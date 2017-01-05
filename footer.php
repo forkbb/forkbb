@@ -145,13 +145,16 @@ else if ($footer_style == 'viewtopic')
 </div>
 <?php
 
+// End the transaction
+$db->end_transaction();
+
 // Display debug info (if enabled/defined)
 if (defined('PUN_DEBUG'))
 {
 	echo '<p id="debugtime">[ ';
 
 	// Calculate script generation time
-	$time_diff = sprintf('%.3f', get_microtime() - $pun_start);
+	$time_diff = sprintf('%.3f', microtime(true) - (empty($_SERVER['REQUEST_TIME_FLOAT']) ? $pun_start : $_SERVER['REQUEST_TIME_FLOAT']));
 	echo sprintf($lang_common['Querytime'], $time_diff, $db->get_num_queries());
 
 	if (function_exists('memory_get_usage'))
@@ -165,10 +168,6 @@ if (defined('PUN_DEBUG'))
 	echo ' ]</p>'."\n";
 }
 
-
-// End the transaction
-$db->end_transaction();
-
 // Display executed queries (if enabled)
 if (defined('PUN_SHOW_QUERIES'))
 	display_saved_queries();
@@ -177,7 +176,6 @@ $tpl_temp = trim(ob_get_contents());
 $tpl_main = str_replace('<pun_footer>', $tpl_temp, $tpl_main);
 ob_end_clean();
 // END SUBST - <pun_footer>
-
 
 // Close the db connection (and free up any result data)
 $db->close();
