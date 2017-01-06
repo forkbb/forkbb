@@ -1,0 +1,62 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "ec3608ec80234fd3cec94b928cfb161c",
+    "content-hash": "624c9d21e02e6a9ad19afc8c1e907875",
+    "packages": [
+        {
+            "name": "artoodetoo/container",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/artoodetoo/container.git",
+                "reference": "1c52096695eb699e2c63b6b84703794d94d0659f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/artoodetoo/container/zipball/1c52096695eb699e2c63b6b84703794d94d0659f",
+                "reference": "1c52096695eb699e2c63b6b84703794d94d0659f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "R2\\DependencyInjection\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "artoodetoo"
+                }
+            ],
+            "description": "Yet another service container",
+            "keywords": [
+                "container",
+                "service"
+            ],
+            "time": "2016-12-27 20:57:10"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "artoodetoo/container": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=5.6.0"
+    },
+    "platform-dev": []
+}

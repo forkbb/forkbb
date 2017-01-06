@@ -6,11 +6,6 @@
  * License: http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  */
 
-// Make sure no one attempts to run this script "directly"
-if (!defined('PUN'))
-	exit;
-
-
 /**
  * Class flux_addon_manager
  *

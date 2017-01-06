@@ -1,0 +1,19 @@
+{
+    "name": "artoodetoo/container",
+    "description": "Yet another service container",
+    "keywords": ["service", "container"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "artoodetoo"
+        }
+    ],
+    "require": {
+        "php": ">=5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "R2\\DependencyInjection\\": "src/"
+        }
+    }
+}

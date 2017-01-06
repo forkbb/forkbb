@@ -1,0 +1,8 @@
+/app/config/main.php
+/app/cache/**/*.php
+/cache/**/*.php
+/img/avatars/*
+!/img/avatars/index.html
+/img/members/*
+!/img/members/.htaccess
+!/img/members/nofile.gif

@@ -11,14 +11,16 @@ if (!defined('PUN_ROOT'))
 
 // Define the version and database revision that this code was written for
 define('FORUM_VERSION', '1.5.10');
-
 define('FORUM_VER_REVISION', 75);	// номер сборки - Visman
-
-$page_js = array();
-
 define('FORUM_DB_REVISION', 21);
 define('FORUM_SI_REVISION', 2.1);
 define('FORUM_PARSER_REVISION', 2);
+
+define('MIN_PHP_VERSION', '5.6.0');
+define('MIN_MYSQL_VERSION', '4.1.2');
+define('MIN_PGSQL_VERSION', '7.0.0');
+define('PUN_SEARCH_MIN_WORD', 3);
+define('PUN_SEARCH_MAX_WORD', 20);
 
 // Block prefetch requests
 if (isset($_SERVER['HTTP_X_MOZ']) && $_SERVER['HTTP_X_MOZ'] == 'prefetch')
@@ -34,23 +36,10 @@ if (isset($_SERVER['HTTP_X_MOZ']) && $_SERVER['HTTP_X_MOZ'] == 'prefetch')
 	exit;
 }
 
-// Attempt to load the configuration file config.php
-if (file_exists(PUN_ROOT.'include/config.php'))
-	require PUN_ROOT.'include/config.php';
-
-// If we have the 1.3-legacy constant defined, define the proper 1.4 constant so we don't get an incorrect "need to install" message
-if (defined('FORUM'))
-	define('PUN', FORUM);
-
-// If PUN isn't defined, config.php is missing or corrupt
-if (!defined('PUN'))
-{
-	header('Location: install.php');
-	exit;
-}
-
 // Record the start time (will be used to calculate the generation time for the page)
 $pun_start = microtime(true);
+
+$page_js = array();
 
 // Load the functions script
 require PUN_ROOT.'include/functions.php';
@@ -67,15 +56,13 @@ forum_remove_bad_characters();
 // Reverse the effect of register_globals
 forum_unregister_globals();
 
-// The addon manager is responsible for storing the hook listeners and communicating with the addons
-$flux_addons = new flux_addon_manager();
-
-// Make sure PHP reports all errors except E_NOTICE. FluxBB supports E_ALL, but a lot of scripts it may interact with, do not
-//error_reporting(E_ALL ^ E_NOTICE);
-error_reporting(E_ALL);
-
 // Force POSIX locale (to prevent functions such as strtolower() from messing up UTF-8 strings)
 setlocale(LC_CTYPE, 'C');
+
+require PUN_ROOT . 'app/bootstrap.php';
+
+// The addon manager is responsible for storing the hook listeners and communicating with the addons
+$flux_addons = new flux_addon_manager();
 
 // If a cookie name is not specified in config.php, we use the default (pun_cookie)
 if (empty($cookie_name))

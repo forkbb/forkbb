@@ -1,0 +1,43 @@
+[
+    {
+        "name": "artoodetoo/container",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/artoodetoo/container.git",
+            "reference": "1c52096695eb699e2c63b6b84703794d94d0659f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/artoodetoo/container/zipball/1c52096695eb699e2c63b6b84703794d94d0659f",
+            "reference": "1c52096695eb699e2c63b6b84703794d94d0659f",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.6"
+        },
+        "time": "2016-12-27 20:57:10",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "R2\\DependencyInjection\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "artoodetoo"
+            }
+        ],
+        "description": "Yet another service container",
+        "keywords": [
+            "container",
+            "service"
+        ]
+    }
+]

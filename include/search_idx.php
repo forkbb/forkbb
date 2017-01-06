@@ -244,7 +244,10 @@ function strip_bbcode($text)
 //
 function update_search_index($mode, $post_id, $message, $subject = null)
 {
-	global $db_type, $db;
+	global $container;
+
+    $db = $container->get('DB');
+    $db_type = $container->getParameter('DB_TYPE');
 
 	$message = utf8_strtolower($message);
 	$subject = utf8_strtolower($subject);
@@ -358,7 +361,10 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 //
 function strip_search_index($post_ids)
 {
-	global $db_type, $db;
+	global $container;
+
+    $db = $container->get('DB');
+    $db_type = $container->getParameter('DB_TYPE');
 
 	switch ($db_type)
 	{

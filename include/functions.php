@@ -1242,9 +1242,7 @@ function random_pass($len)
 //
 function pun_hash($str)
 {
-	global $salt1;
-
-	return sha1($str.$salt1); // соль на пароль - Visman
+	return sha1($str);
 }
 
 

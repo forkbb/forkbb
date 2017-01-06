@@ -1,0 +1,18 @@
+{
+    "name": "forkbb/forkbb",
+    "description": "The ForkBB is an open source forum application.",
+    "homepage": "https://github.com/forkbb",
+    "type": "project",
+    "license": "GPL 2.0",
+    "authors": [
+        {
+            "name": "Visman",
+            "email": "mio.visman@yandex.ru",
+            "homepage": "https://github.com/MioVisman"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.0",
+        "artoodetoo/container": "dev-master"
+    }
+}
