@@ -32,7 +32,7 @@ if ($action == 'check_upgrade')
 	if (empty($latest_version))
 		message($lang_admin_index['Upgrade check failed message']);
 
-	if (version_compare($pun_config['o_cur_version'], $latest_version, '>='))
+	if (version_compare($pun_config['s_fork_version'], $latest_version, '>='))
 		message($lang_admin_index['Running latest version message']);
 	else
 		message(sprintf($lang_admin_index['New version available message'], '<a href="http://fluxbb.org/">FluxBB.org</a>'));
@@ -89,7 +89,7 @@ generate_admin_menu('index');
 				<dl>
 					<dt><?php echo $lang_admin_index['FluxBB version label'] ?></dt>
 					<dd>
-						<?php printf($lang_admin_index['FluxBB version data']."\n", $pun_config['o_cur_version'].'.'.$pun_config['o_cur_ver_revision'], '<a href="https://fluxbb.org/forums/viewtopic.php?id=4941">'.$lang_admin_index['Check for upgrade'].'</a>') ?> - <a href="https://github.com/MioVisman/FluxBB_by_Visman">GitHub</a>
+						<?php printf($lang_admin_index['FluxBB version data']."\n", $pun_config['s_fork_version'].'.'.$pun_config['i_fork_revision'], '<a href="https://fluxbb.org/forums/viewtopic.php?id=4941">'.$lang_admin_index['Check for upgrade'].'</a>') ?> - <a href="https://github.com/MioVisman/FluxBB_by_Visman">GitHub</a>
 					</dd>
 					<dt><?php echo $lang_admin_index['Server statistics label'] ?></dt>
 					<dd>

@@ -1,6 +1,8 @@
 /app/config/main.php
 /app/cache/**/*.php
+/app/cache/**/*.lock
 /cache/**/*.php
+/cache/**/*.lock
 /img/avatars/*
 !/img/avatars/index.html
 /img/members/*

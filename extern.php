@@ -128,7 +128,7 @@ function output_rss($feed)
 	echo "\t\t".'<lastBuildDate>'.gmdate('r', count($feed['items']) ? $feed['items'][0]['pubdate'] : time()).'</lastBuildDate>'."\n";
 
 	if ($pun_config['o_show_version'] == '1')
-		echo "\t\t".'<generator>FluxBB '.$pun_config['o_cur_version'].'</generator>'."\n";
+		echo "\t\t".'<generator>FluxBB '.$pun_config['s_fork_version'].'</generator>'."\n";
 	else
 		echo "\t\t".'<generator>FluxBB</generator>'."\n";
 
@@ -172,7 +172,7 @@ function output_atom($feed)
 	echo "\t".'<updated>'.gmdate('Y-m-d\TH:i:s\Z', count($feed['items']) ? $feed['items'][0]['pubdate'] : time()).'</updated>'."\n";
 
 	if ($pun_config['o_show_version'] == '1')
-		echo "\t".'<generator version="'.$pun_config['o_cur_version'].'">FluxBB</generator>'."\n";
+		echo "\t".'<generator version="'.$pun_config['s_fork_version'].'">FluxBB</generator>'."\n";
 	else
 		echo "\t".'<generator>FluxBB</generator>'."\n";
 

@@ -142,7 +142,7 @@ $lang_common = array(
 'Unstick topic' => 'Снять выделение темы',
 'Stick topic' => 'Выделить тему',
 'Moderate forum' => 'Модерирование раздела',
-'Powered by' => 'Под управлением %s<br />Модифицировал &#x56;&#x69;&#x73;&#x6D;&#x61;&#x6E;',
+'Powered by' => 'Под управлением %s',
 
 // Debug information
 'Debug table' => 'Отладочная информация',

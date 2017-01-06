@@ -10,11 +10,11 @@ if (!defined('PUN_ROOT'))
 	exit('The constant PUN_ROOT must be defined and point to a valid FluxBB installation root directory.');
 
 // Define the version and database revision that this code was written for
-define('FORUM_VERSION', '1.5.10');
-define('FORUM_VER_REVISION', 75);	// номер сборки - Visman
-define('FORUM_DB_REVISION', 21);
-define('FORUM_SI_REVISION', 2.1);
-define('FORUM_PARSER_REVISION', 2);
+define('FORK_VERSION', '0.0.0');
+define('FORK_REVISION', 1);
+define('FORK_DB_REVISION', 21);
+define('FORK_SI_REVISION', 2.1);
+define('FORK_PARSER_REVISION', 2);
 
 define('MIN_PHP_VERSION', '5.6.0');
 define('MIN_MYSQL_VERSION', '4.1.2');
@@ -99,15 +99,10 @@ if (!defined('PUN_CONFIG_LOADED'))
 }
 
 // Verify that we are running the proper database schema revision
-if (!isset($pun_config['o_database_revision']) || $pun_config['o_database_revision'] < FORUM_DB_REVISION ||
-		!isset($pun_config['o_searchindex_revision']) || $pun_config['o_searchindex_revision'] < FORUM_SI_REVISION ||
-		!isset($pun_config['o_parser_revision']) || $pun_config['o_parser_revision'] < FORUM_PARSER_REVISION ||
-		!isset($pun_config['o_cur_ver_revision']) || $pun_config['o_cur_ver_revision'] < FORUM_VER_REVISION ||
-		version_compare($pun_config['o_cur_version'], FORUM_VERSION, '<'))
-	{
-		header('Location: db_update.php');
-		exit;
-	}
+if (empty($pun_config['i_fork_revision']) || $pun_config['i_fork_revision'] < FORK_REVISION) {
+	header('Location: db_update.php');
+	exit;
+}
 
 // Enable output buffering
 if (!defined('PUN_DISABLE_BUFFERING'))

@@ -88,7 +88,7 @@ class Install implements ContainerAwareInterface
 
         // Make sure we are running at least MIN_PHP_VERSION
         if (! function_exists('version_compare') || version_compare(PHP_VERSION, MIN_PHP_VERSION, '<'))
-            exit(sprintf($lang_install['You are running error'], 'PHP', PHP_VERSION, FORUM_VERSION, MIN_PHP_VERSION));
+            exit(sprintf($lang_install['You are running error'], 'PHP', PHP_VERSION, FORK_VERSION, MIN_PHP_VERSION));
 
 
         if (null !== $this->request->postBool('generate_config'))
@@ -314,7 +314,7 @@ foreach ($languages as $temp)
 <?php endif; ?>
 
 <div class="blockform">
-    <h2><span><?php echo sprintf($lang_install['Install'], FORUM_VERSION.'.'.FORUM_VER_REVISION) ?></span></h2>
+    <h2><span><?php echo sprintf($lang_install['Install'], FORK_VERSION . '.' . FORK_REVISION) ?></span></h2>
     <div class="box">
         <form id="install" method="post" action="" onsubmit="this.start.disabled=true;if(process_form(this)){return true;}else{this.start.disabled=false;return false;}">
         <div><input type="hidden" name="form_sent" value="1" /><input type="hidden" name="install_lang" value="<?php echo pun_htmlspecialchars($install_lang) ?>" /></div>
@@ -501,13 +501,13 @@ foreach ($styles as $temp)
                 case 'mysqli_innodb':
                     $mysql_info = $db->get_version();
                     if (version_compare($mysql_info['version'], MIN_MYSQL_VERSION, '<'))
-                        error(sprintf($lang_install['You are running error'], 'MySQL', $mysql_info['version'], FORUM_VERSION, MIN_MYSQL_VERSION));
+                        error(sprintf($lang_install['You are running error'], 'MySQL', $mysql_info['version'], FORK_VERSION, MIN_MYSQL_VERSION));
                     break;
 
                 case 'pgsql':
                     $pgsql_info = $db->get_version();
                     if (version_compare($pgsql_info['version'], MIN_PGSQL_VERSION, '<'))
-                        error(sprintf($lang_install['You are running error'], 'PostgreSQL', $pgsql_info['version'], FORUM_VERSION, MIN_PGSQL_VERSION));
+                        error(sprintf($lang_install['You are running error'], 'PostgreSQL', $pgsql_info['version'], FORK_VERSION, MIN_PGSQL_VERSION));
                     break;
 
                 case 'sqlite':
@@ -1504,7 +1504,7 @@ foreach ($styles as $temp)
                         'default'        => '\'\''
                     ),
                     'password'            => array(
-                        'datatype'        => 'VARCHAR(40)',
+                        'datatype'        => 'VARCHAR(255)',
                         'allow_null'    => false,
                         'default'        => '\'\''
                     ),
@@ -1907,105 +1907,105 @@ foreach ($styles as $temp)
 
             // Insert config data
             $pun_config = array(
-                'o_cur_version'                => FORUM_VERSION,
-                'o_cur_ver_revision'    => FORUM_VER_REVISION, // номер сборки - Visman
-                'o_database_revision'        => FORUM_DB_REVISION,
-                'o_searchindex_revision'    => FORUM_SI_REVISION,
-                'o_parser_revision'            => FORUM_PARSER_REVISION,
-                'o_board_title'                => $title,
-                'o_board_desc'                => $description,
-                'o_default_timezone'        => 0,
-                'o_time_format'                => 'H:i:s',
-                'o_date_format'                => 'Y-m-d',
-                'o_timeout_visit'            => 1800,
-                'o_timeout_online'            => 300,
-                'o_redirect_delay'            => 1,
-                'o_show_version'            => 0,
-                'o_show_user_info'            => 1,
-                'o_show_post_count'            => 1,
-                'o_signatures'                => 1,
-                'o_smilies'                    => 1,
-                'o_smilies_sig'                => 1,
-                'o_make_links'                => 1,
-                'o_default_lang'            => $default_lang,
-                'o_default_style'            => $default_style,
-                'o_default_user_group'        => 4,
-                'o_topic_review'            => 15,
-                'o_disp_topics_default'        => 30,
-                'o_disp_posts_default'        => 25,
-                'o_indent_num_spaces'        => 4,
-                'o_quote_depth'                => 3,
-                'o_quickpost'                => 1,
-                'o_users_online'            => 1,
-                'o_censoring'                => 0,
-                'o_show_dot'                => 0,
-                'o_topic_views'                => 1,
-                'o_quickjump'                => 1,
-                'o_gzip'                    => 0,
-                'o_additional_navlinks'        => '',
-                'o_report_method'            => 0,
-                'o_regs_report'                => 0,
-                'o_default_email_setting'    => 1,
-                'o_mailing_list'            => $email,
-                'o_avatars'                    => $avatars,
-                'o_avatars_dir'                => 'img/avatars',
-                'o_avatars_width'            => 60,
-                'o_avatars_height'            => 60,
-                'o_avatars_size'            => 10240,
-                'o_search_all_forums'        => 1,
-                'o_base_url'                => $base_url,
-                'o_admin_email'                => $email,
-                'o_webmaster_email'            => $email,
-                'o_forum_subscriptions'        => 1,
-                'o_topic_subscriptions'        => 1,
-                'o_smtp_host'                => NULL,
-                'o_smtp_user'                => NULL,
-                'o_smtp_pass'                => NULL,
-                'o_smtp_ssl'                => 0,
-                'o_regs_allow'                => 1,
-                'o_regs_verify'                => 0,
-                'o_announcement'            => 0,
-                'o_announcement_message'    => $lang_install['Announcement'],
-                'o_rules'                    => 0,
-                'o_rules_message'            => $lang_install['Rules'],
-                'o_maintenance'                => 0,
-                'o_maintenance_message'        => $lang_install['Maintenance message'],
-                'o_default_dst'                => 0,
-                'o_feed_type'                => 2,
-                'o_feed_ttl'                => 0,
-                'p_message_bbcode'            => 1,
-                'p_message_img_tag'            => 1,
-                'p_message_all_caps'        => 1,
-                'p_subject_all_caps'        => 1,
-                'p_sig_all_caps'            => 1,
-                'p_sig_bbcode'                => 1,
-                'p_sig_img_tag'                => 0,
-                'p_sig_length'                => 400,
-                'p_sig_lines'                => 4,
-                'p_allow_banned_email'        => 1,
-                'p_allow_dupe_email'        => 0,
-                'p_force_guest_email'        => 1,
-                'o_pms_enabled'                => 1,                    // New PMS - Visman
-                'o_pms_min_kolvo'            => 0,
-                'o_merge_timeout'            => 86400,        // merge post - Visman
+                's_fork_version'          => FORK_VERSION,
+                'i_fork_revision'         => FORK_REVISION,
+                'o_database_revision'     => FORK_DB_REVISION,
+                'o_searchindex_revision'  => FORK_SI_REVISION,
+                'o_parser_revision'       => FORK_PARSER_REVISION,
+                'o_board_title'           => $title,
+                'o_board_desc'            => $description,
+                'o_default_timezone'      => 0,
+                'o_time_format'           => 'H:i:s',
+                'o_date_format'           => 'Y-m-d',
+                'o_timeout_visit'         => 1800,
+                'o_timeout_online'        => 300,
+                'o_redirect_delay'        => 1,
+                'o_show_version'          => 0,
+                'o_show_user_info'        => 1,
+                'o_show_post_count'       => 1,
+                'o_signatures'            => 1,
+                'o_smilies'               => 1,
+                'o_smilies_sig'           => 1,
+                'o_make_links'            => 1,
+                'o_default_lang'          => $default_lang,
+                'o_default_style'         => $default_style,
+                'o_default_user_group'    => 4,
+                'o_topic_review'          => 15,
+                'o_disp_topics_default'   => 30,
+                'o_disp_posts_default'    => 25,
+                'o_indent_num_spaces'     => 4,
+                'o_quote_depth'           => 3,
+                'o_quickpost'             => 1,
+                'o_users_online'          => 1,
+                'o_censoring'             => 0,
+                'o_show_dot'              => 0,
+                'o_topic_views'           => 1,
+                'o_quickjump'             => 1,
+                'o_gzip'                  => 0,
+                'o_additional_navlinks'   => '',
+                'o_report_method'         => 0,
+                'o_regs_report'           => 0,
+                'o_default_email_setting' => 1,
+                'o_mailing_list'          => $email,
+                'o_avatars'               => $avatars,
+                'o_avatars_dir'           => 'img/avatars',
+                'o_avatars_width'         => 60,
+                'o_avatars_height'        => 60,
+                'o_avatars_size'          => 10240,
+                'o_search_all_forums'     => 1,
+                'o_base_url'              => $base_url,
+                'o_admin_email'           => $email,
+                'o_webmaster_email'       => $email,
+                'o_forum_subscriptions'   => 1,
+                'o_topic_subscriptions'   => 1,
+                'o_smtp_host'             => NULL,
+                'o_smtp_user'             => NULL,
+                'o_smtp_pass'             => NULL,
+                'o_smtp_ssl'              => 0,
+                'o_regs_allow'            => 1,
+                'o_regs_verify'           => 0,
+                'o_announcement'          => 0,
+                'o_announcement_message'  => $lang_install['Announcement'],
+                'o_rules'                 => 0,
+                'o_rules_message'         => $lang_install['Rules'],
+                'o_maintenance'           => 0,
+                'o_maintenance_message'   => $lang_install['Maintenance message'],
+                'o_default_dst'           => 0,
+                'o_feed_type'             => 2,
+                'o_feed_ttl'              => 0,
+                'p_message_bbcode'        => 1,
+                'p_message_img_tag'       => 1,
+                'p_message_all_caps'      => 1,
+                'p_subject_all_caps'      => 1,
+                'p_sig_all_caps'          => 1,
+                'p_sig_bbcode'            => 1,
+                'p_sig_img_tag'           => 0,
+                'p_sig_length'            => 400,
+                'p_sig_lines'             => 4,
+                'p_allow_banned_email'    => 1,
+                'p_allow_dupe_email'      => 0,
+                'p_force_guest_email'     => 1,
+                'o_pms_enabled'           => 1,                    // New PMS - Visman
+                'o_pms_min_kolvo'         => 0,
+                'o_merge_timeout'         => 86400,        // merge post - Visman
                 'o_board_redirect'        => '',    // для редиректа - Visman
-                'o_board_redirectg'        => 0,
-                'o_poll_enabled'            => 0,    // опросы - Visman
-                'o_poll_max_ques'            => 3,
+                'o_board_redirectg'       => 0,
+                'o_poll_enabled'          => 0,    // опросы - Visman
+                'o_poll_max_ques'         => 3,
                 'o_poll_max_field'        => 20,
-                'o_poll_time'                    => 60,
-                'o_poll_term'                    => 3,
-                'o_poll_guest'                => 0,
-                'o_fbox_guest'                => 0,    // Fancybox - Visman
-                'o_fbox_files'                => 'viewtopic.php,search.php,pmsnew.php',
-                'o_coding_forms'            => 1,    // кодирование форм - Visman
-                'o_check_ip'                    => 0,    // проверка ip администрации - Visman
-                'o_crypto_enable'            => 1,    // случайные имена полей форм - Visman
-                'o_crypto_pas'                => random_pass(25),
-                'o_crypto_salt'                => random_pass(13),
-                'o_enable_acaptcha'        => 1, // математическая каптча
-                'st_max_users'                => 1,    // статистика по максимуму юзеров - Visman
-                'st_max_users_time'        => time(),
+                'o_poll_time'             => 60,
+                'o_poll_term'             => 3,
+                'o_poll_guest'            => 0,
+                'o_fbox_guest'            => 0,    // Fancybox - Visman
+                'o_fbox_files'            => 'viewtopic.php,search.php,pmsnew.php',
+                'o_coding_forms'          => 1,    // кодирование форм - Visman
+                'o_check_ip'              => 0,    // проверка ip администрации - Visman
+                'o_crypto_enable'         => 1,    // случайные имена полей форм - Visman
+                'o_crypto_pas'            => random_pass(25),
+                'o_crypto_salt'           => random_pass(13),
+                'o_enable_acaptcha'       => 1, // математическая каптча
+                'st_max_users'            => 1,    // статистика по максимуму юзеров - Visman
+                'st_max_users_time'       => time(),
             );
 
             foreach ($pun_config as $conf_name => $conf_value)
@@ -2044,7 +2044,7 @@ foreach ($styles as $temp)
                 $alerts[] = $lang_install['Alert upload'];
 
             // Add some random bytes at the end of the cookie name to prevent collisions
-            $cookie_prefix = 'fork_'.random_key(7, false, true);
+            $cookie_prefix = 'fork' . random_key(7, false, true) . '_';
 
             // Generate the main.php file data
             $config = $this->generate_config_file($base_url, $db_type, $db_host, $db_name, $db_username, $db_password, $db_prefix, $cookie_prefix);
