@@ -59,9 +59,9 @@ if (!isset($smilies))
 //
 function preparse_bbcode($text, &$errors, $is_signature = false)
 {
-	global $pun_config, $lang_common, $lang_post, $re_list;
+	global $pun_config, $lang_common, $lang_post, $re_list, $container;
 
-	$text = preg_replace('%('.str_replace(array('http://', 'https://', '.'), array('https?://', 'https?://', '\.'), $pun_config['o_base_url']).'/viewtopic\.php[^\[\]\s]+)(&search_hl=\d+)%ui', '$1', $text); // search HL - Visman
+	$text = preg_replace('%('.str_replace(array('http://', 'https://', '.'), array('https?://', 'https?://', '\.'), $container->getParameter('BASE_URL')).'/viewtopic\.php[^\[\]\s]+)(&search_hl=\d+)%ui', '$1', $text); // search HL - Visman
 
 	// Remove empty tags
 	while (($new_text = strip_empty_bbcode($text)) !== false)

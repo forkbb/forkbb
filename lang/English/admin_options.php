@@ -3,7 +3,7 @@
 // Language definitions used in admin_options.php
 $lang_admin_options = array(
 
-'Bad HTTP Referer message'			=>	'Bad HTTP_REFERER. If you have moved these forums from one location to another or switched domains, you need to update the Base URL manually in the database (look for o_base_url in the config table) and then clear the cache by deleting all .php files in the /cache directory.',
+'Bad HTTP Referer message'			=>	'Bad HTTP_REFERER. If you have moved these forums from one location to another or switched domains, you need to update the BASE_URL manually in the /app/config/main.php configuration file.',
 'Must enter title message'			=>	'You must enter a board title.',
 'Invalid e-mail message'			=>	'The admin email address you entered is invalid.',
 'Invalid webmaster e-mail message'	=>	'The webmaster email address you entered is invalid.',
@@ -21,9 +21,6 @@ $lang_admin_options = array(
 'Board title help'					=>	'The title of this bulletin board (shown at the top of every page). This field may <strong>not</strong> contain HTML.',
 'Board desc label'					=>	'Board description',
 'Board desc help'					=>	'A short description of this bulletin board (shown at the top of every page). This field may contain HTML.',
-'Base URL label'					=>	'Base URL',
-'Base URL help'						=>	'The complete URL of the board without trailing slash (i.e. http://www.mydomain.com/forums). This <strong>must</strong> be correct in order for all admin and moderator features to work. If you get "Bad referer" errors, it\'s probably incorrect.',
-'Base URL problem'          =>  'Your installation does not support automatic conversion of internationalized domain names. As your base URL contains special characters, you <strong>must</strong> use an online converter in order to avoid "Bad referer" errors.',
 'Timezone label'					=>	'Default time zone',
 'Timezone help'						=>	'The default time zone for guests and users attempting to register for the board.',
 'DST label'							=>	'Adjust for DST',

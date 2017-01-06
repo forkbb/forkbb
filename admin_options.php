@@ -27,7 +27,6 @@ if (isset($_POST['form_sent']))
 	$form = array(
 		'board_title'			=> pun_trim($_POST['form']['board_title']),
 		'board_desc'			=> pun_trim($_POST['form']['board_desc']),
-		'base_url'				=> pun_trim($_POST['form']['base_url']),
 		'default_timezone'		=> floatval($_POST['form']['default_timezone']),
 		'default_dst'			=> $_POST['form']['default_dst'] != '1' ? '0' : '1',
 		'default_lang'			=> pun_trim($_POST['form']['default_lang']),
@@ -89,19 +88,6 @@ if (isset($_POST['form_sent']))
 	if ($form['board_title'] == '')
 		message($lang_admin_options['Must enter title message']);
 
-	// Make sure base_url doesn't end with a slash
-	if (substr($form['base_url'], -1) == '/')
-		$form['base_url'] = substr($form['base_url'], 0, -1);
-/**
-	// Convert IDN to Punycode if needed
-	if (preg_match('/[^\x00-\x7F]/', $form['base_url']))
-	{
-		if (!function_exists('idn_to_ascii'))
-			message($lang_admin_options['Base URL problem']);
-		else
-			$form['base_url'] = idn_to_ascii($form['base_url']);
-	}
-**/
 	$languages = forum_list_langs();
 	if (!in_array($form['default_lang'], $languages))
 		message($lang_common['Bad request'], false, '404 Not Found');
@@ -252,13 +238,6 @@ generate_admin_menu('options');
 									<td>
 										<textarea name="form[board_desc]" cols="60" rows="3"><?php echo pun_htmlspecialchars($pun_config['o_board_desc']) ?></textarea>
 										<span><?php echo $lang_admin_options['Board desc help'] ?></span>
-									</td>
-								</tr>
-								<tr>
-									<th scope="row"><?php echo $lang_admin_options['Base URL label'] ?></th>
-									<td>
-										<input type="text" name="form[base_url]" size="50" maxlength="100" value="<?php echo pun_htmlspecialchars($pun_config['o_base_url']) ?>" />
-										<span><?php echo $lang_admin_options['Base URL help'] ?></span>
 									</td>
 								</tr>
 								<tr>

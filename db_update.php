@@ -660,6 +660,7 @@ switch ($stage)
 	case 'start':
 		$query_str = '?stage=preparse_posts';
 
+        // For FluxBB by Visman 1.5.10.75
         if (! isset($pun_config['i_fork_revision']) || $pun_config['i_fork_revision'] < 1) {
             if (! isset($pun_config['i_fork_revision'])) {
                 $db->query('INSERT INTO '.$db->prefix.'config (conf_name, conf_value) VALUES (\'i_fork_revision\', \'0\')') or error('Unable to insert config value \'i_fork_revision\'', __FILE__, __LINE__, $db->error());
@@ -668,8 +669,9 @@ switch ($stage)
                 $db->query('INSERT INTO '.$db->prefix.'config (conf_name, conf_value) VALUES (\'s_fork_version\', \'0\')') or error('Unable to insert config value \'s_fork_version\'', __FILE__, __LINE__, $db->error());
             }
 
-            $db->query('DELETE FROM '.$db->prefix.'config WHERE conf_name = \'o_cur_version\'') or error('Unable to delete config value \'o_cur_version\'', __FILE__, __LINE__, $db->error());
-            $db->query('DELETE FROM '.$db->prefix.'config WHERE conf_name = \'o_cur_ver_revision\'') or error('Unable to delete config value \'o_cur_ver_revision\'', __FILE__, __LINE__, $db->error());
+            $db->query('DELETE FROM '.$db->prefix.'config WHERE conf_name=\'o_cur_version\'') or error('Unable to delete config value \'o_cur_version\'', __FILE__, __LINE__, $db->error());
+            $db->query('DELETE FROM '.$db->prefix.'config WHERE conf_name=\'o_cur_ver_revision\'') or error('Unable to delete config value \'o_cur_ver_revision\'', __FILE__, __LINE__, $db->error());
+            $db->query('DELETE FROM '.$db->prefix.'config WHERE conf_name=\'o_base_url\'') or error('Unable to delete config value \'o_base_url\'', __FILE__, __LINE__, $db->error());
 
             $db->alter_field('users', 'password', 'VARCHAR(255)', false, '') or error('Unable to alter password field', __FILE__, __LINE__, $db->error());
 

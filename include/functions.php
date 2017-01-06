@@ -228,16 +228,16 @@ function get_current_protocol()
 //
 function get_base_url($support_https = false)
 {
-	global $pun_config;
+	global $container;
 	static $base_url;
 
 	if (!$support_https)
-		return $pun_config['o_base_url'];
+		return $container->getParameter('BASE_URL');
 
 	if (!isset($base_url))
 	{
 		// Make sure we are using the correct protocol
-		$base_url = str_replace(array('http://', 'https://'), get_current_protocol().'://', $pun_config['o_base_url']);
+		$base_url = str_replace(array('http://', 'https://'), get_current_protocol().'://', $container->getParameter('BASE_URL'));
 	}
 
 	return $base_url;

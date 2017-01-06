@@ -3,7 +3,7 @@
 // Language definitions used in admin_options.php
 $lang_admin_options = array(
 
-'Bad HTTP Referer message'			=>	'Плохой HTTP_REFERER. Если вы передвинули форум в другую папку или на другой домен, необходимо поправить Base URL вручную в базе данных (см. параметр o_base_url в таблице config) после чего очистите кеш, удалив все .php файлы в папке /cache.',
+'Bad HTTP Referer message'			=>	'Плохой HTTP_REFERER. Если вы перенесли форум в другую папку или на другой домен, необходимо поправить BASE_URL вручную в файле конфигурации /app/config/main.php.',
 'Must enter title message'			=>	'Вы должны ввести заголовок форума.',
 'Invalid e-mail message'			=>	'Email админа введен неверно.',
 'Invalid webmaster e-mail message'	=>	'Email вебмастера введен неверно.',
@@ -21,9 +21,6 @@ $lang_admin_options = array(
 'Board title help'					=>	'Заголовок этого форума (выводится в шапке каждой страницы). Это поле <strong>не может</strong> содержать HTML.',
 'Board desc label'					=>	'Описание',
 'Board desc help'					=>	'Краткое описание этого форума (выводится в шапке каждой страницы). Это поле может содержать HTML.',
-'Base URL label'					=>	'Base URL',
-'Base URL help'						=>	'Полный URL форума без завершающей черты (т.е. http://www.mydomain.com/forums). <strong>Необходимо</strong> заполнить его правильно. Если вы получаете ошибку "Плохой HTTP_REFERER", вероятно здесь ошибка.',
-'Base URL problem'          =>  'Your installation does not support automatic conversion of internationalized domain names. As your base URL contains special characters, you <strong>must</strong> use an online converter in order to avoid "Bad referer" errors.',
 'Timezone label'					=>	'Временная зона по умолчанию',
 'Timezone help'						=>	'Временная зона  для гостей и новых пользователей.',
 'DST label'							=>	'Поправка на Л.В.',

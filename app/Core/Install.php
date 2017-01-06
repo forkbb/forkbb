@@ -1953,7 +1953,6 @@ foreach ($styles as $temp)
                 'o_avatars_height'        => 60,
                 'o_avatars_size'          => 10240,
                 'o_search_all_forums'     => 1,
-                'o_base_url'              => $base_url,
                 'o_admin_email'           => $email,
                 'o_webmaster_email'       => $email,
                 'o_forum_subscriptions'   => 1,
