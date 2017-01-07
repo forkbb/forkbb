@@ -1192,12 +1192,9 @@ function confirm_message($error_msg = false)
 
 function confirm_referrer($script, $error_msg = false, $use_ip = true)
 {
-	$hash = '';
+    global $container;
 
-	if (isset($_POST['csrf_hash']))
-		$hash = $_POST['csrf_hash'];
-	else if (isset($_GET['csrf_hash']))
-		$hash = $_GET['csrf_hash'];
+	$hash = $container->get('Request')->requestStr('csrf_hash', '');
 
 	if (empty($hash) || !pun_hash_equals(csrf_hash($script, $use_ip), $hash))
 		confirm_message($error_msg);

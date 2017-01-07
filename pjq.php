@@ -18,12 +18,15 @@ if ($pun_user['g_read_board'] == '0')
 if ($pun_user['is_guest'])
 	exit($lang_common['No permission']);
 
-$action = isset($_POST['action']) ? $_POST['action'] : '';
-$id = isset($_POST['id']) ? intval($_POST['id']) : 0;
+$request = $container->get('Request');
+
+$action = $request->postStr('action');
+$id = $request->postInt('id', 0);
 if ($id < 1)
 	exit($lang_common['Bad request']);
 
-if ($action == "quote")
+
+if ($action === "quote")
 {
 	// Fetch some info about the post, the topic and the forum
 	$result = $db->query('SELECT p.message FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'topics AS t ON t.id=p.topic_id INNER JOIN '.$db->prefix.'forums AS f ON f.id=t.forum_id LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id='.$pun_user['g_id'].') WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND p.id='.$id) or exit('Unable to fetch post info '.$db->error());
@@ -35,12 +38,11 @@ if ($action == "quote")
 	if ($pun_config['o_censoring'] == '1')
 		$cur_post['message'] = censor_words($cur_post['message']);
 
-?>
-<quote_post><?php echo $cur_post['message'] ?></quote_post>
-<?php
-
+	echo '<quote_post>' . $cur_post['message'] . '</quote_post>';
 }
-else if ($action == "pmquote")
+
+
+else if ($action === "pmquote")
 {
 	if ($pun_config['o_pms_enabled'] != '1' || $pun_user['g_pm'] == 0 || $pun_user['messages_enable'] == 0)
 		exit($lang_common['No permission']);
@@ -55,11 +57,10 @@ else if ($action == "pmquote")
 	if ($pun_config['o_censoring'] == '1')
 		$cur_post['message'] = censor_words($cur_post['message']);
 
-?>
-<quote_post><?php echo $cur_post['message'] ?></quote_post>
-<?php
-
+	echo '<quote_post>' . $cur_post['message'] . '</quote_post>';
 }
+
+
 else
 	exit($lang_common['Bad request']);
 

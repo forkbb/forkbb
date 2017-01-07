@@ -6,7 +6,7 @@
  * License: http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  */
 
-if (isset($_GET['action']))
+if (isset($_GET['action'])) //????
 	define('PUN_QUIET_VISIT', 1);
 
 define('PUN_ROOT', dirname(__FILE__).'/');
@@ -16,10 +16,12 @@ require PUN_ROOT.'include/common.php';
 // Load the misc.php language file
 require PUN_ROOT.'lang/'.$pun_user['language'].'/misc.php';
 
-$action = isset($_GET['action']) ? $_GET['action'] : null;
+$request = $container->get('Reuqest');
+
+$action = $request->getStr('action');
 
 
-if ($action == 'rules')
+if ($action === 'rules')
 {
 	if ($pun_config['o_rules'] == '0' || ($pun_user['is_guest'] && $pun_user['g_read_board'] == '0' && $pun_config['o_regs_allow'] == '0'))
 		message($lang_common['Bad request'], false, '404 Not Found');
@@ -46,11 +48,11 @@ if ($action == 'rules')
 }
 
 // START быстрое переключение языка - Visman
-else if ($action == 'lang')
+else if ($action === 'lang')
 {
 	confirm_referrer('misc.php');
 
-	$language = isset($_GET['lang']) ? preg_replace('%[^\w]%', '', pun_trim($_GET['lang'])) : '';
+	$language = preg_replace('%[^\w]%', '', $request->getStr('lang', ''));
 	if (empty($language) || !file_exists(PUN_ROOT.'lang/'.$language.'/common.php'))
 		message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -74,7 +76,7 @@ else if ($action == 'lang')
 }
 // END быстрое переключение языка - Visman
 
-else if ($action == 'markread')
+else if ($action === 'markread')
 {
 	if ($pun_user['is_guest'])
 		message($lang_common['No permission'], false, '403 Forbidden');
@@ -91,14 +93,14 @@ else if ($action == 'markread')
 
 
 // Mark the topics/posts in a forum as read?
-else if ($action == 'markforumread')
+else if ($action === 'markforumread')
 {
 	if ($pun_user['is_guest'])
 		message($lang_common['No permission'], false, '403 Forbidden');
 
 	confirm_referrer('viewforum.php');
 
-	$fid = isset($_GET['fid']) ? intval($_GET['fid']) : 0;
+	$fid = $request->getInt('fid', 0);
 	if ($fid < 1)
 		message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -110,12 +112,12 @@ else if ($action == 'markforumread')
 }
 
 
-else if (isset($_GET['email']))
+else if ($request->isGet('email'))
 {
 	if ($pun_user['is_guest'] || $pun_user['g_send_email'] == '0')
 		message($lang_common['No permission'], false, '403 Forbidden');
 
-	$recipient_id = intval($_GET['email']);
+	$recipient_id = $request->getInt('email', 0);
 	if ($recipient_id < 2)
 		message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -129,13 +131,13 @@ else if (isset($_GET['email']))
 		message($lang_misc['Form email disabled']);
 
 
-	if (isset($_POST['form_sent']))
+	if ($request->isPost('form_sent'))
 	{
 		confirm_referrer('misc.php');
 
 		// Clean up message and subject from POST
-		$subject = pun_trim($_POST['req_subject']);
-		$message = pun_trim($_POST['req_message']);
+		$subject = trim($request->postStr('req_subject'));
+		$message = trim($request->postStr('req_message'));
 
 		if ($subject == '')
 			message($lang_misc['No email subject']);
@@ -169,7 +171,7 @@ else if (isset($_GET['email']))
 		$db->query('UPDATE '.$db->prefix.'users SET last_email_sent='.time().' WHERE id='.$pun_user['id']) or error('Unable to update user', __FILE__, __LINE__, $db->error());
 
 		// Try to determine if the data in redirect_url is valid (if not, we redirect to index.php after the email is sent)
-		$redirect_url = validate_redirect($_POST['redirect_url'], 'index.php');
+		$redirect_url = validate_redirect($request->postStr('redirect_url'), 'index.php');
 
 		redirect(pun_htmlspecialchars($redirect_url), $lang_misc['Email sent redirect']);
 	}
@@ -220,22 +222,22 @@ else if (isset($_GET['email']))
 }
 
 
-else if (isset($_GET['report']))
+else if ($request->isGet('report'))
 {
 	if ($pun_user['is_guest'])
 		message($lang_common['No permission'], false, '403 Forbidden');
 
-	$post_id = intval($_GET['report']);
+	$post_id = $request->getInt('report', 0);
 	if ($post_id < 1)
 		message($lang_common['Bad request'], false, '404 Not Found');
 
-	if (isset($_POST['form_sent']))
+	if ($request->isPost('form_sent'))
 	{
 		// Make sure they got here from the site
 		confirm_referrer('misc.php');
 		
 		// Clean up reason from POST
-		$reason = pun_linebreaks(pun_trim($_POST['req_reason']));
+		$reason = pun_linebreaks(pun_trim($request->postStr('req_reason')));
 		if ($reason == '')
 			message($lang_misc['No reason']);
 		else if (strlen($reason) > 65535) // TEXT field can only hold 65535 bytes
@@ -346,15 +348,15 @@ else if (isset($_GET['report']))
 }
 
 
-else if ($action == 'subscribe')
+else if ($action === 'subscribe')
 {
 	if ($pun_user['is_guest'])
 		message($lang_common['No permission'], false, '403 Forbidden');
 
 	confirm_referrer('misc.php');
 
-	$topic_id = isset($_GET['tid']) ? intval($_GET['tid']) : 0;
-	$forum_id = isset($_GET['fid']) ? intval($_GET['fid']) : 0;
+	$topic_id = $request->getInt('tid', 0);
+	$forum_id = $request->getInt('fid', 0);
 	if ($topic_id < 1 && $forum_id < 1)
 		message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -398,15 +400,15 @@ else if ($action == 'subscribe')
 }
 
 
-else if ($action == 'unsubscribe')
+else if ($action === 'unsubscribe')
 {
 	if ($pun_user['is_guest'])
 		message($lang_common['No permission'], false, '403 Forbidden');
 
 	confirm_referrer('misc.php');
 
-	$topic_id = isset($_GET['tid']) ? intval($_GET['tid']) : 0;
-	$forum_id = isset($_GET['fid']) ? intval($_GET['fid']) : 0;
+	$topic_id = $request->getInt('tid', 0);
+	$forum_id = $request->getInt('fid', 0);
 	if ($topic_id < 1 && $forum_id < 1)
 		message($lang_common['Bad request'], false, '404 Not Found');
 

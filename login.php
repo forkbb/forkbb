@@ -6,7 +6,7 @@
  * License: http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  */
 
-if (isset($_GET['action']))
+if (isset($_GET['action'])) //????
 	define('PUN_QUIET_VISIT', 1);
 
 define('PUN_ROOT', dirname(__FILE__).'/');
@@ -16,16 +16,18 @@ require PUN_ROOT.'include/common.php';
 // Load the login.php language file
 require PUN_ROOT.'lang/'.$pun_user['language'].'/login.php';
 
-$action = isset($_GET['action']) ? $_GET['action'] : null;
+$request = $container->get('Request');
+
+$action = $request->getStr('action');
 $errors = array();
 
-if (isset($_POST['form_sent']) && $action == 'in')
+if ($request->isPost('form_sent') && $action === 'in')
 {
 	flux_hook('login_before_validation');
 
-	$form_username = pun_trim($_POST['req_username']);
-	$form_password = pun_trim($_POST['req_password']);
-	$save_pass = isset($_POST['save_pass']);
+	$form_username = trim($request->postStr('req_username'));
+	$form_password = trim($request->postStr('req_password'));
+	$save_pass = $request->isPost('save_pass');
 
 	$username_sql = in_array($container->getParameter('DB_TYPE'), ['mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb']) ? 'username=\''.$db->escape($form_username).'\'' : 'LOWER(username)=LOWER(\''.$db->escape($form_username).'\')';
 
@@ -106,16 +108,16 @@ if (isset($_POST['form_sent']) && $action == 'in')
 		set_tracked_topics(null);
 
 		// Try to determine if the data in redirect_url is valid (if not, we redirect to index.php after login)
-		$redirect_url = validate_redirect($_POST['redirect_url'], 'index.php');
+		$redirect_url = validate_redirect($reqiest->postStr('redirect_url'), 'index.php');
 
 		redirect(pun_htmlspecialchars($redirect_url), $lang_login['Login redirect']);
 	}
 }
 
 
-else if ($action == 'out')
+else if ($action === 'out')
 {
-	if ($pun_user['is_guest'] || !isset($_GET['id']) || $_GET['id'] != $pun_user['id'])
+	if ($pun_user['is_guest'] || ! $request->isGet('id') || $request->getInt('id') !== $pun_user['id'])
 	{
 		header('Location: index.php');
 		exit;
@@ -136,7 +138,7 @@ else if ($action == 'out')
 }
 
 
-else if ($action == 'forget' || $action == 'forget_2')
+else if ($action === 'forget' || $action === 'forget_2')
 {
 	if (!$pun_user['is_guest'])
 	{
@@ -144,14 +146,14 @@ else if ($action == 'forget' || $action == 'forget_2')
 		exit;
 	}
 
-	if (isset($_POST['form_sent']))
+	if ($request->isPost('form_sent'))
 	{
 		flux_hook('forget_password_before_validation');
 
 		require PUN_ROOT.'include/email.php';
 
 		// Validate the email address
-		$email = strtolower(pun_trim($_POST['req_email']));
+		$email = strtolower(trim($request->postStr('req_email')));
 		if (!is_valid_email($email))
 			$errors[] = $lang_common['Invalid email'];
 
@@ -246,7 +248,7 @@ if (!empty($errors))
 					<legend><?php echo $lang_login['Request pass legend'] ?></legend>
 					<div class="infldset">
 						<input type="hidden" name="form_sent" value="1" />
-						<label class="required"><strong><?php echo $lang_common['Email'] ?> <span><?php echo $lang_common['Required'] ?></span></strong><br /><input id="req_email" type="text" name="req_email" value="<?php if (isset($_POST['req_email'])) echo pun_htmlspecialchars($_POST['req_email']); ?>" size="50" maxlength="80" /><br /></label>
+						<label class="required"><strong><?php echo $lang_common['Email'] ?> <span><?php echo $lang_common['Required'] ?></span></strong><br /><input id="req_email" type="text" name="req_email" value="<?php if ($request->isPost('req_email')) echo pun_htmlspecialchars($request->postStr('req_email', '')); ?>" size="50" maxlength="80" /><br /></label>
 						<p><?php echo $lang_login['Request pass info'] ?></p>
 					</div>
 				</fieldset>
@@ -321,11 +323,11 @@ if (!empty($errors))
 					<div class="infldset">
 						<input type="hidden" name="form_sent" value="1" />
 						<input type="hidden" name="redirect_url" value="<?php echo pun_htmlspecialchars($redirect_url) ?>" />
-						<label class="conl required"><strong><?php echo $lang_common['Username'] ?> <span><?php echo $lang_common['Required'] ?></span></strong><br /><input type="text" name="req_username" value="<?php if (isset($_POST['req_username'])) echo pun_htmlspecialchars($_POST['req_username']); ?>" size="25" maxlength="25" tabindex="1" /><br /></label>
+						<label class="conl required"><strong><?php echo $lang_common['Username'] ?> <span><?php echo $lang_common['Required'] ?></span></strong><br /><input type="text" name="req_username" value="<?php if ($request->isPost('req_username')) echo pun_htmlspecialchars($request->postStr('req_username', '')); ?>" size="25" maxlength="25" tabindex="1" /><br /></label>
 						<label class="conl required"><strong><?php echo $lang_common['Password'] ?> <span><?php echo $lang_common['Required'] ?></span></strong><br /><input type="password" name="req_password" size="25" tabindex="2" /><br /></label>
 
 						<div class="rbox clearb">
-							<label><input type="checkbox" name="save_pass" value="1"<?php if (isset($_POST['save_pass'])) echo ' checked="checked"'; ?> tabindex="3" /><?php echo $lang_login['Remember me'] ?><br /></label>
+							<label><input type="checkbox" name="save_pass" value="1"<?php if ($request->isPost('save_pass')) echo ' checked="checked"'; ?> tabindex="3" /><?php echo $lang_login['Remember me'] ?><br /></label>
 						</div>
 
 						<p class="clearb"><?php echo $lang_login['Login info'] ?></p>

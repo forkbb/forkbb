@@ -74,19 +74,21 @@ if ($pun_user['g_read_board'] == '0')
 	exit($lang_common['No view']);
 }
 
-$action = isset($_GET['action']) ? strtolower($_GET['action']) : 'feed';
+$request = $container->get('Request');
+
+$action = strtolower($request->getStr('action', 'feed'));
 
 // Handle a couple old formats, from FluxBB 1.2
 switch ($action)
 {
 	case 'active':
 		$action = 'feed';
-		$_GET['order'] = 'last_post';
+		$_GET['order'] = 'last_post'; //????
 		break;
 
 	case 'new':
 		$action = 'feed';
-		$_GET['order'] = 'posted';
+		$_GET['order'] = 'posted'; //????
 		break;
 }
 
@@ -280,18 +282,18 @@ if ($action == 'feed')
 	require PUN_ROOT.'include/parser.php';
 
 	// Determine what type of feed to output
-	$type = isset($_GET['type']) ? strtolower($_GET['type']) : 'html';
+	$type = strtolower($request->getStr('type', ''));
 	if (!in_array($type, array('html', 'rss', 'atom', 'xml')))
 		$type = 'html';
 
-	$show = isset($_GET['show']) ? intval($_GET['show']) : 15;
+	$show = $request->getInt('show', 15);
 	if ($show < 1 || $show > 50)
 		$show = 15;
 
 	// Was a topic ID supplied?
-	if (isset($_GET['tid']))
+	if ($request->isGet('tid'))
 	{
-		$tid = intval($_GET['tid']);
+		$tid = $request->getInt('tid', 0);
 
 		// Fetch topic subject
 		$result = $db->query('SELECT t.subject, t.first_post_id FROM '.$db->prefix.'topics AS t LEFT JOIN '.$db->prefix.'forum_perms AS fp ON (fp.forum_id=t.forum_id AND fp.group_id='.$pun_user['g_id'].') WHERE (fp.read_forum IS NULL OR fp.read_forum=1) AND t.moved_to IS NULL AND t.id='.$tid) or error('Unable to fetch topic info', __FILE__, __LINE__, $db->error());
@@ -350,14 +352,16 @@ if ($action == 'feed')
 	}
 	else
 	{
-		$order_posted = isset($_GET['order']) && strtolower($_GET['order']) == 'posted';
+		$order_posted = strtolower($request->getStr('order', '')) === 'posted';
 		$forum_name = '';
 		$forum_sql = '';
 
+
+		$fids = trim($request->getStr('fid'));
 		// Were any forum IDs supplied?
-		if (isset($_GET['fid']) && is_scalar($_GET['fid']) && $_GET['fid'] != '')
+		if (! empty($fids))
 		{
-			$fids = explode(',', pun_trim($_GET['fid']));
+			$fids = explode(',', $fids);
 			$fids = array_map('intval', $fids);
 
 			if (!empty($fids))
@@ -372,10 +376,11 @@ if ($action == 'feed')
 			}
 		}
 
+		$nfids = trim($request->getStr('nfid'));
 		// Any forum IDs to exclude?
-		if (isset($_GET['nfid']) && is_scalar($_GET['nfid']) && $_GET['nfid'] != '')
+		if (! empty($nfids))
 		{
-			$nfids = explode(',', pun_trim($_GET['nfid']));
+			$nfids = explode(',', $nfids);
 			$nfids = array_map('intval', $nfids);
 
 			if (!empty($nfids))
@@ -383,7 +388,7 @@ if ($action == 'feed')
 		}
 
 		// Only attempt to cache if caching is enabled and we have all or a single forum
-		if ($pun_config['o_feed_ttl'] > 0 && ($forum_sql == '' || ($forum_name != '' && !isset($_GET['nfid']))))
+		if ($pun_config['o_feed_ttl'] > 0 && ($forum_sql == '' || ($forum_name != '' && ! $request->isGet('nfid'))))
 			$cache_id = 'feed'.sha1($pun_user['g_id'].'|'.$lang_common['lang_identifier'].'|'.($order_posted ? '1' : '0').($forum_name == '' ? '' : '|'.$fids[0]));
 
 		// Load cached feed

@@ -13,8 +13,9 @@ require PUN_ROOT.'include/poll.php';
 if ($pun_user['g_read_board'] == '0')
 	message($lang_common['No view'], false, '403 Forbidden');
 
+$request = $container->get('Request');
 
-$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$id = $request->getInt('id', 0);
 if ($id < 1)
 	message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -63,7 +64,7 @@ require PUN_ROOT.'lang/'.$pun_user['language'].'/post.php';
 $errors = array();
 
 
-if (isset($_POST['form_sent']))
+if ($request->isPost('form_sent'))
 {
 	// Make sure they got here from the site
 	confirm_referrer('edit.php');
@@ -71,7 +72,7 @@ if (isset($_POST['form_sent']))
 	// If it's a topic it must contain a subject
 	if ($can_edit_subject)
 	{
-		$subject = pun_trim($_POST['req_subject']);
+		$subject = trim($request->postStr('req_subject'));
 
 		if ($pun_config['o_censoring'] == '1')
 			$censored_subject = pun_trim(censor_words($subject));
@@ -92,7 +93,7 @@ if (isset($_POST['form_sent']))
 	}
 
 	// Clean up message from POST
-	$message = pun_linebreaks(pun_trim($_POST['req_message']));
+	$message = pun_linebreaks(pun_trim($request->postStr('req_message')));
 
 	// Here we use strlen() not pun_strlen() as we want to limit the post to PUN_MAX_POSTSIZE bytes, not characters
 	if (pun_strlen($message) > PUN_MAX_POSTSIZE)
@@ -121,8 +122,8 @@ if (isset($_POST['form_sent']))
 		}
 	}
 
-	$hide_smilies = isset($_POST['hide_smilies']) ? '1' : '0';
-	$stick_topic = isset($_POST['stick_topic']) ? '1' : '0';
+	$hide_smilies = $request->isPost('hide_smilies') ? '1' : '0';
+	$stick_topic = $request->isPost('stick_topic') ? '1' : '0';
 	if (!$is_admmod)
 		$stick_topic = $cur_post['sticky'];
 
@@ -130,16 +131,16 @@ if (isset($_POST['form_sent']))
 	$message = strip_bad_multibyte_chars($message);
 
 	// Visman
-	$edit_post = isset($_POST['editpost']) ? '1' : '0';
+	$edit_post = $request->isPost('editpost') ? '1' : '0';
 	if ($pun_user['g_id'] != PUN_ADMIN)
 		$edit_post = $cur_post['edit_post'];
 
-	$stick_fp = isset($_POST['stickfp']) ? '1' : '0';
+	$stick_fp = $request->isPost('stickfp') ? '1' : '0';
 	if (!$is_admmod)
 		$stick_fp = $cur_post['stick_fp'];
 
 	// Did everything go according to plan?
-	if (empty($errors) && !isset($_POST['preview']))
+	if (empty($errors) && ! $request->isPost('preview'))
 	{
 		$is_modified = ($subject != $cur_post['subject'] ||
 										$message != $cur_post['message'] ||
@@ -148,7 +149,7 @@ if (isset($_POST['form_sent']))
 										$stick_fp != $cur_post['stick_fp'] ||
 										$stick_topic != $cur_post['sticky']); // MOD warnings - Visman
 
-		$edited_sql = (!isset($_POST['silent']) || !$is_admmod) ? ', edited='.time().', edited_by=\''.$db->escape($pun_user['username']).'\'' : '';
+		$edited_sql = (! $request->isPost('silent') || ! $is_admmod) ? ', edited='.time().', edited_by=\''.$db->escape($pun_user['username']).'\'' : '';
 		$edited_sql.= ', edit_post='.$edit_post; // Visman
 
 		require PUN_ROOT.'include/search_idx.php';
@@ -175,14 +176,14 @@ if (isset($_POST['form_sent']))
 
 		if ($is_admmod)
 		{
-			$warning = pun_linebreaks(pun_trim($_POST['warning']));
+			$warning = pun_linebreaks(pun_trim($request->postStr('warning')));
 			if ($warning != $cur_post['warning'])
 			{
 				$db->query('DELETE FROM '.$db->prefix.'warnings WHERE id='.$id) or error('Unable to remove warning', __FILE__, __LINE__, $db->error());
 				$sql_warm = '';
-				if (strlen($_POST['warning']) > 0 )
+				if (strlen($warning) > 0 )
 				{
-					$db->query('INSERT INTO '.$db->prefix.'warnings (id, poster, poster_id, posted, message) VALUES('.$id.', \''.$db->escape($pun_user['username']).'\', '.$pun_user['id'].', '.time().', \''.$db->escape($_POST['warning']).'\')') or error('Unable to insert warning', __FILE__, __LINE__, $db->error());
+					$db->query('INSERT INTO '.$db->prefix.'warnings (id, poster, poster_id, posted, message) VALUES('.$id.', \''.$db->escape($pun_user['username']).'\', '.$pun_user['id'].', '.time().', \''.$db->escape($warning).'\')') or error('Unable to insert warning', __FILE__, __LINE__, $db->error());
 					$sql_warm = ', warning_flag=1';
 				}
 				$result = $db->query('SELECT COUNT(p.id) FROM '.$db->prefix.'posts AS p INNER JOIN '.$db->prefix.'warnings AS w ON w.id=p.id WHERE p.poster_id='.$cur_post['poster_id']) or error('Unable to sum for posts', __FILE__, __LINE__, $db->error());
@@ -255,7 +256,7 @@ if (!empty($errors))
 <?php
 
 }
-else if (isset($_POST['preview']))
+else if ($request->isPost('preview'))
 {
 	require_once PUN_ROOT.'include/parser.php';
 	$preview_message = parse_message($message, $hide_smilies);
@@ -293,9 +294,9 @@ else if (isset($_POST['preview']))
 					<input type="hidden" name="csrf_hash" value="<?php echo csrf_hash() ?>" />
 					<div class="infldset txtarea">
 <?php if ($can_edit_subject): ?>						<label class="required"><strong><?php echo $lang_common['Subject'] ?> <span><?php echo $lang_common['Required'] ?></span></strong><br />
-						<input class="longinput" type="text" name="req_subject" size="80" maxlength="70" tabindex="<?php echo $cur_index++ ?>" value="<?php echo pun_htmlspecialchars(isset($_POST['req_subject']) ? $_POST['req_subject'] : $cur_post['subject']) ?>" /><br /></label>
+						<input class="longinput" type="text" name="req_subject" size="80" maxlength="70" tabindex="<?php echo $cur_index++ ?>" value="<?php echo pun_htmlspecialchars($request->postStr('req_subject', $cur_post['subject'])) ?>" /><br /></label>
 <?php endif; ?>						<label class="required"><strong><?php echo $lang_common['Message'] ?> <span><?php echo $lang_common['Required'] ?></span></strong><br />
-						<textarea name="req_message" rows="20" cols="95" tabindex="<?php echo $cur_index++ ?>"><?php echo pun_htmlspecialchars(isset($_POST['req_message']) ? $message : $cur_post['message']) ?></textarea><br /></label>
+						<textarea name="req_message" rows="20" cols="95" tabindex="<?php echo $cur_index++ ?>"><?php echo pun_htmlspecialchars($request->isPost('req_message') ? $message : $cur_post['message']) ?></textarea><br /></label>
 						<ul class="bblinks">
 							<li><span><a href="help.php#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a> <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></span></li>
 							<li><span><a href="help.php#url" onclick="window.open(this.href); return false;"><?php echo $lang_common['url tag'] ?></a> <?php echo ($pun_config['p_message_bbcode'] == '1' && $pun_user['g_post_links'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></span></li>
@@ -303,7 +304,7 @@ else if (isset($_POST['preview']))
 							<li><span><a href="help.php#smilies" onclick="window.open(this.href); return false;"><?php echo $lang_common['Smilies'] ?></a> <?php echo ($pun_config['o_smilies'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></span></li>
 						</ul>
 <?php if ($is_admmod): ?>						<label><strong><?php echo $lang_common['Moderator'] ?></strong><br />
-						<input class="longinput" type="text" name="warning" size="80" maxlength="5000" tabindex="<?php echo $cur_index++ ?>" value="<?php echo pun_htmlspecialchars(isset($_POST['warning']) ? $_POST['warning'] : $cur_post['warning']) ?>" /><br /></label>
+						<input class="longinput" type="text" name="warning" size="80" maxlength="5000" tabindex="<?php echo $cur_index++ ?>" value="<?php echo pun_htmlspecialchars($request->postStr('warning', $cur_post['warning'])) ?>" /><br /></label>
 <?php elseif ($cur_post['warning'] != ''): ?>
 						<div class="postwarn">
 							<?php echo pun_htmlspecialchars($cur_post['warning'])."\n" ?>
@@ -316,7 +317,7 @@ else if (isset($_POST['preview']))
 $checkboxes = array();
 if ($can_edit_subject && $is_admmod)
 {
-	if (isset($_POST['stick_topic']) || !isset($_POST['form_sent']) && $cur_post['sticky'] == '1')
+	if ($request->isPost('stick_topic') || ! $request->isPost('form_sent') && $cur_post['sticky'] == '1')
 		$checkboxes[] = '<label><input type="checkbox" name="stick_topic" value="1" checked="checked" tabindex="'.($cur_index++).'" />'.$lang_common['Stick topic'].'<br /></label>';
 	else
 		$checkboxes[] = '<label><input type="checkbox" name="stick_topic" value="1" tabindex="'.($cur_index++).'" />'.$lang_common['Stick topic'].'<br /></label>';
@@ -324,7 +325,7 @@ if ($can_edit_subject && $is_admmod)
 
 if ($pun_config['o_smilies'] == '1')
 {
-	if (isset($_POST['hide_smilies']) || !isset($_POST['form_sent']) && $cur_post['hide_smilies'] == '1')
+	if ($request->isPost('hide_smilies') || ! $request->isPost('form_sent') && $cur_post['hide_smilies'] == '1')
 		$checkboxes[] = '<label><input type="checkbox" name="hide_smilies" value="1" checked="checked" tabindex="'.($cur_index++).'" />'.$lang_post['Hide smilies'].'<br /></label>';
 	else
 		$checkboxes[] = '<label><input type="checkbox" name="hide_smilies" value="1" tabindex="'.($cur_index++).'" />'.$lang_post['Hide smilies'].'<br /></label>';
@@ -332,14 +333,14 @@ if ($pun_config['o_smilies'] == '1')
 
 if ($is_admmod)
 {
-	if (isset($_POST['silent']) || !isset($_POST['form_sent']))
+	if ($request->isPost('silent') || ! $request->isPost('form_sent'))
 		$checkboxes[] = '<label><input type="checkbox" name="silent" value="1" tabindex="'.($cur_index++).'" checked="checked" />'.$lang_post['Silent edit'].'<br /></label>';
 	else
 		$checkboxes[] = '<label><input type="checkbox" name="silent" value="1" tabindex="'.($cur_index++).'" />'.$lang_post['Silent edit'].'<br /></label>';
 	// StickFP - Visman
 	if ($can_edit_subject)
 	{
-		if (isset($_POST['stickfp']) || !isset($_POST['form_sent']) && $cur_post['stick_fp'] == '1')
+		if ($request->isPost('stickfp') || ! $request->isPost('form_sent') && $cur_post['stick_fp'] == '1')
 			$checkboxes[] = '<label><input type="checkbox" name="stickfp" value="1" tabindex="'.($cur_index++).'" checked="checked" />'.$lang_post['Stick first post'].'<br /></label>';
 		else
 			$checkboxes[] = '<label><input type="checkbox" name="stickfp" value="1" tabindex="'.($cur_index++).'" />'.$lang_post['Stick first post'].'<br /></label>';
@@ -349,7 +350,7 @@ if ($is_admmod)
 // мод ограничения времени редактирвания - Visman
 if ($pun_user['g_id'] == PUN_ADMIN)
 {
-	if (isset($_POST['editpost']) || !isset($_POST['form_sent']) && $cur_post['edit_post'] == '1')
+	if ($request->isPost('editpost') || ! $request->isPost('form_sent') && $cur_post['edit_post'] == '1')
 		$checkboxes[] = '<label><input type="checkbox" name="editpost" value="1" tabindex="'.($cur_index++).'" checked="checked" />'.$lang_post['EditPost edit'].'<br /></label>';
 	else
 		$checkboxes[] = '<label><input type="checkbox" name="editpost" value="1" tabindex="'.($cur_index++).'" />'.$lang_post['EditPost edit'].'<br /></label>';

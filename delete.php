@@ -13,8 +13,9 @@ require PUN_ROOT.'include/common.php';
 if ($pun_user['g_read_board'] == '0')
 	message($lang_common['No view'], false, '403 Forbidden');
 
+$request = $container->get('Request');
 
-$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$id = $request->getInt('id', 0);
 if ($id < 1)
 	message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -57,7 +58,7 @@ if (!$is_admmod && $pun_user['g_deledit_interval'] != 0 && (time()-$cur_post['po
 require PUN_ROOT.'lang/'.$pun_user['language'].'/delete.php';
 
 
-if (isset($_POST['delete']))
+if ($request->isPost('delete'))
 {
 	// Make sure they got here from the site
 	confirm_referrer('delete.php');
