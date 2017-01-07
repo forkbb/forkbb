@@ -20,12 +20,14 @@ if ($pun_user['g_id'] != PUN_ADMIN)
 // Load the admin_categories.php language file
 require PUN_ROOT.'lang/'.$admin_language.'/admin_categories.php';
 
+$request = $container->get('Request');
+
 // Add a new category
-if (isset($_POST['add_cat']))
+if ($request->isPost('add_cat'))
 {
 	confirm_referrer('admin_categories.php');
 
-	$new_cat_name = pun_trim($_POST['new_cat_name']);
+	$new_cat_name = trim($request->postStr('new_cat_name'));
 	if ($new_cat_name == '')
 		message($lang_admin_categories['Must enter name message']);
 
@@ -35,15 +37,15 @@ if (isset($_POST['add_cat']))
 }
 
 // Delete a category
-else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
+else if ($request->isPost('del_cat') || $request->isPost('del_cat_comply'))
 {
 	confirm_referrer('admin_categories.php');
 
-	$cat_to_delete = intval($_POST['cat_to_delete']);
+	$cat_to_delete = $request->postInt('cat_to_delete', 0);
 	if ($cat_to_delete < 1)
 		message($lang_common['Bad request'], false, '404 Not Found');
 
-	if (isset($_POST['del_cat_comply'])) // Delete a category with all forums and posts
+	if ($request->isPost('del_cat_comply')) // Delete a category with all forums and posts
 	{
 		@set_time_limit(0);
 
@@ -124,11 +126,11 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 	}
 }
 
-else if (isset($_POST['update'])) // Change position and name of the categories
+else if ($request->isPost('update')) // Change position and name of the categories
 {
 	confirm_referrer('admin_categories.php');
 
-	$categories = $_POST['cat'];
+	$categories = $request->post('cat');
 	if (empty($categories))
 		message($lang_common['Bad request'], false, '404 Not Found');
 
