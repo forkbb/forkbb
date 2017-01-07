@@ -153,7 +153,7 @@ else
 $page_js['f']['collapse'] = 'js/collapse.js';
 $page_js['c'][] = 'if (typeof FluxBB === \'undefined\' || !FluxBB) {var FluxBB = {};}
 FluxBB.vars = {
-	collapse_cookieid: "'.$cookie_name.'_",
+	collapse_cookieid: "'.$container->getParameter('COOKIE_PREFIX').'",
 	collapse_folder: "'.(file_exists(PUN_ROOT.'style/'.$pun_user['style'].'/exp_down.png') ? 'style/'.$pun_user['style'].'/' : 'img/').'"
 };
 FluxBB.collapse.init();';

@@ -247,7 +247,6 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 	global $container;
 
     $db = $container->get('DB');
-    $db_type = $container->getParameter('DB_TYPE');
 
 	$message = utf8_strtolower($message);
 	$subject = utf8_strtolower($subject);
@@ -309,7 +308,7 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 
 		if (!empty($new_words))
 		{
-			switch ($db_type)
+			switch ($container->getParameter('DB_TYPE'))
 			{
 				case 'mysql':
 				case 'mysqli':
@@ -364,9 +363,8 @@ function strip_search_index($post_ids)
 	global $container;
 
     $db = $container->get('DB');
-    $db_type = $container->getParameter('DB_TYPE');
 
-	switch ($db_type)
+	switch ($container->getParameter('DB_TYPE'))
 	{
 		case 'mysql':
 		case 'mysqli':

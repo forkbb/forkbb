@@ -64,10 +64,6 @@ require PUN_ROOT . 'app/bootstrap.php';
 // The addon manager is responsible for storing the hook listeners and communicating with the addons
 $flux_addons = new flux_addon_manager();
 
-// If a cookie name is not specified in config.php, we use the default (pun_cookie)
-if (empty($cookie_name))
-	$cookie_name = 'pun_cookie';
-
 // If the cache directory is not specified, we use the default setting
 if (!defined('FORUM_CACHE_DIR'))
 	define('FORUM_CACHE_DIR', PUN_ROOT.'cache/');
@@ -79,8 +75,7 @@ define('PUN_MOD', 2);
 define('PUN_GUEST', 3);
 define('PUN_MEMBER', 4);
 
-// Load DB abstraction layer and connect
-require PUN_ROOT.'include/dblayer/common_db.php';
+$db = $container->get('DB');
 
 // Start a transaction
 $db->start_transaction();

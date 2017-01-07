@@ -789,7 +789,7 @@ else if (isset($_GET['find_user']))
 		$conditions[] = 'u.registered<'.$registered_before;
 	}
 
-	$like_command = ($db_type == 'pgsql') ? 'ILIKE' : 'LIKE';
+	$like_command = ($container->getParameter('DB_TYPE') == 'pgsql') ? 'ILIKE' : 'LIKE';
 	foreach ($form as $key => $input)
 	{
 		if ($input != '' && in_array($key, array('username', 'email', 'title', 'realname', 'gender', 'url', 'jabber', 'icq', 'msn', 'aim', 'yahoo', 'location', 'signature', 'admin_note'))) // мод пола - Visman

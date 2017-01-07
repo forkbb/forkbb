@@ -361,7 +361,7 @@ else if (isset($_GET['find_ban']))
 		$conditions[] = 'b.expire<'.$expire_before;
 	}
 
-	$like_command = ($db_type == 'pgsql') ? 'ILIKE' : 'LIKE';
+	$like_command = ($container->getParameter('DB_TYPE') == 'pgsql') ? 'ILIKE' : 'LIKE';
 	foreach ($form as $key => $input)
 	{
 		if ($input != '' && in_array($key, array('username', 'ip', 'email', 'message')))

@@ -146,7 +146,7 @@ else if ($footer_style == 'viewtopic')
 <?php
 
 // End the transaction
-$db->end_transaction();
+$container->get('DB')->end_transaction();
 
 // Display debug info (if enabled/defined)
 if (defined('PUN_DEBUG'))
@@ -155,7 +155,7 @@ if (defined('PUN_DEBUG'))
 
 	// Calculate script generation time
 	$time_diff = sprintf('%.3f', microtime(true) - (empty($_SERVER['REQUEST_TIME_FLOAT']) ? $pun_start : $_SERVER['REQUEST_TIME_FLOAT']));
-	echo sprintf($lang_common['Querytime'], $time_diff, $db->get_num_queries());
+	echo sprintf($lang_common['Querytime'], $time_diff, $container->get('DB')->get_num_queries());
 
 	if (function_exists('memory_get_usage'))
 	{
@@ -178,7 +178,7 @@ ob_end_clean();
 // END SUBST - <pun_footer>
 
 // Close the db connection (and free up any result data)
-$db->close();
+$container->get('DB')->close();
 
 if (isset($page_js))
 	$tpl_main = str_replace('<!-- forum_javascript -->', generation_js($page_js), $tpl_main);

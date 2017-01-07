@@ -84,7 +84,9 @@ function generate_pmsn_menu($page = '')
 
 function pmsn_user_update($user, $flag = false)
 {
-	global $db, $db_type;
+	global $container;
+
+    $db = $container->get('DB');
 
 	$mkol = $mnew = 0;
 	$result = $db->query('SELECT id, starter_id, topic_st, topic_to FROM '.$db->prefix.'pms_new_topics WHERE (starter_id='.$user.' AND topic_st<2) OR (to_id='.$user.' AND topic_to<2)') or error('Unable to fetch pms topics IDs', __FILE__, __LINE__, $db->error());
@@ -104,7 +106,9 @@ function pmsn_user_update($user, $flag = false)
 
 function pmsn_user_delete($user, $mflag, $topics = array())
 {
-	global $db, $db_type;
+	global $container;
+
+    $db = $container->get('DB');
 
 	$user_up = array($user);
 	$tf_st = $tf_to = $tm_st = $tm_to = array();

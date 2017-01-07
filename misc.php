@@ -56,7 +56,7 @@ else if ($action == 'lang')
 
 	if ($pun_user['is_guest'])
 	{
-		forum_setcookie($cookie_name.'_glang', $language, time()+ 31536000);
+		forum_setcookie($container->getParameter('COOKIE_PREFIX') . '_glang', $language, time()+ 31536000);
 	}
 	else
 		$db->query('UPDATE '.$db->prefix.'users SET language="'.$db->escape($language).'" WHERE id='.$pun_user['id']) or error('Unable to update profile', __FILE__, __LINE__, $db->error());

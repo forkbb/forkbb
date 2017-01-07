@@ -16,7 +16,9 @@ if (!defined('PUN'))
 //
 function generate_config_cache()
 {
-	global $db;
+	global $container;
+
+    $db = $container->get('DB');
 
 	// Get the forum config from the DB
 	$result = $db->query('SELECT * FROM '.$db->prefix.'config', true) or error('Unable to fetch forum config', __FILE__, __LINE__, $db->error());
@@ -36,7 +38,9 @@ function generate_config_cache()
 //
 function generate_bans_cache()
 {
-	global $db;
+	global $container;
+
+    $db = $container->get('DB');
 
 	// Get the ban list from the DB
 	$result = $db->query('SELECT * FROM '.$db->prefix.'bans', true) or error('Unable to fetch ban list', __FILE__, __LINE__, $db->error());
@@ -56,7 +60,9 @@ function generate_bans_cache()
 //
 function generate_quickjump_cache($group_id = false)
 {
-	global $db, $lang_common;
+	global $container, $lang_common;
+
+    $db = $container->get('DB');
 
 	$groups = array();
 
@@ -142,7 +148,9 @@ function generate_quickjump_cache($group_id = false)
 //
 function generate_censoring_cache()
 {
-	global $db;
+	global $container;
+
+    $db = $container->get('DB');
 
 	$result = $db->query('SELECT search_for, replace_with FROM '.$db->prefix.'censoring') or error('Unable to fetch censoring list', __FILE__, __LINE__, $db->error());
 	$num_words = $db->num_rows($result);
@@ -193,7 +201,9 @@ function generate_stopwords_cache()
 //
 function generate_users_info_cache()
 {
-	global $db;
+	global $container;
+
+    $db = $container->get('DB');
 
 	$stats = array();
 
@@ -214,7 +224,9 @@ function generate_users_info_cache()
 //
 function generate_admins_cache()
 {
-	global $db;
+	global $container;
+
+    $db = $container->get('DB');
 
 	// Get admins from the DB
 	$result = $db->query('SELECT id FROM '.$db->prefix.'users WHERE group_id='.PUN_ADMIN) or error('Unable to fetch users info', __FILE__, __LINE__, $db->error());
@@ -273,7 +285,9 @@ function clear_feed_cache()
 //
 function generate_smiley_cache()
 {
-	global $db;
+	global $container;
+
+    $db = $container->get('DB');
 
 	$str = '<?php'."\n".'$smilies = array('."\n";
 
@@ -324,7 +338,9 @@ function generate_subforums_asc(&$list, $tree, $node = array(0))
 
 function generate_subforums_cache($group_id = false)
 {
-	global $db;
+	global $container;
+
+    $db = $container->get('DB');
 
 	$groups = array();
 

@@ -32,7 +32,7 @@ $sort_dir = isset($_GET['sort_dir']) && $_GET['sort_dir'] == 'DESC' ? 'DESC' : '
 
 // Create any SQL for the WHERE clause
 $where_sql = array();
-$like_command = ($db_type == 'pgsql') ? 'ILIKE' : 'LIKE';
+$like_command = ($container->getParameter('DB_TYPE') == 'pgsql') ? 'ILIKE' : 'LIKE';
 
 if ($username != '')
 	$where_sql[] = 'u.username '.$like_command.' \''.$db->escape(str_replace('*', '%', $username)).'\'';

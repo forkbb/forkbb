@@ -45,7 +45,7 @@ if ($action == 'rebuild')
 		$db->truncate_table('search_words') or error('Unable to empty search index words table', __FILE__, __LINE__, $db->error());
 
 		// Reset the sequence for the search words (not needed for SQLite)
-		switch ($db_type)
+		switch ($container->getParameter('DB_TYPE'))
 		{
 			case 'mysql':
 			case 'mysqli':

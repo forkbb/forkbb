@@ -12,7 +12,11 @@
 //
 function check_cookie(&$pun_user)
 {
-	global $db, $db_type, $pun_config, $cookie_name, $cookie_seed;
+	global $container, $pun_config;
+
+    $db = $container->get('DB');
+    $cookie_name = $container->getParameter('COOKIE_PREFIX');
+    $cookie_seed = $container->getParameter('COOKIE_SALT');
 
 	$now = time();
 
@@ -93,7 +97,7 @@ function check_cookie(&$pun_user)
 				$pun_user['logged'] = $now;
 
 				// With MySQL/MySQLi/SQLite, REPLACE INTO avoids a user having two rows in the online table
-				switch ($db_type)
+				switch ($container->getParameter('DB_TYPE'))
 				{
 					case 'mysql':
 					case 'mysqli':
@@ -160,7 +164,9 @@ function escape_cdata($str)
 //
 function authenticate_user($user, $password, $password_is_hash = false)
 {
-	global $db, $pun_user;
+	global $container, $pun_user;
+
+    $db = $container->get('DB');
 
 	// Check if there's a user matching $user and $password
 	$result = $db->query('SELECT u.*, g.*, o.logged, o.idle FROM '.$db->prefix.'users AS u INNER JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id LEFT JOIN '.$db->prefix.'online AS o ON o.user_id=u.id WHERE '.(is_int($user) ? 'u.id='.intval($user) : 'u.username=\''.$db->escape($user).'\'')) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
@@ -270,7 +276,11 @@ function get_admin_ids()
 //
 function set_default_user()
 {
-	global $db, $db_type, $pun_user, $pun_config, $cookie_name, $languages;
+	global $container, $pun_user, $pun_config, $languages;
+
+    $db = $container->get('DB');
+    $cookie_name = $container->getParameter('COOKIE_PREFIX');
+
 
 	$remote_addr = get_remote_address();
 	
@@ -293,7 +303,7 @@ function set_default_user()
 		$pun_user['logged'] = time();
 
 		// With MySQL/MySQLi/SQLite, REPLACE INTO avoids a user having two rows in the online table
-		switch ($db_type)
+		switch ($container->getParameter('DB_TYPE'))
 		{
 			case 'mysql':
 			case 'mysqli':
@@ -374,7 +384,10 @@ function forum_hmac($data, $key, $raw_output = false)
 //
 function pun_setcookie($user_id, $password_hash, $expire)
 {
-	global $cookie_name, $cookie_seed;
+	global $container;
+
+    $cookie_name = $container->getParameter('COOKIE_PREFIX');
+    $cookie_seed = $container->getParameter('COOKIE_SALT');
 
 	forum_setcookie($cookie_name, $user_id.'|'.forum_hmac($password_hash, $cookie_seed.'_password_hash').'|'.$expire.'|'.forum_hmac($user_id.'|'.$expire, $cookie_seed.'_cookie_hash'), $expire);
 }
@@ -385,7 +398,11 @@ function pun_setcookie($user_id, $password_hash, $expire)
 //
 function forum_setcookie($name, $value, $expire)
 {
-	global $cookie_path, $cookie_domain, $cookie_secure, $pun_config;
+	global $container, $pun_config;
+
+    $cookie_path = $container->getParameter('COOKIE_PATH');
+    $cookie_domain = $container->getParameter('COOKIE_DOMAIN');
+    $cookie_secure = $container->getParameter('COOKIE_SECURE');
 
 	if ($expire - time() - $pun_config['o_timeout_visit'] < 1)
 		$expire = 0;
@@ -405,7 +422,9 @@ function forum_setcookie($name, $value, $expire)
 //
 function check_bans()
 {
-	global $db, $pun_config, $lang_common, $pun_user, $pun_bans;
+	global $container, $pun_config, $lang_common, $pun_user, $pun_bans;
+
+    $db = $container->get('DB');
 
 	// Admins and moderators aren't affected
 	if ($pun_user['is_admmod'] || !$pun_bans)
@@ -476,7 +495,9 @@ function check_bans()
 //
 function check_username($username, $exclude_id = null)
 {
-	global $db, $pun_config, $errors, $lang_prof_reg, $lang_register, $lang_common, $pun_bans;
+	global $container, $pun_config, $errors, $lang_prof_reg, $lang_register, $lang_common, $pun_bans;
+
+    $db = $container->get('DB');
 
 	// Include UTF-8 function
 	require_once PUN_ROOT.'include/utf8/strcasecmp.php';
@@ -532,7 +553,9 @@ function check_username($username, $exclude_id = null)
 // ф-ия переписана - Visman
 function update_users_online($tid = 0, &$witt_us = array())
 {
-	global $db, $pun_config, $onl_u, $onl_g, $onl_s;
+	global $container, $pun_config, $onl_u, $onl_g, $onl_s;
+
+    $db = $container->get('DB');
 
 	$now = time();
 	$nn1 = $now-$pun_config['o_timeout_online'];
@@ -685,7 +708,9 @@ function generate_page_title($page_title, $p = null)
 //
 function set_tracked_topics($tracked_topics)
 {
-	global $cookie_name, $cookie_path, $cookie_domain, $cookie_secure, $pun_config;
+	global $container, $pun_config;
+
+    $cookie_name = $container->getParameter('COOKIE_PREFIX');
 
 	$cookie_data = '';
 	if (!empty($tracked_topics))
@@ -718,7 +743,9 @@ function set_tracked_topics($tracked_topics)
 //
 function get_tracked_topics()
 {
-	global $cookie_name;
+	global $container;
+
+    $cookie_name = $container->getParameter('COOKIE_PREFIX');
 
 	$cookie_data = isset($_COOKIE[$cookie_name.'_track']) ? $_COOKIE[$cookie_name.'_track'] : false;
 	if (!$cookie_data)
@@ -759,7 +786,9 @@ function flux_hook($name)
 //
 function update_forum($forum_id)
 {
-	global $db;
+	global $container;
+
+    $db = $container->get('DB');
 
 	$result = $db->query('SELECT COUNT(id), SUM(num_replies) FROM '.$db->prefix.'topics WHERE forum_id='.$forum_id) or error('Unable to fetch forum topic count', __FILE__, __LINE__, $db->error());
 	list($num_topics, $num_posts) = $db->fetch_row($result);
@@ -801,7 +830,9 @@ function delete_avatar($user_id)
 //
 function delete_topic($topic_id, $flag_f = 1) // not sum - Visman
 {
-	global $db;
+	global $container;
+
+    $db = $container->get('DB');
 
 	// Delete the topic and any redirect topics
 	$db->query('DELETE FROM '.$db->prefix.'topics WHERE id='.$topic_id.' OR moved_to='.$topic_id) or error('Unable to delete topic', __FILE__, __LINE__, $db->error());
@@ -848,7 +879,9 @@ function delete_topic($topic_id, $flag_f = 1) // not sum - Visman
 //
 function delete_post($post_id, $topic_id)
 {
-	global $db;
+	global $container;
+
+    $db = $container->get('DB');
 
 	$result = $db->query('SELECT id, poster, posted FROM '.$db->prefix.'posts WHERE topic_id='.$topic_id.' ORDER BY id DESC LIMIT 2') or error('Unable to fetch post info', __FILE__, __LINE__, $db->error());
 	list($last_id, ,) = $db->fetch_row($result);
@@ -901,7 +934,6 @@ function forum_clear_cache()
 //
 function censor_words($text)
 {
-	global $db;
 	static $search_for, $replace_with;
 
 	// If not already built in a previous call, build an array of censor words and their replacement text
@@ -1031,7 +1063,7 @@ function paginate($num_pages, $cur_page, $link)
 //
 function message($message, $no_back_link = false, $http_status = null)
 {
-	global $db, $lang_common, $pun_config, $pun_start, $tpl_main, $pun_user, $page_js;
+	global $container, $lang_common, $pun_config, $pun_start, $tpl_main, $pun_user, $page_js;
 
 	witt_query(); // MOD Кто в этой теме - Visman
 
@@ -1420,7 +1452,7 @@ function array_insert(&$input, $offset, $element, $key = null)
 //
 function maintenance_message()
 {
-	global $db, $pun_config, $lang_common, $pun_user;
+	global $container, $pun_config, $lang_common, $pun_user;
 
 	// Send no-cache headers
 	header('Expires: Thu, 21 Jul 1977 07:30:00 GMT'); // When yours truly first set eyes on this world! :)
@@ -1518,11 +1550,11 @@ function maintenance_message()
 
 
 	// End the transaction
-	$db->end_transaction();
+	$container->get('DB')->end_transaction();
 
 
 	// Close the db connection (and free up any result data)
-	$db->close();
+	$container->get('DB')->close();
 
 	exit($tpl_maint);
 }
@@ -1533,7 +1565,7 @@ function maintenance_message()
 //
 function redirect($destination_url, $message)
 {
-	global $db, $pun_config, $lang_common, $pun_user;
+	global $container, $pun_config, $lang_common, $pun_user;
 
 	// Prefix with base_url (unless there's already a valid URI)
 	if (strpos($destination_url, 'http://') !== 0 && strpos($destination_url, 'https://') !== 0 && strpos($destination_url, '/') !== 0)
@@ -1545,8 +1577,8 @@ function redirect($destination_url, $message)
 	// If the delay is 0 seconds, we might as well skip the redirect all together
 	if ($pun_config['o_redirect_delay'] == '0')
 	{
-		$db->end_transaction();
-		$db->close();
+		$container->get('DB')->end_transaction();
+		$container->get('DB')->close();
 
 		header('Location: '.str_replace('&amp;', '&', $destination_url));
 		exit;
@@ -1647,7 +1679,7 @@ function redirect($destination_url, $message)
 	ob_start();
 
 	// End the transaction
-	$db->end_transaction();
+	$container->get('DB')->end_transaction();
 
 	// Display executed queries (if enabled)
 	if (defined('PUN_SHOW_QUERIES'))
@@ -1660,7 +1692,7 @@ function redirect($destination_url, $message)
 
 
 	// Close the db connection (and free up any result data)
-	$db->close();
+	$container->get('DB')->close();
 
 	exit($tpl_redir);
 }
@@ -2251,10 +2283,10 @@ function forum_is_writable($path)
 //
 function display_saved_queries()
 {
-	global $db, $lang_common;
+	global $container, $lang_common;
 
 	// Get the queries so that we can print them out
-	$saved_queries = $db->get_saved_queries();
+	$saved_queries = $container->get('DB')->get_saved_queries();
 
 ?>
 
@@ -2326,9 +2358,11 @@ function dump()
 //
 function generation_js($arr)
 {
+    global $container;
+
 	$res = '';
 	if (!empty($arr['j']))
-		$res.= '<script type="text/javascript" src="'.FORUM_AJAX_JQUERY.'"></script>'."\n";
+		$res.= '<script type="text/javascript" src="'.$container->getParameter('JQUERY_LINK').'"></script>'."\n";
 	if (!empty($arr['f']))
 		$res.= '<script type="text/javascript" src="'.implode('"></script>'."\n".'<script type="text/javascript" src="', $arr['f']).'"></script>'."\n";
 	if (!empty($arr['c']))
@@ -2344,8 +2378,10 @@ function generation_js($arr)
 //
 function witt_query($var = NULL)
 {
-	global $db;
+	global $container;
 	static $query;
+
+    $db = $container->get('DB');
 
 	if (!defined('WITT_ENABLE'))
 	{

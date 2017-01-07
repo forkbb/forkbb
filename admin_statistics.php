@@ -66,7 +66,7 @@ $num_online = $db->result($result);
 
 
 // Collect some additional info about MySQL
-if ($db_type == 'mysql' || $db_type == 'mysqli' || $db_type == 'mysql_innodb' || $db_type == 'mysqli_innodb')
+if (in_array($container->getParameter('DB_TYPE'), ['mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb']))
 {
 	// Calculate total db size/row count
 	$result = $db->query('SHOW TABLE STATUS LIKE \''.$db->prefix.'%\'') or error('Unable to fetch table status', __FILE__, __LINE__, $db->error());

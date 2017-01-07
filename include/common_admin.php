@@ -134,7 +134,9 @@ function generate_admin_menu($page = '')
 //
 function prune($forum_id, $prune_sticky, $prune_date)
 {
-	global $db;
+	global $container;
+
+    $db = $container->get('DB');
 
 	$extra_sql = ($prune_date != -1) ? ' AND last_post<'.$prune_date : '';
 

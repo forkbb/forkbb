@@ -16,6 +16,7 @@ return [
     'COOKIE_SALT'   => '_COOKIE_SALT_',
     'ALGO_FOR_HMAC' => 'sha1',
     'SALT1' => '',
+    'JQUERY_LINK' => '//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js',
     'shared' => [
         'Request' => \ForkBB\Core\Request::class,
         'DBLoader' => [

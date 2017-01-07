@@ -664,6 +664,7 @@ switch ($stage)
         if (! isset($pun_config['i_fork_revision']) || $pun_config['i_fork_revision'] < 1) {
             if (! isset($pun_config['i_fork_revision'])) {
                 $db->query('INSERT INTO '.$db->prefix.'config (conf_name, conf_value) VALUES (\'i_fork_revision\', \'0\')') or error('Unable to insert config value \'i_fork_revision\'', __FILE__, __LINE__, $db->error());
+                $pun_config['i_fork_revision'] = 1;
             }
             if (! isset($pun_config['s_fork_version'])) {
                 $db->query('INSERT INTO '.$db->prefix.'config (conf_name, conf_value) VALUES (\'s_fork_version\', \'0\')') or error('Unable to insert config value \'s_fork_version\'', __FILE__, __LINE__, $db->error());

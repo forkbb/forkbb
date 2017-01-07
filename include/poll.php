@@ -56,7 +56,9 @@ function poll_bad()
 // может ли голосовать юзер ****************************************************
 function poll_can_vote($tid, $uid)
 {
-	global $db, $cur_topic;
+	global $container, $cur_topic;
+
+    $db = $container->get('DB');
 
 	if (is_null($uid) || $uid < 2) return false;
 	if (isset($cur_topic['closed']) && $cur_topic['closed'] != '0') return false;
@@ -68,7 +70,9 @@ function poll_can_vote($tid, $uid)
 // получение информации по опросу **********************************************
 function poll_info($tid, $uid = null)
 {
-	global $db;
+	global $container;
+
+    $db = $container->get('DB');
 
 	if ($tid == 0) return null;
 	
@@ -410,7 +414,9 @@ function poll_cache_delete($tid)
 // удаление опроса *************************************************************
 function poll_delete($tid, $flag = false)
 {
-	global $db;
+	global $container;
+
+    $db = $container->get('DB');
 
 	$db->query('DELETE FROM '.$db->prefix.'poll WHERE tid='.$tid) or error('Unable to remove poll', __FILE__, __LINE__, $db->error());
 	$db->query('DELETE FROM '.$db->prefix.'poll_voted WHERE tid='.$tid) or error('Unable to remove poll_voted', __FILE__, __LINE__, $db->error());
@@ -423,7 +429,9 @@ function poll_delete($tid, $flag = false)
 // сохраняем опрос *************************************************************
 function poll_save($tid)
 {
-	global $db, $pun_config;
+	global $container, $pun_config;
+
+    $db = $container->get('DB');
 
 	if (poll_bad() || poll_noedit($tid)) return;
 
@@ -595,7 +603,7 @@ function poll_display_post($tid, $uid)
 function poll_display($tid, $uid, $info, $top, $prev = false)
 {
 
-	global $db, $lang_poll, $pun_config, $lang_common;
+	global $lang_poll, $pun_config, $lang_common;
 
 	if (is_null($info)) return;
 	
@@ -727,7 +735,9 @@ function poll_display($tid, $uid, $info, $top, $prev = false)
 // голосуем ********************************************************************
 function poll_vote($tid, $uid)
 {
-	global $db;
+	global $container;
+
+    $db = $container->get('DB');
 
 	if (poll_bad() || !poll_can_vote($tid, $uid)) poll_mess('Err1');
 
