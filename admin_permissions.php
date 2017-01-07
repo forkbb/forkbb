@@ -20,11 +20,13 @@ if ($pun_user['g_id'] != PUN_ADMIN)
 // Load the admin_permissions.php language file
 require PUN_ROOT.'lang/'.$admin_language.'/admin_permissions.php';
 
-if (isset($_POST['form_sent']))
+$request = $container->get('Request');
+
+if ($request->isPost('form_sent'))
 {
 	confirm_referrer('admin_permissions.php');
 
-	$form = array_map('intval', $_POST['form']);
+	$form = array_map('intval', $request->post('form', array()));
 
 	foreach ($form as $key => $input)
 	{
