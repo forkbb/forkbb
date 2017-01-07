@@ -27,19 +27,21 @@ $groups = array();
 while ($cur_group = $db->fetch_assoc($result))
 	$groups[$cur_group['g_id']] = $cur_group;
 
+$request = $container->get('Request');
+
 // Add/edit a group (stage 1)
-if (isset($_POST['add_group']) || isset($_GET['edit_group']))
+if ($request->isPost('add_group') || $request->isGet('edit_group'))
 {
-	if (isset($_POST['add_group']))
+	if ($request->isPost('add_group'))
 	{
-		$base_group = intval($_POST['base_group']);
+		$base_group = $request->postInt('base_group');
 		$group = $groups[$base_group];
 
 		$mode = 'add';
 	}
 	else // We are editing a group
 	{
-		$group_id = intval($_GET['edit_group']);
+		$group_id = $request->getInt('edit_group', 0);
 		if ($group_id < 1 || !isset($groups[$group_id]))
 			message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -300,54 +302,55 @@ foreach ($groups as $cur_group)
 
 
 // Add/edit a group (stage 2)
-else if (isset($_POST['add_edit_group']))
+else if ($request->isPost('add_edit_group'))
 {
 	confirm_referrer('admin_groups.php');
 
 	// Is this the admin group? (special rules apply)
-	$is_admin_group = (isset($_POST['group_id']) && $_POST['group_id'] == PUN_ADMIN) ? true : false;
+	$is_admin_group = $request->postInt('group_id') === PUN_ADMIN ? true : false;
 
-	$title = pun_trim($_POST['req_title']);
-	$user_title = pun_trim($_POST['user_title']);
+	$title = trim($request->postStr('req_title'));
+	$user_title = trim($request->postStr('user_title'));
 
-	$promote_min_posts = isset($_POST['promote_min_posts']) ? intval($_POST['promote_min_posts']) : '0';
-	if (isset($_POST['promote_next_group']) &&
-			isset($groups[$_POST['promote_next_group']]) &&
-			!in_array($_POST['promote_next_group'], array(PUN_ADMIN, PUN_GUEST)) &&
-			(!isset($_POST['group_id']) || $_POST['promote_next_group'] != $_POST['group_id']))
-		$promote_next_group = $_POST['promote_next_group'];
-	else
-		$promote_next_group = '0';
+	$promote_min_posts = $request->postInt('promote_min_posts', 0);
+	$promote_next_group = $request->postInt('promote_next_group', 0);
 
-	$moderator = isset($_POST['moderator']) && $_POST['moderator'] == '1' ? '1' : '0';
-	$mod_edit_users = $moderator == '1' && isset($_POST['mod_edit_users']) && $_POST['mod_edit_users'] == '1' ? '1' : '0';
-	$mod_rename_users = $moderator == '1' && isset($_POST['mod_rename_users']) && $_POST['mod_rename_users'] == '1' ? '1' : '0';
-	$mod_change_passwords = $moderator == '1' && isset($_POST['mod_change_passwords']) && $_POST['mod_change_passwords'] == '1' ? '1' : '0';
-	$mod_ban_users = $moderator == '1' && isset($_POST['mod_ban_users']) && $_POST['mod_ban_users'] == '1' ? '1' : '0';
-	$mod_promote_users = $moderator == '1' && isset($_POST['mod_promote_users']) && $_POST['mod_promote_users'] == '1' ? '1' : '0';
-	$read_board = isset($_POST['read_board']) ? intval($_POST['read_board']) : '1';
-	$view_users = (isset($_POST['view_users']) && $_POST['view_users'] == '1') || $is_admin_group ? '1' : '0';
-	$post_replies = isset($_POST['post_replies']) ? intval($_POST['post_replies']) : '1';
-	$post_topics = isset($_POST['post_topics']) ? intval($_POST['post_topics']) : '1';
-	$edit_posts = isset($_POST['edit_posts']) ? intval($_POST['edit_posts']) : ($is_admin_group) ? '1' : '0';
-	$delete_posts = isset($_POST['delete_posts']) ? intval($_POST['delete_posts']) : ($is_admin_group) ? '1' : '0';
-	$delete_topics = isset($_POST['delete_topics']) ? intval($_POST['delete_topics']) : ($is_admin_group) ? '1' : '0';
-	$post_links = isset($_POST['post_links']) ? intval($_POST['post_links']) : '1';
-	$set_title = isset($_POST['set_title']) ? intval($_POST['set_title']) : ($is_admin_group) ? '1' : '0';
-	$search = isset($_POST['search']) ? intval($_POST['search']) : '1';
-	$search_users = isset($_POST['search_users']) ? intval($_POST['search_users']) : '1';
-	$send_email = (isset($_POST['send_email']) && $_POST['send_email'] == '1') || $is_admin_group ? '1' : '0';
-	$post_flood = (isset($_POST['post_flood']) && $_POST['post_flood'] >= 0) ? intval($_POST['post_flood']) : '0';
-	$search_flood = (isset($_POST['search_flood']) && $_POST['search_flood'] >= 0) ? intval($_POST['search_flood']) : '0';
-	$email_flood = (isset($_POST['email_flood']) && $_POST['email_flood'] >= 0) ? intval($_POST['email_flood']) : '0';
-	$report_flood = (isset($_POST['report_flood']) && $_POST['report_flood'] >= 0) ? intval($_POST['report_flood']) : '0';
+    if (! isset($groups[$promote_next_group])
+        || in_array($promote_next_group, array(PUN_ADMIN, PUN_GUEST))
+        || $promote_next_group === $request->postInt('group_id', 0)
+    ) {
+		$promote_next_group = 0;
+    }
+
+	$moderator = $request->postInt('moderator', 0) === 1 ? 1 : 0;
+	$mod_edit_users = $moderator && $request->postInt('mod_edit_users', 0) === 1 ? 1 : 0;
+	$mod_rename_users = $moderator && $request->postInt('mod_rename_users', 0) === 1 ? 1 : 0;
+	$mod_change_passwords = $moderator && $request->postInt('mod_change_passwords', 0) === 1 ? 1 : 0;
+	$mod_ban_users = $moderator && $request->postInt('mod_ban_users', 0) === 1 ? 1 : 0;
+	$mod_promote_users = $moderator && $request->postInt('mod_promote_users', 0) === 1 ? 1 : 0;
+	$read_board =  $request->postInt('read_board', 0) === 0 ? 0 : 1;
+	$view_users = $request->postInt('view_users', 0) === 1 || $is_admin_group ? 1 : 0;
+	$post_replies = $request->postInt('post_replies', 0) === 0 ? 0 : 1;
+	$post_topics = $request->postInt('post_topics', 0) === 0 ? 0 : 1;
+	$edit_posts = $request->postInt('edit_posts', 0) === 1 || $is_admin_group ? 1 : 0;
+	$delete_posts = $request->postInt('delete_posts', 0) === 1 || $is_admin_group ? 1 : 0;
+	$delete_topics = $request->postInt('delete_topics', 0) === 1 || $is_admin_group ? 1 : 0;
+	$post_links = $request->postInt('post_links', 0) === 0 ? 0 : 1;
+	$set_title = $request->postInt('set_title', 0) === 1 || $is_admin_group ? 1 : 0;
+	$search = $request->postInt('search', 0) === 0 ? 0 : 1;
+	$search_users = $request->postInt('search_users', 0) === 0 ? 0 : 1;
+	$send_email = $request->postInt('send_email', 0) === 1 || $is_admin_group ? 1 : 0;
+	$post_flood = max($request->postInt('post_flood', 0), 0);
+	$search_flood = max($request->postInt('search_flood', 0), 0);
+	$email_flood = max($request->postInt('email_flood', 0), 0);
+	$report_flood = max($request->postInt('report_flood', 0), 0);
 
 	if ($title == '')
 		message($lang_admin_groups['Must enter title message']);
 
 	$user_title = ($user_title != '') ? '\''.$db->escape($user_title).'\'' : 'NULL';
 
-	if ($_POST['mode'] == 'add')
+	if ($request->postStr('mode') === 'add')
 	{
 		$result = $db->query('SELECT 1 FROM '.$db->prefix.'groups WHERE g_title=\''.$db->escape($title).'\'') or error('Unable to check group title collision', __FILE__, __LINE__, $db->error());
 		if ($db->num_rows($result))
@@ -357,31 +360,31 @@ else if (isset($_POST['add_edit_group']))
 		$new_group_id = $db->insert_id();
 
 		// Now lets copy the forum specific permissions from the group which this group is based on
-		$result = $db->query('SELECT forum_id, read_forum, post_replies, post_topics FROM '.$db->prefix.'forum_perms WHERE group_id='.intval($_POST['base_group'])) or error('Unable to fetch group forum permission list', __FILE__, __LINE__, $db->error());
+		$result = $db->query('SELECT forum_id, read_forum, post_replies, post_topics FROM '.$db->prefix.'forum_perms WHERE group_id='.$request->postInt('base_group', 0)) or error('Unable to fetch group forum permission list', __FILE__, __LINE__, $db->error());
 		while ($cur_forum_perm = $db->fetch_assoc($result))
 			$db->query('INSERT INTO '.$db->prefix.'forum_perms (group_id, forum_id, read_forum, post_replies, post_topics) VALUES('.$new_group_id.', '.$cur_forum_perm['forum_id'].', '.$cur_forum_perm['read_forum'].', '.$cur_forum_perm['post_replies'].', '.$cur_forum_perm['post_topics'].')') or error('Unable to insert group forum permissions', __FILE__, __LINE__, $db->error());
 	}
 	else
 	{
-		$result = $db->query('SELECT 1 FROM '.$db->prefix.'groups WHERE g_title=\''.$db->escape($title).'\' AND g_id!='.intval($_POST['group_id'])) or error('Unable to check group title collision', __FILE__, __LINE__, $db->error());
+		$result = $db->query('SELECT 1 FROM '.$db->prefix.'groups WHERE g_title=\''.$db->escape($title).'\' AND g_id!='.$request->postInt('group_id', 0)) or error('Unable to check group title collision', __FILE__, __LINE__, $db->error());
 		if ($db->num_rows($result))
 			message(sprintf($lang_admin_groups['Title already exists message'], pun_htmlspecialchars($title)));
 
-		$db->query('UPDATE '.$db->prefix.'groups SET g_title=\''.$db->escape($title).'\', g_user_title='.$user_title.', g_promote_min_posts='.$promote_min_posts.', g_promote_next_group='.$promote_next_group.', g_moderator='.$moderator.', g_mod_edit_users='.$mod_edit_users.', g_mod_rename_users='.$mod_rename_users.', g_mod_change_passwords='.$mod_change_passwords.', g_mod_ban_users='.$mod_ban_users.', g_mod_promote_users='.$mod_promote_users.', g_read_board='.$read_board.', g_view_users='.$view_users.', g_post_replies='.$post_replies.', g_post_topics='.$post_topics.', g_edit_posts='.$edit_posts.', g_delete_posts='.$delete_posts.', g_delete_topics='.$delete_topics.', g_post_links='.$post_links.', g_set_title='.$set_title.', g_search='.$search.', g_search_users='.$search_users.', g_send_email='.$send_email.', g_post_flood='.$post_flood.', g_search_flood='.$search_flood.', g_email_flood='.$email_flood.', g_report_flood='.$report_flood.' WHERE g_id='.intval($_POST['group_id'])) or error('Unable to update group', __FILE__, __LINE__, $db->error());
+		$db->query('UPDATE '.$db->prefix.'groups SET g_title=\''.$db->escape($title).'\', g_user_title='.$user_title.', g_promote_min_posts='.$promote_min_posts.', g_promote_next_group='.$promote_next_group.', g_moderator='.$moderator.', g_mod_edit_users='.$mod_edit_users.', g_mod_rename_users='.$mod_rename_users.', g_mod_change_passwords='.$mod_change_passwords.', g_mod_ban_users='.$mod_ban_users.', g_mod_promote_users='.$mod_promote_users.', g_read_board='.$read_board.', g_view_users='.$view_users.', g_post_replies='.$post_replies.', g_post_topics='.$post_topics.', g_edit_posts='.$edit_posts.', g_delete_posts='.$delete_posts.', g_delete_topics='.$delete_topics.', g_post_links='.$post_links.', g_set_title='.$set_title.', g_search='.$search.', g_search_users='.$search_users.', g_send_email='.$send_email.', g_post_flood='.$post_flood.', g_search_flood='.$search_flood.', g_email_flood='.$email_flood.', g_report_flood='.$report_flood.' WHERE g_id='.$request->postInt('group_id', 0)) or error('Unable to update group', __FILE__, __LINE__, $db->error());
 
 		// Promote all users who would be promoted to this group on their next post
 		if ($promote_next_group)
-			$db->query('UPDATE '.$db->prefix.'users SET group_id = '.$promote_next_group.' WHERE group_id = '.intval($_POST['group_id']).' AND num_posts >= '.$promote_min_posts) or error('Unable to auto-promote existing users', __FILE__, __LINE__, $db->error());
+			$db->query('UPDATE '.$db->prefix.'users SET group_id = '.$promote_next_group.' WHERE group_id = '.$request->postInt('group_id', 0).' AND num_posts >= '.$promote_min_posts) or error('Unable to auto-promote existing users', __FILE__, __LINE__, $db->error());
 	}
 
 	// Regenerate the quick jump cache
 	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
 		require PUN_ROOT.'include/cache.php';
 
-	$group_id = $_POST['mode'] == 'add' ? $new_group_id : intval($_POST['group_id']);
+	$group_id = $request->postStr('mode') === 'add' ? $new_group_id : $request->postInt('group_id', 0);
 	generate_quickjump_cache($group_id);
 
-	if ($_POST['mode'] == 'edit')
+	if ($request->postStr('mode') === 'edit')
 		redirect('admin_groups.php', $lang_admin_groups['Group edited redirect']);
 	else
 		redirect('admin_groups.php', $lang_admin_groups['Group added redirect']);
@@ -389,11 +392,11 @@ else if (isset($_POST['add_edit_group']))
 
 
 // Set default group
-else if (isset($_POST['set_default_group']))
+else if ($request->isPost('set_default_group'))
 {
 	confirm_referrer('admin_groups.php');
 
-	$group_id = intval($_POST['default_group']);
+	$group_id = $request->postInt('default_group', 0);
 
 	// Make sure it's not the admin or guest groups
 	if ($group_id == PUN_ADMIN || $group_id == PUN_GUEST)
@@ -416,11 +419,11 @@ else if (isset($_POST['set_default_group']))
 
 
 // Remove a group
-else if (isset($_GET['del_group']))
+else if ($request->isGet('del_group'))
 {
 	confirm_referrer('admin_groups.php');
 
-	$group_id = isset($_POST['group_to_delete']) ? intval($_POST['group_to_delete']) : intval($_GET['del_group']);
+	$group_id = $request->postInt('group_to_delete', $request->getInt('del_group', 0));
 	if ($group_id < 5)
 		message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -432,13 +435,13 @@ else if (isset($_GET['del_group']))
 	$result = $db->query('SELECT g.g_title, COUNT(u.id) FROM '.$db->prefix.'groups AS g INNER JOIN '.$db->prefix.'users AS u ON g.g_id=u.group_id WHERE g.g_id='.$group_id.' GROUP BY g.g_id, g_title') or error('Unable to fetch group info', __FILE__, __LINE__, $db->error());
 
 	// If the group doesn't have any members or if we've already selected a group to move the members to
-	if (!$db->num_rows($result) || isset($_POST['del_group']))
+	if (!$db->num_rows($result) || $request->isPost('del_group'))
 	{
-		if (isset($_POST['del_group_comply']) || isset($_POST['del_group']))
+		if ($request->isPost('del_group_comply') || $request->isPost('del_group'))
 		{
-			if (isset($_POST['del_group']))
+			if ($request->isPost('del_group'))
 			{
-				$move_to_group = intval($_POST['move_to_group']);
+				$move_to_group = $request->postInt('move_to_group');
 				$db->query('UPDATE '.$db->prefix.'users SET group_id='.$move_to_group.' WHERE group_id='.$group_id) or error('Unable to move users into group', __FILE__, __LINE__, $db->error());
 			}
 
