@@ -20,12 +20,14 @@ if (!$pun_user['is_admmod'])
 // Load the admin_reports.php language file
 require PUN_ROOT.'lang/'.$admin_language.'/admin_reports.php';
 
+$request = $container->get('Request');
+
 // Zap a report
-if (isset($_POST['zap_id']))
+if ($request->isPost('zap_id'))
 {
 	confirm_referrer('admin_reports.php');
 
-	$zap_id = intval(key($_POST['zap_id']));
+	$zap_id = (int) $request->postKey('zap_id');
 
 	$result = $db->query('SELECT zapped FROM '.$db->prefix.'reports WHERE id='.$zap_id) or error('Unable to fetch report info', __FILE__, __LINE__, $db->error());
 	$zapped = $db->result($result);
