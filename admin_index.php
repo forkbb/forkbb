@@ -20,36 +20,6 @@ if (!$pun_user['is_admmod'])
 // Load the admin_index.php language file
 require PUN_ROOT.'lang/'.$admin_language.'/admin_index.php';
 
-$action = isset($_GET['action']) ? $_GET['action'] : null;
-
-// Check for upgrade
-if ($action == 'check_upgrade')
-{
-	if (!ini_get('allow_url_fopen'))
-		message($lang_admin_index['fopen disabled message']);
-
-	$latest_version = trim(@file_get_contents('http://fluxbb.org/latest_version'));
-	if (empty($latest_version))
-		message($lang_admin_index['Upgrade check failed message']);
-
-	if (version_compare($pun_config['s_fork_version'], $latest_version, '>='))
-		message($lang_admin_index['Running latest version message']);
-	else
-		message(sprintf($lang_admin_index['New version available message'], '<a href="http://fluxbb.org/">FluxBB.org</a>'));
-}
-// Remove install.php
-else if ($action == 'remove_install_file')
-{
-	$deleted = @unlink(PUN_ROOT.'install.php');
-
-	if ($deleted)
-		redirect('admin_index.php', $lang_admin_index['Deleted install.php redirect']);
-	else
-		message($lang_admin_index['Delete install.php failed']);
-}
-
-$install_file_exists = is_file(PUN_ROOT.'install.php');
-
 $page_title = array(pun_htmlspecialchars($pun_config['o_board_title']), $lang_admin_common['Admin'], $lang_admin_common['Index']);
 define('PUN_ACTIVE_PAGE', 'admin');
 require PUN_ROOT.'header.php';
@@ -75,21 +45,13 @@ generate_admin_menu('index');
 				</ul>
 			</div>
 		</div>
-
-<?php if ($install_file_exists) : ?>
-		<h2 class="block2"><span><?php echo $lang_admin_index['Alerts head'] ?></span></h2>
-		<div id="adalerts" class="box">
-			<p><?php printf($lang_admin_index['Install file exists'], '<a href="admin_index.php?action=remove_install_file">'.$lang_admin_index['Delete install file'].'</a>') ?></p>
-		</div>
-<?php endif; ?>
-
 		<h2 class="block2"><span><?php echo $lang_admin_index['About head'] ?></span></h2>
 		<div id="adstats" class="box">
 			<div class="inbox">
 				<dl>
-					<dt><?php echo $lang_admin_index['FluxBB version label'] ?></dt>
+					<dt><?php echo $lang_admin_index['ForkBB version label'] ?></dt>
 					<dd>
-						<?php printf($lang_admin_index['FluxBB version data']."\n", $pun_config['s_fork_version'].'.'.$pun_config['i_fork_revision'], '<a href="https://fluxbb.org/forums/viewtopic.php?id=4941">'.$lang_admin_index['Check for upgrade'].'</a>') ?> - <a href="https://github.com/MioVisman/FluxBB_by_Visman">GitHub</a>
+						<?php printf($lang_admin_index['ForkBB version data']."\n", $pun_config['s_fork_version'].'.'.$pun_config['i_fork_revision']) ?>
 					</dd>
 					<dt><?php echo $lang_admin_index['Server statistics label'] ?></dt>
 					<dd>
@@ -97,7 +59,7 @@ generate_admin_menu('index');
 					</dd>
 					<dt><?php echo $lang_admin_index['Support label'] ?></dt>
 					<dd>
-						<a href="http://fluxbb.org/forums/index.php"><?php echo $lang_admin_index['Forum label'] ?></a> - <a href="http://fluxbb.org/community/irc.html"><?php echo $lang_admin_index['IRC label'] ?></a>
+						<a href="https://github.com/forkbb/forkbb">GitHub</a>
 					</dd>
 				</dl>
 			</div>
