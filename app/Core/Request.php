@@ -146,6 +146,23 @@ class Request
 
     /**
      * @param string $key
+     * @param mixed $default
+     *
+     * @return mixed
+     */
+    public function postKey($key, $default = null)
+    {
+        if (isset($_POST[$key]) && is_array($_POST[$key])) {
+            $k = key($_POST[$key]);
+            if (null !== $k) {
+                return is_int($k) ? (int) $k : (string) $this->replBadChars($k);
+            }
+        }
+        return $default;
+    }
+
+    /**
+     * @param string $key
      *
      * @return bool
      */

@@ -20,13 +20,15 @@ if ($pun_user['g_id'] != PUN_ADMIN)
 // Load the admin_censoring.php language file
 require PUN_ROOT.'lang/'.$admin_language.'/admin_censoring.php';
 
+$request = $container->get('Request');
+
 // Add a censor word
-if (isset($_POST['add_word']))
+if ($request->isPost('add_word'))
 {
 	confirm_referrer('admin_censoring.php');
 
-	$search_for = pun_trim($_POST['new_search_for']);
-	$replace_with = pun_trim($_POST['new_replace_with']);
+	$search_for = trim($request->postStr('new_search_for'));
+	$replace_with = trim($request->postStr('new_replace_with'));
 
 	if ($search_for == '')
 		message($lang_admin_censoring['Must enter word message']);
@@ -47,14 +49,17 @@ if (isset($_POST['add_word']))
 }
 
 // Update a censor word
-else if (isset($_POST['update']))
+else if ($request->isPost('update'))
 {
 	confirm_referrer('admin_censoring.php');
 
-	$id = intval(key($_POST['update']));
+	$id = (int) $request->postKey('update');
 
-	$search_for = pun_trim($_POST['search_for'][$id]);
-	$replace_with = pun_trim($_POST['replace_with'][$id]);
+	$search_for = $request->post('search_for');
+	$search_for = isset($search_for[$id]) ? trim($search_for[$id]) : '';
+
+	$replace_with = $request->post('replace_with');
+	$replace_with = isset($replace_with[$id]) ? trim($replace_with[$id]) : '';
 
 	if ($search_for == '')
 		message($lang_admin_censoring['Must enter word message']);
@@ -75,11 +80,11 @@ else if (isset($_POST['update']))
 }
 
 // Remove a censor word
-else if (isset($_POST['remove']))
+else if ($request->isPost('remove'))
 {
 	confirm_referrer('admin_censoring.php');
 
-	$id = intval(key($_POST['remove']));
+	$id = (int) $request->postKey('remove');
 
 	$db->query('DELETE FROM '.$db->prefix.'censoring WHERE id='.$id) or error('Unable to delete censor word', __FILE__, __LINE__, $db->error());
 
@@ -129,7 +134,7 @@ generate_admin_menu('censoring');
 						</div>
 					</fieldset>
 				</div>
-<?php if (isset($_GET['censorflag'])): ?>
+<?php if ($request->isGet('censorflag')): ?>
 				<div class="inform">
 					<fieldset>
 						<legend><?php echo $lang_admin_censoring['Double'] ?></legend>
