@@ -22,12 +22,14 @@ if ($pun_user['g_id'] != PUN_ADMIN)
 // Load the admin_maintenance.php language file
 require PUN_ROOT.'lang/'.$admin_language.'/admin_maintenance.php';
 
-$action = isset($_REQUEST['action']) ? pun_trim($_REQUEST['action']) : '';
+$request = $container->get('Request');
+
+$action = $request->requestStr('action', '');
 
 if ($action == 'rebuild')
 {
-	$per_page = isset($_GET['i_per_page']) ? intval($_GET['i_per_page']) : 0;
-	$start_at = isset($_GET['i_start_at']) ? intval($_GET['i_start_at']) : 0;
+	$per_page = $request->getInt('i_per_page', 0);
+	$start_at = max($request->getInt('i_start_at', 1), 1);
 
 	// Check per page is > 0
 	if ($per_page < 1)
@@ -36,7 +38,7 @@ if ($action == 'rebuild')
 	@set_time_limit(0);
 
 	// If this is the first cycle of posts we empty the search index before we proceed
-	if (isset($_GET['i_empty_index']))
+	if ($request->isGet('i_empty_index'))
 	{
 		// This is the only potentially "dangerous" thing we can do here, so we check the referer
 		confirm_referrer('admin_maintenance.php');
@@ -123,17 +125,17 @@ h1 {
 	exit('<meta http-equiv="refresh" content="0;url=admin_maintenance.php'.$query_str.'" /><hr /><p>'.sprintf($lang_admin_maintenance['Javascript redirect failed'], '<a href="admin_maintenance.php'.$query_str.'">'.$lang_admin_maintenance['Click here'].'</a>').'</p>');
 }
 
-if ($action == 'prune')
+elseif ($action == 'prune')
 {
-	$prune_from = pun_trim($_POST['prune_from']);
-	$prune_sticky = intval($_POST['prune_sticky']);
+	$prune_from = trim($request->postStr('prune_from'));
+	$prune_sticky = $request->postInt('prune_sticky', 0);
 
-	if (isset($_POST['prune_comply']))
+	if ($request->isPost('prune_comply'))
 	{
 		confirm_referrer('admin_maintenance.php');
 
-		$prune_days = intval($_POST['prune_days']);
-		$prune_date = ($prune_days) ? time() - ($prune_days * 86400) : -1;
+		$prune_days = $request->postInt('prune_days', false);
+		$prune_date = $prune_days ? time() - ($prune_days * 86400) : -1;
 
 		@set_time_limit(0);
 
@@ -172,8 +174,8 @@ if ($action == 'prune')
 		redirect('admin_maintenance.php', $lang_admin_maintenance['Posts pruned redirect']);
 	}
 
-	$prune_days = pun_trim($_POST['req_prune_days']);
-	if ($prune_days == '' || preg_match('%[^0-9]%', $prune_days))
+	$prune_days = $request->postInt('req_prune_days', 0);
+	if ($prune_days < 1)
 		message($lang_admin_maintenance['Days must be integer message']);
 
 	$prune_date = time() - ($prune_days * 86400);
