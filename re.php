@@ -13,7 +13,9 @@ require PUN_ROOT.'include/common.php';
 if ($pun_user['g_read_board'] == '0')
 	message($lang_common['No view'], false, '403 Forbidden');
 
-if (!isset($_GET['u']) || $pun_user['is_bot'])
+$url = $container->get('Request')->getStr('u');
+
+if (empty($url) || $pun_user['is_bot'])
 	message($lang_common['Bad request'], false, '404 Not Found');
 
 if (file_exists(PUN_ROOT.'lang/'.$pun_user['language'].'/re.php'))
@@ -21,7 +23,7 @@ if (file_exists(PUN_ROOT.'lang/'.$pun_user['language'].'/re.php'))
 else
 	require PUN_ROOT.'lang/English/re.php';
 
-$url = str_replace('&amp;', '&', preg_replace(array('%(https?|ftp)___%i', '%([\r\n])|(\%0[ad])|(;\s*data\s*:)%i'), array('$1://', ''), $_GET['u']));
+$url = str_replace('&amp;', '&', preg_replace(array('%(https?|ftp)___%i', '%([\r\n])|(\%0[ad])|(;\s*data\s*:)%i'), array('$1://', ''), $url));
 
 $page_js['c']['re'] = 'function fluxrdr() {if(history.length<2){window.close()}else{history.go(-1)}return false}';
 

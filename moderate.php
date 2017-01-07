@@ -9,20 +9,22 @@
 define('PUN_ROOT', dirname(__FILE__).'/');
 require PUN_ROOT.'include/common.php';
 
+$request = $container->get('Request');
 
 // This particular function doesn't require forum-based moderator access. It can be used
 // by all moderators and admins
-if (isset($_GET['get_host']))
+if ($request->isGet('get_host'))
 {
 	if ($pun_user['g_id'] != PUN_ADMIN) // IP пользователей видят только админы - Visman
 		message($lang_common['No permission'], false, '403 Forbidden');
 
+	$get_host = $request->getStr('get_host', '');
 	// Is get_host an IP address or a post ID?
-	if (@preg_match('%^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$%D', $_GET['get_host']) || @preg_match('%^((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))$%D', $_GET['get_host']))
-		$ip = $_GET['get_host'];
+	if (@preg_match('%^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$%D', $get_host) || @preg_match('%^((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))$%D', $get_host))
+		$ip = $get_host;
 	else
 	{
-		$get_host = intval($_GET['get_host']);
+		$get_host = (int) $get_host;
 		if ($get_host < 1)
 			message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -41,7 +43,7 @@ if (isset($_GET['get_host']))
 
 
 // All other functions require moderator/admin access
-$fid = isset($_GET['fid']) ? intval($_GET['fid']) : 0;
+$fid = $request->getInt('fid', 0);
 if ($fid < 1)
 	message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -62,9 +64,9 @@ require PUN_ROOT.'lang/'.$pun_user['language'].'/misc.php';
 
 
 // All other topic moderation features require a topic ID in GET
-if (isset($_GET['tid']))
+if ($request->isGet('tid'))
 {
-	$tid = intval($_GET['tid']);
+	$tid = $request->getInt('tid', 0);
 	if ($tid < 1)
 		message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -76,13 +78,13 @@ if (isset($_GET['tid']))
 	$cur_topic = $db->fetch_assoc($result);
 
 	// Delete one or more posts
-	if (isset($_POST['delete_posts']) || isset($_POST['delete_posts_comply']))
+	if ($request->isPost('delete_posts') || $request->isPost('delete_posts_comply'))
 	{
-		$posts = isset($_POST['posts']) ? $_POST['posts'] : array();
+		$posts = $request->post('posts');
 		if (empty($posts))
 			message($lang_misc['No posts selected']);
 
-		if (isset($_POST['delete_posts_comply']))
+		if ($request->isPost('delete_posts_comply'))
 		{
 			confirm_referrer('moderate.php');
 
@@ -158,20 +160,20 @@ if (isset($_GET['tid']))
 
 		require PUN_ROOT.'footer.php';
 	}
-	else if (isset($_POST['split_posts']) || isset($_POST['split_posts_comply']))
+	else if ($request->isPost('split_posts') || $request->isPost('split_posts_comply'))
 	{
-		$posts = isset($_POST['posts']) ? $_POST['posts'] : array();
+		$posts = $request->post('posts');
 		if (empty($posts))
 			message($lang_misc['No posts selected']);
 
-		if (isset($_POST['split_posts_comply']))
+		if ($request->isPost('split_posts_comply'))
 		{
 			confirm_referrer('moderate.php');
 
 			if (@preg_match('%[^0-9,]%', $posts))
 				message($lang_common['Bad request'], false, '404 Not Found');
 
-			$move_to_forum = isset($_POST['move_to_forum']) ? intval($_POST['move_to_forum']) : 0;
+			$move_to_forum = $request->postInt('move_to_forum', 0);
 			if ($move_to_forum < 1)
 				message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -192,7 +194,7 @@ if (isset($_GET['tid']))
 			require PUN_ROOT.'lang/'.$pun_user['language'].'/post.php';
 
 			// Check subject
-			$new_subject = isset($_POST['new_subject']) ? pun_trim($_POST['new_subject']) : '';
+			$new_subject = trim($request->postStr('new_subject'));;
 
 			if ($new_subject == '')
 				message($lang_post['No subject']);
@@ -284,20 +286,20 @@ if (isset($_GET['tid']))
 		require PUN_ROOT.'footer.php';
 	}
 	// Перемещение одного и более сообщений в другую тему
-	else if (isset($_POST['move_posts']) || isset($_POST['move_posts_forum']) || isset($_POST['move_posts_topic']))
+	else if ($request->isPost('move_posts') || $request->isPost('move_posts_forum') || $request->isPost('move_posts_topic'))
 	{
-		$posts = isset($_POST['posts']) ? $_POST['posts'] : array();
+		$posts = $request->post('posts');
 		if (empty($posts))
 			message($lang_misc['No posts selected']);
 
-		if (isset($_POST['move_posts_forum']) || isset($_POST['move_posts_topic']))
+		if ($request->isPost('move_posts_forum') || $request->isPost('move_posts_topic'))
 		{
 			confirm_referrer('moderate.php');
 
 			if (@preg_match('%[^0-9,]%', $posts))
 				message($lang_common['Bad request'], false, '404 Not Found');
 
-			$move_to_forum = isset($_POST['move_to_forum']) ? intval($_POST['move_to_forum']) : 0;
+			$move_to_forum = $request->postInt('move_to_forum', 0);
 			if ($move_to_forum < 1)
 				message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -305,9 +307,9 @@ if (isset($_GET['tid']))
 			if (!$db->num_rows($result))
 				message($lang_common['Bad request'], false, '404 Not Found');
 
-			if (isset($_POST['move_posts_topic']))
+			if ($request->isPost('move_posts_topic'))
 			{
-				$move_to_topic = isset($_POST['move_to_topic']) ? intval($_POST['move_to_topic']) : 0;
+				$move_to_topic = $request->postInt('move_to_topic', 0);
 				if ($move_to_topic < 1 || $move_to_topic == $tid)
 					message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -445,13 +447,13 @@ if (isset($_GET['tid']))
 	// Used to disable the Move and Delete buttons if there are no replies to this topic
 	$button_status = ($cur_topic['num_replies'] == 0) ? ' disabled="disabled"' : '';
 
-	if (isset($_GET['action']) && $_GET['action'] == 'all')
+	if ($request->getStr('action') === 'all')
 		$pun_user['disp_posts'] = $cur_topic['num_replies'] + 1;
 
 	// Determine the post offset (based on $_GET['p'])
 	$num_pages = ceil(($cur_topic['num_replies'] + 1) / $pun_user['disp_posts']);
 
-	$p = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : intval($_GET['p']);
+	$p = max(min($request->getInt('p', 1), $num_pages), 1);
 	$start_from = $pun_user['disp_posts'] * ($p - 1);
 
 	// Generate paging links
@@ -589,17 +591,18 @@ if (isset($_GET['tid']))
 
 
 // Move one or more topics
-if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
+if ($request->isRequest('move_topics') || $request->isPost('move_topics_to'))
 {
-	if (isset($_POST['move_topics_to']))
+	if ($request->isPost('move_topics_to'))
 	{
 		confirm_referrer('moderate.php');
 
-		if (@preg_match('%[^0-9,]%', $_POST['topics']))
+		$topics = $request->postStr('topics', 'bad');
+		if (preg_match('%[^0-9,]%', $topics))
 			message($lang_common['Bad request'], false, '404 Not Found');
 
-		$topics = explode(',', $_POST['topics']);
-		$move_to_forum = isset($_POST['move_to_forum']) ? intval($_POST['move_to_forum']) : 0;
+		$topics = explode(',', $topics);
+		$move_to_forum = $request->postInt('move_to_forum', 0);
 		if (empty($topics) || $move_to_forum < 1)
 			message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -621,7 +624,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		$db->query('UPDATE '.$db->prefix.'topics SET forum_id='.$move_to_forum.' WHERE id IN('.implode(',',$topics).')') or error('Unable to move topics', __FILE__, __LINE__, $db->error());
 
 		// Should we create redirect topics?
-		if (isset($_POST['with_redirect']))
+		if ($requst->isPost('with_redirect'))
 		{
 			foreach ($topics as $cur_topic)
 			{
@@ -641,9 +644,9 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 		redirect('viewforum.php?id='.$move_to_forum, $redirect_msg);
 	}
 
-	if (isset($_POST['move_topics']))
+	if ($request->isPost('move_topics'))
 	{
-		$topics = isset($_POST['topics']) ? $_POST['topics'] : array();
+		$topics = $request->post('topics');
 		if (empty($topics))
 			message($lang_misc['No topics selected']);
 
@@ -652,7 +655,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 	}
 	else
 	{
-		$topics = intval($_GET['move_topics']);
+		$topics = $request->getInt('move_topics', 0);
 		if ($topics < 1)
 			message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -718,16 +721,17 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 }
 
 // Merge two or more topics
-else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
+else if ($request->isPost('merge_topics') || $request->isPost('merge_topics_comply'))
 {
-	if (isset($_POST['merge_topics_comply']))
+	if ($request->isPost('merge_topics_comply'))
 	{
 		confirm_referrer('moderate.php');
 
-		if (@preg_match('%[^0-9,]%', $_POST['topics']))
+		$topics = $request->postStr('topics', 'bad');
+		if (preg_match('%[^0-9,]%', $topics))
 			message($lang_common['Bad request'], false, '404 Not Found');
 
-		$topics = explode(',', $_POST['topics']);
+		$topics = explode(',', $topics);
 		if (count($topics) < 2)
 			message($lang_misc['Not enough topics selected']);
 
@@ -743,7 +747,7 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 		$query = 'UPDATE '.$db->prefix.'topics SET moved_to='.$merge_to_tid.' WHERE moved_to IN('.implode(',', $topics).')';
 
 		// Should we create redirect topics?
-		if (isset($_POST['with_redirect']))
+		if ($request->isPost('with_redirect'))
 			$query .= ' OR (id IN('.implode(',', $topics).') AND id != '.$merge_to_tid.')';
 
 		$db->query($query) or error('Unable to make redirection topics', __FILE__, __LINE__, $db->error());
@@ -764,7 +768,7 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 			$db->query('INSERT INTO '.$db->prefix.'topic_subscriptions (topic_id, user_id) VALUES ('.$merge_to_tid.', '.$cur_user_id.')') or error('Unable to re-enter subscriptions for merge topic', __FILE__, __LINE__, $db->error());
 
 		// Without redirection the old topics are removed
-		if (!isset($_POST['with_redirect']))
+		if (! $request->isPost('with_redirect'))
 			$db->query('DELETE FROM '.$db->prefix.'topics WHERE id IN('.implode(',', $topics).') AND id != '.$merge_to_tid) or error('Unable to delete old topics', __FILE__, __LINE__, $db->error());
 
 		// Count number of replies in the topic
@@ -783,8 +787,8 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 		redirect('viewforum.php?id='.$fid, $lang_misc['Merge topics redirect']);
 	}
 
-	$topics = isset($_POST['topics']) ? $_POST['topics'] : array();
-	if (count($topics) < 2)
+	$topics = $request->post('topics');
+	if (! is_array($topics) || count($topics) < 2)
 		message($lang_misc['Not enough topics selected']);
 
 	$page_title = array(pun_htmlspecialchars($pun_config['o_board_title']), $lang_misc['Moderate']);
@@ -818,17 +822,17 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 }
 
 // Delete one or more topics
-else if (isset($_POST['delete_topics']) || isset($_POST['delete_topics_comply']))
+else if ($request->isPost('delete_topics') || $request->isPost('delete_topics_comply'))
 {
-	$topics = isset($_POST['topics']) ? $_POST['topics'] : array();
+	$topics = $request->post('topics');
 	if (empty($topics))
 		message($lang_misc['No topics selected']);
 
-	if (isset($_POST['delete_topics_comply']))
+	if ($request->isPost('delete_topics_comply'))
 	{
 		confirm_referrer('moderate.php');
 
-		if (@preg_match('%[^0-9,]%', $topics))
+		if (@preg_match('%[^0-9,]%', $topics)) //????
 			message($lang_common['Bad request'], false, '404 Not Found');
 
 		require PUN_ROOT.'include/search_idx.php';
@@ -919,16 +923,16 @@ else if (isset($_POST['delete_topics']) || isset($_POST['delete_topics_comply'])
 
 
 // Open or close one or more topics
-else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
+else if ($request->isRequest('open') || $request->isRequest('close'))
 {
-	$action = (isset($_REQUEST['open'])) ? 0 : 1;
+	$action = $request->isRequest('open') ? 0 : 1;
 
 	// There could be an array of topic IDs in $_POST
-	if (isset($_POST['open']) || isset($_POST['close']))
+	if ($request->isPost('open') || $request->isPost('close'))
 	{
 		confirm_referrer('moderate.php');
 
-		$topics = isset($_POST['topics']) ? @array_map('intval', @array_keys($_POST['topics'])) : array();
+		$topics = @array_map('intval', $request->post('topics', array()));
 		if (empty($topics))
 			message($lang_misc['No topics selected']);
 
@@ -942,7 +946,7 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 	{
 		confirm_referrer('viewtopic.php');
 
-		$topic_id = ($action) ? intval($_GET['close']) : intval($_GET['open']);
+		$topic_id = $request->getInt($action ? 'close' : 'open', 0);
 		if ($topic_id < 1)
 			message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -955,11 +959,11 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 
 
 // Stick a topic
-else if (isset($_GET['stick']))
+else if ($request->isGet('stick'))
 {
 	confirm_referrer('viewtopic.php');
 
-	$stick = intval($_GET['stick']);
+	$stick = $request->getInt('stick', 0);
 	if ($stick < 1)
 		message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -970,11 +974,11 @@ else if (isset($_GET['stick']))
 
 
 // Unstick a topic
-else if (isset($_GET['unstick']))
+else if ($request->isGet('unstick'))
 {
 	confirm_referrer('viewtopic.php');
 
-	$unstick = intval($_GET['unstick']);
+	$unstick = $request->getInt('unstick', 0);
 	if ($unstick < 1)
 		message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -1019,7 +1023,7 @@ switch ($cur_forum['sort_by'])
 // Determine the topic offset (based on $_GET['p'])
 $num_pages = ceil($cur_forum['num_topics'] / $pun_user['disp_topics']);
 
-$p = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : intval($_GET['p']);
+$p = max(min($request->getInt('p', 1), $num_pages), 1);
 $start_from = $pun_user['disp_topics'] * ($p - 1);
 
 // Generate paging links

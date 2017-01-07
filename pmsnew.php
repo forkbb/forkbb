@@ -22,8 +22,10 @@ if ($pun_user['is_guest'])
 if ($pun_config['o_pms_enabled'] != '1' || ($pun_user['g_pm'] == 0 && $pun_user['messages_new'] == 0))
 	message($lang_common['No permission'], false, '403 Forbidden');
 
+$request = $container->get('Request');
+
 // если была отправка формы
-if (isset($_POST['csrf_hash']) || isset($_GET['csrf_hash']))
+if ($request->isRequest('csrf_hash'))
 {
 	confirm_referrer('pmsnew.php');
 	define('PUN_PMS_NEW_CONFIRM', 1);
@@ -36,7 +38,7 @@ if ($action == 'onoff')
 	if (!pun_hash_equals($csrf_token, pmsn_get_var('csrf_token', '')))
 		message($lang_common['Bad request'], false, '404 Not Found');
 
-	if ($pun_user['messages_enable'] == 0 || ($pun_user['messages_enable'] == 1 && isset($_POST['action2']) && defined('PUN_PMS_NEW_CONFIRM')))
+	if ($pun_user['messages_enable'] == 0 || ($pun_user['messages_enable'] == 1 && $request->isPost('action2') && defined('PUN_PMS_NEW_CONFIRM')))
 	{
 		// удаляем сообщения пользователя
 		if ($pun_user['messages_enable'] == 1)
@@ -47,7 +49,7 @@ if ($action == 'onoff')
 
 		redirect('pmsnew.php', $lang_pmsn['Options redirect']);
 	}
-	else if ($pun_user['messages_enable'] == 1 && isset($_POST['action2']))
+	else if ($pun_user['messages_enable'] == 1 && $request->isPost('action2'))
 		message($lang_common['Bad request'], false, '404 Not Found');
 	else
 		$pmsn_modul = 'closeq';
@@ -98,7 +100,7 @@ $pmsn_csrf_hash = (function_exists('csrf_hash')) ? csrf_hash() : '1';
 $pmsn_arr_list = $pmsn_arr_new = $pmsn_arr_save = array();
 $sidamp = $sidvop = $siduser = '';
 
-$sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
+$sid = $request->getInt('sid', 0);
 if ($sid < 2)
 	$sid = 0;
 
