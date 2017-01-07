@@ -6,6 +6,16 @@ class Request
 {
     /**
      * @param string $key
+     *
+     * @return bool
+     */
+    public function isRequest($key)
+    {
+        return $this->isPost($key) || $this->isGet($key);
+    }
+
+    /**
+     * @param string $key
      * @param mixed $default
      *
      * @return mixed
@@ -70,6 +80,16 @@ class Request
 
     /**
      * @param string $key
+     *
+     * @return bool
+     */
+    public function isPost($key)
+    {
+        return isset($_POST[$key]);
+    }
+
+    /**
+     * @param string $key
      * @param mixed $default
      *
      * @return mixed
@@ -91,7 +111,7 @@ class Request
     public function postStr($key, $default = null)
     {
         if (isset($_POST[$key]) && is_string($_POST[$key])) {
-            return $this->replBadChars($_POST[$key]);
+            return (string) $this->replBadChars($_POST[$key]);
         }
         return $default;
     }
@@ -126,6 +146,16 @@ class Request
 
     /**
      * @param string $key
+     *
+     * @return bool
+     */
+    public function isGet($key)
+    {
+        return isset($_GET[$key]);
+    }
+
+    /**
+     * @param string $key
      * @param mixed $default
      *
      * @return mixed
@@ -147,7 +177,7 @@ class Request
     public function getStr($key, $default = null)
     {
         if (isset($_GET[$key]) && is_string($_GET[$key])) {
-            return $this->replBadChars($_GET[$key]);
+            return (string) $this->replBadChars($_GET[$key]);
         }
         return $default;
     }

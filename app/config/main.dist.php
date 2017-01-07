@@ -1,5 +1,8 @@
 <?php
 
+define('PUN_DEBUG', 1);
+define('PUN_SHOW_QUERIES', 1);
+
 return [
     'BASE_URL'    => '_BASE_URL_',
     'DB_TYPE'     => '_DB_TYPE_',

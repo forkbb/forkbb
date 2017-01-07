@@ -20,15 +20,17 @@ if ($pun_user['g_id'] != PUN_ADMIN && ($pun_user['g_moderator'] != '1' || $pun_u
 // Load the admin_bans.php language file
 require PUN_ROOT.'lang/'.$admin_language.'/admin_bans.php';
 
+$request = $container->get('Request');
+
 // Add/edit a ban (stage 1)
-if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
+if ($request->isRequest('add_ban') || $request->isGet('edit_ban'))
 {
-	if (isset($_GET['add_ban']) || isset($_POST['add_ban']))
+	if ($request->isRequest('add_ban'))
 	{
 		// If the ID of the user to ban was provided through GET (a link from profile.php)
-		if (isset($_GET['add_ban']))
+		if ($request->isGet('add_ban'))
 		{
-			$user_id = intval($_GET['add_ban']);
+			$user_id = $request->getInt('add_ban', 0);
 			if ($user_id < 2)
 				message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -40,7 +42,7 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 		}
 		else // Otherwise the username is in POST
 		{
-			$ban_user = pun_trim($_POST['new_ban_user']);
+			$ban_user = trim($request->postStr('new_ban_user'));
 
 			if ($ban_user != '')
 			{
@@ -82,7 +84,7 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 	}
 	else // We are editing a ban
 	{
-		$ban_id = intval($_GET['edit_ban']);
+		$ban_id = $request->getInt('edit_ban', 0);
 		if ($ban_id < 1)
 			message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -179,15 +181,15 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 }
 
 // Add/edit a ban (stage 2)
-else if (isset($_POST['add_edit_ban']))
+else if ($request->isPost('add_edit_ban'))
 {
 	confirm_referrer('admin_bans.php');
 
-	$ban_user = pun_trim($_POST['ban_user']);
-	$ban_ip = pun_trim($_POST['ban_ip']);
-	$ban_email = strtolower(pun_trim($_POST['ban_email']));
-	$ban_message = pun_trim($_POST['ban_message']);
-	$ban_expire = pun_trim($_POST['ban_expire']);
+	$ban_user = trim($request->postStr('ban_user'));
+	$ban_ip = trim($request->postStr('ban_ip'));
+	$ban_email = strtolower(trim($request->postStr('ban_email')));
+	$ban_message = trim($request->postStr('ban_message'));
+	$ban_expire = trim($request->postStr('ban_expire'));
 
 	if ($ban_user == '' && $ban_ip == '' && $ban_email == '')
 		message($lang_admin_bans['Must enter message']);
@@ -285,10 +287,10 @@ else if (isset($_POST['add_edit_ban']))
 	$ban_email = ($ban_email != '') ? '\''.$db->escape($ban_email).'\'' : 'NULL';
 	$ban_message = ($ban_message != '') ? '\''.$db->escape($ban_message).'\'' : 'NULL';
 
-	if ($_POST['mode'] == 'add')
+	if ($request->postStr('mode') == 'add')
 		$db->query('INSERT INTO '.$db->prefix.'bans (username, ip, email, message, expire, ban_creator) VALUES('.$ban_user.', '.$ban_ip.', '.$ban_email.', '.$ban_message.', '.$ban_expire.', '.$pun_user['id'].')') or error('Unable to add ban', __FILE__, __LINE__, $db->error());
 	else
-		$db->query('UPDATE '.$db->prefix.'bans SET username='.$ban_user.', ip='.$ban_ip.', email='.$ban_email.', message='.$ban_message.', expire='.$ban_expire.' WHERE id='.intval($_POST['ban_id'])) or error('Unable to update ban', __FILE__, __LINE__, $db->error());
+		$db->query('UPDATE '.$db->prefix.'bans SET username='.$ban_user.', ip='.$ban_ip.', email='.$ban_email.', message='.$ban_message.', expire='.$ban_expire.' WHERE id='.intval($request->postInt('ban_id'))) or error('Unable to update ban', __FILE__, __LINE__, $db->error());
 
 	// Regenerate the bans cache
 	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
@@ -296,18 +298,18 @@ else if (isset($_POST['add_edit_ban']))
 
 	generate_bans_cache();
 
-	if ($_POST['mode'] == 'edit')
+	if ($request->postStr('mode') == 'edit')
 		redirect('admin_bans.php', $lang_admin_bans['Ban edited redirect']);
 	else
 		redirect('admin_bans.php', $lang_admin_bans['Ban added redirect']);
 }
 
 // Remove a ban
-else if (isset($_GET['del_ban']))
+else if ($request->isGet('del_ban'))
 {
 	confirm_referrer('admin_bans.php');
 
-	$ban_id = intval($_GET['del_ban']);
+	$ban_id = $request->getInt('del_ban');
 	if ($ban_id < 1)
 		message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -323,18 +325,19 @@ else if (isset($_GET['del_ban']))
 }
 
 // Find bans
-else if (isset($_GET['find_ban']))
+else if ($request->isGet('find_ban'))
 {
-	$form = isset($_GET['form']) ? $_GET['form'] : array();
+	$form = $request->get('form', array());
 
 	// trim() all elements in $form
 	$form = array_map('pun_trim', $form);
 	$conditions = $query_str = array();
 
-	$expire_after = isset($_GET['expire_after']) ? pun_trim($_GET['expire_after']) : '';
-	$expire_before = isset($_GET['expire_before']) ? pun_trim($_GET['expire_before']) : '';
-	$order_by = isset($_GET['order_by']) && in_array($_GET['order_by'], array('username', 'ip', 'email', 'expire')) ? 'b.'.$_GET['order_by'] : 'b.username';
-	$direction = isset($_GET['direction']) && $_GET['direction'] == 'DESC' ? 'DESC' : 'ASC';
+	$expire_after = trim($request->getStr('expire_after'));
+	$expire_before = trim($request->getStr('expire_before'));
+	$order_by = $request->getStr('order_by');
+	$order_by = in_array($order_by, array('username', 'ip', 'email', 'expire')) ? 'b.'.$order_by : 'b.username';
+	$direction = $request->getStr('direction') == 'DESC' ? 'DESC' : 'ASC';
 
 	$query_str[] = 'order_by='.$order_by;
 	$query_str[] = 'direction='.$direction;
@@ -375,10 +378,10 @@ else if (isset($_GET['find_ban']))
 	$result = $db->query('SELECT COUNT(id) FROM '.$db->prefix.'bans as b WHERE b.id>0'.(!empty($conditions) ? ' AND '.implode(' AND ', $conditions) : '')) or error('Unable to fetch ban list', __FILE__, __LINE__, $db->error());
 	$num_bans = $db->result($result);
 
-	// Determine the ban offset (based on $_GET['p'])
+	// Determine the ban offset (based on $ _GET['p'])
 	$num_pages = ceil($num_bans / 50);
 
-	$p = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : intval($_GET['p']);
+    $p = min(max($request->getInt('p', 1), 1), $num_pages);
 	$start_from = 50 * ($p - 1);
 
 	// Generate paging links
