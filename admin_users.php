@@ -27,11 +27,12 @@ if (file_exists(PUN_ROOT.'lang/'.$pun_user['language'].'/genders_integration.php
 else
 	require PUN_ROOT.'lang/English/genders_integration.php';
 
+$request = $container->get('Request');
 
 // Show IP statistics for a certain user ID
-if (isset($_GET['ip_stats']))
+if ($request->isGet('ip_stats'))
 {
-	$ip_stats = intval($_GET['ip_stats']);
+	$ip_stats = $request->getInt('ip_stats', 0);
 	if ($ip_stats < 1)
 		message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -42,7 +43,7 @@ if (isset($_GET['ip_stats']))
 	// Determine the ip offset (based on $_GET['p'])
 	$num_pages = ceil($num_ips / 50);
 
-	$p = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : intval($_GET['p']);
+	$p = max(min($request->getInt('p', 1), $num_pages), 1);
 	$start_from = 50 * ($p - 1);
 
 	// Generate paging links
@@ -129,9 +130,9 @@ if (isset($_GET['ip_stats']))
 }
 
 
-if (isset($_GET['show_users']))
+if ($request->isGet('show_users'))
 {
-	$ip = pun_trim($_GET['show_users']);
+	$ip = trim($request->getStr('show_users'));
 
 	if (!@preg_match('%^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$%', $ip) && !@preg_match('%^((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))$%', $ip))
 		message($lang_admin_users['Bad IP message']);
@@ -143,7 +144,7 @@ if (isset($_GET['show_users']))
 	// Determine the user offset (based on $_GET['p'])
 	$num_pages = ceil($num_users / 50);
 
-	$p = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : intval($_GET['p']);
+	$p = max(min($request->getInt('p', 1), $num_pages), 1);
 	$start_from = 50 * ($p - 1);
 
 	// Generate paging links
@@ -271,16 +272,17 @@ if (isset($_GET['show_users']))
 
 
 // Move multiple users to other user groups
-else if (isset($_POST['move_users']) || isset($_POST['move_users_comply']))
+else if ($request->isPost('move_users') || $request->isPost('move_users_comply'))
 {
 	if ($pun_user['g_id'] > PUN_ADMIN)
 		message($lang_common['No permission'], false, '403 Forbidden');
 
 	confirm_referrer('admin_users.php');
 
-	if (isset($_POST['users']))
+	if ($request->isPost('users'))
 	{
-		$user_ids = is_array($_POST['users']) ? array_keys($_POST['users']) : explode(',', $_POST['users']);
+		$user_ids = $request->post('users');
+		$user_ids = is_array($user_ids) ? array_keys($user_ids) : explode(',', $user_ids);
 		$user_ids = array_map('intval', $user_ids);
 
 		// Delete invalid IDs
@@ -303,9 +305,13 @@ else if (isset($_POST['move_users']) || isset($_POST['move_users_comply']))
 	while ($row = $db->fetch_row($result))
 		$all_groups[$row[0]] = $row[1];
 
-	if (isset($_POST['move_users_comply']))
+	if ($request->isPost('move_users_comply'))
 	{
-		$new_group = isset($_POST['new_group']) && isset($all_groups[$_POST['new_group']]) ? $_POST['new_group'] : message($lang_admin_users['Invalid group message']);
+		$new_group = $request->postInt('new_group', 0);
+
+		if (! isset($all_groups[$new_group])) {
+			message($lang_admin_users['Invalid group message']);
+        }
 
 		// Is the new group a moderator group?
 		$result = $db->query('SELECT g_moderator FROM '.$db->prefix.'groups WHERE g_id='.$new_group) or error('Unable to fetch group info', __FILE__, __LINE__, $db->error());
@@ -398,16 +404,17 @@ else if (isset($_POST['move_users']) || isset($_POST['move_users_comply']))
 
 
 // Delete multiple users
-else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']))
+else if ($request->isPost('delete_users') || $request->isPost('delete_users_comply'))
 {
 	if ($pun_user['g_id'] > PUN_ADMIN)
 		message($lang_common['No permission'], false, '403 Forbidden');
 
 	confirm_referrer('admin_users.php');
 
-	if (isset($_POST['users']))
+	if ($request->isPost('users'))
 	{
-		$user_ids = is_array($_POST['users']) ? array_keys($_POST['users']) : explode(',', $_POST['users']);
+		$user_ids = $request->post('users');
+		$user_ids = is_array($user_ids) ? array_keys($user_ids) : explode(',', $user_ids);
 		$user_ids = array_map('intval', $user_ids);
 
 		// Delete invalid IDs
@@ -424,7 +431,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']))
 	if ($db->result($result) > 0)
 		message($lang_admin_users['No delete admins message']);
 
-	if (isset($_POST['delete_users_comply']))
+	if ($request->isPost('delete_users_comply'))
 	{
 		// Fetch user groups
 		$user_groups = array();
@@ -467,7 +474,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']))
 		$db->query('DELETE FROM '.$db->prefix.'online WHERE user_id IN ('.implode(',', $user_ids).')') or error('Unable to remove users from online list', __FILE__, __LINE__, $db->error());
 
 		// Should we delete all posts made by these users?
-		if (isset($_POST['delete_posts']))
+		if ($request->isPost('delete_posts'))
 		{
 			require PUN_ROOT.'include/search_idx.php';
 			@set_time_limit(0);
@@ -555,16 +562,17 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']))
 
 
 // Ban multiple users
-else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
+else if ($request->isPost('ban_users') || $request->isPost('ban_users_comply'))
 {
 	if ($pun_user['g_id'] != PUN_ADMIN && ($pun_user['g_moderator'] != '1' || $pun_user['g_mod_ban_users'] == '0'))
 		message($lang_common['No permission'], false, '403 Forbidden');
 
 	confirm_referrer('admin_users.php');
 
-	if (isset($_POST['users']))
+	if ($request->isPost('users'))
 	{
-		$user_ids = is_array($_POST['users']) ? array_keys($_POST['users']) : explode(',', $_POST['users']);
+		$user_ids = $request->post('users');
+		$user_ids = is_array($user_ids) ? array_keys($user_ids) : explode(',', $user_ids);
 		$user_ids = array_map('intval', $user_ids);
 
 		// Delete invalid IDs
@@ -586,11 +594,11 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 	if ($db->result($result) > 0)
 		message($lang_admin_users['No ban mods message']);
 
-	if (isset($_POST['ban_users_comply']))
+	if ($request->isPost('ban_users_comply'))
 	{
-		$ban_message = pun_trim($_POST['ban_message']);
-		$ban_expire = pun_trim($_POST['ban_expire']);
-		$ban_the_ip = isset($_POST['ban_the_ip']) ? intval($_POST['ban_the_ip']) : 0;
+		$ban_message = trim($request->postStr('ban_message'));
+		$ban_expire = trim($request->postStr('ban_expire'));
+		$ban_the_ip = $request->postInt('ban_the_ip', 0);
 
 		if ($ban_expire != '' && $ban_expire != 'Never')
 		{
@@ -700,25 +708,31 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 }
 
 
-else if (isset($_GET['find_user']))
+else if ($request->isGet('find_user'))
 {
-	$form = isset($_GET['form']) ? $_GET['form'] : array();
+	$form = $request->get('form');
+	if (! is_array($form)) {
+		$form = array();
+    }
 
 	// trim() all elements in $form
 	$form = array_map('pun_trim', $form);
 	$conditions = $query_str = array();
 
-	$posts_greater = isset($_GET['posts_greater']) ? pun_trim($_GET['posts_greater']) : '';
-	$posts_less = isset($_GET['posts_less']) ? pun_trim($_GET['posts_less']) : '';
-	$last_post_after = isset($_GET['last_post_after']) ? pun_trim($_GET['last_post_after']) : '';
-	$last_post_before = isset($_GET['last_post_before']) ? pun_trim($_GET['last_post_before']) : '';
-	$last_visit_after = isset($_GET['last_visit_after']) ? pun_trim($_GET['last_visit_after']) : '';
-	$last_visit_before = isset($_GET['last_visit_before']) ? pun_trim($_GET['last_visit_before']) : '';
-	$registered_after = isset($_GET['registered_after']) ? pun_trim($_GET['registered_after']) : '';
-	$registered_before = isset($_GET['registered_before']) ? pun_trim($_GET['registered_before']) : '';
-	$order_by = isset($_GET['order_by']) && in_array($_GET['order_by'], array('username', 'email', 'num_posts', 'last_post', 'last_visit', 'registered')) ? $_GET['order_by'] : 'username';
-	$direction = isset($_GET['direction']) && $_GET['direction'] == 'DESC' ? 'DESC' : 'ASC';
-	$user_group = isset($_GET['user_group']) ? intval($_GET['user_group']) : -1;
+	$posts_greater = trim($request->getStr('posts_greater'));
+	$posts_less = trim($request->getStr('posts_less'));
+	$last_post_after = trim($request->getStr('last_post_after'));
+	$last_post_before = trim($request->getStr('last_post_before'));
+	$last_visit_after = trim($request->getStr('last_visit_after'));
+	$last_visit_before = trim($request->getStr('last_visit_before'));
+	$registered_after = trim($request->getStr('registered_after'));
+	$registered_before = trim($request->getStr('registered_before'));
+	$order_by = $request->getStr('order_by', '');
+	if (! in_array($order_by, array('username', 'email', 'num_posts', 'last_post', 'last_visit', 'registered'))) {
+		$order_by = 'username';
+    }
+	$direction = $request->getStr('direction') === 'DESC' ? 'DESC' : 'ASC';
+	$user_group = $request->getInt('user_group', -1);
 
 	$query_str[] = 'order_by='.$order_by;
 	$query_str[] = 'direction='.$direction;
@@ -820,7 +834,7 @@ else if (isset($_GET['find_user']))
 	// Determine the user offset (based on $_GET['p'])
 	$num_pages = ceil($num_users / 50);
 
-	$p = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : intval($_GET['p']);
+	$p = max(min($request->getInt('p', 1), $num_pages), 1);
 	$start_from = 50 * ($p - 1);
 
 	// Generate paging links
