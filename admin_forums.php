@@ -20,12 +20,14 @@ if ($pun_user['g_id'] != PUN_ADMIN)
 // Load the admin_forums.php language file
 require PUN_ROOT.'lang/'.$admin_language.'/admin_forums.php';
 
+$request = $container->get('Request');
+
 // Add a "default" forum
-if (isset($_POST['add_forum']))
+if ($request->isPost('add_forum'))
 {
 	confirm_referrer('admin_forums.php');
 
-	$add_to_cat = intval($_POST['add_to_cat']);
+	$add_to_cat = $request->postInt('add_to_cat', 0);
 	if ($add_to_cat < 1)
 		message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -43,15 +45,15 @@ if (isset($_POST['add_forum']))
 }
 
 // Delete a forum
-else if (isset($_GET['del_forum']))
+else if ($request->isGet('del_forum'))
 {
 	confirm_referrer('admin_forums.php');
 
-	$forum_id = intval($_GET['del_forum']);
+	$forum_id = $request->getInt('del_forum', 0);
 	if ($forum_id < 1)
 		message($lang_common['Bad request'], false, '404 Not Found');
 
-	if (isset($_POST['del_forum_comply'])) // Delete a forum with all posts
+	if ($request->isPost('del_forum_comply')) // Delete a forum with all posts
 	{
 		@set_time_limit(0);
 
@@ -125,11 +127,11 @@ else if (isset($_GET['del_forum']))
 }
 
 // Update forum positions
-else if (isset($_POST['update_positions']))
+else if ($request->isPost('update_positions'))
 {
 	confirm_referrer('admin_forums.php');
 
-	foreach ($_POST['position'] as $forum_id => $disp_position)
+	foreach ($request->post('position', array()) as $forum_id => $disp_position)
 	{
 		$disp_position = trim($disp_position);
 		if ($disp_position == '' || preg_match('%[^0-9]%', $disp_position))
@@ -148,26 +150,26 @@ else if (isset($_POST['update_positions']))
 	redirect('admin_forums.php', $lang_admin_forums['Forums updated redirect']);
 }
 
-else if (isset($_GET['edit_forum']))
+else if ($request->isGet('edit_forum'))
 {
-	$forum_id = intval($_GET['edit_forum']);
+	$forum_id = $request->getInt('edit_forum', 0);
 	if ($forum_id < 1)
 		message($lang_common['Bad request'], false, '404 Not Found');
 
 	// Update group permissions for $forum_id
-	if (isset($_POST['save']))
+	if ($request->isPost('save'))
 	{
 		confirm_referrer('admin_forums.php');
 
 		// Start with the forum details
-		$forum_name = pun_trim($_POST['forum_name']);
-		$forum_desc = pun_linebreaks(pun_trim($_POST['forum_desc']));
-		$cat_id = intval($_POST['cat_id']);
-		$sort_by = intval($_POST['sort_by']);
-		$redirect_url = isset($_POST['redirect_url']) ? pun_trim($_POST['redirect_url']) : null;
+		$forum_name = trim($request->postStr('forum_name'));
+		$forum_desc = pun_linebreaks(trim($request->postStr('forum_desc')));
+		$cat_id = $request->postInt('cat_id', 0);
+		$sort_by = $request->postInt('sort_by', 0);
+		$redirect_url = trim($request->postStr('redirect_url'));
 
 		// MOD subforums - Visman
-		$parent_forum_id = $i = intval($_POST['parent_forum']);
+		$parent_forum_id = $i = $request->postInt('parent_forum', 0);
 		while (isset($sf_array_desc[$i][0]))
 			$i = $sf_array_desc[$i][0];
 
@@ -186,17 +188,25 @@ else if (isset($_GET['edit_forum']))
 		$db->query('UPDATE '.$db->prefix.'forums SET forum_name=\''.$db->escape($forum_name).'\', forum_desc='.$forum_desc.', redirect_url='.$redirect_url.', sort_by='.$sort_by.', cat_id='.$cat_id.', parent_forum_id='.$parent_forum_id.' WHERE id='.$forum_id) or error('Unable to update forum', __FILE__, __LINE__, $db->error()); // MOD subforums - Visman
 
 		// Now let's deal with the permissions
-		if (isset($_POST['read_forum_old']))
+		if ($request->isPost('read_forum_old'))
 		{
 			$result = $db->query('SELECT g_id, g_read_board, g_post_replies, g_post_topics FROM '.$db->prefix.'groups WHERE g_id!='.PUN_ADMIN) or error('Unable to fetch user group list', __FILE__, __LINE__, $db->error());
+
+			$arr_rfo = $request->post('read_forum_old');
+			$arr_pro = $request->post('post_replies_old');
+			$arr_pto = $request->post('post_topics_old');
+			$arr_rfn = $request->post('read_forum_new');
+			$arr_prn = $request->post('post_replies_new');
+			$arr_ptn = $request->post('post_topics_new');
+
 			while ($cur_group = $db->fetch_assoc($result))
 			{
-				$read_forum_new = ($cur_group['g_read_board'] == '1') ? isset($_POST['read_forum_new'][$cur_group['g_id']]) ? '1' : '0' : intval($_POST['read_forum_old'][$cur_group['g_id']]);
-				$post_replies_new = isset($_POST['post_replies_new'][$cur_group['g_id']]) ? '1' : '0';
-				$post_topics_new = isset($_POST['post_topics_new'][$cur_group['g_id']]) ? '1' : '0';
+				$read_forum_new = ($cur_group['g_read_board'] == '1') ? isset($arr_rfn[$cur_group['g_id']]) ? '1' : '0' : intval($arr_rfo[$cur_group['g_id']]);
+				$post_replies_new = isset($arr_prn[$cur_group['g_id']]) ? '1' : '0';
+				$post_topics_new = isset($arr_ptn[$cur_group['g_id']]) ? '1' : '0';
 
 				// Check if the new settings differ from the old
-				if ($read_forum_new != $_POST['read_forum_old'][$cur_group['g_id']] || $post_replies_new != $_POST['post_replies_old'][$cur_group['g_id']] || $post_topics_new != $_POST['post_topics_old'][$cur_group['g_id']])
+				if ($read_forum_new != $arr_rfo[$cur_group['g_id']] || $post_replies_new != $arr_pro[$cur_group['g_id']] || $post_topics_new != $arr_pto[$cur_group['g_id']])
 				{
 					// If the new settings are identical to the default settings for this group, delete its row in forum_perms
 					if ($read_forum_new == '1' && $post_replies_new == $cur_group['g_post_replies'] && $post_topics_new == $cur_group['g_post_topics'])
@@ -221,7 +231,7 @@ else if (isset($_GET['edit_forum']))
 
 		redirect('admin_forums.php', $lang_admin_forums['Forum updated redirect']);
 	}
-	else if (isset($_POST['revert_perms']))
+	else if ($request->isPost('revert_perms'))
 	{
 		confirm_referrer('admin_forums.php');
 
