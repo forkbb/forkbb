@@ -35,7 +35,7 @@ $action = pmsn_get_var('action', '');
 if ($action == 'onoff')
 {
 	$csrf_token = pmsn_csrf_token('onoff');
-	if (!pun_hash_equals($csrf_token, pmsn_get_var('csrf_token', '')))
+	if (!hash_equals($csrf_token, pmsn_get_var('csrf_token', '')))
 		message($lang_common['Bad request'], false, '404 Not Found');
 
 	if ($pun_user['messages_enable'] == 0 || ($pun_user['messages_enable'] == 1 && $request->isPost('action2') && defined('PUN_PMS_NEW_CONFIRM')))
@@ -57,7 +57,7 @@ if ($action == 'onoff')
 else if ($action == 'email')
 {
 	$csrf_token = pmsn_csrf_token('email');
-	if (!pun_hash_equals($csrf_token, pmsn_get_var('csrf_token', '')))
+	if (!hash_equals($csrf_token, pmsn_get_var('csrf_token', '')))
 		message($lang_common['Bad request'], false, '404 Not Found');
 
 	if ($pun_user['messages_email'] == 1)
