@@ -52,10 +52,10 @@ function is_banned_email($email)
 //
 function encode_mail_text($str)
 {
-	if (utf8_is_ascii($str))
-		return $str;
-
-	return '=?UTF-8?B?'.base64_encode($str).'?=';
+    if (preg_match('%[^\x00-\x7F]%', $str)) {
+        return '=?UTF-8?B?'.base64_encode($str).'?=';
+    }
+    return $str;
 }
 
 
