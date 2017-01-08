@@ -59,12 +59,6 @@ if (!defined('PUN_DEBUG'))
 // Load the functions script
 require PUN_ROOT.'include/functions.php';
 
-// Load UTF-8 functions
-require PUN_ROOT.'include/utf8/utf8.php';
-
-// Strip out "bad" UTF-8 characters
-forum_remove_bad_characters();
-
 // Reverse the effect of register_globals
 forum_unregister_globals();
 
@@ -1087,7 +1081,7 @@ switch ($stage)
 							{
 								unset($cur_moderators[$old_username]);
 								$cur_moderators[$username] = $id;
-								uksort($cur_moderators, 'utf8_strcasecmp');
+								uksort($cur_moderators, function ($a, $b) {return strcmp(mb_strtolower($a), mb_strtolower($b));});
 
 								$db->query('UPDATE '.$db->prefix.'forums SET moderators=\''.$db->escape(serialize($cur_moderators)).'\' WHERE id='.$cur_forum['id']) or error('Unable to update forum', __FILE__, __LINE__, $db->error());
 							}

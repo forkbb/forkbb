@@ -17,7 +17,7 @@ require PUN_ROOT.'lang/'.$pun_user['language'].'/search.php';
 require PUN_ROOT.'lang/'.$pun_user['language'].'/forum.php';
 
 $request = $container->get('Request');
-$action = $request->isGet('action');
+$action = $request->getStr('action');
 
 if ($pun_user['g_read_board'] == '0')
 	message($lang_common['No view'], false, '403 Forbidden');
@@ -58,8 +58,8 @@ if (! empty($action) || $request->isGet('search_id'))
 	// If it's a regular search (keywords and/or author)
 	else if ($action === 'search')
 	{
-		$keywords = utf8_strtolower(trim($request->getStr('keywords')));
-		$author = utf8_strtolower(trim($request->getStr('author')));
+		$keywords = mb_strtolower(trim($request->getStr('keywords')));
+		$author = mb_strtolower(trim($request->getStr('author')));
 
 		if (preg_match('%^[\*\%]+$%', $keywords) || (mb_strlen(str_replace(array('*', '%'), '', $keywords)) < PUN_SEARCH_MIN_WORD && !is_cjk($keywords)))
 			$keywords = '';
@@ -279,7 +279,7 @@ if (! empty($action) || $request->isGet('search_id'))
 			}
 
 			// If it's a search for author name (and that author name isn't Guest)
-			if ($author && $author != 'guest' && $author != utf8_strtolower($lang_common['Guest']))
+			if ($author && $author != 'guest' && $author != mb_strtolower($lang_common['Guest']))
 			{
 				switch ($container->getParameter('DB_TYPE'))
 				{

@@ -52,7 +52,7 @@ function split_words_clear_link_minor($arr)
 			$res.= split_words_clear_link_minor($text);
 			continue;
 		}
-		$text = utf8_strtolower(rawurldecode($text));
+		$text = mb_strtolower(rawurldecode($text));
 		$text = ucp_preg_replace('%[^\p{L}\p{N}]+%u', ' ', $text);
 		$text = preg_replace('%(?<=\b)((\d+(?=[a-z])|[a-z]+(?=\d)){3,}\w*)(?=\b)%u', ' ', $text);
 		$text = preg_replace('%(?<=\b)\d+|\d+(?=\b)%u', '', $text);
@@ -248,8 +248,8 @@ function update_search_index($mode, $post_id, $message, $subject = null)
 
     $db = $container->get('DB');
 
-	$message = utf8_strtolower($message);
-	$subject = utf8_strtolower($subject);
+	$message = mb_strtolower($message);
+	$subject = mb_strtolower($subject);
 
 	// Remove any bbcode that we shouldn't index
 	$message = strip_bbcode($message);

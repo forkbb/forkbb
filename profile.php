@@ -9,11 +9,6 @@
 define('PUN_ROOT', dirname(__FILE__).'/');
 require PUN_ROOT.'include/common.php';
 
-// Include UTF-8 function
-require PUN_ROOT.'include/utf8/substr_replace.php';
-require PUN_ROOT.'include/utf8/ucwords.php'; // utf8_ucwords needs utf8_substr_replace
-require PUN_ROOT.'include/utf8/strcasecmp.php';
-
 $request = $container->get('Request');
 
 $action = $request->getStr('action');
@@ -541,7 +536,7 @@ else if ($request->isPost('update_forums'))
 	$result = $db->query('SELECT username FROM '.$db->prefix.'users WHERE id='.$id) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
 	$username = $db->result($result);
 
-	$moderator_in = array_keys($request->post('moderator_in', array());
+	$moderator_in = array_keys($request->post('moderator_in', array()));
 
 	// Loop through all forums
 	$result = $db->query('SELECT id, moderators FROM '.$db->prefix.'forums') or error('Unable to fetch forum list', __FILE__, __LINE__, $db->error());
@@ -553,7 +548,7 @@ else if ($request->isPost('update_forums'))
 		if (in_array($cur_forum['id'], $moderator_in) && !in_array($id, $cur_moderators))
 		{
 			$cur_moderators[$username] = $id;
-			uksort($cur_moderators, 'utf8_strcasecmp');
+			uksort($cur_moderators, function ($a, $b) {return strcmp(mb_strtolower($a), mb_strtolower($b));});
 
 			$db->query('UPDATE '.$db->prefix.'forums SET moderators=\''.$db->escape(serialize($cur_moderators)).'\' WHERE id='.$cur_forum['id']) or error('Unable to update forum', __FILE__, __LINE__, $db->error());
 		}
@@ -871,9 +866,9 @@ else if ($request->isPost('form_sent'))
 				{
 					// A list of words that the title may not contain
 					// If the language is English, there will be some duplicates, but it's not the end of the world
-					$forbidden = array('member', 'moderator', 'administrator', 'banned', 'guest', utf8_strtolower($lang_common['Member']), utf8_strtolower($lang_common['Moderator']), utf8_strtolower($lang_common['Administrator']), utf8_strtolower($lang_common['Banned']), utf8_strtolower($lang_common['Guest']));
+					$forbidden = array('member', 'moderator', 'administrator', 'banned', 'guest', mb_strtolower($lang_common['Member']), mb_strtolower($lang_common['Moderator']), mb_strtolower($lang_common['Administrator']), mb_strtolower($lang_common['Banned']), mb_strtolower($lang_common['Guest']));
 
-					if (in_array(utf8_strtolower($form['title']), $forbidden))
+					if (in_array(mb_strtolower($form['title']), $forbidden))
 						message($lang_profile['Forbidden title']);
 				}
 			}
@@ -913,7 +908,7 @@ else if ($request->isPost('form_sent'))
 				else if (substr_count($form['signature'], "\n") > ($pun_config['p_sig_lines']-1))
 					message(sprintf($lang_prof_reg['Sig too many lines'], $pun_config['p_sig_lines']));
 				else if ($form['signature'] && $pun_config['p_sig_all_caps'] == '0' && is_all_uppercase($form['signature']) && !$pun_user['is_admmod'])
-					$form['signature'] = utf8_ucwords(utf8_strtolower($form['signature']));
+					$form['signature'] = mb_strtolower($form['signature']);
 
 				// Validate BBCode syntax
 				if ($pun_config['p_sig_bbcode'] == '1')
@@ -1057,7 +1052,7 @@ else if ($request->isPost('form_sent'))
 				{
 					unset($cur_moderators[$old_username]);
 					$cur_moderators[$form['username']] = $id;
-					uksort($cur_moderators, 'utf8_strcasecmp');
+					uksort($cur_moderators, function ($a, $b) {return strcmp(mb_strtolower($a), mb_strtolower($b));});
 
 					$db->query('UPDATE '.$db->prefix.'forums SET moderators=\''.$db->escape(serialize($cur_moderators)).'\' WHERE id='.$cur_forum['id']) or error('Unable to update forum', __FILE__, __LINE__, $db->error());
 				}
