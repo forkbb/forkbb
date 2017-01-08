@@ -14,13 +14,15 @@ require PUN_ROOT.'include/utf8/substr_replace.php';
 require PUN_ROOT.'include/utf8/ucwords.php'; // utf8_ucwords needs utf8_substr_replace
 require PUN_ROOT.'include/utf8/strcasecmp.php';
 
-$action = isset($_GET['action']) ? $_GET['action'] : null;
-$section = isset($_GET['section']) ? $_GET['section'] : null;
-$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$request = $container->get('Request');
+
+$action = $request->getStr('action');
+$section = $request->getStr('section');
+$id = $request->getInt('id', 0);
 if ($id < 2)
 	message($lang_common['Bad request'], false, '404 Not Found');
 
-if ($action != 'change_pass' || !isset($_GET['key']))
+if ($action !== 'change_pass' || ! $request->isGet('key'))
 {
 	if ($pun_user['g_read_board'] == '0')
 		message($lang_common['No view'], false, '403 Forbidden');
@@ -38,9 +40,9 @@ require PUN_ROOT.'lang/'.$pun_user['language'].'/profile.php';
 // Load the Genders Integration mod language file
 require PUN_ROOT.'lang/'.$pun_user['language'].'/genders_integration.php';
 
-if ($action == 'change_pass')
+if ($action === 'change_pass')
 {
-	if (isset($_GET['key']))
+	if ($request->isGet('key'))
 	{
 		// If the user is already logged in we shouldn't be here :)
 		if (!$pun_user['is_guest'])
@@ -49,7 +51,7 @@ if ($action == 'change_pass')
 			exit;
 		}
 
-		$key = $_GET['key'];
+		$key = $request->getStr('key', '');
 
 		$result = $db->query('SELECT * FROM '.$db->prefix.'users WHERE id='.$id) or error('Unable to fetch new password', __FILE__, __LINE__, $db->error());
 		$cur_user = $db->fetch_assoc($result);
@@ -82,14 +84,14 @@ if ($action == 'change_pass')
 		}
 	}
 
-	if (isset($_POST['form_sent']))
+	if ($request->isPost('form_sent'))
 	{
 		// Make sure they got here from the site
 		confirm_referrer('profile.php');
 
-		$old_password = isset($_POST['req_old_password']) ? pun_trim($_POST['req_old_password']) : '';
-		$new_password1 = pun_trim($_POST['req_new_password1']);
-		$new_password2 = pun_trim($_POST['req_new_password2']);
+		$old_password = trim($request->postStr('req_old_password'));
+		$new_password1 = trim($request->postStr('req_new_password1'));
+		$new_password2 = trim($request->postStr('req_new_password2'));
 
 		if ($new_password1 != $new_password2)
 			message($lang_prof_reg['Pass not match']);
@@ -159,7 +161,7 @@ if ($action == 'change_pass')
 }
 
 
-else if ($action == 'change_email')
+else if ($action === 'change_email')
 {
 	// Make sure we are allowed to change this user's email
 	if ($pun_user['id'] != $id)
@@ -179,9 +181,9 @@ else if ($action == 'change_email')
 		}
 	}
 
-	if (isset($_GET['key']))
+	if ($request->isGet('key'))
 	{
-		$key = $_GET['key'];
+		$key = $request->getStr('key', '');
 
 		$result = $db->query('SELECT activate_string, activate_key FROM '.$db->prefix.'users WHERE id='.$id) or error('Unable to fetch activation data', __FILE__, __LINE__, $db->error());
 		list($new_email, $new_email_key) = $db->fetch_row($result);
@@ -195,9 +197,9 @@ else if ($action == 'change_email')
 			message($lang_profile['Email updated'], true);
 		}
 	}
-	else if (isset($_POST['form_sent']))
+	else if ($request->isPost('form_sent'))
 	{
-		if (pun_hash($_POST['req_password']) !== $pun_user['password'])
+		if (pun_hash($request->postStr('req_password','')) !== $pun_user['password'])
 			message($lang_profile['Wrong pass']);
 
 		// Make sure they got here from the site
@@ -206,7 +208,7 @@ else if ($action == 'change_email')
 		require PUN_ROOT.'include/email.php';
 
 		// Validate the email address
-		$new_email = strtolower(pun_trim($_POST['req_new_email']));
+		$new_email = strtolower(pun_trim($request->postStr('req_new_email')));
 		if (!is_valid_email($new_email))
 			message($lang_common['Invalid email']);
 
@@ -318,7 +320,7 @@ else if ($action == 'change_email')
 }
 
 
-else if ($action == 'upload_avatar' || $action == 'upload_avatar2')
+else if ($action === 'upload_avatar' || $action === 'upload_avatar2')
 {
 	if ($pun_config['o_avatars'] == '0')
 		message($lang_profile['Avatars disabled']);
@@ -328,7 +330,7 @@ else if ($action == 'upload_avatar' || $action == 'upload_avatar2')
 		
 	require PUN_ROOT.'include/upload.php'; // Visman - auto resize avatar
 
-	if (isset($_POST['form_sent']))
+	if ($request->isPost('form_sent'))
 	{
 		if (!isset($_FILES['req_file']))
 			message($lang_profile['No file']);
@@ -465,7 +467,7 @@ else if ($action == 'upload_avatar' || $action == 'upload_avatar2')
 }
 
 
-else if ($action == 'delete_avatar')
+else if ($action === 'delete_avatar')
 {
 	if ($pun_user['id'] != $id && !$pun_user['is_admmod'])
 		message($lang_common['No permission'], false, '403 Forbidden');
@@ -478,14 +480,14 @@ else if ($action == 'delete_avatar')
 }
 
 
-else if (isset($_POST['update_group_membership']))
+else if ($request->isPost('update_group_membership'))
 {
 	if ($pun_user['g_id'] > PUN_ADMIN)
 		message($lang_common['No permission'], false, '403 Forbidden');
 
 	confirm_referrer('profile.php');
 
-	$new_group_id = intval($_POST['group_id']);
+	$new_group_id = $request->postInt('group_id', 0);
 
 	$result = $db->query('SELECT group_id FROM '.$db->prefix.'users WHERE id='.$id) or error('Unable to fetch user group', __FILE__, __LINE__, $db->error());
 	$old_group_id = $db->result($result);
@@ -528,7 +530,7 @@ else if (isset($_POST['update_group_membership']))
 }
 
 
-else if (isset($_POST['update_forums']))
+else if ($request->isPost('update_forums'))
 {
 	if ($pun_user['g_id'] > PUN_ADMIN)
 		message($lang_common['No permission'], false, '403 Forbidden');
@@ -539,7 +541,7 @@ else if (isset($_POST['update_forums']))
 	$result = $db->query('SELECT username FROM '.$db->prefix.'users WHERE id='.$id) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
 	$username = $db->result($result);
 
-	$moderator_in = (isset($_POST['moderator_in'])) ? array_keys($_POST['moderator_in']) : array();
+	$moderator_in = array_keys($request->post('moderator_in', array());
 
 	// Loop through all forums
 	$result = $db->query('SELECT id, moderators FROM '.$db->prefix.'forums') or error('Unable to fetch forum list', __FILE__, __LINE__, $db->error());
@@ -569,7 +571,7 @@ else if (isset($_POST['update_forums']))
 }
 
 
-else if (isset($_POST['ban']))
+else if ($request->isPost('ban'))
 {
 	if ($pun_user['g_id'] != PUN_ADMIN && ($pun_user['g_moderator'] != '1' || $pun_user['g_mod_ban_users'] == '0'))
 		message($lang_common['No permission'], false, '403 Forbidden');
@@ -590,14 +592,14 @@ else if (isset($_POST['ban']))
 }
 
 
-else if ($action == 'promote')
+else if ($action === 'promote')
 {
 	if ($pun_user['g_id'] != PUN_ADMIN && ($pun_user['g_moderator'] != '1' || $pun_user['g_mod_promote_users'] == '0'))
 		message($lang_common['No permission'], false, '403 Forbidden');
 
 	confirm_referrer('viewtopic.php');
 
-	$pid = isset($_GET['pid']) ? intval($_GET['pid']) : 0;
+	$pid = $request->getInt('pid', 0);
 
 	$sql = 'SELECT g.g_promote_next_group FROM '.$db->prefix.'groups AS g INNER JOIN '.$db->prefix.'users AS u ON u.group_id=g.g_id WHERE u.id='.$id.' AND g.g_promote_next_group>0';
 	$result = $db->query($sql) or error('Unable to fetch promotion information', __FILE__, __LINE__, $db->error());
@@ -612,7 +614,7 @@ else if ($action == 'promote')
 }
 
 
-else if (isset($_POST['delete_user']) || isset($_POST['delete_user_comply']))
+else if ($request->isPost('delete_user') || $request->isPost('delete_user_comply'))
 {
 	if ($pun_user['g_id'] > PUN_ADMIN)
 		message($lang_common['No permission'], false, '403 Forbidden');
@@ -626,7 +628,7 @@ else if (isset($_POST['delete_user']) || isset($_POST['delete_user_comply']))
 	if ($group_id == PUN_ADMIN)
 		message($lang_profile['No delete admin message']);
 
-	if (isset($_POST['delete_user_comply']))
+	if ($request->isPost('delete_user_comply'))
 	{
 		// If the user is a moderator or an administrator, we remove him/her from the moderator list in all forums as well
 		$result = $db->query('SELECT g_moderator FROM '.$db->prefix.'groups WHERE g_id='.$group_id) or error('Unable to fetch group', __FILE__, __LINE__, $db->error());
@@ -658,7 +660,7 @@ else if (isset($_POST['delete_user']) || isset($_POST['delete_user_comply']))
 		$db->query('DELETE FROM '.$db->prefix.'online WHERE user_id='.$id) or error('Unable to remove user from online list', __FILE__, __LINE__, $db->error());
 
 		// Should we delete all posts made by this user?
-		if (isset($_POST['delete_posts']))
+		if ($request->isPost('delete_posts'))
 		{
 			require PUN_ROOT.'include/search_idx.php';
 			@set_time_limit(0);
@@ -741,7 +743,7 @@ else if (isset($_POST['delete_user']) || isset($_POST['delete_user_comply']))
 }
 
 
-else if (isset($_POST['form_sent']))
+else if ($request->isPost('form_sent'))
 {
 	// Fetch the user group of the user we are editing
 	$result = $db->query('SELECT u.username, u.group_id, g.g_moderator FROM '.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'groups AS g ON (g.g_id=u.group_id) WHERE u.id='.$id) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
@@ -763,23 +765,25 @@ else if (isset($_POST['form_sent']))
 
 	$username_updated = false;
 
+	$data = $request->post('form', array());
+
 	// Validate input depending on section
 	switch ($section)
 	{
 		case 'essentials':
 		{
 			$form = array(
-				'timezone'		=> floatval($_POST['form']['timezone']),
-				'dst'			=> isset($_POST['form']['dst']) ? '1' : '0',
-				'time_format'	=> intval($_POST['form']['time_format']),
-				'date_format'	=> intval($_POST['form']['date_format']),
+				'timezone'		=> floatval($data['timezone']),
+				'dst'			=> isset($data['dst']) ? '1' : '0',
+				'time_format'	=> intval($data['time_format']),
+				'date_format'	=> intval($data['date_format']),
 			);
 
 			// Make sure we got a valid language string
-			if (isset($_POST['form']['language']))
+			if (isset($data['language']))
 			{
 				$languages = forum_list_langs();
-				$form['language'] = pun_trim($_POST['form']['language']);
+				$form['language'] = pun_trim($data['language']);
 				if (!in_array($form['language'], $languages))
 					message($lang_common['Bad request'], false, '404 Not Found');
 			}
@@ -788,12 +792,12 @@ else if (isset($_POST['form_sent']))
 
 			if ($pun_user['is_admmod'])
 			{
-				$form['admin_note'] = pun_trim($_POST['admin_note']);
+				$form['admin_note'] = trim($request->postStr('admin_note'));
 
 				// Are we allowed to change usernames?
 				if ($pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_moderator'] == '1' && $pun_user['g_mod_rename_users'] == '1'))
 				{
-					$form['username'] = pun_trim($_POST['req_username']);
+					$form['username'] = trim($request->postStr('req_username'));
 
 					if ($form['username'] != $old_username)
 					{
@@ -811,7 +815,7 @@ else if (isset($_POST['form_sent']))
 
 				// We only allow administrators to update the post count
 				if ($pun_user['g_id'] == PUN_ADMIN)
-					$form['num_posts'] = intval($_POST['num_posts']);
+					$form['num_posts'] = $request->postInt('num_posts', 0); //????
 			}
 
 			if ($pun_config['o_regs_verify'] == '0' || $pun_user['is_admmod'])
@@ -819,7 +823,7 @@ else if (isset($_POST['form_sent']))
 				require PUN_ROOT.'include/email.php';
 
 				// Validate the email address
-				$form['email'] = strtolower(pun_trim($_POST['req_email']));
+				$form['email'] = strtolower(pun_trim($request->postStr('req_email')));
 				if (!is_valid_email($form['email']))
 					message($lang_common['Invalid email']);
 			}
@@ -830,10 +834,10 @@ else if (isset($_POST['form_sent']))
 		case 'personal':
 		{
 			$form = array(
-				'realname'		=> isset($_POST['form']['realname']) ? pun_trim($_POST['form']['realname']) : '',
-				'gender'		=> isset($_POST['form']['gender']) ? pun_trim($_POST['form']['gender']) : '', // мод пола - Visman
-				'url'			=> isset($_POST['form']['url']) ? pun_trim($_POST['form']['url']) : '',
-				'location'		=> isset($_POST['form']['location']) ? pun_trim($_POST['form']['location']) : '',
+				'realname'		=> isset($data['realname']) ? pun_trim($data['realname']) : '',
+				'gender'		=> isset($data['gender']) ? pun_trim($data['gender']) : '', // мод пола - Visman
+				'url'			=> isset($data['url']) ? pun_trim($data['url']) : '',
+				'location'		=> isset($data['location']) ? pun_trim($data['location']) : '',
 			);
 
 			// Add http:// if the URL doesn't contain it already (while allowing https://, too)
@@ -858,10 +862,10 @@ else if (isset($_POST['form_sent']))
 			}
 
 			if ($pun_user['g_id'] == PUN_ADMIN)
-				$form['title'] = pun_trim($_POST['title']);
+				$form['title'] = trim($request->postStr('title'));
 			else if ($pun_user['g_set_title'] == '1')
 			{
-				$form['title'] = pun_trim($_POST['title']);
+				$form['title'] = trim($request->postStr('title'));
 
 				if ($form['title'] != '')
 				{
@@ -880,11 +884,11 @@ else if (isset($_POST['form_sent']))
 		case 'messaging':
 		{
 			$form = array(
-				'jabber'		=> pun_trim($_POST['form']['jabber']),
-				'icq'			=> pun_trim($_POST['form']['icq']),
-				'msn'			=> pun_trim($_POST['form']['msn']),
-				'aim'			=> pun_trim($_POST['form']['aim']),
-				'yahoo'			=> pun_trim($_POST['form']['yahoo']),
+				'jabber'		=> pun_trim($data['jabber']),
+				'icq'			=> pun_trim($data['icq']),
+				'msn'			=> pun_trim($data['msn']),
+				'aim'			=> pun_trim($data['aim']),
+				'yahoo'			=> pun_trim($data['yahoo']),
 			);
 
 			// If the ICQ UIN contains anything other than digits it's invalid
@@ -901,7 +905,7 @@ else if (isset($_POST['form_sent']))
 			// Clean up signature from POST
 			if ($pun_config['o_signatures'] == '1')
 			{
-				$form['signature'] = pun_linebreaks(pun_trim($_POST['signature']));
+				$form['signature'] = pun_linebreaks(pun_trim($request->postStr('signature')));
 
 				// Validate signature
 				if (pun_strlen($form['signature']) > $pun_config['p_sig_length'])
@@ -931,8 +935,8 @@ else if (isset($_POST['form_sent']))
 		case 'display':
 		{
 			$form = array(
-				'disp_topics'		=> pun_trim($_POST['form']['disp_topics']),
-				'disp_posts'		=> pun_trim($_POST['form']['disp_posts']),
+				'disp_topics'		=> pun_trim($data['disp_topics']),
+				'disp_posts'		=> pun_trim($data['disp_posts']),
 			);
 
 			if ($form['disp_topics'] != '')
@@ -954,25 +958,25 @@ else if (isset($_POST['form_sent']))
 			}
 
 			if ($pun_config['o_smilies'] == '1' || $pun_config['o_smilies_sig'] == '1')
-				$form['show_smilies'] = isset($_POST['form']['show_smilies']) ? '1' : '0';
+				$form['show_smilies'] = isset($data['show_smilies']) ? '1' : '0';
 
 			if ($pun_config['p_message_bbcode'] == '1' && $pun_config['p_message_img_tag'] == '1')
-				$form['show_img'] = isset($_POST['form']['show_img']) ? '1' : '0';
+				$form['show_img'] = isset($data['show_img']) ? '1' : '0';
 
 			if ($pun_config['o_signatures'] == '1' && $pun_config['p_sig_bbcode'] == '1' && $pun_config['p_sig_img_tag'] == '1')
-				$form['show_img_sig'] = isset($_POST['form']['show_img_sig']) ? '1' : '0';
+				$form['show_img_sig'] = isset($data['show_img_sig']) ? '1' : '0';
 
 			if ($pun_config['o_avatars'] == '1')
-				$form['show_avatars'] = isset($_POST['form']['show_avatars']) ? '1' : '0';
+				$form['show_avatars'] = isset($data['show_avatars']) ? '1' : '0';
 
 			if ($pun_config['o_signatures'] == '1')
-				$form['show_sig'] = isset($_POST['form']['show_sig']) ? '1' : '0';
+				$form['show_sig'] = isset($data['show_sig']) ? '1' : '0';
 
 			// Make sure we got a valid style string
-			if (isset($_POST['form']['style']))
+			if (isset($data['style']))
 			{
 				$styles = forum_list_styles();
-				$form['style'] = pun_trim($_POST['form']['style']);
+				$form['style'] = pun_trim($data['style']);
 				if (!in_array($form['style'], $styles))
 					message($lang_common['Bad request'], false, '404 Not Found');
 			}
@@ -983,9 +987,9 @@ else if (isset($_POST['form_sent']))
 		case 'privacy':
 		{
 			$form = array(
-				'email_setting'			=> intval($_POST['form']['email_setting']),
-				'notify_with_post'		=> isset($_POST['form']['notify_with_post']) ? '1' : '0',
-				'auto_notify'			=> isset($_POST['form']['auto_notify']) ? '1' : '0',
+				'email_setting'			=> intval($data['email_setting']),
+				'notify_with_post'		=> isset($data['notify_with_post']) ? '1' : '0',
+				'auto_notify'			=> isset($data['auto_notify']) ? '1' : '0',
 			);
 
 			if ($form['email_setting'] < 0 || $form['email_setting'] > 2)
@@ -1307,7 +1311,7 @@ if ($pun_user['id'] != $id &&																	// If we aren't the user (i.e. edi
 }
 else
 {
-	if (!$section || $section == 'essentials')
+	if (!$section || $section === 'essentials')
 	{
 		if ($pun_user['is_admmod'])
 		{
@@ -1523,7 +1527,7 @@ else
 <?php
 
 	}
-	else if ($section == 'personal')
+	else if ($section === 'personal')
 	{
 		if ($pun_user['g_set_title'] == '1')
 			$title_field = '<label>'.$lang_common['Title'].' <em>('.$lang_profile['Leave blank'].')</em><br /><input type="text" name="title" value="'.pun_htmlspecialchars($user['title']).'" size="30" maxlength="50" /><br /></label>'."\n";
@@ -1565,7 +1569,7 @@ else
 <?php
 
 	}
-	else if ($section == 'messaging')
+	else if ($section === 'messaging')
 	{
 
 		$page_title = array(pun_htmlspecialchars($pun_config['o_board_title']), $lang_common['Profile'], $lang_profile['Section messaging']);
@@ -1600,7 +1604,7 @@ else
 <?php
 
 	}
-	else if ($section == 'personality')
+	else if ($section === 'personality')
 	{
 		if ($pun_config['o_avatars'] == '0' && $pun_config['o_signatures'] == '0')
 			message($lang_common['Bad request'], false, '404 Not Found');
@@ -1667,7 +1671,7 @@ else
 <?php
 
 	}
-	else if ($section == 'display')
+	else if ($section === 'display')
 	{
 		$page_title = array(pun_htmlspecialchars($pun_config['o_board_title']), $lang_common['Profile'], $lang_profile['Section display']);
 		define('PUN_ACTIVE_PAGE', 'profile');
@@ -1754,7 +1758,7 @@ else
 <?php
 
 	}
-	else if ($section == 'privacy')
+	else if ($section === 'privacy')
 	{
 		$page_title = array(pun_htmlspecialchars($pun_config['o_board_title']), $lang_common['Profile'], $lang_profile['Section privacy']);
 		define('PUN_ACTIVE_PAGE', 'profile');
@@ -1801,7 +1805,7 @@ else
 <?php
 
 	}
-	else if ($section == 'admin')
+	else if ($section === 'admin')
 	{
 		if (!$pun_user['is_admmod'] || ($pun_user['g_moderator'] == '1' && $pun_user['g_mod_ban_users'] == '0'))
 			message($lang_common['Bad request'], false, '403 Forbidden');

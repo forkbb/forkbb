@@ -5,7 +5,7 @@
  * License: http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
  */
 
-if (isset($_GET['delete']))
+if (isset($_GET['delete'])) //????
 	define('PUN_QUIET_VISIT', 1);
 
 define('PUN_ROOT', dirname(__FILE__).'/');
@@ -22,7 +22,9 @@ require PUN_ROOT.'include/upload.php';
 define('PLUGIN_REF', pun_htmlspecialchars('upfiles.php'));
 define('PLUGIN_NF', 25);
 
-if (!isset($_GET['id']))
+$request = $container->get('Request');
+
+if (! $request->isGet('id'))
 {
 	$id = $pun_user['id'];
 
@@ -38,7 +40,7 @@ if (!isset($_GET['id']))
 }
 else
 {
-	$id = intval($_GET['id']);
+	$id = $request->getInt('id', 0);
 	if ($id < 2 || ($pun_user['g_id'] != PUN_ADMIN && $id != $pun_user['id']))
 		message($lang_common['Bad request'], false, '404 Not Found');
 		
@@ -67,7 +69,7 @@ $extsup = explode(',', $extsup.','.strtoupper($extsup));
 // #############################################################################
 
 // Удаление файлов
-if (isset($_GET['delete']))
+if ($request->isGet('delete'))
 {
 	confirm_referrer(PLUGIN_REF);
 
@@ -75,7 +77,7 @@ if (isset($_GET['delete']))
 
 	if (is_dir(PUN_ROOT.$dir))
 	{
-		$file = parse_file(pun_trim($_GET['delete']));
+		$file = parse_file(trim($request->getStr('delete')));
 		$ext = strtolower(substr(strrchr($file, '.'), 1)); // берем расширение файла
 		if ($file[0] != '.' && $ext != '' && !in_array($ext, $extforno) && is_file(PUN_ROOT.$dir.$file))
 		{
@@ -97,7 +99,7 @@ if (isset($_GET['delete']))
 	else
 		$error++;
 
-	if (isset($_GET['ajx']))
+	if ($request->isGet('ajx'))
 	{
 		$db->end_transaction();
 		$db->close();
@@ -116,7 +118,7 @@ if (isset($_GET['delete']))
 		$pun_config['o_redirect_delay'] = 5;
 		$s = $lang_up['Error'].$lang_up['Error delete'];
 	}
-	redirect(empty($_GET['p']) || $_GET['p'] < 2 ? PLUGIN_URL : PLUGIN_URLD.'p='.intval($_GET['p']).'#gofile', $s);
+	redirect($request->getInt('p', 0) < 2 ? PLUGIN_URL : PLUGIN_URLD . 'p=' . $request->getInt('p', 0) . '#gofile', $s);
 }
 
 // Загрузка файла
@@ -243,7 +245,7 @@ else if (isset($_FILES['upfile']) && $id == $pun_user['id'])
 }
 
 // Unknown failure
-else if (!empty($_POST))
+else if (!empty($_POST)) //????
 	redirect(PLUGIN_URL, $lang_up['Error'].$lang_up['Unknown failure']);
 
 // #############################################################################
@@ -325,7 +327,7 @@ if (is_dir(PUN_ROOT.$dir))
 	if (!empty($filesvar))
 	{
 		$num_pages = ceil(sizeof($filesvar) / PLUGIN_NF);
-		$p = (!isset($_GET['p']) || $_GET['p'] <= 1) ? 1 : intval($_GET['p']);
+		$p = max($request->getInt('p', 1), 1);
 		if ($p > $num_pages)
 		{
 			header('Location: '.str_replace('&amp;', '&', PLUGIN_URLD).'p='.$num_pages.'#gofile');
@@ -401,7 +403,7 @@ else
 								</a>
 							</div>
 							<div class="upf-size"><span><?php echo pun_htmlspecialchars($size_file) ?></span></div>
-							<div class="upf-but upf-delete"><a title="<?php echo $lang_up['delete'] ?>" href="<?php echo PLUGIN_URLD.'csrf_hash='.$vcsrf.(empty($_GET['p']) || $_GET['p'] < 2 ? '' : '&amp;p='.intval($_GET['p'])).'&amp;delete='.$f ?>" onclick="return FluxBB.upfile.del(this);"><span></span></a></div>
+							<div class="upf-but upf-delete"><a title="<?php echo $lang_up['delete'] ?>" href="<?php echo PLUGIN_URLD.'csrf_hash='.$vcsrf.($request->getInt('p', 0) < 2 ? '' : '&amp;p='.$request->getInt('p', 0)).'&amp;delete='.$f ?>" onclick="return FluxBB.upfile.del(this);"><span></span></a></div>
 						</li>
 <?php
 

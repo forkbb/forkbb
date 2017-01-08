@@ -26,13 +26,14 @@ require PUN_ROOT.'lang/'.$pun_user['language'].'/prof_reg.php';
 if ($pun_config['o_regs_allow'] == '0')
 	message($lang_register['No new regs']);
 
+$request = $container->get('Request');
 
 // User pressed the cancel button
-if (isset($_GET['cancel']))
+if ($request->isGet('cancel'))
 	redirect('index.php', $lang_register['Reg cancel redirect']);
 
 
-else if ($pun_config['o_rules'] == '1' && !isset($_GET['agree']) && !isset($_POST['form_sent']))
+else if ($pun_config['o_rules'] == '1' && ! $request->isGet('agree') && ! $request->isPost('form_sent'))
 {
 	$page_title = array(pun_htmlspecialchars($pun_config['o_board_title']), $lang_register['Register'], $lang_register['Forum rules']);
 	define('PUN_ACTIVE_PAGE', 'register');
@@ -63,7 +64,7 @@ else if ($pun_config['o_rules'] == '1' && !isset($_GET['agree']) && !isset($_POS
 // Start with a clean slate
 $errors = array();
 
-if (isset($_POST['form_sent']))
+if ($request->isPost('form_sent'))
 {
 	flux_hook('register_before_validation');
 
@@ -74,20 +75,20 @@ if (isset($_POST['form_sent']))
 		message($lang_register['Registration flood']);
 
 
-	$username = pun_trim($_POST['req_user']);
-	$email1 = strtolower(pun_trim($_POST['req_email1']));
+	$username = trim($request->posStr('req_user'));
+	$email1 = strtolower(trim($request->postStr('req_email1')));
 
 	if ($pun_config['o_regs_verify'] == '1')
 	{
-		$email2 = strtolower(pun_trim($_POST['req_email2']));
+		$email2 = strtolower(trim($request->posStr('req_email2')));
 
 		$password1 = random_pass(12);
 		$password2 = $password1;
 	}
 	else
 	{
-		$password1 = pun_trim($_POST['req_password1']);
-		$password2 = pun_trim($_POST['req_password2']);
+		$password1 = trim($request->postStr('req_password1'));
+		$password2 = trim($request->postStr('req_password2'));
 	}
 
 	// Validate username and passwords
@@ -131,22 +132,22 @@ if (isset($_POST['form_sent']))
 	}
 
 	// Make sure we got a valid language string
-	if (isset($_POST['language']))
+	if ($request->isPost('language'))
 	{
-		$language = preg_replace('%[\.\\\/]%', '', $_POST['language']);
+		$language = preg_replace('%[\.\\\/]%', '', $request->postStr('language', ''));
 		if (!file_exists(PUN_ROOT.'lang/'.$language.'/common.php'))
 			message($lang_common['Bad request'], false, '404 Not Found');
 	}
 	else
 		$language = $pun_config['o_default_lang'];
 
-	$timezone = round($_POST['timezone'], 1);
+	$timezone = round($request->postStr('timezone', 0), 1);
 	// мод запоминания пароля - Visman
-	$save_pass = isset($_POST['save_pass']) ? $_POST['save_pass'] : '0';
+	$save_pass = $request->isPost('save_pass') ? 1 : 0; //????
 
-	$dst = isset($_POST['dst']) ? '1' : '0';
+	$dst = $request->isPost('dst') ? '1' : '0'; //????
 
-	$email_setting = intval($_POST['email_setting']);
+	$email_setting = $request->postInt('email_setting');
 	if ($email_setting < 0 || $email_setting > 2)
 		$email_setting = $pun_config['o_default_email_setting'];
 
@@ -259,7 +260,7 @@ if (isset($_POST['form_sent']))
 			message($lang_register['Reg email'].' <a href="mailto:'.pun_htmlspecialchars($pun_config['o_admin_email']).'">'.pun_htmlspecialchars($pun_config['o_admin_email']).'</a>.', true);
 		}
 
-		pun_setcookie($new_uid, $password_hash, ($save_pass == '1') ? time() + 1209600 : time() + $pun_config['o_timeout_visit']); // мод запоминания пароля - Visman
+		pun_setcookie($new_uid, $password_hash, $save_pass === 1 ? time() + 1209600 : time() + $pun_config['o_timeout_visit']); // мод запоминания пароля - Visman
 		
 		// удаляем из онлайн таблицы запись для этого пользователя для правильного подсчета макс. кол-во пользователей - Visman
 		$db->query('DELETE FROM '.$db->prefix.'online WHERE ident=\''.$db->escape(get_remote_address()).'\'') or error('Unable to delete from online list', __FILE__, __LINE__, $db->error());
@@ -321,7 +322,7 @@ if (!empty($errors))
 					<legend><?php echo $lang_register['Username legend'] ?></legend>
 					<div class="infldset">
 						<input type="hidden" name="form_sent" value="1" />
-						<label class="required"><strong><?php echo $lang_common['Username'] ?> <span><?php echo $lang_common['Required'] ?></span></strong><br /><input type="text" name="req_user" value="<?php if (isset($_POST['req_user'])) echo pun_htmlspecialchars($_POST['req_user']); ?>" size="25" maxlength="25" /><br /></label>
+						<label class="required"><strong><?php echo $lang_common['Username'] ?> <span><?php echo $lang_common['Required'] ?></span></strong><br /><input type="text" name="req_user" value="<?php if ($request->isPost('req_user')) echo pun_htmlspecialchars($request->postStr('req_user', '')); ?>" size="25" maxlength="25" /><br /></label>
 					</div>
 				</fieldset>
 			</div>
@@ -329,8 +330,8 @@ if (!empty($errors))
 				<fieldset>
 					<legend><?php echo $lang_register['Pass legend'] ?></legend>
 					<div class="infldset">
-						<label class="conl required"><strong><?php echo $lang_common['Password'] ?> <span><?php echo $lang_common['Required'] ?></span></strong><br /><input type="password" name="req_password1" value="<?php if (isset($_POST['req_password1'])) echo pun_htmlspecialchars($_POST['req_password1']); ?>" size="16" /><br /></label>
-						<label class="conl required"><strong><?php echo $lang_prof_reg['Confirm pass'] ?> <span><?php echo $lang_common['Required'] ?></span></strong><br /><input type="password" name="req_password2" value="<?php if (isset($_POST['req_password2'])) echo pun_htmlspecialchars($_POST['req_password2']); ?>" size="16" /><br /></label>
+						<label class="conl required"><strong><?php echo $lang_common['Password'] ?> <span><?php echo $lang_common['Required'] ?></span></strong><br /><input type="password" name="req_password1" value="<?php if ($request->isPost('req_password1')) echo pun_htmlspecialchars($request->postStr('req_password1', '')); ?>" size="16" /><br /></label>
+						<label class="conl required"><strong><?php echo $lang_prof_reg['Confirm pass'] ?> <span><?php echo $lang_common['Required'] ?></span></strong><br /><input type="password" name="req_password2" value="<?php if ($request->isPost('req_password2')) echo pun_htmlspecialchars($request->postStr('req_password2', '')); ?>" size="16" /><br /></label>
 						<p class="clearb"><?php echo $lang_register['Pass info'] ?></p>
 					</div>
 				</fieldset>
@@ -341,9 +342,9 @@ if (!empty($errors))
 					<div class="infldset">
 <?php if ($pun_config['o_regs_verify'] == '1'): ?>						<p><?php echo $lang_register['Email info'] ?></p>
 <?php endif; ?>						<label class="required"><strong><?php echo $lang_common['Email'] ?> <span><?php echo $lang_common['Required'] ?></span></strong><br />
-						<input type="text" name="req_email1" value="<?php if (isset($_POST['req_email1'])) echo pun_htmlspecialchars($_POST['req_email1']); ?>" size="50" maxlength="80" /><br /></label>
+						<input type="text" name="req_email1" value="<?php if ($request->isPost('req_email1')) echo pun_htmlspecialchars($request->postStr('req_email1', '')); ?>" size="50" maxlength="80" /><br /></label>
 <?php if ($pun_config['o_regs_verify'] == '1'): ?>						<label class="required"><strong><?php echo $lang_register['Confirm email'] ?> <span><?php echo $lang_common['Required'] ?></span></strong><br />
-						<input type="text" name="req_email2" value="<?php if (isset($_POST['req_email2'])) echo pun_htmlspecialchars($_POST['req_email2']); ?>" size="50" maxlength="80" /><br /></label>
+						<input type="text" name="req_email2" value="<?php if ($request->isPost('req_email2')) echo pun_htmlspecialchars($request->postStr('req_email2', '')); ?>" size="50" maxlength="80" /><br /></label>
 <?php endif; ?>					</div>
 				</fieldset>
 			</div>
@@ -442,7 +443,7 @@ if (!empty($errors))
 						</div>
 <?php if ($pun_config['o_regs_verify'] == '0'): ?>						<p><?php echo $lang_prof_reg['Save user/pass info'] ?></p>
 						<div class="rbox">
-							<label><input type="checkbox" name="save_pass" value="1"<?php if (isset($save_pass) && $save_pass == '1') echo ' checked="checked"' ?> /><?php echo $lang_prof_reg['Save user/pass'] ?><br /></label>
+							<label><input type="checkbox" name="save_pass" value="1"<?php if ($save_pass === 1) echo ' checked="checked"' ?> /><?php echo $lang_prof_reg['Save user/pass'] ?><br /></label>
 						</div>
 <?php endif; ?>					</div>
 				</fieldset>
