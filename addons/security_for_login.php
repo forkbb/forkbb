@@ -36,7 +36,9 @@ class addon_security_for_login extends flux_addon
 
 	function hook_login_before_header()
 	{
-		global $db, $pun_config;
+		global $container, $pun_config;
+
+		$db = $container->get('DB');
 
 		if (empty($pun_config['o_sec_of_login']) || $pun_config['o_sec_of_login'] != $this->version)
 		{
@@ -89,7 +91,9 @@ class addon_security_for_login extends flux_addon
 
 	function hook_login_before_submit()
 	{
-		global $db;
+		global $container;
+
+		$db = $container->get('DB');
 
 		$now = time();
 		$ip = get_remote_address();
@@ -113,26 +117,29 @@ class addon_security_for_login extends flux_addon
 
 	function hook_login_before_validation()
 	{
-		global $db, $errors;
+		global $container, $errors;
 		
+		$db = $container->get('DB');
+		$request = $container->get('Request');
+
 		if (!defined('FORUM_SEC_FUNCTIONS_LOADED'))
 			include PUN_ROOT.'include/security.php';
 
 		$now = time();
 
-		if (!isset($_POST[$this->form_key]))
+		if (! $request->isPost($this->form_key))
 		{
 			$errors[] = security_msg('1');
 			return;
 		}
 
-		if (empty($_POST['req_username']) || empty($_POST['req_password']) || empty($_POST['redirect_url']))
+		if (empty($request->postStr('req_username')) || empty($request->postStr('req_password')) || empty($request->postStr('redirect_url')))
 			$errors[] = security_msg('1');
 
 		if (security_test_browser())
 			$errors[] = security_msg('2');
 
-		$result = $db->query('SELECT * FROM '.$db->prefix.'sec_of_login WHERE form_key=\''.$db->escape($_POST[$this->form_key]).'\' LIMIT 1') or error('Unable to get sec_of_login data', __FILE__, __LINE__, $db->error());
+		$result = $db->query('SELECT * FROM '.$db->prefix.'sec_of_login WHERE form_key=\''.$db->escape($requst->postStr($this->form_key, '')).'\' LIMIT 1') or error('Unable to get sec_of_login data', __FILE__, __LINE__, $db->error());
 		$cur_form = $db->fetch_assoc($result);
 
 		if (empty($cur_form['form_time']) || $cur_form['form_captcha'] == 'error')
@@ -158,9 +165,9 @@ class addon_security_for_login extends flux_addon
 		}
 
 		if (empty($errors))
-			$db->query('DELETE FROM '.$db->prefix.'sec_of_login WHERE form_key=\''.$db->escape($_POST[$this->form_key]).'\'') or error('Unable to delete sec_of_login data', __FILE__, __LINE__, $db->error());
+			$db->query('DELETE FROM '.$db->prefix.'sec_of_login WHERE form_key=\''.$db->escape($requst->postStr($this->form_key, '')).'\'') or error('Unable to delete sec_of_login data', __FILE__, __LINE__, $db->error());
 		else
-			$db->query('UPDATE '.$db->prefix.'sec_of_login SET form_captcha=\'error\' WHERE form_key=\''.$db->escape($_POST[$this->form_key]).'\'') or error('Unable to update sec_of_login data', __FILE__, __LINE__, $db->error());
+			$db->query('UPDATE '.$db->prefix.'sec_of_login SET form_captcha=\'error\' WHERE form_key=\''.$db->escape($requst->postStr($this->form_key, '')).'\'') or error('Unable to update sec_of_login data', __FILE__, __LINE__, $db->error());
 	}
 
 

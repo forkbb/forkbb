@@ -29,8 +29,10 @@ $sconf = array(
 	'pic_h' => 1050,
 	);
 
+$request = $container->get('Request');
+
 // Установка плагина/мода
-if (isset($_POST['installation']))
+if ($request->isPost('installation'))
 {
 	$db->add_field('users', 'upload', 'INT(15)', false, 0) or error(sprintf($lang_up['Error DB'], 'users'), __FILE__, __LINE__, $db->error());
 	$db->add_field('groups', 'g_up_ext', 'VARCHAR(255)', false, PLUGIN_EXTS) or error(sprintf($lang_up['Error DB'], 'groups'), __FILE__, __LINE__, $db->error());
@@ -51,7 +53,7 @@ if (isset($_POST['installation']))
 }
 
 // Обновления параметров
-else if (isset($_POST['update']))
+else if ($request->isPost('update'))
 {
 	if (!isset($pun_user['g_up_ext']))
 	{
@@ -60,9 +62,9 @@ else if (isset($_POST['update']))
 		$db->add_field('groups', 'g_up_limit', 'INT(15)', false, 0) or error(sprintf($lang_up['Error DB'], 'groups'), __FILE__, __LINE__, $db->error());
 	}
 
-	$g_up_ext = isset($_POST['g_up_ext']) ? array_map('pun_trim', $_POST['g_up_ext']) : array();
-	$g_up_limit = isset($_POST['g_up_limit']) ? array_map('intval', $_POST['g_up_limit']) : array();
-	$g_up_max = isset($_POST['g_up_max']) ? array_map('intval', $_POST['g_up_max']) : array();
+	$g_up_ext = array_map('trim', $request->post('g_up_ext', array()));
+	$g_up_limit = array_map('intval', $request->post('g_up_limit', array()));
+	$g_up_max = array_map('intval', $request->post('g_up_max', array()));
 
 	$result = $db->query('SELECT g_id FROM '.$db->prefix.'groups ORDER BY g_id') or error('Unable to fetch user group list', __FILE__, __LINE__, $db->error());
 	while ($cur_group = $db->fetch_assoc($result))
@@ -94,21 +96,22 @@ else if (isset($_POST['update']))
 			$db->query('UPDATE '.$db->prefix.'groups SET g_up_ext=\''.$db->escape($g_ext).'\', g_up_limit='.$g_lim.', g_up_max='.$g_max.' WHERE g_id='.$cur_group['g_id']) or error('Unable to update user group list', __FILE__, __LINE__, $db->error());
 		}
 
-	if (isset($_POST['thumb']))
-		$sconf['thumb'] = ($_POST['thumb'] == '1' ? 1 : 0);
-	if (isset($_POST['thumb_size']) && $_POST['thumb_size'] > 0)
-		$sconf['thumb_size'] = intval($_POST['thumb_size']);
-	if (isset($_POST['thumb_perc']) && $_POST['thumb_perc'] > 0 && $_POST['thumb_perc'] <= 100)
-		$sconf['thumb_perc'] = intval($_POST['thumb_perc']);
+    //????
+	if ($request->isPost('thumb'))
+		$sconf['thumb'] = $request->postInt('thumb', 0) === 1 ? 1 : 0;
+	if ($request->isPost('thumb_size') && $request->postInt('thumb_size', 0) > 0)
+		$sconf['thumb_size'] = $request->postInt('thumb_size', 1);
+	if ($request->isPost('thumb_perc') && $request->postInt('thumb_perc', 0) > 0 && $request->postInt('thumb_perc', 0) <= 100)
+		$sconf['thumb_perc'] = $request->postInt('thumb_perc', 1);
 
-	if (isset($_POST['pic_mass']) && $_POST['pic_mass'] >= 0)
-		$sconf['pic_mass'] = intval($_POST['pic_mass']);
-	if (isset($_POST['pic_perc']) && $_POST['pic_perc'] > 0 && $_POST['pic_perc'] <= 100)
-		$sconf['pic_perc'] = intval($_POST['pic_perc']);
-	if (isset($_POST['pic_w']) && $_POST['pic_w'] >= 100)
-		$sconf['pic_w'] = intval($_POST['pic_w']);
-	if (isset($_POST['pic_h']) && $_POST['pic_h'] >= 100)
-		$sconf['pic_h'] = intval($_POST['pic_h']);
+	if ($request->isPost('pic_mass') && $request->postInt('pic_mass', -1) > -1)
+		$sconf['pic_mass'] = $request->postInt('pic_mass', 0);
+	if ($request->isPost('pic_perc') && $request->postInt('pic_perc', 0) > 0 && $request->postInt('pic_perc', 0) <= 100)
+		$sconf['pic_perc'] = $request->postInt('pic_perc', 1);
+	if ($request->isPost('pic_w') && $request->postInt('pic_w', 0) >= 100)
+		$sconf['pic_w'] = $request->postInt('pic_w', 100);
+	if ($request->isPost('pic_h') && $request->postInt('pic_h', 0) >= 100)
+		$sconf['pic_h'] = $request->postInt('pic_h', 100);
 
 	$db->query('DELETE FROM '.$db->prefix.'config WHERE conf_name LIKE \'o\_uploadile\_%\'') or error('Unable to remove config entries', __FILE__, __LINE__, $db->error());;
 	$db->query('INSERT INTO '.$db->prefix.'config (conf_name, conf_value) VALUES(\'o_uploadile_other\', \''.$db->escape(serialize($sconf)).'\')') or error($lang_up['Error DB ins-up'], __FILE__, __LINE__, $db->error());
@@ -122,7 +125,7 @@ else if (isset($_POST['update']))
 }
 
 // Удаление мода
-else if (isset($_POST['restore']))
+else if ($request->isPost('restore'))
 {
 	$db->drop_field('users', 'upload') or error('Unable to drop upload field', __FILE__, __LINE__, $db->error());
 	$db->drop_field('groups', 'g_up_ext') or error('Unable to drop g_up_ext field', __FILE__, __LINE__, $db->error());
@@ -152,14 +155,15 @@ $mem = 'img/members/';
 $regx = '%^img/members/(\d+)/(.+)\.([0-9a-zA-Z]+)$%i';
 // #############################################################################
 // Удаление файлов
-if (isset($_POST['delete']) && isset($_POST['delete_f']) && is_array($_POST['delete_f']))
+if ($request->isPost('delete') && is_array($request->post('delete_f')))
 {
 	$error = 0;
 
 	if (is_dir(PUN_ROOT.$mem))
 	{
 		$au = array();
-		foreach ($_POST['delete_f'] as $file)
+		$data = $request->post('delete_f');
+		foreach ($data as $file)
 		{
 			preg_match($regx, $file, $fi);
 			if (!isset($fi[1]) || !isset($fi[2]) || !isset($fi[3])) continue;
@@ -190,7 +194,7 @@ if (isset($_POST['delete']) && isset($_POST['delete_f']) && is_array($_POST['del
 		}
 	}
 
-	$p = (!isset($_GET['p']) || $_GET['p'] <= 1) ? 1 : intval($_GET['p']);
+	$p = max($request->getInt('p', 1), 1);
 
 	if ($error == 0)
 		redirect(PLUGIN_URL.($p > 1 ? '&amp;p='.$p : ''), $lang_up['Redirect delete']);
@@ -402,7 +406,7 @@ if (is_dir(PUN_ROOT.$mem))
 	if (!empty($af))
 	{
 		$num_pages = ceil(sizeof($af) / PLUGIN_NF);
-		$p = (!isset($_GET['p']) || $_GET['p'] <= 1) ? 1 : intval($_GET['p']);
+		$p = max($request->getInt('p', 1), 1);
 		if ($p > $num_pages)
 		{
 			header('Location: '.PLUGIN_URL.'&p='.$num_pages.'#gofile');
@@ -501,7 +505,7 @@ else
 		$dir = $mem.$fi[1].'/';
 		$size_file = file_size(filesize(PUN_ROOT.$file));
 		$miniature = $dir.'mini_'.$fi[2].'.'.$fi[3];
-		if (isset($_POST['update_thumb']) && $aconf['thumb'] == 1 && array_key_exists(strtolower($fi[3]),$extimageGD))
+		if ($request->isPost('update_thumb') && $aconf['thumb'] == 1 && array_key_exists(strtolower($fi[3]),$extimageGD))
 			img_resize(PUN_ROOT.$file, $dir, 'mini_'.$fi[2], $fi[3], 0, $aconf['thumb_size'], $aconf['thumb_perc']);
 
 ?>

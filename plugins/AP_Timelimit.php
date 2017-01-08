@@ -20,11 +20,13 @@ if (file_exists(PUN_ROOT.'lang/'.$pun_user['language'].'/admin_plugin_timelimit.
 else
 	require PUN_ROOT.'lang/English/admin_plugin_timelimit.php';
 
+$request = $container->get('Request');
+
 // If the "Show text" button was clicked
-if (isset($_POST['show_text']))
+if ($request->isPost('show_text'))
 {
 
-	$g_order = array_map('pun_trim', $_POST['g_order']);
+	$g_order = array_map('trim', $request->post('g_order'));
 
 	$result = $db->query('SELECT g_id, g_title, g_deledit_interval FROM '.$db->prefix.'groups ORDER BY g_id') or error('Unable to fetch user group list', __FILE__, __LINE__, $db->error());
 

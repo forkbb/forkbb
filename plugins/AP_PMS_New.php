@@ -20,14 +20,16 @@ if (file_exists(PUN_ROOT.'lang/'.$admin_language.'/admin_plugin_pms_new.php'))
 else
 	require PUN_ROOT.'lang/English/admin_plugin_pms_new.php';
 
+$request = $container->get('Request');
+
 // If the "Show text" button was clicked
-if (isset($_POST['show_text']))
+if ($request->isPost('show_text'))
 {
-	$en_pms = isset($_POST['enable_pms']) ? 1 : 0;
-	$g_limit = isset($_POST['g_limit']) ? array_map('pun_trim', $_POST['g_limit']) : array();
-	$g_pm = isset($_POST['g_pm']) ? array_map('pun_trim', $_POST['g_pm']) : array();
-	$min_kolvo = isset($_POST['min_kolvo']) ? intval($_POST['min_kolvo']) : 0;
-	$flash_pms = isset($_POST['flasher_pms']) ? 1 : 0;
+	$en_pms = $request->isPost('enable_pms') ? 1 : 0;
+	$g_limit = array_map('trim', $request->post('g_limit', array()));
+	$g_pm = array_map('trim', $request->post('g_pm', array());
+	$min_kolvo = max($request->postInt('min_kolvo', 0), 0);
+	$flash_pms = $request->isPost('flasher_pms') ? 1 : 0;
 
 	$db->query('UPDATE '.$db->prefix.'config SET conf_value=\''.$en_pms.'\' WHERE conf_name=\'o_pms_enabled\'') or error('Unable to update board config', __FILE__, __LINE__, $db->error());
 	$db->query('UPDATE '.$db->prefix.'config SET conf_value=\''.$min_kolvo.'\' WHERE conf_name=\'o_pms_min_kolvo\'') or error('Unable to update board config', __FILE__, __LINE__, $db->error());

@@ -112,8 +112,10 @@ function DeleteModInFiles ()
 	return $errors;
 }
 
+$request = $container->get('Request');
+
 // Установка плагина/мода
-if (isset($_POST['installation']))
+if ($request->isPost('installation'))
 {
 	$db->query('DELETE FROM '.$db->prefix.'config WHERE conf_name LIKE \'o\_fbox\_%\'') or error('Unable to remove config entries', __FILE__, __LINE__, $db->error());;
 	$db->query('INSERT INTO '.$db->prefix.'config (conf_name, conf_value) VALUES(\'o_fbox_guest\', \'0\')') or error('Unable to insert into table config.', __FILE__, __LINE__, $db->error());
@@ -133,10 +135,10 @@ if (isset($_POST['installation']))
 }
 
 // Обновления параметров
-else if (isset($_POST['update']))
+else if ($request->isPost('update'))
 {
-	$gst = isset($_POST['guest_on']) ? 1 : 0;
-	$files = isset($_POST['files']) ? array_map('pun_trim', $_POST['files']) : array();
+	$gst = $request->isPost('guest_on') ? 1 : 0;
+	$files = array_map('trim', $request->post('files', array()));
 	$fls = array();
 	foreach ($files as $file)
 	{
@@ -158,7 +160,7 @@ else if (isset($_POST['update']))
 }
 
 // Удаление мода
-else if (isset($_POST['delete']))
+else if ($request->isPost('delete'))
 {
 	$db->query('DELETE FROM '.$db->prefix.'config WHERE conf_name LIKE \'o\_fbox\_%\'') or error('Unable to remove config entries', __FILE__, __LINE__, $db->error());;
 

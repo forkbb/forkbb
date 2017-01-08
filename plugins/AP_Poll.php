@@ -20,22 +20,23 @@ if (file_exists(PUN_ROOT.'lang/'.$admin_language.'/admin_plugin_poll.php'))
 else
 	require PUN_ROOT.'lang/English/admin_plugin_poll.php';
 
+$request = $container->get('Request');
+
 // If the "Show text" button was clicked
-if (isset($_POST['show_text']))
+if ($request->isPost('show_text'))
 {
 
-	$en_poll = isset($_POST['enable_poll']) ? intval($_POST['enable_poll']) : 0;
-	$en_poll = ($en_poll == 1) ? 1 : 0;
-	
+	$en_poll = $request->isPost('enable_poll') ? 1 : 0;
+
 	$db->query('UPDATE '.$db->prefix.'config SET conf_value=\''.$en_poll.'\' WHERE conf_name=\'o_poll_enabled\'') or error('Unable to update board config', __FILE__, __LINE__, $db->error());
 
 	if ($en_poll == 1)
 	{
-		$poll_max_ques = isset($_POST['poll_max_ques']) ? $_POST['poll_max_ques'] : $pun_config['o_poll_max_ques'];
-		$poll_max_field = isset($_POST['poll_max_field']) ? $_POST['poll_max_field'] : $pun_config['o_poll_max_field'];
-		$poll_time = isset($_POST['poll_time']) ? $_POST['poll_time'] : $pun_config['o_poll_time'];
-		$poll_term = isset($_POST['poll_term']) ? $_POST['poll_term'] : $pun_config['o_poll_term'];
-		$poll_guest = isset($_POST['poll_guest']) ? 1 : 0;
+		$poll_max_ques = $request->postInt('poll_max_ques', $pun_config['o_poll_max_ques']);
+		$poll_max_field = $request->postInt('poll_max_field', $pun_config['o_poll_max_field']);
+		$poll_time = $request->postInt('poll_time', $pun_config['o_poll_time']);
+		$poll_term = $request->postInt('poll_term', $pun_config['o_poll_term']);
+		$poll_guest = $request->isPost('poll_guest') ? 1 : 0;
 		$poll_max_ques = min(10, max(1, $poll_max_ques));
 		$poll_max_field = min(90, max(2, $poll_max_field));
 

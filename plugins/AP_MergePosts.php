@@ -19,14 +19,16 @@ if (file_exists(PUN_ROOT.'lang/'.$admin_language.'/admin_plugin_merge_posts.php'
 else
 	require PUN_ROOT.'lang/English/admin_plugin_merge_posts.php';
 
+$request = $container->get('Request');
+
 // If the "Show text" button was clicked
-if (isset($_POST['show_text']))
+if ($request->isPost('show_text'))
 {
 	// Make sure something was entered
-	if (!isset($_POST['text_to_show']) || pun_trim($_POST['text_to_show']) == '')
+	if (trim($request->postStr('text_to_show')) == '') //????
 		message($lang_admin_plugin_merge_posts['No text']);
 
-	$merge_timeout = intval($_POST['text_to_show']);
+	$merge_timeout = $request->postInt('text_to_show', 0); //????
 	$db->query('UPDATE '.$db->prefix.'config SET conf_value=\''.$merge_timeout.'\' WHERE conf_name=\'o_merge_timeout\'') or error('Unable to update board config', __FILE__, __LINE__, $db->error());
 
 	// Regenerate the config cache

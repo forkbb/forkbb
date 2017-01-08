@@ -20,14 +20,18 @@ if (file_exists(PUN_ROOT.'lang/'.$admin_language.'/admin_plugin_not_sum.php'))
 else
 	require PUN_ROOT.'lang/English/admin_plugin_not_sum.php';
 
+$request = $container->get('Request');
+
 // If the "Show text" button was clicked
-if (isset($_POST['show_text']))
+if ($request->isPost('show_text'))
 {
 	$result = $db->query('SELECT id FROM '.$db->prefix.'forums ORDER BY id') or error('Unable to fetch forums', __FILE__, __LINE__, $db->error());
 
+    $data = $request->post('no_sum_mess', array());
+
 	while ($cur_forum = $db->fetch_assoc($result))
 	{
-		$nosu = isset($_POST['no_sum_mess'][$cur_forum['id']]) ? intval($_POST['no_sum_mess'][$cur_forum['id']]) : 0;
+		$nosu = isset($data[$cur_forum['id']]) ? intval($data[$cur_forum['id']]) : 0;
 		$db->query('UPDATE '.$db->prefix.'forums SET no_sum_mess='.$nosu.' WHERE id='.$cur_forum['id']) or error('Unable to update forums', __FILE__, __LINE__, $db->error());
 	}
 

@@ -50,12 +50,14 @@ while (($entry = $d->read()) !== false)
 $d->close();
 @natsort($img_smilies);
 
+$request = $container->get('Request');
+
 // Change smilies texts, images and positions
-if (isset($_POST['reord']))
+if ($request->isPost('reord'))
 {
-	$smilies_order = array_map('intval', array_map('pun_trim', $_POST['smilies_order']));
-	$smilies_img = array_map('pun_trim', $_POST['smilies_img']);
-	$smilies_code = array_map('pun_trim', $_POST['smilies_code']);
+	$smilies_order = array_map('intval', array_map('trim', $request->post('smilies_order')));
+	$smilies_img = array_map('trim', $request->post('smilies_img'));
+	$smilies_code = array_map('trim', $request->post('smilies_code'));
 
 	// Checking smilies codes
 	$smiley_dups = array();
@@ -86,11 +88,12 @@ if (isset($_POST['reord']))
 }
 
 // Remove smilies
-elseif (isset($_POST['remove']))
+elseif ($request->isPost('remove'))
 {
-	if (empty($_POST['rem_smilies']))
+	$rem_smilies = $request->post('rem_smilies');
+	if (empty($rem_smilies))
 		message($lang_smiley['No Smileys']);
-	$rem_smilies = array_map('intval', array_keys($_POST['rem_smilies']));
+	$rem_smilies = array_map('intval', array_keys($rem_smilies));
 
 	// Delete smilies
 	$db->query('DELETE FROM '.$db->prefix.'smilies WHERE id IN ('.implode(', ', $rem_smilies).')') or error('Unable to delete smiley', __FILE__, __LINE__, $db->error());
@@ -105,10 +108,10 @@ elseif (isset($_POST['remove']))
 }
 
 // Add a smiley to the list
-elseif (isset($_POST['add_smiley']))
+elseif ($request->isPost('add_smiley'))
 {
-	$smiley_code = pun_trim($_POST['smiley_code']);
-	$smiley_image = pun_trim($_POST['smiley_image']);
+	$smiley_code = trim($request->postStr('smiley_code'));
+	$smiley_image = trim($request->postStr('smiley_image'));
 
 	// Checking text code and image
 	if ($smiley_code == '')
@@ -131,11 +134,12 @@ elseif (isset($_POST['add_smiley']))
 }
 
 // Delete images
-elseif (isset($_POST['delete']))
+elseif ($request->isPost('delete'))
 {
-	if (empty($_POST['del_smilies']))
+	$del_smilies = $request->post('del_smilies');
+	if (empty($del_smilies))
 		message($lang_smiley['No Images']);
-	$del_smilies = array_map('pun_trim', $_POST['del_smilies']);
+	$del_smilies = array_map('trim', $del_smilies);
 
 	$to_delete = $images_affected = $not_deleted = array();
 
@@ -170,7 +174,7 @@ elseif (isset($_POST['delete']))
 }
 
 // Add an image
-elseif (isset($_POST['add_image']))
+elseif ($request->isPost('add_image'))
 {
 	if (!isset($_FILES['req_file']))
 		message($lang_smiley['No file']);
