@@ -14,10 +14,11 @@ require PUN_ROOT.'include/common.php';
 if ($pun_user['g_read_board'] == '0')
 	message($lang_common['No view'], false, '403 Forbidden');
 
+$request = $container->get('Request');
 
-$action = isset($_GET['action']) ? $_GET['action'] : null;
-$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-$pid = isset($_GET['pid']) ? intval($_GET['pid']) : 0;
+$action = $request->getStr('action');
+$id = $request->getInt('id', 0);
+$pid = $request->getInt('pid', 0);
 if ($id < 1 && $pid < 1)
 	message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -38,12 +39,12 @@ if ($pid)
 	$result = $db->query('SELECT COUNT(id) FROM '.$db->prefix.'posts WHERE topic_id='.$id.' AND id<'.$pid) or error('Unable to count previous posts', __FILE__, __LINE__, $db->error());
 	$num_posts = $db->result($result) + 1;
 
-	$_GET['p'] = ceil($num_posts / $pun_user['disp_posts']);
+	$_GET['p'] = ceil($num_posts / $pun_user['disp_posts']); //????
 }
 else
 {
 	// If action=new, we redirect to the first new post (if any)
-	if ($action == 'new')
+	if ($action === 'new')
 	{
 		if (!$pun_user['is_guest'])
 		{
@@ -66,7 +67,7 @@ else
 	}
 
 	// If action=last, we redirect to the last post
-	if ($action == 'last')
+	if ($action === 'last')
 	{
 		$result = $db->query('SELECT MAX(id) FROM '.$db->prefix.'posts WHERE topic_id='.$id) or error('Unable to fetch last post info', __FILE__, __LINE__, $db->error());
 		$last_post_id = $db->result($result);
@@ -86,14 +87,14 @@ if (!is_null(poll_post('poll_submit')))
 {
 	poll_vote($id, $pun_user['id']);
 
-	redirect('viewtopic.php?id='.$id.((isset($_GET['p']) && $_GET['p'] > 1) ? '&p='.intval($_GET['p']) : ''), $lang_poll['M0']);
+	redirect('viewtopic.php?id='.$id.($request->getInt('p', 0) > 1 ? '&p='.$request->getInt('p', 1) : ''), $lang_poll['M0']);
 }
 
 // search HL - Visman
 $url_shl = '';
-if (isset($_GET['search_hl']))
+if ($request->isGet('search_hl'))
 {
-	$search_hl = intval($_GET['search_hl']);
+	$search_hl = $request->getInt('search_hl', 0);
 	if ($search_hl < 1)
 		message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -116,7 +117,7 @@ if (isset($_GET['search_hl']))
 	{
 		if ($id > 0)
 		{
-			$p = isset($_GET['p']) && $_GET['p'] > 1 ? '&p='.intval($_GET['p']) : '';
+			$p = $request->getInt('p', 0) > 1 ? '&p='.$request->getInt('p', 1) : '';
 
 			header('Location: viewtopic.php?id='.$id.$p.($pid > 0 ? '#p'.$pid : ''), true, 301);
 		}
@@ -225,7 +226,7 @@ if (!$pun_user['is_guest'])
 // Determine the post offset (based on $_GET['p'])
 $num_pages = ceil(($cur_topic['num_replies'] + 1) / $pun_user['disp_posts']);
 
-$p = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : intval($_GET['p']);
+$p = max(min($request->getInt('p', 1), $num_pages), 1);
 $start_from = $pun_user['disp_posts'] * ($p - 1);
 
 // Generate paging links

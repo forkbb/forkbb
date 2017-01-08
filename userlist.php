@@ -25,10 +25,13 @@ require PUN_ROOT.'lang/'.$pun_user['language'].'/search.php';
 // Determine if we are allowed to view post counts
 $show_post_count = ($pun_config['o_show_post_count'] == '1' || $pun_user['is_admmod']) ? true : false;
 
-$username = isset($_GET['username']) && $pun_user['g_search_users'] == '1' ? pun_trim($_GET['username']) : '';
-$show_group = isset($_GET['show_group']) ? intval($_GET['show_group']) : -1;
-$sort_by = isset($_GET['sort_by']) && (in_array($_GET['sort_by'], array('username', 'registered')) || ($_GET['sort_by'] == 'num_posts' && $show_post_count)) ? $_GET['sort_by'] : 'username';
-$sort_dir = isset($_GET['sort_dir']) && $_GET['sort_dir'] == 'DESC' ? 'DESC' : 'ASC';
+$request = $container->get('Request');
+
+$username = $pun_user['g_search_users'] == '1' ? trim($request->getStr('username')) : '';
+$show_group = $request->getInt('show_group', -1);
+$sort_by = $request->getStr('sort_by', 'username');
+$sort_by = in_array($sort_by, array('username', 'registered')) || ($sort_by === 'num_posts' && $show_post_count) ? $sort_by : 'username';
+$sort_dir = $request->getStr('sort_dir') === 'DESC' ? 'DESC' : 'ASC';
 
 // Create any SQL for the WHERE clause
 $where_sql = array();
@@ -46,7 +49,7 @@ $num_users = $db->result($result);
 // Determine the user offset (based on $_GET['p'])
 $num_pages = ceil($num_users / 50);
 
-$p = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : intval($_GET['p']);
+$p = max(min($request->getInt('p', 1), $num_pages), 1);
 $start_from = 50 * ($p - 1);
 
 $page_title = array(pun_htmlspecialchars($pun_config['o_board_title']), $lang_common['User list']);
