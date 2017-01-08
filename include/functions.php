@@ -1795,7 +1795,7 @@ H2 {MARGIN: 0; COLOR: #FFFFFF; BACKGROUND-COLOR: #B84623; FONT-SIZE: 1.1em; PADD
 //
 // Unset any variables instantiated as a result of register_globals being enabled
 //
-function forum_unregister_globals()
+function forum_unregister_globals() //????
 {
 	$register_globals = ini_get('register_globals');
 	if ($register_globals === '' || $register_globals === '0' || strtolower($register_globals) === 'off')
@@ -1824,7 +1824,7 @@ function forum_unregister_globals()
 //
 // Removes any "bad" characters (characters which mess with the display of a page, are invisible, etc) from user input
 //
-function forum_remove_bad_characters()
+function forum_remove_bad_characters() //????
 {
 	$_GET = remove_bad_characters($_GET);
 	$_POST = remove_bad_characters($_POST);

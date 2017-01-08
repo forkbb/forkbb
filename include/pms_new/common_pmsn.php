@@ -173,12 +173,9 @@ function pmsn_user_delete($user, $mflag, $topics = array())
 
 function pmsn_get_var($name, $default = null)
 {
-	if (isset($_POST[$name]))
-		return $_POST[$name];
-	else if (isset($_GET[$name]))
-		return $_GET[$name];
-	else
-		return $default;
+    global $container;
+
+    return $container->get('Request')->request($name, $default);
 }
 
 function pmsn_csrf_token($key)

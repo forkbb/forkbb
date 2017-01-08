@@ -12,7 +12,9 @@ if (!defined('PUN') || !defined('PUN_PMS_NEW'))
 
 define('PUN_PMS_LOADED', 1);
 
-$tid = isset($_GET['tid']) ? intval($_GET['tid']) : 0;
+$request = $container->get('Request');
+
+$tid = $request->getInt('tid', 0);
 if ($tid < 0)
 	message($lang_common['Bad request'], false, '404 Not Found');
 	
@@ -80,12 +82,12 @@ else
 	$mmodul = 'list';
 }
 
-if (!isset($_POST['req_addressee']) && (isset($_GET['uid']) || $sid))
+if (! $request->isPost('req_addressee') && ($request->isGet('uid') || $sid))
 {
 	if ($sid)
 		$uid = $sid;
 	else
-		$uid = intval($_GET['uid']);
+		$uid = $request->getInt('uid');
 	if ($uid < 2)
 		message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -125,7 +127,7 @@ require PUN_ROOT.'lang/'.$pun_user['language'].'/post.php';
 $errors = array();
 
 // Did someone just hit "Submit" or "Preview" or ""Save?
-if (isset($_POST['csrf_hash']))
+if ($request->isPost('csrf_hash'))
 {
 	if(!defined('PUN_PMS_NEW_CONFIRM'))
 		message($lang_common['Bad referrer']);
@@ -133,13 +135,13 @@ if (isset($_POST['csrf_hash']))
 	$now = time();
 
 	// Flood protection
-	if (!isset($_POST['preview']) && $pun_user['pmsn_last_post'] != '' && ($now - $pun_user['pmsn_last_post']) < $pun_user['g_post_flood'])
+	if (! $request->isPost('preview') && $pun_user['pmsn_last_post'] != '' && ($now - $pun_user['pmsn_last_post']) < $pun_user['g_post_flood'])
 		$errors[] = sprintf($lang_post['Flood start'], $pun_user['g_post_flood'], $pun_user['g_post_flood'] - ($now - $pun_user['pmsn_last_post']));
 
 	if ($tid == 0)
 	{
-		$subject = pun_trim($_POST['req_subject']);
-		$addressee = pun_trim($_POST['req_addressee']);
+		$subject = trim($request->postStr('req_subject'));
+		$addressee = trim($request->postStr('req_addressee'));
 
 		if ($subject == '')
 			$errors[] = $lang_pmsn['No subject'];
@@ -160,9 +162,9 @@ if (isset($_POST['csrf_hash']))
 			$to_user['id'] = $cur_addressee['id'];
 			$to_user['username'] = $cur_addressee['username'];
 
-			if ($pun_user['g_id'] != PUN_ADMIN && !isset($_POST['preview']))
+			if ($pun_user['g_id'] != PUN_ADMIN && ! $request->isPost('preview'))
 			{
-				if (isset($_POST['save']))
+				if ($request->isPost('save'))
 				{
 					if ($pmsn_kol_save >= $pun_user['g_pm_limit'] && $pun_user['g_pm_limit'] != 0)
 						$errors[] = $lang_pmsn['More maximum user'];
@@ -177,7 +179,7 @@ if (isset($_POST['csrf_hash']))
 			}
 		}
 	}
-	else if (!isset($_POST['preview']))
+	else if (! $request->isPost('preview'))
 	{
 		if ($pun_user['id'] == $cur_topic['starter_id'])
 			$mid = $cur_topic['to_id'];
@@ -189,7 +191,7 @@ if (isset($_POST['csrf_hash']))
 
 		if (empty($cur_addressee['id']) || $cur_addressee['id'] < 2)
 			$errors[] = $lang_pmsn['No addressee'];
-		else if ($pun_user['g_id'] != PUN_ADMIN && !isset($_POST['save']) && ($cur_addressee['messages_enable'] == 0 || $cur_addressee['g_pm'] == 0))
+		else if ($pun_user['g_id'] != PUN_ADMIN && ! $request->isPost('save') && ($cur_addressee['messages_enable'] == 0 || $cur_addressee['g_pm'] == 0))
 			$errors[] = $lang_pmsn['Off messages'];
  	}
 
@@ -207,7 +209,7 @@ if (isset($_POST['csrf_hash']))
 		}
 	}
 
-	$message = pun_linebreaks(pun_trim($_POST['req_message']));
+	$message = pun_linebreaks(trim($request->postStr('req_message')));
 
 	if (strlen($message) > 65535)
 		$errors[] = $lang_pmsn['Too long message'];
@@ -224,10 +226,10 @@ if (isset($_POST['csrf_hash']))
 	if ($message == '')
 		$errors[] = $lang_post['No message'];
 
-	$hide_smilies = isset($_POST['hide_smilies']) ? '1' : '0';
+	$hide_smilies = $request->isPost('hide_smilies') ? '1' : '0';
 
 	// posting
-	if (empty($errors) && !isset($_POST['preview']))
+	if (empty($errors) && ! $request->isPost('preview'))
 	{
 		$flag2 = 0;
 		
@@ -270,7 +272,7 @@ if (isset($_POST['csrf_hash']))
 		}
 		else // new dialog
 		{
-			if (isset($_POST['save']))
+			if ($request->isPost('save'))
 			{
 				$flag1 = 3;
 				$flag2 = 2;
@@ -340,9 +342,9 @@ if ($tid)
 		$form = '<form id="post" method="post" action="pmsnew.php?mdl=post&amp;tid='.$tid.$sidamp.'" onsubmit="this.submit.disabled=true;if(process_form(this)){return true;}else{this.submit.disabled=false;return false;}">'."\n";
 
 	// If a quote ID was specified in the url
-	if (isset($_GET['qid']))
+	if ($request->isGet('qid'))
 	{
-		$qid = intval($_GET['qid']);
+		$qid = $request->getInt('qid', 0);
 		if ($qid < 1)
 			message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -461,7 +463,7 @@ if (!empty($errors))
 
 <?php
 }
-else if (isset($_POST['preview']))
+else if ($request->isPost('preview'))
 {
 	require_once PUN_ROOT.'include/parser.php';
 	$preview_message = parse_message($message, $hide_smilies);
@@ -512,7 +514,7 @@ if ($tid==0)
 }
 ?>
 							<label class="required"><strong><?php echo $lang_common['Message'] ?> <span><?php echo $lang_common['Required'] ?></span></strong><br />
-							<textarea name="req_message" rows="20" cols="95" tabindex="<?php echo $cur_index++ ?>"><?php echo isset($_POST['req_message']) ? pun_htmlspecialchars($message) : (isset($quote) ? $quote : ''); ?></textarea><br /></label>
+							<textarea name="req_message" rows="20" cols="95" tabindex="<?php echo $cur_index++ ?>"><?php echo $request->isPost('req_message') ? pun_htmlspecialchars($message) : (isset($quote) ? $quote : ''); ?></textarea><br /></label>
 							<ul class="bblinks">
 								<li><span><a href="help.php#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a> <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></span></li>
 								<li><span><a href="help.php#url" onclick="window.open(this.href); return false;"><?php echo $lang_common['url tag'] ?></a> <?php echo ($pun_config['p_message_bbcode'] == '1' && $pun_user['g_post_links'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></span></li>
@@ -525,7 +527,7 @@ if ($tid==0)
 
 $checkboxes = array();
 if ($pun_config['o_smilies'] == '1')
-	$checkboxes[] = '<label><input type="checkbox" name="hide_smilies" value="1" tabindex="'.($cur_index++).'"'.(isset($_POST['hide_smilies']) ? ' checked="checked"' : '').' />'.$lang_post['Hide smilies'].'<br /></label>';
+	$checkboxes[] = '<label><input type="checkbox" name="hide_smilies" value="1" tabindex="'.($cur_index++).'"'.($request->isPost('hide_smilies') ? ' checked="checked"' : '').' />'.$lang_post['Hide smilies'].'<br /></label>';
 if (!empty($checkboxes))
 {
 ?>

@@ -12,41 +12,38 @@ if (!defined('PUN') || !defined('PUN_PMS_NEW'))
 
 define('PUN_PMS_LOADED', 1);
 
+$request = $container->get('Request');
+
 if (defined('PUN_PMS_NEW_CONFIRM'))
 {
-	if (!isset($_POST['delete']))
+	if (! $request->isPost('delete'))
 		message($lang_common['Bad request'], false, '404 Not Found');
 
-	if (isset($_POST['action2']))
+	if ($request->isPost('action2'))
 	{
-		if (!isset($_POST['user_numb']))
+        $unumbs = $request->postStr('user_numb');
+        if (empty($unumbs) || preg_match('/[^0-9,]/', $unumbs))
 			message($lang_common['Bad request'], false, '404 Not Found');
 
-		if (@preg_match('/[^0-9,]/', $_POST['user_numb']))
-			message($lang_common['Bad request'], false, '404 Not Found');
-
-		$unumbs = explode(',', $_POST['user_numb']);
+		$unumbs = explode(',', $unumbs);
 	}
 	else
 	{
-		if (!isset($_POST['user_numb']))
-			message($lang_common['Bad request'], false, '404 Not Found');
-
-		$unumbs = array_map('intval', array_keys($_POST['user_numb']));
+		$unumbs = array_map('intval', array_keys($request->post('user_numb', array()))); //????
 	}
 
 	if (count($unumbs) < 1)
 		message($lang_common['Bad request'], false, '404 Not Found');
 
 	// действуем
-	if (isset($_POST['action2']))
+	if ($request->isPost('action2'))
 	{
 		$db->query('DELETE FROM '.$db->prefix.'pms_new_block WHERE bl_id='.$pun_user['id'].' AND bl_user_id IN ('.implode(',', $unumbs).')') or error('Unable to remove line in pms_new_block', __FILE__, __LINE__, $db->error());
 
 		$mred = '';
-		if (isset($_POST['p']))
+		if ($request->isPost('p'))
 		{
-			$p = intval($_POST['p']);
+			$p = $request->postInt('p', 0);
 			if ($p > 1)
 				$mred = '&amp;p='.$p;
 		}
@@ -83,7 +80,7 @@ generate_pmsn_menu($pmsn_modul);
 					<input type="hidden" name="csrf_hash" value="<?php echo $pmsn_csrf_hash; ?>" />
 					<input type="hidden" name="user_numb" value="<?php echo implode(',', $unumbs) ?>" />
 					<input type="hidden" name="delete" value="1" />
-					<input type="hidden" name="p" value="<?php echo intval($_POST['p']); ?>" />
+					<input type="hidden" name="p" value="<?php echo $request->postInt('p', 1); ?>" />
 					<fieldset>
 						<legend><?php echo $lang_pmsn['Attention'] ?></legend>
 						<div class="infldset">

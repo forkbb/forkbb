@@ -12,32 +12,33 @@ if (!defined('PUN') || !defined('PUN_PMS_NEW'))
 
 define('PUN_PMS_LOADED', 1);
 
+$request = $container->get('Request');
+
 if (defined('PUN_PMS_NEW_CONFIRM'))
 {
-	if (!isset($_POST['delete']) && !isset($_POST['save']))
+	if (! $request->isPost('delete') && ! $request->isPost('save'))
 		message($lang_common['Bad request'], false, '404 Not Found');
 
-	if (isset($_POST['delete']))
+	if ($request->isPost('delete'))
 		$mflag = 2;
 	else
 		$mflag = 3;
 
-	if (isset($_POST['action2']))
+	if ($request->isPost('action2'))
 	{
-		if (!isset($_POST['topics']))
+        $topics = $request->postStr('topics');
+
+		if (empty($topics) || preg_match('/[^0-9,]/', $topics))
 			message($lang_common['Bad request'], false, '404 Not Found');
 
-		if (@preg_match('/[^0-9,]/', $_POST['topics']))
-			message($lang_common['Bad request'], false, '404 Not Found');
-
-		$topics = explode(',', $_POST['topics']);
+		$topics = explode(',', $topics);
 	}
 	else
 	{
-		if (!isset($_POST['post_topic']))
+		if (! $request->isPost('post_topic'))
 			message($lang_common['Bad request'], false, '404 Not Found');
 
-		$topics = array_map('intval', array_keys($_POST['post_topic']));
+		$topics = array_map('intval', array_keys($request->post('post_topic'))); //????
 	}
 
 	$kolvo = count($topics);
@@ -50,14 +51,14 @@ if (defined('PUN_PMS_NEW_CONFIRM'))
 		message($lang_pmsn['Err2']);
 
 	// действуем
-	if (isset($_POST['action2']))
+	if ($request->isPost('action2'))
 	{
 		pmsn_user_delete($pun_user['id'], $mflag, $topics);
 
 		$mred = '';
-		if (isset($_POST['p']))
+		if ($request->isPost('p'))
 		{
-			$p = intval($_POST['p']);
+			$p = $request->postInt('p', 0);
 			if ($p > 1)
 				$mred = '&amp;p='.$p;
 		}
@@ -67,7 +68,7 @@ if (defined('PUN_PMS_NEW_CONFIRM'))
 else
 	message($lang_common['Bad referrer']);
 
-if (isset($_POST['delete']))
+if ($request->isPost('delete'))
 {
 	$mh2 = $lang_pmsn['InfoDeleteQ'];
 	$mhm = $lang_pmsn['InfoDeleteQm'];
@@ -107,7 +108,7 @@ generate_pmsn_menu($pmsn_modul);
 					<input type="hidden" name="csrf_hash" value="<?php echo $pmsn_csrf_hash ?>" />
 					<input type="hidden" name="topics" value="<?php echo implode(',', $topics) ?>" />
 					<input type="hidden" name="<?php echo $mfm ?>" value="1" />
-					<input type="hidden" name="p" value="<?php echo intval($_POST['p']) ?>" />
+					<input type="hidden" name="p" value="<?php echo $request->postInt('p', 1); ?>" />
 					<fieldset>
 						<legend><?php echo $lang_pmsn['Attention'] ?></legend>
 						<div class="infldset">

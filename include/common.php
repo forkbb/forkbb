@@ -149,7 +149,7 @@ if (!defined('WITT_ENABLE')) // Кто в этой теме - Visman
 	update_users_online();
 
 // Check to see if we logged in without a cookie being set
-if ($pun_user['is_guest'] && isset($_GET['login']))
+if ($pun_user['is_guest'] && $container->get('Request')->isGet('login'))
 	message($lang_common['No cookie']);
 
 // The maximum size of a post, in bytes, since the field is now MEDIUMTEXT this allows ~16MB but lets cap at 1MB...

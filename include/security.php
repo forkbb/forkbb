@@ -241,11 +241,13 @@ function security_test_browser()
 
 function security_verify_captcha($form_captcha)
 {
+    global $container;
+
 	$form_captcha = unserialize($form_captcha);
 
 	foreach ($form_captcha as $key => $val)
 	{
-		if (!isset($_POST[$key]) || pun_trim($_POST[$key]) != $val)
+		if (trim($container->get('Request')->postStr($key)) != $val)
 		{
 			if (substr($key, 0, 4) == 'jst_')
 				return 8; // js выключен

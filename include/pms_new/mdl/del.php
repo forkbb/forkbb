@@ -30,7 +30,9 @@ $cur_post = $db->fetch_assoc($result);
 if (!in_array($cur_post['tid'], $pmsn_arr_list) && !in_array($cur_post['tid'], $pmsn_arr_save))
 	message($lang_common['Bad request'], false, '404 Not Found');
 
-if (isset($_POST['action2']))
+$request = $container->get('Request');
+
+if ($request->isPost('action2'))
 {
 	if (!defined('PUN_PMS_NEW_CONFIRM'))
 		message($lang_common['Bad referrer']);

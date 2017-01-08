@@ -33,7 +33,9 @@ function poll_mess($mess, $ques = '', $vote = '')
 // получение данных из формы ***************************************************
 function poll_post($var, $default = null)
 {
-	return isset($_POST[$var]) ? $_POST[$var] : $default;
+    global $container;
+
+	return $container->get('Request')->post($var, $default);
 }
 
 // запрещено ли редактировать **************************************************

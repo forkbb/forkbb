@@ -12,8 +12,10 @@ if (!defined('PUN') || !defined('PUN_PMS_NEW'))
 
 define('PUN_PMS_LOADED', 1);
 
-$tid = isset($_GET['tid']) ? intval($_GET['tid']) : 0;
-$pid = isset($_GET['pid']) ? intval($_GET['pid']) : 0;
+$request = $container->get('Request');
+
+$tid = $request->getInt('tid', 0);
+$pid = $request->getInt('pid', 0);
 if ($tid < 1 && $pid < 1)
 	message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -27,7 +29,7 @@ if ($pid)
 
 	$result = $db->query('SELECT COUNT(id) FROM '.$db->prefix.'pms_new_posts WHERE topic_id='.$tid.' AND id<'.$pid) or error('Unable to fetch pms_new_posts info', __FILE__, __LINE__, $db->error());
 	$i = $db->result($result) + 1;
-	$_GET['p'] = ceil($i / $pun_user['disp_posts']);
+	$_GET['p'] = ceil($i / $pun_user['disp_posts']); //????
 }
 else if ($action == 'new')
 {
@@ -120,7 +122,7 @@ require PUN_ROOT.'lang/'.$pun_user['language'].'/topic.php';
 // Determine the post offset (based on $_GET['p'])
 $num_pages = ceil(($cur_topic['replies'] + 1) / $pun_user['disp_posts']);
 
-$p = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : intval($_GET['p']);
+$p = max(min($request->getInt('p', 1), $num_pages), 1);
 $start_from = $pun_user['disp_posts'] * ($p - 1);
 
 // Generate paging links

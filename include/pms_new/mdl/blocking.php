@@ -46,7 +46,9 @@ else
 	$mbm = $lang_pmsn['ReBlocking redirect'];
 }
 
-if (isset($_POST['action2']))
+$request = $container->get('Request');
+
+if ($request->isPost('action2'))
 {
 	if (!defined('PUN_PMS_NEW_CONFIRM'))
 		message($lang_common['Bad referrer']);
@@ -55,7 +57,7 @@ if (isset($_POST['action2']))
 	{
 		$db->query('INSERT INTO '.$db->prefix.'pms_new_block (bl_id, bl_user_id) VALUES('.$pun_user['id'].', '.$uid.')') or error('Unable to create line in pms_new_block', __FILE__, __LINE__, $db->error());
 
-		if (isset($_POST['delete_dlg'])) // удаление диалогов
+		if ($request->isPost('delete_dlg')) // удаление диалогов
 		{
 			$result = $db->query('SELECT id FROM '.$db->prefix.'pms_new_topics WHERE (starter_id = '.$pun_user['id'].' AND topic_st < 2 AND to_id='.$uid.') OR (to_id = '.$pun_user['id'].' AND topic_to < 2 AND starter_id='.$uid.')') or error('Unable to fetch pms topics IDs', __FILE__, __LINE__, $db->error());
 			if ($db->num_rows($result))

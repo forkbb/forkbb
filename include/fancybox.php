@@ -17,15 +17,7 @@ if (isset($pun_config['o_fbox_files']) && !isset($http_status) && (!$pun_user['i
 
 		$page_head['fancyboxcss'] = '<link rel="stylesheet" type="text/css" href="style/imports/fancybox.css" />';
 
-		if (!isset($page_js))
-		{
-			$page_head['jquery'] = '<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>';
-			$page_head['fancybox'] = '<script type="text/javascript" src="js/fancybox.js"></script>';
-		}
-		else // For FluxBB by Visman
-		{
-			$page_js['j'] = 1;
-			$page_js['f']['fancybox'] = 'js/fancybox.js';
-		}
+		$page_js['j'] = 1;
+		$page_js['f']['fancybox'] = 'js/fancybox.js';
 	}
 }

@@ -12,7 +12,9 @@ if (!defined('PUN') || !defined('PUN_PMS_NEW'))
 
 define('PUN_PMS_LOADED', 1);
 
-$pid = isset($_GET['pid']) ? intval($_GET['pid']) : 0;
+$request = $container->get('Request');
+
+$pid = $request->getInt('pid', 0);
 if ($pid < 1)
 	message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -64,11 +66,11 @@ require PUN_ROOT.'lang/'.$pun_user['language'].'/post.php';
 // Start with a clean slate
 $errors = array();
 
-if (isset($_POST['csrf_hash']))
+if ($reuest->isPost('csrf_hash'))
 {
 
 	// Clean up message from POST
-	$message = pun_linebreaks(pun_trim($_POST['req_message']));
+	$message = pun_linebreaks(trim($request->postStr('req_message')));
 
 	if (strlen($message) > 65535)
 		$errors[] = $lang_pmsn['Too long message'];
@@ -85,10 +87,10 @@ if (isset($_POST['csrf_hash']))
 	if ($message == '')
 		$errors[] = $lang_post['No message'];
 
-	$hide_smilies = isset($_POST['hide_smilies']) ? '1' : '0';
+	$hide_smilies = $request->isPost('hide_smilies') ? '1' : '0';
 
 	// Did everything go according to plan?
-	if (empty($errors) && !isset($_POST['preview']))
+	if (empty($errors) && ! $request->isPost('preview'))
 	{
 		// Update the post
 		$db->query('UPDATE '.$db->prefix.'pms_new_posts SET message=\''.$db->escape($message).'\', hide_smilies='.$hide_smilies.', edited='.time().', edited_by=\''.$db->escape($pun_user['username']).'\' WHERE id='.$pid) or error('Unable to update pms_new_posts', __FILE__, __LINE__, $db->error());
@@ -152,7 +154,7 @@ if (!empty($errors))
 
 <?php
 }
-else if (isset($_POST['preview']))
+else if ($request->isPost('preview'))
 {
 	require_once PUN_ROOT.'include/parser.php';
 	$preview_message = parse_message($message, $hide_smilies);
@@ -193,7 +195,7 @@ $cur_index = 1;
 						<div class="infldset txtarea">
 							<input type="hidden" name="csrf_hash" value="<?php echo $pmsn_csrf_hash ?>" />
 							<label class="required"><strong><?php echo $lang_common['Message'] ?> <span><?php echo $lang_common['Required'] ?></span></strong><br />
-							<textarea name="req_message" rows="20" cols="95" tabindex="<?php echo $cur_index++ ?>"><?php echo pun_htmlspecialchars(isset($_POST['req_message']) ? $message : $cur_post['message']) ?></textarea><br /></label>
+							<textarea name="req_message" rows="20" cols="95" tabindex="<?php echo $cur_index++ ?>"><?php echo pun_htmlspecialchars($request->isPost('req_message') ? $message : $cur_post['message']) ?></textarea><br /></label>
 							<ul class="bblinks">
 								<li><span><a href="help.php#bbcode" onclick="window.open(this.href); return false;"><?php echo $lang_common['BBCode'] ?></a> <?php echo ($pun_config['p_message_bbcode'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></span></li>
 								<li><span><a href="help.php#url" onclick="window.open(this.href); return false;"><?php echo $lang_common['url tag'] ?></a> <?php echo ($pun_config['p_message_bbcode'] == '1' && $pun_user['g_post_links'] == '1') ? $lang_common['on'] : $lang_common['off']; ?></span></li>

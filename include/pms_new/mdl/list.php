@@ -55,7 +55,9 @@ else
 	// Determine the topic offset (based on $_GET['p'])
 	$num_pages = ceil($pmsn_kol_list / $pun_user['disp_topics']);
 
-	$p = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $num_pages) ? 1 : intval($_GET['p']);
+	$request = $container->get('Request');
+
+	$p = max(min($request->getInt('p', 1), $num_pages), 1);
 	$start_from = $pun_user['disp_topics'] * ($p - 1);
 
 	// Generate paging links

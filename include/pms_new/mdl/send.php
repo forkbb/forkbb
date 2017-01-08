@@ -12,8 +12,9 @@ if (!defined('PUN') || !defined('PUN_PMS_NEW'))
 
 define('PUN_PMS_LOADED', 1);
 
-$tid = isset($_GET['tid']) ? intval($_GET['tid']) : 0;
+$request = $container->get('Request');
 
+$tid = $request->getInt('tid', 0);
 if ($tid < 1)
 	message($lang_common['Bad request'], false, '404 Not Found');
 
@@ -48,7 +49,7 @@ if ($pun_user['g_id'] != PUN_ADMIN)
 		message($lang_pmsn['More maximum']);
 }
 
-if (isset($_POST['action2']))
+if ($request->isPost('action2'))
 {
 	if (!defined('PUN_PMS_NEW_CONFIRM'))
 		message($lang_common['Bad referrer']);
