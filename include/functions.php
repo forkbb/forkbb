@@ -1154,10 +1154,19 @@ function forum_number_format($number, $decimals = 0)
 //
 function random_key($len, $readable = false, $hash = false)
 {
-	if (!function_exists('secure_random_bytes'))
-		include PUN_ROOT.'include/srand.php';
-
-	$key = secure_random_bytes($len);
+    $key = '';
+    if (function_exists('random_bytes')) {
+        $key .= (string) random_bytes($len);
+    }
+    if (strlen($key) < $len && function_exists('mcrypt_create_iv')) {
+        $key .= (string) mcrypt_create_iv($len, MCRYPT_DEV_URANDOM);
+    }
+    if (strlen($key) < $len && function_exists('openssl_random_pseudo_bytes')) {
+        $key .= (string) openssl_random_pseudo_bytes($len);
+    }
+    if (strlen($key) < $len) {
+        throw new \Exception('Could not gather sufficient random data');
+    }
 
 	if ($hash)
 		return substr(bin2hex($key), 0, $len);
