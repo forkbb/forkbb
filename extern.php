@@ -392,8 +392,8 @@ if ($action == 'feed')
 			$cache_id = 'feed'.sha1($pun_user['g_id'].'|'.$lang_common['lang_identifier'].'|'.($order_posted ? '1' : '0').($forum_name == '' ? '' : '|'.$fids[0]));
 
 		// Load cached feed
-		if (isset($cache_id) && file_exists(FORUM_CACHE_DIR.'cache_'.$cache_id.'.php'))
-			include FORUM_CACHE_DIR.'cache_'.$cache_id.'.php';
+		if (isset($cache_id) && file_exists($container->getParameter('DIR_CACHE') . 'cache_'.$cache_id.'.php'))
+			include $container->getParameter('DIR_CACHE') . 'cache_'.$cache_id.'.php';
 
 		$now = time();
 		if (!isset($feed) || $cache_expire < $now)
@@ -519,8 +519,8 @@ else if ($action == 'stats')
 	require PUN_ROOT.'lang/'.$pun_config['o_default_lang'].'/index.php';
 
 	// Collect some statistics from the database
-	if (file_exists(FORUM_CACHE_DIR.'cache_users_info.php'))
-		include FORUM_CACHE_DIR.'cache_users_info.php';
+	if (file_exists($container->getParameter('DIR_CACHE') . 'cache_users_info.php'))
+		include $container->getParameter('DIR_CACHE') . 'cache_users_info.php';
 
 	if (!defined('PUN_USERS_INFO_LOADED'))
 	{
@@ -528,7 +528,7 @@ else if ($action == 'stats')
 			require PUN_ROOT.'include/cache.php';
 
 		generate_users_info_cache();
-		require FORUM_CACHE_DIR.'cache_users_info.php';
+		require $container->getParameter('DIR_CACHE') . 'cache_users_info.php';
 	}
 
 	$result = $db->query('SELECT SUM(num_topics), SUM(num_posts) FROM '.$db->prefix.'forums') or error('Unable to fetch topic/post count', __FILE__, __LINE__, $db->error());

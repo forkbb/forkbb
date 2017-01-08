@@ -88,8 +88,8 @@ if (empty($cookie_name))
 	$cookie_name = 'pun_cookie';
 
 // If the cache directory is not specified, we use the default setting
-if (!defined('FORUM_CACHE_DIR'))
-	define('FORUM_CACHE_DIR', PUN_ROOT.'cache/');
+if (!defined('FORUM_CACHE_DIR')) //????
+	define('FORUM_CACHE_DIR', PUN_ROOT.'app/cache/');
 
 // Turn off PHP time limit
 @set_time_limit(0);

@@ -78,8 +78,8 @@ function poll_info($tid, $uid = null)
 
 	if ($tid == 0) return null;
 	
-	if (file_exists(FORUM_CACHE_DIR.'polls/'.$tid.'.php'))
-		include FORUM_CACHE_DIR.'polls/'.$tid.'.php';
+	if (file_exists($container->getParameter('DIR_CACHE') . 'polls/'.$tid.'.php'))
+		include $container->getParameter('DIR_CACHE') . 'polls/'.$tid.'.php';
 		
 	if (!isset($kol))
 	{
@@ -113,10 +113,10 @@ function poll_info($tid, $uid = null)
 			'type' => $type,
 			);
 
-		if (!is_dir(FORUM_CACHE_DIR.'polls/'))
-			mkdir(FORUM_CACHE_DIR.'polls', 0755);
+		if (!is_dir($container->getParameter('DIR_CACHE') . 'polls/'))
+			mkdir($container->getParameter('DIR_CACHE') . 'polls', 0755);
 
-		$fh = @fopen(FORUM_CACHE_DIR.'polls/'.$tid.'.php', 'wb');
+		$fh = @fopen($container->getParameter('DIR_CACHE') . 'polls/'.$tid.'.php', 'wb');
 		if (!$fh)
 			error('Unable to write configuration cache file to cache(/polls) directory. Please make sure PHP has write access to this directory.', __FILE__, __LINE__);
 
@@ -129,7 +129,7 @@ function poll_info($tid, $uid = null)
 		fclose($fh);
 
 		if (function_exists('apc_delete_file'))
-			@apc_delete_file(FORUM_CACHE_DIR.'polls/'.$tid.'.php');
+			@apc_delete_file($container->getParameter('DIR_CACHE') . 'polls/'.$tid.'.php');
 	}
 	
 	if ($kol == 0) return null;
@@ -409,8 +409,10 @@ function poll_form_validate($tid, &$errors)
 // удаление кэша опроса ********************************************************
 function poll_cache_delete($tid)
 {
-	if (file_exists(FORUM_CACHE_DIR.'polls/'.$tid.'.php'))
-		@unlink(FORUM_CACHE_DIR.'polls/'.$tid.'.php');
+    global $container;
+
+	if (file_exists($container->getParameter('DIR_CACHE') . 'polls/'.$tid.'.php'))
+		@unlink($container->getParameter('DIR_CACHE') . 'polls/'.$tid.'.php');
 }
 
 // удаление опроса *************************************************************

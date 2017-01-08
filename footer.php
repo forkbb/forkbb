@@ -90,8 +90,8 @@ echo "\t\t\t".'<div class="conl">'."\n";
 if ($pun_config['o_quickjump'] == '1')
 {
 	// Load cached quick jump
-	if (file_exists(FORUM_CACHE_DIR.'cache_quickjump_'.$pun_user['g_id'].'.php'))
-		include FORUM_CACHE_DIR.'cache_quickjump_'.$pun_user['g_id'].'.php';
+	if (file_exists($container->getParameter('DIR_CACHE') . 'cache_quickjump_'.$pun_user['g_id'].'.php'))
+		include $container->getParameter('DIR_CACHE') . 'cache_quickjump_'.$pun_user['g_id'].'.php';
 
 	if (!defined('PUN_QJ_LOADED'))
 	{
@@ -99,7 +99,7 @@ if ($pun_config['o_quickjump'] == '1')
 			require PUN_ROOT.'include/cache.php';
 
 		generate_quickjump_cache($pun_user['g_id']);
-		require FORUM_CACHE_DIR.'cache_quickjump_'.$pun_user['g_id'].'.php';
+		require $container->getParameter('DIR_CACHE') . 'cache_quickjump_'.$pun_user['g_id'].'.php';
 	}
 	$page_js['c'][] = 'document.getElementById("qjump").getElementsByTagName("div")[0].getElementsByTagName("input")[0].style.display = "none";'; // Visman - скрываем кнопку перехода при включенном js
 }

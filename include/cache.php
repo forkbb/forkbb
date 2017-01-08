@@ -126,12 +126,12 @@ function generate_quickjump_cache($group_id = false)
 		if ($read_board == '1')
 		{
 			// Load cached subforums - Visman
-			if (file_exists(FORUM_CACHE_DIR.'cache_subforums_'.$group_id.'.php'))
-				include FORUM_CACHE_DIR.'cache_subforums_'.$group_id.'.php';
+			if (file_exists($container->getParameter('DIR_CACHE') . 'cache_subforums_'.$group_id.'.php'))
+				include $container->getParameter('DIR_CACHE') . 'cache_subforums_'.$group_id.'.php';
 			else
 			{
 				generate_subforums_cache($group_id);
-				require FORUM_CACHE_DIR.'cache_subforums_'.$group_id.'.php';
+				require $container->getParameter('DIR_CACHE') . 'cache_subforums_'.$group_id.'.php';
 			}
 
 			$output .= generate_quickjump_sf_list($sf_array_tree);
@@ -246,9 +246,11 @@ function generate_admins_cache()
 //
 function fluxbb_write_cache_file($file, $content)
 {
-	$fh = @fopen(FORUM_CACHE_DIR.$file, 'wb');
+    global $container;
+
+	$fh = @fopen($container->getParameter('DIR_CACHE') . $file, 'wb');
 	if (!$fh)
-		error('Unable to write cache file '.pun_htmlspecialchars($file).' to cache directory. Please make sure PHP has write access to the directory \''.pun_htmlspecialchars(FORUM_CACHE_DIR).'\'', __FILE__, __LINE__);
+		error('Unable to write cache file '.pun_htmlspecialchars($file).' to cache directory. Please make sure PHP has write access to the directory \''.pun_htmlspecialchars($container->getParameter('DIR_CACHE')).'\'', __FILE__, __LINE__);
 
 	flock($fh, LOCK_EX);
 	ftruncate($fh, 0);
@@ -258,7 +260,7 @@ function fluxbb_write_cache_file($file, $content)
 	flock($fh, LOCK_UN);
 	fclose($fh);
 
-	fluxbb_invalidate_cached_file(FORUM_CACHE_DIR.$file);
+	fluxbb_invalidate_cached_file($container->getParameter('DIR_CACHE') . $file);
 }
 
 
@@ -267,13 +269,15 @@ function fluxbb_write_cache_file($file, $content)
 //
 function clear_feed_cache()
 {
-	$d = dir(FORUM_CACHE_DIR);
+    global $container;
+
+	$d = dir($container->getParameter('DIR_CACHE'));
 	while (($entry = $d->read()) !== false)
 	{
 		if (substr($entry, 0, 10) == 'cache_feed' && substr($entry, -4) == '.php')
 		{
-			@unlink(FORUM_CACHE_DIR.$entry);
-			fluxbb_invalidate_cached_file(FORUM_CACHE_DIR.$entry);
+			@unlink($container->getParameter('DIR_CACHE') . $entry);
+			fluxbb_invalidate_cached_file($container->getParameter('DIR_CACHE') . $entry);
 		}
 	}
 	$d->close();

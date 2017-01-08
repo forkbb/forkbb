@@ -47,5 +47,5 @@ if (file_exists(__DIR__ . '/config/main.php')) {
 define('PUN', 1);
 
 $container->setParameter('DIR_CONFIG', __DIR__ . '/config/');
-//$container->setParameter('DIR_CACHE', __DIR__ . '/cache/');
+$container->setParameter('DIR_CACHE', __DIR__ . '/cache/');
 $container->get('firstAction');

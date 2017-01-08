@@ -55,10 +55,6 @@ require PUN_ROOT . 'app/bootstrap.php';
 // The addon manager is responsible for storing the hook listeners and communicating with the addons
 $flux_addons = new flux_addon_manager();
 
-// If the cache directory is not specified, we use the default setting
-if (!defined('FORUM_CACHE_DIR'))
-	define('FORUM_CACHE_DIR', PUN_ROOT.'cache/');
-
 // Define a few commonly used constants
 define('PUN_UNVERIFIED', 0);
 define('PUN_ADMIN', 1);
@@ -72,8 +68,8 @@ $db = $container->get('DB');
 $db->start_transaction();
 
 // Load cached config
-if (file_exists(FORUM_CACHE_DIR.'cache_config.php'))
-	include FORUM_CACHE_DIR.'cache_config.php';
+if (file_exists($container->getParameter('DIR_CACHE') . 'cache_config.php'))
+	include $container->getParameter('DIR_CACHE') . 'cache_config.php';
 
 if (!defined('PUN_CONFIG_LOADED'))
 {
@@ -81,7 +77,7 @@ if (!defined('PUN_CONFIG_LOADED'))
 		require PUN_ROOT.'include/cache.php';
 
 	generate_config_cache();
-	require FORUM_CACHE_DIR.'cache_config.php';
+	require $container->getParameter('DIR_CACHE') . 'cache_config.php';
 }
 
 // Verify that we are running the proper database schema revision
@@ -119,8 +115,8 @@ if ($pun_config['o_maintenance'] && $pun_user['g_id'] > PUN_ADMIN && !defined('P
 	maintenance_message();
 
 // Load cached bans
-if (file_exists(FORUM_CACHE_DIR.'cache_bans.php'))
-	include FORUM_CACHE_DIR.'cache_bans.php';
+if (file_exists($container->getParameter('DIR_CACHE') . 'cache_bans.php'))
+	include $container->getParameter('DIR_CACHE') . 'cache_bans.php';
 
 if (!defined('PUN_BANS_LOADED'))
 {
@@ -128,7 +124,7 @@ if (!defined('PUN_BANS_LOADED'))
 		require PUN_ROOT.'include/cache.php';
 
 	generate_bans_cache();
-	require FORUM_CACHE_DIR.'cache_bans.php';
+	require $container->getParameter('DIR_CACHE') . 'cache_bans.php';
 }
 
 // Check if current user is banned
@@ -156,8 +152,8 @@ if (!defined('FORUM_MAX_COOKIE_SIZE'))
 	define('FORUM_MAX_COOKIE_SIZE', 4048);
 
 // Load cached subforums - Visman
-if (file_exists(FORUM_CACHE_DIR.'cache_subforums_'.$pun_user['g_id'].'.php'))
-	include FORUM_CACHE_DIR.'cache_subforums_'.$pun_user['g_id'].'.php';
+if (file_exists($container->getParameter('DIR_CACHE') . 'cache_subforums_'.$pun_user['g_id'].'.php'))
+	include $container->getParameter('DIR_CACHE') . 'cache_subforums_'.$pun_user['g_id'].'.php';
 
 if (!isset($sf_array_tree))
 {
@@ -165,5 +161,5 @@ if (!isset($sf_array_tree))
 		require PUN_ROOT.'include/cache.php';
 
 	generate_subforums_cache($pun_user['g_id']);
-	require FORUM_CACHE_DIR.'cache_subforums_'.$pun_user['g_id'].'.php';
+	require $container->getParameter('DIR_CACHE') . 'cache_subforums_'.$pun_user['g_id'].'.php';
 }

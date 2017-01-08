@@ -48,8 +48,8 @@ require PUN_ROOT.'header.php';
 require PUN_ROOT.'include/subforums_view.php'; // MOD subforums - Visman
 
 // Collect some statistics from the database
-if (file_exists(FORUM_CACHE_DIR.'cache_users_info.php'))
-	include FORUM_CACHE_DIR.'cache_users_info.php';
+if (file_exists($container->getParameter('DIR_CACHE') . 'cache_users_info.php'))
+	include $container->getParameter('DIR_CACHE') . 'cache_users_info.php';
 
 if (!defined('PUN_USERS_INFO_LOADED'))
 {
@@ -57,7 +57,7 @@ if (!defined('PUN_USERS_INFO_LOADED'))
 		require PUN_ROOT.'include/cache.php';
 
 	generate_users_info_cache();
-	require FORUM_CACHE_DIR.'cache_users_info.php';
+	require $container->getParameter('DIR_CACHE') . 'cache_users_info.php';
 }
 
 $result = $db->query('SELECT SUM(num_topics), SUM(num_posts) FROM '.$db->prefix.'forums') or error('Unable to fetch topic/post count', __FILE__, __LINE__, $db->error());

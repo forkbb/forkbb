@@ -16,15 +16,15 @@ else
 
 if (!isset($smilies))
 {
-	if (file_exists(FORUM_CACHE_DIR.'cache_smilies.php'))
-		include FORUM_CACHE_DIR.'cache_smilies.php';
+	if (file_exists($container->getParameter('DIR_CACHE') . 'cache_smilies.php'))
+		include $container->getParameter('DIR_CACHE') . 'cache_smilies.php';
 	else
 	{
 		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
 			require PUN_ROOT.'include/cache.php';
 
 		generate_smiley_cache();
-		require FORUM_CACHE_DIR.'cache_smilies.php';
+		require $container->getParameter('DIR_CACHE') . 'cache_smilies.php';
 	}
 }
 

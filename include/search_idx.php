@@ -160,7 +160,7 @@ function split_words($text, $idx)
 //
 function validate_search_word($word, $idx)
 {
-	static $stopwords;
+	static $container, $stopwords;
 
 	// If the word is a keyword we don't want to index it, but we do want to be allowed to search it
 	if (is_keyword($word))
@@ -168,8 +168,8 @@ function validate_search_word($word, $idx)
 
 	if (!isset($stopwords))
 	{
-		if (file_exists(FORUM_CACHE_DIR.'cache_stopwords.php'))
-			include FORUM_CACHE_DIR.'cache_stopwords.php';
+		if (file_exists($container->getParameter('DIR_CACHE') . 'cache_stopwords.php'))
+			include $container->getParameter('DIR_CACHE') . 'cache_stopwords.php';
 
 		if (!defined('PUN_STOPWORDS_LOADED'))
 		{
@@ -177,7 +177,7 @@ function validate_search_word($word, $idx)
 				require PUN_ROOT.'include/cache.php';
 
 			generate_stopwords_cache();
-			require FORUM_CACHE_DIR.'cache_stopwords.php';
+			require $container->getParameter('DIR_CACHE') . 'cache_stopwords.php';
 		}
 	}
 

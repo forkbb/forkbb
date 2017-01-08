@@ -255,8 +255,10 @@ function get_base_url($support_https = false)
 //
 function get_admin_ids()
 {
-	if (file_exists(FORUM_CACHE_DIR.'cache_admins.php'))
-		include FORUM_CACHE_DIR.'cache_admins.php';
+    global $container;
+
+	if (file_exists($container->getParameter('DIR_CACHE') . 'cache_admins.php'))
+		include $container->getParameter('DIR_CACHE') . 'cache_admins.php';
 
 	if (!defined('PUN_ADMINS_LOADED'))
 	{
@@ -264,7 +266,7 @@ function get_admin_ids()
 			require PUN_ROOT.'include/cache.php';
 
 		generate_admins_cache();
-		require FORUM_CACHE_DIR.'cache_admins.php';
+		require $container->getParameter('DIR_CACHE') . 'cache_admins.php';
 	}
 
 	return $pun_admins;
@@ -916,11 +918,13 @@ function delete_post($post_id, $topic_id)
 //
 function forum_clear_cache()
 {
-	$d = dir(FORUM_CACHE_DIR);
+    global $container;
+
+	$d = dir($container->getParameter('DIR_CACHE'));
 	while (($entry = $d->read()) !== false)
 	{
 		if (substr($entry, -4) == '.php')
-			@unlink(FORUM_CACHE_DIR.$entry);
+			@unlink($container->getParameter('DIR_CACHE') . $entry);
 	}
 	$d->close();
 }
@@ -931,13 +935,13 @@ function forum_clear_cache()
 //
 function censor_words($text)
 {
-	static $search_for, $replace_with;
+	static $container, $search_for, $replace_with;
 
 	// If not already built in a previous call, build an array of censor words and their replacement text
 	if (!isset($search_for))
 	{
-		if (file_exists(FORUM_CACHE_DIR.'cache_censoring.php'))
-			include FORUM_CACHE_DIR.'cache_censoring.php';
+		if (file_exists($container->getParameter('DIR_CACHE') . 'cache_censoring.php'))
+			include $container->getParameter('DIR_CACHE') . 'cache_censoring.php';
 
 		if (!defined('PUN_CENSOR_LOADED'))
 		{
@@ -945,7 +949,7 @@ function censor_words($text)
 				require PUN_ROOT.'include/cache.php';
 
 			generate_censoring_cache();
-			require FORUM_CACHE_DIR.'cache_censoring.php';
+			require $container->getParameter('DIR_CACHE') . 'cache_censoring.php';
 		}
 	}
 

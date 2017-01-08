@@ -82,10 +82,6 @@ class Install implements ContainerAwareInterface
 
         require PUN_ROOT . 'lang/' . $install_lang . '/install.php';
 
-        // If the cache directory is not specified, we use the default setting
-        if (! defined('FORUM_CACHE_DIR'))
-            define('FORUM_CACHE_DIR', PUN_ROOT . 'cache/');
-
         // Make sure we are running at least MIN_PHP_VERSION
         if (! function_exists('version_compare') || version_compare(PHP_VERSION, MIN_PHP_VERSION, '<'))
             exit(sprintf($lang_install['You are running error'], 'PHP', PHP_VERSION, FORK_VERSION, MIN_PHP_VERSION));
@@ -188,8 +184,8 @@ class Install implements ContainerAwareInterface
         }
 
         // Check if the cache directory is writable
-        if (! forum_is_writable(FORUM_CACHE_DIR))
-            $alerts[] = sprintf($lang_install['Alert cache'], FORUM_CACHE_DIR);
+        if (! forum_is_writable($this->c->getParameter('DIR_CACHE')))
+            $alerts[] = sprintf($lang_install['Alert cache'], $this->c->getParameter('DIR_CACHE'));
 
         // Check if default avatar directory is writable
         if (! forum_is_writable(PUN_ROOT . 'img/avatars/'))
