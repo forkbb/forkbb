@@ -14,8 +14,6 @@ if (!defined('PUN'))
 if (!defined('FORUM_EOL'))
 	define('FORUM_EOL', PHP_EOL);
 
-require PUN_ROOT.'include/utf8/utils/ascii.php';
-
 //
 // Validate an email address
 //
