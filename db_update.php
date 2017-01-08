@@ -59,9 +59,6 @@ if (!defined('PUN_DEBUG'))
 // Load the functions script
 require PUN_ROOT.'include/functions.php';
 
-// Reverse the effect of register_globals
-forum_unregister_globals();
-
 // Turn on full PHP error reporting
 error_reporting(E_ALL);
 

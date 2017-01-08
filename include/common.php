@@ -47,9 +47,6 @@ require PUN_ROOT.'include/functions.php';
 // Load addon functionality
 require PUN_ROOT.'include/addons.php';
 
-// Reverse the effect of register_globals
-forum_unregister_globals();
-
 // Force POSIX locale (to prevent functions such as strtolower() from messing up UTF-8 strings)
 setlocale(LC_CTYPE, 'C');
 
