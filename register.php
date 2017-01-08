@@ -94,7 +94,7 @@ if ($request->isPost('form_sent'))
 	// Validate username and passwords
 	check_username($username);
 
-	if (pun_strlen($password1) < 6)
+	if (mb_strlen($password1) < 6)
 		$errors[] = $lang_prof_reg['Pass too short'];
 	else if ($password1 != $password2)
 		$errors[] = $lang_prof_reg['Pass not match'];

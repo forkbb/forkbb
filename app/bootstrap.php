@@ -21,9 +21,9 @@ mb_language('uni');
 mb_internal_encoding('UTF-8');
 mb_substitute_character(0xFFFD);
 
-// The maximum size of a post, in bytes, since the field is now MEDIUMTEXT this allows ~16MB but lets cap at 1MB...
+// The maximum size of a post, in characters, not bytes
 if (!defined('PUN_MAX_POSTSIZE'))
-	define('PUN_MAX_POSTSIZE', 1048576);
+	define('PUN_MAX_POSTSIZE', 65000);
 
 if (!defined('PUN_SEARCH_MIN_WORD'))
 	define('PUN_SEARCH_MIN_WORD', 3);

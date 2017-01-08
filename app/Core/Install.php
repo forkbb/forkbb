@@ -151,9 +151,9 @@ class Install implements ContainerAwareInterface
                 $base_url = substr($base_url, 0, -1);
 
             // Validate username and passwords
-            if (pun_strlen($username) < 2)
+            if (mb_strlen($username) < 2)
                 $alerts[] = $lang_install['Username 1'];
-            else if (pun_strlen($username) > 25) // This usually doesn't happen since the form element only accepts 25 characters
+            else if (mb_strlen($username) > 25) // This usually doesn't happen since the form element only accepts 25 characters
                 $alerts[] = $lang_install['Username 2'];
             else if (! strcasecmp($username, 'Guest'))
                 $alerts[] = $lang_install['Username 3'];
@@ -164,7 +164,7 @@ class Install implements ContainerAwareInterface
             else if (preg_match('%(?:\[/?(?:b|u|i|h|colou?r|quote|code|img|url|email|list)\]|\[(?:code|quote|list)=)%i', $username))
                 $alerts[] = $lang_install['Username 6'];
 
-            if (pun_strlen($password1) < 6)
+            if (mb_strlen($password1) < 6)
                 $alerts[] = $lang_install['Short password'];
             else if ($password1 != $password2)
                 $alerts[] = $lang_install['Passwords not match'];

@@ -198,7 +198,7 @@ if ($request->isGet('tid'))
 
 			if ($new_subject == '')
 				message($lang_post['No subject']);
-			else if (pun_strlen($new_subject) > 70)
+			else if (mb_strlen($new_subject) > 70)
 				message($lang_post['Too long subject']);
 
 			// Get data from the new first post

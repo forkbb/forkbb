@@ -1028,9 +1028,9 @@ switch ($stage)
 
 				$username = trim($_POST['dupe_users'][$id]);
 
-				if (pun_strlen($username) < 2)
+				if (mb_strlen($username) < 2)
 					$errors[$id][] = $lang_update['Username too short error'];
-				else if (pun_strlen($username) > 25) // This usually doesn't happen since the form element only accepts 25 characters
+				else if (mb_strlen($username) > 25) // This usually doesn't happen since the form element only accepts 25 characters
 					$errors[$id][] = $lang_update['Username too long error'];
 				else if (!strcasecmp($username, 'Guest'))
 					$errors[$id][] = $lang_update['Username Guest reserved error'];

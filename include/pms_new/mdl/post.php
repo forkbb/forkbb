@@ -145,7 +145,7 @@ if ($request->isPost('csrf_hash'))
 
 		if ($subject == '')
 			$errors[] = $lang_pmsn['No subject'];
-		else if (pun_strlen($subject) > 70)
+		else if (mb_strlen($subject) > 70)
 			$errors[] = $lang_post['Too long subject'];
 		else if ($pun_config['p_subject_all_caps'] == '0' && is_all_uppercase($subject) && !$pun_user['is_admmod'])
 			$errors[] = $lang_post['All caps subject'];

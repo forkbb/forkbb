@@ -59,7 +59,7 @@ function security_show_random_value($val)
 		$arr = security_lang('Idx'.$val);
 		$new = $arr[array_rand($arr)];
 
-		if (pun_strlen($new) > pun_strlen($val))
+		if (mb_strlen($new) > mb_strlen($val))
 			$random++;
 
 		return $new;

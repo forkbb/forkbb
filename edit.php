@@ -81,7 +81,7 @@ if ($request->isPost('form_sent'))
 			$errors[] = $lang_post['No subject'];
 		else if ($pun_config['o_censoring'] == '1' && $censored_subject == '')
 			$errors[] = $lang_post['No subject after censoring'];
-		else if (pun_strlen($subject) > 70)
+		else if (mb_strlen($subject) > 70)
 			$errors[] = $lang_post['Too long subject'];
 		else if ($pun_config['p_subject_all_caps'] == '0' && is_all_uppercase($subject) && !$pun_user['is_admmod'])
 			$errors[] = $lang_post['All caps subject'];
@@ -95,8 +95,7 @@ if ($request->isPost('form_sent'))
 	// Clean up message from POST
 	$message = pun_linebreaks(trim($request->postStr('req_message')));
 
-	// Here we use strlen() not pun_strlen() as we want to limit the post to PUN_MAX_POSTSIZE bytes, not characters
-	if (pun_strlen($message) > PUN_MAX_POSTSIZE)
+	if (mb_strlen($message) > PUN_MAX_POSTSIZE)
 		$errors[] = sprintf($lang_post['Too long message'], forum_number_format(PUN_MAX_POSTSIZE));
 	else if ($pun_config['p_message_all_caps'] == '0' && is_all_uppercase($message) && !$pun_user['is_admmod'])
 		$errors[] = $lang_post['All caps message'];

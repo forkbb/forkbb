@@ -378,7 +378,7 @@ function poll_form_validate($tid, &$errors)
 			else
 			{
 				$kol++;
-				if (pun_strlen($question) > 250)
+				if (mb_strlen($question) > 250)
 					$errors[] = sprintf($lang_poll['Question too long'], $k);
 
 				$koc = 0;
@@ -391,7 +391,7 @@ function poll_form_validate($tid, &$errors)
 					else
 					{
 						$koc++;
-						if (pun_strlen($choice) > 250)
+						if (mb_strlen($choice) > 250)
 							$errors[] = sprintf($lang_poll['Choice too long'], $k, $i);
 					}
 				}

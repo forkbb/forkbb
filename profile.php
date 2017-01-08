@@ -95,7 +95,7 @@ if ($action === 'change_pass')
 
 		if ($new_password1 != $new_password2)
 			message($lang_prof_reg['Pass not match']);
-		if (pun_strlen($new_password1) < 6)
+		if (mb_strlen($new_password1) < 6)
 			message($lang_prof_reg['Pass too short']);
 
 		$result = $db->query('SELECT * FROM '.$db->prefix.'users WHERE id='.$id) or error('Unable to fetch password', __FILE__, __LINE__, $db->error());
@@ -908,8 +908,8 @@ else if ($request->isPost('form_sent'))
 				$form['signature'] = pun_linebreaks(trim($request->postStr('signature')));
 
 				// Validate signature
-				if (pun_strlen($form['signature']) > $pun_config['p_sig_length'])
-					message(sprintf($lang_prof_reg['Sig too long'], $pun_config['p_sig_length'], pun_strlen($form['signature']) - $pun_config['p_sig_length']));
+				if (mb_strlen($form['signature']) > $pun_config['p_sig_length'])
+					message(sprintf($lang_prof_reg['Sig too long'], $pun_config['p_sig_length'], mb_strlen($form['signature']) - $pun_config['p_sig_length']));
 				else if (substr_count($form['signature'], "\n") > ($pun_config['p_sig_lines']-1))
 					message(sprintf($lang_prof_reg['Sig too many lines'], $pun_config['p_sig_lines']));
 				else if ($form['signature'] && $pun_config['p_sig_all_caps'] == '0' && is_all_uppercase($form['signature']) && !$pun_user['is_admmod'])

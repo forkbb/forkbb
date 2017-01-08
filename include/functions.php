@@ -506,9 +506,9 @@ function check_username($username, $exclude_id = null)
 	$username = preg_replace('%\s+%s', ' ', $username);
 
 	// Validate username
-	if (pun_strlen($username) < 2)
+	if (mb_strlen($username) < 2)
 		$errors[] = $lang_prof_reg['Username too short'];
-	else if (pun_strlen($username) > 25) // This usually doesn't happen since the form element only accepts 25 characters
+	else if (mb_strlen($username) > 25) // This usually doesn't happen since the form element only accepts 25 characters
 		$errors[] = $lang_prof_reg['Username too long'];
 	else if (!preg_match('%^\p{L}[\p{L}\p{N}_ ]+$%uD', $username)) // строгая проверка имени пользователя - Visman
 		$errors[] = $lang_prof_reg['Username Error'];
@@ -1385,15 +1385,6 @@ function pun_htmlspecialchars_decode($str)
 
 
 //
-// A wrapper for utf8_strlen for compatibility
-//
-function pun_strlen($str)
-{
-	return utf8_strlen($str);
-}
-
-
-//
 // Convert \r\n and \r to \n
 //
 function pun_linebreaks($str)
@@ -1828,7 +1819,7 @@ function forum_remove_bad_characters() //????
 // Removes any "bad" characters (characters which mess with the display of a page, are invisible, etc) from the given string
 // See: http://kb.mozillazine.org/Network.IDN.blacklist_chars
 //
-function remove_bad_characters($array)
+function remove_bad_characters($array) //????
 {
 	static $bad_utf8_chars;
 

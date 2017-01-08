@@ -394,11 +394,11 @@ else
 
 ?>
 						<li>
-							<div class="upf-name" title="<?php echo pun_htmlspecialchars($f) ?>"><span><?php echo pun_htmlspecialchars(pun_strlen($f) > 20 ? utf8_substr($f, 0, 18).'…' : $f) ?></span></div>
+							<div class="upf-name" title="<?php echo pun_htmlspecialchars($f) ?>"><span><?php echo pun_htmlspecialchars(mb_strlen($f) > 20 ? utf8_substr($f, 0, 18).'…' : $f) ?></span></div>
 							<div class="upf-file" style="height:<?php echo $height ?>px;">
 								<a href="<?php echo pun_htmlspecialchars(get_base_url(true).'/'.$file).$fb ?>">
-<?php if ($fmini || $fb): ?>									<img src="<?php echo pun_htmlspecialchars($fmini ? get_base_url(true).'/'.$mini : get_base_url(true).'/'.$file) ?>" alt="<?php echo pun_htmlspecialchars((pun_strlen($fi[1]) > 15 ? utf8_substr($fi[1], 0, 10).'… ' : $fi[1]).'.'.$fi[2]) ?>" />
-<?php else: ?>									<span><?php echo pun_htmlspecialchars((pun_strlen($fi[1]) > 15 ? utf8_substr($fi[1], 0, 10).'… ' : $fi[1]).'.'.$fi[2]) ?></span>
+<?php if ($fmini || $fb): ?>									<img src="<?php echo pun_htmlspecialchars($fmini ? get_base_url(true).'/'.$mini : get_base_url(true).'/'.$file) ?>" alt="<?php echo pun_htmlspecialchars((mb_strlen($fi[1]) > 15 ? utf8_substr($fi[1], 0, 10).'… ' : $fi[1]).'.'.$fi[2]) ?>" />
+<?php else: ?>									<span><?php echo pun_htmlspecialchars((mb_strlen($fi[1]) > 15 ? utf8_substr($fi[1], 0, 10).'… ' : $fi[1]).'.'.$fi[2]) ?></span>
 <?php endif; ?>
 								</a>
 							</div>

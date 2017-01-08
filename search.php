@@ -61,10 +61,10 @@ if (! empty($action) || $request->isGet('search_id'))
 		$keywords = utf8_strtolower(trim($request->getStr('keywords')));
 		$author = utf8_strtolower(trim($request->getStr('author')));
 
-		if (preg_match('%^[\*\%]+$%', $keywords) || (pun_strlen(str_replace(array('*', '%'), '', $keywords)) < PUN_SEARCH_MIN_WORD && !is_cjk($keywords)))
+		if (preg_match('%^[\*\%]+$%', $keywords) || (mb_strlen(str_replace(array('*', '%'), '', $keywords)) < PUN_SEARCH_MIN_WORD && !is_cjk($keywords)))
 			$keywords = '';
 
-		if (preg_match('%^[\*\%]+$%', $author) || pun_strlen(str_replace(array('*', '%'), '', $author)) < 2)
+		if (preg_match('%^[\*\%]+$%', $author) || mb_strlen(str_replace(array('*', '%'), '', $author)) < 2)
 			$author = '';
 
 		if (!$keywords && !$author)
