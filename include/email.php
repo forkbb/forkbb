@@ -84,7 +84,7 @@ function bbcode2email($text, $wrap_length = 72, $language = null)
 	if (!isset($base_url))
 		$base_url = get_base_url();
 
-	$text = pun_trim($text, "\t\n ");
+	$text = trim($text, "\t\n ");
 
 	$shortcut_urls = array(
 		'topic' => '/viewtopic.php?id=$1',
@@ -241,12 +241,12 @@ function pun_mail($to, $subject, $message, $reply_to_email = '', $reply_to_name 
 	$from_email = $pun_config['o_webmaster_email'];
 
 	// Do a little spring cleaning
-	$to = pun_trim(preg_replace('%[\n\r]+%s', '', $to));
-	$subject = pun_trim(preg_replace('%[\n\r]+%s', '', $subject));
-	$from_email = pun_trim(preg_replace('%[\n\r:]+%s', '', $from_email));
-	$from_name = pun_trim(preg_replace('%[\n\r:]+%s', '', str_replace('"', '', $from_name)));
-	$reply_to_email = pun_trim(preg_replace('%[\n\r:]+%s', '', $reply_to_email));
-	$reply_to_name = pun_trim(preg_replace('%[\n\r:]+%s', '', str_replace('"', '', $reply_to_name)));
+	$to = trim(preg_replace('%[\n\r]+%s', '', $to));
+	$subject = trim(preg_replace('%[\n\r]+%s', '', $subject));
+	$from_email = trim(preg_replace('%[\n\r:]+%s', '', $from_email));
+	$from_name = trim(preg_replace('%[\n\r:]+%s', '', str_replace('"', '', $from_name)));
+	$reply_to_email = trim(preg_replace('%[\n\r:]+%s', '', $reply_to_email));
+	$reply_to_name = trim(preg_replace('%[\n\r:]+%s', '', str_replace('"', '', $reply_to_name)));
 
 	// Set up some headers to take advantage of UTF-8
 	$from = '"'.encode_mail_text($from_name).'" <'.$from_email.'>';

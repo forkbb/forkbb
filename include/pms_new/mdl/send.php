@@ -64,8 +64,8 @@ if ($request->isPost('action2'))
 		$mail_tpl = trim(file_get_contents(PUN_ROOT.'lang/'.$cur_user['language'].'/mail_templates/form_pmsn.tpl'));
 
 		$first_crlf = strpos($mail_tpl, "\n");
-		$mail_subject = pun_trim(substr($mail_tpl, 8, $first_crlf-8));
-		$mail_message = pun_trim(substr($mail_tpl, $first_crlf));
+		$mail_subject = trim(substr($mail_tpl, 8, $first_crlf-8));
+		$mail_message = trim(substr($mail_tpl, $first_crlf));
 
 		$mail_subject = str_replace('<mail_subject>', $cur_topic['topic'], $mail_subject);
 		$mail_message = str_replace('<sender>', $pun_user['username'], $mail_message);

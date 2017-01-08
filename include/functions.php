@@ -1403,14 +1403,6 @@ function pun_linebreaks($str)
 
 
 //
-// A wrapper for utf8_trim for compatibility
-//
-function pun_trim($str, $charlist = false)
-{
-	return is_string($str) ? utf8_trim($str, $charlist) : '';
-}
-
-//
 // Checks if a string is in all uppercase
 //
 function is_all_uppercase($string)

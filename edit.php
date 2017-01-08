@@ -75,7 +75,7 @@ if ($request->isPost('form_sent'))
 		$subject = trim($request->postStr('req_subject'));
 
 		if ($pun_config['o_censoring'] == '1')
-			$censored_subject = pun_trim(censor_words($subject));
+			$censored_subject = trim(censor_words($subject));
 
 		if ($subject == '')
 			$errors[] = $lang_post['No subject'];
@@ -93,7 +93,7 @@ if ($request->isPost('form_sent'))
 	}
 
 	// Clean up message from POST
-	$message = pun_linebreaks(pun_trim($request->postStr('req_message')));
+	$message = pun_linebreaks(trim($request->postStr('req_message')));
 
 	// Here we use strlen() not pun_strlen() as we want to limit the post to PUN_MAX_POSTSIZE bytes, not characters
 	if (pun_strlen($message) > PUN_MAX_POSTSIZE)
@@ -115,7 +115,7 @@ if ($request->isPost('form_sent'))
 		else if ($pun_config['o_censoring'] == '1')
 		{
 			// Censor message to see if that causes problems
-			$censored_message = pun_trim(censor_words($message));
+			$censored_message = trim(censor_words($message));
 
 			if ($censored_message == '')
 				$errors[] = $lang_post['No message after censoring'];
@@ -176,7 +176,7 @@ if ($request->isPost('form_sent'))
 
 		if ($is_admmod)
 		{
-			$warning = pun_linebreaks(pun_trim($request->postStr('warning')));
+			$warning = pun_linebreaks(trim($request->postStr('warning')));
 			if ($warning != $cur_post['warning'])
 			{
 				$db->query('DELETE FROM '.$db->prefix.'warnings WHERE id='.$id) or error('Unable to remove warning', __FILE__, __LINE__, $db->error());

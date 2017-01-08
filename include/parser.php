@@ -143,7 +143,7 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 			break;
 	}
 
-	return pun_trim($text);
+	return trim($text);
 }
 
 
@@ -275,7 +275,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 				$split_current = preg_split('%(\n\n+)%', $current, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
 				$current = '';
 
-				if (!pun_trim($split_current[0], "\n")) // The first part is a linebreak so we need to handle any open tags first
+				if (!trim($split_current[0], "\n")) // The first part is a linebreak so we need to handle any open tags first
 					array_unshift($split_current, '');
 
 				for ($i = 1; $i < count($split_current); $i += 2)
@@ -322,7 +322,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 			}
 
 			if (in_array($open_tags[$opened_tag], $tags_trim))
-				$new_text .= pun_trim($current);
+				$new_text .= trim($current);
 			else
 				$new_text .= $current;
 
@@ -647,8 +647,8 @@ function preparse_list_tag($content, $type = '*')
 	$content = '';
 	foreach ($items as $item)
 	{
-		if (pun_trim($item) != '')
-			$content .= '[*'."\0".']'.str_replace('[/*]', '', pun_trim($item)).'[/*'."\0".']'."\n";
+		if (trim($item) != '')
+			$content .= '[*'."\0".']'.str_replace('[/*]', '', trim($item)).'[/*'."\0".']'."\n";
 	}
 
 	return '[list='.$type.']'."\n".$content.'[/list]';
@@ -662,7 +662,7 @@ function handle_url_tag($url, $link = '', $bbcode = false)
 {
 	global $pun_config, $pun_user, $page_js;
 	
-	$url = pun_trim($url);
+	$url = trim($url);
 
 	// Deal with [url][img]http://example.com/test.png[/img][/url]
 	if (preg_match('%<img src=\"(.*?)\"%', $url, $matches))
@@ -745,7 +745,7 @@ function handle_list_tag($content, $type = '*')
 		$content = preg_replace_callback($re_list, create_function('$matches', 'return handle_list_tag($matches[2], $matches[1]);'), $content);
 	}
 
-	$content = preg_replace('#\s*\[\*\](.*?)\[/\*\]\s*#s', '<li><p>$1</p></li>', pun_trim($content));
+	$content = preg_replace('#\s*\[\*\](.*?)\[/\*\]\s*#s', '<li><p>$1</p></li>', trim($content));
 
 	if ($type == '*')
 		$content = '<ul>'.$content.'</ul>';
@@ -782,7 +782,7 @@ function handle_time_tag($after_time)
 	if ($merged_sec > 0)
 		$content[] = (($merged_sec < 10) ? '0'.$merged_sec : $merged_sec).$lang_common['After time s'];
 
-	return pun_linebreaks(pun_trim('<span style="color: #808080"><em>'.$lang_common['After time'].' '.implode(' ', $content).':</em></span>'."\n"));
+	return pun_linebreaks(trim('<span style="color: #808080"><em>'.$lang_common['After time'].' '.implode(' ', $content).':</em></span>'."\n"));
 
 }
 
@@ -994,7 +994,7 @@ function parse_message($text, $hide_smilies)
 			if (isset($inside[$i]))
 			{
 				$num_lines = (substr_count($inside[$i], "\n"));
-				$text .= '</p><div class="codebox"><pre'.(($num_lines > 28) ? ' class="vscroll"' : '').'><code>'.pun_trim($inside[$i], "\n\r").'</code></pre></div><p>';
+				$text .= '</p><div class="codebox"><pre'.(($num_lines > 28) ? ' class="vscroll"' : '').'><code>'.trim($inside[$i], "\n\r").'</code></pre></div><p>';
 			}
 		}
 	}

@@ -29,14 +29,14 @@ if ($request->isPost('form_sent'))
     $data = $request->post('form', array());
 
 	$form = array(
-		'board_title'			=> pun_trim($data['board_title']),
-		'board_desc'			=> pun_trim($data['board_desc']),
+		'board_title'			=> trim($data['board_title']),
+		'board_desc'			=> trim($data['board_desc']),
 		'default_timezone'		=> floatval($data['default_timezone']),
 		'default_dst'			=> $data['default_dst'] != '1' ? '0' : '1',
-		'default_lang'			=> pun_trim($data['default_lang']),
-		'default_style'			=> pun_trim($_POST['form']['default_style']),
-		'time_format'			=> pun_trim($data['time_format']),
-		'date_format'			=> pun_trim($data['date_format']),
+		'default_lang'			=> trim($data['default_lang']),
+		'default_style'			=> trim($_POST['form']['default_style']),
+		'time_format'			=> trim($data['time_format']),
+		'date_format'			=> trim($data['date_format']),
 		'timeout_visit'			=> intval($data['timeout_visit']) > 0 ? intval($data['timeout_visit']) : 1,
 		'timeout_online'		=> intval($data['timeout_online']) > 0 ? intval($data['timeout_online']) : 1,
 		'redirect_delay'		=> intval($data['redirect_delay']) >= 0 ? intval($data['redirect_delay']) : 0,
@@ -60,33 +60,33 @@ if ($request->isPost('form_sent'))
 		'quickjump'				=> $data['quickjump'] != '1' ? '0' : '1',
 		'gzip'					=> $data['gzip'] != '1' ? '0' : '1',
 		'search_all_forums'		=> $data['search_all_forums'] != '1' ? '0' : '1',
-		'additional_navlinks'	=> pun_trim($data['additional_navlinks']),
+		'additional_navlinks'	=> trim($data['additional_navlinks']),
 		'feed_type'				=> intval($data['feed_type']),
 		'feed_ttl'				=> intval($data['feed_ttl']),
 		'report_method'			=> intval($data['report_method']),
-		'mailing_list'			=> pun_trim($data['mailing_list']),
+		'mailing_list'			=> trim($data['mailing_list']),
 		'avatars'				=> $data['avatars'] != '1' ? '0' : '1',
-		'avatars_dir'			=> pun_trim($data['avatars_dir']),
+		'avatars_dir'			=> trim($data['avatars_dir']),
 		'avatars_width'			=> intval($data['avatars_width']) > 0 ? intval($data['avatars_width']) : 1,
 		'avatars_height'		=> intval($data['avatars_height']) > 0 ? intval($data['avatars_height']) : 1,
 		'avatars_size'			=> intval($data['avatars_size']) > 0 ? intval($data['avatars_size']) : 1,
-		'admin_email'			=> strtolower(pun_trim($data['admin_email'])),
-		'webmaster_email'		=> strtolower(pun_trim($data['webmaster_email'])),
+		'admin_email'			=> strtolower(trim($data['admin_email'])),
+		'webmaster_email'		=> strtolower(trim($data['webmaster_email'])),
 		'forum_subscriptions'	=> $data['forum_subscriptions'] != '1' ? '0' : '1',
 		'topic_subscriptions'	=> $data['topic_subscriptions'] != '1' ? '0' : '1',
-		'smtp_host'				=> pun_trim($data['smtp_host']),
-		'smtp_user'				=> pun_trim($data['smtp_user']),
+		'smtp_host'				=> trim($data['smtp_host']),
+		'smtp_user'				=> trim($data['smtp_user']),
 		'smtp_ssl'				=> $data['smtp_ssl'] != '1' ? '0' : '1',
 		'regs_allow'			=> $data['regs_allow'] != '1' ? '0' : '1',
 		'regs_verify'			=> $data['regs_verify'] != '1' ? '0' : '1',
 		'regs_report'			=> $data['regs_report'] != '1' ? '0' : '1',
 		'rules'					=> $data['rules'] != '1' ? '0' : '1',
-		'rules_message'			=> pun_trim($data['rules_message']),
+		'rules_message'			=> trim($data['rules_message']),
 		'default_email_setting'	=> intval($data['default_email_setting']),
 		'announcement'			=> $data['announcement'] != '1' ? '0' : '1',
-		'announcement_message'	=> pun_trim($data['announcement_message']),
+		'announcement_message'	=> trim($data['announcement_message']),
 		'maintenance'			=> $data['maintenance'] != '1' ? '0' : '1',
-		'maintenance_message'	=> pun_trim($data['maintenance_message']),
+		'maintenance_message'	=> trim($data['maintenance_message']),
 	);
 
 	if ($form['board_title'] == '')
@@ -123,13 +123,13 @@ if ($request->isPost('form_sent'))
 		$form['avatars_dir'] = substr($form['avatars_dir'], 0, -1);
 
 	if ($form['additional_navlinks'] != '')
-		$form['additional_navlinks'] = pun_trim(pun_linebreaks($form['additional_navlinks']));
+		$form['additional_navlinks'] = trim(pun_linebreaks($form['additional_navlinks']));
 
 	// Change or enter a SMTP password
 	if (isset($data['smtp_change_pass']))
 	{
-		$smtp_pass1 = isset($data['smtp_pass1']) ? pun_trim($data['smtp_pass1']) : '';
-		$smtp_pass2 = isset($data['smtp_pass2']) ? pun_trim($data['smtp_pass2']) : '';
+		$smtp_pass1 = isset($data['smtp_pass1']) ? trim($data['smtp_pass1']) : '';
+		$smtp_pass2 = isset($data['smtp_pass2']) ? trim($data['smtp_pass2']) : '';
 
 		if ($smtp_pass1 == $smtp_pass2)
 			$form['smtp_pass'] = $smtp_pass1;

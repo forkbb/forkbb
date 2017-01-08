@@ -155,8 +155,8 @@ else if ($request->isGet('email'))
 
 		// The first row contains the subject
 		$first_crlf = strpos($mail_tpl, "\n");
-		$mail_subject = pun_trim(substr($mail_tpl, 8, $first_crlf-8));
-		$mail_message = pun_trim(substr($mail_tpl, $first_crlf));
+		$mail_subject = trim(substr($mail_tpl, 8, $first_crlf-8));
+		$mail_message = trim(substr($mail_tpl, $first_crlf));
 
 		$mail_subject = str_replace('<mail_subject>', $subject, $mail_subject);
 		$mail_message = str_replace('<sender>', $pun_user['username'], $mail_message);
@@ -237,7 +237,7 @@ else if ($request->isGet('report'))
 		confirm_referrer('misc.php');
 		
 		// Clean up reason from POST
-		$reason = pun_linebreaks(pun_trim($request->postStr('req_reason')));
+		$reason = pun_linebreaks(trim($request->postStr('req_reason')));
 		if ($reason == '')
 			message($lang_misc['No reason']);
 		else if (strlen($reason) > 65535) // TEXT field can only hold 65535 bytes

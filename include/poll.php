@@ -209,7 +209,7 @@ function poll_form($tid)
 		}
 	}
 
-	$questions = array_map('pun_trim', $questions);
+	$questions = array_map('trim', $questions);
 	$type = array_map('intval', $type);
 
 	if (poll_noedit($tid))
@@ -252,7 +252,7 @@ function poll_form($tid)
 
 			for ($i = 1; $i <= $pun_config['o_poll_max_field'] && $fi; $i++)
 			{
-				$choice = (isset($choices[$k][$i])) ? pun_htmlspecialchars(pun_trim($choices[$k][$i])) : '';
+				$choice = (isset($choices[$k][$i])) ? pun_htmlspecialchars(trim($choices[$k][$i])) : '';
 				if (empty($choice))
 				{
 					$fi = false;
@@ -316,7 +316,7 @@ function poll_form($tid)
 		
 		for ($i = 1; $i <= $pun_config['o_poll_max_field']; $i++)
 		{
-			$choice = (isset($choices[$k][$i]) && $fi) ? pun_htmlspecialchars(pun_trim($choices[$k][$i])) : '';
+			$choice = (isset($choices[$k][$i]) && $fi) ? pun_htmlspecialchars(trim($choices[$k][$i])) : '';
 
 ?>
 							<label><?php printf($lang_poll['Form choice'], $i) ?><br /><input class="longinput" type="text" name="poll_choice[<?php echo $k ?>][<?php echo $i?>]" value="<?php echo $choice ?>" tabindex="<?php echo $cur_index++ ?>" size="80" maxlength="250" onkeyup="ForChoice(<?php echo $k ?>,<?php echo $i?>)" /></label>
@@ -365,7 +365,7 @@ function poll_form_validate($tid, &$errors)
 		$choices = poll_post('poll_choice', array());
 		$type = poll_post('poll_type', array());
 
-		$questions = array_map('pun_trim', $questions);
+		$questions = array_map('trim', $questions);
 		$type = array_map('intval', $type);
 
 		$fk = true;
@@ -385,7 +385,7 @@ function poll_form_validate($tid, &$errors)
 				$fi = $fk;
 				for ($i = 1; $i <= $pun_config['o_poll_max_field'] && $fi; $i++)
 				{
-					$choice = (isset($choices[$k][$i]) && $fi) ? pun_trim($choices[$k][$i]) : '';
+					$choice = (isset($choices[$k][$i]) && $fi) ? trim($choices[$k][$i]) : '';
 					if ($choice == '')
 						$fi = false;
 					else
@@ -449,7 +449,7 @@ function poll_save($tid)
 		$choices = poll_post('poll_choice', array());
 		$type = poll_post('poll_type', array());
 
-		$questions = array_map('pun_trim', $questions);
+		$questions = array_map('trim', $questions);
 		$type = array_map('intval', $type);
 
 		$cur_ch = array();
@@ -477,7 +477,7 @@ function poll_save($tid)
 				$fi = $fk;
 				for ($i = 1; $i <= $pun_config['o_poll_max_field'] && $fi; $i++)
 				{
-					$choice = (isset($choices[$k][$i]) && $fi) ? pun_trim($choices[$k][$i]) : '';
+					$choice = (isset($choices[$k][$i]) && $fi) ? trim($choices[$k][$i]) : '';
 					if ($choice == '')
 						$fi = false;
 					else
@@ -557,7 +557,7 @@ function poll_display_post($tid, $uid)
 		$choices = poll_post('poll_choice', array());
 		$type = poll_post('poll_type', array());
 
-		$questions = array_map('pun_trim', $questions);
+		$questions = array_map('trim', $questions);
 		$type = array_map('intval', $type);
 
 		$q = $ch = array();
@@ -575,7 +575,7 @@ function poll_display_post($tid, $uid)
 				$fi = $fk;
 				for ($i = 1; $i <= $pun_config['o_poll_max_field'] && $fi; $i++)
 				{
-					$choice = (isset($choices[$k][$i]) && $fi) ? pun_trim($choices[$k][$i]) : '';
+					$choice = (isset($choices[$k][$i]) && $fi) ? trim($choices[$k][$i]) : '';
 					if ($choice == '')
 						$fi = false;
 					else

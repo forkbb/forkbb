@@ -187,7 +187,7 @@ function generate_stopwords_cache()
 	$d->close();
 
 	// Tidy up and filter the stopwords
-	$stopwords = array_map('pun_trim', $stopwords);
+	$stopwords = array_map('trim', $stopwords);
 	$stopwords = array_filter($stopwords);
 
 	// Output stopwords as PHP code

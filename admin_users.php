@@ -716,7 +716,7 @@ else if ($request->isGet('find_user'))
     }
 
 	// trim() all elements in $form
-	$form = array_map('pun_trim', $form);
+	$form = array_map('trim', $form);
 	$conditions = $query_str = array();
 
 	$posts_greater = trim($request->getStr('posts_greater'));

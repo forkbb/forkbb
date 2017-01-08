@@ -87,7 +87,7 @@ if ($request->isPost('form_sent'))
 		$subject = trim($request->postStr('req_subject'));
 
 		if ($pun_config['o_censoring'] == '1')
-			$censored_subject = pun_trim(censor_words($subject));
+			$censored_subject = trim(censor_words($subject));
 
 		if ($subject == '')
 			$errors[] = $lang_post['No subject'];
@@ -109,7 +109,7 @@ if ($request->isPost('form_sent'))
 	else
 	{
 		$username = trim($request->postStr('req_username'));
-		$email = strtolower(pun_trim($request->postStr($pun_config['p_force_guest_email'] == '1' ? 'req_email' : 'email')));
+		$email = strtolower(trim($request->postStr($pun_config['p_force_guest_email'] == '1' ? 'req_email' : 'email')));
 		$banned_email = false;
 
 		// Load the register.php/prof_reg.php language files
@@ -160,7 +160,7 @@ if ($request->isPost('form_sent'))
 		else if ($pun_config['o_censoring'] == '1')
 		{
 			// Censor message to see if that causes problems
-			$censored_message = pun_trim(censor_words($message));
+			$censored_message = trim(censor_words($message));
 
 			if ($censored_message == '')
 				$errors[] = $lang_post['No message after censoring'];

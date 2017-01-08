@@ -220,7 +220,7 @@ else if ($request->isPost('add_edit_ban'))
 	{
 		$ban_ip = preg_replace('%\s{2,}%S', ' ', $ban_ip);
 		$addresses = explode(' ', $ban_ip);
-		$addresses = array_map('pun_trim', $addresses);
+		$addresses = array_map('trim', $addresses);
 
 		for ($i = 0; $i < count($addresses); ++$i)
 		{
@@ -330,7 +330,7 @@ else if ($request->isGet('find_ban'))
 	$form = $request->get('form', array());
 
 	// trim() all elements in $form
-	$form = array_map('pun_trim', $form);
+	$form = array_map('trim', $form);
 	$conditions = $query_str = array();
 
 	$expire_after = trim($request->getStr('expire_after'));

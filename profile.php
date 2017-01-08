@@ -208,7 +208,7 @@ else if ($action === 'change_email')
 		require PUN_ROOT.'include/email.php';
 
 		// Validate the email address
-		$new_email = strtolower(pun_trim($request->postStr('req_new_email')));
+		$new_email = strtolower(trim($request->postStr('req_new_email')));
 		if (!is_valid_email($new_email))
 			message($lang_common['Invalid email']);
 
@@ -783,7 +783,7 @@ else if ($request->isPost('form_sent'))
 			if (isset($data['language']))
 			{
 				$languages = forum_list_langs();
-				$form['language'] = pun_trim($data['language']);
+				$form['language'] = trim($data['language']);
 				if (!in_array($form['language'], $languages))
 					message($lang_common['Bad request'], false, '404 Not Found');
 			}
@@ -823,7 +823,7 @@ else if ($request->isPost('form_sent'))
 				require PUN_ROOT.'include/email.php';
 
 				// Validate the email address
-				$form['email'] = strtolower(pun_trim($request->postStr('req_email')));
+				$form['email'] = strtolower(trim($request->postStr('req_email')));
 				if (!is_valid_email($form['email']))
 					message($lang_common['Invalid email']);
 			}
@@ -834,10 +834,10 @@ else if ($request->isPost('form_sent'))
 		case 'personal':
 		{
 			$form = array(
-				'realname'		=> isset($data['realname']) ? pun_trim($data['realname']) : '',
-				'gender'		=> isset($data['gender']) ? pun_trim($data['gender']) : '', // мод пола - Visman
-				'url'			=> isset($data['url']) ? pun_trim($data['url']) : '',
-				'location'		=> isset($data['location']) ? pun_trim($data['location']) : '',
+				'realname'		=> isset($data['realname']) ? trim($data['realname']) : '',
+				'gender'		=> isset($data['gender']) ? trim($data['gender']) : '', // мод пола - Visman
+				'url'			=> isset($data['url']) ? trim($data['url']) : '',
+				'location'		=> isset($data['location']) ? trim($data['location']) : '',
 			);
 
 			// Add http:// if the URL doesn't contain it already (while allowing https://, too)
@@ -884,11 +884,11 @@ else if ($request->isPost('form_sent'))
 		case 'messaging':
 		{
 			$form = array(
-				'jabber'		=> pun_trim($data['jabber']),
-				'icq'			=> pun_trim($data['icq']),
-				'msn'			=> pun_trim($data['msn']),
-				'aim'			=> pun_trim($data['aim']),
-				'yahoo'			=> pun_trim($data['yahoo']),
+				'jabber'		=> trim($data['jabber']),
+				'icq'			=> trim($data['icq']),
+				'msn'			=> trim($data['msn']),
+				'aim'			=> trim($data['aim']),
+				'yahoo'			=> trim($data['yahoo']),
 			);
 
 			// If the ICQ UIN contains anything other than digits it's invalid
@@ -905,7 +905,7 @@ else if ($request->isPost('form_sent'))
 			// Clean up signature from POST
 			if ($pun_config['o_signatures'] == '1')
 			{
-				$form['signature'] = pun_linebreaks(pun_trim($request->postStr('signature')));
+				$form['signature'] = pun_linebreaks(trim($request->postStr('signature')));
 
 				// Validate signature
 				if (pun_strlen($form['signature']) > $pun_config['p_sig_length'])
@@ -935,8 +935,8 @@ else if ($request->isPost('form_sent'))
 		case 'display':
 		{
 			$form = array(
-				'disp_topics'		=> pun_trim($data['disp_topics']),
-				'disp_posts'		=> pun_trim($data['disp_posts']),
+				'disp_topics'		=> trim($data['disp_topics']),
+				'disp_posts'		=> trim($data['disp_posts']),
 			);
 
 			if ($form['disp_topics'] != '')
@@ -976,7 +976,7 @@ else if ($request->isPost('form_sent'))
 			if (isset($data['style']))
 			{
 				$styles = forum_list_styles();
-				$form['style'] = pun_trim($data['style']);
+				$form['style'] = trim($data['style']);
 				if (!in_array($form['style'], $styles))
 					message($lang_common['Bad request'], false, '404 Not Found');
 			}

@@ -305,8 +305,8 @@ if ($request->isPost('csrf_hash'))
 			$mail_tpl = trim(file_get_contents(PUN_ROOT.'lang/'.$cur_addressee['language'].'/mail_templates/form_pmsn.tpl'));
 
 			$first_crlf = strpos($mail_tpl, "\n");
-			$mail_subject = pun_trim(substr($mail_tpl, 8, $first_crlf-8));
-			$mail_message = pun_trim(substr($mail_tpl, $first_crlf));
+			$mail_subject = trim(substr($mail_tpl, 8, $first_crlf-8));
+			$mail_message = trim(substr($mail_tpl, $first_crlf));
 
 			if (isset($subject))
 				$mail_subject = str_replace('<mail_subject>', $subject, $mail_subject);
