@@ -160,7 +160,8 @@ function split_words($text, $idx)
 //
 function validate_search_word($word, $idx)
 {
-	static $container, $stopwords;
+    global $container;
+	static $stopwords;
 
 	// If the word is a keyword we don't want to index it, but we do want to be allowed to search it
 	if (is_keyword($word))
