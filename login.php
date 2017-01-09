@@ -117,7 +117,7 @@ if ($request->isPost('form_sent') && $action === 'in')
 
 else if ($action === 'out')
 {
-	if ($pun_user['is_guest'] || ! $request->isGet('id') || $request->getInt('id') !== $pun_user['id'])
+	if ($pun_user['is_guest'] || ! $request->isGet('id') || $request->getInt('id') != $pun_user['id'])
 	{
 		header('Location: index.php');
 		exit;
