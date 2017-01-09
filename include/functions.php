@@ -1289,34 +1289,6 @@ function pun_hash($str)
 
 
 //
-// Compute a random hash used against CSRF attacks
-//
-function pun_csrf_token()
-{
-	global $pun_user;
-	static $token;
-
-	if (!isset($token))
-		$token = pun_hash($pun_user['id'].$pun_user['password'].pun_hash(get_remote_address()));
-
-	return $token;
-}
-
-//
-// Check if the CSRF hash is correct
-//
-function check_csrf($token)
-{
-	global $lang_common;
-
-	$is_hash_authorized = hash_equals($token, pun_csrf_token());
-
-	if (!isset($token) || !$is_hash_authorized)
-		message($lang_common['Bad csrf hash'], false, '404 Not Found');
-}
-
-
-//
 // Try to determine the correct remote IP-address
 //
 function get_remote_address()
