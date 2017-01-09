@@ -1162,7 +1162,10 @@ function random_key($len, $readable = false, $hash = false)
         $key .= (string) mcrypt_create_iv($len, MCRYPT_DEV_URANDOM);
     }
     if (strlen($key) < $len && function_exists('openssl_random_pseudo_bytes')) {
-        $key .= (string) openssl_random_pseudo_bytes($len);
+        $tmp = (string) openssl_random_pseudo_bytes($len, $strong);
+        if ($strong) {
+            $key .= $tmp;
+        }
     }
     if (strlen($key) < $len) {
         throw new \Exception('Could not gather sufficient random data');
