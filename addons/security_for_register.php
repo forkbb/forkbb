@@ -138,7 +138,7 @@ class addon_security_for_register extends flux_addon
 		if (security_test_browser())
 			$errors[] = security_msg('2');
 
-		$result = $db->query('SELECT * FROM '.$db->prefix.'sec_of_register WHERE form_key=\''.$db->escape($requst->postStr($this->form_key, '')).'\' LIMIT 1') or error('Unable to get sec_of_register data', __FILE__, __LINE__, $db->error());
+		$result = $db->query('SELECT * FROM '.$db->prefix.'sec_of_register WHERE form_key=\''.$db->escape($request->postStr($this->form_key, '')).'\' LIMIT 1') or error('Unable to get sec_of_register data', __FILE__, __LINE__, $db->error());
 		$cur_form = $db->fetch_assoc($result);
 
 		if (empty($cur_form['form_time']) || $cur_form['form_captcha'] == 'error')
@@ -165,9 +165,9 @@ class addon_security_for_register extends flux_addon
 		}
 
 		if (empty($errors))
-			$db->query('DELETE FROM '.$db->prefix.'sec_of_register WHERE form_key=\''.$db->escape($requst->postStr($this->form_key, '')).'\'') or error('Unable to delete sec_of_register data', __FILE__, __LINE__, $db->error());
+			$db->query('DELETE FROM '.$db->prefix.'sec_of_register WHERE form_key=\''.$db->escape($request->postStr($this->form_key, '')).'\'') or error('Unable to delete sec_of_register data', __FILE__, __LINE__, $db->error());
 		else
-			$db->query('UPDATE '.$db->prefix.'sec_of_register SET form_captcha=\'error\' WHERE form_key=\''.$db->escape($requst->postStr($this->form_key, '')).'\'') or error('Unable to update sec_of_register data', __FILE__, __LINE__, $db->error());
+			$db->query('UPDATE '.$db->prefix.'sec_of_register SET form_captcha=\'error\' WHERE form_key=\''.$db->escape($request->postStr($this->form_key, '')).'\'') or error('Unable to update sec_of_register data', __FILE__, __LINE__, $db->error());
 	}
 
 

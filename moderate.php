@@ -624,7 +624,7 @@ if ($request->isRequest('move_topics') || $request->isPost('move_topics_to'))
 		$db->query('UPDATE '.$db->prefix.'topics SET forum_id='.$move_to_forum.' WHERE id IN('.implode(',',$topics).')') or error('Unable to move topics', __FILE__, __LINE__, $db->error());
 
 		// Should we create redirect topics?
-		if ($requst->isPost('with_redirect'))
+		if ($request->isPost('with_redirect'))
 		{
 			foreach ($topics as $cur_topic)
 			{
