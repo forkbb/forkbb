@@ -18,7 +18,7 @@ return [
     'COOKIE_SECURE' => false,
     'COOKIE_SALT'   => '_COOKIE_SALT_',
     'ALGO_FOR_HMAC' => 'sha1',
-    'SALT1' => '',
+    'SALT1' => '', // For FluxBB by Visman 1.5.10.74 and above
     'JQUERY_LINK' => '//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js',
     'shared' => [
         'Request' => \ForkBB\Core\Request::class,

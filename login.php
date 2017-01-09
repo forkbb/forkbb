@@ -42,33 +42,17 @@ if ($request->isPost('form_sent') && $action === 'in')
 
 	if (!empty($cur_user['password']))
 	{
-		$form_password_hash = pun_hash($form_password); // Will result in a SHA-1 hash
+        // For FluxBB by Visman 1.5.10.74 and above
+        if (strlen($cur_user['password']) == 40) {
+            if (hash_equals($cur_user['password'], sha1($form_password . $container->getParameter('SALT1')))) {
+                $authorized = true;
 
-		// If there is a salt in the database we have upgraded from 1.3-legacy though haven't yet logged in
-		if (!empty($cur_user['salt']))
-		{
-			$is_salt_authorized = hash_equals(sha1($cur_user['salt'].sha1($form_password)), $cur_user['password']);
-			if ($is_salt_authorized) // 1.3 used sha1(salt.sha1(pass))
-			{
-				$authorized = true;
-
-				$db->query('UPDATE '.$db->prefix.'users SET password=\''.$form_password_hash.'\', salt=NULL WHERE id='.$cur_user['id']) or error('Unable to update user password', __FILE__, __LINE__, $db->error());
-			}
-		}
-		// If the length isn't 40 then the password isn't using sha1, so it must be md5 from 1.2
-		else if (strlen($cur_user['password']) != 40)
-		{
-			$is_md5_authorized = hash_equals(md5($form_password.$salt1), $cur_user['password']); // Visman //????
-			if ($is_md5_authorized)
-			{
-				$authorized = true;
-
-				$db->query('UPDATE '.$db->prefix.'users SET password=\''.$form_password_hash.'\' WHERE id='.$cur_user['id']) or error('Unable to update user password', __FILE__, __LINE__, $db->error());
-			}
-		}
-		// Otherwise we should have a normal sha1 password
-		else
-			$authorized = hash_equals($cur_user['password'], $form_password_hash);
+                $cur_user['password'] = password_hash($form_password, PASSWORD_DEFAULT);
+				$db->query('UPDATE '.$db->prefix.'users SET password=\''.$db->escape($cur_user['password']).'\' WHERE id='.$cur_user['id']) or error('Unable to update user password', __FILE__, __LINE__, $db->error());
+            }
+        } else {
+            $authorized = password_verify($form_password, $cur_user['password']);
+        }
 	}
 
 	if (!$authorized)
@@ -102,7 +86,7 @@ if ($request->isPost('form_sent') && $action === 'in')
 		$db->query('DELETE FROM '.$db->prefix.'online WHERE ident=\''.$db->escape(get_remote_address()).'\'') or error('Unable to delete from online list', __FILE__, __LINE__, $db->error());
 
 		$expire = ($save_pass == '1') ? time() + 1209600 : time() + $pun_config['o_timeout_visit'];
-		pun_setcookie($cur_user['id'], $form_password_hash, $expire);
+		pun_setcookie($cur_user['id'], $cur_user['password'], $expire);
 
 		// Reset tracked topics
 		set_tracked_topics(null);
