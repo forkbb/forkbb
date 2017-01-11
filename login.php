@@ -85,8 +85,7 @@ if ($request->isPost('form_sent') && $action === 'in')
 		// Remove this users guest entry from the online list
 		$db->query('DELETE FROM '.$db->prefix.'online WHERE ident=\''.$db->escape(get_remote_address()).'\'') or error('Unable to delete from online list', __FILE__, __LINE__, $db->error());
 
-		$expire = ($save_pass == '1') ? time() + 1209600 : time() + $pun_config['o_timeout_visit'];
-		pun_setcookie($cur_user['id'], $cur_user['password'], $expire);
+        $container->get('UserCookie')->setUserCookie($cur_user['id'], $cur_user['password'], $save_pass == '1');
 
 		// Reset tracked topics
 		set_tracked_topics(null);
@@ -116,7 +115,7 @@ else if ($action === 'out')
 	if (isset($pun_user['logged']))
 		$db->query('UPDATE '.$db->prefix.'users SET last_visit='.$pun_user['logged'].' WHERE id='.$pun_user['id']) or error('Unable to update user visit data', __FILE__, __LINE__, $db->error());
 
-	pun_setcookie(1, pun_hash(uniqid(rand(), true)), time() + 31536000);
+    $container->get('UserCookie')->deleteUserCookie();
 
 	redirect('index.php', $lang_login['Logout redirect']);
 }
@@ -162,6 +161,8 @@ else if ($action === 'forget' || $action === 'forget_2')
 				$mail_message = str_replace('<base_url>', get_base_url().'/', $mail_message);
 				$mail_message = str_replace('<board_mailer>', $pun_config['o_board_title'], $mail_message);
 
+                $secury = $container->get('Secury');
+
 				// Loop through users we found
 				while ($cur_hit = $db->fetch_assoc($result))
 				{
@@ -169,8 +170,8 @@ else if ($action === 'forget' || $action === 'forget_2')
 						message(sprintf($lang_login['Email flood'], intval((3600 - (time() - $cur_hit['last_email_sent'])) / 60)), true);
 
 					// Generate a new password and a new password activation code
-					$new_password = random_pass(12);
-					$new_password_key = random_pass(8);
+					$new_password = $secury->randomPass(12);
+					$new_password_key = $secury->randomPass(8);
 
 					$db->query('UPDATE '.$db->prefix.'users SET activate_string=\''.pun_hash($new_password).'\', activate_key=\''.$new_password_key.'\', last_email_sent = '.time().' WHERE id='.$cur_hit['id']) or error('Unable to update activation data', __FILE__, __LINE__, $db->error());
 

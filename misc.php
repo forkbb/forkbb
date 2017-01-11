@@ -16,7 +16,7 @@ require PUN_ROOT.'include/common.php';
 // Load the misc.php language file
 require PUN_ROOT.'lang/'.$pun_user['language'].'/misc.php';
 
-$request = $container->get('Reuqest');
+$request = $container->get('Request');
 
 $action = $request->getStr('action');
 
@@ -58,7 +58,7 @@ else if ($action === 'lang')
 
 	if ($pun_user['is_guest'])
 	{
-		forum_setcookie($container->getParameter('COOKIE_PREFIX') . '_glang', $language, time()+ 31536000);
+        $container->get('Cookie')->set('glang', $language, time()+ 31536000);
 	}
 	else
 		$db->query('UPDATE '.$db->prefix.'users SET language="'.$db->escape($language).'" WHERE id='.$pun_user['id']) or error('Unable to update profile', __FILE__, __LINE__, $db->error());

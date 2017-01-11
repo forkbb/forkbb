@@ -5,6 +5,21 @@ namespace ForkBB\Core;
 class Request
 {
     /**
+     * @var Secury
+     */
+    protected $secury;
+
+    /**
+     * Конструктор
+     *
+     * @param Secury $secury
+     */
+    public function __construct($secury)
+    {
+        $this->secury = $secury;
+    }
+
+    /**
      * @param string $key
      *
      * @return bool
@@ -97,7 +112,7 @@ class Request
     public function post($key, $default = null)
     {
         if (isset($_POST[$key])) {
-            return $this->replBadChars($_POST[$key]);
+            return $this->secury->replInvalidChars($_POST[$key]);
         }
         return $default;
     }
@@ -111,7 +126,7 @@ class Request
     public function postStr($key, $default = null)
     {
         if (isset($_POST[$key]) && is_string($_POST[$key])) {
-            return (string) $this->replBadChars($_POST[$key]);
+            return (string) $this->secury->replInvalidChars($_POST[$key]);
         }
         return $default;
     }
@@ -155,7 +170,7 @@ class Request
         if (isset($_POST[$key]) && is_array($_POST[$key])) {
             $k = key($_POST[$key]);
             if (null !== $k) {
-                return is_int($k) ? (int) $k : (string) $this->replBadChars($k);
+                return is_int($k) ? (int) $k : (string) $this->secury->replInvalidChars($k);
             }
         }
         return $default;
@@ -180,7 +195,7 @@ class Request
     public function get($key, $default = null)
     {
         if (isset($_GET[$key])) {
-            return $this->replBadChars($_GET[$key]);
+            return $this->secury->replInvalidChars($_GET[$key]);
         }
         return $default;
     }
@@ -194,7 +209,7 @@ class Request
     public function getStr($key, $default = null)
     {
         if (isset($_GET[$key]) && is_string($_GET[$key])) {
-            return (string) $this->replBadChars($_GET[$key]);
+            return (string) $this->secury->replInvalidChars($_GET[$key]);
         }
         return $default;
     }
@@ -225,25 +240,5 @@ class Request
             return (bool) $_GET[$key];
         }
         return $default;
-    }
-
-    /**
-     * @param string|array $data
-     *
-     * @return string|array
-     */
-    protected function replBadChars($data)
-    {
-        if (is_array($data)) {
-            return array_map([$this, 'replBadChars'], $data);
-        }
-
-        // slow, small memory
-        //$data = mb_convert_encoding((string) $data, 'UTF-8', 'UTF-8');
-        // fast, large memory
-        $data = htmlspecialchars_decode(htmlspecialchars((string) $data, ENT_SUBSTITUTE, 'UTF-8'));
-
-        // Remove control characters
-        return preg_replace('%[\x00-\x08\x0B-\x0C\x0E-\x1F]%', '', $data);
     }
 }

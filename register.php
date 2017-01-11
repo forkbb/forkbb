@@ -82,7 +82,7 @@ if ($request->isPost('form_sent'))
 	{
 		$email2 = strtolower(trim($request->posStr('req_email2')));
 
-		$password1 = random_pass(12);
+		$password1 = $container->get('Secury')->randomPass(12);
 		$password2 = $password1;
 	}
 	else
@@ -160,7 +160,7 @@ if ($request->isPost('form_sent'))
 		$now = time();
 
 		$intial_group_id = ($pun_config['o_regs_verify'] == '0') ? $pun_config['o_default_user_group'] : PUN_UNVERIFIED;
-		$password_hash = pun_hash($password1);
+		$password_hash = password_hash($password1, PASSWORD_DEFAULT);
 
 		// Add the user
 		$db->query('INSERT INTO '.$db->prefix.'users (username, group_id, password, email, email_setting, timezone, dst, language, style, registered, registration_ip, last_visit) VALUES(\''.$db->escape($username).'\', '.$intial_group_id.', \''.$password_hash.'\', \''.$db->escape($email1).'\', '.$email_setting.', '.$timezone.' , '.$dst.', \''.$db->escape($language).'\', \''.$pun_config['o_default_style'].'\', '.$now.', \''.$db->escape(get_remote_address()).'\', '.$now.')') or error('Unable to create user', __FILE__, __LINE__, $db->error());
@@ -260,8 +260,8 @@ if ($request->isPost('form_sent'))
 			message($lang_register['Reg email'].' <a href="mailto:'.pun_htmlspecialchars($pun_config['o_admin_email']).'">'.pun_htmlspecialchars($pun_config['o_admin_email']).'</a>.', true);
 		}
 
-		pun_setcookie($new_uid, $password_hash, $save_pass === 1 ? time() + 1209600 : time() + $pun_config['o_timeout_visit']); // мод запоминания пароля - Visman
-		
+        $container->get('UserCookie')->setUserCookie($new_uid, $password_hash, $save_pass === 1);
+
 		// удаляем из онлайн таблицы запись для этого пользователя для правильного подсчета макс. кол-во пользователей - Visman
 		$db->query('DELETE FROM '.$db->prefix.'online WHERE ident=\''.$db->escape(get_remote_address()).'\'') or error('Unable to delete from online list', __FILE__, __LINE__, $db->error());
 

@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ec3608ec80234fd3cec94b928cfb161c",
-    "content-hash": "624c9d21e02e6a9ad19afc8c1e907875",
+    "hash": "6f4e0ebde4d3b282bfe8097414a0e787",
+    "content-hash": "1356226a18a75fe9ec08328a2f553a59",
     "packages": [
         {
             "name": "artoodetoo/container",
-            "version": "dev-master",
+            "version": "dev-visman",
             "source": {
                 "type": "git",
-                "url": "https://github.com/artoodetoo/container.git",
-                "reference": "1c52096695eb699e2c63b6b84703794d94d0659f"
+                "url": "https://github.com/MioVisman/container.git",
+                "reference": "3ab08b97674dff417f36783c9e054c25540171d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/artoodetoo/container/zipball/1c52096695eb699e2c63b6b84703794d94d0659f",
-                "reference": "1c52096695eb699e2c63b6b84703794d94d0659f",
+                "url": "https://api.github.com/repos/MioVisman/container/zipball/3ab08b97674dff417f36783c9e054c25540171d3",
+                "reference": "3ab08b97674dff417f36783c9e054c25540171d3",
                 "shasum": ""
             },
             "require": {
@@ -30,7 +30,6 @@
                     "R2\\DependencyInjection\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -44,7 +43,10 @@
                 "container",
                 "service"
             ],
-            "time": "2016-12-27 20:57:10"
+            "support": {
+                "source": "https://github.com/MioVisman/container/tree/visman"
+            },
+            "time": "2017-01-11 15:15:38"
         }
     ],
     "packages-dev": [],

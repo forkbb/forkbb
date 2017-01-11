@@ -12,16 +12,24 @@ return [
     'DB_NAME'     => '_DB_NAME_',
     'DB_PREFIX'   => '_DB_PREFIX_',
     'P_CONNECT'   => false,
-    'COOKIE_PREFIX' => '_COOKIE_PREFIX_',
-    'COOKIE_DOMAIN' => '',
-    'COOKIE_PATH'   => '/',
-    'COOKIE_SECURE' => false,
-    'COOKIE_SALT'   => '_COOKIE_SALT_',
-    'ALGO_FOR_HMAC' => 'sha1',
-    'SALT1' => '', // For FluxBB by Visman 1.5.10.74 and above
+    'TIME_REMEMBER' => 31536000,
+    'COOKIE' => [
+        'prefix' => '_COOKIE_PREFIX_',
+        'domain' => '',
+        'path'   => '/',
+        'secure' => false,
+    ],
+    'HMAC' => [
+        'algo' => 'sha1',
+        'salt' => '_SALT_FOR_HMAC_',
+    ],
+    'SALT1'       => '', // For FluxBB by Visman 1.5.10.74 and above
     'JQUERY_LINK' => '//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js',
     'shared' => [
-        'Request' => \ForkBB\Core\Request::class,
+        'Request' => [
+            'class' => \ForkBB\Core\Request::class,
+            'Secury' => '@Secury',
+        ],
         'DBLoader' => [
             'class' => \ForkBB\Core\DBLoader::class,
             'db_host'     => '%DB_HOST%',
@@ -34,6 +42,22 @@ return [
         'DB' => [
             'factory method' => '@DBLoader:load',
             'type' => '%DB_TYPE%',
+        ],
+        'Secury' => [
+            'class' => \ForkBB\Core\Secury::class,
+            'hmac' => '%HMAC%',
+        ],
+        'Cookie' => [
+            'class' => \ForkBB\Core\Cookie::class,
+            'Secury' => '@Secury',
+            'options' => '%COOKIE%'
+        ],
+        'UserCookie' => [
+            'class' => \ForkBB\Core\Cookie\UserCookie::class,
+            'Secury' => '@Secury',
+            'Cookie' => '@Cookie',
+            'timeMin' => '@config[o_timeout_visit]',
+            'timeMax' => '%TIME_REMEMBER%',
         ],
         'firstAction' => \ForkBB\Core\Blank::class,
     ],

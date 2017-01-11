@@ -15,136 +15,100 @@ function check_cookie(&$pun_user)
 	global $container, $pun_config;
 
     $db = $container->get('DB');
-    $cookie_name = $container->getParameter('COOKIE_PREFIX');
-    $cookie_seed = $container->getParameter('COOKIE_SALT');
-
+    $userCookie = $container->get('UserCookie');
 	$now = time();
 
-	// If the cookie is set and it matches the correct pattern, then read the values from it
-	if (isset($_COOKIE[$cookie_name]) && preg_match('%^(\d+)\|([0-9a-fA-F]+)\|(\d+)\|([0-9a-fA-F]+)$%', $_COOKIE[$cookie_name], $matches))
+	if (($userId = $userCookie->id()) === false) {
+		return set_default_user();
+    }
+
+	// Кто в этой теме - , o.witt_data - Visman
+	// Check if there's a user with the user ID and password hash from the cookie
+	$result = $db->query('SELECT u.*, g.*, o.logged, o.idle, o.witt_data FROM '.$db->prefix.'users AS u INNER JOIN '.$db->prefix.'groups AS g ON u.group_id=g.g_id LEFT JOIN '.$db->prefix.'online AS o ON o.user_id=u.id WHERE u.id='.$userId) or error('Unable to fetch user information', __FILE__, __LINE__, $db->error());
+	$pun_user = $db->fetch_assoc($result);
+
+    if (empty($pun_user['id']) || ! $userCookie->verifyHash($pun_user['id'], $pun_user['password'])) {
+		return set_default_user();
+    }
+
+	// проверка ip админа и модератора - Visman
+	if ($pun_config['o_check_ip'] == '1' && ($pun_user['g_id'] == PUN_ADMIN || $pun_user['g_moderator'] == '1') && $pun_user['registration_ip'] != get_remote_address())
 	{
-		$cookie = array(
-			'user_id'			=> intval($matches[1]),
-			'password_hash' 	=> $matches[2],
-			'expiration_time'	=> intval($matches[3]),
-			'cookie_hash'		=> $matches[4],
-		);
+		return set_default_user();
 	}
 
-	// If it has a non-guest user, and hasn't expired
-	if (isset($cookie) && $cookie['user_id'] > 1 && $cookie['expiration_time'] > $now)
+    $userCookie->setUserCookie($pun_user['id'], $pun_user['password']);
+
+	// Set a default language if the user selected language no longer exists
+	if (!file_exists(PUN_ROOT.'lang/'.$pun_user['language']))
+		$pun_user['language'] = $pun_config['o_default_lang'];
+
+	// Set a default style if the user selected style no longer exists
+	if (!file_exists(PUN_ROOT.'style/'.$pun_user['style'].'.css'))
+		$pun_user['style'] = $pun_config['o_default_style'];
+
+	if (!$pun_user['disp_topics'])
+		$pun_user['disp_topics'] = $pun_config['o_disp_topics_default'];
+	if (!$pun_user['disp_posts'])
+		$pun_user['disp_posts'] = $pun_config['o_disp_posts_default'];
+
+	// Define this if you want this visit to affect the online list and the users last visit data
+	if (!defined('PUN_QUIET_VISIT'))
 	{
-		// If the cookie has been tampered with
-		$is_authorized = hash_equals(forum_hmac($cookie['user_id'].'|'.$cookie['expiration_time'], $cookie_seed.'_cookie_hash'), $cookie['cookie_hash']);
-		if (!$is_authorized)
+		// Update the online list
+		if (!$pun_user['logged'])
 		{
-			$expire = $now + 31536000; // The cookie expires after a year
-			pun_setcookie(1, pun_hash(uniqid(rand(), true)), $expire);
-			set_default_user();
+			$pun_user['logged'] = $now;
 
-			return;
-		}
-
-		// Кто в этой теме - , o.witt_data - Visman
-		// Check if there's a user with the user ID and password hash from the cookie
-		$result = $db->query('SELECT u.*, g.*, o.logged, o.idle, o.witt_data FROM '.$db->prefix.'users AS u INNER JOIN '.$db->prefix.'groups AS g ON u.group_id=g.g_id LEFT JOIN '.$db->prefix.'online AS o ON o.user_id=u.id WHERE u.id='.intval($cookie['user_id'])) or error('Unable to fetch user information', __FILE__, __LINE__, $db->error());
-		$pun_user = $db->fetch_assoc($result);
-
-		// If user authorisation failed
-		$is_authorized = hash_equals(forum_hmac($pun_user['password'], $cookie_seed.'_password_hash'), $cookie['password_hash']);
-		if (!isset($pun_user['id']) || !$is_authorized)
-		{
-			$expire = $now + 31536000; // The cookie expires after a year
-			pun_setcookie(1, pun_hash(uniqid(rand(), true)), $expire);
-			set_default_user();
-
-			return;
-		}
-
-		// проверка ip админа и модератора - Visman
-		if ($pun_config['o_check_ip'] == '1' && ($pun_user['g_id'] == PUN_ADMIN || $pun_user['g_moderator'] == '1') && $pun_user['registration_ip'] != get_remote_address())
-		{
-			$expire = $now + 31536000; // The cookie expires after a year
-			pun_setcookie(1, pun_hash(uniqid(rand(), true)), $expire);
-			set_default_user();
-
-			return;
-		}
-
-		// Send a new, updated cookie with a new expiration timestamp
-		$expire = ($cookie['expiration_time'] > $now + $pun_config['o_timeout_visit']) ? $now + 1209600 : $now + $pun_config['o_timeout_visit'];
-		pun_setcookie($pun_user['id'], $pun_user['password'], $expire);
-
-		// Set a default language if the user selected language no longer exists
-		if (!file_exists(PUN_ROOT.'lang/'.$pun_user['language']))
-			$pun_user['language'] = $pun_config['o_default_lang'];
-
-		// Set a default style if the user selected style no longer exists
-		if (!file_exists(PUN_ROOT.'style/'.$pun_user['style'].'.css'))
-			$pun_user['style'] = $pun_config['o_default_style'];
-
-		if (!$pun_user['disp_topics'])
-			$pun_user['disp_topics'] = $pun_config['o_disp_topics_default'];
-		if (!$pun_user['disp_posts'])
-			$pun_user['disp_posts'] = $pun_config['o_disp_posts_default'];
-
-		// Define this if you want this visit to affect the online list and the users last visit data
-		if (!defined('PUN_QUIET_VISIT'))
-		{
-			// Update the online list
-			if (!$pun_user['logged'])
+			// With MySQL/MySQLi/SQLite, REPLACE INTO avoids a user having two rows in the online table
+			switch ($container->getParameter('DB_TYPE'))
 			{
-				$pun_user['logged'] = $now;
+				case 'mysql':
+				case 'mysqli':
+				case 'mysql_innodb':
+				case 'mysqli_innodb':
+				case 'sqlite':
+					witt_query('REPLACE INTO '.$db->prefix.'online (user_id, ident, logged:?comma?::?column?:) VALUES('.$pun_user['id'].', \''.$db->escape($pun_user['username']).'\', '.$pun_user['logged'].':?comma?::?value?:)'); // MOD Кто в этой теме - Visman
+					break;
 
-				// With MySQL/MySQLi/SQLite, REPLACE INTO avoids a user having two rows in the online table
-				switch ($container->getParameter('DB_TYPE'))
-				{
-					case 'mysql':
-					case 'mysqli':
-					case 'mysql_innodb':
-					case 'mysqli_innodb':
-					case 'sqlite':
-						witt_query('REPLACE INTO '.$db->prefix.'online (user_id, ident, logged:?comma?::?column?:) VALUES('.$pun_user['id'].', \''.$db->escape($pun_user['username']).'\', '.$pun_user['logged'].':?comma?::?value?:)'); // MOD Кто в этой теме - Visman
-						break;
-
-					default:
-						witt_query('INSERT INTO '.$db->prefix.'online (user_id, ident, logged:?comma?::?column?:) SELECT '.$pun_user['id'].', \''.$db->escape($pun_user['username']).'\', '.$pun_user['logged'].':?comma?::?value?: WHERE NOT EXISTS (SELECT 1 FROM '.$db->prefix.'online WHERE user_id='.$pun_user['id'].')'); // MOD Кто в этой теме - Visman
-						break;
-				}
-
-				// Reset tracked topics
-				set_tracked_topics(null);
+				default:
+					witt_query('INSERT INTO '.$db->prefix.'online (user_id, ident, logged:?comma?::?column?:) SELECT '.$pun_user['id'].', \''.$db->escape($pun_user['username']).'\', '.$pun_user['logged'].':?comma?::?value?: WHERE NOT EXISTS (SELECT 1 FROM '.$db->prefix.'online WHERE user_id='.$pun_user['id'].')'); // MOD Кто в этой теме - Visman
+					break;
 			}
-			else
-			{
-				// Special case: We've timed out, but no other user has browsed the forums since we timed out
-				if ($pun_user['logged'] < ($now-$pun_config['o_timeout_visit']))
-				{
-					$db->query('UPDATE '.$db->prefix.'users SET last_visit='.$pun_user['logged'].' WHERE id='.$pun_user['id']) or error('Unable to update user visit data', __FILE__, __LINE__, $db->error());
-					$pun_user['last_visit'] = $pun_user['logged'];
-				}
 
-				$idle_sql = ($pun_user['idle'] == '1') ? ', idle=0' : '';
-				witt_query('UPDATE '.$db->prefix.'online SET logged='.$now.$idle_sql.':?comma?::?column?::?equal?::?value?: WHERE user_id='.$pun_user['id']); // MOD Кто в этой теме - Visman
-
-				// Update tracked topics with the current expire time
-				if (isset($_COOKIE[$cookie_name.'_track']))
-					forum_setcookie($cookie_name.'_track', $_COOKIE[$cookie_name.'_track'], $now + $pun_config['o_timeout_visit']);
-			}
+			// Reset tracked topics
+			set_tracked_topics(null);
 		}
 		else
 		{
-			if (!$pun_user['logged'])
-				$pun_user['logged'] = $pun_user['last_visit'];
+			// Special case: We've timed out, but no other user has browsed the forums since we timed out
+			if ($pun_user['logged'] < ($now-$pun_config['o_timeout_visit']))
+			{
+				$db->query('UPDATE '.$db->prefix.'users SET last_visit='.$pun_user['logged'].' WHERE id='.$pun_user['id']) or error('Unable to update user visit data', __FILE__, __LINE__, $db->error());
+				$pun_user['last_visit'] = $pun_user['logged'];
+			}
+
+			$idle_sql = ($pun_user['idle'] == '1') ? ', idle=0' : '';
+			witt_query('UPDATE '.$db->prefix.'online SET logged='.$now.$idle_sql.':?comma?::?column?::?equal?::?value?: WHERE user_id='.$pun_user['id']); // MOD Кто в этой теме - Visman
+
+            $cookie = $container->get('Cookie');
+            $track = $cookie->get('track');
+			// Update tracked topics with the current expire time
+			if (isset($track)) {
+                $cookie->set('track', $track, $now + $pun_config['o_timeout_visit']);
+            }
 		}
-
-		$pun_user['is_guest'] = false;
-		$pun_user['is_admmod'] = $pun_user['g_id'] == PUN_ADMIN || $pun_user['g_moderator'] == '1';
-
-		$pun_user['is_bot'] = false; // MOD определения ботов - Visman
 	}
 	else
-		set_default_user();
+	{
+		if (!$pun_user['logged'])
+			$pun_user['logged'] = $pun_user['last_visit'];
+	}
+
+	$pun_user['is_guest'] = false;
+	$pun_user['is_admmod'] = $pun_user['g_id'] == PUN_ADMIN || $pun_user['g_moderator'] == '1';
+
+	$pun_user['is_bot'] = false; // MOD определения ботов - Visman
 }
 
 
@@ -281,8 +245,7 @@ function set_default_user()
 	global $container, $pun_user, $pun_config, $languages;
 
     $db = $container->get('DB');
-    $cookie_name = $container->getParameter('COOKIE_PREFIX');
-
+    $container->get('UserCookie')->deleteUserCookie();
 
 	$remote_addr = get_remote_address();
 	
@@ -334,9 +297,11 @@ function set_default_user()
 	$pun_user['is_bot'] = (strpos($remote_addr, '[Bot]') !== false); // MOD определения ботов - Visman
 	$pun_user['ident'] = $remote_addr; // Кто в этой теме - Visman
 
-	if (!empty($_COOKIE[$cookie_name.'_glang'])) // быстрое переключение языка - Visman
+    // быстрое переключение языка - Visman
+    $language = $container->get('Cookie')->get('glang');
+	if (null !== $language)
 	{
-		$language = preg_replace('%[^\w]%', '', $_COOKIE[$cookie_name.'_glang']);
+		$language = preg_replace('%[^\w]%', '', $language);
 		$languages = forum_list_langs();
 		if (in_array($language, $languages))
 			$pun_user['language'] = $language;
@@ -377,45 +342,6 @@ function forum_hmac($data, $key, $raw_output = false)
 		$hash = pack('H*', $hash);
 
 	return $hash;
-}
-
-
-//
-// Set a cookie, FluxBB style!
-// Wrapper for forum_setcookie
-//
-function pun_setcookie($user_id, $password_hash, $expire)
-{
-	global $container;
-
-    $cookie_name = $container->getParameter('COOKIE_PREFIX');
-    $cookie_seed = $container->getParameter('COOKIE_SALT');
-
-	forum_setcookie($cookie_name, $user_id.'|'.forum_hmac($password_hash, $cookie_seed.'_password_hash').'|'.$expire.'|'.forum_hmac($user_id.'|'.$expire, $cookie_seed.'_cookie_hash'), $expire);
-}
-
-
-//
-// Set a cookie, FluxBB style!
-//
-function forum_setcookie($name, $value, $expire)
-{
-	global $container, $pun_config;
-
-    $cookie_path = $container->getParameter('COOKIE_PATH');
-    $cookie_domain = $container->getParameter('COOKIE_DOMAIN');
-    $cookie_secure = $container->getParameter('COOKIE_SECURE');
-
-	if ($expire - time() - $pun_config['o_timeout_visit'] < 1)
-		$expire = 0;
-
-	// Enable sending of a P3P header
-	header('P3P: CP="CUR ADM"');
-
-	if (version_compare(PHP_VERSION, '5.2.0', '>='))
-		setcookie($name, $value, $expire, $cookie_path, $cookie_domain, $cookie_secure, true);
-	else
-		setcookie($name, $value, $expire, $cookie_path.'; HttpOnly', $cookie_domain, $cookie_secure);
 }
 
 
@@ -709,8 +635,6 @@ function set_tracked_topics($tracked_topics)
 {
 	global $container, $pun_config;
 
-    $cookie_name = $container->getParameter('COOKIE_PREFIX');
-
 	$cookie_data = '';
 	if (!empty($tracked_topics))
 	{
@@ -732,8 +656,7 @@ function set_tracked_topics($tracked_topics)
 		}
 	}
 
-	forum_setcookie($cookie_name.'_track', $cookie_data, time() + $pun_config['o_timeout_visit']);
-	$_COOKIE[$cookie_name.'_track'] = $cookie_data; // Set it directly in $_COOKIE as well
+    $container->get('Cookie')->set('track', $cookie_data, time() + $pun_config['o_timeout_visit']);
 }
 
 
@@ -744,9 +667,7 @@ function get_tracked_topics()
 {
 	global $container;
 
-    $cookie_name = $container->getParameter('COOKIE_PREFIX');
-
-	$cookie_data = isset($_COOKIE[$cookie_name.'_track']) ? $_COOKIE[$cookie_name.'_track'] : false;
+	$cookie_data = $container->get('Cookie')->get('track');
 	if (!$cookie_data)
 		return array('topics' => array(), 'forums' => array());
 
@@ -1150,45 +1071,6 @@ function forum_number_format($number, $decimals = 0)
 
 
 //
-// Generate a random key of length $len
-//
-function random_key($len, $readable = false, $hash = false)
-{
-    $key = '';
-    if (function_exists('random_bytes')) {
-        $key .= (string) random_bytes($len);
-    }
-    if (strlen($key) < $len && function_exists('mcrypt_create_iv')) {
-        $key .= (string) mcrypt_create_iv($len, MCRYPT_DEV_URANDOM);
-    }
-    if (strlen($key) < $len && function_exists('openssl_random_pseudo_bytes')) {
-        $tmp = (string) openssl_random_pseudo_bytes($len, $strong);
-        if ($strong) {
-            $key .= $tmp;
-        }
-    }
-    if (strlen($key) < $len) {
-        throw new \Exception('Could not gather sufficient random data');
-    }
-
-	if ($hash)
-		return substr(bin2hex($key), 0, $len);
-	else if ($readable)
-	{
-		$chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-		$result = '';
-		for ($i = 0; $i < $len; ++$i)
-		$result .= substr($chars, (ord($key[$i]) % strlen($chars)), 1);
-
-		return $result;
-	}
-
-	return $key;
-}
-
-
-//
 // Make sure that HTTP_REFERER matches base_url/script
 // ********* новые ф-ии проверки подлинности - Visman
 // rev 59 - Variant of functions not depending on Base URL
@@ -1266,16 +1148,6 @@ function validate_redirect($redirect_url, $fallback_url)
 		return $redirect_url;
 	else
 		return $fallback_url;
-}
-
-
-//
-// Generate a random password of length $len
-// Compatibility wrapper for random_key
-//
-function random_pass($len)
-{
-	return random_key($len, true);
 }
 
 

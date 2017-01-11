@@ -99,10 +99,13 @@ class Container implements ContainerInterface
         $segments = explode('.', $name);
         $ptr =& $this->config;
         foreach ($segments as $s) {
-            if (!isset($ptr[$s])) {
+            if (isset($ptr[$s])
+                || (is_array($ptr) && array_key_exists($s, $ptr))
+            ) {
+                $ptr =& $ptr[$s];
+            } else {
                 return $default;
             }
-            $ptr =& $ptr[$s];
         }
 
         return $ptr;
@@ -140,17 +143,27 @@ class Container implements ContainerInterface
 
     protected function resolve($value)
     {
-        $matches = null;
-        if (is_string($value) && strpos($value, '%') !== false) {
-            // whole string substitution can return any type of value
-            if (preg_match('~^%(\w+)%$~', $value, $matches)) {
-                $value = $this->substitute($matches);
-            // partial string substitution casts value to string
-            } else {
-                $value = preg_replace_callback('~%(\w+)%~', [$this, 'substitute'], $value);
+        if (is_string($value)) {
+            if (strpos($value, '%') !== false) {
+                // whole string substitution can return any type of value
+                if (preg_match('~^%(\w+(?:\.\w+)*)%$~', $value, $matches)) {
+                    $value = $this->getParameter($matches[1]);
+                // partial string substitution casts value to string
+                } else {
+                    $value = preg_replace_callback('~%(\w+(?:\.\w+)*)%~',
+                        function ($matches) {
+                            return $this->getParameter($matches[1], '');
+                        }, $value);
+                }
+            } elseif (isset($value{0}) && $value{0} === '@') {
+                // получение данных из объекта как массива по индексу
+                if (preg_match('~^@([\w-]+)\[(\w+)\]$~', $value, $matches)) {
+                    $obj = $this->get($matches[1]);
+                    return isset($obj[$matches[2]]) ? $obj[$matches[2]] : null;
+                } else {
+                    return $this->get(substr($value, 1));
+                }
             }
-        } elseif (is_string($value) && isset($value{0}) && $value{0} == '@') {
-            return $this->get(substr($value, 1));
         } elseif (is_array($value)) {
             foreach ($value as &$v) {
                 $v = $this->resolve($v);
@@ -158,13 +171,5 @@ class Container implements ContainerInterface
             unset($v);
         }
         return $value;
-    }
-
-    protected function substitute($matches)
-    {
-        if (array_key_exists($matches[1], $this->config)) {
-            return $this->config[$matches[1]];
-        }
-        return '';
     }
 }

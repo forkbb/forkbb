@@ -109,12 +109,12 @@ if ($action === 'change_pass')
 		if (!$authorized)
 			message($lang_profile['Wrong pass']);
 
-		$new_password_hash = pun_hash($new_password1);
+		$new_password_hash = pun_hash($new_password1);  //????
 
 		$db->query('UPDATE '.$db->prefix.'users SET password=\''.$new_password_hash.'\''.(!empty($cur_user['salt']) ? ', salt=NULL' : '').' WHERE id='.$id) or error('Unable to update password', __FILE__, __LINE__, $db->error());
 
 		if ($pun_user['id'] == $id)
-			pun_setcookie($pun_user['id'], $new_password_hash, time() + $pun_config['o_timeout_visit']);
+            $container->get('UserCookie')->setUserCookie($pun_user['id'], $new_password_hash, false);
 
 		redirect('profile.php?section=essentials&amp;id='.$id, $lang_profile['Pass updated redirect']);
 	}
@@ -260,7 +260,7 @@ else if ($action === 'change_email')
 		}
 
 
-		$new_email_key = random_pass(8);
+		$new_email_key = $container->get('Secury')->randomPass(8);
 
 		$db->query('UPDATE '.$db->prefix.'users SET activate_string=\''.$db->escape($new_email).'\', activate_key=\''.$new_email_key.'\' WHERE id='.$id) or error('Unable to update activation data', __FILE__, __LINE__, $db->error());
 

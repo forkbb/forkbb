@@ -8,8 +8,15 @@ return [
     'DB_NAME'     => '_DB_NAME_',
     'DB_PREFIX'   => '_DB_PREFIX_',
     'P_CONNECT'   => false,
+    'HMAC' => [
+        'algo' => 'sha1',
+        'salt' => '_SALT_FOR_HMAC_',
+    ],
     'shared' => [
-        'Request' => \ForkBB\Core\Request::class,
+        'Request' => [
+            'class' => \ForkBB\Core\Request::class,
+            'Secury' => '@Secury',
+        ],
         'DBLoader' => [
             'class' => \ForkBB\Core\DBLoader::class,
             'db_host'     => '%DB_HOST%',
@@ -26,6 +33,10 @@ return [
         'Install' => [
             'class' => \ForkBB\Core\Install::class,
             'request' => '@Request',
+        ],
+        'Secury' => [
+            'class' => \ForkBB\Core\Secury::class,
+            'hmac' => '%HMAC%',
         ],
         'firstAction' => '@Install:start',
     ],

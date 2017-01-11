@@ -40,7 +40,7 @@ class Install implements ContainerAwareInterface
     {
         $config = file_get_contents($this->c->getParameter('DIR_CONFIG') . 'main.dist.php');
         if (false === $config) {
-            exit('Error open main.dist.php');
+            exit('Error open main.dist.php'); //????
         }
         $config = str_replace('_BASE_URL_', addslashes($base_url), $config);
         $config = str_replace('_DB_TYPE_', addslashes($db_type), $config);
@@ -50,7 +50,7 @@ class Install implements ContainerAwareInterface
         $config = str_replace('_DB_NAME_', addslashes($db_name), $config);
         $config = str_replace('_DB_PREFIX_', addslashes($db_prefix), $config);
         $config = str_replace('_COOKIE_PREFIX_', addslashes($cookie_prefix), $config);
-        $config = str_replace('_COOKIE_SALT_', addslashes(random_key(21, false, true)), $config);
+        $config = str_replace('_SALT_FOR_HMAC_', addslashes($this->c->get('Secury')->randomPass(21)), $config);
 
         return $config;
     }
@@ -1892,7 +1892,7 @@ foreach ($styles as $temp)
             $db->query('INSERT INTO '.$db_prefix.'users (group_id, username, password, email) VALUES(3, \''.$db->escape($lang_install['Guest']).'\', \''.$db->escape($lang_install['Guest']).'\', \''.$db->escape($lang_install['Guest']).'\')')
                 or error('Unable to add guest user. Please check your configuration and try again', __FILE__, __LINE__, $db->error());
 
-            $db->query('INSERT INTO '.$db_prefix.'users (group_id, username, password, email, language, style, num_posts, last_post, registered, registration_ip, last_visit) VALUES(1, \''.$db->escape($username).'\', \''.pun_hash($password1).'\', \''.$email.'\', \''.$db->escape($default_lang).'\', \''.$db->escape($default_style).'\', 1, '.$now.', '.$now.', \''.$db->escape(get_remote_address()).'\', '.$now.')')
+            $db->query('INSERT INTO '.$db_prefix.'users (group_id, username, password, email, language, style, num_posts, last_post, registered, registration_ip, last_visit) VALUES(1, \''.$db->escape($username).'\', \''.$db->escape(password_hash($password1, PASSWORD_DEFAULT)).'\', \''.$db->escape($email).'\', \''.$db->escape($default_lang).'\', \''.$db->escape($default_style).'\', 1, '.$now.', '.$now.', \''.$db->escape(get_remote_address()).'\', '.$now.')')
                 or error('Unable to add administrator user. Please check your configuration and try again', __FILE__, __LINE__, $db->error());
 
             // New PMS - Visman
@@ -1996,8 +1996,8 @@ foreach ($styles as $temp)
                 'o_coding_forms'          => 1,    // кодирование форм - Visman
                 'o_check_ip'              => 0,    // проверка ip администрации - Visman
                 'o_crypto_enable'         => 1,    // случайные имена полей форм - Visman
-                'o_crypto_pas'            => random_pass(25),
-                'o_crypto_salt'           => random_pass(13),
+                'o_crypto_pas'            => $this->c->get('Secury')->randomPass(25),
+                'o_crypto_salt'           => $this->c->get('Secury')->randomPass(13),
                 'o_enable_acaptcha'       => 1, // математическая каптча
                 'st_max_users'            => 1,    // статистика по максимуму юзеров - Visman
                 'st_max_users_time'       => time(),
@@ -2039,7 +2039,7 @@ foreach ($styles as $temp)
                 $alerts[] = $lang_install['Alert upload'];
 
             // Add some random bytes at the end of the cookie name to prevent collisions
-            $cookie_prefix = 'fork' . random_key(7, false, true) . '_';
+            $cookie_prefix = 'fork' . $container->get('Secury')->randomHash(7) . '_';
 
             // Generate the main.php file data
             $config = $this->generate_config_file($base_url, $db_type, $db_host, $db_name, $db_username, $db_password, $db_prefix, $cookie_prefix);

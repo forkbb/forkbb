@@ -1,23 +1,23 @@
 [
     {
         "name": "artoodetoo/container",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "dev-visman",
+        "version_normalized": "dev-visman",
         "source": {
             "type": "git",
-            "url": "https://github.com/artoodetoo/container.git",
-            "reference": "1c52096695eb699e2c63b6b84703794d94d0659f"
+            "url": "https://github.com/MioVisman/container.git",
+            "reference": "3ab08b97674dff417f36783c9e054c25540171d3"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/artoodetoo/container/zipball/1c52096695eb699e2c63b6b84703794d94d0659f",
-            "reference": "1c52096695eb699e2c63b6b84703794d94d0659f",
+            "url": "https://api.github.com/repos/MioVisman/container/zipball/3ab08b97674dff417f36783c9e054c25540171d3",
+            "reference": "3ab08b97674dff417f36783c9e054c25540171d3",
             "shasum": ""
         },
         "require": {
             "php": ">=5.6"
         },
-        "time": "2016-12-27 20:57:10",
+        "time": "2017-01-11 15:15:38",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -25,7 +25,6 @@
                 "R2\\DependencyInjection\\": "src/"
             }
         },
-        "notification-url": "https://packagist.org/downloads/",
         "license": [
             "MIT"
         ],
@@ -38,6 +37,9 @@
         "keywords": [
             "container",
             "service"
-        ]
+        ],
+        "support": {
+            "source": "https://github.com/MioVisman/container/tree/visman"
+        }
     }
 ]

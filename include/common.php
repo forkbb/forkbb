@@ -80,6 +80,8 @@ if (!defined('PUN_CONFIG_LOADED'))
 	require $container->getParameter('DIR_CACHE') . 'cache_config.php';
 }
 
+$container->set('config', $pun_config);
+
 // Verify that we are running the proper database schema revision
 if (empty($pun_config['i_fork_revision']) || $pun_config['i_fork_revision'] < FORK_REVISION) {
 	header('Location: db_update.php');
