@@ -12,7 +12,6 @@ if (!defined('PUN_ROOT'))
 // Define the version and database revision that this code was written for
 define('FORK_VERSION', '0.0.0');
 define('FORK_REVISION', 1);
-define('FORK_DB_REVISION', 21);
 define('FORK_SI_REVISION', 2.1);
 define('FORK_PARSER_REVISION', 2);
 

@@ -5,6 +5,8 @@ namespace ForkBB\Core\Cookie;
 class UserCookie
 {
     const NAME = 'user';
+    const KEY1 = 'key1';
+    const KEY2 = 'key2';
 
     /**
      * @var Secury
@@ -78,28 +80,22 @@ class UserCookie
         $ckUser = $this->cookie->get(self::NAME);
 
         if (null === $ckUser
-            || ! preg_match('%^([\+\-])(\d{1,10})\-(\d{10})\-([a-f\d]{32,})\-([a-f\d]{32,})$%Di', $ckUser, $matches)
+            || ! preg_match('%^(\-)?(\d{1,10})_(\d{10})_([a-f\d]{32,})_([a-f\d]{32,})$%Di', $ckUser, $ms)
         ) {
             return;
         }
 
-        $remember = $matches[1] === '+';
-        $uId = (int) $matches[2];
-        $expTime = (int) $matches[3];
-        $passHash = $matches[4];
-        $ckHash = $matches[5];
-
-        if ($uId < 2
-            || $expTime < time()
-            || ! hash_equals($this->secury->hmac($uId . $expTime . $passHash, 'cookie'), $ckHash)
+        if (2 > $ms[2]
+            || time() > $ms[3]
+            || ! hash_equals($this->secury->hmac($ms[1] . $ms[2] . $ms[3] . $ms[4], self::KEY1), $ms[5])
         ) {
             return;
         }
 
-        $this->remember = $remember;
-        $this->uId = $uId;
-        $this->expTime = $expTime;
-        $this->passHash = $passHash;
+        $this->remember = empty($ms[1]);
+        $this->uId      = (int) $ms[2];
+        $this->expTime  = (int) $ms[3];
+        $this->passHash = $ms[4];
     }
 
     /**
@@ -122,9 +118,8 @@ class UserCookie
      */
     public function verifyHash($id, $hash)
     {
-        return (int) $id === $this->uId
-               && hash_equals($this->passHash, $this->secury->hmac($hash . $this->expTime, 'password'));
-
+        return $this->uId === (int) $id
+               && hash_equals($this->passHash, $this->secury->hmac($hash . $this->expTime, self::KEY2));
     }
 
     /**
@@ -144,22 +139,22 @@ class UserCookie
 
         if ($remember
             || (null === $remember
-                && (int) $id === $this->uId
+                && $this->uId === (int) $id
                 && $this->remember
             )
         ) {
             $expTime = time() + $this->timeMax;
             $expire = $expTime;
-            $prefix = '+';
+            $pfx = '';
         } else {
             $expTime = time() + $this->timeMin;
             $expire = 0;
-            $prefix = '-';
+            $pfx = '-';
         }
-        $passHash = $this->secury->hmac($hash . $expTime, 'password');
-        $ckHash = $this->secury->hmac($id . $expTime . $passHash, 'cookie');
+        $passHash = $this->secury->hmac($hash . $expTime, self::KEY2);
+        $ckHash = $this->secury->hmac($pfx . $id . $expTime . $passHash, self::KEY1);
 
-        return $this->cookie->set(self::NAME, $prefix . $id . '-' . $expTime . '-' . $passHash . '-' . $ckHash, $expire);
+        return $this->cookie->set(self::NAME, $pfx . $id . '_' . $expTime . '_' . $passHash . '_' . $ckHash, $expire);
     }
 
     /**

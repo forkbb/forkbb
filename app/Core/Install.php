@@ -1905,7 +1905,6 @@ foreach ($styles as $temp)
             $pun_config = array(
                 's_fork_version'          => FORK_VERSION,
                 'i_fork_revision'         => FORK_REVISION,
-                'o_database_revision'     => FORK_DB_REVISION,
                 'o_searchindex_revision'  => FORK_SI_REVISION,
                 'o_parser_revision'       => FORK_PARSER_REVISION,
                 'o_board_title'           => $title,

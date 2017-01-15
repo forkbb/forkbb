@@ -9,7 +9,6 @@
 // The FluxBB version this script updates to
 define('UPDATE_TO', '0.0.0');
 define('UPDATE_TO_VER_REVISION', 1);
-define('UPDATE_TO_DB_REVISION', 21);
 define('UPDATE_TO_SI_REVISION', 2.1);
 define('UPDATE_TO_PARSER_REVISION', 2);
 
@@ -663,17 +662,12 @@ switch ($stage)
 
             $db->query('DELETE FROM '.$db->prefix.'config WHERE conf_name=\'o_cur_version\'') or error('Unable to delete config value \'o_cur_version\'', __FILE__, __LINE__, $db->error());
             $db->query('DELETE FROM '.$db->prefix.'config WHERE conf_name=\'o_cur_ver_revision\'') or error('Unable to delete config value \'o_cur_ver_revision\'', __FILE__, __LINE__, $db->error());
+            $db->query('DELETE FROM '.$db->prefix.'config WHERE conf_name=\'o_database_revision\'') or error('Unable to delete config value \'o_database_revision\'', __FILE__, __LINE__, $db->error());
             $db->query('DELETE FROM '.$db->prefix.'config WHERE conf_name=\'o_base_url\'') or error('Unable to delete config value \'o_base_url\'', __FILE__, __LINE__, $db->error());
 
             $db->alter_field('users', 'password', 'VARCHAR(255)', false, '') or error('Unable to alter password field', __FILE__, __LINE__, $db->error());
 
         }
-
-
-		// If we don't need to update the database, skip this stage
-		if (isset($pun_config['o_database_revision']) && $pun_config['o_database_revision'] >= UPDATE_TO_DB_REVISION)
-			break;
-
 		break;
 
 
@@ -1331,9 +1325,6 @@ foreach ($errors[$id] as $cur_error)
 
 		// Обновляем номер сборки - Visman
 		$db->query('UPDATE '.$db->prefix.'config SET conf_value = \''.UPDATE_TO_VER_REVISION.'\' WHERE conf_name = \'i_fork_revision\'') or error('Unable to update revision', __FILE__, __LINE__, $db->error());
-
-		// And the database revision number
-		$db->query('UPDATE '.$db->prefix.'config SET conf_value = \''.UPDATE_TO_DB_REVISION.'\' WHERE conf_name = \'o_database_revision\'') or error('Unable to update database revision number', __FILE__, __LINE__, $db->error());
 
 		// And the search index revision number
 		$db->query('UPDATE '.$db->prefix.'config SET conf_value = \''.UPDATE_TO_SI_REVISION.'\' WHERE conf_name = \'o_searchindex_revision\'') or error('Unable to update search index revision number', __FILE__, __LINE__, $db->error());
