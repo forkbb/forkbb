@@ -44,10 +44,7 @@ if ($request->isPost('installation'))
 	$db->query('DELETE FROM '.$db->prefix.'config WHERE conf_name LIKE \'o\_uploadile\_%\'') or error('Unable to remove config entries', __FILE__, __LINE__, $db->error());;
 	$db->query('INSERT INTO '.$db->prefix.'config (conf_name, conf_value) VALUES(\'o_uploadile_other\', \''.$db->escape(serialize($sconf)).'\')') or error($lang_up['Error DB ins-up'], __FILE__, __LINE__, $db->error());
 
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require PUN_ROOT.'include/cache.php';
-
-	generate_config_cache();
+    $container->get('config update');
 
 	redirect(PLUGIN_URL, $lang_up['Redirect']);
 }
@@ -116,10 +113,7 @@ else if ($request->isPost('update'))
 	$db->query('DELETE FROM '.$db->prefix.'config WHERE conf_name LIKE \'o\_uploadile\_%\'') or error('Unable to remove config entries', __FILE__, __LINE__, $db->error());;
 	$db->query('INSERT INTO '.$db->prefix.'config (conf_name, conf_value) VALUES(\'o_uploadile_other\', \''.$db->escape(serialize($sconf)).'\')') or error($lang_up['Error DB ins-up'], __FILE__, __LINE__, $db->error());
 
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require PUN_ROOT.'include/cache.php';
-
-	generate_config_cache();
+    $container->get('config update');
 
 	redirect(PLUGIN_URL, $lang_up['Redirect']);
 }
@@ -134,11 +128,8 @@ else if ($request->isPost('restore'))
 
 	$db->query('DELETE FROM '.$db->prefix.'config WHERE conf_name LIKE \'o\_uploadile\_%\'') or error('Unable to remove config entries', __FILE__, __LINE__, $db->error());;
 
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require PUN_ROOT.'include/cache.php';
+    $container->get('config update');
 
-	generate_config_cache();
-	
 	redirect(PLUGIN_URL, $lang_up['Redirect']);
 }
 

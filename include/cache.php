@@ -12,50 +12,6 @@ if (!defined('PUN'))
 
 
 //
-// Generate the config cache PHP script
-//
-function generate_config_cache()
-{
-	global $container;
-
-    $db = $container->get('DB');
-
-	// Get the forum config from the DB
-	$result = $db->query('SELECT * FROM '.$db->prefix.'config', true) or error('Unable to fetch forum config', __FILE__, __LINE__, $db->error());
-
-	$output = array();
-	while ($cur_config_item = $db->fetch_row($result))
-		$output[$cur_config_item[0]] = $cur_config_item[1];
-
-	// Output config as PHP code
-	$content = '<?php'."\n\n".'define(\'PUN_CONFIG_LOADED\', 1);'."\n\n".'$pun_config = '.var_export($output, true).';'."\n\n".'?>';
-	fluxbb_write_cache_file('cache_config.php', $content);
-}
-
-
-//
-// Generate the bans cache PHP script
-//
-function generate_bans_cache()
-{
-	global $container;
-
-    $db = $container->get('DB');
-
-	// Get the ban list from the DB
-	$result = $db->query('SELECT * FROM '.$db->prefix.'bans', true) or error('Unable to fetch ban list', __FILE__, __LINE__, $db->error());
-
-	$output = array();
-	while ($cur_ban = $db->fetch_assoc($result))
-		$output[] = $cur_ban;
-
-	// Output ban list as PHP code
-	$content = '<?php'."\n\n".'define(\'PUN_BANS_LOADED\', 1);'."\n\n".'$pun_bans = '.var_export($output, true).';'."\n\n".'?>';
-	fluxbb_write_cache_file('cache_bans.php', $content);
-}
-
-
-//
 // Generate quick jump cache PHP scripts
 //
 function generate_quickjump_cache($group_id = false)
@@ -144,104 +100,6 @@ function generate_quickjump_cache($group_id = false)
 
 
 //
-// Generate the censoring cache PHP script
-//
-function generate_censoring_cache()
-{
-	global $container;
-
-    $db = $container->get('DB');
-
-	$result = $db->query('SELECT search_for, replace_with FROM '.$db->prefix.'censoring') or error('Unable to fetch censoring list', __FILE__, __LINE__, $db->error());
-	$num_words = $db->num_rows($result);
-
-	$search_for = $replace_with = array();
-	for ($i = 0; $i < $num_words; $i++)
-	{
-		list($search_for[$i], $replace_with[$i]) = $db->fetch_row($result);
-		$search_for[$i] = '%(?<=[^\p{L}\p{N}])('.str_replace('\*', '[\p{L}\p{N}]*?', preg_quote($search_for[$i], '%')).')(?=[^\p{L}\p{N}])%iu';
-	}
-
-	// Output censored words as PHP code
-	$content = '<?php'."\n\n".'define(\'PUN_CENSOR_LOADED\', 1);'."\n\n".'$search_for = '.var_export($search_for, true).';'."\n\n".'$replace_with = '.var_export($replace_with, true).';'."\n\n".'?>';
-	fluxbb_write_cache_file('cache_censoring.php', $content);
-}
-
-
-//
-// Generate the stopwords cache PHP script
-//
-function generate_stopwords_cache()
-{
-	$stopwords = array();
-
-	$d = dir(PUN_ROOT.'lang');
-	while (($entry = $d->read()) !== false)
-	{
-		if ($entry{0} == '.')
-			continue;
-
-		if (is_dir(PUN_ROOT.'lang/'.$entry) && file_exists(PUN_ROOT.'lang/'.$entry.'/stopwords.txt'))
-			$stopwords = array_merge($stopwords, file(PUN_ROOT.'lang/'.$entry.'/stopwords.txt'));
-	}
-	$d->close();
-
-	// Tidy up and filter the stopwords
-	$stopwords = array_map('trim', $stopwords);
-	$stopwords = array_filter($stopwords);
-
-	// Output stopwords as PHP code
-	$content = '<?php'."\n\n".'$cache_id = \''.generate_stopwords_cache_id().'\';'."\n".'if ($cache_id != generate_stopwords_cache_id()) return;'."\n\n".'define(\'PUN_STOPWORDS_LOADED\', 1);'."\n\n".'$stopwords = '.var_export($stopwords, true).';'."\n\n".'?>';
-	fluxbb_write_cache_file('cache_stopwords.php', $content);
-}
-
-
-//
-// Load some information about the latest registered users
-//
-function generate_users_info_cache()
-{
-	global $container;
-
-    $db = $container->get('DB');
-
-	$stats = array();
-
-	$result = $db->query('SELECT COUNT(id)-1 FROM '.$db->prefix.'users WHERE group_id!='.PUN_UNVERIFIED) or error('Unable to fetch total user count', __FILE__, __LINE__, $db->error());
-	$stats['total_users'] = $db->result($result);
-
-	$result = $db->query('SELECT id, username FROM '.$db->prefix.'users WHERE group_id!='.PUN_UNVERIFIED.' ORDER BY registered DESC LIMIT 1') or error('Unable to fetch newest registered user', __FILE__, __LINE__, $db->error());
-	$stats['last_user'] = $db->fetch_assoc($result);
-
-	// Output users info as PHP code
-	$content = '<?php'."\n\n".'define(\'PUN_USERS_INFO_LOADED\', 1);'."\n\n".'$stats = '.var_export($stats, true).';'."\n\n".'?>';
-	fluxbb_write_cache_file('cache_users_info.php', $content);
-}
-
-
-//
-// Generate the admins cache PHP script
-//
-function generate_admins_cache()
-{
-	global $container;
-
-    $db = $container->get('DB');
-
-	// Get admins from the DB
-	$result = $db->query('SELECT id FROM '.$db->prefix.'users WHERE group_id='.PUN_ADMIN) or error('Unable to fetch users info', __FILE__, __LINE__, $db->error());
-
-	$output = array();
-	while ($row = $db->fetch_row($result))
-		$output[] = $row[0];
-
-	// Output admin list as PHP code
-	$content = '<?php'."\n\n".'define(\'PUN_ADMINS_LOADED\', 1);'."\n\n".'$pun_admins = '.var_export($output, true).';'."\n\n".'?>';
-	fluxbb_write_cache_file('cache_admins.php', $content);
-}
-
-
-//
 // Safely write out a cache file.
 //
 function fluxbb_write_cache_file($file, $content)
@@ -281,29 +139,6 @@ function clear_feed_cache()
 		}
 	}
 	$d->close();
-}
-
-
-//
-// Generate smiley cache PHP array
-//
-function generate_smiley_cache()
-{
-	global $container;
-
-    $db = $container->get('DB');
-
-	$str = '<?php'."\n".'$smilies = array('."\n";
-
-	$result = $db->query('SELECT image, text FROM '.$db->prefix.'smilies ORDER BY disp_position') or error('Unable to retrieve smilies', __FILE__, __LINE__, $db->error());
-	while ($s = $db->fetch_assoc($result))
-	{
-		$str .= "'".addslashes(pun_htmlspecialchars($s['text']))."' => '".$s['image']."',"."\n";
-	}
-
-	$str .= ');'."\n".'?>';
-
-	fluxbb_write_cache_file('cache_smilies.php', $str);
 }
 
 

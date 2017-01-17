@@ -92,7 +92,7 @@ if ($request->isGet('tid'))
 				message($lang_common['Bad request'], false, '404 Not Found');
 
 			// Verify that the post IDs are valid
-			$admins_sql = ($pun_user['g_id'] != PUN_ADMIN) ? ' AND poster_id NOT IN('.implode(',', get_admin_ids()).')' : '';
+			$admins_sql = ($pun_user['g_id'] != PUN_ADMIN) ? ' AND poster_id NOT IN('.implode(',', $container->get('admins')).')' : '';
 			$result = $db->query('SELECT 1 FROM '.$db->prefix.'posts WHERE id IN('.$posts.') AND topic_id='.$tid.$admins_sql) or error('Unable to check posts', __FILE__, __LINE__, $db->error());
 
 			if ($db->num_rows($result) != substr_count($posts, ',') + 1)
@@ -846,7 +846,7 @@ else if ($request->isPost('delete_topics') || $request->isPost('delete_topics_co
 		// Verify that the posts are not by admins
 		if ($pun_user['g_id'] != PUN_ADMIN)
 		{
-			$result = $db->query('SELECT 1 FROM '.$db->prefix.'posts WHERE topic_id IN('.$topics.') AND poster_id IN('.implode(',', get_admin_ids()).')') or error('Unable to check posts', __FILE__, __LINE__, $db->error());
+			$result = $db->query('SELECT 1 FROM '.$db->prefix.'posts WHERE topic_id IN('.$topics.') AND poster_id IN('.implode(',', $container->get('admins')).')') or error('Unable to check posts', __FILE__, __LINE__, $db->error());
 			if ($db->num_rows($result))
 				message($lang_common['No permission'], false, '403 Forbidden');
 		}

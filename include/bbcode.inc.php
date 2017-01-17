@@ -14,26 +14,16 @@ if (file_exists(PUN_ROOT.'style/'.$pun_user['style'].'/img/bbcode/b.png'))
 else
 	$btndir = 'style/Air/img/bbcode/';
 
-if (!isset($smilies))
-{
-	if (file_exists($container->getParameter('DIR_CACHE') . 'cache_smilies.php'))
-		include $container->getParameter('DIR_CACHE') . 'cache_smilies.php';
-	else
-	{
-		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-			require PUN_ROOT.'include/cache.php';
-
-		generate_smiley_cache();
-		require $container->getParameter('DIR_CACHE') . 'cache_smilies.php';
-	}
-}
+$smilies = $container->get('smilies');
 
 $smil_g = $smil_i = $smil_t = array();
 foreach ($smilies as $smileyt => $smileyi)
 {
-	if (isset($smil_g[$smileyi])) continue;
+	if (isset($smil_g[$smileyi])) {
+        continue;
+    }
 	$smil_g[$smileyi] = true;
-	$smil_i[] = "'".$smileyi."'";
+	$smil_i[] = "'".$smileyi."'"; //????
 	$smil_t[] = "'".addslashes($smileyt)."'";
 }
 

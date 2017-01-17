@@ -489,14 +489,11 @@ else if ($request->isPost('update_group_membership'))
 
 	$db->query('UPDATE '.$db->prefix.'users SET group_id='.$new_group_id.' WHERE id='.$id) or error('Unable to change user group', __FILE__, __LINE__, $db->error());
 
-	// Regenerate the users info cache
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require PUN_ROOT.'include/cache.php';
+    $container->get('users_info update');
 
-	generate_users_info_cache();
-
-	if ($old_group_id == PUN_ADMIN || $new_group_id == PUN_ADMIN)
-		generate_admins_cache();
+	if ($old_group_id == PUN_ADMIN || $new_group_id == PUN_ADMIN) {
+        $container->get('admins update');
+    }
 
 	$result = $db->query('SELECT g_moderator FROM '.$db->prefix.'groups WHERE g_id='.$new_group_id) or error('Unable to fetch group', __FILE__, __LINE__, $db->error());
 	$new_group_mod = $db->result($result);
@@ -694,14 +691,11 @@ else if ($request->isPost('delete_user') || $request->isPost('delete_user_comply
 		// Delete user avatar
 		delete_avatar($id);
 
-		// Regenerate the users info cache
-		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-			require PUN_ROOT.'include/cache.php';
+        $container->get('users_info update');
 
-		generate_users_info_cache();
-
-		if ($group_id == PUN_ADMIN)
-			generate_admins_cache();
+		if ($group_id == PUN_ADMIN) {
+            $container->get('admins update');
+        }
 
 		redirect('index.php', $lang_profile['User delete redirect']);
 	}
@@ -1059,15 +1053,12 @@ else if ($request->isPost('form_sent'))
 			}
 		}
 
-		// Regenerate the users info cache
-		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-			require PUN_ROOT.'include/cache.php';
-
-		generate_users_info_cache();
+        $container->get('users_info update');
 
 		// Check if the bans table was updated and regenerate the bans cache when needed
-		if (isset($bans_updated))
-			generate_bans_cache();
+		if (isset($bans_updated)) {
+            $container->get('bans update');
+        }
 	}
 
 	redirect('profile.php?section='.$section.'&amp;id='.$id, $lang_profile['Profile redirect']);

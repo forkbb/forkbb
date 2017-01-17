@@ -75,7 +75,7 @@ if (! empty($action) || $request->isGet('search_id'))
 
 		$show_as = $request->getStr('show_as') === 'topics' ? 'topics' : 'posts';
 		$sort_by = $request->getInt('sort_by', 0);
-		$search_in = min(max($request->getInt('search_in', 0), 1), -1);
+		$search_in = max(min($request->getInt('search_in', 0), 1), -1);
 	}
 	// If it's a user search (by ID)
 	else if ($action === 'show_user_posts' || $action === 'show_user_topics' || $action === 'show_subscriptions')

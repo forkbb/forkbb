@@ -38,22 +38,6 @@ if (!defined('PUN'))
 %iex' */
 $re_list = '%\[list(?:=([1a*]))?+\]((?:[^\[]*+(?:(?!\[list(?:=[1a*])?+\]|\[/list\])\[[^\[]*+)*+|(?R))*)\[/list\]%i';
 
-// Here you can add additional smilies if you like (please note that you must escape single quote and backslash)
-// Load smilies cache - Visman
-if (!isset($smilies))
-{
-	if (file_exists($container->getParameter('DIR_CACHE') . 'cache_smilies.php'))
-		include $container->getParameter('DIR_CACHE') . 'cache_smilies.php';
-	else
-	{
-		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-			require PUN_ROOT.'include/cache.php';
-
-		generate_smiley_cache();
-		require $container->getParameter('DIR_CACHE') . 'cache_smilies.php';
-	}
-}
-
 //
 // Make sure all BBCodes are lower case and do a little cleanup
 //
@@ -941,14 +925,18 @@ function forum_array_key($arr, $key)
 //
 function do_smilies($text)
 {
-	global $smilies;
+	global $container;
+
+    // Load smilies cache - Visman
+    $smilies = $container->get('smilies');
 
 	$text = ' '.$text.' ';
 
 	foreach ($smilies as $smiley_text => $smiley_img)
 	{
-		if (strpos($text, $smiley_text) !== false)
+		if (strpos($text, $smiley_text) !== false) { //???? проблема: смайлы без кодирования, а текст уже с кодированием
 			$text = ucp_preg_replace('%(?<=[>\s])'.preg_quote($smiley_text, '%').'(?=[^\p{L}\p{N}])%um', '<img src="'.pun_htmlspecialchars(get_base_url(true).'/img/smilies/'.$smiley_img).'" alt="'.substr($smiley_img, 0, strrpos($smiley_img, '.')).'" />', $text);
+        }
 	}
 
 	return substr($text, 1, -1);

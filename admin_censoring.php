@@ -39,11 +39,7 @@ if ($request->isPost('add_word'))
 	$result = $db->query('SELECT COUNT(id) FROM '.$db->prefix.'censoring WHERE search_for IN (\''.$word.'\',\'*'.$word.'\',\''.$word.'*\',\'*'.$word.'*\')') or error('Unable to fetch censor word', __FILE__, __LINE__, $db->error());
 	$nwords = $db->result($result);
 	
-	// Regenerate the censoring cache
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require PUN_ROOT.'include/cache.php';
-
-	generate_censoring_cache();
+    $container->get('censoring update');
 
 	redirect('admin_censoring.php'.(($nwords > 1) ? '?censorflag=1' : ''), $lang_admin_censoring['Word added redirect']);
 }
@@ -70,11 +66,7 @@ else if ($request->isPost('update'))
 	$result = $db->query('SELECT COUNT(id) FROM '.$db->prefix.'censoring WHERE search_for IN (\''.$word.'\',\'*'.$word.'\',\''.$word.'*\',\'*'.$word.'*\')') or error('Unable to fetch censor word', __FILE__, __LINE__, $db->error());
 	$nwords = $db->result($result);
 
-	// Regenerate the censoring cache
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require PUN_ROOT.'include/cache.php';
-
-	generate_censoring_cache();
+    $container->get('censoring update');
 
 	redirect('admin_censoring.php'.(($nwords > 1) ? '?censorflag=1' : ''), $lang_admin_censoring['Word updated redirect']);
 }
@@ -88,11 +80,7 @@ else if ($request->isPost('remove'))
 
 	$db->query('DELETE FROM '.$db->prefix.'censoring WHERE id='.$id) or error('Unable to delete censor word', __FILE__, __LINE__, $db->error());
 
-	// Regenerate the censoring cache
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require PUN_ROOT.'include/cache.php';
-
-	generate_censoring_cache();
+    $container->get('censoring update');
 
 	redirect('admin_censoring.php', $lang_admin_censoring['Word removed redirect']);
 }

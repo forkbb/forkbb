@@ -168,11 +168,7 @@ if ($request->isPost('form_sent'))
 
 		if ($pun_config['o_regs_verify'] == '0')
 		{
-			// Regenerate the users info cache
-			if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-				require PUN_ROOT.'include/cache.php';
-
-			generate_users_info_cache();
+            $container->get('users_info update');
 		}
 
 		// If the mailing list isn't empty, we may need to send out some alerts

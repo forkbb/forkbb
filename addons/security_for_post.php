@@ -172,9 +172,8 @@ class addon_security_for_post extends flux_addon
 
 	function gen_cache()
 	{
-		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-			require PUN_ROOT.'include/cache.php';
+        global $container;
 
-		generate_config_cache();
+        $container->get('config update');
 	}
 }

@@ -18,6 +18,9 @@ class Secury
      * Конструктор
      *
      * @param array $hmac
+     *
+     * @throws \InvalidArgumentException
+     * @throws \UnexpectedValueException
      */
     public function __construct(array $hmac)
     {
@@ -36,6 +39,7 @@ class Secury
      * @param string $data
      * @param string $key
      *
+     * @throws \InvalidArgumentException
      * @return string
      */
     public function hmac($data, $key)
@@ -51,6 +55,7 @@ class Secury
      *
      * @param int $len
      *
+     * @throws \RuntimeException
      * @return string
      */
     public function randomKey($len)

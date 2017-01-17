@@ -9,8 +9,8 @@
 
 // Limits configuration / Configuration des limites
 $smilies_config_image_size = 10240;	// max upload image size in bytes
-$smilies_config_image_width = 20;			// max upload image width in pixels
-$smilies_config_image_height = 20;		// max upload image height in pixels
+$smilies_config_image_width = 40;			// max upload image width in pixels
+$smilies_config_image_height = 40;		// max upload image height in pixels
 
 // Make sure no one attempts to run this script "directly"
 if (!defined('PUN'))
@@ -28,16 +28,7 @@ else
 	require PUN_ROOT.'lang/English/admin_plugin_smilies.php';
 
 // Retrieve the smiley set
-if (file_exists($container->getParameter('DIR_CACHE') . 'cache_smilies.php'))
-	include $container->getParameter('DIR_CACHE') . 'cache_smilies.php';
-else
-{
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require PUN_ROOT.'include/cache.php';
-
-	generate_smiley_cache();
-	require $container->getParameter('DIR_CACHE') . 'cache_smilies.php';
-}
+$smilies = $container->get('smilies');
 
 // Retrieve the smiley images
 $img_smilies = array();
@@ -78,11 +69,7 @@ if ($request->isPost('reord'))
 	while ($db_smilies = $db->fetch_assoc($result))
 		$db->query('UPDATE '.$db->prefix.'smilies SET disp_position='.$smilies_order[$db_smilies['id']].', text=\''.$db->escape($smilies_code[$db_smilies['id']]).'\', image=\''.$db->escape($smilies_img[$db_smilies['id']]).'\' WHERE id='.$db_smilies['id']) or error('Unable to edit smilies', __FILE__, __LINE__, $db->error());
 
-	// Regenerate cache
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require PUN_ROOT.'include/cache.php';
-
-	generate_smiley_cache();
+    $container->get('smilies update');
 
 	redirect(PLUGIN_URL, $lang_smiley['Smilies edited']);
 }
@@ -98,11 +85,7 @@ elseif ($request->isPost('remove'))
 	// Delete smilies
 	$db->query('DELETE FROM '.$db->prefix.'smilies WHERE id IN ('.implode(', ', $rem_smilies).')') or error('Unable to delete smiley', __FILE__, __LINE__, $db->error());
 
-	// Regenerate cache
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require PUN_ROOT.'include/cache.php';
-
-	generate_smiley_cache();
+    $container->get('smilies update');
 
 	redirect(PLUGIN_URL, $lang_smiley['Delete Smiley Redirect']);
 }
@@ -124,11 +107,7 @@ elseif ($request->isPost('add_smiley'))
 	// Add the smiley
 	$db->query('INSERT INTO '.$db->prefix.'smilies (image, text) VALUES (\''.$db->escape($smiley_image).'\', \''.$db->escape($smiley_code).'\')') or error('Unable to add smiley', __FILE__, __LINE__, $db->error());
 
-	// Regenerate cache
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require PUN_ROOT.'include/cache.php';
-
-	generate_smiley_cache();
+    $container->get('smilies update');
 
 	redirect(PLUGIN_URL, $lang_smiley['Successful Creation']);
 }

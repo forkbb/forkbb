@@ -623,12 +623,14 @@ if (isset($_POST['req_db_pass']))
 		}
 
 		$db->query('UPDATE '.$db->prefix.'config SET conf_value=\''.$db->escape($maintenance_message).'\' WHERE conf_name=\'o_maintenance_message\'') or error('Unable to update board config', __FILE__, __LINE__, $db->error());
-
+/*
 		// Regenerate the config cache
 		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
 			require PUN_ROOT.'include/cache.php';
 
 		generate_config_cache();
+*/
+        $container->get('config update');
 	}
 }
 else if (isset($_GET['uid']))
@@ -1346,8 +1348,7 @@ foreach ($errors[$id] as $cur_error)
 		while ($row = $db->fetch_row($result))
 			update_forum($row[0]);
 
-		// Empty the PHP cache
-		forum_clear_cache();
+        $container->get('Cache')->clear();
 
 		// Delete the update lock file
 		@unlink(FORUM_CACHE_DIR.'db_update.lock');

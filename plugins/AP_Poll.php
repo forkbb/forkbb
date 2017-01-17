@@ -47,10 +47,7 @@ if ($request->isPost('show_text'))
 		$db->query('UPDATE '.$db->prefix.'config SET conf_value=\''.intval($poll_guest).'\' WHERE conf_name=\'o_poll_guest\'') or error('Unable to update board config', __FILE__, __LINE__, $db->error());
 	}
 
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require PUN_ROOT.'include/cache.php';
-
-	generate_config_cache();
+    $container->get('config update');
 
 	redirect(PLUGIN_URL, $lang_admin_plugin_poll['Plugin redirect']);
 }

@@ -39,11 +39,7 @@ if ($request->isPost('form_sent'))
 			$db->query('UPDATE '.$db->prefix.'config SET conf_value='.$input.' WHERE conf_name=\'p_'.$db->escape($key).'\'') or error('Unable to update board config', __FILE__, __LINE__, $db->error());
 	}
 
-	// Regenerate the config cache
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require PUN_ROOT.'include/cache.php';
-
-	generate_config_cache();
+	$container->get('config update');
 
 	redirect('admin_permissions.php', $lang_admin_permissions['Perms updated redirect']);
 }

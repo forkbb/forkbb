@@ -508,11 +508,7 @@ else if ($request->isPost('delete_users') || $request->isPost('delete_users_comp
 		foreach ($user_ids as $user_id)
 			delete_avatar($user_id);
 
-		// Regenerate the users info cache
-		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-			require PUN_ROOT.'include/cache.php';
-
-		generate_users_info_cache();
+        $container->get('users_info update');
 
 // New PMS - Visman
 		require PUN_ROOT.'include/pms_new/common_pmsn.php';
@@ -642,11 +638,7 @@ else if ($request->isPost('ban_users') || $request->isPost('ban_users_comply'))
 			$db->query('INSERT INTO '.$db->prefix.'bans (username, ip, email, message, expire, ban_creator) VALUES('.$ban_username.', '.$ban_ip.', '.$ban_email.', '.$ban_message.', '.$ban_expire.', '.$pun_user['id'].')') or error('Unable to add ban', __FILE__, __LINE__, $db->error());
 		}
 
-		// Regenerate the bans cache
-		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-			require PUN_ROOT.'include/cache.php';
-
-		generate_bans_cache();
+        $container->get('bans update');
 
 		redirect('admin_users.php', $lang_admin_users['Users banned redirect']);
 	}

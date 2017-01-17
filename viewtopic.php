@@ -190,7 +190,7 @@ if (defined('WITT_ENABLE'))
 $mods_array = ($cur_topic['moderators'] != '') ? unserialize($cur_topic['moderators']) : array();
 $is_admmod = ($pun_user['g_id'] == PUN_ADMIN || ($pun_user['g_moderator'] == '1' && array_key_exists($pun_user['username'], $mods_array))) ? true : false;
 if ($is_admmod)
-	$admin_ids = get_admin_ids();
+	$admin_ids = $container->get('admins');
 
 if ($pun_user['is_bot']) // запретим ботам постить - Visman
 	$pun_config['o_quickpost'] = $cur_topic['post_replies'] = $pun_user['g_post_replies'] = $pun_config['o_topic_views'] = '';

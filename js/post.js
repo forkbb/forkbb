@@ -76,7 +76,7 @@ FluxBB.post = (function (doc, win) {
 	function SmileysMapBB() {
 		var html = '';
 		for (var i = 0; i < FluxBB.vars.bbSmImg.length; i++) {
-			html += '<img src="img/smilies/' + FluxBB.vars.bbSmImg[i] + '" alt="' + FluxBB.vars.bbSmTxt[i] + '" onclick="return FluxBB.post.insText(\'\', \' ' + FluxBB.vars.bbSmTxt[i].replace(/\\/g, '\\\\').replace(/&#039;/g, '\\\'') + ' \');" />';
+			html += '<img src="img/smilies/' + FluxBB.vars.bbSmImg[i] + '" alt="' + FluxBB.vars.bbSmTxt[i] + '" onclick="return FluxBB.post.insText(\'\', \' ' + FluxBB.vars.bbSmTxt[i].replace(/\\/g, '\\\\').replace(/\'/g, '\\\'') + ' \');" />';
 		}
 		return html;
 	}

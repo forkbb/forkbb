@@ -31,11 +31,7 @@ if ($request->isPost('show_text'))
 	$merge_timeout = $request->postInt('text_to_show', 0); //????
 	$db->query('UPDATE '.$db->prefix.'config SET conf_value=\''.$merge_timeout.'\' WHERE conf_name=\'o_merge_timeout\'') or error('Unable to update board config', __FILE__, __LINE__, $db->error());
 
-	// Regenerate the config cache
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require PUN_ROOT.'include/cache.php';
-
-	generate_config_cache();
+    $container->get('config update');
 
 	redirect(PLUGIN_URL, $lang_admin_plugin_merge_posts['Plugin redirect']);
 }
@@ -55,10 +51,7 @@ else
 		else
 			$merge_timeout = $db->result($result);
 
-		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-			require PUN_ROOT.'include/cache.php';
-
-		generate_config_cache();
+        $container->get('config update');
 	}
 	else
 		$merge_timeout = $pun_config['o_merge_timeout'];

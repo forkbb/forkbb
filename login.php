@@ -68,11 +68,7 @@ if ($request->isPost('form_sent') && $action === 'in')
 		{
 			$db->query('UPDATE '.$db->prefix.'users SET group_id='.$pun_config['o_default_user_group'].' WHERE id='.$cur_user['id']) or error('Unable to update user status', __FILE__, __LINE__, $db->error());
 
-			// Regenerate the users info cache
-			if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-				require PUN_ROOT.'include/cache.php';
-
-			generate_users_info_cache();
+            $container->get('users_info update');
 		}
 
 		// перезаписываем ip админа и модератора - Visman

@@ -38,10 +38,7 @@ if ($request->isPost('show_text'))
 	$db->query('UPDATE '.$db->prefix.'config SET conf_value=\''.$b_crypto.'\' WHERE conf_name=\'o_crypto_enable\'') or error('Unable to update board config', __FILE__, __LINE__, $db->error());
 	$db->query('UPDATE '.$db->prefix.'config SET conf_value=\''.$b_enable_acaptcha.'\' WHERE conf_name=\'o_enable_acaptcha\'') or error('Unable to update board config', __FILE__, __LINE__, $db->error());
 
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require PUN_ROOT.'include/cache.php';
-
-	generate_config_cache();
+    $container->get('config update');
 
 	redirect(PLUGIN_URL, $lang_admin_plugin_security['Plugin redirect']);
 }

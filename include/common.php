@@ -66,20 +66,7 @@ $db = $container->get('DB');
 // Start a transaction
 $db->start_transaction();
 
-// Load cached config
-if (file_exists($container->getParameter('DIR_CACHE') . 'cache_config.php'))
-	include $container->getParameter('DIR_CACHE') . 'cache_config.php';
-
-if (!defined('PUN_CONFIG_LOADED'))
-{
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require PUN_ROOT.'include/cache.php';
-
-	generate_config_cache();
-	require $container->getParameter('DIR_CACHE') . 'cache_config.php';
-}
-
-$container->set('config', $pun_config);
+$pun_config = $container->get('config');
 
 // Verify that we are running the proper database schema revision
 if (empty($pun_config['i_fork_revision']) || $pun_config['i_fork_revision'] < FORK_REVISION) {
@@ -114,19 +101,6 @@ else
 // Check if we are to display a maintenance message
 if ($pun_config['o_maintenance'] && $pun_user['g_id'] > PUN_ADMIN && !defined('PUN_TURN_OFF_MAINT'))
 	maintenance_message();
-
-// Load cached bans
-if (file_exists($container->getParameter('DIR_CACHE') . 'cache_bans.php'))
-	include $container->getParameter('DIR_CACHE') . 'cache_bans.php';
-
-if (!defined('PUN_BANS_LOADED'))
-{
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require PUN_ROOT.'include/cache.php';
-
-	generate_bans_cache();
-	require $container->getParameter('DIR_CACHE') . 'cache_bans.php';
-}
 
 // Check if current user is banned
 check_bans();

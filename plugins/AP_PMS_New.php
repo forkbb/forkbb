@@ -50,10 +50,7 @@ if ($request->isPost('show_text'))
 				$db->query('UPDATE '.$db->prefix.'groups SET g_pm='.$g_p.', g_pm_limit='.$g_lim.' WHERE g_id='.$cur_group['g_id']) or error('Unable to update user group list', __FILE__, __LINE__, $db->error());
 			}
 
-	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-		require PUN_ROOT.'include/cache.php';
-
-	generate_config_cache();
+    $container->get('config update');
 
 	redirect(PLUGIN_URL, $lang_apmsn['Plugin redirect']);
 }

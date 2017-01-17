@@ -31,9 +31,11 @@ function is_valid_email($email)
 //
 function is_banned_email($email)
 {
-	global $pun_bans;
+	global $container;
 
-	foreach ($pun_bans as $cur_ban)
+    $bans = $container->get('bans');
+
+	foreach ($bans as $cur_ban)
 	{
 		if ($cur_ban['email'] != '' &&
 			($email == $cur_ban['email'] ||

@@ -169,17 +169,7 @@ function validate_search_word($word, $idx)
 
 	if (!isset($stopwords))
 	{
-		if (file_exists($container->getParameter('DIR_CACHE') . 'cache_stopwords.php'))
-			include $container->getParameter('DIR_CACHE') . 'cache_stopwords.php';
-
-		if (!defined('PUN_STOPWORDS_LOADED'))
-		{
-			if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-				require PUN_ROOT.'include/cache.php';
-
-			generate_stopwords_cache();
-			require $container->getParameter('DIR_CACHE') . 'cache_stopwords.php';
-		}
+        $stopwords = $container->get('stopwords');
 	}
 
 	// If it is a stopword it isn't valid

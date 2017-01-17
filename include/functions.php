@@ -215,29 +215,6 @@ function get_base_url($support_https = false)
 
 
 //
-// Fetch admin IDs
-//
-function get_admin_ids()
-{
-    global $container;
-
-	if (file_exists($container->getParameter('DIR_CACHE') . 'cache_admins.php'))
-		include $container->getParameter('DIR_CACHE') . 'cache_admins.php';
-
-	if (!defined('PUN_ADMINS_LOADED'))
-	{
-		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-			require PUN_ROOT.'include/cache.php';
-
-		generate_admins_cache();
-		require $container->getParameter('DIR_CACHE') . 'cache_admins.php';
-	}
-
-	return $pun_admins;
-}
-
-
-//
 // Fill $pun_user with default values (for guests)
 //
 function set_default_user()
@@ -311,51 +288,17 @@ function set_default_user()
 
 
 //
-// SHA1 HMAC with PHP 4 fallback
-//
-function forum_hmac($data, $key, $raw_output = false)
-{
-	if (function_exists('hash_hmac'))
-		return hash_hmac('sha1', $data, $key, $raw_output);
-
-	// If key size more than blocksize then we hash it once
-	if (strlen($key) > 64)
-		$key = pack('H*', sha1($key)); // we have to use raw output here to match the standard
-
-	// Ensure we're padded to exactly one block boundary
-	$key = str_pad($key, 64, chr(0x00));
-
-	$hmac_opad = str_repeat(chr(0x5C), 64);
-	$hmac_ipad = str_repeat(chr(0x36), 64);
-
-	// Do inner and outer padding
-	for ($i = 0;$i < 64;$i++) {
-		$hmac_opad[$i] = $hmac_opad[$i] ^ $key[$i];
-		$hmac_ipad[$i] = $hmac_ipad[$i] ^ $key[$i];
-	}
-
-	// Finally, calculate the HMAC
-	$hash = sha1($hmac_opad.pack('H*', sha1($hmac_ipad.$data)));
-
-	// If we want raw output then we need to pack the final result
-	if ($raw_output)
-		$hash = pack('H*', $hash);
-
-	return $hash;
-}
-
-
-//
 // Check whether the connecting user is banned (and delete any expired bans while we're at it)
 //
 function check_bans()
 {
-	global $container, $pun_config, $lang_common, $pun_user, $pun_bans;
+	global $container, $pun_config, $lang_common, $pun_user;
 
     $db = $container->get('DB');
+    $bans = $container->get('bans');
 
 	// Admins and moderators aren't affected
-	if ($pun_user['is_admmod'] || !$pun_bans)
+	if ($pun_user['is_admmod'] || !$bans)
 		return;
 
 	// Add a dot or a colon (depending on IPv4/IPv6) at the end of the IP address to prevent banned address
@@ -366,7 +309,7 @@ function check_bans()
 	$bans_altered = false;
 	$is_banned = false;
 
-	foreach ($pun_bans as $cur_ban)
+	foreach ($bans as $cur_ban)
 	{
 		// Has this ban expired?
 		if ($cur_ban['expire'] != '' && $cur_ban['expire'] <= time())
@@ -410,10 +353,7 @@ function check_bans()
 	// If we removed any expired bans during our run-through, we need to regenerate the bans cache
 	if ($bans_altered)
 	{
-		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-			require PUN_ROOT.'include/cache.php';
-
-		generate_bans_cache();
+        $container->get('bans update');
 	}
 }
 
@@ -423,9 +363,10 @@ function check_bans()
 //
 function check_username($username, $exclude_id = null)
 {
-	global $container, $pun_config, $errors, $lang_prof_reg, $lang_register, $lang_common, $pun_bans;
+	global $container, $pun_config, $errors, $lang_prof_reg, $lang_register, $lang_common;
 
     $db = $container->get('DB');
+    $bans = $container->get('bans');
 
 	// Convert multiple whitespace characters into one (to prevent people from registering with indistinguishable usernames)
 	$username = preg_replace('%\s+%s', ' ', $username);
@@ -462,7 +403,7 @@ function check_username($username, $exclude_id = null)
 	}
 
 	// Check username for any banned usernames
-	foreach ($pun_bans as $cur_ban)
+	foreach ($bans as $cur_ban)
 	{
 		if ($cur_ban['username'] != '' && mb_strtolower($username) == mb_strtolower($cur_ban['username']))
 		{
@@ -542,11 +483,7 @@ function update_users_online($tid = 0, &$witt_us = array())
 		$db->query('UPDATE '.$db->prefix.'config SET conf_value=\''.$kol.'\' WHERE conf_name=\'st_max_users\'') or error('Unable to update config value \'st_max_users\'', __FILE__, __LINE__, $db->error());
 		$db->query('UPDATE '.$db->prefix.'config SET conf_value=\''.$now.'\' WHERE conf_name=\'st_max_users_time\'') or error('Unable to update config value \'st_max_users_time\'', __FILE__, __LINE__, $db->error());
 
-		// Regenerate the config cache
-		if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-			require PUN_ROOT.'include/cache.php';
-
-		generate_config_cache();
+        $container->get('config update');
 	}
 }
 
@@ -835,47 +772,21 @@ function delete_post($post_id, $topic_id)
 
 
 //
-// Delete every .php file in the forum's cache directory
-//
-function forum_clear_cache()
-{
-    global $container;
-
-	$d = dir($container->getParameter('DIR_CACHE'));
-	while (($entry = $d->read()) !== false)
-	{
-		if (substr($entry, -4) == '.php')
-			@unlink($container->getParameter('DIR_CACHE') . $entry);
-	}
-	$d->close();
-}
-
-
-//
 // Replace censored words in $text
 //
 function censor_words($text)
 {
-	static $container, $search_for, $replace_with;
+    global $container;
+	static $search_for, $replace_with;
 
 	// If not already built in a previous call, build an array of censor words and their replacement text
-	if (!isset($search_for))
-	{
-		if (file_exists($container->getParameter('DIR_CACHE') . 'cache_censoring.php'))
-			include $container->getParameter('DIR_CACHE') . 'cache_censoring.php';
-
-		if (!defined('PUN_CENSOR_LOADED'))
-		{
-			if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
-				require PUN_ROOT.'include/cache.php';
-
-			generate_censoring_cache();
-			require $container->getParameter('DIR_CACHE') . 'cache_censoring.php';
-		}
+	if (!isset($search_for)) {
+        list($search_for, $replace_with) = $container->get('censoring');
 	}
 
-	if (!empty($search_for))
+	if (!empty($search_for)) {
 		$text = substr(ucp_preg_replace($search_for, $replace_with, ' '.$text.' '), 1, -1);
+    }
 
 	return $text;
 }
@@ -887,15 +798,17 @@ function censor_words($text)
 //
 function get_title($user)
 {
-	global $pun_bans, $lang_common;
+	global $container, $lang_common;
 	static $ban_list;
+
+    $bans = $container->get('bans');
 
 	// If not already built in a previous call, build an array of lowercase banned usernames
 	if (empty($ban_list))
 	{
 		$ban_list = array();
 
-		foreach ($pun_bans as $cur_ban)
+		foreach ($bans as $cur_ban)
 			$ban_list[] = mb_strtolower($cur_ban['username']);
 	}
 
@@ -1747,27 +1660,6 @@ function forum_list_langs()
 	natcasesort($languages);
 
 	return $languages;
-}
-
-
-//
-// Generate a cache ID based on the last modification time for all stopwords files
-//
-function generate_stopwords_cache_id()
-{
-	$files = glob(PUN_ROOT.'lang/*/stopwords.txt');
-	if ($files === false)
-		return 'cache_id_error';
-
-	$hash = array();
-
-	foreach ($files as $file)
-	{
-		$hash[] = $file;
-		$hash[] = filemtime($file);
-	}
-
-	return sha1(implode('|', $hash));
 }
 
 

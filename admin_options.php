@@ -205,7 +205,7 @@ if ($request->isPost('form_sent'))
 	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
 		require PUN_ROOT.'include/cache.php';
 
-	generate_config_cache();
+	$container->get('config update');
 	clear_feed_cache();
 
 	redirect('admin_options.php', $lang_admin_options['Options updated redirect']);
