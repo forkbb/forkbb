@@ -13,6 +13,12 @@ class Auth extends Page
     protected $nameTpl = 'auth';
 
     /**
+     * Позиция для таблицы онлайн текущего пользователя
+     * @var null|string
+     */
+    protected $onlinePos = 'login';
+
+    /**
      * Указатель на активный пункт навигации
      * @var string
      */

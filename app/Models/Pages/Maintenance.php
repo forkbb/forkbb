@@ -13,6 +13,12 @@ class Maintenance extends Page
     protected $nameTpl = 'maintenance';
 
     /**
+     * Позиция для таблицы онлайн текущего пользователя
+     * @var null|string
+     */
+    protected $onlinePos = null;
+
+    /**
      * HTTP статус ответа для данной страницы
      * @var int
      */
@@ -60,10 +66,10 @@ class Maintenance extends Page
     }
 
     /**
-     * Возврат предупреждений форума
+     * Возврат info, success, warning, error, validation информации
      * @return array
      */
-    protected function fWarning()
+    protected function getIswev()
     {
         return [];
     }

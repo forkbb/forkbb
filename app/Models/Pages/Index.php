@@ -12,7 +12,7 @@ class Index extends Page
 
     /**
      * Позиция для таблицы онлайн текущего пользователя
-     * @var string
+     * @var null|string
      */
     protected $onlinePos = 'index';
 

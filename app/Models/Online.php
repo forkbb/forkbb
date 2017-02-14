@@ -16,6 +16,12 @@ class Online
     protected $c;
 
     /**
+     * Флаг выполнения
+     * @var bool
+     */
+    protected $done = false;
+
+    /**
      * @var array
      */
     protected $config;
@@ -29,12 +35,6 @@ class Online
      * @var User
      */
     protected $user;
-
-    /**
-     * Флаг выполнения
-     * @var bool
-     */
-    protected $flag = false;
 
     /**
      * Контролер
@@ -60,13 +60,16 @@ class Online
      */
     public function handle(Page $page)
     {
-        if ($this->flag) {
-            throw new RuntimeException('Repeated execution of actions over online data');
+        if ($this->done) {
+            return [[], [], []]; //????
         }
-        $this->flag = true;
+        $this->done = true;
 
-        //   string     bool   bool
+        //  string|null  bool   bool
         list($position, $type, $filter) = $page->getDataForOnline();  //???? возможно стоит возвращать полное имя страницы для отображение
+        if (null === $position) {
+            return [[], [], []]; //????
+        }
 
         $this->updateUser($position);
 

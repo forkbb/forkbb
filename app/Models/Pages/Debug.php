@@ -11,6 +11,12 @@ class Debug extends Page
     protected $nameTpl = 'layouts/debug';
 
     /**
+     * Позиция для таблицы онлайн текущего пользователя
+     * @var null|string
+     */
+    protected $onlinePos = null;
+
+    /**
      * Подготавливает данные для шаблона
      * @return Page
      */

@@ -65,6 +65,9 @@ while (! $page instanceof Page && $cur = array_pop($controllers)) {
 }
 
 if ($page instanceof Page) { //????
+    if ($page->getDataForOnline(true)) {
+        $container->get('Online')->handle($page);
+    }
     $tpl = $container->get('View')->setPage($page)->outputPage();
     if (defined('PUN_DEBUG')) {
         $debug = $container->get('Debug')->debug();

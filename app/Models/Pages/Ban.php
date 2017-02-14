@@ -11,6 +11,12 @@ class Ban extends Page
     protected $nameTpl = 'ban';
 
     /**
+     * Позиция для таблицы онлайн текущего пользователя
+     * @var null|string
+     */
+    protected $onlinePos = 'ban';
+
+    /**
      * HTTP статус ответа для данной страницы
      * @var int
      */

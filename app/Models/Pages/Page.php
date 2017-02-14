@@ -56,16 +56,16 @@ abstract class Page
     protected $data;
 
     /**
-     * Позиция для таблицы онлайн текущего пользователя
-     * @var string
-     */
-    protected $onlinePos = '';
-
-    /**
      * Массив info, success, warning, error, validation информации
      * @var array
      */
     protected $iswev = [];
+
+    /**
+     * Позиция для таблицы онлайн текущего пользователя
+     * @var null|string
+     */
+    protected $onlinePos = '';
 
     /**
      * Тип обработки пользователей онлайн
@@ -319,11 +319,14 @@ abstract class Page
 
     /**
      * Возращает данные для управления обработкой пользователей онлайн
-     * @return array
+     * @param bool $short
+     * @return bool|array
      */
-    public function getDataForOnline()
+    public function getDataForOnline($short = false)
     {
-        return [$this->onlinePos, $this->onlineType, $this->onlineFilter];
+        return $short
+            ? null !== $this->onlinePos
+            : [$this->onlinePos, $this->onlineType, $this->onlineFilter];
     }
 
     /**

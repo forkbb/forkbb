@@ -11,6 +11,12 @@ class Rules extends Page
     protected $nameTpl = 'rules';
 
     /**
+     * Позиция для таблицы онлайн текущего пользователя
+     * @var null|string
+     */
+    protected $onlinePos = 'rules';
+
+    /**
      * Указатель на активный пункт навигации
      * @var string
      */

@@ -11,6 +11,12 @@ class Redirect extends Page
     protected $nameTpl = null;
 
     /**
+     * Позиция для таблицы онлайн текущего пользователя
+     * @var null|string
+     */
+    protected $onlinePos = null;
+
+    /**
      * Адрес перехода
      * @var string
      */
