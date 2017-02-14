@@ -1,0 +1,478 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "lang_direction"
+msgstr "ltr"
+
+msgid "lang_identifier"
+msgstr "en"
+
+msgid "lang_decimal_point"
+msgstr "."
+
+msgid "lang_thousands_sep"
+msgstr ","
+
+msgid "Bad token"
+msgstr "Bad token."
+
+msgid "Bad request"
+msgstr "Bad request. The link you followed is incorrect or outdated."
+
+msgid "No view"
+msgstr "You do not have permission to view these forums."
+
+msgid "No permission"
+msgstr "You do not have permission to access this page."
+
+msgid "Bad referrer"
+msgstr "Bad csrf_hash. You were referred to this page from an unauthorized source."
+
+msgid "Bad csrf hash"
+msgstr "Bad CSRF hash. You were referred to this page from an unauthorized source."
+
+msgid "No cookie"
+msgstr "You appear to have logged in successfully, however a cookie has not been set. Please check your settings and if applicable, enable cookies for this website."
+
+msgid "Pun include extension"
+msgstr "Unable to process user include %s from template %s. &quot;%s&quot; files are not allowed"
+
+msgid "Pun include directory"
+msgstr "Unable to process user include %s from template %s. Directory traversal is not allowed"
+
+msgid "Pun include error"
+msgstr "Unable to process user include %s from template %s. There is no such file in neither the template directory nor in the user include directory"
+
+msgid "Hidden text"
+msgstr "Hidden text"
+
+msgid "Show"
+msgstr "Show"
+
+msgid "Hide"
+msgstr "Hide"
+
+msgid "Announcement"
+msgstr "Announcement"
+
+msgid "Options"
+msgstr "Options"
+
+msgid "Submit"
+msgstr "Submit"
+
+msgid "Ban message"
+msgstr "You are banned from this forum."
+
+msgid "Ban message 2"
+msgstr "The ban expires at the end of"
+
+msgid "Ban message 3"
+msgstr "The administrator or moderator that banned you left the following message:"
+
+msgid "Ban message 4"
+msgstr "Please direct any inquiries to the forum administrator at"
+
+msgid "Never"
+msgstr "Never"
+
+msgid "Today"
+msgstr "Today"
+
+msgid "Yesterday"
+msgstr "Yesterday"
+
+msgid "Info"
+msgstr "Info"
+
+msgid "Go back"
+msgstr "Go back"
+
+msgid "Maintenance"
+msgstr "Maintenance"
+
+msgid "Redirecting"
+msgstr "Redirecting"
+
+msgid "Click redirect"
+msgstr "Click here if you do not want to wait any longer (or if your browser does not automatically forward you)"
+
+msgid "on"
+msgstr "on"
+
+msgid "off"
+msgstr "off"
+
+msgid "Invalid email"
+msgstr "The email address you entered is invalid."
+
+msgid "Required"
+msgstr "(Required)"
+
+msgid "required field"
+msgstr "is a required field in this form."
+
+msgid "Last post"
+msgstr "Last post"
+
+msgid "by"
+msgstr "by"
+
+msgid "New posts"
+msgstr "New posts"
+
+msgid "New posts info"
+msgstr "Go to the first new post in this topic."
+
+msgid "Username"
+msgstr "Username"
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Send email"
+msgstr "Send email"
+
+msgid "Moderated by"
+msgstr "Moderated by"
+
+msgid "Registered"
+msgstr "Registered"
+
+msgid "Subject"
+msgstr "Subject"
+
+msgid "Message"
+msgstr "Message"
+
+msgid "Topic"
+msgstr "Topic"
+
+msgid "Forum"
+msgstr "Forum"
+
+msgid "Stats"
+msgstr "Statistics"
+
+msgid "Posts"
+msgstr "Posts"
+
+msgid "Replies"
+msgstr "Replies"
+
+msgid "Pages"
+msgstr "Pages:"
+
+msgid "Page"
+msgstr "Page %s"
+
+msgid "BBCode"
+msgstr "BBCode:"
+
+msgid "url tag"
+msgstr "[url] tag:"
+
+msgid "img tag"
+msgstr "[img] tag:"
+
+msgid "Smilies"
+msgstr "Smilies:"
+
+msgid "and"
+msgstr "and"
+
+msgid "Image link"
+msgstr "image"
+
+msgid "wrote"
+msgstr "wrote:"
+
+msgid "Mailer"
+msgstr "%s"
+
+msgid "Important information"
+msgstr "Important information"
+
+msgid "Write message legend"
+msgstr "Write your message and submit"
+
+msgid "Previous"
+msgstr "Previous"
+
+msgid "Next"
+msgstr "Next"
+
+msgid "Spacer"
+msgstr "…"
+
+msgid "Title"
+msgstr "Title"
+
+msgid "Member"
+msgstr "Member"
+
+msgid "Moderator"
+msgstr "Moderator"
+
+msgid "Administrator"
+msgstr "Administrator"
+
+msgid "Banned"
+msgstr "Banned"
+
+msgid "Guest"
+msgstr "Guest"
+
+msgid "BBCode error no opening tag"
+msgstr "[/%1$s] was found without a matching [%1$s]"
+
+msgid "BBCode error invalid nesting"
+msgstr "[%1$s] was opened within [%2$s], this is not allowed"
+
+msgid "BBCode error invalid self-nesting"
+msgstr "[%s] was opened within itself, this is not allowed"
+
+msgid "BBCode error no closing tag"
+msgstr "[%1$s] was found without a matching [/%1$s]"
+
+msgid "BBCode error empty attribute"
+msgstr "[%s] tag had an empty attribute section"
+
+msgid "BBCode error tag not allowed"
+msgstr "You are not allowed to use [%s] tags"
+
+msgid "BBCode error tag url not allowed"
+msgstr "You are not allowed to post links"
+
+msgid "BBCode list size error"
+msgstr "Your list was too long to parse, please make it smaller!"
+
+msgid "Index"
+msgstr "Index"
+
+msgid "User list"
+msgstr "User list"
+
+msgid "Rules"
+msgstr "Rules"
+
+msgid "Search"
+msgstr "Search"
+
+msgid "Register"
+msgstr "Register"
+
+msgid "Login"
+msgstr "Login"
+
+msgid "Not logged in"
+msgstr "You are not logged in."
+
+msgid "Profile"
+msgstr "Profile"
+
+msgid "Logout"
+msgstr "Logout"
+
+msgid "Logged in as"
+msgstr "Logged in as"
+
+msgid "Admin"
+msgstr "Administration"
+
+msgid "Last visit"
+msgstr "Last visit: %s"
+
+msgid "Topic searches"
+msgstr "Topics:"
+
+msgid "New posts header"
+msgstr "New"
+
+msgid "Active topics"
+msgstr "Active"
+
+msgid "Unanswered topics"
+msgstr "Unanswered"
+
+msgid "Posted topics"
+msgstr "Posted"
+
+msgid "Show new posts"
+msgstr "Find topics with new posts since your last visit."
+
+msgid "Show active topics"
+msgstr "Find topics with recent posts."
+
+msgid "Show unanswered topics"
+msgstr "Find topics with no replies."
+
+msgid "Show posted topics"
+msgstr "Find topics you have posted to."
+
+msgid "Mark all as read"
+msgstr "Mark all topics as read"
+
+msgid "Mark forum read"
+msgstr "Mark this forum as read"
+
+msgid "Title separator"
+msgstr " - "
+
+msgid "PM"
+msgstr "PM"
+
+msgid "PMsend"
+msgstr "Send private message"
+
+msgid "PMnew"
+msgstr "New private message"
+
+msgid "PMmess"
+msgstr "You have new private messages (%s msgs.)."
+
+msgid "Warn"
+msgstr "Warning"
+
+msgid "WarnMess"
+msgstr "You have a new warning!"
+
+msgid "Board footer"
+msgstr "Board footer"
+
+msgid "Jump to"
+msgstr "Jump to"
+
+msgid "Go"
+msgstr " Go "
+
+msgid "Moderate topic"
+msgstr "Moderate topic"
+
+msgid "All"
+msgstr "All"
+
+msgid "Move topic"
+msgstr "Move topic"
+
+msgid "Open topic"
+msgstr "Open topic"
+
+msgid "Close topic"
+msgstr "Close topic"
+
+msgid "Unstick topic"
+msgstr "Unstick topic"
+
+msgid "Stick topic"
+msgstr "Stick topic"
+
+msgid "Moderate forum"
+msgstr "Moderate forum"
+
+msgid "Powered by"
+msgstr "Powered by <a href=\"https://github.com/forkbb\">ForkBB</a>"
+
+msgid "Debug table"
+msgstr "Debug information"
+
+msgid "Querytime"
+msgstr "Generated in %1$s seconds, %2$s queries executed"
+
+msgid "Memory usage"
+msgstr "Memory usage: %1$s"
+
+msgid "Peak usage"
+msgstr "(Peak: %1$s)"
+
+msgid "Query times"
+msgstr "Time (s)"
+
+msgid "Query"
+msgstr "Query"
+
+msgid "Total query time"
+msgstr "Total query time: %s"
+
+msgid "RSS description"
+msgstr "The most recent topics at %s."
+
+msgid "RSS description topic"
+msgstr "The most recent posts in %s."
+
+msgid "RSS reply"
+msgstr "Re: "
+
+msgid "RSS active topics feed"
+msgstr "RSS active topics feed"
+
+msgid "Atom active topics feed"
+msgstr "Atom active topics feed"
+
+msgid "RSS forum feed"
+msgstr "RSS forum feed"
+
+msgid "Atom forum feed"
+msgstr "Atom forum feed"
+
+msgid "RSS topic feed"
+msgstr "RSS topic feed"
+
+msgid "Atom topic feed"
+msgstr "Atom topic feed"
+
+msgid "After time"
+msgstr "Added later"
+
+msgid "After time s"
+msgstr " s"
+
+msgid "After time i"
+msgstr " min"
+
+msgid "After time H"
+msgstr " h"
+
+msgid "After time d"
+msgstr " d"
+
+msgid "New reports"
+msgstr "There are new reports"
+
+msgid "Maintenance mode enabled"
+msgstr "Maintenance mode is enabled!"
+
+msgid "Size unit B"
+msgstr "%s B"
+
+msgid "Size unit KiB"
+msgstr "%s KiB"
+
+msgid "Size unit MiB"
+msgstr "%s MiB"
+
+msgid "Size unit GiB"
+msgstr "%s GiB"
+
+msgid "Size unit TiB"
+msgstr "%s TiB"
+
+msgid "Size unit PiB"
+msgstr "%s PiB"
+
+msgid "Size unit EiB"
+msgstr "%s EiB"

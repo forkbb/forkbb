@@ -4,10 +4,9 @@ namespace ForkBB\Models\Actions;
 
 use ForkBB\Core\Cache;
 use R2\DependencyInjection\ContainerInterface;
-use R2\DependencyInjection\ContainerAwareInterface;
 use InvalidArgumentException;
 
-class CacheLoader implements ContainerAwareInterface
+class CacheLoader
 {
     /**
      * Контейнер
@@ -16,38 +15,27 @@ class CacheLoader implements ContainerAwareInterface
     protected $c;
 
     /**
-     * Инициализация контейнера
-     *
-     * @param ContainerInterface $container
-     */
-    public function setContainer(ContainerInterface $container)
-    {
-        $this->c = $container;
-    }
-
-    /**
      * @var ForkBB\Core\Cache
      */
     protected $cache;
 
     /**
      * Конструктор
-     *
-     * @param ForkBB\Core\Cache $cache
+     * @param Cache $cache
+     * @param ContainerInterface $container
      */
-    public function __construct(Cache $cache)
+    public function __construct(Cache $cache, ContainerInterface $container)
     {
         $this->cache = $cache;
+        $this->c = $container;
     }
 
     /**
      * Загрузка данных из кэша (генерация кэша при отсутствии или по требованию)
-     *
      * @param string $key
      * @param bool $update
-     *
-     * @throws \InvalidArgumentException
      * @return mixed
+     * @throws \InvalidArgumentException
      */
     public function load($key, $update = false)
     {
@@ -64,5 +52,32 @@ class CacheLoader implements ContainerAwareInterface
             }
             return $value;
         }
+    }
+
+    /**
+     * Загрузка данных по разделам из кэша (генерация кэша при условии)
+     * @return array
+     */
+    public function loadForums()
+    {
+        $mark = $this->cache->get('forums_mark');
+        $key = 'forums_' . $this->c->get('user')['g_id'];
+
+        if (empty($mark)) {
+            $this->cache->set('forums_mark', time());
+            $value = $this->c->get('get forums');
+            $this->cache->set($key, [time(), $value]);
+            return $value;
+        }
+
+        $result = $this->cache->get($key);
+
+        if (empty($result) || $result[0] < $mark) {
+            $value = $this->c->get('get forums');
+            $this->cache->set($key, [time(), $value]);
+            return $value;
+        }
+
+        return $result[1];
     }
 }

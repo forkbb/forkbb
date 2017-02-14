@@ -20,6 +20,7 @@ class Container implements ContainerInterface
         if (!empty($config)) {
             $this->config($config);
         }
+        $this->config['CONTAINER'] = $this;
     }
 
     public function config(array $config)
@@ -62,9 +63,6 @@ class Container implements ContainerInterface
             $service = $f(...$args);
         } else {
             $service = new $class(...$args);
-            if ($service instanceof ContainerAwareInterface) {
-                $service->setContainer($this);
-            }
         }
         if ($toShare) {
             $this->instances[$id] = $service;

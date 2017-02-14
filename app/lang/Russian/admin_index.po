@@ -1,0 +1,142 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+
+msgid "Not available"
+msgstr "Not available"
+
+msgid "Forum admin head"
+msgstr "Администрирование форума"
+
+msgid "NA"
+msgstr "N/A"
+
+msgid "Welcome to admin"
+msgstr "Добро пожаловать в панель управления ForkBB! Здесь вы можете настроить ключевые параметры вашего форума. В зависимости от того, Администратор вы или Модератор, вы можете:"
+
+msgid "Welcome 1"
+msgstr "Настроить категории и разделы."
+
+msgid "Welcome 2"
+msgstr "Установить параметры по-умолчанию для форума в целом."
+
+msgid "Welcome 3"
+msgstr "Контролировать права пользователей и гостей."
+
+msgid "Welcome 4"
+msgstr "Смотреть статистику пользователей по IP."
+
+msgid "Welcome 5"
+msgstr "Банить пользователей."
+
+msgid "Welcome 6"
+msgstr "Настроить список цензурируемых слов."
+
+msgid "Welcome 7"
+msgstr "Установить группы пользователей и продвижение по ним."
+
+msgid "Welcome 8"
+msgstr "Очистить старые сообщения."
+
+msgid "Welcome 9"
+msgstr "Реагировать на сигналы пользователей."
+
+msgid "About head"
+msgstr "О ForkBB"
+
+msgid "ForkBB version label"
+msgstr "Версия ForkBB"
+
+msgid "ForkBB version data"
+msgstr "v %s"
+
+msgid "Server statistics label"
+msgstr "Статистика сервера"
+
+msgid "View server statistics"
+msgstr "Смотреть статистику сервера"
+
+msgid "Support label"
+msgstr "Саппорт"
+
+msgid "PHPinfo disabled message"
+msgstr "Функция PHP phpinfo() была отключена на этом сервере."
+
+msgid "Server statistics head"
+msgstr "Статистика сервера"
+
+msgid "Server load label"
+msgstr "Загрузка сервера"
+
+msgid "Server load data"
+msgstr "%s - %s пользователей online"
+
+msgid "Environment label"
+msgstr "Окружение"
+
+msgid "Environment data OS"
+msgstr "Операционная система: %s"
+
+msgid "Show info"
+msgstr "Смотреть подробности"
+
+msgid "Environment data version"
+msgstr "PHP: %s - %s"
+
+msgid "Environment data acc"
+msgstr "Accelerator: %s"
+
+msgid "Turck MMCache"
+msgstr "Turck MMCache"
+
+msgid "Turck MMCache link"
+msgstr "turck-mmcache.sourceforge.net"
+
+msgid "ionCube PHP Accelerator"
+msgstr "ionCube PHP Accelerator"
+
+msgid "ionCube PHP Accelerator link"
+msgstr "www.php-accelerator.co.uk/"
+
+msgid "Alternative PHP Cache (APC)"
+msgstr "Alternative PHP Cache (APC)"
+
+msgid "Alternative PHP Cache (APC) link"
+msgstr "www.php.net/apc/"
+
+msgid "Zend Optimizer"
+msgstr "Zend Optimizer"
+
+msgid "Zend Optimizer link"
+msgstr "www.zend.com/products/guard/zend-optimizer/"
+
+msgid "eAccelerator"
+msgstr "eAccelerator"
+
+msgid "eAccelerator link"
+msgstr "www.eaccelerator.net/"
+
+msgid "XCache"
+msgstr "XCache"
+
+msgid "XCache link"
+msgstr "xcache.lighttpd.net/"
+
+msgid "Database label"
+msgstr "База данных"
+
+msgid "Database data rows"
+msgstr "Строк: %s"
+
+msgid "Database data size"
+msgstr "Размер: %s"

@@ -1,0 +1,112 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+
+msgid "Admin menu"
+msgstr "Админка"
+
+msgid "Plugins menu"
+msgstr "Плагины"
+
+msgid "Moderator menu"
+msgstr "Модерирование"
+
+msgid "Admin index"
+msgstr "Главная"
+
+msgid "Categories"
+msgstr "Категории"
+
+msgid "Forums"
+msgstr "Разделы"
+
+msgid "Users"
+msgstr "Пользователи"
+
+msgid "User groups"
+msgstr "Группы"
+
+msgid "Admin options"
+msgstr "Опции"
+
+msgid "Permissions"
+msgstr "Права"
+
+msgid "Censoring"
+msgstr "Цензура"
+
+msgid "Bans"
+msgstr "Баны"
+
+msgid "Prune"
+msgstr "Очистка"
+
+msgid "Maintenance"
+msgstr "Обслуживание"
+
+msgid "Reports"
+msgstr "Сигналы"
+
+msgid "Server statistics"
+msgstr "Статистика сервера"
+
+msgid "Admin title"
+msgstr "Администрирование"
+
+msgid "Go back"
+msgstr "Назад"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "Update"
+msgstr "Изменить"
+
+msgid "Add"
+msgstr "Добавить"
+
+msgid "Edit"
+msgstr "Править"
+
+msgid "Remove"
+msgstr "Убрать"
+
+msgid "Yes"
+msgstr "Да"
+
+msgid "No"
+msgstr "Нет"
+
+msgid "Save changes"
+msgstr "Сохранить изменения"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "here"
+msgstr "здесь"
+
+msgid "Action"
+msgstr "Действие"
+
+msgid "None"
+msgstr "Пусто"
+
+msgid "Maintenance mode"
+msgstr "режим обслуживания"
+
+msgid "No plugin message"
+msgstr "Нет плагина с именем %s в директории плагинов."
+
+msgid "Plugin failed message"
+msgstr "Загрузить плагин <strong>%s</strong> не удалось."

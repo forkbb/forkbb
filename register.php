@@ -75,12 +75,12 @@ if ($request->isPost('form_sent'))
 		message($lang_register['Registration flood']);
 
 
-	$username = trim($request->posStr('req_user'));
+	$username = trim($request->postStr('req_user'));
 	$email1 = strtolower(trim($request->postStr('req_email1')));
 
 	if ($pun_config['o_regs_verify'] == '1')
 	{
-		$email2 = strtolower(trim($request->posStr('req_email2')));
+		$email2 = strtolower(trim($request->postStr('req_email2')));
 
 		$password1 = $container->get('Secury')->randomPass(12);
 		$password2 = $password1;

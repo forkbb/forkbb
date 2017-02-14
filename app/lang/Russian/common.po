@@ -1,0 +1,478 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+
+msgid "lang_direction"
+msgstr "ltr"
+
+msgid "lang_identifier"
+msgstr "ru"
+
+msgid "lang_decimal_point"
+msgstr "."
+
+msgid "lang_thousands_sep"
+msgstr ","
+
+msgid "Bad request"
+msgstr "Неверный запрос. Ссылка, по которой вы перешли, является неверной или просроченной."
+
+msgid "No view"
+msgstr "У вас нет прав для просмотра форума."
+
+msgid "No permission"
+msgstr "У вас нет прав на просмотр этой страницы."
+
+msgid "Bad token"
+msgstr "Неверный токен."
+
+msgid "Bad referrer"
+msgstr "Неверный csrf_hash. Вы перешли на эту страницу из неавторизованного источника."
+
+msgid "Bad csrf hash"
+msgstr "Неверный CSRF хэш. Вы перешли на эту страницу из неавторизованного источника."
+
+msgid "No cookie"
+msgstr "Вы вошли, но куки (cookie) не были установлены. Пожалуйста проверьте настройки браузера и, если возможно, разрешите куки для этого сайта."
+
+msgid "Pun include extension"
+msgstr "Невозможно подключить файл %s из шаблона %s. Нет разрешения на подлючение файлов с расширением &quot;%s&quot;"
+
+msgid "Pun include directory"
+msgstr "Невозможно подключить файл %s из шаблона %s. Переключение директорий запрещено."
+
+msgid "Pun include error"
+msgstr "Невозможно подключить файл %s из шаблона %s. Файл отсутствует и в шаблоне, и в директории пользователя."
+
+msgid "Hidden text"
+msgstr "Скрытый текст"
+
+msgid "Show"
+msgstr "Показать"
+
+msgid "Hide"
+msgstr "Скрыть"
+
+msgid "Announcement"
+msgstr "Объявление"
+
+msgid "Options"
+msgstr "Параметры"
+
+msgid "Submit"
+msgstr "Отправить"
+
+msgid "Ban message"
+msgstr "Ваша учетная запись заблокирована."
+
+msgid "Ban message 2"
+msgstr "Блокировка заканчивается"
+
+msgid "Ban message 3"
+msgstr "Причина блокирования:"
+
+msgid "Ban message 4"
+msgstr "Все возникшие вопросы отправляйте администратору форума по адресу"
+
+msgid "Never"
+msgstr "Нет"
+
+msgid "Today"
+msgstr "Сегодня"
+
+msgid "Yesterday"
+msgstr "Вчера"
+
+msgid "Info"
+msgstr "Информация"
+
+msgid "Go back"
+msgstr "Назад"
+
+msgid "Maintenance"
+msgstr "Обслуживание"
+
+msgid "Redirecting"
+msgstr "Перенаправление"
+
+msgid "Click redirect"
+msgstr "Кликните здесь, если вы не желаете ждать (или ваш браузер не поддерживает перенаправление)."
+
+msgid "on"
+msgstr "вкл."
+
+msgid "off"
+msgstr "выкл."
+
+msgid "Invalid email"
+msgstr "Указанный почтовый адрес неверен."
+
+msgid "Required"
+msgstr "(Обязательно)"
+
+msgid "required field"
+msgstr "необходимое поле в этой форме."
+
+msgid "Last post"
+msgstr "Последнее сообщение"
+
+msgid "by"
+msgstr "от"
+
+msgid "New posts"
+msgstr "Новые&nbsp;сообщения"
+
+msgid "New posts info"
+msgstr "Перейти к первому новому сообщению в теме."
+
+msgid "Username"
+msgstr "Имя"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Send email"
+msgstr "Отправить письмо"
+
+msgid "Moderated by"
+msgstr "Модератор(ы):"
+
+msgid "Registered"
+msgstr "Дата регистрации"
+
+msgid "Subject"
+msgstr "Заголовок темы"
+
+msgid "Message"
+msgstr "Сообщение"
+
+msgid "Topic"
+msgstr "Тема"
+
+msgid "Forum"
+msgstr "Раздел"
+
+msgid "Stats"
+msgstr "Статистика"
+
+msgid "Posts"
+msgstr "Сообщений"
+
+msgid "Replies"
+msgstr "Ответов"
+
+msgid "Pages"
+msgstr "Страницы"
+
+msgid "Page"
+msgstr "Страница %s"
+
+msgid "BBCode"
+msgstr "BB-коды:"
+
+msgid "url tag"
+msgstr "Тег [url]:"
+
+msgid "img tag"
+msgstr "Тег [img]:"
+
+msgid "Smilies"
+msgstr "Смайлы:"
+
+msgid "and"
+msgstr "и"
+
+msgid "Image link"
+msgstr "картинка"
+
+msgid "wrote"
+msgstr "пишет:"
+
+msgid "Mailer"
+msgstr "%s"
+
+msgid "Important information"
+msgstr "Важная информация"
+
+msgid "Write message legend"
+msgstr "Введите сообщение и нажмите Отправить"
+
+msgid "Previous"
+msgstr "Назад"
+
+msgid "Next"
+msgstr "Вперед"
+
+msgid "Spacer"
+msgstr "&hellip;"
+
+msgid "Title"
+msgstr "Титул"
+
+msgid "Member"
+msgstr "Участник"
+
+msgid "Moderator"
+msgstr "Модератор"
+
+msgid "Administrator"
+msgstr "Администратор"
+
+msgid "Banned"
+msgstr "Забанен"
+
+msgid "Guest"
+msgstr "Гость"
+
+msgid "BBCode error no opening tag"
+msgstr "Обнаружен парный тег [/%1$s] без соответствующего начального тега [%1$s]"
+
+msgid "BBCode error invalid nesting"
+msgstr "Тег [%1$s] открывается внутри [%2$s], это недопустимо"
+
+msgid "BBCode error invalid self-nesting"
+msgstr "Тег [%s] открывается внутри такого же тега, это недопустимо"
+
+msgid "BBCode error no closing tag"
+msgstr "Обнаружен парный тег [%1$s] без соответствующего закрывающего тега [/%1$s]"
+
+msgid "BBCode error empty attribute"
+msgstr "Тег [%s] с пустым атрибутом"
+
+msgid "BBCode error tag not allowed"
+msgstr "Вам нельзя использовать тег [%s]"
+
+msgid "BBCode error tag url not allowed"
+msgstr "Вам нельзя использовать ссылки в сообщениях"
+
+msgid "BBCode list size error"
+msgstr "Ваш список слишком велик, пожалуйста уменьшите его!"
+
+msgid "Index"
+msgstr "Форум"
+
+msgid "User list"
+msgstr "Пользователи"
+
+msgid "Rules"
+msgstr "Правила"
+
+msgid "Search"
+msgstr "Поиск"
+
+msgid "Register"
+msgstr "Регистрация"
+
+msgid "Login"
+msgstr "Вход"
+
+msgid "Not logged in"
+msgstr "Вы не вошли."
+
+msgid "Profile"
+msgstr "Профиль"
+
+msgid "Logout"
+msgstr "Выход"
+
+msgid "Logged in as"
+msgstr "Вы вошли как"
+
+msgid "Admin"
+msgstr "Админка"
+
+msgid "Last visit"
+msgstr "Последний визит: %s"
+
+msgid "Topic searches"
+msgstr "Темы:"
+
+msgid "New posts header"
+msgstr "Новые"
+
+msgid "Active topics"
+msgstr "Активные"
+
+msgid "Unanswered topics"
+msgstr "Без ответа"
+
+msgid "Posted topics"
+msgstr "С вашим участием"
+
+msgid "Show new posts"
+msgstr "Найти темы с новыми сообщениями."
+
+msgid "Show active topics"
+msgstr "Найти темы с недавними сообщениями."
+
+msgid "Show unanswered topics"
+msgstr "Найти темы без ответов."
+
+msgid "Show posted topics"
+msgstr "Найти темы с вашим участием."
+
+msgid "Mark all as read"
+msgstr "Отметить всё как прочтённое"
+
+msgid "Mark forum read"
+msgstr "Отметить раздел как прочтённый"
+
+msgid "Title separator"
+msgstr " - "
+
+msgid "PM"
+msgstr "ЛС"
+
+msgid "PMsend"
+msgstr "Отправить личное сообщение"
+
+msgid "PMnew"
+msgstr "Новое личное сообщение"
+
+msgid "PMmess"
+msgstr "У вас есть новые личные сообщения (%s шт.)."
+
+msgid "Warn"
+msgstr "Предупреждение"
+
+msgid "WarnMess"
+msgstr "Вы получили новое предупреждение!"
+
+msgid "Board footer"
+msgstr "Подвал форума"
+
+msgid "Jump to"
+msgstr "Перейти"
+
+msgid "Go"
+msgstr " Иди "
+
+msgid "Moderate topic"
+msgstr "Модерирование темы"
+
+msgid "All"
+msgstr "All"
+
+msgid "Move topic"
+msgstr "Перенести тему"
+
+msgid "Open topic"
+msgstr "Открыть тему"
+
+msgid "Close topic"
+msgstr "Закрыть тему"
+
+msgid "Unstick topic"
+msgstr "Снять выделение темы"
+
+msgid "Stick topic"
+msgstr "Выделить тему"
+
+msgid "Moderate forum"
+msgstr "Модерирование раздела"
+
+msgid "Powered by"
+msgstr "Под управлением <a href=\"https://github.com/forkbb\">ForkBB</a>"
+
+msgid "Debug table"
+msgstr "Отладочная информация"
+
+msgid "Querytime"
+msgstr "Сгенерировано за %1$s сек, %2$s запросов выполнено"
+
+msgid "Memory usage"
+msgstr "Использовано памяти: %1$s"
+
+msgid "Peak usage"
+msgstr "(Пик: %1$s)"
+
+msgid "Query times"
+msgstr "Время (s)"
+
+msgid "Query"
+msgstr "Запрос"
+
+msgid "Total query time"
+msgstr "Итого: %s"
+
+msgid "RSS description"
+msgstr "Самые свежие темы на %s."
+
+msgid "RSS description topic"
+msgstr "Самые свежие сообщения в %s."
+
+msgid "RSS reply"
+msgstr "Re: "
+
+msgid "RSS active topics feed"
+msgstr "RSS лента активных тем"
+
+msgid "Atom active topics feed"
+msgstr "Atom лента активных тем"
+
+msgid "RSS forum feed"
+msgstr "RSS лента раздела"
+
+msgid "Atom forum feed"
+msgstr "Atom лента раздела"
+
+msgid "RSS topic feed"
+msgstr "RSS лента темы"
+
+msgid "Atom topic feed"
+msgstr "Atom лента темы"
+
+msgid "After time"
+msgstr "Добавлено спустя"
+
+msgid "After time s"
+msgstr " с"
+
+msgid "After time i"
+msgstr " мин"
+
+msgid "After time H"
+msgstr " ч"
+
+msgid "After time d"
+msgstr " дн"
+
+msgid "New reports"
+msgstr "Есть новые сигналы"
+
+msgid "Maintenance mode enabled"
+msgstr "Включен режим обслуживания!"
+
+msgid "Size unit B"
+msgstr "%s байт"
+
+msgid "Size unit KiB"
+msgstr "%s Кбайт"
+
+msgid "Size unit MiB"
+msgstr "%s Мбайт"
+
+msgid "Size unit GiB"
+msgstr "%s Гбайт"
+
+msgid "Size unit TiB"
+msgstr "%s Тбайт"
+
+msgid "Size unit PiB"
+msgstr "%s Пбайт"
+
+msgid "Size unit EiB"
+msgstr "%s Эбайт"

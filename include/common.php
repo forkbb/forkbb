@@ -49,11 +49,6 @@ require PUN_ROOT.'include/addons.php';
 // Force POSIX locale (to prevent functions such as strtolower() from messing up UTF-8 strings)
 setlocale(LC_CTYPE, 'C');
 
-require PUN_ROOT . 'app/bootstrap.php';
-
-// The addon manager is responsible for storing the hook listeners and communicating with the addons
-$flux_addons = new flux_addon_manager();
-
 // Define a few commonly used constants
 define('PUN_UNVERIFIED', 0);
 define('PUN_ADMIN', 1);
@@ -61,18 +56,17 @@ define('PUN_MOD', 2);
 define('PUN_GUEST', 3);
 define('PUN_MEMBER', 4);
 
+require PUN_ROOT . 'app/bootstrap.php';
+
+// The addon manager is responsible for storing the hook listeners and communicating with the addons
+$flux_addons = new flux_addon_manager();
+
 $db = $container->get('DB');
 
 // Start a transaction
 $db->start_transaction();
 
 $pun_config = $container->get('config');
-
-// Verify that we are running the proper database schema revision
-if (empty($pun_config['i_fork_revision']) || $pun_config['i_fork_revision'] < FORK_REVISION) {
-	header('Location: db_update.php');
-	exit;
-}
 
 // Enable output buffering
 if (!defined('PUN_DISABLE_BUFFERING'))
@@ -89,21 +83,13 @@ $forum_time_formats = array($pun_config['o_time_format'], 'H:i:s', 'H:i', 'g:i:s
 $forum_date_formats = array($pun_config['o_date_format'], 'Y-m-d', 'Y-d-m', 'd-m-Y', 'm-d-Y', 'M j Y', 'jS M Y');
 
 // Check/update/set cookie and fetch user info
-$pun_user = array();
-check_cookie($pun_user);
+$pun_user = $container->get('user');
 
 // Attempt to load the common language file
 if (file_exists(PUN_ROOT.'lang/'.$pun_user['language'].'/common.php'))
 	include PUN_ROOT.'lang/'.$pun_user['language'].'/common.php';
 else
 	error('There is no valid language pack \''.pun_htmlspecialchars($pun_user['language']).'\' installed. Please reinstall a language of that name');
-
-// Check if we are to display a maintenance message
-if ($pun_config['o_maintenance'] && $pun_user['g_id'] > PUN_ADMIN && !defined('PUN_TURN_OFF_MAINT'))
-	maintenance_message();
-
-// Check if current user is banned
-check_bans();
 
 // Update online list
 $onl_u = $onl_g = $onl_s = array();
@@ -127,8 +113,8 @@ if (!defined('FORUM_MAX_COOKIE_SIZE'))
 	define('FORUM_MAX_COOKIE_SIZE', 4048);
 
 // Load cached subforums - Visman
-if (file_exists($container->getParameter('DIR_CACHE') . 'cache_subforums_'.$pun_user['g_id'].'.php'))
-	include $container->getParameter('DIR_CACHE') . 'cache_subforums_'.$pun_user['g_id'].'.php';
+if (file_exists($container->getParameter('DIR_CACHE') . '/cache_subforums_'.$pun_user['g_id'].'.php'))
+	include $container->getParameter('DIR_CACHE') . '/cache_subforums_'.$pun_user['g_id'].'.php';
 
 if (!isset($sf_array_tree))
 {
@@ -136,5 +122,5 @@ if (!isset($sf_array_tree))
 		require PUN_ROOT.'include/cache.php';
 
 	generate_subforums_cache($pun_user['g_id']);
-	require $container->getParameter('DIR_CACHE') . 'cache_subforums_'.$pun_user['g_id'].'.php';
+	require $container->getParameter('DIR_CACHE') . '/cache_subforums_'.$pun_user['g_id'].'.php';
 }

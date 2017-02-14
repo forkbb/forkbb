@@ -1,0 +1,37 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+
+msgid "Sub forum"
+msgid_plural "Sub forums"
+msgstr[0] "Подраздел"
+msgstr[1] "Подразделы"
+msgstr[2] "Подразделы"
+
+msgid "Parent forum"
+msgstr "Родительский раздел"
+
+msgid "No parent forum"
+msgstr "Нет родительского раздела"
+
+msgid "%s Topic"
+msgid_plural "%s Topics"
+msgstr[0] "<strong>%s</strong> Тема"
+msgstr[1] "<strong>%s</strong> Темы"
+msgstr[2] "<strong>%s</strong> Тем"
+
+msgid "%s Post"
+msgid_plural "%s Posts"
+msgstr[0] "<strong>%s</strong> Сообщение"
+msgstr[1] "<strong>%s</strong> Сообщения"
+msgstr[2] "<strong>%s</strong> Сообщений"

@@ -33,12 +33,13 @@ return [
         'Install' => [
             'class' => \ForkBB\Core\Install::class,
             'request' => '@Request',
+            'container' => '%CONTAINER%',
         ],
         'Secury' => [
             'class' => \ForkBB\Core\Secury::class,
             'hmac' => '%HMAC%',
         ],
-        'firstAction' => '@Install:start',
+        'Primary' => '@Install:install',
     ],
     'multiple'  => [],
 ];

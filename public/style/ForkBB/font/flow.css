@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Flow Ext';
+    src: local('Flow Ext'), local('FlowExt'), url('flowext.woff2') format('woff2'), url('flowext.woff') format('woff'), url('flowext.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Flow Ext';
+    src: local('Flow Ext Bold'), local('FlowExt-Bold'), url('flowextbold.woff2') format('woff2'), url('flowextbold.woff') format('woff'), url('flowextbold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}

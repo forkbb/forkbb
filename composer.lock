@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6f4e0ebde4d3b282bfe8097414a0e787",
-    "content-hash": "1356226a18a75fe9ec08328a2f553a59",
+    "hash": "66793e0ac7d0499d9403c353c1a60b7b",
+    "content-hash": "8160828b885585e30e73fe34aaca440c",
     "packages": [
         {
             "name": "artoodetoo/container",
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/MioVisman/container.git",
-                "reference": "3ab08b97674dff417f36783c9e054c25540171d3"
+                "reference": "bf147763641e3b6362286d3401b3ee55b2c2760e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MioVisman/container/zipball/3ab08b97674dff417f36783c9e054c25540171d3",
-                "reference": "3ab08b97674dff417f36783c9e054c25540171d3",
+                "url": "https://api.github.com/repos/MioVisman/container/zipball/bf147763641e3b6362286d3401b3ee55b2c2760e",
+                "reference": "bf147763641e3b6362286d3401b3ee55b2c2760e",
                 "shasum": ""
             },
             "require": {
@@ -46,14 +46,61 @@
             "support": {
                 "source": "https://github.com/MioVisman/container/tree/visman"
             },
-            "time": "2017-01-11 15:15:38"
+            "time": "2017-01-23 11:54:39"
+        },
+        {
+            "name": "artoodetoo/dirk",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/artoodetoo/dirk.git",
+                "reference": "e6c2099435d4d4a13d7e96d0170db6182797b5bd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/artoodetoo/dirk/zipball/e6c2099435d4d4a13d7e96d0170db6182797b5bd",
+                "reference": "e6c2099435d4d4a13d7e96d0170db6182797b5bd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.0.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "R2\\Templating\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "artoodetoo",
+                    "email": "i.am@artoodetoo.org"
+                }
+            ],
+            "description": "PHP template system",
+            "keywords": [
+                "dirk",
+                "package",
+                "templates",
+                "templating",
+                "views"
+            ],
+            "time": "2017-01-10 21:38:22"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "artoodetoo/container": 20
+        "artoodetoo/container": 20,
+        "artoodetoo/dirk": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

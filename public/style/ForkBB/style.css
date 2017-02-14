@@ -1,0 +1,1057 @@
+/* Palette URL: http://paletton.com/#uid=10I0u0kllll++b4w0gdaFqt00vB */
+.color-primary-0 { color: #AA7939 }	/* Main Primary color */
+.color-primary-1 { color: #583200 }
+.color-primary-2 { color: #814A00 }
+.color-primary-3 { color: #D3B58D }
+.color-primary-4 { color: #FCFCFC } /* #FEFCF2  #F8F4E3 */
+
+/****************/
+/* Сброс стилей */
+/****************/
+
+html,
+body,
+section,
+header,
+footer,
+nav,
+table,
+div,
+form,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+blockquote,
+ul,
+ol,
+li,
+dl,
+dt,
+dd,
+th,
+td,
+fieldset,
+legend
+img,
+abbr,
+cite {
+  border: 0;
+  font-style: normal;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul,
+ol {
+  list-style: none;
+  box-sizing: border-box;
+}
+
+/*******************/
+/* Общие настройки */
+/*******************/
+@font-face {
+  font-family: "Flow Ext";
+  src: local("Flow Ext"),
+       local("FlowExt"),
+       url("font/flow-400-normal.woff2") format("woff2"),
+       url("font/flow-400-normal.woff") format("woff"),
+       url("font/flow-400-normal.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Flow Ext";
+  src: local("Flow Ext Bold"),
+       local("FlowExt-Bold"),
+       url("font/flow-700-normal.woff2") format("woff2"),
+       url("font/flow-700-normal.woff") format("woff"),
+       url("font/flow-700-normal.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ForkIcon";
+  src: url("data:application/font-woff;base64,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") format("woff"),
+       url("data:application/x-font-ttf;base64,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") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+html {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+h1, h2, h3 {
+  font-family: "Segoe Print", "Flow Ext";
+  font-weight: bold;
+}
+
+.f-wrap {
+  padding: 0 0.3125rem;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.f-wrap,
+.f-header,
+.f-announce,
+.f-footer {
+  position: relative;
+}
+
+body,
+.f-wrap {
+/*  color: rgba(0, 0, 0, 0.5); */
+  color: #333333;
+  background-color: #FFFFFF;
+}
+
+.f-wrap a,
+.f-btn {
+  color: #583200;
+  border-color: #583200;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+
+.f-wrap a {
+  border-bottom: 0.0625rem solid;
+}
+
+.f-btn {
+  font-size: 0.875rem;
+  line-height: 1.125rem;
+  border: 0.0625rem solid;
+  border-radius: 0.1875rem;
+  padding: 0.125rem 0.5rem;
+  background-color: #F8F4E3;
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.f-wrap a:hover,
+.f-wrap a:focus,
+.f-btn:hover,
+.f-btn:focus {
+  background-color: #D3B58D;
+}
+
+.f-wrap a:active,
+.f-btn:active {
+  background-color: #814A00;
+}
+
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+select {
+  background-color: #D3B58D;
+/*  max-width: 100%; */
+}
+
+.f-inline > dt,
+.f-inline > dd {
+  display: inline;
+}
+
+.f-inline > dt + dd:before {
+  content: " ";
+}
+
+.f-inline > dd + dd:before {
+  content: ", ";
+}
+
+
+/* Меню */
+
+.f-menu-toggle:after {
+  display: block;
+  font-size: 1.25rem;
+  content: "\2630";
+  border: 0.0625rem solid;
+  border-radius: 0.25rem;
+  width: 2.75rem;
+  text-align: center;
+  padding: 0.125rem;
+  cursor: pointer;
+}
+
+.f-menu input:checked + .f-menu-toggle:after {
+  content: "\2716";
+}
+
+.f-menu-items {
+  display: block;
+  overflow: hidden;
+  max-height: 0;
+}
+
+.f-menu input:checked ~ .f-menu-items {
+  display: block;
+  max-height: 1000rem;
+}
+
+.f-menu-items li {
+  display: block;
+/*  float: left;
+  width: 100%; */
+}
+
+.f-menu-items a {
+  display: block;
+  padding: 0.625rem;
+  white-space: nowrap;
+}
+
+/*********/
+/* Шапка */
+/*********/
+
+.f-header {
+  background-color: #AA7939;
+  border-bottom: 0.0625rem solid #AA7939;
+}
+
+.f-title > h1 {
+  width: 77%;
+  padding: 0.625rem 0 0.625rem 0.625rem;
+}
+
+.f-description {
+  border-top: 1px dotted #D3B58D;
+  padding: 0.625rem;
+  color: #F8F4E3;
+}
+
+.f-title a {
+  color: #D3B58D;
+  border: 0;
+}
+
+.f-title a:hover,
+.f-title a:focus {
+  background-color: #AA7939;
+}
+
+.main-nav {
+  width: 100%;
+  background-color: #F8F4E3;
+}
+
+.main-nav .f-menu-toggle {
+  color: #D3B58D;
+  border-color: #D3B58D;
+  position: absolute;
+  top: 0.625rem;
+  right: 0.625rem;
+}
+
+.main-nav .f-menu-items {
+  width: 100%;
+  background-color: #F8F4E3;
+  position: relative;
+/*  z-index: 1; */
+}
+
+.main-nav a {
+  color: #583200;
+  text-transform: uppercase;
+  text-align: center;
+  border: 0;
+}
+
+.main-nav a:hover,
+.main-nav a:focus {
+  background-color: #583200;
+  color: #F8F4E3;
+}
+
+.main-nav a.active {
+  background-color: #814A00;
+  color: #F8F4E3;
+}
+
+@media screen and (min-width: 50rem) {
+  .main-nav .f-menu-toggle {
+    display: none;
+  }
+
+  .main-nav .f-menu-items {
+    max-height: 1000rem;
+  }
+
+  .main-nav .f-menu-items li {
+    min-width: 4rem;
+    float: left;
+  }
+
+  .main-nav a {
+    text-transform: none;
+  }
+} /* @media screen and (min-width: 50rem) */
+
+/*********/
+/* iswev */
+/********/
+.f-iswev {
+  border: 0.0625rem solid;
+  margin: 1rem 0;
+  padding: 0.625rem;
+}
+
+.f-iswev > h2 {
+  display: none;
+}
+
+.f-info,
+.f-info .f-wcontent > a  {
+  color: #00529B;
+  background-color: #BDE5F8;
+}
+
+.f-success,
+.f-success .f-wcontent > a {
+  color: #4F8A10;
+  background-color: #DFF2BF;
+}
+
+.f-warning,
+.f-warning .f-wcontent > a {
+  color: #9F6000;
+  background-color: #FEEFB3;
+}
+
+.f-error,
+.f-error .f-wcontent > a {
+  color: #D8000C;
+  background-color: #FFBABA;
+}
+
+.f-validation,
+.f-validation .f-wcontent > a {
+  color: #D63301;
+  background-color: #FFCCBA;
+}
+
+/**************/
+/* Объявление */
+/**************/
+
+.f-announce {
+  border-bottom: 0.0625rem solid #AA7939;
+/*  border-top: 0.0625rem solid #AA7939; */
+}
+
+.f-announce > h2 {
+  display: none;
+}
+
+.f-ancontent {
+  padding: 0.625rem;
+}
+
+/**********/
+/* Подвал */
+/**********/
+
+.f-footer {
+  border-bottom: 0.0625rem solid #AA7939;
+  border-top: 0.0625rem solid #AA7939;
+  background-color: #F8F4E3;
+}
+
+.f-footer > div {
+  padding: 0.625rem;
+}
+
+/*************************/
+/* Отладочная информация */
+/*************************/
+.f-debug {
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.f-debug > h2 {
+  display: none;
+}
+
+.f-debugtime {
+  padding: 0.3125rem 0.625rem;
+}
+
+.f-debug > table {
+  text-align: left;
+  width: 100%;
+  border: 0.0625rem solid #AA7939;
+  border-collapse: collapse;
+}
+
+.f-debug thead {
+  background-color: #F8F4E3;
+}
+
+.f-debug td,
+.f-debug th {
+  padding: 0.3125rem 0.625rem;
+  border-bottom: 0.0625rem solid #AA7939;
+}
+
+/******************/
+/* Хлебные крошки */
+/******************/
+
+.f-links {
+  border-top: 0.0625rem solid #AA7939;
+}
+
+.f-crumb {
+  padding: 0.625rem;
+  display: block;
+  overflow: hidden;
+}
+
+.f-crumb-item {
+  display: block;
+  float: left;
+  white-space: nowrap;
+}
+
+.f-crumb-item + .f-crumb-item:before {
+  display: inline-block;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  color: #583200;
+  content: "/";
+}
+
+.f-crumb-item a.active {
+  border: 0;
+}
+
+/********/
+/* Тело */
+/********/
+
+.f-main {
+/*  border-top: 0.0625rem solid #AA7939; */
+}
+
+.f-main > h2 {
+/*  display: none; */
+}
+
+/****************/
+/* Обслуживание */
+/****************/
+
+.f-maintenance > h2 {
+  display: block;
+  padding: 0.625rem;
+}
+
+.f-maintenance > p {
+  padding: 0.625rem;
+}
+
+/*************/
+/* Сообщение */
+/*************/
+
+.f-message > h2 {
+  display: block;
+  padding: 0.625rem;
+}
+
+.f-message > p {
+  padding: 0.625rem;
+}
+
+/***********/
+/* Правила */
+/***********/
+
+.f-rules > h2 {
+  display: block;
+  padding: 0.625rem;
+}
+
+.f-rules > div {
+  padding: 0.625rem;
+}
+
+/************/
+/* Редирект */
+/************/
+.f-redirect {
+  border: 0.0625rem solid #AA7939;
+}
+
+.f-redirect > h2 {
+  display: block;
+  padding: 0.625rem;
+  background-color: #F8F4E3;
+  border-bottom: 0.0625rem solid #AA7939;
+}
+
+.f-redirect > p {
+  padding: 0.625rem;
+}
+
+/********************/
+/* Сообщение в теме */
+/********************/
+
+.f-post {
+  border-top: 0.0625rem solid #AA7939;
+  margin-bottom: 0.625rem;
+  position: relative;
+  background-color: #FFFFFF;
+  overflow: hidden;
+}
+
+.f-post-header > h3 {
+  display: none;
+}
+
+.f-post-header {
+  padding: 0.625rem;
+  border-bottom: 0.0625rem solid #AA7939;
+  background-color: #D3B58D;
+}
+
+.f-post-left {
+  padding: 0.625rem;
+  background-color: #F8F4E3;
+}
+
+.f-post-right {
+  padding: 0.625rem;
+}
+
+.f-post-footer .f-post-right {
+  text-align: right;
+}
+
+.f-post-footer .f-post-left {
+  display: none;
+}
+
+.f-post-footer li {
+  display: inline;
+}
+
+li + li .f-btn {
+  margin-left: 0.1875rem;
+}
+
+.f-user-info {
+  font-size: 0.875rem;
+}
+
+.f-user-info-custom {
+  display: none;
+}
+
+.f-username {
+  font-size: 1.25rem;
+  float: left;
+}
+
+.f-username a {
+  border: 0;
+}
+
+.f-avatar {
+  float: right;
+}
+
+.f-avatar img {
+  max-width: 4.6875rem;
+  height: auto;
+}
+
+.f-usertitle {
+  clear: left;
+}
+
+@media screen and (min-width: 50rem) {
+  .f-post {
+    background-color: #F8F4E3;
+  }
+
+  .f-post-body, .f-post-footer {
+    width: 100%;
+    float: right;
+    margin-right: -13rem;
+    position: relative;
+    border-left: 0.0625rem solid #AA7939;
+    background-color: #FFFFFF;
+  }
+
+  .f-post-left {
+    width: 11.75rem;
+    margin-left: -13rem;
+    float: left;
+    position: relative;
+    background-color: transparent;
+  }
+
+  .f-post-right {
+    padding-right: 13.625rem;
+    position: relative;
+  }
+
+  .f-post-footer .f-post-left {
+    display: block;
+  }
+
+  .f-user-info-custom {
+    display: block;
+    font-size: 0.875rem;
+  }
+
+  .f-username, .f-avatar {
+    float: none;
+  }
+
+  .f-avatar img {
+    max-width: 100%;
+    height: auto;
+  }
+} /* @media screen and (min-width: 50rem) */
+
+/******************/
+/* Админка - меню */
+/******************/
+.f-admin-menu a {
+  text-align: center;
+  border: 0;
+  text-transform: uppercase;
+}
+
+.f-admin-menu a.active {
+  background-color: #814A00;
+  color: #F8F4E3;
+}
+
+.f-admin-menu h2 {
+  text-align: center;
+  border: 0;
+  white-space: nowrap;
+  font-size: 1.125rem;
+  text-transform: uppercase;
+}
+
+.f-admin-menu input:checked ~ h2 {
+  padding: 0.625rem;
+}
+
+
+@media screen and (min-width: 50rem) {
+  .f-admin {
+    margin-left: 14rem;
+  }
+
+  .f-admin-menu {
+    width: 13rem;
+    float: left;
+ }
+
+  .f-admin-menu .f-menu-toggle {
+    display: none;
+  }
+
+  .f-admin-menu .f-menu-items {
+    max-height: 1000rem;
+  }
+
+  .f-admin-menu .f-menu-items li {
+//    min-width: 4rem;
+//    float: left;
+  }
+
+  .f-admin-menu a {
+    text-align: left;
+    text-transform: none;
+    border-bottom: 0.0625rem dotted;
+  }
+
+  .f-admin-menu h2 {
+    padding: 0.625rem;
+    text-align: left;
+    text-transform: none;
+    border-bottom: 0.0625rem dotted;
+  }
+}
+
+/***********/
+/* Админка */
+/***********/
+.f-admin > h2 {
+  padding-top: 0.625rem;
+}
+
+.f-admin > div {
+  margin-top: 0.625rem;
+  background-color: #F8F4E3;
+  border: 0.0625rem solid #AA7939;
+}
+
+.f-admin > div > p {
+  padding: 0.625rem;
+}
+
+.f-admin > div > ul {
+  padding: 0.625rem;
+  list-style-type: circle;
+  list-style-position: inside;
+}
+
+.f-admin dl {
+  margin: 0 0.625rem 0.625rem 0.625rem;
+}
+
+.f-admin dt {
+  padding: 0.625rem 0;
+}
+
+.f-admin dd {
+  padding: 0.625rem 0;
+  border-bottom: 0.0625rem dotted #AA7939;
+}
+
+@media screen and (min-width: 36rem) {
+  .f-admin dt {
+    float: left;
+    width: 14rem;
+  }
+  .f-admin dd {
+    padding-left: 14rem;
+  }
+}
+
+/*********************/
+/* Статистика форума */
+/*********************/
+.f-stats {
+  border-top: 0.0625rem solid #AA7939;
+  font-size: 0.875rem;
+}
+
+.f-stats > h2 {
+  display: none;
+}
+
+.f-stats > div {
+  padding: 0.3125rem 0;
+}
+
+.f-stats dl {
+  padding: 0.3125rem 0.625rem;
+}
+
+.f-stats dt {
+  display: none;
+}
+
+.f-stats .right {
+  text-align: right;
+}
+
+.f-onlinelist {
+  clear: both;
+  border-top: 0.0625rem dotted #AA7939;
+}
+
+.f-onlinelist > dt {
+  display: inline;
+  font-weight: bold;
+}
+
+/********************/
+/* Таблица разделов */
+/********************/
+.f-forumlist a {
+  border: 0;
+}
+
+.f-forumlist .f-cell {
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+
+.f-forumlist .f-hcell {
+  display: none;
+}
+
+.f-forumlist .f-category {
+  margin-top: 0.625rem;
+}
+
+.f-forumlist .f-row {
+  border-bottom: 0.0625rem solid #AA7939;
+}
+
+.f-forumlist .f-thead {
+  border-bottom: 0.125rem solid #AA7939;
+}
+
+.f-forumlist .f-cmain,
+.f-forumlist .f-cstats {
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+}
+
+.f-forumlist .f-cstats {
+  padding-top: 0;
+  text-align: right;
+  font-size: 0.75rem;
+}
+
+.f-forumlist .f-cstats li {
+  display: inline-block;
+}
+
+.f-forumlist .f-clast {
+  display: none;
+}
+
+.f-category > h2 {
+  padding: 0.625rem 0.625rem 0.3125rem 0.625rem;
+}
+
+.f-forumlist .f-ficon {
+  width: 1.5rem;
+  float: left;
+}
+
+.f-forumlist .f-finfo {
+  margin-left: 1.5rem;
+}
+
+.f-forumlist .f-fdesc {
+  font-size: 0.875rem;
+}
+
+.f-fsub {
+  margin-left: 0.875rem;
+  font-size: 0.875rem;
+}
+
+.f-fsub:before {
+  font-size: 0.875rem;
+  content: "└";
+  margin-left: -0.875rem;
+}
+
+
+.f-fsub > dt {
+  display: none;
+}
+
+.f-modlist {
+  font-size: 0.875rem;
+}
+
+.f-modlist > dt:before {
+  content: "(";
+}
+
+.f-modlist:last-child:after {
+  content: ")";
+}
+
+.f-ficon:before {
+  font-family: ForkIcon;
+  font-size: 1.2rem;
+  color: #814A00;
+  content: "\e900";
+}
+
+.f-fnew .f-ficon:before {
+  content: "\e901";
+}
+
+.f-fredir .f-ficon:before {
+  content: "\e906";
+}
+
+.f-forumlist .f-newtxt {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.875rem;
+  font-weight: normal;
+}
+
+.f-forumlist .f-newtxt:before {
+  content: "[ ";
+}
+
+.f-forumlist .f-newtxt:after {
+  content: " ]";
+}
+
+/*
+.icon-document:before {
+  content: "\e900";
+}
+.icon-document-text:before {
+  content: "\e901";
+}
+.icon-document-upload:before {
+  content: "\e902";
+}
+.icon-document-upload2:before {
+  content: "\e903";
+}
+.icon-document-locked:before {
+  content: "\e904";
+}
+.icon-document-locked2:before {
+  content: "\e905";
+}
+.icon-tag-cord:before {
+  content: "\e906";
+}
+*/
+
+@media screen and (min-width: 50rem) {
+  .f-forumlist .f-cell {
+    display: table-cell;
+  }
+
+  .f-forumlist .f-cmain {
+    width: 100%;
+  }
+
+  .f-forumlist .f-cstats {
+    padding-top: 0.625rem;
+    padding-left: 0;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .f-forumlist .f-cstats li {
+    display: block;
+  }
+
+  .f-forumlist .f-clast {
+    width: 15rem;
+    padding-right: 0.625rem;
+    vertical-align: middle;
+    font-size: 0.875rem;
+  }
+
+  .f-forumlist .f-cltopic,
+  .f-forumlist .f-clposter,
+  .f-forumlist .f-cltime {
+    width: 15rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .f-forumlist .f-cltime {
+    font-size: 0.75rem;
+  }
+}
+
+/*********/
+/* Логин */
+/*********/
+.f-login .f-wrapdiv {
+  margin: 1rem auto;
+  max-width: 20rem;
+  border: 0.0625rem solid #AA7939;
+  border-radius: 0.1875rem;
+}
+
+.f-login h2 {
+  padding: 0.625rem;
+  text-align: center;
+}
+
+#id-aform {
+  padding: 0.625rem;
+}
+
+#id-aform > input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+}
+
+#id-aform > label {
+  display: block;
+  width: 100%;
+}
+
+.f-forgetlink {
+  font-size: 0.875rem;
+  float: right;
+  font-weight: normal;
+}
+
+.f-login #id-label1,
+.f-login #id-label2 {
+  font-weight: bold;
+}
+
+.f-login #id-label1:after,
+.f-login #id-label2:after {
+  content: ":";
+}
+
+.f-login #id-label3 {
+  font-size: 0.875rem;
+}
+
+.f-login #id-label3 > input {
+  margin: 0 0.625rem 0 0;
+}
+
+#id-aform .f-btn {
+  margin: 1rem 0 0.375rem 0;
+}
+
+.f-login .f-wrapdiv > p {
+  padding: 0.625rem;
+  text-align: center;
+  font-size: 0.875rem;
+}

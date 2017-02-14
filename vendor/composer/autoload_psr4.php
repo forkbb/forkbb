@@ -6,5 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'R2\\Templating\\' => array($vendorDir . '/artoodetoo/dirk/src'),
     'R2\\DependencyInjection\\' => array($vendorDir . '/artoodetoo/container/src'),
 );

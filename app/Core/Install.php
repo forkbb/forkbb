@@ -3,9 +3,9 @@
 namespace ForkBB\Core;
 
 use R2\DependencyInjection\ContainerInterface;
-use R2\DependencyInjection\ContainerAwareInterface;
+use RuntimeException;
 
-class Install implements ContainerAwareInterface
+class Install
 {
     /**
      * @var Request
@@ -19,28 +19,24 @@ class Install implements ContainerAwareInterface
     protected $c;
 
     /**
-     * Инициализация контейнера
-     *
-     * @param ContainerInterface $container
+     * Конструктор
+     * @param Request $request
      */
-    public function setContainer(ContainerInterface $container)
+    public function __construct($request, ContainerInterface $container)
     {
+        $this->request = $request;
         $this->c = $container;
     }
 
     /**
-     * @param Request $request
+     * @throws \RuntimeException
+     * @return string
      */
-    public function __construct($request)
-    {
-        $this->request = $request;
-    }
-
     protected function generate_config_file($base_url, $db_type, $db_host, $db_name, $db_username, $db_password, $db_prefix, $cookie_prefix)
     {
-        $config = file_get_contents($this->c->getParameter('DIR_CONFIG') . 'main.dist.php');
+        $config = file_get_contents($this->c->getParameter('DIR_CONFIG') . '/main.dist.php');
         if (false === $config) {
-            exit('Error open main.dist.php'); //????
+            throw new RuntimeException('No access to main.dist.php.');
         }
         $config = str_replace('_BASE_URL_', addslashes($base_url), $config);
         $config = str_replace('_DB_TYPE_', addslashes($db_type), $config);
@@ -55,7 +51,10 @@ class Install implements ContainerAwareInterface
         return $config;
     }
 
-    public function start()
+    /**
+     * @throws \RuntimeException
+     */
+    public function install()
     {
 
         /**
@@ -83,11 +82,12 @@ class Install implements ContainerAwareInterface
         require PUN_ROOT . 'lang/' . $install_lang . '/install.php';
 
         // Make sure we are running at least MIN_PHP_VERSION
-        if (! function_exists('version_compare') || version_compare(PHP_VERSION, MIN_PHP_VERSION, '<'))
-            exit(sprintf($lang_install['You are running error'], 'PHP', PHP_VERSION, FORK_VERSION, MIN_PHP_VERSION));
+        if (! function_exists('version_compare') || version_compare(PHP_VERSION, MIN_PHP_VERSION, '<')) {
+            throw new RuntimeException(sprintf($lang_install['You are running error'], 'PHP', PHP_VERSION, FORK_VERSION, MIN_PHP_VERSION));
+        }
 
 
-        if (null !== $this->request->postBool('generate_config'))
+        if ($this->request->isPost('generate_config'))
         {
             header('Content-Type: text/x-delimtext; name="main.php"');
             header('Content-disposition: attachment; filename=main.php');
@@ -102,11 +102,11 @@ class Install implements ContainerAwareInterface
             $cookie_prefix = $this->request->postStr('cookie_prefix', '');
 
             echo $this->generate_config_file($base_url, $db_type, $db_host, $db_name, $db_username, $db_password, $db_prefix, $cookie_prefix);
-            exit;
+            exit; //????
         }
 
 
-        if (null === $this->request->postBool('form_sent'))
+        if (! $this->request->isPost('form_sent'))
         {
             // Make an educated guess regarding base_url
             $base_url  = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://';    // protocol
@@ -191,7 +191,7 @@ class Install implements ContainerAwareInterface
         if (! forum_is_writable(PUN_ROOT . 'img/avatars/'))
             $alerts[] = sprintf($lang_install['Alert avatar'], PUN_ROOT . 'img/avatars/');
 
-        if (null === $this->request->postBool('form_sent') || ! empty($alerts))
+        if (! $this->request->isPost('form_sent') || ! empty($alerts))
         {
             // Determine available database extensions
             $db_extensions = array();
@@ -943,18 +943,29 @@ foreach ($styles as $temp)
                         'datatype'        => 'INT(10) UNSIGNED',
                         'allow_null'    => true
                     ),
-                    'witt_data'            => array(
+                    'witt_data'            => array(              //????
                         'datatype'        => 'VARCHAR(255)',
                         'allow_null'    => false,
                         'default'        => '\'\''
-                    )
+                    ),
+                    'o_position' => [
+                        'datatype'   => 'VARCHAR(100)',
+                        'allow_null' => false,
+                        'default'    => '\'\''
+                    ],
+                    'o_name' => [
+                        'datatype'   => 'VARCHAR(200)',
+                        'allow_null' => false,
+                        'default'    => '\'\''
+                    ],
                 ),
                 'UNIQUE KEYS'    => array(
                     'user_id_ident_idx'    => array('user_id', 'ident')
                 ),
                 'INDEXES'        => array(
-                    'ident_idx'        => array('ident'),
-                    'logged_idx'    => array('logged')
+                    'ident_idx'      => array('ident'),
+                    'logged_idx'     => array('logged'),
+                    'o_position_idx' => array('o_position'),
                 )
             );
 
@@ -1718,7 +1729,11 @@ foreach ($styles as $temp)
                         'datatype'        => 'TINYINT(4) UNSIGNED',
                         'allow_null'    => false,
                         'default'        => '0'
-                    )
+                    ),
+                    'u_mark_all_read'   => array(
+                        'datatype'      => 'INT(10) UNSIGNED',
+                        'allow_null'    => true
+                    ),
                 ),
                 'PRIMARY KEY'    => array('id'),
                 'UNIQUE KEYS'    => array(
@@ -1875,6 +1890,73 @@ foreach ($styles as $temp)
             );
 
             $db->create_table('poll_voted', $schema) or error('Unable to create table poll_voted', __FILE__, __LINE__, $db->error());
+
+            $schema = [
+                'FIELDS'  => [
+                    'uid' => [
+                        'datatype'   => 'INT(10) UNSIGNED',
+                        'allow_null' => true,
+                    ],
+                    'fid' => [
+                        'datatype'   => 'INT(10) UNSIGNED',
+                        'allow_null' => true,
+                    ],
+                    'mf_upper' => [
+                        'datatype'   => 'INT(10) UNSIGNED',
+                        'allow_null' => true,
+                    ],
+                    'mf_lower' => [
+                        'datatype'   => 'INT(10) UNSIGNED',
+                        'allow_null' => true,
+                    ],
+                ],
+                'UNIQUE KEYS' => [
+                    'uid_fid_idx'    => ['uid', 'fid'],
+                ],
+                'INDEXES' => [
+                    'mf_upper_idx'   => ['mf_upper'],
+                    'mf_lower_idx'   => ['mf_lower'],
+                ]
+            ];
+
+            $db->create_table('mark_of_forum', $schema) or error('Unable to create mark_of_forum table', __FILE__, __LINE__, $db->error());
+
+            $schema = [
+                'FIELDS'  => [
+                    'uid' => [
+                        'datatype'   => 'INT(10) UNSIGNED',
+                        'allow_null' => true,
+                    ],
+                    'fid' => [
+                        'datatype'   => 'INT(10) UNSIGNED',
+                        'allow_null' => true,
+                    ],
+                    'tid' => [
+                        'datatype'   => 'INT(10) UNSIGNED',
+                        'allow_null' => true,
+                    ],
+                    'mt_upper' => [
+                        'datatype'   => 'INT(10) UNSIGNED',
+                        'allow_null' => true,
+                    ],
+                    'mt_lower' => [
+                        'datatype'   => 'INT(10) UNSIGNED',
+                        'allow_null' => true,
+                    ],
+                ],
+                'UNIQUE KEYS' => [
+                    'uid_fid_tid_idx' => ['uid', 'fid', 'tid'],
+                ],
+                'INDEXES' => [
+                    'mt_upper_idx'   => ['mt_upper'],
+                    'mt_lower_idx'   => ['mt_lower'],
+                ]
+            ];
+
+            $db->create_table('mark_of_topic', $schema) or error('Unable to create mark_of_topic table', __FILE__, __LINE__, $db->error());
+
+
+
 
 
             $now = time();
@@ -2047,7 +2129,7 @@ foreach ($styles as $temp)
             $written = false;
             if (forum_is_writable($this->c->getParameter('DIR_CONFIG')))
             {
-                $fh = @fopen($this->c->getParameter('DIR_CONFIG') . 'main.php', 'wb');
+                $fh = @fopen($this->c->getParameter('DIR_CONFIG') . '/main.php', 'wb');
                 if ($fh)
                 {
                     fwrite($fh, $config);
@@ -2157,7 +2239,5 @@ else
 <?php
 
         }
-
-        exit;
     }
 }

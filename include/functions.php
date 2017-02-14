@@ -288,77 +288,6 @@ function set_default_user()
 
 
 //
-// Check whether the connecting user is banned (and delete any expired bans while we're at it)
-//
-function check_bans()
-{
-	global $container, $pun_config, $lang_common, $pun_user;
-
-    $db = $container->get('DB');
-    $bans = $container->get('bans');
-
-	// Admins and moderators aren't affected
-	if ($pun_user['is_admmod'] || !$bans)
-		return;
-
-	// Add a dot or a colon (depending on IPv4/IPv6) at the end of the IP address to prevent banned address
-	// 192.168.0.5 from matching e.g. 192.168.0.50
-	$user_ip = get_remote_address();
-	$user_ip .= (strpos($user_ip, '.') !== false) ? '.' : ':';
-
-	$bans_altered = false;
-	$is_banned = false;
-
-	foreach ($bans as $cur_ban)
-	{
-		// Has this ban expired?
-		if ($cur_ban['expire'] != '' && $cur_ban['expire'] <= time())
-		{
-			$db->query('DELETE FROM '.$db->prefix.'bans WHERE id='.$cur_ban['id']) or error('Unable to delete expired ban', __FILE__, __LINE__, $db->error());
-			$bans_altered = true;
-			continue;
-		}
-
-		if ($cur_ban['username'] != '' && mb_strtolower($pun_user['username']) == mb_strtolower($cur_ban['username']))
-			$is_banned = true;
-
-		if ($cur_ban['ip'] != '')
-		{
-			$cur_ban_ips = explode(' ', $cur_ban['ip']);
-
-			$num_ips = count($cur_ban_ips);
-			for ($i = 0; $i < $num_ips; ++$i)
-			{
-				// Add the proper ending to the ban
-				if (strpos($user_ip, '.') !== false)
-					$cur_ban_ips[$i] = $cur_ban_ips[$i].'.';
-				else
-					$cur_ban_ips[$i] = $cur_ban_ips[$i].':';
-
-				if (substr($user_ip, 0, strlen($cur_ban_ips[$i])) == $cur_ban_ips[$i])
-				{
-					$is_banned = true;
-					break;
-				}
-			}
-		}
-
-		if ($is_banned)
-		{
-			$db->query('DELETE FROM '.$db->prefix.'online WHERE ident=\''.$db->escape($pun_user['username']).'\'') or error('Unable to delete from online list', __FILE__, __LINE__, $db->error());
-			message($lang_common['Ban message'].' '.(($cur_ban['expire'] != '') ? $lang_common['Ban message 2'].' '.strtolower(format_time($cur_ban['expire'], true)).'. ' : '').(($cur_ban['message'] != '') ? $lang_common['Ban message 3'].'<br /><br /><strong>'.pun_htmlspecialchars($cur_ban['message']).'</strong><br /><br />' : '<br /><br />').$lang_common['Ban message 4'].' <a href="mailto:'.pun_htmlspecialchars($pun_config['o_admin_email']).'">'.pun_htmlspecialchars($pun_config['o_admin_email']).'</a>.', true);
-		}
-	}
-
-	// If we removed any expired bans during our run-through, we need to regenerate the bans cache
-	if ($bans_altered)
-	{
-        $container->get('bans update');
-	}
-}
-
-
-//
 // Check username
 //
 function check_username($username, $exclude_id = null)
@@ -2099,4 +2028,62 @@ function sf_crumbs($id)
 	}
 
 	return $str;
+}
+
+/******************************************************************************/
+/*
+function __($data, ...$args)
+{
+    static $tr = [];
+    static $loaded = [];
+
+    if ($data instanceof \R2\DependencyInjection\ContainerInterface) {
+        if (isset($loaded[$args[0]])) {
+            return;
+        }
+        $dir = $data->getParameter('DIR_TRANSL');
+        $lang = isset($args[1]) ? $args[1] : $data->get('user')['language'];
+        if (file_exists($dir . $lang . '/' . $args[0] . '.php')) {
+            $tr = (include $dir . $lang . '/' . $args[0] . '.php') + $tr;
+        } elseif (file_exists($dir . 'English/' . $args[0] . '.php')) {
+            $tr = (include $dir . 'English/' . $args[0] . '.php') + $tr;
+        }
+        $loaded[$args[0]] = true;
+    } else {
+        if (! isset($tr[$data])) {
+            return $data;
+        } elseif (empty($args)) {
+            return $tr[$data];
+        } else {
+            return sprintf($tr[$data], ...$args);
+        }
+    }
+}
+*/
+function __($data, ...$args)
+{
+    static $lang;
+
+    if (empty($lang)) {
+        $lang = $data;
+        return;
+    }
+
+    $tr = $lang->get($data);
+
+    if (is_array($tr)) {
+        if (isset($args[0]) && is_numeric($args[0])) {
+            $n = array_shift($args);
+            eval('$n = (int) ' . $tr['plural']);
+            $tr = $tr[$n];
+        } else {
+            $tr = $tr[0];
+        }
+    }
+
+    if (empty($args)) {
+        return $tr;
+    } else {
+        return sprintf($tr, ...$args);
+    }
 }

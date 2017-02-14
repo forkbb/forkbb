@@ -655,7 +655,7 @@ switch ($stage)
         // For FluxBB by Visman 1.5.10.75
         if (! isset($pun_config['i_fork_revision']) || $pun_config['i_fork_revision'] < 1) {
             if (! isset($pun_config['i_fork_revision'])) {
-                $db->query('INSERT INTO '.$db->prefix.'config (conf_name, conf_value) VALUES (\'i_fork_revision\', \'0\')') or error('Unable to insert config value \'i_fork_revision\'', __FILE__, __LINE__, $db->error());
+                $db->query('INSERT INTO '.$db->prefix.'config (conf_name, conf_value) VALUES (\'i_fork_revision\', \'1\')') or error('Unable to insert config value \'i_fork_revision\'', __FILE__, __LINE__, $db->error());
                 $pun_config['i_fork_revision'] = 1;
             }
             if (! isset($pun_config['s_fork_version'])) {
@@ -668,6 +668,76 @@ switch ($stage)
             $db->query('DELETE FROM '.$db->prefix.'config WHERE conf_name=\'o_base_url\'') or error('Unable to delete config value \'o_base_url\'', __FILE__, __LINE__, $db->error());
 
             $db->alter_field('users', 'password', 'VARCHAR(255)', false, '') or error('Unable to alter password field', __FILE__, __LINE__, $db->error());
+            $db->add_field('user', 'u_mark_all_read', 'INT(10) UNSIGNED', true) or error('Unable to add u_mark_all_read field', __FILE__, __LINE__, $db->error());
+
+            $db->add_field('online', 'o_position', 'VARCHAR(100)', false, '') or error('Unable to add o_position field', __FILE__, __LINE__, $db->error());
+            $db->add_index('online', 'o_position_idx', array('o_position')) or error('Unable to add o_position_idx index', __FILE__, __LINE__, $db->error());
+            $db->add_field('online', 'o_name', 'VARCHAR(200)', false, '') or error('Unable to add o_name field', __FILE__, __LINE__, $db->error());
+
+            $schema = [
+                'FIELDS'  => [
+                    'uid' => [
+                        'datatype'   => 'INT(10) UNSIGNED',
+                        'allow_null' => true,
+                    ],
+                    'fid' => [
+                        'datatype'   => 'INT(10) UNSIGNED',
+                        'allow_null' => true,
+                    ],
+                    'mf_upper' => [
+                        'datatype'   => 'INT(10) UNSIGNED',
+                        'allow_null' => true,
+                    ],
+                    'mf_lower' => [
+                        'datatype'   => 'INT(10) UNSIGNED',
+                        'allow_null' => true,
+                    ],
+                ],
+                'UNIQUE KEYS' => [
+                    'uid_fid_idx'    => ['uid', 'fid'],
+                ],
+                'INDEXES' => [
+                    'mf_upper_idx'   => ['mf_upper'],
+                    'mf_lower_idx'   => ['mf_lower'],
+                ]
+            ];
+
+            $db->create_table('mark_of_forum', $schema) or error('Unable to create mark_of_forum table', __FILE__, __LINE__, $db->error());
+
+            $schema = [
+                'FIELDS'  => [
+                    'uid' => [
+                        'datatype'   => 'INT(10) UNSIGNED',
+                        'allow_null' => true,
+                    ],
+                    'fid' => [
+                        'datatype'   => 'INT(10) UNSIGNED',
+                        'allow_null' => true,
+                    ],
+                    'tid' => [
+                        'datatype'   => 'INT(10) UNSIGNED',
+                        'allow_null' => true,
+                    ],
+                    'mt_upper' => [
+                        'datatype'   => 'INT(10) UNSIGNED',
+                        'allow_null' => true,
+                    ],
+                    'mt_lower' => [
+                        'datatype'   => 'INT(10) UNSIGNED',
+                        'allow_null' => true,
+                    ],
+                ],
+                'UNIQUE KEYS' => [
+                    'uid_fid_tid_idx' => ['uid', 'fid', 'tid'],
+                ],
+                'INDEXES' => [
+                    'mt_upper_idx'   => ['mt_upper'],
+                    'mt_lower_idx'   => ['mt_lower'],
+                ]
+            ];
+
+            $db->create_table('mark_of_topic', $schema) or error('Unable to create mark_of_topic table', __FILE__, __LINE__, $db->error());
+
 
         }
 		break;

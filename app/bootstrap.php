@@ -3,6 +3,7 @@
 namespace ForkBB;
 
 use R2\DependencyInjection\Container;
+use ForkBB\Models\Pages\Page;
 use Exception;
 
 if (! defined('PUN_ROOT'))
@@ -46,6 +47,29 @@ if (file_exists(__DIR__ . '/config/main.php')) {
 
 define('PUN', 1);
 
-$container->setParameter('DIR_CONFIG', __DIR__ . '/config/');
-$container->setParameter('DIR_CACHE', __DIR__ . '/cache/');
-$container->get('firstAction');
+$container->setParameter('DIR_CONFIG', __DIR__ . '/config');
+$container->setParameter('DIR_CACHE', __DIR__ . '/cache');
+$container->setParameter('DIR_VIEWS', __DIR__ . '/templates');
+$container->setParameter('DIR_TRANSL', __DIR__ . '/lang');
+$container->setParameter('START', $pun_start);
+
+$config = $container->get('config');
+$container->setParameter('date_formats', [$config['o_date_format'], 'Y-m-d', 'Y-d-m', 'd-m-Y', 'm-d-Y', 'M j Y', 'jS M Y']);
+$container->setParameter('time_formats', [$config['o_time_format'], 'H:i:s', 'H:i', 'g:i:s a', 'g:i a']);
+
+$page = null;
+$controllers = ['Routing', 'Primary'];
+
+while (! $page instanceof Page && $cur = array_pop($controllers)) {
+    $page = $container->get($cur);
+}
+
+if ($page instanceof Page) { //????
+    $tpl = $container->get('View')->setPage($page)->outputPage();
+    if (defined('PUN_DEBUG')) {
+        $debug = $container->get('Debug')->debug();
+        $debug = $container->get('View')->setPage($debug)->outputPage();
+        $tpl = str_replace('<!-- debuginfo -->', $debug, $tpl);
+    }
+    exit($tpl);
+}
