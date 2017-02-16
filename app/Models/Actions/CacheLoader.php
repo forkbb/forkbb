@@ -61,7 +61,7 @@ class CacheLoader
     public function loadForums()
     {
         $mark = $this->cache->get('forums_mark');
-        $key = 'forums_' . $this->c->get('user')['g_id'];
+        $key = 'forums_' . $this->c->get('user')->gId;
 
         if (empty($mark)) {
             $this->cache->set('forums_mark', time());

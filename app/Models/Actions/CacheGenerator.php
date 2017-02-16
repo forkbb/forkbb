@@ -132,7 +132,7 @@ class CacheGenerator
      */
     public function forums(User $user)
     {
-        $groupId = $user['g_id'];
+        $groupId = $user->gId;
 		$result = $this->db->query('SELECT g_read_board FROM '.$this->db->prefix.'groups WHERE g_id='.$groupId) or error('Unable to fetch user group read permission', __FILE__, __LINE__, $this->db->error());
 		$read = $this->db->result($result);
 

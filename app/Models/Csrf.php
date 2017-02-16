@@ -26,7 +26,7 @@ class Csrf
     public function __construct(Secury $secury, User $user)
     {
         $this->secury = $secury;
-        $this->key = sha1($user['password'] . $user['ip'] . $user['id']);
+        $this->key = sha1($user->password . $user->ip . $user->id);
     }
 
     /**
@@ -46,14 +46,15 @@ class Csrf
 
     /**
      * Проверка токена
-     * @param string $token
+     * @param mixed $token
      * @param string $marker
      * @param array $args
      * @return bool
      */
     public function check($token, $marker, array $args = [])
     {
-        return preg_match('%f(\d+)$%D', $token, $matches)
+        return is_string($token)
+            && preg_match('%f(\d+)$%D', $token, $matches)
             && $matches[1] < time()
             && $matches[1] + 1800 > time()
             && hash_equals($this->create($marker, $args, $matches[1]), $token);

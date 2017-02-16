@@ -71,8 +71,8 @@ class Lang
         } elseif (isset($this->loaded[$name])) {
             return;
         }
-        $lang = $lang ?: $this->c->get('user')['language'];
-        $path = $path ?: $this->c->getParameter('DIR_TRANSL');
+        $lang = $lang ?: $this->c->get('user')->language;
+        $path = $path ?: $this->c->getParameter('DIR_LANG');
         do {
             $flag = true;
             $fullPath = $path . '/'. $lang . '/' . $name . '.po';

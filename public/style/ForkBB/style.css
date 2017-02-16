@@ -468,6 +468,7 @@ select {
 
 .f-main {
 /*  border-top: 0.0625rem solid #AA7939; */
+  margin: 1rem 0;
 }
 
 .f-main > h2 {
@@ -511,6 +512,8 @@ select {
 
 .f-rules > div {
   padding: 0.625rem;
+  border: 0.0625rem solid #AA7939;
+  background-color: #F8F4E3;
 }
 
 /************/
@@ -992,7 +995,7 @@ li + li .f-btn {
 /*********/
 /* Логин */
 /*********/
-.f-login .f-wrapdiv {
+.f-login .f-wdiv {
   margin: 1rem auto;
   max-width: 20rem;
   border: 0.0625rem solid #AA7939;
@@ -1004,11 +1007,11 @@ li + li .f-btn {
   text-align: center;
 }
 
-#id-aform {
+.f-login .f-form {
   padding: 0.625rem;
 }
 
-#id-aform > input {
+.f-login .f-form > input {
   padding: 0.5rem;
   font-size: 1rem;
   display: block;
@@ -1017,7 +1020,7 @@ li + li .f-btn {
   box-sizing: border-box;
 }
 
-#id-aform > label {
+.f-login .f-form > label {
   display: block;
   width: 100%;
 }
@@ -1028,29 +1031,27 @@ li + li .f-btn {
   font-weight: normal;
 }
 
-.f-login #id-label1,
-.f-login #id-label2 {
+.f-login .f-child1 {
   font-weight: bold;
 }
 
-.f-login #id-label1:after,
-.f-login #id-label2:after {
+.f-login .f-child1:after {
   content: ":";
 }
 
-.f-login #id-label3 {
+.f-login .f-child2 {
   font-size: 0.875rem;
 }
 
-.f-login #id-label3 > input {
+.f-login .f-child2 > input {
   margin: 0 0.625rem 0 0;
 }
 
-#id-aform .f-btn {
+.f-login .f-btn {
   margin: 1rem 0 0.375rem 0;
 }
 
-.f-login .f-wrapdiv > p {
+.f-login .f-child3 {
   padding: 0.625rem;
   text-align: center;
   font-size: 0.875rem;

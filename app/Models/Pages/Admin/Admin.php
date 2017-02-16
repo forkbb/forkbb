@@ -57,7 +57,6 @@ abstract class Admin extends Page
     protected function aNavigation()
     {
         $user = $this->c->get('user');
-        $is_admin = $user['g_id'] == PUN_ADMIN;
         $r = $this->c->get('Router');
 
         $nav = [
@@ -66,14 +65,14 @@ abstract class Admin extends Page
                 'users' => ['admin_users.php', __('Users')],
             ],
         ];
-        if ($is_admin || $user['g_mod_ban_users'] == '1') {
+        if ($user->isAdmin || $user->gModBanUsers == '1') {
             $nav['Moderator menu']['bans'] = ['admin_bans.php', __('Bans')];
         }
-        if ($is_admin || $this->config['o_report_method'] == '0' || $this->config['o_report_method'] == '2') {
+        if ($user->isAdmin || $this->config['o_report_method'] == '0' || $this->config['o_report_method'] == '2') {
             $nav['Moderator menu']['reports'] = ['admin_reports.php', __('Reports')];
         }
 
-        if ($is_admin) {
+        if ($user->isAdmin) {
             $nav['Admin menu'] = [
                 'options' => ['admin_options.php', __('Admin options')],
                 'permissions' => ['admin_permissions.php', __('Permissions')],

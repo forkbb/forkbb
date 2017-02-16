@@ -32,11 +32,12 @@ class Routing
         $r = $this->c->get('Router');
 
         // регистрация/вход/выход
-        if ($user['is_guest']) {
+        if ($user->isGuest) {
             // вход
             $r->add('GET', '/login', 'Auth:login', 'Login');
             $r->add('POST', '/login', 'Auth:loginPost');
             $r->add('GET', '/login/forget', 'Auth:forget', 'Forget');
+            $r->add('POST', '/login/forget', 'Auth:forgetPost');
             // регистрация
             if ($config['o_regs_allow'] == '1') {
                 $r->add('GET', '/registration', 'Registration:reg', 'Registration'); //????
@@ -46,19 +47,19 @@ class Routing
             $r->add('GET', '/logout/{token}', 'Auth:logout', 'Logout');
         }
         // просмотр разрешен
-        if ($user['g_read_board'] == '1') {
+        if ($user->gReadBoard == '1') {
             // главная
             $r->add('GET', '/', 'Index:view', 'Index');
             // правила
-            if ($config['o_rules'] == '1' && (! $user['is_guest'] || $config['o_regs_allow'] == '1')) {
+            if ($config['o_rules'] == '1' && (! $user->isGuest || $config['o_regs_allow'] == '1')) {
                 $r->add('GET', '/rules', 'Rules:view', 'Rules');
             }
             // поиск
-            if ($user['g_search'] == '1') {
+            if ($user->gSearch == '1') {
                 $r->add('GET', '/search', 'Search:view', 'Search');
             }
             // юзеры
-            if ($user['g_view_users'] == '1') {
+            if ($user->gViewUsers == '1') {
                 // список пользователей
                 $r->add('GET', '/userlist[/page/{page}]', 'Userlist:view', 'Userlist');
                 // юзеры
@@ -72,12 +73,12 @@ class Routing
 
         }
         // админ и модератор
-        if ($user['is_admmod']) {
+        if ($user->isAdmMod) {
             $r->add('GET', '/admin/', 'AdminIndex:index', 'Admin');
             $r->add('GET', '/admin/statistics', 'AdminStatistics:statistics', 'AdminStatistics');
         }
         // только админ
-        if ($user['g_id'] == PUN_ADMIN) {
+        if ($user->isAdmin) {
             $r->add('GET', '/admin/statistics/info', 'AdminStatistics:info', 'AdminInfo');
         }
 
@@ -97,7 +98,7 @@ class Routing
                 break;
             case $r::NOT_FOUND:
                 // ... 404 Not Found
-                if ($user['g_read_board'] != '1' && $user['is_guest']) {
+                if ($user->gReadBoard != '1' && $user->isGuest) {
                     $page = $this->c->get('Redirect')->setPage('Login');
                 } else {
 //                  $page = $this->c->get('Message')->message('Bad request');

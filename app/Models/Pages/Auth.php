@@ -10,7 +10,7 @@ class Auth extends Page
      * Имя шаблона
      * @var string
      */
-    protected $nameTpl = 'auth';
+    protected $nameTpl = 'login';
 
     /**
      * Позиция для таблицы онлайн текущего пользователя
@@ -100,7 +100,7 @@ class Auth extends Page
             '_save' => $save,
         ];
 
-        if (empty($token) || ! $this->c->get('Csrf')->check($token, 'Login')) {
+        if (! $this->c->get('Csrf')->check($token, 'Login')) {
             $this->iswev['e'][] = __('Bad token');
             return $this->login($args);
         }
@@ -118,5 +118,63 @@ class Auth extends Page
         }
 
         return $this->c->get('Redirect')->setUrl($redirect)->setMessage(__('Login redirect'));
+    }
+
+    /**
+     * Подготовка данных для страницы восстановления пароля
+     * @param array $args
+     * @return Page
+     */
+    public function forget($args)
+    {
+        $this->c->get('Lang')->load('login');
+
+        $this->nameTpl = 'forget';
+        $this->onlinePos = 'forget';
+
+        if (! isset($args['_email'])) {
+            $args['_email'] = '';
+        }
+
+        $this->titles = [
+            __('Request pass'),
+        ];
+        $this->data = [
+            'email' => $args['_email'],
+            'formAction' => $this->c->get('Router')->link('Forget'),
+            'formToken' => $this->c->get('Csrf')->create('Forget'),
+        ];
+
+        return $this;
+    }
+
+    /**
+     * Отправка письма для восстановления пароля
+     * @return Page
+     */
+    public function forgetPost()
+    {
+        $this->c->get('Lang')->load('login');
+
+        $token = $this->c->get('Request')->postStr('token');
+        $email = $this->c->get('Request')->postStr('email');
+
+        $args = [
+            '_email' => $email,
+        ];
+
+        if (! $this->c->get('Csrf')->check($token, 'Forget')) {
+            $this->iswev['e'][] = __('Bad token');
+            return $this->forget($args);
+        }
+
+        $mail = $this->c->get('Mail');
+        if (! $mail->valid($email)) {
+            $this->iswev['v'][] = __('Invalid email');
+            return $this->forget($args);
+        }
+
+
+
     }
 }

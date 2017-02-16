@@ -2,11 +2,11 @@
 
 namespace ForkBB\Models;
 
-use ForkBB\Core\AbstractModel;
+use ForkBB\Core\Model; //????
 use R2\DependencyInjection\ContainerInterface;
 use RuntimeException;
 
-class User extends AbstractModel
+class User extends Model
 {
     /**
      * Контейнер
@@ -30,93 +30,41 @@ class User extends AbstractModel
     protected $db;
 
     /**
-     * Время
-     * @var int
-     */
-    protected $now;
-
-    /**
      * Конструктор
      */
-    public function __construct(array $data, ContainerInterface $container)
+    public function __construct(array $config, $cookie, $db, ContainerInterface $container)
     {
-        $this->now = time();
+        $this->config = $config;
+        $this->userCookie = $cookie;
+        $this->db = $db;
         $this->c = $container;
-        $this->config = $container->get('config');
-        $this->userCookie = $container->get('UserCookie');
-        $this->db = $container->get('DB');
-        parent::__construct($data);
     }
 
     /**
-     * Выполняется до конструктора родителя
+     * @return User
      */
-    protected function beforeConstruct(array $data)
+    public function init()
     {
-        return $data;
+        $this->current = $this->c->get('LoadCurrentUser')->load();
+
+        return $this;
     }
 
-    protected function getIsGuest()
-    {
-        return $this->id < 2 || empty($this->gId) || $this->gId == PUN_GUEST;
-    }
-
-    protected function getIsAdmin()
-    {
-        return $this->gId == PUN_ADMIN;
-    }
-
-    protected function getIsAdmMod()
-    {
-        return $this->gId == PUN_ADMIN || $this->gModerator == '1';
-    }
-
-    protected function getLogged()
-    {
-        return empty($this->data['logged']) ? $this->now : $this->data['logged'];
-    }
-
-    protected function getIsLogged()
-    {
-        return ! empty($this->data['logged']);
-    }
-
-    protected function getLanguage()
-    {
-        if ($this->isGuest
-            || ! file_exists($this->c->getParameter('DIR_LANG') . '/' . $this->data['language'] . '/common.po')
-        ) {
-            return $this->config['o_default_lang'];
-        } else {
-            return $this->data['language'];
-        }
-    }
-
-    protected function getStyle()
-    {
-        if ($this->isGuest
-//???            || ! file_exists($this->c->getParameter('DIR_LANG') . '/' . $this->data['language'])
-        ) {
-            return $this->config['o_default_style'];
-        } else {
-            return $this->data['style'];
-        }
-    }
 
     /**
      * Выход
      */
     public function logout()
     {
-        if ($this->isGuest) {
+        if ($this->current['is_guest']) {
             return;
         }
 
         $this->userCookie->deleteUserCookie();
         $this->c->get('Online')->delete($this);
         // Update last_visit (make sure there's something to update it with)
-        if ($this->isLogged) {
-            $this->db->query('UPDATE '.$this->db->prefix.'users SET last_visit='.$this->logged.' WHERE id='.$this->id) or error('Unable to update user visit data', __FILE__, __LINE__, $this->db->error());
+        if (isset($this->current['logged'])) {
+            $this->db->query('UPDATE '.$this->db->prefix.'users SET last_visit='.$this->current['logged'].' WHERE id='.$this->current['id']) or error('Unable to update user visit data', __FILE__, __LINE__, $this->db->error());
         }
     }
 
@@ -163,10 +111,10 @@ class User extends AbstractModel
         }
 
         // перезаписываем ip админа и модератора - Visman
-        if ($this->config['o_check_ip'] == '1' && $user['registration_ip'] != $this->ip)
+        if ($this->config['o_check_ip'] == '1' && $user['registration_ip'] != $this->current['ip'])
         {
             if ($user['g_id'] == PUN_ADMIN || $user['g_moderator'] == '1')
-                $this->db->query('UPDATE '.$this->db->prefix.'users SET registration_ip=\''.$this->db->escape($this->ip).'\' WHERE id='.$user['id']) or error('Unable to update user IP', __FILE__, __LINE__, $this->db->error());
+                $this->db->query('UPDATE '.$this->db->prefix.'users SET registration_ip=\''.$this->db->escape($this->current['ip']).'\' WHERE id='.$user['id']) or error('Unable to update user IP', __FILE__, __LINE__, $this->db->error());
         }
 
         $this->c->get('Online')->delete($this);
@@ -175,4 +123,5 @@ class User extends AbstractModel
 
         return $user['id'];
     }
+
 }

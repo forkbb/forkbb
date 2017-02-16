@@ -50,7 +50,7 @@ define('PUN', 1);
 $container->setParameter('DIR_CONFIG', __DIR__ . '/config');
 $container->setParameter('DIR_CACHE', __DIR__ . '/cache');
 $container->setParameter('DIR_VIEWS', __DIR__ . '/templates');
-$container->setParameter('DIR_TRANSL', __DIR__ . '/lang');
+$container->setParameter('DIR_LANG', __DIR__ . '/lang');
 $container->setParameter('START', $pun_start);
 
 $config = $container->get('config');

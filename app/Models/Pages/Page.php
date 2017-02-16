@@ -183,7 +183,7 @@ abstract class Page
     {
         if ($this->config['o_maintenance'] == '1') {
             $user = $this->c->get('user');
-            if ($user['is_admmod']) {
+            if ($user->isAdmMod) {
                 $this->iswev['w'][] = '<a href="' . $this->c->get('Router')->link('AdminOptions', ['#' => 'maintenance']). '">' . __('Maintenance mode enabled') . '</a>';
             }
         }
@@ -232,33 +232,33 @@ abstract class Page
             'index' => [$r->link('Index'), __('Index')]
         ];
 
-        if ($user['g_read_board'] == '1' && $user['g_view_users'] == '1') {
+        if ($user->gReadBoard == '1' && $user->gViewUsers == '1') {
             $nav['userlist'] = [$r->link('Userlist'), __('User list')];
         }
 
-        if ($this->config['o_rules'] == '1' && (! $user['is_guest'] || $user['g_read_board'] == '1' || $this->config['o_regs_allow'] == '1')) {
+        if ($this->config['o_rules'] == '1' && (! $user->isGuest || $user->gReadBoard == '1' || $this->config['o_regs_allow'] == '1')) {
             $nav['rules'] = [$r->link('Rules'), __('Rules')];
         }
 
-        if ($user['g_read_board'] == '1' && $user['g_search'] == '1') {
+        if ($user->gReadBoard == '1' && $user->gSearch == '1') {
             $nav['search'] = [$r->link('Search'), __('Search')];
         }
 
-        if ($user['is_guest']) {
+        if ($user->isGuest) {
             $nav['register'] = ['register.php', __('Register')];
             $nav['login'] = [$r->link('Login'), __('Login')];
         } else {
             $nav['profile'] = [$r->link('User', [
-                'id' => $user['id'],
-                'name' => $user['username']
+                'id' => $user->id,
+                'name' => $user->username,
             ]), __('Profile')];
             // New PMS
-            if ($this->config['o_pms_enabled'] == '1' && ($user['g_pm'] == 1 || $user['messages_new'] > 0)) { //????
+            if ($this->config['o_pms_enabled'] == '1' && ($user->isAdmin || $user->messagesNew > 0)) { //????
                 $nav['pmsnew'] = ['pmsnew.php', __('PM')]; //'<li id="nav"'.((PUN_ACTIVE_PAGE == 'pms_new' || $user['messages_new'] > 0) ? ' class="isactive"' : '').'><a href="pmsnew.php">'.__('PM').(($user['messages_new'] > 0) ? ' (<span'.((empty($this->config['o_pms_flasher']) || PUN_ACTIVE_PAGE == 'pms_new') ? '' : ' class="remflasher"' ).'>'.$user['messages_new'].'</span>)' : '').'</a></li>';
             }
             // New PMS
 
-            if ($user['is_admmod']) {
+            if ($user->isAdmMod) {
                 $nav['admin'] = [$r->link('Admin'), __('Admin')];
             }
 
@@ -267,7 +267,7 @@ abstract class Page
             ]), __('Logout')];
         }
 
-        if ($user['g_read_board'] == '1' && $this->config['o_additional_navlinks'] != '') {
+        if ($user->gReadBoard == '1' && $this->config['o_additional_navlinks'] != '') {
             // position|name|link[|id]\n
             if (preg_match_all('%^(\d+)\|([^\|\n\r]+)\|([^\|\n\r]+)(?:\|([^\|\n\r]+))?$%m', $this->config['o_additional_navlinks']."\n", $matches)) {
                $k = count($matches[0]);
@@ -359,14 +359,14 @@ abstract class Page
 
         $user = $this->c->get('user');
 
-        $diff = ($user['timezone'] + $user['dst']) * 3600;
+        $diff = ($user->timezone + $user->dst) * 3600;
         $timestamp += $diff;
 
         if (null === $dateFormat) {
-            $dateFormat = $this->c->getParameter('date_formats')[$user['date_format']];
+            $dateFormat = $this->c->getParameter('date_formats')[$user->dateFormat];
         }
         if(null === $timeFormat) {
-            $timeFormat = $this->c->getParameter('time_formats')[$user['time_format']];
+            $timeFormat = $this->c->getParameter('time_formats')[$user->timeFormat];
         }
 
         $date = gmdate($dateFormat, $timestamp);

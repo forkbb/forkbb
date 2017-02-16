@@ -181,11 +181,13 @@ for ($i=0;$i<100;++$i) {
     {
         $now = time();
         // гость
-        if ($this->user['is_guest']) {
-            $oname = (string) $this->user['is_bot'];
+        if ($this->user->isGuest) {
+            $oname = (string) $this->user->isBot;
 
-            if ($this->user['is_logged']) {
-                $this->db->query('INSERT INTO '.$this->db->prefix.'online (user_id, ident, logged, o_position, o_name) SELECT 1, \''.$this->db->escape($this->user['ip']).'\', '.$now.', \''.$this->db->escape($position).'\', \''.$this->db->escape($oname).'\' FROM '.$this->db->prefix.'groups WHERE NOT EXISTS (SELECT 1 FROM '.$this->db->prefix.'online WHERE user_id=1 AND ident=\''.$this->db->escape($this->user['ip']).'\') LIMIT 1') or error('Unable to insert into online list', __FILE__, __LINE__, $this->db->error());
+            if ($this->user->isLogged) {
+                $this->db->query('UPDATE '.$this->db->prefix.'online SET logged='.$now.', o_position=\''.$this->db->escape($position).'\', o_name=\''.$this->db->escape($oname).'\' WHERE user_id=1 AND ident=\''.$this->db->escape($this->user->ip).'\'') or error('Unable to update online list', __FILE__, __LINE__, $this->db->error());
+            } else {
+                $this->db->query('INSERT INTO '.$this->db->prefix.'online (user_id, ident, logged, o_position, o_name) SELECT 1, \''.$this->db->escape($this->user->ip).'\', '.$now.', \''.$this->db->escape($position).'\', \''.$this->db->escape($oname).'\' FROM '.$this->db->prefix.'groups WHERE NOT EXISTS (SELECT 1 FROM '.$this->db->prefix.'online WHERE user_id=1 AND ident=\''.$this->db->escape($this->user->ip).'\') LIMIT 1') or error('Unable to insert into online list', __FILE__, __LINE__, $this->db->error());
 
                 // With MySQL/MySQLi/SQLite, REPLACE INTO avoids a user having two rows in the online table
 /*                switch ($this->c->getParameter('DB_TYPE')) {
@@ -194,21 +196,22 @@ for ($i=0;$i<100;++$i) {
                     case 'mysql_innodb':
                     case 'mysqli_innodb':
                     case 'sqlite':
-                        $this->db->query('REPLACE INTO '.$this->db->prefix.'online (user_id, ident, logged, o_position, o_name) VALUES(1, \''.$this->db->escape($this->user['ip']).'\', '.$now.', \''.$this->db->escape($position).'\', \''.$this->db->escape($oname).'\')') or error('Unable to insert into online list', __FILE__, __LINE__, $this->db->error());
+                        $this->db->query('REPLACE INTO '.$this->db->prefix.'online (user_id, ident, logged, o_position, o_name) VALUES(1, \''.$this->db->escape($this->user->ip).'\', '.$now.', \''.$this->db->escape($position).'\', \''.$this->db->escape($oname).'\')') or error('Unable to insert into online list', __FILE__, __LINE__, $this->db->error());
                         break;
 
                     default:
-                        $this->db->query('INSERT INTO '.$this->db->prefix.'online (user_id, ident, logged, o_position, o_name) SELECT 1, \''.$this->db->escape($this->user['ip']).'\', '.$now.', \''.$this->db->escape($position).'\', \''.$this->db->escape($oname).'\' WHERE NOT EXISTS (SELECT 1 FROM '.$this->db->prefix.'online WHERE user_id=1 AND ident=\''.$this->db->escape($this->user['ip']).'\')') or error('Unable to insert into online list', __FILE__, __LINE__, $this->db->error());
+                        $this->db->query('INSERT INTO '.$this->db->prefix.'online (user_id, ident, logged, o_position, o_name) SELECT 1, \''.$this->db->escape($this->user->ip).'\', '.$now.', \''.$this->db->escape($position).'\', \''.$this->db->escape($oname).'\' WHERE NOT EXISTS (SELECT 1 FROM '.$this->db->prefix.'online WHERE user_id=1 AND ident=\''.$this->db->escape($this->user->ip).'\')') or error('Unable to insert into online list', __FILE__, __LINE__, $this->db->error());
                         break;
                 }
 */
-            } else {
-                $this->db->query('UPDATE '.$this->db->prefix.'online SET logged='.$now.', o_position=\''.$this->db->escape($position).'\', o_name=\''.$this->db->escape($oname).'\' WHERE user_id=1 AND ident=\''.$this->db->escape($this->user['ip']).'\'') or error('Unable to update online list', __FILE__, __LINE__, $this->db->error());
             }
         } else {
         // пользователь
-            if ($this->user['is_logged']) {
-                $this->db->query('INSERT INTO '.$this->db->prefix.'online (user_id, ident, logged, o_position) SELECT '.$this->user['id'].', \''.$this->db->escape($this->user['username']).'\', '.$now.', \''.$this->db->escape($position).'\' FROM '.$this->db->prefix.'groups WHERE NOT EXISTS (SELECT 1 FROM '.$this->db->prefix.'online WHERE user_id='.$this->user['id'].') LIMIT 1') or error('Unable to insert into online list', __FILE__, __LINE__, $this->db->error());
+            if ($this->user->isLogged) {
+                $idle_sql = ($this->user->idle == '1') ? ', idle=0' : '';
+                $this->db->query('UPDATE '.$this->db->prefix.'online SET logged='.$now.$idle_sql.', o_position=\''.$this->db->escape($position).'\' WHERE user_id='.$this->user->id) or error('Unable to update online list', __FILE__, __LINE__, $this->db->error());
+            } else {
+                $this->db->query('INSERT INTO '.$this->db->prefix.'online (user_id, ident, logged, o_position) SELECT '.$this->user->id.', \''.$this->db->escape($this->user->username).'\', '.$now.', \''.$this->db->escape($position).'\' FROM '.$this->db->prefix.'groups WHERE NOT EXISTS (SELECT 1 FROM '.$this->db->prefix.'online WHERE user_id='.$this->user->id.') LIMIT 1') or error('Unable to insert into online list', __FILE__, __LINE__, $this->db->error());
                 // With MySQL/MySQLi/SQLite, REPLACE INTO avoids a user having two rows in the online table
 /*                switch ($this->c->getParameter('DB_TYPE')) {
                     case 'mysql':
@@ -216,17 +219,14 @@ for ($i=0;$i<100;++$i) {
                     case 'mysql_innodb':
                     case 'mysqli_innodb':
                     case 'sqlite':
-                        $this->db->query('REPLACE INTO '.$this->db->prefix.'online (user_id, ident, logged, o_position) VALUES('.$this->user['id'].', \''.$this->db->escape($this->user['username']).'\', '.$now.', \''.$this->db->escape($position).'\')') or error('Unable to insert into online list', __FILE__, __LINE__, $this->db->error());
+                        $this->db->query('REPLACE INTO '.$this->db->prefix.'online (user_id, ident, logged, o_position) VALUES('.$this->user->id.', \''.$this->db->escape($this->user->username).'\', '.$now.', \''.$this->db->escape($position).'\')') or error('Unable to insert into online list', __FILE__, __LINE__, $this->db->error());
                         break;
 
                     default:
-                        $this->db->query('INSERT INTO '.$this->db->prefix.'online (user_id, ident, logged, o_position) SELECT '.$this->user['id'].', \''.$this->db->escape($this->user['username']).'\', '.$now.', \''.$this->db->escape($position).'\' WHERE NOT EXISTS (SELECT 1 FROM '.$this->db->prefix.'online WHERE user_id='.$this->user['id'].')') or error('Unable to insert into online list', __FILE__, __LINE__, $this->db->error());
+                        $this->db->query('INSERT INTO '.$this->db->prefix.'online (user_id, ident, logged, o_position) SELECT '.$this->user->id.', \''.$this->db->escape($this->user->username).'\', '.$now.', \''.$this->db->escape($position).'\' WHERE NOT EXISTS (SELECT 1 FROM '.$this->db->prefix.'online WHERE user_id='.$this->user->id.')') or error('Unable to insert into online list', __FILE__, __LINE__, $this->db->error());
                         break;
                 }
 */
-            } else {
-                $idle_sql = ($this->user['idle'] == '1') ? ', idle=0' : '';
-                $this->db->query('UPDATE '.$this->db->prefix.'online SET logged='.$now.$idle_sql.', o_position=\''.$this->db->escape($position).'\' WHERE user_id='.$this->user['id']) or error('Unable to update online list', __FILE__, __LINE__, $this->db->error());
             }
         }
     }
@@ -236,10 +236,10 @@ for ($i=0;$i<100;++$i) {
      */
     public function delete(User $user)
     {
-        if ($user['is_guest']) {
-            $this->db->query('DELETE FROM '.$this->db->prefix.'online WHERE user_id=1 AND ident=\''.$this->db->escape($user['ip']).'\'') or error('Unable to delete from online list', __FILE__, __LINE__, $this->db->error());
+        if ($user->isGuest) {
+            $this->db->query('DELETE FROM '.$this->db->prefix.'online WHERE user_id=1 AND ident=\''.$this->db->escape($user->ip).'\'') or error('Unable to delete from online list', __FILE__, __LINE__, $this->db->error());
         } else {
-            $this->db->query('DELETE FROM '.$this->db->prefix.'online WHERE user_id='.$user['id']) or error('Unable to delete from online list', __FILE__, __LINE__, $this->db->error());
+            $this->db->query('DELETE FROM '.$this->db->prefix.'online WHERE user_id='.$user->id) or error('Unable to delete from online list', __FILE__, __LINE__, $this->db->error());
         }
     }
 }

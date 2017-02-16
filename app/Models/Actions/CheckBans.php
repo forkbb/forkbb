@@ -2,7 +2,6 @@
 
 namespace ForkBB\Models\Actions;
 
-use ForkBB\Models\User;
 use R2\DependencyInjection\ContainerInterface;
 
 class CheckBans
@@ -13,6 +12,10 @@ class CheckBans
      */
     protected $c;
 
+    /**
+     * Конструктор
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->c = $container;
@@ -20,26 +23,25 @@ class CheckBans
 
     /**
      * Возвращает массив с описанием бана или null
-     * @param User $user
-     *
      * @return null|array
      */
-    public function check(User $user) //????
+    public function check()
     {
         $bans = $this->c->get('bans');
+        $user = $this->c->get('user');
 
         // Для админов и при отсутствии банов прекращаем проверку
-        if ($user['g_id'] == PUN_ADMIN || empty($bans)) {
+        if ($user->isAdmin || empty($bans)) {
            return null;
         }
 
         // Add a dot or a colon (depending on IPv4/IPv6) at the end of the IP address to prevent banned address
         // 192.168.0.5 from matching e.g. 192.168.0.50
-        $user_ip = get_remote_address();
-        $add = strpos($user_ip, '.') !== false ? '.' : ':';
-        $user_ip .= $add;
+        $userIp = $user->ip;
+        $add = strpos($userIp, '.') !== false ? '.' : ':';
+        $userIp .= $add;
 
-        $username = mb_strtolower($user['username']);
+        $username = mb_strtolower($user->username);
 
         $banned = false;
         $remove = [];
@@ -55,11 +57,11 @@ class CheckBans
                 continue;
             }
 
-            if (! $user['is_guest']) {
+            if (! $user->isGuest) {
                 if ($cur['username'] != '' && $username == mb_strtolower($cur['username'])) {
                     $banned = $cur;
                     continue;
-                } elseif ($cur['email'] != '' && $user['email'] == $cur['email']) {
+                } elseif ($cur['email'] != '' && $user->email == $cur['email']) {
                     $banned = $cur;
                     continue;
                 }
@@ -70,7 +72,7 @@ class CheckBans
                 $ips = explode(' ', $cur['ip']);
                 foreach ($ips as $ip) {
                     $ip .= $add;
-                    if (substr($user_ip, 0, strlen($ip)) == $ip) {
+                    if (substr($userIp, 0, strlen($ip)) == $ip) {
                         $banned = $cur;
                         break;
                     }

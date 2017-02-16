@@ -1,22 +1,22 @@
 <?php
 
-namespace ForkBB\Core\Cookie;
+namespace ForkBB\Models;
 
-class UserCookie
+use ForkBB\Core\Cookie;
+use ForkBB\Core\Secury;
+use R2\DependencyInjection\ContainerInterface;
+
+class UserCookie extends Cookie
 {
     const NAME = 'user';
     const KEY1 = 'key1';
     const KEY2 = 'key2';
 
     /**
-     * @var Secury
+     * Контейнер
+     * @var ContainerInterface
      */
-    protected $secury;
-
-    /**
-     * @var Cookie
-     */
-    protected $cookie;
+    protected $c;
 
     /**
      * Флаг указывающий на режим "запомнить меня"
@@ -43,32 +43,14 @@ class UserCookie
     protected $passHash;
 
     /**
-     * Период действия куки аутентификации в секундах для режима "не запоминать меня"
-     * @var int
-     */
-    protected $timeMin;
-
-    /**
-     * Период действия куки аутентификации в секундах для режима "запомнить меня"
-     * @var int
-     */
-    protected $timeMax;
-
-    /**
      * Конструктор
      *
-     * @param Secury $secury
-     * @param Cookie $cookie
-     * @param int $timeMin
-     * @param int $timeMax
+     * @param ContainerInterface $container
      */
-    public function __construct($secury, $cookie, $timeMin, $timeMax)
+    public function __construct(Secury $secury, array $options, ContainerInterface $container)
     {
-        $this->secury = $secury;
-        $this->cookie = $cookie;
-        $this->timeMin = $timeMin;
-        $this->timeMax = $timeMax;
-
+        parent::__construct($secury, $options);
+        $this->c = $container;
         $this->init();
     }
 
@@ -77,7 +59,7 @@ class UserCookie
      */
     protected function init()
     {
-        $ckUser = $this->cookie->get(self::NAME);
+        $ckUser = $this->get(self::NAME);
 
         if (null === $ckUser
             || ! preg_match('%^(\-)?(\d{1,10})_(\d{10})_([a-f\d]{32,})_([a-f\d]{32,})$%Di', $ckUser, $ms)
@@ -143,18 +125,18 @@ class UserCookie
                 && $this->remember
             )
         ) {
-            $expTime = time() + $this->timeMax;
+            $expTime = time() + $this->c->getParameter('TIME_REMEMBER');
             $expire = $expTime;
             $pfx = '';
         } else {
-            $expTime = time() + $this->timeMin;
+            $expTime = time() + $this->c->get('config')['o_timeout_visit'];
             $expire = 0;
             $pfx = '-';
         }
         $passHash = $this->secury->hmac($hash . $expTime, self::KEY2);
         $ckHash = $this->secury->hmac($pfx . $id . $expTime . $passHash, self::KEY1);
 
-        return $this->cookie->set(self::NAME, $pfx . $id . '_' . $expTime . '_' . $passHash . '_' . $ckHash, $expire);
+        return $this->set(self::NAME, $pfx . $id . '_' . $expTime . '_' . $passHash . '_' . $ckHash, $expire);
     }
 
     /**
@@ -164,10 +146,10 @@ class UserCookie
      */
     public function deleteUserCookie()
     {
-        if (null === $this->cookie->get(self::NAME)) {
+        if (null === $this->get(self::NAME)) {
             return true;
         } else {
-            return $this->cookie->delete(self::NAME);
+            return $this->delete(self::NAME);
         }
     }
 }

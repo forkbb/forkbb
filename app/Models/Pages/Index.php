@@ -50,7 +50,7 @@ class Index extends Page
 
         $stats['total_users'] = $this->number($stats['total_users']);
 
-        if ($user['g_view_users'] == '1') {
+        if ($user->gViewUsers == '1') {
             $stats['newest_user'] = [
                 $r->link('User', [
                     'id' => $stats['last_user']['id'],
@@ -73,7 +73,7 @@ class Index extends Page
             list($users, $guests, $bots) = $this->c->get('Online')->handle($this);
             $list = [];
 
-            if ($user['g_view_users'] == '1') {
+            if ($user->gViewUsers == '1') {
                 foreach ($users as $id => $cur) {
                     $list[] = [
                         $r->link('User', [
@@ -131,10 +131,10 @@ class Index extends Page
 
         // текущие данные по подразделам
         $forums = array_slice($fAsc[$root], 1);
-        if ($user['is_guest']) {
+        if ($user->isGuest) {
             $result = $db->query('SELECT id, forum_desc, moderators, num_topics, num_posts, last_post, last_post_id, last_poster, last_topic FROM '.$db->prefix.'forums WHERE id IN ('.implode(',', $forums).')', true) or error('Unable to fetch forum list', __FILE__, __LINE__, $db->error());
         } else {
-            $result = $db->query('SELECT f.id, f.forum_desc, f.moderators, f.num_topics, f.num_posts, f.last_post, f.last_post_id, f.last_poster, f.last_topic, mof.mf_upper FROM '.$db->prefix.'forums AS f LEFT JOIN '.$db->prefix.'mark_of_forum AS mof ON (mof.uid='.$user['id'].' AND f.id=mof.fid) WHERE f.id IN ('.implode(',', $forums).')', true) or error('Unable to fetch forum list', __FILE__, __LINE__, $db->error());
+            $result = $db->query('SELECT f.id, f.forum_desc, f.moderators, f.num_topics, f.num_posts, f.last_post, f.last_post_id, f.last_poster, f.last_topic, mof.mf_upper FROM '.$db->prefix.'forums AS f LEFT JOIN '.$db->prefix.'mark_of_forum AS mof ON (mof.uid='.$user->id.' AND f.id=mof.fid) WHERE f.id IN ('.implode(',', $forums).')', true) or error('Unable to fetch forum list', __FILE__, __LINE__, $db->error());
         }
 
         $forums = [];
@@ -145,9 +145,9 @@ class Index extends Page
 
         // поиск новых
         $new = [];
-        if (! $user['is_guest']) {
+        if (! $user->isGuest) {
             // предварительная проверка разделов
-            $max = max((int) $user['last_visit'], (int) $user['u_mark_all_read']);
+            $max = max((int) $user->lastVisit, (int) $user->uMarkAllRead);
             foreach ($forums as $id => $cur) {
                 $t = max($max, (int) $cur['mf_upper']);
                 if ($cur['last_post'] > $t) {
@@ -156,7 +156,7 @@ class Index extends Page
             }
             // проверка по темам
             if (! empty($new)) {
-                $result = $db->query('SELECT t.forum_id, t.id, t.last_post FROM '.$db->prefix.'topics AS t LEFT JOIN '.$db->prefix.'mark_of_topic AS mot ON (mot.uid='.$user['id'].' AND mot.tid=t.id) WHERE t.forum_id IN('.implode(',', array_keys($new)).') AND t.last_post>'.$max.' AND t.moved_to IS NULL AND (mot.mt_upper IS NULL OR t.last_post>mot.mt_upper)') or error('Unable to fetch new topics', __FILE__, __LINE__, $db->error());
+                $result = $db->query('SELECT t.forum_id, t.id, t.last_post FROM '.$db->prefix.'topics AS t LEFT JOIN '.$db->prefix.'mark_of_topic AS mot ON (mot.uid='.$user->id.' AND mot.tid=t.id) WHERE t.forum_id IN('.implode(',', array_keys($new)).') AND t.last_post>'.$max.' AND t.moved_to IS NULL AND (mot.mt_upper IS NULL OR t.last_post>mot.mt_upper)') or error('Unable to fetch new topics', __FILE__, __LINE__, $db->error());
                 $tmp = [];
                 while ($cur = $db->fetch_assoc($result)) {
                     if ($cur['last_post']>$new[$cur['forum_id']]) {
@@ -191,7 +191,7 @@ class Index extends Page
             if (!empty($forums[$fId]['moderators'])) {
                 $mods = unserialize($forums[$fId]['moderators']);
                 foreach ($mods as $name => $id) {
-                    if ($user['g_view_users'] == '1') {
+                    if ($user->gViewUsers == '1') {
                         $moderators[] = [
                             $r->link('User', [
                                 'id' => $id,

@@ -2041,7 +2041,7 @@ function __($data, ...$args)
         if (isset($loaded[$args[0]])) {
             return;
         }
-        $dir = $data->getParameter('DIR_TRANSL');
+        $dir = $data->getParameter('DIR_LANG');
         $lang = isset($args[1]) ? $args[1] : $data->get('user')['language'];
         if (file_exists($dir . $lang . '/' . $args[0] . '.php')) {
             $tr = (include $dir . $lang . '/' . $args[0] . '.php') + $tr;

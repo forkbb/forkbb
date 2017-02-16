@@ -2,6 +2,8 @@
 
 namespace ForkBB\Core;
 
+use ForkBB\Core\Secury;
+
 class Cookie
 {
     /**
@@ -39,7 +41,7 @@ class Cookie
      * @param Secury $secury
      * @param array $options
      */
-    public function __construct($secury, array $options)
+    public function __construct(Secury $secury, array $options)
     {
         $this->secury = $secury;
 

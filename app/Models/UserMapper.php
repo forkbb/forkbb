@@ -3,98 +3,88 @@
 namespace ForkBB\Models;
 
 use ForkBB\Models\User;
+use R2\DependencyInjection\ContainerInterface;
 use RuntimeException;
 use InvalidArgumentException;
 
 class UserMapper
 {
     /**
+     * Контейнер
+     * @var ContainerInterface
+     */
+    protected $c;
+
+    /**
      * @var array
      */
     protected $config;
 
     /**
-     * @var UserCookie
-     */
-    protected $cookie;
-
-    /**
      * @var DB
      */
-    protected $db
+    protected $db;
 
     /**
      * Конструктор
-     * @param array $config
-     * @param UserCookie $cookie
-     * @param DB $db
+     * @param ContainerInterface $container
      */
-    public function __construct(array $config, $cookie, $db)
+    public function __construct(ContainerInterface $container)
     {
-        $this->config = $config;
-        $this->cookie = $cookie;
-        $this->db = $db;
+        $this->c = $container;
+        $this->config = $container->get('config');
+        $this->db = $container->get('DB');
     }
 
     /**
+     * Возврат адреса пользователя
+     * @return string
+     */
+    protected function getIpAddress()
+    {
+       return filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP) ?: 'unknow';
+    }
+
+    /**
+     * Получение данных для текущего пользователя/гостя
      * @param int $id
-     *
-     * @throws \InvalidArgumentException
-     * @retrun User
-     */
-    public function load($id = null)
-    {
-        if (null === $id) {
-            $user = $this->loadCurrent();
-            return new User($user, $this->config, $this->cookie);
-        } elseif ($id < 2) {
-            throw new InvalidArgumentException('User id can not be less than 2');
-        }
-
-
-    }
-
-    /**
-     * @retrun array
-     */
-    protected function loadCurrent()
-    {
-        if (($userId = $this->cookie->id()) === false) {
-            return $this->loadGuest();
-        }
-
-        $result = $this->db->query('SELECT u.*, g.*, o.logged, o.idle, o.witt_data FROM '.$this->db->prefix.'users AS u INNER JOIN '.$this->db->prefix.'groups AS g ON u.group_id=g.g_id LEFT JOIN '.$this->db->prefix.'online AS o ON o.user_id=u.id WHERE u.id='.$userId) or error('Unable to fetch user information', __FILE__, __LINE__, $this->db->error());
-        $user = $this->db->fetch_assoc($result);
-        $this->db->free_result($result);
-
-        if (empty($user['id']) || ! $this->cookie->verifyHash($user['id'], $user['password'])) {
-            return $this->loadGuest();
-        }
-
-        // проверка ip админа и модератора - Visman
-        if ($this->config['o_check_ip'] == '1' && ($user['g_id'] == PUN_ADMIN || $user['g_moderator'] == '1') && $user['registration_ip'] != get_remote_address())
-        {
-            return $this->loadGuest();
-        }
-
-        return $user;
-    }
-
-    /**
+     * @return User
      * @throws \RuntimeException
-     * @retrun array
      */
-    protected function loadGuest()
+    public function getCurrent($id = 1)
     {
-        $remote_addr = get_remote_address();
-        $result = $this->db->query('SELECT u.*, g.*, o.logged, o.last_post, o.last_search, o.witt_data FROM '.$this->db->prefix.'users AS u INNER JOIN '.$this->db->prefix.'groups AS g ON u.group_id=g.g_id LEFT JOIN '.$this->db->prefix.'online AS o ON o.ident=\''.$this->db->escape($remote_addr).'\' WHERE u.id=1') or error('Unable to fetch guest information', __FILE__, __LINE__, $this->db->error());
-        $user = $this->db->fetch_assoc($result);
-        $this->db->free_result($result);
+        $ip = $this->getIpAddress();
+        $id = (int) $id;
 
-        if (empty($user['id']) {
+        if ($id > 1) {
+            $result = $this->db->query('SELECT u.*, g.*, o.logged, o.idle FROM '.$this->db->prefix.'users AS u INNER JOIN '.$this->db->prefix.'groups AS g ON u.group_id=g.g_id LEFT JOIN '.$this->db->prefix.'online AS o ON o.user_id=u.id WHERE u.id='.$id) or error('Unable to fetch user information', __FILE__, __LINE__, $this->db->error());
+            $user = $this->db->fetch_assoc($result);
+            $this->db->free_result($result);
+        }
+        if (empty($user['id'])) {
+            $result = $this->db->query('SELECT u.*, g.*, o.logged, o.last_post, o.last_search FROM '.$this->db->prefix.'users AS u INNER JOIN '.$this->db->prefix.'groups AS g ON u.group_id=g.g_id LEFT JOIN '.$this->db->prefix.'online AS o ON (o.user_id=1 AND o.ident=\''.$this->db->escape($ip).'\') WHERE u.id=1') or error('Unable to fetch guest information', __FILE__, __LINE__, $this->db->error());
+            $user = $this->db->fetch_assoc($result);
+            $this->db->free_result($result);
+        }
+
+        if (empty($user['id'])) {
             throw new RuntimeException('Unable to fetch guest information. Your database must contain both a guest user and a guest user group.');
         }
 
-        return $user;
+        $user['ip'] = $ip;
+        return new User($user, $this->c);
     }
+
+    /**
+     * Обновляет время последнего визита для конкретного пользователя
+     * @param int $id
+     * @param int $time
+     */
+    public function updateLastVisit($id, $time)
+    {
+        $id = (int) $id;
+        $time = (int) $time;
+        $this->db->query('UPDATE '.$this->db->prefix.'users SET last_visit='.$time.' WHERE id='.$id) or error('Unable to update user visit data', __FILE__, __LINE__, $this->db->error());
+    }
+
 }
