@@ -46,7 +46,7 @@ class Primary
             exit;
         }
 
-        if (($banned = $this->c->get('CheckBans')->check($this->c->get('user'))) !== null) {
+        if (($banned = $this->c->get('CheckBans')->check()) !== null) {
             return $this->c->get('Ban')->ban($banned);
         }
     }

@@ -40,7 +40,7 @@ class Statistics extends Admin
         $this->c->get('Lang')->load('admin_index');
         $this->data = [];
         $this->titles[] = __('Server statistics');
-        $this->data['isAdmin'] = $this->c->get('user')['g_id'] == PUN_ADMIN;
+        $this->data['isAdmin'] = $this->c->get('user')->isAdmin;
         $this->data['linkInfo'] = $this->c->get('Router')->link('AdminInfo');
 
         // Get the server load averages (if possible)

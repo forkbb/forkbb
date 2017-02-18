@@ -78,7 +78,7 @@ class LoadUserFromCookie
             }
             // Special case: We've timed out, but no other user has browsed the forums since we timed out
             if ($user->isLogged && $user->logged < time() - $this->config['o_timeout_visit']) {
-                $this->mapper->updateLastVisit($user->id, $user->logged);
+                $this->mapper->updateLastVisit($user);
                 $user->lastVisit = $user->logged;
             }
         }

@@ -12,12 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "Login errors"
-msgstr "Login error"
-
-msgid "Login errors info"
-msgstr "The following error needs to be corrected before you can login:"
-
 msgid "Wrong user/pass"
 msgstr "Wrong username and/or password."
 
@@ -30,38 +24,29 @@ msgstr "Logged in successfully. Redirecting …"
 msgid "Logout redirect"
 msgstr "Logged out. Redirecting …"
 
-msgid "No email match"
-msgstr "There is no user registered with the email address"
-
 msgid "Request pass"
 msgstr "Request password"
 
-msgid "Request pass legend"
-msgstr "Enter the email address with which you registered"
-
 msgid "Request pass info"
-msgstr "A new password together with a link to activate the new password will be sent to that address."
+msgstr "An email will be sent to the specified address with instructions on how to change your password."
 
 msgid "Not registered"
 msgstr "Not registered yet?"
 
-msgid "Login legend"
-msgstr "Enter your username and password below"
-
 msgid "Remember me"
 msgstr "Remember me"
 
-msgid "Login info"
-msgstr "If you have not registered or have forgotten your password click on the appropriate link below."
-
-msgid "New password errors"
-msgstr "Password request error"
-
-msgid "New passworderrors info"
-msgstr "The following error needs to be corrected before a new password can be sent:"
-
 msgid "Forget mail"
-msgstr "An email has been sent to the specified address with instructions on how to change your password. If it does not arrive you can contact the forum administrator at"
+msgstr "An email has been sent to the specified address with instructions on how to change your password. If it does not arrive you can contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."
+
+msgid "Error mail"
+msgstr "When sending email there was an error. Try later or contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."
 
 msgid "Email flood"
 msgstr "This account has already requested a password reset in the past hour. Please wait %s minutes before requesting a new password again."
+
+msgid "Pass too short"
+msgstr "Passwords must be at least 6 characters long."
+
+msgid "Pass not match"
+msgstr "Passwords do not match."

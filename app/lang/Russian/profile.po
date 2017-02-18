@@ -1,0 +1,376 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+
+msgid "Profile menu"
+msgstr "Профиль"
+
+msgid "Section essentials"
+msgstr "Основное"
+
+msgid "Section personal"
+msgstr "Личное"
+
+msgid "Section messaging"
+msgstr "Пейджеры"
+
+msgid "Section personality"
+msgstr "Аватара/подпись"
+
+msgid "Section display"
+msgstr "Вид форума"
+
+msgid "Section privacy"
+msgstr "Приватность"
+
+msgid "Section admin"
+msgstr "Модерирование"
+
+msgid "Username and pass legend"
+msgstr "Настройка имени пользователя и пароля"
+
+msgid "Personal details legend"
+msgstr "Настройка персональных данных"
+
+msgid "Contact details legend"
+msgstr "Настройка контактных данных"
+
+msgid "User activity"
+msgstr "Активность пользователя"
+
+msgid "Paginate info"
+msgstr "Укажите число тем и сообщений, выводимых на страницу."
+
+msgid "Pass key bad"
+msgstr "Указанный ключ активации пароля неверен или истек срок его действия. Пожалуйста, повторно запросите новый пароль. Если ничего не получится, то свяжитесь с администрацией; почтовый адрес для связи"
+
+msgid "Pass updated"
+msgstr "Ваш пароль изменён. Вы можете войти на форум с новым паролем."
+
+msgid "Pass updated redirect"
+msgstr "Пароль изменён. Переадресация &hellip;"
+
+msgid "Wrong pass"
+msgstr "Ошибка в старом пароле."
+
+msgid "Change pass"
+msgstr "Смена пароля"
+
+msgid "Change pass legend"
+msgstr "Введите и подтвердите новый пароль"
+
+msgid "Old pass"
+msgstr "Старый пароль"
+
+msgid "New pass"
+msgstr "Новый пароль"
+
+msgid "Confirm new pass"
+msgstr "Ещё раз"
+
+msgid "Pass info"
+msgstr "Пароль должен состоять минимум из 6 символов. Пароль чувствителен к регистру вводимых букв."
+
+msgid "Email key bad"
+msgstr "Указанный ключ активации почтового адреса неверен или истек срок его действия. Пожалуйста, повторно запросите смену почтового адреса. Если ничего не получится, то свяжитесь с администрацией; почтовый адрес для связи"
+
+msgid "Email updated"
+msgstr "Ваш почтовый адрес изменён."
+
+msgid "Activate email sent"
+msgstr "На указанный почтовый адрес было отправлено письмо с инструкциями по активации новой почты. Если вы не получите письмо, то свяжитесь с администрацией; почтовый адрес для связи"
+
+msgid "Email legend"
+msgstr "Ввод нового почтового адреса"
+
+msgid "Email instructions"
+msgstr "На новый почтовый адрес будет отправлено письмо со ссылкой для активации. Вы должны будете перейти по ссылке, указанной в письме, для завершения процедуры изменения параметров."
+
+msgid "Change email"
+msgstr "Изменение почтового адреса"
+
+msgid "New email"
+msgstr "Новый почтовый адрес"
+
+msgid "Avatars disabled"
+msgstr "Администратор выключил использование аватар."
+
+msgid "Too large ini"
+msgstr "Выбранный файл слишком велик для загрузки. Сервер отклонил загрузку."
+
+msgid "Partial upload"
+msgstr "Выбранный файл был загружен частично. Пожалуйста, повторите попытку."
+
+msgid "No tmp directory"
+msgstr "PHP не может сохранить загруженный файл по временному адресу."
+
+msgid "No file"
+msgstr "Не выбран файл для загрузки."
+
+msgid "Bad type"
+msgstr "Загрузка файла с используемым расширением запрещена. Разрешенные расширения: gif, jpeg и png."
+
+msgid "Too wide or high"
+msgstr "Выбранный файл превышает максимально допустимые размеры"
+
+msgid "Too large"
+msgstr "Выбранный файл больше максимально допустимых размеров"
+
+msgid "pixels"
+msgstr "точек"
+
+msgid "bytes"
+msgstr "байт"
+
+msgid "Move failed"
+msgstr "Сервер не смог сохранить загруженный файл. Свяжитесь с администрацией; почтовый адрес для связи"
+
+msgid "Unknown failure"
+msgstr "Произошла неизвестная ошибка. Пожалуйста, повторите попытку."
+
+msgid "Avatar upload redirect"
+msgstr "Аватара загружена. Переадресация &hellip;"
+
+msgid "Avatar deleted redirect"
+msgstr "Аватара удалена. Переадресация &hellip;"
+
+msgid "Avatar desc"
+msgstr "Аватара это маленькая картинка, которая будет выводиться возле каждого вашего сообщения. Она должна быть не больше чем"
+
+msgid "Upload avatar"
+msgstr "Загрузка аватары"
+
+msgid "Upload avatar legend"
+msgstr "Укажите файл с аватарой"
+
+msgid "Delete avatar"
+msgstr "Удалить аватару"
+
+msgid "File"
+msgstr "Файл"
+
+msgid "Upload"
+msgstr "Загрузить"
+
+msgid "Forbidden title"
+msgstr "В вашем титуле содержится запрещенное слово. Вы должны внести изменение."
+
+msgid "Profile redirect"
+msgstr "Профиль обновлен. Переадресация &hellip;"
+
+msgid "Users profile"
+msgstr "Профиль пользователя %s"
+
+msgid "Username info"
+msgstr "Пользователь: %s"
+
+msgid "Email info"
+msgstr "Email: %s"
+
+msgid "Posts info"
+msgstr "Сообщений: %s"
+
+msgid "Registered info"
+msgstr "Дата регистрации: %s"
+
+msgid "Last post info"
+msgstr "Последнее сообщение: %s"
+
+msgid "Last visit info"
+msgstr "Последний визит: %s"
+
+msgid "Show posts"
+msgstr "Просмотреть все сообщения"
+
+msgid "Show topics"
+msgstr "Просмотреть все темы"
+
+msgid "Show subscriptions"
+msgstr "Просмотреть все подписки"
+
+msgid "Realname"
+msgstr "Настоящее имя"
+
+msgid "Location"
+msgstr "Местоположение"
+
+msgid "Website"
+msgstr "Сайт"
+
+msgid "Invalid website URL"
+msgstr "Введенный адрес сайта неверен."
+
+msgid "Website not allowed"
+msgstr "Сейчас вам запрещено указывать ссылки на сайты."
+
+msgid "Jabber"
+msgstr "Jabber"
+
+msgid "ICQ"
+msgstr "ICQ"
+
+msgid "MSN"
+msgstr "Microsoft Account"
+
+msgid "AOL IM"
+msgstr "AOL IM"
+
+msgid "Yahoo"
+msgstr "Yahoo! Messenger"
+
+msgid "Avatar"
+msgstr "Аватара"
+
+msgid "Signature"
+msgstr "Подпись"
+
+msgid "Sig max size"
+msgstr "Макс. длина: %s символов / Макс. число строк: %s"
+
+msgid "Avatar legend"
+msgstr "Наcтройка аватары"
+
+msgid "Avatar info"
+msgstr "Аватара - это маленькая картинка, которая будет выводиться возле каждого вашего сообщения. Вы можете загрузить аватару по ссылке ниже."
+
+msgid "Change avatar"
+msgstr "Сменить аватару"
+
+msgid "Signature legend"
+msgstr "Настройка подписи"
+
+msgid "Signature info"
+msgstr "Подпись - это небольшой текст, присоединяемый к вашему сообщению. Здесь вы можете указать что угодно. Возможно, вы захотите поместить сюда любимую цитату или скан вашей росписи. Подпись может содержать BB-коды, если это не запрещено настройками форума. Вы можете увидеть, какие именно возможности включены в примечании под полем ввода подписи."
+
+msgid "Sig preview"
+msgstr "Предварительный просмотр текущей подписи:"
+
+msgid "No sig"
+msgstr "Нет сохраненной подписи."
+
+msgid "Signature quote/code/list/h"
+msgstr "BB-коды quote, code, hr, size, audio, video, spoiler и list запрещены в подписи."
+
+msgid "Topics per page"
+msgstr "Тем"
+
+msgid "Posts per page"
+msgstr "Сообщений"
+
+msgid "Leave blank"
+msgstr "Не вводите ничего, для использования настроек по умолчанию."
+
+msgid "Subscription legend"
+msgstr "Настройка опций вашей подписки"
+
+msgid "Notify full"
+msgstr "Включать в письмо-уведомление текстовую часть новых сообщений."
+
+msgid "Auto notify full"
+msgstr "Автоматически подписываться на темы, в которых публикуете сообщения."
+
+msgid "Show smilies"
+msgstr "Показывать смайлики как графику"
+
+msgid "Show images"
+msgstr "Показывать изображения в сообщениях"
+
+msgid "Show images sigs"
+msgstr "Показывать изображения в подписях"
+
+msgid "Show avatars"
+msgstr "Показывать аватары пользователей"
+
+msgid "Show sigs"
+msgstr "Показывать подписи пользователей"
+
+msgid "Style legend"
+msgstr "Настройка стиля оформления"
+
+msgid "Styles"
+msgstr "Стили"
+
+msgid "Admin note"
+msgstr "Примечание администрации"
+
+msgid "Pagination legend"
+msgstr "Настройка постраничного вывода"
+
+msgid "Post display legend"
+msgstr "Тонкая настройка параметров просмотра сообщений"
+
+msgid "Post display info"
+msgstr "Если у вас медленное соединение, отключите некоторые из настроек. Например, отключение вывода изображений в сообщениях и подписях, существенно ускорит загрузку страниц."
+
+msgid "Instructions"
+msgstr "После сохранения изменений, вы автоматически вернетесь на эту страницу."
+
+msgid "Group membership legend"
+msgstr "Выбор группы пользователя"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Set mods legend"
+msgstr "Настройка прав модератора"
+
+msgid "Moderator in info"
+msgstr "Выберите разделы, которые будет модерировать этот пользователь.<br /> Замечание: Применимо только к модераторам. Администраторы могут модерировать любой форум."
+
+msgid "Update forums"
+msgstr "Обновить разделы"
+
+msgid "Delete ban legend"
+msgstr "Удалить (только для администраторов) или забанить пользователя"
+
+msgid "Delete user"
+msgstr "Удалить"
+
+msgid "Ban user"
+msgstr "Забанить"
+
+msgid "Confirm delete legend"
+msgstr "ВАЖНО: прочтите перед удалением пользователя"
+
+msgid "Confirm delete user"
+msgstr "Подтверждение удаления учетной записи"
+
+msgid "Confirmation info"
+msgstr "Пожалуйста, подтвердите свое желание удалить учетную запись пользователя"
+
+msgid "Delete warning"
+msgstr "Внимание! Удалённого пользователя и/или его сообщения невозможно восстановить. Если вы не хотите удалять сообщения вместе с пользователями, то их можно будет удалить позже, в ручном режиме."
+
+msgid "Delete posts"
+msgstr "Удалить все темы и сообщения пользователя."
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "User delete redirect"
+msgstr "Пользователь удален. Переадресация &hellip;"
+
+msgid "User promote redirect"
+msgstr "Пользователь перемещен. Переадресация &hellip;"
+
+msgid "Group membership redirect"
+msgstr "Группа пользователя изменена. Переадресация &hellip;"
+
+msgid "Update forums redirect"
+msgstr "Права модератора обновлены. Переадресация &hellip;"
+
+msgid "Ban redirect"
+msgstr "Переадресация &hellip;"
+
+msgid "No delete admin message"
+msgstr "Учетная запись администратора не может быть удалена. Чтобы удалить эту учетную запись, надо переместить пользователя в группу с более низкими правами."

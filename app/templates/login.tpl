@@ -5,8 +5,8 @@
         <form class="f-form" method="post" action="{!! $formAction !!}">
           <input type="hidden" name="token" value="{!! $formToken !!}">
           <input type="hidden" name="redirect" value="{{ $formRedirect }}">
-          <label class="f-child1" for="id-name">{!! __('Username') !!}</label>
-          <input required id="id-name" type="text" name="name" value="{{ $name }}" maxlength="25" autofocus="autofocus" spellcheck="false" tabindex="1">
+          <label class="f-child1" for="id-username">{!! __('Username') !!}</label>
+          <input required id="id-username" type="text" name="username" value="{{ $username }}" maxlength="25" autofocus="autofocus" spellcheck="false" tabindex="1">
           <label class="f-child1" for="id-password">{!! __('Password') !!}<a class="f-forgetlink" href="{!! $forgetLink !!}" tabindex="5">{!! __('Forgotten pass') !!}</a></label>
           <input required id="id-password" type="password" name="password" tabindex="2">
 @if($formSave)

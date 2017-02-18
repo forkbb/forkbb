@@ -36,8 +36,13 @@ class Routing
             // вход
             $r->add('GET', '/login', 'Auth:login', 'Login');
             $r->add('POST', '/login', 'Auth:loginPost');
+            // забыли пароль
             $r->add('GET', '/login/forget', 'Auth:forget', 'Forget');
             $r->add('POST', '/login/forget', 'Auth:forgetPost');
+            // смена пароля
+            $r->add('GET', '/login/{email}/{key}', 'Auth:changePass', 'ChangePassword');
+            $r->add('POST', '/login/{email}/{key}', 'Auth:changePassPost');
+
             // регистрация
             if ($config['o_regs_allow'] == '1') {
                 $r->add('GET', '/registration', 'Registration:reg', 'Registration'); //????
