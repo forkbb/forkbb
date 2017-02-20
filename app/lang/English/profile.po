@@ -79,7 +79,7 @@ msgid "Confirm new pass"
 msgstr "Confirm new password"
 
 msgid "Pass info"
-msgstr "Passwords must be at least 6 characters long. Passwords are case sensitive."
+msgstr "Passwords must be at least 8 characters long. Passwords are case sensitive."
 
 msgid "Email key bad"
 msgstr "The specified email activation key was incorrect or has expired. Please re-request change of email address. If that fails, contact the forum administrator at"

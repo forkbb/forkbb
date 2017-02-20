@@ -59,7 +59,7 @@ class Router
 
     /**
      * Конструктор
-     * @param string $prefix
+     * @param string $base
      */
     public function __construct($base = '')
     {
@@ -183,8 +183,6 @@ class Router
                 return [self::OK, $data[0], $args];
             }
         }
-
-
         if (empty($allowed)) {
             return [self::NOT_FOUND];
         } else {

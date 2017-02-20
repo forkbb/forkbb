@@ -37,7 +37,7 @@ class Online
     protected $user;
 
     /**
-     * Контролер
+     * Конструктор
      * @param array $config
      * @param DB $db
      * @param User $user

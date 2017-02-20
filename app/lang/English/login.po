@@ -24,10 +24,10 @@ msgstr "Logged in successfully. Redirecting …"
 msgid "Logout redirect"
 msgstr "Logged out. Redirecting …"
 
-msgid "Request pass"
-msgstr "Request password"
+msgid "Password reset"
+msgstr "Password reset"
 
-msgid "Request pass info"
+msgid "Password reset info"
 msgstr "An email will be sent to the specified address with instructions on how to change your password."
 
 msgid "Not registered"
@@ -43,10 +43,7 @@ msgid "Error mail"
 msgstr "When sending email there was an error. Try later or contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."
 
 msgid "Email flood"
-msgstr "This account has already requested a password reset in the past hour. Please wait %s minutes before requesting a new password again."
-
-msgid "Pass too short"
-msgstr "Passwords must be at least 6 characters long."
+msgstr "This account has already requested a password reset in the past hour. Please wait %s minutes before trying again."
 
 msgid "Pass not match"
 msgstr "Passwords do not match."

@@ -2083,6 +2083,8 @@ function __($data, ...$args)
 
     if (empty($args)) {
         return $tr;
+    } elseif (is_array($args[0])) {
+        return strtr($tr, $args[0]);
     } else {
         return sprintf($tr, ...$args);
     }

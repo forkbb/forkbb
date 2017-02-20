@@ -40,8 +40,8 @@ class Routing
             $r->add('GET', '/login/forget', 'Auth:forget', 'Forget');
             $r->add('POST', '/login/forget', 'Auth:forgetPost');
             // смена пароля
-            $r->add('GET', '/login/{email}/{key}', 'Auth:changePass', 'ChangePassword');
-            $r->add('POST', '/login/{email}/{key}', 'Auth:changePassPost');
+            $r->add('GET', '/login/{email}/{key}/{hash}', 'Auth:changePass', 'ChangePassword');
+            $r->add('POST', '/login/{email}/{key}/{hash}', 'Auth:changePassPost');
 
             // регистрация
             if ($config['o_regs_allow'] == '1') {
@@ -120,5 +120,4 @@ class Routing
         }
         return $page;
     }
-
 }

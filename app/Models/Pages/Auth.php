@@ -33,7 +33,7 @@ class Auth extends Page
     {
         $this->c->get('Lang')->load('login');
 
-        if ($this->c->get('Csrf')->check($args['token'], 'Logout', $args)) {
+        if ($this->c->get('Csrf')->verify($args['token'], 'Logout', $args)) {
             $user = $this->c->get('user');
 
             $this->c->get('UserCookie')->deleteUserCookie();
@@ -43,7 +43,7 @@ class Auth extends Page
             return $this->c->get('Redirect')->setPage('Index')->setMessage(__('Logout redirect'));
         }
 
-        return $this->c->get('Redirect')->setPage('Index')->setMessage(__('Bad request'));
+        return $this->c->get('Redirect')->setPage('Index')->setMessage(__('Bad token'));
     }
 
     /**
@@ -89,36 +89,33 @@ class Auth extends Page
     {
         $this->c->get('Lang')->load('login');
 
-        $username = $this->c->get('Request')->postStr('username', '');
-        $password = $this->c->get('Request')->postStr('password', '');
-        $token = $this->c->get('Request')->postStr('token');
-        $save = $this->c->get('Request')->postStr('save');
+        $v = $this->c->get('Validator');
+        $v->setRules([
+            'token'    => 'token:Login',
+            'redirect' => 'referer:Index',
+            'username' => ['required|string|min:2|max:25', __('Username')],
+            'password' => ['required|string', __('Password')],
+            'save'     => 'checkbox',
+        ]);
 
-        $redirect = $this->c->get('Request')->postStr('redirect', '');
-        $redirect = $this->c->get('Router')->validate($redirect, 'Index');
+        $ok = $v->validation($_POST);
+        $data = $v->getData();
+        $this->iswev = $v->getErrors();
 
-        $args = [
-            '_username' => $username,
-            '_redirect' => $redirect,
-            '_save' => $save,
-        ];
-
-        if (! $this->c->get('Csrf')->check($token, 'Login')) {
-            $this->iswev['e'][] = __('Bad token');
-            return $this->login($args);
-        }
-
-        if (empty($username) || empty($password)) {
+        if ($ok && ! $this->loginProcess($data['username'], $data['password'], $data['save'])) {
             $this->iswev['v'][] = __('Wrong user/pass');
-            return $this->login($args);
+            $ok = false;
         }
 
-        if (! $this->loginProcess($username, $password, ! empty($save))) {
-            $this->iswev['v'][] = __('Wrong user/pass');
-            return $this->login($args);
+        if ($ok) {
+            return $this->c->get('Redirect')->setUrl($data['redirect'])->setMessage(__('Login redirect'));
+        } else {
+            return $this->login([
+                '_username' => $data['username'],
+                '_redirect' => $data['redirect'],
+                '_save'     => $data['save'],
+            ]);
         }
-
-        return $this->c->get('Redirect')->setUrl($redirect)->setMessage(__('Login redirect'));
     }
 
     /**
@@ -196,7 +193,7 @@ class Auth extends Page
         }
 
         $this->titles = [
-            __('Request pass'),
+            __('Password reset'),
         ];
         $this->data = [
             'email' => $args['_email'],
@@ -215,43 +212,43 @@ class Auth extends Page
     {
         $this->c->get('Lang')->load('login');
 
-        $token = $this->c->get('Request')->postStr('token');
-        $email = $this->c->get('Request')->postStr('email');
+        $v = $this->c->get('Validator');
+        $v->setRules([
+            'token' => 'token:Forget',
+            'email' => 'required|email',
+        ])->setMessages([
+            'email' => __('Invalid email'),
+        ]);
 
-        $args = [
-            '_email' => $email,
-        ];
+        $ok = $v->validation($_POST);
+        $data = $v->getData();
+        $this->iswev = $v->getErrors();
 
-        if (! $this->c->get('Csrf')->check($token, 'Forget')) {
-            $this->iswev['e'][] = __('Bad token');
-            return $this->forget($args);
+        if ($ok && ($user = $this->c->get('UserMapper')->getUser($data['email'], 'email')) === null) {
+            $this->iswev['v'][] = __('Invalid email');
+            $ok = false;
+        }
+        if ($ok && ! empty($user->lastEmailSent) && time() - $user->lastEmailSent < 3600) {
+            $this->iswev['e'][] = __('Email flood', (int) (($user->lastEmailSent + 3600 - time()) / 60));
+            $ok = false;
+        }
+
+        if (! $ok) {
+            return $this->forget([
+                '_email' => $data['email'],
+            ]);
         }
 
         $mail = $this->c->get('Mail');
-        if (! $mail->valid($email)) {
-            $this->iswev['v'][] = __('Invalid email');
-            return $this->forget($args);
-        }
-
-        $user = $this->c->get('UserMapper')->getUser($email, 'email');
-        if (null == $user) {
-            $this->iswev['v'][] = __('Invalid email');
-            return $this->forget($args);
-        }
-
-        if (! empty($user->lastEmailSent) && time() - $user->lastEmailSent < 3600) {
-            $this->iswev['e'][] = __('Email flood', (int) (($user->lastEmailSent + 3600 - time()) / 60));
-            return $this->forget($args);
-        }
-
         $mail->setFolder($this->c->getParameter('DIR_LANG'))
             ->setLanguage($user->language);
 
         $key = 'p' . $this->c->get('Secury')->randomPass(75);
-        $link = $this->c->get('Router')->link('ChangePassword', ['email' => $email, 'key' => $key]);
-        $data = ['key' => $key, 'link' => $link];
+        $hash = $this->c->get('Secury')->hash($data['email'] . $key);
+        $link = $this->c->get('Router')->link('ChangePassword', ['email' => $data['email'], 'key' => $key, 'hash' => $hash]);
+        $tplData = ['link' => $link];
 
-        if ($mail->send($email, 'change_password.tpl', $data)) {
+        if ($mail->send($data['email'], 'change_password.tpl', $tplData)) {
             $this->c->get('UserMapper')->updateUser($user->id, ['activate_string' => $key, 'last_email_sent' => time()]);
             return $this->c->get('Message')->message(__('Forget mail', $this->config['o_admin_email']), false, 200);
         } else {
@@ -269,14 +266,19 @@ class Auth extends Page
         $this->nameTpl = 'login/password';
         $this->onlinePos = 'password';
 
-        // что-то пошло не так
-        if (! $this->c->get('Mail')->valid($args['email'])
-            || ($user = $this->c->get('UserMapper')->getUser($args['email'], 'email')) === null
-            || empty($user->activateString)
-            || $user->activateString{0} !== 'p'
-            || ! hash_equals($user->activateString, $args['key'])
-        ) {
-            return $this->c->get('Message')->message(__('Bad request'), false);
+        if (isset($args['_ok'])) {
+            unset($args['_ok']);
+        } else {
+            // что-то пошло не так
+            if (! hash_equals($args['hash'], $this->c->get('Secury')->hash($args['email'] . $args['key']))
+                || ! $this->c->get('Mail')->valid($args['email'])
+                || ($user = $this->c->get('UserMapper')->getUser($args['email'], 'email')) === null
+                || empty($user->activateString)
+                || $user->activateString{0} !== 'p'
+                || ! hash_equals($user->activateString, $args['key'])
+            ) {
+                return $this->c->get('Message')->message(__('Bad request'), false);
+            }
         }
 
         $this->c->get('Lang')->load('login');
@@ -300,14 +302,11 @@ class Auth extends Page
      */
     public function changePassPost(array $args)
     {
-        $token = $this->c->get('Request')->postStr('token');
-        $password = $this->c->get('Request')->postStr('password', '');
-        $password2 = $this->c->get('Request')->postStr('password2', '');
-
         $this->c->get('Lang')->load('login');
 
         // что-то пошло не так
-        if (! $this->c->get('Mail')->valid($args['email'])
+        if (! hash_equals($args['hash'], $this->c->get('Secury')->hash($args['email'] . $args['key']))
+            || ! $this->c->get('Mail')->valid($args['email'])
             || ($user = $this->c->get('UserMapper')->getUser($args['email'], 'email')) === null
             || empty($user->activateString)
             || $user->activateString{0} !== 'p'
@@ -316,23 +315,29 @@ class Auth extends Page
             return $this->c->get('Message')->message(__('Bad request'), false);
         }
 
-        if (! $this->c->get('Csrf')->check($token, 'ChangePassword', $args)) {
-            $this->iswev['e'][] = __('Bad token');
-            return $this->changePass($args);
-        }
-        if (mb_strlen($password) < 6) {
-            $this->iswev['v'][] = __('Pass too short');
-            return $this->changePass($args);
-        }
-        if ($password !== $password2) {
-            $this->iswev['v'][] = __('Pass not match');
-            return $this->changePass($args);
-        }
-
-        $this->c->get('UserMapper')->updateUser($user->id, ['password' => password_hash($password, PASSWORD_DEFAULT), 'activate_string' => null]);
-
         $this->c->get('Lang')->load('profile');
+
+        $v = $this->c->get('Validator');
+        $v->setRules([
+            'token'     => 'token:ChangePassword',
+            'password'  => ['required|string|min:8', __('New pass')],
+            'password2' => 'required|same:password',
+        ])->setArguments([
+            'token' => $args,
+        ])->setMessages([
+            'password2' => __('Pass not match'),
+        ]);
+
+        if (! $v->validation($_POST)) {
+            $this->iswev = $v->getErrors();
+            $args['_ok'] = true;
+            return $this->changePass($args);
+        }
+        $data = $v->getData();
+
+        $this->c->get('UserMapper')->updateUser($user->id, ['password' => password_hash($data['password'], PASSWORD_DEFAULT), 'activate_string' => null]);
+
         $this->iswev['s'][] = __('Pass updated');
-        return $this->login([]);
+        return $this->login(['_redirect' => $this->c->get('Router')->link('Index')]);
     }
 }

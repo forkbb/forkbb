@@ -19,7 +19,6 @@ class Csrf
 
     /**
      * Конструктор
-     *
      * @param Secury $secury
      * @param User $user
      */
@@ -51,7 +50,7 @@ class Csrf
      * @param array $args
      * @return bool
      */
-    public function check($token, $marker, array $args = [])
+    public function verify($token, $marker, array $args = [])
     {
         return is_string($token)
             && preg_match('%f(\d+)$%D', $token, $matches)
@@ -59,5 +58,4 @@ class Csrf
             && $matches[1] + 1800 > time()
             && hash_equals($this->create($marker, $args, $matches[1]), $token);
     }
-
 }
