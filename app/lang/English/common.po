@@ -24,6 +24,9 @@ msgstr "."
 msgid "lang_thousands_sep"
 msgstr ","
 
+msgid "Redirecting to index"
+msgstr "Redirecting to Index page."
+
 msgid "Bad token"
 msgstr "Bad token."
 
@@ -35,12 +38,6 @@ msgstr "You do not have permission to view these forums."
 
 msgid "No permission"
 msgstr "You do not have permission to access this page."
-
-msgid "Bad referrer"
-msgstr "Bad csrf_hash. You were referred to this page from an unauthorized source."
-
-msgid "Bad csrf hash"
-msgstr "Bad CSRF hash. You were referred to this page from an unauthorized source."
 
 msgid "No cookie"
 msgstr "You appear to have logged in successfully, however a cookie has not been set. Please check your settings and if applicable, enable cookies for this website."

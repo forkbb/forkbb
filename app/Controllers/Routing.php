@@ -50,6 +50,10 @@ class Routing
         } else {
             // выход
             $r->add('GET', '/logout/{token}', 'Auth:logout', 'Logout');
+
+            // обработка "кривых" перенаправлений с логина и регистрации
+            $r->add('GET', '/login[/{tail:.*}]', 'Redirect:toIndex');
+            $r->add('GET', '/registration[/{tail:.*}]', 'Redirect:toIndex');
         }
         // просмотр разрешен
         if ($user->gReadBoard == '1') {
@@ -106,7 +110,7 @@ class Routing
                 if ($user->gReadBoard != '1' && $user->isGuest) {
                     $page = $this->c->Redirect->setPage('Login');
                 } else {
-//                  $page = $this->c->Message->message('Bad request');
+                    $page = $this->c->Message->message('Bad request');
                 }
                 break;
             case $r::METHOD_NOT_ALLOWED:

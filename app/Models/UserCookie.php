@@ -4,19 +4,12 @@ namespace ForkBB\Models;
 
 use ForkBB\Core\Cookie;
 use ForkBB\Core\Secury;
-use ForkBB\Core\Container;
 
 class UserCookie extends Cookie
 {
     const NAME = 'user';
     const KEY1 = 'key1';
     const KEY2 = 'key2';
-
-    /**
-     * Контейнер
-     * @var Container
-     */
-    protected $c;
 
     /**
      * Флаг указывающий на режим "запомнить меня"
@@ -43,14 +36,29 @@ class UserCookie extends Cookie
     protected $passHash;
 
     /**
-     * Конструктор
-     *
-     * @param Container $container
+     * Время жизни куки без запоминания
+     * @var int
      */
-    public function __construct(Secury $secury, array $options, Container $container)
+    protected $min;
+
+    /**
+     * Время жизни куки с запоминанием
+     * @var int
+     */
+    protected $max;
+
+    /**
+     * Конструктор
+     * @param Secury $secury
+     * @param array $options
+     * @param int $min
+     * @param int $max
+     */
+    public function __construct(Secury $secury, array $options, $min, $max)
     {
         parent::__construct($secury, $options);
-        $this->c = $container;
+        $this->min = (int) $min;
+        $this->max = (int) $max;
         $this->init();
     }
 
@@ -81,8 +89,7 @@ class UserCookie extends Cookie
     }
 
     /**
-     * Возвращает id юзера из печеньки
-     *
+     * Возвращает id юзера из куки
      * @return int|false
      */
     public function id()
@@ -92,10 +99,8 @@ class UserCookie extends Cookie
 
     /**
      * Проверка хэша пароля
-     *
      * @param int $id
      * @param string $hash
-     *
      * @return bool
      */
     public function verifyHash($id, $hash)
@@ -105,12 +110,10 @@ class UserCookie extends Cookie
     }
 
     /**
-     * Установка печеньки аутентификации юзера
-     *
+     * Установка куки аутентификации юзера
      * @param int $id
      * @param string $hash
      * @param bool $remember
-     *
      * @return bool
      */
     public function setUserCookie($id, $hash, $remember = null)
@@ -125,11 +128,11 @@ class UserCookie extends Cookie
                 && $this->remember
             )
         ) {
-            $expTime = time() + $this->c->TIME_REMEMBER;
+            $expTime = time() + $this->max;
             $expire = $expTime;
             $pfx = '';
         } else {
-            $expTime = time() + $this->c->config['o_timeout_visit'];
+            $expTime = time() + $this->min;
             $expire = 0;
             $pfx = '-';
         }
@@ -140,8 +143,7 @@ class UserCookie extends Cookie
     }
 
     /**
-     * Удаление печеньки аутентификации юзера
-     *
+     * Удаление куки аутентификации юзера
      * @return bool
      */
     public function deleteUserCookie()

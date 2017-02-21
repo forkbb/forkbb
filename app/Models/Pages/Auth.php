@@ -29,19 +29,16 @@ class Auth extends Page
      */
     public function logout($args)
     {
-        $this->c->Lang->load('login');
-
-        if ($this->c->Csrf->verify($args['token'], 'Logout', $args)) {
-            $user = $this->c->user;
-
-            $this->c->UserCookie->deleteUserCookie();
-            $this->c->Online->delete($user);
-            $this->c->UserMapper->updateLastVisit($user);
-
-            return $this->c->Redirect->setPage('Index')->setMessage(__('Logout redirect'));
+        if (! $this->c->Csrf->verify($args['token'], 'Logout', $args)) {
+            return $this->c->Redirect->setPage('Index')->setMessage(__('Bad token'));
         }
 
-        return $this->c->Redirect->setPage('Index')->setMessage(__('Bad token'));
+        $this->c->UserCookie->deleteUserCookie();
+        $this->c->Online->delete($this->c->user);
+        $this->c->UserMapper->updateLastVisit($this->c->user);
+
+        $this->c->Lang->load('login');
+        return $this->c->Redirect->setPage('Index')->setMessage(__('Logout redirect'));
     }
 
     /**
@@ -183,8 +180,8 @@ class Auth extends Page
     {
         $this->c->Lang->load('login');
 
-        $this->nameTpl = 'login/forget';
-        $this->onlinePos = 'forget';
+        $this->nameTpl = 'password_reset';
+        $this->onlinePos = 'password_reset';
 
         if (! isset($args['_email'])) {
             $args['_email'] = '';
@@ -246,7 +243,7 @@ class Auth extends Page
         $link = $this->c->Router->link('ChangePassword', ['email' => $data['email'], 'key' => $key, 'hash' => $hash]);
         $tplData = ['link' => $link];
 
-        if ($mail->send($data['email'], 'change_password.tpl', $tplData)) {
+        if ($mail->send($data['email'], 'password_reset.tpl', $tplData)) {
             $this->c->UserMapper->updateUser($user->id, ['activate_string' => $key, 'last_email_sent' => time()]);
             return $this->c->Message->message(__('Forget mail', $this->config['o_admin_email']), false, 200);
         } else {
@@ -261,8 +258,8 @@ class Auth extends Page
      */
     public function changePass(array $args)
     {
-        $this->nameTpl = 'login/password';
-        $this->onlinePos = 'password';
+        $this->nameTpl = 'change_password';
+        $this->onlinePos = 'change_password';
 
         if (isset($args['_ok'])) {
             unset($args['_ok']);
@@ -300,8 +297,6 @@ class Auth extends Page
      */
     public function changePassPost(array $args)
     {
-        $this->c->Lang->load('login');
-
         // что-то пошло не так
         if (! hash_equals($args['hash'], $this->c->Secury->hash($args['email'] . $args['key']))
             || ! $this->c->Mail->valid($args['email'])
@@ -313,6 +308,7 @@ class Auth extends Page
             return $this->c->Message->message(__('Bad request'), false);
         }
 
+        $this->c->Lang->load('login');
         $this->c->Lang->load('profile');
 
         $v = $this->c->Validator;

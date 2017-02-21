@@ -32,6 +32,15 @@ class Redirect extends Page
     }
 
     /**
+     * Перенаправление на главную страницу форума
+     * @return Page
+     */
+    public function toIndex()
+    {
+        return $this->setPage('Index')->setMessage(__('Redirecting to index'));
+    }
+
+    /**
      * Задает адрес перехода
      * @param string $marker
      * @param array $args
@@ -66,7 +75,7 @@ class Redirect extends Page
             return $this;
         }
 
-        $this->nameTpl = 'redirect';
+        $this->nameTpl = 'layouts/redirect';
         $this->titles = [
             __('Redirecting'),
         ];

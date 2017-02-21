@@ -4,7 +4,7 @@ namespace ForkBB;
 
 use ForkBB\Core\Container;
 use ForkBB\Models\Pages\Page;
-use Exception;
+use RuntimeException;
 
 if (! defined('PUN_ROOT'))
 	exit('The constant PUN_ROOT must be defined and point to a valid FluxBB installation root directory.');
@@ -42,7 +42,7 @@ if (file_exists(__DIR__ . '/config/main.php')) {
 } elseif (file_exists(__DIR__ . '/config/install.php')) {
     $container = new Container(include __DIR__ . '/config/install.php');
 } else {
-    throw new Exception('Application is not configured');
+    throw new RuntimeException('Application is not configured');
 }
 
 define('PUN', 1);
