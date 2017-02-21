@@ -2,21 +2,21 @@
 
 namespace ForkBB\Controllers;
 
-use R2\DependencyInjection\ContainerInterface;
+use ForkBB\Core\Container;
 
 class Primary
 {
     /**
      * Контейнер
-     * @var ContainerInterface
+     * @var Container
      */
     protected $c;
 
     /**
      * Конструктор
-     * @param array $config
+     * @param Container $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Container $container)
     {
         $this->c = $container;
     }
@@ -29,14 +29,14 @@ class Primary
      */
     public function check()
     {
-        $config = $this->c->get('config');
+        $config = $this->c->config;
 
         // Проверяем режим обслуживания форума
         if ($config['o_maintenance'] && ! defined('PUN_TURN_OFF_MAINT')) { //????
-           if (! in_array($this->c->get('UserCookie')->id(), $this->c->get('admins'))
-               || ! in_array($this->c->get('user')['id'], $this->c->get('admins'))
+           if (! in_array($this->c->UserCookie->id(), $this->c->admins)
+               || ! in_array($this->c->user['id'], $this->c->admins)
            ) {
-               return $this->c->get('Maintenance');
+               return $this->c->Maintenance;
            }
         }
 
@@ -46,8 +46,8 @@ class Primary
             exit;
         }
 
-        if (($banned = $this->c->get('CheckBans')->check()) !== null) {
-            return $this->c->get('Ban')->ban($banned);
+        if (($banned = $this->c->CheckBans->check()) !== null) {
+            return $this->c->Ban->ban($banned);
         }
     }
 }

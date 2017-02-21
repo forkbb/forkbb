@@ -2,7 +2,7 @@
 
 namespace ForkBB\Core;
 
-use R2\DependencyInjection\ContainerInterface;
+use ForkBB\Core\Container;
 use RuntimeException;
 
 class Install
@@ -14,7 +14,7 @@ class Install
 
     /**
      * Контейнер
-     * @var ContainerInterface
+     * @var Container
      */
     protected $c;
 
@@ -22,7 +22,7 @@ class Install
      * Конструктор
      * @param Request $request
      */
-    public function __construct($request, ContainerInterface $container)
+    public function __construct($request, Container $container)
     {
         $this->request = $request;
         $this->c = $container;
@@ -34,7 +34,7 @@ class Install
      */
     protected function generate_config_file($base_url, $db_type, $db_host, $db_name, $db_username, $db_password, $db_prefix, $cookie_prefix)
     {
-        $config = file_get_contents($this->c->getParameter('DIR_CONFIG') . '/main.dist.php');
+        $config = file_get_contents($this->c->DIR_CONFIG . '/main.dist.php');
         if (false === $config) {
             throw new RuntimeException('No access to main.dist.php.');
         }
@@ -46,7 +46,7 @@ class Install
         $config = str_replace('_DB_NAME_', addslashes($db_name), $config);
         $config = str_replace('_DB_PREFIX_', addslashes($db_prefix), $config);
         $config = str_replace('_COOKIE_PREFIX_', addslashes($cookie_prefix), $config);
-        $config = str_replace('_SALT_FOR_HMAC_', addslashes($this->c->get('Secury')->randomPass(21)), $config);
+        $config = str_replace('_SALT_FOR_HMAC_', addslashes($this->c->Secury->randomPass(21)), $config);
 
         return $config;
     }
@@ -184,8 +184,8 @@ class Install
         }
 
         // Check if the cache directory is writable
-        if (! forum_is_writable($this->c->getParameter('DIR_CACHE')))
-            $alerts[] = sprintf($lang_install['Alert cache'], $this->c->getParameter('DIR_CACHE'));
+        if (! forum_is_writable($this->c->DIR_CACHE))
+            $alerts[] = sprintf($lang_install['Alert cache'], $this->c->DIR_CACHE);
 
         // Check if default avatar directory is writable
         if (! forum_is_writable(PUN_ROOT . 'img/avatars/'))
@@ -479,14 +479,14 @@ foreach ($styles as $temp)
             if (strlen($db_prefix) > 0 && (! preg_match('%^[a-zA-Z]\w*$%', $db_prefix) || strlen($db_prefix) > 40))
                 error(sprintf($lang_install['Table prefix error'], $db->prefix));
 
-            $this->c->setParameter('DB_TYPE', $db_type);
-            $this->c->setParameter('DB_HOST', $db_host);
-            $this->c->setParameter('DB_USERNAME', $db_username);
-            $this->c->setParameter('DB_PASSWORD', $db_password);
-            $this->c->setParameter('DB_NAME', $db_name);
-            $this->c->setParameter('DB_PREFIX', $db_prefix);
+            $this->c->DB_TYPE = $db_type;
+            $this->c->DB_HOST = $db_host;
+            $this->c->DB_USERNAME = $db_username;
+            $this->c->DB_PASSWORD = $db_password;
+            $this->c->DB_NAME = $db_name;
+            $this->c->DB_PREFIX = $db_prefix;
 
-            $db = $this->c->get('DB');
+            $db = $this->c->DB;
 
             // Do some DB type specific checks
             switch ($db_type)
@@ -2077,8 +2077,8 @@ foreach ($styles as $temp)
                 'o_coding_forms'          => 1,    // кодирование форм - Visman
                 'o_check_ip'              => 0,    // проверка ip администрации - Visman
                 'o_crypto_enable'         => 1,    // случайные имена полей форм - Visman
-                'o_crypto_pas'            => $this->c->get('Secury')->randomPass(25),
-                'o_crypto_salt'           => $this->c->get('Secury')->randomPass(13),
+                'o_crypto_pas'            => $this->c->Secury->randomPass(25),
+                'o_crypto_salt'           => $this->c->Secury->randomPass(13),
                 'o_enable_acaptcha'       => 1, // математическая каптча
                 'st_max_users'            => 1,    // статистика по максимуму юзеров - Visman
                 'st_max_users_time'       => time(),
@@ -2127,9 +2127,9 @@ foreach ($styles as $temp)
 
             // Attempt to write main.php and serve it up for download if writing fails
             $written = false;
-            if (forum_is_writable($this->c->getParameter('DIR_CONFIG')))
+            if (forum_is_writable($this->c->DIR_CONFIG))
             {
-                $fh = @fopen($this->c->getParameter('DIR_CONFIG') . '/main.php', 'wb');
+                $fh = @fopen($this->c->DIR_CONFIG . '/main.php', 'wb');
                 if ($fh)
                 {
                     fwrite($fh, $config);

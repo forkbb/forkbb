@@ -39,7 +39,7 @@ class Redirect extends Page
      */
     public function setPage($marker, array $args = [])
     {
-        $this->link = $this->c->get('Router')->link($marker, $args);
+        $this->link = $this->c->Router->link($marker, $args);
         return $this;
     }
 

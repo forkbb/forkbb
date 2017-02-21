@@ -22,10 +22,10 @@ class Index extends Admin
      */
     public function index()
     {
-        $this->c->get('Lang')->load('admin_index');
+        $this->c->Lang->load('admin_index');
         $this->data = [
             'version' => $this->config['s_fork_version'] . '.' . $this->config['i_fork_revision'],
-            'linkStat' => $this->c->get('Router')->link('AdminStatistics'),
+            'linkStat' => $this->c->Router->link('AdminStatistics'),
         ];
         $this->titles[] = __('Admin index');
         return $this;

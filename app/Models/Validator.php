@@ -2,7 +2,7 @@
 
 namespace ForkBB\Models;
 
-use R2\DependencyInjection\ContainerInterface;
+use ForkBB\Core\Container;
 use RuntimeException;
 
 class Validator
@@ -15,7 +15,7 @@ class Validator
 
     /**
      * Контейнер
-     * @var ContainerInterface
+     * @var Container
      */
     protected $c;
 
@@ -57,9 +57,9 @@ class Validator
 
     /**
      * Конструктор
-     * @param ContainerInterface $container
+     * @param Container $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Container $container)
     {
         $this->c = $container;
     }
@@ -157,7 +157,7 @@ class Validator
                 list($value, $error) = $this->requiredRule('', $attr, $args);
             } else {
                 $value = isset($raw[$field])
-                    ? $this->c->get('Secury')->replInvalidChars($raw[$field])
+                    ? $this->c->Secury->replInvalidChars($raw[$field])
                     : null;
                 // перебор правил для текущего поля
                 foreach ($rules as $rule => $attr) {
@@ -380,7 +380,7 @@ class Validator
         if (! is_array($args)) {
             $args = [];
         }
-        if (is_string($value) && $this->c->get('Csrf')->verify($value, $attr, $args)) {
+        if (is_string($value) && $this->c->Csrf->verify($value, $attr, $args)) {
             return [$value, false];
         } else {
             return ['', ['Bad token', 'e']];
@@ -397,12 +397,12 @@ class Validator
         if (! is_array($args)) {
             $args = [];
         }
-        return [$this->c->get('Router')->validate($value, $attr), false];
+        return [$this->c->Router->validate($value, $attr), false];
     }
 
     protected function emailRule($value, $attr)
     {
-        if ($this->c->get('Mail')->valid($value)) {
+        if ($this->c->Mail->valid($value)) {
             return [$value, false];
         } else {
             if (! is_string($value)) {

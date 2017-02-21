@@ -3,14 +3,14 @@
 namespace ForkBB\Models\Actions;
 
 use ForkBB\Core\Cache;
-use R2\DependencyInjection\ContainerInterface;
+use ForkBB\Core\Container;
 use InvalidArgumentException;
 
 class CacheLoader
 {
     /**
      * Контейнер
-     * @var ContainerInterface
+     * @var Container
      */
     protected $c;
 
@@ -22,9 +22,9 @@ class CacheLoader
     /**
      * Конструктор
      * @param Cache $cache
-     * @param ContainerInterface $container
+     * @param Container $container
      */
-    public function __construct(Cache $cache, ContainerInterface $container)
+    public function __construct(Cache $cache, Container $container)
     {
         $this->cache = $cache;
         $this->c = $container;
@@ -45,10 +45,10 @@ class CacheLoader
         if (! $update && $this->cache->has($key)) {
             return $this->cache->get($key);
         } else {
-            $value = $this->c->get('get ' . $key);
+            $value = $this->c->{'get ' . $key};
             $this->cache->set($key, $value);
             if ($update) {
-                $this->c->set($key, $value);
+                $this->c->$key = $value;
             }
             return $value;
         }
@@ -61,11 +61,11 @@ class CacheLoader
     public function loadForums()
     {
         $mark = $this->cache->get('forums_mark');
-        $key = 'forums_' . $this->c->get('user')->gId;
+        $key = 'forums_' . $this->c->user->gId;
 
         if (empty($mark)) {
             $this->cache->set('forums_mark', time());
-            $value = $this->c->get('get forums');
+            $value = $this->c->{'get forums'};
             $this->cache->set($key, [time(), $value]);
             return $value;
         }
@@ -73,7 +73,7 @@ class CacheLoader
         $result = $this->cache->get($key);
 
         if (empty($result) || $result[0] < $mark) {
-            $value = $this->c->get('get forums');
+            $value = $this->c->{'get forums'};
             $this->cache->set($key, [time(), $value]);
             return $value;
         }

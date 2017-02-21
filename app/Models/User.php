@@ -3,14 +3,14 @@
 namespace ForkBB\Models;
 
 use ForkBB\Core\AbstractModel;
-use R2\DependencyInjection\ContainerInterface;
+use ForkBB\Core\Container;
 use RuntimeException;
 
 class User extends AbstractModel
 {
     /**
      * Контейнер
-     * @var ContainerInterface
+     * @var Container
      */
     protected $c;
 
@@ -38,13 +38,13 @@ class User extends AbstractModel
     /**
      * Конструктор
      */
-    public function __construct(array $data, ContainerInterface $container)
+    public function __construct(array $data, Container $container)
     {
         $this->now = time();
         $this->c = $container;
-        $this->config = $container->get('config');
-        $this->userCookie = $container->get('UserCookie');
-        $this->db = $container->get('DB');
+        $this->config = $container->config;
+        $this->userCookie = $container->UserCookie;
+        $this->db = $container->DB;
         parent::__construct($data);
     }
 
@@ -89,7 +89,7 @@ class User extends AbstractModel
     protected function getLanguage()
     {
         if ($this->isGuest
-            || ! file_exists($this->c->getParameter('DIR_LANG') . '/' . $this->data['language'] . '/common.po')
+            || ! file_exists($this->c->DIR_LANG . '/' . $this->data['language'] . '/common.po')
         ) {
             return $this->config['o_default_lang'];
         } else {
@@ -100,7 +100,7 @@ class User extends AbstractModel
     protected function getStyle()
     {
         if ($this->isGuest
-//???            || ! file_exists($this->c->getParameter('DIR_LANG') . '/' . $this->data['language'])
+//???            || ! file_exists($this->c->DIR_LANG . '/' . $this->data['language'])
         ) {
             return $this->config['o_default_style'];
         } else {

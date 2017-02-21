@@ -2,21 +2,21 @@
 
 namespace ForkBB\Controllers;
 
-use R2\DependencyInjection\ContainerInterface;
+use ForkBB\Core\Container;
 
 class Routing
 {
     /**
      * Контейнер
-     * @var ContainerInterface
+     * @var Container
      */
     protected $c;
 
     /**
      * Конструктор
-     * @param array $config
+     * @param Container $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Container $container)
     {
         $this->c = $container;
     }
@@ -27,9 +27,9 @@ class Routing
      */
     public function routing()
     {
-        $user = $this->c->get('user');
-        $config = $this->c->get('config');
-        $r = $this->c->get('Router');
+        $user = $this->c->user;
+        $config = $this->c->config;
+        $r = $this->c->Router;
 
         // регистрация/вход/выход
         if ($user->isGuest) {
@@ -99,23 +99,23 @@ class Routing
             case $r::OK:
                 // ... 200 OK
                 list($page, $action) = explode(':', $route[1], 2);
-                $page = $this->c->get($page)->$action($route[2]);
+                $page = $this->c->$page->$action($route[2]);
                 break;
             case $r::NOT_FOUND:
                 // ... 404 Not Found
                 if ($user->gReadBoard != '1' && $user->isGuest) {
-                    $page = $this->c->get('Redirect')->setPage('Login');
+                    $page = $this->c->Redirect->setPage('Login');
                 } else {
-//                  $page = $this->c->get('Message')->message('Bad request');
+//                  $page = $this->c->Message->message('Bad request');
                 }
                 break;
             case $r::METHOD_NOT_ALLOWED:
                 // ... 405 Method Not Allowed
-                $page = $this->c->get('Message')->message('Bad request', true, 405, ['Allow: ' . implode(',', $route[1])]);
+                $page = $this->c->Message->message('Bad request', true, 405, ['Allow: ' . implode(',', $route[1])]);
                 break;
             case $r::NOT_IMPLEMENTED:
                 // ... 501 Not implemented
-                $page = $this->c->get('Message')->message('Bad request', true, 501);
+                $page = $this->c->Message->message('Bad request', true, 501);
                 break;
         }
         return $page;

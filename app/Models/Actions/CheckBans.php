@@ -2,21 +2,21 @@
 
 namespace ForkBB\Models\Actions;
 
-use R2\DependencyInjection\ContainerInterface;
+use ForkBB\Core\Container;
 
 class CheckBans
 {
     /**
      * Контейнер
-     * @var ContainerInterface
+     * @var Container
      */
     protected $c;
 
     /**
      * Конструктор
-     * @param ContainerInterface $container
+     * @param Container $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Container $container)
     {
         $this->c = $container;
     }
@@ -27,8 +27,8 @@ class CheckBans
      */
     public function check()
     {
-        $bans = $this->c->get('bans');
-        $user = $this->c->get('user');
+        $bans = $this->c->bans;
+        $user = $this->c->user;
 
         // Для админов и при отсутствии банов прекращаем проверку
         if ($user->isAdmin || empty($bans)) {
@@ -83,15 +83,15 @@ class CheckBans
         // If we removed any expired bans during our run-through, we need to regenerate the bans cache
         if (! empty($remove))
         {
-            $db = $this->c->get('DB');
+            $db = $this->c->DB;
             $db->query('DELETE FROM '.$db->prefix.'bans WHERE id IN (' . implode(',', $remove) . ')') or error('Unable to delete expired ban', __FILE__, __LINE__, $db->error());
-            $this->c->get('bans update');
+            $this->c->{'bans update'};
         }
 
         if ($banned)
         {
             //???? а зачем это надо?
-            $this->c->get('Online')->delete($user);
+            $this->c->Online->delete($user);
             return $banned;
         }
 

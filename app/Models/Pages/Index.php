@@ -36,14 +36,14 @@ class Index extends Page
      */
     public function view()
     {
-        $this->c->get('Lang')->load('index');
-        $this->c->get('Lang')->load('subforums');
+        $this->c->Lang->load('index');
+        $this->c->Lang->load('subforums');
 
-        $db = $this->c->get('DB');
-        $user = $this->c->get('user');
-        $r = $this->c->get('Router');
+        $db = $this->c->DB;
+        $user = $this->c->user;
+        $r = $this->c->Router;
 
-        $stats = $this->c->get('users_info');
+        $stats = $this->c->users_info;
 
         $result = $db->query('SELECT SUM(num_topics), SUM(num_posts) FROM '.$db->prefix.'forums') or error('Unable to fetch topic/post count', __FILE__, __LINE__, $db->error());
         list($stats['total_topics'], $stats['total_posts']) = array_map([$this, 'number'], array_map('intval', $db->fetch_row($result)));
@@ -70,7 +70,7 @@ class Index extends Page
             $this->data['online']['max_time'] = $this->time($this->config['st_max_users_time']);
 
             // данные онлайн посетителей
-            list($users, $guests, $bots) = $this->c->get('Online')->handle($this);
+            list($users, $guests, $bots) = $this->c->Online->handle($this);
             $list = [];
 
             if ($user->gViewUsers == '1') {
@@ -105,7 +105,7 @@ class Index extends Page
             $this->data['online']['list'] = $list;
         } else {
             $this->onlineType = false;
-            $this->c->get('Online')->handle($this);
+            $this->c->Online->handle($this);
             $this->data['online'] = null;
         }
         $this->data['forums'] = $this->getForumsData();
@@ -119,15 +119,15 @@ class Index extends Page
      */
     protected function getForumsData($root = 0)
     {
-        list($fTree, $fDesc, $fAsc) = $this->c->get('forums');
+        list($fTree, $fDesc, $fAsc) = $this->c->forums;
 
         // раздел $root не имеет подразделов для вывода или они не доступны
         if (empty($fTree[$root])) {
             return [];
         }
 
-        $db = $this->c->get('DB');
-        $user = $this->c->get('user');
+        $db = $this->c->DB;
+        $user = $this->c->user;
 
         // текущие данные по подразделам
         $forums = array_slice($fAsc[$root], 1);
@@ -168,7 +168,7 @@ class Index extends Page
             }
         }
 
-        $r = $this->c->get('Router');
+        $r = $this->c->Router;
 
         // формированием таблицы разделов
         $result = [];

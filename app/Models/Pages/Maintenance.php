@@ -2,7 +2,7 @@
 
 namespace ForkBB\Models\Pages;
 
-use R2\DependencyInjection\ContainerInterface;
+use ForkBB\Core\Container;
 
 class Maintenance extends Page
 {
@@ -32,13 +32,13 @@ class Maintenance extends Page
 
     /**
      * Конструктор
-     * @param ContainerInterface $container
+     * @param Container $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Container $container)
     {
         $this->c = $container;
-        $this->config = $container->get('config');
-        $container->get('Lang')->load('common', $this->config['o_default_lang']);
+        $this->config = $container->config;
+        $container->Lang->load('common', $this->config['o_default_lang']);
     }
 
     /**

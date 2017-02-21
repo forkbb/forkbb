@@ -2,14 +2,14 @@
 
 namespace ForkBB\Models\Pages;
 
-use R2\DependencyInjection\ContainerInterface;
+use ForkBB\Core\Container;
 use RuntimeException;
 
 abstract class Page
 {
     /**
      * Контейнер
-     * @var ContainerInterface
+     * @var Container
      */
     protected $c;
 
@@ -85,13 +85,13 @@ abstract class Page
 
     /**
      * Конструктор
-     * @param ContainerInterface $container
+     * @param Container $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Container $container)
     {
         $this->c = $container;
-        $this->config = $container->get('config');
-        $container->get('Lang')->load('common');
+        $this->config = $container->config;
+        $container->Lang->load('common');
     }
 
     /**
@@ -170,7 +170,7 @@ abstract class Page
             'fNavigation' => $this->fNavigation(),
             'fIndex' => $this->index,
             'fAnnounce' => $this->fAnnounce(),
-            'fRootLink' => $this->c->get('Router')->link('Index'),
+            'fRootLink' => $this->c->Router->link('Index'),
             'fIswev' => $this->getIswev(),
         ];
     }
@@ -182,9 +182,9 @@ abstract class Page
     protected function getIswev()
     {
         if ($this->config['o_maintenance'] == '1') {
-            $user = $this->c->get('user');
+            $user = $this->c->user;
             if ($user->isAdmMod) {
-                $this->iswev['w'][] = '<a href="' . $this->c->get('Router')->link('AdminOptions', ['#' => 'maintenance']). '">' . __('Maintenance mode enabled') . '</a>';
+                $this->iswev['w'][] = '<a href="' . $this->c->Router->link('AdminOptions', ['#' => 'maintenance']). '">' . __('Maintenance mode enabled') . '</a>';
             }
         }
         return $this->iswev;
@@ -225,8 +225,8 @@ abstract class Page
      */
     protected function fNavigation()
     {
-        $user = $this->c->get('user');
-        $r = $this->c->get('Router');
+        $user = $this->c->user;
+        $r = $this->c->Router;
 
         $nav = [
             'index' => [$r->link('Index'), __('Index')]
@@ -263,7 +263,7 @@ abstract class Page
             }
 
             $nav['logout'] = [$r->link('Logout', [
-                'token' => $this->c->get('Csrf')->create('Logout'),
+                'token' => $this->c->Csrf->create('Logout'),
             ]), __('Logout')];
         }
 
@@ -357,16 +357,16 @@ abstract class Page
             return __('Never');
         }
 
-        $user = $this->c->get('user');
+        $user = $this->c->user;
 
         $diff = ($user->timezone + $user->dst) * 3600;
         $timestamp += $diff;
 
         if (null === $dateFormat) {
-            $dateFormat = $this->c->getParameter('date_formats')[$user->dateFormat];
+            $dateFormat = $this->c->date_formats[$user->dateFormat];
         }
         if(null === $timeFormat) {
-            $timeFormat = $this->c->getParameter('time_formats')[$user->timeFormat];
+            $timeFormat = $this->c->time_formats[$user->timeFormat];
         }
 
         $date = gmdate($dateFormat, $timestamp);

@@ -10,7 +10,6 @@ class ComposerStaticInit90ad93c7251d4f60daa9e545879c49e7
         'R' => 
         array (
             'R2\\Templating\\' => 14,
-            'R2\\DependencyInjection\\' => 23,
         ),
     );
 
@@ -18,10 +17,6 @@ class ComposerStaticInit90ad93c7251d4f60daa9e545879c49e7
         'R2\\Templating\\' => 
         array (
             0 => __DIR__ . '/..' . '/artoodetoo/dirk/src',
-        ),
-        'R2\\DependencyInjection\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/artoodetoo/container/src',
         ),
     );
 

@@ -3,7 +3,7 @@
 namespace ForkBB\Models;
 
 use ForkBB\Models\User;
-use R2\DependencyInjection\ContainerInterface;
+use ForkBB\Core\Container;
 use RuntimeException;
 use InvalidArgumentException;
 
@@ -11,7 +11,7 @@ class UserMapper
 {
     /**
      * Контейнер
-     * @var ContainerInterface
+     * @var Container
      */
     protected $c;
 
@@ -27,13 +27,13 @@ class UserMapper
 
     /**
      * Конструктор
-     * @param ContainerInterface $container
+     * @param Container $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Container $container)
     {
         $this->c = $container;
-        $this->config = $container->get('config');
-        $this->db = $container->get('DB');
+        $this->config = $container->config;
+        $this->db = $container->DB;
     }
 
     /**

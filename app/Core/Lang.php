@@ -2,14 +2,14 @@
 
 namespace ForkBB\Core;
 
-use R2\DependencyInjection\ContainerInterface;
+use ForkBB\Core\Container;
 use RuntimeException;
 
 class Lang
 {
     /**
      * Контейнер
-     * @var ContainerInterface
+     * @var Container
      */
     protected $c;
 
@@ -27,9 +27,9 @@ class Lang
 
     /**
      * Конструктор
-     * @param ContainerInterface $container
+     * @param Container $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Container $container)
     {
         $this->c = $container;
         __($this);
@@ -71,8 +71,8 @@ class Lang
         } elseif (isset($this->loaded[$name])) {
             return;
         }
-        $lang = $lang ?: $this->c->get('user')->language;
-        $path = $path ?: $this->c->getParameter('DIR_LANG');
+        $lang = $lang ?: $this->c->user->language;
+        $path = $path ?: $this->c->DIR_LANG;
         do {
             $flag = true;
             $fullPath = $path . '/'. $lang . '/' . $name . '.po';

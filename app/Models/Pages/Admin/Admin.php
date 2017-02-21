@@ -2,8 +2,8 @@
 
 namespace ForkBB\Models\Pages\Admin;
 
+use ForkBB\Core\Container;
 use ForkBB\Models\Pages\Page;
-use R2\DependencyInjection\ContainerInterface;
 
 abstract class Admin extends Page
 {
@@ -27,12 +27,12 @@ abstract class Admin extends Page
 
     /**
      * Конструктор
-     * @param ContainerInterface $container
+     * @param Container $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Container $container)
     {
         parent::__construct($container);
-        $container->get('Lang')->load('admin');
+        $container->Lang->load('admin');
         $this->titles = [__('Admin title')];
     }
 
@@ -42,8 +42,6 @@ abstract class Admin extends Page
      */
     public function getData()
     {
-        $this->c->get('Online')->handle($this);
-
         $data = parent::getData();
         $data['aNavigation'] = $this->aNavigation();
         $data['aIndex'] = $this->adminIndex;
@@ -56,8 +54,8 @@ abstract class Admin extends Page
      */
     protected function aNavigation()
     {
-        $user = $this->c->get('user');
-        $r = $this->c->get('Router');
+        $user = $this->c->user;
+        $r = $this->c->Router;
 
         $nav = [
             'Moderator menu'  => [

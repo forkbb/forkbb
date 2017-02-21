@@ -4,7 +4,7 @@ namespace ForkBB\Models;
 
 use ForkBB\Core\Cookie;
 use ForkBB\Core\Secury;
-use R2\DependencyInjection\ContainerInterface;
+use ForkBB\Core\Container;
 
 class UserCookie extends Cookie
 {
@@ -14,7 +14,7 @@ class UserCookie extends Cookie
 
     /**
      * Контейнер
-     * @var ContainerInterface
+     * @var Container
      */
     protected $c;
 
@@ -45,9 +45,9 @@ class UserCookie extends Cookie
     /**
      * Конструктор
      *
-     * @param ContainerInterface $container
+     * @param Container $container
      */
-    public function __construct(Secury $secury, array $options, ContainerInterface $container)
+    public function __construct(Secury $secury, array $options, Container $container)
     {
         parent::__construct($secury, $options);
         $this->c = $container;
@@ -125,11 +125,11 @@ class UserCookie extends Cookie
                 && $this->remember
             )
         ) {
-            $expTime = time() + $this->c->getParameter('TIME_REMEMBER');
+            $expTime = time() + $this->c->TIME_REMEMBER;
             $expire = $expTime;
             $pfx = '';
         } else {
-            $expTime = time() + $this->c->get('config')['o_timeout_visit'];
+            $expTime = time() + $this->c->config['o_timeout_visit'];
             $expire = 0;
             $pfx = '-';
         }

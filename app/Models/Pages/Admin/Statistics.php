@@ -24,7 +24,7 @@ class Statistics extends Admin
     {
         // Is phpinfo() a disabled function?
         if (strpos(strtolower((string) ini_get('disable_functions')), 'phpinfo') !== false) {
-            $this->c->get('Message')->message('PHPinfo disabled message', true, 200);
+            $this->c->Message->message('PHPinfo disabled message', true, 200);
         }
 
         phpinfo();
@@ -37,11 +37,11 @@ class Statistics extends Admin
      */
     public function statistics()
     {
-        $this->c->get('Lang')->load('admin_index');
+        $this->c->Lang->load('admin_index');
         $this->data = [];
         $this->titles[] = __('Server statistics');
-        $this->data['isAdmin'] = $this->c->get('user')->isAdmin;
-        $this->data['linkInfo'] = $this->c->get('Router')->link('AdminInfo');
+        $this->data['isAdmin'] = $this->c->user->isAdmin;
+        $this->data['linkInfo'] = $this->c->Router->link('AdminInfo');
 
         // Get the server load averages (if possible)
         if (@file_exists('/proc/loadavg') && is_readable('/proc/loadavg')) {
@@ -66,12 +66,12 @@ class Statistics extends Admin
         }
 
         // Get number of current visitors
-        $db = $this->c->get('DB');
+        $db = $this->c->DB;
         $result = $db->query('SELECT COUNT(user_id) FROM '.$db->prefix.'online WHERE idle=0') or error('Unable to fetch online count', __FILE__, __LINE__, $db->error());
         $this->data['numOnline'] = $db->result($result);
 
         // Collect some additional info about MySQL
-        if (in_array($this->c->getParameter('DB_TYPE'), ['mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb'])) {
+        if (in_array($this->c->DB_TYPE, ['mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb'])) {
             // Calculate total db size/row count
             $result = $db->query('SHOW TABLE STATUS LIKE \''.$db->prefix.'%\'') or error('Unable to fetch table status', __FILE__, __LINE__, $db->error());
 

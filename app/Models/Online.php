@@ -2,16 +2,16 @@
 
 namespace ForkBB\Models;
 
+use ForkBB\Core\Container;
 use ForkBB\Models\User;
 use ForkBB\Models\Pages\Page;
-use R2\DependencyInjection\ContainerInterface;
 use RuntimeException;
 
 class Online
 {
     /**
      * Контейнер
-     * @var ContainerInterface
+     * @var Container
      */
     protected $c;
 
@@ -41,9 +41,9 @@ class Online
      * @param array $config
      * @param DB $db
      * @param User $user
-     * @param ContainerInterface $container
+     * @param Container $container
      */
-    public function __construct(array $config, $db, User $user, ContainerInterface $container)
+    public function __construct(array $config, $db, User $user, Container $container)
     {
         $this->config = $config;
         $this->db = $db;
@@ -162,7 +162,7 @@ class Online
             $this->db->query('UPDATE '.$this->db->prefix.'config SET conf_value=\''.$all.'\' WHERE conf_name=\'st_max_users\'') or error('Unable to update config value \'st_max_users\'', __FILE__, __LINE__, $this->db->error());
             $this->db->query('UPDATE '.$this->db->prefix.'config SET conf_value=\''.$now.'\' WHERE conf_name=\'st_max_users_time\'') or error('Unable to update config value \'st_max_users_time\'', __FILE__, __LINE__, $this->db->error());
 
-            $this->c->get('config update');
+            $this->c->{'config update'};
         }
 /*
 @set_time_limit(0);
@@ -190,7 +190,7 @@ for ($i=0;$i<100;++$i) {
                 $this->db->query('INSERT INTO '.$this->db->prefix.'online (user_id, ident, logged, o_position, o_name) SELECT 1, \''.$this->db->escape($this->user->ip).'\', '.$now.', \''.$this->db->escape($position).'\', \''.$this->db->escape($oname).'\' FROM '.$this->db->prefix.'groups WHERE NOT EXISTS (SELECT 1 FROM '.$this->db->prefix.'online WHERE user_id=1 AND ident=\''.$this->db->escape($this->user->ip).'\') LIMIT 1') or error('Unable to insert into online list', __FILE__, __LINE__, $this->db->error());
 
                 // With MySQL/MySQLi/SQLite, REPLACE INTO avoids a user having two rows in the online table
-/*                switch ($this->c->getParameter('DB_TYPE')) {
+/*                switch ($this->c->DB_TYPE) {
                     case 'mysql':
                     case 'mysqli':
                     case 'mysql_innodb':
@@ -213,7 +213,7 @@ for ($i=0;$i<100;++$i) {
             } else {
                 $this->db->query('INSERT INTO '.$this->db->prefix.'online (user_id, ident, logged, o_position) SELECT '.$this->user->id.', \''.$this->db->escape($this->user->username).'\', '.$now.', \''.$this->db->escape($position).'\' FROM '.$this->db->prefix.'groups WHERE NOT EXISTS (SELECT 1 FROM '.$this->db->prefix.'online WHERE user_id='.$this->user->id.') LIMIT 1') or error('Unable to insert into online list', __FILE__, __LINE__, $this->db->error());
                 // With MySQL/MySQLi/SQLite, REPLACE INTO avoids a user having two rows in the online table
-/*                switch ($this->c->getParameter('DB_TYPE')) {
+/*                switch ($this->c->DB_TYPE) {
                     case 'mysql':
                     case 'mysqli':
                     case 'mysql_innodb':

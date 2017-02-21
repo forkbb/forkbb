@@ -4,50 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "66793e0ac7d0499d9403c353c1a60b7b",
-    "content-hash": "8160828b885585e30e73fe34aaca440c",
+    "hash": "6c899de021c8c6537d723a4f7d26f06d",
+    "content-hash": "b734e8bdbede86eb0dbd047bb31d3a03",
     "packages": [
-        {
-            "name": "artoodetoo/container",
-            "version": "dev-visman",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/MioVisman/container.git",
-                "reference": "bf147763641e3b6362286d3401b3ee55b2c2760e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/MioVisman/container/zipball/bf147763641e3b6362286d3401b3ee55b2c2760e",
-                "reference": "bf147763641e3b6362286d3401b3ee55b2c2760e",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.6"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "R2\\DependencyInjection\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "artoodetoo"
-                }
-            ],
-            "description": "Yet another service container",
-            "keywords": [
-                "container",
-                "service"
-            ],
-            "support": {
-                "source": "https://github.com/MioVisman/container/tree/visman"
-            },
-            "time": "2017-01-23 11:54:39"
-        },
         {
             "name": "artoodetoo/dirk",
             "version": "dev-master",
@@ -99,7 +58,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "artoodetoo/container": 20,
         "artoodetoo/dirk": 20
     },
     "prefer-stable": false,

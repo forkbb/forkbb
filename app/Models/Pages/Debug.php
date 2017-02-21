@@ -23,14 +23,14 @@ class Debug extends Page
     public function debug()
     {
         $this->data = [
-            'time' => $this->number(microtime(true) - (empty($_SERVER['REQUEST_TIME_FLOAT']) ? $this->c->getParameter('START') : $_SERVER['REQUEST_TIME_FLOAT']), 3),
-            'numQueries' => $this->c->get('DB')->get_num_queries(),
+            'time' => $this->number(microtime(true) - (empty($_SERVER['REQUEST_TIME_FLOAT']) ? $this->c->START : $_SERVER['REQUEST_TIME_FLOAT']), 3),
+            'numQueries' => $this->c->DB->get_num_queries(),
             'memory' => $this->size(memory_get_usage()),
             'peak' => $this->size(memory_get_peak_usage()),
         ];
 
         if (defined('PUN_SHOW_QUERIES')) {
-            $this->data['queries'] = $this->c->get('DB')->get_saved_queries();
+            $this->data['queries'] = $this->c->DB->get_saved_queries();
         } else {
             $this->data['queries'] = null;
         }

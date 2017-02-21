@@ -11,15 +11,8 @@
             "homepage": "https://github.com/MioVisman"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/MioVisman/container"
-        }
-    ],
     "require": {
         "php": ">=5.6.0",
-        "artoodetoo/container": "dev-visman",
         "artoodetoo/dirk": "dev-master"
     }
 }
