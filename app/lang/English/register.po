@@ -1,0 +1,70 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "Sign up"
+msgstr "Sign up"
+
+msgid "If no rules"
+msgstr "Treat other people the way you want to be treated yourself."
+
+msgid "Bad agree"
+msgstr "ID forms obsolete. Please begin <a href=\"%s\">registration</a> again."
+
+msgid "Reg cancel redirect"
+msgstr "No you agree with the forum rules. Registration cancelled. Redirecting …"
+
+msgid "Registration flood"
+msgstr "A new user was registered with the same IP address as you within the last hour. To prevent registration flooding, at least an hour has to pass between registrations from the same IP. Sorry for the inconvenience."
+
+msgid "Agree"
+msgstr "Agree"
+
+msgid "Username guest"
+msgstr "The username guest is reserved. Please choose another username."
+
+msgid "Username censor"
+msgstr "The username you entered contains one or more censored words. Please choose another username."
+
+msgid "Banned username"
+msgstr "The username you entered is banned in this forum. Please choose another username."
+
+msgid "Username not unique"
+msgstr "The username you entered is not unique. Please choose another username."
+
+msgid "Banned email"
+msgstr "The email address you entered is banned in this forum. Please choose another email address."
+
+msgid "Dupe email"
+msgstr "Someone else is already registered with that email address. Please choose another email address."
+
+msgid "Reg email"
+msgstr "Thank you for registering. A letter with a link to activate your account was sent to the specified address. If it doesn't arrive you can contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."
+
+msgid "Reg complete"
+msgstr "Registration complete. You can log in the forums."
+
+msgid "Email info"
+msgstr "Please enter a valid email address. It will be used to activate your account."
+
+msgid "Pass format"
+msgstr "Password must contain the digit, uppercase and lowercase letters, symbol different from the digits and letters."
+
+msgid "Pass info"
+msgstr "Passwords must be at least 8 characters long. Passwords are case sensitive."
+
+msgid "Login format"
+msgstr "The username must begin with a letter. May contain letters, numbers, spaces, dots, dashes and underscores."
+
+msgid "Error welcom mail"
+msgstr "When sending email there was an error. Please use the password reset form or contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."

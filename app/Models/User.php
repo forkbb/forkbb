@@ -20,16 +20,6 @@ class User extends AbstractModel
     protected $config;
 
     /**
-     * @var UserCookie
-     */
-    protected $userCookie;
-
-    /**
-     * @var DB
-     */
-    protected $db;
-
-    /**
      * Время
      * @var int
      */
@@ -43,8 +33,6 @@ class User extends AbstractModel
         $this->now = time();
         $this->c = $container;
         $this->config = $container->config;
-        $this->userCookie = $container->UserCookie;
-        $this->db = $container->DB;
         parent::__construct($data);
     }
 

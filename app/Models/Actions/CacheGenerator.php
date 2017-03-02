@@ -65,14 +65,11 @@ class CacheGenerator
         $search_for = $replace_with = [];
         for ($i = 0; $i < $num_words; $i++) {
             list($search_for[$i], $replace_with[$i]) = $this->db->fetch_row($result);
-            $search_for[$i] = '%(?<=[^\p{L}\p{N}])('.str_replace('\*', '[\p{L}\p{N}]*?', preg_quote($search_for[$i], '%')).')(?=[^\p{L}\p{N}])%iu';
+            $search_for[$i] = '%(?<![\p{L}\p{N}])('.str_replace('\*', '[\p{L}\p{N}]*?', preg_quote($search_for[$i], '%')).')(?![\p{L}\p{N}])%iu';
         }
         $this->db->free_result($result);
 
-        return [
-            'search_for' => $search_for,
-            'replace_with' => $replace_with
-        ];
+        return [$search_for, $replace_with];
     }
 
     /**

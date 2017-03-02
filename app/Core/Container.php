@@ -1,6 +1,6 @@
 <?php
 /**
- * based on code Container https://github.com/artoodetoo/container
+ * based on Container https://github.com/artoodetoo/container
  * by artoodetoo
  */
 namespace ForkBB\Core;

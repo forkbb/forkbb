@@ -12,6 +12,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
 
+msgid "Sign in"
+msgstr "Войти"
+
+msgid "Banned email"
+msgstr "Введенный почтовый адрес заблокирован."
+
+msgid "Account is not activated"
+msgstr "Аккаунт не активирован."
+
 msgid "Wrong user/pass"
 msgstr "Неверное имя и/или пароль. Имя и пароль чувствительны к регистру!"
 
@@ -39,11 +48,29 @@ msgstr "Запомнить меня"
 msgid "Forget mail"
 msgstr "Письмо с инструкцией по изменению пароля было выслано на указанный вами почтовый адрес. Если вы не получите его, свяжитесь с администрацией форума по адресу <a href=\"mailto:%1$s\">%1$s</a>."
 
-msgid "Error mail"
-msgstr "При отправки письма возникла ошибка. Попробуйте позже или свяжитесь с администратором форума по адресу <a href=\"mailto:%1$s\">%1$s</a>."
-
 msgid "Email flood"
 msgstr "Для этой учетной записи недавно уже запрашивали сброс пароля. Пожалуйста, подождите %s минут, прежде чем повторить попытку."
 
 msgid "Pass not match"
 msgstr "Пароли не совпадают."
+
+msgid "Change pass"
+msgstr "Смена пароля"
+
+msgid "Change password"
+msgstr "Сменить пароль"
+
+msgid "New pass"
+msgstr "Новый пароль"
+
+msgid "Confirm new pass"
+msgstr "Ещё раз"
+
+msgid "Pass format"
+msgstr "Пароль должен содержать цифру, строчную и прописную буквы, символ отличающийся от цифр и букв."
+
+msgid "Pass info"
+msgstr "Пароль должен состоять минимум из 8 символов. Пароль чувствителен к регистру вводимых букв."
+
+msgid "Pass updated"
+msgstr "Ваш пароль изменён. Вы можете войти на форум с новым паролем."

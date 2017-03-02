@@ -78,6 +78,9 @@ msgstr "New password"
 msgid "Confirm new pass"
 msgstr "Confirm new password"
 
+msgid "Pass format"
+msgstr "Password must contain the digit, uppercase and lowercase letters, symbol different from the digits and letters."
+
 msgid "Pass info"
 msgstr "Passwords must be at least 8 characters long. Passwords are case sensitive."
 

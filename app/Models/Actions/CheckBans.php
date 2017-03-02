@@ -13,6 +13,11 @@ class CheckBans
     protected $c;
 
     /**
+     * Содержит массив с описание бана для проверяемого юзера
+     */
+    protected $ban;
+
+    /**
      * Конструктор
      * @param Container $container
      */
@@ -27,54 +32,72 @@ class CheckBans
      */
     public function check()
     {
-        $bans = $this->c->bans;
         $user = $this->c->user;
 
         // Для админов и при отсутствии банов прекращаем проверку
-        if ($user->isAdmin || empty($bans)) {
-           return null;
+        if ($user->isAdmin) {
+            return null;
+        } elseif ($user->isGuest) {
+            $banned = $this->isBanned(null, null, $user->ip);
+        } else {
+            $banned = $this->isBanned($user->username, $user->email, $user->ip);
         }
 
-        // Add a dot or a colon (depending on IPv4/IPv6) at the end of the IP address to prevent banned address
-        // 192.168.0.5 from matching e.g. 192.168.0.50
-        $userIp = $user->ip;
-        $add = strpos($userIp, '.') !== false ? '.' : ':';
-        $userIp .= $add;
+        if ($banned) {
+            $this->c->Online->delete($user); //???? а зачем это надо?
+            return $this->ban;
+        }
 
-        $username = mb_strtolower($user->username);
+        return null;
+    }
 
-        $banned = false;
+    /**
+     * Проверяет наличие бана на основании имени юзера, email и(или) ip
+     * Удаляет просроченные баны
+     * @param string $username
+     * @param string $email
+     * @param string $userIp
+     * @return int
+     */
+    public function isBanned($username = null, $email = null, $userIp = null)
+    {
+        $bans = $this->c->bans;
+        if (empty($bans)) {
+            return 0;
+        }
+        if (isset($username)) {
+            $username = mb_strtolower($username, 'UTF-8');
+        }
+        if (isset($userIp)) {
+            // Add a dot or a colon (depending on IPv4/IPv6) at the end of the IP address to prevent banned address
+            // 192.168.0.5 from matching e.g. 192.168.0.50
+            $add = strpos($userIp, '.') !== false ? '.' : ':';
+            $userIp .= $add;
+        }
+
+        $banned = 0;
         $remove = [];
+        $now = time();
 
-        foreach ($bans as $cur)
-        {
-            // Has this ban expired?
-            if ($cur['expire'] != '' && $cur['expire'] <= time())
-            {
+        foreach ($bans as $cur) {
+            if ($cur['expire'] != '' && $cur['expire'] < $now) {
                 $remove[] = $cur['id'];
                 continue;
-            } elseif ($banned) {
-                continue;
-            }
-
-            if (! $user->isGuest) {
-                if ($cur['username'] != '' && $username == mb_strtolower($cur['username'])) {
-                    $banned = $cur;
-                    continue;
-                } elseif ($cur['email'] != '' && $user->email == $cur['email']) {
-                    $banned = $cur;
-                    continue;
-                }
-            }
-
-            if ($cur['ip'] != '')
-            {
-                $ips = explode(' ', $cur['ip']);
-                foreach ($ips as $ip) {
+            } elseif (isset($username) && $cur['username'] != '' && $username == mb_strtolower($cur['username'])) {
+                $this->ban = $cur;
+                $banned = 1;
+                break;
+            } elseif (isset($email) && $cur['email'] != '' && $email == $cur['email']) {
+                $this->ban = $cur;
+                $banned = 2;
+                break;
+            } elseif (isset($userIp) && $cur['ip'] != '') {
+                foreach (explode(' ', $cur['ip']) as $ip) {
                     $ip .= $add;
                     if (substr($userIp, 0, strlen($ip)) == $ip) {
-                        $banned = $cur;
-                        break;
+                        $this->ban = $cur;
+                        $banned = 3;
+                        break 2;
                     }
                 }
             }
@@ -87,14 +110,6 @@ class CheckBans
             $db->query('DELETE FROM '.$db->prefix.'bans WHERE id IN (' . implode(',', $remove) . ')') or error('Unable to delete expired ban', __FILE__, __LINE__, $db->error());
             $this->c->{'bans update'};
         }
-
-        if ($banned)
-        {
-            //???? а зачем это надо?
-            $this->c->Online->delete($user);
-            return $banned;
-        }
-
-        return null;
+        return $banned;
     }
 }

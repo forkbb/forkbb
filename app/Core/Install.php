@@ -1520,6 +1520,11 @@ foreach ($styles as $temp)
                         'allow_null'    => false,
                         'default'        => '\'\''
                     ),
+                    'email_confirmed'        => array(
+                        'datatype'        => 'TINYINT(1)',
+                        'allow_null'    => false,
+                        'default'        => '0'
+                    ),
                     'title'                => array(
                         'datatype'        => 'VARCHAR(50)',
                         'allow_null'    => true

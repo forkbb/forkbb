@@ -706,15 +706,11 @@ function delete_post($post_id, $topic_id)
 function censor_words($text)
 {
     global $container;
-	static $search_for, $replace_with;
 
-	// If not already built in a previous call, build an array of censor words and their replacement text
-	if (!isset($search_for)) {
-        list($search_for, $replace_with) = $container->get('censoring');
-	}
+    list($search_for, $replace_with) = $container->censoring;
 
 	if (!empty($search_for)) {
-		$text = substr(ucp_preg_replace($search_for, $replace_with, ' '.$text.' '), 1, -1);
+		$text = preg_replace($search_for, $replace_with, $text);
     }
 
 	return $text;

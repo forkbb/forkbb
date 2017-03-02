@@ -669,6 +669,7 @@ switch ($stage)
 
             $db->alter_field('users', 'password', 'VARCHAR(255)', false, '') or error('Unable to alter password field', __FILE__, __LINE__, $db->error());
             $db->add_field('user', 'u_mark_all_read', 'INT(10) UNSIGNED', true) or error('Unable to add u_mark_all_read field', __FILE__, __LINE__, $db->error());
+            $db->add_field('user', 'email_confirmed', 'TINYINT(1)', false, 0, 'email') or error('Unable to add email_confirmed field', __FILE__, __LINE__, $db->error());
 
             $db->add_field('online', 'o_position', 'VARCHAR(100)', false, '') or error('Unable to add o_position field', __FILE__, __LINE__, $db->error());
             $db->add_index('online', 'o_position_idx', array('o_position')) or error('Unable to add o_position_idx index', __FILE__, __LINE__, $db->error());

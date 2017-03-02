@@ -71,14 +71,15 @@ class Router
 
     /**
      * Проверка url на принадлежность форуму
-     * @param string $url
+     * @param mixed $url
      * @param string $defMarker
      * @param array $defArgs
      * @return string
      */
     public function validate($url, $defMarker, array $defArgs = [])
     {
-        if (parse_url($url, PHP_URL_HOST) === $this->host
+        if (is_string($url)
+            && parse_url($url, PHP_URL_HOST) === $this->host
             && ($route = $this->route('GET', rawurldecode(parse_url($url, PHP_URL_PATH))))
             && $route[0] === self::OK
         ) {

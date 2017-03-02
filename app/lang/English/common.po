@@ -24,8 +24,14 @@ msgstr "."
 msgid "lang_thousands_sep"
 msgstr ","
 
+msgid "Forum rules"
+msgstr "Forum rules"
+
 msgid "Redirecting to index"
 msgstr "Redirecting to Index page."
+
+msgid "Error mail"
+msgstr "When sending email there was an error. Please try again later or contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."
 
 msgid "Bad token"
 msgstr "Bad token."
@@ -451,7 +457,7 @@ msgid "New reports"
 msgstr "There are new reports"
 
 msgid "Maintenance mode enabled"
-msgstr "Maintenance mode is enabled!"
+msgstr "<a href=\"%s\"Maintenance mode is enabled!</a>"
 
 msgid "Size unit B"
 msgstr "%s B"

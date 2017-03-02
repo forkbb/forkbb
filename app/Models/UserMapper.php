@@ -90,7 +90,8 @@ class UserMapper
      * Получение пользователя по условию
      * @param int|string
      * @param string $field
-     * @return null|User
+     * @return int|User
+     * @throws \InvalidArgumentException
      */
     public function getUser($value, $field = 'id')
     {
@@ -105,13 +106,13 @@ class UserMapper
                 $where = 'u.email=\'' . $this->db->escape($value) . '\'';
                 break;
             default:
-                return null;
+                throw new InvalidArgumentException('Field not supported');
         }
         $result = $this->db->query('SELECT u.*, g.* FROM '.$this->db->prefix.'users AS u LEFT JOIN '.$this->db->prefix.'groups AS g ON u.group_id=g.g_id WHERE '.$where) or error('Unable to fetch user information', __FILE__, __LINE__, $this->db->error());
 
         // найдено несколько пользователей
         if ($this->db->num_rows($result) !== 1) {
-            return null;
+            return $this->db->num_rows($result);
         }
 
         $user = $this->db->fetch_assoc($result);
@@ -119,14 +120,25 @@ class UserMapper
 
         // найден гость
         if ($user['id'] == 1) {
-            return null;
+            return 1;
         }
 
         return new User($user, $this->c);
     }
 
     /**
-     * Обновить данные юзера
+     * Проверка на уникальность имени пользователя
+     * @param string $username
+     * @return bool
+     */
+    public function isUnique($username)
+    {
+        $result = $this->db->query('SELECT username FROM '.$this->db->prefix.'users WHERE (UPPER(username)=UPPER(\''.$this->db->escape($username).'\') OR UPPER(username)=UPPER(\''.$this->db->escape(preg_replace('%[^\p{L}\p{N}]%u', '', $username)).'\'))') or error('Unable to fetch user info', __FILE__, __LINE__, $this->db->error());
+        return ! $this->db->num_rows($result);
+    }
+
+    /**
+     * Обновить данные пользователя
      * @param int $id
      * @param array $update
      */
@@ -152,4 +164,16 @@ class UserMapper
         $this->db->query('UPDATE '.$this->db->prefix.'users SET '.implode(', ', $set).' WHERE id='.$id) or error('Unable to update user data', __FILE__, __LINE__, $this->db->error());
     }
 
+    /**
+     * Создание нового пользователя
+     * @param User $user
+     * @throws
+     * @return int
+     */
+    public function newUser(User $user)
+    {
+        $this->db->query('INSERT INTO '.$this->db->prefix.'users (username, group_id, password, email, email_confirmed, email_setting, timezone, dst, language, style, registered, registration_ip, last_visit, activate_string) VALUES(\''.$this->db->escape($user->username).'\', '.$user->groupId.', \''.$this->db->escape($user->password).'\', \''.$this->db->escape($user->email).'\', '.$user->emailConfirmed.', '.$this->config['o_default_email_setting'].', '.$this->config['o_default_timezone'].' , '.$this->config['o_default_dst'].', \''.$this->db->escape($user->language).'\', \''.$user->style.'\', '.time().', \''.$this->db->escape($this->getIpAddress()).'\', '.$user->lastVisit.', \''.$this->db->escape($user->activateString).'\')') or error('Unable to create user', __FILE__, __LINE__, $this->db->error());
+        $new_uid = $this->db->insert_id(); //????
+        return $new_uid;
+    }
 }

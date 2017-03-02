@@ -165,6 +165,8 @@ abstract class Page
         return $this->data + [
             'pageTitle' => $this->pageTitle(),
             'pageHeads' => $this->pageHeads(),
+            'fLang' => __('lang_identifier'),
+            'fDirection' => __('lang_direction'),
             'fTitle' => $this->config['o_board_title'],
             'fDescription' => $this->config['o_board_desc'],
             'fNavigation' => $this->fNavigation(),
@@ -182,12 +184,22 @@ abstract class Page
     protected function getIswev()
     {
         if ($this->config['o_maintenance'] == '1') {
-            $user = $this->c->user;
-            if ($user->isAdmMod) {
-                $this->iswev['w'][] = '<a href="' . $this->c->Router->link('AdminOptions', ['#' => 'maintenance']). '">' . __('Maintenance mode enabled') . '</a>';
+            if ($this->c->user->isAdmin) {
+                $this->iswev['w'][] = __('Maintenance mode enabled', $this->c->Router->link('AdminOptions', ['#' => 'maintenance']));
             }
         }
         return $this->iswev;
+    }
+
+    /**
+     * Установка info, success, warning, error, validation информации из вне
+     * @param array $iswev
+     * @return Page
+     */
+    public function setIswev(array $iswev)
+    {
+        $this->iswev = $iswev;
+        return $this;
     }
 
     /**
@@ -207,7 +219,7 @@ abstract class Page
      */
     protected function pageHeads()
     {
-        return [];
+        return []; //????
     }
 
     /**
@@ -245,7 +257,7 @@ abstract class Page
         }
 
         if ($user->isGuest) {
-            $nav['register'] = ['register.php', __('Register')];
+            $nav['register'] = [$r->link('Register'), __('Register')];
             $nav['login'] = [$r->link('Login'), __('Login')];
         } else {
             $nav['profile'] = [$r->link('User', [
@@ -294,11 +306,11 @@ abstract class Page
      * Заглушка
      * @param string $name
      * @param array $arguments
-     * @return Page
+     * @throws \RuntimeException
      */
     public function __call($name, array $arguments)
     {
-        return $this;
+        throw new RuntimeException("'{$name}' method is not");
     }
 
     /**
@@ -308,7 +320,7 @@ abstract class Page
      */
     protected function size($size)
     {
-        $units = array('B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB');
+        $units = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB'];
 
         for ($i = 0; $size > 1024; $i++) {
             $size /= 1024;

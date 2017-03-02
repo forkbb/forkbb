@@ -45,7 +45,9 @@ class Routing
 
             // регистрация
             if ($config['o_regs_allow'] == '1') {
-                $r->add('GET', '/registration', 'Registration:reg', 'Registration'); //????
+                $r->add('GET', '/registration', 'Rules:confirmation', 'Register');
+                $r->add('POST', '/registration/agree', 'Register:reg', 'RegisterForm');
+                $r->add('GET', '/registration/activate/{id:\d+}/{key}/{hash}', 'Register:activate', 'RegActivate');
             }
         } else {
             // выход

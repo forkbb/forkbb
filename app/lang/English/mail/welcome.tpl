@@ -1,12 +1,11 @@
-Subject: Welcome to <board_title>!
+Subject: Welcome to <fTitle>!
 
-Thank you for registering in the forums at <base_url>. Your account details are:
+Thank you for registering in the forums at <fRootLink>.
 
-Username: <username>
-Password: <password>
+Your username: <username>
 
-Login at <login_url> to activate the account.
+Go <link> to activate your account.
 
 --
-<board_mailer> Mailer
+<fMailer> Mailer
 (Do not reply to this message)

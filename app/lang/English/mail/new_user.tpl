@@ -1,12 +1,12 @@
 Subject: Alert - New registration
 
-User '<username>' registered in the forums at <base_url>
+User '<username>' registered in the forums at <fRootLink>
 
-User profile: <profile_url>
+User profile: <userLink>
 
 To administer this account, please visit the following page:
 <admin_url>
 
 --
-<board_mailer> Mailer
+<fMailer> Mailer
 (Do not reply to this message)

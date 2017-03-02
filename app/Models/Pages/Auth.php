@@ -2,6 +2,9 @@
 
 namespace ForkBB\Models\Pages;
 
+use ForkBB\Models\Validator;
+use ForkBB\Models\User;
+
 class Auth extends Page
 {
     /**
@@ -23,6 +26,12 @@ class Auth extends Page
     protected $index = 'login';
 
     /**
+     * Для передачи User из vCheckEmail() в forgetPost()
+     * @var User
+     */
+    protected $tmpUser;
+
+    /**
      * Выход пользователя
      * @param array $args
      * @retrun Page
@@ -37,7 +46,7 @@ class Auth extends Page
         $this->c->Online->delete($this->c->user);
         $this->c->UserMapper->updateLastVisit($this->c->user);
 
-        $this->c->Lang->load('login');
+        $this->c->Lang->load('auth');
         return $this->c->Redirect->setPage('Index')->setMessage(__('Logout redirect'));
     }
 
@@ -48,7 +57,7 @@ class Auth extends Page
      */
     public function login(array $args)
     {
-        $this->c->Lang->load('login');
+        $this->c->Lang->load('auth');
 
         if (! isset($args['_username'])) {
             $args['_username'] = '';
@@ -62,15 +71,15 @@ class Auth extends Page
             __('Login'),
         ];
         $this->data = [
-            'username' => $args['_username'],
             'formAction' => $this->c->Router->link('Login'),
             'formToken' => $this->c->Csrf->create('Login'),
             'forgetLink' => $this->c->Router->link('Forget'),
             'regLink' => $this->config['o_regs_allow'] == '1'
-                ? $this->c->Router->link('Registration')
+                ? $this->c->Router->link('Register')
                 : null,
-            'formRedirect' => $args['_redirect'],
-            'formSave' => ! empty($args['_save'])
+            'username' => $args['_username'],
+            'redirect' => $args['_redirect'],
+            'save' => ! empty($args['_save'])
         ];
 
         return $this;
@@ -82,93 +91,78 @@ class Auth extends Page
      */
     public function loginPost()
     {
-        $this->c->Lang->load('login');
+        $this->c->Lang->load('auth');
 
-        $v = $this->c->Validator;
-        $v->setRules([
+        $v = $this->c->Validator->addValidators([
+            'login_process' => [$this, 'vLoginProcess'],
+        ])->setRules([
             'token'    => 'token:Login',
             'redirect' => 'referer:Index',
-            'username' => ['required|string|min:2|max:25', __('Username')],
-            'password' => ['required|string', __('Password')],
+            'username' => ['required|string', __('Username')],
+            'password' => ['required|string|login_process', __('Password')],
             'save'     => 'checkbox',
         ]);
 
-        $ok = $v->validation($_POST);
-        $data = $v->getData();
-        $this->iswev = $v->getErrors();
-
-        if ($ok && ! $this->loginProcess($data['username'], $data['password'], $data['save'])) {
-            $this->iswev['v'][] = __('Wrong user/pass');
-            $ok = false;
-        }
-
-        if ($ok) {
-            return $this->c->Redirect->setUrl($data['redirect'])->setMessage(__('Login redirect'));
+        if ($v->validation($_POST)) {
+            return $this->c->Redirect->setUrl($v->redirect)->setMessage(__('Login redirect'));
         } else {
+            $this->iswev = $v->getErrors();
             return $this->login([
-                '_username' => $data['username'],
-                '_redirect' => $data['redirect'],
-                '_save'     => $data['save'],
+                '_username' => $v->username,
+                '_redirect' => $v->redirect,
+                '_save'     => $v->save,
             ]);
         }
     }
 
     /**
-     * Вход на форум
-     * @param string $username
+     * Проверка по базе и вход на форум
+     * @param Validator $v
      * @param string $password
-     * @param bool $save
-     * @return bool
+     * @param int $type
+     * @return array
      */
-    protected function loginProcess($username, $password, $save)
+    public function vLoginProcess(Validator $v, $password, $type)
     {
-        $user = $this->c->UserMapper->getUser($username, 'username');
-        if (null == $user) {
-            return false;
-        }
-
-        $authorized = false;
-        $hash = $user->password;
-        $update = [];
-
-        // For FluxBB by Visman 1.5.10.74 and above
-        if (strlen($hash) == 40) {
-            if (hash_equals($hash, sha1($password . $this->c->SALT1))) {
-                $hash = password_hash($password, PASSWORD_DEFAULT);
-                $update['password'] = $hash;
-                $authorized = true;
-            }
+        $error = false;
+        if (! empty($v->getErrors())) {
+        } elseif (! ($user = $this->c->UserMapper->getUser($v->username, 'username')) instanceof User) {
+            $error = __('Wrong user/pass');
+        } elseif ($user->isUnverified) {
+            $error = [__('Account is not activated'), 'w'];
         } else {
-            $authorized = password_verify($password, $hash);
-        }
+            $authorized = false;
+            $hash = $user->password;
+            $update = [];
+            // For FluxBB by Visman 1.5.10.74 and above
+            if (strlen($hash) == 40) {
+                if (hash_equals($hash, sha1($password . $this->c->SALT1))) {
+                    $hash = password_hash($password, PASSWORD_DEFAULT);
+                    $update['password'] = $hash;
+                    $authorized = true;
+                }
+            } else {
+                $authorized = password_verify($password, $hash);
+            }
+            // ошибка в пароле
+            if (! $authorized) {
+                $error = __('Wrong user/pass');
+            } else {
+                // перезаписываем ip админа и модератора - Visman
+                if ($user->isAdmMod
+                    && $this->config['o_check_ip']
+                    && $user->registrationIp != $this->c->user->ip
+                ) {
+                    $update['registration_ip'] = $this->c->user->ip;
+                }
+                // изменения юзера в базе
+                $this->c->UserMapper->updateUser($user->id, $update);
 
-        if (! $authorized) {
-            return false;
+                $this->c->Online->delete($this->c->user);
+                $this->c->UserCookie->setUserCookie($user->id, $hash, $v->save);
+            }
         }
-
-        // Update the status if this is the first time the user logged in
-        if ($user->isUnverified) {
-            $update['group_id'] = (int) $this->config['o_default_user_group'];
-        }
-
-        // перезаписываем ip админа и модератора - Visman
-        if ($user->isAdmMod
-            && $this->config['o_check_ip']
-            && $user->registrationIp != $this->c->user->ip
-        ) {
-            $update['registration_ip'] = $this->c->user->ip;
-        }
-
-        // изменения юзера в базе
-        $this->c->UserMapper->updateUser($user->id, $update);
-        // обновления кэша
-        if (isset($update['group_id'])) {
-            $this->c->{'users_info update'};
-        }
-        $this->c->Online->delete($this->c->user);
-        $this->c->UserCookie->setUserCookie($user->id, $hash, $save);
-
-        return true;
+        return [$password, $type, $error];
     }
 
     /**
@@ -178,8 +172,6 @@ class Auth extends Page
      */
     public function forget(array $args)
     {
-        $this->c->Lang->load('login');
-
         $this->nameTpl = 'password_reset';
         $this->onlinePos = 'password_reset';
 
@@ -187,13 +179,15 @@ class Auth extends Page
             $args['_email'] = '';
         }
 
+        $this->c->Lang->load('auth');
+
         $this->titles = [
             __('Password reset'),
         ];
         $this->data = [
-            'email' => $args['_email'],
             'formAction' => $this->c->Router->link('Forget'),
             'formToken' => $this->c->Csrf->create('Forget'),
+            'email' => $args['_email'],
         ];
 
         return $this;
@@ -205,50 +199,73 @@ class Auth extends Page
      */
     public function forgetPost()
     {
-        $this->c->Lang->load('login');
+        $this->c->Lang->load('auth');
 
-        $v = $this->c->Validator;
-        $v->setRules([
+        $v = $this->c->Validator->addValidators([
+            'check_email' => [$this, 'vCheckEmail'],
+        ])->setRules([
             'token' => 'token:Forget',
-            'email' => 'required|email',
+            'email' => 'required|string:trim,lower|email|check_email',
         ])->setMessages([
-            'email' => __('Invalid email'),
+            'email.email' => __('Invalid email'),
         ]);
 
-        $ok = $v->validation($_POST);
-        $data = $v->getData();
-        $this->iswev = $v->getErrors();
-
-        if ($ok && ($user = $this->c->UserMapper->getUser($data['email'], 'email')) === null) {
-            $this->iswev['v'][] = __('Invalid email');
-            $ok = false;
-        }
-        if ($ok && ! empty($user->lastEmailSent) && time() - $user->lastEmailSent < 3600) {
-            $this->iswev['e'][] = __('Email flood', (int) (($user->lastEmailSent + 3600 - time()) / 60));
-            $ok = false;
-        }
-
-        if (! $ok) {
+        if (! $v->validation($_POST)) {
+            $this->iswev = $v->getErrors();
             return $this->forget([
-                '_email' => $data['email'],
+                '_email' => $v->email,
             ]);
         }
 
-        $mail = $this->c->Mail;
-        $mail->setFolder($this->c->DIR_LANG)
-            ->setLanguage($user->language);
+        $key = 'p' . $this->c->Secury->randomPass(79);
+        $hash = $this->c->Secury->hash($v->email . $key);
+        $link = $this->c->Router->link('ChangePassword', ['email' => $v->email, 'key' => $key, 'hash' => $hash]);
+        $tplData = [
+            'fRootLink' => $this->c->Router->link('Index'),
+            'fMailer' => __('Mailer', $this->config['o_board_title']),
+            'username' => $this->tmpUser->username,
+            'link' => $link,
+        ];
+        $mail = $this->c->Mail->reset()
+            ->setFolder($this->c->DIR_LANG)
+            ->setLanguage($this->tmpUser->language)
+            ->setTo($v->email, $this->tmpUser->username)
+            ->setFrom($this->config['o_webmaster_email'], __('Mailer', $this->config['o_board_title']))
+            ->setTpl('password_reset.tpl', $tplData);
 
-        $key = 'p' . $this->c->Secury->randomPass(75);
-        $hash = $this->c->Secury->hash($data['email'] . $key);
-        $link = $this->c->Router->link('ChangePassword', ['email' => $data['email'], 'key' => $key, 'hash' => $hash]);
-        $tplData = ['link' => $link];
-
-        if ($mail->send($data['email'], 'password_reset.tpl', $tplData)) {
-            $this->c->UserMapper->updateUser($user->id, ['activate_string' => $key, 'last_email_sent' => time()]);
+        if ($mail->send()) {
+            $this->c->UserMapper->updateUser($this->tmpUser->id, ['activate_string' => $key, 'last_email_sent' => time()]);
             return $this->c->Message->message(__('Forget mail', $this->config['o_admin_email']), false, 200);
         } else {
             return $this->c->Message->message(__('Error mail', $this->config['o_admin_email']), true, 200);
         }
+    }
+
+    /**
+     * Дополнительная проверка email
+     * @param Validator $v
+     * @param string $username
+     * @param int $type
+     * @return array
+     */
+    public function vCheckEmail(Validator $v, $email, $type)
+    {
+        $error = false;
+        // есть ошибки
+        if (! empty($v->getErrors())) {
+        // email забанен
+        } elseif ($this->c->CheckBans->isBanned(null, $email) > 0) {
+            $error = __('Banned email');
+        // нет пользователя с таким email
+        } elseif (! ($user = $this->c->UserMapper->getUser($email, 'email')) instanceof User) {
+            $error = __('Invalid email');
+        // за последний час уже был запрос на этот email
+        } elseif (! empty($user->lastEmailSent) && time() - $user->lastEmailSent < 3600) {
+            $error = [__('Email flood', (int) (($user->lastEmailSent + 3600 - time()) / 60)), 'e'];
+        } else {
+            $this->tmpUser = $user;
+        }
+        return [$email, $type, $error];
     }
 
     /**
@@ -267,7 +284,7 @@ class Auth extends Page
             // что-то пошло не так
             if (! hash_equals($args['hash'], $this->c->Secury->hash($args['email'] . $args['key']))
                 || ! $this->c->Mail->valid($args['email'])
-                || ($user = $this->c->UserMapper->getUser($args['email'], 'email')) === null
+                || ! ($user = $this->c->UserMapper->getUser($args['email'], 'email')) instanceof User
                 || empty($user->activateString)
                 || $user->activateString{0} !== 'p'
                 || ! hash_equals($user->activateString, $args['key'])
@@ -276,8 +293,7 @@ class Auth extends Page
             }
         }
 
-        $this->c->Lang->load('login');
-        $this->c->Lang->load('profile');
+        $this->c->Lang->load('auth');
 
         $this->titles = [
             __('Change pass'),
@@ -300,7 +316,7 @@ class Auth extends Page
         // что-то пошло не так
         if (! hash_equals($args['hash'], $this->c->Secury->hash($args['email'] . $args['key']))
             || ! $this->c->Mail->valid($args['email'])
-            || ($user = $this->c->UserMapper->getUser($args['email'], 'email')) === null
+            || ! ($user = $this->c->UserMapper->getUser($args['email'], 'email')) instanceof User
             || empty($user->activateString)
             || $user->activateString{0} !== 'p'
             || ! hash_equals($user->activateString, $args['key'])
@@ -308,18 +324,18 @@ class Auth extends Page
             return $this->c->Message->message(__('Bad request'), false);
         }
 
-        $this->c->Lang->load('login');
-        $this->c->Lang->load('profile');
+        $this->c->Lang->load('auth');
 
         $v = $this->c->Validator;
         $v->setRules([
             'token'     => 'token:ChangePassword',
-            'password'  => ['required|string|min:8', __('New pass')],
-            'password2' => 'required|same:password',
+            'password'  => ['required|string|min:8|password', __('New pass')],
+            'password2' => ['required|same:password', __('Confirm new pass')],
         ])->setArguments([
             'token' => $args,
         ])->setMessages([
-            'password2' => __('Pass not match'),
+            'password.password'  => __('Pass format'),
+            'password2.same' => __('Pass not match'),
         ]);
 
         if (! $v->validation($_POST)) {
@@ -329,7 +345,7 @@ class Auth extends Page
         }
         $data = $v->getData();
 
-        $this->c->UserMapper->updateUser($user->id, ['password' => password_hash($data['password'], PASSWORD_DEFAULT), 'activate_string' => null]);
+        $this->c->UserMapper->updateUser($user->id, ['password' => password_hash($data['password'], PASSWORD_DEFAULT), 'email_confirmed' => 1, 'activate_string' => null]);
 
         $this->iswev['s'][] = __('Pass updated');
         return $this->login(['_redirect' => $this->c->Router->link('Index')]);

@@ -11,6 +11,11 @@
             "homepage": "https://github.com/MioVisman"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "ForkBB\\": "app/"
+        }
+    },
     "require": {
         "php": ">=5.6.0",
         "artoodetoo/dirk": "dev-master"

@@ -24,8 +24,14 @@ msgstr "."
 msgid "lang_thousands_sep"
 msgstr ","
 
+msgid "Forum rules"
+msgstr "Правила форума"
+
 msgid "Redirecting to index"
 msgstr "Перенаправление на главную страницу форума."
+
+msgid "Error mail"
+msgstr "При отправке письма возникла ошибка. Пожалуйста, повторите попытку позже или свяжитесь с администратором форума по адресу <a href=\"mailto:%1$s\">%1$s</a>."
 
 msgid "Bad request"
 msgstr "Неверный запрос. Ссылка, по которой вы перешли, является неверной или просроченной."
@@ -451,7 +457,7 @@ msgid "New reports"
 msgstr "Есть новые сигналы"
 
 msgid "Maintenance mode enabled"
-msgstr "Включен режим обслуживания!"
+msgstr "<a href=\"%s\">Включен режим обслуживания!</a>"
 
 msgid "Size unit B"
 msgstr "%s байт"

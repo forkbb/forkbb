@@ -12,6 +12,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid "Sign in"
+msgstr "Sign in"
+
+msgid "Banned email"
+msgstr "The email address you entered is banned in this forum."
+
+msgid "Account is not activated"
+msgstr "Account is not activated."
+
 msgid "Wrong user/pass"
 msgstr "Wrong username and/or password."
 
@@ -39,11 +48,29 @@ msgstr "Remember me"
 msgid "Forget mail"
 msgstr "An email has been sent to the specified address with instructions on how to change your password. If it does not arrive you can contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."
 
-msgid "Error mail"
-msgstr "When sending email there was an error. Try later or contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."
-
 msgid "Email flood"
 msgstr "This account has already requested a password reset in the past hour. Please wait %s minutes before trying again."
 
 msgid "Pass not match"
 msgstr "Passwords do not match."
+
+msgid "Change pass"
+msgstr "Change password"
+
+msgid "Change password"
+msgstr "Change password"
+
+msgid "New pass"
+msgstr "New password"
+
+msgid "Confirm new pass"
+msgstr "Confirm new password"
+
+msgid "Pass format"
+msgstr "Password must contain the digit, uppercase and lowercase letters, symbol different from the digits and letters."
+
+msgid "Pass info"
+msgstr "Passwords must be at least 8 characters long. Passwords are case sensitive."
+
+msgid "Pass updated"
+msgstr "Your password has been updated. You can now login with your new password."

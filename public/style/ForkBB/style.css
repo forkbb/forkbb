@@ -194,6 +194,10 @@ select {
   content: ", ";
 }
 
+.f-req:after {
+  content: " *";
+  color: red;
+}
 
 /* Меню */
 
@@ -510,7 +514,7 @@ select {
   padding: 0.625rem;
 }
 
-.f-rules > div {
+#id-rules {
   padding: 0.625rem;
   border: 0.0625rem solid #AA7939;
   background-color: #F8F4E3;
@@ -992,26 +996,27 @@ li + li .f-btn {
   }
 }
 
-/*********/
-/* Логин */
-/*********/
-.f-login .f-wdiv {
+/*********************/
+/* Логин/Регистрация */
+/*********************/
+.f-lrdiv {
   margin: 1rem auto;
   max-width: 20rem;
   border: 0.0625rem solid #AA7939;
   border-radius: 0.1875rem;
 }
 
-.f-login h2 {
+.f-lrdiv h2 {
   padding: 0.625rem;
   text-align: center;
 }
 
-.f-login .f-form {
+.f-lrdiv .f-form {
   padding: 0.625rem;
 }
 
-.f-login .f-form > input {
+.f-lrdiv .f-ctrl,
+.f-lrdiv .f-btn {
   padding: 0.5rem;
   font-size: 1rem;
   display: block;
@@ -1020,7 +1025,10 @@ li + li .f-btn {
   box-sizing: border-box;
 }
 
-.f-login .f-form > label {
+.f-lrdiv .f-child1,
+.f-lrdiv .f-child2,
+.f-lrdiv .f-child3,
+.f-lrdiv .f-child4 {
   display: block;
   width: 100%;
 }
@@ -1031,28 +1039,53 @@ li + li .f-btn {
   font-weight: normal;
 }
 
-.f-login .f-child1 {
+.f-lrdiv .f-child1 {
   font-weight: bold;
 }
 
-.f-login .f-child1:after {
-  content: ":";
-}
-
-.f-login .f-child2 {
+.f-lrdiv .f-child2 {
   font-size: 0.875rem;
 }
 
-.f-login .f-child2 > input {
+.f-lrdiv .f-child2 > input {
   margin: 0 0.625rem 0 0;
 }
 
-.f-login .f-btn {
+.f-lrdiv .f-btn {
   margin: 1rem 0 0.375rem 0;
 }
 
-.f-login .f-child3 {
+.f-lrdiv .f-child3 {
   padding: 0.625rem;
   text-align: center;
   font-size: 0.875rem;
+}
+
+.f-lrdiv .f-child4 {
+  font-size: 0.8125rem;
+  text-align: justify;
+}
+
+.f-ctrl {
+  border: 0.0625rem solid #AA7939;
+}
+
+.f-ctrl:focus {
+  box-shadow: inset 0px 0px 0.25rem 0 rgba(170,121,57,0.5), 0px 0px 0.25rem 0 rgba(170,121,57,0.5);
+}
+
+.f-ctrl + .f-fhint {
+  overflow: hidden;
+  max-height: 0;
+  -webkit-transition: max-height 0.5s, margin 0.5s;
+  -webkit-transition-delay: 0.2s;
+  transition: max-height 0.5s, margin 0.5s;
+  transition-delay: 0.2s;
+}
+
+.f-ctrl:focus + .f-fhint,
+.f-ctrl:active + .f-fhint {
+  margin-top: -0.375rem;
+  margin-bottom: 1rem;
+  max-height: 1000rem;
 }

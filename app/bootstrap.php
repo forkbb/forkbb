@@ -34,8 +34,9 @@ if (!defined('PUN_SEARCH_MAX_WORD'))
 if (!defined('FORUM_MAX_COOKIE_SIZE'))
 	define('FORUM_MAX_COOKIE_SIZE', 4048);
 
-$loader = require __DIR__ . '/../vendor/autoload.php';
-$loader->setPsr4('ForkBB\\', __DIR__ . '/');
+//$loader =
+require __DIR__ . '/../vendor/autoload.php';
+//$loader->setPsr4('ForkBB\\', __DIR__ . '/');
 
 if (file_exists(__DIR__ . '/config/main.php')) {
     $container = new Container(include __DIR__ . '/config/main.php');
@@ -64,15 +65,13 @@ while (! $page instanceof Page && $cur = array_pop($controllers)) {
     $page = $container->$cur;
 }
 
-if ($page instanceof Page) { //????
-    if ($page->getDataForOnline(true)) {
-        $container->Online->handle($page);
-    }
-    $tpl = $container->View->setPage($page)->outputPage();
-    if (defined('PUN_DEBUG')) {
-        $debug = $container->Debug->debug();
-        $debug = $container->View->setPage($debug)->outputPage();
-        $tpl = str_replace('<!-- debuginfo -->', $debug, $tpl);
-    }
-    exit($tpl);
+if ($page->getDataForOnline(true)) {
+    $container->Online->handle($page);
 }
+$tpl = $container->View->setPage($page)->outputPage();
+if (defined('PUN_DEBUG')) {
+    $debug = $container->Debug->debug();
+    $debug = $container->View->setPage($debug)->outputPage();
+    $tpl = str_replace('<!-- debuginfo -->', $debug, $tpl);
+}
+exit($tpl);

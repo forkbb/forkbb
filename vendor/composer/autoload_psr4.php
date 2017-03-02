@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'R2\\Templating\\' => array($vendorDir . '/artoodetoo/dirk/src'),
+    'ForkBB\\' => array($baseDir . '/app'),
 );
