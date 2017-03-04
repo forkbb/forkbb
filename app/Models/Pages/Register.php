@@ -2,8 +2,9 @@
 
 namespace ForkBB\Models\Pages;
 
-use ForkBB\Models\Validator;
+use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\User;
+use ForkBB\Models\Validator;
 
 class Register extends Page
 {
@@ -134,11 +135,9 @@ class Register extends Page
         if ($this->config['o_regs_verify'] == '1') {
             $groupId = PUN_UNVERIFIED;
             $key = 'w' . $this->c->Secury->randomPass(79);
-            $visit = 0;
         } else {
             $groupId = $this->config['o_default_user_group'];
             $key = null;
-            $visit = time(); //????
         }
 
         $newUserId = $this->c->UserMapper->newUser(new User([
@@ -147,8 +146,8 @@ class Register extends Page
             'password' => password_hash($v->password, PASSWORD_DEFAULT),
             'email' => $v->email,
             'email_confirmed' => 0,
-            'last_visit' => $visit,
             'activate_string' => $key,
+            'u_mark_all_read' => time(),
         ], $this->c));
 
         // обновление статистики по пользователям
@@ -157,7 +156,7 @@ class Register extends Page
         }
 
         // уведомление о регистрации
-        if ($this->config['o_mailing_list'] != '' && $this->config['o_regs_report'] == '1') {
+        if ($this->config['o_regs_report'] == '1' && $this->config['o_mailing_list'] != '') {
             $tplData = [
                 'fTitle' => $this->config['o_board_title'],
                 'fRootLink' => $this->c->Router->link('Index'),
@@ -165,13 +164,19 @@ class Register extends Page
                 'username' => $v->username,
                 'userLink' => $this->c->Router->link('User', ['id' => $newUserId, 'name' => $v->username]),
             ];
-            $mail = $this->c->Mail->reset()
-                ->setFolder($this->c->DIR_LANG)
-                ->setLanguage($this->config['o_default_lang'])
-                ->setTo($this->config['o_mailing_list'])
-                ->setFrom($this->config['o_webmaster_email'], __('Mailer', $this->config['o_board_title']))
-                ->setTpl('new_user.tpl', $tplData)
-                ->send();
+
+            try {
+                $this->c->Mail
+                    ->reset()
+                    ->setFolder($this->c->DIR_LANG)
+                    ->setLanguage($this->config['o_default_lang'])
+                    ->setTo($this->config['o_mailing_list'])
+                    ->setFrom($this->config['o_webmaster_email'], __('Mailer', $this->config['o_board_title']))
+                    ->setTpl('new_user.tpl', $tplData)
+                    ->send();
+            } catch (MailException $e) {
+            //????
+            }
         }
 
         $this->c->Lang->load('register');
@@ -187,15 +192,22 @@ class Register extends Page
                 'username' => $v->username,
                 'link' => $link,
             ];
-            $mail = $this->c->Mail->reset()
-                ->setFolder($this->c->DIR_LANG)
-                ->setLanguage($this->c->user->language)
-                ->setTo($v->email)
-                ->setFrom($this->config['o_webmaster_email'], __('Mailer', $this->config['o_board_title']))
-                ->setTpl('welcome.tpl', $tplData);
+
+            try {
+                $isSent = $this->c->Mail
+                    ->reset()
+                    ->setFolder($this->c->DIR_LANG)
+                    ->setLanguage($this->c->user->language)
+                    ->setTo($v->email)
+                    ->setFrom($this->config['o_webmaster_email'], __('Mailer', $this->config['o_board_title']))
+                    ->setTpl('welcome.tpl', $tplData)
+                    ->send();
+            } catch (MailException $e) {
+                $isSent = false;
+            }
 
             // письмо активации аккаунта отправлено
-            if ($mail->send()) {
+            if ($isSent) {
                 return $this->c->Message->message(__('Reg email', $this->config['o_admin_email']), false, 200);
             // форма сброса пароля
             } else {

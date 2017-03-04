@@ -2,8 +2,8 @@
 
 namespace ForkBB\Models;
 
-use ForkBB\Models\User;
 use ForkBB\Core\Container;
+use ForkBB\Models\User;
 use RuntimeException;
 use InvalidArgumentException;
 
@@ -172,7 +172,7 @@ class UserMapper
      */
     public function newUser(User $user)
     {
-        $this->db->query('INSERT INTO '.$this->db->prefix.'users (username, group_id, password, email, email_confirmed, email_setting, timezone, dst, language, style, registered, registration_ip, last_visit, activate_string) VALUES(\''.$this->db->escape($user->username).'\', '.$user->groupId.', \''.$this->db->escape($user->password).'\', \''.$this->db->escape($user->email).'\', '.$user->emailConfirmed.', '.$this->config['o_default_email_setting'].', '.$this->config['o_default_timezone'].' , '.$this->config['o_default_dst'].', \''.$this->db->escape($user->language).'\', \''.$user->style.'\', '.time().', \''.$this->db->escape($this->getIpAddress()).'\', '.$user->lastVisit.', \''.$this->db->escape($user->activateString).'\')') or error('Unable to create user', __FILE__, __LINE__, $this->db->error());
+        $this->db->query('INSERT INTO '.$this->db->prefix.'users (username, group_id, password, email, email_confirmed, email_setting, timezone, dst, language, style, registered, registration_ip, activate_string, u_mark_all_read) VALUES(\''.$this->db->escape($user->username).'\', '.$user->groupId.', \''.$this->db->escape($user->password).'\', \''.$this->db->escape($user->email).'\', '.$user->emailConfirmed.', '.$this->config['o_default_email_setting'].', '.$this->config['o_default_timezone'].' , '.$this->config['o_default_dst'].', \''.$this->db->escape($user->language).'\', \''.$user->style.'\', '.time().', \''.$this->db->escape($this->getIpAddress()).'\', \''.$this->db->escape($user->activateString).'\', '.$user->uMarkAllRead.')') or error('Unable to create user', __FILE__, __LINE__, $this->db->error());
         $new_uid = $this->db->insert_id(); //????
         return $new_uid;
     }

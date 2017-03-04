@@ -491,13 +491,12 @@ class Validator
     {
         if (null === $value) {
             return [$value, $type, false];
-        } elseif ($this->c->Mail->valid($value)) {
-            return [$value, $type, false];
+        }
+        $email = $this->c->Mail->valid($value, true);
+        if (false === $email) {
+            return [(string) $value, $type, 'The :alias is not valid email'];
         } else {
-            if (! is_string($value)) {
-                $value = (string) $value;
-            }
-            return [$value, $type, 'The :alias is not valid email'];
+            return [$email, $type, false];
         }
     }
 

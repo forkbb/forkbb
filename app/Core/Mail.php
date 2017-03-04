@@ -2,7 +2,8 @@
 
 namespace ForkBB\Core;
 
-use RuntimeException;
+use ForkBB\Core\Exceptions\MailException;
+use ForkBB\Core\Exceptions\StmpException;
 
 class Mail
 {
@@ -81,14 +82,33 @@ class Mail
     /**
      * Валидация email
      * @param mixed $email
-     * @return bool
+     * @param bool $strict
+     * @param bool $idna
+     * @return false|string
      */
-    public function valid($email)
+    public function valid($email, $strict = false, $idna = false)
     {
-        return is_string($email)
-            && strlen($email) <= 80
-            && trim($email) === $email
-            && preg_match('%^.+@.+$%D', $email);
+        if (! is_string($email)
+            || mb_strlen($email, 'UTF-8') > 80
+            || ! preg_match('%^([\w!#$\%&\'*+-/=?^`{|}~]+(?:\.[\w!#$\%&\'*+-/=?^`{|}~]+)*)@([^\x00-\x20]+)$%D', $email, $matches)
+        ) {
+            return false;
+        }
+        $local = $matches[1];
+        $domain = mb_strtolower($matches[2], 'UTF-8');
+        if (! preg_match('%^(?:[\p{L}\p{N}]+(?:\-[\p{L}\p{N}]+)*\.)*\p{L}+$%u', $domain)) {
+            return false;
+        }
+
+        $domainASCII = idn_to_ascii($domain);
+
+        if ($strict) {
+            $mx = dns_get_record($domainASCII, DNS_MX);
+            if (empty($mx)) {
+                return false;
+            }
+        }
+        return $local . '@' . ($idna ? $domainASCII : $domain);
     }
 
     /**
@@ -127,8 +147,8 @@ class Mail
             $email = preg_split('%[,\n\r]%', (string) $email, -1, PREG_SPLIT_NO_EMPTY);
         }
         foreach($email as $cur) {
-            $cur = trim((string) $cur);
-            if ($this->valid($cur)) {
+            $cur = $this->valid(trim((string) $cur), false, true);
+            if (false !== $cur) {
                 $this->to[] = $this->formatAddress($cur, $name);
             }
         }
@@ -155,7 +175,8 @@ class Mail
      */
     public function setFrom($email, $name = null)
     {
-        if ($this->valid($email)) {
+        $email = $this->valid($email, false, true);
+        if (false !== $email) {
             $this->headers['From'] = $this->formatAddress($email, $name);
         }
         return $this;
@@ -169,7 +190,8 @@ class Mail
      */
     public function setReplyTo($email, $name = null)
     {
-        if ($this->valid($email)) {
+        $email = $this->valid($email, false, true);
+        if (false !== $email) {
             $this->headers['Reply-To'] = $this->formatAddress($email, $name);
         }
         return $this;
@@ -183,8 +205,7 @@ class Mail
      */
     protected function formatAddress($email, $name = null)
     {
-        $email = $this->filterEmail($email);
-        if (null === $name || ! is_string($name) || strlen(trim($name)) == 0) {
+        if (! is_string($name) || strlen(trim($name)) == 0) {
             return $email;
         } else {
             $name = $this->encodeText($this->filterName($name));
@@ -207,30 +228,13 @@ class Mail
     }
 
     /**
-     * Фильтрация email
-     * @param string $email
-     * @return string
-     */
-    protected function filterEmail($email)
-    {
-        return preg_replace('%[\x00-\x1F",<>]%', '', $email);
-    }
-
-    /**
      * Фильтрация имени
      * @param string $name
      * @return string
      */
     protected function filterName($name)
     {
-        return strtr(trim($name), [
-            "\r" => '',
-            "\n" => '',
-            "\t" => '',
-            '"'  => '\'',
-            '<'  => '[',
-            '>'  => ']',
-        ]);
+        return addcslashes(preg_replace('%[\x00-\x1F]%', '', trim($name)), '\\"');
     }
 
     /**
@@ -259,14 +263,14 @@ class Mail
      * Задает сообщение по шаблону
      * @param string $tpl
      * @param array $data
-     * @throws \RuntimeException
+     * @throws MailException
      * @return Mail
      */
     public function setTpl($tpl, array $data)
     {
         $file = rtrim($this->folder, '\\/') . '/' . $this->language . '/mail/' . $tpl;
         if (! file_exists($file)) {
-            throw new RuntimeException('Tpl not found');
+            throw new MailException('The template isn\'t found (' . $file . ').');
         }
         $tpl = trim(file_get_contents($file));
         foreach ($data as $key => $val) {
@@ -274,7 +278,7 @@ class Mail
         }
         list($subject, $tpl) = explode("\n", $tpl, 2);
         if (! isset($tpl)) {
-            throw new RuntimeException('Tpl empty');
+            throw new MailException('The template is empty (' . $file . ').');
         }
         $this->setSubject(substr($subject, 8));
         return $this->setMessage($tpl);
@@ -283,7 +287,6 @@ class Mail
     /**
      * Задает сообщение
      * @param string $message
-     * @throws \RuntimeException
      * @return Mail
      */
     public function setMessage($message)
@@ -297,21 +300,22 @@ class Mail
 
     /**
      * Отправляет письмо
+     * @throws MailException
      * @return bool
      */
     public function send()
     {
         if (empty($this->to)) {
-            throw new RuntimeException('No recipient(s)');
+            throw new MailException('No recipient for the email.');
         }
         if (empty($this->headers['From'])) {
-            throw new RuntimeException('No sender');
+            throw new MailException('No sender for the email.');
         }
         if (! isset($this->headers['Subject'])) {
-            throw new RuntimeException('Subject empty');
+            throw new MailException('The subject of the email is empty.');
         }
         if (trim($this->message) == '') {
-            throw new RuntimeException('Message empty');
+            throw new MailException('The body of the email is empty.');
         }
 
         $this->headers = array_replace($this->headers, [
@@ -359,7 +363,7 @@ class Mail
 
     /**
      * Отправка письма через smtp
-     * @throws \RuntimeException
+     * @throws SmtpException
      * @return bool
      */
     protected function smtp()
@@ -367,7 +371,7 @@ class Mail
         // подлючение
         if (! is_resource($this->connect)) {
             if (($connect = @fsockopen($this->smtp['host'], $this->smtp['port'], $errno, $errstr, 5)) === false) {
-                throw new RuntimeException('Could not connect to smtp host "' . $this->smtp['host'] . '" (' . $errno . ') (' . $errstr . ')');
+                throw new SmtpException('Couldn\'t connect to smtp host "' . $this->smtp['host'] . ':' . $this->smtp['port'] . '" (' . $errno . ') (' . $errstr . ').');
             }
             stream_set_timeout($connect, 5);
             $this->connect = $connect;
@@ -387,15 +391,6 @@ class Mail
             $this->smtpData('NOOP', '250');
         }
         return true;
-    }
-
-    public function __destruct()
-    {
-        // завершение сеанса smtp
-        if (is_resource($this->connect)) {
-            $this->smtpData('QUIT', null);
-            @fclose($this->connect);
-        }
     }
 
     /**
@@ -425,23 +420,25 @@ class Mail
     }
 
     /**
+     * Отправляет данные на сервер
+     * Проверяет ответ
+     * Возвращает код ответа
      * @param string $data
      * @param mixed $code
-     * @throws \RuntimeException
+     * @throws SmtpException
      * @return string
      */
     protected function smtpData($data, $code)
     {
-//var_dump($data);
-        if (is_string($data)) {
-            @fwrite($this->connect, $data . $this->EOL);
+        if (is_resource($this->connect) && is_string($data)) {
+            if (@fwrite($this->connect, $data . $this->EOL) === false) {
+                throw new SmtpException('Couldn\'t send data to mail server.');
+            }
         }
-
         $response = '';
-//        while (! isset($get{3}) || $get{3} !== ' ') {
-        while (is_resource($this->connect) && !feof($this->connect)) {
+        while (is_resource($this->connect) && ! feof($this->connect)) {
             if (($get = @fgets($this->connect, 512)) === false) {
-                throw new RuntimeException('Couldn\'t get mail server response codes');
+                throw new SmtpException('Couldn\'t get mail server response codes.');
             }
             $response .= $get;
             if (isset($get{3}) && $get{3} === ' ') {
@@ -449,9 +446,8 @@ class Mail
                 break;
             }
         }
-//var_dump($response);
         if ($code !== null && ! in_array($return, (array) $code)) {
-            throw new RuntimeException('Unable to send email. Response of the SMTP server: "'.$get.'"');
+            throw new SmtpException('Unable to send email. Response of mail server: "' . $get . '"');
         }
         return $return;
     }
@@ -480,5 +476,17 @@ class Mail
         return empty($_SERVER['SERVER_NAME'])
             ? (isset($_SERVER['SERVER_ADDR']) ? '[' . $_SERVER['SERVER_ADDR'] . ']' : '[127.0.0.1]')
             : $_SERVER['SERVER_NAME'];
+    }
+
+    /**
+     * Деструктор
+     */
+    public function __destruct()
+    {
+        // завершение сеанса smtp
+        if (is_resource($this->connect)) {
+            $this->smtpData('QUIT', null);
+            @fclose($this->connect);
+        }
     }
 }

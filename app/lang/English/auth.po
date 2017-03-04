@@ -74,3 +74,6 @@ msgstr "Passwords must be at least 8 characters long. Passwords are case sensiti
 
 msgid "Pass updated"
 msgstr "Your password has been updated. You can now login with your new password."
+
+msgid "Account activated"
+msgstr "Account activated."

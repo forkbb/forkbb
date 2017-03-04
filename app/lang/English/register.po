@@ -67,4 +67,4 @@ msgid "Login format"
 msgstr "The username must begin with a letter. May contain letters, numbers, spaces, dots, dashes and underscores."
 
 msgid "Error welcom mail"
-msgstr "When sending email there was an error. Please use the password reset form or contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."
+msgstr "When sending email there was an error. Please use the password reset form for activate your account or contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."

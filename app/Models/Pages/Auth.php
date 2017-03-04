@@ -2,8 +2,9 @@
 
 namespace ForkBB\Models\Pages;
 
-use ForkBB\Models\Validator;
+use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\User;
+use ForkBB\Models\Validator;
 
 class Auth extends Page
 {
@@ -226,14 +227,21 @@ class Auth extends Page
             'username' => $this->tmpUser->username,
             'link' => $link,
         ];
-        $mail = $this->c->Mail->reset()
-            ->setFolder($this->c->DIR_LANG)
-            ->setLanguage($this->tmpUser->language)
-            ->setTo($v->email, $this->tmpUser->username)
-            ->setFrom($this->config['o_webmaster_email'], __('Mailer', $this->config['o_board_title']))
-            ->setTpl('password_reset.tpl', $tplData);
 
-        if ($mail->send()) {
+        try {
+            $isSent = $this->c->Mail
+                ->reset()
+                ->setFolder($this->c->DIR_LANG)
+                ->setLanguage($this->tmpUser->language)
+                ->setTo($v->email, $this->tmpUser->username)
+                ->setFrom($this->config['o_webmaster_email'], __('Mailer', $this->config['o_board_title']))
+                ->setTpl('password_reset.tpl', $tplData)
+                ->send();
+        } catch (MailException $e) {
+            $isSent = false;
+        }
+
+        if ($isSent) {
             $this->c->UserMapper->updateUser($this->tmpUser->id, ['activate_string' => $key, 'last_email_sent' => time()]);
             return $this->c->Message->message(__('Forget mail', $this->config['o_admin_email']), false, 200);
         } else {
@@ -283,7 +291,6 @@ class Auth extends Page
         } else {
             // что-то пошло не так
             if (! hash_equals($args['hash'], $this->c->Secury->hash($args['email'] . $args['key']))
-                || ! $this->c->Mail->valid($args['email'])
                 || ! ($user = $this->c->UserMapper->getUser($args['email'], 'email')) instanceof User
                 || empty($user->activateString)
                 || $user->activateString{0} !== 'p'
@@ -294,6 +301,12 @@ class Auth extends Page
         }
 
         $this->c->Lang->load('auth');
+
+        if ($user->isUnverified) {
+            $this->c->UserMapper->updateUser($user->id, ['group_id' => $this->config['o_default_user_group'], 'email_confirmed' => 1]);
+            $this->c->{'users_info update'};
+            $this->iswev['i'][] = __('Account activated');
+        }
 
         $this->titles = [
             __('Change pass'),
@@ -315,7 +328,6 @@ class Auth extends Page
     {
         // что-то пошло не так
         if (! hash_equals($args['hash'], $this->c->Secury->hash($args['email'] . $args['key']))
-            || ! $this->c->Mail->valid($args['email'])
             || ! ($user = $this->c->UserMapper->getUser($args['email'], 'email')) instanceof User
             || empty($user->activateString)
             || $user->activateString{0} !== 'p'
