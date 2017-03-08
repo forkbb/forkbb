@@ -34,7 +34,6 @@ class CheckBans
     {
         $user = $this->c->user;
 
-        // Для админов и при отсутствии банов прекращаем проверку
         if ($user->isAdmin) {
             return null;
         } elseif ($user->isGuest) {
@@ -46,9 +45,9 @@ class CheckBans
         if ($banned) {
             $this->c->Online->delete($user); //???? а зачем это надо?
             return $this->ban;
+        } else {
+            return null;
         }
-
-        return null;
     }
 
     /**
@@ -102,12 +101,9 @@ class CheckBans
                 }
             }
         }
-
-        // If we removed any expired bans during our run-through, we need to regenerate the bans cache
         if (! empty($remove))
         {
-            $db = $this->c->DB;
-            $db->query('DELETE FROM '.$db->prefix.'bans WHERE id IN (' . implode(',', $remove) . ')') or error('Unable to delete expired ban', __FILE__, __LINE__, $db->error());
+            $this->c->DB->exec('DELETE FROM ::bans WHERE id IN (?ai:remove)', [':remove' => $remove]);
             $this->c->{'bans update'};
         }
         return $banned;

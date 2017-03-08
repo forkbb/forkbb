@@ -14,10 +14,16 @@
             </dd>
             <dt>{!! __('Database label') !!}</dt>
             <dd>
-              {!! $dbVersion !!}
+              {{ $dbVersion }}
 @if($tRecords && $tSize)
               <br>{!! __('Database data rows', $tRecords) !!}
               <br>{!! __('Database data size', $tSize) !!}
+@endif
+@if($tOther)
+              <br><br>{!! __('Other')!!}
+@foreach($tOther as $key => $value)
+              <br>{{ $key }} = {{ $value }}
+@endforeach
 @endif
             </dd>
 @endif

@@ -5,7 +5,6 @@ namespace ForkBB\Models;
 use ForkBB\Core\Container;
 use ForkBB\Models\User;
 use ForkBB\Models\Pages\Page;
-use RuntimeException;
 
 class Online
 {
@@ -27,28 +26,14 @@ class Online
     protected $config;
 
     /**
-     * @var DB
-     */
-    protected $db;
-
-    /**
-     * @var User
-     */
-    protected $user;
-
-    /**
      * Конструктор
      * @param array $config
-     * @param DB $db
-     * @param User $user
      * @param Container $container
      */
-    public function __construct(array $config, $db, User $user, Container $container)
+    public function __construct(Container $container)
     {
-        $this->config = $config;
-        $this->db = $db;
-        $this->user = $user;
         $this->c = $container;
+        $this->config = $container->config;
     }
 
     /**
@@ -83,13 +68,13 @@ class Online
         $setIdle = false;
 
         if ($this->config['o_users_online'] == '1' && $type) {
-            $result = $this->db->query('SELECT user_id, ident, logged, idle, o_position, o_name FROM '.$this->db->prefix.'online ORDER BY logged') or error('Unable to fetch users from online list', __FILE__, __LINE__, $this->db->error());
+            $stmt = $this->c->DB->query('SELECT user_id, ident, logged, idle, o_position, o_name FROM ::online ORDER BY logged');
         } elseif ($type) {
-            $result = $this->db->query('SELECT user_id, ident, logged, idle FROM '.$this->db->prefix.'online ORDER BY logged') or error('Unable to fetch users from online list', __FILE__, __LINE__, $this->db->error());
+            $stmt = $this->c->DB->query('SELECT user_id, ident, logged, idle FROM ::online ORDER BY logged');
         } else {
-            $result = $this->db->query('SELECT user_id, ident, logged, idle FROM '.$this->db->prefix.'online WHERE logged<'.$tOnline) or error('Unable to fetch users from online list', __FILE__, __LINE__, $this->db->error());
+            $stmt = $this->c->DB->query('SELECT user_id, ident, logged, idle FROM ::online WHERE logged<?i:online', [':online' => $tOnline]);
         }
-        while ($cur = $this->db->fetch_assoc($result)) {
+        while ($cur = $stmt->fetch()) {
 
             // посетитель уже не онлайн (или почти не онлайн)
             if ($cur['logged'] < $tOnline) {
@@ -97,7 +82,7 @@ class Online
                 if ($cur['user_id'] > 1) {
                     if ($cur['logged'] < $tVisit) {
                         $deleteU = true;
-                        $this->db->query('UPDATE '.$this->db->prefix.'users SET last_visit='.$cur['logged'].' WHERE id='.$cur['user_id']) or error('Unable to update user visit data', __FILE__, __LINE__, $this->db->error());
+                        $this->c->DB->exec('UPDATE ::users SET last_visit=?i:last WHERE id=?i:id', [':last' => $cur['logged'], ':id' => $cur['user_id']]);
                     } elseif ($cur['idle'] == '0') {
                         $setIdle = true;
                     }
@@ -140,36 +125,28 @@ class Online
                 ++$all;
             }
         }
-        $this->db->free_result($result);
 
         // удаление просроченных пользователей
         if ($deleteU) {
-            $this->db->query('DELETE FROM '.$this->db->prefix.'online WHERE logged<'.$tVisit) or error('Unable to delete from online list', __FILE__, __LINE__, $this->db->error());
+            $this->c->DB->exec('DELETE FROM ::online WHERE logged<?i:visit', [':visit' => $tVisit]);
         }
 
         // удаление просроченных гостей
         if ($deleteG) {
-            $this->db->query('DELETE FROM '.$this->db->prefix.'online WHERE user_id=1 AND logged<'.$tOnline) or error('Unable to delete from online list', __FILE__, __LINE__, $this->db->error());
+            $this->c->DB->exec('DELETE FROM ::online WHERE user_id=1 AND logged<?i:online', [':online' => $tOnline]);
         }
 
         // обновление idle
         if ($setIdle) {
-            $this->db->query('UPDATE '.$this->db->prefix.'online SET idle=1 WHERE logged<'.$tOnline) or error('Unable to update into online list', __FILE__, __LINE__, $this->db->error());
+            $this->c->DB->exec('UPDATE ::online SET idle=1 WHERE logged<?i:online', [':online' => $tOnline]);
         }
 
         // обновление максимального значение пользоватеелй онлайн
         if ($this->config['st_max_users'] < $all) {
-            $this->db->query('UPDATE '.$this->db->prefix.'config SET conf_value=\''.$all.'\' WHERE conf_name=\'st_max_users\'') or error('Unable to update config value \'st_max_users\'', __FILE__, __LINE__, $this->db->error());
-            $this->db->query('UPDATE '.$this->db->prefix.'config SET conf_value=\''.$now.'\' WHERE conf_name=\'st_max_users_time\'') or error('Unable to update config value \'st_max_users_time\'', __FILE__, __LINE__, $this->db->error());
-
+            $this->c->DB->exec('UPDATE ::config SET conf_value=?s:value WHERE conf_name=?s:name', [':value' => $all, ':name' => 'st_max_users']);
+            $this->c->DB->exec('UPDATE ::config SET conf_value=?s:value WHERE conf_name=?s:name', [':value' => $now, ':name' => 'st_max_users_time']);
             $this->c->{'config update'};
         }
-/*
-@set_time_limit(0);
-for ($i=0;$i<100;++$i) {
-    $this->db->query('REPLACE INTO '.$this->db->prefix.'online (user_id, ident, logged, o_position, o_name) VALUES(1, \''.$this->db->escape($i).'\', '.time().', \''.$this->db->escape($position).'\', \'Super Puper '.$this->db->escape($i).'\')') or error('Unable to insert into online list', __FILE__, __LINE__, $this->db->error());
-}
-*/
         return [$users, $guests, $bots];
     }
 
@@ -181,52 +158,30 @@ for ($i=0;$i<100;++$i) {
     {
         $now = time();
         // гость
-        if ($this->user->isGuest) {
-            $oname = (string) $this->user->isBot;
-
-            if ($this->user->isLogged) {
-                $this->db->query('UPDATE '.$this->db->prefix.'online SET logged='.$now.', o_position=\''.$this->db->escape($position).'\', o_name=\''.$this->db->escape($oname).'\' WHERE user_id=1 AND ident=\''.$this->db->escape($this->user->ip).'\'') or error('Unable to update online list', __FILE__, __LINE__, $this->db->error());
+        if ($this->c->user->isGuest) {
+            $vars = [
+                ':logged' => time(),
+                ':pos' => $position,
+                ':name' => (string) $this->c->user->isBot,
+                ':ip' => $this->c->user->ip
+            ];
+            if ($this->c->user->isLogged) {
+                $this->c->DB->exec('UPDATE ::online SET logged=?i:logged, o_position=?s:pos, o_name=?s:name WHERE user_id=1 AND ident=?s:ip', $vars);
             } else {
-                $this->db->query('INSERT INTO '.$this->db->prefix.'online (user_id, ident, logged, o_position, o_name) SELECT 1, \''.$this->db->escape($this->user->ip).'\', '.$now.', \''.$this->db->escape($position).'\', \''.$this->db->escape($oname).'\' FROM '.$this->db->prefix.'groups WHERE NOT EXISTS (SELECT 1 FROM '.$this->db->prefix.'online WHERE user_id=1 AND ident=\''.$this->db->escape($this->user->ip).'\') LIMIT 1') or error('Unable to insert into online list', __FILE__, __LINE__, $this->db->error());
-
-                // With MySQL/MySQLi/SQLite, REPLACE INTO avoids a user having two rows in the online table
-/*                switch ($this->c->DB_TYPE) {
-                    case 'mysql':
-                    case 'mysqli':
-                    case 'mysql_innodb':
-                    case 'mysqli_innodb':
-                    case 'sqlite':
-                        $this->db->query('REPLACE INTO '.$this->db->prefix.'online (user_id, ident, logged, o_position, o_name) VALUES(1, \''.$this->db->escape($this->user->ip).'\', '.$now.', \''.$this->db->escape($position).'\', \''.$this->db->escape($oname).'\')') or error('Unable to insert into online list', __FILE__, __LINE__, $this->db->error());
-                        break;
-
-                    default:
-                        $this->db->query('INSERT INTO '.$this->db->prefix.'online (user_id, ident, logged, o_position, o_name) SELECT 1, \''.$this->db->escape($this->user->ip).'\', '.$now.', \''.$this->db->escape($position).'\', \''.$this->db->escape($oname).'\' WHERE NOT EXISTS (SELECT 1 FROM '.$this->db->prefix.'online WHERE user_id=1 AND ident=\''.$this->db->escape($this->user->ip).'\')') or error('Unable to insert into online list', __FILE__, __LINE__, $this->db->error());
-                        break;
-                }
-*/
+                $this->c->DB->exec('INSERT INTO ::online (user_id, ident, logged, o_position, o_name) SELECT 1, ?s:ip, ?i:logged, ?s:pos, ?s:name FROM ::groups WHERE NOT EXISTS (SELECT 1 FROM ::online WHERE user_id=1 AND ident=?s:ip) LIMIT 1', $vars);
             }
         } else {
         // пользователь
-            if ($this->user->isLogged) {
-                $idle_sql = ($this->user->idle == '1') ? ', idle=0' : '';
-                $this->db->query('UPDATE '.$this->db->prefix.'online SET logged='.$now.$idle_sql.', o_position=\''.$this->db->escape($position).'\' WHERE user_id='.$this->user->id) or error('Unable to update online list', __FILE__, __LINE__, $this->db->error());
+            $vars = [
+                ':logged' => time(),
+                ':pos' => $position,
+                ':id' => $this->c->user->id,
+                ':name' => $this->c->user->username,
+            ];
+            if ($this->c->user->isLogged) {
+                $this->c->DB->exec('UPDATE ::online SET logged=?i:logged, idle=0, o_position=?s:pos WHERE user_id=?i:id', $vars);
             } else {
-                $this->db->query('INSERT INTO '.$this->db->prefix.'online (user_id, ident, logged, o_position) SELECT '.$this->user->id.', \''.$this->db->escape($this->user->username).'\', '.$now.', \''.$this->db->escape($position).'\' FROM '.$this->db->prefix.'groups WHERE NOT EXISTS (SELECT 1 FROM '.$this->db->prefix.'online WHERE user_id='.$this->user->id.') LIMIT 1') or error('Unable to insert into online list', __FILE__, __LINE__, $this->db->error());
-                // With MySQL/MySQLi/SQLite, REPLACE INTO avoids a user having two rows in the online table
-/*                switch ($this->c->DB_TYPE) {
-                    case 'mysql':
-                    case 'mysqli':
-                    case 'mysql_innodb':
-                    case 'mysqli_innodb':
-                    case 'sqlite':
-                        $this->db->query('REPLACE INTO '.$this->db->prefix.'online (user_id, ident, logged, o_position) VALUES('.$this->user->id.', \''.$this->db->escape($this->user->username).'\', '.$now.', \''.$this->db->escape($position).'\')') or error('Unable to insert into online list', __FILE__, __LINE__, $this->db->error());
-                        break;
-
-                    default:
-                        $this->db->query('INSERT INTO '.$this->db->prefix.'online (user_id, ident, logged, o_position) SELECT '.$this->user->id.', \''.$this->db->escape($this->user->username).'\', '.$now.', \''.$this->db->escape($position).'\' WHERE NOT EXISTS (SELECT 1 FROM '.$this->db->prefix.'online WHERE user_id='.$this->user->id.')') or error('Unable to insert into online list', __FILE__, __LINE__, $this->db->error());
-                        break;
-                }
-*/
+                $this->c->DB->exec('INSERT INTO ::online (user_id, ident, logged, o_position) SELECT ?i:id, ?s:name, ?i:logged, ?s:pos FROM ::groups WHERE NOT EXISTS (SELECT 1 FROM ::online WHERE user_id=?i:id) LIMIT 1', $vars);
             }
         }
     }
@@ -237,9 +192,9 @@ for ($i=0;$i<100;++$i) {
     public function delete(User $user)
     {
         if ($user->isGuest) {
-            $this->db->query('DELETE FROM '.$this->db->prefix.'online WHERE user_id=1 AND ident=\''.$this->db->escape($user->ip).'\'') or error('Unable to delete from online list', __FILE__, __LINE__, $this->db->error());
+            $this->c->DB->exec('DELETE FROM ::online WHERE user_id=1 AND ident=?s:ip', [':ip' => $user->ip]);
         } else {
-            $this->db->query('DELETE FROM '.$this->db->prefix.'online WHERE user_id='.$user->id) or error('Unable to delete from online list', __FILE__, __LINE__, $this->db->error());
+            $this->c->DB->exec('DELETE FROM ::online WHERE user_id=?i:id', [':id' => $user->id]);
         }
     }
 }

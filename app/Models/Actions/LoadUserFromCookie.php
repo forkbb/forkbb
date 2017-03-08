@@ -62,7 +62,7 @@ class LoadUserFromCookie
             // быстрое переключение языка - Visman
             $language = $this->cookie->get('glang');
             if (null !== $language) {
-                $language = preg_replace('%[^\w]%', '', $language);
+                $language = preg_replace('%[^a-zA-Z0-9_]%', '', $language);
                 $languages = forum_list_langs();
                 if (in_array($language, $languages)) {
                     $user->language = $language;
@@ -138,7 +138,7 @@ class LoadUserFromCookie
             $agent = preg_replace('%(?:https?://|www\.)[^\)]*(\)[^/]+$)?%i', ' ', $agent);
         }
         if (strpos($agent, '@') !== false) {
-            $agent = preg_replace('%\b[\w\.-]+@[^\)]+%', ' ', $agent);
+            $agent = preg_replace('%\b[a-z0-9_\.-]+@[^\)]+%i', ' ', $agent);
         }
 
         $agentL = strtolower($agent);

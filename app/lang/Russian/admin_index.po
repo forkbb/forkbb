@@ -140,3 +140,6 @@ msgstr "Строк: %s"
 
 msgid "Database data size"
 msgstr "Размер: %s"
+
+msgid "Other"
+msgstr "Дополнительные данные:"

@@ -1,374 +1,524 @@
 <?php
 
-/**
- * Copyright (C) 2008-2012 FluxBB
- * based on code by Rickard Andersson copyright (C) 2002-2008 PunBB
- * License: http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
- */
-
 namespace ForkBB\Core\DB;
 
-// Make sure we have built in support for MySQL
-if (!function_exists('mysql_connect'))
-	exit('This PHP environment doesn\'t have MySQL support built in. MySQL support is required if you want to use a MySQL database to run this forum. Consult the PHP documentation for further assistance.');
+use ForkBB\Core\DB;
+use PDO;
+use PDOStatement;
+use PDOException;
 
-
-class DBLayer
+class Mysql
 {
-	var $prefix;
-	var $link_id;
-	var $query_result;
+    /**
+     * @var DB
+     */
+    protected $db;
 
-	var $saved_queries = array();
-	var $num_queries = 0;
+    /**
+     * Префикс для таблиц базы
+     * @var string
+     */
+    protected $dbPrefix;
 
-	var $error_no = false;
-	var $error_msg = 'Unknown';
+    /**
+     * Набор символов БД
+     * @var string
+     */
+    protected $dbCharSet;
 
-	var $datatype_transformations = array(
-		'%^SERIAL$%'	=>	'INT(10) UNSIGNED AUTO_INCREMENT'
-	);
+    /**
+     * Массив замены типов полей таблицы
+     * @var array
+     */
+    protected $dbTypeRepl = [
+        '%^SERIAL$%i' => 'INT(10) UNSIGNED AUTO_INCREMENT',
+    ];
 
+    /**
+     * Конструктор
+     *
+     * @param DB $db
+     * @param string $prefix
+     */
+    public function __construct(DB $db, $prefix)
+    {
+        $this->db = $db;
+        $this->dbPrefix = $prefix;
+    }
 
-	function __construct($db_host, $db_username, $db_password, $db_name, $db_prefix, $p_connect)
+    /**
+     * Перехват неизвестных методов
+     *
+     * @param string $name
+     * @param array $args
+     *
+     * @throws PDOException
+     */
+    public function __call($name, array $args)
+    {
+        throw new PDOException("Method '{$name}' not found in DB driver.");
+    }
+
+    /**
+     * Проверяет строку на допустимые символы
+     *
+     * @param string $str
+     *
+     * @throws PDOException
+     */
+    protected function testStr($str)
+    {
+        if (! is_string($str) || preg_match('%[^a-zA-Z0-9_]%', $str)) {
+            throw new PDOException("Name '{$str}' have bad characters.");
+        }
+    }
+
+    /**
+     * Операции над полями индексов: проверка, замена
+     *
+     * @param array $arr
+     *
+     * @return string
+     */
+    protected function replIdxs(array $arr)
+    {
+        foreach ($arr as &$value) {
+            if (preg_match('%^(.*)\s*(\(\d+\))$%', $value, $matches)) {
+                $this->testStr($matches[1]);
+                $value = "`{$matches[1]}`{$matches[2]}";
+            } else {
+                $this->testStr($value);
+                $value = "`{$value}`";
+            }
+            unset($value);
+        }
+        return implode(',', $arr);
+    }
+
+    /**
+     * Замена типа поля в соответствии с dbTypeRepl
+     *
+     * @param string $type
+     *
+     * @return string
+     */
+    protected function replType($type)
+    {
+        return preg_replace(array_keys($this->dbTypeRepl), array_values($this->dbTypeRepl), $type);
+    }
+
+    /**
+     * Конвертирует данные в строку для DEFAULT
+     *
+     * @param mixed $data
+     *
+     * @throws PDOException
+     *
+     * @return string
+     */
+    protected function convToStr($data) {
+        if (is_string($data)) {
+            return $this->db->quote($data);
+        } elseif (is_numeric($data)) {
+            return (string) $data;
+        } elseif (is_bool($data)) {
+            return $data ? 'true' : 'false';
+        } else {
+            throw new PDOException('Invalid data type for DEFAULT.');
+        }
+    }
+
+    /**
+     * Вовзращает набор символов БД
+     *
+     * @return string
+     */
+    protected function getCharSet()
+    {
+        if (! $this->dbCharSet) {
+            $stmt = $this->db->query("SHOW VARIABLES LIKE 'character\_set\_database'");
+            $this->dbCharSet = $stmt->fetchColumn(1);
+            $stmt->closeCursor();
+        }
+        return $this->dbCharSet;
+    }
+
+    /**
+     * Проверяет наличие таблицы в базе
+     *
+     * @param string $table
+     * @param bool $noPrefix
+     *
+     * @return bool
+     */
+    public function tableExists($table, $noPrefix = false)
+    {
+        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        try {
+            $stmt = $this->db->query('SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:table', [':table' => $table]);
+            $result = $stmt->fetch();
+            $stmt->closeCursor();
+        } catch (PDOException $e) {
+            return false;
+        }
+        return ! empty($result);
+    }
+
+    /**
+     * Проверяет наличие поля в таблице
+     *
+     * @param string $table
+     * @param string $field
+     * @param bool $noPrefix
+     *
+     * @return bool
+     */
+	public function fieldExists($table, $field, $noPrefix = false)
 	{
-		$this->prefix = $db_prefix;
-
-		if ($p_connect)
-			$this->link_id = @mysql_pconnect($db_host, $db_username, $db_password);
-		else
-			$this->link_id = @mysql_connect($db_host, $db_username, $db_password);
-
-		if ($this->link_id)
-		{
-			if (!@mysql_select_db($db_name, $this->link_id))
-				error('Unable to select database. MySQL reported: '.mysql_error(), __FILE__, __LINE__);
-		}
-		else
-			error('Unable to connect to MySQL server. MySQL reported: '.mysql_error(), __FILE__, __LINE__);
-
-		// Setup the client-server character set (UTF-8)
-		if (!defined('FORUM_NO_SET_NAMES'))
-			$this->set_names('utf8');
-
-		return $this->link_id;
-	}
-	
-
-	function start_transaction()
-	{
-		return;
-	}
-
-
-	function end_transaction()
-	{
-		return;
-	}
-
-
-	function query($sql, $unbuffered = false)
-	{
-		if (defined('PUN_SHOW_QUERIES'))
-			$q_start = microtime(true);
-
-		if ($unbuffered)
-			$this->query_result = @mysql_unbuffered_query($sql, $this->link_id);
-		else
-			$this->query_result = @mysql_query($sql, $this->link_id);
-
-		if ($this->query_result)
-		{
-			if (defined('PUN_SHOW_QUERIES'))
-				$this->saved_queries[] = array($sql, sprintf('%.5f', microtime(true) - $q_start));
-
-			++$this->num_queries;
-
-			return $this->query_result;
-		}
-		else
-		{
-			if (defined('PUN_SHOW_QUERIES'))
-				$this->saved_queries[] = array($sql, 0);
-
-			$this->error_no = @mysql_errno($this->link_id);
-			$this->error_msg = @mysql_error($this->link_id);
-
-			return false;
-		}
-	}
-
-
-	function result($query_id = 0, $row = 0, $col = 0)
-	{
-		return ($query_id) ? @mysql_result($query_id, $row, $col) : false;
-	}
-
-
-	function fetch_assoc($query_id = 0)
-	{
-		return ($query_id) ? @mysql_fetch_assoc($query_id) : false;
-	}
-
-
-	function fetch_row($query_id = 0)
-	{
-		return ($query_id) ? @mysql_fetch_row($query_id) : false;
-	}
-
-
-	function num_rows($query_id = 0)
-	{
-		return ($query_id) ? @mysql_num_rows($query_id) : false;
-	}
-
-
-	function affected_rows()
-	{
-		return ($this->link_id) ? @mysql_affected_rows($this->link_id) : false;
-	}
-
-
-	function insert_id()
-	{
-		return ($this->link_id) ? @mysql_insert_id($this->link_id) : false;
-	}
-
-
-	function get_num_queries()
-	{
-		return $this->num_queries;
-	}
-
-
-	function get_saved_queries()
-	{
-		return $this->saved_queries;
-	}
-
-
-	function free_result($query_id = false)
-	{
-		return ($query_id) ? @mysql_free_result($query_id) : false;
-	}
-
-
-	function escape($str)
-	{
-		if (is_array($str))
-			return '';
-		else if (function_exists('mysql_real_escape_string'))
-			return mysql_real_escape_string($str, $this->link_id);
-		else
-			return mysql_escape_string($str);
-	}
-
-
-	function error()
-	{
-		$result['error_sql'] = @current(@end($this->saved_queries));
-		$result['error_no'] = $this->error_no;
-		$result['error_msg'] = $this->error_msg;
-
-		return $result;
-	}
-
-
-	function close()
-	{
-		if ($this->link_id)
-		{
-			if (is_resource($this->query_result))
-				@mysql_free_result($this->query_result);
-
-			return @mysql_close($this->link_id);
-		}
-		else
-			return false;
-	}
-
-	function get_names()
-	{
-		$result = $this->query('SHOW VARIABLES LIKE \'character_set_connection\'');
-		return $this->result($result, 0, 1);
-	}
-
-
-	function set_names($names)
-	{
-		return $this->query('SET NAMES \''.$this->escape($names).'\'');
+        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        try {
+            $stmt = $this->db->query('SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:table AND COLUMN_NAME = ?s:field', [':table' => $table, ':field' => $field]);
+            $result = $stmt->fetch();
+            $stmt->closeCursor();
+        } catch (PDOException $e) {
+            return false;
+        }
+        return ! empty($result);
 	}
 
+    /**
+     * Проверяет наличие индекса в таблице
+     *
+     * @param string $table
+     * @param string $index
+     * @param bool $noPrefix
+     *
+     * @return bool
+     */
+    public function indexExists($table, $index, $noPrefix = false)
+    {
+        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        $index = $index == 'PRIMARY' ? $index : $table . '_' . $index;
+        try {
+            $stmt = $this->db->query('SELECT 1 FROM INFORMATION_SCHEMA.STATISTICS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:table AND INDEX_NAME = ?s:index', [':table' => $table, ':index' => $index]);
+            $result = $stmt->fetch();
+            $stmt->closeCursor();
+        } catch (PDOException $e) {
+            return false;
+        }
+        return ! empty($result);
+    }
 
-	function get_version()
+    /**
+     * Создает таблицу
+     *
+     * @param string $table
+     * @param array $schema
+     * @param bool $noPrefix
+     *
+     * @return bool
+     */
+    public function createTable($table, array $schema, $noPrefix = false)
+    {
+        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        $this->testStr($table);
+        $charSet = $this->getCharSet();
+        $query = "CREATE TABLE IF NOT EXISTS `{$table}` (";
+        foreach ($schema['FIELDS'] as $field => $data) {
+            $this->testStr($field);
+            // имя и тип
+            $query .= "`{$field}` " . $this->replType($data[0]);
+            // не NULL
+            if (empty($data[1])) {
+                $query .= ' NOT NULL';
+            }
+            // значение по умолчанию
+            if (isset($data[2])) {
+                $query .= ' DEFAULT ' . $this->convToStr($data[2]);
+            }
+            // сравнение
+            if (isset($data[3]) && is_string($data[3])) {
+                $this->testStr($data[3]);
+                $query .= " CHARACTER SET {$charSet} COLLATE {$charSet}_{$data[3]}";
+            }
+            $query .= ', ';
+        }
+        if (isset($schema['PRIMARY KEY'])) {
+            $query .= 'PRIMARY KEY (' . $this->replIdxs($schema['PRIMARY KEY']) . '), ';
+        }
+        if (isset($schema['UNIQUE KEYS'])) {
+            foreach ($schema['UNIQUE KEYS'] as $key => $fields) {
+                $this->testStr($key);
+                $query .= "UNIQUE `{$table}_{$key}` (" . $this->replIdxs($fields) . '), ';
+            }
+        }
+        if (isset($schema['INDEXES'])) {
+            foreach ($schema['INDEXES'] as $index => $fields) {
+                $this->testStr($index);
+                $query .= "INDEX `{$table}_{$index}` (" . $this->replIdxs($fields) . '), ';
+            }
+        }
+        if (isset($schema['ENGINE'])) {
+            $engine = $schema['ENGINE'];
+        } else {
+            // при отсутствии типа таблицы он определяется на основании типов других таблиц в базе
+            $stmt = $this->db->query("SHOW TABLE STATUS LIKE '{$this->dbPrefix}%'");
+            $engine = [];
+            while ($row = $stmt->fetch()) {
+                if (isset($engine[$row['Engine']])) {
+                    ++$engine[$row['Engine']];
+                } else {
+                    $engine[$row['Engine']] = 1;
+                }
+            }
+            // в базе нет таблиц
+            if (empty($engine)) {
+                $engine = 'MyISAM';
+            } else {
+                arsort($engine);
+                // берем тип наиболее часто встречаемый у имеющихся таблиц
+                $engine = array_shift(array_keys($engine));
+            }
+        }
+        $this->testStr($engine);
+		$query = rtrim($query, ', ') . ") ENGINE = {$engine} CHARACTER SET {$charSet}";
+        return $this->db->exec($query) !== false;
+    }
+
+    /**
+     * Удаляет таблицу
+     *
+     * @param string $table
+     * @param bool $noPrefix
+     *
+     * @return bool
+     */
+    public function dropTable($table, $noPrefix = false)
+    {
+        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        $this->testStr($table);
+		return $this->db->exec("DROP TABLE IF EXISTS `{$table}`") !== false;
+    }
+
+    /**
+     * Переименовывает таблицу
+     *
+     * @param string $old
+     * @param string $new
+     * @param bool $noPrefix
+     *
+     * @return bool
+     */
+    public function renameTable($old, $new, $noPrefix = false)
+    {
+        if ($this->tableExists($new, $noPrefix) && ! $this->tableExists($old, $noPrefix)) {
+            return true;
+        }
+        $old = ($noPrefix ? '' : $this->dbPrefix) . $old;
+        $this->testStr($old);
+        $new = ($noPrefix ? '' : $this->dbPrefix) . $new;
+        $this->testStr($new);
+        return $this->db->exec("ALTER TABLE `{$old}` RENAME TO `{$new}`") !== false;
+    }
+
+    /**
+     * Добавляет поле в таблицу
+     *
+     * @param string $table
+     * @param string $field
+     * @param bool $allowNull
+     * @param mixed $default
+     * @param string $after
+     * @param bool $noPrefix
+     *
+     * @return bool
+     */
+    public function addField($table, $field, $type, $allowNull, $default = null, $after = null, $noPrefix = false)
+    {
+        if ($this->fieldExists($table, $field, $noPrefix)) {
+            return true;
+        }
+        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        $this->testStr($table);
+        $this->testStr($field);
+        $query = "ALTER TABLE `{$table}` ADD `{$field}` " . $this->replType($type);
+        if ($allowNull) {
+            $query .= ' NOT NULL';
+        }
+        if (null !== $default) {
+            $query .= ' DEFAULT ' . $this->convToStr($default);
+        }
+        if (null !== $after) {
+            $this->testStr($after);
+            $query .= " AFTER `{$after}`";
+        }
+        return $this->db->exec($query) !== false;
+    }
+
+    /**
+     * Модифицирует поле в таблице
+     *
+     * @param string $table
+     * @param string $field
+     * @param bool $allowNull
+     * @param mixed $default
+     * @param string $after
+     * @param bool $noPrefix
+     *
+     * @return bool
+     */
+	public function alterField($table, $field, $type, $allowNull, $default = null, $after = null, $noPrefix = false)
 	{
-		$result = $this->query('SELECT VERSION()');
-
-		return array(
-			'name'		=> 'MySQL Standard',
-			'version'	=> preg_replace('%^([^-]+).*$%', '\\1', $this->result($result))
-		);
+        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        $this->testStr($table);
+        $this->testStr($field);
+        $query = "ALTER TABLE `{$table}` MODIFY `{$field}` " . $this->replType($type);
+        if ($allowNull) {
+            $query .= ' NOT NULL';
+        }
+        if (null !== $default) {
+            $query .= ' DEFAULT ' . $this->convToStr($default);
+        }
+        if (null !== $after) {
+            $this->testStr($after);
+            $query .= " AFTER `{$after}`";
+        }
+        return $this->db->exec($query) !== false;
 	}
 
+    /**
+     * Удаляет поле из таблицы
+     *
+     * @param string $table
+     * @param string $field
+     * @param bool $noPrefix
+     *
+     * @return bool
+     */
+    public function dropField($table, $field, $noPrefix = false)
+    {
+        if (! $this->fieldExists($table, $field, $noPrefix)) {
+            return true;
+        }
+        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        $this->testStr($table);
+        $this->testStr($field);
+        return $this->db->exec("ALTER TABLE `{$table}` DROP COLUMN `{$field}`") !== false;
+    }
 
-	function table_exists($table_name, $no_prefix = false)
-	{
-		$result = $this->query('SHOW TABLES LIKE \''.($no_prefix ? '' : $this->prefix).$this->escape($table_name).'\'');
-		return $this->num_rows($result) > 0;
-	}
+    /**
+     * Добавляет индекс в таблицу
+     *
+     * @param string $table
+     * @param string $index
+     * @param array $fields
+     * @param bool $unique
+     * @param bool $noPrefix
+     *
+     * @return bool
+     */
+    public function addIndex($table, $index, array $fields, $unique = false, $noPrefix = false)
+    {
+        if ($this->indexExists($table, $index, $noPrefix)) {
+            return true;
+        }
+        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        $this->testStr($table);
+        $query = "ALTER TABLE `{$table}` ADD ";
+        if ($index == 'PRIMARY') {
+            $query .= 'PRIMARY KEY';
+        } else {
+            $index = $table . '_' . $index;
+            $this->testStr($index);
+            if ($unique) {
+                $query .= "UNIQUE `{$index}`";
+            } else {
+                $query .= "INDEX `{$index}`";
+            }
+        }
+        $query .= ' (' . $this->replIdxs($fields) . ')';
+        return $this->db->exec($query) !== false;
+    }
 
+    /**
+     * Удаляет индекс из таблицы
+     *
+     * @param string $table
+     * @param string $index
+     * @param bool $noPrefix
+     *
+     * @return bool
+     */
+    public function dropIndex($table, $index, $noPrefix = false)
+    {
+        if (! $this->indexExists($table, $index, $noPrefix)) {
+            return true;
+        }
+        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        $this->testStr($table);
+        $query = "ALTER TABLE `{$table}` ";
+        if ($index == 'PRIMARY') {
+            $query .= "DROP PRIMARY KEY";
+        } else {
+            $index = $table . '_' . $index;
+            $this->testStr($index);
+            $query .= "DROP INDEX `{$index}`";
+        }
+        return $this->db->exec($query) !== false;
+    }
 
-	function field_exists($table_name, $field_name, $no_prefix = false)
-	{
-		$result = $this->query('SHOW COLUMNS FROM '.($no_prefix ? '' : $this->prefix).$table_name.' LIKE \''.$this->escape($field_name).'\'');
-		return $this->num_rows($result) > 0;
-	}
+    /**
+     * Очищает таблицу
+     *
+     * @param string $table
+     * @param bool $noPrefix
+     *
+     * @return bool
+     */
+    public function truncateTable($table, $noPrefix = false)
+    {
+        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        $this->testStr($table);
+        return $this->db->exec("TRUNCATE TABLE `{$table}`") !== false;
+    }
 
+    /**
+     * Статистика
+     *
+     * @return array|string
+     */
+    public function statistics()
+    {
+        $this->testStr($this->dbPrefix);
+        $stmt = $this->db->query("SHOW TABLE STATUS LIKE '{$this->dbPrefix}%'");
+        $records = $size = 0;
+        $engine = [];
+        while ($row = $stmt->fetch()) {
+            $records += $row['Rows'];
+            $size += $row['Data_length'] + $row['Index_length'];
+            if (isset($engine[$row['Engine']])) {
+                ++$engine[$row['Engine']];
+            } else {
+                $engine[$row['Engine']] = 1;
+            }
+        }
+        arsort($engine);
+        $tmp = [];
+        foreach ($engine as $key => $val) {
+            $tmp[] = "{$key}({$val})";
+        }
 
-	function index_exists($table_name, $index_name, $no_prefix = false)
-	{
-		$exists = false;
+        $other = [];
+        $stmt = $this->db->query("SHOW VARIABLES LIKE 'character\_set\_%'");
+        while ($row = $stmt->fetch(\PDO::FETCH_NUM)) {
+            $other[$row[0]] = $row[1];
+        }
 
-		$result = $this->query('SHOW INDEX FROM '.($no_prefix ? '' : $this->prefix).$table_name);
-		while ($cur_index = $this->fetch_assoc($result))
-		{
-			if (strtolower($cur_index['Key_name']) == strtolower(($no_prefix ? '' : $this->prefix).$table_name.'_'.$index_name))
-			{
-				$exists = true;
-				break;
-			}
-		}
-
-		return $exists;
-	}
-
-
-	function create_table($table_name, $schema, $no_prefix = false)
-	{
-		if ($this->table_exists($table_name, $no_prefix))
-			return true;
-
-		$query = 'CREATE TABLE '.($no_prefix ? '' : $this->prefix).$table_name." (\n";
-
-		// Go through every schema element and add it to the query
-		foreach ($schema['FIELDS'] as $field_name => $field_data)
-		{
-			$field_data['datatype'] = preg_replace(array_keys($this->datatype_transformations), array_values($this->datatype_transformations), $field_data['datatype']);
-
-			$query .= $field_name.' '.$field_data['datatype'];
-
-			if (isset($field_data['collation']))
-				$query .= 'CHARACTER SET utf8 COLLATE utf8_'.$field_data['collation'];
-
-			if (!$field_data['allow_null'])
-				$query .= ' NOT NULL';
-
-			if (isset($field_data['default']))
-				$query .= ' DEFAULT '.$field_data['default'];
-
-			$query .= ",\n";
-		}
-
-		// If we have a primary key, add it
-		if (isset($schema['PRIMARY KEY']))
-			$query .= 'PRIMARY KEY ('.implode(',', $schema['PRIMARY KEY']).'),'."\n";
-
-		// Add unique keys
-		if (isset($schema['UNIQUE KEYS']))
-		{
-			foreach ($schema['UNIQUE KEYS'] as $key_name => $key_fields)
-				$query .= 'UNIQUE KEY '.($no_prefix ? '' : $this->prefix).$table_name.'_'.$key_name.'('.implode(',', $key_fields).'),'."\n";
-		}
-
-		// Add indexes
-		if (isset($schema['INDEXES']))
-		{
-			foreach ($schema['INDEXES'] as $index_name => $index_fields)
-				$query .= 'KEY '.($no_prefix ? '' : $this->prefix).$table_name.'_'.$index_name.'('.implode(',', $index_fields).'),'."\n";
-		}
-
-		// We remove the last two characters (a newline and a comma) and add on the ending
-		$query = substr($query, 0, strlen($query) - 2)."\n".') ENGINE = '.(isset($schema['ENGINE']) ? $schema['ENGINE'] : 'MyISAM').' CHARACTER SET utf8';
-
-		return $this->query($query) ? true : false;
-	}
-
-
-	function drop_table($table_name, $no_prefix = false)
-	{
-		if (!$this->table_exists($table_name, $no_prefix))
-			return true;
-
-		return $this->query('DROP TABLE '.($no_prefix ? '' : $this->prefix).$table_name) ? true : false;
-	}
-
-
-	function rename_table($old_table, $new_table, $no_prefix = false)
-	{
-		// If the new table exists and the old one doesn't, then we're happy
-		if ($this->table_exists($new_table, $no_prefix) && !$this->table_exists($old_table, $no_prefix))
-			return true;
-
-		return $this->query('ALTER TABLE '.($no_prefix ? '' : $this->prefix).$old_table.' RENAME TO '.($no_prefix ? '' : $this->prefix).$new_table) ? true : false;
-	}
-
-
-	function add_field($table_name, $field_name, $field_type, $allow_null, $default_value = null, $after_field = null, $no_prefix = false)
-	{
-		if ($this->field_exists($table_name, $field_name, $no_prefix))
-			return true;
-
-		$field_type = preg_replace(array_keys($this->datatype_transformations), array_values($this->datatype_transformations), $field_type);
-
-		if (!is_null($default_value) && !is_int($default_value) && !is_float($default_value))
-			$default_value = '\''.$this->escape($default_value).'\'';
-
-		return $this->query('ALTER TABLE '.($no_prefix ? '' : $this->prefix).$table_name.' ADD '.$field_name.' '.$field_type.($allow_null ? '' : ' NOT NULL').(!is_null($default_value) ? ' DEFAULT '.$default_value : '').(!is_null($after_field) ? ' AFTER '.$after_field : '')) ? true : false;
-	}
-
-
-	function alter_field($table_name, $field_name, $field_type, $allow_null, $default_value = null, $after_field = null, $no_prefix = false)
-	{
-		if (!$this->field_exists($table_name, $field_name, $no_prefix))
-			return true;
-
-		$field_type = preg_replace(array_keys($this->datatype_transformations), array_values($this->datatype_transformations), $field_type);
-
-		if (!is_null($default_value) && !is_int($default_value) && !is_float($default_value))
-			$default_value = '\''.$this->escape($default_value).'\'';
-
-		return $this->query('ALTER TABLE '.($no_prefix ? '' : $this->prefix).$table_name.' MODIFY '.$field_name.' '.$field_type.($allow_null ? '' : ' NOT NULL').(!is_null($default_value) ? ' DEFAULT '.$default_value : '').(!is_null($after_field) ? ' AFTER '.$after_field : '')) ? true : false;
-	}
-
-
-	function drop_field($table_name, $field_name, $no_prefix = false)
-	{
-		if (!$this->field_exists($table_name, $field_name, $no_prefix))
-			return true;
-
-		return $this->query('ALTER TABLE '.($no_prefix ? '' : $this->prefix).$table_name.' DROP '.$field_name) ? true : false;
-	}
-
-
-	function add_index($table_name, $index_name, $index_fields, $unique = false, $no_prefix = false)
-	{
-		if ($this->index_exists($table_name, $index_name, $no_prefix))
-			return true;
-
-		return $this->query('ALTER TABLE '.($no_prefix ? '' : $this->prefix).$table_name.' ADD '.($unique ? 'UNIQUE ' : '').'INDEX '.($no_prefix ? '' : $this->prefix).$table_name.'_'.$index_name.' ('.implode(',', $index_fields).')') ? true : false;
-	}
-
-
-	function drop_index($table_name, $index_name, $no_prefix = false)
-	{
-		if (!$this->index_exists($table_name, $index_name, $no_prefix))
-			return true;
-
-		return $this->query('ALTER TABLE '.($no_prefix ? '' : $this->prefix).$table_name.' DROP INDEX '.($no_prefix ? '' : $this->prefix).$table_name.'_'.$index_name) ? true : false;
-	}
-
-	function truncate_table($table_name, $no_prefix = false)
-	{
-		return $this->query('TRUNCATE TABLE '.($no_prefix ? '' : $this->prefix).$table_name) ? true : false;
-	}
+        return [
+            'db'      => 'MySQL (PDO) ' . $this->db->getAttribute(\PDO::ATTR_SERVER_VERSION) . ' : ' . implode(', ', $tmp),
+            'records' => $records,
+            'size'    => $size,
+            'server info' => $this->db->getAttribute(\PDO::ATTR_SERVER_INFO),
+        ] + $other;
+    }
 }

@@ -146,10 +146,10 @@ class FileCache implements ProviderCacheInterface
      */
     protected function file($key)
     {
-        if (is_string($key) && preg_match('%^[\w-]+$%D', $key)) {
+        if (is_string($key) && preg_match('%^[a-z0-9_-]+$%Di', $key)) {
             return $this->cacheDir . '/cache_' . $key . '.php';
         }
-        throw new InvalidArgumentException("`$key`: Key contains invalid characters");
+        throw new InvalidArgumentException("Key '$key' contains invalid characters.");
     }
 
     /**

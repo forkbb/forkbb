@@ -2,23 +2,24 @@
 
 namespace ForkBB\Models\Actions;
 
-//use ForkBB\Core\DB;
+use ForkBB\Core\Container;
 use ForkBB\Models\User;
 
 class CacheGenerator
 {
     /**
-     * @var ForkBB\Core\DB
+     * Контейнер
+     * @var Container
      */
-    protected $db;
+    protected $c;
 
     /**
      * Конструктор
-     * @param ForkBB\Core\DB $db
+     * @param Container $container
      */
-    public function __construct($db)
+    public function __construct(Container $container)
     {
-        $this->db = $db;
+        $this->c = $container;
     }
 
     /**
@@ -27,14 +28,7 @@ class CacheGenerator
      */
     public function config()
     {
-        // Get the forum config from the DB
-        $result = $this->db->query('SELECT * FROM '.$this->db->prefix.'config', true) or error('Unable to fetch forum config', __FILE__, __LINE__, $this->db->error());
-        $arr = [];
-        while ($cur = $this->db->fetch_row($result)) {
-            $arr[$cur[0]] = $cur[1];
-        }
-        $this->db->free_result($result);
-        return $arr;
+        return $this->c->DB->query('SELECT conf_name, conf_value FROM ::config')->fetchAll(\PDO::FETCH_KEY_PAIR);
     }
 
     /**
@@ -43,14 +37,7 @@ class CacheGenerator
      */
     public function bans()
     {
-        // Get the ban list from the DB
-        $result = $this->db->query('SELECT * FROM '.$this->db->prefix.'bans', true) or error('Unable to fetch ban list', __FILE__, __LINE__, $this->db->error());
-        $arr = [];
-        while ($cur = $this->db->fetch_assoc($result)) {
-            $arr[] = $cur;
-        }
-        $this->db->free_result($result);
-        return $arr;
+        return $this->c->DB->query('SELECT id, username, ip, email, message, expire FROM ::bans')->fetchAll();
     }
 
     /**
@@ -59,17 +46,13 @@ class CacheGenerator
      */
     public function censoring()
     {
-        $result = $this->db->query('SELECT search_for, replace_with FROM '.$this->db->prefix.'censoring') or error('Unable to fetch censoring list', __FILE__, __LINE__, $this->db->error());
-        $num_words = $this->db->num_rows($result);
-
-        $search_for = $replace_with = [];
-        for ($i = 0; $i < $num_words; $i++) {
-            list($search_for[$i], $replace_with[$i]) = $this->db->fetch_row($result);
-            $search_for[$i] = '%(?<![\p{L}\p{N}])('.str_replace('\*', '[\p{L}\p{N}]*?', preg_quote($search_for[$i], '%')).')(?![\p{L}\p{N}])%iu';
+        $stmt = $this->c->DB->query('SELECT search_for, replace_with FROM ::censoring');
+        $search = $replace = [];
+        while ($row = $stmt->fetch()) {
+            $replace[] = $row['replace_with'];
+            $search[] = '%(?<![\p{L}\p{N}])('.str_replace('\*', '[\p{L}\p{N}]*?', preg_quote($row['search_for'], '%')).')(?![\p{L}\p{N}])%iu';
         }
-        $this->db->free_result($result);
-
-        return [$search_for, $replace_with];
+        return [$search, $replace];
     }
 
     /**
@@ -80,13 +63,8 @@ class CacheGenerator
     public function usersInfo()
     {
         $stats = [];
-
-        $result = $this->db->query('SELECT COUNT(id)-1 FROM '.$this->db->prefix.'users WHERE group_id!='.PUN_UNVERIFIED) or error('Unable to fetch total user count', __FILE__, __LINE__, $this->db->error());
-        $stats['total_users'] = $this->db->result($result);
-
-        $result = $this->db->query('SELECT id, username FROM '.$this->db->prefix.'users WHERE group_id!='.PUN_UNVERIFIED.' ORDER BY registered DESC LIMIT 1') or error('Unable to fetch newest registered user', __FILE__, __LINE__, $this->db->error());
-        $stats['last_user'] = $this->db->fetch_assoc($result);
-
+        $stats['total_users'] = $this->c->DB->query('SELECT COUNT(id)-1 FROM ::users WHERE group_id!='.PUN_UNVERIFIED)->fetchColumn();
+        $stats['last_user'] = $this->c->DB->query('SELECT id, username FROM ::users WHERE group_id!='.PUN_UNVERIFIED.' ORDER BY registered DESC LIMIT 1')->fetch();
         return $stats;
     }
 
@@ -96,15 +74,7 @@ class CacheGenerator
      */
     public function admins()
     {
-        // Get admins from the DB
-        $result = $this->db->query('SELECT id FROM '.$this->db->prefix.'users WHERE group_id='.PUN_ADMIN) or error('Unable to fetch users info', __FILE__, __LINE__, $this->db->error());
-        $arr = [];
-        while ($row = $this->db->fetch_row($result)) {
-            $arr[] = $row[0];
-        }
-        $this->db->free_result($result);
-
-        return $arr;
+        return $this->c->DB->query('SELECT id FROM ::users WHERE group_id='.PUN_ADMIN)->fetchAll(\PDO::FETCH_COLUMN);
     }
 
     /**
@@ -113,14 +83,7 @@ class CacheGenerator
      */
     public function smilies()
     {
-        $arr = [];
-        $result = $this->db->query('SELECT text, image FROM '.$this->db->prefix.'smilies ORDER BY disp_position') or error('Unable to retrieve smilies', __FILE__, __LINE__, $this->db->error());
-        while ($cur = $this->db->fetch_assoc($result)) {
-            $arr[$cur['text']] = $cur['image'];
-        }
-        $this->db->free_result($result);
-
-        return $arr;
+        return $this->c->DB->query('SELECT text, image FROM ::smilies ORDER BY disp_position')->fetchAll(\PDO::FETCH_KEY_PAIR); //???? text уникальное?
     }
 
     /**
@@ -129,22 +92,20 @@ class CacheGenerator
      */
     public function forums(User $user)
     {
-        $groupId = $user->gId;
-		$result = $this->db->query('SELECT g_read_board FROM '.$this->db->prefix.'groups WHERE g_id='.$groupId) or error('Unable to fetch user group read permission', __FILE__, __LINE__, $this->db->error());
-		$read = $this->db->result($result);
+        $stmt = $this->c->DB->query('SELECT g_read_board FROM ::groups WHERE g_id=?i:id', [':id' => $user->gId]);
+        $read = $stmt->fetchColumn();
+        $stmt->closeCursor();
 
         $tree = $desc = $asc = [];
 
         if ($read) {
-            $result = $this->db->query('SELECT c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.redirect_url, f.parent_forum_id, f.disp_position FROM '.$this->db->prefix.'categories AS c INNER JOIN '.$this->db->prefix.'forums AS f ON c.id=f.cat_id LEFT JOIN '.$this->db->prefix.'forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id='.$groupId.') WHERE fp.read_forum IS NULL OR fp.read_forum=1 ORDER BY c.disp_position, c.id, f.disp_position', true) or error('Unable to fetch category/forum list', __FILE__, __LINE__, $this->db->error());
-
-            while ($f = $this->db->fetch_assoc($result)) {
+            $stmt = $this->c->DB->query('SELECT c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.redirect_url, f.parent_forum_id, f.disp_position FROM ::categories AS c INNER JOIN ::forums AS f ON c.id=f.cat_id LEFT JOIN ::forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id=?i:id) WHERE fp.read_forum IS NULL OR fp.read_forum=1 ORDER BY c.disp_position, c.id, f.disp_position', [':id' => $user->gId]);
+            while ($f = $stmt->fetch()) {
                 $tree[$f['parent_forum_id']][$f['fid']] = $f;
             }
             $this->forumsDesc($desc, $tree);
             $this->forumsAsc($asc, $tree);
         }
-
         return [$tree, $desc, $asc];
     }
 

@@ -21,11 +21,6 @@ class UserMapper
     protected $config;
 
     /**
-     * @var DB
-     */
-    protected $db;
-
-    /**
      * Конструктор
      * @param Container $container
      */
@@ -33,7 +28,6 @@ class UserMapper
     {
         $this->c = $container;
         $this->config = $container->config;
-        $this->db = $container->DB;
     }
 
     /**
@@ -54,23 +48,16 @@ class UserMapper
     public function getCurrent($id = 1)
     {
         $ip = $this->getIpAddress();
-        $id = (int) $id;
-
+        $user = null;
         if ($id > 1) {
-            $result = $this->db->query('SELECT u.*, g.*, o.logged, o.idle FROM '.$this->db->prefix.'users AS u INNER JOIN '.$this->db->prefix.'groups AS g ON u.group_id=g.g_id LEFT JOIN '.$this->db->prefix.'online AS o ON o.user_id=u.id WHERE u.id='.$id) or error('Unable to fetch user information', __FILE__, __LINE__, $this->db->error());
-            $user = $this->db->fetch_assoc($result);
-            $this->db->free_result($result);
+            $user = $this->c->DB->query('SELECT u.*, g.*, o.logged, o.idle FROM ::users AS u INNER JOIN ::groups AS g ON u.group_id=g.g_id LEFT JOIN ::online AS o ON o.user_id=u.id WHERE u.id=?i:id', [':id' => $id])->fetch();
         }
         if (empty($user['id'])) {
-            $result = $this->db->query('SELECT u.*, g.*, o.logged, o.last_post, o.last_search FROM '.$this->db->prefix.'users AS u INNER JOIN '.$this->db->prefix.'groups AS g ON u.group_id=g.g_id LEFT JOIN '.$this->db->prefix.'online AS o ON (o.user_id=1 AND o.ident=\''.$this->db->escape($ip).'\') WHERE u.id=1') or error('Unable to fetch guest information', __FILE__, __LINE__, $this->db->error());
-            $user = $this->db->fetch_assoc($result);
-            $this->db->free_result($result);
+            $user = $this->c->DB->query('SELECT u.*, g.*, o.logged, o.last_post, o.last_search FROM ::users AS u INNER JOIN ::groups AS g ON u.group_id=g.g_id LEFT JOIN ::online AS o ON (o.user_id=1 AND o.ident=?s:ip) WHERE u.id=1', [':ip' => $ip])->fetch();
         }
-
         if (empty($user['id'])) {
             throw new RuntimeException('Unable to fetch guest information. Your database must contain both a guest user and a guest user group.');
         }
-
         $user['ip'] = $ip;
         return new User($user, $this->c);
     }
@@ -82,7 +69,7 @@ class UserMapper
     public function updateLastVisit(User $user)
     {
         if ($user->isLogged) {
-            $this->db->query('UPDATE '.$this->db->prefix.'users SET last_visit='.$user->logged.' WHERE id='.$user->id) or error('Unable to update user visit data', __FILE__, __LINE__, $this->db->error());
+            $this->c->DB->exec('UPDATE ::users SET last_visit=?i:loggid WHERE id=?i:id', [':loggid' => $user->logged, ':id' => $user->id]);
         }
     }
 
@@ -97,33 +84,27 @@ class UserMapper
     {
         switch ($field) {
             case 'id':
-                $where = 'u.id=' . (int) $value;
+                $where = 'u.id= ?i';
                 break;
             case 'username':
-                $where = 'u.username=\'' . $this->db->escape($value) . '\'';
+                $where = 'u.username= ?s';
                 break;
             case 'email':
-                $where = 'u.email=\'' . $this->db->escape($value) . '\'';
+                $where = 'u.email= ?s';
                 break;
             default:
                 throw new InvalidArgumentException('Field not supported');
         }
-        $result = $this->db->query('SELECT u.*, g.* FROM '.$this->db->prefix.'users AS u LEFT JOIN '.$this->db->prefix.'groups AS g ON u.group_id=g.g_id WHERE '.$where) or error('Unable to fetch user information', __FILE__, __LINE__, $this->db->error());
-
+        $result = $this->c->DB->query('SELECT u.*, g.* FROM ::users AS u LEFT JOIN ::groups AS g ON u.group_id=g.g_id WHERE ' . $where, [$value])->fetchAll();
         // найдено несколько пользователей
-        if ($this->db->num_rows($result) !== 1) {
-            return $this->db->num_rows($result);
+        if (count($result) !== 1) {
+            return count($result);
         }
-
-        $user = $this->db->fetch_assoc($result);
-        $this->db->free_result($result);
-
         // найден гость
-        if ($user['id'] == 1) {
+        if ($result[0]['id'] == 1) {
             return 1;
         }
-
-        return new User($user, $this->c);
+        return new User($result[0], $this->c);
     }
 
     /**
@@ -133,8 +114,12 @@ class UserMapper
      */
     public function isUnique($username)
     {
-        $result = $this->db->query('SELECT username FROM '.$this->db->prefix.'users WHERE (UPPER(username)=UPPER(\''.$this->db->escape($username).'\') OR UPPER(username)=UPPER(\''.$this->db->escape(preg_replace('%[^\p{L}\p{N}]%u', '', $username)).'\'))') or error('Unable to fetch user info', __FILE__, __LINE__, $this->db->error());
-        return ! $this->db->num_rows($result);
+        $vars = [
+            ':name' => $username,
+            ':other' => preg_replace('%[^\p{L}\p{N}]%u', '', $username),
+        ];
+        $result = $this->c->DB->query('SELECT username FROM ::users WHERE UPPER(username)=UPPER(?s:name) OR UPPER(username)=UPPER(?s:other)', $vars)->fetchAll();
+        return ! count($result);
     }
 
     /**
@@ -149,19 +134,17 @@ class UserMapper
             return;
         }
 
-        $set = [];
+        $set = $vars = [];
         foreach ($update as $field => $value) {
-            if (! is_string($field) || (null !== $value && ! is_int($value) && ! is_string($value))) {
-                return;
-            }
-            if (null === $value) {
-                $set[] = $field . '= NULL';
+            $vars[] = $value;
+            if (is_int($value)) {
+                $set[] = $field . ' = ?i';
             } else {
-                $set[] = $field . '=' . (is_int($value) ? $value : '\'' . $this->db->escape($value) . '\'');
+                $set[] = $field . ' = ?s';
             }
         }
-
-        $this->db->query('UPDATE '.$this->db->prefix.'users SET '.implode(', ', $set).' WHERE id='.$id) or error('Unable to update user data', __FILE__, __LINE__, $this->db->error());
+        $vars[] = $id;
+        $this->c->DB->query('UPDATE ::users SET ' . implode(', ', $set) . ' WHERE id=?i', $vars); //????
     }
 
     /**
@@ -172,8 +155,23 @@ class UserMapper
      */
     public function newUser(User $user)
     {
-        $this->db->query('INSERT INTO '.$this->db->prefix.'users (username, group_id, password, email, email_confirmed, email_setting, timezone, dst, language, style, registered, registration_ip, activate_string, u_mark_all_read) VALUES(\''.$this->db->escape($user->username).'\', '.$user->groupId.', \''.$this->db->escape($user->password).'\', \''.$this->db->escape($user->email).'\', '.$user->emailConfirmed.', '.$this->config['o_default_email_setting'].', '.$this->config['o_default_timezone'].' , '.$this->config['o_default_dst'].', \''.$this->db->escape($user->language).'\', \''.$user->style.'\', '.time().', \''.$this->db->escape($this->getIpAddress()).'\', \''.$this->db->escape($user->activateString).'\', '.$user->uMarkAllRead.')') or error('Unable to create user', __FILE__, __LINE__, $this->db->error());
-        $new_uid = $this->db->insert_id(); //????
-        return $new_uid;
+        $vars = [
+            ':name' => $user->username,
+            ':group' => $user->groupId,
+            ':password' => $user->password,
+            ':email' => $user->email,
+            ':confirmed' => $user->emailConfirmed,
+            ':setting' => $this->config['o_default_email_setting'],
+            ':timezone' => $this->config['o_default_timezone'],
+            ':dst' => $this->config['o_default_dst'],
+            ':language' => $user->language,
+            ':style' => $user->style,
+            ':registered' => time(),
+            ':ip' => $this->getIpAddress(),
+            ':activate' => $user->activateString,
+            ':mark' => $user->uMarkAllRead,
+        ];
+        $this->c->DB->query('INSERT INTO ::users (username, group_id, password, email, email_confirmed, email_setting, timezone, dst, language, style, registered, registration_ip, activate_string, u_mark_all_read) VALUES(?s:name, ?i:group, ?s:password, ?s:email, ?i:confirmed, ?i:setting, ?s:timezone, ?i:dst, ?s:language, ?s:style, ?i:registered, ?s:ip, ?s:activate, ?i:mark)', $vars);
+        return $this->c->DB->lastInsertId();
     }
 }

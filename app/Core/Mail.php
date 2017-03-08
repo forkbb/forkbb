@@ -90,7 +90,7 @@ class Mail
     {
         if (! is_string($email)
             || mb_strlen($email, 'UTF-8') > 80
-            || ! preg_match('%^([\w!#$\%&\'*+-/=?^`{|}~]+(?:\.[\w!#$\%&\'*+-/=?^`{|}~]+)*)@([^\x00-\x20]+)$%D', $email, $matches)
+            || ! preg_match('%^([a-z0-9_!#$\%&\'*+-/=?^`{|}~]+(?:\.[a-z0-9_!#$\%&\'*+-/=?^`{|}~]+)*)@([^\x00-\x20]+)$%Di', $email, $matches)
         ) {
             return false;
         }

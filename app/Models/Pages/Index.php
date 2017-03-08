@@ -39,14 +39,13 @@ class Index extends Page
         $this->c->Lang->load('index');
         $this->c->Lang->load('subforums');
 
-        $db = $this->c->DB;
         $user = $this->c->user;
         $r = $this->c->Router;
 
         $stats = $this->c->users_info;
 
-        $result = $db->query('SELECT SUM(num_topics), SUM(num_posts) FROM '.$db->prefix.'forums') or error('Unable to fetch topic/post count', __FILE__, __LINE__, $db->error());
-        list($stats['total_topics'], $stats['total_posts']) = array_map([$this, 'number'], array_map('intval', $db->fetch_row($result)));
+        $stmt = $this->c->DB->query('SELECT SUM(num_topics), SUM(num_posts) FROM ::forums');
+        list($stats['total_topics'], $stats['total_posts']) = array_map([$this, 'number'], array_map('intval', $stmt->fetch(\PDO::FETCH_NUM)));
 
         $stats['total_users'] = $this->number($stats['total_users']);
 
@@ -126,22 +125,22 @@ class Index extends Page
             return [];
         }
 
-        $db = $this->c->DB;
         $user = $this->c->user;
 
         // текущие данные по подразделам
-        $forums = array_slice($fAsc[$root], 1);
+        $vars = [
+            ':id' => $user->id,
+            ':forums' => array_slice($fAsc[$root], 1),
+        ];
         if ($user->isGuest) {
-            $result = $db->query('SELECT id, forum_desc, moderators, num_topics, num_posts, last_post, last_post_id, last_poster, last_topic FROM '.$db->prefix.'forums WHERE id IN ('.implode(',', $forums).')', true) or error('Unable to fetch forum list', __FILE__, __LINE__, $db->error());
+            $stmt = $this->c->DB->query('SELECT id, forum_desc, moderators, num_topics, num_posts, last_post, last_post_id, last_poster, last_topic FROM ::forums WHERE id IN (?ai:forums)', $vars);
         } else {
-            $result = $db->query('SELECT f.id, f.forum_desc, f.moderators, f.num_topics, f.num_posts, f.last_post, f.last_post_id, f.last_poster, f.last_topic, mof.mf_upper FROM '.$db->prefix.'forums AS f LEFT JOIN '.$db->prefix.'mark_of_forum AS mof ON (mof.uid='.$user->id.' AND f.id=mof.fid) WHERE f.id IN ('.implode(',', $forums).')', true) or error('Unable to fetch forum list', __FILE__, __LINE__, $db->error());
+            $stmt = $this->c->DB->query('SELECT f.id, f.forum_desc, f.moderators, f.num_topics, f.num_posts, f.last_post, f.last_post_id, f.last_poster, f.last_topic, mof.mf_upper FROM ::forums AS f LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:id AND f.id=mof.fid) WHERE f.id IN (?ai:forums)', $vars);
         }
-
         $forums = [];
-        while ($cur = $db->fetch_assoc($result)) {
+        while ($cur = $stmt->fetch()) {
             $forums[$cur['id']] = $cur;
         }
-        $db->free_result($result);
 
         // поиск новых
         $new = [];
@@ -156,15 +155,19 @@ class Index extends Page
             }
             // проверка по темам
             if (! empty($new)) {
-                $result = $db->query('SELECT t.forum_id, t.id, t.last_post FROM '.$db->prefix.'topics AS t LEFT JOIN '.$db->prefix.'mark_of_topic AS mot ON (mot.uid='.$user->id.' AND mot.tid=t.id) WHERE t.forum_id IN('.implode(',', array_keys($new)).') AND t.last_post>'.$max.' AND t.moved_to IS NULL AND (mot.mt_upper IS NULL OR t.last_post>mot.mt_upper)') or error('Unable to fetch new topics', __FILE__, __LINE__, $db->error());
+                $vars = [
+                    ':id' => $user->id,
+                    ':forums' => $new,
+                    ':max' => $max,
+                ];
+                $stmt = $this->c->DB->query('SELECT t.forum_id, t.id, t.last_post FROM ::topics AS t LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:id AND mot.tid=t.id) WHERE t.forum_id IN(?ai:forums) AND t.last_post>?i:max AND t.moved_to IS NULL AND (mot.mt_upper IS NULL OR t.last_post>mot.mt_upper)', $vars);
                 $tmp = [];
-                while ($cur = $db->fetch_assoc($result)) {
+                while ($cur = $stmt->fetch()) {
                     if ($cur['last_post']>$new[$cur['forum_id']]) {
                         $tmp[$cur['forum_id']] = true;
                     }
                 }
                 $new = $tmp;
-                $db->free_result($result);
             }
         }
 

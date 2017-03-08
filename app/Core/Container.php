@@ -173,11 +173,11 @@ class Container
         if (is_string($value)) {
             if (strpos($value, '%') !== false) {
                 // whole string substitution can return any type of value
-                if (preg_match('~^%(\w+(?:\.\w+)*)%$~', $value, $matches)) {
+                if (preg_match('~^%([a-z0-9_]+(?:\.[a-z0-9_]+)*)%$~i', $value, $matches)) {
                     $value = $this->__get($matches[1]);
                 } else {
                     // partial string substitution casts value to string
-                    $value = preg_replace_callback('~%(\w+(?:\.\w+)*)%~',
+                    $value = preg_replace_callback('~%([a-z0-9_]+(?:\.[a-z0-9_]+)*)%~i',
                         function ($matches) {
                             return $this->__get($matches[1]);
                         }, $value);

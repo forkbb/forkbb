@@ -476,7 +476,7 @@ foreach ($styles as $temp)
         else
         {
             // Validate prefix
-            if (strlen($db_prefix) > 0 && (! preg_match('%^[a-zA-Z]\w*$%', $db_prefix) || strlen($db_prefix) > 40))
+            if (strlen($db_prefix) > 0 && (! preg_match('%^[a-z][a-z0-9_]*$%i', $db_prefix) || strlen($db_prefix) > 40))
                 error(sprintf($lang_install['Table prefix error'], $db->prefix));
 
             $this->c->DB_TYPE = $db_type;

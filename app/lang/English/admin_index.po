@@ -140,3 +140,6 @@ msgstr "Rows: %s"
 
 msgid "Database data size"
 msgstr "Size: %s"
+
+msgid "Other"
+msgstr "Other:"

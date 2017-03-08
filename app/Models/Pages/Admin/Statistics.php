@@ -66,27 +66,14 @@ class Statistics extends Admin
         }
 
         // Get number of current visitors
-        $db = $this->c->DB;
-        $result = $db->query('SELECT COUNT(user_id) FROM '.$db->prefix.'online WHERE idle=0') or error('Unable to fetch online count', __FILE__, __LINE__, $db->error());
-        $this->data['numOnline'] = $db->result($result);
+        $this->data['numOnline'] = $this->c->DB->query('SELECT COUNT(user_id) FROM ::online WHERE idle=0')->fetchColumn();
 
-        // Collect some additional info about MySQL
-        if (in_array($this->c->DB_TYPE, ['mysql', 'mysqli', 'mysql_innodb', 'mysqli_innodb'])) {
-            // Calculate total db size/row count
-            $result = $db->query('SHOW TABLE STATUS LIKE \''.$db->prefix.'%\'') or error('Unable to fetch table status', __FILE__, __LINE__, $db->error());
-
-            $tRecords = $tSize = 0;
-            while ($status = $db->fetch_assoc($result)) {
-                $tRecords += $status['Rows'];
-                $tSize += $status['Data_length'] + $status['Index_length'];
-            }
-
-            $this->data['tSize'] = $this->size($tSize);
-            $this->data['tRecords'] = $this->number($tRecords);
-        } else {
-            $this->data['tSize'] = 0;
-            $this->data['tRecords'] = 0;
-        }
+        $stat = $this->c->DB->statistics();
+        $this->data['dbVersion'] = $stat['db'];
+        $this->data['tSize'] = $this->size($stat['size']);
+        $this->data['tRecords'] = $this->number($stat['records']);
+        unset($stat['db'], $stat['size'], $stat['records']);
+        $this->data['tOther'] = $stat;
 
         // Check for the existence of various PHP opcode caches/optimizers
         if (function_exists('mmcache')) {
@@ -104,8 +91,6 @@ class Statistics extends Admin
         } else {
             $this->data['accelerator'] = __('NA');
         }
-
-        $this->data['dbVersion'] = implode(' ', $db->get_version());
 
         return $this;
     }

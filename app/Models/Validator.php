@@ -345,7 +345,7 @@ class Validator
         if (false === $error) {
             return [null, $type, 'The :alias is not required'];
         } else {
-            return [$value, $type, false];
+            return [$value, $type, true];
         }
     }
 
