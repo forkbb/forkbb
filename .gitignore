@@ -1,3 +1,4 @@
+.old
 /app/config/main.php
 /app/cache/**/*.php
 /app/cache/**/*.lock
