@@ -219,7 +219,7 @@ abstract class Page
      */
     protected function pageHeads()
     {
-        return []; //????
+        return ['link rel="stylesheet" type="text/css" href="' . $this->c->Router->link() . 'style/' . $this->c->user->style . '/style.css' . '"'];
     }
 
     /**
@@ -310,7 +310,7 @@ abstract class Page
      */
     public function __call($name, array $arguments)
     {
-        throw new RuntimeException("'{$name}' method is not");
+        throw new RuntimeException("'{$name}' method not found.");
     }
 
     /**
@@ -349,7 +349,9 @@ abstract class Page
      */
     protected function number($number, $decimals = 0)
     {
-        return is_numeric($number) ? number_format($number, $decimals, __('lang_decimal_point'), __('lang_thousands_sep')) : 'not a number';
+        return is_numeric($number)
+            ? number_format($number, $decimals, __('lang_decimal_point'), __('lang_thousands_sep'))
+            : 'not a number';
     }
 
 
@@ -375,10 +377,10 @@ abstract class Page
         $timestamp += $diff;
 
         if (null === $dateFormat) {
-            $dateFormat = $this->c->date_formats[$user->dateFormat];
+            $dateFormat = $this->c->DATE_FORMATS[$user->dateFormat];
         }
         if(null === $timeFormat) {
-            $timeFormat = $this->c->time_formats[$user->timeFormat];
+            $timeFormat = $this->c->TIME_FORMATS[$user->timeFormat];
         }
 
         $date = gmdate($dateFormat, $timestamp);

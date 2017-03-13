@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="refresh" content="{!! $Timeout !!};URL={{ $Link }}">
   <title>{{ $pageTitle }}</title>
-  <link rel="stylesheet" type="text/css" href="http://forkbb.local/public/style/ForkBB/style.css">
-@foreach($pageHeads as $v)
-  {!! $v !!}
+@foreach($pageHeads as $cur)
+  <{!! $cur !!}>
 @endforeach
 </head>
 <body>

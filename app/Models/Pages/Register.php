@@ -133,7 +133,7 @@ class Register extends Page
     protected function regEnd(Validator $v)
     {
         if ($this->config['o_regs_verify'] == '1') {
-            $groupId = PUN_UNVERIFIED;
+            $groupId = $this->c->GROUP_UNVERIFIED;
             $key = 'w' . $this->c->Secury->randomPass(79);
         } else {
             $groupId = $this->config['o_default_user_group'];

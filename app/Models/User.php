@@ -4,7 +4,6 @@ namespace ForkBB\Models;
 
 use ForkBB\Core\AbstractModel;
 use ForkBB\Core\Container;
-use RuntimeException;
 
 class User extends AbstractModel
 {
@@ -46,22 +45,25 @@ class User extends AbstractModel
 
     protected function getIsUnverified()
     {
-        return $this->groupId == PUN_UNVERIFIED;
+        return $this->groupId == $this->c->GROUP_UNVERIFIED;
     }
 
     protected function getIsGuest()
     {
-        return $this->id < 2 || empty($this->gId) || $this->gId == PUN_GUEST;
+        return $this->groupId == $this->c->GROUP_GUEST
+            || $this->id < 2
+            || $this->groupId == $this->c->GROUP_UNVERIFIED;
     }
 
     protected function getIsAdmin()
     {
-        return $this->gId == PUN_ADMIN;
+        return $this->groupId == $this->c->GROUP_ADMIN;
     }
 
     protected function getIsAdmMod()
     {
-        return $this->gId == PUN_ADMIN || $this->gModerator == '1';
+        return $this->groupId == $this->c->GROUP_ADMIN
+            || $this->gModerator == '1';
     }
 
     protected function getLogged()
@@ -76,23 +78,31 @@ class User extends AbstractModel
 
     protected function getLanguage()
     {
-        if ($this->isGuest
-            || ! file_exists($this->c->DIR_LANG . '/' . $this->data['language'] . '/common.po')
-        ) {
-            return $this->config['o_default_lang'];
+        $langs = $this->c->Func->getLangs();
+
+        $lang = $this->isGuest || empty($this->data['language']) || ! in_array($this->data['language'], $langs)
+            ? $this->config['o_default_lang']
+            : $this->data['language'];
+
+        if (in_array($lang, $langs)) {
+            return $lang;
         } else {
-            return $this->data['language'];
+            return isset($langs[0]) ? $langs[0] : 'English';
         }
     }
 
     protected function getStyle()
     {
-        if ($this->isGuest
-//???            || ! file_exists($this->c->DIR_LANG . '/' . $this->data['language'])
-        ) {
-            return $this->config['o_default_style'];
+        $styles = $this->c->Func->getStyles();
+
+        $style = $this->isGuest || empty($this->data['style']) || ! in_array($this->data['style'], $styles)
+            ? $this->config['o_default_style']
+            : $this->data['style'];
+
+        if (in_array($style, $styles)) {
+            return $style;
         } else {
-            return $this->data['style'];
+            return isset($styles[0]) ? $styles[0] : 'ForkBB';
         }
     }
 }

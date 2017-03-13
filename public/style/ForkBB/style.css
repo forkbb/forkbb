@@ -1089,3 +1089,24 @@ li + li .f-btn {
   margin-bottom: 1rem;
   max-height: 1000rem;
 }
+
+/*************/
+/* Установка */
+/*************/
+
+.f-install .f-lrdiv {
+  margin: 1rem 0;
+  max-width: 100%;
+}
+
+.f-lrdiv .f-finfo {
+  margin: 1rem -0.625rem;
+  background-color: #AA7939;
+  padding: 0.625rem;
+  color: #F8F4E3;
+}
+
+.f-install .f-ctrl + .f-child4 {
+  margin-top: -0.375rem;
+  margin-bottom: 1rem;
+}

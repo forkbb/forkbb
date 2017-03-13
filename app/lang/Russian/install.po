@@ -1,0 +1,223 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+
+msgid "ForkBB Installation"
+msgstr "Установка ForkBB"
+
+msgid "Welcome"
+msgstr "Вы собираетесь установить ForkBB. Для этого заполните ниже представленную форму. Если вы столкнетесь с трудностями в процессе установки, пожалуйста, обратитесь к документации."
+
+msgid "Choose install language"
+msgstr "Язык скрипта установки"
+
+msgid "Install language"
+msgstr "Язык"
+
+msgid "Choose install language info"
+msgstr "Язык, на котором будет отображаться информация во время установки форума. Для форума язык по умолчанию можно задать отдельно, ниже."
+
+msgid "Change language"
+msgstr "Изменить язык"
+
+msgid "Install"
+msgstr "Установка ForkBB rev.%s"
+
+msgid "Database setup"
+msgstr "Настройки базы данных"
+
+msgid "Info 1"
+msgstr "Полная информация о подключаемой базе данных."
+
+msgid "Database type"
+msgstr "Тип базы данных"
+
+msgid "Info 2"
+msgstr "Выберите тип базы данных. Форум поддерживает SQLite, MySQL и PostgreSQL."
+
+msgid "Database server hostname"
+msgstr "Адрес сервера базы данных"
+
+msgid "Info 3"
+msgstr "Вы можете уточнить адрес у хостера, если <code>localhost</code> не работает."
+
+msgid "Database name"
+msgstr "Имя базы данных"
+
+msgid "Info 4"
+msgstr "Имя базы данных, в которую будет установлен ForkBB."
+
+msgid "Database username"
+msgstr "Имя пользователя базы данных"
+
+msgid "Database password"
+msgstr "Пароль к базе данных"
+
+msgid "Info 5"
+msgstr "Введите имя пользователя и пароль для подключения к базе данных (для SQLite оставьте пустыми)."
+
+msgid "Table prefix"
+msgstr "Префикс таблиц"
+
+msgid "Info 6"
+msgstr "Если требуется установить несколько форумов ForkBB в одну базу данных, измените это поле. Префикс может содержать буквы от a до z (латиница), цифры и знак подчеркивания. Первой должна идти буква. Максимальная длина 40 символов."
+
+msgid "Administration setup"
+msgstr "Настройки администратора"
+
+msgid "Info 7"
+msgstr "Создайте первый аккаунт на вашем форуме."
+
+msgid "Administrator username"
+msgstr "Имя администратора"
+
+msgid "Info 8"
+msgstr "Имя должно начинаться с буквы. Может содержать буквы, цифры, пробел, точку, дефис и знак подчеркивания."
+
+msgid "Administrator password"
+msgstr "Пароль администратора"
+
+msgid "Info 9"
+msgstr "Пароль должен содержать цифру, строчную и прописную буквы, символ отличающийся от цифр и букв. Пароль должен состоять минимум из 8 символов. Пароль чувствителен к регистру вводимых букв."
+
+msgid "Administrator email"
+msgstr "Почта администратора"
+
+msgid "Info 10"
+msgstr "Укажите действующий почтовый адрес."
+
+msgid "Board setup"
+msgstr "Настройки форума"
+
+msgid "Info 11"
+msgstr "Настройки вашего форума. Можете изменить их позже."
+
+msgid "Board title"
+msgstr "Заголовок форума"
+
+msgid "Board description"
+msgstr "Описание форума (поддерживает HTML)"
+
+msgid "Base URL"
+msgstr "URL форума"
+
+msgid "Default language"
+msgstr "Язык по умолчанию"
+
+msgid "Default style"
+msgstr "Стиль по умолчанию"
+
+msgid "Start install"
+msgstr "Начать установку"
+
+msgid "You are running error"
+msgstr "Вы используете %1$s версии %2$s. ForkBB rev.%3$s требует как минимум %1$s %4$s для своей работы. Вы должны обновить ваш %1$s, прежде чем продолжить."
+
+msgid "Alert folder"
+msgstr "Для правильного функционирования ForkBB директория <em>%s</em> должна быть открыта для записи из PHP. Используйте chmod для установки прав на директорию. Если сомневаетесь, то установите права 0777."
+
+msgid "No styles"
+msgstr "Нет стилей."
+
+msgid "No DB extensions"
+msgstr "Ваш PHP не поддерживает ни одного типа БД поддерживаемого ForkBB. PDO должен быть включен."
+
+msgid "My ForkBB Forum"
+msgstr "Мой ForkBB форум"
+
+msgid "Description"
+msgstr "Форум работает на движке с открытым исходным кодом - ForkBB."
+
+msgid "Wrong email"
+msgstr "Ошибка в email администратора."
+
+msgid "Table prefix error"
+msgstr "Префикс '%s' не соответсвует формату."
+
+msgid "Prefix reserved"
+msgstr "Префикс 'sqlite_' зарезрвирован для SQLite."
+
+msgid "Existing table error"
+msgstr "Таблица '%susers' уже существует в базе '%s'. Это может означать, что ForkBB был установлен в данную базу или другой программный пакет занимает таблицы, требуемые для работы ForkBB. Если вы хотите установить несколько копий форума в одну базу, выбирайте разные префиксы для них."
+
+msgid "Administrators"
+msgstr "Администраторы"
+
+msgid "Administrator"
+msgstr "Администратор"
+
+msgid "Moderators"
+msgstr "Модераторы"
+
+msgid "Moderator"
+msgstr "Модератор"
+
+msgid "Guests"
+msgstr "Гости"
+
+msgid "Guest"
+msgstr "Гость"
+
+msgid "Members"
+msgstr "Пользователи"
+
+msgid "Announcement"
+msgstr "Тут можно задать свое объявление"
+
+msgid "Rules"
+msgstr "Тут можно указать правила форума"
+
+msgid "Maintenance message"
+msgstr "Форум временно переведен в режим обслуживания. Зайдите позже."
+
+msgid "Test post"
+msgstr "Тестовая тема"
+
+msgid "Test message"
+msgstr "Если вы видите это сообщение, то установка ForkBB закончена и форум работает! Теперь перейдите в админку (войдите на форум под администратором) и сконфигурируйте форум."
+
+msgid "Test category"
+msgstr "Тестовая категория"
+
+msgid "Test forum"
+msgstr "Тестовый раздел"
+
+msgid "This is just a test forum"
+msgstr "Этот раздел создан при установке форума"
+
+msgid "Alert cache"
+msgstr "<strong>Папка кэша заблокирована для записи!</strong> Для правильного функционирования ForkBB директория <em>%s</em> должна быть открыта для записи из PHP. Используйте chmod для установки прав на директорию. Если сомневаетесь, то установите права 0777."
+
+msgid "Alert avatar"
+msgstr "<strong>Папка для аватар заблокирована для записи!</strong> Если вы хотите, чтобы пользователи форума использовали аватары, вы должны разрешить запись в директорию <em>%s</em> для PHP. Позже вы можете сменить директорию хранения аватар (смотрите Админка/Опции). Используйте chmod для установки прав на директорию. Если сомневаетесь, то установите права 0777."
+
+msgid "Alert upload"
+msgstr "<strong>Загрузка файлов, кажется, выключена на этом сервере!</strong> Если вы хотите, чтобы пользователи форума использовали аватары, вы должны разрешить file_uploads в настройках вашего PHP. После разрешения загрузки файлов на сервер, вы можете разрешить использования аватар для пользователей форума (смотрите Админка/Опции)."
+
+msgid "ForkBB has been installed"
+msgstr "ForkBB установлен. Для завершения следуйте ниже приведенной инструкции."
+
+msgid "Final instructions"
+msgstr "Заключительная инструкция"
+
+msgid "Info 17"
+msgstr "Чтобы завершить установку форума, нажмите кнопку ниже для скачивания файла main.php. После этого запишите этот файл в директорию /app/config (рядом с файлом main.dist.php) вашего форума."
+
+msgid "Info 18"
+msgstr "Как только вы загрузите main.php на форум, ForkBB будет полностью установлен! После этого <a href="index.php">перейти на главную страницу форума</a>."
+
+msgid "Download main.php file"
+msgstr "Скачать файл main.php"
+
+msgid "ForkBB fully installed"
+msgstr "ForkBB полностью установлен! Теперь вы можете <a href="index.php">перейти на главную страницу форума</a>."

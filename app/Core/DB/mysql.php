@@ -228,6 +228,11 @@ class Mysql
             $this->testStr($field);
             // имя и тип
             $query .= "`{$field}` " . $this->replType($data[0]);
+            // сравнение
+            if (isset($data[3]) && is_string($data[3])) {
+                $this->testStr($data[3]);
+                $query .= " CHARACTER SET {$charSet} COLLATE {$charSet}_{$data[3]}";
+            }
             // не NULL
             if (empty($data[1])) {
                 $query .= ' NOT NULL';
@@ -235,11 +240,6 @@ class Mysql
             // значение по умолчанию
             if (isset($data[2])) {
                 $query .= ' DEFAULT ' . $this->convToStr($data[2]);
-            }
-            // сравнение
-            if (isset($data[3]) && is_string($data[3])) {
-                $this->testStr($data[3]);
-                $query .= " CHARACTER SET {$charSet} COLLATE {$charSet}_{$data[3]}";
             }
             $query .= ', ';
         }
@@ -262,7 +262,8 @@ class Mysql
             $engine = $schema['ENGINE'];
         } else {
             // при отсутствии типа таблицы он определяется на основании типов других таблиц в базе
-            $stmt = $this->db->query("SHOW TABLE STATUS LIKE '{$this->dbPrefix}%'");
+            $prefix = str_replace('_', '\\_', $this->dbPrefix);
+            $stmt = $this->db->query("SHOW TABLE STATUS LIKE '{$prefix}%'");
             $engine = [];
             while ($row = $stmt->fetch()) {
                 if (isset($engine[$row['Engine']])) {
@@ -277,11 +278,12 @@ class Mysql
             } else {
                 arsort($engine);
                 // берем тип наиболее часто встречаемый у имеющихся таблиц
-                $engine = array_shift(array_keys($engine));
+                $engine = array_keys($engine);
+                $engine = array_shift($engine);
             }
         }
         $this->testStr($engine);
-		$query = rtrim($query, ', ') . ") ENGINE = {$engine} CHARACTER SET {$charSet}";
+		$query = rtrim($query, ', ') . ") ENGINE={$engine} CHARACTER SET {$charSet}";
         return $this->db->exec($query) !== false;
     }
 
@@ -490,7 +492,8 @@ class Mysql
     public function statistics()
     {
         $this->testStr($this->dbPrefix);
-        $stmt = $this->db->query("SHOW TABLE STATUS LIKE '{$this->dbPrefix}%'");
+        $prefix = str_replace('_', '\\_', $this->dbPrefix);
+        $stmt = $this->db->query("SHOW TABLE STATUS LIKE '{$prefix}%'");
         $records = $size = 0;
         $engine = [];
         while ($row = $stmt->fetch()) {

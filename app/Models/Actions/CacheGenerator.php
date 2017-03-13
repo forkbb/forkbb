@@ -63,8 +63,8 @@ class CacheGenerator
     public function usersInfo()
     {
         $stats = [];
-        $stats['total_users'] = $this->c->DB->query('SELECT COUNT(id)-1 FROM ::users WHERE group_id!='.PUN_UNVERIFIED)->fetchColumn();
-        $stats['last_user'] = $this->c->DB->query('SELECT id, username FROM ::users WHERE group_id!='.PUN_UNVERIFIED.' ORDER BY registered DESC LIMIT 1')->fetch();
+        $stats['total_users'] = $this->c->DB->query('SELECT COUNT(id)-1 FROM ::users WHERE group_id!=?i', [$this->c->GROUP_UNVERIFIED])->fetchColumn();
+        $stats['last_user'] = $this->c->DB->query('SELECT id, username FROM ::users WHERE group_id!=?i ORDER BY registered DESC LIMIT 1', [$this->c->GROUP_UNVERIFIED])->fetch();
         return $stats;
     }
 
@@ -74,7 +74,7 @@ class CacheGenerator
      */
     public function admins()
     {
-        return $this->c->DB->query('SELECT id FROM ::users WHERE group_id='.PUN_ADMIN)->fetchAll(\PDO::FETCH_COLUMN);
+        return $this->c->DB->query('SELECT id FROM ::users WHERE group_id=?i', [$this->c->GROUP_ADMIN])->fetchAll(\PDO::FETCH_COLUMN);
     }
 
     /**

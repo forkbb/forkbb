@@ -6,9 +6,6 @@ use ForkBB\Core\Container;
 use ForkBB\Models\Pages\Page;
 use RuntimeException;
 
-if (! defined('PUN_ROOT'))
-	exit('The constant PUN_ROOT must be defined and point to a valid FluxBB installation root directory.');
-
 // боевой
 #error_reporting(E_ALL);
 #ini_set('display_errors', 0);
@@ -22,56 +19,42 @@ mb_language('uni');
 mb_internal_encoding('UTF-8');
 mb_substitute_character(0xFFFD);
 
-// The maximum size of a post, in characters, not bytes
-if (!defined('PUN_MAX_POSTSIZE'))
-	define('PUN_MAX_POSTSIZE', 65000);
-
-if (!defined('PUN_SEARCH_MIN_WORD'))
-	define('PUN_SEARCH_MIN_WORD', 3);
-if (!defined('PUN_SEARCH_MAX_WORD'))
-	define('PUN_SEARCH_MAX_WORD', 20);
-
-if (!defined('FORUM_MAX_COOKIE_SIZE'))
-	define('FORUM_MAX_COOKIE_SIZE', 4048);
-
-//$loader =
 require __DIR__ . '/../vendor/autoload.php';
-//$loader->setPsr4('ForkBB\\', __DIR__ . '/');
 
 if (file_exists(__DIR__ . '/config/main.php')) {
-    $container = new Container(include __DIR__ . '/config/main.php');
+    $c = new Container(include __DIR__ . '/config/main.php');
 } elseif (file_exists(__DIR__ . '/config/install.php')) {
-    $container = new Container(include __DIR__ . '/config/install.php');
+    $c = new Container(include __DIR__ . '/config/install.php');
 } else {
-    throw new RuntimeException('Application is not configured');
+    throw new RuntimeException('Application is not configured.');
 }
 
-define('PUN', 1);
+require __DIR__ . '/functions.php';
 
-$container->DIR_CONFIG = __DIR__ . '/config';
-$container->DIR_CACHE = __DIR__ . '/cache';
-$container->DIR_VIEWS = __DIR__ . '/templates';
-$container->DIR_LANG = __DIR__ . '/lang';
-$container->START = $pun_start;
+$c->FORK_REVISION = 1;
+$c->START = $forkStart;
+$c->DIR_APP    = __DIR__;
+$c->DIR_PUBLIC = $forkPublic;
+$c->DIR_CONFIG = __DIR__ . '/config';
+$c->DIR_CACHE  = __DIR__ . '/cache';
+$c->DIR_VIEWS  = __DIR__ . '/templates';
+$c->DIR_LANG   = __DIR__ . '/lang';
+$c->DATE_FORMATS = [$c->config['o_date_format'], 'Y-m-d', 'Y-d-m', 'd-m-Y', 'm-d-Y', 'M j Y', 'jS M Y'];
+$c->TIME_FORMATS = [$c->config['o_time_format'], 'H:i:s', 'H:i', 'g:i:s a', 'g:i a'];
 
-$config = $container->config;
-$container->date_formats = [$config['o_date_format'], 'Y-m-d', 'Y-d-m', 'd-m-Y', 'm-d-Y', 'M j Y', 'jS M Y'];
-$container->time_formats = [$config['o_time_format'], 'H:i:s', 'H:i', 'g:i:s a', 'g:i a'];
-
-$page = null;
 $controllers = ['Routing', 'Primary'];
-
+$page = null;
 while (! $page instanceof Page && $cur = array_pop($controllers)) {
-    $page = $container->$cur;
+    $page = $c->$cur;
 }
 
 if ($page->getDataForOnline(true)) {
-    $container->Online->handle($page);
+    $c->Online->handle($page);
 }
-$tpl = $container->View->setPage($page)->outputPage();
-if (defined('PUN_DEBUG')) {
-    $debug = $container->Debug->debug();
-    $debug = $container->View->setPage($debug)->outputPage();
+$tpl = $c->View->setPage($page)->outputPage();
+if ($c->DEBUG > 0) {
+    $debug = $c->Debug->debug();
+    $debug = $c->View->setPage($debug)->outputPage();
     $tpl = str_replace('<!-- debuginfo -->', $debug, $tpl);
 }
 exit($tpl);

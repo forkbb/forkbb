@@ -28,7 +28,7 @@ class Router
     protected $methods = [];
 
     /**
-     * Массив для построения реальных ссылок
+     * Массив для построения ссылок
      * @var array
      */
     protected $links = [];
@@ -61,7 +61,7 @@ class Router
      * Конструктор
      * @param string $base
      */
-    public function __construct($base = '')
+    public function __construct($base)
     {
         $this->baseUrl = $base;
         $this->host = parse_url($base, PHP_URL_HOST);
@@ -90,15 +90,15 @@ class Router
     }
 
     /**
-     * Возвращает реальный url
+     * Возвращает ссылку на основании маркера
      * @param string $marker
      * @param array $args
      * @return string
      */
-    public function link($marker, array $args = [])
+    public function link($marker = null, array $args = [])
     {
         $result = $this->baseUrl; //???? http и https
-        if (isset($this->links[$marker])) {
+        if (is_string($marker) && isset($this->links[$marker])) {
             $s = $this->links[$marker];
             foreach ($args as $key => $val) {
                 if ($key == '#') {

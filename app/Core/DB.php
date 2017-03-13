@@ -132,7 +132,7 @@ class DB extends PDO
                     continue 2;
             }
 
-            if (! isset($params[$key])) {
+            if (! isset($params[$key]) && ! array_key_exists($key, $params)) {
                 throw new PDOException("'$key': No parameter for (?$type) placeholder");
             }
 

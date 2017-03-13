@@ -70,6 +70,7 @@ class Validator
             'array'         => [$this, 'vArray'],
             'checkbox'      => [$this, 'vCheckbox'],
             'email'         => [$this, 'vEmail'],
+            'in'            => [$this, 'vIn'],
             'integer'       => [$this, 'vInteger'],
             'login'         => [$this, 'vLogin'],
             'max'           => [$this, 'vMax'],
@@ -184,6 +185,16 @@ class Validator
         }
         $this->raw = null;
         return empty($this->errors);
+    }
+
+    /**
+     * Проверяет наличие поля
+     * @param string $field
+     * @return bool
+     */
+    public function __isset($field)
+    {
+        return isset($this->result[$field]); //????
     }
 
     /**
@@ -357,7 +368,7 @@ class Validator
             foreach(explode(',', $attr) as $action) {
                 switch ($action) {
                     case 'trim':
-                        $value = trim($value);
+                        $value = preg_replace('%^\s+|\s+$%u', '', $value); // trim($value);
                         break;
                     case 'lower':
                         $value = mb_strtolower($value, 'UTF-8');
@@ -528,5 +539,14 @@ class Validator
     protected function vLogin($v, $value, $type)
     {
         return $this->vRegex($v, $value, $type, '%^\p{L}[\p{L}\p{N}\x20\._-]+$%uD');
+    }
+
+    protected function vIn($v, $value, $type, $attr)
+    {
+        if (null === $value || in_array($value, explode(',', $attr))) {
+            return [$value, $type, false];
+        } else {
+            return [null, $type, 'The :alias contains an invalid value'];
+        }
     }
 }

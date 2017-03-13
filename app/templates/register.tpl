@@ -13,7 +13,7 @@
           </div>
           <div>
             <label class="f-child1 f-req" for="id-username">{!! __('Username') !!}</label>
-            <input required class="f-ctrl" id="id-username" type="text" name="username" value="{{ $username }}" maxlength="25" pattern=".{2,25}" spellcheck="false" tabindex="2">
+            <input required class="f-ctrl" id="id-username" type="text" name="username" value="{{ $username }}" maxlength="25" pattern="^.{2,25}$" spellcheck="false" tabindex="2">
             <label class="f-child4 f-fhint">{!! __('Login format') !!}</label>
           </div>
           <div>
