@@ -132,6 +132,9 @@ msgstr "Нет стилей."
 msgid "No DB extensions"
 msgstr "Ваш PHP не поддерживает ни одного типа БД поддерживаемого ForkBB. PDO должен быть включен."
 
+msgid "No access to main.dist.php"
+msgstr "Нет доступа к файлу конфигурации main.dist.php."
+
 msgid "My ForkBB Forum"
 msgstr "Мой ForkBB форум"
 

@@ -132,6 +132,9 @@ msgstr "No styles."
 msgid "No DB extensions"
 msgstr "This PHP environment does not have support for any of the databases that ForkBB supports. PDO must be enabled."
 
+msgid "No access to main.dist.php"
+msgstr "No access to main.dist.php."
+
 msgid "My ForkBB Forum"
 msgstr "My ForkBB Forum"
 

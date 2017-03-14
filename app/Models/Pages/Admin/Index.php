@@ -24,7 +24,7 @@ class Index extends Admin
     {
         $this->c->Lang->load('admin_index');
         $this->data = [
-            'version' => $this->config['s_fork_version'] . '.' . $this->config['i_fork_revision'],
+            'revision' => $this->config['i_fork_revision'],
             'linkStat' => $this->c->Router->link('AdminStatistics'),
         ];
         $this->titles[] = __('Admin index');

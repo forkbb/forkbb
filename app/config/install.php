@@ -10,9 +10,8 @@ return [
     'GROUP_MEMBER'     => 4,
     'EOL' => PHP_EOL,
 
-
     'HMAC' => [
-        'algo' => 'sha1',
+        'algo' => 'sha256',
         'salt' => '_SALT_FOR_HMAC_',
     ],
 
@@ -26,25 +25,13 @@ return [
     ],
 
     'shared' => [
-        'Lang' => \ForkBB\Core\Lang::class,
-        'Router' => [
-            'class' => \ForkBB\Core\Router::class,
-            'base_url' => '%BASE_URL%',
-        ],
-        'View' => [
-            'class' => \ForkBB\Core\View::class,
+        'FileCache' => [
+            'class' => \ForkBB\Core\Cache\FileCache::class,
             'cache_dir' => '%DIR_CACHE%',
-            'views_dir' => '%DIR_VIEWS%',
         ],
-        'Func' => \ForkBB\Core\Func::class,
-        'Validator' => \ForkBB\Models\Validator::class,
-        'Mail' => [
-            'class' => \ForkBB\Core\Mail::class,
-            'host' => '',
-            'user' => '',
-            'pass' => '',
-            'ssl' => '',
-            'eol' => '%EOL%',
+        'Cache' => [
+            'class' => \ForkBB\Core\Cache::class,
+            'provider' => '@FileCache',
         ],
         'DB' => [
             'class' => \ForkBB\Core\DB::class,
@@ -54,25 +41,37 @@ return [
             'options'  => '%DB_OPTIONS%',
             'prefix'   => '%DB_PREFIX%',
         ],
-
-
-
-
-        'Request' => [
-            'class' => \ForkBB\Core\Request::class,
-            'Secury' => '@Secury',
+        'Func' => \ForkBB\Core\Func::class,
+        'Lang' => \ForkBB\Core\Lang::class,
+        'Mail' => [
+            'class' => \ForkBB\Core\Mail::class,
+            'host' => '',
+            'user' => '',
+            'pass' => '',
+            'ssl' => '',
+            'eol' => '%EOL%',
+        ],
+        'Router' => [
+            'class' => \ForkBB\Core\Router::class,
+            'base_url' => '%BASE_URL%',
+        ],
+        'View' => [
+            'class' => \ForkBB\Core\View::class,
+            'cache_dir' => '%DIR_CACHE%',
+            'views_dir' => '%DIR_VIEWS%',
         ],
         'Secury' => [
             'class' => \ForkBB\Core\Secury::class,
             'hmac' => '%HMAC%',
         ],
+        'Validator' => \ForkBB\Models\Validator::class,
     ],
     'multiple'  => [
         'PrimaryController' => \ForkBB\Controllers\Install::class,
         'Primary' => '@PrimaryController:routing',
 
+        'Debug' => \ForkBB\Models\Pages\Debug::class,
         'Install' => \ForkBB\Models\Pages\Install::class,
         'Redirect' => \ForkBB\Models\Pages\Redirect::class,
-        'Debug' => \ForkBB\Models\Pages\Debug::class,
     ],
 ];

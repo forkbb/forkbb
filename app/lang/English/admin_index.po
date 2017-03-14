@@ -58,7 +58,7 @@ msgid "ForkBB version label"
 msgstr "ForkBB version"
 
 msgid "ForkBB version data"
-msgstr "v %s"
+msgstr "rev.%s"
 
 msgid "Server statistics label"
 msgstr "Server statistics"

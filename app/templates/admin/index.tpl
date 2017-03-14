@@ -19,7 +19,7 @@
         <div>
           <dl>
             <dt>{!! __('ForkBB version label') !!}</dt>
-            <dd>{!! __('ForkBB version data', $version) !!}</dd>
+            <dd>{!! __('ForkBB version data', $revision) !!}</dd>
             <dt>{!! __('Server statistics label') !!}</dt>
             <dd><a href="{!! $linkStat !!}">{!! __('View server statistics') !!}</a></dd>
             <dt>{!! __('Support label') !!}</dt>

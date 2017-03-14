@@ -6,6 +6,7 @@ use ForkBB\Core\Container;
 use ForkBB\Models\Validator;
 use PDO;
 use PDOException;
+use RuntimeException;
 
 class Install extends Page
 {
@@ -154,6 +155,12 @@ class Install extends Page
             $this->iswev['e'][] = __('No DB extensions');
         }
         unset($args['dbtype']);
+        // доступность шаблона конфигурации
+        $config = file_get_contents($this->c->DIR_CONFIG . '/main.dist.php');
+        if (false === $config) {
+            $this->iswev['e'][] = __('No access to main.dist.php');
+        }
+        unset($config);
 
         $this->data = $args + [
             'rev' => $this->c->FORK_REVISION,
@@ -328,8 +335,11 @@ class Install extends Page
      */
     protected function installEnd(Validator $v)
     {
-        $this->c->DB->beginTransaction();
+        @set_time_limit(0);
+        $this->c->Cache->clear();
 
+        $this->c->DB->beginTransaction();
+        // bans
         $schema = [
             'FIELDS' => [
                 'id'          => ['SERIAL', false],
@@ -347,7 +357,7 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('bans', $schema);
-
+        // categories
         $schema = [
             'FIELDS' => [
                 'id'            => ['SERIAL', false],
@@ -355,9 +365,10 @@ class Install extends Page
                 'disp_position' => ['INT(10)', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
+            'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('categories', $schema);
-
+        // censoring
         $schema = [
             'FIELDS' => [
                 'id'           => ['SERIAL', false],
@@ -365,18 +376,20 @@ class Install extends Page
                 'replace_with' => ['VARCHAR(60)', false, ''],
             ],
             'PRIMARY KEY' => ['id'],
+            'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('censoring', $schema);
-
+        // config
         $schema = [
             'FIELDS' => [
                 'conf_name'  => ['VARCHAR(255)', false, ''],
                 'conf_value' => ['TEXT', true],
             ],
             'PRIMARY KEY' => ['conf_name'],
+            'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('config', $schema);
-
+        // forum_perms
         $schema = [
             'FIELDS' => [
                 'group_id'     => ['INT(10)', false, 0],
@@ -386,9 +399,10 @@ class Install extends Page
                 'post_topics'  => ['TINYINT(1)', false, 1],
             ],
             'PRIMARY KEY' => array('group_id', 'forum_id'),
+            'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('forum_perms', $schema);
-
+        // forums
         $schema = [
             'FIELDS' => [
                 'id'              => ['SERIAL', false],
@@ -409,9 +423,10 @@ class Install extends Page
                 'parent_forum_id' => ['INT(10) UNSIGNED', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
+            'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('forums', $schema);
-
+        // groups
         $schema = [
             'FIELDS' => [
                 'g_id'                   => ['SERIAL', false],
@@ -446,9 +461,10 @@ class Install extends Page
                 'g_pm_limit'             => ['INT(10) UNSIGNED', false, 100],
             ],
             'PRIMARY KEY' => ['g_id'],
+            'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('groups', $schema);
-
+        // online
         $schema = [
             'FIELDS' => [
                 'user_id'     => ['INT(10) UNSIGNED', false, 1],
@@ -469,9 +485,10 @@ class Install extends Page
                 'logged_idx'     => ['logged'],
                 'o_position_idx' => ['o_position'],
             ],
+            'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('online', $schema);
-
+        // posts
         $schema = [
             'FIELDS' => [
                 'id'           => ['SERIAL', false],
@@ -493,9 +510,10 @@ class Install extends Page
                 'topic_id_idx' => ['topic_id'],
                 'multi_idx'    => ['poster_id', 'topic_id'],
             ],
+            'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('posts', $schema);
-
+        // reports
         $schema = [
             'FIELDS' => [
                 'id'          => ['SERIAL', false],
@@ -512,9 +530,10 @@ class Install extends Page
             'INDEXES' => [
                 'zapped_idx' => ['zapped'],
             ],
+            'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('reports', $schema);
-
+        // search_cache
         $schema = [
             'FIELDS' => [
                 'id'          => ['INT(10) UNSIGNED', false, 0],
@@ -525,9 +544,10 @@ class Install extends Page
             'INDEXES' => [
                 'ident_idx' => ['ident(8)'], //????
             ],
+            'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('search_cache', $schema);
-
+        // search_matches
         $schema = [
             'FIELDS' => [
                 'post_id'       => ['INT(10) UNSIGNED', false, 0],
@@ -538,9 +558,10 @@ class Install extends Page
                 'word_id_idx' => ['word_id'],
                 'post_id_idx' => ['post_id'],
             ],
+            'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('search_matches', $schema);
-
+        // search_words
         $schema = [
             'FIELDS' => [
                 'id'   => ['SERIAL', false],
@@ -550,31 +571,34 @@ class Install extends Page
             'INDEXES' => [
                 'id_idx' => ['id'],
             ],
+            'ENGINE' => $this->DBEngine,
         ];
         if ($v->dbtype == 'sqlite') { //????
             $schema['PRIMARY KEY'] = ['id'];
             $schema['UNIQUE KEYS'] = ['word_idx' => ['word']];
         }
         $this->c->DB->createTable('search_words', $schema);
-
+        // topic_subscriptions
         $schema = [
             'FIELDS' => [
                 'user_id'  => ['INT(10) UNSIGNED', false, 0],
                 'topic_id' => ['INT(10) UNSIGNED', false, 0],
             ],
             'PRIMARY KEY' => ['user_id', 'topic_id'],
+            'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('topic_subscriptions', $schema);
-
+        // forum_subscriptions
         $schema = [
             'FIELDS' => [
                 'user_id'  => ['INT(10) UNSIGNED', false, 0],
                 'forum_id' => ['INT(10) UNSIGNED', false, 0],
             ],
             'PRIMARY KEY' => ['user_id', 'forum_id'],
+            'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('forum_subscriptions', $schema);
-
+        // topics
         $schema = [
             'FIELDS' => [
                 'id'            => ['SERIAL', false],
@@ -604,9 +628,10 @@ class Install extends Page
                 'last_post_idx'     => ['last_post'],
                 'first_post_id_idx' => ['first_post_id'],
             ],
+            'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('topics', $schema);
-
+        // pms_new_block
         $schema = [
             'FIELDS' => [
                 'bl_id'      => ['INT(10) UNSIGNED', false, 0],
@@ -616,9 +641,10 @@ class Install extends Page
                 'bl_id_idx'      => ['bl_id'],
                 'bl_user_id_idx' => ['bl_user_id']
             ],
+            'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('pms_new_block', $schema);
-
+        // pms_new_posts
         $schema = [
             'FIELDS' => [
                 'id'           => ['SERIAL', false],
@@ -638,9 +664,10 @@ class Install extends Page
                 'topic_id_idx' => ['topic_id'],
                 'multi_idx'    => ['poster_id', 'topic_id'],
             ],
+            'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('pms_new_posts', $schema);
-
+        // pms_new_topics
         $schema = [
             'FIELDS' => [
                 'id'          => ['SERIAL', false],
@@ -662,13 +689,14 @@ class Install extends Page
                 'multi_idx_st' => ['starter_id', 'topic_st'],
                 'multi_idx_to' => ['to_id', 'topic_to'],
             ],
+            'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('pms_new_topics', $schema);
-
+        // users
         $schema = [
             'FIELDS' => [
                 'id'               => ['SERIAL', false],
-                'group_id'         => ['INT(10) UNSIGNED', false, 3], //????
+                'group_id'         => ['INT(10) UNSIGNED', false, $this->c->GROUP_UNVERIFIED],
                 'username'         => ['VARCHAR(200)', false, ''],
                 'password'         => ['VARCHAR(255)', false, ''],
                 'email'            => ['VARCHAR(80)', false, ''],
@@ -709,7 +737,7 @@ class Install extends Page
                 'last_visit'       => ['INT(10) UNSIGNED', false, 0],
                 'admin_note'       => ['VARCHAR(30)', true],
                 'activate_string'  => ['VARCHAR(80)', true],
-                'activate_key'     => ['VARCHAR(8)', true],
+                'activate_key'     => ['VARCHAR(8)', true],    //????
                 'messages_enable'  => ['TINYINT(1)', false, 1],
                 'messages_email'   => ['TINYINT(1)', false, 0],
                 'messages_flag'    => ['TINYINT(1)', false, 0],
@@ -728,9 +756,10 @@ class Install extends Page
             'INDEXES' => [
                 'registered_idx' => ['registered'],
             ],
+            'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('users', $schema);
-
+        // smilies
         $schema = [
             'FIELDS' => [
                 'id'            => ['SERIAL', false],
@@ -739,8 +768,206 @@ class Install extends Page
                 'disp_position' => ['TINYINT(4) UNSIGNED', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
+            'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('smilies', $schema);
+        // warnings
+        $schema = [
+            'FIELDS' => [
+                'id'        => ['SERIAL', false],
+                'poster'    => ['VARCHAR(200)', false, ''],
+                'poster_id' => ['INT(10) UNSIGNED', false, 0],
+                'posted'    => ['INT(10) UNSIGNED', false, 0],
+                'message'   => ['TEXT', true],
+            ],
+            'PRIMARY KEY' => ['id'],
+            'ENGINE' => $this->DBEngine,
+        ];
+        $this->c->DB->createTable('warnings', $schema);
+        // poll
+        $schema = [
+            'FIELDS' => [
+                'tid'      => ['INT(10) UNSIGNED', false, 0],
+                'question' => ['TINYINT(4)', false, 0],
+                'field'    => ['TINYINT(4)', false, 0],
+                'choice'   => ['VARCHAR(255)', false, ''],
+                'votes'    => ['INT(10) UNSIGNED', false, 0],
+            ],
+            'PRIMARY KEY' => ['tid', 'question', 'field'],
+            'ENGINE' => $this->DBEngine,
+        ];
+        $this->c->DB->createTable('poll', $schema);
+        // poll_voted
+        $schema = [
+            'FIELDS' => [
+                'tid' => ['INT(10) UNSIGNED', false],
+                'uid' => ['INT(10) UNSIGNED', false],
+                'rez' => ['TEXT', true],
+            ],
+            'PRIMARY KEY' => ['tid', 'uid'],
+            'ENGINE' => $this->DBEngine,
+        ];
+        $this->c->DB->createTable('poll_voted', $schema) ;
+        // mark_of_forum
+        $schema = [
+            'FIELDS' => [
+                'uid'      => ['INT(10) UNSIGNED', true],
+                'fid'      => ['INT(10) UNSIGNED', true],
+                'mf_upper' => ['INT(10) UNSIGNED', true],
+                'mf_lower' => ['INT(10) UNSIGNED', true],
+            ],
+            'UNIQUE KEYS' => [
+                'uid_fid_idx' => ['uid', 'fid'],
+            ],
+            'INDEXES' => [
+                'mf_upper_idx' => ['mf_upper'],
+                'mf_lower_idx' => ['mf_lower'],
+            ],
+            'ENGINE' => $this->DBEngine,
+        ];
+        $this->c->DB->createTable('mark_of_forum', $schema);
+        // mark_of_topic
+        $schema = [
+            'FIELDS' => [
+                'uid'      => ['INT(10) UNSIGNED', true],
+                'fid'      => ['INT(10) UNSIGNED', true], //????
+                'tid'      => ['INT(10) UNSIGNED', true],
+                'mt_upper' => ['INT(10) UNSIGNED', true],
+                'mt_lower' => ['INT(10) UNSIGNED', true],
+            ],
+            'UNIQUE KEYS' => [
+                'uid_fid_tid_idx' => ['uid', 'fid', 'tid'],
+            ],
+            'INDEXES' => [
+                'mt_upper_idx' => ['mt_upper'],
+                'mt_lower_idx' => ['mt_lower'],
+            ],
+            'ENGINE' => $this->DBEngine,
+        ];
+        $this->c->DB->createTable('mark_of_topic', $schema);
+
+        $now = time();
+
+        $groups = [
+        //    g_id,                  g_title,              g_user_title,        g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood
+            [$this->c->GROUP_ADMIN,  __('Administrators'), __('Administrator'), 0,           0,                0,                  0,                      0,               1,                   1,            1,            1,              1,             1,            1,              1,               1,           1,        1,              1,            0,            0,              0,             0],
+            [$this->c->GROUP_MOD,    __('Moderators'),     __('Moderator'),     1,           1,                1,                  1,                      1,               1,                   1,            1,            1,              1,             1,            1,              1,               1,           1,        1,              1,            0,            0,              0,             0],
+            [$this->c->GROUP_GUEST,  __('Guests'),         NULL,                0,           0,                0,                  0,                      0,               0,                   1,            1,            0,              0,             0,            0,              0,               0,           1,        1,              0,            120,          60,             0,             0],
+            [$this->c->GROUP_MEMBER, __('Members'),        NULL,                0,           0,                0,                  0,                      0,               0,                   1,            1,            1,              1,             1,            1,              1,               0,           1,        1,              1,            30,           30,             60,            60],
+        ];
+        foreach ($groups as $group) { //???? $db_type != 'pgsql'
+            $this->c->DB->exec('INSERT INTO ::groups (g_id, g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood) VALUES (?i, ?s, ?s, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i)', $group) ;
+        }
+        $this->c->DB->exec('UPDATE ::groups SET g_pm_limit=0 WHERE g_id=?i', [$this->c->GROUP_ADMIN]);
+
+        $ip = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP) ?: 'unknow';
+        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, email) VALUES (?i, ?s, ?s, ?s)', [$this->c->GROUP_GUEST, __('Guest'), __('Guest'), __('Guest')]);
+        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, email, language, style, num_posts, last_post, registered, registration_ip, last_visit) VALUES (?i, ?s, ?s, ?s, ?s, ?s, ?i, ?i, ?i, ?s, ?i)', [$this->c->GROUP_ADMIN, $v->username, password_hash($v->password, PASSWORD_DEFAULT), $v->email, $v->defaultlang, $v->defaultstyle, 1, $now, $now, $ip, $now]);
+
+        $pun_config = [
+            'i_fork_revision' => $this->c->FORK_REVISION,
+            'o_board_title' => $v->title,
+            'o_board_desc' => $v->descr,
+            'o_default_timezone' => 0,
+            'o_time_format' => 'H:i:s',
+            'o_date_format' => 'Y-m-d',
+            'o_timeout_visit' => 1800,
+            'o_timeout_online' => 300,
+            'o_redirect_delay' => 1,
+            'o_show_version' => 0,
+            'o_show_user_info' => 1,
+            'o_show_post_count' => 1,
+            'o_signatures' => 1,
+            'o_smilies' => 1,
+            'o_smilies_sig' => 1,
+            'o_make_links' => 1,
+            'o_default_lang' => $v->defaultlang,
+            'o_default_style' => $v->defaultstyle,
+            'o_default_user_group' => $this->c->GROUP_MEMBER,
+            'o_topic_review' => 15,
+            'o_disp_topics_default' => 30,
+            'o_disp_posts_default' => 25,
+            'o_indent_num_spaces' => 4,
+            'o_quote_depth' => 3,
+            'o_quickpost' => 1,
+            'o_users_online' => 1,
+            'o_censoring' => 0,
+            'o_show_dot' => 0,
+            'o_topic_views' => 1,
+            'o_quickjump' => 1,
+            'o_gzip' => 0,
+            'o_additional_navlinks' => '',
+            'o_report_method' => 0,
+            'o_regs_report' => 0,
+            'o_default_email_setting' => 1,
+            'o_mailing_list' => $v->email,
+            'o_avatars' => in_array(strtolower(@ini_get('file_uploads')), ['on', 'true', '1']) ? 1 : 0,
+            'o_avatars_dir' => '/avatar/',
+            'o_avatars_width' => 60,
+            'o_avatars_height' => 60,
+            'o_avatars_size' => 10240,
+            'o_search_all_forums' => 1,
+            'o_admin_email' => $v->email,
+            'o_webmaster_email' => $v->email,
+            'o_forum_subscriptions' => 1,
+            'o_topic_subscriptions' => 1,
+            'o_smtp_host' => NULL,
+            'o_smtp_user' => NULL,
+            'o_smtp_pass' => NULL,
+            'o_smtp_ssl' => 0,
+            'o_regs_allow' => 1,
+            'o_regs_verify' => 1,
+            'o_announcement' => 0,
+            'o_announcement_message' => __('Announcement'),
+            'o_rules' => 0,
+            'o_rules_message' => __('Rules'),
+            'o_maintenance' => 0,
+            'o_maintenance_message' => __('Maintenance message'),
+            'o_default_dst' => 0,
+            'o_feed_type' => 2,
+            'o_feed_ttl' => 0,
+            'p_message_bbcode' => 1,
+            'p_message_img_tag' => 1,
+            'p_message_all_caps' => 1,
+            'p_subject_all_caps' => 1,
+            'p_sig_all_caps' => 1,
+            'p_sig_bbcode' => 1,
+            'p_sig_img_tag' => 0,
+            'p_sig_length' => 400,
+            'p_sig_lines' => 4,
+            'p_allow_banned_email' => 0,
+            'p_allow_dupe_email' => 0,
+            'p_force_guest_email' => 1,
+            'o_pms_enabled' => 1,                    // New PMS - Visman
+            'o_pms_min_kolvo' => 0,
+            'o_merge_timeout' => 86400,        // merge post - Visman
+            'o_board_redirect' => '',    // для редиректа - Visman
+            'o_board_redirectg' => 0,
+            'o_poll_enabled' => 0,    // опросы - Visman
+            'o_poll_max_ques' => 3,
+            'o_poll_max_field' => 20,
+            'o_poll_time' => 60,
+            'o_poll_term' => 3,
+            'o_poll_guest' => 0,
+            'o_fbox_guest' => 0,    // Fancybox - Visman
+            'o_fbox_files' => 'viewtopic.php,search.php,pmsnew.php',
+            'o_coding_forms' => 1,    // кодирование форм - Visman
+            'o_check_ip' => 0,    // проверка ip администрации - Visman
+            'o_crypto_enable' => 1,    // случайные имена полей форм - Visman
+            'o_crypto_pas' => $this->c->Secury->randomPass(25),
+            'o_crypto_salt' => $this->c->Secury->randomPass(13),
+            'o_enable_acaptcha' => 1, // математическая каптча
+            'st_max_users' => 1,    // статистика по максимуму юзеров - Visman
+            'st_max_users_time' => time(),
+        ];
+        foreach ($pun_config as $conf_name => $conf_value) {
+            $this->c->DB->exec('INSERT INTO ::config (conf_name, conf_value) VALUES (?s, ?s)', [$conf_name, $conf_value]);
+        }
+
+        $this->c->DB->exec('INSERT INTO ::categories (cat_name, disp_position) VALUES (?s, ?i)', [__('Test category'), 1]);
+        $this->c->DB->exec('INSERT INTO ::forums (forum_name, forum_desc, num_topics, num_posts, last_post, last_post_id, last_poster, last_topic, disp_position, cat_id) VALUES (?s, ?s, ?i, ?i, ?i, ?i, ?s, ?s, ?i, ?i)', [__('Test forum'), __('This is just a test forum'), 1, 1, $now, 1, $v->username, __('Test post'), 1, 1]);
+        $this->c->DB->exec('INSERT INTO ::topics (poster, subject, posted, first_post_id, last_post, last_post_id, last_poster, forum_id) VALUES(?s, ?s, ?i, ?i, ?i, ?i, ?s, ?i)', [$v->username, __('Test post'), $now, 1, $now, 1, $v->username, 1]);
+        $this->c->DB->exec('INSERT INTO ::posts (poster, poster_id, poster_ip, message, posted, topic_id) VALUES(?s, ?i, ?s, ?s, ?i, ?i)', [$v->username, 2, $ip, __('Test message'), $now, 1]);
 
         $smilies = [
             ':)'         => 'smile.png',
@@ -767,173 +994,30 @@ class Install extends Page
             $this->c->DB->exec('INSERT INTO ::smilies (image, text, disp_position) VALUES(?s, ?s, ?i)', [$img, $text, $i++]); //????
         }
 
-        $schema = [
-            'FIELDS' => [
-                'id'        => ['SERIAL', false],
-                'poster'    => ['VARCHAR(200)', false, ''],
-                'poster_id' => ['INT(10) UNSIGNED', false, 0],
-                'posted'    => ['INT(10) UNSIGNED', false, 0],
-                'message'   => ['TEXT', true],
-            ],
-            'PRIMARY KEY' => ['id'],
-        ];
-        $this->c->DB->createTable('warnings', $schema);
-
-        $schema = [
-            'FIELDS' => [
-                'tid'      => ['INT(10) UNSIGNED', false, 0],
-                'question' => ['TINYINT(4)', false, 0],
-                'field'    => ['TINYINT(4)', false, 0],
-                'choice'   => ['VARCHAR(255)', false, ''],
-                'votes'    => ['INT(10) UNSIGNED', false, 0],
-            ],
-            'PRIMARY KEY' => ['tid', 'question', 'field'],
-        ];
-        $this->c->DB->createTable('poll', $schema);
-
-        $schema = [
-            'FIELDS' => [
-                'tid' => ['INT(10) UNSIGNED', false],
-                'uid' => ['INT(10) UNSIGNED', false],
-                'rez' => ['TEXT', true],
-            ],
-            'PRIMARY KEY' => ['tid', 'uid'],
-        ];
-        $this->c->DB->createTable('poll_voted', $schema) ;
-
-        $now = time();
-
-        $groups = [
-        // g_id, g_title,             g_user_title,        g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood
-            [1, __('Administrators'), __('Administrator'), 0,           0,                0,                  0,                      0,               1,                   1,            1,            1,              1,             1,            1,              1,               1,           1,        1,              1,            0,            0,              0,             0],
-            [2, __('Moderators'),     __('Moderator'),     1,           1,                1,                  1,                      1,               1,                   1,            1,            1,              1,             1,            1,              1,               1,           1,        1,              1,            0,            0,              0,             0],
-            [3, __('Guests'),         NULL,                0,           0,                0,                  0,                      0,               0,                   1,            1,            0,              0,             0,            0,              0,               0,           1,        1,              0,            120,          60,             0,             0],
-            [4, __('Members'),        NULL,                0,           0,                0,                  0,                      0,               0,                   1,            1,            1,              1,             1,            1,              1,               0,           1,        1,              1,            30,           30,             60,            60],
-        ];
-        foreach ($groups as $group) { //???? $db_type != 'pgsql'
-            $this->c->DB->exec('INSERT INTO ::groups (g_id, g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood) VALUES (?i, ?s, ?s, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i)', $group) ;
-        }
-        $this->c->DB->exec('UPDATE ::groups SET g_pm_limit=0 WHERE g_id=1') ;
-
-        $ip = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP) ?: 'unknow';
-        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, email) VALUES (?i, ?s, ?s, ?s)', [3, __('Guest'), __('Guest'), __('Guest')]);
-        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, email, language, style, num_posts, last_post, registered, registration_ip, last_visit) VALUES (?i, ?s, ?s, ?s, ?s, ?s, ?i, ?i, ?i, ?s, ?i)', [1, $v->username, password_hash($v->password, PASSWORD_DEFAULT), $v->email, $v->defaultlang, $v->defaultstyle, 1, $now, $now, $ip, $now]);
-
-        $pun_config = [
-            'i_fork_revision' => $this->c->FORK_REVISION,
-            'o_board_title' => $v->title,
-            'o_board_desc' => $v->descr,
-            'o_default_timezone' => 0,
-            'o_time_format' => 'H:i:s',
-            'o_date_format' => 'Y-m-d',
-            'o_timeout_visit' => 1800,
-            'o_timeout_online' => 300,
-            'o_redirect_delay' => 1,
-            'o_show_version' => 0,
-            'o_show_user_info' => 1,
-            'o_show_post_count' => 1,
-            'o_signatures' => 1,
-            'o_smilies' => 1,
-            'o_smilies_sig' => 1,
-            'o_make_links' => 1,
-            'o_default_lang' => $v->defaultlang,
-            'o_default_style' => $v->defaultstyle,
-            'o_default_user_group' => 4,
-            'o_topic_review' => 15,
-            'o_disp_topics_default' => 30,
-            'o_disp_posts_default' => 25,
-            'o_indent_num_spaces' => 4,
-            'o_quote_depth' => 3,
-            'o_quickpost' => 1,
-            'o_users_online' => 1,
-            'o_censoring' => 0,
-            'o_show_dot' => 0,
-            'o_topic_views' => 1,
-            'o_quickjump' => 1,
-            'o_gzip' => 0,
-            'o_additional_navlinks' => '',
-            'o_report_method' => 0,
-            'o_regs_report' => 0,
-            'o_default_email_setting' => 1,
-            'o_mailing_list' => $v->email,
-            'o_avatars' => in_array(strtolower(@ini_get('file_uploads')), ['on', 'true', '1']) ? 1 : 0,
-            'o_avatars_dir' => 'img/avatars',
-            'o_avatars_width' => 60,
-            'o_avatars_height' => 60,
-            'o_avatars_size' => 10240,
-            'o_search_all_forums' => 1,
-            'o_admin_email' => $v->email,
-            'o_webmaster_email' => $v->email,
-            'o_forum_subscriptions' => 1,
-            'o_topic_subscriptions' => 1,
-            'o_smtp_host' => NULL,
-            'o_smtp_user' => NULL,
-            'o_smtp_pass' => NULL,
-            'o_smtp_ssl' => 0,
-            'o_regs_allow' => 1,
-            'o_regs_verify' => 0,
-            'o_announcement' => 0,
-            'o_announcement_message' => __('Announcement'),
-            'o_rules' => 0,
-            'o_rules_message' => __('Rules'),
-            'o_maintenance' => 0,
-            'o_maintenance_message' => __('Maintenance message'),
-            'o_default_dst' => 0,
-            'o_feed_type' => 2,
-            'o_feed_ttl' => 0,
-            'p_message_bbcode' => 1,
-            'p_message_img_tag' => 1,
-            'p_message_all_caps' => 1,
-            'p_subject_all_caps' => 1,
-            'p_sig_all_caps' => 1,
-            'p_sig_bbcode' => 1,
-            'p_sig_img_tag' => 0,
-            'p_sig_length' => 400,
-            'p_sig_lines' => 4,
-            'p_allow_banned_email' => 1,
-            'p_allow_dupe_email' => 0,
-            'p_force_guest_email' => 1,
-            'o_pms_enabled' => 1,                    // New PMS - Visman
-            'o_pms_min_kolvo' => 0,
-            'o_merge_timeout' => 86400,        // merge post - Visman
-            'o_board_redirect' => '',    // для редиректа - Visman
-            'o_board_redirectg' => 0,
-            'o_poll_enabled' => 0,    // опросы - Visman
-            'o_poll_max_ques' => 3,
-            'o_poll_max_field' => 20,
-            'o_poll_time' => 60,
-            'o_poll_term' => 3,
-            'o_poll_guest' => 0,
-            'o_fbox_guest' => 0,    // Fancybox - Visman
-            'o_fbox_files' => 'viewtopic.php,search.php,pmsnew.php',
-            'o_coding_forms' => 1,    // кодирование форм - Visman
-            'o_check_ip' => 0,    // проверка ip администрации - Visman
-            'o_crypto_enable' => 1,    // случайные имена полей форм - Visman
-            'o_crypto_pas' => $this->c->Secury->randomPass(25),
-            'o_crypto_salt' => $this->c->Secury->randomPass(13),
-            'o_enable_acaptcha' => 1, // математическая каптча
-            'st_max_users' => 1,    // статистика по максимуму юзеров - Visman
-            'st_max_users_time' => time(),
-        ];
-
-        foreach ($pun_config as $conf_name => $conf_value) {
-            $this->c->DB->exec('INSERT INTO ::config (conf_name, conf_value) VALUES (?s, ?s)', [$conf_name, $conf_value]);
-        }
-
-        // Insert some other default data
-        $subject = __('Test post');
-        $message = __('Test message');
-
-        $this->c->DB->exec('INSERT INTO ::categories (cat_name, disp_position) VALUES (?s, ?i)', [__('Test category'), 1]);
-
-        $this->c->DB->exec('INSERT INTO ::forums (forum_name, forum_desc, num_topics, num_posts, last_post, last_post_id, last_poster, last_topic, disp_position, cat_id) VALUES (?s, ?s, ?i, ?i, ?i, ?i, ?s, ?s, ?i, ?i)', [__('Test forum'), __('This is just a test forum'), 1, 1, $now, 1, $v->username, $subject, 1, 1]);
-
-        $this->c->DB->exec('INSERT INTO ::topics (poster, subject, posted, first_post_id, last_post, last_post_id, last_poster, forum_id) VALUES(?s, ?s, ?i, ?i, ?i, ?i, ?s, ?i)', [$v->username, $subject, $now, 1, $now, 1, $v->username, 1]);
-
-        $this->c->DB->exec('INSERT INTO ::posts (poster, poster_id, poster_ip, message, posted, topic_id) VALUES(?s, ?i, ?s, ?s, ?i, ?i)', [$v->username, 2, $ip, $message, $now, 1]);
-
         $this->c->DB->commit();
 
-        exit();
+        $config = file_get_contents($this->c->DIR_CONFIG . '/main.dist.php');
+        if (false === $config) {
+            throw new RuntimeException('No access to main.dist.php.');
+        }
+
+        $repl = [
+            '_BASE_URL_'      => $v->baseurl,
+            '_DB_DSN_'        => $this->c->DB_DSN,
+            '_DB_USERNAME_'   => $this->c->DB_USERNAME,
+            '_DB_PASSWORD_'   => $this->c->DB_PASSWORD,
+            '_DB_PREFIX_'     => $this->c->DB_PREFIX,
+            '_SALT_FOR_HMAC_' => $this->c->Secury->randomPass(21),
+            '_COOKIE_PREFIX_' => 'fork' . $this->c->Secury->randomHash(7) . '_',
+        ];
+        foreach ($repl as $key => $val) {
+            $config = str_replace($key, addslashes($val), $config);
+        }
+        $result = file_put_contents($this->c->DIR_CONFIG . '/main.php', $config);
+        if (false === $result) {
+            throw new RuntimeException('No write to main.php.');
+        }
+
+        return $this->c->Redirect->toIndex();
     }
 }
