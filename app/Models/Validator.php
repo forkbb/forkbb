@@ -533,7 +533,7 @@ class Validator
 
     protected function vPassword($v, $value, $type)
     {
-        return $this->vRegex($v, $value, $type, '%^(?=.*\p{N})(?=.*\p{Lu})(?=.*\p{Ll})(?=.*[^\p{N}\p{L}])%u');
+        return $this->vRegex($v, $value, $type, '%[^\x20][\x20][^\x20]%');
     }
 
     protected function vLogin($v, $value, $type)

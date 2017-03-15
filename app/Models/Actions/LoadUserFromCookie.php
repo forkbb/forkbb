@@ -60,14 +60,14 @@ class LoadUserFromCookie
             $user->style = $this->config['o_default_style'];
 
             // быстрое переключение языка - Visman
-            $language = $this->cookie->get('glang');
+/*            $language = $this->cookie->get('glang');
             if (null !== $language) {
                 $language = preg_replace('%[^a-zA-Z0-9_]%', '', $language);
                 $languages = forum_list_langs();
                 if (in_array($language, $languages)) {
                     $user->language = $language;
                 }
-            }
+            } */
         } else {
             $user->isBot = false;
             if (! $user->dispTopics) {

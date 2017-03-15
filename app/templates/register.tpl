@@ -17,8 +17,8 @@
             <label class="f-child4 f-fhint">{!! __('Login format') !!}</label>
           </div>
           <div>
-            <label class="f-child1 f-req" for="id-password">{!! __('Password') !!}</label>
-            <input required class="f-ctrl" id="id-password" type="password" name="password" pattern=".{8,}" tabindex="3">
+            <label class="f-child1 f-req" for="id-password">{!! __('Passphrase') !!}</label>
+            <input required class="f-ctrl" id="id-password" type="password" name="password" pattern="^.{16,}$" tabindex="3">
             <label class="f-child4 f-fhint">{!! __('Pass format') !!} {!! __('Pass info') !!}</label>
           </div>
           <div>

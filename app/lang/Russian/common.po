@@ -141,8 +141,8 @@ msgstr "Перейти к первому новому сообщению в те
 msgid "Username"
 msgstr "Имя"
 
-msgid "Password"
-msgstr "Пароль"
+msgid "Passphrase"
+msgstr "Кодовая фраза"
 
 msgid "Email"
 msgstr "E-mail"

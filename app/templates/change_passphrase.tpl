@@ -14,7 +14,7 @@
             <label class="f-child4">{!! __('Pass format') !!} {!! __('Pass info') !!}</label>
           </div>
           <div>
-            <input class="f-btn" type="submit" name="login" value="{!! __('Change password') !!}" tabindex="3">
+            <input class="f-btn" type="submit" name="login" value="{!! __('Change passphrase') !!}" tabindex="3">
           </div>
         </form>
       </div>

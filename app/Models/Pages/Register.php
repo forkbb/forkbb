@@ -43,7 +43,7 @@ class Register extends Page
             'on'       => 'integer',
             'email'    => ['required_with:on|string:trim,lower|email|check_email', __('Email')],
             'username' => ['required_with:on|string:trim|min:2|max:25|login|check_username', __('Username')],
-            'password' => ['required_with:on|string|min:8|password', __('Password')],
+            'password' => ['required_with:on|string|min:8|password', __('Passphrase')],
         ])->setMessages([
             'agree.required'    => ['cancel', 'cancel'],
             'agree.token'       => [__('Bad agree', $this->c->Router->link('Register')), 'w'],

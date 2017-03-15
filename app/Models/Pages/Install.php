@@ -217,7 +217,7 @@ class Install extends Page
             'dbpass' => ['string:trim', __('Database password')],
             'dbprefix' => ['string:trim|max:40|check_prefix', __('Table prefix')],
             'username' => ['required|string:trim|min:2|max:25', __('Administrator username')],
-            'password' => ['required|string|min:8|password', __('Administrator password')],
+            'password' => ['required|string|min:8|password', __('Administrator passphrase')],
             'email' => 'required|string:trim,lower|email',
             'title' => ['required|string:trim', __('Board title')],
             'descr' => ['required|string:trim', __('Board description')],

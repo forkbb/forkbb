@@ -101,8 +101,8 @@
             <label class="f-child4">{!! __('Info 8') !!}</label>
           </div>
           <div>
-            <label class="f-child1 f-req" for="id-password">{!! __('Administrator password') !!}</label>
-            <input required class="f-ctrl" id="id-password" type="password" name="password" pattern=".{8,}">
+            <label class="f-child1 f-req" for="id-password">{!! __('Administrator passphrase') !!}</label>
+            <input required class="f-ctrl" id="id-password" type="password" name="password" pattern="^.{16,}$">
             <label class="f-child4">{!! __('Info 9') !!}</label>
           </div>
           <div>

@@ -100,7 +100,7 @@ class Auth extends Page
             'token'    => 'token:Login',
             'redirect' => 'referer:Index',
             'username' => ['required|string', __('Username')],
-            'password' => ['required|string|login_process', __('Password')],
+            'password' => ['required|string|login_process', __('Passphrase')],
             'save'     => 'checkbox',
         ]);
 
@@ -173,8 +173,8 @@ class Auth extends Page
      */
     public function forget(array $args)
     {
-        $this->nameTpl = 'password_reset';
-        $this->onlinePos = 'password_reset';
+        $this->nameTpl = 'passphrase_reset';
+        $this->onlinePos = 'passphrase_reset';
 
         if (! isset($args['_email'])) {
             $args['_email'] = '';
@@ -183,7 +183,7 @@ class Auth extends Page
         $this->c->Lang->load('auth');
 
         $this->titles = [
-            __('Password reset'),
+            __('Passphrase reset'),
         ];
         $this->data = [
             'formAction' => $this->c->Router->link('Forget'),
@@ -283,8 +283,8 @@ class Auth extends Page
      */
     public function changePass(array $args)
     {
-        $this->nameTpl = 'change_password';
-        $this->onlinePos = 'change_password';
+        $this->nameTpl = 'change_passphrase';
+        $this->onlinePos = 'change_passphrase';
 
         if (isset($args['_ok'])) {
             unset($args['_ok']);

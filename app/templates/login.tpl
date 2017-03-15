@@ -10,7 +10,7 @@
             <input required class="f-ctrl" id="id-username" type="text" name="username" value="{{ $username }}" maxlength="25" autofocus="autofocus" spellcheck="false" tabindex="1">
           </div>
           <div>
-            <label class="f-child1 f-req" for="id-password">{!! __('Password') !!}<a class="f-forgetlink" href="{!! $forgetLink !!}" tabindex="5">{!! __('Forgotten pass') !!}</a></label>
+            <label class="f-child1 f-req" for="id-password">{!! __('Passphrase') !!}<a class="f-forgetlink" href="{!! $forgetLink !!}" tabindex="5">{!! __('Forgotten pass') !!}</a></label>
             <input required class="f-ctrl" id="id-password" type="password" name="password" tabindex="2">
           </div>
           <div>

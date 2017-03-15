@@ -141,8 +141,8 @@ msgstr "Go to the first new post in this topic."
 msgid "Username"
 msgstr "Username"
 
-msgid "Password"
-msgstr "Password"
+msgid "Passphrase"
+msgstr "Passphrase"
 
 msgid "Email"
 msgstr "Email"

@@ -58,13 +58,13 @@ msgid "Email info"
 msgstr "Please enter a valid email address. It will be used to activate your account."
 
 msgid "Pass format"
-msgstr "Password must contain the digit, uppercase and lowercase letters, symbol different from the digits and letters."
+msgstr "Passphrase must contain a few words."
 
 msgid "Pass info"
-msgstr "Passwords must be at least 8 characters long. Passwords are case sensitive."
+msgstr "Passphrase must be at least 16 characters long. Passphrase are case sensitive."
 
 msgid "Login format"
 msgstr "The username must begin with a letter. May contain letters, numbers, spaces, dots, dashes and underscores."
 
 msgid "Error welcom mail"
-msgstr "When sending email there was an error. Please use the password reset form for activate your account or contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."
+msgstr "When sending email there was an error. Please use the passphrase reset form for activate your account or contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."

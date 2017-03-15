@@ -84,11 +84,11 @@ msgstr "Administrator's username"
 msgid "Info 8"
 msgstr "The username must begin with a letter. May contain letters, numbers, spaces, dots, dashes and underscores."
 
-msgid "Administrator password"
-msgstr "Administrator's password"
+msgid "Administrator passphrase"
+msgstr "Administrator's passphrase"
 
 msgid "Info 9"
-msgstr "Password must contain the digit, uppercase and lowercase letters, symbol different from the digits and letters. Passwords must be at least 8 characters long. Passwords are case sensitive."
+msgstr "Passphrase must contain a few words. Passphrase must be at least 16 characters long. Passphrase are case sensitive."
 
 msgid "Administrator email"
 msgstr "Administrator's email"

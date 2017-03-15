@@ -22,10 +22,10 @@ msgid "Account is not activated"
 msgstr "Account is not activated."
 
 msgid "Wrong user/pass"
-msgstr "Wrong username and/or password."
+msgstr "Wrong username and/or passphrase."
 
 msgid "Forgotten pass"
-msgstr "Forgotten your password?"
+msgstr "Forgotten?"
 
 msgid "Login redirect"
 msgstr "Logged in successfully. Redirecting …"
@@ -33,11 +33,11 @@ msgstr "Logged in successfully. Redirecting …"
 msgid "Logout redirect"
 msgstr "Logged out. Redirecting …"
 
-msgid "Password reset"
-msgstr "Password reset"
+msgid "Passphrase reset"
+msgstr "Passphrase reset"
 
-msgid "Password reset info"
-msgstr "An email will be sent to the specified address with instructions on how to change your password."
+msgid "Passphrase reset info"
+msgstr "An email will be sent to the specified address with instructions on how to change your passphrase."
 
 msgid "Not registered"
 msgstr "Not registered yet?"
@@ -46,34 +46,34 @@ msgid "Remember me"
 msgstr "Remember me"
 
 msgid "Forget mail"
-msgstr "An email has been sent to the specified address with instructions on how to change your password. If it does not arrive you can contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."
+msgstr "An email has been sent to the specified address with instructions on how to change your passphrase. If it does not arrive you can contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."
 
 msgid "Email flood"
-msgstr "This account has already requested a password reset in the past hour. Please wait %s minutes before trying again."
+msgstr "This account has already requested a passphrase reset in the past hour. Please wait %s minutes before trying again."
 
 msgid "Pass not match"
-msgstr "Passwords do not match."
+msgstr "Passphrases do not match."
 
 msgid "Change pass"
-msgstr "Change password"
+msgstr "Change passphrase"
 
-msgid "Change password"
-msgstr "Change password"
+msgid "Change passphrase"
+msgstr "Change passphrase"
 
 msgid "New pass"
-msgstr "New password"
+msgstr "New passphrase"
 
 msgid "Confirm new pass"
-msgstr "Confirm new password"
+msgstr "Confirm new passphrase"
 
 msgid "Pass format"
-msgstr "Password must contain the digit, uppercase and lowercase letters, symbol different from the digits and letters."
+msgstr "Passphrase must contain a few words."
 
 msgid "Pass info"
-msgstr "Passwords must be at least 8 characters long. Passwords are case sensitive."
+msgstr "Passphrase must be at least 16 characters long. Passphrase are case sensitive."
 
 msgid "Pass updated"
-msgstr "Your password has been updated. You can now login with your new password."
+msgstr "Your passphrase has been updated. You can now login with your new passphrase."
 
 msgid "Account activated"
 msgstr "Account activated."
