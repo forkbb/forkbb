@@ -34,20 +34,20 @@ class Routing
         // регистрация/вход/выход
         if ($user->isGuest) {
             // вход
-            $r->add('GET', '/login', 'Auth:login', 'Login');
+            $r->add('GET',  '/login', 'Auth:login', 'Login');
             $r->add('POST', '/login', 'Auth:loginPost');
-            // забыли пароль
-            $r->add('GET', '/login/forget', 'Auth:forget', 'Forget');
+            // забыли кодовую фразу
+            $r->add('GET',  '/login/forget', 'Auth:forget', 'Forget');
             $r->add('POST', '/login/forget', 'Auth:forgetPost');
-            // смена пароля
-            $r->add('GET', '/login/{email}/{key}/{hash}', 'Auth:changePass', 'ChangePassword');
+            // смена кодовой фразы
+            $r->add('GET',  '/login/{email}/{key}/{hash}', 'Auth:changePass', 'ChangePassword');
             $r->add('POST', '/login/{email}/{key}/{hash}', 'Auth:changePassPost');
 
             // регистрация
             if ($config['o_regs_allow'] == '1') {
-                $r->add('GET', '/registration', 'Rules:confirmation', 'Register');
+                $r->add('GET',  '/registration', 'Rules:confirmation', 'Register');
                 $r->add('POST', '/registration/agree', 'Register:reg', 'RegisterForm');
-                $r->add('GET', '/registration/activate/{id:\d+}/{key}/{hash}', 'Register:activate', 'RegActivate');
+                $r->add('GET',  '/registration/activate/{id:\d+}/{key}/{hash}', 'Register:activate', 'RegActivate');
             }
         } else {
             // выход
@@ -72,15 +72,15 @@ class Routing
             // юзеры
             if ($user->gViewUsers == '1') {
                 // список пользователей
-                $r->add('GET', '/userlist[/page/{page}]', 'Userlist:view', 'Userlist');
+                $r->add('GET', '/userlist[/page/{page:[1-9]\d*}]', 'Userlist:view', 'Userlist');
                 // юзеры
-                $r->add('GET', '/user/{id:\d+}[/{name}]', 'Profile:view', 'User'); //????
+                $r->add('GET', '/user/{id:[1-9]\d*}[/{name}]', 'Profile:view', 'User'); //????
             }
 
             // разделы
-            $r->add('GET', '/forum/{id:\d+}[/{name}][/page/{page:\d+}]', 'Forum:view', 'Forum');
+            $r->add('GET', '/forum/{id:[1-9]\d*}[/{name}][/page/{page:[1-9]\d*}]', 'Forum:view', 'Forum');
             // темы
-            $r->add('GET', '/post/{id:\d+}#p{id}', 'Topic:viewpost', 'viewPost');
+            $r->add('GET', '/post/{id:[1-9]\d*}#p{id}', 'Topic:viewpost', 'viewPost');
 
         }
         // админ и модератор

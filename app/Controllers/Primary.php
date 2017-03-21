@@ -31,7 +31,7 @@ class Primary
     {
         if ($this->c->config['o_maintenance'] && ! $this->c->MAINTENANCE_OFF) {
            if (! in_array($this->c->UserCookie->id(), $this->c->admins)
-               || ! in_array($this->c->user['id'], $this->c->admins)
+               || ! in_array($this->c->user->id, $this->c->admins)
            ) {
                return $this->c->Maintenance;
            }

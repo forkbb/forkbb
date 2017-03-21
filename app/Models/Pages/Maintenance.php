@@ -51,7 +51,7 @@ class Maintenance extends Page
             __('Maintenance'),
         ];
         $this->data = [
-            'MaintenanceMessage' => $this->config['o_maintenance_message'],
+            'maintenanceMessage' => $this->config['o_maintenance_message'],
         ];
         return parent::getData();
     }

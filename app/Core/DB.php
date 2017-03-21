@@ -41,7 +41,7 @@ class DB extends PDO
     {
         $type = strstr($dsn, ':', true);
         if (! $type || ! file_exists(__DIR__ . '/DB/' . ucfirst($type) . '.php')) {
-            throw new PDOException("For '$type' the driver isn't found.");
+            throw new PDOException("Driver isn't found for '$type'");
         }
         $this->dbType = $type;
 

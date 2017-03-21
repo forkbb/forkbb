@@ -99,7 +99,7 @@ class CacheGenerator
         $tree = $desc = $asc = [];
 
         if ($read) {
-            $stmt = $this->c->DB->query('SELECT c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.redirect_url, f.parent_forum_id, f.disp_position FROM ::categories AS c INNER JOIN ::forums AS f ON c.id=f.cat_id LEFT JOIN ::forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id=?i:id) WHERE fp.read_forum IS NULL OR fp.read_forum=1 ORDER BY c.disp_position, c.id, f.disp_position', [':id' => $user->gId]);
+            $stmt = $this->c->DB->query('SELECT c.id AS cid, c.cat_name, f.id AS fid, f.forum_name, f.redirect_url, f.parent_forum_id, f.disp_position, fp.post_topics, fp.post_replies FROM ::categories AS c INNER JOIN ::forums AS f ON c.id=f.cat_id LEFT JOIN ::forum_perms AS fp ON (fp.forum_id=f.id AND fp.group_id=?i:gid) WHERE fp.read_forum IS NULL OR fp.read_forum=1 ORDER BY c.disp_position, c.id, f.disp_position', [':gid' => $user->groupId]);
             while ($f = $stmt->fetch()) {
                 $tree[$f['parent_forum_id']][$f['fid']] = $f;
             }

@@ -64,7 +64,7 @@ return [
             'class' => \ForkBB\Core\Secury::class,
             'hmac' => '%HMAC%',
         ],
-        'Validator' => \ForkBB\Models\Validator::class,
+        'Validator' => \ForkBB\Core\Validator::class,
     ],
     'multiple'  => [
         'PrimaryController' => \ForkBB\Controllers\Install::class,

@@ -25,8 +25,8 @@ class Message extends Page
             __('Info'),
         ];
         $this->data = [
-            'Message' => __($message),
-            'Back' => $back,
+            'message' => __($message),
+            'back' => $back,
         ];
         return $this;
     }

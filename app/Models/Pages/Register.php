@@ -2,9 +2,9 @@
 
 namespace ForkBB\Models\Pages;
 
+use ForkBB\Core\Validator;
 use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\User;
-use ForkBB\Models\Validator;
 
 class Register extends Page
 {
@@ -43,7 +43,7 @@ class Register extends Page
             'on'       => 'integer',
             'email'    => ['required_with:on|string:trim,lower|email|check_email', __('Email')],
             'username' => ['required_with:on|string:trim|min:2|max:25|login|check_username', __('Username')],
-            'password' => ['required_with:on|string|min:8|password', __('Passphrase')],
+            'password' => ['required_with:on|string|min:16|password', __('Passphrase')],
         ])->setMessages([
             'agree.required'    => ['cancel', 'cancel'],
             'agree.token'       => [__('Bad agree', $this->c->Router->link('Register')), 'w'],
@@ -113,7 +113,9 @@ class Register extends Page
         if (preg_match('%^(guest|' . preg_quote(__('Guest'), '%') . ')$%iu', $username)) {
             $error = __('Username guest');
         // цензура
-        } elseif ($this->config['o_censoring'] == '1' && censor_words($username) !== $username) {
+        } elseif ($this->config['o_censoring'] == '1'
+            && preg_replace($this->c->censoring[0], $this->c->censoring[1], $username) !== $username
+        ) {
             $error = __('Username censor');
         // username забанен
         } elseif ($this->c->CheckBans->isBanned($username) > 0) {

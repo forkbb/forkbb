@@ -1,9 +1,8 @@
 <?php
 
-namespace ForkBB\Models;
+namespace ForkBB\Core;
 
 use ForkBB\Core\Secury;
-use ForkBB\Models\User;
 
 class Csrf
 {
@@ -22,10 +21,10 @@ class Csrf
      * @param Secury $secury
      * @param User $user
      */
-    public function __construct(Secury $secury, User $user)
+    public function __construct(Secury $secury, $key)
     {
         $this->secury = $secury;
-        $this->key = sha1($user->password . $user->ip . $user->id);
+        $this->key = sha1($key);
     }
 
     /**

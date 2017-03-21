@@ -2,123 +2,176 @@
 
 namespace ForkBB\Models\Pages;
 
-class Index extends Page
+class Forum extends Page
 {
     /**
      * Имя шаблона
      * @var string
      */
-    protected $nameTpl = 'index';
+    protected $nameTpl = 'forum';
 
     /**
      * Позиция для таблицы онлайн текущего пользователя
      * @var null|string
      */
-    protected $onlinePos = 'index';
-
-    /**
-     * Тип обработки пользователей онлайн
-     * @var bool
-     */
-    protected $onlineType = true;
-
-    /**
-     * Тип возврата данных при onlineType === true
-     * Если true, то из online должны вернутся только пользователи находящиеся на этой же странице
-     * Если false, то все пользователи online
-     * @var bool
-     */
-    protected $onlineFilter = false;
+    protected $onlinePos = 'forum';
 
     /**
      * Подготовка данных для шаблона
+     * @param array $args
      * @return Page
      */
-    public function view()
+    public function view(array $args)
     {
         $this->c->Lang->load('index');
         $this->c->Lang->load('subforums');
 
-        $stats = $this->c->users_info;
+        list($fTree, $fDesc, $fAsc) = $this->c->forums;
+        // раздел отсутствует в доступных
+        if (empty($fDesc[$args['id']])) {
+            return $this->c->Message->message('Bad request');
+        }
 
-        $stmt = $this->c->DB->query('SELECT SUM(num_topics), SUM(num_posts) FROM ::forums');
-        list($stats['total_topics'], $stats['total_posts']) = array_map([$this, 'number'], array_map('intval', $stmt->fetch(\PDO::FETCH_NUM)));
+        $parent = isset($fDesc[$args['id']][0]) ? $fDesc[$args['id']][0] : 0;
+        $perm = $fTree[$parent][$args['id']];
 
-        $stats['total_users'] = $this->number($stats['total_users']);
+        // редирект, если раздел это ссылка
+        if (! empty($perm['redirect_url'])) {
+            return $this->c->Redirect->setUrl($perm['redirect_url']);
+        }
+        
+        $user = $this->c->user;
+        $vars = [
+            ':fid' => $args['id'],
+            ':uid' => $user->id,
+            ':gid' => $user->groupId,
+        ];
+        if ($user->isGuest) {
+            $sql = 'SELECT f.forum_name, f.moderators, f.num_topics, f.sort_by, 0 AS is_subscribed FROM ::forums AS f WHERE f.id=?i:fid';
+        } else {
+            $sql = 'SELECT f.forum_name, f.moderators, f.num_topics, f.sort_by, s.user_id AS is_subscribed, mof.mf_upper, mof.mf_lower FROM ::forums AS f LEFT JOIN ::forum_subscriptions AS s ON (f.id=s.forum_id AND s.user_id=?i:uid) LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND f.id=mof.fid) WHERE f.id=?i:fid';
+        }
+        $curForum = $this->c->DB->query($sql, $vars)->fetch();
 
-        if ($this->c->user->gViewUsers == '1') {
-            $stats['newest_user'] = [
-                $this->c->Router->link('User', [
-                    'id' => $stats['last_user']['id'],
-                    'name' => $stats['last_user']['username'],
-                ]),
-                $stats['last_user']['username']
+        // нет данных по данному разделу
+        if (! isset($curForum['forum_name'])) {
+            return $this->c->Message->message('Bad request'); //???? может в лог ошибок?
+        }
+
+        $page = isset($args['page']) ? (int) $args['page'] : 1;
+        if (empty($curForum['num_topics'])) {
+            // попытка открыть страницу которой нет
+            if ($page !== 1) {
+                return $this->c->Message->message('Bad request');
+            }
+            $pages = 1;
+            $offset = 0;
+            $topics = null;
+        } else {
+            $pages = ceil($curForum['num_topics'] / $user->dispTopics);
+            // попытка открыть страницу которой нет
+            if ($page < 1 || $page > $pages) {
+                return $this->c->Message->message('Bad request');
+            }
+            $offset = $user->dispTopics * ($page - 1);
+
+            switch ($curForum['sort_by']) {
+                case 1:
+                    $sortBy = 'posted DESC';
+                    break;
+                case 2:
+                    $sortBy = 'subject ASC';
+                    break;
+                case 0:
+                default:
+                    $sortBy = 'last_post DESC';
+                    break;
+            }
+
+            $vars = [
+                ':fid' => $args['id'],
+                ':offset' => $offset,
+                ':rows' => $user->dispTopics,
             ];
-        } else {
-            $stats['newest_user'] = $stats['last_user']['username'];
+            $topics = $this->c->DB
+                ->query("SELECT id FROM ::topics WHERE forum_id=?i:fid ORDER BY sticky DESC, {$sortBy}, id DESC LIMIT ?i:offset, ?i:rows", $vars)
+                ->fetchAll(\PDO::FETCH_COLUMN);
         }
-        $this->data['stats'] = $stats;
 
-        // вывод информации об онлайн посетителях
-        if ($this->config['o_users_online'] == '1') {
-            $this->data['online'] = [];
-            $this->data['online']['max'] = $this->number($this->config['st_max_users']);
-            $this->data['online']['max_time'] = $this->time($this->config['st_max_users_time']);
+        $dotTopics = [];
+        if (! empty($topics)) {
+            $vars = [
+                ':uid' => $user->id,
+                ':topics' => $topics,
+            ];
 
-            // данные онлайн посетителей
-            list($users, $guests, $bots) = $this->c->Online->handle($this);
-            $list = [];
+            if (! $user->isGuest && $this->config['o_show_dot'] == '1') {
+                $dotTopics = $this->c->DB
+                    ->query('SELECT topic_id FROM ::posts WHERE topic_id IN (?ai:topics) AND poster_id=?i:uid GROUP BY topic_id', $vars)
+                    ->fetchAll(\PDO::FETCH_COLUMN);
+            }
 
-            if ($this->c->user->gViewUsers == '1') {
-                foreach ($users as $id => $cur) {
-                    $list[] = [
-                        $this->c->Router->link('User', [
-                            'id' => $id,
-                            'name' => $cur['name'],
-                        ]),
-                        $cur['name'],
-                    ];
-                }
+            if ($user->isGuest) {
+                $sql = "SELECT id, poster, subject, posted, last_post, last_post_id, last_poster, num_views, num_replies, closed, sticky, moved_to, poll_type FROM ::topics WHERE id IN(?ai:topics) ORDER BY sticky DESC, {$sortBy}, id DESC";
             } else {
-                foreach ($users as $cur) {
-                    $list[] = $cur['name'];
-                }
+                $sql = "SELECT t.id, t.poster, t.subject, t.posted, t.last_post, t.last_post_id, t.last_poster, t.num_views, t.num_replies, t.closed, t.sticky, t.moved_to, t.poll_type, mot.mt_upper, mot.mt_lower FROM ::topics AS t LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND t.id=mot.tid) WHERE t.id IN (?ai:topics) ORDER BY t.sticky DESC, t.{$sortBy}, t.id DESC";
             }
-            $this->data['online']['number_of_users'] = $this->number(count($users));
-
-            $s = 0;
-            foreach ($bots as $name => $cur) {
-                $count = count($cur);
-                $s += $count;
-                if ($count > 1) {
-                    $list[] = '[Bot] ' . $name . ' (' . $count . ')';
-                } else {
-                    $list[] = '[Bot] ' . $name;
-                }
-            }
-            $s += count($guests);
-            $this->data['online']['number_of_guests'] = $this->number($s);
-            $this->data['online']['list'] = $list;
-        } else {
-            $this->onlineType = false;
-            $this->c->Online->handle($this);
-            $this->data['online'] = null;
+            $topics = $this->c->DB->query($sql, $vars)->fetchAll();
         }
-        $this->data['forums'] = $this->getForumsData();
+
+
+
+
+        $moders = empty($curForum['moderators']) ? [] : array_flip(unserialize($curForum['moderators']));
+
+        $this->onlinePos = 'forum' . $args['id'];
+
+        // хлебные крошки и титул
+        $this->titles = [];
+        $crumbs = [];
+        $id = $args['id'];
+        $activ = true;
+        while (true) {
+            $name = $fDesc[$id]['forum_name'];
+            array_unshift($this->titles, $name);
+            $crumbs[] = [
+                $this->c->Router->link('Forum', ['id' => $id, 'name' => $name]),
+                $name, 
+                $activ,
+            ];
+            $activ = null;
+            if (! isset($fDesc[$id][0])) {
+                break;
+            }
+            $id = $fDesc[$id][0];
+        }
+        $crumbs[] = [
+            $this->c->Router->link('Index'),
+            __('Index'),
+            null,
+        ];
+
+        $this->data = [
+            'forums' => $this->getForumsData($args['id']),
+            'topics' => $topics,
+            'dots' => array_flip($dotTopics),
+            'crumbs' => array_reverse($crumbs),
+        ];
+
         return $this;
     }
 
     /**
      * Получение данных по разделам
-     * @param int $root
+     * @param int $parent
      * @return array
      */
-    protected function getForumsData($root = 0)
+    protected function getForumsData($parent = 0)
     {
         list($fTree, $fDesc, $fAsc) = $this->c->forums;
 
-        // раздел $root не имеет подразделов для вывода или они не доступны
-        if (empty($fTree[$root])) {
+        // раздел $parent не имеет подразделов для вывода или они не доступны
+        if (empty($fTree[$parent])) {
             return [];
         }
 
@@ -127,7 +180,7 @@ class Index extends Page
         // текущие данные по подразделам
         $vars = [
             ':id' => $user->id,
-            ':forums' => array_slice($fAsc[$root], 1),
+            ':forums' => array_slice($fAsc[$parent], 1),
         ];
         if ($user->isGuest) {
             $stmt = $this->c->DB->query('SELECT id, forum_desc, moderators, num_topics, num_posts, last_post, last_post_id, last_poster, last_topic FROM ::forums WHERE id IN (?ai:forums)', $vars);
@@ -172,7 +225,7 @@ class Index extends Page
 
         // формированием таблицы разделов
         $result = [];
-        foreach ($fTree[$root] as $fId => $cur) {
+        foreach ($fTree[$parent] as $fId => $cur) {
             // список подразделов
             $subForums = [];
             if (isset($fTree[$fId])) {

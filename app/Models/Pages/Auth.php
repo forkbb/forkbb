@@ -2,9 +2,9 @@
 
 namespace ForkBB\Models\Pages;
 
+use ForkBB\Core\Validator;
 use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\User;
-use ForkBB\Models\Validator;
 
 class Auth extends Page
 {
@@ -235,7 +235,7 @@ class Auth extends Page
                 ->setLanguage($this->tmpUser->language)
                 ->setTo($v->email, $this->tmpUser->username)
                 ->setFrom($this->config['o_webmaster_email'], __('Mailer', $this->config['o_board_title']))
-                ->setTpl('password_reset.tpl', $tplData)
+                ->setTpl('passphrase_reset.tpl', $tplData)
                 ->send();
         } catch (MailException $e) {
             $isSent = false;
@@ -341,7 +341,7 @@ class Auth extends Page
         $v = $this->c->Validator;
         $v->setRules([
             'token'     => 'token:ChangePassword',
-            'password'  => ['required|string|min:8|password', __('New pass')],
+            'password'  => ['required|string|min:16|password', __('New pass')],
             'password2' => ['required|same:password', __('Confirm new pass')],
         ])->setArguments([
             'token' => $args,

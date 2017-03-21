@@ -56,6 +56,7 @@ return [
             'class' => \ForkBB\Core\Cache::class,
             'provider' => '@FileCache',
         ],
+        'Validator' => \ForkBB\Core\Validator::class,
         'View' => [
             'class' => \ForkBB\Core\View::class,
             'cache_dir' => '%DIR_CACHE%',
@@ -122,13 +123,12 @@ return [
             'max' => '%TIME_REMEMBER%',
         ],
         'Csrf' => [
-            'class' => \ForkBB\Models\Csrf::class,
+            'class' => \ForkBB\Core\Csrf::class,
             'Secury' => '@Secury',
-            'user' => '@user',
+            'key' => '%user.password%%user.ip%%user.id%',
         ],
         'Online' => \ForkBB\Models\Online::class,
         'UserMapper' => \ForkBB\Models\UserMapper::class,
-        'Validator' => \ForkBB\Models\Validator::class,
 
         'Message' => \ForkBB\Models\Pages\Message::class,
     ],

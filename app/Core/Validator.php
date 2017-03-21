@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkBB\Models;
+namespace ForkBB\Core;
 
 use ForkBB\Core\Container;
 use RuntimeException;
