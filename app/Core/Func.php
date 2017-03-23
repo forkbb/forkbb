@@ -59,4 +59,57 @@ class Func
         }
         return $this->langs;
     }
+
+    /**
+     * @param int $all
+     * @param int $cur
+     * @param string $marker
+     * @param array $args
+     * @return array 
+     */
+    public function paginate($all, $cur, $marker, array $args = []) 
+    {
+        $pages = [];
+        if ($all < 2) {
+            $pages[] = [null, 1, true];
+        } else {
+            if ($cur > 0) {
+                $cur = min(max(1, $cur), $all);
+                if ($cur === 2) {
+                    $pages[] = [$this->c->Router->link($marker, $args), 'prev', null];
+                } elseif ($cur > 2) {
+                    $pages[] = [$this->c->Router->link($marker, ['page' => $cur - 1] + $args), 'prev', null];
+                }
+                $tpl = [1 => 1];
+                $start = $cur < 6 ? 2 : $cur - 2;
+                $end = $all - $cur < 5 ? $all : $cur + 3;
+                for ($i = $start; $i < $end; ++$i) {
+                    $tpl[$i] = $i;
+                }
+                $tpl[$all] = $all;
+            } else {
+                $tpl = $all < 7 
+                    ? array_slice([2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6], 0, $all - 1)
+                    : [2 => 2, 3 => 3, 4 => 4, $all => $all];
+            }
+            $k = 1;
+            foreach ($tpl as $i) {
+                if ($i - $k > 1) {
+                    $pages[] = [null, 'space', null];
+                }
+                if ($i === $cur) {
+                    $pages[] = [null, $i, true];
+                } elseif ($i === 1) {
+                    $pages[] = [$this->c->Router->link($marker, $args), $i, null];
+                } else {
+                    $pages[] = [$this->c->Router->link($marker, ['page' => $i] + $args), $i, null];
+                }
+                $k = $i;
+            }
+            if ($cur > 0 && $cur < $all) {
+                $pages[] = [$this->c->Router->link($marker, ['page' => $cur + 1] + $args), 'next', null];
+            }
+        }
+        return $pages;
+    }
 }

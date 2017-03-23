@@ -811,17 +811,17 @@ class Install extends Page
         // mark_of_forum
         $schema = [
             'FIELDS' => [
-                'uid'      => ['INT(10) UNSIGNED', true],
-                'fid'      => ['INT(10) UNSIGNED', true],
-                'mf_upper' => ['INT(10) UNSIGNED', true],
-                'mf_lower' => ['INT(10) UNSIGNED', true],
+                'uid'              => ['INT(10) UNSIGNED', true],
+                'fid'              => ['INT(10) UNSIGNED', true],
+                'mf_last_visit'    => ['INT(10) UNSIGNED', true],
+                'mf_mark_all_read' => ['INT(10) UNSIGNED', true],
             ],
             'UNIQUE KEYS' => [
                 'uid_fid_idx' => ['uid', 'fid'],
             ],
             'INDEXES' => [
-                'mf_upper_idx' => ['mf_upper'],
-                'mf_lower_idx' => ['mf_lower'],
+                'mf_last_visit_idx'    => ['mf_last_visit'],
+                'mf_mark_all_read_idx' => ['mf_mark_all_read'],
             ],
             'ENGINE' => $this->DBEngine,
         ];
@@ -829,18 +829,18 @@ class Install extends Page
         // mark_of_topic
         $schema = [
             'FIELDS' => [
-                'uid'      => ['INT(10) UNSIGNED', true],
-                'fid'      => ['INT(10) UNSIGNED', true], //????
-                'tid'      => ['INT(10) UNSIGNED', true],
-                'mt_upper' => ['INT(10) UNSIGNED', true],
-                'mt_lower' => ['INT(10) UNSIGNED', true],
+                'uid'           => ['INT(10) UNSIGNED', true],
+                'fid'           => ['INT(10) UNSIGNED', true], //????
+                'tid'           => ['INT(10) UNSIGNED', true],
+                'mt_last_visit' => ['INT(10) UNSIGNED', true],
+                'mt_last_read'  => ['INT(10) UNSIGNED', true],
             ],
             'UNIQUE KEYS' => [
                 'uid_fid_tid_idx' => ['uid', 'fid', 'tid'],
             ],
             'INDEXES' => [
-                'mt_upper_idx' => ['mt_upper'],
-                'mt_lower_idx' => ['mt_lower'],
+                'mt_last_visit_idx' => ['mt_last_visit'],
+                'mt_last_read_idx'  => ['mt_last_read'],
             ],
             'ENGINE' => $this->DBEngine,
         ];

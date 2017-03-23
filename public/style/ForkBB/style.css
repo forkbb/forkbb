@@ -438,12 +438,11 @@ select {
 /* Хлебные крошки */
 /******************/
 
-.f-links {
-  border-top: 0.0625rem solid #AA7939;
+.f-nav-links {
+  margin: 1rem 0;
 }
 
 .f-crumbs {
-  margin: 1rem 0;
   padding: 0 0.625rem;
   display: block;
   overflow: hidden;
@@ -466,6 +465,56 @@ select {
 .f-crumb a.active {
   border: 0;
 }
+
+.f-links-b {
+  margin-top: 0.625rem;
+  border-top: 0.0625rem dotted #AA7939;
+}
+
+.f-links-a {
+  margin-bottom: 0.625rem;
+  border-bottom: 0.0625rem dotted #AA7939;
+}
+
+.f-link-post {
+  float: right;
+}
+
+.f-pages {
+  float: left;
+}
+
+.f-links-a .f-link-post,
+.f-links-a .f-pages {
+  padding: 0 0.625rem 0.625rem 0.625rem;
+}
+
+.f-links-b .f-link-post,
+.f-links-b .f-pages {
+  padding: 0.625rem 0.625rem 0 0.625rem;
+}
+
+.f-nav-links .f-page {
+/*  float: left; */
+  border: 0.0625rem solid #AA7939;
+  padding: 0.125rem 0.4375rem;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+/*  margin-left: -0.0625rem; */
+  line-height: 1.125rem;
+/*  display: inline-block; */
+}
+
+.f-nav-links .f-pspacer {
+    border: 0;
+    padding: 0;
+}
+
+.f-nav-links .f-page.active {
+  border-color: #814A00;
+  background-color: #814A00;
+  color: #F8F4E3;
+}  
 
 /********/
 /* Тело */
@@ -1124,4 +1173,8 @@ li + li .f-btn {
 
 .f-subforums .f-forumlist .f-thead {
   border-bottom-width: 0.0625rem;
+}
+
+.f-forum > h2 {
+  display: none;
 }

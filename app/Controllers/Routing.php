@@ -78,9 +78,14 @@ class Routing
             }
 
             // разделы
+            $r->add('GET', '/forum/{id:[1-9]\d*}/new/topic', 'Post:newTopic', 'NewTopic');
             $r->add('GET', '/forum/{id:[1-9]\d*}[/{name}][/page/{page:[1-9]\d*}]', 'Forum:view', 'Forum');
             // темы
-            $r->add('GET', '/post/{id:[1-9]\d*}#p{id}', 'Topic:viewpost', 'viewPost');
+            $r->add('GET', '/topic/{id:[1-9]\d*}[/{name}][/page/{page:[1-9]\d*}]', 'Topic:view', 'Topic');
+            $r->add('GET', '/topic/{id:[1-9]\d*}/go_to/new', 'Topic:goToNew', 'TopicGoToNew');
+            $r->add('GET', '/topic/{id:[1-9]\d*}/go_to/unread', 'Topic:goToUnread', 'TopicGoToUnread');
+            // сообщения
+            $r->add('GET', '/post/{id:[1-9]\d*}#p{id}', 'Topic:viewPost', 'ViewPost'); //????
 
         }
         // админ и модератор
