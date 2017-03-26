@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ $pageTitle }}</title>
-@foreach($pageHeads as $cur)
+@foreach($pageHeaders as $cur)
   <{!! $cur !!}>
 @endforeach
 </head>

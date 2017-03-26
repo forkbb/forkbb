@@ -4,7 +4,7 @@
               <div class="f-cell f-cmain">
                 <div class="f-ficon"></div>
                 <div class="f-finfo">
-                  <h3><span class="f-fredirtext">{!! __('Link to') !!}</span> <a href="{!! $cur['redirect_url'] !!}">{{ $cur['forum_name'] }}</a></h3>
+                  <h3><span class="f-fredirtext">{!! __('Link to') !!}</span> <a class="f-ftname" href="{!! $cur['redirect_url'] !!}">{{ $cur['forum_name'] }}</a></h3>
 @if($cur['forum_desc'])
                   <p class="f-fdesc">{!! $cur['forum_desc'] !!}</p>
 @endif
@@ -21,7 +21,7 @@
                 <div class="f-ficon"></div>
                 <div class="f-finfo">
                   <h3>
-                    <a href="{!! $cur['forum_link'] !!}">{{ $cur['forum_name'] }}</a>
+                    <a class="f-ftname" href="{!! $cur['forum_link'] !!}">{{ $cur['forum_name'] }}</a>
 @if($cur['new'])
                     <span class="f-newtxt"><a href="">{!! __('New posts') !!}</a></span>
 @endif

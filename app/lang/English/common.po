@@ -177,6 +177,11 @@ msgstr "Posts"
 msgid "Replies"
 msgstr "Replies"
 
+msgid "%s Reply"
+msgid_plural "%s Replies"
+msgstr[0] "<strong>%s</strong> Reply"
+msgstr[1] "<strong>%s</strong> Replies"
+
 msgid "Pages"
 msgstr "Pages:"
 

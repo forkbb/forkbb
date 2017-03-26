@@ -177,6 +177,12 @@ msgstr "Сообщений"
 msgid "Replies"
 msgstr "Ответов"
 
+msgid "%s Reply"
+msgid_plural "%s Replies"
+msgstr[0] "<strong>%s</strong> Ответ"
+msgstr[1] "<strong>%s</strong> Ответа"
+msgstr[2] "<strong>%s</strong> Ответов"
+
 msgid "Pages"
 msgstr "Страницы"
 

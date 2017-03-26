@@ -27,6 +27,12 @@ class Register extends Page
     protected $index = 'register';
 
     /**
+     * Переменная для meta name="robots"
+     * @var string
+     */
+    protected $robots = 'noindex';
+
+    /**
      * Обработчик регистрации
      * @retrun Page
      */

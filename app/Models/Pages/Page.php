@@ -84,6 +84,18 @@ abstract class Page
     protected $onlineFilter = true;
 
     /**
+     * Переменная для meta name="robots"
+     * @var string
+     */
+    protected $robots;
+
+    /**
+     * Переменная для link rel="canonical"
+     * @var string
+     */
+    protected $canonical;
+
+    /**
      * Конструктор
      * @param Container $container
      */
@@ -106,7 +118,6 @@ abstract class Page
         }
         return $headers;
     }
-
 
     /**
      * Возвращает HTTP статус страницы или null
@@ -164,7 +175,7 @@ abstract class Page
         }
         return $this->data + [
             'pageTitle' => $this->pageTitle(),
-            'pageHeads' => $this->pageHeads(),
+            'pageHeaders' => $this->pageHeaders(),
             'fLang' => __('lang_identifier'),
             'fDirection' => __('lang_direction'),
             'fTitle' => $this->config['o_board_title'],
@@ -217,9 +228,16 @@ abstract class Page
      * Генерация массива заголовков страницы
      * @return array
      */
-    protected function pageHeads()
+    protected function pageHeaders()
     {
-        return ['link rel="stylesheet" type="text/css" href="' . $this->c->Router->link() . 'style/' . $this->c->user->style . '/style.css' . '"'];
+        $headers = ['link rel="stylesheet" type="text/css" href="' . $this->c->Router->link() . 'style/' . $this->c->user->style . '/style.css' . '"'];
+        if ($this->robots) {
+            $headers[] = 'meta name="robots" content="' . $this->robots . '"';
+        }
+        if ($this->canonical) {
+            $headers[] = 'link rel="canonical" href="' . $this->canonical . '"';
+        }
+        return $headers;
     }
 
     /**
@@ -322,7 +340,7 @@ abstract class Page
     {
         $units = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB'];
 
-        for ($i = 0; $size > 1024; $i++) {
+        for ($i = 0; $size > 1024; ++$i) {
             $size /= 1024;
         }
 

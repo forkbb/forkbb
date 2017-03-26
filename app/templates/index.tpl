@@ -1,7 +1,7 @@
 @extends('layouts/main')
 @if($forums)
     <section class="f-main">
-      <ol class="f-forumlist">
+      <ol class="f-ftlist">
 @foreach($forums as $id => $cat)
         <li id="cat-{!! $id !!}" class="f-category">
           <h2>{{ $cat['name'] }}</h2>

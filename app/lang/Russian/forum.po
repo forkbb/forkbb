@@ -18,6 +18,12 @@ msgstr "Создать тему"
 msgid "Views"
 msgstr "Просмотров"
 
+msgid "%s View"
+msgid_plural "%s Views"
+msgstr[0] "<strong>%s</strong> Просмотр"
+msgstr[1] "<strong>%s</strong> Просмотра"
+msgstr[2] "<strong>%s</strong> Просмотров"
+
 msgid "Moved"
 msgstr "Перенесено"
 

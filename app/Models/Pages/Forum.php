@@ -117,6 +117,11 @@ class Forum extends Page
                 $dots = [];
             }
 
+            if (! $user->isGuest) {
+                $lower = max((int) $user->uMarkAllRead, (int) $curForum['mf_mark_all_read']);
+                $upper = max($lower, (int) $user->lastVisit);
+            }
+
             if ($user->isGuest) {
                 $sql = "SELECT id, poster, subject, posted, last_post, last_post_id, last_poster, num_views, num_replies, closed, sticky, moved_to, poll_type FROM ::topics WHERE id IN(?ai:topics) ORDER BY sticky DESC, {$sortBy}, id DESC";
             } else {
@@ -124,42 +129,54 @@ class Forum extends Page
             }
             $topics = $this->c->DB->query($sql, $vars)->fetchAll();
 
-            if (! $user->isGuest) {
-                $lower = max((int) $user->uMarkAllRead, (int) $curForum['mf_mark_all_read']);
-                $upper = max($lower, (int) $user->lastVisit);
-            }
-
             foreach ($topics as &$cur) {
+                // цензура
                 if ($this->config['o_censoring'] == '1') {
                     $cur['subject'] = preg_replace($this->c->censoring[0], $this->c->censoring[1], $cur['subject']);
                 }
-                if (empty($cur['moved_to'])) {
-                    $cur['link'] = $this->c->Router->link('Topic', ['id' => $cur['id'], 'name' => $cur['subject']]);
-                    $cur['link_last'] = $this->c->Router->link('viewPost', ['id' => $cur['last_post_id']]);
-                    if ($user->isGuest) {
-                        $cur['link_new'] = null;
-                        $cur['link_unread'] = null;
-                        $cur['dot'] = false;
-                    } else {
-                        if ($cur['last_post'] > max($upper, $cur['mt_last_visit'])) {
-                            $cur['link_new'] = $this->c->Router->link('TopicGoToNew', ['id' => $cur['id']]);
-                        } else {
-                            $cur['link_new'] = null;
-                        }
-                        if ($cur['last_post'] > max($lower, $cur['mt_last_read'])) {
-                            $cur['link_unread'] = $this->c->Router->link('TopicGoToUnread', ['id' => $cur['id']]);
-                        } else {
-                            $cur['link_unread'] = null;
-                        }
-                        $cur['dot'] = isset($dots[$cur['id']]);
-                    }
-                } else {
+                // перенос темы
+                if ($cur['moved_to']) {
                     $cur['link'] = $this->c->Router->link('Topic', ['id' => $cur['moved_to'], 'name' => $cur['subject']]);
                     $cur['link_last'] = null;
                     $cur['link_new'] = null;
                     $cur['link_unread'] = null;
                     $cur['dot'] = false;
+                    continue;
                 }
+                // страницы темы
+                $tPages = ceil(($cur['num_replies'] + 1) / $user->dispPosts);
+                if ($tPages > 1) {
+                    $cur['pages'] = $this->c->Func->paginate($tPages, -1, 'Topic', ['id' => $cur['id'], 'name' => $cur['subject']]);
+                } else {
+                    $cur['pages'] = null;
+                }
+
+                $cur['link'] = $this->c->Router->link('Topic', ['id' => $cur['id'], 'name' => $cur['subject']]);
+                $cur['link_last'] = $this->c->Router->link('ViewPost', ['id' => $cur['last_post_id']]);
+                $cur['num_views'] = $this->config['o_topic_views'] == '1' ? $this->number($cur['num_views']) : null;
+                $cur['num_replies'] = $this->number($cur['num_replies']);
+                $cur['last_post'] = $this->time($cur['last_post']);
+                // для гостя пусто
+                if ($user->isGuest) {
+                    $cur['link_new'] = null;
+                    $cur['link_unread'] = null;
+                    $cur['dot'] = false;
+                    continue;
+                }
+                // новые сообщения
+                if ($cur['last_post'] > max($upper, $cur['mt_last_visit'])) {
+                    $cur['link_new'] = $this->c->Router->link('TopicGoToNew', ['id' => $cur['id']]);
+                } else {
+                    $cur['link_new'] = null;
+                }
+                // не прочитанные сообщения
+                if ($cur['last_post'] > max($lower, $cur['mt_last_read'])) {
+                    $cur['link_unread'] = $this->c->Router->link('TopicGoToUnread', ['id' => $cur['id']]);
+                } else {
+                    $cur['link_unread'] = null;
+                }
+                // активность пользователя в теме
+                $cur['dot'] = isset($dots[$cur['id']]);
             }
             unset($cur);
         }
@@ -203,9 +220,9 @@ class Forum extends Page
             'newTopic' => $newOn ? $this->c->Router->link('NewTopic', ['id' => $args['id']]) : null,
             'pages' => $this->c->Func->paginate($pages, $page, 'Forum', ['id' => $args['id'], 'name' => $fDesc[$args['id']]['forum_name']]),
         ];
-#echo "<pre>\n";
-#var_dump($this->data);
-#echo "</pre>\n";
+
+        $this->canonical = $page > 1 ? $this->c->Router->link('Forum', ['id' => $args['id'], 'name' => $fDesc[$args['id']]['forum_name'], 'page' => $page])
+            : $this->c->Router->link('Forum', ['id' => $args['id'], 'name' => $fDesc[$args['id']]['forum_name']]);
         return $this;
     }
 

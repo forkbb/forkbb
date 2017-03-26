@@ -18,6 +18,11 @@ msgstr "Post new topic"
 msgid "Views"
 msgstr "Views"
 
+msgid "%s View"
+msgid_plural "%s Views"
+msgstr[0] "<strong>%s</strong> View"
+msgstr[1] "<strong>%s</strong> Views"
+
 msgid "Moved"
 msgstr "Moved:"
 

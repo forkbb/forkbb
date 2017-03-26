@@ -23,6 +23,12 @@ class Install extends Page
     protected $onlinePos = null;
 
     /**
+     * Переменная для meta name="robots"
+     * @var string
+     */
+    protected $robots = 'noindex';
+
+    /**
      * Для MySQL
      * @var string
      */

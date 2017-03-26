@@ -46,6 +46,7 @@ class Rules extends Page
     public function confirmation()
     {
         $this->index = 'register';
+        $this->robots = 'noindex';
         $this->c->Lang->load('register');
 
         $this->titles = [

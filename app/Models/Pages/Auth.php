@@ -33,6 +33,12 @@ class Auth extends Page
     protected $tmpUser;
 
     /**
+     * Переменная для meta name="robots"
+     * @var string
+     */
+    protected $robots = 'noindex';
+
+    /**
      * Выход пользователя
      * @param array $args
      * @retrun Page

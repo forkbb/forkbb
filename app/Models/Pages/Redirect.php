@@ -23,6 +23,12 @@ class Redirect extends Page
     protected $link;
 
     /**
+     * Переменная для meta name="robots"
+     * @var string
+     */
+    protected $robots = 'noindex';
+
+    /**
      * Возвращает флаг готовности данных
      * @return bool
      */

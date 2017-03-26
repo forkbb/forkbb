@@ -497,7 +497,7 @@ select {
 .f-nav-links .f-page {
 /*  float: left; */
   border: 0.0625rem solid #AA7939;
-  padding: 0.125rem 0.4375rem;
+  padding: 0.125rem 0.375rem;
   font-size: 0.875rem;
   box-sizing: border-box;
 /*  margin-left: -0.0625rem; */
@@ -514,7 +514,7 @@ select {
   border-color: #814A00;
   background-color: #814A00;
   color: #F8F4E3;
-}  
+}
 
 /********/
 /* Тело */
@@ -859,193 +859,6 @@ li + li .f-btn {
   font-weight: bold;
 }
 
-/********************/
-/* Таблица разделов */
-/********************/
-.f-forumlist a {
-  border: 0;
-}
-
-.f-forumlist .f-cell {
-  padding-top: 0.625rem;
-  padding-bottom: 0.625rem;
-}
-
-.f-forumlist .f-hcell {
-  display: none;
-}
-
-.f-forumlist .f-category {
-  margin-top: 0.625rem;
-}
-
-.f-forumlist .f-row {
-  border-bottom: 0.0625rem solid #AA7939;
-}
-
-.f-forumlist .f-thead {
-  border-bottom: 0.125rem solid #AA7939;
-}
-
-.f-forumlist .f-cmain,
-.f-forumlist .f-cstats {
-  padding-left: 0.625rem;
-  padding-right: 0.625rem;
-}
-
-.f-forumlist .f-cstats {
-  padding-top: 0;
-  text-align: right;
-  font-size: 0.75rem;
-}
-
-.f-forumlist .f-cstats li {
-  display: inline-block;
-}
-
-.f-forumlist .f-clast {
-  display: none;
-}
-
-.f-category > h2 {
-  padding: 0.625rem 0.625rem 0.3125rem 0.625rem;
-}
-
-.f-forumlist .f-ficon {
-  width: 1.5rem;
-  float: left;
-}
-
-.f-forumlist .f-finfo {
-  margin-left: 1.5rem;
-}
-
-.f-forumlist .f-fdesc {
-  font-size: 0.875rem;
-}
-
-.f-fsub {
-  margin-left: 0.875rem;
-  font-size: 0.875rem;
-}
-
-.f-fsub:before {
-  font-size: 0.875rem;
-  content: "└";
-  margin-left: -0.875rem;
-}
-
-
-.f-fsub > dt {
-  display: none;
-}
-
-.f-modlist {
-  font-size: 0.875rem;
-}
-
-.f-modlist > dt:before {
-  content: "(";
-}
-
-.f-modlist:last-child:after {
-  content: ")";
-}
-
-.f-ficon:before {
-  font-family: ForkIcon;
-  font-size: 1.2rem;
-  color: #814A00;
-  content: "\e900";
-}
-
-.f-fnew .f-ficon:before {
-  content: "\e901";
-}
-
-.f-fredir .f-ficon:before {
-  content: "\e906";
-}
-
-.f-forumlist .f-newtxt {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.875rem;
-  font-weight: normal;
-}
-
-.f-forumlist .f-newtxt:before {
-  content: "[ ";
-}
-
-.f-forumlist .f-newtxt:after {
-  content: " ]";
-}
-
-/*
-.icon-document:before {
-  content: "\e900";
-}
-.icon-document-text:before {
-  content: "\e901";
-}
-.icon-document-upload:before {
-  content: "\e902";
-}
-.icon-document-upload2:before {
-  content: "\e903";
-}
-.icon-document-locked:before {
-  content: "\e904";
-}
-.icon-document-locked2:before {
-  content: "\e905";
-}
-.icon-tag-cord:before {
-  content: "\e906";
-}
-*/
-
-@media screen and (min-width: 50rem) {
-  .f-forumlist .f-cell {
-    display: table-cell;
-  }
-
-  .f-forumlist .f-cmain {
-    width: 100%;
-  }
-
-  .f-forumlist .f-cstats {
-    padding-top: 0.625rem;
-    padding-left: 0;
-    vertical-align: middle;
-    white-space: nowrap;
-  }
-
-  .f-forumlist .f-cstats li {
-    display: block;
-  }
-
-  .f-forumlist .f-clast {
-    width: 15rem;
-    padding-right: 0.625rem;
-    vertical-align: middle;
-    font-size: 0.875rem;
-  }
-
-  .f-forumlist .f-cltopic,
-  .f-forumlist .f-clposter,
-  .f-forumlist .f-cltime {
-    width: 15rem;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-
-  .f-forumlist .f-cltime {
-    font-size: 0.75rem;
-  }
-}
-
 /*********************/
 /* Логин/Регистрация */
 /*********************/
@@ -1160,9 +973,196 @@ li + li .f-btn {
   margin-bottom: 1rem;
 }
 
-/**********/
-/* Форумы */
-/**********/
+/***************************************/
+/* Таблица разделов, подразделов и тем */
+/***************************************/
+.f-ftlist a {
+  border: 0;
+}
+
+.f-ftlist .f-cell {
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+
+.f-ftlist .f-hcell {
+  display: none;
+}
+
+.f-ftlist .f-category {
+  margin-top: 0.625rem;
+}
+
+.f-ftlist .f-row {
+  border-bottom: 0.0625rem solid #AA7939;
+}
+
+.f-ftlist .f-thead {
+  border-bottom: 0.125rem solid #AA7939;
+}
+
+.f-ftlist .f-cmain,
+.f-ftlist .f-cstats {
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+}
+
+.f-ftlist .f-cstats {
+  padding-top: 0;
+  text-align: right;
+  font-size: 0.75rem;
+}
+
+.f-ftlist .f-cstats li {
+  display: inline-block;
+}
+
+.f-ftlist .f-clast {
+  display: none;
+}
+
+.f-category > h2 {
+  padding: 0.625rem 0.625rem 0.3125rem 0.625rem;
+}
+
+.f-ftlist .f-ficon {
+  width: 2rem;
+  float: left;
+}
+
+.f-ftlist .f-finfo {
+  margin-left: 2rem;
+}
+
+.f-ftlist .f-fdesc {
+  font-size: 0.875rem;
+}
+
+.f-fsub {
+  margin-left: 0.875rem;
+  font-size: 0.875rem;
+}
+
+.f-fsub:before {
+  font-size: 0.875rem;
+  content: "└";
+  margin-left: -0.875rem;
+}
+
+.f-fsub > dt {
+  display: none;
+}
+
+.f-modlist {
+  font-size: 0.875rem;
+}
+
+.f-modlist > dt:before {
+  content: "(";
+}
+
+.f-modlist:last-child:after {
+  content: ")";
+}
+
+.f-ficon:before {
+  font-family: ForkIcon;
+  font-size: 1.2rem;
+  color: #814A00;
+  content: "\e900";
+}
+
+.f-fnew .f-ficon:before {
+  content: "\e901";
+}
+
+.f-fredir .f-ficon:before {
+  content: "\e906";
+}
+
+.f-ftlist .f-newtxt {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.875rem;
+  font-weight: normal;
+  white-space: nowrap;
+}
+
+.f-ftlist .f-newtxt:before {
+  content: "[ ";
+}
+
+.f-ftlist .f-newtxt:after {
+  content: " ]";
+}
+
+/*
+.icon-document:before {
+  content: "\e900";
+}
+.icon-document-text:before {
+  content: "\e901";
+}
+.icon-document-upload:before {
+  content: "\e902";
+}
+.icon-document-upload2:before {
+  content: "\e903";
+}
+.icon-document-locked:before {
+  content: "\e904";
+}
+.icon-document-locked2:before {
+  content: "\e905";
+}
+.icon-tag-cord:before {
+  content: "\e906";
+}
+*/
+
+@media screen and (min-width: 50rem) {
+  .f-ftlist .f-cell {
+    display: table-cell;
+  }
+
+  .f-ftlist .f-cmain {
+    width: 100%;
+  }
+
+  .f-ftlist .f-cstats {
+    padding-top: 0.625rem;
+    padding-left: 0;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .f-ftlist .f-cstats li {
+    display: block;
+  }
+
+  .f-ftlist .f-clast {
+    width: 15rem;
+    padding-right: 0.625rem;
+    vertical-align: middle;
+    font-size: 0.875rem;
+  }
+
+  .f-ftlist .f-cltopic,
+  .f-ftlist .f-clposter,
+  .f-ftlist .f-cltime {
+    width: 15rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .f-ftlist .f-cltime {
+    font-size: 0.75rem;
+  }
+}
+
+/********************/
+/* Страница раздела */
+/********************/
 .f-subforums {
   margin: 1rem 0;
 }
@@ -1171,10 +1171,36 @@ li + li .f-btn {
   display: none;
 }
 
-.f-subforums .f-forumlist .f-thead {
-  border-bottom-width: 0.0625rem;
-}
-
 .f-forum > h2 {
   display: none;
+}
+
+.f-forum h3 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-size: 1rem;
+  position: relative;
+}
+
+.f-cmposter {
+  font-size: 0.875rem;
+}
+
+.f-tdot {
+  font-weight: bold;
+  position: absolute;
+  margin-left: -0.5rem;
+}
+
+.f-tpages .f-page {
+  border: 0.0625rem solid #AA7939;
+  padding: 0.0625rem 0.3125rem;
+  font-size: 0.875rem;
+/**  box-sizing: border-box; */
+  line-height: 1.125rem;
+}
+
+.f-tpages .f-pspacer {
+    border: 0;
+    padding: 0;
 }
