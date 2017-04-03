@@ -815,16 +815,14 @@ class Install extends Page
         // mark_of_forum
         $schema = [
             'FIELDS' => [
-                'uid'              => ['INT(10) UNSIGNED', true],
-                'fid'              => ['INT(10) UNSIGNED', true],
-                'mf_last_visit'    => ['INT(10) UNSIGNED', true],
-                'mf_mark_all_read' => ['INT(10) UNSIGNED', true],
+                'uid'              => ['INT(10) UNSIGNED', false],
+                'fid'              => ['INT(10) UNSIGNED', false],
+                'mf_mark_all_read' => ['INT(10) UNSIGNED', false, 0],
             ],
             'UNIQUE KEYS' => [
                 'uid_fid_idx' => ['uid', 'fid'],
             ],
             'INDEXES' => [
-                'mf_last_visit_idx'    => ['mf_last_visit'],
                 'mf_mark_all_read_idx' => ['mf_mark_all_read'],
             ],
             'ENGINE' => $this->DBEngine,
@@ -833,14 +831,13 @@ class Install extends Page
         // mark_of_topic
         $schema = [
             'FIELDS' => [
-                'uid'           => ['INT(10) UNSIGNED', true],
-                'fid'           => ['INT(10) UNSIGNED', true], //????
-                'tid'           => ['INT(10) UNSIGNED', true],
-                'mt_last_visit' => ['INT(10) UNSIGNED', true],
-                'mt_last_read'  => ['INT(10) UNSIGNED', true],
+                'uid'           => ['INT(10) UNSIGNED', false],
+                'tid'           => ['INT(10) UNSIGNED', false],
+                'mt_last_visit' => ['INT(10) UNSIGNED', false, 0],
+                'mt_last_read'  => ['INT(10) UNSIGNED', false, 0],
             ],
             'UNIQUE KEYS' => [
-                'uid_fid_tid_idx' => ['uid', 'fid', 'tid'],
+                'uid_tid_idx' => ['uid', 'tid'],
             ],
             'INDEXES' => [
                 'mt_last_visit_idx' => ['mt_last_visit'],

@@ -28,7 +28,7 @@ trait ForumsTrait
         if ($user->isGuest) {
             $stmt = $this->c->DB->query('SELECT id, forum_desc, moderators, num_topics, num_posts, last_post, last_post_id, last_poster, last_topic FROM ::forums WHERE id IN (?ai:forums)', $vars);
         } else {
-            $stmt = $this->c->DB->query('SELECT f.id, f.forum_desc, f.moderators, f.num_topics, f.num_posts, f.last_post, f.last_post_id, f.last_poster, f.last_topic, mof.mf_last_visit FROM ::forums AS f LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:id AND f.id=mof.fid) WHERE f.id IN (?ai:forums)', $vars);
+            $stmt = $this->c->DB->query('SELECT f.id, f.forum_desc, f.moderators, f.num_topics, f.num_posts, f.last_post, f.last_post_id, f.last_poster, f.last_topic, mof.mf_mark_all_read FROM ::forums AS f LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:id AND f.id=mof.fid) WHERE f.id IN (?ai:forums)', $vars);
         }
         $forums = [];
         while ($cur = $stmt->fetch()) {
@@ -41,22 +41,22 @@ trait ForumsTrait
             // предварительная проверка разделов
             $max = max((int) $user->lastVisit, (int) $user->uMarkAllRead);
             foreach ($forums as $id => $cur) {
-                $t = max($max, (int) $cur['mf_last_visit']);
+                $t = max($max, (int) $cur['mf_mark_all_read']);
                 if ($cur['last_post'] > $t) {
                     $new[$id] = $t;
                 }
             }
-            // проверка по темам //???? возможно не нужна из-за mf_last_visit????
+            // проверка по темам
             if (! empty($new)) {
                 $vars = [
                     ':id' => $user->id,
                     ':forums' => array_keys($new),
                     ':max' => $max,
                 ];
-                $stmt = $this->c->DB->query('SELECT t.forum_id, t.id, t.last_post FROM ::topics AS t LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:id AND mot.tid=t.id) WHERE t.forum_id IN(?ai:forums) AND t.last_post>?i:max AND t.moved_to IS NULL AND (mot.mt_last_visit IS NULL OR t.last_post>mot.mt_last_visit)', $vars);
+                $stmt = $this->c->DB->query('SELECT t.forum_id, t.last_post FROM ::topics AS t LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:id AND mot.tid=t.id) WHERE t.forum_id IN(?ai:forums) AND t.last_post>?i:max AND t.moved_to IS NULL AND (mot.mt_last_visit IS NULL OR t.last_post>mot.mt_last_visit)', $vars);
                 $tmp = [];
                 while ($cur = $stmt->fetch()) {
-                    if ($cur['last_post']>$new[$cur['forum_id']]) {
+                    if ($cur['last_post'] > $new[$cur['forum_id']]) {
                         $tmp[$cur['forum_id']] = true;
                     }
                 }
