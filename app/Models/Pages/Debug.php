@@ -39,19 +39,10 @@ class Debug extends Page
     }
 
     /**
-     * Возвращает массив ссылок с описанием для построения навигации
-     * @return array
-     */
-    protected function fNavigation()
-    {
-        return [];
-    }
-
-    /**
      * Возвращает HTTP заголовки страницы
      * @return array
      */
-    public function getHeaders()
+    public function httpHeaders()
     {
         return [];
     }

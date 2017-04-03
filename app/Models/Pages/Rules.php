@@ -28,9 +28,7 @@ class Rules extends Page
      */
     public function view()
     {
-        $this->titles = [
-            __('Forum rules'),
-        ];
+        $this->titles[] = __('Forum rules');
         $this->data = [
             'title' => __('Forum rules'),
             'rules' => $this->config['o_rules_message'],
@@ -49,9 +47,7 @@ class Rules extends Page
         $this->robots = 'noindex';
         $this->c->Lang->load('register');
 
-        $this->titles = [
-            __('Forum rules'),
-        ];
+        $this->titles[] = __('Forum rules');
         $this->data = [
             'title' => __('Forum rules'),
             'rules' => $this->config['o_rules'] == '1' ?

@@ -33,7 +33,6 @@ abstract class Admin extends Page
     {
         parent::__construct($container);
         $container->Lang->load('admin');
-        $this->titles = [__('Admin title')];
     }
 
     /**
@@ -46,6 +45,18 @@ abstract class Admin extends Page
         $data['aNavigation'] = $this->aNavigation();
         $data['aIndex'] = $this->adminIndex;
         return $data;
+    }
+
+    /**
+     * Формирует title страницы
+     * @param array $titles
+     * @return string
+     */
+    protected function pageTitle(array $titles = [])
+    {
+        $titles = $this->titles;
+        $titles[] = __('Admin title');
+        return parent::pageTitle($titles);
     }
 
     /**
@@ -81,7 +92,6 @@ abstract class Admin extends Page
                 'maintenance' => ['admin_maintenance.php', __('Maintenance')]
             ];
         }
-
 
         return $nav;
     }

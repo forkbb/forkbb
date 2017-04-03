@@ -29,9 +29,8 @@ class Ban extends Page
      */
     public function ban(array $banned)
     {
-        $this->titles = [
-            __('Info'),
-        ];
+        $this->titles[] = __('Info');
+
         if (! empty($banned['expire'])) {
              $banned['expire'] = strtolower($this->time($banned['expire'], true));
         }

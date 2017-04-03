@@ -188,13 +188,12 @@ class Forum extends Page
             || ($user->isAdmMod && isset($moders[$user->id]));
 
         $this->onlinePos = 'forum-' . $args['id'];
-        $this->titles = [];
         $crumbs = [];
         $id = $args['id'];
         $activ = true;
         while (true) {
             $name = $fDesc[$id]['forum_name'];
-            array_unshift($this->titles, $name);
+            $this->titles[] = $name;
             $crumbs[] = [
                 $this->c->Router->link('Forum', ['id' => $id, 'name' => $name]),
                 $name, 

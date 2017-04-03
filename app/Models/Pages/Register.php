@@ -69,9 +69,7 @@ class Register extends Page
             return $this->c->Redirect->setPage('Index')->setMessage(__('Reg cancel redirect'));
         }
 
-        $this->titles = [
-            __('Register'),
-        ];
+        $this->titles[] = __('Register');
         $this->data = [
             'formAction' => $this->c->Router->link('RegisterForm'),
             'formToken' => $this->c->Csrf->create('RegisterForm'),
@@ -88,10 +86,9 @@ class Register extends Page
      * Дополнительная проверка email
      * @param Validator $v
      * @param string $username
-     * @param int $type
      * @return array
      */
-    public function vCheckEmail(Validator $v, $email, $type)
+    public function vCheckEmail(Validator $v, $email)
     {
         $error = false;
         // email забанен
@@ -101,17 +98,16 @@ class Register extends Page
         } elseif (empty($v->getErrors()) && $this->c->UserMapper->getUser($email, 'email') !== 0) {
             $error = __('Dupe email');
         }
-        return [$email, $type, $error];
+        return [$email, $error];
     }
 
     /**
      * Дополнительная проверка username
      * @param Validator $v
      * @param string $username
-     * @param int $type
      * @return array
      */
-    public function vCheckUsername(Validator $v, $username, $type)
+    public function vCheckUsername(Validator $v, $username)
     {
         $username = preg_replace('%\s+%su', ' ', $username);
         $error = false;
@@ -130,7 +126,7 @@ class Register extends Page
         } elseif (empty($v->getErrors()) && ! $this->c->UserMapper->isUnique($username)) {
             $error = __('Username not unique');
         }
-        return [$username, $type, $error];
+        return [$username, $error];
     }
 
     /**

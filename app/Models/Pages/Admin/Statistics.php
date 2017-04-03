@@ -38,7 +38,6 @@ class Statistics extends Admin
     public function statistics()
     {
         $this->c->Lang->load('admin_index');
-        $this->data = [];
         $this->titles[] = __('Server statistics');
         $this->data['isAdmin'] = $this->c->user->isAdmin;
         $this->data['linkInfo'] = $this->c->Router->link('AdminInfo');

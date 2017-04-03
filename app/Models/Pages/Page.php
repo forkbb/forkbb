@@ -47,13 +47,13 @@ abstract class Page
      * Массив титула страницы
      * @var array
      */
-    protected $titles;
+    protected $titles = [];
 
     /**
      * Подготовленные данные для шаблона
      * @var array
      */
-    protected $data;
+    protected $data = [];
 
     /**
      * Массив info, success, warning, error, validation информации
@@ -110,10 +110,10 @@ abstract class Page
      * Возвращает HTTP заголовки страницы
      * @return array
      */
-    public function getHeaders()
+    public function httpHeaders()
     {
         $headers = $this->httpHeaders;
-        if (! empty($status = $this->getStatus())) {
+        if (! empty($status = $this->httpStatus())) {
             $headers[] = $status;
         }
         return $headers;
@@ -123,7 +123,7 @@ abstract class Page
      * Возвращает HTTP статус страницы или null
      * @return null|string
      */
-    protected function getStatus()
+    protected function httpStatus()
     {
         $list = [
             403 => '403 Forbidden',
@@ -152,7 +152,7 @@ abstract class Page
      */
     public function isReady()
     {
-        return is_array($this->data);
+        return ! empty($this->data);
     }
 
     /**
@@ -170,14 +170,9 @@ abstract class Page
      */
     public function getData()
     {
-        if (empty($this->data)) {
-            $this->data = [];
-        }
-        return $this->data + [
+        return [
             'pageTitle' => $this->pageTitle(),
             'pageHeaders' => $this->pageHeaders(),
-            'fLang' => __('lang_identifier'),
-            'fDirection' => __('lang_direction'),
             'fTitle' => $this->config['o_board_title'],
             'fDescription' => $this->config['o_board_desc'],
             'fNavigation' => $this->fNavigation(),
@@ -185,7 +180,7 @@ abstract class Page
             'fAnnounce' => $this->fAnnounce(),
             'fRootLink' => $this->c->Router->link('Index'),
             'fIswev' => $this->getIswev(),
-        ];
+        ] + $this->data;
     }
 
     /**
@@ -194,10 +189,8 @@ abstract class Page
      */
     protected function getIswev()
     {
-        if ($this->config['o_maintenance'] == '1') {
-            if ($this->c->user->isAdmin) {
-                $this->iswev['w'][] = __('Maintenance mode enabled', $this->c->Router->link('AdminOptions', ['#' => 'maintenance']));
-            }
+        if ($this->config['o_maintenance'] == '1' && $this->c->user->isAdmin) {
+            $this->iswev['w']['maintenance'] = __('Maintenance mode enabled', $this->c->Router->link('AdminOptions', ['#' => 'maintenance']));
         }
         return $this->iswev;
     }
@@ -215,13 +208,16 @@ abstract class Page
 
     /**
      * Формирует title страницы
+     * @param array $titles
      * @return string
      */
-    protected function pageTitle()
+    protected function pageTitle(array $titles = [])
     {
-        $arr = empty($this->titles) ? [] : array_reverse($this->titles);
-        $arr[] = $this->config['o_board_title'];
-        return implode(__('Title separator'), $arr);
+        if (empty($titles)) {
+            $titles = $this->titles;
+        }
+        $titles[] = $this->config['o_board_title'];
+        return implode(__('Title separator'), $titles);
     }
 
     /**
@@ -321,14 +317,15 @@ abstract class Page
     }
 
     /**
-     * Заглушка
-     * @param string $name
-     * @param array $arguments
-     * @throws \RuntimeException
+     * Возращает данные для управления обработкой пользователей онлайн
+     * @param bool $short
+     * @return bool|array
      */
-    public function __call($name, array $arguments)
+    public function getDataForOnline($short = false)
     {
-        throw new RuntimeException("'{$name}' method not found.");
+        return $short
+            ? null !== $this->onlinePos
+            : [$this->onlinePos, $this->onlineType, $this->onlineFilter];
     }
 
     /**
@@ -345,18 +342,6 @@ abstract class Page
         }
 
         return __('Size unit '.$units[$i], round($size, 2));
-    }
-
-    /**
-     * Возращает данные для управления обработкой пользователей онлайн
-     * @param bool $short
-     * @return bool|array
-     */
-    public function getDataForOnline($short = false)
-    {
-        return $short
-            ? null !== $this->onlinePos
-            : [$this->onlinePos, $this->onlineType, $this->onlineFilter];
     }
 
     /**
@@ -420,5 +405,16 @@ abstract class Page
         } else {
             return $date . ' ' . gmdate($timeFormat, $timestamp);
         }
+    }
+
+    /**
+     * Заглушка
+     * @param string $name
+     * @param array $arguments
+     * @throws \RuntimeException
+     */
+    public function __call($name, array $arguments)
+    {
+        throw new RuntimeException("'{$name}' method not found.");
     }
 }

@@ -53,8 +53,6 @@ class Install extends Page
     {
         return $this->data + [
             'pageHeads' => $this->pageHeads(),
-            'fLang' => __('lang_identifier'),
-            'fDirection' => __('lang_direction'),
             'fIswev' => $this->getIswev(),
         ];
     }

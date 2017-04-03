@@ -25,12 +25,6 @@ class Maintenance extends Page
     protected $httpStatus = 503;
 
     /**
-     * Подготовленные данные для шаблона
-     * @var array
-     */
-    protected $data = [];
-
-    /**
      * Конструктор
      * @param Container $container
      */
@@ -42,35 +36,32 @@ class Maintenance extends Page
     }
 
     /**
+     * Возвращает флаг готовности данных
+     * @return bool
+     */
+    public function isReady()
+    {
+        return true;
+    }
+
+    /**
      * Возвращает данные для шаблона
      * @return array
      */
     public function getData()
     {
-        $this->titles = [
-            __('Maintenance'),
-        ];
-        $this->data = [
+        $this->titles[] = __('Maintenance');
+        return [
             'maintenanceMessage' => $this->config['o_maintenance_message'],
+            'pageTitle' => $this->pageTitle(),
+            'pageHeaders' => $this->pageHeaders(),
+            'fTitle' => $this->config['o_board_title'],
+            'fDescription' => $this->config['o_board_desc'],
+            'fNavigation' => null,
+            'fIndex' => $this->index,
+            'fAnnounce' => null,
+            'fRootLink' => $this->c->Router->link('Index'),
+            'fIswev' => null,
         ];
-        return parent::getData();
-    }
-
-    /**
-     * Возвращает массив ссылок с описанием для построения навигации
-     * @return array
-     */
-    protected function fNavigation()
-    {
-        return [];
-    }
-
-    /**
-     * Возврат info, success, warning, error, validation информации
-     * @return array
-     */
-    protected function getIswev()
-    {
-        return [];
     }
 }

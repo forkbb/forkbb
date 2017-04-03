@@ -45,7 +45,7 @@ class Auth extends Page
      */
     public function logout($args)
     {
-        if (! $this->c->Csrf->verify($args['token'], 'Logout', $args)) {
+        if (empty($args['token']) || ! $this->c->Csrf->verify($args['token'], 'Logout', $args)) {
             return $this->c->Redirect->setPage('Index')->setMessage(__('Bad token'));
         }
 
@@ -74,9 +74,7 @@ class Auth extends Page
             $args['_redirect'] = $this->c->Router->validate($args['_redirect'], 'Index');
         }
 
-        $this->titles = [
-            __('Login'),
-        ];
+        $this->titles[] = __('Login');
         $this->data = [
             'formAction' => $this->c->Router->link('Login'),
             'formToken' => $this->c->Csrf->create('Login'),
@@ -126,10 +124,9 @@ class Auth extends Page
      * Проверка по базе и вход на форум
      * @param Validator $v
      * @param string $password
-     * @param int $type
      * @return array
      */
-    public function vLoginProcess(Validator $v, $password, $type)
+    public function vLoginProcess(Validator $v, $password)
     {
         $error = false;
         if (! empty($v->getErrors())) {
@@ -169,7 +166,7 @@ class Auth extends Page
                 $this->c->UserCookie->setUserCookie($user->id, $hash, $v->save);
             }
         }
-        return [$password, $type, $error];
+        return [$password, $error];
     }
 
     /**
@@ -188,9 +185,7 @@ class Auth extends Page
 
         $this->c->Lang->load('auth');
 
-        $this->titles = [
-            __('Passphrase reset'),
-        ];
+        $this->titles[] = __('Passphrase reset');
         $this->data = [
             'formAction' => $this->c->Router->link('Forget'),
             'formToken' => $this->c->Csrf->create('Forget'),
@@ -259,10 +254,9 @@ class Auth extends Page
      * Дополнительная проверка email
      * @param Validator $v
      * @param string $username
-     * @param int $type
      * @return array
      */
-    public function vCheckEmail(Validator $v, $email, $type)
+    public function vCheckEmail(Validator $v, $email)
     {
         $error = false;
         // есть ошибки
@@ -279,7 +273,7 @@ class Auth extends Page
         } else {
             $this->tmpUser = $user;
         }
-        return [$email, $type, $error];
+        return [$email, $error];
     }
 
     /**
@@ -314,9 +308,7 @@ class Auth extends Page
             $this->iswev['i'][] = __('Account activated');
         }
 
-        $this->titles = [
-            __('Change pass'),
-        ];
+        $this->titles[] = __('Change pass');
         $this->data = [
             'formAction' => $this->c->Router->link('ChangePassword', $args),
             'formToken' => $this->c->Csrf->create('ChangePassword', $args),

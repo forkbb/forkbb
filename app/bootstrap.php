@@ -51,10 +51,10 @@ while (! $page instanceof Page && $cur = array_pop($controllers)) {
 if ($page->getDataForOnline(true)) {
     $c->Online->handle($page);
 }
-$tpl = $c->View->setPage($page)->outputPage();
+$tpl = $c->View->rendering($page);
 if ($c->DEBUG > 0) {
     $debug = $c->Debug->debug();
-    $debug = $c->View->setPage($debug)->outputPage();
+    $debug = $c->View->rendering($debug);
     $tpl = str_replace('<!-- debuginfo -->', $debug, $tpl);
 }
 exit($tpl);

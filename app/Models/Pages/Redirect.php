@@ -82,12 +82,10 @@ class Redirect extends Page
         }
 
         $this->nameTpl = 'layouts/redirect';
-        $this->titles = [
-            __('Redirecting'),
-        ];
+        $this->titles[] = __('Redirecting');
         $this->data = [
-            'Message' => $message,
-            'Timeout' => (int) $this->config['o_redirect_delay'],  //???? перенести в заголовки?
+            'message' => $message,
+            'timeout' => (int) $this->config['o_redirect_delay'],  //???? перенести в заголовки?
         ];
         return $this;
     }
@@ -96,7 +94,7 @@ class Redirect extends Page
      * Возвращает HTTP заголовки страницы
      * @return array
      */
-    public function getHeaders()
+    public function httpHeaders()
     {
         // переадресация без вывода сообщения
         if (empty($this->data)) {
@@ -104,7 +102,7 @@ class Redirect extends Page
                 'Location: ' . $this->link, //????
             ];
         }
-        return parent::getHeaders();
+        return parent::httpHeaders();
     }
 
     /**
@@ -113,7 +111,7 @@ class Redirect extends Page
      */
     public function getData()
     {
-        $this->data['Link'] = $this->link;
+        $this->data['link'] = $this->link;
         return parent::getData();
     }
 }

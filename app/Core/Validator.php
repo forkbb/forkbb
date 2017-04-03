@@ -7,13 +7,6 @@ use RuntimeException;
 
 class Validator
 {
-    const T_UNKNOWN = 0;
-    const T_STRING = 1;
-    const T_NUMERIC = 2;
-    const T_INT = 3;
-    const T_ARRAY = 4;
-    const T_BOOLEAN = 5;
-
     /**
      * Контейнер
      * @var Container
@@ -21,42 +14,63 @@ class Validator
     protected $c;
 
     /**
+     * Массив валидаторов
      * @var array
      */
-    protected $validators;
+    protected $validators = [];
 
     /**
+     * Массив правил для текущей проверки данных
      * @var array
      */
-    protected $rules;
+    protected $rules = [];
 
     /**
+     * Массив результатов проверенных данных
      * @var array
      */
-    protected $result;
+    protected $result = [];
 
     /**
+     * Массив дополнительных аргументов для валидаторов и конкретных полей/правил
      * @var array
      */
-    protected $arguments;
+    protected $arguments = [];
 
     /**
+     * Массив сообщений об ошибках для конкретных полей/правил
      * @var array
      */
-    protected $messages;
+    protected $messages = [];
 
     /**
+     * Массив псевдонимов имен полей для вывода в ошибках
      * @var array
      */
-    protected $aliases;
+    protected $aliases = [];
 
     /**
+     * Массив ошибок валидации
      * @var array
      */
-    protected $errors;
+    protected $errors = [];
 
-    protected $fields;
-    protected $status;
+    /**
+     * Массив имен полей для обработки
+     * @var array
+     */
+    protected $fields = [];
+
+    /**
+     * Массив состояний проверки полей
+     * @var array
+     */
+    protected $status = [];
+
+    /**
+     * Массив входящих данных для обработки
+     * @var array
+     */
     protected $raw;
 
     /**
@@ -181,7 +195,7 @@ class Validator
         $this->status = [];
         $this->raw = $raw;
         foreach ($this->fields as $field) {
-            $this->$field;
+            $this->__get($field);
         }
         $this->raw = null;
         return empty($this->errors);
@@ -223,15 +237,12 @@ class Validator
         }
 
         $error = false;
-        $type = self::T_UNKNOWN;
         foreach ($rules as $validator => $attr) {
             $args = $this->getArguments($field, $validator);
-            list($value, $type, $error) = $this->validators[$validator]($this, $value, $type, $attr, $args);
-            // ошибок нет
-            if (false === $error) {
-                continue;
+            list($value, $error) = $this->validators[$validator]($this, $value, $attr, $args);
+            if (false !== $error) {
+                break;
             }
-            break;
         }
 
         if (! is_bool($error)) {
@@ -296,7 +307,7 @@ class Validator
     public function getStatus($field)
     {
         if (! isset($this->status[$field])) {
-            $this->$field;
+            $this->__get($field);
         }
         return $this->status[$field];
     }
@@ -324,229 +335,206 @@ class Validator
         return $this->errors;
     }
 
-    protected function vRequired($v, $value, $type)
+    protected function vRequired($v, $value)
     {
         if (is_string($value)) {
-            if (strlen(trim($value)) > 0) {
-                return [$value, $v::T_STRING, false];
+            if (strlen(preg_replace('%^\s+|\s+$%u', '', $value)) > 0) {
+                return [$value, false];
             }
         } elseif (is_array($value)) {
             if (! empty($value)) {
-                return [$value, $v::T_ARRAY, false];
+                return [$value, false];
             }
         } elseif (null !== $value) {
-            if (is_int($value)) {
-                $type = $v::T_INT;
-            } elseif (is_numeric($value)) {
-                $type = $v::T_NUMERIC;
-            }
-            return [$value, $type, false];
+            return [$value, false];
         }
-        return [null, $type, 'The :alias is required'];
+        return [null, 'The :alias is required'];
     }
 
-    protected function vRequiredWith($v, $value, $type, $attr)
+    protected function vRequiredWith($v, $value, $attr)
     {
         foreach (explode(',', $attr) as $field) {
-            if (null !== $v->$field) {
-                return $this->vRequired($v, $value, $type);
+            if (null !== $this->__get($field) {
+                return $this->vRequired($v, $value);
             }
         }
-        list(, , $error) = $this->vRequired($v, $value, $type);
+        list(, $error) = $this->vRequired($v, $value);
         if (false === $error) {
-            return [null, $type, 'The :alias is not required'];
+            return [null, 'The :alias is not required'];
         } else {
-            return [$value, $type, true];
+            return [$value, true];
         }
     }
 
-    protected function vString($v, $value, $type, $attr)
+    protected function vString($v, $value, $attr)
     {
         if (null === $value) {
-            return [null, $type, false];
+            return [null, false];
         } elseif (is_string($value)) {
             foreach(explode(',', $attr) as $action) {
                 switch ($action) {
                     case 'trim':
-                        $value = preg_replace('%^\s+|\s+$%u', '', $value); // trim($value);
+                        $value = preg_replace('%^\s+|\s+$%u', '', $value);
                         break;
                     case 'lower':
                         $value = mb_strtolower($value, 'UTF-8');
                         break;
                 }
             }
-            return [$value, $v::T_STRING, false];
+            return [$value, false];
         } else {
-            return [null, $type, 'The :alias must be string'];
+            return [null, 'The :alias must be string'];
         }
     }
 
-    protected function vNumeric($v, $value, $type)
+    protected function vNumeric($v, $value)
     {
         if (null === $value) {
-            return [null, $type, false];
+            return [null, false];
         } elseif (is_numeric($value)) {
-            return [0 + $value, $v::T_NUMERIC, false];
+            return [0 + $value, false];
         } else {
-            return [null, $type, 'The :alias must be numeric'];
+            return [null, 'The :alias must be numeric'];
         }
     }
 
-    protected function vInteger($v, $value, $type)
+    protected function vInteger($v, $value)
     {
         if (null === $value) {
-            return [null, $type, false];
+            return [null, false];
         } elseif (is_numeric($value) && is_int(0 + $value)) {
-            return [(int) $value, $v::T_INT, false];
+            return [(int) $value, false];
         } else {
-            return [null, $type, 'The :alias must be integer'];
+            return [null, 'The :alias must be integer'];
         }
     }
 
-    protected function vArray($v, $value, $type)
+    protected function vArray($v, $value)
     {
         if (null === $value) {
-            return [null, $type, false];
+            return [null, false];
         } elseif (is_array($value)) {
-            return [$value, $v::T_ARRAY, false];
+            return [$value, false];
         } else {
-            return [null, $type, 'The :alias must be array'];
+            return [null, 'The :alias must be array'];
         }
     }
 
-    protected function vMin($v, $value, $type, $attr)
+    protected function vMin($v, $value, $attr)
     {
-        if (null === $value) {
-            return [null, $type, false];
+        if (is_numeric($value)) {
+            if (0 + $value < $attr) {
+                return [$value, 'The :alias minimum is :attr'];
+            }
+        } elseif (is_string($value)) {
+            if (mb_strlen($value, 'UTF-8') < $attr) {
+                return [$value, 'The :alias minimum is :attr characters'];
+            }
+        } elseif (is_array($value)) {
+            if (count($value) < $attr) {
+                return [$value, 'The :alias minimum is :attr elements'];
+            }
+        } else {
+            return [null, null === $value ? false : 'The :alias minimum is :attr'];
         }
-        switch ($type) {
-            case self::T_STRING:
-                if (mb_strlen($value, 'UTF-8') < $attr) {
-                    return [$value, $type, 'The :alias minimum is :attr characters'];
-                }
-                break;
-            case self::T_NUMERIC:
-            case self::T_INT:
-                if ($value < $attr) {
-                    return [$value, $type, 'The :alias minimum is :attr'];
-                }
-                break;
-            case self::T_ARRAY:
-                if (count($value) < $attr) {
-                    return [$value, $type, 'The :alias minimum is :attr elements'];
-                }
-                break;
-            default:
-                return [null, $type, 'The :alias minimum is :attr'];
-                break;
-        }
-        return [$value, $type, false];
+        return [$value, false];
     }
 
-    protected function vMax($v, $value, $type, $attr)
+    protected function vMax($v, $value, $attr)
     {
-        if (null === $value) {
-            return [null, $type, false];
+        if (is_numeric($value)) {
+            if (0 + $value > $attr) {
+                return [$value, 'The :alias maximum is :attr'];
+            }
+        } elseif (is_string($value)) {
+            if (mb_strlen($value, 'UTF-8') > $attr) {
+                return [$value, 'The :alias maximum is :attr characters'];
+            }
+        } elseif (is_array($value)) {
+            if (count($value) > $attr) {
+                return [$value, 'The :alias maximum is :attr elements'];
+            }
+        } else {
+            return [null, null === $value ? false : 'The :alias maximum is :attr'];
         }
-        switch ($type) {
-            case self::T_STRING:
-                if (mb_strlen($value, 'UTF-8') > $attr) {
-                    return [$value, $type, 'The :alias maximum is :attr characters'];
-                }
-                break;
-            case self::T_NUMERIC:
-            case self::T_INT:
-                if ($value > $attr) {
-                    return [$value, $type, 'The :alias maximum is :attr'];
-                }
-                break;
-            case self::T_ARRAY:
-                if (count($value) > $attr) {
-                    return [$value, $type, 'The :alias maximum is :attr elements'];
-                }
-                break;
-            default:
-                return [null, $type, 'The :alias maximum is :attr'];
-                break;
-        }
-        return [$value, $type, false];
+        return [$value, false];
     }
 
-    protected function vToken($v, $value, $type, $attr, $args)
+    protected function vToken($v, $value, $attr, $args)
     {
         if (! is_array($args)) {
             $args = [];
         }
         $value = (string) $value;
         if ($this->c->Csrf->verify($value, $attr, $args)) {
-            return [$value, $type, false];
+            return [$value, false];
         } else {
-            return [$value, $type, ['Bad token', 'e']];
+            return [$value, ['Bad token', 'e']];
         }
     }
 
     protected function vCheckbox($v, $value)
     {
-        return [! empty($value), $v::T_BOOLEAN, false];
+        return [! empty($value), false];
     }
 
-    protected function vReferer($v, $value, $type, $attr, $args)
+    protected function vReferer($v, $value, $attr, $args)
     {
         if (! is_array($args)) {
             $args = [];
         }
-        return [$this->c->Router->validate($value, $attr, $args), $type, false];
+        return [$this->c->Router->validate($value, $attr, $args), false];
     }
 
-    protected function vEmail($v, $value, $type)
+    protected function vEmail($v, $value)
     {
         if (null === $value) {
-            return [$value, $type, false];
+            return [$value, false];
         }
         $email = $this->c->Mail->valid($value, true);
         if (false === $email) {
-            return [(string) $value, $type, 'The :alias is not valid email'];
+            return [(string) $value, 'The :alias is not valid email'];
         } else {
-            return [$email, $type, false];
+            return [$email, false];
         }
     }
 
-    protected function vSame($v, $value, $type, $attr)
+    protected function vSame($v, $value, $attr)
     {
-        if (! $v->getStatus($attr) || $value === $v->$attr) {
-            return [$value, $type, false];
+        if (! $this->getStatus($attr) || $value === $this->__get($attr)) {
+            return [$value, false];
         } else {
-            return [null, $type, 'The :alias must be same with original'];
+            return [null, 'The :alias must be same with original'];
         }
     }
 
-    protected function vRegex($v, $value, $type, $attr)
+    protected function vRegex($v, $value, $attr)
     {
         if (null === $value) {
-            return [$value, $type, false];
-        } elseif ($type === $v::T_STRING && preg_match($attr, $value)) {
-            return [$value, $type, false];
+            return [$value, false];
+        } elseif (is_string($value) && preg_match($attr, $value)) {
+            return [$value, false];
         } else {
-            return [null, $type, 'The :alias is not valid format'];
+            return [null, 'The :alias is not valid format'];
         }
     }
 
-    protected function vPassword($v, $value, $type)
+    protected function vPassword($v, $value)
     {
-        return $this->vRegex($v, $value, $type, '%[^\x20][\x20][^\x20]%');
+        return $this->vRegex($v, $value, '%[^\x20][\x20][^\x20]%');
     }
 
-    protected function vLogin($v, $value, $type)
+    protected function vLogin($v, $value)
     {
-        return $this->vRegex($v, $value, $type, '%^\p{L}[\p{L}\p{N}\x20\._-]+$%uD');
+        return $this->vRegex($v, $value, '%^\p{L}[\p{L}\p{N}\x20\._-]+$%uD');
     }
 
-    protected function vIn($v, $value, $type, $attr)
+    protected function vIn($v, $value, $attr)
     {
         if (null === $value || in_array($value, explode(',', $attr))) {
-            return [$value, $type, false];
+            return [$value, false];
         } else {
-            return [null, $type, 'The :alias contains an invalid value'];
+            return [null, 'The :alias contains an invalid value'];
         }
     }
 }

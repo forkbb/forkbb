@@ -8,8 +8,6 @@ use RuntimeException;
 
 class View extends Dirk
 {
-    protected $page;
-
     public function __construct ($cache, $views)
     {
         $config = [
@@ -42,32 +40,23 @@ class View extends Dirk
             $value);
     }
 
-    public function setPage(Page $page)
+    public function rendering(Page $page)
     {
-        if (true !== $page->isReady()) {
+        if (! $page->isReady()) {
             throw new RuntimeException('The page model does not contain data ready');
         }
-        $this->page = $page;
-        return $this;
-    }
 
-    public function outputPage()
-    {
-        if (empty($this->page)) {
-            throw new RuntimeException('The page model isn\'t set');
-        }
-
-        $headers = $this->page->getHeaders();
+        $headers = $page->httpHeaders();
         foreach ($headers as $header) {
             header($header);
         }
 
-        $tpl = $this->page->getNameTpl();
+        $tpl = $page->getNameTpl();
         // переадресация
         if (null === $tpl) {
             return null;
         }
 
-        return $this->fetch($tpl, $this->page->getData());
+        return $this->fetch($tpl, $page->getData());
     }
 }

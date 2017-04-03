@@ -21,9 +21,7 @@ class Message extends Page
     {
         $this->httpStatus = $status;
         $this->httpHeaders = $headers;
-        $this->titles = [
-            __('Info'),
-        ];
+        $this->titles[] = __('Info');
         $this->data = [
             'message' => __($message),
             'back' => $back,
