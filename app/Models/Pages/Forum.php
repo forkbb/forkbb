@@ -52,7 +52,7 @@ class Forum extends Page
         if ($user->isGuest) {
             $sql = 'SELECT f.moderators, f.num_topics, f.sort_by, 0 AS is_subscribed FROM ::forums AS f WHERE f.id=?i:fid';
         } else {
-            $sql = 'SELECT f.moderators, f.num_topics, f.sort_by, s.user_id AS is_subscribed, mof.mf_mark_all_read FROM ::forums AS f LEFT JOIN ::forum_subscriptions AS s ON (f.id=s.forum_id AND s.user_id=?i:uid) LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND f.id=mof.fid) WHERE f.id=?i:fid';
+            $sql = 'SELECT f.moderators, f.num_topics, f.sort_by, s.user_id AS is_subscribed, mof.mf_last_visit, mof.mf_mark_all_read FROM ::forums AS f LEFT JOIN ::forum_subscriptions AS s ON (f.id=s.forum_id AND s.user_id=?i:uid) LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND f.id=mof.fid) WHERE f.id=?i:fid';
         }
         $curForum = $this->c->DB->query($sql, $vars)->fetch();
 
@@ -131,6 +131,7 @@ class Forum extends Page
             }
             $topics = $this->c->DB->query($sql, $vars)->fetchAll();
 
+            $maxTime = 0;
             foreach ($topics as &$cur) {
                 // цензура
                 if ($this->config['o_censoring'] == '1') {
@@ -157,6 +158,7 @@ class Forum extends Page
                 $cur['link_last'] = $this->c->Router->link('ViewPost', ['id' => $cur['last_post_id']]);
                 $cur['num_views'] = $this->config['o_topic_views'] == '1' ? $this->number($cur['num_views']) : null;
                 $cur['num_replies'] = $this->number($cur['num_replies']);
+                $time = $cur['last_post'];
                 $cur['last_post'] = $this->time($cur['last_post']);
                 // для гостя пусто
                 if ($user->isGuest) {
@@ -166,13 +168,14 @@ class Forum extends Page
                     continue;
                 }
                 // новые сообщения
-                if ($cur['last_post'] > max($upper, $cur['mt_last_visit'])) {
+                if ($time > max($upper, $cur['mt_last_visit'])) {
                     $cur['link_new'] = $this->c->Router->link('TopicGoToNew', ['id' => $cur['id']]);
+                    $maxTime = max($maxTime, $time);
                 } else {
                     $cur['link_new'] = null;
                 }
                 // не прочитанные сообщения
-                if ($cur['last_post'] > max($lower, $cur['mt_last_read'])) {
+                if ($time > max($lower, $cur['mt_last_read'])) {
                     $cur['link_unread'] = $this->c->Router->link('TopicGoToUnread', ['id' => $cur['id']]);
                 } else {
                     $cur['link_unread'] = null;
@@ -181,6 +184,20 @@ class Forum extends Page
                 $cur['dot'] = isset($dots[$cur['id']]);
             }
             unset($cur);
+
+            // изменение времени последнего посещения
+            if ($maxTime > (int) $curForum['mf_last_visit']) {
+                $vars = [
+                    ':fid' => $args['id'],
+                    ':uid' => $user->id,
+                    ':tm' => $maxTime,
+                ];
+                if (empty($curForum['mf_last_visit']) && empty($curForum['mf_mark_all_read'])) {
+                    $this->c->DB->exec('INSERT INTO ::mark_of_forum (uid, fid, mf_last_visit) SELECT ?i:uid, ?i:fid, ?i:tm FROM ::groups WHERE NOT EXISTS (SELECT 1 FROM ::mark_of_forum WHERE uid=?i:uid AND fid=?i:fid) LIMIT 1', $vars);
+                } else {
+                    $this->c->DB->exec('UPDATE ::mark_of_forum SET mf_last_visit=?i:tm WHERE uid=?i:uid AND fid=?i:fid', $vars);
+                }
+            }
         }
 
         $moders = empty($curForum['moderators']) ? [] : array_flip(unserialize($curForum['moderators']));
