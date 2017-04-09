@@ -90,7 +90,7 @@
             </div>
           </li>
 @else
-          <li id="topic-{!! $topic['id'] !!}" class="f-row<!--inline-->
+          <li id="topic-{!! $topic['id'] !!}" class="f-row<!-- inline -->
 @if($topic['link_new']) f-fnew
 @endif
 @if($topic['link_unread']) f-funread
@@ -103,7 +103,7 @@
 @endif
 @if($topic['dot']) f-fposted
 @endif
-            "><!--endinline-->
+            "><!-- endinline -->
             <div class="f-cell f-cmain">
               <div class="f-ficon"></div>
               <div class="f-finfo">

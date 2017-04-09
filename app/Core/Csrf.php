@@ -37,9 +37,13 @@ class Csrf
     public function create($marker, array $args = [], $time = null)
     {
          unset($args['token'], $args['#']);
-         $data = $marker . '|' . json_encode($args);
+         ksort($args);
+         $marker .= '|';
+         foreach ($args as $key => $value) {
+             $marker .= $key . '|' . (string) $value . '|';
+         }
          $time = $time ?: time();
-         return $this->secury->hmac($data, $time . $this->key) . 'f' . $time;
+         return $this->secury->hmac($marker, $time . $this->key) . 'f' . $time;
     }
 
     /**

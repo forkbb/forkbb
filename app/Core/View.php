@@ -29,11 +29,11 @@ class View extends Dirk
      */
     protected function compileTransformations($value)
     {
-        if (strpos($value, '<!--inline-->') === false) {
+        if (strpos($value, '<!-- inline -->') === false) {
             return $value;
         }
         return preg_replace_callback(
-            '%<!--inline-->([^<]*(?:<(?!!--endinline-->)[^<]*)*+)(?:<!--endinline-->)?%',
+            '%<!-- inline -->([^<]*(?:<(?!!-- endinline -->)[^<]*)*+)(?:<!-- endinline -->)?%',
             function ($matches) {
                 return preg_replace('%\h*\R\s*%', '', $matches[1]);
             },

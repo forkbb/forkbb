@@ -3,7 +3,7 @@
       <h2>{!! $title !!}</h2>
       <div id="id-rules">{!! $rules !!}</div>
 @if($formAction)
-      <div class="f-lrdiv">
+      <div class="f-fdiv f-lrdiv">
         <form class="f-form" method="post" action="{!! $formAction !!}">
           <input type="hidden" name="token" value="{!! $formToken !!}">
           <div>

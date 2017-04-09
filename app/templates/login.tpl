@@ -1,13 +1,13 @@
 @extends('layouts/main')
     <section class="f-main f-login">
-      <div class="f-lrdiv">
+      <div class="f-fdiv f-lrdiv">
         <h2>{!! __('Login') !!}</h2>
         <form class="f-form" method="post" action="{!! $formAction !!}">
           <input type="hidden" name="token" value="{!! $formToken !!}">
           <input type="hidden" name="redirect" value="{{ $redirect }}">
           <div>
             <label class="f-child1 f-req" for="id-username">{!! __('Username') !!}</label>
-            <input required class="f-ctrl" id="id-username" type="text" name="username" value="{{ $username }}" maxlength="25" autofocus="autofocus" spellcheck="false" tabindex="1">
+            <input required class="f-ctrl" id="id-username" type="text" name="username" value="{{ $username }}" maxlength="25" autofocus spellcheck="false" tabindex="1">
           </div>
           <div>
             <label class="f-child1 f-req" for="id-password">{!! __('Passphrase') !!}<a class="f-forgetlink" href="{!! $forgetLink !!}" tabindex="5">{!! __('Forgotten pass') !!}</a></label>
@@ -26,7 +26,7 @@
         </form>
       </div>
 @if($regLink)
-      <div class="f-lrdiv">
+      <div class="f-fdiv f-lrdiv">
         <p class="f-child3"><a href="{!! $regLink !!}" tabindex="6">{!! __('Not registered') !!}</a></p>
       </div>
 @endif

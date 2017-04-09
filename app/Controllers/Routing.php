@@ -96,6 +96,12 @@ class Routing
         // только админ
         if ($user->isAdmin) {
             $r->add('GET', '/admin/statistics/info', 'AdminStatistics:info', 'AdminInfo');
+            $r->add('GET', '/admin/groups', 'AdminGroups:view', 'AdminGroups');
+            $r->add('POST', '/admin/groups/new[/{base:[1-9]\d*}]', 'AdminGroups:newPost', 'AdminGroupsNew');
+            $r->add('POST', '/admin/groups/default', 'AdminGroups:defaultPost', 'AdminGroupsDefault');
+            $r->add('GET', '/admin/groups/edit/{id:[1-9]\d*}', 'AdminGroups:edit', 'AdminGroupsEdit');
+            $r->add('POST', '/admin/groups/edit/{id:[1-9]\d*}', 'AdminGroups:editPost');
+            $r->add('GET', '/admin/groups/delete/{id:[1-9]\d*}', 'AdminGroups:delete', 'AdminGroupsDelete');
         }
 
         $uri = $_SERVER['REQUEST_URI'];

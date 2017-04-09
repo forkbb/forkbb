@@ -21,7 +21,7 @@
 @endif
 @if(is_array($installLangs))
     <section class="f-install">
-      <div class="f-lrdiv">
+      <div class="f-fdiv">
         <h2>{!! __('Choose install language') !!}</h2>
         <form class="f-form" method="post" action="{!! $formAction !!}">
           <div>
@@ -46,7 +46,7 @@
 @endif
 @if(empty($fIswev['e']))
     <section class="f-main f-install">
-      <div class="f-lrdiv">
+      <div class="f-fdiv">
         <h2>{!! __('Install', $rev) !!}</h2>
         <form class="f-form" method="post" action="{!! $formAction !!}" autocomplete="off">
           <input type="hidden" name="installlang" value="{!! $installLang !!}">

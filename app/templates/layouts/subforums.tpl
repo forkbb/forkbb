@@ -27,18 +27,18 @@
 @endif
                   </h3>
 @if($cur['subforums'])
-                  <dl class="f-inline f-fsub"><!--inline-->
+                  <dl class="f-inline f-fsub"><!-- inline -->
                     <dt>{!! __('Sub forum', count($cur['subforums'])) !!}</dt>
 @foreach($cur['subforums'] as $sub)
                     <dd><a href="{!! $sub[0] !!}">{{ $sub[1] }}</a></dd>
 @endforeach
-                  </dl><!--endinline-->
+                  </dl><!-- endinline -->
 @endif
 @if($cur['forum_desc'])
                   <p class="f-fdesc">{!! $cur['forum_desc'] !!}</p>
 @endif
 @if($cur['moderators'])
-                  <dl class="f-inline f-modlist"><!--inline-->
+                  <dl class="f-inline f-modlist"><!-- inline -->
                     <dt>{!! __('Moderated by') !!}</dt>
 @foreach($cur['moderators'] as $mod)
 @if(is_string($mod))
@@ -47,7 +47,7 @@
                     <dd><a href="{!! $mod[0] !!}">{{ $mod[1] }}</a></dd>
 @endif
 @endforeach
-                  </dl><!--endinline-->
+                  </dl><!-- endinline -->
 @endif
                 </div>
               </div>

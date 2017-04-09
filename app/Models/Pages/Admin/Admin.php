@@ -26,6 +26,12 @@ abstract class Admin extends Page
     protected $onlinePos = 'admin';
 
     /**
+     * Переменная для meta name="robots"
+     * @var string
+     */
+    protected $robots = 'noindex, nofollow';
+
+    /**
      * Конструктор
      * @param Container $container
      */
@@ -87,7 +93,7 @@ abstract class Admin extends Page
                 'permissions' => ['admin_permissions.php', __('Permissions')],
                 'categories' => ['admin_categories.php', __('Categories')],
                 'forums' => ['admin_forums.php', __('Forums')],
-                'groups' => ['admin_groups.php', __('User groups')],
+                'groups' => [$r->link('AdminGroups'), __('User groups')],
                 'censoring' => ['admin_censoring.php', __('Censoring')],
                 'maintenance' => ['admin_maintenance.php', __('Maintenance')]
             ];

@@ -44,7 +44,7 @@
 @endif
         </dl>
 @if($online && $online['list'])
-        <dl class="f-inline f-onlinelist"><!--inline-->
+        <dl class="f-inline f-onlinelist"><!-- inline -->
           <dt>{!! __('Online') !!}</dt>
 @foreach($online['list'] as $cur)
 @if(is_string($cur))
@@ -53,7 +53,7 @@
           <dd><a href="{!! $cur[0] !!}">{{ $cur[1] }}</a></dd>
 @endif
 @endforeach
-        </dl><!--endinline-->
+        </dl><!-- endinline -->
 @endif
       </div>
     </section>

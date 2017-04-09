@@ -90,6 +90,7 @@ class Validator
             'max'           => [$this, 'vMax'],
             'min'           => [$this, 'vMin'],
             'numeric'       => [$this, 'vNumeric'],
+            'not_in'        => [$this, 'vNotIn'],
             'password'      => [$this, 'vPassword'],
             'referer'       => [$this, 'vReferer'],
             'regex'         => [$this, 'vRegex'],
@@ -354,7 +355,7 @@ class Validator
     protected function vRequiredWith($v, $value, $attr)
     {
         foreach (explode(',', $attr) as $field) {
-            if (null !== $this->__get($field) {
+            if (null !== $this->__get($field)) {
                 return $this->vRequired($v, $value);
             }
         }
@@ -534,7 +535,16 @@ class Validator
         if (null === $value || in_array($value, explode(',', $attr))) {
             return [$value, false];
         } else {
-            return [null, 'The :alias contains an invalid value'];
+            return [$value, 'The :alias contains an invalid value'];
+        }
+    }
+
+    protected function vNotIn($v, $value, $attr)
+    {
+        if (null === $value || ! in_array($value, explode(',', $attr))) {
+            return [$value, false];
+        } else {
+            return [$value, 'The :alias contains an invalid value'];
         }
     }
 }
