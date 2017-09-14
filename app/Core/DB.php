@@ -103,87 +103,82 @@ class DB extends PDO
      */
     protected function parse($query, array $params)
     {
-        $parts = preg_split('%(?=[?:])(?<![a-z0-9_])(\?[a-z0-9_]+|\?(?!=:))?(::?[a-z0-9_]+)?%i', $query, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
         $idxIn = 0;
         $idxOut = 1;
-        $query = '';
-        $total = count($parts);
         $map = [];
         $bind = [];
+        $query = preg_replace_callback(
+            '%(?=[?:])(?<![\w?])(\?(?![:?])(\w+)?)?(?:(::?)(\w+))?%i', 
+            function($matches) use ($params, &$idxIn, &$idxOut, &$map, &$bind) {
+                if ($matches[3] === '::') {
+                    return $this->dbPrefix . $matches[4];
+                }
+                
+                $type = $matches[2] ?: 's';
 
-        for ($i = 0; $i < $total; ++$i) {
-            switch ($parts[$i][0]) {
-                case '?':
-                    $type = isset($parts[$i][1]) ? substr($parts[$i], 1) : 's';
-                    $key = isset($parts[$i + 1]) && $parts[$i + 1][0] === ':'
-                           ? $parts[++$i]
-                           : $idxIn++;
-                    break;
-                case ':':
-                    if ($parts[$i][1] === ':') {
-                        $query .= $this->dbPrefix . substr($parts[$i], 2);
-                        continue 2;
+                if ($matches[4]) {
+                    $key1 = ':' . $matches[4];
+                    $key2 = $matches[4];
+                } else {
+                    $key1 = $idxIn;
+                    $key2 = $idxIn;
+                    ++$idxIn;
+                }
+
+                if (isset($params[$key1]) || array_key_exists($key1, $params)) {
+                    $value = $params[$key1];
+                } elseif (isset($params[$key2]) || array_key_exists($key2, $params)) {
+                    $value = $params[$key2];
+                } else {
+                    throw new PDOException("'$key1': No parameter for (?$type) placeholder");
+                }
+
+                switch ($type) {
+                    case 'p':
+                        return (string) $value;
+                    case 'ai':
+                        $bindType = self::PARAM_INT;
+                        break;
+                    case 'as':
+                    case 'a':
+                        $bindType = self::PARAM_STR;
+                        break;
+                    case 'i':
+                        $bindType = self::PARAM_INT;
+                        $value = [$value];
+                        break;
+                    case 'b':
+                        $bindType = self::PARAM_BOOL;
+                        $value = [$value];
+                        break;
+                    case 's':
+                    default:
+                        $bindType = self::PARAM_STR;
+                        $value = [$value];
+                        $type = 's';
+                        break;
+                }
+
+                $res = [];
+                foreach ($value as $val) {
+                    $name = ':' . $idxOut;
+                    ++$idxOut;
+                    $res[] = $name;
+                    $bind[$name] = [$val, $bindType];
+
+                    if (empty($map[$key2])) {
+                        $map[$key2] = [$type, $name];
+                    } else {
+                        $map[$key2][] = $name;
                     }
-                    $type = 's';
-                    $key = $parts[$i];
-                    break;
-                default:
-                    $query .= $parts[$i];
-                    continue 2;
-            }
-
-            if (! isset($params[$key]) && ! array_key_exists($key, $params)) {
-                throw new PDOException("'$key': No parameter for (?$type) placeholder");
-            }
-
-            switch ($type) {
-                case 'p':
-                    $query .= (string) $params[$key];
-                    continue 2;
-                case 'as':
-                case 'ai':
-                case 'a':
-                    $bindType = $type === 'ai' ? self::PARAM_INT : self::PARAM_STR;
-                    $comma = '';
-                    foreach ($params[$key] as $val) {
-                        $name = ':' . $idxOut++;
-                        $query .= $comma . $name;
-                        $bind[$name] = [$val, $bindType];
-                        $comma = ',';
-
-                        if (empty($map[$key])) {
-                            $map[$key] = [$type, $name];
-                        } else {
-                            $map[$key][] = $name;
-                        }
-                    }
-                    continue 2;
-                case '':
-                    break;
-                case 'i':
-                    $bindType = self::PARAM_INT;
-                    break;
-                case 'b':
-                    $bindType = self::PARAM_BOOL;
-                    break;
-                case 's':
-                default:
-                    $bindType = self::PARAM_STR;
-                    $type = 's';
-                    break;
-            }
-
-            $name = ':' . $idxOut++;
-            $query .= $name;
-            $bind[$name] = [$params[$key], $bindType];
-
-            if (empty($map[$key])) {
-                $map[$key] = [$type, $name];
-            } else {
-                $map[$key][] = $name;
-            }
-        }
-
+                }
+                return implode(',', $res);
+            }, 
+            $query
+        );
+//var_dump($query);
+//var_dump($bind);
+//var_dump($map);
         return [$query, $bind, $map];
     }
 

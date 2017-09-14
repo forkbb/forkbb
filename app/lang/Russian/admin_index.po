@@ -55,7 +55,7 @@ msgid "About head"
 msgstr "О ForkBB"
 
 msgid "ForkBB version label"
-msgstr "Версия ForkBB"
+msgstr "Версия"
 
 msgid "ForkBB version data"
 msgstr "rev.%s"
@@ -67,7 +67,7 @@ msgid "View server statistics"
 msgstr "Смотреть статистику сервера"
 
 msgid "Support label"
-msgstr "Саппорт"
+msgstr "Поддержка"
 
 msgid "PHPinfo disabled message"
 msgstr "Функция PHP phpinfo() была отключена на этом сервере."

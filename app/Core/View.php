@@ -37,7 +37,8 @@ class View extends Dirk
             function ($matches) {
                 return preg_replace('%\h*\R\s*%', '', $matches[1]);
             },
-            $value);
+            $value
+        );
     }
 
     public function rendering(Page $page)

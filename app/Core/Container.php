@@ -177,10 +177,13 @@ class Container
                     $value = $this->__get($matches[1]);
                 } else {
                     // partial string substitution casts value to string
-                    $value = preg_replace_callback('~%([a-z0-9_]+(?:\.[a-z0-9_]+)*)%~i',
+                    $value = preg_replace_callback(
+                        '~%([a-z0-9_]+(?:\.[a-z0-9_]+)*)%~i',
                         function ($matches) {
                             return $this->__get($matches[1]);
-                        }, $value);
+                        }, 
+                        $value
+                    );
                 }
             } elseif (isset($value{0}) && $value{0} === '@') {
                 return $this->__get(substr($value, 1));
