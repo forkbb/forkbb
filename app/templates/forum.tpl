@@ -141,9 +141,9 @@
             </div>
             <div class="f-cell f-cstats">
               <ul>
-                <li>{!! __('%s Reply', $topic['num_replies'], $topic['num_replies']) !!}</li>
-@if(null !== $topic['num_views'])
-                <li>{!! __('%s View', $topic['num_views'], $topic['num_views'])!!}</li>
+                <li>{!! __('%s Reply', $topic['num_replies'], $topic['replies']) !!}</li>
+@if($topic['views'])
+                <li>{!! __('%s View', $topic['num_views'], $topic['views']) !!}</li>
 @endif
               </ul>
             </div>

@@ -99,8 +99,6 @@ class Func
                 }
                 if ($i === $cur) {
                     $pages[] = [null, $i, true];
-                } elseif ($i === 1) {
-                    $pages[] = [$this->c->Router->link($marker, $args), $i, null];
                 } else {
                     $pages[] = [$this->c->Router->link($marker, ['page' => $i] + $args), $i, null];
                 }

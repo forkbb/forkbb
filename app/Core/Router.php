@@ -97,12 +97,14 @@ class Router
      */
     public function link($marker = null, array $args = [])
     {
-        $result = $this->baseUrl; //???? http и https
+        $result = $this->baseUrl;
         if (is_string($marker) && isset($this->links[$marker])) {
             $s = $this->links[$marker];
             foreach ($args as $key => $val) {
                 if ($key == '#') {
                     $s .= '#' . rawurlencode($val); //????
+                    continue;
+                } elseif ($key == 'page' && $val === 1) {
                     continue;
                 }
                 $s = preg_replace(

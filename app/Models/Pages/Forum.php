@@ -79,7 +79,7 @@ class Forum extends Page
                 return $this->c->Message->message('Bad request');
             }
 
-            $offset = $user->dispTopics * ($page - 1);
+            $offset = ($page - 1) * $user->dispTopics;
 
             switch ($curForum['sort_by']) {
                 case 1:
@@ -132,10 +132,7 @@ class Forum extends Page
             $topics = $this->c->DB->query($sql, $vars)->fetchAll();
 
             foreach ($topics as &$cur) {
-                // цензура
-                if ($this->config['o_censoring'] == '1') {
-                    $cur['subject'] = preg_replace($this->c->censoring[0], $this->c->censoring[1], $cur['subject']);
-                }
+                $cur['subject'] = $this->censor($cur['subject']);
                 // перенос темы
                 if ($cur['moved_to']) {
                     $cur['link'] = $this->c->Router->link('Topic', ['id' => $cur['moved_to'], 'name' => $cur['subject']]);
@@ -155,8 +152,8 @@ class Forum extends Page
 
                 $cur['link'] = $this->c->Router->link('Topic', ['id' => $cur['id'], 'name' => $cur['subject']]);
                 $cur['link_last'] = $this->c->Router->link('ViewPost', ['id' => $cur['last_post_id']]);
-                $cur['num_views'] = $this->config['o_topic_views'] == '1' ? $this->number($cur['num_views']) : null;
-                $cur['num_replies'] = $this->number($cur['num_replies']);
+                $cur['views'] = $this->config['o_topic_views'] == '1' ? $this->number($cur['num_views']) : null;
+                $cur['replies'] = $this->number($cur['num_replies']);
                 $time = $cur['last_post'];
                 $cur['last_post'] = $this->time($cur['last_post']);
                 // для гостя пусто
@@ -191,6 +188,7 @@ class Forum extends Page
             || ($user->isAdmMod && isset($moders[$user->id]));
 
         $this->onlinePos = 'forum-' . $args['id'];
+
         $crumbs = [];
         $id = $args['id'];
         $activ = true;
@@ -223,8 +221,8 @@ class Forum extends Page
             'pages' => $this->c->Func->paginate($pages, $page, 'Forum', ['id' => $args['id'], 'name' => $fDesc[$args['id']]['forum_name']]),
         ];
 
-        $this->canonical = $page > 1 ? $this->c->Router->link('Forum', ['id' => $args['id'], 'name' => $fDesc[$args['id']]['forum_name'], 'page' => $page])
-            : $this->c->Router->link('Forum', ['id' => $args['id'], 'name' => $fDesc[$args['id']]['forum_name']]);
+        $this->canonical = $this->c->Router->link('Forum', ['id' => $args['id'], 'name' => $fDesc[$args['id']]['forum_name'], 'page' => $page]);
+
         return $this;
     }
 }

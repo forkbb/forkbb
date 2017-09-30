@@ -67,7 +67,7 @@ class Container
             if (is_array($service)) {
                 return $this->fromArray($service, $tree);
             } elseif (is_object($service)) {
-                return $service->$tree[0];
+                return $service->{$tree[0]};
             } else {
                 return null;
             }

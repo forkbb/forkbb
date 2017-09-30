@@ -12,7 +12,7 @@ function __($data, ...$args)
     $tr = $lang->get($data);
 
     if (is_array($tr)) {
-        if (isset($args[0]) && is_numeric($args[0])) {
+        if (isset($args[0]) && is_int($args[0])) {
             $n = array_shift($args);
             eval('$n = (int) ' . $tr['plural']);
             $tr = $tr[$n];

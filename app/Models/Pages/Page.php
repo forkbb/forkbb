@@ -408,6 +408,20 @@ abstract class Page
     }
 
     /**
+     * Выполняет цензуру при необходимости
+     * @param string $str
+     * @return string
+     */
+    protected function censor($str)
+    {
+        if ($this->config['o_censoring'] == '1') {
+            return (string) preg_replace($this->c->censoring[0], $this->c->censoring[1],  $str);
+        } else {
+            return $str;
+        }
+    }
+
+    /**
      * Заглушка
      * @param string $name
      * @param array $arguments

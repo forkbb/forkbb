@@ -31,6 +31,14 @@ if (file_exists(__DIR__ . '/config/main.php')) {
 
 require __DIR__ . '/functions.php';
 
+// https or http?
+if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') {
+    $c->BASE_URL = str_replace('http://', 'https://', $c->BASE_URL);
+} else {
+    $c->BASE_URL = str_replace('https://', 'http://', $c->BASE_URL);
+}
+$c->PUBLIC_URL = $c->BASE_URL . $forkPublicPrefix;
+
 $c->FORK_REVISION = 1;
 $c->START = $forkStart;
 $c->DIR_APP    = __DIR__;
@@ -52,7 +60,7 @@ if ($page->getDataForOnline(true)) {
     $c->Online->handle($page);
 }
 $tpl = $c->View->rendering($page);
-if ($c->DEBUG > 0) {
+if ($tpl !== null && $c->DEBUG > 0) {
     $debug = $c->Debug->debug();
     $debug = $c->View->rendering($debug);
     $tpl = str_replace('<!-- debuginfo -->', $debug, $tpl);

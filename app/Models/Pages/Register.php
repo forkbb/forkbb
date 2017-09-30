@@ -115,9 +115,7 @@ class Register extends Page
         if (preg_match('%^(guest|' . preg_quote(__('Guest'), '%') . ')$%iu', $username)) {
             $error = __('Username guest');
         // цензура
-        } elseif ($this->config['o_censoring'] == '1'
-            && preg_replace($this->c->censoring[0], $this->c->censoring[1], $username) !== $username
-        ) {
+        } elseif ($this->censor($username) !== $username) {
             $error = __('Username censor');
         // username забанен
         } elseif ($this->c->CheckBans->isBanned($username) > 0) {
