@@ -81,7 +81,7 @@ class Routing
             $r->add('GET', '/forum/{id:[1-9]\d*}/new/topic', 'Post:newTopic', 'NewTopic');
             $r->add('GET', '/forum/{id:[1-9]\d*}[/{name}][/page/{page:[1-9]\d*}]', 'Forum:view', 'Forum');
             // темы
-            $r->add('GET', '/topic/{id:[1-9]\d*}[/{name}][/page/{page:[1-9]\d*}]', 'Topic:view', 'Topic');
+            $r->add('GET', '/topic/{id:[1-9]\d*}[/{name}][/page/{page:[1-9]\d*}]', 'Topic:viewTopic', 'Topic');
             $r->add('GET', '/topic/{id:[1-9]\d*}/goto/new', 'Topic:goToNew', 'TopicGoToNew');
             $r->add('GET', '/topic/{id:[1-9]\d*}/goto/unread', 'Topic:goToUnread', 'TopicGoToUnread');
             $r->add('GET', '/topic/{id:[1-9]\d*}/goto/last', 'Topic:goToLast', 'TopicGoToLast');

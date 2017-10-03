@@ -5,6 +5,7 @@ namespace ForkBB\Models\Pages;
 class Forum extends Page
 {
     use ForumsTrait;
+    use CrumbTrait;
 
     /**
      * Имя шаблона
@@ -189,33 +190,10 @@ class Forum extends Page
 
         $this->onlinePos = 'forum-' . $args['id'];
 
-        $crumbs = [];
-        $id = $args['id'];
-        $activ = true;
-        while (true) {
-            $name = $fDesc[$id]['forum_name'];
-            $this->titles[] = $name;
-            $crumbs[] = [
-                $this->c->Router->link('Forum', ['id' => $id, 'name' => $name]),
-                $name, 
-                $activ,
-            ];
-            $activ = null;
-            if (! isset($fDesc[$id][0])) {
-                break;
-            }
-            $id = $fDesc[$id][0];
-        }
-        $crumbs[] = [
-            $this->c->Router->link('Index'),
-            __('Index'),
-            null,
-        ];
-
         $this->data = [
             'forums' => $this->getForumsData($args['id']),
             'topics' => $topics,
-            'crumbs' => array_reverse($crumbs),
+            'crumbs' => $this->getCrumbs([$fDesc, $args['id']]),
             'forumName' => $fDesc[$args['id']]['forum_name'],
             'newTopic' => $newOn ? $this->c->Router->link('NewTopic', ['id' => $args['id']]) : null,
             'pages' => $this->c->Func->paginate($pages, $page, 'Forum', ['id' => $args['id'], 'name' => $fDesc[$args['id']]['forum_name']]),

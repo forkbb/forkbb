@@ -5,7 +5,9 @@ namespace ForkBB\Models\Pages;
 class Topic extends Page
 {
     use UsersTrait;
-
+    use OnlineTrait;
+    use CrumbTrait;
+    
     /**
      * Имя шаблона
      * @var string
@@ -17,6 +19,22 @@ class Topic extends Page
      * @var null|string
      */
     protected $onlinePos = 'topic';
+
+    /**
+     * Тип обработки пользователей онлайн
+     * Если false, то идет обновление данных
+     * Если true, то идет возврат данных (смотрите $onlineFilter)
+     * @var bool
+     */
+    protected $onlineType = true;
+     
+    /**
+     * Тип возврата данных при onlineType === true
+     * Если true, то из online должны вернутся только пользователи находящиеся на этой же странице
+     * Если false, то все пользователи online
+     * @var bool
+     */
+    protected $onlineFilter = true;
 
     /**
      * Подготовка данных для шаблона
@@ -69,44 +87,37 @@ class Topic extends Page
         $vars = [
             ':pid' => $args['id'],
         ];
-        $sql = 'SELECT topic_id FROM ::posts WHERE id=?i:pid';
 
-        $tid = $this->c->DB->query($sql, $vars)->fetchColumn();
-        // сообшение не найдено в базе
-        if (empty($tid)) {
-            return $this->c->Message->message('Bad request');
+        if ($this->c->user->isGuest) {
+            $sql = 'SELECT t.*, f.moderators, 0 AS is_subscribed 
+                    FROM ::topics AS t 
+                    INNER JOIN ::forums AS f ON f.id=t.forum_id 
+                    INNER JOIN ::posts AS p ON t.id=p.topic_id
+                    WHERE p.id=?i:pid AND t.moved_to IS NULL';
+        } else {
+            $sql = 'SELECT t.*, f.moderators, s.user_id AS is_subscribed 
+                    FROM ::topics AS t 
+                    INNER JOIN ::forums AS f ON f.id=t.forum_id 
+                    INNER JOIN ::posts AS p ON t.id=p.topic_id
+                    LEFT JOIN ::topic_subscriptions AS s ON (t.id=s.topic_id AND s.user_id=?i:uid) 
+                    WHERE p.id=?i:pid AND t.moved_to IS NULL';
         }
 
-        $vars = [
-            ':pid' => $args['id'],
-            ':tid' => $tid,
-        ];
-        $sql = 'SELECT COUNT(id) FROM ::posts WHERE topic_id=?i:tid AND id<?i:pid';
-
-        $num = 1 + $this->c->DB->query($sql, $vars)->fetchColumn();
-
-        return $this->view([
-            'id' => $tid,
-            'page' => ceil($num / $this->c->user->dispPosts),
-        ]);
+        return $this->view($sql, $vars, null);
     }
 
     /**
-     * Подготовка данных для шаблона
+     * Просмотр темы по ее номеру
      * @param array $args
      * @return Page
      */
-    public function view(array $args)
+    public function viewTopic(array $args)
     {
-        $this->c->Lang->load('topic');
-
-        $user = $this->c->user;
         $vars = [
             ':tid' => $args['id'],
-            ':uid' => $user->id,
         ];
 
-        if ($user->isGuest) {
+        if ($this->c->user->isGuest) {
             $sql = 'SELECT t.*, f.moderators, 0 AS is_subscribed 
                     FROM ::topics AS t 
                     INNER JOIN ::forums AS f ON f.id=t.forum_id 
@@ -118,62 +129,88 @@ class Topic extends Page
                     LEFT JOIN ::topic_subscriptions AS s ON (t.id=s.topic_id AND s.user_id=?i:uid) 
                     WHERE t.id=?i:tid AND t.moved_to IS NULL';
         }
-        $topic = $this->c->DB->query($sql, $vars)->fetch();
 
+        $page = isset($args['page']) ? (int) $args['page'] : 1;
+
+        return $this->view($sql, $vars, $page);
+    }
+
+    /**
+     * Подготовка данных для шаблона
+     * @param string $sql
+     * @param array $vars
+     * @param int|null $page
+     * @return Page
+     */
+     protected function view($sql, array $vars, $page)
+     {
+        $user = $this->c->user;
+
+        $vars[':uid'] = $user->id;
+
+        $topic = $this->c->DB->query($sql, $vars)->fetch();
+        
         // тема отсутствует или недоступна
         if (empty($topic)) {
             return $this->c->Message->message('Bad request');
         }
-
+        
         list($fTree, $fDesc, $fAsc) = $this->c->forums;
-
+        
         // раздел отсутствует в доступных
         if (empty($fDesc[$topic['forum_id']])) {
             return $this->c->Message->message('Bad request');
         }
+        
+        if (null === $page) {
+            $vars[':tid'] = $topic['id'];
+            $sql = 'SELECT COUNT(id) FROM ::posts WHERE topic_id=?i:tid AND id<?i:pid';
 
-        $page = isset($args['page']) ? (int) $args['page'] : 1;
-        $pages = ceil(( $topic['num_replies'] + 1) / $user->dispPosts);
+            $num = 1 + $this->c->DB->query($sql, $vars)->fetchColumn();
 
+            $page = ceil($num / $user->dispPosts);
+        }
+
+        $this->c->Lang->load('topic');
+
+        $pages = ceil(($topic['num_replies'] + 1) / $user->dispPosts);
         // попытка открыть страницу которой нет
         if ($page < 1 || $page > $pages) {
             return $this->c->Message->message('Bad request');
         }
 
         $offset = ($page - 1) * $user->dispPosts;
-        
         $vars = [
-            ':tid' => $args['id'],
+            ':tid'    => $topic['id'],
             ':offset' => $offset,
-            ':rows' => $user->dispPosts,
+            ':rows'   => $user->dispPosts,
         ];
         $sql = 'SELECT id 
                 FROM ::posts 
                 WHERE topic_id=?i:tid 
                 ORDER BY id LIMIT ?i:offset, ?i:rows';
+
         $ids = $this->c->DB->query($sql, $vars)->fetchAll(\PDO::FETCH_COLUMN);
 
         // нарушена синхронизация количества сообщений в темах
         if (empty($ids)) {
-            return $this->goToLast($args); //????
+            return $this->goToLast($topic['id']);
         }
 
         $moders = empty($topic['moderators']) ? [] : array_flip(unserialize($topic['moderators']));
-
         $parent = isset($fDesc[$topic['forum_id']][0]) ? $fDesc[$topic['forum_id']][0] : 0;
         $perm = $fTree[$parent][$topic['forum_id']];
 
+        $newOn = null;
         if ($user->isAdmin) {
-            $newPost = $this->c->Router->link('NewPost', ['id' => $args['id']]);
+            $newOn = true;
         } elseif ($topic['closed'] == '1') {
-            $newPost = false;
+            $newOn = false;
         } elseif ($perm['post_replies'] === 1 
             || (null === $perm['post_replies'] && $user->gPostReplies == '1')
             || ($user->isAdmMod && isset($moders[$user->id]))
         ) {
-            $newPost = $this->c->Router->link('NewPost', ['id' => $args['id']]);
-        } else {
-            $newPost = null;
+            $newOn = true;
         }
 
         // приклейка первого сообщения темы
@@ -188,6 +225,7 @@ class Topic extends Page
         $sql = 'SELECT id, message, poster, posted 
                 FROM ::warnings 
                 WHERE id IN (?ai:ids)';
+
         $warnings = $this->c->DB->query($sql, $vars)->fetchAll(\PDO::FETCH_GROUP);
         
         $vars = [
@@ -202,11 +240,33 @@ class Topic extends Page
                 INNER JOIN ::users AS u ON u.id=p.poster_id 
                 INNER JOIN ::groups AS g ON g.g_id=u.group_id 
                 WHERE p.id IN (?ai:ids) ORDER BY p.id';
+
         $stmt = $this->c->DB->query($sql, $vars);
+
+        // парсер и его настройка для сообщений
+        $bbcodes = include $this->c->DIR_CONFIG . '/defaultBBCode.php';
+        $smilies = $this->c->smilies;
+        foreach ($smilies as &$cur) {
+            $cur = $this->c->PUBLIC_URL . '/img/sm/' . $cur;
+        }
+        unset($cur);
+        $bbInfo = $this->c->BBCODE_INFO;
+        $bbWList = $this->config['p_message_bbcode'] == '1' ? null : [];
+        $bbBList = $this->config['p_message_img_tag'] == '1' ? [] : ['img'];
+        $parser = $this->c->Parser;
+        $parser->setBBCodes($bbcodes)
+               ->setAttr('isSign', false)
+               ->setWhiteList($bbWList)
+               ->setBlackList($bbBList);
+        if ($user->showSmilies == '1') {
+            $parser->setSmilies($smilies)
+                   ->setSmTpl($bbInfo['smTpl'], $bbInfo['smTplTag'], $bbInfo['smTplBl']);
+        }
 
         $genders = [1 => ' f-user-male', 2 => ' f-user-female'];
         $postCount = 0;
         $posts = [];
+        $signs = [];
         $posters = [];
         while ($cur = $stmt->fetch()) {
             // данные по автору сообшения
@@ -215,6 +275,7 @@ class Topic extends Page
             } else {
                 $post = [
                     'poster'            => $cur['username'],
+                    'poster_id'         => $cur['poster_id'],
                     'poster_title'      => $this->censor($this->userGetTitle($cur)),
                     'poster_avatar'     => null,
                     'poster_registered' => null,
@@ -251,6 +312,14 @@ class Topic extends Page
                     $post['poster_online'] = ' f-user-online'; //????
 
                     $posters[$cur['poster_id']] = $post;
+
+                    if ($this->config['o_signatures'] == '1' 
+                        && $cur['signature'] != '' 
+                        && $user->showSig == '1' 
+                        && ! isset($signs[$cur['poster_id']])
+                    ) {
+                        $signs[$cur['poster_id']] = $cur['signature'];
+                    }
                 }
             }
 
@@ -259,6 +328,12 @@ class Topic extends Page
             $post['link']       = $this->c->Router->link('ViewPost', ['id' => $cur['id']]);
             $post['posted']     = $this->time($cur['posted']);
             $post['posted_utc'] = gmdate('Y-m-d\TH:i:s\Z', $cur['posted']);
+
+            $parser->parse($this->censor($cur['message']));
+            if ($this->config['o_smilies'] == '1' && $user->showSmilies == '1' && $cur['hide_smilies'] == '0') {
+                $parser->detectSmilies();
+            }
+            $post['message'] = $parser->getHtml();
 
             // номер сообшения в теме
             if ($stickFP && $offset > 0 && $cur['id'] == $topic['first_post_id']) {
@@ -274,12 +349,22 @@ class Topic extends Page
                 $controls['report'] = ['#', 'Report'];
             }
             if ($user->isAdmin 
-                || ($user->isAdmMod && isset($moders[$user->id]))
-                || ($cur['poster_id'] == $user->id) //????
+                || ($user->isAdmMod && isset($moders[$user->id]) && ! in_array($cur['poster_id'], $this->c->admins))
             ) {
+                $controls['delete'] = ['#', 'Delete'];
                 $controls['edit'] = ['#', 'Edit'];
+            } elseif ($topic['closed'] != '1' 
+                && $cur['poster_id'] == $user->id
+                && ($user->gDeleditInterval == '0' || $cur['edit_post'] == '1' || time() - $cur['posted'] < $user->gDeleditInterval)
+            ) {
+                if (($cur['id'] == $topic['first_post_id'] && $user->gDeleteTopics == '1') || ($cur['id'] != $topic['first_post_id'] && $user->gDeletePosts == '1')) {
+                    $controls['delete'] = ['#', 'Delete'];
+                }
+                if ($user->gEditPosts == '1') {
+                    $controls['edit'] = ['#', 'Edit'];
+                }
             }
-            if ($newPost) {
+            if ($newOn) {
                 $controls['quote'] = ['#', 'Reply'];
             }
 
@@ -288,50 +373,54 @@ class Topic extends Page
             $posts[] = $post;
         }
 
+        if ($signs) {
+            // настройка парсера для подписей
+            $bbWList = $this->config['p_sig_bbcode'] == '1' ? $bbInfo['forSign'] : [];
+            $bbBList = $this->config['p_sig_img_tag'] == '1' ? [] : ['img'];
+            $parser->setAttr('isSign', true)
+                   ->setWhiteList($bbWList)
+                   ->setBlackList($bbBList);
+
+            foreach ($signs as &$cur) {
+                $parser->parse($this->censor($cur));
+                if ($this->config['o_smilies_sig'] == '1' && $user->showSmilies == '1') {
+                    $parser->detectSmilies();
+                }
+                $cur = $parser->getHtml();
+            }
+            unset($cur);
+        }
+
         $topic['subject'] = $this->censor($topic['subject']);
         
-        $crumbs = [];
-        $crumbs[] = [
-            $this->c->Router->link('Topic', ['id' => $args['id'], 'name' => $topic['subject']]),
-            $topic['subject'],
-            true,
-        ];
-        $this->titles[] = $topic['subject'];
-
-        $id = $topic['forum_id'];
-        $activ = null;
-        while (true) {
-            $name = $fDesc[$id]['forum_name'];
-            $this->titles[] = $name;
-            $crumbs[] = [
-                $this->c->Router->link('Forum', ['id' => $id, 'name' => $name]),
-                $name, 
-                $activ,
-            ];
-            $activ = null;
-            if (! isset($fDesc[$id][0])) {
-                break;
-            }
-            $id = $fDesc[$id][0];
-        }
-        $crumbs[] = [
-            $this->c->Router->link('Index'),
-            __('Index'),
-            null,
-        ];
+        $this->onlinePos = 'topic-' . $topic['id'];
 
         $this->data = [
-            'topic' => $topic,
-            'posts' => $posts,
+            'topic'    => $topic,
+            'posts'    => $posts,
+            'signs'    => $signs,
             'warnings' => $warnings,
-            'crumbs' => array_reverse($crumbs),
-            'topicName' => $topic['subject'],
-            'newPost' => $newPost,
-            'stickFP' => $stickFP,
-            'pages' => $this->c->Func->paginate($pages, $page, 'Topic', ['id' => $args['id'], 'name' => $topic['subject']]),
+            'crumbs'   => $this->getCrumbs(
+                ['Topic', ['id' => $topic['id'], 'name' => $topic['subject']]],
+                [$fDesc, $topic['forum_id']]
+            ),
+            'newPost'  => $newOn ? $this->c->Router->link('NewPost', ['id' => $topic['id']]) : $newOn,
+            'stickFP'  => $stickFP,
+            'pages'    => $this->c->Func->paginate($pages, $page, 'Topic', ['id' => $topic['id'], 'name' => $topic['subject']]),
+            'online'   => $this->getUsersOnlineInfo(),
+            'stats'    => null,
         ];
 
-        $this->canonical = $this->c->Router->link('Topic', ['id' => $args['id'], 'name' => $topic['subject'], 'page' => $page]);
+        $this->canonical = $this->c->Router->link('Topic', ['id' => $topic['id'], 'name' => $topic['subject'], 'page' => $page]);
+
+        if ($this->config['o_topic_views'] == '1') {
+            $vars = [
+                ':tid' => $topic['id'],
+            ];
+            $sql = 'UPDATE ::topics SET num_views=num_views+1 WHERE id=?i:tid';
+
+            $this->c->DB->query($sql, $vars);
+        }
 
         return $this;
     }

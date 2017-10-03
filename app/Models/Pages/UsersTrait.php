@@ -47,10 +47,10 @@ trait UsersTrait
         $filetypes = array('jpg', 'gif', 'png');
     
         foreach ($filetypes as $type) {
-            $path = $this->c->DIR_PUBLIC . "/avatar/{$id}.{$type}";
+            $path = $this->c->DIR_PUBLIC . "/{$this->config['o_avatars_dir']}/{$id}.{$type}";
 
             if (file_exists($path) && getimagesize($path)) {
-                return $this->c->PUBLIC_URL . "/avatar/{$id}.{$type}";
+                return $this->c->PUBLIC_URL . "/{$this->config['o_avatars_dir']}/{$id}.{$type}";
             }
         }
 

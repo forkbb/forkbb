@@ -2,4 +2,4 @@
 /app/config/main.php
 /app/cache/**/*.php
 /app/cache/**/*.lock
-/public/avatar/*
+/public/img/avatars/*

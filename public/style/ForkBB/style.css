@@ -1215,6 +1215,11 @@ li + li .f-btn {
   clear: left;
 }
 
+.f-post-signature {
+  font-size: 0.875rem;
+  opacity: 0.5;
+}
+
 @media screen and (min-width: 50rem) {
   .f-post {
     background-color: #F8F4E3;

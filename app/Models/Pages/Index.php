@@ -5,6 +5,7 @@ namespace ForkBB\Models\Pages;
 class Index extends Page
 {
     use ForumsTrait;
+    use OnlineTrait;
 
     /**
      * Имя шаблона
@@ -60,53 +61,11 @@ class Index extends Page
             $stats['newest_user'] = $stats['last_user']['username'];
         }
         $this->data['stats'] = $stats;
-
-        // вывод информации об онлайн посетителях
-        if ($this->config['o_users_online'] == '1') {
-            $this->data['online'] = [];
-            $this->data['online']['max'] = $this->number($this->config['st_max_users']);
-            $this->data['online']['max_time'] = $this->time($this->config['st_max_users_time']);
-
-            // данные онлайн посетителей
-            list($users, $guests, $bots) = $this->c->Online->handle($this);
-            $list = [];
-
-            if ($this->c->user->gViewUsers == '1') {
-                foreach ($users as $id => $cur) {
-                    $list[] = [
-                        $this->c->Router->link('User', [
-                            'id' => $id,
-                            'name' => $cur['name'],
-                        ]),
-                        $cur['name'],
-                    ];
-                }
-            } else {
-                foreach ($users as $cur) {
-                    $list[] = $cur['name'];
-                }
-            }
-            $this->data['online']['number_of_users'] = $this->number(count($users));
-
-            $s = 0;
-            foreach ($bots as $name => $cur) {
-                $count = count($cur);
-                $s += $count;
-                if ($count > 1) {
-                    $list[] = '[Bot] ' . $name . ' (' . $count . ')';
-                } else {
-                    $list[] = '[Bot] ' . $name;
-                }
-            }
-            $s += count($guests);
-            $this->data['online']['number_of_guests'] = $this->number($s);
-            $this->data['online']['list'] = $list;
-        } else {
-            $this->onlineType = false;
-            $this->c->Online->handle($this);
-            $this->data['online'] = null;
-        }
+        $this->data['online'] = $this->getUsersOnlineInfo();
         $this->data['forums'] = $this->getForumsData();
+
+        $this->canonical = $this->c->Router->link('Index');
+        
         return $this;
     }
 }

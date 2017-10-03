@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{!! __('lang_identifier') !!} dir="{!! __('lang_direction') !!}">
+<html lang="{!! __('lang_identifier') !!}" dir="{!! __('lang_direction') !!}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">

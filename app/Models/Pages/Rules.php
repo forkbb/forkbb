@@ -34,6 +34,9 @@ class Rules extends Page
             'rules' => $this->config['o_rules_message'],
             'formAction' => null,
         ];
+
+        $this->canonical = $this->c->Router->link('Rules');
+
         return $this;
     }
 

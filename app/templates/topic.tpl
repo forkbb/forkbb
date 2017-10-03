@@ -48,14 +48,14 @@
 @endif
     </div>
     <section class="f-main f-topic">
-      <h2>{{ $topicName }}</h2>
+      <h2>{{ $topic['subject'] }}</h2>
 @foreach($posts as $post)
       <article id="p{!! $post['id'] !!}" class="f-post{!! $post['poster_gender'].$post['poster_online'] !!} clearfix">
-        <div class="f-post-header clearfix">
-          <h3>{{ $topicName }} - #{!! $post['post_number'] !!}</h3>
+        <header class="f-post-header clearfix">
+          <h3>{{ $topic['subject'] }} - #{!! $post['post_number'] !!}</h3>
           <span class="left"><time datetime="{{ $post['posted_utc'] }}">{{ $post['posted'] }}</time></span>
           <span class="right"><a href="{!! $post['link'] !!}" rel="bookmark">#{!! $post['post_number'] !!}</a></span>
-        </div>
+        </header>
         <div class="f-post-body clearfix">
           <address class="f-post-left clearfix">
             <ul class="f-user-info">
@@ -84,9 +84,17 @@
             </ul>
 @endif
           </address>
-
+          <div class="f-post-right f-post-main">
+            {!! $post['message'] !!}
+          </div>
+@if(isset($signs[$post['poster_id']]))
+          <div class="f-post-right f-post-signature">
+            <hr>
+            {!! $signs[$post['poster_id']] !!}
+          </div>
+@endif
         </div>
-        <div class="f-post-footer clearfix">
+        <footer class="f-post-footer clearfix">
           <div class="f-post-left">
             <span></span>
           </div>
@@ -99,7 +107,7 @@
             </ul>
           </div>
 @endif
-        </div>
+        </footer>
       </article>
 @endforeach
     </section>
@@ -112,3 +120,6 @@
 @endif
 @yield('crumbs')
     </div>
+@if($online)
+@include('layouts/stats')
+@endif

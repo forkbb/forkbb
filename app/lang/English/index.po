@@ -24,12 +24,6 @@ msgstr "Board is empty."
 msgid "Newest user"
 msgstr "Newest registered user:"
 
-msgid "Users online"
-msgstr "Registered users online:"
-
-msgid "Guests online"
-msgstr "guests:"
-
 msgid "No of users"
 msgstr "Total number of registered users:"
 
@@ -39,10 +33,10 @@ msgstr "Total number of topics:"
 msgid "No of posts"
 msgstr "Total number of posts:"
 
-msgid "Online"
+msgid "Online users"
 msgstr "Online:"
 
-msgid "Board info"
+msgid "Stats info"
 msgstr "Board information"
 
 msgid "Board stats"
@@ -53,3 +47,6 @@ msgstr "Maximum online users (%1$s) was be there %2$s"
 
 msgid "User info"
 msgstr "User information"
+
+msgid "Visitors online"
+msgstr "Registered users online: <strong>%1$s</strong>, guests: <strong>%2$s</strong>."

@@ -46,5 +46,49 @@
             "templating",
             "views"
         ]
+    },
+    {
+        "name": "miovisman/parserus",
+        "version": "0.9.1",
+        "version_normalized": "0.9.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/MioVisman/Parserus.git",
+            "reference": "d039178d46c989ebb8eb89970b52eb6ce927c817"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/MioVisman/Parserus/zipball/d039178d46c989ebb8eb89970b52eb6ce927c817",
+            "reference": "d039178d46c989ebb8eb89970b52eb6ce927c817",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4.0"
+        },
+        "time": "2016-11-26 06:56:51",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Parserus": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Visman",
+                "email": "mio.visman@yandex.ru",
+                "homepage": "https://github.com/MioVisman"
+            }
+        ],
+        "description": "BBCode parser.",
+        "homepage": "https://github.com/MioVisman/Parserus",
+        "keywords": [
+            "bbcode",
+            "parser"
+        ]
     }
 ]

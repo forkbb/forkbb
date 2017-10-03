@@ -95,8 +95,14 @@ msgstr "Warnings:"
 msgid "Reply"
 msgstr "Reply"
 
-msgid "Users online"
-msgstr "Registered users online in this topic: %s"
+msgid "User info"
+msgstr "User information"
 
-msgid "Guests online"
-msgstr "guests: %s"
+msgid "Visitors online"
+msgstr "Registered users online in this topic: <strong>%1$s</strong>, guests: <strong>%2$s</strong>."
+
+msgid "Online users"
+msgstr "Online:"
+
+msgid "Stats info"
+msgstr "Topic information"

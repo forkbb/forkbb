@@ -28,11 +28,22 @@ class ComposerStaticInit90ad93c7251d4f60daa9e545879c49e7
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'P' => 
+        array (
+            'Parserus' => 
+            array (
+                0 => __DIR__ . '/..' . '/miovisman/parserus',
+            ),
+        ),
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit90ad93c7251d4f60daa9e545879c49e7::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit90ad93c7251d4f60daa9e545879c49e7::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit90ad93c7251d4f60daa9e545879c49e7::$prefixesPsr0;
 
         }, null, ClassLoader::class);
     }

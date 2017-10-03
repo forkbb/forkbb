@@ -24,12 +24,6 @@ msgstr "Форум пуст."
 msgid "Newest user"
 msgstr "Новичок:"
 
-msgid "Users online"
-msgstr "Сейчас пользователей:"
-
-msgid "Guests online"
-msgstr "гостей:"
-
 msgid "No of users"
 msgstr "Всего пользователей:"
 
@@ -39,10 +33,10 @@ msgstr "Всего тем:"
 msgid "No of posts"
 msgstr "Всего сообщений:"
 
-msgid "Online"
+msgid "Online users"
 msgstr "Активны:"
 
-msgid "Board info"
+msgid "Stats info"
 msgstr "Информация о форуме"
 
 msgid "Board stats"
@@ -53,3 +47,6 @@ msgstr "Больше всего онлайн посетителей (%1$s) зд�
 
 msgid "User info"
 msgstr "Информация о пользователях"
+
+msgid "Visitors online"
+msgstr "Сейчас пользователей: <strong>%1$s</strong>, гостей: <strong>%2$s</strong>."

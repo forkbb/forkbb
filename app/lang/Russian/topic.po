@@ -96,8 +96,14 @@ msgstr "Предупреждений:"
 msgid "Reply"
 msgstr "Ответить"
 
-msgid "Users online"
-msgstr "Сейчас в этой теме пользователей: %s"
+msgid "User info"
+msgstr "Информация о пользователях"
 
-msgid "Guests online"
-msgstr "гостей: %s"
+msgid "Visitors online"
+msgstr "Сейчас в этой теме пользователей: <strong>%1$s</strong>, гостей: <strong>%2$s</strong>."
+
+msgid "Online users"
+msgstr "Активны:"
+
+msgid "Stats info"
+msgstr "Информация о теме"
