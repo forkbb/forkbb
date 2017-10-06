@@ -32,3 +32,6 @@ msgid "%s Post"
 msgid_plural "%s Posts"
 msgstr[0] "<strong>%s</strong> Post"
 msgstr[1] "<strong>%s</strong> Posts"
+
+msgid "Moderated by"
+msgstr "Moderated by"

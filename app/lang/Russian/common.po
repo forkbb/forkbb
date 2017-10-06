@@ -150,9 +150,6 @@ msgstr "E-mail"
 msgid "Send email"
 msgstr "Отправить письмо"
 
-msgid "Moderated by"
-msgstr "Модератор(ы):"
-
 msgid "Registered"
 msgstr "Дата регистрации"
 

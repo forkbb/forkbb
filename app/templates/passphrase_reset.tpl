@@ -4,14 +4,18 @@
         <h2>{!! __('Passphrase reset') !!}</h2>
         <form class="f-form" method="post" action="{!! $formAction !!}">
           <input type="hidden" name="token" value="{!! $formToken !!}">
-          <div>
-            <label class="f-child1 f-req" for="id-email">{!! __('Email') !!}</label>
-            <input required class="f-ctrl" id="id-email" type="text" name="email" value="{{ $email }}" maxlength="80" pattern=".+@.+" autofocus spellcheck="false" tabindex="1">
-            <span class="f-child4">{!! __('Passphrase reset info') !!}</span>
-          </div>
-          <div>
+          <fieldset>
+            <dl>
+              <dt><label class="f-child1 f-req" for="id-email">{!! __('Email') !!}</label></dt>
+              <dd>
+                <input required class="f-ctrl" id="id-email" type="text" name="email" value="{{ $email }}" maxlength="80" pattern=".+@.+" autofocus spellcheck="false" tabindex="1">
+                <p class="f-child4">{!! __('Passphrase reset info') !!}</p>
+              </dd>
+            </dl>
+          </fieldset>
+          <p>
             <input class="f-btn" type="submit" name="submit" value="{!! __('Send email') !!}" tabindex="2">
-          </div>
+          </p>
         </form>
       </div>
     </section>

@@ -42,6 +42,7 @@
 @endif
 @yield('content')
     <footer class="f-footer clearfix">
+      <h2>{!! __('Board footer') !!}</h2>
       <div class="left">
       </div>
       <div class="right">

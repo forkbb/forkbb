@@ -226,7 +226,7 @@ abstract class Page
      */
     protected function pageHeaders()
     {
-        $headers = ['link rel="stylesheet" type="text/css" href="' . $this->c->Router->link() . 'style/' . $this->c->user->style . '/style.css' . '"'];
+        $headers = ['link rel="stylesheet" type="text/css" href="' . $this->c->PUBLIC_URL . '/style/' . $this->c->user->style . '/style.css' . '"'];
         if ($this->robots) {
             $headers[] = 'meta name="robots" content="' . $this->robots . '"';
         }

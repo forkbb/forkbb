@@ -150,9 +150,6 @@ msgstr "Email"
 msgid "Send email"
 msgstr "Send email"
 
-msgid "Moderated by"
-msgstr "Moderated by"
-
 msgid "Registered"
 msgstr "Registered"
 

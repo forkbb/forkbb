@@ -36,7 +36,7 @@ dd,
 th,
 td,
 fieldset,
-legend
+legend,
 img,
 abbr,
 cite {
@@ -116,6 +116,10 @@ body,
 /*  color: rgba(0, 0, 0, 0.5); */
   color: #333333;
   background-color: #FFFFFF;
+}
+
+.f-wrap textarea {
+  resize: vertical;
 }
 
 .f-wrap a,
@@ -503,6 +507,10 @@ select {
   border-bottom: 0.0625rem solid #AA7939;
   border-top: 0.0625rem solid #AA7939;
   background-color: #F8F4E3;
+}
+
+.f-footer > h2 {
+  display: none;
 }
 
 .f-footer > div {
@@ -1265,3 +1273,23 @@ li + li .f-btn {
     height: auto;
   }
 } /* @media screen and (min-width: 50rem) */
+
+.post-form {
+  border-top: 0.0625rem solid #AA7939;
+}
+
+.post-form > .f-fdiv {
+  margin: 1rem 0;
+  background-color: #F8F4E3;
+}
+
+.post-form legend {
+  width: 100%;
+  padding-bottom: 0.625rem;
+  margin-bottom: 0.625rem;
+  border-bottom: 0.0625rem dotted #AA7939;
+}
+
+.post-form .f-btn {
+  width: auto;
+}

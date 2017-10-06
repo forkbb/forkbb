@@ -39,7 +39,7 @@
 @endif
 @if($cur['moderators'])
                   <dl class="f-inline f-modlist"><!-- inline -->
-                    <dt>{!! __('Moderated by') !!}</dt>
+                    <dt>{!! __('Moderated by', count($cur['moderators'])) !!}</dt>
 @foreach($cur['moderators'] as $mod)
 @if(is_string($mod))
                     <dd>{{ $mod }}</dd>

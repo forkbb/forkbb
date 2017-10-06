@@ -123,3 +123,38 @@
 @if($online)
 @include('layouts/stats')
 @endif
+    <section class="post-form">
+      <h2>{!! __('Quick post') !!}</h2>
+      <div class="f-fdiv">
+        <form class="f-form" method="post" action="">
+          <fieldset>
+            <dl>
+              <dt><label class="f-child1 f-req" for="id-username">{!! __('Username') !!}</label></dt>
+              <dd>
+                <input required class="f-ctrl" id="id-username" type="text" name="username" value="" maxlength="25" pattern="^.{2,25}$" spellcheck="false">
+              </dd>
+            </dl>
+            <dl>
+              <dt><label class="f-child1 f-req" for="id-email">{!! __('Email') !!}</label></dt>
+              <dd>
+                <input required class="f-ctrl" id="id-email" type="text" name="email" value="" maxlength="80" pattern=".+@.+" spellcheck="false">
+              </dd>
+            </dl>
+            <dl>
+              <dt><label class="f-child1 f-req" for="id-message">{!! __('Message') !!}</label></dt>
+              <dd>
+                <textarea required class="f-ctrl" id="id-message" name="message"></textarea>
+              </dd>
+            </dl>
+          </fieldset>
+          <fieldset>
+            <legend>{!! __('Options') !!}</legend>
+            <div>
+            </div>
+          </fieldset>
+          <p>
+            <input class="f-btn" type="submit" name="submit" value="{!! __('Submit') !!}">
+          </p>
+        </form>
+      </div>
+    </section>

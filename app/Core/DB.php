@@ -110,13 +110,13 @@ class DB extends PDO
         $query = preg_replace_callback(
             '%(?=[?:])(?<![\w?])(\?(?![:?])(\w+)?)?(?:(::?)(\w+))?%i', 
             function($matches) use ($params, &$idxIn, &$idxOut, &$map, &$bind) {
-                if ($matches[3] === '::') {
+                if (isset($matches[3]) && $matches[3] === '::') {
                     return $this->dbPrefix . $matches[4];
                 }
                 
                 $type = $matches[2] ?: 's';
 
-                if ($matches[4]) {
+                if (isset($matches[4])) {
                     $key1 = ':' . $matches[4];
                     $key2 = $matches[4];
                 } else {
