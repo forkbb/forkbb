@@ -24,13 +24,22 @@ class Debug extends Page
     {
         $this->data = [
             'time' => $this->number(microtime(true) - $this->c->START, 3),
-            'numQueries' => 0, //$this->c->DB->get_num_queries(),
+            'numQueries' => $this->c->DB->getCount(),
             'memory' => $this->size(memory_get_usage()),
             'peak' => $this->size(memory_get_peak_usage()),
         ];
 
         if ($this->c->DEBUG > 1) {
-            $this->data['queries'] = $this->c->DB->get_saved_queries();
+            $total = 0;
+            $this->data['queries'] = array_map(
+                function($a) use (&$total) {
+                    $total += $a[1];
+                    $a[1] = $this->number($a[1], 3);
+                    return $a;
+                }, 
+                $this->c->DB->getQueries()
+            );
+            $this->data['total'] = $this->number($total, 3);
         } else {
             $this->data['queries'] = null;
         }

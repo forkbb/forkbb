@@ -16,6 +16,10 @@
             <td class="tcr">{{ $cur[0] }}</td>
           </tr>
 @endforeach
+          <tr>
+            <td class="tcl">{{ $total }}</td>
+            <td class="tcr"></td>
+          </tr>
         </tbody>
       </table>
 @endif

@@ -166,13 +166,13 @@ class Forum extends Page
                 }
                 // новые сообщения
                 if ($time > max($upper, (int) $cur['mt_last_visit'])) {
-                    $cur['link_new'] = $this->c->Router->link('TopicGoToNew', ['id' => $cur['id']]);
+                    $cur['link_new'] = $this->c->Router->link('TopicViewNew', ['id' => $cur['id']]);
                 } else {
                     $cur['link_new'] = null;
                 }
                 // не прочитанные сообщения
                 if ($time > max($lower, (int) $cur['mt_last_read'])) {
-                    $cur['link_unread'] = $this->c->Router->link('TopicGoToUnread', ['id' => $cur['id']]);
+                    $cur['link_unread'] = $this->c->Router->link('TopicViewUnread', ['id' => $cur['id']]);
                 } else {
                     $cur['link_unread'] = null;
                 }

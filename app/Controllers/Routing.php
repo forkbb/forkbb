@@ -72,23 +72,28 @@ class Routing
             // юзеры
             if ($user->gViewUsers == '1') {
                 // список пользователей
-                $r->add('GET', '/userlist[/page/{page:[1-9]\d*}]', 'Userlist:view', 'Userlist');
+                $r->add('GET', '/userlist[/{page:[1-9]\d*}]', 'Userlist:view', 'Userlist');
                 // юзеры
-                $r->add('GET', '/user/{id:[1-9]\d*}[/{name}]', 'Profile:view', 'User'); //????
+                $r->add('GET', '/user/{id:[1-9]\d*}/{name}', 'Profile:view', 'User'); //????
             }
 
             // разделы
-            $r->add('GET', '/forum/{id:[1-9]\d*}/new/topic', 'Post:newTopic', 'NewTopic');
-            $r->add('GET', '/forum/{id:[1-9]\d*}[/{name}][/page/{page:[1-9]\d*}]', 'Forum:view', 'Forum');
+            $r->add('GET',  '/forum/{id:[1-9]\d*}/{name}[/{page:[1-9]\d*}]', 'Forum:view', 'Forum');
+            $r->add('GET',  '/forum/{id:[1-9]\d*}/new/topic', 'Post:newTopic', 'NewTopic');
+            $r->add('POST', '/forum/{id:[1-9]\d*}/new/topic', 'Post:newTopicPost');
             // темы
-            $r->add('GET', '/topic/{id:[1-9]\d*}[/{name}][/page/{page:[1-9]\d*}]', 'Topic:viewTopic', 'Topic');
-            $r->add('GET', '/topic/{id:[1-9]\d*}/goto/new', 'Topic:goToNew', 'TopicGoToNew');
-            $r->add('GET', '/topic/{id:[1-9]\d*}/goto/unread', 'Topic:goToUnread', 'TopicGoToUnread');
-            $r->add('GET', '/topic/{id:[1-9]\d*}/goto/last', 'Topic:goToLast', 'TopicGoToLast');
-            $r->add('GET', '/topic/{id:[1-9]\d*}/new/post', 'Post:new', 'NewPost');
+            $r->add('GET',  '/topic/{id:[1-9]\d*}/{name}[/{page:[1-9]\d*}]', 'Topic:viewTopic', 'Topic');
+            $r->add('GET',  '/topic/{id:[1-9]\d*}/view/new', 'Topic:viewNew', 'TopicViewNew');
+            $r->add('GET',  '/topic/{id:[1-9]\d*}/view/unread', 'Topic:viewUnread', 'TopicViewUnread');
+            $r->add('GET',  '/topic/{id:[1-9]\d*}/view/last', 'Topic:viewLast', 'TopicViewLast');
+            $r->add('GET',  '/topic/{id:[1-9]\d*}/new/reply[/{quote:[1-9]\d*}]', 'Post:newReply', 'NewReply');
+            $r->add('POST', '/topic/{id:[1-9]\d*}/new/reply', 'Post:newReplyPost');
             // сообщения
-            $r->add('GET', '/post/{id:[1-9]\d*}#p{id}', 'Topic:viewPost', 'ViewPost'); //????
-
+            $r->add('GET', '/post/{id:[1-9]\d*}#p{id}', 'Topic:viewPost', 'ViewPost');
+            $r->add('GET', '/post/{id:[1-9]\d*}/delete', 'Delete:delete', 'DeletePost'); //????
+            $r->add('GET', '/post/{id:[1-9]\d*}/edit', 'Edit:edit', 'EditPost'); //????
+            $r->add('GET', '/post/{id:[1-9]\d*}/report', 'Report:report', 'ReportPost'); //????
+            
         }
         // админ и модератор
         if ($user->isAdmMod) {
@@ -97,13 +102,13 @@ class Routing
         }
         // только админ
         if ($user->isAdmin) {
-            $r->add('GET', '/admin/statistics/info', 'AdminStatistics:info', 'AdminInfo');
-            $r->add('GET', '/admin/groups', 'AdminGroups:view', 'AdminGroups');
+            $r->add('GET',  '/admin/statistics/info', 'AdminStatistics:info', 'AdminInfo');
+            $r->add('GET',  '/admin/groups', 'AdminGroups:view', 'AdminGroups');
             $r->add('POST', '/admin/groups/new[/{base:[1-9]\d*}]', 'AdminGroups:newPost', 'AdminGroupsNew');
             $r->add('POST', '/admin/groups/default', 'AdminGroups:defaultPost', 'AdminGroupsDefault');
-            $r->add('GET', '/admin/groups/edit/{id:[1-9]\d*}', 'AdminGroups:edit', 'AdminGroupsEdit');
-            $r->add('POST', '/admin/groups/edit/{id:[1-9]\d*}', 'AdminGroups:editPost');
-            $r->add('GET', '/admin/groups/delete/{id:[1-9]\d*}', 'AdminGroups:delete', 'AdminGroupsDelete');
+            $r->add('GET',  '/admin/groups/{id:[1-9]\d*}/edit', 'AdminGroups:edit', 'AdminGroupsEdit');
+            $r->add('POST', '/admin/groups/{id:[1-9]\d*}/edit', 'AdminGroups:editPost');
+            $r->add('GET',  '/admin/groups/{id:[1-9]\d*}/delete', 'AdminGroups:delete', 'AdminGroupsDelete');
         }
 
         $uri = $_SERVER['REQUEST_URI'];

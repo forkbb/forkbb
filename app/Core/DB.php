@@ -5,6 +5,7 @@ namespace ForkBB\Core;
 use PDO;
 use PDOStatement;
 use PDOException;
+use ForkBB\Core\DBStatement;
 
 class DB extends PDO
 {
@@ -25,6 +26,24 @@ class DB extends PDO
      * @var //????
      */
     protected $dbDrv;
+
+    /**
+     * Количество выполненных запросов
+     * @var int
+     */
+    protected $qCount = 0;
+
+    /**
+     * Выполненные запросы
+     * @var array
+     */
+    protected $queries = [];
+
+    /**
+     * Дельта времени для следующего запроса
+     * @var float
+     */
+    protected $delta = 0;
 
     /**
      * Конструктор
@@ -50,6 +69,7 @@ class DB extends PDO
             self::ATTR_DEFAULT_FETCH_MODE => self::FETCH_ASSOC,
             self::ATTR_EMULATE_PREPARES   => false,
             self::ATTR_ERRMODE            => self::ERRMODE_EXCEPTION,
+            self::ATTR_STATEMENT_CLASS    => array(DBStatement::class, [$this]),
         ];
 
         parent::__construct($dsn, $username, $password, $options);
@@ -106,10 +126,9 @@ class DB extends PDO
         $idxIn = 0;
         $idxOut = 1;
         $map = [];
-        $bind = [];
         $query = preg_replace_callback(
             '%(?=[?:])(?<![\w?])(\?(?![:?])(\w+)?)?(?:(::?)(\w+))?%i', 
-            function($matches) use ($params, &$idxIn, &$idxOut, &$map, &$bind) {
+            function($matches) use ($params, &$idxIn, &$idxOut, &$map) {
                 if (isset($matches[3]) && $matches[3] === '::') {
                     return $this->dbPrefix . $matches[4];
                 }
@@ -137,23 +156,17 @@ class DB extends PDO
                     case 'p':
                         return (string) $value;
                     case 'ai':
-                        $bindType = self::PARAM_INT;
-                        break;
                     case 'as':
                     case 'a':
-                        $bindType = self::PARAM_STR;
                         break;
                     case 'i':
-                        $bindType = self::PARAM_INT;
                         $value = [$value];
                         break;
                     case 'b':
-                        $bindType = self::PARAM_BOOL;
                         $value = [$value];
                         break;
                     case 's':
                     default:
-                        $bindType = self::PARAM_STR;
                         $value = [$value];
                         $type = 's';
                         break;
@@ -164,7 +177,6 @@ class DB extends PDO
                     $name = ':' . $idxOut;
                     ++$idxOut;
                     $res[] = $name;
-                    $bind[$name] = [$val, $bindType];
 
                     if (empty($map[$key2])) {
                         $map[$key2] = [$type, $name];
@@ -177,9 +189,8 @@ class DB extends PDO
             $query
         );
 //var_dump($query);
-//var_dump($bind);
 //var_dump($map);
-        return [$query, $bind, $map];
+        return [$query, $map];
     }
 
     /**
@@ -196,6 +207,39 @@ class DB extends PDO
     }
 
     /**
+     * Метод для получения количества выполненных запросов
+     * 
+     * @return int
+     */
+    public function getCount()
+    {
+        return $this->qCount;
+    }
+
+    /**
+     * Метод для получения статистики выполненных запросов
+     * 
+     * @return array
+     */
+    public function getQueries()
+    {
+        return $this->queries;
+    }
+
+    /**
+     * Метод для сохранения статистики по выполненному запросу
+     * 
+     * @param string $query
+     * @param float $time
+     */
+    public function saveQuery($query, $time)
+    {
+        $this->qCount++;
+        $this->queries[] = [$query, $time + $this->delta];
+        $this->delta = 0;
+    }
+
+    /**
      * Метод расширяет PDO::exec()
      *
      * @param string $query
@@ -205,16 +249,22 @@ class DB extends PDO
      */
     public function exec($query, array $params = [])
     {
-        list($query, $bind, ) = $this->parse($query, $params);
+        list($query, $map) = $this->parse($query, $params);
 
-        if (empty($bind)) {
-            return parent::exec($query);
+        if (empty($params)) {
+            $start  = microtime(true);
+            $result = parent::exec($query);
+            $this->saveQuery($query, microtime(true) - $start);
+            return $result;
         }
 
-        $stmt = parent::prepare($query);
-        $this->bind($stmt, $bind);
+        $start = microtime(true);
+        $stmt  = parent::prepare($query);
+        $this->delta = microtime(true) - $start;
 
-        if ($stmt->execute()) {
+        $stmt->setMap($map);
+
+        if ($stmt->execute($params)) {
             return $stmt->rowCount(); //??? Для запроса SELECT... не ясно поведение!
         }
 
@@ -243,9 +293,14 @@ class DB extends PDO
             $options = [];
         }
 
-        list($query, $bind, $map) = $this->parse($query, $params);
-        $stmt = parent::prepare($query, $options);
-        $this->bind($stmt, $bind);
+        list($query, $map) = $this->parse($query, $params);
+        $start = microtime(true);
+        $stmt  = parent::prepare($query, $options);
+        $this->delta = microtime(true) - $start;
+        
+        $stmt->setMap($map);
+
+        $stmt->bindValueList($params);
 
         return $stmt;
     }
@@ -266,16 +321,22 @@ class DB extends PDO
             $params = [];
         }
 
-        list($query, $bind, ) = $this->parse($query, $params);
+        list($query, $map) = $this->parse($query, $params);
 
-        if (empty($bind)) {
-            return parent::query($query, ...$args);
+        if (empty($params)) {
+            $start  = microtime(true);
+            $result = parent::query($query, ...$args);
+            $this->saveQuery($query, microtime(true) - $start);
+            return $result;
         }
 
-        $stmt = parent::prepare($query);
-        $this->bind($stmt, $bind);
+        $start = microtime(true);
+        $stmt  = parent::prepare($query);
+        $this->delta = microtime(true) - $start;
+        
+        $stmt->setMap($map);
 
-        if ($stmt->execute()) {
+        if ($stmt->execute($params)) {
             if (! empty($args)) {
                 $stmt->setFetchMode(...$args);
             }

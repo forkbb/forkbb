@@ -21,7 +21,7 @@
             <dl>
               <dt></dt>
 @if($save)
-              <dd><label class="f-child2"><input type="checkbox" name="save" value="1" tabindex="3" checked="checked">{!! __('Remember me') !!}</label></dd>
+              <dd><label class="f-child2"><input type="checkbox" name="save" value="1" tabindex="3" checked>{!! __('Remember me') !!}</label></dd>
 @else
               <dd><label class="f-child2"><input type="checkbox" name="save" value="1" tabindex="3">{!! __('Remember me') !!}</label></dd>
 @endif
