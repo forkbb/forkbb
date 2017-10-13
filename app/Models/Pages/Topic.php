@@ -524,16 +524,16 @@ class Topic extends Page
             }
             if ($flag) {
                 if (empty($topic['mt_last_read']) && empty($topic['mt_last_visit'])) {
-                    $this->c->DB->exec('INSERT INTO ::mark_of_topic (uid, tid, mt_last_visit, mt_last_read) 
-                                        SELECT ?i:uid, ?i:tid, ?i:visit, ?i:read 
-                                        FROM ::groups 
-                                        WHERE NOT EXISTS (SELECT 1 
-                                                          FROM ::mark_of_topic 
-                                                          WHERE uid=?i:uid AND tid=?i:tid) 
+                    $this->c->DB->exec('INSERT INTO ::mark_of_topic (uid, tid, mt_last_visit, mt_last_read)
+                                        SELECT ?i:uid, ?i:tid, ?i:visit, ?i:read
+                                        FROM ::groups
+                                        WHERE NOT EXISTS (SELECT 1
+                                                          FROM ::mark_of_topic
+                                                          WHERE uid=?i:uid AND tid=?i:tid)
                                         LIMIT 1', $vars);
                 } else {
-                    $this->c->DB->exec('UPDATE ::mark_of_topic 
-                    SET mt_last_visit=?i:visit, mt_last_read=?i:read 
+                    $this->c->DB->exec('UPDATE ::mark_of_topic
+                    SET mt_last_visit=?i:visit, mt_last_read=?i:read
                     WHERE uid=?i:uid AND tid=?i:tid', $vars);
                 }
             }

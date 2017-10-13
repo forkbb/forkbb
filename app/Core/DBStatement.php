@@ -64,21 +64,16 @@ class DBStatement extends PDOStatement
     public function bindValueList(array $params)
     {
         foreach ($this->map as $key => $data) {
-            if (isset($params[$key])) {
-                $bValue = $params[$key];
-            } elseif (isset($params[':' . $key])) {
-                $bValue = $params[':' . $key];
-            } else {
-                throw new PDOException("The value for :{$key} placeholder isn't found");
-            }
-
             $type = array_shift($data);
             $bType = $this->types[$type];
+            $bValue = $this->db->getValue($key, $params);
 
             if ($type{0} === 'a') {
+                if (! is_array($bValue)) {
+                    throw new PDOException("Expected array: key='{$key}'");
+                }
                 foreach ($data as $bParam) {
-                    $bVal = array_shift($bValue); //????
-                    parent::bindValue($bParam, $bVal, $bType); //????
+                    parent::bindValue($bParam, array_shift($bValue), $bType); //????
                 }
             } else {
                 foreach ($data as $bParam) {

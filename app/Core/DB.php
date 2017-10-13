@@ -69,7 +69,7 @@ class DB extends PDO
             self::ATTR_DEFAULT_FETCH_MODE => self::FETCH_ASSOC,
             self::ATTR_EMULATE_PREPARES   => false,
             self::ATTR_ERRMODE            => self::ERRMODE_EXCEPTION,
-            self::ATTR_STATEMENT_CLASS    => array(DBStatement::class, [$this]),
+            self::ATTR_STATEMENT_CLASS    => [DBStatement::class, [$this]],
         ];
 
         parent::__construct($dsn, $username, $password, $options);
@@ -114,43 +114,28 @@ class DB extends PDO
     /**
      * Метод приводит запрос с типизированными плейсхолдерами к понятному для PDO виду
      *
-     * @param string $query
+     * @param string &$query
      * @param array $params
      *
      * @throws PDOException
      *
      * @return array
      */
-    protected function parse($query, array $params)
+    protected function parse(&$query, array $params)
     {
         $idxIn = 0;
         $idxOut = 1;
         $map = [];
         $query = preg_replace_callback(
-            '%(?=[?:])(?<![\w?])(\?(?![:?])(\w+)?)?(?:(::?)(\w+))?%i', 
+            '%(?=[?:])(?<![\w?:])(?:::(\w+)|\?(?![?:])(?:(\w+)(?::(\w+))?)?|:(\w+))%', 
             function($matches) use ($params, &$idxIn, &$idxOut, &$map) {
-                if (isset($matches[3]) && $matches[3] === '::') {
-                    return $this->dbPrefix . $matches[4];
-                }
-                
-                $type = $matches[2] ?: 's';
-
-                if (isset($matches[4])) {
-                    $key1 = ':' . $matches[4];
-                    $key2 = $matches[4];
-                } else {
-                    $key1 = $idxIn;
-                    $key2 = $idxIn;
-                    ++$idxIn;
+                if (! empty($matches[1])) {
+                    return $this->dbPrefix . $matches[1];
                 }
 
-                if (isset($params[$key1]) || array_key_exists($key1, $params)) {
-                    $value = $params[$key1];
-                } elseif (isset($params[$key2]) || array_key_exists($key2, $params)) {
-                    $value = $params[$key2];
-                } else {
-                    throw new PDOException("'$key1': No parameter for (?$type) placeholder");
-                }
+                $type = empty($matches[2]) ? 's' : $matches[2];
+                $key = isset($matches[4]) ? $matches[4] : (isset($matches[3]) ? $matches[3] : $idxIn++);
+                $value = $this->getValue($key, $params);
 
                 switch ($type) {
                     case 'p':
@@ -160,50 +145,62 @@ class DB extends PDO
                     case 'a':
                         break;
                     case 'i':
-                        $value = [$value];
-                        break;
                     case 'b':
-                        $value = [$value];
-                        break;
                     case 's':
+                        $value = [1];
+                        break;
                     default:
-                        $value = [$value];
+                        $value = [1];
                         $type = 's';
                         break;
                 }
 
+                if (! is_array($value)) {
+                    throw new PDOException("Expected array: key='{$key}', type='{$type}'");
+                }
+
+                if (! isset($map[$key])) {
+                    $map[$key] = [$type];
+                }
+
                 $res = [];
                 foreach ($value as $val) {
-                    $name = ':' . $idxOut;
-                    ++$idxOut;
+                    $name = ':' . $idxOut++;
                     $res[] = $name;
-
-                    if (empty($map[$key2])) {
-                        $map[$key2] = [$type, $name];
-                    } else {
-                        $map[$key2][] = $name;
-                    }
+                    $map[$key][] = $name;
                 }
                 return implode(',', $res);
             }, 
             $query
         );
-//var_dump($query);
-//var_dump($map);
-        return [$query, $map];
+        return $map;
     }
 
     /**
-     * Метод связывает параметры запроса с соответвтующими значениями
+     * Метод возвращает значение из массива параметров по ключу или исключение
+     * 
+     * @param mixed $key
+     * @param array $params
+     * 
+     * @throws PDOException
      *
-     * @param PDOStatement $stmt
-     * @param array $bind
+     * @return mixed
      */
-    protected function bind(PDOStatement $stmt, array $bind)
+    public function getValue($key, array $params)
     {
-        foreach ($bind as $key => $val) {
-            $stmt->bindValue($key, $val[0], $val[1]);
+        if (
+            is_string($key) 
+            && (isset($params[':' . $key]) || array_key_exists(':' . $key, $params))
+        ) {
+            return $params[':' . $key];
+        } elseif (
+            (is_string($key) || is_int($key))
+            && (isset($params[$key]) || array_key_exists($key, $params))
+        ) {
+            return $params[$key];
         }
+
+        throw new PDOException("The '{$key}' key is not found in the parameters");
     }
 
     /**
@@ -249,7 +246,7 @@ class DB extends PDO
      */
     public function exec($query, array $params = [])
     {
-        list($query, $map) = $this->parse($query, $params);
+        $map = $this->parse($query, $params);
 
         if (empty($params)) {
             $start  = microtime(true);
@@ -293,7 +290,8 @@ class DB extends PDO
             $options = [];
         }
 
-        list($query, $map) = $this->parse($query, $params);
+        $map = $this->parse($query, $params);
+        
         $start = microtime(true);
         $stmt  = parent::prepare($query, $options);
         $this->delta = microtime(true) - $start;
@@ -321,7 +319,7 @@ class DB extends PDO
             $params = [];
         }
 
-        list($query, $map) = $this->parse($query, $params);
+        $map = $this->parse($query, $params);
 
         if (empty($params)) {
             $start  = microtime(true);
