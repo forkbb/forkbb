@@ -2,22 +2,13 @@
 
 namespace ForkBB\Models\Pages\Admin;
 
+use ForkBB\Models\Pages\Admin;
+
 class Statistics extends Admin
 {
     /**
-     * Имя шаблона
-     * @var string
-     */
-    protected $nameTpl = 'admin/statistics';
-
-    /**
-     * Указатель на активный пункт навигации админки
-     * @var string
-     */
-    protected $adminIndex = 'index';
-
-    /**
      * phpinfo
+     * 
      * @return Page|null
      */
     public function info()
@@ -33,14 +24,17 @@ class Statistics extends Admin
 
     /**
      * Подготавливает данные для шаблона
+     * 
      * @return Page
      */
     public function statistics()
     {
         $this->c->Lang->load('admin_index');
-        $this->titles[] = __('Server statistics');
-        $this->data['isAdmin'] = $this->c->user->isAdmin;
-        $this->data['linkInfo'] = $this->c->Router->link('AdminInfo');
+
+        $this->nameTpl  = 'admin/statistics';
+        $this->titles   = __('Server statistics');
+        $this->isAdmin  = $this->c->user->isAdmin;
+        $this->linkInfo = $this->c->Router->link('AdminInfo');
 
         // Get the server load averages (if possible)
         if (@file_exists('/proc/loadavg') && is_readable('/proc/loadavg')) {
@@ -57,38 +51,38 @@ class Statistics extends Admin
             }
 
             $ave = @explode(' ', $ave);
-            $this->data['serverLoad'] = isset($ave[2]) ? $ave[0].' '.$ave[1].' '.$ave[2] : __('Not available');
+            $this->serverLoad = isset($ave[2]) ? $ave[0].' '.$ave[1].' '.$ave[2] : __('Not available');
         } elseif (!in_array(PHP_OS, array('WINNT', 'WIN32')) && preg_match('%averages?: ([\d\.]+),?\s+([\d\.]+),?\s+([\d\.]+)%i', @exec('uptime'), $ave)) {
-            $this->data['serverLoad'] = $ave[1].' '.$ave[2].' '.$ave[3];
+            $this->serverLoad = $ave[1].' '.$ave[2].' '.$ave[3];
         } else {
-            $this->data['serverLoad'] = __('Not available');
+            $this->serverLoad = __('Not available');
         }
 
         // Get number of current visitors
-        $this->data['numOnline'] = $this->c->DB->query('SELECT COUNT(user_id) FROM ::online WHERE idle=0')->fetchColumn();
+        $this->numOnline = $this->c->DB->query('SELECT COUNT(user_id) FROM ::online WHERE idle=0')->fetchColumn();
 
         $stat = $this->c->DB->statistics();
-        $this->data['dbVersion'] = $stat['db'];
-        $this->data['tSize'] = $this->size($stat['size']);
-        $this->data['tRecords'] = $this->number($stat['records']);
+        $this->dbVersion = $stat['db'];
+        $this->tSize     = $this->size($stat['size']);
+        $this->tRecords  = $this->number($stat['records']);
         unset($stat['db'], $stat['size'], $stat['records']);
-        $this->data['tOther'] = $stat;
+        $this->tOther    = $stat;
 
         // Check for the existence of various PHP opcode caches/optimizers
         if (function_exists('mmcache')) {
-            $this->data['accelerator'] = '<a href="http://' . __('Turck MMCache link') . '">' . __('Turck MMCache') . '</a>';
+            $this->accelerator = '<a href="http://' . __('Turck MMCache link') . '">' . __('Turck MMCache') . '</a>';
         } elseif (isset($_PHPA)) {
-            $this->data['accelerator'] = '<a href="http://' . __('ionCube PHP Accelerator link') . '">' . __('ionCube PHP Accelerator') . '</a>';
+            $this->accelerator = '<a href="http://' . __('ionCube PHP Accelerator link') . '">' . __('ionCube PHP Accelerator') . '</a>';
         } elseif (ini_get('apc.enabled')) {
-            $this->data['accelerator'] ='<a href="http://' . __('Alternative PHP Cache (APC) link') . '">' . __('Alternative PHP Cache (APC)') . '</a>';
+            $this->accelerator ='<a href="http://' . __('Alternative PHP Cache (APC) link') . '">' . __('Alternative PHP Cache (APC)') . '</a>';
         } elseif (ini_get('zend_optimizer.optimization_level')) {
-            $this->data['accelerator'] = '<a href="http://' . __('Zend Optimizer link') . '">' . __('Zend Optimizer') . '</a>';
+            $this->accelerator = '<a href="http://' . __('Zend Optimizer link') . '">' . __('Zend Optimizer') . '</a>';
         } elseif (ini_get('eaccelerator.enable')) {
-            $this->data['accelerator'] = '<a href="http://' . __('eAccelerator link') . '">' . __('eAccelerator') . '</a>';
+            $this->accelerator = '<a href="http://' . __('eAccelerator link') . '">' . __('eAccelerator') . '</a>';
         } elseif (ini_get('xcache.cacher')) {
-            $this->data['accelerator'] = '<a href="http://' . __('XCache link') . '">' . __('XCache') . '</a>';
+            $this->accelerator = '<a href="http://' . __('XCache link') . '">' . __('XCache') . '</a>';
         } else {
-            $this->data['accelerator'] = __('NA');
+            $this->accelerator = __('NA');
         }
 
         return $this;

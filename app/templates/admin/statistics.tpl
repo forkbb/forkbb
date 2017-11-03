@@ -4,24 +4,24 @@
         <div>
           <dl>
             <dt>{!! __('Server load label') !!}</dt>
-            <dd>{!! __('Server load data', $serverLoad, $numOnline) !!}</dd>
-@if($isAdmin)
+            <dd>{!! __('Server load data', $p->serverLoad, $p->numOnline) !!}</dd>
+@if($p->isAdmin)
             <dt>{!! __('Environment label') !!}</dt>
             <dd>
               {!! __('Environment data OS', PHP_OS) !!}<br>
-              {!! __('Environment data version', phpversion(), '<a href="' . $linkInfo . '">'.__('Show info').'</a>') !!}<br>
-              {!! __('Environment data acc', $accelerator) !!}
+              {!! __('Environment data version', phpversion(), '<a href="' . $p->linkInfo . '">'.__('Show info').'</a>') !!}<br>
+              {!! __('Environment data acc', $p->accelerator) !!}
             </dd>
             <dt>{!! __('Database label') !!}</dt>
             <dd>
-              {{ $dbVersion }}
-@if($tRecords && $tSize)
-              <br>{!! __('Database data rows', $tRecords) !!}
-              <br>{!! __('Database data size', $tSize) !!}
+              {{ $p->dbVersion }}
+@if($p->tRecords && $p->tSize)
+              <br>{!! __('Database data rows', $p->tRecords) !!}
+              <br>{!! __('Database data size', $p->tSize) !!}
 @endif
-@if($tOther)
+@if($p->tOther)
               <br><br>{!! __('Other')!!}
-@foreach($tOther as $key => $value)
+@foreach($p->tOther as $key => $value)
               <br>{{ $key }} = {{ $value }}
 @endforeach
 @endif

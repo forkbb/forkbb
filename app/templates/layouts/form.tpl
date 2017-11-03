@@ -24,11 +24,11 @@
 @if($cur['type'] === 'textarea')
                 <textarea{!! empty($cur['required']) ? '' : ' required' !!} class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}">{{ $cur['value'] or '' }}</textarea>
 @if(isset($cur['bb']))
-                  <ul class="f-child5">
+                <ul class="f-child5">
 @foreach($cur['bb'] as $val)
-                    <li><span><a href="{!! $val[0] !!}">{!! $val[1] !!}</a> {!! $val[2] !!}</span></li>
+                  <li><span><a href="{!! $val[0] !!}">{!! $val[1] !!}</a> {!! $val[2] !!}</span></li>
 @endforeach
-                  </ul>
+                </ul>
 @endif
 @elseif($cur['type'] === 'text')
                 <input{!! empty($cur['required']) ? '' : ' required' !!} class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="text" maxlength="{{ $cur['maxlength'] or '' }}" pattern="{{ $cur['pattern'] or '' }}" value="{{ $cur['value'] or '' }}">

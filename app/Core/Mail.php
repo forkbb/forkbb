@@ -54,6 +54,7 @@ class Mail
 
     /**
      * Конструктор
+     *
      * @param mixed $host
      * @param mixed $user
      * @param mixed $pass
@@ -81,9 +82,11 @@ class Mail
 
     /**
      * Валидация email
+     *
      * @param mixed $email
      * @param bool $strict
      * @param bool $idna
+     *
      * @return false|string
      */
     public function valid($email, $strict = false, $idna = false)
@@ -113,6 +116,7 @@ class Mail
 
     /**
      * Сброс
+     *
      * @return Mail
      */
     public function reset()
@@ -125,7 +129,9 @@ class Mail
 
     /**
      * Задает тему письма
+     *
      * @param string $subject
+     *
      * @return Mail
      */
     public function setSubject($subject)
@@ -136,8 +142,10 @@ class Mail
 
     /**
      * Добавляет заголовок To
+     *
      * @param string|array $email
      * @param string $name
+     *
      * @return Mail
      */
     public function addTo($email, $name = null)
@@ -157,8 +165,10 @@ class Mail
 
     /**
      * Задает заголовок To
+     *
      * @param string|array $email
      * @param string $name
+     *
      * @return Mail
      */
     public function setTo($email, $name = null)
@@ -169,8 +179,10 @@ class Mail
 
     /**
      * Задает заголовок From
+     *
      * @param string $email
      * @param string $name
+     *
      * @return Mail
      */
     public function setFrom($email, $name = null)
@@ -184,8 +196,10 @@ class Mail
 
     /**
      * Задает заголовок Reply-To
+     *
      * @param string $email
      * @param string $name
+     *
      * @return Mail
      */
     public function setReplyTo($email, $name = null)
@@ -199,8 +213,10 @@ class Mail
 
     /**
      * Форматирование адреса
+     *
      * @param string|array $email
      * @param string $name
+     *
      * @return string
      */
     protected function formatAddress($email, $name = null)
@@ -215,7 +231,9 @@ class Mail
 
     /**
      * Кодирование заголовка/имени
+     *
      * @param string $str
+     *
      * @return string
      */
     protected function encodeText($str)
@@ -229,7 +247,9 @@ class Mail
 
     /**
      * Фильтрация имени
+     *
      * @param string $name
+     *
      * @return string
      */
     protected function filterName($name)
@@ -239,7 +259,9 @@ class Mail
 
     /**
      * Установка папки для поиска шаблонов писем
+     *
      * @param string $folder
+     *
      * @return Mail
      */
     public function setFolder($folder)
@@ -250,7 +272,9 @@ class Mail
 
     /**
      * Установка языка для поиска шаблонов писем
+     *
      * @param string $language
+     *
      * @return Mail
      */
     public function setLanguage($language)
@@ -261,9 +285,12 @@ class Mail
 
     /**
      * Задает сообщение по шаблону
+     *
      * @param string $tpl
      * @param array $data
+     *
      * @throws MailException
+     *
      * @return Mail
      */
     public function setTpl($tpl, array $data)
@@ -286,7 +313,9 @@ class Mail
 
     /**
      * Задает сообщение
+     *
      * @param string $message
+     *
      * @return Mail
      */
     public function setMessage($message)
@@ -300,7 +329,9 @@ class Mail
 
     /**
      * Отправляет письмо
+     *
      * @throws MailException
+     *
      * @return bool
      */
     public function send()
@@ -335,6 +366,7 @@ class Mail
 
     /**
      * Отправка письма через функцию mail
+     *
      * @return bool
      */
     protected function mail()
@@ -349,7 +381,9 @@ class Mail
 
     /**
      * Переводит заголовки из массива в строку
+     *
      * @param array $headers
+     *
      * @return string
      */
     protected function strHeaders(array $headers)
@@ -363,7 +397,9 @@ class Mail
 
     /**
      * Отправка письма через smtp
+     *
      * @throws SmtpException
+     *
      * @return bool
      */
     protected function smtp()
@@ -423,9 +459,12 @@ class Mail
      * Отправляет данные на сервер
      * Проверяет ответ
      * Возвращает код ответа
+     *
      * @param string $data
      * @param mixed $code
+     *
      * @throws SmtpException
+     *
      * @return string
      */
     protected function smtpData($data, $code)
@@ -454,7 +493,9 @@ class Mail
 
     /**
      * Выделяет email из заголовка
+     *
      * @param string $str
+     *
      * @return string
      */
     protected function getEmailFrom($str)
@@ -469,6 +510,7 @@ class Mail
 
     /**
      * Возвращает имя сервера или его ip
+     *
      * @return string
      */
     protected function hostname()

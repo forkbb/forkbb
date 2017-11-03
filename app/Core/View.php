@@ -3,7 +3,7 @@
 namespace ForkBB\Core;
 
 use R2\Templating\Dirk;
-use ForkBB\Models\Pages\Page;
+use ForkBB\Models\Page;
 use RuntimeException;
 
 class View extends Dirk
@@ -24,7 +24,9 @@ class View extends Dirk
 
     /**
      * Трансформация скомпилированного шаблона
+     *
      * @param string $value
+     *
      * @return string
      */
     protected function compileTransformations($value)
@@ -41,23 +43,38 @@ class View extends Dirk
         );
     }
 
-    public function rendering(Page $page)
+    /**
+     * Return result of templating
+     *
+     * @param Page $p
+     *
+     * @return null|string
+     */
+    public function rendering(Page $p)
     {
-        if (! $page->isReady()) {
-            throw new RuntimeException('The page model does not contain data ready');
-        }
-
-        $headers = $page->httpHeaders();
-        foreach ($headers as $header) {
+        foreach ($p->httpHeaders as $header) {
             header($header);
         }
 
-        $tpl = $page->getNameTpl();
-        // переадресация
-        if (null === $tpl) {
+        if (null === $p->nameTpl) {
             return null;
         }
 
-        return $this->fetch($tpl, $page->getData());
+        $p->prepare();
+
+        $this->templates[] = $p->nameTpl;
+        while ($_name = array_shift($this->templates)) {
+            $this->beginBlock('content');
+            foreach ($this->composers as $_cname => $_cdata) {
+                if (preg_match($_cname, $_name)) {
+                    foreach ($_cdata as $_citem) {
+                        extract((is_callable($_citem) ? $_citem($this) : $_citem) ?: []);
+                    }
+                }
+            }
+            require($this->prepare($_name));
+            $this->endBlock(true);
+        }
+        return $this->block('content');
     }
 }

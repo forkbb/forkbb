@@ -1,6 +1,6 @@
 @section('crumbs')
       <ul class="f-crumbs">
-@foreach($crumbs as $cur)
+@foreach($p->crumbs as $cur)
 @if($cur[2])
         <li class="f-crumb"><a href="{!! $cur[0] !!}" class="active">{{ $cur[1] }}</a></li>
 @else
@@ -10,15 +10,15 @@
       </ul>
 @endsection
 @section('linkpost')
-@if($newTopic)
+@if($p->newTopic)
         <div class="f-link-post">
-          <a class="f-btn" href="{!! $newTopic !!}">{!! __('Post topic') !!}</a>
+          <a class="f-btn" href="{!! $p->newTopic !!}">{!! __('Post topic') !!}</a>
         </div>
 @endif
 @endsection
 @section('pages')
         <nav class="f-pages">
-@foreach($pages as $cur)
+@foreach($p->pages as $cur)
 @if($cur[2])
           <span class="f-page active">{{ $cur[1] }}</span>
 @elseif($cur[1] === 'space')
@@ -34,13 +34,13 @@
         </nav>
 @endsection
 @extends('layouts/main')
-@if($forums)
+@if($p->forums)
     <div class="f-nav-links">
 @yield('crumbs')
     </div>
     <section class="f-subforums">
       <ol class="f-ftlist">
-@foreach($forums as $id => $cat)
+@foreach($p->forums as $id => $cat)
         <li id="id-subforums{!! $id !!}" class="f-category">
           <h2>{{ __('Sub forum', 2) }}</h2>
           <ol class="f-table">
@@ -58,20 +58,20 @@
 @endif
     <div class="f-nav-links">
 @yield('crumbs')
-@if($newTopic || $pages)
+@if($p->newTopic || $p->pages)
       <div class="f-links-b clearfix">
 @yield('pages')
 @yield('linkpost')
       </div>
 @endif
     </div>
-@if(empty($topics))
+@if(!$p->topics)
     <section class="f-main f-message">
       <h2>{!! __('Empty forum') !!}</h2>
     </section>
 @else
     <section class="f-main f-forum">
-      <h2>{{ $forumName }}</h2>
+      <h2>{{ $p->forumName }}</h2>
       <div class="f-ftlist">
         <ol class="f-table">
           <li class="f-row f-thead" value="0">
@@ -79,7 +79,7 @@
             <div class="f-hcell f-cstats">{!! __('Stats') !!}</div>
             <div class="f-hcell f-clast">{!! __('Last post') !!}</div>
           </li>
-@foreach($topics as $topic)
+@foreach($p->topics as $topic)
 @if($topic['moved_to'])
           <li id="topic-{!! $topic['id']!!}" class="f-row f-fredir">
             <div class="f-cell f-cmain">
@@ -160,7 +160,7 @@
       </div>
     </section>
     <div class="f-nav-links">
-@if($newTopic || $pages)
+@if($p->newTopic || $p->pages)
       <div class="f-links-a clearfix">
 @yield('linkpost')
 @yield('pages')

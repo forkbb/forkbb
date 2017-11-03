@@ -1,7 +1,7 @@
     <section class="f-debug">
       <h2>{!! __('Debug table') !!}</h2>
-      <p class="f-debugtime">[ {!! __('Querytime', $time, $numQueries) !!} - {!! __('Memory usage', $memory) !!} {!! __('Peak usage', $peak) !!} ]</p>
-@if($queries)
+      <p class="f-debugtime">[ {!! __('Querytime', $p->time, $p->numQueries) !!} - {!! __('Memory usage', $p->memory) !!} {!! __('Peak usage', $p->peak) !!} ]</p>
+@if($p->queries)
       <table>
         <thead>
           <tr>
@@ -10,14 +10,14 @@
           </tr>
         </thead>
         <tbody>
-@foreach($queries as $cur)
+@foreach($p->queries as $cur)
           <tr>
             <td class="tcl">{{ $cur[1] }}</td>
             <td class="tcr">{{ $cur[0] }}</td>
           </tr>
 @endforeach
           <tr>
-            <td class="tcl">{{ $total }}</td>
+            <td class="tcl">{{ $p->total }}</td>
             <td class="tcr"></td>
           </tr>
         </tbody>

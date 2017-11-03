@@ -16,9 +16,11 @@ class Secury
 
     /**
      * Конструктор
+     *
      * @param array $hmac
-     * @throws \InvalidArgumentException
-     * @throws \UnexpectedValueException
+     *
+     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
      */
     public function __construct(array $hmac)
     {
@@ -33,7 +35,9 @@ class Secury
 
     /**
      * Обертка для hash_hmac
+     *
      * @param string $data
+     *
      * @return string
      */
     public function hash($data)
@@ -43,10 +47,13 @@ class Secury
 
     /**
      * Обертка для hash_hmac
+     *
      * @param string $data
      * @param string $key
+     *
+     * @throws InvalidArgumentException
+     *
      * @return string
-     * @throws \InvalidArgumentException
      */
     public function hmac($data, $key)
     {
@@ -58,9 +65,12 @@ class Secury
 
     /**
      * Возвращает случайный набор байтов заданной длины
+     *
      * @param int $len
+     *
+     * @throws RuntimeException
+     *
      * @return string
-     * @throws \RuntimeException
      */
     public function randomKey($len)
     {
@@ -85,7 +95,9 @@ class Secury
 
     /**
      * Возвращает случайную строку заданной длины состоящую из символов 0-9 и a-f
+     *
      * @param int $len
+     *
      * @return string
      */
     public function randomHash($len)
@@ -96,7 +108,9 @@ class Secury
     /**
      * Возвращает случайную строку заданной длины состоящую из цифр, латиницы,
      * знака минус и символа подчеркивания
+     *
      * @param int $len
+     *
      * @return string
      */
     public function randomPass($len)
@@ -112,7 +126,9 @@ class Secury
 
     /**
      * Replacing invalid UTF-8 characters and remove control characters
+     *
      * @param string|array $data
+     *
      * @return string|array
      */
     public function replInvalidChars($data)

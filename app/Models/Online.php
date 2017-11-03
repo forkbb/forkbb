@@ -3,71 +3,60 @@
 namespace ForkBB\Models;
 
 use ForkBB\Core\Container;
+use ForkBB\Models\Model;
 use ForkBB\Models\User;
-use ForkBB\Models\Pages\Page;
+use ForkBB\Models\Page;
 
-class Online
+class Online extends Model
 {
     /**
-     * Контейнер
-     * @var Container
-     */
-    protected $c;
-
-    /**
-     * Флаг выполнения
-     * @var bool
-     */
-    protected $done = false;
-
-    /**
-     * @var array
-     */
-    protected $config;
-
-    /**
      * Конструктор
-     * @param array $config
+     *
      * @param Container $container
      */
     public function __construct(Container $container)
     {
-        $this->c = $container;
-        $this->config = $container->config;
+        parent::__construct($container);
+        $this->users  = [];
+        $this->guests = [];
+        $this->bots   = [];
     }
 
     /**
      * Обработка данных пользователей онлайн
      * Обновление данных текущего пользователя
      * Возврат данных по пользователям онлайн
+     *
      * @param Page $page
-     * @return array
      */
-    public function handle(Page $page)
+    public function calc(Page $page)
     {
         if ($this->done) {
-            return [[], [], []]; //????
+            return;
         }
         $this->done = true;
 
-        //  string|null  bool   bool
-        list($position, $type, $filter) = $page->getDataForOnline();  //???? возможно стоит возвращать полное имя страницы для отображение
+        $position = $page->onlinePos;
         if (null === $position) {
-            return [[], [], []]; //????
+            return;
         }
+        $type     = $page->onlineType;
+        $filter   = $page->onlineFilter;
 
         $this->updateUser($position);
 
-        $all = 0;
-        $now = time();
-        $tOnline = $now - $this->config['o_timeout_online'];
-        $tVisit = $now - $this->config['o_timeout_visit'];
-        $users = $guests = $bots = [];
+        $all     = 0;
+        $now     = time();
+        $tOnline = $now - $this->c->config->o_timeout_online;
+        $tVisit  = $now - $this->c->config->o_timeout_visit;
+        $users   = [];
+        $guests  = [];
+        $bots    = [];
         $deleteG = false;
         $deleteU = false;
         $setIdle = false;
 
-        if ($this->config['o_users_online'] == '1' && $type) {
+        if ($this->c->config->o_users_online == '1' && $type) {
             $stmt = $this->c->DB->query('SELECT user_id, ident, logged, idle, o_position, o_name FROM ::online ORDER BY logged');
         } elseif ($type) {
             $stmt = $this->c->DB->query('SELECT user_id, ident, logged, idle FROM ::online ORDER BY logged');
@@ -142,16 +131,19 @@ class Online
         }
 
         // обновление максимального значение пользоватеелй онлайн
-        if ($this->config['st_max_users'] < $all) {
-            $this->c->DB->exec('UPDATE ::config SET conf_value=?s:value WHERE conf_name=?s:name', [':value' => $all, ':name' => 'st_max_users']);
-            $this->c->DB->exec('UPDATE ::config SET conf_value=?s:value WHERE conf_name=?s:name', [':value' => $now, ':name' => 'st_max_users_time']);
-            $this->c->{'config update'};
+        if ($this->c->config->st_max_users < $all) {
+            $this->c->config->st_max_users      = $all;
+            $this->c->config->st_max_users_time = $now;
+            $this->c->config->save();
         }
-        return [$users, $guests, $bots];
+        $this->users  = $users;
+        $this->guests = $guests;
+        $this->bots   = $bots;
     }
 
     /**
      * Обновление данных текущего пользователя
+     *
      * @param string $position
      */
     protected function updateUser($position)

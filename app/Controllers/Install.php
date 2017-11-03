@@ -15,6 +15,7 @@ class Install
 
     /**
      * Конструктор
+     *
      * @param Container $container
      */
     public function __construct(Container $container)
@@ -24,6 +25,7 @@ class Install
 
     /**
      * Маршрутиризация
+     *
      * @return Page
      */
     public function routing()
@@ -38,7 +40,7 @@ class Install
             . preg_replace('%:(80|443)$%', '', $_SERVER['HTTP_HOST'])
             . substr($uri, 0, (int) strrpos($uri, '/'));
 
-        $this->c->Lang->load('common', $this->c->config['o_default_lang']);
+        $this->c->Lang->load('common', $this->c->config->o_default_lang);
         $this->c->user = new User(['id' => 2, 'group_id' => $this->c->GROUP_ADMIN], $this->c);
 
         $r = $this->c->Router;
@@ -54,7 +56,7 @@ class Install
                 $page = $this->c->$page->$action($route[2]);
                 break;
             default:
-                $page = $this->c->Redirect->setPage('Install')->setMessage('Redirect to install');
+                $page = $this->c->Redirect->page('Install')->message('Redirect to install');
                 break;
         }
         return $page;

@@ -2,22 +2,11 @@
 
 namespace ForkBB\Models;
 
-use ForkBB\Core\AbstractModel;
+use ForkBB\Models\DataModel;
 use ForkBB\Core\Container;
 
-class User extends AbstractModel
+class User extends DataModel
 {
-    /**
-     * Контейнер
-     * @var Container
-     */
-    protected $c;
-
-    /**
-     * @var array
-     */
-    protected $config;
-
     /**
      * Время
      * @var int
@@ -26,63 +15,56 @@ class User extends AbstractModel
 
     /**
      * Конструктор
+     *
+     * @param array $data
+     * @param Container $container
      */
-    public function __construct(array $data, Container $container)
+    public function __construct(array $data = [], Container $container)
     {
         $this->now = time();
-        $this->c = $container;
-        $this->config = $container->config;
-        parent::__construct($data);
-    }
-
-    /**
-     * Выполняется до конструктора родителя
-     */
-    protected function beforeConstruct(array $data)
-    {
-        return $data;
+        parent::__construct($data, $container);
     }
 
     protected function getIsUnverified()
     {
-        return $this->groupId == $this->c->GROUP_UNVERIFIED;
+        return $this->group_id == $this->c->GROUP_UNVERIFIED;
     }
 
     protected function getIsGuest()
     {
-        return $this->groupId == $this->c->GROUP_GUEST
+        return $this->group_id == $this->c->GROUP_GUEST
             || $this->id < 2
-            || $this->groupId == $this->c->GROUP_UNVERIFIED;
+            || $this->group_id == $this->c->GROUP_UNVERIFIED;
     }
 
     protected function getIsAdmin()
     {
-        return $this->groupId == $this->c->GROUP_ADMIN;
+        return $this->group_id == $this->c->GROUP_ADMIN;
     }
 
     protected function getIsAdmMod()
     {
-        return $this->groupId == $this->c->GROUP_ADMIN
-            || $this->gModerator == '1';
+        return $this->group_id == $this->c->GROUP_ADMIN
+            || $this->g_moderator == '1';
     }
 
     protected function getLogged()
     {
-        return empty($this->data['logged']) ? $this->now : $this->data['logged'];
+        return empty($this->a['logged']) ? $this->now : $this->a['logged'];
     }
 
     protected function getIsLogged()
     {
-        return ! empty($this->data['logged']);
+        return ! empty($this->a['logged']);
     }
 
     protected function getLanguage()
     {
         $langs = $this->c->Func->getLangs();
 
-        $lang = $this->isGuest || empty($this->data['language']) || ! in_array($this->data['language'], $langs)
-            ? $this->config['o_default_lang']
-            : $this->data['language'];
+        $lang = $this->isGuest || empty($this->a['language']) || ! in_array($this->a['language'], $langs)
+            ? $this->c->config->o_default_lang
+            : $this->a['language'];
 
         if (in_array($lang, $langs)) {
             return $lang;
@@ -95,9 +77,9 @@ class User extends AbstractModel
     {
         $styles = $this->c->Func->getStyles();
 
-        $style = $this->isGuest || empty($this->data['style']) || ! in_array($this->data['style'], $styles)
-            ? $this->config['o_default_style']
-            : $this->data['style'];
+        $style = $this->isGuest || empty($this->a['style']) || ! in_array($this->a['style'], $styles)
+            ? $this->c->config->o_default_style
+            : $this->a['style'];
 
         if (in_array($style, $styles)) {
             return $style;

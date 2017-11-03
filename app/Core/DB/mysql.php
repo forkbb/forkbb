@@ -35,6 +35,25 @@ class Mysql
     ];
 
     /**
+     * Подстановка типов полей для карты БД
+     * @var array
+     */
+    protected $types = [
+        'bool'      => 'b',
+        'boolean'   => 'b',
+        'tinyint'   => 'i',
+        'smallint'  => 'i',
+        'mediumint' => 'i',
+        'int'       => 'i',
+        'integer'   => 'i',
+        'bigint'    => 'i',
+        'decimal'   => 'i',
+        'dec'       => 'i',
+        'float'     => 'i',
+        'double'    => 'i',
+    ];
+
+    /**
      * Конструктор
      *
      * @param DB $db
@@ -523,5 +542,27 @@ class Mysql
             'size'    => $size,
             'server info' => $this->db->getAttribute(\PDO::ATTR_SERVER_INFO),
         ] + $other;
+    }
+
+    /**
+     * Формирует карту базы данных
+     *
+     * @return array
+     */
+    public function getMap()
+    {
+        $stmt = $this->db->query('SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME LIKE ?s', ["{$this->dbPrefix}%"]);
+        $result = [];
+        $table = null;
+        while ($row = $stmt->fetch()) {
+            if ($table !== $row['TABLE_NAME']) {
+                $table = $row['TABLE_NAME'];
+                $tableNoPref = substr($table, strlen($this->dbPrefix));
+                $result[$tableNoPref] = [];
+            }
+            $type = strtolower($row['DATA_TYPE']);
+            $result[$tableNoPref][$row['COLUMN_NAME']] = isset($this->types[$type]) ? $this->types[$type] : 's';
+        }
+        return $result;
     }
 }

@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ $pageTitle }}</title>
-@foreach($pageHeaders as $cur)
+  <title>{{ $p->pageTitle }}</title>
+@foreach($p->pageHeaders as $cur)
   <{!! $cur !!}>
 @endforeach
 </head>
@@ -12,16 +12,16 @@
   <div class="f-wrap">
     <header class="f-header">
       <div class="f-title">
-        <h1><a href="{!! $fRootLink !!}">{{ $fTitle }}</a></h1>
-        <p class="f-description">{!! $fDescription !!}</p>
+        <h1><a href="{!! $p->fRootLink !!}">{{ $p->fTitle }}</a></h1>
+        <p class="f-description">{!! $p->fDescription !!}</p>
       </div>
-@if(!empty($fNavigation))
+@if($p->fNavigation)
       <nav class="main-nav f-menu">
         <input id="main-nav-checkbox" style="display: none;" type="checkbox">
         <label class="f-menu-toggle" for="main-nav-checkbox"></label>
         <ul class="f-menu-items">
-@foreach($fNavigation as $key => $val)
-@if($key == $fIndex)
+@foreach($p->fNavigation as $key => $val)
+@if($key == $p->fIndex)
           <li><a id="nav-{{ $key }}" class="active" href="{!! $val[0] !!}">{!! $val[1] !!}</a></li>
 @else
           <li><a id="nav-{{ $key }}" href="{!! $val[0] !!}">{!! $val[1] !!}</a></li>
@@ -31,13 +31,13 @@
       </nav>
 @endif
     </header>
-@if($fAnnounce)
+@if($p->fAnnounce)
     <section class="f-announce">
       <h2>{!! __('Announcement') !!}</h2>
-      <p class="f-ancontent">{!! $fAnnounce !!}</p>
+      <p class="f-ancontent">{!! $p->fAnnounce !!}</p>
     </section>
 @endif
-@if($fIswev)
+@if($p->fIswev)
 @include('layouts/iswev')
 @endif
 @yield('content')

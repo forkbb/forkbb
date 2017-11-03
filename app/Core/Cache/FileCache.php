@@ -18,8 +18,8 @@ class FileCache implements ProviderCacheInterface
      *
      * @param string $dir
      *
-     * @throws \InvalidArgumentException
-     * @throws \RuntimeException
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
      */
     public function __construct($dir)
     {
@@ -63,7 +63,8 @@ class FileCache implements ProviderCacheInterface
      * @param mixed $value
      * @param int $ttl
      *
-     * @throws \RuntimeException
+     * @throws RuntimeException
+     *
      * @return bool
      */
     public function set($key, $value, $ttl = null)
@@ -84,7 +85,8 @@ class FileCache implements ProviderCacheInterface
      *
      * @param string $key
      *
-     * @throws \RuntimeException
+     * @throws RuntimeException
+     *
      * @return bool
      */
     public function delete($key)
@@ -141,7 +143,8 @@ class FileCache implements ProviderCacheInterface
      *
      * @param string $key
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
+     *
      * @return string
      */
     protected function file($key)

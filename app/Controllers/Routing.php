@@ -14,6 +14,7 @@ class Routing
 
     /**
      * Конструктор
+     *
      * @param Container $container
      */
     public function __construct(Container $container)
@@ -23,6 +24,7 @@ class Routing
 
     /**
      * Маршрутиризация
+     *
      * @return Page
      */
     public function routing()
@@ -44,7 +46,7 @@ class Routing
             $r->add('POST', '/login/{email}/{key}/{hash}', 'Auth:changePassPost');
 
             // регистрация
-            if ($config['o_regs_allow'] == '1') {
+            if ($config->o_regs_allow == '1') {
                 $r->add('GET',  '/registration', 'Rules:confirmation', 'Register');
                 $r->add('POST', '/registration/agree', 'Register:reg', 'RegisterForm');
                 $r->add('GET',  '/registration/activate/{id:\d+}/{key}/{hash}', 'Register:activate', 'RegActivate');
@@ -58,19 +60,19 @@ class Routing
             $r->add('GET', '/registration[/{tail:.*}]', 'Redirect:toIndex');
         }
         // просмотр разрешен
-        if ($user->gReadBoard == '1') {
+        if ($user->g_read_board == '1') {
             // главная
             $r->add('GET', '/', 'Index:view', 'Index');
             // правила
-            if ($config['o_rules'] == '1' && (! $user->isGuest || $config['o_regs_allow'] == '1')) {
+            if ($config->o_rules == '1' && (! $user->isGuest || $config->o_regs_allow == '1')) {
                 $r->add('GET', '/rules', 'Rules:view', 'Rules');
             }
             // поиск
-            if ($user->gSearch == '1') {
+            if ($user->g_search == '1') {
                 $r->add('GET', '/search', 'Search:view', 'Search');
             }
             // юзеры
-            if ($user->gViewUsers == '1') {
+            if ($user->g_view_users == '1') {
                 // список пользователей
                 $r->add('GET', '/userlist[/{page:[1-9]\d*}]', 'Userlist:view', 'Userlist');
                 // юзеры
@@ -93,7 +95,7 @@ class Routing
             $r->add('GET', '/post/{id:[1-9]\d*}/delete', 'Delete:delete', 'DeletePost'); //????
             $r->add('GET', '/post/{id:[1-9]\d*}/edit', 'Edit:edit', 'EditPost'); //????
             $r->add('GET', '/post/{id:[1-9]\d*}/report', 'Report:report', 'ReportPost'); //????
-            
+
         }
         // админ и модератор
         if ($user->isAdmMod) {
@@ -127,8 +129,8 @@ class Routing
                 break;
             case $r::NOT_FOUND:
                 // ... 404 Not Found
-                if ($user->gReadBoard != '1' && $user->isGuest) {
-                    $page = $this->c->Redirect->setPage('Login');
+                if ($user->g_read_board != '1' && $user->isGuest) {
+                    $page = $this->c->Redirect->page('Login');
                 } else {
                     $page = $this->c->Message->message('Bad request');
                 }

@@ -1,6 +1,6 @@
 @section('crumbs')
       <ul class="f-crumbs">
-@foreach($crumbs as $cur)
+@foreach($p->crumbs as $cur)
 @if($cur[2])
         <li class="f-crumb"><a href="{!! $cur[0] !!}" class="active">{{ $cur[1] }}</a></li>
 @else
@@ -10,19 +10,19 @@
       </ul>
 @endsection
 @section('linkpost')
-@if($NewReply !== null)
+@if($p->NewReply !== null)
         <div class="f-link-post">
-@if($NewReply === false)
+@if($p->NewReply === false)
           __('Topic closed')
 @else
-          <a class="f-btn" href="{!! $NewReply !!}">{!! __('Post reply') !!}</a>
+          <a class="f-btn" href="{!! $p->NewReply !!}">{!! __('Post reply') !!}</a>
 @endif
         </div>
 @endif
 @endsection
 @section('pages')
         <nav class="f-pages">
-@foreach($pages as $cur)
+@foreach($p->pages as $cur)
 @if($cur[2])
           <span class="f-page active">{{ $cur[1] }}</span>
 @elseif($cur[1] === 'space')
@@ -40,7 +40,7 @@
 @extends('layouts/main')
     <div class="f-nav-links">
 @yield('crumbs')
-@if($NewReply || $pages)
+@if($p->NewReply || $p->pages)
       <div class="f-links-b clearfix">
 @yield('pages')
 @yield('linkpost')
@@ -48,11 +48,11 @@
 @endif
     </div>
     <section class="f-main f-topic">
-      <h2>{{ $topic['subject'] }}</h2>
-@foreach($posts as $post)
+      <h2>{{ $p->topic['subject'] }}</h2>
+@foreach($p->posts as $post)
       <article id="p{!! $post['id'] !!}" class="f-post{!! $post['poster_gender'].$post['poster_online'] !!} clearfix">
         <header class="f-post-header clearfix">
-          <h3>{{ $topic['subject'] }} - #{!! $post['post_number'] !!}</h3>
+          <h3>{{ $p->topic['subject'] }} - #{!! $post['post_number'] !!}</h3>
           <span class="left"><time datetime="{{ $post['posted_utc'] }}">{{ $post['posted'] }}</time></span>
           <span class="right"><a href="{!! $post['link'] !!}" rel="bookmark">#{!! $post['post_number'] !!}</a></span>
         </header>
@@ -87,10 +87,10 @@
           <div class="f-post-right f-post-main">
             {!! $post['message'] !!}
           </div>
-@if(isset($signs[$post['poster_id']]))
+@if(isset($p->signs[$post['poster_id']]))
           <div class="f-post-right f-post-signature">
             <hr>
-            {!! $signs[$post['poster_id']] !!}
+            {!! $p->signs[$post['poster_id']] !!}
           </div>
 @endif
         </div>
@@ -112,7 +112,7 @@
 @endforeach
     </section>
     <div class="f-nav-links">
-@if($NewReply || $pages)
+@if($p->NewReply || $p->pages)
       <div class="f-links-a clearfix">
 @yield('linkpost')
 @yield('pages')
@@ -120,10 +120,10 @@
 @endif
 @yield('crumbs')
     </div>
-@if($online)
+@if($p->online)
 @include('layouts/stats')
 @endif
-@if($form)
+@if($form = $p->form)
     <section class="post-form">
       <h2>{!! __('Quick post') !!}</h2>
       <div class="f-fdiv">

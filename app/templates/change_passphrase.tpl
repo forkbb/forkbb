@@ -2,8 +2,8 @@
     <section class="f-main f-login">
       <div class="f-fdiv f-lrdiv">
         <h2>{!! __('Change pass') !!}</h2>
-        <form class="f-form" method="post" action="{!! $formAction !!}">
-          <input type="hidden" name="token" value="{!! $formToken !!}">
+        <form class="f-form" method="post" action="{!! $p->formAction !!}">
+          <input type="hidden" name="token" value="{!! $p->formToken !!}">
           <fieldset>
             <dl>
               <dt><label class="f-child1 f-req" for="id-password">{!! __('New pass') !!}</label></dt>

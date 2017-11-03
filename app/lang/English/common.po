@@ -79,13 +79,13 @@ msgid "Ban message"
 msgstr "You are banned from this forum."
 
 msgid "Ban message 2"
-msgstr "The ban expires at the end of"
+msgstr "The ban expires at the end of %s"
 
 msgid "Ban message 3"
 msgstr "The administrator or moderator that banned you left the following message:"
 
 msgid "Ban message 4"
-msgstr "Please direct any inquiries to the forum administrator at"
+msgstr "Please direct any inquiries to the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."
 
 msgid "Never"
 msgstr "Never"

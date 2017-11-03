@@ -1,15 +1,15 @@
 @extends('layouts/main')
     <section class="f-main f-rules">
-      <h2>{!! $title !!}</h2>
-      <div id="id-rules">{!! $rules !!}</div>
-@if($formAction)
+      <h2>{!! $p->title !!}</h2>
+      <div id="id-rules">{!! $p->rules !!}</div>
+@if($p->formAction)
       <div class="f-fdiv f-lrdiv">
-        <form class="f-form" method="post" action="{!! $formAction !!}">
-          <input type="hidden" name="token" value="{!! $formToken !!}">
+        <form class="f-form" method="post" action="{!! $p->formAction !!}">
+          <input type="hidden" name="token" value="{!! $p->formToken !!}">
           <fieldset>
             <dl>
               <dt></dt>
-              <dd><label class="f-child2"><input type="checkbox" name="agree" value="{!! $formHash !!}" tabindex="1">{!! __('Agree') !!}</label></dd>
+              <dd><label class="f-child2"><input type="checkbox" name="agree" value="{!! $p->formHash !!}" tabindex="1">{!! __('Agree') !!}</label></dd>
             </dl>
           </fieldset>
           <p>

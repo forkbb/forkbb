@@ -8,19 +8,22 @@ trait OnlineTrait
      * Получение информации об онлайн посетителях
      * @return null|array
      */
-    protected function getUsersOnlineInfo() 
+    protected function usersOnlineInfo() 
     {
-        if ($this->config['o_users_online'] == '1') {
+        if ($this->c->config->o_users_online == '1') {
+            // данные онлайн посетителей
+            $this->c->Online->calc($this);
+            $users  = $this->c->Online->users; //????
+            $guests = $this->c->Online->guests;
+            $bots   = $this->c->Online->bots;
+
+            $list   = [];
             $data = [
-                'max'      => $this->number($this->config['st_max_users']),
-                'max_time' => $this->time($this->config['st_max_users_time']),
+                'max'      => $this->number($this->c->config->st_max_users),
+                'max_time' => $this->time($this->c->config->st_max_users_time),
             ];
 
-            // данные онлайн посетителей
-            list($users, $guests, $bots) = $this->c->Online->handle($this);
-            $list = [];
-
-            if ($this->c->user->gViewUsers == '1') {
+            if ($this->c->user->g_view_users == '1') {
                 foreach ($users as $id => $cur) {
                     $list[] = [
                         $this->c->Router->link('User', [

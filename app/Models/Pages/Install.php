@@ -4,29 +4,14 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Core\Container;
 use ForkBB\Core\Validator;
+use ForkBB\Models\Page;
 use PDO;
 use PDOException;
 use RuntimeException;
 
 class Install extends Page
 {
-    /**
-     * Имя шаблона
-     * @var string
-     */
-    protected $nameTpl = 'layouts/install';
-
-    /**
-     * Позиция для таблицы онлайн текущего пользователя
-     * @var null|string
-     */
-    protected $onlinePos = null;
-
-    /**
-     * Переменная для meta name="robots"
-     * @var string
-     */
-    protected $robots = 'noindex';
+    const PHP_MIN = '5.6.0';
 
     /**
      * Для MySQL
@@ -36,33 +21,30 @@ class Install extends Page
 
     /**
      * Конструктор
+     * 
      * @param Container $container
      */
     public function __construct(Container $container)
     {
         $this->c = $container;
-        $this->config = $container->config;
-        $container->Lang->load('common', $this->config['o_default_lang']);
+        $container->Lang->load('common', $container->config->o_default_lang);
     }
 
     /**
-     * Возвращает данные для шаблона
-     * @return array
+     * Подготовка страницы к отображению
      */
-    public function getData()
+    public function prepare()
     {
-        return $this->data + [
-            'pageHeads' => $this->pageHeads(),
-            'fIswev' => $this->getIswev(),
-        ];
     }
 
     /**
      * Возращает типы БД поддерживаемые PDO
+     * 
      * @param string $curType
+     * 
      * @return array
      */
-    protected function getDBTypes($curType = null)
+    protected function DBTypes($curType = null)
     {
         $dbTypes = [];
         $pdoDrivers = PDO::getAvailableDrivers();
@@ -93,15 +75,47 @@ class Install extends Page
 
     /**
      * Подготовка данных для страницы установки форума
+     * 
      * @param array $args
+     * 
      * @return Page
      */
     public function install(array $args)
     {
+        $this->nameTpl    = 'layouts/install';
+        $this->onlinePos  = null;
+        $this->robots     = 'noindex';
+        $this->rev        = $this->c->FORK_REVISION;
+        $this->formAction = $this->c->Router->link('Install');
+
+        // версия PHP
+        if (version_compare(PHP_VERSION, self::PHP_MIN, '<')) {
+            $this->a['fIswev']['e'][] = __('You are running error', 'PHP', PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN);
+        }
+
+        // доступность папок на запись
+        $folders = [
+            $this->c->DIR_CONFIG,
+            $this->c->DIR_CACHE,
+            $this->c->DIR_PUBLIC . '/avatar',
+        ];
+        foreach ($folders as $folder) {
+            if (! is_writable($folder)) {
+                $this->a['fIswev']['e'][] = __('Alert folder', $folder);
+            }
+        }
+
+        // доступность шаблона конфигурации
+        $config = file_get_contents($this->c->DIR_CONFIG . '/main.dist.php');
+        if (false === $config) {
+            $this->a['fIswev']['e'][] = __('No access to main.dist.php');
+        }
+        unset($config);
+
         // язык
         $langs = $this->c->Func->getLangs();
         if (empty($langs)) {
-            $this->iswev['e'][] = 'No language pack.';
+            $this->a['fIswev']['e'][] = 'No language pack.';
             $installLang = $installLangs = $defaultLangs = 'English';
         } else {
             if (isset($args['installlang'])) {
@@ -123,27 +137,14 @@ class Install extends Page
             }
 
         }
-        unset($args['installlang']);
-        // версия PHP
-        $phpMin = '5.6.0';
-        if (version_compare(PHP_VERSION, $phpMin, '<')) {
-            $this->iswev['e'][] = __('You are running error', 'PHP', PHP_VERSION, $this->c->FORK_REVISION, $phpMin);
-        }
-        // доступность папок на запись
-        $folders = [
-            $this->c->DIR_CONFIG,
-            $this->c->DIR_CACHE,
-            $this->c->DIR_PUBLIC . '/avatar',
-        ];
-        foreach ($folders as $folder) {
-            if (! is_writable($folder)) {
-                $this->iswev['e'][] = __('Alert folder', $folder);
-            }
-        }
+        $this->installLangs = $installLangs;
+        $this->installLang  = $installLang;
+        $this->defaultLangs = $defaultLangs;
+
         // стиль
         $styles = $this->c->Func->getStyles();
         if (empty($styles)) {
-            $this->iswev['e'][] = __('No styles');
+            $this->a['fIswev']['e'][] = __('No styles');
             $defaultStyles = ['ForkBB'];
         } else {
             $defaultStyles = [];
@@ -152,43 +153,46 @@ class Install extends Page
                 $defaultStyles[] = $style == $defStyle ? [$style, 1] : [$style];
             }
         }
-        unset($args['defaultstyle']);
+        $this->defaultStyles = $defaultStyles;
+        
         // типы БД
-        $dbTypes = $this->getDBTypes(isset($args['dbtype']) ? $args['dbtype'] : null);
+        $dbTypes = $this->DBTypes(isset($args['dbtype']) ? $args['dbtype'] : null);
         if (empty($dbTypes)) {
-            $this->iswev['e'][] = __('No DB extensions');
+            $this->a['fIswev']['e'][] = __('No DB extensions');
         }
-        unset($args['dbtype']);
-        // доступность шаблона конфигурации
-        $config = file_get_contents($this->c->DIR_CONFIG . '/main.dist.php');
-        if (false === $config) {
-            $this->iswev['e'][] = __('No access to main.dist.php');
-        }
-        unset($config);
+        $this->dbTypes = $dbTypes;
+        
 
-        $this->data = $args + [
-            'rev' => $this->c->FORK_REVISION,
-            'formAction' => $this->c->Router->link('Install'),
-            'installLangs' => $installLangs,
-            'installLang' => $installLang,
-            'dbTypes' => $dbTypes,
-            'dbhost' => 'localhost',
-            'dbname' => '',
-            'dbuser' => '',
-            'dbprefix' => '',
-            'username' => '',
-            'email' => '',
-            'title' => __('My ForkBB Forum'),
-            'descr' => __('Description'),
-            'baseurl' => $this->c->BASE_URL,
-            'defaultLangs' => $defaultLangs,
-            'defaultStyles' => $defaultStyles,
-        ];
+        $this->a = $this->a + $args; //????
+
+        if (empty($args)) {
+            $this->dbhost   = 'localhost';
+            $this->dbname   = '';
+            $this->dbuser   = '';
+            $this->dbprefix = '';
+            $this->username = '';
+            $this->email    = '';
+            $this->title    = __('My ForkBB Forum');
+            $this->descr    = __('Description');
+            $this->baseurl  = $this->c->BASE_URL;
+        } else {
+            $this->dbhost   = $args['dbhost'];
+            $this->dbname   = $args['dbname'];
+            $this->dbuser   = $args['dbuser'];
+            $this->dbprefix = $args['dbprefix'];
+            $this->username = $args['username'];
+            $this->email    = $args['email'];
+            $this->title    = $args['title'];
+            $this->descr    = $args['descr'];
+            $this->baseurl  = $args['baseurl'];
+        }
+
         return $this;
     }
 
     /**
      * Начальная стадия установки
+     * 
      * @return Page
      */
     public function installPost()
@@ -214,7 +218,7 @@ class Install extends Page
             'rtrim_url'    => [$this, 'vRtrimURL']
         ])->setRules([
             'installlang' => 'string:trim',
-            'dbtype' => ['required|string:trim|in:' . implode(',', array_keys($this->getDBTypes())), __('Database type')],
+            'dbtype' => ['required|string:trim|in:' . implode(',', array_keys($this->DBTypes())), __('Database type')],
             'dbhost' => ['required|string:trim|check_host', __('Database server hostname')],
             'dbname' => ['required|string:trim', __('Database name')],
             'dbuser' => ['string:trim', __('Database username')],
@@ -235,50 +239,53 @@ class Install extends Page
         if ($v->validation($_POST)) {
             return $this->installEnd($v);
         } else {
-            $this->iswev = $v->getErrors();
+            $this->fIswev = $v->getErrors();
             return $this->install($v->getData());
         }
     }
 
     /**
      * Обработка base URL
+     * 
      * @param Validator $v
      * @param string $url
-     * @param int $type
+     * 
      * @return array
      */
-    public function vRtrimURL(Validator $v, $url, $type)
+    public function vRtrimURL(Validator $v, $url)
     {
-        return [rtrim($url, '/'), $type, false];
+        return [rtrim($url, '/'), true];
     }
 
     /**
      * Дополнительная проверка префикса
+     * 
      * @param Validator $v
      * @param string $prefix
-     * @param int $type
+     * 
      * @return array
      */
-    public function vCheckPrefix(Validator $v, $prefix, $type)
+    public function vCheckPrefix(Validator $v, $prefix)
     {
-        $error = false;
+        $error = true;
         if (strlen($prefix) == 0) {
         } elseif (! preg_match('%^[a-z][a-z\d_]*$%i', $prefix)) {
             $error = __('Table prefix error', $prefix);
         } elseif ($v->dbtype == 'sqlite' && strtolower($prefix) == 'sqlite_') {
             $error = __('Prefix reserved');
         }
-        return [$prefix, $type, $error];
+        return [$prefix, $error];
     }
 
     /**
      * Полная проверка подключения к БД
+     * 
      * @param Validator $v
      * @param string $dbhost
-     * @param int $type
+     * 
      * @return array
      */
-    public function vCheckHost(Validator $v, $dbhost, $type)
+    public function vCheckHost(Validator $v, $dbhost)
     {
         $this->c->DB_USERNAME = $v->dbuser;
         $this->c->DB_PASSWORD = $v->dbpass;
@@ -287,7 +294,7 @@ class Install extends Page
         $dbname = $v->dbname;
         // есть ошибки, ни чего не проверяем
         if (! empty($v->getErrors())) {
-            return [$dbhost, $type, false];
+            return [$dbhost, true];
         }
         // настройки подключения БД
         $DBEngine = 'MyISAM';
@@ -314,13 +321,13 @@ class Install extends Page
         try {
             $stat = $this->c->DB->statistics();
         } catch (PDOException $e) {
-            return [$dbhost, $type, $e->getMessage()];
+            return [$dbhost, $e->getMessage()];
         }
         // проверка наличия таблицы пользователей в БД
         try {
             $stmt = $this->c->DB->query('SELECT 1 FROM ::users WHERE id=1 LIMIT 1');
             if (! empty($stmt->fetch())) {
-                return [$dbhost, $type, __('Existing table error', $v->dbprefix, $v->dbname)];
+                return [$dbhost, __('Existing table error', $v->dbprefix, $v->dbname)];
             }
         } catch (PDOException $e) {
             // все отлично, таблица пользователей не найдена
@@ -329,12 +336,14 @@ class Install extends Page
         if (isset($stat['character_set_database']) && $stat['character_set_database'] == 'utf8') {
             $this->c->DB_DSN = str_replace('charset=utf8mb4', 'charset=utf8', $this->c->DB_DSN);
         }
-        return [$dbhost, $type, false];
+        return [$dbhost, true];
     }
 
     /**
      * Завершение установки форума
+     * 
      * @param Validator $v
+     * 
      * @return Page
      */
     protected function installEnd(Validator $v)
@@ -1002,7 +1011,7 @@ class Install extends Page
             throw new RuntimeException('No access to main.dist.php.');
         }
 
-        $repl = [
+        $repl = [ //????
             '_BASE_URL_'      => $v->baseurl,
             '_DB_DSN_'        => $this->c->DB_DSN,
             '_DB_USERNAME_'   => $this->c->DB_USERNAME,
@@ -1016,7 +1025,7 @@ class Install extends Page
         }
         $result = file_put_contents($this->c->DIR_CONFIG . '/main.php', $config);
         if (false === $result) {
-            throw new RuntimeException('No write to main.php.');
+            throw new RuntimeException('No write to main.php');
         }
 
         return $this->c->Redirect->toIndex();

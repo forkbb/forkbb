@@ -2,64 +2,49 @@
 
 namespace ForkBB\Models\Pages;
 
+use ForkBB\Models\Page;
+
 class Rules extends Page
 {
     /**
-     * Имя шаблона
-     * @var string
-     */
-    protected $nameTpl = 'rules';
-
-    /**
-     * Позиция для таблицы онлайн текущего пользователя
-     * @var null|string
-     */
-    protected $onlinePos = 'rules';
-
-    /**
-     * Указатель на активный пункт навигации
-     * @var string
-     */
-    protected $index = 'rules';
-
-    /**
      * Подготавливает данные для шаблона
+     * 
      * @return Page
      */
     public function view()
     {
-        $this->titles[] = __('Forum rules');
-        $this->data = [
-            'title' => __('Forum rules'),
-            'rules' => $this->config['o_rules_message'],
-            'formAction' => null,
-        ];
-
-        $this->canonical = $this->c->Router->link('Rules');
+        $this->fIndex     = 'rules';
+        $this->nameTpl    = 'rules';
+        $this->onlinePos  = 'rules';
+        $this->canonical  = $this->c->Router->link('Rules');
+        $this->titles     = __('Forum rules');
+        $this->title      = __('Forum rules');
+        $this->rules      = $this->c->config->o_rules_message;
+        $this->formAction = null;
 
         return $this;
     }
 
     /**
      * Подготавливает данные для шаблона
+     * 
      * @return Page
      */
     public function confirmation()
     {
-        $this->index = 'register';
-        $this->robots = 'noindex';
         $this->c->Lang->load('register');
 
-        $this->titles[] = __('Forum rules');
-        $this->data = [
-            'title' => __('Forum rules'),
-            'rules' => $this->config['o_rules'] == '1' ?
-                $this->config['o_rules_message']
-                : __('If no rules'),
-            'formAction' => $this->c->Router->link('RegisterForm'),
-            'formToken' => $this->c->Csrf->create('RegisterForm'),
-            'formHash' => $this->c->Csrf->create('Register'),
-        ];
+        $this->fIndex     = 'register';
+        $this->nameTpl    = 'rules';
+        $this->onlinePos  = 'rules';
+        $this->robots     = 'noindex';
+        $this->titles     = __('Forum rules');
+        $this->title      = __('Forum rules');
+        $this->rules      = $this->c->config->o_rules == '1' ? $this->c->config->o_rules_message : __('If no rules');
+        $this->formAction = $this->c->Router->link('RegisterForm');
+        $this->formToken  = $this->c->Csrf->create('RegisterForm');
+        $this->formHash   = $this->c->Csrf->create('Register');
+
         return $this;
     }
 }

@@ -18,6 +18,7 @@ class Csrf
 
     /**
      * Конструктор
+     *
      * @param Secury $secury
      * @param User $user
      */
@@ -29,9 +30,11 @@ class Csrf
 
     /**
      * Возвращает csrf токен
+     *
      * @param string $marker
      * @param array $args
      * @param string|int $time
+     *
      * @return string
      */
     public function create($marker, array $args = [], $time = null)
@@ -48,9 +51,11 @@ class Csrf
 
     /**
      * Проверка токена
+     *
      * @param mixed $token
      * @param string $marker
      * @param array $args
+     *
      * @return bool
      */
     public function verify($token, $marker, array $args = [])

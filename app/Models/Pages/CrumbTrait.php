@@ -6,22 +6,44 @@ trait CrumbTrait
 {
     /**
      * Возвращает массив хлебных крошек
+     * 
      * @param mixed $args
+     * 
      * @return array
      */
-    protected function getCrumbs(...$args)
+    protected function crumbs(...$args)
     {
         $crumbs = [];
         $active = true;
 
         foreach ($args as $arg) {
+            if (isset($arg->forum_name)) {
+                while ($arg->id > 0) {
+                    $this->titles = $arg->forum_name;
+                    $crumbs[] = [
+                        $this->c->Router->link('Forum', ['id' => $arg->id, 'name' => $arg->forum_name]),
+                        $arg->forum_name,
+                        $active,
+                    ];
+                    $active = null;
+                    $arg = $arg->parent;
+                }
+            } else {
+                $this->titles = (string) $arg;
+                $crumbs[] = [
+                    null,
+                    (string) $arg,
+                    $active,
+                ];
+            }
+/*
             if (is_array($arg)) {
                 $cur = array_shift($arg);
                 // массив разделов
                 if (is_array($cur)) {
                     $id = $arg[0];
                     while (true) {
-                        $this->titles[] = $cur[$id]['forum_name'];
+                        $this->titles = $cur[$id]['forum_name'];
                         $crumbs[] = [
                             $this->c->Router->link('Forum', ['id' => $id, 'name' => $cur[$id]['forum_name']]),
                             $cur[$id]['forum_name'], 
@@ -48,7 +70,7 @@ trait CrumbTrait
                     } else {
                         continue;
                     }
-                    $this->titles[] = $name;
+                    $this->titles = $name;
                     $crumbs[] = [
                         $this->c->Router->link($cur, $vars),
                         $name, 
@@ -57,13 +79,14 @@ trait CrumbTrait
                 }
             // предположительно идет только название, без ссылки
             } else {
-                $this->titles[] = (string) $arg;
+                $this->titles = (string) $arg;
                 $crumbs[] = [
                     null,
                     (string) $arg,
                     $active,
                 ];
             }
+*/
             $active = null;
         }
         // главная страница

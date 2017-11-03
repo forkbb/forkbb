@@ -6,25 +6,25 @@ trait UsersTrait
 {
     /**
      * Имена забаненных пользователей
+     * 
      * @var array
      */
     protected $userBanNames;
 
     /**
      * Определение титула для пользователя
+     * 
      * @param array $data
+     * 
      * @return string
      */
     protected function userGetTitle(array $data) 
     {
         if (! isset($this->userBanNames)) {
-            $this->userBanNames = [];
-            foreach($this->c->bans as $cur) {
-                $this->userBanNames[mb_strtolower($cur['username'])] = true;
-            }
+            $this->userBanNames = $this->c->bans->userList; //????
         }
 
-        if(isset($this->userBanNames[$data['username']])) {
+        if (isset($this->userBanNames[mb_strtolower($data['username'])])) { //????
             return __('Banned');
         } elseif ($data['title'] != '') {
             return $data['title'];
@@ -39,7 +39,9 @@ trait UsersTrait
 
     /**
      * Определение ссылки на аватарку
+     * 
      * @param int $id
+     * 
      * @return string|null
      */
     protected function userGetAvatarLink($id)
@@ -47,10 +49,10 @@ trait UsersTrait
         $filetypes = array('jpg', 'gif', 'png');
     
         foreach ($filetypes as $type) {
-            $path = $this->c->DIR_PUBLIC . "/{$this->config['o_avatars_dir']}/{$id}.{$type}";
+            $path = $this->c->DIR_PUBLIC . "/{$this->c->config->o_avatars_dir}/{$id}.{$type}";
 
             if (file_exists($path) && getimagesize($path)) {
-                return $this->c->PUBLIC_URL . "/{$this->config['o_avatars_dir']}/{$id}.{$type}";
+                return $this->c->PUBLIC_URL . "/{$this->c->config->o_avatars_dir}/{$id}.{$type}";
             }
         }
 

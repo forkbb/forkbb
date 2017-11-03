@@ -2,22 +2,12 @@
 
 namespace ForkBB\Models\Pages;
 
+use ForkBB\Models\Page;
+
 class Forum extends Page
 {
     use ForumsTrait;
     use CrumbTrait;
-
-    /**
-     * Имя шаблона
-     * @var string
-     */
-    protected $nameTpl = 'forum';
-
-    /**
-     * Позиция для таблицы онлайн текущего пользователя
-     * @var null|string
-     */
-    protected $onlinePos = 'forum';
 
     /**
      * Подготовка данных для шаблона
@@ -29,41 +19,19 @@ class Forum extends Page
         $this->c->Lang->load('forum');
         $this->c->Lang->load('subforums');
 
-        list($fTree, $fDesc, $fAsc) = $this->c->forums;
-
-        // раздел отсутствует в доступных
-        if (empty($fDesc[$args['id']])) {
+        $forum = $this->c->forums->loadTree($args['id']);
+        if (empty($forum)) {
             return $this->c->Message->message('Bad request');
         }
 
-        $parent = isset($fDesc[$args['id']][0]) ? $fDesc[$args['id']][0] : 0;
-        $perm = $fTree[$parent][$args['id']];
-
         // редирект, если раздел это ссылка
-        if (! empty($perm['redirect_url'])) {
-            return $this->c->Redirect->setUrl($perm['redirect_url']);
+        if (! empty($forum->redirect_url)) {
+            return $this->c->Redirect->url($forum->redirect_url);
         }
-        
+
         $user = $this->c->user;
-        $vars = [
-            ':fid' => $args['id'],
-            ':uid' => $user->id,
-            ':gid' => $user->groupId,
-        ];
-        if ($user->isGuest) {
-            $sql = 'SELECT f.moderators, f.num_topics, f.sort_by, 0 AS is_subscribed FROM ::forums AS f WHERE f.id=?i:fid';
-        } else {
-            $sql = 'SELECT f.moderators, f.num_topics, f.sort_by, s.user_id AS is_subscribed, mof.mf_mark_all_read FROM ::forums AS f LEFT JOIN ::forum_subscriptions AS s ON (f.id=s.forum_id AND s.user_id=?i:uid) LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND f.id=mof.fid) WHERE f.id=?i:fid';
-        }
-        $curForum = $this->c->DB->query($sql, $vars)->fetch();
-
-        // нет данных по данному разделу
-        if (empty($curForum)) {
-            return $this->c->Message->message('Bad request'); //???? может в лог ошибок?
-        }
-
         $page = isset($args['page']) ? (int) $args['page'] : 1;
-        if (empty($curForum['num_topics'])) {
+        if (empty($forum->num_topics)) {
             // попытка открыть страницу которой нет
             if ($page !== 1) {
                 return $this->c->Message->message('Bad request');
@@ -73,16 +41,16 @@ class Forum extends Page
             $offset = 0;
             $topics = null;
         } else {
-            $pages = ceil($curForum['num_topics'] / $user->dispTopics);
+            $pages = ceil($forum->num_topics / $user->disp_topics);
 
             // попытка открыть страницу которой нет
             if ($page < 1 || $page > $pages) {
                 return $this->c->Message->message('Bad request');
             }
 
-            $offset = ($page - 1) * $user->dispTopics;
+            $offset = ($page - 1) * $user->disp_topics;
 
-            switch ($curForum['sort_by']) {
+            switch ($forum->sort_by) {
                 case 1:
                     $sortBy = 'posted DESC';
                     break;
@@ -96,9 +64,9 @@ class Forum extends Page
             }
 
             $vars = [
-                ':fid' => $args['id'],
+                ':fid'    => $args['id'],
                 ':offset' => $offset,
-                ':rows' => $user->dispTopics,
+                ':rows'   => $user->disp_topics,
             ];
             $topics = $this->c->DB
                 ->query("SELECT id FROM ::topics WHERE forum_id=?i:fid ORDER BY sticky DESC, {$sortBy}, id DESC LIMIT ?i:offset, ?i:rows", $vars)
@@ -107,11 +75,11 @@ class Forum extends Page
 
         if (! empty($topics)) {
             $vars = [
-                ':uid' => $user->id,
+                ':uid'    => $user->id,
                 ':topics' => $topics,
             ];
 
-            if (! $user->isGuest && $this->config['o_show_dot'] == '1') {
+            if (! $user->isGuest && $this->c->config->o_show_dot == '1') {
                 $dots = $this->c->DB
                     ->query('SELECT topic_id FROM ::posts WHERE poster_id=?i:uid AND topic_id IN (?ai:topics) GROUP BY topic_id', $vars)
                     ->fetchAll(\PDO::FETCH_COLUMN);
@@ -121,8 +89,8 @@ class Forum extends Page
             }
 
             if (! $user->isGuest) {
-                $lower = max((int) $user->uMarkAllRead, (int) $curForum['mf_mark_all_read']);
-                $upper = max($lower, (int) $user->lastVisit);
+                $lower = max((int) $user->u_mark_all_read, (int) $forum->mf_mark_all_read);
+                $upper = max($lower, (int) $user->last_visit);
             }
 
             if ($user->isGuest) {
@@ -133,7 +101,7 @@ class Forum extends Page
             $topics = $this->c->DB->query($sql, $vars)->fetchAll();
 
             foreach ($topics as &$cur) {
-                $cur['subject'] = $this->censor($cur['subject']);
+                $cur['subject'] = $this->c->censorship->censor($cur['subject']);
                 // перенос темы
                 if ($cur['moved_to']) {
                     $cur['link'] = $this->c->Router->link('Topic', ['id' => $cur['moved_to'], 'name' => $cur['subject']]);
@@ -144,7 +112,7 @@ class Forum extends Page
                     continue;
                 }
                 // страницы темы
-                $tPages = ceil(($cur['num_replies'] + 1) / $user->dispPosts);
+                $tPages = ceil(($cur['num_replies'] + 1) / $user->disp_posts);
                 if ($tPages > 1) {
                     $cur['pages'] = $this->c->Func->paginate($tPages, -1, 'Topic', ['id' => $cur['id'], 'name' => $cur['subject']]);
                 } else {
@@ -153,7 +121,7 @@ class Forum extends Page
 
                 $cur['link'] = $this->c->Router->link('Topic', ['id' => $cur['id'], 'name' => $cur['subject']]);
                 $cur['link_last'] = $this->c->Router->link('ViewPost', ['id' => $cur['last_post_id']]);
-                $cur['views'] = $this->config['o_topic_views'] == '1' ? $this->number($cur['num_views']) : null;
+                $cur['views'] = $this->c->config->o_topic_views == '1' ? $this->number($cur['num_views']) : null;
                 $cur['replies'] = $this->number($cur['num_replies']);
                 $time = $cur['last_post'];
                 $cur['last_post'] = $this->time($cur['last_post']);
@@ -182,24 +150,22 @@ class Forum extends Page
             unset($cur);
         }
 
-        $moders = empty($curForum['moderators']) ? [] : array_flip(unserialize($curForum['moderators']));
-        $newOn = $perm['post_topics'] == 1 
-            || (null === $perm['post_topics'] && $user->gPostTopics == 1)
-            || $user->isAdmin 
+        $moders = empty($forum->moderators) ? [] : array_flip(unserialize($forum->moderators));
+        $newOn = $forum->post_topics == 1
+            || (null === $forum->post_topics && $user->g_post_topics == 1)
+            || $user->isAdmin
             || ($user->isAdmMod && isset($moders[$user->id]));
 
-        $this->onlinePos = 'forum-' . $args['id'];
-
-        $this->data = [
-            'forums' => $this->getForumsData($args['id']),
-            'topics' => $topics,
-            'crumbs' => $this->getCrumbs([$fDesc, $args['id']]),
-            'forumName' => $fDesc[$args['id']]['forum_name'],
-            'newTopic' => $newOn ? $this->c->Router->link('NewTopic', ['id' => $args['id']]) : null,
-            'pages' => $this->c->Func->paginate($pages, $page, 'Forum', ['id' => $args['id'], 'name' => $fDesc[$args['id']]['forum_name']]),
-        ];
-
-        $this->canonical = $this->c->Router->link('Forum', ['id' => $args['id'], 'name' => $fDesc[$args['id']]['forum_name'], 'page' => $page]);
+        $this->fIndex     = 'index';
+        $this->nameTpl    = 'forum';
+        $this->onlinePos  = 'forum-' . $args['id'];
+        $this->canonical  = $this->c->Router->link('Forum', ['id' => $args['id'], 'name' => $forum->forum_name, 'page' => $page]);
+        $this->forums     = $this->forumsData($args['id']);
+        $this->topics     = $topics;
+        $this->crumbs     = $this->crumbs($forum);
+        $this->forumName  = $forum->forum_name;
+        $this->newTopic   = $newOn ? $this->c->Router->link('NewTopic', ['id' => $args['id']]) : null;
+        $this->pages      = $this->c->Func->paginate($pages, $page, 'Forum', ['id' => $args['id'], 'name' => $forum->forum_name]);
 
         return $this;
     }

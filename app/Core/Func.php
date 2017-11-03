@@ -24,6 +24,8 @@ class Func
 
     /**
      * Конструктор
+     *
+     * @param Container $container
      */
     public function __construct(Container $container)
     {
@@ -61,13 +63,16 @@ class Func
     }
 
     /**
+     * Пагинация
+     *
      * @param int $all
      * @param int $cur
      * @param string $marker
      * @param array $args
-     * @return array 
+     *
+     * @return array
      */
-    public function paginate($all, $cur, $marker, array $args = []) 
+    public function paginate($all, $cur, $marker, array $args = [])
     {
         $pages = [];
         if ($all < 2) {
@@ -88,7 +93,7 @@ class Func
                 }
                 $tpl[$all] = $all;
             } else {
-                $tpl = $all < 7 
+                $tpl = $all < 7
                     ? array_slice([2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6], 0, $all - 1)
                     : [2 => 2, 3 => 3, 4 => 4, $all => $all];
             }

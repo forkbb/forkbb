@@ -75,6 +75,7 @@ class Validator
 
     /**
      * Конструктор
+     *
      * @param Container $container
      */
     public function __construct(Container $container)
@@ -104,8 +105,10 @@ class Validator
 
     /**
      * Добавление новых валидаторов
+     *
      * @param array $validators
-     * @param Validator
+     *
+     * @return Validator
      */
     public function addValidators(array $validators)
     {
@@ -115,9 +118,12 @@ class Validator
 
     /**
      * Установка правил проверки
+     *
      * @param array $list
-     * @return Validator
+     *
      * @throws RuntimeException
+     *
+     * @return Validator
      */
     public function setRules(array $list)
     {
@@ -149,7 +155,9 @@ class Validator
 
     /**
      * Установка дополнительных аргументов для конкретных "имя поля"."имя правила".
+     *
      * @param array $arguments
+     *
      * @return Validator
      */
     public function setArguments(array $arguments)
@@ -160,7 +168,9 @@ class Validator
 
     /**
      * Установка сообщений для конкретных "имя поля"."имя правила".
+     *
      * @param array $messages
+     *
      * @return Validator
      */
     public function setMessages(array $messages)
@@ -171,7 +181,9 @@ class Validator
 
     /**
      * Установка псевдонимов имен полей для сообщений об ошибках
+     *
      * @param array $aliases
+     *
      * @return Validator
      */
     public function setAliases(array $aliases)
@@ -183,9 +195,12 @@ class Validator
     /**
      * Проверка данных
      * Удачная проверка возвращает true
+     *
      * @param array $raw
+     *
+     * @throws RuntimeException
+     *
      * @return bool
-     * @throws \RuntimeException
      */
     public function validation(array $raw)
     {
@@ -204,7 +219,9 @@ class Validator
 
     /**
      * Проверяет наличие поля
+     *
      * @param string $field
+     *
      * @return bool
      */
     public function __isset($field)
@@ -215,9 +232,12 @@ class Validator
     /**
      * Проверяет поле согласно заданным правилам
      * Возвращает значение запрашиваемого поля
+     *
      * @param string
+     *
+     * @throws RuntimeException
+     *
      * @return mixed
-     * @throws \RuntimeException
      */
     public function __get($field)
     {
@@ -259,8 +279,10 @@ class Validator
 
     /**
      * Получение дополнительных аргументов
+     *
      * @param string $field
-     * @param string $field
+     * @param string $rule
+     *
      * @return mixed
      */
     protected function getArguments($field, $rule)
@@ -276,6 +298,7 @@ class Validator
 
     /**
      * Обработка ошибки
+     *
      * @param mixed $error
      * @param string $field
      * @param string $rule
@@ -302,7 +325,9 @@ class Validator
 
     /**
      * Возвращает статус проверки поля
+     *
      * @param string $field
+     *
      * @return bool
      */
     public function getStatus($field)
@@ -316,8 +341,10 @@ class Validator
     /**
      * Возвращает проверенные данные
      * Поля с ошибками содержат значения по умолчанию или значения с ошибками
+     *
+     * @throws RuntimeException
+     *
      * @return array
-     * @throws \RuntimeException
      */
     public function getData()
     {
@@ -329,6 +356,7 @@ class Validator
 
     /**
      * Возращает массив ошибок
+     *
      * @return array
      */
     public function getErrors()

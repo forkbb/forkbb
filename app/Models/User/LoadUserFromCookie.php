@@ -1,63 +1,44 @@
 <?php
 
-namespace ForkBB\Models\Actions;
+namespace ForkBB\Models\User;
 
-use ForkBB\Models\UserCookie;
-use ForkBB\Models\UserMapper;
+use ForkBB\Models\MethodModel;
 use RuntimeException;
 
-class LoadUserFromCookie
+class LoadUserFromCookie extends MethodModel
 {
-    protected $mapper;
-    protected $cookie;
-    protected $config;
-
-    /**
-     * Конструктор
-     *
-     * @param UserMapper $mapper
-     * @param UserCookie $cookie
-     * @param array $config
-     */
-    public function __construct(UserMapper $mapper, UserCookie $cookie, array $config)
-    {
-        $this->mapper = $mapper;
-        $this->cookie = $cookie;
-        $this->config = $config;
-    }
-
     /**
      * Получение юзера на основе куки авторизации
      * Обновление куки аутентификации
      *
      * @return User
      */
-    public function load()
+    public function loadCurrent()
     {
-        $id = $this->cookie->id() ?: 1;
-        $user = $this->mapper->getCurrent($id);
+        $cookie = $this->c->Cookie;
+        $this->loadUser((int) $cookie->uId);
 
-        if (! $user->isGuest) {
-            if (! $this->cookie->verifyHash($user->id, $user->password)) {
-                $user = $this->mapper->getCurrent(1);
-            } elseif ($this->config['o_check_ip'] == '1'
-                && $user->isAdmMod
-                && $user->registrationIp != $user->ip
+        if (! $this->model->isGuest) {
+            if (! $cookie->verifyUser($this->model)) {
+                $this->model = $this->loadUser(1);
+            } elseif ($this->c->config->o_check_ip == '1'
+                && $this->model->isAdmMod
+                && $this->model->registration_ip != $this->model->ip
             ) {
-                $user = $this->mapper->getCurrent(1);
+                $this->model = $this->loadUser(1);
             }
         }
 
-        $this->cookie->setUserCookie($user->id, $user->password);
+        $cookie->setUser($this->model);
 
-        if ($user->isGuest) {
-            $user->isBot = $this->isBot();
-            $user->dispTopics = $this->config['o_disp_topics_default'];
-            $user->dispPosts = $this->config['o_disp_posts_default'];
-            $user->timezone = $this->config['o_default_timezone'];
-            $user->dst = $this->config['o_default_dst'];
-            $user->language = $this->config['o_default_lang'];
-            $user->style = $this->config['o_default_style'];
+        if ($this->model->isGuest) {
+            $this->model->__isBot = $this->isBot();
+            $this->model->__disp_topics = $this->c->config->o_disp_topics_default;
+            $this->model->__disp_posts = $this->c->config->o_disp_posts_default;
+            $this->model->__timezone = $this->c->config->o_default_timezone;
+            $this->model->__dst = $this->c->config->o_default_dst;
+#            $this->model->language = $this->c->config->o_default_lang;
+#            $this->model->style = $this->c->config->o_default_style;
 
             // быстрое переключение языка - Visman
 /*            $language = $this->cookie->get('glang');
@@ -65,30 +46,64 @@ class LoadUserFromCookie
                 $language = preg_replace('%[^a-zA-Z0-9_]%', '', $language);
                 $languages = forum_list_langs();
                 if (in_array($language, $languages)) {
-                    $user->language = $language;
+                    $this->model->language = $language;
                 }
             } */
         } else {
-            $user->isBot = false;
-            if (! $user->dispTopics) {
-                $user->dispTopics = $this->config['o_disp_topics_default'];
+            $this->model->__isBot = false;
+            if (! $this->model->disp_topics) {
+                $this->model->__disp_topics = $this->c->config->o_disp_topics_default;
             }
-            if (! $user->dispPosts) {
-                $user->dispPosts = $this->config['o_disp_posts_default'];
+            if (! $this->model->disp_posts) {
+                $this->model->__disp_posts = $this->c->config->o_disp_posts_default;
             }
             // Special case: We've timed out, but no other user has browsed the forums since we timed out
-            if ($user->isLogged && $user->logged < time() - $this->config['o_timeout_visit']) {
-                $this->mapper->updateLastVisit($user);
-                $user->lastVisit = $user->logged;
+            if ($this->model->isLogged && $this->model->logged < time() - $this->c->config->o_timeout_visit) {
+                $this->model->updateLastVisit();
             }
         }
 
-        return $user;
+        return $this->model;
+    }
+
+    /**
+     * Загрузка данных в модель пользователя из базы
+     *
+     * @param int $id
+     *
+     * @throws RuntimeException
+     */
+    public function loadUser($id)
+    {
+        $data = null;
+        $ip = $this->getIp();
+        if ($id > 1) {
+            $data = $this->c->DB->query('SELECT u.*, g.*, o.logged, o.idle FROM ::users AS u INNER JOIN ::groups AS g ON u.group_id=g.g_id LEFT JOIN ::online AS o ON o.user_id=u.id WHERE u.id=?i:id', [':id' => $id])->fetch();
+        }
+        if (empty($data['id'])) {
+            $data = $this->c->DB->query('SELECT u.*, g.*, o.logged, o.last_post, o.last_search FROM ::users AS u INNER JOIN ::groups AS g ON u.group_id=g.g_id LEFT JOIN ::online AS o ON (o.user_id=1 AND o.ident=?s:ip) WHERE u.id=1', [':ip' => $ip])->fetch();
+        }
+        if (empty($data['id'])) {
+            throw new RuntimeException('Unable to fetch guest information. Your database must contain both a guest user and a guest user group.');
+        }
+        $this->model->setAttrs($data);
+        $this->model->__ip = $ip;
+    }
+
+    /**
+     * Возврат ip пользователя
+     *
+     * @return string
+     */
+    protected function getIp()
+    {
+       return filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP) ?: 'unknow';
     }
 
     /**
      * Проверка на робота
      * Если робот, то возврат имени
+     *
      * @return false|string
      */
     protected function isBot()
@@ -125,9 +140,11 @@ class LoadUserFromCookie
 
     /**
      * Выделяет имя робота из юзерагента
+     *
      * @param string $agent
      * @param string $agentL
-     * @retrun string
+     *
+     * @return string
      */
     protected function nameBot($agent, $agentL)
     {

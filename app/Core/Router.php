@@ -59,6 +59,7 @@ class Router
 
     /**
      * Конструктор
+     *
      * @param string $base
      */
     public function __construct($base)
@@ -71,9 +72,11 @@ class Router
 
     /**
      * Проверка url на принадлежность форуму
+     *
      * @param mixed $url
      * @param string $defMarker
      * @param array $defArgs
+     *
      * @return string
      */
     public function validate($url, $defMarker, array $defArgs = [])
@@ -91,8 +94,10 @@ class Router
 
     /**
      * Возвращает ссылку на основании маркера
+     *
      * @param string $marker
      * @param array $args
+     *
      * @return string
      */
     public function link($marker = null, array $args = [])
@@ -127,8 +132,10 @@ class Router
 
     /**
      * Метод определяет маршрут
+     *
      * @param string $method
      * @param string $uri
+     *
      * @return array
      */
     public function route($method, $uri)
@@ -195,6 +202,7 @@ class Router
 
     /**
      * Метод добавдяет маршрут
+     *
      * @param string|array $method
      * @param string $route
      * @param string $handler
@@ -244,7 +252,9 @@ class Router
 
     /**
      * Метод разбирает динамический маршрут
+     *
      * @param string $route
+     *
      * @return array|false
      */
     protected function parse($route)

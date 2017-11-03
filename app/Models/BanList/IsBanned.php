@@ -1,0 +1,35 @@
+<?php
+
+namespace ForkBB\Models\BanList;
+
+use ForkBB\Models\MethodModel;
+use ForkBB\Models\User;
+
+class IsBanned extends MethodModel
+{
+    /**
+     * Проверяет наличие бана на основании имени пользователя и(или) email
+     *
+     * @param User $user
+     *
+     * @return int
+     */
+    public function isBanned(User $user)
+    {
+        $name  = $this->trimToNull($this->model->username, true);
+        if (null !== $name && isset($this->model->userList[$name])) {
+            return 1;
+        }
+        $email = $this->trimToNull($this->model->email);
+        if (null !== $email) {
+            foreach ($this->model->otherList as $row) {
+                if (null === $row['email']) {
+                    continue;
+                } elseif ($email == $row['email']) {
+                    return 2;
+                }
+            }
+        }
+        return 0;
+    }
+}

@@ -3,7 +3,7 @@
 namespace ForkBB;
 
 use ForkBB\Core\Container;
-use ForkBB\Models\Pages\Page;
+use ForkBB\Models\Page;
 use RuntimeException;
 
 // боевой
@@ -47,8 +47,8 @@ $c->DIR_CONFIG = __DIR__ . '/config';
 $c->DIR_CACHE  = __DIR__ . '/cache';
 $c->DIR_VIEWS  = __DIR__ . '/templates';
 $c->DIR_LANG   = __DIR__ . '/lang';
-$c->DATE_FORMATS = [$c->config['o_date_format'], 'Y-m-d', 'Y-d-m', 'd-m-Y', 'm-d-Y', 'M j Y', 'jS M Y'];
-$c->TIME_FORMATS = [$c->config['o_time_format'], 'H:i:s', 'H:i', 'g:i:s a', 'g:i a'];
+$c->DATE_FORMATS = [$c->config->o_date_format, 'Y-m-d', 'Y-d-m', 'd-m-Y', 'm-d-Y', 'M j Y', 'jS M Y'];
+$c->TIME_FORMATS = [$c->config->o_time_format, 'H:i:s', 'H:i', 'g:i:s a', 'g:i a'];
 
 $controllers = ['Routing', 'Primary'];
 $page = null;
@@ -56,13 +56,12 @@ while (! $page instanceof Page && $cur = array_pop($controllers)) {
     $page = $c->$cur;
 }
 
-if ($page->getDataForOnline(true)) {
-    $c->Online->handle($page);
+if (null !== $page->onlinePos) {
+    $c->Online->calc($page);
 }
 $tpl = $c->View->rendering($page);
 if ($tpl !== null && $c->DEBUG > 0) {
-    $debug = $c->Debug->debug();
-    $debug = $c->View->rendering($debug);
+    $debug = $c->View->rendering($c->Debug->debug());
     $tpl = str_replace('<!-- debuginfo -->', $debug, $tpl);
 }
 exit($tpl);

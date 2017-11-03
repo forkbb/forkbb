@@ -18,6 +18,7 @@ class Container
 
     /**
      * Конструктор
+     *
      * @param array config
      */
     public function __construct(array $config = null)
@@ -37,6 +38,7 @@ class Container
 
     /**
      * Adding config
+     *
      * @param array config
      */
     public function config(array $config)
@@ -53,9 +55,12 @@ class Container
 
     /**
      * Gets a service or parameter.
+     *
      * @param string $id
+     *
+     * @throws InvalidArgumentException
+     *
      * @return mixed
-     * @throws \InvalidArgumentException
      */
     public function __get($id)
     {
@@ -79,7 +84,7 @@ class Container
             $toShare = false;
             $config = (array) $this->multiple[$id];
         } else {
-            throw new InvalidArgumentException('Wrong property name '.$id);
+            throw new InvalidArgumentException('Wrong property name: ' . $id);
         }
         // N.B. "class" is just the first element, regardless of its key
         $class = array_shift($config);
@@ -107,6 +112,7 @@ class Container
     /**
      * Sets a service or parameter.
      * Provides a fluent interface.
+     *
      * @param string $id
      * @param mixed $service
      */
@@ -121,8 +127,10 @@ class Container
 
     /**
      * Gets data from array.
+     *
      * @param array $array
      * @param array $tree
+     *
      * @return mixed
      */
     public function fromArray(array $array, array $tree)
@@ -145,21 +153,23 @@ class Container
      * @param string $name  The parameter name
      * @param mixed  $value The parameter value
      *
+     * @throws InvalidArgumentException
+     *
      * @return ContainerInterface Self reference
      */
     public function setParameter($name, $value)
     {
         $segments = explode('.', $name);
         $n = count($segments);
-        $ptr =& $this->config;
+        $ptr = &$this->config;
         foreach ($segments as $s) {
             if (--$n) {
-                if (!array_key_exists($s, $ptr)) {
+                if (! array_key_exists($s, $ptr)) {
                     $ptr[$s] = [];
-                } elseif (!is_array($ptr[$s])) {
-                    throw new \InvalidArgumentException("Scalar \"{$s}\" in the path \"{$name}\"");
+                } elseif (! is_array($ptr[$s])) {
+                    throw new InvalidArgumentException("Scalar '{$s}' in the path '{$name}'");
                 }
-                $ptr =& $ptr[$s];
+                $ptr = &$ptr[$s];
             } else {
                 $ptr[$s] = $value;
             }
@@ -181,7 +191,7 @@ class Container
                         '~%([a-z0-9_]+(?:\.[a-z0-9_]+)*)%~i',
                         function ($matches) {
                             return $this->__get($matches[1]);
-                        }, 
+                        },
                         $value
                     );
                 }

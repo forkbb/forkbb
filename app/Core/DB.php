@@ -2,10 +2,10 @@
 
 namespace ForkBB\Core;
 
+use ForkBB\Core\DBStatement;
 use PDO;
 use PDOStatement;
 use PDOException;
-use ForkBB\Core\DBStatement;
 
 class DB extends PDO
 {
@@ -127,7 +127,7 @@ class DB extends PDO
         $idxOut = 1;
         $map = [];
         $query = preg_replace_callback(
-            '%(?=[?:])(?<![\w?:])(?:::(\w+)|\?(?![?:])(?:(\w+)(?::(\w+))?)?|:(\w+))%', 
+            '%(?=[?:])(?<![\w?:])(?:::(\w+)|\?(?![?:])(?:(\w+)(?::(\w+))?)?|:(\w+))%',
             function($matches) use ($params, &$idxIn, &$idxOut, &$map) {
                 if (! empty($matches[1])) {
                     return $this->dbPrefix . $matches[1];
@@ -170,7 +170,7 @@ class DB extends PDO
                     $map[$key][] = $name;
                 }
                 return implode(',', $res);
-            }, 
+            },
             $query
         );
         return $map;
@@ -178,10 +178,10 @@ class DB extends PDO
 
     /**
      * Метод возвращает значение из массива параметров по ключу или исключение
-     * 
+     *
      * @param mixed $key
      * @param array $params
-     * 
+     *
      * @throws PDOException
      *
      * @return mixed
@@ -189,7 +189,7 @@ class DB extends PDO
     public function getValue($key, array $params)
     {
         if (
-            is_string($key) 
+            is_string($key)
             && (isset($params[':' . $key]) || array_key_exists(':' . $key, $params))
         ) {
             return $params[':' . $key];
@@ -205,7 +205,7 @@ class DB extends PDO
 
     /**
      * Метод для получения количества выполненных запросов
-     * 
+     *
      * @return int
      */
     public function getCount()
@@ -215,7 +215,7 @@ class DB extends PDO
 
     /**
      * Метод для получения статистики выполненных запросов
-     * 
+     *
      * @return array
      */
     public function getQueries()
@@ -225,7 +225,7 @@ class DB extends PDO
 
     /**
      * Метод для сохранения статистики по выполненному запросу
-     * 
+     *
      * @param string $query
      * @param float $time
      */
@@ -291,11 +291,11 @@ class DB extends PDO
         }
 
         $map = $this->parse($query, $params);
-        
+
         $start = microtime(true);
         $stmt  = parent::prepare($query, $options);
         $this->delta = microtime(true) - $start;
-        
+
         $stmt->setMap($map);
 
         $stmt->bindValueList($params);
@@ -331,7 +331,7 @@ class DB extends PDO
         $start = microtime(true);
         $stmt  = parent::prepare($query);
         $this->delta = microtime(true) - $start;
-        
+
         $stmt->setMap($map);
 
         if ($stmt->execute($params)) {

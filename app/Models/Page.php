@@ -1,0 +1,311 @@
+<?php
+
+namespace ForkBB\Models;
+
+use ForkBB\Core\Container;
+use ForkBB\Models\Model;
+use RuntimeException;
+
+abstract class Page extends Model
+{
+    /**
+     * Конструктор
+     *
+     * @param Container $container
+     */
+    public function __construct(Container $container)
+    {
+        parent::__construct($container);
+
+        $container->Lang->load('common');
+
+        $this->fIndex       = 'index'; # string      Указатель на активный пункт навигации
+        $this->httpStatus   = 200;     # int         HTTP статус ответа для данной страницы
+        $this->httpHeaders  = [];      # array       HTTP заголовки отличные от статуса
+#       $this->nameTpl      = null;    # null|string Имя шаблона
+#       $this->titles       = [];      # array       Массив титула страницы | setTitles()
+        $this->fIswev       = [];      # array       Массив info, success, warning, error, validation информации
+#       $this->onlinePos    = '';      # null|string Позиция для таблицы онлайн текущего пользователя
+        $this->onlineType   = false;   # bool        Тип обработки пользователей онлайн
+                                       #             Если false, то идет обновление данных
+                                       #             Если true, то идет возврат данных (смотрите onlineFilter)
+        $this->onlineFilter = true;    # bool        Тип возврата данных при onlineType === true
+                                       #             Если true, то из online должны вернутся только пользователи находящиеся на этой же странице
+                                       #             Если false, то все пользователи online
+#       $this->robots       = '';      # string      Переменная для meta name="robots"
+#       $this->canonical    = '';      # string      Переменная для link rel="canonical"
+
+        $this->fTitle       = $container->config->o_board_title;
+        $this->fDescription = $container->config->o_board_desc;
+        $this->fAnnounce    = $container->config->o_announcement_message;
+        $this->fRootLink    = $container->Router->link('Index');
+    }
+
+    /**
+     * Подготовка страницы к отображению
+     */
+    public function prepare()
+    {
+        $this->fNavigation = $this->fNavigation();
+        $this->maintenance();
+    }
+
+    /**
+     * Возвращает массив ссылок с описанием для построения навигации
+     *
+     * @return array
+     */
+    protected function fNavigation()
+    {
+        $user = $this->c->user;
+        $r = $this->c->Router;
+
+        $nav = [
+            'index' => [$r->link('Index'), __('Index')]
+        ];
+
+        if ($user->g_read_board == '1' && $user->g_view_users == '1') {
+            $nav['userlist'] = [$r->link('Userlist'), __('User list')];
+        }
+
+        if ($this->c->config->o_rules == '1' && (! $user->isGuest || $user->g_read_board == '1' || $this->c->config->o_regs_allow == '1')) {
+            $nav['rules'] = [$r->link('Rules'), __('Rules')];
+        }
+
+        if ($user->g_read_board == '1' && $user->g_search == '1') {
+            $nav['search'] = [$r->link('Search'), __('Search')];
+        }
+
+        if ($user->isGuest) {
+            $nav['register'] = [$r->link('Register'), __('Register')];
+            $nav['login'] = [$r->link('Login'), __('Login')];
+        } else {
+            $nav['profile'] = [$r->link('User', [
+                'id' => $user->id,
+                'name' => $user->username,
+            ]), __('Profile')];
+            // New PMS
+            if ($this->c->config->o_pms_enabled == '1' && ($user->isAdmin || $user->messages_new > 0)) { //????
+                $nav['pmsnew'] = ['pmsnew.php', __('PM')]; //'<li id="nav"'.((PUN_ACTIVE_PAGE == 'pms_new' || $user['messages_new'] > 0) ? ' class="isactive"' : '').'><a href="pmsnew.php">'.__('PM').(($user['messages_new'] > 0) ? ' (<span'.((empty($this->c->config->o_pms_flasher) || PUN_ACTIVE_PAGE == 'pms_new') ? '' : ' class="remflasher"' ).'>'.$user['messages_new'].'</span>)' : '').'</a></li>';
+            }
+            // New PMS
+
+            if ($user->isAdmMod) {
+                $nav['admin'] = [$r->link('Admin'), __('Admin')];
+            }
+
+            $nav['logout'] = [$r->link('Logout', [
+                'token' => $this->c->Csrf->create('Logout'),
+            ]), __('Logout')];
+        }
+
+        if ($user->g_read_board == '1' && $this->c->config->o_additional_navlinks != '') {
+            // position|name|link[|id]\n
+            if (preg_match_all('%^(\d+)\|([^\|\n\r]+)\|([^\|\n\r]+)(?:\|([^\|\n\r]+))?$%m', $this->c->config->o_additional_navlinks."\n", $matches)) {
+               $k = count($matches[0]);
+               for ($i = 0; $i < $k; ++$i) {
+                   if (empty($matches[4][$i])) {
+                       $matches[4][$i] = 'extra' . $i;
+                   }
+                   if (isset($nav[$matches[4][$i]])) {
+                       $nav[$matches[4][$i]] = [$matches[3][$i], $matches[2][$i]];
+                   } else {
+                       $nav = array_merge(
+                           array_slice($nav, 0, $matches[1][$i]),
+                           [$matches[4][$i] => [$matches[3][$i], $matches[2][$i]]],
+                           array_slice($nav, $matches[1][$i])
+                       );
+                   }
+               }
+            }
+        }
+        return $nav;
+    }
+
+    /**
+     * Вывод информации о режиме обслуживания для админа
+     */
+    protected function maintenance()
+    {
+        if ($this->c->config->o_maintenance == '1' && $this->c->user->isAdmin) {
+            $this->a['fIswev']['w']['maintenance'] = __('Maintenance mode enabled', $this->c->Router->link('AdminOptions', ['#' => 'maintenance']));
+        }
+    }
+
+    /**
+     * Возвращает title страницы
+     * $this->pageTitle
+     *
+     * @param array $titles
+     *
+     * @return string
+     */
+    protected function getPageTitle(array $titles = [])
+    {
+        if (empty($titles)) {
+            $titles = $this->titles;
+        }
+        $titles[] = $this->c->config->o_board_title;
+        return implode(__('Title separator'), $titles);
+    }
+
+    /**
+     * Возвращает массива заголовков страницы
+     * $this->pageHeaders
+     *
+     * @return array
+     */
+    protected function getPageHeaders()
+    {
+        $headers = ['link rel="stylesheet" type="text/css" href="' . $this->c->PUBLIC_URL . '/style/' . $this->c->user->style . '/style.css' . '"'];
+        if ($this->robots) {
+            $headers[] = 'meta name="robots" content="' . $this->robots . '"';
+        }
+        if ($this->canonical) {
+            $headers[] = 'link rel="canonical" href="' . $this->canonical . '"';
+        }
+        return $headers;
+    }
+
+    /**
+     * Возвращает HTTP заголовки страницы
+     * $this->httpHeaders
+     *
+     * @return array
+     */
+    protected function getHttpHeaders()
+    {
+        $headers = $this->a['httpHeaders'];
+        if (! empty($status = $this->httpStatus())) {
+            $headers[] = $status;
+        }
+        return $headers;
+    }
+
+    /**
+     * Возвращает HTTP статус страницы или null
+     *
+     * @return null|string
+     */
+    protected function httpStatus()
+    {
+        $list = [
+            403 => '403 Forbidden',
+            404 => '404 Not Found',
+            405 => '405 Method Not Allowed',
+            501 => '501 Not Implemented',
+            503 => '503 Service Unavailable',
+        ];
+
+        if (isset($list[$this->httpStatus])) {
+            $status = 'HTTP/1.0 ';
+
+            if (isset($_SERVER['SERVER_PROTOCOL'])
+                && preg_match('%^HTTP/([12]\.[01])%', $_SERVER['SERVER_PROTOCOL'], $match)
+            ) {
+                $status = 'HTTP/' . $match[1] . ' ';
+            }
+
+            return $status . $list[$this->httpStatus];
+        }
+    }
+
+    /**
+     * Дописывает в массив титула страницы новый элемент
+     * $this->titles
+     *
+     * @param string @val
+     */
+    public function setTitles($val)
+    {
+        if (empty($this->a['titles'])) {
+            $this->a['titles'] = [$val];
+        } else {
+            $this->a['titles'][] = $val;
+        }
+    }
+
+    /**
+     * Возвращает размер в байтах, Кбайтах, ...
+     *
+     * @param int $size
+     *
+     * @return string
+     */
+    protected function size($size)
+    {
+        $units = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB'];
+
+        for ($i = 0; $size > 1024; ++$i) {
+            $size /= 1024;
+        }
+
+        return __('Size unit '.$units[$i], round($size, 2));
+    }
+
+    /**
+     * Возвращает число в формате языка текущего пользователя
+     *
+     * @param mixed $number
+     * @param int $decimals
+     *
+     * @return string
+     */
+    protected function number($number, $decimals = 0)
+    {
+        return is_numeric($number)
+            ? number_format($number, $decimals, __('lang_decimal_point'), __('lang_thousands_sep'))
+            : 'not a number';
+    }
+
+    /**
+     * Возвращает время в формате текущего пользователя
+     *
+     * @param int|string $timestamp
+     * @param bool $dateOnly
+     * @param string $dateFormat
+     * @param string $timeFormat
+     * @param bool $timeOnly
+     * @param bool $noText
+     *
+     * @return string
+     */
+    protected function time($timestamp, $dateOnly = false, $dateFormat = null, $timeFormat = null, $timeOnly = false, $noText = false)
+    {
+        if (empty($timestamp)) {
+            return __('Never');
+        }
+
+        $user = $this->c->user;
+
+        $diff = ($user->timezone + $user->dst) * 3600;
+        $timestamp += $diff;
+
+        if (null === $dateFormat) {
+            $dateFormat = $this->c->DATE_FORMATS[$user->date_format];
+        }
+        if(null === $timeFormat) {
+            $timeFormat = $this->c->TIME_FORMATS[$user->time_format];
+        }
+
+        $date = gmdate($dateFormat, $timestamp);
+
+        if(! $noText) {
+            $now = time() + $diff;
+
+            if ($date == gmdate($dateFormat, $now)) {
+                $date = __('Today');
+            } elseif ($date == gmdate($dateFormat, $now - 86400)) {
+                $date = __('Yesterday');
+            }
+        }
+
+        if ($dateOnly) {
+            return $date;
+        } elseif ($timeOnly) {
+            return gmdate($timeFormat, $timestamp);
+        } else {
+            return $date . ' ' . gmdate($timeFormat, $timestamp);
+        }
+    }
+}

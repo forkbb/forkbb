@@ -2,57 +2,29 @@
 
 namespace ForkBB\Models\Pages;
 
+use ForkBB\Models\Page;
+
 class Redirect extends Page
 {
     /**
-     * Имя шаблона
-     * @var string
-     */
-    protected $nameTpl = null;
-
-    /**
-     * Позиция для таблицы онлайн текущего пользователя
-     * @var null|string
-     */
-    protected $onlinePos = null;
-
-    /**
-     * Адрес перехода
-     * @var string
-     */
-    protected $link;
-
-    /**
-     * Переменная для meta name="robots"
-     * @var string
-     */
-    protected $robots = 'noindex';
-
-    /**
-     * Возвращает флаг готовности данных
-     * @return bool
-     */
-    public function isReady()
-    {
-        return ! empty($this->link);
-    }
-
-    /**
      * Перенаправление на главную страницу форума
+     * 
      * @return Page
      */
     public function toIndex()
     {
-        return $this->setPage('Index')->setMessage(__('Redirecting to index'));
+        return $this->page('Index')->message(__('Redirecting to index'));
     }
 
     /**
      * Задает адрес перехода
+     * 
      * @param string $marker
      * @param array $args
+     * 
      * @return Page
      */
-    public function setPage($marker, array $args = [])
+    public function page($marker, array $args = [])
     {
         $this->link = $this->c->Router->link($marker, $args);
         return $this;
@@ -60,10 +32,12 @@ class Redirect extends Page
 
     /**
      * Задает ссылку для перехода
+     * 
      * @param string $url
+     * 
      * @return Page
      */
-    public function setUrl($url)
+    public function url($url)
     {
         $this->link = $url;
         return $this;
@@ -71,47 +45,47 @@ class Redirect extends Page
 
     /**
      * Задает сообщение
+     * 
      * @param string $message
+     * 
      * @return Page
      */
-    public function setMessage($message)
+    public function message($message)
     {
         // переадресация без вывода сообщения
-        if ($this->config['o_redirect_delay'] == '0') {
+        if ($this->c->config->o_redirect_delay == '0') {
             return $this;
         }
 
         $this->nameTpl = 'layouts/redirect';
-        $this->titles[] = __('Redirecting');
-        $this->data = [
-            'message' => $message,
-            'timeout' => (int) $this->config['o_redirect_delay'],  //???? перенести в заголовки?
-        ];
+        $this->titles  = __('Redirecting');
+        $this->robots  = 'noindex';
+        $this->message = $message;
+        $this->timeout = (int) $this->c->config->o_redirect_delay;  //???? перенести в заголовки?
+
         return $this;
     }
 
     /**
      * Возвращает HTTP заголовки страницы
+     * $this->httpHeaders
+     * 
      * @return array
      */
-    public function httpHeaders()
+    protected function getHttpHeaders()
     {
-        // переадресация без вывода сообщения
-        if (empty($this->data)) {
+        if (null === $this->nameTpl) {
             $this->httpHeaders = [
                 'Location: ' . $this->link, //????
             ];
         }
-        return parent::httpHeaders();
+        return parent::getHttpHeaders();
     }
 
     /**
-     * Возвращает данные для шаблона
-     * @return array
+     * Подготовка страницы к отображению
      */
-    public function getData()
+    public function prepare()
     {
-        $this->data['link'] = $this->link;
-        return parent::getData();
     }
 }

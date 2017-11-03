@@ -27,6 +27,7 @@ class Lang
 
     /**
      * Конструктор
+     *
      * @param Container $container
      */
     public function __construct(Container $container)
@@ -37,8 +38,10 @@ class Lang
 
     /**
      * Ищет сообщение в загруженных переводах
+     *
      * @param string $message
      * @param string $lang
+     *
      * @return string|array
      */
     public function get($message, $lang = null)
@@ -58,6 +61,7 @@ class Lang
 
     /**
      * Загрузка языкового файла
+     *
      * @param string $name
      * @param string $lang
      * @param string $path
@@ -95,9 +99,12 @@ class Lang
 
     /**
      * Получение массива перевода из строки (.po файла)
+     *
      * @param string $str
-     * @return array
+     *
      * @throws RuntimeException
+     *
+     * @return array
      */
     protected function arrayFromStr($str)
     {
@@ -242,7 +249,9 @@ class Lang
     /**
      * Получение оригинальной строки с удалением кавычек
      * и преобразованием спецсимволов
+     *
      * @param string $line
+     *
      * @return string
      */
     protected function originalLine($line)
@@ -256,5 +265,4 @@ class Lang
             $line
         );
     }
-
 }

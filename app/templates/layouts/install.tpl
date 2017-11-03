@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{!! __('ForkBB Installation') !!}</title>
-@foreach($pageHeads as $cur)
+@foreach($p->pageHeads as $cur)
   <{!! $cur !!}>
 @endforeach
 </head>
@@ -16,18 +16,18 @@
         <p class="f-description">{!! __('Welcome') !!}</p>
       </div>
     </header>
-@if($fIswev)
+@if($p->fIswev)
 @include('layouts/iswev')
 @endif
-@if(is_array($installLangs))
+@if(is_array($p->installLangs))
     <section class="f-install">
       <div class="f-fdiv">
         <h2>{!! __('Choose install language') !!}</h2>
-        <form class="f-form" method="post" action="{!! $formAction !!}">
+        <form class="f-form" method="post" action="{!! $p->formAction !!}">
           <div>
             <label class="f-child1">{!! __('Install language') !!}</label>
             <select class="f-ctrl" id="id-installlang" name="installlang">
-@foreach($installLangs as $cur)
+@foreach($p->installLangs as $cur)
 @if(isset($cur[1]))
               <option value="{{ $cur[0] }}" selected>{{ $cur[0] }}</option>
 @else
@@ -44,12 +44,12 @@
       </div>
     </section>
 @endif
-@if(empty($fIswev['e']))
+@if(empty($p->fIswev['e']))
     <section class="f-main f-install">
       <div class="f-fdiv">
-        <h2>{!! __('Install', $rev) !!}</h2>
-        <form class="f-form" method="post" action="{!! $formAction !!}" autocomplete="off">
-          <input type="hidden" name="installlang" value="{!! $installLang !!}">
+        <h2>{!! __('Install', $p->rev) !!}</h2>
+        <form class="f-form" method="post" action="{!! $p->formAction !!}" autocomplete="off">
+          <input type="hidden" name="installlang" value="{!! $p->installLang !!}">
           <div class="f-finfo">
             <h3>{!! __('Database setup') !!}</h3>
             <p>{!! __('Info 1') !!}</p>
@@ -57,7 +57,7 @@
           <div>
             <label class="f-child1 f-req">{!! __('Database type') !!}</label>
             <select class="f-ctrl" id="id-dbtype" name="dbtype">
-@foreach($dbTypes as $key => $cur)
+@foreach($p->dbTypes as $key => $cur)
 @if(empty($cur[1]))
               <option value="{{ $key }}">{{ $cur[0] }}</option>
 @else
@@ -69,17 +69,17 @@
           </div>
           <div>
             <label class="f-child1 f-req" for="id-dbhost">{!! __('Database server hostname') !!}</label>
-            <input required class="f-ctrl" id="id-dbhost" type="text" name="dbhost" value="{{ $dbhost }}">
+            <input required class="f-ctrl" id="id-dbhost" type="text" name="dbhost" value="{{ $p->dbhost }}">
             <label class="f-child4">{!! __('Info 3') !!}</label>
           </div>
           <div>
             <label class="f-child1 f-req" for="id-dbname">{!! __('Database name') !!}</label>
-            <input required class="f-ctrl" id="id-dbname" type="text" name="dbname" value="{{ $dbname }}">
+            <input required class="f-ctrl" id="id-dbname" type="text" name="dbname" value="{{ $p->dbname }}">
             <label class="f-child4">{!! __('Info 4') !!}</label>
           </div>
           <div>
             <label class="f-child1" for="id-dbuser">{!! __('Database username') !!}</label>
-            <input class="f-ctrl" id="id-dbuser" type="text" name="dbuser" value="{{ $dbuser }}">
+            <input class="f-ctrl" id="id-dbuser" type="text" name="dbuser" value="{{ $p->dbuser }}">
           </div>
           <div>
             <label class="f-child1" for="id-dbpass">{!! __('Database password') !!}</label>
@@ -88,7 +88,7 @@
           </div>
           <div>
             <label class="f-child1" for="id-dbprefix">{!! __('Table prefix') !!}</label>
-            <input class="f-ctrl" id="id-dbprefix" type="text" name="dbprefix" value="{{ $dbprefix }}" maxlength="40" pattern="^[a-zA-Z][a-zA-Z\d_]*$">
+            <input class="f-ctrl" id="id-dbprefix" type="text" name="dbprefix" value="{{ $p->dbprefix }}" maxlength="40" pattern="^[a-zA-Z][a-zA-Z\d_]*$">
             <label class="f-child4">{!! __('Info 6') !!}</label>
           </div>
           <div class="f-finfo">
@@ -97,7 +97,7 @@
           </div>
           <div>
             <label class="f-child1 f-req" for="id-username">{!! __('Administrator username') !!}</label>
-            <input required class="f-ctrl" id="id-username" type="text" name="username" value="{{ $username }}" maxlength="25" pattern="^.{2,25}$">
+            <input required class="f-ctrl" id="id-username" type="text" name="username" value="{{ $p->username }}" maxlength="25" pattern="^.{2,25}$">
             <label class="f-child4">{!! __('Info 8') !!}</label>
           </div>
           <div>
@@ -107,7 +107,7 @@
           </div>
           <div>
             <label class="f-child1 f-req" for="id-email">{!! __('Administrator email') !!}</label>
-            <input required class="f-ctrl" id="id-email" type="text" name="email" value="{{ $email }}" maxlength="80" pattern=".+@.+">
+            <input required class="f-ctrl" id="id-email" type="text" name="email" value="{{ $p->email }}" maxlength="80" pattern=".+@.+">
             <label class="f-child4">{!! __('Info 10') !!}</label>
           </div>
           <div class="f-finfo">
@@ -116,21 +116,21 @@
           </div>
           <div>
             <label class="f-child1 f-req" for="id-title">{!! __('Board title') !!}</label>
-            <input required class="f-ctrl" id="id-title" type="text" name="title" value="{{ $title }}">
+            <input required class="f-ctrl" id="id-title" type="text" name="title" value="{{ $p->title }}">
           </div>
           <div>
             <label class="f-child1 f-req" for="id-descr">{!! __('Board description') !!}</label>
-            <input required class="f-ctrl" id="id-descr" type="text" name="descr" value="{{ $descr }}">
+            <input required class="f-ctrl" id="id-descr" type="text" name="descr" value="{{ $p->descr }}">
           </div>
           <div>
             <label class="f-child1 f-req" for="id-baseurl">{!! __('Base URL') !!}</label>
-            <input required class="f-ctrl" id="id-baseurl" type="text" name="baseurl" value="{{ $baseurl }}">
+            <input required class="f-ctrl" id="id-baseurl" type="text" name="baseurl" value="{{ $p->baseurl }}">
           </div>
-@if(is_array($defaultLangs))
+@if(is_array($p->defaultLangs))
           <div>
             <label class="f-child1 f-req">{!! __('Default language') !!}</label>
             <select class="f-ctrl" id="id-defaultlang" name="defaultlang">
-@foreach($defaultLangs as $cur)
+@foreach($p->defaultLangs as $cur)
 @if(isset($cur[1]))
               <option value="{{ $cur[0] }}" selected>{{ $cur[0] }}</option>
 @else
@@ -140,12 +140,12 @@
             </select>
           </div>
 @else
-          <input type="hidden" name="defaultlang" value="{!! $defaultLangs !!}">
+          <input type="hidden" name="defaultlang" value="{!! $p->defaultLangs !!}">
 @endif
           <div>
             <label class="f-child1 f-req">{!! __('Default style') !!}</label>
             <select class="f-ctrl" id="id-defaultstyle" name="defaultstyle">
-@foreach($defaultStyles as $cur)
+@foreach($p->defaultStyles as $cur)
 @if(isset($cur[1]))
               <option value="{{ $cur[0] }}" selected>{{ $cur[0] }}</option>
 @else

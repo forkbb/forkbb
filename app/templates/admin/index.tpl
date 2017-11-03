@@ -19,9 +19,9 @@
         <div>
           <dl>
             <dt>{!! __('ForkBB version label') !!}</dt>
-            <dd>{!! __('ForkBB version data', $revision) !!}</dd>
+            <dd>{!! __('ForkBB version data', $p->revision) !!}</dd>
             <dt>{!! __('Server statistics label') !!}</dt>
-            <dd><a href="{!! $linkStat !!}">{!! __('View server statistics') !!}</a></dd>
+            <dd><a href="{!! $p->linkStat !!}">{!! __('View server statistics') !!}</a></dd>
             <dt>{!! __('Support label') !!}</dt>
             <dd><a href="https://github.com/forkbb/forkbb">GitHub</a></dd>
           </dl>

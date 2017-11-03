@@ -2,42 +2,41 @@
 
 namespace ForkBB\Models\Pages;
 
+use ForkBB\Models\Page;
+use ForkBB\Models\User;
+
 class Ban extends Page
 {
     /**
-     * Имя шаблона
-     * @var string
-     */
-    protected $nameTpl = 'ban';
-
-    /**
-     * Позиция для таблицы онлайн текущего пользователя
-     * @var null|string
-     */
-    protected $onlinePos = 'ban';
-
-    /**
-     * HTTP статус ответа для данной страницы
-     * @var int
-     */
-    protected $httpStatus = 403;
-
-    /**
      * Подготавливает данные для шаблона
-     * @param array $banned
+     * 
+     * @param User $user
+     * 
      * @return Page
      */
-    public function ban(array $banned)
+    public function ban(User $user)
     {
-        $this->titles[] = __('Info');
-
-        if (! empty($banned['expire'])) {
-             $banned['expire'] = strtolower($this->time($banned['expire'], true));
+        $ban = $user->banInfo;
+        
+        if (! empty($ban['expire'])) {
+            $ban['expire'] = strtolower($this->time($ban['expire'], true));
         }
-        $this->data = [
-            'banned' => $banned,
-            'adminEmail' => $this->config['o_admin_email'],
-        ];
+
+        $this->httpStatus = 403;
+        $this->nameTpl    = 'ban';
+#       $this->onlinePos  = 'ban';
+#       $this->robots     = 'noindex';
+        $this->titles     = __('Info');
+        $this->ban        = $ban;
+        $this->adminEmail = $this->c->config->o_admin_email;
+
         return $this;
+    }
+
+    /**
+     * Подготовка страницы к отображению
+     */
+    public function prepare()
+    {
     }
 }

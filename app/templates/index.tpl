@@ -1,8 +1,8 @@
 @extends('layouts/main')
-@if($forums)
+@if($p->forums)
     <section class="f-main">
       <ol class="f-ftlist">
-@foreach($forums as $id => $cat)
+@foreach($p->forums as $id => $cat)
         <li id="cat-{!! $id !!}" class="f-category">
           <h2>{{ $cat['name'] }}</h2>
           <ol class="f-table">

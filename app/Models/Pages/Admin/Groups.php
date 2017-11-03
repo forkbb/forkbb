@@ -4,21 +4,10 @@ namespace ForkBB\Models\Pages\Admin;
 
 use ForkBB\Core\Container;
 use ForkBB\Core\Validator;
+use ForkBB\Models\Pages\Admin;
 
 class Groups extends Admin
 {
-    /**
-     * Имя шаблона
-     * @var string
-     */
-    protected $nameTpl = 'admin/groups';
-
-    /**
-     * Указатель на активный пункт навигации админки
-     * @var string
-     */
-    protected $adminIndex = 'groups';
-
     /**
      * Массив групп
      * @var array
@@ -45,6 +34,7 @@ class Groups extends Admin
 
     /**
      * Конструктор
+     * 
      * @param Container $container
      */
     public function __construct(Container $container)
@@ -66,6 +56,7 @@ class Groups extends Admin
                 }
             }
         }
+        $this->aIndex = 'groups';
     }
 
     /**
@@ -84,6 +75,7 @@ class Groups extends Admin
 
     /**
      * Подготавливает данные для шаблона
+     * 
      * @return Page
      */
     public function view()
@@ -109,23 +101,23 @@ class Groups extends Admin
 
         $this->c->Lang->load('admin_groups');
 
-        $this->data = [
-            'formActionNew'     => $this->c->Router->link('AdminGroupsNew'),
-            'formTokenNew'      => $this->c->Csrf->create('AdminGroupsNew'),
-            'formActionDefault' => $this->c->Router->link('AdminGroupsDefault'),
-            'formTokenDefault'  => $this->c->Csrf->create('AdminGroupsDefault'),
-            'defaultGroup'      => $this->config['o_default_user_group'],
-            'groupsNew'         => $groupsNew,
-            'groupsDefault'     => $groupsDefault,
-            'groupsList'        => $groupsList,
-            'tabindex'          => 0,
-        ];
+        $this->nameTpl = 'admin/groups';
+        $this->formActionNew     = $this->c->Router->link('AdminGroupsNew');
+        $this->formTokenNew      = $this->c->Csrf->create('AdminGroupsNew');
+        $this->formActionDefault = $this->c->Router->link('AdminGroupsDefault');
+        $this->formTokenDefault  = $this->c->Csrf->create('AdminGroupsDefault');
+        $this->defaultGroup      = $this->c->config->o_default_user_group;
+        $this->groupsNew         = $groupsNew;
+        $this->groupsDefault     = $groupsDefault;
+        $this->groupsList        = $groupsList;
+        $this->tabindex          = 0;
 
         return $this;
     }
 
     /**
      * Устанавливает группу по умолчанию
+     * 
      * @return Page
      */
     public function defaultPost()
@@ -138,18 +130,20 @@ class Groups extends Admin
         ]);
 
         if (! $v->validation($_POST)) {
-            $this->iswev = $v->getErrors();
+            $this->fIswev = $v->getErrors();
             return $this->view();
         }
-        $this->c->DB->exec('UPDATE ::config SET conf_value=?s:id WHERE conf_name=\'o_default_user_group\'', [':id' => $v->defaultgroup]);
-        $this->c->{'config update'};
-        return $this->c->Redirect->setPage('AdminGroups')->setMessage(__('Default group redirect'));
+        $this->c->config->o_default_user_group = $v->defaultgroup;
+        $this->c->config->save();
+        return $this->c->Redirect->page('AdminGroups')->message(__('Default group redirect'));
     }
 
     /**
      * Подготавливает данные для создание группы
      * Создает новую группу
+     * 
      * @param array $args
+     * 
      * @return Page
      */
     public function newPost(array $args)
@@ -163,7 +157,7 @@ class Groups extends Admin
             ]);
 
             if (! $v->validation($_POST)) {
-                $this->iswev = $v->getErrors();
+                $this->fIswev = $v->getErrors();
                 return $this->view();
             } else {
                 return $this->edit(['id' => $v->basegroup, '_new' => true]);
@@ -175,7 +169,9 @@ class Groups extends Admin
 
     /**
      * Подготавливает данные для шаблона редактирования группы
+     * 
      * @param array $args
+     * 
      * @return Page
      */
     public function edit(array $args)
@@ -203,20 +199,20 @@ class Groups extends Admin
 
         $this->c->Lang->load('admin_groups');
 
-        $this->data = [
-            'formAction' => $this->c->Router->link($marker, $vars),
-            'formToken'  => $this->c->Csrf->create($marker, $vars),
-            'form'       => $this->viewForm($id, $groups[$args['id']]),
-            'warn'       => empty($groups[$args['id']]['g_moderator']) ? null : __('Moderator info'),
-            'tabindex'   => 0,
-        ];
+        $this->formAction = $this->c->Router->link($marker, $vars);
+        $this->formToken  = $this->c->Csrf->create($marker, $vars);
+        $this->form       = $this->viewForm($id, $groups[$args['id']]);
+        $this->warn       = empty($groups[$args['id']]['g_moderator']) ? null : __('Moderator info');
+        $this->tabindex   = 0;
 
         return $this;
     }
 
     /**
      * Запись данных по новой/измененной группе
+     * 
      * @param array $args
+     * 
      * @return Page
      */
     public function editPost(array $args)
@@ -274,7 +270,7 @@ class Groups extends Admin
         ]);
 
         if (! $v->validation($_POST)) {
-            $this->iswev = $v->getErrors();
+            $this->fIswev = $v->getErrors();
             $args['_data'] = $v->getData();
             return $this->edit($args);
         }
@@ -334,8 +330,8 @@ class Groups extends Admin
         $this->c->Cache->delete('forums_mark');
 
         return $this->c->Redirect
-            ->setPage('AdminGroups')
-            ->setMessage($id === -1 ? __('Group added redirect') : __('Group edited redirect'));
+            ->page('AdminGroups')
+            ->message($id === -1 ? __('Group added redirect') : __('Group edited redirect'));
     }
 
     /**
@@ -397,7 +393,7 @@ class Groups extends Admin
 
         $y = __('Yes');
         $n = __('No');
-        if ($id !== $this->c->GROUP_GUEST && $id != $this->config['o_default_user_group']) {
+        if ($id !== $this->c->GROUP_GUEST && $id != $this->c->config->o_default_user_group) {
             $form['g_moderator'] = [
                 'type' => 'radio',
                 'value' => isset($data['g_moderator']) ? $data['g_moderator'] : 0,
