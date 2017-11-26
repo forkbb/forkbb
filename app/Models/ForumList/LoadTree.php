@@ -7,7 +7,7 @@ use ForkBB\Models\MethodModel;
 class LoadTree extends MethodModel
 {
     /**
-     * Загружает данные в модели разделов для указанного раздела и всех его потомков
+     * Загружает данные в модели для указанного раздела и всех его потомков
      * 
      * @param int $rootId
      * 
@@ -22,25 +22,25 @@ class LoadTree extends MethodModel
 
         $list = [];
         if (! $root->ready) {
-            $list[] = $rootId;
+            $list[$rootId] = $root;
         }
         foreach ($root->descendants as $id => $descendant) {
             if (! $descendant->ready) {
-                $list[] = $id;
+                $list[$id] = $descendant;
             }
         }
 
         $this->loadData($list);
 
         if (! $this->c->user->isGuest) {
-            $this->checkForNew(array_keys($root->descendants)); //????
+            $this->checkForNew($root->descendants);
         }
 
         return $root;
     }
 
     /**
-     * Загружает данные из БД по списку id разделов
+     * Загружает данные из БД по списку разделов
      * 
      * @param array $list
      */
@@ -52,7 +52,7 @@ class LoadTree extends MethodModel
 
         $vars = [
             ':uid'    => $this->c->user->id,
-            ':forums' => $list,
+            ':forums' => array_keys($list),
         ];
 
         if ($this->c->user->isGuest) {
@@ -79,12 +79,12 @@ class LoadTree extends MethodModel
 
         $stmt = $this->c->DB->query($sql, $vars);
         while ($cur = $stmt->fetch()) {
-            $this->model->forum($cur['id'])->replAtttrs($cur)->ready = true;
+            $list[$cur['id']]->replAttrs($cur)->__ready = true;
         }
     }
 
     /**
-     * Проверяет наличие новых сообщений в разделах по списку id
+     * Проверяет наличие новых сообщений в разделах по их списку
      * 
      * @param array $list
      */
@@ -97,8 +97,7 @@ class LoadTree extends MethodModel
         // предварительная проверка разделов
         $time = [];
         $max = max((int) $this->c->user->last_visit, (int) $this->c->user->u_mark_all_read);
-        foreach ($list as $id) {
-            $forum = $this->model->forum($id);
+        foreach ($list as $forum) {
             $t = max($max, (int) $forum->mf_mark_all_read);
             if ($forum->last_post > $t) {
                 $time[$id] = $t;
@@ -125,7 +124,7 @@ class LoadTree extends MethodModel
         $stmt = $this->c->DB->query($sql, $vars);
         while ($cur = $stmt->fetch()) {
             if ($cur['last_post'] > $time[$cur['forum_id']]) {
-                $this->model->forum($cur['forum_id'])->newMessages = true; //????
+                $list[$cur['forum_id']]->__newMessages = true; //????
             }
         }
     }

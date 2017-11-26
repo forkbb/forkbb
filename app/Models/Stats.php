@@ -3,6 +3,7 @@
 namespace ForkBB\Models;
 
 use ForkBB\Models\Model;
+use PDO;
 
 class Stats extends Model
 {
@@ -21,9 +22,7 @@ class Stats extends Model
             $this->load();
         }
 
-        list($topics, $posts) = $this->c->DB->query('SELECT SUM(num_topics), SUM(num_posts) FROM ::forums')->fetch(\PDO::FETCH_NUM);
-        $this->postTotal  = $posts;
-        $this->topicTotal = $topics;
+        list($this->topicTotal, $this->postTotal) = $this->c->DB->query('SELECT SUM(num_topics), SUM(num_posts) FROM ::forums')->fetch(PDO::FETCH_NUM);
 
         return $this;
     }

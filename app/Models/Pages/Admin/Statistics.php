@@ -59,7 +59,7 @@ class Statistics extends Admin
         }
 
         // Get number of current visitors
-        $this->numOnline = $this->c->DB->query('SELECT COUNT(user_id) FROM ::online WHERE idle=0')->fetchColumn();
+        $this->numOnline = $this->c->Online->calc($this)->all;
 
         $stat = $this->c->DB->statistics();
         $this->dbVersion = $stat['db'];

@@ -26,7 +26,7 @@ if (file_exists(__DIR__ . '/config/main.php')) {
 } elseif (file_exists(__DIR__ . '/config/install.php')) {
     $c = new Container(include __DIR__ . '/config/install.php');
 } else {
-    throw new RuntimeException('Application is not configured.');
+    throw new RuntimeException('Application is not configured');
 }
 
 require __DIR__ . '/functions.php';
@@ -60,7 +60,7 @@ if (null !== $page->onlinePos) {
     $c->Online->calc($page);
 }
 $tpl = $c->View->rendering($page);
-if ($tpl !== null && $c->DEBUG > 0) {
+if (null !== $tpl && $c->DEBUG > 0) {
     $debug = $c->View->rendering($c->Debug->debug());
     $tpl = str_replace('<!-- debuginfo -->', $debug, $tpl);
 }

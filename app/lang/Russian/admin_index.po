@@ -79,7 +79,7 @@ msgid "Server load label"
 msgstr "Загрузка сервера"
 
 msgid "Server load data"
-msgstr "%s - %s пользователей online"
+msgstr "%1$s - %2$s посетитель(ей)"
 
 msgid "Environment label"
 msgstr "Окружение"

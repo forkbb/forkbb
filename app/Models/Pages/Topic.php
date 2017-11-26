@@ -6,15 +6,7 @@ use ForkBB\Models\Page;
 
 class Topic extends Page
 {
-    use UsersTrait;
-    use OnlineTrait;
     use CrumbTrait;
-
-    /**
-     * Данные по текущей теме
-     * @var array
-     */
-    protected $curTopic;
 
     /**
      * Переход к первому новому сообщению темы (или в конец)
@@ -25,35 +17,7 @@ class Topic extends Page
      */
     public function viewNew(array $args)
     {
-        $topic = $this->curTopic($args['id']); 
-        if (false === $topic) {
-            return $this->c->Message->message('Bad request');
-        }
-
-        if (! $this->c->user->isGuest) {
-            $upper = max(
-                (int) $this->c->user->last_visit,
-                (int) $this->c->user->u_mark_all_read,
-                (int) $topic['mf_mark_all_read'],
-                (int) $topic['mt_last_visit']
-            );
-
-            if ($upper < $topic['last_post']) {
-                $vars = [
-                    ':tid' => $args['id'],
-                    ':visit' => $upper,
-                ];
-                $sql = 'SELECT MIN(id) FROM ::posts WHERE topic_id=?i:tid AND posted>?i:visit';
-
-                $pid = $this->c->DB->query($sql, $vars)->fetchColumn();
-
-                if (! empty($pid)) {
-                    return $this->c->Redirect->page('ViewPost', ['id' => $pid]);
-                }
-            }
-        }
-
-        return $this->viewLast(['id' => $topic['id']]);
+        return $this->view('new', $args);
     }
 
     /**
@@ -65,34 +29,7 @@ class Topic extends Page
      */
     public function viewUnread(array $args)
     {
-        $topic = $this->curTopic($args['id']); 
-        if (false === $topic) {
-            return $this->c->Message->message('Bad request');
-        }
-
-        if (! $this->c->user->isGuest) {
-            $lower = max(
-                (int) $this->c->user->u_mark_all_read,
-                (int) $topic['mf_mark_all_read'],
-                (int) $topic['mt_last_read']
-            );
-
-            if ($lower < $topic['last_post']) {
-                $vars = [
-                    ':tid' => $args['id'],
-                    ':visit' => $lower,
-                ];
-                $sql = 'SELECT MIN(id) FROM ::posts WHERE topic_id=?i:tid AND posted>?i:visit';
-
-                $pid = $this->c->DB->query($sql, $vars)->fetchColumn();
-
-                if (! empty($pid)) {
-                    return $this->c->Redirect->page('ViewPost', ['id' => $pid]);
-                }
-            }
-        }
-
-        return $this->viewLast(['id' => $topic['id']]);
+        return $this->view('unread', $args);
     }
 
     /**
@@ -104,100 +41,9 @@ class Topic extends Page
      */
     public function viewLast(array $args)
     {
-        $topic = $this->curTopic($args['id']); 
-        if (false === $topic) {
-            return $this->c->Message->message('Bad request');
-        }
+        return $this->view('last', $args);
+    }
 
-        $vars = [
-            ':tid' => $args['id'],
-        ];
-        $sql = 'SELECT MAX(id) FROM ::posts WHERE topic_id=?i:tid';
-
-        $pid = $this->c->DB->query($sql, $vars)->fetchColumn();
-        // нет ни одного сообщения в теме
-        if (empty($pid)) {
-            return $this->c->Message->message('Bad request');
-        }
-
-        return $this->c->Redirect->page('ViewPost', ['id' => $pid]);
-     }
-
-    /**
-     * Получение данных по текущей теме
-     * 
-     * @param mixed $id
-     * @param mixed $pid
-     * 
-     * @return bool|array
-     */
-    protected function curTopic($id, $pid = null)
-    {
-        if ($this->curTopic) {
-            return $this->curTopic;
-        }
-
-        if (isset($pid)) {
-            $vars = [
-                ':pid' => $pid,
-                ':uid' => $this->c->user->id,
-            ];
-            if ($this->c->user->isGuest) {
-                $sql = 'SELECT t.*, f.moderators, 0 AS is_subscribed, 0 AS mf_mark_all_read, 0 AS mt_last_visit, 0 AS mt_last_read
-                        FROM ::topics AS t
-                        INNER JOIN ::forums AS f ON f.id=t.forum_id
-                        INNER JOIN ::posts AS p ON t.id=p.topic_id
-                        WHERE p.id=?i:pid AND t.moved_to IS NULL';
-
-            } else {
-                $sql = 'SELECT t.*, f.moderators, s.user_id AS is_subscribed, mof.mf_mark_all_read, mot.mt_last_visit, mot.mt_last_read
-                        FROM ::topics AS t
-                        INNER JOIN ::forums AS f ON f.id=t.forum_id
-                        INNER JOIN ::posts AS p ON t.id=p.topic_id
-                        LEFT JOIN ::topic_subscriptions AS s ON (t.id=s.topic_id AND s.user_id=?i:uid)
-                        LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND f.id=mof.fid)
-                        LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND t.id=mot.tid)
-                        WHERE p.id=?i:pid AND t.moved_to IS NULL';
-            }
-        } else {
-            $vars = [
-                ':tid' => $id,
-                ':uid' => $this->c->user->id,
-            ];
-            if ($this->c->user->isGuest) {
-                $sql = 'SELECT t.*, f.moderators, 0 AS is_subscribed, 0 AS mf_mark_all_read, 0 AS mt_last_visit, 0 AS mt_last_read
-                        FROM ::topics AS t
-                        INNER JOIN ::forums AS f ON f.id=t.forum_id
-                        WHERE t.id=?i:tid AND t.moved_to IS NULL';
-
-            } else {
-                $sql = 'SELECT t.*, f.moderators, s.user_id AS is_subscribed, mof.mf_mark_all_read, mot.mt_last_visit, mot.mt_last_read
-                        FROM ::topics AS t
-                        INNER JOIN ::forums AS f ON f.id=t.forum_id
-                        LEFT JOIN ::topic_subscriptions AS s ON (t.id=s.topic_id AND s.user_id=?i:uid)
-                        LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND f.id=mof.fid)
-                        LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND t.id=mot.tid)
-                        WHERE t.id=?i:tid AND t.moved_to IS NULL';
-            }
-        }
-
-        $topic = $this->c->DB->query($sql, $vars)->fetch();
-
-        // тема отсутствует или недоступна
-        if (empty($topic)) {
-            return false;
-        }
-
-        list($fTree, $fDesc, $fAsc) = $this->c->forums;
-
-        // раздел отсутствует в доступных
-        if (empty($fDesc[$topic['forum_id']])) {
-            return false;
-        }
-
-        $this->curTopic = $topic;
-        return $topic;
-     }
 
     /**
      * Просмотр темы по номеру сообщения
@@ -208,11 +54,7 @@ class Topic extends Page
      */
     public function viewPost(array $args)
     {
-        $topic = $this->curTopic(null, $args['id']);
-        if (false === $topic) {
-            return $this->c->Message->message('Bad request');
-        }
-        return $this->view($topic, $args['id']);
+        return $this->view('post', $args);
     }
 
     /**
@@ -224,65 +66,83 @@ class Topic extends Page
      */
     public function viewTopic(array $args)
     {
-        $topic = $this->curTopic($args['id']);
-        if (false === $topic) {
-            return $this->c->Message->message('Bad request');
+        return $this->view('topic', $args);
+    }
+
+    /**
+     * @param string $type
+     * @param Models\Topic $topic
+     * 
+     * @param Page
+     */
+    protected function go($type, $topic)
+    {
+        switch ($type) {
+            case 'new':
+                $pid = $topic->post_new;
+                break;
+            case 'unread':
+                $pid = $topic->post_unread;
+                break;
+            case 'last':
+                $pid = $topic->last_post_id;
+                break;
+            default:
+                return $this->c->Message->message('Bad request');
         }
-        $page = isset($args['page']) ? (int) $args['page'] : 1;
-        return $this->view($topic, null, $page);
+        
+        if ($pid) {
+            return $this->c->Redirect->page('ViewPost', ['id' => $pid]);
+        } else {
+            return $this->c->Redirect->page('ViewPost', ['id' => $topic->last_post_id]);
+        }
     }
 
     /**
      * Подготовка данных для шаблона
      * 
-     * @param array $topic
-     * @param int|null $pid
-     * @param int|null $page
+     * @param string $type
+     * @param array $args
      * 
      * @return Page
      */
-     protected function view(array $topic, $pid, $page = null)
-     {
-        $user = $this->c->user;
-
-        if (null === $page) {
-            $vars = [
-                ':tid' => $topic['id'],
-                ':pid' => $pid,
-            ];
-            $sql = 'SELECT COUNT(id) FROM ::posts WHERE topic_id=?i:tid AND id<?i:pid';
-
-            $num = 1 + $this->c->DB->query($sql, $vars)->fetchColumn();
-
-            $page = ceil($num / $user->disp_posts);
+    protected function view($type, array $args)
+    {
+        $topic = $this->c->ModelTopic->load((int) $args['id'], $type === 'post');
+            
+        if (! $topic->id || ! $topic->last_post_id) {
+            return $this->c->Message->message('Bad request');
+        }
+    
+        if ($topic->moved_to) {
+            return $this->c->Redirect->page('Topic', ['id' => $topic->moved_to]);
         }
 
-        $pages = ceil(($topic['num_replies'] + 1) / $user->disp_posts);
-        // попытка открыть страницу которой нет
-        if ($page < 1 || $page > $pages) {
+        switch ($type) {
+            case 'topic':
+                $topic->page = isset($args['page']) ? (int) $args['page'] : 1;
+                break;
+            case 'post':
+                $topic->calcPage((int) $args['id']);
+                break;
+            default:
+                return $this->go($type, $topic);
+        }
+
+        if (! $topic->hasPage()) {
             return $this->c->Message->message('Bad request');
         }
 
-        $offset = ($page - 1) * $user->disp_posts;
-        $vars = [
-            ':tid'    => $topic['id'],
-            ':offset' => $offset,
-            ':rows'   => $user->disp_posts,
-        ];
-        $sql = 'SELECT id
-                FROM ::posts
-                WHERE topic_id=?i:tid
-                ORDER BY id LIMIT ?i:offset, ?i:rows';
-
-        $ids = $this->c->DB->query($sql, $vars)->fetchAll(\PDO::FETCH_COLUMN);
-
-        // нарушена синхронизация количества сообщений в темах
-        if (empty($ids)) {
-            return $this->viewLast(['id' => $topic['id']]);
+        if (! $posts = $topic->posts()) {
+            return $this->go('last', $topic);
         }
 
         $this->c->Lang->load('topic');
 
+        $user = $this->c->user;
+        
+        
+/*
         list($fTree, $fDesc, $fAsc) = $this->c->forums;
 
         $moders = empty($topic['moderators']) ? [] : array_flip(unserialize($topic['moderators']));
@@ -305,35 +165,6 @@ class Topic extends Page
             $newOn = true;
         }
 
-        // приклейка первого сообщения темы
-        $stickFP = (! empty($topic['stick_fp']) || ! empty($topic['poll_type']));
-        if ($stickFP) {
-            $ids[] = $topic['first_post_id'];
-        }
-
-        $vars = [
-            ':ids' => $ids,
-        ];
-        $sql = 'SELECT id, message, poster, posted
-                FROM ::warnings
-                WHERE id IN (?ai:ids)';
-
-        $warnings = $this->c->DB->query($sql, $vars)->fetchAll(\PDO::FETCH_GROUP);
-
-        $vars = [
-            ':ids' => $ids,
-        ];
-        $sql = 'SELECT u.warning_all, u.gender, u.email, u.title, u.url, u.location, u.signature,
-                       u.email_setting, u.num_posts, u.registered, u.admin_note, u.messages_enable,
-                       p.id, p.poster as username, p.poster_id, p.poster_ip, p.poster_email, p.message,
-                       p.hide_smilies, p.posted, p.edited, p.edited_by, p.edit_post, p.user_agent,
-                       g.g_id, g.g_user_title, g.g_promote_next_group, g.g_pm
-                FROM ::posts AS p
-                INNER JOIN ::users AS u ON u.id=p.poster_id
-                INNER JOIN ::groups AS g ON g.g_id=u.group_id
-                WHERE p.id IN (?ai:ids) ORDER BY p.id';
-
-        $stmt = $this->c->DB->query($sql, $vars);
 
         // парсер и его настройка для сообщений
         $bbcodes = include $this->c->DIR_CONFIG . '/defaultBBCode.php';
@@ -489,14 +320,14 @@ class Topic extends Page
 
         $topic['subject'] = $this->c->censorship->censor($topic['subject']);
 
-
+*/
         // данные для формы быстрого ответа
         $form = null;
-        if ($newOn && $this->c->config->o_quickpost == '1') {
+        if ($topic->post_replies && $this->c->config->o_quickpost == '1') {
             $form = [
-                'action' => $this->c->Router->link('NewReply', ['id' => $topic['id']]),
+                'action' => $this->c->Router->link('NewReply', ['id' => $topic->id]),
                 'hidden' => [
-                    'token' => $this->c->Csrf->create('NewReply', ['id' => $topic['id']]),
+                    'token' => $this->c->Csrf->create('NewReply', ['id' => $topic->id]),
                 ],
                 'sets'   => [],
                 'btns'   => [
@@ -557,54 +388,48 @@ class Topic extends Page
             }
         }
 
-        $this->nameTpl    = 'topic';
-        $this->onlinePos  = 'topic-' . $topic['id'];
-        $this->onlineType = true;
-        $this->canonical  = $this->c->Router->link('Topic', ['id' => $topic['id'], 'name' => $topic['subject'], 'page' => $page]);
-        $this->topic      = $topic;
-        $this->posts      = $posts;
-        $this->signs      = $signs;
-        $this->warnings   = $warnings;
-        $this->crumbs     = $this->crumbs(
-            ['Topic', ['id' => $topic['id'], 'name' => $topic['subject']]],
-            [$fDesc, $topic['forum_id']]
-        );
-        $this->NewReply   = $newOn ? $this->c->Router->link('NewReply', ['id' => $topic['id']]) : $newOn;
-        $this->stickFP    = $stickFP;
-        $this->pages      = $this->c->Func->paginate($pages, $page, 'Topic', ['id' => $topic['id'], 'name' => $topic['subject']]);
-        $this->online     = $this->usersOnlineInfo();
-        $this->stats      = null;
-        $this->form       = $form;
+        $this->nameTpl      = 'topic';
+        $this->onlinePos    = 'topic-' . $topic->id;
+        $this->onlineDetail = true;
+        $this->canonical    = $this->c->Router->link('Topic', ['id' => $topic->id, 'name' => $topic->cens()->subject, 'page' => $topic->page]);
+        $this->topic        = $topic;
+        $this->posts        = $posts;
+        $this->crumbs       = $this->crumbs($topic);
+        $this->NewReply     = $topic->post_replies ? $this->c->Router->link('NewReply', ['id' => $topic->id]) : null;
+        $this->pages        = $topic->pages;
+        $this->online       = $this->c->Online->calc($this)->info();
+        $this->stats        = null;
+        $this->form         = $form;
 
         if ($this->c->config->o_topic_views == '1') {
             $vars = [
-                ':tid' => $topic['id'],
+                ':tid' => $topic->id,
             ];
             $sql = 'UPDATE ::topics SET num_views=num_views+1 WHERE id=?i:tid';
 
             $this->c->DB->query($sql, $vars);
         }
-
+/*
         if (! $user->isGuest) {
             $vars = [
                 ':uid'   => $user->id,
-                ':tid'   => $topic['id'],
-                ':read'  => $topic['mt_last_read'],
-                ':visit' => $topic['mt_last_visit'],
+                ':tid'   => $topic->id,
+                ':read'  => $topic->mt_last_read,
+                ':visit' => $topic->mt_last_visit,
             ];
             $flag = false;
-            $lower = max((int) $user->u_mark_all_read, (int) $topic['mf_mark_all_read'], (int) $topic['mt_last_read']); //????
+            $lower = max((int) $user->u_mark_all_read, (int) $topic->mf_mark_all_read, (int) $topic->mt_last_read); //????
             if ($timeMax > $lower) {
                 $vars[':read'] = $timeMax;
                 $flag = true;
             }
-            $upper = max($lower, (int) $topic['mt_last_visit'], (int) $user->last_visit); //????
-            if ($topic['last_post'] > $upper) {
-                $vars[':visit'] = $topic['last_post'];
+            $upper = max($lower, (int) $topic->mt_last_visit, (int) $user->last_visit); //????
+            if ($topic->last_post > $upper) {
+                $vars[':visit'] = $topic->last_post;
                 $flag = true;
             }
             if ($flag) {
-                if (empty($topic['mt_last_read']) && empty($topic['mt_last_visit'])) {
+                if (empty($topic->mt_last_read) && empty($topic->mt_last_visit)) {
                     $this->c->DB->exec('INSERT INTO ::mark_of_topic (uid, tid, mt_last_visit, mt_last_read)
                                         SELECT ?i:uid, ?i:tid, ?i:visit, ?i:read
                                         FROM ::groups
@@ -619,7 +444,7 @@ class Topic extends Page
                 }
             }
         }
-
+*/
         return $this;
     }
 }

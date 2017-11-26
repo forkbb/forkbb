@@ -1,10 +1,10 @@
 @extends('layouts/main')
-@if($p->forums)
+@if($p->categoryes)
     <section class="f-main">
       <ol class="f-ftlist">
-@foreach($p->forums as $id => $cat)
+@foreach($p->categoryes as $id => $forums)
         <li id="cat-{!! $id !!}" class="f-category">
-          <h2>{{ $cat['name'] }}</h2>
+          <h2>{{ current($forums)->cat_name }}</h2>
           <ol class="f-table">
             <li class="f-row f-thead" value="0">
               <div class="f-hcell f-cmain">{!! __('Forum') !!}</div>
@@ -16,10 +16,6 @@
         </li>
 @endforeach
       </ol>
-    </section>
-@else
-    <section class="f-main f-message">
-      <h2>{!! __('Empty board') !!}</h2>
     </section>
 @endif
 @include('layouts/stats')

@@ -41,7 +41,7 @@ class Install
             . substr($uri, 0, (int) strrpos($uri, '/'));
 
         $this->c->Lang->load('common', $this->c->config->o_default_lang);
-        $this->c->user = new User(['id' => 2, 'group_id' => $this->c->GROUP_ADMIN], $this->c);
+        $this->c->user = $this->ModelUser->setAttrs(['id' => 2, 'group_id' => $this->c->GROUP_ADMIN]);
 
         $r = $this->c->Router;
         $r->add('GET', '/install', 'Install:install', 'Install');

@@ -16,49 +16,48 @@ class User extends DataModel
     /**
      * Конструктор
      *
-     * @param array $data
      * @param Container $container
      */
-    public function __construct(array $data = [], Container $container)
+    public function __construct(Container $container)
     {
         $this->now = time();
-        parent::__construct($data, $container);
+        parent::__construct($container);
     }
 
-    protected function getIsUnverified()
+    protected function getisUnverified()
     {
         return $this->group_id == $this->c->GROUP_UNVERIFIED;
     }
 
-    protected function getIsGuest()
+    protected function getisGuest()
     {
         return $this->group_id == $this->c->GROUP_GUEST
             || $this->id < 2
             || $this->group_id == $this->c->GROUP_UNVERIFIED;
     }
 
-    protected function getIsAdmin()
+    protected function getisAdmin()
     {
         return $this->group_id == $this->c->GROUP_ADMIN;
     }
 
-    protected function getIsAdmMod()
+    protected function getisAdmMod()
     {
         return $this->group_id == $this->c->GROUP_ADMIN
             || $this->g_moderator == '1';
     }
 
-    protected function getLogged()
+    protected function getlogged()
     {
         return empty($this->a['logged']) ? $this->now : $this->a['logged'];
     }
 
-    protected function getIsLogged()
+    protected function getisLogged()
     {
         return ! empty($this->a['logged']);
     }
 
-    protected function getLanguage()
+    protected function getlanguage()
     {
         $langs = $this->c->Func->getLangs();
 
@@ -73,7 +72,7 @@ class User extends DataModel
         }
     }
 
-    protected function getStyle()
+    protected function getstyle()
     {
         $styles = $this->c->Func->getStyles();
 
@@ -86,5 +85,45 @@ class User extends DataModel
         } else {
             return isset($styles[0]) ? $styles[0] : 'ForkBB';
         }
+    }
+
+    protected function getlink()
+    {
+        return $this->c->Router->link('User', ['id' => $this->id, 'name' => $this->username]);
+    }
+
+    protected function getavatar()
+    {
+        $filetypes = array('jpg', 'gif', 'png');
+            
+        foreach ($filetypes as $type) {
+            $path = $this->c->DIR_PUBLIC . "/{$this->c->config->o_avatars_dir}/{$this->id}.{$type}";
+        
+            if (file_exists($path) && getimagesize($path)) {
+                return $this->c->PUBLIC_URL . "/{$this->c->config->o_avatars_dir}/{$this->id}.{$type}";
+            }
+        }
+    
+        return null;
+    }
+
+    public function title()
+    {
+        if (isset($this->c->bans->userList[mb_strtolower($this->username)])) { //????
+            return __('Banned');
+        } elseif ($this->title != '') {
+            return $this->cens()->title;
+        } elseif ($this->g_user_title != '') {
+            return $this->cens()->g_user_title;
+        } elseif ($this->isGuest) {
+            return __('Guest');
+        } else {
+            return __('Member');
+        }
+    }
+
+    protected function getonline()
+    {
+        return isset($this->c->Online->online[$this->id]);
     }
 }

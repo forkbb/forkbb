@@ -34,14 +34,13 @@
         </nav>
 @endsection
 @extends('layouts/main')
-@if($p->forums)
+@if($forums = $p->forums)
     <div class="f-nav-links">
 @yield('crumbs')
     </div>
     <section class="f-subforums">
       <ol class="f-ftlist">
-@foreach($p->forums as $id => $cat)
-        <li id="id-subforums{!! $id !!}" class="f-category">
+        <li id="id-subforums{!! $p->forum->id !!}" class="f-category">
           <h2>{{ __('Sub forum', 2) }}</h2>
           <ol class="f-table">
             <li class="f-row f-thead" value="0">
@@ -52,7 +51,6 @@
 @include('layouts/subforums')
           </ol>
         </li>
-@endforeach
       </ol>
     </section>
 @endif
@@ -65,13 +63,9 @@
       </div>
 @endif
     </div>
-@if(!$p->topics)
-    <section class="f-main f-message">
-      <h2>{!! __('Empty forum') !!}</h2>
-    </section>
-@else
+@if($p->topics)
     <section class="f-main f-forum">
-      <h2>{{ $p->forumName }}</h2>
+      <h2>{{ $p->forum->forum_name }}</h2>
       <div class="f-ftlist">
         <ol class="f-table">
           <li class="f-row f-thead" value="0">
@@ -80,50 +74,50 @@
             <div class="f-hcell f-clast">{!! __('Last post') !!}</div>
           </li>
 @foreach($p->topics as $topic)
-@if($topic['moved_to'])
-          <li id="topic-{!! $topic['id']!!}" class="f-row f-fredir">
+@if($topic->moved_to)
+          <li id="topic-{!! $topic->id !!}" class="f-row f-fredir">
             <div class="f-cell f-cmain">
               <div class="f-ficon"></div>
               <div class="f-finfo">
-                <h3><span class="f-fredirtext">{!! __('Moved') !!}</span> <a class="f-ftname" href="{!! $topic['link'] !!}">{{ $topic['subject'] }}</a></h3>
+                <h3><span class="f-fredirtext">{!! __('Moved') !!}</span> <a class="f-ftname" href="{!! $topic->link !!}">{{ $topic->cens()->subject }}</a></h3>
               </div>
             </div>
           </li>
 @else
-          <li id="topic-{!! $topic['id'] !!}" class="f-row<!-- inline -->
-@if($topic['link_new']) f-fnew
+          <li id="topic-{!! $topic->id !!}" class="f-row<!-- inline -->
+@if($topic->link_new) f-fnew
 @endif
-@if($topic['link_unread']) f-funread
+@if($topic->link_unread) f-funread
 @endif
-@if($topic['sticky']) f-fsticky
+@if($topic->sticky) f-fsticky
 @endif
-@if($topic['closed']) f-fclosed
+@if($topic->closed) f-fclosed
 @endif
-@if($topic['poll_type']) f-fpoll
+@if($topic->poll_type) f-fpoll
 @endif
-@if($topic['dot']) f-fposted
+@if($topic->dot) f-fposted
 @endif
             "><!-- endinline -->
             <div class="f-cell f-cmain">
               <div class="f-ficon"></div>
               <div class="f-finfo">
                 <h3>
-@if($topic['dot'])
+@if($topic->dot)
                   <span class="f-tdot">·</span>
 @endif
-@if($topic['sticky'])
+@if($topic->sticky)
                   <span class="f-stickytxt">{!! __('Sticky') !!}</span>
 @endif
-@if($topic['closed'])
+@if($topic->closed)
                   <span class="f-closedtxt">{!! __('Closed') !!}</span>
 @endif
-@if($topic['poll_type'])
+@if($topic->poll_type)
                   <span class="f-polltxt">{!! __('Poll') !!}</span>
 @endif
-                  <a class="f-ftname" href="{!! $topic['link'] !!}">{{ $topic['subject'] }}</a>
-@if($topic['pages'])
+                  <a class="f-ftname" href="{!! $topic->link !!}">{{ $topic->cens()->subject }}</a>
+@if($topic->pages)
                   <span class="f-tpages">
-@foreach($topic['pages'] as $cur)
+@foreach($topic->pages as $cur)
 @if($cur[1] === 'space')
                     <span class="f-page f-pspacer">{!! __('Spacer') !!}</span>
 @else
@@ -132,25 +126,25 @@
 @endforeach
                   </span>
 @endif
-@if($topic['link_new'])
-                  <span class="f-newtxt"><a href="{!! $topic['link_new'] !!}" title="{!! __('New posts info') !!}">{!! __('New posts') !!}</a></span>
+@if($topic->link_new)
+                  <span class="f-newtxt"><a href="{!! $topic->link_new !!}" title="{!! __('New posts info') !!}">{!! __('New posts') !!}</a></span>
 @endif
                 </h3>
-                <p class="f-cmposter">{!! __('by') !!} {{ $topic['poster'] }}</p>
+                <p class="f-cmposter">{!! __('by') !!} {{ $topic->poster }}</p>
               </div>
             </div>
             <div class="f-cell f-cstats">
               <ul>
-                <li>{!! __('%s Reply', $topic['num_replies'], $topic['replies']) !!}</li>
-@if($topic['views'])
-                <li>{!! __('%s View', $topic['num_views'], $topic['views']) !!}</li>
+                <li>{!! __('%s Reply', $topic->num_replies, $topic->num()->num_replies) !!}</li>
+@if($topic->num_views)
+                <li>{!! __('%s View', $topic->num_views, $topic->num()->num_views) !!}</li>
 @endif
               </ul>
             </div>
             <div class="f-cell f-clast">
               <ul>
-                <li class="f-cltopic"><a href="{!! $topic['link_last'] !!}" title="&quot;{{ $topic['subject'] }}&quot; - {!! __('Last post') !!}">{{ $topic['last_post'] }}</a></li>
-                <li class="f-clposter">{!! __('by') !!} {{ $topic['last_poster'] }}</li>
+                <li class="f-cltopic"><a href="{!! $topic->link_last !!}" title="&quot;{{ $topic->cens()->subject }}&quot; - {!! __('Last post') !!}">{{ $topic->dt()->last_post }}</a></li>
+                <li class="f-clposter">{!! __('by') !!} {{ $topic->last_poster }}</li>
               </ul>
             </div>
           </li>

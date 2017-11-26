@@ -26,12 +26,8 @@ abstract class Page extends Model
 #       $this->titles       = [];      # array       Массив титула страницы | setTitles()
         $this->fIswev       = [];      # array       Массив info, success, warning, error, validation информации
 #       $this->onlinePos    = '';      # null|string Позиция для таблицы онлайн текущего пользователя
-        $this->onlineType   = false;   # bool        Тип обработки пользователей онлайн
-                                       #             Если false, то идет обновление данных
-                                       #             Если true, то идет возврат данных (смотрите onlineFilter)
-        $this->onlineFilter = true;    # bool        Тип возврата данных при onlineType === true
-                                       #             Если true, то из online должны вернутся только пользователи находящиеся на этой же странице
-                                       #             Если false, то все пользователи online
+        $this->onlineDetail = false;   # bool        Формировать данные по посетителям online или нет
+        $this->onlineFilter = true;    # bool        Посетители только по текущей странице или по всем
 #       $this->robots       = '';      # string      Переменная для meta name="robots"
 #       $this->canonical    = '';      # string      Переменная для link rel="canonical"
 
@@ -140,7 +136,7 @@ abstract class Page extends Model
      *
      * @return string
      */
-    protected function getPageTitle(array $titles = [])
+    protected function getpageTitle(array $titles = [])
     {
         if (empty($titles)) {
             $titles = $this->titles;
@@ -155,7 +151,7 @@ abstract class Page extends Model
      *
      * @return array
      */
-    protected function getPageHeaders()
+    protected function getpageHeaders()
     {
         $headers = ['link rel="stylesheet" type="text/css" href="' . $this->c->PUBLIC_URL . '/style/' . $this->c->user->style . '/style.css' . '"'];
         if ($this->robots) {
@@ -173,7 +169,7 @@ abstract class Page extends Model
      *
      * @return array
      */
-    protected function getHttpHeaders()
+    protected function gethttpHeaders()
     {
         $headers = $this->a['httpHeaders'];
         if (! empty($status = $this->httpStatus())) {
@@ -216,7 +212,7 @@ abstract class Page extends Model
      *
      * @param string @val
      */
-    public function setTitles($val)
+    public function settitles($val)
     {
         if (empty($this->a['titles'])) {
             $this->a['titles'] = [$val];

@@ -79,7 +79,7 @@ msgid "Server load label"
 msgstr "Server load"
 
 msgid "Server load data"
-msgstr "%s - %s user(s) online"
+msgstr "%1$s - %2$s visitor(s) online"
 
 msgid "Environment label"
 msgstr "Environment"

@@ -10,9 +10,9 @@
       </ul>
 @endsection
 @section('linkpost')
-@if($p->NewReply !== null)
+@if($p->topic->post_replies || $p->topic->closed)
         <div class="f-link-post">
-@if($p->NewReply === false)
+@if($p->topic->closed)
           __('Topic closed')
 @else
           <a class="f-btn" href="{!! $p->NewReply !!}">{!! __('Post reply') !!}</a>
@@ -40,7 +40,7 @@
 @extends('layouts/main')
     <div class="f-nav-links">
 @yield('crumbs')
-@if($p->NewReply || $p->pages)
+@if($p->topic->post_replies || $p->topic->closed || $p->pages)
       <div class="f-links-b clearfix">
 @yield('pages')
 @yield('linkpost')
@@ -48,49 +48,55 @@
 @endif
     </div>
     <section class="f-main f-topic">
-      <h2>{{ $p->topic['subject'] }}</h2>
+      <h2>{{ $p->topic->cens()->subject }}</h2>
 @foreach($p->posts as $post)
-      <article id="p{!! $post['id'] !!}" class="f-post{!! $post['poster_gender'].$post['poster_online'] !!} clearfix">
+      <article id="p{!! $post->id !!}" class="clearfix f-post<!-- inline -->
+@if($post->user->gender == 1) f-user-male
+@elseif($post->user->gender == 2) f-user-female
+@endif
+@if($post->user->online) f-user-online
+@endif
+      "><!-- endinline -->
         <header class="f-post-header clearfix">
-          <h3>{{ $p->topic['subject'] }} - #{!! $post['post_number'] !!}</h3>
-          <span class="left"><time datetime="{{ $post['posted_utc'] }}">{{ $post['posted'] }}</time></span>
-          <span class="right"><a href="{!! $post['link'] !!}" rel="bookmark">#{!! $post['post_number'] !!}</a></span>
+          <h3>{{ $p->topic->cens()->subject }} - #{!! $post->postNumber !!}</h3>
+          <span class="left"><time datetime="{{ $post->utc()->posted }}">{{ $post->dt()->posted }}</time></span>
+          <span class="right"><a href="{!! $post->link !!}" rel="bookmark">#{!! $post->postNumber !!}</a></span>
         </header>
         <div class="f-post-body clearfix">
           <address class="f-post-left clearfix">
             <ul class="f-user-info">
-@if($post['poster_link'])
-              <li class="f-username"><a href="{!! $post['poster_link'] !!}">{{ $post['poster'] }}</a></li>
+@if($post->showUserLink)
+              <li class="f-username"><a href="{!! $post->user->link !!}">{{ $post->user->username }}</a></li>
 @else
-              <li class="f-username">{{ $post['poster'] }}</li>
+              <li class="f-username">{{ $post->user->username }}</li>
 @endif
-@if($post['poster_avatar'])
+@if($post->showUserAvatar)
               <li class="f-avatar">
-                <img alt="{{ $post['poster'] }}" src="{!! $post['poster_avatar'] !!}">
+                <img alt="{{ $post->user->username }}" src="{!! $post->user->avatar !!}">
               </li>
 @endif
-              <li class="f-usertitle"><span>{{$post['poster_title']}}</span></li>
-@if($post['poster_posts'])
-              <li class="f-postcount"><span>{!! __('%s post', $post['poster_num_posts'], $post['poster_posts']) !!}</span></li>
+              <li class="f-usertitle"><span>{{ $post->user->title() }}</span></li>
+@if($post->showUserInfo)
+              <li class="f-postcount"><span>{!! __('%s post', $post->user->num_posts, $post->user->num()->num_posts) !!}</span></li>
 @endif
             </ul>
-@if($post['poster_info_add'])
+@if($post->showUserInfo)
             <ul class="f-user-info-add">
-              <li><span>{!! __('Registered:') !!} {{ $post['poster_registered'] }}</span></li>
-@if($post['poster_location'])
-              <li><span>{!! __('From') !!} {{ $post['poster_location'] }}</span></li>
+              <li><span>{!! __('Registered:') !!} {{ $post->user->dt(true)->registered }}</span></li>
+@if($post->user->location)
+              <li><span>{!! __('From') !!} {{ $post->user->cens()->location }}</span></li>
 @endif
               <li><span></span></li>
             </ul>
 @endif
           </address>
           <div class="f-post-right f-post-main">
-            {!! $post['message'] !!}
+            {!! $post->message !!}
           </div>
-@if(isset($p->signs[$post['poster_id']]))
+@if($post->showSignature && $post->user->signature)
           <div class="f-post-right f-post-signature">
             <hr>
-            {!! $p->signs[$post['poster_id']] !!}
+            {!! $post->user->signature !!}
           </div>
 @endif
         </div>
@@ -98,10 +104,10 @@
           <div class="f-post-left">
             <span></span>
           </div>
-@if($post['controls'])
+@if($post->controls)
           <div class="f-post-right clearfix">
             <ul>
-@foreach($post['controls'] as $key => $control)
+@foreach($post->controls as $key => $control)
               <li class="f-post{!! $key !!}"><a class="f-btn" href="{!! $control[0] !!}">{!! __($control[1]) !!}</a></li>
 @endforeach
             </ul>
@@ -112,7 +118,7 @@
 @endforeach
     </section>
     <div class="f-nav-links">
-@if($p->NewReply || $p->pages)
+@if($p->topic->post_replies || $p->topic->closed || $p->pages)
       <div class="f-links-a clearfix">
 @yield('linkpost')
 @yield('pages')

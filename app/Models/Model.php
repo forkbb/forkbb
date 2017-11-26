@@ -3,10 +3,9 @@
 namespace ForkBB\Models;
 
 use ForkBB\Core\Container;
-use InvalidArgumentException;
 use RuntimeException;
 
-abstract class Model
+class Model
 {
     /**
      * Контейнер
@@ -19,6 +18,12 @@ abstract class Model
      * @var array
      */
     protected $a = [];
+
+    /**
+     * Вычисленные данные модели
+     * @var array
+     */
+    protected $aCalc = [];
 
     /**
      * Конструктор
@@ -39,7 +44,9 @@ abstract class Model
      */
     public function __isset($name)
     {
-        return isset($this->a[$name]); //???? array_key_exists($name, $this->a)
+        return array_key_exists($name, $this->a) 
+            || array_key_exists($name, $this->aCalc)
+            || method_exists($this, 'get' . $name);
     }
 
     /**
@@ -49,7 +56,8 @@ abstract class Model
      */
     public function __unset($name)
     {
-        unset($this->a[$name]);
+        unset($this->a[$name]);     //????
+        unset($this->aCalc[$name]); //????
     }
 
     /**
@@ -60,8 +68,9 @@ abstract class Model
      */
     public function __set($name, $val)
     {
-        $method = 'set' . ucfirst($name);
-        if (method_exists($this, $method)) {
+        unset($this->aCalc[$name]);
+
+        if (method_exists($this, $method = 'set' . $name)) {
             $this->$method($val);
         } else {
             $this->a[$name] = $val;
@@ -77,9 +86,10 @@ abstract class Model
      */
     public function __get($name)
     {
-        $method = 'get' . ucfirst($name);
-        if (method_exists($this, $method)) {
-            return $this->$method();
+        if (array_key_exists($name, $this->aCalc)) {
+            return $this->aCalc[$name];
+        } elseif (method_exists($this, $method = 'get' . $name)) {
+            return $this->aCalc[$name] = $this->$method();
         } else {
             return isset($this->a[$name]) ? $this->a[$name] : null;
         }
@@ -111,5 +121,25 @@ abstract class Model
         } else {
             return $factory->$name(...$args);
         }
+    }
+
+    public function cens()
+    {
+        return $this->c->FuncAll->setModel('cens', $this);
+    }
+
+    public function num($decimals = 0)
+    {
+        return $this->c->FuncAll->setModel('num', $this, $decimals);
+    }
+
+    public function dt($dateOnly = false, $dateFormat = null, $timeFormat = null, $timeOnly = false, $noText = false)
+    {
+        return $this->c->FuncAll->setModel('dt', $this, $dateOnly, $dateFormat, $timeFormat, $timeOnly, $noText);
+    }
+
+    public function utc()
+    {
+        return $this->c->FuncAll->setModel('utc', $this);
     }
 }

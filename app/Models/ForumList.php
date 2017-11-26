@@ -8,37 +8,33 @@ use RuntimeException;
 class ForumList extends Model
 {
     /**
-     * Загружает список доступных разделов для текущего пользователя из кеша/БД
+     * Заполняет модель данными
+     * 
+     * @param int $gid
      *
      * @return ForumList
      */
-    public function init()
+    public function init($gid = 0)
     {
+        if (empty($gid)) {
+            $gid = $this->c->user->group_id;
+        }
+
         $mark = $this->c->Cache->get('forums_mark');
         if (empty($mark)) {
             $this->c->Cache->set('forums_mark', time());
-            return $this->load();
+            $list = $this->refresh($gid);
+        } else {
+            $result = $this->c->Cache->get('forums_' . $gid);
+            if (empty($result['time']) || $result['time'] < $mark) {
+                $list = $this->refresh($gid);
+            } else {
+                $list = $result['list'];
+            }
         }
 
-        $result = $this->c->Cache->get('forums_' . $this->c->user->group_id);
-        if (empty($result['time']) || $result['time'] < $mark) {
-            return $this->load();
-        }
-
-        $this->list = $result['list']; //????
+        $this->list = $list; //????
         return $this;
-    }
-
-    /**
-     * Проверяет доступность раздела
-     * 
-     * @param int $id
-     * 
-     * @return bool
-     */
-    public function isAvailable($id)
-    {
-        return isset($this->list[$id]); //????
     }
 
     /**
@@ -51,7 +47,7 @@ class ForumList extends Model
     {
         if (isset($this->forums[$id])) {
             return $this->forums[$id];
-        } elseif ($this->isAvailable($id)) {
+        } elseif (isset($this->list[$id])) {
             $forum = $this->c->ModelForum->setAttrs($this->list[$id]);
             $this->a['forums'][$id] = $forum; //????
             return $forum;

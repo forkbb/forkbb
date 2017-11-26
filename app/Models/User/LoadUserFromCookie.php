@@ -78,13 +78,13 @@ class LoadUserFromCookie extends MethodModel
         $data = null;
         $ip = $this->getIp();
         if ($id > 1) {
-            $data = $this->c->DB->query('SELECT u.*, g.*, o.logged, o.idle FROM ::users AS u INNER JOIN ::groups AS g ON u.group_id=g.g_id LEFT JOIN ::online AS o ON o.user_id=u.id WHERE u.id=?i:id', [':id' => $id])->fetch();
+            $data = $this->c->DB->query('SELECT u.*, g.*, o.logged FROM ::users AS u INNER JOIN ::groups AS g ON u.group_id=g.g_id LEFT JOIN ::online AS o ON o.user_id=u.id WHERE u.id=?i:id', [':id' => $id])->fetch();
         }
         if (empty($data['id'])) {
             $data = $this->c->DB->query('SELECT u.*, g.*, o.logged, o.last_post, o.last_search FROM ::users AS u INNER JOIN ::groups AS g ON u.group_id=g.g_id LEFT JOIN ::online AS o ON (o.user_id=1 AND o.ident=?s:ip) WHERE u.id=1', [':ip' => $ip])->fetch();
-        }
-        if (empty($data['id'])) {
-            throw new RuntimeException('Unable to fetch guest information. Your database must contain both a guest user and a guest user group.');
+            if (empty($data['id'])) {
+                throw new RuntimeException('Unable to fetch guest information. Your database must contain both a guest user and a guest user group');
+            }
         }
         $this->model->setAttrs($data);
         $this->model->__ip = $ip;

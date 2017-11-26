@@ -483,7 +483,7 @@ class Install extends Page
                 'user_id'     => ['INT(10) UNSIGNED', false, 1],
                 'ident'       => ['VARCHAR(200)', false, ''],
                 'logged'      => ['INT(10) UNSIGNED', false, 0],
-                'idle'        => ['TINYINT(1)', false, 0],
+                'idle'        => ['TINYINT(1)', false, 0], //????
                 'last_post'   => ['INT(10) UNSIGNED', true],
                 'last_search' => ['INT(10) UNSIGNED', true],
                 'witt_data'   => ['VARCHAR(255)', false, ''],  //????
@@ -496,7 +496,7 @@ class Install extends Page
             'INDEXES' => [
                 'ident_idx'      => ['ident'],
                 'logged_idx'     => ['logged'],
-                'o_position_idx' => ['o_position'],
+                'o_position_idx' => ['o_position'], //????
             ],
             'ENGINE' => $this->DBEngine,
         ];

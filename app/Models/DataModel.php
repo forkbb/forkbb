@@ -2,30 +2,17 @@
 
 namespace ForkBB\Models;
 
-use ForkBB\Core\Container;
 use ForkBB\Models\Model;
 use InvalidArgumentException;
 use RuntimeException;
 
-abstract class DataModel extends Model
+class DataModel extends Model
 {
     /**
      * Массив флагов измененных свойств модели
      * @var array
      */
     protected $modified = [];
-
-    /**
-     * Конструктор
-     *
-     * @param array $attrs
-     * @param Container $container
-     */
-    public function __construct(array $attrs, Container $container)
-    {
-        parent::__construct($container);
-        $this->a = $attrs;
-    }
 
     /**
      * Устанавливает значения для свойств
@@ -36,8 +23,32 @@ abstract class DataModel extends Model
      */
     public function setAttrs(array $attrs)
     {
-        $this->a = $attrs; //????
+        $this->a        = $attrs; //????
+        $this->aCalc    = [];
         $this->modified = [];
+        return $this;
+    }
+
+    /**
+     * Перезапись свойст модели
+     * 
+     * @param array $attrs
+     * 
+     * @return DataModel
+     */
+    public function replAttrs(array $attrs)
+    {
+        foreach ($attrs as $key => $val) {
+            $this->{'__' . $key} = $val; //????
+            unset($this->aCalc['key']);
+        }
+
+        $modified = array_diff(array_keys($this->modified), array_keys($attrs));
+        $this->modified = [];
+        foreach ($modified as $key) {
+            $this->modified[$key] = true;
+        }
+
         return $this;
     }
 
@@ -77,15 +88,13 @@ abstract class DataModel extends Model
      */
     public function __set($name, $val)
     {
-        // запись свойства без отслеживания изменений
+        // без отслеживания
         if (strpos($name, '__') === 0) {
-            return parent::__set(substr($name, 2), $val);
-        }
-
-        $old = isset($this->a[$name]) ? $this->a[$name] : null;
-        parent::__set($name, $val);
-        if ($old !== $this->a[$name]) {
+            $name = substr($name, 2);
+        // с отслеживанием
+        } else {
             $this->modified[$name] = true;
         }
+        return parent::__set($name, $val);
     }
 }

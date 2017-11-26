@@ -6,9 +6,6 @@ use ForkBB\Models\Page;
 
 class Index extends Page
 {
-    use ForumsTrait;
-    use OnlineTrait;
-
     /**
      * Подготовка данных для шаблона
      * 
@@ -19,31 +16,35 @@ class Index extends Page
         $this->c->Lang->load('index');
         $this->c->Lang->load('subforums');
 
-        $stats = [];
-        $stats['total_users']  = $this->number($this->c->stats->userTotal);
-        $stats['total_posts']  = $this->number($this->c->stats->postTotal);
-        $stats['total_topics'] = $this->number($this->c->stats->topicTotal);
-
-        if ($this->c->user->g_view_users == '1') {
-            $stats['newest_user'] = [
-                $this->c->Router->link('User', [
+        // крайний пользователь // ???? может в stats переместить?
+        $this->c->stats->userLast = $this->c->user->g_view_users == '1' 
+            ? [ $this->c->Router->link('User', [
                     'id'   => $this->c->stats->userLast['id'],
                     'name' => $this->c->stats->userLast['username'],
                 ]),
-                $this->c->stats->userLast['username']
-            ];
+                $this->c->stats->userLast['username'],
+            ] : $this->c->stats->userLast['username'];
+
+        // для таблицы разделов
+        $root   = $this->c->forums->loadTree(0);
+        $forums = empty($root) ? [] : $root->subforums;
+        $ctgs   = [];
+        if (empty($forums)) {
+            $this->a['fIswev']['i'][] = __('Empty board');
         } else {
-            $stats['newest_user'] = $this->c->stats->userLast['username'];
+            foreach($forums as $forum) {
+                $ctgs[$forum->cat_id][] = $forum;
+            }
         }
 
         $this->nameTpl      = 'index';
         $this->onlinePos    = 'index';
-        $this->onlineType   = true;
+        $this->onlineDetail = true;
         $this->onlineFilter = false;
         $this->canonical    = $this->c->Router->link('Index');
-        $this->stats        = $stats;
-        $this->online       = $this->usersOnlineInfo();
-        $this->forums       = $this->forumsData();
+        $this->stats        = $this->c->stats;
+        $this->online       = $this->c->Online->calc($this)->info();
+        $this->categoryes   = $ctgs;
 
         return $this;
     }

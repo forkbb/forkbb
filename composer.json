@@ -19,6 +19,6 @@
     "require": {
         "php": ">=5.6.0",
         "artoodetoo/dirk": "dev-master",
-        "MioVisman/Parserus": "^0.9.1"
+        "miovisman/parserus": "dev-master"
     }
 }
