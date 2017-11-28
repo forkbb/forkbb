@@ -5,9 +5,45 @@ namespace ForkBB\Models;
 use ForkBB\Models\DataModel;
 use ForkBB\Core\Container;
 use RuntimeException;
+use InvalidArgumentException;
 
 class Forum extends DataModel
 {
+    /**
+     * Получение родительского раздела
+     *
+     * @throws RuntimeException
+     *
+     * @return Models\Forum
+     */
+    protected function getparent()
+    {
+        if (null === $this->parent_forum_id && $this->id !== 0) {
+            throw new RuntimeException('Parent is not defined');
+        }
+
+        return $this->c->forums->forum($this->parent_forum_id);
+    }
+
+    /**
+     * Статус возможности создания новой темы
+     * 
+     * @return bool
+     */
+    protected function getcanCreateTopic()
+    {
+        $user = $this->c->user;
+        return $this->post_topics == 1
+            || (null === $this->post_topics && $user->g_post_topics == 1)
+            || $user->isAdmin
+            || ($user->isAdmMod && isset($this->moderators[$user->id]));
+    }
+
+    /**
+     * Получение массива подразделов
+     *
+     * @return array
+     */
     protected function getsubforums()
     {
         $sub = [];
@@ -19,6 +55,11 @@ class Forum extends DataModel
         return $sub;
     }
 
+    /**
+     * Получение массива всех дочерних разделов
+     *
+     * @return array
+     */
     protected function getdescendants()
     {
         $all = [];
@@ -30,16 +71,45 @@ class Forum extends DataModel
         return $all;
     }
 
-    protected function getparent()
-    {
-        return $this->c->forums->forum($this->parent_forum_id);
-    }
-
+    /**
+     * Ссылка на раздел
+     *
+     * @return string
+     */
     protected function getlink()
     {
         return $this->c->Router->link('Forum', ['id' => $this->id, 'name' => $this->forum_name]);
     }
 
+    /**
+     * Ссылка на последнее сообщение в разделе
+     *
+     * @return null|string
+     */
+    protected function getlinkLast()
+    {
+        if ($this->last_post_id < 1) {
+            return null;
+        } else {
+            return $this->c->Router->link('ViewPost', ['id' => $this->last_post_id]);
+        }
+    }
+
+    /**
+     * Ссылка на создание новой темы
+     * 
+     * @return string
+     */
+    protected function getlinkCreateTopic()
+    {
+        return $this->c->Router->link('NewTopic', ['id' => $this->id]);
+    }
+
+    /**
+     * Получение массива модераторов
+     *
+     * @return array
+     */
     protected function getmoderators()
     {
         if (empty($this->a['moderators'])) {
@@ -64,9 +134,14 @@ class Forum extends DataModel
         return $moderators;
     }
 
+    /**
+     * Возвращает общую статистику по дереву разделов с корнем в текущем разделе
+     *
+     * @return Models\Forum
+     */
     protected function gettree()
     {
-        if (empty($this->a['tree'])) {
+        if (empty($this->a['tree'])) { //????
             $numT   = (int) $this->num_topics;
             $numP   = (int) $this->num_posts;
             $time   = (int) $this->last_post;
@@ -93,49 +168,58 @@ class Forum extends DataModel
                 'last_poster'    => $poster,
                 'last_topic'     => $topic,
                 'newMessages'    => $fnew,
-                'last_post_link' => empty($postId) ? '' : $this->c->Router->link('ViewPost', ['id' => $postId]),
             ]);
         }
         return $this->a['tree'];
     }
 
     /**
-     * @param int $page
-     * 
-     * @return bool
+     * Количество страниц в разделе
+     *
+     * @throws RuntimeException
+     *
+     * @return int
      */
-    public function hasPage($page)
+    protected function getnumPages()
     {
         if (null === $this->num_topics) {
             throw new RuntimeException('The model does not have the required data');
         }
 
-        if (empty($this->num_topics)) {
-            if ($page !== 1) {
-                return false;
-            }
-            $this->page   = 1;
-            $this->pages  = 1;
-            $this->offset = 0;
-        } else {
-            $pages = ceil($this->num_topics / $this->c->user->disp_topics);
-            if ($page < 1 || $page > $pages) {
-                return false;
-            }
-            $this->page   = $page;
-            $this->pages  = $pages;
-            $this->offset = ($page - 1) * $this->c->user->disp_topics;
-        }
-        return true;
+        return $this->num_topics === 0 ? 1 : (int) ceil($this->num_topics / $this->c->user->disp_topics);
     }
 
     /**
+     * Массив страниц раздела
+     *
+     * @return array
+     */
+    protected function getpagination()
+    {
+        return $this->c->Func->paginate($this->numPages, $this->page, 'Forum', ['id' => $this->id, 'name' => $this->forum_name]);
+    }
+
+    /**
+     * Статус наличия установленной страницы в разделе
+     *
+     * @return bool
+     */
+    public function hasPage()
+    {
+        return $this->page > 0 && $this->page <= $this->numPages;
+    }
+
+    /**
+     * Возвращает массив тем с установленной страницы
+     *
+     * @throws InvalidArgumentException
+     *
      * @return array
      */
     public function topics()
     {
-        if (null === $this->page) {
-            throw new RuntimeException('The model does not have the required data');
+        if (! $this->hasPage()) {
+            throw new InvalidArgumentException('Bad number of displayed page');
         }
 
         if (empty($this->num_topics)) {
@@ -149,7 +233,6 @@ class Forum extends DataModel
             case 2:
                 $sortBy = 'subject ASC';
                 break;
-            case 0:
             default:
                 $sortBy = 'last_post DESC';
                 break;
@@ -157,13 +240,13 @@ class Forum extends DataModel
 
         $vars = [
             ':fid'    => $this->id,
-            ':offset' => $this->offset,
+            ':offset' => ($this->page - 1) * $this->c->user->disp_topics,
             ':rows'   => $this->c->user->disp_topics,
         ];
-        $sql = "SELECT id 
-                FROM ::topics 
-                WHERE forum_id=?i:fid 
-                ORDER BY sticky DESC, {$sortBy}, id DESC 
+        $sql = "SELECT id
+                FROM ::topics
+                WHERE forum_id=?i:fid
+                ORDER BY sticky DESC, {$sortBy}, id DESC
                 LIMIT ?i:offset, ?i:rows";
 
         $ids = $this->c->DB->query($sql, $vars)->fetchAll(\PDO::FETCH_COLUMN);
@@ -186,15 +269,15 @@ class Forum extends DataModel
         }
 
         if ($this->c->user->isGuest) {
-            $sql = "SELECT t.* 
-                    FROM ::topics AS t 
-                    WHERE t.id IN(?ai:ids) 
+            $sql = "SELECT t.*
+                    FROM ::topics AS t
+                    WHERE t.id IN(?ai:ids)
                     ORDER BY t.sticky DESC, t.{$sortBy}, t.id DESC";
         } else {
-            $sql = "SELECT t.*, mot.mt_last_visit, mot.mt_last_read 
-                    FROM ::topics AS t 
-                    LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND t.id=mot.tid) 
-                    WHERE t.id IN (?ai:ids) 
+            $sql = "SELECT t.*, mot.mt_last_visit, mot.mt_last_read
+                    FROM ::topics AS t
+                    LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND t.id=mot.tid)
+                    WHERE t.id IN (?ai:ids)
                     ORDER BY t.sticky DESC, t.{$sortBy}, t.id DESC";
         }
         $topics = $this->c->DB->query($sql, $vars)->fetchAll();

@@ -10,19 +10,19 @@
       </ul>
 @endsection
 @section('linkpost')
-@if($p->topic->post_replies || $p->topic->closed)
+@if($p->topic->canReply || $p->topic->closed)
         <div class="f-link-post">
 @if($p->topic->closed)
           __('Topic closed')
 @else
-          <a class="f-btn" href="{!! $p->NewReply !!}">{!! __('Post reply') !!}</a>
+          <a class="f-btn" href="{!! $p->topic->linkReply !!}">{!! __('Post reply') !!}</a>
 @endif
         </div>
 @endif
 @endsection
-@section('pages')
+@section('pagination')
         <nav class="f-pages">
-@foreach($p->pages as $cur)
+@foreach($p->pagination as $cur)
 @if($cur[2])
           <span class="f-page active">{{ $cur[1] }}</span>
 @elseif($cur[1] === 'space')
@@ -40,9 +40,9 @@
 @extends('layouts/main')
     <div class="f-nav-links">
 @yield('crumbs')
-@if($p->topic->post_replies || $p->topic->closed || $p->pages)
+@if($p->topic->canReply || $p->topic->closed || $p->pagination)
       <div class="f-links-b clearfix">
-@yield('pages')
+@yield('pagination')
 @yield('linkpost')
       </div>
 @endif
@@ -118,10 +118,10 @@
 @endforeach
     </section>
     <div class="f-nav-links">
-@if($p->topic->post_replies || $p->topic->closed || $p->pages)
+@if($p->topic->canReply || $p->topic->closed || $p->pagination)
       <div class="f-links-a clearfix">
 @yield('linkpost')
-@yield('pages')
+@yield('pagination')
       </div>
 @endif
 @yield('crumbs')

@@ -8,7 +8,28 @@ use RuntimeException;
 
 class Topic extends DataModel
 {
-    protected function getpost_replies()
+    /**
+     * Получение родительского раздела
+     *
+     * @throws RuntimeException
+     *
+     * @return Models\Forum
+     */
+    protected function getparent()
+    {
+        if ($this->forum_id < 1) {
+            throw new RuntimeException('Parent is not defined');
+        }
+
+        return $this->c->forums->forum($this->forum_id);
+    }
+
+    /**
+     * Статус возможности ответа в теме
+     *
+     * @return bool
+     */
+    protected function getcanReply()
     {
         if ($this->c->user->isAdmin) {
             return true;
@@ -24,26 +45,32 @@ class Topic extends DataModel
         }
     }
 
-    protected function getnum_views()
-    {
-        return $this->c->config->o_topic_views == '1' ? $this->a['num_views'] : null;
-    }
-
-    protected function getparent()
-    {
-        return $this->c->forums->forum($this->forum_id);
-    }
-
+    /**
+     * Ссылка на тему
+     *
+     * @return string
+     */
     protected function getlink()
     {
-        if ($this->moved_to) {
-            return $this->c->Router->link('Topic', ['id' => $this->moved_to, 'name' => $this->cens()->subject]);
-        } else {
-            return $this->c->Router->link('Topic', ['id' => $this->id, 'name' => $this->cens()->subject]);
-        }
+        return $this->c->Router->link('Topic', ['id' => $this->moved_to ?: $this->id, 'name' => $this->cens()->subject]);
     }
 
-    protected function getlink_last()
+    /**
+     * Ссылка для ответа в теме
+     *
+     * @return string
+     */
+    protected function getlinkReply()
+    {
+        return $this->c->Router->link('NewReply', ['id' => $this->id]);
+    }
+
+    /**
+     * Ссылка для перехода на последнее сообщение темы
+     *
+     * @return null|string
+     */
+    protected function getlinkLast()
     {
         if ($this->moved_to) {
             return null;
@@ -52,95 +79,117 @@ class Topic extends DataModel
         }
     }
 
-    protected function getlink_new()
+    /**
+     * Ссылка для перехода на первое новое сообщение в теме
+     *
+     * @return string
+     */
+    protected function getlinkNew()
     {
-        if ($this->c->user->isGuest || $this->moved_to) {
-            return null;
-        }
-        if ($this->last_post > max(
-            (int) $this->c->user->u_mark_all_read, 
-            (int) $this->parent->mf_mark_all_read,
-            (int) $this->c->user->last_visit, 
-            (int) $this->mt_last_visit)
-        ) {
-            return $this->c->Router->link('TopicViewNew', ['id' => $this->id]);
-        } else {
-            return null;
-        }
+        return $this->c->Router->link('TopicViewNew', ['id' => $this->id]);
     }
 
-    protected function getpost_new()
+    /**
+     * Ссылка для перехода на первое не прочитанное сообщение в теме
+     */
+    protected function getlinkUnread()
+    {
+        return $this->c->Router->link('TopicViewUnread', ['id' => $this->id]);
+    }
+
+    /**
+     * Статус наличия новых сообщений в теме
+     *
+     * @return false|int
+     */
+    protected function gethasNew()
     {
         if ($this->c->user->isGuest || $this->moved_to) {
-            return null;
+            return false;
         }
-        $upper = max(
-            (int) $this->c->user->u_mark_all_read, 
+
+        $time = max(
+            (int) $this->c->user->u_mark_all_read,
             (int) $this->parent->mf_mark_all_read,
-            (int) $this->c->user->last_visit, 
+            (int) $this->c->user->last_visit,
             (int) $this->mt_last_visit
         );
-        if ($this->last_post > $upper) {
-            $vars = [
-                ':tid'   => $this->id,
-                ':visit' => $upper,
-            ];
-            $sql = 'SELECT MIN(id) FROM ::posts WHERE topic_id=?i:tid AND posted>?i:visit';
 
-            $pid = $this->c->DB->query($sql, $vars)->fetchColumn();
-
-            if (! empty($pid)) {
-                return $pid;
-            }
-        }
-
-        return null;
+        return $this->last_post > $time ? $time : false;
     }
 
-    protected function getlink_unread()
+    /**
+     * Статус наличия не прочитанных сообщений в теме
+     *
+     * @return false|int
+     */
+    protected function gethasUnread()
     {
         if ($this->c->user->isGuest || $this->moved_to) {
-            return null;
+            return false;
         }
-        if ($this->last_post > max(
-            (int) $this->c->user->u_mark_all_read, 
-            (int) $this->parent->mf_mark_all_read,
-            (int) $this->mt_last_read)
-        ) {
-            return $this->c->Router->link('TopicViewUnread', ['id' => $this->id]);
-        } else {
-            return null;
-        }
-    }
 
-    protected function getpost_unread()
-    {
-        if ($this->c->user->isGuest || $this->moved_to) {
-            return null;
-        }
-        $lower = max(
-            (int) $this->c->user->u_mark_all_read, 
+        $time = max(
+            (int) $this->c->user->u_mark_all_read,
             (int) $this->parent->mf_mark_all_read,
             (int) $this->mt_last_read
         );
-        if ($this->last_post > $lower) {
-            $vars = [
-                ':tid'   => $this->id,
-                ':visit' => $lower,
-            ];
-            $sql = 'SELECT MIN(id) FROM ::posts WHERE topic_id=?i:tid AND posted>?i:visit';
 
-            $pid = $this->c->DB->query($sql, $vars)->fetchColumn();
-
-            if (! empty($pid)) {
-                return $pid;
-            }
-        }
-
-        return null;
+        return $this->last_post > $time ? $time : false;
     }
 
-    protected function getnum_pages()
+    /**
+     * Номер первого нового сообщения в теме
+     *
+     * @return int
+     */
+    protected function getfirstNew()
+    {
+        if (false === $this->hasNew) {
+            return 0;
+        }
+
+        $vars = [
+            ':tid'   => $this->id,
+            ':visit' => $this->hasNew,
+        ];
+        $sql = 'SELECT MIN(id) FROM ::posts WHERE topic_id=?i:tid AND posted>?i:visit';
+
+        $pid = $this->c->DB->query($sql, $vars)->fetchColumn();
+
+        return $pid ?: 0;
+    }
+
+    /**
+     * Номер первого не прочитанного сообщения в теме
+     *
+     * @return int
+     */
+    protected function getfirstUnread()
+    {
+        if (false === $this->hasUnread) {
+            return 0;
+        }
+
+        $vars = [
+            ':tid'   => $this->id,
+            ':visit' => $this->hasUnread,
+        ];
+        $sql = 'SELECT MIN(id) FROM ::posts WHERE topic_id=?i:tid AND posted>?i:visit';
+
+        $pid = $this->c->DB->query($sql, $vars)->fetchColumn();
+
+        return $pid ?: 0;
+    }
+
+    /**
+     * Количество страниц в теме
+     *
+     * @throws RuntimeException
+     *
+     * @return int
+     */
+    protected function getnumPages()
     {
         if (null === $this->num_replies) {
             throw new RuntimeException('The model does not have the required data');
@@ -150,27 +199,35 @@ class Topic extends DataModel
     }
 
     /**
-     * @returm array
+     * Массив страниц темы
+     *
+     * @return array
      */
-    protected function getpages()
+    protected function getpagination()
     {
         $page = (int) $this->page;
-        if ($page < 1 && $this->num_pages === 1) {
+
+        if ($page < 1 && $this->numPages === 1) {
+            // 1 страницу в списке тем раздела не отображаем
             return [];
-        } else {
-            return $this->c->Func->paginate($this->num_pages, $page, 'Topic', ['id' => $this->id, 'name' => $this->cens()->subject]);
+        } else { //????
+            return $this->c->Func->paginate($this->numPages, $page, 'Topic', ['id' => $this->id, 'name' => $this->cens()->subject]);
         }
     }
 
     /**
+     * Статус наличия установленной страницы в теме
+     *
      * @return bool
      */
     public function hasPage()
     {
-        return $this->page > 0 && $this->page <= $this->num_pages;
+        return $this->page > 0 && $this->page <= $this->numPages;
     }
 
     /**
+     * Вычисляет страницу темы на которой находится данное сообщение
+     *
      * @param int $pid
      */
     public function calcPage($pid)
@@ -190,12 +247,16 @@ class Topic extends DataModel
     }
 
     /**
+     * Возвращает массив сообщений с установленной рание страницы темы
+     *
+     * @throws InvalidArgumentException
+     *
      * @return array
      */
     public function posts()
     {
         if (! $this->hasPage()) {
-            throw new RuntimeException('The model does not have the required data');
+            throw new InvalidArgumentException('Bad number of displayed page');
         }
 
         $offset = ($this->page - 1) * $this->c->user->disp_posts;
@@ -270,5 +331,28 @@ class Topic extends DataModel
         }
         unset($cur);
         return $posts;
+    }
+
+    /**
+     * Статус показа/подсчета просмотров темы
+     *
+     * @return bool
+     */
+    protected function getshowViews()
+    {
+        return $this->c->config->o_topic_views == '1';
+    }
+
+    /**
+     * Увеличивает на 1 количество просмотров темы
+     */
+    public function incViews()
+    {
+        $vars = [
+            ':tid' => $this->id,
+        ];
+        $sql = 'UPDATE ::topics SET num_views=num_views+1 WHERE id=?i:tid';
+
+        $this->c->DB->query($sql, $vars);
     }
 }

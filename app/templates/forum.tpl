@@ -9,16 +9,16 @@
 @endforeach
       </ul>
 @endsection
-@section('linkpost')
-@if($p->newTopic)
+@section('linknewtopic')
+@if($p->forum->canCreateTopic)
         <div class="f-link-post">
-          <a class="f-btn" href="{!! $p->newTopic !!}">{!! __('Post topic') !!}</a>
+          <a class="f-btn" href="{!! $p->forum->linkCreateTopic !!}">{!! __('Post topic') !!}</a>
         </div>
 @endif
 @endsection
-@section('pages')
+@section('pagination')
         <nav class="f-pages">
-@foreach($p->pages as $cur)
+@foreach($p->forum->pagination as $cur)
 @if($cur[2])
           <span class="f-page active">{{ $cur[1] }}</span>
 @elseif($cur[1] === 'space')
@@ -56,10 +56,10 @@
 @endif
     <div class="f-nav-links">
 @yield('crumbs')
-@if($p->newTopic || $p->pages)
+@if($p->forum->canCreateTopic || $p->forum->pagination)
       <div class="f-links-b clearfix">
-@yield('pages')
-@yield('linkpost')
+@yield('pagination')
+@yield('linknewtopic')
       </div>
 @endif
     </div>
@@ -85,9 +85,9 @@
           </li>
 @else
           <li id="topic-{!! $topic->id !!}" class="f-row<!-- inline -->
-@if($topic->link_new) f-fnew
+@if($topic->hasNew !== false) f-fnew
 @endif
-@if($topic->link_unread) f-funread
+@if($topic->hasUnread !== false) f-funread
 @endif
 @if($topic->sticky) f-fsticky
 @endif
@@ -115,9 +115,9 @@
                   <span class="f-polltxt">{!! __('Poll') !!}</span>
 @endif
                   <a class="f-ftname" href="{!! $topic->link !!}">{{ $topic->cens()->subject }}</a>
-@if($topic->pages)
+@if($topic->pagination)
                   <span class="f-tpages">
-@foreach($topic->pages as $cur)
+@foreach($topic->pagination as $cur)
 @if($cur[1] === 'space')
                     <span class="f-page f-pspacer">{!! __('Spacer') !!}</span>
 @else
@@ -126,8 +126,8 @@
 @endforeach
                   </span>
 @endif
-@if($topic->link_new)
-                  <span class="f-newtxt"><a href="{!! $topic->link_new !!}" title="{!! __('New posts info') !!}">{!! __('New posts') !!}</a></span>
+@if($topic->hasNew !== false)
+                  <span class="f-newtxt"><a href="{!! $topic->linkNew !!}" title="{!! __('New posts info') !!}">{!! __('New posts') !!}</a></span>
 @endif
                 </h3>
                 <p class="f-cmposter">{!! __('by') !!} {{ $topic->poster }}</p>
@@ -136,14 +136,14 @@
             <div class="f-cell f-cstats">
               <ul>
                 <li>{!! __('%s Reply', $topic->num_replies, $topic->num()->num_replies) !!}</li>
-@if($topic->num_views)
+@if($topic->showViews)
                 <li>{!! __('%s View', $topic->num_views, $topic->num()->num_views) !!}</li>
 @endif
               </ul>
             </div>
             <div class="f-cell f-clast">
               <ul>
-                <li class="f-cltopic"><a href="{!! $topic->link_last !!}" title="&quot;{{ $topic->cens()->subject }}&quot; - {!! __('Last post') !!}">{{ $topic->dt()->last_post }}</a></li>
+                <li class="f-cltopic"><a href="{!! $topic->linkLast !!}" title="&quot;{{ $topic->cens()->subject }}&quot; - {!! __('Last post') !!}">{{ $topic->dt()->last_post }}</a></li>
                 <li class="f-clposter">{!! __('by') !!} {{ $topic->last_poster }}</li>
               </ul>
             </div>
@@ -154,10 +154,10 @@
       </div>
     </section>
     <div class="f-nav-links">
-@if($p->newTopic || $p->pages)
+@if($p->forum->canCreateTopic || $p->forum->pagination)
       <div class="f-links-a clearfix">
-@yield('linkpost')
-@yield('pages')
+@yield('linknewtopic')
+@yield('pagination')
       </div>
 @endif
 @yield('crumbs')

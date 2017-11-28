@@ -60,7 +60,7 @@
               <div class="f-cell f-clast">
                 <ul>
 @if($cur->tree->last_post_id)
-                  <li class="f-cltopic"><a href="{!! $cur->tree->last_post_link !!}" title="&quot;{{ $cur->tree->cens()->last_topic }}&quot; - {!! __('Last post') !!}">{{ $cur->tree->cens()->last_topic }}</a></li>
+                  <li class="f-cltopic"><a href="{!! $cur->tree->linkLast !!}" title="&quot;{{ $cur->tree->cens()->last_topic }}&quot; - {!! __('Last post') !!}">{{ $cur->tree->cens()->last_topic }}</a></li>
                   <li class="f-clposter">{!! __('by') !!} {{ $cur->tree->last_poster }}</li>
                   <li class="f-cltime">{!! $cur->tree->dt()->last_post !!}</li>
 @else

@@ -69,18 +69,14 @@ class Statistics extends Admin
         $this->tOther    = $stat;
 
         // Check for the existence of various PHP opcode caches/optimizers
-        if (function_exists('mmcache')) {
-            $this->accelerator = '<a href="http://' . __('Turck MMCache link') . '">' . __('Turck MMCache') . '</a>';
-        } elseif (isset($_PHPA)) {
-            $this->accelerator = '<a href="http://' . __('ionCube PHP Accelerator link') . '">' . __('ionCube PHP Accelerator') . '</a>';
-        } elseif (ini_get('apc.enabled')) {
-            $this->accelerator ='<a href="http://' . __('Alternative PHP Cache (APC) link') . '">' . __('Alternative PHP Cache (APC)') . '</a>';
-        } elseif (ini_get('zend_optimizer.optimization_level')) {
-            $this->accelerator = '<a href="http://' . __('Zend Optimizer link') . '">' . __('Zend Optimizer') . '</a>';
-        } elseif (ini_get('eaccelerator.enable')) {
-            $this->accelerator = '<a href="http://' . __('eAccelerator link') . '">' . __('eAccelerator') . '</a>';
+        if (ini_get('opcache.enable') && function_exists('opcache_invalidate')) {
+            $this->accelerator = '<a href="https://secure.php.net/opcache/">Zend OPcache</a>';
+        } elseif (ini_get('wincache.fcenabled')) {
+            $this->accelerator = '<a href="https://secure.php.net/wincache/">Windows Cache for PHP</a>';
+        } elseif (ini_get('apc.enabled') && function_exists('apc_delete_file')) {
+            $this->accelerator = '<a href="https://secure.php.net/apc/">Alternative PHP Cache (APC)</a>'; //???? частичная эмуляция APCu
         } elseif (ini_get('xcache.cacher')) {
-            $this->accelerator = '<a href="http://' . __('XCache link') . '">' . __('XCache') . '</a>';
+            $this->accelerator = '<a href="https://xcache.lighttpd.net/">XCache</a>';
         } else {
             $this->accelerator = __('NA');
         }

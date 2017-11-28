@@ -24,11 +24,21 @@ class User extends DataModel
         parent::__construct($container);
     }
 
+    /**
+     * Статус неподтвержденного
+     *
+     * @return bool
+     */
     protected function getisUnverified()
     {
         return $this->group_id == $this->c->GROUP_UNVERIFIED;
     }
 
+    /**
+     * Статус гостя
+     *
+     * @return bool
+     */
     protected function getisGuest()
     {
         return $this->group_id == $this->c->GROUP_GUEST
@@ -36,27 +46,52 @@ class User extends DataModel
             || $this->group_id == $this->c->GROUP_UNVERIFIED;
     }
 
+    /**
+     * Статус админа
+     *
+     * @return bool
+     */
     protected function getisAdmin()
     {
         return $this->group_id == $this->c->GROUP_ADMIN;
     }
 
+    /**
+     * Статус админа/модератора
+     *
+     * @return bool
+     */
     protected function getisAdmMod()
     {
         return $this->group_id == $this->c->GROUP_ADMIN
             || $this->g_moderator == '1';
     }
 
+    /**
+     * Время последнего действия пользователя
+     *
+     * @return int
+     */
     protected function getlogged()
     {
         return empty($this->a['logged']) ? $this->now : $this->a['logged'];
     }
 
+    /**
+     * Статус наличия данных пользователя в таблице online //????
+     *
+     * @return bool
+     */
     protected function getisLogged()
     {
         return ! empty($this->a['logged']);
     }
 
+    /**
+     * Текущий язык пользователя
+     *
+     * @return string
+     */
     protected function getlanguage()
     {
         $langs = $this->c->Func->getLangs();
@@ -72,6 +107,11 @@ class User extends DataModel
         }
     }
 
+    /**
+     * Текущий стиль отображения
+     *
+     * @return string
+     */
     protected function getstyle()
     {
         $styles = $this->c->Func->getStyles();
@@ -87,26 +127,41 @@ class User extends DataModel
         }
     }
 
+    /**
+     * Ссылка на профиль пользователя
+     *
+     * @return string
+     */
     protected function getlink()
     {
         return $this->c->Router->link('User', ['id' => $this->id, 'name' => $this->username]);
     }
 
+    /**
+     * Ссылка на аватару пользователя
+     *
+     * @return null|string
+     */
     protected function getavatar()
     {
         $filetypes = array('jpg', 'gif', 'png');
-            
+
         foreach ($filetypes as $type) {
             $path = $this->c->DIR_PUBLIC . "/{$this->c->config->o_avatars_dir}/{$this->id}.{$type}";
-        
+
             if (file_exists($path) && getimagesize($path)) {
                 return $this->c->PUBLIC_URL . "/{$this->c->config->o_avatars_dir}/{$this->id}.{$type}";
             }
         }
-    
+
         return null;
     }
 
+    /**
+     * Титул пользователя
+     *
+     * @return string
+     */
     public function title()
     {
         if (isset($this->c->bans->userList[mb_strtolower($this->username)])) { //????
@@ -122,6 +177,11 @@ class User extends DataModel
         }
     }
 
+    /**
+     * Статус online
+     *
+     * @return bool
+     */
     protected function getonline()
     {
         return isset($this->c->Online->online[$this->id]);

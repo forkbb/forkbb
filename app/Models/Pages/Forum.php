@@ -28,26 +28,17 @@ class Forum extends Page
             return $this->c->Redirect->url($forum->redirect_url);
         }
 
-        $page = isset($args['page']) ? (int) $args['page'] : 1;
-        if (! $forum->hasPage($page)) {
+        $forum->page = isset($args['page']) ? (int) $args['page'] : 1;
+        if (! $forum->hasPage()) {
             return $this->c->Message->message('Bad request');
         }
 
         $topics = $forum->topics();
         $user = $this->c->user;
 
-        if (! $user->isGuest) {
-            $lower = max((int) $user->u_mark_all_read, (int) $forum->mf_mark_all_read);
-            $upper = max($lower, (int) $user->last_visit);
-        }
-
         if (empty($topics)) {
             $this->a['fIswev']['i'][] = __('Empty forum');
         }
-        $newOn = $forum->post_topics == 1
-            || (null === $forum->post_topics && $user->g_post_topics == 1)
-            || $user->isAdmin
-            || ($user->isAdmMod && isset($forum->moderators[$user->id]));
 
         $this->fIndex     = 'index';
         $this->nameTpl    = 'forum';
@@ -57,8 +48,6 @@ class Forum extends Page
         $this->forums     = $forum->subforums;
         $this->topics     = $topics;
         $this->crumbs     = $this->crumbs($forum);
-        $this->newTopic   = $newOn ? $this->c->Router->link('NewTopic', ['id' => $args['id']]) : null;
-        $this->pages      = $this->c->Func->paginate($forum->pages, $forum->page, 'Forum', ['id' => $args['id'], 'name' => $forum->forum_name]);
 
         return $this;
     }

@@ -19,7 +19,7 @@ msgid "Forum admin head"
 msgstr "Администрирование форума"
 
 msgid "NA"
-msgstr "N/A"
+msgstr "-"
 
 msgid "Welcome to admin"
 msgstr "Добро пожаловать в панель управления ForkBB! Здесь вы можете настроить ключевые параметры вашего форума. В зависимости от того, Администратор вы или Модератор, вы можете:"
@@ -94,43 +94,7 @@ msgid "Environment data version"
 msgstr "PHP: %s - %s"
 
 msgid "Environment data acc"
-msgstr "Accelerator: %s"
-
-msgid "Turck MMCache"
-msgstr "Turck MMCache"
-
-msgid "Turck MMCache link"
-msgstr "turck-mmcache.sourceforge.net"
-
-msgid "ionCube PHP Accelerator"
-msgstr "ionCube PHP Accelerator"
-
-msgid "ionCube PHP Accelerator link"
-msgstr "www.php-accelerator.co.uk/"
-
-msgid "Alternative PHP Cache (APC)"
-msgstr "Alternative PHP Cache (APC)"
-
-msgid "Alternative PHP Cache (APC) link"
-msgstr "www.php.net/apc/"
-
-msgid "Zend Optimizer"
-msgstr "Zend Optimizer"
-
-msgid "Zend Optimizer link"
-msgstr "www.zend.com/products/guard/zend-optimizer/"
-
-msgid "eAccelerator"
-msgstr "eAccelerator"
-
-msgid "eAccelerator link"
-msgstr "www.eaccelerator.net/"
-
-msgid "XCache"
-msgstr "XCache"
-
-msgid "XCache link"
-msgstr "xcache.lighttpd.net/"
+msgstr "Акселератор: %s"
 
 msgid "Database label"
 msgstr "База данных"

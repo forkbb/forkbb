@@ -10,9 +10,9 @@ class Topic extends Page
 
     /**
      * Переход к первому новому сообщению темы (или в конец)
-     * 
+     *
      * @param array $args
-     * 
+     *
      * @return Page
      */
     public function viewNew(array $args)
@@ -22,9 +22,9 @@ class Topic extends Page
 
     /**
      * Переход к первому непрочитанному сообщению (или в конец)
-     * 
+     *
      * @param array $args
-     * 
+     *
      * @return Page
      */
     public function viewUnread(array $args)
@@ -34,9 +34,9 @@ class Topic extends Page
 
     /**
      * Переход к последнему сообщению темы
-     * 
+     *
      * @param array $args
-     * 
+     *
      * @return Page
      */
     public function viewLast(array $args)
@@ -47,9 +47,9 @@ class Topic extends Page
 
     /**
      * Просмотр темы по номеру сообщения
-     * 
+     *
      * @param array $args
-     * 
+     *
      * @return Page
      */
     public function viewPost(array $args)
@@ -59,9 +59,9 @@ class Topic extends Page
 
     /**
      * Просмотр темы по ее номеру
-     * 
+     *
      * @param array $args
-     * 
+     *
      * @return Page
      */
     public function viewTopic(array $args)
@@ -72,17 +72,17 @@ class Topic extends Page
     /**
      * @param string $type
      * @param Models\Topic $topic
-     * 
+     *
      * @param Page
      */
     protected function go($type, $topic)
     {
         switch ($type) {
             case 'new':
-                $pid = $topic->post_new;
+                $pid = $topic->firstNew;
                 break;
             case 'unread':
-                $pid = $topic->post_unread;
+                $pid = $topic->firstUnread;
                 break;
             case 'last':
                 $pid = $topic->last_post_id;
@@ -90,30 +90,26 @@ class Topic extends Page
             default:
                 return $this->c->Message->message('Bad request');
         }
-        
-        if ($pid) {
-            return $this->c->Redirect->page('ViewPost', ['id' => $pid]);
-        } else {
-            return $this->c->Redirect->page('ViewPost', ['id' => $topic->last_post_id]);
-        }
+
+        return $this->c->Redirect->page('ViewPost', ['id' => $pid ?: $topic->last_post_id]);
     }
 
     /**
      * Подготовка данных для шаблона
-     * 
+     *
      * @param string $type
      * @param array $args
-     * 
+     *
      * @return Page
      */
     protected function view($type, array $args)
     {
         $topic = $this->c->ModelTopic->load((int) $args['id'], $type === 'post');
-            
+
         if (! $topic->id || ! $topic->last_post_id) {
             return $this->c->Message->message('Bad request');
         }
-    
+
         if ($topic->moved_to) {
             return $this->c->Redirect->page('Topic', ['id' => $topic->moved_to]);
         }
@@ -140,8 +136,8 @@ class Topic extends Page
         $this->c->Lang->load('topic');
 
         $user = $this->c->user;
-        
-        
+
+
 /*
         list($fTree, $fDesc, $fAsc) = $this->c->forums;
 
@@ -323,7 +319,7 @@ class Topic extends Page
 */
         // данные для формы быстрого ответа
         $form = null;
-        if ($topic->post_replies && $this->c->config->o_quickpost == '1') {
+        if ($topic->canReply && $this->c->config->o_quickpost == '1') {
             $form = [
                 'action' => $this->c->Router->link('NewReply', ['id' => $topic->id]),
                 'hidden' => [
@@ -395,19 +391,13 @@ class Topic extends Page
         $this->topic        = $topic;
         $this->posts        = $posts;
         $this->crumbs       = $this->crumbs($topic);
-        $this->NewReply     = $topic->post_replies ? $this->c->Router->link('NewReply', ['id' => $topic->id]) : null;
-        $this->pages        = $topic->pages;
+        $this->pagination   = $topic->pagination;
         $this->online       = $this->c->Online->calc($this)->info();
         $this->stats        = null;
         $this->form         = $form;
 
-        if ($this->c->config->o_topic_views == '1') {
-            $vars = [
-                ':tid' => $topic->id,
-            ];
-            $sql = 'UPDATE ::topics SET num_views=num_views+1 WHERE id=?i:tid';
-
-            $this->c->DB->query($sql, $vars);
+        if ($topic->showViews) {
+            $topic->incViews();
         }
 /*
         if (! $user->isGuest) {
