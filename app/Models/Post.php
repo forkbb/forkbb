@@ -112,4 +112,26 @@ class Post extends DataModel
         }
         return $controls;
     }
+
+    /**
+     * HTML код сообщения
+     * 
+     * @return string
+     */
+    public function html()
+    {
+        $bbWList = $this->c->config->p_message_bbcode == '1' ? null : [];
+        $bbBList = $this->c->config->p_message_img_tag == '1' ? [] : ['img'];
+
+        $parser = $this->c->Parser->setAttr('isSign', false)
+            ->setWhiteList($bbWList)
+            ->setBlackList($bbBList)
+            ->parse($this->cens()->message);
+
+        if ($this->hide_smilies != '1' && $this->c->config->o_smilies == '1') {
+            $parser->detectSmilies();
+        }
+
+        return $parser->getHtml();
+    }
 }

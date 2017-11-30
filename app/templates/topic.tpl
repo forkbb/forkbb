@@ -22,7 +22,7 @@
 @endsection
 @section('pagination')
         <nav class="f-pages">
-@foreach($p->pagination as $cur)
+@foreach($p->topic->pagination as $cur)
 @if($cur[2])
           <span class="f-page active">{{ $cur[1] }}</span>
 @elseif($cur[1] === 'space')
@@ -40,7 +40,7 @@
 @extends('layouts/main')
     <div class="f-nav-links">
 @yield('crumbs')
-@if($p->topic->canReply || $p->topic->closed || $p->pagination)
+@if($p->topic->canReply || $p->topic->closed || $p->topic->pagination)
       <div class="f-links-b clearfix">
 @yield('pagination')
 @yield('linkpost')
@@ -70,7 +70,7 @@
 @else
               <li class="f-username">{{ $post->user->username }}</li>
 @endif
-@if($post->showUserAvatar)
+@if($post->showUserAvatar && $post->user->avatar)
               <li class="f-avatar">
                 <img alt="{{ $post->user->username }}" src="{!! $post->user->avatar !!}">
               </li>
@@ -91,12 +91,12 @@
 @endif
           </address>
           <div class="f-post-right f-post-main">
-            {!! $post->message !!}
+            {!! $post->html() !!}
           </div>
 @if($post->showSignature && $post->user->signature)
           <div class="f-post-right f-post-signature">
             <hr>
-            {!! $post->user->signature !!}
+            {!! $post->user->htmlSign !!}
           </div>
 @endif
         </div>
@@ -118,7 +118,7 @@
 @endforeach
     </section>
     <div class="f-nav-links">
-@if($p->topic->canReply || $p->topic->closed || $p->pagination)
+@if($p->topic->canReply || $p->topic->closed || $p->topic->pagination)
       <div class="f-links-a clearfix">
 @yield('linkpost')
 @yield('pagination')

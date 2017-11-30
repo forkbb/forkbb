@@ -49,23 +49,23 @@
     },
     {
         "name": "miovisman/parserus",
-        "version": "0.9.1",
-        "version_normalized": "0.9.1.0",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/MioVisman/Parserus.git",
-            "reference": "d039178d46c989ebb8eb89970b52eb6ce927c817"
+            "reference": "bbdade91cfc4927ebb8b5b984f90a52075f75ece"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/MioVisman/Parserus/zipball/d039178d46c989ebb8eb89970b52eb6ce927c817",
-            "reference": "d039178d46c989ebb8eb89970b52eb6ce927c817",
+            "url": "https://api.github.com/repos/MioVisman/Parserus/zipball/bbdade91cfc4927ebb8b5b984f90a52075f75ece",
+            "reference": "bbdade91cfc4927ebb8b5b984f90a52075f75ece",
             "shasum": ""
         },
         "require": {
             "php": ">=5.4.0"
         },
-        "time": "2016-11-26 06:56:51",
+        "time": "2017-11-21 06:34:31",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

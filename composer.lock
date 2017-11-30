@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f222f403c8d48f00cb5e3e37f680ebcb",
-    "content-hash": "b8c1ffae094a89502ad8a3c60385d4b8",
+    "hash": "683b977706502db4bb7fc7ba3cd8ca71",
+    "content-hash": "2299621b481bdbc8ce629eee53b1b82e",
     "packages": [
         {
             "name": "artoodetoo/dirk",
@@ -55,16 +55,16 @@
         },
         {
             "name": "miovisman/parserus",
-            "version": "0.9.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MioVisman/Parserus.git",
-                "reference": "d039178d46c989ebb8eb89970b52eb6ce927c817"
+                "reference": "bbdade91cfc4927ebb8b5b984f90a52075f75ece"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MioVisman/Parserus/zipball/d039178d46c989ebb8eb89970b52eb6ce927c817",
-                "reference": "d039178d46c989ebb8eb89970b52eb6ce927c817",
+                "url": "https://api.github.com/repos/MioVisman/Parserus/zipball/bbdade91cfc4927ebb8b5b984f90a52075f75ece",
+                "reference": "bbdade91cfc4927ebb8b5b984f90a52075f75ece",
                 "shasum": ""
             },
             "require": {
@@ -93,14 +93,15 @@
                 "bbcode",
                 "parser"
             ],
-            "time": "2016-11-26 06:56:51"
+            "time": "2017-11-21 06:34:31"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "artoodetoo/dirk": 20
+        "artoodetoo/dirk": 20,
+        "miovisman/parserus": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

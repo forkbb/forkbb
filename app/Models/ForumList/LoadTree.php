@@ -100,7 +100,7 @@ class LoadTree extends MethodModel
         foreach ($list as $forum) {
             $t = max($max, (int) $forum->mf_mark_all_read);
             if ($forum->last_post > $t) {
-                $time[$id] = $t;
+                $time[$forum->id] = $t;
             }
         }
 

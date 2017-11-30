@@ -330,6 +330,7 @@ class Topic extends DataModel
             $cur = $this->c->ModelPost->setAttrs($cur);
         }
         unset($cur);
+        $this->timeMax = $timeMax;
         return $posts;
     }
 
@@ -354,5 +355,49 @@ class Topic extends DataModel
         $sql = 'UPDATE ::topics SET num_views=num_views+1 WHERE id=?i:tid';
 
         $this->c->DB->query($sql, $vars);
+    }
+
+    /**
+     * Обновление меток последнего визита и последнего прочитанного сообщения
+     */
+    public function updateVisits()
+    {
+        if ($this->c->user->isGuest) {
+            return;
+        }
+
+        $vars = [
+            ':uid'   => $this->c->user->id,
+            ':tid'   => $this->id,
+            ':read'  => $this->mt_last_read,
+            ':visit' => $this->mt_last_visit,
+        ];
+        $flag = false;
+
+        if (false !== $this->hasNew) {
+            $flag = true;
+            $vars[':visit'] = $this->last_post;
+        }
+        if (false !== $this->hasUnread && $this->timeMax > $this->hasUnread) {
+            $flag = true;
+            $vars[':read'] = $this->timeMax;
+        }
+
+        if ($flag) {
+            if (empty($this->mt_last_read) && empty($this->mt_last_visit)) {
+                $sql = 'INSERT INTO ::mark_of_topic (uid, tid, mt_last_visit, mt_last_read)
+                        SELECT ?i:uid, ?i:tid, ?i:visit, ?i:read
+                        FROM ::groups
+                        WHERE NOT EXISTS (SELECT 1
+                                          FROM ::mark_of_topic
+                                          WHERE uid=?i:uid AND tid=?i:tid)
+                        LIMIT 1';
+            } else {
+                $sql = 'UPDATE ::mark_of_topic
+                        SET mt_last_visit=?i:visit, mt_last_read=?i:read
+                        WHERE uid=?i:uid AND tid=?i:tid';
+            }
+            $this->c->DB->exec($sql, $vars);
+        }
     }
 }

@@ -4,10 +4,8 @@ return [
     ['tag' => 'ROOT',
      'type' => 'block',
      'handler' => function($body) {
-         $body = '<p>' . $body . '</p>';
-
          // Replace any breaks next to paragraphs so our replace below catches them
-         $body = preg_replace('%(</?p>)(?:\s*?<br>){1,2}%', '$1', $body);
+         $body = preg_replace('%(</?p>)(?:\s*?<br>){1,2}%', '$1', '<p>' . $body . '</p>');
          $body = preg_replace('%(?:<br>\s*?){1,2}(</?p>)%', '$1', $body);
 
          // Remove any empty paragraph tags (inserted via quotes/lists/code/etc) which should be stripped
@@ -32,9 +30,7 @@ return [
          'no attr' => true,
      ],
      'handler' => function($body, $attrs) {
-         $body = trim($body, "\n\r");
-         $class = substr_count($body, "\n") > 28 ? ' class="vscroll"' : '';
-         return '</p><div class="codebox"><pre' . $class . '><code>' . $body . '</code></pre></div><p>';
+         return '</p><div class="codebox"><pre><code>' . trim($body, "\n\r") . '</code></pre></div><p>';
      },
     ],
     ['tag' => 'b',
@@ -86,7 +82,7 @@ return [
      },
     ],
     ['tag' => 'color',
-     'self nesting' => true,
+     'self nesting' => 5,
      'attrs' => [
          'Def' => [
              'format' => '%^(?:\#(?:[\dA-Fa-f]{3}){1,2}|(?:aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|orange|purple|red|silver|teal|yellow|white))$%',
@@ -97,7 +93,7 @@ return [
      },
     ],
     ['tag' => 'colour',
-     'self nesting' => true,
+     'self nesting' => 5,
      'attrs' => [
          'Def' => [
              'format' => '%^(?:\#(?:[\dA-Fa-f]{3}){1,2}|(?:aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|orange|purple|red|silver|teal|yellow|white))$%',
@@ -108,7 +104,7 @@ return [
      },
     ],
     ['tag' => 'background',
-     'self nesting' => true,
+     'self nesting' => 5,
      'attrs' => [
          'Def' => [
              'format' => '%^(?:\#(?:[\dA-Fa-f]{3}){1,2}|(?:aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|orange|purple|red|silver|teal|yellow|white))$%',
@@ -119,7 +115,7 @@ return [
      },
     ],
     ['tag' => 'size',
-     'self nesting' => true,
+     'self nesting' => 5,
      'attrs' => [
          'Def' => [
              'format' => '%^[1-9]\d*(?:em|ex|pt|px|\%)?$%',
@@ -156,7 +152,7 @@ return [
      },
     ],
     ['tag' => 'font',
-     'self nesting' => true,
+     'self nesting' => 5,
      'attrs' => [
          'Def' => [
              'format' => '%^[a-z\d, -]+$%i',
@@ -187,7 +183,7 @@ return [
     ],
     ['tag' => '*',
      'type' => 'block',
-     'self nesting' => true,
+     'self nesting' => 5,
      'parents' => ['list'],
      'auto' => true,
      'handler' => function($body) {
@@ -196,7 +192,7 @@ return [
     ],
     ['tag' => 'list',
      'type' => 'list',
-     'self nesting' => true,
+     'self nesting' => 5,
      'tags only' => true,
      'attrs' => [
          'Def' => true,
@@ -251,7 +247,7 @@ return [
     ],
     ['tag' => 'quote',
      'type' => 'block',
-     'self nesting' => true,
+     'self nesting' => 5,
      'attrs' => [
          'Def' => true,
          'no attr' => true,
@@ -268,7 +264,7 @@ return [
     ],
     ['tag' => 'spoiler',
      'type' => 'block',
-     'self nesting' => true,
+     'self nesting' => 5,
      'attrs' => [
          'Def' => true,
          'no attr' => true,
@@ -354,7 +350,7 @@ return [
          }
 
          if ($url === $body) {
-             $url = htmlspecialchars_decode($url, ENT_QUOTES);
+             $url = htmlspecialchars_decode($url, ENT_QUOTES | ENT_HTML5);
              $url = mb_strlen($url, 'UTF-8') > 55 ? mb_substr($url, 0, 39, 'UTF-8') . ' … ' . mb_substr($url, -10, null, 'UTF-8') : $url;
              $body = $parser->e($url);
          }
@@ -365,7 +361,7 @@ return [
     ['tag' => 'table',
      'type' => 'table',
      'tags only' => true,
-     'self nesting' => true,
+     'self nesting' => 5,
      'attrs' => [
          'no attr' => true,
          'style' => true,
@@ -390,7 +386,7 @@ return [
     ['tag' => 'caption',
      'type' => 'block',
      'parents' => ['table'],
-     'self nesting' => true,
+     'self nesting' => 5,
      'attrs' => [
          'no attr' => true,
          'style' => true,
@@ -407,7 +403,7 @@ return [
      'type' => 't',
      'parents' => ['table'],
      'tags only' => true,
-     'self nesting' => true,
+     'self nesting' => 5,
      'attrs' => [
          'no attr' => true,
          'style' => true,
@@ -424,7 +420,7 @@ return [
      'type' => 't',
      'parents' => ['table'],
      'tags only' => true,
-     'self nesting' => true,
+     'self nesting' => 5,
      'attrs' => [
          'no attr' => true,
          'style' => true,
@@ -441,7 +437,7 @@ return [
      'type' => 't',
      'parents' => ['table'],
      'tags only' => true,
-     'self nesting' => true,
+     'self nesting' => 5,
      'attrs' => [
          'no attr' => true,
          'style' => true,
@@ -458,7 +454,7 @@ return [
      'type' => 'tr',
      'parents' => ['table', 't'],
      'tags only' => true,
-     'self nesting' => true,
+     'self nesting' => 5,
      'attrs' => [
          'no attr' => true,
          'style' => true,
@@ -474,7 +470,7 @@ return [
     ['tag' => 'th',
      'type' => 'block',
      'parents' => ['tr'],
-     'self nesting' => true,
+     'self nesting' => 5,
      'attrs' => [
          'no attr' => true,
          'style' => true,
@@ -492,7 +488,7 @@ return [
     ['tag' => 'td',
      'type' => 'block',
      'parents' => ['tr'],
-     'self nesting' => true,
+     'self nesting' => 5,
      'attrs' => [
          'no attr' => true,
          'style' => true,

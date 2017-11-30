@@ -391,7 +391,6 @@ class Topic extends Page
         $this->topic        = $topic;
         $this->posts        = $posts;
         $this->crumbs       = $this->crumbs($topic);
-        $this->pagination   = $topic->pagination;
         $this->online       = $this->c->Online->calc($this)->info();
         $this->stats        = null;
         $this->form         = $form;
@@ -399,6 +398,7 @@ class Topic extends Page
         if ($topic->showViews) {
             $topic->incViews();
         }
+        $topic->updateVisits();
 /*
         if (! $user->isGuest) {
             $vars = [
