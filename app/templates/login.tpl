@@ -1,4 +1,4 @@
-@extends('layouts/main')
+@extends ('layouts/main')
     <section class="f-main f-login">
       <div class="f-fdiv f-lrdiv">
         <h2>{!! __('Login') !!}</h2>
@@ -20,7 +20,7 @@
             </dl>
             <dl>
               <dt></dt>
-@if($p->save)
+@if ($p->save)
               <dd><label class="f-child2"><input type="checkbox" name="save" value="1" tabindex="3" checked>{!! __('Remember me') !!}</label></dd>
 @else
               <dd><label class="f-child2"><input type="checkbox" name="save" value="1" tabindex="3">{!! __('Remember me') !!}</label></dd>
@@ -32,7 +32,7 @@
           </p>
         </form>
       </div>
-@if($p->regLink)
+@if ($p->regLink)
       <div class="f-fdiv f-lrdiv">
         <p class="f-child3"><a href="{!! $p->regLink !!}" tabindex="6">{!! __('Not registered') !!}</a></p>
       </div>

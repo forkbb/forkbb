@@ -23,6 +23,32 @@ class View extends Dirk
     }
 
     /**
+     * Compile Statements that start with "@"
+     *
+     * @param  string  $value
+     * 
+     * @return mixed
+     */
+    protected function compileStatements($value)
+    {
+        return preg_replace_callback(
+            '/[ \t]*+\B@(\w+)([ \t]*)(\( ( (?>[^()]+) | (?3) )* \))?/x',
+            function($match) {
+                if (method_exists($this, $method = 'compile' . ucfirst($match[1]))) {
+                    if (isset($match[3])) {
+                        return $this->$method($match[3]);
+                    } else {
+                        return $this->$method('') . $match[2];
+                    }
+                } else {
+                    return $match[0];
+                }
+            },
+            $value
+        );
+    }
+
+    /**
      * Трансформация скомпилированного шаблона
      *
      * @param string $value

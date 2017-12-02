@@ -1,4 +1,4 @@
-@extends('layouts/admin')
+@extends ('layouts/admin')
       <section class="f-admin">
         <h2>{!! __('Add group subhead') !!}</h2>
         <div class="f-fdiv">
@@ -8,12 +8,8 @@
               <dt>{!! __('New group label') !!}</dt>
               <dd>
                 <select class="f-ctrl" id="id-basegroup" name="basegroup" tabindex="{!! ++$p->tabindex !!}">
-@foreach($p->groupsNew as $cur)
-@if ($cur[0] == $p->defaultGroup)
-                  <option value="{!! $cur[0] !!}" selected>{{ $cur[1] }}</option>
-@else
-                  <option value="{!! $cur[0] !!}">{{ $cur[1] }}</option>
-@endif
+@foreach ($p->groupsNew as $cur)
+                  <option value="{!! $cur[0] !!}" @if ($cur[0] == $p->defaultGroup) selected @endif>{{ $cur[1] }}</option>
 @endforeach
                 </select>
                 <span class="f-child4">{!! __('New group help') !!}</span>
@@ -34,12 +30,8 @@
               <dt>{!! __('Default group label') !!}</dt>
               <dd>
                 <select class="f-ctrl" id="id-defaultgroup" name="defaultgroup" tabindex="{!! ++$p->tabindex !!}">
-@foreach($p->groupsDefault as $cur)
-@if ($cur[0] == $p->defaultGroup)
-                  <option value="{!! $cur[0] !!}" selected>{{ $cur[1] }}</option>
-@else
-                  <option value="{!! $cur[0] !!}">{{ $cur[1] }}</option>
-@endif
+@foreach ($p->groupsDefault as $cur)
+                  <option value="{!! $cur[0] !!}" @if ($cur[0] == $p->defaultGroup) selected @endif>{{ $cur[1] }}</option>
 @endforeach
                 </select>
                 <span class="f-child4">{!! __('Default group help') !!}</span>
@@ -56,12 +48,12 @@
         <div>
           <p>{!! __('Edit groups info') !!}</p>
           <ol class="f-grlist">
-@foreach($p->groupsList as $cur)
+@foreach ($p->groupsList as $cur)
             <li>
               <a href="{!! $cur[0] !!}" tabindex="{!! ++$p->tabindex !!}">{{ $cur[1] }}</a>
-@if($cur[2])
+  @if ($cur[2])
               <a class="f-btn" href="{!! $cur[2] !!}" tabindex="{!! ++$p->tabindex !!}">{!! __('Delete link') !!}</a>
-@endif
+  @endif
             </li>
 @endforeach
           </ol>

@@ -1,42 +1,44 @@
-@section('crumbs')
+@section ('crumbs')
       <ul class="f-crumbs">
-@foreach($p->crumbs as $cur)
-@if($cur[2])
-        <li class="f-crumb"><a href="{!! $cur[0] !!}" class="active">{{ $cur[1] }}</a></li>
-@else
-        <li class="f-crumb"><a href="{!! $cur[0] !!}">{{ $cur[1] }}</a></li>
-@endif
-@endforeach
+  @foreach ($p->crumbs as $cur)
+        <li class="f-crumb"><!-- inline -->
+    @if ($cur[0])
+          <a href="{!! $cur[0] !!}" @if ($cur[2]) class="active" @endif>{{ $cur[1] }}</a>
+    @else
+          <span @if ($cur[2]) class="active" @endif>{{ $cur[1] }}</span>
+    @endif
+        </li><!-- endinline -->
+  @endforeach
       </ul>
 @endsection
-@section('linknewtopic')
-@if($p->forum->canCreateTopic)
+@section ('linknewtopic')
+  @if ($p->forum->canCreateTopic)
         <div class="f-link-post">
           <a class="f-btn" href="{!! $p->forum->linkCreateTopic !!}">{!! __('Post topic') !!}</a>
         </div>
-@endif
+  @endif
 @endsection
-@section('pagination')
+@section ('pagination')
         <nav class="f-pages">
-@foreach($p->forum->pagination as $cur)
-@if($cur[2])
+  @foreach ($p->forum->pagination as $cur)
+    @if ($cur[2])
           <span class="f-page active">{{ $cur[1] }}</span>
-@elseif($cur[1] === 'space')
+    @elseif ($cur[1] === 'space')
           <span class="f-page f-pspacer">{!! __('Spacer') !!}</span>
-@elseif($cur[1] === 'prev')
+    @elseif ($cur[1] === 'prev')
           <a rel="prev" class="f-page f-pprev" href="{!! $cur[0] !!}">{!! __('Previous') !!}</a>
-@elseif($cur[1] === 'next')
+    @elseif ($cur[1] === 'next')
           <a rel="next" class="f-page f-pnext" href="{!! $cur[0] !!}">{!! __('Next') !!}</a>
-@else
+    @else
           <a class="f-page" href="{!! $cur[0] !!}">{{ $cur[1] }}</a>
-@endif
-@endforeach
+    @endif
+  @endforeach
         </nav>
 @endsection
-@extends('layouts/main')
-@if($forums = $p->forums)
+@extends ('layouts/main')
+@if ($forums = $p->forums)
     <div class="f-nav-links">
-@yield('crumbs')
+  @yield ('crumbs')
     </div>
     <section class="f-subforums">
       <ol class="f-ftlist">
@@ -48,22 +50,22 @@
               <div class="f-hcell f-cstats">{!! __('Stats') !!}</div>
               <div class="f-hcell f-clast">{!! __('Last post') !!}</div>
             </li>
-@include('layouts/subforums')
+  @include ('layouts/subforums')
           </ol>
         </li>
       </ol>
     </section>
 @endif
     <div class="f-nav-links">
-@yield('crumbs')
-@if($p->forum->canCreateTopic || $p->forum->pagination)
+@yield ('crumbs')
+@if ($p->forum->canCreateTopic || $p->forum->pagination)
       <div class="f-links-b clearfix">
-@yield('pagination')
-@yield('linknewtopic')
+  @yield ('pagination')
+  @yield ('linknewtopic')
       </div>
 @endif
     </div>
-@if($p->topics)
+@if ($p->topics)
     <section class="f-main f-forum">
       <h2>{{ $p->forum->forum_name }}</h2>
       <div class="f-ftlist">
@@ -73,8 +75,8 @@
             <div class="f-hcell f-cstats">{!! __('Stats') !!}</div>
             <div class="f-hcell f-clast">{!! __('Last post') !!}</div>
           </li>
-@foreach($p->topics as $topic)
-@if($topic->moved_to)
+  @foreach ($p->topics as $topic)
+    @if ($topic->moved_to)
           <li id="topic-{!! $topic->id !!}" class="f-row f-fredir">
             <div class="f-cell f-cmain">
               <div class="f-ficon"></div>
@@ -83,52 +85,39 @@
               </div>
             </div>
           </li>
-@else
-          <li id="topic-{!! $topic->id !!}" class="f-row<!-- inline -->
-@if($topic->hasNew !== false) f-fnew
-@endif
-@if($topic->hasUnread !== false) f-funread
-@endif
-@if($topic->sticky) f-fsticky
-@endif
-@if($topic->closed) f-fclosed
-@endif
-@if($topic->poll_type) f-fpoll
-@endif
-@if($topic->dot) f-fposted
-@endif
-            "><!-- endinline -->
+    @else
+          <li id="topic-{!! $topic->id !!}" class="f-row @if ($topic->hasNew !== false) f-fnew @endif @if ($topic->hasUnread !== false) f-funread @endif @if ($topic->sticky) f-fsticky @endif @if ($topic->closed) f-fclosed @endif @if ($topic->poll_type) f-fpoll @endif @if ($topic->dot) f-fposted @endif">
             <div class="f-cell f-cmain">
               <div class="f-ficon"></div>
               <div class="f-finfo">
                 <h3>
-@if($topic->dot)
+      @if ($topic->dot)
                   <span class="f-tdot">·</span>
-@endif
-@if($topic->sticky)
+      @endif
+      @if ($topic->sticky)
                   <span class="f-stickytxt">{!! __('Sticky') !!}</span>
-@endif
-@if($topic->closed)
+      @endif
+      @if ($topic->closed)
                   <span class="f-closedtxt">{!! __('Closed') !!}</span>
-@endif
-@if($topic->poll_type)
+      @endif
+      @if ($topic->poll_type)
                   <span class="f-polltxt">{!! __('Poll') !!}</span>
-@endif
+      @endif
                   <a class="f-ftname" href="{!! $topic->link !!}">{{ $topic->cens()->subject }}</a>
-@if($topic->pagination)
+      @if ($topic->pagination)
                   <span class="f-tpages">
-@foreach($topic->pagination as $cur)
-@if($cur[1] === 'space')
+        @foreach ($topic->pagination as $cur)
+          @if ($cur[1] === 'space')
                     <span class="f-page f-pspacer">{!! __('Spacer') !!}</span>
-@else
+          @else
                     <a class="f-page" href="{!! $cur[0] !!}">{{ $cur[1] }}</a>
-@endif
-@endforeach
+           @endif
+        @endforeach
                   </span>
-@endif
-@if($topic->hasNew !== false)
+      @endif
+      @if ($topic->hasNew !== false)
                   <span class="f-newtxt"><a href="{!! $topic->linkNew !!}" title="{!! __('New posts info') !!}">{!! __('New posts') !!}</a></span>
-@endif
+      @endif
                 </h3>
                 <p class="f-cmposter">{!! __('by') !!} {{ $topic->poster }}</p>
               </div>
@@ -136,9 +125,9 @@
             <div class="f-cell f-cstats">
               <ul>
                 <li>{!! __('%s Reply', $topic->num_replies, $topic->num()->num_replies) !!}</li>
-@if($topic->showViews)
+      @if ($topic->showViews)
                 <li>{!! __('%s View', $topic->num_views, $topic->num()->num_views) !!}</li>
-@endif
+      @endif
               </ul>
             </div>
             <div class="f-cell f-clast">
@@ -148,18 +137,18 @@
               </ul>
             </div>
           </li>
-@endif
-@endforeach
+    @endif
+  @endforeach
         </ol>
       </div>
     </section>
     <div class="f-nav-links">
-@if($p->forum->canCreateTopic || $p->forum->pagination)
+  @if ($p->forum->canCreateTopic || $p->forum->pagination)
       <div class="f-links-a clearfix">
-@yield('linknewtopic')
-@yield('pagination')
+    @yield ('linknewtopic')
+    @yield ('pagination')
       </div>
-@endif
-@yield('crumbs')
+  @endif
+  @yield ('crumbs')
     </div>
 @endif

@@ -26,7 +26,7 @@ class Register extends Page
             'agree'    => 'required|token:Register',
             'on'       => 'integer',
             'email'    => ['required_with:on|string:trim,lower|email|check_email', __('Email')],
-            'username' => ['required_with:on|string:trim|min:2|max:25|login|check_username', __('Username')],
+            'username' => ['required_with:on|string:trim,spaces|min:2|max:25|login|check_username', __('Username')],
             'password' => ['required_with:on|string|min:16|password', __('Passphrase')],
         ])->setMessages([
             'agree.required'    => ['cancel', 'cancel'],
@@ -57,7 +57,7 @@ class Register extends Page
         $this->agree      = $v->agree;
         $this->on         = '1';
         $this->email      = $v->email;
-        $this->username  = $v->username;
+        $this->username   = $v->username;
 
         return $this;
     }
@@ -96,7 +96,6 @@ class Register extends Page
      */
     public function vCheckUsername(Validator $v, $username)
     {
-        $username = preg_replace('%\s+%su', ' ', $username);
         $error = false;
         $user = $this->c->ModelUser;
         $user->__username = $username;

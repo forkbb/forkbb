@@ -2,8 +2,11 @@
 
 namespace ForkBB\Models;
 
-use ForkBB\Models\DataModel;
 use ForkBB\Core\Container;
+use ForkBB\Models\DataModel;
+use ForkBB\Models\Model;
+use ForkBB\Models\Forum;
+use RuntimeException;
 
 class User extends DataModel
 {
@@ -65,6 +68,26 @@ class User extends DataModel
     {
         return $this->group_id == $this->c->GROUP_ADMIN
             || $this->g_moderator == '1';
+    }
+
+    /**
+     * Статус модератора для указанной модели
+     * 
+     * @param Model $model
+     * 
+     * @throws RuntimeException
+     * 
+     * @return bool
+     */
+    public function isModerator(Model $model)
+    {
+        while (! $model instanceof Forum) {
+            $model = $model->parent;
+            if (! $model instanceof Model) {
+                throw new RuntimeException('Moderator\'s rights can not be found');
+            }
+        }
+        return isset($model->moderators[$this->id]);
     }
 
     /**

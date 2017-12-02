@@ -22,19 +22,17 @@ class Load extends MethodModel
                 ':uid' => $this->c->user->id,
             ];
             if ($this->c->user->isGuest) {
-                $sql = 'SELECT t.*, f.moderators
+                $sql = 'SELECT t.*
                         FROM ::topics AS t
-                        INNER JOIN ::forums AS f ON f.id=t.forum_id
                         INNER JOIN ::posts AS p ON t.id=p.topic_id
                         WHERE p.id=?i:pid';
 
             } else {
-                $sql = 'SELECT t.*, f.moderators, s.user_id AS is_subscribed, mof.mf_mark_all_read, mot.mt_last_visit, mot.mt_last_read
+                $sql = 'SELECT t.*, s.user_id AS is_subscribed, mof.mf_mark_all_read, mot.mt_last_visit, mot.mt_last_read
                         FROM ::topics AS t
-                        INNER JOIN ::forums AS f ON f.id=t.forum_id
                         INNER JOIN ::posts AS p ON t.id=p.topic_id
                         LEFT JOIN ::topic_subscriptions AS s ON (t.id=s.topic_id AND s.user_id=?i:uid)
-                        LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND f.id=mof.fid)
+                        LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND t.forum_id=mof.fid)
                         LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND t.id=mot.tid)
                         WHERE p.id=?i:pid';
             }
@@ -44,17 +42,15 @@ class Load extends MethodModel
                 ':uid' => $this->c->user->id,
             ];
             if ($this->c->user->isGuest) {
-                $sql = 'SELECT t.*, f.moderators
+                $sql = 'SELECT t.*
                         FROM ::topics AS t
-                        INNER JOIN ::forums AS f ON f.id=t.forum_id
                         WHERE t.id=?i:tid';
 
             } else {
-                $sql = 'SELECT t.*, f.moderators, s.user_id AS is_subscribed, mof.mf_mark_all_read, mot.mt_last_visit, mot.mt_last_read
+                $sql = 'SELECT t.*, s.user_id AS is_subscribed, mof.mf_mark_all_read, mot.mt_last_visit, mot.mt_last_read
                         FROM ::topics AS t
-                        INNER JOIN ::forums AS f ON f.id=t.forum_id
                         LEFT JOIN ::topic_subscriptions AS s ON (t.id=s.topic_id AND s.user_id=?i:uid)
-                        LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND f.id=mof.fid)
+                        LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND t.forum_id=mof.fid)
                         LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND t.id=mot.tid)
                         WHERE t.id=?i:tid';
             }
@@ -64,11 +60,9 @@ class Load extends MethodModel
 
         // тема отсутствует или недоступна
         if (empty($data)) {
-            return $this->emptyTopic();
+            return $this->model->setAttrs([]);
         }
 
-        $forForum['moderators'] = $data['moderators'];
-        unset($data['moderators']);
         if (! $this->c->user->isGuest) {
             $forForum['mf_mark_all_read'] = $data['mf_mark_all_read'];
             unset($data['mf_mark_all_read']);
@@ -76,18 +70,15 @@ class Load extends MethodModel
         $this->model->setAttrs($data);
         $forum = $this->model->parent;
 
-        // раздел не доступен
+        // раздел недоступен
         if (empty($forum)) {
-            return $this->emptyTopic();
+            return $this->model->setAttrs([]);
         }
 
-        $forum->replAttrs($forForum);
+        if (! empty($forForum)) {
+            $forum->replAttrs($forForum);
+        }
 
         return $this->model;
-    }
-
-    protected function emptyTopic()
-    {
-        return $this->model->setAttrs([]);
     }
 }

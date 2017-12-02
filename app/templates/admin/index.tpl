@@ -1,4 +1,4 @@
-@extends('layouts/admin')
+@extends ('layouts/admin')
       <section class="f-admin">
         <h2>{!! __('Forum admin head') !!}</h2>
         <div>

@@ -37,7 +37,7 @@ class Topic extends DataModel
             return false;
         } elseif ($this->parent->post_replies == '1'
             || (null === $this->parent->post_replies && $this->c->user->g_post_replies == '1')
-            || ($this->c->user->isAdmMod && isset($this->parent->moderators[$this->c->user->id]))
+            || $this->c->user->isModerator($this)
         ) {
             return true;
         } else {

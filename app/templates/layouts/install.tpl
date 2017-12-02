@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{!! __('ForkBB Installation') !!}</title>
-@foreach($p->pageHeads as $cur)
+@foreach ($p->pageHeads as $cur)
   <{!! $cur !!}>
 @endforeach
 </head>
@@ -16,10 +16,10 @@
         <p class="f-description">{!! __('Welcome') !!}</p>
       </div>
     </header>
-@if($p->fIswev)
-@include('layouts/iswev')
+@if ($p->fIswev)
+  @include ('layouts/iswev')
 @endif
-@if(is_array($p->installLangs))
+@if (is_array($p->installLangs))
     <section class="f-install">
       <div class="f-fdiv">
         <h2>{!! __('Choose install language') !!}</h2>
@@ -27,13 +27,9 @@
           <div>
             <label class="f-child1">{!! __('Install language') !!}</label>
             <select class="f-ctrl" id="id-installlang" name="installlang">
-@foreach($p->installLangs as $cur)
-@if(isset($cur[1]))
-              <option value="{{ $cur[0] }}" selected>{{ $cur[0] }}</option>
-@else
-              <option value="{{ $cur[0] }}">{{ $cur[0] }}</option>
-@endif
-@endforeach
+  @foreach ($p->installLangs as $cur)
+              <option value="{{ $cur[0] }}" @if (isset($cur[1])) selected @endif>{{ $cur[0] }}</option>
+  @endforeach
             </select>
             <label class="f-child4">{!! __('Choose install language info') !!}</label>
           </div>
@@ -44,7 +40,7 @@
       </div>
     </section>
 @endif
-@if(empty($p->fIswev['e']))
+@if (empty($p->fIswev['e']))
     <section class="f-main f-install">
       <div class="f-fdiv">
         <h2>{!! __('Install', $p->rev) !!}</h2>
@@ -57,13 +53,9 @@
           <div>
             <label class="f-child1 f-req">{!! __('Database type') !!}</label>
             <select class="f-ctrl" id="id-dbtype" name="dbtype">
-@foreach($p->dbTypes as $key => $cur)
-@if(empty($cur[1]))
-              <option value="{{ $key }}">{{ $cur[0] }}</option>
-@else
-              <option value="{{ $key }}" selected>{{ $cur[0] }}</option>
-@endif
-@endforeach
+  @foreach ($p->dbTypes as $key => $cur)
+              <option value="{{ $key }}" @if (!empty($cur[1])) selected @endif>{{ $cur[0] }}</option>
+  @endforeach
             </select>
             <label class="f-child4">{!! __('Info 2') !!}</label>
           </div>
@@ -126,32 +118,24 @@
             <label class="f-child1 f-req" for="id-baseurl">{!! __('Base URL') !!}</label>
             <input required class="f-ctrl" id="id-baseurl" type="text" name="baseurl" value="{{ $p->baseurl }}">
           </div>
-@if(is_array($p->defaultLangs))
+  @if (is_array($p->defaultLangs))
           <div>
             <label class="f-child1 f-req">{!! __('Default language') !!}</label>
             <select class="f-ctrl" id="id-defaultlang" name="defaultlang">
-@foreach($p->defaultLangs as $cur)
-@if(isset($cur[1]))
-              <option value="{{ $cur[0] }}" selected>{{ $cur[0] }}</option>
-@else
-              <option value="{{ $cur[0] }}">{{ $cur[0] }}</option>
-@endif
-@endforeach
+    @foreach ($p->defaultLangs as $cur)
+              <option value="{{ $cur[0] }}" @if (isset($cur[1])) selected @endif>{{ $cur[0] }}</option>
+    @endforeach
             </select>
           </div>
-@else
+  @else
           <input type="hidden" name="defaultlang" value="{!! $p->defaultLangs !!}">
-@endif
+  @endif
           <div>
             <label class="f-child1 f-req">{!! __('Default style') !!}</label>
             <select class="f-ctrl" id="id-defaultstyle" name="defaultstyle">
-@foreach($p->defaultStyles as $cur)
-@if(isset($cur[1]))
-              <option value="{{ $cur[0] }}" selected>{{ $cur[0] }}</option>
-@else
-              <option value="{{ $cur[0] }}">{{ $cur[0] }}</option>
-@endif
-@endforeach
+  @foreach ($p->defaultStyles as $cur)
+              <option value="{{ $cur[0] }}" @if (isset($cur[1])) selected @endif>{{ $cur[0] }}</option>
+  @endforeach
             </select>
           </div>
           <div>

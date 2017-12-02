@@ -35,7 +35,7 @@ class Refresh extends MethodModel
         if ($read == '1') {
             $list = [];
             $sql  = 'SELECT f.cat_id, c.cat_name, f.id, f.forum_name, f.redirect_url, f.parent_forum_id,
-                            f.disp_position, fp.post_topics, fp.post_replies
+                            f.moderators, f.disp_position, fp.post_topics, fp.post_replies
                      FROM ::categories AS c
                      INNER JOIN ::forums AS f ON c.id=f.cat_id
                      LEFT JOIN ::forum_perms AS fp ON (fp.group_id=?i:gid AND fp.forum_id=f.id)
@@ -44,6 +44,7 @@ class Refresh extends MethodModel
 
             $stmt = $this->c->DB->query($sql, $vars);
             while ($row = $stmt->fetch()) {
+                $row['moderators'] = $this->formatModers($row['moderators']);
                 $list[$row['id']] = $row;
             }
             
@@ -57,6 +58,18 @@ class Refresh extends MethodModel
             'list' => $this->list,
         ]);
         return $this->list;
+    }
+
+    /**
+     * Преобразует строку со списком модераторов в массив
+     * 
+     * @param string $str
+     * 
+     * @return null|array
+     */
+    protected function formatModers($str)
+    {
+        return empty($str) ? null : array_flip(unserialize($str));
     }
 
     /**

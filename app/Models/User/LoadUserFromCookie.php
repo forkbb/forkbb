@@ -23,7 +23,7 @@ class LoadUserFromCookie extends MethodModel
                 $this->model = $this->loadUser(1);
             } elseif ($this->c->config->o_check_ip == '1'
                 && $this->model->isAdmMod
-                && $this->model->registration_ip != $this->model->ip
+                && $this->model->registration_ip !== $this->model->ip
             ) {
                 $this->model = $this->loadUser(1);
             }

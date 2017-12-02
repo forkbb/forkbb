@@ -36,7 +36,7 @@ class Forum extends DataModel
         return $this->post_topics == 1
             || (null === $this->post_topics && $user->g_post_topics == 1)
             || $user->isAdmin
-            || ($user->isAdmMod && isset($this->moderators[$user->id]));
+            || $user->isModerator($this);
     }
 
     /**
@@ -116,22 +116,22 @@ class Forum extends DataModel
             return [];
         }
 
-        $moderators = [];
-        $mods = unserialize($this->a['moderators']);
-        foreach ($mods as $name => $id) {
-            if ($this->c->user->g_view_users == '1') {
-                $moderators[$id] = [
+        if ($this->c->user->g_view_users == '1') {
+            $arr = $this->a['moderators'];
+            foreach($arr as $id => &$cur) {
+                $cur = [
                     $this->c->Router->link('User', [
-                        'id' => $id,
-                        'name' => $name,
+                        'id'   => $id,
+                        'name' => $cur,
                     ]),
-                    $name
+                    $cur,
                 ];
-            } else {
-                $moderators[$id] = $name;
             }
+            unset($cur);
+            return $arr;
+        } else {
+            return $this->a['moderators'];
         }
-        return $moderators;
     }
 
     /**

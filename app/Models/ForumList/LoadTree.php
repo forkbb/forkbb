@@ -56,21 +56,21 @@ class LoadTree extends MethodModel
         ];
 
         if ($this->c->user->isGuest) {
-            $sql = 'SELECT f.id, f.forum_desc, f.moderators, f.num_topics, f.sort_by,
-                           f.num_posts, f.last_post, f.last_post_id, f.last_poster, f.last_topic
+            $sql = 'SELECT f.id, f.forum_desc, f.num_topics, f.sort_by, f.num_posts,
+                           f.last_post, f.last_post_id, f.last_poster, f.last_topic
                     FROM ::forums AS f
                     WHERE id IN (?ai:forums)';
         } elseif ($this->c->config->o_forum_subscriptions == '1') {
-            $sql = 'SELECT f.id, f.forum_desc, f.moderators, f.num_topics, f.sort_by,
-                           f.num_posts, f.last_post, f.last_post_id, f.last_poster, f.last_topic,
+            $sql = 'SELECT f.id, f.forum_desc, f.num_topics, f.sort_by, f.num_posts,
+                           f.last_post, f.last_post_id, f.last_poster, f.last_topic,
                            mof.mf_mark_all_read, s.user_id AS is_subscribed
                     FROM ::forums AS f 
                     LEFT JOIN ::forum_subscriptions AS s ON (s.user_id=?i:uid AND s.forum_id=f.id) 
                     LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND mof.fid=f.id)
                     WHERE f.id IN (?ai:forums)';
         } else {
-            $sql = 'SELECT f.id, f.forum_desc, f.moderators, f.num_topics, f.sort_by,
-                           f.num_posts, f.last_post, f.last_post_id, f.last_poster, f.last_topic,
+            $sql = 'SELECT f.id, f.forum_desc, f.num_topics, f.sort_by, f.num_posts,
+                           f.last_post, f.last_post_id, f.last_poster, f.last_topic,
                            mof.mf_mark_all_read 
                     FROM ::forums AS f 
                     LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:id AND mof.fid=f.id)

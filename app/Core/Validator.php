@@ -82,6 +82,7 @@ class Validator
     {
         $this->c = $container;
         $this->validators = [
+            'absent'        => [$this, 'vAbsent'],
             'array'         => [$this, 'vArray'],
             'checkbox'      => [$this, 'vCheckbox'],
             'email'         => [$this, 'vEmail'],
@@ -364,6 +365,15 @@ class Validator
         return $this->errors;
     }
 
+    protected function vAbsent($v, $value)
+    {
+        if (null === $value) {
+            return [$value, false];
+        } else {
+            return [null, 'The :alias should be absent'];
+        }
+    }
+
     protected function vRequired($v, $value)
     {
         if (is_string($value)) {
@@ -407,6 +417,9 @@ class Validator
                         break;
                     case 'lower':
                         $value = mb_strtolower($value, 'UTF-8');
+                        break;
+                    case 'spaces':
+                        $value = preg_replace('%\s+%u', ' ', $value);
                         break;
                 }
             }

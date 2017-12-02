@@ -83,12 +83,7 @@ class Post extends DataModel
         if (! $user->isAdmin && ! $user->isGuest) {
             $controls['report'] = [$this->c->Router->link('ReportPost', $vars), 'Report'];
         }
-        if ($user->isAdmin
-            || ($user->isAdmMod
-                && ! $this->user->isAdmin
-                && isset($this->parent->parent->moderators[$user->id])
-            )
-        ) {
+        if ($user->isAdmin || ($user->isModerator($this) && ! $this->user->isAdmin)) {
             $controls['delete'] = [$this->c->Router->link('DeletePost', $vars), 'Delete'];
             $controls['edit'] = [$this->c->Router->link('EditPost', $vars), 'Edit'];
         } elseif ($this->parent->closed != '1'

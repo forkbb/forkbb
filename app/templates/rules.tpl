@@ -1,8 +1,8 @@
-@extends('layouts/main')
+@extends ('layouts/main')
     <section class="f-main f-rules">
       <h2>{!! $p->title !!}</h2>
       <div id="id-rules">{!! $p->rules !!}</div>
-@if($p->formAction)
+@if ($p->formAction)
       <div class="f-fdiv f-lrdiv">
         <form class="f-form" method="post" action="{!! $p->formAction !!}">
           <input type="hidden" name="token" value="{!! $p->formToken !!}">
