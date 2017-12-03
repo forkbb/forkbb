@@ -106,7 +106,7 @@ class Topic extends Page
     {
         $topic = $this->c->ModelTopic->load((int) $args['id'], $type === 'post');
 
-        if (! $topic->id || ! $topic->last_post_id) {
+        if (empty($topic) || ! $topic->last_post_id) {
             return $this->c->Message->message('Bad request');
         }
 
@@ -189,7 +189,7 @@ class Topic extends Page
 
             $fieldset = [];
             if ($user->isAdmin || $user->isModerator($topic)) {
-                $fieldset['merge'] = [
+                $fieldset['merge_post'] = [
                     'type'    => 'checkbox',
                     'label'   => __('Merge posts'),
                     'value'   => '1',

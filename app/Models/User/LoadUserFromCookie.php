@@ -88,6 +88,7 @@ class LoadUserFromCookie extends MethodModel
         }
         $this->model->setAttrs($data);
         $this->model->__ip = $ip;
+        $this->model->__userAgent = $this->getUserAgent();
     }
 
     /**
@@ -101,6 +102,17 @@ class LoadUserFromCookie extends MethodModel
     }
 
     /**
+     * Возврат юзер агента браузера пользователя
+     * 
+     * @return string
+     */
+    protected function getUserAgent()
+    {
+        $ua = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+        return is_string($ua) ? trim($ua) : '';
+    }
+
+    /**
      * Проверка на робота
      * Если робот, то возврат имени
      *
@@ -108,7 +120,7 @@ class LoadUserFromCookie extends MethodModel
      */
     protected function isBot()
     {
-        $agent = trim($_SERVER['HTTP_USER_AGENT']);
+        $agent = $this->getUserAgent();
         if ($agent == '') {
             return false;
         }

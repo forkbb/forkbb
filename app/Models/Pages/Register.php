@@ -72,18 +72,17 @@ class Register extends Page
      */
     public function vCheckEmail(Validator $v, $email)
     {
-        $error = false;
         $user = $this->c->ModelUser;
         $user->__email = $email;
 
         // email забанен
         if ($this->c->bans->isBanned($user) > 0) {
-            $error = __('Banned email');
+            $v->addError('Banned email');
         // найден хотя бы 1 юзер с таким же email
         } elseif (empty($v->getErrors()) && $user->load($email, 'email') !== 0) {
-            $error = __('Dupe email');
+            $v->addError('Dupe email');
         }
-        return [$email, $error];
+        return $email;
     }
 
     /**
@@ -96,24 +95,23 @@ class Register extends Page
      */
     public function vCheckUsername(Validator $v, $username)
     {
-        $error = false;
         $user = $this->c->ModelUser;
         $user->__username = $username;
 
         // username = Гость
         if (preg_match('%^(guest|' . preg_quote(__('Guest'), '%') . ')$%iu', $username)) {
-            $error = __('Username guest');
+            $v->addError('Username guest');
         // цензура
         } elseif ($this->c->censorship->censor($username) !== $username) {
-            $error = __('Username censor');
+            $v->addError('Username censor');
         // username забанен
         } elseif ($this->c->bans->isBanned($user) > 0) {
-            $error = __('Banned username');
+            $v->addError('Banned username');
         // есть пользователь с похожим именем
         } elseif (empty($v->getErrors()) && ! $user->isUnique()) {
-            $error = __('Username not unique');
+            $v->addError('Username not unique');
         }
-        return [$username, $error];
+        return $username;
     }
 
     /**
@@ -134,6 +132,7 @@ class Register extends Page
         }
 
         $user = $this->c->ModelUser;
+        
         $user->username        = $v->username;
         $user->password        = password_hash($v->password, PASSWORD_DEFAULT);
         $user->group_id        = $groupId;

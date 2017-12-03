@@ -15,12 +15,19 @@
     <div class="f-nav-links">
 @yield ('crumbs')
     </div>
-    <section class="f-main f-topic">
-      <h2>{{ '' }}</h2>
+@if ($p->parser)
+    <section class="f-main f-preview">
+      <h2>{!! __('Post preview') !!}</h2>
+      <div class="f-post-body clearfix">
+        <div class="f-post-right f-post-main">
+          {!! $p->parser->getHtml() !!}
+        </div>
+      </div>
     </section>
+@endif
 @if ($form = $p->form)
     <section class="post-form">
-      <h2>{!! __('Quick post') !!}</h2>
+      <h2>{!! $p->titleForm !!}</h2>
       <div class="f-fdiv">
   @include ('layouts/form')
       </div>

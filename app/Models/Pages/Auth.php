@@ -112,12 +112,11 @@ class Auth extends Page
      */
     public function vLoginProcess(Validator $v, $password)
     {
-        $error = false;
         if (! empty($v->getErrors())) {
         } elseif (! ($user = $this->c->ModelUser->load($v->username, 'username')) instanceof User) {
-            $error = __('Wrong user/pass');
+            $v->addError('Wrong user/pass');
         } elseif ($user->isUnverified) {
-            $error = [__('Account is not activated'), 'w'];
+            $v->addError('Account is not activated', 'w');
         } else {
             $authorized = false;
             $hash = $user->password;
@@ -133,7 +132,7 @@ class Auth extends Page
             }
             // ошибка в пароле
             if (! $authorized) {
-                $error = __('Wrong user/pass');
+                $v->addError('Wrong user/pass');
             } else {
                 // перезаписываем ip админа и модератора - Visman
                 if ($user->isAdmMod
@@ -149,7 +148,7 @@ class Auth extends Page
                 $this->c->Cookie->setUser($user);
             }
         }
-        return [$password, $error];
+        return $password;
     }
 
     /**
@@ -248,26 +247,25 @@ class Auth extends Page
     public function vCheckEmail(Validator $v, $email)
     {
         if (! empty($v->getErrors())) {
-            return [$email, false];
+            return $email;
         }
             
-        $error = false;
         $user = $this->c->ModelUser;
         $user->__email = $email;
 
         // email забанен
         if ($this->c->bans->isBanned($user) > 0) {
-            $error = __('Banned email');
+            $v->addError('Banned email');
         // нет пользователя с таким email
         } elseif (! $user->load($email, 'email') instanceof User) {
-            $error = __('Invalid email');
+            $v->addError('Invalid email');
         // за последний час уже был запрос на этот email
         } elseif (! empty($user->last_email_sent) && time() - $user->last_email_sent < 3600) {
-            $error = [__('Email flood', (int) (($user->last_email_sent + 3600 - time()) / 60)), 'e'];
+            $v->addError(__('Email flood', (int) (($user->last_email_sent + 3600 - time()) / 60)), 'e');
         } else {
             $this->tmpUser = $user;
         }
-        return [$email, $error];
+        return $email;
     }
 
     /**

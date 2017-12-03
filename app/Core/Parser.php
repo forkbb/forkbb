@@ -30,8 +30,10 @@ class Parser extends Parserus
      */
     protected function init()
     {
-        $bbcodes = include $this->c->DIR_CONFIG . '/defaultBBCode.php';
-        $this->setBBCodes($bbcodes);
+        if ($this->c->config->p_message_bbcode == '1' || $this->c->config->p_sig_bbcode == '1') {
+            $bbcodes = include $this->c->DIR_CONFIG . '/defaultBBCode.php';
+            $this->setBBCodes($bbcodes);
+        }
 
         if ($this->c->user->show_smilies == '1'
             && ($this->c->config->o_smilies_sig == '1' || $this->c->config->o_smilies == '1')

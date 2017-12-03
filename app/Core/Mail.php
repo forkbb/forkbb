@@ -106,7 +106,7 @@ class Mail
         $domainASCII = idn_to_ascii($domain);
 
         if ($strict) {
-            $mx = dns_get_record($domainASCII, DNS_MX);
+            $mx = @dns_get_record($domainASCII, DNS_MX); //????
             if (empty($mx)) {
                 return false;
             }

@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkBB\Models\User;
+namespace ForkBB\Models\Topic;
 
 use ForkBB\Models\MethodModel;
 use RuntimeException;
@@ -12,7 +12,7 @@ class Save extends MethodModel
      *
      * @throws RuntimeException
      * 
-     * @return User
+     * @return Topic
      */
     public function update()
     {
@@ -24,7 +24,7 @@ class Save extends MethodModel
             return $this->model;
         }
         $values = $this->model->getAttrs();
-        $fileds = $this->c->dbMap->users;
+        $fileds = $this->c->dbMap->topics;
         $set = $vars = [];
         foreach ($modified as $name) {
             if (! isset($fileds[$name])) {
@@ -37,7 +37,7 @@ class Save extends MethodModel
             return $this->model;
         }
         $vars[] = $this->model->id;
-        $this->c->DB->query('UPDATE ::users SET ' . implode(', ', $set) . ' WHERE id=?i', $vars);
+        $this->c->DB->query('UPDATE ::topics SET ' . implode(', ', $set) . ' WHERE id=?i', $vars);
         $this->model->resModified();
 
         return $this->model;
@@ -57,7 +57,7 @@ class Save extends MethodModel
             throw new RuntimeException('The model has ID');
         }
         $values = $this->model->getAttrs();
-        $fileds = $this->c->dbMap->users;
+        $fileds = $this->c->dbMap->topics;
         $set = $set2 = $vars = [];
         foreach ($modified as $name) {
             if (! isset($fileds[$name])) {
@@ -70,7 +70,7 @@ class Save extends MethodModel
         if (empty($set)) {
             throw new RuntimeException('The model is empty');
         }
-        $this->c->DB->query('INSERT INTO ::users (' . implode(', ', $set) . ') VALUES (' . implode(', ', $set2) . ')', $vars);
+        $this->c->DB->query('INSERT INTO ::topics (' . implode(', ', $set) . ') VALUES (' . implode(', ', $set2) . ')', $vars);
         $this->model->id = $this->c->DB->lastInsertId();
         $this->model->resModified();
 

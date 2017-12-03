@@ -12,7 +12,7 @@ class Load extends MethodModel
      * @param int $id
      * @param bool $isPost
      *
-     * @return Topic
+     * @return null|Topic
      */
     public function load($id, $isPost = false)
     {
@@ -60,7 +60,7 @@ class Load extends MethodModel
 
         // тема отсутствует или недоступна
         if (empty($data)) {
-            return $this->model->setAttrs([]);
+            return null;
         }
 
         if (! $this->c->user->isGuest) {
@@ -72,7 +72,7 @@ class Load extends MethodModel
 
         // раздел недоступен
         if (empty($forum)) {
-            return $this->model->setAttrs([]);
+            return null;
         }
 
         if (! empty($forForum)) {

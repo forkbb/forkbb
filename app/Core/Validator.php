@@ -74,6 +74,18 @@ class Validator
     protected $raw;
 
     /**
+     * Данные для текущей обработки
+     * @var array
+     */
+    protected $curData = [];
+
+    /**
+     * Флаг ошибки
+     * @var mixed
+     */
+    protected $error;
+
+    /**
      * Конструктор
      *
      * @param Container $container
@@ -208,9 +220,10 @@ class Validator
         if (empty($this->rules)) {
             throw new RuntimeException('Rules not found');
         }
-        $this->errors = [];
-        $this->status = [];
-        $this->raw = $raw;
+        $this->errors  = [];
+        $this->status  = [];
+        $this->curData = [];
+        $this->raw     = $raw;
         foreach ($this->fields as $field) {
             $this->__get($field);
         }
@@ -258,24 +271,68 @@ class Validator
             }
         }
 
-        $error = false;
         foreach ($rules as $validator => $attr) {
-            $args = $this->getArguments($field, $validator);
-            list($value, $error) = $this->validators[$validator]($this, $value, $attr, $args);
-            if (false !== $error) {
+            // данные для обработчика ошибок
+            $this->error     = null;
+            $this->curData[] = [
+                'field' => $field,
+                'rule'  => $validator,
+                'attr'  => $attr,
+            ];
+
+            $value = $this->validators[$validator]($this, $value, $attr, $this->getArguments($field, $validator));
+            
+            array_pop($this->curData);
+
+            if (null !== $this->error) {
                 break;
             }
         }
 
-        if (! is_bool($error)) {
-            $this->error($error, $field, $validator, $attr);
-            $this->status[$field] = false;
-        } else {
-            $this->status[$field] = true;
+        $this->status[$field] = true !== $this->error; // в $this->error может быть состояние false
+        $this->result[$field] = $value;
+
+        return $value;
+    }
+
+    /**
+     * Добавление ошибки
+     *
+     * @param mixed $error
+     * @param string $type
+     * 
+     * @throws RuntimeException
+     */
+    public function addError($error, $type = 'v')
+    {
+        if (empty($vars = end($this->curData))) {
+            throw new RuntimeException('The array of variables is empty');
         }
 
-        $this->result[$field] = $value;
-        return $value;
+        // нет ошибки, для выхода из цикла проверки правил
+        if (true === $error) {
+            $this->error = false;
+            return;
+        }
+
+        extract($vars);
+
+        // псевдоним имени поля
+        $alias = isset($this->aliases[$field]) ? $this->aliases[$field] : $field;
+
+        // текст ошибки
+        if (isset($this->messages[$field . '.' . $rule])) {
+            $error = $this->messages[$field . '.' . $rule];
+        } elseif (isset($this->messages[$field])) {
+            $error = $this->messages[$field];
+        }
+        if (is_array($error)) {
+            $type = $error[1];
+            $error = $error[0];
+        }
+
+        $this->errors[$type][] = __($error, [':alias' => $alias, ':attr' => $attr]);
+        $this->error           = true;
     }
 
     /**
@@ -295,33 +352,6 @@ class Validator
         } else {
             return null;
         }
-    }
-
-    /**
-     * Обработка ошибки
-     *
-     * @param mixed $error
-     * @param string $field
-     * @param string $rule
-     * @param string $attr
-     */
-    protected function error($error, $field, $rule, $attr)
-    {
-        // псевдоним имени поля
-        $alias = isset($this->aliases[$field]) ? $this->aliases[$field] : $field;
-        // текст ошибки
-        if (isset($this->messages[$field . '.' . $rule])) {
-            $error = $this->messages[$field . '.' . $rule];
-        } elseif (isset($this->messages[$field])) {
-            $error = $this->messages[$field];
-        }
-        $type = 'v';
-        // ошибка содержит тип
-        if (is_array($error)) {
-            $type = $error[1];
-            $error = $error[0];
-        }
-        $this->errors[$type][] = __($error, [':alias' => $alias, ':attr' => $attr]);
     }
 
     /**
@@ -367,48 +397,53 @@ class Validator
 
     protected function vAbsent($v, $value)
     {
-        if (null === $value) {
-            return [$value, false];
-        } else {
-            return [null, 'The :alias should be absent'];
+        if (null !== $value) {
+            $this->addError('The :alias should be absent');
         }
+        return null;
     }
 
     protected function vRequired($v, $value)
     {
         if (is_string($value)) {
             if (strlen(preg_replace('%^\s+|\s+$%u', '', $value)) > 0) {
-                return [$value, false];
+                return $value;
             }
         } elseif (is_array($value)) {
             if (! empty($value)) {
-                return [$value, false];
+                return $value;
             }
         } elseif (null !== $value) {
-            return [$value, false];
+            return $value;
         }
-        return [null, 'The :alias is required'];
+        $this->addError('The :alias is required');
+        return null;
     }
 
-    protected function vRequiredWith($v, $value, $attr)
+    protected function vRequiredWith($v, $value, $attr)  //???????????????????????
     {
         foreach (explode(',', $attr) as $field) {
-            if (null !== $this->__get($field)) {
-                return $this->vRequired($v, $value);
-            }
+            if (null !== $this->__get($field)) {     // если есть хотя бы одно поле,
+                return $this->vRequired($v, $value); // то проверяем данное поле
+            }                                        // на обязательное наличие
         }
-        list(, $error) = $this->vRequired($v, $value);
-        if (false === $error) {
-            return [null, 'The :alias is not required'];
-        } else {
-            return [$value, true];
+        if (null === $value) {                       // если данное поле отсутствует,
+            $this->addError(true);                   // то прерываем его проверку
         }
+        return $value;
+
+#        list(, $error) = $this->vRequired($v, $value);
+#        if (false === $error) {
+#            return [null, 'The :alias is not required'];
+#        } else {
+#            return [$value, true];
+#        }
     }
 
     protected function vString($v, $value, $attr)
     {
         if (null === $value) {
-            return [null, false];
+            return null;
         } elseif (is_string($value)) {
             foreach(explode(',', $attr) as $action) {
                 switch ($action) {
@@ -423,83 +458,87 @@ class Validator
                         break;
                 }
             }
-            return [$value, false];
+            return $value;
         } else {
-            return [null, 'The :alias must be string'];
+            $this->addError('The :alias must be string');
+            return null;
         }
     }
 
     protected function vNumeric($v, $value)
     {
         if (null === $value) {
-            return [null, false];
+            return null;
         } elseif (is_numeric($value)) {
-            return [0 + $value, false];
+            return 0 + $value;
         } else {
-            return [null, 'The :alias must be numeric'];
+            $this->addError('The :alias must be numeric');
+            return null;
         }
     }
 
     protected function vInteger($v, $value)
     {
         if (null === $value) {
-            return [null, false];
+            return null;
         } elseif (is_numeric($value) && is_int(0 + $value)) {
-            return [(int) $value, false];
+            return (int) $value;
         } else {
-            return [null, 'The :alias must be integer'];
+            $this->addError('The :alias must be integer');
+            return null;
         }
     }
 
     protected function vArray($v, $value)
     {
-        if (null === $value) {
-            return [null, false];
-        } elseif (is_array($value)) {
-            return [$value, false];
+        if (null !== $value && ! is_array($value)) {
+            $this->addError('The :alias must be array');
+            return null;
         } else {
-            return [null, 'The :alias must be array'];
+            return $value;
         }
     }
 
     protected function vMin($v, $value, $attr)
     {
-        if (is_numeric($value)) {
-            if (0 + $value < $attr) {
-                return [$value, 'The :alias minimum is :attr'];
-            }
-        } elseif (is_string($value)) {
+        if (is_string($value)) {
             if (mb_strlen($value, 'UTF-8') < $attr) {
-                return [$value, 'The :alias minimum is :attr characters'];
+                $this->addError('The :alias minimum is :attr characters');
+            }
+        } elseif (is_numeric($value)) {
+            if (0 + $value < $attr) {
+                $this->addError('The :alias minimum is :attr');
             }
         } elseif (is_array($value)) {
             if (count($value) < $attr) {
-                return [$value, 'The :alias minimum is :attr elements'];
+                $this->addError('The :alias minimum is :attr elements');
             }
-        } else {
-            return [null, null === $value ? false : 'The :alias minimum is :attr'];
+        } elseif (null !== $value) {
+            $this->addError('The :alias minimum is :attr');
+            return null;
         }
-        return [$value, false];
+        return $value;
     }
 
     protected function vMax($v, $value, $attr)
     {
-        if (is_numeric($value)) {
-            if (0 + $value > $attr) {
-                return [$value, 'The :alias maximum is :attr'];
-            }
-        } elseif (is_string($value)) {
+        if (is_string($value)) {
             if (mb_strlen($value, 'UTF-8') > $attr) {
-                return [$value, 'The :alias maximum is :attr characters'];
+                $this->addError('The :alias maximum is :attr characters');
+            }
+        } elseif (is_numeric($value)) {
+            if (0 + $value > $attr) {
+                $this->addError('The :alias maximum is :attr');
             }
         } elseif (is_array($value)) {
             if (count($value) > $attr) {
-                return [$value, 'The :alias maximum is :attr elements'];
+                $this->addError('The :alias maximum is :attr elements');
             }
-        } else {
-            return [null, null === $value ? false : 'The :alias maximum is :attr'];
+        } elseif (null !== $value) {
+            $this->addError('The :alias maximum is :attr'); //????
+            return null;
         }
-        return [$value, false];
+        return $value;
     }
 
     protected function vToken($v, $value, $attr, $args)
@@ -507,17 +546,17 @@ class Validator
         if (! is_array($args)) {
             $args = [];
         }
-        $value = (string) $value;
-        if ($this->c->Csrf->verify($value, $attr, $args)) {
-            return [$value, false];
+        if (! is_string($value) || ! $this->c->Csrf->verify($value, $attr, $args)) {
+            $this->addError('Bad token', 'e');
+            return null;
         } else {
-            return [$value, ['Bad token', 'e']];
+            return $value;
         }
     }
 
     protected function vCheckbox($v, $value)
     {
-        return [! empty($value), false];
+        return ! empty($value);
     }
 
     protected function vReferer($v, $value, $attr, $args)
@@ -525,39 +564,42 @@ class Validator
         if (! is_array($args)) {
             $args = [];
         }
-        return [$this->c->Router->validate($value, $attr, $args), false];
+        return $this->c->Router->validate($value, $attr, $args);
     }
 
     protected function vEmail($v, $value)
     {
         if (null === $value) {
-            return [$value, false];
+            return null;
         }
         $email = $this->c->Mail->valid($value, true);
         if (false === $email) {
-            return [(string) $value, 'The :alias is not valid email'];
+            $this->addError('The :alias is not valid email');
+            return $value;
         } else {
-            return [$email, false];
+            return $email;
         }
     }
 
     protected function vSame($v, $value, $attr)
     {
         if (! $this->getStatus($attr) || $value === $this->__get($attr)) {
-            return [$value, false];
+            return $value;
         } else {
-            return [null, 'The :alias must be same with original'];
+            $this->addError('The :alias must be same with original');
+            return null;
         }
     }
 
     protected function vRegex($v, $value, $attr)
     {
-        if (null === $value) {
-            return [$value, false];
-        } elseif (is_string($value) && preg_match($attr, $value)) {
-            return [$value, false];
+        if (null !== $value 
+            && (! is_string($value) || ! preg_match($attr, $value))
+        ) {
+            $this->addError('The :alias is not valid format');
+            return null;
         } else {
-            return [null, 'The :alias is not valid format'];
+            return $value;
         }
     }
 
@@ -573,19 +615,17 @@ class Validator
 
     protected function vIn($v, $value, $attr)
     {
-        if (null === $value || in_array($value, explode(',', $attr))) {
-            return [$value, false];
-        } else {
-            return [$value, 'The :alias contains an invalid value'];
+        if (null !== $value && ! in_array($value, explode(',', $attr))) {
+            $this->addError('The :alias contains an invalid value');
         }
+        return $value;
     }
 
     protected function vNotIn($v, $value, $attr)
     {
-        if (null === $value || ! in_array($value, explode(',', $attr))) {
-            return [$value, false];
-        } else {
-            return [$value, 'The :alias contains an invalid value'];
+        if (null !== $value && in_array($value, explode(',', $attr))) {
+            $this->addError('The :alias contains an invalid value');
         }
+        return $value;
     }
 }

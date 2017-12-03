@@ -65,9 +65,9 @@ class Router
     public function __construct($base)
     {
         $this->baseUrl = $base;
-        $this->host = parse_url($base, PHP_URL_HOST);
-        $this->prefix = parse_url($base, PHP_URL_PATH);
-        $this->length = strlen($this->prefix);
+        $this->host    = parse_url($base, PHP_URL_HOST);
+        $this->prefix  = parse_url($base, PHP_URL_PATH);
+        $this->length  = strlen($this->prefix);
     }
 
     /**
@@ -107,14 +107,23 @@ class Router
             $s = $this->links[$marker];
             foreach ($args as $key => $val) {
                 if ($key == '#') {
-                    $s .= '#' . rawurlencode($val); //????
+                    $s .= '#' . rawurlencode($val);
                     continue;
                 } elseif ($key == 'page' && $val === 1) {
                     continue;
                 }
-                $s = preg_replace(
-                    '%\{' . preg_quote($key, '%') . '(?::[^{}]+)?\}%',
-                    rawurlencode($val),
+                $s = preg_replace_callback( //????
+                    '%\{' . preg_quote($key, '%') . '(?::[^{}]+)?\}%', 
+                    function($match) use ($val) {
+                        if (is_string($val)) {
+                            $val = trim(preg_replace('%[^\p{L}\p{N}_]+%u', '-', $val), '_-');
+                        } elseif (is_numeric($val)) { //????
+                            $val = (string) $val;
+                        } else {
+                            $val = null;
+                        }
+                        return isset($val[0]) ? rawurlencode($val) : '-';
+                    },
                     $s
                 );
             }
