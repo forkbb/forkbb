@@ -395,12 +395,16 @@ class Validator
         return $this->errors;
     }
 
-    protected function vAbsent($v, $value)
+    protected function vAbsent($v, $value, $attr)
     {
         if (null !== $value) {
             $this->addError('The :alias should be absent');
         }
-        return null;
+        if (isset($attr[0])) {
+            return $attr;
+        } else {
+            return null;
+        }
     }
 
     protected function vRequired($v, $value)
@@ -556,7 +560,7 @@ class Validator
 
     protected function vCheckbox($v, $value)
     {
-        return ! empty($value);
+        return null === $value ? false : (string) $value;
     }
 
     protected function vReferer($v, $value, $attr, $args)

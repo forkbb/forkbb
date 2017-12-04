@@ -16,7 +16,7 @@ class Save extends MethodModel
      */
     public function update()
     {
-        if (empty($this->model->id)) {
+        if ($this->model->id < 1) {
             throw new RuntimeException('The model does not have ID');
         }
         $modified = $this->model->getModified();
@@ -24,7 +24,16 @@ class Save extends MethodModel
             return $this->model;
         }
         $values = $this->model->getAttrs();
-        $fileds = $this->c->dbMap->users;
+
+        if ($this->model->isGuest) {
+            $fileds = $this->c->dbMap->online;
+            $table  = 'online';
+            $where  = 'user_id=1 AND ident=?s';
+        } else {
+            $fileds = $this->c->dbMap->users;
+            $table  = 'users';
+            $where  = 'id=?i';
+        }
         $set = $vars = [];
         foreach ($modified as $name) {
             if (! isset($fileds[$name])) {
@@ -36,8 +45,12 @@ class Save extends MethodModel
         if (empty($set)) {
             return $this->model;
         }
-        $vars[] = $this->model->id;
-        $this->c->DB->query('UPDATE ::users SET ' . implode(', ', $set) . ' WHERE id=?i', $vars);
+        if ($this->model->isGuest) {
+            $vars[] = $this->model->ip;
+        } else {
+            $vars[] = $this->model->id;
+        }
+        $this->c->DB->query('UPDATE ::' . $table . ' SET ' . implode(', ', $set) . ' WHERE ' . $where, $vars);
         $this->model->resModified();
 
         return $this->model;

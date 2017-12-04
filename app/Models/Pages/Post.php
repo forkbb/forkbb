@@ -4,6 +4,8 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Core\Validator;
 use ForkBB\Models\Model;
+use ForkBB\Models\Forum;
+use ForkBB\Models\Topic;
 use ForkBB\Models\Page;
 
 class Post extends Page
@@ -11,17 +13,16 @@ class Post extends Page
     use CrumbTrait;
 
     /**
-     * Подготовка данных для шаблона
+     * Подготовка данных для шаблона создания темы
      * 
      * @param array $args
      * 
      * @return Page
      */
-    public function newTopic(array $args)
+    public function newTopic(array $args, Forum $forum = null)
     {
-        $forum = $this->c->forums->forum($args['id']);
+        $forum = $forum ?: $this->c->forums->forum((int) $args['id']);
 
-        // раздел отсутствует в доступных или является ссылкой
         if (empty($forum) || $forum->redirect_url || ! $forum->canCreateTopic) {
             return $this->c->Message->message('Bad request');
         }
@@ -30,20 +31,26 @@ class Post extends Page
 
         $this->nameTpl   = 'post';
         $this->onlinePos = 'forum-' . $forum->id;
-        $this->canonical = $this->c->Router->link('NewTopic', $args);
+        $this->canonical = $this->c->Router->link('NewTopic', ['id' => $forum->id]);
         $this->robots    = 'noindex';
         $this->crumbs    = $this->crumbs(__('Post new topic'), $forum);
         $this->form      = $this->messageForm($forum, 'NewTopic', $args, true);
-        $this->titleForm = __('Post new topic');
+        $this->formTitle = __('Post new topic');
         
         return $this;
     }
 
+    /**
+     * Обработчка данных от формы создания темы
+     * 
+     * @param array $args
+     * 
+     * @return Page
+     */
     public function newTopicPost(array $args)
     {
-        $forum = $this->c->forums->forum($args['id']);
+        $forum = $this->c->forums->forum((int) $args['id']);
         
-        // раздел отсутствует в доступных или является ссылкой
         if (empty($forum) || $forum->redirect_url || ! $forum->canCreateTopic) {
             return $this->c->Message->message('Bad request');
         }
@@ -52,70 +59,46 @@ class Post extends Page
 
         $v = $this->messageValidator($forum, 'NewTopic', $args, true);
 
-        if (! $v->validation($_POST) || isset($v->preview)) {
-            $this->fIswev = $v->getErrors();
-            $args['_vars'] = $v->getData();
-            return $this->newTopic($args);
+        if ($v->validation($_POST) && null === $v->preview) {
+            return $this->endPost($forum, $v);
         }
 
-        $now = time();
-        $poster = $v->username ?: $this->c->user->username;
+        $this->fIswev  = $v->getErrors();
+        $args['_vars'] = $v->getData();
 
-        // создание темы
-        $topic = $this->c->ModelTopic;
+        if (null !== $v->preview && ! $v->getErrors()) {
+            $this->previewHtml = $this->c->Parser->getHtml();
+        }
 
-        $topic->subject     = $v->subject;
-        $topic->poster      = $poster;
-        $topic->last_poster = $poster;
-        $topic->posted      = $now;
-        $topic->last_post   = $now;
-        $topic->sticky      = $v->stick_topic ? 1 : 0;
-        $topic->stick_fp    = $v->stick_fp ? 1 : 0;
-#       $topic->poll_type = ;
-#       $topic->poll_time = ;
-#       $topic->poll_term = ;
-#       $topic->poll_kol = ;
-
-        $topic->insert();
-
-        // создание сообщения
-        $post = $this->c->ModelPost;
-
-        $post->poster       = $poster;
-        $post->poster_id    = $this->c->user->id;
-        $post->poster_ip    = $this->c->user->ip;
-        $post->poster_email = $v->email;
-        $post->message      = $v->message; //?????
-        $post->hide_smilies = $v->hide_smilies ? 1 : 0;
-#       $post->edit_post    =
-        $post->posted       = $now;
-#       $post->edited       =
-#       $post->edited_by    =
-        $post->user_agent   = $this->c->user->userAgent;
-        $post->topic_id     = $topic->id;
-
-        $post->insert();
-
-        // обновление созданной темы
-        $topic->forum_id      = $forum->id; //????
-        $topic->first_post_id = $post->id;
-        $topic->last_post_id  = $post->id;
-
-        $topic->update();
-        
-        $forum->calcStat()->update();
-        
-        return $this->c->Redirect
-            ->page('Topic', ['id' => $topic->id, 'name' => $topic->cens()->subject])
-            ->message(__('Post redirect'));
+        return $this->newTopic($args, $forum);
     }
 
-    public function newReply(array $args)
+    /**
+     * Подготовка данных для шаблона создания сообщения
+     * 
+     * @param array $args
+     * 
+     * @return Page
+     */
+    public function newReply(array $args, Topic $topic = null)
     {
-        $topic = $this->c->ModelTopic->load((int) $args['id']);
+        $topic = $topic ?: $this->c->ModelTopic->load((int) $args['id']);
 
         if (empty($topic) || $topic->moved_to || ! $topic->canReply) {
             return $this->c->Message->message('Bad request');
+        }
+
+        if (isset($args['quote'])) {
+            $post = $this->c->ModelPost->load((int) $args['quote'], $topic);
+
+            if (empty($post)) {
+                return $this->c->Message->message('Bad request');
+            }
+
+            $message = '[quote="' . $post->poster . '"]' . $post->message . '[/quote]';
+
+            $args['_vars'] = ['message' => $message];
+            unset($args['quote']);
         }
 
         $this->c->Lang->load('post');
@@ -126,14 +109,22 @@ class Post extends Page
         $this->robots    = 'noindex';
         $this->crumbs    = $this->crumbs(__('Post a reply'), $topic);
         $this->form      = $this->messageForm($topic, 'NewReply', $args);
-        $this->titleForm = __('Post a reply');
+        $this->formTitle = __('Post a reply');
                 
         return $this;
     }
 
+    /**
+     * Обработка данных от формы создания сообщения
+     * 
+     * @param array $args
+     * 
+     * @return Page
+     */
     public function newReplyPost(array $args)
     {
-        $topic = $this->c->ModelTopic->load((int) $args['id']);
+        $tid   = (int) $args['id'];
+        $topic = $this->c->ModelTopic->load($tid);
         
         if (empty($topic) || $topic->moved_to || ! $topic->canReply) {
             return $this->c->Message->message('Bad request');
@@ -143,14 +134,133 @@ class Post extends Page
                 
         $v = $this->messageValidator($topic, 'NewReply', $args);
 
-        if (! $v->validation($_POST) || isset($v->preview)) {
-            $this->fIswev = $v->getErrors();
-            $args['_vars'] = $v->getData();
-            return $this->newReply($args);
+        if ($v->validation($_POST) && null === $v->preview) {
+            return $this->endPost($topic, $v);
         }
 
+        $this->fIswev  = $v->getErrors();
+        $args['_vars'] = $v->getData();
 
-        exit('ok');
+        if (null !== $v->preview && ! $v->getErrors()) {
+            $this->previewHtml = $this->c->Parser->getHtml();
+        }
+
+        return $this->newReply($args, $topic);
+    }
+
+    /**
+     * Создание темы/сообщения
+     * 
+     * @param Model $model
+     * @param Validator $v
+     * 
+     * @return Page
+     */
+    protected function endPost(Model $model, Validator $v)
+    {
+        $now       = time();
+        $user      = $this->c->user;
+        $username  = $user->isGuest ? $v->username : $user->username;
+        $merge     = false;
+        $executive = $user->isAdmin || $user->isModerator($model);
+        
+        // подготовка к объединению/сохранению сообщения
+        if (null === $v->subject) {
+            $createTopic = false;
+            $forum       = $model->parent;
+            $topic       = $model;
+            
+            if (! $user->isGuest && $topic->last_poster === $username) {
+                if ($executive) {
+                    if ($v->merge_post) {
+                        $merge = true;
+                    } 
+                } else {
+                    if ($this->c->config->o_merge_timeout > 0 // ???? стоит завязать на время редактирование сообщений?
+                        && $now - $topic->last_post < $this->c->config->o_merge_timeout
+                    ) {
+                        $merge = true;
+                    }
+                }
+            }
+        // создание темы
+        } else {
+            $createTopic = true;
+            $forum       = $model;
+            $topic       = $this->c->ModelTopic;
+
+            $topic->subject     = $v->subject;
+            $topic->poster      = $username;
+            $topic->last_poster = $username;
+            $topic->posted      = $now;
+            $topic->last_post   = $now;
+            $topic->sticky      = $v->stick_topic ? 1 : 0;
+            $topic->stick_fp    = $v->stick_fp ? 1 : 0;
+#           $topic->poll_type   = ;
+#           $topic->poll_time   = ;
+#           $topic->poll_term   = ;
+#           $topic->poll_kol    = ;
+    
+            $topic->insert();
+        }
+
+        // попытка объеденить новое сообщение с крайним в теме
+        if ($merge) {
+            $lastPost = $this->c->ModelPost->load($topic->last_post_id);
+
+            if ($this->c->MAX_POST_SIZE > mb_strlen($lastPost->message . $v->message, 'UTF-8') + 100) { //????
+                $lastPost->message = $lastPost->message . "\n[after=" . ($now - $topic->last_post) . "]\n" . $v->message; //????
+                $lastPost->posted  = $lastPost->posted + 1; //???? прибаляем 1 секунду для появления в новых //????
+
+                $lastPost->update();
+            } else {
+                $merge = false;
+            }
+        }
+        
+        // создание нового сообщения
+        if (! $merge) {
+            $post = $this->c->ModelPost;
+        
+            $post->poster       = $username;
+            $post->poster_id    = $this->c->user->id;
+            $post->poster_ip    = $this->c->user->ip;
+            $post->poster_email = $v->email;
+            $post->message      = $v->message; //?????
+            $post->hide_smilies = $v->hide_smilies ? 1 : 0;
+#           $post->edit_post    =
+            $post->posted       = $now;
+#           $post->edited       =
+#           $post->edited_by    =
+            $post->user_agent   = $this->c->user->userAgent;
+            $post->topic_id     = $topic->id;
+        
+            $post->insert();
+        }
+
+        if ($createTopic) {
+            $topic->forum_id      = $forum->id;
+            $topic->first_post_id = $post->id;
+        }
+
+        // обновление данных в теме и разделе
+        $topic->calcStat()->update();
+        $forum->calcStat()->update();
+
+        // обновление данных текущего пользователя
+        if (! $merge && ! $user->isGuest && $forum->no_sum_mess != '1') {
+            $user->num_posts = $user->num_posts + 1;
+
+            if ($user->g_promote_next_group != '0' && $user->num_posts >= $user->g_promote_min_posts) {
+                $user->group_id = $user->g_promote_next_group;
+            }
+        }
+        $user->last_post = $now;
+        $user->update();
+        
+        return $this->c->Redirect
+            ->page('ViewPost', ['id' => $merge ? $lastPost->id : $post->id])
+            ->message(__('Post redirect'));
     }
 
     /**
@@ -159,12 +269,12 @@ class Post extends Page
      * @param Validator $v
      * @param string $email
      * 
-     * @return array
+     * @return string
      */
     public function vCheckEmail(Validator $v, $email)
     {
         $user = $this->c->ModelUser;
-        $user->__email = $email;
+        $user->email = $email;
 
         // email забанен
         if ($this->c->bans->isBanned($user) > 0) {
@@ -179,18 +289,18 @@ class Post extends Page
      * @param Validator $v
      * @param string $username
      * 
-     * @return array
+     * @return string
      */
     public function vCheckUsername(Validator $v, $username)
     {
         $user = $this->c->ModelUser;
-        $user->__username = $username;
+        $user->username = $username;
 
         // username = Гость
         if (preg_match('%^(guest|' . preg_quote(__('Guest'), '%') . ')$%iu', $username)) {
             $v->addError('Username guest');
         // цензура
-        } elseif ($user->cens()->$username !== $username) {
+        } elseif ($user->cens()->username !== $username) {
             $v->addError('Username censor');
         // username забанен
         } elseif ($this->c->bans->isBanned($user) > 0) {
@@ -205,13 +315,15 @@ class Post extends Page
      * @param Validator $v
      * @param string $subject
      * 
-     * @return array
+     * @return string
      */
-    public function vCheckSubject(Validator $v, $subject)
+    public function vCheckSubject(Validator $v, $subject, $attr, $executive)
     {
+        // после цензуры заголовок темы путой
         if ($this->c->censorship->censor($subject) == '') {
             $v->addError('No subject after censoring');
-        } elseif (! $this->tmpAdmMod
+        // заголовок темы только заглавными буквами
+        } elseif (! $executive
             && $this->c->config->p_subject_all_caps == '0'
             && preg_match('%\p{Lu}%u', $subject)
             && ! preg_match('%\p{Ll}%u', $subject)
@@ -229,16 +341,19 @@ class Post extends Page
      * 
      * @return array
      */
-    public function vCheckMessage(Validator $v, $message)
+    public function vCheckMessage(Validator $v, $message, $attr, $executive)
     {
+        // после цензуры текст сообщения пустой
         if ($this->c->censorship->censor($message) == '') {
             $v->addError('No message after censoring');
-        } elseif (! $this->tmpAdmMod
+        // текст сообщения только заглавными буквами
+        } elseif (! $executive
             && $this->c->config->p_message_all_caps == '0'
             && preg_match('%\p{Lu}%u', $message)
             && ! preg_match('%\p{Ll}%u', $message)
         ) {
             $v->addError('All caps message');
+        // проверка парсером
         } else {
             
             $bbWList = $this->c->config->p_message_bbcode == '1' ? null : [];
@@ -258,21 +373,16 @@ class Post extends Page
                 $this->c->Parser->detectSmilies();
             }
 
-            $errors = $this->c->Parser->getErrors();
-            if ($errors) {
-                foreach($errors as $error) {
-                    $v->addError($error);
-                } 
-            } else {
-                $this->parser = $this->c->Parser;
-            }
+            foreach($this->c->Parser->getErrors() as $error) {
+                $v->addError($error);
+            } 
         }
 
         return $message;
     }
 
     /**
-     * Проверка данных поступивших из формы сообщения
+     * Подготовка валидатора к проверке данных из формы создания темы/сообщения
      * 
      * @param Model $model
      * @param string $marker
@@ -298,20 +408,21 @@ class Post extends Page
         }
 
         if ($this->c->user->isAdmin || $this->c->user->isModerator($model)) {
-            $this->tmpAdmMod   = true;
-            $ruleStickTopic    = 'checkbox';
-
             if ($editSubject) {
-                $ruleStickFP   = 'checkbox';
-                $ruleMergePost = 'absent';
+                $ruleStickTopic = 'checkbox';
+                $ruleStickFP    = 'checkbox';
+                $ruleMergePost  = 'absent';
             } else {
-                $ruleStickFP   = 'absent';
-                $ruleMergePost = 'checkbox';
+                $ruleStickTopic = 'absent';
+                $ruleStickFP    = 'absent';
+                $ruleMergePost  = 'checkbox';
             }
+            $executive          = true;
         } else {
-            $ruleStickTopic    = 'absent';
-            $ruleStickFP       = 'absent';
-            $ruleMergePost     = 'absent';
+            $ruleStickTopic     = 'absent';
+            $ruleStickFP        = 'absent';
+            $ruleMergePost      = 'absent:1';
+            $executive          = false;
         }
 
         if ($this->c->config->o_smilies == '1') {
@@ -336,18 +447,20 @@ class Post extends Page
             'hide_smilies' => $ruleHideSmilies,
             'submit'       => 'string', //????
             'preview'      => 'string', //????
-            'message'      => 'required|string:trim|max:65536|check_message',
+            'message'      => 'required|string:trim|max:' . $this->c->MAX_POST_SIZE . '|check_message',
         ])->setArguments([
-            'token' => $args,
+            'token'                 => $args,
+            'subject.check_subject' => $executive,
+            'message.check_message' => $executive,
         ])->setMessages([
-            'username.login'    => __('Login format'),
+            'username.login' => __('Login format'),
         ]);
 
         return $v;
     }
 
     /**
-     * Возвращает данные для построения формы сообщения
+     * Возвращает данные для построения формы создания темы/сообщения
      * 
      * @param Model $model
      * @param string $marker
@@ -423,25 +536,25 @@ class Post extends Page
 
         $fieldset = [];
         if ($this->c->user->isAdmin || $this->c->user->isModerator($model)) {
-            $fieldset['stick_topic'] = [
-                'type'    => 'checkbox',
-                'label'   => __('Stick topic'),
-                'value'   => '1',
-                'checked' => ! empty($vars['stick_topic']),
-            ];
             if ($editSubject) {
+                $fieldset['stick_topic'] = [
+                    'type'    => 'checkbox',
+                    'label'   => __('Stick topic'),
+                    'value'   => '1',
+                    'checked' => isset($vars['stick_topic']) ? (bool) $vars['stick_topic'] : false,
+                ];
                 $fieldset['stick_fp'] = [
                     'type'    => 'checkbox',
                     'label'   => __('Stick first post'),
                     'value'   => '1',
-                    'checked' => ! empty($vars['stick_fp']),
+                    'checked' => isset($vars['stick_fp']) ? (bool) $vars['stick_fp'] : false,
                 ];
             } else {
                 $fieldset['merge_post'] = [
                     'type'    => 'checkbox',
                     'label'   => __('Merge posts'),
                     'value'   => '1',
-                    'checked' => isset($vars['merge_post']) ? (bool) $vars['merge_post'] : 1,
+                    'checked' => isset($vars['merge_post']) ? (bool) $vars['merge_post'] : true,
                 ];
             }
         }
@@ -450,7 +563,7 @@ class Post extends Page
                 'type'    => 'checkbox',
                 'label'   => __('Hide smilies'),
                 'value'   => '1',
-                'checked' => ! empty($vars['hide_smilies']),
+                'checked' => isset($vars['hide_smilies']) ? (bool) $vars['hide_smilies'] : false,
             ];
         }
         if ($fieldset) {

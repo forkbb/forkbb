@@ -103,7 +103,7 @@ class Mail
             return false;
         }
 
-        $domainASCII = idn_to_ascii($domain);
+        $domainASCII = idn_to_ascii($domain, 0, INTL_IDNA_VARIANT_UTS46);
 
         if ($strict) {
             $mx = @dns_get_record($domainASCII, DNS_MX); //????

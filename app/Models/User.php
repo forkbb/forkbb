@@ -2,7 +2,6 @@
 
 namespace ForkBB\Models;
 
-use ForkBB\Core\Container;
 use ForkBB\Models\DataModel;
 use ForkBB\Models\Model;
 use ForkBB\Models\Forum;
@@ -10,23 +9,6 @@ use RuntimeException;
 
 class User extends DataModel
 {
-    /**
-     * Время
-     * @var int
-     */
-    protected $now;
-
-    /**
-     * Конструктор
-     *
-     * @param Container $container
-     */
-    public function __construct(Container $container)
-    {
-        $this->now = time();
-        parent::__construct($container);
-    }
-
     /**
      * Статус неподтвержденного
      *
@@ -97,7 +79,7 @@ class User extends DataModel
      */
     protected function getlogged()
     {
-        return empty($this->a['logged']) ? $this->now : $this->a['logged'];
+        return empty($this->a['logged']) ? time() : $this->a['logged'];
     }
 
     /**
