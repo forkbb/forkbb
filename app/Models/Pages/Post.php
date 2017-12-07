@@ -67,7 +67,7 @@ class Post extends Page
         $args['_vars'] = $v->getData();
 
         if (null !== $v->preview && ! $v->getErrors()) {
-            $this->previewHtml = $this->c->Parser->getHtml();
+            $this->previewHtml = $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies);
         }
 
         return $this->newTopic($args, $forum);
@@ -105,7 +105,7 @@ class Post extends Page
         
         $this->nameTpl   = 'post';
         $this->onlinePos = 'topic-' . $topic->id;
-        $this->canonical = $this->c->Router->link('NewReply', $args);
+        $this->canonical = $this->c->Router->link('NewReply', ['id' => $topic->id]);
         $this->robots    = 'noindex';
         $this->crumbs    = $this->crumbs(__('Post a reply'), $topic);
         $this->form      = $this->messageForm($topic, 'NewReply', $args);
@@ -142,7 +142,7 @@ class Post extends Page
         $args['_vars'] = $v->getData();
 
         if (null !== $v->preview && ! $v->getErrors()) {
-            $this->previewHtml = $this->c->Parser->getHtml();
+            $this->previewHtml = $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies);
         }
 
         return $this->newReply($args, $topic);
@@ -206,9 +206,10 @@ class Post extends Page
 
         // попытка объеденить новое сообщение с крайним в теме
         if ($merge) {
-            $lastPost = $this->c->ModelPost->load($topic->last_post_id);
+            $lastPost  = $this->c->ModelPost->load($topic->last_post_id);
+            $newLength = mb_strlen($lastPost->message . $v->message, 'UTF-8');
 
-            if ($this->c->MAX_POST_SIZE > mb_strlen($lastPost->message . $v->message, 'UTF-8') + 100) { //????
+            if ($newLength < $this->c->MAX_POST_SIZE - 100) {
                 $lastPost->message = $lastPost->message . "\n[after=" . ($now - $topic->last_post) . "]\n" . $v->message; //????
                 $lastPost->posted  = $lastPost->posted + 1; //???? прибаляем 1 секунду для появления в новых //????
 
@@ -339,7 +340,7 @@ class Post extends Page
      * @param Validator $v
      * @param string $message
      * 
-     * @return array
+     * @return string
      */
     public function vCheckMessage(Validator $v, $message, $attr, $executive)
     {
@@ -355,23 +356,7 @@ class Post extends Page
             $v->addError('All caps message');
         // проверка парсером
         } else {
-            
-            $bbWList = $this->c->config->p_message_bbcode == '1' ? null : [];
-            $bbBList = $this->c->config->p_message_img_tag == '1' ? [] : ['img'];
-
-            $this->c->Parser->setAttr('isSign', false)
-                ->setWhiteList($bbWList)
-                ->setBlackList($bbBList)
-                ->parse($message, ['strict' => true])
-                ->stripEmptyTags(" \n\t\r\v", true);
-
-            if ($this->c->config->o_make_links == '1') {
-                $this->c->Parser->detectUrls();
-            }
-
-            if ($v->hide_smilies != '1' && $this->c->config->o_smilies == '1') {
-                $this->c->Parser->detectSmilies();
-            }
+            $message = $this->c->Parser->prepare($message); //????
 
             foreach($this->c->Parser->getErrors() as $error) {
                 $v->addError($error);
@@ -379,6 +364,30 @@ class Post extends Page
         }
 
         return $message;
+    }
+
+    /**
+     * Проверка времени ограничения флуда
+     * 
+     * @param Validator $v
+     * @param null|string $submit
+     * 
+     * @return null|string
+     */
+    public function vCheckTimeout(Validator $v, $submit)
+    {
+        if (null === $submit) {
+            return null;
+        }
+
+        $user = $this->c->user;
+        $time = time() - (int) $user->last_post;
+
+        if ($time < $user->g_post_flood) {
+            $v->addError(__('Flood start', $user->g_post_flood, $user->g_post_flood - $time), 'e');
+        }
+
+        return $submit;
     }
 
     /**
@@ -436,6 +445,7 @@ class Post extends Page
             'check_username' => [$this, 'vCheckUsername'],
             'check_subject'  => [$this, 'vCheckSubject'],
             'check_message'  => [$this, 'vCheckMessage'],
+            'check_timeout'  => [$this, 'vCheckTimeout'],
         ])->setRules([
             'token'        => 'token:' . $marker,
             'email'        => [$ruleEmail, __('Email')],
@@ -445,8 +455,8 @@ class Post extends Page
             'stick_fp'     => $ruleStickFP,
             'merge_post'   => $ruleMergePost,
             'hide_smilies' => $ruleHideSmilies,
-            'submit'       => 'string', //????
             'preview'      => 'string', //????
+            'submit'       => 'string|check_timeout', //????
             'message'      => 'required|string:trim|max:' . $this->c->MAX_POST_SIZE . '|check_message',
         ])->setArguments([
             'token'                 => $args,

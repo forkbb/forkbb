@@ -199,18 +199,6 @@ class User extends DataModel
      */
     protected function gethtmlSign()
     {
-        $bbWList = $this->c->config->p_sig_bbcode == '1' ? $this->c->BBCODE_INFO['forSign'] : [];
-        $bbBList = $this->c->config->p_sig_img_tag == '1' ? [] : ['img'];
-
-        $parser = $this->c->Parser->setAttr('isSign', true)
-            ->setWhiteList($bbWList)
-            ->setBlackList($bbBList)
-            ->parse($this->cens()->signature);
-
-        if ($this->c->config->o_smilies_sig == '1') {
-            $parser->detectSmilies();
-        }
-
-        return $parser->getHtml();
+        return $this->c->Parser->parseSignature($this->cens()->signature); //????
     }
 }

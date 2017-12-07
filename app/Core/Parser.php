@@ -3,6 +3,7 @@
 namespace ForkBB\Core;
 
 use Parserus;
+use ForkBB\Core\Container;
 
 class Parser extends Parserus
 {
@@ -64,5 +65,93 @@ class Parser extends Parserus
             $bb['self nesting'] = (int) $this->c->config->o_quote_depth;
         }
         return parent::addBBCode($bb);
+    }
+
+    /**
+     * Проверяет разметку сообщения с бб-кодами
+     * Пытается исправить неточности разметки
+     * Генерирует ошибки разметки
+     *
+     * @param string $text
+     * @param bool $isSignature
+     *
+     * @return string
+     */
+    public function prepare($text, $isSignature = false)
+    {
+        if ($isSignature) {
+            $whiteList = $this->c->config->p_sig_bbcode == '1' ? $this->c->BBCODE_INFO['forSign'] : [];
+            $blackList = $this->c->config->p_sig_img_tag == '1' ? [] : ['img'];
+        } else {
+            $whiteList = $this->c->config->p_message_bbcode == '1' ? null : [];
+            $blackList = $this->c->config->p_message_img_tag == '1' ? [] : ['img'];
+        }
+
+        $this->setAttr('isSign', $isSignature)
+             ->setWhiteList($whiteList)
+             ->setBlackList($blackList)
+             ->parse($text, ['strict' => true])
+             ->stripEmptyTags(" \n\t\r\v", true);
+
+        if ($this->c->config->o_make_links == '1') {
+            $this->detectUrls();
+        }
+
+        return preg_replace('%^(\x20*\n)+|(\n\x20*)+$%D', '', $this->getCode());
+    }
+
+    /**
+     * Преобразует бб-коды в html в сообщениях
+     *
+     * @param null|string $text
+     * @param bool $hideSmilies
+     *
+     * @return string
+     */
+    public function parseMessage($text = null, $hideSmilies = false)
+    {
+        // при null предполагается брать данные после prepare()
+        if (null !== $text) {
+            $whiteList = $this->c->config->p_message_bbcode == '1' ? null : [];
+            $blackList = $this->c->config->p_message_img_tag == '1' ? [] : ['img'];
+    
+            $this->setAttr('isSign', false)
+                 ->setWhiteList($whiteList)
+                 ->setBlackList($blackList)
+                 ->parse($text);
+        }
+
+        if (! $hideSmilies && $this->c->config->o_smilies == '1') {
+            $this->detectSmilies();
+        }
+
+        return $this->getHtml();
+    }
+
+    /**
+     * Преобразует бб-коды в html в подписях пользователей
+     *
+     * @param null|string $text
+     *
+     * @return string
+     */
+    public function parseSignature($text = null)
+    {
+        // при null предполагается брать данные после prepare()
+        if (null !== $text) {
+            $whiteList = $this->c->config->p_sig_bbcode == '1' ? $this->c->BBCODE_INFO['forSign'] : [];
+            $blackList = $this->c->config->p_sig_img_tag == '1' ? [] : ['img'];
+    
+            $this->setAttr('isSign', true)
+                 ->setWhiteList($whiteList)
+                 ->setBlackList($blackList)
+                 ->parse($text);
+        }
+
+        if ($this->c->config->o_smilies_sig == '1') {
+            $this->detectSmilies();
+        }
+
+        return $this->getHtml();
     }
 }

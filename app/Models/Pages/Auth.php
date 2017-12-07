@@ -145,7 +145,7 @@ class Auth extends Page
                 $user->update();
 
                 $this->c->Online->delete($this->c->user);
-                $this->c->Cookie->setUser($user);
+                $this->c->Cookie->setUser($user, (bool) $v->save);
             }
         }
         return $password;

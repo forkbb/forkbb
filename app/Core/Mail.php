@@ -92,21 +92,34 @@ class Mail
     public function valid($email, $strict = false, $idna = false)
     {
         if (! is_string($email)
-            || mb_strlen($email, 'UTF-8') > 80
-            || ! preg_match('%^([a-z0-9_!#$\%&\'*+-/=?^`{|}~]+(?:\.[a-z0-9_!#$\%&\'*+-/=?^`{|}~]+)*)@([^\x00-\x20]+)$%Di', $email, $matches)
+            || mb_strlen($email, 'UTF-8') > 80 //?????
+            || ! preg_match('%^([^\x00-\x1F\\\/\s@]+)@([^\x00-\x1F\s@]+)$%Du', $email, $matches)
         ) {
             return false;
         }
         $local = $matches[1];
         $domain = mb_strtolower($matches[2], 'UTF-8');
-        if (! preg_match('%^(?:[\p{L}\p{N}]+(?:\-[\p{L}\p{N}]+)*\.)*\p{L}+$%u', $domain)) {
-            return false;
+
+        if ($domain{0} === '[' && substr($domain, -1) === ']') {
+            $ip = substr($domain, 1, -1);
+            if (! filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+                return $false;
+            }
+            $domainASCII = $domain;
+        } else {
+            $ip = null;
+            if (! preg_match('%^(?:[\p{L}\p{N}]+(?:\-[\p{L}\p{N}]+)*\.)*\p{L}+$%u', $domain)) {
+                return false;
+            }
+            $domainASCII = idn_to_ascii($domain, 0, INTL_IDNA_VARIANT_UTS46);
         }
 
-        $domainASCII = idn_to_ascii($domain, 0, INTL_IDNA_VARIANT_UTS46);
-
         if ($strict) {
-            $mx = @dns_get_record($domainASCII, DNS_MX); //????
+            if ($ip) {
+                $mx = @checkdnsrr($ip, 'MX');
+            } else {
+                $mx = @dns_get_record($domainASCII, DNS_MX);
+            }
             if (empty($mx)) {
                 return false;
             }

@@ -2,6 +2,8 @@
 
 namespace ForkBB\Core;
 
+use InvalidArgumentException;
+
 class Router
 {
     const OK = 200;
@@ -103,40 +105,43 @@ class Router
     public function link($marker = null, array $args = [])
     {
         $result = $this->baseUrl;
-        if (is_string($marker) && isset($this->links[$marker])) {
-            $s = $this->links[$marker];
-            foreach ($args as $key => $val) {
-                if ($key == '#') {
-                    $s .= '#' . rawurlencode($val);
-                    continue;
-                } elseif ($key == 'page' && $val === 1) {
+        $anchor = isset($args['#']) ? '#' . rawurlencode($args['#']) : '';
+
+        // маркер пустой
+        if (null === $marker) {
+            return $result . "/{$anchor}";
+        // такой ссылки нет
+        } elseif (! isset($this->links[$marker])) {
+            return $result . '/';
+        // ссылка статична
+        } elseif (is_string($data = $this->links[$marker])) {
+            return $result . $data . $anchor;
+        }
+
+        list($link, $names, $request) = $data;
+        $data = [];
+        // перечисление имен переменных для построения ссылки
+        foreach ($names as $name) {
+            // значение есть
+            if (isset($args[$name])) {
+                // кроме page = 1
+                if ($name != 'page' || $args[$name] !== 1) {
+                    $data['{' . $name . '}'] = rawurlencode(preg_replace('%[\s\\\/]+%u', '-', $args[$name]));
                     continue;
                 }
-                $s = preg_replace_callback( //????
-                    '%\{' . preg_quote($key, '%') . '(?::[^{}]+)?\}%', 
-                    function($match) use ($val) {
-                        if (is_string($val)) {
-                            $val = trim(preg_replace('%[^\p{L}\p{N}_]+%u', '-', $val), '_-');
-                        } elseif (is_numeric($val)) { //????
-                            $val = (string) $val;
-                        } else {
-                            $val = null;
-                        }
-                        return isset($val[0]) ? rawurlencode($val) : '-';
-                    },
-                    $s
-                );
             }
-            $s = preg_replace('%\[[^{}\[\]]*\{[^}]+\}[^{}\[\]]*\]%', '', $s);
-            if (strpos($s, '{') === false) {
-                $result .= str_replace(['[', ']'], '', $s);
+
+            // значения нет, но оно обязательно
+            if ($request[$name]) {
+                return $result . '/';
+            // значение не обязательно
             } else {
-                $result .= '/';
+                $link = preg_replace('%\[[^\[\]{}]*{' . preg_quote($name, '%') . '}[^\[\]{}]*\]%', '', $link);
             }
-        } else {
-            $result .= '/';
         }
-        return $result;
+        $link = str_replace(['[', ']'], '', $link);
+
+        return $result . strtr($link, $data) . $anchor;
     }
 
     /**
@@ -227,12 +232,15 @@ class Router
             $this->methods[$method] = 1;
         }
 
-        $link = $route;
-        if (($pos = strpos($route, '#')) !== false) {
-            $route = substr($route, 0, $pos);
+        $link   = $route;
+        $anchor = '';
+        if (false !== strpos($route, '#')) {
+            list($route, $anchor) = explode('#', $route, 2);
+            $anchor = '#' . $anchor;
         }
 
         if (false === strpbrk($route, '{}[]')) {
+            $data = null;
             if (is_array($method)) {
                 foreach ($method as $m) {
                     $this->statical[$route][$m] = $handler;
@@ -255,7 +263,11 @@ class Router
         }
 
         if ($marker) {
-            $this->links[$marker] = $link;
+            if ($data) {
+                $this->links[$marker] = [$data[3] . $anchor, $data[2], $data[4]];
+            } else {
+                $this->links[$marker] = $link;
+            }
         }
     }
 
@@ -281,11 +293,14 @@ class Router
         }
 
         $pattern = '%^';
-        $var = false;
-        $first = false;
-        $buffer = '';
-        $args = [];
-        $s = 0;
+        $var     = false;
+        $first   = false;
+        $buffer  = '';
+        $args    = [];
+        $s       = 0;
+        $req     = true;
+        $argReq  = [];
+        $temp    = '';
 
         foreach ($parts as $part) {
             if ($var) {
@@ -301,9 +316,11 @@ class Router
                             return false;
                         }
                         $pattern .= '(?P<' . $data[0] . '>' . $data[1] . ')';
-                        $args[] = $data[0];
-                        $var = false;
-                        $buffer = '';
+                        $args[]   = $data[0];
+                        $temp    .= '{' . $data[0] . '}';
+                        $var      = false;
+                        $buffer   = '';
+                        $argsReq[$data[0]] = $req;
                         break;
                     default:
                         $buffer .= $part;
@@ -311,8 +328,9 @@ class Router
             } elseif ($first) {
                 switch ($part) {
                     case '/':
-                        $first = false;
+                        $first    = false;
                         $pattern .= preg_quote($part, '%');
+                        $temp    .= $part;
                         break;
                     default:
                         return false;
@@ -322,7 +340,9 @@ class Router
                     case '[':
                         ++$s;
                         $pattern .= '(?:';
-                        $first = true;
+                        $first    = true;
+                        $req      = false;
+                        $temp    .= '[';
                         break;
                     case ']':
                         --$s;
@@ -330,6 +350,8 @@ class Router
                             return false;
                         }
                         $pattern .= ')?';
+                        $req      = true;
+                        $temp    .= ']';
                         break;
                     case '{':
                         $var = true;
@@ -338,6 +360,7 @@ class Router
                         return false;
                     default:
                         $pattern .= preg_quote($part, '%');
+                        $temp    .= $part;
                 }
             }
         }
@@ -345,6 +368,6 @@ class Router
             return false;
         }
         $pattern .= '$%D';
-        return [$base, $pattern, $args];
+        return [$base, $pattern, $args, $temp, $argsReq];
     }
 }
