@@ -1164,6 +1164,7 @@ select {
 
 .f-post {
   border-top: 0.0625rem solid #AA7939;
+  border-bottom: 0.0625rem solid #AA7939;
   margin-bottom: 0.625rem;
   position: relative;
   background-color: #FFFFFF;
@@ -1178,6 +1179,21 @@ select {
   padding: 0.625rem;
   border-bottom: 0.0625rem solid #AA7939;
   background-color: #D3B58D;
+}
+
+.f-post-posted {
+  float: left;
+}
+
+.f-post-edited {
+  float: left;
+  font-style: italic;
+  margin-left: 0.625rem;
+  opacity: 0.5;
+}
+
+.f-post-number {
+  float: right;
 }
 
 .f-post-left {

@@ -9,7 +9,7 @@ class Statistics extends Admin
     /**
      * phpinfo
      * 
-     * @return Page|null
+     * @return Page
      */
     public function info()
     {
@@ -18,8 +18,38 @@ class Statistics extends Admin
             $this->c->Message->message('PHPinfo disabled message', true, 200);
         }
 
+        ob_start();
         phpinfo();
-        exit; //????
+        $page = ob_get_clean();
+        
+        if (preg_match('%<body[^>]*>(.*)</body[^>]*>%is', $page, $matches)) {
+            $phpinfo = $matches[1];
+            if (preg_match('%<style[^>]*>(.*?)</style[^>]*>%is', $page, $matches)) {
+                $style = preg_replace_callback(
+                    '%(\S[^{]*)({[^}]+})%', 
+                    function($match) {
+                        $result = array_map(
+                            function($val) {
+                                $val = str_replace('body', '.f-phpinfo-div', $val, $count);
+                                return $count ? $val : '.f-phpinfo-div ' . $val;
+                            }, 
+                            explode(',', $match[1])
+                        );
+                        return implode(', ', $result) . $match[2];
+                    }, 
+                    $matches[1]
+                );
+                $this->addStyle('phpinfo', $style);
+            }
+        } else {
+            $phpinfo = '- - -';
+        }
+
+        $this->nameTpl = 'admin/phpinfo';
+        $this->titles  = 'phpinfo()';
+        $this->phpinfo = $phpinfo;
+        
+        return $this;
     }
 
     /**
@@ -70,15 +100,20 @@ class Statistics extends Admin
 
         // Check for the existence of various PHP opcode caches/optimizers
         if (ini_get('opcache.enable') && function_exists('opcache_invalidate')) {
-            $this->accelerator = '<a href="https://secure.php.net/opcache/">Zend OPcache</a>';
+            $this->accelerator = 'Zend OPcache';
+            $this->linkAcc     = 'https://secure.php.net/opcache/';
         } elseif (ini_get('wincache.fcenabled')) {
-            $this->accelerator = '<a href="https://secure.php.net/wincache/">Windows Cache for PHP</a>';
+            $this->accelerator = 'Windows Cache for PHP';
+            $this->linkAcc     = 'https://secure.php.net/wincache/';
         } elseif (ini_get('apc.enabled') && function_exists('apc_delete_file')) {
-            $this->accelerator = '<a href="https://secure.php.net/apc/">Alternative PHP Cache (APC)</a>'; //???? частичная эмуляция APCu
+            $this->accelerator = 'Alternative PHP Cache (APC)'; //???? частичная эмуляция APCu
+            $this->linkAcc     = 'https://secure.php.net/apc/';
         } elseif (ini_get('xcache.cacher')) {
-            $this->accelerator = '<a href="https://xcache.lighttpd.net/">XCache</a>';
+            $this->accelerator = 'XCache';
+            $this->linkAcc     = 'https://xcache.lighttpd.net/';
         } else {
             $this->accelerator = __('NA');
+            $this->linkAcc     = null;
         }
 
         return $this;

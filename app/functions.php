@@ -1,5 +1,10 @@
 <?php
 
+function _e($val)
+{
+    return htmlspecialchars($val, ENT_HTML5 | ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+
 function __($data, ...$args)
 {
     static $lang;
@@ -24,8 +29,9 @@ function __($data, ...$args)
     if (empty($args)) {
         return $tr;
     } elseif (is_array($args[0])) {
-        return strtr($tr, $args[0]);
+        return strtr($tr, array_map('_e', $args[0]));
     } else {
+        $args = array_map('_e', $args);
         return sprintf($tr, ...$args);
     }
 }

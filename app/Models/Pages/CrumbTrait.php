@@ -31,7 +31,11 @@ trait CrumbTrait
                         $name = 'no name';
                     }
 
-                    $this->titles = $name;
+                    if ($arg->page > 1) {
+                        $this->titles = $name . ' ' . __('Page', $arg->page);
+                    } else {
+                        $this->titles = $name;
+                    }
                     $crumbs[] = [$arg->link, $name, $active];
                     $active = null;
                     $arg = $arg->parent;

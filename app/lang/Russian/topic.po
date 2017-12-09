@@ -52,7 +52,10 @@ msgid "Offline"
 msgstr "Вне форума"
 
 msgid "Last edit"
-msgstr "Отредактировано"
+msgstr "Последний раз отредактировано %1$s (%2$s)"
+
+msgid "Edited"
+msgstr "Изменено"
 
 msgid "Report"
 msgstr "Просигналить"

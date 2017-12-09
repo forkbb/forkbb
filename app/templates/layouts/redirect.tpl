@@ -6,7 +6,11 @@
   <meta http-equiv="refresh" content="{!! $p->timeout !!};URL={{ $p->link }}">
   <title>{{ $p->pageTitle }}</title>
 @foreach ($p->pageHeaders as $cur)
-  <{!! $cur !!}>
+  @if ($cur[0] === 'style')
+  <{!! $cur[0] !!}>{!! $cur[1] !!}</{!! $cur[0] !!}>
+  @else
+  <{!! $cur[0] !!} {!! $cur[1] !!}>
+  @endif
 @endforeach
 </head>
 <body>

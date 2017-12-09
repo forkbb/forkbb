@@ -183,7 +183,7 @@ msgid "Pages"
 msgstr "Pages:"
 
 msgid "Page"
-msgstr "Page %s"
+msgstr "(Page %s)"
 
 msgid "BBCode"
 msgstr "BBCode:"

@@ -97,7 +97,7 @@ abstract class Page extends Model
 
         if ($user->g_read_board == '1' && $this->c->config->o_additional_navlinks != '') {
             // position|name|link[|id]\n
-            if (preg_match_all('%^(\d+)\|([^\|\n\r]+)\|([^\|\n\r]+)(?:\|([^\|\n\r]+))?$%m', $this->c->config->o_additional_navlinks."\n", $matches)) {
+            if (preg_match_all('%^(\d+)\|([^\|\n\r]+)\|([^\|\n\r]+)(?:\|([^\|\n\r]+))?$%m', $this->c->config->o_additional_navlinks . "\n", $matches)) {
                $k = count($matches[0]);
                for ($i = 0; $i < $k; ++$i) {
                    if (empty($matches[4][$i])) {
@@ -153,14 +153,33 @@ abstract class Page extends Model
      */
     protected function getpageHeaders()
     {
-        $headers = ['link rel="stylesheet" type="text/css" href="' . $this->c->PUBLIC_URL . '/style/' . $this->c->user->style . '/style.css' . '"'];
-        if ($this->robots) {
-            $headers[] = 'meta name="robots" content="' . $this->robots . '"';
-        }
+        $headers = [['link', 'rel="stylesheet" type="text/css" href="' . $this->c->PUBLIC_URL . '/style/' . $this->c->user->style . '/style.css' . '"']];
         if ($this->canonical) {
-            $headers[] = 'link rel="canonical" href="' . $this->canonical . '"';
+            $headers[] = ['link', 'rel="canonical" href="' . $this->canonical . '"'];
+        }
+        if ($this->robots) {
+            $headers[] = ['meta', 'name="robots" content="' . $this->robots . '"'];
+        }
+        if (isset($this->a['pageHeaders']['style'])) {
+            foreach ($this->a['pageHeaders']['style'] as $style) {
+                $headers[] = ['style', $style];
+            }
         }
         return $headers;
+    }
+
+    /**
+     * Добавляет стиль на страницу
+     * 
+     * @param string $name
+     * @param string $val
+     * 
+     * @return Page
+     */
+    public function addStyle($name, $val) 
+    {
+        $this->a['pageHeaders']['style'][$name] = $val;
+        return $this;
     }
 
     /**

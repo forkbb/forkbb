@@ -4,8 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{!! __('ForkBB Installation') !!}</title>
-@foreach ($p->pageHeads as $cur)
-  <{!! $cur !!}>
+@foreach ($p->pageHeaders as $cur)
+  @if ($cur[0] === 'style')
+  <{!! $cur[0] !!}>{!! $cur[1] !!}</{!! $cur[0] !!}>
+  @else
+  <{!! $cur[0] !!} {!! $cur[1] !!}>
+  @endif
 @endforeach
 </head>
 <body>

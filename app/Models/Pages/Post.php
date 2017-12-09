@@ -210,8 +210,9 @@ class Post extends Page
             $newLength = mb_strlen($lastPost->message . $v->message, 'UTF-8');
 
             if ($newLength < $this->c->MAX_POST_SIZE - 100) {
-                $lastPost->message = $lastPost->message . "\n[after=" . ($now - $topic->last_post) . "]\n" . $v->message; //????
-                $lastPost->posted  = $lastPost->posted + 1; //???? прибаляем 1 секунду для появления в новых //????
+                $lastPost->message   = $lastPost->message . "\n[after=" . ($now - $topic->last_post) . "]\n" . $v->message; //????
+                $lastPost->edited    = $now;
+                $lastPost->edited_by = $username;
 
                 $lastPost->update();
             } else {
@@ -484,6 +485,7 @@ class Post extends Page
         $vars = isset($args['_vars']) ? $args['_vars'] : null;
         unset($args['_vars']);
 
+        $autofocus = true;
         $form = [
             'action' => $this->c->Router->link($marker, $args),
             'hidden' => [
@@ -506,6 +508,7 @@ class Post extends Page
                 'required'  => true,
                 'pattern'   => '^.{2,25}$',
                 'value'     => isset($vars['username']) ? $vars['username'] : null,
+                'autofocus' => $autofocus,
             ];
             $fieldset['email'] = [
                 'dl'        => 't2',
@@ -516,6 +519,7 @@ class Post extends Page
                 'pattern'   => '.+@.+',
                 'value'     => isset($vars['email']) ? $vars['email'] : null,
             ];
+            $autofocus = null;
         }
 
         if ($editSubject) {
@@ -525,7 +529,9 @@ class Post extends Page
                 'title'     => __('Subject'),
                 'required'  => true,
                 'value'     => isset($vars['subject']) ? $vars['subject'] : null,
+                'autofocus' => $autofocus,
             ];
+            $autofocus = null;
         }
 
         $fieldset['message'] = [
@@ -539,11 +545,13 @@ class Post extends Page
                 ['link', __('img tag'), __($this->c->config->p_message_bbcode == '1' && $this->c->config->p_message_img_tag == '1' ? 'on' : 'off')],
                 ['link', __('Smilies'), __($this->c->config->o_smilies == '1' ? 'on' : 'off')],
             ],
+            'autofocus' => $autofocus,
         ];
         $form['sets'][] = [
             'fields' => $fieldset,
         ];
-
+        $autofocus = null;
+        
         $fieldset = [];
         if ($this->c->user->isAdmin || $this->c->user->isModerator($model)) {
             if ($editSubject) {

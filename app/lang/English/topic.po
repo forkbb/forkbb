@@ -51,7 +51,10 @@ msgid "Offline"
 msgstr "Offline"
 
 msgid "Last edit"
-msgstr "Last edited by"
+msgstr "Last edited by %1$s (%2$s)"
+
+msgid "Edited"
+msgstr "Edited"
 
 msgid "Report"
 msgstr "Report"

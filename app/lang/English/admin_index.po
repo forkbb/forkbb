@@ -91,10 +91,10 @@ msgid "Show info"
 msgstr "Show info"
 
 msgid "Environment data version"
-msgstr "PHP: %s - %s"
+msgstr "PHP: %s"
 
 msgid "Environment data acc"
-msgstr "Accelerator: %s"
+msgstr "Accelerator:"
 
 msgid "Database label"
 msgstr "Database"

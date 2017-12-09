@@ -32,14 +32,10 @@ class View extends Dirk
     protected function compileStatements($value)
     {
         return preg_replace_callback(
-            '/[ \t]*+\B@(\w+)([ \t]*)(\( ( (?>[^()]+) | (?3) )* \))?/x',
+            '/[ \t]*+\B@(\w+)(?: [ \t]*( \( ( (?>[^()]+) | (?2) )* \) ) )?/x',
             function($match) {
                 if (method_exists($this, $method = 'compile' . ucfirst($match[1]))) {
-                    if (isset($match[3])) {
-                        return $this->$method($match[3]);
-                    } else {
-                        return $this->$method('') . $match[2];
-                    }
+                    return isset($match[2]) ? $this->$method($match[2]) : $this->$method('');
                 } else {
                     return $match[0];
                 }

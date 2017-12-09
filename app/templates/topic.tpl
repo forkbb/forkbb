@@ -55,8 +55,11 @@
       <article id="p{!! $post->id !!}" class="clearfix f-post @if ($post->user->gender == 1) f-user-male @elseif ($post->user->gender == 2) f-user-female @endif @if ($post->user->online) f-user-online @endif">
         <header class="f-post-header clearfix">
           <h3>{{ $p->topic->cens()->subject }} - #{!! $post->postNumber !!}</h3>
-          <span class="left"><time datetime="{{ $post->utc()->posted }}">{{ $post->dt()->posted }}</time></span>
-          <span class="right"><a href="{!! $post->link !!}" rel="bookmark">#{!! $post->postNumber !!}</a></span>
+          <span class="f-post-posted"><time datetime="{{ $post->utc()->posted }}">{{ $post->dt()->posted }}</time></span>
+  @if ($post->edited)
+          <span class="f-post-edited" title="{!! __('Last edit', $post->user->username, $post->dt()->edited) !!}">{!! __('Edited') !!}</span>
+  @endif
+          <span class="f-post-number"><a href="{!! $post->link !!}" rel="bookmark">#{!! $post->postNumber !!}</a></span>
         </header>
         <div class="f-post-body clearfix">
           <address class="f-post-left clearfix">
