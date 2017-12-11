@@ -150,7 +150,7 @@ class Validator
             $rules = [];
             // псевдоним содержится в списке правил
             if (is_array($raw)) {
-                list($raw, $this->aliases[$field]) = $raw;
+                list($raw, $this->aliases[$field]) = $raw; //????
             }
             // перебор правил для текущего поля
             foreach (explode('|', $raw) as $rule) {

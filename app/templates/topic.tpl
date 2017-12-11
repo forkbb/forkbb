@@ -64,7 +64,7 @@
         <div class="f-post-body clearfix">
           <address class="f-post-left clearfix">
             <ul class="f-user-info">
-  @if ($post->showUserLink)
+  @if ($post->showUserLink && $post->user->link)
               <li class="f-username"><a href="{!! $post->user->link !!}">{{ $post->user->username }}</a></li>
   @else
               <li class="f-username">{{ $post->user->username }}</li>
@@ -75,7 +75,7 @@
               </li>
   @endif
               <li class="f-usertitle"><span>{{ $post->user->title() }}</span></li>
-  @if ($post->showUserInfo)
+  @if ($post->showUserInfo && $post->user->num_posts)
               <li class="f-postcount"><span>{!! __('%s post', $post->user->num_posts, $post->user->num()->num_posts) !!}</span></li>
   @endif
             </ul>

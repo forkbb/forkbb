@@ -30,17 +30,17 @@ return [
          'no attr' => true,
      ],
      'handler' => function($body, $attrs) {
-         return '</p><div class="codebox"><pre><code>' . trim($body, "\n\r") . '</code></pre></div><p>';
+         return '</p><pre class="f-bb-code"><code>' . trim($body, "\n\r") . '</code></pre><p>';
      },
     ],
     ['tag' => 'b',
      'handler' => function($body) {
-         return '<strong>' . $body . '</strong>';
+         return '<b>' . $body . '</b>';
      },
     ],
     ['tag' => 'i',
      'handler' => function($body) {
-         return '<em>' . $body . '</em>';
+         return '<i>' . $body . '</i>';
      },
     ],
     ['tag' => 'em',
@@ -50,12 +50,12 @@ return [
     ],
     ['tag' => 'u',
      'handler' => function($body) {
-         return '<span class="bbu">' . $body . '</span>';
+         return '<span class="f-bb-u">' . $body . '</span>';
      },
     ],
     ['tag' => 's',
      'handler' => function($body) {
-         return '<span class="bbs">' . $body . '</span>';
+         return '<s>' . $body . '</s>';
      },
     ],
     ['tag' => 'del',
@@ -71,7 +71,7 @@ return [
     ['tag' => 'h',
      'type' => 'h',
      'handler' => function($body) {
-         return '</p><h5>' . $body . '</h5><p>';
+         return '</p><p class="f-bb-header">' . $body . '</p><p>';
      },
     ],
     ['tag' => 'hr',
@@ -205,11 +205,11 @@ return [
 
          switch ($attrs['Def'][0]) {
              case 'a':
-                 return '</p><ol class="alpha">' . $body . '</ol><p>';
+                 return '</p><ol class="f-bb-l-lat">' . $body . '</ol><p>';
              case '1':
-                 return '</p><ol class="decimal">' . $body . '</ol><p>';
+                 return '</p><ol class="f-bb-l-dec">' . $body . '</ol><p>';
              default:
-                 return '</p><ul>' . $body . '</ul><p>';
+                 return '</p><ul class="f-bb-l-disc">' . $body . '</ul><p>';
          }
      },
     ],
@@ -242,7 +242,7 @@ return [
 
          $attr = __('After time') . ' ' . implode(' ', $arr);
 
-         return '<span style="color: #808080"><em>' . $attr . ':</em></span><br />';
+         return '</p><p class="f-bb-after">' . $attr . ':</p><p>';
      },
     ],
     ['tag' => 'quote',
@@ -253,13 +253,8 @@ return [
          'no attr' => true,
      ],
      'handler' => function($body, $attrs) {
-         if (isset($attrs['Def'])) {
-             $st = '</p><div class="quotebox"><cite>' . $attrs['Def'] .  ' ' . __('wrote') . '</cite><blockquote><div><p>';
-         } else {
-             $st = '</p><div class="quotebox"><blockquote><div><p>';
-         }
-
-         return $st . $body . '</p></div></blockquote></div><p>';
+         $header = isset($attrs['Def']) ? '<div class="f-bb-q-header">' . $attrs['Def'] .  ' ' . __('wrote') . '</div>' : '';
+         return "</p><blockquote class=\"f-bb-quote\">{$header}<div class=\"f-bb-q-body\"><p>{$body}</p></div></blockquote><p>";
      },
     ],
     ['tag' => 'spoiler',

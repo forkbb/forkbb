@@ -37,7 +37,7 @@
 @endforeach
           <p>
 @foreach ($form['btns'] as $key => $cur)
-            <input class="f-btn" type="{{ $cur[0] }}" name="{{ $key }}" value="{{ $cur[1] }}" accesskey="{{ $cur[2] }}">
+            <input class="f-btn @if(isset($cur['class'])) {{ $cur['class'] }} @endif" type="{{ $cur['type'] }}" name="{{ $key }}" value="{{ $cur['value'] }}" @if (isset($cur['accesskey'])) accesskey="{{ $cur['accesskey'] }}" @endif>
 @endforeach
           </p>
         </form>

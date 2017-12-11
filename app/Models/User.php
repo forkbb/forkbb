@@ -63,6 +63,10 @@ class User extends DataModel
      */
     public function isModerator(Model $model)
     {
+        if ($this->g_moderator != '1') {
+            return false;
+        }
+        
         while (! $model instanceof Forum) {
             $model = $model->parent;
             if (! $model instanceof Model) {
@@ -135,11 +139,15 @@ class User extends DataModel
     /**
      * Ссылка на профиль пользователя
      *
-     * @return string
+     * @return null|string
      */
     protected function getlink()
     {
-        return $this->c->Router->link('User', ['id' => $this->id, 'name' => $this->username]);
+        if ($this->isGuest) {
+            return null;
+        } else {
+            return $this->c->Router->link('User', ['id' => $this->id, 'name' => $this->username]);
+        }
     }
 
     /**

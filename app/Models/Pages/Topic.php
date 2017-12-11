@@ -7,6 +7,7 @@ use ForkBB\Models\Page;
 class Topic extends Page
 {
     use CrumbTrait;
+    use PostFormTrait;
 
     /**
      * Переход к первому новому сообщению темы (или в конец)
@@ -135,75 +136,6 @@ class Topic extends Page
 
         $this->c->Lang->load('topic');
 
-        $user = $this->c->user;
-
-        // данные для формы быстрого ответа
-        $form = null;
-        if ($topic->canReply && $this->c->config->o_quickpost == '1') {
-            $form = [
-                'action' => $this->c->Router->link('NewReply', ['id' => $topic->id]),
-                'hidden' => [
-                    'token' => $this->c->Csrf->create('NewReply', ['id' => $topic->id]),
-                ],
-                'sets'   => [],
-                'btns'   => [
-                    'submit'  => ['submit', __('Submit'), 's'],
-                    'preview' => ['submit', __('Preview'), 'p'],
-                ],
-            ];
-
-            $fieldset = [];
-            if ($user->isGuest) {
-                $fieldset['username'] = [
-                    'dl'        => 't1',
-                    'type'      => 'text',
-                    'maxlength' => 25,
-                    'title'     => __('Username'),
-                    'required'  => true,
-                    'pattern'   => '^.{2,25}$',
-                ];
-                $fieldset['email'] = [
-                    'dl'        => 't2',
-                    'type'      => 'text',
-                    'maxlength' => 80,
-                    'title'     => __('Email'),
-                    'required'  => $this->c->config->p_force_guest_email == '1',
-                    'pattern'   => '.+@.+',
-                ];
-            }
-
-            $fieldset['message'] = [
-                'type'     => 'textarea',
-                'title'    => __('Message'),
-                'required' => true,
-                'bb'       => [
-                    ['link', __('BBCode'), __($this->c->config->p_message_bbcode == '1' ? 'on' : 'off')],
-                    ['link', __('url tag'), __($this->c->config->p_message_bbcode == '1' && $user->g_post_links == '1' ? 'on' : 'off')],
-                    ['link', __('img tag'), __($this->c->config->p_message_bbcode == '1' && $this->c->config->p_message_img_tag == '1' ? 'on' : 'off')],
-                    ['link', __('Smilies'), __($this->c->config->o_smilies == '1' ? 'on' : 'off')],
-                ],
-            ];
-            $form['sets'][] = [
-                'fields' => $fieldset,
-            ];
-
-            $fieldset = [];
-            if ($user->isAdmin || $user->isModerator($topic)) {
-                $fieldset['merge_post'] = [
-                    'type'    => 'checkbox',
-                    'label'   => __('Merge posts'),
-                    'value'   => '1',
-                    'checked' => true,
-                ];
-            }
-            if ($fieldset) {
-                $form['sets'][] = [
-                    'legend' => __('Options'),
-                    'fields' => $fieldset,
-                ];
-            }
-        }
-
         $this->nameTpl      = 'topic';
         $this->onlinePos    = 'topic-' . $topic->id;
         $this->onlineDetail = true;
@@ -213,7 +145,9 @@ class Topic extends Page
         $this->crumbs       = $this->crumbs($topic);
         $this->online       = $this->c->Online->calc($this)->info();
         $this->stats        = null;
-        $this->form         = $form;
+        $this->form         = $topic->canReply && $this->c->config->o_quickpost == '1' 
+                                ? $this->messageForm($topic, 'NewReply', ['id' => $topic->id], false, true) 
+                                : null;
 
         if ($topic->showViews) {
             $topic->incViews();

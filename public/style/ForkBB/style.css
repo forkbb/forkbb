@@ -150,6 +150,10 @@ body,
           user-select: none;
 }
 
+.f-btn.f-minor {
+  opacity: 0.5;
+}
+
 .f-wrap a:hover,
 .f-wrap a:focus,
 .f-btn:hover,
@@ -1202,11 +1206,13 @@ select {
 }
 
 .f-post-right {
-  padding: 0.625rem;
+  padding: 0.625rem 0.625rem 0 0.625rem;
 }
 
 .f-post-footer .f-post-right {
   text-align: right;
+  padding-top: 0;
+  padding-bottom: 0.625rem;
 }
 
 .f-post-footer .f-post-left {
@@ -1254,6 +1260,72 @@ li + li .f-btn {
 .f-post-signature {
   font-size: 0.875rem;
   opacity: 0.5;
+  padding-top: 0;
+}
+
+/*********************/
+.f-bb-u {
+  text-decoration: underline;
+}
+
+.f-bb-header {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.f-bb-after {
+  opacity: 0.5;
+  font-style: italic;
+}
+
+.f-bb-quote {
+  border-left: 0.1875rem solid #AA7939;
+  border-top: 0.0625rem solid #AA7939;
+}
+
+.f-bb-q-header {
+  padding: 0.625rem;
+  background-color: #D3B58D;
+}
+
+.f-bb-q-body {
+  padding: 0.625rem;
+}
+
+.f-bb-code {
+  border: 0.0625rem solid #AA7939;
+  padding: 0.625rem;
+  background-color: #D3B58D;
+  overflow: auto;
+  max-height: 45rem;
+}
+
+.f-bb-l-disc {
+  list-style-type: disc;
+  list-style-position: outside;
+  padding-left: 1.5rem;
+}
+
+.f-bb-l-dec {
+  list-style-type: decimal;
+  list-style-position: outside;
+  padding-left: 1.5rem;
+}
+
+.f-bb-l-lat {
+  list-style-type: lower-alpha;
+  list-style-position: outside;
+  padding-left: 1.5rem;
+}
+
+.f-post-main p,
+.f-post-main blockquote,
+.f-post-main br,
+.f-post-main pre,
+.f-post-main ol,
+.f-post-main ul {
+  margin-bottom: 0.625rem;
+  word-wrap: break-word;
 }
 
 @media screen and (min-width: 50rem) {

@@ -9,7 +9,7 @@
             <dt>{!! __('Environment label') !!}</dt>
             <dd>
               {!! __('Environment data OS', PHP_OS) !!}<br>
-              {!! __('Environment data version', phpversion()) !!} - <a href="{!! $p->linkInfo !!}">{!! __('Show info') !!}</a><br>
+              {!! __('Environment data version', PHP_VERSION) !!} - <a href="{!! $p->linkInfo !!}">{!! __('Show info') !!}</a><br>
   @if ($p->linkAcc)
               {!! __('Environment data acc') !!} <a href="{!! $p->linkAcc !!}">{{ $p->accelerator }}</a>
   @else

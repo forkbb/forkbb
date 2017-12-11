@@ -50,6 +50,10 @@ class Parser extends Parserus
 
             $this->setSmilies($smilies)->setSmTpl($info['smTpl'], $info['smTplTag'], $info['smTplBl']);
         }
+
+        $this->setAttr('baseUrl', $this->c->BASE_URL);
+        $this->setAttr('showImg', $this->c->user->show_img != '0');
+        $this->setAttr('showImgSign', $this->c->user->show_img_sig != '0');
     }
 
     /**

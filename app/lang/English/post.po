@@ -12,6 +12,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid "You can not post links in subject"
+msgstr "You can not post links in subject."
+
 msgid "No subject"
 msgstr "Topics must contain a subject."
 

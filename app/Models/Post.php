@@ -21,7 +21,7 @@ class Post extends DataModel
     /**
      * Автор сообщения
      *
-     * @return Models\User
+     * @return User
      */
     protected function getuser()
     {
@@ -103,7 +103,7 @@ class Post extends DataModel
             }
         }
         if ($this->parent->canReply) {
-            $controls['quote'] = [$this->c->Router->link('NewReply', ['id' => $this->parent->id, 'quote' => $this->id]), 'Reply'];
+            $controls['quote'] = [$this->c->Router->link('NewReply', ['id' => $this->parent->id, 'quote' => $this->id]), 'Quote'];
         }
         return $controls;
     }
