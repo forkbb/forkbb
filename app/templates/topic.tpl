@@ -50,14 +50,14 @@
 @endif
     </div>
     <section class="f-main f-topic">
-      <h2>{{ $p->topic->cens()->subject }}</h2>
+      <h2>{{ cens($p->topic->subject) }}</h2>
 @foreach ($p->posts as $post)
       <article id="p{!! $post->id !!}" class="clearfix f-post @if ($post->user->gender == 1) f-user-male @elseif ($post->user->gender == 2) f-user-female @endif @if ($post->user->online) f-user-online @endif">
         <header class="f-post-header clearfix">
-          <h3>{{ $p->topic->cens()->subject }} - #{!! $post->postNumber !!}</h3>
-          <span class="f-post-posted"><time datetime="{{ $post->utc()->posted }}">{{ $post->dt()->posted }}</time></span>
+          <h3>{{ cens($p->topic->subject) }} - #{!! $post->postNumber !!}</h3>
+          <span class="f-post-posted"><time datetime="{{ utc($post->posted) }}">{{ dt($post->posted) }}</time></span>
   @if ($post->edited)
-          <span class="f-post-edited" title="{!! __('Last edit', $post->user->username, $post->dt()->edited) !!}">{!! __('Edited') !!}</span>
+          <span class="f-post-edited" title="{!! __('Last edit', $post->user->username, dt($post->edited)) !!}">{!! __('Edited') !!}</span>
   @endif
           <span class="f-post-number"><a href="{!! $post->link !!}" rel="bookmark">#{!! $post->postNumber !!}</a></span>
         </header>
@@ -76,14 +76,14 @@
   @endif
               <li class="f-usertitle"><span>{{ $post->user->title() }}</span></li>
   @if ($post->showUserInfo && $post->user->num_posts)
-              <li class="f-postcount"><span>{!! __('%s post', $post->user->num_posts, $post->user->num()->num_posts) !!}</span></li>
+              <li class="f-postcount"><span>{!! __('%s post', $post->user->num_posts, num($post->user->num_posts)) !!}</span></li>
   @endif
             </ul>
   @if ($post->showUserInfo)
             <ul class="f-user-info-add">
-              <li><span>{!! __('Registered:') !!} {{ $post->user->dt(true)->registered }}</span></li>
+              <li><span>{!! __('Registered:') !!} {{ dt($post->user->registered, true) }}</span></li>
     @if ($post->user->location)
-              <li><span>{!! __('From') !!} {{ $post->user->cens()->location }}</span></li>
+              <li><span>{!! __('From') !!} {{ cens($post->user->location) }}</span></li>
     @endif
               <li><span></span></li>
             </ul>
@@ -103,12 +103,21 @@
           <div class="f-post-left">
             <span></span>
           </div>
-  @if ($post->controls)
+  @if ($post->canReport || $post->canDelete || $post->canEdit || $post->canQuote)
           <div class="f-post-right clearfix">
             <ul>
-    @foreach ($post->controls as $key => $control)
-              <li class="f-post{!! $key !!}"><a class="f-btn" href="{!! $control[0] !!}">{!! __($control[1]) !!}</a></li>
-    @endforeach
+    @if ($post->canReport)
+              <li class="f-postreport"><a class="f-btn f-minor" href="{!! $post->linkReport !!}">{!! __('Report') !!}</a></li>
+    @endif
+    @if ($post->canDelete)
+              <li class="f-postdelete"><a class="f-btn" href="{!! $post->linkDelete !!}">{!! __('Delete') !!}</a></li>
+    @endif
+    @if ($post->canEdit)
+              <li class="f-postedit"><a class="f-btn" href="{!! $post->linkEdit !!}">{!! __('Edit') !!}</a></li>
+    @endif
+    @if ($post->canQuote)
+              <li class="f-postquote"><a class="f-btn" href="{!! $post->linkQuote !!}">{!! __('Quote') !!}</a></li>
+    @endif
             </ul>
           </div>
   @endif

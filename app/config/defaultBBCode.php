@@ -228,19 +228,19 @@ return [
          $hours = ($attrs['Def'] / 3600) % 24;
          $days = (int) ($attrs['Def'] / 86400);
          if ($days > 0) {
-             $arr[] = $days . __('After time d');
+             $arr[] = $days . \ForkBB\__('After time d');
          }
          if ($hours > 0) {
-             $arr[] = $hours . __('After time H');
+             $arr[] = $hours . \ForkBB\__('After time H');
          }
          if ($min > 0) {
-             $arr[] = (($min < 10) ? '0' . $min : $min) . __('After time i');
+             $arr[] = (($min < 10) ? '0' . $min : $min) . \ForkBB\__('After time i');
          }
          if ($sec > 0) {
-             $arr[] = (($sec < 10) ? '0' . $sec : $sec) . __('After time s');
+             $arr[] = (($sec < 10) ? '0' . $sec : $sec) . \ForkBB\__('After time s');
          }
 
-         $attr = __('After time') . ' ' . implode(' ', $arr);
+         $attr = \ForkBB\__('After time') . ' ' . implode(' ', $arr);
 
          return '</p><p class="f-bb-after">' . $attr . ':</p><p>';
      },
@@ -253,7 +253,7 @@ return [
          'no attr' => true,
      ],
      'handler' => function($body, $attrs) {
-         $header = isset($attrs['Def']) ? '<div class="f-bb-q-header">' . $attrs['Def'] .  ' ' . __('wrote') . '</div>' : '';
+         $header = isset($attrs['Def']) ? '<div class="f-bb-q-header">' . $attrs['Def'] .  ' ' . \ForkBB\__('wrote') . '</div>' : '';
          return "</p><blockquote class=\"f-bb-quote\">{$header}<div class=\"f-bb-q-body\"><p>{$body}</p></div></blockquote><p>";
      },
     ],
@@ -268,7 +268,7 @@ return [
          if (isset($attrs['Def'])) {
              $st = '</p><div class="quotebox" style="padding: 0px;"><div onclick="var e,d,c=this.parentNode,a=c.getElementsByTagName(\'div\')[1],b=this.getElementsByTagName(\'span\')[0];if(a.style.display!=\'\'){while(c.parentNode&&(!d||!e||d==e)){e=d;d=(window.getComputedStyle?getComputedStyle(c, null):c.currentStyle)[\'backgroundColor\'];if(d==\'transparent\'||d==\'rgba(0, 0, 0, 0)\')d=e;c=c.parentNode;}a.style.display=\'\';a.style.backgroundColor=d;b.innerHTML=\'&#9650;\';}else{a.style.display=\'none\';b.innerHTML=\'&#9660;\';}" style="font-weight: bold; cursor: pointer; font-size: 0.9em;"><span style="padding: 0 5px;">&#9660;</span>' . $attrs['Def'] . '</div><div style="padding: 6px; margin: 0; display: none;"><p>';
          } else {
-             $st = '</p><div class="quotebox" style="padding: 0px;"><div onclick="var e,d,c=this.parentNode,a=c.getElementsByTagName(\'div\')[1],b=this.getElementsByTagName(\'span\')[0];if(a.style.display!=\'\'){while(c.parentNode&&(!d||!e||d==e)){e=d;d=(window.getComputedStyle?getComputedStyle(c, null):c.currentStyle)[\'backgroundColor\'];if(d==\'transparent\'||d==\'rgba(0, 0, 0, 0)\')d=e;c=c.parentNode;}a.style.display=\'\';a.style.backgroundColor=d;b.innerHTML=\'&#9650;\';}else{a.style.display=\'none\';b.innerHTML=\'&#9660;\';}" style="font-weight: bold; cursor: pointer; font-size: 0.9em;"><span style="padding: 0 5px;">&#9660;</span>' . __('Hidden text') . '</div><div style="padding: 6px; margin: 0; display: none;"><p>';
+             $st = '</p><div class="quotebox" style="padding: 0px;"><div onclick="var e,d,c=this.parentNode,a=c.getElementsByTagName(\'div\')[1],b=this.getElementsByTagName(\'span\')[0];if(a.style.display!=\'\'){while(c.parentNode&&(!d||!e||d==e)){e=d;d=(window.getComputedStyle?getComputedStyle(c, null):c.currentStyle)[\'backgroundColor\'];if(d==\'transparent\'||d==\'rgba(0, 0, 0, 0)\')d=e;c=c.parentNode;}a.style.display=\'\';a.style.backgroundColor=d;b.innerHTML=\'&#9650;\';}else{a.style.display=\'none\';b.innerHTML=\'&#9660;\';}" style="font-weight: bold; cursor: pointer; font-size: 0.9em;"><span style="padding: 0 5px;">&#9660;</span>' . \ForkBB\__('Hidden text') . '</div><div style="padding: 6px; margin: 0; display: none;"><p>';
          }
 
          return $st . $body . '</p></div></div><p>';
@@ -303,7 +303,7 @@ return [
             }
          }
 
-         return '<a href="' . $body . '" rel="nofollow">&lt;' . __('Image link') . ' - ' . $attrs['Def'] . '&gt;</a>';
+         return '<a href="' . $body . '" rel="nofollow">&lt;' . \ForkBB\__('Image link') . ' - ' . $attrs['Def'] . '&gt;</a>';
      },
     ],
     ['tag' => 'url',

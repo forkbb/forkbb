@@ -122,24 +122,4 @@ class Model
             return $factory->$name(...$args);
         }
     }
-
-    public function cens()
-    {
-        return $this->c->FuncAll->setModel('cens', $this);
-    }
-
-    public function num($decimals = 0)
-    {
-        return $this->c->FuncAll->setModel('num', $this, $decimals);
-    }
-
-    public function dt($dateOnly = false, $dateFormat = null, $timeFormat = null, $timeOnly = false, $noText = false)
-    {
-        return $this->c->FuncAll->setModel('dt', $this, $dateOnly, $dateFormat, $timeFormat, $timeOnly, $noText);
-    }
-
-    public function utc()
-    {
-        return $this->c->FuncAll->setModel('utc', $this);
-    }
 }

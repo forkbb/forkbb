@@ -91,10 +91,11 @@ class Routing
             $r->add('GET',  '/topic/{id:[1-9]\d*}/new/reply[/{quote:[1-9]\d*}]', 'Post:newReply', 'NewReply');
             $r->add('POST', '/topic/{id:[1-9]\d*}/new/reply', 'Post:newReplyPost');
             // сообщения
-            $r->add('GET', '/post/{id:[1-9]\d*}#p{id}', 'Topic:viewPost', 'ViewPost');
-            $r->add('GET', '/post/{id:[1-9]\d*}/delete', 'Delete:delete', 'DeletePost'); //????
-            $r->add('GET', '/post/{id:[1-9]\d*}/edit', 'Edit:edit', 'EditPost'); //????
-            $r->add('GET', '/post/{id:[1-9]\d*}/report', 'Report:report', 'ReportPost'); //????
+            $r->add('GET',  '/post/{id:[1-9]\d*}#p{id}', 'Topic:viewPost', 'ViewPost');
+            $r->add('GET',  '/post/{id:[1-9]\d*}/edit', 'Edit:edit', 'EditPost');
+            $r->add('POST', '/post/{id:[1-9]\d*}/edit', 'Edit:editPost');
+            $r->add('GET',  '/post/{id:[1-9]\d*}/delete', 'Delete:delete', 'DeletePost');
+            $r->add('GET',  '/post/{id:[1-9]\d*}/report', 'Report:report', 'ReportPost');
 
         }
         // админ и модератор

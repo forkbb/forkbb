@@ -20,8 +20,8 @@
             <dd>
               {{ $p->dbVersion }}
   @if ($p->tRecords && $p->tSize)
-              <br>{!! __('Database data rows', $p->tRecords) !!}
-              <br>{!! __('Database data size', $p->tSize) !!}
+              <br>{!! __('Database data rows', num($p->tRecords)) !!}
+              <br>{!! __('Database data size', size($p->tSize)) !!}
   @endif
   @if ($p->tOther)
               <br><br>{!! __('Other')!!}

@@ -6,7 +6,7 @@ use ForkBB\Core\Container;
 use ForkBB\Models\Model;
 use RuntimeException;
 
-abstract class Page extends Model
+class Page extends Model
 {
     /**
      * Конструктор
@@ -57,42 +57,42 @@ abstract class Page extends Model
         $r = $this->c->Router;
 
         $nav = [
-            'index' => [$r->link('Index'), __('Index')]
+            'index' => [$r->link('Index'), \ForkBB\__('Index')]
         ];
 
         if ($user->g_read_board == '1' && $user->g_view_users == '1') {
-            $nav['userlist'] = [$r->link('Userlist'), __('User list')];
+            $nav['userlist'] = [$r->link('Userlist'), \ForkBB\__('User list')];
         }
 
         if ($this->c->config->o_rules == '1' && (! $user->isGuest || $user->g_read_board == '1' || $this->c->config->o_regs_allow == '1')) {
-            $nav['rules'] = [$r->link('Rules'), __('Rules')];
+            $nav['rules'] = [$r->link('Rules'), \ForkBB\__('Rules')];
         }
 
         if ($user->g_read_board == '1' && $user->g_search == '1') {
-            $nav['search'] = [$r->link('Search'), __('Search')];
+            $nav['search'] = [$r->link('Search'), \ForkBB\__('Search')];
         }
 
         if ($user->isGuest) {
-            $nav['register'] = [$r->link('Register'), __('Register')];
-            $nav['login'] = [$r->link('Login'), __('Login')];
+            $nav['register'] = [$r->link('Register'), \ForkBB\__('Register')];
+            $nav['login'] = [$r->link('Login'), \ForkBB\__('Login')];
         } else {
             $nav['profile'] = [$r->link('User', [
                 'id' => $user->id,
                 'name' => $user->username,
-            ]), __('Profile')];
+            ]), \ForkBB\__('Profile')];
             // New PMS
             if ($this->c->config->o_pms_enabled == '1' && ($user->isAdmin || $user->messages_new > 0)) { //????
-                $nav['pmsnew'] = ['pmsnew.php', __('PM')]; //'<li id="nav"'.((PUN_ACTIVE_PAGE == 'pms_new' || $user['messages_new'] > 0) ? ' class="isactive"' : '').'><a href="pmsnew.php">'.__('PM').(($user['messages_new'] > 0) ? ' (<span'.((empty($this->c->config->o_pms_flasher) || PUN_ACTIVE_PAGE == 'pms_new') ? '' : ' class="remflasher"' ).'>'.$user['messages_new'].'</span>)' : '').'</a></li>';
+                $nav['pmsnew'] = ['pmsnew.php', \ForkBB\__('PM')]; //'<li id="nav"'.((PUN_ACTIVE_PAGE == 'pms_new' || $user['messages_new'] > 0) ? ' class="isactive"' : '').'><a href="pmsnew.php">'.\ForkBB\__('PM').(($user['messages_new'] > 0) ? ' (<span'.((empty($this->c->config->o_pms_flasher) || PUN_ACTIVE_PAGE == 'pms_new') ? '' : ' class="remflasher"' ).'>'.$user['messages_new'].'</span>)' : '').'</a></li>';
             }
             // New PMS
 
             if ($user->isAdmMod) {
-                $nav['admin'] = [$r->link('Admin'), __('Admin')];
+                $nav['admin'] = [$r->link('Admin'), \ForkBB\__('Admin')];
             }
 
             $nav['logout'] = [$r->link('Logout', [
                 'token' => $this->c->Csrf->create('Logout'),
-            ]), __('Logout')];
+            ]), \ForkBB\__('Logout')];
         }
 
         if ($user->g_read_board == '1' && $this->c->config->o_additional_navlinks != '') {
@@ -124,7 +124,7 @@ abstract class Page extends Model
     protected function maintenance()
     {
         if ($this->c->config->o_maintenance == '1' && $this->c->user->isAdmin) {
-            $this->a['fIswev']['w']['maintenance'] = __('Maintenance mode enabled', $this->c->Router->link('AdminOptions', ['#' => 'maintenance']));
+            $this->a['fIswev']['w']['maintenance'] = \ForkBB\__('Maintenance mode enabled', $this->c->Router->link('AdminOptions', ['#' => 'maintenance']));
         }
     }
 
@@ -142,7 +142,7 @@ abstract class Page extends Model
             $titles = $this->titles;
         }
         $titles[] = $this->c->config->o_board_title;
-        return implode(__('Title separator'), $titles);
+        return implode(\ForkBB\__('Title separator'), $titles);
     }
 
     /**
@@ -229,7 +229,7 @@ abstract class Page extends Model
      * Дописывает в массив титула страницы новый элемент
      * $this->titles
      *
-     * @param string @val
+     * @param string $val
      */
     public function settitles($val)
     {
@@ -237,90 +237,6 @@ abstract class Page extends Model
             $this->a['titles'] = [$val];
         } else {
             $this->a['titles'][] = $val;
-        }
-    }
-
-    /**
-     * Возвращает размер в байтах, Кбайтах, ...
-     *
-     * @param int $size
-     *
-     * @return string
-     */
-    protected function size($size)
-    {
-        $units = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB'];
-
-        for ($i = 0; $size > 1024; ++$i) {
-            $size /= 1024;
-        }
-
-        return __('Size unit '.$units[$i], round($size, 2));
-    }
-
-    /**
-     * Возвращает число в формате языка текущего пользователя
-     *
-     * @param mixed $number
-     * @param int $decimals
-     *
-     * @return string
-     */
-    protected function number($number, $decimals = 0)
-    {
-        return is_numeric($number)
-            ? number_format($number, $decimals, __('lang_decimal_point'), __('lang_thousands_sep'))
-            : 'not a number';
-    }
-
-    /**
-     * Возвращает время в формате текущего пользователя
-     *
-     * @param int|string $timestamp
-     * @param bool $dateOnly
-     * @param string $dateFormat
-     * @param string $timeFormat
-     * @param bool $timeOnly
-     * @param bool $noText
-     *
-     * @return string
-     */
-    protected function time($timestamp, $dateOnly = false, $dateFormat = null, $timeFormat = null, $timeOnly = false, $noText = false)
-    {
-        if (empty($timestamp)) {
-            return __('Never');
-        }
-
-        $user = $this->c->user;
-
-        $diff = ($user->timezone + $user->dst) * 3600;
-        $timestamp += $diff;
-
-        if (null === $dateFormat) {
-            $dateFormat = $this->c->DATE_FORMATS[$user->date_format];
-        }
-        if(null === $timeFormat) {
-            $timeFormat = $this->c->TIME_FORMATS[$user->time_format];
-        }
-
-        $date = gmdate($dateFormat, $timestamp);
-
-        if(! $noText) {
-            $now = time() + $diff;
-
-            if ($date == gmdate($dateFormat, $now)) {
-                $date = __('Today');
-            } elseif ($date == gmdate($dateFormat, $now - 86400)) {
-                $date = __('Yesterday');
-            }
-        }
-
-        if ($dateOnly) {
-            return $date;
-        } elseif ($timeOnly) {
-            return gmdate($timeFormat, $timestamp);
-        } else {
-            return $date . ' ' . gmdate($timeFormat, $timestamp);
         }
     }
 }

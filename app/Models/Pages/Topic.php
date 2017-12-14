@@ -139,15 +139,16 @@ class Topic extends Page
         $this->nameTpl      = 'topic';
         $this->onlinePos    = 'topic-' . $topic->id;
         $this->onlineDetail = true;
-        $this->canonical    = $this->c->Router->link('Topic', ['id' => $topic->id, 'name' => $topic->cens()->subject, 'page' => $topic->page]);
+        $this->canonical    = $this->c->Router->link('Topic', ['id' => $topic->id, 'name' => \ForkBB\cens($topic->subject), 'page' => $topic->page]);
         $this->topic        = $topic;
         $this->posts        = $posts;
         $this->crumbs       = $this->crumbs($topic);
         $this->online       = $this->c->Online->calc($this)->info();
         $this->stats        = null;
-        $this->form         = $topic->canReply && $this->c->config->o_quickpost == '1' 
-                                ? $this->messageForm($topic, 'NewReply', ['id' => $topic->id], false, true) 
-                                : null;
+
+        if ($topic->canReply && $this->c->config->o_quickpost == '1') {
+            $this->form     = $this->messageForm($topic, 'NewReply', ['id' => $topic->id], false, false, true);
+        }
 
         if ($topic->showViews) {
             $topic->incViews();

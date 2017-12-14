@@ -26,9 +26,14 @@ class Save extends MethodModel
                 ':name'  => $name
             ];
             //????
+            //????
             $count = $this->c->DB->exec('UPDATE ::config SET conf_value=?s:value WHERE conf_name=?s:name', $vars);
+            //????
+            //????
             if ($count === 0) {
-                $this->c->DB->exec('INSERT INTO ::config (conf_name, conf_value) VALUES (?s:name, ?s:value)', $vars);
+                //????
+                //????
+                $this->c->DB->exec('INSERT INTO ::config (conf_name, conf_value) SELECT ?s:name, ?s:value FROM ::groups WHERE NOT EXISTS (SELECT 1 FROM ::config WHERE conf_name=?s:name) LIMIT 1', $vars);
             }
         }
         $this->c->Cache->delete('config');

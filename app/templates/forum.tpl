@@ -81,7 +81,7 @@
             <div class="f-cell f-cmain">
               <div class="f-ficon"></div>
               <div class="f-finfo">
-                <h3><span class="f-fredirtext">{!! __('Moved') !!}</span> <a class="f-ftname" href="{!! $topic->link !!}">{{ $topic->cens()->subject }}</a></h3>
+                <h3><span class="f-fredirtext">{!! __('Moved') !!}</span> <a class="f-ftname" href="{!! $topic->link !!}">{{ cens($topic->subject) }}</a></h3>
               </div>
             </div>
           </li>
@@ -103,7 +103,7 @@
       @if ($topic->poll_type)
                   <span class="f-polltxt">{!! __('Poll') !!}</span>
       @endif
-                  <a class="f-ftname" href="{!! $topic->link !!}">{{ $topic->cens()->subject }}</a>
+                  <a class="f-ftname" href="{!! $topic->link !!}">{{ cens($topic->subject) }}</a>
       @if ($topic->pagination)
                   <span class="f-tpages">
         @foreach ($topic->pagination as $cur)
@@ -124,15 +124,15 @@
             </div>
             <div class="f-cell f-cstats">
               <ul>
-                <li>{!! __('%s Reply', $topic->num_replies, $topic->num()->num_replies) !!}</li>
+                <li>{!! __('%s Reply', $topic->num_replies, num($topic->num_replies)) !!}</li>
       @if ($topic->showViews)
-                <li>{!! __('%s View', $topic->num_views, $topic->num()->num_views) !!}</li>
+                <li>{!! __('%s View', $topic->num_views, num($topic->num_views)) !!}</li>
       @endif
               </ul>
             </div>
             <div class="f-cell f-clast">
               <ul>
-                <li class="f-cltopic"><a href="{!! $topic->linkLast !!}" title="&quot;{{ $topic->cens()->subject }}&quot; - {!! __('Last post') !!}">{{ $topic->dt()->last_post }}</a></li>
+                <li class="f-cltopic"><a href="{!! $topic->linkLast !!}" title="&quot;{{ cens($topic->subject) }}&quot; - {!! __('Last post') !!}">{{ dt($topic->last_post) }}</a></li>
                 <li class="f-clposter">{!! __('by') !!} {{ $topic->last_poster }}</li>
               </ul>
             </div>

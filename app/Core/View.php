@@ -53,10 +53,23 @@ class View extends Dirk
      */
     protected function compileTransformations($value)
     {
+        $perfix = <<<'EOD'
+<?php
+
+use function \ForkBB\__;
+use function \ForkBB\cens;
+use function \ForkBB\num;
+use function \ForkBB\dt;
+use function \ForkBB\utc;
+use function \ForkBB\size;
+
+?>
+EOD;
+
         if (strpos($value, '<!-- inline -->') === false) {
-            return $value;
+            return $perfix . $value;
         }
-        return preg_replace_callback(
+        return $perfix . preg_replace_callback(
             '%<!-- inline -->([^<]*(?:<(?!!-- endinline -->)[^<]*)*+)(?:<!-- endinline -->)?%',
             function ($matches) {
                 return preg_replace('%\h*\R\s*%', '', $matches[1]);

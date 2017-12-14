@@ -62,7 +62,7 @@ class Statistics extends Admin
         $this->c->Lang->load('admin_index');
 
         $this->nameTpl  = 'admin/statistics';
-        $this->titles   = __('Server statistics');
+        $this->titles   = \ForkBB\__('Server statistics');
         $this->isAdmin  = $this->c->user->isAdmin;
         $this->linkInfo = $this->c->Router->link('AdminInfo');
 
@@ -81,11 +81,11 @@ class Statistics extends Admin
             }
 
             $ave = @explode(' ', $ave);
-            $this->serverLoad = isset($ave[2]) ? $ave[0].' '.$ave[1].' '.$ave[2] : __('Not available');
+            $this->serverLoad = isset($ave[2]) ? $ave[0].' '.$ave[1].' '.$ave[2] : \ForkBB\__('Not available');
         } elseif (!in_array(PHP_OS, array('WINNT', 'WIN32')) && preg_match('%averages?: ([\d\.]+),?\s+([\d\.]+),?\s+([\d\.]+)%i', @exec('uptime'), $ave)) {
             $this->serverLoad = $ave[1].' '.$ave[2].' '.$ave[3];
         } else {
-            $this->serverLoad = __('Not available');
+            $this->serverLoad = \ForkBB\__('Not available');
         }
 
         // Get number of current visitors
@@ -93,8 +93,8 @@ class Statistics extends Admin
 
         $stat = $this->c->DB->statistics();
         $this->dbVersion = $stat['db'];
-        $this->tSize     = $this->size($stat['size']);
-        $this->tRecords  = $this->number($stat['records']);
+        $this->tSize     = $stat['size'];
+        $this->tRecords  = $stat['records'];
         unset($stat['db'], $stat['size'], $stat['records']);
         $this->tOther    = $stat;
 
@@ -112,7 +112,7 @@ class Statistics extends Admin
             $this->accelerator = 'XCache';
             $this->linkAcc     = 'https://xcache.lighttpd.net/';
         } else {
-            $this->accelerator = __('NA');
+            $this->accelerator = \ForkBB\__('NA');
             $this->linkAcc     = null;
         }
 

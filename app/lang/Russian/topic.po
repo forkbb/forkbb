@@ -64,7 +64,7 @@ msgid "Delete"
 msgstr "Удалить"
 
 msgid "Edit"
-msgstr "Редактировать"
+msgstr "Изменить"
 
 msgid "Quote"
 msgstr "Цитировать"

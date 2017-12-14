@@ -25,14 +25,14 @@ class Register extends Page
             'token'    => 'token:RegisterForm',
             'agree'    => 'required|token:Register',
             'on'       => 'integer',
-            'email'    => ['required_with:on|string:trim,lower|email|check_email', __('Email')],
-            'username' => ['required_with:on|string:trim,spaces|min:2|max:25|login|check_username', __('Username')],
-            'password' => ['required_with:on|string|min:16|password', __('Passphrase')],
+            'email'    => ['required_with:on|string:trim,lower|email|check_email', \ForkBB\__('Email')],
+            'username' => ['required_with:on|string:trim,spaces|min:2|max:25|login|check_username', \ForkBB\__('Username')],
+            'password' => ['required_with:on|string|min:16|password', \ForkBB\__('Passphrase')],
         ])->setMessages([
             'agree.required'    => ['cancel', 'cancel'],
-            'agree.token'       => [__('Bad agree', $this->c->Router->link('Register')), 'w'],
-            'password.password' => __('Pass format'),
-            'username.login'    => __('Login format'),
+            'agree.token'       => [\ForkBB\__('Bad agree', $this->c->Router->link('Register')), 'w'],
+            'password.password' => \ForkBB\__('Pass format'),
+            'username.login'    => \ForkBB\__('Login format'),
         ]);
 
         // завершение регистрации
@@ -44,13 +44,13 @@ class Register extends Page
 
         // нет согласия с правилами
         if (isset($this->fIswev['cancel'])) {
-            return $this->c->Redirect->page('Index')->message(__('Reg cancel redirect'));
+            return $this->c->Redirect->page('Index')->message(\ForkBB\__('Reg cancel redirect'));
         }
 
         $this->fIndex     = 'register';
         $this->nameTpl    = 'register';
         $this->onlinePos  = 'register';
-        $this->titles     = __('Register');
+        $this->titles     = \ForkBB\__('Register');
         $this->robots     = 'noindex';
         $this->formAction = $this->c->Router->link('RegisterForm');
         $this->formToken  = $this->c->Csrf->create('RegisterForm');
@@ -99,7 +99,7 @@ class Register extends Page
         $user->__username = $username;
 
         // username = Гость
-        if (preg_match('%^(guest|' . preg_quote(__('Guest'), '%') . ')$%iu', $username)) {
+        if (preg_match('%^(guest|' . preg_quote(\ForkBB\__('Guest'), '%') . ')$%iu', $username)) {
             $v->addError('Username guest');
         // цензура
         } elseif ($this->c->censorship->censor($username) !== $username) {
@@ -160,7 +160,7 @@ class Register extends Page
             $tplData = [
                 'fTitle' => $this->c->config->o_board_title,
                 'fRootLink' => $this->c->Router->link('Index'),
-                'fMailer' => __('Mailer', $this->c->config->o_board_title),
+                'fMailer' => \ForkBB\__('Mailer', $this->c->config->o_board_title),
                 'username' => $v->username,
                 'userLink' => $this->c->Router->link('User', ['id' => $newUserId, 'name' => $v->username]),
             ];
@@ -171,7 +171,7 @@ class Register extends Page
                     ->setFolder($this->c->DIR_LANG)
                     ->setLanguage($this->c->config->o_default_lang)
                     ->setTo($this->c->config->o_mailing_list)
-                    ->setFrom($this->c->config->o_webmaster_email, __('Mailer', $this->c->config->o_board_title))
+                    ->setFrom($this->c->config->o_webmaster_email, \ForkBB\__('Mailer', $this->c->config->o_board_title))
                     ->setTpl('new_user.tpl', $tplData)
                     ->send();
             } catch (MailException $e) {
@@ -188,7 +188,7 @@ class Register extends Page
             $tplData = [
                 'fTitle' => $this->c->config->o_board_title,
                 'fRootLink' => $this->c->Router->link('Index'),
-                'fMailer' => __('Mailer', $this->c->config->o_board_title),
+                'fMailer' => \ForkBB\__('Mailer', $this->c->config->o_board_title),
                 'username' => $v->username,
                 'link' => $link,
             ];
@@ -199,7 +199,7 @@ class Register extends Page
                     ->setFolder($this->c->DIR_LANG)
                     ->setLanguage($this->c->user->language)
                     ->setTo($v->email)
-                    ->setFrom($this->c->config->o_webmaster_email, __('Mailer', $this->c->config->o_board_title))
+                    ->setFrom($this->c->config->o_webmaster_email, \ForkBB\__('Mailer', $this->c->config->o_board_title))
                     ->setTpl('welcome.tpl', $tplData)
                     ->send();
             } catch (MailException $e) {
@@ -208,17 +208,17 @@ class Register extends Page
 
             // письмо активации аккаунта отправлено
             if ($isSent) {
-                return $this->c->Message->message(__('Reg email', $this->c->config->o_admin_email), false, 200);
+                return $this->c->Message->message(\ForkBB\__('Reg email', $this->c->config->o_admin_email), false, 200);
             // форма сброса пароля
             } else {
                 $auth = $this->c->Auth;
-                $auth->fIswev = ['w' => [__('Error welcom mail', $this->c->config->o_admin_email)]];
+                $auth->fIswev = ['w' => [\ForkBB\__('Error welcom mail', $this->c->config->o_admin_email)]];
                 return $auth->forget(['_email' => $v->email]);
             }
         // форма логина
         } else {
             $auth = $this->c->Auth;
-            $auth->fIswev = ['s' => [__('Reg complete')]];
+            $auth->fIswev = ['s' => [\ForkBB\__('Reg complete')]];
             return $auth->login(['_username' => $v->username]);
         }
     }
@@ -238,7 +238,7 @@ class Register extends Page
             || $user->activate_string{0} !== 'w'
             || ! hash_equals($user->activate_string, $args['key'])
         ) {
-            return $this->c->Message->message(__('Bad request'), false);
+            return $this->c->Message->message('Bad request', false);
         }
 
         $user->group_id = $this->c->config->o_default_user_group;
@@ -250,7 +250,7 @@ class Register extends Page
         $this->c->Lang->load('register');
 
         $auth = $this->c->Auth;
-        $auth->fIswev = ['s' => [__('Reg complete')]];
+        $auth->fIswev = ['s' => [\ForkBB\__('Reg complete')]];
         return $auth->login(['_username' => $v->username]);
     }
 }

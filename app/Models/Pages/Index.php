@@ -30,7 +30,7 @@ class Index extends Page
         $forums = empty($root) ? [] : $root->subforums;
         $ctgs   = [];
         if (empty($forums)) {
-            $this->a['fIswev']['i'][] = __('Empty board');
+            $this->a['fIswev']['i'][] = \ForkBB\__('Empty board');
         } else {
             foreach($forums as $forum) {
                 $ctgs[$forum->cat_id][] = $forum;

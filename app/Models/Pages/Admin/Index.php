@@ -16,7 +16,7 @@ class Index extends Admin
         $this->c->Lang->load('admin_index');
 
         $this->nameTpl  = 'admin/index';
-        $this->titles   = __('Admin index');
+        $this->titles   = \ForkBB\__('Admin index');
         $this->revision = $this->c->config->i_fork_revision;
         $this->linkStat = $this->c->Router->link('AdminStatistics');
 

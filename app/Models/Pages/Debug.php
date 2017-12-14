@@ -15,15 +15,12 @@ class Debug extends Page
     {
         if ($this->c->DEBUG > 1) {
             $total = 0;
-            $this->queries = array_map(
-                function($a) use (&$total) {
-                    $total += $a[1];
-                    $a[1] = $this->number($a[1], 3);
-                    return $a;
-                }, 
-                $this->c->DB->getQueries()
-            );
-            $this->total = $this->number($total, 3);
+            $queries = $this->c->DB->getQueries();
+            foreach ($queries as $cur) {
+                $total += $cur[1];
+            }
+            $this->queries = $queries;
+            $this->total   = $total;
         } else {
             $this->queries = null;
         }
@@ -31,9 +28,9 @@ class Debug extends Page
         $this->nameTpl    = 'layouts/debug';
         $this->onlinePos  = null;
         $this->numQueries = $this->c->DB->getCount();
-        $this->memory     = $this->size(memory_get_usage());
-        $this->peak       = $this->size(memory_get_peak_usage());
-        $this->time       = $this->number(microtime(true) - $this->c->START, 3);
+        $this->memory     = memory_get_usage();
+        $this->peak       = memory_get_peak_usage();
+        $this->time       = microtime(true) - $this->c->START;
         
         return $this;
     }

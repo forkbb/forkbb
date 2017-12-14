@@ -23,7 +23,7 @@ class Post extends DataModel
      *
      * @return User
      */
-    protected function getuser()
+    protected function getuser() //????
     {
         $attrs = $this->a; //????
         $attrs['id'] = $attrs['poster_id'];
@@ -70,42 +70,73 @@ class Post extends DataModel
         return $this->c->config->o_signatures == '1' && $this->c->user->show_sig == '1';
     }
 
-    /**
-     * Массив элементов управления
-     *
-     * @return array
-     */
-    protected function getcontrols()
+
+    protected function getcanReport()
     {
-        $user = $this->c->user;
-        $controls = [];
-        $vars = ['id' => $this->id];
-        if (! $user->isAdmin && ! $user->isGuest) {
-            $controls['report'] = [$this->c->Router->link('ReportPost', $vars), 'Report'];
+        return ! $this->c->user->isAdmin && ! $this->c->user->isGuest;
+    }
+
+    protected function getlinkReport()
+    {
+        return $this->c->Router->link('ReportPost', ['id' => $this->id]);
+    }
+
+    protected function getcanDelete()
+    {
+        if ($this->c->user->isGuest) {
+            return false;
+        } elseif ($this->c->user->isAdmin || ($this->c->user->isModerator($this) && ! $this->user->isAdmin)) {
+            return true;
+        } elseif ($this->parent->closed == '1') {
+            return false;
         }
-        if ($user->isAdmin || ($user->isModerator($this) && ! $this->user->isAdmin)) {
-            $controls['delete'] = [$this->c->Router->link('DeletePost', $vars), 'Delete'];
-            $controls['edit'] = [$this->c->Router->link('EditPost', $vars), 'Edit'];
-        } elseif ($this->parent->closed != '1'
-            && $this->user->id == $user->id
-            && ($user->g_deledit_interval == '0'
-                || $this->edit_post == '1'
-                || time() - $this->posted < $user->g_deledit_interval
+
+        return $this->user->id === $this->c->user->id
+            && (($this->id == $this->parent->first_post_id && $this->c->user->g_delete_topics == '1') 
+                || ($this->id != $this->parent->first_post_id && $this->c->user->g_delete_posts == '1')
             )
-        ) {
-            if (($this->id == $this->parent->first_post_id && $user->g_delete_topics == '1')
-                || ($this->id != $this->parent->first_post_id && $user->g_delete_posts == '1')
-            ) {
-                $controls['delete'] = [$this->c->Router->link('DeletePost', $vars), 'Delete'];
-            }
-            if ($user->g_edit_posts == '1') {
-                $controls['edit'] = [$this->c->Router->link('EditPost', $vars), 'Edit'];
-            }
+            && ($this->c->user->g_deledit_interval == '0' 
+                || $this->edit_post == '1' 
+                || time() - $this->posted < $this->c->user->g_deledit_interval
+            );
+    }
+
+    protected function getlinkDelete()
+    {
+        return $this->c->Router->link('DeletePost', ['id' => $this->id]);
+    }
+
+    protected function getcanEdit()
+    {
+        if ($this->c->user->isGuest) {
+            return false;
+        } elseif ($this->c->user->isAdmin || ($this->c->user->isModerator($this) && ! $this->user->isAdmin)) {
+            return true;
+        } elseif ($this->parent->closed == '1') {
+            return false;
         }
-        if ($this->parent->canReply) {
-            $controls['quote'] = [$this->c->Router->link('NewReply', ['id' => $this->parent->id, 'quote' => $this->id]), 'Quote'];
-        }
-        return $controls;
+
+        return $this->user->id === $this->c->user->id
+            && $this->c->user->g_edit_posts == '1'
+            && ($this->c->user->g_deledit_interval == '0' 
+                || $this->edit_post == '1' 
+                || time() - $this->posted < $this->c->user->g_deledit_interval
+            );
+    }
+
+    protected function getlinkEdit()
+    {
+        return $this->c->Router->link('EditPost', ['id' => $this->id]);
+    }
+
+    protected function getcanQuote()
+    {
+        return $this->parent->canReply;
+    }
+
+    protected function getlinkQuote()
+    {
+        return $this->c->Router->link('NewReply', ['id' => $this->parent->id, 'quote' => $this->id]);
     }
 
     /**
@@ -115,6 +146,6 @@ class Post extends DataModel
      */
     public function html()
     {
-        return $this->c->Parser->parseMessage($this->cens()->message, (bool) $this->hide_smilies); //????
+        return $this->c->censorship->censor($this->c->Parser->parseMessage($this->message, (bool) $this->hide_smilies));
     }
 }

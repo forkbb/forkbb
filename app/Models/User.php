@@ -178,15 +178,15 @@ class User extends DataModel
     public function title()
     {
         if (isset($this->c->bans->userList[mb_strtolower($this->username)])) { //????
-            return __('Banned');
+            return \ForkBB\__('Banned');
         } elseif ($this->title != '') {
-            return $this->cens()->title;
+            return \ForkBB\cens($this->title);
         } elseif ($this->g_user_title != '') {
-            return $this->cens()->g_user_title;
+            return \ForkBB\cens($this->g_user_title);
         } elseif ($this->isGuest) {
-            return __('Guest');
+            return \ForkBB\__('Guest');
         } else {
-            return __('Member');
+            return \ForkBB\__('Member');
         }
     }
 
@@ -207,6 +207,6 @@ class User extends DataModel
      */
     protected function gethtmlSign()
     {
-        return $this->c->Parser->parseSignature($this->cens()->signature); //????
+        return $this->c->censorship->censor($this->c->Parser->parseSignature($this->signature));
     }
 }

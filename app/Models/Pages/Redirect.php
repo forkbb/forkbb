@@ -13,7 +13,7 @@ class Redirect extends Page
      */
     public function toIndex()
     {
-        return $this->page('Index')->message(__('Redirecting to index'));
+        return $this->page('Index')->message(\ForkBB\__('Redirecting to index'));
     }
 
     /**
@@ -58,7 +58,7 @@ class Redirect extends Page
         }
 
         $this->nameTpl = 'layouts/redirect';
-        $this->titles  = __('Redirecting');
+        $this->titles  = \ForkBB\__('Redirecting');
         $this->robots  = 'noindex';
         $this->message = $message;
         $this->timeout = (int) $this->c->config->o_redirect_delay;  //???? перенести в заголовки?

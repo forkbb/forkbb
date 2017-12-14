@@ -52,7 +52,7 @@ class Topic extends DataModel
      */
     protected function getlink()
     {
-        return $this->c->Router->link('Topic', ['id' => $this->moved_to ?: $this->id, 'name' => $this->cens()->subject]);
+        return $this->c->Router->link('Topic', ['id' => $this->moved_to ?: $this->id, 'name' => \ForkBB\cens($this->subject)]);
     }
 
     /**
@@ -211,7 +211,7 @@ class Topic extends DataModel
             // 1 страницу в списке тем раздела не отображаем
             return [];
         } else { //????
-            return $this->c->Func->paginate($this->numPages, $page, 'Topic', ['id' => $this->id, 'name' => $this->cens()->subject]);
+            return $this->c->Func->paginate($this->numPages, $page, 'Topic', ['id' => $this->id, 'name' => \ForkBB\cens($this->subject)]);
         }
     }
 

@@ -20,8 +20,8 @@ class Message extends Page
         $this->nameTpl     = 'message';
         $this->httpStatus  = $status;
         $this->httpHeaders = $headers;
-        $this->titles      = __('Info');
-        $this->message     = __($message);
+        $this->titles      = \ForkBB\__('Info');
+        $this->message     = \ForkBB\__($message);
         $this->back        = $back;
 
         return $this;

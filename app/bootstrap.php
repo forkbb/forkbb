@@ -30,6 +30,7 @@ if (file_exists(__DIR__ . '/config/main.php')) {
 }
 
 require __DIR__ . '/functions.php';
+\ForkBB\_init($c);
 
 // https or http?
 if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') {

@@ -331,7 +331,7 @@ class Validator
             $error = $error[0];
         }
 
-        $this->errors[$type][] = __($error, [':alias' => $alias, ':attr' => $attr]);
+        $this->errors[$type][] = \ForkBB\__($error, [':alias' => $alias, ':attr' => $attr]);
         $this->error           = true;
     }
 

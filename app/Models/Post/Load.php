@@ -43,7 +43,7 @@ class Load extends MethodModel
         return implode(', ', $result);
     }
 
-    protected function setData(array $data, array $args)
+    protected function setData(array $args, array $data)
     {
         foreach ($args as $alias => $model) {
             $attrs = [];
@@ -68,7 +68,7 @@ class Load extends MethodModel
         // пост + топик
         if (null === $topic) {
 
-            $fileds = $this->queryFields([
+            $fields = $this->queryFields([
                 'p' => array_map(function($val) {return true;}, $this->c->dbMap->posts), // все поля в true
                 't' => array_map(function($val) {return true;}, $this->c->dbMap->topics), // все поля в true
             ]);
@@ -78,7 +78,7 @@ class Load extends MethodModel
                 ':fields' => $fields,
             ];
 
-            $sql = 'SELECT ?p:fileds
+            $sql = 'SELECT ?p:fields
                     FROM ::posts AS p 
                     INNER JOIN ::topics AS t ON t.id=p.topic_id
                     WHERE p.id=?i:pid';
@@ -103,14 +103,15 @@ class Load extends MethodModel
 
         if (null === $topic) {
             $topic = $this->c->ModelTopic;
-            $this->setData($data, [
-                'p' => $this->model,
-                't' => $topic,
-            ]);
+            $this->setData(['p' => $this->model, 't' => $topic], $data);
         } else {
             $this->model->setAttrs($data);
         }
         $this->model->__parent = $topic;
+
+        if ($topic->moved_to || ! $topic->parent) { //????
+            return null;
+        }
         
         return $this->model;
     }

@@ -3,140 +3,81 @@
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Core\Validator;
-use ForkBB\Models\Model;
-use ForkBB\Models\Forum;
-use ForkBB\Models\Topic;
+use ForkBB\Models\Post;
 use ForkBB\Models\Page;
 
-class Post extends Page
+class Edit extends Page
 {
     use CrumbTrait;
     use PostFormTrait;
     use PostValidatorTrait;
 
     /**
-     * Подготовка данных для шаблона создания темы
+     * Подготовка данных для шаблона редактироания сообщения
      * 
      * @param array $args
      * 
      * @return Page
      */
-    public function newTopic(array $args, Forum $forum = null)
+    public function edit(array $args, Post $post = null)
     {
-        $forum = $forum ?: $this->c->forums->forum((int) $args['id']);
+        $post = $post ?: $this->c->ModelPost->load((int) $args['id']);
 
-        if (empty($forum) || $forum->redirect_url || ! $forum->canCreateTopic) {
+        if (empty($post) || ! $post->canEdit) {
             return $this->c->Message->message('Bad request');
         }
 
-        $this->c->Lang->load('post');
+        $topic       = $post->parent;
+        $editSubject = $post->id === $topic->first_post_id;
 
-        $this->nameTpl   = 'post';
-        $this->onlinePos = 'forum-' . $forum->id;
-        $this->canonical = $this->c->Router->link('NewTopic', ['id' => $forum->id]);
-        $this->robots    = 'noindex';
-        $this->crumbs    = $this->crumbs(\ForkBB\__('Post new topic'), $forum);
-        $this->formTitle = \ForkBB\__('Post new topic');
-        $this->form      = $this->messageForm($forum, 'NewTopic', $args, false, true);
-        
-        return $this;
-    }
-
-    /**
-     * Обработчка данных от формы создания темы
-     * 
-     * @param array $args
-     * 
-     * @return Page
-     */
-    public function newTopicPost(array $args)
-    {
-        $forum = $this->c->forums->forum((int) $args['id']);
-        
-        if (empty($forum) || $forum->redirect_url || ! $forum->canCreateTopic) {
-            return $this->c->Message->message('Bad request');
-        }
-
-        $this->c->Lang->load('post');
-
-        $v = $this->messageValidator($forum, 'NewTopic', $args, false, true);
-
-        if ($v->validation($_POST) && null === $v->preview) {
-            return $this->endPost($forum, $v);
-        }
-
-        $this->fIswev  = $v->getErrors();
-        $args['_vars'] = $v->getData();
-
-        if (null !== $v->preview && ! $v->getErrors()) {
-            $this->previewHtml = $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies);
-        }
-
-        return $this->newTopic($args, $forum);
-    }
-
-    /**
-     * Подготовка данных для шаблона создания сообщения
-     * 
-     * @param array $args
-     * 
-     * @return Page
-     */
-    public function newReply(array $args, Topic $topic = null)
-    {
-        $topic = $topic ?: $this->c->ModelTopic->load((int) $args['id']);
-
-        if (empty($topic) || $topic->moved_to || ! $topic->canReply) {
-            return $this->c->Message->message('Bad request');
-        }
-
-        if (isset($args['quote'])) {
-            $post = $this->c->ModelPost->load((int) $args['quote'], $topic);
-
-            if (empty($post)) {
-                return $this->c->Message->message('Bad request');
-            }
-
-            $message = '[quote="' . $post->poster . '"]' . $post->message . '[/quote]';
-
-            $args['_vars'] = ['message' => $message];
-            unset($args['quote']);
+        if (! isset($args['_vars'])) {
+            $args['_vars'] = [
+                'message'      => $post->message,
+                'subject'      => $topic->subject,
+                'hide_smilies' => $post->hide_smilies,
+                'stick_topic'  => $topic->sticky,
+                'stick_fp'     => $topic->stick_fp,
+                'edit_post'    => $post->edit_post,
+            ];
         }
 
         $this->c->Lang->load('post');
         
         $this->nameTpl   = 'post';
         $this->onlinePos = 'topic-' . $topic->id;
-        $this->canonical = $this->c->Router->link('NewReply', ['id' => $topic->id]);
+        $this->canonical = $post->linkEdit;
         $this->robots    = 'noindex';
-        $this->crumbs    = $this->crumbs(\ForkBB\__('Post a reply'), $topic);
-        $this->formTitle = \ForkBB\__('Post a reply');
-        $this->form      = $this->messageForm($topic, 'NewReply', $args);
+        $this->formTitle = $editSubject ? \ForkBB\__('Edit topic') : \ForkBB\__('Edit post');
+        $this->crumbs    = $this->crumbs($this->formTitle, $topic);
+        $this->form      = $this->messageForm($post, 'EditPost', $args, true, $editSubject);
                 
         return $this;
     }
 
     /**
-     * Обработка данных от формы создания сообщения
+     * Обработка данных от формы редактирования сообщения
      * 
      * @param array $args
      * 
      * @return Page
      */
-    public function newReplyPost(array $args)
+    public function editPost(array $args)
     {
-        $topic = $this->c->ModelTopic->load((int) $args['id']);
-        
-        if (empty($topic) || $topic->moved_to || ! $topic->canReply) {
+        $post = $this->c->ModelPost->load((int) $args['id']);
+
+        if (empty($post) || ! $post->canEdit) {
             return $this->c->Message->message('Bad request');
         }
-        
+
+        $topic       = $post->parent;
+        $editSubject = $post->id === $topic->first_post_id;
+
         $this->c->Lang->load('post');
-                
-        $v = $this->messageValidator($topic, 'NewReply', $args);
+
+        $v = $this->messageValidator($topic, 'EditPost', $args, true, $editSubject);
 
         if ($v->validation($_POST) && null === $v->preview) {
-            return $this->endPost($topic, $v);
+            return $this->endEdit($post, $v);
         }
 
         $this->fIswev  = $v->getErrors();
@@ -146,18 +87,18 @@ class Post extends Page
             $this->previewHtml = $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies);
         }
 
-        return $this->newReply($args, $topic);
+        return $this->edit($args, $post);
     }
 
     /**
-     * Создание темы/сообщения
+     * Сохранение сообщения
      * 
-     * @param Model $model
+     * @param Post $post
      * @param Validator $v
      * 
      * @return Page
      */
-    protected function endPost(Model $model, Validator $v)
+    protected function endEdit(Post $post, Validator $v)
     {
         $now       = time();
         $user      = $this->c->user;

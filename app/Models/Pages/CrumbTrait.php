@@ -26,13 +26,13 @@ trait CrumbTrait
                     if (isset($arg->forum_name)) {
                         $name = $arg->forum_name;
                     } elseif (isset($arg->subject)) {
-                        $name = $arg->cens()->subject;
+                        $name = \ForkBB\cens($arg->subject);
                     } else {
                         $name = 'no name';
                     }
 
                     if ($arg->page > 1) {
-                        $this->titles = $name . ' ' . __('Page', $arg->page);
+                        $this->titles = $name . ' ' . \ForkBB\__('Page', $arg->page);
                     } else {
                         $this->titles = $name;
                     }
@@ -48,7 +48,7 @@ trait CrumbTrait
             $active = null;
         }
         // главная страница
-        $crumbs[] = [$this->c->Router->link('Index'), __('Index'), $active];
+        $crumbs[] = [$this->c->Router->link('Index'), \ForkBB\__('Index'), $active];
 
         return array_reverse($crumbs);
     }

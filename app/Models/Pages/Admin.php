@@ -5,7 +5,7 @@ namespace ForkBB\Models\Pages;
 use ForkBB\Core\Container;
 use ForkBB\Models\Page;
 
-abstract class Admin extends Page
+class Admin extends Page
 {
     /**
      * Конструктор
@@ -45,26 +45,26 @@ abstract class Admin extends Page
 
         $nav = [
             'Moderator menu'  => [
-                'index' => [$r->link('Admin'), __('Admin index')],
-                'users' => ['admin_users.php', __('Users')],
+                'index' => [$r->link('Admin'), \ForkBB\__('Admin index')],
+                'users' => ['admin_users.php', \ForkBB\__('Users')],
             ],
         ];
         if ($user->isAdmin || $user->g_mod_ban_users == '1') {
-            $nav['Moderator menu']['bans'] = ['admin_bans.php', __('Bans')];
+            $nav['Moderator menu']['bans'] = ['admin_bans.php', \ForkBB\__('Bans')];
         }
         if ($user->isAdmin || $this->c->config->o_report_method == '0' || $this->c->config->o_report_method == '2') {
-            $nav['Moderator menu']['reports'] = ['admin_reports.php', __('Reports')];
+            $nav['Moderator menu']['reports'] = ['admin_reports.php', \ForkBB\__('Reports')];
         }
 
         if ($user->isAdmin) {
             $nav['Admin menu'] = [
-                'options'     => ['admin_options.php', __('Admin options')],
-                'permissions' => ['admin_permissions.php', __('Permissions')],
-                'categories'  => ['admin_categories.php', __('Categories')],
-                'forums'      => ['admin_forums.php', __('Forums')],
-                'groups'      => [$r->link('AdminGroups'), __('User groups')],
-                'censoring'   => ['admin_censoring.php', __('Censoring')],
-                'maintenance' => ['admin_maintenance.php', __('Maintenance')]
+                'options'     => ['admin_options.php', \ForkBB\__('Admin options')],
+                'permissions' => ['admin_permissions.php', \ForkBB\__('Permissions')],
+                'categories'  => ['admin_categories.php', \ForkBB\__('Categories')],
+                'forums'      => ['admin_forums.php', \ForkBB\__('Forums')],
+                'groups'      => [$r->link('AdminGroups'), \ForkBB\__('User groups')],
+                'censoring'   => ['admin_censoring.php', \ForkBB\__('Censoring')],
+                'maintenance' => ['admin_maintenance.php', \ForkBB\__('Maintenance')]
             ];
         }
 
@@ -84,7 +84,7 @@ abstract class Admin extends Page
         if (empty($titles)) {
             $titles = $this->titles;
         }
-        $titles[] = __('Admin title');
+        $titles[] = \ForkBB\__('Admin title');
         return parent::getPageTitle($titles);
     }
 }

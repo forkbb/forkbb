@@ -96,6 +96,9 @@ msgstr "Скрытое редактирование (не показывать \
 msgid "Edit post"
 msgstr "Редактирование сообщения"
 
+msgid "Edit topic"
+msgstr "Редактирование темы"
+
 msgid "Merge posts"
 msgstr "Соединить с предыдущим сообщением, если оно ваше"
 

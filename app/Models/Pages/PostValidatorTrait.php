@@ -41,10 +41,10 @@ trait PostValidatorTrait
         $user->username = $username;
 
         // username = Гость
-        if (preg_match('%^(guest|' . preg_quote(__('Guest'), '%') . ')$%iu', $username)) {
+        if (preg_match('%^(guest|' . preg_quote(\ForkBB\__('Guest'), '%') . ')$%iu', $username)) {
             $v->addError('Username guest');
         // цензура
-        } elseif ($user->cens()->username !== $username) {
+        } elseif (\ForkBB\cens($user->username) !== $username) {
             $v->addError('Username censor');
         // username забанен
         } elseif ($this->c->bans->isBanned($user) > 0) {
@@ -64,7 +64,7 @@ trait PostValidatorTrait
     public function vCheckSubject(Validator $v, $subject, $attr, $executive)
     {
         // после цензуры заголовок темы путой
-        if ($this->c->censorship->censor($subject) == '') {
+        if (\ForkBB\cens($subject) == '') {
             $v->addError('No subject after censoring');
         // заголовок темы только заглавными буквами
         } elseif (! $executive
@@ -93,7 +93,7 @@ trait PostValidatorTrait
     public function vCheckMessage(Validator $v, $message, $attr, $executive)
     {
         // после цензуры текст сообщения пустой
-        if ($this->c->censorship->censor($message) == '') {
+        if (\ForkBB\cens($message) == '') {
             $v->addError('No message after censoring');
         // текст сообщения только заглавными буквами
         } elseif (! $executive
@@ -132,7 +132,7 @@ trait PostValidatorTrait
         $time = time() - (int) $user->last_post;
 
         if ($time < $user->g_post_flood) {
-            $v->addError(__('Flood start', $user->g_post_flood, $user->g_post_flood - $time), 'e');
+            $v->addError(\ForkBB\__('Flood start', $user->g_post_flood, $user->g_post_flood - $time), 'e');
         }
 
         return $submit;
@@ -144,11 +144,12 @@ trait PostValidatorTrait
      * @param Model $model
      * @param string $marker
      * @param array $args
+     * @param bool $editPost
      * @param bool $editSubject
      * 
      * @return Validator
      */
-    protected function messageValidator(Model $model, $marker, array $args, $editSubject = false)
+    protected function messageValidator(Model $model, $marker, array $args, $editPost = false, $editSubject = false)
     {
         if ($this->c->user->isGuest) {
             $ruleEmail    = ($this->c->config->p_force_guest_email == '1' ? 'required|' : '') . 'string:trim,lower|email|check_email';
@@ -168,17 +169,26 @@ trait PostValidatorTrait
             if ($editSubject) {
                 $ruleStickTopic = 'checkbox';
                 $ruleStickFP    = 'checkbox';
-                $ruleMergePost  = 'absent';
             } else {
                 $ruleStickTopic = 'absent';
                 $ruleStickFP    = 'absent';
+            }
+            if (! $editSubject && ! $editPost) {
                 $ruleMergePost  = 'checkbox';
+            } else {
+                $ruleMergePost  = 'absent';
+            }
+            if ($editPost) {
+                $ruleEditPost   = 'checkbox';
+            } else {
+                $ruleEditPost   = 'absent';
             }
             $executive          = true;
         } else {
             $ruleStickTopic     = 'absent';
             $ruleStickFP        = 'absent';
             $ruleMergePost      = 'absent:1';
+            $ruleEditPost       = 'absent';
             $executive          = false;
         }
 
@@ -196,13 +206,14 @@ trait PostValidatorTrait
             'check_timeout'  => [$this, 'vCheckTimeout'],
         ])->setRules([
             'token'        => 'token:' . $marker,
-            'email'        => [$ruleEmail, __('Email')],
-            'username'     => [$ruleUsername, __('Username')],
-            'subject'      => [$ruleSubject, __('Subject')],
+            'email'        => [$ruleEmail, \ForkBB\__('Email')],
+            'username'     => [$ruleUsername, \ForkBB\__('Username')],
+            'subject'      => [$ruleSubject, \ForkBB\__('Subject')],
             'stick_topic'  => $ruleStickTopic,
             'stick_fp'     => $ruleStickFP,
             'merge_post'   => $ruleMergePost,
             'hide_smilies' => $ruleHideSmilies,
+            'edit_post'    => $ruleEditPost,
             'preview'      => 'string',
             'submit'       => 'string|check_timeout',
             'message'      => 'required|string:trim|max:' . $this->c->MAX_POST_SIZE . '|check_message',
@@ -211,7 +222,7 @@ trait PostValidatorTrait
             'subject.check_subject' => $executive,
             'message.check_message' => $executive,
         ])->setMessages([
-            'username.login' => __('Login format'),
+            'username.login' => \ForkBB\__('Login format'),
         ]);
 
         return $v;

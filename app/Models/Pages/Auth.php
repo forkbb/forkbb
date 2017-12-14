@@ -25,7 +25,7 @@ class Auth extends Page
     public function logout($args)
     {
         if (empty($args['token']) || ! $this->c->Csrf->verify($args['token'], 'Logout', $args)) {
-            return $this->c->Redirect->page('Index')->message(__('Bad token'));
+            return $this->c->Redirect->page('Index')->message(\ForkBB\__('Bad token'));
         }
 
         $this->c->Cookie->deleteUser();
@@ -33,7 +33,7 @@ class Auth extends Page
         $this->c->user->updateLastVisit();
 
         $this->c->Lang->load('auth');
-        return $this->c->Redirect->page('Index')->message(__('Logout redirect'));
+        return $this->c->Redirect->page('Index')->message(\ForkBB\__('Logout redirect'));
     }
 
     /**
@@ -59,7 +59,7 @@ class Auth extends Page
         $this->nameTpl    = 'login';
         $this->onlinePos  = 'login';
         $this->robots     = 'noindex';
-        $this->titles     = __('Login');
+        $this->titles     = \ForkBB\__('Login');
         $this->formAction = $this->c->Router->link('Login');
         $this->formToken  = $this->c->Csrf->create('Login');
         $this->forgetLink = $this->c->Router->link('Forget');
@@ -85,13 +85,13 @@ class Auth extends Page
         ])->setRules([
             'token'    => 'token:Login',
             'redirect' => 'referer:Index',
-            'username' => ['required|string', __('Username')],
-            'password' => ['required|string|login_process', __('Passphrase')],
+            'username' => ['required|string', \ForkBB\__('Username')],
+            'password' => ['required|string|login_process', \ForkBB\__('Passphrase')],
             'save'     => 'checkbox',
         ]);
 
         if ($v->validation($_POST)) {
-            return $this->c->Redirect->url($v->redirect)->message(__('Login redirect'));
+            return $this->c->Redirect->url($v->redirect)->message(\ForkBB\__('Login redirect'));
         } else {
             $this->fIswev = $v->getErrors();
             return $this->login([
@@ -170,7 +170,7 @@ class Auth extends Page
         $this->nameTpl    = 'passphrase_reset';
         $this->onlinePos  = 'passphrase_reset';
         $this->robots     = 'noindex';
-        $this->titles     = __('Passphrase reset');
+        $this->titles     = \ForkBB\__('Passphrase reset');
         $this->formAction = $this->c->Router->link('Forget');
         $this->formToken  = $this->c->Csrf->create('Forget');
         $this->email      = $args['_email'];
@@ -193,7 +193,7 @@ class Auth extends Page
             'token' => 'token:Forget',
             'email' => 'required|string:trim,lower|email|check_email',
         ])->setMessages([
-            'email.email' => __('Invalid email'),
+            'email.email' => \ForkBB\__('Invalid email'),
         ]);
 
         if (! $v->validation($_POST)) {
@@ -208,7 +208,7 @@ class Auth extends Page
         $link = $this->c->Router->link('ChangePassword', ['email' => $v->email, 'key' => $key, 'hash' => $hash]);
         $tplData = [
             'fRootLink' => $this->c->Router->link('Index'),
-            'fMailer' => __('Mailer', $this->c->config->o_board_title),
+            'fMailer' => \ForkBB\__('Mailer', $this->c->config->o_board_title),
             'username' => $this->tmpUser->username,
             'link' => $link,
         ];
@@ -219,7 +219,7 @@ class Auth extends Page
                 ->setFolder($this->c->DIR_LANG)
                 ->setLanguage($this->tmpUser->language)
                 ->setTo($v->email, $this->tmpUser->username)
-                ->setFrom($this->c->config->o_webmaster_email, __('Mailer', $this->c->config->o_board_title))
+                ->setFrom($this->c->config->o_webmaster_email, \ForkBB\__('Mailer', $this->c->config->o_board_title))
                 ->setTpl('passphrase_reset.tpl', $tplData)
                 ->send();
         } catch (MailException $e) {
@@ -230,9 +230,9 @@ class Auth extends Page
             $this->tmpUser->activate_string = $key;
             $this->tmpUser->last_email_sent = time();
             $this->tmpUser->update();
-            return $this->c->Message->message(__('Forget mail', $this->c->config->o_admin_email), false, 200);
+            return $this->c->Message->message(\ForkBB\__('Forget mail', $this->c->config->o_admin_email), false, 200);
         } else {
-            return $this->c->Message->message(__('Error mail', $this->c->config->o_admin_email), true, 200);
+            return $this->c->Message->message(\ForkBB\__('Error mail', $this->c->config->o_admin_email), true, 200);
         }
     }
 
@@ -261,7 +261,7 @@ class Auth extends Page
             $v->addError('Invalid email');
         // за последний час уже был запрос на этот email
         } elseif (! empty($user->last_email_sent) && time() - $user->last_email_sent < 3600) {
-            $v->addError(__('Email flood', (int) (($user->last_email_sent + 3600 - time()) / 60)), 'e');
+            $v->addError(\ForkBB\__('Email flood', (int) (($user->last_email_sent + 3600 - time()) / 60)), 'e');
         } else {
             $this->tmpUser = $user;
         }
@@ -288,7 +288,7 @@ class Auth extends Page
                 || $user->activate_string{0} !== 'p'
                 || ! hash_equals($user->activate_string, $args['key'])
             ) {
-                return $this->c->Message->message(__('Bad request'), false);
+                return $this->c->Message->message('Bad request', false);
             }
         }
 
@@ -299,14 +299,14 @@ class Auth extends Page
             $user->email_confirmed = 1;
             $user->update();
             $this->c->{'users_info update'};
-            $this->a['fIswev']['i'][] = __('Account activated');
+            $this->a['fIswev']['i'][] = \ForkBB\__('Account activated');
         }
 
         $this->fIndex     = 'login';
         $this->nameTpl    = 'change_passphrase';
         $this->onlinePos  = 'change_passphrase';
         $this->robots     = 'noindex';
-        $this->titles     = __('Passphrase reset');
+        $this->titles     = \ForkBB\__('Passphrase reset');
         $this->formAction = $this->c->Router->link('ChangePassword', $args);
         $this->formToken  = $this->c->Csrf->create('ChangePassword', $args);
 
@@ -329,7 +329,7 @@ class Auth extends Page
             || $user->activate_string{0} !== 'p'
             || ! hash_equals($user->activate_string, $args['key'])
         ) {
-            return $this->c->Message->message(__('Bad request'), false);
+            return $this->c->Message->message('Bad request', false);
         }
 
         $this->c->Lang->load('auth');
@@ -337,13 +337,13 @@ class Auth extends Page
         $v = $this->c->Validator;
         $v->setRules([
             'token'     => 'token:ChangePassword',
-            'password'  => ['required|string|min:16|password', __('New pass')],
-            'password2' => ['required|same:password', __('Confirm new pass')],
+            'password'  => ['required|string|min:16|password', \ForkBB\__('New pass')],
+            'password2' => ['required|same:password', \ForkBB\__('Confirm new pass')],
         ])->setArguments([
             'token' => $args,
         ])->setMessages([
-            'password.password'  => __('Pass format'),
-            'password2.same' => __('Pass not match'),
+            'password.password'  => \ForkBB\__('Pass format'),
+            'password2.same' => \ForkBB\__('Pass not match'),
         ]);
 
         if (! $v->validation($_POST)) {
@@ -358,7 +358,7 @@ class Auth extends Page
         $user->activate_string = null;
         $user->update();
 
-        $this->a['fIswev']['s'][] = __('Pass updated');
+        $this->a['fIswev']['s'][] = \ForkBB\__('Pass updated');
         return $this->login(['_redirect' => $this->c->Router->link('Index')]);
     }
 }

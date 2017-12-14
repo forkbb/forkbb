@@ -22,7 +22,7 @@ class Maintenance extends Page
         $this->nameTpl            = 'maintenance';
 #       $this->onlinePos          = null; //????
 #       $this->robots             = 'noindex';
-        $this->titles             = __('Maintenance');
+        $this->titles             = \ForkBB\__('Maintenance');
 #       $this->fNavigation        = null; //????
         $this->maintenanceMessage = $this->c->config->o_maintenance_message;
     }

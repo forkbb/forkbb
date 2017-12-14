@@ -17,8 +17,8 @@ class Rules extends Page
         $this->nameTpl    = 'rules';
         $this->onlinePos  = 'rules';
         $this->canonical  = $this->c->Router->link('Rules');
-        $this->titles     = __('Forum rules');
-        $this->title      = __('Forum rules');
+        $this->titles     = \ForkBB\__('Forum rules');
+        $this->title      = \ForkBB\__('Forum rules');
         $this->rules      = $this->c->config->o_rules_message;
         $this->formAction = null;
 
@@ -38,9 +38,9 @@ class Rules extends Page
         $this->nameTpl    = 'rules';
         $this->onlinePos  = 'rules';
         $this->robots     = 'noindex';
-        $this->titles     = __('Forum rules');
-        $this->title      = __('Forum rules');
-        $this->rules      = $this->c->config->o_rules == '1' ? $this->c->config->o_rules_message : __('If no rules');
+        $this->titles     = \ForkBB\__('Forum rules');
+        $this->title      = \ForkBB\__('Forum rules');
+        $this->rules      = $this->c->config->o_rules == '1' ? $this->c->config->o_rules_message : \ForkBB\__('If no rules');
         $this->formAction = $this->c->Router->link('RegisterForm');
         $this->formToken  = $this->c->Csrf->create('RegisterForm');
         $this->formHash   = $this->c->Csrf->create('Register');

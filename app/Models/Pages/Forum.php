@@ -37,7 +37,7 @@ class Forum extends Page
         $user = $this->c->user;
 
         if (empty($topics)) {
-            $this->a['fIswev']['i'][] = __('Empty forum');
+            $this->a['fIswev']['i'][] = \ForkBB\__('Empty forum');
         }
 
         $this->fIndex     = 'index';

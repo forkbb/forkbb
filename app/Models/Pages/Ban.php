@@ -18,15 +18,11 @@ class Ban extends Page
     {
         $ban = $user->banInfo;
         
-        if (! empty($ban['expire'])) {
-            $ban['expire'] = strtolower($this->time($ban['expire'], true));
-        }
-
         $this->httpStatus = 403;
         $this->nameTpl    = 'ban';
 #       $this->onlinePos  = 'ban';
 #       $this->robots     = 'noindex';
-        $this->titles     = __('Info');
+        $this->titles     = \ForkBB\__('Info');
         $this->ban        = $ban;
         $this->adminEmail = $this->c->config->o_admin_email;
 
