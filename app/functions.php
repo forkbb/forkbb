@@ -48,9 +48,9 @@ function __($arg, ...$args)
     if (empty($args)) {
         return $tr;
     } elseif (is_array($args[0])) {
-        return strtr($tr, array_map('\ForkBB\_e', $args[0]));
+        return strtr($tr, array_map('\ForkBB\e', $args[0]));
     } else {
-        $args = array_map('\ForkBB\_e', $args);
+        $args = array_map('\ForkBB\e', $args);
         return sprintf($tr, ...$args);
     }
 }
@@ -62,7 +62,7 @@ function __($arg, ...$args)
  *
  * @return string
  */
-function _e($arg)
+function e($arg)
 {
     return htmlspecialchars($arg, ENT_HTML5 | ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
@@ -184,5 +184,5 @@ function size($size)
         $size /= 1024;
     }
 
-    return __('Size unit '.$units[$i], round($size, 2));
+    return __('%s ' . $units[$i], round($size, 2));
 }

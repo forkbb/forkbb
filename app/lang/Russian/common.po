@@ -462,23 +462,23 @@ msgstr "Есть новые сигналы"
 msgid "Maintenance mode enabled"
 msgstr "<a href=\"%s\">Включен режим обслуживания!</a>"
 
-msgid "Size unit B"
+msgid "%s B"
 msgstr "%s байт"
 
-msgid "Size unit KiB"
+msgid "%s KiB"
 msgstr "%s Кбайт"
 
-msgid "Size unit MiB"
+msgid "%s MiB"
 msgstr "%s Мбайт"
 
-msgid "Size unit GiB"
+msgid "%s GiB"
 msgstr "%s Гбайт"
 
-msgid "Size unit TiB"
+msgid "%s TiB"
 msgstr "%s Тбайт"
 
-msgid "Size unit PiB"
+msgid "%s PiB"
 msgstr "%s Пбайт"
 
-msgid "Size unit EiB"
+msgid "%s EiB"
 msgstr "%s Эбайт"

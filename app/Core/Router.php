@@ -88,7 +88,11 @@ class Router
             && ($route = $this->route('GET', rawurldecode(parse_url($url, PHP_URL_PATH))))
             && $route[0] === self::OK
         ) {
-            return $url;
+            if (isset($route[3])) {
+                return $this->link($route[3], $route[2]);
+            } else {
+                return $url;
+            }
         } else {
             return $this->link($defMarker, $defArgs);
         }
@@ -172,16 +176,18 @@ class Router
 
         if (isset($this->statical[$uri])) {
             if (isset($this->statical[$uri][$method])) {
-                return [self::OK, $this->statical[$uri][$method], []];
+                list($handler, $marker) = $this->statical[$uri][$method];
+                return [self::OK, $handler, [], $marker];
             } elseif ($head && isset($this->statical[$uri]['GET'])) {
-                return [self::OK, $this->statical[$uri]['GET'], []];
+                list($handler, $marker) = $this->statical[$uri]['GET'];
+                return [self::OK, $handler, [], $marker];
             } else {
                 $allowed = array_keys($this->statical[$uri]);
             }
         }
 
-        $pos = strpos(substr($uri, 1), '/');
-        $base = false === $pos ? $uri : substr($uri, 0, ++$pos);
+        $pos = strpos($uri, '/', 1);
+        $base = false === $pos ? $uri : substr($uri, 0, $pos);
 
         if (isset($this->dynamic[$base])) {
             foreach ($this->dynamic[$base] as $pattern => $data) {
@@ -190,21 +196,21 @@ class Router
                 }
 
                 if (isset($data[$method])) {
-                    $data = $data[$method];
+                    list($handler, $keys, $marker) = $data[$method];
                 } elseif ($head && isset($data['GET'])) {
-                    $data = $data['GET'];
+                    list($handler, $keys, $marker) = $data['GET'];
                 } else {
                     $allowed += array_keys($data);
                     continue;
                 }
 
                 $args = [];
-                foreach ($data[1] as $key) {
+                foreach ($keys as $key) {
                     if (isset($matches[$key])) {
                         $args[$key] = $matches[$key];
                     }
                 }
-                return [self::OK, $data[0], $args];
+                return [self::OK, $handler, $args, $marker];
             }
         }
         if (empty($allowed)) {
@@ -243,22 +249,22 @@ class Router
             $data = null;
             if (is_array($method)) {
                 foreach ($method as $m) {
-                    $this->statical[$route][$m] = $handler;
+                    $this->statical[$route][$m] = [$handler, $marker];
                 }
             } else {
-                $this->statical[$route][$method] = $handler;
+                $this->statical[$route][$method] = [$handler, $marker];
             }
         } else {
             $data = $this->parse($route);
             if (false === $data) {
-                throw new \Exception('Route is incorrect');
+                throw new InvalidArgumentException('Route is incorrect');
             }
             if (is_array($method)) {
                 foreach ($method as $m) {
-                    $this->dynamic[$data[0]][$data[1]][$m] = [$handler, $data[2]];
+                    $this->dynamic[$data[0]][$data[1]][$m] = [$handler, $data[2], $marker];
                 }
             } else {
-                $this->dynamic[$data[0]][$data[1]][$method] = [$handler, $data[2]];
+                $this->dynamic[$data[0]][$data[1]][$method] = [$handler, $data[2], $marker];
             }
         }
 

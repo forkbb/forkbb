@@ -459,25 +459,25 @@ msgid "New reports"
 msgstr "There are new reports"
 
 msgid "Maintenance mode enabled"
-msgstr "<a href=\"%s\"Maintenance mode is enabled!</a>"
+msgstr "<a href=\"%s\">Maintenance mode is enabled!</a>"
 
-msgid "Size unit B"
+msgid "%s B"
 msgstr "%s B"
 
-msgid "Size unit KiB"
+msgid "%s KiB"
 msgstr "%s KiB"
 
-msgid "Size unit MiB"
+msgid "%s MiB"
 msgstr "%s MiB"
 
-msgid "Size unit GiB"
+msgid "%s GiB"
 msgstr "%s GiB"
 
-msgid "Size unit TiB"
+msgid "%s TiB"
 msgstr "%s TiB"
 
-msgid "Size unit PiB"
+msgid "%s PiB"
 msgstr "%s PiB"
 
-msgid "Size unit EiB"
+msgid "%s EiB"
 msgstr "%s EiB"
