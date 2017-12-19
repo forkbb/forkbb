@@ -2,45 +2,52 @@
 
 namespace ForkBB\Models\User;
 
-use ForkBB\Models\MethodModel;
+use ForkBB\Models\Action;
 use InvalidArgumentException;
 
-class Load extends MethodModel
+class Load extends Action
 {
     /**
      * Получение пользователя по условию
+     * 
      * @param mixed $value
      * @param string $field
+     * 
      * @throws InvalidArgumentException
+     * 
      * @return int|User
      */
     public function load($value, $field = 'id')
     {
         switch ($field) {
             case 'id':
-                $where = 'u.id= ?i';
+                $where = 'u.id=?i:field';
                 break;
             case 'username':
-                $where = 'u.username= ?s';
+                $where = 'u.username=?s:field';
                 break;
             case 'email':
-                $where = 'u.email= ?s';
+                $where = 'u.email=?s:field';
                 break;
             default:
                 throw new InvalidArgumentException('Field not supported');
         }
+        $vars = [':field' => $value];
+        $sql = 'SELECT u.*, g.* 
+                FROM ::users AS u 
+                LEFT JOIN ::groups AS g ON u.group_id=g.g_id 
+                WHERE ' . $where;
 
-        $data = $this->c->DB->query('SELECT u.*, g.* FROM ::users AS u LEFT JOIN ::groups AS g ON u.group_id=g.g_id WHERE ' . $where, [$value])
-            ->fetchAll();
+        $data = $this->c->DB->query($sql, $vars)->fetchAll();
 
         // число найденных пользователей отлично от одного
-        if (count($data) !== 1) {
-            return count($data);
+        $count = count($data);
+        if ($count !== 1) {
+            return $count;
         }
-        // найден гость
-        if ($data[0]['id'] < 2) {
-            return 1;
-        }
-        return $this->model->setAttrs($data[0]);
+
+        $user = $this->manager->create($data[0]);
+
+        return $user->isGuest ? 1 : $user;
     }
 }

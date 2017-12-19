@@ -2,9 +2,9 @@
 
 namespace ForkBB\Models\BanList;
 
-use ForkBB\Models\MethodModel;
+use ForkBB\Models\Method;
 
-class Delete extends MethodModel
+class Delete extends Method
 {
     /**
      * Удаляет из банов записи по списку номеров

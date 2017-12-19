@@ -2,10 +2,10 @@
 
 namespace ForkBB\Models\BanList;
 
-use ForkBB\Models\MethodModel;
-use ForkBB\Models\User;
+use ForkBB\Models\Method;
+use ForkBB\Models\User\Model as User;
 
-class IsBanned extends MethodModel
+class IsBanned extends Method
 {
     /**
      * Проверяет наличие бана на основании имени пользователя и(или) email

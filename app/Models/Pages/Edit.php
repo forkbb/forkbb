@@ -3,7 +3,7 @@
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Core\Validator;
-use ForkBB\Models\Post;
+use ForkBB\Models\Post\Model as Post;
 use ForkBB\Models\Page;
 
 class Edit extends Page
@@ -19,9 +19,9 @@ class Edit extends Page
      * 
      * @return Page
      */
-    public function edit(array $args, Post $post = null)
+    public function edit(array $args)
     {
-        $post = $post ?: $this->c->ModelPost->load((int) $args['id']);
+        $post = $this->c->posts->load((int) $args['id']);
 
         if (empty($post) || ! $post->canEdit) {
             return $this->c->Message->message('Bad request');
@@ -63,7 +63,7 @@ class Edit extends Page
      */
     public function editPost(array $args)
     {
-        $post = $this->c->ModelPost->load((int) $args['id']);
+        $post = $this->c->posts->load((int) $args['id']);
 
         if (empty($post) || ! $post->canEdit) {
             return $this->c->Message->message('Bad request');
@@ -148,19 +148,19 @@ class Edit extends Page
         }
 
         // обновление сообщения
-        $post->update();
+        $this->c->posts->update($post);
 
         // обновление темы
         if ($calcTopic) {
             $topic->calcStat();
         }
-        $topic->update();
+        $this->c->topics->update($topic);
 
         // обновление раздела
         if ($calcForum) {
             $topic->parent->calcStat();
         }
-        $topic->parent->update();
+        $this->c->forums->update($topic->parent);
         
         // антифлуд 
         if ($calcPost || $calcForum) { 

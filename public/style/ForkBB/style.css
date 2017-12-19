@@ -468,10 +468,18 @@ select {
 }
 
 .f-fdiv .f-finfo {
-  margin: 1rem -0.625rem;
+  margin: -0.625rem -0.625rem 1rem -0.625rem;
   background-color: #AA7939;
   padding: 0.625rem;
   color: #F8F4E3;
+}
+
+.f-finfo + .f-finfo {
+  margin-top: -1rem;
+}
+
+fieldset + .f-finfo {
+  margin-top: 1rem;
 }
 
 .f-ctrl {
@@ -1386,7 +1394,7 @@ li + li .f-btn {
   border-top: 0.0625rem solid #AA7939;
 }
 
-.f-preview h2 {
+.f-preview > h2 {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1rem;
   line-height: 1.5;
@@ -1404,24 +1412,30 @@ li + li .f-btn {
 }
 
 /*****************************/
-.post-form {
+.f-post-form {
   border-top: 0.0625rem solid #AA7939;
   margin-bottom: 1rem;
 }
 
-.post-form > h2 {
+.f-view-posts {
+  margin-bottom: 1rem;
+  margin-top: -1rem;
+}
+
+.f-post-form > h2,
+.f-view-posts > h2 {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1rem;
   padding-right: 0.625rem;
   padding: 1rem 0.625rem 0.3125rem 0.625rem
 }
 
-.post-form > .f-fdiv {
+.f-post-form > .f-fdiv {
 /*  margin: 1rem 0; */
   background-color: #F8F4E3;
 }
 
-.post-form legend {
+.f-post-form legend {
   width: 100%;
   padding-bottom: 0.625rem;
   margin-bottom: 0.625rem;
@@ -1429,19 +1443,19 @@ li + li .f-btn {
   font-weight: bold;
 }
 
-.post-form .f-child1 {
+.f-post-form .f-child1 {
   font-size: 0.875rem;
 }
 
-.post-form .f-child5 > li {
+.f-post-form .f-child5 > li {
   display: inline;
 }
 
-.post-form .f-child5 a {
+.f-post-form .f-child5 a {
   border: 0;
 }
 
-.post-form .f-btn {
+.f-post-form .f-btn {
   width: auto;
   display: inline;
 }

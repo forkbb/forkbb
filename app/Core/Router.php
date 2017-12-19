@@ -129,7 +129,7 @@ class Router
             // значение есть
             if (isset($args[$name])) {
                 // кроме page = 1
-                if ($name != 'page' || $args[$name] !== 1) {
+                if ($name !== 'page' || $args[$name] !== 1) {
                     $data['{' . $name . '}'] = rawurlencode(preg_replace('%[\s\\\/]+%u', '-', $args[$name]));
                     continue;
                 }

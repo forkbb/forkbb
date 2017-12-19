@@ -24,6 +24,15 @@ msgstr "."
 msgid "lang_thousands_sep"
 msgstr ","
 
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Cancel redirect"
+msgstr "Operation cancelled."
+
+msgid "No confirm redirect"
+msgstr "No confirmation provided. Operation cancelled."
+
 msgid "Forum rules"
 msgstr "Forum rules"
 
@@ -182,7 +191,7 @@ msgstr[1] "<strong>%s</strong> Replies"
 msgid "Pages"
 msgstr "Pages:"
 
-msgid "Page"
+msgid "Page %s"
 msgstr "(Page %s)"
 
 msgid "BBCode"

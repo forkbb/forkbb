@@ -5,7 +5,7 @@ namespace ForkBB\Models\Pages;
 use ForkBB\Core\Validator;
 use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\Page;
-use ForkBB\Models\User;
+use ForkBB\Models\User\Model as User;
 
 class Auth extends Page
 {
@@ -30,7 +30,7 @@ class Auth extends Page
 
         $this->c->Cookie->deleteUser();
         $this->c->Online->delete($this->c->user);
-        $this->c->user->updateLastVisit();
+        $this->c->users->updateLastVisit($this->c->user);
 
         $this->c->Lang->load('auth');
         return $this->c->Redirect->page('Index')->message(\ForkBB\__('Logout redirect'));
@@ -113,7 +113,7 @@ class Auth extends Page
     public function vLoginProcess(Validator $v, $password)
     {
         if (! empty($v->getErrors())) {
-        } elseif (! ($user = $this->c->ModelUser->load($v->username, 'username')) instanceof User) {
+        } elseif (! ($user = $this->c->users->load($v->username, 'username')) instanceof User) {
             $v->addError('Wrong user/pass');
         } elseif ($user->isUnverified) {
             $v->addError('Account is not activated', 'w');
@@ -142,7 +142,7 @@ class Auth extends Page
                     $user->registration_ip = $this->c->user->ip;
                 }
                 // изменения юзера в базе
-                $user->update();
+                $this->c->users->update($user);
 
                 $this->c->Online->delete($this->c->user);
                 $this->c->Cookie->setUser($user, (bool) $v->save);
@@ -229,7 +229,7 @@ class Auth extends Page
         if ($isSent) {
             $this->tmpUser->activate_string = $key;
             $this->tmpUser->last_email_sent = time();
-            $this->tmpUser->update();
+            $this->c->users->update($this->tmpUser);
             return $this->c->Message->message(\ForkBB\__('Forget mail', $this->c->config->o_admin_email), false, 200);
         } else {
             return $this->c->Message->message(\ForkBB\__('Error mail', $this->c->config->o_admin_email), true, 200);
@@ -250,7 +250,7 @@ class Auth extends Page
             return $email;
         }
             
-        $user = $this->c->ModelUser;
+        $user = $this->c->users->create();
         $user->__email = $email;
 
         // email забанен
@@ -283,7 +283,7 @@ class Auth extends Page
         } else {
             // что-то пошло не так
             if (! hash_equals($args['hash'], $this->c->Secury->hash($args['email'] . $args['key']))
-                || ! ($user = $this->c->ModelUser->load($args['email'], 'email')) instanceof User
+                || ! ($user = $this->c->users->load($args['email'], 'email')) instanceof User
                 || empty($user->activate_string)
                 || $user->activate_string{0} !== 'p'
                 || ! hash_equals($user->activate_string, $args['key'])
@@ -297,7 +297,7 @@ class Auth extends Page
         if ($user->isUnverified) {
             $user->group_id = $this->c->config->o_default_user_group;
             $user->email_confirmed = 1;
-            $user->update();
+            $this->c->users->update($user);
             $this->c->{'users_info update'};
             $this->a['fIswev']['i'][] = \ForkBB\__('Account activated');
         }
@@ -324,7 +324,7 @@ class Auth extends Page
     {
         // что-то пошло не так
         if (! hash_equals($args['hash'], $this->c->Secury->hash($args['email'] . $args['key']))
-            || ! ($user = $this->c->ModelUser->load($args['email'], 'email')) instanceof User
+            || ! ($user = $this->c->users->load($args['email'], 'email')) instanceof User
             || empty($user->activate_string)
             || $user->activate_string{0} !== 'p'
             || ! hash_equals($user->activate_string, $args['key'])
@@ -356,7 +356,7 @@ class Auth extends Page
         $user->password = password_hash($data['password'], PASSWORD_DEFAULT);
         $user->email_confirmed = 1;
         $user->activate_string = null;
-        $user->update();
+        $this->c->users->update($user);
 
         $this->a['fIswev']['s'][] = \ForkBB\__('Pass updated');
         return $this->login(['_redirect' => $this->c->Router->link('Index')]);

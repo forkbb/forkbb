@@ -1,10 +1,10 @@
 <?php
 
-namespace ForkBB\Models\ForumList;
+namespace ForkBB\Models\Forum;
 
-use ForkBB\Models\MethodModel;
+use ForkBB\Models\Action;
 
-class LoadTree extends MethodModel
+class LoadTree extends Action
 {
     /**
      * Загружает данные в модели для указанного раздела и всех его потомков
@@ -15,7 +15,7 @@ class LoadTree extends MethodModel
      */
     public function loadTree($rootId)
     {
-        $root = $this->model->forum($rootId);
+        $root = $this->manager->get($rootId);
         if (null === $root) {
             return null;
         }
@@ -44,7 +44,7 @@ class LoadTree extends MethodModel
      * 
      * @param array $list
      */
-    public function loadData(array $list)
+    protected function loadData(array $list)
     {
         if (empty($list)) {
             return;

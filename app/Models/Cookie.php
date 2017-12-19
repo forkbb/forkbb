@@ -3,7 +3,7 @@
 namespace ForkBB\Models;
 
 use ForkBB\Models\Model;
-use ForkBB\Models\User;
+use ForkBB\Models\User\Model as User;
 use ForkBB\Core\Container;
 use RuntimeException;
 

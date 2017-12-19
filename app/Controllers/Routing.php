@@ -95,6 +95,7 @@ class Routing
             $r->add('GET',  '/post/{id:[1-9]\d*}/edit', 'Edit:edit', 'EditPost');
             $r->add('POST', '/post/{id:[1-9]\d*}/edit', 'Edit:editPost');
             $r->add('GET',  '/post/{id:[1-9]\d*}/delete', 'Delete:delete', 'DeletePost');
+            $r->add('POST', '/post/{id:[1-9]\d*}/delete', 'Delete:deletePost');
             $r->add('GET',  '/post/{id:[1-9]\d*}/report', 'Report:report', 'ReportPost');
 
         }

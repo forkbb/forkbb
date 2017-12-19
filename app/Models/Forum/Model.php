@@ -1,13 +1,12 @@
 <?php
 
-namespace ForkBB\Models;
+namespace ForkBB\Models\Forum;
 
 use ForkBB\Models\DataModel;
-use ForkBB\Core\Container;
 use RuntimeException;
 use InvalidArgumentException;
 
-class Forum extends DataModel
+class Model extends DataModel
 {
     /**
      * Получение родительского раздела
@@ -22,7 +21,7 @@ class Forum extends DataModel
             throw new RuntimeException('Parent is not defined');
         }
 
-        return $this->c->forums->forum($this->parent_forum_id);
+        return $this->c->forums->get($this->parent_forum_id);
     }
 
     /**
@@ -49,7 +48,7 @@ class Forum extends DataModel
         $sub = [];
         if (! empty($this->a['subforums'])) {
             foreach ($this->a['subforums'] as $id) {
-                $sub[$id] = $this->c->forums->forum($id);
+                $sub[$id] = $this->c->forums->get($id);
             }
         }
         return $sub;
@@ -65,7 +64,7 @@ class Forum extends DataModel
         $all = [];
         if (! empty($this->a['descendants'])) {
             foreach ($this->a['descendants'] as $id) {
-                $all[$id] = $this->c->forums->forum($id);
+                $all[$id] = $this->c->forums->get($id);
             }
         }
         return $all;
@@ -160,7 +159,7 @@ class Forum extends DataModel
                     $topic  = $children->last_topic;
                 }
             }
-            $this->a['tree'] = $this->c->ModelForum->setAttrs([
+            $this->a['tree'] = $this->c->forums->create([
                 'num_topics'     => $numT,
                 'num_posts'      => $numP,
                 'last_post'      => $time,
@@ -284,7 +283,7 @@ class Forum extends DataModel
 
         foreach ($topics as &$cur) {
             $cur['dot'] = isset($dots[$cur['id']]);
-            $cur = $this->c->ModelTopic->setAttrs($cur);
+            $cur = $this->c->topics->create($cur);
         }
         unset($cur);
 

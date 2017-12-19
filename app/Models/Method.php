@@ -5,7 +5,7 @@ namespace ForkBB\Models;
 use ForkBB\Core\Container;
 use ForkBB\Models\Model;
 
-abstract class MethodModel
+class Method
 {
     /**
      * Контейнер
@@ -22,12 +22,23 @@ abstract class MethodModel
     /**
      * Конструктор
      *
-     * @param Model $model
      * @param Container $container
      */
-    public function __construct(Model $model, Container $container)
+    public function __construct(Container $container)
+    {
+        $this->c = $container;
+    }
+
+    /**
+     * Объявление модели
+     * 
+     * @param Model $model
+     * 
+     * @return Method
+     */
+    public function setModel(Model $model)
     {
         $this->model = $model;
-        $this->c = $container;
+        return $this;
     }
 }

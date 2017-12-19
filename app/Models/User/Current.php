@@ -2,10 +2,10 @@
 
 namespace ForkBB\Models\User;
 
-use ForkBB\Models\MethodModel;
+use ForkBB\Models\Action;
 use RuntimeException;
 
-class LoadUserFromCookie extends MethodModel
+class Current extends Action
 {
     /**
      * Получение юзера на основе куки авторизации
@@ -13,32 +13,32 @@ class LoadUserFromCookie extends MethodModel
      *
      * @return User
      */
-    public function loadCurrent()
+    public function current()
     {
         $cookie = $this->c->Cookie;
-        $this->loadUser((int) $cookie->uId);
+        $user = $this->load((int) $cookie->uId);
 
-        if (! $this->model->isGuest) {
-            if (! $cookie->verifyUser($this->model)) {
-                $this->model = $this->loadUser(1);
+        if (! $user->isGuest) {
+            if (! $cookie->verifyUser($user)) {
+                $user = $this->load(1);
             } elseif ($this->c->config->o_check_ip == '1'
-                && $this->model->isAdmMod
-                && $this->model->registration_ip !== $this->model->ip
+                && $user->isAdmMod
+                && $user->registration_ip !== $user->ip
             ) {
-                $this->model = $this->loadUser(1);
+                $user = $this->load(1);
             }
         }
 
-        $cookie->setUser($this->model);
+        $cookie->setUser($user);
 
-        if ($this->model->isGuest) {
-            $this->model->__isBot = $this->isBot();
-            $this->model->__disp_topics = $this->c->config->o_disp_topics_default;
-            $this->model->__disp_posts = $this->c->config->o_disp_posts_default;
-            $this->model->__timezone = $this->c->config->o_default_timezone;
-            $this->model->__dst = $this->c->config->o_default_dst;
-#            $this->model->language = $this->c->config->o_default_lang;
-#            $this->model->style = $this->c->config->o_default_style;
+        if ($user->isGuest) {
+            $user->__isBot = $this->isBot();
+            $user->__disp_topics = $this->c->config->o_disp_topics_default;
+            $user->__disp_posts = $this->c->config->o_disp_posts_default;
+            $user->__timezone = $this->c->config->o_default_timezone;
+            $user->__dst = $this->c->config->o_default_dst;
+#            $user->language = $this->c->config->o_default_lang;
+#            $user->style = $this->c->config->o_default_style;
 
             // быстрое переключение языка - Visman
 /*            $language = $this->cookie->get('glang');
@@ -46,24 +46,26 @@ class LoadUserFromCookie extends MethodModel
                 $language = preg_replace('%[^a-zA-Z0-9_]%', '', $language);
                 $languages = forum_list_langs();
                 if (in_array($language, $languages)) {
-                    $this->model->language = $language;
+                    $user->language = $language;
                 }
             } */
         } else {
-            $this->model->__isBot = false;
-            if (! $this->model->disp_topics) {
-                $this->model->__disp_topics = $this->c->config->o_disp_topics_default;
+            $user->__isBot = false;
+            if (! $user->disp_topics) {
+                $user->__disp_topics = $this->c->config->o_disp_topics_default;
             }
-            if (! $this->model->disp_posts) {
-                $this->model->__disp_posts = $this->c->config->o_disp_posts_default;
+            if (! $user->disp_posts) {
+                $user->__disp_posts = $this->c->config->o_disp_posts_default;
             }
             // Special case: We've timed out, but no other user has browsed the forums since we timed out
-            if ($this->model->isLogged && $this->model->logged < time() - $this->c->config->o_timeout_visit) {
-                $this->model->updateLastVisit();
+            if ($user->isLogged && $user->logged < time() - $this->c->config->o_timeout_visit) {
+                $this->manager->updateLastVisit($user); //????
             }
+
+            $this->manager->set($user->id, $user);
         }
 
-        return $this->model;
+        return $user;
     }
 
     /**
@@ -72,8 +74,10 @@ class LoadUserFromCookie extends MethodModel
      * @param int $id
      *
      * @throws RuntimeException
+     * 
+     * @return User;
      */
-    public function loadUser($id)
+    protected function load($id)
     {
         $data = null;
         $ip = $this->getIp();
@@ -86,9 +90,11 @@ class LoadUserFromCookie extends MethodModel
                 throw new RuntimeException('Unable to fetch guest information. Your database must contain both a guest user and a guest user group');
             }
         }
-        $this->model->setAttrs($data);
-        $this->model->__ip = $ip;
-        $this->model->__userAgent = $this->getUserAgent();
+
+        $user = $this->manager->create($data);
+        $user->__ip = $ip;
+        $user->__userAgent = $this->getUserAgent();
+        return $user;
     }
 
     /**

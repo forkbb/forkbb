@@ -2,18 +2,27 @@
 
 namespace ForkBB\Models\User;
 
-use ForkBB\Models\MethodModel;
+use ForkBB\Models\Action;
+use ForkBB\Models\User\Model as User;
+use RuntimeException;
 
-class UpdateLastVisit extends MethodModel
+class UpdateLastVisit extends Action
 {
     /**
-     * Обновляет время последнего визита для конкретного пользователя
+     * Обновляет время последнего визита пользователя
+     * 
+     * @param User $user
+     *
+     * @throws RuntimeException
      */
-    public function updateLastVisit()
+    public function updateLastVisit(User $user)
     {
-        if ($this->model->isLogged) {
-            $this->c->DB->exec('UPDATE ::users SET last_visit=?i:loggid WHERE id=?i:id', [':loggid' => $this->model->logged, ':id' => $this->model->id]);
-            $this->model->__last_visit = $this->model->logged;
+        if ($user->id < 2) {
+            throw new RuntimeException('Expected user');
+        }
+        if ($user->isLogged) {
+            $this->c->DB->exec('UPDATE ::users SET last_visit=?i:loggid WHERE id=?i:id', [':loggid' => $user->logged, ':id' => $user->id]);
+            $user->__last_visit = $user->logged;
         }
     }
 }

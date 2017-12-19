@@ -2,30 +2,33 @@
 
 namespace ForkBB\Models\User;
 
-use ForkBB\Models\MethodModel;
+use ForkBB\Models\Action;
+use ForkBB\Models\User\Model as User;
 use RuntimeException;
 
-class Save extends MethodModel
+class Save extends Action
 {
     /**
      * Обновляет данные пользователя
      *
+     * @param User $user
+     * 
      * @throws RuntimeException
      * 
      * @return User
      */
-    public function update()
+    public function update(User $user)
     {
-        if ($this->model->id < 1) {
+        if ($user->id < 1) {
             throw new RuntimeException('The model does not have ID');
         }
-        $modified = $this->model->getModified();
+        $modified = $user->getModified();
         if (empty($modified)) {
-            return $this->model;
+            return $user;
         }
-        $values = $this->model->getAttrs();
+        $values = $user->getAttrs();
 
-        if ($this->model->isGuest) {
+        if ($user->isGuest) {
             $fileds = $this->c->dbMap->online;
             $table  = 'online';
             $where  = 'user_id=1 AND ident=?s';
@@ -43,33 +46,35 @@ class Save extends MethodModel
             $set[] = $name . '=?' . $fileds[$name];
         }
         if (empty($set)) {
-            return $this->model;
+            return $user;
         }
-        if ($this->model->isGuest) {
-            $vars[] = $this->model->ip;
+        if ($user->isGuest) {
+            $vars[] = $user->ip;
         } else {
-            $vars[] = $this->model->id;
+            $vars[] = $user->id;
         }
         $this->c->DB->query('UPDATE ::' . $table . ' SET ' . implode(', ', $set) . ' WHERE ' . $where, $vars);
-        $this->model->resModified();
+        $user->resModified();
 
-        return $this->model;
+        return $user;
     }
 
     /**
      * Добавляет новую запись в таблицу пользователей
      *
+     * @param User $user
+     * 
      * @throws RuntimeException
      * 
      * @return int
      */
-    public function insert()
+    public function insert(User $user)
     {
-        $modified = $this->model->getModified();
-        if (null !== $this->model->id || in_array('id', $modified)) {
+        $modified = $user->getModified();
+        if (null !== $user->id || in_array('id', $modified)) {
             throw new RuntimeException('The model has ID');
         }
-        $values = $this->model->getAttrs();
+        $values = $user->getAttrs();
         $fileds = $this->c->dbMap->users;
         $set = $set2 = $vars = [];
         foreach ($modified as $name) {
@@ -84,9 +89,9 @@ class Save extends MethodModel
             throw new RuntimeException('The model is empty');
         }
         $this->c->DB->query('INSERT INTO ::users (' . implode(', ', $set) . ') VALUES (' . implode(', ', $set2) . ')', $vars);
-        $this->model->id = $this->c->DB->lastInsertId();
-        $this->model->resModified();
+        $user->id = $this->c->DB->lastInsertId();
+        $user->resModified();
 
-        return $this->model->id;
+        return $user->id;
     }
 }

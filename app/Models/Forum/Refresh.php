@@ -1,10 +1,10 @@
 <?php
 
-namespace ForkBB\Models\ForumList;
+namespace ForkBB\Models\Forum;
 
-use ForkBB\Models\MethodModel;
+use ForkBB\Models\Action;
 
-class Refresh extends MethodModel
+class Refresh extends Action
 {
     /**
      * @var array

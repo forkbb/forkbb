@@ -2,28 +2,31 @@
 
 namespace ForkBB\Models\Post;
 
-use ForkBB\Models\MethodModel;
+use ForkBB\Models\Action;
+use ForkBB\Models\Post\Model as Post;
 use RuntimeException;
 
-class Save extends MethodModel
+class Save extends Action
 {
     /**
-     * Обновляет данные пользователя
+     * Обновляет сообщение в БД
      *
+     * @param Post $post
+     * 
      * @throws RuntimeException
      * 
      * @return Post
      */
-    public function update()
+    public function update(Post $post)
     {
-        if (empty($this->model->id)) {
+        if ($post->id < 1) {
             throw new RuntimeException('The model does not have ID');
         }
-        $modified = $this->model->getModified();
+        $modified = $post->getModified();
         if (empty($modified)) {
-            return $this->model;
+            return $post;
         }
-        $values = $this->model->getAttrs();
+        $values = $post->getAttrs();
         $fileds = $this->c->dbMap->posts;
         $set = $vars = [];
         foreach ($modified as $name) {
@@ -34,29 +37,31 @@ class Save extends MethodModel
             $set[] = $name . '=?' . $fileds[$name];
         }
         if (empty($set)) {
-            return $this->model;
+            return $post;
         }
-        $vars[] = $this->model->id;
+        $vars[] = $post->id;
         $this->c->DB->query('UPDATE ::posts SET ' . implode(', ', $set) . ' WHERE id=?i', $vars);
-        $this->model->resModified();
+        $post->resModified();
 
-        return $this->model;
+        return $post;
     }
 
     /**
-     * Добавляет новую запись в таблицу пользователей
+     * Добавляет новое сообщение в БД
      *
+     * @param Post $post
+     * 
      * @throws RuntimeException
      * 
      * @return int
      */
-    public function insert()
+    public function insert(Post $post)
     {
-        $modified = $this->model->getModified();
-        if (null !== $this->model->id || in_array('id', $modified)) {
+        $modified = $post->getModified();
+        if (null !== $post->id || in_array('id', $modified)) {
             throw new RuntimeException('The model has ID');
         }
-        $values = $this->model->getAttrs();
+        $values = $post->getAttrs();
         $fileds = $this->c->dbMap->posts;
         $set = $set2 = $vars = [];
         foreach ($modified as $name) {
@@ -71,9 +76,9 @@ class Save extends MethodModel
             throw new RuntimeException('The model is empty');
         }
         $this->c->DB->query('INSERT INTO ::posts (' . implode(', ', $set) . ') VALUES (' . implode(', ', $set2) . ')', $vars);
-        $this->model->id = $this->c->DB->lastInsertId();
-        $this->model->resModified();
+        $post->id = $this->c->DB->lastInsertId();
+        $post->resModified();
 
-        return $this->model->id;
+        return $post->id;
     }
 }

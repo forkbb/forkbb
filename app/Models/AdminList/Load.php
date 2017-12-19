@@ -2,9 +2,9 @@
 
 namespace ForkBB\Models\AdminList;
 
-use ForkBB\Models\MethodModel;
+use ForkBB\Models\Method;
 
-class Load extends MethodModel
+class Load extends Method
 {
     /**
      * Заполняет модель данными из БД

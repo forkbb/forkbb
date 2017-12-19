@@ -2,10 +2,10 @@
 
 namespace ForkBB\Models\BanList;
 
-use ForkBB\Models\MethodModel;
-use ForkBB\Models\User;
+use ForkBB\Models\Method;
+use ForkBB\Models\User\Model as User;
 
-class Check extends MethodModel
+class Check extends Method
 {
     /**
      * Проверяет наличие бана (для текущего пользователя) на основании имени пользователя/ip

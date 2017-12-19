@@ -1,13 +1,29 @@
 <?php
 
-namespace ForkBB\Models;
+namespace ForkBB\Models\Post;
 
 use ForkBB\Models\DataModel;
-use ForkBB\Core\Container;
+use ForkBB\Models\User\Model as User;
 use RuntimeException;
 
-class Post extends DataModel
+class Model extends DataModel
 {
+    /**
+     * Получение родительского раздела
+     *
+     * @throws RuntimeException
+     *
+     * @return Topic
+     */
+    protected function getparent()
+    {
+        if ($this->topic_id < 1) {
+            throw new RuntimeException('Parent is not defined');
+        }
+
+        return $this->c->topics->get($this->topic_id);
+    }
+
     /**
      * Ссылка на сообщение
      *
@@ -25,9 +41,23 @@ class Post extends DataModel
      */
     protected function getuser() //????
     {
-        $attrs = $this->a; //????
-        $attrs['id'] = $attrs['poster_id'];
-        return $this->c->ModelUser->setAttrs($attrs);
+        $user = $this->c->users->get($this->poster_id);
+
+        if (! $user instanceof User) {
+            var_dump($this->poster_id);
+            $attrs = $this->a; //????
+            $attrs['id'] = $attrs['poster_id'];
+
+            $user = $this->c->users->create($attrs);
+
+            if ($user->isGuest) {
+                $user->__email = $this->poster_email;
+            } else {
+                $this->c->users->set($user->id, $user);
+            }
+        }
+
+        return $user; 
     }
 
     /**

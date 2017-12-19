@@ -105,7 +105,12 @@ class Topic extends Page
      */
     protected function view($type, array $args)
     {
-        $topic = $this->c->ModelTopic->load((int) $args['id'], $type === 'post');
+        if ($type === 'post') {
+            $post  = $this->c->posts->load((int) $args['id']);
+            $topic = null === $post ? null : $post->parent;
+        } else {
+            $topic = $this->c->topics->load((int) $args['id']);
+        }
 
         if (empty($topic) || ! $topic->last_post_id) {
             return $this->c->Message->message('Bad request');

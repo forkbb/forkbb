@@ -5,7 +5,7 @@ namespace ForkBB\Models\Pages;
 use ForkBB\Core\Validator;
 use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\Page;
-use ForkBB\Models\User;
+use ForkBB\Models\User\Model as User;
 
 class Register extends Page
 {
@@ -72,7 +72,7 @@ class Register extends Page
      */
     public function vCheckEmail(Validator $v, $email)
     {
-        $user = $this->c->ModelUser;
+        $user = $this->c->users->create();
         $user->__email = $email;
 
         // email забанен
@@ -95,7 +95,7 @@ class Register extends Page
      */
     public function vCheckUsername(Validator $v, $username)
     {
-        $user = $this->c->ModelUser;
+        $user = $this->c->users->create();
         $user->__username = $username;
 
         // username = Гость
@@ -108,7 +108,7 @@ class Register extends Page
         } elseif ($this->c->bans->isBanned($user) > 0) {
             $v->addError('Banned username');
         // есть пользователь с похожим именем
-        } elseif (empty($v->getErrors()) && ! $user->isUnique()) {
+        } elseif (empty($v->getErrors()) && ! $this->c->users->isUniqueName($user)) {
             $v->addError('Username not unique');
         }
         return $username;
@@ -131,7 +131,7 @@ class Register extends Page
             $key = null;
         }
 
-        $user = $this->c->ModelUser;
+        $user = $this->c->users->create();
         
         $user->username        = $v->username;
         $user->password        = password_hash($v->password, PASSWORD_DEFAULT);
@@ -233,7 +233,7 @@ class Register extends Page
     public function activate(array $args)
     {
         if (! hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['key']))
-            || ! ($user = $this->c->ModelUser->load($args['id'])) instanceof User
+            || ! ($user = $this->c->users->load($args['id'])) instanceof User
             || empty($user->activate_string)
             || $user->activate_string{0} !== 'w'
             || ! hash_equals($user->activate_string, $args['key'])

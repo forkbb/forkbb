@@ -1,13 +1,13 @@
 <?php
 
-namespace ForkBB\Models;
+namespace ForkBB\Models\User;
 
 use ForkBB\Models\DataModel;
-use ForkBB\Models\Model;
+use ForkBB\Models\Model as BaseModel;
 use ForkBB\Models\Forum;
 use RuntimeException;
 
-class User extends DataModel
+class Model extends DataModel
 {
     /**
      * Статус неподтвержденного
@@ -55,13 +55,13 @@ class User extends DataModel
     /**
      * Статус модератора для указанной модели
      * 
-     * @param Model $model
+     * @param BaseModel $model
      * 
      * @throws RuntimeException
      * 
      * @return bool
      */
-    public function isModerator(Model $model)
+    public function isModerator(BaseModel $model)
     {
         if ($this->g_moderator != '1') {
             return false;
@@ -69,7 +69,7 @@ class User extends DataModel
         
         while (! $model instanceof Forum) {
             $model = $model->parent;
-            if (! $model instanceof Model) {
+            if (! $model instanceof BaseModel) {
                 throw new RuntimeException('Moderator\'s rights can not be found');
             }
         }

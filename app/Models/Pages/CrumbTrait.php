@@ -32,7 +32,7 @@ trait CrumbTrait
                     }
 
                     if ($arg->page > 1) {
-                        $this->titles = $name . ' ' . \ForkBB\__('Page', $arg->page);
+                        $this->titles = $name . ' ' . \ForkBB\__('Page %s', $arg->page);
                     } else {
                         $this->titles = $name;
                     }

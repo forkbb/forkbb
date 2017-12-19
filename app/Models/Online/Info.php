@@ -2,9 +2,9 @@
 
 namespace ForkBB\Models\Online;
 
-use ForkBB\Models\MethodModel;
+use ForkBB\Models\Method;
 
-class Info extends MethodModel
+class Info extends Method
 {
     /**
      * Получение информации об онлайн посетителях

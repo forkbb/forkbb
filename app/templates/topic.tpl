@@ -57,7 +57,7 @@
           <h3>{{ cens($p->topic->subject) }} - #{!! $post->postNumber !!}</h3>
           <span class="f-post-posted"><time datetime="{{ utc($post->posted) }}">{{ dt($post->posted) }}</time></span>
   @if ($post->edited)
-          <span class="f-post-edited" title="{!! __('Last edit', $post->user->username, dt($post->edited)) !!}">{!! __('Edited') !!}</span>
+          <span class="f-post-edited" title="{!! __('Last edit', $post->edited_by, dt($post->edited)) !!}">{!! __('Edited') !!}</span>
   @endif
           <span class="f-post-number"><a href="{!! $post->link !!}" rel="bookmark">#{!! $post->postNumber !!}</a></span>
         </header>
@@ -138,7 +138,7 @@
   @include ('layouts/stats')
 @endif
 @if ($form = $p->form)
-    <section class="post-form">
+    <section class="f-post-form">
       <h2>{!! __('Quick post') !!}</h2>
       <div class="f-fdiv">
   @include ('layouts/form')

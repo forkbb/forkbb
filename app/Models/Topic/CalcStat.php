@@ -2,10 +2,10 @@
 
 namespace ForkBB\Models\Topic;
 
-use ForkBB\Models\MethodModel;
+use ForkBB\Models\Method;
 use RuntimeException;
 
-class CalcStat extends MethodModel
+class CalcStat extends Method
 {
     /**
      * Пересчитывает статистику темы

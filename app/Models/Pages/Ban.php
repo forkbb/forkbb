@@ -3,7 +3,7 @@
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
-use ForkBB\Models\User;
+use ForkBB\Models\User\Model as User;
 
 class Ban extends Page
 {

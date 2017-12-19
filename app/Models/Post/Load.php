@@ -2,10 +2,9 @@
 
 namespace ForkBB\Models\Post;
 
-use ForkBB\Models\MethodModel;
-use ForkBB\Models\Topic;
+use ForkBB\Models\Action;
 
-class Load extends MethodModel
+class Load extends Action
 {
     protected $aliases;
 
@@ -25,15 +24,16 @@ class Load extends MethodModel
 
                 if (true === $replName && isset($fields[$originalName])) {
                     $replName = "alias_{$alias}_{$originalName}";
-                }
-
-                if (true === $replName) {
+                    $result[] = $name . ' AS '. $replName;
+                    $aliases[$alias][$replName] = $originalName;
+                    $fields[$replName] = $alias;
+                } elseif (true === $replName) {
                     $result[] = $name;
                     $aliases[$alias][$originalName] = true;
                     $fields[$originalName] = $alias;
                 } else {
                     $result[] = $name . ' AS '. $replName;
-                    $aliases[$alias][$replName] = $originalName;
+                    $aliases[$alias][$replName] = $replName; //???? $originalName;
                     $fields[$replName] = $alias;
                 }
             }
@@ -45,74 +45,119 @@ class Load extends MethodModel
 
     protected function setData(array $args, array $data)
     {
-        foreach ($args as $alias => $model) {
+        foreach ($args as $aliases => $model) {
             $attrs = [];
-            foreach ($this->aliases[$alias] as $key => $repl) {
-                $name = true === $repl ? $key : $repl;
-                $attrs[$name] = $data[$key];
+            foreach (explode('.', $aliases) as $alias) {
+                foreach ($this->aliases[$alias] as $key => $repl) {
+                    $name = true === $repl ? $key : $repl;
+                    $attrs[$name] = $data[$key];
+                }
             }
             $model->setAttrs($attrs);
         }
     }
 
     /**
-     * Заполняет модель данными из БД
+     * Загружает сообщение из БД с проверкой вхождения в указанную тему
+     * Проверка доступности
+     * 
+     * @param int $id
+     * @param int $tid
+     * 
+     * @return null|Post
+     */
+    public function loadFromTopic($id, $tid)
+    {
+        $vars = [
+            ':pid' => $id,
+            ':tid' => $tid,
+        ];
+        $sql = 'SELECT p.* 
+                FROM ::posts AS p 
+                WHERE p.id=?i:pid AND p.topic_id=?i:tid';
+    
+        $data = $this->c->DB->query($sql, $vars)->fetch();
+                    
+        // сообщение отсутствует или недоступено
+        if (empty($data)) {
+            return null;
+        }
+
+        $post  = $this->manager->create($data);
+        $topic = $post->parent;
+
+        if (empty($topic) || $topic->moved_to || ! $topic->parent) {
+            return null;
+        }
+
+        return $post;
+    }
+
+    /**
+     * Загружает сообщение из БД 
+     * Загружает тему этого сообщения
+     * Проверка доступности
      *
      * @param int $id
-     * @param Topic $topic
      *
      * @return null|Post
      */
-    public function load($id, Topic $topic = null)
+    public function load($id)
     {
-        // пост + топик
-        if (null === $topic) {
-
-            $fields = $this->queryFields([
-                'p' => array_map(function($val) {return true;}, $this->c->dbMap->posts), // все поля в true
-                't' => array_map(function($val) {return true;}, $this->c->dbMap->topics), // все поля в true
-            ]);
-
+        if ($this->c->user->isGuest) {
             $vars = [
                 ':pid' => $id,
-                ':fields' => $fields,
+                ':fields' => $this->queryFields([
+                    'p' => array_map(function($val) {return true;}, $this->c->dbMap->posts), // все поля в true
+                    't' => array_map(function($val) {return true;}, $this->c->dbMap->topics), // все поля в true
+                ]),
             ];
 
             $sql = 'SELECT ?p:fields
                     FROM ::posts AS p 
                     INNER JOIN ::topics AS t ON t.id=p.topic_id
                     WHERE p.id=?i:pid';
-        // только пост
         } else {
             $vars = [
                 ':pid' => $id,
-                ':tid' => $topic->id,
+                ':uid' => $this->c->user->id,
+                ':fields' => $this->queryFields([
+                    'p'   => array_map(function($val) {return true;}, $this->c->dbMap->posts), // все поля в true
+                    't'   => array_map(function($val) {return true;}, $this->c->dbMap->topics), // все поля в true
+                    's'   => ['user_id' => 'is_subscribed'],
+                    'mof' => ['mf_mark_all_read' => true],
+                    'mot' => ['mt_last_visit' => true, 'mt_last_read' => true],
+                ]),
             ];
 
-            $sql = 'SELECT p.* 
-                    FROM ::posts AS p 
-                    WHERE p.id=?i:pid AND p.topic_id=?i:tid';
+            $sql = 'SELECT ?p:fields
+                    FROM ::posts AS p
+                    INNER JOIN ::topics AS t ON t.id=p.topic_id
+                    LEFT JOIN ::topic_subscriptions AS s ON (t.id=s.topic_id AND s.user_id=?i:uid)
+                    LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND t.forum_id=mof.fid)
+                    LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND t.id=mot.tid)
+                    WHERE p.id=?i:pid';
         }
 
         $data = $this->c->DB->query($sql, $vars)->fetch();
                     
-        // пост отсутствует или недоступен
+        // сообщение отсутствует или недоступено
         if (empty($data)) {
             return null;
         }
 
-        if (null === $topic) {
-            $topic = $this->c->ModelTopic;
-            $this->setData(['p' => $this->model, 't' => $topic], $data);
-        } else {
-            $this->model->setAttrs($data);
-        }
-        $this->model->__parent = $topic;
+        $post  = $this->manager->create();
+        $topic = $this->c->topics->create();
+        $this->setData(['p' => $post, 't.s.mof.mot' => $topic], $data);
 
-        if ($topic->moved_to || ! $topic->parent) { //????
+        if ($topic->moved_to || ! $topic->parent) {
             return null;
         }
-        
-        return $this->model;
+
+        $topic->parent->__mf_mark_all_read = $topic->mf_mark_all_read; //????
+
+        $this->c->topics->set($topic->id, $topic);
+
+        return $post;
     }
 }

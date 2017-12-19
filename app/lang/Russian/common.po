@@ -24,6 +24,15 @@ msgstr "."
 msgid "lang_thousands_sep"
 msgstr ","
 
+msgid "Cancel"
+msgstr "Отменить"
+
+msgid "Cancel redirect"
+msgstr "Операция отменена."
+
+msgid "No confirm redirect"
+msgstr "Подтверждение не получено. Операция отменена."
+
 msgid "Forum rules"
 msgstr "Правила форума"
 
@@ -183,7 +192,7 @@ msgstr[2] "<strong>%s</strong> Ответов"
 msgid "Pages"
 msgstr "Страницы"
 
-msgid "Page"
+msgid "Page %s"
 msgstr "(Страница %s)"
 
 msgid "BBCode"

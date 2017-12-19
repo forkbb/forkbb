@@ -1,0 +1,55 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+
+msgid "Delete post"
+msgstr "Удаление сообщения"
+
+msgid "Delete topic"
+msgstr "Удаление темы"
+
+msgid "Delete  post"
+msgstr "Удалить сообщение"
+
+msgid "Delete  topic"
+msgstr "Удалить тему"
+
+msgid "Confirm delete post"
+msgstr "Удалить сообщение"
+
+msgid "Confirm delete topic"
+msgstr "Удалить тему (<b>Все сообщения из этой темы будут удалены</b>)"
+
+msgid "Warning"
+msgstr "Внимание! Вы собираетесь навсегда удалить сообщение."
+
+msgid "Topic warning"
+msgstr "Внимание! Это первое сообщение в теме, вся тема будет безвозвратно удалелена."
+
+msgid "Delete info"
+msgstr "Удаляемое сообщение показано ниже"
+
+msgid "Reply by"
+msgstr "Автор сообщения: %1$s<br>Отправлено: %2$s"
+
+msgid "Topic by"
+msgstr "Автор темы: %1$s<br>Создана: %2$s"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "Post del redirect"
+msgstr "Сообщение удалено. Переадресация &hellip;"
+
+msgid "Topic del redirect"
+msgstr "Тема удалена. Переадресация &hellip;"

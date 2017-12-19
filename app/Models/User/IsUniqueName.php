@@ -2,23 +2,23 @@
 
 namespace ForkBB\Models\User;
 
-use ForkBB\Models\MethodModel;
+use ForkBB\Models\Action;
+use ForkBB\Models\User\Model as User;
 
-class IsUnique extends MethodModel
+class IsUniqueName extends Action
 {
     /**
      * Проверка на уникальность имени пользователя
-     * @param string $username
+     * 
+     * @param User $user
+     * 
      * @return bool
      */
-    public function isUnique($username = null)
+    public function isUniqueName(User $user)
     {
-        if (null === $username) {
-            $username = $this->model->username;
-        }
         $vars = [
-            ':name' => $username,
-            ':other' => preg_replace('%[^\p{L}\p{N}]%u', '', $username),
+            ':name' => $user->username,
+            ':other' => preg_replace('%[^\p{L}\p{N}]%u', '', $user->username), //????
         ];
         $result = $this->c->DB->query('SELECT username FROM ::users WHERE UPPER(username)=UPPER(?s:name) OR UPPER(username)=UPPER(?s:other)', $vars)->fetchAll();
         return ! count($result);

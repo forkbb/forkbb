@@ -166,7 +166,7 @@ function dt($arg, $dateOnly = false, $dateFormat = null, $timeFormat = null, $ti
  */
 function utc($timestamp)
 {
-    return gmdate('Y-m-d\TH:i:s\Z', $timestamp);
+    return gmdate('c', $timestamp); // Y-m-d\TH:i:s\Z
 }
 
 /**

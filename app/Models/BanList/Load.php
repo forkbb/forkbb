@@ -2,9 +2,9 @@
 
 namespace ForkBB\Models\BanList;
 
-use ForkBB\Models\MethodModel;
+use ForkBB\Models\Method;
 
-class Load extends MethodModel
+class Load extends Method
 {
     /**
      * Загружает список банов из БД

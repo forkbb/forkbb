@@ -2,28 +2,31 @@
 
 namespace ForkBB\Models\Forum;
 
-use ForkBB\Models\MethodModel;
+use ForkBB\Models\Action;
+use ForkBB\Models\Forum\Model as Forum;
 use RuntimeException;
 
-class Save extends MethodModel
+class Save extends Action
 {
     /**
-     * Обновляет данные пользователя
+     * Обновляет раздел в БД
      *
+     * @param Forum $forum
+     * 
      * @throws RuntimeException
      * 
      * @return Forum
      */
-    public function update()
+    public function update(Forum $forum)
     {
-        if (empty($this->model->id)) {
+        if ($forum->id < 1) {
             throw new RuntimeException('The model does not have ID');
         }
-        $modified = $this->model->getModified();
+        $modified = $forum->getModified();
         if (empty($modified)) {
-            return $this->model;
+            return $forum;
         }
-        $values = $this->model->getAttrs();
+        $values = $forum->getAttrs();
         $fileds = $this->c->dbMap->forums;
         $set = $vars = [];
         foreach ($modified as $name) {
@@ -34,29 +37,31 @@ class Save extends MethodModel
             $set[] = $name . '=?' . $fileds[$name];
         }
         if (empty($set)) {
-            return $this->model;
+            return $forum;
         }
-        $vars[] = $this->model->id;
+        $vars[] = $forum->id;
         $this->c->DB->query('UPDATE ::forums SET ' . implode(', ', $set) . ' WHERE id=?i', $vars);
-        $this->model->resModified();
+        $forum->resModified();
 
-        return $this->model;
+        return $forum;
     }
 
     /**
-     * Добавляет новую запись в таблицу пользователей
+     * Добавляет новый раздел в БД
      *
+     * @param Forum $forum
+     * 
      * @throws RuntimeException
      * 
      * @return int
      */
-    public function insert()
+    public function insert(Forum $forum)
     {
-        $modified = $this->model->getModified();
-        if (null !== $this->model->id || in_array('id', $modified)) {
+        $modified = $forum->getModified();
+        if (null !== $forum->id || in_array('id', $modified)) {
             throw new RuntimeException('The model has ID');
         }
-        $values = $this->model->getAttrs();
+        $values = $forum->getAttrs();
         $fileds = $this->c->dbMap->forums;
         $set = $set2 = $vars = [];
         foreach ($modified as $name) {
@@ -71,9 +76,9 @@ class Save extends MethodModel
             throw new RuntimeException('The model is empty');
         }
         $this->c->DB->query('INSERT INTO ::forums (' . implode(', ', $set) . ') VALUES (' . implode(', ', $set2) . ')', $vars);
-        $this->model->id = $this->c->DB->lastInsertId();
-        $this->model->resModified();
+        $forum->id = $this->c->DB->lastInsertId();
+        $forum->resModified();
 
-        return $this->model->id;
+        return $forum->id;
     }
 }

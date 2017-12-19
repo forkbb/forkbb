@@ -101,25 +101,12 @@ class Model
      * @param string $name
      * @param array $args
      *
-     * @throws RuntimeException
-     *
      * @return mixed
      */
     public function __call($name, array $args)
     {
-        $key = str_replace(['ForkBB\\', '\\'], '', get_class($this));
+        $key = str_replace(['ForkBB\\Models\\', 'ForkBB\\', '\\'], '', get_class($this));
 
-        if (empty($this->c->METHODS[$key][$name])) {
-            throw new RuntimeException("The {$name} method was not found");
-        }
-
-        $link = explode(':', $this->c->METHODS[$key][$name], 2);
-        $factory = new $link[0]($this, $this->c);
-
-        if (isset($link[1])) {
-            return $factory->{$link[1]}(...$args);
-        } else {
-            return $factory->$name(...$args);
-        }
+        return $this->c->{$key . ucfirst($name)}->setModel($this)->$name(...$args);
     }
 }

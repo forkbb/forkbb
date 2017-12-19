@@ -1,19 +1,18 @@
 <?php
 
-namespace ForkBB\Models;
+namespace ForkBB\Models\Topic;
 
 use ForkBB\Models\DataModel;
-use ForkBB\Core\Container;
 use RuntimeException;
 
-class Topic extends DataModel
+class Model extends DataModel
 {
     /**
      * Получение родительского раздела
      *
      * @throws RuntimeException
      *
-     * @return Models\Forum
+     * @return Forum
      */
     protected function getparent()
     {
@@ -21,7 +20,7 @@ class Topic extends DataModel
             throw new RuntimeException('Parent is not defined');
         }
 
-        return $this->c->forums->forum($this->forum_id);
+        return $this->c->forums->get($this->forum_id);
     }
 
     /**
@@ -296,7 +295,7 @@ class Topic extends DataModel
                        u.email_setting, u.num_posts, u.registered, u.admin_note, u.messages_enable,
                        u.group_id,
                        p.id, p.poster as username, p.poster_id, p.poster_ip, p.poster_email, p.message,
-                       p.hide_smilies, p.posted, p.edited, p.edited_by, p.edit_post, p.user_agent,
+                       p.hide_smilies, p.posted, p.edited, p.edited_by, p.edit_post, p.user_agent, p.topic_id,
                        g.g_user_title, g.g_promote_next_group, g.g_pm
                 FROM ::posts AS p
                 INNER JOIN ::users AS u ON u.id=p.poster_id
@@ -325,9 +324,7 @@ class Topic extends DataModel
                 $cur['warnings'] = $warnings[$cur['id']];
             }
 
-            $cur['parent'] = $this;
-
-            $cur = $this->c->ModelPost->setAttrs($cur);
+            $cur = $this->c->posts->create($cur);
         }
         unset($cur);
         $this->timeMax = $timeMax;

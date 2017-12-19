@@ -2,9 +2,9 @@
 
 namespace ForkBB\Models\Config;
 
-use ForkBB\Models\MethodModel;
+use ForkBB\Models\Method;
 
-class Save extends MethodModel
+class Save extends Method
 {
     /**
      * Сохраняет изменения модели в БД

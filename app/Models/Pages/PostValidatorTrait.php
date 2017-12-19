@@ -17,7 +17,7 @@ trait PostValidatorTrait
      */
     public function vCheckEmail(Validator $v, $email)
     {
-        $user = $this->c->ModelUser;
+        $user = $this->c->users->create();
         $user->email = $email;
 
         // email забанен
@@ -37,7 +37,7 @@ trait PostValidatorTrait
      */
     public function vCheckUsername(Validator $v, $username)
     {
-        $user = $this->c->ModelUser;
+        $user = $this->c->users->create();
         $user->username = $username;
 
         // username = Гость

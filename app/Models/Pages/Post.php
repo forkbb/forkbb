@@ -5,7 +5,7 @@ namespace ForkBB\Models\Pages;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Model;
 use ForkBB\Models\Forum;
-use ForkBB\Models\Topic;
+use ForkBB\Models\Topic\Model as Topic;
 use ForkBB\Models\Page;
 
 class Post extends Page
@@ -23,7 +23,7 @@ class Post extends Page
      */
     public function newTopic(array $args, Forum $forum = null)
     {
-        $forum = $forum ?: $this->c->forums->forum((int) $args['id']);
+        $forum = $forum ?: $this->c->forums->get((int) $args['id']);
 
         if (empty($forum) || $forum->redirect_url || ! $forum->canCreateTopic) {
             return $this->c->Message->message('Bad request');
@@ -51,7 +51,7 @@ class Post extends Page
      */
     public function newTopicPost(array $args)
     {
-        $forum = $this->c->forums->forum((int) $args['id']);
+        $forum = $this->c->forums->get((int) $args['id']);
         
         if (empty($forum) || $forum->redirect_url || ! $forum->canCreateTopic) {
             return $this->c->Message->message('Bad request');
@@ -82,16 +82,16 @@ class Post extends Page
      * 
      * @return Page
      */
-    public function newReply(array $args, Topic $topic = null)
+    public function newReply(array $args)
     {
-        $topic = $topic ?: $this->c->ModelTopic->load((int) $args['id']);
+        $topic = $this->c->topics->load((int) $args['id']);
 
         if (empty($topic) || $topic->moved_to || ! $topic->canReply) {
             return $this->c->Message->message('Bad request');
         }
 
         if (isset($args['quote'])) {
-            $post = $this->c->ModelPost->load((int) $args['quote'], $topic);
+            $post = $this->c->posts->load((int) $args['quote'], $topic->id);
 
             if (empty($post)) {
                 return $this->c->Message->message('Bad request');
@@ -125,7 +125,7 @@ class Post extends Page
      */
     public function newReplyPost(array $args)
     {
-        $topic = $this->c->ModelTopic->load((int) $args['id']);
+        $topic = $this->c->topics->load((int) $args['id']);
         
         if (empty($topic) || $topic->moved_to || ! $topic->canReply) {
             return $this->c->Message->message('Bad request');
@@ -146,7 +146,7 @@ class Post extends Page
             $this->previewHtml = $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies);
         }
 
-        return $this->newReply($args, $topic);
+        return $this->newReply($args);
     }
 
     /**
@@ -188,7 +188,7 @@ class Post extends Page
         } else {
             $createTopic = true;
             $forum       = $model;
-            $topic       = $this->c->ModelTopic;
+            $topic       = $this->c->topics->create();
 
             $topic->subject     = $v->subject;
             $topic->poster      = $username;
@@ -202,12 +202,12 @@ class Post extends Page
 #           $topic->poll_term   = ;
 #           $topic->poll_kol    = ;
     
-            $topic->insert();
+            $this->c->topics->insert($topic);
         }
 
         // попытка объеденить новое сообщение с крайним в теме
         if ($merge) {
-            $lastPost  = $this->c->ModelPost->load($topic->last_post_id);
+            $lastPost  = $this->c->posts->load($topic->last_post_id, $topic->id);
             $newLength = mb_strlen($lastPost->message . $v->message, 'UTF-8');
 
             if ($newLength < $this->c->MAX_POST_SIZE - 100) {
@@ -215,7 +215,7 @@ class Post extends Page
                 $lastPost->edited    = $now;
                 $lastPost->edited_by = $username;
 
-                $lastPost->update();
+                $this->c->posts->update($lastPost);
             } else {
                 $merge = false;
             }
@@ -223,7 +223,7 @@ class Post extends Page
         
         // создание нового сообщения
         if (! $merge) {
-            $post = $this->c->ModelPost;
+            $post = $this->c->posts->create();
         
             $post->poster       = $username;
             $post->poster_id    = $this->c->user->id;
@@ -237,8 +237,8 @@ class Post extends Page
 #           $post->edited_by    =
             $post->user_agent   = $this->c->user->userAgent;
             $post->topic_id     = $topic->id;
-        
-            $post->insert();
+
+            $this->c->posts->insert($post);
         }
 
         if ($createTopic) {
@@ -247,8 +247,8 @@ class Post extends Page
         }
 
         // обновление данных в теме и разделе
-        $topic->calcStat()->update();
-        $forum->calcStat()->update();
+        $this->c->topics->update($topic->calcStat());
+        $this->c->forums->update($forum->calcStat());
 
         // обновление данных текущего пользователя
         if (! $merge && ! $user->isGuest && $forum->no_sum_mess != '1') {
