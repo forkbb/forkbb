@@ -194,6 +194,7 @@ class Page extends Model
         if (! empty($status = $this->httpStatus())) {
             $headers[] = $status;
         }
+#       $headers[] = 'X-Frame-Options: DENY';
         return $headers;
     }
 

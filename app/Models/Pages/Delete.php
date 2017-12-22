@@ -117,7 +117,18 @@ class Delete extends Page
             return $this->c->Redirect->page('ViewPost', $args)->message(\ForkBB\__('No confirm redirect'));
         }
 
+        $this->c->DB->beginTransaction();
 
+        if ($deleteTopic) {
+            $redirect = $this->c->Redirect->page('Forum', ['id' => $topic->forum_id])->message(\ForkBB\__('Topic del redirect'));
+            $this->c->topics->delete($topic);
+        } else {
+            $redirect = $this->c->Redirect->page('ViewPost', ['id' => $this->c->posts->previousPost($post)])->message(\ForkBB\__('Post del redirect'));
+            $this->c->posts->delete($post);
+        }
 
+        $this->c->DB->commit();
+
+        return $redirect;
     }
 }

@@ -165,7 +165,7 @@ class Edit extends Page
         // антифлуд 
         if ($calcPost || $calcForum) { 
             $user->last_post = $now; //????
-            $user->update();
+            $this->c->users->update($user);
         }
         
         return $this->c->Redirect

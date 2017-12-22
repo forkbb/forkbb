@@ -244,8 +244,9 @@ class Register extends Page
         $user->group_id = $this->c->config->o_default_user_group;
         $user->email_confirmed = 1;
         $user->activate_string = null;
-        $user->update();
-        $this->c->{'users_info update'};
+        $this->c->users->update($user);
+
+        $this->c->{'users_info update'}; //????
 
         $this->c->Lang->load('register');
 

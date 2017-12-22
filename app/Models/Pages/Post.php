@@ -259,7 +259,7 @@ class Post extends Page
             }
         }
         $user->last_post = $now;
-        $user->update();
+        $this->c->users->update($user);
         
         return $this->c->Redirect
             ->page('ViewPost', ['id' => $merge ? $lastPost->id : $post->id])
