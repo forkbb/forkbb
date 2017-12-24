@@ -19,7 +19,7 @@ class Manager extends ManagerModel
      * 
      * @param array $attrs
      * 
-     * @return Topic
+     * @return Forum
      */
     public function create(array $attrs = [])
     {

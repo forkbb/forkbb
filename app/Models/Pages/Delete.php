@@ -10,9 +10,9 @@ class Delete extends Page
 
     /**
      * Подготовка данных для шаблона удаления сообщения/темы
-     * 
+     *
      * @param array $args
-     * 
+     *
      * @return Page
      */
     public function delete(array $args)
@@ -27,7 +27,7 @@ class Delete extends Page
         $deleteTopic = $post->id === $topic->first_post_id;
 
         $this->c->Lang->load('delete');
-        
+
         $this->nameTpl    = 'post';
         $this->onlinePos  = 'topic-' . $topic->id;
         $this->canonical  = $post->linkDelete;
@@ -68,25 +68,25 @@ class Delete extends Page
             ],
             'btns'   => [
                 'delete'  => [
-                    'type'      => 'submit', 
-                    'value'     => \ForkBB\__($deleteTopic ? 'Delete  topic' : 'Delete  post'), 
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__($deleteTopic ? 'Delete  topic' : 'Delete  post'),
                     'accesskey' => 'd',
                 ],
                 'cancel'  => [
-                    'type'      => 'submit', 
-                    'value'     => \ForkBB\__('Cancel'), 
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__('Cancel'),
                 ],
             ],
         ];
-                
+
         return $this;
     }
 
     /**
      * Обработка данных от формы удаления сообщения/темы
-     * 
+     *
      * @param array $args
-     * 
+     *
      * @return Page
      */
     public function deletePost(array $args)

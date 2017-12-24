@@ -16,7 +16,7 @@ class Model extends DataModel
      */
     protected function getisUnverified()
     {
-        return $this->group_id == $this->c->GROUP_UNVERIFIED;
+        return empty($this->group_id);
     }
 
     /**
@@ -28,7 +28,7 @@ class Model extends DataModel
     {
         return $this->group_id == $this->c->GROUP_GUEST
             || $this->id < 2
-            || $this->group_id == $this->c->GROUP_UNVERIFIED;
+            || empty($this->group_id);
     }
 
     /**

@@ -12,11 +12,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "Must enter title message"
+msgid "You must enter a group title"
 msgstr "You must enter a group title."
 
-msgid "Title already exists message"
-msgstr "There is already a group with the title <strong>%s</strong>."
+msgid "Title already exists"
+msgstr "There is already a group with this title."
 
 msgid "Default group redirect"
 msgstr "Default group set. Redirecting …"
@@ -69,14 +69,14 @@ msgstr "Edit"
 msgid "Delete link"
 msgstr "Delete"
 
-msgid "Group delete head"
+msgid "Group delete"
 msgstr "Group delete"
 
-msgid "Confirm delete subhead"
-msgstr "Confirm delete group"
+msgid "I want to delete this group"
+msgstr "Yes, I want to delete the group <b>%s</b>"
 
-msgid "Confirm delete info"
-msgstr "Are you sure that you want to delete the group <strong>%s</strong>?"
+msgid "Confirm delete"
+msgstr "Delete group?"
 
 msgid "Confirm delete warn"
 msgstr "WARNING! After you deleted a group you cannot restore it."
@@ -263,3 +263,21 @@ msgstr "Number of seconds that users in this group have to wait between reports.
 
 msgid "Moderator info"
 msgstr "Please note that in order for a user in this group to have moderator abilities, he/she must be assigned to moderate one or more forums. This is done via the user administration page of the user's profile."
+
+msgid "Delete-edit interval label"
+msgstr "Interval for editing/deleting"
+
+msgid "Delete-edit interval help"
+msgstr "Number of seconds to edit (delete) your messages or topics. Set to 0 to disable.<br>Moderators have no restrictions in the zone of responsibility."
+
+msgid "Create new group"
+msgstr "Create new group"
+
+msgid "Edit group"
+msgstr "Edit group"
+
+msgid "Invalid default group"
+msgstr "Invalid default group."
+
+msgid "Invalid group to create on base"
+msgstr "Invalid group to create on base."

@@ -19,7 +19,7 @@
               </dd>
             </dl>
           </fieldset>
-          <p>
+          <p class="f-btns">
             <input class="f-btn" type="submit" name="login" value="{!! __('Change passphrase') !!}" tabindex="3">
           </p>
         </form>

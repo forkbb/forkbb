@@ -16,14 +16,20 @@
           </ul>
         </div>
         <h2>{!! __('About head') !!}</h2>
-        <div>
-          <dl>
-            <dt>{!! __('ForkBB version label') !!}</dt>
-            <dd>{!! __('ForkBB version data', $p->revision) !!}</dd>
-            <dt>{!! __('Server statistics label') !!}</dt>
-            <dd><a href="{!! $p->linkStat !!}">{!! __('View server statistics') !!}</a></dd>
-            <dt>{!! __('Support label') !!}</dt>
-            <dd><a href="https://github.com/forkbb/forkbb">GitHub</a></dd>
-          </dl>
+        <div class="f-fdiv">
+          <fieldset>
+            <dl>
+              <dt>{!! __('ForkBB version label') !!}</dt>
+              <dd>{!! __('ForkBB version data', $p->revision) !!}</dd>
+            </dl>
+            <dl>
+              <dt>{!! __('Server statistics label') !!}</dt>
+              <dd><a href="{!! $p->linkStat !!}">{!! __('View server statistics') !!}</a></dd>
+            </dl>
+            <dl>
+              <dt>{!! __('Support label') !!}</dt>
+              <dd><a href="https://github.com/forkbb/forkbb">GitHub</a></dd>
+            </dl>
+          </fieldset>
         </div>
       </section>

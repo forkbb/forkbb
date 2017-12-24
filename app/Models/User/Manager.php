@@ -70,8 +70,8 @@ class Manager extends ManagerModel
      */
     public function insert(User $user)
     {
-        $id = $this->Save->insert($topic);
-        $this->set($id, $topic);
+        $id = $this->Save->insert($user);
+        $this->set($id, $user);
         return $id;
     }
 }

@@ -1,33 +1,33 @@
 <?php
 
-namespace ForkBB\Models\Topic;
+namespace ForkBB\Models\Group;
 
 use ForkBB\Models\Action;
-use ForkBB\Models\Topic\Model as Topic;
+use ForkBB\Models\Group\Model as Group;
 use RuntimeException;
 
 class Save extends Action
 {
     /**
-     * Обновляет тему в БД
+     * Обновляет группу в БД
      *
-     * @param Topic $topic
+     * @param Group $group
      * 
      * @throws RuntimeException
      * 
-     * @return Topic
+     * @return Group
      */
-    public function update(Topic $topic)
+    public function update(Group $group)
     {
-        if ($topic->id < 1) {
+        if ($group->g_id < 1) {
             throw new RuntimeException('The model does not have ID');
         }
-        $modified = $topic->getModified();
+        $modified = $group->getModified();
         if (empty($modified)) {
-            return $topic;
+            return $group;
         }
-        $values = $topic->getAttrs();
-        $fileds = $this->c->dbMap->topics;
+        $values = $group->getAttrs();
+        $fileds = $this->c->dbMap->groups;
         $set = $vars = [];
         foreach ($modified as $name) {
             if (! isset($fileds[$name])) {
@@ -37,31 +37,31 @@ class Save extends Action
             $set[] = $name . '=?' . $fileds[$name];
         }
         if (empty($set)) {
-            return $topic;
+            return $group;
         }
-        $vars[] = $topic->id;
-        $this->c->DB->query('UPDATE ::topics SET ' . implode(', ', $set) . ' WHERE id=?i', $vars);
-        $topic->resModified();
+        $vars[] = $group->g_id;
+        $this->c->DB->query('UPDATE ::groups SET ' . implode(', ', $set) . ' WHERE id=?i', $vars);
+        $group->resModified();
 
-        return $topic;
+        return $group;
     }
 
     /**
-     * Добавляет новую тему в БД
+     * Добавляет новую группу в БД
      *
-     * @param Topic $topic
+     * @param Group $group
      * 
      * @throws RuntimeException
      * 
      * @return int
      */
-    public function insert(Topic $topic)
+    public function insert(Group $group)
     {
-        if (null !== $topic->id) {
+        if (null !== $group->g_id) {
             throw new RuntimeException('The model has ID');
         }
-        $attrs  = $topic->getAttrs();
-        $fileds = $this->c->dbMap->topics;
+        $attrs  = $group->getAttrs();
+        $fileds = $this->c->dbMap->groups;
         $set = $set2 = $vars = [];
         foreach ($attrs as $key => $value) {
             if (! isset($fileds[$key])) {
@@ -74,10 +74,10 @@ class Save extends Action
         if (empty($set)) {
             throw new RuntimeException('The model is empty');
         }
-        $this->c->DB->query('INSERT INTO ::topics (' . implode(', ', $set) . ') VALUES (' . implode(', ', $set2) . ')', $vars);
-        $topic->id = $this->c->DB->lastInsertId();
-        $topic->resModified();
+        $this->c->DB->query('INSERT INTO ::groups (' . implode(', ', $set) . ') VALUES (' . implode(', ', $set2) . ')', $vars);
+        $group->g_id = $this->c->DB->lastInsertId();
+        $group->resModified();
 
-        return $topic->id;
+        return $group->g_id;
     }
 }

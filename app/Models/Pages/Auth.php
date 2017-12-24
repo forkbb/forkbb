@@ -193,7 +193,7 @@ class Auth extends Page
             'token' => 'token:Forget',
             'email' => 'required|string:trim,lower|email|check_email',
         ])->setMessages([
-            'email.email' => \ForkBB\__('Invalid email'),
+            'email.email' => 'Invalid email',
         ]);
 
         if (! $v->validation($_POST)) {
@@ -342,8 +342,8 @@ class Auth extends Page
         ])->setArguments([
             'token' => $args,
         ])->setMessages([
-            'password.password'  => \ForkBB\__('Pass format'),
-            'password2.same' => \ForkBB\__('Pass not match'),
+            'password.password'  => 'Pass format',
+            'password2.same'     => 'Pass not match',
         ]);
 
         if (! $v->validation($_POST)) {

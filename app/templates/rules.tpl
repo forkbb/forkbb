@@ -12,7 +12,7 @@
               <dd><label class="f-child2"><input type="checkbox" name="agree" value="{!! $p->formHash !!}" tabindex="1">{!! __('Agree') !!}</label></dd>
             </dl>
           </fieldset>
-          <p>
+          <p class="f-btns">
             <input class="f-btn" type="submit" name="register" value="{!! __('Register') !!}" tabindex="2">
           </p>
         </form>

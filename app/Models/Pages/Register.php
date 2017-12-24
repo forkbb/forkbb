@@ -31,8 +31,8 @@ class Register extends Page
         ])->setMessages([
             'agree.required'    => ['cancel', 'cancel'],
             'agree.token'       => [\ForkBB\__('Bad agree', $this->c->Router->link('Register')), 'w'],
-            'password.password' => \ForkBB\__('Pass format'),
-            'username.login'    => \ForkBB\__('Login format'),
+            'password.password' => 'Pass format',
+            'username.login'    => 'Login format',
         ]);
 
         // завершение регистрации
@@ -124,7 +124,7 @@ class Register extends Page
     protected function regEnd(Validator $v)
     {
         if ($this->c->config->o_regs_verify == '1') {
-            $groupId = $this->c->GROUP_UNVERIFIED;
+            $groupId = 0;
             $key = 'w' . $this->c->Secury->randomPass(79);
         } else {
             $groupId = $this->c->config->o_default_user_group;

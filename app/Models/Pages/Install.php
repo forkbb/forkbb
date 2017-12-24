@@ -709,7 +709,7 @@ class Install extends Page
         $schema = [
             'FIELDS' => [
                 'id'               => ['SERIAL', false],
-                'group_id'         => ['INT(10) UNSIGNED', false, $this->c->GROUP_UNVERIFIED],
+                'group_id'         => ['INT(10) UNSIGNED', false, 0],
                 'username'         => ['VARCHAR(200)', false, ''],
                 'password'         => ['VARCHAR(255)', false, ''],
                 'email'            => ['VARCHAR(80)', false, ''],

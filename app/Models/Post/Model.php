@@ -44,7 +44,6 @@ class Model extends DataModel
         $user = $this->c->users->get($this->poster_id);
 
         if (! $user instanceof User) {
-            var_dump($this->poster_id);
             $attrs = $this->a; //????
             $attrs['id'] = $attrs['poster_id'];
 

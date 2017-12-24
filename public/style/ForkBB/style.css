@@ -94,8 +94,33 @@ html {
 }
 
 h1, h2, h3 {
-  font-family: "Segoe Print", "Flow Ext";
   font-weight: bold;
+}
+
+h2 {
+  font-size: 1.25rem;
+}
+
+h3 {
+  font-size: 1rem;
+}
+
+.f-header h1, 
+.f-category h2, 
+.f-category h3 {
+  font-family: "Segoe Print", "Flow Ext";
+}
+
+.f-header h1 {
+  font-size: 2rem;
+}
+
+.f-category h2 {
+  font-size: 1.5rem
+}
+
+.f-category h3 {
+  font-size: 1.25rem;
 }
 
 .f-wrap {
@@ -392,12 +417,16 @@ select {
 }
 
 .f-fdiv h2,
-.f-fdiv .f-form {
-  padding: 0.625rem;
+.f-fdiv fieldset {
+  padding: 0.625rem 0.625rem 0 0.625rem;
 }
 
 .f-fdiv h3 {
   padding: 0.625rem 0.625rem 0 0.625rem;
+}
+
+.f-fdiv dl {
+  padding: 0 0 0.625rem 0;
 }
 
 .f-fdiv .f-ctrl,
@@ -406,13 +435,13 @@ select {
   font-size: 1rem;
   display: block;
   width: 100%;
-  margin-bottom: 1rem;
+/*  margin-bottom: 1rem; */
   box-sizing: border-box;
 }
 
 .f-fdiv .f-label {
   font-size: 1rem;
-  margin-bottom: 1rem;
+/*  margin-bottom: 1rem; */
   display: inline-block;
 }
 
@@ -447,8 +476,12 @@ select {
   margin: 0 0.625rem 0 0;
 }
 
+.f-fdiv .f-btns {
+  padding: 0 0.625rem;
+}
+
 .f-fdiv .f-btn {
-  margin: 1rem 0 0.375rem 0;
+  margin: 0.625rem 0;
 }
 
 .f-fdiv .f-child3 {
@@ -459,27 +492,30 @@ select {
 
 .f-fdiv .f-child4 {
   font-size: 0.8125rem;
+  margin-top: 0.3125rem;
   text-align: justify;
 }
 
 .f-fdiv .f-child5 {
-  margin-top: -0.375rem;
-  margin-bottom: 1rem
+/*  margin-top: -0.375rem; */
+/*  margin-bottom: 1rem */
+  padding-top: 0.3125rem;
 }
 
 .f-fdiv .f-finfo {
-  margin: -0.625rem -0.625rem 1rem -0.625rem;
+/*  margin: -0.625rem -0.625rem 1rem -0.625rem; */
   background-color: #AA7939;
   padding: 0.625rem;
   color: #F8F4E3;
+  margin-bottom: 0.625rem;
 }
 
-.f-finfo + .f-finfo {
-  margin-top: -1rem;
+.f-fdiv .f-finfo + .f-finfo {
+  margin-top: -0.625rem;
 }
 
-fieldset + .f-finfo {
-  margin-top: 1rem;
+.f-fdiv fieldset + .f-finfo {
+/*  margin-top: 0.625rem; */
 }
 
 .f-ctrl {
@@ -487,7 +523,7 @@ fieldset + .f-finfo {
 }
 
 .f-ctrl:focus {
-  box-shadow: inset 0px 0px 0.25rem 0 rgba(170,121,57,0.5), 0px 0px 0.25rem 0 rgba(170,121,57,0.5);
+  box-shadow: inset 0 0 0.5rem 0 rgba(170,121,57,0.75), 0 0 0.5rem 0 rgba(170,121,57,0.75); 
 }
 
 .f-ctrl + .f-fhint {
@@ -501,9 +537,10 @@ fieldset + .f-finfo {
 
 .f-ctrl:focus + .f-fhint,
 .f-ctrl:active + .f-fhint {
-  margin-top: -0.375rem;
-  margin-bottom: 1rem;
-  max-height: 1000rem;
+/*  margin-top: 0.3125rem; */
+/*  margin-bottom: -0.625rem; */
+  
+  max-height: 10rem;
 }
 
 /**************/
@@ -750,7 +787,7 @@ fieldset + .f-finfo {
   text-align: center;
   border: 0;
   white-space: nowrap;
-  font-size: 1.125rem;
+/*  font-size: 1.125rem; */
   text-transform: uppercase;
 }
 
@@ -821,20 +858,36 @@ fieldset + .f-finfo {
 }
 
 .f-admin dl {
-  margin: 0 0.625rem 0.625rem 0.625rem;
+/*  margin: 0 0.625rem 0.625rem 0.625rem; */
+  border-bottom: 0.0625rem dotted #AA7939;
+  margin-bottom: 0.625rem;
+}
+
+.f-admin dl:before,
+.f-admin dl:after {
+  content: " ";
+  display: table;
+}
+
+.f-admin dl:after {
+  clear: both;
 }
 
 .f-admin dt {
-  padding-top: 0.625rem;
+/*  padding-top: 0.625rem; */
 }
 
 .f-admin dd {
-  padding: 0.625rem 0;
-  border-bottom: 0.0625rem dotted #AA7939;
+/*  padding: 0.625rem 0; */
+/*  border-bottom: 0.0625rem dotted #AA7939; */
 }
 
 .f-admin .f-fdiv dl {
-  margin: 0;
+/*  margin: 0; */
+}
+
+.f-admin .f-fdiv .f-child2 {
+  font-size: 1rem;
 }
 
 .f-grlist {
@@ -861,8 +914,21 @@ fieldset + .f-finfo {
     float: left;
     width: 14rem;
   }
+
   .f-admin dd {
     padding-left: 14.625rem;
+  }
+
+  .f-admin .f-fdiv .f-child1 {
+    font-weight: normal;
+  }
+
+  .f-field-full dt {
+    display: none;
+  }
+
+  .f-field-full dd {
+    padding-left: 0;
   }
 }
 
@@ -1139,7 +1205,7 @@ fieldset + .f-finfo {
 }
 
 .f-forum h3 {
-  font-family: Arial, Helvetica, sans-serif;
+/*  font-family: Arial, Helvetica, sans-serif;  */
   font-weight: normal;
   font-size: 1rem;
   position: relative;
@@ -1395,7 +1461,7 @@ li + li .f-btn {
 }
 
 .f-preview > h2 {
-  font-family: Arial, Helvetica, sans-serif;
+/**  font-family: Arial, Helvetica, sans-serif; */
   font-size: 1rem;
   line-height: 1.5;
   padding: 1rem 0.625rem 0.3125rem 0.625rem
@@ -1424,7 +1490,7 @@ li + li .f-btn {
 
 .f-post-form > h2,
 .f-view-posts > h2 {
-  font-family: Arial, Helvetica, sans-serif;
+/**  font-family: Arial, Helvetica, sans-serif; */
   font-size: 1rem;
   padding-right: 0.625rem;
   padding: 1rem 0.625rem 0.3125rem 0.625rem
@@ -1437,7 +1503,7 @@ li + li .f-btn {
 
 .f-post-form legend {
   width: 100%;
-  padding-bottom: 0.625rem;
+  padding: 0.625rem 0 0.3125rem 0;
   margin-bottom: 0.625rem;
   border-bottom: 0.0625rem dotted #AA7939;
   font-weight: bold;

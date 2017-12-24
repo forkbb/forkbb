@@ -13,7 +13,7 @@
               </dd>
             </dl>
           </fieldset>
-          <p>
+          <p class="f-btns">
             <input class="f-btn" type="submit" name="submit" value="{!! __('Send email') !!}" tabindex="2">
           </p>
         </form>

@@ -3,7 +3,6 @@
 return [
     'BASE_URL'    => 'http://forkbb.local',
     'DEBUG' => 1,
-    'GROUP_UNVERIFIED' => 0,
     'GROUP_ADMIN'      => 1,
     'GROUP_MOD'        => 2,
     'GROUP_GUEST'      => 3,

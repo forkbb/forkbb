@@ -22,7 +22,7 @@
             <dl @if (isset($cur['dl'])) class="f-field-{{ $cur['dl'] }}" @endif>
               <dt> @if (isset($cur['title']))<label class="f-child1 @if (isset($cur['required'])) f-req @endif" for="id-{{ $key }}">{!! $cur['title'] !!}</label> @endif</dt>
               <dd>
-      @if ($cur['type'] === 'textarea')
+      @if ('textarea' === $cur['type'])
                 <textarea @if (isset($cur['required'])) required @endif @if (isset($cur['autofocus'])) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}">{{ $cur['value'] or '' }}</textarea>
         @if (isset($cur['bb']))
                 <ul class="f-child5">
@@ -31,10 +31,22 @@
           @endforeach
                 </ul>
         @endif
-      @elseif ($cur['type'] === 'text')
+      @elseif ('select' === $cur['type'])
+                <select @if (isset($cur['required'])) required @endif @if (isset($cur['autofocus'])) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}">
+        @foreach ($cur['options'] as $v => $n)
+                  <option value="{{ $v }}" @if ($v == $cur['value']) selected @endif>{{ $n }}</option>
+        @endforeach
+                </select>
+      @elseif ('text' === $cur['type'])
                 <input @if (isset($cur['required'])) required @endif @if (isset($cur['autofocus'])) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="text" @if (! empty($cur['maxlength'])) maxlength="{{ $cur['maxlength'] }}" @endif @if (isset($cur['pattern'])) pattern="{{ $cur['pattern'] }}" @endif @if (isset($cur['value'])) value="{{ $cur['value'] }}" @endif>
-      @elseif ($cur['type'] === 'checkbox')
+      @elseif ('number' === $cur['type'])
+                <input @if (isset($cur['required'])) required @endif @if (isset($cur['autofocus'])) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="number" min="{{ $cur['min'] }}" max="{{ $cur['max'] }}" @if (isset($cur['value'])) value="{{ $cur['value'] }}" @endif>
+      @elseif ('checkbox' === $cur['type'])
                 <label class="f-child2"><input @if (isset($cur['autofocus'])) autofocus @endif type="checkbox" id="id-{{ $key }}" name="{{ $key }}" value="{{ $cur['value'] or '1' }}" @if (! empty($cur['checked'])) checked @endif>{!! $cur['label'] !!}</label>
+      @elseif ('radio' === $cur['type'])
+        @foreach ($cur['values'] as $v => $n)
+                <label class="f-label"><input @if (isset($cur['autofocus'])) autofocus @endif type="radio" id="id-{{ $key }}-{{ $v }}" name="{{ $key }}" value="{{ $v }}" @if ($v == $cur['value']) checked @endif>{{ $n }}</label>
+        @endforeach
       @endif
       @if (isset($cur['info']))
                 <p class="f-child4">{!! $cur['info'] !!}</p>
@@ -45,7 +57,7 @@
           </fieldset>
   @endif
 @endforeach
-          <p>
+          <p class="f-btns">
 @foreach ($form['btns'] as $key => $cur)
             <input class="f-btn @if(isset($cur['class'])) {{ $cur['class'] }} @endif" type="{{ $cur['type'] }}" name="{{ $key }}" value="{{ $cur['value'] }}" @if (isset($cur['accesskey'])) accesskey="{{ $cur['accesskey'] }}" @endif>
 @endforeach

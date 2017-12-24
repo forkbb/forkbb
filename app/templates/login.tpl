@@ -27,7 +27,7 @@
 @endif
             </dl>
           </fieldset>
-          <p>
+          <p class="f-btns">
             <input class="f-btn" type="submit" name="login" value="{!! __('Sign in') !!}" tabindex="4">
           </p>
         </form>

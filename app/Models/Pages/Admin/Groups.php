@@ -4,129 +4,117 @@ namespace ForkBB\Models\Pages\Admin;
 
 use ForkBB\Core\Container;
 use ForkBB\Core\Validator;
+use ForkBB\Models\Group\Model as Group;
 use ForkBB\Models\Pages\Admin;
 
 class Groups extends Admin
 {
     /**
-     * Массив групп
-     * @var array
-     */
-    protected $groups;
-
-    /**
-     * Список групп доступных как основа для новой
-     * @var array
-     */
-    protected $grBase = [];
-
-    /**
-     * Список групп доступных для группы по умолчанию
-     * @var array
-     */
-    protected $grDefault = [];
-
-    /**
-     * Список групп доступных для удаления
-     * @var array
-     */
-    protected $grDelete = [];
-
-    /**
      * Конструктор
-     * 
+     *
      * @param Container $container
      */
     public function __construct(Container $container)
     {
         parent::__construct($container);
 
-        $this->getGroup();
-        $forBase = [$this->c->GROUP_UNVERIFIED, $this->c->GROUP_ADMIN, $this->c->GROUP_GUEST];
-        $forDelete = [$this->c->GROUP_UNVERIFIED, $this->c->GROUP_ADMIN, $this->c->GROUP_MOD, $this->c->GROUP_GUEST, $this->c->GROUP_MEMBER];
+        $this->c->Lang->load('admin_groups');
 
-        foreach ($this->groups as $key => $cur) {
-            if (! in_array($key, $forBase)) {
-                $this->grBase[$key] = true;
-                if ($cur['g_moderator'] == 0) {
-                    $this->grDefault[$key] = true;
-                }
-                if (! in_array($key, $forDelete)) {
-                    $this->grDelete[$key] = true;
-                }
+        $groupsList    = [];
+        $groupsNew     = [];
+        $groupsDefault = [];
+        $notForNew     = [$this->c->GROUP_ADMIN];
+        $notForDefault = [$this->c->GROUP_ADMIN, $this->c->GROUP_MOD, $this->c->GROUP_GUEST];
+
+        foreach ($this->c->groups->getList() as $key => $group) {
+            $groupsList[$key] = [$group->g_title, $group->linkEdit, $group->linkDelete];
+
+            if (! in_array($group->g_id, $notForNew)) {
+                $groupsNew[$key] = $group->g_title;
+            }
+            if (! in_array($group->g_id, $notForDefault) && $group->g_moderator == 0) {
+                $groupsDefault[$key] = $group->g_title;
             }
         }
-        $this->aIndex = 'groups';
-    }
-
-    /**
-     * Создает массив групп
-     */
-    protected function getGroup()
-    {
-        if (empty($this->groups)) {
-            $this->groups = [];
-            $stmt = $this->c->DB->query('SELECT * FROM ::groups ORDER BY g_id');
-            while ($cur = $stmt->fetch()) {
-                $this->groups[$cur['g_id']] = $cur;
-            }
-        }
+        $this->groupsList    = $groupsList;
+        $this->groupsNew     = $groupsNew;
+        $this->groupsDefault = $groupsDefault;
+        $this->aIndex        = 'groups';
     }
 
     /**
      * Подготавливает данные для шаблона
-     * 
+     *
      * @return Page
      */
     public function view()
     {
-        $groupsList = [];
-        $groupsNew = [];
-        $groupsDefault = [];
-        foreach ($this->groups as $key => $cur) {
-            $groupsList[] = [
-                $this->c->Router->link('AdminGroupsEdit', ['id' => $key]),
-                $cur['g_title'],
-                isset($this->grDelete[$key]) 
-                    ? $this->c->Router->link('AdminGroupsDelete', ['id' => $key])
-                    : null,
-            ];
-            if (isset($this->grBase[$key])) {
-                $groupsNew[] = [$key, $cur['g_title']];
-            }
-            if (isset($this->grDefault[$key])) {
-                $groupsDefault[] = [$key, $cur['g_title']];
-            }
-        }
-
-        $this->c->Lang->load('admin_groups');
-
-        $this->nameTpl = 'admin/groups';
-        $this->formActionNew     = $this->c->Router->link('AdminGroupsNew');
-        $this->formTokenNew      = $this->c->Csrf->create('AdminGroupsNew');
-        $this->formActionDefault = $this->c->Router->link('AdminGroupsDefault');
-        $this->formTokenDefault  = $this->c->Csrf->create('AdminGroupsDefault');
-        $this->defaultGroup      = $this->c->config->o_default_user_group;
-        $this->groupsNew         = $groupsNew;
-        $this->groupsDefault     = $groupsDefault;
-        $this->groupsList        = $groupsList;
-        $this->tabindex          = 0;
+        $this->nameTpl     = 'admin/groups';
+        $this->formNew     = [
+            'action' => $this->c->Router->link('AdminGroupsNew'),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('AdminGroupsNew'),
+            ],
+            'sets'   => [[
+                'fields' => [
+                    'basegroup' => [
+                        'type'      => 'select',
+                        'options'   => $this->groupsNew,
+                        'value'     => $this->c->config->o_default_user_group,
+                        'title'     => \ForkBB\__('New group label'),
+                        'info'      => \ForkBB\__('New group help'),
+                        'autofocus' => true,
+                    ],
+                ],
+            ]],
+            'btns'   => [
+                'submit'  => [
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__('Add'),
+                    'accesskey' => 'a',
+                ],
+            ],
+        ];
+        $this->formDefault = [
+            'action' => $this->c->Router->link('AdminGroupsDefault'),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('AdminGroupsDefault'),
+            ],
+            'sets'   => [[
+                'fields' => [
+                    'defaultgroup' => [
+                        'type'    => 'select',
+                        'options' => $this->groupsDefault,
+                        'value'   => $this->c->config->o_default_user_group,
+                        'title'   => \ForkBB\__('Default group label'),
+                        'info'    => \ForkBB\__('Default group help'),
+                    ],
+                ],
+            ]],
+            'btns'   => [
+                'submit'  => [
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__('Save'),
+                    'accesskey' => 's',
+                ],
+            ],
+        ];
 
         return $this;
     }
 
     /**
      * Устанавливает группу по умолчанию
-     * 
+     *
      * @return Page
      */
     public function defaultPost()
     {
-        $this->c->Lang->load('admin_groups');
-
         $v = $this->c->Validator->setRules([
             'token'        => 'token:AdminGroupsDefault',
-            'defaultgroup' => 'required|integer|in:' . implode(',', array_keys($this->grDefault)),
+            'defaultgroup' => 'required|integer|in:' . implode(',', array_keys($this->groupsDefault)),
+        ])->setMessages([
+            'defaultgroup.in' => 'Invalid default group',
         ]);
 
         if (! $v->validation($_POST)) {
@@ -139,103 +127,105 @@ class Groups extends Admin
     }
 
     /**
-     * Подготавливает данные для создание группы
-     * Создает новую группу
-     * 
+     * Подготавливает данные для шаблона редактирования группы
+     *
      * @param array $args
-     * 
+     *
      * @return Page
      */
-    public function newPost(array $args)
+    public function edit(array $args)
     {
-        $this->c->Lang->load('admin_groups');
+        if (isset($args['base'])) {
+            $group = $this->c->groups->get((int) $args['base']);
+        } else {
+            $group = $this->c->groups->get((int) $args['id']);
+        }
 
-        if (empty($args['base'])) {
+        if (null === $group) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $group = clone $group;
+
+        if (isset($args['base'])) {
+            $vars            = ['base' => $group->g_id];
+            $group->g_title  = '';
+            $group->g_id     = null;
+            $marker          = 'AdminGroupsNew';
+            $this->titles    = \ForkBB\__('Create new group');
+            $this->titleForm = \ForkBB\__('Create new group');
+        } else {
+            $vars            = ['id' => $group->g_id];
+            $marker          = 'AdminGroupsEdit';
+            $this->titles    = \ForkBB\__('Edit group');
+            $this->titleForm = \ForkBB\__('Edit group');
+        }
+
+        if (isset($args['_data'])) {
+            $group->replAttrs($args['_data']);
+        }
+
+        $this->nameTpl = 'admin/group';
+        $this->form    = $this->viewForm($group, $marker, $vars);
+
+        return $this;
+    }
+
+    /**
+     * Создание новой группы
+     * Запись данных по новой/измененной группе
+     *
+     * @param array $args
+     *
+     * @return Page
+     */
+    public function editPost(array $args)
+    {
+        // начало создания новой группы
+        if (empty($args['id']) && empty($args['base'])) {
             $v = $this->c->Validator->setRules([
                 'token'     => 'token:AdminGroupsNew',
-                'basegroup' => ['required|integer|in:' . implode(',', array_keys($this->grBase)), \ForkBB\__('New group label')]
+                'basegroup' => 'required|integer|in:' . implode(',', array_keys($this->groupsNew)),
+            ])->setMessages([
+                'basegroup.in' => 'Invalid group to create on base',
             ]);
 
             if (! $v->validation($_POST)) {
                 $this->fIswev = $v->getErrors();
                 return $this->view();
             } else {
-                return $this->edit(['id' => $v->basegroup, '_new' => true]);
+                return $this->edit(['base' => $v->basegroup]);
             }
-        } else {
-            return $this->editPost(['id' => $args['base'], '_new' => true]);
         }
-    }
 
-    /**
-     * Подготавливает данные для шаблона редактирования группы
-     * 
-     * @param array $args
-     * 
-     * @return Page
-     */
-    public function edit(array $args)
-    {
-        $groups = $this->groups;
+        if (isset($args['base'])) {
+            $group = $this->c->groups->get((int) $args['base']);
+        } else {
+            $group = $this->c->groups->get((int) $args['id']);
+        }
 
-        if (isset($args['_data'])) {
-            $groups[$args['id']] = $args['_data'];
-        } elseif (! isset($groups[$args['id']])) {
+        if (null === $group) {
             return $this->c->Message->message('Bad request');
         }
 
-        if (isset($args['_new'])) {
-            $id = -1;
-            $marker = 'AdminGroupsNew';
-            $vars = ['base' => $args['id']];
-            if (! isset($args['_data'])) {
-                unset($groups[$args['id']]['g_title']);
-            }
-        } else {
-            $id = (int) $args['id'];
-            $marker = 'AdminGroupsEdit';
-            $vars = ['id' => $id];
-        }
+        $group = clone $group;
 
-        $this->c->Lang->load('admin_groups');
-
-        $this->formAction = $this->c->Router->link($marker, $vars);
-        $this->formToken  = $this->c->Csrf->create($marker, $vars);
-        $this->form       = $this->viewForm($id, $groups[$args['id']]);
-        $this->warn       = empty($groups[$args['id']]['g_moderator']) ? null : \ForkBB\__('Moderator info');
-        $this->tabindex   = 0;
-
-        return $this;
-    }
-
-    /**
-     * Запись данных по новой/измененной группе
-     * 
-     * @param array $args
-     * 
-     * @return Page
-     */
-    public function editPost(array $args)
-    {
         $next = $this->c->GROUP_ADMIN . ',' . $this->c->GROUP_GUEST;
-        if (isset($args['_new'])) {
-            $id = -1;
-            $marker = 'AdminGroupsNew';
-            $vars = ['base' => $args['id']];
+
+        if (isset($args['base'])) {
+            $marker      = 'AdminGroupsNew';
+            $group->g_id = null;
         } else {
-            $id = (int) $args['id'];
             $marker = 'AdminGroupsEdit';
-            $vars = ['id' => $id];
-            $next .= ',' . $id;
-        }
-        $reserve = [];
-        foreach ($this->groups as $key => $cur) {
-            if ($key != $id) {
-                $reserve[] = $cur['g_title'];
-            }
+            $next  .= ',' . $group->g_id;
         }
 
-        $this->c->Lang->load('admin_groups');
+        $reserve = [];
+        foreach ($this->groupsList as $key => $cur) {
+            if ($group->g_id !== $key) {
+                $reserve[] = $cur[0];
+            }
+        }
 
         $v = $this->c->Validator->setRules([
             'token'                  => 'token:' . $marker,
@@ -256,6 +246,7 @@ class Groups extends Admin
             'g_edit_posts'           => 'integer|in:0,1',
             'g_delete_posts'         => 'integer|in:0,1',
             'g_delete_topics'        => 'integer|in:0,1',
+            'g_deledit_interval'     => 'integer|min:0|max:999999',
             'g_set_title'            => 'integer|in:0,1',
             'g_post_links'           => 'integer|in:0,1',
             'g_search'               => 'integer|in:0,1',
@@ -266,11 +257,14 @@ class Groups extends Admin
             'g_email_flood'          => 'integer|min:0|max:999999',
             'g_report_flood'         => 'integer|min:0|max:999999',
         ])->setArguments([
-            'token' => $vars,
+            'token' => $args,
+        ])->setMessages([
+            'g_title.required' => 'You must enter a group title',
+            'g_title.not_in'   => 'Title already exists',
         ]);
 
         if (! $v->validation($_POST)) {
-            $this->fIswev = $v->getErrors();
+            $this->fIswev  = $v->getErrors();
             $args['_data'] = $v->getData();
             return $this->edit($args);
         }
@@ -289,283 +283,374 @@ class Groups extends Admin
             $data['g_promote_min_posts']  = 0;
         }
 
-        $fields = [];
-        $sets = [];
-        $vars = [];
-        foreach($data as $key => $value) {
-            if (substr($key, 0, 2) !== 'g_' || $value === null) {
-                continue;
-            } elseif ($key === 'g_user_title' && ! isset($value{0})) {
-                $value = null;
-            }
-            if ($id === -1) {
-                $fields[] = $key;
-                $sets[] = is_int($value) ? '?i' : '?s';
-                $vars[] = $value;
-            } else {
-                if ($id === $this->c->GROUP_ADMIN 
-                    && ! in_array($key, ['g_title', 'g_user_title'])
-                ) {
-                    continue;
-                }
-                $sets[] = $key . '=' . (is_int($value) ? '?i' : '?s');
-                $vars[] = $value;
-            } 
+        foreach ($data as $attr => $value) {
+            $group->$attr = $value;
         }
-        if ($id === -1) {
-            $this->c->DB->exec('INSERT INTO ::groups (' . implode(', ', $fields) . ') VALUES(' . implode(', ', $sets) . ')', $vars);
-            $newId = $this->c->DB->lastInsertId();
 
-            $this->c->DB->exec('INSERT INTO ::forum_perms (group_id, forum_id, read_forum, post_replies, post_topics) SELECT ?i:new, forum_id, read_forum, post_replies, post_topics FROM ::forum_perms WHERE group_id=?i:old', [':new' => $newId, ':old' => $args['id']]);
+        $this->c->DB->beginTransaction();
+
+        if (null === $group->g_id) {
+            $message = \ForkBB\__('Group added redirect');
+            $newId   = $this->c->groups->insert($group);
+            //????
+            $this->c->DB->exec('INSERT INTO ::forum_perms (group_id, forum_id, read_forum, post_replies, post_topics) SELECT ?i:new, forum_id, read_forum, post_replies, post_topics FROM ::forum_perms WHERE group_id=?i:old', [':new' => $newId, ':old' => $args['base']]);
+
         } else {
-            $vars[] = $id;
-            $this->c->DB->exec('UPDATE ::groups SET ' . implode(', ', $sets) . ' WHERE g_id=?i', $vars);
-
+            $message = \ForkBB\__('Group edited redirect');
+            $this->c->groups->update($group);
+            //????
             if ($data['g_promote_next_group']) {
-                $vars = [':next' => $data['g_promote_next_group'], ':id' => $id, ':posts' => $data['g_promote_min_posts']];
+                $vars = [':next' => $data['g_promote_next_group'], ':id' => $group->g_id, ':posts' => $data['g_promote_min_posts']];
                 $this->c->DB->exec('UPDATE ::users SET group_id=?i:next WHERE group_id=?i:id AND num_posts>=?i:posts', $vars);
             }
         }
 
+        $this->c->DB->commit();
+
         $this->c->Cache->delete('forums_mark');
 
-        return $this->c->Redirect
-            ->page('AdminGroups')
-            ->message($id === -1 ? \ForkBB\__('Group added redirect') : \ForkBB\__('Group edited redirect'));
+        return $this->c->Redirect->page('AdminGroups')->message($message);
     }
 
     /**
      * Формирует данные для формы редактирования группы
-     * @param int $id
-     * @param array $data
+     *
+     * @param Group $group
+     * @param string $marker
+     * @param array $args
+     *
      * @return array
      */
-    protected function viewForm($id, array $data)
+    protected function viewForm(Group $group, $marker, array $args)
     {
-        $this->nameTpl = 'admin/group';
         $form = [
-            'g_title' => [
-                'type' => 'text',
-                'maxlength' => 50,
-                'value' => isset($data['g_title']) ? $data['g_title'] : '',
-                'title' => \ForkBB\__('Group title label'),
-                'required' => true,
+            'action' => $this->c->Router->link($marker, $args),
+            'hidden' => [
+                'token' => $this->c->Csrf->create($marker, $args),
             ],
-            'g_user_title' => [
-                'type' => 'text',
-                'maxlength' => 50,
-                'value' => isset($data['g_user_title']) ? $data['g_user_title'] : '',
-                'title' => \ForkBB\__('User title label'),
-                'info' => \ForkBB\__('User title help', $id == $this->c->GROUP_GUEST ? \ForkBB\__('Guest') : \ForkBB\__('Member')),
+            'sets'   => [],
+            'btns'   => [
+                'submit'  => [
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__('Submit'),
+                    'accesskey' => 's',
+                ],
             ],
         ];
 
-        if ($id === $this->c->GROUP_UNVERIFIED || $id === $this->c->GROUP_ADMIN) {
+        $fieldset = [];
+        $fieldset['g_title'] = [
+            'type'      => 'text',
+            'maxlength' => 50,
+            'value'     => $group->g_title,
+            'title'     => \ForkBB\__('Group title label'),
+            'required'  => true,
+            'autofocus' => true,
+        ];
+        $fieldset['g_user_title'] = [
+            'type'      => 'text',
+            'maxlength' => 50,
+            'value'     => $group->g_user_title,
+            'title'     => \ForkBB\__('User title label'),
+            'info'      => \ForkBB\__('User title help', $group->groupGuest ? \ForkBB\__('Guest') : \ForkBB\__('Member')),
+        ];
+
+        if ($group->g_id === $this->c->GROUP_ADMIN) {
+            $form['sets'][] = [
+                'fields' => $fieldset,
+            ];
             return $form;
         }
 
-        if ($id !== $this->c->GROUP_GUEST) {
+        if (! $group->groupGuest) {
             $options = [0 => \ForkBB\__('Disable promotion')];
 
-            foreach ($this->groups as $group) {
-                if ($group['g_id'] == $id || empty($this->grBase[$group['g_id']])) {
+            foreach ($this->groupsNew as $key => $title) {
+                if ($key === $group->g_id || $key === $this->c->GROUP_GUEST) {
                     continue;
                 }
-                $options[$group['g_id']] = $group['g_title'];
+                $options[$key] = $title;
             }
 
-            $form['g_promote_next_group'] = [
-                'type' => 'select',
+            $fieldset['g_promote_next_group'] = [
+                'type'    => 'select',
                 'options' => $options,
-                'value' => isset($data['g_promote_next_group']) ? $data['g_promote_next_group'] : 0,
-                'title' => \ForkBB\__('Promote users label'),
-                'info' => \ForkBB\__('Promote users help', \ForkBB\__('Disable promotion')),
+                'value'   => $group->g_promote_next_group,
+                'title'   => \ForkBB\__('Promote users label'),
+                'info'    => \ForkBB\__('Promote users help', \ForkBB\__('Disable promotion')),
             ];
-            $form['g_promote_min_posts'] = [
-                'type' => 'number',
-                'min' => 0,
-                'max' => 9999999999,
-                'value' => isset($data['g_promote_min_posts']) ? $data['g_promote_min_posts'] : 0,
+            $fieldset['g_promote_min_posts'] = [
+                'type'  => 'number',
+                'min'   => 0,
+                'max'   => 9999999999,
+                'value' => $group->g_promote_min_posts,
                 'title' => \ForkBB\__('Number for promotion label'),
-                'info' => \ForkBB\__('Number for promotion help'),
+                'info'  => \ForkBB\__('Number for promotion help'),
             ];
         }
 
         $y = \ForkBB\__('Yes');
         $n = \ForkBB\__('No');
-        if ($id !== $this->c->GROUP_GUEST && $id != $this->c->config->o_default_user_group) {
-            $form['g_moderator'] = [
-                'type' => 'radio',
-                'value' => isset($data['g_moderator']) ? $data['g_moderator'] : 0,
+
+        if (! $group->groupGuest && $group->g_id != $this->c->config->o_default_user_group) {
+            $fieldset['g_moderator'] = [
+                'type'   => 'radio',
+                'value'  => $group->g_moderator,
                 'values' => [1 => $y, 0 => $n],
-                'title' => \ForkBB\__('Mod privileges label'),
-                'info' => \ForkBB\__('Mod privileges help'),
+                'title'  => \ForkBB\__('Mod privileges label'),
+                'info'   => \ForkBB\__('Mod privileges help'),
             ];
-            $form['g_mod_edit_users'] = [
-                'type' => 'radio',
-                'value' => isset($data['g_mod_edit_users']) ? $data['g_mod_edit_users'] : 0,
+            $fieldset['g_mod_edit_users'] = [
+                'type'   => 'radio',
+                'value'  => $group->g_mod_edit_users,
                 'values' => [1 => $y, 0 => $n],
-                'title' => \ForkBB\__('Edit profile label'),
-                'info' => \ForkBB\__('Edit profile help'),
+                'title'  => \ForkBB\__('Edit profile label'),
+                'info'   => \ForkBB\__('Edit profile help'),
             ];
-            $form['g_mod_rename_users'] = [
-                'type' => 'radio',
-                'value' => isset($data['g_mod_rename_users']) ? $data['g_mod_rename_users'] : 0,
+            $fieldset['g_mod_rename_users'] = [
+                'type'   => 'radio',
+                'value'  => $group->g_mod_rename_users,
                 'values' => [1 => $y, 0 => $n],
-                'title' => \ForkBB\__('Rename users label'),
-                'info' => \ForkBB\__('Rename users help'),
+                'title'  => \ForkBB\__('Rename users label'),
+                'info'   => \ForkBB\__('Rename users help'),
             ];
-            $form['g_mod_change_passwords'] = [
-                'type' => 'radio',
-                'value' => isset($data['g_mod_change_passwords']) ? $data['g_mod_change_passwords'] : 0,
+            $fieldset['g_mod_change_passwords'] = [
+                'type'   => 'radio',
+                'value'  => $group->g_mod_change_passwords,
                 'values' => [1 => $y, 0 => $n],
-                'title' => \ForkBB\__('Change passwords label'),
-                'info' => \ForkBB\__('Change passwords help'),
+                'title'  => \ForkBB\__('Change passwords label'),
+                'info'   => \ForkBB\__('Change passwords help'),
             ];
-            $form['g_mod_promote_users'] = [
-                'type' => 'radio',
-                'value' => isset($data['g_mod_promote_users']) ? $data['g_mod_promote_users'] : 0,
+            $fieldset['g_mod_promote_users'] = [
+                'type'   => 'radio',
+                'value'  => $group->g_mod_promote_users,
                 'values' => [1 => $y, 0 => $n],
-                'title' => \ForkBB\__('Mod promote users label'),
-                'info' => \ForkBB\__('Mod promote users help'),
+                'title'  => \ForkBB\__('Mod promote users label'),
+                'info'   => \ForkBB\__('Mod promote users help'),
             ];
-            $form['g_mod_ban_users'] = [
-                'type' => 'radio',
-                'value' => isset($data['g_mod_ban_users']) ? $data['g_mod_ban_users'] : 0,
+            $fieldset['g_mod_ban_users'] = [
+                'type'   => 'radio',
+                'value'  => $group->g_mod_ban_users,
                 'values' => [1 => $y, 0 => $n],
-                'title' => \ForkBB\__('Ban users label'),
-                'info' => \ForkBB\__('Ban users help'),
+                'title'  => \ForkBB\__('Ban users label'),
+                'info'   => \ForkBB\__('Ban users help'),
             ];
         }
 
-        $form['g_read_board'] = [
-            'type' => 'radio',
-            'value' => isset($data['g_read_board']) ? $data['g_read_board'] : 0,
+        $fieldset['g_read_board'] = [
+            'type'   => 'radio',
+            'value'  => $group->g_read_board,
             'values' => [1 => $y, 0 => $n],
-            'title' => \ForkBB\__('Read board label'),
-            'info' => \ForkBB\__('Read board help'),
+            'title'  => \ForkBB\__('Read board label'),
+            'info'   => \ForkBB\__('Read board help'),
         ];
-        $form['g_view_users'] = [
-            'type' => 'radio',
-            'value' => isset($data['g_view_users']) ? $data['g_view_users'] : 0,
+        $fieldset['g_view_users'] = [
+            'type'   => 'radio',
+            'value'  => $group->g_view_users,
             'values' => [1 => $y, 0 => $n],
-            'title' => \ForkBB\__('View user info label'),
-            'info' => \ForkBB\__('View user info help'),
+            'title'  => \ForkBB\__('View user info label'),
+            'info'   => \ForkBB\__('View user info help'),
         ];
-        $form['g_post_replies'] = [
-            'type' => 'radio',
-            'value' => isset($data['g_post_replies']) ? $data['g_post_replies'] : 0,
+        $fieldset['g_post_replies'] = [
+            'type'   => 'radio',
+            'value'  => $group->g_post_replies,
             'values' => [1 => $y, 0 => $n],
-            'title' => \ForkBB\__('Post replies label'),
-            'info' => \ForkBB\__('Post replies help'),
+            'title'  => \ForkBB\__('Post replies label'),
+            'info'   => \ForkBB\__('Post replies help'),
         ];
-        $form['g_post_topics'] = [
-            'type' => 'radio',
-            'value' => isset($data['g_post_topics']) ? $data['g_post_topics'] : 0,
+        $fieldset['g_post_topics'] = [
+            'type'   => 'radio',
+            'value'  => $group->g_post_topics,
             'values' => [1 => $y, 0 => $n],
-            'title' => \ForkBB\__('Post topics label'),
-            'info' => \ForkBB\__('Post topics help'),
+            'title'  => \ForkBB\__('Post topics label'),
+            'info'   => \ForkBB\__('Post topics help'),
         ];
 
-        if ($id !== $this->c->GROUP_GUEST) {
-            $form['g_edit_posts'] = [
-                'type' => 'radio',
-                'value' => isset($data['g_edit_posts']) ? $data['g_edit_posts'] : 0,
+        if (! $group->groupGuest) {
+            $fieldset['g_edit_posts'] = [
+                'type'   => 'radio',
+                'value'  => $group->g_edit_posts,
                 'values' => [1 => $y, 0 => $n],
-                'title' => \ForkBB\__('Edit posts label'),
-                'info' => \ForkBB\__('Edit posts help'),
+                'title'  => \ForkBB\__('Edit posts label'),
+                'info'   => \ForkBB\__('Edit posts help'),
             ];
-            $form['g_delete_posts'] = [
-                'type' => 'radio',
-                'value' => isset($data['g_delete_posts']) ? $data['g_delete_posts'] : 0,
+            $fieldset['g_delete_posts'] = [
+                'type'   => 'radio',
+                'value'  => $group->g_delete_posts,
                 'values' => [1 => $y, 0 => $n],
-                'title' => \ForkBB\__('Delete posts label'),
-                'info' => \ForkBB\__('Delete posts help'),
+                'title'  => \ForkBB\__('Delete posts label'),
+                'info'   => \ForkBB\__('Delete posts help'),
             ];
-            $form['g_delete_topics'] = [
-                'type' => 'radio',
-                'value' => isset($data['g_delete_topics']) ? $data['g_delete_topics'] : 0,
+            $fieldset['g_delete_topics'] = [
+                'type'   => 'radio',
+                'value'  => $group->g_delete_topics,
                 'values' => [1 => $y, 0 => $n],
-                'title' => \ForkBB\__('Delete topics label'),
-                'info' => \ForkBB\__('Delete topics help'),
+                'title'  => \ForkBB\__('Delete topics label'),
+                'info'   => \ForkBB\__('Delete topics help'),
             ];
-            $form['g_set_title'] = [
-                'type' => 'radio',
-                'value' => isset($data['g_set_title']) ? $data['g_set_title'] : 0,
+            $fieldset['g_deledit_interval'] = [
+                'type'  => 'number',
+                'min'   => 0,
+                'max'   => 999999,
+                'value' => $group->g_deledit_interval,
+                'title' => \ForkBB\__('Delete-edit interval label'),
+                'info'  => \ForkBB\__('Delete-edit interval help'),
+            ];
+            $fieldset['g_set_title'] = [
+                'type'   => 'radio',
+                'value'  => $group->g_set_title,
                 'values' => [1 => $y, 0 => $n],
-                'title' => \ForkBB\__('Set own title label'),
-                'info' => \ForkBB\__('Set own title help'),
+                'title'  => \ForkBB\__('Set own title label'),
+                'info'   => \ForkBB\__('Set own title help'),
             ];
         }
 
-        $form['g_post_links'] = [
-            'type' => 'radio',
-            'value' => isset($data['g_post_links']) ? $data['g_post_links'] : 0,
+        $fieldset['g_post_links'] = [
+            'type'   => 'radio',
+            'value'  => $group->g_post_links,
             'values' => [1 => $y, 0 => $n],
-            'title' => \ForkBB\__('Post links label'),
-            'info' => \ForkBB\__('Post links help'),
+            'title'  => \ForkBB\__('Post links label'),
+            'info'   => \ForkBB\__('Post links help'),
         ];
-        $form['g_search'] = [
-            'type' => 'radio',
-            'value' => isset($data['g_search']) ? $data['g_search'] : 0,
+        $fieldset['g_search'] = [
+            'type'   => 'radio',
+            'value'  => $group->g_search,
             'values' => [1 => $y, 0 => $n],
-            'title' => \ForkBB\__('User search label'),
-            'info' => \ForkBB\__('User search help'),
+            'title'  => \ForkBB\__('User search label'),
+            'info'   => \ForkBB\__('User search help'),
         ];
-        $form['g_search_users'] = [
-            'type' => 'radio',
-            'value' => isset($data['g_search_users']) ? $data['g_search_users'] : 0,
+        $fieldset['g_search_users'] = [
+            'type'   => 'radio',
+            'value'  => $group->g_search_users,
             'values' => [1 => $y, 0 => $n],
-            'title' => \ForkBB\__('User list search label'),
-            'info' => \ForkBB\__('User list search help'),
+            'title'  => \ForkBB\__('User list search label'),
+            'info'   => \ForkBB\__('User list search help'),
         ];
 
-        if ($id !== $this->c->GROUP_GUEST) {
-            $form['g_send_email'] = [
-                'type' => 'radio',
-                'value' => isset($data['g_send_email']) ? $data['g_send_email'] : 0,
+        if (! $group->groupGuest) {
+            $fieldset['g_send_email'] = [
+                'type'   => 'radio',
+                'value'  => $group->g_send_email,
                 'values' => [1 => $y, 0 => $n],
-                'title' => \ForkBB\__('Send e-mails label'),
-                'info' => \ForkBB\__('Send e-mails help'),
+                'title'  => \ForkBB\__('Send e-mails label'),
+                'info'   => \ForkBB\__('Send e-mails help'),
             ];
         }
 
-        $form['g_post_flood'] = [
-            'type' => 'number',
-            'min' => 0,
-            'max' => 999999,
-            'value' => isset($data['g_post_flood']) ? $data['g_post_flood'] : 0,
+        $fieldset['g_post_flood'] = [
+            'type'  => 'number',
+            'min'   => 0,
+            'max'   => 999999,
+            'value' => $group->g_post_flood,
             'title' => \ForkBB\__('Post flood label'),
-            'info' => \ForkBB\__('Post flood help'),
+            'info'  => \ForkBB\__('Post flood help'),
         ];
-        $form['g_search_flood'] = [
-            'type' => 'number',
-            'min' => 0,
-            'max' => 999999,
-            'value' => isset($data['g_search_flood']) ? $data['g_search_flood'] : 0,
+        $fieldset['g_search_flood'] = [
+            'type'  => 'number',
+            'min'   => 0,
+            'max'   => 999999,
+            'value' => $group->g_search_flood,
             'title' => \ForkBB\__('Search flood label'),
-            'info' => \ForkBB\__('Search flood help'),
+            'info'  => \ForkBB\__('Search flood help'),
         ];
 
-        if ($id !== $this->c->GROUP_GUEST) {
-            $form['g_email_flood'] = [
-                'type' => 'number',
-                'min' => 0,
-                'max' => 999999,
-                'value' => isset($data['g_email_flood']) ? $data['g_email_flood'] : 0,
+        if (! $group->groupGuest) {
+            $fieldset['g_email_flood'] = [
+                'type'  => 'number',
+                'min'   => 0,
+                'max'   => 999999,
+                'value' => $group->g_email_flood,
                 'title' => \ForkBB\__('E-mail flood label'),
-                'info' => \ForkBB\__('E-mail flood help'),
+                'info'  => \ForkBB\__('E-mail flood help'),
             ];
-            $form['g_report_flood'] = [
-                'type' => 'number',
-                'min' => 0,
-                'max' => 999999,
-                'value' => isset($data['g_report_flood']) ? $data['g_report_flood'] : 0,
+            $fieldset['g_report_flood'] = [
+                'type'  => 'number',
+                'min'   => 0,
+                'max'   => 999999,
+                'value' => $group->g_report_flood,
                 'title' => \ForkBB\__('Report flood label'),
-                'info' => \ForkBB\__('Report flood help'),
+                'info'  => \ForkBB\__('Report flood help'),
+            ];
+        }
+
+        $form['sets'][] = [
+            'fields' => $fieldset,
+        ];
+
+        if (! empty($group->g_moderator)) {
+            $form['sets'][] = [
+                'info' => [
+                    'info1' => [
+                        'type'  => '', //????
+                        'value' => \ForkBB\__('Moderator info'),
+                    ],
+                ],
             ];
         }
 
         return $form;
+    }
+
+    /**
+     * Подготавливает данные для шаблона
+     *
+     * @param array $args
+     * 
+     * @return Page
+     */
+    public function delete(array $args)
+    {
+        $group = $this->c->groups->get((int) $args['id']);
+
+        if (null === $group || ! $group->canDelete) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $form = [
+            'action' => $this->c->Router->link('AdminGroupsDelete', $args),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('AdminGroupsDelete', $args),
+            ],
+            'sets'   => [],
+            'btns'   => [
+                'delete'  => [
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__('Delete group'),
+                    'accesskey' => 'd',
+                ],
+            ],
+        ];
+
+        $form['sets'][] = [
+            'info' => [
+                'info1' => [
+                    'type'  => '', //????
+                    'value' => \ForkBB\__('Confirm delete warn'),
+                ],
+#                'info2' => [
+#                    'type'  => '', //????
+#                    'value' => \ForkBB\__('Confirm delete info', $group->g_title),
+#                    'html'  => true,
+#                ],
+            ],
+        ];
+        $form['sets'][] = [
+            'fields' => [
+                'confirm' => [
+#                    'dl'      => 'full',
+                    'title'   => \ForkBB\__('Confirm delete'),
+                    'type'    => 'checkbox',
+                    'label'   => \ForkBB\__('I want to delete this group', $group->g_title),
+                    'value'   => '1',
+                    'checked' => false,
+                ],
+            ],
+        ];
+
+        $this->nameTpl = 'admin/group_delete';
+        $this->titles  = \ForkBB\__('Group delete');
+        $this->form    = $form;
+
+        return $this;
     }
 }

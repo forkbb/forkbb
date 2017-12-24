@@ -29,7 +29,7 @@
               </dd>
             </dl>
           </fieldset>
-          <p>
+          <p class="f-btns">
             <input class="f-btn" type="submit" name="register" value="{!! __('Sign up') !!}" tabindex="4">
           </p>
         </form>

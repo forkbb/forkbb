@@ -25,7 +25,6 @@ return [
     'JQUERY_LINK' => '//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js',
     'DEBUG' => 1,
     'MAINTENANCE_OFF' => false,
-    'GROUP_UNVERIFIED' => 0,
     'GROUP_ADMIN' => 1,
     'GROUP_MOD' => 2,
     'GROUP_GUEST' => 3,

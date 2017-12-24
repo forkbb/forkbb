@@ -57,20 +57,19 @@ class Save extends Action
      */
     public function insert(Post $post)
     {
-        $modified = $post->getModified();
-        if (null !== $post->id || in_array('id', $modified)) {
+        if (null !== $post->id) {
             throw new RuntimeException('The model has ID');
         }
-        $values = $post->getAttrs();
+        $attrs  = $post->getAttrs();
         $fileds = $this->c->dbMap->posts;
         $set = $set2 = $vars = [];
-        foreach ($modified as $name) {
-            if (! isset($fileds[$name])) {
+        foreach ($attrs as $key => $value) {
+            if (! isset($fileds[$key])) {
                 continue;
             }
-            $vars[] = $values[$name];
-            $set[] = $name;
-            $set2[] = '?' . $fileds[$name];
+            $vars[] = $value;
+            $set[]  = $key;
+            $set2[] = '?' . $fileds[$key];
         }
         if (empty($set)) {
             throw new RuntimeException('The model is empty');
