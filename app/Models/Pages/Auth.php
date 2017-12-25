@@ -47,6 +47,8 @@ class Auth extends Page
     {
         $this->c->Lang->load('auth');
 
+        $save = empty($args) || ! empty($args['_save']);
+
         if (! isset($args['_username'])) {
             $args['_username'] = '';
         }
@@ -66,7 +68,7 @@ class Auth extends Page
         $this->regLink    = $this->c->config->o_regs_allow == '1' ? $this->c->Router->link('Register') : null;
         $this->username   = $args['_username'];
         $this->redirect   = $args['_redirect'];
-        $this->save       = ! empty($args['_save']);
+        $this->save       = $save;
 
         return $this;
     }

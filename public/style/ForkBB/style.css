@@ -473,7 +473,8 @@ select {
 }
 
 .f-fdiv .f-child2 > input {
-  margin: 0 0.625rem 0 0;
+/*  margin: 0 0.625rem 0 0; */
+  margin-right: 0.625rem;
 }
 
 .f-fdiv .f-btns {
@@ -1521,9 +1522,14 @@ li + li .f-btn {
   border: 0;
 }
 
-.f-post-form .f-btn {
+.f-post-form .f-btn,
+.f-delete-group-form .f-btn {
   width: auto;
   display: inline;
+}
+
+.f-delete-group-form .f-btns {
+  text-align: center;
 }
 
 #id-message {

@@ -88,7 +88,7 @@ msgid "Move users subhead"
 msgstr "Move users currently in group"
 
 msgid "Move users info"
-msgstr "The group <strong>%s</strong> currently has <strong>%s</strong> members. Please select a group to which these members will be assigned upon deletion."
+msgstr "The group <b>%1$s</b> currently has <b>%2$s</b> members. Please select a group to which these members will be assigned upon deletion."
 
 msgid "Move users label"
 msgstr "Move users to"

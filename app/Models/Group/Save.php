@@ -40,7 +40,7 @@ class Save extends Action
             return $group;
         }
         $vars[] = $group->g_id;
-        $this->c->DB->query('UPDATE ::groups SET ' . implode(', ', $set) . ' WHERE id=?i', $vars);
+        $this->c->DB->query('UPDATE ::groups SET ' . implode(', ', $set) . ' WHERE g_id=?i', $vars);
         $group->resModified();
 
         return $group;

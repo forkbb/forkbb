@@ -154,18 +154,20 @@ class Groups extends Admin
             $marker          = 'AdminGroupsNew';
             $this->titles    = \ForkBB\__('Create new group');
             $this->titleForm = \ForkBB\__('Create new group');
+            $this->classForm = 'f-create-group-form';
         } else {
             $vars            = ['id' => $group->g_id];
             $marker          = 'AdminGroupsEdit';
             $this->titles    = \ForkBB\__('Edit group');
             $this->titleForm = \ForkBB\__('Edit group');
+            $this->classForm = 'f-edit-group-form';
         }
 
         if (isset($args['_data'])) {
             $group->replAttrs($args['_data']);
         }
 
-        $this->nameTpl = 'admin/group';
+        $this->nameTpl = 'admin/form';
         $this->form    = $this->viewForm($group, $marker, $vars);
 
         return $this;
@@ -298,10 +300,9 @@ class Groups extends Admin
         } else {
             $message = \ForkBB\__('Group edited redirect');
             $this->c->groups->update($group);
-            //????
-            if ($data['g_promote_next_group']) {
-                $vars = [':next' => $data['g_promote_next_group'], ':id' => $group->g_id, ':posts' => $data['g_promote_min_posts']];
-                $this->c->DB->exec('UPDATE ::users SET group_id=?i:next WHERE group_id=?i:id AND num_posts>=?i:posts', $vars);
+
+            if ($group->g_promote_min_posts) {
+                $this->c->users->promote($group);
             }
         }
 
@@ -606,6 +607,8 @@ class Groups extends Admin
             return $this->c->Message->message('Bad request');
         }
 
+        $count = $this->c->users->UsersNumber($group);
+
         $form = [
             'action' => $this->c->Router->link('AdminGroupsDelete', $args),
             'hidden' => [
@@ -618,26 +621,38 @@ class Groups extends Admin
                     'value'     => \ForkBB\__('Delete group'),
                     'accesskey' => 'd',
                 ],
+                'cancel'  => [
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__('Cancel'),
+                ],
             ],
         ];
 
-        $form['sets'][] = [
-            'info' => [
-                'info1' => [
-                    'type'  => '', //????
-                    'value' => \ForkBB\__('Confirm delete warn'),
+        if ($count) {
+            $groups = [];
+            foreach ($this->groupsList as $key => $cur) {
+                if ($key === $this->c->GROUP_GUEST || $key === $group->g_id) {
+                    continue;
+                }
+                $groups[$key] = $cur[0];
+            }
+
+            $form['sets'][] = [
+                'fields' => [
+                    'movegroup' => [
+                        'type'      => 'select',
+                        'options'   => $groups,
+                        'value'     => $this->c->config->o_default_user_group,
+                        'title'     => \ForkBB\__('Move users label'),
+                        'info'      => \ForkBB\__('Move users info', $group->g_title, $count),
+                    ],
                 ],
-#                'info2' => [
-#                    'type'  => '', //????
-#                    'value' => \ForkBB\__('Confirm delete info', $group->g_title),
-#                    'html'  => true,
-#                ],
-            ],
-        ];
+            ];
+        }
+
         $form['sets'][] = [
             'fields' => [
                 'confirm' => [
-#                    'dl'      => 'full',
                     'title'   => \ForkBB\__('Confirm delete'),
                     'type'    => 'checkbox',
                     'label'   => \ForkBB\__('I want to delete this group', $group->g_title),
@@ -646,11 +661,80 @@ class Groups extends Admin
                 ],
             ],
         ];
+        $form['sets'][] = [
+            'info' => [
+                'info1' => [
+                    'type'  => '', //????
+                    'value' => \ForkBB\__('Confirm delete warn'),
+                ],
+            ],
+        ];
 
-        $this->nameTpl = 'admin/group_delete';
-        $this->titles  = \ForkBB\__('Group delete');
-        $this->form    = $form;
+        $this->nameTpl   = 'admin/form';
+        $this->titles    = \ForkBB\__('Group delete');
+        $this->titleForm = \ForkBB\__('Group delete');
+        $this->classForm = 'f-delete-group-form';
+        $this->form      = $form;
 
         return $this;
+    }
+
+    /**
+     * Удаление группы
+     *
+     * @param array $args
+     * 
+     * @return Page
+     */
+    public function deletePost(array $args)
+    {
+        $group = $this->c->groups->get((int) $args['id']);
+
+        if (null === $group || ! $group->canDelete) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $count = $this->c->users->UsersNumber($group);
+        if ($count) {
+            $move   = 'required|integer|in:';
+            $groups = [];
+            foreach ($this->groupsList as $key => $cur) {
+                if ($key === $this->c->GROUP_GUEST || $key === $group->g_id) {
+                    continue;
+                }
+                $groups[$key] = $cur[0];
+            }
+            $move  .= implode(',', array_keys($groups));
+        } else {
+            $move   = 'absent';
+        }
+
+        $v = $this->c->Validator->setRules([
+            'token'     => 'token:AdminGroupsDelete',
+            'movegroup' => $move,
+            'confirm'   => 'integer',
+            'delete'    => 'string',
+            'cancel'    => 'string',
+        ])->setArguments([
+            'token' => $args,
+        ]);
+
+        if (! $v->validation($_POST) || null === $v->delete) {
+            return $this->c->Redirect->page('AdminGroups')->message(\ForkBB\__('Cancel redirect'));
+        } elseif ($v->confirm !== 1) {
+            return $this->c->Redirect->page('AdminGroups')->message(\ForkBB\__('No confirm redirect'));
+        }
+
+        $this->c->DB->beginTransaction();
+
+        if ($v->movegroup) {
+            $this->c->groups->delete($group, $this->c->groups->get($v->movegroup));
+        } else {
+            $this->c->groups->delete($group);
+        }
+
+        $this->c->DB->commit();
+
+        return $this->c->Redirect->page('AdminGroups')->message(\ForkBB\__('Group removed redirect'));
     }
 }
