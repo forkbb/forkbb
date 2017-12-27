@@ -1,20 +1,24 @@
 @extends ('layouts/admin')
-      <section class="f-admin">
+      <section class="f-admin f-welcome">
         <h2>{!! __('Forum admin head') !!}</h2>
         <div>
-          <p>{!! __('Welcome to admin') !!}</p>
-          <ul>
-            <li><span>{!! __('Welcome 1') !!}</span></li>
-            <li><span>{!! __('Welcome 2') !!}</span></li>
-            <li><span>{!! __('Welcome 3') !!}</span></li>
-            <li><span>{!! __('Welcome 4') !!}</span></li>
-            <li><span>{!! __('Welcome 5') !!}</span></li>
-            <li><span>{!! __('Welcome 6') !!}</span></li>
-            <li><span>{!! __('Welcome 7') !!}</span></li>
-            <li><span>{!! __('Welcome 8') !!}</span></li>
-            <li><span>{!! __('Welcome 9') !!}</span></li>
-          </ul>
+          <fieldset>
+            <p>{!! __('Welcome to admin') !!}</p>
+            <ul>
+              <li><span>{!! __('Welcome 1') !!}</span></li>
+              <li><span>{!! __('Welcome 2') !!}</span></li>
+              <li><span>{!! __('Welcome 3') !!}</span></li>
+              <li><span>{!! __('Welcome 4') !!}</span></li>
+              <li><span>{!! __('Welcome 5') !!}</span></li>
+              <li><span>{!! __('Welcome 6') !!}</span></li>
+              <li><span>{!! __('Welcome 7') !!}</span></li>
+              <li><span>{!! __('Welcome 8') !!}</span></li>
+              <li><span>{!! __('Welcome 9') !!}</span></li>
+            </ul>
+          </fieldset>
         </div>
+      </section>
+      <section class="f-admin">
         <h2>{!! __('About head') !!}</h2>
         <div class="f-fdiv">
           <fieldset>

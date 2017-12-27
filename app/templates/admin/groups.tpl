@@ -15,19 +15,21 @@
 @endif
         </div>
       </section>
-      <section class="f-admin">
+      <section class="f-admin f-grlist">
         <h2>{!! __('Edit groups subhead') !!}</h2>
         <div>
-          <p>{!! __('Edit groups info') !!}</p>
-          <ol class="f-grlist">
+          <fieldset>
+            <p>{!! __('Edit groups info') !!}</p>
+            <ol>
 @foreach ($p->groupsList as $cur)
-            <li>
-              <a href="{!! $cur[1] !!}">{{ $cur[0] }}</a>
+              <li>
+                <a href="{!! $cur[1] !!}">{{ $cur[0] }}</a>
   @if ($cur[2])
-              <a class="f-btn" href="{!! $cur[2] !!}">{!! __('Delete link') !!}</a>
+                <a class="f-btn" href="{!! $cur[2] !!}">{!! __('Delete link') !!}</a>
   @endif
-            </li>
+              </li>
 @endforeach
-          </ol>
+            </ol>
+          </fieldset>
         </div>
       </section>

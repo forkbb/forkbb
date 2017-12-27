@@ -110,7 +110,7 @@ class Auth extends Page
      * @param Validator $v
      * @param string $password
      * 
-     * @return array
+     * @return string
      */
     public function vLoginProcess(Validator $v, $password)
     {
@@ -244,7 +244,7 @@ class Auth extends Page
      * @param Validator $v
      * @param string $email
      * 
-     * @return array
+     * @return string
      */
     public function vCheckEmail(Validator $v, $email)
     {

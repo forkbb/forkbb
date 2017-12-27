@@ -445,6 +445,10 @@ select {
   display: inline-block;
 }
 
+.f-field-block .f-label {
+  display: block;
+}
+
 .f-fdiv .f-label > input {
   margin-left: 0;
   margin-right: 0.3125rem;
@@ -452,6 +456,10 @@ select {
 
 .f-fdiv .f-label + .f-label {
   margin-left: 0.625rem;
+}
+
+.f-field-block .f-label + .f-label {
+  margin-left: 0;
 }
 
 .f-fdiv .f-child1,
@@ -847,15 +855,20 @@ select {
   border: 0.0625rem solid #AA7939;
 }
 
-.f-admin > div > p {
+.f-welcome p,
+.f-grlist p {
   padding: 0.625rem;
   text-align: justify;
 }
 
-.f-admin > div > ul {
-  padding: 0.625rem;
+.f-welcome ul {
+  padding: 0 0.625rem 0.625rem 0.625rem;
   list-style-type: circle;
   list-style-position: inside;
+}
+
+.f-grlist ol {
+  padding: 0 0.625rem 0.625rem 0.625rem;
 }
 
 .f-admin dl {
@@ -891,16 +904,12 @@ select {
   font-size: 1rem;
 }
 
-.f-grlist {
-  padding: 0.625rem;
-}
-
-.f-grlist > li {
+.f-grlist li {
   padding: 0.625rem 0;
   border-bottom: 0.0625rem dotted #AA7939;
 }
 
-.f-grlist > li:first-child {
+.f-grlist li:first-child {
   border-top: 0.0625rem dotted #AA7939;
 }
 
@@ -1502,7 +1511,8 @@ li + li .f-btn {
   background-color: #F8F4E3;
 }
 
-.f-post-form legend {
+.f-post-form legend,
+.f-form legend {
   width: 100%;
   padding: 0.625rem 0 0.3125rem 0;
   margin-bottom: 0.625rem;
@@ -1523,12 +1533,12 @@ li + li .f-btn {
 }
 
 .f-post-form .f-btn,
-.f-delete-group-form .f-btn {
+.f-deletegroup-form .f-btn {
   width: auto;
   display: inline;
 }
 
-.f-delete-group-form .f-btns {
+.f-deletegroup-form .f-btns {
   text-align: center;
 }
 

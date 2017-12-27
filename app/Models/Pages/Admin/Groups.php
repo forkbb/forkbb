@@ -3,7 +3,6 @@
 namespace ForkBB\Models\Pages\Admin;
 
 use ForkBB\Core\Container;
-use ForkBB\Core\Validator;
 use ForkBB\Models\Group\Model as Group;
 use ForkBB\Models\Pages\Admin;
 
@@ -63,7 +62,7 @@ class Groups extends Admin
                         'value'     => $this->c->config->o_default_user_group,
                         'title'     => \ForkBB\__('New group label'),
                         'info'      => \ForkBB\__('New group help'),
-                        'autofocus' => true,
+#                       'autofocus' => true,
                     ],
                 ],
             ]],
@@ -108,7 +107,7 @@ class Groups extends Admin
      *
      * @return Page
      */
-    public function defaultPost()
+    public function defaultSet()
     {
         $v = $this->c->Validator->setRules([
             'token'        => 'token:AdminGroupsDefault',
@@ -127,61 +126,15 @@ class Groups extends Admin
     }
 
     /**
-     * Подготавливает данные для шаблона редактирования группы
-     *
-     * @param array $args
-     *
-     * @return Page
-     */
-    public function edit(array $args)
-    {
-        if (isset($args['base'])) {
-            $group = $this->c->groups->get((int) $args['base']);
-        } else {
-            $group = $this->c->groups->get((int) $args['id']);
-        }
-
-        if (null === $group) {
-            return $this->c->Message->message('Bad request');
-        }
-
-        $group = clone $group;
-
-        if (isset($args['base'])) {
-            $vars            = ['base' => $group->g_id];
-            $group->g_title  = '';
-            $group->g_id     = null;
-            $marker          = 'AdminGroupsNew';
-            $this->titles    = \ForkBB\__('Create new group');
-            $this->titleForm = \ForkBB\__('Create new group');
-            $this->classForm = 'f-create-group-form';
-        } else {
-            $vars            = ['id' => $group->g_id];
-            $marker          = 'AdminGroupsEdit';
-            $this->titles    = \ForkBB\__('Edit group');
-            $this->titleForm = \ForkBB\__('Edit group');
-            $this->classForm = 'f-edit-group-form';
-        }
-
-        if (isset($args['_data'])) {
-            $group->replAttrs($args['_data']);
-        }
-
-        $this->nameTpl = 'admin/form';
-        $this->form    = $this->viewForm($group, $marker, $vars);
-
-        return $this;
-    }
-
-    /**
+     * Редактирование группы
      * Создание новой группы
-     * Запись данных по новой/измененной группе
      *
      * @param array $args
+     * @param string $method
      *
      * @return Page
      */
-    public function editPost(array $args)
+    public function edit(array $args, $method)
     {
         // начало создания новой группы
         if (empty($args['id']) && empty($args['base'])) {
@@ -195,84 +148,110 @@ class Groups extends Admin
             if (! $v->validation($_POST)) {
                 $this->fIswev = $v->getErrors();
                 return $this->view();
-            } else {
-                return $this->edit(['base' => $v->basegroup]);
             }
+
+            $gid  = $v->basegroup;
+            $next = false;
+        // продолжение редактирования/создания
+        } else {
+            $gid  = (int) (isset($args['id']) ? $args['id'] : $args['base']);
+            $next = true;
         }
 
-        if (isset($args['base'])) {
-            $group = $this->c->groups->get((int) $args['base']);
-        } else {
-            $group = $this->c->groups->get((int) $args['id']);
-        }
+        $group = $this->c->groups->get($gid);
 
         if (null === $group) {
             return $this->c->Message->message('Bad request');
         }
 
-        $group = clone $group;
+        $group   = clone $group;
+        $notNext = $this->c->GROUP_ADMIN . ',' . $this->c->GROUP_GUEST;
 
-        $next = $this->c->GROUP_ADMIN . ',' . $this->c->GROUP_GUEST;
-
-        if (isset($args['base'])) {
-            $marker      = 'AdminGroupsNew';
-            $group->g_id = null;
+        if (isset($args['id'])) {
+            $marker          = 'AdminGroupsEdit';
+            $vars            = ['id' => $group->g_id];
+            $notNext        .= ',' . $group->g_id;
+            $this->titles    = \ForkBB\__('Edit group');
+            $this->titleForm = \ForkBB\__('Edit group');
+            $this->classForm = 'editgroup';
         } else {
-            $marker = 'AdminGroupsEdit';
-            $next  .= ',' . $group->g_id;
+            $marker          = 'AdminGroupsNew';
+            $vars            = ['base' => $group->g_id];
+            $group->g_title  = '';
+            $group->g_id     = null;
+            $this->titles    = \ForkBB\__('Create new group');
+            $this->titleForm = \ForkBB\__('Create new group');
+            $this->classForm = 'creategroup';
         }
 
-        $reserve = [];
-        foreach ($this->groupsList as $key => $cur) {
-            if ($group->g_id !== $key) {
-                $reserve[] = $cur[0];
+        if ('POST' === $method && $next) {
+            $reserve = [];
+            foreach ($this->groupsList as $key => $cur) {
+                if ($group->g_id !== $key) {
+                    $reserve[] = $cur[0];
+                }
             }
-        }
 
-        $v = $this->c->Validator->setRules([
-            'token'                  => 'token:' . $marker,
-            'g_title'                => 'required|string:trim|max:50|not_in:' . implode(',', $reserve),
-            'g_user_title'           => 'string:trim|max:50',
-            'g_promote_next_group'   => 'integer|min:0|not_in:' . $next,
-            'g_promote_min_posts'    => 'integer|min:0|max:9999999999',
-            'g_moderator'            => 'integer|in:0,1',
-            'g_mod_edit_users'       => 'integer|in:0,1',
-            'g_mod_rename_users'     => 'integer|in:0,1',
-            'g_mod_change_passwords' => 'integer|in:0,1',
-            'g_mod_promote_users'    => 'integer|in:0,1',
-            'g_mod_ban_users'        => 'integer|in:0,1',
-            'g_read_board'           => 'integer|in:0,1',
-            'g_view_users'           => 'integer|in:0,1',
-            'g_post_replies'         => 'integer|in:0,1',
-            'g_post_topics'          => 'integer|in:0,1',
-            'g_edit_posts'           => 'integer|in:0,1',
-            'g_delete_posts'         => 'integer|in:0,1',
-            'g_delete_topics'        => 'integer|in:0,1',
-            'g_deledit_interval'     => 'integer|min:0|max:999999',
-            'g_set_title'            => 'integer|in:0,1',
-            'g_post_links'           => 'integer|in:0,1',
-            'g_search'               => 'integer|in:0,1',
-            'g_search_users'         => 'integer|in:0,1',
-            'g_send_email'           => 'integer|in:0,1',
-            'g_post_flood'           => 'integer|min:0|max:999999',
-            'g_search_flood'         => 'integer|min:0|max:999999',
-            'g_email_flood'          => 'integer|min:0|max:999999',
-            'g_report_flood'         => 'integer|min:0|max:999999',
-        ])->setArguments([
-            'token' => $args,
-        ])->setMessages([
-            'g_title.required' => 'You must enter a group title',
-            'g_title.not_in'   => 'Title already exists',
-        ]);
+            $v = $this->c->Validator->setRules([
+                'token'                  => 'token:' . $marker,
+                'g_title'                => 'required|string:trim|max:50|not_in:' . implode(',', $reserve),
+                'g_user_title'           => 'string:trim|max:50',
+                'g_promote_next_group'   => 'integer|min:0|not_in:' . $notNext,
+                'g_promote_min_posts'    => 'integer|min:0|max:9999999999',
+                'g_moderator'            => 'integer|in:0,1',
+                'g_mod_edit_users'       => 'integer|in:0,1',
+                'g_mod_rename_users'     => 'integer|in:0,1',
+                'g_mod_change_passwords' => 'integer|in:0,1',
+                'g_mod_promote_users'    => 'integer|in:0,1',
+                'g_mod_ban_users'        => 'integer|in:0,1',
+                'g_read_board'           => 'integer|in:0,1',
+                'g_view_users'           => 'integer|in:0,1',
+                'g_post_replies'         => 'integer|in:0,1',
+                'g_post_topics'          => 'integer|in:0,1',
+                'g_edit_posts'           => 'integer|in:0,1',
+                'g_delete_posts'         => 'integer|in:0,1',
+                'g_delete_topics'        => 'integer|in:0,1',
+                'g_deledit_interval'     => 'integer|min:0|max:999999',
+                'g_set_title'            => 'integer|in:0,1',
+                'g_post_links'           => 'integer|in:0,1',
+                'g_search'               => 'integer|in:0,1',
+                'g_search_users'         => 'integer|in:0,1',
+                'g_send_email'           => 'integer|in:0,1',
+                'g_post_flood'           => 'integer|min:0|max:999999',
+                'g_search_flood'         => 'integer|min:0|max:999999',
+                'g_email_flood'          => 'integer|min:0|max:999999',
+                'g_report_flood'         => 'integer|min:0|max:999999',
+            ])->setArguments([
+                'token' => $vars,
+            ])->setMessages([
+                'g_title.required' => 'You must enter a group title',
+                'g_title.not_in'   => 'Title already exists',
+            ]);
 
-        if (! $v->validation($_POST)) {
+            if ($v->validation($_POST)) {
+                return $this->save($group, $v->getData());
+            }
+
             $this->fIswev  = $v->getErrors();
-            $args['_data'] = $v->getData();
-            return $this->edit($args);
+            $group->replAttrs($v->getData());
         }
 
-        $data = $v->getData();
+        $this->nameTpl = 'admin/form';
+        $this->form    = $this->viewForm($group, $marker, $vars);
 
+        return $this;
+    }
+
+    /**
+     * Запись данных по новой/измененной группе
+     *
+     * @param Group $group
+     * @param array $args
+     *
+     * @return Page
+     */
+    public function save(Group $group, array $data)
+    {
         if (empty($data['g_moderator'])) {
             $data['g_mod_edit_users']       = 0;
             $data['g_mod_rename_users']     = 0;
@@ -296,7 +275,7 @@ class Groups extends Admin
             $newId   = $this->c->groups->insert($group);
             //????
             $this->c->DB->exec('INSERT INTO ::forum_perms (group_id, forum_id, read_forum, post_replies, post_topics) SELECT ?i:new, forum_id, read_forum, post_replies, post_topics FROM ::forum_perms WHERE group_id=?i:old', [':new' => $newId, ':old' => $args['base']]);
-
+            //????
         } else {
             $message = \ForkBB\__('Group edited redirect');
             $this->c->groups->update($group);
@@ -333,7 +312,7 @@ class Groups extends Admin
             'btns'   => [
                 'submit'  => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Submit'),
+                    'value'     => \ForkBB\__('Save'),
                     'accesskey' => 's',
                 ],
             ],
@@ -346,7 +325,7 @@ class Groups extends Admin
             'value'     => $group->g_title,
             'title'     => \ForkBB\__('Group title label'),
             'required'  => true,
-            'autofocus' => true,
+#           'autofocus' => true,
         ];
         $fieldset['g_user_title'] = [
             'type'      => 'text',
@@ -593,13 +572,14 @@ class Groups extends Admin
     }
 
     /**
-     * Подготавливает данные для шаблона
+     * Удаление группы
      *
      * @param array $args
-     * 
+     * @param string $method
+     *
      * @return Page
      */
-    public function delete(array $args)
+    public function delete(array $args, $method)
     {
         $group = $this->c->groups->get((int) $args['id']);
 
@@ -608,6 +588,49 @@ class Groups extends Admin
         }
 
         $count = $this->c->users->UsersNumber($group);
+        if ($count) {
+            $move   = 'required|integer|in:';
+            $groups = [];
+            foreach ($this->groupsList as $key => $cur) {
+                if ($key === $this->c->GROUP_GUEST || $key === $group->g_id) {
+                    continue;
+                }
+                $groups[$key] = $cur[0];
+            }
+            $move  .= implode(',', array_keys($groups));
+        } else {
+            $move   = 'absent';
+        }
+
+        if ('POST' === $method) {
+            $v = $this->c->Validator->setRules([
+                'token'     => 'token:AdminGroupsDelete',
+                'movegroup' => $move,
+                'confirm'   => 'integer',
+                'delete'    => 'string',
+                'cancel'    => 'string',
+            ])->setArguments([
+                'token' => $args,
+            ]);
+
+            if (! $v->validation($_POST) || null === $v->delete) {
+                return $this->c->Redirect->page('AdminGroups')->message(\ForkBB\__('Cancel redirect'));
+            } elseif ($v->confirm !== 1) {
+                return $this->c->Redirect->page('AdminGroups')->message(\ForkBB\__('No confirm redirect'));
+            }
+
+            $this->c->DB->beginTransaction();
+
+            if ($v->movegroup) {
+                $this->c->groups->delete($group, $this->c->groups->get($v->movegroup));
+            } else {
+                $this->c->groups->delete($group);
+            }
+
+            $this->c->DB->commit();
+
+            return $this->c->Redirect->page('AdminGroups')->message(\ForkBB\__('Group removed redirect'));
+        }
 
         $form = [
             'action' => $this->c->Router->link('AdminGroupsDelete', $args),
@@ -629,14 +652,6 @@ class Groups extends Admin
         ];
 
         if ($count) {
-            $groups = [];
-            foreach ($this->groupsList as $key => $cur) {
-                if ($key === $this->c->GROUP_GUEST || $key === $group->g_id) {
-                    continue;
-                }
-                $groups[$key] = $cur[0];
-            }
-
             $form['sets'][] = [
                 'fields' => [
                     'movegroup' => [
@@ -673,68 +688,9 @@ class Groups extends Admin
         $this->nameTpl   = 'admin/form';
         $this->titles    = \ForkBB\__('Group delete');
         $this->titleForm = \ForkBB\__('Group delete');
-        $this->classForm = 'f-delete-group-form';
+        $this->classForm = 'deletegroup';
         $this->form      = $form;
 
         return $this;
-    }
-
-    /**
-     * Удаление группы
-     *
-     * @param array $args
-     * 
-     * @return Page
-     */
-    public function deletePost(array $args)
-    {
-        $group = $this->c->groups->get((int) $args['id']);
-
-        if (null === $group || ! $group->canDelete) {
-            return $this->c->Message->message('Bad request');
-        }
-
-        $count = $this->c->users->UsersNumber($group);
-        if ($count) {
-            $move   = 'required|integer|in:';
-            $groups = [];
-            foreach ($this->groupsList as $key => $cur) {
-                if ($key === $this->c->GROUP_GUEST || $key === $group->g_id) {
-                    continue;
-                }
-                $groups[$key] = $cur[0];
-            }
-            $move  .= implode(',', array_keys($groups));
-        } else {
-            $move   = 'absent';
-        }
-
-        $v = $this->c->Validator->setRules([
-            'token'     => 'token:AdminGroupsDelete',
-            'movegroup' => $move,
-            'confirm'   => 'integer',
-            'delete'    => 'string',
-            'cancel'    => 'string',
-        ])->setArguments([
-            'token' => $args,
-        ]);
-
-        if (! $v->validation($_POST) || null === $v->delete) {
-            return $this->c->Redirect->page('AdminGroups')->message(\ForkBB\__('Cancel redirect'));
-        } elseif ($v->confirm !== 1) {
-            return $this->c->Redirect->page('AdminGroups')->message(\ForkBB\__('No confirm redirect'));
-        }
-
-        $this->c->DB->beginTransaction();
-
-        if ($v->movegroup) {
-            $this->c->groups->delete($group, $this->c->groups->get($v->movegroup));
-        } else {
-            $this->c->groups->delete($group);
-        }
-
-        $this->c->DB->commit();
-
-        return $this->c->Redirect->page('AdminGroups')->message(\ForkBB\__('Group removed redirect'));
     }
 }

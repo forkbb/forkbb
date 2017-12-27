@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
+use ForkBB\Models\Topic\Model as ModelTopic;
 
 class Topic extends Page
 {
@@ -72,11 +73,11 @@ class Topic extends Page
 
     /**
      * @param string $type
-     * @param Models\Topic $topic
+     * @param ModelTopic $topic
      *
      * @param Page
      */
-    protected function go($type, $topic)
+    protected function go($type, ModelTopic $topic)
     {
         switch ($type) {
             case 'new':

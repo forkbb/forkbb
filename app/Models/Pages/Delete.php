@@ -9,13 +9,14 @@ class Delete extends Page
     use CrumbTrait;
 
     /**
-     * Подготовка данных для шаблона удаления сообщения/темы
+     * Удаление сообщения/темы
      *
      * @param array $args
+     * @param string $method
      *
      * @return Page
      */
-    public function delete(array $args)
+    public function delete(array $args, $method)
     {
         $post = $this->c->posts->load((int) $args['id']);
 
@@ -27,6 +28,37 @@ class Delete extends Page
         $deleteTopic = $post->id === $topic->first_post_id;
 
         $this->c->Lang->load('delete');
+
+        if ($method === 'POST') {
+            $v = $this->c->Validator->setRules([
+                'token'   => 'token:DeletePost',
+                'confirm' => 'integer',
+                'delete'  => 'string',
+                'cancel'  => 'string',
+            ])->setArguments([
+                'token' => $args,
+            ]);
+    
+            if (! $v->validation($_POST) || null === $v->delete) {
+                return $this->c->Redirect->page('ViewPost', $args)->message(\ForkBB\__('Cancel redirect'));
+            } elseif ($v->confirm !== 1) {
+                return $this->c->Redirect->page('ViewPost', $args)->message(\ForkBB\__('No confirm redirect'));
+            }
+    
+            $this->c->DB->beginTransaction();
+    
+            if ($deleteTopic) {
+                $redirect = $this->c->Redirect->page('Forum', ['id' => $topic->forum_id])->message(\ForkBB\__('Topic del redirect'));
+                $this->c->topics->delete($topic);
+            } else {
+                $redirect = $this->c->Redirect->page('ViewPost', ['id' => $this->c->posts->previousPost($post)])->message(\ForkBB\__('Post del redirect'));
+                $this->c->posts->delete($post);
+            }
+    
+            $this->c->DB->commit();
+    
+            return $redirect;
+        }
 
         $this->nameTpl    = 'post';
         $this->onlinePos  = 'topic-' . $topic->id;
@@ -80,55 +112,5 @@ class Delete extends Page
         ];
 
         return $this;
-    }
-
-    /**
-     * Обработка данных от формы удаления сообщения/темы
-     *
-     * @param array $args
-     *
-     * @return Page
-     */
-    public function deletePost(array $args)
-    {
-        $post = $this->c->posts->load((int) $args['id']);
-
-        if (empty($post) || ! $post->canDelete) {
-            return $this->c->Message->message('Bad request');
-        }
-
-        $topic       = $post->parent;
-        $deleteTopic = $post->id === $topic->first_post_id;
-
-        $this->c->Lang->load('delete');
-
-        $v = $this->c->Validator->setRules([
-            'token'   => 'token:DeletePost',
-            'confirm' => 'integer',
-            'delete'  => 'string',
-            'cancel'  => 'string',
-        ])->setArguments([
-            'token' => $args,
-        ]);
-
-        if (! $v->validation($_POST) || null === $v->delete) {
-            return $this->c->Redirect->page('ViewPost', $args)->message(\ForkBB\__('Cancel redirect'));
-        } elseif ($v->confirm !== 1) {
-            return $this->c->Redirect->page('ViewPost', $args)->message(\ForkBB\__('No confirm redirect'));
-        }
-
-        $this->c->DB->beginTransaction();
-
-        if ($deleteTopic) {
-            $redirect = $this->c->Redirect->page('Forum', ['id' => $topic->forum_id])->message(\ForkBB\__('Topic del redirect'));
-            $this->c->topics->delete($topic);
-        } else {
-            $redirect = $this->c->Redirect->page('ViewPost', ['id' => $this->c->posts->previousPost($post)])->message(\ForkBB\__('Post del redirect'));
-            $this->c->posts->delete($post);
-        }
-
-        $this->c->DB->commit();
-
-        return $redirect;
     }
 }

@@ -13,13 +13,14 @@ class Edit extends Page
     use PostValidatorTrait;
 
     /**
-     * Подготовка данных для шаблона редактироания сообщения
+     * Редактирование сообщения
      * 
      * @param array $args
+     * @param string $method
      * 
      * @return Page
      */
-    public function edit(array $args)
+    public function edit(array $args, $method)
     {
         $post = $this->c->posts->load((int) $args['id']);
 
@@ -30,8 +31,23 @@ class Edit extends Page
         $topic       = $post->parent;
         $editSubject = $post->id === $topic->first_post_id;
 
-        if (! isset($args['_vars'])) {
-            $args['_vars'] = [
+        $this->c->Lang->load('post');
+
+        if ($method === 'POST') {
+            $v = $this->messageValidator($topic, 'EditPost', $args, true, $editSubject);
+
+            if ($v->validation($_POST) && null === $v->preview) {
+                return $this->endEdit($post, $v);
+            }
+
+            $this->fIswev  = $v->getErrors();
+            $args['_vars'] = $v->getData(); //????
+
+            if (null !== $v->preview && ! $v->getErrors()) {
+                $this->previewHtml = $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies);
+            }
+        } else {
+            $args['_vars'] = [ //????
                 'message'      => $post->message,
                 'subject'      => $topic->subject,
                 'hide_smilies' => $post->hide_smilies,
@@ -41,8 +57,6 @@ class Edit extends Page
             ];
         }
 
-        $this->c->Lang->load('post');
-        
         $this->nameTpl   = 'post';
         $this->onlinePos = 'topic-' . $topic->id;
         $this->canonical = $post->linkEdit;
@@ -52,42 +66,6 @@ class Edit extends Page
         $this->form      = $this->messageForm($post, 'EditPost', $args, true, $editSubject);
                 
         return $this;
-    }
-
-    /**
-     * Обработка данных от формы редактирования сообщения
-     * 
-     * @param array $args
-     * 
-     * @return Page
-     */
-    public function editPost(array $args)
-    {
-        $post = $this->c->posts->load((int) $args['id']);
-
-        if (empty($post) || ! $post->canEdit) {
-            return $this->c->Message->message('Bad request');
-        }
-
-        $topic       = $post->parent;
-        $editSubject = $post->id === $topic->first_post_id;
-
-        $this->c->Lang->load('post');
-
-        $v = $this->messageValidator($topic, 'EditPost', $args, true, $editSubject);
-
-        if ($v->validation($_POST) && null === $v->preview) {
-            return $this->endEdit($post, $v);
-        }
-
-        $this->fIswev  = $v->getErrors();
-        $args['_vars'] = $v->getData();
-
-        if (null !== $v->preview && ! $v->getErrors()) {
-            $this->previewHtml = $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies);
-        }
-
-        return $this->edit($args, $post);
     }
 
     /**

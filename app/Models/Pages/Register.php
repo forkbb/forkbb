@@ -68,7 +68,7 @@ class Register extends Page
      * @param Validator $v
      * @param string $email
      * 
-     * @return array
+     * @return string
      */
     public function vCheckEmail(Validator $v, $email)
     {
@@ -91,7 +91,7 @@ class Register extends Page
      * @param Validator $v
      * @param string $username
      * 
-     * @return array
+     * @return string
      */
     public function vCheckUsername(Validator $v, $username)
     {

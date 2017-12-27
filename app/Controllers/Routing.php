@@ -80,23 +80,20 @@ class Routing
             }
 
             // разделы
-            $r->add('GET',  '/forum/{id:[1-9]\d*}/{name}[/{page:[1-9]\d*}]', 'Forum:view', 'Forum');
-            $r->add('GET',  '/forum/{id:[1-9]\d*}/new/topic', 'Post:newTopic', 'NewTopic');
-            $r->add('POST', '/forum/{id:[1-9]\d*}/new/topic', 'Post:newTopicPost');
+            $r->add('GET',           '/forum/{id:[1-9]\d*}/{name}[/{page:[1-9]\d*}]', 'Forum:view',    'Forum'   );
+            $r->add(['GET', 'POST'], '/forum/{id:[1-9]\d*}/new/topic',                'Post:newTopic', 'NewTopic');
             // темы
-            $r->add('GET',  '/topic/{id:[1-9]\d*}/{name}[/{page:[1-9]\d*}]', 'Topic:viewTopic', 'Topic');
-            $r->add('GET',  '/topic/{id:[1-9]\d*}/view/new', 'Topic:viewNew', 'TopicViewNew');
-            $r->add('GET',  '/topic/{id:[1-9]\d*}/view/unread', 'Topic:viewUnread', 'TopicViewUnread');
-            $r->add('GET',  '/topic/{id:[1-9]\d*}/view/last', 'Topic:viewLast', 'TopicViewLast');
-            $r->add('GET',  '/topic/{id:[1-9]\d*}/new/reply[/{quote:[1-9]\d*}]', 'Post:newReply', 'NewReply');
-            $r->add('POST', '/topic/{id:[1-9]\d*}/new/reply', 'Post:newReplyPost');
+            $r->add('GET',  '/topic/{id:[1-9]\d*}/{name}[/{page:[1-9]\d*}]',     'Topic:viewTopic',  'Topic'          );
+            $r->add('GET',  '/topic/{id:[1-9]\d*}/view/new',                     'Topic:viewNew',    'TopicViewNew'   );
+            $r->add('GET',  '/topic/{id:[1-9]\d*}/view/unread',                  'Topic:viewUnread', 'TopicViewUnread');
+            $r->add('GET',  '/topic/{id:[1-9]\d*}/view/last',                    'Topic:viewLast',   'TopicViewLast'  );
+            $r->add('GET',  '/topic/{id:[1-9]\d*}/new/reply[/{quote:[1-9]\d*}]', 'Post:newReply',    'NewReply'       );
+            $r->add('POST', '/topic/{id:[1-9]\d*}/new/reply',                    'Post:newReply'                      );
             // сообщения
-            $r->add('GET',  '/post/{id:[1-9]\d*}#p{id}', 'Topic:viewPost', 'ViewPost');
-            $r->add('GET',  '/post/{id:[1-9]\d*}/edit', 'Edit:edit', 'EditPost');
-            $r->add('POST', '/post/{id:[1-9]\d*}/edit', 'Edit:editPost');
-            $r->add('GET',  '/post/{id:[1-9]\d*}/delete', 'Delete:delete', 'DeletePost');
-            $r->add('POST', '/post/{id:[1-9]\d*}/delete', 'Delete:deletePost');
-            $r->add('GET',  '/post/{id:[1-9]\d*}/report', 'Report:report', 'ReportPost');
+            $r->add('GET',           '/post/{id:[1-9]\d*}#p{id}',  'Topic:viewPost', 'ViewPost'  );
+            $r->add(['GET', 'POST'], '/post/{id:[1-9]\d*}/edit',   'Edit:edit',      'EditPost'  );
+            $r->add(['GET', 'POST'], '/post/{id:[1-9]\d*}/delete', 'Delete:delete',  'DeletePost');
+            $r->add('GET',           '/post/{id:[1-9]\d*}/report', 'Report:report',  'ReportPost');
 
         }
         // админ и модератор
@@ -106,29 +103,31 @@ class Routing
         }
         // только админ
         if ($user->isAdmin) {
-            $r->add('GET',  '/admin/statistics/info', 'AdminStatistics:info', 'AdminInfo');
-            $r->add('GET',  '/admin/groups', 'AdminGroups:view', 'AdminGroups');
-            $r->add('POST', '/admin/groups/new[/{base:[1-9]\d*}]', 'AdminGroups:editPost', 'AdminGroupsNew');
-            $r->add('POST', '/admin/groups/default', 'AdminGroups:defaultPost', 'AdminGroupsDefault');
-            $r->add('GET',  '/admin/groups/{id:[1-9]\d*}/edit', 'AdminGroups:edit', 'AdminGroupsEdit');
-            $r->add('POST', '/admin/groups/{id:[1-9]\d*}/edit', 'AdminGroups:editPost');
-            $r->add('GET',  '/admin/groups/{id:[1-9]\d*}/delete', 'AdminGroups:delete', 'AdminGroupsDelete');
-            $r->add('POST', '/admin/groups/{id:[1-9]\d*}/delete', 'AdminGroups:deletePost');
+            $r->add('GET',           '/admin/statistics/info',              'AdminStatistics:info',   'AdminInfo'         );
+            $r->add(['GET', 'POST'], '/admin/options',                      'AdminOptions:edit',      'AdminOptions'      );
+            $r->add('GET',           '/admin/groups',                       'AdminGroups:view',       'AdminGroups'       );
+            $r->add('POST',          '/admin/groups/default',               'AdminGroups:defaultSet', 'AdminGroupsDefault');
+            $r->add('POST',          '/admin/groups/new[/{base:[1-9]\d*}]', 'AdminGroups:edit',       'AdminGroupsNew'    );
+            $r->add(['GET', 'POST'], '/admin/groups/{id:[1-9]\d*}/edit',    'AdminGroups:edit',       'AdminGroupsEdit'   );
+            $r->add(['GET', 'POST'], '/admin/groups/{id:[1-9]\d*}/delete',  'AdminGroups:delete',     'AdminGroupsDelete' );
+            $r->add('GET',           '/admin/censoring',                    'AdminCensoring:view',    'AdminCensoring'    );
+            
         }
 
         $uri = $_SERVER['REQUEST_URI'];
         if (($pos = strpos($uri, '?')) !== false) {
             $uri = substr($uri, 0, $pos);
         }
-        $uri = rawurldecode($uri);
+        $uri    = rawurldecode($uri);
+        $method = $_SERVER['REQUEST_METHOD'];
 
-        $route = $r->route($_SERVER['REQUEST_METHOD'], $uri);
+        $route = $r->route($method, $uri);
         $page = null;
         switch ($route[0]) {
             case $r::OK:
                 // ... 200 OK
                 list($page, $action) = explode(':', $route[1], 2);
-                $page = $this->c->$page->$action($route[2]);
+                $page = $this->c->$page->$action($route[2], $method);
                 break;
             case $r::NOT_FOUND:
                 // ... 404 Not Found

@@ -90,11 +90,31 @@ class DataModel extends Model
     {
         // без отслеживания
         if (strpos($name, '__') === 0) {
-            $name = substr($name, 2);
+            $track = null;
+            $name  = substr($name, 2);
         // с отслеживанием
         } else {
+            $track = false;
+            if (array_key_exists($name, $this->a)) {
+                $track = true;
+                $old   = $this->a[$name];
+                // fix
+                if (is_int($val) && is_numeric($old) && is_int(0 + $old)) {
+                    $old = (int) $old;
+                }
+            }
+        }
+
+        parent::__set($name, $val);
+
+        if (null === $track) {
+            return;
+        }
+
+        if ((! $track && array_key_exists($name, $this->a)) 
+            || ($track && $old !== $this->a[$name])
+        ) {
             $this->modified[$name] = true;
         }
-        return parent::__set($name, $val);
     }
 }

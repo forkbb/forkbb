@@ -39,6 +39,8 @@
                 </select>
       @elseif ('text' === $cur['type'])
                 <input @if (isset($cur['required'])) required @endif @if (isset($cur['autofocus'])) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="text" @if (! empty($cur['maxlength'])) maxlength="{{ $cur['maxlength'] }}" @endif @if (isset($cur['pattern'])) pattern="{{ $cur['pattern'] }}" @endif @if (isset($cur['value'])) value="{{ $cur['value'] }}" @endif>
+      @elseif ('password' === $cur['type'])
+                <input @if (isset($cur['required'])) required @endif @if (isset($cur['autofocus'])) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="password" @if (! empty($cur['maxlength'])) maxlength="{{ $cur['maxlength'] }}" @endif @if (isset($cur['pattern'])) pattern="{{ $cur['pattern'] }}" @endif @if (isset($cur['value'])) value="{{ $cur['value'] }}" @endif>
       @elseif ('number' === $cur['type'])
                 <input @if (isset($cur['required'])) required @endif @if (isset($cur['autofocus'])) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="number" min="{{ $cur['min'] }}" max="{{ $cur['max'] }}" @if (isset($cur['value'])) value="{{ $cur['value'] }}" @endif>
       @elseif ('checkbox' === $cur['type'])

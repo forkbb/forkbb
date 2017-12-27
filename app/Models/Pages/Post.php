@@ -15,21 +15,37 @@ class Post extends Page
     use PostValidatorTrait;
 
     /**
-     * Подготовка данных для шаблона создания темы
+     * Создание новой темы
      * 
      * @param array $args
+     * @param string $method
      * 
      * @return Page
      */
-    public function newTopic(array $args, Forum $forum = null)
+    public function newTopic(array $args, $method)
     {
-        $forum = $forum ?: $this->c->forums->get((int) $args['id']);
+        $forum = $this->c->forums->get((int) $args['id']);
 
         if (empty($forum) || $forum->redirect_url || ! $forum->canCreateTopic) {
             return $this->c->Message->message('Bad request');
         }
 
         $this->c->Lang->load('post');
+
+        if ('POST' === $method) {
+            $v = $this->messageValidator($forum, 'NewTopic', $args, false, true);
+
+            if ($v->validation($_POST) && null === $v->preview) {
+                return $this->endPost($forum, $v);
+            }
+    
+            $this->fIswev  = $v->getErrors();
+            $args['_vars'] = $v->getData(); //????
+
+            if (null !== $v->preview && ! $v->getErrors()) {
+                $this->previewHtml = $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies);
+            }
+        }
 
         $this->nameTpl   = 'post';
         $this->onlinePos = 'forum-' . $forum->id;
@@ -43,46 +59,14 @@ class Post extends Page
     }
 
     /**
-     * Обработчка данных от формы создания темы
-     * 
-     * @param array $args
-     * 
-     * @return Page
-     */
-    public function newTopicPost(array $args)
-    {
-        $forum = $this->c->forums->get((int) $args['id']);
-        
-        if (empty($forum) || $forum->redirect_url || ! $forum->canCreateTopic) {
-            return $this->c->Message->message('Bad request');
-        }
-
-        $this->c->Lang->load('post');
-
-        $v = $this->messageValidator($forum, 'NewTopic', $args, false, true);
-
-        if ($v->validation($_POST) && null === $v->preview) {
-            return $this->endPost($forum, $v);
-        }
-
-        $this->fIswev  = $v->getErrors();
-        $args['_vars'] = $v->getData();
-
-        if (null !== $v->preview && ! $v->getErrors()) {
-            $this->previewHtml = $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies);
-        }
-
-        return $this->newTopic($args, $forum);
-    }
-
-    /**
      * Подготовка данных для шаблона создания сообщения
      * 
      * @param array $args
+     * @param string $method
      * 
      * @return Page
      */
-    public function newReply(array $args)
+    public function newReply(array $args, $method)
     {
         $topic = $this->c->topics->load((int) $args['id']);
 
@@ -90,7 +74,22 @@ class Post extends Page
             return $this->c->Message->message('Bad request');
         }
 
-        if (isset($args['quote'])) {
+        $this->c->Lang->load('post');
+
+        if ('POST' === $method) {
+            $v = $this->messageValidator($topic, 'NewReply', $args);
+
+            if ($v->validation($_POST) && null === $v->preview) {
+                return $this->endPost($topic, $v);
+            }
+    
+            $this->fIswev  = $v->getErrors();
+            $args['_vars'] = $v->getData(); //????
+    
+            if (null !== $v->preview && ! $v->getErrors()) {
+                $this->previewHtml = $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies);
+            }
+        } elseif (isset($args['quote'])) {
             $post = $this->c->posts->load((int) $args['quote'], $topic->id);
 
             if (empty($post)) {
@@ -99,12 +98,10 @@ class Post extends Page
 
             $message = '[quote="' . $post->poster . '"]' . $post->message . '[/quote]';
 
-            $args['_vars'] = ['message' => $message];
+            $args['_vars'] = ['message' => $message]; //????
             unset($args['quote']);
         }
 
-        $this->c->Lang->load('post');
-        
         $this->nameTpl   = 'post';
         $this->onlinePos = 'topic-' . $topic->id;
         $this->canonical = $this->c->Router->link('NewReply', ['id' => $topic->id]);
@@ -114,39 +111,6 @@ class Post extends Page
         $this->form      = $this->messageForm($topic, 'NewReply', $args);
                 
         return $this;
-    }
-
-    /**
-     * Обработка данных от формы создания сообщения
-     * 
-     * @param array $args
-     * 
-     * @return Page
-     */
-    public function newReplyPost(array $args)
-    {
-        $topic = $this->c->topics->load((int) $args['id']);
-        
-        if (empty($topic) || $topic->moved_to || ! $topic->canReply) {
-            return $this->c->Message->message('Bad request');
-        }
-        
-        $this->c->Lang->load('post');
-                
-        $v = $this->messageValidator($topic, 'NewReply', $args);
-
-        if ($v->validation($_POST) && null === $v->preview) {
-            return $this->endPost($topic, $v);
-        }
-
-        $this->fIswev  = $v->getErrors();
-        $args['_vars'] = $v->getData();
-
-        if (null !== $v->preview && ! $v->getErrors()) {
-            $this->previewHtml = $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies);
-        }
-
-        return $this->newReply($args);
     }
 
     /**

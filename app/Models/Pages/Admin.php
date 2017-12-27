@@ -58,7 +58,7 @@ class Admin extends Page
 
         if ($user->isAdmin) {
             $nav['Admin menu'] = [
-                'options'     => ['admin_options.php', \ForkBB\__('Admin options')],
+                'options'     => [$r->link('AdminOptions'), \ForkBB\__('Admin options')],
                 'permissions' => ['admin_permissions.php', \ForkBB\__('Permissions')],
                 'categories'  => ['admin_categories.php', \ForkBB\__('Categories')],
                 'forums'      => ['admin_forums.php', \ForkBB\__('Forums')],
