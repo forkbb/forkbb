@@ -147,10 +147,16 @@ class Validator
         $this->arguments = [];
         $this->fields = [];
         foreach ($list as $field => $raw) {
+            $suffix = null;
+            // правило для элементов массива
+            if (strpos($field, '.') > 0) {
+                list($field, $suffix) = explode('.', $field, 2);
+            }
             $rules = [];
             // псевдоним содержится в списке правил
             if (is_array($raw)) {
-                list($raw, $this->aliases[$field]) = $raw; //????
+                $this->aliases[$field] = $raw[1]; //????????????????
+                $raw                   = $raw[0];
             }
             // перебор правил для текущего поля
             foreach (explode('|', $raw) as $rule) {
@@ -160,7 +166,11 @@ class Validator
                  }
                  $rules[$tmp[0]] = isset($tmp[1]) ? $tmp[1] : '';
             }
-            $this->rules[$field] = $rules;
+            if (isset($suffix)) {
+                $this->rules[$field]['array'][$suffix] = $rules;
+            } else {
+                $this->rules[$field] = $rules;
+            }
             $this->fields[$field] = $field;
         }
         return $this;
@@ -227,7 +237,7 @@ class Validator
         foreach ($this->fields as $field) {
             $this->__get($field);
         }
-        $this->raw = null;
+        $this->raw     = null;
         return empty($this->errors);
     }
 
@@ -271,6 +281,25 @@ class Validator
             }
         }
 
+        $value = $this->checkValue($value, $rules, $field);
+
+        $this->status[$field] = true !== $this->error; // в $this->error может быть состояние false
+        $this->result[$field] = $value;
+
+        return $value;
+    }
+
+    /**
+     * Проверка значения списком правил
+     * 
+     * @param mixed $value
+     * @param array $rules
+     * @param string $field
+     * 
+     * @return mixed
+     */
+    protected function checkValue($value, array $rules, $field)
+    {
         foreach ($rules as $validator => $attr) {
             // данные для обработчика ошибок
             $this->error     = null;
@@ -288,10 +317,6 @@ class Validator
                 break;
             }
         }
-
-        $this->status[$field] = true !== $this->error; // в $this->error может быть состояние false
-        $this->result[$field] = $value;
-
         return $value;
     }
 
@@ -493,15 +518,58 @@ class Validator
         }
     }
 
-    protected function vArray($v, $value)
+    protected function vArray($v, $value, $attr)
     {
         if (null !== $value && ! is_array($value)) {
             $this->addError('The :alias must be array');
             return null;
-        } else {
+        } elseif (! $attr) {
             return $value;
         }
+
+        if (empty($vars = end($this->curData))) {
+            throw new RuntimeException('The array of variables is empty');
+        }
+        
+        $result = [];
+        foreach ($attr as $name => $rules) {
+            $this->recArray($value, $result, $name, $rules, $vars['field'] . '.' . $name);
+        }
+        return $result;
     }
+
+    protected function recArray(&$value, &$result, $name, $rules, $field)
+    {
+        $idxs = explode('.', $name);
+        $key  = array_shift($idxs);
+        $name = implode('.', $idxs);
+
+        if ('*' === $key) {
+            if (! is_array($value)) {
+                return; //????
+            }
+
+            foreach ($value as $i => $cur) {
+                if ('' === $name) {
+                    $result[$i] = $this->checkValue($cur, $rules, $field);
+                } else {
+                    $this->recArray($value[$i], $result[$i], $name, $rules, $field);
+                }
+            }
+        } else {
+            if (! array_key_exists($key, $value)) {
+                return; //????
+            }
+    
+            if ('' === $name) {
+                $result[$key] = $this->checkValue($value[$key], $rules, $field);
+            } else {
+                $this->recArray($value[$key], $result[$key], $name, $rules, $field);
+            }
+        }
+    }
+
+
 
     protected function vMin($v, $value, $attr)
     {

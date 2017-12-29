@@ -1,0 +1,79 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+
+msgid "Must enter name message"
+msgstr "Необходимо ввести имя категории"
+
+msgid "Category added redirect"
+msgstr "Категория добавлена. Переадресация …"
+
+msgid "Category deleted redirect"
+msgstr "Категория удалена. Переадресация …"
+
+msgid "Delete category head"
+msgstr "Удаление категории (вместе со всеми разделами и темами в ней)"
+
+msgid "Confirm delete subhead"
+msgstr "Подтверждение удаления категории"
+
+msgid "Confirm delete info"
+msgstr "Вы уверены, что хотите удалить категорию <b>%s</b>?"
+
+msgid "Delete category warn"
+msgstr "<b>ВНИМАНИЕ!</b> Удаляя категорию вы удалите все разделы, темы и сообщения относящиеся к ней (если таковые имеются)!"
+
+msgid "Must enter integer message"
+msgstr "Позиция должна быть неотрицательным целым числом."
+
+msgid "Categories updated redirect"
+msgstr "Категории изменены. Переадресация …"
+
+msgid "Add categories head"
+msgstr "Добавление категорий"
+
+msgid "Add categories subhead"
+msgstr "Добавление категорий"
+
+msgid "Add category label"
+msgstr "Имя новой категории"
+
+msgid "Add new submit"
+msgstr "Добавить"
+
+msgid "Add category help"
+msgstr "Имя для новой категории. Вы сможете изменить имя категории позже. Перейдите в <a href="%1$s">%2$s</a>, чтобы добавить разделы в новую категорию."
+
+msgid "Delete categories head"
+msgstr "Удаление категорий"
+
+msgid "Delete categories subhead"
+msgstr "Удаление категорий"
+
+msgid "Delete category label"
+msgstr "Удалить категорию"
+
+msgid "Delete category help"
+msgstr "Выберите категорию для удаления. У вас будет запрошено подтверждение, прежде чем категория будет окончательно удалена."
+
+msgid "Edit categories head"
+msgstr "Редактирование категорий"
+
+msgid "Edit categories subhead"
+msgstr "Редактирование категорий"
+
+msgid "Category position label"
+msgstr "Позиция"
+
+msgid "Category name label"
+msgstr "Имя"

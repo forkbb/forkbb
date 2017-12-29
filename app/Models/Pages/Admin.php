@@ -59,9 +59,9 @@ class Admin extends Page
         if ($user->isAdmin) {
             $nav['Admin menu'] = [
                 'options'     => [$r->link('AdminOptions'), \ForkBB\__('Admin options')],
-                'permissions' => ['admin_permissions.php', \ForkBB\__('Permissions')],
-                'categories'  => ['admin_categories.php', \ForkBB\__('Categories')],
-                'forums'      => ['admin_forums.php', \ForkBB\__('Forums')],
+                'permissions' => [$r->link('AdminPermissions'), \ForkBB\__('Permissions')],
+                'categories'  => [$r->link('AdminCategories'), \ForkBB\__('Categories')],
+                'forums'      => [$r->link('AdminForums'), \ForkBB\__('Forums')],
                 'groups'      => [$r->link('AdminGroups'), \ForkBB\__('User groups')],
                 'censoring'   => ['admin_censoring.php', \ForkBB\__('Censoring')],
                 'maintenance' => ['admin_maintenance.php', \ForkBB\__('Maintenance')]

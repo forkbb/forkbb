@@ -93,7 +93,7 @@ class Groups extends Admin
             'btns'   => [
                 'submit'  => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Save'),
+                    'value'     => \ForkBB\__('Update'),
                     'accesskey' => 's',
                 ],
             ],
@@ -312,7 +312,7 @@ class Groups extends Admin
             'btns'   => [
                 'submit'  => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Save'),
+                    'value'     => null === $group->g_id ? \ForkBB\__('Add') : \ForkBB\__('Update'),
                     'accesskey' => 's',
                 ],
             ],
@@ -369,49 +369,48 @@ class Groups extends Admin
             ];
         }
 
-        $y = \ForkBB\__('Yes');
-        $n = \ForkBB\__('No');
+        $yn = [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')];
 
         if (! $group->groupGuest && $group->g_id != $this->c->config->o_default_user_group) {
             $fieldset['g_moderator'] = [
                 'type'   => 'radio',
                 'value'  => $group->g_moderator,
-                'values' => [1 => $y, 0 => $n],
+                'values' => $yn,
                 'title'  => \ForkBB\__('Mod privileges label'),
                 'info'   => \ForkBB\__('Mod privileges help'),
             ];
             $fieldset['g_mod_edit_users'] = [
                 'type'   => 'radio',
                 'value'  => $group->g_mod_edit_users,
-                'values' => [1 => $y, 0 => $n],
+                'values' => $yn,
                 'title'  => \ForkBB\__('Edit profile label'),
                 'info'   => \ForkBB\__('Edit profile help'),
             ];
             $fieldset['g_mod_rename_users'] = [
                 'type'   => 'radio',
                 'value'  => $group->g_mod_rename_users,
-                'values' => [1 => $y, 0 => $n],
+                'values' => $yn,
                 'title'  => \ForkBB\__('Rename users label'),
                 'info'   => \ForkBB\__('Rename users help'),
             ];
             $fieldset['g_mod_change_passwords'] = [
                 'type'   => 'radio',
                 'value'  => $group->g_mod_change_passwords,
-                'values' => [1 => $y, 0 => $n],
+                'values' => $yn,
                 'title'  => \ForkBB\__('Change passwords label'),
                 'info'   => \ForkBB\__('Change passwords help'),
             ];
             $fieldset['g_mod_promote_users'] = [
                 'type'   => 'radio',
                 'value'  => $group->g_mod_promote_users,
-                'values' => [1 => $y, 0 => $n],
+                'values' => $yn,
                 'title'  => \ForkBB\__('Mod promote users label'),
                 'info'   => \ForkBB\__('Mod promote users help'),
             ];
             $fieldset['g_mod_ban_users'] = [
                 'type'   => 'radio',
                 'value'  => $group->g_mod_ban_users,
-                'values' => [1 => $y, 0 => $n],
+                'values' => $yn,
                 'title'  => \ForkBB\__('Ban users label'),
                 'info'   => \ForkBB\__('Ban users help'),
             ];
@@ -420,28 +419,28 @@ class Groups extends Admin
         $fieldset['g_read_board'] = [
             'type'   => 'radio',
             'value'  => $group->g_read_board,
-            'values' => [1 => $y, 0 => $n],
+            'values' => $yn,
             'title'  => \ForkBB\__('Read board label'),
             'info'   => \ForkBB\__('Read board help'),
         ];
         $fieldset['g_view_users'] = [
             'type'   => 'radio',
             'value'  => $group->g_view_users,
-            'values' => [1 => $y, 0 => $n],
+            'values' => $yn,
             'title'  => \ForkBB\__('View user info label'),
             'info'   => \ForkBB\__('View user info help'),
         ];
         $fieldset['g_post_replies'] = [
             'type'   => 'radio',
             'value'  => $group->g_post_replies,
-            'values' => [1 => $y, 0 => $n],
+            'values' => $yn,
             'title'  => \ForkBB\__('Post replies label'),
             'info'   => \ForkBB\__('Post replies help'),
         ];
         $fieldset['g_post_topics'] = [
             'type'   => 'radio',
             'value'  => $group->g_post_topics,
-            'values' => [1 => $y, 0 => $n],
+            'values' => $yn,
             'title'  => \ForkBB\__('Post topics label'),
             'info'   => \ForkBB\__('Post topics help'),
         ];
@@ -450,21 +449,21 @@ class Groups extends Admin
             $fieldset['g_edit_posts'] = [
                 'type'   => 'radio',
                 'value'  => $group->g_edit_posts,
-                'values' => [1 => $y, 0 => $n],
+                'values' => $yn,
                 'title'  => \ForkBB\__('Edit posts label'),
                 'info'   => \ForkBB\__('Edit posts help'),
             ];
             $fieldset['g_delete_posts'] = [
                 'type'   => 'radio',
                 'value'  => $group->g_delete_posts,
-                'values' => [1 => $y, 0 => $n],
+                'values' => $yn,
                 'title'  => \ForkBB\__('Delete posts label'),
                 'info'   => \ForkBB\__('Delete posts help'),
             ];
             $fieldset['g_delete_topics'] = [
                 'type'   => 'radio',
                 'value'  => $group->g_delete_topics,
-                'values' => [1 => $y, 0 => $n],
+                'values' => $yn,
                 'title'  => \ForkBB\__('Delete topics label'),
                 'info'   => \ForkBB\__('Delete topics help'),
             ];
@@ -479,7 +478,7 @@ class Groups extends Admin
             $fieldset['g_set_title'] = [
                 'type'   => 'radio',
                 'value'  => $group->g_set_title,
-                'values' => [1 => $y, 0 => $n],
+                'values' => $yn,
                 'title'  => \ForkBB\__('Set own title label'),
                 'info'   => \ForkBB\__('Set own title help'),
             ];
@@ -488,21 +487,21 @@ class Groups extends Admin
         $fieldset['g_post_links'] = [
             'type'   => 'radio',
             'value'  => $group->g_post_links,
-            'values' => [1 => $y, 0 => $n],
+            'values' => $yn,
             'title'  => \ForkBB\__('Post links label'),
             'info'   => \ForkBB\__('Post links help'),
         ];
         $fieldset['g_search'] = [
             'type'   => 'radio',
             'value'  => $group->g_search,
-            'values' => [1 => $y, 0 => $n],
+            'values' => $yn,
             'title'  => \ForkBB\__('User search label'),
             'info'   => \ForkBB\__('User search help'),
         ];
         $fieldset['g_search_users'] = [
             'type'   => 'radio',
             'value'  => $group->g_search_users,
-            'values' => [1 => $y, 0 => $n],
+            'values' => $yn,
             'title'  => \ForkBB\__('User list search label'),
             'info'   => \ForkBB\__('User list search help'),
         ];
@@ -511,7 +510,7 @@ class Groups extends Admin
             $fieldset['g_send_email'] = [
                 'type'   => 'radio',
                 'value'  => $group->g_send_email,
-                'values' => [1 => $y, 0 => $n],
+                'values' => $yn,
                 'title'  => \ForkBB\__('Send e-mails label'),
                 'info'   => \ForkBB\__('Send e-mails help'),
             ];

@@ -4,6 +4,7 @@ namespace ForkBB\Models\Pages\Admin;
 
 use ForkBB\Core\Validator;
 use ForkBB\Models\Pages\Admin;
+use ForkBB\Models\Config as Config;
 
 class Options extends Admin
 {
@@ -141,9 +142,11 @@ class Options extends Admin
     /**
      * Формирует данные для формы
      *
+     * @param Config $config
+     * 
      * @return array
      */
-    protected function viewForm($config)
+    protected function viewForm(Config $config)
     {
         $form = [
             'action' => $this->c->Router->link('AdminOptions'),
@@ -152,10 +155,10 @@ class Options extends Admin
             ],
             'sets'   => [],
             'btns'   => [
-                'submit'  => [
+                'update'  => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Save'),
-                    'accesskey' => 's',
+                    'value'     => \ForkBB\__('Update'),
+                    'accesskey' => 'u',
                 ],
             ],
         ];

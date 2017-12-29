@@ -1559,3 +1559,38 @@ li + li .f-btn {
     padding-left: 0.3125rem;
   }
 }  
+
+/*********************/
+/* Админка/Категории */
+/*********************/
+
+.f-updatecategories-form dt {
+  display: none;
+}
+
+.f-updatecategories-form dd {
+  padding-left: 0;
+}
+
+.f-updatecategories-form .f-field-name {
+  float: left;
+  width: 70%;
+}
+
+.f-updatecategories-form .f-field-position {
+  padding-left: 0.625rem;
+  float: left;
+  width: 30%;
+}
+
+.f-updatecategories-form dl:first-child dt,
+.f-updatecategories-form dl:nth-child(2) dt,
+.f-updatecategories-form dl:last-child dt {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+}
+
+.f-updatecategories-form .f-child1 {
+  font-weight: normal;
+}

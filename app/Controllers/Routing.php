@@ -105,6 +105,9 @@ class Routing
         if ($user->isAdmin) {
             $r->add('GET',           '/admin/statistics/info',              'AdminStatistics:info',   'AdminInfo'         );
             $r->add(['GET', 'POST'], '/admin/options',                      'AdminOptions:edit',      'AdminOptions'      );
+            $r->add(['GET', 'POST'], '/admin/permissions',                  'AdminPermissions:edit',  'AdminPermissions'  );
+            $r->add(['GET', 'POST'], '/admin/categories',                   'AdminCategories:view',   'AdminCategories'   );
+            $r->add('GET',           '/admin/forums',                       'AdminForums:view',       'AdminForums'       );
             $r->add('GET',           '/admin/groups',                       'AdminGroups:view',       'AdminGroups'       );
             $r->add('POST',          '/admin/groups/default',               'AdminGroups:defaultSet', 'AdminGroupsDefault');
             $r->add('POST',          '/admin/groups/new[/{base:[1-9]\d*}]', 'AdminGroups:edit',       'AdminGroupsNew'    );
