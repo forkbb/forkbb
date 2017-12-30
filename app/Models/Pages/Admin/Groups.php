@@ -35,10 +35,11 @@ class Groups extends Admin
                 $groupsDefault[$key] = $group->g_title;
             }
         }
+
+        $this->aIndex        = 'groups';
         $this->groupsList    = $groupsList;
         $this->groupsNew     = $groupsNew;
         $this->groupsDefault = $groupsDefault;
-        $this->aIndex        = 'groups';
     }
 
     /**
@@ -49,6 +50,7 @@ class Groups extends Admin
     public function view()
     {
         $this->nameTpl     = 'admin/groups';
+        $this->titles      = \ForkBB\__('User groups');
         $this->formNew     = [
             'action' => $this->c->Router->link('AdminGroupsNew'),
             'hidden' => [
@@ -122,7 +124,7 @@ class Groups extends Admin
         }
         $this->c->config->o_default_user_group = $v->defaultgroup;
         $this->c->config->save();
-        return $this->c->Redirect->page('AdminGroups')->message(\ForkBB\__('Default group redirect'));
+        return $this->c->Redirect->page('AdminGroups')->message('Default group redirect');
     }
 
     /**
@@ -613,9 +615,9 @@ class Groups extends Admin
             ]);
 
             if (! $v->validation($_POST) || null === $v->delete) {
-                return $this->c->Redirect->page('AdminGroups')->message(\ForkBB\__('Cancel redirect'));
+                return $this->c->Redirect->page('AdminGroups')->message('Cancel redirect');
             } elseif ($v->confirm !== 1) {
-                return $this->c->Redirect->page('AdminGroups')->message(\ForkBB\__('No confirm redirect'));
+                return $this->c->Redirect->page('AdminGroups')->message('No confirm redirect');
             }
 
             $this->c->DB->beginTransaction();
@@ -628,7 +630,7 @@ class Groups extends Admin
 
             $this->c->DB->commit();
 
-            return $this->c->Redirect->page('AdminGroups')->message(\ForkBB\__('Group removed redirect'));
+            return $this->c->Redirect->page('AdminGroups')->message('Group removed redirect');
         }
 
         $form = [
@@ -680,15 +682,16 @@ class Groups extends Admin
                 'info1' => [
                     'type'  => '', //????
                     'value' => \ForkBB\__('Confirm delete warn'),
+                    'html'  => true,
                 ],
             ],
         ];
 
         $this->nameTpl   = 'admin/form';
         $this->titles    = \ForkBB\__('Group delete');
+        $this->form      = $form;
         $this->titleForm = \ForkBB\__('Group delete');
         $this->classForm = 'deletegroup';
-        $this->form      = $form;
 
         return $this;
     }

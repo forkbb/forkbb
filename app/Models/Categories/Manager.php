@@ -17,13 +17,13 @@ class Manager extends ManagerModel
 
     /**
      * Загрузка категорий из БД
-     * 
+     *
      * @return Manager
      */
     public function init()
     {
-        $sql = 'SELECT id, cat_name, disp_position 
-                FROM ::categories 
+        $sql = 'SELECT id, cat_name, disp_position
+                FROM ::categories
                 ORDER BY disp_position';
         $this->repository = $this->c->DB->query($sql)->fetchAll(\PDO::FETCH_UNIQUE);
         return $this;
@@ -62,8 +62,8 @@ class Manager extends ManagerModel
                 ':position' => $cat['disp_position'],
                 ':cid'      => $key,
             ];
-            $sql = 'UPDATE ::categories 
-                    SET cat_name=?s:name, disp_position=?i:position 
+            $sql = 'UPDATE ::categories
+                    SET cat_name=?s:name, disp_position=?i:position
                     WHERE id=?i:cid';
             $this->c->DB->query($sql, $vars); //????
         }
@@ -86,14 +86,39 @@ class Manager extends ManagerModel
             ':name'     => $name,
             ':position' => $pos,
         ];
-        $sql = 'INSERT INTO ::categories (cat_name, disp_position) 
+        $sql = 'INSERT INTO ::categories (cat_name, disp_position)
                 VALUES (?s:name, ?i:position)';
         $this->c->DB->query($sql, $vars);
-        
+
         $cid = $this->c->DB->lastInsertId();
 
         parent::set($cid, ['cat_name' => $name, 'disp_position' => $pos]);
 
         return $cid;
+    }
+
+    public function delete($cid)
+    {
+        $root = $this->c->forums->get(0);
+        $del  = [];
+
+        foreach ($root->subforums as $forum) {
+            if ($forum->cat_id === $cid) {
+                $del = array_merge($del, [$forum], $forum->descendants);
+            }
+        }
+
+        if ($del) {
+            $this->c->forums->delete(...$del);
+        }
+
+        $vars = [
+            ':cid' => $cid,
+        ];
+        $sql = 'DELETE FROM ::categories
+                WHERE id=?i:cid';
+        $this->c->DB->exec($sql, $vars);
+
+        return $this;
     }
 }

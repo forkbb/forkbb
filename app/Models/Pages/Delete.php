@@ -40,18 +40,18 @@ class Delete extends Page
             ]);
     
             if (! $v->validation($_POST) || null === $v->delete) {
-                return $this->c->Redirect->page('ViewPost', $args)->message(\ForkBB\__('Cancel redirect'));
+                return $this->c->Redirect->page('ViewPost', $args)->message('Cancel redirect');
             } elseif ($v->confirm !== 1) {
-                return $this->c->Redirect->page('ViewPost', $args)->message(\ForkBB\__('No confirm redirect'));
+                return $this->c->Redirect->page('ViewPost', $args)->message('No confirm redirect');
             }
     
             $this->c->DB->beginTransaction();
     
             if ($deleteTopic) {
-                $redirect = $this->c->Redirect->page('Forum', ['id' => $topic->forum_id])->message(\ForkBB\__('Topic del redirect'));
+                $redirect = $this->c->Redirect->page('Forum', ['id' => $topic->forum_id])->message('Topic del redirect');
                 $this->c->topics->delete($topic);
             } else {
-                $redirect = $this->c->Redirect->page('ViewPost', ['id' => $this->c->posts->previousPost($post)])->message(\ForkBB\__('Post del redirect'));
+                $redirect = $this->c->Redirect->page('ViewPost', ['id' => $this->c->posts->previousPost($post)])->message('Post del redirect');
                 $this->c->posts->delete($post);
             }
     

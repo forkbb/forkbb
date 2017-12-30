@@ -9,11 +9,11 @@ use ForkBB\Models\Pages\Admin;
 class Categories extends Admin
 {
     /**
-     * Подготавливает данные для шаблона
+     * Просмотр, редактирвоание и добавление категорий
      *
      * @param array $args
      * @param string $method
-     * 
+     *
      * @return Page
      */
     public function view(array $args, $method)
@@ -41,19 +41,16 @@ class Categories extends Admin
                 if (strlen($v->new) > 0) {
                     $this->c->categories->insert($v->new); //????
                 }
-                
+
                 $this->c->DB->commit();
 
                 $this->c->Cache->delete('forums_mark'); //????
 
-                return $this->c->Redirect->page('AdminCategories')->message(\ForkBB\__('Categories updated redirect'));
+                return $this->c->Redirect->page('AdminCategories')->message('Categories updated redirect');
             }
 
             $this->fIswev  = $v->getErrors();
         }
-
-        $this->nameTpl     = 'admin/categories';
-        $this->aIndex      = 'categories';
 
         $form = [
             'action' => $this->c->Router->link('AdminCategories'),
@@ -72,7 +69,6 @@ class Categories extends Admin
 
         $fieldset = [];
         foreach ($this->c->categories->getList() as $key => $row) {
-
             $fieldset["form[{$key}][cat_name]"] = [
                 'dl'        => 'name',
                 'type'      => 'text',
@@ -89,7 +85,13 @@ class Categories extends Admin
                 'value' => $row['disp_position'],
                 'title' => \ForkBB\__('Category position label'),
             ];
-
+            $fieldset[] = [
+                'dl'    => 'delete',
+                'type'  => 'btn',
+                'value' => '❌',
+                'title' => \ForkBB\__('Delete'),
+                'link'  => $this->c->Router->link('AdminCategoriesDelete', ['id' => $key]),
+            ];
         }
         $fieldset['new'] = [
             'dl'        => 'new',
@@ -103,7 +105,106 @@ class Categories extends Admin
             'fields' => $fieldset,
         ];
 
-        $this->formUpdate = $form;
+        $this->nameTpl   = 'admin/form';
+        $this->aIndex    = 'categories';
+        $this->titles    = \ForkBB\__('Categories');
+        $this->form      = $form;
+        $this->classForm = 'editcategories';
+        $this->titleForm = \ForkBB\__('Categories');
+
+        return $this;
+    }
+
+    /**
+     * Удаление категорий
+     *
+     * @param array $args
+     * @param string $method
+     *
+     * @return Page
+     */
+    public function delete(array $args, $method)
+    {
+        $category = $this->c->categories->get((int) $args['id']);
+        if (! $category) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $this->c->Lang->load('admin_categories');
+
+        if ('POST' === $method) {
+            $v = $this->c->Validator->setRules([
+                'token'     => 'token:AdminCategoriesDelete',
+                'confirm'   => 'integer',
+                'delete'    => 'string',
+                'cancel'    => 'string',
+            ])->setArguments([
+                'token' => $args,
+            ]);
+
+            if (! $v->validation($_POST) || null === $v->delete) {
+                return $this->c->Redirect->page('AdminCategories')->message('Cancel redirect');
+            } elseif ($v->confirm !== 1) {
+                return $this->c->Redirect->page('AdminCategories')->message('No confirm redirect');
+            }
+
+            $this->c->DB->beginTransaction();
+
+            $this->c->categories->delete((int) $args['id']);
+
+            $this->c->DB->commit();
+
+            $this->c->Cache->delete('forums_mark'); //????
+
+            return $this->c->Redirect->page('AdminCategories')->message('Category deleted redirect');
+        }
+
+        $form = [
+            'action' => $this->c->Router->link('AdminCategoriesDelete', $args),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('AdminCategoriesDelete', $args),
+            ],
+            'sets'   => [],
+            'btns'   => [
+                'delete'  => [
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__('Delete category'),
+                    'accesskey' => 'd',
+                ],
+                'cancel'  => [
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__('Cancel'),
+                ],
+            ],
+        ];
+
+        $form['sets'][] = [
+            'fields' => [
+                'confirm' => [
+                    'title'   => \ForkBB\__('Confirm delete'),
+                    'type'    => 'checkbox',
+                    'label'   => \ForkBB\__('I want to delete this category', $category['cat_name']),
+                    'value'   => '1',
+                    'checked' => false,
+                ],
+            ],
+        ];
+        $form['sets'][] = [
+            'info' => [
+                'info1' => [
+                    'type'  => '', //????
+                    'value' => \ForkBB\__('Delete category warn'),
+                    'html'  => true,
+                ],
+            ],
+        ];
+
+        $this->nameTpl   = 'admin/form';
+        $this->aIndex    = 'categories';
+        $this->titles    = \ForkBB\__('Delete category head');
+        $this->form      = $form;
+        $this->classForm = 'deletecategory';
+        $this->titleForm = \ForkBB\__('Delete category head');
 
         return $this;
     }

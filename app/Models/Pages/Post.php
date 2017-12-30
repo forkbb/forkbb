@@ -227,6 +227,6 @@ class Post extends Page
         
         return $this->c->Redirect
             ->page('ViewPost', ['id' => $merge ? $lastPost->id : $post->id])
-            ->message(\ForkBB\__('Post redirect'));
+            ->message('Post redirect');
     }
 }

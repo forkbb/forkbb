@@ -148,6 +148,6 @@ class Edit extends Page
         
         return $this->c->Redirect
             ->page('ViewPost', ['id' => $post->id])
-            ->message(\ForkBB\__('Edit redirect'));
+            ->message('Edit redirect');
     }
 }

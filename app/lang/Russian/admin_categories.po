@@ -24,11 +24,11 @@ msgstr "Категория удалена. Переадресация …"
 msgid "Delete category head"
 msgstr "Удаление категории (вместе со всеми разделами и темами в ней)"
 
-msgid "Confirm delete subhead"
-msgstr "Подтверждение удаления категории"
+msgid "Confirm delete"
+msgstr "Удалить категорию?"
 
-msgid "Confirm delete info"
-msgstr "Вы уверены, что хотите удалить категорию <b>%s</b>?"
+msgid "I want to delete this category"
+msgstr "Да, я хочу удалить категорию <b>%s</b>"
 
 msgid "Delete category warn"
 msgstr "<b>ВНИМАНИЕ!</b> Удаляя категорию вы удалите все разделы, темы и сообщения относящиеся к ней (если таковые имеются)!"
@@ -54,13 +54,13 @@ msgstr "Добавить"
 msgid "Add category help"
 msgstr "Имя для новой категории. Вы сможете изменить имя категории позже. Перейдите в <a href="%1$s">%2$s</a>, чтобы добавить разделы в новую категорию."
 
-msgid "Delete categories head"
-msgstr "Удаление категорий"
+msgid "Delete category head"
+msgstr "Удаление категории"
 
 msgid "Delete categories subhead"
 msgstr "Удаление категорий"
 
-msgid "Delete category label"
+msgid "Delete category"
 msgstr "Удалить категорию"
 
 msgid "Delete category help"

@@ -25,7 +25,7 @@ class Auth extends Page
     public function logout($args)
     {
         if (empty($args['token']) || ! $this->c->Csrf->verify($args['token'], 'Logout', $args)) {
-            return $this->c->Redirect->page('Index')->message(\ForkBB\__('Bad token'));
+            return $this->c->Redirect->page('Index')->message('Bad token');
         }
 
         $this->c->Cookie->deleteUser();
@@ -33,7 +33,7 @@ class Auth extends Page
         $this->c->users->updateLastVisit($this->c->user);
 
         $this->c->Lang->load('auth');
-        return $this->c->Redirect->page('Index')->message(\ForkBB\__('Logout redirect'));
+        return $this->c->Redirect->page('Index')->message('Logout redirect');
     }
 
     /**
@@ -93,7 +93,7 @@ class Auth extends Page
         ]);
 
         if ($v->validation($_POST)) {
-            return $this->c->Redirect->url($v->redirect)->message(\ForkBB\__('Login redirect'));
+            return $this->c->Redirect->url($v->redirect)->message('Login redirect');
         } else {
             $this->fIswev = $v->getErrors();
             return $this->login([

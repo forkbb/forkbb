@@ -103,18 +103,20 @@ class Routing
         }
         // только админ
         if ($user->isAdmin) {
-            $r->add('GET',           '/admin/statistics/info',              'AdminStatistics:info',   'AdminInfo'         );
-            $r->add(['GET', 'POST'], '/admin/options',                      'AdminOptions:edit',      'AdminOptions'      );
-            $r->add(['GET', 'POST'], '/admin/permissions',                  'AdminPermissions:edit',  'AdminPermissions'  );
-            $r->add(['GET', 'POST'], '/admin/categories',                   'AdminCategories:view',   'AdminCategories'   );
-            $r->add('GET',           '/admin/forums',                       'AdminForums:view',       'AdminForums'       );
-            $r->add('GET',           '/admin/groups',                       'AdminGroups:view',       'AdminGroups'       );
-            $r->add('POST',          '/admin/groups/default',               'AdminGroups:defaultSet', 'AdminGroupsDefault');
-            $r->add('POST',          '/admin/groups/new[/{base:[1-9]\d*}]', 'AdminGroups:edit',       'AdminGroupsNew'    );
-            $r->add(['GET', 'POST'], '/admin/groups/{id:[1-9]\d*}/edit',    'AdminGroups:edit',       'AdminGroupsEdit'   );
-            $r->add(['GET', 'POST'], '/admin/groups/{id:[1-9]\d*}/delete',  'AdminGroups:delete',     'AdminGroupsDelete' );
-            $r->add('GET',           '/admin/censoring',                    'AdminCensoring:view',    'AdminCensoring'    );
-            
+            $r->add('GET',           '/admin/statistics/info',                 'AdminStatistics:info',   'AdminInfo'         );
+            $r->add(['GET', 'POST'], '/admin/options',                         'AdminOptions:edit',      'AdminOptions'      );
+            $r->add(['GET', 'POST'], '/admin/permissions',                     'AdminPermissions:edit',  'AdminPermissions'  );
+            $r->add(['GET', 'POST'], '/admin/categories',                      'AdminCategories:view',   'AdminCategories'   );
+            $r->add(['GET', 'POST'], '/admin/categories/{id:[1-9]\d*}/delete', 'AdminCategories:delete', 'AdminCategoriesDelete');
+
+            $r->add('GET',           '/admin/forums',                          'AdminForums:view',       'AdminForums'       );
+            $r->add('GET',           '/admin/groups',                          'AdminGroups:view',       'AdminGroups'       );
+            $r->add('POST',          '/admin/groups/default',                  'AdminGroups:defaultSet', 'AdminGroupsDefault');
+            $r->add('POST',          '/admin/groups/new[/{base:[1-9]\d*}]',    'AdminGroups:edit',       'AdminGroupsNew'    );
+            $r->add(['GET', 'POST'], '/admin/groups/{id:[1-9]\d*}/edit',       'AdminGroups:edit',       'AdminGroupsEdit'   );
+            $r->add(['GET', 'POST'], '/admin/groups/{id:[1-9]\d*}/delete',     'AdminGroups:delete',     'AdminGroupsDelete' );
+            $r->add('GET',           '/admin/censoring',                       'AdminCensoring:view',    'AdminCensoring'    );
+
         }
 
         $uri = $_SERVER['REQUEST_URI'];

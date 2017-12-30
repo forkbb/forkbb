@@ -52,7 +52,7 @@ class Permissions extends Admin
             if ($valid) {
                 $config->save();
                 
-                return $this->c->Redirect->page('AdminPermissions')->message(\ForkBB\__('Perms updated redirect'));
+                return $this->c->Redirect->page('AdminPermissions')->message('Perms updated redirect');
             }
     
             $this->fIswev  = $v->getErrors();
@@ -60,6 +60,7 @@ class Permissions extends Admin
 
         $this->aIndex    = 'permissions';
         $this->nameTpl   = 'admin/form';
+        $this->titles    = \ForkBB\__('Permissions');
         $this->form      = $this->viewForm($config);
         $this->titleForm = \ForkBB\__('Permissions head');
         $this->classForm = 'editpermissions';

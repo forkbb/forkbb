@@ -79,7 +79,7 @@ msgid "Confirm delete"
 msgstr "Delete group?"
 
 msgid "Confirm delete warn"
-msgstr "WARNING! After you deleted a group you cannot restore it."
+msgstr "<b>WARNING!</b> After you deleted a group you cannot restore it."
 
 msgid "Delete group head"
 msgstr "Delete group"

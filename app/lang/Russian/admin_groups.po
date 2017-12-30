@@ -79,7 +79,7 @@ msgid "Confirm delete"
 msgstr "Удалить группу?"
 
 msgid "Confirm delete warn"
-msgstr "ВНИМАНИЕ! Удалённую группу невозможно восстановить."
+msgstr "<b>ВНИМАНИЕ!</b> Удалённую группу невозможно восстановить."
 
 msgid "Delete group head"
 msgstr "Удалить группу"

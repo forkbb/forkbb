@@ -24,14 +24,14 @@ msgstr "Category deleted. Redirecting …"
 msgid "Delete category head"
 msgstr "Delete category (together with all forums and posts it contains)"
 
-msgid "Confirm delete subhead"
-msgstr "Confirm delete category"
+msgid "Confirm delete"
+msgstr "Delete category?"
 
-msgid "Confirm delete info"
-msgstr "Are you sure that you want to delete the category <b>%s</b>?"
+msgid "I want to delete this category"
+msgstr "Yes, I want to delete the category <b>%s</b>"
 
 msgid "Delete category warn"
-msgstr "<b>WARNING!</b> Deleting a category will delete all forums and posts (if any) in this category!"
+msgstr "<b>WARNING!</b> Deleting a category will delete all forums, topics and posts (if any) in this category!"
 
 msgid "Must enter integer message"
 msgstr "Position must be a positive integer value."
@@ -54,14 +54,14 @@ msgstr "Add new"
 msgid "Add category help"
 msgstr "The name of the new category you want to add. You can edit the name of the category later. Go to <a href="%1$s">%2$s</a> to add forums to your new category."
 
-msgid "Delete categories head"
-msgstr "Delete categories"
+msgid "Delete category head"
+msgstr "Delete category"
 
 msgid "Delete categories subhead"
 msgstr "Delete categories"
 
-msgid "Delete category label"
-msgstr "Delete a category"
+msgid "Delete category"
+msgstr "Delete category"
 
 msgid "Delete category help"
 msgstr "Select the name of the category you want to delete. You will be asked to confirm your choice of category for deletion before it is deleted."

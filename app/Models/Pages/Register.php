@@ -44,7 +44,7 @@ class Register extends Page
 
         // нет согласия с правилами
         if (isset($this->fIswev['cancel'])) {
-            return $this->c->Redirect->page('Index')->message(\ForkBB\__('Reg cancel redirect'));
+            return $this->c->Redirect->page('Index')->message('Reg cancel redirect');
         }
 
         $this->fIndex     = 'register';

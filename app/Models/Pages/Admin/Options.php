@@ -108,7 +108,7 @@ class Options extends Admin
             if ($valid) {
                 $config->save();
                 
-                return $this->c->Redirect->page('AdminOptions')->message(\ForkBB\__('Options updated redirect'));
+                return $this->c->Redirect->page('AdminOptions')->message('Options updated redirect');
             }
     
             $this->fIswev  = $v->getErrors();
@@ -116,6 +116,7 @@ class Options extends Admin
 
         $this->aIndex    = 'options';
         $this->nameTpl   = 'admin/form';
+        $this->titles    = \ForkBB\__('Admin options');
         $this->form      = $this->viewForm($config);
         $this->titleForm = \ForkBB\__('Options head');
         $this->classForm = 'editoptions';

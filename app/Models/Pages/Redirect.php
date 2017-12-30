@@ -60,7 +60,7 @@ class Redirect extends Page
         $this->nameTpl = 'layouts/redirect';
         $this->titles  = \ForkBB\__('Redirecting');
         $this->robots  = 'noindex';
-        $this->message = $message;
+        $this->message = \ForkBB\__($message);
         $this->timeout = (int) $this->c->config->o_redirect_delay;  //???? перенести в заголовки?
 
         return $this;
