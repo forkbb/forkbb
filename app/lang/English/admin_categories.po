@@ -27,7 +27,7 @@ msgstr "Delete category (together with all forums and posts it contains)"
 msgid "Confirm delete"
 msgstr "Delete category?"
 
-msgid "I want to delete this category"
+msgid "I want to delete the category %s"
 msgstr "Yes, I want to delete the category <b>%s</b>"
 
 msgid "Delete category warn"

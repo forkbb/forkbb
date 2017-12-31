@@ -109,7 +109,7 @@ class Categories extends Admin
         $this->aIndex    = 'categories';
         $this->titles    = \ForkBB\__('Categories');
         $this->form      = $form;
-        $this->classForm = 'editcategories';
+        $this->classForm = ['editcategories', 'inline'];
         $this->titleForm = \ForkBB\__('Categories');
 
         return $this;
@@ -183,7 +183,7 @@ class Categories extends Admin
                 'confirm' => [
                     'title'   => \ForkBB\__('Confirm delete'),
                     'type'    => 'checkbox',
-                    'label'   => \ForkBB\__('I want to delete this category', $category['cat_name']),
+                    'label'   => \ForkBB\__('I want to delete the category %s', $category['cat_name']),
                     'value'   => '1',
                     'checked' => false,
                 ],
@@ -203,7 +203,7 @@ class Categories extends Admin
         $this->aIndex    = 'categories';
         $this->titles    = \ForkBB\__('Delete category head');
         $this->form      = $form;
-        $this->classForm = 'deletecategory';
+        $this->classForm = ['deletecategory', 'btnsrow'];
         $this->titleForm = \ForkBB\__('Delete category head');
 
         return $this;

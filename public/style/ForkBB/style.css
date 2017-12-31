@@ -528,6 +528,10 @@ select {
 /*  margin-top: 0.625rem; */
 }
 
+.f-fdiv .f-finfo + fieldset {
+  padding-top: 0;
+}
+  
 .f-ctrl {
   border: 0.0625rem solid #AA7939;
 }
@@ -1533,15 +1537,13 @@ li + li .f-btn {
   border: 0;
 }
 
-.f-post-form .f-btn,
-.f-deletegroup-form .f-btn,
-.f-deletecategory-form .f-btn {
+.f-btnsrow-form .f-btns .f-btn {
   width: auto;
   display: inline;
 }
 
 .f-deletegroup-form .f-btns {
-  text-align: center;
+/*  text-align: center; */
 }
 
 #id-message {
@@ -1564,49 +1566,63 @@ li + li .f-btn {
 
 /*********************/
 /* Админка/Категории */
+/* Админка/Разделы   */
 /*********************/
 
-.f-editcategories-form dt {
+.f-inline-form dt {
   display: none;
 }
 
-.f-editcategories-form dd {
+.f-inline-form dd {
   padding-left: 0;
 }
 
-.f-editcategories-form .f-field-name {
+.f-inline-form .f-field-name {
   float: left;
   width: calc(100% - 8rem);
 }
 
-.f-editcategories-form .f-field-position {
+.f-inline-form .f-field-position {
   padding-left: 0.625rem;
   float: left;
   width: 5rem;
 }
 
-.f-editcategories-form .f-field-delete {
+.f-inline-form .f-field-delete {
   padding-left: 0.625rem;
   float: left;
   width: 3rem;
   overflow: hidden;
 }
 
-.f-editcategories-form .f-field-delete .f-btn {
+.f-inline-form .f-field-delete .f-btn {
   margin: 0;
   text-align: center;
 }
 
-.f-editcategories-form dl:first-child dt,
-.f-editcategories-form dl:nth-child(2) dt,
-.f-editcategories-form dl:nth-child(3) dt,
-.f-editcategories-form dl:last-child dt {
+.f-inline-form .f-field-name .f-btn {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.f-inline-form fieldset dl:nth-child(-n+3) dt,
+.f-inline-form .f-field-new dt {
   display: block;
   width: 100%;
   overflow: hidden;
   float: none;
 }
 
-.f-editcategories-form .f-child1 {
+.f-inline-form .f-child1 {
   font-weight: normal;
+}
+
+.f-field-depth1 dd {
+  padding-left: 0.625rem;
+}
+
+.f-field-depth2 dd {
+  padding-left: 1.25rem;
 }

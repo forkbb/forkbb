@@ -19,7 +19,7 @@
             <legend>{!! $set['legend'] !!}</legend>
     @endif
     @foreach ($set['fields'] as $key => $cur)
-            <dl @if (isset($cur['dl'])) class="f-field-{{ $cur['dl'] }}" @endif>
+            <dl @if (isset($cur['dl'])) class="f-field-{!! implode(' f-field-', (array) $cur['dl']) !!}" @endif>
               <dt> @if (isset($cur['title']))<label class="f-child1 @if (isset($cur['required'])) f-req @endif" @if (is_string($key)) for="id-{{ $key }}" @endif>{!! $cur['title'] !!}</label> @endif</dt>
               <dd>
       @if ('text' === $cur['type'])

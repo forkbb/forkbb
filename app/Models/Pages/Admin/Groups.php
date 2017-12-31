@@ -691,7 +691,7 @@ class Groups extends Admin
         $this->titles    = \ForkBB\__('Group delete');
         $this->form      = $form;
         $this->titleForm = \ForkBB\__('Group delete');
-        $this->classForm = 'deletegroup';
+        $this->classForm = ['deletegroup', 'btnsrow'];
 
         return $this;
     }

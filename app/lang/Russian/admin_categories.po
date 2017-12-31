@@ -27,11 +27,11 @@ msgstr "Удаление категории (вместе со всеми раз
 msgid "Confirm delete"
 msgstr "Удалить категорию?"
 
-msgid "I want to delete this category"
+msgid "I want to delete the category %s"
 msgstr "Да, я хочу удалить категорию <b>%s</b>"
 
 msgid "Delete category warn"
-msgstr "<b>ВНИМАНИЕ!</b> Удаляя категорию вы удалите все разделы, темы и сообщения относящиеся к ней (если таковые имеются)!"
+msgstr "<b>ВНИМАНИЕ!</b> При удалении категории будут удалены все разделы, темы и сообщения находящиеся в ней!"
 
 msgid "Must enter integer message"
 msgstr "Позиция должна быть неотрицательным целым числом."

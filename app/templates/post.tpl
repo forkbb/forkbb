@@ -26,7 +26,7 @@
     </section>
 @endif
 @if ($form = $p->form)
-    <section class="f-post-form">
+    <section class="f-post-form f-btnsrow-form">
       <h2>{!! $p->formTitle !!}</h2>
       <div class="f-fdiv">
   @include ('layouts/form')
