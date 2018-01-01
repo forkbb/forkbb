@@ -9,6 +9,65 @@ use ForkBB\Models\Pages\Admin;
 class Forums extends Admin
 {
     /**
+     * Получение списка разделов и подразделов
+     * 
+     * @param Forum $forum
+     * @param int $depth
+     * @param array $list
+     * 
+     * @return array
+     */
+    protected function forumsList(Forum $forum, $depth, array $list = [])
+    {
+        ++$depth;
+        foreach ($forum->subforums as $sub) {
+            $sub->__depth = $depth;
+            $list[] = $sub;
+    
+            $list = $this->forumsList($sub, $depth, $list);
+        }
+        return $list;
+    }
+
+    /**
+     * Получение списка опций для выбора родителя
+     * 
+     * @param Forum $forum
+     */
+    protected function calcList(Forum $forum)
+    {
+        $cid        = null;
+        $categories = $this->c->categories->getList();
+        $options    = [
+            [0, \ForkBB\__('Not selected')],
+        ];
+        $idxs       = [];
+        foreach ($this->forumsList($this->c->forums->get(0), 0) as $f) {
+            if ($cid !== $f->cat_id) {
+                $cid       = $f->cat_id;
+                $options[] = [-$cid, \ForkBB\__('Category prefix') . $f->cat_name];
+                $idxs[]    = -$cid;
+                unset($categories[$cid]);
+            }
+            
+            $indent = str_repeat(\ForkBB\__('Forum indent'), $f->depth);
+
+            if ($f->id === $forum->id || isset($forum->descendants[$f->id]) || $f->redirect_url) {
+                $options[] = [$f->id, $indent . \ForkBB\__('Forum prefix') . $f->forum_name, true];
+            } else {
+                $options[] = [$f->id, $indent . \ForkBB\__('Forum prefix') . $f->forum_name];
+                $idxs[]    = $f->id;
+            }
+        }
+        foreach ($categories as $key => $row) {
+            $idxs[]    = -$key;
+            $options[] = [-$key, \ForkBB\__('Category prefix') . $row['cat_name']];
+        }
+        $this->listOfIndexes  = $idxs;
+        $this->listForOptions = $options;
+    }
+
+    /**
      * Просмотр, редактирвоание и добавление разделов
      *
      * @param array $args
@@ -54,7 +113,7 @@ class Forums extends Admin
             ],
             'sets'   => [],
             'btns'   => [
-                'submit'  => [
+                'update'  => [
                     'type'      => 'submit',
                     'value'     => \ForkBB\__('Update positions'),
                     'accesskey' => 'u',
@@ -62,8 +121,7 @@ class Forums extends Admin
             ],
         ];
 
-        $root = $this->c->forums->get(0);
-        $list = $this->createList([], $root, -1);
+        $list = $this->forumsList($this->c->forums->get(0), -1);
 
         $fieldset = [];
         $cid = null;
@@ -73,6 +131,7 @@ class Forums extends Admin
                     $form['sets'][] = [
                         'fields' => $fieldset,
                     ];
+                    $fieldset = [];
                 }
 
                 $form['sets'][] = [
@@ -83,10 +142,8 @@ class Forums extends Admin
                         ],
                     ],
                 ];
-
-                $fieldset = [];
+                $cid = $forum->cat_id;
             }
-            $cid = $forum->cat_id;
 
             $fieldset[] = [
                 'dl'        => ['name', 'depth' . $forum->depth],
@@ -127,28 +184,7 @@ class Forums extends Admin
     }
 
     /**
-     * Получение списка разделов и подразделов
-     * 
-     * @param array $list
-     * @param Forum $forum
-     * @param int $depth
-     * 
-     * @return array
-     */
-    protected function createList(array $list, Forum $forum, $depth)
-    {
-        ++$depth;
-        foreach ($forum->subforums as $sub) {
-            $sub->__depth = $depth;
-            $list[] = $sub;
-    
-            $list = $this->createList($list, $sub, $depth);
-        }
-        return $list;
-    }
-
-    /**
-     * Удаление категорий
+     * Удаление раздела
      *
      * @param array $args
      * @param string $method
@@ -239,5 +275,166 @@ class Forums extends Admin
         $this->titleForm = \ForkBB\__('Delete forum head');
 
         return $this;
+    }
+
+    /**
+     * Редактирование раздела
+     * Создание нового раздела 
+     *
+     * @param array $args
+     * @param string $method
+     *
+     * @return Page
+     */
+    public function edit(array $args, $method)
+    {
+        $this->c->Lang->load('admin_forums');
+
+        if (empty($args['id'])) {
+            $forum           = $this->c->forums->create();
+            $marker          = 'AdminForumsNew';
+            $this->titles    = \ForkBB\__('Add forum head');
+            $this->titleForm = \ForkBB\__('Add forum head');
+            $this->classForm = 'createforum';
+        } else {
+            $forum           = $this->c->forums->loadTree((int) $args['id']); //?????
+            $marker          = 'AdminForumsEdit';
+            $this->titles    = \ForkBB\__('Edit forum head');
+            $this->titleForm = \ForkBB\__('Edit forum head');
+            $this->classForm = 'editforum';
+        }
+
+        if (! $forum instanceof Forum) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $this->calcList($forum);
+
+        if ('POST' === $method) {
+            $v = $this->c->Validator->setRules([
+                'token'        => 'token:' . $marker,
+                'forum_name'   => 'required|string:trim|max:80',
+                'forum_desc'   => 'string:trim|max:65000 bytes',
+                'parent'       => 'required|integer|in:' . implode(',', $this->listOfIndexes),
+                'sort_by'      => 'required|integer|in:0,1,2',
+                'redirect_url' => 'string:trim|max:100',
+            ])->setArguments([
+                'token' => $args,
+            ]);
+
+            $valid = $v->validation($_POST);
+
+            $forum->forum_name   = $v->forum_name;
+            $forum->forum_desc   = $v->forum_desc;
+            $forum->sort_by      = $v->sort_by;
+            $forum->redirect_url = $v->redirect_url; //???? null
+            if ($v->parent > 0) {
+                $forum->parent_forum_id = $v->parent;
+                $forum->cat_id          = $this->c->forums->get($v->parent)->cat_id;
+            } elseif ($v->parent < 0) {
+                $forum->cat_id          = -$v->parent;
+                $forum->parent_forum_id = 0;
+            }
+
+            if ($valid) {
+                $this->c->DB->beginTransaction();
+
+                if (empty($args['id'])) {
+                    $message = 'Forum added redirect';
+                    $this->c->forums->insert($forum);
+                } else {
+                    $message = 'Forum updated redirect';
+                    $this->c->forums->update($forum);
+                }
+
+                //???? права
+
+                $this->c->DB->commit();
+
+                $this->c->Cache->delete('forums_mark');
+
+                return $this->c->Redirect->page('AdminForums')->message($message);
+            }
+
+            $this->fIswev  = $v->getErrors();
+        }
+
+        $this->nameTpl   = 'admin/form';
+        $this->aIndex    = 'forums';
+        $this->form      = $this->viewForm($forum, $marker, $args);
+
+        return $this;
+    }
+
+    /**
+     * Формирует данные для формы редактирования раздела
+     *
+     * @param Forum $forum
+     * @param string $marker
+     * @param array $args
+     *
+     * @return array
+     */
+    protected function viewForm(Forum $forum, $marker, array $args)
+    {
+        $form = [
+            'action' => $this->c->Router->link($marker, $args),
+            'hidden' => [
+                'token' => $this->c->Csrf->create($marker, $args),
+            ],
+            'sets'   => [],
+            'btns'   => [
+                'submit'  => [
+                    'type'      => 'submit',
+                    'value'     => empty($forum->id) ? \ForkBB\__('Add') : \ForkBB\__('Update'),
+                    'accesskey' => 's',
+                ],
+            ],
+        ];
+
+        $form['sets'][] = [
+            'fields' => [
+                'forum_name' => [
+                    'type'      => 'text',
+                    'maxlength' => 80,
+                    'value'     => $forum->forum_name,
+                    'title'     => \ForkBB\__('Forum name label'),
+                    'required'  => true,
+                ],
+                'forum_desc' => [
+                    'type'      => 'textarea',
+                    'value'     => $forum->forum_desc,
+                    'title'     => \ForkBB\__('Forum description label'),
+                ],
+                'parent' => [
+                    'type'     => 'select',
+                    'options'  => $this->listForOptions,
+                    'value'    => $forum->parent_forum_id ? $forum->parent_forum_id : -$forum->cat_id,
+                    'title'    => \ForkBB\__('Parent label'),
+                    'info'     => \ForkBB\__('Parent help'),
+                    'required' => true,
+                ],
+                'sort_by' => [
+                    'type'    => 'select',
+                    'options' => [
+                        0 => \ForkBB\__('Last post option'),
+                        1 => \ForkBB\__('Topic start option'),
+                        2 => \ForkBB\__('Subject option'),
+                    ],
+                    'value'   => $forum->sort_by,
+                    'title'   => \ForkBB\__('Sort by label'),
+                ],
+                'redirect_url' => [
+                    'type'      => 'text',
+                    'maxlength' => 100, //?????
+                    'value'     => $forum->redirect_url,
+                    'title'     => \ForkBB\__('Redirect label'),
+                    'info'      => \ForkBB\__('Redirect help'),
+                    'disabled'  => $forum->num_topics ? true : null,
+                ],
+            ],
+        ];
+
+        return $form;
     }
 }

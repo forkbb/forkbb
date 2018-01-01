@@ -40,7 +40,23 @@ class Save extends Action
             return $forum;
         }
         $vars[] = $forum->id;
-        $this->c->DB->query('UPDATE ::forums SET ' . implode(', ', $set) . ' WHERE id=?i', $vars);
+
+        $this->c->DB->exec('UPDATE ::forums SET ' . implode(', ', $set) . ' WHERE id=?i', $vars);
+
+        // модификация категории у потомков при ее изменении
+        if (in_array('cat_id', $modified) && $forum->descendants) {
+            foreach ($forum->descendants as $f) {
+                $f->__cat_id = $values['cat_id'];
+            }
+            $vars = [
+                ':ids'      => array_keys($forum->descendants),
+                ':category' => $values['cat_id'],
+            ];
+            $sql = 'UPDATE ::forums SET cat_id=?i:category WHERE id IN (?ai:ids)';
+
+            $this->c->DB->exec($sql, $vars);
+        }
+
         $forum->resModified();
 
         return $forum;

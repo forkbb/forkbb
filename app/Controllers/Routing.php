@@ -110,6 +110,7 @@ class Routing
             $r->add(['GET', 'POST'], '/admin/categories/{id:[1-9]\d*}/delete', 'AdminCategories:delete', 'AdminCategoriesDelete');
 
             $r->add(['GET', 'POST'], '/admin/forums',                          'AdminForums:view',       'AdminForums'       );
+            $r->add(['GET', 'POST'], '/admin/forums/new',                      'AdminForums:edit',       'AdminForumsNew'    );
             $r->add(['GET', 'POST'], '/admin/forums/{id:[1-9]\d*}/edit',       'AdminForums:edit',       'AdminForumsEdit'   );
             $r->add(['GET', 'POST'], '/admin/forums/{id:[1-9]\d*}/delete',     'AdminForums:delete',     'AdminForumsDelete' );
             $r->add('GET',           '/admin/groups',                          'AdminGroups:view',       'AdminGroups'       );

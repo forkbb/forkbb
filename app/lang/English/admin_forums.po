@@ -105,20 +105,20 @@ msgstr "Category"
 msgid "Sort by label"
 msgstr "Sort topics by"
 
-msgid "Last post"
+msgid "Last post option"
 msgstr "Last post"
 
-msgid "Topic start"
+msgid "Topic start option"
 msgstr "Topic start"
 
-msgid "Subject"
+msgid "Subject option"
 msgstr "Subject"
 
 msgid "Redirect label"
 msgstr "Redirect URL"
 
 msgid "Redirect help"
-msgstr "Only available in empty forums"
+msgstr "Only available in empty forums."
 
 msgid "Group permissions subhead"
 msgstr "Edit group permissions for this forum"
@@ -137,3 +137,21 @@ msgstr "Post topics"
 
 msgid "Revert to default"
 msgstr "Revert to default"
+
+msgid "Parent label"
+msgstr "Parent"
+
+msgid "Parent help"
+msgstr "Category or forum for the location of this forum."
+
+msgid "Not selected"
+msgstr "Not selected"
+
+msgid "Category prefix"
+msgstr "▶ "
+
+msgid "Forum prefix"
+msgstr ""
+
+msgid "Forum indent"
+msgstr "◦ ◦ "

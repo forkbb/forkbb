@@ -167,7 +167,7 @@ class Lang
                         }
 
                     // одиночный
-                    } elseif (isset($cur[0]{0})) {
+                    } elseif (isset($cur[0])) { // {0}
                         $result[$cur['msgid']] = $cur[0];
                     }
                 }

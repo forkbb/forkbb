@@ -105,20 +105,20 @@ msgstr "Категория"
 msgid "Sort by label"
 msgstr "Сортировать темы по"
 
-msgid "Last post"
+msgid "Last post option"
 msgstr "Последнему сообщению"
 
-msgid "Topic start"
-msgstr "Дате старта темы"
+msgid "Topic start option"
+msgstr "Первому сообщению"
 
-msgid "Subject"
+msgid "Subject option"
 msgstr "Заголовку"
 
 msgid "Redirect label"
 msgstr "URL переадресации"
 
 msgid "Redirect help"
-msgstr "Доступно только для пустых разделов"
+msgstr "Доступно только для пустых разделов."
 
 msgid "Group permissions subhead"
 msgstr "Изменения прав доступа к разделу"
@@ -137,3 +137,21 @@ msgstr "Создавать темы"
 
 msgid "Revert to default"
 msgstr "Вернуть по умолчанию"
+
+msgid "Parent label"
+msgstr "Родитель"
+
+msgid "Parent help"
+msgstr "Категория или раздел для расположения данного раздела."
+
+msgid "Not selected"
+msgstr "Не выбран"
+
+msgid "Category prefix"
+msgstr "▶ "
+
+msgid "Forum prefix"
+msgstr ""
+
+msgid "Forum indent"
+msgstr "◦ ◦ "
