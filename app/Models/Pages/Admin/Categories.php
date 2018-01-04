@@ -70,7 +70,7 @@ class Categories extends Admin
         $fieldset = [];
         foreach ($this->c->categories->getList() as $key => $row) {
             $fieldset["form[{$key}][cat_name]"] = [
-                'dl'        => 'name',
+                'dl'        => ['name', 'inline'],
                 'type'      => 'text',
                 'maxlength' => 80,
                 'value'     => $row['cat_name'],
@@ -78,7 +78,7 @@ class Categories extends Admin
                 'required'  => true,
             ];
             $fieldset["form[{$key}][disp_position]"] = [
-                'dl'    => 'position',
+                'dl'    => ['position', 'inline'],
                 'type'  => 'number',
                 'min'   => 0,
                 'max'   => 9999999999,
@@ -86,7 +86,7 @@ class Categories extends Admin
                 'title' => \ForkBB\__('Category position label'),
             ];
             $fieldset[] = [
-                'dl'    => 'delete',
+                'dl'    => ['delete', 'inline'],
                 'type'  => 'btn',
                 'value' => '❌',
                 'title' => \ForkBB\__('Delete'),
@@ -109,7 +109,7 @@ class Categories extends Admin
         $this->aIndex    = 'categories';
         $this->titles    = \ForkBB\__('Categories');
         $this->form      = $form;
-        $this->classForm = ['editcategories', 'inline'];
+        $this->classForm = 'editcategories';
         $this->titleForm = \ForkBB\__('Categories');
 
         return $this;

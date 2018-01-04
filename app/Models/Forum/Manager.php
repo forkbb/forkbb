@@ -4,6 +4,7 @@ namespace ForkBB\Models\Forum;
 
 use ForkBB\Models\ManagerModel;
 use ForkBB\Models\Forum\Model as Forum;
+use ForkBB\Models\Group\Model as Group;
 use RuntimeException;
 
 class Manager extends ManagerModel
@@ -29,24 +30,26 @@ class Manager extends ManagerModel
     /**
      * Инициализация списка разделов
      * 
-     * @param int $gid
+     * @param Group $group
      *
      * @return Manager
      */
-    public function init($gid = 0)
+    public function init(Group $group = null)
     {
-        if (empty($gid)) {
+        if (null === $group) {
             $gid = $this->c->user->group_id;
+        } else {
+            $gid = $group->g_id;
         }
 
         $mark = $this->c->Cache->get('forums_mark');
         if (empty($mark)) {
             $this->c->Cache->set('forums_mark', time());
-            $list = $this->refresh($gid);
+            $list = $this->refresh($group);
         } else {
             $result = $this->c->Cache->get('forums_' . $gid);
             if (empty($result['time']) || $result['time'] < $mark) {
-                $list = $this->refresh($gid);
+                $list = $this->refresh($group);
             } else {
                 $list = $result['list'];
             }

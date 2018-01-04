@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Forum;
 
 use ForkBB\Models\Action;
+use ForkBB\Models\Group\Model as Group;
 
 class Refresh extends Action
 {
@@ -15,25 +16,25 @@ class Refresh extends Action
      * Возвращает список доступных разделов для группы
      * Обновляет кеш
      *
-     * @param int $gid
+     * @param Group $group
      * 
      * @return array
      */
-    public function refresh($gid)
+    public function refresh(Group $group = null)
     {
-        $vars = [
-            ':gid' => $gid,
-        ];
-        
-        if ($this->c->user->group_id === $gid) {
+        if (null === $group) {
+            $gid  = $this->c->user->group_id;
             $read = $this->c->user->g_read_board;
         } else {
-            $sql = 'SELECT g_read_board FROM ::groups WHERE g_id=?i:gid';
-            $read = $this->c->DB->query($sql, $vars)->fetchColumn();
+            $gid  = $group->g_id;
+            $read = $group->g_read_board;
         }
 
-        if ($read == '1') {
+        if ('1' == $read) {
             $list = [];
+            $vars = [
+                ':gid' => $gid,
+            ];
             $sql  = 'SELECT f.cat_id, c.cat_name, f.id, f.forum_name, f.redirect_url, f.parent_forum_id,
                             f.moderators, f.no_sum_mess, f.disp_position, fp.post_topics, fp.post_replies
                      FROM ::categories AS c
@@ -91,7 +92,7 @@ class Refresh extends Action
             $sub[] = $id;
             $all   = array_merge($this->createList($list, $id), $all);
         }
-        if ($parent === 0) {
+        if (0 === $parent) {
             if (empty($sub)) {
                 return [];
             }
@@ -103,7 +104,7 @@ class Refresh extends Action
         $list[$parent]['descendants'] = $all ?: null;
         
         $this->list[$parent] = array_filter($list[$parent], function($val) {
-            return $val !== null;
+            return null !== $val;
         });
         return $all;
     }

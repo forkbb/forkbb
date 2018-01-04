@@ -416,8 +416,7 @@ select {
   border: 0.0625rem solid #AA7939;
 }
 
-.f-fdiv h2,
-.f-fdiv fieldset {
+.f-fdiv h2 {
   padding: 0.625rem 0.625rem 0 0.625rem;
 }
 
@@ -427,6 +426,15 @@ select {
 
 .f-fdiv dl {
   padding: 0 0 0.625rem 0;
+}
+
+.f-fdiv fieldset {
+  padding: 0 0.625rem;
+}
+
+.f-fdiv fieldset > legend:first-child,
+.f-fdiv fieldset > dl:first-child:not(.f-field-inline) {
+  padding-top: 0.625rem;
 }
 
 .f-fdiv .f-ctrl,
@@ -518,6 +526,7 @@ select {
   padding: 0.625rem;
   color: #F8F4E3;
   margin-bottom: 0.625rem;
+  text-align: justify
 }
 
 .f-fdiv .f-finfo + .f-finfo {
@@ -529,7 +538,7 @@ select {
 }
 
 .f-fdiv .f-finfo + fieldset {
-  padding-top: 0;
+/*  padding-top: 0; */
 }
   
 .f-ctrl {
@@ -1568,54 +1577,54 @@ li + li .f-btn {
 /* Админка/Категории */
 /* Админка/Разделы   */
 /*********************/
-
-.f-inline-form dt {
+.f-field-inline > dt {
   display: none;
 }
 
-.f-inline-form dd {
+.f-field-inline > dd {
   padding-left: 0;
 }
 
-.f-inline-form .f-field-name {
+.f-field-inline.f-field-name {
   float: left;
   width: calc(100% - 8rem);
 }
 
-.f-inline-form .f-field-position {
+.f-field-inline.f-field-position {
   padding-left: 0.625rem;
   float: left;
   width: 5rem;
 }
 
-.f-inline-form .f-field-delete {
+.f-field-inline.f-field-delete {
   padding-left: 0.625rem;
   float: left;
   width: 3rem;
   overflow: hidden;
 }
 
-.f-inline-form .f-field-delete .f-btn {
+.f-field-inline .f-btn {
   margin: 0;
+}
+
+.f-field-delete .f-btn {
   text-align: center;
 }
 
-.f-inline-form .f-field-name .f-btn {
-  margin: 0;
+.f-field-name .f-btn {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.f-inline-form fieldset dl:nth-child(-n+3) dt,
-.f-inline-form .f-field-new dt {
+.f-field-inline:nth-child(-n+3) > dt {
   display: block;
   width: 100%;
   overflow: hidden;
   float: none;
 }
 
-.f-inline-form .f-child1 {
+.f-field-inline .f-child1 {
   font-weight: normal;
 }
 
@@ -1625,4 +1634,68 @@ li + li .f-btn {
 
 .f-field-depth2 dd {
   padding-left: 1.25rem;
+}
+
+.f-editcategories-form .f-field-inline:nth-child(-n+3) {
+  padding-top: 0.625rem;
+}
+
+/*********************/
+/* Админка/Разделы   */
+/*********************/
+.f-field-inline.f-field-cando {
+  float: left;
+  width: 33.333%;
+  padding-left: 0.625rem;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  text-align: center;
+  position: relative;
+}
+
+.f-field-inline.f-field-cando > dt {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  float: none;
+}
+
+.f-field-inline.f-field-cando > dt > label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.f-editforum-form legend {
+  margin-bottom: 0;
+}
+
+.f-field-on input:not(:checked) + span {
+  opacity: 0.2;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: red;
+}
+
+.f-field-off input:checked + span {
+  opacity: 0.2;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: red;
+}
+
+.f-field-cando input:disabled + span {
+  opacity: 0.2;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: gray;
 }

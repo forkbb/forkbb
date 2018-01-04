@@ -30,7 +30,7 @@ class Forums extends Admin
     }
 
     /**
-     * Получение списка опций для выбора родителя
+     * Составление списка категорий/разделов для выбора родителя
      * 
      * @param Forum $forum
      */
@@ -39,7 +39,7 @@ class Forums extends Admin
         $cid        = null;
         $categories = $this->c->categories->getList();
         $options    = [
-            [0, \ForkBB\__('Not selected')],
+            ['', \ForkBB\__('Not selected')],
         ];
         $idxs       = [];
         foreach ($this->forumsList($this->c->forums->get(0), 0) as $f) {
@@ -146,14 +146,14 @@ class Forums extends Admin
             }
 
             $fieldset[] = [
-                'dl'        => ['name', 'depth' . $forum->depth],
+                'dl'        => ['name', 'inline', 'depth' . $forum->depth],
                 'type'      => 'btn',
                 'value'     => $forum->forum_name,
                 'title'     => \ForkBB\__('Forum label'),
                 'link'      => $this->c->Router->link('AdminForumsEdit', ['id' => $forum->id]),
             ];
             $fieldset["form[{$forum->id}][disp_position]"] = [
-                'dl'    => 'position',
+                'dl'    => ['position', 'inline'],
                 'type'  => 'number',
                 'min'   => 0,
                 'max'   => 9999999999,
@@ -161,7 +161,7 @@ class Forums extends Admin
                 'title' => \ForkBB\__('Position label'),
             ];
             $fieldset[] = [
-                'dl'    => 'delete',
+                'dl'    => ['delete', 'inline'],
                 'type'  => 'btn',
                 'value' => '❌',
                 'title' => \ForkBB\__('Delete'),
@@ -312,12 +312,15 @@ class Forums extends Admin
 
         if ('POST' === $method) {
             $v = $this->c->Validator->setRules([
-                'token'        => 'token:' . $marker,
-                'forum_name'   => 'required|string:trim|max:80',
-                'forum_desc'   => 'string:trim|max:65000 bytes',
-                'parent'       => 'required|integer|in:' . implode(',', $this->listOfIndexes),
-                'sort_by'      => 'required|integer|in:0,1,2',
-                'redirect_url' => 'string:trim|max:100',
+                'token'                => 'token:' . $marker,
+                'forum_name'           => 'required|string:trim|max:80',
+                'forum_desc'           => 'string:trim|max:65000 bytes',
+                'parent'               => 'required|integer|in:' . implode(',', $this->listOfIndexes),
+                'sort_by'              => 'required|integer|in:0,1,2',
+                'redirect_url'         => 'string:trim|max:100',
+                'perms.*.read_forum'   => 'checkbox',
+                'perms.*.post_replies' => 'checkbox',
+                'perms.*.post_topics'  => 'checkbox',
             ])->setArguments([
                 'token' => $args,
             ]);
@@ -347,7 +350,7 @@ class Forums extends Admin
                     $this->c->forums->update($forum);
                 }
 
-                //???? права
+                $this->c->groups->Perm->update($forum, $v->perms);
 
                 $this->c->DB->commit();
 
@@ -430,10 +433,58 @@ class Forums extends Admin
                     'value'     => $forum->redirect_url,
                     'title'     => \ForkBB\__('Redirect label'),
                     'info'      => \ForkBB\__('Redirect help'),
-                    'disabled'  => $forum->num_topics ? true : null,
+                    'disabled'  => $forum->num_topics || $forum->subforums ? true : null,
                 ],
             ],
         ];
+
+        $form['sets'][] = [
+            'info' => [
+                'info1' => [
+                    'type'  => '', //????
+                    'value' => \ForkBB\__('Group permissions info', $this->c->Router->link('AdminGroups'), \ForkBB\__('User groups')),
+                    'html'  => true,
+                ],
+            ],
+        ];
+
+        $aOn  = ['cando', 'inline', 'on'];
+        $aOff = ['cando', 'inline', 'off'];
+        foreach ($this->c->groups->Perm->get($forum) as $id => $group) {
+            $fieldset = [];
+            $fieldset["perms[{$id}][read_forum]"] = [
+                'dl'       => $group->def_read_forum ? $aOn : $aOff,
+                'type'     => 'checkbox',
+                'value'    => '1',
+                'title'    => \ForkBB\__('Read forum label'),
+                'label'    => \ForkBB\__('<span></span>'),
+                'checked'  => $group->set_read_forum,
+                'disabled' => $group->dis_read_forum,
+            ];
+            $fieldset["perms[{$id}][post_replies]"] = [
+                'dl'       => $group->def_post_replies ? $aOn : $aOff,
+                'type'     => 'checkbox',
+                'value'    => '1',
+                'title'    => \ForkBB\__('Post replies label'),
+                'label'    => \ForkBB\__('<span></span>'),
+                'checked'  => $group->set_post_replies,
+                'disabled' => $group->dis_post_replies,
+            ];
+            $fieldset["perms[{$id}][post_topics]"] = [
+                'dl'       => $group->def_post_topics ? $aOn : $aOff,
+                'type'     => 'checkbox',
+                'value'    => '1',
+                'title'    => \ForkBB\__('Post topics label'),
+                'label'    => \ForkBB\__('<span></span>'),
+                'checked'  => $group->set_post_topics,
+                'disabled' => $group->dis_post_topics,
+            ];
+
+            $form['sets'][] = [
+                'legend' => \ForkBB\e($group->g_title),
+                'fields' => $fieldset,
+            ];
+        }
 
         return $form;
     }

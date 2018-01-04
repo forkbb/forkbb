@@ -120,11 +120,14 @@ msgstr "Redirect URL"
 msgid "Redirect help"
 msgstr "Only available in empty forums."
 
-msgid "Group permissions subhead"
-msgstr "Edit group permissions for this forum"
+msgid "Access rights for groups"
+msgstr "Access rights for groups"
 
 msgid "Group permissions info"
-msgstr "In this form, you can set the forum specific permissions for the different user groups. If you haven\'t made any changes to this forum\'s group permissions, what you see below is the default based on settings in %s. Administrators always have full permissions and are thus excluded. Permission settings that differ from the default permissions for the user group are marked red. The "Read forum" permission checkbox will be disabled if the group in question lacks the "Read board" permission. For redirect forums, only the "Read forum" permission is editable."
+msgstr "In this form, you can set the forum specific permissions for the different user groups. If you haven't made any changes to this forum's group permissions, what you see below is the default based on settings in <a href=\"%1$s\">%2$s</a>. Administrators always have full permissions and are thus excluded. Permission settings that differ from the default permissions for the user group are marked red. The \"Read forum\" permission checkbox will be disabled if the group in question lacks the \"Read board\" permission. For redirect forums, only the \"Read forum\" permission is editable."
+
+msgid "Group label"
+msgstr "Group"
 
 msgid "Read forum label"
 msgstr "Read forum"
