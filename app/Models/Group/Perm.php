@@ -25,12 +25,8 @@ class Perm extends Action
      */
     public function get(Forum $forum)
     {
-        if ($forum->id < 1) {
-            throw new RuntimeException('The forum does not have ID');
-        }
-
         $vars = [
-            ':fid' => $forum->id,
+            ':fid' => $forum->id > 0 ? $forum->id : 0,
             ':adm' => $this->c->GROUP_ADMIN,
         ];
         $sql = 'SELECT g.g_id, fp.read_forum, fp.post_replies, fp.post_topics 
@@ -116,5 +112,26 @@ class Perm extends Action
                 $this->c->DB->exec($sql, $vars);
             }
         }
+    }
+
+    /**
+     * Обновление разрешений для раздела
+     *
+     * @param Forum $forum
+     * 
+     * @throws RuntimeException
+     */
+    public function reset(Forum $forum)
+    {
+        if ($forum->id < 1) {
+            throw new RuntimeException('The forum does not have ID');
+        }
+
+        $vars = [
+            ':fid' => $forum->id,
+        ];
+        $sql = 'DELETE FROM ::forum_perms 
+                WHERE forum_id=?i:fid';
+        $this->c->DB->exec($sql, $vars);
     }
 }

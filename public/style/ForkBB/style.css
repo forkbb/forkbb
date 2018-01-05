@@ -1699,3 +1699,15 @@ li + li .f-btn {
   right: 0;
   background: gray;
 }
+
+.f-editforums-form .f-btn[data-name=new],
+.f-editforum-form .f-btn[name=reset] {
+  float: right;
+  width: auto;
+}
+
+.f-btn.f-disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.5;
+}

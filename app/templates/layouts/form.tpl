@@ -54,7 +54,7 @@
       @elseif ('password' === $cur['type'])
                 <input @if (isset($cur['required'])) required @endif @if (! empty($cur['disabled'])) disabled @endif @if (isset($cur['autofocus'])) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="password" @if (! empty($cur['maxlength'])) maxlength="{{ $cur['maxlength'] }}" @endif @if (isset($cur['pattern'])) pattern="{{ $cur['pattern'] }}" @endif @if (isset($cur['value'])) value="{{ $cur['value'] }}" @endif>
       @elseif ('btn' === $cur['type'])
-                <a class="f-btn" href="{!! $cur['link'] !!}">{{ $cur['value'] }}</a>
+                <a class="f-btn @if (! empty($cur['disabled'])) f-disabled @endif" href="{!! $cur['link'] !!}" @if (! empty($cur['disabled'])) tabindex="-1" @endif>{{ $cur['value'] }}</a>
       @endif
       @if (isset($cur['info']))
                 <p class="f-child4">{!! $cur['info'] !!}</p>
@@ -67,7 +67,11 @@
 @endforeach
           <p class="f-btns">
 @foreach ($form['btns'] as $key => $cur)
+  @if ('submit' === $cur['type'])
             <input class="f-btn @if(isset($cur['class'])) {{ $cur['class'] }} @endif" type="{{ $cur['type'] }}" name="{{ $key }}" value="{{ $cur['value'] }}" @if (isset($cur['accesskey'])) accesskey="{{ $cur['accesskey'] }}" @endif>
+  @elseif ('btn'=== $cur['type'])          
+            <a class="f-btn @if(isset($cur['class'])) {{ $cur['class'] }} @endif" data-name="{{ $key }}" href="{!! $cur['link'] !!}" @if (isset($cur['accesskey'])) accesskey="{{ $cur['accesskey'] }}" @endif>{{ $cur['value'] }}</a>
+  @endif
 @endforeach
           </p>
         </form>

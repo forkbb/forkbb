@@ -100,7 +100,7 @@ class Manager extends ManagerModel
      * 
      * @return int
      */
-    public function insert(Topic $forum)
+    public function insert(Forum $forum)
     {
         $id = $this->Save->insert($forum);
         $this->set($id, $forum);

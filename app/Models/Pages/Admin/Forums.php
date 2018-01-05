@@ -113,6 +113,12 @@ class Forums extends Admin
             ],
             'sets'   => [],
             'btns'   => [
+                'new'  => [
+                    'type'      => 'btn',
+                    'value'     => \ForkBB\__('New forum'),
+                    'link'      => $this->c->Router->link('AdminForumsNew'),
+                    'accesskey' => 'n',
+                ],
                 'update'  => [
                     'type'      => 'submit',
                     'value'     => \ForkBB\__('Update positions'),
@@ -160,12 +166,14 @@ class Forums extends Admin
                 'value' => $forum->disp_position,
                 'title' => \ForkBB\__('Position label'),
             ];
+            $disabled = (bool) $forum->subforums;
             $fieldset[] = [
-                'dl'    => ['delete', 'inline'],
-                'type'  => 'btn',
-                'value' => '❌',
-                'title' => \ForkBB\__('Delete'),
-                'link'  => $this->c->Router->link('AdminForumsDelete', ['id' => $forum->id]),
+                'dl'       => ['delete', 'inline'],
+                'type'     => 'btn',
+                'value'    => '❌',
+                'title'    => \ForkBB\__('Delete'),
+                'link'     => $disabled ? '#' : $this->c->Router->link('AdminForumsDelete', ['id' => $forum->id]),
+                'disabled' => $disabled,
             ];
         }
 
@@ -194,7 +202,7 @@ class Forums extends Admin
     public function delete(array $args, $method)
     {
         $forum = $this->c->forums->get((int) $args['id']);
-        if (! $forum instanceof Forum) {
+        if (! $forum instanceof Forum || $forum->subforums) {
             return $this->c->Message->message('Bad request');
         }
 
@@ -321,6 +329,8 @@ class Forums extends Admin
                 'perms.*.read_forum'   => 'checkbox',
                 'perms.*.post_replies' => 'checkbox',
                 'perms.*.post_topics'  => 'checkbox',
+                'submit'               => 'string',
+                'reset'                => empty($forum->id) ? 'absent' : 'string',
             ])->setArguments([
                 'token' => $args,
             ]);
@@ -342,15 +352,20 @@ class Forums extends Admin
             if ($valid) {
                 $this->c->DB->beginTransaction();
 
-                if (empty($args['id'])) {
-                    $message = 'Forum added redirect';
-                    $this->c->forums->insert($forum);
+                if ($v->reset) {
+                    $message = 'Perms reverted redirect';
+                    $this->c->groups->Perm->reset($forum);
                 } else {
-                    $message = 'Forum updated redirect';
-                    $this->c->forums->update($forum);
+                    if (empty($args['id'])) {
+                        $message = 'Forum added redirect';
+                        $this->c->forums->insert($forum);
+                    } else {
+                        $message = 'Forum updated redirect';
+                        $this->c->forums->update($forum);
+                    }
+    
+                    $this->c->groups->Perm->update($forum, $v->perms);
                 }
-
-                $this->c->groups->Perm->update($forum, $v->perms);
 
                 $this->c->DB->commit();
 
@@ -386,13 +401,21 @@ class Forums extends Admin
                 'token' => $this->c->Csrf->create($marker, $args),
             ],
             'sets'   => [],
-            'btns'   => [
-                'submit'  => [
-                    'type'      => 'submit',
-                    'value'     => empty($forum->id) ? \ForkBB\__('Add') : \ForkBB\__('Update'),
-                    'accesskey' => 's',
-                ],
-            ],
+            'btns'   => [],
+        ];
+
+        if ($forum->id > 0) {
+            $form['btns']['reset'] = [
+                'type'      => 'submit',
+                'value'     => \ForkBB\__('Revert to default'),
+                'accesskey' => 'r',
+            ];
+        }
+
+        $form['btns']['submit'] = [
+            'type'      => 'submit',
+            'value'     => empty($forum->id) ? \ForkBB\__('Add') : \ForkBB\__('Update'),
+            'accesskey' => 's',
         ];
 
         $form['sets'][] = [
