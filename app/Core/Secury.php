@@ -60,7 +60,7 @@ class Secury
         if (empty($key)) {
             throw new InvalidArgumentException('Key can not be empty');
         }
-        return hash_hmac($this->hmac['algo'], $data, $this->hmac['salt'] . $key);
+        return hash_hmac($this->hmac['algo'], $data, $key . $this->hmac['salt']);
     }
 
     /**

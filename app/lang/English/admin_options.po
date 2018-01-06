@@ -46,13 +46,13 @@ msgid "Board title label"
 msgstr "Board title"
 
 msgid "Board title help"
-msgstr "The title of this bulletin board (shown at the top of every page). This field may <strong>not</strong> contain HTML."
+msgstr "The title of this bulletin board (shown at the top of every page). This field <b>not may</b> contain HTML."
 
 msgid "Board desc label"
 msgstr "Board description"
 
 msgid "Board desc help"
-msgstr "A short description of this bulletin board (shown at the top of every page). This field may contain HTML."
+msgstr "A short description of this bulletin board (shown at the top of every page). This field <b>may</b> contain HTML."
 
 msgid "Timezone label"
 msgstr "Default time zone"
@@ -70,13 +70,13 @@ msgid "Language label"
 msgstr "Default language"
 
 msgid "Language help"
-msgstr "The default language for guests and users who haven\'t changed from the default in their profile. If you remove a language pack, this must be updated."
+msgstr "The default language for guests and users who haven't changed from the default in their profile."
 
 msgid "Default style label"
 msgstr "Default style"
 
 msgid "Default style help"
-msgstr "The default style for guests and users who haven\'t changed from the default in their profile."
+msgstr "The default style for guests and users who haven't changed from the default in their profile."
 
 msgid "UTC-12:00"
 msgstr "(UTC-12:00) International Date Line West"
@@ -481,7 +481,7 @@ msgid "SMTP username label"
 msgstr "SMTP username"
 
 msgid "SMTP username help"
-msgstr "Username for SMTP server. Only enter a username if it is required by the SMTP server (most servers <strong>do not</strong> require authentication)."
+msgstr "Username for SMTP server. Only enter a username if it is required by the SMTP server."
 
 msgid "SMTP password label"
 msgstr "SMTP password"
@@ -490,7 +490,7 @@ msgid "SMTP change password help"
 msgstr "Check this if you want to change or delete the currently stored password."
 
 msgid "SMTP password help"
-msgstr "Password for SMTP server. Only enter a password if it is required by the SMTP server (most servers <strong>do not</strong> require authentication). Please enter your password twice to confirm."
+msgstr "Password for SMTP server. Only enter a password if it is required by the SMTP server."
 
 msgid "SMTP SSL label"
 msgstr "Encrypt SMTP using SSL"

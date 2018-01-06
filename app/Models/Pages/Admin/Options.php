@@ -4,7 +4,7 @@ namespace ForkBB\Models\Pages\Admin;
 
 use ForkBB\Core\Validator;
 use ForkBB\Models\Pages\Admin;
-use ForkBB\Models\Config as Config;
+use ForkBB\Models\Config\Model as Config;
 
 class Options extends Admin
 {
@@ -25,6 +25,7 @@ class Options extends Admin
         if ('POST' === $method) {
             $v = $this->c->Validator->addValidators([
                 'check_timeout' => [$this, 'vCheckTimeout'],
+                'check_dir'     => [$this, 'vCheckDir'],
             ])->setRules([
                 'token'                   => 'token:AdminOptions',
                 'o_board_title'           => 'required|string:trim|max:255',
@@ -63,12 +64,12 @@ class Options extends Admin
                 'o_report_method'         => 'required|integer|in:0,1,2',
                 'o_mailing_list'          => 'string:trim|max:65000 bytes',
                 'o_avatars'               => 'required|integer|in:0,1',
-                'o_avatars_dir'           => 'required|string:trim|max:255', //?????
+                'o_avatars_dir'           => 'required|string:trim|max:255|check_dir',
                 'o_avatars_width'         => 'required|integer|min:50|max:999',
                 'o_avatars_height'        => 'required|integer|min:50|max:999',
                 'o_avatars_size'          => 'required|integer|min:0|max:9999999',
-                'o_admin_email'           => 'required|string:trim|max:80|email',
-                'o_webmaster_email'       => 'required|string:trim|max:80|email',
+                'o_admin_email'           => 'required|string:trim,lower|max:80|email',
+                'o_webmaster_email'       => 'required|string:trim,lower|max:80|email',
                 'o_forum_subscriptions'   => 'required|integer|in:0,1',
                 'o_topic_subscriptions'   => 'required|integer|in:0,1',
                 'o_smtp_host'             => 'string:trim|max:255',
@@ -141,6 +142,21 @@ class Options extends Admin
     }
 
     /**
+     * Дополнительная проверка каталога аватарок
+     * 
+     * @param Validator $v
+     * @param string $dir
+     * 
+     * @return string
+     */
+    public function vCheckDir(Validator $v, $dir)
+    {
+        $dir = '/' . trim(str_replace(['\\', '.'], ['/', ''], $dir), '/'); //?????
+
+        return $dir;
+    }
+
+    /**
      * Формирует данные для формы
      *
      * @param Config $config
@@ -156,10 +172,10 @@ class Options extends Admin
             ],
             'sets'   => [],
             'btns'   => [
-                'update'  => [
+                'save'  => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Update'),
-                    'accesskey' => 'u',
+                    'value'     => \ForkBB\__('Save changes'),
+                    'accesskey' => 's',
                 ],
             ],
         ];

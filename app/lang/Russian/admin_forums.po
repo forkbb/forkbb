@@ -39,32 +39,8 @@ msgstr "Новый раздел"
 msgid "Add forum head"
 msgstr "Добавление раздела"
 
-msgid "Create new subhead"
-msgstr "Создание нового раздела"
-
-msgid "Add forum label"
-msgstr "Добавить в категорию"
-
-msgid "Add forum help"
-msgstr "Выберите категорию, в которую будет добавлена новый раздел."
-
-msgid "Add forum"
-msgstr "Добавить"
-
-msgid "No categories exist"
-msgstr "Нет ни одной категории"
-
-msgid "Edit forums head"
-msgstr "Правка разделов"
-
-msgid "Category subhead"
-msgstr "Категория:"
-
 msgid "Forum label"
 msgstr "Раздел"
-
-msgid "Edit link"
-msgstr "Править"
 
 msgid "Delete forum"
 msgstr "Удалить раздел"
@@ -90,17 +66,11 @@ msgstr "<b>ВНИМАНИЕ!</b> При удалении раздела буду
 msgid "Edit forum head"
 msgstr "Правка раздела"
 
-msgid "Edit details subhead"
-msgstr "Параметры раздела"
-
 msgid "Forum name label"
 msgstr "Название раздела"
 
 msgid "Forum description label"
 msgstr "Описание (HTML)"
-
-msgid "Category label"
-msgstr "Категория"
 
 msgid "Sort by label"
 msgstr "Сортировать темы по"
@@ -119,9 +89,6 @@ msgstr "URL переадресации"
 
 msgid "Redirect help"
 msgstr "Доступно только для пустых разделов."
-
-msgid "Access rights for groups"
-msgstr "Права доступа для групп"
 
 msgid "Group permissions info"
 msgstr "Вы можете установить для этого раздела особые привилегии для различных групп пользователей. Если вы не вносили никаких изменений, то то, что вы видите внизу — права по умолчанию, установленные в <a href=\"%1$s\">%2$s</a>. Администраторы всегда имеют полные права, которые нельзя отнять. Права, отличающиеся от прав по умолчанию выделены красным. Галочка \"Читать раздел\" будет недоступна, если у данной группы нет права \"Читать разделы\". Для переадресованных разделов доступно для редактирования только право \"Читать раздел\"."

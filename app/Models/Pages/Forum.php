@@ -24,7 +24,7 @@ class Forum extends Page
         }
 
         // редирект, если раздел это ссылка
-        if (! empty($forum->redirect_url)) {
+        if ($forum->redirect_url) {
             return $this->c->Redirect->url($forum->redirect_url);
         }
 

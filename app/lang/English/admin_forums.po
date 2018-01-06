@@ -39,32 +39,8 @@ msgstr "New forum"
 msgid "Add forum head"
 msgstr "Add forum"
 
-msgid "Create new subhead"
-msgstr "Create a new forum"
-
-msgid "Add forum label"
-msgstr "Add forum to category"
-
-msgid "Add forum help"
-msgstr "Select the category to which you wish to add a new forum."
-
-msgid "Add forum"
-msgstr "Add forum"
-
-msgid "No categories exist"
-msgstr "No categories exist"
-
-msgid "Edit forums head"
-msgstr "Edit forums"
-
-msgid "Category subhead"
-msgstr "Category:"
-
 msgid "Forum label"
 msgstr "Forum"
-
-msgid "Edit link"
-msgstr "Edit"
 
 msgid "Delete forum"
 msgstr "Delete forum"
@@ -90,17 +66,11 @@ msgstr "<b>WARNING!</b> Deleting a forum will delete all topics and posts (if an
 msgid "Edit forum head"
 msgstr "Edit forum"
 
-msgid "Edit details subhead"
-msgstr "Edit forum details"
-
 msgid "Forum name label"
 msgstr "Forum name"
 
 msgid "Forum description label"
 msgstr "Description (HTML)"
-
-msgid "Category label"
-msgstr "Category"
 
 msgid "Sort by label"
 msgstr "Sort topics by"
@@ -119,9 +89,6 @@ msgstr "Redirect URL"
 
 msgid "Redirect help"
 msgstr "Only available in empty forums."
-
-msgid "Access rights for groups"
-msgstr "Access rights for groups"
 
 msgid "Group permissions info"
 msgstr "In this form, you can set the forum specific permissions for the different user groups. If you haven't made any changes to this forum's group permissions, what you see below is the default based on settings in <a href=\"%1$s\">%2$s</a>. Administrators always have full permissions and are thus excluded. Permission settings that differ from the default permissions for the user group are marked red. The \"Read forum\" permission checkbox will be disabled if the group in question lacks the \"Read board\" permission. For redirect forums, only the \"Read forum\" permission is editable."

@@ -42,21 +42,24 @@ class Forums extends Admin
             ['', \ForkBB\__('Not selected')],
         ];
         $idxs       = [];
-        foreach ($this->forumsList($this->c->forums->get(0), 0) as $f) {
-            if ($cid !== $f->cat_id) {
-                $cid       = $f->cat_id;
-                $options[] = [-$cid, \ForkBB\__('Category prefix') . $f->cat_name];
-                $idxs[]    = -$cid;
-                unset($categories[$cid]);
-            }
-            
-            $indent = str_repeat(\ForkBB\__('Forum indent'), $f->depth);
-
-            if ($f->id === $forum->id || isset($forum->descendants[$f->id]) || $f->redirect_url) {
-                $options[] = [$f->id, $indent . \ForkBB\__('Forum prefix') . $f->forum_name, true];
-            } else {
-                $options[] = [$f->id, $indent . \ForkBB\__('Forum prefix') . $f->forum_name];
-                $idxs[]    = $f->id;
+        $root = $this->c->forums->get(0);
+        if ($root instanceof Forum) {
+            foreach ($this->forumsList($root, 0) as $f) {
+                if ($cid !== $f->cat_id) {
+                    $cid       = $f->cat_id;
+                    $options[] = [-$cid, \ForkBB\__('Category prefix') . $f->cat_name];
+                    $idxs[]    = -$cid;
+                    unset($categories[$cid]);
+                }
+                
+                $indent = str_repeat(\ForkBB\__('Forum indent'), $f->depth);
+    
+                if ($f->id === $forum->id || isset($forum->descendants[$f->id]) || $f->redirect_url) {
+                    $options[] = [$f->id, $indent . \ForkBB\__('Forum prefix') . $f->forum_name, true];
+                } else {
+                    $options[] = [$f->id, $indent . \ForkBB\__('Forum prefix') . $f->forum_name];
+                    $idxs[]    = $f->id;
+                }
             }
         }
         foreach ($categories as $key => $row) {
@@ -127,59 +130,63 @@ class Forums extends Admin
             ],
         ];
 
-        $list = $this->forumsList($this->c->forums->get(0), -1);
+        $root = $this->c->forums->get(0);
 
-        $fieldset = [];
-        $cid = null;
-        foreach ($list as $forum) {
-            if ($cid !== $forum->cat_id) {
-                if (null !== $cid) {
+        if ($root instanceof Forum) {
+            $list = $this->forumsList($root, -1);
+
+            $fieldset = [];
+            $cid = null;
+            foreach ($list as $forum) {
+                if ($cid !== $forum->cat_id) {
+                    if (null !== $cid) {
+                        $form['sets'][] = [
+                            'fields' => $fieldset,
+                        ];
+                        $fieldset = [];
+                    }
+    
                     $form['sets'][] = [
-                        'fields' => $fieldset,
-                    ];
-                    $fieldset = [];
-                }
-
-                $form['sets'][] = [
-                    'info' => [
-                        'info1' => [
-                            'type'  => '', //????
-                            'value' => $forum->cat_name,
+                        'info' => [
+                            'info1' => [
+                                'type'  => '', //????
+                                'value' => $forum->cat_name,
+                            ],
                         ],
-                    ],
+                    ];
+                    $cid = $forum->cat_id;
+                }
+    
+                $fieldset[] = [
+                    'dl'        => ['name', 'inline', 'depth' . $forum->depth],
+                    'type'      => 'btn',
+                    'value'     => $forum->forum_name,
+                    'title'     => \ForkBB\__('Forum label'),
+                    'link'      => $this->c->Router->link('AdminForumsEdit', ['id' => $forum->id]),
                 ];
-                $cid = $forum->cat_id;
+                $fieldset["form[{$forum->id}][disp_position]"] = [
+                    'dl'    => ['position', 'inline'],
+                    'type'  => 'number',
+                    'min'   => 0,
+                    'max'   => 9999999999,
+                    'value' => $forum->disp_position,
+                    'title' => \ForkBB\__('Position label'),
+                ];
+                $disabled = (bool) $forum->subforums;
+                $fieldset[] = [
+                    'dl'       => ['delete', 'inline'],
+                    'type'     => 'btn',
+                    'value'    => '❌',
+                    'title'    => \ForkBB\__('Delete'),
+                    'link'     => $disabled ? '#' : $this->c->Router->link('AdminForumsDelete', ['id' => $forum->id]),
+                    'disabled' => $disabled,
+                ];
             }
-
-            $fieldset[] = [
-                'dl'        => ['name', 'inline', 'depth' . $forum->depth],
-                'type'      => 'btn',
-                'value'     => $forum->forum_name,
-                'title'     => \ForkBB\__('Forum label'),
-                'link'      => $this->c->Router->link('AdminForumsEdit', ['id' => $forum->id]),
-            ];
-            $fieldset["form[{$forum->id}][disp_position]"] = [
-                'dl'    => ['position', 'inline'],
-                'type'  => 'number',
-                'min'   => 0,
-                'max'   => 9999999999,
-                'value' => $forum->disp_position,
-                'title' => \ForkBB\__('Position label'),
-            ];
-            $disabled = (bool) $forum->subforums;
-            $fieldset[] = [
-                'dl'       => ['delete', 'inline'],
-                'type'     => 'btn',
-                'value'    => '❌',
-                'title'    => \ForkBB\__('Delete'),
-                'link'     => $disabled ? '#' : $this->c->Router->link('AdminForumsDelete', ['id' => $forum->id]),
-                'disabled' => $disabled,
+    
+            $form['sets'][] = [
+                'fields' => $fieldset,
             ];
         }
-
-        $form['sets'][] = [
-            'fields' => $fieldset,
-        ];
 
         $this->nameTpl   = 'admin/form';
         $this->aIndex    = 'forums';
@@ -325,7 +332,7 @@ class Forums extends Admin
                 'forum_desc'           => 'string:trim|max:65000 bytes',
                 'parent'               => 'required|integer|in:' . implode(',', $this->listOfIndexes),
                 'sort_by'              => 'required|integer|in:0,1,2',
-                'redirect_url'         => 'string:trim|max:100',
+                'redirect_url'         => 'string:trim|max:255', //????
                 'perms.*.read_forum'   => 'checkbox',
                 'perms.*.post_replies' => 'checkbox',
                 'perms.*.post_topics'  => 'checkbox',
@@ -340,7 +347,7 @@ class Forums extends Admin
             $forum->forum_name   = $v->forum_name;
             $forum->forum_desc   = $v->forum_desc;
             $forum->sort_by      = $v->sort_by;
-            $forum->redirect_url = $v->redirect_url; //???? null
+            $forum->redirect_url = $v->redirect_url;
             if ($v->parent > 0) {
                 $forum->parent_forum_id = $v->parent;
                 $forum->cat_id          = $this->c->forums->get($v->parent)->cat_id;
@@ -452,7 +459,7 @@ class Forums extends Admin
                 ],
                 'redirect_url' => [
                     'type'      => 'text',
-                    'maxlength' => 100, //?????
+                    'maxlength' => 255,
                     'value'     => $forum->redirect_url,
                     'title'     => \ForkBB\__('Redirect label'),
                     'info'      => \ForkBB\__('Redirect help'),

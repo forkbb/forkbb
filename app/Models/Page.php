@@ -33,8 +33,10 @@ class Page extends Model
 
         $this->fTitle       = $container->config->o_board_title;
         $this->fDescription = $container->config->o_board_desc;
-        $this->fAnnounce    = $container->config->o_announcement_message;
         $this->fRootLink    = $container->Router->link('Index');
+        if ($container->config->o_announcement == '1') {
+            $this->fAnnounce = $container->config->o_announcement_message;
+        }
     }
 
     /**

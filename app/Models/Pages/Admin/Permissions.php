@@ -4,7 +4,7 @@ namespace ForkBB\Models\Pages\Admin;
 
 use ForkBB\Core\Validator;
 use ForkBB\Models\Pages\Admin;
-use ForkBB\Models\Config as Config;
+use ForkBB\Models\Config\Model as Config;
 
 class Permissions extends Admin
 {
@@ -84,10 +84,10 @@ class Permissions extends Admin
             ],
             'sets'   => [],
             'btns'   => [
-                'update'  => [
+                'save'  => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Update'),
-                    'accesskey' => 'u',
+                    'value'     => \ForkBB\__('Save changes'),
+                    'accesskey' => 's',
                 ],
             ],
         ];

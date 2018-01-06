@@ -63,7 +63,7 @@ class Admin extends Page
                 'categories'  => [$r->link('AdminCategories'), \ForkBB\__('Categories')],
                 'forums'      => [$r->link('AdminForums'), \ForkBB\__('Forums')],
                 'groups'      => [$r->link('AdminGroups'), \ForkBB\__('User groups')],
-                'censoring'   => ['admin_censoring.php', \ForkBB\__('Censoring')],
+                'censoring'   => [$r->link('AdminCensoring'), \ForkBB\__('Censoring')],
                 'maintenance' => ['admin_maintenance.php', \ForkBB\__('Maintenance')]
             ];
         }

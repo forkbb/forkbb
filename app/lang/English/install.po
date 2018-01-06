@@ -34,7 +34,7 @@ msgid "Install"
 msgstr "Install ForkBB rev.%s"
 
 msgid "Database setup"
-msgstr "Database setup"
+msgstr "<b>Database setup</b>"
 
 msgid "Info 1"
 msgstr "All information we need to create a connection with your database."
@@ -73,7 +73,7 @@ msgid "Info 6"
 msgstr "If you want to run multiple ForkBB installations in a single database, change this. The prefix may contain the letters a to z, any numbers and the underscore character. They must however start with a letter. The maximum length is 40 characters."
 
 msgid "Administration setup"
-msgstr "Administration setup"
+msgstr "<b>Administration setup</b>"
 
 msgid "Info 7"
 msgstr "Create the very first account on your board."
@@ -97,7 +97,7 @@ msgid "Info 10"
 msgstr "Please enter a valid email address."
 
 msgid "Board setup"
-msgstr "Board setup"
+msgstr "<b>Board setup</b>"
 
 msgid "Info 11"
 msgstr "Settings for your board. You can change this later."
@@ -126,6 +126,9 @@ msgstr "You are running %1$s version %2$s. ForkBB rev.%3$s requires at least %1$
 msgid "Alert folder"
 msgstr "In order for ForkBB to function properly, the directory <em>%s</em> must be writable by PHP. Use chmod to set the appropriate directory permissions. If in doubt, chmod to 0777."
 
+msgid "No language packs"
+msgstr "No language packs."
+
 msgid "No styles"
 msgstr "No styles."
 
@@ -151,36 +154,36 @@ msgid "Prefix reserved"
 msgstr "The table prefix 'sqlite_' is reserved for use by the SQLite engine."
 
 msgid "Existing table error"
-msgstr "A table called '%susers' is already present in the database '%s'. This could mean that ForkBB is already installed or that another piece of software is installed and is occupying one or more of the table names ForkBB requires. If you want to install multiple copies of ForkBB in the same database, you must choose a different table prefix."
+msgstr "A table called '%1$susers' is already present in the database '%2$s'. This could mean that ForkBB is already installed or that another piece of software is installed and is occupying one or more of the table names ForkBB requires. If you want to install multiple copies of ForkBB in the same database, you must choose a different table prefix."
 
 msgid "Administrators"
 msgstr "Administrators"
 
-msgid "Administrator"
+msgid "Administrator "
 msgstr "Administrator"
 
 msgid "Moderators"
 msgstr "Moderators"
 
-msgid "Moderator"
+msgid "Moderator "
 msgstr "Moderator"
 
 msgid "Guests"
 msgstr "Guests"
 
-msgid "Guest"
+msgid "Guest "
 msgstr "Guest"
 
 msgid "Members"
 msgstr "Members"
 
-msgid "Announcement"
+msgid "Announcement "
 msgstr "Enter your announcement here."
 
-msgid "Rules"
+msgid "Rules "
 msgstr "Enter your rules here"
 
-msgid "Maintenance message"
+msgid "Maintenance message "
 msgstr "The forums are temporarily down for maintenance. Come back later."
 
 msgid "Test post"
@@ -199,13 +202,13 @@ msgid "This is just a test forum"
 msgstr "This is just a test forum"
 
 msgid "Alert cache"
-msgstr "<strong>The cache directory is currently not writable!</strong> In order for ForkBB to function properly, the directory <em>%s</em> must be writable by PHP. Use chmod to set the appropriate directory permissions. If in doubt, chmod to 0777."
+msgstr "<b>The cache directory is currently not writable!</b> In order for ForkBB to function properly, the directory <em>%s</em> must be writable by PHP. Use chmod to set the appropriate directory permissions. If in doubt, chmod to 0777."
 
 msgid "Alert avatar"
-msgstr "<strong>The avatar directory is currently not writable!</strong> If you want users to be able to upload their own avatar images you must see to it that the directory <em>%s</em> is writable by PHP. You can later choose to save avatar images in a different directory (see Admin/Options). Use chmod to set the appropriate directory permissions. If in doubt, chmod to 0777."
+msgstr "<b>The avatar directory is currently not writable!</b> If you want users to be able to upload their own avatar images you must see to it that the directory <em>%s</em> is writable by PHP. You can later choose to save avatar images in a different directory (see Admin/Options). Use chmod to set the appropriate directory permissions. If in doubt, chmod to 0777."
 
 msgid "Alert upload"
-msgstr "<strong>File uploads appear to be disallowed on this server!</strong> If you want users to be able to upload their own avatar images you must enable the file_uploads configuration setting in PHP. Once file uploads have been enabled, avatar uploads can be enabled in Administration/Options/Features."
+msgstr "<b>File uploads appear to be disallowed on this server!</b> If you want users to be able to upload their own avatar images you must enable the file_uploads configuration setting in PHP. Once file uploads have been enabled, avatar uploads can be enabled in Administration/Options/Features."
 
 msgid "ForkBB has been installed"
 msgstr "ForkBB has been installed. To finalize the installation please follow the instructions below."
@@ -224,3 +227,6 @@ msgstr "Download main.php file"
 
 msgid "ForkBB fully installed"
 msgstr "ForkBB has been fully installed! You may now <a href=\"index.php\">go to the forum index</a>."
+
+msgid "Bad database charset"
+msgstr "The database must be created with the character encoding <b>utf8mb4</b> (compare <b>utf8mb4_unicode_ci</b>)."

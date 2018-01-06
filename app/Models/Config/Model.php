@@ -1,10 +1,10 @@
 <?php
 
-namespace ForkBB\Models;
+namespace ForkBB\Models\Config;
 
 use ForkBB\Models\DataModel;
 
-class Config extends DataModel
+class Model extends DataModel
 {
     /**
      * Заполняет модель данными из кеша/БД

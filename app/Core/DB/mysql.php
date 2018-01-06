@@ -21,12 +21,6 @@ class Mysql
     protected $dbPrefix;
 
     /**
-     * Набор символов БД
-     * @var string
-     */
-    protected $dbCharSet;
-
-    /**
      * Массив замены типов полей таблицы
      * @var array
      */
@@ -148,21 +142,6 @@ class Mysql
     }
 
     /**
-     * Вовзращает набор символов БД
-     *
-     * @return string
-     */
-    protected function getCharSet()
-    {
-        if (! $this->dbCharSet) {
-            $stmt = $this->db->query("SHOW VARIABLES LIKE 'character\_set\_database'");
-            $this->dbCharSet = $stmt->fetchColumn(1);
-            $stmt->closeCursor();
-        }
-        return $this->dbCharSet;
-    }
-
-    /**
      * Проверяет наличие таблицы в базе
      *
      * @param string $table
@@ -241,16 +220,20 @@ class Mysql
     {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $this->testStr($table);
-        $charSet = $this->getCharSet();
         $query = "CREATE TABLE IF NOT EXISTS `{$table}` (";
         foreach ($schema['FIELDS'] as $field => $data) {
             $this->testStr($field);
             // имя и тип
             $query .= "`{$field}` " . $this->replType($data[0]);
             // сравнение
-            if (isset($data[3]) && is_string($data[3])) {
-                $this->testStr($data[3]);
-                $query .= " CHARACTER SET {$charSet} COLLATE {$charSet}_{$data[3]}";
+            if (preg_match('%^(?:CHAR|VARCHAR|TINYTEXT|TEXT|MEDIUMTEXT|LONGTEXT|ENUM|SET)%i', $data[0])) {
+                $query .= ' CHARACTER SET utf8mb4 COLLATE utf8mb4_';
+                if (isset($data[3]) && is_string($data[3])) {
+                    $this->testStr($data[3]);
+                    $query .= $data[3];
+                } else {
+                    $query .= 'unicode_ci';
+                }
             }
             // не NULL
             if (empty($data[1])) {
@@ -302,7 +285,7 @@ class Mysql
             }
         }
         $this->testStr($engine);
-		$query = rtrim($query, ', ') . ") ENGINE={$engine} CHARACTER SET {$charSet}";
+        $query = rtrim($query, ', ') . ") ENGINE={$engine} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
         return $this->db->exec($query) !== false;
     }
 

@@ -160,10 +160,10 @@ class Model extends DataModel
         $filetypes = array('jpg', 'gif', 'png');
 
         foreach ($filetypes as $type) {
-            $path = $this->c->DIR_PUBLIC . "/{$this->c->config->o_avatars_dir}/{$this->id}.{$type}";
+            $path = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$this->id}.{$type}";
 
             if (file_exists($path) && getimagesize($path)) {
-                return $this->c->PUBLIC_URL . "/{$this->c->config->o_avatars_dir}/{$this->id}.{$type}";
+                return $this->c->PUBLIC_URL . "{$this->c->config->o_avatars_dir}/{$this->id}.{$type}";
             }
         }
 

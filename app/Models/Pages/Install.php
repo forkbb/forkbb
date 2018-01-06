@@ -2,7 +2,6 @@
 
 namespace ForkBB\Models\Pages;
 
-use ForkBB\Core\Container;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use PDO;
@@ -20,17 +19,6 @@ class Install extends Page
     protected $DBEngine = '';
 
     /**
-     * Конструктор
-     * 
-     * @param Container $container
-     */
-    public function __construct(Container $container)
-    {
-        $this->c = $container;
-        $container->Lang->load('common', $container->config->o_default_lang);
-    }
-
-    /**
      * Подготовка страницы к отображению
      */
     public function prepare()
@@ -38,35 +26,29 @@ class Install extends Page
     }
 
     /**
-     * Возращает типы БД поддерживаемые PDO
-     * 
-     * @param string $curType
+     * Возращает доступные типы БД
      * 
      * @return array
      */
-    protected function DBTypes($curType = null)
+    protected function DBTypes()
     {
         $dbTypes = [];
         $pdoDrivers = PDO::getAvailableDrivers();
         foreach ($pdoDrivers as $type) {
             if (file_exists($this->c->DIR_APP . '/Core/DB/' . ucfirst($type) . '.php')) {
-                $slctd = $type == $curType ? true : null;
                 switch ($type) {
                     case 'mysql':
-                        $dbTypes[$type] = ['MySQL (PDO)', $slctd];
-
-                        $type = 'mysql_innodb';
-                        $slctd = $type == $curType ? true : null;
-                        $dbTypes[$type] = ['MySQL (PDO) InnoDB', $slctd];
+                        $dbTypes['mysql_innodb'] = 'MySQL InnoDB (PDO)';
+                        $dbTypes[$type]          = 'MySQL (PDO) (no transactions!)';
                         break;
                     case 'sqlite':
-                        $dbTypes[$type] = ['SQLite (PDO)', $slctd];
+                        $dbTypes[$type]          = 'SQLite (PDO)';
                         break;
                     case 'pgsql':
-                        $dbTypes[$type] = ['PostgreSQL (PDO)', $slctd];
+                        $dbTypes[$type]          = 'PostgreSQL (PDO)';
                         break;
                     default:
-                        $dbTypes[$type] = [ucfirst($type) . ' (PDO)', $slctd];
+                        $dbTypes[$type]          = ucfirst($type) . ' (PDO)';
                 }
             }
         }
@@ -77,171 +59,320 @@ class Install extends Page
      * Подготовка данных для страницы установки форума
      * 
      * @param array $args
+     * @param string $method
      * 
      * @return Page
      */
-    public function install(array $args)
+    public function install(array $args, $method)
     {
-        $this->nameTpl    = 'layouts/install';
-        $this->onlinePos  = null;
-        $this->robots     = 'noindex';
-        $this->rev        = $this->c->FORK_REVISION;
-        $this->formAction = $this->c->Router->link('Install');
+        $changeLang = false;
+        if ('POST' === $method) {
+            $v = $this->c->Validator->setRules([
+                'token'       => 'token:Install',
+                'installlang' => 'required|string:trim',
+                'changelang'  => 'string',
+            ]);
+
+            if ($v->validation($_POST)) {
+                $this->c->user->language = $v->installlang;
+                $changeLang              = (bool) $v->changelang;
+            }
+        }
+        $v = null;
+
+        $this->c->Lang->load('install');
 
         // версия PHP
         if (version_compare(PHP_VERSION, self::PHP_MIN, '<')) {
             $this->a['fIswev']['e'][] = \ForkBB\__('You are running error', 'PHP', PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN);
         }
 
+        // типы БД
+        $this->dbTypes = $this->DBTypes();
+        if (empty($this->dbTypes)) {
+            $this->a['fIswev']['e'][] = \ForkBB\__('No DB extensions');
+        }
+
         // доступность папок на запись
         $folders = [
             $this->c->DIR_CONFIG,
             $this->c->DIR_CACHE,
-            $this->c->DIR_PUBLIC . '/avatar',
+            $this->c->DIR_PUBLIC . '/img/avatars',
         ];
         foreach ($folders as $folder) {
             if (! is_writable($folder)) {
+                $folder = str_replace(dirname($this->c->DIR_APP), '', $folder);
                 $this->a['fIswev']['e'][] = \ForkBB\__('Alert folder', $folder);
             }
         }
 
         // доступность шаблона конфигурации
-        $config = file_get_contents($this->c->DIR_CONFIG . '/main.dist.php');
+        $config = @file_get_contents($this->c->DIR_CONFIG . '/main.dist.php');
         if (false === $config) {
             $this->a['fIswev']['e'][] = \ForkBB\__('No access to main.dist.php');
         }
         unset($config);
 
-        // язык
+        // языки
         $langs = $this->c->Func->getLangs();
         if (empty($langs)) {
-            $this->a['fIswev']['e'][] = 'No language pack.';
-            $installLang = $installLangs = $defaultLangs = 'English';
-        } else {
-            if (isset($args['installlang'])) {
-                $this->c->user->language = $args['installlang'];
-            }
-
-            $this->c->Lang->load('install');
-
-            if (count($langs) > 1) {
-                $installLang = $this->c->user->language;
-                $defLang = isset($args['defaultlang']) ? $args['defaultlang'] : $installLang;
-                $installLangs = $defaultLangs = [];
-                foreach ($langs as $lang) {
-                    $installLangs[] = $lang == $installLang ? [$lang, 1] : [$lang];
-                    $defaultLangs[] = $lang == $defLang ? [$lang, 1] : [$lang];
-                }
-            } else {
-                $installLang = $installLangs = $defaultLangs = $langs[0];
-            }
-
+            $this->a['fIswev']['e'][] = \ForkBB\__('No language packs');
         }
-        $this->installLangs = $installLangs;
-        $this->installLang  = $installLang;
-        $this->defaultLangs = $defaultLangs;
 
-        // стиль
+        // стили
         $styles = $this->c->Func->getStyles();
         if (empty($styles)) {
             $this->a['fIswev']['e'][] = \ForkBB\__('No styles');
-            $defaultStyles = ['ForkBB'];
-        } else {
-            $defaultStyles = [];
-            $defStyle = isset($args['defaultstyle']) ? $args['defaultstyle'] : $this->c->user->style;
-            foreach ($styles as $style) {
-                $defaultStyles[] = $style == $defStyle ? [$style, 1] : [$style];
+        }
+
+        if ('POST' === $method && ! $changeLang && empty($this->a['fIswev']['e'])) {
+            $v = $this->c->Validator->addValidators([
+                'check_prefix' => [$this, 'vCheckPrefix'],
+                'check_host'   => [$this, 'vCheckHost'],
+                'rtrim_url'    => [$this, 'vRtrimURL']
+            ])->setRules([
+                'dbtype'       => 'required|string:trim|in:' . implode(',', array_keys($this->dbTypes)),
+                'dbhost'       => 'required|string:trim|check_host',
+                'dbname'       => 'required|string:trim',
+                'dbuser'       => 'string:trim',
+                'dbpass'       => 'string:trim',
+                'dbprefix'     => 'string:trim|max:40|check_prefix',
+                'username'     => 'required|string:trim|min:2|max:25',
+                'password'     => 'required|string|min:16|password',
+                'email'        => 'required|string:trim,lower|max:80|email',
+                'title'        => 'required|string:trim|max:255',
+                'descr'        => 'string:trim|max:65000 bytes',
+                'baseurl'      => 'required|string:trim|rtrim_url',
+                'defaultlang'  => 'required|string:trim|in:' . implode(',', $this->c->Func->getLangs()),
+                'defaultstyle' => 'required|string:trim|in:' . implode(',', $this->c->Func->getStyles()),
+            ])->setAliases([
+                'dbtype'       => 'Database type',
+                'dbhost'       => 'Database server hostname',
+                'dbname'       => 'Database name',
+                'dbuser'       => 'Database username',
+                'dbpass'       => 'Database password',
+                'dbprefix'     => 'Table prefix',
+                'username'     => 'Administrator username',
+                'password'     => 'Administrator passphrase',
+                'title'        => 'Board title',
+                'descr'        => 'Board description',
+                'baseurl'      => 'Base URL',
+                'defaultlang'  => 'Default language',
+                'defaultstyle' => 'Default style',
+            ])->setMessages([
+                'email'        => 'Wrong email',
+            ]);
+    
+            if ($v->validation($_POST)) {
+                return $this->installEnd($v);
+            } else {
+                $this->fIswev = $v->getErrors();
             }
         }
-        $this->defaultStyles = $defaultStyles;
-        
-        // типы БД
-        $dbTypes = $this->DBTypes(isset($args['dbtype']) ? $args['dbtype'] : null);
-        if (empty($dbTypes)) {
-            $this->a['fIswev']['e'][] = \ForkBB\__('No DB extensions');
-        }
-        $this->dbTypes = $dbTypes;
-        
 
-        $this->a = $this->a + $args; //????
-
-        if (empty($args)) {
-            $this->dbhost   = 'localhost';
-            $this->dbname   = '';
-            $this->dbuser   = '';
-            $this->dbprefix = '';
-            $this->username = '';
-            $this->email    = '';
-            $this->title    = \ForkBB\__('My ForkBB Forum');
-            $this->descr    = \ForkBB\__('Description');
-            $this->baseurl  = $this->c->BASE_URL;
-        } else {
-            $this->dbhost   = $args['dbhost'];
-            $this->dbname   = $args['dbname'];
-            $this->dbuser   = $args['dbuser'];
-            $this->dbprefix = $args['dbprefix'];
-            $this->username = $args['username'];
-            $this->email    = $args['email'];
-            $this->title    = $args['title'];
-            $this->descr    = $args['descr'];
-            $this->baseurl  = $args['baseurl'];
+        if (count($langs) > 1) {
+            $this->form1 = [
+                'action' => $this->c->Router->link('Install'),
+                'hidden' => [
+                    'token' => $this->c->Csrf->create('Install'),
+                ],
+                'sets'   => [
+                    [
+                        'fields' => [
+                            'installlang' => [
+                                'type'    => 'select',
+                                'options' => array_combine($langs, $langs),
+                                'value'   => $this->c->user->language,
+                                'title'   => \ForkBB\__('Install language'),
+                                'info'    => \ForkBB\__('Choose install language info'),
+                            ],
+                        ],
+                    ],
+                ],
+                'btns'   => [
+                    'changelang'  => [
+                        'type'      => 'submit', 
+                        'value'     => \ForkBB\__('Change language'), 
+                    ],
+                ],
+            ];
         }
+
+        $this->form2 = [
+            'action' => $this->c->Router->link('Install'),
+            'hidden' => [
+                'token'       => $this->c->Csrf->create('Install'),
+                'installlang' => $this->c->user->language,
+            ],
+            'sets'   => [
+                [
+                    'info' => [
+                        'info1' => [
+                            'type'  => '', //????
+                            'value' => \ForkBB\__('Database setup'),
+                            'html'  => true,
+                        ],
+                        'info2' => [
+                            'type'  => '', //????
+                            'value' => \ForkBB\__('Info 1'),
+                        ],
+                    ],
+                ],
+                [
+                    'fields' => [
+                        'dbtype' => [
+                            'type'     => 'select',
+                            'options'  => $this->dbTypes,
+                            'value'    => $v ? $v->dbtype : 'mysql_innodb',
+                            'title'    => \ForkBB\__('Database type'),
+                            'info'     => \ForkBB\__('Info 2'),
+                            'required' => true,
+                        ],
+                        'dbhost' => [
+                            'type'      => 'text',
+                            'value'     => $v ? $v->dbhost : 'localhost',
+                            'title'     => \ForkBB\__('Database server hostname'),
+                            'info'      => \ForkBB\__('Info 3'),
+                            'required'  => true,
+                        ],
+                        'dbname' => [
+                            'type'      => 'text',
+                            'value'     => $v ? $v->dbname : '',
+                            'title'     => \ForkBB\__('Database name'),
+                            'info'      => \ForkBB\__('Info 4'),
+                            'required'  => true,
+                        ],
+                        'dbuser' => [
+                            'type'      => 'text',
+                            'value'     => $v ? $v->dbuser : '',
+                            'title'     => \ForkBB\__('Database username'),
+                        ],
+                        'dbpass' => [
+                            'type'      => 'password',
+                            'value'     => '',
+                            'title'     => \ForkBB\__('Database password'),
+                            'info'      => \ForkBB\__('Info 5'),
+                        ],
+                        'dbprefix' => [
+                            'type'      => 'text',
+                            'maxlength' => 40,
+                            'value'     => $v ? $v->dbprefix : '',
+                            'title'     => \ForkBB\__('Table prefix'),
+                            'info'      => \ForkBB\__('Info 6'),
+                        ],
+                    ],
+                ],
+                [
+                    'info' => [
+                        'info1' => [
+                            'type'  => '', //????
+                            'value' => \ForkBB\__('Administration setup'),
+                            'html'  => true,
+                        ],
+                        'info2' => [
+                            'type'  => '', //????
+                            'value' => \ForkBB\__('Info 7'),
+                        ],
+                    ],
+                ],
+                [
+                    'fields' => [
+                        'username' => [
+                            'type'      => 'text',
+                            'maxlength' => 25,
+                            'pattern'   => '^.{2,25}$',
+                            'value'     => $v ? $v->username : '',
+                            'title'     => \ForkBB\__('Administrator username'),
+                            'info'      => \ForkBB\__('Info 8'),
+                            'required'  => true,
+                        ],
+                        'password' => [
+                            'type'      => 'password',
+                            'pattern'   => '^.{16,}$',
+                            'value'     => '',
+                            'title'     => \ForkBB\__('Administrator passphrase'),
+                            'info'      => \ForkBB\__('Info 9'),
+                            'required'  => true,
+                        ],
+                        'email' => [
+                            'type'      => 'text',
+                            'maxlength' => 80,
+                            'pattern'   => '.+@.+',
+                            'value'     => $v ? $v->email : '',
+                            'title'     => \ForkBB\__('Administrator email'),
+                            'info'      => \ForkBB\__('Info 10'),
+                            'required'  => true,
+                        ],
+
+                    ],
+                ],
+                [
+                    'info' => [
+                        'info1' => [
+                            'type'  => '', //????
+                            'value' => \ForkBB\__('Board setup'),
+                            'html'  => true,
+                        ],
+                        'info2' => [
+                            'type'  => '', //????
+                            'value' => \ForkBB\__('Info 11'),
+                        ],
+                    ],
+                ],
+                [
+                    'fields' => [
+                        'title' => [
+                            'type'      => 'text',
+                            'maxlength' => 255,
+                            'value'     => $v ? $v->title : \ForkBB\__('My ForkBB Forum'),
+                            'title'     => \ForkBB\__('Board title'),
+                            'required'  => true,
+                        ],
+                        'descr' => [
+                            'type'      => 'text',
+                            'maxlength' => 16000,
+                            'value'     => $v ? $v->descr : \ForkBB\__('Description'),
+                            'title'     => \ForkBB\__('Board description'),
+                        ],
+                        'baseurl' => [
+                            'type'      => 'text',
+                            'maxlength' => 1024,
+                            'value'     => $v ? $v->baseurl : $this->c->BASE_URL,
+                            'title'     => \ForkBB\__('Base URL'),
+                            'required'  => true,
+                        ],
+                        'defaultlang' => [
+                            'type'      => 'select',
+                            'options'   => array_combine($langs, $langs),
+                            'value'     => $v ? $v->defaultlang : $this->c->user->language,
+                            'title'     => \ForkBB\__('Default language'),
+                            'required'  => true,
+                        ],
+                        'defaultstyle' => [
+                            'type'      => 'select',
+                            'options'   => array_combine($styles, $styles),
+                            'value'     => $v ? $v->defaultstyle : $this->c->user->style,
+                            'title'     => \ForkBB\__('Default style'),
+                            'required'  => true,
+                        ],
+
+                    ],
+                ],
+            ],
+            'btns'   => [
+                'submit'  => [
+                    'type'      => 'submit', 
+                    'value'     => \ForkBB\__('Start install'), 
+                ],
+            ],
+        ];
+
+        $this->nameTpl    = 'layouts/install';
+        $this->onlinePos  = null;
+        $this->robots     = 'noindex';
+        $this->rev        = $this->c->FORK_REVISION;
 
         return $this;
-    }
-
-    /**
-     * Начальная стадия установки
-     * 
-     * @return Page
-     */
-    public function installPost()
-    {
-        $v = $this->c->Validator->setRules([
-            'installlang' => 'string:trim',
-            'changelang' => 'string',
-        ]);
-        $v->validation($_POST);
-
-        $installLang = $v->installlang;
-
-        if (isset($v->changelang)) {
-            return $this->install(['installlang' => $installLang]);
-        }
-
-        $this->c->user->language = $installLang;
-        $this->c->Lang->load('install');
-
-        $v = $this->c->Validator->addValidators([
-            'check_prefix' => [$this, 'vCheckPrefix'],
-            'check_host'   => [$this, 'vCheckHost'],
-            'rtrim_url'    => [$this, 'vRtrimURL']
-        ])->setRules([
-            'installlang'  => 'string:trim',
-            'dbtype'       => ['required|string:trim|in:' . implode(',', array_keys($this->DBTypes())), \ForkBB\__('Database type')],
-            'dbhost'       => ['required|string:trim|check_host', \ForkBB\__('Database server hostname')],
-            'dbname'       => ['required|string:trim', \ForkBB\__('Database name')],
-            'dbuser'       => ['string:trim', \ForkBB\__('Database username')],
-            'dbpass'       => ['string:trim', \ForkBB\__('Database password')],
-            'dbprefix'     => ['string:trim|max:40|check_prefix', \ForkBB\__('Table prefix')],
-            'username'     => ['required|string:trim|min:2|max:25', \ForkBB\__('Administrator username')],
-            'password'     => ['required|string|min:16|password', \ForkBB\__('Administrator passphrase')],
-            'email'        => 'required|string:trim,lower|email',
-            'title'        => ['required|string:trim', \ForkBB\__('Board title')],
-            'descr'        => ['required|string:trim', \ForkBB\__('Board description')],
-            'baseurl'      => ['required|string:trim|rtrim_url', \ForkBB\__('Base URL')],
-            'defaultlang'  => ['required|string:trim|in:' . implode(',', $this->c->Func->getLangs()), \ForkBB\__('Default language')],
-            'defaultstyle' => ['required|string:trim|in:' . implode(',', $this->c->Func->getStyles()), \ForkBB\__('Default style')],
-        ])->setMessages([
-            'email' => \ForkBB\__('Wrong email'),
-        ]);
-
-        if ($v->validation($_POST)) {
-            return $this->installEnd($v);
-        } else {
-            $this->fIswev = $v->getErrors();
-            return $this->install($v->getData());
-        }
     }
 
     /**
@@ -250,11 +381,11 @@ class Install extends Page
      * @param Validator $v
      * @param string $url
      * 
-     * @return array
+     * @return string
      */
     public function vRtrimURL(Validator $v, $url)
     {
-        return [rtrim($url, '/'), true];
+        return rtrim($url, '/');
     }
 
     /**
@@ -263,18 +394,18 @@ class Install extends Page
      * @param Validator $v
      * @param string $prefix
      * 
-     * @return array
+     * @return string
      */
     public function vCheckPrefix(Validator $v, $prefix)
     {
-        $error = true;
-        if (strlen($prefix) == 0) {
-        } elseif (! preg_match('%^[a-z][a-z\d_]*$%i', $prefix)) {
-            $error = \ForkBB\__('Table prefix error', $prefix);
-        } elseif ($v->dbtype == 'sqlite' && strtolower($prefix) == 'sqlite_') {
-            $error = \ForkBB\__('Prefix reserved');
+        if (isset($prefix{0})) {
+            if (! preg_match('%^[a-z][a-z\d_]*$%i', $prefix)) {
+                $v->addError('Table prefix error');
+            } elseif ('sqlite' === $v->dbtype && 'sqlite_' === strtolower($prefix)) {
+                $v->addError('Prefix reserved');
+            }
         }
-        return [$prefix, $error];
+        return $prefix;
     }
 
     /**
@@ -283,19 +414,21 @@ class Install extends Page
      * @param Validator $v
      * @param string $dbhost
      * 
-     * @return array
+     * @return string
      */
     public function vCheckHost(Validator $v, $dbhost)
     {
         $this->c->DB_USERNAME = $v->dbuser;
         $this->c->DB_PASSWORD = $v->dbpass;
         $this->c->DB_PREFIX   = $v->dbprefix;
-        $dbtype = $v->dbtype;
-        $dbname = $v->dbname;
+        $dbtype               = $v->dbtype;
+        $dbname               = $v->dbname;
+
         // есть ошибки, ни чего не проверяем
         if (! empty($v->getErrors())) {
-            return [$dbhost, true];
+            return $dbhost;
         }
+
         // настройки подключения БД
         $DBEngine = 'MyISAM';
         switch ($dbtype) {
@@ -317,26 +450,32 @@ class Install extends Page
                 //????
         }
         $this->c->DB_OPTIONS  = [];
+
         // подключение к БД
         try {
             $stat = $this->c->DB->statistics();
         } catch (PDOException $e) {
-            return [$dbhost, $e->getMessage()];
+            $v->addError($e->getMessage());
+            return $dbhost;
         }
+
         // проверка наличия таблицы пользователей в БД
         try {
-            $stmt = $this->c->DB->query('SELECT 1 FROM ::users WHERE id=1 LIMIT 1');
+            $stmt = $this->c->DB->query('SELECT 1 FROM ::users LIMIT 1');
             if (! empty($stmt->fetch())) {
-                return [$dbhost, \ForkBB\__('Existing table error', $v->dbprefix, $v->dbname)];
+                $v->addError(\ForkBB\__('Existing table error', $v->dbprefix, $v->dbname));
+                return $dbhost;
             }
         } catch (PDOException $e) {
             // все отлично, таблица пользователей не найдена
         }
-        // база MySQL, кодировка базы UTF-8 (3 байта)
-        if (isset($stat['character_set_database']) && $stat['character_set_database'] == 'utf8') {
-            $this->c->DB_DSN = str_replace('charset=utf8mb4', 'charset=utf8', $this->c->DB_DSN);
+
+        // база MySQL, кодировка базы отличается от UTF-8 (4 байта)
+        if (isset($stat['character_set_database']) && 'utf8mb4' !== $stat['character_set_database']) {
+            $v->addError('Bad database charset');
         }
-        return [$dbhost, true];
+
+        return $dbhost;
     }
 
     /**
@@ -352,11 +491,12 @@ class Install extends Page
         $this->c->Cache->clear();
 
         $this->c->DB->beginTransaction();
+
         // bans
         $schema = [
             'FIELDS' => [
                 'id'          => ['SERIAL', false],
-                'username'    => ['VARCHAR(200)', true],
+                'username'    => ['VARCHAR(190)', true],
                 'ip'          => ['VARCHAR(255)', true],
                 'email'       => ['VARCHAR(80)', true],
                 'message'     => ['VARCHAR(255)', true],
@@ -370,6 +510,7 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('bans', $schema);
+
         // categories
         $schema = [
             'FIELDS' => [
@@ -381,6 +522,7 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('categories', $schema);
+
         // censoring
         $schema = [
             'FIELDS' => [
@@ -392,16 +534,18 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('censoring', $schema);
+
         // config
         $schema = [
             'FIELDS' => [
-                'conf_name'  => ['VARCHAR(255)', false, ''],
+                'conf_name'  => ['VARCHAR(190)', false, ''],
                 'conf_value' => ['TEXT', true],
             ],
             'PRIMARY KEY' => ['conf_name'],
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('config', $schema);
+
         // forum_perms
         $schema = [
             'FIELDS' => [
@@ -415,19 +559,20 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('forum_perms', $schema);
+
         // forums
         $schema = [
             'FIELDS' => [
                 'id'              => ['SERIAL', false],
                 'forum_name'      => ['VARCHAR(80)', false, 'New forum'],
                 'forum_desc'      => ['TEXT', true],
-                'redirect_url'    => ['VARCHAR(100)', true],
+                'redirect_url'    => ['VARCHAR(255)', false, ''],
                 'moderators'      => ['TEXT', true],
                 'num_topics'      => ['MEDIUMINT(8) UNSIGNED', false, 0],
                 'num_posts'       => ['MEDIUMINT(8) UNSIGNED', false, 0],
                 'last_post'       => ['INT(10) UNSIGNED', true],
                 'last_post_id'    => ['INT(10) UNSIGNED', true],
-                'last_poster'     => ['VARCHAR(200)', true],
+                'last_poster'     => ['VARCHAR(190)', true],
                 'last_topic'      => ['VARCHAR(255)', true],
                 'sort_by'         => ['TINYINT(1)', false, 0],
                 'disp_position'   => ['INT(10)', false, 0],
@@ -439,6 +584,7 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('forums', $schema);
+
         // groups
         $schema = [
             'FIELDS' => [
@@ -477,44 +623,43 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('groups', $schema);
+
         // online
         $schema = [
             'FIELDS' => [
                 'user_id'     => ['INT(10) UNSIGNED', false, 1],
-                'ident'       => ['VARCHAR(200)', false, ''],
+                'ident'       => ['VARCHAR(190)', false, ''],
                 'logged'      => ['INT(10) UNSIGNED', false, 0],
-                'idle'        => ['TINYINT(1)', false, 0], //????
                 'last_post'   => ['INT(10) UNSIGNED', true],
                 'last_search' => ['INT(10) UNSIGNED', true],
-                'witt_data'   => ['VARCHAR(255)', false, ''],  //????
                 'o_position'  => ['VARCHAR(100)', false, ''],
-                'o_name'      => ['VARCHAR(200)', false, ''],
+                'o_name'      => ['VARCHAR(190)', false, ''],
             ],
             'UNIQUE KEYS' => [
-                'user_id_ident_idx' => ['user_id', 'ident(25)'],
+                'user_id_ident_idx' => ['user_id', 'ident(45)'],
             ],
             'INDEXES' => [
                 'ident_idx'      => ['ident'],
                 'logged_idx'     => ['logged'],
-                'o_position_idx' => ['o_position'], //????
             ],
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('online', $schema);
+
         // posts
         $schema = [
             'FIELDS' => [
                 'id'           => ['SERIAL', false],
-                'poster'       => ['VARCHAR(200)', false, ''],
+                'poster'       => ['VARCHAR(190)', false, ''],
                 'poster_id'    => ['INT(10) UNSIGNED', false, 1],
-                'poster_ip'    => ['VARCHAR(39)', true],
+                'poster_ip'    => ['VARCHAR(45)', true],
                 'poster_email' => ['VARCHAR(80)', true],
-                'message'      => ['MEDIUMTEXT', true],
+                'message'      => ['MEDIUMTEXT', false, ''],
                 'hide_smilies' => ['TINYINT(1)', false, 0],
                 'edit_post'    => ['TINYINT(1)', false, 0],
                 'posted'       => ['INT(10) UNSIGNED', false, 0],
                 'edited'       => ['INT(10) UNSIGNED', true],
-                'edited_by'    => ['VARCHAR(200)', true],
+                'edited_by'    => ['VARCHAR(190)', true],
                 'user_agent'   => ['VARCHAR(255)', true],
                 'topic_id'     => ['INT(10) UNSIGNED', false, 0],
             ],
@@ -526,6 +671,7 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('posts', $schema);
+
         // reports
         $schema = [
             'FIELDS' => [
@@ -546,6 +692,7 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('reports', $schema);
+
         // search_cache
         $schema = [
             'FIELDS' => [
@@ -560,6 +707,7 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('search_cache', $schema);
+
         // search_matches
         $schema = [
             'FIELDS' => [
@@ -574,6 +722,7 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('search_matches', $schema);
+
         // search_words
         $schema = [
             'FIELDS' => [
@@ -586,11 +735,12 @@ class Install extends Page
             ],
             'ENGINE' => $this->DBEngine,
         ];
-        if ($v->dbtype == 'sqlite') { //????
+        if ('sqlite' === $v->dbtype) { //????
             $schema['PRIMARY KEY'] = ['id'];
             $schema['UNIQUE KEYS'] = ['word_idx' => ['word']];
         }
         $this->c->DB->createTable('search_words', $schema);
+
         // topic_subscriptions
         $schema = [
             'FIELDS' => [
@@ -601,6 +751,7 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('topic_subscriptions', $schema);
+
         // forum_subscriptions
         $schema = [
             'FIELDS' => [
@@ -611,17 +762,18 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('forum_subscriptions', $schema);
+
         // topics
         $schema = [
             'FIELDS' => [
                 'id'            => ['SERIAL', false],
-                'poster'        => ['VARCHAR(200)', false, ''],
+                'poster'        => ['VARCHAR(190)', false, ''],
                 'subject'       => ['VARCHAR(255)', false, ''],
                 'posted'        => ['INT(10) UNSIGNED', false, 0],
                 'first_post_id' => ['INT(10) UNSIGNED', false, 0],
                 'last_post'     => ['INT(10) UNSIGNED', false, 0],
                 'last_post_id'  => ['INT(10) UNSIGNED', false, 0],
-                'last_poster'   => ['VARCHAR(200)', true],
+                'last_poster'   => ['VARCHAR(190)', true],
                 'num_views'     => ['MEDIUMINT(8) UNSIGNED', false, 0],
                 'num_replies'   => ['MEDIUMINT(8) UNSIGNED', false, 0],
                 'closed'        => ['TINYINT(1)', false, 0],
@@ -644,6 +796,7 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('topics', $schema);
+
         // pms_new_block
         $schema = [
             'FIELDS' => [
@@ -657,18 +810,19 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('pms_new_block', $schema);
+
         // pms_new_posts
         $schema = [
             'FIELDS' => [
                 'id'           => ['SERIAL', false],
-                'poster'       => ['VARCHAR(200)', false, ''],
+                'poster'       => ['VARCHAR(190)', false, ''],
                 'poster_id'    => ['INT(10) UNSIGNED', false, 1],
-                'poster_ip'    => ['VARCHAR(39)', true],
+                'poster_ip'    => ['VARCHAR(45)', true],
                 'message'      => ['TEXT', true],
                 'hide_smilies' => ['TINYINT(1)', false, 0],
                 'posted'       => ['INT(10) UNSIGNED', false, 0],
                 'edited'       => ['INT(10) UNSIGNED', true],
-                'edited_by'    => ['VARCHAR(200)', true],
+                'edited_by'    => ['VARCHAR(190)', true],
                 'post_new'     => ['TINYINT(1)', false, 1],
                 'topic_id'     => ['INT(10) UNSIGNED', false, 0],
             ],
@@ -680,14 +834,15 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('pms_new_posts', $schema);
+
         // pms_new_topics
         $schema = [
             'FIELDS' => [
                 'id'          => ['SERIAL', false],
                 'topic'       => ['VARCHAR(255)', false, ''],
-                'starter'     => ['VARCHAR(200)', false, ''],
+                'starter'     => ['VARCHAR(190)', false, ''],
                 'starter_id'  => ['INT(10) UNSIGNED', false, 0],
-                'to_user'     => ['VARCHAR(200)', false, ''],
+                'to_user'     => ['VARCHAR(190)', false, ''],
                 'to_id'       => ['INT(10) UNSIGNED', false, 0],
                 'replies'     => ['MEDIUMINT(8) UNSIGNED', false, 0],
                 'last_posted' => ['INT(10) UNSIGNED', false, 0],
@@ -705,12 +860,13 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('pms_new_topics', $schema);
+
         // users
         $schema = [
             'FIELDS' => [
                 'id'               => ['SERIAL', false],
                 'group_id'         => ['INT(10) UNSIGNED', false, 0],
-                'username'         => ['VARCHAR(200)', false, ''],
+                'username'         => ['VARCHAR(190)', false, ''],
                 'password'         => ['VARCHAR(255)', false, ''],
                 'email'            => ['VARCHAR(80)', false, ''],
                 'email_confirmed'  => ['TINYINT(1)', false, 0],
@@ -746,7 +902,7 @@ class Install extends Page
                 'last_email_sent'  => ['INT(10) UNSIGNED', true],
                 'last_report_sent' => ['INT(10) UNSIGNED', true],
                 'registered'       => ['INT(10) UNSIGNED', false, 0],
-                'registration_ip'  => ['VARCHAR(39)', false, ''],
+                'registration_ip'  => ['VARCHAR(45)', false, ''],
                 'last_visit'       => ['INT(10) UNSIGNED', false, 0],
                 'admin_note'       => ['VARCHAR(30)', true],
                 'activate_string'  => ['VARCHAR(80)', true],
@@ -772,6 +928,7 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('users', $schema);
+
         // smilies
         $schema = [
             'FIELDS' => [
@@ -784,11 +941,12 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('smilies', $schema);
+
         // warnings
         $schema = [
             'FIELDS' => [
                 'id'        => ['SERIAL', false],
-                'poster'    => ['VARCHAR(200)', false, ''],
+                'poster'    => ['VARCHAR(190)', false, ''],
                 'poster_id' => ['INT(10) UNSIGNED', false, 0],
                 'posted'    => ['INT(10) UNSIGNED', false, 0],
                 'message'   => ['TEXT', true],
@@ -797,6 +955,7 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('warnings', $schema);
+
         // poll
         $schema = [
             'FIELDS' => [
@@ -810,6 +969,7 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('poll', $schema);
+
         // poll_voted
         $schema = [
             'FIELDS' => [
@@ -821,11 +981,12 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('poll_voted', $schema) ;
+
         // mark_of_forum
         $schema = [
             'FIELDS' => [
-                'uid'              => ['INT(10) UNSIGNED', false],
-                'fid'              => ['INT(10) UNSIGNED', false],
+                'uid'              => ['INT(10) UNSIGNED', false, 0],
+                'fid'              => ['INT(10) UNSIGNED', false, 0],
                 'mf_mark_all_read' => ['INT(10) UNSIGNED', false, 0],
             ],
             'UNIQUE KEYS' => [
@@ -837,11 +998,12 @@ class Install extends Page
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('mark_of_forum', $schema);
+
         // mark_of_topic
         $schema = [
             'FIELDS' => [
-                'uid'           => ['INT(10) UNSIGNED', false],
-                'tid'           => ['INT(10) UNSIGNED', false],
+                'uid'           => ['INT(10) UNSIGNED', false, 0],
+                'tid'           => ['INT(10) UNSIGNED', false, 0],
                 'mt_last_visit' => ['INT(10) UNSIGNED', false, 0],
                 'mt_last_read'  => ['INT(10) UNSIGNED', false, 0],
             ],
@@ -859,11 +1021,11 @@ class Install extends Page
         $now = time();
 
         $groups = [
-        //    g_id,                  g_title,              g_user_title,        g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood
-            [$this->c->GROUP_ADMIN,  \ForkBB\__('Administrators'), \ForkBB\__('Administrator'), 0,           0,                0,                  0,                      0,               1,                   1,            1,            1,              1,             1,            1,              1,               1,           1,        1,              1,            0,            0,              0,             0],
-            [$this->c->GROUP_MOD,    \ForkBB\__('Moderators'),     \ForkBB\__('Moderator'),     1,           1,                1,                  1,                      1,               1,                   1,            1,            1,              1,             1,            1,              1,               1,           1,        1,              1,            0,            0,              0,             0],
-            [$this->c->GROUP_GUEST,  \ForkBB\__('Guests'),         NULL,                0,           0,                0,                  0,                      0,               0,                   1,            1,            0,              0,             0,            0,              0,               0,           1,        1,              0,            120,          60,             0,             0],
-            [$this->c->GROUP_MEMBER, \ForkBB\__('Members'),        NULL,                0,           0,                0,                  0,                      0,               0,                   1,            1,            1,              1,             1,            1,              1,               0,           1,        1,              1,            30,           30,             60,            60],
+            // g_id,                 g_title,                      g_user_title,        g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood
+            [$this->c->GROUP_ADMIN,  \ForkBB\__('Administrators'), \ForkBB\__('Administrator '), 0,           0,                0,                  0,                      0,               1,                   1,            1,            1,              1,             1,            1,              1,               1,           1,        1,              1,            0,            0,              0,             0],
+            [$this->c->GROUP_MOD,    \ForkBB\__('Moderators'),     \ForkBB\__('Moderator '),     1,           1,                1,                  1,                      1,               1,                   1,            1,            1,              1,             1,            1,              1,               1,           1,        1,              1,            0,            0,              0,             0],
+            [$this->c->GROUP_GUEST,  \ForkBB\__('Guests'),         NULL,                         0,           0,                0,                  0,                      0,               0,                   1,            1,            0,              0,             0,            0,              0,               0,           1,        1,              0,            120,          60,             0,             0],
+            [$this->c->GROUP_MEMBER, \ForkBB\__('Members'),        NULL,                         0,           0,                0,                  0,                      0,               0,                   1,            1,            1,              1,             1,            1,              1,               0,           1,        1,              1,            30,           30,             60,            60],
         ];
         foreach ($groups as $group) { //???? $db_type != 'pgsql'
             $this->c->DB->exec('INSERT INTO ::groups (g_id, g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood) VALUES (?i, ?s, ?s, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i)', $group) ;
@@ -871,104 +1033,102 @@ class Install extends Page
         $this->c->DB->exec('UPDATE ::groups SET g_pm_limit=0 WHERE g_id=?i', [$this->c->GROUP_ADMIN]);
 
         $ip = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP) ?: 'unknow';
-        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, email) VALUES (?i, ?s, ?s, ?s)', [$this->c->GROUP_GUEST, \ForkBB\__('Guest'), \ForkBB\__('Guest'), \ForkBB\__('Guest')]);
+        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, email) VALUES (?i, ?s, ?s, ?s)', [$this->c->GROUP_GUEST, \ForkBB\__('Guest '), \ForkBB\__('Guest '), \ForkBB\__('Guest ')]);
         $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, email, language, style, num_posts, last_post, registered, registration_ip, last_visit) VALUES (?i, ?s, ?s, ?s, ?s, ?s, ?i, ?i, ?i, ?s, ?i)', [$this->c->GROUP_ADMIN, $v->username, password_hash($v->password, PASSWORD_DEFAULT), $v->email, $v->defaultlang, $v->defaultstyle, 1, $now, $now, $ip, $now]);
 
         $pun_config = [
-            'i_fork_revision' => $this->c->FORK_REVISION,
-            'o_board_title' => $v->title,
-            'o_board_desc' => $v->descr,
-            'o_default_timezone' => 0,
-            'o_time_format' => 'H:i:s',
-            'o_date_format' => 'Y-m-d',
-            'o_timeout_visit' => 1800,
-            'o_timeout_online' => 300,
-            'o_redirect_delay' => 1,
-            'o_show_version' => 0,
-            'o_show_user_info' => 1,
-            'o_show_post_count' => 1,
-            'o_signatures' => 1,
-            'o_smilies' => 1,
-            'o_smilies_sig' => 1,
-            'o_make_links' => 1,
-            'o_default_lang' => $v->defaultlang,
-            'o_default_style' => $v->defaultstyle,
-            'o_default_user_group' => $this->c->GROUP_MEMBER,
-            'o_topic_review' => 15,
-            'o_disp_topics_default' => 30,
-            'o_disp_posts_default' => 25,
-            'o_indent_num_spaces' => 4,
-            'o_quote_depth' => 3,
-            'o_quickpost' => 1,
-            'o_users_online' => 1,
-            'o_censoring' => 0,
-            'o_show_dot' => 0,
-            'o_topic_views' => 1,
-            'o_quickjump' => 1,
-            'o_gzip' => 0,
-            'o_additional_navlinks' => '',
-            'o_report_method' => 0,
-            'o_regs_report' => 0,
+            'i_fork_revision'         => $this->c->FORK_REVISION,
+            'o_board_title'           => $v->title,
+            'o_board_desc'            => $v->descr,
+            'o_default_timezone'      => 0,
+            'o_time_format'           => 'H:i:s',
+            'o_date_format'           => 'Y-m-d',
+            'o_timeout_visit'         => 3600,
+            'o_timeout_online'        => 900,
+            'o_redirect_delay'        => 1,
+            'o_show_version'          => 0,
+            'o_show_user_info'        => 1,
+            'o_show_post_count'       => 1,
+            'o_signatures'            => 1,
+            'o_smilies'               => 1,
+            'o_smilies_sig'           => 1,
+            'o_make_links'            => 1,
+            'o_default_lang'          => $v->defaultlang,
+            'o_default_style'         => $v->defaultstyle,
+            'o_default_user_group'    => $this->c->GROUP_MEMBER,
+            'o_topic_review'          => 15,
+            'o_disp_topics_default'   => 30,
+            'o_disp_posts_default'    => 25,
+            'o_indent_num_spaces'     => 4,
+            'o_quote_depth'           => 3,
+            'o_quickpost'             => 1,
+            'o_users_online'          => 1,
+            'o_censoring'             => 0,
+            'o_show_dot'              => 0,
+            'o_topic_views'           => 1,
+            'o_quickjump'             => 1,
+            'o_gzip'                  => 0,
+            'o_additional_navlinks'   => '',
+            'o_report_method'         => 0,
+            'o_regs_report'           => 0,
             'o_default_email_setting' => 1,
-            'o_mailing_list' => $v->email,
-            'o_avatars' => in_array(strtolower(@ini_get('file_uploads')), ['on', 'true', '1']) ? 1 : 0,
-            'o_avatars_dir' => '/avatar/',
-            'o_avatars_width' => 60,
-            'o_avatars_height' => 60,
-            'o_avatars_size' => 10240,
-            'o_search_all_forums' => 1,
-            'o_admin_email' => $v->email,
-            'o_webmaster_email' => $v->email,
-            'o_forum_subscriptions' => 1,
-            'o_topic_subscriptions' => 1,
-            'o_smtp_host' => NULL,
-            'o_smtp_user' => NULL,
-            'o_smtp_pass' => NULL,
-            'o_smtp_ssl' => 0,
-            'o_regs_allow' => 1,
-            'o_regs_verify' => 1,
-            'o_announcement' => 0,
-            'o_announcement_message' => \ForkBB\__('Announcement'),
-            'o_rules' => 0,
-            'o_rules_message' => \ForkBB\__('Rules'),
-            'o_maintenance' => 0,
-            'o_maintenance_message' => \ForkBB\__('Maintenance message'),
-            'o_default_dst' => 0,
-            'o_feed_type' => 2,
-            'o_feed_ttl' => 0,
-            'p_message_bbcode' => 1,
-            'p_message_img_tag' => 1,
-            'p_message_all_caps' => 1,
-            'p_subject_all_caps' => 1,
-            'p_sig_all_caps' => 1,
-            'p_sig_bbcode' => 1,
-            'p_sig_img_tag' => 0,
-            'p_sig_length' => 400,
-            'p_sig_lines' => 4,
-            'p_allow_banned_email' => 0,
-            'p_allow_dupe_email' => 0,
-            'p_force_guest_email' => 1,
-            'o_pms_enabled' => 1,                    // New PMS - Visman
-            'o_pms_min_kolvo' => 0,
-            'o_merge_timeout' => 86400,        // merge post - Visman
-            'o_board_redirect' => '',    // для редиректа - Visman
-            'o_board_redirectg' => 0,
-            'o_poll_enabled' => 0,    // опросы - Visman
-            'o_poll_max_ques' => 3,
-            'o_poll_max_field' => 20,
-            'o_poll_time' => 60,
-            'o_poll_term' => 3,
-            'o_poll_guest' => 0,
-            'o_fbox_guest' => 0,    // Fancybox - Visman
-            'o_fbox_files' => 'viewtopic.php,search.php,pmsnew.php',
-            'o_coding_forms' => 1,    // кодирование форм - Visman
-            'o_check_ip' => 0,    // проверка ip администрации - Visman
-            'o_crypto_enable' => 1,    // случайные имена полей форм - Visman
-            'o_crypto_pas' => $this->c->Secury->randomPass(25),
-            'o_crypto_salt' => $this->c->Secury->randomPass(13),
-            'o_enable_acaptcha' => 1, // математическая каптча
-            'st_max_users' => 1,    // статистика по максимуму юзеров - Visman
-            'st_max_users_time' => time(),
+            'o_mailing_list'          => $v->email,
+            'o_avatars'               => in_array(strtolower(@ini_get('file_uploads')), ['on', 'true', '1']) ? 1 : 0,
+            'o_avatars_dir'           => '/img/avatars',
+            'o_avatars_width'         => 60,
+            'o_avatars_height'        => 60,
+            'o_avatars_size'          => 10240,
+            'o_search_all_forums'     => 1,
+            'o_admin_email'           => $v->email,
+            'o_webmaster_email'       => $v->email,
+            'o_forum_subscriptions'   => 1,
+            'o_topic_subscriptions'   => 1,
+            'o_smtp_host'             => NULL,
+            'o_smtp_user'             => NULL,
+            'o_smtp_pass'             => NULL,
+            'o_smtp_ssl'              => 0,
+            'o_regs_allow'            => 1,
+            'o_regs_verify'           => 1,
+            'o_announcement'          => 0,
+            'o_announcement_message'  => \ForkBB\__('Announcement '),
+            'o_rules'                 => 0,
+            'o_rules_message'         => \ForkBB\__('Rules '),
+            'o_maintenance'           => 0,
+            'o_maintenance_message'   => \ForkBB\__('Maintenance message '),
+            'o_default_dst'           => 0,
+            'o_feed_type'             => 2,
+            'o_feed_ttl'              => 0,
+            'p_message_bbcode'        => 1,
+            'p_message_img_tag'       => 1,
+            'p_message_all_caps'      => 1,
+            'p_subject_all_caps'      => 1,
+            'p_sig_all_caps'          => 1,
+            'p_sig_bbcode'            => 1,
+            'p_sig_img_tag'           => 0,
+            'p_sig_length'            => 400,
+            'p_sig_lines'             => 4,
+            'p_force_guest_email'     => 1,
+            'o_pms_enabled'           => 1,                    // New PMS - Visman
+            'o_pms_min_kolvo'         => 0,
+            'o_merge_timeout'         => 86400,        // merge post - Visman
+            'o_board_redirect'        => '',    // для редиректа - Visman
+            'o_board_redirectg'       => 0,
+            'o_poll_enabled'          => 0,    // опросы - Visman
+            'o_poll_max_ques'         => 3,
+            'o_poll_max_field'        => 20,
+            'o_poll_time'             => 60,
+            'o_poll_term'             => 3,
+            'o_poll_guest'            => 0,
+            'o_fbox_guest'            => 0,    // Fancybox - Visman
+            'o_fbox_files'            => 'viewtopic.php,search.php,pmsnew.php',
+            'o_coding_forms'          => 1,    // кодирование форм - Visman
+            'o_check_ip'              => 0,    // проверка ip администрации - Visman
+            'o_crypto_enable'         => 1,    // случайные имена полей форм - Visman
+            'o_crypto_pas'            => $this->c->Secury->randomPass(25),
+            'o_crypto_salt'           => $this->c->Secury->randomPass(13),
+            'o_enable_acaptcha'       => 1, // математическая каптча
+            'st_max_users'            => 1,    // статистика по максимуму юзеров - Visman
+            'st_max_users_time'       => time(),
         ];
         foreach ($pun_config as $conf_name => $conf_value) {
             $this->c->DB->exec('INSERT INTO ::config (conf_name, conf_value) VALUES (?s, ?s)', [$conf_name, $conf_value]);
@@ -1006,7 +1166,7 @@ class Install extends Page
 
         $this->c->DB->commit();
 
-        $config = file_get_contents($this->c->DIR_CONFIG . '/main.dist.php');
+        $config = @file_get_contents($this->c->DIR_CONFIG . '/main.dist.php');
         if (false === $config) {
             throw new RuntimeException('No access to main.dist.php.');
         }
@@ -1017,8 +1177,10 @@ class Install extends Page
             '_DB_USERNAME_'   => $this->c->DB_USERNAME,
             '_DB_PASSWORD_'   => $this->c->DB_PASSWORD,
             '_DB_PREFIX_'     => $this->c->DB_PREFIX,
-            '_SALT_FOR_HMAC_' => $this->c->Secury->randomPass(21),
+            '_SALT_FOR_HMAC_' => $this->c->Secury->randomPass(mt_rand(20,30)),
             '_COOKIE_PREFIX_' => 'fork' . $this->c->Secury->randomHash(7) . '_',
+            '_COOKIE_KEY1_'   => $this->c->Secury->randomPass(mt_rand(20,30)),
+            '_COOKIE_KEY2_'   => $this->c->Secury->randomPass(mt_rand(20,30)),
         ];
         foreach ($repl as $key => $val) {
             $config = str_replace($key, addslashes($val), $config);

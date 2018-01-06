@@ -21,9 +21,6 @@ msgstr "There is already a group with this title."
 msgid "Default group redirect"
 msgstr "Default group set. Redirecting …"
 
-msgid "Cannot remove default message"
-msgstr "The default group cannot be removed. In order to delete this group, you must first setup a different group as the default."
-
 msgid "Group removed redirect"
 msgstr "Group removed. Redirecting …"
 
@@ -32,9 +29,6 @@ msgstr "Group added. Redirecting …"
 
 msgid "Group edited redirect"
 msgstr "Group edited. Redirecting …"
-
-msgid "Control of groups"
-msgstr "Control of groups"
 
 msgid "Add group subhead"
 msgstr "Add new group"
@@ -54,17 +48,8 @@ msgstr "Default group"
 msgid "Default group help"
 msgstr "This is the default user group, e.g. the group users are placed in when they register. For security reasons, users can't be placed in either the moderator or administrator user groups by default."
 
-msgid "Existing groups head"
-msgstr "Existing groups"
-
-msgid "Edit groups subhead"
-msgstr "Edit/delete groups"
-
 msgid "Edit groups info"
 msgstr "The pre-defined groups Guests, Administrators, Moderators and Members cannot be removed. However, they can be edited. Please note that in some groups, some options are unavailable (e.g. the <em>edit posts</em> permission for guests). Administrators always have full permissions."
-
-msgid "Edit link"
-msgstr "Edit"
 
 msgid "Delete link"
 msgstr "Delete"
@@ -81,12 +66,6 @@ msgstr "Delete group?"
 msgid "Confirm delete warn"
 msgstr "<b>WARNING!</b> After you deleted a group you cannot restore it."
 
-msgid "Delete group head"
-msgstr "Delete group"
-
-msgid "Move users subhead"
-msgstr "Move users currently in group"
-
 msgid "Move users info"
 msgstr "The group <b>%1$s</b> currently has <b>%2$s</b> members. Please select a group to which these members will be assigned upon deletion."
 
@@ -95,12 +74,6 @@ msgstr "Move users to"
 
 msgid "Delete group"
 msgstr "Delete group"
-
-msgid "Group settings head"
-msgstr "Group settings"
-
-msgid "Group settings subhead"
-msgstr "Setup group options and permissions"
 
 msgid "Group settings info"
 msgstr "Below options and permissions are the default permissions for the user group. These options apply if no forum specific permissions are in effect."
@@ -112,13 +85,13 @@ msgid "User title label"
 msgstr "User title"
 
 msgid "User title help"
-msgstr "The rank users in this group have attained. Leave blank to use default title ("%s")."
+msgstr "The rank users in this group have attained. Leave blank to use default title <b>%s</b>."
 
 msgid "Promote users label"
 msgstr "Promote users"
 
 msgid "Promote users help"
-msgstr "You can promote users to a new group automatically if they reach a certain number of posts. Select "%s" to disable. For security reasons, you are not allowed to select an administrator group here. Also note that group changes for users affected by this setting will take effect <strong>immediately</strong>."
+msgstr "You can promote users to a new group automatically if they reach a certain number of posts. Select \"%s\" to disable. For security reasons, you are not allowed to select an administrator group here. Also note that group changes for users affected by this setting will take effect <b>immediately</b>."
 
 msgid "Number for promotion label"
 msgstr "Number of messages for promotion"
@@ -169,7 +142,7 @@ msgid "Read board label"
 msgstr "Read board"
 
 msgid "Read board help"
-msgstr "Allow users in this group to view the board. This setting applies to every aspect of the board and can therefore not be overridden by forum specific settings. If this is set to "No", users in this group will only be able to login/logout and register."
+msgstr "Allow users in this group to view the board. This setting applies to every aspect of the board and can therefore not be overridden by forum specific settings. If this is set to \"No\", users in this group will only be able to login/logout and register."
 
 msgid "View user info label"
 msgstr "View user information"

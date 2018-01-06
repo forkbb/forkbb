@@ -1,5 +1,6 @@
 .old
 /app/config/main.php
+/app/config/_*
 /app/cache/**/*.php
 /app/cache/**/*.lock
 /public/img/avatars/*

@@ -320,6 +320,17 @@ class Groups extends Admin
             ],
         ];
 
+        if ($group->g_id !== $this->c->GROUP_ADMIN) {
+            $form['sets'][] = [
+                'info' => [
+                    'info1' => [
+                        'type'  => '', //????
+                        'value' => \ForkBB\__('Group settings info'),
+                    ],
+                ],
+            ];
+        }
+
         $fieldset = [];
         $fieldset['g_title'] = [
             'type'      => 'text',
