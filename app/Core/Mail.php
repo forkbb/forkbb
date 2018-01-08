@@ -3,7 +3,7 @@
 namespace ForkBB\Core;
 
 use ForkBB\Core\Exceptions\MailException;
-use ForkBB\Core\Exceptions\StmpException;
+use ForkBB\Core\Exceptions\SmtpException;
 
 class Mail
 {

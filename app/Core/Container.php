@@ -206,4 +206,14 @@ class Container
         }
         return $value;
     }
+
+    /**
+     * @param string $name
+     * 
+     * @return bool
+     */
+    public function isInit($name)
+    {
+        return array_key_exists($name, $this->instances);
+    }
 }

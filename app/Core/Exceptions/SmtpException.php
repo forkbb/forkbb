@@ -2,6 +2,8 @@
 
 namespace ForkBB\Core\Exceptions;
 
-class StmpException extends MailException
+use ForkBB\Core\Exceptions\MailException;
+
+class SmtpException extends MailException
 {
 }
