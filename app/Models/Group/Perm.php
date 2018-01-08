@@ -115,7 +115,7 @@ class Perm extends Action
     }
 
     /**
-     * Обновление разрешений для раздела
+     * Сброс разрешений для раздела
      *
      * @param Forum $forum
      * 
@@ -132,6 +132,55 @@ class Perm extends Action
         ];
         $sql = 'DELETE FROM ::forum_perms 
                 WHERE forum_id=?i:fid';
+        $this->c->DB->exec($sql, $vars);
+    }
+
+    /**
+     * Удаление разрешений для группы
+     *
+     * @param Group $group
+     * 
+     * @throws RuntimeException
+     */
+    public function delete(Group $group)
+    {
+        if ($group->g_id < 1) {
+            throw new RuntimeException('The group does not have ID');
+        }
+
+        $vars = [
+            ':gid' => $group->g_id,
+        ];
+        $sql = 'DELETE FROM ::forum_perms 
+                WHERE group_id=?i:gid';
+        $this->c->DB->exec($sql, $vars);
+    }
+
+    /**
+     * Копирование разрешений первой группы во вторую
+     *
+     * @param Group $from
+     * @param Group $to
+     * 
+     * @throws RuntimeException
+     */
+    public function copy(Group $from, Group $to)
+    {
+        if ($from->g_id < 1 || $to->g_id < 1) {
+            throw new RuntimeException('The group does not have ID');
+        }
+
+        $this->delete($to);
+
+        $vars = [
+            ':old' => $from->g_id,
+            ':new' => $to->g_id,
+        ];
+        $sql = 'INSERT INTO ::forum_perms (group_id, forum_id, read_forum, post_replies, post_topics) 
+                SELECT ?i:new, forum_id, read_forum, post_replies, post_topics 
+                FROM ::forum_perms 
+                WHERE group_id=?i:old';
+
         $this->c->DB->exec($sql, $vars);
     }
 }

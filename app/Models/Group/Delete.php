@@ -10,7 +10,7 @@ use RuntimeException;
 class Delete extends Action
 {
     /**
-     * Удаляет тему(ы) 
+     * Удаляет группу
      *
      * @param Group $group
      * @param Group $new
@@ -20,14 +20,11 @@ class Delete extends Action
      */
     public function delete(Group $group, Group $new = null)
     {
-        //????
-#       if (! $arg->parent instanceof Forum) {
-#           throw new RuntimeException('Parent unavailable');
-#       }
-
         if (null !== $new) {
             $this->c->users->promote($group, $new);
         }
+
+        $this->manager->Perm->delete($group);
 
         $vars = [
             ':gid' => $group->g_id,
