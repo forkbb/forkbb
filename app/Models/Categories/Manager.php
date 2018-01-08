@@ -6,6 +6,7 @@ use ForkBB\Models\ManagerModel;
 //use ForkBB\Models\Categories\Model as Categories;
 use InvalidArgumentException;
 use RuntimeException;
+use PDO;
 
 class Manager extends ManagerModel
 {
@@ -25,7 +26,7 @@ class Manager extends ManagerModel
         $sql = 'SELECT id, cat_name, disp_position
                 FROM ::categories
                 ORDER BY disp_position';
-        $this->repository = $this->c->DB->query($sql)->fetchAll(\PDO::FETCH_UNIQUE);
+        $this->repository = $this->c->DB->query($sql)->fetchAll(PDO::FETCH_UNIQUE);
         return $this;
     }
 
