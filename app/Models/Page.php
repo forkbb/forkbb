@@ -126,7 +126,7 @@ class Page extends Model
     protected function maintenance()
     {
         if ($this->c->config->o_maintenance == '1' && $this->c->user->isAdmin) {
-            $this->a['fIswev']['w']['maintenance'] = \ForkBB\__('Maintenance mode enabled', $this->c->Router->link('AdminOptions', ['#' => 'maintenance']));
+            $this->a['fIswev']['w']['maintenance'] = \ForkBB\__('Maintenance mode enabled', $this->c->Router->link('AdminOptions', ['#' => 'Maintenance']));
         }
     }
 
