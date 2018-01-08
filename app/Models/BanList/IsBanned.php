@@ -16,11 +16,11 @@ class IsBanned extends Method
      */
     public function isBanned(User $user)
     {
-        $name  = $this->model->trimToNull($this->model->username, true);
+        $name  = $this->model->trimToNull($user->username, true);
         if (null !== $name && isset($this->model->userList[$name])) {
             return 1;
         }
-        $email = $this->model->trimToNull($this->model->email);
+        $email = $this->model->trimToNull($user->email);
         if (null !== $email) {
             foreach ($this->model->otherList as $row) {
                 if (null === $row['email']) {

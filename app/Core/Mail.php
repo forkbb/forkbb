@@ -540,7 +540,11 @@ class Mail
     {
         // завершение сеанса smtp
         if (is_resource($this->connect)) {
-            $this->smtpData('QUIT', null);
+            try {
+                $this->smtpData('QUIT', null);
+            } catch (MailException $e) {
+                //????
+            }
             @fclose($this->connect);
         }
     }

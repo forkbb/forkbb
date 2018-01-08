@@ -36,6 +36,7 @@ class Permissions extends Admin
                 'p_sig_all_caps'          => 'required|integer|in:0,1',
                 'p_sig_length'            => 'required|integer|min:0|max:16000',
                 'p_sig_lines'             => 'required|integer|min:0|max:100',
+            ])->setAliases([
             ])->setArguments([
             ])->setMessages([
             ]);

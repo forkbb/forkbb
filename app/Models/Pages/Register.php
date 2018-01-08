@@ -10,7 +10,7 @@ use ForkBB\Models\User\Model as User;
 class Register extends Page
 {
     /**
-     * Обработчик регистрации
+     * Регистрация
      * 
      * @return Page
      */
@@ -25,9 +25,13 @@ class Register extends Page
             'token'    => 'token:RegisterForm',
             'agree'    => 'required|token:Register',
             'on'       => 'integer',
-            'email'    => ['required_with:on|string:trim,lower|email|check_email', \ForkBB\__('Email')],
-            'username' => ['required_with:on|string:trim,spaces|min:2|max:25|login|check_username', \ForkBB\__('Username')],
-            'password' => ['required_with:on|string|min:16|password', \ForkBB\__('Passphrase')],
+            'email'    => 'required_with:on|string:trim,lower|email|check_email',
+            'username' => 'required_with:on|string:trim,spaces|min:2|max:25|login|check_username',
+            'password' => 'required_with:on|string|min:16|password',
+        ])->setAliases([
+            'email'    => 'Email',
+            'username' => 'Username',
+            'password' => 'Passphrase',
         ])->setMessages([
             'agree.required'    => ['cancel', 'cancel'],
             'agree.token'       => [\ForkBB\__('Bad agree', $this->c->Router->link('Register')), 'w'],
@@ -36,7 +40,7 @@ class Register extends Page
         ]);
 
         // завершение регистрации
-        if ($v->validation($_POST) && $v->on === 1) {
+        if ($v->validation($_POST) && 1 === $v->on) {
             return $this->regEnd($v);
         }
 
@@ -72,11 +76,8 @@ class Register extends Page
      */
     public function vCheckEmail(Validator $v, $email)
     {
-        $user = $this->c->users->create();
-        $user->__email = $email;
-
         // email забанен
-        if ($this->c->bans->isBanned($user) > 0) {
+        if ($this->c->bans->isBanned($this->c->users->create(['email' => $email])) > 0) {
             $v->addError('Banned email');
         // найден хотя бы 1 юзер с таким же email
         } elseif (empty($v->getErrors()) && 0 !== $this->c->users->load($email, 'email')) {
@@ -95,11 +96,10 @@ class Register extends Page
      */
     public function vCheckUsername(Validator $v, $username)
     {
-        $user = $this->c->users->create();
-        $user->__username = $username;
+        $user = $this->c->users->create(['username' => $username]);
 
         // username = Гость
-        if (preg_match('%^(guest|' . preg_quote(\ForkBB\__('Guest'), '%') . ')$%iu', $username)) {
+        if (preg_match('%^(guest|' . preg_quote(\ForkBB\__('Guest'), '%') . ')$%iu', $username)) { //????
             $v->addError('Username guest');
         // цензура
         } elseif ($this->c->censorship->censor($username) !== $username) {
@@ -117,13 +117,13 @@ class Register extends Page
     /**
      * Завершение регистрации
      * 
-     * @param array @data
+     * @param Validator $v
      * 
      * @return Page
      */
     protected function regEnd(Validator $v)
     {
-        if ($this->c->config->o_regs_verify == '1') {
+        if ('1' == $this->c->config->o_regs_verify) {
             $groupId = 0;
             $key = 'w' . $this->c->Secury->randomPass(79);
         } else {
@@ -143,20 +143,20 @@ class Register extends Page
         $user->email_setting   = $this->c->config->o_default_email_setting;
         $user->timezone        = $this->c->config->o_default_timezone;
         $user->dst             = $this->c->config->o_default_dst;
-        $user->language        = $user->language;
-        $user->style           = $user->style;
+        $user->language        = $user->language; //????
+        $user->style           = $user->style;    //????
         $user->registered      = time();
         $user->registration_ip = $this->c->user->ip;
             
         $newUserId = $this->c->users->insert($user);
 
         // обновление статистики по пользователям
-        if ($this->c->config->o_regs_verify != '1') {
+        if ('1' != $this->c->config->o_regs_verify) {
             $this->c->Cache->delete('stats');
         }
 
         // уведомление о регистрации
-        if ($this->c->config->o_regs_report == '1' && $this->c->config->o_mailing_list != '') {
+        if ('1' == $this->c->config->o_regs_report && '' != $this->c->config->o_mailing_list) {
             $tplData = [
                 'fTitle' => $this->c->config->o_board_title,
                 'fRootLink' => $this->c->Router->link('Index'),
@@ -182,7 +182,7 @@ class Register extends Page
         $this->c->Lang->load('register');
 
         // отправка письма активации аккаунта
-        if ($this->c->config->o_regs_verify == '1') {
+        if ('1' == $this->c->config->o_regs_verify) {
             $hash = $this->c->Secury->hash($newUserId . $key);
             $link = $this->c->Router->link('RegActivate', ['id' => $newUserId, 'key' => $key, 'hash' => $hash]);
             $tplData = [
@@ -213,13 +213,13 @@ class Register extends Page
             } else {
                 $auth = $this->c->Auth;
                 $auth->fIswev = ['w' => [\ForkBB\__('Error welcom mail', $this->c->config->o_admin_email)]];
-                return $auth->forget(['_email' => $v->email]);
+                return $auth->forget(['_email' => $v->email], 'GET');
             }
         // форма логина
         } else {
             $auth = $this->c->Auth;
             $auth->fIswev = ['s' => [\ForkBB\__('Reg complete')]];
-            return $auth->login(['_username' => $v->username]);
+            return $auth->login(['_username' => $v->username], 'GET');
         }
     }
 
@@ -235,23 +235,23 @@ class Register extends Page
         if (! hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['key']))
             || ! ($user = $this->c->users->load($args['id'])) instanceof User
             || empty($user->activate_string)
-            || $user->activate_string{0} !== 'w'
+            || 'w' !== $user->activate_string{0} 
             || ! hash_equals($user->activate_string, $args['key'])
         ) {
             return $this->c->Message->message('Bad request', false);
         }
 
-        $user->group_id = $this->c->config->o_default_user_group;
+        $user->group_id        = $this->c->config->o_default_user_group;
         $user->email_confirmed = 1;
         $user->activate_string = null;
         $this->c->users->update($user);
 
-        $this->c->Cache->delete('stats'); //????
+        $this->c->Cache->delete('stats');
 
         $this->c->Lang->load('register');
 
         $auth = $this->c->Auth;
         $auth->fIswev = ['s' => [\ForkBB\__('Reg complete')]];
-        return $auth->login(['_username' => $v->username]);
+        return $auth->login(['_username' => $user->username], 'GET');
     }
 }

@@ -28,7 +28,7 @@ class Save extends Action
         }
         $values = $user->getAttrs();
 
-        if ($user->isGuest) {
+        if ($user->isGuest && ! $user->isUnverified) {
             $fileds = $this->c->dbMap->online;
             $table  = 'online';
             $where  = 'user_id=1 AND ident=?s';
@@ -48,7 +48,7 @@ class Save extends Action
         if (empty($set)) {
             return $user;
         }
-        if ($user->isGuest) {
+        if ($user->isGuest && ! $user->isUnverified) {
             $vars[] = $user->ip;
         } else {
             $vars[] = $user->id;

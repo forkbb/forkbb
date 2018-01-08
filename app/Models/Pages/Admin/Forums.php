@@ -114,6 +114,7 @@ class Forums extends Admin
             $v = $this->c->Validator->setRules([
                 'token'                => 'token:AdminForums',
                 'form.*.disp_position' => 'required|integer|min:0|max:9999999999',
+            ])->setAliases([
             ])->setArguments([
             ])->setMessages([
             ]);
@@ -249,6 +250,7 @@ class Forums extends Admin
                 'confirm'   => 'integer',
                 'delete'    => 'string',
                 'cancel'    => 'string',
+            ])->setAliases([
             ])->setArguments([
                 'token' => $args,
             ]);
@@ -366,6 +368,7 @@ class Forums extends Admin
                 'perms.*.post_topics'  => 'checkbox',
                 'submit'               => 'string',
                 'reset'                => empty($forum->id) ? 'absent' : 'string',
+            ])->setAliases([
             ])->setArguments([
                 'token' => $args,
             ]);

@@ -35,6 +35,7 @@ class Delete extends Page
                 'confirm' => 'integer',
                 'delete'  => 'string',
                 'cancel'  => 'string',
+            ])->setAliases([
             ])->setArguments([
                 'token' => $args,
             ]);

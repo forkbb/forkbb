@@ -114,6 +114,7 @@ class Groups extends Admin
         $v = $this->c->Validator->setRules([
             'token'        => 'token:AdminGroupsDefault',
             'defaultgroup' => 'required|integer|in:' . implode(',', array_keys($this->groupsDefault)),
+        ])->setAliases([
         ])->setMessages([
             'defaultgroup.in' => 'Invalid default group',
         ]);
@@ -143,6 +144,7 @@ class Groups extends Admin
             $v = $this->c->Validator->setRules([
                 'token'     => 'token:AdminGroupsNew',
                 'basegroup' => 'required|integer|in:' . implode(',', array_keys($this->groupsNew)),
+            ])->setAliases([
             ])->setMessages([
                 'basegroup.in' => 'Invalid group to create on base',
             ]);
@@ -223,6 +225,7 @@ class Groups extends Admin
                 'g_search_flood'         => 'integer|min:0|max:999999',
                 'g_email_flood'          => 'integer|min:0|max:999999',
                 'g_report_flood'         => 'integer|min:0|max:999999',
+            ])->setAliases([
             ])->setArguments([
                 'token' => $vars,
             ])->setMessages([
@@ -621,6 +624,7 @@ class Groups extends Admin
                 'confirm'   => 'integer',
                 'delete'    => 'string',
                 'cancel'    => 'string',
+            ])->setAliases([
             ])->setArguments([
                 'token' => $args,
             ]);

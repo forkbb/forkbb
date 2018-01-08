@@ -87,6 +87,7 @@ class Options extends Admin
                 'o_announcement_message'  => 'string:trim|max:65000 bytes',
                 'o_maintenance'           => 'required|integer|in:0,1|check_empty:o_maintenance_message',
                 'o_maintenance_message'   => 'string:trim|max:65000 bytes',
+            ])->setAliases([
             ])->setArguments([
             ])->setMessages([
                 'o_board_title'     => 'Must enter title message',

@@ -26,6 +26,7 @@ class Categories extends Admin
                 'form.*.cat_name'      => 'required|string:trim|max:80',
                 'form.*.disp_position' => 'required|integer|min:0|max:9999999999',
                 'new'                  => 'string:trim|max:80'
+            ])->setAliases([
             ])->setArguments([
             ])->setMessages([
             ]);
@@ -138,6 +139,7 @@ class Categories extends Admin
                 'confirm'   => 'integer',
                 'delete'    => 'string',
                 'cancel'    => 'string',
+            ])->setAliases([
             ])->setArguments([
                 'token' => $args,
             ]);

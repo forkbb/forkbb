@@ -24,6 +24,7 @@ class Censoring extends Admin
                 'o_censoring'         => 'required|integer|in:0,1',
                 'form.*.search_for'   => 'string:trim|max:60',
                 'form.*.replace_with' => 'string:trim|max:60',
+            ])->setAliases([
             ])->setArguments([
             ])->setMessages([
             ]);

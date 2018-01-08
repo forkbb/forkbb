@@ -217,6 +217,7 @@ trait PostValidatorTrait
             'preview'      => 'string',
             'submit'       => 'string|check_timeout',
             'message'      => 'required|string:trim|max:' . $this->c->MAX_POST_SIZE . '|check_message',
+        ])->setAliases([
         ])->setArguments([
             'token'                 => $args,
             'subject.check_subject' => $executive,

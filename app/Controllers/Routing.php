@@ -36,14 +36,11 @@ class Routing
         // регистрация/вход/выход
         if ($user->isGuest) {
             // вход
-            $r->add('GET',  '/login', 'Auth:login', 'Login');
-            $r->add('POST', '/login', 'Auth:loginPost');
+            $r->add(['GET', 'POST'], '/login', 'Auth:login', 'Login');
             // забыли кодовую фразу
-            $r->add('GET',  '/login/forget', 'Auth:forget', 'Forget');
-            $r->add('POST', '/login/forget', 'Auth:forgetPost');
+            $r->add(['GET', 'POST'],  '/login/forget', 'Auth:forget', 'Forget');
             // смена кодовой фразы
-            $r->add('GET',  '/login/{email}/{key}/{hash}', 'Auth:changePass', 'ChangePassword');
-            $r->add('POST', '/login/{email}/{key}/{hash}', 'Auth:changePassPost');
+            $r->add(['GET', 'POST'],  '/login/{email}/{key}/{hash}', 'Auth:changePass', 'ChangePassword');
 
             // регистрация
             if ($config->o_regs_allow == '1') {
