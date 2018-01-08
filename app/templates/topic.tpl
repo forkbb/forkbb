@@ -75,7 +75,7 @@
               </li>
   @endif
               <li class="f-usertitle"><span>{{ $post->user->title() }}</span></li>
-  @if ($post->showUserInfo && $post->user->num_posts)
+  @if ($post->showPostCount && $post->user->num_posts)
               <li class="f-postcount"><span>{!! __('%s post', $post->user->num_posts, num($post->user->num_posts)) !!}</span></li>
   @endif
             </ul>

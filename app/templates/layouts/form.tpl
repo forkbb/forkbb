@@ -14,7 +14,7 @@
       @endif
     @endforeach
   @elseif (isset($set['fields']))
-          <fieldset>
+          <fieldset @if (isset($set['id'])) id="{{ $set['id'] }}" @endif>
     @if (isset($set['legend']))
             <legend>{!! $set['legend'] !!}</legend>
     @endif
