@@ -160,13 +160,13 @@ class Groups extends Admin
             $next = true;
         }
 
-        $group = $this->c->groups->get($gid);
+        $baseGroup = $this->c->groups->get($gid);
 
-        if (null === $group) {
+        if (! $baseGroup instanceof Group) {
             return $this->c->Message->message('Bad request');
         }
 
-        $group   = clone $group;
+        $group   = clone $baseGroup;
         $notNext = $this->c->GROUP_ADMIN . ',' . $this->c->GROUP_GUEST;
 
         if (isset($args['id'])) {
@@ -231,7 +231,7 @@ class Groups extends Admin
             ]);
 
             if ($v->validation($_POST)) {
-                return $this->save($group, $v->getData());
+                return $this->save($group, $baseGroup, $v->getData());
             }
 
             $this->fIswev  = $v->getErrors();
@@ -248,11 +248,12 @@ class Groups extends Admin
      * Запись данных по новой/измененной группе
      *
      * @param Group $group
+     * @param Group $baseGroup
      * @param array $args
      *
      * @return Page
      */
-    public function save(Group $group, array $data)
+    public function save(Group $group, Group $baseGroup, array $data)
     {
         if (empty($data['g_moderator'])) {
             $data['g_mod_edit_users']       = 0;
@@ -275,9 +276,8 @@ class Groups extends Admin
         if (null === $group->g_id) {
             $message = \ForkBB\__('Group added redirect');
             $newId   = $this->c->groups->insert($group);
-            //????
-            $this->c->DB->exec('INSERT INTO ::forum_perms (group_id, forum_id, read_forum, post_replies, post_topics) SELECT ?i:new, forum_id, read_forum, post_replies, post_topics FROM ::forum_perms WHERE group_id=?i:old', [':new' => $newId, ':old' => $args['base']]);
-            //????
+
+            $this->c->groups->Perm->copy($baseGroup, $group);
         } else {
             $message = \ForkBB\__('Group edited redirect');
             $this->c->groups->update($group);

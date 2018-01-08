@@ -71,6 +71,34 @@ class Forums extends Admin
     }
 
     /**
+     * Вычисление позиции для (нового) раздела
+     * 
+     * @param Forum $forum
+     * 
+     * @return int
+     */
+    protected function forumPos(Forum $forum)
+    {
+        if (is_int($forum->disp_position)) {
+            return $forum->disp_position;
+        }
+
+        $root = $this->c->forums->get(0);
+
+        if (! $root instanceof Forum) {
+            return 0;
+        }
+
+        $max = 0;
+        foreach ($root->descendants as $f) {
+            if ($f->disp_position > $max) {
+                $max = $f->disp_position;
+            }
+        }
+        return $max + 1;
+    }
+
+    /**
      * Просмотр, редактирвоание и добавление разделов
      *
      * @param array $args
@@ -365,6 +393,7 @@ class Forums extends Admin
                 } else {
                     if (empty($args['id'])) {
                         $message = 'Forum added redirect';
+                        $forum->disp_position = $this->forumPos($forum);
                         $this->c->forums->insert($forum);
                     } else {
                         $message = 'Forum updated redirect';

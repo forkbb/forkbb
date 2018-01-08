@@ -26,6 +26,7 @@ class Options extends Admin
             $v = $this->c->Validator->addValidators([
                 'check_timeout' => [$this, 'vCheckTimeout'],
                 'check_dir'     => [$this, 'vCheckDir'],
+                'check_empty'   => [$this, 'vCheckEmpty'],
             ])->setRules([
                 'token'                   => 'token:AdminOptions',
                 'o_board_title'           => 'required|string:trim|max:255',
@@ -51,7 +52,6 @@ class Options extends Admin
                 'o_quote_depth'           => 'required|integer|min:0|max:9',
                 'o_quickpost'             => 'required|integer|in:0,1',
                 'o_users_online'          => 'required|integer|in:0,1',
-                'o_censoring'             => 'required|integer|in:0,1',
                 'o_signatures'            => 'required|integer|in:0,1',
                 'o_show_dot'              => 'required|integer|in:0,1',
                 'o_topic_views'           => 'required|integer|in:0,1',
@@ -80,12 +80,12 @@ class Options extends Admin
                 'o_regs_allow'            => 'required|integer|in:0,1',
                 'o_regs_verify'           => 'required|integer|in:0,1',
                 'o_regs_report'           => 'required|integer|in:0,1',
-                'o_rules'                 => 'required|integer|in:0,1',
+                'o_rules'                 => 'required|integer|in:0,1|check_empty:o_rules_message',
                 'o_rules_message'         => 'string:trim|max:65000 bytes',
                 'o_default_email_setting' => 'required|integer|in:0,1,2',
-                'o_announcement'          => 'required|integer|in:0,1',
+                'o_announcement'          => 'required|integer|in:0,1|check_empty:o_announcement_message',
                 'o_announcement_message'  => 'string:trim|max:65000 bytes',
-                'o_maintenance'           => 'required|integer|in:0,1',
+                'o_maintenance'           => 'required|integer|in:0,1|check_empty:o_maintenance_message',
                 'o_maintenance_message'   => 'string:trim|max:65000 bytes',
             ])->setArguments([
             ])->setMessages([
@@ -154,6 +154,23 @@ class Options extends Admin
         $dir = '/' . trim(str_replace(['\\', '.'], ['/', ''], $dir), '/'); //?????
 
         return $dir;
+    }
+
+    /**
+     * Дополнительная проверка на пустоту другого поля
+     * 
+     * @param Validator $v
+     * @param int $value
+     * @param string $attr
+     * 
+     * @return int
+     */
+    public function vCheckEmpty(Validator $v, $value, $attr)
+    {
+        if (0 !== $value && 0 === strlen($v->$attr)) {
+            $value = 0;
+        }
+        return $value;
     }
 
     /**
@@ -423,13 +440,6 @@ class Options extends Admin
                     'values' => $yn,
                     'title'  => \ForkBB\__('Users online label'),
                     'info'   => \ForkBB\__('Users online help'),
-                ],
-                'o_censoring' => [
-                    'type'   => 'radio',
-                    'value'  => $config->o_censoring,
-                    'values' => $yn,
-                    'title'  => \ForkBB\__('Censor words label'),
-                    'info'   => \ForkBB\__('Censor words help', $this->c->Router->link('AdminCensoring')),
                 ],
                 'o_signatures' => [
                     'type'   => 'radio',
@@ -725,6 +735,7 @@ class Options extends Admin
         ];
 
         $form['sets'][] = [
+            'id'     => 'Maintenance',
             'legend' => \ForkBB\__('Maintenance subhead'),
             'fields' => [
                 'o_maintenance' => [
