@@ -79,7 +79,7 @@ class Register extends Page
         if ($this->c->bans->isBanned($user) > 0) {
             $v->addError('Banned email');
         // найден хотя бы 1 юзер с таким же email
-        } elseif (empty($v->getErrors()) && $user->load($email, 'email') !== 0) {
+        } elseif (empty($v->getErrors()) && 0 !== $this->c->users->load($email, 'email')) {
             $v->addError('Dupe email');
         }
         return $email;
@@ -148,11 +148,11 @@ class Register extends Page
         $user->registered      = time();
         $user->registration_ip = $this->c->user->ip;
             
-        $newUserId = $user->insert();
+        $newUserId = $this->c->users->insert($user);
 
         // обновление статистики по пользователям
         if ($this->c->config->o_regs_verify != '1') {
-            $this->c->{'users_info update'};
+            $this->c->Cache->delete('stats');
         }
 
         // уведомление о регистрации
@@ -246,7 +246,7 @@ class Register extends Page
         $user->activate_string = null;
         $this->c->users->update($user);
 
-        $this->c->{'users_info update'}; //????
+        $this->c->Cache->delete('stats'); //????
 
         $this->c->Lang->load('register');
 

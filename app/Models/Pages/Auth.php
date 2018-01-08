@@ -252,14 +252,11 @@ class Auth extends Page
             return $email;
         }
             
-        $user = $this->c->users->create();
-        $user->__email = $email;
-
         // email забанен
-        if ($this->c->bans->isBanned($user) > 0) {
+        if ($this->c->bans->isBanned($this->c->users->create(['email' => $email])) > 0) {
             $v->addError('Banned email');
         // нет пользователя с таким email
-        } elseif (! $user->load($email, 'email') instanceof User) {
+        } elseif (! ($user = $this->c->users->load($email, 'email')) instanceof User) {
             $v->addError('Invalid email');
         // за последний час уже был запрос на этот email
         } elseif (! empty($user->last_email_sent) && time() - $user->last_email_sent < 3600) {
@@ -300,7 +297,7 @@ class Auth extends Page
             $user->group_id = $this->c->config->o_default_user_group;
             $user->email_confirmed = 1;
             $this->c->users->update($user);
-            $this->c->{'users_info update'};
+            $this->c->Cache->delete('stats');
             $this->a['fIswev']['i'][] = \ForkBB\__('Account activated');
         }
 
