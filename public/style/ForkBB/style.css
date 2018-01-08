@@ -1616,12 +1616,20 @@ li + li .f-btn {
   font-weight: normal;
 }
 
-.f-field-depth1 dd {
+.f-field-depth1 > dd {
   padding-left: 0.625rem;
 }
 
-.f-field-depth2 dd {
+.f-field-depth2 > dd {
   padding-left: 1.25rem;
+}
+
+.f-field-depth3 > dd {
+  padding-left: 1.875rem;
+}
+
+.f-field-depth4 > dd {
+  padding-left: 2.5rem;
 }
 
 .f-editcategories-form .f-field-inline:nth-child(-n+3) {
@@ -1648,7 +1656,7 @@ li + li .f-btn {
   float: none;
 }
 
-.f-field-inline.f-field-cando > dt > label {
+.f-field-inline > dt > label {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -1698,6 +1706,33 @@ li + li .f-btn {
   pointer-events: none;
   cursor: default;
   opacity: 0.5;
+}
+
+/*********************/
+/* Админка/Цензура   */
+/*********************/
+.f-field-inline.f-field-censor {
+  float: left;
+  width: 50%;
+}
+
+.f-field-inline.f-field-censor:nth-child(odd) {
+  padding-right: 0.3125rem;
+}
+
+.f-field-inline.f-field-censor:nth-child(even) {
+  padding-left: 0.3125rem;
+}
+
+.f-field-inline.f-field-censor > dt {
+  display: none;
+}
+
+.f-field-inline.f-field-censor:nth-child(-n+2) > dt {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  float: none;
 }
 
 /*************/
