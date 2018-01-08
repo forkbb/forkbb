@@ -48,6 +48,9 @@ class Load extends Action
         foreach ($args as $aliases => $model) {
             $attrs = [];
             foreach (explode('.', $aliases) as $alias) {
+                if (empty($this->aliases[$alias])) {
+                    continue;
+                }
                 foreach ($this->aliases[$alias] as $key => $repl) {
                     $name = true === $repl ? $key : $repl;
                     $attrs[$name] = $data[$key];
