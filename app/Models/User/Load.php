@@ -42,12 +42,10 @@ class Load extends Action
 
         // число найденных пользователей отлично от одного
         $count = count($data);
-        if ($count !== 1) {
+        if (1 !== $count || 1 === $data[0]['id']) {
             return $count;
         }
 
-        $user = $this->manager->create($data[0]);
-
-        return $user->isGuest ? 1 : $user;
+        return $this->manager->create($data[0]);
     }
 }

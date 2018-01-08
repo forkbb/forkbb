@@ -27,8 +27,8 @@ class Model extends DataModel
     protected function getisGuest()
     {
         return $this->group_id == $this->c->GROUP_GUEST
-            || $this->id < 2
-            || empty($this->group_id);
+            || $this->id < 2 //????
+            || empty($this->group_id); //????
     }
 
     /**
