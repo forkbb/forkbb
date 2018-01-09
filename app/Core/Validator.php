@@ -17,55 +17,55 @@ class Validator
      * Массив валидаторов
      * @var array
      */
-    protected $validators = [];
+    protected $validators;
 
     /**
      * Массив правил для текущей проверки данных
      * @var array
      */
-    protected $rules = [];
+    protected $rules;
 
     /**
      * Массив результатов проверенных данных
      * @var array
      */
-    protected $result = [];
+    protected $result;
 
     /**
      * Массив дополнительных аргументов для валидаторов и конкретных полей/правил
      * @var array
      */
-    protected $arguments = [];
+    protected $arguments;
 
     /**
      * Массив сообщений об ошибках для конкретных полей/правил
      * @var array
      */
-    protected $messages = [];
+    protected $messages;
 
     /**
      * Массив псевдонимов имен полей для вывода в ошибках
      * @var array
      */
-    protected $aliases = [];
+    protected $aliases;
 
     /**
      * Массив ошибок валидации
      * @var array
      */
-    protected $errors = [];
+    protected $errors;
 
     /**
      * Массив имен полей для обработки
      * @var array
      */
-    protected $fields = [];
+    protected $fields;
 
     /**
      * Массив состояний проверки полей
      * @var array
      */
-    protected $status = [];
+    protected $status;
 
     /**
      * Массив входящих данных для обработки
@@ -77,7 +77,7 @@ class Validator
      * Данные для текущей обработки
      * @var array
      */
-    protected $curData = [];
+    protected $curData;
 
     /**
      * Флаг ошибки
@@ -93,6 +93,16 @@ class Validator
     public function __construct(Container $container)
     {
         $this->c = $container;
+        $this->reset();
+    }
+
+    /**
+     * Сброс настроек
+     *
+     * @return Validator
+     */
+    public function reset()
+    {
         $this->validators = [
             'absent'        => [$this, 'vAbsent'],
             'array'         => [$this, 'vArray'],
@@ -114,6 +124,15 @@ class Validator
             'string'        => [$this, 'vString'],
             'token'         => [$this, 'vToken'],
         ];
+        $this->rules     = [];
+        $this->result    = [];
+        $this->arguments = [];
+        $this->messages  = [];
+        $this->aliases   = [];
+        $this->errors    = [];
+        $this->fields    = [];
+        $this->status    = [];
+        return $this;
     }
 
     /**
@@ -130,7 +149,7 @@ class Validator
     }
 
     /**
-     * Установка правил проверки
+     * Добавление правил проверки
      *
      * @param array $list
      *
@@ -138,14 +157,8 @@ class Validator
      *
      * @return Validator
      */
-    public function setRules(array $list)
+    public function addRules(array $list)
     {
-        $this->rules = [];
-        $this->result = [];
-        $this->alias = [];
-        $this->errors = [];
-        $this->arguments = [];
-        $this->fields = [];
         foreach ($list as $field => $raw) {
             $suffix = null;
             // правило для элементов массива
@@ -153,13 +166,8 @@ class Validator
                 list($field, $suffix) = explode('.', $field, 2);
             }
             $rules = [];
-            // псевдоним содержится в списке правил
-            if (is_array($raw)) {
-                $this->aliases[$field] = $raw[1]; //????????????????
-                $raw                   = $raw[0];
-            }
             // перебор правил для текущего поля
-            foreach (explode('|', $raw) as $rule) {
+            foreach (explode('|', $raw) as $rule) { //???? нужно экоанирование для разделителей
                  $tmp = explode(':', $rule, 2);
                  if (empty($this->validators[$tmp[0]])) {
                      throw new RuntimeException($tmp[0] . ' validator not found');
@@ -177,39 +185,39 @@ class Validator
     }
 
     /**
-     * Установка дополнительных аргументов для конкретных "имя поля"."имя правила".
+     * Добавление дополнительных аргументов для конкретных "имя поля"."имя правила".
      *
      * @param array $arguments
      *
      * @return Validator
      */
-    public function setArguments(array $arguments)
+    public function addArguments(array $arguments)
     {
-        $this->arguments = $arguments;
+        $this->arguments = array_replace($this->arguments, $arguments);
         return $this;
     }
 
     /**
-     * Установка сообщений для конкретных "имя поля"."имя правила".
+     * Добавление сообщений для конкретных "имя поля"."имя правила".
      *
      * @param array $messages
      *
      * @return Validator
      */
-    public function setMessages(array $messages)
+    public function addMessages(array $messages)
     {
-        $this->messages = $messages;
+        $this->messages = array_replace($this->messages, $messages);
         return $this;
     }
 
     /**
-     * Установка псевдонимов имен полей для сообщений об ошибках
+     * Добавление псевдонимов имен полей для сообщений об ошибках
      *
      * @param array $aliases
      *
      * @return Validator
      */
-    public function setAliases(array $aliases)
+    public function addAliases(array $aliases)
     {
         $this->aliases = array_replace($this->aliases, $aliases);
         return $this;
@@ -217,7 +225,6 @@ class Validator
 
     /**
      * Проверка данных
-     * Удачная проверка возвращает true
      *
      * @param array $raw
      *
@@ -250,7 +257,7 @@ class Validator
      */
     public function __isset($field)
     {
-        return isset($this->result[$field]); //????
+        return isset($this->result[$field]);
     }
 
     /**
@@ -291,11 +298,11 @@ class Validator
 
     /**
      * Проверка значения списком правил
-     * 
+     *
      * @param mixed $value
      * @param array $rules
      * @param string $field
-     * 
+     *
      * @return mixed
      */
     protected function checkValue($value, array $rules, $field)
@@ -310,7 +317,7 @@ class Validator
             ];
 
             $value = $this->validators[$validator]($this, $value, $attr, $this->getArguments($field, $validator));
-            
+
             array_pop($this->curData);
 
             if (null !== $this->error) {
@@ -325,7 +332,7 @@ class Validator
      *
      * @param mixed $error
      * @param string $type
-     * 
+     *
      * @throws RuntimeException
      */
     public function addError($error, $type = 'v')
@@ -425,7 +432,7 @@ class Validator
         if (null !== $value) {
             $this->addError('The :alias should be absent');
         }
-        if (isset($attr[0])) {
+        if (isset($attr{0})) {
             return $attr;
         } else {
             return null;
@@ -530,7 +537,7 @@ class Validator
         if (empty($vars = end($this->curData))) {
             throw new RuntimeException('The array of variables is empty');
         }
-        
+
         $result = [];
         foreach ($attr as $name => $rules) {
             $this->recArray($value, $result, $name, $rules, $vars['field'] . '.' . $name);
@@ -560,7 +567,7 @@ class Validator
             if (! array_key_exists($key, $value)) {
                 return; //????
             }
-    
+
             if ('' === $name) {
                 $result[$key] = $this->checkValue($value[$key], $rules, $field);
             } else {
@@ -645,7 +652,7 @@ class Validator
 
     protected function vEmail($v, $value)
     {
-        if (null === $value) {
+        if (null === $value || '' === $value) { //???? перед правилом должно стоять правило `required`
             return null;
         }
         $email = $this->c->Mail->valid($value, true);
@@ -669,7 +676,7 @@ class Validator
 
     protected function vRegex($v, $value, $attr)
     {
-        if (null !== $value 
+        if (null !== $value
             && (! is_string($value) || ! preg_match($attr, $value))
         ) {
             $this->addError('The :alias is not valid format');

@@ -11,33 +11,34 @@ class Register extends Page
 {
     /**
      * Регистрация
-     * 
+     *
      * @return Page
      */
     public function reg()
     {
         $this->c->Lang->load('register');
 
-        $v = $this->c->Validator->addValidators([
-            'check_email'    => [$this, 'vCheckEmail'],
-            'check_username' => [$this, 'vCheckUsername'],
-        ])->setRules([
-            'token'    => 'token:RegisterForm',
-            'agree'    => 'required|token:Register',
-            'on'       => 'integer',
-            'email'    => 'required_with:on|string:trim,lower|email|check_email',
-            'username' => 'required_with:on|string:trim,spaces|min:2|max:25|login|check_username',
-            'password' => 'required_with:on|string|min:16|password',
-        ])->setAliases([
-            'email'    => 'Email',
-            'username' => 'Username',
-            'password' => 'Passphrase',
-        ])->setMessages([
-            'agree.required'    => ['cancel', 'cancel'],
-            'agree.token'       => [\ForkBB\__('Bad agree', $this->c->Router->link('Register')), 'w'],
-            'password.password' => 'Pass format',
-            'username.login'    => 'Login format',
-        ]);
+        $v = $this->c->Validator->reset()
+            ->addValidators([
+                'check_email'    => [$this, 'vCheckEmail'],
+                'check_username' => [$this, 'vCheckUsername'],
+            ])->addRules([
+                'token'    => 'token:RegisterForm',
+                'agree'    => 'required|token:Register',
+                'on'       => 'integer',
+                'email'    => 'required_with:on|string:trim,lower|email|check_email',
+                'username' => 'required_with:on|string:trim,spaces|min:2|max:25|login|check_username',
+                'password' => 'required_with:on|string|min:16|password',
+            ])->addAliases([
+                'email'    => 'Email',
+                'username' => 'Username',
+                'password' => 'Passphrase',
+            ])->addMessages([
+                'agree.required'    => ['cancel', 'cancel'],
+                'agree.token'       => [\ForkBB\__('Bad agree', $this->c->Router->link('Register')), 'w'],
+                'password.password' => 'Pass format',
+                'username.login'    => 'Login format',
+            ]);
 
         // завершение регистрации
         if ($v->validation($_POST) && 1 === $v->on) {
@@ -68,10 +69,10 @@ class Register extends Page
 
     /**
      * Дополнительная проверка email
-     * 
+     *
      * @param Validator $v
      * @param string $email
-     * 
+     *
      * @return string
      */
     public function vCheckEmail(Validator $v, $email)
@@ -88,10 +89,10 @@ class Register extends Page
 
     /**
      * Дополнительная проверка username
-     * 
+     *
      * @param Validator $v
      * @param string $username
-     * 
+     *
      * @return string
      */
     public function vCheckUsername(Validator $v, $username)
@@ -116,9 +117,9 @@ class Register extends Page
 
     /**
      * Завершение регистрации
-     * 
+     *
      * @param Validator $v
-     * 
+     *
      * @return Page
      */
     protected function regEnd(Validator $v)
@@ -132,7 +133,7 @@ class Register extends Page
         }
 
         $user = $this->c->users->create();
-        
+
         $user->username        = $v->username;
         $user->password        = password_hash($v->password, PASSWORD_DEFAULT);
         $user->group_id        = $groupId;
@@ -147,7 +148,7 @@ class Register extends Page
         $user->style           = $user->style;    //????
         $user->registered      = time();
         $user->registration_ip = $this->c->user->ip;
-            
+
         $newUserId = $this->c->users->insert($user);
 
         // обновление статистики по пользователям
@@ -225,9 +226,9 @@ class Register extends Page
 
     /**
      * Активация аккаунта
-     * 
+     *
      * @param array $args
-     * 
+     *
      * @return Page
      */
     public function activate(array $args)
@@ -235,7 +236,7 @@ class Register extends Page
         if (! hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['key']))
             || ! ($user = $this->c->users->load($args['id'])) instanceof User
             || empty($user->activate_string)
-            || 'w' !== $user->activate_string{0} 
+            || 'w' !== $user->activate_string{0}
             || ! hash_equals($user->activate_string, $args['key'])
         ) {
             return $this->c->Message->message('Bad request', false);

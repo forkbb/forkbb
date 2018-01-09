@@ -19,15 +19,16 @@ class Censoring extends Admin
         $this->c->Lang->load('admin_censoring');
 
         if ('POST' === $method) {
-            $v = $this->c->Validator->setRules([
-                'token'               => 'token:AdminCensoring',
-                'o_censoring'         => 'required|integer|in:0,1',
-                'form.*.search_for'   => 'string:trim|max:60',
-                'form.*.replace_with' => 'string:trim|max:60',
-            ])->setAliases([
-            ])->setArguments([
-            ])->setMessages([
-            ]);
+            $v = $this->c->Validator->reset()
+                ->addRules([
+                    'token'               => 'token:AdminCensoring',
+                    'o_censoring'         => 'required|integer|in:0,1',
+                    'form.*.search_for'   => 'string:trim|max:60',
+                    'form.*.replace_with' => 'string:trim|max:60',
+                ])->addAliases([
+                ])->addArguments([
+                ])->addMessages([
+                ]);
 
             if ($v->validation($_POST)) {
                 $this->c->DB->beginTransaction();

@@ -111,13 +111,14 @@ class Groups extends Admin
      */
     public function defaultSet()
     {
-        $v = $this->c->Validator->setRules([
-            'token'        => 'token:AdminGroupsDefault',
-            'defaultgroup' => 'required|integer|in:' . implode(',', array_keys($this->groupsDefault)),
-        ])->setAliases([
-        ])->setMessages([
-            'defaultgroup.in' => 'Invalid default group',
-        ]);
+        $v = $this->c->Validator->reset()
+            ->addRules([
+                'token'        => 'token:AdminGroupsDefault',
+                'defaultgroup' => 'required|integer|in:' . implode(',', array_keys($this->groupsDefault)),
+            ])->addAliases([
+            ])->addMessages([
+                'defaultgroup.in' => 'Invalid default group',
+            ]);
 
         if (! $v->validation($_POST)) {
             $this->fIswev = $v->getErrors();
@@ -141,13 +142,14 @@ class Groups extends Admin
     {
         // начало создания новой группы
         if (empty($args['id']) && empty($args['base'])) {
-            $v = $this->c->Validator->setRules([
-                'token'     => 'token:AdminGroupsNew',
-                'basegroup' => 'required|integer|in:' . implode(',', array_keys($this->groupsNew)),
-            ])->setAliases([
-            ])->setMessages([
-                'basegroup.in' => 'Invalid group to create on base',
-            ]);
+            $v = $this->c->Validator->reset()
+                ->addRules([
+                    'token'     => 'token:AdminGroupsNew',
+                    'basegroup' => 'required|integer|in:' . implode(',', array_keys($this->groupsNew)),
+                ])->addAliases([
+                ])->addMessages([
+                    'basegroup.in' => 'Invalid group to create on base',
+                ]);
 
             if (! $v->validation($_POST)) {
                 $this->fIswev = $v->getErrors();
@@ -196,42 +198,43 @@ class Groups extends Admin
                 }
             }
 
-            $v = $this->c->Validator->setRules([
-                'token'                  => 'token:' . $marker,
-                'g_title'                => 'required|string:trim|max:50|not_in:' . implode(',', $reserve),
-                'g_user_title'           => 'string:trim|max:50',
-                'g_promote_next_group'   => 'integer|min:0|not_in:' . $notNext,
-                'g_promote_min_posts'    => 'integer|min:0|max:9999999999',
-                'g_moderator'            => 'integer|in:0,1',
-                'g_mod_edit_users'       => 'integer|in:0,1',
-                'g_mod_rename_users'     => 'integer|in:0,1',
-                'g_mod_change_passwords' => 'integer|in:0,1',
-                'g_mod_promote_users'    => 'integer|in:0,1',
-                'g_mod_ban_users'        => 'integer|in:0,1',
-                'g_read_board'           => 'integer|in:0,1',
-                'g_view_users'           => 'integer|in:0,1',
-                'g_post_replies'         => 'integer|in:0,1',
-                'g_post_topics'          => 'integer|in:0,1',
-                'g_edit_posts'           => 'integer|in:0,1',
-                'g_delete_posts'         => 'integer|in:0,1',
-                'g_delete_topics'        => 'integer|in:0,1',
-                'g_deledit_interval'     => 'integer|min:0|max:999999',
-                'g_set_title'            => 'integer|in:0,1',
-                'g_post_links'           => 'integer|in:0,1',
-                'g_search'               => 'integer|in:0,1',
-                'g_search_users'         => 'integer|in:0,1',
-                'g_send_email'           => 'integer|in:0,1',
-                'g_post_flood'           => 'integer|min:0|max:999999',
-                'g_search_flood'         => 'integer|min:0|max:999999',
-                'g_email_flood'          => 'integer|min:0|max:999999',
-                'g_report_flood'         => 'integer|min:0|max:999999',
-            ])->setAliases([
-            ])->setArguments([
-                'token' => $vars,
-            ])->setMessages([
-                'g_title.required' => 'You must enter a group title',
-                'g_title.not_in'   => 'Title already exists',
-            ]);
+            $v = $this->c->Validator->reset()
+                ->addRules([
+                    'token'                  => 'token:' . $marker,
+                    'g_title'                => 'required|string:trim|max:50|not_in:' . implode(',', $reserve),
+                    'g_user_title'           => 'string:trim|max:50',
+                    'g_promote_next_group'   => 'integer|min:0|not_in:' . $notNext,
+                    'g_promote_min_posts'    => 'integer|min:0|max:9999999999',
+                    'g_moderator'            => 'integer|in:0,1',
+                    'g_mod_edit_users'       => 'integer|in:0,1',
+                    'g_mod_rename_users'     => 'integer|in:0,1',
+                    'g_mod_change_passwords' => 'integer|in:0,1',
+                    'g_mod_promote_users'    => 'integer|in:0,1',
+                    'g_mod_ban_users'        => 'integer|in:0,1',
+                    'g_read_board'           => 'integer|in:0,1',
+                    'g_view_users'           => 'integer|in:0,1',
+                    'g_post_replies'         => 'integer|in:0,1',
+                    'g_post_topics'          => 'integer|in:0,1',
+                    'g_edit_posts'           => 'integer|in:0,1',
+                    'g_delete_posts'         => 'integer|in:0,1',
+                    'g_delete_topics'        => 'integer|in:0,1',
+                    'g_deledit_interval'     => 'integer|min:0|max:999999',
+                    'g_set_title'            => 'integer|in:0,1',
+                    'g_post_links'           => 'integer|in:0,1',
+                    'g_search'               => 'integer|in:0,1',
+                    'g_search_users'         => 'integer|in:0,1',
+                    'g_send_email'           => 'integer|in:0,1',
+                    'g_post_flood'           => 'integer|min:0|max:999999',
+                    'g_search_flood'         => 'integer|min:0|max:999999',
+                    'g_email_flood'          => 'integer|min:0|max:999999',
+                    'g_report_flood'         => 'integer|min:0|max:999999',
+                ])->addAliases([
+                ])->addArguments([
+                    'token' => $vars,
+                ])->addMessages([
+                    'g_title.required' => 'You must enter a group title',
+                    'g_title.not_in'   => 'Title already exists',
+                ]);
 
             if ($v->validation($_POST)) {
                 return $this->save($group, $baseGroup, $v->getData());
@@ -618,16 +621,17 @@ class Groups extends Admin
         }
 
         if ('POST' === $method) {
-            $v = $this->c->Validator->setRules([
-                'token'     => 'token:AdminGroupsDelete',
-                'movegroup' => $move,
-                'confirm'   => 'integer',
-                'delete'    => 'string',
-                'cancel'    => 'string',
-            ])->setAliases([
-            ])->setArguments([
-                'token' => $args,
-            ]);
+            $v = $this->c->Validator->reset()
+                ->addRules([
+                    'token'     => 'token:AdminGroupsDelete',
+                    'movegroup' => $move,
+                    'confirm'   => 'integer',
+                    'delete'    => 'string',
+                    'cancel'    => 'string',
+                ])->addAliases([
+                ])->addArguments([
+                    'token' => $args,
+                ]);
 
             if (! $v->validation($_POST) || null === $v->delete) {
                 return $this->c->Redirect->page('AdminGroups')->message('Cancel redirect');

@@ -111,13 +111,14 @@ class Forums extends Admin
         $this->c->Lang->load('admin_forums');
 
         if ('POST' === $method) {
-            $v = $this->c->Validator->setRules([
-                'token'                => 'token:AdminForums',
-                'form.*.disp_position' => 'required|integer|min:0|max:9999999999',
-            ])->setAliases([
-            ])->setArguments([
-            ])->setMessages([
-            ]);
+            $v = $this->c->Validator->reset()
+                ->addRules([
+                    'token'                => 'token:AdminForums',
+                    'form.*.disp_position' => 'required|integer|min:0|max:9999999999',
+                ])->addAliases([
+                ])->addArguments([
+                ])->addMessages([
+                ]);
 
             if ($v->validation($_POST)) {
                 $this->c->DB->beginTransaction();
@@ -245,15 +246,16 @@ class Forums extends Admin
         $this->c->Lang->load('admin_forums');
 
         if ('POST' === $method) {
-            $v = $this->c->Validator->setRules([
-                'token'     => 'token:AdminForumsDelete',
-                'confirm'   => 'integer',
-                'delete'    => 'string',
-                'cancel'    => 'string',
-            ])->setAliases([
-            ])->setArguments([
-                'token' => $args,
-            ]);
+            $v = $this->c->Validator->reset()
+                ->addRules([
+                    'token'     => 'token:AdminForumsDelete',
+                    'confirm'   => 'integer',
+                    'delete'    => 'string',
+                    'cancel'    => 'string',
+                ])->addAliases([
+                ])->addArguments([
+                    'token' => $args,
+                ]);
 
             if (! $v->validation($_POST) || null === $v->delete) {
                 return $this->c->Redirect->page('AdminForums')->message('Cancel redirect');
@@ -356,22 +358,23 @@ class Forums extends Admin
         $this->calcList($forum);
 
         if ('POST' === $method) {
-            $v = $this->c->Validator->setRules([
-                'token'                => 'token:' . $marker,
-                'forum_name'           => 'required|string:trim|max:80',
-                'forum_desc'           => 'string:trim|max:65000 bytes',
-                'parent'               => 'required|integer|in:' . implode(',', $this->listOfIndexes),
-                'sort_by'              => 'required|integer|in:0,1,2',
-                'redirect_url'         => 'string:trim|max:255', //????
-                'perms.*.read_forum'   => 'checkbox',
-                'perms.*.post_replies' => 'checkbox',
-                'perms.*.post_topics'  => 'checkbox',
-                'submit'               => 'string',
-                'reset'                => empty($forum->id) ? 'absent' : 'string',
-            ])->setAliases([
-            ])->setArguments([
-                'token' => $args,
-            ]);
+            $v = $this->c->Validator->reset()
+                ->addRules([
+                    'token'                => 'token:' . $marker,
+                    'forum_name'           => 'required|string:trim|max:80',
+                    'forum_desc'           => 'string:trim|max:65000 bytes',
+                    'parent'               => 'required|integer|in:' . implode(',', $this->listOfIndexes),
+                    'sort_by'              => 'required|integer|in:0,1,2',
+                    'redirect_url'         => 'string:trim|max:255', //????
+                    'perms.*.read_forum'   => 'checkbox',
+                    'perms.*.post_replies' => 'checkbox',
+                    'perms.*.post_topics'  => 'checkbox',
+                    'submit'               => 'string',
+                    'reset'                => empty($forum->id) ? 'absent' : 'string',
+                ])->addAliases([
+                ])->addArguments([
+                    'token' => $args,
+                ]);
 
             $valid = $v->validation($_POST);
 

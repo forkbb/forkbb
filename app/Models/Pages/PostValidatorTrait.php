@@ -152,7 +152,7 @@ trait PostValidatorTrait
     protected function messageValidator(Model $model, $marker, array $args, $editPost = false, $editSubject = false)
     {
         if ($this->c->user->isGuest) {
-            $ruleEmail    = ($this->c->config->p_force_guest_email == '1' ? 'required|' : '') . 'string:trim,lower|email|check_email';
+            $ruleEmail    = ('1' == $this->c->config->p_force_guest_email ? 'required|' : '') . 'string:trim,lower|email|check_email';
             $ruleUsername = 'required|string:trim,spaces|min:2|max:25|login|check_username';
         } else {
             $ruleEmail    = 'absent';
@@ -198,33 +198,37 @@ trait PostValidatorTrait
             $ruleHideSmilies = 'absent';
         }
             
-        $v = $this->c->Validator->addValidators([
-            'check_email'    => [$this, 'vCheckEmail'],
-            'check_username' => [$this, 'vCheckUsername'],
-            'check_subject'  => [$this, 'vCheckSubject'],
-            'check_message'  => [$this, 'vCheckMessage'],
-            'check_timeout'  => [$this, 'vCheckTimeout'],
-        ])->setRules([
-            'token'        => 'token:' . $marker,
-            'email'        => [$ruleEmail, \ForkBB\__('Email')],
-            'username'     => [$ruleUsername, \ForkBB\__('Username')],
-            'subject'      => [$ruleSubject, \ForkBB\__('Subject')],
-            'stick_topic'  => $ruleStickTopic,
-            'stick_fp'     => $ruleStickFP,
-            'merge_post'   => $ruleMergePost,
-            'hide_smilies' => $ruleHideSmilies,
-            'edit_post'    => $ruleEditPost,
-            'preview'      => 'string',
-            'submit'       => 'string|check_timeout',
-            'message'      => 'required|string:trim|max:' . $this->c->MAX_POST_SIZE . '|check_message',
-        ])->setAliases([
-        ])->setArguments([
-            'token'                 => $args,
-            'subject.check_subject' => $executive,
-            'message.check_message' => $executive,
-        ])->setMessages([
-            'username.login' => \ForkBB\__('Login format'),
-        ]);
+        $v = $this->c->Validator->reset()
+            ->addValidators([
+                'check_email'    => [$this, 'vCheckEmail'],
+                'check_username' => [$this, 'vCheckUsername'],
+                'check_subject'  => [$this, 'vCheckSubject'],
+                'check_message'  => [$this, 'vCheckMessage'],
+                'check_timeout'  => [$this, 'vCheckTimeout'],
+            ])->addRules([
+                'token'        => 'token:' . $marker,
+                'email'        => $ruleEmail,
+                'username'     => $ruleUsername,
+                'subject'      => $ruleSubject,
+                'stick_topic'  => $ruleStickTopic,
+                'stick_fp'     => $ruleStickFP,
+                'merge_post'   => $ruleMergePost,
+                'hide_smilies' => $ruleHideSmilies,
+                'edit_post'    => $ruleEditPost,
+                'preview'      => 'string',
+                'submit'       => 'string|check_timeout',
+                'message'      => 'required|string:trim|max:' . $this->c->MAX_POST_SIZE . '|check_message',
+            ])->addAliases([
+                'email'        => 'Email',
+                'username'     => 'Username',
+                'subject'      => 'Subject',
+            ])->addArguments([
+                'token'                 => $args,
+                'subject.check_subject' => $executive,
+                'message.check_message' => $executive,
+            ])->addMessages([
+                'username.login' => 'Login format',
+            ]);
 
         return $v;
     }

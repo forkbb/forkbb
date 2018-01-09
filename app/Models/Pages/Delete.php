@@ -30,15 +30,16 @@ class Delete extends Page
         $this->c->Lang->load('delete');
 
         if ($method === 'POST') {
-            $v = $this->c->Validator->setRules([
-                'token'   => 'token:DeletePost',
-                'confirm' => 'integer',
-                'delete'  => 'string',
-                'cancel'  => 'string',
-            ])->setAliases([
-            ])->setArguments([
-                'token' => $args,
-            ]);
+            $v = $this->c->Validator->reset()
+                ->addRules([
+                    'token'   => 'token:DeletePost',
+                    'confirm' => 'integer',
+                    'delete'  => 'string',
+                    'cancel'  => 'string',
+                ])->addAliases([
+                ])->addArguments([
+                    'token' => $args,
+                ]);
     
             if (! $v->validation($_POST) || null === $v->delete) {
                 return $this->c->Redirect->page('ViewPost', $args)->message('Cancel redirect');

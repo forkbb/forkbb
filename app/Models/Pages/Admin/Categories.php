@@ -21,15 +21,16 @@ class Categories extends Admin
         $this->c->Lang->load('admin_categories');
 
         if ('POST' === $method) {
-            $v = $this->c->Validator->setRules([
-                'token'                => 'token:AdminCategories',
-                'form.*.cat_name'      => 'required|string:trim|max:80',
-                'form.*.disp_position' => 'required|integer|min:0|max:9999999999',
-                'new'                  => 'string:trim|max:80'
-            ])->setAliases([
-            ])->setArguments([
-            ])->setMessages([
-            ]);
+            $v = $this->c->Validator->reset()
+                ->addRules([
+                    'token'                => 'token:AdminCategories',
+                    'form.*.cat_name'      => 'required|string:trim|max:80',
+                    'form.*.disp_position' => 'required|integer|min:0|max:9999999999',
+                    'new'                  => 'string:trim|max:80'
+                ])->addAliases([
+                ])->addArguments([
+                ])->addMessages([
+                ]);
 
             if ($v->validation($_POST)) {
                 $this->c->DB->beginTransaction();
@@ -134,15 +135,16 @@ class Categories extends Admin
         $this->c->Lang->load('admin_categories');
 
         if ('POST' === $method) {
-            $v = $this->c->Validator->setRules([
-                'token'     => 'token:AdminCategoriesDelete',
-                'confirm'   => 'integer',
-                'delete'    => 'string',
-                'cancel'    => 'string',
-            ])->setAliases([
-            ])->setArguments([
-                'token' => $args,
-            ]);
+            $v = $this->c->Validator->reset()
+                ->addRules([
+                    'token'     => 'token:AdminCategoriesDelete',
+                    'confirm'   => 'integer',
+                    'delete'    => 'string',
+                    'cancel'    => 'string',
+                ])->addAliases([
+                ])->addArguments([
+                    'token' => $args,
+                ]);
 
             if (! $v->validation($_POST) || null === $v->delete) {
                 return $this->c->Redirect->page('AdminCategories')->message('Cancel redirect');

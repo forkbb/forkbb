@@ -50,18 +50,19 @@ class Auth extends Page
 
         $v = null;
         if ('POST' === $method) {
-            $v = $this->c->Validator->addValidators([
-                'login_process' => [$this, 'vLoginProcess'],
-            ])->setRules([
-                'token'    => 'token:Login',
-                'redirect' => 'required|referer:Index',
-                'username' => 'required|string',
-                'password' => 'required|string|login_process',
-                'save'     => 'checkbox',
-            ])->setAliases([
-                'username' => 'Username',
-                'password' => 'Passphrase',
-            ]);
+            $v = $this->c->Validator->reset()
+                ->addValidators([
+                    'login_process' => [$this, 'vLoginProcess'],
+                ])->addRules([
+                    'token'    => 'token:Login',
+                    'redirect' => 'required|referer:Index',
+                    'username' => 'required|string',
+                    'password' => 'required|string|login_process',
+                    'save'     => 'checkbox',
+                ])->addAliases([
+                    'username' => 'Username',
+                    'password' => 'Passphrase',
+                ]);
     
             if ($v->validation($_POST)) {
                 return $this->c->Redirect->url($v->redirect)->message('Login redirect');
@@ -153,15 +154,16 @@ class Auth extends Page
 
         $v = null;
         if ('POST' === $method) {
-            $v = $this->c->Validator->addValidators([
-                'check_email' => [$this, 'vCheckEmail'],
-            ])->setRules([
-                'token' => 'token:Forget',
-                'email' => 'required|string:trim,lower|email|check_email',
-            ])->setAliases([
-            ])->setMessages([
-                'email.email' => 'Invalid email',
-            ]);
+            $v = $this->c->Validator->reset()
+                ->addValidators([
+                    'check_email' => [$this, 'vCheckEmail'],
+                ])->addRules([
+                    'token' => 'token:Forget',
+                    'email' => 'required|string:trim,lower|email|check_email',
+                ])->addAliases([
+                ])->addMessages([
+                    'email.email' => 'Invalid email',
+                ]);
 
             if ($v->validation($_POST)) {
                 $key = 'p' . $this->c->Secury->randomPass(79);
@@ -260,19 +262,20 @@ class Auth extends Page
         $this->c->Lang->load('auth');
 
         if ('POST' === $method) {
-            $v = $this->c->Validator->setRules([
-                'token'     => 'token:ChangePassword',
-                'password'  => 'required|string|min:16|password',
-                'password2' => 'required|same:password',
-            ])->setAliases([
-                'password'  => 'New pass',
-                'password2' => 'Confirm new pass',
-            ])->setArguments([
-                'token' => $args,
-            ])->setMessages([
-                'password.password'  => 'Pass format',
-                'password2.same'     => 'Pass not match',
-            ]);
+            $v = $this->c->Validator->reset()
+                ->addRules([
+                    'token'     => 'token:ChangePassword',
+                    'password'  => 'required|string|min:16|password',
+                    'password2' => 'required|same:password',
+                ])->addAliases([
+                    'password'  => 'New pass',
+                    'password2' => 'Confirm new pass',
+                ])->addArguments([
+                    'token' => $args,
+                ])->addMessages([
+                    'password.password'  => 'Pass format',
+                    'password2.same'     => 'Pass not match',
+                ]);
     
             if ($v->validation($_POST)) {
                 $user->password        = password_hash($v->password, PASSWORD_DEFAULT);

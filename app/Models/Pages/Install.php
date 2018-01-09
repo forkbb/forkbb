@@ -67,11 +67,12 @@ class Install extends Page
     {
         $changeLang = false;
         if ('POST' === $method) {
-            $v = $this->c->Validator->setRules([
-                'token'       => 'token:Install',
-                'installlang' => 'required|string:trim',
-                'changelang'  => 'string',
-            ]);
+            $v = $this->c->Validator->reset()
+                ->addRules([
+                    'token'       => 'token:Install',
+                    'installlang' => 'required|string:trim',
+                    'changelang'  => 'string',
+                ]);
 
             if ($v->validation($_POST)) {
                 $this->c->user->language = $v->installlang;
@@ -126,42 +127,43 @@ class Install extends Page
         }
 
         if ('POST' === $method && ! $changeLang && empty($this->a['fIswev']['e'])) {
-            $v = $this->c->Validator->addValidators([
-                'check_prefix' => [$this, 'vCheckPrefix'],
-                'check_host'   => [$this, 'vCheckHost'],
-                'rtrim_url'    => [$this, 'vRtrimURL']
-            ])->setRules([
-                'dbtype'       => 'required|string:trim|in:' . implode(',', array_keys($this->dbTypes)),
-                'dbhost'       => 'required|string:trim|check_host',
-                'dbname'       => 'required|string:trim',
-                'dbuser'       => 'string:trim',
-                'dbpass'       => 'string:trim',
-                'dbprefix'     => 'string:trim|max:40|check_prefix',
-                'username'     => 'required|string:trim|min:2|max:25',
-                'password'     => 'required|string|min:16|password',
-                'email'        => 'required|string:trim,lower|max:80|email',
-                'title'        => 'required|string:trim|max:255',
-                'descr'        => 'string:trim|max:65000 bytes',
-                'baseurl'      => 'required|string:trim|rtrim_url',
-                'defaultlang'  => 'required|string:trim|in:' . implode(',', $this->c->Func->getLangs()),
-                'defaultstyle' => 'required|string:trim|in:' . implode(',', $this->c->Func->getStyles()),
-            ])->setAliases([
-                'dbtype'       => 'Database type',
-                'dbhost'       => 'Database server hostname',
-                'dbname'       => 'Database name',
-                'dbuser'       => 'Database username',
-                'dbpass'       => 'Database password',
-                'dbprefix'     => 'Table prefix',
-                'username'     => 'Administrator username',
-                'password'     => 'Administrator passphrase',
-                'title'        => 'Board title',
-                'descr'        => 'Board description',
-                'baseurl'      => 'Base URL',
-                'defaultlang'  => 'Default language',
-                'defaultstyle' => 'Default style',
-            ])->setMessages([
-                'email'        => 'Wrong email',
-            ]);
+            $v = $this->c->Validator->reset()
+                ->addValidators([
+                    'check_prefix' => [$this, 'vCheckPrefix'],
+                    'check_host'   => [$this, 'vCheckHost'],
+                    'rtrim_url'    => [$this, 'vRtrimURL']
+                ])->addRules([
+                    'dbtype'       => 'required|string:trim|in:' . implode(',', array_keys($this->dbTypes)),
+                    'dbhost'       => 'required|string:trim|check_host',
+                    'dbname'       => 'required|string:trim',
+                    'dbuser'       => 'string:trim',
+                    'dbpass'       => 'string:trim',
+                    'dbprefix'     => 'string:trim|max:40|check_prefix',
+                    'username'     => 'required|string:trim|min:2|max:25',
+                    'password'     => 'required|string|min:16|password',
+                    'email'        => 'required|string:trim,lower|max:80|email',
+                    'title'        => 'required|string:trim|max:255',
+                    'descr'        => 'string:trim|max:65000 bytes',
+                    'baseurl'      => 'required|string:trim|rtrim_url',
+                    'defaultlang'  => 'required|string:trim|in:' . implode(',', $this->c->Func->getLangs()),
+                    'defaultstyle' => 'required|string:trim|in:' . implode(',', $this->c->Func->getStyles()),
+                ])->addAliases([
+                    'dbtype'       => 'Database type',
+                    'dbhost'       => 'Database server hostname',
+                    'dbname'       => 'Database name',
+                    'dbuser'       => 'Database username',
+                    'dbpass'       => 'Database password',
+                    'dbprefix'     => 'Table prefix',
+                    'username'     => 'Administrator username',
+                    'password'     => 'Administrator passphrase',
+                    'title'        => 'Board title',
+                    'descr'        => 'Board description',
+                    'baseurl'      => 'Base URL',
+                    'defaultlang'  => 'Default language',
+                    'defaultstyle' => 'Default style',
+                ])->addMessages([
+                    'email'        => 'Wrong email',
+                ]);
     
             if ($v->validation($_POST)) {
                 return $this->installEnd($v);

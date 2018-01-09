@@ -23,23 +23,24 @@ class Permissions extends Admin
         $config = clone $this->c->config;
 
         if ('POST' === $method) {
-            $v = $this->c->Validator->addValidators([
-            ])->setRules([
-                'token'                   => 'token:AdminPermissions',
-                'p_message_bbcode'        => 'required|integer|in:0,1',
-                'p_message_img_tag'       => 'required|integer|in:0,1',
-                'p_message_all_caps'      => 'required|integer|in:0,1',
-                'p_subject_all_caps'      => 'required|integer|in:0,1',
-                'p_force_guest_email'     => 'required|integer|in:0,1',
-                'p_sig_bbcode'            => 'required|integer|in:0,1',
-                'p_sig_img_tag'           => 'required|integer|in:0,1',
-                'p_sig_all_caps'          => 'required|integer|in:0,1',
-                'p_sig_length'            => 'required|integer|min:0|max:16000',
-                'p_sig_lines'             => 'required|integer|min:0|max:100',
-            ])->setAliases([
-            ])->setArguments([
-            ])->setMessages([
-            ]);
+            $v = $this->c->Validator->reset()
+                ->addValidators([
+                ])->addRules([
+                    'token'               => 'token:AdminPermissions',
+                    'p_message_bbcode'    => 'required|integer|in:0,1',
+                    'p_message_img_tag'   => 'required|integer|in:0,1',
+                    'p_message_all_caps'  => 'required|integer|in:0,1',
+                    'p_subject_all_caps'  => 'required|integer|in:0,1',
+                    'p_force_guest_email' => 'required|integer|in:0,1',
+                    'p_sig_bbcode'        => 'required|integer|in:0,1',
+                    'p_sig_img_tag'       => 'required|integer|in:0,1',
+                    'p_sig_all_caps'      => 'required|integer|in:0,1',
+                    'p_sig_length'        => 'required|integer|min:0|max:16000',
+                    'p_sig_lines'         => 'required|integer|min:0|max:100',
+                ])->addAliases([
+                ])->addArguments([
+                ])->addMessages([
+                ]);
 
             $valid = $v->validation($_POST);
             $data  = $v->getData();

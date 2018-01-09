@@ -40,7 +40,7 @@ class Load extends Action
 
         $data = $this->c->DB->query($sql, $vars)->fetchAll();
 
-        // число найденных пользователей отлично от одного
+        // число найденных пользователей отлично от одного или гость
         $count = count($data);
         if (1 !== $count || 1 === $data[0]['id']) {
             return $count;
