@@ -62,7 +62,7 @@ trait PostFormTrait
                 'type'      => 'text',
                 'maxlength' => 80,
                 'title'     => \ForkBB\__('Email'),
-                'required'  => $this->c->config->p_force_guest_email == '1',
+                'required'  => '1' == $this->c->config->p_force_guest_email,
                 'pattern'   => '.+@.+',
                 'value'     => isset($vars['email']) ? $vars['email'] : null,
             ];
