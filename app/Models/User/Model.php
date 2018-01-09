@@ -16,7 +16,7 @@ class Model extends DataModel
      */
     protected function getisUnverified()
     {
-        return empty($this->group_id);
+        return 0 === $this->group_id;
     }
 
     /**
@@ -26,9 +26,9 @@ class Model extends DataModel
      */
     protected function getisGuest()
     {
-        return $this->group_id == $this->c->GROUP_GUEST
-            || $this->id < 2 //????
-            || empty($this->group_id); //????
+        return $this->group_id === $this->c->GROUP_GUEST
+            || $this->id < 2
+            || null === $this->group_id;
     }
 
     /**
@@ -38,7 +38,7 @@ class Model extends DataModel
      */
     protected function getisAdmin()
     {
-        return $this->group_id == $this->c->GROUP_ADMIN;
+        return $this->group_id === $this->c->GROUP_ADMIN;
     }
 
     /**
@@ -48,8 +48,8 @@ class Model extends DataModel
      */
     protected function getisAdmMod()
     {
-        return $this->group_id == $this->c->GROUP_ADMIN
-            || $this->g_moderator == '1';
+        return $this->group_id === $this->c->GROUP_ADMIN
+            || '1' == $this->g_moderator;
     }
 
     /**
@@ -63,7 +63,7 @@ class Model extends DataModel
      */
     public function isModerator(BaseModel $model)
     {
-        if ($this->g_moderator != '1') {
+        if ('1' != $this->g_moderator) {
             return false;
         }
         

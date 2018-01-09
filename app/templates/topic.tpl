@@ -59,7 +59,7 @@
   @if ($post->edited)
           <span class="f-post-edited" title="{!! __('Last edit', $post->edited_by, dt($post->edited)) !!}">{!! __('Edited') !!}</span>
   @endif
-          <span class="f-post-number"><a href="{!! $post->link !!}" rel="bookmark">#{!! $post->postNumber !!}</a></span>
+          <span class="f-post-number"><a href="{!! $post->link !!}" rel="bookmark">№{!! $post->postNumber !!}</a></span>
         </header>
         <div class="f-post-body clearfix">
           <address class="f-post-left clearfix">

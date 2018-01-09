@@ -302,12 +302,13 @@ class Model extends DataModel
                 INNER JOIN ::groups AS g ON g.g_id=u.group_id
                 WHERE p.id IN (?ai:ids) ORDER BY p.id';
 
-        $posts = $this->c->DB->query($sql, $vars)->fetchAll();
+        $stmt = $this->c->DB->query($sql, $vars);
 
         $postCount = 0;
         $timeMax = 0;
+        $result = [];
 
-        foreach ($posts as &$cur) {
+        while ($cur = $stmt->fetch()) {
             if ($cur['posted'] > $timeMax) {
                 $timeMax = $cur['posted'];
             }
@@ -324,11 +325,10 @@ class Model extends DataModel
                 $cur['warnings'] = $warnings[$cur['id']];
             }
 
-            $cur = $this->c->posts->create($cur);
+            $result[] = $this->c->posts->create($cur);
         }
-        unset($cur);
         $this->timeMax = $timeMax;
-        return $posts;
+        return $result;
     }
 
     /**
