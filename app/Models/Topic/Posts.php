@@ -3,48 +3,29 @@
 namespace ForkBB\Models\Topic;
 
 use ForkBB\Models\Method;
-use Iterator;
 use PDO;
 use InvalidArgumentException;
 use RuntimeException;
 
-class Posts extends Method implements Iterator
+class Posts extends Method
 {
-    protected $key;
-
-    protected $row;
-
-    protected $stmt;
-
-    protected $warnings;
-
-    protected $postCount;
-
-    protected $post;
-
-    protected $offset;
-
     /**
-     * 
-     * 
-     * @throws RuntimeException
-     * 
-     * @return null|Method
+     * Возвращает массив сообщений с установленной ранее страницы темы
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return array
      */
     public function posts()
     {
-        if ($this->model->id < 1) {
-            throw new RuntimeException('The model does not have ID');
-        }
-
         if (! $this->model->hasPage()) {
             throw new InvalidArgumentException('Bad number of displayed page');
         }
 
-        $this->offset = ($this->model->page - 1) * $this->c->user->disp_posts;
+        $offset = ($this->model->page - 1) * $this->c->user->disp_posts;
         $vars = [
             ':tid'    => $this->model->id,
-            ':offset' => $this->offset,
+            ':offset' => $offset,
             ':rows'   => $this->c->user->disp_posts,
         ];
         $sql = 'SELECT id
@@ -54,7 +35,7 @@ class Posts extends Method implements Iterator
 
         $ids = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
         if (empty($ids)) {
-            return null;
+            return [];
         }
 
         // приклейка первого сообщения темы
@@ -69,7 +50,7 @@ class Posts extends Method implements Iterator
                 FROM ::warnings
                 WHERE id IN (?ai:ids)';
 
-        $this->warnings = $this->c->DB->query($sql, $vars)->fetchAll(\PDO::FETCH_GROUP);
+        $warnings = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_GROUP);
 
         $vars = [
             ':ids' => $ids,
@@ -85,60 +66,32 @@ class Posts extends Method implements Iterator
                 INNER JOIN ::groups AS g ON g.g_id=u.group_id
                 WHERE p.id IN (?ai:ids) ORDER BY p.id';
 
-        $this->stmt = $this->c->DB->query($sql, $vars);
-        $this->model->timeMax = 0;
-        $this->postCount = 0;
-        $this->post = $this->c->posts->create();
+        $stmt = $this->c->DB->query($sql, $vars);
 
-        return $this;
-    }
+        $postCount = 0;
+        $timeMax = 0;
+        $result = [];
 
-    public function rewind()
-    {
-        $this->key = 0;
-    }
-  
-    public function current()
-    {
-        if (empty($this->row)) { //????
-            return false;
+        while ($cur = $stmt->fetch()) {
+            if ($cur['posted'] > $timeMax) {
+                $timeMax = $cur['posted'];
+            }
+
+            // номер сообшения в теме
+            if ($cur['id'] == $this->model->first_post_id && $offset > 0) {
+                $cur['postNumber'] = 1;
+            } else {
+                ++$postCount;
+                $cur['postNumber'] = $offset + $postCount;
+            }
+
+            if (isset($warnings[$cur['id']])) {
+                $cur['warnings'] = $warnings[$cur['id']];
+            }
+
+            $result[] = $this->c->posts->create($cur);
         }
-
-        $cur = $this->row;
-
-        if ($cur['posted'] > $this->model->timeMax) {
-            $this->model->timeMax = $cur['posted'];
-        }
-
-        // номер сообшения в теме
-        if ($cur['id'] == $this->model->first_post_id && $this->offset > 0) {
-            $cur['postNumber'] = 1;
-        } else {
-            ++$this->postCount;
-            $cur['postNumber'] = $this->offset + $this->postCount;
-        }
-
-        if (isset($this->warnings[$cur['id']])) {
-            $cur['warnings'] = $this->warnings[$cur['id']];
-        }
-
-        return $this->post->setAttrs($cur);
+        $this->model->timeMax = $timeMax;
+        return $result;
     }
-  
-    public function key() 
-    {
-        return $this->key;
-    }
-  
-    public function next() 
-    {
-        ++$this->key;
-    }
-  
-    public function valid()
-    {
-        $this->row = $this->stmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_ABS, $this->key);
-        return false !== $this->row;
-    }
-
 }
