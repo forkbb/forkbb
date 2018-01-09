@@ -1266,14 +1266,15 @@ select {
   overflow: hidden;
 }
 
-.f-post-header > h3 {
-  display: none;
-}
-
 .f-post-header {
   padding: 0.625rem;
   border-bottom: 0.0625rem solid #AA7939;
   background-color: #D3B58D;
+  font-size: 0.875rem;
+}
+
+.f-post-header > h3 {
+  display: none;
 }
 
 .f-post-posted {
@@ -1552,12 +1553,14 @@ li + li .f-btn {
     width: 30%;
     float: left;
     padding-right: 0.3125rem;
+    padding-top: 0.625rem;
   }
 
   .f-fdiv .f-field-t2 {
     width: 70%;
     float: left;
     padding-left: 0.3125rem;
+    padding-top: 0.625rem;
   }
 }
 
