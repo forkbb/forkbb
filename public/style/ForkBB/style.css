@@ -655,7 +655,8 @@ select {
 .f-crumb {
   display: block;
   float: left;
-  white-space: nowrap;
+/*  white-space: nowrap; */
+  word-break: break-all;
 }
 
 .f-crumb + .f-crumb:before {
@@ -1221,6 +1222,8 @@ select {
   font-weight: normal;
   font-size: 1rem;
   position: relative;
+  display: inline-block;
+  word-break: break-all;
 }
 
 .f-cmposter {
@@ -1330,6 +1333,7 @@ li + li .f-btn {
 .f-username {
   font-size: 1.25rem;
   float: left;
+  word-break: break-all;
 }
 
 .f-username a {

@@ -136,7 +136,7 @@ class Topic extends Page
             return $this->c->Message->message('Bad request');
         }
 
-        if (! $posts = $topic->posts()) {
+        if (! $posts = $this->c->posts->view($topic)) {
             return $this->go('last', $topic);
         }
 

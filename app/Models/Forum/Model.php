@@ -5,6 +5,7 @@ namespace ForkBB\Models\Forum;
 use ForkBB\Models\DataModel;
 use RuntimeException;
 use InvalidArgumentException;
+use PDO;
 
 class Model extends DataModel
 {
@@ -215,7 +216,7 @@ class Model extends DataModel
      *
      * @return array
      */
-    public function topics()
+    public function pageData()
     {
         if (! $this->hasPage()) {
             throw new InvalidArgumentException('Bad number of displayed page');
@@ -248,45 +249,8 @@ class Model extends DataModel
                 ORDER BY sticky DESC, {$sortBy}, id DESC
                 LIMIT ?i:offset, ?i:rows";
 
-        $ids = $this->c->DB->query($sql, $vars)->fetchAll(\PDO::FETCH_COLUMN);
-        if (empty($ids)) {
-            return []; //????
-        }
+        $ids = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
-        $vars = [
-            ':uid' => $this->c->user->id,
-            ':ids' => $ids,
-        ];
-
-        if (! $this->c->user->isGuest && $this->c->config->o_show_dot == '1') {
-            $dots = $this->c->DB
-                ->query('SELECT topic_id FROM ::posts WHERE poster_id=?i:uid AND topic_id IN (?ai:ids) GROUP BY topic_id', $vars)
-                ->fetchAll(\PDO::FETCH_COLUMN);
-            $dots = array_flip($dots);
-        } else {
-            $dots = [];
-        }
-
-        if ($this->c->user->isGuest) {
-            $sql = "SELECT t.*
-                    FROM ::topics AS t
-                    WHERE t.id IN(?ai:ids)
-                    ORDER BY t.sticky DESC, t.{$sortBy}, t.id DESC";
-        } else {
-            $sql = "SELECT t.*, mot.mt_last_visit, mot.mt_last_read
-                    FROM ::topics AS t
-                    LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND t.id=mot.tid)
-                    WHERE t.id IN (?ai:ids)
-                    ORDER BY t.sticky DESC, t.{$sortBy}, t.id DESC";
-        }
-        $topics = $this->c->DB->query($sql, $vars)->fetchAll();
-
-        foreach ($topics as &$cur) {
-            $cur['dot'] = isset($dots[$cur['id']]);
-            $cur = $this->c->topics->create($cur);
-        }
-        unset($cur);
-
-        return $topics;
+        return empty($ids) ? [] : $this->c->topics->view($ids);
     }
 }

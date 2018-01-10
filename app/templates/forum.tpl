@@ -104,6 +104,8 @@
                   <span class="f-polltxt">{!! __('Poll') !!}</span>
       @endif
                   <a class="f-ftname" href="{!! $topic->link !!}">{{ cens($topic->subject) }}</a>
+                </h3>
+                <span class="f-cmposter">{!! __('by') !!} {{ $topic->poster }}</span>
       @if ($topic->pagination)
                   <span class="f-tpages">
         @foreach ($topic->pagination as $cur)
@@ -118,8 +120,6 @@
       @if ($topic->hasNew !== false)
                   <span class="f-newtxt"><a href="{!! $topic->linkNew !!}" title="{!! __('New posts info') !!}">{!! __('New posts') !!}</a></span>
       @endif
-                </h3>
-                <p class="f-cmposter">{!! __('by') !!} {{ $topic->poster }}</p>
               </div>
             </div>
             <div class="f-cell f-cstats">

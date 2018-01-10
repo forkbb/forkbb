@@ -10,7 +10,9 @@ class Forum extends Page
 
     /**
      * Подготовка данных для шаблона
+     * 
      * @param array $args
+     * 
      * @return Page
      */
     public function view(array $args)
@@ -19,7 +21,7 @@ class Forum extends Page
         $this->c->Lang->load('subforums');
 
         $forum = $this->c->forums->loadTree($args['id']);
-        if (empty($forum)) {
+        if (null === $forum) {
             return $this->c->Message->message('Bad request');
         }
 
@@ -33,21 +35,18 @@ class Forum extends Page
             return $this->c->Message->message('Bad request');
         }
 
-        $topics = $forum->topics();
-        $user = $this->c->user;
-
-        if (empty($topics)) {
-            $this->a['fIswev']['i'][] = \ForkBB\__('Empty forum');
-        }
-
         $this->fIndex     = 'index';
         $this->nameTpl    = 'forum';
         $this->onlinePos  = 'forum-' . $args['id'];
         $this->canonical  = $this->c->Router->link('Forum', ['id' => $args['id'], 'name' => $forum->forum_name, 'page' => $forum->page]);
         $this->forum      = $forum;
         $this->forums     = $forum->subforums;
-        $this->topics     = $topics;
+        $this->topics     = $forum->pageData();
         $this->crumbs     = $this->crumbs($forum);
+
+        if (empty($this->topics)) {
+            $this->a['fIswev']['i'][] = \ForkBB\__('Empty forum');
+        }
 
         return $this;
     }

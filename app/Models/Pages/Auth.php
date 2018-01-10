@@ -71,6 +71,8 @@ class Auth extends Page
             $this->fIswev = $v->getErrors();
         }
 
+        $ref = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+        
         $this->fIndex     = 'login';
         $this->nameTpl    = 'login';
         $this->onlinePos  = 'login';
@@ -81,7 +83,7 @@ class Auth extends Page
         $this->forgetLink = $this->c->Router->link('Forget');
         $this->regLink    = $this->c->config->o_regs_allow == '1' ? $this->c->Router->link('Register') : null;
         $this->username   = $v ? $v->username : (isset($args['_username']) ? $args['_username'] : '');
-        $this->redirect   = $v ? $v->redirect : $this->c->Router->validate($_SERVER['HTTP_REFERER'], 'Index'); //????
+        $this->redirect   = $v ? $v->redirect : $this->c->Router->validate($ref, 'Index');
         $this->save       = $v ? $v->save : 1;
 
         return $this;
