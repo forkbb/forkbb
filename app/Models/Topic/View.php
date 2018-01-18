@@ -3,28 +3,41 @@
 namespace ForkBB\Models\Topic;
 
 use ForkBB\Models\Action;
+use ForkBB\Models\Forum\Model as Forum;
+use ForkBB\Models\Search\Model as Search;
 use ForkBB\Models\Topic\Model as Topic;
 use PDO;
+use InvalidArgumentException;
+use RuntimeException;
 
 class View extends Action
 {
     /**
      * Возвращает список тем
      *
-     * @param array $list
-     * @param bool $expanded
+     * @param mixed $arg
      *
+     * @throws InvalidArgumentException
+     * 
      * @return array
      */
-    public function view(array $list, $expanded = false)
+    public function view($arg)
     {
-        if (empty($list)) {
-            return [];
+        if ($arg instanceof Forum) {
+            $expanded = false;
+        } elseif ($arg instanceof Search) {
+            $expanded = true;
+        } else {
+            throw new InvalidArgumentException('Expected Forum or Search');
+        }
+
+        if (empty($arg->idsList) || ! is_array($arg->idsList)) {
+            throw new RuntimeException('Model does not contain a list of topics to display');
         }
 
         $vars = [
             ':uid' => $this->c->user->id,
-            ':ids' => $list,
+            ':ids' => $arg->idsList,
         ];
 
         if (! $this->c->user->isGuest && '1' == $this->c->config->o_show_dot) {
@@ -56,7 +69,7 @@ class View extends Action
         }
         $stmt = $this->c->DB->query($sql, $vars);
 
-        $result = array_flip($list);
+        $result = array_flip($arg->idsList);
         while ($row = $stmt->fetch()) {
             $row['dot'] = isset($dots[$row['id']]);
             $result[$row['id']] = $this->manager->create($row);

@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Model;
+use ForkBB\Models\Search\Model as Search;
 
 trait CrumbTrait 
 {
@@ -20,8 +21,18 @@ trait CrumbTrait
         $active = true;
 
         foreach ($args as $arg) {
-            // Раздел или топик
-            if ($arg instanceof Model) {
+            // поиск
+            if ($arg instanceof Search) {
+                if ($arg->page > 1) {
+                    $this->titles = $arg->name . ' ' . \ForkBB\__('Page %s', $arg->page);
+                } else {
+                    $this->titles = $arg->name;
+                }
+                $crumbs[]     = [$arg->link, $arg->name, $active];
+                $this->titles = \ForkBB\__('Search');
+                $crumbs[]     = [$this->c->Router->link('Search'), \ForkBB\__('Search'), null];
+            // раздел или топик
+            } elseif ($arg instanceof Model) {
                 while (null !== $arg->parent && $arg->link) {
                     if (isset($arg->forum_name)) {
                         $name = $arg->forum_name;
@@ -37,13 +48,17 @@ trait CrumbTrait
                         $this->titles = $name;
                     }
                     $crumbs[] = [$arg->link, $name, $active];
-                    $active = null;
-                    $arg = $arg->parent;
+                    $active   = null;
+                    $arg      = $arg->parent;
                 }
-            // Строка
+            // ссылка
+            } elseif (is_array($arg)) {
+                $this->titles = $arg[1];
+                $crumbs[]     = [$arg[0], $arg[1], $active];
+            // строка
             } else {
                 $this->titles = (string) $arg;
-                $crumbs[] = [null, (string) $arg, $active];
+                $crumbs[]     = [null, (string) $arg, $active];
             }
             $active = null;
         }

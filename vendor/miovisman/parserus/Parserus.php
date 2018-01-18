@@ -205,6 +205,7 @@ class Parserus
         }
 
         $res['handler'] = isset($bb['handler']) ? $bb['handler'] : null;
+        $res['text handler'] = isset($bb['text handler']) ? $bb['text handler'] : null;
 
         $required = [];
         $attrs = [];
@@ -1065,6 +1066,44 @@ class Parserus
         }
 
         return '[' . $tag . $def . $other . ']' . (isset($this->bbcodes[$tag]['single']) ? '' : $body . '[/' . $tag .']');
+    }
+
+    /**
+     * Метод возвращает текст без bb-кодов построенный на основании дерева тегов
+     *
+     * @param  int    $id Указатель на текущий тег
+     *
+     * @return string
+     */
+    public function getText($id = 0)
+    {
+        if (isset($this->data[$id]['tag'])) {
+
+            $body = '';
+            foreach ($this->data[$id]['children'] as $cid) {
+                $body .= $this->getText($cid);
+            }
+
+            $bb = $this->bbcodes[$this->data[$id]['tag']];
+
+            if (null === $bb['text handler']) {
+                return $body;
+            }
+
+            $attrs = [];
+            foreach ($this->data[$id]['attrs'] as $key => $val) {
+                if (isset($bb['attrs'][$key])) {
+                    $attrs[$key] = $val;
+                }
+            }
+
+            return $bb['text handler']($body, $attrs, $this);
+        }
+
+        $pid = $this->data[$id]['parent'];
+        $bb = $this->bbcodes[$this->data[$pid]['tag']];
+
+        return  isset($bb['tags only']) ? '' : $this->data[$id]['text'];
     }
 
     /**

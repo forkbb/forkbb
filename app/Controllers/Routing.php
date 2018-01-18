@@ -66,7 +66,8 @@ class Routing
             }
             // поиск
             if ($user->g_search == '1') {
-                $r->add('GET', '/search', 'Search:view', 'Search');
+                $r->add(['GET','POST'], '/search[/{advanced:advanced}]',           'Search:view',   'Search');
+                $r->add('GET',          '/search/{action:last|unanswered}[/{page:[1-9]\d*}]', 'Search:action', 'SearchAction');
             }
             // юзеры
             if ($user->g_view_users == '1') {

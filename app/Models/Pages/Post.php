@@ -16,10 +16,10 @@ class Post extends Page
 
     /**
      * Создание новой темы
-     * 
+     *
      * @param array $args
      * @param string $method
-     * 
+     *
      * @return Page
      */
     public function newTopic(array $args, $method)
@@ -38,7 +38,7 @@ class Post extends Page
             if ($v->validation($_POST) && null === $v->preview) {
                 return $this->endPost($forum, $v);
             }
-    
+
             $this->fIswev  = $v->getErrors();
             $args['_vars'] = $v->getData(); //????
 
@@ -54,16 +54,16 @@ class Post extends Page
         $this->crumbs    = $this->crumbs(\ForkBB\__('Post new topic'), $forum);
         $this->formTitle = \ForkBB\__('Post new topic');
         $this->form      = $this->messageForm($forum, 'NewTopic', $args, false, true);
-        
+
         return $this;
     }
 
     /**
      * Подготовка данных для шаблона создания сообщения
-     * 
+     *
      * @param array $args
      * @param string $method
-     * 
+     *
      * @return Page
      */
     public function newReply(array $args, $method)
@@ -82,10 +82,10 @@ class Post extends Page
             if ($v->validation($_POST) && null === $v->preview) {
                 return $this->endPost($topic, $v);
             }
-    
+
             $this->fIswev  = $v->getErrors();
             $args['_vars'] = $v->getData(); //????
-    
+
             if (null !== $v->preview && ! $v->getErrors()) {
                 $this->previewHtml = $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies);
             }
@@ -109,37 +109,39 @@ class Post extends Page
         $this->crumbs    = $this->crumbs(\ForkBB\__('Post a reply'), $topic);
         $this->formTitle = \ForkBB\__('Post a reply');
         $this->form      = $this->messageForm($topic, 'NewReply', $args);
-                
+
         return $this;
     }
 
     /**
      * Создание темы/сообщения
-     * 
+     *
      * @param Model $model
      * @param Validator $v
-     * 
+     *
      * @return Page
      */
     protected function endPost(Model $model, Validator $v)
     {
+        $this->c->DB->beginTransaction();
+
         $now       = time();
         $user      = $this->c->user;
         $username  = $user->isGuest ? $v->username : $user->username;
         $merge     = false;
         $executive = $user->isAdmin || $user->isModerator($model);
-        
+
         // подготовка к объединению/сохранению сообщения
         if (null === $v->subject) {
             $createTopic = false;
             $forum       = $model->parent;
             $topic       = $model;
-            
+
             if (! $user->isGuest && $topic->last_poster === $username) {
                 if ($executive) {
                     if ($v->merge_post) {
                         $merge = true;
-                    } 
+                    }
                 } else {
                     if ($this->c->config->o_merge_timeout > 0 // ???? стоит завязать на время редактирование сообщений?
                         && $now - $topic->last_post < $this->c->config->o_merge_timeout
@@ -165,7 +167,7 @@ class Post extends Page
 #           $topic->poll_time   = ;
 #           $topic->poll_term   = ;
 #           $topic->poll_kol    = ;
-    
+
             $this->c->topics->insert($topic);
         }
 
@@ -184,11 +186,11 @@ class Post extends Page
                 $merge = false;
             }
         }
-        
+
         // создание нового сообщения
         if (! $merge) {
             $post = $this->c->posts->create();
-        
+
             $post->poster       = $username;
             $post->poster_id    = $this->c->user->id;
             $post->poster_ip    = $this->c->user->ip;
@@ -224,7 +226,15 @@ class Post extends Page
         }
         $user->last_post = $now;
         $this->c->users->update($user);
-        
+
+        if ($merge) {
+            $this->c->search->index($lastPost, 'merge');
+        } else {
+            $this->c->search->index($post);
+        }
+
+        $this->c->DB->commit();
+
         return $this->c->Redirect
             ->page('ViewPost', ['id' => $merge ? $lastPost->id : $post->id])
             ->message('Post redirect');

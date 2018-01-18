@@ -14,10 +14,10 @@ class Edit extends Page
 
     /**
      * Редактирование сообщения
-     * 
+     *
      * @param array $args
      * @param string $method
-     * 
+     *
      * @return Page
      */
     public function edit(array $args, $method)
@@ -64,20 +64,22 @@ class Edit extends Page
         $this->formTitle = $editSubject ? \ForkBB\__('Edit topic') : \ForkBB\__('Edit post');
         $this->crumbs    = $this->crumbs($this->formTitle, $topic);
         $this->form      = $this->messageForm($post, 'EditPost', $args, true, $editSubject);
-                
+
         return $this;
     }
 
     /**
      * Сохранение сообщения
-     * 
+     *
      * @param Post $post
      * @param Validator $v
-     * 
+     *
      * @return Page
      */
     protected function endEdit(Post $post, Validator $v)
     {
+        $this->c->DB->beginTransaction();
+
         $now         = time();
         $user        = $this->c->user;
         $executive   = $user->isAdmin || $user->isModerator($post);
@@ -139,13 +141,17 @@ class Edit extends Page
             $topic->parent->calcStat();
         }
         $this->c->forums->update($topic->parent);
-        
-        // антифлуд 
-        if ($calcPost || $calcForum) { 
+
+        // антифлуд
+        if ($calcPost || $calcForum) {
             $user->last_post = $now; //????
             $this->c->users->update($user);
         }
-        
+
+        $this->c->search->index($post, 'edit');
+
+        $this->c->DB->commit();
+
         return $this->c->Redirect
             ->page('ViewPost', ['id' => $post->id])
             ->message('Edit redirect');

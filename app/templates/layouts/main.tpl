@@ -17,7 +17,9 @@
     <header class="f-header">
       <div class="f-title">
         <h1><a href="{!! $p->fRootLink !!}">{{ $p->fTitle }}</a></h1>
+@if ($p->fDescription)
         <p class="f-description">{!! $p->fDescription !!}</p>
+@endif
       </div>
 @if ($p->fNavigation)
       <nav class="main-nav f-menu">

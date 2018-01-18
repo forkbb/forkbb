@@ -475,7 +475,8 @@ select {
 .f-fdiv .f-child2,
 .f-fdiv .f-child3,
 .f-fdiv .f-child4,
-.f-fdiv .f-child5 {
+.f-fdiv .f-child5,
+.f-fdiv .f-child6 {
   display: block;
   width: 100%;
 }
@@ -508,7 +509,8 @@ select {
   font-size: 0.875rem;
 }
 
-.f-fdiv .f-child4 {
+.f-fdiv .f-child4,
+.f-fdiv .f-child6 {
   font-size: 0.8125rem;
   margin-top: 0.3125rem;
   text-align: justify;
@@ -540,7 +542,7 @@ select {
 .f-fdiv .f-finfo + fieldset {
 /*  padding-top: 0; */
 }
-  
+
 .f-ctrl {
   border: 0.0625rem solid #AA7939;
 }
@@ -622,6 +624,7 @@ select {
   width: 100%;
   border: 0.0625rem solid #AA7939;
   border-collapse: collapse;
+  word-break: break-all;
 }
 
 .f-debug thead {
@@ -1222,12 +1225,18 @@ select {
   font-weight: normal;
   font-size: 1rem;
   position: relative;
-  display: inline-block;
+  display: block;
   word-break: break-all;
 }
 
-.f-cmposter {
+.f-cmposter,
+.f-cmforum {
   font-size: 0.875rem;
+  float: left;
+}
+
+.f-cmforum:before {
+  content: ", ";
 }
 
 .f-tdot {
@@ -1247,6 +1256,18 @@ select {
 .f-tpages .f-pspacer {
     border: 0;
     padding: 0;
+}
+
+.f-tpages .f-page,
+.f-cmforum > a {
+  opacity: 0.4;
+}
+
+.f-tpages .f-page:focus,
+.f-tpages .f-page:hover,
+.f-cmforum > a:focus,
+.f-cmforum > a:hover {
+  opacity: 1;
 }
 
 /*****************/
@@ -1556,15 +1577,18 @@ li + li .f-btn {
   .f-fdiv .f-field-t1 {
     width: 30%;
     float: left;
-    padding-right: 0.3125rem;
     padding-top: 0.625rem;
   }
 
   .f-fdiv .f-field-t2 {
     width: 70%;
     float: left;
-    padding-left: 0.3125rem;
     padding-top: 0.625rem;
+  }
+
+  .f-field-t1 + .f-field-t2,
+  .f-field-t2 + .f-field-t1 {
+    padding-left: 0.625rem;
   }
 }
 
@@ -1751,4 +1775,26 @@ li + li .f-btn {
 
 .f-install > h2{
   padding: 0 0.625rem;
+}
+
+/*********/
+/* Поиск */
+/*********/
+.f-search-form > h2 {
+  display: none;
+}
+
+.f-search-form .f-child6:first-child {
+  text-align: right;
+}
+
+.f-search-form .f-child6:last-child {
+  padding-bottom: 0.625rem;
+}
+
+@media screen and (min-width: 50rem) {
+  .f-search-form .f-fdiv .f-field-t1,
+  .f-search-form .f-fdiv .f-field-t2 {
+    padding-top: 0;
+  }
 }

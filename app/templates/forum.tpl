@@ -12,15 +12,15 @@
       </ul>
 @endsection
 @section ('linknewtopic')
-  @if ($p->forum->canCreateTopic)
+  @if ($p->model->canCreateTopic)
         <div class="f-link-post">
-          <a class="f-btn" href="{!! $p->forum->linkCreateTopic !!}">{!! __('Post topic') !!}</a>
+          <a class="f-btn" href="{!! $p->model->linkCreateTopic !!}">{!! __('Post topic') !!}</a>
         </div>
   @endif
 @endsection
 @section ('pagination')
         <nav class="f-pages">
-  @foreach ($p->forum->pagination as $cur)
+  @foreach ($p->model->pagination as $cur)
     @if ($cur[2])
           <span class="f-page active">{{ $cur[1] }}</span>
     @elseif ($cur[1] === 'space')
@@ -36,13 +36,13 @@
         </nav>
 @endsection
 @extends ('layouts/main')
-@if ($forums = $p->forums)
+@if ($forums = $p->model->subforums)
     <div class="f-nav-links">
   @yield ('crumbs')
     </div>
     <section class="f-subforums">
       <ol class="f-ftlist">
-        <li id="id-subforums{!! $p->forum->id !!}" class="f-category">
+        <li id="id-subforums{!! $p->model->id !!}" class="f-category">
           <h2>{{ __('Sub forum', 2) }}</h2>
           <ol class="f-table">
             <li class="f-row f-thead" value="0">
@@ -58,7 +58,7 @@
 @endif
     <div class="f-nav-links">
 @yield ('crumbs')
-@if ($p->forum->canCreateTopic || $p->forum->pagination)
+@if ($p->model->canCreateTopic || $p->model->pagination)
       <div class="f-links-b clearfix">
   @yield ('pagination')
   @yield ('linknewtopic')
@@ -67,7 +67,7 @@
     </div>
 @if ($p->topics)
     <section class="f-main f-forum">
-      <h2>{{ $p->forum->forum_name }}</h2>
+      <h2>{{ $p->model->forum_name or $p->model->name }}</h2>
       <div class="f-ftlist">
         <ol class="f-table">
           <li class="f-row f-thead" value="0">
@@ -104,8 +104,6 @@
                   <span class="f-polltxt">{!! __('Poll') !!}</span>
       @endif
                   <a class="f-ftname" href="{!! $topic->link !!}">{{ cens($topic->subject) }}</a>
-                </h3>
-                <span class="f-cmposter">{!! __('by') !!} {{ $topic->poster }}</span>
       @if ($topic->pagination)
                   <span class="f-tpages">
         @foreach ($topic->pagination as $cur)
@@ -119,6 +117,11 @@
       @endif
       @if ($topic->hasNew !== false)
                   <span class="f-newtxt"><a href="{!! $topic->linkNew !!}" title="{!! __('New posts info') !!}">{!! __('New posts') !!}</a></span>
+      @endif
+                </h3>
+                <p class="f-cmposter">{!! __('by') !!} {{ $topic->poster }}</p>
+      @if ($p->showForum)
+                <p class="f-cmforum"><a href="{!! $topic->parent->link !!}">{{ $topic->parent->forum_name }}</a></p>
       @endif
               </div>
             </div>
@@ -143,7 +146,7 @@
       </div>
     </section>
     <div class="f-nav-links">
-  @if ($p->forum->canCreateTopic || $p->forum->pagination)
+  @if ($p->model->canCreateTopic || $p->model->pagination)
       <div class="f-links-a clearfix">
     @yield ('linknewtopic')
     @yield ('pagination')

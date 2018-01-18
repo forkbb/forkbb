@@ -186,7 +186,7 @@ class Model extends DataModel
             throw new RuntimeException('The model does not have the required data');
         }
 
-        return $this->num_topics === 0 ? 1 : (int) ceil($this->num_topics / $this->c->user->disp_topics);
+        return (int) ceil(($this->num_topics ?: 1) / $this->c->user->disp_topics);
     }
 
     /**
@@ -249,8 +249,8 @@ class Model extends DataModel
                 ORDER BY sticky DESC, {$sortBy}, id DESC
                 LIMIT ?i:offset, ?i:rows";
 
-        $ids = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
+        $this->idsList = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
-        return empty($ids) ? [] : $this->c->topics->view($ids);
+        return empty($this->idsList) ? [] : $this->c->topics->view($this);
     }
 }

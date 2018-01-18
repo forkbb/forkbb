@@ -74,6 +74,7 @@ class Stopwords extends Model
         // Tidy up and filter the stopwords
         $stopwords = array_map('trim', $stopwords);
         $stopwords = array_filter($stopwords);
+        $stopwords = array_flip($stopwords);
 
         $this->c->Cache->set('stopwords', ['id' => $id, 'stopwords' => $stopwords]);
         $this->list = $stopwords;
