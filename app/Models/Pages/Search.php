@@ -4,11 +4,42 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
 use ForkBB\Core\Validator;
+use ForkBB\Models\Forum\Model as Forum;
 use InvalidArgumentException;
 
 class Search extends Page
 {
     use CrumbTrait;
+
+    /**
+     * Составление списка категорий/разделов для выбора
+     */
+    protected function calcList()
+    {
+        $cid     = null;
+        $options = [];
+        $idxs    = [];
+        $root = $this->c->forums->get(0);
+        if ($root instanceof Forum) {
+            foreach ($this->c->forums->depthList($root, -1) as $f) {
+                if ($cid !== $f->cat_id) {
+                    $cid       = $f->cat_id;
+                    $options[] = [\ForkBB\__('Category prefix') . $f->cat_name];
+                }
+
+                $indent = str_repeat(\ForkBB\__('Forum indent'), $f->depth);
+
+                if ($f->redirect_url) {
+                    $options[] = [$f->id, $indent . \ForkBB\__('Forum prefix') . $f->forum_name, true];
+                } else {
+                    $options[] = [$f->id, $indent . \ForkBB\__('Forum prefix') . $f->forum_name];
+                    $idxs[]    = $f->id;
+                }
+            }
+        }
+        $this->listOfIndexes  = $idxs;
+        $this->listForOptions = $options;
+    }
 
     /**
      * Поиск
@@ -21,6 +52,7 @@ class Search extends Page
     public function view(array $args, $method)
     {
         $this->c->Lang->load('search');
+        $this->calcList();
 
         $v = null;
         if ('POST' === $method) {
@@ -51,7 +83,8 @@ class Search extends Page
             if (isset($args['advanced'])) {
                 $v->addRules([
                     'author'   => 'string:trim|max:25',
-                    'forums'   => 'integer',
+                    'forums'   => 'array',
+                    'forums.*' => 'integer|in:' . implode(',', $this->listOfIndexes),
                     'serch_in' => 'required|integer|in:0,1,2',
                     'sort_by'  => 'required|integer|in:0,1,2,3',
                     'sort_dir' => 'required|integer|in:0,1',
@@ -60,15 +93,33 @@ class Search extends Page
             }
 
             if ($v->validation($_POST)) {
-                $this->c->search->execute([
+                $forums = $v->forums;
+
+                if (empty($forums) && ! $this->c->user->isAdmin) {
+                    $forums = $this->listOfIndexes;
+                }
+
+                $options = [
                     'keywords' => $v->keywords,
                     'author'   => (string) $v->author,
-                    'forums'   => $v->forums,
+                    'forums'   => $forums,
                     'serch_in' => ['all', 'posts', 'topics'][(int) $v->serch_in],
                     'sort_by'  => ['post', 'author', 'subject', 'forum'][(int) $v->sort_by],
                     'sort_dir' => ['desc', 'asc'][(int) $v->sort_dir],
                     'show_as'  => ['posts', 'topics'][(int) $v->show_as],
-                ]);
+                ];
+
+                $result = $this->c->search->execute($options);
+
+                $user = $this->c->user;
+                if ($user->g_search_flood) {
+                    $user->last_search = time();
+                    $this->c->users->update($user); //?????
+                }
+
+                if (empty($result)) {
+                    $this->fIswev = ['i', \ForkBB\__('No hits')];
+                }
             }
 
             $this->fIswev = $v->getErrors();
@@ -98,7 +149,7 @@ class Search extends Page
                         'html'      => true,
                     ],
                     'keywords' => [
-                        'dl'        => 't2',
+                        'dl'        => 'w2',
                         'type'      => 'text',
                         'maxlength' => 100,
                         'title'     => \ForkBB\__('Keyword search'),
@@ -107,7 +158,7 @@ class Search extends Page
                         'autofocus' => true,
                     ],
                     'author' => [
-                        'dl'        => 't1',
+                        'dl'        => 'w1',
                         'type'      => 'text',
                         'maxlength' => 25,
                         'title'     => \ForkBB\__('Author search'),
@@ -123,28 +174,31 @@ class Search extends Page
                 'legend' => \ForkBB\__('Search in legend'),
                 'fields' => [
                     'forums' => [
+                        'dl'      => 'w3',
                         'type'    => 'multiselect',
-                        'options' => [],
+                        'options' => $this->listForOptions,
                         'value'   => $v ? $v->forums : null,
                         'title'   => \ForkBB\__('Forum search'),
+                        'size'    => min(count($this->listForOptions), 10),
                     ],
                     'serch_in' => [
-                        'type'   => 'select',
+                        'dl'      => 'w3',
+                        'type'    => 'select',
                         'options' => [
                             0 => \ForkBB\__('Message and subject'),
                             1 => \ForkBB\__('Message only'),
                             2 => \ForkBB\__('Topic only'),
                         ],
-                        'value'  => $v ? $v->serch_in : 0,
-                        'title'  => \ForkBB\__('Search in'),
+                        'value'   => $v ? $v->serch_in : 0,
+                        'title'   => \ForkBB\__('Search in'),
                     ],
                     [
-                        'type'  => 'info',
-                        'value' => \ForkBB\__('Search in info'),
+                        'type'    => 'info',
+                        'value'   => \ForkBB\__('Search in info'),
                     ],
                     [
-                        'type'  => 'info',
-                        'value' => \ForkBB\__('Search multiple forums info'),
+                        'type'    => 'info',
+                        'value'   => \ForkBB\__('Search multiple forums info'),
                     ],
 
                 ],
@@ -153,37 +207,40 @@ class Search extends Page
                 'legend' => \ForkBB\__('Search results legend'),
                 'fields' => [
                     'sort_by' => [
-                        'type'   => 'select',
+                        'dl'      => 'w4',
+                        'type'    => 'select',
                         'options' => [
                             0 => \ForkBB\__('Sort by post time'),
                             1 => \ForkBB\__('Sort by author'),
                             2 => \ForkBB\__('Sort by subject'),
                             3 => \ForkBB\__('Sort by forum'),
                         ],
-                        'value'  => $v ? $v->sort_by : 0,
-                        'title'  => \ForkBB\__('Sort by'),
+                        'value'   => $v ? $v->sort_by : 0,
+                        'title'   => \ForkBB\__('Sort by'),
                     ],
                     'sort_dir' => [
-                        'type'   => 'radio',
-                        'values' => [
+                        'dl'      => 'w4',
+                        'type'    => 'radio',
+                        'values'  => [
                             0 => \ForkBB\__('Descending'),
                             1 => \ForkBB\__('Ascending'),
                         ],
-                        'value'  => $v ? $v->sort_dir : 0,
-                        'title'  => \ForkBB\__('Sort order'),
+                        'value'   => $v ? $v->sort_dir : 0,
+                        'title'   => \ForkBB\__('Sort order'),
                     ],
                     'show_as' => [
-                        'type'   => 'radio',
-                        'values' => [
+                        'dl'      => 'w4',
+                        'type'    => 'radio',
+                        'values'  => [
                             0 => \ForkBB\__('Show as posts'),
                             1 => \ForkBB\__('Show as topics'),
                         ],
-                        'value'  => $v ? $v->show_as : 0,
-                        'title'  => \ForkBB\__('Show as'),
+                        'value'   => $v ? $v->show_as : 0,
+                        'title'   => \ForkBB\__('Show as'),
                     ],
                     [
-                        'type'  => 'info',
-                        'value' => \ForkBB\__('Search results info'),
+                        'type'    => 'info',
+                        'value'   => \ForkBB\__('Search results info'),
                     ],
                 ],
 
@@ -229,10 +286,16 @@ class Search extends Page
      */
     public function vCheckQuery(Validator $v, $query)
     {
-        $search = $this->c->search;
+        $user = $this->c->user;
 
-        if (! $search->prepare($query)) {
-            $v->addError(\ForkBB\__($search->queryError, $search->queryText));
+        if ($user->last_search && time() - $user->last_search < $user->g_search_flood) {
+            $v->addError(\ForkBB\__('Search flood', $user->g_search_flood, $user->g_search_flood - time() + $user->last_search));
+        } else {
+            $search = $this->c->search;
+
+            if (! $search->prepare($query)) {
+                $v->addError(\ForkBB\__($search->queryError, $search->queryText));
+            }
         }
 
         return $query;
@@ -270,7 +333,7 @@ class Search extends Page
         if (false === $list) {
             return $this->c->Message->message('Bad request');
         } elseif (empty($list)) {
-            $this->a['fIswev']['i'][] = \ForkBB\__('No hits');
+            $this->fIswev = ['i', \ForkBB\__('No hits')];
             return $this->view(['advanced' => 'advanced'], 'GET');
         }
 

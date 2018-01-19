@@ -27,7 +27,7 @@ class Install extends Page
 
     /**
      * Возращает доступные типы БД
-     * 
+     *
      * @return array
      */
     protected function DBTypes()
@@ -57,10 +57,10 @@ class Install extends Page
 
     /**
      * Подготовка данных для страницы установки форума
-     * 
+     *
      * @param array $args
      * @param string $method
-     * 
+     *
      * @return Page
      */
     public function install(array $args, $method)
@@ -85,13 +85,13 @@ class Install extends Page
 
         // версия PHP
         if (version_compare(PHP_VERSION, self::PHP_MIN, '<')) {
-            $this->a['fIswev']['e'][] = \ForkBB\__('You are running error', 'PHP', PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN);
+            $this->fIswev = ['e', \ForkBB\__('You are running error', 'PHP', PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN)];
         }
 
         // типы БД
         $this->dbTypes = $this->DBTypes();
         if (empty($this->dbTypes)) {
-            $this->a['fIswev']['e'][] = \ForkBB\__('No DB extensions');
+            $this->fIswev = ['e', \ForkBB\__('No DB extensions')];
         }
 
         // доступность папок на запись
@@ -103,30 +103,30 @@ class Install extends Page
         foreach ($folders as $folder) {
             if (! is_writable($folder)) {
                 $folder = str_replace(dirname($this->c->DIR_APP), '', $folder);
-                $this->a['fIswev']['e'][] = \ForkBB\__('Alert folder', $folder);
+                $this->fIswev = ['e', \ForkBB\__('Alert folder', $folder)];
             }
         }
 
         // доступность шаблона конфигурации
         $config = @file_get_contents($this->c->DIR_CONFIG . '/main.dist.php');
         if (false === $config) {
-            $this->a['fIswev']['e'][] = \ForkBB\__('No access to main.dist.php');
+            $this->fIswev = ['e', \ForkBB\__('No access to main.dist.php')];
         }
         unset($config);
 
         // языки
         $langs = $this->c->Func->getLangs();
         if (empty($langs)) {
-            $this->a['fIswev']['e'][] = \ForkBB\__('No language packs');
+            $this->fIswev = ['e', \ForkBB\__('No language packs')];
         }
 
         // стили
         $styles = $this->c->Func->getStyles();
         if (empty($styles)) {
-            $this->a['fIswev']['e'][] = \ForkBB\__('No styles');
+            $this->fIswev = ['e', \ForkBB\__('No styles')];
         }
 
-        if ('POST' === $method && ! $changeLang && empty($this->a['fIswev']['e'])) {
+        if ('POST' === $method && ! $changeLang && empty($this->a['fIswev']['e'])) { //????
             $v = $this->c->Validator->reset()
                 ->addValidators([
                     'check_prefix' => [$this, 'vCheckPrefix'],
@@ -164,7 +164,7 @@ class Install extends Page
                 ])->addMessages([
                     'email'        => 'Wrong email',
                 ]);
-    
+
             if ($v->validation($_POST)) {
                 return $this->installEnd($v);
             } else {
@@ -193,8 +193,8 @@ class Install extends Page
                 ],
                 'btns'   => [
                     'changelang'  => [
-                        'type'      => 'submit', 
-                        'value'     => \ForkBB\__('Change language'), 
+                        'type'      => 'submit',
+                        'value'     => \ForkBB\__('Change language'),
                     ],
                 ],
             ];
@@ -363,8 +363,8 @@ class Install extends Page
             ],
             'btns'   => [
                 'submit'  => [
-                    'type'      => 'submit', 
-                    'value'     => \ForkBB\__('Start install'), 
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__('Start install'),
                 ],
             ],
         ];
@@ -379,10 +379,10 @@ class Install extends Page
 
     /**
      * Обработка base URL
-     * 
+     *
      * @param Validator $v
      * @param string $url
-     * 
+     *
      * @return string
      */
     public function vRtrimURL(Validator $v, $url)
@@ -392,10 +392,10 @@ class Install extends Page
 
     /**
      * Дополнительная проверка префикса
-     * 
+     *
      * @param Validator $v
      * @param string $prefix
-     * 
+     *
      * @return string
      */
     public function vCheckPrefix(Validator $v, $prefix)
@@ -412,10 +412,10 @@ class Install extends Page
 
     /**
      * Полная проверка подключения к БД
-     * 
+     *
      * @param Validator $v
      * @param string $dbhost
-     * 
+     *
      * @return string
      */
     public function vCheckHost(Validator $v, $dbhost)
@@ -482,9 +482,9 @@ class Install extends Page
 
     /**
      * Завершение установки форума
-     * 
+     *
      * @param Validator $v
-     * 
+     *
      * @return Page
      */
     protected function installEnd(Validator $v)

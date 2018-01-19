@@ -11,11 +11,12 @@ use RuntimeException;
 
 class Execute extends Method
 {
-    protected $selectForIndex;
-    protected $selectForPosts;
+    protected $queryIdx;
+    protected $queryCJK;
     protected $sortType;
     protected $words;
-    protected $stmt;
+    protected $stmtIdx;
+    protected $stmtCJK;
 
     /**
      * @param array $options
@@ -33,9 +34,12 @@ class Execute extends Method
 echo '<pre>';
 var_dump($this->model->queryText);
 
-        $this->words = [];
-        $this->stmt  = null;
-        $vars        = $this->buildSelect($options);
+        $this->words   = [];
+        $this->stmtIdx = null;
+        $this->stmtCJK = null;
+        $vars          = $this->buildSelect($options);
+
+var_dump($this->queryIdx, $this->queryCJK);
 
         $ids = $this->exec($this->model->queryWords, $vars);
 
@@ -47,7 +51,8 @@ var_dump($this->model->queryText);
 
 var_dump($ids);
 echo '</pre>';
-        exit();
+
+        return $ids;
     }
 
     /**
@@ -55,14 +60,14 @@ echo '</pre>';
      *
      * @param array $words
      * @param array $vars
-     * @param array $ids
      *
      * @return array
      */
-    protected function exec(array $words, array $vars, array $ids = [])
+    protected function exec(array $words, array $vars)
     {
         $type  = 'AND';
         $count = 0;
+        $ids   = [];
 
         foreach ($words as $word) {
 
@@ -80,12 +85,12 @@ var_dump($word);
             }
 
             if (is_array($word) && (! isset($word['type']) || 'CJK' !== $word['type'])) {
-                $ids = $this->exec($word, $vars, $ids);
+                $ids = $this->exec($word, $vars);
             } else {
                 $CJK = false;
                 if (isset($word['type']) && 'CJK' === $word['type']) {
                     $CJK  = true;
-                    $word = $word['word']; //???? добавить *
+                    $word = '*' . trim($word['word'], '*') . '*';
                 }
 
                 $word = str_replace(['*', '?'], ['%', '_'], $word);
@@ -95,13 +100,23 @@ var_dump($word);
                 } else {
                     $vars[':word'] = $word;
 
-                    if (null === $this->stmt) {
-                        $this->stmt = $this->c->DB->prepare($this->selectForIndex, $vars);
-                        $this->stmt->execute();
+                    if ($CJK) {
+                        if (null === $this->stmtCJK) {
+                            $this->stmtCJK = $this->c->DB->prepare($this->queryCJK, $vars);
+                            $this->stmtCJK->execute();
+                        } else {
+                            $this->stmtCJK->execute($vars);
+                        }
+                        $this->words[$word] = $list = $this->stmtCJK->fetchAll(PDO::FETCH_KEY_PAIR);
                     } else {
-                        $this->stmt->execute($vars);
+                        if (null === $this->stmtIdx) {
+                            $this->stmtIdx = $this->c->DB->prepare($this->queryIdx, $vars);
+                            $this->stmtIdx->execute();
+                        } else {
+                            $this->stmtIdx->execute($vars);
+                        }
+                        $this->words[$word] = $list = $this->stmtIdx->fetchAll(PDO::FETCH_KEY_PAIR);
                     }
-                    $this->words[$word] = $list = $this->stmt->fetchAll(PDO::FETCH_KEY_PAIR);
                 }
 
 var_dump($list);
@@ -137,85 +152,134 @@ var_dump($list);
         # ["sort_dir"]=> string(4) "desc"
         # ["show_as"] => string(5) "posts"
         $vars  = [];
-        $where = [];
-        $joinT = false;
-        $joinP = false;
+        $whereIdx = [];
+        $whereCJK = [];
+        $joinTIdx = false;
+        $joinPIdx = false;
+        $useT     = false;
+        $useP     = false;
+
+        if (! empty($options['forums'])) {
+            $joinTIdx               = true;
+            $whereIdx[]             = 't.forum_id IN (?ai:forums)';
+            $whereCJK[]             = 't.forum_id IN (?ai:forums)';
+            $useT                   = true;
+            $vars[':forums']        = (array) $options['forums'];
+        }
+
+        //???? нужен индекс по авторам сообщений/тем
+        //???? что делать с подчеркиванием в именах?
+        if ('' != $options['author']) {
+            $joinPIdx               = true;
+            $vars[':author']        = str_replace(['*', '?'], ['%', '_'], $options['author']);
+            $whereIdx[]             = 'p.poster LIKE ?s:author';
+        }
 
         switch ($options['serch_in']) {
             case 'posts':
-                $where[]            = 'm.subject_match=0';
+                $whereIdx[]         = 'm.subject_match=0';
+                $whereCJK[]         = 'p.message LIKE ?s:word';
+                $useP               = true;
+                if (isset($vars[':author'])) {
+                    $whereCJK[]     = 'p.poster LIKE ?s:author';
+                }
                 break;
             case 'topics':
-                $where[]            = 'm.subject_match=1';
+                $whereIdx[]         = 'm.subject_match=1';
+                $whereCJK[]         = 't.subject LIKE ?s:word';
+                $useT               = true;
+                if (isset($vars[':author'])) {
+                    $whereCJK[]     = 't.poster LIKE ?s:author';
+                }
                 // при поиске в заголовках результат только в виде списка тем
                 $options['show_as'] = 'topics';
                 break;
-        }
-
-        if (! empty($options['forums'])) {
-            $joinT                  = true;
-            $where[]                = 't.forum_id IN (?ai:forums)';
-            $vars[':forums']        = (array) $options['forums'];
+            default:
+                if (isset($vars[':author'])) {
+                    $whereCJK[]     = '((p.message LIKE ?s:word AND p.poster LIKE ?s:author) OR (t.subject LIKE ?s:word AND t.poster LIKE ?s:author))';
+                } else {
+                    $whereCJK[]     = '(p.message LIKE ?s:word OR t.subject LIKE ?s:word)';
+                }
+                $useP               = true;
+                $useT               = true;
+                break;
         }
 
         if ('topics' === $options['show_as']) {
             $showTopics             = true;
-            $joinP                  = true;
-            $selectF                = 'p.topic_id';
+            $joinPIdx               = true;
+            $selectFIdx             = 'p.topic_id';
+            $selectFCJK             = 't.id';
+            $useT                   = true;
         } else {
             $showTopics             = false;
-            $selectF                = 'm.post_id';
-        }
-
-        //???? нужен индекс по авторам сообщений
-        //???? что делать с подчеркиванием в именах?
-        if ('' != $options['author']) {
-            $joinP                  = true;
-            $vars[':author']        = str_replace(['*', '?'], ['%', '_'], $options['author']);
-            $where[]                = 'p.poster LIKE ?s:author';
+            $selectFIdx             = 'm.post_id';
+            $selectFCJK             = 'p.id';
+            $useP                   = true;
         }
 
         switch ($options['sort_by']) {
             case 'author':
                 if ($showTopics) {
-                    $sortBy         = 't.poster';
-                    $joinT          = true;
+                    $sortIdx        = 't.poster';
+                    $sortCJK        = 't.poster';
+                    $joinTIdx       = true;
+                    $useT           = true;
                 } else {
-                    $sortBy         = 'p.poster';
-                    $joinP          = true;
+                    $sortIdx        = 'p.poster';
+                    $sortCJK        = 'p.poster';
+                    $joinPIdx       = true;
+                    $useP           = true;
                 }
                 $this->sortType     = SORT_STRING;
                 break;
             case 'subject':
-                $sortBy             = 't.subject';
-                $joinT              = true;
+                $sortIdx            = 't.subject';
+                $sortCJK            = 't.subject';
+                $joinTIdx           = true;
+                $useT               = true;
                 $this->sortType     = SORT_STRING;
                 break;
             case 'forum':
-                $sortBy             = 't.forum_id';
-                $joinT              = true;
+                $sortIdx            = 't.forum_id';
+                $sortCJK            = 't.forum_id';
+                $joinTIdx           = true;
+                $useT               = true;
                 $this->sortType     = SORT_NUMERIC;
                 break;
             default:
                 if ($showTopics) {
-                    $sortBy         = 't.last_post';
-                    $joinT          = true;
+                    $sortIdx        = 't.last_post';
+                    $sortCJK        = 't.last_post';
+                    $joinTIdx       = true;
+                    $useT           = true;
                 } else {
-                    $sortBy         = 'm.post_id';
+                    $sortIdx        = 'm.post_id';
+                    $sortCJK        = 'p.id';
+                    $useP           = true;
                 }
                 $this->sortType     = SORT_NUMERIC;
                 break;
         }
 
-        $joinP = $joinP || $joinT ? 'INNER JOIN ::posts AS p ON p.id=m.post_id '   : '';
-        $joinT = $joinT           ? 'INNER JOIN ::topics AS t ON t.id=p.topic_id ' : '';
-        $where = empty($where)    ? '' : ' AND ' . implode(' AND ', $where);
+        $joinPIdx = $joinPIdx || $joinTIdx ? 'INNER JOIN ::posts AS p ON p.id=m.post_id '   : '';
+        $joinTIdx = $joinTIdx           ? 'INNER JOIN ::topics AS t ON t.id=p.topic_id ' : '';
+        $whereIdx = empty($whereIdx)    ? '' : ' AND ' . implode(' AND ', $whereIdx);
 
-        $this->selectForIndex = "SELECT {$selectF}, {$sortBy} FROM ::search_words AS w " .
-                                'INNER JOIN ::search_matches AS m ON m.word_id=w.id ' .
-                                $joinP .
-                                $joinT .
-                                'WHERE w.word LIKE ?s:word' . $where;
+        $this->queryIdx = "SELECT {$selectFIdx}, {$sortIdx} FROM ::search_words AS w " .
+                          'INNER JOIN ::search_matches AS m ON m.word_id=w.id ' .
+                          $joinPIdx .
+                          $joinTIdx .
+                          'WHERE w.word LIKE ?s:word' . $whereIdx;
+
+        if ($useP) {
+            $this->queryCJK = "SELECT {$selectFCJK}, {$sortCJK} FROM ::posts AS p " .
+                              ($useT ? 'INNER JOIN ::topics AS t ON t.id=p.topic_id ' : '') .
+                              'WHERE ' . implode(' AND ', $whereCJK);
+        } else {
+            $this->queryCJK = "SELECT {$selectFCJK}, {$sortCJK} FROM ::topics AS t " .
+                              'WHERE ' . implode(' AND ', $whereCJK);
+        }
 
         return $vars;
     }

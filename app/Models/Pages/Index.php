@@ -8,7 +8,7 @@ class Index extends Page
 {
     /**
      * Подготовка данных для шаблона
-     * 
+     *
      * @return Page
      */
     public function view()
@@ -17,7 +17,7 @@ class Index extends Page
         $this->c->Lang->load('subforums');
 
         // крайний пользователь // ???? может в stats переместить?
-        $this->c->stats->userLast = $this->c->user->g_view_users == '1' 
+        $this->c->stats->userLast = $this->c->user->g_view_users == '1'
             ? [ $this->c->Router->link('User', [
                     'id'   => $this->c->stats->userLast['id'],
                     'name' => $this->c->stats->userLast['username'],
@@ -30,7 +30,7 @@ class Index extends Page
         $forums = empty($root) ? [] : $root->subforums;
         $ctgs   = [];
         if (empty($forums)) {
-            $this->a['fIswev']['i'][] = \ForkBB\__('Empty board');
+            $this->fIswev = ['i', \ForkBB\__('Empty board')];
         } else {
             foreach($forums as $forum) {
                 $ctgs[$forum->cat_id][] = $forum;

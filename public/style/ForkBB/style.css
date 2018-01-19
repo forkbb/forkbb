@@ -479,6 +479,7 @@ select {
 .f-fdiv .f-child6 {
   display: block;
   width: 100%;
+  clear: both;
 }
 
 .f-fdiv .f-child1 {
@@ -1042,6 +1043,12 @@ select {
   border-bottom: 0.0625rem solid #AA7939;
 }
 
+/*
+.f-ftlist .f-row:hover {
+  background-color: #F8F4E3;
+}
+*/
+
 .f-ftlist .f-thead {
   border-bottom: 0.125rem solid #AA7939;
 }
@@ -1574,20 +1581,20 @@ li + li .f-btn {
 }
 
 @media screen and (min-width: 50rem) {
-  .f-fdiv .f-field-t1 {
+  .f-fdiv .f-field-w1 {
     width: 30%;
     float: left;
     padding-top: 0.625rem;
   }
 
-  .f-fdiv .f-field-t2 {
+  .f-fdiv .f-field-w2 {
     width: 70%;
     float: left;
     padding-top: 0.625rem;
   }
 
-  .f-field-t1 + .f-field-t2,
-  .f-field-t2 + .f-field-t1 {
+  .f-field-w1 + .f-field-w2,
+  .f-field-w2 + .f-field-w1 {
     padding-left: 0.625rem;
   }
 }
@@ -1661,6 +1668,10 @@ li + li .f-btn {
 
 .f-field-depth4 > dd {
   padding-left: 2.5rem;
+}
+
+.f-field-depth5 > dd {
+  padding-left: 3.125rem;
 }
 
 .f-editcategories-form .f-field-inline:nth-child(-n+3) {
@@ -1793,8 +1804,25 @@ li + li .f-btn {
 }
 
 @media screen and (min-width: 50rem) {
-  .f-search-form .f-fdiv .f-field-t1,
-  .f-search-form .f-fdiv .f-field-t2 {
+  .f-search-form .f-fdiv .f-field-w1,
+  .f-search-form .f-fdiv .f-field-w2 {
     padding-top: 0;
+  }
+
+  .f-search-form .f-fdiv .f-field-w3 {
+    width: 50%;
+    float: left;
+/*    padding-top: 0; */
+  }
+
+  .f-search-form .f-fdiv .f-field-w4 {
+    width: 33.33%;
+    float: left;
+/*    padding-top: 0; */
+  }
+
+  .f-field-w3 + .f-field-w3,
+  .f-field-w4 + .f-field-w4 {
+    padding-left: 0.625rem;
   }
 }

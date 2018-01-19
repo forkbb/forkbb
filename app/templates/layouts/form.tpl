@@ -34,13 +34,45 @@
           @endif
         @elseif ('select' === $cur['type'])
                 <select @if (! empty($cur['required'])) required @endif @if (! empty($cur['disabled'])) disabled @endif @if (isset($cur['autofocus'])) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}">
+          @if (null === ($count = null) && is_array(reset($cur['options'])) && 1 === count(reset($cur['options'])) && $count = 0) @endif
           @foreach ($cur['options'] as $v => $option)
             @if (is_array($option))
+              @if (null !== $count && 1 === count($option))
+                @if (++$count > 1)
+                </optgroup>
+                @endif
+                <optgroup label="{{ $option[0] }}">
+              @else
                   <option value="{{ $option[0] }}" @if ($option[0] == $cur['value']) selected @endif @if (isset($option[2])) disabled @endif>{{ $option[1] }}</option>
+              @endif
             @else
                   <option value="{{ $v }}" @if ($v == $cur['value']) selected @endif>{{ $option }}</option>
             @endif
           @endforeach
+          @if (null !== $count)
+                </optgroup>
+          @endif
+                </select>
+        @elseif ('multiselect' === $cur['type'])
+                <select @if (! empty($cur['required'])) required @endif @if (! empty($cur['disabled'])) disabled @endif @if (isset($cur['autofocus'])) autofocus @endif @if (! empty($cur['size'])) size="{{ $cur['size'] }}" @endif multiple class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}[]">
+          @if (null === ($count = null) && is_array(reset($cur['options'])) && 1 === count(reset($cur['options'])) && $count = 0) @endif
+          @foreach ($cur['options'] as $v => $option)
+            @if (is_array($option))
+              @if (null !== $count && 1 === count($option))
+                @if (++$count > 1)
+                </optgroup>
+                @endif
+                <optgroup label="{{ $option[0] }}">
+              @else
+                  <option value="{{ $option[0] }}" @if ((is_array($cur['value']) && in_array($option[0], $cur['value'])) || $option[0] == $cur['value']) selected @endif @if (isset($option[2])) disabled @endif>{{ $option[1] }}</option>
+              @endif
+            @else
+                  <option value="{{ $v }}" @if ((is_array($cur['value']) && in_array($v, $cur['value'])) || $v == $cur['value']) selected @endif>{{ $option }}</option>
+            @endif
+          @endforeach
+          @if (null !== $count)
+                </optgroup>
+          @endif
                 </select>
         @elseif ('number' === $cur['type'])
                 <input @if (! empty($cur['required'])) required @endif @if (! empty($cur['disabled'])) disabled @endif @if (isset($cur['autofocus'])) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="number" min="{{ $cur['min'] }}" max="{{ $cur['max'] }}" @if (isset($cur['value'])) value="{{ $cur['value'] }}" @endif>
@@ -69,7 +101,7 @@
 @foreach ($form['btns'] as $key => $cur)
   @if ('submit' === $cur['type'])
             <input class="f-btn @if(isset($cur['class'])) {{ $cur['class'] }} @endif" type="{{ $cur['type'] }}" name="{{ $key }}" value="{{ $cur['value'] }}" @if (isset($cur['accesskey'])) accesskey="{{ $cur['accesskey'] }}" @endif>
-  @elseif ('btn'=== $cur['type'])          
+  @elseif ('btn'=== $cur['type'])
             <a class="f-btn @if(isset($cur['class'])) {{ $cur['class'] }} @endif" data-name="{{ $key }}" href="{!! $cur['link'] !!}" @if (isset($cur['accesskey'])) accesskey="{{ $cur['accesskey'] }}" @endif>{{ $cur['value'] }}</a>
   @endif
 @endforeach

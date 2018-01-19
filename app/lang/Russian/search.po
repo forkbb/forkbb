@@ -188,3 +188,12 @@ msgstr "<a href=\"%s\">Расширенный поиск</a>"
 
 msgid "<a href=\"%s\">Simple search</a>"
 msgstr "<a href=\"%s\">Простой поиск</a>"
+
+msgid "Category prefix"
+msgstr ""
+
+msgid "Forum prefix"
+msgstr ""
+
+msgid "Forum indent"
+msgstr "◦ ◦ "

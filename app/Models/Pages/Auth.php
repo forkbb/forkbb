@@ -17,9 +17,9 @@ class Auth extends Page
 
     /**
      * Выход пользователя
-     * 
+     *
      * @param array $args
-     * 
+     *
      * @return Page
      */
     public function logout($args)
@@ -38,10 +38,10 @@ class Auth extends Page
 
     /**
      * Вход на форум
-     * 
+     *
      * @param array $args
      * @param string $method
-     * 
+     *
      * @return Page
      */
     public function login(array $args, $method)
@@ -63,16 +63,16 @@ class Auth extends Page
                     'username' => 'Username',
                     'password' => 'Passphrase',
                 ]);
-    
+
             if ($v->validation($_POST)) {
                 return $this->c->Redirect->url($v->redirect)->message('Login redirect');
             }
-            
+
             $this->fIswev = $v->getErrors();
         }
 
         $ref = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
-        
+
         $this->fIndex     = 'login';
         $this->nameTpl    = 'login';
         $this->onlinePos  = 'login';
@@ -91,10 +91,10 @@ class Auth extends Page
 
     /**
      * Проверка по базе и вход
-     * 
+     *
      * @param Validator $v
      * @param string $password
-     * 
+     *
      * @return string
      */
     public function vLoginProcess(Validator $v, $password)
@@ -144,10 +144,10 @@ class Auth extends Page
 
     /**
      * Запрос на смену кодовой фразы
-     * 
+     *
      * @param array $args
      * @param string $method
-     * 
+     *
      * @return Page
      */
     public function forget(array $args, $method)
@@ -177,7 +177,7 @@ class Auth extends Page
                     'username' => $this->tmpUser->username,
                     'link' => $link,
                 ];
-        
+
                 try {
                     $isSent = $this->c->Mail
                         ->reset()
@@ -217,10 +217,10 @@ class Auth extends Page
 
     /**
      * Дополнительная проверка email
-     * 
+     *
      * @param Validator $v
      * @param string $email
-     * 
+     *
      * @return string
      */
     public function vCheckEmail(Validator $v, $email)
@@ -243,10 +243,10 @@ class Auth extends Page
 
     /**
      * Смена кодовой фразы
-     * 
+     *
      * @param array $args
      * @param string $method
-     * 
+     *
      * @return Page
      */
     public function changePass(array $args, $method)
@@ -278,14 +278,14 @@ class Auth extends Page
                     'password.password'  => 'Pass format',
                     'password2.same'     => 'Pass not match',
                 ]);
-    
+
             if ($v->validation($_POST)) {
                 $user->password        = password_hash($v->password, PASSWORD_DEFAULT);
                 $user->email_confirmed = 1;
                 $user->activate_string = null;
                 $this->c->users->update($user);
-        
-                $this->a['fIswev']['s'][] = \ForkBB\__('Pass updated');
+
+                $this->fIswev = ['s', \ForkBB\__('Pass updated')];
                 return $this->login([], 'GET');
             }
 
@@ -297,7 +297,7 @@ class Auth extends Page
             $user->email_confirmed = 1;
             $this->c->users->update($user);
             $this->c->Cache->delete('stats');
-            $this->a['fIswev']['i'][] = \ForkBB\__('Account activated');
+            $this->fIswev = ['i', \ForkBB\__('Account activated')];
         }
 
         $this->fIndex     = 'login';

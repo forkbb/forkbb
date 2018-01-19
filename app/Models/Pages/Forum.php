@@ -10,9 +10,9 @@ class Forum extends Page
 
     /**
      * Подготовка данных для шаблона
-     * 
+     *
      * @param array $args
-     * 
+     *
      * @return Page
      */
     public function view(array $args)
@@ -44,7 +44,7 @@ class Forum extends Page
         $this->crumbs     = $this->crumbs($forum);
 
         if (empty($this->topics)) {
-            $this->a['fIswev']['i'][] = \ForkBB\__('Empty forum');
+            $this->fIswev = ['i', \ForkBB\__('Empty forum')];
         }
 
         return $this;

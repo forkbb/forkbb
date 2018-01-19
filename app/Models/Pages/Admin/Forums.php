@@ -9,29 +9,8 @@ use ForkBB\Models\Pages\Admin;
 class Forums extends Admin
 {
     /**
-     * Получение списка разделов и подразделов
-     * 
-     * @param Forum $forum
-     * @param int $depth
-     * @param array $list
-     * 
-     * @return array
-     */
-    protected function forumsList(Forum $forum, $depth, array $list = [])
-    {
-        ++$depth;
-        foreach ($forum->subforums as $sub) {
-            $sub->__depth = $depth;
-            $list[] = $sub;
-    
-            $list = $this->forumsList($sub, $depth, $list);
-        }
-        return $list;
-    }
-
-    /**
      * Составление списка категорий/разделов для выбора родителя
-     * 
+     *
      * @param Forum $forum
      */
     protected function calcList(Forum $forum)
@@ -44,16 +23,16 @@ class Forums extends Admin
         $idxs       = [];
         $root = $this->c->forums->get(0);
         if ($root instanceof Forum) {
-            foreach ($this->forumsList($root, 0) as $f) {
+            foreach ($this->c->forums->depthList($root, 0) as $f) {
                 if ($cid !== $f->cat_id) {
                     $cid       = $f->cat_id;
                     $options[] = [-$cid, \ForkBB\__('Category prefix') . $f->cat_name];
                     $idxs[]    = -$cid;
                     unset($categories[$cid]);
                 }
-                
+
                 $indent = str_repeat(\ForkBB\__('Forum indent'), $f->depth);
-    
+
                 if ($f->id === $forum->id || isset($forum->descendants[$f->id]) || $f->redirect_url) {
                     $options[] = [$f->id, $indent . \ForkBB\__('Forum prefix') . $f->forum_name, true];
                 } else {
@@ -72,9 +51,9 @@ class Forums extends Admin
 
     /**
      * Вычисление позиции для (нового) раздела
-     * 
+     *
      * @param Forum $forum
-     * 
+     *
      * @return int
      */
     protected function forumPos(Forum $forum)
@@ -163,7 +142,7 @@ class Forums extends Admin
         $root = $this->c->forums->get(0);
 
         if ($root instanceof Forum) {
-            $list = $this->forumsList($root, -1);
+            $list = $this->c->forums->depthList($root, -1);
 
             $fieldset = [];
             $cid = null;
@@ -175,7 +154,7 @@ class Forums extends Admin
                         ];
                         $fieldset = [];
                     }
-    
+
                     $form['sets'][] = [
                         'info' => [
                             'info1' => [
@@ -186,7 +165,7 @@ class Forums extends Admin
                     ];
                     $cid = $forum->cat_id;
                 }
-    
+
                 $fieldset[] = [
                     'dl'        => ['name', 'inline', 'depth' . $forum->depth],
                     'type'      => 'btn',
@@ -212,7 +191,7 @@ class Forums extends Admin
                     'disabled' => $disabled,
                 ];
             }
-    
+
             $form['sets'][] = [
                 'fields' => $fieldset,
             ];
@@ -326,7 +305,7 @@ class Forums extends Admin
 
     /**
      * Редактирование раздела
-     * Создание нового раздела 
+     * Создание нового раздела
      *
      * @param array $args
      * @param string $method
@@ -405,7 +384,7 @@ class Forums extends Admin
                         $message = 'Forum updated redirect';
                         $this->c->forums->update($forum);
                     }
-    
+
                     $this->c->groups->Perm->update($forum, $v->perms);
                 }
 

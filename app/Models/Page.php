@@ -172,13 +172,13 @@ class Page extends Model
 
     /**
      * Добавляет стиль на страницу
-     * 
+     *
      * @param string $name
      * @param string $val
-     * 
+     *
      * @return Page
      */
-    public function addStyle($name, $val) 
+    public function addStyle($name, $val)
     {
         $this->a['pageHeaders']['style'][$name] = $val;
         return $this;
@@ -230,7 +230,7 @@ class Page extends Model
 
     /**
      * Дописывает в массив титула страницы новый элемент
-     * $this->titles
+     * $this->titles = ...
      *
      * @param string $val
      */
@@ -240,6 +240,24 @@ class Page extends Model
             $this->a['titles'] = [$val];
         } else {
             $this->a['titles'][] = $val;
+        }
+    }
+
+    /**
+     * Добавление новой ошибки
+     * $this->fIswev = ...
+     *
+     * @param array $val
+     */
+    public function setfIswev(array $val)
+    {
+        if (empty($this->a['fIswev'])) {
+            $this->a['fIswev'] = [];
+        }
+        if (isset($val[0]) && isset($val[1]) && is_string($val[0]) && is_string($val[1])) {
+            $this->a['fIswev'][$val[0]][] = $val[1];
+        } else {
+            $this->a['fIswev'] = array_merge_recursive((array) $this->a['fIswev'], $val);
         }
     }
 }

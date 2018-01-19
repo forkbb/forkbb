@@ -74,7 +74,7 @@ class Current extends Action
      * @param int $id
      *
      * @throws RuntimeException
-     * 
+     *
      * @return User;
      */
     protected function load($id)
@@ -109,7 +109,7 @@ class Current extends Action
 
     /**
      * Возврат юзер агента браузера пользователя
-     * 
+     *
      * @return string
      */
     protected function getUserAgent()

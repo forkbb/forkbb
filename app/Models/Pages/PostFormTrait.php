@@ -4,18 +4,18 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Model;
 
-trait PostFormTrait 
+trait PostFormTrait
 {
     /**
      * Возвращает данные для построения формы создания темы/сообщения
-     * 
+     *
      * @param Model $model
      * @param string $marker
      * @param array $args
      * @param bool $editPost
      * @param bool $editSubject
      * @param bool $quickReply
-     * 
+     *
      * @return array
      */
     protected function messageForm(Model $model, $marker, array $args, $editPost = false, $editSubject = false, $quickReply = false)
@@ -32,13 +32,13 @@ trait PostFormTrait
             'sets'   => [],
             'btns'   => [
                 'submit'  => [
-                    'type'      => 'submit', 
-                    'value'     => \ForkBB\__('Submit'), 
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__('Submit'),
                     'accesskey' => 's',
                 ],
                 'preview' => [
-                    'type'      => 'submit', 
-                    'value'     => \ForkBB\__('Preview'), 
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__('Preview'),
                     'accesskey' => 'p',
                     'class'     => 'f-minor',
                 ],
@@ -48,7 +48,7 @@ trait PostFormTrait
         $fieldset = [];
         if ($this->c->user->isGuest) {
             $fieldset['username'] = [
-                'dl'        => 't1',
+                'dl'        => 'w1',
                 'type'      => 'text',
                 'maxlength' => 25,
                 'title'     => \ForkBB\__('Username'),
@@ -58,7 +58,7 @@ trait PostFormTrait
                 'autofocus' => $autofocus,
             ];
             $fieldset['email'] = [
-                'dl'        => 't2',
+                'dl'        => 'w2',
                 'type'      => 'text',
                 'maxlength' => 80,
                 'title'     => \ForkBB\__('Email'),
@@ -98,7 +98,7 @@ trait PostFormTrait
             'fields' => $fieldset,
         ];
         $autofocus = null;
-        
+
         $fieldset = [];
         if ($this->c->user->isAdmin || $this->c->user->isModerator($model)) {
             if ($editSubject) {
