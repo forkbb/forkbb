@@ -37,6 +37,8 @@ class Model extends DataModel
     /**
      * Автор сообщения
      *
+     * @throws RuntimeException
+     *
      * @return User
      */
     protected function getuser() //????
@@ -44,19 +46,14 @@ class Model extends DataModel
         $user = $this->c->users->get($this->poster_id);
 
         if (! $user instanceof User) {
-            $attrs = $this->a; //????
-            $attrs['id'] = $attrs['poster_id'];
-
-            $user = $this->c->users->create($attrs);
-
-            if ($user->isGuest) {
-                $user->__email = $this->poster_email;
-            } else {
-                $this->c->users->set($user->id, $user);
-            }
+            throw new RuntimeException('No user data');
+        } elseif (1 === $this->poster_id) {
+            $user = clone $user;
+            $user->__email = $this->poster_email;
+            $user->__username = $this->poster;
         }
 
-        return $user; 
+        return $user;
     }
 
     /**
@@ -130,11 +127,11 @@ class Model extends DataModel
         }
 
         return $this->user->id === $this->c->user->id
-            && (($this->id == $this->parent->first_post_id && $this->c->user->g_delete_topics == '1') 
+            && (($this->id == $this->parent->first_post_id && $this->c->user->g_delete_topics == '1')
                 || ($this->id != $this->parent->first_post_id && $this->c->user->g_delete_posts == '1')
             )
-            && ($this->c->user->g_deledit_interval == '0' 
-                || $this->edit_post == '1' 
+            && ($this->c->user->g_deledit_interval == '0'
+                || $this->edit_post == '1'
                 || time() - $this->posted < $this->c->user->g_deledit_interval
             );
     }
@@ -156,8 +153,8 @@ class Model extends DataModel
 
         return $this->user->id === $this->c->user->id
             && $this->c->user->g_edit_posts == '1'
-            && ($this->c->user->g_deledit_interval == '0' 
-                || $this->edit_post == '1' 
+            && ($this->c->user->g_deledit_interval == '0'
+                || $this->edit_post == '1'
                 || time() - $this->posted < $this->c->user->g_deledit_interval
             );
     }
@@ -179,7 +176,7 @@ class Model extends DataModel
 
     /**
      * HTML код сообщения
-     * 
+     *
      * @return string
      */
     public function html()

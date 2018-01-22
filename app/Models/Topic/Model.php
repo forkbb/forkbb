@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Topic;
 
 use ForkBB\Models\DataModel;
+use PDO;
 use RuntimeException;
 
 class Model extends DataModel
@@ -222,6 +223,40 @@ class Model extends DataModel
     public function hasPage()
     {
         return $this->page > 0 && $this->page <= $this->numPages;
+    }
+
+    /**
+     * Возвращает массив сообщений с установленной страницы
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return array
+     */
+    public function pageData()
+    {
+        if (! $this->hasPage()) {
+            throw new InvalidArgumentException('Bad number of displayed page');
+        }
+
+        $vars = [
+            ':tid'    => $this->id,
+            ':offset' => ($this->page - 1) * $this->c->user->disp_posts,
+            ':rows'   => $this->c->user->disp_posts,
+        ];
+        $sql = 'SELECT id
+                FROM ::posts
+                WHERE topic_id=?i:tid
+                ORDER BY id
+                LIMIT ?i:offset, ?i:rows';
+        $list = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
+
+        if (! empty($list) && ($this->stick_fp || $this->poll_type) && ! in_array($this->first_post_id, $list)) {
+            array_unshift($list, $this->first_post_id);
+        }
+
+        $this->idsList = $list;
+
+        return empty($this->idsList) ? [] : $this->c->posts->view($this);
     }
 
     /**

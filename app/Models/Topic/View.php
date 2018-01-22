@@ -18,7 +18,8 @@ class View extends Action
      * @param mixed $arg
      *
      * @throws InvalidArgumentException
-     * 
+     * @throws RuntimeException
+     *
      * @return array
      */
     public function view($arg)
@@ -32,7 +33,7 @@ class View extends Action
         }
 
         if (empty($arg->idsList) || ! is_array($arg->idsList)) {
-            throw new RuntimeException('Model does not contain a list of topics to display');
+            throw new RuntimeException('Model does not contain of topics list for display');
         }
 
         $vars = [
@@ -41,9 +42,9 @@ class View extends Action
         ];
 
         if (! $this->c->user->isGuest && '1' == $this->c->config->o_show_dot) {
-            $sql = 'SELECT topic_id 
-                    FROM ::posts 
-                    WHERE poster_id=?i:uid AND topic_id IN (?ai:ids) 
+            $sql = 'SELECT topic_id
+                    FROM ::posts
+                    WHERE poster_id=?i:uid AND topic_id IN (?ai:ids)
                     GROUP BY topic_id';
             $dots = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
             $dots = array_flip($dots);
@@ -73,7 +74,7 @@ class View extends Action
         while ($row = $stmt->fetch()) {
             $row['dot'] = isset($dots[$row['id']]);
             $result[$row['id']] = $this->manager->create($row);
-            if ($expanded) {
+            if ($expanded && ! $this->c->user->isGuest) {
                 $result[$row['id']]->parent->__mf_mark_all_read = $row['mf_mark_all_read'];
             }
         }

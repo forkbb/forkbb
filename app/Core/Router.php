@@ -59,6 +59,16 @@ class Router
      */
     protected $length;
 
+    protected $subSearch = [
+        '/',
+        '\\',
+    ];
+
+    protected $subRepl = [
+        '(_slash_)',
+        '(_backslash_)',
+    ];
+
     /**
      * Конструктор
      *
@@ -130,7 +140,7 @@ class Router
             if (isset($args[$name])) {
                 // кроме page = 1
                 if ($name !== 'page' || $args[$name] !== 1) {
-                    $data['{' . $name . '}'] = rawurlencode(preg_replace('%[\s\\\/]+%u', '-', $args[$name]));
+                    $data['{' . $name . '}'] = rawurlencode(str_replace($this->subSearch, $this->subRepl, $args[$name]));
                     continue;
                 }
             }
@@ -140,7 +150,8 @@ class Router
                 return $result . '/';
             // значение не обязательно
             } else {
-                $link = preg_replace('%\[[^\[\]{}]*{' . preg_quote($name, '%') . '}[^\[\]{}]*\]%', '', $link);
+//                $link = preg_replace('%\[[^\[\]{}]*{' . preg_quote($name, '%') . '}[^\[\]{}]*\]%', '', $link);
+                $link = preg_replace('%\[[^\[\]]*?{' . preg_quote($name, '%') . '}[^\[\]]*+(\[((?>[^\[\]]*+)|(?1))+\])*?\]%', '', $link);
             }
         }
         $link = str_replace(['[', ']'], '', $link);
@@ -207,7 +218,7 @@ class Router
                 $args = [];
                 foreach ($keys as $key) {
                     if (isset($matches[$key])) {
-                        $args[$key] = $matches[$key];
+                        $args[$key] = str_replace($this->subRepl, $this->subSearch, $matches[$key]);
                     }
                 }
                 return [self::OK, $handler, $args, $marker];

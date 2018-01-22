@@ -1196,6 +1196,7 @@ select {
     padding-right: 0.625rem;
     vertical-align: middle;
     font-size: 0.875rem;
+    text-align: right;
   }
 
   .f-ftlist .f-cltopic,

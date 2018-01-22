@@ -42,34 +42,50 @@ class Search extends Page
     }
 
     /**
-     * Поиск
+     * Расширенный поиск
      *
      * @param array $args
      * @param string $method
      *
      * @return Page
      */
-    public function view(array $args, $method)
+    public function viewAdvanced(array $args, $method)
+    {
+        return $this->view($args, $method, true);
+    }
+
+    /**
+     * Поиск
+     *
+     * @param array $args
+     * @param string $method
+     * @param bool $advanced
+     *
+     * @return Page
+     */
+    public function view(array $args, $method, $advanced = false)
     {
         $this->c->Lang->load('search');
         $this->calcList();
 
+        $marker = $advanced ? 'SearchAdvanced' : 'Search';
+
         $v = null;
-        if ('POST' === $method) {
+        if ('POST' === $method || isset($args['keywords'])) {
             $v = $this->c->Validator->reset()
                 ->addValidators([
-                    'check_query' => [$this, 'vCheckQuery'],
+                    'check_query'  => [$this, 'vCheckQuery'],
+                    'check_forums' => [$this, 'vCheckForums'],
+                    'check_author' => [$this, 'vCheckAuthor'],
                 ])->addRules([
-                    'token'    => 'token:Search',
-                    'keywords' => 'required|string:trim|max:100|check_query',
-                    'author'   => 'absent',
-                    'forums'   => 'absent',
-                    'serch_in' => 'absent',
-                    'sort_by'  => 'absent',
-                    'sort_dir' => 'absent',
-                    'show_as'  => 'absent',
+                    'author'   => 'absent:*',
+                    'forums'   => 'absent:*',
+                    'serch_in' => 'absent:0|integer',
+                    'sort_by'  => 'absent:0|integer',
+                    'sort_dir' => 'absent:0|integer',
+                    'show_as'  => 'absent:0|integer',
                 ])->addArguments([
-                    'token' => $args,
+//                    'token' => $args,
                 ])->addAliases([
                     'keywords' => 'Keyword search',
                     'author'   => 'Author search',
@@ -80,11 +96,10 @@ class Search extends Page
                     'show_as'  => 'Show as',
                 ]);
 
-            if (isset($args['advanced'])) {
+            if ($advanced) {
                 $v->addRules([
-                    'author'   => 'string:trim|max:25',
-                    'forums'   => 'array',
-                    'forums.*' => 'integer|in:' . implode(',', $this->listOfIndexes),
+                    'author'   => 'required|string:trim|max:25|check_author',
+                    'forums'   => 'check_forums',
                     'serch_in' => 'required|integer|in:0,1,2',
                     'sort_by'  => 'required|integer|in:0,1,2,3',
                     'sort_dir' => 'required|integer|in:0,1',
@@ -92,43 +107,29 @@ class Search extends Page
                 ]);
             }
 
-            if ($v->validation($_POST)) {
-                $forums = $v->forums;
+            if ('POST' === $method) {
+                $v->addRules([
+                    'token'    => 'token:' . $marker,
+                ]);
+            }
 
-                if (empty($forums) && ! $this->c->user->isAdmin) {
-                    $forums = $this->listOfIndexes;
-                }
+            $v->addRules([
+                'keywords'     => 'required|string:trim|max:100|check_query:' . $method,
+            ]);
 
-                $options = [
-                    'keywords' => $v->keywords,
-                    'author'   => (string) $v->author,
-                    'forums'   => $forums,
-                    'serch_in' => ['all', 'posts', 'topics'][(int) $v->serch_in],
-                    'sort_by'  => ['post', 'author', 'subject', 'forum'][(int) $v->sort_by],
-                    'sort_dir' => ['desc', 'asc'][(int) $v->sort_dir],
-                    'show_as'  => ['posts', 'topics'][(int) $v->show_as],
-                ];
-
-                $result = $this->c->search->execute($options);
-
-                $user = $this->c->user;
-                if ($user->g_search_flood) {
-                    $user->last_search = time();
-                    $this->c->users->update($user); //?????
-                }
-
-                if (empty($result)) {
-                    $this->fIswev = ['i', \ForkBB\__('No hits')];
-                }
+            if ('POST' === $method && $v->validation($_POST)) {
+                return $this->c->Redirect->page($marker, $v->getData());
+            } elseif ('GET' === $method && $v->validation($args)) {
+                return $this->action(array_merge($args, $v->getData(), ['action' => 'search']), $method, $advanced);
             }
 
             $this->fIswev = $v->getErrors();
         }
 
         $form = [
-            'action' => $this->c->Router->link('Search', $args),
+            'action' => $this->c->Router->link($marker),
             'hidden' => [
-                'token' => $this->c->Csrf->create('Search', $args),
+                'token' => $this->c->Csrf->create($marker),
             ],
             'sets' => [],
             'btns'   => [
@@ -140,7 +141,7 @@ class Search extends Page
             ],
         ];
 
-        if (isset($args['advanced'])) {
+        if ($advanced) {
             $form['sets'][] = [
                 'fields' => [
                     [
@@ -162,7 +163,8 @@ class Search extends Page
                         'type'      => 'text',
                         'maxlength' => 25,
                         'title'     => \ForkBB\__('Author search'),
-                        'value'     => $v ? $v->author : '',
+                        'value'     => $v ? $v->author : '*',
+                        'required'  => true,
                     ],
                     [
                         'type'      => 'info',
@@ -177,7 +179,7 @@ class Search extends Page
                         'dl'      => 'w3',
                         'type'    => 'multiselect',
                         'options' => $this->listForOptions,
-                        'value'   => $v ? $v->forums : null,
+                        'value'   => $v ? explode('.', $v->forums) : null,
                         'title'   => \ForkBB\__('Forum search'),
                         'size'    => min(count($this->listForOptions), 10),
                     ],
@@ -250,7 +252,7 @@ class Search extends Page
                 'fields' => [
                     [
                         'type'      => 'info',
-                        'value'     => \ForkBB\__('<a href="%s">Advanced search</a>', $this->c->Router->link('Search', ['advanced' => 'advanced'])),
+                        'value'     => \ForkBB\__('<a href="%s">Advanced search</a>', $this->c->Router->link('SearchAdvanced')),
                         'html'      => true,
                     ],
                     'keywords' => [
@@ -281,20 +283,40 @@ class Search extends Page
      *
      * @param Validator $v
      * @param string $query
+     * @param string $method
      *
      * @return string
      */
-    public function vCheckQuery(Validator $v, $query)
+    public function vCheckQuery(Validator $v, $query, $method)
     {
-        $user = $this->c->user;
+        if (empty($v->getErrors())) {
+            $user  = $this->c->user;
+            $flood = $user->last_search && time() - $user->last_search < $user->g_search_flood;
 
-        if ($user->last_search && time() - $user->last_search < $user->g_search_flood) {
-            $v->addError(\ForkBB\__('Search flood', $user->g_search_flood, $user->g_search_flood - time() + $user->last_search));
-        } else {
-            $search = $this->c->search;
+            if ('POST' !== $method || ! $flood) {
+                $search = $this->c->search;
 
-            if (! $search->prepare($query)) {
-                $v->addError(\ForkBB\__($search->queryError, $search->queryText));
+                if (! $search->prepare($query)) {
+                    $v->addError(\ForkBB\__($search->queryError, $search->queryText));
+                } else {
+
+                    if ($this->c->search->execute($v, $this->listOfIndexes, $flood)) {
+                        $flood = false;
+
+                        if (empty($search->queryIds)) {
+                            $v->addError('No hits', 'i');
+                        }
+
+                        if ($search->queryNoCache && $user->g_search_flood) {
+                            $user->last_search = time();
+                            $this->c->users->update($user); //?????
+                        }
+                    }
+                }
+            }
+
+            if ($flood) {
+                $v->addError(\ForkBB\__('Search flood', $user->g_search_flood, $user->g_search_flood - time() + $user->last_search));
             }
         }
 
@@ -302,16 +324,68 @@ class Search extends Page
     }
 
     /**
+     * Дополнительная проверка разделов
+     *
+     * @param Validator $v
+     * @param string|array $forums
+     *
+     * @return string
+     */
+    public function vCheckForums(Validator $v, $forums)
+    {
+        if ('*' !== $forums) {
+            if (is_string($forums) && preg_match('%^\d+(?:\.\d+)*$%D', $forums)) {
+                $forums = explode('.', $forums);
+            } elseif (null === $forums) {
+                $forums = '*';
+            } elseif (! is_array($forums)) {
+                $v->addError('The :alias contains an invalid value');
+                $forums = '*';
+            }
+        }
+
+        if ('*' !== $forums) {
+            if (! empty(array_diff($forums, $this->listOfIndexes))) {
+                $v->addError('The :alias contains an invalid value');
+            }
+            sort($forums, SORT_NUMERIC);
+            $forums = implode('.', $forums);
+        }
+
+        return $forums;
+    }
+
+    /**
+     * Дополнительная проверка автора
+     *
+     * @param Validator $v
+     * @param string|array $forums
+     *
+     * @return string
+     */
+    public function vCheckAuthor(Validator $v, $name)
+    {
+        $name = preg_replace('%\*+%', '*', $name);
+
+        if ('*' !== $name && ! preg_match('%[\p{L}\p{N}]%', $name)) {
+            $v->addError('The :alias is not valid format');
+        }
+
+        return $name;
+    }
+
+    /**
      * Типовые действия
      *
      * @param array $args
      * @param string $method
+     * @param bool $advanced
      *
      * @throws InvalidArgumentException
      *
      * @return Page
      */
-    public function action(array $args, $method)
+    public function action(array $args, $method, $advanced = false)
     {
         $this->c->Lang->load('search');
 
@@ -319,6 +393,25 @@ class Search extends Page
         $model->page = isset($args['page']) ? (int) $args['page'] : 1;
         $action      = $args['action'];
         switch ($action) {
+            case 'search':
+                if (1 === $model->showAs) {
+                    if ('*' === $args['author']) {
+                        $model->name  = \ForkBB\__('By keywords show as topics', $args['keywords']);
+                    } else {
+                        $model->name  = \ForkBB\__('By both show as topics', $args['keywords'], $args['author']);
+                    }
+                    $list = $model->actionT($action);
+                } else {
+                    if ('*' === $args['author']) {
+                        $model->name  = \ForkBB\__('By keywords show as posts', $args['keywords']);
+                    } else {
+                        $model->name  = \ForkBB\__('By both show as posts', $args['keywords'], $args['author']);
+                    }
+                    //?????
+                }
+                $model->linkMarker = $advanced ? 'SearchAdvanced' : 'Search';;
+                $model->linkArgs   = $args;
+                break;
             case 'last':
             case 'unanswered':
                 $list = $model->actionT($action);

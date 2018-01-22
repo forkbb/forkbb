@@ -11,7 +11,7 @@ use RuntimeException;
 class ActionT extends Method
 {
     /**
-     * Действия с темами
+     * Поисковые действия по темам
      *
      * @param string $action
      *
@@ -26,7 +26,11 @@ class ActionT extends Method
             return []; //????
         }
 
+        $sql = null;
         switch ($action) {
+            case 'search':
+                $list = $this->model->queryIds;
+                break;
             case 'last':
                 $sql = 'SELECT t.id
                         FROM ::topics AS t
@@ -42,10 +46,13 @@ class ActionT extends Method
             default:
                 throw new InvalidArgumentException('Unknown action: ' . $action);
         }
-        $vars = [
-            ':forums' => array_keys($root->descendants),
-        ];
-        $list = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
+
+        if (null !== $sql) {
+            $vars = [
+                ':forums' => array_keys($root->descendants),
+            ];
+            $list = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
+        }
 
         $this->model->numPages = (int) ceil((count($list) ?: 1) / $this->c->user->disp_topics);
 

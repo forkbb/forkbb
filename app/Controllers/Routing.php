@@ -66,7 +66,12 @@ class Routing
             }
             // поиск
             if ($user->g_search == '1') {
-                $r->add(['GET','POST'], '/search[/{advanced:advanced}]',           'Search:view',   'Search');
+                $r->add('GET',  '/search[/simple/{keywords}[/{page:[1-9]\d*}]]',  'Search:view',   'Search');
+                $r->add('POST', '/search',                                        'Search:view');
+
+                $r->add('GET',  '/search/advanced[/{keywords}/{author}/{forums}/{serch_in:\d}/{sort_by:\d}/{sort_dir:\d}/{show_as:\d}[/{page:[1-9]\d*}]]', 'Search:viewAdvanced',   'SearchAdvanced');
+                $r->add('POST', '/search/advanced',           'Search:viewAdvanced');
+
                 $r->add('GET',          '/search/{action:last|unanswered}[/{page:[1-9]\d*}]', 'Search:action', 'SearchAction');
             }
             // юзеры

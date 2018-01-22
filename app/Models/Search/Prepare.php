@@ -158,9 +158,9 @@ class Prepare extends Method
         }
 
         if (! $count) {
-            $error = 'There is no word for search: "%s"';
+            $error = 'There is no word for search: \'%s\'';
         } else if ($keyword) {
-            $error = 'Syntactic word at the end of the search query: "%s"';
+            $error = 'Syntactic word at the end of the search query: \'%s\'';
         } elseif (! empty($stack)) {
             $error = 'The order of brackets is broken: \'%s\'';
         }

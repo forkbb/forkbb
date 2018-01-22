@@ -2,6 +2,7 @@
 
 namespace ForkBB\Models\Search;
 
+use ForkBB\Core\Validator;
 use ForkBB\Models\Method;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Post\Model as Post;
@@ -19,40 +20,83 @@ class Execute extends Method
     protected $stmtCJK;
 
     /**
-     * @param array $options
+     * Поиск тем/сообщений в соответствии с поисковым запросом
+     * Получение данных из таблицы кеша
+     * Сохранение результатов в таблицу кеша
+     *
+     * @param Validator $v
+     * @param array $forumIdxs
+     * @param bool $flood
      *
      * @throws RuntimeException
      *
-     * @return array
+     * @return bool
      */
-    public function execute(array $options)
+    public function execute(Validator $v, array $forumIdxs, $flood)
     {
         if (! is_array($this->model->queryWords) || ! is_string($this->model->queryText)) {
-            throw new InvalidArgumentException('No query data');
+            throw new RuntimeException('No query data');
         }
-
-echo '<pre>';
-var_dump($this->model->queryText);
 
         $this->words   = [];
         $this->stmtIdx = null;
         $this->stmtCJK = null;
-        $vars          = $this->buildSelect($options);
+        $queryVars     = $this->buildSelect($v, $forumIdxs);
 
-var_dump($this->queryIdx, $this->queryCJK);
+        $key = $this->c->user->group_id . '-' .
+               $v->serch_in .
+               $v->sort_by .
+               $v->sort_dir .
+               $this->model->showAs . '-' .
+               $this->model->queryText . '-' . // $v->keywords
+               $v->author . '-' .
+               $v->forums;
 
-        $ids = $this->exec($this->model->queryWords, $vars);
+        $vars = [
+            ':key' => $key,
+        ];
+        $sql = 'SELECT search_time, search_data
+                FROM ::search_cache
+                WHERE search_key=?s:key
+                ORDER BY search_time DESC
+                LIMIT 1';
+        $row = $this->c->DB->query($sql, $vars)->fetch();
 
-        if ('asc' === $options['sort_dir']) {
+        if (! empty($row['search_time']) && time() - $row['search_time'] < 60 * 5) { //????
+            $result                    = explode("\n", $row['search_data']);
+            $this->model->queryIds     = explode(',', $result[0]);
+            $this->model->queryNoCache = false;
+            return true;
+        } elseif ($flood) {
+            return false;
+        }
+
+        $ids = $this->exec($this->model->queryWords, $queryVars);
+
+        if (1 === $v->sort_dir) {
             asort($ids, $this->sortType);
         } else {
             arsort($ids, $this->sortType);
         }
 
-var_dump($ids);
-echo '</pre>';
+        $ids = array_keys($ids);
 
-        return $ids;
+        $data = [
+            implode(',', $ids),
+        ];
+        $vars = [
+            ':data' => implode("\n", $data),
+            ':key'  => $key,
+            ':time' => time(),
+        ];
+        $sql = 'INSERT INTO ::search_cache (search_key, search_time, search_data)
+                VALUES (?s:key, ?i:time, ?s:data)';
+        $this->c->DB->exec($sql, $vars);
+
+        $this->model->queryIds     = $ids;
+        $this->model->queryNoCache = true;
+
+        return true;
     }
 
     /**
@@ -70,9 +114,6 @@ echo '</pre>';
         $ids   = [];
 
         foreach ($words as $word) {
-
-var_dump($word);
-
             // служебное слово
             if ('AND' === $word || 'OR' === $word || 'NOT' === $word) {
                 $type = $word;
@@ -119,7 +160,6 @@ var_dump($word);
                     }
                 }
 
-var_dump($list);
                 if (! $count) {
                     $ids = $list;
                 } elseif ('AND' === $type) {
@@ -138,143 +178,139 @@ var_dump($list);
     }
 
     /**
-     * @param array $options
+     * Создание sql запросов к поисковому индексу и к сообщениям/темам
+     *
+     * @param Validator $v
+     * @param array $forumIdxs
      *
      * @return array
      */
-    protected function buildSelect(array $options)
+    protected function buildSelect(Validator $v, array $forumIdxs)
     {
-        # ["keywords"]=> string(5) "fnghj"
-        # ["author"]  => string(0) ""
-        # ["forums"]  => NULL
-        # ["serch_in"]=> string(3) "all"
-        # ["sort_by"] => string(4) "post"
-        # ["sort_dir"]=> string(4) "desc"
-        # ["show_as"] => string(5) "posts"
-        $vars  = [];
+        $vars     = [];
         $whereIdx = [];
         $whereCJK = [];
-        $joinTIdx = false;
-        $joinPIdx = false;
-        $useT     = false;
-        $useP     = false;
+        $useTIdx  = false;
+        $usePIdx  = false;
+        $useTCJK  = false;
+        $usePCJK  = false;
 
-        if (! empty($options['forums'])) {
-            $joinTIdx               = true;
-            $whereIdx[]             = 't.forum_id IN (?ai:forums)';
-            $whereCJK[]             = 't.forum_id IN (?ai:forums)';
-            $useT                   = true;
-            $vars[':forums']        = (array) $options['forums'];
+        if ('*' !== $v->forums || ! $this->c->user->isAdmin) {
+            $useTIdx                 = true;
+            $whereIdx[]              = 't.forum_id IN (?ai:forums)';
+            $whereCJK[]              = 't.forum_id IN (?ai:forums)';
+            $useTCJK                 = true;
+            $vars[':forums']         = '*' === $v->forums ? $forumIdxs : explode('.', $v->forums);
         }
 
-        //???? нужен индекс по авторам сообщений/тем
+        //???? нужен индекс по авторам сообщений/тем?
         //???? что делать с подчеркиванием в именах?
-        if ('' != $options['author']) {
-            $joinPIdx               = true;
-            $vars[':author']        = str_replace(['*', '?'], ['%', '_'], $options['author']);
-            $whereIdx[]             = 'p.poster LIKE ?s:author';
+        if ('*' !== $v->author) {
+            $usePIdx                 = true;
+            $vars[':author']         = str_replace(['*', '?'], ['%', '_'], $v->author);
+            $whereIdx[]              = 'p.poster LIKE ?s:author';
         }
 
-        switch ($options['serch_in']) {
-            case 'posts':
-                $whereIdx[]         = 'm.subject_match=0';
-                $whereCJK[]         = 'p.message LIKE ?s:word';
-                $useP               = true;
+        $this->model->showAs         = $v->show_as;
+
+        switch ($v->serch_in) {
+            case 1:
+                $whereIdx[]          = 'm.subject_match=0';
+                $whereCJK[]          = 'p.message LIKE ?s:word';
+                $usePCJK             = true;
                 if (isset($vars[':author'])) {
-                    $whereCJK[]     = 'p.poster LIKE ?s:author';
+                    $whereCJK[]      = 'p.poster LIKE ?s:author';
                 }
                 break;
-            case 'topics':
-                $whereIdx[]         = 'm.subject_match=1';
-                $whereCJK[]         = 't.subject LIKE ?s:word';
-                $useT               = true;
+            case 2:
+                $whereIdx[]          = 'm.subject_match=1';
+                $whereCJK[]          = 't.subject LIKE ?s:word';
+                $useTCJK             = true;
                 if (isset($vars[':author'])) {
-                    $whereCJK[]     = 't.poster LIKE ?s:author';
+                    $whereCJK[]      = 't.poster LIKE ?s:author';
                 }
                 // при поиске в заголовках результат только в виде списка тем
-                $options['show_as'] = 'topics';
+                $this->model->showAs = 1;
                 break;
             default:
                 if (isset($vars[':author'])) {
-                    $whereCJK[]     = '((p.message LIKE ?s:word AND p.poster LIKE ?s:author) OR (t.subject LIKE ?s:word AND t.poster LIKE ?s:author))';
+                    $whereCJK[]      = '((p.message LIKE ?s:word AND p.poster LIKE ?s:author) OR (t.subject LIKE ?s:word AND t.poster LIKE ?s:author))';
                 } else {
-                    $whereCJK[]     = '(p.message LIKE ?s:word OR t.subject LIKE ?s:word)';
+                    $whereCJK[]      = '(p.message LIKE ?s:word OR t.subject LIKE ?s:word)';
                 }
-                $useP               = true;
-                $useT               = true;
+                $usePCJK             = true;
+                $useTCJK             = true;
                 break;
         }
 
-        if ('topics' === $options['show_as']) {
-            $showTopics             = true;
-            $joinPIdx               = true;
-            $selectFIdx             = 'p.topic_id';
-            $selectFCJK             = 't.id';
-            $useT                   = true;
+        if (1 === $this->model->showAs) {
+            $usePIdx                 = true;
+            $selectFIdx              = 'p.topic_id';
+            $selectFCJK              = 't.id';
+            $useTCJK                 = true;
         } else {
-            $showTopics             = false;
-            $selectFIdx             = 'm.post_id';
-            $selectFCJK             = 'p.id';
-            $useP                   = true;
+            $selectFIdx              = 'm.post_id';
+            $selectFCJK              = 'p.id';
+            $usePCJK                 = true;
         }
 
-        switch ($options['sort_by']) {
-            case 'author':
-                if ($showTopics) {
-                    $sortIdx        = 't.poster';
-                    $sortCJK        = 't.poster';
-                    $joinTIdx       = true;
-                    $useT           = true;
+        switch ($v->sort_by) {
+            case 1:
+                if (1 === $this->model->showAs) {
+                    $sortIdx         = 't.poster';
+                    $sortCJK         = 't.poster';
+                    $useTIdx         = true;
+                    $useTCJK         = true;
                 } else {
-                    $sortIdx        = 'p.poster';
-                    $sortCJK        = 'p.poster';
-                    $joinPIdx       = true;
-                    $useP           = true;
+                    $sortIdx         = 'p.poster';
+                    $sortCJK         = 'p.poster';
+                    $usePIdx         = true;
+                    $usePCJK         = true;
                 }
-                $this->sortType     = SORT_STRING;
+                $this->sortType      = SORT_STRING;
                 break;
-            case 'subject':
-                $sortIdx            = 't.subject';
-                $sortCJK            = 't.subject';
-                $joinTIdx           = true;
-                $useT               = true;
-                $this->sortType     = SORT_STRING;
+            case 2:
+                $sortIdx             = 't.subject';
+                $sortCJK             = 't.subject';
+                $useTIdx             = true;
+                $useTCJK             = true;
+                $this->sortType      = SORT_STRING;
                 break;
-            case 'forum':
-                $sortIdx            = 't.forum_id';
-                $sortCJK            = 't.forum_id';
-                $joinTIdx           = true;
-                $useT               = true;
-                $this->sortType     = SORT_NUMERIC;
+            case 3:
+                $sortIdx             = 't.forum_id';
+                $sortCJK             = 't.forum_id';
+                $useTIdx             = true;
+                $useTCJK             = true;
+                $this->sortType      = SORT_NUMERIC;
                 break;
             default:
-                if ($showTopics) {
-                    $sortIdx        = 't.last_post';
-                    $sortCJK        = 't.last_post';
-                    $joinTIdx       = true;
-                    $useT           = true;
+                if (1 === $this->model->showAs) {
+                    $sortIdx         = 't.last_post';
+                    $sortCJK         = 't.last_post';
+                    $useTIdx         = true;
+                    $useTCJK         = true;
                 } else {
-                    $sortIdx        = 'm.post_id';
-                    $sortCJK        = 'p.id';
-                    $useP           = true;
+                    $sortIdx         = 'm.post_id';
+                    $sortCJK         = 'p.id';
+                    $usePCJK         = true;
                 }
-                $this->sortType     = SORT_NUMERIC;
+                $this->sortType      = SORT_NUMERIC;
                 break;
         }
 
-        $joinPIdx = $joinPIdx || $joinTIdx ? 'INNER JOIN ::posts AS p ON p.id=m.post_id '   : '';
-        $joinTIdx = $joinTIdx           ? 'INNER JOIN ::topics AS t ON t.id=p.topic_id ' : '';
-        $whereIdx = empty($whereIdx)    ? '' : ' AND ' . implode(' AND ', $whereIdx);
+        $usePIdx  = $usePIdx || $useTIdx ? 'INNER JOIN ::posts AS p ON p.id=m.post_id '   : '';
+        $useTIdx  = $useTIdx             ? 'INNER JOIN ::topics AS t ON t.id=p.topic_id ' : '';
+        $whereIdx = empty($whereIdx)     ? '' : ' AND ' . implode(' AND ', $whereIdx);
 
         $this->queryIdx = "SELECT {$selectFIdx}, {$sortIdx} FROM ::search_words AS w " .
                           'INNER JOIN ::search_matches AS m ON m.word_id=w.id ' .
-                          $joinPIdx .
-                          $joinTIdx .
+                          $usePIdx .
+                          $useTIdx .
                           'WHERE w.word LIKE ?s:word' . $whereIdx;
 
-        if ($useP) {
+        if ($usePCJK) {
             $this->queryCJK = "SELECT {$selectFCJK}, {$sortCJK} FROM ::posts AS p " .
-                              ($useT ? 'INNER JOIN ::topics AS t ON t.id=p.topic_id ' : '') .
+                              ($useTCJK ? 'INNER JOIN ::topics AS t ON t.id=p.topic_id ' : '') .
                               'WHERE ' . implode(' AND ', $whereCJK);
         } else {
             $this->queryCJK = "SELECT {$selectFCJK}, {$sortCJK} FROM ::topics AS t " .
