@@ -725,6 +725,17 @@ select {
   color: #F8F4E3;
 }
 
+.f-pinfo {
+  display: none;
+}
+
+@media screen and (min-width: 50rem) {
+  .f-pinfo {
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+    display: inline;
+  }
+}
 /********/
 /* Тело */
 /********/
@@ -1802,6 +1813,11 @@ li + li .f-btn {
 
 .f-search-form .f-child6:last-child {
   padding-bottom: 0.625rem;
+}
+
+.f-post-search-info {
+  font-size: 0.875rem;
+  padding-top: 0.625rem;
 }
 
 @media screen and (min-width: 50rem) {

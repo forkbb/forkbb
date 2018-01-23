@@ -55,7 +55,7 @@ msgid "Last edit"
 msgstr "Последний раз отредактировано %1$s (%2$s)"
 
 msgid "Edited"
-msgstr "Изменено"
+msgstr "Отредактировано"
 
 msgid "Report"
 msgstr "Просигналить"

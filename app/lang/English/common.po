@@ -188,11 +188,19 @@ msgid_plural "%s Replies"
 msgstr[0] "<strong>%s</strong> Reply"
 msgstr[1] "<strong>%s</strong> Replies"
 
+msgid "%s View"
+msgid_plural "%s Views"
+msgstr[0] "<strong>%s</strong> View"
+msgstr[1] "<strong>%s</strong> Views"
+
 msgid "Pages"
 msgstr "Pages:"
 
 msgid "Page %s"
 msgstr "(Page %s)"
+
+msgid "Page %1$s of %2$s"
+msgstr "Page %1$s of %2$s ·"
 
 msgid "BBCode"
 msgstr "BBCode:"

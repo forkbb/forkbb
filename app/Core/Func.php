@@ -69,20 +69,20 @@ class Func
      * @param int $cur
      * @param string $marker
      * @param array $args
+     * @param string $info
      *
      * @return array
      */
-    public function paginate($all, $cur, $marker, array $args = [])
+    public function paginate($all, $cur, $marker, array $args = [], $info = 'Page %1$s of %2$s')
     {
         $pages = [];
         if ($all < 2) {
-            $pages[] = [null, 1, true];
+//            $pages[] = [null, 1, true];
         } else {
             if ($cur > 0) {
+                $pages[] = [\ForkBB\__($info, $cur, $all), 'info', null];
                 $cur = min(max(1, $cur), $all);
-                if ($cur === 2) {
-                    $pages[] = [$this->c->Router->link($marker, $args), 'prev', null];
-                } elseif ($cur > 2) {
+                if ($cur > 1) {
                     $pages[] = [$this->c->Router->link($marker, ['page' => $cur - 1] + $args), 'prev', null];
                 }
                 $tpl = [1 => 1];

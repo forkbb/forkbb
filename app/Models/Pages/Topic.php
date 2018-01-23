@@ -146,7 +146,7 @@ class Topic extends Page
         $this->onlinePos    = 'topic-' . $topic->id;
         $this->onlineDetail = true;
         $this->canonical    = $this->c->Router->link('Topic', ['id' => $topic->id, 'name' => \ForkBB\cens($topic->subject), 'page' => $topic->page]);
-        $this->topic        = $topic;
+        $this->model        = $topic;
         $this->posts        = $posts;
         $this->crumbs       = $this->crumbs($topic);
         $this->online       = $this->c->Online->calc($this)->info();

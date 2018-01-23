@@ -10,9 +10,9 @@ class Manager extends ManagerModel
 {
     /**
      * Создает новую модель пользователя
-     * 
+     *
      * @param array $attrs
-     * 
+     *
      * @return User
      */
     public function create(array $attrs = [])
@@ -22,38 +22,68 @@ class Manager extends ManagerModel
 
     /**
      * Получение пользователя по условию
-     * 
+     *
      * @param mixed $value
      * @param string $field
-     * 
-     * @return int|User
+     *
+     * @return mixed
      */
     public function load($value, $field = 'id')
     {
-        $user = $field === 'id' ? $this->get($value) : null;
-
-        if (! $user instanceof User) {
-            $user = $this->Load->load($value, $field);
-
-            if ($user instanceof User) {
-                $test = $this->get($user->id);
-
-                if ($test instanceof User) {
-                    return $test;
+        if (is_array($value)) {
+            $result = [];
+            if ($field === 'id') {
+                $temp = [];
+                foreach ($value as $id) {
+                    if ($this->get($id) instanceof User) {
+                        $result[$id] = $this->get($id);
+                    } else {
+                        $temp[] = $id;
+                    }
                 }
-
-                $this->set($user->id, $user);
+                $value = $temp;
             }
-        }
+            if (empty($value)) {
+                return $result;
+            }
+            foreach ($this->Load->load($value, $field) as $user) {
+                if ($user instanceof User) {
+                    if ($this->get($user->id) instanceof User) {
+                        $result[$user->id] = $this->get($user->id);
+                    } else {
+                        $result[$user->id] = $user;
+                        $this->set($user->id, $user);
+                    }
+                }
+            }
 
-        return $user;
+            return $result;
+        } else {
+            $user = $field === 'id' ? $this->get($value) : null;
+
+            if (! $user instanceof User) {
+                $user = $this->Load->load($value, $field);
+
+                if ($user instanceof User) {
+                    $test = $this->get($user->id);
+
+                    if ($test instanceof User) {
+                        return $test;
+                    }
+
+                    $this->set($user->id, $user);
+                }
+            }
+
+            return $user;
+        }
     }
 
     /**
      * Обновляет данные пользователя
      *
      * @param User $user
-     * 
+     *
      * @return User
      */
     public function update(User $user)
@@ -65,7 +95,7 @@ class Manager extends ManagerModel
      * Добавляет новую запись в таблицу пользователей
      *
      * @param User $user
-     * 
+     *
      * @return int
      */
     public function insert(User $user)

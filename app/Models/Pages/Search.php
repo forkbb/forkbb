@@ -389,9 +389,10 @@ class Search extends Page
     {
         $this->c->Lang->load('search');
 
-        $model       = $this->c->search;
-        $model->page = isset($args['page']) ? (int) $args['page'] : 1;
-        $action      = $args['action'];
+        $model        = $this->c->search;
+        $model->page  = isset($args['page']) ? (int) $args['page'] : 1;
+        $action       = $args['action'];
+        $asTopicsList = true;
         switch ($action) {
             case 'search':
                 if (1 === $model->showAs) {
@@ -407,7 +408,8 @@ class Search extends Page
                     } else {
                         $model->name  = \ForkBB\__('By both show as posts', $args['keywords'], $args['author']);
                     }
-                    //?????
+                    $list = $model->actionP($action);
+                    $asTopicsList = false;
                 }
                 $model->linkMarker = $advanced ? 'SearchAdvanced' : 'Search';;
                 $model->linkArgs   = $args;
@@ -430,14 +432,25 @@ class Search extends Page
             return $this->view(['advanced' => 'advanced'], 'GET');
         }
 
-        $this->fIndex       = 'search';
-        $this->nameTpl      = 'forum';
-        $this->onlinePos    = 'search';
-        $this->robots       = 'noindex';
-        $this->model        = $model;
-        $this->topics       = $list;
-        $this->crumbs       = $this->crumbs($model);
-        $this->showForum    = true;
+        if ($asTopicsList) {
+            $this->c->Lang->load('forum');
+
+            $this->nameTpl   = 'forum';
+            $this->topics    = $list;
+        } else {
+            $this->c->Lang->load('topic');
+
+            $this->nameTpl   = 'topic';
+            $this->posts     = $list;
+        }
+
+        $this->fIndex        = 'search';
+        $this->nameTpl       = $asTopicsList ? 'forum' : 'topic';
+        $this->onlinePos     = 'search';
+        $this->robots        = 'noindex';
+        $this->model         = $model;
+        $this->crumbs        = $this->crumbs($model);
+        $this->searchMode    = true;
 
         return $this;
     }

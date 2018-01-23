@@ -189,11 +189,20 @@ msgstr[0] "<strong>%s</strong> Ответ"
 msgstr[1] "<strong>%s</strong> Ответа"
 msgstr[2] "<strong>%s</strong> Ответов"
 
+msgid "%s View"
+msgid_plural "%s Views"
+msgstr[0] "<strong>%s</strong> Просмотр"
+msgstr[1] "<strong>%s</strong> Просмотра"
+msgstr[2] "<strong>%s</strong> Просмотров"
+
 msgid "Pages"
 msgstr "Страницы"
 
 msgid "Page %s"
 msgstr "(Страница %s)"
+
+msgid "Page %1$s of %2$s"
+msgstr "Страница %1$s из %2$s ·"
 
 msgid "BBCode"
 msgstr "BB-коды:"

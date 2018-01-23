@@ -19,21 +19,25 @@
   @endif
 @endsection
 @section ('pagination')
+  @if ($p->model->pagination)
         <nav class="f-pages">
-  @foreach ($p->model->pagination as $cur)
-    @if ($cur[2])
-          <span class="f-page active">{{ $cur[1] }}</span>
-    @elseif ($cur[1] === 'space')
+    @foreach ($p->model->pagination as $cur)
+      @if ($cur[2])
+          <a class="f-page active" href="{!! $cur[0] !!}">{{ $cur[1] }}</a>
+      @elseif ('info' === $cur[1])
+          <span class="f-pinfo">{!! $cur[0] !!}</span>
+      @elseif ('space' === $cur[1])
           <span class="f-page f-pspacer">{!! __('Spacer') !!}</span>
-    @elseif ($cur[1] === 'prev')
+      @elseif ('prev' === $cur[1])
           <a rel="prev" class="f-page f-pprev" href="{!! $cur[0] !!}">{!! __('Previous') !!}</a>
-    @elseif ($cur[1] === 'next')
+      @elseif ('next' === $cur[1])
           <a rel="next" class="f-page f-pnext" href="{!! $cur[0] !!}">{!! __('Next') !!}</a>
-    @else
+      @else
           <a class="f-page" href="{!! $cur[0] !!}">{{ $cur[1] }}</a>
-    @endif
-  @endforeach
+      @endif
+    @endforeach
         </nav>
+  @endif
 @endsection
 @extends ('layouts/main')
 @if ($forums = $p->model->subforums)
@@ -120,7 +124,7 @@
       @endif
                 </h3>
                 <p class="f-cmposter">{!! __('by') !!} {{ $topic->poster }}</p>
-      @if ($p->showForum)
+      @if ($p->searchMode)
                 <p class="f-cmforum"><a href="{!! $topic->parent->link !!}">{{ $topic->parent->forum_name }}</a></p>
       @endif
               </div>

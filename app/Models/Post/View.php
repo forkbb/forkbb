@@ -78,11 +78,7 @@ class View extends Action
      */
     public function view($arg)
     {
-        if ($arg instanceof Topic) {
-            $expanded = false;
-        } elseif ($arg instanceof Search) {
-            $expanded = true;
-        } else {
+        if (! $arg instanceof Topic && ! $arg instanceof Search) {
             throw new InvalidArgumentException('Expected Topic or Search');
         }
 
@@ -98,41 +94,87 @@ class View extends Action
                 WHERE id IN (?ai:ids)';
         $warnings = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_GROUP);
 
-        if (! $expanded) {
+        $userIds = [];
+        $result  = array_flip($arg->idsList);
+
+        if ($arg instanceof Topic) {
             $vars = [
                 ':ids' => $arg->idsList,
-                ':fields' => $this->queryFields([
-                    'p' => array_map(function($val) {return true;}, $this->c->dbMap->posts), // все поля в true
-                    'u' => array_map(function($val) {return true;}, $this->c->dbMap->users), // все поля в true
-                    'g' => array_map(function($val) {return true;}, $this->c->dbMap->groups), // все поля в true
-                ]),
             ];
-
-            $sql = 'SELECT ?p:fields
+            $sql = 'SELECT p.*
                     FROM ::posts AS p
-                    INNER JOIN ::users AS u ON u.id=p.poster_id
-                    INNER JOIN ::groups AS g ON g.g_id=u.group_id
                     WHERE p.id IN (?ai:ids)';
+            $stmt = $this->c->DB->query($sql, $vars);
+
+            while ($row = $stmt->fetch()) {
+                $post = $this->manager->create($row);
+
+                if (isset($warnings[$row['id']])) {
+                    $post->__warnings = $warnings[$row['id']];
+                }
+
+                $userIds[$post->poster_id] = true;
+
+                $result[$post->id] = $post;
+            }
         } else {
+            if ($this->c->user->isGuest) {
+                $vars = [
+                    ':ids' => $arg->idsList,
+                    ':fields' => $this->queryFields([
+                        'p'   => array_map(function($val) {return true;}, $this->c->dbMap->posts), // все поля в true
+                        't'   => array_map(function($val) {return true;}, $this->c->dbMap->topics), // все поля в true
+                    ]),
+                ];
+                $sql = 'SELECT ?p:fields
+                        FROM ::posts AS p
+                        INNER JOIN ::topics AS t ON t.id=p.topic_id
+                        WHERE p.id IN (?ai:ids)';
 
+            } else {
+                $vars = [
+                    ':ids' => $arg->idsList,
+                    ':uid' => $this->c->user->id,
+                    ':fields' => $this->queryFields([
+                        'p'   => array_map(function($val) {return true;}, $this->c->dbMap->posts), // все поля в true
+                        't'   => array_map(function($val) {return true;}, $this->c->dbMap->topics), // все поля в true
+#                        's'   => ['user_id' => 'is_subscribed'],
+                        'mof' => ['mf_mark_all_read' => true],
+                        'mot' => ['mt_last_visit' => true, 'mt_last_read' => true],
+                    ]),
+                ];
+                $sql = 'SELECT ?p:fields
+                        FROM ::posts AS p
+                        INNER JOIN ::topics AS t ON t.id=p.topic_id
+                        LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND t.forum_id=mof.fid)
+                        LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND t.id=mot.tid)
+                        WHERE p.id IN (?ai:ids)';
+#                        LEFT JOIN ::topic_subscriptions AS s ON (t.id=s.topic_id AND s.user_id=?i:uid)
+            }
+
+            $stmt = $this->c->DB->query($sql, $vars);
+
+            while ($row = $stmt->fetch()) {
+
+                $post  = $this->manager->create();
+                $topic = $this->c->topics->create();
+                $this->setData(['p' => $post, 't.s.mof.mot' => $topic], $row);
+
+                if (isset($warnings[$row['id']])) {
+                    $post->__warnings = $warnings[$row['id']];
+                }
+
+                $userIds[$post->poster_id] = true;
+
+                $result[$post->id] = $post;
+
+                if (! $this->c->topics->get($topic->id)) {
+                    $this->c->topics->set($topic->id, $topic);
+                }
+            }
         }
 
-        $stmt = $this->c->DB->query($sql, $vars);
-
-        $result = array_flip($arg->idsList);
-
-        while ($row = $stmt->fetch()) {
-            $post = $this->manager->create();
-            $user = $this->c->users->create();
-            $this->setData(['p' => $post, 'u.g' => $user], $row);
-            if (isset($warnings[$row['id']])) {
-                $post->__warnings = $warnings[$row['id']];
-            }
-            $result[$post->id] = $post;
-            if (! $this->c->users->get($user->id) instanceof User) {
-                $this->c->users->set($user->id, $user);
-            }
-        }
+        $this->c->users->load(array_keys($userIds));
 
         $offset    = ($arg->page - 1) * $this->c->user->disp_posts;
         $postCount = 0;
@@ -144,17 +186,17 @@ class View extends Action
                     $timeMax = $post->posted;
                 }
                 if ($post->id === $arg->first_post_id && $offset > 0) {
-                    $post->postNumber = 1;
+                    $post->__postNumber = 1;
                 } else {
                     ++$postCount;
-                    $post->postNumber = $offset + $postCount;
+                    $post->__postNumber = $offset + $postCount;
                 }
             }
             $arg->timeMax = $timeMax;
         } else {
             foreach ($result as $post) {
                 ++$postCount;
-                $post->postNumber = $offset + $postCount; //????
+                $post->__postNumber = $offset + $postCount; //????
             }
         }
         return $result;
