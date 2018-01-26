@@ -54,79 +54,61 @@
 @endif
     </div>
     <section class="f-main f-topic">
-@if ($p->searchMode)
-      <h2>{{ $p->model->name }}</h2>
-@else
       <h2>{{ cens($p->model->subject) }}</h2>
-@endif
-@foreach ($p->posts as $post)
-      <article id="p{!! $post->id !!}" class="clearfix f-post @if ($post->user->gender == 1) f-user-male @elseif ($post->user->gender == 2) f-user-female @endif @if ($post->user->online) f-user-online @endif @if (1 === $post->postNumber && ! $p->searchMode) f-post-first @endif">
-        <header class="f-post-header clearfix">
-  @if ($p->searchMode)
-          <h3>@if ($post->id !== $post->parent->first_post_id) {!! __('Re') !!} @endif {{ cens($post->parent->subject) }}</h3>
+@foreach ($p->posts as $id => $post)
+  @if (empty($post->id) && $iswev = ['e' => [__('Message %s was not found in the database', $id)]])
+    @include ('layouts/iswev')
   @else
+      <article id="p{!! $post->id !!}" class="clearfix f-post @if ($post->user->gender == 1) f-user-male @elseif ($post->user->gender == 2) f-user-female @endif @if ($post->user->online) f-user-online @endif @if (1 === $post->postNumber) f-post-first @endif">
+        <header class="f-post-header clearfix">
           <h3>@if ($post->postNumber > 1) {!! __('Re') !!} @endif {{ cens($p->model->subject) }}</h3>
-  @endif
           <span class="f-post-posted"><a href="{!! $post->link !!}" rel="bookmark"><time datetime="{{ utc($post->posted) }}">{{ dt($post->posted) }}</time></a></span>
-  @if ($post->edited)
+    @if ($post->edited)
           <span class="f-post-edited" title="{!! __('Last edit', $post->edited_by, dt($post->edited)) !!}">{!! __('Edited') !!}</span>
-  @endif
+    @endif
           <span class="f-post-number">#{!! $post->postNumber !!}</span>
         </header>
         <div class="f-post-body clearfix">
           <address class="f-post-left clearfix">
             <ul class="f-user-info">
-  @if ($post->showUserLink && $post->user->link)
+    @if ($post->showUserLink && $post->user->link)
               <li class="f-username"><a href="{!! $post->user->link !!}">{{ $post->user->username }}</a></li>
-  @else
+    @else
               <li class="f-username">{{ $post->user->username }}</li>
-  @endif
-  @if (! $p->searchMode && $post->showUserAvatar && $post->user->avatar)
+    @endif
+    @if ($post->showUserAvatar && $post->user->avatar)
               <li class="f-avatar">
                 <img alt="{{ $post->user->username }}" src="{!! $post->user->avatar !!}">
               </li>
-  @endif
-              <li class="f-usertitle"><span>{{ $post->user->title() }}</span></li>
-  @if (! $p->searchMode && $post->showPostCount && $post->user->num_posts)
-              <li class="f-postcount"><span>{!! __('%s post', $post->user->num_posts, num($post->user->num_posts)) !!}</span></li>
-  @endif
+    @endif
+              <li class="f-usertitle">{{ $post->user->title() }}</li>
+    @if ($post->showPostCount && $post->user->num_posts)
+              <li class="f-postcount">{!! __('%s post', $post->user->num_posts, num($post->user->num_posts)) !!}</li>
+    @endif
             </ul>
-  @if (! $p->searchMode && $post->showUserInfo)
+    @if ($post->showUserInfo)
             <ul class="f-user-info-add">
-              <li><span>{!! __('Registered:') !!} {{ dt($post->user->registered, true) }}</span></li>
-    @if ($post->user->location)
-              <li><span>{!! __('From') !!} {{ cens($post->user->location) }}</span></li>
-    @endif
-              <li><span></span></li>
+              <li>{!! __('Registered:') !!} {{ dt($post->user->registered, true) }}</li>
+      @if ($post->user->location)
+              <li>{!! __('From') !!} {{ cens($post->user->location) }}</li>
+      @endif
             </ul>
-  @endif
-  @if ($p->searchMode)
-            <ul class="f-post-search-info">
-              <li class="f-psiforum"><span>{!! __('Forum') !!}: <a href="{!! $post->parent->parent->link !!}">{{ $post->parent->parent->forum_name }}</a></span></li>
-              <li class="f-psitopic"><span>{!! __('Topic') !!}: <a href="{!! $post->parent->link !!}">{{ cens($post->parent->subject) }}</a></span></li>
-              <li class="f-psireply"><span>{!! __('%s Reply', $post->parent->num_replies, num($post->parent->num_replies)) !!}</span></li>
-    @if ($post->parent->showViews)
-              <li class="f-psireply"><span>{!! __('%s View', $post->parent->num_views, num($post->parent->num_views)) !!}</span></li>
     @endif
-            </ul>
-  @endif
           </address>
           <div class="f-post-right f-post-main">
             {!! $post->html() !!}
           </div>
-  @if (! $p->searchMode && $post->showSignature && $post->user->signature)
+    @if ($post->showSignature && $post->user->signature)
           <div class="f-post-right f-post-signature">
             <hr>
             {!! $post->user->htmlSign !!}
           </div>
-  @endif
+    @endif
         </div>
         <footer class="f-post-footer clearfix">
           <div class="f-post-left">
             <span></span>
           </div>
-  @if ($p->searchMode)
-  @else
     @if ($post->canReport || $post->canDelete || $post->canEdit || $post->canQuote)
           <div class="f-post-right clearfix">
             <ul>
@@ -145,9 +127,9 @@
             </ul>
           </div>
     @endif
-  @endif
         </footer>
       </article>
+  @endif
 @endforeach
     </section>
     <div class="f-nav-links">

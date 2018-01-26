@@ -79,8 +79,12 @@
             <div class="f-hcell f-cstats">{!! __('Stats') !!}</div>
             <div class="f-hcell f-clast">{!! __('Last post') !!}</div>
           </li>
-  @foreach ($p->topics as $topic)
-    @if ($topic->moved_to)
+  @foreach ($p->topics as $id => $topic)
+    @if (empty($topic->id) && $iswev = ['e' => [__('Topic %s was not found in the database', $id)]])
+          <li id="topic-{!! $id !!}" class="f-row">
+      @include ('layouts/iswev')
+          </li>
+    @elseif ($topic->moved_to)
           <li id="topic-{!! $topic->id !!}" class="f-row f-fredir">
             <div class="f-cell f-cmain">
               <div class="f-ficon"></div>

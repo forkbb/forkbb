@@ -132,23 +132,11 @@ msgstr "Warnings for %s"
 msgid "Quick search show_last"
 msgstr "Last posts"
 
-msgid "By keywords show as topics"
-msgstr "Topics with posts containing \'%s\'"
+msgid "Search query: %s"
+msgstr "Search query: «%s»"
 
-msgid "By keywords show as posts"
-msgstr "Posts containing \'%s\'"
-
-msgid "By user show as topics"
-msgstr "Topics with posts by %s"
-
-msgid "By user show as posts"
-msgstr "Posts by %s"
-
-msgid "By both show as topics"
-msgstr "Topics with posts containing \'%s\', by %s"
-
-msgid "By both show as posts"
-msgstr "Posts containing \'%s\', by %s"
+msgid "Search query: %1$s and Author: %2$s"
+msgstr "Search query: «%1$s» - Author: «%2$s»"
 
 msgid "No terms"
 msgstr "You have to enter at least one keyword and/or an author to search for."
@@ -179,6 +167,9 @@ msgstr "Go to post"
 
 msgid "Go to topic"
 msgstr "Go to topic"
+
+msgid "Go to forum"
+msgstr "Go to forum"
 
 msgid "Search btn"
 msgstr "Serach"

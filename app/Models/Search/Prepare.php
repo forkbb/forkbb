@@ -173,19 +173,6 @@ class Prepare extends Method
     }
 
     /**
-     * Замена в строке по массиву шаблонов
-     *
-     * @param string $str
-     * @param array $repl
-     *
-     * @return string
-     */
-    protected function repl($str, array $repl)
-    {
-        return preg_replace(array_keys($repl), array_values($repl), $str);
-    }
-
-    /**
      * Восстановление текста запроса по массиву слов
      *
      * @param array $words

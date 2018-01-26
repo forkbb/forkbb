@@ -1,48 +1,48 @@
-@if (isset($p->fIswev['i']))
+@if (! empty($iswev['i']))
     <section class="f-iswev f-info">
       <h2>Info message</h2>
       <ul>
-  @foreach ($p->fIswev['i'] as $cur)
+  @foreach ($iswev['i'] as $cur)
         <li class="f-icontent">{!! $cur !!}</li>
   @endforeach
       </ul>
     </section>
 @endif
-@if (isset($p->fIswev['s']))
+@if (! empty($iswev['s']))
     <section class="f-iswev f-success">
       <h2>Successful operation message</h2>
       <ul>
-  @foreach ($p->fIswev['s'] as $cur)
+  @foreach ($iswev['s'] as $cur)
         <li class="f-scontent">{!! $cur !!}</li>
   @endforeach
       </ul>
     </section>
 @endif
-@if (isset($p->fIswev['w']))
+@if (! empty($iswev['w']))
     <section class="f-iswev f-warning">
       <h2>Warning message</h2>
       <ul>
-  @foreach ($p->fIswev['w'] as $cur)
+  @foreach ($iswev['w'] as $cur)
         <li class="f-wcontent">{!! $cur !!}</li>
   @endforeach
       </ul>
     </section>
 @endif
-@if (isset($p->fIswev['e']))
+@if (! empty($iswev['e']))
     <section class="f-iswev f-error">
       <h2>Error message</h2>
       <ul>
-  @foreach ($p->fIswev['e'] as $cur)
+  @foreach ($iswev['e'] as $cur)
         <li class="f-econtent">{!! $cur !!}</li>
   @endforeach
       </ul>
     </section>
 @endif
-@if (isset($p->fIswev['v']))
+@if (! empty($iswev['v']))
     <section class="f-iswev f-validation">
       <h2>Validation message</h2>
       <ul>
-  @foreach ($p->fIswev['v'] as $cur)
+  @foreach ($iswev['v'] as $cur)
         <li class="f-vcontent">{!! $cur !!}</li>
   @endforeach
       </ul>

@@ -396,22 +396,17 @@ class Search extends Page
         switch ($action) {
             case 'search':
                 if (1 === $model->showAs) {
-                    if ('*' === $args['author']) {
-                        $model->name  = \ForkBB\__('By keywords show as topics', $args['keywords']);
-                    } else {
-                        $model->name  = \ForkBB\__('By both show as topics', $args['keywords'], $args['author']);
-                    }
                     $list = $model->actionT($action);
                 } else {
-                    if ('*' === $args['author']) {
-                        $model->name  = \ForkBB\__('By keywords show as posts', $args['keywords']);
-                    } else {
-                        $model->name  = \ForkBB\__('By both show as posts', $args['keywords'], $args['author']);
-                    }
                     $list = $model->actionP($action);
                     $asTopicsList = false;
                 }
-                $model->linkMarker = $advanced ? 'SearchAdvanced' : 'Search';;
+                if ('*' === $args['author']) {
+                    $model->name  = \ForkBB\__('Search query: %s', $args['keywords']);
+                } else {
+                    $model->name  = \ForkBB\__('Search query: %1$s and Author: %2$s', $args['keywords'], $args['author']);
+                }
+                $model->linkMarker = $advanced ? 'SearchAdvanced' : 'Search';
                 $model->linkArgs   = $args;
                 break;
             case 'last':
@@ -440,12 +435,11 @@ class Search extends Page
         } else {
             $this->c->Lang->load('topic');
 
-            $this->nameTpl   = 'topic';
+            $this->nameTpl   = 'topic_in_search';
             $this->posts     = $list;
         }
 
         $this->fIndex        = 'search';
-        $this->nameTpl       = $asTopicsList ? 'forum' : 'topic';
         $this->onlinePos     = 'search';
         $this->robots        = 'noindex';
         $this->model         = $model;

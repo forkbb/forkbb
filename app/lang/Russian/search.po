@@ -132,23 +132,11 @@ msgstr "Предупреждения для %s"
 msgid "Quick search show_last"
 msgstr "Последние сообщения"
 
-msgid "By keywords show as topics"
-msgstr "Ключевые слова "%s" (темы)"
+msgid "Search query: %s"
+msgstr "Запрос: «%s»"
 
-msgid "By keywords show as posts"
-msgstr "Ключевые слова "%s" (сообщения)"
-
-msgid "By user show as topics"
-msgstr "Автор %s (темы)"
-
-msgid "By user show as posts"
-msgstr "Автор %s (сообщения)"
-
-msgid "By both show as topics"
-msgstr "Ключевые слова "%s" и автор %s (темы)"
-
-msgid "By both show as posts"
-msgstr "Ключевые слова "%s" и автор %s (сообщения)"
+msgid "Search query: %1$s and Author: %2$s"
+msgstr "Запрос: «%1$s» - Автор: «%2$s»"
 
 msgid "No terms"
 msgstr "Необходимо ввести хотя бы одно ключевое слово или автора для проведения поиска."
@@ -179,6 +167,9 @@ msgstr "Перейти к сообщению"
 
 msgid "Go to topic"
 msgstr "Перейти к теме"
+
+msgid "Go to forum"
+msgstr "Перейти к разделу"
 
 msgid "Search btn"
 msgstr "Найти"

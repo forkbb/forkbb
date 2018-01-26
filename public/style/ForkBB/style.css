@@ -949,6 +949,10 @@ select {
 
 }
 
+.f-phpinfo {
+  word-break: break-all;
+}
+
 @media screen and (min-width: 36rem) {
   .f-admin dt {
     float: left;
@@ -1282,8 +1286,8 @@ select {
   opacity: 0.4;
 }
 
+.f-tpages:hover .f-page,
 .f-tpages .f-page:focus,
-.f-tpages .f-page:hover,
 .f-cmforum > a:focus,
 .f-cmforum > a:hover {
   opacity: 1;
@@ -1348,6 +1352,15 @@ select {
   text-align: right;
   padding-top: 0;
   padding-bottom: 0.625rem;
+}
+
+.f-post-footer .f-post-right .f-btn {
+  opacity: 0.4;
+}
+
+.f-post-footer .f-post-right:hover .f-btn,
+.f-post-footer .f-post-right .f-btn:focus {
+  opacity: 1;
 }
 
 .f-post-footer .f-post-left {
@@ -1498,6 +1511,7 @@ li + li .f-btn {
   .f-user-info-add {
     display: block;
     font-size: 0.875rem;
+    word-break: break-all;
   }
 
   .f-username, .f-avatar {
@@ -1816,8 +1830,26 @@ li + li .f-btn {
 }
 
 .f-post-search-info {
+  display: none;
+}
+
+.f-post-search .f-post-header > h3 {
   font-size: 0.875rem;
-  padding-top: 0.625rem;
+  font-weight: normal;
+  display: inline-block;
+/*  float: left; */
+  word-break: break-all;
+}
+
+.f-post-search .f-post-posted {
+  float: none;
+}
+
+.f-psh-topic:before,
+.f-post-search .f-post-posted:before {
+  content: "»";
+  padding-left: 0.3125rem;
+  padding-right: 0.3125rem;
 }
 
 @media screen and (min-width: 50rem) {
@@ -1841,5 +1873,12 @@ li + li .f-btn {
   .f-field-w3 + .f-field-w3,
   .f-field-w4 + .f-field-w4 {
     padding-left: 0.625rem;
+  }
+
+  .f-post-search-info {
+    display: block;
+    font-size: 0.875rem;
+    padding-top: 0.625rem;
+    word-break: break-all;
   }
 }

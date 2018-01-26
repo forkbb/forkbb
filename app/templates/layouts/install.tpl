@@ -20,7 +20,7 @@
         <p class="f-description">{!! __('Welcome') !!}</p>
       </div>
     </header>
-@if ($p->fIswev)
+@if ($iswev = $p->fIswev)
   @include ('layouts/iswev')
 @endif
 @if ($form = $p->form1)

@@ -11,7 +11,7 @@ use RuntimeException;
 class Delete extends Action
 {
     /**
-     * Удаляет тему(ы) 
+     * Удаляет тему(ы)
      *
      * @param mixed ...$args
      *
@@ -48,20 +48,20 @@ class Delete extends Action
         if (! empty($topics) + ! empty($forums) > 1) {
             throw new InvalidArgumentException('Expected only forum or topic');
         }
-        
+
         $this->c->posts->delete(...$args);
 
-        //???? подписки, опросы, предупреждения, поисковый индекс, метки посещения тем
+        //???? подписки, опросы, предупреждения, метки посещения тем
 
         if ($topics) {
             $vars = [
                 ':topics' => array_keys($topics),
             ];
-            $sql = 'DELETE FROM ::mark_of_topic 
+            $sql = 'DELETE FROM ::mark_of_topic
                     WHERE tid IN (?ai:topics)';
             $this->c->DB->exec($sql, $vars);
 
-            $sql = 'DELETE FROM ::topics 
+            $sql = 'DELETE FROM ::topics
                     WHERE id IN (?ai:topics)';
             $this->c->DB->exec($sql, $vars);
 
@@ -72,15 +72,15 @@ class Delete extends Action
             $vars = [
                 ':forums' => array_keys($forums),
             ];
-            $sql = 'DELETE FROM ::mark_of_topic 
+            $sql = 'DELETE FROM ::mark_of_topic
                     WHERE tid IN (
-                        SELECT id 
+                        SELECT id
                         FROM ::topics
                         WHERE forum_id IN (?ai:forums)
                     )';
             $this->c->DB->exec($sql, $vars);
 
-            $sql = 'DELETE FROM ::topics 
+            $sql = 'DELETE FROM ::topics
                     WHERE forum_id IN (?ai:forums)';
             $this->c->DB->exec($sql, $vars);
         }

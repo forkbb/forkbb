@@ -44,3 +44,6 @@ msgstr "Unsubscribe"
 
 msgid "Subscribe"
 msgstr "Subscribe to this forum"
+
+msgid "Topic %s was not found in the database"
+msgstr "Topic №%s was not found in the database"

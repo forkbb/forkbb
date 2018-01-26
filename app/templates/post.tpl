@@ -33,10 +33,11 @@
       </div>
     </section>
 @endif
-@if ($p->posts) 
+@if ($p->posts)
     <section class="f-view-posts">
       <h2>{!! $p->postsTitle !!}</h2>
   @foreach ($p->posts as $post)
+    @if (! empty($post->id))
       <article id="p{!! $post->id !!}" class="clearfix f-post">
         <header class="f-post-header clearfix">
           <span class="f-post-posted"><time datetime="{{ utc($post->posted) }}">{{ dt($post->posted) }}</time></span>
@@ -53,6 +54,7 @@
           </div>
         </div>
       </article>
+    @endif
   @endforeach
     </section>
 @endif

@@ -10,7 +10,7 @@ use RuntimeException;
 class Delete extends Action
 {
     /**
-     * Удаляет раздел(ы) 
+     * Удаляет раздел(ы)
      *
      * @param mixed ...$args
      *
@@ -47,7 +47,7 @@ class Delete extends Action
 
         $this->c->topics->delete(...$args);
 
-        //???? подписки, опросы, предупреждения, поисковый индекс, метки посещения тем
+        //???? подписки, опросы, предупреждения, метки посещения тем
 
         foreach ($forums as $forum) {
             $this->c->groups->Perm->reset($forum);
@@ -56,11 +56,11 @@ class Delete extends Action
         $vars = [
             ':forums' => array_keys($forums),
         ];
-        $sql = 'DELETE FROM ::mark_of_forum 
+        $sql = 'DELETE FROM ::mark_of_forum
                 WHERE fid IN (?ai:forums)';
         $this->c->DB->exec($sql, $vars);
 
-        $sql = 'DELETE FROM ::forums 
+        $sql = 'DELETE FROM ::forums
                 WHERE id IN (?ai:forums)';
         $this->c->DB->exec($sql, $vars);
     }

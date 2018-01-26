@@ -39,7 +39,7 @@
       <p class="f-ancontent">{!! $p->fAnnounce !!}</p>
     </section>
 @endif
-@if ($p->fIswev)
+@if ($iswev = $p->fIswev)
   @include ('layouts/iswev')
 @endif
 @yield ('content')

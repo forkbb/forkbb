@@ -113,3 +113,6 @@ msgstr "Информация о теме"
 
 msgid "Merge posts"
 msgstr "Соединить с предыдущим сообщением, если оно ваше"
+
+msgid "Message %s was not found in the database"
+msgstr "Сообщение №%s не найдено в базе данных"

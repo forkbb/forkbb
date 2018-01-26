@@ -44,3 +44,6 @@ msgstr "Отказаться от подписки"
 
 msgid "Subscribe"
 msgstr "Подписаться на этот раздел"
+
+msgid "Topic %s was not found in the database"
+msgstr "Тема №%s не найдена в базе данных"

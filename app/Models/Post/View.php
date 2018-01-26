@@ -186,9 +186,15 @@ class View extends Action
                     $timeMax = $post->posted;
                 }
                 if ($post->id === $arg->first_post_id && $offset > 0) {
+                    if (empty($post->id)) {
+                        continue;
+                    }
                     $post->__postNumber = 1;
                 } else {
                     ++$postCount;
+                    if (empty($post->id)) {
+                        continue;
+                    }
                     $post->__postNumber = $offset + $postCount;
                 }
             }
@@ -196,6 +202,9 @@ class View extends Action
         } else {
             foreach ($result as $post) {
                 ++$postCount;
+                if (empty($post->id)) {
+                    continue;
+                }
                 $post->__postNumber = $offset + $postCount; //????
             }
         }
