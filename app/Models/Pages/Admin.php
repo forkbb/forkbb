@@ -9,13 +9,13 @@ class Admin extends Page
 {
     /**
      * Конструктор
-     * 
+     *
      * @param Container $container
      */
     public function __construct(Container $container)
     {
         parent::__construct($container);
-        
+
         $this->aIndex    = 'index'; # string Указатель на активный пункт навигации в меню админки
         $this->fIndex    = 'admin';
         $this->onlinePos = 'admin';
@@ -35,7 +35,7 @@ class Admin extends Page
 
     /**
      * Возвращает массив ссылок с описанием для построения навигации админки
-     * 
+     *
      * @return array
      */
     protected function aNavigation()
@@ -64,7 +64,7 @@ class Admin extends Page
                 'forums'      => [$r->link('AdminForums'), \ForkBB\__('Forums')],
                 'groups'      => [$r->link('AdminGroups'), \ForkBB\__('User groups')],
                 'censoring'   => [$r->link('AdminCensoring'), \ForkBB\__('Censoring')],
-                'maintenance' => ['admin_maintenance.php', \ForkBB\__('Maintenance')]
+                'maintenance' => [$r->link('AdminMaintenance'), \ForkBB\__('Maintenance')]
             ];
         }
 
@@ -74,9 +74,9 @@ class Admin extends Page
     /**
      * Возвращает title страницы
      * $this->pageTitle
-     * 
+     *
      * @param array $titles
-     * 
+     *
      * @return string
      */
     protected function getPageTitle(array $titles = [])

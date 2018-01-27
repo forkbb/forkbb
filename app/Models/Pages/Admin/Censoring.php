@@ -76,7 +76,7 @@ class Censoring extends Admin
                 ],
             ],
             'btns'   => [
-                'sva'  => [
+                'submit' => [
                     'type'      => 'submit',
                     'value'     => \ForkBB\__('Save changes'),
                     'accesskey' => 's',

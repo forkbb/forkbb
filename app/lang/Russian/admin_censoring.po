@@ -15,9 +15,6 @@ msgstr ""
 msgid "Must enter word message"
 msgstr "Необходимо ввести слово, которое подлежит цензуре."
 
-msgid "Data updated redirect"
-msgstr "Данные изменены. Переадресация …"
-
 msgid "Word added redirect"
 msgstr "Слово добавлено. Переадресация …"
 

@@ -479,6 +479,9 @@ select {
 .f-fdiv .f-child6 {
   display: block;
   width: 100%;
+}
+
+.f-fdiv .f-child6 {
   clear: both;
 }
 

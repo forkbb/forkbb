@@ -10,9 +10,9 @@ class Manager extends ManagerModel
 {
     /**
      * Создает новую модель темы
-     * 
+     *
      * @param array $attrs
-     * 
+     *
      * @return Topic
      */
     public function create(array $attrs = [])
@@ -43,7 +43,7 @@ class Manager extends ManagerModel
      * Обновляет тему в БД
      *
      * @param Topic $topic
-     * 
+     *
      * @return Topic
      */
     public function update(Topic $topic)
@@ -55,7 +55,7 @@ class Manager extends ManagerModel
      * Добавляет новую тему в БД
      *
      * @param Topic $topic
-     * 
+     *
      * @return int
      */
     public function insert(Topic $topic)

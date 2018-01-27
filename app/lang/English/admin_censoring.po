@@ -15,9 +15,6 @@ msgstr ""
 msgid "Must enter word message"
 msgstr "You must enter a word to censor."
 
-msgid "Data updated redirect"
-msgstr "Data updated. Redirecting …"
-
 msgid "Word added redirect"
 msgstr "Censor word added. Redirecting …"
 

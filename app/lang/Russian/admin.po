@@ -102,11 +102,11 @@ msgstr "Действие"
 msgid "None"
 msgstr "Пусто"
 
-msgid "Maintenance mode"
-msgstr "режим обслуживания"
-
 msgid "No plugin message"
 msgstr "Нет плагина с именем %s в директории плагинов."
 
 msgid "Plugin failed message"
 msgstr "Загрузить плагин <strong>%s</strong> не удалось."
+
+msgid "Data updated redirect"
+msgstr "Данные изменены. Переадресация …"

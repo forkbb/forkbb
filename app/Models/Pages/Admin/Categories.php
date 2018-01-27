@@ -63,7 +63,7 @@ class Categories extends Admin
             'btns'   => [
                 'submit'  => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Submit'),
+                    'value'     => \ForkBB\__('Save changes'),
                     'accesskey' => 's',
                 ],
             ],

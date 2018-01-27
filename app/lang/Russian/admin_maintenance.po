@@ -1,0 +1,133 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+
+msgid "Maintenance head"
+msgstr "Обслуживание форума"
+
+msgid "Rebuild index head"
+msgstr "Перестройка поискового индекса"
+
+msgid "Rebuild index info"
+msgstr "Если вы добавляли, правили или удаляли сообщения вручную в базе данных или если наблюдаете проблемы с поиском, вы можете перестроить поисковый индекс. Для большей производительности включите режим обслуживания (см. выше) на время перестройки. <b>Перестройка индекса может занять продолжительное время и увеличивает загрузку сервера!</b>"
+
+msgid "Posts per cycle label"
+msgstr "Сообщений за цикл"
+
+msgid "Posts per cycle help"
+msgstr "Количество индексируемых сообщений на одной странице. Т.е. если вы введёте  300, триста сообщений будут проиндексированы и затем страница обновится. Это сделано для того, чтобы скрипт не превысил допустимое время на выполнение."
+
+msgid "Starting post label"
+msgstr "ID первого сообщения"
+
+msgid "Starting post help"
+msgstr "ID сообщения, с которого начнется перестройка. По умолчанию оно равно ID первого сообщения в базе. Как правило, вам не нужно трогать это поле."
+
+msgid "Empty index label"
+msgstr "Очищать индекс"
+
+msgid "Empty index help"
+msgstr "Включите эту опцию, если надо очистить индекс перед переиндексацией (см. ниже)."
+
+msgid "Rebuild completed info"
+msgstr "Когда процесс завершится, вы будете перенаправлены снова на эту страницу. Если захотите прервать процесс, запишите значение ID, которое получилось в конце страницы и введите ID+1 в "ID первого сообщения" когда/если захотите продолжить (галку "Очищать индекс" нужно будет снять)."
+
+msgid "Rebuild index"
+msgstr "Перестроить индекс"
+
+msgid "Rebuilding search index"
+msgstr "Перестройка поискового индекса"
+
+msgid "Rebuilding index info"
+msgstr "Перестройка индекса. Подходящее время чтобы попить кофе :-)"
+
+msgid "Rebuilding index end"
+msgstr "Перестройка индекса закончена. Переадресация &hellip;"
+
+msgid "Processed posts"
+msgstr "Обработаны сообщения с <b>%1$s</b> по <b>%2$s</b> …"
+
+msgid "Click here"
+msgstr "Кликните здесь"
+
+msgid "Javascript redirect failed"
+msgstr "Автоматическая переадресация выключена. %s чтобы продолжить …"
+
+msgid "Posts must be integer message"
+msgstr "Число сообщений за цикл должно быть положительным целым числом."
+
+msgid "Days must be integer message"
+msgstr "Число дней должно быть положительным целым числом."
+
+msgid "No old topics message"
+msgstr "Нет тем старше %s дней. Пожалуйста, уменьшите значение "Дней" и попробуйте снова."
+
+msgid "Posts pruned redirect"
+msgstr "Сообщения очищены. Переадресация..."
+
+msgid "Prune head"
+msgstr "Очистка"
+
+msgid "Prune subhead"
+msgstr "Удаление старых сообщений"
+
+msgid "Days old label"
+msgstr "Дней"
+
+msgid "Days old help"
+msgstr "Минимальный "возраст" сообщений, которые подлежат удалению. Т.е. если вы ввели 30, все темы, в которых за 30 последних дней не было ни одного сообщения, будут удалены."
+
+msgid "Prune sticky label"
+msgstr "Удалять важные темы"
+
+msgid "Prune sticky help"
+msgstr "Если включено, важные темы тоже будут удаляться."
+
+msgid "Prune from label"
+msgstr "Что чистить"
+
+msgid "All forums"
+msgstr "Все форумы"
+
+msgid "Prune from help"
+msgstr "Форум, который вы хотите почистить."
+
+msgid "Prune info"
+msgstr "Пользуйтесь с осторожностью. <b>Удалённые сообщения невозможно восстановить.</b> Для большей производительности желательно включить %s на время очистки."
+
+msgid "Confirm prune subhead"
+msgstr "Подтверждение удаления"
+
+msgid "Confirm prune info"
+msgstr "Вы действительно хотите очистить все темы старше %s дней из %s (это %s тем)."
+
+msgid "Confirm prune warn"
+msgstr "ВНИМАНИЕ! Очистка удаляет сообщения безвозвратно."
+
+msgid "Maintenance subhead"
+msgstr "Обслуживание"
+
+msgid "Maintenance mode label"
+msgstr "Включить"
+
+msgid "Maintenance mode help"
+msgstr "Если включено, форум будет доступен только для Администраторов. Может использоваться, если надо временно выключить сайт для проведения каких-то работ. <b>ВНИМАНИЕ! Не выходите с форума пока действует режим обслуживания.</b> Вы не сможете войти обратно."
+
+msgid "Maintenance message label"
+msgstr "Текст сообщения"
+
+msgid "Maintenance message help"
+msgstr "Сообщение, которое будет показываться посетителям форума пока действует режим обслуживания. Текст может содержать HTML."
+
+msgid "Default maintenance message"
+msgstr "Форум временно закрыт на обслуживание. Пожалуйста, попробуйте зайти через несколько минут."

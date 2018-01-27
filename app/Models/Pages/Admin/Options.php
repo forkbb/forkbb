@@ -86,8 +86,6 @@ class Options extends Admin
                     'o_default_email_setting' => 'required|integer|in:0,1,2',
                     'o_announcement'          => 'required|integer|in:0,1|check_empty:o_announcement_message',
                     'o_announcement_message'  => 'string:trim|max:65000 bytes',
-                    'o_maintenance'           => 'required|integer|in:0,1|check_empty:o_maintenance_message',
-                    'o_maintenance_message'   => 'string:trim|max:65000 bytes',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -109,11 +107,15 @@ class Options extends Admin
             }
 
             if ($valid) {
+                $this->c->DB->beginTransaction();
+
                 $config->save();
-                
+
+                $this->c->DB->commit();
+
                 return $this->c->Redirect->page('AdminOptions')->message('Options updated redirect');
             }
-    
+
             $this->fIswev  = $v->getErrors();
         }
 
@@ -126,13 +128,13 @@ class Options extends Admin
 
         return $this;
     }
-    
+
     /**
      * Дополнительная проверка времени online
-     * 
+     *
      * @param Validator $v
      * @param int $timeout
-     * 
+     *
      * @return int
      */
     public function vCheckTimeout(Validator $v, $timeout)
@@ -145,10 +147,10 @@ class Options extends Admin
 
     /**
      * Дополнительная проверка каталога аватарок
-     * 
+     *
      * @param Validator $v
      * @param string $dir
-     * 
+     *
      * @return string
      */
     public function vCheckDir(Validator $v, $dir)
@@ -160,11 +162,11 @@ class Options extends Admin
 
     /**
      * Дополнительная проверка на пустоту другого поля
-     * 
+     *
      * @param Validator $v
      * @param int $value
      * @param string $attr
-     * 
+     *
      * @return int
      */
     public function vCheckEmpty(Validator $v, $value, $attr)
@@ -179,7 +181,7 @@ class Options extends Admin
      * Формирует данные для формы
      *
      * @param Config $config
-     * 
+     *
      * @return array
      */
     protected function viewForm(Config $config)
@@ -298,7 +300,7 @@ class Options extends Admin
         $timestamp = time() + ($this->c->user->timezone + $this->c->user->dst) * 3600;
         $time = \ForkBB\dt($timestamp, false, $config->o_date_format, $config->o_time_format, true, true);
         $date = \ForkBB\dt($timestamp, true, $config->o_date_format, $config->o_time_format, false, true);
-    
+
         $form['sets'][] = [
             'legend' => \ForkBB\__('Timeouts subhead'),
             'fields' => [
@@ -503,7 +505,7 @@ class Options extends Admin
                     'value'  => $config->o_feed_typet,
                     'values' => [
                         0 => \ForkBB\__('No feeds'),
-                        1 => \ForkBB\__('RSS'), 
+                        1 => \ForkBB\__('RSS'),
                         2 => \ForkBB\__('Atom'),
                     ],
                     'title'  => \ForkBB\__('Default feed label'),
@@ -534,7 +536,7 @@ class Options extends Admin
                     'value'  => $config->o_report_method,
                     'values' => [
                         0 => \ForkBB\__('Internal'),
-                        1 => \ForkBB\__('By e-mail'), 
+                        1 => \ForkBB\__('By e-mail'),
                         2 => \ForkBB\__('Both'),
                     ],
                     'title'  => \ForkBB\__('Reporting method label'),
@@ -707,7 +709,7 @@ class Options extends Admin
                     'value'  => $config->o_default_email_setting,
                     'values' => [
                         0 => \ForkBB\__('Display e-mail label'),
-                        1 => \ForkBB\__('Hide allow form label'), 
+                        1 => \ForkBB\__('Hide allow form label'),
                         2 => \ForkBB\__('Hide both label'),
                     ],
                     'title'  => \ForkBB\__('E-mail default label'),
@@ -731,27 +733,6 @@ class Options extends Admin
                     'value'     => $config->o_announcement_message,
                     'title'     => \ForkBB\__('Announcement message label'),
                     'info'      => \ForkBB\__('Announcement message help'),
-                ],
-
-            ],
-        ];
-
-        $form['sets'][] = [
-            'id'     => 'Maintenance',
-            'legend' => \ForkBB\__('Maintenance subhead'),
-            'fields' => [
-                'o_maintenance' => [
-                    'type'   => 'radio',
-                    'value'  => $config->o_maintenance,
-                    'values' => $yn,
-                    'title'  => \ForkBB\__('Maintenance mode label'),
-                    'info'   => \ForkBB\__('Maintenance mode help'),
-                ],
-                'o_maintenance_message' => [
-                    'type'      => 'textarea',
-                    'value'     => $config->o_maintenance_message,
-                    'title'     => \ForkBB\__('Maintenance message label'),
-                    'info'      => \ForkBB\__('Maintenance message help'),
                 ],
 
             ],

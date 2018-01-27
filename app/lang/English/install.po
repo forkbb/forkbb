@@ -184,7 +184,7 @@ msgid "Rules "
 msgstr "Enter your rules here"
 
 msgid "Maintenance message "
-msgstr "The forums are temporarily down for maintenance. Come back later."
+msgstr "The forums are temporarily down for maintenance. Please try again in a few minutes."
 
 msgid "Test post"
 msgstr "Test topic"
