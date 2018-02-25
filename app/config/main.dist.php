@@ -80,7 +80,7 @@ return [
 
         'config'     => '@ConfigModel:init',
         'bans'       => '@ModelBanList:init',
-        'censorship' => '@ModelCensorshipList:init',
+        'censorship' => '@CensorshipModel:init',
         'stats'      => '@ModelStats:init',
         'admins'     => '@ModelAdminList:init',
         'smilies'    => '@ModelSmileyList:init',
@@ -93,6 +93,7 @@ return [
         'users'      => \ForkBB\Models\User\Manager::class,
         'groups'     => '@GroupManager:init',
         'categories' => '@CategoriesManager:init',
+        'search'     => \ForkBB\Models\Search\Model::class,
 
         'Csrf' => [
             'class'  => \ForkBB\Core\Csrf::class,
@@ -127,6 +128,7 @@ return [
         'Delete'          => \ForkBB\Models\Pages\Delete::class,
         'Rules'           => \ForkBB\Models\Pages\Rules::class,
         'Auth'            => \ForkBB\Models\Pages\Auth::class,
+        'Search'          => \ForkBB\Models\Pages\Search::class,
         'Register'        => \ForkBB\Models\Pages\Register::class,
         'Redirect'        => \ForkBB\Models\Pages\Redirect::class,
         'Maintenance'     => \ForkBB\Models\Pages\Maintenance::class,
@@ -139,6 +141,8 @@ return [
         'AdminCategories' => \ForkBB\Models\Pages\Admin\Categories::class,
         'AdminForums'     => \ForkBB\Models\Pages\Admin\Forums::class,
         'AdminGroups'     => \ForkBB\Models\Pages\Admin\Groups::class,
+        'AdminCensoring'  => \ForkBB\Models\Pages\Admin\Censoring::class,
+        'AdminMaintenance' => \ForkBB\Models\Pages\Admin\Maintenance::class,
 
         'ConfigModel'     => \ForkBB\Models\Config\Model::class,
         'ConfigModelLoad' => \ForkBB\Models\Config\Load::class,
@@ -152,8 +156,10 @@ return [
         'BanListDelete'   => \ForkBB\Models\BanList\Delete::class,
         'BanListIsBanned' => \ForkBB\Models\BanList\IsBanned::class,
 
-        'ModelCensorshipList' => \ForkBB\Models\CensorshipList::class,
-        'CensorshipListLoad' => \ForkBB\Models\CensorshipList\Load::class,
+        'CensorshipModel'        => \ForkBB\Models\Censorship\Model::class,
+        'CensorshipModelRefresh' => \ForkBB\Models\Censorship\Refresh::class,
+        'CensorshipModelLoad'    => \ForkBB\Models\Censorship\Load::class,
+        'CensorshipModelSave'    => \ForkBB\Models\Censorship\Save::class,
 
         'ModelStats'          => \ForkBB\Models\Stats::class,
         'StatsLoad' => \ForkBB\Models\Stats\Load::class,
@@ -191,12 +197,15 @@ return [
         'TopicManagerLoad'   => \ForkBB\Models\Topic\Load::class,
         'TopicManagerSave'   => \ForkBB\Models\Topic\Save::class,
         'TopicManagerDelete' => \ForkBB\Models\Topic\Delete::class,
+        'TopicManagerView'   => \ForkBB\Models\Topic\View::class,
 
         'PostModel'               => \ForkBB\Models\Post\Model::class,
         'PostManagerLoad'         => \ForkBB\Models\Post\Load::class,
         'PostManagerSave'         => \ForkBB\Models\Post\Save::class,
         'PostManagerDelete'       => \ForkBB\Models\Post\Delete::class,
         'PostManagerPreviousPost' => \ForkBB\Models\Post\PreviousPost::class,
+        'PostManagerView'         => \ForkBB\Models\Post\View::class,
+        'PostManagerRebuildIndex' => \ForkBB\Models\Post\RebuildIndex::class,
 
         'GroupModel'         => \ForkBB\Models\Group\Model::class,
         'GroupManager'       => \ForkBB\Models\Group\Manager::class,
@@ -205,5 +214,13 @@ return [
         'GroupManagerPerm'   => \ForkBB\Models\Group\Perm::class,
 
         'CategoriesManager' => \ForkBB\Models\Categories\Manager::class,
+
+        'SearchModelActionP' => \ForkBB\Models\Search\ActionP::class,
+        'SearchModelActionT' => \ForkBB\Models\Search\ActionT::class,
+        'SearchModelDelete'  => \ForkBB\Models\Search\Delete::class,
+        'SearchModelIndex'   => \ForkBB\Models\Search\Index::class,
+        'SearchModelTruncateIndex'   => \ForkBB\Models\Search\TruncateIndex::class,
+        'SearchModelPrepare' => \ForkBB\Models\Search\Prepare::class,
+        'SearchModelExecute' => \ForkBB\Models\Search\Execute::class,
     ],
 ];
