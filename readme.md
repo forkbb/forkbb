@@ -1,19 +1,18 @@
-# ForkBB 0.0.0 Pre-Alpha Readme
+# ForkBB rev 1 Pre-Alpha Readme
 
 ## About
 
-ForkBB is an open source forum application.
+ForkBB is an open source forum application. The project is based on [FluxBB_by_Visman](https://github.com/MioVisman/FluxBB_by_Visman)
+
+## Note
+
+**Do not use in production.** Many functions of the forum are not implemented.
+No: user profiles, moderator functions, private messages, voting, subscriptions, rss, plugins/extensions system.
 
 ## Requirements
 
-* A webserver
 * PHP 5.6.x or 7.x.x
-* A database such as MySQL 4.1.2(?) or later, PostgreSQL 7.0(?) or later, or SQLite 2(?)
-
-## Recommendations
-
-* Make use of a PHP accelerator such as APC or XCache
-* Make sure PHP has the zlib module installed to allow ForkBB to gzip output
+* A database such as MySQL 5.5.3 or later (_Drivers for other databases are not realized now_)
 
 ## Links
 
