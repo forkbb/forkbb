@@ -3,4 +3,5 @@
 /app/config/_*
 /app/cache/**/*.php
 /app/cache/**/*.lock
+/app/Core/DBold
 /public/img/avatars/*

@@ -3,7 +3,7 @@
     "description": "The ForkBB is an open source forum application.",
     "homepage": "https://github.com/forkbb",
     "type": "project",
-    "license": "GPL 2.0",
+    "license": "MIT",
     "authors": [
         {
             "name": "Visman",

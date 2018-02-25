@@ -17,3 +17,7 @@ No: user profiles, moderator functions, private messages, voting, subscriptions,
 ## Links
 
 * Development: https://github.com/forkbb/forkbb
+
+## License
+
+This project is under MIT license. Please see the [license file](LICENSE) for details.
