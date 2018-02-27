@@ -6,7 +6,7 @@ use ForkBB\Core\Container;
 
 /**
  * Инициализирует другие функции (передача контейнера)
- * 
+ *
  * @param Container $c
  */
 function _init(Container $c)
@@ -18,10 +18,10 @@ function _init(Container $c)
 
 /**
  * Транслирует строку с подстановкой аргументов
- * 
+ *
  * @param Container|string $arg
  * @param mixed ...$args
- * 
+ *
  * @return string
  */
 function __($arg, ...$args)
@@ -69,15 +69,15 @@ function e($arg)
 
 /**
  * Цензура
- * 
+ *
  * @param Container|string $arg
- * 
+ *
  * @return string
  */
 function cens($arg)
 {
     static $c;
-    
+
     if (empty($c)) {
         $c = $arg;
         return;
@@ -116,7 +116,7 @@ function num($number, $decimals = 0)
 function dt($arg, $dateOnly = false, $dateFormat = null, $timeFormat = null, $timeOnly = false, $noText = false)
 {
     static $c;
-    
+
     if (empty($c)) {
         $c = $arg;
         return;
@@ -159,9 +159,9 @@ function dt($arg, $dateOnly = false, $dateFormat = null, $timeFormat = null, $ti
 
 /**
  * Преобразует timestamp в YYYY-MM-DDTHH:mm:ss.sssZ
- * 
+ *
  * @param int $timestamp
- * 
+ *
  * @return string
  */
 function utc($timestamp)
@@ -184,5 +184,5 @@ function size($size)
         $size /= 1024;
     }
 
-    return __('%s ' . $units[$i], round($size, 2));
+    return __('%s ' . $units[$i], sprintf('%.2f', $size));
 }
