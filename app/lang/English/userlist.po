@@ -1,0 +1,42 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "User find legend"
+msgstr "Find and sort users"
+
+msgid "User search info"
+msgstr "Enter a username to search for and/or a user group to filter by. The username field can be left blank. Use the wildcard character * for partial matches."
+
+msgid "User sort info"
+msgstr "Sort users by name, date registered or number of posts and in ascending/descending order."
+
+msgid "User group"
+msgstr "User group"
+
+msgid "No of posts"
+msgstr "Number of posts"
+
+msgid "All users"
+msgstr "All"
+
+msgid "User_list"
+msgstr "User list"
+
+msgid "%s<span> post,</span>"
+msgid_plural "%s<span> posts,</span>"
+msgstr[0] "%s<span> post,</span>"
+msgstr[1] "%s<span> posts,</span>"
+
+msgid "<span>registered: </span>%s"
+msgstr "<span>registered: </span>%s"

@@ -203,6 +203,16 @@ class Groups extends Admin
                     'token'                  => 'token:' . $marker,
                     'g_title'                => 'required|string:trim|max:50|not_in:' . implode(',', $reserve),
                     'g_user_title'           => 'string:trim|max:50',
+                ])->addAliases([
+                ])->addArguments([
+                    'token' => $vars,
+                ])->addMessages([
+                    'g_title.required' => 'You must enter a group title',
+                    'g_title.not_in'   => 'Title already exists',
+                ]);
+
+            if ($group->g_id !== $this->c->GROUP_ADMIN) {
+                $v->addRules([
                     'g_promote_next_group'   => 'integer|min:0|not_in:' . $notNext,
                     'g_promote_min_posts'    => 'integer|min:0|max:9999999999',
                     'g_moderator'            => 'integer|in:0,1',
@@ -228,13 +238,8 @@ class Groups extends Admin
                     'g_search_flood'         => 'integer|min:0|max:999999',
                     'g_email_flood'          => 'integer|min:0|max:999999',
                     'g_report_flood'         => 'integer|min:0|max:999999',
-                ])->addAliases([
-                ])->addArguments([
-                    'token' => $vars,
-                ])->addMessages([
-                    'g_title.required' => 'You must enter a group title',
-                    'g_title.not_in'   => 'Title already exists',
                 ]);
+            }
 
             if ($v->validation($_POST)) {
                 return $this->save($group, $baseGroup, $v->getData());
@@ -268,7 +273,7 @@ class Groups extends Admin
             $data['g_mod_promote_users']    = 0;
             $data['g_mod_ban_users']        = 0;
         }
-        if ($data['g_promote_next_group'] * $data['g_promote_min_posts'] == 0) {
+        if (isset($data['g_promote_next_group']) && $data['g_promote_next_group'] * $data['g_promote_min_posts'] == 0) {
             $data['g_promote_next_group'] = 0;
             $data['g_promote_min_posts']  = 0;
         }
