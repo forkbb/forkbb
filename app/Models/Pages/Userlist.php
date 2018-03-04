@@ -25,10 +25,10 @@ class Userlist extends Page
 
         $v = $this->c->Validator->reset()
             ->addRules([
-                'sort'  => 'string|in:username,registered,num_posts',
+                'sort'  => 'string|in:username,registered' . ($this->user->showPostCount ? ',num_posts' : ''),
                 'dir'   => 'string|in:ASC,DESC',
                 'group' => 'integer|min:-1|max:9999999999|not_in:0,' . $this->c->GROUP_GUEST,
-                'name'  => 'string:trim|min:1|max:25',
+                'name'  => 'string:trim|min:1|max:25' . ($this->user->searchUsers ? '' : '|in:*'),
             ]);
 
         $error = true;
@@ -71,10 +71,39 @@ class Userlist extends Page
             $this->startNum = ($page - 1) * $this->c->config->o_disp_users;
             $ids = \array_slice($ids, $this->startNum, $this->c->config->o_disp_users);
             $this->userList = $this->c->users->load($ids);
+
+            $links = [];
+            $vars = ['page' => $page];
+
+            if (4 === $count) {
+                $vars['group'] = -1;
+                $vars['name']  = '*';
+            } else {
+                $vars['group'] = $v->group;
+                $vars['name']  = $v->name;
+            }
+
+            $this->active = 0;
+
+            foreach (['username', 'num_posts', 'registered'] as $i => $sort) {
+                $vars['sort'] = $sort;
+
+                foreach (['ASC', 'DESC'] as $j => $dir) {
+                    $vars['dir'] = $dir;
+                    $links[$i * 2 + $j] = $this->c->Router->link('Userlist', $vars);
+
+                    if ($v->sort === $sort && $v->dir === $dir) {
+                        $this->active = $i * 2 + $j;
+                    }
+                }
+            }
+
+            $this->links = $links;
         } else {
             $this->startNum = 0;
             $this->userList = null;
             // ни чего не найдено
+            $this->links = [null, null, null, null, null, null];
         }
 
         $this->fIndex       = 'userlist';

@@ -49,7 +49,7 @@ class Model extends DataModel
     protected function getisAdmMod()
     {
         return $this->group_id === $this->c->GROUP_ADMIN
-            || '1' == $this->g_moderator;
+            || 1 == $this->g_moderator;
     }
 
     /**
@@ -63,7 +63,7 @@ class Model extends DataModel
      */
     public function isModerator(BaseModel $model)
     {
-        if ('1' != $this->g_moderator) {
+        if (1 != $this->g_moderator) {
             return false;
         }
 
@@ -83,7 +83,7 @@ class Model extends DataModel
      */
     protected function getlogged()
     {
-        return empty($this->a['logged']) ? time() : $this->a['logged'];
+        return empty($this->a['logged']) ? \time() : $this->a['logged'];
     }
 
     /**
@@ -105,11 +105,11 @@ class Model extends DataModel
     {
         $langs = $this->c->Func->getLangs();
 
-        $lang = $this->isGuest || empty($this->a['language']) || ! in_array($this->a['language'], $langs)
+        $lang = $this->isGuest || empty($this->a['language']) || ! \in_array($this->a['language'], $langs)
             ? $this->c->config->o_default_lang
             : $this->a['language'];
 
-        if (in_array($lang, $langs)) {
+        if (\in_array($lang, $langs)) {
             return $lang;
         } else {
             return isset($langs[0]) ? $langs[0] : 'English';
@@ -125,11 +125,11 @@ class Model extends DataModel
     {
         $styles = $this->c->Func->getStyles();
 
-        $style = $this->isGuest || empty($this->a['style']) || ! in_array($this->a['style'], $styles)
+        $style = $this->isGuest || empty($this->a['style']) || ! \in_array($this->a['style'], $styles)
             ? $this->c->config->o_default_style
             : $this->a['style'];
 
-        if (in_array($style, $styles)) {
+        if (\in_array($style, $styles)) {
             return $style;
         } else {
             return isset($styles[0]) ? $styles[0] : 'ForkBB';
@@ -157,12 +157,12 @@ class Model extends DataModel
      */
     protected function getavatar()
     {
-        $filetypes = array('jpg', 'gif', 'png');
+        $filetypes = ['jpg', 'gif', 'png'];
 
         foreach ($filetypes as $type) {
             $path = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$this->id}.{$type}";
 
-            if (file_exists($path) && getimagesize($path)) {
+            if (\file_exists($path) && \getimagesize($path)) {
                 return $this->c->PUBLIC_URL . "{$this->c->config->o_avatars_dir}/{$this->id}.{$type}";
             }
         }
@@ -217,7 +217,17 @@ class Model extends DataModel
      */
     protected function getviewUsers()
     {
-        return $this->g_view_users == '1' || $this->isAdmin;
+        return 1 == $this->g_view_users || $this->isAdmin;
+    }
+
+    /**
+     * Статус поиска пользователей
+     *
+     * @return bool
+     */
+    protected function getsearchUsers()
+    {
+        return 1 == $this->g_search_users || $this->isAdmin;
     }
 
     /**
@@ -227,7 +237,7 @@ class Model extends DataModel
      */
     protected function getshowAvatar()
     {
-        return $this->c->config->o_avatars == '1' && $this->show_avatars == '1';
+        return '1' == $this->c->config->o_avatars && 1 == $this->show_avatars;
     }
 
     /**
@@ -237,7 +247,7 @@ class Model extends DataModel
      */
     protected function getshowUserInfo()
     {
-        return $this->c->config->o_show_user_info == '1';
+        return '1' == $this->c->config->o_show_user_info;
     }
 
     /**
@@ -247,7 +257,7 @@ class Model extends DataModel
      */
     protected function getshowSignature()
     {
-        return $this->c->config->o_signatures == '1' && $this->show_sig == '1';
+        return '1' == $this->c->config->o_signatures && 1 == $this->show_sig;
     }
 
     /**
@@ -257,6 +267,6 @@ class Model extends DataModel
      */
     protected function getshowPostCount()
     {
-        return $this->c->config->o_show_post_count == '1' || $this->isAdmMod;
+        return '1' == $this->c->config->o_show_post_count || $this->isAdmMod;
     }
 }

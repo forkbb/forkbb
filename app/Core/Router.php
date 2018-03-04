@@ -95,7 +95,7 @@ class Router
     {
         if (\is_string($url)
             && \parse_url($url, PHP_URL_HOST) === $this->host
-            && ($route = $this->route('GET', \rawurldecode(\parse_url($url, PHP_URL_PATH))))
+            && ($route = $this->route('GET', \rawurldecode(\parse_url($url, \PHP_URL_PATH))))
             && $route[0] === self::OK
         ) {
             if (isset($route[3])) {
@@ -297,7 +297,7 @@ class Router
      */
     protected function parse($route)
     {
-        $parts = \preg_split('%([\[\]{}/])%', $route, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+        $parts = \preg_split('%([\[\]{}/])%', $route, -1, \PREG_SPLIT_NO_EMPTY | \PREG_SPLIT_DELIM_CAPTURE);
 
         $s = 1;
         $base = $parts[0];

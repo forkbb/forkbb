@@ -57,26 +57,26 @@
           <li class="f-row f-thead" value="{{ $p->startNum }}">
             <span class="f-hcell f-cusername">
               <span class="f-hc-table">
-                <span class="f-hc-tasc">▲</span>
+                <span class="f-hc-tasc"><a @if (0 === $p->active) class="active" @endif href="{!! $p->links[0] !!}">▲</a></span>
                 <span class="f-hc-tname">{!! __('Username') !!}</span>
-                <span class="f-hc-tdesc">▼</span>
+                <span class="f-hc-tdesc"><a @if (1 === $p->active) class="active" @endif href="{!! $p->links[1] !!}">▼</a></span>
               </span>
             </span>
             <span class="f-hcell f-ctitle">{!! __('Title') !!}</span>
     @if ($p->user->showPostCount)
             <span class="f-hcell f-cnumposts">
               <span class="f-hc-table">
-                <span class="f-hc-tasc">▲</span>
+                <span class="f-hc-tasc"><a @if (2 === $p->active) class="active" @endif href="{!! $p->links[2] !!}">▲</a></span>
                 <span class="f-hc-tname">{!! __('Posts') !!}</span>
-                <span class="f-hc-tdesc">▼</span>
+                <span class="f-hc-tdesc"><a @if (3 === $p->active) class="active" @endif href="{!! $p->links[3] !!}">▼</a></span>
               </span>
             </span>
     @endif
             <span class="f-hcell f-cdatereg">
               <span class="f-hc-table">
-                <span class="f-hc-tasc">▲</span>
+                <span class="f-hc-tasc"><a @if (4 === $p->active) class="active" @endif href="{!! $p->links[4] !!}">▲</a></span>
                 <span class="f-hc-tname">{!! __('Registered') !!}</span>
-                <span class="f-hc-tdesc">▼</span>
+                <span class="f-hc-tdesc"><a @if (5 === $p->active) class="active" @endif href="{!! $p->links[5] !!}">▼</a></span>
               </span>
             </span>
           </li>

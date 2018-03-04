@@ -1953,9 +1953,28 @@ li + li .f-btn {
 
   .f-hc-table .f-hc-tasc,
   .f-hc-table .f-hc-tdesc {
-    font-size: 0.625rem;
+    font-size: 0.75rem;
     display: block;
     text-align: center;
+  }
+
+  .f-hc-table .f-hc-tname {
+    padding: 0.125rem 0;
+    display: block;
+  }
+
+  .f-hc-tasc > a,
+  .f-hc-tdesc > a {
+/*    display: block; */
+    padding: 0 0.25rem;
+    border: 0;
+  }
+
+  .f-hc-tasc > a.active,
+  .f-hc-tdesc > a.active {
+/*    background-color: #814A00;
+    color: #F8F4E3; */
+    border: 0.0625rem solid #814A00;
   }
 
   .f-ulist .f-cell > b,
