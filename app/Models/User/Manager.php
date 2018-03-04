@@ -30,8 +30,8 @@ class Manager extends ManagerModel
      */
     public function load($value, $field = 'id')
     {
-        if (is_array($value)) {
-            $result = [];
+        if (\is_array($value)) {
+            $result = \array_flip($value); // ???? а если пользователь не найдется?
             if ($field === 'id') {
                 $temp = [];
                 foreach ($value as $id) {

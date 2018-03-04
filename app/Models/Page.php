@@ -37,6 +37,7 @@ class Page extends Model
         if ($container->config->o_announcement == '1') {
             $this->fAnnounce = $container->config->o_announcement_message;
         }
+        $this->user         = $this->c->user; // передача текущего юзера в шаблон
     }
 
     /**
@@ -55,40 +56,41 @@ class Page extends Model
      */
     protected function fNavigation()
     {
-        $user = $this->c->user;
         $r = $this->c->Router;
 
         $nav = [
             'index' => [$r->link('Index'), \ForkBB\__('Index')]
         ];
 
-        if ($user->g_read_board == '1' && $user->g_view_users == '1') {
+        if ($this->user->g_read_board == '1' && $this->user->viewUsers) {
             $nav['userlist'] = [$r->link('Userlist'), \ForkBB\__('User list')];
         }
 
-        if ($this->c->config->o_rules == '1' && (! $user->isGuest || $user->g_read_board == '1' || $this->c->config->o_regs_allow == '1')) {
+        if ($this->c->config->o_rules == '1'
+            && (! $this->user->isGuest || $this->user->g_read_board == '1' || $this->c->config->o_regs_allow == '1')
+        ) {
             $nav['rules'] = [$r->link('Rules'), \ForkBB\__('Rules')];
         }
 
-        if ($user->g_read_board == '1' && $user->g_search == '1') {
+        if ($this->user->g_read_board == '1' && $this->user->g_search == '1') {
             $nav['search'] = [$r->link('Search'), \ForkBB\__('Search')];
         }
 
-        if ($user->isGuest) {
+        if ($this->user->isGuest) {
             $nav['register'] = [$r->link('Register'), \ForkBB\__('Register')];
             $nav['login'] = [$r->link('Login'), \ForkBB\__('Login')];
         } else {
             $nav['profile'] = [$r->link('User', [
-                'id' => $user->id,
-                'name' => $user->username,
+                'id'   => $this->user->id,
+                'name' => $this->user->username,
             ]), \ForkBB\__('Profile')];
             // New PMS
-            if ($this->c->config->o_pms_enabled == '1' && ($user->isAdmin || $user->messages_new > 0)) { //????
+            if ($this->c->config->o_pms_enabled == '1' && ($this->user->isAdmin || $this->user->messages_new > 0)) { //????
                 $nav['pmsnew'] = ['pmsnew.php', \ForkBB\__('PM')]; //'<li id="nav"'.((PUN_ACTIVE_PAGE == 'pms_new' || $user['messages_new'] > 0) ? ' class="isactive"' : '').'><a href="pmsnew.php">'.\ForkBB\__('PM').(($user['messages_new'] > 0) ? ' (<span'.((empty($this->c->config->o_pms_flasher) || PUN_ACTIVE_PAGE == 'pms_new') ? '' : ' class="remflasher"' ).'>'.$user['messages_new'].'</span>)' : '').'</a></li>';
             }
             // New PMS
 
-            if ($user->isAdmMod) {
+            if ($this->user->isAdmMod) {
                 $nav['admin'] = [$r->link('Admin'), \ForkBB\__('Admin')];
             }
 
@@ -97,10 +99,10 @@ class Page extends Model
             ]), \ForkBB\__('Logout')];
         }
 
-        if ($user->g_read_board == '1' && $this->c->config->o_additional_navlinks != '') {
+        if ($this->user->g_read_board == '1' && $this->c->config->o_additional_navlinks != '') {
             // position|name|link[|id]\n
-            if (preg_match_all('%^(\d+)\|([^\|\n\r]+)\|([^\|\n\r]+)(?:\|([^\|\n\r]+))?$%m', $this->c->config->o_additional_navlinks . "\n", $matches)) {
-               $k = count($matches[0]);
+            if (\preg_match_all('%^(\d+)\|([^\|\n\r]+)\|([^\|\n\r]+)(?:\|([^\|\n\r]+))?$%m', $this->c->config->o_additional_navlinks . "\n", $matches)) {
+               $k = \count($matches[0]);
                for ($i = 0; $i < $k; ++$i) {
                    if (empty($matches[4][$i])) {
                        $matches[4][$i] = 'extra' . $i;
@@ -108,10 +110,10 @@ class Page extends Model
                    if (isset($nav[$matches[4][$i]])) {
                        $nav[$matches[4][$i]] = [$matches[3][$i], $matches[2][$i]];
                    } else {
-                       $nav = array_merge(
-                           array_slice($nav, 0, $matches[1][$i]),
+                       $nav = \array_merge(
+                           \array_slice($nav, 0, $matches[1][$i]),
                            [$matches[4][$i] => [$matches[3][$i], $matches[2][$i]]],
-                           array_slice($nav, $matches[1][$i])
+                           \array_slice($nav, $matches[1][$i])
                        );
                    }
                }
@@ -125,7 +127,7 @@ class Page extends Model
      */
     protected function maintenance()
     {
-        if ($this->c->config->o_maintenance == '1' && $this->c->user->isAdmin) {
+        if ($this->c->config->o_maintenance == '1' && $this->user->isAdmin) {
             $this->a['fIswev']['w']['maintenance'] = \ForkBB\__('Maintenance mode enabled', $this->c->Router->link('AdminMaintenance'));
         }
     }
@@ -144,7 +146,7 @@ class Page extends Model
             $titles = $this->titles;
         }
         $titles[] = $this->c->config->o_board_title;
-        return implode(\ForkBB\__('Title separator'), $titles);
+        return \implode(\ForkBB\__('Title separator'), $titles);
     }
 
     /**
@@ -155,7 +157,7 @@ class Page extends Model
      */
     protected function getpageHeaders()
     {
-        $headers = [['link', 'rel="stylesheet" type="text/css" href="' . $this->c->PUBLIC_URL . '/style/' . $this->c->user->style . '/style.css' . '"']];
+        $headers = [['link', 'rel="stylesheet" type="text/css" href="' . $this->c->PUBLIC_URL . '/style/' . $this->user->style . '/style.css' . '"']];
         if ($this->canonical) {
             $headers[] = ['link', 'rel="canonical" href="' . $this->canonical . '"'];
         }
@@ -219,7 +221,7 @@ class Page extends Model
             $status = 'HTTP/1.0 ';
 
             if (isset($_SERVER['SERVER_PROTOCOL'])
-                && preg_match('%^HTTP/([12]\.[01])%', $_SERVER['SERVER_PROTOCOL'], $match)
+                && \preg_match('%^HTTP/([12]\.[01])%', $_SERVER['SERVER_PROTOCOL'], $match)
             ) {
                 $status = 'HTTP/' . $match[1] . ' ';
             }
@@ -254,10 +256,10 @@ class Page extends Model
         if (empty($this->a['fIswev'])) {
             $this->a['fIswev'] = [];
         }
-        if (isset($val[0]) && isset($val[1]) && is_string($val[0]) && is_string($val[1])) {
+        if (isset($val[0]) && isset($val[1]) && \is_string($val[0]) && \is_string($val[1])) {
             $this->a['fIswev'][$val[0]][] = $val[1];
         } else {
-            $this->a['fIswev'] = array_merge_recursive((array) $this->a['fIswev'], $val);
+            $this->a['fIswev'] = \array_merge_recursive((array) $this->a['fIswev'], $val);
         }
     }
 }

@@ -40,7 +40,6 @@ class Admin extends Page
      */
     protected function aNavigation()
     {
-        $user = $this->c->user;
         $r = $this->c->Router;
 
         $nav = [
@@ -49,14 +48,14 @@ class Admin extends Page
                 'users' => ['admin_users.php', \ForkBB\__('Users')],
             ],
         ];
-        if ($user->isAdmin || $user->g_mod_ban_users == '1') {
+        if ($this->user->isAdmin || $this->user->g_mod_ban_users == '1') {
             $nav['Moderator menu']['bans'] = ['admin_bans.php', \ForkBB\__('Bans')];
         }
-        if ($user->isAdmin || $this->c->config->o_report_method == '0' || $this->c->config->o_report_method == '2') {
+        if ($this->user->isAdmin || $this->c->config->o_report_method == '0' || $this->c->config->o_report_method == '2') {
             $nav['Moderator menu']['reports'] = ['admin_reports.php', \ForkBB\__('Reports')];
         }
 
-        if ($user->isAdmin) {
+        if ($this->user->isAdmin) {
             $nav['Admin menu'] = [
                 'options'     => [$r->link('AdminOptions'), \ForkBB\__('Admin options')],
                 'permissions' => [$r->link('AdminPermissions'), \ForkBB\__('Permissions')],

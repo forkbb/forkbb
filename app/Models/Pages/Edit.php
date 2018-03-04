@@ -81,8 +81,7 @@ class Edit extends Page
         $this->c->DB->beginTransaction();
 
         $now         = time();
-        $user        = $this->c->user;
-        $executive   = $user->isAdmin || $user->isModerator($post);
+        $executive   = $this->user->isAdmin || $this->user->isModerator($post);
         $topic       = $post->parent;
         $editSubject = $post->id === $topic->first_post_id;
         $calcPost    = false;
@@ -93,7 +92,7 @@ class Edit extends Page
         if ($post->message !== $v->message) {
             $post->message       = $v->message;
             $post->edited        = $now;
-            $post->edited_by     = $user->username;
+            $post->edited_by     = $this->user->username;
             $calcPost            = true;
             if ($post->id === $topic->last_post_id) {
                 $calcTopic       = true;
@@ -114,7 +113,7 @@ class Edit extends Page
             if ($topic->subject !== $v->subject) {
                 $topic->subject  = $v->subject;
                 $post->edited    = $now;
-                $post->edited_by = $user->username;
+                $post->edited_by = $this->user->username;
                 $calcForum       = true;
             }
             // выделение темы
@@ -144,8 +143,8 @@ class Edit extends Page
 
         // антифлуд
         if ($calcPost || $calcForum) {
-            $user->last_post = $now; //????
-            $this->c->users->update($user);
+            $this->user->last_post = $now; //????
+            $this->c->users->update($this->user);
         }
 
         $this->c->search->index($post, 'edit');

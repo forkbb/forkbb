@@ -54,11 +54,11 @@ class Model extends DataModel
 
     /**
      * Статус модератора для указанной модели
-     * 
+     *
      * @param BaseModel $model
-     * 
+     *
      * @throws RuntimeException
-     * 
+     *
      * @return bool
      */
     public function isModerator(BaseModel $model)
@@ -66,7 +66,7 @@ class Model extends DataModel
         if ('1' != $this->g_moderator) {
             return false;
         }
-        
+
         while (! $model instanceof Forum) {
             $model = $model->parent;
             if (! $model instanceof BaseModel) {
@@ -202,11 +202,61 @@ class Model extends DataModel
 
     /**
      * HTML код подписи
-     * 
+     *
      * @return string
      */
     protected function gethtmlSign()
     {
         return $this->c->censorship->censor($this->c->Parser->parseSignature($this->signature));
+    }
+
+    /**
+     * Статус видимости профилей пользователей
+     *
+     * @return bool
+     */
+    protected function getviewUsers()
+    {
+        return $this->g_view_users == '1' || $this->isAdmin;
+    }
+
+    /**
+     * Статус показа аватаров
+     *
+     * @return bool
+     */
+    protected function getshowAvatar()
+    {
+        return $this->c->config->o_avatars == '1' && $this->show_avatars == '1';
+    }
+
+    /**
+     * Статус показа информации пользователя
+     *
+     * @return bool
+     */
+    protected function getshowUserInfo()
+    {
+        return $this->c->config->o_show_user_info == '1';
+    }
+
+    /**
+     * Статус показа подписи
+     *
+     * @return bool
+     */
+    protected function getshowSignature()
+    {
+        return $this->c->config->o_signatures == '1' && $this->show_sig == '1';
+    }
+
+    /**
+     * Статус показа количества сообщений
+     *
+     * @return bool
+     */
+    protected function getshowPostCount()
+    {
+        return $this->c->config->o_show_post_count == '1' || $this->isAdmMod;
     }
 }

@@ -56,56 +56,6 @@ class Model extends DataModel
         return $user;
     }
 
-    /**
-     * Статус видимости ссылки на профиль пользователя
-     *
-     * @return bool
-     */
-    protected function getshowUserLink()
-    {
-        return $this->c->user->g_view_users == '1';
-    }
-
-    /**
-     * Статус показа аватаров
-     *
-     * @return bool
-     */
-    protected function getshowUserAvatar()
-    {
-        return $this->c->config->o_avatars == '1' && $this->c->user->show_avatars == '1';
-    }
-
-    /**
-     * Статус показа информации пользователя
-     *
-     * @return bool
-     */
-    protected function getshowUserInfo()
-    {
-        return $this->c->config->o_show_user_info == '1';
-    }
-
-    /**
-     * Статус показа подписи
-     *
-     * @return bool
-     */
-    protected function getshowSignature()
-    {
-        return $this->c->config->o_signatures == '1' && $this->c->user->show_sig == '1';
-    }
-
-    /**
-     * Статус показа количества сообщений
-     *
-     * @return bool
-     */
-    protected function getshowPostCount()
-    {
-        return $this->showUserInfo && $this->c->config->o_show_post_count == '1';
-    }
-
     protected function getcanReport()
     {
         return ! $this->c->user->isAdmin && ! $this->c->user->isGuest;

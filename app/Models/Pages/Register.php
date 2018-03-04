@@ -147,7 +147,7 @@ class Register extends Page
         $user->language        = $user->language; //????
         $user->style           = $user->style;    //????
         $user->registered      = time();
-        $user->registration_ip = $this->c->user->ip;
+        $user->registration_ip = $this->user->ip;
 
         $newUserId = $this->c->users->insert($user);
 
@@ -198,7 +198,7 @@ class Register extends Page
                 $isSent = $this->c->Mail
                     ->reset()
                     ->setFolder($this->c->DIR_LANG)
-                    ->setLanguage($this->c->user->language)
+                    ->setLanguage($this->user->language)
                     ->setTo($v->email)
                     ->setFrom($this->c->config->o_webmaster_email, \ForkBB\__('Mailer', $this->c->config->o_board_title))
                     ->setTpl('welcome.tpl', $tplData)

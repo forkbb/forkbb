@@ -17,7 +17,7 @@ class Index extends Page
         $this->c->Lang->load('subforums');
 
         // крайний пользователь // ???? может в stats переместить?
-        $this->c->stats->userLast = $this->c->user->g_view_users == '1'
+        $this->c->stats->userLast = $this->user->viewUsers
             ? [ $this->c->Router->link('User', [
                     'id'   => $this->c->stats->userLast['id'],
                     'name' => $this->c->stats->userLast['username'],

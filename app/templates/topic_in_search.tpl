@@ -59,7 +59,7 @@
         <div class="f-post-body clearfix">
           <address class="f-post-left clearfix">
             <ul class="f-user-info">
-    @if ($post->showUserLink && $post->user->link)
+    @if ($p->user->viewUsers && $post->user->link)
               <li class="f-username"><a href="{!! $post->user->link !!}">{{ $post->user->username }}</a></li>
     @else
               <li class="f-username">{{ $post->user->username }}</li>

@@ -7,7 +7,7 @@
               <dt>{!! __('Server load label') !!}</dt>
               <dd>{!! __('Server load data', $p->serverLoad, $p->numOnline) !!}</dd>
             </dl>
-@if ($p->isAdmin)
+@if ($p->user->isAdmin)
             <dl>
               <dt>{!! __('Environment label') !!}</dt>
               <dd>

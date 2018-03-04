@@ -26,15 +26,15 @@ class View extends Dirk
      * Compile Statements that start with "@"
      *
      * @param  string  $value
-     * 
+     *
      * @return mixed
      */
     protected function compileStatements($value)
     {
-        return preg_replace_callback(
+        return \preg_replace_callback(
             '/[ \t]*+\B@(\w+)(?: [ \t]*( \( ( (?>[^()]+) | (?2) )* \) ) )?/x',
             function($match) {
-                if (method_exists($this, $method = 'compile' . ucfirst($match[1]))) {
+                if (\method_exists($this, $method = 'compile' . \ucfirst($match[1]))) {
                     return isset($match[2]) ? $this->$method($match[2]) : $this->$method('');
                 } else {
                     return $match[0];
@@ -66,13 +66,13 @@ use function \ForkBB\size;
 ?>
 EOD;
 
-        if (strpos($value, '<!-- inline -->') === false) {
+        if (\strpos($value, '<!-- inline -->') === false) {
             return $perfix . $value;
         }
-        return $perfix . preg_replace_callback(
+        return $perfix . \preg_replace_callback(
             '%<!-- inline -->([^<]*(?:<(?!!-- endinline -->)[^<]*)*+)(?:<!-- endinline -->)?%',
             function ($matches) {
-                return preg_replace('%\h*\R\s*%', '', $matches[1]);
+                return \preg_replace('%\h*\R\s*%', '', $matches[1]);
             },
             $value
         );
@@ -88,7 +88,7 @@ EOD;
     public function rendering(Page $p)
     {
         foreach ($p->httpHeaders as $header) {
-            header($header);
+            \header($header);
         }
 
         if (null === $p->nameTpl) {
@@ -98,12 +98,12 @@ EOD;
         $p->prepare();
 
         $this->templates[] = $p->nameTpl;
-        while ($_name = array_shift($this->templates)) {
+        while ($_name = \array_shift($this->templates)) {
             $this->beginBlock('content');
             foreach ($this->composers as $_cname => $_cdata) {
-                if (preg_match($_cname, $_name)) {
+                if (\preg_match($_cname, $_name)) {
                     foreach ($_cdata as $_citem) {
-                        extract((is_callable($_citem) ? $_citem($this) : $_citem) ?: []);
+                        \extract((\is_callable($_citem) ? $_citem($this) : $_citem) ?: []);
                     }
                 }
             }

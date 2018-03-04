@@ -126,10 +126,9 @@ class Post extends Page
         $this->c->DB->beginTransaction();
 
         $now       = time();
-        $user      = $this->c->user;
-        $username  = $user->isGuest ? $v->username : $user->username;
+        $username  = $this->user->isGuest ? $v->username : $this->user->username;
         $merge     = false;
-        $executive = $user->isAdmin || $user->isModerator($model);
+        $executive = $this->user->isAdmin || $this->user->isModerator($model);
 
         // подготовка к объединению/сохранению сообщения
         if (null === $v->subject) {
@@ -137,7 +136,7 @@ class Post extends Page
             $forum       = $model->parent;
             $topic       = $model;
 
-            if (! $user->isGuest && $topic->last_poster === $username) {
+            if (! $this->user->isGuest && $topic->last_poster === $username) {
                 if ($executive) {
                     if ($v->merge_post) {
                         $merge = true;
@@ -192,8 +191,8 @@ class Post extends Page
             $post = $this->c->posts->create();
 
             $post->poster       = $username;
-            $post->poster_id    = $this->c->user->id;
-            $post->poster_ip    = $this->c->user->ip;
+            $post->poster_id    = $this->user->id;
+            $post->poster_ip    = $this->user->ip;
             $post->poster_email = $v->email;
             $post->message      = $v->message; //?????
             $post->hide_smilies = $v->hide_smilies ? 1 : 0;
@@ -201,7 +200,7 @@ class Post extends Page
             $post->posted       = $now;
 #           $post->edited       =
 #           $post->edited_by    =
-            $post->user_agent   = $this->c->user->userAgent;
+            $post->user_agent   = $this->user->userAgent;
             $post->topic_id     = $topic->id;
 
             $this->c->posts->insert($post);
@@ -217,15 +216,15 @@ class Post extends Page
         $this->c->forums->update($forum->calcStat());
 
         // обновление данных текущего пользователя
-        if (! $merge && ! $user->isGuest && $forum->no_sum_mess != '1') {
-            $user->num_posts = $user->num_posts + 1;
+        if (! $merge && ! $this->user->isGuest && $forum->no_sum_mess != '1') {
+            $this->user->num_posts = $this->user->num_posts + 1;
 
-            if ($user->g_promote_next_group != '0' && $user->num_posts >= $user->g_promote_min_posts) {
-                $user->group_id = $user->g_promote_next_group;
+            if ($this->user->g_promote_next_group != '0' && $this->user->num_posts >= $this->user->g_promote_min_posts) {
+                $this->user->group_id = $this->user->g_promote_next_group;
             }
         }
-        $user->last_post = $now;
-        $this->c->users->update($user);
+        $this->user->last_post = $now;
+        $this->c->users->update($this->user);
 
         if ($merge) {
             $this->c->search->index($lastPost, 'merge');

@@ -57,19 +57,23 @@
           <li class="f-row f-thead" value="{{ $p->startNum }}">
             <span class="f-hcell f-cusername">{!! __('Username') !!}</span>
             <span class="f-hcell f-ctitle">{!! __('Title') !!}</span>
+    @if ($p->user->showPostCount)
             <span class="f-hcell f-cnumposts">{!! __('Posts') !!}</span>
+    @endif
             <span class="f-hcell f-cdatereg">{!! __('Registered') !!}</span>
           </li>
   @foreach ($p->userList as $user)
           <li class="f-row">
-    @if ($p->showUserLink && $user->link)
+    @if ($p->user->viewUsers && $user->link)
             <span class="f-cell f-cusername"><a href="{!! $user->link !!}">{{ $user->username }}</a></span>
     @else
             <span class="f-cell f-cusername">{{ $user->username }}</span>
     @endif
-            <span class="f-cell f-ctitle"><span>(</span>{{ $user->title() }}<span>),</span></span>
-            <span class="f-cell f-cnumposts">{!! __('%s<span> post,</span>', $user->num_posts, num($user->num_posts)) !!}</span>
-            <span class="f-cell f-cdatereg">{!! __('<span>registered: </span>%s', dt($user->registered, true)) !!}</span>
+            <span class="f-cell f-ctitle"><span>(</span><i>{{ $user->title() }}</i><span>),</span></span>
+    @if ($p->user->showPostCount)
+            <span class="f-cell f-cnumposts">{!! __('<b>%s</b><span> post,</span>', $user->num_posts, num($user->num_posts)) !!}</span>
+    @endif
+            <span class="f-cell f-cdatereg">{!! __('<span>registered: </span><b>%s</b>', dt($user->registered, true)) !!}</span>
           </li>
   @endforeach
         </ol>

@@ -71,22 +71,22 @@
         <div class="f-post-body clearfix">
           <address class="f-post-left clearfix">
             <ul class="f-user-info">
-    @if ($post->showUserLink && $post->user->link)
+    @if ($p->user->viewUsers && $post->user->link)
               <li class="f-username"><a href="{!! $post->user->link !!}">{{ $post->user->username }}</a></li>
     @else
               <li class="f-username">{{ $post->user->username }}</li>
     @endif
-    @if ($post->showUserAvatar && $post->user->avatar)
+    @if ($p->user->showAvatar && $post->user->avatar)
               <li class="f-avatar">
                 <img alt="{{ $post->user->username }}" src="{!! $post->user->avatar !!}">
               </li>
     @endif
               <li class="f-usertitle">{{ $post->user->title() }}</li>
-    @if ($post->showPostCount && $post->user->num_posts)
+    @if ($p->user->showUserInfo && $p->user->showPostCount && $post->user->num_posts)
               <li class="f-postcount">{!! __('%s post', $post->user->num_posts, num($post->user->num_posts)) !!}</li>
     @endif
             </ul>
-    @if ($post->showUserInfo)
+    @if ($p->user->showUserInfo)
             <ul class="f-user-info-add">
               <li>{!! __('Registered:') !!} {{ dt($post->user->registered, true) }}</li>
       @if ($post->user->location)
@@ -98,7 +98,7 @@
           <div class="f-post-right f-post-main">
             {!! $post->html() !!}
           </div>
-    @if ($post->showSignature && $post->user->signature)
+    @if ($p->user->showSignature && $post->user->signature)
           <div class="f-post-right f-post-signature">
             <hr>
             {!! $post->user->htmlSign !!}

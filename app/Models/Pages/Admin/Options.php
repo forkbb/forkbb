@@ -297,7 +297,7 @@ class Options extends Admin
             ],
         ];
 
-        $timestamp = time() + ($this->c->user->timezone + $this->c->user->dst) * 3600;
+        $timestamp = time() + ($this->user->timezone + $this->user->dst) * 3600;
         $time = \ForkBB\dt($timestamp, false, $config->o_date_format, $config->o_time_format, true, true);
         $date = \ForkBB\dt($timestamp, true, $config->o_date_format, $config->o_time_format, false, true);
 

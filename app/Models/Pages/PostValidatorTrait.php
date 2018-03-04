@@ -5,14 +5,14 @@ namespace ForkBB\Models\Pages;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Model;
 
-trait PostValidatorTrait 
+trait PostValidatorTrait
 {
     /**
      * Дополнительная проверка email
-     * 
+     *
      * @param Validator $v
      * @param string $email
-     * 
+     *
      * @return string
      */
     public function vCheckEmail(Validator $v, $email)
@@ -29,10 +29,10 @@ trait PostValidatorTrait
 
     /**
      * Дополнительная проверка username
-     * 
+     *
      * @param Validator $v
      * @param string $username
-     * 
+     *
      * @return string
      */
     public function vCheckUsername(Validator $v, $username)
@@ -55,10 +55,10 @@ trait PostValidatorTrait
 
     /**
      * Дополнительная проверка subject
-     * 
+     *
      * @param Validator $v
      * @param string $subject
-     * 
+     *
      * @return string
      */
     public function vCheckSubject(Validator $v, $subject, $attr, $executive)
@@ -74,7 +74,7 @@ trait PostValidatorTrait
         ) {
             $v->addError('All caps subject');
         } elseif (! $executive
-            && $this->c->user->g_post_links != '1'
+            && $this->user->g_post_links != '1'
             && preg_match('%https?://|www\.%ui', $subject)
         ) {
             $v->addError('You can not post links in subject');
@@ -84,10 +84,10 @@ trait PostValidatorTrait
 
     /**
      * Дополнительная проверка message
-     * 
+     *
      * @param Validator $v
      * @param string $message
-     * 
+     *
      * @return string
      */
     public function vCheckMessage(Validator $v, $message, $attr, $executive)
@@ -108,7 +108,7 @@ trait PostValidatorTrait
 
             foreach($this->c->Parser->getErrors() as $error) {
                 $v->addError($error);
-            } 
+            }
         }
 
         return $message;
@@ -116,10 +116,10 @@ trait PostValidatorTrait
 
     /**
      * Проверка времени ограничения флуда
-     * 
+     *
      * @param Validator $v
      * @param null|string $submit
-     * 
+     *
      * @return null|string
      */
     public function vCheckTimeout(Validator $v, $submit)
@@ -128,11 +128,10 @@ trait PostValidatorTrait
             return null;
         }
 
-        $user = $this->c->user;
-        $time = time() - (int) $user->last_post;
+        $time = time() - (int) $this->user->last_post;
 
-        if ($time < $user->g_post_flood) {
-            $v->addError(\ForkBB\__('Flood start', $user->g_post_flood, $user->g_post_flood - $time), 'e');
+        if ($time < $this->user->g_post_flood) {
+            $v->addError(\ForkBB\__('Flood start', $this->user->g_post_flood, $this->user->g_post_flood - $time), 'e');
         }
 
         return $submit;
@@ -140,18 +139,18 @@ trait PostValidatorTrait
 
     /**
      * Подготовка валидатора к проверке данных из формы создания темы/сообщения
-     * 
+     *
      * @param Model $model
      * @param string $marker
      * @param array $args
      * @param bool $editPost
      * @param bool $editSubject
-     * 
+     *
      * @return Validator
      */
     protected function messageValidator(Model $model, $marker, array $args, $editPost = false, $editSubject = false)
     {
-        if ($this->c->user->isGuest) {
+        if ($this->user->isGuest) {
             $ruleEmail    = ('1' == $this->c->config->p_force_guest_email ? 'required|' : '') . 'string:trim,lower|email|check_email';
             $ruleUsername = 'required|string:trim,spaces|min:2|max:25|login|check_username';
         } else {
@@ -165,7 +164,7 @@ trait PostValidatorTrait
             $ruleSubject = 'absent';
         }
 
-        if ($this->c->user->isAdmin || $this->c->user->isModerator($model)) {
+        if ($this->user->isAdmin || $this->user->isModerator($model)) {
             if ($editSubject) {
                 $ruleStickTopic = 'checkbox';
                 $ruleStickFP    = 'checkbox';
@@ -197,7 +196,7 @@ trait PostValidatorTrait
         } else {
             $ruleHideSmilies = 'absent';
         }
-            
+
         $v = $this->c->Validator->reset()
             ->addValidators([
                 'check_email'    => [$this, 'vCheckEmail'],

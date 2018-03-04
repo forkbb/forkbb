@@ -8,7 +8,7 @@ class Statistics extends Admin
 {
     /**
      * phpinfo
-     * 
+     *
      * @return Page
      */
     public function info()
@@ -21,22 +21,22 @@ class Statistics extends Admin
         ob_start();
         phpinfo();
         $page = ob_get_clean();
-        
+
         if (preg_match('%<body[^>]*>(.*)</body[^>]*>%is', $page, $matches)) {
             $phpinfo = $matches[1];
             if (preg_match('%<style[^>]*>(.*?)</style[^>]*>%is', $page, $matches)) {
                 $style = preg_replace_callback(
-                    '%(\S[^{]*)({[^}]+})%', 
+                    '%(\S[^{]*)({[^}]+})%',
                     function($match) {
                         $result = array_map(
                             function($val) {
                                 $val = str_replace('body', '.f-phpinfo-div', $val, $count);
                                 return $count ? $val : '.f-phpinfo-div ' . $val;
-                            }, 
+                            },
                             explode(',', $match[1])
                         );
                         return implode(', ', $result) . $match[2];
-                    }, 
+                    },
                     $matches[1]
                 );
                 $this->addStyle('phpinfo', $style);
@@ -48,13 +48,13 @@ class Statistics extends Admin
         $this->nameTpl = 'admin/phpinfo';
         $this->titles  = 'phpinfo()';
         $this->phpinfo = $phpinfo;
-        
+
         return $this;
     }
 
     /**
      * Подготавливает данные для шаблона
-     * 
+     *
      * @return Page
      */
     public function statistics()
@@ -63,7 +63,6 @@ class Statistics extends Admin
 
         $this->nameTpl  = 'admin/statistics';
         $this->titles   = \ForkBB\__('Server statistics');
-        $this->isAdmin  = $this->c->user->isAdmin;
         $this->linkInfo = $this->c->Router->link('AdminInfo');
 
         // Get the server load averages (if possible)

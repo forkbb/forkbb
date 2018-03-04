@@ -1946,6 +1946,12 @@ li + li .f-btn {
     display: none;
   }
 
+  .f-ulist .f-cell > b,
+  .f-ulist .f-cell > i {
+    font-style: normal;
+    font-weight: normal;
+  }
+
   .f-ulist .f-cusername {
     padding: 0.625rem 0 0.625rem 0.625rem;
     width: 50%;

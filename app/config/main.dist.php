@@ -128,6 +128,7 @@ return [
         'Delete'          => \ForkBB\Models\Pages\Delete::class,
         'Rules'           => \ForkBB\Models\Pages\Rules::class,
         'Auth'            => \ForkBB\Models\Pages\Auth::class,
+        'Userlist'        => \ForkBB\Models\Pages\Userlist::class,
         'Search'          => \ForkBB\Models\Pages\Search::class,
         'Register'        => \ForkBB\Models\Pages\Register::class,
         'Redirect'        => \ForkBB\Models\Pages\Redirect::class,
@@ -183,6 +184,7 @@ return [
         'UserManagerIsUniqueName'     => \ForkBB\Models\User\IsUniqueName::class,
         'UserManagerUsersNumber'      => \ForkBB\Models\User\UsersNumber::class,
         'UserManagerPromote'          => \ForkBB\Models\User\Promote::class,
+        'UserManagerFilter'           => \ForkBB\Models\User\Filter::class,
 
         'ForumModel'           => \ForkBB\Models\Forum\Model::class,
         'ForumModelCalcStat'   => \ForkBB\Models\Forum\CalcStat::class,

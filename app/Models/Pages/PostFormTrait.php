@@ -46,7 +46,7 @@ trait PostFormTrait
         ];
 
         $fieldset = [];
-        if ($this->c->user->isGuest) {
+        if ($this->user->isGuest) {
             $fieldset['username'] = [
                 'dl'        => 'w1',
                 'type'      => 'text',
@@ -88,7 +88,7 @@ trait PostFormTrait
             'value'    => isset($vars['message']) ? $vars['message'] : null,
             'bb'       => [
                 ['link', \ForkBB\__('BBCode'), \ForkBB\__($this->c->config->p_message_bbcode == '1' ? 'on' : 'off')],
-                ['link', \ForkBB\__('url tag'), \ForkBB\__($this->c->config->p_message_bbcode == '1' && $this->c->user->g_post_links == '1' ? 'on' : 'off')],
+                ['link', \ForkBB\__('url tag'), \ForkBB\__($this->c->config->p_message_bbcode == '1' && $this->user->g_post_links == '1' ? 'on' : 'off')],
                 ['link', \ForkBB\__('img tag'), \ForkBB\__($this->c->config->p_message_bbcode == '1' && $this->c->config->p_message_img_tag == '1' ? 'on' : 'off')],
                 ['link', \ForkBB\__('Smilies'), \ForkBB\__($this->c->config->o_smilies == '1' ? 'on' : 'off')],
             ],
@@ -100,7 +100,7 @@ trait PostFormTrait
         $autofocus = null;
 
         $fieldset = [];
-        if ($this->c->user->isAdmin || $this->c->user->isModerator($model)) {
+        if ($this->user->isAdmin || $this->user->isModerator($model)) {
             if ($editSubject) {
                 $fieldset['stick_topic'] = [
                     'type'    => 'checkbox',

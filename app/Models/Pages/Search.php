@@ -290,8 +290,7 @@ class Search extends Page
     public function vCheckQuery(Validator $v, $query, $method)
     {
         if (empty($v->getErrors())) {
-            $user  = $this->c->user;
-            $flood = $user->last_search && time() - $user->last_search < $user->g_search_flood;
+            $flood = $this->user->last_search && time() - $this->user->last_search < $this->user->g_search_flood;
 
             if ('POST' !== $method || ! $flood) {
                 $search = $this->c->search;
@@ -307,16 +306,16 @@ class Search extends Page
                             $v->addError('No hits', 'i');
                         }
 
-                        if ($search->queryNoCache && $user->g_search_flood) {
-                            $user->last_search = time();
-                            $this->c->users->update($user); //?????
+                        if ($search->queryNoCache && $this->user->g_search_flood) {
+                            $this->user->last_search = time();
+                            $this->c->users->update($this->user); //?????
                         }
                     }
                 }
             }
 
             if ($flood) {
-                $v->addError(\ForkBB\__('Search flood', $user->g_search_flood, $user->g_search_flood - time() + $user->last_search));
+                $v->addError(\ForkBB\__('Search flood', $this->user->g_search_flood, $this->user->g_search_flood - time() + $this->user->last_search));
             }
         }
 

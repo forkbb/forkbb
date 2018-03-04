@@ -29,8 +29,8 @@ class Auth extends Page
         }
 
         $this->c->Cookie->deleteUser();
-        $this->c->Online->delete($this->c->user);
-        $this->c->users->updateLastVisit($this->c->user);
+        $this->c->Online->delete($this->user);
+        $this->c->users->updateLastVisit($this->user);
 
         $this->c->Lang->load('auth');
         return $this->c->Redirect->page('Index')->message('Logout redirect');
@@ -124,9 +124,9 @@ class Auth extends Page
                 // перезаписываем ip админа и модератора - Visman
                 if ($user->isAdmMod
                     && $this->c->config->o_check_ip
-                    && $user->registration_ip != $this->c->user->ip
+                    && $user->registration_ip != $this->user->ip
                 ) {
-                    $user->registration_ip = $this->c->user->ip;
+                    $user->registration_ip = $this->user->ip;
                 }
                 // сбросить запрос на смену кодовой фразы
                 if (! empty($user->activate_string) && 'p' === $user->activate_string{0}) {
@@ -135,7 +135,7 @@ class Auth extends Page
                 // изменения юзера в базе
                 $this->c->users->update($user);
 
-                $this->c->Online->delete($this->c->user);
+                $this->c->Online->delete($this->user);
                 $this->c->Cookie->setUser($user, (bool) $v->save);
             }
         }

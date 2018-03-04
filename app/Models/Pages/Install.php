@@ -75,8 +75,8 @@ class Install extends Page
                 ]);
 
             if ($v->validation($_POST)) {
-                $this->c->user->language = $v->installlang;
-                $changeLang              = (bool) $v->changelang;
+                $this->user->language = $v->installlang;
+                $changeLang           = (bool) $v->changelang;
             }
         }
         $v = null;
@@ -184,7 +184,7 @@ class Install extends Page
                             'installlang' => [
                                 'type'    => 'select',
                                 'options' => array_combine($langs, $langs),
-                                'value'   => $this->c->user->language,
+                                'value'   => $this->user->language,
                                 'title'   => \ForkBB\__('Install language'),
                                 'info'    => \ForkBB\__('Choose install language info'),
                             ],
@@ -204,7 +204,7 @@ class Install extends Page
             'action' => $this->c->Router->link('Install'),
             'hidden' => [
                 'token'       => $this->c->Csrf->create('Install'),
-                'installlang' => $this->c->user->language,
+                'installlang' => $this->user->language,
             ],
             'sets'   => [
                 [
@@ -346,14 +346,14 @@ class Install extends Page
                         'defaultlang' => [
                             'type'      => 'select',
                             'options'   => array_combine($langs, $langs),
-                            'value'     => $v ? $v->defaultlang : $this->c->user->language,
+                            'value'     => $v ? $v->defaultlang : $this->user->language,
                             'title'     => \ForkBB\__('Default language'),
                             'required'  => true,
                         ],
                         'defaultstyle' => [
                             'type'      => 'select',
                             'options'   => array_combine($styles, $styles),
-                            'value'     => $v ? $v->defaultstyle : $this->c->user->style,
+                            'value'     => $v ? $v->defaultstyle : $this->user->style,
                             'title'     => \ForkBB\__('Default style'),
                             'required'  => true,
                         ],

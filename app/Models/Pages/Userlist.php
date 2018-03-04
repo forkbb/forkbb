@@ -52,7 +52,6 @@ class Userlist extends Page
 //        $this->form         = $form;
         $this->crumbs       = $this->crumbs([$this->c->Router->link('Userlist'), \ForkBB\__('User_list')]);
         $this->pagination   = $this->c->Func->paginate($pages, $page, 'Userlist');
-        $this->showUserLink = $this->c->config->o_show_user_info == '1';
 
         return $this;
     }

@@ -241,7 +241,7 @@ msgid "Post count label"
 msgstr "User post count"
 
 msgid "Post count help"
-msgstr "Show the number of posts a user has made (affects topic view, profile and user list)."
+msgstr "Show the number of posts a user has made (affects topic view, profile and user list). Does not affect administrators and moderators."
 
 msgid "Smilies label"
 msgstr "Smilies in posts"
