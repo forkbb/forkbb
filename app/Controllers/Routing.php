@@ -77,7 +77,7 @@ class Routing
             // юзеры
             if ($user->g_view_users == '1') {
                 // список пользователей
-                $r->add('GET', '/userlist[/{page:[1-9]\d*}]', 'Userlist:view', 'Userlist');
+                $r->add('GET', '/userlist[/{sort:username|registered|num_posts}/{dir:ASC|DESC}/{group:\-1|[1-9]\d*}/{name}][/{page:[1-9]\d*}]', 'Userlist:view', 'Userlist');
                 // юзеры
                 $r->add('GET', '/user/{id:[1-9]\d*}/{name}', 'Profile:view', 'User'); //????
             }
@@ -127,10 +127,10 @@ class Routing
         }
 
         $uri = $_SERVER['REQUEST_URI'];
-        if (($pos = strpos($uri, '?')) !== false) {
-            $uri = substr($uri, 0, $pos);
+        if (($pos = \strpos($uri, '?')) !== false) {
+            $uri = \substr($uri, 0, $pos);
         }
-        $uri    = rawurldecode($uri);
+        $uri    = \rawurldecode($uri);
         $method = $_SERVER['REQUEST_METHOD'];
 
         $route = $r->route($method, $uri);
@@ -138,7 +138,7 @@ class Routing
         switch ($route[0]) {
             case $r::OK:
                 // ... 200 OK
-                list($page, $action) = explode(':', $route[1], 2);
+                list($page, $action) = \explode(':', $route[1], 2);
                 $page = $this->c->$page->$action($route[2], $method);
                 break;
             case $r::NOT_FOUND:
@@ -151,7 +151,7 @@ class Routing
                 break;
             case $r::METHOD_NOT_ALLOWED:
                 // ... 405 Method Not Allowed
-                $page = $this->c->Message->message('Bad request', true, 405, ['Allow: ' . implode(',', $route[1])]);
+                $page = $this->c->Message->message('Bad request', true, 405, ['Allow: ' . \implode(',', $route[1])]);
                 break;
             case $r::NOT_IMPLEMENTED:
                 // ... 501 Not implemented

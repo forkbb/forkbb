@@ -55,12 +55,30 @@
       <div class="f-ulist">
         <ol class="f-table">
           <li class="f-row f-thead" value="{{ $p->startNum }}">
-            <span class="f-hcell f-cusername">{!! __('Username') !!}</span>
+            <span class="f-hcell f-cusername">
+              <span class="f-hc-table">
+                <span class="f-hc-tasc">▲</span>
+                <span class="f-hc-tname">{!! __('Username') !!}</span>
+                <span class="f-hc-tdesc">▼</span>
+              </span>
+            </span>
             <span class="f-hcell f-ctitle">{!! __('Title') !!}</span>
     @if ($p->user->showPostCount)
-            <span class="f-hcell f-cnumposts">{!! __('Posts') !!}</span>
+            <span class="f-hcell f-cnumposts">
+              <span class="f-hc-table">
+                <span class="f-hc-tasc">▲</span>
+                <span class="f-hc-tname">{!! __('Posts') !!}</span>
+                <span class="f-hc-tdesc">▼</span>
+              </span>
+            </span>
     @endif
-            <span class="f-hcell f-cdatereg">{!! __('Registered') !!}</span>
+            <span class="f-hcell f-cdatereg">
+              <span class="f-hc-table">
+                <span class="f-hc-tasc">▲</span>
+                <span class="f-hc-tname">{!! __('Registered') !!}</span>
+                <span class="f-hc-tdesc">▼</span>
+              </span>
+            </span>
           </li>
   @foreach ($p->userList as $user)
           <li class="f-row">

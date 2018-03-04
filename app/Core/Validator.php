@@ -144,7 +144,7 @@ class Validator
      */
     public function addValidators(array $validators)
     {
-        $this->validators = array_replace($this->validators, $validators);
+        $this->validators = \array_replace($this->validators, $validators);
         return $this;
     }
 
@@ -162,13 +162,13 @@ class Validator
         foreach ($list as $field => $raw) {
             $suffix = null;
             // правило для элементов массива
-            if (strpos($field, '.') > 0) {
-                list($field, $suffix) = explode('.', $field, 2);
+            if (\strpos($field, '.') > 0) {
+                list($field, $suffix) = \explode('.', $field, 2);
             }
             $rules = [];
             // перебор правил для текущего поля
-            foreach (explode('|', $raw) as $rule) { //???? нужно экоанирование для разделителей
-                 $tmp = explode(':', $rule, 2);
+            foreach (\explode('|', $raw) as $rule) { //???? нужно экоанирование для разделителей
+                 $tmp = \explode(':', $rule, 2);
                  if (empty($this->validators[$tmp[0]])) {
                      throw new RuntimeException($tmp[0] . ' validator not found');
                  }
@@ -193,7 +193,7 @@ class Validator
      */
     public function addArguments(array $arguments)
     {
-        $this->arguments = array_replace($this->arguments, $arguments);
+        $this->arguments = \array_replace($this->arguments, $arguments);
         return $this;
     }
 
@@ -206,7 +206,7 @@ class Validator
      */
     public function addMessages(array $messages)
     {
-        $this->messages = array_replace($this->messages, $messages);
+        $this->messages = \array_replace($this->messages, $messages);
         return $this;
     }
 
@@ -219,7 +219,7 @@ class Validator
      */
     public function addAliases(array $aliases)
     {
-        $this->aliases = array_replace($this->aliases, $aliases);
+        $this->aliases = \array_replace($this->aliases, $aliases);
         return $this;
     }
 
@@ -318,7 +318,7 @@ class Validator
 
             $value = $this->validators[$validator]($this, $value, $attr, $this->getArguments($field, $validator));
 
-            array_pop($this->curData);
+            \array_pop($this->curData);
 
             if (null !== $this->error) {
                 break;
@@ -337,7 +337,7 @@ class Validator
      */
     public function addError($error, $type = 'v')
     {
-        if (empty($vars = end($this->curData))) {
+        if (empty($vars = \end($this->curData))) {
             throw new RuntimeException('The array of variables is empty');
         }
 
@@ -347,7 +347,7 @@ class Validator
             return;
         }
 
-        extract($vars);
+        \extract($vars);
 
         // псевдоним имени поля
         $alias = isset($this->aliases[$field]) ? $this->aliases[$field] : $field;
@@ -358,7 +358,7 @@ class Validator
         } elseif (isset($this->messages[$field])) {
             $error = $this->messages[$field];
         }
-        if (is_array($error)) {
+        if (\is_array($error)) {
             $type = $error[1];
             $error = $error[0];
         }
@@ -441,11 +441,11 @@ class Validator
 
     protected function vRequired($v, $value)
     {
-        if (is_string($value)) {
-            if (strlen(preg_replace('%^\s+|\s+$%u', '', $value)) > 0) {
+        if (\is_string($value)) {
+            if (\strlen(\preg_replace('%^\s+|\s+$%u', '', $value)) > 0) {
                 return $value;
             }
-        } elseif (is_array($value)) {
+        } elseif (\is_array($value)) {
             if (! empty($value)) {
                 return $value;
             }
@@ -458,7 +458,7 @@ class Validator
 
     protected function vRequiredWith($v, $value, $attr)  //???????????????????????
     {
-        foreach (explode(',', $attr) as $field) {
+        foreach (\explode(',', $attr) as $field) {
             if (null !== $this->__get($field)) {     // если есть хотя бы одно поле,
                 return $this->vRequired($v, $value); // то проверяем данное поле
             }                                        // на обязательное наличие
@@ -480,17 +480,17 @@ class Validator
     {
         if (null === $value) {
             return null;
-        } elseif (is_string($value)) {
-            foreach(explode(',', $attr) as $action) {
+        } elseif (\is_string($value)) {
+            foreach(\explode(',', $attr) as $action) {
                 switch ($action) {
                     case 'trim':
-                        $value = preg_replace('%^\s+|\s+$%u', '', $value);
+                        $value = \preg_replace('%^\s+|\s+$%u', '', $value);
                         break;
                     case 'lower':
-                        $value = mb_strtolower($value, 'UTF-8');
+                        $value = \mb_strtolower($value, 'UTF-8');
                         break;
                     case 'spaces':
-                        $value = preg_replace('%\s+%u', ' ', $value);
+                        $value = \preg_replace('%\s+%u', ' ', $value);
                         break;
                 }
             }
@@ -505,7 +505,7 @@ class Validator
     {
         if (null === $value) {
             return null;
-        } elseif (is_numeric($value)) {
+        } elseif (\is_numeric($value)) {
             return 0 + $value;
         } else {
             $this->addError('The :alias must be numeric');
@@ -517,7 +517,7 @@ class Validator
     {
         if (null === $value) {
             return null;
-        } elseif (is_numeric($value) && is_int(0 + $value)) {
+        } elseif (\is_numeric($value) && \is_int(0 + $value)) {
             return (int) $value;
         } else {
             $this->addError('The :alias must be integer');
@@ -527,14 +527,14 @@ class Validator
 
     protected function vArray($v, $value, $attr)
     {
-        if (null !== $value && ! is_array($value)) {
+        if (null !== $value && ! \is_array($value)) {
             $this->addError('The :alias must be array');
             return null;
         } elseif (! $attr) {
             return $value;
         }
 
-        if (empty($vars = end($this->curData))) {
+        if (empty($vars = \end($this->curData))) {
             throw new RuntimeException('The array of variables is empty');
         }
 
@@ -547,12 +547,12 @@ class Validator
 
     protected function recArray(&$value, &$result, $name, $rules, $field)
     {
-        $idxs = explode('.', $name);
-        $key  = array_shift($idxs);
-        $name = implode('.', $idxs);
+        $idxs = \explode('.', $name);
+        $key  = \array_shift($idxs);
+        $name = \implode('.', $idxs);
 
         if ('*' === $key) {
-            if (! is_array($value)) {
+            if (! \is_array($value)) {
                 return; //????
             }
 
@@ -564,7 +564,7 @@ class Validator
                 }
             }
         } else {
-            if (! array_key_exists($key, $value)) {
+            if (! \array_key_exists($key, $value)) {
                 return; //????
             }
 
@@ -580,18 +580,18 @@ class Validator
 
     protected function vMin($v, $value, $attr)
     {
-        if (is_string($value)) {
-            if ((strpos($attr, 'bytes') && strlen($value) < (int) $attr)
-                || mb_strlen($value, 'UTF-8') < $attr
+        if (\is_string($value)) {
+            if ((\strpos($attr, 'bytes') && \strlen($value) < (int) $attr)
+                || \mb_strlen($value, 'UTF-8') < $attr
             ) {
                 $this->addError('The :alias minimum is :attr characters');
             }
-        } elseif (is_numeric($value)) {
+        } elseif (\is_numeric($value)) {
             if (0 + $value < $attr) {
                 $this->addError('The :alias minimum is :attr');
             }
-        } elseif (is_array($value)) {
-            if (count($value) < $attr) {
+        } elseif (\is_array($value)) {
+            if (\count($value) < $attr) {
                 $this->addError('The :alias minimum is :attr elements');
             }
         } elseif (null !== $value) {
@@ -603,17 +603,17 @@ class Validator
 
     protected function vMax($v, $value, $attr)
     {
-        if (is_string($value)) {
-            if ((strpos($attr, 'bytes') && strlen($value) > (int) $attr)
-                || mb_strlen($value, 'UTF-8') > $attr
+        if (\is_string($value)) {
+            if ((\strpos($attr, 'bytes') && \strlen($value) > (int) $attr)
+                || \mb_strlen($value, 'UTF-8') > $attr
             ) {
                 $this->addError('The :alias maximum is :attr characters');
             }
-        } elseif (is_numeric($value)) {
+        } elseif (\is_numeric($value)) {
             if (0 + $value > $attr) {
                 $this->addError('The :alias maximum is :attr');
             }
-        } elseif (is_array($value)) {
+        } elseif (\is_array($value)) {
             if (count($value) > $attr) {
                 $this->addError('The :alias maximum is :attr elements');
             }
@@ -626,10 +626,10 @@ class Validator
 
     protected function vToken($v, $value, $attr, $args)
     {
-        if (! is_array($args)) {
+        if (! \is_array($args)) {
             $args = [];
         }
-        if (! is_string($value) || ! $this->c->Csrf->verify($value, $attr, $args)) {
+        if (! \is_string($value) || ! $this->c->Csrf->verify($value, $attr, $args)) {
             $this->addError('Bad token', 'e');
             return null;
         } else {
@@ -644,7 +644,7 @@ class Validator
 
     protected function vReferer($v, $value, $attr, $args)
     {
-        if (! is_array($args)) {
+        if (! \is_array($args)) {
             $args = [];
         }
         return $this->c->Router->validate($value, $attr, $args);
@@ -677,7 +677,7 @@ class Validator
     protected function vRegex($v, $value, $attr)
     {
         if (null !== $value
-            && (! is_string($value) || ! preg_match($attr, $value))
+            && (! is_string($value) || ! \preg_match($attr, $value))
         ) {
             $this->addError('The :alias is not valid format');
             return null;
@@ -698,7 +698,7 @@ class Validator
 
     protected function vIn($v, $value, $attr)
     {
-        if (null !== $value && ! in_array($value, explode(',', $attr))) {
+        if (null !== $value && ! \in_array($value, \explode(',', $attr))) {
             $this->addError('The :alias contains an invalid value');
         }
         return $value;
@@ -706,7 +706,7 @@ class Validator
 
     protected function vNotIn($v, $value, $attr)
     {
-        if (null !== $value && in_array($value, explode(',', $attr))) {
+        if (null !== $value && \in_array($value, \explode(',', $attr))) {
             $this->addError('The :alias contains an invalid value');
         }
         return $value;

@@ -1946,6 +1946,18 @@ li + li .f-btn {
     display: none;
   }
 
+  .f-ulist .f-hcell .f-hc-table {
+    display: table;
+    line-height: 1;
+  }
+
+  .f-hc-table .f-hc-tasc,
+  .f-hc-table .f-hc-tdesc {
+    font-size: 0.625rem;
+    display: block;
+    text-align: center;
+  }
+
   .f-ulist .f-cell > b,
   .f-ulist .f-cell > i {
     font-style: normal;
@@ -1970,9 +1982,18 @@ li + li .f-btn {
     text-align: center;
   }
 
+  .f-ulist .f-cnumposts .f-hc-table {
+    margin: 0 auto;
+  }
+
   .f-ulist .f-cdatereg {
     padding: 0.625rem;
     width: 11rem;
     min-width: 11rem;
+  }
+
+  .f-ulist .f-hcell {
+    padding-top: 0.3125rem;
+    padding-bottom: 0.3125rem;
   }
 }

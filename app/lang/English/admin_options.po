@@ -279,6 +279,12 @@ msgstr "Posts per page"
 msgid "Posts per page help"
 msgstr "The default number of posts to display per page in a topic. Users can personalize this setting."
 
+msgid "Users per page label"
+msgstr "Users per page"
+
+msgid "Users per page help"
+msgstr "The number of users displayed on one page of the list."
+
 msgid "Indent label"
 msgstr "Indent size"
 

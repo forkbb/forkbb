@@ -35,7 +35,7 @@ class Install extends Page
         $dbTypes = [];
         $pdoDrivers = PDO::getAvailableDrivers();
         foreach ($pdoDrivers as $type) {
-            if (file_exists($this->c->DIR_APP . '/Core/DB/' . ucfirst($type) . '.php')) {
+            if (\file_exists($this->c->DIR_APP . '/Core/DB/' . \ucfirst($type) . '.php')) {
                 switch ($type) {
                     case 'mysql':
                         $dbTypes['mysql_innodb'] = 'MySQL InnoDB (PDO)';
@@ -48,7 +48,7 @@ class Install extends Page
                         $dbTypes[$type]          = 'PostgreSQL (PDO)';
                         break;
                     default:
-                        $dbTypes[$type]          = ucfirst($type) . ' (PDO)';
+                        $dbTypes[$type]          = \ucfirst($type) . ' (PDO)';
                 }
             }
         }
@@ -84,7 +84,7 @@ class Install extends Page
         $this->c->Lang->load('install');
 
         // версия PHP
-        if (version_compare(PHP_VERSION, self::PHP_MIN, '<')) {
+        if (\version_compare(PHP_VERSION, self::PHP_MIN, '<')) {
             $this->fIswev = ['e', \ForkBB\__('You are running error', 'PHP', PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN)];
         }
 
@@ -101,14 +101,14 @@ class Install extends Page
             $this->c->DIR_PUBLIC . '/img/avatars',
         ];
         foreach ($folders as $folder) {
-            if (! is_writable($folder)) {
-                $folder = str_replace(dirname($this->c->DIR_APP), '', $folder);
+            if (! \is_writable($folder)) {
+                $folder = \str_replace(\dirname($this->c->DIR_APP), '', $folder);
                 $this->fIswev = ['e', \ForkBB\__('Alert folder', $folder)];
             }
         }
 
         // доступность шаблона конфигурации
-        $config = @file_get_contents($this->c->DIR_CONFIG . '/main.dist.php');
+        $config = @\file_get_contents($this->c->DIR_CONFIG . '/main.dist.php');
         if (false === $config) {
             $this->fIswev = ['e', \ForkBB\__('No access to main.dist.php')];
         }
@@ -133,7 +133,7 @@ class Install extends Page
                     'check_host'   => [$this, 'vCheckHost'],
                     'rtrim_url'    => [$this, 'vRtrimURL']
                 ])->addRules([
-                    'dbtype'       => 'required|string:trim|in:' . implode(',', array_keys($this->dbTypes)),
+                    'dbtype'       => 'required|string:trim|in:' . \implode(',', \array_keys($this->dbTypes)),
                     'dbhost'       => 'required|string:trim|check_host',
                     'dbname'       => 'required|string:trim',
                     'dbuser'       => 'string:trim',
@@ -145,8 +145,8 @@ class Install extends Page
                     'title'        => 'required|string:trim|max:255',
                     'descr'        => 'string:trim|max:65000 bytes',
                     'baseurl'      => 'required|string:trim|rtrim_url',
-                    'defaultlang'  => 'required|string:trim|in:' . implode(',', $this->c->Func->getLangs()),
-                    'defaultstyle' => 'required|string:trim|in:' . implode(',', $this->c->Func->getStyles()),
+                    'defaultlang'  => 'required|string:trim|in:' . \implode(',', $this->c->Func->getLangs()),
+                    'defaultstyle' => 'required|string:trim|in:' . \implode(',', $this->c->Func->getStyles()),
                 ])->addAliases([
                     'dbtype'       => 'Database type',
                     'dbhost'       => 'Database server hostname',
@@ -172,7 +172,7 @@ class Install extends Page
             }
         }
 
-        if (count($langs) > 1) {
+        if (\count($langs) > 1) {
             $this->form1 = [
                 'action' => $this->c->Router->link('Install'),
                 'hidden' => [
@@ -183,7 +183,7 @@ class Install extends Page
                         'fields' => [
                             'installlang' => [
                                 'type'    => 'select',
-                                'options' => array_combine($langs, $langs),
+                                'options' => \array_combine($langs, $langs),
                                 'value'   => $this->user->language,
                                 'title'   => \ForkBB\__('Install language'),
                                 'info'    => \ForkBB\__('Choose install language info'),
@@ -387,7 +387,7 @@ class Install extends Page
      */
     public function vRtrimURL(Validator $v, $url)
     {
-        return rtrim($url, '/');
+        return \rtrim($url, '/');
     }
 
     /**
@@ -401,9 +401,9 @@ class Install extends Page
     public function vCheckPrefix(Validator $v, $prefix)
     {
         if (isset($prefix{0})) {
-            if (! preg_match('%^[a-z][a-z\d_]*$%i', $prefix)) {
+            if (! \preg_match('%^[a-z][a-z\d_]*$%i', $prefix)) {
                 $v->addError('Table prefix error');
-            } elseif ('sqlite' === $v->dbtype && 'sqlite_' === strtolower($prefix)) {
+            } elseif ('sqlite' === $v->dbtype && 'sqlite_' === \strtolower($prefix)) {
                 $v->addError('Prefix reserved');
             }
         }
@@ -438,7 +438,7 @@ class Install extends Page
                 $DBEngine = 'InnoDB';
             case 'mysql':
                 $this->DBEngine = $DBEngine;
-                if (preg_match('%^([^:]+):(\d+)$%', $dbhost, $matches)) {
+                if (\preg_match('%^([^:]+):(\d+)$%', $dbhost, $matches)) {
                     $this->c->DB_DSN = "mysql:host={$matches[1]};port={$matches[2]};dbname={$dbname};charset=utf8mb4";
                 } else {
                     $this->c->DB_DSN = "mysql:host={$dbhost};dbname={$dbname};charset=utf8mb4";
@@ -489,7 +489,7 @@ class Install extends Page
      */
     protected function installEnd(Validator $v)
     {
-        @set_time_limit(0);
+        @\set_time_limit(0);
         $this->c->Cache->clear();
 
         $this->c->DB->beginTransaction();
@@ -1034,7 +1034,7 @@ class Install extends Page
         }
         $this->c->DB->exec('UPDATE ::groups SET g_pm_limit=0 WHERE g_id=?i', [$this->c->GROUP_ADMIN]);
 
-        $ip = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP) ?: 'unknow';
+        $ip = \filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP) ?: 'unknow';
         $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, email) VALUES (?i, ?s, ?s, ?s)', [$this->c->GROUP_GUEST, \ForkBB\__('Guest '), \ForkBB\__('Guest '), \ForkBB\__('Guest ')]);
         $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, email, language, style, num_posts, last_post, registered, registration_ip, last_visit) VALUES (?i, ?s, ?s, ?s, ?s, ?s, ?i, ?i, ?i, ?s, ?i)', [$this->c->GROUP_ADMIN, $v->username, password_hash($v->password, PASSWORD_DEFAULT), $v->email, $v->defaultlang, $v->defaultstyle, 1, $now, $now, $ip, $now]);
 
@@ -1061,6 +1061,7 @@ class Install extends Page
             'o_topic_review'          => 15,
             'o_disp_topics_default'   => 30,
             'o_disp_posts_default'    => 25,
+            'o_disp_users'            => 50,
             'o_indent_num_spaces'     => 4,
             'o_quote_depth'           => 3,
             'o_quickpost'             => 1,
@@ -1075,7 +1076,7 @@ class Install extends Page
             'o_regs_report'           => 0,
             'o_default_email_setting' => 1,
             'o_mailing_list'          => $v->email,
-            'o_avatars'               => in_array(strtolower(@ini_get('file_uploads')), ['on', 'true', '1']) ? 1 : 0,
+            'o_avatars'               => \in_array(\strtolower(@\ini_get('file_uploads')), ['on', 'true', '1']) ? 1 : 0,
             'o_avatars_dir'           => '/img/avatars',
             'o_avatars_width'         => 60,
             'o_avatars_height'        => 60,
@@ -1168,7 +1169,7 @@ class Install extends Page
 
         $this->c->DB->commit();
 
-        $config = @file_get_contents($this->c->DIR_CONFIG . '/main.dist.php');
+        $config = @\file_get_contents($this->c->DIR_CONFIG . '/main.dist.php');
         if (false === $config) {
             throw new RuntimeException('No access to main.dist.php.');
         }
@@ -1185,9 +1186,9 @@ class Install extends Page
             '_COOKIE_KEY2_'   => $this->c->Secury->randomPass(mt_rand(20,30)),
         ];
         foreach ($repl as $key => $val) {
-            $config = str_replace($key, addslashes($val), $config);
+            $config = \str_replace($key, \addslashes($val), $config);
         }
-        $result = file_put_contents($this->c->DIR_CONFIG . '/main.php', $config);
+        $result = \file_put_contents($this->c->DIR_CONFIG . '/main.php', $config);
         if (false === $result) {
             throw new RuntimeException('No write to main.php');
         }

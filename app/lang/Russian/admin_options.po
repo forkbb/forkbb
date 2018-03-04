@@ -279,6 +279,12 @@ msgstr "Сообщений на страницу"
 msgid "Posts per page help"
 msgstr "Значение по умолчанию сколько сообщений выводить на странице с темой. Пользователь может установить своё значение."
 
+msgid "Users per page label"
+msgstr "Пользователей на страницу"
+
+msgid "Users per page help"
+msgstr "Число пользователей отображаемых на одной странице списка."
+
 msgid "Indent label"
 msgstr "Размер отступа"
 

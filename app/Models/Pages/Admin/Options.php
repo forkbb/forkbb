@@ -34,8 +34,8 @@ class Options extends Admin
                     'o_board_desc'            => 'string:trim|max:65000 bytes',
                     'o_default_timezone'      => 'required|string:trim|in:-12,-11,-10,-9.5,-9,-8.5,-8,-7,-6,-5,-4,-3.5,-3,-2,-1,0,1,2,3,3.5,4,4.5,5,5.5,5.75,6,6.5,7,8,8.75,9,9.5,10,10.5,11,11.5,12,12.75,13,14',
                     'o_default_dst'           => 'required|integer|in:0,1',
-                    'o_default_lang'          => 'required|string:trim|in:' . implode(',', $this->c->Func->getLangs()),
-                    'o_default_style'         => 'required|string:trim|in:' . implode(',', $this->c->Func->getStyles()),
+                    'o_default_lang'          => 'required|string:trim|in:' . \implode(',', $this->c->Func->getLangs()),
+                    'o_default_style'         => 'required|string:trim|in:' . \implode(',', $this->c->Func->getStyles()),
                     'o_time_format'           => 'required|string:trim|max:25',
                     'o_date_format'           => 'required|string:trim|max:25',
                     'o_timeout_visit'         => 'required|integer|min:0|max:99999',
@@ -49,6 +49,7 @@ class Options extends Admin
                     'o_topic_review'          => 'required|integer|min:0|max:50',
                     'o_disp_topics_default'   => 'required|integer|min:10|max:50',
                     'o_disp_posts_default'    => 'required|integer|min:10|max:50',
+                    'o_disp_users'            => 'required|integer|min:10|max:50',
                     'o_indent_num_spaces'     => 'required|integer|min:0|max:99',
                     'o_quote_depth'           => 'required|integer|min:0|max:9',
                     'o_quickpost'             => 'required|integer|in:0,1',
@@ -155,7 +156,7 @@ class Options extends Admin
      */
     public function vCheckDir(Validator $v, $dir)
     {
-        $dir = '/' . trim(str_replace(['\\', '.'], ['/', ''], $dir), '/'); //?????
+        $dir = '/' . \trim(\str_replace(['\\', '.'], ['/', ''], $dir), '/'); //?????
 
         return $dir;
     }
@@ -171,7 +172,7 @@ class Options extends Admin
      */
     public function vCheckEmpty(Validator $v, $value, $attr)
     {
-        if (0 !== $value && 0 === strlen($v->$attr)) {
+        if (0 !== $value && 0 === \strlen($v->$attr)) {
             $value = 0;
         }
         return $value;
@@ -203,9 +204,9 @@ class Options extends Admin
 
         $yn     = [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')];
         $langs  = $this->c->Func->getLangs();
-        $langs  = array_combine($langs, $langs);
+        $langs  = \array_combine($langs, $langs);
         $styles = $this->c->Func->getStyles();
-        $styles = array_combine($styles, $styles);
+        $styles = \array_combine($styles, $styles);
 
         $form['sets'][] = [
             'legend' => \ForkBB\__('Essentials subhead'),
@@ -297,7 +298,7 @@ class Options extends Admin
             ],
         ];
 
-        $timestamp = time() + ($this->user->timezone + $this->user->dst) * 3600;
+        $timestamp = \time() + ($this->user->timezone + $this->user->dst) * 3600;
         $time = \ForkBB\dt($timestamp, false, $config->o_date_format, $config->o_time_format, true, true);
         $date = \ForkBB\dt($timestamp, true, $config->o_date_format, $config->o_time_format, false, true);
 
@@ -385,14 +386,6 @@ class Options extends Admin
                     'title'  => \ForkBB\__('Clickable links label'),
                     'info'   => \ForkBB\__('Clickable links help'),
                 ],
-                'o_topic_review' => [
-                    'type'  => 'number',
-                    'min'   => 0,
-                    'max'   => 50,
-                    'value' => $config->o_topic_review,
-                    'title' => \ForkBB\__('Topic review label'),
-                    'info'  => \ForkBB\__('Topic review help'),
-                ],
                 'o_disp_topics_default' => [
                     'type'  => 'number',
                     'min'   => 10,
@@ -408,6 +401,22 @@ class Options extends Admin
                     'value' => $config->o_disp_posts_default,
                     'title' => \ForkBB\__('Posts per page label'),
                     'info'  => \ForkBB\__('Posts per page help'),
+                ],
+                'o_disp_users' => [
+                    'type'  => 'number',
+                    'min'   => 10,
+                    'max'   => 50,
+                    'value' => $config->o_disp_users,
+                    'title' => \ForkBB\__('Users per page label'),
+                    'info'  => \ForkBB\__('Users per page help'),
+                ],
+                'o_topic_review' => [
+                    'type'  => 'number',
+                    'min'   => 0,
+                    'max'   => 50,
+                    'value' => $config->o_topic_review,
+                    'title' => \ForkBB\__('Topic review label'),
+                    'info'  => \ForkBB\__('Topic review help'),
                 ],
                 'o_indent_num_spaces' => [
                     'type'  => 'number',
