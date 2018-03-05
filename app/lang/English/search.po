@@ -21,9 +21,6 @@ msgstr "You do not have permission to use the search feature."
 msgid "Search flood"
 msgstr "At least %s seconds have to pass between searches. Please wait %s seconds and try searching again."
 
-msgid "Search"
-msgstr "Search"
-
 msgid "Search criteria legend"
 msgstr "Enter your search criteria"
 
@@ -64,7 +61,7 @@ msgid "Sort by"
 msgstr "Sort by"
 
 msgid "Sort order"
-msgstr "Sort order"
+msgstr "Results sort order"
 
 msgid "Search results legend"
 msgstr "Select how to view search results"
@@ -98,9 +95,6 @@ msgstr "Topics"
 
 msgid "Show as posts"
 msgstr "Posts"
-
-msgid "Search"
-msgstr "Search"
 
 msgid "Search results"
 msgstr "Search results"

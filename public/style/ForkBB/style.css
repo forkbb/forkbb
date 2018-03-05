@@ -1873,13 +1873,15 @@ li + li .f-btn {
 /*    padding-top: 0; */
   }
 
-  .f-search-form .f-fdiv .f-field-w4 {
+  .f-search-form .f-fdiv .f-field-w4,
+  .f-userlist-form .f-fdiv .f-field-w4 {
     width: 33.33%;
     float: left;
 /*    padding-top: 0; */
   }
 
-  .f-search-form .f-label {
+  .f-search-form .f-label,
+  .f-userlist-form .f-label {
     padding: 0.5rem 0;
   }
 
@@ -1901,6 +1903,10 @@ li + li .f-btn {
 /************************/
 
 .f-userlist > h2 {
+  padding: 0 0.625rem;
+}
+
+.f-userlist-form > h2 {
   display: none;
 }
 
@@ -1922,6 +1928,10 @@ li + li .f-btn {
 }
 
 @media screen and (min-width: 50rem) {
+  .f-userlist > h2 {
+    display: none;
+  }
+
   .f-ulist .f-row {
     padding: 0;
   }
@@ -2014,5 +2024,13 @@ li + li .f-btn {
   .f-ulist .f-hcell {
     padding-top: 0.3125rem;
     padding-bottom: 0.3125rem;
+  }
+
+  .f-userlist-form fieldset > .f-field-w4:first-child + .f-field-w4 {
+    padding-top: 0.625rem;
+  }
+
+  .f-userlist-form fieldset > .f-field-w4:first-child + .f-field-w4 + .f-field-w4 {
+    padding-top: 0.625rem;
   }
 }

@@ -77,7 +77,8 @@ class Routing
             // юзеры
             if ($user->g_view_users == '1') {
                 // список пользователей
-                $r->add('GET', '/userlist[/{sort:username|registered|num_posts}/{dir:ASC|DESC}/{group:\-1|[1-9]\d*}/{name}][/{page:[1-9]\d*}]', 'Userlist:view', 'Userlist');
+                $r->add('GET',  '/userlist[/{sort:username|registered|num_posts}/{dir:ASC|DESC}/{group:\-1|[1-9]\d*}/{name}][/{page:[1-9]\d*}]', 'Userlist:view', 'Userlist');
+                $r->add('POST', '/userlist', 'Userlist:view');
                 // юзеры
                 $r->add('GET', '/user/{id:[1-9]\d*}/{name}', 'Profile:view', 'User'); //????
             }

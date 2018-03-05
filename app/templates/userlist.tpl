@@ -43,7 +43,7 @@
     </div>
 @if ($form = $p->form)
     <section class="f-main f-userlist-form">
-      <h2>{!! __('Search') !!}</h2>
+      <h2>{!! __($p->user->searchUsers ? 'User search head' : 'User sort head') !!}</h2>
       <div class="f-fdiv">
   @include ('layouts/form')
       </div>
@@ -51,32 +51,32 @@
 @endif
 @if ($p->userList)
     <section class="f-main f-userlist">
-      <h2>{!! __('User list') !!}</h2>
+      <h2>{!! __('User_list') !!}</h2>
       <div class="f-ulist">
         <ol class="f-table">
           <li class="f-row f-thead" value="{{ $p->startNum }}">
             <span class="f-hcell f-cusername">
               <span class="f-hc-table">
-                <span class="f-hc-tasc"><a @if (0 === $p->active) class="active" @endif href="{!! $p->links[0] !!}">▲</a></span>
+                <span class="f-hc-tasc"><a @if (0 === $p->activeLink) class="active" @endif href="{!! $p->links[0] !!}">▲</a></span>
                 <span class="f-hc-tname">{!! __('Username') !!}</span>
-                <span class="f-hc-tdesc"><a @if (1 === $p->active) class="active" @endif href="{!! $p->links[1] !!}">▼</a></span>
+                <span class="f-hc-tdesc"><a @if (1 === $p->activeLink) class="active" @endif href="{!! $p->links[1] !!}">▼</a></span>
               </span>
             </span>
             <span class="f-hcell f-ctitle">{!! __('Title') !!}</span>
     @if ($p->user->showPostCount)
             <span class="f-hcell f-cnumposts">
               <span class="f-hc-table">
-                <span class="f-hc-tasc"><a @if (2 === $p->active) class="active" @endif href="{!! $p->links[2] !!}">▲</a></span>
+                <span class="f-hc-tasc"><a @if (2 === $p->activeLink) class="active" @endif href="{!! $p->links[2] !!}">▲</a></span>
                 <span class="f-hc-tname">{!! __('Posts') !!}</span>
-                <span class="f-hc-tdesc"><a @if (3 === $p->active) class="active" @endif href="{!! $p->links[3] !!}">▼</a></span>
+                <span class="f-hc-tdesc"><a @if (3 === $p->activeLink) class="active" @endif href="{!! $p->links[3] !!}">▼</a></span>
               </span>
             </span>
     @endif
             <span class="f-hcell f-cdatereg">
               <span class="f-hc-table">
-                <span class="f-hc-tasc"><a @if (4 === $p->active) class="active" @endif href="{!! $p->links[4] !!}">▲</a></span>
+                <span class="f-hc-tasc"><a @if (4 === $p->activeLink) class="active" @endif href="{!! $p->links[4] !!}">▲</a></span>
                 <span class="f-hc-tname">{!! __('Registered') !!}</span>
-                <span class="f-hc-tdesc"><a @if (5 === $p->active) class="active" @endif href="{!! $p->links[5] !!}">▼</a></span>
+                <span class="f-hc-tdesc"><a @if (5 === $p->activeLink) class="active" @endif href="{!! $p->links[5] !!}">▼</a></span>
               </span>
             </span>
           </li>

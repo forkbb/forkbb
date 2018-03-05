@@ -12,14 +12,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
 
-msgid "User find legend"
-msgstr "Поиск и сортировка пользователей"
+msgid "User search head"
+msgstr "Поиск пользователей"
+
+msgid "User sort head"
+msgstr "Сортировка пользователей"
 
 msgid "User search info"
-msgstr "Введите имя пользователя и/или выберите группу по которой хотите фильтровать список. Имя пользователя может быть пустым. Для поиска по маске разрешено использовать символ звездочки (*)."
-
-msgid "User sort info"
-msgstr "Сортируйте пользователей по именам, дате регистрации и количеству сообщений; по возрастанию или убыванию."
+msgstr "Для поиска по маске разрешено использовать символ звездочки (*)."
 
 msgid "User group"
 msgstr "Группа пользователей"
@@ -28,7 +28,7 @@ msgid "No of posts"
 msgstr "Кол-во сообщений"
 
 msgid "All users"
-msgstr "&lt;Все&gt;"
+msgstr "< Все >"
 
 msgid "User_list"
 msgstr "Список пользователей"
@@ -41,3 +41,33 @@ msgstr[2] "<b>%s</b><span> сообщений,</span>"
 
 msgid "<span>registered: </span><b>%s</b>"
 msgstr "<span>дата регистрации: </span><b>%s</b>"
+
+msgid "No users found"
+msgstr "По вашему запросу ничего не найдено."
+
+msgid "Search btn"
+msgstr "Найти"
+
+msgid "Sort btn"
+msgstr "Сортировать"
+
+msgid "Sort users by"
+msgstr "Сортировать по"
+
+msgid "Sort by name"
+msgstr "имени"
+
+msgid "Sort by number"
+msgstr "количеству сообщений"
+
+msgid "Sort by date"
+msgstr "дате регистрации"
+
+msgid "User sort order"
+msgstr "Упорядочить по"
+
+msgid "Ascending"
+msgstr "возрастанию"
+
+msgid "Descending"
+msgstr "убыванию"

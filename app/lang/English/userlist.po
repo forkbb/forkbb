@@ -12,14 +12,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "User find legend"
-msgstr "Find and sort users"
+msgid "User search head"
+msgstr "Find users"
+
+msgid "User sort head"
+msgstr "Sort users"
 
 msgid "User search info"
-msgstr "Enter a username to search for and/or a user group to filter by. The username field can be left blank. Use the wildcard character * for partial matches."
-
-msgid "User sort info"
-msgstr "Sort users by name, date registered or number of posts and in ascending/descending order."
+msgstr "Use the wildcard character * for partial matches."
 
 msgid "User group"
 msgstr "User group"
@@ -28,7 +28,7 @@ msgid "No of posts"
 msgstr "Number of posts"
 
 msgid "All users"
-msgstr "All"
+msgstr "< All >"
 
 msgid "User_list"
 msgstr "User list"
@@ -40,3 +40,33 @@ msgstr[1] "<b>%s</b><span> posts,</span>"
 
 msgid "<span>registered: </span><b>%s</b>"
 msgstr "<span>registered: </span><b>%s</b>"
+
+msgid "No users found"
+msgstr "No users were found matching your criteria."
+
+msgid "Search btn"
+msgstr "Serach"
+
+msgid "Sort btn"
+msgstr "Sort"
+
+msgid "Sort users by"
+msgstr "Sort user list by"
+
+msgid "Sort by name"
+msgstr "Name"
+
+msgid "Sort by number"
+msgstr "Number of posts"
+
+msgid "Sort by date"
+msgstr "Date of registration"
+
+msgid "User sort order"
+msgstr "User list sort order"
+
+msgid "Ascending"
+msgstr "Ascending"
+
+msgid "Descending"
+msgstr "Descending"

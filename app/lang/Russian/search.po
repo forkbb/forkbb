@@ -21,9 +21,6 @@ msgstr "У вас нет прав для использования поиска
 msgid "Search flood"
 msgstr "Должно пройти как минимум %s секунд между повторными попытками поиска информации. Пожалуйста, подождите %s секунд, а затем повторите попытку."
 
-msgid "Search"
-msgstr "Поиск"
-
 msgid "Search criteria legend"
 msgstr "Условия поиска"
 
@@ -64,7 +61,7 @@ msgid "Sort by"
 msgstr "Сортировать по"
 
 msgid "Sort order"
-msgstr "Порядок сортировки"
+msgstr "Упорядочить по"
 
 msgid "Search results legend"
 msgstr "Настройка параметров вывода результатов"
@@ -85,10 +82,10 @@ msgid "Sort by forum"
 msgstr "разделу"
 
 msgid "Ascending"
-msgstr "по возрастанию"
+msgstr "возрастанию"
 
 msgid "Descending"
-msgstr "по убыванию"
+msgstr "убыванию"
 
 msgid "Show as"
 msgstr "Показать как"
@@ -98,9 +95,6 @@ msgstr "темы"
 
 msgid "Show as posts"
 msgstr "сообщения"
-
-msgid "Search"
-msgstr "Поиск"
 
 msgid "Search results"
 msgstr "Результаты поиска"

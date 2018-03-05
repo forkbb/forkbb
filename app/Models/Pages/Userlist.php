@@ -23,16 +23,21 @@ class Userlist extends Page
     {
         $this->c->Lang->load('userlist');
 
+        $groups = \array_filter($this->c->groups->getList(), function ($group) {
+                return ! $group->groupGuest;
+            });
+
+        $prefix = 'POST' === $method ? 'required|' : '';
         $v = $this->c->Validator->reset()
             ->addRules([
-                'sort'  => 'string|in:username,registered' . ($this->user->showPostCount ? ',num_posts' : ''),
-                'dir'   => 'string|in:ASC,DESC',
-                'group' => 'integer|min:-1|max:9999999999|not_in:0,' . $this->c->GROUP_GUEST,
-                'name'  => 'string:trim|min:1|max:25' . ($this->user->searchUsers ? '' : '|in:*'),
+                'sort'  => $prefix . 'string|in:username,registered' . ($this->user->showPostCount ? ',num_posts' : ''),
+                'dir'   => $prefix . 'string|in:ASC,DESC',
+                'group' => $prefix . 'integer|in:-1,' . \implode(',', \array_keys($groups)),
+                'name'  => $prefix . 'string:trim|min:1|max:25' . ($this->user->searchUsers ? '' : '|in:*'),
             ]);
 
         $error = true;
-        if ($v->validation($args)) {
+        if ($v->validation('POST' === $method ? $_POST : $args)) {
             $count = (int) (null === $v->sort)
                    + (int) (null === $v->dir)
                    + (int) (null === $v->group)
@@ -44,6 +49,9 @@ class Userlist extends Page
         }
         if ($error) {
             return $this->c->Message->message('Bad request');
+        }
+        if ('POST' === $method) {
+            return $this->c->Redirect->page('Userlist', $v->getData());
         }
 
         $filters = [];
@@ -83,7 +91,7 @@ class Userlist extends Page
                 $vars['name']  = $v->name;
             }
 
-            $this->active = 0;
+            $this->activeLink = 0;
 
             foreach (['username', 'num_posts', 'registered'] as $i => $sort) {
                 $vars['sort'] = $sort;
@@ -93,7 +101,7 @@ class Userlist extends Page
                     $links[$i * 2 + $j] = $this->c->Router->link('Userlist', $vars);
 
                     if ($v->sort === $sort && $v->dir === $dir) {
-                        $this->active = $i * 2 + $j;
+                        $this->activeLink = $i * 2 + $j;
                     }
                 }
             }
@@ -102,16 +110,76 @@ class Userlist extends Page
         } else {
             $this->startNum = 0;
             $this->userList = null;
-            // ни чего не найдено
-            $this->links = [null, null, null, null, null, null];
+            $this->links    = [null, null, null, null, null, null];
+            $this->fIswev   = ['i', \ForkBB\__('No users found')];
         }
+
+        $form = [
+            'action' => $this->c->Router->link('Userlist'),
+            'hidden' => [],
+            'sets'   => [],
+            'btns'   => [
+                'submit' => [
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__($this->user->searchUsers ? 'Search btn' : 'Sort btn'),
+                    'accesskey' => 's',
+                ],
+            ],
+        ];
+
+        $fields = [];
+
+        if ($this->user->searchUsers) {
+            $fields['name'] = [
+                'type'      => 'text',
+                'maxlength' => 25,
+                'value'     => $v->name ?: '*',
+                'title'     => \ForkBB\__('Username'),
+                'info'      => \ForkBB\__('User search info'),
+                'required'  => true,
+#               'autofocus' => true,
+            ];
+        } else {
+            $form['hidden']['name'] = '*';
+        }
+        $fields['group'] = [
+            'dl'      => 'w4',
+            'type'    => 'select',
+            'options' => [[-1, \ForkBB\__('All users')]] + \array_map(function ($group) {
+                    return [$group->g_id, $group->g_title];
+                }, $groups),
+            'value'   => $v->group,
+            'title'   => \ForkBB\__('User group'),
+        ];
+        $fields['sort'] = [
+            'dl'      => 'w4',
+            'type'    => 'select',
+            'options' => [
+                ['username', \ForkBB\__('Sort by name')],
+                ['num_posts', \ForkBB\__('Sort by number'), $this->user->showPostCount ? null : true],
+                ['registered', \ForkBB\__('Sort by date')],
+            ],
+            'value'   => $v->sort,
+            'title'   => \ForkBB\__('Sort users by'),
+        ];
+        $fields['dir'] = [
+            'dl'      => 'w4',
+            'type'   => 'radio',
+            'value'  => $v->dir ?: 'ASC',
+            'values' => [
+                'ASC'  => \ForkBB\__('Ascending'),
+                'DESC' => \ForkBB\__('Descending'),
+            ],
+            'title'  => \ForkBB\__('User sort order'),
+        ];
+        $form['sets'][] = ['fields' => $fields];
 
         $this->fIndex       = 'userlist';
         $this->nameTpl      = 'userlist';
         $this->onlinePos    = 'userlist';
-        $this->canonical    = $this->c->Router->link('Userlist', ['page' => $page]); // ????
+        $this->canonical    = $this->c->Router->link('Userlist', $args); // ????
         $this->robots       = 'noindex';
-//        $this->form         = $form;
+        $this->form         = $form;
         $this->crumbs       = $this->crumbs([$this->c->Router->link('Userlist'), \ForkBB\__('User_list')]);
         $this->pagination   = $this->c->Func->paginate($pages, $page, 'Userlist', $args);
 
