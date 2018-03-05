@@ -121,7 +121,7 @@ class Userlist extends Page
             'btns'   => [
                 'submit' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__($this->user->searchUsers ? 'Search btn' : 'Sort btn'),
+                    'value'     => \ForkBB\__($this->user->searchUsers ? 'Search btn' : 'Submit'),
                     'accesskey' => 's',
                 ],
             ],

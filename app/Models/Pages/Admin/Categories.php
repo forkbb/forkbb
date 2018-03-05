@@ -95,16 +95,17 @@ class Categories extends Admin
                 'link'  => $this->c->Router->link('AdminCategoriesDelete', ['id' => $key]),
             ];
         }
-        $fieldset['new'] = [
-            'dl'        => 'new',
-            'type'      => 'text',
-            'maxlength' => 80,
-            'title'     => \ForkBB\__('Add category label'),
-            'info'      => \ForkBB\__('Add category help', $this->c->Router->link('AdminForums'), \ForkBB\__('Forums')),
-        ];
-
+        $form['sets'][] = ['fields' => $fieldset];
         $form['sets'][] = [
-            'fields' => $fieldset,
+            'fields' => [
+                'new' => [
+                    'dl'        => 'new',
+                    'type'      => 'text',
+                    'maxlength' => 80,
+                    'title'     => \ForkBB\__('Add category label'),
+                    'info'      => \ForkBB\__('Add category help', $this->c->Router->link('AdminForums'), \ForkBB\__('Forums')),
+                ],
+            ],
         ];
 
         $this->nameTpl   = 'admin/form';

@@ -48,9 +48,6 @@ msgstr "По вашему запросу ничего не найдено."
 msgid "Search btn"
 msgstr "Найти"
 
-msgid "Sort btn"
-msgstr "Сортировать"
-
 msgid "Sort users by"
 msgstr "Сортировать по"
 

@@ -93,6 +93,12 @@ html {
   line-height: 1.5;
 }
 
+.f-wrap {
+  padding: 0 0.3125rem;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
 h1, h2, h3 {
   font-weight: bold;
 }
@@ -121,12 +127,6 @@ h3 {
 
 .f-category h3 {
   font-size: 1.25rem;
-}
-
-.f-wrap {
-  padding: 0 0.3125rem;
-  max-width: 64rem;
-  margin: 0 auto;
 }
 
 .f-wrap,
@@ -414,27 +414,39 @@ select {
 .f-fdiv {
   max-width: 100%;
   border: 0.0625rem solid #AA7939;
+  padding: 0.3125rem;
 }
 
 .f-fdiv h2 {
-  padding: 0.625rem 0.625rem 0 0.625rem;
+  padding: 0.3125rem;
 }
 
 .f-fdiv h3 {
-  padding: 0.625rem 0.625rem 0 0.625rem;
+  padding: 0.3125rem;
 }
 
 .f-fdiv dl {
-  padding: 0 0 0.625rem 0;
+  padding: 0.3125rem;
 }
 
-.f-fdiv fieldset {
+.f-fdiv .f-btns {
+  padding: 0.625rem 0.3125rem;
+}
+
+/*.f-fdiv fieldset {
   padding: 0 0.625rem;
-}
+}*/
 
-.f-fdiv fieldset > legend:first-child,
+/*.f-fdiv fieldset > legend:first-child,
 .f-fdiv fieldset > dl:first-child:not(.f-field-inline) {
   padding-top: 0.625rem;
+}*/
+
+.f-fdiv legend {
+  width: 100%;
+  padding: 0.3125rem;
+  border-bottom: 0.0625rem dotted #AA7939;
+  font-weight: bold;
 }
 
 .f-fdiv .f-ctrl,
@@ -447,6 +459,11 @@ select {
 /*  margin-bottom: 1rem; */
   box-sizing: border-box;
 }
+
+/* .f-fdiv .f-btn {
+  margin: 0.3125rem;
+} */
+
 
 .f-fdiv .f-label {
   font-size: 1rem;
@@ -481,10 +498,6 @@ select {
   width: 100%;
 }
 
-.f-fdiv .f-child6 {
-  clear: both;
-}
-
 .f-fdiv .f-child1 {
   font-weight: bold;
 }
@@ -499,22 +512,13 @@ select {
   margin-right: 0.625rem;
 }
 
-.f-fdiv .f-btns {
-  padding: 0 0.625rem;
-}
-
-.f-fdiv .f-btn {
-  margin: 0.625rem 0;
-}
-
 .f-fdiv .f-child3 {
   padding: 0.625rem;
   text-align: center;
   font-size: 0.875rem;
 }
 
-.f-fdiv .f-child4,
-.f-fdiv .f-child6 {
+.f-fdiv .f-child4 {
   font-size: 0.8125rem;
   margin-top: 0.3125rem;
   text-align: justify;
@@ -526,13 +530,30 @@ select {
   padding-top: 0.3125rem;
 }
 
+.f-fdiv .f-child6 {
+  padding: 0.3125rem;
+  text-align: justify;
+  font-size: 0.8125rem;
+  clear: both;
+}
+
+.f-fdiv .f-child6 + .f-child6 {
+  margin-top: -0.3125rem;
+}
+
 .f-fdiv .f-finfo {
 /*  margin: -0.625rem -0.625rem 1rem -0.625rem; */
   background-color: #AA7939;
   padding: 0.625rem;
   color: #F8F4E3;
-  margin-bottom: 0.625rem;
-  text-align: justify
+/*  margin-bottom: 0.625rem; */
+  text-align: justify;
+  margin: 0 -0.3125rem 0.3125rem -0.3125rem;
+  overflow: hidden;
+}
+
+.f-fdiv .f-finfo:first-child {
+  margin-top: -0.3125rem;
 }
 
 .f-fdiv .f-finfo + .f-finfo {
@@ -913,7 +934,11 @@ select {
 .f-admin dl {
 /*  margin: 0 0.625rem 0.625rem 0.625rem; */
   border-bottom: 0.0625rem dotted #AA7939;
-  margin-bottom: 0.625rem;
+  margin-bottom: 0.3125rem;
+}
+
+.f-admin legend {
+  margin-bottom: 0.3125rem;
 }
 
 .f-admin dl:before,
@@ -1581,14 +1606,14 @@ li + li .f-btn {
   background-color: #F8F4E3;
 }
 
-.f-post-form legend,
+/* .f-post-form legend,
 .f-form legend {
   width: 100%;
   padding: 0.625rem 0 0.3125rem 0;
   margin-bottom: 0.625rem;
   border-bottom: 0.0625rem dotted #AA7939;
   font-weight: bold;
-}
+} */
 
 .f-post-form .f-child1 {
   font-size: 0.875rem;
@@ -1619,19 +1644,19 @@ li + li .f-btn {
   .f-fdiv .f-field-w1 {
     width: 30%;
     float: left;
-    padding-top: 0.625rem;
+/*    padding-top: 0.625rem; */
   }
 
   .f-fdiv .f-field-w2 {
     width: 70%;
     float: left;
-    padding-top: 0.625rem;
+/*    padding-top: 0.625rem; */
   }
 
-  .f-field-w1 + .f-field-w2,
+/*  .f-field-w1 + .f-field-w2,
   .f-field-w2 + .f-field-w1 {
     padding-left: 0.625rem;
-  }
+  } */
 }
 
 /*********************/
@@ -1652,13 +1677,13 @@ li + li .f-btn {
 }
 
 .f-field-inline.f-field-position {
-  padding-left: 0.625rem;
+/*  padding-left: 0.625rem; */
   float: left;
   width: 5rem;
 }
 
 .f-field-inline.f-field-delete {
-  padding-left: 0.625rem;
+/*  padding-left: 0.625rem; */
   float: left;
   width: 3rem;
   overflow: hidden;
@@ -1709,9 +1734,9 @@ li + li .f-btn {
   padding-left: 3.125rem;
 }
 
-.f-editcategories-form .f-field-inline:nth-child(-n+3) {
+/* .f-editcategories-form .f-field-inline:nth-child(-n+3) {
   padding-top: 0.625rem;
-}
+} */
 
 /*********************/
 /* Админка/Разделы   */
@@ -1719,9 +1744,9 @@ li + li .f-btn {
 .f-field-inline.f-field-cando {
   float: left;
   width: 33.333%;
-  padding-left: 0.625rem;
-  margin-bottom: 0;
-  padding-bottom: 0;
+/*  padding-left: 0.625rem; */
+/*  margin: 0 0.3125rem; */
+/*  padding-bottom: 0; */
   text-align: center;
   position: relative;
 }
@@ -1739,7 +1764,7 @@ li + li .f-btn {
   text-overflow: ellipsis;
 }
 
-.f-editforum-form legend {
+ .f-editforum-form legend {
   margin-bottom: 0;
 }
 
@@ -1777,6 +1802,7 @@ li + li .f-btn {
 .f-editforum-form .f-btn[name=reset] {
   float: right;
   width: auto;
+  margin-bottom: 0.625rem;
 }
 
 .f-btn.f-disabled {
@@ -1793,13 +1819,13 @@ li + li .f-btn {
   width: 50%;
 }
 
-.f-field-inline.f-field-censor:nth-child(odd) {
+/*.f-field-inline.f-field-censor:nth-child(odd) {
   padding-right: 0.3125rem;
-}
+} */
 
-.f-field-inline.f-field-censor:nth-child(even) {
+/*.f-field-inline.f-field-censor:nth-child(even) {
   padding-left: 0.3125rem;
-}
+}*/
 
 .f-field-inline.f-field-censor > dt {
   display: none;
@@ -1832,11 +1858,13 @@ li + li .f-btn {
 
 .f-search-form .f-child6:first-child {
   text-align: right;
+  padding: 0 0.3125rem;
+  margin-bottom: -0.3125rem;
 }
 
-.f-search-form .f-child6:last-child {
+/* .f-search-form .f-child6:last-child {
   padding-bottom: 0.625rem;
-}
+} */
 
 .f-post-search-info {
   display: none;
@@ -1862,10 +1890,10 @@ li + li .f-btn {
 }
 
 @media screen and (min-width: 50rem) {
-  .f-search-form .f-fdiv .f-field-w1,
+/*  .f-search-form .f-fdiv .f-field-w1,
   .f-search-form .f-fdiv .f-field-w2 {
     padding-top: 0;
-  }
+  } */
 
   .f-search-form .f-fdiv .f-field-w3 {
     width: 50%;
@@ -1885,10 +1913,10 @@ li + li .f-btn {
     padding: 0.5rem 0;
   }
 
-  .f-field-w3 + .f-field-w3,
+/*  .f-field-w3 + .f-field-w3,
   .f-field-w4 + .f-field-w4 {
     padding-left: 0.625rem;
-  }
+  } */
 
   .f-post-search-info {
     display: block;
@@ -2026,11 +2054,7 @@ li + li .f-btn {
     padding-bottom: 0.3125rem;
   }
 
-  .f-userlist-form fieldset > .f-field-w4:first-child + .f-field-w4 {
+/*  .f-userlist-form fieldset > .f-field-w4:first-child ~ .f-field-w4 {
     padding-top: 0.625rem;
-  }
-
-  .f-userlist-form fieldset > .f-field-w4:first-child + .f-field-w4 + .f-field-w4 {
-    padding-top: 0.625rem;
-  }
+  } */
 }
