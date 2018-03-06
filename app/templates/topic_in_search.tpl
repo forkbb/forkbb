@@ -47,7 +47,7 @@
   @if (empty($post->id) && $iswev = ['e' => [__('Message %s was not found in the database', $id)]])
     @include ('layouts/iswev')
   @else
-      <article id="p{!! $post->id !!}" class="clearfix f-post f-post-search @if ($post->user->gender == 1) f-user-male @elseif ($post->user->gender == 2) f-user-female @endif @if ($post->user->online) f-user-online @endif">
+      <article id="p{!! $post->id !!}" class="f-post f-post-search @if ($post->user->gender == 1) f-user-male @elseif ($post->user->gender == 2) f-user-female @endif @if ($post->user->online) f-user-online @endif">
         <header class="f-post-header clearfix">
           <h3>
             <span class="f-psh-forum"><a href="{!! $post->parent->parent->link !!}" title="{!! __('Go to forum') !!}">{{ $post->parent->parent->forum_name }}</a></span>
@@ -57,7 +57,7 @@
           <span class="f-post-number">#{!! $post->postNumber !!}</span>
         </header>
         <div class="f-post-body clearfix">
-          <address class="f-post-left clearfix">
+          <address class="f-post-left">
             <ul class="f-user-info">
     @if ($p->user->viewUsers && $post->user->link)
               <li class="f-username"><a href="{!! $post->user->link !!}">{{ $post->user->username }}</a></li>
@@ -83,7 +83,7 @@
           <div class="f-post-left">
             <span></span>
           </div>
-          <div class="f-post-right clearfix">
+          <div class="f-post-right">
             <ul>
               <li class="f-posttotopic"><a class="f-btn" href="{!! $post->parent->link !!}">{!! __('Go to topic') !!}</a></li>
               <li class="f-posttopost"><a class="f-btn" href="{!! $post->link !!}">{!! __('Go to post') !!}</a></li>

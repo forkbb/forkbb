@@ -39,7 +39,9 @@ fieldset,
 legend,
 img,
 abbr,
-cite {
+cite,
+address,
+article {
   border: 0;
   font-style: normal;
   font-weight: normal;
@@ -172,6 +174,7 @@ body,
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  white-space: nowrap;
 }
 
 .f-btn.f-minor {
@@ -651,17 +654,19 @@ select {
 }
 
 .f-crumb {
-  display: block;
-  float: left;
-  word-break: break-all;
+  display: inline;
+/*  float: left;
+  word-break: break-all; */
+  word-wrap: break-word;
+  max-width: 100%;
 }
 
 .f-crumb + .f-crumb:before {
-  display: inline-block;
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
+  display: inline;
+/*  padding-right: 0.5rem;
+  padding-left: 0.5rem; */
   color: #583200;
-  content: "/";
+  content: "/ ";
 }
 
 .f-crumb a.active {
@@ -1355,6 +1360,12 @@ select {
   word-break: break-all;
 }
 
+.f-user-online .f-username::before {
+  content: "✔ ";
+  color: #4F8A10;
+  font-size: 1rem;
+}
+
 .f-username a {
   border: 0;
 }
@@ -1458,7 +1469,7 @@ select {
   }
 
   .f-post-left {
-    width: 11.75rem;
+    width: 13rem;
     margin-left: -13rem;
     float: left;
     position: relative;
@@ -1472,6 +1483,11 @@ select {
 
   .f-post-footer .f-post-left {
     display: block;
+    padding-top: 0;
+  }
+
+  .f-userstatus {
+    font-size: 0.875rem;
   }
 
   .f-user-info-add {

@@ -59,7 +59,7 @@
   @if (empty($post->id) && $iswev = ['e' => [__('Message %s was not found in the database', $id)]])
     @include ('layouts/iswev')
   @else
-      <article id="p{!! $post->id !!}" class="clearfix f-post @if ($post->user->gender == 1) f-user-male @elseif ($post->user->gender == 2) f-user-female @endif @if ($post->user->online) f-user-online @endif @if (1 === $post->postNumber) f-post-first @endif">
+      <article id="p{!! $post->id !!}" class="f-post @if ($post->user->gender == 1) f-user-male @elseif ($post->user->gender == 2) f-user-female @endif @if ($post->user->online) f-user-online @endif @if (1 === $post->postNumber) f-post-first @endif">
         <header class="f-post-header clearfix">
           <h3>@if ($post->postNumber > 1) {!! __('Re') !!} @endif {{ cens($p->model->subject) }}</h3>
           <span class="f-post-posted"><a href="{!! $post->link !!}" rel="bookmark"><time datetime="{{ utc($post->posted) }}">{{ dt($post->posted) }}</time></a></span>
@@ -69,7 +69,7 @@
           <span class="f-post-number">#{!! $post->postNumber !!}</span>
         </header>
         <div class="f-post-body clearfix">
-          <address class="f-post-left clearfix">
+          <address class="f-post-left">
             <ul class="f-user-info">
     @if ($p->user->viewUsers && $post->user->link)
               <li class="f-username"><a href="{!! $post->user->link !!}">{{ $post->user->username }}</a></li>
@@ -107,10 +107,10 @@
         </div>
         <footer class="f-post-footer clearfix">
           <div class="f-post-left">
-            <span></span>
+            <span class="f-userstatus">{!! __($post->user->online ? 'Online' : 'Offline') !!}</span>
           </div>
     @if ($post->canReport || $post->canDelete || $post->canEdit || $post->canQuote)
-          <div class="f-post-right clearfix">
+          <div class="f-post-right">
             <ul>
       @if ($post->canReport)
               <li class="f-postreport"><a class="f-btn f-minor" href="{!! $post->linkReport !!}">{!! __('Report') !!}</a></li>
