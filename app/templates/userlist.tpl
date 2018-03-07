@@ -36,7 +36,7 @@
     <div class="f-nav-links">
 @yield ('crumbs')
 @if ($p->pagination)
-      <div class="f-links-b clearfix">
+      <div class="f-nlinks-b clearfix">
   @yield ('pagination')
       </div>
 @endif
@@ -99,7 +99,7 @@
     </section>
   @if ($p->pagination)
     <div class="f-nav-links">
-      <div class="f-links clearfix">
+      <div class="f-nlinks clearfix">
     @yield ('pagination')
       </div>
     </div>

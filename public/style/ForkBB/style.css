@@ -673,17 +673,17 @@ select {
   border: 0;
 }
 
-.f-links-b {
+.f-nlinks-b {
   margin-top: 0.625rem;
   border-top: 0.0625rem dotted #AA7939;
 }
 
-.f-links-a {
+.f-nlinks-a {
   margin-bottom: 0.625rem;
   border-bottom: 0.0625rem dotted #AA7939;
 }
 
-.f-link-post {
+.f-actions-links {
   float: right;
 }
 
@@ -691,18 +691,18 @@ select {
   float: left;
 }
 
-.f-links-a .f-link-post,
-.f-links-a .f-pages {
+.f-nlinks-a .f-actions-links,
+.f-nlinks-a .f-pages {
   padding: 0 0.625rem 0.625rem 0.625rem;
 }
 
-.f-links-b .f-link-post,
-.f-links-b .f-pages {
+.f-nlinks-b .f-actions-links,
+.f-nlinks-b .f-pages {
   padding: 0.625rem 0.625rem 0 0.625rem;
 }
 
-.f-links .f-link-post,
-.f-links .f-pages {
+.f-nlinks .f-actions-links,
+.f-nlinks .f-pages {
   padding: 0 0.625rem;
 }
 
@@ -982,8 +982,17 @@ select {
   display: none;
 }
 
-.f-stats .right {
-  text-align: right;
+.f-stboard {
+  text-align: center;
+  border-bottom: 0.0625rem dotted #AA7939;
+}
+
+.f-stboard > dd {
+  display: inline-block;
+}
+
+.f-stboard > dd + dd {
+  margin-left: 0.625rem;
 }
 
 .f-onlinelist {
@@ -994,6 +1003,26 @@ select {
 .f-onlinelist > dt {
   display: inline;
   font-weight: bold;
+}
+
+@media screen and (min-width: 45rem) {
+  .f-stboard {
+    text-align: right;
+    float: right;
+    border: 0;
+  }
+
+  .f-stboard > dd {
+    display: block;
+  }
+
+  .f-stboard > dd + dd {
+    margin-left: 0;
+  }
+
+  .f-stusers {
+    float: left;
+  }
 }
 
 /*********************/

@@ -25,13 +25,13 @@ msgid "Newest user"
 msgstr "Newest registered user:"
 
 msgid "No of users"
-msgstr "Total number of registered users:"
+msgstr "Users:"
 
 msgid "No of topics"
-msgstr "Total number of topics:"
+msgstr "Topics:"
 
 msgid "No of posts"
-msgstr "Total number of posts:"
+msgstr "Posts:"
 
 msgid "Online users"
 msgstr "Online:"

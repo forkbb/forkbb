@@ -2,14 +2,14 @@
       <h2>{!! __('Stats info') !!}</h2>
       <div class="clearfix">
 @if ($p->stats)
-        <dl class="right">
+        <dl class="f-stboard">
           <dt>{!! __('Board stats') !!}</dt>
           <dd>{!! __('No of users') !!} <strong>{!! num($p->stats->userTotal) !!}</strong></dd>
           <dd>{!! __('No of topics') !!} <strong>{!! num($p->stats->topicTotal) !!}</strong></dd>
           <dd>{!! __('No of posts') !!} <strong>{!! num($p->stats->postTotal) !!}</strong></dd>
         </dl>
 @endif
-        <dl class="left">
+        <dl class="f-stusers">
           <dt>{!! __('User info') !!}</dt>
 @if ($p->stats)
   @if (is_string($p->stats->userLast))

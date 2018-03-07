@@ -13,11 +13,11 @@
 @endsection
 @section ('linkpost')
   @if ($p->model->canReply || $p->model->closed)
-        <div class="f-link-post">
+        <div class="f-actions-links">
     @if ($p->model->closed)
           {!! __('Topic closed') !!}
     @else
-          <a class="f-btn" href="{!! $p->model->linkReply !!}">{!! __('Post reply') !!}</a>
+          <a class="f-btn f-btn-post-reply" href="{!! $p->model->linkReply !!}">{!! __('Post reply') !!}</a>
     @endif
         </div>
   @endif
@@ -47,7 +47,7 @@
     <div class="f-nav-links">
 @yield ('crumbs')
 @if ($p->model->canReply || $p->model->closed || $p->model->pagination)
-      <div class="f-links-b clearfix">
+      <div class="f-nlinks-b clearfix">
   @yield ('pagination')
   @yield ('linkpost')
       </div>
@@ -134,7 +134,7 @@
     </section>
     <div class="f-nav-links">
 @if ($p->model->canReply || $p->model->closed || $p->model->pagination)
-      <div class="f-links-a clearfix">
+      <div class="f-nlinks-a clearfix">
   @yield ('linkpost')
   @yield ('pagination')
       </div>

@@ -25,13 +25,13 @@ msgid "Newest user"
 msgstr "Новичок:"
 
 msgid "No of users"
-msgstr "Всего пользователей:"
+msgstr "Пользователей:"
 
 msgid "No of topics"
-msgstr "Всего тем:"
+msgstr "Тем:"
 
 msgid "No of posts"
-msgstr "Всего сообщений:"
+msgstr "Сообщений:"
 
 msgid "Online users"
 msgstr "Активны:"

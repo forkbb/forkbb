@@ -13,8 +13,8 @@
 @endsection
 @section ('linknewtopic')
   @if ($p->model->canCreateTopic)
-        <div class="f-link-post">
-          <a class="f-btn" href="{!! $p->model->linkCreateTopic !!}">{!! __('Post topic') !!}</a>
+        <div class="f-actions-links">
+          <a class="f-btn f-btn-create-topic" href="{!! $p->model->linkCreateTopic !!}">{!! __('Post topic') !!}</a>
         </div>
   @endif
 @endsection
@@ -63,7 +63,7 @@
     <div class="f-nav-links">
 @yield ('crumbs')
 @if ($p->model->canCreateTopic || $p->model->pagination)
-      <div class="f-links-b clearfix">
+      <div class="f-nlinks-b clearfix">
   @yield ('pagination')
   @yield ('linknewtopic')
       </div>
@@ -155,7 +155,7 @@
     </section>
     <div class="f-nav-links">
   @if ($p->model->canCreateTopic || $p->model->pagination)
-      <div class="f-links-a clearfix">
+      <div class="f-nlinks-a clearfix">
     @yield ('linknewtopic')
     @yield ('pagination')
       </div>
