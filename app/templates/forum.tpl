@@ -11,13 +11,6 @@
   @endforeach
       </ul>
 @endsection
-@section ('linknewtopic')
-  @if ($p->model->canCreateTopic)
-        <div class="f-actions-links">
-          <a class="f-btn f-btn-create-topic" href="{!! $p->model->linkCreateTopic !!}">{!! __('Post topic') !!}</a>
-        </div>
-  @endif
-@endsection
 @section ('pagination')
   @if ($p->model->pagination)
         <nav class="f-pages">
@@ -65,7 +58,11 @@
 @if ($p->model->canCreateTopic || $p->model->pagination)
       <div class="f-nlinks-b clearfix">
   @yield ('pagination')
-  @yield ('linknewtopic')
+  @if ($p->model->canCreateTopic)
+        <div class="f-actions-links">
+          <a class="f-btn f-btn-create-topic" href="{!! $p->model->linkCreateTopic !!}">{!! __('Post topic') !!}</a>
+        </div>
+  @endif
       </div>
 @endif
     </div>
@@ -154,9 +151,18 @@
       </div>
     </section>
     <div class="f-nav-links">
-  @if ($p->model->canCreateTopic || $p->model->pagination)
+  @if ($p->model->canCreateTopic || $p->model->pagination || $p->model->canMarkRead)
       <div class="f-nlinks-a clearfix">
-    @yield ('linknewtopic')
+    @if ($p->model->canCreateTopic || $p->model->canMarkRead)
+        <div class="f-actions-links">
+      @if ($p->model->canMarkRead)
+          <a class="f-btn f-btn-markread" title="{!! __('Mark forum read') !!}" href="{!! $p->model->linkMarkRead !!}">{!! __('All is read') !!}</a>
+      @endif
+      @if ($p->model->canCreateTopic)
+          <a class="f-btn f-btn-create-topic" href="{!! $p->model->linkCreateTopic !!}">{!! __('Post topic') !!}</a>
+        </div>
+      @endif
+    @endif
     @yield ('pagination')
       </div>
   @endif

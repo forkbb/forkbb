@@ -8,20 +8,20 @@ class Redirect extends Page
 {
     /**
      * Перенаправление на главную страницу форума
-     * 
+     *
      * @return Page
      */
     public function toIndex()
     {
-        return $this->page('Index')->message(\ForkBB\__('Redirecting to index'));
+        return $this->page('Index')->message('Redirecting to index');
     }
 
     /**
      * Задает адрес перехода
-     * 
+     *
      * @param string $marker
      * @param array $args
-     * 
+     *
      * @return Page
      */
     public function page($marker, array $args = [])
@@ -32,9 +32,9 @@ class Redirect extends Page
 
     /**
      * Задает ссылку для перехода
-     * 
+     *
      * @param string $url
-     * 
+     *
      * @return Page
      */
     public function url($url)
@@ -45,9 +45,9 @@ class Redirect extends Page
 
     /**
      * Задает сообщение
-     * 
+     *
      * @param string $message
-     * 
+     *
      * @return Page
      */
     public function message($message)
@@ -69,7 +69,7 @@ class Redirect extends Page
     /**
      * Возвращает HTTP заголовки страницы
      * $this->httpHeaders
-     * 
+     *
      * @return array
      */
     protected function getHttpHeaders()

@@ -27,7 +27,7 @@ class Model extends DataModel
 
     /**
      * Статус возможности создания новой темы
-     * 
+     *
      * @return bool
      */
     protected function getcanCreateTopic()
@@ -37,6 +37,16 @@ class Model extends DataModel
             || (null === $this->post_topics && $user->g_post_topics == 1)
             || $user->isAdmin
             || $user->isModerator($this);
+    }
+
+    /**
+     * Статус возможности пометки всех тем прочтенными
+     *
+     * @return bool
+     */
+    protected function getcanMarkRead()
+    {
+        return ! $this->c->user->isGuest; // ????
     }
 
     /**
@@ -78,7 +88,11 @@ class Model extends DataModel
      */
     protected function getlink()
     {
-        return $this->c->Router->link('Forum', ['id' => $this->id, 'name' => $this->forum_name]);
+        if (0 === $this->id) {
+            return $this->c->Router->link('Index');
+        } else {
+            return $this->c->Router->link('Forum', ['id' => $this->id, 'name' => $this->forum_name]);
+        }
     }
 
     /**
@@ -97,12 +111,25 @@ class Model extends DataModel
 
     /**
      * Ссылка на создание новой темы
-     * 
+     *
      * @return string
      */
     protected function getlinkCreateTopic()
     {
         return $this->c->Router->link('NewTopic', ['id' => $this->id]);
+    }
+
+    /**
+     * Ссылка на пометку всех тем прочтенными
+     *
+     * @return string
+     */
+    protected function getlinkMarkRead()
+    {
+        return $this->c->Router->link('MarkRead', [
+                'id'    => $this->id,
+                'token' => $this->c->Csrf->create('MarkRead', ['id' => $this->id]),
+            ]);
     }
 
     /**

@@ -348,12 +348,6 @@ msgstr "Найти темы без ответов."
 msgid "Show posted topics"
 msgstr "Найти темы с вашим участием."
 
-msgid "Mark all as read"
-msgstr "Отметить всё как прочтённое"
-
-msgid "Mark forum read"
-msgstr "Отметить раздел как прочтённый"
-
 msgid "Title separator"
 msgstr " - "
 

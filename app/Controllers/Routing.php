@@ -82,6 +82,10 @@ class Routing
                 // юзеры
                 $r->add('GET', '/user/{id:[1-9]\d*}/{name}', 'Profile:view', 'User'); //????
             }
+            // пометка разделов прочитанными
+            if (! $user->isGuest) {
+                $r->add('GET', '/forum/{id:\d+}/markread/{token}', 'Misc:markread', 'MarkRead');
+            }
 
             // разделы
             $r->add('GET',           '/forum/{id:[1-9]\d*}/{name}[/{page:[1-9]\d*}]', 'Forum:view',    'Forum'   );

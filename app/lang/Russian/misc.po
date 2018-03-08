@@ -1,0 +1,235 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+
+msgid "Mark read redirect"
+msgstr "Все темы и разделы помечены прочитанными. Переадресация &hellip;"
+
+msgid "Mark forum read redirect"
+msgstr "Все темы выбранного раздела помечены прочитанными. Переадресация &hellip;"
+
+msgid "Form email disabled"
+msgstr "Пользователь, которому вы пытаетесь отправить письмо, отключил такую возможность."
+
+msgid "No email subject"
+msgstr "Вы должны ввести заголовок."
+
+msgid "No email message"
+msgstr "Вы должны ввести текст письма."
+
+msgid "Too long email message"
+msgstr "Сообщение должно быть не длиннее 65535 символов (64 KB)."
+
+msgid "Email flood"
+msgstr "По крайней мере %s секунд должно пройти между отправками писем. Пожалуйста, подождите %s секунд и попробуйте снова."
+
+msgid "Email sent redirect"
+msgstr "Письмо отправлено. Переадресация &hellip;"
+
+msgid "Send email to"
+msgstr "Отправить сообщение для"
+
+msgid "Email subject"
+msgstr "Заголовок"
+
+msgid "Email message"
+msgstr "Сообщение"
+
+msgid "Email disclosure note"
+msgstr "Имейте в виду, что ваш почтовый адрес будет виден получателю письма."
+
+msgid "Write email"
+msgstr "Форма для составления и отправки письма"
+
+msgid "No reason"
+msgstr "Пожалуйста, введите причину."
+
+msgid "Reason too long"
+msgstr "Ваше сообщение не должно превышать 65535 байт (~64Кб)."
+
+msgid "Report flood"
+msgstr "По крайней мере %s секунд должно пройти между сигналами. Пожалуйста, подождите %s секунд и попробуйте снова."
+
+msgid "Report redirect"
+msgstr "Сигнал отправлен. Переадресация &hellip;"
+
+msgid "Report post"
+msgstr "Сигнал модератору"
+
+msgid "Reason"
+msgstr "Причина обращения"
+
+msgid "Reason desc"
+msgstr "Пожалуйста, кратко опишите причину создания этого сигнала (жалобы)"
+
+msgid "Already subscribed topic"
+msgstr "Вы уже подписаны на эту тему."
+
+msgid "Already subscribed forum"
+msgstr "Вы уже подписаны на этот раздел."
+
+msgid "Subscribe redirect"
+msgstr "Подписка добавлена. Переадресация &hellip;"
+
+msgid "Not subscribed topic"
+msgstr "Вы не подписаны на эту тему."
+
+msgid "Not subscribed forum"
+msgstr "Вы не подписаны на этот раздел."
+
+msgid "Unsubscribe redirect"
+msgstr "Подписка удалена. Переадресация &hellip;"
+
+msgid "Moderate"
+msgstr "Модерирование"
+
+msgid "Select"
+msgstr "Выбрать"
+
+msgid "Move"
+msgstr "Перенести"
+
+msgid "Split"
+msgstr "Разделить"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "Merge"
+msgstr "Объединить"
+
+msgid "Lang changed"
+msgstr "Язык изменен. Переадресация &hellip;"
+
+msgid "Open"
+msgstr "Открыть"
+
+msgid "Close"
+msgstr "Закрыть"
+
+msgid "Move topic"
+msgstr "Перенос темы"
+
+msgid "Move topics"
+msgstr "Перенос тем"
+
+msgid "Move legend"
+msgstr "Выберите раздел-получатель"
+
+msgid "Move to"
+msgstr "Перенести в"
+
+msgid "Nowhere to move"
+msgstr "Нет раздела, куда бы вы могли перенести тему(ы)."
+
+msgid "Leave redirect"
+msgstr "Оставить тему(ы) переадресации"
+
+msgid "Move topic redirect"
+msgstr "Тема перенесена. Переадресация &hellip;"
+
+msgid "Move topics redirect"
+msgstr "Темы перенесены. Переадресация &hellip;"
+
+msgid "Confirm delete legend"
+msgstr "Пожалуйста, подтвердите удаление"
+
+msgid "Delete topics"
+msgstr "Удаление тем"
+
+msgid "Delete topics comply"
+msgstr "Вы уверены, что хотите удалить отмеченные темы?"
+
+msgid "Delete topics redirect"
+msgstr "Темы удалены. Переадресация &hellip;"
+
+msgid "Open topic redirect"
+msgstr "Тема открыта. Переадресация &hellip;"
+
+msgid "Open topics redirect"
+msgstr "Темы открыты. Переадресация &hellip;"
+
+msgid "Close topic redirect"
+msgstr "Тема закрыта. Переадресация &hellip;"
+
+msgid "Close topics redirect"
+msgstr "Темы закрыты. Переадресация &hellip;"
+
+msgid "No topics selected"
+msgstr "Вы должны выбрать хотя бы одну тему для переноса/удаления/открытия/закрытия."
+
+msgid "Not enough topics selected"
+msgstr "Вы должны выбрать хотя бы две темы для объединения."
+
+msgid "Stick topic redirect"
+msgstr "Тема выделена. Переадресация &hellip;"
+
+msgid "Unstick topic redirect"
+msgstr "Выделение темы снято. Переадресация &hellip;"
+
+msgid "Merge topics"
+msgstr "Объединение тем"
+
+msgid "Merge topics redirect"
+msgstr "Темы объединены. Переадресация &hellip;"
+
+msgid "Confirm merge legend"
+msgstr "Пожалуйста, подтвердите объединение"
+
+msgid "New subject"
+msgstr "Название новой темы"
+
+msgid "Confirm split legend"
+msgstr "Пожалуйста, подтвердите разделение выбранных сообщений и укажите место переноса."
+
+msgid "Split posts"
+msgstr "Разделение сообщений"
+
+msgid "Split posts comply"
+msgstr "Вы уверены, что хотите разделить выбранные сообщения?"
+
+msgid "Split posts redirect"
+msgstr "Сообщения разделены. Переадресация &hellip;"
+
+msgid "Delete posts"
+msgstr "Удаление сообщений"
+
+msgid "Cannot select first"
+msgstr "Первое сообщение не может быть выбрано."
+
+msgid "Delete posts comply"
+msgstr "Вы уверены, что хотите удалить выбранные сообщения?"
+
+msgid "Delete posts redirect"
+msgstr "Сообщения удалены. Переадресация &hellip;"
+
+msgid "No posts selected"
+msgstr "Вы должны выбрать хотя бы одно сообщение для данного действия."
+
+msgid "Host info 1"
+msgstr "IP адрес: %s"
+
+msgid "Host info 2"
+msgstr "Имя хоста: %s"
+
+msgid "Show more users"
+msgstr "Показать еще информацию по IP"
+
+msgid "Move posts"
+msgstr "Перенос сообщений"
+
+msgid "Move posts redirect"
+msgstr "Сообщения перенесены. Переадресация &hellip;"
+
+msgid "Post from topic"
+msgstr "Это сообщение перенесено из темы"

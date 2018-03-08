@@ -346,12 +346,6 @@ msgstr "Find topics with no replies."
 msgid "Show posted topics"
 msgstr "Find topics you have posted to."
 
-msgid "Mark all as read"
-msgstr "Mark all topics as read"
-
-msgid "Mark forum read"
-msgstr "Mark this forum as read"
-
 msgid "Title separator"
 msgstr " - "
 

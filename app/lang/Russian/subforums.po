@@ -41,3 +41,12 @@ msgid_plural "Moderated by"
 msgstr[0] "Модератор:"
 msgstr[1] "Модераторы:"
 msgstr[2] "Модераторы:"
+
+msgid "Mark all as read"
+msgstr "Отметить все разделы прочитанными"
+
+msgid "Mark forum read"
+msgstr "Отметить все темы в этом раздел прочитанными"
+
+msgid "All is read"
+msgstr "Всё прочитано"

@@ -35,3 +35,12 @@ msgstr[1] "<strong>%s</strong> Posts"
 
 msgid "Moderated by"
 msgstr "Moderated by"
+
+msgid "Mark all as read"
+msgstr "Mark all topics as read"
+
+msgid "Mark forum read"
+msgstr "Mark this forum as read"
+
+msgid "All is read"
+msgstr "All is read"

@@ -1167,6 +1167,15 @@ select {
   content: " ]";
 }
 
+.f-btn-markread {
+  opacity: 0.5;
+}
+
+.f-btn-markread:focus,
+.f-btn-markread:hover {
+  opacity: 1;
+}
+
 /*
 .icon-document:before {
   content: "\e900";

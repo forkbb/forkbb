@@ -135,6 +135,7 @@ return [
         'Maintenance'     => \ForkBB\Models\Pages\Maintenance::class,
         'Ban'             => \ForkBB\Models\Pages\Ban::class,
         'Debug'           => \ForkBB\Models\Pages\Debug::class,
+        'Misc'            => \ForkBB\Models\Pages\Misc::class,
         'AdminIndex'      => \ForkBB\Models\Pages\Admin\Index::class,
         'AdminStatistics' => \ForkBB\Models\Pages\Admin\Statistics::class,
         'AdminOptions'    => \ForkBB\Models\Pages\Admin\Options::class,
@@ -193,6 +194,7 @@ return [
         'ForumManagerLoadTree' => \ForkBB\Models\Forum\LoadTree::class,
         'ForumManagerSave'     => \ForkBB\Models\Forum\Save::class,
         'ForumManagerDelete'   => \ForkBB\Models\Forum\Delete::class,
+        'ForumManagerMarkread' => \ForkBB\Models\Forum\Markread::class,
 
         'TopicModel'         => \ForkBB\Models\Topic\Model::class,
         'TopicModelCalcStat' => \ForkBB\Models\Topic\CalcStat::class,

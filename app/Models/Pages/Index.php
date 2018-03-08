@@ -46,6 +46,13 @@ class Index extends Page
         $this->online       = $this->c->Online->calc($this)->info();
         $this->categoryes   = $ctgs;
 
+        if (! $this->user->isGuest) {
+            $this->linkMarkRead = $this->c->Router->link('MarkRead', [
+                    'id'    => 0,
+                    'token' => $this->c->Csrf->create('MarkRead', ['id' => 0]),
+                ]);
+        }
+
         return $this;
     }
 }
