@@ -44,9 +44,9 @@ class Model
      */
     public function __isset($name)
     {
-        return array_key_exists($name, $this->a) 
-            || array_key_exists($name, $this->aCalc)
-            || method_exists($this, 'get' . $name);
+        return \array_key_exists($name, $this->a)
+            || \array_key_exists($name, $this->aCalc)
+            || \method_exists($this, 'get' . $name);
     }
 
     /**
@@ -70,7 +70,7 @@ class Model
     {
         unset($this->aCalc[$name]);
 
-        if (method_exists($this, $method = 'set' . $name)) {
+        if (\method_exists($this, $method = 'set' . $name)) {
             $this->$method($val);
         } else {
             $this->a[$name] = $val;
@@ -86,9 +86,9 @@ class Model
      */
     public function __get($name)
     {
-        if (array_key_exists($name, $this->aCalc)) {
+        if (\array_key_exists($name, $this->aCalc)) {
             return $this->aCalc[$name];
-        } elseif (method_exists($this, $method = 'get' . $name)) {
+        } elseif (\method_exists($this, $method = 'get' . $name)) {
             return $this->aCalc[$name] = $this->$method();
         } else {
             return isset($this->a[$name]) ? $this->a[$name] : null;
@@ -105,8 +105,8 @@ class Model
      */
     public function __call($name, array $args)
     {
-        $key = str_replace(['ForkBB\\Models\\', 'ForkBB\\', '\\'], '', get_class($this));
+        $key = \str_replace(['ForkBB\\Models\\', 'ForkBB\\', '\\'], '', \get_class($this));
 
-        return $this->c->{$key . ucfirst($name)}->setModel($this)->$name(...$args);
+        return $this->c->{$key . \ucfirst($name)}->setModel($this)->$name(...$args);
     }
 }

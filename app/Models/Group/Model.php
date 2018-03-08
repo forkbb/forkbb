@@ -16,12 +16,12 @@ class Model extends DataModel
     protected function getcanDelete()
     {
         $notDeleted = [
-            $this->c->GROUP_ADMIN, 
-            $this->c->GROUP_MOD, 
-            $this->c->GROUP_GUEST, 
+            $this->c->GROUP_ADMIN,
+            $this->c->GROUP_MOD,
+            $this->c->GROUP_GUEST,
             $this->c->GROUP_MEMBER
         ];
-        return ! in_array($this->g_id, $notDeleted) && $this->g_id != $this->c->config->o_default_user_group;
+        return ! \in_array($this->g_id, $notDeleted) && $this->g_id != $this->c->config->o_default_user_group;
     }
 
     protected function getlinkDelete()

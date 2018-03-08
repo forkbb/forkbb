@@ -20,9 +20,9 @@ class Index extends Method
     public function index(Post $post, $mode = 'add')
     {
         //???? пост после валидации должен иметь дерево тегов
-        $mesWords = $this->words(mb_strtolower($this->c->Parser->getText(), 'UTF-8'));
+        $mesWords = $this->words(\mb_strtolower($this->c->Parser->getText(), 'UTF-8'));
         $subWords = $post->id === $post->parent->first_post_id
-            ? $this->words(mb_strtolower($post->parent->subject, 'UTF-8'))
+            ? $this->words(\mb_strtolower($post->parent->subject, 'UTF-8'))
             : [];
 
         if ('add' !== $mode) {
@@ -48,13 +48,13 @@ class Index extends Method
 
         $words = [];
         if ('edit' === $mode) {
-            $words['add']['p'] = array_diff($mesWords, array_keys($mesCurWords));
-            $words['add']['s'] = array_diff($subWords, array_keys($subCurWords));
-            $words['del']['p'] = array_diff_key($mesCurWords, array_flip($mesWords));
-            $words['del']['s'] = array_diff_key($subCurWords, array_flip($subWords));
+            $words['add']['p'] = \array_diff($mesWords, \array_keys($mesCurWords));
+            $words['add']['s'] = \array_diff($subWords, \array_keys($subCurWords));
+            $words['del']['p'] = \array_diff_key($mesCurWords, \array_flip($mesWords));
+            $words['del']['s'] = \array_diff_key($subCurWords, \array_flip($subWords));
         } elseif ('merge' === $mode) {
-            $words['add']['p'] = array_diff($mesWords, array_keys($mesCurWords));
-            $words['add']['s'] = array_diff($subWords, array_keys($subCurWords));
+            $words['add']['p'] = \array_diff($mesWords, \array_keys($mesCurWords));
+            $words['add']['s'] = \array_diff($subWords, \array_keys($subCurWords));
             $words['del']['p'] = [];
             $words['del']['s'] = [];
         } else {
@@ -67,7 +67,7 @@ class Index extends Method
         if (empty($words['add']['s'])) {
             $allWords = $words['add']['p'];
         } else {
-            $allWords = array_unique(array_merge($words['add']['p'], $words['add']['s']));
+            $allWords = \array_unique(\array_merge($words['add']['p'], $words['add']['s']));
         }
         if (! empty($allWords)) {
             $vars = [
@@ -77,7 +77,7 @@ class Index extends Method
                     FROM ::search_words
                     WHERE word IN(?as:words)';
             $oldWords = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
-            $newWords = array_diff($allWords, $oldWords);
+            $newWords = \array_diff($allWords, $oldWords);
 
             if (! empty($newWords)) {
                 $sql  = 'INSERT INTO ::search_words (word) VALUES(?s:word)';
@@ -139,7 +139,7 @@ class Index extends Method
         $text = $this->model->cleanText($text, true);
 
         $words = [];
-        foreach (array_unique(explode(' ', $text)) as $word) {
+        foreach (\array_unique(\explode(' ', $text)) as $word) {
             $word = $this->model->word($word, true);
             if (null !== $word) {
                 $words[] = $word;

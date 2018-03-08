@@ -10,7 +10,7 @@ class UpdateCountPosts extends Action
 {
     /**
      * Обновляет число сообщений пользователя(ей)
-     * 
+     *
      * @param mixed ...$args
      *
      * @throws InvalidArgumentException
@@ -36,7 +36,7 @@ class UpdateCountPosts extends Action
         } else {
             $where = 'u.id IN (?ai:ids)';
             $vars  = [
-                ':ids' => array_keys($ids),
+                ':ids' => \array_keys($ids),
             ];
         }
 

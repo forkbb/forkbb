@@ -8,7 +8,7 @@ class Model extends ParentModel
 {
     /**
      * Загружает список цензуры из кеша/БД
-     * 
+     *
      * @return Censorship
      */
     public function init()
@@ -35,7 +35,7 @@ class Model extends ParentModel
     public function censor($str)
     {
         if ('1' == $this->c->config->o_censoring) {
-            return (string) preg_replace($this->searchList, $this->replaceList,  $str);
+            return (string) \preg_replace($this->searchList, $this->replaceList,  $str);
         } else {
             return $str;
         }

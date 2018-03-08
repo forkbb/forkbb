@@ -40,9 +40,9 @@ class Func
     public function getStyles()
     {
         if (empty($this->styles)) {
-            $this->styles = array_map(function($style) {
-                return str_replace([$this->c->DIR_PUBLIC . '/style/', '/style.css'], '', $style);
-            }, glob($this->c->DIR_PUBLIC . '/style/*/style.css'));
+            $this->styles = \array_map(function($style) {
+                return \str_replace([$this->c->DIR_PUBLIC . '/style/', '/style.css'], '', $style);
+            }, \glob($this->c->DIR_PUBLIC . '/style/*/style.css'));
         }
         return $this->styles;
     }
@@ -55,9 +55,9 @@ class Func
     public function getLangs()
     {
         if (empty($this->langs)) {
-            $this->langs = array_map(function($lang) {
-                return str_replace([$this->c->DIR_LANG . '/', '/common.po'], '', $lang);
-            }, glob($this->c->DIR_LANG . '/*/common.po'));
+            $this->langs = \array_map(function($lang) {
+                return \str_replace([$this->c->DIR_LANG . '/', '/common.po'], '', $lang);
+            }, \glob($this->c->DIR_LANG . '/*/common.po'));
         }
         return $this->langs;
     }
@@ -81,7 +81,7 @@ class Func
         } else {
             if ($cur > 0) {
                 $pages[] = [\ForkBB\__($info, $cur, $all), 'info', null];
-                $cur = min(max(1, $cur), $all);
+                $cur = \min(\max(1, $cur), $all);
                 if ($cur > 1) {
                     $pages[] = [$this->c->Router->link($marker, ['page' => $cur - 1] + $args), 'prev', null];
                 }
@@ -94,7 +94,7 @@ class Func
                 $tpl[$all] = $all;
             } else {
                 $tpl = $all < 7
-                    ? array_slice([2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6], 0, $all - 1)
+                    ? \array_slice([2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6], 0, $all - 1)
                     : [2 => 2, 3 => 3, 4 => 4, $all => $all];
             }
             $k = 1;

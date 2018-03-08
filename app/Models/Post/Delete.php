@@ -66,10 +66,10 @@ class Delete extends Action
             foreach ($posts as $post) {
                 $users[$post->poster_id] = true;
             }
-            $users = array_keys($users);
+            $users = \array_keys($users);
 
             $vars = [
-                ':posts' => array_keys($posts),
+                ':posts' => \array_keys($posts),
             ];
             $sql = 'DELETE FROM ::posts
                     WHERE id IN (?ai:posts)';
@@ -88,7 +88,7 @@ class Delete extends Action
             }
         } elseif ($topics) {
             $vars = [
-                ':topics' => array_keys($topics),
+                ':topics' => \array_keys($topics),
             ];
             $sql = 'SELECT p.poster_id
                     FROM ::posts AS p
@@ -101,7 +101,7 @@ class Delete extends Action
             $this->c->DB->exec($sql, $vars);
         } elseif ($forums) {
             $vars = [
-                ':forums' => array_keys($forums),
+                ':forums' => \array_keys($forums),
             ];
             $sql = 'SELECT p.poster_id
                     FROM ::posts AS p

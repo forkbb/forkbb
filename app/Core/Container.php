@@ -44,13 +44,13 @@ class Container
     public function config(array $config)
     {
         if (isset($config['shared'])) {
-            $this->shared = array_replace_recursive($this->shared, $config['shared']);
+            $this->shared = \array_replace_recursive($this->shared, $config['shared']);
         }
         if (isset($config['multiple'])) {
-            $this->multiple = array_replace_recursive($this->multiple, $config['multiple']);
+            $this->multiple = \array_replace_recursive($this->multiple, $config['multiple']);
         }
         unset($config['shared'], $config['multiple']);
-        $this->config = array_replace_recursive($this->config, $config);
+        $this->config = \array_replace_recursive($this->config, $config);
     }
 
     /**
@@ -66,10 +66,10 @@ class Container
     {
         if (isset($this->instances[$id])) {
             return $this->instances[$id];
-        } elseif (strpos($id, '.') !== false) {
-            $tree = explode('.', $id);
-            $service = $this->__get(array_shift($tree));
-            if (is_array($service)) {
+        } elseif (\strpos($id, '.') !== false) {
+            $tree = \explode('.', $id);
+            $service = $this->__get(\array_shift($tree));
+            if (\is_array($service)) {
                 return $this->fromArray($service, $tree);
             } elseif (is_object($service)) {
                 return $service->{$tree[0]};
@@ -87,15 +87,15 @@ class Container
             throw new InvalidArgumentException('Wrong property name: ' . $id);
         }
         // N.B. "class" is just the first element, regardless of its key
-        $class = array_shift($config);
+        $class = \array_shift($config);
         $args = [];
         // If you want to susbtitute some values in arguments, use non-numeric keys for them
         foreach ($config as $k => $v) {
-            $args[] = is_numeric($k) ? $v : $this->resolve($v);
+            $args[] = \is_numeric($k) ? $v : $this->resolve($v);
         }
         // Special case: reference to factory method
-        if ($class{0} == '@' && strpos($class, ':') !== false) {
-            list($name, $method) = explode(':', substr($class, 1), 2);
+        if ($class{0} == '@' && \strpos($class, ':') !== false) {
+            list($name, $method) = \explode(':', \substr($class, 1), 2);
             $factory = $this->__get($name);
             $service = $factory->$method(...$args);
         } else {
@@ -118,7 +118,7 @@ class Container
      */
     public function __set($id, $service)
     {
-        if (strpos($id, '.') !== false) {
+        if (\strpos($id, '.') !== false) {
             //????
         } else {
             $this->instances[$id] = $service;
@@ -159,14 +159,14 @@ class Container
      */
     public function setParameter($name, $value)
     {
-        $segments = explode('.', $name);
-        $n = count($segments);
+        $segments = \explode('.', $name);
+        $n = \count($segments);
         $ptr = &$this->config;
         foreach ($segments as $s) {
             if (--$n) {
-                if (! array_key_exists($s, $ptr)) {
+                if (! \array_key_exists($s, $ptr)) {
                     $ptr[$s] = [];
-                } elseif (! is_array($ptr[$s])) {
+                } elseif (! \is_array($ptr[$s])) {
                     throw new InvalidArgumentException("Scalar '{$s}' in the path '{$name}'");
                 }
                 $ptr = &$ptr[$s];
@@ -180,14 +180,14 @@ class Container
 
     protected function resolve($value)
     {
-        if (is_string($value)) {
-            if (strpos($value, '%') !== false) {
+        if (\is_string($value)) {
+            if (\strpos($value, '%') !== false) {
                 // whole string substitution can return any type of value
-                if (preg_match('~^%([a-z0-9_]+(?:\.[a-z0-9_]+)*)%$~i', $value, $matches)) {
+                if (\preg_match('~^%([a-z0-9_]+(?:\.[a-z0-9_]+)*)%$~i', $value, $matches)) {
                     $value = $this->__get($matches[1]);
                 } else {
                     // partial string substitution casts value to string
-                    $value = preg_replace_callback(
+                    $value = \preg_replace_callback(
                         '~%([a-z0-9_]+(?:\.[a-z0-9_]+)*)%~i',
                         function ($matches) {
                             return $this->__get($matches[1]);
@@ -196,9 +196,9 @@ class Container
                     );
                 }
             } elseif (isset($value{0}) && $value{0} === '@') {
-                return $this->__get(substr($value, 1));
+                return $this->__get(\substr($value, 1));
             }
-        } elseif (is_array($value)) {
+        } elseif (\is_array($value)) {
             foreach ($value as &$v) {
                 $v = $this->resolve($v);
             }
@@ -209,11 +209,11 @@ class Container
 
     /**
      * @param string $name
-     * 
+     *
      * @return bool
      */
     public function isInit($name)
     {
-        return array_key_exists($name, $this->instances);
+        return \array_key_exists($name, $this->instances);
     }
 }

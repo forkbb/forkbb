@@ -20,7 +20,7 @@ class Prepare extends Method
      */
     public function prepare($query)
     {
-        if (substr_count($query, '"') % 2) {
+        if (\substr_count($query, '"') % 2) {
             $this->model->queryError = 'Odd number of quotes: \'%s\'';
             $this->model->queryWords = [];
             $this->model->queryText  = $query;
@@ -37,14 +37,14 @@ class Prepare extends Method
         $keyword = true;
         $count   = 0;
 
-        foreach (preg_split('%"%', $query) as $subQuery) {
+        foreach (\preg_split('%"%', $query) as $subQuery) {
             // подстрока внутри кавычек
             if ($quotes) {
-                $subQuery = mb_strtolower(trim($subQuery), 'UTF-8');
+                $subQuery = \mb_strtolower(trim($subQuery), 'UTF-8');
                 // не стоп-слово и минимальная длина удовлетворяет условию
                 if (null !== $this->model->word($subQuery)) {
                     // подстрока является словом и нет символов CJK языков
-                    if (false === strpos($subQuery, ' ')
+                    if (false === \strpos($subQuery, ' ')
                         && ! $this->model->isCJKWord($subQuery)
                         && $this->model->cleanText($subQuery) === $subQuery
                     ) {
@@ -63,11 +63,11 @@ class Prepare extends Method
 
             // действуют управляющие слова
             foreach (
-                preg_split(
+                \preg_split(
                     '%\s*(\b(?:AND|OR|NOT)\b|(?<![\p{L}\p{N}])\-|[()+|!])\s*|\s+%u',
                     $subQuery,
                     -1,
-                    PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
+                    \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY
                 ) as $cur
             ) {
                 $key = null;
@@ -107,7 +107,7 @@ class Prepare extends Method
                             $error = 'The order of brackets is broken: \'%s\'';
                         } else {
                             $temp = $words;
-                            list($words, $keyword, $count) = array_pop($stack);
+                            list($words, $keyword, $count) = \array_pop($stack);
                             if (! $keyword) {
                                 $words[] = 'AND';
                             }
@@ -117,11 +117,11 @@ class Prepare extends Method
                         }
                         break;
                     default:
-                        $cur    = mb_strtolower($cur, 'UTF-8');
+                        $cur    = \mb_strtolower($cur, 'UTF-8');
                         $cur    = $this->model->cleanText($cur); //????
                         $temp   = [];
                         $countT = 0;
-                        foreach (explode(' ', $cur) as $word) {
+                        foreach (\explode(' ', $cur) as $word) {
                             $word = $this->model->word($word);
                             if (null === $word) {
                                 continue;
@@ -131,7 +131,7 @@ class Prepare extends Method
                             }
                             if ($this->model->isCJKWord($word)) {
                                 $temp[] = ['type' => 'CJK', 'word' => $word];
-                            } elseif (rtrim($word, '?*') === $word) {
+                            } elseif (\rtrim($word, '?*') === $word) {
                                 $temp[] = $word . '*'; //????
                             } else {
                                 $temp[] = $word;
@@ -142,8 +142,8 @@ class Prepare extends Method
                             if (! $keyword) {
                                 $words[] = 'AND';
                             }
-                            if (1 === $countT || 'AND' === end($words)) {
-                                $words  = array_merge($words, $temp);
+                            if (1 === $countT || 'AND' === \end($words)) {
+                                $words  = \array_merge($words, $temp);
                                 $count += $countT;
                             } else {
                                 $words[] = $temp;
@@ -186,7 +186,7 @@ class Prepare extends Method
         foreach ($words as $word) {
             if (isset($word['type']) && 'CJK' === $word['type']) {
                 $word = '"' . $word['word'] . '"';
-            } elseif (is_array($word)) {
+            } elseif (\is_array($word)) {
                 $word = '(' . $this->queryText($word) . ')';
             }
             $result .= $space . $word;

@@ -58,8 +58,8 @@ class DB extends PDO
      */
     public function __construct($dsn, $username = null, $password = null, array $options = [], $prefix = '')
     {
-        $type = strstr($dsn, ':', true);
-        if (! $type || ! file_exists(__DIR__ . '/DB/' . ucfirst($type) . '.php')) {
+        $type = \strstr($dsn, ':', true);
+        if (! $type || ! \file_exists(__DIR__ . '/DB/' . \ucfirst($type) . '.php')) {
             throw new PDOException("Driver isn't found for '$type'");
         }
         $this->dbType = $type;
@@ -86,7 +86,7 @@ class DB extends PDO
     public function __call($name, array $args)
     {
         if (empty($this->dbDrv)) {
-            $drv = 'ForkBB\\Core\\DB\\' . ucfirst($this->dbType);
+            $drv = 'ForkBB\\Core\\DB\\' . \ucfirst($this->dbType);
             $this->dbDrv = new $drv($this, $this->dbPrefix);
         }
         return $this->dbDrv->$name(...$args);
@@ -104,7 +104,7 @@ class DB extends PDO
         $verify = [self::ATTR_CURSOR => [self::CURSOR_FWDONLY, self::CURSOR_SCROLL]];
 
         foreach ($arr as $key => $value) {
-           if (! isset($verify[$key]) || ! in_array($value, $verify[$key])) {
+           if (! isset($verify[$key]) || ! \in_array($value, $verify[$key])) {
                return false;
            }
         }
@@ -126,7 +126,7 @@ class DB extends PDO
         $idxIn = 0;
         $idxOut = 1;
         $map = [];
-        $query = preg_replace_callback(
+        $query = \preg_replace_callback(
             '%(?=[?:])(?<![\w?:])(?:::(\w+)|\?(?![?:])(?:(\w+)(?::(\w+))?)?|:(\w+))%',
             function($matches) use ($params, &$idxIn, &$idxOut, &$map) {
                 if (! empty($matches[1])) {
@@ -155,7 +155,7 @@ class DB extends PDO
                         break;
                 }
 
-                if (! is_array($value)) {
+                if (! \is_array($value)) {
                     throw new PDOException("Expected array: key='{$key}', type='{$type}'");
                 }
 
@@ -169,7 +169,7 @@ class DB extends PDO
                     $res[] = $name;
                     $map[$key][] = $name;
                 }
-                return implode(',', $res);
+                return \implode(',', $res);
             },
             $query
         );
@@ -189,13 +189,13 @@ class DB extends PDO
     public function getValue($key, array $params)
     {
         if (
-            is_string($key)
-            && (isset($params[':' . $key]) || array_key_exists(':' . $key, $params))
+            \is_string($key)
+            && (isset($params[':' . $key]) || \array_key_exists(':' . $key, $params))
         ) {
             return $params[':' . $key];
         } elseif (
-            (is_string($key) || is_int($key))
-            && (isset($params[$key]) || array_key_exists($key, $params))
+            (\is_string($key) || \is_int($key))
+            && (isset($params[$key]) || \array_key_exists($key, $params))
         ) {
             return $params[$key];
         }
@@ -249,15 +249,15 @@ class DB extends PDO
         $map = $this->parse($query, $params);
 
         if (empty($params)) {
-            $start  = microtime(true);
+            $start  = \microtime(true);
             $result = parent::exec($query);
-            $this->saveQuery($query, microtime(true) - $start);
+            $this->saveQuery($query, \microtime(true) - $start);
             return $result;
         }
 
-        $start = microtime(true);
+        $start = \microtime(true);
         $stmt  = parent::prepare($query);
-        $this->delta = microtime(true) - $start;
+        $this->delta = \microtime(true) - $start;
 
         $stmt->setMap($map);
 
@@ -292,9 +292,9 @@ class DB extends PDO
 
         $map = $this->parse($query, $params);
 
-        $start = microtime(true);
+        $start = \microtime(true);
         $stmt  = parent::prepare($query, $options);
-        $this->delta = microtime(true) - $start;
+        $this->delta = \microtime(true) - $start;
 
         $stmt->setMap($map);
 
@@ -313,8 +313,8 @@ class DB extends PDO
      */
     public function query($query, ...$args)
     {
-        if (isset($args[0]) && is_array($args[0])) {
-            $params = array_shift($args);
+        if (isset($args[0]) && \is_array($args[0])) {
+            $params = \array_shift($args);
         } else {
             $params = [];
         }
@@ -322,15 +322,15 @@ class DB extends PDO
         $map = $this->parse($query, $params);
 
         if (empty($params)) {
-            $start  = microtime(true);
+            $start  = \microtime(true);
             $result = parent::query($query, ...$args);
-            $this->saveQuery($query, microtime(true) - $start);
+            $this->saveQuery($query, \microtime(true) - $start);
             return $result;
         }
 
-        $start = microtime(true);
+        $start = \microtime(true);
         $stmt  = parent::prepare($query);
-        $this->delta = microtime(true) - $start;
+        $this->delta = \microtime(true) - $start;
 
         $stmt->setMap($map);
 

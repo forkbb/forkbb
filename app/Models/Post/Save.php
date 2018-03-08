@@ -12,9 +12,9 @@ class Save extends Action
      * Обновляет сообщение в БД
      *
      * @param Post $post
-     * 
+     *
      * @throws RuntimeException
-     * 
+     *
      * @return Post
      */
     public function update(Post $post)
@@ -40,7 +40,7 @@ class Save extends Action
             return $post;
         }
         $vars[] = $post->id;
-        $this->c->DB->query('UPDATE ::posts SET ' . implode(', ', $set) . ' WHERE id=?i', $vars);
+        $this->c->DB->query('UPDATE ::posts SET ' . \implode(', ', $set) . ' WHERE id=?i', $vars);
         $post->resModified();
 
         return $post;
@@ -50,9 +50,9 @@ class Save extends Action
      * Добавляет новое сообщение в БД
      *
      * @param Post $post
-     * 
+     *
      * @throws RuntimeException
-     * 
+     *
      * @return int
      */
     public function insert(Post $post)
@@ -74,7 +74,7 @@ class Save extends Action
         if (empty($set)) {
             throw new RuntimeException('The model is empty');
         }
-        $this->c->DB->query('INSERT INTO ::posts (' . implode(', ', $set) . ') VALUES (' . implode(', ', $set2) . ')', $vars);
+        $this->c->DB->query('INSERT INTO ::posts (' . \implode(', ', $set) . ') VALUES (' . \implode(', ', $set2) . ')', $vars);
         $post->id = $this->c->DB->lastInsertId();
         $post->resModified();
 

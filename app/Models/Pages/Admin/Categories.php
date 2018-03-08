@@ -40,7 +40,7 @@ class Categories extends Admin
                 }
                 $this->c->categories->update();
 
-                if (strlen($v->new) > 0) {
+                if (\strlen($v->new) > 0) {
                     $this->c->categories->insert($v->new); //????
                 }
 

@@ -18,9 +18,9 @@ class Perm extends Action
      * Получение таблицы разрешений для раздела
      *
      * @param Forum $forum
-     * 
+     *
      * @throws RuntimeException
-     * 
+     *
      * @return array
      */
     public function get(Forum $forum)
@@ -29,9 +29,9 @@ class Perm extends Action
             ':fid' => $forum->id > 0 ? $forum->id : 0,
             ':adm' => $this->c->GROUP_ADMIN,
         ];
-        $sql = 'SELECT g.g_id, fp.read_forum, fp.post_replies, fp.post_topics 
-                FROM ::groups AS g 
-                LEFT JOIN ::forum_perms AS fp ON (g.g_id=fp.group_id AND fp.forum_id=?i:fid) 
+        $sql = 'SELECT g.g_id, fp.read_forum, fp.post_replies, fp.post_topics
+                FROM ::groups AS g
+                LEFT JOIN ::forum_perms AS fp ON (g.g_id=fp.group_id AND fp.forum_id=?i:fid)
                 WHERE g.g_id!=?i:adm
                 ORDER BY g.g_id';
         $perms = $this->c->DB->query($sql, $vars)->fetchAll(\PDO::FETCH_UNIQUE);
@@ -52,7 +52,7 @@ class Perm extends Action
 
             $result[$gid] = $group;
         }
-        $this->fileds = array_keys($perm);
+        $this->fileds = \array_keys($perm);
 
         return $result;
     }
@@ -62,7 +62,7 @@ class Perm extends Action
      *
      * @param Forum $forum
      * @param array $perms
-     * 
+     *
      * @throws RuntimeException
      */
     public function update(Forum $forum, array $perms)
@@ -78,7 +78,7 @@ class Perm extends Action
 
             $row     = [];
             $modDef  = false;
-            $modPerm = false; 
+            $modPerm = false;
             foreach ($this->fileds as $field) {
                 if ($group->{'dis_' . $field}) {
                     $row[$field] = $group->{'set_' . $field} ? 1 : 0;
@@ -89,26 +89,26 @@ class Perm extends Action
                     $modPerm     = $row[$field] !== (int) $group->{'set_' . $field} ? true : $modPerm;
                 }
             }
-            
+
             if ($modDef || $modPerm) {
                 $vars = [
                     ':gid' => $id,
                     ':fid' => $forum->id,
                 ];
-                $sql = 'DELETE FROM ::forum_perms 
+                $sql = 'DELETE FROM ::forum_perms
                         WHERE group_id=?i:gid AND forum_id=?i:fid';
                 $this->c->DB->exec($sql, $vars);
             }
-            
+
             if ($modDef) {
-                $vars   = array_values($row);
+                $vars   = \array_values($row);
                 $vars[] = $id;
                 $vars[] = $forum->id;
-                $list   = array_keys($row);
+                $list   = \array_keys($row);
                 $list[] = 'group_id';
                 $list[] = 'forum_id';
-                $list2  = array_fill(0, count($list), '?i');
-                $sql = 'INSERT INTO ::forum_perms (' . implode(', ', $list) . ') VALUES (' . implode(', ', $list2) . ')';
+                $list2  = \array_fill(0, \count($list), '?i');
+                $sql = 'INSERT INTO ::forum_perms (' . \implode(', ', $list) . ') VALUES (' . \implode(', ', $list2) . ')';
                 $this->c->DB->exec($sql, $vars);
             }
         }
@@ -118,7 +118,7 @@ class Perm extends Action
      * Сброс разрешений для раздела
      *
      * @param Forum $forum
-     * 
+     *
      * @throws RuntimeException
      */
     public function reset(Forum $forum)
@@ -130,7 +130,7 @@ class Perm extends Action
         $vars = [
             ':fid' => $forum->id,
         ];
-        $sql = 'DELETE FROM ::forum_perms 
+        $sql = 'DELETE FROM ::forum_perms
                 WHERE forum_id=?i:fid';
         $this->c->DB->exec($sql, $vars);
     }
@@ -139,7 +139,7 @@ class Perm extends Action
      * Удаление разрешений для группы
      *
      * @param Group $group
-     * 
+     *
      * @throws RuntimeException
      */
     public function delete(Group $group)
@@ -151,7 +151,7 @@ class Perm extends Action
         $vars = [
             ':gid' => $group->g_id,
         ];
-        $sql = 'DELETE FROM ::forum_perms 
+        $sql = 'DELETE FROM ::forum_perms
                 WHERE group_id=?i:gid';
         $this->c->DB->exec($sql, $vars);
     }
@@ -161,7 +161,7 @@ class Perm extends Action
      *
      * @param Group $from
      * @param Group $to
-     * 
+     *
      * @throws RuntimeException
      */
     public function copy(Group $from, Group $to)
@@ -176,9 +176,9 @@ class Perm extends Action
             ':old' => $from->g_id,
             ':new' => $to->g_id,
         ];
-        $sql = 'INSERT INTO ::forum_perms (group_id, forum_id, read_forum, post_replies, post_topics) 
-                SELECT ?i:new, forum_id, read_forum, post_replies, post_topics 
-                FROM ::forum_perms 
+        $sql = 'INSERT INTO ::forum_perms (group_id, forum_id, read_forum, post_replies, post_topics)
+                SELECT ?i:new, forum_id, read_forum, post_replies, post_topics
+                FROM ::forum_perms
                 WHERE group_id=?i:old';
 
         $this->c->DB->exec($sql, $vars);

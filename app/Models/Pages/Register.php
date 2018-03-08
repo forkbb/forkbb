@@ -100,7 +100,7 @@ class Register extends Page
         $user = $this->c->users->create(['username' => $username]);
 
         // username = Гость
-        if (preg_match('%^(guest|' . preg_quote(\ForkBB\__('Guest'), '%') . ')$%iu', $username)) { //????
+        if (\preg_match('%^(guest|' . \preg_quote(\ForkBB\__('Guest'), '%') . ')$%iu', $username)) { // ???? а зачем?
             $v->addError('Username guest');
         // цензура
         } elseif ($this->c->censorship->censor($username) !== $username) {
@@ -140,13 +140,13 @@ class Register extends Page
         $user->email           = $v->email;
         $user->email_confirmed = 0;
         $user->activate_string = $key;
-        $user->u_mark_all_read = time();
+        $user->u_mark_all_read = \time();
         $user->email_setting   = $this->c->config->o_default_email_setting;
         $user->timezone        = $this->c->config->o_default_timezone;
         $user->dst             = $this->c->config->o_default_dst;
         $user->language        = $user->language; //????
         $user->style           = $user->style;    //????
-        $user->registered      = time();
+        $user->registered      = \time();
         $user->registration_ip = $this->user->ip;
 
         $newUserId = $this->c->users->insert($user);
@@ -233,11 +233,11 @@ class Register extends Page
      */
     public function activate(array $args)
     {
-        if (! hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['key']))
+        if (! \hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['key']))
             || ! ($user = $this->c->users->load($args['id'])) instanceof User
             || empty($user->activate_string)
             || 'w' !== $user->activate_string{0}
-            || ! hash_equals($user->activate_string, $args['key'])
+            || ! \hash_equals($user->activate_string, $args['key'])
         ) {
             return $this->c->Message->message('Bad request', false);
         }

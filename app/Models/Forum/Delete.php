@@ -33,7 +33,7 @@ class Delete extends Action
                 }
                 $forums[$arg->id] = $arg;
                 $all[$arg->id]    = true;
-                foreach (array_keys($arg->descendants) as $id) { //???? а если не админ?
+                foreach (\array_keys($arg->descendants) as $id) { //???? а если не админ?
                     $all[$id] = true;
                 }
             } else {
@@ -41,7 +41,7 @@ class Delete extends Action
             }
         }
 
-        if (array_diff_key($all, $forums)) {
+        if (\array_diff_key($all, $forums)) {
             throw new RuntimeException('Descendants should not be or they should be deleted too');
         }
 
@@ -54,7 +54,7 @@ class Delete extends Action
         }
 
         $vars = [
-            ':forums' => array_keys($forums),
+            ':forums' => \array_keys($forums),
         ];
         $sql = 'DELETE FROM ::mark_of_forum
                 WHERE fid IN (?ai:forums)';

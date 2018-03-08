@@ -23,7 +23,7 @@ class Check extends Method
         }
 
         // удаление просроченных банов
-        $now = time();
+        $now = \time();
         $ids = [];
         foreach ($this->model->otherList as $id => $row) {
             if (null !== $row['expire'] && $row['expire'] < $now) {
@@ -40,11 +40,11 @@ class Check extends Method
             if (null === $ip) {
                 return false; //????
             }
-            $add = strpos($ip, ':') === false ? '.' : ':'; //????
+            $add = \strpos($ip, ':') === false ? '.' : ':'; //????
             $ip .= $add;
             foreach ($this->model->ipList as $addr => $id) {
                 $addr .= $add;
-                if (substr($ip, 0, strlen($addr)) == $addr) {
+                if (\substr($ip, 0, \strlen($addr)) == $addr) {
                     if (isset($this->model->otherList[$id])) {
                         $user->__banInfo = $this->model->otherList[$id];
                     }

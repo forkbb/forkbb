@@ -201,7 +201,7 @@ class Maintenance extends Admin
 
         $this->c->DB->beginTransaction();
 
-        @set_time_limit(0);
+        @\set_time_limit(0);
 
         if ('POST' === $method && $v->clear) {
             $this->c->search->truncateIndex();

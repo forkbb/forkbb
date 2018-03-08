@@ -55,7 +55,7 @@ class Delete extends Action
 
         if ($topics) {
             $vars = [
-                ':topics' => array_keys($topics),
+                ':topics' => \array_keys($topics),
             ];
             $sql = 'DELETE FROM ::mark_of_topic
                     WHERE tid IN (?ai:topics)';
@@ -70,7 +70,7 @@ class Delete extends Action
             }
         } elseif ($forums) {
             $vars = [
-                ':forums' => array_keys($forums),
+                ':forums' => \array_keys($forums),
             ];
             $sql = 'DELETE FROM ::mark_of_topic
                     WHERE tid IN (

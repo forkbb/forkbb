@@ -25,7 +25,7 @@ class Markread extends Action
         }
 
         if (0 === $forum->id) {
-            $user->u_mark_all_read = time();
+            $user->u_mark_all_read = \time();
 
             $this->c->users->update($user);
 
@@ -41,7 +41,7 @@ class Markread extends Action
             $vars = [
                 ':uid'  => $user->id,
                 ':fid'  => $forum->id,
-                ':mark' => time(),
+                ':mark' => \time(),
             ];
             $sql = 'DELETE FROM ::mark_of_topic
                     WHERE uid=?i:uid AND tid IN (

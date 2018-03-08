@@ -49,12 +49,12 @@ class ActionT extends Method
 
         if (null !== $sql) {
             $vars = [
-                ':forums' => array_keys($root->descendants),
+                ':forums' => \array_keys($root->descendants),
             ];
             $list = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
         }
 
-        $this->model->numPages = (int) ceil((count($list) ?: 1) / $this->c->user->disp_topics);
+        $this->model->numPages = (int) \ceil((\count($list) ?: 1) / $this->c->user->disp_topics);
 
         // нет такой страницы в результате поиска
         if (! $this->model->hasPage()) {
@@ -64,7 +64,7 @@ class ActionT extends Method
             return [];
         }
 
-        $this->model->idsList = array_slice($list, ($this->model->page - 1) * $this->c->user->disp_topics, $this->c->user->disp_topics);
+        $this->model->idsList = \array_slice($list, ($this->model->page - 1) * $this->c->user->disp_topics, $this->c->user->disp_topics);
 
         return $this->c->topics->view($this->model);
     }

@@ -58,13 +58,13 @@ class Delete extends Method
 
         if ($posts) {
             $vars = [
-                ':posts' => array_keys($posts),
+                ':posts' => \array_keys($posts),
             ];
             $sql = 'DELETE FROM ::search_matches
                     WHERE post_id IN (?ai:posts)';
         } elseif ($topics) {
             $vars = [
-                ':topics' => array_keys($topics),
+                ':topics' => \array_keys($topics),
             ];
             $sql = 'DELETE FROM ::search_matches
                     WHERE post_id IN (
@@ -74,7 +74,7 @@ class Delete extends Method
                     )';
         } elseif ($forums) {
             $vars = [
-                ':forums' => array_keys($forums),
+                ':forums' => \array_keys($forums),
             ];
             $sql = 'DELETE FROM ::search_matches
                     WHERE post_id IN (

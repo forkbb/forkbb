@@ -8,7 +8,7 @@ class Debug extends Page
 {
     /**
      * Подготавливает данные для шаблона
-     * 
+     *
      * @return Page
      */
     public function debug()
@@ -31,10 +31,10 @@ class Debug extends Page
 
         $this->nameTpl    = 'layouts/debug';
         $this->onlinePos  = null;
-        $this->memory     = memory_get_usage();
-        $this->peak       = memory_get_peak_usage();
-        $this->time       = microtime(true) - $this->c->START;
-        
+        $this->memory     = \memory_get_usage();
+        $this->peak       = \memory_get_peak_usage();
+        $this->time       = \microtime(true) - $this->c->START;
+
         return $this;
     }
 
@@ -48,7 +48,7 @@ class Debug extends Page
     /**
      * Возвращает HTTP заголовки страницы
      * $this->httpHeaders
-     * 
+     *
      * @return array
      */
     protected function getHttpHeaders()

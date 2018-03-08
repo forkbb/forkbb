@@ -108,14 +108,14 @@ class Auth extends Page
             $authorized = false;
             $hash = $user->password;
             // For FluxBB by Visman 1.5.10.74 and above
-            if (strlen($hash) == 40) {
-                if (hash_equals($hash, sha1($password . $this->c->SALT1))) {
-                    $hash = password_hash($password, PASSWORD_DEFAULT);
+            if (\strlen($hash) == 40) {
+                if (\hash_equals($hash, sha1($password . $this->c->SALT1))) {
+                    $hash = \password_hash($password, \PASSWORD_DEFAULT);
                     $user->password = $hash;
                     $authorized = true;
                 }
             } else {
-                $authorized = password_verify($password, $hash);
+                $authorized = \password_verify($password, $hash);
             }
             // ошибка в пароле
             if (! $authorized) {
@@ -173,9 +173,9 @@ class Auth extends Page
                 $link = $this->c->Router->link('ChangePassword', ['email' => $v->email, 'key' => $key, 'hash' => $hash]);
                 $tplData = [
                     'fRootLink' => $this->c->Router->link('Index'),
-                    'fMailer' => \ForkBB\__('Mailer', $this->c->config->o_board_title),
-                    'username' => $this->tmpUser->username,
-                    'link' => $link,
+                    'fMailer'   => \ForkBB\__('Mailer', $this->c->config->o_board_title),
+                    'username'  => $this->tmpUser->username,
+                    'link'      => $link,
                 ];
 
                 try {
@@ -193,7 +193,7 @@ class Auth extends Page
 
                 if ($isSent) {
                     $this->tmpUser->activate_string = $key;
-                    $this->tmpUser->last_email_sent = time();
+                    $this->tmpUser->last_email_sent = \time();
                     $this->c->users->update($this->tmpUser);
                     return $this->c->Message->message(\ForkBB\__('Forget mail', $this->c->config->o_admin_email), false, 200);
                 } else {
@@ -233,8 +233,8 @@ class Auth extends Page
         } elseif (! ($user = $this->c->users->load($email, 'email')) instanceof User) {
             $v->addError('Invalid email');
         // за последний час уже был запрос на этот email
-        } elseif ($user->last_email_sent > 0 && time() - $user->last_email_sent < 3600) {
-            $v->addError(\ForkBB\__('Email flood', (int) (($user->last_email_sent + 3600 - time()) / 60)), 'e');
+        } elseif ($user->last_email_sent > 0 && \time() - $user->last_email_sent < 3600) {
+            $v->addError(\ForkBB\__('Email flood', (int) (($user->last_email_sent + 3600 - \time()) / 60)), 'e');
         } else {
             $this->tmpUser = $user;
         }
@@ -252,11 +252,11 @@ class Auth extends Page
     public function changePass(array $args, $method)
     {
         // что-то пошло не так
-        if (! hash_equals($args['hash'], $this->c->Secury->hash($args['email'] . $args['key']))
+        if (! \hash_equals($args['hash'], $this->c->Secury->hash($args['email'] . $args['key']))
             || ! ($user = $this->c->users->load($args['email'], 'email')) instanceof User
             || empty($user->activate_string)
             || 'p' !== $user->activate_string{0}
-            || ! hash_equals($user->activate_string, $args['key'])
+            || ! \hash_equals($user->activate_string, $args['key'])
         ) {
             return $this->c->Message->message('Bad request', false);
         }
@@ -280,7 +280,7 @@ class Auth extends Page
                 ]);
 
             if ($v->validation($_POST)) {
-                $user->password        = password_hash($v->password, PASSWORD_DEFAULT);
+                $user->password        = \password_hash($v->password, PASSWORD_DEFAULT);
                 $user->email_confirmed = 1;
                 $user->activate_string = null;
                 $this->c->users->update($user);

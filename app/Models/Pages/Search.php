@@ -27,7 +27,7 @@ class Search extends Page
                     $options[] = [\ForkBB\__('Category prefix') . $f->cat_name];
                 }
 
-                $indent = str_repeat(\ForkBB\__('Forum indent'), $f->depth);
+                $indent = \str_repeat(\ForkBB\__('Forum indent'), $f->depth);
 
                 if ($f->redirect_url) {
                     $options[] = [$f->id, $indent . \ForkBB\__('Forum prefix') . $f->forum_name, true];
@@ -120,7 +120,7 @@ class Search extends Page
             if ('POST' === $method && $v->validation($_POST)) {
                 return $this->c->Redirect->page($marker, $v->getData());
             } elseif ('GET' === $method && $v->validation($args)) {
-                return $this->action(array_merge($args, $v->getData(), ['action' => 'search']), $method, $advanced);
+                return $this->action(\array_merge($args, $v->getData(), ['action' => 'search']), $method, $advanced);
             }
 
             $this->fIswev = $v->getErrors();
@@ -179,9 +179,9 @@ class Search extends Page
                         'dl'      => 'w3',
                         'type'    => 'multiselect',
                         'options' => $this->listForOptions,
-                        'value'   => $v ? explode('.', $v->forums) : null,
+                        'value'   => $v ? \explode('.', $v->forums) : null,
                         'title'   => \ForkBB\__('Forum search'),
-                        'size'    => min(count($this->listForOptions), 10),
+                        'size'    => \min(\count($this->listForOptions), 10),
                     ],
                     'serch_in' => [
                         'dl'      => 'w3',
@@ -290,7 +290,7 @@ class Search extends Page
     public function vCheckQuery(Validator $v, $query, $method)
     {
         if (empty($v->getErrors())) {
-            $flood = $this->user->last_search && time() - $this->user->last_search < $this->user->g_search_flood;
+            $flood = $this->user->last_search && \time() - $this->user->last_search < $this->user->g_search_flood;
 
             if ('POST' !== $method || ! $flood) {
                 $search = $this->c->search;
@@ -307,7 +307,7 @@ class Search extends Page
                         }
 
                         if ($search->queryNoCache && $this->user->g_search_flood) {
-                            $this->user->last_search = time();
+                            $this->user->last_search = \time();
                             $this->c->users->update($this->user); //?????
                         }
                     }
@@ -315,7 +315,7 @@ class Search extends Page
             }
 
             if ($flood) {
-                $v->addError(\ForkBB\__('Search flood', $this->user->g_search_flood, $this->user->g_search_flood - time() + $this->user->last_search));
+                $v->addError(\ForkBB\__('Search flood', $this->user->g_search_flood, $this->user->g_search_flood - \time() + $this->user->last_search));
             }
         }
 
@@ -333,22 +333,22 @@ class Search extends Page
     public function vCheckForums(Validator $v, $forums)
     {
         if ('*' !== $forums) {
-            if (is_string($forums) && preg_match('%^\d+(?:\.\d+)*$%D', $forums)) {
-                $forums = explode('.', $forums);
+            if (\is_string($forums) && \preg_match('%^\d+(?:\.\d+)*$%D', $forums)) {
+                $forums = \explode('.', $forums);
             } elseif (null === $forums) {
                 $forums = '*';
-            } elseif (! is_array($forums)) {
+            } elseif (! \is_array($forums)) {
                 $v->addError('The :alias contains an invalid value');
                 $forums = '*';
             }
         }
 
         if ('*' !== $forums) {
-            if (! empty(array_diff($forums, $this->listOfIndexes))) {
+            if (! empty(\array_diff($forums, $this->listOfIndexes))) {
                 $v->addError('The :alias contains an invalid value');
             }
-            sort($forums, SORT_NUMERIC);
-            $forums = implode('.', $forums);
+            \sort($forums, SORT_NUMERIC);
+            $forums = \implode('.', $forums);
         }
 
         return $forums;
@@ -364,9 +364,9 @@ class Search extends Page
      */
     public function vCheckAuthor(Validator $v, $name)
     {
-        $name = preg_replace('%\*+%', '*', $name);
+        $name = \preg_replace('%\*+%', '*', $name);
 
-        if ('*' !== $name && ! preg_match('%[\p{L}\p{N}]%', $name)) {
+        if ('*' !== $name && ! \preg_match('%[\p{L}\p{N}]%', $name)) {
             $v->addError('The :alias is not valid format');
         }
 

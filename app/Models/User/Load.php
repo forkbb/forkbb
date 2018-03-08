@@ -19,7 +19,7 @@ class Load extends Action
      */
     public function load($value, $field = 'id')
     {
-        $flag = is_array($value);
+        $flag = \is_array($value);
 
         switch (($flag ? 'a_' : '') . $field) {
             case 'id':
@@ -58,7 +58,7 @@ class Load extends Action
             }
             return $result;
         } else {
-            $count = count($data);
+            $count = \count($data);
             // число найденных пользователей отлично от одного или гость
             if (1 !== $count || 1 === $data[0]['id']) {
                 return $count;

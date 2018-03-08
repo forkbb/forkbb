@@ -177,7 +177,7 @@ class Model extends DataModel
      */
     public function title()
     {
-        if (isset($this->c->bans->userList[mb_strtolower($this->username)])) { //????
+        if (isset($this->c->bans->userList[\mb_strtolower($this->username)])) { //????
             return \ForkBB\__('Banned');
         } elseif ($this->title != '') {
             return \ForkBB\cens($this->title);

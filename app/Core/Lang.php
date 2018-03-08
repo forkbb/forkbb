@@ -79,8 +79,8 @@ class Lang
         do {
             $flag = true;
             $fullPath = $path . '/'. $lang . '/' . $name . '.po';
-            if (file_exists($fullPath)) {
-                $file = file_get_contents($fullPath);
+            if (\file_exists($fullPath)) {
+                $file = \file_get_contents($fullPath);
                 if (isset($this->tr[$lang])) {
                     $this->tr[$lang] += $this->arrayFromStr($file);
                 } else {
@@ -107,8 +107,8 @@ class Lang
      */
     protected function arrayFromStr($str)
     {
-        $lines = explode("\n", $str);
-        $count = count($lines);
+        $lines = \explode("\n", $str);
+        $count = \count($lines);
         $result = [];
         $cur = [];
         $curComm = null;
@@ -117,7 +117,7 @@ class Lang
         $plural = '($n != 1);';
 
         for ($i = 0; $i < $count; ++$i) {
-            $line = trim($lines[$i]);
+            $line = \trim($lines[$i]);
 
             // пустая строка
             if (! isset($line{0})) {
@@ -133,11 +133,11 @@ class Lang
 
                 // заголовки
                 if (! isset($cur['msgid']{0})) {
-                    if (preg_match('%Plural\-Forms:\s+nplurals=(\d+);\s*plural=([^;\n\r]+;)%i', $cur[0], $v)) {
+                    if (\preg_match('%Plural\-Forms:\s+nplurals=(\d+);\s*plural=([^;\n\r]+;)%i', $cur[0], $v)) {
                         $nplurals = (int) $v[1];
-                        $plural = str_replace('n', '$n', trim($v[2]));
-                        $plural = str_replace(':', ': (', $plural, $curVal);
-                        $plural = str_replace(';', str_repeat(')', $curVal). ';', $plural);
+                        $plural = \str_replace('n', '$n', \trim($v[2]));
+                        $plural = \str_replace(':', ': (', $plural, $curVal);
+                        $plural = \str_replace(';', \str_repeat(')', $curVal). ';', $plural);
                     }
 
                 // перевод
@@ -194,9 +194,9 @@ class Lang
             }
 
             // выделение команды
-            $v = explode(' ', $line, 2);
+            $v = \explode(' ', $line, 2);
             $command = $v[0];
-            $v = isset($v[1]) ? $this->originalLine(trim($v[1])) : '';
+            $v = isset($v[1]) ? $this->originalLine(\trim($v[1])) : '';
 
             switch ($command) {
                 case 'msgctxt':
@@ -255,10 +255,10 @@ class Lang
      */
     protected function originalLine($line)
     {
-        if (isset($line[1]) && $line{0} == '"' && $line{strlen($line) - 1} == '"') {
-            $line = substr($line, 1, -1);
+        if (isset($line[1]) && $line{0} == '"' && $line{\strlen($line) - 1} == '"') {
+            $line = \substr($line, 1, -1);
         }
-        return str_replace(
+        return \str_replace(
             ['\\n', '\\t', '\\"', '\\\\'],
             ["\n",  "\t",  '"',  '\\'],
             $line

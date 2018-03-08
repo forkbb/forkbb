@@ -104,7 +104,7 @@ class Current extends Action
      */
     protected function getIp()
     {
-       return filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP) ?: 'unknow';
+       return \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: 'unknow';
     }
 
     /**
@@ -115,7 +115,7 @@ class Current extends Action
     protected function getUserAgent()
     {
         $ua = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
-        return is_string($ua) ? trim($ua) : '';
+        return \is_string($ua) ? \trim($ua) : '';
     }
 
     /**
@@ -130,26 +130,26 @@ class Current extends Action
         if ($agent == '') {
             return false;
         }
-        $agentL = strtolower($agent);
+        $agentL = \strtolower($agent);
 
-        if (strpos($agentL, 'bot') !== false
-            || strpos($agentL, 'spider') !== false
-            || strpos($agentL, 'crawler') !== false
-            || strpos($agentL, 'http') !== false
+        if (\strpos($agentL, 'bot') !== false
+            || \strpos($agentL, 'spider') !== false
+            || \strpos($agentL, 'crawler') !== false
+            || \strpos($agentL, 'http') !== false
         ) {
             return $this->nameBot($agent, $agentL);
         }
 
-        if (strpos($agent, 'Mozilla/') !== false
-            && (strpos($agent, 'Gecko') !== false
-                || (strpos($agent, '(compatible; MSIE ') !== false
-                    && strpos($agent, 'Windows') !== false
+        if (\strpos($agent, 'Mozilla/') !== false
+            && (\strpos($agent, 'Gecko') !== false
+                || (\strpos($agent, '(compatible; MSIE ') !== false
+                    && \strpos($agent, 'Windows') !== false
                 )
             )
         ) {
             return false;
-        } elseif (strpos($agent, 'Opera/') !== false
-            && strpos($agent, 'Presto/') !== false
+        } elseif (\strpos($agent, 'Opera/') !== false
+            && \strpos($agent, 'Presto/') !== false
         ) {
             return false;
         }
@@ -166,21 +166,21 @@ class Current extends Action
      */
     protected function nameBot($agent, $agentL)
     {
-        if (strpos($agentL, 'mozilla') !== false) {
-            $agent = preg_replace('%Mozilla.*?compatible%i', ' ', $agent);
+        if (\strpos($agentL, 'mozilla') !== false) {
+            $agent = \preg_replace('%Mozilla.*?compatible%i', ' ', $agent);
         }
-        if (strpos($agentL, 'http') !== false || strpos($agentL, 'www.') !== false) {
-            $agent = preg_replace('%(?:https?://|www\.)[^\)]*(\)[^/]+$)?%i', ' ', $agent);
+        if (\strpos($agentL, 'http') !== false || \strpos($agentL, 'www.') !== false) {
+            $agent = \preg_replace('%(?:https?://|www\.)[^\)]*(\)[^/]+$)?%i', ' ', $agent);
         }
-        if (strpos($agent, '@') !== false) {
-            $agent = preg_replace('%\b[a-z0-9_\.-]+@[^\)]+%i', ' ', $agent);
+        if (\strpos($agent, '@') !== false) {
+            $agent = \preg_replace('%\b[a-z0-9_\.-]+@[^\)]+%i', ' ', $agent);
         }
 
-        $agentL = strtolower($agent);
-        if (strpos($agentL, 'bot') !== false
-            || strpos($agentL, 'spider') !== false
-            || strpos($agentL, 'crawler') !== false
-            || strpos($agentL, 'engine') !== false
+        $agentL = \strtolower($agent);
+        if (\strpos($agentL, 'bot') !== false
+            || \strpos($agentL, 'spider') !== false
+            || \strpos($agentL, 'crawler') !== false
+            || \strpos($agentL, 'engine') !== false
         ) {
             $f = true;
             $p = '%(?<=[^a-z\d\.-])(?:robot|bot|spider|crawler)\b.*%i';
@@ -189,7 +189,7 @@ class Current extends Action
             $p = '%^$%';
         }
 
-        if ($f && preg_match('%\b(([a-z\d\.! _-]+)?(?:robot|(?<!ro)bot|spider|crawler|engine)(?(2)[a-z\d\.! _-]*|[a-z\d\.! _-]+))%i', $agent, $matches))
+        if ($f && \preg_match('%\b(([a-z\d\.! _-]+)?(?:robot|(?<!ro)bot|spider|crawler|engine)(?(2)[a-z\d\.! _-]*|[a-z\d\.! _-]+))%i', $agent, $matches))
         {
             $agent = $matches[1];
 
@@ -229,20 +229,20 @@ class Current extends Action
                 '',
             ];
         }
-        $agent = trim(preg_replace($pat, $rep, $agent), ' -');
+        $agent = \trim(\preg_replace($pat, $rep, $agent), ' -');
 
         if (empty($agent)) {
             return 'Unknown';
         }
 
-        $a = explode(' ', $agent);
+        $a = \explode(' ', $agent);
         $agent = $a[0];
-        if (strlen($agent) < 20
+        if (\strlen($agent) < 20
             && ! empty($a[1])
-            && strlen($agent . ' ' . $a[1]) < 26
+            && \strlen($agent . ' ' . $a[1]) < 26
         ) {
             $agent .= ' ' . $a[1];
-        } elseif (strlen($agent) > 25) {
+        } elseif (\strlen($agent) > 25) {
             $agent = 'Unknown';
         }
         return $agent;

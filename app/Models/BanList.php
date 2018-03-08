@@ -34,11 +34,11 @@ class BanList extends Model
      */
     public function trimToNull($val, $toLower = false)
     {
-        $val = trim($val);
+        $val = \trim($val);
         if ($val == '') {
             return null;
         } elseif ($toLower) {
-            return mb_strtolower($val, 'UTF-8');
+            return \mb_strtolower($val, 'UTF-8');
         } else {
             return $val;
         }

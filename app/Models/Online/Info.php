@@ -16,7 +16,7 @@ class Info extends Method
         if (! $this->model->detail) {
             return null;
         }
-            
+
         $this->model->maxNum = $this->c->config->st_max_users;
         $this->model->maxTime = $this->c->config->st_max_users_time;
 
@@ -36,11 +36,11 @@ class Info extends Method
                 $info[] = $user['name'];
             }
         }
-        $this->model->numUsers = count($info);
+        $this->model->numUsers = \count($info);
 
         $s = 0;
         foreach ($this->model->bots as $bot => $arr) {
-            $count = count($arr);
+            $count = \count($arr);
             $s += $count;
             if ($count > 1) {
                 $info[] = '[Bot] ' . $bot . ' (' . $count . ')';
@@ -48,7 +48,7 @@ class Info extends Method
                 $info[] = '[Bot] ' . $bot;
             }
         }
-        $this->model->numGuests = $s + count($this->model->guests);
+        $this->model->numGuests = $s + \count($this->model->guests);
         $this->model->info      = $info;
 
         return $this->model;

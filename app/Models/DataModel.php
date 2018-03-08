@@ -31,9 +31,9 @@ class DataModel extends Model
 
     /**
      * Перезапись свойст модели
-     * 
+     *
      * @param array $attrs
-     * 
+     *
      * @return DataModel
      */
     public function replAttrs(array $attrs)
@@ -43,7 +43,7 @@ class DataModel extends Model
             unset($this->aCalc['key']);
         }
 
-        $modified = array_diff(array_keys($this->modified), array_keys($attrs));
+        $modified = \array_diff(\array_keys($this->modified), \array_keys($attrs));
         $this->modified = [];
         foreach ($modified as $key) {
             $this->modified[$key] = true;
@@ -69,7 +69,7 @@ class DataModel extends Model
      */
     public function getModified()
     {
-        return array_keys($this->modified);
+        return \array_keys($this->modified);
     }
 
     /**
@@ -89,17 +89,17 @@ class DataModel extends Model
     public function __set($name, $val)
     {
         // без отслеживания
-        if (strpos($name, '__') === 0) {
+        if (\strpos($name, '__') === 0) {
             $track = null;
             $name  = substr($name, 2);
         // с отслеживанием
         } else {
             $track = false;
-            if (array_key_exists($name, $this->a)) {
+            if (\array_key_exists($name, $this->a)) {
                 $track = true;
                 $old   = $this->a[$name];
                 // fix
-                if (is_int($val) && is_numeric($old) && is_int(0 + $old)) {
+                if (\is_int($val) && \is_numeric($old) && \is_int(0 + $old)) {
                     $old = (int) $old;
                 }
             }
@@ -111,7 +111,7 @@ class DataModel extends Model
             return;
         }
 
-        if ((! $track && array_key_exists($name, $this->a)) 
+        if ((! $track && \array_key_exists($name, $this->a))
             || ($track && $old !== $this->a[$name])
         ) {
             $this->modified[$name] = true;

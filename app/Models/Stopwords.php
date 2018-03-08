@@ -36,7 +36,7 @@ class Stopwords extends Model
             return $this->id;
         }
 
-        $files = glob($this->c->DIR_LANG . '/*/stopwords.txt');
+        $files = \glob($this->c->DIR_LANG . '/*/stopwords.txt');
         if ($files === false) {
             return 'cache_id_error';
         }
@@ -46,10 +46,10 @@ class Stopwords extends Model
 
         foreach ($files as $file) {
             $hash[] = $file;
-            $hash[] = filemtime($file);
+            $hash[] = \filemtime($file);
         }
 
-        return $this->id = sha1(implode('|', $hash));
+        return $this->id = \sha1(\implode('|', $hash));
     }
 
     /**
@@ -61,20 +61,20 @@ class Stopwords extends Model
     {
         $id = $this->generateId();
 
-        if (! is_array($this->files)) {
+        if (! \is_array($this->files)) {
             $this->list = [];
             return $this;
         }
 
         $stopwords = [];
         foreach ($this->files as $file) {
-            $stopwords = array_merge($stopwords, file($file));
+            $stopwords = \array_merge($stopwords, \file($file));
         }
 
         // Tidy up and filter the stopwords
-        $stopwords = array_map('trim', $stopwords);
-        $stopwords = array_filter($stopwords);
-        $stopwords = array_flip($stopwords);
+        $stopwords = \array_map('trim', $stopwords);
+        $stopwords = \array_filter($stopwords);
+        $stopwords = \array_flip($stopwords);
 
         $this->c->Cache->set('stopwords', ['id' => $id, 'stopwords' => $stopwords]);
         $this->list = $stopwords;

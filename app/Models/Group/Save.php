@@ -12,9 +12,9 @@ class Save extends Action
      * Обновляет группу в БД
      *
      * @param Group $group
-     * 
+     *
      * @throws RuntimeException
-     * 
+     *
      * @return Group
      */
     public function update(Group $group)
@@ -40,7 +40,7 @@ class Save extends Action
             return $group;
         }
         $vars[] = $group->g_id;
-        $this->c->DB->query('UPDATE ::groups SET ' . implode(', ', $set) . ' WHERE g_id=?i', $vars);
+        $this->c->DB->query('UPDATE ::groups SET ' . \implode(', ', $set) . ' WHERE g_id=?i', $vars);
         $group->resModified();
 
         return $group;
@@ -50,9 +50,9 @@ class Save extends Action
      * Добавляет новую группу в БД
      *
      * @param Group $group
-     * 
+     *
      * @throws RuntimeException
-     * 
+     *
      * @return int
      */
     public function insert(Group $group)
@@ -74,7 +74,7 @@ class Save extends Action
         if (empty($set)) {
             throw new RuntimeException('The model is empty');
         }
-        $this->c->DB->query('INSERT INTO ::groups (' . implode(', ', $set) . ') VALUES (' . implode(', ', $set2) . ')', $vars);
+        $this->c->DB->query('INSERT INTO ::groups (' . \implode(', ', $set) . ') VALUES (' . \implode(', ', $set2) . ')', $vars);
         $group->g_id = $this->c->DB->lastInsertId();
         $group->resModified();
 

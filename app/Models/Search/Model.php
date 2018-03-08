@@ -75,25 +75,25 @@ class Model extends BaseModel
      */
     public function cleanText($text, $indexing = false)
     {
-        $text = str_replace(['`', '’', 'ё'], ['\'', '\'', 'е'], $text);
+        $text = \str_replace(['`', '’', 'ё'], ['\'', '\'', 'е'], $text);
         // четыре одинаковых буквы в одну
-        $text = preg_replace('%(\p{L})\1{3,}%u', '\1', $text);
+        $text = \preg_replace('%(\p{L})\1{3,}%u', '\1', $text);
         // удаление ' и - вне слов
-        $text = preg_replace('%((?<![\p{L}\p{N}])[\'\-]|[\'\-](?![\p{L}\p{N}]))%u', ' ', $text);
+        $text = \preg_replace('%((?<![\p{L}\p{N}])[\'\-]|[\'\-](?![\p{L}\p{N}]))%u', ' ', $text);
 
-        if (false !== strpos($text, '-')) {
+        if (false !== \strpos($text, '-')) {
             // удаление слов c -либо|нибу[дт]ь|нить
-            $text = preg_replace('%\b[\p{L}\p{N}\-\']+\-(?:либо|нибу[дт]ь|нить)(?![\p{L}\p{N}\'\-])%u', '', $text);
+            $text = \preg_replace('%\b[\p{L}\p{N}\-\']+\-(?:либо|нибу[дт]ь|нить)(?![\p{L}\p{N}\'\-])%u', '', $text);
             // удаление из слов все хвосты с 1 или 2 русскими буквами или -таки|чуть
-            $text = preg_replace('%(?<=[\p{L}\p{N}])(\-(?:таки|чуть|[а-я]{1,2}))+(?![\p{L}\p{N}\'\-])%u', '', $text);
+            $text = \preg_replace('%(?<=[\p{L}\p{N}])(\-(?:таки|чуть|[а-я]{1,2}))+(?![\p{L}\p{N}\'\-])%u', '', $text);
         }
 
         // удаление символов отличающихся от букв и цифр
-        $text = preg_replace('%(?![\'\-'.($indexing ? '' : '\?\*').'])[^\p{L}\p{N}]+%u', ' ', $text);
+        $text = \preg_replace('%(?![\'\-'.($indexing ? '' : '\?\*').'])[^\p{L}\p{N}]+%u', ' ', $text);
         // сжатие пробелов
-        $text = preg_replace('% {2,}%', ' ', $text);
+        $text = \preg_replace('% {2,}%', ' ', $text);
 
-        return trim($text);
+        return \trim($text);
     }
 
     /**
@@ -117,14 +117,14 @@ class Model extends BaseModel
             return $indexing ? null : $word;
         }
 
-        $len = mb_strlen(trim($word, '?*'), 'UTF-8');
+        $len = \mb_strlen(trim($word, '?*'), 'UTF-8');
 
         if ($len < 3) {
             return null;
         }
 
         if ($len > 20) {
-            $word = mb_substr($word, 0, 20, 'UTF-8');
+            $word = \mb_substr($word, 0, 20, 'UTF-8');
         }
 
         return $word;
@@ -139,6 +139,6 @@ class Model extends BaseModel
      */
     public function isCJKWord($word)
     {
-        return preg_match('%' . self::CJK_REGEX . '%u', $word) ? true : false; //?????
+        return \preg_match('%' . self::CJK_REGEX . '%u', $word) ? true : false; //?????
     }
 }

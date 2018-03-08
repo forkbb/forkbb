@@ -25,7 +25,7 @@ class Csrf
     public function __construct(Secury $secury, $key)
     {
         $this->secury = $secury;
-        $this->key = sha1($key);
+        $this->key = \sha1($key);
     }
 
     /**
@@ -40,12 +40,12 @@ class Csrf
     public function create($marker, array $args = [], $time = null)
     {
          unset($args['token'], $args['#']);
-         ksort($args);
+         \ksort($args);
          $marker .= '|';
          foreach ($args as $key => $value) {
              $marker .= $key . '|' . (string) $value . '|';
          }
-         $time = $time ?: time();
+         $time = $time ?: \time();
          return $this->secury->hmac($marker, $time . $this->key) . 'f' . $time;
     }
 
@@ -60,10 +60,10 @@ class Csrf
      */
     public function verify($token, $marker, array $args = [])
     {
-        return is_string($token)
-            && preg_match('%f(\d+)$%D', $token, $matches)
-            && $matches[1] < time()
-            && $matches[1] + 1800 > time()
-            && hash_equals($this->create($marker, $args, $matches[1]), $token);
+        return \is_string($token)
+            && \preg_match('%f(\d+)$%D', $token, $matches)
+            && $matches[1] < \time()
+            && $matches[1] + 1800 > \time()
+            && \hash_equals($this->create($marker, $args, $matches[1]), $token);
     }
 }

@@ -54,7 +54,7 @@ class Cookie extends Model
      */
     public function set($name, $value, $expire = 0, $path = null, $domain = null, $secure = false, $httponly = true)
     {
-        $result = setcookie(
+        $result = \setcookie(
             $this->prefix . $name,
             $value,
             $expire,
@@ -109,14 +109,14 @@ class Cookie extends Model
         $ckUser = $this->get(self::NAME);
 
         if (null === $ckUser
-            || ! preg_match('%^(\-)?(\d{1,10})_(\d{10})_([a-f\d]{32,})_([a-f\d]{32,})$%Di', $ckUser, $ms)
+            || ! \preg_match('%^(\-)?(\d{1,10})_(\d{10})_([a-f\d]{32,})_([a-f\d]{32,})$%Di', $ckUser, $ms)
         ) {
             return;
         }
 
         if (2 > $ms[2]
-            || time() > $ms[3]
-            || ! hash_equals(
+            || \time() > $ms[3]
+            || ! \hash_equals(
                      $this->c->Secury->hmac($ms[1] . $ms[2] . $ms[3] . $ms[4], $this->key1),
                      $ms[5]
                  )
@@ -140,7 +140,7 @@ class Cookie extends Model
     public function verifyUser(User $user)
     {
         return $this->uId === (int) $user->id
-            && hash_equals(
+            && \hash_equals(
                    (string) $this->uHash,
                    $this->c->Secury->hmac($user->password . $this->uExpire, $this->key2)
                );
@@ -166,11 +166,11 @@ class Cookie extends Model
                 && $this->uRemember
             )
         ) {
-            $expTime = time() + $this->time;
+            $expTime = \time() + $this->time;
             $expire = $expTime;
             $pfx = '';
         } else {
-            $expTime = time() + $this->c->config->o_timeout_visit;
+            $expTime = \time() + $this->c->config->o_timeout_visit;
             $expire = 0;
             $pfx = '-';
         }

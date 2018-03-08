@@ -28,10 +28,10 @@ class Groups extends Admin
         foreach ($this->c->groups->getList() as $key => $group) {
             $groupsList[$key] = [$group->g_title, $group->linkEdit, $group->linkDelete];
 
-            if (! in_array($group->g_id, $notForNew)) {
+            if (! \in_array($group->g_id, $notForNew)) {
                 $groupsNew[$key] = $group->g_title;
             }
-            if (! in_array($group->g_id, $notForDefault) && $group->g_moderator == 0) {
+            if (! \in_array($group->g_id, $notForDefault) && $group->g_moderator == 0) {
                 $groupsDefault[$key] = $group->g_title;
             }
         }
@@ -114,7 +114,7 @@ class Groups extends Admin
         $v = $this->c->Validator->reset()
             ->addRules([
                 'token'        => 'token:AdminGroupsDefault',
-                'defaultgroup' => 'required|integer|in:' . implode(',', array_keys($this->groupsDefault)),
+                'defaultgroup' => 'required|integer|in:' . \implode(',', \array_keys($this->groupsDefault)),
             ])->addAliases([
             ])->addMessages([
                 'defaultgroup.in' => 'Invalid default group',
@@ -145,7 +145,7 @@ class Groups extends Admin
             $v = $this->c->Validator->reset()
                 ->addRules([
                     'token'     => 'token:AdminGroupsNew',
-                    'basegroup' => 'required|integer|in:' . implode(',', array_keys($this->groupsNew)),
+                    'basegroup' => 'required|integer|in:' . \implode(',', \array_keys($this->groupsNew)),
                 ])->addAliases([
                 ])->addMessages([
                     'basegroup.in' => 'Invalid group to create on base',
@@ -201,7 +201,7 @@ class Groups extends Admin
             $v = $this->c->Validator->reset()
                 ->addRules([
                     'token'                  => 'token:' . $marker,
-                    'g_title'                => 'required|string:trim|max:50|not_in:' . implode(',', $reserve),
+                    'g_title'                => 'required|string:trim|max:50|not_in:' . \implode(',', $reserve),
                     'g_user_title'           => 'string:trim|max:50',
                 ])->addAliases([
                 ])->addArguments([
@@ -620,7 +620,7 @@ class Groups extends Admin
                 }
                 $groups[$key] = $cur[0];
             }
-            $move  .= implode(',', array_keys($groups));
+            $move  .= \implode(',', \array_keys($groups));
         } else {
             $move   = 'absent';
         }

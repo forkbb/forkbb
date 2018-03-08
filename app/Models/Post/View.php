@@ -46,14 +46,14 @@ class View extends Action
         }
         $this->aliases = $aliases;
 
-        return implode(', ', $result);
+        return \implode(', ', $result);
     }
 
     protected function setData(array $args, array $data)
     {
         foreach ($args as $aliases => $model) {
             $attrs = [];
-            foreach (explode('.', $aliases) as $alias) {
+            foreach (\explode('.', $aliases) as $alias) {
                 if (empty($this->aliases[$alias])) {
                     continue;
                 }
@@ -82,7 +82,7 @@ class View extends Action
             throw new InvalidArgumentException('Expected Topic or Search');
         }
 
-        if (empty($arg->idsList) || ! is_array($arg->idsList)) {
+        if (empty($arg->idsList) || ! \is_array($arg->idsList)) {
             throw new RuntimeException('Model does not contain of posts list for display');
         }
 
@@ -95,7 +95,7 @@ class View extends Action
         $warnings = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_GROUP);
 
         $userIds = [];
-        $result  = array_flip($arg->idsList);
+        $result  = \array_flip($arg->idsList);
 
         if ($arg instanceof Topic) {
             $vars = [
@@ -122,8 +122,8 @@ class View extends Action
                 $vars = [
                     ':ids' => $arg->idsList,
                     ':fields' => $this->queryFields([
-                        'p'   => array_map(function($val) {return true;}, $this->c->dbMap->posts), // все поля в true
-                        't'   => array_map(function($val) {return true;}, $this->c->dbMap->topics), // все поля в true
+                        'p'   => \array_map(function($val) {return true;}, $this->c->dbMap->posts), // все поля в true
+                        't'   => \array_map(function($val) {return true;}, $this->c->dbMap->topics), // все поля в true
                     ]),
                 ];
                 $sql = 'SELECT ?p:fields
@@ -136,8 +136,8 @@ class View extends Action
                     ':ids' => $arg->idsList,
                     ':uid' => $this->c->user->id,
                     ':fields' => $this->queryFields([
-                        'p'   => array_map(function($val) {return true;}, $this->c->dbMap->posts), // все поля в true
-                        't'   => array_map(function($val) {return true;}, $this->c->dbMap->topics), // все поля в true
+                        'p'   => \array_map(function($val) {return true;}, $this->c->dbMap->posts), // все поля в true
+                        't'   => \array_map(function($val) {return true;}, $this->c->dbMap->topics), // все поля в true
 #                        's'   => ['user_id' => 'is_subscribed'],
                         'mof' => ['mf_mark_all_read' => true],
                         'mot' => ['mt_last_visit' => true, 'mt_last_read' => true],

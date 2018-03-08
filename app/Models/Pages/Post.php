@@ -125,7 +125,7 @@ class Post extends Page
     {
         $this->c->DB->beginTransaction();
 
-        $now       = time();
+        $now       = \time();
         $username  = $this->user->isGuest ? $v->username : $this->user->username;
         $merge     = false;
         $executive = $this->user->isAdmin || $this->user->isModerator($model);
@@ -173,7 +173,7 @@ class Post extends Page
         // попытка объеденить новое сообщение с крайним в теме
         if ($merge) {
             $lastPost  = $this->c->posts->load($topic->last_post_id, $topic->id);
-            $newLength = mb_strlen($lastPost->message . $v->message, 'UTF-8');
+            $newLength = \mb_strlen($lastPost->message . $v->message, 'UTF-8');
 
             if ($newLength < $this->c->MAX_POST_SIZE - 100) {
                 $lastPost->message   = $lastPost->message . "\n[after=" . ($now - $topic->last_post) . "]\n" . $v->message; //????

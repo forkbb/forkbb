@@ -41,7 +41,7 @@ trait PostValidatorTrait
         $user->username = $username;
 
         // username = Гость
-        if (preg_match('%^(guest|' . preg_quote(\ForkBB\__('Guest'), '%') . ')$%iu', $username)) {
+        if (\preg_match('%^(guest|' . \preg_quote(\ForkBB\__('Guest'), '%') . ')$%iu', $username)) { // ???? а зачем?
             $v->addError('Username guest');
         // цензура
         } elseif (\ForkBB\cens($user->username) !== $username) {
@@ -68,14 +68,14 @@ trait PostValidatorTrait
             $v->addError('No subject after censoring');
         // заголовок темы только заглавными буквами
         } elseif (! $executive
-            && $this->c->config->p_subject_all_caps == '0'
-            && preg_match('%\p{Lu}%u', $subject)
-            && ! preg_match('%\p{Ll}%u', $subject)
+            && '0' == $this->c->config->p_subject_all_caps
+            && \preg_match('%\p{Lu}%u', $subject)
+            && ! \preg_match('%\p{Ll}%u', $subject)
         ) {
             $v->addError('All caps subject');
         } elseif (! $executive
-            && $this->user->g_post_links != '1'
-            && preg_match('%https?://|www\.%ui', $subject)
+            && '1' != $this->user->g_post_links
+            && \preg_match('%https?://|www\.%ui', $subject)
         ) {
             $v->addError('You can not post links in subject');
         }
@@ -97,9 +97,9 @@ trait PostValidatorTrait
             $v->addError('No message after censoring');
         // текст сообщения только заглавными буквами
         } elseif (! $executive
-            && $this->c->config->p_message_all_caps == '0'
-            && preg_match('%\p{Lu}%u', $message)
-            && ! preg_match('%\p{Ll}%u', $message)
+            && '0' == $this->c->config->p_message_all_caps
+            && \preg_match('%\p{Lu}%u', $message)
+            && ! \preg_match('%\p{Ll}%u', $message)
         ) {
             $v->addError('All caps message');
         // проверка парсером
@@ -128,7 +128,7 @@ trait PostValidatorTrait
             return null;
         }
 
-        $time = time() - (int) $this->user->last_post;
+        $time = \time() - (int) $this->user->last_post;
 
         if ($time < $this->user->g_post_flood) {
             $v->addError(\ForkBB\__('Flood start', $this->user->g_post_flood, $this->user->g_post_flood - $time), 'e');
@@ -191,7 +191,7 @@ trait PostValidatorTrait
             $executive          = false;
         }
 
-        if ($this->c->config->o_smilies == '1') {
+        if ('1' == $this->c->config->o_smilies) {
             $ruleHideSmilies = 'checkbox';
         } else {
             $ruleHideSmilies = 'absent';

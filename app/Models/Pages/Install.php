@@ -85,7 +85,7 @@ class Install extends Page
 
         // версия PHP
         if (\version_compare(PHP_VERSION, self::PHP_MIN, '<')) {
-            $this->fIswev = ['e', \ForkBB\__('You are running error', 'PHP', PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN)];
+            $this->fIswev = ['e', \ForkBB\__('You are running error', 'PHP', \PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN)];
         }
 
         // типы БД
@@ -345,14 +345,14 @@ class Install extends Page
                         ],
                         'defaultlang' => [
                             'type'      => 'select',
-                            'options'   => array_combine($langs, $langs),
+                            'options'   => \array_combine($langs, $langs),
                             'value'     => $v ? $v->defaultlang : $this->user->language,
                             'title'     => \ForkBB\__('Default language'),
                             'required'  => true,
                         ],
                         'defaultstyle' => [
                             'type'      => 'select',
-                            'options'   => array_combine($styles, $styles),
+                            'options'   => \array_combine($styles, $styles),
                             'value'     => $v ? $v->defaultstyle : $this->user->style,
                             'title'     => \ForkBB\__('Default style'),
                             'required'  => true,
@@ -557,7 +557,7 @@ class Install extends Page
                 'post_replies' => ['TINYINT(1)', false, 1],
                 'post_topics'  => ['TINYINT(1)', false, 1],
             ],
-            'PRIMARY KEY' => array('group_id', 'forum_id'),
+            'PRIMARY KEY' => ['group_id', 'forum_id'],
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('forum_perms', $schema);
@@ -1020,7 +1020,7 @@ class Install extends Page
         ];
         $this->c->DB->createTable('mark_of_topic', $schema);
 
-        $now = time();
+        $now = \time();
 
         $groups = [
             // g_id,                 g_title,                      g_user_title,        g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood
@@ -1131,7 +1131,7 @@ class Install extends Page
             'o_crypto_salt'           => $this->c->Secury->randomPass(13),
             'o_enable_acaptcha'       => 1, // математическая каптча
             'st_max_users'            => 1,    // статистика по максимуму юзеров - Visman
-            'st_max_users_time'       => time(),
+            'st_max_users_time'       => \time(),
         ];
         foreach ($pun_config as $conf_name => $conf_value) {
             $this->c->DB->exec('INSERT INTO ::config (conf_name, conf_value) VALUES (?s, ?s)', [$conf_name, $conf_value]);

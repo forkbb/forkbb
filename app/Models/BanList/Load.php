@@ -26,8 +26,8 @@ class Load extends Method
 
             $ips = $this->model->trimToNull($row['ip']);
             if (null !== $ips) {
-                foreach (explode(' ', $ips) as $ip) {
-                    $ip = trim($ip);
+                foreach (\explode(' ', $ips) as $ip) {
+                    $ip = \trim($ip);
                     if ($ip != '') {
                         $ipList[$ip] = $row['id'];
                     }

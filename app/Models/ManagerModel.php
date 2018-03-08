@@ -25,14 +25,14 @@ class ManagerModel extends Model
 
     /**
      * Возвращает action по его имени
-     * 
+     *
      * @param string $name
      *
      * @return mixed
      */
     public function __get($name)
     {
-        $key = str_replace(['ForkBB\\Models\\', 'ForkBB\\', '\\'], '', get_class($this));
+        $key = \str_replace(['ForkBB\\Models\\', 'ForkBB\\', '\\'], '', \get_class($this));
 
         return $this->c->{$key . $name}->setManager($this);
     }
@@ -47,8 +47,8 @@ class ManagerModel extends Model
      */
     public function __call($name, array $args)
     {
-        $key = str_replace(['ForkBB\\Models\\', 'ForkBB\\', '\\'], '', get_class($this));
+        $key = \str_replace(['ForkBB\\Models\\', 'ForkBB\\', '\\'], '', \get_class($this));
 
-        return $this->c->{$key . ucfirst($name)}->setManager($this)->$name(...$args);
+        return $this->c->{$key . \ucfirst($name)}->setManager($this)->$name(...$args);
     }
 }

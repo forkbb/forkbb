@@ -40,14 +40,14 @@ class Load extends Action
         }
         $this->aliases = $aliases;
 
-        return implode(', ', $result);
+        return \implode(', ', $result);
     }
 
     protected function setData(array $args, array $data)
     {
         foreach ($args as $aliases => $model) {
             $attrs = [];
-            foreach (explode('.', $aliases) as $alias) {
+            foreach (\explode('.', $aliases) as $alias) {
                 if (empty($this->aliases[$alias])) {
                     continue;
                 }
@@ -63,10 +63,10 @@ class Load extends Action
     /**
      * Загружает сообщение из БД с проверкой вхождения в указанную тему
      * Проверка доступности
-     * 
+     *
      * @param int $id
      * @param int $tid
-     * 
+     *
      * @return null|Post
      */
     public function loadFromTopic($id, $tid)
@@ -75,12 +75,12 @@ class Load extends Action
             ':pid' => $id,
             ':tid' => $tid,
         ];
-        $sql = 'SELECT p.* 
-                FROM ::posts AS p 
+        $sql = 'SELECT p.*
+                FROM ::posts AS p
                 WHERE p.id=?i:pid AND p.topic_id=?i:tid';
-    
+
         $data = $this->c->DB->query($sql, $vars)->fetch();
-                    
+
         // сообщение отсутствует или недоступено
         if (empty($data)) {
             return null;
@@ -97,7 +97,7 @@ class Load extends Action
     }
 
     /**
-     * Загружает сообщение из БД 
+     * Загружает сообщение из БД
      * Загружает тему этого сообщения
      * Проверка доступности
      *
@@ -111,13 +111,13 @@ class Load extends Action
             $vars = [
                 ':pid' => $id,
                 ':fields' => $this->queryFields([
-                    'p' => array_map(function($val) {return true;}, $this->c->dbMap->posts), // все поля в true
-                    't' => array_map(function($val) {return true;}, $this->c->dbMap->topics), // все поля в true
+                    'p' => \array_map(function($val) {return true;}, $this->c->dbMap->posts), // все поля в true
+                    't' => \array_map(function($val) {return true;}, $this->c->dbMap->topics), // все поля в true
                 ]),
             ];
 
             $sql = 'SELECT ?p:fields
-                    FROM ::posts AS p 
+                    FROM ::posts AS p
                     INNER JOIN ::topics AS t ON t.id=p.topic_id
                     WHERE p.id=?i:pid';
         } else {
@@ -125,8 +125,8 @@ class Load extends Action
                 ':pid' => $id,
                 ':uid' => $this->c->user->id,
                 ':fields' => $this->queryFields([
-                    'p'   => array_map(function($val) {return true;}, $this->c->dbMap->posts), // все поля в true
-                    't'   => array_map(function($val) {return true;}, $this->c->dbMap->topics), // все поля в true
+                    'p'   => \array_map(function($val) {return true;}, $this->c->dbMap->posts), // все поля в true
+                    't'   => \array_map(function($val) {return true;}, $this->c->dbMap->topics), // все поля в true
                     's'   => ['user_id' => 'is_subscribed'],
                     'mof' => ['mf_mark_all_read' => true],
                     'mot' => ['mt_last_visit' => true, 'mt_last_read' => true],
@@ -143,7 +143,7 @@ class Load extends Action
         }
 
         $data = $this->c->DB->query($sql, $vars)->fetch();
-                    
+
         // сообщение отсутствует или недоступено
         if (empty($data)) {
             return null;

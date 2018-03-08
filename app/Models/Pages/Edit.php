@@ -80,7 +80,7 @@ class Edit extends Page
     {
         $this->c->DB->beginTransaction();
 
-        $now         = time();
+        $now         = \time();
         $executive   = $this->user->isAdmin || $this->user->isModerator($post);
         $topic       = $post->parent;
         $editSubject = $post->id === $topic->first_post_id;

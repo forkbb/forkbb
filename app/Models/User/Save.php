@@ -12,9 +12,9 @@ class Save extends Action
      * Обновляет данные пользователя
      *
      * @param User $user
-     * 
+     *
      * @throws RuntimeException
-     * 
+     *
      * @return User
      */
     public function update(User $user)
@@ -53,7 +53,7 @@ class Save extends Action
         } else {
             $vars[] = $user->id;
         }
-        $this->c->DB->query('UPDATE ::' . $table . ' SET ' . implode(', ', $set) . ' WHERE ' . $where, $vars);
+        $this->c->DB->query('UPDATE ::' . $table . ' SET ' . \implode(', ', $set) . ' WHERE ' . $where, $vars);
         $user->resModified();
 
         return $user;
@@ -63,9 +63,9 @@ class Save extends Action
      * Добавляет новую запись в таблицу пользователей
      *
      * @param User $user
-     * 
+     *
      * @throws RuntimeException
-     * 
+     *
      * @return int
      */
     public function insert(User $user)
@@ -87,7 +87,7 @@ class Save extends Action
         if (empty($set)) {
             throw new RuntimeException('The model is empty');
         }
-        $this->c->DB->query('INSERT INTO ::users (' . implode(', ', $set) . ') VALUES (' . implode(', ', $set2) . ')', $vars);
+        $this->c->DB->query('INSERT INTO ::users (' . \implode(', ', $set) . ') VALUES (' . \implode(', ', $set2) . ')', $vars);
         $user->id = $this->c->DB->lastInsertId();
         $user->resModified();
 

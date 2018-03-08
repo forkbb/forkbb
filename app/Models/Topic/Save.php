@@ -12,9 +12,9 @@ class Save extends Action
      * Обновляет тему в БД
      *
      * @param Topic $topic
-     * 
+     *
      * @throws RuntimeException
-     * 
+     *
      * @return Topic
      */
     public function update(Topic $topic)
@@ -40,7 +40,7 @@ class Save extends Action
             return $topic;
         }
         $vars[] = $topic->id;
-        $this->c->DB->query('UPDATE ::topics SET ' . implode(', ', $set) . ' WHERE id=?i', $vars);
+        $this->c->DB->query('UPDATE ::topics SET ' . \implode(', ', $set) . ' WHERE id=?i', $vars);
         $topic->resModified();
 
         return $topic;
@@ -50,9 +50,9 @@ class Save extends Action
      * Добавляет новую тему в БД
      *
      * @param Topic $topic
-     * 
+     *
      * @throws RuntimeException
-     * 
+     *
      * @return int
      */
     public function insert(Topic $topic)
@@ -74,7 +74,7 @@ class Save extends Action
         if (empty($set)) {
             throw new RuntimeException('The model is empty');
         }
-        $this->c->DB->query('INSERT INTO ::topics (' . implode(', ', $set) . ') VALUES (' . implode(', ', $set2) . ')', $vars);
+        $this->c->DB->query('INSERT INTO ::topics (' . \implode(', ', $set) . ') VALUES (' . \implode(', ', $set2) . ')', $vars);
         $topic->id = $this->c->DB->lastInsertId();
         $topic->resModified();
 

@@ -108,7 +108,7 @@ class Model extends DataModel
             return false;
         }
 
-        $time = max(
+        $time = \max(
             (int) $this->c->user->u_mark_all_read,
             (int) $this->parent->mf_mark_all_read,
             (int) $this->c->user->last_visit,
@@ -129,7 +129,7 @@ class Model extends DataModel
             return false;
         }
 
-        $time = max(
+        $time = \max(
             (int) $this->c->user->u_mark_all_read,
             (int) $this->parent->mf_mark_all_read,
             (int) $this->mt_last_read
@@ -195,7 +195,7 @@ class Model extends DataModel
             throw new RuntimeException('The model does not have the required data');
         }
 
-        return (int) ceil(($this->num_replies + 1) / $this->c->user->disp_posts);
+        return (int) \ceil(($this->num_replies + 1) / $this->c->user->disp_posts);
     }
 
     /**
@@ -250,8 +250,8 @@ class Model extends DataModel
                 LIMIT ?i:offset, ?i:rows';
         $list = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
-        if (! empty($list) && ($this->stick_fp || $this->poll_type) && ! in_array($this->first_post_id, $list)) {
-            array_unshift($list, $this->first_post_id);
+        if (! empty($list) && ($this->stick_fp || $this->poll_type) && ! \in_array($this->first_post_id, $list)) {
+            \array_unshift($list, $this->first_post_id);
         }
 
         $this->idsList = $list;
@@ -277,7 +277,7 @@ class Model extends DataModel
 
         $result = $this->c->DB->query($sql, $vars)->fetch();
 
-        $this->page = empty($result['flag']) ? null : (int) ceil(($result['num'] + 1) / $this->c->user->disp_posts);
+        $this->page = empty($result['flag']) ? null : (int) \ceil(($result['num'] + 1) / $this->c->user->disp_posts);
     }
 
     /**

@@ -101,7 +101,7 @@ class Parser extends Parserus
             $this->detectUrls();
         }
 
-        return preg_replace('%^(\x20*\n)+|(\n\x20*)+$%D', '', $this->getCode());
+        return \preg_replace('%^(\x20*\n)+|(\n\x20*)+$%D', '', $this->getCode());
     }
 
     /**
@@ -118,7 +118,7 @@ class Parser extends Parserus
         if (null !== $text) {
             $whiteList = $this->c->config->p_message_bbcode == '1' ? null : [];
             $blackList = $this->c->config->p_message_img_tag == '1' ? [] : ['img'];
-    
+
             $this->setAttr('isSign', false)
                  ->setWhiteList($whiteList)
                  ->setBlackList($blackList)
@@ -145,7 +145,7 @@ class Parser extends Parserus
         if (null !== $text) {
             $whiteList = $this->c->config->p_sig_bbcode == '1' ? $this->c->BBCODE_INFO['forSign'] : [];
             $blackList = $this->c->config->p_sig_img_tag == '1' ? [] : ['img'];
-    
+
             $this->setAttr('isSign', true)
                  ->setWhiteList($whiteList)
                  ->setBlackList($blackList)

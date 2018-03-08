@@ -32,7 +32,7 @@ class View extends Action
             throw new InvalidArgumentException('Expected Forum or Search');
         }
 
-        if (empty($arg->idsList) || ! is_array($arg->idsList)) {
+        if (empty($arg->idsList) || ! \is_array($arg->idsList)) {
             throw new RuntimeException('Model does not contain of topics list for display');
         }
 
@@ -47,7 +47,7 @@ class View extends Action
                     WHERE poster_id=?i:uid AND topic_id IN (?ai:ids)
                     GROUP BY topic_id';
             $dots = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
-            $dots = array_flip($dots);
+            $dots = \array_flip($dots);
         } else {
             $dots = [];
         }
@@ -70,7 +70,7 @@ class View extends Action
         }
         $stmt = $this->c->DB->query($sql, $vars);
 
-        $result = array_flip($arg->idsList);
+        $result = \array_flip($arg->idsList);
         while ($row = $stmt->fetch()) {
             $row['dot'] = isset($dots[$row['id']]);
             $result[$row['id']] = $this->manager->create($row);

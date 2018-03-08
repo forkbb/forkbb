@@ -31,7 +31,7 @@ class Forums extends Admin
                     unset($categories[$cid]);
                 }
 
-                $indent = str_repeat(\ForkBB\__('Forum indent'), $f->depth);
+                $indent = \str_repeat(\ForkBB\__('Forum indent'), $f->depth);
 
                 if ($f->id === $forum->id || isset($forum->descendants[$f->id]) || $f->redirect_url) {
                     $options[] = [$f->id, $indent . \ForkBB\__('Forum prefix') . $f->forum_name, true];
@@ -58,7 +58,7 @@ class Forums extends Admin
      */
     protected function forumPos(Forum $forum)
     {
-        if (is_int($forum->disp_position)) {
+        if (\is_int($forum->disp_position)) {
             return $forum->disp_position;
         }
 

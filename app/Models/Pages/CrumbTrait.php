@@ -5,14 +5,14 @@ namespace ForkBB\Models\Pages;
 use ForkBB\Models\Model;
 use ForkBB\Models\Search\Model as Search;
 
-trait CrumbTrait 
+trait CrumbTrait
 {
     /**
      * Возвращает массив хлебных крошек
      * Заполняет массив титула страницы
-     * 
+     *
      * @param mixed $args
-     * 
+     *
      * @return array
      */
     protected function crumbs(...$args)
@@ -52,7 +52,7 @@ trait CrumbTrait
                     $arg      = $arg->parent;
                 }
             // ссылка
-            } elseif (is_array($arg)) {
+            } elseif (\is_array($arg)) {
                 $this->titles = $arg[1];
                 $crumbs[]     = [$arg[0], $arg[1], $active];
             // строка
@@ -65,6 +65,6 @@ trait CrumbTrait
         // главная страница
         $crumbs[] = [$this->c->Router->link('Index'), \ForkBB\__('Index'), $active];
 
-        return array_reverse($crumbs);
+        return \array_reverse($crumbs);
     }
 }

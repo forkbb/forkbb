@@ -614,7 +614,7 @@ class Validator
                 $this->addError('The :alias maximum is :attr');
             }
         } elseif (\is_array($value)) {
-            if (count($value) > $attr) {
+            if (\count($value) > $attr) {
                 $this->addError('The :alias maximum is :attr elements');
             }
         } elseif (null !== $value) {
@@ -677,7 +677,7 @@ class Validator
     protected function vRegex($v, $value, $attr)
     {
         if (null !== $value
-            && (! is_string($value) || ! \preg_match($attr, $value))
+            && (! \is_string($value) || ! \preg_match($attr, $value))
         ) {
             $this->addError('The :alias is not valid format');
             return null;

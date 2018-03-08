@@ -82,7 +82,7 @@ class Model extends DataModel
             )
             && ($this->c->user->g_deledit_interval == '0'
                 || $this->edit_post == '1'
-                || time() - $this->posted < $this->c->user->g_deledit_interval
+                || \time() - $this->posted < $this->c->user->g_deledit_interval
             );
     }
 
@@ -105,7 +105,7 @@ class Model extends DataModel
             && $this->c->user->g_edit_posts == '1'
             && ($this->c->user->g_deledit_interval == '0'
                 || $this->edit_post == '1'
-                || time() - $this->posted < $this->c->user->g_deledit_interval
+                || \time() - $this->posted < $this->c->user->g_deledit_interval
             );
     }
 

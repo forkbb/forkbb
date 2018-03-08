@@ -14,7 +14,7 @@ class Online extends Model
      * Возврат данных по пользователям онлайн
      *
      * @param Page $page
-     * 
+     *
      * @return Online
      */
     public function calc(Page $page)
@@ -34,7 +34,7 @@ class Online extends Model
         $this->updateUser($position);
 
         $all     = 0;
-        $now     = time();
+        $now     = \time();
         $tOnline = $now - $this->c->config->o_timeout_online;
         $tVisit  = $now - $this->c->config->o_timeout_visit;
         $online  = [];
@@ -79,7 +79,7 @@ class Online extends Model
             if ($filter && $cur['o_position'] !== $position) {
                 continue;
             }
-            
+
             // пользователь
             if ($cur['user_id'] > 1) {
                 $users[$cur['user_id']] = [
@@ -143,7 +143,7 @@ class Online extends Model
         // гость
         if ($this->c->user->isGuest) {
             $vars = [
-                ':logged' => time(),
+                ':logged' => \time(),
                 ':pos'    => $position,
                 ':name'   => (string) $this->c->user->isBot,
                 ':ip'     => $this->c->user->ip
@@ -156,7 +156,7 @@ class Online extends Model
         } else {
         // пользователь
             $vars = [
-                ':logged' => time(),
+                ':logged' => \time(),
                 ':pos'    => $position,
                 ':id'     => $this->c->user->id,
                 ':name'   => $this->c->user->username,

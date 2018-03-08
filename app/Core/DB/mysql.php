@@ -81,7 +81,7 @@ class Mysql
      */
     protected function testStr($str)
     {
-        if (! is_string($str) || preg_match('%[^a-zA-Z0-9_]%', $str)) {
+        if (! \is_string($str) || \preg_match('%[^a-zA-Z0-9_]%', $str)) {
             throw new PDOException("Name '{$str}' have bad characters.");
         }
     }
@@ -96,7 +96,7 @@ class Mysql
     protected function replIdxs(array $arr)
     {
         foreach ($arr as &$value) {
-            if (preg_match('%^(.*)\s*(\(\d+\))$%', $value, $matches)) {
+            if (\preg_match('%^(.*)\s*(\(\d+\))$%', $value, $matches)) {
                 $this->testStr($matches[1]);
                 $value = "`{$matches[1]}`{$matches[2]}";
             } else {
@@ -105,7 +105,7 @@ class Mysql
             }
             unset($value);
         }
-        return implode(',', $arr);
+        return \implode(',', $arr);
     }
 
     /**
@@ -117,7 +117,7 @@ class Mysql
      */
     protected function replType($type)
     {
-        return preg_replace(array_keys($this->dbTypeRepl), array_values($this->dbTypeRepl), $type);
+        return \preg_replace(\array_keys($this->dbTypeRepl), \array_values($this->dbTypeRepl), $type);
     }
 
     /**
@@ -130,11 +130,11 @@ class Mysql
      * @return string
      */
     protected function convToStr($data) {
-        if (is_string($data)) {
+        if (\is_string($data)) {
             return $this->db->quote($data);
-        } elseif (is_numeric($data)) {
+        } elseif (\is_numeric($data)) {
             return (string) $data;
-        } elseif (is_bool($data)) {
+        } elseif (\is_bool($data)) {
             return $data ? 'true' : 'false';
         } else {
             throw new PDOException('Invalid data type for DEFAULT.');
@@ -226,9 +226,9 @@ class Mysql
             // имя и тип
             $query .= "`{$field}` " . $this->replType($data[0]);
             // сравнение
-            if (preg_match('%^(?:CHAR|VARCHAR|TINYTEXT|TEXT|MEDIUMTEXT|LONGTEXT|ENUM|SET)%i', $data[0])) {
+            if (\preg_match('%^(?:CHAR|VARCHAR|TINYTEXT|TEXT|MEDIUMTEXT|LONGTEXT|ENUM|SET)%i', $data[0])) {
                 $query .= ' CHARACTER SET utf8mb4 COLLATE utf8mb4_';
-                if (isset($data[3]) && is_string($data[3])) {
+                if (isset($data[3]) && \is_string($data[3])) {
                     $this->testStr($data[3]);
                     $query .= $data[3];
                 } else {
@@ -264,7 +264,7 @@ class Mysql
             $engine = $schema['ENGINE'];
         } else {
             // при отсутствии типа таблицы он определяется на основании типов других таблиц в базе
-            $prefix = str_replace('_', '\\_', $this->dbPrefix);
+            $prefix = \str_replace('_', '\\_', $this->dbPrefix);
             $stmt = $this->db->query("SHOW TABLE STATUS LIKE '{$prefix}%'");
             $engine = [];
             while ($row = $stmt->fetch()) {
@@ -278,14 +278,14 @@ class Mysql
             if (empty($engine)) {
                 $engine = 'MyISAM';
             } else {
-                arsort($engine);
+                \arsort($engine);
                 // берем тип наиболее часто встречаемый у имеющихся таблиц
-                $engine = array_keys($engine);
-                $engine = array_shift($engine);
+                $engine = \array_keys($engine);
+                $engine = \array_shift($engine);
             }
         }
         $this->testStr($engine);
-        $query = rtrim($query, ', ') . ") ENGINE={$engine} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
+        $query = \rtrim($query, ', ') . ") ENGINE={$engine} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
         return $this->db->exec($query) !== false;
     }
 
@@ -507,7 +507,7 @@ class Mysql
                 $engine[$row['Engine']] = 1;
             }
         }
-        arsort($engine);
+        \arsort($engine);
         $tmp = [];
         foreach ($engine as $key => $val) {
             $tmp[] = "{$key}({$val})";
@@ -515,15 +515,15 @@ class Mysql
 
         $other = [];
         $stmt = $this->db->query("SHOW VARIABLES LIKE 'character\_set\_%'");
-        while ($row = $stmt->fetch(\PDO::FETCH_NUM)) {
+        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
             $other[$row[0]] = $row[1];
         }
 
         return [
-            'db'      => 'MySQL (PDO) ' . $this->db->getAttribute(\PDO::ATTR_SERVER_VERSION) . ' : ' . implode(', ', $tmp),
+            'db'      => 'MySQL (PDO) ' . $this->db->getAttribute(PDO::ATTR_SERVER_VERSION) . ' : ' . implode(', ', $tmp),
             'records' => $records,
             'size'    => $size,
-            'server info' => $this->db->getAttribute(\PDO::ATTR_SERVER_INFO),
+            'server info' => $this->db->getAttribute(PDO::ATTR_SERVER_INFO),
         ] + $other;
     }
 
@@ -540,10 +540,10 @@ class Mysql
         while ($row = $stmt->fetch()) {
             if ($table !== $row['TABLE_NAME']) {
                 $table = $row['TABLE_NAME'];
-                $tableNoPref = substr($table, strlen($this->dbPrefix));
+                $tableNoPref = \substr($table, \strlen($this->dbPrefix));
                 $result[$tableNoPref] = [];
             }
-            $type = strtolower($row['DATA_TYPE']);
+            $type = \strtolower($row['DATA_TYPE']);
             $result[$tableNoPref][$row['COLUMN_NAME']] = isset($this->types[$type]) ? $this->types[$type] : 's';
         }
         return $result;

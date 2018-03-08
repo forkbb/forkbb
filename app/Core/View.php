@@ -14,7 +14,7 @@ class View extends Dirk
             'views'     => $views,
             'cache'     => $cache,
             'ext'       => '.tpl',
-            'echo'      => 'htmlspecialchars(%s, ENT_HTML5 | ENT_QUOTES | ENT_SUBSTITUTE, \'UTF-8\')',
+            'echo'      => '\\htmlspecialchars(%s, \\ENT_HTML5 | \\ENT_QUOTES | \\ENT_SUBSTITUTE, \'UTF-8\')',
             'separator' => '/',
         ];
         $this->compilers[] = 'Transformations';

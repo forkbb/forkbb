@@ -17,7 +17,7 @@ class Refresh extends Action
      * Обновляет кеш
      *
      * @param Group $group
-     * 
+     *
      * @return array
      */
     public function refresh(Group $group = null)
@@ -48,14 +48,14 @@ class Refresh extends Action
                 $row['moderators'] = $this->formatModers($row['moderators']);
                 $list[$row['id']] = $row;
             }
-            
+
             if (! empty($list)) {
                 $this->createList($list);
             }
         }
 
         $this->c->Cache->set('forums_' . $gid, [
-            'time' => time(),
+            'time' => \time(),
             'list' => $this->list,
         ]);
         return $this->list;
@@ -63,14 +63,14 @@ class Refresh extends Action
 
     /**
      * Преобразует строку со списком модераторов в массив
-     * 
+     *
      * @param string $str
-     * 
+     *
      * @return null|array
      */
     protected function formatModers($str)
     {
-        return empty($str) ? null : array_flip(unserialize($str));
+        return empty($str) ? null : \array_flip(\unserialize($str));
     }
 
     /**
@@ -90,7 +90,7 @@ class Refresh extends Action
                 continue;
             }
             $sub[] = $id;
-            $all   = array_merge($this->createList($list, $id), $all);
+            $all   = \array_merge($this->createList($list, $id), $all);
         }
         if (0 === $parent) {
             if (empty($sub)) {
@@ -99,11 +99,11 @@ class Refresh extends Action
             $list[0]['id']    = $parent;
             $list[0]['ready'] = true;
         }
-        $all = array_merge($sub, $all);
+        $all = \array_merge($sub, $all);
         $list[$parent]['subforums']   = $sub ?: null;
         $list[$parent]['descendants'] = $all ?: null;
-        
-        $this->list[$parent] = array_filter($list[$parent], function($val) {
+
+        $this->list[$parent] = \array_filter($list[$parent], function($val) {
             return null !== $val;
         });
         return $all;
