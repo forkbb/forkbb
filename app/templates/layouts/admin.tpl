@@ -1,5 +1,5 @@
 @extends ('layouts/main')
-    <div class="f-main clearfix">
+    <div class="f-main f-main-admin">
       <aside class="f-admin-menu">
 @if ($p->aNavigation)
         <nav class="f-admin-nav f-menu">
@@ -16,5 +16,7 @@
         </nav>
 @endif
       </aside>
+      <div class="f-admin-wrap">
 @yield ('content')
+      </div>
     </div>

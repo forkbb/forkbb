@@ -95,7 +95,10 @@ class Categories extends Admin
                 'link'  => $this->c->Router->link('AdminCategoriesDelete', ['id' => $key]),
             ];
         }
-        $form['sets'][] = ['fields' => $fieldset];
+        $form['sets'][] = [
+            'class'  => 'inline',
+            'fields' => $fieldset,
+        ];
         $form['sets'][] = [
             'fields' => [
                 'new' => [

@@ -836,16 +836,18 @@ select {
 }
 
 @media screen and (min-width: 50rem) {
-  .f-admin {
-    margin-left: 14rem;
+  .f-main-admin {
+    display: flex;
+    flex-wrap: wrap;
   }
 
   .f-admin-menu {
     width: 13rem;
-    float: left;
-/*    position: static;
-    position: sticky;
-    top: 0; */
+    margin-right: 1rem;
+  }
+
+  .f-admin-wrap {
+    width: calc(100% - 14rem);
   }
 
   .f-admin-menu .f-menu-toggle {
@@ -908,16 +910,6 @@ select {
   margin-bottom: 0.3125rem;
 }
 
-.f-admin dl:before,
-.f-admin dl:after {
-  content: " ";
-  display: table;
-}
-
-.f-admin dl:after {
-  clear: both;
-}
-
 .f-admin .f-fdiv .f-child2 {
   font-size: 1rem;
 }
@@ -942,13 +934,17 @@ select {
 }
 
 @media screen and (min-width: 36rem) {
+  .f-admin dl {
+    display: flex;
+  }
+
   .f-admin dt {
-    float: left;
     width: 14rem;
+    margin-right: 0.625rem;
   }
 
   .f-admin dd {
-    padding-left: 14.625rem;
+    width: calc(100% - 14.625rem);
   }
 
   .f-admin .f-fdiv .f-child1 {
@@ -1627,26 +1623,36 @@ select {
 /* Админка/Категории */
 /* Админка/Разделы   */
 /*********************/
+.f-fs-inline {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.f-fs-inline .f-field-inline,
+.f-fs-inline .f-field-cando {
+  display: block;
+}
+
 .f-field-inline > dt {
+  width: 100%;
+  margin: 0;
   display: none;
 }
 
 .f-field-inline > dd {
-  padding-left: 0;
+  display: block;
+  width: 100%;
 }
 
 .f-field-inline.f-field-name {
-  float: left;
   width: calc(100% - 8rem);
 }
 
 .f-field-inline.f-field-position {
-  float: left;
   width: 5rem;
 }
 
 .f-field-inline.f-field-delete {
-  float: left;
   width: 3rem;
   overflow: hidden;
 }
@@ -1667,13 +1673,13 @@ select {
 
 .f-field-inline:nth-child(-n+3) > dt {
   display: block;
-  width: 100%;
-  overflow: hidden;
-  float: none;
 }
 
 .f-field-inline .f-child1 {
   font-weight: normal;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .f-field-depth1 > dd {
@@ -1700,24 +1706,20 @@ select {
 /* Админка/Разделы   */
 /*********************/
 .f-field-inline.f-field-cando {
-  float: left;
   width: 33.333%;
   text-align: center;
-  position: relative;
+/*  position: relative; */
 }
 
 .f-field-inline.f-field-cando > dt {
   display: block;
-  width: 100%;
-  overflow: hidden;
-  float: none;
 }
 
-.f-field-inline > dt > label {
+/* .f-field-inline > dt > label {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
+} */
 
  .f-editforum-form legend {
   margin-bottom: 0;
@@ -1770,7 +1772,6 @@ select {
 /* Админка/Цензура   */
 /*********************/
 .f-field-inline.f-field-censor {
-  float: left;
   width: 50%;
 }
 
@@ -1780,9 +1781,6 @@ select {
 
 .f-field-inline.f-field-censor:nth-child(-n+2) > dt {
   display: block;
-  width: 100%;
-  overflow: hidden;
-  float: none;
 }
 
 /*************/

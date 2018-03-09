@@ -10,7 +10,7 @@
           <p class="f-finfo"> @if (empty($cur['html'])){{ $cur['value'] }} @else{!! $cur['value'] !!} @endif</p>
     @endforeach
   @elseif (isset($set['fields']))
-          <fieldset @if (isset($set['id'])) id="{{ $set['id'] }}" @endif>
+          <fieldset @if (isset($set['id'])) id="{{ $set['id'] }}" @endif @if (isset($set['class'])) class="f-fs-{!! implode(' f-fs-', (array) $set['class']) !!}" @endif>
     @if (isset($set['legend']))
             <legend>{!! $set['legend'] !!}</legend>
     @endif

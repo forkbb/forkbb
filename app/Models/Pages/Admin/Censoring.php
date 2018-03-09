@@ -117,6 +117,7 @@ class Censoring extends Admin
         ];
 
         $form['sets'][] = [
+            'class'  => 'inline',
             'fields' => $fieldset,
         ];
 

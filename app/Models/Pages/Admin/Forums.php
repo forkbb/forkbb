@@ -150,6 +150,7 @@ class Forums extends Admin
                 if ($cid !== $forum->cat_id) {
                     if (null !== $cid) {
                         $form['sets'][] = [
+                            'class'  => 'inline',
                             'fields' => $fieldset,
                         ];
                         $fieldset = [];
@@ -193,6 +194,7 @@ class Forums extends Admin
             }
 
             $form['sets'][] = [
+                'class'  => 'inline',
                 'fields' => $fieldset,
             ];
         }
@@ -525,6 +527,7 @@ class Forums extends Admin
             ];
 
             $form['sets'][] = [
+                'class'  => 'inline',
                 'legend' => \ForkBB\e($group->g_title),
                 'fields' => $fieldset,
             ];
