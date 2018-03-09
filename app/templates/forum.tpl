@@ -56,7 +56,7 @@
     <div class="f-nav-links">
 @yield ('crumbs')
 @if ($p->model->canCreateTopic || $p->model->pagination)
-      <div class="f-nlinks-b clearfix">
+      <div class="f-nlinks-b">
   @yield ('pagination')
   @if ($p->model->canCreateTopic)
         <div class="f-actions-links">
@@ -152,7 +152,7 @@
     </section>
     <div class="f-nav-links">
   @if ($p->model->canCreateTopic || $p->model->pagination || $p->model->canMarkRead)
-      <div class="f-nlinks-a clearfix">
+      <div class="f-nlinks-a">
     @if ($p->model->canCreateTopic || $p->model->canMarkRead)
         <div class="f-actions-links">
       @if ($p->model->canMarkRead)

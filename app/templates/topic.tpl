@@ -47,7 +47,7 @@
     <div class="f-nav-links">
 @yield ('crumbs')
 @if ($p->model->canReply || $p->model->closed || $p->model->pagination)
-      <div class="f-nlinks-b clearfix">
+      <div class="f-nlinks-b">
   @yield ('pagination')
   @yield ('linkpost')
       </div>
@@ -134,7 +134,7 @@
     </section>
     <div class="f-nav-links">
 @if ($p->model->canReply || $p->model->closed || $p->model->pagination)
-      <div class="f-nlinks-a clearfix">
+      <div class="f-nlinks-a">
   @yield ('linkpost')
   @yield ('pagination')
       </div>

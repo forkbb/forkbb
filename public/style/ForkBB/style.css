@@ -586,6 +586,9 @@ select {
   border-bottom: 0.0625rem solid #AA7939;
   border-top: 0.0625rem solid #AA7939;
   background-color: #F8F4E3;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .f-footer > h2 {
@@ -668,37 +671,42 @@ select {
   border: 0;
 }
 
+.f-nav-links .f-actions-links,
+.f-nav-links .f-pages {
+  padding: 0 0.625rem;
+}
+
+.f-nlinks,
+.f-nlinks-a,
+.f-nlinks-b {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .f-nlinks-b {
   margin-top: 0.625rem;
   border-top: 0.0625rem dotted #AA7939;
 }
 
+.f-nlinks-b .f-actions-links,
+.f-nlinks-b .f-pages {
+  padding-top: 0.625rem;
+}
+
 .f-nlinks-a {
   margin-bottom: 0.625rem;
   border-bottom: 0.0625rem dotted #AA7939;
-}
-
-.f-actions-links {
-  float: right;
-}
-
-.f-pages {
-  float: left;
+  flex-wrap: wrap-reverse;
 }
 
 .f-nlinks-a .f-actions-links,
 .f-nlinks-a .f-pages {
-  padding: 0 0.625rem 0.625rem 0.625rem;
+  padding-bottom: 0.625rem;
 }
 
-.f-nlinks-b .f-actions-links,
-.f-nlinks-b .f-pages {
-  padding: 0.625rem 0.625rem 0 0.625rem;
-}
-
-.f-nlinks .f-actions-links,
-.f-nlinks .f-pages {
-  padding: 0 0.625rem;
+.f-nav-links .f-actions-links {
+  margin-left: auto;
+  order: 1;
 }
 
 .f-nav-links .f-page {
@@ -962,40 +970,35 @@ select {
 .f-stats {
   border-top: 0.0625rem solid #AA7939;
   font-size: 0.875rem;
-}
-
-.f-stats > h2 {
-  display: none;
-}
-
-.f-stats > div {
   padding: 0.3125rem 0;
 }
 
-.f-stats dl {
-  padding: 0.3125rem 0.625rem;
-}
-
+.f-stats > h2,
 .f-stats dt {
   display: none;
 }
 
+.f-stboard,
+.f-stusers {
+  padding: 0.3125rem;
+}
+
 .f-stboard {
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
   border-bottom: 0.0625rem dotted #AA7939;
 }
 
-.f-stboard > dd {
-  display: inline-block;
-}
-
-.f-stboard > dd + dd {
-  margin-left: 0.625rem;
+.f-stboard > dd,
+.f-stusers > dd {
+  padding: 0 0.3125rem;
 }
 
 .f-onlinelist {
-  clear: both;
   border-top: 0.0625rem dotted #AA7939;
+  padding: 0.3125rem 0.625rem;
+  width: 100%
 }
 
 .f-onlinelist > dt {
@@ -1004,22 +1007,20 @@ select {
 }
 
 @media screen and (min-width: 45rem) {
+  .f-stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between
+  }
+
   .f-stboard {
-    text-align: right;
-    float: right;
-    border: 0;
-  }
-
-  .f-stboard > dd {
     display: block;
-  }
-
-  .f-stboard > dd + dd {
-    margin-left: 0;
+    border: 0;
+    text-align: right;
   }
 
   .f-stusers {
-    float: left;
+    order: -1;
   }
 }
 

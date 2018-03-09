@@ -43,13 +43,10 @@
   @include ('layouts/iswev')
 @endif
 @yield ('content')
-    <footer class="f-footer clearfix">
+    <footer class="f-footer">
       <h2>{!! __('Board footer') !!}</h2>
-      <div class="left">
-      </div>
-      <div class="right">
-        <p class="poweredby">{!! __('Powered by') !!}</p>
-      </div>
+      <div></div>
+      <div><p class="poweredby">{!! __('Powered by') !!}</p></div>
     </footer>
 <!-- debuginfo -->
   </div>
