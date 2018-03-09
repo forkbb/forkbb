@@ -5,6 +5,7 @@ namespace ForkBB\Models\Group;
 use ForkBB\Models\Action;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Group\Model as Group;
+use PDO;
 use RuntimeException;
 
 class Perm extends Action
@@ -34,7 +35,7 @@ class Perm extends Action
                 LEFT JOIN ::forum_perms AS fp ON (g.g_id=fp.group_id AND fp.forum_id=?i:fid)
                 WHERE g.g_id!=?i:adm
                 ORDER BY g.g_id';
-        $perms = $this->c->DB->query($sql, $vars)->fetchAll(\PDO::FETCH_UNIQUE);
+        $perms = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_UNIQUE);
 
         $result = [];
         foreach ($perms as $gid => $perm) {

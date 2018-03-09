@@ -101,7 +101,7 @@ class Page extends Model
 
         if ($this->user->g_read_board == '1' && $this->c->config->o_additional_navlinks != '') {
             // position|name|link[|id]\n
-            if (\preg_match_all('%^(\d+)\|([^\|\n\r]+)\|([^\|\n\r]+)(?:\|([^\|\n\r]+))?$%m', $this->c->config->o_additional_navlinks . "\n", $matches)) {
+            if (\preg_match_all('%^(\d+)\|([^\|\n\r]+)\|([^\|\n\r]+)(?:\|([^\|\n\r]+))?%m', $this->c->config->o_additional_navlinks . "\n", $matches)) {
                $k = \count($matches[0]);
                for ($i = 0; $i < $k; ++$i) {
                    if (empty($matches[4][$i])) {

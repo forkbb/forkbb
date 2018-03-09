@@ -6,6 +6,7 @@ use ForkBB\Models\Action;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Post\Model as Post;
 use ForkBB\Models\Topic\Model as Topic;
+use PDO;
 use InvalidArgumentException;
 use RuntimeException;
 
@@ -94,7 +95,7 @@ class Delete extends Action
                     FROM ::posts AS p
                     WHERE p.topic_id IN (?ai:topics)
                     GROUP BY p.poster_id';
-            $users = $this->c->DB->query($sql, $vars)->fetchAll(\PDO::FETCH_COLUMN);
+            $users = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
             $sql = 'DELETE FROM ::posts
                     WHERE topic_id IN (?ai:topics)';
@@ -108,7 +109,7 @@ class Delete extends Action
                     INNER JOIN ::topics AS t ON t.id=p.topic_id
                     WHERE t.forum_id IN (?ai:forums)
                     GROUP BY p.poster_id';
-            $users = $this->c->DB->query($sql, $vars)->fetchAll(\PDO::FETCH_COLUMN);
+            $users = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
             $sql = 'DELETE FROM ::posts
                     WHERE topic_id IN (

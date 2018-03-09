@@ -22,12 +22,12 @@
 @endif
       </div>
 @if ($p->fNavigation)
-      <nav class="main-nav f-menu">
-        <input id="main-nav-checkbox" style="display: none;" type="checkbox">
-        <label class="f-menu-toggle" for="main-nav-checkbox"></label>
+      <nav class="f-main-nav f-menu">
+        <input id="id-mn-checkbox" class="f-menu-checkbox" type="checkbox" style="display: none;">
+        <label class="f-menu-toggle" for="id-mn-checkbox"></label>
         <ul class="f-menu-items">
   @foreach ($p->fNavigation as $key => $val)
-          <li><a id="nav-{{ $key }}" @if ($key == $p->fIndex) class="active" @endif href="{!! $val[0] !!}">{!! $val[1] !!}</a></li>
+          <li id="id-nav-{{ $key }}" class="f-menu-item"><a class="f-menu-a @if ($key == $p->fIndex) active @endif" href="{!! $val[0] !!}">{!! $val[1] !!}</a></li>
   @endforeach
         </ul>
       </nav>
