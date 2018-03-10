@@ -1708,7 +1708,7 @@ select {
 .f-field-inline.f-field-cando {
   width: 33.333%;
   text-align: center;
-/*  position: relative; */
+  position: relative;
 }
 
 .f-field-inline.f-field-cando > dt {
