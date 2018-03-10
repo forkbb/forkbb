@@ -102,8 +102,8 @@ msgstr "Результаты поиска"
 msgid "Quick search show_new"
 msgstr "Темы с новыми сообщениями"
 
-msgid "Quick search show_recent"
-msgstr "Активные темы"
+msgid "Quick search show_latest"
+msgstr "Последние активные темы"
 
 msgid "Quick search show_unanswered"
 msgstr "Темы без ответа"

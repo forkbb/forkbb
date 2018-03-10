@@ -59,44 +59,50 @@ class Page extends Model
         $r = $this->c->Router;
 
         $nav = [
-            'index' => [$r->link('Index'), \ForkBB\__('Index')]
+            'index' => [$r->link('Index'), 'Index']
         ];
 
         if ($this->user->g_read_board == '1' && $this->user->viewUsers) {
-            $nav['userlist'] = [$r->link('Userlist'), \ForkBB\__('User list')];
+            $nav['userlist'] = [$r->link('Userlist'), 'User list'];
         }
 
         if ($this->c->config->o_rules == '1'
             && (! $this->user->isGuest || $this->user->g_read_board == '1' || $this->c->config->o_regs_allow == '1')
         ) {
-            $nav['rules'] = [$r->link('Rules'), \ForkBB\__('Rules')];
+            $nav['rules'] = [$r->link('Rules'), 'Rules'];
         }
 
         if ($this->user->g_read_board == '1' && $this->user->g_search == '1') {
-            $nav['search'] = [$r->link('Search'), \ForkBB\__('Search')];
+            $sub = [];
+            if (! $this->user->isGuest) {
+                $sub['with-your-posts'] = [$r->link('SearchAction', ['action' => '???']), 'Topics with your posts', 'Find topics with your posts'];
+            }
+            $sub['latest']     = [$r->link('SearchAction', ['action' => 'latest']), 'Latest active topics', 'Find latest active topics'];
+            $sub['unanswered'] = [$r->link('SearchAction', ['action' => 'unanswered']), 'Unanswered topics', 'Find unanswered topics'];
+            $nav['search']     = [$r->link('Search'), 'Search', null, $sub];
         }
 
         if ($this->user->isGuest) {
-            $nav['register'] = [$r->link('Register'), \ForkBB\__('Register')];
-            $nav['login'] = [$r->link('Login'), \ForkBB\__('Login')];
+            $nav['register'] = [$r->link('Register'), 'Register'];
+            $nav['login'] = [$r->link('Login'), 'Login'];
         } else {
             $nav['profile'] = [$r->link('User', [
                 'id'   => $this->user->id,
                 'name' => $this->user->username,
-            ]), \ForkBB\__('Profile')];
+            ]), 'Profile'];
             // New PMS
             if ($this->c->config->o_pms_enabled == '1' && ($this->user->isAdmin || $this->user->messages_new > 0)) { //????
-                $nav['pmsnew'] = ['pmsnew.php', \ForkBB\__('PM')]; //'<li id="nav"'.((PUN_ACTIVE_PAGE == 'pms_new' || $user['messages_new'] > 0) ? ' class="isactive"' : '').'><a href="pmsnew.php">'.\ForkBB\__('PM').(($user['messages_new'] > 0) ? ' (<span'.((empty($this->c->config->o_pms_flasher) || PUN_ACTIVE_PAGE == 'pms_new') ? '' : ' class="remflasher"' ).'>'.$user['messages_new'].'</span>)' : '').'</a></li>';
+                $nav['pmsnew'] = ['pmsnew.php', 'PM']; //'<li id="nav"'.((PUN_ACTIVE_PAGE == 'pms_new' || $user['messages_new'] > 0) ? ' class="isactive"' : '').'><a href="pmsnew.php">'.\ForkBB\__('PM').(($user['messages_new'] > 0) ? ' (<span'.((empty($this->c->config->o_pms_flasher) || PUN_ACTIVE_PAGE == 'pms_new') ? '' : ' class="remflasher"' ).'>'.$user['messages_new'].'</span>)' : '').'</a></li>';
             }
             // New PMS
 
             if ($this->user->isAdmMod) {
-                $nav['admin'] = [$r->link('Admin'), \ForkBB\__('Admin')];
+                $nav['admin'] = [$r->link('Admin'), 'Admin'];
             }
 
             $nav['logout'] = [$r->link('Logout', [
                 'token' => $this->c->Csrf->create('Logout'),
-            ]), \ForkBB\__('Logout')];
+            ]), 'Logout'];
         }
 
         if ($this->user->g_read_board == '1' && $this->c->config->o_additional_navlinks != '') {

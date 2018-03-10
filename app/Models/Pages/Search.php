@@ -408,7 +408,7 @@ class Search extends Page
                 $model->linkMarker = $advanced ? 'SearchAdvanced' : 'Search';
                 $model->linkArgs   = $args;
                 break;
-            case 'last':
+            case 'latest':
             case 'unanswered':
                 $list = $model->actionT($action);
                 $model->name       = \ForkBB\__('Quick search show_' . $action);

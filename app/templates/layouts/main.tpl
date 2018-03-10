@@ -22,12 +22,27 @@
 @endif
       </div>
 @if ($p->fNavigation)
-      <nav class="f-main-nav f-menu">
+      <nav class="f-main-nav f-menu @if (isset($p->fNavigation['search'])) f-main-nav-search @endif">
         <input id="id-mn-checkbox" class="f-menu-checkbox" type="checkbox" style="display: none;">
         <label class="f-menu-toggle" for="id-mn-checkbox"></label>
         <ul class="f-menu-items">
   @foreach ($p->fNavigation as $key => $val)
-          <li id="id-nav-{{ $key }}" class="f-menu-item"><a class="f-menu-a @if ($key == $p->fIndex) active @endif" href="{!! $val[0] !!}">{!! $val[1] !!}</a></li>
+          <li id="id-nav-{!! $key !!}" class="f-menu-item"><!-- inline -->
+            <a class="f-menu-a @if ($key == $p->fIndex) active @endif" href="{!! __($val[0]) !!}">{!! __($val[1]) !!}</a>
+    @if (isset($val[3]))
+            <ul class="f-submenu-items">
+      @foreach ($val[3] as $key => $val)
+              <li id="id-nav-{!! $key !!}" class="f-menu-item">
+        @if (isset($val[0]))
+                <a class="f-menu-a" href="{!! __($val[0]) !!}" title="{!! __($val[2]) !!}">{!! __($val[1]) !!}</a>
+        @else
+                <span class="f-menu-span">{!! __($val[1]) !!}</span>
+        @endif
+              </li>
+      @endforeach
+            </ul>
+    @endif
+          </li><!-- endinline -->
   @endforeach
         </ul>
       </nav>

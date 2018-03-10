@@ -72,7 +72,7 @@ class Routing
                 $r->add('GET',  '/search/advanced[/{keywords}/{author}/{forums}/{serch_in:\d}/{sort_by:\d}/{sort_dir:\d}/{show_as:\d}[/{page:[1-9]\d*}]]', 'Search:viewAdvanced',   'SearchAdvanced');
                 $r->add('POST', '/search/advanced',           'Search:viewAdvanced');
 
-                $r->add('GET',          '/search/{action:last|unanswered}[/{page:[1-9]\d*}]', 'Search:action', 'SearchAction');
+                $r->add('GET',          '/search/{action:latest|unanswered}[/{page:[1-9]\d*}]', 'Search:action', 'SearchAction');
             }
             // юзеры
             if ($user->g_view_users == '1') {

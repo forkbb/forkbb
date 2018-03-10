@@ -319,33 +319,6 @@ msgstr "Administration"
 msgid "Last visit"
 msgstr "Last visit: %s"
 
-msgid "Topic searches"
-msgstr "Topics:"
-
-msgid "New posts header"
-msgstr "New"
-
-msgid "Active topics"
-msgstr "Active"
-
-msgid "Unanswered topics"
-msgstr "Unanswered"
-
-msgid "Posted topics"
-msgstr "Posted"
-
-msgid "Show new posts"
-msgstr "Find topics with new posts since your last visit."
-
-msgid "Show active topics"
-msgstr "Find topics with recent posts."
-
-msgid "Show unanswered topics"
-msgstr "Find topics with no replies."
-
-msgid "Show posted topics"
-msgstr "Find topics you have posted to."
-
 msgid "Title separator"
 msgstr " - "
 
@@ -492,3 +465,21 @@ msgstr "%s PiB"
 
 msgid "%s EiB"
 msgstr "%s EiB"
+
+msgid "Latest active topics"
+msgstr "Latest active topics"
+
+msgid "Find latest active topics"
+msgstr "Find latest active topics"
+
+msgid "Unanswered topics"
+msgstr "Unanswered topics"
+
+msgid "Find unanswered topics"
+msgstr "Find unanswered topics"
+
+msgid "Topics with your posts"
+msgstr "Topics with your posts"
+
+msgid "Find topics with your posts"
+msgstr "Find topics with your posts"

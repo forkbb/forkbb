@@ -352,7 +352,7 @@ msgid "Menu items label"
 msgstr "Additional menu items"
 
 msgid "Menu items help"
-msgstr "You can add any number of new items in the menu. Each line specifies one item in the format: <b>Position</b>|<b>Name</b>|<b>Link</b><i>[|<b>Identifier</b>]</i>."
+msgstr "You can add any number of new items in the menu. Each line specifies one item in the format: <b>Position</b><wbr>|<b>Name</b><wbr>|<b>Link</b><wbr><i>[|<b>Identifier</b>]</i>."
 
 msgid "Feed subhead"
 msgstr "Syndication"

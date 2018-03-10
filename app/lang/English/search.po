@@ -102,8 +102,8 @@ msgstr "Search results"
 msgid "Quick search show_new"
 msgstr "New"
 
-msgid "Quick search show_recent"
-msgstr "Active"
+msgid "Quick search show_latest"
+msgstr "Latest active"
 
 msgid "Quick search show_unanswered"
 msgstr "Unanswered"

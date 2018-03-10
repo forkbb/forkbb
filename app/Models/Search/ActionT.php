@@ -31,7 +31,7 @@ class ActionT extends Method
             case 'search':
                 $list = $this->model->queryIds;
                 break;
-            case 'last':
+            case 'latest':
                 $sql = 'SELECT t.id
                         FROM ::topics AS t
                         WHERE t.forum_id IN (?ai:forums) AND t.moved_to IS NULL

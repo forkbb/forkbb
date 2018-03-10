@@ -321,33 +321,6 @@ msgstr "Админка"
 msgid "Last visit"
 msgstr "Последний визит: %s"
 
-msgid "Topic searches"
-msgstr "Темы:"
-
-msgid "New posts header"
-msgstr "Новые"
-
-msgid "Active topics"
-msgstr "Активные"
-
-msgid "Unanswered topics"
-msgstr "Без ответа"
-
-msgid "Posted topics"
-msgstr "С вашим участием"
-
-msgid "Show new posts"
-msgstr "Найти темы с новыми сообщениями."
-
-msgid "Show active topics"
-msgstr "Найти темы с недавними сообщениями."
-
-msgid "Show unanswered topics"
-msgstr "Найти темы без ответов."
-
-msgid "Show posted topics"
-msgstr "Найти темы с вашим участием."
-
 msgid "Title separator"
 msgstr " - "
 
@@ -494,3 +467,21 @@ msgstr "%s Пбайт"
 
 msgid "%s EiB"
 msgstr "%s Эбайт"
+
+msgid "Latest active topics"
+msgstr "Последние активные темы"
+
+msgid "Find latest active topics"
+msgstr "Найти последние активные темы"
+
+msgid "Unanswered topics"
+msgstr "Темы без ответа"
+
+msgid "Find unanswered topics"
+msgstr "Найти темы без ответа"
+
+msgid "Topics with your posts"
+msgstr "Темы с вашим участием"
+
+msgid "Find topics with your posts"
+msgstr "Найти темы с вашим участием"
