@@ -1,6 +1,6 @@
 <?php
 
-$forkStart = empty($_SERVER['REQUEST_TIME_FLOAT']) ? microtime(true) : $_SERVER['REQUEST_TIME_FLOAT'];
+$forkStart = empty($_SERVER['REQUEST_TIME_FLOAT']) ? \microtime(true) : $_SERVER['REQUEST_TIME_FLOAT'];
 $forkPublic = __DIR__;
 $forkPublicPrefix = '';
 

@@ -35,9 +35,9 @@ function __($arg, ...$args)
 
     $tr = $c->Lang->get($arg);
 
-    if (is_array($tr)) {
-        if (isset($args[0]) && is_int($args[0])) {
-            $n = array_shift($args);
+    if (\is_array($tr)) {
+        if (isset($args[0]) && \is_int($args[0])) {
+            $n = \array_shift($args);
             eval('$n = (int) ' . $tr['plural']);
             $tr = $tr[$n];
         } else {
@@ -47,11 +47,11 @@ function __($arg, ...$args)
 
     if (empty($args)) {
         return $tr;
-    } elseif (is_array($args[0])) {
-        return strtr($tr, array_map('\ForkBB\e', $args[0]));
+    } elseif (\is_array($args[0])) {
+        return \strtr($tr, \array_map('\ForkBB\e', $args[0]));
     } else {
-        $args = array_map('\ForkBB\e', $args);
-        return sprintf($tr, ...$args);
+        $args = \array_map('\ForkBB\e', $args);
+        return \sprintf($tr, ...$args);
     }
 }
 
@@ -64,7 +64,7 @@ function __($arg, ...$args)
  */
 function e($arg)
 {
-    return htmlspecialchars($arg, ENT_HTML5 | ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    return \htmlspecialchars($arg, \ENT_HTML5 | \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8');
 }
 
 /**
@@ -96,8 +96,8 @@ function cens($arg)
  */
 function num($number, $decimals = 0)
 {
-    return is_numeric($number)
-        ? number_format($number, $decimals, __('lang_decimal_point'), __('lang_thousands_sep'))
+    return \is_numeric($number)
+        ? \number_format($number, $decimals, __('lang_decimal_point'), __('lang_thousands_sep'))
         : 'not a number';
 }
 
@@ -136,14 +136,14 @@ function dt($arg, $dateOnly = false, $dateFormat = null, $timeFormat = null, $ti
         $timeFormat = $c->TIME_FORMATS[$c->user->time_format];
     }
 
-    $date = gmdate($dateFormat, $arg);
+    $date = \gmdate($dateFormat, $arg);
 
     if(! $noText) {
-        $now = time() + $diff;
+        $now = \time() + $diff;
 
-        if ($date == gmdate($dateFormat, $now)) {
+        if ($date == \gmdate($dateFormat, $now)) {
             $date = __('Today');
-        } elseif ($date == gmdate($dateFormat, $now - 86400)) {
+        } elseif ($date == \gmdate($dateFormat, $now - 86400)) {
             $date = __('Yesterday');
         }
     }
@@ -151,9 +151,9 @@ function dt($arg, $dateOnly = false, $dateFormat = null, $timeFormat = null, $ti
     if ($dateOnly) {
         return $date;
     } elseif ($timeOnly) {
-        return gmdate($timeFormat, $arg);
+        return \gmdate($timeFormat, $arg);
     } else {
-        return $date . ' ' . gmdate($timeFormat, $arg);
+        return $date . ' ' . \gmdate($timeFormat, $arg);
     }
 }
 
@@ -166,7 +166,7 @@ function dt($arg, $dateOnly = false, $dateFormat = null, $timeFormat = null, $ti
  */
 function utc($timestamp)
 {
-    return gmdate('c', $timestamp); // Y-m-d\TH:i:s\Z
+    return \gmdate('c', $timestamp); // Y-m-d\TH:i:s\Z
 }
 
 /**
@@ -184,5 +184,5 @@ function size($size)
         $size /= 1024;
     }
 
-    return __('%s ' . $units[$i], sprintf('%.2f', $size));
+    return __('%s ' . $units[$i], num($size, 2)); // \sprintf('%.2f', $size)
 }
