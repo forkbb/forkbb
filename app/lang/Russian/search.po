@@ -102,13 +102,13 @@ msgstr "Результаты поиска"
 msgid "Quick search show_new"
 msgstr "Темы с новыми сообщениями"
 
-msgid "Quick search show_latest"
+msgid "Quick search latest_active_topics"
 msgstr "Последние активные темы"
 
-msgid "Quick search show_unanswered"
+msgid "Quick search unanswered_topics"
 msgstr "Темы без ответа"
 
-msgid "Quick search show_replies"
+msgid "Quick search topics_with_your_posts"
 msgstr "Темы с вашим участием"
 
 msgid "Quick search show_user_topics"

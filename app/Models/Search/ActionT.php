@@ -14,12 +14,13 @@ class ActionT extends Method
      * Поисковые действия по темам
      *
      * @param string $action
+     * @param int $uid
      *
      * @throws InvalidArgumentException
      *
      * @return false|array
      */
-    public function actionT($action)
+    public function actionT($action, $uid = null)
     {
         $root = $this->c->forums->get(0);
         if (! $root instanceof Forum || empty($root->descendants)) {
@@ -31,16 +32,24 @@ class ActionT extends Method
             case 'search':
                 $list = $this->model->queryIds;
                 break;
-            case 'latest':
+            case 'latest_active_topics':
                 $sql = 'SELECT t.id
                         FROM ::topics AS t
                         WHERE t.forum_id IN (?ai:forums) AND t.moved_to IS NULL
                         ORDER BY t.last_post DESC';
                 break;
-            case 'unanswered':
+            case 'unanswered_topics':
                 $sql = 'SELECT t.id
                         FROM ::topics AS t
                         WHERE t.forum_id IN (?ai:forums) AND t.moved_to IS NULL AND t.num_replies=0
+                        ORDER BY t.last_post DESC';
+                break;
+            case 'topics_with_your_posts':
+                $sql = 'SELECT t.id
+                        FROM ::topics AS t
+                        INNER JOIN ::posts AS p ON t.id=p.topic_id
+                        WHERE t.forum_id IN (?ai:forums) AND t.moved_to IS NULL AND p.poster_id=?i:uid
+                        GROUP BY t.id
                         ORDER BY t.last_post DESC';
                 break;
             default:
@@ -50,6 +59,7 @@ class ActionT extends Method
         if (null !== $sql) {
             $vars = [
                 ':forums' => \array_keys($root->descendants),
+                ':uid'    => $uid,
             ];
             $list = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
         }

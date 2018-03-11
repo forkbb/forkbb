@@ -392,31 +392,38 @@ class Search extends Page
         $model->page  = isset($args['page']) ? (int) $args['page'] : 1;
         $action       = $args['action'];
         $asTopicsList = true;
+        $list         = false;
+        $uid          = isset($args['uid']) ? (int) $args['uid'] : null;
         switch ($action) {
             case 'search':
                 if (1 === $model->showAs) {
                     $list = $model->actionT($action);
                 } else {
                     $list = $model->actionP($action);
-                    $asTopicsList = false;
+                    $asTopicsList  = false;
                 }
                 if ('*' === $args['author']) {
-                    $model->name  = \ForkBB\__('Search query: %s', $args['keywords']);
+                    $model->name   = \ForkBB\__('Search query: %s', $args['keywords']);
                 } else {
-                    $model->name  = \ForkBB\__('Search query: %1$s and Author: %2$s', $args['keywords'], $args['author']);
+                    $model->name   = \ForkBB\__('Search query: %1$s and Author: %2$s', $args['keywords'], $args['author']);
                 }
                 $model->linkMarker = $advanced ? 'SearchAdvanced' : 'Search';
                 $model->linkArgs   = $args;
                 break;
-            case 'latest':
-            case 'unanswered':
-                $list = $model->actionT($action);
-                $model->name       = \ForkBB\__('Quick search show_' . $action);
+            case 'topics_with_your_posts':
+                if ($this->user->isGuest) {
+                    break;
+                }
+                $uid               = $this->user->id;
+            case 'latest_active_topics':
+            case 'unanswered_topics':
+                $list              = $model->actionT($action, $uid);
+                $model->name       = \ForkBB\__('Quick search ' . $action);
                 $model->linkMarker = 'SearchAction';
                 $model->linkArgs   = ['action' => $action];
                 break;
-            default:
-                throw new InvalidArgumentException('Unknown action: ' . $action);
+#            default:
+#                throw new InvalidArgumentException('Unknown action: ' . $action);
         }
 
         if (false === $list) {
