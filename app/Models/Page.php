@@ -74,13 +74,25 @@ class Page extends Model
 
         if ($this->user->g_read_board == '1' && $this->user->g_search == '1') {
             $sub = [];
-            $sub['latest']     = [$r->link('SearchAction', ['action' => 'latest_active_topics']), 'Latest active topics', 'Find latest active topics'];
+            $sub['latest'] = [
+                $r->link('SearchAction', ['action' => 'latest_active_topics']),
+                'Latest active topics',
+                'Find latest active topics',
+            ];
             if (! $this->user->isGuest) {
-                $sub['with-your-posts'] = [$r->link('SearchAction', ['action' => 'topics_with_your_posts']), 'Topics with your posts', 'Find topics with your posts'];
+                $sub['with-your-posts'] = [
+                    $r->link('SearchAction', ['action' => 'topics_with_your_posts']),
+                    'Topics with your posts',
+                    'Find topics with your posts',
+                ];
             }
-            $sub['unanswered'] = [$r->link('SearchAction', ['action' => 'unanswered_topics']), 'Unanswered topics', 'Find unanswered topics'];
+            $sub['unanswered'] = [
+                $r->link('SearchAction', ['action' => 'unanswered_topics']),
+                'Unanswered topics',
+                'Find unanswered topics',
+            ];
 
-            $nav['search']     = [$r->link('Search'), 'Search', null, $sub];
+            $nav['search'] = [$r->link('Search'), 'Search', null, $sub];
         }
 
         if ($this->user->isGuest) {

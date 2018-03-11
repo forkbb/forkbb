@@ -34,7 +34,7 @@
       @foreach ($val[3] as $key => $val)
               <li id="id-nav-{!! $key !!}" class="f-menu-item">
         @if (isset($val[0]))
-                <a class="f-menu-a" href="{!! __($val[0]) !!}" title="{!! __($val[2]) !!}">{!! __($val[1]) !!}</a>
+                <a class="f-menu-a @if ($key == $p->fSubIndex) active @endif" href="{!! __($val[0]) !!}" title="{!! __($val[2]) !!}">{!! __($val[1]) !!}</a>
         @else
                 <span class="f-menu-span">{!! __($val[1]) !!}</span>
         @endif

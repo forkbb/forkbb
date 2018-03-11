@@ -394,6 +394,11 @@ class Search extends Page
         $asTopicsList = true;
         $list         = false;
         $uid          = isset($args['uid']) ? (int) $args['uid'] : null;
+        $subIndex = [
+            'topics_with_your_posts' => 'with-your-posts',
+            'latest_active_topics'   => 'latest',
+            'unanswered_topics'      => 'unanswered',
+        ];
         switch ($action) {
             case 'search':
                 if (1 === $model->showAs) {
@@ -421,6 +426,7 @@ class Search extends Page
                 $model->name       = \ForkBB\__('Quick search ' . $action);
                 $model->linkMarker = 'SearchAction';
                 $model->linkArgs   = ['action' => $action];
+                $this->fSubIndex   = $subIndex[$action];
                 break;
 #            default:
 #                throw new InvalidArgumentException('Unknown action: ' . $action);
