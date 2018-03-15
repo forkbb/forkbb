@@ -53,7 +53,7 @@ class Filter extends Action
                     break;
                 case 'LIKE':
                     $where[] = "u.{$field} LIKE ?{$fields[$field]}";
-                    $vars[]  = \str_replace(['*', '_'], ['%', '\\_'], $rule[1]);
+                    $vars[]  = \str_replace(['%', '*', '_'], ['\\%', '%', '\\_'], $rule[1]);
                     break;
                 default:
                     throw new InvalidArgumentException('The condition is not clear');
