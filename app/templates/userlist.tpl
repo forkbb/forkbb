@@ -62,7 +62,11 @@
                 <span class="f-hc-tdesc"><a @if (1 === $p->activeLink) class="active" @endif href="{!! $p->links[1] !!}">▼</a></span>
               </span>
             </span>
-            <span class="f-hcell f-ctitle">{!! __('Title') !!}</span>
+            <span class="f-hcell f-ctitle">
+              <small>(</small>
+              <span class="f-hc-tname">{!! __('Title') !!}</span>
+              <small>),</small>
+            </span>
     @if ($p->user->showPostCount)
             <span class="f-hcell f-cnumposts">
               <span class="f-hc-table">
@@ -70,6 +74,7 @@
                 <span class="f-hc-tname">{!! __('Posts') !!}</span>
                 <span class="f-hc-tdesc"><a @if (3 === $p->activeLink) class="active" @endif href="{!! $p->links[3] !!}">▼</a></span>
               </span>
+              <small>,</small>
             </span>
     @endif
             <span class="f-hcell f-cdatereg">
@@ -87,11 +92,11 @@
     @else
             <span class="f-cell f-cusername">{{ $user->username }}</span>
     @endif
-            <span class="f-cell f-ctitle"><span>(</span><i>{{ $user->title() }}</i><span>),</span></span>
+            <span class="f-cell f-ctitle"><small>(</small><i>{{ $user->title() }}</i><small>),</small></span>
     @if ($p->user->showPostCount)
-            <span class="f-cell f-cnumposts">{!! __('<b>%s</b><span> post,</span>', $user->num_posts, num($user->num_posts)) !!}</span>
+            <span class="f-cell f-cnumposts">{!! __('<b>%s</b><small> post,</small>', $user->num_posts, num($user->num_posts)) !!}</span>
     @endif
-            <span class="f-cell f-cdatereg">{!! __('<span>registered: </span><b>%s</b>', dt($user->registered, true)) !!}</span>
+            <span class="f-cell f-cdatereg">{!! __('<small>registered: </small><b>%s</b>', dt($user->registered, true)) !!}</span>
           </li>
   @endforeach
         </ol>

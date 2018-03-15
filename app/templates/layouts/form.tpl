@@ -19,7 +19,7 @@
             <p class="f-child6"> @if (empty($cur['html'])){{ $cur['value'] }} @else{!! $cur['value'] !!} @endif</p>
       @else
             <dl @if (isset($cur['dl'])) class="f-field-{!! implode(' f-field-', (array) $cur['dl']) !!}" @endif>
-              <dt> @if (isset($cur['title']))<label class="f-child1 @if (! empty($cur['required'])) f-req @endif" @if (is_string($key)) for="id-{{ $key }}" @endif>{!! $cur['title'] !!}</label> @endif</dt>
+              <dt> @if (isset($cur['title']))<label class="f-child1 @if (! empty($cur['required'])) f-req @endif" @if (is_string($key) && 'radio' !== $cur['type']) for="id-{{ $key }}" @endif>{!! $cur['title'] !!}</label> @endif</dt>
               <dd>
         @if ('text' === $cur['type'])
                 <input @if (! empty($cur['required'])) required @endif @if (! empty($cur['disabled'])) disabled @endif @if (isset($cur['autofocus'])) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="text" @if (! empty($cur['maxlength'])) maxlength="{{ $cur['maxlength'] }}" @endif @if (isset($cur['pattern'])) pattern="{{ $cur['pattern'] }}" @endif @if (isset($cur['value'])) value="{{ $cur['value'] }}" @endif>

@@ -1931,7 +1931,8 @@ select {
     vertical-align: middle;
   }
 
-  .f-ulist .f-cell > span {
+  .f-ulist .f-cell > small,
+  .f-ulist .f-hcell > small {
     display: none;
   }
 
