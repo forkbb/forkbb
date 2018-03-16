@@ -112,4 +112,23 @@ EOD;
         }
         return $this->block('content');
     }
+
+    /**
+     * Compile the if statements
+     *
+     * @param  string  $expression
+     * @return string
+     */
+    protected function compileIf($expression)
+    {
+        if (\preg_match('%^\(\s*(\!\s*)?(\$[\w>-]+\[(?:[\'"]\w+[\'"]|\d+)\])\s*\)$%', $expression, $matches)) {
+            if (empty($matches[1])) {
+                return "<?php if(! empty{$expression}): ?>";
+            } else {
+                return "<?php if(empty({$matches[2]})): ?>";
+            }
+        } else {
+            return parent::compileIf($expression);
+        }
+    }
 }

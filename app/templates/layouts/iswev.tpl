@@ -1,4 +1,4 @@
-@if (! empty($iswev['i']))
+@if ($iswev['i'])
     <section class="f-iswev f-info">
       <h2>Info message</h2>
       <ul>
@@ -8,7 +8,7 @@
       </ul>
     </section>
 @endif
-@if (! empty($iswev['s']))
+@if ($iswev['s'])
     <section class="f-iswev f-success">
       <h2>Successful operation message</h2>
       <ul>
@@ -18,7 +18,7 @@
       </ul>
     </section>
 @endif
-@if (! empty($iswev['w']))
+@if ($iswev['w'])
     <section class="f-iswev f-warning">
       <h2>Warning message</h2>
       <ul>
@@ -28,7 +28,7 @@
       </ul>
     </section>
 @endif
-@if (! empty($iswev['e']))
+@if ($iswev['e'])
     <section class="f-iswev f-error">
       <h2>Error message</h2>
       <ul>
@@ -38,7 +38,7 @@
       </ul>
     </section>
 @endif
-@if (! empty($iswev['v']))
+@if ($iswev['v'])
     <section class="f-iswev f-validation">
       <h2>Validation message</h2>
       <ul>

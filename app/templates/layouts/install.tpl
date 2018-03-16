@@ -31,7 +31,7 @@
       </div>
     </section>
 @endif
-@if (empty($p->fIswev['e']))
+@if (! $p->fIswev['e'])
   @if ($form = $p->form2)
     <section class="f-install">
       <h2>{!! __('Install', $p->rev) !!}</h2>
