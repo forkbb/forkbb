@@ -13,7 +13,7 @@ class View extends Dirk
         $config = [
             'views'     => $views,
             'cache'     => $cache,
-            'ext'       => '.tpl',
+            'ext'       => '.forkbb.php',
             'echo'      => '\\htmlspecialchars(%s, \\ENT_HTML5 | \\ENT_QUOTES | \\ENT_SUBSTITUTE, \'UTF-8\')',
             'separator' => '/',
         ];
