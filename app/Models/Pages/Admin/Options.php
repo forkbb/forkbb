@@ -713,8 +713,8 @@ class Options extends Admin
                     'info'      => \ForkBB\__('Rules help'),
                 ],
                 'o_default_email_setting' => [
+                    'class'  => 'block',
                     'type'   => 'radio',
-                    'dl'     => 'block',
                     'value'  => $config->o_default_email_setting,
                     'values' => [
                         0 => \ForkBB\__('Display e-mail label'),

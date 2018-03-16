@@ -48,7 +48,7 @@ trait PostFormTrait
         $fieldset = [];
         if ($this->user->isGuest) {
             $fieldset['username'] = [
-                'dl'        => 'w1',
+                'class'     => 'w1',
                 'type'      => 'text',
                 'maxlength' => 25,
                 'title'     => \ForkBB\__('Username'),
@@ -58,7 +58,7 @@ trait PostFormTrait
                 'autofocus' => $autofocus,
             ];
             $fieldset['email'] = [
-                'dl'        => 'w2',
+                'class'     => 'w2',
                 'type'      => 'text',
                 'maxlength' => 80,
                 'title'     => \ForkBB\__('Email'),

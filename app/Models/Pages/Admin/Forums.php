@@ -168,14 +168,14 @@ class Forums extends Admin
                 }
 
                 $fieldset[] = [
-                    'dl'        => ['name', 'inline', 'depth' . $forum->depth],
+                    'class'     => ['name', 'inline', 'depth' . $forum->depth],
                     'type'      => 'btn',
                     'value'     => $forum->forum_name,
                     'title'     => \ForkBB\__('Forum label'),
                     'link'      => $this->c->Router->link('AdminForumsEdit', ['id' => $forum->id]),
                 ];
                 $fieldset["form[{$forum->id}][disp_position]"] = [
-                    'dl'    => ['position', 'inline'],
+                    'class' => ['position', 'inline'],
                     'type'  => 'number',
                     'min'   => 0,
                     'max'   => 9999999999,
@@ -184,7 +184,7 @@ class Forums extends Admin
                 ];
                 $disabled = (bool) $forum->subforums;
                 $fieldset[] = [
-                    'dl'       => ['delete', 'inline'],
+                    'class'       => ['delete', 'inline'],
                     'type'     => 'btn',
                     'value'    => '❌',
                     'title'    => \ForkBB\__('Delete'),
@@ -499,7 +499,7 @@ class Forums extends Admin
         foreach ($this->c->groups->Perm->get($forum) as $id => $group) {
             $fieldset = [];
             $fieldset["perms[{$id}][read_forum]"] = [
-                'dl'       => $group->def_read_forum ? $aOn : $aOff,
+                'class'    => $group->def_read_forum ? $aOn : $aOff,
                 'type'     => 'checkbox',
                 'value'    => '1',
                 'title'    => \ForkBB\__('Read forum label'),
@@ -508,7 +508,7 @@ class Forums extends Admin
                 'disabled' => $group->dis_read_forum,
             ];
             $fieldset["perms[{$id}][post_replies]"] = [
-                'dl'       => $group->def_post_replies ? $aOn : $aOff,
+                'class'    => $group->def_post_replies ? $aOn : $aOff,
                 'type'     => 'checkbox',
                 'value'    => '1',
                 'title'    => \ForkBB\__('Post replies label'),
@@ -517,7 +517,7 @@ class Forums extends Admin
                 'disabled' => $group->dis_post_replies,
             ];
             $fieldset["perms[{$id}][post_topics]"] = [
-                'dl'       => $group->def_post_topics ? $aOn : $aOff,
+                'class'    => $group->def_post_topics ? $aOn : $aOff,
                 'type'     => 'checkbox',
                 'value'    => '1',
                 'title'    => \ForkBB\__('Post topics label'),

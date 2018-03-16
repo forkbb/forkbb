@@ -143,7 +143,7 @@ class Userlist extends Page
             $form['hidden']['name'] = '*';
         }
         $fields['group'] = [
-            'dl'      => 'w4',
+            'class'   => 'w4',
             'type'    => 'select',
             'options' => [[-1, \ForkBB\__('All users')]] + \array_map(function ($group) {
                     return [$group->g_id, $group->g_title];
@@ -152,7 +152,7 @@ class Userlist extends Page
             'title'   => \ForkBB\__('User group'),
         ];
         $fields['sort'] = [
-            'dl'      => 'w4',
+            'class'   => 'w4',
             'type'    => 'select',
             'options' => [
                 ['username', \ForkBB\__('Sort by name')],
@@ -163,7 +163,7 @@ class Userlist extends Page
             'title'   => \ForkBB\__('Sort users by'),
         ];
         $fields['dir'] = [
-            'dl'      => 'w4',
+            'class'  => 'w4',
             'type'   => 'radio',
             'value'  => $v->dir ?: 'ASC',
             'values' => [

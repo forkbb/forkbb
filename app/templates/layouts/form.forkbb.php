@@ -18,7 +18,7 @@
       @if ('info' === $cur['type'])
             <p class="f-child6"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
       @else
-            <dl @if ($cur['dl']) class="f-field-{!! implode(' f-field-', (array) $cur['dl']) !!}" @endif>
+            <dl @if ($cur['class']) class="f-field-{!! implode(' f-field-', (array) $cur['class']) !!}" @endif>
               <dt> @if ($cur['title'])<label class="f-child1 @if ($cur['required']) f-req @endif" @if (is_string($key) && 'radio' !== $cur['type']) for="id-{{ $key }}" @endif>{!! $cur['title'] !!}</label> @endif</dt>
               <dd>
         @if ('text' === $cur['type'])
