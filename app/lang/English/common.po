@@ -259,6 +259,9 @@ msgstr "Banned"
 msgid "Guest"
 msgstr "Guest"
 
+msgid "Unverified"
+msgstr "Непроверенный"
+
 msgid "BBCode error no opening tag"
 msgstr "[/%1$s] was found without a matching [%1$s]"
 
@@ -483,3 +486,9 @@ msgstr "Topics with your posts"
 
 msgid "Find topics with your posts"
 msgstr "Find topics with your posts"
+
+msgid "Male"
+msgstr "Male"
+
+msgid "Female"
+msgstr "Female"

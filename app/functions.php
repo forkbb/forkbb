@@ -98,7 +98,7 @@ function num($number, $decimals = 0)
 {
     return \is_numeric($number)
         ? \number_format($number, $decimals, __('lang_decimal_point'), __('lang_thousands_sep'))
-        : 'not a number';
+        : '-';
 }
 
 /**

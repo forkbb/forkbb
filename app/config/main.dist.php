@@ -136,6 +136,7 @@ return [
         'Ban'             => \ForkBB\Models\Pages\Ban::class,
         'Debug'           => \ForkBB\Models\Pages\Debug::class,
         'Misc'            => \ForkBB\Models\Pages\Misc::class,
+        'Profile'         => \ForkBB\Models\Pages\Profile::class,
         'AdminIndex'      => \ForkBB\Models\Pages\Admin\Index::class,
         'AdminStatistics' => \ForkBB\Models\Pages\Admin\Statistics::class,
         'AdminOptions'    => \ForkBB\Models\Pages\Admin\Options::class,

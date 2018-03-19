@@ -48,6 +48,7 @@ article {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  word-wrap: break-word;
 }
 
 ul,
@@ -643,7 +644,7 @@ select {
   width: 100%;
   border: 0.0625rem solid #AA7939;
   border-collapse: collapse;
-  word-break: break-all;
+/*  word-break: break-all; */
 }
 
 .f-debug thead {
@@ -678,7 +679,7 @@ select {
   display: inline;
 /*  float: left;
   word-break: break-all; */
-  word-wrap: break-word;
+/*  word-wrap: break-word; */
   max-width: 100%;
 }
 
@@ -1507,7 +1508,7 @@ select {
 .f-post-main ol,
 .f-post-main ul {
   margin-bottom: 0.625rem;
-  word-wrap: break-word;
+/*  word-wrap: break-word; */
 }
 
 @media screen and (min-width: 50rem) {
@@ -1549,7 +1550,7 @@ select {
   .f-user-info-add {
     display: block;
     font-size: 0.875rem;
-    word-break: break-all;
+  /*  word-break: break-all; */
   }
 
   .f-username, .f-avatar {
@@ -1873,7 +1874,7 @@ select {
     display: block;
     font-size: 0.875rem;
     padding-top: 0.625rem;
-    word-break: break-all;
+  /*  word-break: break-all; */
   }
 }
 
@@ -2001,5 +2002,124 @@ select {
   .f-ulist .f-hcell {
     padding-top: 0.3125rem;
     padding-bottom: 0.3125rem;
+  }
+}
+
+/***********/
+/* Профиль */
+/***********/
+.f-profile > h2 {
+  display: none;
+}
+
+.f-fs-header {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+}
+
+.f-fs-header .f-wrap-usertitle,
+.f-fs-data {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.f-fs-header .f-wrap-usertitle {
+  width: 100%;
+}
+
+.f-fs-header .f-ctrl {
+  border: 0;
+  padding: 0;
+}
+
+.f-fs-header .f-avatar-img {
+  max-width: 4.6875rem;
+  height: auto;
+}
+
+.f-fs-header #id-dl-avatar {
+  padding: 0.3125rem 0.3125rem 0.3125rem 0.625rem;
+}
+
+.f-fs-header #id-dl-username {
+  border-bottom: 0.0625rem solid #AA7939;
+}
+
+.f-fs-header #id-username {
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.f-fs-header #id-title {
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.f-fs-header .f-child1,
+.f-fs-header legend,
+.f-fs-data legend {
+  display: none;
+}
+
+.f-fs-data .f-child1,
+.f-fs-data .f-ctrl,
+.f-fs-data dt,
+.f-fs-data dd {
+  display: inline;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.f-fs-data .f-child1:after {
+  content: ": ";
+}
+
+.f-fs-header,
+.f-fs-data {
+  border-bottom: 0.0625rem dotted #AA7939;
+}
+
+
+@media screen and (min-width: 40rem) {
+  .f-fs-header .f-wrap-usertitle {
+    order: 1;
+    width: 67%;
+    margin-left: auto;
+  }
+
+  .f-fs-header #id-username {
+    text-align: left;
+  }
+
+  .f-fs-header #id-title {
+    text-align: left;
+  }
+
+  .f-fs-header .f-avatar-img {
+    max-width: 11.75rem;
+  }
+
+  .f-fs-header #id-dl-avatar {
+    width: 33%;
+    text-align: right;
+    padding: 0.3125rem 0.625rem 0.3125rem 0.3125rem;
+  }
+
+  .f-fs-data dl {
+    display: flex;
+  }
+
+  .f-fs-data dt {
+    width: 33%;
+    text-align: right;
+    padding-right: 0.625rem;
+  }
+
+  .f-fs-data dd {
+    width: 67%
   }
 }

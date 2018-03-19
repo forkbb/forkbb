@@ -171,8 +171,8 @@ msgstr "The title you entered contains a forbidden word. You must choose a diffe
 msgid "Profile redirect"
 msgstr "Profile updated. Redirecting …"
 
-msgid "Users profile"
-msgstr "%s\"s profile"
+msgid "%s's profile"
+msgstr "%s's profile"
 
 msgid "Username info"
 msgstr "Username: %s"
@@ -180,23 +180,26 @@ msgstr "Username: %s"
 msgid "Email info"
 msgstr "Email: %s"
 
-msgid "Posts info"
-msgstr "Posts: %s"
-
 msgid "Registered info"
-msgstr "Registered: %s"
+msgstr "Registered"
 
 msgid "Last post info"
-msgstr "Last post: %s"
+msgstr "Last post"
 
 msgid "Last visit info"
-msgstr "Last visit: %s"
+msgstr "Last visit"
+
+msgid "Posts info"
+msgstr "Total posts"
 
 msgid "Show posts"
-msgstr "Show all posts"
+msgstr "Show user's posts"
+
+msgid "Topics info"
+msgstr "Total topics"
 
 msgid "Show topics"
-msgstr "Show all topics"
+msgstr "Show user's topics"
 
 msgid "Show subscriptions"
 msgstr "Show all subscriptions"
@@ -377,3 +380,9 @@ msgstr "Redirecting …"
 
 msgid "No delete admin message"
 msgstr "Administrators cannot be deleted. In order to delete this user, you must first move him/her to a different user group."
+
+msgid "Gender"
+msgstr "Gender"
+
+msgid "Unknown"
+msgstr "Unknown"

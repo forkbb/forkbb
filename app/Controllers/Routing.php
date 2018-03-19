@@ -43,7 +43,7 @@ class Routing
             $r->add(['GET', 'POST'],  '/login/{email}/{key}/{hash}', 'Auth:changePass', 'ChangePassword');
 
             // регистрация
-            if ($config->o_regs_allow == '1') {
+            if ('1' == $config->o_regs_allow) {
                 $r->add('GET',  '/registration', 'Rules:confirmation', 'Register');
                 $r->add('POST', '/registration/agree', 'Register:reg', 'RegisterForm');
                 $r->add('GET',  '/registration/activate/{id:\d+}/{key}/{hash}', 'Register:activate', 'RegActivate');
@@ -57,15 +57,15 @@ class Routing
             $r->add('GET', '/registration[/{tail:.*}]', 'Redirect:toIndex');
         }
         // просмотр разрешен
-        if ($user->g_read_board == '1') {
+        if ('1' == $user->g_read_board) {
             // главная
             $r->add('GET', '/', 'Index:view', 'Index');
             // правила
-            if ($config->o_rules == '1' && (! $user->isGuest || $config->o_regs_allow == '1')) {
+            if ('1' == $config->o_rules && (! $user->isGuest || '1' == $config->o_regs_allow)) {
                 $r->add('GET', '/rules', 'Rules:view', 'Rules');
             }
             // поиск
-            if ($user->g_search == '1') {
+            if ('1' == $user->g_search) {
                 $r->add('GET',  '/search[/simple/{keywords}[/{page:[1-9]\d*}]]', 'Search:view',   'Search');
                 $r->add('POST', '/search',                                       'Search:view');
 
@@ -75,7 +75,7 @@ class Routing
                 $r->add('GET', '/search/{action:(?!search)\w+}[/{page:[1-9]\d*}]', 'Search:action', 'SearchAction');
             }
             // юзеры
-            if ($user->g_view_users == '1') {
+            if ($user->viewUsers) {
                 // список пользователей
                 $r->add('GET',  '/userlist[/{sort:username|registered|num_posts}/{dir:ASC|DESC}/{group:\-1|[1-9]\d*}/{name}][/{page:[1-9]\d*}]', 'Userlist:view', 'Userlist');
                 $r->add('POST', '/userlist', 'Userlist:view');

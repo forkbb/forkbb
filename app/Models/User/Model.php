@@ -185,6 +185,8 @@ class Model extends DataModel
             return \ForkBB\cens($this->g_user_title);
         } elseif ($this->isGuest) {
             return \ForkBB\__('Guest');
+        } elseif ($this->isUnverified) {
+            return \ForkBB\__('Unverified');
         } else {
             return \ForkBB\__('Member');
         }

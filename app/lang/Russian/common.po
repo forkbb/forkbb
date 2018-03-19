@@ -261,6 +261,9 @@ msgstr "Забанен"
 msgid "Guest"
 msgstr "Гость"
 
+msgid "Unverified"
+msgstr "Непроверенный"
+
 msgid "BBCode error no opening tag"
 msgstr "Обнаружен парный тег [/%1$s] без соответствующего начального тега [%1$s]"
 
@@ -485,3 +488,9 @@ msgstr "Темы с вашим участием"
 
 msgid "Find topics with your posts"
 msgstr "Найти темы с вашим участием"
+
+msgid "Male"
+msgstr "Мужской"
+
+msgid "Female"
+msgstr "Женский"
