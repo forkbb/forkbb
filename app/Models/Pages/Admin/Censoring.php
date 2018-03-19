@@ -60,7 +60,7 @@ class Censoring extends Admin
                             'type'   => 'radio',
                             'value'  => $this->c->config->o_censoring,
                             'values' => [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')],
-                            'title'  => \ForkBB\__('Censor words label'),
+                            'caption'  => \ForkBB\__('Censor words label'),
                             'info'   => \ForkBB\__('Censor words help'),
                         ],
                     ],
@@ -91,14 +91,14 @@ class Censoring extends Admin
                 'type'      => 'text',
                 'maxlength' => 60,
                 'value'     => $row['search_for'],
-                'title'     => \ForkBB\__('Censored word label'),
+                'caption'     => \ForkBB\__('Censored word label'),
             ];
             $fieldset["form[{$id}][replace_with]"] = [
                 'class'     => ['censor', 'inline'],
                 'type'      => 'text',
                 'maxlength' => 60,
                 'value'     => $row['replace_with'],
-                'title'     => \ForkBB\__('Replacement label'),
+                'caption'     => \ForkBB\__('Replacement label'),
             ];
         }
         $fieldset["form[0][search_for]"] = [
@@ -106,14 +106,14 @@ class Censoring extends Admin
             'type'      => 'text',
             'maxlength' => 60,
             'value'     => '',
-            'title'     => \ForkBB\__('Censored word label'),
+            'caption'     => \ForkBB\__('Censored word label'),
         ];
         $fieldset["form[0][replace_with]"] = [
             'class'     => ['censor', 'inline'],
             'type'      => 'text',
             'maxlength' => 60,
             'value'     => '',
-            'title'     => \ForkBB\__('Replacement label'),
+            'caption'     => \ForkBB\__('Replacement label'),
         ];
 
         $form['sets'][] = [

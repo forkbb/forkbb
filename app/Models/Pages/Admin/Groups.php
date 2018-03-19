@@ -62,7 +62,7 @@ class Groups extends Admin
                         'type'      => 'select',
                         'options'   => $this->groupsNew,
                         'value'     => $this->c->config->o_default_user_group,
-                        'title'     => \ForkBB\__('New group label'),
+                        'caption'     => \ForkBB\__('New group label'),
                         'info'      => \ForkBB\__('New group help'),
 #                       'autofocus' => true,
                     ],
@@ -87,7 +87,7 @@ class Groups extends Admin
                         'type'    => 'select',
                         'options' => $this->groupsDefault,
                         'value'   => $this->c->config->o_default_user_group,
-                        'title'   => \ForkBB\__('Default group label'),
+                        'caption'   => \ForkBB\__('Default group label'),
                         'info'    => \ForkBB\__('Default group help'),
                     ],
                 ],
@@ -347,7 +347,7 @@ class Groups extends Admin
             'type'      => 'text',
             'maxlength' => 50,
             'value'     => $group->g_title,
-            'title'     => \ForkBB\__('Group title label'),
+            'caption'     => \ForkBB\__('Group title label'),
             'required'  => true,
 #           'autofocus' => true,
         ];
@@ -355,7 +355,7 @@ class Groups extends Admin
             'type'      => 'text',
             'maxlength' => 50,
             'value'     => $group->g_user_title,
-            'title'     => \ForkBB\__('User title label'),
+            'caption'     => \ForkBB\__('User title label'),
             'info'      => \ForkBB\__('User title help', $group->groupGuest ? \ForkBB\__('Guest') : \ForkBB\__('Member')),
         ];
 
@@ -380,7 +380,7 @@ class Groups extends Admin
                 'type'    => 'select',
                 'options' => $options,
                 'value'   => $group->g_promote_next_group,
-                'title'   => \ForkBB\__('Promote users label'),
+                'caption'   => \ForkBB\__('Promote users label'),
                 'info'    => \ForkBB\__('Promote users help', \ForkBB\__('Disable promotion')),
             ];
             $fieldset['g_promote_min_posts'] = [
@@ -388,7 +388,7 @@ class Groups extends Admin
                 'min'   => 0,
                 'max'   => 9999999999,
                 'value' => $group->g_promote_min_posts,
-                'title' => \ForkBB\__('Number for promotion label'),
+                'caption' => \ForkBB\__('Number for promotion label'),
                 'info'  => \ForkBB\__('Number for promotion help'),
             ];
         }
@@ -400,42 +400,42 @@ class Groups extends Admin
                 'type'   => 'radio',
                 'value'  => $group->g_moderator,
                 'values' => $yn,
-                'title'  => \ForkBB\__('Mod privileges label'),
+                'caption'  => \ForkBB\__('Mod privileges label'),
                 'info'   => \ForkBB\__('Mod privileges help'),
             ];
             $fieldset['g_mod_edit_users'] = [
                 'type'   => 'radio',
                 'value'  => $group->g_mod_edit_users,
                 'values' => $yn,
-                'title'  => \ForkBB\__('Edit profile label'),
+                'caption'  => \ForkBB\__('Edit profile label'),
                 'info'   => \ForkBB\__('Edit profile help'),
             ];
             $fieldset['g_mod_rename_users'] = [
                 'type'   => 'radio',
                 'value'  => $group->g_mod_rename_users,
                 'values' => $yn,
-                'title'  => \ForkBB\__('Rename users label'),
+                'caption'  => \ForkBB\__('Rename users label'),
                 'info'   => \ForkBB\__('Rename users help'),
             ];
             $fieldset['g_mod_change_passwords'] = [
                 'type'   => 'radio',
                 'value'  => $group->g_mod_change_passwords,
                 'values' => $yn,
-                'title'  => \ForkBB\__('Change passwords label'),
+                'caption'  => \ForkBB\__('Change passwords label'),
                 'info'   => \ForkBB\__('Change passwords help'),
             ];
             $fieldset['g_mod_promote_users'] = [
                 'type'   => 'radio',
                 'value'  => $group->g_mod_promote_users,
                 'values' => $yn,
-                'title'  => \ForkBB\__('Mod promote users label'),
+                'caption'  => \ForkBB\__('Mod promote users label'),
                 'info'   => \ForkBB\__('Mod promote users help'),
             ];
             $fieldset['g_mod_ban_users'] = [
                 'type'   => 'radio',
                 'value'  => $group->g_mod_ban_users,
                 'values' => $yn,
-                'title'  => \ForkBB\__('Ban users label'),
+                'caption'  => \ForkBB\__('Ban users label'),
                 'info'   => \ForkBB\__('Ban users help'),
             ];
         }
@@ -444,28 +444,28 @@ class Groups extends Admin
             'type'   => 'radio',
             'value'  => $group->g_read_board,
             'values' => $yn,
-            'title'  => \ForkBB\__('Read board label'),
+            'caption'  => \ForkBB\__('Read board label'),
             'info'   => \ForkBB\__('Read board help'),
         ];
         $fieldset['g_view_users'] = [
             'type'   => 'radio',
             'value'  => $group->g_view_users,
             'values' => $yn,
-            'title'  => \ForkBB\__('View user info label'),
+            'caption'  => \ForkBB\__('View user info label'),
             'info'   => \ForkBB\__('View user info help'),
         ];
         $fieldset['g_post_replies'] = [
             'type'   => 'radio',
             'value'  => $group->g_post_replies,
             'values' => $yn,
-            'title'  => \ForkBB\__('Post replies label'),
+            'caption'  => \ForkBB\__('Post replies label'),
             'info'   => \ForkBB\__('Post replies help'),
         ];
         $fieldset['g_post_topics'] = [
             'type'   => 'radio',
             'value'  => $group->g_post_topics,
             'values' => $yn,
-            'title'  => \ForkBB\__('Post topics label'),
+            'caption'  => \ForkBB\__('Post topics label'),
             'info'   => \ForkBB\__('Post topics help'),
         ];
 
@@ -474,21 +474,21 @@ class Groups extends Admin
                 'type'   => 'radio',
                 'value'  => $group->g_edit_posts,
                 'values' => $yn,
-                'title'  => \ForkBB\__('Edit posts label'),
+                'caption'  => \ForkBB\__('Edit posts label'),
                 'info'   => \ForkBB\__('Edit posts help'),
             ];
             $fieldset['g_delete_posts'] = [
                 'type'   => 'radio',
                 'value'  => $group->g_delete_posts,
                 'values' => $yn,
-                'title'  => \ForkBB\__('Delete posts label'),
+                'caption'  => \ForkBB\__('Delete posts label'),
                 'info'   => \ForkBB\__('Delete posts help'),
             ];
             $fieldset['g_delete_topics'] = [
                 'type'   => 'radio',
                 'value'  => $group->g_delete_topics,
                 'values' => $yn,
-                'title'  => \ForkBB\__('Delete topics label'),
+                'caption'  => \ForkBB\__('Delete topics label'),
                 'info'   => \ForkBB\__('Delete topics help'),
             ];
             $fieldset['g_deledit_interval'] = [
@@ -496,14 +496,14 @@ class Groups extends Admin
                 'min'   => 0,
                 'max'   => 999999,
                 'value' => $group->g_deledit_interval,
-                'title' => \ForkBB\__('Delete-edit interval label'),
+                'caption' => \ForkBB\__('Delete-edit interval label'),
                 'info'  => \ForkBB\__('Delete-edit interval help'),
             ];
             $fieldset['g_set_title'] = [
                 'type'   => 'radio',
                 'value'  => $group->g_set_title,
                 'values' => $yn,
-                'title'  => \ForkBB\__('Set own title label'),
+                'caption'  => \ForkBB\__('Set own title label'),
                 'info'   => \ForkBB\__('Set own title help'),
             ];
         }
@@ -512,21 +512,21 @@ class Groups extends Admin
             'type'   => 'radio',
             'value'  => $group->g_post_links,
             'values' => $yn,
-            'title'  => \ForkBB\__('Post links label'),
+            'caption'  => \ForkBB\__('Post links label'),
             'info'   => \ForkBB\__('Post links help'),
         ];
         $fieldset['g_search'] = [
             'type'   => 'radio',
             'value'  => $group->g_search,
             'values' => $yn,
-            'title'  => \ForkBB\__('User search label'),
+            'caption'  => \ForkBB\__('User search label'),
             'info'   => \ForkBB\__('User search help'),
         ];
         $fieldset['g_search_users'] = [
             'type'   => 'radio',
             'value'  => $group->g_search_users,
             'values' => $yn,
-            'title'  => \ForkBB\__('User list search label'),
+            'caption'  => \ForkBB\__('User list search label'),
             'info'   => \ForkBB\__('User list search help'),
         ];
 
@@ -535,7 +535,7 @@ class Groups extends Admin
                 'type'   => 'radio',
                 'value'  => $group->g_send_email,
                 'values' => $yn,
-                'title'  => \ForkBB\__('Send e-mails label'),
+                'caption'  => \ForkBB\__('Send e-mails label'),
                 'info'   => \ForkBB\__('Send e-mails help'),
             ];
         }
@@ -545,7 +545,7 @@ class Groups extends Admin
             'min'   => 0,
             'max'   => 999999,
             'value' => $group->g_post_flood,
-            'title' => \ForkBB\__('Post flood label'),
+            'caption' => \ForkBB\__('Post flood label'),
             'info'  => \ForkBB\__('Post flood help'),
         ];
         $fieldset['g_search_flood'] = [
@@ -553,7 +553,7 @@ class Groups extends Admin
             'min'   => 0,
             'max'   => 999999,
             'value' => $group->g_search_flood,
-            'title' => \ForkBB\__('Search flood label'),
+            'caption' => \ForkBB\__('Search flood label'),
             'info'  => \ForkBB\__('Search flood help'),
         ];
 
@@ -563,7 +563,7 @@ class Groups extends Admin
                 'min'   => 0,
                 'max'   => 999999,
                 'value' => $group->g_email_flood,
-                'title' => \ForkBB\__('E-mail flood label'),
+                'caption' => \ForkBB\__('E-mail flood label'),
                 'info'  => \ForkBB\__('E-mail flood help'),
             ];
             $fieldset['g_report_flood'] = [
@@ -571,7 +571,7 @@ class Groups extends Admin
                 'min'   => 0,
                 'max'   => 999999,
                 'value' => $group->g_report_flood,
-                'title' => \ForkBB\__('Report flood label'),
+                'caption' => \ForkBB\__('Report flood label'),
                 'info'  => \ForkBB\__('Report flood help'),
             ];
         }
@@ -683,7 +683,7 @@ class Groups extends Admin
                         'type'      => 'select',
                         'options'   => $groups,
                         'value'     => $this->c->config->o_default_user_group,
-                        'title'     => \ForkBB\__('Move users label'),
+                        'caption'     => \ForkBB\__('Move users label'),
                         'info'      => \ForkBB\__('Move users info', $group->g_title, $count),
                     ],
                 ],
@@ -693,7 +693,7 @@ class Groups extends Admin
         $form['sets'][] = [
             'fields' => [
                 'confirm' => [
-                    'title'   => \ForkBB\__('Confirm delete'),
+                    'caption'   => \ForkBB\__('Confirm delete'),
                     'type'    => 'checkbox',
                     'label'   => \ForkBB\__('I want to delete this group', $group->g_title),
                     'value'   => '1',

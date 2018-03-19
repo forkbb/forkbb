@@ -76,7 +76,7 @@ class Categories extends Admin
                 'type'      => 'text',
                 'maxlength' => 80,
                 'value'     => $row['cat_name'],
-                'title'     => \ForkBB\__('Category name label'),
+                'caption'     => \ForkBB\__('Category name label'),
                 'required'  => true,
             ];
             $fieldset["form[{$key}][disp_position]"] = [
@@ -85,13 +85,13 @@ class Categories extends Admin
                 'min'   => 0,
                 'max'   => 9999999999,
                 'value' => $row['disp_position'],
-                'title' => \ForkBB\__('Category position label'),
+                'caption' => \ForkBB\__('Category position label'),
             ];
             $fieldset[] = [
                 'class' => ['delete', 'inline'],
                 'type'  => 'btn',
                 'value' => '❌',
-                'title' => \ForkBB\__('Delete'),
+                'caption' => \ForkBB\__('Delete'),
                 'link'  => $this->c->Router->link('AdminCategoriesDelete', ['id' => $key]),
             ];
         }
@@ -105,7 +105,7 @@ class Categories extends Admin
                     'class'     => 'new',
                     'type'      => 'text',
                     'maxlength' => 80,
-                    'title'     => \ForkBB\__('Add category label'),
+                    'caption'     => \ForkBB\__('Add category label'),
                     'info'      => \ForkBB\__('Add category help', $this->c->Router->link('AdminForums'), \ForkBB\__('Forums')),
                 ],
             ],
@@ -189,7 +189,7 @@ class Categories extends Admin
         $form['sets'][] = [
             'fields' => [
                 'confirm' => [
-                    'title'   => \ForkBB\__('Confirm delete'),
+                    'caption'   => \ForkBB\__('Confirm delete'),
                     'type'    => 'checkbox',
                     'label'   => \ForkBB\__('I want to delete the category %s', $category['cat_name']),
                     'value'   => '1',

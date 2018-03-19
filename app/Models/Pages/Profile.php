@@ -57,7 +57,7 @@ class Profile extends Page
             'id'        => 'username',
             'type'      => 'text',
             'maxlength' => 25,
-            'title'     => \ForkBB\__('Username'),
+            'caption'     => \ForkBB\__('Username'),
             'required'  => true,
             'pattern'   => '^.{2,25}$',
             'value'     => $curUser->username,
@@ -66,7 +66,7 @@ class Profile extends Page
             'id'        => 'title',
             'type'      => 'text',
             'maxlength' => 50,
-            'title'     => \ForkBB\__('Title'),
+            'caption'     => \ForkBB\__('Title'),
             'value'     => $isEdit ? $curUser->title : $curUser->title(),
         ];
         $fieldset[] = [
@@ -76,7 +76,7 @@ class Profile extends Page
             $fieldset['avatar'] = [
                 'id'        => 'avatar',
                 'type'      => 'yield',
-                'title'     => \ForkBB\__('Avatar'),
+                'caption'     => \ForkBB\__('Avatar'),
                 'value'     => 'avatar',
             ];
         }
@@ -93,7 +93,7 @@ class Profile extends Page
                 'id'        => 'realname',
                 'type'      => 'text',
                 'maxlength' => 40,
-                'title'     => \ForkBB\__('Realname'),
+                'caption'     => \ForkBB\__('Realname'),
                 'value'     => $isEdit ? $curUser->realname : \ForkBB\cens($curUser->realname),
             ];
         }
@@ -107,7 +107,7 @@ class Profile extends Page
                     1 => \ForkBB\__('Male'),
                     2 => \ForkBB\__('Female'),
                 ],
-                'title'  => \ForkBB\__('Gender'),
+                'caption'  => \ForkBB\__('Gender'),
             ];
         }
         if ($isEdit || $curUser->location) {
@@ -115,7 +115,7 @@ class Profile extends Page
                 'id'        => 'location',
                 'type'      => 'text',
                 'maxlength' => 40,
-                'title'     => \ForkBB\__('Location'),
+                'caption'     => \ForkBB\__('Location'),
                 'value'     => $isEdit ? $curUser->location : \ForkBB\cens($curUser->location),
             ];
         }
@@ -124,7 +124,7 @@ class Profile extends Page
                 'id'        => 'website',
                 'type'      => 'text',
                 'maxlength' => 100,
-                'title'     => \ForkBB\__('Website'),
+                'caption'     => \ForkBB\__('Website'),
                 'value'     => $isEdit ? $curUser->url : \ForkBB\cens($curUser->url),
             ];
         }
@@ -143,13 +143,13 @@ class Profile extends Page
                 'id'        => 'signature',
                 'type'      => 'textarea',
                 'value'     => $curUser->signature,
-                'title'     => \ForkBB\__('Signature'),
+                'caption'     => \ForkBB\__('Signature'),
             ];
         } elseif ($curUser->signature) { //????
             $fieldset['signature'] = [
                 'id'        => 'signature',
                 'type'      => 'yield',
-                'title'     => \ForkBB\__('Signature'),
+                'caption'     => \ForkBB\__('Signature'),
                 'value'     => 'signature',
             ];
         }
@@ -167,45 +167,45 @@ class Profile extends Page
             'id'        => 'registered',
             'type'      => 'str',
             'value'     => \ForkBB\dt($curUser->registered, true),
-            'title'     => \ForkBB\__('Registered info'),
+            'caption'     => \ForkBB\__('Registered info'),
         ];
         $fieldset['lastvisit'] = [
             'id'        => 'lastvisit',
             'type'      => 'str',
             'value'     => \ForkBB\dt($curUser->last_visit, true),
-            'title'     => \ForkBB\__('Last visit info'),
+            'caption'     => \ForkBB\__('Last visit info'),
         ];
         $fieldset['lastpost'] = [
             'id'        => 'lastpost',
             'type'      => 'str',
             'value'     => \ForkBB\dt($curUser->last_post, true),
-            'title'     => \ForkBB\__('Last post info'),
+            'caption'     => \ForkBB\__('Last post info'),
         ];
         if ($curUser->num_posts) {
             if ('1' == $this->user->g_search && $this->user->showPostCount) {
                 $fieldset['posts'] = [
                     'id'        => 'posts',
                     'type'      => 'yield',
-                    'title'     => \ForkBB\__('Posts info'),
+                    'caption'     => \ForkBB\__('Posts info'),
                     'value'     => 'totalposts',
                 ];
                 $fieldset['topics'] = [
                     'id'        => 'topics',
                     'type'      => 'yield',
-                    'title'     => \ForkBB\__('Topics info'),
+                    'caption'     => \ForkBB\__('Topics info'),
                     'value'     => 'totaltopics',
                 ];
             } elseif ($this->user->showPostCount) {
                 $fieldset['posts'] = [
                     'id'        => 'posts',
                     'type'      => 'str',
-                    'title'     => \ForkBB\__('Posts info'),
+                    'caption'     => \ForkBB\__('Posts info'),
                     'value'     => \ForkBB\num($curUser->num_posts),
                 ];
                 $fieldset['topics'] = [
                     'id'        => 'topics',
                     'type'      => 'str',
-                    'title'     => \ForkBB\__('Topics info'),
+                    'caption'     => \ForkBB\__('Topics info'),
                     'value'     => \ForkBB\num($curUser->num_topics),
                 ];
             }

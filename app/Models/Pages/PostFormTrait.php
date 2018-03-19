@@ -51,7 +51,7 @@ trait PostFormTrait
                 'class'     => 'w1',
                 'type'      => 'text',
                 'maxlength' => 25,
-                'title'     => \ForkBB\__('Username'),
+                'caption'     => \ForkBB\__('Username'),
                 'required'  => true,
                 'pattern'   => '^.{2,25}$',
                 'value'     => isset($vars['username']) ? $vars['username'] : null,
@@ -61,7 +61,7 @@ trait PostFormTrait
                 'class'     => 'w2',
                 'type'      => 'text',
                 'maxlength' => 80,
-                'title'     => \ForkBB\__('Email'),
+                'caption'     => \ForkBB\__('Email'),
                 'required'  => '1' == $this->c->config->p_force_guest_email,
                 'pattern'   => '.+@.+',
                 'value'     => isset($vars['email']) ? $vars['email'] : null,
@@ -73,7 +73,7 @@ trait PostFormTrait
             $fieldset['subject'] = [
                 'type'      => 'text',
                 'maxlength' => 70,
-                'title'     => \ForkBB\__('Subject'),
+                'caption'     => \ForkBB\__('Subject'),
                 'required'  => true,
                 'value'     => isset($vars['subject']) ? $vars['subject'] : null,
                 'autofocus' => $autofocus,
@@ -83,7 +83,7 @@ trait PostFormTrait
 
         $fieldset['message'] = [
             'type'     => 'textarea',
-            'title'    => \ForkBB\__('Message'),
+            'caption'    => \ForkBB\__('Message'),
             'required' => true,
             'value'    => isset($vars['message']) ? $vars['message'] : null,
             'bb'       => [

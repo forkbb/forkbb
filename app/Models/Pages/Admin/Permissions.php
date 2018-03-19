@@ -53,10 +53,10 @@ class Permissions extends Admin
 
             if ($valid) {
                 $config->save();
-                
+
                 return $this->c->Redirect->page('AdminPermissions')->message('Perms updated redirect');
             }
-    
+
             $this->fIswev  = $v->getErrors();
         }
 
@@ -69,12 +69,12 @@ class Permissions extends Admin
 
         return $this;
     }
-    
+
     /**
      * Формирует данные для формы
      *
      * @param Config $config
-     * 
+     *
      * @return array
      */
     protected function viewForm(Config $config)
@@ -103,35 +103,35 @@ class Permissions extends Admin
                     'type'   => 'radio',
                     'value'  => $config->p_message_bbcode,
                     'values' => $yn,
-                    'title'  => \ForkBB\__('BBCode label'),
+                    'caption'  => \ForkBB\__('BBCode label'),
                     'info'   => \ForkBB\__('BBCode help'),
                 ],
                 'p_message_img_tag' => [
                     'type'   => 'radio',
                     'value'  => $config->p_message_img_tag,
                     'values' => $yn,
-                    'title'  => \ForkBB\__('Image tag label'),
+                    'caption'  => \ForkBB\__('Image tag label'),
                     'info'   => \ForkBB\__('Image tag help'),
                 ],
                 'p_message_all_caps' => [
                     'type'   => 'radio',
                     'value'  => $config->p_message_all_caps,
                     'values' => $yn,
-                    'title'  => \ForkBB\__('All caps message label'),
+                    'caption'  => \ForkBB\__('All caps message label'),
                     'info'   => \ForkBB\__('All caps message help'),
                 ],
                 'p_subject_all_caps' => [
                     'type'   => 'radio',
                     'value'  => $config->p_subject_all_caps,
                     'values' => $yn,
-                    'title'  => \ForkBB\__('All caps subject label'),
+                    'caption'  => \ForkBB\__('All caps subject label'),
                     'info'   => \ForkBB\__('All caps subject help'),
                 ],
                 'p_force_guest_email' => [
                     'type'   => 'radio',
                     'value'  => $config->p_force_guest_email,
                     'values' => $yn,
-                    'title'  => \ForkBB\__('Require e-mail label'),
+                    'caption'  => \ForkBB\__('Require e-mail label'),
                     'info'   => \ForkBB\__('Require e-mail help'),
                 ],
             ],
@@ -144,21 +144,21 @@ class Permissions extends Admin
                     'type'   => 'radio',
                     'value'  => $config->p_sig_bbcode,
                     'values' => $yn,
-                    'title'  => \ForkBB\__('BBCode sigs label'),
+                    'caption'  => \ForkBB\__('BBCode sigs label'),
                     'info'   => \ForkBB\__('BBCode sigs help'),
                 ],
                 'p_sig_img_tag' => [
                     'type'   => 'radio',
                     'value'  => $config->p_sig_img_tag,
                     'values' => $yn,
-                    'title'  => \ForkBB\__('Image tag sigs label'),
+                    'caption'  => \ForkBB\__('Image tag sigs label'),
                     'info'   => \ForkBB\__('Image tag sigs help'),
                 ],
                 'p_sig_all_caps' => [
                     'type'   => 'radio',
                     'value'  => $config->p_sig_all_caps,
                     'values' => $yn,
-                    'title'  => \ForkBB\__('All caps sigs label'),
+                    'caption'  => \ForkBB\__('All caps sigs label'),
                     'info'   => \ForkBB\__('All caps sigs help'),
                 ],
                 'p_sig_length' => [
@@ -166,7 +166,7 @@ class Permissions extends Admin
                     'min'   => 0,
                     'max'   => 16000,
                     'value' => $config->p_sig_length,
-                    'title' => \ForkBB\__('Max sig length label'),
+                    'caption' => \ForkBB\__('Max sig length label'),
                     'info'  => \ForkBB\__('Max sig length help'),
                 ],
                 'p_sig_lines' => [
@@ -174,7 +174,7 @@ class Permissions extends Admin
                     'min'   => 0,
                     'max'   => 100,
                     'value' => $config->p_sig_lines,
-                    'title' => \ForkBB\__('Max sig lines label'),
+                    'caption' => \ForkBB\__('Max sig lines label'),
                     'info'  => \ForkBB\__('Max sig lines help'),
                 ],
 

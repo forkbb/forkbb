@@ -153,7 +153,7 @@ class Search extends Page
                         'class'     => 'w2',
                         'type'      => 'text',
                         'maxlength' => 100,
-                        'title'     => \ForkBB\__('Keyword search'),
+                        'caption'     => \ForkBB\__('Keyword search'),
                         'value'     => $v ? $v->keywords : '',
                         'required'  => true,
                         'autofocus' => true,
@@ -162,7 +162,7 @@ class Search extends Page
                         'class'     => 'w1',
                         'type'      => 'text',
                         'maxlength' => 25,
-                        'title'     => \ForkBB\__('Author search'),
+                        'caption'     => \ForkBB\__('Author search'),
                         'value'     => $v ? $v->author : '*',
                         'required'  => true,
                     ],
@@ -180,7 +180,7 @@ class Search extends Page
                         'type'    => 'multiselect',
                         'options' => $this->listForOptions,
                         'value'   => $v ? \explode('.', $v->forums) : null,
-                        'title'   => \ForkBB\__('Forum search'),
+                        'caption'   => \ForkBB\__('Forum search'),
                         'size'    => \min(\count($this->listForOptions), 10),
                     ],
                     'serch_in' => [
@@ -192,7 +192,7 @@ class Search extends Page
                             2 => \ForkBB\__('Topic only'),
                         ],
                         'value'   => $v ? $v->serch_in : 0,
-                        'title'   => \ForkBB\__('Search in'),
+                        'caption'   => \ForkBB\__('Search in'),
                     ],
                     [
                         'type'    => 'info',
@@ -218,7 +218,7 @@ class Search extends Page
                             3 => \ForkBB\__('Sort by forum'),
                         ],
                         'value'   => $v ? $v->sort_by : 0,
-                        'title'   => \ForkBB\__('Sort by'),
+                        'caption'   => \ForkBB\__('Sort by'),
                     ],
                     'sort_dir' => [
                         'class'   => 'w4',
@@ -228,7 +228,7 @@ class Search extends Page
                             1 => \ForkBB\__('Ascending'),
                         ],
                         'value'   => $v ? $v->sort_dir : 0,
-                        'title'   => \ForkBB\__('Sort order'),
+                        'caption'   => \ForkBB\__('Sort order'),
                     ],
                     'show_as' => [
                         'class'   => 'w4',
@@ -238,7 +238,7 @@ class Search extends Page
                             1 => \ForkBB\__('Show as topics'),
                         ],
                         'value'   => $v ? $v->show_as : 0,
-                        'title'   => \ForkBB\__('Show as'),
+                        'caption'   => \ForkBB\__('Show as'),
                     ],
                     [
                         'type'    => 'info',
@@ -258,7 +258,7 @@ class Search extends Page
                     'keywords' => [
                         'type'      => 'text',
                         'maxlength' => 100,
-                        'title'     => \ForkBB\__('Keyword search'),
+                        'caption'     => \ForkBB\__('Keyword search'),
                         'value'     => $v ? $v->keywords : '',
                         'required'  => true,
                         'autofocus' => true,
