@@ -125,13 +125,13 @@ class Forums extends Admin
             ],
             'sets'   => [],
             'btns'   => [
-                'new'  => [
+                'new' => [
                     'type'      => 'btn',
                     'value'     => \ForkBB\__('New forum'),
                     'link'      => $this->c->Router->link('AdminForumsNew'),
                     'accesskey' => 'n',
                 ],
-                'update'  => [
+                'update' => [
                     'type'      => 'submit',
                     'value'     => \ForkBB\__('Update positions'),
                     'accesskey' => 'u',
@@ -168,26 +168,26 @@ class Forums extends Admin
                 }
 
                 $fieldset[] = [
-                    'class'     => ['name', 'inline', 'depth' . $forum->depth],
-                    'type'      => 'btn',
-                    'value'     => $forum->forum_name,
-                    'caption'     => \ForkBB\__('Forum label'),
-                    'link'      => $this->c->Router->link('AdminForumsEdit', ['id' => $forum->id]),
+                    'class'   => ['name', 'inline', 'depth' . $forum->depth],
+                    'type'    => 'btn',
+                    'value'   => $forum->forum_name,
+                    'caption' => \ForkBB\__('Forum label'),
+                    'link'    => $this->c->Router->link('AdminForumsEdit', ['id' => $forum->id]),
                 ];
                 $fieldset["form[{$forum->id}][disp_position]"] = [
-                    'class' => ['position', 'inline'],
-                    'type'  => 'number',
-                    'min'   => 0,
-                    'max'   => 9999999999,
-                    'value' => $forum->disp_position,
+                    'class'   => ['position', 'inline'],
+                    'type'    => 'number',
+                    'min'     => 0,
+                    'max'     => 9999999999,
+                    'value'   => $forum->disp_position,
                     'caption' => \ForkBB\__('Position label'),
                 ];
                 $disabled = (bool) $forum->subforums;
                 $fieldset[] = [
-                    'class'       => ['delete', 'inline'],
+                    'class'    => ['delete', 'inline'],
                     'type'     => 'btn',
                     'value'    => '❌',
-                    'caption'    => \ForkBB\__('Delete'),
+                    'caption'  => \ForkBB\__('Delete'),
                     'link'     => $disabled ? '#' : $this->c->Router->link('AdminForumsDelete', ['id' => $forum->id]),
                     'disabled' => $disabled,
                 ];
@@ -262,12 +262,12 @@ class Forums extends Admin
             ],
             'sets'   => [],
             'btns'   => [
-                'delete'  => [
+                'delete' => [
                     'type'      => 'submit',
                     'value'     => \ForkBB\__('Delete forum'),
                     'accesskey' => 'd',
                 ],
-                'cancel'  => [
+                'cancel' => [
                     'type'      => 'submit',
                     'value'     => \ForkBB\__('Cancel'),
                 ],
@@ -277,7 +277,7 @@ class Forums extends Admin
         $form['sets'][] = [
             'fields' => [
                 'confirm' => [
-                    'caption'   => \ForkBB\__('Confirm delete'),
+                    'caption' => \ForkBB\__('Confirm delete'),
                     'type'    => 'checkbox',
                     'label'   => \ForkBB\__('I want to delete forum %s', $forum->forum_name),
                     'value'   => '1',
@@ -397,12 +397,12 @@ class Forums extends Admin
                 return $this->c->Redirect->page('AdminForums')->message($message);
             }
 
-            $this->fIswev  = $v->getErrors();
+            $this->fIswev = $v->getErrors();
         }
 
-        $this->nameTpl   = 'admin/form';
-        $this->aIndex    = 'forums';
-        $this->form      = $this->viewForm($forum, $marker, $args);
+        $this->nameTpl = 'admin/form';
+        $this->aIndex  = 'forums';
+        $this->form    = $this->viewForm($forum, $marker, $args);
 
         return $this;
     }
@@ -447,19 +447,19 @@ class Forums extends Admin
                     'type'      => 'text',
                     'maxlength' => 80,
                     'value'     => $forum->forum_name,
-                    'caption'     => \ForkBB\__('Forum name label'),
+                    'caption'   => \ForkBB\__('Forum name label'),
                     'required'  => true,
                 ],
                 'forum_desc' => [
-                    'type'      => 'textarea',
-                    'value'     => $forum->forum_desc,
-                    'caption'     => \ForkBB\__('Forum description label'),
+                    'type'    => 'textarea',
+                    'value'   => $forum->forum_desc,
+                    'caption' => \ForkBB\__('Forum description label'),
                 ],
                 'parent' => [
                     'type'     => 'select',
                     'options'  => $this->listForOptions,
                     'value'    => $forum->parent_forum_id ? $forum->parent_forum_id : -$forum->cat_id,
-                    'caption'    => \ForkBB\__('Parent label'),
+                    'caption'  => \ForkBB\__('Parent label'),
                     'info'     => \ForkBB\__('Parent help'),
                     'required' => true,
                 ],
@@ -471,13 +471,13 @@ class Forums extends Admin
                         2 => \ForkBB\__('Subject option'),
                     ],
                     'value'   => $forum->sort_by,
-                    'caption'   => \ForkBB\__('Sort by label'),
+                    'caption' => \ForkBB\__('Sort by label'),
                 ],
                 'redirect_url' => [
                     'type'      => 'text',
                     'maxlength' => 255,
                     'value'     => $forum->redirect_url,
-                    'caption'     => \ForkBB\__('Redirect label'),
+                    'caption'   => \ForkBB\__('Redirect label'),
                     'info'      => \ForkBB\__('Redirect help'),
                     'disabled'  => $forum->num_topics || $forum->subforums ? true : null,
                 ],
@@ -502,7 +502,7 @@ class Forums extends Admin
                 'class'    => $group->def_read_forum ? $aOn : $aOff,
                 'type'     => 'checkbox',
                 'value'    => '1',
-                'caption'    => \ForkBB\__('Read forum label'),
+                'caption'  => \ForkBB\__('Read forum label'),
                 'label'    => \ForkBB\__('<span></span>'),
                 'checked'  => $group->set_read_forum,
                 'disabled' => $group->dis_read_forum,
@@ -511,7 +511,7 @@ class Forums extends Admin
                 'class'    => $group->def_post_replies ? $aOn : $aOff,
                 'type'     => 'checkbox',
                 'value'    => '1',
-                'caption'    => \ForkBB\__('Post replies label'),
+                'caption'  => \ForkBB\__('Post replies label'),
                 'label'    => \ForkBB\__('<span></span>'),
                 'checked'  => $group->set_post_replies,
                 'disabled' => $group->dis_post_replies,
@@ -520,7 +520,7 @@ class Forums extends Admin
                 'class'    => $group->def_post_topics ? $aOn : $aOff,
                 'type'     => 'checkbox',
                 'value'    => '1',
-                'caption'    => \ForkBB\__('Post topics label'),
+                'caption'  => \ForkBB\__('Post topics label'),
                 'label'    => \ForkBB\__('<span></span>'),
                 'checked'  => $group->set_post_topics,
                 'disabled' => $group->dis_post_topics,

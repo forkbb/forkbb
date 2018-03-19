@@ -55,26 +55,26 @@ class Maintenance extends Admin
             'hidden' => [
                 'token' => $this->c->Csrf->create('AdminMaintenance'),
             ],
-            'sets' => [
+            'sets'   => [
                 [
                     'fields' => [
                         'o_maintenance' => [
-                            'type'   => 'radio',
-                            'value'  => $config->o_maintenance,
-                            'values' => [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')],
-                            'caption'  => \ForkBB\__('Maintenance mode label'),
-                            'info'   => \ForkBB\__('Maintenance mode help'),
+                            'type'    => 'radio',
+                            'value'   => $config->o_maintenance,
+                            'values'  => [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')],
+                            'caption' => \ForkBB\__('Maintenance mode label'),
+                            'info'    => \ForkBB\__('Maintenance mode help'),
                         ],
                         'o_maintenance_message' => [
-                            'type'      => 'textarea',
-                            'value'     => $config->o_maintenance_message,
-                            'caption'     => \ForkBB\__('Maintenance message label'),
-                            'info'      => \ForkBB\__('Maintenance message help'),
+                            'type'    => 'textarea',
+                            'value'   => $config->o_maintenance_message,
+                            'caption' => \ForkBB\__('Maintenance message label'),
+                            'info'    => \ForkBB\__('Maintenance message help'),
                         ],
                     ],
                 ],
             ],
-            'btns' => [
+            'btns'   => [
                 'submit' => [
                     'type'      => 'submit',
                     'value'     => \ForkBB\__('Save changes'),
@@ -88,7 +88,7 @@ class Maintenance extends Admin
             'hidden' => [
                 'token' => $this->c->Csrf->create('AdminMaintenanceRebuild'),
             ],
-            'sets' => [
+            'sets'   => [
                 [
                     'info' => [
                         'info1' => [
@@ -101,26 +101,26 @@ class Maintenance extends Admin
                 [
                     'fields' => [
                         'limit' => [
-                            'type'  => 'number',
-                            'min'   => 1,
-                            'max'   => 9999,
-                            'value' => 100,
+                            'type'    => 'number',
+                            'min'     => 1,
+                            'max'     => 9999,
+                            'value'   => 100,
                             'caption' => \ForkBB\__('Posts per cycle label'),
-                            'info'  => \ForkBB\__('Posts per cycle help'),
+                            'info'    => \ForkBB\__('Posts per cycle help'),
                         ],
                         'start' => [
-                            'type'  => 'number',
-                            'min'   => 1,
-                            'max'   => 9999999999,
-                            'value' => 1,
+                            'type'    => 'number',
+                            'min'     => 1,
+                            'max'     => 9999999999,
+                            'value'   => 1,
                             'caption' => \ForkBB\__('Starting post label'),
-                            'info'  => \ForkBB\__('Starting post help'),
+                            'info'    => \ForkBB\__('Starting post help'),
                         ],
                         'clear' => [
                             'type'    => 'checkbox',
                             'value'   => '1',
                             'checked' => true,
-                            'caption'   => \ForkBB\__('Empty index label'),
+                            'caption' => \ForkBB\__('Empty index label'),
                             'label'   => \ForkBB\__('Empty index help'),
                         ],
                     ],
@@ -135,7 +135,7 @@ class Maintenance extends Admin
                     ],
                 ],
             ],
-            'btns' => [
+            'btns'   => [
                 'rebuild' => [
                     'type'      => 'submit',
                     'value'     => \ForkBB\__('Rebuild index'),

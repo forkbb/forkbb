@@ -134,7 +134,7 @@ class Userlist extends Page
                 'type'      => 'text',
                 'maxlength' => 25,
                 'value'     => $v->name ?: '*',
-                'caption'     => \ForkBB\__('Username'),
+                'caption'   => \ForkBB\__('Username'),
                 'info'      => \ForkBB\__('User search info'),
                 'required'  => true,
 #               'autofocus' => true,
@@ -149,7 +149,7 @@ class Userlist extends Page
                     return [$group->g_id, $group->g_title];
                 }, $groups),
             'value'   => $v->group,
-            'caption'   => \ForkBB\__('User group'),
+            'caption' => \ForkBB\__('User group'),
         ];
         $fields['sort'] = [
             'class'   => 'w4',
@@ -160,17 +160,17 @@ class Userlist extends Page
                 ['registered', \ForkBB\__('Sort by date')],
             ],
             'value'   => $v->sort,
-            'caption'   => \ForkBB\__('Sort users by'),
+            'caption' => \ForkBB\__('Sort users by'),
         ];
         $fields['dir'] = [
-            'class'  => 'w4',
-            'type'   => 'radio',
-            'value'  => $v->dir ?: 'ASC',
-            'values' => [
+            'class'   => 'w4',
+            'type'    => 'radio',
+            'value'   => $v->dir ?: 'ASC',
+            'values'  => [
                 'ASC'  => \ForkBB\__('Ascending'),
                 'DESC' => \ForkBB\__('Descending'),
             ],
-            'caption'  => \ForkBB\__('User sort order'),
+            'caption' => \ForkBB\__('User sort order'),
         ];
         $form['sets'][] = ['fields' => $fields];
 

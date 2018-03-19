@@ -37,7 +37,7 @@ class Profile extends Page
                 ],
                 'sets'   => [],
                 'btns'   => [
-                    'save'  => [
+                    'save' => [
                         'type'      => 'submit',
                         'value'     => \ForkBB\__('Save changes'),
                         'accesskey' => 's',
@@ -50,14 +50,14 @@ class Profile extends Page
 
         $fieldset = [];
         $fieldset[] = [
-            'class'     => 'usertitle',
-            'type'      => 'wrap',
+            'class' => 'usertitle',
+            'type'  => 'wrap',
         ];
         $fieldset['username'] = [
             'id'        => 'username',
             'type'      => 'text',
             'maxlength' => 25,
-            'caption'     => \ForkBB\__('Username'),
+            'caption'   => \ForkBB\__('Username'),
             'required'  => true,
             'pattern'   => '^.{2,25}$',
             'value'     => $curUser->username,
@@ -66,18 +66,18 @@ class Profile extends Page
             'id'        => 'title',
             'type'      => 'text',
             'maxlength' => 50,
-            'caption'     => \ForkBB\__('Title'),
+            'caption'   => \ForkBB\__('Title'),
             'value'     => $isEdit ? $curUser->title : $curUser->title(),
         ];
         $fieldset[] = [
-            'type'      => 'endwrap',
+            'type' => 'endwrap',
         ];
         if ('1' == $this->c->config->o_avatars && $curUser->avatar) {
             $fieldset['avatar'] = [
-                'id'        => 'avatar',
-                'type'      => 'yield',
-                'caption'     => \ForkBB\__('Avatar'),
-                'value'     => 'avatar',
+                'id'      => 'avatar',
+                'type'    => 'yield',
+                'caption' => \ForkBB\__('Avatar'),
+                'value'   => 'avatar',
             ];
         }
         $form['sets'][] = [
@@ -93,21 +93,21 @@ class Profile extends Page
                 'id'        => 'realname',
                 'type'      => 'text',
                 'maxlength' => 40,
-                'caption'     => \ForkBB\__('Realname'),
+                'caption'   => \ForkBB\__('Realname'),
                 'value'     => $isEdit ? $curUser->realname : \ForkBB\cens($curUser->realname),
             ];
         }
         if ($isEdit || $curUser->gender) {
             $fieldset['gender'] = [
-                'id'     => 'gender',
-                'type'   => 'radio',
-                'value'  => $curUser->gender,
-                'values' => [
+                'id'      => 'gender',
+                'type'    => 'radio',
+                'value'   => $curUser->gender,
+                'values'  => [
                     0 => \ForkBB\__('Unknown'),
                     1 => \ForkBB\__('Male'),
                     2 => \ForkBB\__('Female'),
                 ],
-                'caption'  => \ForkBB\__('Gender'),
+                'caption' => \ForkBB\__('Gender'),
             ];
         }
         if ($isEdit || $curUser->location) {
@@ -115,7 +115,7 @@ class Profile extends Page
                 'id'        => 'location',
                 'type'      => 'text',
                 'maxlength' => 40,
-                'caption'     => \ForkBB\__('Location'),
+                'caption'   => \ForkBB\__('Location'),
                 'value'     => $isEdit ? $curUser->location : \ForkBB\cens($curUser->location),
             ];
         }
@@ -124,7 +124,7 @@ class Profile extends Page
                 'id'        => 'website',
                 'type'      => 'text',
                 'maxlength' => 100,
-                'caption'     => \ForkBB\__('Website'),
+                'caption'   => \ForkBB\__('Website'),
                 'value'     => $isEdit ? $curUser->url : \ForkBB\cens($curUser->url),
             ];
         }
@@ -140,17 +140,17 @@ class Profile extends Page
         $fieldset = [];
         if ($isEdit) {
             $fieldset['signature'] = [
-                'id'        => 'signature',
-                'type'      => 'textarea',
-                'value'     => $curUser->signature,
-                'caption'     => \ForkBB\__('Signature'),
+                'id'      => 'signature',
+                'type'    => 'textarea',
+                'value'   => $curUser->signature,
+                'caption' => \ForkBB\__('Signature'),
             ];
         } elseif ($curUser->signature) { //????
             $fieldset['signature'] = [
-                'id'        => 'signature',
-                'type'      => 'yield',
-                'caption'     => \ForkBB\__('Signature'),
-                'value'     => 'signature',
+                'id'      => 'signature',
+                'type'    => 'yield',
+                'caption' => \ForkBB\__('Signature'),
+                'value'   => 'signature',
             ];
         }
         if (! empty($fieldset)) {
@@ -164,49 +164,49 @@ class Profile extends Page
 
         $fieldset = [];
         $fieldset['registered'] = [
-            'id'        => 'registered',
-            'type'      => 'str',
-            'value'     => \ForkBB\dt($curUser->registered, true),
-            'caption'     => \ForkBB\__('Registered info'),
+            'id'      => 'registered',
+            'type'    => 'str',
+            'value'   => \ForkBB\dt($curUser->registered, true),
+            'caption' => \ForkBB\__('Registered info'),
         ];
         $fieldset['lastvisit'] = [
-            'id'        => 'lastvisit',
-            'type'      => 'str',
-            'value'     => \ForkBB\dt($curUser->last_visit, true),
-            'caption'     => \ForkBB\__('Last visit info'),
+            'id'      => 'lastvisit',
+            'type'    => 'str',
+            'value'   => \ForkBB\dt($curUser->last_visit, true),
+            'caption' => \ForkBB\__('Last visit info'),
         ];
         $fieldset['lastpost'] = [
-            'id'        => 'lastpost',
-            'type'      => 'str',
-            'value'     => \ForkBB\dt($curUser->last_post, true),
-            'caption'     => \ForkBB\__('Last post info'),
+            'id'      => 'lastpost',
+            'type'    => 'str',
+            'value'   => \ForkBB\dt($curUser->last_post, true),
+            'caption' => \ForkBB\__('Last post info'),
         ];
         if ($curUser->num_posts) {
             if ('1' == $this->user->g_search && $this->user->showPostCount) {
                 $fieldset['posts'] = [
-                    'id'        => 'posts',
-                    'type'      => 'yield',
-                    'caption'     => \ForkBB\__('Posts info'),
-                    'value'     => 'totalposts',
+                    'id'      => 'posts',
+                    'type'    => 'yield',
+                    'caption' => \ForkBB\__('Posts info'),
+                    'value'   => 'totalposts',
                 ];
                 $fieldset['topics'] = [
-                    'id'        => 'topics',
-                    'type'      => 'yield',
-                    'caption'     => \ForkBB\__('Topics info'),
-                    'value'     => 'totaltopics',
+                    'id'      => 'topics',
+                    'type'    => 'yield',
+                    'caption' => \ForkBB\__('Topics info'),
+                    'value'   => 'totaltopics',
                 ];
             } elseif ($this->user->showPostCount) {
                 $fieldset['posts'] = [
-                    'id'        => 'posts',
-                    'type'      => 'str',
-                    'caption'     => \ForkBB\__('Posts info'),
-                    'value'     => \ForkBB\num($curUser->num_posts),
+                    'id'      => 'posts',
+                    'type'    => 'str',
+                    'caption' => \ForkBB\__('Posts info'),
+                    'value'   => \ForkBB\num($curUser->num_posts),
                 ];
                 $fieldset['topics'] = [
-                    'id'        => 'topics',
-                    'type'      => 'str',
-                    'caption'     => \ForkBB\__('Topics info'),
-                    'value'     => \ForkBB\num($curUser->num_topics),
+                    'id'      => 'topics',
+                    'type'    => 'str',
+                    'caption' => \ForkBB\__('Topics info'),
+                    'value'   => \ForkBB\num($curUser->num_topics),
                 ];
             }
         }
@@ -218,14 +218,14 @@ class Profile extends Page
         ];
 
 
-        $this->fIndex     = $curUser->id === $this->user->id ? 'profile' : 'userlist';
-        $this->nameTpl    = 'profile';
-        $this->onlinePos  = 'profile-' . $curUser->id; // ????
-        $this->canonical  = $curUser->link;
-        $this->title      = \ForkBB\__('%s\'s profile', $curUser->username);
-        $this->crumbs     = $this->crumbs([$curUser->link, $this->title]);
-        $this->form       = $form;
-        $this->curUser    = $curUser;
+        $this->fIndex    = $curUser->id === $this->user->id ? 'profile' : 'userlist';
+        $this->nameTpl   = 'profile';
+        $this->onlinePos = 'profile-' . $curUser->id; // ????
+        $this->canonical = $curUser->link;
+        $this->title     = \ForkBB\__('%s\'s profile', $curUser->username);
+        $this->crumbs    = $this->crumbs([$curUser->link, $this->title]);
+        $this->form      = $form;
+        $this->curUser   = $curUser;
 
         return $this;
     }

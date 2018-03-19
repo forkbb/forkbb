@@ -62,14 +62,14 @@ class Groups extends Admin
                         'type'      => 'select',
                         'options'   => $this->groupsNew,
                         'value'     => $this->c->config->o_default_user_group,
-                        'caption'     => \ForkBB\__('New group label'),
+                        'caption'   => \ForkBB\__('New group label'),
                         'info'      => \ForkBB\__('New group help'),
 #                       'autofocus' => true,
                     ],
                 ],
             ]],
             'btns'   => [
-                'submit'  => [
+                'submit' => [
                     'type'      => 'submit',
                     'value'     => \ForkBB\__('Add'),
                     'accesskey' => 'a',
@@ -87,7 +87,7 @@ class Groups extends Admin
                         'type'    => 'select',
                         'options' => $this->groupsDefault,
                         'value'   => $this->c->config->o_default_user_group,
-                        'caption'   => \ForkBB\__('Default group label'),
+                        'caption' => \ForkBB\__('Default group label'),
                         'info'    => \ForkBB\__('Default group help'),
                     ],
                 ],
@@ -347,7 +347,7 @@ class Groups extends Admin
             'type'      => 'text',
             'maxlength' => 50,
             'value'     => $group->g_title,
-            'caption'     => \ForkBB\__('Group title label'),
+            'caption'   => \ForkBB\__('Group title label'),
             'required'  => true,
 #           'autofocus' => true,
         ];
@@ -355,7 +355,7 @@ class Groups extends Admin
             'type'      => 'text',
             'maxlength' => 50,
             'value'     => $group->g_user_title,
-            'caption'     => \ForkBB\__('User title label'),
+            'caption'   => \ForkBB\__('User title label'),
             'info'      => \ForkBB\__('User title help', $group->groupGuest ? \ForkBB\__('Guest') : \ForkBB\__('Member')),
         ];
 
@@ -380,16 +380,16 @@ class Groups extends Admin
                 'type'    => 'select',
                 'options' => $options,
                 'value'   => $group->g_promote_next_group,
-                'caption'   => \ForkBB\__('Promote users label'),
+                'caption' => \ForkBB\__('Promote users label'),
                 'info'    => \ForkBB\__('Promote users help', \ForkBB\__('Disable promotion')),
             ];
             $fieldset['g_promote_min_posts'] = [
-                'type'  => 'number',
-                'min'   => 0,
-                'max'   => 9999999999,
-                'value' => $group->g_promote_min_posts,
+                'type'    => 'number',
+                'min'     => 0,
+                'max'     => 9999999999,
+                'value'   => $group->g_promote_min_posts,
                 'caption' => \ForkBB\__('Number for promotion label'),
-                'info'  => \ForkBB\__('Number for promotion help'),
+                'info'    => \ForkBB\__('Number for promotion help'),
             ];
         }
 
@@ -397,182 +397,182 @@ class Groups extends Admin
 
         if (! $group->groupGuest && $group->g_id != $this->c->config->o_default_user_group) {
             $fieldset['g_moderator'] = [
-                'type'   => 'radio',
-                'value'  => $group->g_moderator,
-                'values' => $yn,
-                'caption'  => \ForkBB\__('Mod privileges label'),
-                'info'   => \ForkBB\__('Mod privileges help'),
+                'type'    => 'radio',
+                'value'   => $group->g_moderator,
+                'values'  => $yn,
+                'caption' => \ForkBB\__('Mod privileges label'),
+                'info'    => \ForkBB\__('Mod privileges help'),
             ];
             $fieldset['g_mod_edit_users'] = [
-                'type'   => 'radio',
-                'value'  => $group->g_mod_edit_users,
-                'values' => $yn,
-                'caption'  => \ForkBB\__('Edit profile label'),
-                'info'   => \ForkBB\__('Edit profile help'),
+                'type'    => 'radio',
+                'value'   => $group->g_mod_edit_users,
+                'values'  => $yn,
+                'caption' => \ForkBB\__('Edit profile label'),
+                'info'    => \ForkBB\__('Edit profile help'),
             ];
             $fieldset['g_mod_rename_users'] = [
-                'type'   => 'radio',
-                'value'  => $group->g_mod_rename_users,
-                'values' => $yn,
-                'caption'  => \ForkBB\__('Rename users label'),
-                'info'   => \ForkBB\__('Rename users help'),
+                'type'    => 'radio',
+                'value'   => $group->g_mod_rename_users,
+                'values'  => $yn,
+                'caption' => \ForkBB\__('Rename users label'),
+                'info'    => \ForkBB\__('Rename users help'),
             ];
             $fieldset['g_mod_change_passwords'] = [
-                'type'   => 'radio',
-                'value'  => $group->g_mod_change_passwords,
-                'values' => $yn,
-                'caption'  => \ForkBB\__('Change passwords label'),
-                'info'   => \ForkBB\__('Change passwords help'),
+                'type'    => 'radio',
+                'value'   => $group->g_mod_change_passwords,
+                'values'  => $yn,
+                'caption' => \ForkBB\__('Change passwords label'),
+                'info'    => \ForkBB\__('Change passwords help'),
             ];
             $fieldset['g_mod_promote_users'] = [
-                'type'   => 'radio',
-                'value'  => $group->g_mod_promote_users,
-                'values' => $yn,
-                'caption'  => \ForkBB\__('Mod promote users label'),
-                'info'   => \ForkBB\__('Mod promote users help'),
+                'type'    => 'radio',
+                'value'   => $group->g_mod_promote_users,
+                'values'  => $yn,
+                'caption' => \ForkBB\__('Mod promote users label'),
+                'info'    => \ForkBB\__('Mod promote users help'),
             ];
             $fieldset['g_mod_ban_users'] = [
-                'type'   => 'radio',
-                'value'  => $group->g_mod_ban_users,
-                'values' => $yn,
-                'caption'  => \ForkBB\__('Ban users label'),
-                'info'   => \ForkBB\__('Ban users help'),
+                'type'    => 'radio',
+                'value'   => $group->g_mod_ban_users,
+                'values'  => $yn,
+                'caption' => \ForkBB\__('Ban users label'),
+                'info'    => \ForkBB\__('Ban users help'),
             ];
         }
 
         $fieldset['g_read_board'] = [
-            'type'   => 'radio',
-            'value'  => $group->g_read_board,
-            'values' => $yn,
-            'caption'  => \ForkBB\__('Read board label'),
-            'info'   => \ForkBB\__('Read board help'),
+            'type'    => 'radio',
+            'value'   => $group->g_read_board,
+            'values'  => $yn,
+            'caption' => \ForkBB\__('Read board label'),
+            'info'    => \ForkBB\__('Read board help'),
         ];
         $fieldset['g_view_users'] = [
-            'type'   => 'radio',
-            'value'  => $group->g_view_users,
-            'values' => $yn,
-            'caption'  => \ForkBB\__('View user info label'),
-            'info'   => \ForkBB\__('View user info help'),
+            'type'    => 'radio',
+            'value'   => $group->g_view_users,
+            'values'  => $yn,
+            'caption' => \ForkBB\__('View user info label'),
+            'info'    => \ForkBB\__('View user info help'),
         ];
         $fieldset['g_post_replies'] = [
-            'type'   => 'radio',
-            'value'  => $group->g_post_replies,
-            'values' => $yn,
-            'caption'  => \ForkBB\__('Post replies label'),
-            'info'   => \ForkBB\__('Post replies help'),
+            'type'    => 'radio',
+            'value'   => $group->g_post_replies,
+            'values'  => $yn,
+            'caption' => \ForkBB\__('Post replies label'),
+            'info'    => \ForkBB\__('Post replies help'),
         ];
         $fieldset['g_post_topics'] = [
-            'type'   => 'radio',
-            'value'  => $group->g_post_topics,
-            'values' => $yn,
-            'caption'  => \ForkBB\__('Post topics label'),
-            'info'   => \ForkBB\__('Post topics help'),
+            'type'    => 'radio',
+            'value'   => $group->g_post_topics,
+            'values'  => $yn,
+            'caption' => \ForkBB\__('Post topics label'),
+            'info'    => \ForkBB\__('Post topics help'),
         ];
 
         if (! $group->groupGuest) {
             $fieldset['g_edit_posts'] = [
-                'type'   => 'radio',
-                'value'  => $group->g_edit_posts,
-                'values' => $yn,
-                'caption'  => \ForkBB\__('Edit posts label'),
-                'info'   => \ForkBB\__('Edit posts help'),
+                'type'    => 'radio',
+                'value'   => $group->g_edit_posts,
+                'values'  => $yn,
+                'caption' => \ForkBB\__('Edit posts label'),
+                'info'    => \ForkBB\__('Edit posts help'),
             ];
             $fieldset['g_delete_posts'] = [
-                'type'   => 'radio',
-                'value'  => $group->g_delete_posts,
-                'values' => $yn,
-                'caption'  => \ForkBB\__('Delete posts label'),
-                'info'   => \ForkBB\__('Delete posts help'),
+                'type'    => 'radio',
+                'value'   => $group->g_delete_posts,
+                'values'  => $yn,
+                'caption' => \ForkBB\__('Delete posts label'),
+                'info'    => \ForkBB\__('Delete posts help'),
             ];
             $fieldset['g_delete_topics'] = [
-                'type'   => 'radio',
-                'value'  => $group->g_delete_topics,
-                'values' => $yn,
-                'caption'  => \ForkBB\__('Delete topics label'),
-                'info'   => \ForkBB\__('Delete topics help'),
+                'type'    => 'radio',
+                'value'   => $group->g_delete_topics,
+                'values'  => $yn,
+                'caption' => \ForkBB\__('Delete topics label'),
+                'info'    => \ForkBB\__('Delete topics help'),
             ];
             $fieldset['g_deledit_interval'] = [
-                'type'  => 'number',
-                'min'   => 0,
-                'max'   => 999999,
-                'value' => $group->g_deledit_interval,
+                'type'    => 'number',
+                'min'     => 0,
+                'max'     => 999999,
+                'value'   => $group->g_deledit_interval,
                 'caption' => \ForkBB\__('Delete-edit interval label'),
-                'info'  => \ForkBB\__('Delete-edit interval help'),
+                'info'    => \ForkBB\__('Delete-edit interval help'),
             ];
             $fieldset['g_set_title'] = [
-                'type'   => 'radio',
-                'value'  => $group->g_set_title,
-                'values' => $yn,
-                'caption'  => \ForkBB\__('Set own title label'),
-                'info'   => \ForkBB\__('Set own title help'),
+                'type'    => 'radio',
+                'value'   => $group->g_set_title,
+                'values'  => $yn,
+                'caption' => \ForkBB\__('Set own title label'),
+                'info'    => \ForkBB\__('Set own title help'),
             ];
         }
 
         $fieldset['g_post_links'] = [
-            'type'   => 'radio',
-            'value'  => $group->g_post_links,
-            'values' => $yn,
-            'caption'  => \ForkBB\__('Post links label'),
-            'info'   => \ForkBB\__('Post links help'),
+            'type'    => 'radio',
+            'value'   => $group->g_post_links,
+            'values'  => $yn,
+            'caption' => \ForkBB\__('Post links label'),
+            'info'    => \ForkBB\__('Post links help'),
         ];
         $fieldset['g_search'] = [
-            'type'   => 'radio',
-            'value'  => $group->g_search,
-            'values' => $yn,
-            'caption'  => \ForkBB\__('User search label'),
-            'info'   => \ForkBB\__('User search help'),
+            'type'    => 'radio',
+            'value'   => $group->g_search,
+            'values'  => $yn,
+            'caption' => \ForkBB\__('User search label'),
+            'info'    => \ForkBB\__('User search help'),
         ];
         $fieldset['g_search_users'] = [
-            'type'   => 'radio',
-            'value'  => $group->g_search_users,
-            'values' => $yn,
-            'caption'  => \ForkBB\__('User list search label'),
-            'info'   => \ForkBB\__('User list search help'),
+            'type'    => 'radio',
+            'value'   => $group->g_search_users,
+            'values'  => $yn,
+            'caption' => \ForkBB\__('User list search label'),
+            'info'    => \ForkBB\__('User list search help'),
         ];
 
         if (! $group->groupGuest) {
             $fieldset['g_send_email'] = [
-                'type'   => 'radio',
-                'value'  => $group->g_send_email,
-                'values' => $yn,
-                'caption'  => \ForkBB\__('Send e-mails label'),
-                'info'   => \ForkBB\__('Send e-mails help'),
+                'type'    => 'radio',
+                'value'   => $group->g_send_email,
+                'values'  => $yn,
+                'caption' => \ForkBB\__('Send e-mails label'),
+                'info'    => \ForkBB\__('Send e-mails help'),
             ];
         }
 
         $fieldset['g_post_flood'] = [
-            'type'  => 'number',
-            'min'   => 0,
-            'max'   => 999999,
-            'value' => $group->g_post_flood,
+            'type'    => 'number',
+            'min'     => 0,
+            'max'     => 999999,
+            'value'   => $group->g_post_flood,
             'caption' => \ForkBB\__('Post flood label'),
-            'info'  => \ForkBB\__('Post flood help'),
+            'info'    => \ForkBB\__('Post flood help'),
         ];
         $fieldset['g_search_flood'] = [
-            'type'  => 'number',
-            'min'   => 0,
-            'max'   => 999999,
-            'value' => $group->g_search_flood,
+            'type'    => 'number',
+            'min'     => 0,
+            'max'     => 999999,
+            'value'   => $group->g_search_flood,
             'caption' => \ForkBB\__('Search flood label'),
-            'info'  => \ForkBB\__('Search flood help'),
+            'info'    => \ForkBB\__('Search flood help'),
         ];
 
         if (! $group->groupGuest) {
             $fieldset['g_email_flood'] = [
-                'type'  => 'number',
-                'min'   => 0,
-                'max'   => 999999,
-                'value' => $group->g_email_flood,
+                'type'    => 'number',
+                'min'     => 0,
+                'max'     => 999999,
+                'value'   => $group->g_email_flood,
                 'caption' => \ForkBB\__('E-mail flood label'),
-                'info'  => \ForkBB\__('E-mail flood help'),
+                'info'    => \ForkBB\__('E-mail flood help'),
             ];
             $fieldset['g_report_flood'] = [
-                'type'  => 'number',
-                'min'   => 0,
-                'max'   => 999999,
-                'value' => $group->g_report_flood,
+                'type'    => 'number',
+                'min'     => 0,
+                'max'     => 999999,
+                'value'   => $group->g_report_flood,
                 'caption' => \ForkBB\__('Report flood label'),
-                'info'  => \ForkBB\__('Report flood help'),
+                'info'    => \ForkBB\__('Report flood help'),
             ];
         }
 
@@ -664,12 +664,12 @@ class Groups extends Admin
             ],
             'sets'   => [],
             'btns'   => [
-                'delete'  => [
+                'delete' => [
                     'type'      => 'submit',
                     'value'     => \ForkBB\__('Delete group'),
                     'accesskey' => 'd',
                 ],
-                'cancel'  => [
+                'cancel' => [
                     'type'      => 'submit',
                     'value'     => \ForkBB\__('Cancel'),
                 ],
@@ -680,11 +680,11 @@ class Groups extends Admin
             $form['sets'][] = [
                 'fields' => [
                     'movegroup' => [
-                        'type'      => 'select',
-                        'options'   => $groups,
-                        'value'     => $this->c->config->o_default_user_group,
-                        'caption'     => \ForkBB\__('Move users label'),
-                        'info'      => \ForkBB\__('Move users info', $group->g_title, $count),
+                        'type'    => 'select',
+                        'options' => $groups,
+                        'value'   => $this->c->config->o_default_user_group,
+                        'caption' => \ForkBB\__('Move users label'),
+                        'info'    => \ForkBB\__('Move users info', $group->g_title, $count),
                     ],
                 ],
             ];
@@ -693,7 +693,7 @@ class Groups extends Admin
         $form['sets'][] = [
             'fields' => [
                 'confirm' => [
-                    'caption'   => \ForkBB\__('Confirm delete'),
+                    'caption' => \ForkBB\__('Confirm delete'),
                     'type'    => 'checkbox',
                     'label'   => \ForkBB\__('I want to delete this group', $group->g_title),
                     'value'   => '1',
