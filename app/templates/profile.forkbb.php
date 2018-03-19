@@ -13,8 +13,6 @@
 @endsection
 @section ('avatar')<img class="f-avatar-img" src="{!! $p->curUser->avatar !!}" alt="{{ $p->curUser->username }}"> @endsection
 @section ('signature'){!! $p->curUser->htmlSign !!} @endsection
-@section ('totalposts')<a href="" title="{{ __('Show posts') }}">{!! num($p->curUser->num_posts) !!}</a> @endsection
-@section ('totaltopics')<a href="" title="{{ __('Show topics') }}">{!! num($p->curUser->num_topics) !!}</a> @endsection
 @extends ('layouts/main')
     <div class="f-nav-links">
 @yield ('crumbs')

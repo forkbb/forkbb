@@ -119,13 +119,21 @@ class Profile extends Page
                 'value'     => $isEdit ? $curUser->location : \ForkBB\cens($curUser->location),
             ];
         }
-        if ($isEdit || $curUser->url) {
+        if ($isEdit) {
             $fieldset['url'] = [
                 'id'        => 'website',
                 'type'      => 'text',
                 'maxlength' => 100,
                 'caption'   => \ForkBB\__('Website'),
-                'value'     => $isEdit ? $curUser->url : \ForkBB\cens($curUser->url),
+                'value'     => $curUser->url
+            ];
+        } elseif ($curUser->url) {
+            $fieldset['url'] = [
+                'id'      => 'website',
+                'type'    => 'link',
+                'caption' => \ForkBB\__('Website'),
+                'value'   => \ForkBB\cens($curUser->url),
+                'href'    => \ForkBB\cens($curUser->url),
             ];
         }
         if (! empty($fieldset)) {
@@ -182,18 +190,22 @@ class Profile extends Page
             'caption' => \ForkBB\__('Last post info'),
         ];
         if ($curUser->num_posts) {
-            if ('1' == $this->user->g_search && $this->user->showPostCount) {
+            if ('1' == $this->user->g_search) {
                 $fieldset['posts'] = [
                     'id'      => 'posts',
-                    'type'    => 'yield',
+                    'type'    => 'link',
                     'caption' => \ForkBB\__('Posts info'),
-                    'value'   => 'totalposts',
+                    'value'   => $this->user->showPostCount ? \ForkBB\num($curUser->num_posts) : \ForkBB\__('Show posts'),
+                    'href'    => '',
+                    'title'   => \ForkBB\__('Show posts'),
                 ];
                 $fieldset['topics'] = [
                     'id'      => 'topics',
-                    'type'    => 'yield',
+                    'type'    => 'link',
                     'caption' => \ForkBB\__('Topics info'),
-                    'value'   => 'totaltopics',
+                    'value'   => $this->user->showPostCount ? \ForkBB\num($curUser->num_topics) : \ForkBB\__('Show topics'),
+                    'href'    => '',
+                    'title'   => \ForkBB\__('Show topics'),
                 ];
             } elseif ($this->user->showPostCount) {
                 $fieldset['posts'] = [
