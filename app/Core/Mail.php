@@ -94,6 +94,7 @@ class Mail
         if (! \is_string($email)
             || \mb_strlen($email, 'UTF-8') > 80 //???? for DB
             || ! \preg_match('%^(?!\.)((?:(?:^|\.)(?>"(?!\s)(?:\x5C[^\x00-\x1F]|[^\x00-\x1F\x5C"])++(?<!\s)"|[a-zA-Z0-9!#$\%&\'*+/=?^_`{|}~-]+))+)@([^\x00-\x1F\s@]++)$%Du', $email, $matches)
+            || \mb_strlen($matches[1], 'UTF-8') > 64
         ) {
             return false;
         }
