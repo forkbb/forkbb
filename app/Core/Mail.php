@@ -92,31 +92,45 @@ class Mail
     public function valid($email, $strict = false, $idna = false)
     {
         if (! \is_string($email)
-            || \mb_strlen($email, 'UTF-8') > 80 //?????
-            || ! \preg_match('%^([^\x00-\x1F\\\/\s@]+)@([^\x00-\x1F\s@]+)$%Du', $email, $matches)
+            || \mb_strlen($email, 'UTF-8') > 80 //???? for DB
+            || ! \preg_match('%^(?!\.)((?:(?:^|\.)(?>"(?!\s)(?:\x5C[^\x00-\x1F]|[^\x00-\x1F\x5C"])++(?<!\s)"|[a-zA-Z0-9!#$\%&\'*+/=?^_`{|}~-]+))+)@([^\x00-\x1F\s@]++)$%Du', $email, $matches)
         ) {
             return false;
         }
-        $local = $matches[1];
-        $domain = \mb_strtolower($matches[2], 'UTF-8');
+        $local  = $matches[1];
+        $domain = $matches[2];
 
-        if ($domain{0} === '[' && \substr($domain, -1) === ']') {
-            $ip = \substr($domain, 1, -1);
-            if (! \filter_var($ip, \FILTER_VALIDATE_IP, \FILTER_FLAG_IPV4)) {
-                return $false;
+        if ('[' === $domain{0} && ']' === \substr($domain, -1)) {
+            if (1 === \strpos($domain, 'IPv6:')) {
+                $prefix = 'IPv6:';
+                $ip     = \substr($domain, 6, -1);
+            } else {
+                $prefix = '';
+                $ip     = \substr($domain, 1, -1);
             }
-            $domainASCII = $domain;
-        } else {
-            $ip = null;
-            if (! \preg_match('%^(?:[\p{L}\p{N}]+(?:\-[\p{L}\p{N}]+)*\.)*\p{L}+$%u', $domain)) {
+            $ip = \strtoupper($ip);
+
+            if (false === \filter_var($ip, \FILTER_VALIDATE_IP)) {
                 return false;
             }
-            $domainASCII = \idn_to_ascii($domain, 0, \INTL_IDNA_VARIANT_UTS46);
+
+            $domainASCII = $domain = "[{$prefix}{$ip}]";
+        } else {
+            $ip          = null;
+            $domainASCII = $domain = \mb_strtolower($domain, 'UTF-8');
+
+            if (\preg_match('%[\x80-\xFF]%', $domain) && \function_exists('idn_to_ascii')) {
+                $domainASCII = \idn_to_ascii($domain, 0, \INTL_IDNA_VARIANT_UTS46);
+            }
+
+            if ('localhost' == $domain || ! \preg_match('%^(?:(?:xn\-\-)?[a-z0-9]+(?:\-[a-z0-9]+)*(?:$|\.(?!$)))+$%', $domainASCII)) {
+                return false;
+            }
         }
 
         if ($strict) {
             if ($ip) {
-                $mx = @\checkdnsrr($ip, 'MX');
+                $mx = @\checkdnsrr($ip, 'MX'); // ???? ipv6?
             } else {
                 $mx = @\dns_get_record($domainASCII, \DNS_MX);
             }
@@ -124,6 +138,7 @@ class Mail
                 return false;
             }
         }
+
         return $local . '@' . ($idna ? $domainASCII : $domain);
     }
 
