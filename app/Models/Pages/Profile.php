@@ -26,6 +26,7 @@ class Profile extends Page
 
         $this->c->Lang->load('profile');
 
+        $myProf   = $curUser->id === $this->user->id;
         $isEdit   = false;
         $clSuffix = $isEdit ? '-edit' : '';
 
@@ -87,8 +88,25 @@ class Profile extends Page
             'fields' => $fieldset,
         ];
 
+        if ($this->user->isAdmMod && ($isEdit || '' != $curUser->admin_note)) {
+            $fieldset = [];
+            $fieldset['admin_note'] = [
+                'id'        => 'admin_note',
+                'type'      => 'text',
+                'maxlength' => 30,
+                'caption'   => \ForkBB\__('Admin note'),
+                'value'     => $curUser->admin_note,
+            ];
+            $form['sets'][] = [
+                'id'     => 'note',
+                'class'  => 'data' . $clSuffix,
+                'legend' => \ForkBB\__('Admin note'),
+                'fields' => $fieldset,
+            ];
+        }
+
         $fieldset = [];
-        if ($isEdit || $curUser->realname) {
+        if ($isEdit || '' != $curUser->realname) {
             $fieldset['realname'] = [
                 'id'        => 'realname',
                 'type'      => 'text',
@@ -110,7 +128,7 @@ class Profile extends Page
                 'caption' => \ForkBB\__('Gender'),
             ];
         }
-        if ($isEdit || $curUser->location) {
+        if ($isEdit || '' != $curUser->location) {
             $fieldset['location'] = [
                 'id'        => 'location',
                 'type'      => 'text',
@@ -153,7 +171,7 @@ class Profile extends Page
                 'value'   => $curUser->signature,
                 'caption' => \ForkBB\__('Signature'),
             ];
-        } elseif ($curUser->signature) { //????
+        } elseif ('' != $curUser->signature) {
             $fieldset['signature'] = [
                 'id'      => 'signature',
                 'type'    => 'yield',
@@ -177,12 +195,14 @@ class Profile extends Page
             'value'   => \ForkBB\dt($curUser->registered, true),
             'caption' => \ForkBB\__('Registered info'),
         ];
-        $fieldset['lastvisit'] = [
-            'id'      => 'lastvisit',
-            'type'    => 'str',
-            'value'   => \ForkBB\dt($curUser->last_visit, true),
-            'caption' => \ForkBB\__('Last visit info'),
-        ];
+        if ($myProf || $this->user->isAdmMod) {
+            $fieldset['lastvisit'] = [
+                'id'      => 'lastvisit',
+                'type'    => 'str',
+                'value'   => \ForkBB\dt($curUser->last_visit, true),
+                'caption' => \ForkBB\__('Last visit info'),
+            ];
+        }
         $fieldset['lastpost'] = [
             'id'      => 'lastpost',
             'type'    => 'str',
@@ -229,13 +249,12 @@ class Profile extends Page
             'fields' => $fieldset,
         ];
 
-
-        $this->fIndex    = $curUser->id === $this->user->id ? 'profile' : 'userlist';
+        $this->fIndex    = $myProf ? 'profile' : 'userlist';
         $this->nameTpl   = 'profile';
         $this->onlinePos = 'profile-' . $curUser->id; // ????
         $this->canonical = $curUser->link;
         $this->title     = \ForkBB\__('%s\'s profile', $curUser->username);
-        $this->crumbs    = $this->crumbs([$curUser->link, $this->title]);
+        $this->crumbs    = $this->crumbs([$curUser->link, $this->title], [$this->c->Router->link('Userlist'), \ForkBB\__('User list')]);
         $this->form      = $form;
         $this->curUser   = $curUser;
 

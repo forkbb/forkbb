@@ -2083,6 +2083,10 @@ select {
   border-bottom: 0.0625rem dotted #AA7939;
 }
 
+#id-fs-note.f-fs-data {
+/*   color: #D8000C; */
+  background-color: #FFBABA;
+}
 
 @media screen and (min-width: 40rem) {
   .f-fs-header .f-wrap-usertitle {

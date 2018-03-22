@@ -177,10 +177,10 @@ class Userlist extends Page
         $this->fIndex       = 'userlist';
         $this->nameTpl      = 'userlist';
         $this->onlinePos    = 'userlist';
-        $this->canonical    = $this->c->Router->link('Userlist', $args); // ????
+        $this->canonical    = $this->c->Router->link('Userlist', $args);
         $this->robots       = 'noindex';
         $this->form         = $form;
-        $this->crumbs       = $this->crumbs([$this->c->Router->link('Userlist'), \ForkBB\__('User_list')]);
+        $this->crumbs       = $this->crumbs([$this->c->Router->link('Userlist'), \ForkBB\__('User list')]);
         $this->pagination   = $this->c->Func->paginate($pages, $page, 'Userlist', $args);
 
         return $this;
