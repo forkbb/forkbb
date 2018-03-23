@@ -58,7 +58,6 @@ class Options extends Admin
                     'o_show_dot'              => 'required|integer|in:0,1',
                     'o_topic_views'           => 'required|integer|in:0,1',
                     'o_quickjump'             => 'required|integer|in:0,1',
-                    'o_gzip'                  => 'required|integer|in:0,1',
                     'o_search_all_forums'     => 'required|integer|in:0,1',
                     'o_additional_navlinks'   => 'string:trim|max:65000 bytes',
                     'o_feed_type'             => 'required|integer|in:0,1,2',
@@ -481,13 +480,6 @@ class Options extends Admin
                     'values'  => $yn,
                     'caption' => \ForkBB\__('Quick jump label'),
                     'info'    => \ForkBB\__('Quick jump help'),
-                ],
-                'o_gzip' => [ //????
-                    'type'    => 'radio',
-                    'value'   => $config->o_gzip,
-                    'values'  => $yn,
-                    'caption' => \ForkBB\__('GZip label'),
-                    'info'    => \ForkBB\__('GZip help'),
                 ],
                 'o_search_all_forums' => [ //????
                     'type'    => 'radio',
