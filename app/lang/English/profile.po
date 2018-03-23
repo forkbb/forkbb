@@ -386,3 +386,9 @@ msgstr "Gender"
 
 msgid "Unknown"
 msgstr "Unknown"
+
+msgid "Edit profile"
+msgstr "Edit"
+
+msgid "Edit settings"
+msgstr "Settings"

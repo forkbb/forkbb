@@ -258,6 +258,9 @@ class Profile extends Page
         $this->form      = $form;
         $this->curUser   = $curUser;
 
+        $this->linkEditProfile  = $this->c->Router->link('EditUserProfile',  ['id' => $curUser->id]);
+        $this->linkEditSettings = $this->c->Router->link('EditUserSettings', ['id' => $curUser->id]);
+
         return $this;
     }
 }

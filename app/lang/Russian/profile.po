@@ -386,3 +386,9 @@ msgstr "Пол"
 
 msgid "Unknown"
 msgstr "Неизвестно"
+
+msgid "Edit profile"
+msgstr "Редактировать"
+
+msgid "Edit settings"
+msgstr "Настройки"
