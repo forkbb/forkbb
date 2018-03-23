@@ -494,3 +494,9 @@ msgstr "Мужской"
 
 msgid "Female"
 msgstr "Женский"
+
+msgid "Save changes"
+msgstr "Сохранить изменения"
+
+msgid "Save"
+msgstr "Сохранить"

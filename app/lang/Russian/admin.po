@@ -87,12 +87,6 @@ msgstr "Да"
 msgid "No"
 msgstr "Нет"
 
-msgid "Save changes"
-msgstr "Сохранить изменения"
-
-msgid "Save"
-msgstr "Сохранить"
-
 msgid "here"
 msgstr "здесь"
 

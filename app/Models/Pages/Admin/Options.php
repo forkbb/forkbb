@@ -19,6 +19,7 @@ class Options extends Admin
     public function edit(array $args, $method)
     {
         $this->c->Lang->load('admin_options');
+        $this->c->Lang->load('profile_other');
 
         $config = clone $this->c->config;
 

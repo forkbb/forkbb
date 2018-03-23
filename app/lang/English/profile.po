@@ -178,7 +178,7 @@ msgid "Username info"
 msgstr "Username: %s"
 
 msgid "Email info"
-msgstr "Email: %s"
+msgstr "Email"
 
 msgid "Registered info"
 msgstr "Registered"
@@ -324,9 +324,6 @@ msgstr "When you update your profile, you will be redirected back to this page."
 msgid "Group membership legend"
 msgstr "Choose user group"
 
-msgid "Save"
-msgstr "Save"
-
 msgid "Set mods legend"
 msgstr "Set moderator access"
 
@@ -392,3 +389,15 @@ msgstr "Edit"
 
 msgid "Edit settings"
 msgstr "Settings"
+
+msgid "Contact details"
+msgstr "Contact details"
+
+msgid "Personal information"
+msgstr "Personal information"
+
+msgid "User %s"
+msgstr "%s"
+
+msgid "Email settings label"
+msgstr "Email settings"

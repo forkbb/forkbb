@@ -1652,36 +1652,36 @@ select {
   flex-wrap: wrap;
 }
 
-.f-fs-inline .f-field-inline,
+.f-fs-inline .f-field-adm-inline,
 .f-fs-inline .f-field-cando {
   display: block;
 }
 
-.f-field-inline > dt {
+.f-field-adm-inline > dt {
   width: 100%;
   margin: 0;
   display: none;
 }
 
-.f-field-inline > dd {
+.f-field-adm-inline > dd {
   display: block;
   width: 100%;
 }
 
-.f-field-inline.f-field-name {
+.f-field-adm-inline.f-field-name {
   width: calc(100% - 8rem);
 }
 
-.f-field-inline.f-field-position {
+.f-field-adm-inline.f-field-position {
   width: 5rem;
 }
 
-.f-field-inline.f-field-delete {
+.f-field-adm-inline.f-field-delete {
   width: 3rem;
   overflow: hidden;
 }
 
-.f-field-inline .f-btn {
+.f-field-adm-inline .f-btn {
   margin: 0;
 }
 
@@ -1695,11 +1695,11 @@ select {
   text-overflow: ellipsis;
 }
 
-.f-field-inline:nth-child(-n+3) > dt {
+.f-field-adm-inline:nth-child(-n+3) > dt {
   display: block;
 }
 
-.f-field-inline .f-child1 {
+.f-field-adm-inline .f-child1 {
   font-weight: normal;
   white-space: nowrap;
   overflow: hidden;
@@ -1729,17 +1729,17 @@ select {
 /*********************/
 /* Админка/Разделы   */
 /*********************/
-.f-field-inline.f-field-cando {
+.f-field-adm-inline.f-field-cando {
   width: 33.333%;
   text-align: center;
   position: relative;
 }
 
-.f-field-inline.f-field-cando > dt {
+.f-field-adm-inline.f-field-cando > dt {
   display: block;
 }
 
-/* .f-field-inline > dt > label {
+/* .f-field-adm-inline > dt > label {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -1795,15 +1795,15 @@ select {
 /*********************/
 /* Админка/Цензура   */
 /*********************/
-.f-field-inline.f-field-censor {
+.f-field-adm-inline.f-field-censor {
   width: 50%;
 }
 
-.f-field-inline.f-field-censor > dt {
+.f-field-adm-inline.f-field-censor > dt {
   display: none;
 }
 
-.f-field-inline.f-field-censor:nth-child(-n+2) > dt {
+.f-field-adm-inline.f-field-censor:nth-child(-n+2) > dt {
   display: block;
 }
 
@@ -2018,6 +2018,20 @@ select {
   align-items: center;
 }
 
+.f-field-pline .f-child1,
+.f-field-pline .f-str,
+.f-field-pline dt,
+.f-field-pline dd {
+  display: inline;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.f-field-pline .f-child1:after {
+  content: ": ";
+}
+
 .f-fs-header .f-wrap-usertitle,
 .f-fs-data {
   display: flex;
@@ -2027,11 +2041,6 @@ select {
 
 .f-fs-header .f-wrap-usertitle {
   width: 100%;
-}
-
-.f-fs-header .f-ctrl {
-  border: 0;
-  padding: 0;
 }
 
 .f-fs-header .f-avatar-img {
@@ -2051,31 +2060,19 @@ select {
   font-weight: bold;
   font-size: 1.5rem;
   text-align: center;
+  display: block;
 }
 
 .f-fs-header #id-title {
   font-size: 0.875rem;
   text-align: center;
+  display: block;
 }
 
 .f-fs-header .f-child1,
 .f-fs-header legend,
 .f-fs-data legend {
   display: none;
-}
-
-.f-fs-data .f-child1,
-.f-fs-data .f-ctrl,
-.f-fs-data dt,
-.f-fs-data dd {
-  display: inline;
-  border: 0;
-  padding: 0;
-  margin: 0;
-}
-
-.f-fs-data .f-child1:after {
-  content: ": ";
 }
 
 .f-fs-header,
@@ -2103,6 +2100,11 @@ select {
     text-align: left;
   }
 
+  .f-fs-header #id-dl-username,
+  .f-fs-header #id-dl-title {
+    padding-left: 0;
+  }
+
   .f-fs-header .f-avatar-img {
     max-width: 11.75rem;
   }
@@ -2126,4 +2128,38 @@ select {
   .f-fs-data dd {
     width: 67%
   }
+}
+
+/****************************/
+/* Профиль - редактирование */
+/****************************/
+
+.f-fs-header-edit dl,
+.f-fs-data-edit:not(#id-fs-activity) dl,
+#id-fs-activity.f-fs-data-edit {
+  border-bottom: 0.0625rem dotted #AA7939;
+}
+
+.f-fs-header-edit,
+.f-fs-data-edit {
+/*  border-bottom: 0.0625rem solid #AA7939; */
+  padding: 0.3125rem 0;
+  margin-bottom: 0.3125rem;
+}
+
+.f-fs-header-edit .f-avatar-img {
+  max-width: 11.75rem;
+  height: auto;
+}
+
+.f-fs-data-edit legend {
+  display: none;
+}
+
+.f-fs-data-edit #id-signature {
+  height: 11rem;
+}
+
+#id-fs-activity.f-fs-data-edit .f-child1:after {
+  content: ": ";
 }

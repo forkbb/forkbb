@@ -16,16 +16,13 @@
 @extends ('layouts/main')
     <div class="f-nav-links">
 @yield ('crumbs')
-@if ($p->linkEditProfile || $p->linkEditSettings)
+@if ($p->actionBtns)
       <div class="f-nlinks-b">
         <div class="f-actions-links">
-    @if ($p->linkEditProfile)
-          <a class="f-btn f-btn-edit-profile" href="{!! $p->linkEditProfile !!}">{!! __('Edit profile') !!}</a>
-    @endif
-    @if ($p->linkEditSettings)
-          <a class="f-btn f-btn-edit-settings" href="{!! $p->linkEditSettings !!}">{!! __('Edit settings') !!}</a>
+    @foreach ($p->actionBtns as $key => $cur)
+          <a class="f-btn f-btn-{{ $key }}" href="{!! $cur[0] !!}" title="{{ $cur[1] }}">{{ $cur[1] }}</a>
+    @endforeach
         </div>
-    @endif
       </div>
 @endif
     </div>

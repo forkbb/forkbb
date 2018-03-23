@@ -103,7 +103,7 @@
                 @elseif ('yield' === $cur['type'])
                 {!! $this->block($cur['value']) !!}
                 @elseif ('str' === $cur['type'])
-                <p class="f-ctrl" id="id-{{ $key }}">{{ $cur['value'] }}</p>
+                <p class="f-str" id="id-{{ $key }}">{{ $cur['value'] }}</p>
                 @elseif ('link' === $cur['type'])
                 <a class="f-link" id="id-{{ $key }}" href="{{ $cur['href'] or '' }}" title="{{ $cur['title'] or '' }}">{{ $cur['value'] or '' }}</a>
                 @endif

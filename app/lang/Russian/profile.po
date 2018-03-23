@@ -178,7 +178,7 @@ msgid "Username info"
 msgstr "Пользователь: %s"
 
 msgid "Email info"
-msgstr "Email: %s"
+msgstr "Email"
 
 msgid "Registered info"
 msgstr "Дата регистрации"
@@ -274,7 +274,7 @@ msgid "Posts per page"
 msgstr "Сообщений"
 
 msgid "Leave blank"
-msgstr "Не вводите ничего, для использования настроек по умолчанию."
+msgstr "Оставьте поле пустым, для использования настроек по умолчанию."
 
 msgid "Subscription legend"
 msgstr "Настройка опций вашей подписки"
@@ -323,9 +323,6 @@ msgstr "После сохранения изменений, вы автомат�
 
 msgid "Group membership legend"
 msgstr "Выбор группы пользователя"
-
-msgid "Save"
-msgstr "Сохранить"
 
 msgid "Set mods legend"
 msgstr "Настройка прав модератора"
@@ -392,3 +389,15 @@ msgstr "Редактировать"
 
 msgid "Edit settings"
 msgstr "Настройки"
+
+msgid "Contact details"
+msgstr "Контактная информация"
+
+msgid "Personal information"
+msgstr "Персональные данные"
+
+msgid "User %s"
+msgstr "%s"
+
+msgid "Email settings label"
+msgstr "Настройки email"

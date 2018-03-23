@@ -81,12 +81,12 @@ class Routing
                 $r->add('POST', '/userlist', 'Userlist:view');
                 // юзеры
                 $r->add('GET',           '/user/{id:[2-9]|[1-9]\d+}/{name}',        'Profile:view',     'User');
-                $r->add(['GET', 'POST'], '/user/{id:[2-9]|[1-9]\d+}/edit/profile',  'Profile:profile',  'EditUserProfile');
+                $r->add(['GET', 'POST'], '/user/{id:[2-9]|[1-9]\d+}/edit/profile',  'Profile:edit',     'EditUserProfile');
                 $r->add(['GET', 'POST'], '/user/{id:[2-9]|[1-9]\d+}/edit/settings', 'Profile:settings', 'EditUserSettings');
             } elseif (! $user->isGuest) {
                 // только свой профиль
                 $r->add('GET',           '/user/{id:' . $user->id . '}/{name}',        'Profile:view',     'User');
-                $r->add(['GET', 'POST'], '/user/{id:' . $user->id . '}/edit/profile',  'Profile:profile',  'EditUserProfile');
+                $r->add(['GET', 'POST'], '/user/{id:' . $user->id . '}/edit/profile',  'Profile:edit',     'EditUserProfile');
                 $r->add(['GET', 'POST'], '/user/{id:' . $user->id . '}/edit/settings', 'Profile:settings', 'EditUserSettings');
             }
             // пометка разделов прочитанными

@@ -87,12 +87,6 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-msgid "Save changes"
-msgstr "Save changes"
-
-msgid "Save"
-msgstr "Save"
-
 msgid "here"
 msgstr "here"
 

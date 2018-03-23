@@ -168,14 +168,14 @@ class Forums extends Admin
                 }
 
                 $fieldset[] = [
-                    'class'   => ['name', 'inline', 'depth' . $forum->depth],
+                    'class'   => ['name', 'adm-inline', 'depth' . $forum->depth],
                     'type'    => 'btn',
                     'value'   => $forum->forum_name,
                     'caption' => \ForkBB\__('Forum label'),
                     'link'    => $this->c->Router->link('AdminForumsEdit', ['id' => $forum->id]),
                 ];
                 $fieldset["form[{$forum->id}][disp_position]"] = [
-                    'class'   => ['position', 'inline'],
+                    'class'   => ['position', 'adm-inline'],
                     'type'    => 'number',
                     'min'     => 0,
                     'max'     => 9999999999,
@@ -184,7 +184,7 @@ class Forums extends Admin
                 ];
                 $disabled = (bool) $forum->subforums;
                 $fieldset[] = [
-                    'class'    => ['delete', 'inline'],
+                    'class'    => ['delete', 'adm-inline'],
                     'type'     => 'btn',
                     'value'    => '❌',
                     'caption'  => \ForkBB\__('Delete'),
@@ -494,8 +494,8 @@ class Forums extends Admin
             ],
         ];
 
-        $aOn  = ['cando', 'inline', 'on'];
-        $aOff = ['cando', 'inline', 'off'];
+        $aOn  = ['cando', 'adm-inline', 'on'];
+        $aOff = ['cando', 'adm-inline', 'off'];
         foreach ($this->c->groups->Perm->get($forum) as $id => $group) {
             $fieldset = [];
             $fieldset["perms[{$id}][read_forum]"] = [

@@ -492,3 +492,9 @@ msgstr "Male"
 
 msgid "Female"
 msgstr "Female"
+
+msgid "Save changes"
+msgstr "Save changes"
+
+msgid "Save"
+msgstr "Save"

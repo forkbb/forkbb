@@ -10,31 +10,58 @@ class Profile extends Page
     use CrumbTrait;
 
     /**
-     * Подготавливает данные для шаблона
+     * Подготавливает данные для шаблона редактирования профиля
      *
      * @param array $args
      * @param string $method
      *
      * @return Page
      */
-    public function view(array $args, $method)
+    public function edit(array $args, $method)
+    {
+        return $this->view($args, $method, true);
+    }
+
+    /**
+     * Подготавливает данные для шаблона просмотра профиля
+     *
+     * @param array $args
+     * @param string $method
+     * @param bool $isEdit
+     *
+     * @return Page
+     */
+    public function view(array $args, $method, $isEdit = false)
     {
         $curUser = $this->c->users->load((int) $args['id']);
+
         if (! $curUser instanceof User || ($curUser->isUnverified && ! $this->user->isAdmMod)) {
             return $this->c->Message->message('Bad request');
         }
 
+        $myProf      = $curUser->id === $this->user->id;
+        $isAdmin     = $this->user->isAdmin && ($myProf || ! $curUser->isAdmin);
+        $isModer     = $this->user->isAdmMod && ($myProf || ! $curUser->isAdmMod);
+        $canEditProf = $myProf || $isAdmin || ($isModer && '1' == $this->user->g_mod_edit_users);
+        $canEditSets = $myProf || $isAdmin || ($isModer && '1' == $this->user->g_mod_edit_users); // ????
+
+        if ($isEdit) {
+            if (! $canEditProf) {
+                return $this->c->Message->message('Bad request');
+            }
+
+            $this->c->Lang->load('profile_other');
+        }
+
         $this->c->Lang->load('profile');
 
-        $myProf   = $curUser->id === $this->user->id;
-        $isEdit   = false;
         $clSuffix = $isEdit ? '-edit' : '';
 
         if ($isEdit) {
             $form = [
-                'action' => $this->c->Router->link(''),
+                'action' => $this->c->Router->link('EditUserProfile',  ['id' => $curUser->id]),
                 'hidden' => [
-                    'token' => $this->c->Csrf->create(''),
+                    'token' => $this->c->Csrf->create('EditUserProfile',  ['id' => $curUser->id]),
                 ],
                 'sets'   => [],
                 'btns'   => [
@@ -49,27 +76,49 @@ class Profile extends Page
             $form = ['sets' => []];
         }
 
+        // имя, титул и аватара
         $fieldset = [];
         $fieldset[] = [
             'class' => 'usertitle',
             'type'  => 'wrap',
         ];
-        $fieldset['username'] = [
-            'id'        => 'username',
-            'type'      => 'text',
-            'maxlength' => 25,
-            'caption'   => \ForkBB\__('Username'),
-            'required'  => true,
-            'pattern'   => '^.{2,25}$',
-            'value'     => $curUser->username,
-        ];
-        $fieldset['title'] = [
-            'id'        => 'title',
-            'type'      => 'text',
-            'maxlength' => 50,
-            'caption'   => \ForkBB\__('Title'),
-            'value'     => $isEdit ? $curUser->title : $curUser->title(),
-        ];
+        if ($isEdit && ($isAdmin || $isModer && '1' == $this->user->g_mod_rename_users)) {
+            $fieldset['username'] = [
+                'id'        => 'username',
+                'type'      => 'text',
+                'maxlength' => 25,
+                'caption'   => \ForkBB\__('Username'),
+                'required'  => true,
+                'pattern'   => '^.{2,25}$',
+                'value'     => $curUser->username,
+            ];
+        } else {
+            $fieldset['username'] = [
+                'id'      => 'username',
+                'class'   => 'pline',
+                'type'    => 'str',
+                'caption' => \ForkBB\__('Username'),
+                'value'   => $curUser->username,
+            ];
+        }
+        if ($isEdit && ($isAdmin || $isModer || '1' == $this->user->g_set_title)) {
+            $fieldset['title'] = [
+                'id'        => 'title',
+                'type'      => 'text',
+                'maxlength' => 50,
+                'caption'   => \ForkBB\__('Title'),
+                'value'     => $curUser->title,
+                'info'      => \ForkBB\__('Leave blank'),
+            ];
+        } else {
+            $fieldset['title'] = [
+                'id'      => 'title',
+                'class'   => 'pline',
+                'type'    => 'str',
+                'caption' => \ForkBB\__('Title'),
+                'value'   => $curUser->title(),
+            ];
+        }
         $fieldset[] = [
             'type' => 'endwrap',
         ];
@@ -88,53 +137,152 @@ class Profile extends Page
             'fields' => $fieldset,
         ];
 
-        if ($this->user->isAdmMod && ($isEdit || '' != $curUser->admin_note)) {
+        // примечание администрации
+        if ($this->user->isAdmMod) {
             $fieldset = [];
-            $fieldset['admin_note'] = [
-                'id'        => 'admin_note',
-                'type'      => 'text',
-                'maxlength' => 30,
-                'caption'   => \ForkBB\__('Admin note'),
-                'value'     => $curUser->admin_note,
-            ];
-            $form['sets'][] = [
-                'id'     => 'note',
-                'class'  => 'data' . $clSuffix,
-                'legend' => \ForkBB\__('Admin note'),
-                'fields' => $fieldset,
-            ];
+            if ($isEdit) {
+                $fieldset['admin_note'] = [
+                    'id'        => 'admin_note',
+                    'type'      => 'text',
+                    'maxlength' => 30,
+                    'caption'   => \ForkBB\__('Admin note'),
+                    'value'     => $curUser->admin_note,
+                ];
+            } elseif ('' != $curUser->admin_note) {
+                $fieldset['admin_note'] = [
+                    'id'        => 'admin_note',
+                    'class'   => 'pline',
+                    'type'      => 'str',
+                    'caption'   => \ForkBB\__('Admin note'),
+                    'value'     => $curUser->admin_note,
+                ];
+            }
+            if (! empty($fieldset)) {
+                $form['sets'][] = [
+                    'id'     => 'note',
+                    'class'  => 'data' . $clSuffix,
+                    'legend' => \ForkBB\__('Admin note'),
+                    'fields' => $fieldset,
+                ];
+            }
         }
 
+        // личное
         $fieldset = [];
-        if ($isEdit || '' != $curUser->realname) {
+        if ($isEdit) {
             $fieldset['realname'] = [
                 'id'        => 'realname',
                 'type'      => 'text',
                 'maxlength' => 40,
                 'caption'   => \ForkBB\__('Realname'),
-                'value'     => $isEdit ? $curUser->realname : \ForkBB\cens($curUser->realname),
+                'value'     => $curUser->realname,
+            ];
+        } elseif ('' != $curUser->realname) {
+            $fieldset['realname'] = [
+                'id'      => 'realname',
+                'class'   => 'pline',
+                'type'    => 'str',
+                'caption' => \ForkBB\__('Realname'),
+                'value'   => \ForkBB\cens($curUser->realname),
             ];
         }
-        if ($isEdit || $curUser->gender) {
+        $genders = [
+            0 => \ForkBB\__('Unknown'),
+            1 => \ForkBB\__('Male'),
+            2 => \ForkBB\__('Female'),
+        ];
+        if ($isEdit) {
             $fieldset['gender'] = [
                 'id'      => 'gender',
                 'type'    => 'radio',
                 'value'   => $curUser->gender,
-                'values'  => [
-                    0 => \ForkBB\__('Unknown'),
-                    1 => \ForkBB\__('Male'),
-                    2 => \ForkBB\__('Female'),
-                ],
+                'values'  => $genders,
+                'caption' => \ForkBB\__('Gender'),
+            ];
+        } elseif ($curUser->gender && isset($genders[$curUser->gender])) {
+            $fieldset['gender'] = [
+                'id'      => 'gender',
+                'class'   => 'pline',
+                'type'    => 'str',
+                'value'   => $genders[$curUser->gender],
                 'caption' => \ForkBB\__('Gender'),
             ];
         }
-        if ($isEdit || '' != $curUser->location) {
+        if ($isEdit) {
             $fieldset['location'] = [
                 'id'        => 'location',
                 'type'      => 'text',
                 'maxlength' => 40,
                 'caption'   => \ForkBB\__('Location'),
-                'value'     => $isEdit ? $curUser->location : \ForkBB\cens($curUser->location),
+                'value'     => $curUser->location,
+            ];
+        } elseif ('' != $curUser->location) {
+            $fieldset['location'] = [
+                'id'      => 'location',
+                'class'   => 'pline',
+                'type'    => 'str',
+                'caption' => \ForkBB\__('Location'),
+                'value'   => \ForkBB\cens($curUser->location),
+            ];
+        }
+        if (! empty($fieldset)) {
+            $form['sets'][] = [
+                'id'     => 'personal',
+                'class'  => 'data' . $clSuffix,
+                'legend' => \ForkBB\__('Personal information'),
+                'fields' => $fieldset,
+            ];
+        }
+
+        // контактная информация
+        $fieldset = [];
+        if ($myProf || $this->user->isAdmMod) {
+            $fieldset['open-email'] = [
+                'id'      => 'open-email',
+                'class'   => 'pline',
+                'type'    => 'link',
+                'caption' => \ForkBB\__('Email info'),
+                'value'   => \ForkBB\cens($curUser->email),
+                'href'    => 'mailto:' . $curUser->email,
+            ];
+        }
+        if (! $myProf
+            && (($this->user->isAdmMod && 1 === $curUser->email_setting)
+                || (! $this->user->isGuest && '1' == $this->user->g_send_email)
+            )
+        ) {
+            if (0 === $curUser->email_setting) {
+                $fieldset['email'] = [
+                    'id'      => 'email',
+                    'class'   => 'pline',
+                    'type'    => 'link',
+                    'caption' => \ForkBB\__('Email info'),
+                    'value'   => \ForkBB\cens($curUser->email),
+                    'href'    => 'mailto:' . $curUser->email,
+                ];
+            } elseif (1 === $curUser->email_setting) {
+                $fieldset['email'] = [
+                    'id'      => 'email',
+                    'class'   => 'pline',
+                    'type'    => 'link',
+                    'caption' => \ForkBB\__('Email info'),
+                    'value'   => \ForkBB\__('Send email'),
+                    'href'    => $this->c->Router->link('', ['id' => $curUser->id]), // ????
+                ];
+            }
+        }
+        if ($isEdit) {
+            $fieldset['email_setting'] = [
+                'id'      => 'email_setting',
+                'class'   => 'block',
+                'type'    => 'radio',
+                'value'   => $curUser->email_setting,
+                'values'  => [
+                    0 => \ForkBB\__('Display e-mail label'),
+                    1 => \ForkBB\__('Hide allow form label'),
+                    2 => \ForkBB\__('Hide both label'),
+                ],
+                'caption' => \ForkBB\__('Email settings label'),
             ];
         }
         if ($isEdit) {
@@ -148,6 +296,7 @@ class Profile extends Page
         } elseif ($curUser->url) {
             $fieldset['url'] = [
                 'id'      => 'website',
+                'class'   => 'pline',
                 'type'    => 'link',
                 'caption' => \ForkBB\__('Website'),
                 'value'   => \ForkBB\cens($curUser->url),
@@ -156,48 +305,65 @@ class Profile extends Page
         }
         if (! empty($fieldset)) {
             $form['sets'][] = [
-                'id'     => 'personal',
+                'id'     => 'contacts',
                 'class'  => 'data' . $clSuffix,
-                'legend' => \ForkBB\__('Section personal'),
+                'legend' => \ForkBB\__('Contact details'),
                 'fields' => $fieldset,
             ];
         }
 
-        $fieldset = [];
-        if ($isEdit) {
-            $fieldset['signature'] = [
-                'id'      => 'signature',
-                'type'    => 'textarea',
-                'value'   => $curUser->signature,
-                'caption' => \ForkBB\__('Signature'),
-            ];
-        } elseif ('' != $curUser->signature) {
-            $fieldset['signature'] = [
-                'id'      => 'signature',
-                'type'    => 'yield',
-                'caption' => \ForkBB\__('Signature'),
-                'value'   => 'signature',
-            ];
-        }
-        if (! empty($fieldset)) {
-            $form['sets'][] = [
-                'id'     => 'signature',
-                'class'  => 'data' . $clSuffix,
-                'legend' => \ForkBB\__('Signature'),
-                'fields' => $fieldset,
-            ];
+        // подпись
+        if ('1' == $this->c->config->o_signatures) {
+            $fieldset = [];
+            if ($isEdit) {
+                $fieldset['signature'] = [
+                    'id'      => 'signature',
+                    'type'    => 'textarea',
+                    'value'   => $curUser->signature,
+                    'caption' => \ForkBB\__('Signature'),
+                ];
+            } elseif ('' != $curUser->signature) {
+                $fieldset['signature'] = [
+                    'id'      => 'signature',
+                    'type'    => 'yield',
+                    'caption' => \ForkBB\__('Signature'),
+                    'value'   => 'signature',
+                ];
+            }
+            if (! empty($fieldset)) {
+                $form['sets'][] = [
+                    'id'     => 'signature',
+                    'class'  => 'data' . $clSuffix,
+                    'legend' => \ForkBB\__('Signature'),
+                    'fields' => $fieldset,
+                ];
+            }
         }
 
+        // активность
         $fieldset = [];
         $fieldset['registered'] = [
             'id'      => 'registered',
+            'class'   => 'pline',
             'type'    => 'str',
             'value'   => \ForkBB\dt($curUser->registered, true),
             'caption' => \ForkBB\__('Registered info'),
         ];
-        if ($myProf || $this->user->isAdmMod) {
+        if ($this->user->isAdmin) {
+            $fieldset['ip'] = [
+                'id'      => 'ip',
+                'class'   => 'pline',
+                'type'    => 'link',
+                'caption' => 'IP',
+                'value'   => $curUser->registration_ip,
+                'href'    => $this->c->Router->link('', ['id' => $curUser->id]), // ????
+                'title'   => 'IP',
+            ];
+        }
+        if ($myProf || $this->user->isAdmMod) { // ????
             $fieldset['lastvisit'] = [
                 'id'      => 'lastvisit',
+                'class'   => 'pline',
                 'type'    => 'str',
                 'value'   => \ForkBB\dt($curUser->last_visit, true),
                 'caption' => \ForkBB\__('Last visit info'),
@@ -205,6 +371,7 @@ class Profile extends Page
         }
         $fieldset['lastpost'] = [
             'id'      => 'lastpost',
+            'class'   => 'pline',
             'type'    => 'str',
             'value'   => \ForkBB\dt($curUser->last_post, true),
             'caption' => \ForkBB\__('Last post info'),
@@ -213,6 +380,7 @@ class Profile extends Page
             if ('1' == $this->user->g_search) {
                 $fieldset['posts'] = [
                     'id'      => 'posts',
+                    'class'   => 'pline',
                     'type'    => 'link',
                     'caption' => \ForkBB\__('Posts info'),
                     'value'   => $this->user->showPostCount ? \ForkBB\num($curUser->num_posts) : \ForkBB\__('Show posts'),
@@ -221,6 +389,7 @@ class Profile extends Page
                 ];
                 $fieldset['topics'] = [
                     'id'      => 'topics',
+                    'class'   => 'pline',
                     'type'    => 'link',
                     'caption' => \ForkBB\__('Topics info'),
                     'value'   => $this->user->showPostCount ? \ForkBB\num($curUser->num_topics) : \ForkBB\__('Show topics'),
@@ -230,12 +399,14 @@ class Profile extends Page
             } elseif ($this->user->showPostCount) {
                 $fieldset['posts'] = [
                     'id'      => 'posts',
+                    'class'   => 'pline',
                     'type'    => 'str',
                     'caption' => \ForkBB\__('Posts info'),
                     'value'   => \ForkBB\num($curUser->num_posts),
                 ];
                 $fieldset['topics'] = [
                     'id'      => 'topics',
+                    'class'   => 'pline',
                     'type'    => 'str',
                     'caption' => \ForkBB\__('Topics info'),
                     'value'   => \ForkBB\num($curUser->num_topics),
@@ -254,12 +425,39 @@ class Profile extends Page
         $this->onlinePos = 'profile-' . $curUser->id; // ????
         $this->canonical = $curUser->link;
         $this->title     = \ForkBB\__('%s\'s profile', $curUser->username);
-        $this->crumbs    = $this->crumbs([$curUser->link, $this->title], [$this->c->Router->link('Userlist'), \ForkBB\__('User list')]);
+        $this->crumbs    = $this->crumbs(
+            [$curUser->link, \ForkBB\__('User %s', $curUser->username)],
+            [$this->c->Router->link('Userlist'), \ForkBB\__('User list')]
+        );
         $this->form      = $form;
         $this->curUser   = $curUser;
 
-        $this->linkEditProfile  = $this->c->Router->link('EditUserProfile',  ['id' => $curUser->id]);
-        $this->linkEditSettings = $this->c->Router->link('EditUserSettings', ['id' => $curUser->id]);
+        $btns = [];
+        if ($isAdmin || ($isModer && '1' == $this->user->g_mod_ban_users)) {
+            $btns['ban-user'] = [
+                $this->c->Router->link('',  ['id' => $curUser->id]),
+                \ForkBB\__('Ban user'),
+            ];
+        }
+        if ($isAdmin || $isModer) { // ????
+            $btns['delete-user'] = [
+                $this->c->Router->link('',  ['id' => $curUser->id]),
+                \ForkBB\__('Delete user'),
+            ];
+        }
+        if ($canEditProf) {
+            $btns['edit-profile'] = [
+                $this->c->Router->link('EditUserProfile',  ['id' => $curUser->id]),
+                \ForkBB\__('Edit profile'),
+            ];
+        }
+        if ($canEditSets) {
+            $btns['edit-settings'] = [
+                $this->c->Router->link('EditUserSettings', ['id' => $curUser->id]),
+                \ForkBB\__('Edit settings'),
+            ];
+        }
+        $this->actionBtns = $btns;
 
         return $this;
     }
