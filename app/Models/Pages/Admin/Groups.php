@@ -211,16 +211,10 @@ class Groups extends Admin
                     'g_title.not_in'   => 'Title already exists',
                 ]);
 
-            if ($group->g_id !== $this->c->GROUP_ADMIN) {
+            if (! $group->groupAdmin) {
                 $v->addRules([
                     'g_promote_next_group'   => 'integer|min:0|not_in:' . $notNext,
                     'g_promote_min_posts'    => 'integer|min:0|max:9999999999',
-                    'g_moderator'            => 'integer|in:0,1',
-                    'g_mod_edit_users'       => 'integer|in:0,1',
-                    'g_mod_rename_users'     => 'integer|in:0,1',
-                    'g_mod_change_passwords' => 'integer|in:0,1',
-                    'g_mod_promote_users'    => 'integer|in:0,1',
-                    'g_mod_ban_users'        => 'integer|in:0,1',
                     'g_read_board'           => 'integer|in:0,1',
                     'g_view_users'           => 'integer|in:0,1',
                     'g_post_replies'         => 'integer|in:0,1',
@@ -239,6 +233,17 @@ class Groups extends Admin
                     'g_email_flood'          => 'integer|min:0|max:999999',
                     'g_report_flood'         => 'integer|min:0|max:999999',
                 ]);
+
+                if (! $group->groupGuest && ! $group->groupMember && $group->g_id != $this->c->config->o_default_user_group) {
+                    $v->addRules([
+                        'g_moderator'            => 'integer|in:0,1',
+                        'g_mod_edit_users'       => 'integer|in:0,1',
+                        'g_mod_rename_users'     => 'integer|in:0,1',
+                        'g_mod_change_passwords' => 'integer|in:0,1',
+                        'g_mod_promote_users'    => 'integer|in:0,1',
+                        'g_mod_ban_users'        => 'integer|in:0,1',
+                    ]);
+                }
             }
 
             if ($v->validation($_POST)) {
@@ -266,7 +271,7 @@ class Groups extends Admin
      */
     public function save(Group $group, Group $baseGroup, array $data)
     {
-        if (empty($data['g_moderator'])) {
+        if (! $group->groupAdmin && isset($data['g_moderator']) && 0 === $data['g_moderator']) {
             $data['g_mod_edit_users']       = 0;
             $data['g_mod_rename_users']     = 0;
             $data['g_mod_change_passwords'] = 0;
@@ -331,7 +336,7 @@ class Groups extends Admin
             ],
         ];
 
-        if ($group->g_id !== $this->c->GROUP_ADMIN) {
+        if (! $group->groupAdmin) {
             $form['sets'][] = [
                 'info' => [
                     'info1' => [
@@ -359,7 +364,7 @@ class Groups extends Admin
             'info'      => \ForkBB\__('User title help', $group->groupGuest ? \ForkBB\__('Guest') : \ForkBB\__('Member')),
         ];
 
-        if ($group->g_id === $this->c->GROUP_ADMIN) {
+        if ($group->groupAdmin) {
             $form['sets'][] = [
                 'fields' => $fieldset,
             ];
@@ -395,7 +400,7 @@ class Groups extends Admin
 
         $yn = [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')];
 
-        if (! $group->groupGuest && $group->g_id != $this->c->config->o_default_user_group) {
+        if (! $group->groupGuest && ! $group->groupMember && $group->g_id != $this->c->config->o_default_user_group) {
             $fieldset['g_moderator'] = [
                 'type'    => 'radio',
                 'value'   => $group->g_moderator,

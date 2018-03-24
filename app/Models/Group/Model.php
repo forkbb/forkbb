@@ -33,4 +33,14 @@ class Model extends DataModel
     {
         return $this->g_id === $this->c->GROUP_GUEST;
     }
+
+    protected function getgroupMember()
+    {
+        return $this->g_id === $this->c->GROUP_MEMBER;
+    }
+
+    protected function getgroupAdmin()
+    {
+        return $this->g_id === $this->c->GROUP_ADMIN;
+    }
 }
