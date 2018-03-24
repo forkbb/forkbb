@@ -39,14 +39,10 @@ class Profile extends Page
             return $this->c->Message->message('Bad request');
         }
 
-        $myProf      = $curUser->id === $this->user->id;
-        $isAdmin     = $this->user->isAdmin && ($myProf || ! $curUser->isAdmin);
-        $isModer     = $this->user->isAdmMod && ($myProf || ! $curUser->isAdmMod);
-        $canEditProf = $myProf || $isAdmin || ($isModer && '1' == $this->user->g_mod_edit_users);
-        $canEditConf = $myProf || $isAdmin || ($isModer && '1' == $this->user->g_mod_edit_users); // ????
+        $rules = $this->c->ProfileRules->setUser($curUser);
 
         if ($isEdit) {
-            if (! $canEditProf) {
+            if (! $rules->editProfile) {
                 return $this->c->Message->message('Bad request');
             }
 
@@ -54,6 +50,10 @@ class Profile extends Page
         }
 
         $this->c->Lang->load('profile');
+
+        if ($isEdit && 'POST' === $method) {
+
+        }
 
         $clSuffix = $isEdit ? '-edit' : '';
 
@@ -82,7 +82,7 @@ class Profile extends Page
             'class' => 'usertitle',
             'type'  => 'wrap',
         ];
-        if ($isEdit && ($isAdmin || $isModer && '1' == $this->user->g_mod_rename_users)) {
+        if ($isEdit && $rules->rename) {
             $fieldset['username'] = [
                 'id'        => 'username',
                 'type'      => 'text',
@@ -101,7 +101,7 @@ class Profile extends Page
                 'value'   => $curUser->username,
             ];
         }
-        if ($isEdit && ($isAdmin || $isModer || '1' == $this->user->g_set_title)) {
+        if ($isEdit && $rules->setTitle) {
             $fieldset['title'] = [
                 'id'        => 'title',
                 'type'      => 'text',
@@ -247,7 +247,7 @@ class Profile extends Page
 
         // контактная информация
         $fieldset = [];
-        if ($myProf || $this->user->isAdmMod) {
+        if ($rules->openEmail) {
             $fieldset['open-email'] = [
                 'id'      => 'open-email',
                 'class'   => 'pline',
@@ -257,11 +257,7 @@ class Profile extends Page
                 'href'    => 'mailto:' . $curUser->email,
             ];
         }
-        if (! $myProf
-            && (($this->user->isAdmMod && 1 === $curUser->email_setting)
-                || (! $this->user->isGuest && '1' == $this->user->g_send_email)
-            )
-        ) {
+        if ($rules->email) {
             if (0 === $curUser->email_setting) {
                 $fieldset['email'] = [
                     'id'      => 'email',
@@ -371,7 +367,7 @@ class Profile extends Page
                 'title'   => 'IP',
             ];
         }
-        if ($myProf || $this->user->isAdmMod) { // ????
+        if ($rules->lastvisit) {
             $fieldset['lastvisit'] = [
                 'id'      => 'lastvisit',
                 'class'   => 'pline',
@@ -446,7 +442,7 @@ class Profile extends Page
             );
         }
 
-        $this->fIndex    = $myProf ? 'profile' : 'userlist';
+        $this->fIndex    = $rules->my ? 'profile' : 'userlist';
         $this->nameTpl   = 'profile';
         $this->onlinePos = 'profile-' . $curUser->id; // ????
         $this->title     = \ForkBB\__('%s\'s profile', $curUser->username);
@@ -454,19 +450,19 @@ class Profile extends Page
         $this->curUser   = $curUser;
 
         $btns = [];
-        if (! $myProf && ($isAdmin || ($isModer && '1' == $this->user->g_mod_ban_users))) {
+        if ($rules->banUser) {
             $btns['ban-user'] = [
                 $this->c->Router->link('',  ['id' => $curUser->id]),
                 \ForkBB\__('Ban user'),
             ];
         }
-        if (! $myProf && ($isAdmin || $isModer)) { // ????
+        if ($rules->deleteUser) {
             $btns['delete-user'] = [
                 $this->c->Router->link('',  ['id' => $curUser->id]),
                 \ForkBB\__('Delete user'),
             ];
         }
-        if (!$isEdit && $canEditProf) {
+        if (! $isEdit && $rules->editProfile) {
             $btns['edit-profile'] = [
                 $this->c->Router->link('EditUserProfile',  ['id' => $curUser->id]),
                 \ForkBB\__('Edit '),
@@ -478,7 +474,7 @@ class Profile extends Page
                 \ForkBB\__('View '),
             ];
         }
-        if ($canEditConf) {
+        if ($rules->editConfig) {
             $btns['edit-settings'] = [
                 $this->c->Router->link('EditBoardConfig', ['id' => $curUser->id]),
                 \ForkBB\__('Configure '),
