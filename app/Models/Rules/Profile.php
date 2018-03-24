@@ -45,12 +45,12 @@ class Profile extends Rules
         return $this->admin || $this->moderator || '1' == $this->user->g_set_title;
     }
 
-    public function getopenEmail()
+    public function getviewOEmail()
     {
         return $this->my || $this->user->isAdmMod;
     }
 
-    public function getemail() // ?????
+    public function getviewEmail() // ?????
     {
         return ! $this->my
             && (($this->user->isAdmMod && 1 === $this->curUser->email_setting)
@@ -58,7 +58,7 @@ class Profile extends Rules
             );
     }
 
-    public function getlastvisit()
+    public function getviewLastVisit()
     {
         return $this->my || $this->user->isAdmMod;
     }
@@ -71,5 +71,10 @@ class Profile extends Rules
     public function getdeleteUser()
     {
         return ! $this->my && ($this->admin || $this->moderator); // ????
+    }
+
+    public function getviewIP()
+    {
+        return $this->user->isAdmin;
     }
 }

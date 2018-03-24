@@ -77,13 +77,13 @@ class Profile extends Page
         }
 
         // имя, титул и аватара
-        $fieldset = [];
-        $fieldset[] = [
+        $fields = [];
+        $fields[] = [
             'class' => 'usertitle',
             'type'  => 'wrap',
         ];
         if ($isEdit && $rules->rename) {
-            $fieldset['username'] = [
+            $fields['username'] = [
                 'id'        => 'username',
                 'type'      => 'text',
                 'maxlength' => 25,
@@ -93,7 +93,7 @@ class Profile extends Page
                 'value'     => $curUser->username,
             ];
         } else {
-            $fieldset['username'] = [
+            $fields['username'] = [
                 'id'      => 'username',
                 'class'   => 'pline',
                 'type'    => 'str',
@@ -102,7 +102,7 @@ class Profile extends Page
             ];
         }
         if ($isEdit && $rules->setTitle) {
-            $fieldset['title'] = [
+            $fields['title'] = [
                 'id'        => 'title',
                 'type'      => 'text',
                 'maxlength' => 50,
@@ -111,7 +111,7 @@ class Profile extends Page
                 'info'      => \ForkBB\__('Leave blank'),
             ];
         } else {
-            $fieldset['title'] = [
+            $fields['title'] = [
                 'id'      => 'title',
                 'class'   => 'pline',
                 'type'    => 'str',
@@ -119,12 +119,12 @@ class Profile extends Page
                 'value'   => $curUser->title(),
             ];
         }
-        $fieldset[] = [
+        $fields[] = [
             'type' => 'endwrap',
         ];
         if ('1' == $this->c->config->o_avatars) {
             if ($isEdit && ! $curUser->avatar) { //// может стоит поле для загрузки вставить????
-                $fieldset['avatar'] = [
+                $fields['avatar'] = [
                     'id'      => 'avatar',
                     'class'   => 'pline',
                     'type'    => 'str',
@@ -132,7 +132,7 @@ class Profile extends Page
                     'value'   => \ForkBB\__('Not uploaded'),
                 ];
             } elseif ($curUser->avatar) {
-                $fieldset['avatar'] = [
+                $fields['avatar'] = [
                     'id'      => 'avatar',
                     'type'    => 'yield',
                     'caption' => \ForkBB\__('Avatar'),
@@ -144,14 +144,14 @@ class Profile extends Page
             'id'     => 'header',
             'class'  => 'header' . $clSuffix,
 #            'legend' => \ForkBB\__('Options'),
-            'fields' => $fieldset,
+            'fields' => $fields,
         ];
 
         // примечание администрации
         if ($this->user->isAdmMod) {
-            $fieldset = [];
+            $fields = [];
             if ($isEdit) {
-                $fieldset['admin_note'] = [
+                $fields['admin_note'] = [
                     'id'        => 'admin_note',
                     'type'      => 'text',
                     'maxlength' => 30,
@@ -159,7 +159,7 @@ class Profile extends Page
                     'value'     => $curUser->admin_note,
                 ];
             } elseif ('' != $curUser->admin_note) {
-                $fieldset['admin_note'] = [
+                $fields['admin_note'] = [
                     'id'        => 'admin_note',
                     'class'   => 'pline',
                     'type'      => 'str',
@@ -167,20 +167,20 @@ class Profile extends Page
                     'value'     => $curUser->admin_note,
                 ];
             }
-            if (! empty($fieldset)) {
+            if (! empty($fields)) {
                 $form['sets'][] = [
                     'id'     => 'note',
                     'class'  => 'data' . $clSuffix,
                     'legend' => \ForkBB\__('Admin note'),
-                    'fields' => $fieldset,
+                    'fields' => $fields,
                 ];
             }
         }
 
         // личное
-        $fieldset = [];
+        $fields = [];
         if ($isEdit) {
-            $fieldset['realname'] = [
+            $fields['realname'] = [
                 'id'        => 'realname',
                 'type'      => 'text',
                 'maxlength' => 40,
@@ -188,7 +188,7 @@ class Profile extends Page
                 'value'     => $curUser->realname,
             ];
         } elseif ('' != $curUser->realname) {
-            $fieldset['realname'] = [
+            $fields['realname'] = [
                 'id'      => 'realname',
                 'class'   => 'pline',
                 'type'    => 'str',
@@ -202,7 +202,7 @@ class Profile extends Page
             2 => \ForkBB\__('Female'),
         ];
         if ($isEdit) {
-            $fieldset['gender'] = [
+            $fields['gender'] = [
                 'id'      => 'gender',
                 'class'   => 'block',
                 'type'    => 'radio',
@@ -211,7 +211,7 @@ class Profile extends Page
                 'caption' => \ForkBB\__('Gender'),
             ];
         } elseif ($curUser->gender && isset($genders[$curUser->gender])) {
-            $fieldset['gender'] = [
+            $fields['gender'] = [
                 'id'      => 'gender',
                 'class'   => 'pline',
                 'type'    => 'str',
@@ -220,7 +220,7 @@ class Profile extends Page
             ];
         }
         if ($isEdit) {
-            $fieldset['location'] = [
+            $fields['location'] = [
                 'id'        => 'location',
                 'type'      => 'text',
                 'maxlength' => 40,
@@ -228,7 +228,7 @@ class Profile extends Page
                 'value'     => $curUser->location,
             ];
         } elseif ('' != $curUser->location) {
-            $fieldset['location'] = [
+            $fields['location'] = [
                 'id'      => 'location',
                 'class'   => 'pline',
                 'type'    => 'str',
@@ -236,19 +236,19 @@ class Profile extends Page
                 'value'   => \ForkBB\cens($curUser->location),
             ];
         }
-        if (! empty($fieldset)) {
+        if (! empty($fields)) {
             $form['sets'][] = [
                 'id'     => 'personal',
                 'class'  => 'data' . $clSuffix,
                 'legend' => \ForkBB\__('Personal information'),
-                'fields' => $fieldset,
+                'fields' => $fields,
             ];
         }
 
         // контактная информация
-        $fieldset = [];
-        if ($rules->openEmail) {
-            $fieldset['open-email'] = [
+        $fields = [];
+        if ($rules->viewOEmail) {
+            $fields['open-email'] = [
                 'id'      => 'open-email',
                 'class'   => 'pline',
                 'type'    => 'link',
@@ -257,9 +257,9 @@ class Profile extends Page
                 'href'    => 'mailto:' . $curUser->email,
             ];
         }
-        if ($rules->email) {
+        if ($rules->viewEmail) {
             if (0 === $curUser->email_setting) {
-                $fieldset['email'] = [
+                $fields['email'] = [
                     'id'      => 'email',
                     'class'   => 'pline',
                     'type'    => 'link',
@@ -268,7 +268,7 @@ class Profile extends Page
                     'href'    => 'mailto:' . $curUser->email,
                 ];
             } elseif (1 === $curUser->email_setting) {
-                $fieldset['email'] = [
+                $fields['email'] = [
                     'id'      => 'email',
                     'class'   => 'pline',
                     'type'    => 'link',
@@ -279,7 +279,7 @@ class Profile extends Page
             }
         }
         if ($isEdit) {
-            $fieldset['email_setting'] = [
+            $fields['email_setting'] = [
                 'id'      => 'email_setting',
                 'class'   => 'block',
                 'type'    => 'radio',
@@ -293,7 +293,7 @@ class Profile extends Page
             ];
         }
         if ($isEdit) {
-            $fieldset['url'] = [
+            $fields['url'] = [
                 'id'        => 'website',
                 'type'      => 'text',
                 'maxlength' => 100,
@@ -301,7 +301,7 @@ class Profile extends Page
                 'value'     => $curUser->url
             ];
         } elseif ($curUser->url) {
-            $fieldset['url'] = [
+            $fields['url'] = [
                 'id'      => 'website',
                 'class'   => 'pline',
                 'type'    => 'link',
@@ -310,54 +310,54 @@ class Profile extends Page
                 'href'    => \ForkBB\cens($curUser->url),
             ];
         }
-        if (! empty($fieldset)) {
+        if (! empty($fields)) {
             $form['sets'][] = [
                 'id'     => 'contacts',
                 'class'  => 'data' . $clSuffix,
                 'legend' => \ForkBB\__('Contact details'),
-                'fields' => $fieldset,
+                'fields' => $fields,
             ];
         }
 
         // подпись
         if ('1' == $this->c->config->o_signatures) {
-            $fieldset = [];
+            $fields = [];
             if ($isEdit) {
-                $fieldset['signature'] = [
+                $fields['signature'] = [
                     'id'      => 'signature',
                     'type'    => 'textarea',
                     'value'   => $curUser->signature,
                     'caption' => \ForkBB\__('Signature'),
                 ];
             } elseif ('' != $curUser->signature) {
-                $fieldset['signature'] = [
+                $fields['signature'] = [
                     'id'      => 'signature',
                     'type'    => 'yield',
                     'caption' => \ForkBB\__('Signature'),
                     'value'   => 'signature',
                 ];
             }
-            if (! empty($fieldset)) {
+            if (! empty($fields)) {
                 $form['sets'][] = [
                     'id'     => 'signature',
                     'class'  => 'data' . $clSuffix,
                     'legend' => \ForkBB\__('Signature'),
-                    'fields' => $fieldset,
+                    'fields' => $fields,
                 ];
             }
         }
 
         // активность
-        $fieldset = [];
-        $fieldset['registered'] = [
+        $fields = [];
+        $fields['registered'] = [
             'id'      => 'registered',
             'class'   => 'pline',
             'type'    => 'str',
             'value'   => \ForkBB\dt($curUser->registered, true),
             'caption' => \ForkBB\__('Registered info'),
         ];
-        if ($this->user->isAdmin) {
-            $fieldset['ip'] = [
+        if ($rules->viewIP) {
+            $fields['ip'] = [
                 'id'      => 'ip',
                 'class'   => 'pline',
                 'type'    => 'link',
@@ -367,8 +367,8 @@ class Profile extends Page
                 'title'   => 'IP',
             ];
         }
-        if ($rules->lastvisit) {
-            $fieldset['lastvisit'] = [
+        if ($rules->viewLastVisit) {
+            $fields['lastvisit'] = [
                 'id'      => 'lastvisit',
                 'class'   => 'pline',
                 'type'    => 'str',
@@ -376,7 +376,7 @@ class Profile extends Page
                 'caption' => \ForkBB\__('Last visit info'),
             ];
         }
-        $fieldset['lastpost'] = [
+        $fields['lastpost'] = [
             'id'      => 'lastpost',
             'class'   => 'pline',
             'type'    => 'str',
@@ -385,7 +385,7 @@ class Profile extends Page
         ];
         if ($curUser->num_posts) {
             if ('1' == $this->user->g_search) {
-                $fieldset['posts'] = [
+                $fields['posts'] = [
                     'id'      => 'posts',
                     'class'   => 'pline',
                     'type'    => 'link',
@@ -394,7 +394,7 @@ class Profile extends Page
                     'href'    => '',
                     'title'   => \ForkBB\__('Show posts'),
                 ];
-                $fieldset['topics'] = [
+                $fields['topics'] = [
                     'id'      => 'topics',
                     'class'   => 'pline',
                     'type'    => 'link',
@@ -404,14 +404,14 @@ class Profile extends Page
                     'title'   => \ForkBB\__('Show topics'),
                 ];
             } elseif ($this->user->showPostCount) {
-                $fieldset['posts'] = [
+                $fields['posts'] = [
                     'id'      => 'posts',
                     'class'   => 'pline',
                     'type'    => 'str',
                     'caption' => \ForkBB\__('Posts info'),
                     'value'   => \ForkBB\num($curUser->num_posts),
                 ];
-                $fieldset['topics'] = [
+                $fields['topics'] = [
                     'id'      => 'topics',
                     'class'   => 'pline',
                     'type'    => 'str',
@@ -424,7 +424,7 @@ class Profile extends Page
             'id'     => 'activity',
             'class'  => 'data' . $clSuffix,
             'legend' => \ForkBB\__('User activity'),
-            'fields' => $fieldset,
+            'fields' => $fields,
         ];
 
         if ($isEdit) {
