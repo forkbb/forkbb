@@ -241,7 +241,7 @@ msgid "Signature"
 msgstr "Signature"
 
 msgid "Sig max size"
-msgstr "Max length: %s characters / Max lines: %s"
+msgstr "Max length: <b>%1$s</b> characters / Max lines: <b>%2$s</b>"
 
 msgid "Avatar legend"
 msgstr "Set your avatar display options"
@@ -413,3 +413,9 @@ msgstr "Board configuration"
 
 msgid "Not uploaded"
 msgstr "Not uploaded"
+
+msgid "New avatar"
+msgstr "New avatar"
+
+msgid "New avatar info"
+msgstr "The avatar will be automatically resize to <b>%1$s</b>x<b>%2$s</b> pixel / <b>%3$s</b> bytes (<i>%4$s</i>) if exceeds these parameters."

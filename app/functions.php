@@ -184,5 +184,7 @@ function size($size)
         $size /= 1024;
     }
 
-    return __('%s ' . $units[$i], num($size, 2)); // \sprintf('%.2f', $size)
+    $decimals = $size - (int) $size < 0.005 ? 0 : 2;
+
+    return __('%s ' . $units[$i], num($size, $decimals));
 }

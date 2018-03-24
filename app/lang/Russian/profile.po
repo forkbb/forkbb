@@ -241,7 +241,7 @@ msgid "Signature"
 msgstr "Подпись"
 
 msgid "Sig max size"
-msgstr "Макс. длина: %s символов / Макс. число строк: %s"
+msgstr "Максимальная длина: <b>%1$s</b> символов / Максимальное число строк: <b>%2$s</b>"
 
 msgid "Avatar legend"
 msgstr "Наcтройка аватары"
@@ -413,3 +413,9 @@ msgstr "Настрйока форума"
 
 msgid "Not uploaded"
 msgstr "Не загружена"
+
+msgid "New avatar"
+msgstr "Новая аватара"
+
+msgid "New avatar info"
+msgstr "Аватара будет автоматически сжата до <b>%1$s</b>x<b>%2$s</b> пиксел / <b>%3$s</b> байт (<i>%4$s</i>), если привысит эти параметры."

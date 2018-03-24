@@ -77,4 +77,9 @@ class Profile extends Rules
     {
         return $this->user->isAdmin;
     }
+
+    public function getuseAvatar()
+    {
+        return '1' == $this->c->config->o_avatars;
+    }
 }

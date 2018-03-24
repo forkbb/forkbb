@@ -122,8 +122,8 @@ class Profile extends Page
         $fields[] = [
             'type' => 'endwrap',
         ];
-        if ('1' == $this->c->config->o_avatars) {
-            if ($isEdit && ! $curUser->avatar) { //// может стоит поле для загрузки вставить????
+        if ($rules->useAvatar) {
+            if ($isEdit && ! $curUser->avatar) {
                 $fields['avatar'] = [
                     'id'      => 'avatar',
                     'class'   => 'pline',
@@ -137,6 +137,16 @@ class Profile extends Page
                     'type'    => 'yield',
                     'caption' => \ForkBB\__('Avatar'),
                     'value'   => 'avatar',
+                ];
+            }
+            if ($isEdit) {
+                $fields['upload_avatar'] = [
+                    'id'        => 'upload_avatar',
+                    'type'      => 'text',
+                    'maxlength' => 50,
+                    'caption'   => \ForkBB\__('New avatar'),
+                    'value'     => '',
+                    'info'      => \ForkBB\__('New avatar info', \ForkBB\num($this->c->config->o_avatars_width), \ForkBB\num($this->c->config->o_avatars_height), \ForkBB\num($this->c->config->o_avatars_size), \ForkBB\size($this->c->config->o_avatars_size)),
                 ];
             }
         }
@@ -328,6 +338,7 @@ class Profile extends Page
                     'type'    => 'textarea',
                     'value'   => $curUser->signature,
                     'caption' => \ForkBB\__('Signature'),
+                    'info'    => \ForkBB\__('Sig max size', \ForkBB\num($this->c->config->p_sig_length), \ForkBB\num($this->c->config->p_sig_lines)),
                 ];
             } elseif ('' != $curUser->signature) {
                 $fields['signature'] = [
