@@ -384,12 +384,6 @@ msgstr "Gender"
 msgid "Unknown"
 msgstr "Unknown"
 
-msgid "Edit profile"
-msgstr "Edit"
-
-msgid "Edit settings"
-msgstr "Settings"
-
 msgid "Contact details"
 msgstr "Contact details"
 
@@ -401,3 +395,21 @@ msgstr "%s"
 
 msgid "Email settings label"
 msgstr "Email settings"
+
+msgid "View "
+msgstr "View"
+
+msgid "Edit "
+msgstr "Edit"
+
+msgid "Editing profile"
+msgstr "Editing profile"
+
+msgid "Configure "
+msgstr "Configure"
+
+msgid "Board configuration"
+msgstr "Board configuration"
+
+msgid "Not uploaded"
+msgstr "Not uploaded"

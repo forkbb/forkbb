@@ -43,7 +43,7 @@ class Profile extends Page
         $isAdmin     = $this->user->isAdmin && ($myProf || ! $curUser->isAdmin);
         $isModer     = $this->user->isAdmMod && ($myProf || ! $curUser->isAdmMod);
         $canEditProf = $myProf || $isAdmin || ($isModer && '1' == $this->user->g_mod_edit_users);
-        $canEditSets = $myProf || $isAdmin || ($isModer && '1' == $this->user->g_mod_edit_users); // ????
+        $canEditConf = $myProf || $isAdmin || ($isModer && '1' == $this->user->g_mod_edit_users); // ????
 
         if ($isEdit) {
             if (! $canEditProf) {
@@ -122,13 +122,23 @@ class Profile extends Page
         $fieldset[] = [
             'type' => 'endwrap',
         ];
-        if ('1' == $this->c->config->o_avatars && $curUser->avatar) {
-            $fieldset['avatar'] = [
-                'id'      => 'avatar',
-                'type'    => 'yield',
-                'caption' => \ForkBB\__('Avatar'),
-                'value'   => 'avatar',
-            ];
+        if ('1' == $this->c->config->o_avatars) {
+            if ($isEdit && ! $curUser->avatar) { //// может стоит поле для загрузки вставить????
+                $fieldset['avatar'] = [
+                    'id'      => 'avatar',
+                    'class'   => 'pline',
+                    'type'    => 'str',
+                    'caption' => \ForkBB\__('Avatar'),
+                    'value'   => \ForkBB\__('Not uploaded'),
+                ];
+            } elseif ($curUser->avatar) {
+                $fieldset['avatar'] = [
+                    'id'      => 'avatar',
+                    'type'    => 'yield',
+                    'caption' => \ForkBB\__('Avatar'),
+                    'value'   => 'avatar',
+                ];
+            }
         }
         $form['sets'][] = [
             'id'     => 'header',
@@ -194,6 +204,7 @@ class Profile extends Page
         if ($isEdit) {
             $fieldset['gender'] = [
                 'id'      => 'gender',
+                'class'   => 'block',
                 'type'    => 'radio',
                 'value'   => $curUser->gender,
                 'values'  => $genders,
@@ -420,41 +431,57 @@ class Profile extends Page
             'fields' => $fieldset,
         ];
 
+        if ($isEdit) {
+            $this->robots    = 'noindex';
+            $this->crumbs    = $this->crumbs(
+                \ForkBB\__('Editing profile'),
+                [$curUser->link, \ForkBB\__('User %s', $curUser->username)],
+                [$this->c->Router->link('Userlist'), \ForkBB\__('User list')]
+            );
+        } else {
+            $this->canonical = $curUser->link;
+            $this->crumbs    = $this->crumbs(
+                [$curUser->link, \ForkBB\__('User %s', $curUser->username)],
+                [$this->c->Router->link('Userlist'), \ForkBB\__('User list')]
+            );
+        }
+
         $this->fIndex    = $myProf ? 'profile' : 'userlist';
         $this->nameTpl   = 'profile';
         $this->onlinePos = 'profile-' . $curUser->id; // ????
-        $this->canonical = $curUser->link;
         $this->title     = \ForkBB\__('%s\'s profile', $curUser->username);
-        $this->crumbs    = $this->crumbs(
-            [$curUser->link, \ForkBB\__('User %s', $curUser->username)],
-            [$this->c->Router->link('Userlist'), \ForkBB\__('User list')]
-        );
         $this->form      = $form;
         $this->curUser   = $curUser;
 
         $btns = [];
-        if ($isAdmin || ($isModer && '1' == $this->user->g_mod_ban_users)) {
+        if (! $myProf && ($isAdmin || ($isModer && '1' == $this->user->g_mod_ban_users))) {
             $btns['ban-user'] = [
                 $this->c->Router->link('',  ['id' => $curUser->id]),
                 \ForkBB\__('Ban user'),
             ];
         }
-        if ($isAdmin || $isModer) { // ????
+        if (! $myProf && ($isAdmin || $isModer)) { // ????
             $btns['delete-user'] = [
                 $this->c->Router->link('',  ['id' => $curUser->id]),
                 \ForkBB\__('Delete user'),
             ];
         }
-        if ($canEditProf) {
+        if (!$isEdit && $canEditProf) {
             $btns['edit-profile'] = [
                 $this->c->Router->link('EditUserProfile',  ['id' => $curUser->id]),
-                \ForkBB\__('Edit profile'),
+                \ForkBB\__('Edit '),
             ];
         }
-        if ($canEditSets) {
+        if ($isEdit) {
+            $btns['view-profile'] = [
+                $curUser->link,
+                \ForkBB\__('View '),
+            ];
+        }
+        if ($canEditConf) {
             $btns['edit-settings'] = [
-                $this->c->Router->link('EditUserSettings', ['id' => $curUser->id]),
-                \ForkBB\__('Edit settings'),
+                $this->c->Router->link('EditBoardConfig', ['id' => $curUser->id]),
+                \ForkBB\__('Configure '),
             ];
         }
         $this->actionBtns = $btns;

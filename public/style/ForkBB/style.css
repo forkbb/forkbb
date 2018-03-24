@@ -2128,6 +2128,10 @@ select {
   .f-fs-data dd {
     width: 67%
   }
+
+  .f-field-pline .f-child1:after {
+    content: "";
+  }
 }
 
 /****************************/
@@ -2160,6 +2164,25 @@ select {
   height: 11rem;
 }
 
-#id-fs-activity.f-fs-data-edit .f-child1:after {
-  content: ": ";
+.f-fs-data-edit #id-admin_note {
+  background-color: #FFBABA;
+}
+
+@media screen and (min-width: 40rem) {
+  .f-fs-header-edit dl,
+  .f-fs-data-edit dl {
+    display: flex;
+  }
+
+  .f-fs-header-edit dt,
+  .f-fs-data-edit dt {
+    width: 33%;
+    text-align: right;
+    padding-right: 0.625rem;
+  }
+
+  .f-fs-header-edit dd,
+  .f-fs-data-edit dd {
+    width: 67%
+  }
 }

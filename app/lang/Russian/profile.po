@@ -384,12 +384,6 @@ msgstr "Пол"
 msgid "Unknown"
 msgstr "Неизвестно"
 
-msgid "Edit profile"
-msgstr "Редактировать"
-
-msgid "Edit settings"
-msgstr "Настройки"
-
 msgid "Contact details"
 msgstr "Контактная информация"
 
@@ -401,3 +395,21 @@ msgstr "%s"
 
 msgid "Email settings label"
 msgstr "Настройки email"
+
+msgid "View "
+msgstr "Просмотреть"
+
+msgid "Edit "
+msgstr "Редактировать"
+
+msgid "Editing profile"
+msgstr "Редактирование профиля"
+
+msgid "Configure "
+msgstr "Настроить"
+
+msgid "Board configuration"
+msgstr "Настрйока форума"
+
+msgid "Not uploaded"
+msgstr "Не загружена"
