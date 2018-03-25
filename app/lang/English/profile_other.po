@@ -133,10 +133,10 @@ msgid "UTC+14:00"
 msgstr "(UTC+14:00) Line Islands"
 
 msgid "Display e-mail label"
-msgstr "Display email address to other users."
+msgstr "Display email address to other users"
 
 msgid "Hide allow form label"
-msgstr "Hide email address but allow form e-mail."
+msgstr "Hide email address but allow form e-mail"
 
 msgid "Hide both label"
-msgstr "Hide email address and disallow form email."
+msgstr "Hide email address and disallow form email"

@@ -140,13 +140,19 @@ class Profile extends Page
                 ];
             }
             if ($isEdit) {
+                $form['enctype'] = 'multipart/form-data';
+                $form['hidden']['MAX_FILE_SIZE'] = 999999999;
+
                 $fields['upload_avatar'] = [
                     'id'        => 'upload_avatar',
-                    'type'      => 'text',
-                    'maxlength' => 50,
+                    'type'      => 'file',
                     'caption'   => \ForkBB\__('New avatar'),
-                    'value'     => '',
-                    'info'      => \ForkBB\__('New avatar info', \ForkBB\num($this->c->config->o_avatars_width), \ForkBB\num($this->c->config->o_avatars_height), \ForkBB\num($this->c->config->o_avatars_size), \ForkBB\size($this->c->config->o_avatars_size)),
+                    'info'      => \ForkBB\__('New avatar info',
+                        \ForkBB\num($this->c->config->o_avatars_width),
+                        \ForkBB\num($this->c->config->o_avatars_height),
+                        \ForkBB\num($this->c->config->o_avatars_size),
+                        \ForkBB\size($this->c->config->o_avatars_size)
+                    ),
                 ];
             }
         }

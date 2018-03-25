@@ -35,22 +35,22 @@ class Profile extends Rules
         return $this;
     }
 
-    public function getrename()
+    protected function getrename()
     {
         return $this->admin || ($this->moderator  && '1' == $this->user->g_mod_rename_users);
     }
 
-    public function getsetTitle()
+    protected function getsetTitle()
     {
         return $this->admin || $this->moderator || '1' == $this->user->g_set_title;
     }
 
-    public function getviewOEmail()
+    protected function getviewOEmail()
     {
         return $this->my || $this->user->isAdmMod;
     }
 
-    public function getviewEmail() // ?????
+    protected function getviewEmail() // ?????
     {
         return ! $this->my
             && (($this->user->isAdmMod && 1 === $this->curUser->email_setting)
@@ -58,27 +58,27 @@ class Profile extends Rules
             );
     }
 
-    public function getviewLastVisit()
+    protected function getviewLastVisit()
     {
         return $this->my || $this->user->isAdmMod;
     }
 
-    public function getbanUser()
+    protected function getbanUser()
     {
         return ! $this->my && ($this->admin || ($this->moderator && '1' == $this->user->g_mod_ban_users));
     }
 
-    public function getdeleteUser()
+    protected function getdeleteUser()
     {
         return ! $this->my && ($this->admin || $this->moderator); // ????
     }
 
-    public function getviewIP()
+    protected function getviewIP()
     {
         return $this->user->isAdmin;
     }
 
-    public function getuseAvatar()
+    protected function getuseAvatar()
     {
         return '1' == $this->c->config->o_avatars;
     }

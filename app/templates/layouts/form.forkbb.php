@@ -1,5 +1,5 @@
 @if ($form['action'])
-        <form class="f-form" method="post" action="{!! $form['action'] !!}">
+        <form class="f-form" method="post" action="{!! $form['action'] !!}" @if ($form['enctype']) enctype="{{ $form['enctype'] }}" @endif>
     @if ($form['hidden'])
         @foreach ($form['hidden'] as $key => $val)
           <input type="hidden" name="{{ $key }}" value="{{ $val }}">
@@ -100,12 +100,14 @@
                 <input @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="password" @if ($cur['maxlength']) maxlength="{{ $cur['maxlength'] }}" @endif @if ($cur['pattern']) pattern="{{ $cur['pattern'] }}" @endif @if (isset($cur['value'])) value="{{ $cur['value'] }}" @endif>
                 @elseif ('btn' === $cur['type'])
                 <a class="f-btn @if ($cur['disabled']) f-disabled @endif" href="{!! $cur['link'] !!}" @if ($cur['disabled']) tabindex="-1" @endif>{{ $cur['value'] }}</a>
-                @elseif ('yield' === $cur['type'])
-                {!! $this->block($cur['value']) !!}
                 @elseif ('str' === $cur['type'])
                 <p class="f-str" id="id-{{ $key }}">{{ $cur['value'] }}</p>
                 @elseif ('link' === $cur['type'])
                 <a class="f-link" id="id-{{ $key }}" href="{{ $cur['href'] or '' }}" title="{{ $cur['title'] or '' }}">{{ $cur['value'] or '' }}</a>
+                @elseif ('yield' === $cur['type'])
+                {!! $this->block($cur['value']) !!}
+                @elseif ('file' === $cur['type'])
+                <input @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="file">
                 @endif
                 @if ($cur['info'])
                 <p class="f-child4">{!! $cur['info'] !!}</p>

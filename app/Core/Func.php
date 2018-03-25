@@ -2,6 +2,8 @@
 
 namespace ForkBB\Core;
 
+use ForkBB\Core\Container;
+
 class Func
 {
     /**
