@@ -35,6 +35,8 @@ return [
         'smTplBl'  => ['url'],
     ],
     'MAX_POST_SIZE' => 65536,
+    'MAX_IMG_SIZE'  => '2M',
+    'MAX_FILE_SIZE' => '2M',
 
     'shared' => [
         'DB' => [
@@ -109,6 +111,11 @@ return [
         'Parser' => [
             'class' => \ForkBB\Core\Parser::class,
             'flag'  => ENT_HTML5,
+        ],
+        'Files' => [
+            'class' => \ForkBB\Core\Files::class,
+            'file'  => '%MAX_FILE_SIZE%',
+            'img'   => '%MAX_IMG_SIZE%',
         ],
 
     ],

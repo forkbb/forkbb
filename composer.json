@@ -18,6 +18,8 @@
     },
     "require": {
         "php": ">=5.6.0",
+        "ext-gd": "*",
+        "ext-mbstring": "*",
         "artoodetoo/dirk": "dev-master",
         "miovisman/parserus": "dev-master"
     }

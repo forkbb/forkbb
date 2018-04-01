@@ -3,6 +3,7 @@
 namespace ForkBB\Core;
 
 use ForkBB\Core\Container;
+use ForkBB\Core\File;
 use RuntimeException;
 
 class Validator
@@ -108,6 +109,8 @@ class Validator
             'array'         => [$this, 'vArray'],
             'checkbox'      => [$this, 'vCheckbox'],
             'email'         => [$this, 'vEmail'],
+            'file'          => [$this, 'vFile'],
+            'image'         => [$this, 'vImage'],
             'in'            => [$this, 'vIn'],
             'integer'       => [$this, 'vInteger'],
             'login'         => [$this, 'vLogin'],
@@ -616,8 +619,21 @@ class Validator
                 $this->addError('The :alias maximum is :attr');
             }
         } elseif (\is_array($value)) {
-            if (\count($value) > $attr) {
+            if (\reset($value) instanceof File) {
+                $attr *= 1024;
+                foreach ($value as $file) {
+                    if ($file->size() > $attr) {
+                        $this->addError('The :alias contains too large a file');
+                        return null;
+                    }
+                }
+            } elseif (\count($value) > $attr) {
                 $this->addError('The :alias maximum is :attr elements');
+            }
+        } elseif ($value instanceof File) {
+            if ($value->size() > $attr * 1024) {
+                $this->addError('The :alias contains too large a file');
+                return null;
             }
         } elseif (null !== $value) {
             $this->addError('The :alias maximum is :attr'); //????
@@ -710,6 +726,51 @@ class Validator
     {
         if (null !== $value && \in_array($value, \explode(',', $attr))) {
             $this->addError('The :alias contains an invalid value');
+        }
+        return $value;
+    }
+
+
+    protected function vFile($v, $value, $attr)
+    {
+        if (null === $value) {
+            return null;
+        }
+        if (! \is_array($value)) {
+            $this->addError('The :alias not contains file');
+            return null;
+        }
+        $value = $this->c->Files->upload($value);
+        if (null === $value) {
+            return null;
+        } elseif (false === $value) {
+            $this->addError($this->c->Files->error());
+            return null;
+        } elseif ('multiple' === $attr) {
+            if (! \is_array($value)) {
+                $value = [$value];
+            }
+        } elseif (\is_array($value)) {
+            $this->addError('The :alias contains more than one file');
+            return null;
+        }
+        return $value;
+    }
+
+    protected function vImage($v, $value, $attr)
+    {
+        $value = $this->vFile($v, $value, $attr);
+
+        if (\is_array($value)) {
+            foreach ($value as $file) {
+                if (false === $this->c->Files->isImage($file)) {
+                    $this->addError('The :alias not contains image');
+                    return null;
+                }
+            }
+        } elseif (null !== $value && false === $this->c->Files->isImage($value)) {
+            $this->addError('The :alias not contains image');
+            return null;
         }
         return $value;
     }

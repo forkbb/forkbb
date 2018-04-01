@@ -10,6 +10,12 @@ use RuntimeException;
 class Model extends DataModel
 {
     /**
+     * Типы аватарок
+     * @var array
+     */
+    protected $avatarTypes = ['jpg', 'gif', 'png'];
+
+    /**
      * Статус неподтвержденного
      *
      * @return bool
@@ -157,9 +163,7 @@ class Model extends DataModel
      */
     protected function getavatar()
     {
-        $filetypes = ['jpg', 'gif', 'png'];
-
-        foreach ($filetypes as $type) {
+        foreach ($this->avatarTypes as $type) {
             $path = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$this->id}.{$type}";
 
             if (\is_file($path) && \getimagesize($path)) {
@@ -168,6 +172,20 @@ class Model extends DataModel
         }
 
         return null;
+    }
+
+    /**
+     * Удаляет аватару пользователя
+     */
+    public function deleteAvatar()
+    {
+        foreach ($this->avatarTypes as $type) {
+            $path = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$this->id}.{$type}";
+
+            if (\is_file($path)) {
+                @\unlink($path);
+            }
+        }
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace ForkBB\Models\Pages;
 
+use ForkBB\Core\Image;
 use ForkBB\Models\Page;
 use ForkBB\Models\User\Model as User;
 
@@ -52,16 +53,45 @@ class Profile extends Page
         $this->c->Lang->load('profile');
 
         if ($isEdit && 'POST' === $method) {
+            $v = $this->c->Validator->reset()
+                ->addValidators([
+                ])->addRules([
+                    'token'         => 'token:EditUserProfile',
+                    'upload_avatar' => $rules->useAvatar ? 'image|max:' . $this->c->Files->maxImgSize('K') : 'absent',
+                ])->addAliases([
+                ])->addArguments([
+                    'token'         => ['id' => $curUser->id],
+                ])->addMessages([
+                ]);
 
+            if ($v->validation($_FILES + $_POST)) {
+                if ($v->upload_avatar instanceof Image) {
+                    $curUser->deleteAvatar();
+                    $v->upload_avatar
+                        ->rename(false)
+                        ->rewrite(true)
+                        ->resize((int) $this->c->config->o_avatars_width, (int) $this->c->config->o_avatars_height)
+                        ->toFile($this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$curUser->id}.(jpg|png|gif)");
+#                    var_dump(
+#                        $v->upload_avatar->path(),
+#                        $v->upload_avatar->name(),
+#                        $v->upload_avatar->ext(),
+#                        $v->upload_avatar->size(),
+#                       $v->upload_avatar->error()
+#                    );
+                }
+            }
+
+            $this->fIswev  = $v->getErrors();
         }
 
         $clSuffix = $isEdit ? '-edit' : '';
 
         if ($isEdit) {
             $form = [
-                'action' => $this->c->Router->link('EditUserProfile',  ['id' => $curUser->id]),
+                'action' => $this->c->Router->link('EditUserProfile', ['id' => $curUser->id]),
                 'hidden' => [
-                    'token' => $this->c->Csrf->create('EditUserProfile',  ['id' => $curUser->id]),
+                    'token' => $this->c->Csrf->create('EditUserProfile', ['id' => $curUser->id]),
                 ],
                 'sets'   => [],
                 'btns'   => [
@@ -141,7 +171,7 @@ class Profile extends Page
             }
             if ($isEdit) {
                 $form['enctype'] = 'multipart/form-data';
-                $form['hidden']['MAX_FILE_SIZE'] = 999999999;
+                $form['hidden']['MAX_FILE_SIZE'] = $this->c->Files->maxImgSize();
 
                 $fields['upload_avatar'] = [
                     'id'        => 'upload_avatar',
