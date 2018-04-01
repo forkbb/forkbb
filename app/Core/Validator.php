@@ -581,8 +581,9 @@ class Validator
     protected function vMin($v, $value, $attr)
     {
         if (\is_string($value)) {
-            if ((\strpos($attr, 'bytes') && \strlen($value) < (int) $attr)
-                || \mb_strlen($value, 'UTF-8') < $attr
+            $isBytes = \strpos($attr, 'bytes');
+            if (($isBytes && \strlen($value) < (int) $attr)
+                || (! $isBytes && \mb_strlen($value, 'UTF-8') < $attr)
             ) {
                 $this->addError('The :alias minimum is :attr characters');
             }
@@ -604,8 +605,9 @@ class Validator
     protected function vMax($v, $value, $attr)
     {
         if (\is_string($value)) {
-            if ((\strpos($attr, 'bytes') && \strlen($value) > (int) $attr)
-                || \mb_strlen($value, 'UTF-8') > $attr
+            $isBytes = \strpos($attr, 'bytes');
+            if (($isBytes && \strlen($value) > (int) $attr)
+                || (! $isBytes && \mb_strlen($value, 'UTF-8') > $attr)
             ) {
                 $this->addError('The :alias maximum is :attr characters');
             }

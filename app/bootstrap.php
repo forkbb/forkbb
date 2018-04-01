@@ -21,9 +21,9 @@ use RuntimeException;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-if (\file_exists(__DIR__ . '/config/main.php')) {
+if (\is_file(__DIR__ . '/config/main.php')) {
     $c = new Container(include __DIR__ . '/config/main.php');
-} elseif (\file_exists(__DIR__ . '/config/install.php')) {
+} elseif (\is_file(__DIR__ . '/config/install.php')) {
     $c = new Container(include __DIR__ . '/config/install.php');
 } else {
     throw new RuntimeException('Application is not configured');

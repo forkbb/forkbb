@@ -79,7 +79,7 @@ class Lang
         do {
             $flag = true;
             $fullPath = $path . '/'. $lang . '/' . $name . '.po';
-            if (\file_exists($fullPath)) {
+            if (\is_file($fullPath)) {
                 $file = \file_get_contents($fullPath);
                 if (isset($this->tr[$lang])) {
                     $this->tr[$lang] += $this->arrayFromStr($file);

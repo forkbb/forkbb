@@ -35,7 +35,7 @@ class Install extends Page
         $dbTypes = [];
         $pdoDrivers = PDO::getAvailableDrivers();
         foreach ($pdoDrivers as $type) {
-            if (\file_exists($this->c->DIR_APP . '/Core/DB/' . \ucfirst($type) . '.php')) {
+            if (\is_file($this->c->DIR_APP . '/Core/DB/' . \ucfirst($type) . '.php')) {
                 switch ($type) {
                     case 'mysql':
                         $dbTypes['mysql_innodb'] = 'MySQL InnoDB (PDO)';

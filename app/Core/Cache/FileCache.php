@@ -44,7 +44,7 @@ class FileCache implements ProviderCacheInterface
     public function get($key, $default = null)
     {
         $file = $this->file($key);
-        if (\file_exists($file)) {
+        if (\is_file($file)) {
             require $file;
 
             if (isset($expire) && isset($data)
@@ -92,7 +92,7 @@ class FileCache implements ProviderCacheInterface
     public function delete($key)
     {
         $file = $this->file($key);
-        if (\file_exists($file)) {
+        if (\is_file($file)) {
             if (\unlink($file)) {
                 $this->invalidate($file);
                 return true;

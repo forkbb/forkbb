@@ -127,14 +127,16 @@ class Secury
     /**
      * Replacing invalid UTF-8 characters and remove control characters
      *
-     * @param string|array $data
+     * @param mixed $data
      *
-     * @return string|array
+     * @return mixed
      */
     public function replInvalidChars($data)
     {
         if (\is_array($data)) {
             return \array_map([$this, 'replInvalidChars'], $data);
+        } elseif (\is_int($data)) {
+            return (int) $data;
         }
         // Replacing invalid UTF-8 characters
         // slow, small memory

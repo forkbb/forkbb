@@ -59,7 +59,7 @@ class DB extends PDO
     public function __construct($dsn, $username = null, $password = null, array $options = [], $prefix = '')
     {
         $type = \strstr($dsn, ':', true);
-        if (! $type || ! \file_exists(__DIR__ . '/DB/' . \ucfirst($type) . '.php')) {
+        if (! $type || ! \is_file(__DIR__ . '/DB/' . \ucfirst($type) . '.php')) {
             throw new PDOException("Driver isn't found for '$type'");
         }
         $this->dbType = $type;

@@ -162,7 +162,7 @@ class Model extends DataModel
         foreach ($filetypes as $type) {
             $path = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$this->id}.{$type}";
 
-            if (\file_exists($path) && \getimagesize($path)) {
+            if (\is_file($path) && \getimagesize($path)) {
                 return $this->c->PUBLIC_URL . "{$this->c->config->o_avatars_dir}/{$this->id}.{$type}";
             }
         }
