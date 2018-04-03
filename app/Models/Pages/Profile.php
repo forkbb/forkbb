@@ -134,8 +134,6 @@ class Profile extends Page
 
                 $this->c->users->update($curUser);
 
-
-
                 return $this->c->Redirect->page('EditUserProfile',  ['id' => $curUser->id])->message('Profile redirect');
             }
 
@@ -177,7 +175,7 @@ class Profile extends Page
                 'caption'   => \ForkBB\__('Username'),
                 'required'  => true,
                 'pattern'   => '^.{2,25}$',
-                'value'     => $curUser->username,
+                'value'     => isset($v->username) ? $v->username : $curUser->username,
             ];
         } else {
             $fields['username'] = [
@@ -194,7 +192,7 @@ class Profile extends Page
                 'type'      => 'text',
                 'maxlength' => 50,
                 'caption'   => \ForkBB\__('Title'),
-                'value'     => $curUser->title,
+                'value'     => isset($v->title) ? $v->title : $curUser->title,
                 'info'      => \ForkBB\__('Leave blank'),
             ];
         } else {
@@ -259,7 +257,7 @@ class Profile extends Page
                     'type'      => 'text',
                     'maxlength' => 30,
                     'caption'   => \ForkBB\__('Admin note'),
-                    'value'     => $curUser->admin_note,
+                    'value'     => isset($v->admin_note) ? $v->admin_note : $curUser->admin_note,
                 ];
             } elseif ('' != $curUser->admin_note) {
                 $fields['admin_note'] = [
@@ -288,7 +286,7 @@ class Profile extends Page
                 'type'      => 'text',
                 'maxlength' => 40,
                 'caption'   => \ForkBB\__('Realname'),
-                'value'     => $curUser->realname,
+                'value'     => isset($v->realname) ? $v->realname : $curUser->realname,
             ];
         } elseif ('' != $curUser->realname) {
             $fields['realname'] = [
@@ -309,7 +307,7 @@ class Profile extends Page
                 'id'      => 'gender',
                 'class'   => 'block',
                 'type'    => 'radio',
-                'value'   => $curUser->gender,
+                'value'   => isset($v->gender) ? $v->gender : $curUser->gender,
                 'values'  => $genders,
                 'caption' => \ForkBB\__('Gender'),
             ];
@@ -328,7 +326,7 @@ class Profile extends Page
                 'type'      => 'text',
                 'maxlength' => 30,
                 'caption'   => \ForkBB\__('Location'),
-                'value'     => $curUser->location,
+                'value'     => isset($v->location) ? $v->location : $curUser->location,
             ];
         } elseif ('' != $curUser->location) {
             $fields['location'] = [
@@ -386,7 +384,7 @@ class Profile extends Page
                 'id'      => 'email_setting',
                 'class'   => 'block',
                 'type'    => 'radio',
-                'value'   => $curUser->email_setting,
+                'value'   => isset($v->email_setting) ? $v->email_setting : $curUser->email_setting,
                 'values'  => [
                     0 => \ForkBB\__('Display e-mail label'),
                     1 => \ForkBB\__('Hide allow form label'),
@@ -401,7 +399,7 @@ class Profile extends Page
                 'type'      => 'text',
                 'maxlength' => 100,
                 'caption'   => \ForkBB\__('Website'),
-                'value'     => $curUser->url
+                'value'     => isset($v->url) ? $v->url : $curUser->url,
             ];
         } elseif ($rules->viewLinks && $curUser->url) {
             $fields['url'] = [
@@ -429,7 +427,7 @@ class Profile extends Page
                 $fields['signature'] = [
                     'id'      => 'signature',
                     'type'    => 'textarea',
-                    'value'   => $curUser->signature,
+                    'value'   => isset($v->signature) ? $v->signature : $curUser->signature,
                     'caption' => \ForkBB\__('Signature'),
                     'info'    => \ForkBB\__('Sig max size', \ForkBB\num($this->c->config->p_sig_length), \ForkBB\num($this->c->config->p_sig_lines)),
                 ];
