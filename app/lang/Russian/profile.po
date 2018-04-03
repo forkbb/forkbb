@@ -381,8 +381,8 @@ msgstr "Учетная запись администратора не может
 msgid "Gender"
 msgstr "Пол"
 
-msgid "Unknown"
-msgstr "Неизвестно"
+msgid "Do not display"
+msgstr "Не отображать"
 
 msgid "Contact details"
 msgstr "Контактная информация"

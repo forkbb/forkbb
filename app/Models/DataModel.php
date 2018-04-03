@@ -40,7 +40,7 @@ class DataModel extends Model
     {
         foreach ($attrs as $key => $val) {
             $this->{'__' . $key} = $val; //????
-            unset($this->aCalc['key']);
+//            unset($this->aCalc['key']);
         }
 
         $modified = \array_diff(\array_keys($this->modified), \array_keys($attrs));

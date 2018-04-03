@@ -25,6 +25,43 @@ class Profile extends Page
     }
 
     /**
+     * Дополнительная проверка signature
+     *
+     * @param Validator $v
+     * @param string $signature
+     *
+     * @return string
+     */
+    public function vCheckSignature(Validator $v, $signature)
+    {
+        if ('' != $signature) {
+            // после цензуры текст сообщения пустой
+            if (\ForkBB\cens($signature) == '') {
+                $v->addError('No signature after censoring');
+            // количество строк
+            } elseif (\substr_count($signature, "\n") >= $this->c->config->p_sig_lines) {
+                $v->addError('Signature has too many lines');
+            // текст сообщения только заглавными буквами
+            } elseif (! $this->c->user->isAdmin
+                && '0' == $this->c->config->p_sig_all_caps
+                && \preg_match('%\p{Lu}%u', $signature)
+                && ! \preg_match('%\p{Ll}%u', $signature)
+            ) {
+                $v->addError('All caps signature');
+            // проверка парсером
+            } else {
+                $signature = $this->c->Parser->prepare($signature, true); //????
+
+                foreach($this->c->Parser->getErrors() as $error) {
+                    $v->addError($error);
+                }
+            }
+        }
+
+        return $signature;
+    }
+
+    /**
      * Подготавливает данные для шаблона просмотра профиля
      *
      * @param array $args
@@ -56,8 +93,9 @@ class Profile extends Page
         if ($isEdit && 'POST' === $method) {
             $v = $this->c->Validator->reset()
                 ->addValidators([
-                    'check_username' => [$this->c->Validators, 'vCheckUsername'],
-                    'no_url'         => [$this->c->Validators, 'vNoURL'],
+                    'no_url'          => [$this->c->Validators, 'vNoURL'],
+                    'check_username'  => [$this->c->Validators, 'vCheckUsername'],
+                    'check_signature' => [$this, 'vCheckSignature'],
                 ])->addRules([
                     'token'         => 'token:EditUserProfile',
                     'username'      => $rules->rename? 'required|string:trim,spaces|min:2|max:25|login|check_username' : 'absent',
@@ -69,7 +107,7 @@ class Profile extends Page
                     'location'      => 'string:trim|max:30|no_url',
                     'email_setting' => 'required|integer|in:0,1,2',
                     'url'           => $rules->editLinks ? 'string:trim|max:100' : 'absent',
-                    'signature'     => $rules->useSignature ? 'string:trim|max:' . $this->c->config->p_sig_length . '' : 'absent',
+                    'signature'     => $rules->useSignature ? "string:trim|max:{$this->c->config->p_sig_length}|check_signature" : 'absent',
                 ])->addAliases([
                 ])->addArguments([
                     'token'                   => ['id' => $curUser->id],
@@ -85,17 +123,23 @@ class Profile extends Page
                         ->rewrite(true)
                         ->resize((int) $this->c->config->o_avatars_width, (int) $this->c->config->o_avatars_height)
                         ->toFile($this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$curUser->id}.(jpg|png|gif)");
-#                    var_dump(
-#                        $v->upload_avatar->path(),
-#                        $v->upload_avatar->name(),
-#                        $v->upload_avatar->ext(),
-#                        $v->upload_avatar->size(),
-#                       $v->upload_avatar->error()
-#                    );
                 }
+
+                $data = $v->getData();
+                unset($data['token'], $data['upload_avatar']);
+
+                foreach ($data as $attr => $value) {
+                    $curUser->$attr = $value;
+                }
+
+                $this->c->users->update($curUser);
+
+
+
+                return $this->c->Redirect->page('EditUserProfile',  ['id' => $curUser->id])->message('Profile redirect');
             }
 
-            $this->fIswev  = $v->getErrors();
+            $this->fIswev = $v->getErrors();
         }
 
         $clSuffix = $isEdit ? '-edit' : '';
@@ -256,7 +300,7 @@ class Profile extends Page
             ];
         }
         $genders = [
-            0 => \ForkBB\__('Unknown'),
+            0 => \ForkBB\__('Do not display'),
             1 => \ForkBB\__('Male'),
             2 => \ForkBB\__('Female'),
         ];
@@ -490,7 +534,7 @@ class Profile extends Page
         if ($isEdit) {
             $this->robots    = 'noindex';
             $this->crumbs    = $this->crumbs(
-                \ForkBB\__('Editing profile'),
+                [$this->c->Router->link('EditUserProfile',  ['id' => $curUser->id]), \ForkBB\__('Editing profile')],
                 [$curUser->link, \ForkBB\__('User %s', $curUser->username)],
                 [$this->c->Router->link('Userlist'), \ForkBB\__('User list')]
             );

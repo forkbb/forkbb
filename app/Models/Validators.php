@@ -29,12 +29,12 @@ class Validators
      *
      * @param Validator $v
      * @param string $username
-     * @param string $data
+     * @param string $z
      * @param mixed $originalUser
      *
      * @return string
      */
-    public function vCheckUsername(Validator $v, $username, $zero, $originalUser)
+    public function vCheckUsername(Validator $v, $username, $z, $originalUser)
     {
         if ($originalUser instanceof User) {
             $id   = $originalUser->id;

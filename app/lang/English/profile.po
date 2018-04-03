@@ -381,8 +381,8 @@ msgstr "Administrators cannot be deleted. In order to delete this user, you must
 msgid "Gender"
 msgstr "Gender"
 
-msgid "Unknown"
-msgstr "Unknown"
+msgid "Do not display"
+msgstr "Do not display"
 
 msgid "Contact details"
 msgstr "Contact details"
