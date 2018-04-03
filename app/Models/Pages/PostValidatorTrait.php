@@ -47,11 +47,8 @@ trait PostValidatorTrait
             && ! \preg_match('%\p{Ll}%u', $subject)
         ) {
             $v->addError('All caps subject');
-        } elseif (! $executive
-            && '1' != $this->user->g_post_links
-            && \preg_match('%https?://|www\.%ui', $subject)
-        ) {
-            $v->addError('You can not post links in subject');
+        } elseif (! $executive) {
+            $this->c->Validators->vNoURL($v, $subject, null, null);
         }
         return $subject;
     }

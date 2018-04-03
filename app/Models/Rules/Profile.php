@@ -87,4 +87,14 @@ class Profile extends Rules
     {
         return '1' == $this->c->config->o_signatures;
     }
+
+    protected function getviewLinks()
+    {
+        return $this->user->isAdmMod || '1' == $this->curUser->g_post_links;
+    }
+
+    protected function geteditLinks()
+    {
+        return $this->admin || (($this->moderator || $this->my) && '1' == $this->user->g_post_links);
+    }
 }

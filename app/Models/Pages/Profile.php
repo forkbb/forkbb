@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Core\Image;
+use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\User\Model as User;
 
@@ -56,17 +57,18 @@ class Profile extends Page
             $v = $this->c->Validator->reset()
                 ->addValidators([
                     'check_username' => [$this->c->Validators, 'vCheckUsername'],
+                    'no_url'         => [$this->c->Validators, 'vNoURL'],
                 ])->addRules([
                     'token'         => 'token:EditUserProfile',
                     'username'      => $rules->rename? 'required|string:trim,spaces|min:2|max:25|login|check_username' : 'absent',
-                    'title'         => $rules->setTitle ? 'string:trim|max:50' : 'absent',
+                    'title'         => $rules->setTitle ? 'string:trim|max:50|no_url' : 'absent',
                     'upload_avatar' => $rules->useAvatar ? "image|max:{$this->c->Files->maxImgSize('K')}" : 'absent',
                     'admin_note'    => $this->user->isAdmMod ? 'string:trim|max:30' : 'absent',
-                    'realname'      => 'string:trim|max:40',
+                    'realname'      => 'string:trim|max:40|no_url',
                     'gender'        => 'required|integer|in:0,1,2',
-                    'location'      => 'string:trim|max:30',
+                    'location'      => 'string:trim|max:30|no_url',
                     'email_setting' => 'required|integer|in:0,1,2',
-                    'url'           => 'string:trim|max:100',
+                    'url'           => $rules->editLinks ? 'string:trim|max:100' : 'absent',
                     'signature'     => $rules->useSignature ? 'string:trim|max:' . $this->c->config->p_sig_length . '' : 'absent',
                 ])->addAliases([
                 ])->addArguments([
@@ -349,7 +351,7 @@ class Profile extends Page
                 'caption' => \ForkBB\__('Email settings label'),
             ];
         }
-        if ($isEdit) {
+        if ($rules->editLinks && $isEdit) {
             $fields['url'] = [
                 'id'        => 'website',
                 'type'      => 'text',
@@ -357,7 +359,7 @@ class Profile extends Page
                 'caption'   => \ForkBB\__('Website'),
                 'value'     => $curUser->url
             ];
-        } elseif ($curUser->url) {
+        } elseif ($rules->viewLinks && $curUser->url) {
             $fields['url'] = [
                 'id'      => 'website',
                 'class'   => 'pline',

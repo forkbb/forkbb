@@ -66,4 +66,23 @@ class Validators
         return $username;
     }
 
+    /**
+     * Дополнительная проверка на отсутствие url в значении
+     *
+     * @param Validator $v
+     * @param mixed $value
+     * @param string $flag
+     *
+     * @return mixed
+     */
+    public function vNoURL(Validator $v, $value, $flag)
+    {
+        $flag = empty($flag) || '1' != $this->c->user->g_post_links;
+
+        if ($flag && \preg_match('%https?://|www\.%i', $value)) {
+            $v->addError('The :alias contains a link');
+        }
+        return $value;
+    }
+
 }
