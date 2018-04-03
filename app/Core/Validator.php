@@ -98,7 +98,7 @@ class Validator
     }
 
     /**
-     * Сброс настроек
+     * Сбрасывает настройки к начальным состояниям
      *
      * @return Validator
      */
@@ -139,7 +139,7 @@ class Validator
     }
 
     /**
-     * Добавление новых валидаторов
+     * Добавляет валидаторы
      *
      * @param array $validators
      *
@@ -152,7 +152,7 @@ class Validator
     }
 
     /**
-     * Добавление правил проверки
+     * Добавляет правила
      *
      * @param array $list
      *
@@ -170,7 +170,7 @@ class Validator
             }
             $rules = [];
             // перебор правил для текущего поля
-            foreach (\explode('|', $raw) as $rule) { //???? нужно экоанирование для разделителей
+            foreach (\explode('|', $raw) as $rule) { //???? нужно экранирование для разделителей
                  $tmp = \explode(':', $rule, 2);
                  if (empty($this->validators[$tmp[0]])) {
                      throw new RuntimeException($tmp[0] . ' validator not found');
@@ -188,7 +188,7 @@ class Validator
     }
 
     /**
-     * Добавление дополнительных аргументов для конкретных "имя поля"."имя правила".
+     * Добавляет дополнительные аргументы для конкретных "имя поля"."имя правила".
      *
      * @param array $arguments
      *
@@ -201,7 +201,7 @@ class Validator
     }
 
     /**
-     * Добавление сообщений для конкретных "имя поля"."имя правила".
+     * Добавляет сообщения для конкретных "имя поля"."имя правила".
      *
      * @param array $messages
      *
@@ -214,7 +214,7 @@ class Validator
     }
 
     /**
-     * Добавление псевдонимов имен полей для сообщений об ошибках
+     * Добавляет псевдонимы имен полей для сообщений об ошибках
      *
      * @param array $aliases
      *
@@ -227,7 +227,7 @@ class Validator
     }
 
     /**
-     * Проверка данных
+     * Проверяет данные
      *
      * @param array $raw
      *
@@ -300,7 +300,7 @@ class Validator
     }
 
     /**
-     * Проверка значения списком правил
+     * Проверяет значение списком правил
      *
      * @param mixed $value
      * @param array $rules
@@ -331,7 +331,7 @@ class Validator
     }
 
     /**
-     * Добавление ошибки
+     * Добавляет ошибку
      *
      * @param mixed $error
      * @param string $type
@@ -371,7 +371,7 @@ class Validator
     }
 
     /**
-     * Получение дополнительных аргументов
+     * Возвращает дополнительные аргументы
      *
      * @param string $field
      * @param string $rule
@@ -430,6 +430,16 @@ class Validator
         return $this->errors;
     }
 
+    /**
+     * Выполняет проверку значения по правилу
+     *
+     * @param Validator $first   ссылка на валидатор
+     * @param mixed $second      проверяемое значение
+     * @param mixed $third       атрибут правила
+     * @param mixed $fourth      дополнительный аргумент
+     *
+     * @return mixed
+     */
     protected function vAbsent($v, $value, $attr)
     {
         if (null !== $value) {

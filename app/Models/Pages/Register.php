@@ -21,7 +21,7 @@ class Register extends Page
         $v = $this->c->Validator->reset()
             ->addValidators([
                 'check_email'    => [$this, 'vCheckEmail'],
-                'check_username' => [$this, 'vCheckUsername'],
+                'check_username' => [$this->c->Validators, 'vCheckUsername'],
             ])->addRules([
                 'token'    => 'token:RegisterForm',
                 'agree'    => 'required|token:Register',
@@ -85,34 +85,6 @@ class Register extends Page
             $v->addError('Dupe email');
         }
         return $email;
-    }
-
-    /**
-     * Дополнительная проверка username
-     *
-     * @param Validator $v
-     * @param string $username
-     *
-     * @return string
-     */
-    public function vCheckUsername(Validator $v, $username)
-    {
-        $user = $this->c->users->create(['username' => $username]);
-
-        // username = Гость
-        if (\preg_match('%^(guest|' . \preg_quote(\ForkBB\__('Guest'), '%') . ')$%iu', $username)) { // ???? а зачем?
-            $v->addError('Username guest');
-        // цензура
-        } elseif ($this->c->censorship->censor($username) !== $username) {
-            $v->addError('Username censor');
-        // username забанен
-        } elseif ($this->c->bans->isBanned($user) > 0) {
-            $v->addError('Banned username');
-        // есть пользователь с похожим именем
-        } elseif (empty($v->getErrors()) && ! $this->c->users->isUniqueName($user)) {
-            $v->addError('Username not unique');
-        }
-        return $username;
     }
 
     /**

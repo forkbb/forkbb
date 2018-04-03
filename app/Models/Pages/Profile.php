@@ -55,12 +55,23 @@ class Profile extends Page
         if ($isEdit && 'POST' === $method) {
             $v = $this->c->Validator->reset()
                 ->addValidators([
+                    'check_username' => [$this->c->Validators, 'vCheckUsername'],
                 ])->addRules([
                     'token'         => 'token:EditUserProfile',
-                    'upload_avatar' => $rules->useAvatar ? 'image|max:' . $this->c->Files->maxImgSize('K') : 'absent',
+                    'username'      => $rules->rename? 'required|string:trim,spaces|min:2|max:25|login|check_username' : 'absent',
+                    'title'         => $rules->setTitle ? 'string:trim|max:50' : 'absent',
+                    'upload_avatar' => $rules->useAvatar ? "image|max:{$this->c->Files->maxImgSize('K')}" : 'absent',
+                    'admin_note'    => $this->user->isAdmMod ? 'string:trim|max:30' : 'absent',
+                    'realname'      => 'string:trim|max:40',
+                    'gender'        => 'required|integer|in:0,1,2',
+                    'location'      => 'string:trim|max:30',
+                    'email_setting' => 'required|integer|in:0,1,2',
+                    'url'           => 'string:trim|max:100',
+                    'signature'     => $rules->useSignature ? 'string:trim|max:' . $this->c->config->p_sig_length . '' : 'absent',
                 ])->addAliases([
                 ])->addArguments([
-                    'token'         => ['id' => $curUser->id],
+                    'token'                   => ['id' => $curUser->id],
+                    'username.check_username' => $curUser,
                 ])->addMessages([
                 ]);
 
@@ -269,7 +280,7 @@ class Profile extends Page
             $fields['location'] = [
                 'id'        => 'location',
                 'type'      => 'text',
-                'maxlength' => 40,
+                'maxlength' => 30,
                 'caption'   => \ForkBB\__('Location'),
                 'value'     => $curUser->location,
             ];
@@ -366,7 +377,7 @@ class Profile extends Page
         }
 
         // подпись
-        if ('1' == $this->c->config->o_signatures) {
+        if ($rules->useSignature) {
             $fields = [];
             if ($isEdit) {
                 $fields['signature'] = [

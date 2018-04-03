@@ -117,6 +117,7 @@ return [
             'file'  => '%MAX_FILE_SIZE%',
             'img'   => '%MAX_IMG_SIZE%',
         ],
+        'Validators' => \ForkBB\Models\Validators::class,
 
     ],
     'multiple'  => [

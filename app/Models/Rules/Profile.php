@@ -82,4 +82,9 @@ class Profile extends Rules
     {
         return '1' == $this->c->config->o_avatars;
     }
+
+    protected function getuseSignature()
+    {
+        return '1' == $this->c->config->o_signatures;
+    }
 }

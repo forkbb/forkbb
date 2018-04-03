@@ -28,32 +28,6 @@ trait PostValidatorTrait
     }
 
     /**
-     * Дополнительная проверка username
-     *
-     * @param Validator $v
-     * @param string $username
-     *
-     * @return string
-     */
-    public function vCheckUsername(Validator $v, $username)
-    {
-        $user = $this->c->users->create();
-        $user->username = $username;
-
-        // username = Гость
-        if (\preg_match('%^(guest|' . \preg_quote(\ForkBB\__('Guest'), '%') . ')$%iu', $username)) { // ???? а зачем?
-            $v->addError('Username guest');
-        // цензура
-        } elseif (\ForkBB\cens($user->username) !== $username) {
-            $v->addError('Username censor');
-        // username забанен
-        } elseif ($this->c->bans->isBanned($user) > 0) {
-            $v->addError('Banned username');
-        }
-        return $username;
-    }
-
-    /**
      * Дополнительная проверка subject
      *
      * @param Validator $v
@@ -200,7 +174,7 @@ trait PostValidatorTrait
         $v = $this->c->Validator->reset()
             ->addValidators([
                 'check_email'    => [$this, 'vCheckEmail'],
-                'check_username' => [$this, 'vCheckUsername'],
+                'check_username' => [$this->c->Validators, 'vCheckUsername'],
                 'check_subject'  => [$this, 'vCheckSubject'],
                 'check_message'  => [$this, 'vCheckMessage'],
                 'check_timeout'  => [$this, 'vCheckTimeout'],

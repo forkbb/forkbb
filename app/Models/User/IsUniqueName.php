@@ -17,10 +17,11 @@ class IsUniqueName extends Action
     public function isUniqueName(User $user)
     {
         $vars = [
-            ':name' => $user->username,
-            ':other' => \preg_replace('%[^\p{L}\p{N}]%u', '', $user->username), //????
+            ':id'    => (int) $user->id,
+            ':name'  => $user->username,
+            ':other' => \preg_replace('%[^\p{L}\p{N}]%u', '', $user->username), //???? что за бред :)
         ];
-        $result = $this->c->DB->query('SELECT username FROM ::users WHERE LOWER(username)=LOWER(?s:name) OR LOWER(username)=LOWER(?s:other)', $vars)->fetchAll();
+        $result = $this->c->DB->query('SELECT username FROM ::users WHERE (LOWER(username)=LOWER(?s:name) OR LOWER(username)=LOWER(?s:other)) AND id!=?i:id', $vars)->fetchAll();
         return ! \count($result);
     }
 }
