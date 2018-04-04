@@ -16,6 +16,7 @@ class DataModel extends Model
 
     /**
      * Устанавливает значения для свойств
+     * Флаги модификации свойст сброшены
      *
      * @param array $attrs
      *
@@ -30,23 +31,24 @@ class DataModel extends Model
     }
 
     /**
-     * Перезапись свойст модели
+     * Перезаписывает свойства модели
+     * Флаги модификации свойств сбрасываются/устанавливаются в зависимости от второго параметра
      *
      * @param array $attrs
+     * @param bool $setFlags
      *
      * @return DataModel
      */
-    public function replAttrs(array $attrs)
+    public function replAttrs(array $attrs, $setFlags = false)
     {
-        foreach ($attrs as $key => $val) {
-            $this->{'__' . $key} = $val; //????
-//            unset($this->aCalc['key']);
-        }
+        foreach ($attrs as $name => $value) {
+            $this->__set($name, $value);
 
-        $modified = \array_diff(\array_keys($this->modified), \array_keys($attrs));
-        $this->modified = [];
-        foreach ($modified as $key) {
-            $this->modified[$key] = true;
+            if (! $setFlags) {
+//                $this->modified[$name] = true;
+//            } else {
+                unset($this->modified[$name]);
+            }
         }
 
         return $this;

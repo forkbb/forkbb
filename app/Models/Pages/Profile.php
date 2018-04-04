@@ -91,6 +91,42 @@ class Profile extends Page
         $this->c->Lang->load('profile');
 
         if ($isEdit && 'POST' === $method) {
+            if ($rules->rename) {
+                $ruleUsername = 'required|string:trim,spaces|min:2|max:25|login|check_username';
+            } else {
+                $ruleUsername = 'absent';
+            }
+
+            if ($rules->setTitle) {
+                $ruleTitle = 'string:trim|max:50|no_url';
+            } else {
+                $ruleTitle = 'absent';
+            }
+
+            if ($rules->useAvatar) {
+                $ruleAvatar = "image|max:{$this->c->Files->maxImgSize('K')}";
+            } else {
+                $ruleAvatar = 'absent';
+            }
+
+            if ($this->user->isAdmMod) {
+                $ruleAdminNote = 'string:trim|max:30';
+            } else {
+                $ruleAdminNote = 'absent';
+            }
+
+            if ($rules->editWebsite) {
+                $ruleWebsite = 'string:trim|max:100'; // ???? валидация url?
+            } else {
+                $ruleWebsite = 'absent';
+            }
+
+            if ($rules->useSignature) {
+                $ruleSignature = "string:trim|max:{$this->c->config->p_sig_length}|check_signature";
+            } else {
+                $ruleSignature = 'absent';
+            }
+
             $v = $this->c->Validator->reset()
                 ->addValidators([
                     'no_url'          => [$this->c->Validators, 'vNoURL'],
@@ -98,24 +134,38 @@ class Profile extends Page
                     'check_signature' => [$this, 'vCheckSignature'],
                 ])->addRules([
                     'token'         => 'token:EditUserProfile',
-                    'username'      => $rules->rename? 'required|string:trim,spaces|min:2|max:25|login|check_username' : 'absent',
-                    'title'         => $rules->setTitle ? 'string:trim|max:50|no_url' : 'absent',
-                    'upload_avatar' => $rules->useAvatar ? "image|max:{$this->c->Files->maxImgSize('K')}" : 'absent',
-                    'admin_note'    => $this->user->isAdmMod ? 'string:trim|max:30' : 'absent',
+                    'username'      => $ruleUsername,
+                    'title'         => $ruleTitle,
+                    'upload_avatar' => $ruleAvatar,
+                    'admin_note'    => $ruleAdminNote,
                     'realname'      => 'string:trim|max:40|no_url',
                     'gender'        => 'required|integer|in:0,1,2',
                     'location'      => 'string:trim|max:30|no_url',
                     'email_setting' => 'required|integer|in:0,1,2',
-                    'url'           => $rules->editLinks ? 'string:trim|max:100' : 'absent',
-                    'signature'     => $rules->useSignature ? "string:trim|max:{$this->c->config->p_sig_length}|check_signature" : 'absent',
+                    'url'           => $ruleWebsite,
+                    'signature'     => $ruleSignature,
                 ])->addAliases([
+                    'username'      => 'Username',
+                    'title'         => 'Title',
+                    'upload_avatar' => 'New avatar',
+                    'admin_note'    => 'Admin note',
+                    'realname'      => 'Realname',
+                    'gender'        => 'Gender',
+                    'location'      => 'Location',
+                    'email_setting' => 'Email settings label',
+                    'url'           => 'Website',
+                    'signature'     => 'Signature',
                 ])->addArguments([
                     'token'                   => ['id' => $curUser->id],
                     'username.check_username' => $curUser,
                 ])->addMessages([
                 ]);
 
-            if ($v->validation($_FILES + $_POST)) {
+            $valid = $v->validation($_FILES + $_POST);
+            $data  = $v->getData();
+            unset($data['token'], $data['upload_avatar']);
+
+            if ($valid) {
                 if ($v->upload_avatar instanceof Image) {
                     $curUser->deleteAvatar();
                     $v->upload_avatar
@@ -125,19 +175,16 @@ class Profile extends Page
                         ->toFile($this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$curUser->id}.(jpg|png|gif)");
                 }
 
-                $data = $v->getData();
-                unset($data['token'], $data['upload_avatar']);
-
-                foreach ($data as $attr => $value) {
-                    $curUser->$attr = $value;
-                }
+                $curUser->replAttrs($data, true);
 
                 $this->c->users->update($curUser);
 
                 return $this->c->Redirect->page('EditUserProfile',  ['id' => $curUser->id])->message('Profile redirect');
-            }
+            } else {
+                $this->fIswev = $v->getErrors();
 
-            $this->fIswev = $v->getErrors();
+                $curUser->replAttrs($data);
+            }
         }
 
         $clSuffix = $isEdit ? '-edit' : '';
@@ -175,7 +222,7 @@ class Profile extends Page
                 'caption'   => \ForkBB\__('Username'),
                 'required'  => true,
                 'pattern'   => '^.{2,25}$',
-                'value'     => isset($v->username) ? $v->username : $curUser->username,
+                'value'     => $curUser->username,
             ];
         } else {
             $fields['username'] = [
@@ -192,7 +239,7 @@ class Profile extends Page
                 'type'      => 'text',
                 'maxlength' => 50,
                 'caption'   => \ForkBB\__('Title'),
-                'value'     => isset($v->title) ? $v->title : $curUser->title,
+                'value'     => $curUser->title,
                 'info'      => \ForkBB\__('Leave blank'),
             ];
         } else {
@@ -257,7 +304,7 @@ class Profile extends Page
                     'type'      => 'text',
                     'maxlength' => 30,
                     'caption'   => \ForkBB\__('Admin note'),
-                    'value'     => isset($v->admin_note) ? $v->admin_note : $curUser->admin_note,
+                    'value'     => $curUser->admin_note,
                 ];
             } elseif ('' != $curUser->admin_note) {
                 $fields['admin_note'] = [
@@ -286,7 +333,7 @@ class Profile extends Page
                 'type'      => 'text',
                 'maxlength' => 40,
                 'caption'   => \ForkBB\__('Realname'),
-                'value'     => isset($v->realname) ? $v->realname : $curUser->realname,
+                'value'     => $curUser->realname,
             ];
         } elseif ('' != $curUser->realname) {
             $fields['realname'] = [
@@ -307,7 +354,7 @@ class Profile extends Page
                 'id'      => 'gender',
                 'class'   => 'block',
                 'type'    => 'radio',
-                'value'   => isset($v->gender) ? $v->gender : $curUser->gender,
+                'value'   => $curUser->gender,
                 'values'  => $genders,
                 'caption' => \ForkBB\__('Gender'),
             ];
@@ -326,7 +373,7 @@ class Profile extends Page
                 'type'      => 'text',
                 'maxlength' => 30,
                 'caption'   => \ForkBB\__('Location'),
-                'value'     => isset($v->location) ? $v->location : $curUser->location,
+                'value'     => $curUser->location,
             ];
         } elseif ('' != $curUser->location) {
             $fields['location'] = [
@@ -384,7 +431,7 @@ class Profile extends Page
                 'id'      => 'email_setting',
                 'class'   => 'block',
                 'type'    => 'radio',
-                'value'   => isset($v->email_setting) ? $v->email_setting : $curUser->email_setting,
+                'value'   => $curUser->email_setting,
                 'values'  => [
                     0 => \ForkBB\__('Display e-mail label'),
                     1 => \ForkBB\__('Hide allow form label'),
@@ -393,7 +440,7 @@ class Profile extends Page
                 'caption' => \ForkBB\__('Email settings label'),
             ];
         }
-        if ($rules->editLinks && $isEdit) {
+        if ($rules->editWebsite && $isEdit) {
             $fields['url'] = [
                 'id'        => 'website',
                 'type'      => 'text',
@@ -401,7 +448,7 @@ class Profile extends Page
                 'caption'   => \ForkBB\__('Website'),
                 'value'     => isset($v->url) ? $v->url : $curUser->url,
             ];
-        } elseif ($rules->viewLinks && $curUser->url) {
+        } elseif ($rules->viewWebsite && $curUser->url) {
             $fields['url'] = [
                 'id'      => 'website',
                 'class'   => 'pline',
@@ -427,7 +474,7 @@ class Profile extends Page
                 $fields['signature'] = [
                     'id'      => 'signature',
                     'type'    => 'textarea',
-                    'value'   => isset($v->signature) ? $v->signature : $curUser->signature,
+                    'value'   => $curUser->signature,
                     'caption' => \ForkBB\__('Signature'),
                     'info'    => \ForkBB\__('Sig max size', \ForkBB\num($this->c->config->p_sig_length), \ForkBB\num($this->c->config->p_sig_lines)),
                 ];

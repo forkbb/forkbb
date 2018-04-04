@@ -414,7 +414,7 @@ class Validator
      */
     public function getData()
     {
-        if (empty($this->result)) {
+        if (empty($this->status)) {
             throw new RuntimeException('Data not found');
         }
         return $this->result;
