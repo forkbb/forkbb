@@ -98,7 +98,7 @@
           <div class="f-post-right f-post-main">
             {!! $post->html() !!}
           </div>
-    @if ($p->user->showSignature && $post->user->signature)
+    @if ($p->user->showSignature && '' != $post->user->signature)
           <div class="f-post-right f-post-signature">
             <hr>
             {!! $post->user->htmlSign !!}

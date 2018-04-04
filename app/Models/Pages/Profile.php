@@ -184,7 +184,11 @@ class Profile extends Page
 
                 $this->curUser->replAttrs($data, true);
 
+                $this->c->DB->beginTransaction();
+
                 $this->c->users->update($this->curUser);
+
+                $this->c->DB->commit();
 
                 return $this->c->Redirect->page('EditUserProfile',  ['id' => $this->curUser->id])->message('Profile redirect');
             } else {
@@ -646,10 +650,10 @@ class Profile extends Page
                 'id'      => 'ip',
                 'class'   => 'pline',
                 'type'    => 'link',
-                'caption' => 'IP',
+                'caption' => \ForkBB\__('IP'),
                 'value'   => $this->curUser->registration_ip,
                 'href'    => $this->c->Router->link('', ['id' => $this->curUser->id]), // ????
-                'title'   => 'IP',
+                'title'   => \ForkBB\__('IP title'),
             ];
         }
         $form['sets'][] = [
