@@ -58,6 +58,11 @@ class Profile extends Rules
             );
     }
 
+    protected function geteditEmail()
+    {
+        return $this->admin || $this->my; // ???? разрешать ли модераторам менять email?
+    }
+
     protected function getviewLastVisit()
     {
         return $this->my || $this->user->isAdmMod;

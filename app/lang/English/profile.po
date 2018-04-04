@@ -425,3 +425,21 @@ msgstr "IP"
 
 msgid "IP title"
 msgstr "IP"
+
+msgid "No signature after censoring"
+msgstr "Text of signature was deleted after censoring"
+
+msgid "Signature has too many lines"
+msgstr "Signature has too many lines"
+
+msgid "All caps signature"
+msgstr "Signature has only capital letters"
+
+msgid "To change email"
+msgstr "Change email address"
+
+msgid "Your password"
+msgstr "Your password"
+
+msgid "Invalid password"
+msgstr "Invalid password"

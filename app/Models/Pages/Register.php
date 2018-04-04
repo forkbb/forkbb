@@ -20,7 +20,7 @@ class Register extends Page
 
         $v = $this->c->Validator->reset()
             ->addValidators([
-                'check_email'    => [$this, 'vCheckEmail'],
+                'check_email'    => [$this->c->Validators, 'vCheckEmail'],
                 'check_username' => [$this->c->Validators, 'vCheckUsername'],
             ])->addRules([
                 'token'    => 'token:RegisterForm',
@@ -65,26 +65,6 @@ class Register extends Page
         $this->username   = $v->username;
 
         return $this;
-    }
-
-    /**
-     * Дополнительная проверка email
-     *
-     * @param Validator $v
-     * @param string $email
-     *
-     * @return string
-     */
-    public function vCheckEmail(Validator $v, $email)
-    {
-        // email забанен
-        if ($this->c->bans->isBanned($this->c->users->create(['email' => $email])) > 0) {
-            $v->addError('Banned email');
-        // найден хотя бы 1 юзер с таким же email
-        } elseif (empty($v->getErrors()) && 0 !== $this->c->users->load($email, 'email')) {
-            $v->addError('Dupe email');
-        }
-        return $email;
     }
 
     /**

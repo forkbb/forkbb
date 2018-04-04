@@ -67,6 +67,43 @@ class Validators
     }
 
     /**
+     * Дополнительная проверка email
+     * WARNING!!!
+     * Если передан гость 4-ым параметром, то проверка уникальности email не проводится
+     *
+     * @param Validator $v
+     * @param string $email
+     * @param string $z
+     * @param mixed $originalUser
+     *
+     * @return string
+     */
+    public function vCheckEmail(Validator $v, $email, $z, $originalUser)
+    {
+        // email забанен
+        if ($this->c->bans->isBanned($this->c->users->create(['email' => $email])) > 0) {
+            $v->addError('Banned email');
+        // проверка email на уникальность
+        } elseif (empty($v->getErrors())) {
+            $id = null;
+
+            if ($originalUser instanceof User && ! $originalUser->isGuest) {
+                $id = $originalUser->id;
+            } elseif (! $originalUser instanceof User) {
+                $id = true;
+            }
+
+            if ($id) {
+                $user = $this->c->users->load($email, 'email');
+                if (($user instanceof User && $id !== $user->id) || (! $user instanceof User && 0 !== $user)) {
+                    $v->addError('Dupe email');
+                }
+            }
+        }
+        return $email;
+    }
+
+    /**
      * Дополнительная проверка на отсутствие url в значении
      *
      * @param Validator $v

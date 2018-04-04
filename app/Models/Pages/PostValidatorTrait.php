@@ -8,26 +8,6 @@ use ForkBB\Models\Model;
 trait PostValidatorTrait
 {
     /**
-     * Дополнительная проверка email
-     *
-     * @param Validator $v
-     * @param string $email
-     *
-     * @return string
-     */
-    public function vCheckEmail(Validator $v, $email)
-    {
-        $user = $this->c->users->create();
-        $user->email = $email;
-
-        // email забанен
-        if ($this->c->bans->isBanned($user) > 0) {
-            $v->addError('Banned email');
-        }
-        return $email;
-    }
-
-    /**
      * Дополнительная проверка subject
      *
      * @param Validator $v
@@ -170,7 +150,7 @@ trait PostValidatorTrait
 
         $v = $this->c->Validator->reset()
             ->addValidators([
-                'check_email'    => [$this, 'vCheckEmail'],
+                'check_email'    => [$this->c->Validators, 'vCheckEmail'],
                 'check_username' => [$this->c->Validators, 'vCheckUsername'],
                 'check_subject'  => [$this, 'vCheckSubject'],
                 'check_message'  => [$this, 'vCheckMessage'],
@@ -196,6 +176,7 @@ trait PostValidatorTrait
                 'token'                 => $args,
                 'subject.check_subject' => $executive,
                 'message.check_message' => $executive,
+                'email.check_email'     => $this->user,
             ])->addMessages([
                 'username.login' => 'Login format',
             ]);

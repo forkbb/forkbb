@@ -83,11 +83,14 @@ class Routing
                 $r->add('GET',           '/user/{id:[2-9]|[1-9]\d+}/{name}',       'Profile:view',   'User');
                 $r->add(['GET', 'POST'], '/user/{id:[2-9]|[1-9]\d+}/edit/profile', 'Profile:edit',   'EditUserProfile');
                 $r->add(['GET', 'POST'], '/user/{id:[2-9]|[1-9]\d+}/edit/config',  'Profile:config', 'EditBoardConfig');
+                $r->add(['GET', 'POST'], '/user/{id:[2-9]|[1-9]\d+}/change/email', 'Profile:email',  'ChangeUserEmail');
+
             } elseif (! $user->isGuest) {
                 // только свой профиль
                 $r->add('GET',           '/user/{id:' . $user->id . '}/{name}',       'Profile:view',   'User');
                 $r->add(['GET', 'POST'], '/user/{id:' . $user->id . '}/edit/profile', 'Profile:edit',   'EditUserProfile');
                 $r->add(['GET', 'POST'], '/user/{id:' . $user->id . '}/edit/config',  'Profile:config', 'EditBoardConfig');
+                $r->add(['GET', 'POST'], '/user/{id:' . $user->id . '}/change/email', 'Profile:email',  'ChangeUserEmail');
             }
             // пометка разделов прочитанными
             if (! $user->isGuest) {

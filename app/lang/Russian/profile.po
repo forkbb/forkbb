@@ -100,10 +100,10 @@ msgid "Email instructions"
 msgstr "На новый почтовый адрес будет отправлено письмо со ссылкой для активации. Вы должны будете перейти по ссылке, указанной в письме, для завершения процедуры изменения параметров."
 
 msgid "Change email"
-msgstr "Изменение почтового адреса"
+msgstr "Изменение адреса электронной почты"
 
 msgid "New email"
-msgstr "Новый почтовый адрес"
+msgstr "Новый email"
 
 msgid "Avatars disabled"
 msgstr "Администратор выключил использование аватар."
@@ -425,3 +425,21 @@ msgstr "IP"
 
 msgid "IP title"
 msgstr "IP"
+
+msgid "No signature after censoring"
+msgstr "Весь текст подписи удален после цензуры"
+
+msgid "Signature has too many lines"
+msgstr "В подписи слишком много строк"
+
+msgid "All caps signature"
+msgstr "Текст подписи содержит только заглавные буквы"
+
+msgid "To change email"
+msgstr "Изменить адрес электронной почты"
+
+msgid "Your password"
+msgstr "Ваш пароль"
+
+msgid "Invalid password"
+msgstr "Неверный пароль"

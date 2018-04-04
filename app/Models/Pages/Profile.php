@@ -25,43 +25,6 @@ class Profile extends Page
     }
 
     /**
-     * Дополнительная проверка signature
-     *
-     * @param Validator $v
-     * @param string $signature
-     *
-     * @return string
-     */
-    public function vCheckSignature(Validator $v, $signature)
-    {
-        if ('' != $signature) {
-            // после цензуры текст сообщения пустой
-            if (\ForkBB\cens($signature) == '') {
-                $v->addError('No signature after censoring');
-            // количество строк
-            } elseif (\substr_count($signature, "\n") >= $this->c->config->p_sig_lines) {
-                $v->addError('Signature has too many lines');
-            // текст сообщения только заглавными буквами
-            } elseif (! $this->c->user->isAdmin
-                && '0' == $this->c->config->p_sig_all_caps
-                && \preg_match('%\p{Lu}%u', $signature)
-                && ! \preg_match('%\p{Ll}%u', $signature)
-            ) {
-                $v->addError('All caps signature');
-            // проверка парсером
-            } else {
-                $signature = $this->c->Parser->prepare($signature, true); //????
-
-                foreach($this->c->Parser->getErrors() as $error) {
-                    $v->addError($error);
-                }
-            }
-        }
-
-        return $signature;
-    }
-
-    /**
      * Подготавливает данные для шаблона просмотра профиля
      *
      * @param array $args
@@ -78,10 +41,10 @@ class Profile extends Page
             return $this->c->Message->message('Bad request');
         }
 
-        $rules = $this->c->ProfileRules->setUser($this->curUser);
+        $this->rules = $this->c->ProfileRules->setUser($this->curUser);
 
         if ($isEdit) {
-            if (! $rules->editProfile) {
+            if (! $this->rules->editProfile) {
                 return $this->c->Message->message('Bad request');
             }
 
@@ -91,19 +54,19 @@ class Profile extends Page
         $this->c->Lang->load('profile');
 
         if ($isEdit && 'POST' === $method) {
-            if ($rules->rename) {
+            if ($this->rules->rename) {
                 $ruleUsername = 'required|string:trim,spaces|min:2|max:25|login|check_username';
             } else {
                 $ruleUsername = 'absent';
             }
 
-            if ($rules->setTitle) {
+            if ($this->rules->setTitle) {
                 $ruleTitle = 'string:trim|max:50|no_url';
             } else {
                 $ruleTitle = 'absent';
             }
 
-            if ($rules->useAvatar) {
+            if ($this->rules->useAvatar) {
                 $ruleAvatar    = "image|max:{$this->c->Files->maxImgSize('K')}";
                 $ruleDelAvatar = $this->curUser->avatar ? 'checkbox' : 'absent';
             } else {
@@ -117,13 +80,13 @@ class Profile extends Page
                 $ruleAdminNote = 'absent';
             }
 
-            if ($rules->editWebsite) {
+            if ($this->rules->editWebsite) {
                 $ruleWebsite = 'string:trim|max:100'; // ???? валидация url?
             } else {
                 $ruleWebsite = 'absent';
             }
 
-            if ($rules->useSignature) {
+            if ($this->rules->useSignature) {
                 $ruleSignature = "string:trim|max:{$this->c->config->p_sig_length}|check_signature";
             } else {
                 $ruleSignature = 'absent';
@@ -198,72 +161,247 @@ class Profile extends Page
             }
         }
 
+        $crumbs = [];
+
         if ($isEdit) {
-            $this->robots    = 'noindex';
-            $this->crumbs    = $this->crumbs(
-                [$this->c->Router->link('EditUserProfile',  ['id' => $this->curUser->id]), \ForkBB\__('Editing profile')],
-                [$this->curUser->link, \ForkBB\__('User %s', $this->curUser->username)],
-                [$this->c->Router->link('Userlist'), \ForkBB\__('User list')]
-            );
+            $this->robots = 'noindex';
+            $crumbs[]     = [$this->c->Router->link('EditUserProfile',  ['id' => $this->curUser->id]), \ForkBB\__('Editing profile')];
         } else {
             $this->canonical = $this->curUser->link;
-            $this->crumbs    = $this->crumbs(
-                [$this->curUser->link, \ForkBB\__('User %s', $this->curUser->username)],
-                [$this->c->Router->link('Userlist'), \ForkBB\__('User list')]
-            );
         }
 
-        $this->fIndex    = $rules->my ? 'profile' : 'userlist';
-        $this->nameTpl   = 'profile';
-        $this->onlinePos = 'profile-' . $this->curUser->id; // ????
-        $this->title     = \ForkBB\__('%s\'s profile', $this->curUser->username);
-        $this->form      = $this->profileForm($isEdit, $rules);
+        $this->crumbs     = $this->extCrumbs(...$crumbs);
+        $this->fIndex     = $this->rules->my ? 'profile' : 'userlist';
+        $this->nameTpl    = 'profile';
+        $this->onlinePos  = 'profile-' . $this->curUser->id; // ????
+        $this->title      = \ForkBB\__('%s\'s profile', $this->curUser->username);
+        $this->form       = $this->profileForm($isEdit);
+        $this->actionBtns = $this->btns($isEdit ? 'edit' : 'view');
 
+        return $this;
+    }
+
+    /**
+     * Подготавливает данные для шаблона просмотра профиля
+     *
+     * @param array $args
+     * @param string $method
+     *
+     * @return Page
+     */
+    public function email(array $args, $method)
+    {
+        $this->curUser = $this->c->users->load((int) $args['id']);
+
+        if (! $this->curUser instanceof User || ($this->curUser->isUnverified && ! $this->user->isAdmMod)) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $this->rules = $this->c->ProfileRules->setUser($this->curUser);
+
+        if (! $this->rules->editEmail) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $this->c->Lang->load('profile');
+
+        if ('POST' === $method) {
+            $v = $this->c->Validator->reset()
+                ->addValidators([
+                    'check_password' => [$this, 'vCheckPassword'],
+                    'check_email'    => [$this->c->Validators, 'vCheckEmail'],
+                ])->addRules([
+                    'token'         => 'token:ChangeUserEmail',
+                    'password'      => 'required|string:trim|check_password',
+                    'new_email'     => 'required|string:trim,lower|email|check_email',
+                ])->addAliases([
+                    'new_email'     => 'New email',
+                    'password'      => 'Your password',
+                ])->addArguments([
+                    'token'                   => ['id' => $this->curUser->id],
+                    'new_email.check_email' => $this->curUser,
+                ])->addMessages([
+                ]);
+
+            if ($v->validation($_POST)) {
+
+            }
+
+            $this->fIswev = $v->getErrors();
+        }
+
+        $form = [
+            'action' => $this->c->Router->link('ChangeUserEmail', ['id' => $this->curUser->id]),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('ChangeUserEmail', ['id' => $this->curUser->id]),
+            ],
+            'sets'   => [
+                [
+                    'class'  => 'data-edit',
+                    'fields' => [
+                        'new_email' => [
+                            'id'        => 'new_email',
+                            'type'      => 'text',
+                            'maxlength' => 80,
+                            'caption'   => \ForkBB\__('New email'),
+                            'required'  => true,
+                            'pattern'   => '.+@.+',
+                            'value'     => isset($v->new_email) ? $v->new_email : $this->curUser->email,
+                        ],
+                        'password' => [
+                            'id'        => 'password',
+                            'type'      => 'password',
+                            'caption'   => \ForkBB\__('Your password'),
+                            'required'  => true,
+                        ],
+                    ],
+                ],
+            ],
+            'btns'   => [
+                'submit' => [
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__('Submit'),
+                    'accesskey' => 's',
+                ],
+            ],
+        ];
+
+
+
+        $this->robots     = 'noindex';
+        $this->crumbs     = $this->extCrumbs(
+            [$this->c->Router->link('ChangeUserEmail', ['id' => $this->curUser->id]), \ForkBB\__('Change email')]
+        );
+        $this->fIndex     = $this->rules->my ? 'profile' : 'userlist';
+        $this->nameTpl    = 'profile';
+        $this->onlinePos  = 'profile-' . $this->curUser->id; // ????
+        $this->title      = \ForkBB\__('%s\'s profile', $this->curUser->username);
+        $this->form       = $form;
+        $this->actionBtns = $this->btns('edit');
+
+        return $this;
+    }
+
+    /**
+     * Дополнительная проверка signature
+     *
+     * @param Validator $v
+     * @param string $signature
+     *
+     * @return string
+     */
+    public function vCheckSignature(Validator $v, $signature)
+    {
+        if ('' != $signature) {
+            // после цензуры текст сообщения пустой
+            if (\ForkBB\cens($signature) == '') {
+                $v->addError('No signature after censoring');
+            // количество строк
+            } elseif (\substr_count($signature, "\n") >= $this->c->config->p_sig_lines) {
+                $v->addError('Signature has too many lines');
+            // текст сообщения только заглавными буквами
+            } elseif (! $this->c->user->isAdmin
+                && '0' == $this->c->config->p_sig_all_caps
+                && \preg_match('%\p{Lu}%u', $signature)
+                && ! \preg_match('%\p{Ll}%u', $signature)
+            ) {
+                $v->addError('All caps signature');
+            // проверка парсером
+            } else {
+                $signature = $this->c->Parser->prepare($signature, true); //????
+
+                foreach($this->c->Parser->getErrors() as $error) {
+                    $v->addError($error);
+                }
+            }
+        }
+
+        return $signature;
+    }
+
+    /**
+     * Проверяет пароль на совпадение с текущим пользователем
+     *
+     * @param Validator $v
+     * @param string $password
+     *
+     * @return string
+     */
+    public function vCheckPassword(Validator $v, $password)
+    {
+        if (! \password_verify($password, $this->user->password)) {
+            $v->addError('Invalid password');
+        }
+
+        return $password;
+    }
+
+    /**
+     * Дополняет массив хлебных крошек
+     *
+     * @param mixed ...$args
+     *
+     * @return array
+     */
+    protected function extCrumbs(...$args)
+    {
+        $args[] = [$this->curUser->link, \ForkBB\__('User %s', $this->curUser->username)];
+        $args[] = [$this->c->Router->link('Userlist'), \ForkBB\__('User list')];
+
+        return $this->crumbs(...$args);
+    }
+
+    /**
+     * Формирует массив кнопок
+     *
+     * @param string $type
+     *
+     * @return array
+     */
+    protected function btns($type)
+    {
         $btns = [];
-        if ($rules->banUser) {
+        if ($this->rules->banUser) {
             $btns['ban-user'] = [
                 $this->c->Router->link('',  ['id' => $this->curUser->id]),
                 \ForkBB\__('Ban user'),
             ];
         }
-        if ($rules->deleteUser) {
+        if ($this->rules->deleteUser) {
             $btns['delete-user'] = [
                 $this->c->Router->link('',  ['id' => $this->curUser->id]),
                 \ForkBB\__('Delete user'),
             ];
         }
-        if (! $isEdit && $rules->editProfile) {
+        if ('edit' != $type && $this->rules->editProfile) {
             $btns['edit-profile'] = [
                 $this->c->Router->link('EditUserProfile',  ['id' => $this->curUser->id]),
                 \ForkBB\__('Edit '),
             ];
         }
-        if ($isEdit) {
+        if ('view' != $type) {
             $btns['view-profile'] = [
                 $this->curUser->link,
                 \ForkBB\__('View '),
             ];
         }
-        if ($rules->editConfig) {
+        if ('config' != $type && $this->rules->editConfig) {
             $btns['edit-settings'] = [
                 $this->c->Router->link('EditBoardConfig', ['id' => $this->curUser->id]),
                 \ForkBB\__('Configure '),
             ];
         }
-        $this->actionBtns = $btns;
-
-        return $this;
+        return $btns;
     }
 
     /**
      * Создает массив данных для просмотра/редактирования профиля
      *
      * @param bool $isEdit
-     * @param Rules $rules
      *
      * @return array
      */
-    protected function profileForm($isEdit, $rules)
+    protected function profileForm($isEdit)
     {
         $clSuffix = $isEdit ? '-edit' : '';
 
@@ -292,7 +430,7 @@ class Profile extends Page
             'class' => 'usertitle',
             'type'  => 'wrap',
         ];
-        if ($isEdit && $rules->rename) {
+        if ($isEdit && $this->rules->rename) {
             $fields['username'] = [
                 'id'        => 'username',
                 'type'      => 'text',
@@ -311,7 +449,7 @@ class Profile extends Page
                 'value'   => $this->curUser->username,
             ];
         }
-        if ($isEdit && $rules->setTitle) {
+        if ($isEdit && $this->rules->setTitle) {
             $fields['title'] = [
                 'id'        => 'title',
                 'type'      => 'text',
@@ -332,7 +470,7 @@ class Profile extends Page
         $fields[] = [
             'type' => 'endwrap',
         ];
-        if ($rules->useAvatar) {
+        if ($this->rules->useAvatar) {
             if ($isEdit && ! $this->curUser->avatar) {
                 $fields['avatar'] = [
                     'id'      => 'avatar',
@@ -355,6 +493,7 @@ class Profile extends Page
 
                 if ($this->curUser->avatar) {
                     $fields['delete_avatar'] = [
+                        'id'      => 'delete_avatar',
                         'type'    => 'checkbox',
                         'label'   => \ForkBB\__('Delete avatar'),
                         'value'   => '1',
@@ -482,7 +621,7 @@ class Profile extends Page
 
         // контактная информация
         $fields = [];
-        if ($rules->viewOEmail) {
+        if ($this->rules->viewOEmail) {
             $fields['open-email'] = [
                 'id'      => 'open-email',
                 'class'   => 'pline',
@@ -492,7 +631,7 @@ class Profile extends Page
                 'href'    => 'mailto:' . $this->curUser->email,
             ];
         }
-        if ($rules->viewEmail) {
+        if ($this->rules->viewEmail) {
             if (0 === $this->curUser->email_setting) {
                 $fields['email'] = [
                     'id'      => 'email',
@@ -514,6 +653,14 @@ class Profile extends Page
             }
         }
         if ($isEdit) {
+            if ($this->rules->editEmail) {
+                $fields[] = [
+                    'id'    => 'change_email',
+                    'type'  => 'link',
+                    'value' => \ForkBB\__('To change email'),
+                    'href'  => $this->c->Router->link('ChangeUserEmail', ['id' => $this->curUser->id]),
+                ];
+            }
             $fields['email_setting'] = [
                 'id'      => 'email_setting',
                 'class'   => 'block',
@@ -527,7 +674,7 @@ class Profile extends Page
                 'caption' => \ForkBB\__('Email settings label'),
             ];
         }
-        if ($rules->editWebsite && $isEdit) {
+        if ($this->rules->editWebsite && $isEdit) {
             $fields['url'] = [
                 'id'        => 'website',
                 'type'      => 'text',
@@ -535,7 +682,7 @@ class Profile extends Page
                 'caption'   => \ForkBB\__('Website'),
                 'value'     => isset($v->url) ? $v->url : $this->curUser->url,
             ];
-        } elseif ($rules->viewWebsite && $this->curUser->url) {
+        } elseif ($this->rules->viewWebsite && $this->curUser->url) {
             $fields['url'] = [
                 'id'      => 'website',
                 'class'   => 'pline',
@@ -555,7 +702,7 @@ class Profile extends Page
         }
 
         // подпись
-        if ($rules->useSignature) {
+        if ($this->rules->useSignature) {
             $fields = [];
             if ($isEdit) {
                 $fields['signature'] = [
@@ -592,7 +739,7 @@ class Profile extends Page
             'value'   => \ForkBB\dt($this->curUser->registered, true),
             'caption' => \ForkBB\__('Registered info'),
         ];
-        if ($rules->viewLastVisit) {
+        if ($this->rules->viewLastVisit) {
             $fields['lastvisit'] = [
                 'id'      => 'lastvisit',
                 'class'   => 'pline',
@@ -645,7 +792,7 @@ class Profile extends Page
                 ];
             }
         }
-        if ($rules->viewIP) {
+        if ($this->rules->viewIP) {
             $fields['ip'] = [
                 'id'      => 'ip',
                 'class'   => 'pline',
