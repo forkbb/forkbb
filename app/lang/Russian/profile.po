@@ -409,7 +409,7 @@ msgid "Configure "
 msgstr "Настроить"
 
 msgid "Board configuration"
-msgstr "Настрйока форума"
+msgstr "Настройка форума"
 
 msgid "Not uploaded"
 msgstr "Не загружена"

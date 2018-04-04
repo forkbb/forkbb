@@ -104,9 +104,11 @@ class Profile extends Page
             }
 
             if ($rules->useAvatar) {
-                $ruleAvatar = "image|max:{$this->c->Files->maxImgSize('K')}";
+                $ruleAvatar    = "image|max:{$this->c->Files->maxImgSize('K')}";
+                $ruleDelAvatar = $this->curUser->avatar ? 'checkbox' : 'absent';
             } else {
-                $ruleAvatar = 'absent';
+                $ruleAvatar    = 'absent';
+                $ruleDelAvatar = 'absent';
             }
 
             if ($this->user->isAdmMod) {
@@ -137,6 +139,7 @@ class Profile extends Page
                     'username'      => $ruleUsername,
                     'title'         => $ruleTitle,
                     'upload_avatar' => $ruleAvatar,
+                    'delete_avatar' => $ruleDelAvatar,
                     'admin_note'    => $ruleAdminNote,
                     'realname'      => 'string:trim|max:40|no_url',
                     'gender'        => 'required|integer|in:0,1,2',
@@ -148,6 +151,7 @@ class Profile extends Page
                     'username'      => 'Username',
                     'title'         => 'Title',
                     'upload_avatar' => 'New avatar',
+                    'delete_avatar' => 'Delete avatar',
                     'admin_note'    => 'Admin note',
                     'realname'      => 'Realname',
                     'gender'        => 'Gender',
@@ -166,8 +170,11 @@ class Profile extends Page
             unset($data['token'], $data['upload_avatar']);
 
             if ($valid) {
-                if ($v->upload_avatar instanceof Image) {
+                if ($v->delete_avatar || $v->upload_avatar instanceof Image) {
                     $this->curUser->deleteAvatar();
+                }
+
+                if ($v->upload_avatar instanceof Image) {
                     $v->upload_avatar
                         ->rename(false)
                         ->rewrite(true)
@@ -341,6 +348,15 @@ class Profile extends Page
             if ($isEdit) {
                 $form['enctype'] = 'multipart/form-data';
                 $form['hidden']['MAX_FILE_SIZE'] = $this->c->Files->maxImgSize();
+
+                if ($this->curUser->avatar) {
+                    $fields['delete_avatar'] = [
+                        'type'    => 'checkbox',
+                        'label'   => \ForkBB\__('Delete avatar'),
+                        'value'   => '1',
+                        'checked' => false,
+                    ];
+                }
 
                 $fields['upload_avatar'] = [
                     'id'        => 'upload_avatar',
@@ -565,17 +581,6 @@ class Profile extends Page
 
         // активность
         $fields = [];
-        if ($rules->viewIP) {
-            $fields['ip'] = [
-                'id'      => 'ip',
-                'class'   => 'pline',
-                'type'    => 'link',
-                'caption' => 'IP',
-                'value'   => $this->curUser->registration_ip,
-                'href'    => $this->c->Router->link('', ['id' => $this->curUser->id]), // ????
-                'title'   => 'IP',
-            ];
-        }
         $fields['registered'] = [
             'id'      => 'registered',
             'class'   => 'pline',
@@ -635,6 +640,17 @@ class Profile extends Page
                     'value'   => \ForkBB\num($this->curUser->num_topics),
                 ];
             }
+        }
+        if ($rules->viewIP) {
+            $fields['ip'] = [
+                'id'      => 'ip',
+                'class'   => 'pline',
+                'type'    => 'link',
+                'caption' => 'IP',
+                'value'   => $this->curUser->registration_ip,
+                'href'    => $this->c->Router->link('', ['id' => $this->curUser->id]), // ????
+                'title'   => 'IP',
+            ];
         }
         $form['sets'][] = [
             'id'     => 'activity',
