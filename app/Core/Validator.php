@@ -408,16 +408,25 @@ class Validator
      * Возвращает проверенные данные
      * Поля с ошибками содержат значения по умолчанию или значения с ошибками
      *
+     * @param bool $all
+     *
      * @throws RuntimeException
      *
      * @return array
      */
-    public function getData()
+    public function getData($all = false)
     {
         if (empty($this->status)) {
             throw new RuntimeException('Data not found');
         }
-        return $this->result;
+
+        if ($all) {
+            return $this->result;
+        } else {
+            return \array_filter($this->result, function ($value) {
+                return null !== $value;
+            });
+        }
     }
 
     /**

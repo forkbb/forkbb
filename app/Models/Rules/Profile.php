@@ -54,7 +54,7 @@ class Profile extends Rules
     {
         return ! $this->my
             && (($this->user->isAdmMod && 1 === $this->curUser->email_setting)
-                || (! $this->user->isGuest && '1' == $this->user->g_send_email)
+                || (! $this->user->isGuest && ! $this->user->isAdmMod && '1' == $this->user->g_send_email)
             );
     }
 

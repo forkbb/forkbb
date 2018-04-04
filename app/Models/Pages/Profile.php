@@ -466,7 +466,7 @@ class Profile extends Page
             $fields['open-email'] = [
                 'id'      => 'open-email',
                 'class'   => 'pline',
-                'type'    => 'link',
+                'type'    => 2 === $this->curUser->email_setting ? 'str' : 'link',
                 'caption' => \ForkBB\__('Email info'),
                 'value'   => \ForkBB\cens($this->curUser->email),
                 'href'    => 'mailto:' . $this->curUser->email,
@@ -565,13 +565,6 @@ class Profile extends Page
 
         // активность
         $fields = [];
-        $fields['registered'] = [
-            'id'      => 'registered',
-            'class'   => 'pline',
-            'type'    => 'str',
-            'value'   => \ForkBB\dt($this->curUser->registered, true),
-            'caption' => \ForkBB\__('Registered info'),
-        ];
         if ($rules->viewIP) {
             $fields['ip'] = [
                 'id'      => 'ip',
@@ -583,6 +576,13 @@ class Profile extends Page
                 'title'   => 'IP',
             ];
         }
+        $fields['registered'] = [
+            'id'      => 'registered',
+            'class'   => 'pline',
+            'type'    => 'str',
+            'value'   => \ForkBB\dt($this->curUser->registered, true),
+            'caption' => \ForkBB\__('Registered info'),
+        ];
         if ($rules->viewLastVisit) {
             $fields['lastvisit'] = [
                 'id'      => 'lastvisit',

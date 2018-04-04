@@ -45,8 +45,6 @@ class DataModel extends Model
             $this->__set($name, $value);
 
             if (! $setFlags) {
-//                $this->modified[$name] = true;
-//            } else {
                 unset($this->modified[$name]);
             }
         }
