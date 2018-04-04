@@ -72,13 +72,13 @@ class Profile extends Page
      */
     public function view(array $args, $method, $isEdit = false)
     {
-        $curUser = $this->c->users->load((int) $args['id']);
+        $this->curUser = $this->c->users->load((int) $args['id']);
 
-        if (! $curUser instanceof User || ($curUser->isUnverified && ! $this->user->isAdmMod)) {
+        if (! $this->curUser instanceof User || ($this->curUser->isUnverified && ! $this->user->isAdmMod)) {
             return $this->c->Message->message('Bad request');
         }
 
-        $rules = $this->c->ProfileRules->setUser($curUser);
+        $rules = $this->c->ProfileRules->setUser($this->curUser);
 
         if ($isEdit) {
             if (! $rules->editProfile) {
@@ -156,8 +156,8 @@ class Profile extends Page
                     'url'           => 'Website',
                     'signature'     => 'Signature',
                 ])->addArguments([
-                    'token'                   => ['id' => $curUser->id],
-                    'username.check_username' => $curUser,
+                    'token'                   => ['id' => $this->curUser->id],
+                    'username.check_username' => $this->curUser,
                 ])->addMessages([
                 ]);
 
@@ -167,33 +167,100 @@ class Profile extends Page
 
             if ($valid) {
                 if ($v->upload_avatar instanceof Image) {
-                    $curUser->deleteAvatar();
+                    $this->curUser->deleteAvatar();
                     $v->upload_avatar
                         ->rename(false)
                         ->rewrite(true)
                         ->resize((int) $this->c->config->o_avatars_width, (int) $this->c->config->o_avatars_height)
-                        ->toFile($this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$curUser->id}.(jpg|png|gif)");
+                        ->toFile($this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$this->curUser->id}.(jpg|png|gif)");
                 }
 
-                $curUser->replAttrs($data, true);
+                $this->curUser->replAttrs($data, true);
 
-                $this->c->users->update($curUser);
+                $this->c->users->update($this->curUser);
 
-                return $this->c->Redirect->page('EditUserProfile',  ['id' => $curUser->id])->message('Profile redirect');
+                return $this->c->Redirect->page('EditUserProfile',  ['id' => $this->curUser->id])->message('Profile redirect');
             } else {
                 $this->fIswev = $v->getErrors();
 
-                $curUser->replAttrs($data);
+                $this->curUser->replAttrs($data);
             }
         }
 
+        if ($isEdit) {
+            $this->robots    = 'noindex';
+            $this->crumbs    = $this->crumbs(
+                [$this->c->Router->link('EditUserProfile',  ['id' => $this->curUser->id]), \ForkBB\__('Editing profile')],
+                [$this->curUser->link, \ForkBB\__('User %s', $this->curUser->username)],
+                [$this->c->Router->link('Userlist'), \ForkBB\__('User list')]
+            );
+        } else {
+            $this->canonical = $this->curUser->link;
+            $this->crumbs    = $this->crumbs(
+                [$this->curUser->link, \ForkBB\__('User %s', $this->curUser->username)],
+                [$this->c->Router->link('Userlist'), \ForkBB\__('User list')]
+            );
+        }
+
+        $this->fIndex    = $rules->my ? 'profile' : 'userlist';
+        $this->nameTpl   = 'profile';
+        $this->onlinePos = 'profile-' . $this->curUser->id; // ????
+        $this->title     = \ForkBB\__('%s\'s profile', $this->curUser->username);
+        $this->form      = $this->profileForm($isEdit, $rules);
+
+        $btns = [];
+        if ($rules->banUser) {
+            $btns['ban-user'] = [
+                $this->c->Router->link('',  ['id' => $this->curUser->id]),
+                \ForkBB\__('Ban user'),
+            ];
+        }
+        if ($rules->deleteUser) {
+            $btns['delete-user'] = [
+                $this->c->Router->link('',  ['id' => $this->curUser->id]),
+                \ForkBB\__('Delete user'),
+            ];
+        }
+        if (! $isEdit && $rules->editProfile) {
+            $btns['edit-profile'] = [
+                $this->c->Router->link('EditUserProfile',  ['id' => $this->curUser->id]),
+                \ForkBB\__('Edit '),
+            ];
+        }
+        if ($isEdit) {
+            $btns['view-profile'] = [
+                $this->curUser->link,
+                \ForkBB\__('View '),
+            ];
+        }
+        if ($rules->editConfig) {
+            $btns['edit-settings'] = [
+                $this->c->Router->link('EditBoardConfig', ['id' => $this->curUser->id]),
+                \ForkBB\__('Configure '),
+            ];
+        }
+        $this->actionBtns = $btns;
+
+        return $this;
+    }
+
+    /**
+     * Создает массив данных для просмотра/редактирования профиля
+     *
+     * @param bool $isEdit
+     * @param Rules $rules
+     *
+     * @return array
+     */
+    protected function profileForm($isEdit, $rules)
+    {
         $clSuffix = $isEdit ? '-edit' : '';
 
         if ($isEdit) {
             $form = [
-                'action' => $this->c->Router->link('EditUserProfile', ['id' => $curUser->id]),
+                'action' => $this->c->Router->link('EditUserProfile', ['id' => $this->curUser->id]),
                 'hidden' => [
-                    'token' => $this->c->Csrf->create('EditUserProfile', ['id' => $curUser->id]),
+                    'token' => $this->c->Csrf->create('EditUserProfile', ['id' => $this->curUser->id]),
                 ],
                 'sets'   => [],
                 'btns'   => [
@@ -222,7 +289,7 @@ class Profile extends Page
                 'caption'   => \ForkBB\__('Username'),
                 'required'  => true,
                 'pattern'   => '^.{2,25}$',
-                'value'     => $curUser->username,
+                'value'     => $this->curUser->username,
             ];
         } else {
             $fields['username'] = [
@@ -230,7 +297,7 @@ class Profile extends Page
                 'class'   => 'pline',
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Username'),
-                'value'   => $curUser->username,
+                'value'   => $this->curUser->username,
             ];
         }
         if ($isEdit && $rules->setTitle) {
@@ -239,7 +306,7 @@ class Profile extends Page
                 'type'      => 'text',
                 'maxlength' => 50,
                 'caption'   => \ForkBB\__('Title'),
-                'value'     => $curUser->title,
+                'value'     => $this->curUser->title,
                 'info'      => \ForkBB\__('Leave blank'),
             ];
         } else {
@@ -248,14 +315,14 @@ class Profile extends Page
                 'class'   => 'pline',
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Title'),
-                'value'   => $curUser->title(),
+                'value'   => $this->curUser->title(),
             ];
         }
         $fields[] = [
             'type' => 'endwrap',
         ];
         if ($rules->useAvatar) {
-            if ($isEdit && ! $curUser->avatar) {
+            if ($isEdit && ! $this->curUser->avatar) {
                 $fields['avatar'] = [
                     'id'      => 'avatar',
                     'class'   => 'pline',
@@ -263,7 +330,7 @@ class Profile extends Page
                     'caption' => \ForkBB\__('Avatar'),
                     'value'   => \ForkBB\__('Not uploaded'),
                 ];
-            } elseif ($curUser->avatar) {
+            } elseif ($this->curUser->avatar) {
                 $fields['avatar'] = [
                     'id'      => 'avatar',
                     'type'    => 'yield',
@@ -304,15 +371,15 @@ class Profile extends Page
                     'type'      => 'text',
                     'maxlength' => 30,
                     'caption'   => \ForkBB\__('Admin note'),
-                    'value'     => $curUser->admin_note,
+                    'value'     => $this->curUser->admin_note,
                 ];
-            } elseif ('' != $curUser->admin_note) {
+            } elseif ('' != $this->curUser->admin_note) {
                 $fields['admin_note'] = [
                     'id'        => 'admin_note',
                     'class'   => 'pline',
                     'type'      => 'str',
                     'caption'   => \ForkBB\__('Admin note'),
-                    'value'     => $curUser->admin_note,
+                    'value'     => $this->curUser->admin_note,
                 ];
             }
             if (! empty($fields)) {
@@ -333,15 +400,15 @@ class Profile extends Page
                 'type'      => 'text',
                 'maxlength' => 40,
                 'caption'   => \ForkBB\__('Realname'),
-                'value'     => $curUser->realname,
+                'value'     => $this->curUser->realname,
             ];
-        } elseif ('' != $curUser->realname) {
+        } elseif ('' != $this->curUser->realname) {
             $fields['realname'] = [
                 'id'      => 'realname',
                 'class'   => 'pline',
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Realname'),
-                'value'   => \ForkBB\cens($curUser->realname),
+                'value'   => \ForkBB\cens($this->curUser->realname),
             ];
         }
         $genders = [
@@ -354,16 +421,16 @@ class Profile extends Page
                 'id'      => 'gender',
                 'class'   => 'block',
                 'type'    => 'radio',
-                'value'   => $curUser->gender,
+                'value'   => $this->curUser->gender,
                 'values'  => $genders,
                 'caption' => \ForkBB\__('Gender'),
             ];
-        } elseif ($curUser->gender && isset($genders[$curUser->gender])) {
+        } elseif ($this->curUser->gender && isset($genders[$this->curUser->gender])) {
             $fields['gender'] = [
                 'id'      => 'gender',
                 'class'   => 'pline',
                 'type'    => 'str',
-                'value'   => $genders[$curUser->gender],
+                'value'   => $genders[$this->curUser->gender],
                 'caption' => \ForkBB\__('Gender'),
             ];
         }
@@ -373,15 +440,15 @@ class Profile extends Page
                 'type'      => 'text',
                 'maxlength' => 30,
                 'caption'   => \ForkBB\__('Location'),
-                'value'     => $curUser->location,
+                'value'     => $this->curUser->location,
             ];
-        } elseif ('' != $curUser->location) {
+        } elseif ('' != $this->curUser->location) {
             $fields['location'] = [
                 'id'      => 'location',
                 'class'   => 'pline',
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Location'),
-                'value'   => \ForkBB\cens($curUser->location),
+                'value'   => \ForkBB\cens($this->curUser->location),
             ];
         }
         if (! empty($fields)) {
@@ -401,28 +468,28 @@ class Profile extends Page
                 'class'   => 'pline',
                 'type'    => 'link',
                 'caption' => \ForkBB\__('Email info'),
-                'value'   => \ForkBB\cens($curUser->email),
-                'href'    => 'mailto:' . $curUser->email,
+                'value'   => \ForkBB\cens($this->curUser->email),
+                'href'    => 'mailto:' . $this->curUser->email,
             ];
         }
         if ($rules->viewEmail) {
-            if (0 === $curUser->email_setting) {
+            if (0 === $this->curUser->email_setting) {
                 $fields['email'] = [
                     'id'      => 'email',
                     'class'   => 'pline',
                     'type'    => 'link',
                     'caption' => \ForkBB\__('Email info'),
-                    'value'   => \ForkBB\cens($curUser->email),
-                    'href'    => 'mailto:' . $curUser->email,
+                    'value'   => \ForkBB\cens($this->curUser->email),
+                    'href'    => 'mailto:' . $this->curUser->email,
                 ];
-            } elseif (1 === $curUser->email_setting) {
+            } elseif (1 === $this->curUser->email_setting) {
                 $fields['email'] = [
                     'id'      => 'email',
                     'class'   => 'pline',
                     'type'    => 'link',
                     'caption' => \ForkBB\__('Email info'),
                     'value'   => \ForkBB\__('Send email'),
-                    'href'    => $this->c->Router->link('', ['id' => $curUser->id]), // ????
+                    'href'    => $this->c->Router->link('', ['id' => $this->curUser->id]), // ????
                 ];
             }
         }
@@ -431,7 +498,7 @@ class Profile extends Page
                 'id'      => 'email_setting',
                 'class'   => 'block',
                 'type'    => 'radio',
-                'value'   => $curUser->email_setting,
+                'value'   => $this->curUser->email_setting,
                 'values'  => [
                     0 => \ForkBB\__('Display e-mail label'),
                     1 => \ForkBB\__('Hide allow form label'),
@@ -446,16 +513,16 @@ class Profile extends Page
                 'type'      => 'text',
                 'maxlength' => 100,
                 'caption'   => \ForkBB\__('Website'),
-                'value'     => isset($v->url) ? $v->url : $curUser->url,
+                'value'     => isset($v->url) ? $v->url : $this->curUser->url,
             ];
-        } elseif ($rules->viewWebsite && $curUser->url) {
+        } elseif ($rules->viewWebsite && $this->curUser->url) {
             $fields['url'] = [
                 'id'      => 'website',
                 'class'   => 'pline',
                 'type'    => 'link',
                 'caption' => \ForkBB\__('Website'),
-                'value'   => \ForkBB\cens($curUser->url),
-                'href'    => \ForkBB\cens($curUser->url),
+                'value'   => \ForkBB\cens($this->curUser->url),
+                'href'    => \ForkBB\cens($this->curUser->url),
             ];
         }
         if (! empty($fields)) {
@@ -474,11 +541,11 @@ class Profile extends Page
                 $fields['signature'] = [
                     'id'      => 'signature',
                     'type'    => 'textarea',
-                    'value'   => $curUser->signature,
+                    'value'   => $this->curUser->signature,
                     'caption' => \ForkBB\__('Signature'),
                     'info'    => \ForkBB\__('Sig max size', \ForkBB\num($this->c->config->p_sig_length), \ForkBB\num($this->c->config->p_sig_lines)),
                 ];
-            } elseif ('' != $curUser->signature) {
+            } elseif ('' != $this->curUser->signature) {
                 $fields['signature'] = [
                     'id'      => 'signature',
                     'type'    => 'yield',
@@ -502,7 +569,7 @@ class Profile extends Page
             'id'      => 'registered',
             'class'   => 'pline',
             'type'    => 'str',
-            'value'   => \ForkBB\dt($curUser->registered, true),
+            'value'   => \ForkBB\dt($this->curUser->registered, true),
             'caption' => \ForkBB\__('Registered info'),
         ];
         if ($rules->viewIP) {
@@ -511,8 +578,8 @@ class Profile extends Page
                 'class'   => 'pline',
                 'type'    => 'link',
                 'caption' => 'IP',
-                'value'   => $curUser->registration_ip,
-                'href'    => $this->c->Router->link('', ['id' => $curUser->id]), // ????
+                'value'   => $this->curUser->registration_ip,
+                'href'    => $this->c->Router->link('', ['id' => $this->curUser->id]), // ????
                 'title'   => 'IP',
             ];
         }
@@ -521,7 +588,7 @@ class Profile extends Page
                 'id'      => 'lastvisit',
                 'class'   => 'pline',
                 'type'    => 'str',
-                'value'   => \ForkBB\dt($curUser->last_visit, true),
+                'value'   => \ForkBB\dt($this->curUser->last_visit, true),
                 'caption' => \ForkBB\__('Last visit info'),
             ];
         }
@@ -529,17 +596,17 @@ class Profile extends Page
             'id'      => 'lastpost',
             'class'   => 'pline',
             'type'    => 'str',
-            'value'   => \ForkBB\dt($curUser->last_post, true),
+            'value'   => \ForkBB\dt($this->curUser->last_post, true),
             'caption' => \ForkBB\__('Last post info'),
         ];
-        if ($curUser->num_posts) {
+        if ($this->curUser->num_posts) {
             if ('1' == $this->user->g_search) {
                 $fields['posts'] = [
                     'id'      => 'posts',
                     'class'   => 'pline',
                     'type'    => 'link',
                     'caption' => \ForkBB\__('Posts info'),
-                    'value'   => $this->user->showPostCount ? \ForkBB\num($curUser->num_posts) : \ForkBB\__('Show posts'),
+                    'value'   => $this->user->showPostCount ? \ForkBB\num($this->curUser->num_posts) : \ForkBB\__('Show posts'),
                     'href'    => '',
                     'title'   => \ForkBB\__('Show posts'),
                 ];
@@ -548,7 +615,7 @@ class Profile extends Page
                     'class'   => 'pline',
                     'type'    => 'link',
                     'caption' => \ForkBB\__('Topics info'),
-                    'value'   => $this->user->showPostCount ? \ForkBB\num($curUser->num_topics) : \ForkBB\__('Show topics'),
+                    'value'   => $this->user->showPostCount ? \ForkBB\num($this->curUser->num_topics) : \ForkBB\__('Show topics'),
                     'href'    => '',
                     'title'   => \ForkBB\__('Show topics'),
                 ];
@@ -558,14 +625,14 @@ class Profile extends Page
                     'class'   => 'pline',
                     'type'    => 'str',
                     'caption' => \ForkBB\__('Posts info'),
-                    'value'   => \ForkBB\num($curUser->num_posts),
+                    'value'   => \ForkBB\num($this->curUser->num_posts),
                 ];
                 $fields['topics'] = [
                     'id'      => 'topics',
                     'class'   => 'pline',
                     'type'    => 'str',
                     'caption' => \ForkBB\__('Topics info'),
-                    'value'   => \ForkBB\num($curUser->num_topics),
+                    'value'   => \ForkBB\num($this->curUser->num_topics),
                 ];
             }
         }
@@ -576,61 +643,6 @@ class Profile extends Page
             'fields' => $fields,
         ];
 
-        if ($isEdit) {
-            $this->robots    = 'noindex';
-            $this->crumbs    = $this->crumbs(
-                [$this->c->Router->link('EditUserProfile',  ['id' => $curUser->id]), \ForkBB\__('Editing profile')],
-                [$curUser->link, \ForkBB\__('User %s', $curUser->username)],
-                [$this->c->Router->link('Userlist'), \ForkBB\__('User list')]
-            );
-        } else {
-            $this->canonical = $curUser->link;
-            $this->crumbs    = $this->crumbs(
-                [$curUser->link, \ForkBB\__('User %s', $curUser->username)],
-                [$this->c->Router->link('Userlist'), \ForkBB\__('User list')]
-            );
-        }
-
-        $this->fIndex    = $rules->my ? 'profile' : 'userlist';
-        $this->nameTpl   = 'profile';
-        $this->onlinePos = 'profile-' . $curUser->id; // ????
-        $this->title     = \ForkBB\__('%s\'s profile', $curUser->username);
-        $this->form      = $form;
-        $this->curUser   = $curUser;
-
-        $btns = [];
-        if ($rules->banUser) {
-            $btns['ban-user'] = [
-                $this->c->Router->link('',  ['id' => $curUser->id]),
-                \ForkBB\__('Ban user'),
-            ];
-        }
-        if ($rules->deleteUser) {
-            $btns['delete-user'] = [
-                $this->c->Router->link('',  ['id' => $curUser->id]),
-                \ForkBB\__('Delete user'),
-            ];
-        }
-        if (! $isEdit && $rules->editProfile) {
-            $btns['edit-profile'] = [
-                $this->c->Router->link('EditUserProfile',  ['id' => $curUser->id]),
-                \ForkBB\__('Edit '),
-            ];
-        }
-        if ($isEdit) {
-            $btns['view-profile'] = [
-                $curUser->link,
-                \ForkBB\__('View '),
-            ];
-        }
-        if ($rules->editConfig) {
-            $btns['edit-settings'] = [
-                $this->c->Router->link('EditBoardConfig', ['id' => $curUser->id]),
-                \ForkBB\__('Configure '),
-            ];
-        }
-        $this->actionBtns = $btns;
-
-        return $this;
+        return $form;
     }
 }
