@@ -153,7 +153,7 @@ class Profile extends Page
 
                 $this->c->DB->commit();
 
-                return $this->c->Redirect->page('EditUserProfile',  ['id' => $this->curUser->id])->message('Profile redirect');
+                return $this->c->Redirect->page('EditUserProfile', ['id' => $this->curUser->id])->message('Profile redirect');
             } else {
                 $this->fIswev = $v->getErrors();
 
@@ -165,7 +165,7 @@ class Profile extends Page
 
         if ($isEdit) {
             $this->robots = 'noindex';
-            $crumbs[]     = [$this->c->Router->link('EditUserProfile',  ['id' => $this->curUser->id]), \ForkBB\__('Editing profile')];
+            $crumbs[]     = [$this->c->Router->link('EditUserProfile', ['id' => $this->curUser->id]), \ForkBB\__('Editing profile')];
         } else {
             $this->canonical = $this->curUser->link;
         }
@@ -211,19 +211,32 @@ class Profile extends Page
                     'check_password' => [$this, 'vCheckPassword'],
                     'check_email'    => [$this->c->Validators, 'vCheckEmail'],
                 ])->addRules([
-                    'token'         => 'token:ChangeUserEmail',
-                    'password'      => 'required|string:trim|check_password',
-                    'new_email'     => 'required|string:trim,lower|email|check_email',
+                    'token'     => 'token:ChangeUserEmail',
+                    'password'  => 'required|string:trim|check_password',
+                    'new_email' => 'required|string:trim,lower|email|check_email',
                 ])->addAliases([
-                    'new_email'     => 'New email',
-                    'password'      => 'Your password',
+                    'new_email' => 'New email',
+                    'password'  => 'Your password',
                 ])->addArguments([
-                    'token'                   => ['id' => $this->curUser->id],
+                    'token'                 => ['id' => $this->curUser->id],
                     'new_email.check_email' => $this->curUser,
                 ])->addMessages([
                 ]);
 
             if ($v->validation($_POST)) {
+                if ($v->new_email === $this->curUser->email) {
+                    return $this->c->Redirect->page('EditUserProfile', ['id' => $this->curUser->id])->message('Email is old redirect');
+                }
+
+                if ($this->user->isAdmin || '1' != $this->c->config->o_regs_verify) {
+                    $this->curUser->email           = $v->new_email;
+                    $this->curUser->email_confirmed = 0;
+
+                    $this->c->users->update($this->curUser);
+
+                    return $this->c->Redirect->page('EditUserProfile', ['id' => $this->curUser->id])->message('Email changed redirect');
+                }
+
 
             }
 
@@ -265,8 +278,6 @@ class Profile extends Page
                 ],
             ],
         ];
-
-
 
         $this->robots     = 'noindex';
         $this->crumbs     = $this->extCrumbs(

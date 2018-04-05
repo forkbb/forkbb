@@ -78,16 +78,16 @@ class Register extends Page
     {
         if ('1' == $this->c->config->o_regs_verify) {
             $groupId = 0;
-            $key = 'w' . $this->c->Secury->randomPass(79);
+            $key     = $this->c->Secury->randomPass(31);
         } else {
             $groupId = $this->c->config->o_default_user_group;
-            $key = null;
+            $key     = null;
         }
 
         $user = $this->c->users->create();
 
         $user->username        = $v->username;
-        $user->password        = password_hash($v->password, PASSWORD_DEFAULT);
+        $user->password        = \password_hash($v->password, PASSWORD_DEFAULT);
         $user->group_id        = $groupId;
         $user->email           = $v->email;
         $user->email_confirmed = 0;
@@ -187,8 +187,6 @@ class Register extends Page
     {
         if (! \hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['key']))
             || ! ($user = $this->c->users->load($args['id'])) instanceof User
-            || empty($user->activate_string)
-            || 'w' !== $user->activate_string{0}
             || ! \hash_equals($user->activate_string, $args['key'])
         ) {
             return $this->c->Message->message('Bad request', false);
@@ -196,7 +194,8 @@ class Register extends Page
 
         $user->group_id        = $this->c->config->o_default_user_group;
         $user->email_confirmed = 1;
-        $user->activate_string = null;
+        $user->activate_string = '';
+
         $this->c->users->update($user);
 
         $this->c->Cache->delete('stats');

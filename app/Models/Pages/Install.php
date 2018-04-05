@@ -907,8 +907,7 @@ class Install extends Page
                 'registration_ip'  => ['VARCHAR(45)', false, ''],
                 'last_visit'       => ['INT(10) UNSIGNED', false, 0],
                 'admin_note'       => ['VARCHAR(30)', false, ''],
-                'activate_string'  => ['VARCHAR(80)', true],
-                'activate_key'     => ['VARCHAR(8)', true],    //????
+                'activate_string'  => ['VARCHAR(80)', false, ''],
                 'messages_enable'  => ['TINYINT(1)', false, 1],
                 'messages_email'   => ['TINYINT(1)', false, 0],
                 'messages_flag'    => ['TINYINT(1)', false, 0],

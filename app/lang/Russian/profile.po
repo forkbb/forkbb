@@ -443,3 +443,9 @@ msgstr "Ваш пароль"
 
 msgid "Invalid password"
 msgstr "Неверный пароль"
+
+msgid "Email is old redirect"
+msgstr "Адрес электронной почты оставлен без изменений. Переадресация &hellip;"
+
+msgid "Email changed redirect"
+msgstr "Адрес электронной почты изменен. Переадресация &hellip;"

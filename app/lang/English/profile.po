@@ -443,3 +443,9 @@ msgstr "Your password"
 
 msgid "Invalid password"
 msgstr "Invalid password"
+
+msgid "Email is old redirect"
+msgstr "Email address is not changed. Redirecting …"
+
+msgid "Email changed redirect"
+msgstr "Email address changed. Redirecting …"

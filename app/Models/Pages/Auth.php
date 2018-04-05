@@ -129,8 +129,8 @@ class Auth extends Page
                     $user->registration_ip = $this->user->ip;
                 }
                 // сбросить запрос на смену кодовой фразы
-                if (! empty($user->activate_string) && 'p' === $user->activate_string{0}) {
-                    $user->activate_string = null;
+                if (32 === \strlen($user->activate_string)) {
+                    $user->activate_string = '';
                 }
                 // изменения юзера в базе
                 $this->c->users->update($user);
@@ -139,6 +139,7 @@ class Auth extends Page
                 $this->c->Cookie->setUser($user, (bool) $v->save);
             }
         }
+
         return $password;
     }
 
@@ -155,6 +156,7 @@ class Auth extends Page
         $this->c->Lang->load('auth');
 
         $v = null;
+
         if ('POST' === $method) {
             $v = $this->c->Validator->reset()
                 ->addValidators([
@@ -168,7 +170,7 @@ class Auth extends Page
                 ]);
 
             if ($v->validation($_POST)) {
-                $key = 'p' . $this->c->Secury->randomPass(79);
+                $key  = $this->c->Secury->randomPass(32);
                 $hash = $this->c->Secury->hash($v->email . $key);
                 $link = $this->c->Router->link('ChangePassword', ['email' => $v->email, 'key' => $key, 'hash' => $hash]);
                 $tplData = [
@@ -200,6 +202,7 @@ class Auth extends Page
                     return $this->c->Message->message(\ForkBB\__('Error mail', $this->c->config->o_admin_email), true, 200);
                 }
             }
+
             $this->fIswev = $v->getErrors();
         }
 
@@ -254,8 +257,6 @@ class Auth extends Page
         // что-то пошло не так
         if (! \hash_equals($args['hash'], $this->c->Secury->hash($args['email'] . $args['key']))
             || ! ($user = $this->c->users->load($args['email'], 'email')) instanceof User
-            || empty($user->activate_string)
-            || 'p' !== $user->activate_string{0}
             || ! \hash_equals($user->activate_string, $args['key'])
         ) {
             return $this->c->Message->message('Bad request', false);
@@ -282,7 +283,8 @@ class Auth extends Page
             if ($v->validation($_POST)) {
                 $user->password        = \password_hash($v->password, PASSWORD_DEFAULT);
                 $user->email_confirmed = 1;
-                $user->activate_string = null;
+                $user->activate_string = '';
+
                 $this->c->users->update($user);
 
                 $this->fIswev = ['s', \ForkBB\__('Pass updated')];
