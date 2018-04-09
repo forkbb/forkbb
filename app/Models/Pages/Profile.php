@@ -4,6 +4,7 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Core\Image;
 use ForkBB\Core\Validator;
+use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\Page;
 use ForkBB\Models\User\Model as User;
 
@@ -235,9 +236,41 @@ class Profile extends Page
                     $this->c->users->update($this->curUser);
 
                     return $this->c->Redirect->page('EditUserProfile', ['id' => $this->curUser->id])->message('Email changed redirect');
+                } else {
+                    $key  = $this->c->Secury->randomPass(33);
+                    $hash = $this->c->Secury->hash($this->curUser->id . $v->new_email . $key);
+                    $link = $this->c->Router->link('SetNewEmail', ['id' => $this->curUser->id, 'email' => $v->new_email, 'key' => $key, 'hash' => $hash]);
+                    $tplData = [
+                        'fRootLink' => $this->c->Router->link('Index'),
+                        'fMailer'   => \ForkBB\__('Mailer', $this->c->config->o_board_title),
+                        'username'  => $this->curUser->username,
+                        'link'      => $link,
+                    ];
+
+                    try {
+                        $isSent = $this->c->Mail
+                            ->reset()
+                            ->setFolder($this->c->DIR_LANG)
+                            ->setLanguage($this->curUser->language)
+                            ->setTo($v->new_email, $this->curUser->username)
+                            ->setFrom($this->c->config->o_webmaster_email, \ForkBB\__('Mailer', $this->c->config->o_board_title))
+                            ->setTpl('activate_email.tpl', $tplData)
+                            ->send();
+                    } catch (MailException $e) {
+                        $isSent = false;
+                    }
+
+                    if ($isSent) {
+                        $this->curUser->activate_string = $key;
+                        $this->curUser->last_email_sent = \time();
+
+                        $this->c->users->update($this->curUser);
+
+                        return $this->c->Message->message(\ForkBB\__('Activate email sent', $this->c->config->o_admin_email), false, 200);
+                    } else {
+                        return $this->c->Message->message(\ForkBB\__('Error mail', $this->c->config->o_admin_email), true, 200);
+                    }
                 }
-
-
             }
 
             $this->fIswev = $v->getErrors();
@@ -291,6 +324,35 @@ class Profile extends Page
         $this->actionBtns = $this->btns('edit');
 
         return $this;
+    }
+
+    /**
+     * Изменяет почтовый адрес пользователя по ссылке активации
+     *
+     * @param array $args
+     * @param string $method
+     *
+     * @return Page
+     */
+    public function setEmail(array $args, $method)
+    {
+        if ($this->user->id !== (int) $args['id']
+            || ! \hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['email'] . $args['key']))
+            || empty($this->user->activate_string)
+            || ! \hash_equals($this->user->activate_string, $args['key'])
+        ) {
+            return $this->c->Message->message('Bad request', false);
+        }
+
+        $this->c->Lang->load('profile');
+
+        $this->user->email           = $args['email'];
+        $this->user->email_confirmed = 1;
+        $this->user->activate_string = '';
+
+        $this->c->users->update($this->user);
+
+        return $this->c->Redirect->url($this->user->link)->message('Email changed redirect');
     }
 
     /**

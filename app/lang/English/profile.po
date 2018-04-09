@@ -91,7 +91,7 @@ msgid "Email updated"
 msgstr "Your email address has been updated."
 
 msgid "Activate email sent"
-msgstr "An email has been sent to the specified address with instructions on how to activate the new email address. If it doesn\"t arrive you can contact the forum administrator at"
+msgstr "An email has been sent to the specified address with instructions on how to activate the new email address. If it does not arrive you can contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."
 
 msgid "Email legend"
 msgstr "Enter your new email address"

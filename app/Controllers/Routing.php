@@ -92,6 +92,10 @@ class Routing
                 $r->add(['GET', 'POST'], '/user/{id:' . $user->id . '}/edit/config',  'Profile:config', 'EditBoardConfig');
                 $r->add(['GET', 'POST'], '/user/{id:' . $user->id . '}/change/email', 'Profile:email',  'ChangeUserEmail');
             }
+            // смена своего email
+            if (! $user->isGuest) {
+                $r->add('GET', '/user/{id:' . $user->id . '}/{email}/{key}/{hash}', 'Profile:setEmail',  'SetNewEmail');
+            }
             // пометка разделов прочитанными
             if (! $user->isGuest) {
                 $r->add('GET', '/forum/{id:\d+}/markread/{token}', 'Misc:markread', 'MarkRead');

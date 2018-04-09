@@ -257,6 +257,7 @@ class Auth extends Page
         // что-то пошло не так
         if (! \hash_equals($args['hash'], $this->c->Secury->hash($args['email'] . $args['key']))
             || ! ($user = $this->c->users->load($args['email'], 'email')) instanceof User
+            || empty($user->activate_string)
             || ! \hash_equals($user->activate_string, $args['key'])
         ) {
             return $this->c->Message->message('Bad request', false);

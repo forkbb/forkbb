@@ -81,7 +81,7 @@ class Register extends Page
             $key     = $this->c->Secury->randomPass(31);
         } else {
             $groupId = $this->c->config->o_default_user_group;
-            $key     = null;
+            $key     = '';
         }
 
         $user = $this->c->users->create();
@@ -187,6 +187,7 @@ class Register extends Page
     {
         if (! \hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['key']))
             || ! ($user = $this->c->users->load($args['id'])) instanceof User
+            || empty($user->activate_string)
             || ! \hash_equals($user->activate_string, $args['key'])
         ) {
             return $this->c->Message->message('Bad request', false);

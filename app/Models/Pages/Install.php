@@ -922,6 +922,7 @@ class Install extends Page
             'PRIMARY KEY' => ['id'],
             'UNIQUE KEYS' => [
                 'username_idx' => ['username(25)'],
+                'email_idx'    => ['email'],
             ],
             'INDEXES' => [
                 'registered_idx' => ['registered'],
