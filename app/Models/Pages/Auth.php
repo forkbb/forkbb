@@ -10,12 +10,6 @@ use ForkBB\Models\User\Model as User;
 class Auth extends Page
 {
     /**
-     * Для передачи User из vCheckEmail() в forgetPost()
-     * @var User
-     */
-    protected $tmpUser; //????
-
-    /**
      * Выход пользователя
      *
      * @param array $args
@@ -158,15 +152,19 @@ class Auth extends Page
         $v = null;
 
         if ('POST' === $method) {
+            $tmpUser = $this->c->users->create();
+
             $v = $this->c->Validator->reset()
                 ->addValidators([
-                    'check_email' => [$this, 'vCheckEmail'],
+                    'check_email' => [$this->c->Validators, 'vCheckEmail'],
                 ])->addRules([
                     'token' => 'token:Forget',
-                    'email' => 'required|string:trim,lower|email|check_email',
+                    'email' => 'required|string:trim,lower|email|check_email:exists,flood',
                 ])->addAliases([
                 ])->addMessages([
                     'email.email' => 'Invalid email',
+                ])->addArguments([
+                    'email.check_email' => $tmpUser, // сюда идет возрат данных по найденному пользователю
                 ]);
 
             if ($v->validation($_POST)) {
@@ -176,7 +174,7 @@ class Auth extends Page
                 $tplData = [
                     'fRootLink' => $this->c->Router->link('Index'),
                     'fMailer'   => \ForkBB\__('Mailer', $this->c->config->o_board_title),
-                    'username'  => $this->tmpUser->username,
+                    'username'  => $tmpUser->username,
                     'link'      => $link,
                 ];
 
@@ -184,8 +182,8 @@ class Auth extends Page
                     $isSent = $this->c->Mail
                         ->reset()
                         ->setFolder($this->c->DIR_LANG)
-                        ->setLanguage($this->tmpUser->language)
-                        ->setTo($v->email, $this->tmpUser->username)
+                        ->setLanguage($tmpUser->language)
+                        ->setTo($v->email, $tmpUser->username)
                         ->setFrom($this->c->config->o_webmaster_email, \ForkBB\__('Mailer', $this->c->config->o_board_title))
                         ->setTpl('passphrase_reset.tpl', $tplData)
                         ->send();
@@ -194,9 +192,9 @@ class Auth extends Page
                 }
 
                 if ($isSent) {
-                    $this->tmpUser->activate_string = $key;
-                    $this->tmpUser->last_email_sent = \time();
-                    $this->c->users->update($this->tmpUser);
+                    $tmpUser->activate_string = $key;
+                    $tmpUser->last_email_sent = \time();
+                    $this->c->users->update($tmpUser);
                     return $this->c->Message->message(\ForkBB\__('Forget mail', $this->c->config->o_admin_email), false, 200);
                 } else {
                     return $this->c->Message->message(\ForkBB\__('Error mail', $this->c->config->o_admin_email), true, 200);
@@ -216,32 +214,6 @@ class Auth extends Page
         $this->email      = $v ? $v->email : (isset($args['_email']) ? $args['_email'] : '');
 
         return $this;
-    }
-
-    /**
-     * Дополнительная проверка email
-     *
-     * @param Validator $v
-     * @param string $email
-     *
-     * @return string
-     */
-    public function vCheckEmail(Validator $v, $email)
-    {
-        if (! empty($v->getErrors())) {
-        // email забанен
-        } elseif ($this->c->bans->isBanned($this->c->users->create(['email' => $email])) > 0) {
-            $v->addError('Banned email');
-        // нет пользователя с таким email
-        } elseif (! ($user = $this->c->users->load($email, 'email')) instanceof User) {
-            $v->addError('Invalid email');
-        // за последний час уже был запрос на этот email
-        } elseif ($user->last_email_sent > 0 && \time() - $user->last_email_sent < 3600) {
-            $v->addError(\ForkBB\__('Email flood', (int) (($user->last_email_sent + 3600 - \time()) / 60)), 'e');
-        } else {
-            $this->tmpUser = $user;
-        }
-        return $email;
     }
 
     /**

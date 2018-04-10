@@ -214,7 +214,7 @@ class Profile extends Page
                 ])->addRules([
                     'token'     => 'token:ChangeUserEmail',
                     'password'  => 'required|string:trim|check_password',
-                    'new_email' => 'required|string:trim,lower|email|check_email',
+                    'new_email' => 'required|string:trim,lower|email|check_email:unique,flood',
                 ])->addAliases([
                     'new_email' => 'New email',
                     'password'  => 'Your password',
@@ -293,6 +293,7 @@ class Profile extends Page
                             'required'  => true,
                             'pattern'   => '.+@.+',
                             'value'     => isset($v->new_email) ? $v->new_email : $this->curUser->email,
+                            'info'      => ! $this->user->isAdmin && '1' == $this->c->config->o_regs_verify ? \ForkBB\__('Email instructions') : null,
                         ],
                         'password' => [
                             'id'        => 'password',

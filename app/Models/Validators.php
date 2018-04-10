@@ -73,31 +73,66 @@ class Validators
      *
      * @param Validator $v
      * @param string $email
-     * @param string $z
+     * @param string $attrs
      * @param mixed $originalUser
      *
      * @return string
      */
-    public function vCheckEmail(Validator $v, $email, $z, $originalUser)
+    public function vCheckEmail(Validator $v, $email, $attrs, $originalUser)
     {
         // email забанен
         if ($this->c->bans->isBanned($this->c->users->create(['email' => $email])) > 0) {
             $v->addError('Banned email');
-        // проверка email на уникальность
+        // остальные проверки
         } elseif (empty($v->getErrors())) {
-            $id = null;
+            $attrs = \array_flip(\explode(',', $attrs));
+            $ok    = true;
+            $user  = true;
 
-            if ($originalUser instanceof User && ! $originalUser->isGuest) {
-                $id = $originalUser->id;
-            } elseif (! $originalUser instanceof User) {
-                $id = true;
+            // наличие
+            if (isset($attrs['exists'])) {
+                $user = $this->c->users->load($email, 'email');
+
+                if (! $user instanceof User) {
+                    $v->addError('Invalid email');
+                    $ok = false;
+                }
             }
 
-            if ($id) {
-                $user = $this->c->users->load($email, 'email');
+            // уникальность
+            if ($ok && isset($attrs['unique']) && (! $originalUser instanceof User || ! $originalUser->isGuest)) {
+                if (true === $user) {
+                    $user = $this->c->users->load($email, 'email');
+                }
+
+                $id = $originalUser instanceof User ? $originalUser->id : true;
+
                 if (($user instanceof User && $id !== $user->id) || (! $user instanceof User && 0 !== $user)) {
                     $v->addError('Dupe email');
+                    $ok = false;
                 }
+            }
+
+            // флуд
+            if ($ok && isset($attrs['flood'])) {
+                $min = 3600;
+
+                if ($originalUser instanceof User && ! $originalUser->isGuest) {
+                    $flood = \time() - $originalUser->last_email_sent;
+                } elseif ($user instanceof User) {
+                    $flood = \time() - $user->last_email_sent;
+                } else {
+                    $flood = $min;
+                }
+                if ($flood < $min) {
+                    $v->addError(\ForkBB\__('Email flood', (int) (($min - $flood) / 60)), 'e');
+                    $ok = false;
+                }
+            }
+
+            // возврат данных пользователя через 4-ый параметр
+            if ($ok && $originalUser instanceof User && $originalUser->id < 1 && $user instanceof User) {
+                $originalUser->setAttrs($user->getAttrs());
             }
         }
         return $email;
