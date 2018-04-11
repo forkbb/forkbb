@@ -117,7 +117,10 @@ return [
             'file'  => '%MAX_FILE_SIZE%',
             'img'   => '%MAX_IMG_SIZE%',
         ],
-        'Validators' => \ForkBB\Models\Validators::class,
+
+        'VLnoURL'    => \ForkBB\Models\Validators\NoURL::class,
+        'VLusername' => \ForkBB\Models\Validators\Username::class,
+        'VLemail'    => \ForkBB\Models\Validators\Email::class,
 
     ],
     'multiple'  => [

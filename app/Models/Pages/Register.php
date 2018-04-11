@@ -20,14 +20,12 @@ class Register extends Page
 
         $v = $this->c->Validator->reset()
             ->addValidators([
-                'check_email'    => [$this->c->Validators, 'vCheckEmail'],
-                'check_username' => [$this->c->Validators, 'vCheckUsername'],
             ])->addRules([
                 'token'    => 'token:RegisterForm',
                 'agree'    => 'required|token:Register',
                 'on'       => 'integer',
-                'email'    => 'required_with:on|string:trim,lower|email|check_email:unique',
-                'username' => 'required_with:on|string:trim,spaces|min:2|max:25|login|check_username',
+                'email'    => 'required_with:on|string:trim,lower|email:banned,unique',
+                'username' => 'required_with:on|string:trim,spaces|username',
                 'password' => 'required_with:on|string|min:16|password',
             ])->addAliases([
                 'email'    => 'Email',

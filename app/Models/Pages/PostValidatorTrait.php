@@ -27,8 +27,6 @@ trait PostValidatorTrait
             && ! \preg_match('%\p{Ll}%u', $subject)
         ) {
             $v->addError('All caps subject');
-        } elseif (! $executive) {
-            $this->c->Validators->vNoURL($v, $subject, null, null);
         }
         return $subject;
     }
@@ -102,17 +100,11 @@ trait PostValidatorTrait
     protected function messageValidator(Model $model, $marker, array $args, $editPost = false, $editSubject = false)
     {
         if ($this->user->isGuest) {
-            $ruleEmail    = ('1' == $this->c->config->p_force_guest_email ? 'required|' : '') . 'string:trim,lower|email|check_email';
-            $ruleUsername = 'required|string:trim,spaces|min:2|max:25|login|check_username';
+            $ruleEmail    = ('1' == $this->c->config->p_force_guest_email ? 'required|' : '') . 'string:trim,lower|email:banned';
+            $ruleUsername = 'required|string:trim,spaces|username';
         } else {
             $ruleEmail    = 'absent';
             $ruleUsername = 'absent';
-        }
-
-        if ($editSubject) {
-            $ruleSubject = 'required|string:trim,spaces|min:1|max:70|check_subject';
-        } else {
-            $ruleSubject = 'absent';
         }
 
         if ($this->user->isAdmin || $this->user->isModerator($model)) {
@@ -142,6 +134,12 @@ trait PostValidatorTrait
             $executive          = false;
         }
 
+        if ($editSubject) {
+            $ruleSubject = 'required|string:trim,spaces|min:1|max:70|' . ($executive ? '' : 'noURL|') . 'check_subject';
+        } else {
+            $ruleSubject = 'absent';
+        }
+
         if ('1' == $this->c->config->o_smilies) {
             $ruleHideSmilies = 'checkbox';
         } else {
@@ -150,8 +148,6 @@ trait PostValidatorTrait
 
         $v = $this->c->Validator->reset()
             ->addValidators([
-                'check_email'    => [$this->c->Validators, 'vCheckEmail'],
-                'check_username' => [$this->c->Validators, 'vCheckUsername'],
                 'check_subject'  => [$this, 'vCheckSubject'],
                 'check_message'  => [$this, 'vCheckMessage'],
                 'check_timeout'  => [$this, 'vCheckTimeout'],
@@ -176,7 +172,7 @@ trait PostValidatorTrait
                 'token'                 => $args,
                 'subject.check_subject' => $executive,
                 'message.check_message' => $executive,
-                'email.check_email'     => $this->user,
+                'email.email'           => $this->user,
             ])->addMessages([
                 'username.login' => 'Login format',
             ]);

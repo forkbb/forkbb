@@ -4,6 +4,7 @@ namespace ForkBB\Core;
 
 use ForkBB\Core\Container;
 use ForkBB\Core\File;
+use ForkBB\Core\Validators;
 use RuntimeException;
 
 class Validator
@@ -108,12 +109,10 @@ class Validator
             'absent'        => [$this, 'vAbsent'],
             'array'         => [$this, 'vArray'],
             'checkbox'      => [$this, 'vCheckbox'],
-            'email'         => [$this, 'vEmail'],
             'file'          => [$this, 'vFile'],
             'image'         => [$this, 'vImage'],
             'in'            => [$this, 'vIn'],
             'integer'       => [$this, 'vInteger'],
-            'login'         => [$this, 'vLogin'],
             'max'           => [$this, 'vMax'],
             'min'           => [$this, 'vMin'],
             'numeric'       => [$this, 'vNumeric'],
@@ -171,11 +170,20 @@ class Validator
             $rules = [];
             // перебор правил для текущего поля
             foreach (\explode('|', $raw) as $rule) { //???? нужно экранирование для разделителей
-                 $tmp = \explode(':', $rule, 2);
-                 if (empty($this->validators[$tmp[0]])) {
-                     throw new RuntimeException($tmp[0] . ' validator not found');
+                 $vs = \explode(':', $rule, 2);
+                 if (empty($this->validators[$vs[0]])) {
+                     try {
+                        $validator = $this->c->{'VL' . $vs[0]};
+                     } catch (Exception $e) {
+                        $validator = null;
+                     }
+                     if ($validator instanceof Validators) {
+                        $this->validators[$vs[0]] = [$validator, $vs[0]];
+                     } else {
+                        throw new RuntimeException($vs[0] . ' validator not found');
+                     }
                  }
-                 $rules[$tmp[0]] = isset($tmp[1]) ? $tmp[1] : '';
+                 $rules[$vs[0]] = isset($vs[1]) ? $vs[1] : '';
             }
             if (isset($suffix)) {
                 $this->rules[$field]['array'][$suffix] = $rules;
@@ -449,7 +457,7 @@ class Validator
      *
      * @return mixed
      */
-    protected function vAbsent($v, $value, $attr)
+    protected function vAbsent(Validator $v, $value, $attr)
     {
         if (null !== $value) {
             $this->addError('The :alias should be absent');
@@ -461,7 +469,7 @@ class Validator
         }
     }
 
-    protected function vRequired($v, $value)
+    protected function vRequired(Validator $v, $value)
     {
         if (\is_string($value)) {
             if (\strlen(\preg_replace('%^\s+|\s+$%u', '', $value)) > 0) {
@@ -478,7 +486,7 @@ class Validator
         return null;
     }
 
-    protected function vRequiredWith($v, $value, $attr)  //???????????????????????
+    protected function vRequiredWith(Validator $v, $value, $attr)  //???????????????????????
     {
         foreach (\explode(',', $attr) as $field) {
             if (null !== $this->__get($field)) {     // если есть хотя бы одно поле,
@@ -498,7 +506,7 @@ class Validator
 #        }
     }
 
-    protected function vString($v, $value, $attr)
+    protected function vString(Validator $v, $value, $attr)
     {
         if (null === $value) {
             return null;
@@ -523,7 +531,7 @@ class Validator
         }
     }
 
-    protected function vNumeric($v, $value)
+    protected function vNumeric(Validator $v, $value)
     {
         if (null === $value) {
             return null;
@@ -535,7 +543,7 @@ class Validator
         }
     }
 
-    protected function vInteger($v, $value)
+    protected function vInteger(Validator $v, $value)
     {
         if (null === $value) {
             return null;
@@ -547,7 +555,7 @@ class Validator
         }
     }
 
-    protected function vArray($v, $value, $attr)
+    protected function vArray(Validator $v, $value, $attr)
     {
         if (null !== $value && ! \is_array($value)) {
             $this->addError('The :alias must be array');
@@ -598,9 +606,7 @@ class Validator
         }
     }
 
-
-
-    protected function vMin($v, $value, $attr)
+    protected function vMin(Validator $v, $value, $attr)
     {
         if (\is_string($value)) {
             $isBytes = \strpos($attr, 'bytes');
@@ -624,7 +630,7 @@ class Validator
         return $value;
     }
 
-    protected function vMax($v, $value, $attr)
+    protected function vMax(Validator $v, $value, $attr)
     {
         if (\is_string($value)) {
             $isBytes = \strpos($attr, 'bytes');
@@ -661,7 +667,7 @@ class Validator
         return $value;
     }
 
-    protected function vToken($v, $value, $attr, $args)
+    protected function vToken(Validator $v, $value, $attr, $args)
     {
         if (! \is_array($args)) {
             $args = [];
@@ -674,12 +680,12 @@ class Validator
         }
     }
 
-    protected function vCheckbox($v, $value)
+    protected function vCheckbox(Validator $v, $value)
     {
         return null === $value ? false : (string) $value;
     }
 
-    protected function vReferer($v, $value, $attr, $args)
+    protected function vReferer(Validator $v, $value, $attr, $args)
     {
         if (! \is_array($args)) {
             $args = [];
@@ -687,21 +693,7 @@ class Validator
         return $this->c->Router->validate($value, $attr, $args);
     }
 
-    protected function vEmail($v, $value)
-    {
-        if (null === $value || '' === $value) { //???? перед правилом должно стоять правило `required`
-            return null;
-        }
-        $email = $this->c->Mail->valid($value, true);
-        if (false === $email) {
-            $this->addError('The :alias is not valid email');
-            return $value;
-        } else {
-            return $email;
-        }
-    }
-
-    protected function vSame($v, $value, $attr)
+    protected function vSame(Validator $v, $value, $attr)
     {
         if (! $this->getStatus($attr) || $value === $this->__get($attr)) {
             return $value;
@@ -711,7 +703,7 @@ class Validator
         }
     }
 
-    protected function vRegex($v, $value, $attr)
+    protected function vRegex(Validator $v, $value, $attr)
     {
         if (null !== $value
             && (! \is_string($value) || ! \preg_match($attr, $value))
@@ -723,17 +715,12 @@ class Validator
         }
     }
 
-    protected function vPassword($v, $value)
+    protected function vPassword(Validator $v, $value)
     {
         return $this->vRegex($v, $value, '%[^\x20][\x20][^\x20]%');
     }
 
-    protected function vLogin($v, $value)
-    {
-        return $this->vRegex($v, $value, '%^\p{L}[\p{L}\p{N}\x20\._-]+$%uD');
-    }
-
-    protected function vIn($v, $value, $attr)
+    protected function vIn(Validator $v, $value, $attr)
     {
         if (null !== $value && ! \in_array($value, \explode(',', $attr))) {
             $this->addError('The :alias contains an invalid value');
@@ -741,7 +728,7 @@ class Validator
         return $value;
     }
 
-    protected function vNotIn($v, $value, $attr)
+    protected function vNotIn(Validator $v, $value, $attr)
     {
         if (null !== $value && \in_array($value, \explode(',', $attr))) {
             $this->addError('The :alias contains an invalid value');
@@ -750,7 +737,7 @@ class Validator
     }
 
 
-    protected function vFile($v, $value, $attr)
+    protected function vFile(Validator $v, $value, $attr)
     {
         if (null === $value) {
             return null;
@@ -776,7 +763,7 @@ class Validator
         return $value;
     }
 
-    protected function vImage($v, $value, $attr)
+    protected function vImage(Validator $v, $value, $attr)
     {
         $value = $this->vFile($v, $value, $attr);
 

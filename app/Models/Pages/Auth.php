@@ -156,15 +156,14 @@ class Auth extends Page
 
             $v = $this->c->Validator->reset()
                 ->addValidators([
-                    'check_email' => [$this->c->Validators, 'vCheckEmail'],
                 ])->addRules([
                     'token' => 'token:Forget',
-                    'email' => 'required|string:trim,lower|email|check_email:exists,flood',
+                    'email' => 'required|string:trim,lower|email:banned,exists,flood',
                 ])->addAliases([
                 ])->addMessages([
                     'email.email' => 'Invalid email',
                 ])->addArguments([
-                    'email.check_email' => $tmpUser, // сюда идет возрат данных по найденному пользователю
+                    'email.email' => $tmpUser, // сюда идет возрат данных по найденному пользователю
                 ]);
 
             if ($v->validation($_POST)) {

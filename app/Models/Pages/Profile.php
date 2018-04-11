@@ -56,13 +56,13 @@ class Profile extends Page
 
         if ($isEdit && 'POST' === $method) {
             if ($this->rules->rename) {
-                $ruleUsername = 'required|string:trim,spaces|min:2|max:25|login|check_username';
+                $ruleUsername = 'required|string:trim,spaces|username';
             } else {
                 $ruleUsername = 'absent';
             }
 
             if ($this->rules->setTitle) {
-                $ruleTitle = 'string:trim|max:50|no_url';
+                $ruleTitle = 'string:trim|max:50|noURL';
             } else {
                 $ruleTitle = 'absent';
             }
@@ -95,8 +95,6 @@ class Profile extends Page
 
             $v = $this->c->Validator->reset()
                 ->addValidators([
-                    'no_url'          => [$this->c->Validators, 'vNoURL'],
-                    'check_username'  => [$this->c->Validators, 'vCheckUsername'],
                     'check_signature' => [$this, 'vCheckSignature'],
                 ])->addRules([
                     'token'         => 'token:EditUserProfile',
@@ -105,9 +103,9 @@ class Profile extends Page
                     'upload_avatar' => $ruleAvatar,
                     'delete_avatar' => $ruleDelAvatar,
                     'admin_note'    => $ruleAdminNote,
-                    'realname'      => 'string:trim|max:40|no_url',
+                    'realname'      => 'string:trim|max:40|noURL:1',
                     'gender'        => 'required|integer|in:0,1,2',
-                    'location'      => 'string:trim|max:30|no_url',
+                    'location'      => 'string:trim|max:30|noURL:1',
                     'email_setting' => 'required|integer|in:0,1,2',
                     'url'           => $ruleWebsite,
                     'signature'     => $ruleSignature,
@@ -124,8 +122,8 @@ class Profile extends Page
                     'url'           => 'Website',
                     'signature'     => 'Signature',
                 ])->addArguments([
-                    'token'                   => ['id' => $this->curUser->id],
-                    'username.check_username' => $this->curUser,
+                    'token'             => ['id' => $this->curUser->id],
+                    'username.username' => $this->curUser,
                 ])->addMessages([
                 ]);
 
@@ -210,17 +208,16 @@ class Profile extends Page
             $v = $this->c->Validator->reset()
                 ->addValidators([
                     'check_password' => [$this, 'vCheckPassword'],
-                    'check_email'    => [$this->c->Validators, 'vCheckEmail'],
                 ])->addRules([
                     'token'     => 'token:ChangeUserEmail',
                     'password'  => 'required|string:trim|check_password',
-                    'new_email' => 'required|string:trim,lower|email|check_email:unique,flood',
+                    'new_email' => 'required|string:trim,lower|email:banned,unique,flood',
                 ])->addAliases([
                     'new_email' => 'New email',
                     'password'  => 'Your password',
                 ])->addArguments([
-                    'token'                 => ['id' => $this->curUser->id],
-                    'new_email.check_email' => $this->curUser,
+                    'token'           => ['id' => $this->curUser->id],
+                    'new_email.email' => $this->curUser,
                 ])->addMessages([
                 ]);
 
