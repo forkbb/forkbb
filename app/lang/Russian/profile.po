@@ -54,12 +54,6 @@ msgstr "Укажите число тем и сообщений, выводимы
 msgid "Pass key bad"
 msgstr "Указанный ключ активации пароля неверен или истек срок его действия. Пожалуйста, повторно запросите новый пароль. Если ничего не получится, то свяжитесь с администрацией; почтовый адрес для связи"
 
-msgid "Pass updated"
-msgstr "Ваш пароль изменён. Вы можете войти на форум с новым паролем."
-
-msgid "Pass updated redirect"
-msgstr "Пароль изменён. Переадресация &hellip;"
-
 msgid "Wrong pass"
 msgstr "Ошибка в старом пароле."
 
@@ -438,14 +432,41 @@ msgstr "Текст подписи содержит только заглавны
 msgid "To change email"
 msgstr "Изменить адрес электронной почты"
 
-msgid "Your password"
-msgstr "Ваш пароль"
+msgid "Your passphrase"
+msgstr "Ваша кодовая фраза"
 
-msgid "Invalid password"
-msgstr "Неверный пароль"
+msgid "Invalid passphrase"
+msgstr "Неверная кодовая фраза"
 
 msgid "Email is old redirect"
 msgstr "Адрес электронной почты оставлен без изменений. Переадресация &hellip;"
 
 msgid "Email changed redirect"
 msgstr "Адрес электронной почты изменен. Переадресация &hellip;"
+
+msgid "Pass not match"
+msgstr "Кодовые фразы не совпадают."
+
+msgid "Change pass"
+msgstr "Смена кодовой фразы"
+
+msgid "Change passphrase"
+msgstr "Изменить кодовую фразу"
+
+msgid "New pass"
+msgstr "Новая кодовая фраза"
+
+msgid "Confirm new pass"
+msgstr "Ещё раз"
+
+msgid "Pass format"
+msgstr "Кодовая фраза должна содержать несколько слов."
+
+msgid "Pass info"
+msgstr "Кодовая фраза должна состоять минимум из 16 символов. Она чувствительна к регистру вводимых букв."
+
+msgid "Pass updated"
+msgstr "Ваша кодовая фраза изменена. Вы можете войти на форум с ее помощью."
+
+msgid "Pass updated redirect"
+msgstr "Кодовая фраза изменена. Переадресация &hellip;"

@@ -40,6 +40,11 @@ class Profile extends Rules
         return $this->admin || ($this->moderator  && '1' == $this->user->g_mod_rename_users);
     }
 
+    protected function geteditPass()
+    {
+        return $this->my || $this->admin || ($this->moderator && '1' == $this->user->g_mod_change_passwords);
+    }
+
     protected function getsetTitle()
     {
         return $this->admin || $this->moderator || '1' == $this->user->g_set_title;

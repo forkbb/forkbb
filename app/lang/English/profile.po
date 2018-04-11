@@ -54,12 +54,6 @@ msgstr "Enter the number of topics and posts you wish to view on each page."
 msgid "Pass key bad"
 msgstr "The specified password activation key was incorrect or has expired. Please re-request a new password. If that fails, contact the forum administrator at"
 
-msgid "Pass updated"
-msgstr "Your password has been updated. You can now login with your new password."
-
-msgid "Pass updated redirect"
-msgstr "Password updated. Redirecting …"
-
 msgid "Wrong pass"
 msgstr "Wrong old password."
 
@@ -438,14 +432,41 @@ msgstr "Signature has only capital letters"
 msgid "To change email"
 msgstr "Change email address"
 
-msgid "Your password"
-msgstr "Your password"
+msgid "Your passphrase"
+msgstr "Your passphrase"
 
-msgid "Invalid password"
-msgstr "Invalid password"
+msgid "Invalid passphrase"
+msgstr "Invalid passphrase"
 
 msgid "Email is old redirect"
 msgstr "Email address is not changed. Redirecting …"
 
 msgid "Email changed redirect"
 msgstr "Email address changed. Redirecting …"
+
+msgid "Pass not match"
+msgstr "Passphrases do not match."
+
+msgid "Change pass"
+msgstr "Change passphrase"
+
+msgid "Change passphrase"
+msgstr "Change passphrase"
+
+msgid "New pass"
+msgstr "New passphrase"
+
+msgid "Confirm new pass"
+msgstr "Confirm new passphrase"
+
+msgid "Pass format"
+msgstr "Passphrase must contain a few words."
+
+msgid "Pass info"
+msgstr "Passphrase must be at least 16 characters long. Passphrase are case sensitive."
+
+msgid "Pass updated"
+msgstr "Your passphrase has been updated. You can now login with your new passphrase."
+
+msgid "Pass updated redirect"
+msgstr "Passphrase updated. Redirecting …"

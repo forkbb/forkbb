@@ -42,7 +42,7 @@ class Email extends Validators
         $user  = true;
 
         // email забанен
-        if ($ok && isset($attrs['banned']) && $this->c->bans->isBanned($this->c->users->create(['email' => $email])) > 0) {
+        if ($ok && isset($attrs['noban']) && $this->c->bans->isBanned($this->c->users->create(['email' => $email])) > 0) {
             $v->addError('Banned email');
             $ok = false;
         }

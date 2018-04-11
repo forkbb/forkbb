@@ -58,7 +58,7 @@ msgid "Change pass"
 msgstr "Смена кодовой фразы"
 
 msgid "Change passphrase"
-msgstr "Сменить кодовую фразу"
+msgstr "Изменить кодовую фразу"
 
 msgid "New pass"
 msgstr "Новая кодовая фраза"

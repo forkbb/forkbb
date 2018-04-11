@@ -209,12 +209,12 @@ class Profile extends Page
                 ->addValidators([
                     'check_password' => [$this, 'vCheckPassword'],
                 ])->addRules([
-                    'token'     => 'token:ChangeUserEmail',
+                    'token'     => 'token:EditUserEmail',
                     'password'  => 'required|string:trim|check_password',
-                    'new_email' => 'required|string:trim,lower|email:banned,unique,flood',
+                    'new_email' => 'required|string:trim,lower|email:noban,unique,flood',
                 ])->addAliases([
                     'new_email' => 'New email',
-                    'password'  => 'Your password',
+                    'password'  => 'Your passphrase',
                 ])->addArguments([
                     'token'           => ['id' => $this->curUser->id],
                     'new_email.email' => $this->curUser,
@@ -274,9 +274,9 @@ class Profile extends Page
         }
 
         $form = [
-            'action' => $this->c->Router->link('ChangeUserEmail', ['id' => $this->curUser->id]),
+            'action' => $this->c->Router->link('EditUserEmail', ['id' => $this->curUser->id]),
             'hidden' => [
-                'token' => $this->c->Csrf->create('ChangeUserEmail', ['id' => $this->curUser->id]),
+                'token' => $this->c->Csrf->create('EditUserEmail', ['id' => $this->curUser->id]),
             ],
             'sets'   => [
                 [
@@ -295,7 +295,7 @@ class Profile extends Page
                         'password' => [
                             'id'        => 'password',
                             'type'      => 'password',
-                            'caption'   => \ForkBB\__('Your password'),
+                            'caption'   => \ForkBB\__('Your passphrase'),
                             'required'  => true,
                         ],
                     ],
@@ -312,7 +312,8 @@ class Profile extends Page
 
         $this->robots     = 'noindex';
         $this->crumbs     = $this->extCrumbs(
-            [$this->c->Router->link('ChangeUserEmail', ['id' => $this->curUser->id]), \ForkBB\__('Change email')]
+            [$this->c->Router->link('EditUserEmail', ['id' => $this->curUser->id]), \ForkBB\__('Change email')],
+            [$this->c->Router->link('EditUserProfile', ['id' => $this->curUser->id]), \ForkBB\__('Editing profile')]
         );
         $this->fIndex     = $this->rules->my ? 'profile' : 'userlist';
         $this->nameTpl    = 'profile';
@@ -351,6 +352,118 @@ class Profile extends Page
         $this->c->users->update($this->user);
 
         return $this->c->Redirect->url($this->user->link)->message('Email changed redirect');
+    }
+
+    /**
+     * Подготавливает данные для шаблона просмотра профиля
+     *
+     * @param array $args
+     * @param string $method
+     *
+     * @return Page
+     */
+    public function pass(array $args, $method)
+    {
+        $this->curUser = $this->c->users->load((int) $args['id']);
+
+        if (! $this->curUser instanceof User || ($this->curUser->isUnverified && ! $this->user->isAdmMod)) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $this->rules = $this->c->ProfileRules->setUser($this->curUser);
+
+        if (! $this->rules->editPass) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $this->c->Lang->load('profile');
+
+        if ('POST' === $method) {
+            $v = $this->c->Validator->reset()
+                ->addValidators([
+                    'check_password' => [$this, 'vCheckPassword'],
+                ])->addRules([
+                    'token'     => 'token:EditUserPass',
+                    'password'  => 'required|string:trim|check_password',
+                    'new_pass'  => 'required|string:trim,lower|password',
+                ])->addAliases([
+                    'new_pass'  => 'New pass',
+                    'password'  => 'Your passphrase',
+                ])->addArguments([
+                    'token'           => ['id' => $this->curUser->id],
+                ])->addMessages([
+                ]);
+
+            if ($v->validation($_POST)) {
+//                if (\password_verify($v->new_pass, $this->curUser->password)) {
+//                    return $this->c->Redirect->page('EditUserProfile', ['id' => $this->curUser->id])->message('Email is old redirect');
+//                }
+
+                $this->curUser->password = \password_hash($v->new_pass, \PASSWORD_DEFAULT);
+                $this->c->users->update($this->curUser);
+
+                if ($this->rules->my) {
+#                    $auth = $this->c->Auth;
+#                    $auth->fIswev = ['s' => [\ForkBB\__('Pass updated')]];
+#                    return $auth->login(['_username' => $this->curUser->username], 'GET');
+                    return $this->c->Redirect->page('Login')->message('Pass updated'); // ????
+                } else {
+                    return $this->c->Redirect->page('EditUserProfile', ['id' => $this->curUser->id])->message('Pass updated redirect');
+                }
+            }
+
+            $this->fIswev = $v->getErrors();
+        }
+
+        $form = [
+            'action' => $this->c->Router->link('EditUserPass', ['id' => $this->curUser->id]),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('EditUserPass', ['id' => $this->curUser->id]),
+            ],
+            'sets'   => [
+                [
+                    'class'  => 'data-edit',
+                    'fields' => [
+                        'new_pass' => [
+                            'id'        => 'new_pass',
+                            'type'      => 'password',
+                            'maxlength' => 25,
+                            'caption'   => \ForkBB\__('New pass'),
+                            'required'  => true,
+                            'pattern'   => '^.{16,}$',
+                            'info'      => \ForkBB\__('Pass format') . ' ' . \ForkBB\__('Pass info'),
+                        ],
+                        'password' => [
+                            'id'        => 'password',
+                            'type'      => 'password',
+                            'caption'   => \ForkBB\__('Your passphrase'),
+                            'required'  => true,
+                        ],
+                    ],
+                ],
+            ],
+            'btns'   => [
+                'submit' => [
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__('Submit'),
+                    'accesskey' => 's',
+                ],
+            ],
+        ];
+
+        $this->robots     = 'noindex';
+        $this->crumbs     = $this->extCrumbs(
+            [$this->c->Router->link('EditUserPass', ['id' => $this->curUser->id]), \ForkBB\__('Change pass')],
+            [$this->c->Router->link('EditUserProfile', ['id' => $this->curUser->id]), \ForkBB\__('Editing profile')]
+        );
+        $this->fIndex     = $this->rules->my ? 'profile' : 'userlist';
+        $this->nameTpl    = 'profile';
+        $this->onlinePos  = 'profile-' . $this->curUser->id; // ????
+        $this->title      = \ForkBB\__('%s\'s profile', $this->curUser->username);
+        $this->form       = $form;
+        $this->actionBtns = $this->btns('edit');
+
+        return $this;
     }
 
     /**
@@ -401,7 +514,7 @@ class Profile extends Page
     public function vCheckPassword(Validator $v, $password)
     {
         if (! \password_verify($password, $this->user->password)) {
-            $v->addError('Invalid password');
+            $v->addError('Invalid passphrase');
         }
 
         return $password;
@@ -518,6 +631,14 @@ class Profile extends Page
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Username'),
                 'value'   => $this->curUser->username,
+            ];
+        }
+        if ($isEdit && $this->rules->editPass) {
+            $fields[] = [
+                'id'    => 'change_pass',
+                'type'  => 'link',
+                'value' => \ForkBB\__('Change passphrase'),
+                'href'  => $this->c->Router->link('EditUserPass', ['id' => $this->curUser->id]),
             ];
         }
         if ($isEdit && $this->rules->setTitle) {
@@ -729,7 +850,7 @@ class Profile extends Page
                     'id'    => 'change_email',
                     'type'  => 'link',
                     'value' => \ForkBB\__('To change email'),
-                    'href'  => $this->c->Router->link('ChangeUserEmail', ['id' => $this->curUser->id]),
+                    'href'  => $this->c->Router->link('EditUserEmail', ['id' => $this->curUser->id]),
                 ];
             }
             $fields['email_setting'] = [

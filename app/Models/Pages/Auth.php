@@ -158,7 +158,7 @@ class Auth extends Page
                 ->addValidators([
                 ])->addRules([
                     'token' => 'token:Forget',
-                    'email' => 'required|string:trim,lower|email:banned,exists,flood',
+                    'email' => 'required|string:trim,lower|email:noban,exists,flood',
                 ])->addAliases([
                 ])->addMessages([
                     'email.email' => 'Invalid email',
@@ -253,7 +253,7 @@ class Auth extends Page
                 ]);
 
             if ($v->validation($_POST)) {
-                $user->password        = \password_hash($v->password, PASSWORD_DEFAULT);
+                $user->password        = \password_hash($v->password, \PASSWORD_DEFAULT);
                 $user->email_confirmed = 1;
                 $user->activate_string = '';
 
