@@ -5,6 +5,7 @@ namespace ForkBB\Models\Pages;
 use ForkBB\Models\Page;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Forum\Model as Forum;
+use ForkBB\Models\User\Model as User;
 use InvalidArgumentException;
 
 class Search extends Page
@@ -402,9 +403,9 @@ class Search extends Page
         switch ($action) {
             case 'search':
                 if (1 === $model->showAs) {
-                    $list = $model->actionT($action);
+                    $list          = $model->actionT($action);
                 } else {
-                    $list = $model->actionP($action);
+                    $list          = $model->actionP($action);
                     $asTopicsList  = false;
                 }
                 if ('*' === $args['author']) {
@@ -419,14 +420,37 @@ class Search extends Page
                 if ($this->user->isGuest) {
                     break;
                 }
-                $uid               = $this->user->id;
             case 'latest_active_topics':
             case 'unanswered_topics':
+                if (isset($uid)) {
+                    break;
+                }
+                $uid               = $this->user->id;
                 $list              = $model->actionT($action, $uid);
                 $model->name       = \ForkBB\__('Quick search ' . $action);
                 $model->linkMarker = 'SearchAction';
                 $model->linkArgs   = ['action' => $action];
                 $this->fSubIndex   = $subIndex[$action];
+                break;
+            case 'posts':
+                $asTopicsList      = false;
+            case 'topics':
+                if (! isset($uid)) {
+                    break;
+                }
+                $user              = $this->c->users->load($uid);
+                if (! $user instanceof User) {
+                    break;
+                }
+                if ($asTopicsList) {
+                    $list          = $model->actionT($action, $user->id);
+                } else {
+                    $list          = $model->actionP($action, $user->id);
+                }
+                $model->name       = \ForkBB\__('Quick search user ' . $action, $user->username);
+                $model->linkMarker = 'SearchAction';
+                $model->linkArgs   = ['action' => $action, 'uid' => $user->id];
+
                 break;
 #            default:
 #                throw new InvalidArgumentException('Unknown action: ' . $action);

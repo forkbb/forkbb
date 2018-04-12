@@ -406,7 +406,7 @@ class Profile extends Page
 #                    $auth = $this->c->Auth;
 #                    $auth->fIswev = ['s' => [\ForkBB\__('Pass updated')]];
 #                    return $auth->login(['_username' => $this->curUser->username], 'GET');
-                    return $this->c->Redirect->page('Login')->message('Pass updated'); // ????
+                    return $this->c->Redirect->page('Login')->message('Pass updated'); // ???? нужна передача данных между скриптами не привязанная к пользователю
                 } else {
                     return $this->c->Redirect->page('EditUserProfile', ['id' => $this->curUser->id])->message('Pass updated redirect');
                 }
@@ -955,7 +955,7 @@ class Profile extends Page
                     'type'    => 'link',
                     'caption' => \ForkBB\__('Posts info'),
                     'value'   => $this->user->showPostCount ? \ForkBB\num($this->curUser->num_posts) : \ForkBB\__('Show posts'),
-                    'href'    => '',
+                    'href'    => $this->c->Router->link('SearchAction', ['action' => 'posts', 'uid' => $this->curUser->id]),
                     'title'   => \ForkBB\__('Show posts'),
                 ];
                 $fields['topics'] = [
@@ -964,7 +964,7 @@ class Profile extends Page
                     'type'    => 'link',
                     'caption' => \ForkBB\__('Topics info'),
                     'value'   => $this->user->showPostCount ? \ForkBB\num($this->curUser->num_topics) : \ForkBB\__('Show topics'),
-                    'href'    => '',
+                    'href'    => $this->c->Router->link('SearchAction', ['action' => 'topics', 'uid' => $this->curUser->id]),
                     'title'   => \ForkBB\__('Show topics'),
                 ];
             } elseif ($this->user->showPostCount) {

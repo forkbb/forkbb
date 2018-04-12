@@ -14,12 +14,13 @@ class ActionP extends Method
      * Поисковые действия по сообщениям
      *
      * @param string $action
+     * @param int $uid
      *
      * @throws InvalidArgumentException
      *
      * @return false|array
      */
-    public function actionP($action)
+    public function actionP($action, $uid = null)
     {
         $root = $this->c->forums->get(0);
         if (! $root instanceof Forum || empty($root->descendants)) {
@@ -31,6 +32,14 @@ class ActionP extends Method
             case 'search':
                 $list = $this->model->queryIds;
                 break;
+            case 'posts':
+                $sql = 'SELECT p.id
+                        FROM ::posts AS p
+                        INNER JOIN ::topics AS t ON t.id=p.topic_id
+                        WHERE t.forum_id IN (?ai:forums) AND t.moved_to IS NULL AND p.poster_id=?i:uid
+                        ORDER BY p.posted DESC';
+                break;
+
 #            case 'last':
 #                $sql = 'SELECT t.id
 #                        FROM ::topics AS t
@@ -50,6 +59,7 @@ class ActionP extends Method
         if (null !== $sql) {
             $vars = [
                 ':forums' => array_keys($root->descendants),
+                ':uid'    => $uid,
             ];
             $list = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
         }

@@ -111,10 +111,10 @@ msgstr "Unanswered"
 msgid "Quick search topics_with_your_posts"
 msgstr "Posted"
 
-msgid "Quick search show_user_topics"
+msgid "Quick search user topics"
 msgstr "Topics by %s"
 
-msgid "Quick search show_user_posts"
+msgid "Quick search user posts"
 msgstr "Posts by %s"
 
 msgid "Quick search show_subscriptions"

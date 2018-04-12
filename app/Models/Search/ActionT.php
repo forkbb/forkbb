@@ -52,6 +52,13 @@ class ActionT extends Method
                         GROUP BY t.id
                         ORDER BY t.last_post DESC';
                 break;
+            case 'topics':
+                $sql = 'SELECT t.id
+                        FROM ::topics AS t
+                        INNER JOIN ::posts AS p ON t.first_post_id=p.id
+                        WHERE t.forum_id IN (?ai:forums) AND t.moved_to IS NULL AND p.poster_id=?i:uid
+                        ORDER BY t.last_post DESC';
+                break;
             default:
                 throw new InvalidArgumentException('Unknown action: ' . $action);
         }
