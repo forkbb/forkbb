@@ -279,26 +279,41 @@ msgstr "Include a plain text version of new posts in subscription notification e
 msgid "Auto notify full"
 msgstr "Automatically subscribe to every topic you post in."
 
-msgid "Show smilies"
+msgid "Smilies label"
+msgstr "Smilies"
+
+msgid "Smilies info"
 msgstr "Show smilies as graphic icons."
 
-msgid "Show images"
+msgid "Images label"
+msgstr "Images in posts"
+
+msgid "Images info"
 msgstr "Show images in posts."
 
-msgid "Show images sigs"
+msgid "Images sigs label"
+msgstr "Images in signatures"
+
+msgid "Images sigs info"
 msgstr "Show images in user signatures."
 
-msgid "Show avatars"
+msgid "Avatars label"
+msgstr "Avatars"
+
+msgid "Avatars info"
 msgstr "Show user avatars in posts."
 
-msgid "Show sigs"
+msgid "Sigs label"
+msgstr "Signatures"
+
+msgid "Sigs info"
 msgstr "Show user signatures."
 
 msgid "Style legend"
 msgstr "Select your preferred style"
 
-msgid "Styles"
-msgstr "Styles"
+msgid "Style"
+msgstr "Style"
 
 msgid "Admin note"
 msgstr "Admin note"
@@ -470,3 +485,30 @@ msgstr "Your passphrase has been updated. You can now login with your new passph
 
 msgid "Pass updated redirect"
 msgstr "Passphrase updated. Redirecting …"
+
+msgid "Language"
+msgstr "Language"
+
+msgid "Essentials"
+msgstr "Essentials"
+
+msgid "Time zone"
+msgstr "Time zone"
+
+msgid "Default"
+msgstr "Default"
+
+msgid "For default"
+msgstr "Clean this field for the default settings."
+
+msgid "Time format"
+msgstr "Time format"
+
+msgid "Date format"
+msgstr "Date format"
+
+msgid "Viewing posts"
+msgstr "Viewing posts"
+
+msgid "Pagination"
+msgstr "Pagination"

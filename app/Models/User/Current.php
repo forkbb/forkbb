@@ -33,8 +33,8 @@ class Current extends Action
 
         if ($user->isGuest) {
             $user->__isBot = $this->isBot();
-            $user->__disp_topics = $this->c->config->o_disp_topics_default;
-            $user->__disp_posts = $this->c->config->o_disp_posts_default;
+#            $user->__disp_topics = $this->c->config->o_disp_topics_default;
+#            $user->__disp_posts = $this->c->config->o_disp_posts_default;
             $user->__timezone = $this->c->config->o_default_timezone;
             $user->__dst = $this->c->config->o_default_dst;
 #            $user->language = $this->c->config->o_default_lang;
@@ -51,12 +51,12 @@ class Current extends Action
             } */
         } else {
             $user->__isBot = false;
-            if (! $user->disp_topics) {
-                $user->__disp_topics = $this->c->config->o_disp_topics_default;
-            }
-            if (! $user->disp_posts) {
-                $user->__disp_posts = $this->c->config->o_disp_posts_default;
-            }
+#            if (! $user->disp_topics) {
+#                $user->__disp_topics = $this->c->config->o_disp_topics_default;
+#            }
+#            if (! $user->disp_posts) {
+#                $user->__disp_posts = $this->c->config->o_disp_posts_default;
+#            }
             // Special case: We've timed out, but no other user has browsed the forums since we timed out
             if ($user->isLogged && $user->logged < time() - $this->c->config->o_timeout_visit) {
                 $this->manager->updateLastVisit($user); //????

@@ -289,4 +289,24 @@ class Model extends DataModel
     {
         return '1' == $this->c->config->o_show_post_count || $this->isAdmMod;
     }
+
+    /**
+     * Число тем на одну страницу
+     *
+     * @return int
+     */
+    protected function getdisp_topics()
+    {
+        return (int) (empty($this->a['disp_topics']) ? $this->c->config->o_disp_topics_default : $this->a['disp_topics']);
+    }
+
+    /**
+     * Число сообщений на одну страницу
+     *
+     * @return int
+     */
+    protected function getdisp_posts()
+    {
+        return (int) (empty($this->a['disp_posts']) ? $this->c->config->o_disp_posts_default : $this->a['disp_posts']);
+    }
 }

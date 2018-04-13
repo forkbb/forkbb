@@ -296,6 +296,12 @@ class Validator
             $rules = $this->rules[$field];
             if (isset($this->raw[$field])) {
                 $value = $this->c->Secury->replInvalidChars($this->raw[$field]);
+                // пустое поле в соответствии с правилом 'required' должно быть равно null
+                if ((\is_string($value) && 0 === \strlen(\preg_replace('%^\s+|\s+$%u', '', $value)))
+                    || (\is_array($value) && empty($value))
+                ) {
+                    $value = null;
+                }
             }
         }
 

@@ -500,3 +500,9 @@ msgstr "Сохранить изменения"
 
 msgid "Save"
 msgstr "Сохранить"
+
+msgid "Yes"
+msgstr "Да"
+
+msgid "No"
+msgstr "Нет"

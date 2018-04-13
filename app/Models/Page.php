@@ -99,10 +99,7 @@ class Page extends Model
             $nav['register'] = [$r->link('Register'), 'Register'];
             $nav['login'] = [$r->link('Login'), 'Login'];
         } else {
-            $nav['profile'] = [$r->link('User', [
-                'id'   => $this->user->id,
-                'name' => $this->user->username,
-            ]), 'Profile'];
+            $nav['profile'] = [$this->user->link, 'Profile'];
             // New PMS
             if ($this->c->config->o_pms_enabled == '1' && ($this->user->isAdmin || $this->user->messages_new > 0)) { //????
                 $nav['pmsnew'] = ['pmsnew.php', 'PM']; //'<li id="nav"'.((PUN_ACTIVE_PAGE == 'pms_new' || $user['messages_new'] > 0) ? ' class="isactive"' : '').'><a href="pmsnew.php">'.\ForkBB\__('PM').(($user['messages_new'] > 0) ? ' (<span'.((empty($this->c->config->o_pms_flasher) || PUN_ACTIVE_PAGE == 'pms_new') ? '' : ' class="remflasher"' ).'>'.$user['messages_new'].'</span>)' : '').'</a></li>';

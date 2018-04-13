@@ -81,12 +81,6 @@ msgstr "Edit"
 msgid "Remove"
 msgstr "Remove"
 
-msgid "Yes"
-msgstr "Yes"
-
-msgid "No"
-msgstr "No"
-
 msgid "here"
 msgstr "here"
 

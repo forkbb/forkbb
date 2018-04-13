@@ -57,12 +57,6 @@ msgstr "Default time zone"
 msgid "Timezone help"
 msgstr "The default time zone for guests and users attempting to register for the board."
 
-msgid "DST label"
-msgstr "Adjust for DST"
-
-msgid "DST help"
-msgstr "Check if daylight savings is in effect (advances times by 1 hour)."
-
 msgid "Language label"
 msgstr "Default language"
 
@@ -147,14 +141,8 @@ msgstr "Topic review"
 msgid "Topic review help"
 msgstr "Maximum number of posts to display when posting (newest first). Set to 0 to disable."
 
-msgid "Topics per page label"
-msgstr "Topics per page"
-
 msgid "Topics per page help"
 msgstr "The default number of topics to display per page in a forum. Users can personalize this setting."
-
-msgid "Posts per page label"
-msgstr "Posts per page"
 
 msgid "Posts per page help"
 msgstr "The default number of posts to display per page in a topic. Users can personalize this setting."

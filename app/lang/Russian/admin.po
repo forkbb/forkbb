@@ -81,12 +81,6 @@ msgstr "Править"
 msgid "Remove"
 msgstr "Убрать"
 
-msgid "Yes"
-msgstr "Да"
-
-msgid "No"
-msgstr "Нет"
-
 msgid "here"
 msgstr "здесь"
 

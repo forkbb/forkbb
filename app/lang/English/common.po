@@ -498,3 +498,9 @@ msgstr "Save changes"
 
 msgid "Save"
 msgstr "Save"
+
+msgid "Yes"
+msgstr "Yes"
+
+msgid "No"
+msgstr "No"
