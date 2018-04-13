@@ -512,3 +512,6 @@ msgstr "Просмотр сообщений"
 
 msgid "Pagination"
 msgstr "Постраничный вывод"
+
+msgid "Board configuration redirect"
+msgstr "Настройка форума обновлены. Переадресация &hellip;"

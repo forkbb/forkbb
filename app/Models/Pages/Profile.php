@@ -44,7 +44,7 @@ class Profile extends Page
                     'token'        => 'token:EditBoardConfig',
                     'language'     => 'required|string:trim|in:' . \implode(',', $this->c->Func->getLangs()),
                     'style'        => 'required|string:trim|in:' . \implode(',', $this->c->Func->getStyles()),
-                    'timezone'     => 'required|string:trim|in:-12,-11,-10,-9.5,-9,-8.5,-8,-7,-6,-5,-4,-3.5,-3,-2,-1,0,1,2,3,3.5,4,4.5,5,5.5,5.75,6,6.5,7,8,8.75,9,9.5,10,10.5,11,11.5,12,12.75,13,14',
+                    'timezone'     => 'required|numeric|in:-12,-11,-10,-9.5,-9,-8.5,-8,-7,-6,-5,-4,-3.5,-3,-2,-1,0,1,2,3,3.5,4,4.5,5,5.5,5.75,6,6.5,7,8,8.75,9,9.5,10,10.5,11,11.5,12,12.75,13,14',
                     'dst'          => 'required|integer|in:0,1',
                     'time_format'  => 'required|integer|in:' . \implode(',', \array_keys($this->c->TIME_FORMATS)),
                     'date_format'  => 'required|integer|in:' . \implode(',', \array_keys($this->c->DATE_FORMATS)),
@@ -75,7 +75,18 @@ class Profile extends Page
                 ]);
 
             if ($v->validation($_POST)) {
+                $data  = $v->getData();
+                unset($data['token']);
 
+                $this->curUser->replAttrs($data, true);
+
+                $this->c->DB->beginTransaction();
+
+                $this->c->users->update($this->curUser);
+
+                $this->c->DB->commit();
+
+                return $this->c->Redirect->page('EditBoardConfig', ['id' => $this->curUser->id])->message('Board configuration redirect');
             }
 
             $this->fIswev = $v->getErrors();

@@ -512,3 +512,6 @@ msgstr "Viewing posts"
 
 msgid "Pagination"
 msgstr "Pagination"
+
+msgid "Board configuration redirect"
+msgstr "Board configuration updated. Redirecting …"
