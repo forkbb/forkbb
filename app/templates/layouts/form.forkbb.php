@@ -28,11 +28,7 @@
               <dt> @if ($cur['caption'])<label class="f-child1 @if ($cur['required']) f-req @endif" @if (is_string($key) && 'radio' !== $cur['type'] && 'yield' !== $cur['type']) for="id-{{ $key }}" @endif>{!! $cur['caption'] !!}</label> @endif</dt>
               <dd>
                 @if ('text' === $cur['type'])
-                    @if ($form['action'])
                 <input @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="text" @if ($cur['maxlength']) maxlength="{{ $cur['maxlength'] }}" @endif @if ($cur['pattern']) pattern="{{ $cur['pattern'] }}" @endif @if (isset($cur['value'])) value="{{ $cur['value'] }}" @endif>
-                    @else
-                <p class="f-ctrl" id="id-{{ $key }}">{{ $cur['value'] or '' }}</p>
-                    @endif
                 @elseif ('textarea' === $cur['type'])
                 <textarea @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}">{{ $cur['value'] or '' }}</textarea>
                     @if ($cur['bb'])
@@ -89,13 +85,9 @@
                 @elseif ('checkbox' === $cur['type'])
                 <label class="f-child2"><input @if ($cur['autofocus']) autofocus @endif @if ($cur['disabled']) disabled @endif type="checkbox" id="id-{{ $key }}" name="{{ $key }}" value="{{ $cur['value'] or '1' }}" @if ($cur['checked']) checked @endif>{!! $cur['label'] !!}</label>
                 @elseif ('radio' === $cur['type'])
-                    @if ($form['action'])
-                        @foreach ($cur['values'] as $v => $n)
+                    @foreach ($cur['values'] as $v => $n)
                 <label class="f-label"><input @if ($cur['autofocus']) autofocus @endif @if ($cur['disabled']) disabled @endif type="radio" id="id-{{ $key }}-{{ $v }}" name="{{ $key }}" value="{{ $v }}" @if ($v == $cur['value']) checked @endif>{{ $n }}</label>
-                        @endforeach
-                    @else
-                <p class="f-ctrl" id="id-{{ $key }}">{{ $cur['values'][$cur['value']] or '' }}</p>
-                    @endif
+                    @endforeach
                 @elseif ('password' === $cur['type'])
                 <input @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="password" @if ($cur['maxlength']) maxlength="{{ $cur['maxlength'] }}" @endif @if ($cur['pattern']) pattern="{{ $cur['pattern'] }}" @endif @if (isset($cur['value'])) value="{{ $cur['value'] }}" @endif>
                 @elseif ('btn' === $cur['type'])

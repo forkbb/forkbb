@@ -6,7 +6,7 @@ use ForkBB\Core\Container;
 use ForkBB\Models\Model;
 use RuntimeException;
 
-class Page extends Model
+abstract class Page extends Model
 {
     /**
      * Конструктор

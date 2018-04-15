@@ -80,22 +80,22 @@ class Routing
                 $r->add('GET',  '/userlist[/{sort:username|registered|num_posts}/{dir:ASC|DESC}/{group:\-1|[1-9]\d*}/{name}][/{page:[1-9]\d*}]', 'Userlist:view', 'Userlist');
                 $r->add('POST', '/userlist', 'Userlist:view');
                 // юзеры
-                $r->add('GET',           '/user/{id:[2-9]|[1-9]\d+}/{name}',          'Profile:view',   'User');
-                $r->add(['GET', 'POST'], '/user/{id:[2-9]|[1-9]\d+}/edit/profile',    'Profile:edit',   'EditUserProfile');
-                $r->add(['GET', 'POST'], '/user/{id:[2-9]|[1-9]\d+}/edit/config',     'Profile:config', 'EditBoardConfig');
-                $r->add(['GET', 'POST'], '/user/{id:[2-9]|[1-9]\d+}/edit/email',      'Profile:email',  'EditUserEmail');
-                $r->add(['GET', 'POST'], '/user/{id:[2-9]|[1-9]\d+}/edit/passphrase', 'Profile:pass',   'EditUserPass');
+                $r->add('GET',           '/user/{id:[2-9]|[1-9]\d+}/{name}',          'ProfileView:view',   'User');
+                $r->add(['GET', 'POST'], '/user/{id:[2-9]|[1-9]\d+}/edit/profile',    'ProfileEdit:edit',   'EditUserProfile');
+                $r->add(['GET', 'POST'], '/user/{id:[2-9]|[1-9]\d+}/edit/config',     'ProfileConfig:config', 'EditUserBoardConfig');
+                $r->add(['GET', 'POST'], '/user/{id:[2-9]|[1-9]\d+}/edit/email',      'ProfileEmail:email',  'EditUserEmail');
+                $r->add(['GET', 'POST'], '/user/{id:[2-9]|[1-9]\d+}/edit/passphrase', 'ProfilePass:pass',   'EditUserPass');
             } elseif (! $user->isGuest) {
                 // только свой профиль
-                $r->add('GET',           '/user/{id:' . $user->id . '}/{name}',          'Profile:view',   'User');
-                $r->add(['GET', 'POST'], '/user/{id:' . $user->id . '}/edit/profile',    'Profile:edit',   'EditUserProfile');
-                $r->add(['GET', 'POST'], '/user/{id:' . $user->id . '}/edit/config',     'Profile:config', 'EditBoardConfig');
-                $r->add(['GET', 'POST'], '/user/{id:' . $user->id . '}/edit/email',      'Profile:email',  'EditUserEmail');
-                $r->add(['GET', 'POST'], '/user/{id:' . $user->id . '}/edit/passphrase', 'Profile:pass',   'EditUserPass');
+                $r->add('GET',           '/user/{id:' . $user->id . '}/{name}',          'ProfileView:view',   'User');
+                $r->add(['GET', 'POST'], '/user/{id:' . $user->id . '}/edit/profile',    'ProfileEdit:edit',   'EditUserProfile');
+                $r->add(['GET', 'POST'], '/user/{id:' . $user->id . '}/edit/config',     'ProfileConfig:config', 'EditUserBoardConfig');
+                $r->add(['GET', 'POST'], '/user/{id:' . $user->id . '}/edit/email',      'ProfileEmail:email',  'EditUserEmail');
+                $r->add(['GET', 'POST'], '/user/{id:' . $user->id . '}/edit/passphrase', 'ProfilePass:pass',   'EditUserPass');
             }
             // смена своего email
             if (! $user->isGuest) {
-                $r->add('GET', '/user/{id:' . $user->id . '}/{email}/{key}/{hash}', 'Profile:setEmail',  'SetNewEmail');
+                $r->add('GET', '/user/{id:' . $user->id . '}/{email}/{key}/{hash}', 'ProfileEmail:setEmail',  'SetNewEmail');
             }
             // пометка разделов прочитанными
             if (! $user->isGuest) {
