@@ -94,7 +94,7 @@ trait PostFormTrait
             ],
             'autofocus' => $autofocus,
         ];
-        $form['sets'][] = [
+        $form['sets']['uesm'] = [
             'fields' => $fieldset,
         ];
         $autofocus = null;
@@ -140,7 +140,7 @@ trait PostFormTrait
             ];
         }
         if ($fieldset) {
-            $form['sets'][] = [
+            $form['sets']['sett'] = [
                 'legend' => \ForkBB\__('Options'),
                 'fields' => $fieldset,
             ];

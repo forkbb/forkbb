@@ -208,7 +208,7 @@ class Options extends Admin
         $styles = $this->c->Func->getStyles();
         $styles = \array_combine($styles, $styles);
 
-        $form['sets'][] = [
+        $form['sets']['essentials'] = [
             'legend' => \ForkBB\__('Essentials subhead'),
             'fields' => [
                 'o_board_title' => [
@@ -302,7 +302,7 @@ class Options extends Admin
         $time = \ForkBB\dt($timestamp, false, $config->o_date_format, $config->o_time_format, true, true);
         $date = \ForkBB\dt($timestamp, true, $config->o_date_format, $config->o_time_format, false, true);
 
-        $form['sets'][] = [
+        $form['sets']['timeouts'] = [
             'legend' => \ForkBB\__('Timeouts subhead'),
             'fields' => [
                 'o_time_format' => [
@@ -348,7 +348,7 @@ class Options extends Admin
             ],
         ];
 
-        $form['sets'][] = [
+        $form['sets']['display'] = [
             'legend' => \ForkBB\__('Display subhead'),
             'fields' => [
                 'o_show_user_info' => [
@@ -437,7 +437,7 @@ class Options extends Admin
             ],
         ];
 
-        $form['sets'][] = [
+        $form['sets']['features'] = [
             'legend' => \ForkBB\__('Features subhead'),
             'fields' => [
                 'o_quickpost' => [
@@ -499,7 +499,7 @@ class Options extends Admin
             ],
         ];
 
-        $form['sets'][] = [
+        $form['sets']['feed'] = [
             'legend' => \ForkBB\__('Feed subhead'),
             'fields' => [
                 'o_feed_type' => [
@@ -530,7 +530,7 @@ class Options extends Admin
             ],
         ];
 
-        $form['sets'][] = [
+        $form['sets']['reports'] = [
             'legend' => \ForkBB\__('Reports subhead'),
             'fields' => [
                 'o_report_method' => [
@@ -553,7 +553,7 @@ class Options extends Admin
             ],
         ];
 
-        $form['sets'][] = [
+        $form['sets']['avatars'] = [
             'legend' => \ForkBB\__('Avatars subhead'),
             'fields' => [
                 'o_avatars' => [
@@ -598,7 +598,7 @@ class Options extends Admin
             ],
         ];
 
-        $form['sets'][] = [
+        $form['sets']['email'] = [
             'legend' => \ForkBB\__('E-mail subhead'),
             'fields' => [
                 'o_admin_email' => [
@@ -668,7 +668,7 @@ class Options extends Admin
             ],
         ];
 
-        $form['sets'][] = [
+        $form['sets']['registration'] = [
             'legend' => \ForkBB\__('Registration subhead'),
             'fields' => [
                 'o_regs_allow' => [
@@ -720,7 +720,7 @@ class Options extends Admin
             ],
         ];
 
-        $form['sets'][] = [
+        $form['sets']['announcement'] = [
             'legend' => \ForkBB\__('Announcement subhead'),
             'fields' => [
                 'o_announcement' => [

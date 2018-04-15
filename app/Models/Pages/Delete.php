@@ -40,15 +40,15 @@ class Delete extends Page
                 ])->addArguments([
                     'token' => $args,
                 ]);
-    
+
             if (! $v->validation($_POST) || null === $v->delete) {
                 return $this->c->Redirect->page('ViewPost', $args)->message('Cancel redirect');
             } elseif ($v->confirm !== 1) {
                 return $this->c->Redirect->page('ViewPost', $args)->message('No confirm redirect');
             }
-    
+
             $this->c->DB->beginTransaction();
-    
+
             if ($deleteTopic) {
                 $redirect = $this->c->Redirect->page('Forum', ['id' => $topic->forum_id])->message('Topic del redirect');
                 $this->c->topics->delete($topic);
@@ -56,9 +56,9 @@ class Delete extends Page
                 $redirect = $this->c->Redirect->page('ViewPost', ['id' => $this->c->posts->previousPost($post)])->message('Post del redirect');
                 $this->c->posts->delete($post);
             }
-    
+
             $this->c->DB->commit();
-    
+
             return $redirect;
         }
 
@@ -76,7 +76,7 @@ class Delete extends Page
                 'token' => $this->c->Csrf->create('DeletePost', ['id' => $post->id]),
             ],
             'sets'   => [
-                [
+                'info' => [
                     'info' => [
                         'info1' => [
                             'type'    => '', //????
@@ -89,7 +89,7 @@ class Delete extends Page
                         ],
                     ],
                 ],
-                [
+                'confirm' => [
                     'fields' => [
                         'confirm' => [
                             'type'    => 'checkbox',

@@ -206,7 +206,6 @@ class Edit extends Profile
         ];
         if ($this->rules->rename) {
             $fields['username'] = [
-                'id'        => 'username',
                 'type'      => 'text',
                 'maxlength' => 25,
                 'caption'   => \ForkBB\__('Username'),
@@ -216,7 +215,6 @@ class Edit extends Profile
             ];
         } else {
             $fields['username'] = [
-                'id'      => 'username',
                 'class'   => 'pline',
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Username'),
@@ -224,8 +222,7 @@ class Edit extends Profile
             ];
         }
         if ($this->rules->editPass) {
-            $fields[] = [
-                'id'    => 'change_pass',
+            $fields['change_pass'] = [
                 'type'  => 'link',
                 'value' => \ForkBB\__('Change passphrase'),
                 'href'  => $this->c->Router->link('EditUserPass', ['id' => $this->curUser->id]),
@@ -233,7 +230,6 @@ class Edit extends Profile
         }
         if ($this->rules->setTitle) {
             $fields['title'] = [
-                'id'        => 'title',
                 'type'      => 'text',
                 'maxlength' => 50,
                 'caption'   => \ForkBB\__('Title'),
@@ -242,7 +238,6 @@ class Edit extends Profile
             ];
         } else {
             $fields['title'] = [
-                'id'      => 'title',
                 'class'   => 'pline',
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Title'),
@@ -255,7 +250,6 @@ class Edit extends Profile
         if ($this->rules->useAvatar) {
             if (! $this->curUser->avatar) {
                 $fields['avatar'] = [
-                    'id'      => 'avatar',
                     'class'   => 'pline',
                     'type'    => 'str',
                     'caption' => \ForkBB\__('Avatar'),
@@ -263,7 +257,6 @@ class Edit extends Profile
                 ];
             } elseif ($this->curUser->avatar) {
                 $fields['avatar'] = [
-                    'id'      => 'avatar',
                     'type'    => 'yield',
                     'caption' => \ForkBB\__('Avatar'),
                     'value'   => 'avatar',
@@ -275,7 +268,6 @@ class Edit extends Profile
 
             if ($this->curUser->avatar) {
                 $fields['delete_avatar'] = [
-                    'id'      => 'delete_avatar',
                     'type'    => 'checkbox',
                     'label'   => \ForkBB\__('Delete avatar'),
                     'value'   => '1',
@@ -284,7 +276,6 @@ class Edit extends Profile
             }
 
             $fields['upload_avatar'] = [
-                'id'        => 'upload_avatar',
                 'type'      => 'file',
                 'caption'   => \ForkBB\__('New avatar'),
                 'info'      => \ForkBB\__('New avatar info',
@@ -295,8 +286,7 @@ class Edit extends Profile
                 ),
             ];
         }
-        $form['sets'][] = [
-            'id'     => 'header',
+        $form['sets']['header'] = [
             'class'  => 'header-edit',
 #            'legend' => \ForkBB\__('Options'),
             'fields' => $fields,
@@ -304,13 +294,11 @@ class Edit extends Profile
 
         // примечание администрации
         if ($this->user->isAdmMod) {
-            $form['sets'][] = [
-                'id'     => 'note',
+            $form['sets']['note'] = [
                 'class'  => 'data-edit',
                 'legend' => \ForkBB\__('Admin note'),
                 'fields' => [
                     'admin_note' => [
-                        'id'        => 'admin_note',
                         'type'      => 'text',
                         'maxlength' => 30,
                         'caption'   => \ForkBB\__('Admin note'),
@@ -323,7 +311,6 @@ class Edit extends Profile
         // личное
         $fields = [];
         $fields['realname'] = [
-            'id'        => 'realname',
             'type'      => 'text',
             'maxlength' => 40,
             'caption'   => \ForkBB\__('Realname'),
@@ -335,7 +322,6 @@ class Edit extends Profile
             2 => \ForkBB\__('Female'),
         ];
         $fields['gender'] = [
-            'id'      => 'gender',
             'class'   => 'block',
             'type'    => 'radio',
             'value'   => $this->curUser->gender,
@@ -343,14 +329,12 @@ class Edit extends Profile
             'caption' => \ForkBB\__('Gender'),
         ];
         $fields['location'] = [
-            'id'        => 'location',
             'type'      => 'text',
             'maxlength' => 30,
             'caption'   => \ForkBB\__('Location'),
             'value'     => $this->curUser->location,
         ];
-        $form['sets'][] = [
-            'id'     => 'personal',
+        $form['sets']['personal'] = [
             'class'  => 'data-edit',
             'legend' => \ForkBB\__('Personal information'),
             'fields' => $fields,
@@ -360,7 +344,6 @@ class Edit extends Profile
         $fields = [];
         if ($this->rules->viewOEmail) {
             $fields['open-email'] = [
-                'id'      => 'open-email',
                 'class'   => 'pline',
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Email info'),
@@ -368,15 +351,13 @@ class Edit extends Profile
             ];
         }
         if ($this->rules->editEmail) {
-            $fields[] = [
-                'id'    => 'change_email',
+            $fields['change_email'] = [
                 'type'  => 'link',
                 'value' => \ForkBB\__('To change email'),
                 'href'  => $this->c->Router->link('EditUserEmail', ['id' => $this->curUser->id]),
             ];
         }
         $fields['email_setting'] = [
-            'id'      => 'email_setting',
             'class'   => 'block',
             'type'    => 'radio',
             'value'   => $this->curUser->email_setting,
@@ -406,8 +387,7 @@ class Edit extends Profile
                 'href'    => \ForkBB\cens($this->curUser->url),
             ];
         }
-        $form['sets'][] = [
-            'id'     => 'contacts',
+        $form['sets']['contacts'] = [
             'class'  => 'data-edit',
             'legend' => \ForkBB\__('Contact details'),
             'fields' => $fields,
@@ -417,14 +397,12 @@ class Edit extends Profile
         if ($this->rules->useSignature) {
             $fields = [];
             $fields['signature'] = [
-                'id'      => 'signature',
                 'type'    => 'textarea',
                 'value'   => $this->curUser->signature,
                 'caption' => \ForkBB\__('Signature'),
                 'info'    => \ForkBB\__('Sig max size', \ForkBB\num($this->c->config->p_sig_length), \ForkBB\num($this->c->config->p_sig_lines)),
             ];
-            $form['sets'][] = [
-                'id'     => 'signature',
+            $form['sets']['signature'] = [
                 'class'  => 'data-edit',
                 'legend' => \ForkBB\__('Signature'),
                 'fields' => $fields,

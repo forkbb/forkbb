@@ -96,7 +96,7 @@ class Permissions extends Admin
 
         $yn = [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')];
 
-        $form['sets'][] = [
+        $form['sets']['posting'] = [
             'legend' => \ForkBB\__('Posting subhead'),
             'fields' => [
                 'p_message_bbcode' => [
@@ -137,7 +137,7 @@ class Permissions extends Admin
             ],
         ];
 
-        $form['sets'][] = [
+        $form['sets']['signatures'] = [
             'legend' => \ForkBB\__('Signatures subhead'),
             'fields' => [
                 'p_sig_bbcode' => [

@@ -55,7 +55,7 @@ abstract class Profile extends Page
     }
 
     /**
-     * Возвращает хлеьные крошки
+     * Возвращает хлебные крошки
      *
      * @param mixed ...$args
      *

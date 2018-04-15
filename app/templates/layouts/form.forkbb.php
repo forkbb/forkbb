@@ -6,26 +6,26 @@
         @endforeach
     @endif
 @endif
-@foreach ($form['sets'] as $set)
-    @if ($set['info'])
-        @foreach ($set['info'] as $key => $cur)
+@foreach ($form['sets'] as $setKey => $setVal)
+    @if ($setVal['info'])
+        @foreach ($setVal['info'] as $key => $cur)
           <p class="f-finfo"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
         @endforeach
-    @elseif ($set['fields'])
-          <fieldset @if ($set['id']) id="id-fs-{{ $set['id'] }}" @endif @if ($set['class']) class="f-fs-{!! implode(' f-fs-', (array) $set['class']) !!}" @endif>
-        @if ($set['legend'])
-            <legend>{!! $set['legend'] !!}</legend>
+    @elseif ($setVal['fields'])
+          <fieldset id="id-fs-{{ $setKey }}" @if ($setVal['class']) class="f-fs-{!! implode(' f-fs-', (array) $setVal['class']) !!}" @endif>
+        @if ($setVal['legend'])
+            <legend>{!! $setVal['legend'] !!}</legend>
         @endif
-        @foreach ($set['fields'] as $key => $cur)
+        @foreach ($setVal['fields'] as $key => $cur)
             @if ('info' === $cur['type'])
-            <p class="f-child6"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
+            <p id="id-{{ $cur['id'] or $key }}" class="f-child6"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
             @elseif ('wrap' === $cur['type'])
-            <div @if ($cur['id']) id="id-{{ $cur['id'] }}" @endif @if ($cur['class']) class="f-wrap-{!! implode(' f-wrap-', (array) $cur['class']) !!}" @endif>
+            <div id="id-{{ $cur['id'] or $key }}" @if ($cur['class']) class="f-wrap-{!! implode(' f-wrap-', (array) $cur['class']) !!}" @endif>
             @elseif ('endwrap' === $cur['type'])
             </div>
             @else
-            <dl @if ($cur['id']) id="id-dl-{{ $cur['id'] }}" @endif @if ($cur['class']) class="f-field-{!! implode(' f-field-', (array) $cur['class']) !!}" @endif>
-              <dt> @if ($cur['caption'])<label class="f-child1 @if ($cur['required']) f-req @endif" @if (is_string($key) && 'radio' !== $cur['type'] && 'yield' !== $cur['type']) for="id-{{ $key }}" @endif>{!! $cur['caption'] !!}</label> @endif</dt>
+            <dl id="id-dl-{{ $cur['id'] or $key }}" @if ($cur['class']) class="f-field-{!! implode(' f-field-', (array) $cur['class']) !!}" @endif>
+              <dt> @if ($cur['caption'])<label class="f-child1 @if ($cur['required']) f-req @endif" @if (false === \strpos('.radio.yield.str.btn.', ".{$cur['type']}.")) for="id-{{ $key }}" @endif>{!! $cur['caption'] !!}</label> @endif</dt>
               <dd>
                 @if ('text' === $cur['type'])
                 <input @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="text" @if ($cur['maxlength']) maxlength="{{ $cur['maxlength'] }}" @endif @if ($cur['pattern']) pattern="{{ $cur['pattern'] }}" @endif @if (isset($cur['value'])) value="{{ $cur['value'] }}" @endif>
@@ -40,10 +40,10 @@
                     @endif
                 @elseif ('select' === $cur['type'])
                 <select @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}">
-                    @if (null === ($count = null) && is_array(reset($cur['options'])) && 1 === count(reset($cur['options'])) && $count = 0) @endif
+                    @if (null === ($count = null) && \is_array(reset($cur['options'])) && 1 === \count(reset($cur['options'])) && $count = 0) @endif
                     @foreach ($cur['options'] as $v => $option)
-                        @if (is_array($option))
-                            @if (null !== $count && 1 === count($option))
+                        @if (\is_array($option))
+                            @if (null !== $count && 1 === \count($option))
                                 @if (++$count > 1)
                 </optgroup>
                                 @endif
@@ -61,19 +61,19 @@
                 </select>
                 @elseif ('multiselect' === $cur['type'])
                 <select @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif @if ($cur['size']) size="{{ $cur['size'] }}" @endif multiple class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}[]">
-                    @if (null === ($count = null) && is_array(reset($cur['options'])) && 1 === count(reset($cur['options'])) && $count = 0) @endif
+                    @if (null === ($count = null) && \is_array(reset($cur['options'])) && 1 === count(reset($cur['options'])) && $count = 0) @endif
                     @foreach ($cur['options'] as $v => $option)
-                        @if (is_array($option))
+                        @if (\is_array($option))
                             @if (null !== $count && 1 === count($option))
                                 @if (++$count > 1)
                 </optgroup>
                                 @endif
                 <optgroup label="{{ $option[0] }}">
                             @else
-                  <option value="{{ $option[0] }}" @if ((is_array($cur['value']) && in_array($option[0], $cur['value'])) || $option[0] == $cur['value']) selected @endif @if ($option[2]) disabled @endif>{{ $option[1] }}</option>
+                  <option value="{{ $option[0] }}" @if ((\is_array($cur['value']) && in_array($option[0], $cur['value'])) || $option[0] == $cur['value']) selected @endif @if ($option[2]) disabled @endif>{{ $option[1] }}</option>
                             @endif
                         @else
-                  <option value="{{ $v }}" @if ((is_array($cur['value']) && in_array($v, $cur['value'])) || $v == $cur['value']) selected @endif>{{ $option }}</option>
+                  <option value="{{ $v }}" @if ((\is_array($cur['value']) && in_array($v, $cur['value'])) || $v == $cur['value']) selected @endif>{{ $option }}</option>
                         @endif
                     @endforeach
                     @if (null !== $count)

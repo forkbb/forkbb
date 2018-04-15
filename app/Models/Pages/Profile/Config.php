@@ -121,27 +121,23 @@ class Config extends Profile
             $dateFormat[$key] = \ForkBB\dt(\time(), true, $value, null, false, true) . ($key ? '' : ' (' . \ForkBB\__('Default') . ')');
         }
 
-        $form['sets'][] = [
-            'id'     => 'essentials',
+        $form['sets']['essentials'] = [
             'legend' => \ForkBB\__('Essentials'),
             'class'  => 'data-edit',
             'fields' => [
                 'language' => [
-                    'id'      => 'language',
                     'type'    => 'select',
                     'options' => $langs,
                     'value'   => $this->curUser->language,
                     'caption' => \ForkBB\__('Language'),
                 ],
                 'style' => [
-                    'id'      => 'style',
                     'type'    => 'select',
                     'options' => $styles,
                     'value'   => $this->curUser->style,
                     'caption' => \ForkBB\__('Style'),
                 ],
                 'timezone' => [
-                    'id'      => 'timezone',
                     'type'    => 'select',
                     'options' => [
                         '-12'   => \ForkBB\__('UTC-12:00'),
@@ -189,7 +185,6 @@ class Config extends Profile
                     'caption' => \ForkBB\__('Time zone'),
                 ],
                 'dst' => [
-                    'id'      => 'dst',
                     'type'    => 'radio',
                     'value'   => $this->curUser->dst,
                     'values'  => $yn,
@@ -197,14 +192,12 @@ class Config extends Profile
                     'info'    => \ForkBB\__('DST help'),
                 ],
                 'time_format' => [
-                    'id'      => 'time_format',
                     'type'    => 'select',
                     'options' => $timeFormat,
                     'value'   => $this->curUser->time_format,
                     'caption' => \ForkBB\__('Time format'),
                 ],
                 'date_format' => [
-                    'id'      => 'date_format',
                     'type'    => 'select',
                     'options' => $dateFormat,
                     'value'   => $this->curUser->date_format,
@@ -213,13 +206,11 @@ class Config extends Profile
 
             ],
         ];
-        $form['sets'][] = [
-            'id'     => 'viewing-posts',
+        $form['sets']['viewing-posts'] = [
             'legend' => \ForkBB\__('Viewing posts'),
             'class'  => 'data-edit',
             'fields' => [
                 'show_smilies' => [
-                    'id'      => 'show_smilies',
                     'type'    => 'radio',
                     'value'   => $this->curUser->show_smilies,
                     'values'  => $yn,
@@ -227,7 +218,6 @@ class Config extends Profile
                     'info'    => \ForkBB\__('Smilies info'),
                 ],
                 'show_sig' => [
-                    'id'      => 'show_sig',
                     'type'    => 'radio',
                     'value'   => $this->curUser->show_sig,
                     'values'  => $yn,
@@ -235,7 +225,6 @@ class Config extends Profile
                     'info'    => \ForkBB\__('Sigs info'),
                 ],
                 'show_avatars' => [
-                    'id'      => 'show_avatars',
                     'type'    => 'radio',
                     'value'   => $this->curUser->show_avatars,
                     'values'  => $yn,
@@ -243,7 +232,6 @@ class Config extends Profile
                     'info'    => \ForkBB\__('Avatars info'),
                 ],
                 'show_img' => [
-                    'id'      => 'show_img',
                     'type'    => 'radio',
                     'value'   => $this->curUser->show_img,
                     'values'  => $yn,
@@ -251,7 +239,6 @@ class Config extends Profile
                     'info'    => \ForkBB\__('Images info'),
                 ],
                 'show_img_sig' => [
-                    'id'      => 'show_img_sig',
                     'type'    => 'radio',
                     'value'   => $this->curUser->show_img_sig,
                     'values'  => $yn,
@@ -260,13 +247,11 @@ class Config extends Profile
                 ],
             ],
         ];
-        $form['sets'][] = [
-            'id'     => 'pagination',
+        $form['sets']['pagination'] = [
             'legend' => \ForkBB\__('Pagination'),
             'class'  => 'data-edit',
             'fields' => [
                 'disp_topics' => [
-                    'id'      => 'disp_topics',
                     'type'    => 'number',
                     'min'     => 10,
                     'max'     => 50,
@@ -275,7 +260,6 @@ class Config extends Profile
                     'info'    => \ForkBB\__('For default'),
                 ],
                 'disp_posts' => [
-                    'id'      => 'disp_posts',
                     'type'    => 'number',
                     'min'     => 10,
                     'max'     => 50,

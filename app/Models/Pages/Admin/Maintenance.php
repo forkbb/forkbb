@@ -56,7 +56,7 @@ class Maintenance extends Admin
                 'token' => $this->c->Csrf->create('AdminMaintenance'),
             ],
             'sets'   => [
-                [
+                'maint' => [
                     'fields' => [
                         'o_maintenance' => [
                             'type'    => 'radio',
@@ -89,7 +89,7 @@ class Maintenance extends Admin
                 'token' => $this->c->Csrf->create('AdminMaintenanceRebuild'),
             ],
             'sets'   => [
-                [
+                'indx-info' => [
                     'info' => [
                         'info1' => [
                             'type'  => '', //????
@@ -98,7 +98,7 @@ class Maintenance extends Admin
                         ],
                     ],
                 ],
-                [
+                'indx' => [
                     'fields' => [
                         'limit' => [
                             'type'    => 'number',
@@ -125,7 +125,7 @@ class Maintenance extends Admin
                         ],
                     ],
                 ],
-                [
+                'indx-info2' => [
                     'info' => [
                         'info1' => [
                             'type'  => '', //????

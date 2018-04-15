@@ -47,14 +47,12 @@ class View extends Profile
             'type'  => 'wrap',
         ];
         $fields['username'] = [
-            'id'      => 'username',
             'class'   => 'pline',
             'type'    => 'str',
             'caption' => \ForkBB\__('Username'),
             'value'   => $this->curUser->username,
         ];
         $fields['title'] = [
-            'id'      => 'title',
             'class'   => 'pline',
             'type'    => 'str',
             'caption' => \ForkBB\__('Title'),
@@ -65,14 +63,12 @@ class View extends Profile
         ];
         if ($this->rules->useAvatar) {
             $fields['avatar'] = [
-                'id'      => 'avatar',
                 'type'    => 'yield',
                 'caption' => \ForkBB\__('Avatar'),
                 'value'   => 'avatar',
             ];
         }
-        $form['sets'][] = [
-            'id'     => 'header',
+        $form['sets']['header'] = [
             'class'  => 'header',
 #            'legend' => \ForkBB\__('Options'),
             'fields' => $fields,
@@ -80,13 +76,11 @@ class View extends Profile
 
         // примечание администрации
         if ($this->user->isAdmMod && '' != $this->curUser->admin_note) {
-            $form['sets'][] = [
-                'id'     => 'note',
+            $form['sets']['note'] = [
                 'class'  => 'data',
                 'legend' => \ForkBB\__('Admin note'),
                 'fields' => [
                     'admin_note' => [
-                        'id'        => 'admin_note',
                         'class'     => 'pline',
                         'type'      => 'str',
                         'caption'   => \ForkBB\__('Admin note'),
@@ -100,7 +94,6 @@ class View extends Profile
         $fields = [];
         if ('' != $this->curUser->realname) {
             $fields['realname'] = [
-                'id'      => 'realname',
                 'class'   => 'pline',
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Realname'),
@@ -114,7 +107,6 @@ class View extends Profile
         ];
         if ($this->curUser->gender && isset($genders[$this->curUser->gender])) {
             $fields['gender'] = [
-                'id'      => 'gender',
                 'class'   => 'pline',
                 'type'    => 'str',
                 'value'   => $genders[$this->curUser->gender],
@@ -123,7 +115,6 @@ class View extends Profile
         }
         if ('' != $this->curUser->location) {
             $fields['location'] = [
-                'id'      => 'location',
                 'class'   => 'pline',
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Location'),
@@ -131,8 +122,7 @@ class View extends Profile
             ];
         }
         if (! empty($fields)) {
-            $form['sets'][] = [
-                'id'     => 'personal',
+            $form['sets']['personal'] = [
                 'class'  => 'data',
                 'legend' => \ForkBB\__('Personal information'),
                 'fields' => $fields,
@@ -143,7 +133,6 @@ class View extends Profile
         $fields = [];
         if ($this->rules->viewOEmail) {
             $fields['open-email'] = [
-                'id'      => 'open-email',
                 'class'   => 'pline',
                 'type'    => 2 === $this->curUser->email_setting ? 'str' : 'link',
                 'caption' => \ForkBB\__('Email info'),
@@ -154,7 +143,6 @@ class View extends Profile
         if ($this->rules->viewEmail) {
             if (0 === $this->curUser->email_setting) {
                 $fields['email'] = [
-                    'id'      => 'email',
                     'class'   => 'pline',
                     'type'    => 'link',
                     'caption' => \ForkBB\__('Email info'),
@@ -163,7 +151,6 @@ class View extends Profile
                 ];
             } elseif (1 === $this->curUser->email_setting) {
                 $fields['email'] = [
-                    'id'      => 'email',
                     'class'   => 'pline',
                     'type'    => 'link',
                     'caption' => \ForkBB\__('Email info'),
@@ -183,8 +170,7 @@ class View extends Profile
             ];
         }
         if (! empty($fields)) {
-            $form['sets'][] = [
-                'id'     => 'contacts',
+            $form['sets']['contacts'] = [
                 'class'  => 'data',
                 'legend' => \ForkBB\__('Contact details'),
                 'fields' => $fields,
@@ -196,15 +182,13 @@ class View extends Profile
             $fields = [];
             if ('' != $this->curUser->signature) {
                 $fields['signature'] = [
-                    'id'      => 'signature',
                     'type'    => 'yield',
                     'caption' => \ForkBB\__('Signature'),
                     'value'   => 'signature',
                 ];
             }
             if (! empty($fields)) {
-                $form['sets'][] = [
-                    'id'     => 'signature',
+                $form['sets']['signature'] = [
                     'class'  => 'data',
                     'legend' => \ForkBB\__('Signature'),
                     'fields' => $fields,
@@ -215,7 +199,6 @@ class View extends Profile
         // активность
         $fields = [];
         $fields['registered'] = [
-            'id'      => 'registered',
             'class'   => 'pline',
             'type'    => 'str',
             'value'   => \ForkBB\dt($this->curUser->registered, true),
@@ -223,7 +206,6 @@ class View extends Profile
         ];
         if ($this->rules->viewLastVisit) {
             $fields['lastvisit'] = [
-                'id'      => 'lastvisit',
                 'class'   => 'pline',
                 'type'    => 'str',
                 'value'   => \ForkBB\dt($this->curUser->last_visit, true),
@@ -231,7 +213,6 @@ class View extends Profile
             ];
         }
         $fields['lastpost'] = [
-            'id'      => 'lastpost',
             'class'   => 'pline',
             'type'    => 'str',
             'value'   => \ForkBB\dt($this->curUser->last_post, true),
@@ -240,7 +221,6 @@ class View extends Profile
         if ($this->curUser->num_posts) {
             if ('1' == $this->user->g_search) {
                 $fields['posts'] = [
-                    'id'      => 'posts',
                     'class'   => 'pline',
                     'type'    => 'link',
                     'caption' => \ForkBB\__('Posts info'),
@@ -249,7 +229,6 @@ class View extends Profile
                     'title'   => \ForkBB\__('Show posts'),
                 ];
                 $fields['topics'] = [
-                    'id'      => 'topics',
                     'class'   => 'pline',
                     'type'    => 'link',
                     'caption' => \ForkBB\__('Topics info'),
@@ -259,14 +238,12 @@ class View extends Profile
                 ];
             } elseif ($this->user->showPostCount) {
                 $fields['posts'] = [
-                    'id'      => 'posts',
                     'class'   => 'pline',
                     'type'    => 'str',
                     'caption' => \ForkBB\__('Posts info'),
                     'value'   => \ForkBB\num($this->curUser->num_posts),
                 ];
                 $fields['topics'] = [
-                    'id'      => 'topics',
                     'class'   => 'pline',
                     'type'    => 'str',
                     'caption' => \ForkBB\__('Topics info'),
@@ -276,7 +253,6 @@ class View extends Profile
         }
         if ($this->rules->viewIP) {
             $fields['ip'] = [
-                'id'      => 'ip',
                 'class'   => 'pline',
                 'type'    => 'link',
                 'caption' => \ForkBB\__('IP'),
@@ -285,8 +261,7 @@ class View extends Profile
                 'title'   => \ForkBB\__('IP title'),
             ];
         }
-        $form['sets'][] = [
-            'id'     => 'activity',
+        $form['sets']['activity'] = [
             'class'  => 'data',
             'legend' => \ForkBB\__('User activity'),
             'fields' => $fields,

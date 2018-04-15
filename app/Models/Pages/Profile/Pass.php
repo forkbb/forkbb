@@ -84,11 +84,10 @@ class Pass extends Profile
                 'token' => $this->c->Csrf->create('EditUserPass', ['id' => $this->curUser->id]),
             ],
             'sets'   => [
-                [
+                'new-pass' => [
                     'class'  => 'data-edit',
                     'fields' => [
                         'new_pass' => [
-                            'id'        => 'new_pass',
                             'type'      => 'password',
                             'maxlength' => 25,
                             'caption'   => \ForkBB\__('New pass'),
@@ -97,7 +96,6 @@ class Pass extends Profile
                             'info'      => \ForkBB\__('Pass format') . ' ' . \ForkBB\__('Pass info'),
                         ],
                         'password' => [
-                            'id'        => 'password',
                             'type'      => 'password',
                             'caption'   => \ForkBB\__('Your passphrase'),
                             'required'  => true,

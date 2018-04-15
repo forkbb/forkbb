@@ -179,7 +179,7 @@ class Install extends Page
                     'token' => $this->c->Csrf->create('Install'),
                 ],
                 'sets'   => [
-                    [
+                    'dlang' => [
                         'fields' => [
                             'installlang' => [
                                 'type'    => 'select',
@@ -207,7 +207,7 @@ class Install extends Page
                 'installlang' => $this->user->language,
             ],
             'sets'   => [
-                [
+                'db-info' => [
                     'info' => [
                         'info1' => [
                             'type'  => '', //????
@@ -220,7 +220,7 @@ class Install extends Page
                         ],
                     ],
                 ],
-                [
+                'db' => [
                     'fields' => [
                         'dbtype' => [
                             'type'     => 'select',
@@ -264,7 +264,7 @@ class Install extends Page
                         ],
                     ],
                 ],
-                [
+                'adm-info' => [
                     'info' => [
                         'info1' => [
                             'type'  => '', //????
@@ -277,7 +277,7 @@ class Install extends Page
                         ],
                     ],
                 ],
-                [
+                'adm' => [
                     'fields' => [
                         'username' => [
                             'type'      => 'text',
@@ -308,7 +308,7 @@ class Install extends Page
 
                     ],
                 ],
-                [
+                'board-info' => [
                     'info' => [
                         'info1' => [
                             'type'  => '', //????
@@ -321,7 +321,7 @@ class Install extends Page
                         ],
                     ],
                 ],
-                [
+                'board' => [
                     'fields' => [
                         'title' => [
                             'type'      => 'text',

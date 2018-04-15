@@ -95,11 +95,11 @@ class Categories extends Admin
                 'link'    => $this->c->Router->link('AdminCategoriesDelete', ['id' => $key]),
             ];
         }
-        $form['sets'][] = [
+        $form['sets']['cats'] = [
             'class'  => 'inline',
             'fields' => $fieldset,
         ];
-        $form['sets'][] = [
+        $form['sets']['new-cat'] = [
             'fields' => [
                 'new' => [
                     'class'     => 'new',
@@ -186,7 +186,7 @@ class Categories extends Admin
             ],
         ];
 
-        $form['sets'][] = [
+        $form['sets']['del'] = [
             'fields' => [
                 'confirm' => [
                     'caption' => \ForkBB\__('Confirm delete'),
@@ -197,7 +197,7 @@ class Categories extends Admin
                 ],
             ],
         ];
-        $form['sets'][] = [
+        $form['sets']['del-info'] = [
             'info' => [
                 'info1' => [
                     'type'  => '', //????

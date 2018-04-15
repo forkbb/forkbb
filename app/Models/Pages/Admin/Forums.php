@@ -149,14 +149,14 @@ class Forums extends Admin
             foreach ($list as $forum) {
                 if ($cid !== $forum->cat_id) {
                     if (null !== $cid) {
-                        $form['sets'][] = [
+                        $form['sets']["cat{$cid}"] = [
                             'class'  => 'inline',
                             'fields' => $fieldset,
                         ];
                         $fieldset = [];
                     }
 
-                    $form['sets'][] = [
+                    $form['sets']["cat{$forum->cat_id}-info"] = [
                         'info' => [
                             'info1' => [
                                 'type'  => '', //????
@@ -167,7 +167,7 @@ class Forums extends Admin
                     $cid = $forum->cat_id;
                 }
 
-                $fieldset[] = [
+                $fieldset["forum{$forum->id}"] = [
                     'class'   => ['name', 'adm-inline', 'depth' . $forum->depth],
                     'type'    => 'btn',
                     'value'   => $forum->forum_name,
@@ -183,7 +183,7 @@ class Forums extends Admin
                     'caption' => \ForkBB\__('Position label'),
                 ];
                 $disabled = (bool) $forum->subforums;
-                $fieldset[] = [
+                $fieldset["forum{$forum->id}-del"] = [
                     'class'    => ['delete', 'adm-inline'],
                     'type'     => 'btn',
                     'value'    => '❌',
@@ -193,7 +193,7 @@ class Forums extends Admin
                 ];
             }
 
-            $form['sets'][] = [
+            $form['sets']["cat{$cid}"] = [
                 'class'  => 'inline',
                 'fields' => $fieldset,
             ];
@@ -441,7 +441,7 @@ class Forums extends Admin
             'accesskey' => 's',
         ];
 
-        $form['sets'][] = [
+        $form['sets']['forum'] = [
             'fields' => [
                 'forum_name' => [
                     'type'      => 'text',
@@ -484,7 +484,7 @@ class Forums extends Admin
             ],
         ];
 
-        $form['sets'][] = [
+        $form['sets']['forum-info'] = [
             'info' => [
                 'info1' => [
                     'type'  => '', //????
@@ -526,7 +526,7 @@ class Forums extends Admin
                 'disabled' => $group->dis_post_topics,
             ];
 
-            $form['sets'][] = [
+            $form['sets']["perms{$id}"] = [
                 'class'  => 'inline',
                 'legend' => \ForkBB\e($group->g_title),
                 'fields' => $fieldset,

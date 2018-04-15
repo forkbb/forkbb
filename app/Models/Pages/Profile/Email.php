@@ -147,11 +147,10 @@ class Email extends Profile
                 'token' => $this->c->Csrf->create('EditUserEmail', ['id' => $this->curUser->id]),
             ],
             'sets'   => [
-                [
+                'new-email' => [
                     'class'  => 'data-edit',
                     'fields' => [
                         'new_email' => [
-                            'id'        => 'new_email',
                             'type'      => 'text',
                             'maxlength' => 80,
                             'caption'   => \ForkBB\__('New email'),
@@ -161,7 +160,6 @@ class Email extends Profile
                             'info'      => ! $this->user->isAdmin && '1' == $this->c->config->o_regs_verify ? \ForkBB\__('Email instructions') : null,
                         ],
                         'password' => [
-                            'id'        => 'password',
                             'type'      => 'password',
                             'caption'   => \ForkBB\__('Your passphrase'),
                             'required'  => true,

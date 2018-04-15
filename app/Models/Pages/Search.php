@@ -143,7 +143,7 @@ class Search extends Page
         ];
 
         if ($advanced) {
-            $form['sets'][] = [
+            $form['sets']['what'] = [
                 'fields' => [
                     [
                         'type'  => 'info',
@@ -173,7 +173,7 @@ class Search extends Page
                     ],
                 ],
             ];
-            $form['sets'][] = [
+            $form['sets']['where'] = [
                 'legend' => \ForkBB\__('Search in legend'),
                 'fields' => [
                     'forums' => [
@@ -206,7 +206,7 @@ class Search extends Page
 
                 ],
             ];
-            $form['sets'][] = [
+            $form['sets']['how'] = [
                 'legend' => \ForkBB\__('Search results legend'),
                 'fields' => [
                     'sort_by' => [
@@ -249,7 +249,7 @@ class Search extends Page
 
             ];
         } else {
-            $form['sets'][] = [
+            $form['sets']['what'] = [
                 'fields' => [
                     [
                         'type'  => 'info',

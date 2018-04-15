@@ -54,7 +54,7 @@ class Censoring extends Admin
                 'token' => $this->c->Csrf->create('AdminCensoring'),
             ],
             'sets'   => [
-                [
+                'onoff' => [
                     'fields' => [
                         'o_censoring' => [
                             'type'    => 'radio',
@@ -65,7 +65,7 @@ class Censoring extends Admin
                         ],
                     ],
                 ],
-                [
+                'onoff-info' => [
                     'info' => [
                         'info1' => [
                             'type'  => '', //????
@@ -116,7 +116,7 @@ class Censoring extends Admin
             'caption'   => \ForkBB\__('Replacement label'),
         ];
 
-        $form['sets'][] = [
+        $form['sets']['cens'] = [
             'class'  => 'inline',
             'fields' => $fieldset,
         ];

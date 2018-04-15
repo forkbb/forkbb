@@ -56,18 +56,20 @@ class Groups extends Admin
             'hidden' => [
                 'token' => $this->c->Csrf->create('AdminGroupsNew'),
             ],
-            'sets'   => [[
-                'fields' => [
-                    'basegroup' => [
-                        'type'      => 'select',
-                        'options'   => $this->groupsNew,
-                        'value'     => $this->c->config->o_default_user_group,
-                        'caption'   => \ForkBB\__('New group label'),
-                        'info'      => \ForkBB\__('New group help'),
-#                       'autofocus' => true,
+            'sets'   => [
+                'base' => [
+                    'fields' => [
+                        'basegroup' => [
+                            'type'      => 'select',
+                            'options'   => $this->groupsNew,
+                            'value'     => $this->c->config->o_default_user_group,
+                            'caption'   => \ForkBB\__('New group label'),
+                            'info'      => \ForkBB\__('New group help'),
+#                           'autofocus' => true,
+                        ],
                     ],
                 ],
-            ]],
+            ],
             'btns'   => [
                 'submit' => [
                     'type'      => 'submit',
@@ -81,17 +83,19 @@ class Groups extends Admin
             'hidden' => [
                 'token' => $this->c->Csrf->create('AdminGroupsDefault'),
             ],
-            'sets'   => [[
-                'fields' => [
-                    'defaultgroup' => [
-                        'type'    => 'select',
-                        'options' => $this->groupsDefault,
-                        'value'   => $this->c->config->o_default_user_group,
-                        'caption' => \ForkBB\__('Default group label'),
-                        'info'    => \ForkBB\__('Default group help'),
+            'sets'   => [
+                'del' => [
+                    'fields' => [
+                        'defaultgroup' => [
+                            'type'    => 'select',
+                            'options' => $this->groupsDefault,
+                            'value'   => $this->c->config->o_default_user_group,
+                            'caption' => \ForkBB\__('Default group label'),
+                            'info'    => \ForkBB\__('Default group help'),
+                        ],
                     ],
                 ],
-            ]],
+            ],
             'btns'   => [
                 'submit'  => [
                     'type'      => 'submit',
@@ -337,7 +341,7 @@ class Groups extends Admin
         ];
 
         if (! $group->groupAdmin) {
-            $form['sets'][] = [
+            $form['sets']['def-info'] = [
                 'info' => [
                     'info1' => [
                         'type'  => '', //????
@@ -365,7 +369,7 @@ class Groups extends Admin
         ];
 
         if ($group->groupAdmin) {
-            $form['sets'][] = [
+            $form['sets']['group-data'] = [
                 'fields' => $fieldset,
             ];
             return $form;
@@ -581,12 +585,12 @@ class Groups extends Admin
             ];
         }
 
-        $form['sets'][] = [
+        $form['sets']['group-data'] = [
             'fields' => $fieldset,
         ];
 
         if (! empty($group->g_moderator)) {
-            $form['sets'][] = [
+            $form['sets']['mod-info'] = [
                 'info' => [
                     'info1' => [
                         'type'  => '', //????
@@ -682,7 +686,7 @@ class Groups extends Admin
         ];
 
         if ($count) {
-            $form['sets'][] = [
+            $form['sets']['move'] = [
                 'fields' => [
                     'movegroup' => [
                         'type'    => 'select',
@@ -695,7 +699,7 @@ class Groups extends Admin
             ];
         }
 
-        $form['sets'][] = [
+        $form['sets']['conf'] = [
             'fields' => [
                 'confirm' => [
                     'caption' => \ForkBB\__('Confirm delete'),
@@ -706,7 +710,7 @@ class Groups extends Admin
                 ],
             ],
         ];
-        $form['sets'][] = [
+        $form['sets']['conf-info'] = [
             'info' => [
                 'info1' => [
                     'type'  => '', //????

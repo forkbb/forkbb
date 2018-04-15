@@ -172,7 +172,7 @@ class Userlist extends Page
             ],
             'caption' => \ForkBB\__('User sort order'),
         ];
-        $form['sets'][] = ['fields' => $fields];
+        $form['sets']['users'] = ['fields' => $fields];
 
         $this->fIndex       = 'userlist';
         $this->nameTpl      = 'userlist';
