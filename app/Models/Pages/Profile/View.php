@@ -22,7 +22,7 @@ class View extends Profile
 
         $this->canonical  = $this->curUser->link;
         $this->robots     = null;
-        $this->crumbs     = $this->crumbsExt();
+        $this->crumbs     = $this->crumbs();
         $this->form       = $this->form();
         $this->actionBtns = $this->btns('view');
 
@@ -42,7 +42,7 @@ class View extends Profile
 
         // имя, титул и аватара
         $fields = [];
-        $fields[] = [
+        $fields['usertitle'] = [
             'class' => 'usertitle',
             'type'  => 'wrap',
         ];

@@ -278,4 +278,62 @@ abstract class Page extends Model
             $this->a['fIswev'] = \array_merge_recursive((array) $this->a['fIswev'], $val);
         }
     }
+
+    /**
+     * Возвращает массив хлебных крошек
+     * Заполняет массив титула страницы
+     *
+     * @param mixed $crumbs
+     *
+     * @return array
+     */
+    protected function crumbs(...$crumbs)
+    {
+        $result = [];
+        $active = true;
+
+        foreach ($crumbs as $crumb) {
+            // модель
+            if ($crumb instanceof Model) {
+                do {
+                    // для поиска
+                    if (isset($crumb->name)) {
+                        $name = $crumb->name;
+                    // для раздела
+                    } elseif (isset($crumb->forum_name)) {
+                        $name = $crumb->forum_name;
+                    // для темы
+                    } elseif (isset($crumb->subject)) {
+                        $name = \ForkBB\cens($crumb->subject);
+                    // все остальное
+                    } else {
+                        $name = 'no name';
+                    }
+
+                    $result[] = [$crumb->link, $name, $active];
+                    $active   = null;
+
+                    if ($crumb->page > 1) {
+                        $name .= ' ' . \ForkBB\__('Page %s', $crumb->page);
+                    }
+
+                    $this->titles = $name;
+                    $crumb        = $crumb->parent;
+                } while ($crumb instanceof Model && null !== $crumb->parent);
+            // ссылка (передана массивом)
+            } elseif (\is_array($crumb) && isset($crumb[0], $crumb[1])) {
+                $result[]     = [$crumb[0], $crumb[1], $active];
+                $this->titles = $crumb[1];
+            // строка
+            } else {
+                $result[]     = [null, (string) $crumb, $active];
+                $this->titles = (string) $crumb;
+            }
+            $active = null;
+        }
+        // главная страница
+        $result[] = [$this->c->Router->link('Index'), \ForkBB\__('Index'), $active];
+
+        return \array_reverse($result);
+    }
 }

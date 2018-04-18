@@ -6,8 +6,6 @@ use ForkBB\Models\Page;
 
 class Rules extends Page
 {
-    use CrumbTrait;
-
     /**
      * Подготавливает данные для шаблона
      *

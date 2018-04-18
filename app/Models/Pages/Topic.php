@@ -7,7 +7,6 @@ use ForkBB\Models\Topic\Model as ModelTopic;
 
 class Topic extends Page
 {
-    use CrumbTrait;
     use PostFormTrait;
 
     /**

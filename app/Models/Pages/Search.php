@@ -10,8 +10,6 @@ use InvalidArgumentException;
 
 class Search extends Page
 {
-    use CrumbTrait;
-
     /**
      * Составление списка категорий/разделов для выбора
      */
@@ -274,7 +272,7 @@ class Search extends Page
         $this->canonical = $this->c->Router->link('Search');
         $this->robots    = 'noindex';
         $this->form      = $form;
-        $this->crumbs    = $this->crumbs([$this->c->Router->link('Search'), \ForkBB\__('Search')]);
+        $this->crumbs    = $this->crumbs();
 
         return $this;
     }
@@ -483,5 +481,19 @@ class Search extends Page
         $this->searchMode    = true;
 
         return $this;
+    }
+
+    /**
+     * Возвращает массив хлебных крошек
+     * Заполняет массив титула страницы
+     *
+     * @param mixed $crumbs
+     *
+     * @return array
+     */
+    protected function crumbs(...$crumbs)
+    {
+        $crumbs[] = [$this->c->Router->link('Search'), \ForkBB\__('Search')];
+        return parent::crumbs(...$crumbs);
     }
 }

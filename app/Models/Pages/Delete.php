@@ -6,8 +6,6 @@ use ForkBB\Models\Page;
 
 class Delete extends Page
 {
-    use CrumbTrait;
-
     /**
      * Удаление сообщения/темы
      *

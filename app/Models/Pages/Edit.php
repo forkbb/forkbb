@@ -8,7 +8,6 @@ use ForkBB\Models\Page;
 
 class Edit extends Page
 {
-    use CrumbTrait;
     use PostFormTrait;
     use PostValidatorTrait;
 

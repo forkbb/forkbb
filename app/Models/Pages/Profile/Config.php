@@ -78,7 +78,7 @@ class Config extends Profile
             $this->fIswev = $v->getErrors();
         }
 
-        $this->crumbs     = $this->crumbsExt([$this->c->Router->link('EditUserBoardConfig', ['id' => $this->curUser->id]), \ForkBB\__('Board configuration')]);
+        $this->crumbs     = $this->crumbs([$this->c->Router->link('EditUserBoardConfig', ['id' => $this->curUser->id]), \ForkBB\__('Board configuration')]);
         $this->form       = $this->form();
         $this->actionBtns = $this->btns('config');
 

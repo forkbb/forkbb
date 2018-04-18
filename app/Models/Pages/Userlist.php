@@ -9,8 +9,6 @@ use InvalidArgumentException;
 
 class Userlist extends Page
 {
-    use CrumbTrait;
-
     /**
      * Список пользователей
      *

@@ -61,7 +61,7 @@ class Pass extends Profile
             $this->fIswev = $v->getErrors();
         }
 
-        $this->crumbs     = $this->crumbsExt(
+        $this->crumbs     = $this->crumbs(
             [$this->c->Router->link('EditUserPass', ['id' => $this->curUser->id]), \ForkBB\__('Change pass')],
             [$this->c->Router->link('EditUserProfile', ['id' => $this->curUser->id]), \ForkBB\__('Editing profile')]
         );

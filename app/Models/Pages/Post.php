@@ -10,7 +10,6 @@ use ForkBB\Models\Page;
 
 class Post extends Page
 {
-    use CrumbTrait;
     use PostFormTrait;
     use PostValidatorTrait;
 

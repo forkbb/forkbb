@@ -124,7 +124,7 @@ class Email extends Profile
         }
 
 
-        $this->crumbs     = $this->crumbsExt(
+        $this->crumbs     = $this->crumbs(
             [$this->c->Router->link('EditUserEmail', ['id' => $this->curUser->id]), \ForkBB\__('Change email')],
             [$this->c->Router->link('EditUserProfile', ['id' => $this->curUser->id]), \ForkBB\__('Editing profile')]
         );

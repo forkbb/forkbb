@@ -132,7 +132,7 @@ class Edit extends Profile
             }
         }
 
-        $this->crumbs     = $this->crumbsExt([$this->c->Router->link('EditUserProfile', ['id' => $this->curUser->id]), \ForkBB\__('Editing profile')]);
+        $this->crumbs     = $this->crumbs([$this->c->Router->link('EditUserProfile', ['id' => $this->curUser->id]), \ForkBB\__('Editing profile')]);
         $this->form       = $this->form();
         $this->actionBtns = $this->btns('edit');
 
@@ -200,7 +200,7 @@ class Edit extends Profile
 
         // имя, титул и аватара
         $fields = [];
-        $fields[] = [
+        $fields['usertitle'] = [
             'class' => 'usertitle',
             'type'  => 'wrap',
         ];

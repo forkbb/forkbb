@@ -8,8 +8,6 @@ use ForkBB\Models\User\Model as User;
 
 abstract class Profile extends Page
 {
-    use CrumbTrait;
-
     /**
      * Инициализирует профиль
      *
@@ -55,18 +53,19 @@ abstract class Profile extends Page
     }
 
     /**
-     * Возвращает хлебные крошки
+     * Возвращает массив хлебных крошек
+     * Заполняет массив титула страницы
      *
-     * @param mixed ...$args
+     * @param mixed $crumbs
      *
      * @return array
      */
-    protected function crumbsExt(...$args)
+    protected function crumbs(...$crumbs)
     {
-        $args[] = [$this->curUser->link, \ForkBB\__('User %s', $this->curUser->username)];
-        $args[] = [$this->c->Router->link('Userlist'), \ForkBB\__('User list')];
+        $crumbs[] = [$this->curUser->link, \ForkBB\__('User %s', $this->curUser->username)];
+        $crumbs[] = [$this->c->Router->link('Userlist'), \ForkBB\__('User list')];
 
-        return $this->crumbs(...$args);
+        return parent::crumbs(...$crumbs);
     }
 
     /**

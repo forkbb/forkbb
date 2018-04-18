@@ -6,8 +6,6 @@ use ForkBB\Models\Page;
 
 class Forum extends Page
 {
-    use CrumbTrait;
-
     /**
      * Подготовка данных для шаблона
      *
