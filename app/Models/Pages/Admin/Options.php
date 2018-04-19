@@ -77,7 +77,7 @@ class Options extends Admin
                     'o_smtp_host'             => 'string:trim|max:255',
                     'o_smtp_user'             => 'string:trim|max:255',
                     'o_smtp_pass'             => 'string:trim|max:255', //??????
-                    'changeSmtpPassword'      => 'integer',             //??????
+                    'changeSmtpPassword'      => 'checkbox',
                     'o_smtp_ssl'              => 'required|integer|in:0,1',
                     'o_regs_allow'            => 'required|integer|in:0,1',
                     'o_regs_verify'           => 'required|integer|in:0,1',
@@ -98,7 +98,7 @@ class Options extends Admin
             $valid = $v->validation($_POST);
             $data  = $v->getData();
 
-            if (1 !== $data['changeSmtpPassword']) { //????
+            if (empty($data['changeSmtpPassword'])) {
                 unset($data['o_smtp_pass']);
             }
             unset($data['changeSmtpPassword'], $data['token']);
