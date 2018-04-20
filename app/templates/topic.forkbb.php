@@ -86,7 +86,7 @@
               <li class="f-postcount">{!! __('%s post', $post->user->num_posts, num($post->user->num_posts)) !!}</li>
     @endif
             </ul>
-    @if ($p->user->showUserInfo)
+    @if (! $post->user->isGuest && $p->user->showUserInfo)
             <ul class="f-user-info-add">
               <li>{!! __('Registered:') !!} {{ dt($post->user->registered, true) }}</li>
       @if ($post->user->location)
@@ -107,7 +107,9 @@
         </div>
         <footer class="f-post-footer clearfix">
           <div class="f-post-left">
+    @if (! $post->user->isGuest)
             <span class="f-userstatus">{!! __($post->user->online ? 'Online' : 'Offline') !!}</span>
+    @endif
           </div>
     @if ($post->canReport || $post->canDelete || $post->canEdit || $post->canQuote)
           <div class="f-post-right">
