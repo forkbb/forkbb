@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @copyright  Copyright (c) 2016-2017 Visman. All rights reserved.
+ * @copyright  Copyright (c) 2016-2018 Visman. All rights reserved.
  * @author     Visman <mio.visman@yandex.ru>
  * @link       https://github.com/MioVisman/Parserus
  * @license    https://opensource.org/licenses/MIT The MIT License (MIT)
@@ -1081,7 +1081,12 @@ class Parserus
 
             $body = '';
             foreach ($this->data[$id]['children'] as $cid) {
-                $body .= $this->getText($cid);
+                $child = $this->getText($cid);
+                if (isset($body{0}, $child{0})) {
+                    $body .= ' ' . $child;
+                } else {
+                    $body .= $child;
+                }
             }
 
             $bb = $this->bbcodes[$this->data[$id]['tag']];
