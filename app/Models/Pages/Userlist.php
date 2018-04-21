@@ -10,6 +10,28 @@ use InvalidArgumentException;
 class Userlist extends Page
 {
     /**
+     * Генерирует список доступных групп пользователей
+     *
+     * @param bool $onlyKeys
+     *
+     * @return array
+     */
+    protected function groups($onlyKeys = false)
+    {
+        $groups = [
+            -1 => \ForkBB\__('All users'),
+        ];
+
+        foreach ($this->c->groups->getList() as $group) {
+            if (! $group->groupGuest) {
+                $groups[$group->g_id] = $group->g_title;
+            }
+        }
+
+        return $onlyKeys ? \array_keys($groups) : $groups;
+    }
+
+    /**
      * Список пользователей
      *
      * @param array $args
@@ -21,16 +43,12 @@ class Userlist extends Page
     {
         $this->c->Lang->load('userlist');
 
-        $groups = \array_filter($this->c->groups->getList(), function ($group) {
-                return ! $group->groupGuest;
-            });
-
         $prefix = 'POST' === $method ? 'required|' : '';
         $v = $this->c->Validator->reset()
             ->addRules([
                 'sort'  => $prefix . 'string|in:username,registered' . ($this->user->showPostCount ? ',num_posts' : ''),
                 'dir'   => $prefix . 'string|in:ASC,DESC',
-                'group' => $prefix . 'integer|in:-1,' . \implode(',', \array_keys($groups)),
+                'group' => $prefix . 'integer|in:' . \implode(',', $this->groups(true)),
                 'name'  => $prefix . 'string:trim|min:1|max:25' . ($this->user->searchUsers ? '' : '|in:*'),
             ]);
 
@@ -143,9 +161,7 @@ class Userlist extends Page
         $fields['group'] = [
             'class'   => 'w4',
             'type'    => 'select',
-            'options' => [[-1, \ForkBB\__('All users')]] + \array_map(function ($group) {
-                    return [$group->g_id, $group->g_title];
-                }, $groups),
+            'options' => $this->groups(),
             'value'   => $v->group,
             'caption' => \ForkBB\__('User group'),
         ];

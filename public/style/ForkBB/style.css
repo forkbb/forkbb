@@ -957,6 +957,20 @@ select {
   word-break: break-all;
 }
 
+.f-admin .f-wrap-between {
+  display: flex;
+  align-items: flex-end;
+}
+
+.f-admin .f-field-bstart,
+.f-admin .f-field-bend {
+  width: 50%;
+}
+
+.f-admin .f-field-bstart .f-child1 {
+  white-space: nowrap;
+}
+
 @media screen and (min-width: 36rem) {
   .f-admin dl {
     display: flex;
@@ -981,6 +995,22 @@ select {
 
   .f-field-full dd {
     padding-left: 0;
+  }
+
+  .f-admin .f-field-bstart {
+    width: calc((100% - 14.625rem) / 2 + 14.625rem);
+  }
+
+  .f-admin .f-field-bend {
+    width: calc((100% - 14.625rem) / 2);
+  }
+
+  .f-admin .f-field-bend > dt {
+    display: none;
+  }
+
+  .f-admin .f-field-bend > dd {
+    width: 100%;
   }
 }
 

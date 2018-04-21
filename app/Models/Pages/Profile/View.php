@@ -251,13 +251,13 @@ class View extends Profile
                 ];
             }
         }
-        if ($this->rules->viewIP) {
+        if ($this->rules->viewIP && false !== \filter_var($this->curUser->registration_ip, \FILTER_VALIDATE_IP)) {
             $fields['ip'] = [
                 'class'   => 'pline',
                 'type'    => 'link',
                 'caption' => \ForkBB\__('IP'),
                 'value'   => $this->curUser->registration_ip,
-                'href'    => $this->c->Router->link('', ['id' => $this->curUser->id]), // ????
+                'href'    => $this->c->Router->link('AdminHost', ['ip' => $this->curUser->registration_ip]),
                 'title'   => \ForkBB\__('IP title'),
             ];
         }

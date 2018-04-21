@@ -45,7 +45,7 @@ class Admin extends Page
         $nav = [
             'Moderator menu'  => [
                 'index' => [$r->link('Admin'), \ForkBB\__('Admin index')],
-                'users' => ['admin_users.php', \ForkBB\__('Users')],
+                'users' => [$r->link('AdminUsers'), \ForkBB\__('Users')],
             ],
         ];
         if ($this->user->isAdmin || $this->user->g_mod_ban_users == '1') {

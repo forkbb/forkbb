@@ -123,6 +123,9 @@ class Routing
         if ($user->isAdmMod) {
             $r->add('GET', '/admin/', 'AdminIndex:index', 'Admin');
             $r->add('GET', '/admin/statistics', 'AdminStatistics:statistics', 'AdminStatistics');
+
+            $r->add(['GET', 'POST'], '/admin/users', 'AdminUsers:view', 'AdminUsers');
+
         }
         // только админ
         if ($user->isAdmin) {
@@ -144,6 +147,8 @@ class Routing
             $r->add(['GET', 'POST'], '/admin/maintenance',                       'AdminMaintenance:view',    'AdminMaintenance'  );
             $r->add('POST',          '/admin/maintenance/rebuild',               'AdminMaintenance:rebuild', 'AdminMaintenanceRebuild');
             $r->add('GET',           '/admin/maintenance/rebuild/{token}/{clear:[01]}/{limit:[1-9]\d*}/{start:[1-9]\d*}', 'AdminMaintenance:rebuild', 'AdminRebuildIndex' );
+
+            $r->add('GET',           '/admin/get/host/{ip:[0-9a-fA-F:.]+}',      'AdminHost:view',           'AdminHost');
         }
 
         $uri = $_SERVER['REQUEST_URI'];

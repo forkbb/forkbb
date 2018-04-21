@@ -1,0 +1,331 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+
+msgid "Non numeric message"
+msgstr "Вы ввели в числовое поле недопустимы символ."
+
+msgid "Invalid date time message"
+msgstr "Вы ввели неправильные дату/время."
+
+msgid "Not verified"
+msgstr "Не проверенный"
+
+msgid "No users selected"
+msgstr "Пользователи не выбраны."
+
+msgid "No move admins message"
+msgstr "Из соображений безопасности вы не можете переместить администраторов в другую группу. Если всё же вы хотите их переместить, то сделайте это в их профилях."
+
+msgid "No delete admins message"
+msgstr "Администраторы не могут быть удалены. Для того, чтобы удалить администраторов, вы должны сначала переместить их в другую группу."
+
+msgid "No ban admins message"
+msgstr "Администраторы не могут быть забанены. Для того, чтобы забанить администраторов, вы должны сначала переместить их в другую группу."
+
+msgid "No ban mods message"
+msgstr "Модераторы не могут быть забанены модераторами. Если вы хотите забанить модераторов, сообщите администратору."
+
+msgid "Move users"
+msgstr "Изменение группы у пользователей"
+
+msgid "Move users subhead"
+msgstr "Выберете новую группу"
+
+msgid "New group label"
+msgstr "Новая группа"
+
+msgid "New group help"
+msgstr "Выберите группу, в которую будут перемещены выбранные пользователи."
+
+msgid "Invalid group message"
+msgstr "Неверная группа."
+
+msgid "Users move redirect"
+msgstr "Пользователям изменена группа. Переадресация..."
+
+msgid "Delete users"
+msgstr "Удаление пользователей"
+
+msgid "Confirm delete legend"
+msgstr "ВАЖНО: прочтите перед удалением"
+
+msgid "Confirm delete info"
+msgstr "Пожалуйста, подтвердите удаление пользователя."
+
+msgid "Delete posts"
+msgstr "Удалить все темы и сообщения пользователей."
+
+msgid "Delete warning"
+msgstr "Предупреждаем! Удалённых пользователей и/или сообщения невозможно восстановить. Если вы выберете "не удалять сообщения", их можно будет удалить вручную в любое время."
+
+msgid "Users delete redirect"
+msgstr "Пользователи удалены. Переадресация..."
+
+msgid "Ban users"
+msgstr "Бан пользователей"
+
+msgid "Message expiry subhead"
+msgstr "Сообщение забаненым пользователям и дата окончания"
+
+msgid "Ban message label"
+msgstr "Сообщение забаненому"
+
+msgid "Ban message help"
+msgstr "Этот текст будет показан забаненым пользователям, когда они посетят форум."
+
+msgid "Expire date label"
+msgstr "Дата окончания"
+
+msgid "Expire date help"
+msgstr "Дата, когда бан автоматически снимется (формат: yyyy-mm-dd). Оставьте пустым если бан можно снять только вручную."
+
+msgid "Ban IP label"
+msgstr "Бан IP адреса"
+
+msgid "Ban IP help"
+msgstr "Бан IP адреса пользователей, чтобы сделать регистрацию новой учетной записи более трудной."
+
+msgid "Invalid date message"
+msgstr "Вы ввели неправильную дату."
+
+msgid "Invalid date reasons"
+msgstr "Вы ввели неправильную дату окончания. Дата должна быть в формате YYYY-MM-DD и должна быть не ранее, чем завтрашнее число."
+
+msgid "Users banned redirect"
+msgstr "Пользователи забанены. Переадресация..."
+
+msgid "User search head"
+msgstr "Поиск пользователей"
+
+msgid "User search subhead"
+msgstr "Критерии поиска"
+
+msgid "User search info"
+msgstr "Поиск пользователей в базе. Вы можете указать сразу несколько условий. Маски в виде звёздочек (*) допускаются."
+
+msgid "Username label"
+msgstr "Имя пользователя"
+
+msgid "E-mail address label"
+msgstr "Email адрес"
+
+msgid "Title label"
+msgstr "Титул"
+
+msgid "Real name label"
+msgstr "Настоящее имя"
+
+msgid "Gender label"
+msgstr "Пол"
+
+msgid "Do not display"
+msgstr "Не отображать"
+
+msgid "Website label"
+msgstr "Вебсайт"
+
+msgid "Jabber label"
+msgstr "Jabber"
+
+msgid "ICQ label"
+msgstr "ICQ"
+
+msgid "MSN label"
+msgstr "Microsoft Account"
+
+msgid "AOL label"
+msgstr "AOL IM"
+
+msgid "Yahoo label"
+msgstr "Yahoo Messenger"
+
+msgid "Location label"
+msgstr "Откуда"
+
+msgid "Signature label"
+msgstr "Подпись"
+
+msgid "Admin note label"
+msgstr "Примечание админа"
+
+msgid "Posts label"
+msgstr "Сообщений"
+
+msgid "Posts more than label"
+msgstr "Сообщений больше чем"
+
+msgid "Posts less than label"
+msgstr "Сообщений меньше чем"
+
+msgid "Last post label"
+msgstr "Последнее сообщение"
+
+msgid "Last post after label"
+msgstr "Последнее сообщение позднее"
+
+msgid "Date help"
+msgstr "(yyyy-mm-dd hh:mm:ss)"
+
+msgid "Last post before label"
+msgstr "Последнее сообщение ранее"
+
+msgid "Last visit label"
+msgstr "Последний визит"
+
+msgid "Last visit after label"
+msgstr "Последний визит позднее"
+
+msgid "Last visit before label"
+msgstr "Последний визит ранее"
+
+msgid "Registered label"
+msgstr "Дата регистрации"
+
+msgid "Registered after label"
+msgstr "Зарегистрирован позднее"
+
+msgid "Registered before label"
+msgstr "Зарегистрирован ранее"
+
+msgid "Order by label"
+msgstr "Сортировать по"
+
+msgid "Order by username"
+msgstr "Имени"
+
+msgid "Order by e-mail"
+msgstr "Email"
+
+msgid "Order by posts"
+msgstr "Количествуву сообщений"
+
+msgid "Order by last post"
+msgstr "Последнему сообщению"
+
+msgid "Order by last visit"
+msgstr "Последнему визиту"
+
+msgid "Order by registered"
+msgstr "Регистрации"
+
+msgid "Ascending"
+msgstr "По возрастанию"
+
+msgid "Descending"
+msgstr "По убыванию"
+
+msgid "User group label"
+msgstr "Группа"
+
+msgid "All groups"
+msgstr "Все группы"
+
+msgid "Unverified users"
+msgstr "Неподтверждённые"
+
+msgid "Submit search"
+msgstr "Начать поиск"
+
+msgid "IP search head"
+msgstr "Поиск по IP"
+
+msgid "IP search subhead"
+msgstr "Введите IP для поиска"
+
+msgid "IP address label"
+msgstr "IP адрес"
+
+msgid "IP address help"
+msgstr "IP адрес который будем искать в базе сообщений."
+
+msgid "Find IP address"
+msgstr "Найти IP адрес"
+
+msgid "Results head"
+msgstr "Результаты поиска"
+
+msgid "Results username head"
+msgstr "Имя пользователя"
+
+msgid "Results e-mail head"
+msgstr "Email"
+
+msgid "Results title head"
+msgstr "Титул/Статус"
+
+msgid "Results posts head"
+msgstr "Сообщений"
+
+msgid "Results admin note head"
+msgstr "Примечание"
+
+msgid "Results actions head"
+msgstr "Действия"
+
+msgid "Results IP address head"
+msgstr "IP адрес"
+
+msgid "Results last used head"
+msgstr "Посл. использование"
+
+msgid "Results times found head"
+msgstr "Встречается раз"
+
+msgid "Results action head"
+msgstr "Действие"
+
+msgid "Results find more link"
+msgstr "Найти других пользователей с этим ip"
+
+msgid "Results no posts found"
+msgstr "У этого пользователя нет ни одного сообщения."
+
+msgid "Select"
+msgstr "Выбрать"
+
+msgid "Select all"
+msgstr "Выбрать всё"
+
+msgid "Unselect all"
+msgstr "Отменить"
+
+msgid "Ban"
+msgstr "Бан"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "Change group"
+msgstr "Изменить группу"
+
+msgid "Bad IP message"
+msgstr "Указанный IP имеет неправильный формат."
+
+msgid "Results view IP link"
+msgstr "IP статистика"
+
+msgid "Results show posts link"
+msgstr "Сообщения"
+
+msgid "Results guest"
+msgstr "Гость"
+
+msgid "Results no IP found"
+msgstr "Указанный IP не найден в базе."
+
+msgid "No match"
+msgstr "Ничего"
+
+msgid "Search results legend"
+msgstr "Настройка параметров вывода результатов"

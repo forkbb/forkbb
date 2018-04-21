@@ -161,6 +161,8 @@ return [
         'AdminGroups'     => \ForkBB\Models\Pages\Admin\Groups::class,
         'AdminCensoring'  => \ForkBB\Models\Pages\Admin\Censoring::class,
         'AdminMaintenance' => \ForkBB\Models\Pages\Admin\Maintenance::class,
+        'AdminUsers'      => \ForkBB\Models\Pages\Admin\Users::class,
+        'AdminHost'       => \ForkBB\Models\Pages\Admin\Host::class,
 
         'ConfigModel'     => \ForkBB\Models\Config\Model::class,
         'ConfigModelLoad' => \ForkBB\Models\Config\Load::class,

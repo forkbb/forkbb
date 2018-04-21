@@ -433,7 +433,7 @@ msgid "IP"
 msgstr "IP"
 
 msgid "IP title"
-msgstr "IP"
+msgstr "Показать информацию об IP"
 
 msgid "No signature after censoring"
 msgstr "Весь текст подписи удален после цензуры"

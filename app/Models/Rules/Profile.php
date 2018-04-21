@@ -37,7 +37,7 @@ class Profile extends Rules
 
     protected function getrename()
     {
-        return $this->admin || ($this->moderator  && '1' == $this->user->g_mod_rename_users);
+        return $this->admin || ($this->moderator && '1' == $this->user->g_mod_rename_users);
     }
 
     protected function geteditPass()
