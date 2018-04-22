@@ -329,3 +329,6 @@ msgstr "Ничего"
 
 msgid "Search results legend"
 msgstr "Настройка параметров вывода результатов"
+
+msgid "No users found"
+msgstr "По вашему запросу ничего не найдено."

@@ -76,9 +76,9 @@ class Userlist extends Page
         } else {
             $filters['group_id'] = ['=', $v->group];
         }
-#        if (null !== $v->name && '*' !== $v->name) {
-#            $filters['username'] = ['LIKE', $v->name];
-#        }
+        if (null !== $v->name) {
+            $filters['username'] = ['LIKE', $v->name];
+        }
 
         $order  = $v->sort ? [$v->sort => $v->dir] : [];
 

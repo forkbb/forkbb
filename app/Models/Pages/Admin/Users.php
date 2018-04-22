@@ -58,9 +58,11 @@ class Users extends Admin
             $filters['group_id'] = ['=', $data['user_group']];
         }
 
-        unset($data['order_by'], $data['direction'], $data['user_group']);
-
         foreach ($data as $field => $value) {
+            if ('order_by' === $field || 'direction' === $field || 'user_group' === $field) {
+                continue;
+            }
+
             $key  = 1;
             $type = '=';
 
@@ -80,7 +82,22 @@ class Users extends Admin
             $filters[$field][$key] = $value;
         }
 
-        $ids = $this->c->users->filter($filters, $order);
+        $ids    = $this->c->users->filter($filters, $order);
+        $number = \count($ids);
+
+        if (0 == $number) {
+            $this->fIswev = ['i', \ForkBB\__('No users found')];
+
+            return $this->view([], 'GET', $data);
+        }
+
+        $page  = isset($args['page']) ? (int) $args['page'] : 1;
+        $pages = (int) \ceil($number / $this->c->config->o_disp_users);
+
+        if ($page > $pages) {
+            return $this->c->Message->message('Bad request');
+        }
+
 
         exit(var_dump($ids, $order, $filters));
     }
@@ -90,14 +107,13 @@ class Users extends Admin
      *
      * @param array $args
      * @param string $method
+     * @param array $data
      *
      * @return Page
      */
-    public function view(array $args, $method)
+    public function view(array $args, $method, array $data = [])
     {
         $this->c->Lang->load('admin_users');
-
-        $data = [];
 
         if ('POST' === $method) {
             $v = $this->c->Validator->reset()
