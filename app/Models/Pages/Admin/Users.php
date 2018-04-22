@@ -98,8 +98,16 @@ class Users extends Admin
             return $this->c->Message->message('Bad request');
         }
 
+        $startNum = ($page - 1) * $this->c->config->o_disp_users;
+        $ids      = \array_slice($ids, $this->startNum, $this->c->config->o_disp_users);
+        $userList = $this->c->users->load($ids);
 
-        exit(var_dump($ids, $order, $filters));
+        $this->nameTpl    = 'admin/users_result';
+        $this->aIndex     = 'users';
+        $this->titles     = \ForkBB\__('Users');
+        $this->formResult = $this->formUsers($userList, $startNum);
+
+        return $this;
     }
 
     /**
@@ -466,6 +474,84 @@ class Users extends Admin
         $form['sets']['ip'] = [
             'fields' => $fields,
         ];
+
+        return $form;
+    }
+
+    /**
+     * Создает массив данных для формы найденных по фильтру пользователей
+     *
+     * @param array $users
+     * @param int $number
+     *
+     * @return array
+     */
+    protected function formUsers(array $users, $number)
+    {
+        $form = [
+            'action' => $this->c->Router->link(''),
+            'hidden' => [
+                'token' => $this->c->Csrf->create(''),
+            ],
+            'sets'   => [],
+            'btns'   => [
+                'find1' => [
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__('???'),
+                    'accesskey' => 's',
+                ],
+            ],
+        ];
+
+        foreach ($users as $user) {
+            ++$number;
+            $fields = [];
+
+            $fields["l{$number}-username"] = [
+#                'class'   => 'pline',
+                'type'    => 'link',
+                'caption' => \ForkBB\__('Results username head'),
+                'value'   => $user->username,
+                'href'    => $user->link,
+#                'title'   => \ForkBB\__('Show posts'),
+            ];
+            $fields["l{$number}-email"] = [
+#                'class'   => 'pline',
+                'type'    => 'link',
+                'caption' => \ForkBB\__('Results e-mail head'),
+                'value'   => $user->email,
+                'href'    => 'mailto:' . $user->email,
+#                'title'   => \ForkBB\__('Show posts'),
+            ];
+            $fields["l{$number}-title"] = [
+#                'class'   => 'pline',
+                'type'    => 'str',
+                'caption' => \ForkBB\__('Results title head'),
+                'value'   => $user->title(),
+            ];
+            $fields["l{$number}-posts"] = [
+#                'class'   => 'pline',
+                'type'    => $user->num_posts ? 'link' : 'str',
+                'caption' => \ForkBB\__('Results posts head'),
+                'value'   => \ForkBB\num($user->num_posts),
+                'href'    => $this->c->Router->link('SearchAction', ['action' => 'posts', 'uid' => $user->id]),
+                'title'   => \ForkBB\__('Results show posts link'),
+            ];
+            $fields["l{$number}-note"] = [
+#                'class'   => 'pline',
+                'type'    => 'str',
+                'caption' => \ForkBB\__('Примечание админа'),
+                'value'   => $user->admin_note,
+            ];
+
+
+
+
+            $form['sets']["l{$number}"] = [
+                'legend' => $number,
+                'fields' => $fields,
+            ];
+        }
 
         return $form;
     }

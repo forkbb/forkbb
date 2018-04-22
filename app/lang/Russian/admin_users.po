@@ -316,7 +316,7 @@ msgid "Results view IP link"
 msgstr "IP статистика"
 
 msgid "Results show posts link"
-msgstr "Сообщения"
+msgstr "Показать сообщения"
 
 msgid "Results guest"
 msgstr "Гость"
