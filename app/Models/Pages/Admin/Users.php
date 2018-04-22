@@ -32,6 +32,60 @@ class Users extends Admin
     }
 
     /**
+     * Подготавливает данные для шаблона найденных по фильтру пользователей
+     *
+     * @param array $args
+     * @param string $method
+     *
+     * @return Page
+     */
+    public function filter(array $args, $method)
+    {
+        if (! \hash_equals($args['hash'], $this->c->Secury->hash($args['filters']))
+            || ! \is_array($data = \json_decode(\base64_decode($args['filters'], true), true))
+        ) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $this->c->Lang->load('admin_users');
+
+        $order = [
+            $data['order_by'] => $data['direction'],
+        ];
+        $filters = [];
+
+        if ($data['user_group'] > -1) {
+            $filters['group_id'] = ['=', $data['user_group']];
+        }
+
+        unset($data['order_by'], $data['direction'], $data['user_group']);
+
+        foreach ($data as $field => $value) {
+            $key  = 1;
+            $type = '=';
+
+            if (\preg_match('%^(.+?)_(1|2)$%', $field, $matches)) {
+                $type  = 'BETWEEN';
+                $field = $matches[1];
+                $key   = $matches[2];
+
+                if (\is_string($value)) {
+                    $value = \strtotime($value . ' UTC');
+                }
+            } elseif (\is_string($value)) {
+                $type  = 'LIKE';
+            }
+
+            $filters[$field][0]    = $type;
+            $filters[$field][$key] = $value;
+        }
+
+        $ids = $this->c->users->filter($filters, $order);
+
+        exit(var_dump($ids, $order, $filters));
+    }
+
+    /**
      * Подготавливает данные для шаблона поиска пользователей
      *
      * @param array $args
@@ -43,42 +97,94 @@ class Users extends Admin
     {
         $this->c->Lang->load('admin_users');
 
-        $v = null;
+        $data = [];
+
         if ('POST' === $method) {
             $v = $this->c->Validator->reset()
-                ->addValidators([
-                    'check_message' => [$this, 'vCheckMessage'],
-                ])->addRules([
-                    'token'                 => 'token:AdminMaintenance',
-                    'o_maintenance'         => 'required|integer|in:0,1',
-                    'o_maintenance_message' => 'string:trim|max:65000 bytes|check_message',
-                ])->addAliases([
-                ])->addArguments([
-                ])->addMessages([
+                ->addRules([
+                    'token' => 'token:AdminUsers',
+                    'ip'    => 'required',
                 ]);
 
             if ($v->validation($_POST)) {
-                $this->c->DB->beginTransaction();
+                $ip = \filter_var($v->ip, \FILTER_VALIDATE_IP);
 
-                $this->c->config->o_maintenance         = $v->o_maintenance;
-                $this->c->config->o_maintenance_message = $v->o_maintenance_message;
-                $this->c->config->save();
+                if (false === $ip) {
+                    $this->fIswev = ['v', \ForkBB\__('Bad IP message')];
+                    $data         = $v->getData();
+                } else {
+                    return $this->c->Redirect->page('AdminShowUsersWithIP', ['ip' => $ip]);
+                }
+            } else {
+                $v = $this->c->Validator->reset()
+                    ->addValidators([
+                    ])->addRules([
+                        'token'           => 'token:AdminUsers',
+                        'username'        => 'string|max:25',
+                        'email'           => 'string|max:80',
+                        'title'           => 'string|max:50',
+                        'realname'        => 'string|max:40',
+                        'gender'          => 'integer|in:0,1,2',
+                        'url'             => 'string|max:100',
+                        'location'        => 'string|max:30',
+                        'signature'       => 'string|max:512',
+                        'admin_note'      => 'string|max:30',
+                        'num_posts_1'     => 'integer|min:0|max:9999999999',
+                        'num_posts_2'     => 'integer|min:0|max:9999999999',
+                        'last_post_1'     => 'date',
+                        'last_post_2'     => 'date',
+                        'last_visit_1'    => 'date',
+                        'last_visit_2'    => 'date',
+                        'registered_1'    => 'date',
+                        'registered_2'    => 'date',
+                        'order_by'        => 'required|string|in:username,email,num_posts,last_post,last_visit,registered',
+                        'direction'       => 'required|string|in:ASC,DESC',
+                        'user_group'      => 'required|integer|in:' . \implode(',', $this->groups(true)),
+                    ])->addAliases([
+                        'username'        => 'Username label',
+                        'email'           => 'E-mail address label',
+                        'title'           => 'Title label',
+                        'realname'        => 'Real name label',
+                        'gender'          => 'Gender label',
+                        'url'             => 'Website label',
+                        'location'        => 'Location label',
+                        'signature'       => 'Signature label',
+                        'admin_note'      => 'Admin note label',
+                        'num_posts_1'     => 'Posts label',
+                        'num_posts_2'     => 'Posts label',
+                        'last_post_1'     => 'Last post label',
+                        'last_post_2'     => 'Last post label',
+                        'last_visit_1'    => 'Last visit label',
+                        'last_visit_2'    => 'Last visit label',
+                        'registered_1'    => 'Registered label',
+                        'registered_2'    => 'Registered label',
+                        'order_by'        => 'Order by label',
+#                        'direction'       => ,
+                        'user_group'      => 'User group label',
+                    ])->addArguments([
+                    ])->addMessages([
+                    ]);
 
-                $this->c->DB->commit();
+                if ($v->validation($_POST)) {
+                    $filters = $v->getData();
+                    unset($filters['token']);
+                    $filters = \base64_encode(\json_encode($filters));
+                    $hash    = $this->c->Secury->hash($filters);
+                    return $this->c->Redirect->page('AdminShowUsersWithFilter', ['filters' => $filters, 'hash' => $hash]);
+                }
 
-                return $this->c->Redirect->page('AdminMaintenance')->message('Data updated redirect');
+                $this->fIswev = $v->getErrors();
+                $data         = $v->getData();
             }
-
-            $this->fIswev = $v->getErrors();
         }
 
         $this->nameTpl    = 'admin/users';
         $this->aIndex     = 'users';
         $this->titles     = \ForkBB\__('Users');
-        $this->formSearch = $this->formSearch($v);
+        $this->formSearch = $this->formSearch($data);
 
         if ($this->user->isAdmin) {
-            $this->formIP = $this->formIP($v);
+            $this->formIP = $this->formIP($data);
         }
 
         return $this;
@@ -87,11 +193,11 @@ class Users extends Admin
     /**
      * Создает массив данных для формы поиска
      *
-     * @param mixed $v
+     * @param array $data
      *
      * @return array
      */
-    protected function formSearch($v)
+    protected function formSearch(array $data)
     {
         $form = [
             'action' => $this->c->Router->link('AdminUsers'),
@@ -120,25 +226,25 @@ class Users extends Admin
             'type'      => 'text',
             'maxlength' => 25,
             'caption'   => \ForkBB\__('Username label'),
-            'value'     => isset($v->username) ? $v->username : null,
+            'value'     => isset($data['username']) ? $data['username'] : null,
         ];
         $fields['email'] = [
             'type'      => 'text',
             'maxlength' => 80,
             'caption'   => \ForkBB\__('E-mail address label'),
-            'value'     => isset($v->email) ? $v->email : null,
+            'value'     => isset($data['email']) ? $data['email'] : null,
         ];
         $fields['title'] = [
             'type'      => 'text',
             'maxlength' => 50,
             'caption'   => \ForkBB\__('Title label'),
-            'value'     => isset($v->title) ? $v->title : null,
+            'value'     => isset($data['title']) ? $data['title'] : null,
         ];
         $fields['realname'] = [
             'type'      => 'text',
             'maxlength' => 40,
             'caption'   => \ForkBB\__('Real name label'),
-            'value'     => isset($v->realname) ? $v->realname : null,
+            'value'     => isset($data['realname']) ? $data['realname'] : null,
         ];
         $genders = [
             0 => \ForkBB\__('Do not display'),
@@ -148,7 +254,7 @@ class Users extends Admin
         $fields['gender'] = [
 #            'class'   => 'block',
             'type'    => 'radio',
-            'value'   => isset($v->gender) ? $v->gender : -1,
+            'value'   => isset($data['gender']) ? $data['gender'] : -1,
             'values'  => $genders,
             'caption' => \ForkBB\__('Gender label'),
         ];
@@ -157,25 +263,25 @@ class Users extends Admin
             'type'      => 'text',
             'maxlength' => 100,
             'caption'   => \ForkBB\__('Website label'),
-            'value'     => isset($v->url) ? $v->url : null,
+            'value'     => isset($data['url']) ? $data['url'] : null,
         ];
         $fields['location'] = [
             'type'      => 'text',
             'maxlength' => 30,
             'caption'   => \ForkBB\__('Location label'),
-            'value'     => isset($v->location) ? $v->location : null,
+            'value'     => isset($data['location']) ? $data['location'] : null,
         ];
         $fields['signature'] = [
             'type'      => 'text',
             'maxlength' => 512,
             'caption'   => \ForkBB\__('Signature label'),
-            'value'     => isset($v->signature) ? $v->signature : null,
+            'value'     => isset($data['signature']) ? $data['signature'] : null,
         ];
         $fields['admin_note'] = [
             'type'      => 'text',
             'maxlength' => 30,
             'caption'   => \ForkBB\__('Admin note label'),
-            'value'     => isset($v->admin_note) ? $v->admin_note : null,
+            'value'     => isset($data['admin_note']) ? $data['admin_note'] : null,
         ];
         $fields['between1'] = [
             'class' => 'between',
@@ -186,7 +292,7 @@ class Users extends Admin
             'class'   => 'bstart',
             'min'     => 0,
             'max'     => 9999999999,
-            'value'   => isset($v->num_posts_1) ? $v->num_posts_1 : null,
+            'value'   => isset($data['num_posts_1']) ? $data['num_posts_1'] : null,
             'caption' => \ForkBB\__('Posts label'),
         ];
         $fields['num_posts_2'] = [
@@ -194,7 +300,7 @@ class Users extends Admin
             'class'   => 'bend',
             'min'     => 0,
             'max'     => 9999999999,
-            'value'   => isset($v->num_posts_2) ? $v->num_posts_2 : null,
+            'value'   => isset($data['num_posts_2']) ? $data['num_posts_2'] : null,
         ];
         $fields[] = [
             'type' => 'endwrap',
@@ -207,14 +313,14 @@ class Users extends Admin
             'class'     => 'bstart',
             'type'      => 'text',
             'maxlength' => 100,
-            'value'     => isset($v->last_post_1) ? $v->last_post_1 : null,
+            'value'     => isset($data['last_post_1']) ? $data['last_post_1'] : null,
             'caption'   => \ForkBB\__('Last post label'),
         ];
         $fields['last_post_2'] = [
             'class'     => 'bend',
             'type'      => 'text',
             'maxlength' => 100,
-            'value'     => isset($v->last_post_2) ? $v->last_post_2 : null,
+            'value'     => isset($data['last_post_2']) ? $data['last_post_2'] : null,
         ];
         $fields[] = [
             'type' => 'endwrap',
@@ -227,14 +333,14 @@ class Users extends Admin
             'class'     => 'bstart',
             'type'      => 'text',
             'maxlength' => 100,
-            'value'     => isset($v->last_visit_1) ? $v->last_visit_1 : null,
+            'value'     => isset($data['last_visit_1']) ? $data['last_visit_1'] : null,
             'caption'   => \ForkBB\__('Last visit label'),
         ];
         $fields['last_visit_2'] = [
             'class'     => 'bend',
             'type'      => 'text',
             'maxlength' => 100,
-            'value'     => isset($v->last_visit_2) ? $v->last_visit_2 : null,
+            'value'     => isset($data['last_visit_2']) ? $data['last_visit_2'] : null,
         ];
         $fields[] = [
             'type' => 'endwrap',
@@ -247,14 +353,14 @@ class Users extends Admin
             'class'     => 'bstart',
             'type'      => 'text',
             'maxlength' => 100,
-            'value'     => isset($v->registered_1) ? $v->registered_1 : null,
+            'value'     => isset($data['registered_1']) ? $data['registered_1'] : null,
             'caption'   => \ForkBB\__('Registered label'),
         ];
         $fields['registered_2'] = [
             'class'     => 'bend',
             'type'      => 'text',
             'maxlength' => 100,
-            'value'     => isset($v->registered_2) ? $v->registered_2 : null,
+            'value'     => isset($data['registered_2']) ? $data['registered_2'] : null,
         ];
         $fields[] = [
             'type' => 'endwrap',
@@ -280,7 +386,7 @@ class Users extends Admin
                 'last_visit' => \ForkBB\__('Order by last visit'),
                 'registered' => \ForkBB\__('Order by registered'),
             ],
-            'value'   => isset($v->order_by) ? $v->order_by : 'registered',
+            'value'   => isset($data['order_by']) ? $data['order_by'] : 'registered',
             'caption' => \ForkBB\__('Order by label'),
         ];
         $fields['direction'] = [
@@ -290,7 +396,7 @@ class Users extends Admin
                 'ASC'  => \ForkBB\__('Ascending'),
                 'DESC' => \ForkBB\__('Descending'),
             ],
-            'value'   => isset($v->direction) ? $v->direction : 'DESC',
+            'value'   => isset($data['direction']) ? $data['direction'] : 'DESC',
         ];
         $fields[] = [
             'type' => 'endwrap',
@@ -298,7 +404,7 @@ class Users extends Admin
         $fields['user_group'] = [
             'type'    => 'select',
             'options' => $this->groups(),
-            'value'   => isset($v->user_group) ? $v->user_group : -1,
+            'value'   => isset($data['user_group']) ? $data['user_group'] : -1,
             'caption' => \ForkBB\__('User group label'),
         ];
 
@@ -313,11 +419,11 @@ class Users extends Admin
     /**
      * Создает массив данных для формы поиска по IP
      *
-     * @param mixed $v
+     * @param array $data
      *
      * @return array
      */
-    protected function formIP($v)
+    protected function formIP(array $data)
     {
         $form = [
             'action' => $this->c->Router->link('AdminUsers'),
@@ -338,7 +444,7 @@ class Users extends Admin
             'type'      => 'text',
             'maxlength' => 49,
             'caption'   => \ForkBB\__('IP address label'),
-            'value'     => isset($v->ip) ? $v->ip : null,
+            'value'     => isset($data['ip']) ? $data['ip'] : null,
             'required'  => true,
         ];
         $form['sets']['ip'] = [

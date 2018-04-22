@@ -109,6 +109,7 @@ class Validator
             'absent'        => [$this, 'vAbsent'],
             'array'         => [$this, 'vArray'],
             'checkbox'      => [$this, 'vCheckbox'],
+            'date'          => [$this, 'vDate'],
             'file'          => [$this, 'vFile'],
             'image'         => [$this, 'vImage'],
             'in'            => [$this, 'vIn'],
@@ -783,6 +784,17 @@ class Validator
         } elseif (null !== $value && false === $this->c->Files->isImage($value)) {
             $this->addError('The :alias not contains image');
             return null;
+        }
+        return $value;
+    }
+
+    public function vDate(Validator $v, $value)
+    {
+        if (null === $value) {
+            return null;
+        } elseif (! \is_string($value) || false === \strtotime($value . ' UTC')) {
+            $v->addError('The :alias does not contain a date');
+            return \is_string($value) ? $value : null;
         }
         return $value;
     }

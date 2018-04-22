@@ -28,7 +28,7 @@ class Host extends Admin
 
         $this->nameTpl     = 'message';
         $this->titles      = \ForkBB\__('Info');
-        $this->message     = \ForkBB\__('Host info', $ip, $host, $this->c->Router->link('AdminHost', ['ip' => $ip]));
+        $this->message     = \ForkBB\__('Host info', $ip, $host, $this->c->Router->link('AdminShowUsersWithIP', ['ip' => $ip]));
         $this->back        = true;
 
         return $this;
