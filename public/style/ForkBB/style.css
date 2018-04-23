@@ -1666,7 +1666,7 @@ select {
 /*********************/
 .f-fs-category {
   display: flex;
-  align-items: flex-end;
+  align-items: stretch;
   min-width: 0;
 }
 
@@ -1680,6 +1680,7 @@ select {
 
 .f-field-category {
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .f-field-category > dt {
@@ -1717,7 +1718,7 @@ select {
 /*********************/
 .f-fs-forum {
   display: flex;
-  align-items: flex-end;
+  align-items: stretch;
   min-width: 0;
 }
 
@@ -1731,6 +1732,7 @@ select {
 
 .f-field-forum {
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .f-field-forum > dt {
@@ -1792,7 +1794,7 @@ select {
 .f-fs-permission {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
+  align-items: stretch;
   min-width: 0;
 }
 
@@ -1810,6 +1812,7 @@ select {
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .f-fs-permission .f-field-cando > dt,
@@ -1867,7 +1870,7 @@ select {
 .f-fs-censor {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
+  align-items: stretch;
   min-width: 0;
 }
 
@@ -1879,6 +1882,7 @@ select {
   width: 50%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .f-fs-censor .f-field-censor > dt {
