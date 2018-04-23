@@ -847,49 +847,30 @@ select {
   color: #F8F4E3;
 }
 
-.f-admin-menu h2 {
-  text-align: center;
-  border: 0;
-  white-space: nowrap;
-/*  font-size: 1.125rem; */
-  text-transform: uppercase;
-}
-
-.f-admin-menu input:checked ~ h2 {
-  padding: 0.625rem;
-}
-
 @media screen and (min-width: 50rem) {
   .f-main-admin {
     display: flex;
     flex-wrap: wrap;
   }
 
-  .f-admin-menu {
+  .f-main-admin .f-admin-menu {
     width: 13rem;
     margin-right: 1rem;
   }
 
-  .f-admin-wrap {
+  .f-main-admin .f-admin-wrap {
     width: calc(100% - 14rem);
   }
 
-  .f-admin-menu .f-menu-toggle {
+  .f-main-admin .f-admin-menu .f-menu-toggle {
     display: none;
   }
 
-  .f-admin-menu .f-menu-items {
+  .f-main-admin .f-admin-menu .f-menu-items {
     max-height: 100rem;
   }
 
-  .f-admin-menu .f-menu-a {
-    text-align: left;
-    text-transform: none;
-    border-bottom: 0.0625rem dotted;
-  }
-
-  .f-admin-menu h2 {
-    padding: 0.625rem;
+  .f-main-admin .f-admin-menu .f-menu-a {
     text-align: left;
     text-transform: none;
     border-bottom: 0.0625rem dotted;
@@ -899,12 +880,15 @@ select {
 /***********/
 /* Админка */
 /***********/
+.f-admin:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
 .f-admin > h2 {
-  padding: 0.625rem 0.625rem 0 0.625rem;
+  display: none;
 }
 
 .f-admin > div {
-  margin-top: 0.625rem;
   background-color: #F8F4E3;
   border: 0.0625rem solid #AA7939;
 }
@@ -955,6 +939,10 @@ select {
 
 .f-phpinfo {
   word-break: break-all;
+}
+
+.f-phpinfo-div {
+  overflow-x: auto;
 }
 
 .f-admin .f-wrap-between {

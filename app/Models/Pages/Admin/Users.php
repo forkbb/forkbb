@@ -104,7 +104,8 @@ class Users extends Admin
 
         $this->nameTpl    = 'admin/users_result';
         $this->aIndex     = 'users';
-        $this->titles     = \ForkBB\__('Users');
+        $this->mainSuffix = '-one-column';
+        $this->aCrumbs[]  = [$this->c->Router->link('AdminShowUsersWithFilter', ['filters' => $args['filters'], 'hash' => $args['hash']]), \ForkBB\__('Results head')];
         $this->formResult = $this->formUsers($userList, $startNum);
 
         return $this;
@@ -204,7 +205,7 @@ class Users extends Admin
 
         $this->nameTpl    = 'admin/users';
         $this->aIndex     = 'users';
-        $this->titles     = \ForkBB\__('Users');
+#        $this->titles     = \ForkBB\__('Users');
         $this->formSearch = $this->formSearch($data);
 
         if ($this->user->isAdmin) {
@@ -472,6 +473,7 @@ class Users extends Admin
             'required'  => true,
         ];
         $form['sets']['ip'] = [
+            'legend' => \ForkBB\__('IP search subhead'),
             'fields' => $fields,
         ];
 

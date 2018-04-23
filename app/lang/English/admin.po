@@ -98,3 +98,6 @@ msgstr "Loading of the plugin - <strong>%s</strong> - failed."
 
 msgid "Data updated redirect"
 msgstr "Data updated. Redirecting …"
+
+msgid "\"%s\""
+msgstr "\"%s\""

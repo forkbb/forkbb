@@ -113,7 +113,6 @@ class Categories extends Admin
 
         $this->nameTpl   = 'admin/form';
         $this->aIndex    = 'categories';
-        $this->titles    = \ForkBB\__('Categories');
         $this->form      = $form;
         $this->classForm = 'editcategories';
         $this->titleForm = \ForkBB\__('Categories');
@@ -209,7 +208,8 @@ class Categories extends Admin
 
         $this->nameTpl   = 'admin/form';
         $this->aIndex    = 'categories';
-        $this->titles    = \ForkBB\__('Delete category head');
+        $this->aCrumbs[] = [$this->c->Router->link('AdminCategoriesDelete', ['id' => $args['id']]), \ForkBB\__('Delete category head')];
+        $this->aCrumbs[] = \ForkBB\__('"%s"', $category['cat_name']);
         $this->form      = $form;
         $this->classForm = ['deletecategory', 'btnsrow'];
         $this->titleForm = \ForkBB\__('Delete category head');

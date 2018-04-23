@@ -122,7 +122,6 @@ class Options extends Admin
 
         $this->aIndex    = 'options';
         $this->nameTpl   = 'admin/form';
-        $this->titles    = \ForkBB\__('Admin options');
         $this->form      = $this->viewForm($config);
         $this->titleForm = \ForkBB\__('Options head');
         $this->classForm = 'editoptions';

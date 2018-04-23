@@ -241,7 +241,7 @@ msgid "IP search head"
 msgstr "IP search"
 
 msgid "IP search subhead"
-msgstr "Enter IP to search for"
+msgstr "IP for search"
 
 msgid "IP address label"
 msgstr "IP address"

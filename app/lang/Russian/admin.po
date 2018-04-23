@@ -98,3 +98,6 @@ msgstr "Загрузить плагин <strong>%s</strong> не удалось.
 
 msgid "Data updated redirect"
 msgstr "Данные изменены. Переадресация …"
+
+msgid "\"%s\""
+msgstr "\"%s\""

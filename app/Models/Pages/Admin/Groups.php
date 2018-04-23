@@ -50,7 +50,6 @@ class Groups extends Admin
     public function view()
     {
         $this->nameTpl     = 'admin/groups';
-        $this->titles      = \ForkBB\__('User groups');
         $this->formNew     = [
             'action' => $this->c->Router->link('AdminGroupsNew'),
             'hidden' => [
@@ -58,6 +57,7 @@ class Groups extends Admin
             ],
             'sets'   => [
                 'base' => [
+                    'legend' => \ForkBB\__('Add group subhead'),
                     'fields' => [
                         'basegroup' => [
                             'type'      => 'select',
@@ -85,6 +85,7 @@ class Groups extends Admin
             ],
             'sets'   => [
                 'del' => [
+                    'legend' => \ForkBB\__('Default group subhead'),
                     'fields' => [
                         'defaultgroup' => [
                             'type'    => 'select',
@@ -181,7 +182,8 @@ class Groups extends Admin
             $marker          = 'AdminGroupsEdit';
             $vars            = ['id' => $group->g_id];
             $notNext        .= ',' . $group->g_id;
-            $this->titles    = \ForkBB\__('Edit group');
+            $this->aCrumbs[] = [$this->c->Router->link($marker, $vars), \ForkBB\__('Edit group')];
+            $this->aCrumbs[] = \ForkBB\__('"%s"', $group->g_title);
             $this->titleForm = \ForkBB\__('Edit group');
             $this->classForm = 'editgroup';
         } else {
@@ -189,7 +191,7 @@ class Groups extends Admin
             $vars            = ['base' => $group->g_id];
             $group->g_title  = '';
             $group->g_id     = null;
-            $this->titles    = \ForkBB\__('Create new group');
+            $this->aCrumbs[] = \ForkBB\__('Create new group');
             $this->titleForm = \ForkBB\__('Create new group');
             $this->classForm = 'creategroup';
         }
@@ -721,7 +723,8 @@ class Groups extends Admin
         ];
 
         $this->nameTpl   = 'admin/form';
-        $this->titles    = \ForkBB\__('Group delete');
+        $this->aCrumbs[] = [$this->c->Router->link('AdminGroupsDelete', $args), \ForkBB\__('Group delete')];
+        $this->aCrumbs[] = \ForkBB\__('"%s"', $group->g_title);
         $this->form      = $form;
         $this->titleForm = \ForkBB\__('Group delete');
         $this->classForm = ['deletegroup', 'btnsrow'];

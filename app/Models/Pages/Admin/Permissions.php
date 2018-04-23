@@ -62,7 +62,6 @@ class Permissions extends Admin
 
         $this->aIndex    = 'permissions';
         $this->nameTpl   = 'admin/form';
-        $this->titles    = \ForkBB\__('Permissions');
         $this->form      = $this->viewForm($config);
         $this->titleForm = \ForkBB\__('Permissions head');
         $this->classForm = 'editpermissions';

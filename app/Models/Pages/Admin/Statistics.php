@@ -45,9 +45,11 @@ class Statistics extends Admin
             $phpinfo = '- - -';
         }
 
-        $this->nameTpl = 'admin/phpinfo';
-        $this->titles  = 'phpinfo()';
-        $this->phpinfo = $phpinfo;
+        $this->nameTpl   = 'admin/phpinfo';
+        $this->mainSuffix = '-one-column';
+        $this->aCrumbs[] = [$this->c->Router->link('AdminInfo'), 'phpinfo()'];
+        $this->aCrumbs[] = [$this->c->Router->link('AdminStatistics'), \ForkBB\__('Server statistics')];
+        $this->phpinfo   = $phpinfo;
 
         return $this;
     }
@@ -61,9 +63,9 @@ class Statistics extends Admin
     {
         $this->c->Lang->load('admin_index');
 
-        $this->nameTpl  = 'admin/statistics';
-        $this->titles   = \ForkBB\__('Server statistics');
-        $this->linkInfo = $this->c->Router->link('AdminInfo');
+        $this->nameTpl   = 'admin/statistics';
+        $this->aCrumbs[] = [$this->c->Router->link('AdminStatistics'), \ForkBB\__('Server statistics')];
+        $this->linkInfo  = $this->c->Router->link('AdminInfo');
 
         // Get the server load averages (if possible)
         if (@\file_exists('/proc/loadavg') && \is_readable('/proc/loadavg')) {

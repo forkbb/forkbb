@@ -201,7 +201,6 @@ class Forums extends Admin
 
         $this->nameTpl   = 'admin/form';
         $this->aIndex    = 'forums';
-        $this->titles    = \ForkBB\__('Forums');
         $this->form      = $form;
         $this->classForm = ['editforums', 'inline'];
         $this->titleForm = \ForkBB\__('Forums');
@@ -297,7 +296,8 @@ class Forums extends Admin
 
         $this->nameTpl   = 'admin/form';
         $this->aIndex    = 'forums';
-        $this->titles    = \ForkBB\__('Delete forum head');
+        $this->aCrumbs[] = [$this->c->Router->link('AdminForumsDelete', ['id' => $forum->id]), \ForkBB\__('Delete forum head')];
+        $this->aCrumbs[] = \ForkBB\__('"%s"', $forum->forum_name);
         $this->form      = $form;
         $this->classForm = ['deleteforum', 'btnsrow'];
         $this->titleForm = \ForkBB\__('Delete forum head');
@@ -321,13 +321,14 @@ class Forums extends Admin
         if (empty($args['id'])) {
             $forum           = $this->c->forums->create();
             $marker          = 'AdminForumsNew';
-            $this->titles    = \ForkBB\__('Add forum head');
+            $this->aCrumbs[] = [$this->c->Router->link($marker), \ForkBB\__('Add forum head')];
             $this->titleForm = \ForkBB\__('Add forum head');
             $this->classForm = 'createforum';
         } else {
             $forum           = $this->c->forums->loadTree((int) $args['id']); //?????
             $marker          = 'AdminForumsEdit';
-            $this->titles    = \ForkBB\__('Edit forum head');
+            $this->aCrumbs[] = [$this->c->Router->link($marker, $args), \ForkBB\__('Edit forum head')];
+            $this->aCrumbs[] = \ForkBB\__('"%s"', $forum->forum_name);
             $this->titleForm = \ForkBB\__('Edit forum head');
             $this->classForm = 'editforum';
         }

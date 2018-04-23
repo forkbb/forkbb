@@ -8,6 +8,11 @@ use ForkBB\Models\Page;
 class Admin extends Page
 {
     /**
+     * @var array
+     */
+    protected $aCrumbs = [];
+
+    /**
      * Конструктор
      *
      * @param Container $container
@@ -30,6 +35,8 @@ class Admin extends Page
     public function prepare()
     {
         $this->aNavigation = $this->aNavigation();
+        $this->crumbs      = $this->crumbs(...$this->aCrumbs);
+
         parent::prepare();
     }
 
@@ -40,23 +47,21 @@ class Admin extends Page
      */
     protected function aNavigation()
     {
-        $r = $this->c->Router;
-
+        $r   = $this->c->Router;
         $nav = [
-            'Moderator menu'  => [
-                'index' => [$r->link('Admin'), \ForkBB\__('Admin index')],
-                'users' => [$r->link('AdminUsers'), \ForkBB\__('Users')],
-            ],
+            'index' => [$r->link('Admin'), \ForkBB\__('Admin index')],
+            'users' => [$r->link('AdminUsers'), \ForkBB\__('Users')],
         ];
+
         if ($this->user->isAdmin || $this->user->g_mod_ban_users == '1') {
-            $nav['Moderator menu']['bans'] = ['admin_bans.php', \ForkBB\__('Bans')];
+            $nav['bans'] = ['admin_bans.php', \ForkBB\__('Bans')];
         }
         if ($this->user->isAdmin || $this->c->config->o_report_method == '0' || $this->c->config->o_report_method == '2') {
-            $nav['Moderator menu']['reports'] = ['admin_reports.php', \ForkBB\__('Reports')];
+            $nav['reports'] = ['admin_reports.php', \ForkBB\__('Reports')];
         }
 
         if ($this->user->isAdmin) {
-            $nav['Admin menu'] = [
+            $nav += [
                 'options'     => [$r->link('AdminOptions'), \ForkBB\__('Admin options')],
                 'permissions' => [$r->link('AdminPermissions'), \ForkBB\__('Permissions')],
                 'categories'  => [$r->link('AdminCategories'), \ForkBB\__('Categories')],
@@ -71,19 +76,25 @@ class Admin extends Page
     }
 
     /**
-     * Возвращает title страницы
-     * $this->pageTitle
+     * Возвращает массив хлебных крошек
+     * Заполняет массив титула страницы
      *
-     * @param array $titles
+     * @param mixed $crumbs
      *
-     * @return string
+     * @return array
      */
-    protected function getPageTitle(array $titles = [])
+    protected function crumbs(...$crumbs)
     {
-        if (empty($titles)) {
-            $titles = $this->titles;
+        if ('index' !== $this->aIndex) {
+            if (isset($this->aNavigation[$this->aIndex])) {
+                $crumbs[] = $this->aNavigation[$this->aIndex];
+            } else {
+                $crumbs[] = 'unknown';
+            }
         }
-        $titles[] = \ForkBB\__('Admin title');
-        return parent::getPageTitle($titles);
+
+        $crumbs[] = [$this->c->Router->link('Admin'), \ForkBB\__('Admin title')];
+
+        return parent::crumbs(...$crumbs);
     }
 }
