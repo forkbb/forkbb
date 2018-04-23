@@ -87,14 +87,14 @@ class Censoring extends Admin
         $fieldset = [];
         foreach ($this->c->censorship->load() as $id => $row) {
             $fieldset["form[{$id}][search_for]"] = [
-                'class'     => ['censor', 'adm-inline'],
+                'class'     => ['censor'],
                 'type'      => 'text',
                 'maxlength' => 60,
                 'value'     => $row['search_for'],
                 'caption'   => \ForkBB\__('Censored word label'),
             ];
             $fieldset["form[{$id}][replace_with]"] = [
-                'class'     => ['censor', 'adm-inline'],
+                'class'     => ['censor'],
                 'type'      => 'text',
                 'maxlength' => 60,
                 'value'     => $row['replace_with'],
@@ -102,14 +102,14 @@ class Censoring extends Admin
             ];
         }
         $fieldset["form[0][search_for]"] = [
-            'class'     => ['censor', 'adm-inline'],
+            'class'     => ['censor'],
             'type'      => 'text',
             'maxlength' => 60,
             'value'     => '',
             'caption'   => \ForkBB\__('Censored word label'),
         ];
         $fieldset["form[0][replace_with]"] = [
-            'class'     => ['censor', 'adm-inline'],
+            'class'     => ['censor'],
             'type'      => 'text',
             'maxlength' => 60,
             'value'     => '',
@@ -117,7 +117,7 @@ class Censoring extends Admin
         ];
 
         $form['sets']['cens'] = [
-            'class'  => 'inline',
+            'class'  => 'censor',
             'fields' => $fieldset,
         ];
 

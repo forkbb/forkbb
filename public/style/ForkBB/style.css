@@ -1663,62 +1663,107 @@ select {
 
 /*********************/
 /* Админка/Категории */
-/* Админка/Разделы   */
 /*********************/
-.f-fs-inline {
+.f-fs-category {
   display: flex;
-  flex-wrap: wrap;
+  align-items: flex-end;
+  min-width: 0;
 }
 
-.f-fs-inline .f-field-adm-inline,
-.f-fs-inline .f-field-cando {
-  display: block;
-}
-
-.f-field-adm-inline > dt {
-  width: 100%;
-  margin: 0;
+.f-fs-category > legend {
   display: none;
 }
 
-.f-field-adm-inline > dd {
-  display: block;
+.f-fs-category .f-child1 {
+  font-weight: normal;
+}
+
+.f-field-category {
+  flex-direction: column;
+}
+
+.f-field-category > dt {
+  display: none;
+}
+
+.f-field-category > dd {
   width: 100%;
 }
 
-.f-field-adm-inline.f-field-name {
+.f-fs-category:first-of-type .f-field-category > dt {
+  display: block;
+  width: 100%;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.f-field-category.f-field-name {
   width: calc(100% - 8rem);
 }
 
-.f-field-adm-inline.f-field-position {
+.f-field-category.f-field-position {
   width: 5rem;
 }
 
-.f-field-adm-inline.f-field-delete {
+.f-field-category.f-field-delete {
   width: 3rem;
   overflow: hidden;
-}
-
-.f-field-adm-inline .f-btn {
-  margin: 0;
-}
-
-.f-field-delete .f-btn {
   text-align: center;
 }
 
-.f-field-name .f-btn {
+/*********************/
+/* Админка/Разделы   */
+/*********************/
+.f-fs-forum {
+  display: flex;
+  align-items: flex-end;
+  min-width: 0;
+}
+
+.f-fs-forum > legend {
+  display: none;
+}
+
+.f-fs-forum .f-child1 {
+  font-weight: normal;
+}
+
+.f-field-forum {
+  flex-direction: column;
+}
+
+.f-field-forum > dt {
+  display: none;
+}
+
+.f-field-forum > dd {
+  width: 100%;
+}
+
+.f-finfo + .f-fs-forum .f-field-forum > dt {
+  display: block;
+  width: 100%;
+  margin: 0;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-.f-field-adm-inline:nth-child(-n+3) > dt {
-  display: block;
+.f-field-forum.f-field-name {
+  width: calc(100% - 8rem);
 }
 
-.f-field-adm-inline .f-child1 {
-  font-weight: normal;
+.f-field-forum.f-field-position {
+  width: 5rem;
+}
+
+.f-field-forum.f-field-delete {
+  width: 3rem;
+  overflow: hidden;
+  text-align: center;
+}
+
+.f-field-forum.f-field-name .f-btn {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1744,27 +1789,33 @@ select {
   padding-left: 3.125rem;
 }
 
-/*********************/
-/* Админка/Разделы   */
-/*********************/
-.f-field-adm-inline.f-field-cando {
+.f-fs-permission {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  min-width: 0;
+}
+
+.f-fs-permission > legend {
+  margin: 0;
+}
+
+.f-fs-permission .f-child1 {
+  font-weight: normal;
+}
+
+.f-fs-permission .f-field-cando {
   width: 33.333%;
   text-align: center;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
-.f-field-adm-inline.f-field-cando > dt {
-  display: block;
-}
-
-/* .f-field-adm-inline > dt > label {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-} */
-
- .f-editforum-form legend {
-  margin-bottom: 0;
+.f-fs-permission .f-field-cando > dt,
+.f-fs-permission .f-field-cando > dd {
+  width: 100%;
+  margin: 0;
 }
 
 .f-field-on input:not(:checked) + span {
@@ -1813,16 +1864,34 @@ select {
 /*********************/
 /* Админка/Цензура   */
 /*********************/
-.f-field-adm-inline.f-field-censor {
-  width: 50%;
+.f-fs-censor {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  min-width: 0;
 }
 
-.f-field-adm-inline.f-field-censor > dt {
+.f-fs-censor .f-child1 {
+  font-weight: normal;
+}
+
+.f-fs-censor .f-field-censor  {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.f-fs-censor .f-field-censor > dt {
   display: none;
 }
 
-.f-field-adm-inline.f-field-censor:nth-child(-n+2) > dt {
+.f-fs-censor .f-field-censor > dd {
+  width: 100%;
+}
+
+.f-field-censor:nth-child(-n+2) > dt {
   display: block;
+  width: 100%;
 }
 
 /*************/
@@ -2207,4 +2276,36 @@ select {
   .f-fs-data-edit dd {
     width: 67%
   }
+}
+
+/************************/
+/* Админка/Пользователи */
+/************************/
+.f-fs-result {
+  display: flex;
+  align-items: flex-end;
+  min-width: 0;
+}
+
+.f-fs-result > legend {
+  display: none;
+}
+
+.f-fs-result .f-field-result {
+  display: flex;
+  flex-direction: column;
+}
+
+.f-fs-result .f-field-result > dt {
+  display: none;
+}
+
+.f-fs-result .f-field-result > dd {
+  width: 100%;
+}
+
+.f-fs-result:first-of-type .f-field-result > dt {
+  display: block;
+  margin: 0;
+  width: 100%;
 }

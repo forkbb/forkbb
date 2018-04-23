@@ -509,7 +509,7 @@ class Users extends Admin
             $fields = [];
 
             $fields["l{$number}-username"] = [
-#                'class'   => 'pline',
+                'class'   => ['result'],
                 'type'    => 'link',
                 'caption' => \ForkBB\__('Results username head'),
                 'value'   => $user->username,
@@ -517,7 +517,7 @@ class Users extends Admin
 #                'title'   => \ForkBB\__('Show posts'),
             ];
             $fields["l{$number}-email"] = [
-#                'class'   => 'pline',
+                'class'   => ['result'],
                 'type'    => 'link',
                 'caption' => \ForkBB\__('Results e-mail head'),
                 'value'   => $user->email,
@@ -525,13 +525,13 @@ class Users extends Admin
 #                'title'   => \ForkBB\__('Show posts'),
             ];
             $fields["l{$number}-title"] = [
-#                'class'   => 'pline',
+                'class'   => ['result'],
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Results title head'),
                 'value'   => $user->title(),
             ];
             $fields["l{$number}-posts"] = [
-#                'class'   => 'pline',
+                'class'   => ['result'],
                 'type'    => $user->num_posts ? 'link' : 'str',
                 'caption' => \ForkBB\__('Results posts head'),
                 'value'   => \ForkBB\num($user->num_posts),
@@ -539,7 +539,7 @@ class Users extends Admin
                 'title'   => \ForkBB\__('Results show posts link'),
             ];
             $fields["l{$number}-note"] = [
-#                'class'   => 'pline',
+                'class'   => ['result'],
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Примечание админа'),
                 'value'   => $user->admin_note,
@@ -549,6 +549,7 @@ class Users extends Admin
 
 
             $form['sets']["l{$number}"] = [
+                'class'  => 'result',
                 'legend' => $number,
                 'fields' => $fields,
             ];

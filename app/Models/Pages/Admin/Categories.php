@@ -69,36 +69,37 @@ class Categories extends Admin
             ],
         ];
 
-        $fieldset = [];
         foreach ($this->c->categories->getList() as $key => $row) {
-            $fieldset["form[{$key}][cat_name]"] = [
-                'class'     => ['name', 'adm-inline'],
+            $fields = [];
+            $fields["form[{$key}][cat_name]"] = [
+                'class'     => ['name', 'category'],
                 'type'      => 'text',
                 'maxlength' => 80,
                 'value'     => $row['cat_name'],
                 'caption'   => \ForkBB\__('Category name label'),
                 'required'  => true,
             ];
-            $fieldset["form[{$key}][disp_position]"] = [
-                'class'   => ['position', 'adm-inline'],
+            $fields["form[{$key}][disp_position]"] = [
+                'class'   => ['position', 'category'],
                 'type'    => 'number',
                 'min'     => 0,
                 'max'     => 9999999999,
                 'value'   => $row['disp_position'],
                 'caption' => \ForkBB\__('Category position label'),
             ];
-            $fieldset[] = [
-                'class'   => ['delete', 'adm-inline'],
+            $fields["delete-btn{$key}"] = [
+                'class'   => ['delete', 'category'],
                 'type'    => 'btn',
                 'value'   => '❌',
                 'caption' => \ForkBB\__('Delete'),
                 'link'    => $this->c->Router->link('AdminCategoriesDelete', ['id' => $key]),
             ];
+            $form['sets']["category{$key}"] = [
+                'class'  => 'category',
+                'legend' => $row['cat_name'],
+                'fields' => $fields,
+            ];
         }
-        $form['sets']['cats'] = [
-            'class'  => 'inline',
-            'fields' => $fieldset,
-        ];
         $form['sets']['new-cat'] = [
             'fields' => [
                 'new' => [
