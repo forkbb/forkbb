@@ -205,7 +205,6 @@ class Users extends Admin
 
         $this->nameTpl    = 'admin/users';
         $this->aIndex     = 'users';
-#        $this->titles     = \ForkBB\__('Users');
         $this->formSearch = $this->formSearch($data);
 
         if ($this->user->isAdmin) {

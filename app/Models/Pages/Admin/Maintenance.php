@@ -147,7 +147,6 @@ class Maintenance extends Admin
 
         $this->nameTpl         = 'admin/maintenance';
         $this->aIndex          = 'maintenance';
-#        $this->titles          = \ForkBB\__('Maintenance');
 
         return $this;
     }

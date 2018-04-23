@@ -297,7 +297,7 @@ class Groups extends Admin
 
         if (null === $group->g_id) {
             $message = \ForkBB\__('Group added redirect');
-            $newId   = $this->c->groups->insert($group);
+            $this->c->groups->insert($group);
 
             $this->c->groups->Perm->copy($baseGroup, $group);
         } else {
@@ -313,7 +313,7 @@ class Groups extends Admin
 
         $this->c->Cache->delete('forums_mark');
 
-        return $this->c->Redirect->page('AdminGroups')->message($message);
+        return $this->c->Redirect->page('AdminGroupsEdit', ['id' => $group->g_id])->message($message);
     }
 
     /**

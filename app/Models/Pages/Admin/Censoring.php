@@ -123,7 +123,6 @@ class Censoring extends Admin
 
         $this->nameTpl   = 'admin/form';
         $this->aIndex    = 'censoring';
-#        $this->titles    = \ForkBB\__('Censoring');
         $this->form      = $form;
         $this->classForm = 'editcensorship';
         $this->titleForm = \ForkBB\__('Censoring');

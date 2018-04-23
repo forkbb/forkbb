@@ -395,7 +395,7 @@ class Forums extends Admin
 
                 $this->c->Cache->delete('forums_mark');
 
-                return $this->c->Redirect->page('AdminForums')->message($message);
+                return $this->c->Redirect->page('AdminForumsEdit', ['id' => $forum->id])->message($message);
             }
 
             $this->fIswev = $v->getErrors();
