@@ -507,9 +507,12 @@ class Users extends Admin
         foreach ($users as $user) {
             ++$number;
             $fields = [];
-
+            $fields["l{$number}-wrap1"] = [
+                'class' => 'main-result',
+                'type'  => 'wrap',
+            ];
             $fields["l{$number}-username"] = [
-                'class'   => ['result'],
+                'class'   => ['result', 'username'],
                 'type'    => 'link',
                 'caption' => \ForkBB\__('Results username head'),
                 'value'   => $user->username,
@@ -517,7 +520,7 @@ class Users extends Admin
 #                'title'   => \ForkBB\__('Show posts'),
             ];
             $fields["l{$number}-email"] = [
-                'class'   => ['result'],
+                'class'   => ['result', 'email'],
                 'type'    => 'link',
                 'caption' => \ForkBB\__('Results e-mail head'),
                 'value'   => $user->email,
@@ -525,13 +528,13 @@ class Users extends Admin
 #                'title'   => \ForkBB\__('Show posts'),
             ];
             $fields["l{$number}-title"] = [
-                'class'   => ['result'],
+                'class'   => ['result', 'title'],
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Results title head'),
                 'value'   => $user->title(),
             ];
             $fields["l{$number}-posts"] = [
-                'class'   => ['result'],
+                'class'   => ['result', 'posts'],
                 'type'    => $user->num_posts ? 'link' : 'str',
                 'caption' => \ForkBB\__('Results posts head'),
                 'value'   => \ForkBB\num($user->num_posts),
@@ -539,15 +542,33 @@ class Users extends Admin
                 'title'   => \ForkBB\__('Results show posts link'),
             ];
             $fields["l{$number}-note"] = [
-                'class'   => ['result'],
+                'class'   => ['result', 'note'],
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Примечание админа'),
                 'value'   => $user->admin_note,
             ];
 
+            if ($this->user->isAdmin) {
+                $fields["l{$number}-view-ip"] = [
+                    'class'   => ['result', 'view-ip'],
+                    'type'    => 'link',
+#                    'caption' => \ForkBB\__('Results posts head'),
+                    'value'   => \ForkBB\__('Results view IP link'),
+                    'href'    => '',
+#                    'title'   => \ForkBB\__('Results show posts link'),
+                ];
+            }
 
-
-
+            $fields[] = [
+                'type' => 'endwrap',
+            ];
+            $fields["users[{$user->id}]"] = [
+                'class'   => ['result', 'check'],
+                'caption' => \ForkBB\__('Select'),
+                'type'    => 'checkbox',
+                'value'   => $user->id,
+                'checked' => false,
+            ];
             $form['sets']["l{$number}"] = [
                 'class'  => 'result',
                 'legend' => $number,

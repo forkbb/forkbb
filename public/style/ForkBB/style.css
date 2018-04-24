@@ -2287,29 +2287,99 @@ select {
 /************************/
 .f-fs-result {
   display: flex;
-  align-items: flex-end;
+  align-items: stretch;
   min-width: 0;
+  border-bottom: 0.0625rem dotted #AA7939;
+  margin-bottom: 0.3125rem;
+  padding-bottom: 0.3125rem;
 }
 
 .f-fs-result > legend {
   display: none;
 }
 
+.f-fs-result .f-child2 > input {
+  margin: 0;
+}
+
+.f-fs-result .f-field-result {
+  border: 0;
+  margin: 0;
+}
+
+.f-wrap-main-result {
+  width: calc(100% - 3rem);
+}
+
+.f-wrap-main-result .f-field-result > dt,
+.f-wrap-main-result .f-field-result > dd,
+.f-wrap-main-result .f-field-result .f-str {
+  display: inline;
+}
+
+.f-wrap-main-result .f-field-result .f-child1 {
+  display: inline;
+  font-weight: bold;
+}
+
+.f-wrap-main-result .f-field-result .f-child1:after {
+  content: ": ";
+}
+
+.f-field-result.f-field-check {
+  width: 3rem;
+  overflow: hidden;
+  text-align: center;
+  border-left: 0.0625rem dotted #AA7939;
+  display: flex;
+  flex-direction: column;
+}
+
+.f-field-result.f-field-check > dt {
+  display: none;
+}
+
+.f-field-result.f-field-check > dd {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%
+}
+
+.f-field-result.f-field-view-ip {
+  text-align: right;
+}
+
+@media screen and (min-width: 36rem) {
+  .f-wrap-main-result .f-field-result > dt,
+  .f-wrap-main-result .f-field-result > dd {
+    display: block;
+  }
+
+  .f-wrap-main-result .f-field-result .f-child1 {
+    display: block;
+    font-weight: normal;
+  }
+
+  .f-wrap-main-result .f-field-result .f-child1:after {
+    content: "";
+  }
+}
+
+/*
 .f-fs-result .f-field-result {
   display: flex;
   flex-direction: column;
 }
 
 .f-fs-result .f-field-result > dt {
-  display: none;
+  display: block;
+  margin: 0;
+  width: 100%;
 }
 
 .f-fs-result .f-field-result > dd {
   width: 100%;
 }
+*/
 
-.f-fs-result:first-of-type .f-field-result > dt {
-  display: block;
-  margin: 0;
-  width: 100%;
-}
