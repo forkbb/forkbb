@@ -504,20 +504,24 @@ class Users extends Admin
             ],
         ];
 
+        \array_unshift($users, $this->c->users->create(['id' => -1]));
+
         foreach ($users as $user) {
-            ++$number;
             $fields = [];
             $fields["l{$number}-wrap1"] = [
                 'class' => 'main-result',
                 'type'  => 'wrap',
             ];
+            $fields["l{$number}-wrap2"] = [
+                'class' => 'user-result',
+                'type'  => 'wrap',
+            ];
             $fields["l{$number}-username"] = [
                 'class'   => ['result', 'username'],
-                'type'    => 'link',
+                'type'    => $user->isGuest ? 'str' : 'link',
                 'caption' => \ForkBB\__('Results username head'),
                 'value'   => $user->username,
                 'href'    => $user->link,
-#                'title'   => \ForkBB\__('Show posts'),
             ];
             $fields["l{$number}-email"] = [
                 'class'   => ['result', 'email'],
@@ -525,19 +529,21 @@ class Users extends Admin
                 'caption' => \ForkBB\__('Results e-mail head'),
                 'value'   => $user->email,
                 'href'    => 'mailto:' . $user->email,
-#                'title'   => \ForkBB\__('Show posts'),
+            ];
+            $fields[] = [
+                'type' => 'endwrap',
             ];
             $fields["l{$number}-title"] = [
                 'class'   => ['result', 'title'],
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Results title head'),
-                'value'   => $user->title(),
+                'value'   => -1 === $user->id ? null : $user->title(),
             ];
             $fields["l{$number}-posts"] = [
                 'class'   => ['result', 'posts'],
                 'type'    => $user->num_posts ? 'link' : 'str',
                 'caption' => \ForkBB\__('Results posts head'),
-                'value'   => \ForkBB\num($user->num_posts),
+                'value'   => $user->num_posts ? \ForkBB\num($user->num_posts) : null,
                 'href'    => $this->c->Router->link('SearchAction', ['action' => 'posts', 'uid' => $user->id]),
                 'title'   => \ForkBB\__('Results show posts link'),
             ];
@@ -551,29 +557,31 @@ class Users extends Admin
             if ($this->user->isAdmin) {
                 $fields["l{$number}-view-ip"] = [
                     'class'   => ['result', 'view-ip'],
-                    'type'    => 'link',
-#                    'caption' => \ForkBB\__('Results posts head'),
-                    'value'   => \ForkBB\__('Results view IP link'),
+                    'type'    => $user->isGuest ? 'str' : 'link',
+                    'caption' => \ForkBB\__('Results action head'),
+                    'value'   => $user->isGuest ? null : \ForkBB\__('Results view IP link'),
                     'href'    => '',
-#                    'title'   => \ForkBB\__('Results show posts link'),
                 ];
             }
 
             $fields[] = [
                 'type' => 'endwrap',
             ];
-            $fields["users[{$user->id}]"] = [
+            $key = $user->isGuest ? "guest{$number}" : "users[{$user->id}]";
+            $fields[$key] = [
                 'class'   => ['result', 'check'],
                 'caption' => \ForkBB\__('Select'),
-                'type'    => 'checkbox',
-                'value'   => $user->id,
+                'type'    => $user->isGuest ? 'str' : 'checkbox',
+                'value'   => $user->isGuest ? null : $user->id,
                 'checked' => false,
             ];
             $form['sets']["l{$number}"] = [
                 'class'  => 'result',
-                'legend' => $number,
+                'legend' => -1 === $user->id ? null : $number,
                 'fields' => $fields,
             ];
+
+            ++$number;
         }
 
         return $form;

@@ -2294,6 +2294,10 @@ select {
   padding-bottom: 0.3125rem;
 }
 
+.f-fs-result:first-of-type {
+  display: none;
+}
+
 .f-fs-result > legend {
   display: none;
 }
@@ -2326,7 +2330,7 @@ select {
   content: ": ";
 }
 
-.f-field-result.f-field-check {
+.f-fs-result .f-field-check {
   width: 3rem;
   overflow: hidden;
   text-align: center;
@@ -2335,19 +2339,15 @@ select {
   flex-direction: column;
 }
 
-.f-field-result.f-field-check > dt {
+.f-fs-result .f-field-check > dt {
   display: none;
 }
 
-.f-field-result.f-field-check > dd {
+.f-fs-result .f-field-check > dd {
   display: flex;
   align-items: center;
   height: 100%;
   width: 100%
-}
-
-.f-field-result.f-field-view-ip {
-  text-align: right;
 }
 
 @media screen and (min-width: 36rem) {
@@ -2366,20 +2366,77 @@ select {
   }
 }
 
-/*
-.f-fs-result .f-field-result {
-  display: flex;
-  flex-direction: column;
-}
+@media screen and (min-width: 50rem) {
+  .f-wrap-main-result {
+    display: flex;
+  }
 
-.f-fs-result .f-field-result > dt {
-  display: block;
-  margin: 0;
-  width: 100%;
-}
+  .f-fs-result .f-field-result,
+  .f-fs-result .f-wrap-user-result {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 
-.f-fs-result .f-field-result > dd {
-  width: 100%;
-}
-*/
+  .f-fs-result .f-field-result > dt {
+    display: block;
+    margin: 0;
+    width: 100%;
+  }
 
+  .f-fs-result .f-field-result > dd {
+    margin: 0;
+    width: 100%;
+  }
+
+  .f-fs-result:first-of-type {
+    display: flex;
+    text-align: center;
+  }
+
+  .f-fs-result:not(:first-of-type) .f-field-result > dt,
+  .f-fs-result:first-of-type .f-field-result > dd {
+    display: none;
+  }
+
+  .f-fs-result .f-field-result .f-child1 {
+    font-weight: bold;
+  }
+
+  .f-fs-result .f-wrap-user-result {
+    width: 33%;
+  }
+
+  .f-fs-result .f-field-username {
+    width: 100%;
+  }
+
+  .f-fs-result .f-field-email {
+    width: 100%;
+  }
+
+  .f-fs-result .f-field-title {
+    width: 16%;
+    border-left: 0.0625rem dotted #AA7939;
+  }
+
+  .f-fs-result .f-field-posts {
+    width: 15%;
+    border-left: 0.0625rem dotted #AA7939;
+  }
+
+  .f-fs-result .f-field-posts > dd {
+    text-align: right;
+  }
+
+  .f-fs-result .f-field-note {
+    width: 20%;
+    border-left: 0.0625rem dotted #AA7939;
+  }
+
+  .f-fs-result .f-field-view-ip {
+    width: 16%;
+    border-left: 0.0625rem dotted #AA7939;
+  }
+
+}
