@@ -11,7 +11,7 @@ No: user profiles, moderator functions, private messages, voting, subscriptions,
 
 ## Requirements
 
-* PHP 5.6.x or 7.x.x
+* PHP 5.6.12+ or 7.x.x
 * A database such as MySQL 5.5.3 or later (_Drivers for other databases are not realized now_)
 
 ## Links
