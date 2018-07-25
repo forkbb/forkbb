@@ -23,9 +23,9 @@ class Manager extends ManagerModel
      */
     public function init()
     {
-        $sql = 'SELECT id, cat_name, disp_position
-                FROM ::categories
-                ORDER BY disp_position';
+        $sql = 'SELECT c.id, c.cat_name, c.disp_position
+                FROM ::categories AS c
+                ORDER BY c.disp_position';
         $this->repository = $this->c->DB->query($sql)->fetchAll(PDO::FETCH_UNIQUE);
         return $this;
     }

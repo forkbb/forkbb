@@ -89,9 +89,9 @@ class View extends Action
         $vars = [
             ':ids' => $arg->idsList,
         ];
-        $sql = 'SELECT id, message, poster, posted
-                FROM ::warnings
-                WHERE id IN (?ai:ids)';
+        $sql = 'SELECT w.id, w.message, w.poster, w.posted
+                FROM ::warnings AS w
+                WHERE w.id IN (?ai:ids)';
         $warnings = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_GROUP);
 
         $userIds = [];

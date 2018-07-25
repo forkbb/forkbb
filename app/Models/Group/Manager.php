@@ -16,9 +16,9 @@ class Manager extends ManagerModel
 
     /**
      * Создает новую модель раздела
-     * 
+     *
      * @param array $attrs
-     * 
+     *
      * @return Group
      */
     public function create(array $attrs = [])
@@ -33,13 +33,13 @@ class Manager extends ManagerModel
 
     /**
      * Загрузка списка групп
-     * 
+     *
      * @return Manager
      */
     public function init()
     {
         if (empty($this->flag)) {
-            $stmt = $this->c->DB->query('SELECT * FROM ::groups ORDER BY g_id');
+            $stmt = $this->c->DB->query('SELECT g.* FROM ::groups AS g ORDER BY g.g_id');
             while ($row = $stmt->fetch()) {
                 $this->set($row['g_id'], $this->create($row));
             }
@@ -50,9 +50,9 @@ class Manager extends ManagerModel
 
     /**
      * Получение модели группы
-     * 
+     *
      * @param int $id
-     * 
+     *
      * @return null|Group
      */
     public function get($id)
@@ -66,7 +66,7 @@ class Manager extends ManagerModel
      * Обновляет группу в БД
      *
      * @param Group $group
-     * 
+     *
      * @return Group
      */
     public function update(Group $group)
@@ -78,7 +78,7 @@ class Manager extends ManagerModel
      * Добавляет новую группу в БД
      *
      * @param Group $group
-     * 
+     *
      * @return int
      */
     public function insert(Group $group)

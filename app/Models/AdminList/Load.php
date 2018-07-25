@@ -15,7 +15,7 @@ class Load extends Method
      */
     public function load()
     {
-        $list = $this->c->DB->query('SELECT id FROM ::users WHERE group_id=?i', [$this->c->GROUP_ADMIN])->fetchAll(PDO::FETCH_COLUMN);
+        $list = $this->c->DB->query('SELECT u.id FROM ::users AS u WHERE u.group_id=?i', [$this->c->GROUP_ADMIN])->fetchAll(PDO::FETCH_COLUMN);
         $this->model->list = $list;
         $this->c->Cache->set('admins', $list);
         return $this->model;

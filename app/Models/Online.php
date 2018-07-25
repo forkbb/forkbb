@@ -45,9 +45,9 @@ class Online extends Model
         $deleteU = false;
 
         if ($detail) {
-            $sql = 'SELECT user_id, ident, logged, o_position, o_name FROM ::online ORDER BY logged';
+            $sql = 'SELECT o.user_id, o.ident, o.logged, o.o_position, o.o_name FROM ::online AS o ORDER BY o.logged';
         } else {
-            $sql = 'SELECT user_id, ident, logged FROM ::online ORDER BY logged';
+            $sql = 'SELECT o.user_id, o.ident, o.logged FROM ::online AS o ORDER BY o.logged';
         }
         $stmt = $this->c->DB->query($sql);
 

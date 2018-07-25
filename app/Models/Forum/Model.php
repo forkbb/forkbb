@@ -255,13 +255,13 @@ class Model extends DataModel
 
         switch ($this->sort_by) {
             case 1:
-                $sortBy = 'posted DESC';
+                $sortBy = 't.posted DESC';
                 break;
             case 2:
-                $sortBy = 'subject ASC';
+                $sortBy = 't.subject ASC';
                 break;
             default:
-                $sortBy = 'last_post DESC';
+                $sortBy = 't.last_post DESC';
                 break;
         }
 
@@ -270,10 +270,10 @@ class Model extends DataModel
             ':offset' => ($this->page - 1) * $this->c->user->disp_topics,
             ':rows'   => $this->c->user->disp_topics,
         ];
-        $sql = "SELECT id
-                FROM ::topics
-                WHERE forum_id=?i:fid
-                ORDER BY sticky DESC, {$sortBy}, id DESC
+        $sql = "SELECT t.id
+                FROM ::topics AS t
+                WHERE t.forum_id=?i:fid
+                ORDER BY t.sticky DESC, {$sortBy}, t.id DESC
                 LIMIT ?i:offset, ?i:rows";
 
         $this->idsList = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);

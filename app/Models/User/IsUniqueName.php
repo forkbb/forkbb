@@ -21,7 +21,7 @@ class IsUniqueName extends Action
             ':name'  => $user->username,
             ':other' => \preg_replace('%[^\p{L}\p{N}]%u', '', $user->username), //???? что за бред :)
         ];
-        $result = $this->c->DB->query('SELECT username FROM ::users WHERE (LOWER(username)=LOWER(?s:name) OR LOWER(username)=LOWER(?s:other)) AND id!=?i:id', $vars)->fetchAll();
+        $result = $this->c->DB->query('SELECT u.username FROM ::users AS u WHERE (LOWER(u.username)=LOWER(?s:name) OR LOWER(u.username)=LOWER(?s:other)) AND u.id!=?i:id', $vars)->fetchAll();
         return ! \count($result);
     }
 }

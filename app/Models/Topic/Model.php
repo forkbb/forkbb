@@ -153,7 +153,7 @@ class Model extends DataModel
             ':tid'   => $this->id,
             ':visit' => $this->hasNew,
         ];
-        $sql = 'SELECT MIN(id) FROM ::posts WHERE topic_id=?i:tid AND posted>?i:visit';
+        $sql = 'SELECT MIN(p.id) FROM ::posts AS p WHERE p.topic_id=?i:tid AND p.posted>?i:visit';
 
         $pid = $this->c->DB->query($sql, $vars)->fetchColumn();
 
@@ -175,7 +175,7 @@ class Model extends DataModel
             ':tid'   => $this->id,
             ':visit' => $this->hasUnread,
         ];
-        $sql = 'SELECT MIN(id) FROM ::posts WHERE topic_id=?i:tid AND posted>?i:visit';
+        $sql = 'SELECT MIN(p.id) FROM ::posts AS p WHERE p.topic_id=?i:tid AND p.posted>?i:visit';
 
         $pid = $this->c->DB->query($sql, $vars)->fetchColumn();
 
@@ -243,10 +243,10 @@ class Model extends DataModel
             ':offset' => ($this->page - 1) * $this->c->user->disp_posts,
             ':rows'   => $this->c->user->disp_posts,
         ];
-        $sql = 'SELECT id
-                FROM ::posts
-                WHERE topic_id=?i:tid
-                ORDER BY id
+        $sql = 'SELECT p.id
+                FROM ::posts AS p
+                WHERE p.topic_id=?i:tid
+                ORDER BY p.id
                 LIMIT ?i:offset, ?i:rows';
         $list = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
 

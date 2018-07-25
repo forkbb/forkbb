@@ -9,9 +9,9 @@ class UsersNumber extends Action
 {
     /**
      * Подсчет количества пользователей в группе
-     * 
+     *
      * @param Group $group
-     * 
+     *
      * @return int
      */
     public function UsersNumber(Group $group)
@@ -23,7 +23,7 @@ class UsersNumber extends Action
         $vars = [
             ':gid' => $group->g_id,
         ];
-        $sql = 'SELECT COUNT(id) FROM ::users WHERE group_id=?i:gid';
+        $sql = 'SELECT COUNT(u.id) FROM ::users AS u WHERE u.group_id=?i:gid';
 
         return $this->c->DB->query($sql, $vars)->fetchColumn();
     }

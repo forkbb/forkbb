@@ -14,7 +14,7 @@ class Refresh extends Method
      */
     public function refresh()
     {
-        $stmt = $this->c->DB->query('SELECT id, search_for, replace_with FROM ::censoring');
+        $stmt = $this->c->DB->query('SELECT ce.id, ce.search_for, ce.replace_with FROM ::censoring AS ce');
         $search  = [];
         $replace = [];
         while ($row = $stmt->fetch()) {

@@ -29,10 +29,10 @@ class Index extends Method
             $vars = [
                 ':pid' => $post->id,
             ];
-            $sql = 'SELECT w.id, w.word, m.subject_match
-                    FROM ::search_words AS w
-                    INNER JOIN ::search_matches AS m ON w.id=m.word_id
-                    WHERE m.post_id=?i:pid';
+            $sql = 'SELECT sw.id, sw.word, sm.subject_match
+                    FROM ::search_words AS sw
+                    INNER JOIN ::search_matches AS sm ON sw.id=sm.word_id
+                    WHERE sm.post_id=?i:pid';
             $stmt = $this->c->DB->query($sql, $vars);
 
             $mesCurWords = [];
@@ -73,9 +73,9 @@ class Index extends Method
             $vars = [
                 ':words' => $allWords,
             ];
-            $sql = 'SELECT word
-                    FROM ::search_words
-                    WHERE word IN(?as:words)';
+            $sql = 'SELECT sw.word
+                    FROM ::search_words AS sw
+                    WHERE sw.word IN(?as:words)';
             $oldWords = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
             $newWords = \array_diff($allWords, $oldWords);
 

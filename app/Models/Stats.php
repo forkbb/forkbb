@@ -22,7 +22,7 @@ class Stats extends Model
             $this->load();
         }
 
-        list($this->topicTotal, $this->postTotal) = $this->c->DB->query('SELECT SUM(num_topics), SUM(num_posts) FROM ::forums')->fetch(PDO::FETCH_NUM);
+        list($this->topicTotal, $this->postTotal) = $this->c->DB->query('SELECT SUM(f.num_topics), SUM(f.num_posts) FROM ::forums AS f')->fetch(PDO::FETCH_NUM);
 
         return $this;
     }

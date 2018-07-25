@@ -55,10 +55,10 @@ class Execute extends Method
         $vars = [
             ':key' => $key,
         ];
-        $sql = 'SELECT search_time, search_data
-                FROM ::search_cache
-                WHERE search_key=?s:key
-                ORDER BY search_time DESC
+        $sql = 'SELECT sc.search_time, sc.search_data
+                FROM ::search_cache AS sc
+                WHERE sc.search_key=?s:key
+                ORDER BY sc.search_time DESC
                 LIMIT 1';
         $row = $this->c->DB->query($sql, $vars)->fetch();
 
@@ -215,7 +215,7 @@ class Execute extends Method
 
         switch ($v->serch_in) {
             case 1:
-                $whereIdx[]          = 'm.subject_match=0';
+                $whereIdx[]          = 'sm.subject_match=0';
                 $whereCJK[]          = 'p.message LIKE ?s:word';
                 $usePCJK             = true;
                 if (isset($vars[':author'])) {
@@ -223,7 +223,7 @@ class Execute extends Method
                 }
                 break;
             case 2:
-                $whereIdx[]          = 'm.subject_match=1';
+                $whereIdx[]          = 'sm.subject_match=1';
                 $whereCJK[]          = 't.subject LIKE ?s:word';
                 $useTCJK             = true;
                 if (isset($vars[':author'])) {
@@ -249,7 +249,7 @@ class Execute extends Method
             $selectFCJK              = 't.id';
             $useTCJK                 = true;
         } else {
-            $selectFIdx              = 'm.post_id';
+            $selectFIdx              = 'sm.post_id';
             $selectFCJK              = 'p.id';
             $usePCJK                 = true;
         }
@@ -290,7 +290,7 @@ class Execute extends Method
                     $useTIdx         = true;
                     $useTCJK         = true;
                 } else {
-                    $sortIdx         = 'm.post_id';
+                    $sortIdx         = 'sm.post_id';
                     $sortCJK         = 'p.id';
                     $usePCJK         = true;
                 }
@@ -298,15 +298,15 @@ class Execute extends Method
                 break;
         }
 
-        $usePIdx  = $usePIdx || $useTIdx ? 'INNER JOIN ::posts AS p ON p.id=m.post_id '   : '';
+        $usePIdx  = $usePIdx || $useTIdx ? 'INNER JOIN ::posts AS p ON p.id=sm.post_id '   : '';
         $useTIdx  = $useTIdx             ? 'INNER JOIN ::topics AS t ON t.id=p.topic_id ' : '';
         $whereIdx = empty($whereIdx)     ? '' : ' AND ' . \implode(' AND ', $whereIdx);
 
-        $this->queryIdx = "SELECT {$selectFIdx}, {$sortIdx} FROM ::search_words AS w " .
-                          'INNER JOIN ::search_matches AS m ON m.word_id=w.id ' .
+        $this->queryIdx = "SELECT {$selectFIdx}, {$sortIdx} FROM ::search_words AS sw " .
+                          'INNER JOIN ::search_matches AS sm ON sm.word_id=sw.id ' .
                           $usePIdx .
                           $useTIdx .
-                          'WHERE w.word LIKE ?s:word' . $whereIdx;
+                          'WHERE sw.word LIKE ?s:word' . $whereIdx;
 
         if ($usePCJK) {
             $this->queryCJK = "SELECT {$selectFCJK}, {$sortCJK} FROM ::posts AS p " .

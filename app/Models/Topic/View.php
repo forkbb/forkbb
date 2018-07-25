@@ -42,10 +42,10 @@ class View extends Action
         ];
 
         if (! $this->c->user->isGuest && '1' == $this->c->config->o_show_dot) {
-            $sql = 'SELECT topic_id
-                    FROM ::posts
-                    WHERE poster_id=?i:uid AND topic_id IN (?ai:ids)
-                    GROUP BY topic_id';
+            $sql = 'SELECT p.topic_id
+                    FROM ::posts AS p
+                    WHERE p.poster_id=?i:uid AND p.topic_id IN (?ai:ids)
+                    GROUP BY p.topic_id';
             $dots = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
             $dots = \array_flip($dots);
         } else {

@@ -14,9 +14,9 @@ class Load extends Method
      */
     public function load()
     {
-        $sql = 'SELECT id, search_for, replace_with 
-                FROM ::censoring 
-                ORDER BY REPLACE(search_for, \'*\', \'\')';
+        $sql = 'SELECT ce.id, ce.search_for, ce.replace_with
+                FROM ::censoring AS ce
+                ORDER BY REPLACE(ce.search_for, \'*\', \'\')';
         return $this->c->DB->query($sql)->fetchAll(PDO::FETCH_UNIQUE);
     }
 }

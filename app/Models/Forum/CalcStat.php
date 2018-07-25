@@ -9,9 +9,9 @@ class CalcStat extends Method
 {
     /**
      * Пересчитывает статистику
-     * 
+     *
      * @throws RuntimeException
-     * 
+     *
      * @return Forum
      */
     public function calcStat()
@@ -21,19 +21,19 @@ class CalcStat extends Method
         }
 
         $vars = [':fid' => $this->model->id];
-        $sql = 'SELECT COUNT(id) as num_topics, SUM(num_replies) as num_replies 
-                FROM ::topics 
-                WHERE forum_id=?i:fid';
+        $sql = 'SELECT COUNT(t.id) as num_topics, SUM(t.num_replies) as num_replies
+                FROM ::topics AS t
+                WHERE t.forum_id=?i:fid';
 
         $result = $this->c->DB->query($sql, $vars)->fetch();
 
         $this->model->num_topics = $result['num_topics'];
         $this->model->num_posts  = $result['num_topics'] + $result['num_replies'];
 
-        $sql = 'SELECT last_post, last_post_id, last_poster, subject as last_topic
-                FROM ::topics 
-                WHERE forum_id=?i:fid AND moved_to IS NULL 
-                ORDER BY last_post DESC 
+        $sql = 'SELECT t.last_post, t.last_post_id, t.last_poster, t.subject as last_topic
+                FROM ::topics AS t
+                WHERE t.forum_id=?i:fid AND t.moved_to IS NULL
+                ORDER BY t.last_post DESC
                 LIMIT 1';
 
         $result = $this->c->DB->query($sql, $vars)->fetch();
