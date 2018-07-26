@@ -99,20 +99,8 @@ class Auth extends Page
         } elseif ($user->isUnverified) {
             $v->addError('Account is not activated', 'w');
         } else {
-            $authorized = false;
-            $hash = $user->password;
-            // For FluxBB by Visman 1.5.10.74 and above
-            if (\strlen($hash) == 40) {
-                if (\hash_equals($hash, sha1($password . $this->c->SALT1))) {
-                    $hash = \password_hash($password, \PASSWORD_DEFAULT);
-                    $user->password = $hash;
-                    $authorized = true;
-                }
-            } else {
-                $authorized = \password_verify($password, $hash);
-            }
             // ошибка в пароле
-            if (! $authorized) {
+            if (! \password_verify($password, $user->password)) {
                 $v->addError('Wrong user/pass');
             } else {
                 // перезаписываем ip админа и модератора - Visman
