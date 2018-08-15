@@ -202,10 +202,8 @@ class Options extends Admin
         ];
 
         $yn     = [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')];
-        $langs  = $this->c->Func->getLangs();
-        $langs  = \array_combine($langs, $langs);
+        $langs  = $this->c->Func->getNameLangs();
         $styles = $this->c->Func->getStyles();
-        $styles = \array_combine($styles, $styles);
 
         $form['sets']['essentials'] = [
             'legend' => \ForkBB\__('Essentials subhead'),

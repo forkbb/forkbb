@@ -115,7 +115,7 @@ class Install extends Page
         unset($config);
 
         // языки
-        $langs = $this->c->Func->getLangs();
+        $langs = $this->c->Func->getNameLangs();
         if (empty($langs)) {
             $this->fIswev = ['e', \ForkBB\__('No language packs')];
         }
@@ -183,7 +183,7 @@ class Install extends Page
                         'fields' => [
                             'installlang' => [
                                 'type'    => 'select',
-                                'options' => \array_combine($langs, $langs),
+                                'options' => $langs,
                                 'value'   => $this->user->language,
                                 'caption' => \ForkBB\__('Install language'),
                                 'info'    => \ForkBB\__('Choose install language info'),
@@ -345,14 +345,14 @@ class Install extends Page
                         ],
                         'defaultlang' => [
                             'type'      => 'select',
-                            'options'   => \array_combine($langs, $langs),
+                            'options'   => $langs,
                             'value'     => $v ? $v->defaultlang : $this->user->language,
                             'caption'   => \ForkBB\__('Default language'),
                             'required'  => true,
                         ],
                         'defaultstyle' => [
                             'type'      => 'select',
-                            'options'   => \array_combine($styles, $styles),
+                            'options'   => $styles,
                             'value'     => $v ? $v->defaultstyle : $this->user->style,
                             'caption'   => \ForkBB\__('Default style'),
                             'required'  => true,

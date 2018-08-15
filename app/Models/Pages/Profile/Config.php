@@ -108,10 +108,8 @@ class Config extends Profile
         ];
 
         $yn     = [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')];
-        $langs  = $this->c->Func->getLangs();
-        $langs  = \array_combine($langs, $langs);
+        $langs  = $this->c->Func->getNameLangs();
         $styles = $this->c->Func->getStyles();
-        $styles = \array_combine($styles, $styles);
         $timeFormat = [];
         foreach ($this->c->TIME_FORMATS as $key => $value) {
             $timeFormat[$key] = \ForkBB\dt(\time(), false, null, $value, true, true) . ($key ? '' : ' (' . \ForkBB\__('Default') . ')');

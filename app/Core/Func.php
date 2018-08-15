@@ -25,6 +25,12 @@ class Func
     protected $langs;
 
     /**
+     * Список имен доступных языков
+     * @var array
+     */
+    protected $nameLangs;
+
+    /**
      * Конструктор
      *
      * @param Container $container
@@ -41,10 +47,8 @@ class Func
      */
     public function getStyles()
     {
-        if (empty($this->styles)) {
-            $this->styles = \array_map(function($style) {
-                return \str_replace([$this->c->DIR_PUBLIC . '/style/', '/style.css'], '', $style);
-            }, \glob($this->c->DIR_PUBLIC . '/style/*/style.css'));
+        if (! \is_array($this->styles)) {
+            $this->styles = $this->getFoldersWithFile($this->c->DIR_PUBLIC . '/style', 'style.css');
         }
         return $this->styles;
     }
@@ -56,12 +60,56 @@ class Func
      */
     public function getLangs()
     {
-        if (empty($this->langs)) {
-            $this->langs = \array_map(function($lang) {
-                return \str_replace([$this->c->DIR_LANG . '/', '/common.po'], '', $lang);
-            }, \glob($this->c->DIR_LANG . '/*/common.po'));
+        if (! \is_array($this->langs)) {
+            $this->langs = $this->getFoldersWithFile($this->c->DIR_LANG, 'common.po');
         }
         return $this->langs;
+    }
+
+    /**
+     * Список имен доступных языков
+     *
+     * @return array
+     */
+    public function getNameLangs()
+    {
+        if (! \is_array($this->nameLangs)) {
+            $langs = $this->getLangs();
+            foreach ($langs as &$value) {
+                $value = include "{$this->c->DIR_LANG}/{$value}/name.php";
+            }
+            unset($value);
+            $this->nameLangs = $langs;
+        }
+
+        return $this->nameLangs;
+    }
+
+    /**
+     * Список папок в данной директории содержащих заданный файл
+     *
+     * @param string $dir
+     * @param string $file
+     *
+     * @return array
+     */
+    public function getFoldersWithFile($dir, $file)
+    {
+        $result = [];
+        if (\is_dir($dir) && ($dh = \opendir($dir)) !== false) {
+            while (($entry = \readdir($dh)) !== false) {
+                if (isset($entry{0})
+                    && $entry{0} !== '.'
+                    && \is_dir("{$dir}/{$entry}")
+                    && \is_file("{$dir}/{$entry}/{$file}")
+                ) {
+                    $result[$entry] = $entry;
+                }
+            }
+            \closedir($dh);
+            \asort($result, \SORT_NATURAL);
+        }
+        return $result;
     }
 
     /**
@@ -116,5 +164,39 @@ class Func
             }
         }
         return $pages;
+    }
+
+    /**
+     * Разбор HTTP_ACCEPT_LANGUAGE
+     *
+     * @param string $str
+     *
+     * @return array
+     */
+    public function  langParse($str)
+    {
+        $result = [];
+
+        foreach (\explode(',', $str) as $step) {
+            $dsr = \explode(';', $step, 2);
+            if (isset($dsr[1])) {
+                $q = \trim(\ltrim(\ltrim($dsr[1], 'q '), '='));
+                if (! \is_numeric($q) || $q < 0 || $q > 1) {
+                    continue;
+                }
+                $q = (float) $q;
+            } else {
+                $q = 1;
+            }
+
+            $l = \trim($dsr[0]);
+            if (! \preg_match('%^[[:alpha:]]{1,8}(?:-[[:alnum:]]{1,8})?$%', $l)) {
+                continue;
+            }
+
+            $result[$l] = $q;
+        }
+
+        return \array_keys(\arsort($result, \SORT_NUMERIC));
     }
 }
