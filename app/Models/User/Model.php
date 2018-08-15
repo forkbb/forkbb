@@ -111,14 +111,14 @@ class Model extends DataModel
     {
         $langs = $this->c->Func->getLangs();
 
-        $lang = $this->isGuest || empty($this->a['language']) || ! \in_array($this->a['language'], $langs)
+        $lang = $this->isGuest || empty($this->a['language']) || ! isset($langs[$this->a['language']])
             ? $this->c->config->o_default_lang
             : $this->a['language'];
 
-        if (\in_array($lang, $langs)) {
+        if (isset($langs[$lang])) {
             return $lang;
         } else {
-            return isset($langs[0]) ? $langs[0] : 'English';
+            return \reset($langs) ?: 'en';
         }
     }
 
@@ -131,14 +131,14 @@ class Model extends DataModel
     {
         $styles = $this->c->Func->getStyles();
 
-        $style = $this->isGuest || empty($this->a['style']) || ! \in_array($this->a['style'], $styles)
+        $style = $this->isGuest || empty($this->a['style']) || ! isset($styles[$this->a['style']])
             ? $this->c->config->o_default_style
             : $this->a['style'];
 
-        if (\in_array($style, $styles)) {
+        if (isset($styles[$style])) {
             return $style;
         } else {
-            return isset($styles[0]) ? $styles[0] : 'ForkBB';
+            return \reset($styles) ?: 'ForkBB';
         }
     }
 

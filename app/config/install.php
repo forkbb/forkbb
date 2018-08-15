@@ -15,7 +15,7 @@ return [
     ],
 
     'forConfig' => [
-        'o_default_lang'   => 'English',
+        'o_default_lang'   => 'en',
         'o_default_style'  => 'ForkBB',
         'o_redirect_delay' => 0,
         'o_date_format'    => 'Y-m-d',

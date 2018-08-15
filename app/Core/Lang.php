@@ -87,10 +87,10 @@ class Lang
                     $this->tr[$lang] = $this->arrayFromStr($file);
                 }
                 $flag = false;
-            } elseif ($lang === 'English') {
+            } elseif ($lang === 'en') {
                 $flag = false;
             }
-            $lang = 'English';
+            $lang = 'en';
         } while ($flag);
 
         $this->loaded[$name][$lang] = true;
