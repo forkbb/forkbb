@@ -173,7 +173,7 @@ class Func
      *
      * @return array
      */
-    public function  langParse($str)
+    public function langParse($str)
     {
         $result = [];
 
@@ -196,7 +196,8 @@ class Func
 
             $result[$l] = $q;
         }
+        \arsort($result, \SORT_NUMERIC);
 
-        return \array_keys(\arsort($result, \SORT_NUMERIC));
+        return \array_keys($result);
     }
 }

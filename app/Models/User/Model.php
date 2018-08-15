@@ -111,7 +111,7 @@ class Model extends DataModel
     {
         $langs = $this->c->Func->getLangs();
 
-        $lang = $this->isGuest || empty($this->a['language']) || ! isset($langs[$this->a['language']])
+        $lang = empty($this->a['language']) || ! isset($langs[$this->a['language']])
             ? $this->c->config->o_default_lang
             : $this->a['language'];
 

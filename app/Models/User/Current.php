@@ -39,6 +39,7 @@ class Current extends Action
             $user->__dst = $this->c->config->o_default_dst;
 #            $user->language = $this->c->config->o_default_lang;
 #            $user->style = $this->c->config->o_default_style;
+            $user->__language = $this->getLangFromHTTP();
 
             // быстрое переключение языка - Visman
 /*            $language = $this->cookie->get('glang');
@@ -246,5 +247,28 @@ class Current extends Action
             $agent = 'Unknown';
         }
         return $agent;
+    }
+
+    /**
+     * Возвращает имеющийся в наличии язык из HTTP_ACCEPT_LANGUAGE
+     * или язык по умолчанию
+     *
+     * @return string
+     */
+    protected function getLangFromHTTP()
+    {
+        if (! empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            $langs = $this->c->Func->getLangs();
+            foreach ($this->c->Func->langParse($_SERVER['HTTP_ACCEPT_LANGUAGE']) as $entry) {
+                $arr = \explode('-', $entry);
+                if (isset($arr[1])) {
+                    $entry = $arr[0] . '_' . \strtoupper($arr[1]);
+                }
+                if (isset($langs[$entry])) {
+                    return $langs[$entry];
+                }
+            }
+        }
+        return $this->c->config->o_default_lang;
     }
 }
