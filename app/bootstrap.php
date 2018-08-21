@@ -3,16 +3,12 @@
 namespace ForkBB;
 
 use ForkBB\Core\Container;
+use ForkBB\Core\ErrorHandler;
 use ForkBB\Models\Page;
 use RuntimeException;
 
-// боевой
-#\error_reporting(E_ALL);
-#\ini_set('display_errors', 0);
-#\ini_set('log_errors', 1);
-// разраб
-\error_reporting(E_ALL);
-\ini_set('display_errors', 1);
+\error_reporting(\E_ALL ^ \E_NOTICE);
+\ini_set('display_errors', 0);
 \ini_set('log_errors', 1);
 
 \mb_language('uni');
@@ -20,6 +16,8 @@ use RuntimeException;
 \mb_substitute_character(0xFFFD);
 
 require __DIR__ . '/../vendor/autoload.php';
+
+$errorHandler = new ErrorHandler();
 
 if (\is_file(__DIR__ . '/config/main.php')) {
     $c = new Container(include __DIR__ . '/config/main.php');

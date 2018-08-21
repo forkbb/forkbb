@@ -1,5 +1,10 @@
 <?php
 
+# development
+#\error_reporting(\E_ALL);
+#\ini_set('display_errors', 1);
+#\ini_set('log_errors', 1);
+
 return [
     'BASE_URL'    => '_BASE_URL_',
     'EOL'         => PHP_EOL, // Define line breaks in mail headers; possible values can be PHP_EOL, "\r\n", "\n" or "\r"
