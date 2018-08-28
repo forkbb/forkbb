@@ -32,10 +32,12 @@ class Manager extends ManagerModel
     {
         if (\is_array($value)) {
             $result = \array_flip($value); // ???? а если пользователь не найдется?
-            if ($field === 'id') {
+            if ('id' === $field) {
                 $temp = [];
                 foreach ($value as $id) {
-                    if ($this->get($id) instanceof User) {
+                    if (\is_string($id)) { // ???? для пользователей из админки
+                        $result[$id] = $id;
+                    } elseif ($this->get($id) instanceof User) {
                         $result[$id] = $this->get($id);
                     } else {
                         $temp[] = $id;
@@ -59,7 +61,7 @@ class Manager extends ManagerModel
 
             return $result;
         } else {
-            $user = $field === 'id' ? $this->get($value) : null;
+            $user = 'id' === $field ? $this->get($value) : null;
 
             if (! $user instanceof User) {
                 $user = $this->Load->load($value, $field);

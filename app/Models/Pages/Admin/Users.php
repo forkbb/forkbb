@@ -32,6 +32,64 @@ class Users extends Admin
     }
 
     /**
+     * Подготавливает данные для шаблона найденных по ip пользователей
+     *
+     * @param array $args
+     * @param string $method
+     *
+     * @return Page
+     */
+    public function ip(array $args, $method)
+    {
+        $ip = \filter_var($args['ip'], \FILTER_VALIDATE_IP);
+        if (false === $ip) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $this->c->Lang->load('admin_users');
+
+        $fromPosts = $this->c->posts->userInfoFromIP($ip);
+        $ids       = $this->c->users->filter([
+            'registration_ip' => ['=', $ip],
+        ]);
+        $ids       = \array_flip($ids);
+
+        foreach ($fromPosts as $val) {
+            if (isset($ids[$val])) {
+                unset($ids[$val]);
+            }
+        }
+        $ids    = \array_merge($fromPosts, $ids);
+        $number = \count($ids);
+
+        if (0 == $number) {
+            $this->fIswev = ['i', \ForkBB\__('No users found')];
+
+            return $this->view([], 'GET', ['ip' => $ip]);
+        }
+
+        $page  = isset($args['page']) ? (int) $args['page'] : 1;
+        $pages = (int) \ceil($number / $this->c->config->o_disp_users);
+
+        if ($page > $pages) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $startNum = ($page - 1) * $this->c->config->o_disp_users;
+        $ids      = \array_slice($ids, $startNum, $this->c->config->o_disp_users);
+        $userList = $this->c->users->load($ids);
+
+        $this->nameTpl    = 'admin/users_result';
+        $this->aIndex     = 'users';
+        $this->mainSuffix = '-one-column';
+        $this->aCrumbs[]  = [$this->c->Router->link('AdminShowUsersWithIP', ['ip' => $ip]), \ForkBB\__('Results head')];
+        $this->formResult = $this->formUsers($userList, $startNum);
+        $this->pagination = $this->c->Func->paginate($pages, $page, 'AdminShowUsersWithIP', ['ip' => $ip]);
+
+        return $this;
+    }
+
+    /**
      * Подготавливает данные для шаблона найденных по фильтру пользователей
      *
      * @param array $args
@@ -99,7 +157,7 @@ class Users extends Admin
         }
 
         $startNum = ($page - 1) * $this->c->config->o_disp_users;
-        $ids      = \array_slice($ids, $this->startNum, $this->c->config->o_disp_users);
+        $ids      = \array_slice($ids, $startNum, $this->c->config->o_disp_users);
         $userList = $this->c->users->load($ids);
 
         $this->nameTpl    = 'admin/users_result';
@@ -107,6 +165,7 @@ class Users extends Admin
         $this->mainSuffix = '-one-column';
         $this->aCrumbs[]  = [$this->c->Router->link('AdminShowUsersWithFilter', ['filters' => $args['filters'], 'hash' => $args['hash']]), \ForkBB\__('Results head')];
         $this->formResult = $this->formUsers($userList, $startNum);
+        $this->pagination = $this->c->Func->paginate($pages, $page, 'AdminShowUsersWithFilter', ['filters' => $args['filters'], 'hash' => $args['hash']]);
 
         return $this;
     }
@@ -507,6 +566,10 @@ class Users extends Admin
         \array_unshift($users, $this->c->users->create(['id' => -1]));
 
         foreach ($users as $user) {
+            if (\is_string($user)) {
+                $user = $this->c->users->create(['id' => 1, 'username' => $user]);
+            }
+
             $fields = [];
             $fields["l{$number}-wrap1"] = [
                 'class' => 'main-result',
