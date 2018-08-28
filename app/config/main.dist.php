@@ -233,6 +233,7 @@ return [
         'PostManagerPreviousPost' => \ForkBB\Models\Post\PreviousPost::class,
         'PostManagerView'         => \ForkBB\Models\Post\View::class,
         'PostManagerRebuildIndex' => \ForkBB\Models\Post\RebuildIndex::class,
+        'PostManagerUserInfoFromIP' => \ForkBB\Models\Post\UserInfoFromIP::class,
 
         'GroupModel'         => \ForkBB\Models\Group\Model::class,
         'GroupManager'       => \ForkBB\Models\Group\Manager::class,
