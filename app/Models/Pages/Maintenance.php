@@ -9,7 +9,7 @@ class Maintenance extends Page
 {
     /**
      * Конструктор
-     * 
+     *
      * @param Container $container
      */
     public function __construct(Container $container)
@@ -25,6 +25,8 @@ class Maintenance extends Page
         $this->titles             = \ForkBB\__('Maintenance');
 #       $this->fNavigation        = null; //????
         $this->maintenanceMessage = $this->c->config->o_maintenance_message;
+
+        $this->header('Retry-After', '3600');
     }
 
     /**

@@ -75,9 +75,7 @@ class Redirect extends Page
     protected function getHttpHeaders()
     {
         if (null === $this->nameTpl) {
-            $this->httpHeaders = [
-                'Location: ' . $this->link, //????
-            ];
+            $this->header('Location', $this->link);
         }
         return parent::getHttpHeaders();
     }

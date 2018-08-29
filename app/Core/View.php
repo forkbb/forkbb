@@ -88,7 +88,7 @@ EOD;
     public function rendering(Page $p)
     {
         foreach ($p->httpHeaders as $header) {
-            \header($header);
+            \header($header[0], $header[1]);
         }
 
         if (null === $p->nameTpl) {

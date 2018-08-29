@@ -203,6 +203,30 @@ abstract class Page extends Model
     }
 
     /**
+     * Добавляет HTTP заголовок
+     *
+     * @param string $key
+     * @param string $value
+     * @param bool   $replace
+     *
+     * @return Page
+     */
+    public function header($key, $value, $replace = true)
+    {
+        if ('HTTP/' === \substr($key, 0, 5)) {
+            if (\preg_match('%^HTTP/\d\.\d%', $_SERVER['SERVER_PROTOCOL'], $match)) {
+                $key = $match[0];
+            } else {
+                $key = 'HTTP/1.1';
+            }
+        } else {
+            $key .= ':';
+        }
+        $this->a['httpHeaders'][] = ["{$key} {$value}", $replace];
+        return $this;
+    }
+
+    /**
      * Возвращает HTTP заголовки страницы
      * $this->httpHeaders
      *
@@ -210,18 +234,22 @@ abstract class Page extends Model
      */
     protected function gethttpHeaders()
     {
-        $headers = $this->a['httpHeaders'];
-        if (! empty($status = $this->httpStatus())) {
-            $headers[] = $status;
-        }
-#       $headers[] = 'X-Frame-Options: DENY';
-        return $headers;
+        $now = gmdate('D, d M Y H:i:s') . ' GMT';
+
+        $this->httpStatus()
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Content-type', 'text/html; charset=utf-8')
+            ->header('Date', $now)
+            ->header('Last-Modified', $now)
+            ->header('Expires', $now);
+
+        return $this->a['httpHeaders'];
     }
 
     /**
-     * Возвращает HTTP статус страницы или null
+     * Устанавливает HTTP статус страницы
      *
-     * @return null|string
+     * @return Page
      */
     protected function httpStatus()
     {
@@ -234,16 +262,9 @@ abstract class Page extends Model
         ];
 
         if (isset($list[$this->httpStatus])) {
-            $status = 'HTTP/1.0 ';
-
-            if (isset($_SERVER['SERVER_PROTOCOL'])
-                && \preg_match('%^HTTP/([12]\.[01])%', $_SERVER['SERVER_PROTOCOL'], $match)
-            ) {
-                $status = 'HTTP/' . $match[1] . ' ';
-            }
-
-            return $status . $list[$this->httpStatus];
+            $this->header('HTTP/1.0', $list[$this->httpStatus]);
         }
+        return $this;
     }
 
     /**
