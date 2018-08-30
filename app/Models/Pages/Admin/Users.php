@@ -82,7 +82,7 @@ class Users extends Admin
         $this->nameTpl    = 'admin/users_result';
         $this->aIndex     = 'users';
         $this->mainSuffix = '-one-column';
-        $this->aCrumbs[]  = [$this->c->Router->link('AdminShowUsersWithIP', ['ip' => $ip]), \ForkBB\__('Results head')];
+        $this->aCrumbs[]  = [$this->c->Router->link('AdminShowUsersWithIP', ['ip' => $ip]), $ip];
         $this->formResult = $this->formUsers($userList, $startNum);
         $this->pagination = $this->c->Func->paginate($pages, $page, 'AdminShowUsersWithIP', ['ip' => $ip]);
 
@@ -587,11 +587,11 @@ class Users extends Admin
                 'href'    => $user->link,
             ];
             $fields["l{$number}-email"] = [
-                'class'   => ['result', 'email'],
-                'type'    => 'link',
+                'class'   => $user->isGuest ? ['result', 'email', 'no-data'] : ['result', 'email'],
+                'type'    => $user->isGuest ? 'str' : 'link',
                 'caption' => \ForkBB\__('Results e-mail head'),
-                'value'   => $user->email,
-                'href'    => 'mailto:' . $user->email,
+                'value'   => $user->isGuest ? '' : $user->email,
+                'href'    => $user->isGuest ? '' : 'mailto:' . $user->email,
             ];
             $fields[] = [
                 'type' => 'endwrap',
@@ -603,7 +603,7 @@ class Users extends Admin
                 'value'   => -1 === $user->id ? null : $user->title(),
             ];
             $fields["l{$number}-posts"] = [
-                'class'   => ['result', 'posts'],
+                'class'   => $user->isGuest ? ['result', 'posts', 'no-data'] : ['result', 'posts'],
                 'type'    => $user->num_posts ? 'link' : 'str',
                 'caption' => \ForkBB\__('Results posts head'),
                 'value'   => $user->num_posts ? \ForkBB\num($user->num_posts) : null,
@@ -611,7 +611,7 @@ class Users extends Admin
                 'title'   => \ForkBB\__('Results show posts link'),
             ];
             $fields["l{$number}-note"] = [
-                'class'   => ['result', 'note'],
+                'class'   => $user->isGuest ? ['result', 'note', 'no-data'] : ['result', 'note'],
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Примечание админа'),
                 'value'   => $user->admin_note,
@@ -619,7 +619,7 @@ class Users extends Admin
 
             if ($this->user->isAdmin) {
                 $fields["l{$number}-view-ip"] = [
-                    'class'   => ['result', 'view-ip'],
+                    'class'   => $user->isGuest ? ['result', 'view-ip', 'no-data'] : ['result', 'view-ip'],
                     'type'    => $user->isGuest ? 'str' : 'link',
                     'caption' => \ForkBB\__('Results action head'),
                     'value'   => $user->isGuest ? null : \ForkBB\__('Results view IP link'),

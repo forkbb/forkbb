@@ -2294,7 +2294,8 @@ select {
   padding-bottom: 0.3125rem;
 }
 
-.f-fs-result:first-of-type {
+.f-fs-result:first-of-type,
+.f-fs-result .f-field-no-data {
   display: none;
 }
 
