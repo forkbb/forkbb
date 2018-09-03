@@ -2294,6 +2294,10 @@ select {
   padding-bottom: 0.3125rem;
 }
 
+.f-fs-stat {
+  display: block;
+}
+
 .f-fs-result:first-of-type,
 .f-fs-result .f-field-no-data {
   display: none;
@@ -2316,22 +2320,24 @@ select {
   width: calc(100% - 3rem);
 }
 
-.f-wrap-main-result .f-field-result > dt,
-.f-wrap-main-result .f-field-result > dd,
-.f-wrap-main-result .f-field-result .f-str {
+.f-fs-result .f-field-result > dt,
+.f-fs-result .f-field-result > dd,
+.f-fs-result .f-field-result .f-str {
   display: inline;
 }
 
-.f-wrap-main-result .f-field-result .f-child1 {
+.f-fs-result .f-field-result .f-child1 {
   display: inline;
   font-weight: bold;
 }
 
-.f-wrap-main-result .f-field-result .f-child1:after {
+.f-fs-result .f-field-result .f-child1:after {
   content: ": ";
 }
 
 .f-fs-result .f-field-check {
+  border: 0;
+  margin: 0;
   width: 3rem;
   overflow: hidden;
   text-align: center;
@@ -2352,22 +2358,26 @@ select {
 }
 
 @media screen and (min-width: 36rem) {
-  .f-wrap-main-result .f-field-result > dt,
-  .f-wrap-main-result .f-field-result > dd {
+  .f-fs-result .f-field-result > dt,
+  .f-fs-result .f-field-result > dd {
     display: block;
   }
 
-  .f-wrap-main-result .f-field-result .f-child1 {
+  .f-fs-result .f-field-result .f-child1 {
     display: block;
     font-weight: normal;
   }
 
-  .f-wrap-main-result .f-field-result .f-child1:after {
+  .f-fs-result .f-field-result .f-child1:after {
     content: "";
   }
 }
 
 @media screen and (min-width: 50rem) {
+  .f-fs-stat {
+    display: flex;
+  }
+
   .f-wrap-main-result {
     display: flex;
   }
@@ -2379,7 +2389,8 @@ select {
     justify-content: center;
   }
 
-  .f-fs-result .f-field-result > dt {
+  .f-fs-result .f-field-result > dt,
+  .f-fs-result:first-of-type .f-field-check > dt {
     display: block;
     margin: 0;
     width: 100%;
@@ -2400,7 +2411,8 @@ select {
     display: none;
   }
 
-  .f-fs-result .f-field-result .f-child1 {
+  .f-fs-result .f-field-result .f-child1,
+  .f-fs-result .f-field-check .f-child1 {
     font-weight: bold;
   }
 
@@ -2440,4 +2452,24 @@ select {
     border-left: 0.0625rem dotted #AA7939;
   }
 
+  .f-fs-result .f-field-ip {
+    width: 25%;
+  }
+
+  .f-fs-result .f-field-last-used {
+    width: 25%;
+    border-left: 0.0625rem dotted #AA7939;
+    text-align: center;
+  }
+
+  .f-fs-result .f-field-used-times {
+    width: 20%;
+    border-left: 0.0625rem dotted #AA7939;
+    text-align: center;
+  }
+
+  .f-fs-result .f-field-action {
+    width: 30%;
+    border-left: 0.0625rem dotted #AA7939;
+  }
 }

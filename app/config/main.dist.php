@@ -234,6 +234,7 @@ return [
         'PostManagerView'         => \ForkBB\Models\Post\View::class,
         'PostManagerRebuildIndex' => \ForkBB\Models\Post\RebuildIndex::class,
         'PostManagerUserInfoFromIP' => \ForkBB\Models\Post\UserInfoFromIP::class,
+        'PostManagerUserStat'     => \ForkBB\Models\Post\UserStat::class,
 
         'GroupModel'         => \ForkBB\Models\Group\Model::class,
         'GroupManager'       => \ForkBB\Models\Group\Manager::class,

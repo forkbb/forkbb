@@ -32,6 +32,47 @@ class Users extends Admin
     }
 
     /**
+     * Подготавливает данные для шаблона ip статистики для пользователя
+     *
+     * @param array $args
+     * @param string $method
+     *
+     * @return Page
+     */
+    public function viewUserStat(array $args, $method)
+    {
+        $this->c->Lang->load('admin_users');
+
+        $stat   = $this->c->posts->userStat($args['id']);
+        $number = \count($stat);
+
+        $page  = isset($args['page']) ? (int) $args['page'] : 1;
+        $pages = (int) \ceil(($number ?: 1) / $this->c->config->o_disp_users);
+
+        if ($page > $pages) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $startNum = ($page - 1) * $this->c->config->o_disp_users;
+        $stat     = \array_slice($stat, $startNum, $this->c->config->o_disp_users);
+
+        $user = $this->c->users->load((int) $args['id']);
+
+        if (0 == $number) {
+            $this->fIswev = ['i', \ForkBB\__('Results no posts found')];
+        }
+
+        $this->nameTpl    = 'admin/users_result';
+        $this->aIndex     = 'users';
+        $this->mainSuffix = '-one-column';
+        $this->aCrumbs[]  = [$this->c->Router->link('AdminUserStat', ['id' => $args['id']]), $user->username];
+        $this->formResult = $this->formStat($stat, $startNum);
+        $this->pagination = $this->c->Func->paginate($pages, $page, 'AdminUserStat', ['id' => $args['id']]);
+
+        return $this;
+    }
+
+    /**
      * Подготавливает данные для шаблона найденных по ip пользователей
      *
      * @param array $args
@@ -39,7 +80,7 @@ class Users extends Admin
      *
      * @return Page
      */
-    public function ip(array $args, $method)
+    public function viewIP(array $args, $method)
     {
         $ip = \filter_var($args['ip'], \FILTER_VALIDATE_IP);
         if (false === $ip) {
@@ -69,7 +110,7 @@ class Users extends Admin
         }
 
         $page  = isset($args['page']) ? (int) $args['page'] : 1;
-        $pages = (int) \ceil($number / $this->c->config->o_disp_users);
+        $pages = (int) \ceil(($number ?: 1) / $this->c->config->o_disp_users);
 
         if ($page > $pages) {
             return $this->c->Message->message('Bad request');
@@ -82,9 +123,9 @@ class Users extends Admin
         $this->nameTpl    = 'admin/users_result';
         $this->aIndex     = 'users';
         $this->mainSuffix = '-one-column';
-        $this->aCrumbs[]  = [$this->c->Router->link('AdminShowUsersWithIP', ['ip' => $ip]), $ip];
+        $this->aCrumbs[]  = [$this->c->Router->link('AdminUsersIP', ['ip' => $ip]), $ip];
         $this->formResult = $this->formUsers($userList, $startNum);
-        $this->pagination = $this->c->Func->paginate($pages, $page, 'AdminShowUsersWithIP', ['ip' => $ip]);
+        $this->pagination = $this->c->Func->paginate($pages, $page, 'AdminUsersIP', ['ip' => $ip]);
 
         return $this;
     }
@@ -97,7 +138,7 @@ class Users extends Admin
      *
      * @return Page
      */
-    public function filter(array $args, $method)
+    public function viewFilter(array $args, $method)
     {
         if (! \hash_equals($args['hash'], $this->c->Secury->hash($args['filters']))
             || ! \is_array($data = \json_decode(\base64_decode($args['filters'], true), true))
@@ -150,7 +191,7 @@ class Users extends Admin
         }
 
         $page  = isset($args['page']) ? (int) $args['page'] : 1;
-        $pages = (int) \ceil($number / $this->c->config->o_disp_users);
+        $pages = (int) \ceil(($number ?: 1) / $this->c->config->o_disp_users);
 
         if ($page > $pages) {
             return $this->c->Message->message('Bad request');
@@ -163,9 +204,9 @@ class Users extends Admin
         $this->nameTpl    = 'admin/users_result';
         $this->aIndex     = 'users';
         $this->mainSuffix = '-one-column';
-        $this->aCrumbs[]  = [$this->c->Router->link('AdminShowUsersWithFilter', ['filters' => $args['filters'], 'hash' => $args['hash']]), \ForkBB\__('Results head')];
+        $this->aCrumbs[]  = [$this->c->Router->link('AdminUsersFilter', ['filters' => $args['filters'], 'hash' => $args['hash']]), \ForkBB\__('Results head')];
         $this->formResult = $this->formUsers($userList, $startNum);
-        $this->pagination = $this->c->Func->paginate($pages, $page, 'AdminShowUsersWithFilter', ['filters' => $args['filters'], 'hash' => $args['hash']]);
+        $this->pagination = $this->c->Func->paginate($pages, $page, 'AdminUsersFilter', ['filters' => $args['filters'], 'hash' => $args['hash']]);
 
         return $this;
     }
@@ -197,7 +238,7 @@ class Users extends Admin
                     $this->fIswev = ['v', \ForkBB\__('Bad IP message')];
                     $data         = $v->getData();
                 } else {
-                    return $this->c->Redirect->page('AdminShowUsersWithIP', ['ip' => $ip]);
+                    return $this->c->Redirect->page('AdminUsersIP', ['ip' => $ip]);
                 }
             } else {
                 $v = $this->c->Validator->reset()
@@ -254,7 +295,7 @@ class Users extends Admin
                     unset($filters['token']);
                     $filters = \base64_encode(\json_encode($filters));
                     $hash    = $this->c->Secury->hash($filters);
-                    return $this->c->Redirect->page('AdminShowUsersWithFilter', ['filters' => $filters, 'hash' => $hash]);
+                    return $this->c->Redirect->page('AdminUsersFilter', ['filters' => $filters, 'hash' => $hash]);
                 }
 
                 $this->fIswev = $v->getErrors();
@@ -611,7 +652,7 @@ class Users extends Admin
                 'title'   => \ForkBB\__('Results show posts link'),
             ];
             $fields["l{$number}-note"] = [
-                'class'   => $user->isGuest ? ['result', 'note', 'no-data'] : ['result', 'note'],
+                'class'   => '' === \trim($user->admin_note) ? ['result', 'note', 'no-data'] : ['result', 'note'],
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Примечание админа'),
                 'value'   => $user->admin_note,
@@ -620,10 +661,10 @@ class Users extends Admin
             if ($this->user->isAdmin) {
                 $fields["l{$number}-view-ip"] = [
                     'class'   => $user->isGuest ? ['result', 'view-ip', 'no-data'] : ['result', 'view-ip'],
-                    'type'    => $user->isGuest ? 'str' : 'link',
+                    'type'    => $user->isGuest || ! $user->num_posts ? 'str' : 'link',
                     'caption' => \ForkBB\__('Results action head'),
                     'value'   => $user->isGuest ? null : \ForkBB\__('Results view IP link'),
-                    'href'    => '',
+                    'href'    => $this->c->Router->link('AdminUserStat', ['id' => $user->id]),
                 ];
             }
 
@@ -632,7 +673,7 @@ class Users extends Admin
             ];
             $key = $user->isGuest ? "guest{$number}" : "users[{$user->id}]";
             $fields[$key] = [
-                'class'   => ['result', 'check'],
+                'class'   => ['check'],
                 'caption' => \ForkBB\__('Select'),
                 'type'    => $user->isGuest ? 'str' : 'checkbox',
                 'value'   => $user->isGuest ? null : $user->id,
@@ -645,6 +686,69 @@ class Users extends Admin
             ];
 
             ++$number;
+        }
+
+        return $form;
+    }
+
+    /**
+     * Создает массив данных для формы статистики пользователя по ip
+     *
+     * @param array $stat
+     * @param int $number
+     *
+     * @return array
+     */
+    protected function formStat(array $stat, $number)
+    {
+        $form = [
+            'action' => null,
+            'hidden' => null,
+            'sets'   => [],
+            'btns'   => null,
+        ];
+
+        \array_unshift($stat, ['last_used' => null, 'used_times' => null]);
+        $flag = false;
+
+        foreach ($stat as $ip => $data) {
+            $fields = [];
+
+            $fields["l{$number}-ip"] = [
+                'class'   => ['result', 'ip'],
+                'type'    => $flag ? 'link' : 'str',
+                'caption' => \ForkBB\__('Results IP address head'),
+                'value'   => $flag ? $ip : null,
+                'href'    => $flag ? $this->c->Router->link('AdminHost', ['ip' => $ip]) : null,
+            ];
+            $fields["l{$number}-last-used"] = [
+                'class'   => ['result', 'last-used'],
+                'type'    => 'str',
+                'caption' => \ForkBB\__('Results last used head'),
+                'value'   => $flag ? \ForkBB\dt($data['last_used']) : null,
+            ];
+            $fields["l{$number}-used-times"] = [
+                'class'   => ['result', 'used-times'],
+                'type'    => 'str',
+                'caption' => \ForkBB\__('Results times found head'),
+                'value'   => $flag ? \ForkBB\num($data['used_times']) : null,
+            ];
+            $fields["l{$number}-action"] = [
+                'class'   => ['result', 'action'],
+                'type'    => $flag ? 'link' : 'str',
+                'caption' => \ForkBB\__('Results action head'),
+                'value'   => $flag ? \ForkBB\__('Results find more link') : null,
+                'href'    => $flag ? $this->c->Router->link('AdminUsersIP', ['ip' => $ip]) : null,
+            ];
+
+            $form['sets']["l{$number}"] = [
+                'class'  => ['result', 'stat'],
+                'legend' => $flag ? $number : null,
+                'fields' => $fields,
+            ];
+
+            ++$number;
+            $flag = true;
         }
 
         return $form;
