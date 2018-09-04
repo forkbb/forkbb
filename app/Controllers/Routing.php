@@ -125,8 +125,7 @@ class Routing
             $r->add('GET', '/admin/statistics', 'AdminStatistics:statistics', 'AdminStatistics');
 
             $r->add(['GET', 'POST'], '/admin/users', 'AdminUsers:view', 'AdminUsers');
-            $r->add('GET',           '/admin/users/filter/{filters}/{hash}[/{page:[1-9]\d*}]', 'AdminUsers:viewFilter', 'AdminUsersFilter');
-
+            $r->add(['GET', 'POST'], '/admin/users/result/{data}[/{page:[1-9]\d*}]', 'AdminUsersResult:view', 'AdminUsersResult');
         }
         // только админ
         if ($user->isAdmin) {
@@ -150,8 +149,7 @@ class Routing
             $r->add('GET',           '/admin/maintenance/rebuild/{token}/{clear:[01]}/{limit:[1-9]\d*}/{start:[1-9]\d*}', 'AdminMaintenance:rebuild', 'AdminRebuildIndex' );
 
             $r->add('GET',           '/admin/get/host/{ip:[0-9a-fA-F:.]+}',      'AdminHost:view',           'AdminHost');
-            $r->add('GET',           '/admin/users/ip/{ip:[0-9a-fA-F:.]+}[/{page:[1-9]\d*}]',      'AdminUsers:viewIP',            'AdminUsersIP');
-            $r->add('GET',           '/admin/users/user/{id:[2-9]|[1-9]\d+}[/{page:[1-9]\d*}]',      'AdminUsers:viewUserStat',            'AdminUserStat');
+            $r->add('GET',           '/admin/users/user/{id:[2-9]|[1-9]\d+}[/{page:[1-9]\d*}]',      'AdminUsersStat:view',            'AdminUserStat');
         }
 
         $uri = $_SERVER['REQUEST_URI'];

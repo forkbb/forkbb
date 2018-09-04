@@ -85,7 +85,7 @@ class Userlist extends Page
         $ids    = $this->c->users->filter($filters, $order);
         $number = \count($ids);
         $page   = isset($args['page']) ? (int) $args['page'] : 1;
-        $pages  = $number ? (int) \ceil($number / $this->c->config->o_disp_users) : 1;
+        $pages  = (int) \ceil(($number ?: 1) / $this->c->config->o_disp_users);
 
         if ($page > $pages) {
             return $this->c->Message->message('Bad request');

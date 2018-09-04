@@ -446,7 +446,12 @@ select {
 }
 
 .f-fdiv .f-btns {
-  padding: 0.625rem 0.3125rem;
+  padding: 0.3125rem;
+}
+
+.f-fdiv .f-btns .f-btn {
+  margin: 0.3125rem 0;
+  min-width: 7rem;
 }
 
 .f-fdiv legend {
@@ -2285,6 +2290,15 @@ select {
 /************************/
 /* Админка/Пользователи */
 /************************/
+.f-search-result-form .f-btns {
+  text-align: right;
+}
+
+.f-search-result-form .f-btns .f-btn {
+  display: inline;
+  width: auto;
+}
+
 .f-fs-result {
   display: flex;
   align-items: stretch;

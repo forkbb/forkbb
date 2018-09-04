@@ -166,7 +166,9 @@ return [
         'AdminGroups'     => \ForkBB\Models\Pages\Admin\Groups::class,
         'AdminCensoring'  => \ForkBB\Models\Pages\Admin\Censoring::class,
         'AdminMaintenance' => \ForkBB\Models\Pages\Admin\Maintenance::class,
-        'AdminUsers'      => \ForkBB\Models\Pages\Admin\Users::class,
+        'AdminUsers'      => \ForkBB\Models\Pages\Admin\Users\View::class,
+        'AdminUsersResult' => \ForkBB\Models\Pages\Admin\Users\Result::class,
+        'AdminUsersStat'  => \ForkBB\Models\Pages\Admin\Users\Stat::class,
         'AdminHost'       => \ForkBB\Models\Pages\Admin\Host::class,
 
         'ConfigModel'     => \ForkBB\Models\Config\Model::class,
