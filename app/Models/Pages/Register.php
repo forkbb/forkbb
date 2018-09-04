@@ -94,8 +94,8 @@ class Register extends Page
         $user->email_setting   = $this->c->config->o_default_email_setting;
         $user->timezone        = $this->c->config->o_default_timezone;
         $user->dst             = $this->c->config->o_default_dst;
-        $user->language        = $user->language; //????
-        $user->style           = $user->style;    //????
+        $user->language        = $this->user->language;
+        $user->style           = $this->user->style;
         $user->registered      = \time();
         $user->registration_ip = $this->user->ip;
 
