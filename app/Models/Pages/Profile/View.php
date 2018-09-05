@@ -61,7 +61,7 @@ class View extends Profile
         $fields[] = [
             'type' => 'endwrap',
         ];
-        if ($this->rules->useAvatar) {
+        if ($this->rules->useAvatar && $this->curUser->avatar) {
             $fields['avatar'] = [
                 'type'    => 'yield',
                 'caption' => \ForkBB\__('Avatar'),
