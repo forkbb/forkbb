@@ -23,7 +23,7 @@ class Result extends Users
         }
 
         if (isset($data['ip'])) {
-            if (! $this->user->isAdmin) {
+            if (! $this->user->canViewIP) {
                 return $this->c->Message->message('Bad request');
             }
 

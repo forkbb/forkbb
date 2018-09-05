@@ -85,7 +85,7 @@ class Profile extends Rules
 
     protected function getviewIP()
     {
-        return $this->user->isAdmin;
+        return $this->user->canViewIP;
     }
 
     protected function getuseAvatar()

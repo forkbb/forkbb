@@ -120,7 +120,7 @@ class View extends Users
         $this->aIndex     = 'users';
         $this->formSearch = $this->form($data);
 
-        if ($this->user->isAdmin) {
+        if ($this->user->canViewIP) {
             $this->formIP = $this->formIP($data);
         }
 

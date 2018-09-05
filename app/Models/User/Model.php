@@ -309,4 +309,14 @@ class Model extends DataModel
     {
         return (int) (empty($this->a['disp_posts']) ? $this->c->config->o_disp_posts_default : $this->a['disp_posts']);
     }
+
+    /**
+     * Статус показа ip пользователей
+     *
+     * @return bool
+     */
+    protected function getcanViewIP()
+    {
+        return $this->isAdmin;
+    }
 }
