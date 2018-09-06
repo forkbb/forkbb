@@ -22,15 +22,17 @@ class Result extends Users
             return $this->c->Message->message('Bad request');
         }
 
+        $this->rules = $this->c->UsersRules->init();
+
         if (isset($data['ip'])) {
-            if (! $this->user->canViewIP) {
+            if (! $this->rules->viewIP) {
                 return $this->c->Message->message('Bad request');
             }
 
-            $ids = $this->forIP($data['ip']);
+            $ids    = $this->forIP($data['ip']);
             $crName = $data['ip'];
         } else {
-            $ids = $this->forFilter($data);
+            $ids    = $this->forFilter($data);
             $crName = \ForkBB\__('Results head');
         }
 
@@ -49,15 +51,58 @@ class Result extends Users
             return $this->c->Message->message('Bad request');
         }
 
+        if ('POST' === $method) {
+            $v = $this->c->Validator->reset()
+            ->addValidators([
+            ])->addRules([
+                'token'          => 'token:AdminUsersResult',
+                'users'          => 'required|array',
+                'users.*'        => 'required|integer|min:2|max:9999999999',
+                'ban'            => $this->rules->banUsers ? 'checkbox' : 'absent',
+                'delete'         => $this->rules->deleteUsers ? 'checkbox' : 'absent',
+                'change_group'   => $this->rules->changeGroup ? 'checkbox' : 'absent',
+            ])->addAliases([
+                'users'          => 'Select',
+                'users.*'        => 'Select',
+            ])->addArguments([
+                'token'          => $args,
+            ])->addMessages([
+                'users.required' => 'No users selected',
+                'ban'            => 'Action not available',
+                'delete'         => 'Action not available',
+                'change_group'   => 'Action not available',
+            ]);
+
+            if ($v->validation($_POST)) {
+                if (! empty($v->ban) && $this->rules->banUsers) {
+                    $action = self::ACTION_BAN;
+                } elseif (! empty($v->delete) && $this->rules->deleteUsers) {
+                    $action = self::ACTION_DEL;
+                } elseif (! empty($v->change_group) && $this->rules->changeGroup) {
+                    $action = self::ACTION_CHG;
+                } else {
+                    $this->fIswev = ['v', \ForkBB\__('Action not available')];
+                }
+
+                if (empty($this->fIswev)) {
+                    $selected = $this->checkSelected($v->users, $action);
+                    if (\is_array($selected)) {
+                        return $this->c->Redirect->page('AdminUsersAction', ['action' => $action, 'ids' => \implode('-', $selected)]);
+                    }
+                }
+            }
+
+            $this->fIswev = $v->getErrors();
+        }
+
         $startNum = ($page - 1) * $this->c->config->o_disp_users;
         $ids      = \array_slice($ids, $startNum, $this->c->config->o_disp_users);
         $userList = $this->c->users->load($ids);
 
         $this->nameTpl    = 'admin/users_result';
-        $this->aIndex     = 'users';
         $this->mainSuffix = '-one-column';
         $this->aCrumbs[]  = [$this->c->Router->link('AdminUsersResult', ['data' => $args['data']]), $crName];
-        $this->formResult = $this->form($userList, $startNum);
+        $this->formResult = $this->form($userList, $startNum, $args);
         $this->pagination = $this->c->Func->paginate($pages, $page, 'AdminUsersResult', ['data' => $args['data']]);
 
         return $this;
@@ -138,35 +183,42 @@ class Result extends Users
      *
      * @param array $users
      * @param int $number
+     * @param array $args
      *
      * @return array
      */
-    protected function form(array $users, $number)
+    protected function form(array $users, $number, array $args)
     {
         $form = [
-            'action' => $this->c->Router->link(''),
+            'action' => $this->c->Router->link('AdminUsersResult', $args),
             'hidden' => [
-                'token' => $this->c->Csrf->create(''),
+                'token' => $this->c->Csrf->create('AdminUsersResult', $args),
             ],
             'sets'   => [],
-            'btns'   => [
-                'ban' => [
-                    'type'      => 'submit',
-                    'value'     => \ForkBB\__('Ban'),
-                    'accesskey' => null,
-                ],
-                'delete' => [
-                    'type'      => 'submit',
-                    'value'     => \ForkBB\__('Delete'),
-                    'accesskey' => null,
-                ],
-                'change_group' => [
-                    'type'      => 'submit',
-                    'value'     => \ForkBB\__('Change group'),
-                    'accesskey' => null,
-                ],
-            ],
+            'btns'   => [],
         ];
+
+        if ($this->rules->banUsers) {
+            $form['btns']['ban'] = [
+                'type'      => 'submit',
+                'value'     => \ForkBB\__('Ban'),
+                'accesskey' => null,
+            ];
+        }
+        if ($this->rules->deleteUsers) {
+            $form['btns']['delete'] = [
+                'type'      => 'submit',
+                'value'     => \ForkBB\__('Delete'),
+                'accesskey' => null,
+            ];
+        }
+        if ($this->rules->changeGroup) {
+            $form['btns']['change_group'] = [
+                'type'      => 'submit',
+                'value'     => \ForkBB\__('Change group'),
+                'accesskey' => null,
+            ];
+        }
 
         \array_unshift($users, $this->c->users->create(['id' => -1]));
 

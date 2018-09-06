@@ -24,6 +24,18 @@ msgstr "Not verified"
 msgid "No users selected"
 msgstr "No users selected."
 
+msgid "Action not available"
+msgstr "Action not available."
+
+msgid "You are not allowed to delete the %s"
+msgstr "You are not allowed to delete the %s."
+
+msgid "You are not allowed to ban the %s"
+msgstr "You are not allowed to ban the %s."
+
+msgid "You are not allowed to change group for %s"
+msgstr "You are not allowed to change group for %s."
+
 msgid "No move admins message"
 msgstr "For security reasons, you are not allowed to move multiple administrators to another group. If you want to move these administrators, you can do so on their respective user profiles."
 

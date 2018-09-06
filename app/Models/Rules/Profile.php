@@ -22,6 +22,8 @@ class Profile extends Rules
      */
     public function setUser(User $curUser)
     {
+        $this->a     = [];
+        $this->aCalc = [];
         $this->ready = true;
 
         $this->user        = $this->c->user;

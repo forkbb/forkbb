@@ -24,6 +24,18 @@ msgstr "Не проверенный"
 msgid "No users selected"
 msgstr "Пользователи не выбраны."
 
+msgid "Action not available"
+msgstr "Действие недоступно."
+
+msgid "You are not allowed to delete the %s"
+msgstr "Недостаточно прав для удаления %s."
+
+msgid "You are not allowed to ban the %s"
+msgstr "Недостаточно прав для бана %s."
+
+msgid "You are not allowed to change group for %s"
+msgstr "Недостаточно прав для изменения группы у %s."
+
 msgid "No move admins message"
 msgstr "Из соображений безопасности вы не можете переместить администраторов в другую группу. Если всё же вы хотите их переместить, то сделайте это в их профилях."
 

@@ -126,6 +126,8 @@ class Routing
 
             $r->add(['GET', 'POST'], '/admin/users', 'AdminUsers:view', 'AdminUsers');
             $r->add(['GET', 'POST'], '/admin/users/result/{data}[/{page:[1-9]\d*}]', 'AdminUsersResult:view', 'AdminUsersResult');
+            $r->add(['GET', 'POST'], '/admin/users/{action:\w+}/{ids:\d+(?:-\d+)*}', 'AdminUsersAction:view', 'AdminUsersAction');
+
 
             if ($user->canViewIP) {
                 $r->add('GET',           '/admin/get/host/{ip:[0-9a-fA-F:.]+}',      'AdminHost:view',           'AdminHost');

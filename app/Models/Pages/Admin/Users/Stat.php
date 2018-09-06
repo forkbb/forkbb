@@ -37,7 +37,6 @@ class Stat extends Users
         }
 
         $this->nameTpl    = 'admin/users_result';
-        $this->aIndex     = 'users';
         $this->mainSuffix = '-one-column';
         $this->aCrumbs[]  = [$this->c->Router->link('AdminUserStat', ['id' => $args['id']]), $user->username];
         $this->formResult = $this->form($stat, $startNum);

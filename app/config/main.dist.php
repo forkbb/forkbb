@@ -255,5 +255,6 @@ return [
         'SearchModelExecute' => \ForkBB\Models\Search\Execute::class,
 
         'ProfileRules' => \ForkBB\Models\Rules\Profile::class,
+        'UsersRules'   => \ForkBB\Models\Rules\Users::class,
     ],
 ];
