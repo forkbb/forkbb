@@ -641,17 +641,14 @@ class Groups extends Admin
                 ->addRules([
                     'token'     => 'token:AdminGroupsDelete',
                     'movegroup' => $move,
-                    'confirm'   => 'integer',
+                    'confirm'   => 'integer', // ????
                     'delete'    => 'string',
-                    'cancel'    => 'string',
                 ])->addAliases([
                 ])->addArguments([
                     'token' => $args,
                 ]);
 
-            if (! $v->validation($_POST) || null === $v->delete) {
-                return $this->c->Redirect->page('AdminGroups')->message('Cancel redirect');
-            } elseif ($v->confirm !== 1) {
+            if (! $v->validation($_POST) || $v->confirm !== 1) {
                 return $this->c->Redirect->page('AdminGroups')->message('No confirm redirect');
             }
 
@@ -681,8 +678,9 @@ class Groups extends Admin
                     'accesskey' => 'd',
                 ],
                 'cancel' => [
-                    'type'      => 'submit',
+                    'type'      => 'btn',
                     'value'     => \ForkBB\__('Cancel'),
+                    'link'      => $this->c->Router->link('AdminGroups'),
                 ],
             ],
         ];
