@@ -147,7 +147,7 @@
   @include ('layouts/stats')
 @endif
 @if ($form = $p->form)
-    <section class="f-post-form f-btnsrow-form">
+    <section class="f-post-form">
       <h2>{!! __('Quick post') !!}</h2>
       <div class="f-fdiv">
   @include ('layouts/form')

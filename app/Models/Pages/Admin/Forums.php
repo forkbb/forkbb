@@ -291,7 +291,7 @@ class Forums extends Admin
         $this->aCrumbs[] = [$this->c->Router->link('AdminForumsDelete', ['id' => $forum->id]), \ForkBB\__('Delete forum head')];
         $this->aCrumbs[] = \ForkBB\__('"%s"', $forum->forum_name);
         $this->form      = $form;
-        $this->classForm = ['deleteforum', 'btnsrow'];
+        $this->classForm = 'deleteforum';
         $this->titleForm = \ForkBB\__('Delete forum head');
 
         return $this;

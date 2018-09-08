@@ -212,7 +212,7 @@ class Categories extends Admin
         $this->aCrumbs[] = [$this->c->Router->link('AdminCategoriesDelete', ['id' => $args['id']]), \ForkBB\__('Delete category head')];
         $this->aCrumbs[] = \ForkBB\__('"%s"', $category['cat_name']);
         $this->form      = $form;
-        $this->classForm = ['deletecategory', 'btnsrow'];
+        $this->classForm = 'deletecategory';
         $this->titleForm = \ForkBB\__('Delete category head');
 
         return $this;

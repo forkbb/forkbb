@@ -1650,7 +1650,7 @@ select {
   border: 0;
 }
 
-.f-btnsrow-form .f-btns .f-btn {
+.f-post-form .f-btn {
   width: auto;
   display: inline-block;
 }
@@ -1674,6 +1674,11 @@ select {
 /*********************/
 /* Админка/Категории */
 /*********************/
+.f-deletecategory-form .f-btn {
+  width: auto;
+  display: inline-block;
+}
+
 .f-fs-category {
   display: flex;
   align-items: stretch;
@@ -1726,6 +1731,11 @@ select {
 /*********************/
 /* Админка/Разделы   */
 /*********************/
+.f-deleteforum-form .f-btn {
+  width: auto;
+  display: inline-block;
+}
+
 .f-fs-forum {
   display: flex;
   align-items: stretch;
@@ -1872,6 +1882,13 @@ select {
   pointer-events: none;
   cursor: default;
   opacity: 0.5;
+}
+/******************/
+/* Админка/Группы */
+/******************/
+.f-deletegroup-form .f-btn {
+  width: auto;
+  display: inline-block;
 }
 
 /*********************/
