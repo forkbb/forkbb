@@ -41,7 +41,10 @@ img,
 abbr,
 cite,
 address,
-article {
+article,
+input,
+textarea,
+a {
   border: 0;
   font-style: normal;
   font-weight: normal;
@@ -49,11 +52,13 @@ article {
   padding: 0;
   box-sizing: border-box;
   word-wrap: break-word;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 ul,
 ol {
   list-style: none;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 /*******************/
@@ -90,7 +95,6 @@ ol {
 }
 
 html {
-  font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
   line-height: 1.5;
 }
@@ -175,6 +179,7 @@ body,
       -ms-user-select: none;
           user-select: none;
   white-space: nowrap;
+  text-align: center;
 }
 
 .f-btn.f-minor {
@@ -1647,7 +1652,7 @@ select {
 
 .f-btnsrow-form .f-btns .f-btn {
   width: auto;
-  display: inline;
+  display: inline-block;
 }
 
 #id-message {
@@ -2294,8 +2299,9 @@ select {
   text-align: right;
 }
 
-.f-search-result-form .f-btns .f-btn {
-  display: inline;
+.f-search-result-form .f-btns .f-btn,
+.f-delete-users-form .f-btns .f-btn{
+  display: inline-block;
   width: auto;
 }
 

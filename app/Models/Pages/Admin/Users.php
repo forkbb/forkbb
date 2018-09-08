@@ -79,14 +79,17 @@ abstract class Users extends Admin
      * Проверяет доступность действий над выбранными пользователями
      *
      * @param array $selected
-     * @param string $action // ????
+     * @param string $action
      *
      * @return false|array
      */
     protected function checkSelected(array $selected, $action)
     {
+        $selected = \array_map(function ($value) { // ????
+            return (int) $value;
+        }, $selected);
         $bad = \array_filter($selected, function ($value) {
-            return $value < 2; // ???? например '03'
+            return $value < 2;
         });
 
         if (! empty($bad)) {
@@ -141,6 +144,11 @@ abstract class Users extends Admin
             }
 
             $result[] = $user->id;
+        }
+
+        if (empty($result)) {
+            $this->fIswev = ['v', \ForkBB\__('No users selected')];
+            return false;
         }
 
         return $result;

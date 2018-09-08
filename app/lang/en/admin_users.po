@@ -66,6 +66,9 @@ msgstr "Invalid group ID."
 msgid "Users move redirect"
 msgstr "User group changed. Redirecting …"
 
+msgid "Deleting users"
+msgstr "Delete users"
+
 msgid "Delete users"
 msgstr "Delete users"
 
@@ -73,13 +76,13 @@ msgid "Confirm delete legend"
 msgstr "Important: read before deleting users"
 
 msgid "Confirm delete info"
-msgstr "Please confirm that you want to delete these users."
+msgstr "Please confirm that you want to delete these users: %s."
 
 msgid "Delete posts"
-msgstr "Delete any posts and topics these users have made."
+msgstr "Delete any posts and topics"
 
 msgid "Delete warning"
-msgstr "Warning! Deleted users and/or posts cannot be restored. If you choose not to delete the posts made by these users, the posts can only be deleted manually at a later time."
+msgstr "<b>Warning!</b> Deleted users and/or posts cannot be restored. If you choose not to delete the posts made by these users, the posts can only be deleted manually at a later time."
 
 msgid "Users delete redirect"
 msgstr "Users deleted. Redirecting …"
