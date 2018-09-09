@@ -6,6 +6,7 @@ use ForkBB\Models\Method;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Post\Model as Post;
 use ForkBB\Models\Topic\Model as Topic;
+use ForkBB\Models\User\Model as User;
 use PDO;
 use InvalidArgumentException;
 use RuntimeException;
@@ -23,56 +24,68 @@ class Delete extends Method
     public function delete(...$args)
     {
         if (empty($args)) {
-            throw new InvalidArgumentException('No arguments, expected forum, topic or post');
+            throw new InvalidArgumentException('No arguments, expected User(s), Forum(s), Topic(s) or Post(s)');
         }
 
-        $posts   = [];
-        $parents = [];
-        $topics  = [];
+        $users   = [];
         $forums  = [];
-        // ?????
+        $topics  = [];
+        $posts   = [];
+        $isUser  = 0;
+        $isForum = 0;
+        $isTopic = 0;
+        $isPost  = 0;
+
         foreach ($args as $arg) {
-            if ($arg instanceof Post) {
-                if (! $arg->parent instanceof Topic || ! $arg->parent->parent instanceof Forum) {
-                    throw new RuntimeException('Parents unavailable');
+            if ($arg instanceof User) {
+                if ($arg->isGuest) {
+                    throw new RuntimeException('Guest can not be deleted');
                 }
-                $posts[$arg->id]         = $arg;
-            } elseif ($arg instanceof Topic) {
-                if (! $arg->parent instanceof Forum) {
-                    throw new RuntimeException('Parent unavailable');
+                if (true === $arg->deleteAllPost) {
+                    $users[] = $arg->id;
                 }
-                $topics[$arg->id] = $arg;
+                $isUser = 1;
             } elseif ($arg instanceof Forum) {
                 if (! $this->c->forums->get($arg->id) instanceof Forum) {
                     throw new RuntimeException('Forum unavailable');
                 }
                 $forums[$arg->id] = $arg;
+                $isForum          = 1;
+            } elseif ($arg instanceof Topic) {
+                if (! $arg->parent instanceof Forum) {
+                    throw new RuntimeException('Parent unavailable');
+                }
+                $topics[$arg->id] = $arg;
+                $isTopic          = 1;
+            } elseif ($arg instanceof Post) {
+                if (! $arg->parent instanceof Topic || ! $arg->parent->parent instanceof Forum) {
+                    throw new RuntimeException('Parents unavailable');
+                }
+                $posts[$arg->id] = $arg;
+                $isPost          = 1;
             } else {
-                throw new InvalidArgumentException('Expected forum, topic or post');
+                throw new InvalidArgumentException('Expected User(s), Forum(s), Topic(s) or Post(s)');
             }
         }
 
-        if (! empty($posts) + ! empty($topics) + ! empty($forums) > 1) {
-            throw new InvalidArgumentException('Expected only forum, topic or post');
+        if ($isUser + $isForum + $isTopic + $isPost > 1) {
+            throw new InvalidArgumentException('Expected only User(s), Forum(s), Topic(s) or Post(s)');
         }
 
-        if ($posts) {
+        $sql = null;
+
+        if ($users) {
             $vars = [
-                ':posts' => \array_keys($posts),
-            ];
-            $sql = 'DELETE FROM ::search_matches
-                    WHERE post_id IN (?ai:posts)';
-        } elseif ($topics) {
-            $vars = [
-                ':topics' => \array_keys($topics),
+                ':users' => $users,
             ];
             $sql = 'DELETE FROM ::search_matches
                     WHERE post_id IN (
                         SELECT p.id
                         FROM ::posts AS p
-                        WHERE p.topic_id IN (?ai:topics)
+                        WHERE p.poster_id IN (?ai:users)
                     )';
-        } elseif ($forums) {
+        }
+        if ($forums) {
             $vars = [
                 ':forums' => \array_keys($forums),
             ];
@@ -84,6 +97,26 @@ class Delete extends Method
                         WHERE t.forum_id IN (?ai:forums)
                     )';
         }
-        $this->c->DB->exec($sql, $vars);
+        if ($topics) {
+            $vars = [
+                ':topics' => \array_keys($topics),
+            ];
+            $sql = 'DELETE FROM ::search_matches
+                    WHERE post_id IN (
+                        SELECT p.id
+                        FROM ::posts AS p
+                        WHERE p.topic_id IN (?ai:topics)
+                    )';
+        }
+        if ($posts) {
+            $vars = [
+                ':posts' => \array_keys($posts),
+            ];
+            $sql = 'DELETE FROM ::search_matches
+                    WHERE post_id IN (?ai:posts)';
+        }
+        if ($sql) {
+            $this->c->DB->exec($sql, $vars);
+        }
     }
 }

@@ -9,6 +9,23 @@ use RuntimeException;
 class Action extends Users
 {
     /**
+     * Возвращает список имен пользователей
+     *
+     * @param array $users
+     *
+     * @return array
+     */
+    protected function nameList(array $users)
+    {
+        $result = [];
+        foreach ($users as $user) {
+            $result[] = $user->username;
+        }
+        \sort($result, \SORT_STRING | \SORT_FLAG_CASE);
+        return $result;
+    }
+
+    /**
      * Подготавливает данные для шаблона(ов) действия
      *
      * @param array $args
@@ -77,7 +94,38 @@ class Action extends Users
      */
     protected function delete(array $args, $method)
     {
+        if ('POST' === $method) {
+            $v = $this->c->Validator->reset()
+                ->addRules([
+                    'token'        => 'token:AdminUsersAction',
+                    'confirm'      => 'required|integer|in:0,1',
+                    'delete_posts' => 'required|integer|in:0,1',
+                    'delete'       => 'string',
+                ])->addAliases([
+                ])->addArguments([
+                    'token' => $args,
+                ]);
 
+            if (! $v->validation($_POST) || $v->confirm !== 1) {
+                return $this->c->Redirect->page('AdminUsers')->message('No confirm redirect');
+            }
+
+            if (1 === $v->delete_posts) {
+                foreach ($this->userList as $user) {
+                    $user->__deleteAllPost = true;
+                }
+            }
+
+            $this->c->DB->beginTransaction();
+
+            $this->c->users->delete(...$this->userList);
+
+            $this->c->DB->commit();
+
+            $this->c->Cache->delete('stats');
+
+            return $this->c->Redirect->page('AdminUsers')->message('Users delete redirect');
+        }
 
         $this->nameTpl    = 'admin/form';
         $this->classForm  = 'delete-users';
@@ -86,24 +134,6 @@ class Action extends Users
         $this->form       = $this->formDelete($args);
 
         return $this;
-
-    }
-
-    /**
-     * Возвращает список имен пользователей
-     *
-     * @param array $users
-     *
-     * @return array
-     */
-    protected function nameList(array $users)
-    {
-        $result = [];
-        foreach ($users as $user) {
-            $result[] = $user->username;
-        }
-        \sort($result, \SORT_STRING | \SORT_FLAG_CASE);
-        return $result;
     }
 
     /**

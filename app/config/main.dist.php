@@ -212,6 +212,7 @@ return [
         'UserManagerUsersNumber'      => \ForkBB\Models\User\UsersNumber::class,
         'UserManagerPromote'          => \ForkBB\Models\User\Promote::class,
         'UserManagerFilter'           => \ForkBB\Models\User\Filter::class,
+        'UserManagerDelete'           => \ForkBB\Models\User\Delete::class,
 
         'ForumModel'           => \ForkBB\Models\Forum\Model::class,
         'ForumModelCalcStat'   => \ForkBB\Models\Forum\CalcStat::class,

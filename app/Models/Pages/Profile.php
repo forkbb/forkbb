@@ -86,7 +86,7 @@ abstract class Profile extends Page
         }
         if ($this->rules->deleteUser) {
             $btns['delete-user'] = [
-                $this->c->Router->link('',  ['id' => $this->curUser->id]),
+                $this->c->Router->link('AdminUsersAction',  ['action' => 'delete', 'ids' => $this->curUser->id]), // ????
                 \ForkBB\__('Delete user'),
             ];
         }

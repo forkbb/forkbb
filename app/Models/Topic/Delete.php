@@ -5,6 +5,8 @@ namespace ForkBB\Models\Topic;
 use ForkBB\Models\Action;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Topic\Model as Topic;
+use ForkBB\Models\User\Model as User;
+use PDO;
 use InvalidArgumentException;
 use RuntimeException;
 
@@ -21,38 +23,98 @@ class Delete extends Action
     public function delete(...$args)
     {
         if (empty($args)) {
-            throw new InvalidArgumentException('No arguments, expected forum or topic');
+            throw new InvalidArgumentException('No arguments, expected User(s), Forum(s) or Topic(s)');
         }
 
-        $topics  = [];
-        $parents = [];
-        $forums  = [];
+        $users    = [];
+        $usersDel = [];
+        $forums   = [];
+        $topics   = [];
+        $parents  = [];
+        $isUser   = 0;
+        $isForum  = 0;
+        $isTopic  = 0;
 
         foreach ($args as $arg) {
-            if ($arg instanceof Topic) {
-                if (! $arg->parent instanceof Forum) {
-                    throw new RuntimeException('Parent unavailable');
+            if ($arg instanceof User) {
+                if ($arg->isGuest) {
+                    throw new RuntimeException('Guest can not be deleted');
                 }
-                $topics[$arg->id]        = $arg;
-                $parents[$arg->forum_id] = $arg->parent;
+                if (true === $arg->deleteAllPost) {
+                    $usersDel[] = $arg->id;
+                }
+                $users[] = $arg->id;
+                $isUser  = 1;
             } elseif ($arg instanceof Forum) {
                 if (! $this->c->forums->get($arg->id) instanceof Forum) {
                     throw new RuntimeException('Forum unavailable');
                 }
                 $forums[$arg->id] = $arg;
+                $isForum          = 1;
+            } elseif ($arg instanceof Topic) {
+                if (! $arg->parent instanceof Forum) {
+                    throw new RuntimeException('Parent unavailable');
+                }
+                $topics[$arg->id]        = $arg;
+                $parents[$arg->forum_id] = $arg->parent;
+                $isTopic                 = 1;
             } else {
-                throw new InvalidArgumentException('Expected forum or topic');
+                throw new InvalidArgumentException('Expected User(s), Forum(s) or Topic(s)');
             }
         }
 
-        if (! empty($topics) + ! empty($forums) > 1) {
-            throw new InvalidArgumentException('Expected only forum or topic');
+        if ($isUser + $isForum + $isTopic > 1) {
+            throw new InvalidArgumentException('Expected only User(s), Forum(s) or Topic(s)');
+        }
+
+        if ($usersDel) {
+            $vars = [
+                ':users' => $usersDel,
+            ];
+            $sql = 'SELECT t.id, t.forum_id
+                    FROM ::topics AS t
+                    INNER JOIN ::posts AS p ON t.first_post_id=p.id
+                    WHERE p.poster_id IN (?ai:users)';
+            $topics = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_KEY_PAIR); //????
+
+            if ($topics) {
+                foreach ($topics as $value) { // ????
+                    if (isset($parents[$value])) {
+                        continue;
+                    }
+                    $parents[$value] = $this->c->forums->get($value);
+                }
+            }
         }
 
         $this->c->posts->delete(...$args);
 
-        //???? подписки, опросы, предупреждения, метки посещения тем
+        //???? подписки, опросы, предупреждения
 
+        if ($users) {
+            $vars = [
+                ':users' => $users,
+            ];
+            $sql = 'DELETE FROM ::mark_of_topic
+                    WHERE uid IN (?ai:users)';
+            $this->c->DB->exec($sql, $vars);
+        }
+        if ($forums) {
+            $vars = [
+                ':forums' => \array_keys($forums),
+            ];
+            $sql = 'DELETE FROM ::mark_of_topic
+                    WHERE tid IN (
+                        SELECT id
+                        FROM ::topics
+                        WHERE forum_id IN (?ai:forums)
+                    )';
+            $this->c->DB->exec($sql, $vars);
+
+            $sql = 'DELETE FROM ::topics
+                    WHERE forum_id IN (?ai:forums)';
+            $this->c->DB->exec($sql, $vars);
+        }
         if ($topics) {
             $vars = [
                 ':topics' => \array_keys($topics),
@@ -68,21 +130,6 @@ class Delete extends Action
             foreach($parents as $forum) {
                 $this->c->forums->update($forum->calcStat());
             }
-        } elseif ($forums) {
-            $vars = [
-                ':forums' => \array_keys($forums),
-            ];
-            $sql = 'DELETE FROM ::mark_of_topic
-                    WHERE tid IN (
-                        SELECT id
-                        FROM ::topics
-                        WHERE forum_id IN (?ai:forums)
-                    )';
-            $this->c->DB->exec($sql, $vars);
-
-            $sql = 'DELETE FROM ::topics
-                    WHERE forum_id IN (?ai:forums)';
-            $this->c->DB->exec($sql, $vars);
         }
     }
 }

@@ -46,7 +46,7 @@ class Model extends DataModel
         $user = $this->c->users->get($this->poster_id);
 
         if (! $user instanceof User) {
-            throw new RuntimeException('No user data');
+            throw new RuntimeException('No user data in post number ' . $this->id);
         } elseif (1 === $this->poster_id) {
             $user = clone $user;
             $user->__email = $this->poster_email;
