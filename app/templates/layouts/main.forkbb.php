@@ -23,8 +23,8 @@
       </div>
 @if ($p->fNavigation)
       <nav class="f-main-nav f-menu @if ($p->fNavigation['search']) f-main-nav-search @endif">
-        <input id="id-mn-checkbox" class="f-menu-checkbox" type="checkbox" style="display: none;">
-        <label class="f-menu-toggle" for="id-mn-checkbox"></label>
+        <input id="id-mn-checkbox" class="f-menu-checkbox" type="checkbox">
+        <label id="id-mn-label" class="f-menu-toggle" for="id-mn-checkbox"></label>
         <ul class="f-menu-items">
   @foreach ($p->fNavigation as $key => $val)
           <li id="id-nav-{!! $key !!}" class="f-menu-item"><!-- inline -->

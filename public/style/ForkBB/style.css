@@ -138,7 +138,8 @@ h3 {
 .f-wrap,
 .f-header,
 .f-announce,
-.f-footer {
+.f-footer,
+.f-main {
   position: relative;
 }
 
@@ -261,14 +262,23 @@ select {
   content: "\2716";
 }
 
+.f-menu-checkbox:focus + .f-menu-toggle:after {
+  color: #D3B58D;
+  background-color: #583200;
+  border-color: #D3B58D;
+}
+
 .f-menu-items {
   overflow: hidden;
-  max-height: 0;
-/*  transition-duration: 0.5s; */
+  /*max-height: 0;*/
+  /*transition-duration: 0.5s;*/
+  display: none;
+  flex-direction: column;
 }
 
 .f-menu-checkbox:checked ~ .f-menu-items {
-  max-height: 100rem;
+  /*max-height: 100rem;*/
+  display: flex;
 }
 
 .f-menu-a {
@@ -312,7 +322,12 @@ select {
   background-color: #F8F4E3;
 }
 
-.f-main-nav .f-menu-toggle {
+#id-mn-checkbox {
+  position: absolute;
+  opacity: 0;
+}
+
+#id-mn-label {
   color: #D3B58D;
   border-color: #D3B58D;
   position: absolute;
@@ -341,26 +356,28 @@ select {
   padding: 0.3125rem 0.625rem;
 }
 
+.f-main-nav .f-menu-a.active {
+  background-color: #814A00;
+  color: #F8F4E3;
+}
+
 .f-main-nav .f-menu-a:hover,
 .f-main-nav .f-menu-a:focus {
   background-color: #583200;
   color: #F8F4E3;
 }
 
-.f-main-nav .f-menu-a.active {
-  background-color: #814A00;
-  color: #F8F4E3;
-}
-
 @media screen and (min-width: 50rem) {
-  .f-main-nav .f-menu-toggle {
+  #id-mn-checkbox,
+  #id-mn-label {
     display: none;
   }
 
   .f-main-nav .f-menu-items {
     display: flex;
     flex-wrap: wrap;
-    max-height: 100rem;
+    /*max-height: 100rem;*/
+    flex-direction: row;
   }
 
   .f-main-nav .f-menu-item {
@@ -857,7 +874,33 @@ select {
   color: #F8F4E3;
 }
 
+.f-admin-menu .f-menu-a:hover,
+.f-admin-menu .f-menu-a:focus {
+  background-color: #583200;
+  color: #F8F4E3;
+}
+
+#id-an-checkbox {
+  position: absolute;
+  opacity: 0;
+}
+
+#id-an-label {
+  position: absolute;
+  top: -3.125rem;
+  right: 0.625rem;
+}
+
+.f-nav-admin-links,
+.f-nav-admin-one-column-links {
+  margin-right: 3.75rem;
+}
+
 @media screen and (min-width: 50rem) {
+  .f-nav-admin-links {
+    margin-right: 0;
+  }
+
   .f-main-admin {
     display: flex;
     flex-wrap: wrap;
@@ -872,12 +915,14 @@ select {
     width: calc(100% - 14rem);
   }
 
-  .f-main-admin .f-admin-menu .f-menu-toggle {
+  .f-main-admin #id-an-checkbox,
+  .f-main-admin #id-an-label {
     display: none;
   }
 
   .f-main-admin .f-admin-menu .f-menu-items {
-    max-height: 100rem;
+    /*max-height: 100rem;*/
+    display: flex;
   }
 
   .f-main-admin .f-admin-menu .f-menu-a {
