@@ -698,13 +698,13 @@ class Install extends Page
         // search_cache
         $schema = [
             'FIELDS' => [
-                'id'          => ['INT(10) UNSIGNED', false, 0],
-                'ident'       => ['VARCHAR(200)', false, ''],
                 'search_data' => ['MEDIUMTEXT', true],
+                'search_time' => ['INT(10) UNSIGNED', false, 0],
+                'search_key'  => ['VARCHAR(190)', false, '', 'bin'],
             ],
-            'PRIMARY KEY' => ['id'],
             'INDEXES' => [
-                'ident_idx' => ['ident(8)'], //????
+                'search_time_idx' => ['search_time'],
+                'search_key_idx'  => ['search_key'],
             ],
             'ENGINE' => $this->DBEngine,
         ];
