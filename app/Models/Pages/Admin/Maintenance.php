@@ -57,6 +57,7 @@ class Maintenance extends Admin
             ],
             'sets'   => [
                 'maint' => [
+                    'legend' => \ForkBB\__('Maintenance head'),
                     'fields' => [
                         'o_maintenance' => [
                             'type'    => 'radio',
