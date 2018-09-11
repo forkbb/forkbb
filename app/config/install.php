@@ -11,6 +11,7 @@ return [
     'GROUP_MOD'        => 2,
     'GROUP_GUEST'      => 3,
     'GROUP_MEMBER'     => 4,
+    'GROUP_NEW_MEMBER' => 5,
     'EOL'              => PHP_EOL,
 
     'HMAC' => [
@@ -80,6 +81,8 @@ return [
 
         'config'     => '@ConfigModel:install',
         'users'      => \ForkBB\Models\User\Manager::class,
+
+        'VLemail'    => \ForkBB\Models\Validators\Email::class,
     ],
     'multiple'  => [
         'PrimaryController' => \ForkBB\Controllers\Install::class,

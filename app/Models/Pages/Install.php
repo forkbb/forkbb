@@ -84,7 +84,7 @@ class Install extends Page
         $this->c->Lang->load('install');
 
         // версия PHP
-        if (\version_compare(PHP_VERSION, self::PHP_MIN, '<')) {
+        if (\version_compare(\PHP_VERSION, self::PHP_MIN, '<')) {
             $this->fIswev = ['e', \ForkBB\__('You are running error', 'PHP', \PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN)];
         }
 
@@ -422,7 +422,7 @@ class Install extends Page
     {
         $this->c->DB_USERNAME = $v->dbuser;
         $this->c->DB_PASSWORD = $v->dbpass;
-        $this->c->DB_PREFIX   = $v->dbprefix;
+        $this->c->DB_PREFIX   = \is_string($v->dbprefix) ? $v->dbprefix : '';
         $dbtype               = $v->dbtype;
         $dbname               = $v->dbname;
 
@@ -1023,20 +1023,21 @@ class Install extends Page
         $now = \time();
 
         $groups = [
-            // g_id,                 g_title,                      g_user_title,        g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood
-            [$this->c->GROUP_ADMIN,  \ForkBB\__('Administrators'), \ForkBB\__('Administrator '), 0,           0,                0,                  0,                      0,               1,                   1,            1,            1,              1,             1,            1,              1,               1,           1,        1,              1,            0,            0,              0,             0],
-            [$this->c->GROUP_MOD,    \ForkBB\__('Moderators'),     \ForkBB\__('Moderator '),     1,           1,                1,                  1,                      1,               1,                   1,            1,            1,              1,             1,            1,              1,               1,           1,        1,              1,            0,            0,              0,             0],
-            [$this->c->GROUP_GUEST,  \ForkBB\__('Guests'),         NULL,                         0,           0,                0,                  0,                      0,               0,                   1,            1,            0,              0,             0,            0,              0,               0,           1,        1,              0,            120,          60,             0,             0],
-            [$this->c->GROUP_MEMBER, \ForkBB\__('Members'),        NULL,                         0,           0,                0,                  0,                      0,               0,                   1,            1,            1,              1,             1,            1,              1,               0,           1,        1,              1,            30,           30,             60,            60],
+            // g_id,                     g_title,                      g_user_title,        g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_post_links, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood
+            [$this->c->GROUP_ADMIN,      \ForkBB\__('Administrators'), \ForkBB\__('Administrator '), 0,           0,                0,                  0,                      0,               1,                1,            1,            1,              1,             1,            1,              1,              1,             1,         1,        1,              1,            0,            0,              0,             0],
+            [$this->c->GROUP_MOD,        \ForkBB\__('Moderators'),     \ForkBB\__('Moderator '),     1,           1,                1,                  1,                      1,               1,                1,            1,            1,              1,             1,            1,              1,              1,             1,         1,        1,              1,            0,            0,              0,             0],
+            [$this->c->GROUP_GUEST,      \ForkBB\__('Guests'),         NULL,                         0,           0,                0,                  0,                      0,               0,                1,            1,            0,              0,             0,            0,              0,              0,             0,         1,        1,              0,            120,          60,             0,             0],
+            [$this->c->GROUP_MEMBER,     \ForkBB\__('Members'),        NULL,                         0,           0,                0,                  0,                      0,               0,                1,            1,            1,              1,             1,            1,              1,              1,             0,         1,        1,              1,            30,           30,             60,            60],
+            [$this->c->GROUP_NEW_MEMBER, \ForkBB\__('New members'),    \ForkBB\__('New member'),     0,           0,                0,                  0,                      0,               0,                1,            1,            1,              1,             1,            1,              1,              0,             0,         1,        1,              1,            60,           30,             120,           60],
         ];
         foreach ($groups as $group) { //???? $db_type != 'pgsql'
-            $this->c->DB->exec('INSERT INTO ::groups (g_id, g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood) VALUES (?i, ?s, ?s, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i)', $group) ;
+            $this->c->DB->exec('INSERT INTO ::groups (g_id, g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_post_links, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood) VALUES (?i, ?s, ?s, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i)', $group) ;
         }
         $this->c->DB->exec('UPDATE ::groups SET g_pm_limit=0 WHERE g_id=?i', [$this->c->GROUP_ADMIN]);
 
-        $ip = \filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP) ?: 'unknow';
+        $ip = \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: 'unknow';
         $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, email) VALUES (?i, ?s, ?s, ?s)', [$this->c->GROUP_GUEST, \ForkBB\__('Guest '), \ForkBB\__('Guest '), \ForkBB\__('Guest ')]);
-        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, email, language, style, num_posts, last_post, registered, registration_ip, last_visit) VALUES (?i, ?s, ?s, ?s, ?s, ?s, ?i, ?i, ?i, ?s, ?i)', [$this->c->GROUP_ADMIN, $v->username, password_hash($v->password, PASSWORD_DEFAULT), $v->email, $v->defaultlang, $v->defaultstyle, 1, $now, $now, $ip, $now]);
+        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, email, language, style, num_posts, last_post, registered, registration_ip, last_visit) VALUES (?i, ?s, ?s, ?s, ?s, ?s, ?i, ?i, ?i, ?s, ?i)', [$this->c->GROUP_ADMIN, $v->username, password_hash($v->password, \PASSWORD_DEFAULT), $v->email, $v->defaultlang, $v->defaultstyle, 1, $now, $now, $ip, $now]);
 
         $pun_config = [
             'i_fork_revision'         => $this->c->FORK_REVISION,
@@ -1057,7 +1058,7 @@ class Install extends Page
             'o_make_links'            => 1,
             'o_default_lang'          => $v->defaultlang,
             'o_default_style'         => $v->defaultstyle,
-            'o_default_user_group'    => $this->c->GROUP_MEMBER,
+            'o_default_user_group'    => $this->c->GROUP_NEW_MEMBER,
             'o_topic_review'          => 15,
             'o_disp_topics_default'   => 30,
             'o_disp_posts_default'    => 25,

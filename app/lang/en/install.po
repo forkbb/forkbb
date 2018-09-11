@@ -177,6 +177,12 @@ msgstr "Guest"
 msgid "Members"
 msgstr "Members"
 
+msgid "New members"
+msgstr "New members"
+
+msgid "New member"
+msgstr "New member"
+
 msgid "Announcement "
 msgstr "Enter your announcement here."
 

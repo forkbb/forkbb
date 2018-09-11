@@ -64,7 +64,7 @@ class Container
      */
     public function __get($id)
     {
-        if (isset($this->instances[$id])) {
+        if (isset($this->instances[$id]) || \array_key_exists($id, $this->instances)) { //????
             return $this->instances[$id];
         } elseif (\strpos($id, '.') !== false) {
             $tree = \explode('.', $id);
