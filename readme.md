@@ -14,6 +14,15 @@ No: user profiles, moderator functions, private messages, voting, subscriptions,
 * PHP 5.6.12+ or 7.x.x
 * A database such as MySQL 5.5.3 or later (_Drivers for other databases are not realized now_)
 
+## Install
+
+* Document Root == **public** folder (recommended):
+  1. Rename public/**.dist.htaccess** to public/**.htaccess**,
+  2. Rename public/**index.dist.php** to public/**index.php**;
+* Document Root != **public** folder:
+  1. Rename **.dist.htaccess** to **.htaccess**,
+  2. Rename **index.dist.php** to **index.php**.
+
 ## Links
 
 * Development: https://github.com/forkbb/forkbb
