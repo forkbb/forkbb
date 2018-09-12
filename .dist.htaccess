@@ -1,0 +1,14 @@
+AddDefaultCharset UTF-8
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  #RewriteBase /
+
+  RewriteRule ^favicon\.ico$ public/favicon.ico [L]
+  RewriteRule ^robots\.txt$ public/robots.txt [L]
+
+  RewriteRule !^public/. index.php [L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^public/ index.php [L]
+</IfModule>

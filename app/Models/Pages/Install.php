@@ -1180,10 +1180,10 @@ class Install extends Page
             '_DB_USERNAME_'   => $this->c->DB_USERNAME,
             '_DB_PASSWORD_'   => $this->c->DB_PASSWORD,
             '_DB_PREFIX_'     => $this->c->DB_PREFIX,
-            '_SALT_FOR_HMAC_' => $this->c->Secury->randomPass(mt_rand(20,30)),
+            '_SALT_FOR_HMAC_' => $this->c->Secury->randomPass(\mt_rand(20,30)),
             '_COOKIE_PREFIX_' => 'fork' . $this->c->Secury->randomHash(7) . '_',
-            '_COOKIE_KEY1_'   => $this->c->Secury->randomPass(mt_rand(20,30)),
-            '_COOKIE_KEY2_'   => $this->c->Secury->randomPass(mt_rand(20,30)),
+            '_COOKIE_KEY1_'   => $this->c->Secury->randomPass(\mt_rand(20,30)),
+            '_COOKIE_KEY2_'   => $this->c->Secury->randomPass(\mt_rand(20,30)),
         ];
         foreach ($repl as $key => $val) {
             $config = \str_replace($key, \addslashes($val), $config);

@@ -4,8 +4,17 @@
 \ini_set('display_errors', 1);
 \ini_set('log_errors', 1);
 
+function forkGetBaseURL()
+{
+    $baseURL = 'http://'
+        . \preg_replace('%:(80|443)$%', '', $_SERVER['HTTP_HOST'])
+        . \str_replace('\\', '/', \dirname($_SERVER['SCRIPT_NAME']));
+
+    return \rtrim($baseURL, '/');
+}
+
 return [
-    'BASE_URL'         => 'http://forkbb.local',
+    'BASE_URL'         => forkGetBaseURL(),
     'DEBUG'            => 0,
     'GROUP_ADMIN'      => 1,
     'GROUP_MOD'        => 2,

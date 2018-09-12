@@ -35,10 +35,6 @@ class Install
         }
         $uri = \rawurldecode($uri);
 
-        $this->c->BASE_URL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://'
-            . \preg_replace('%:(80|443)$%', '', $_SERVER['HTTP_HOST'])
-            . \substr($uri, 0, (int) \strrpos($uri, '/'));
-
         $this->c->Lang->load('common', $this->c->config->o_default_lang);
         $this->c->user = $this->c->users->create(['id' => 2, 'group_id' => $this->c->GROUP_ADMIN]);
 
