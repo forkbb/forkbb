@@ -45,7 +45,7 @@ class Delete extends Page
             $this->c->DB->beginTransaction();
 
             if ($deleteTopic) {
-                $redirect = $this->c->Redirect->page('Forum', ['id' => $topic->forum_id])->message('Topic del redirect');
+                $redirect = $this->c->Redirect->page('Forum', ['id' => $topic->forum_id, 'name' => $topic->parent->forum_name])->message('Topic del redirect');
                 $this->c->topics->delete($topic);
             } else {
                 $redirect = $this->c->Redirect->page('ViewPost', ['id' => $this->c->posts->previousPost($post)])->message('Post del redirect');
