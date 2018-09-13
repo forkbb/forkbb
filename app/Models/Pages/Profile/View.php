@@ -218,7 +218,7 @@ class View extends Profile
             'value'   => \ForkBB\dt($this->curUser->last_post, true),
             'caption' => \ForkBB\__('Last post info'),
         ];
-        if ($this->curUser->num_posts) {
+        if ($this->curUser->num_posts || $this->curUser->num_topics) {
             if ('1' == $this->user->g_search) {
                 $fields['posts'] = [
                     'class'   => 'pline',

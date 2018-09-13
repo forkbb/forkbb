@@ -28,6 +28,7 @@ class Delete extends Action
 
         $users    = [];
         $usersDel = [];
+        $usersUpd = [];
         $forums   = [];
         $topics   = [];
         $parents  = [];
@@ -67,6 +68,28 @@ class Delete extends Action
             throw new InvalidArgumentException('Expected only User(s), Forum(s) or Topic(s)');
         }
 
+        if ($forums) {
+            $vars = [
+                ':forums' => \array_keys($forums),
+            ];
+            $sql = 'SELECT p.poster_id
+                    FROM ::topics AS t
+                    INNER JOIN ::posts AS p ON t.first_post_id=p.id
+                    WHERE t.forum_id IN (?ai:forums) AND t.moved_to IS NULL
+                    GROUP BY p.poster_id';
+            $usersUpd = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
+        }
+        if ($topics) {
+            $vars = [
+                ':topics' => \array_keys($topics),
+            ];
+            $sql = 'SELECT p.poster_id
+                    FROM ::topics AS t
+                    INNER JOIN ::posts AS p ON t.first_post_id=p.id
+                    WHERE t.id IN (?ai:topics) AND t.moved_to IS NULL
+                    GROUP BY p.poster_id';
+            $usersUpd = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
+        }
         if ($usersDel) {
             $vars = [
                 ':users' => $usersDel,
@@ -130,6 +153,10 @@ class Delete extends Action
             foreach($parents as $forum) {
                 $this->c->forums->update($forum->calcStat());
             }
+        }
+
+        if ($usersUpd) {
+            $this->c->users->UpdateCountTopics(...$usersUpd);
         }
     }
 }

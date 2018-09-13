@@ -208,6 +208,7 @@ return [
         'UserManagerCurrent'          => \ForkBB\Models\User\Current::class,
         'UserManagerUpdateLastVisit'  => \ForkBB\Models\User\UpdateLastVisit::class,
         'UserManagerUpdateCountPosts' => \ForkBB\Models\User\UpdateCountPosts::class,
+        'UserManagerUpdateCountTopics' => \ForkBB\Models\User\UpdateCountTopics::class,
         'UserManagerIsUniqueName'     => \ForkBB\Models\User\IsUniqueName::class,
         'UserManagerUsersNumber'      => \ForkBB\Models\User\UsersNumber::class,
         'UserManagerPromote'          => \ForkBB\Models\User\Promote::class,

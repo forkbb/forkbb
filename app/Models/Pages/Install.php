@@ -899,6 +899,7 @@ class Install extends Page
                 'language'         => ['VARCHAR(25)', false, ''],
                 'style'            => ['VARCHAR(25)', false, ''],
                 'num_posts'        => ['INT(10) UNSIGNED', false, 0],
+                'num_topics'       => ['INT(10) UNSIGNED', false, 0],
                 'last_post'        => ['INT(10) UNSIGNED', true],
                 'last_search'      => ['INT(10) UNSIGNED', true],
                 'last_email_sent'  => ['INT(10) UNSIGNED', true],
