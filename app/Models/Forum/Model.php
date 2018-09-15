@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Forum;
 
 use ForkBB\Models\DataModel;
+use ForkBB\Models\User\Model as User;
 use RuntimeException;
 use InvalidArgumentException;
 use PDO;
@@ -158,6 +159,29 @@ class Model extends DataModel
             return $arr;
         } else {
             return $this->a['moderators'];
+        }
+    }
+
+    /**
+     * Удаляет указанных пользователей из списка модераторов
+     *
+     * @param array ...$users
+     *
+     * @throws InvalidArgumentException
+     */
+    public function modDelete(...$users)
+    {
+        $moderators = $this->moderators;
+
+        foreach ($users as $user) {
+            if (! $user instanceof User) {
+                throw new InvalidArgumentException('Expected User');
+            }
+            unset($moderators[$user->id]);
+        }
+
+        if ($moderators !== $this->moderators) {
+            $this->moderators = $moderators;
         }
     }
 

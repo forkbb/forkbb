@@ -2362,7 +2362,8 @@ select {
 }
 
 .f-search-result-form .f-btns .f-btn,
-.f-delete-users-form .f-btns .f-btn{
+.f-delete-users-form .f-btns .f-btn,
+.f-change-group-form .f-btns .f-btn {
   display: inline-block;
   width: auto;
 }

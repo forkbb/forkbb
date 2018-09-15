@@ -40,7 +40,7 @@
                     @endif
                 @elseif ('select' === $cur['type'])
                 <select @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}">
-                    @if (null === ($count = null) && \is_array(reset($cur['options'])) && 1 === \count(reset($cur['options'])) && $count = 0) @endif
+                    @if (null === ($count = null) && \is_array(\reset($cur['options'])) && 1 === \count(\reset($cur['options'])) && $count = 0) @endif
                     @foreach ($cur['options'] as $v => $option)
                         @if (\is_array($option))
                             @if (null !== $count && 1 === \count($option))
@@ -61,10 +61,10 @@
                 </select>
                 @elseif ('multiselect' === $cur['type'])
                 <select @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif @if ($cur['size']) size="{{ $cur['size'] }}" @endif multiple class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}[]">
-                    @if (null === ($count = null) && \is_array(reset($cur['options'])) && 1 === count(reset($cur['options'])) && $count = 0) @endif
+                    @if (null === ($count = null) && \is_array(\reset($cur['options'])) && 1 === \count(\reset($cur['options'])) && $count = 0) @endif
                     @foreach ($cur['options'] as $v => $option)
                         @if (\is_array($option))
-                            @if (null !== $count && 1 === count($option))
+                            @if (null !== $count && 1 === \count($option))
                                 @if (++$count > 1)
                 </optgroup>
                                 @endif

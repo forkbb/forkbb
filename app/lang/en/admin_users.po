@@ -48,17 +48,20 @@ msgstr "Administrators cannot be banned. In order to ban administrators, you mus
 msgid "No ban mods message"
 msgstr "Moderators cannot be banned. In order to ban moderators, you must first move them to a different user group."
 
-msgid "Move users"
+msgid "Change user group"
 msgstr "Change user group"
 
+msgid "Move users"
+msgstr "Move users"
+
 msgid "Move users subhead"
-msgstr "Select new user group"
+msgstr "Select group"
 
 msgid "New group label"
 msgstr "New group"
 
 msgid "New group help"
-msgstr "Select the group to which the selected users will be moved. For security reasons, it is not possible to move multiple users to the administrator group."
+msgstr "Select the group to which these users will be moved: <b>%s</b>."
 
 msgid "Invalid group message"
 msgstr "Invalid group ID."
@@ -76,10 +79,10 @@ msgid "Confirm delete legend"
 msgstr "Important: read before deleting users"
 
 msgid "Confirm delete info"
-msgstr "Please confirm that you want to delete these users: %s."
+msgstr "Please confirm that you want to delete these users: <b>%s</b>."
 
 msgid "Delete posts"
-msgstr "Delete any posts and topics"
+msgstr "Delete their posts and topics"
 
 msgid "Delete warning"
 msgstr "<b>Warning!</b> Deleted users and/or posts cannot be restored. If you choose not to delete the posts made by these users, the posts can only be deleted manually at a later time."

@@ -214,6 +214,7 @@ return [
         'UserManagerPromote'          => \ForkBB\Models\User\Promote::class,
         'UserManagerFilter'           => \ForkBB\Models\User\Filter::class,
         'UserManagerDelete'           => \ForkBB\Models\User\Delete::class,
+        'UserManagerChangeGroup'      => \ForkBB\Models\User\ChangeGroup::class,
 
         'ForumModel'           => \ForkBB\Models\Forum\Model::class,
         'ForumModelCalcStat'   => \ForkBB\Models\Forum\CalcStat::class,
