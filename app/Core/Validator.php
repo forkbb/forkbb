@@ -187,6 +187,9 @@ class Validator
                  $rules[$vs[0]] = isset($vs[1]) ? $vs[1] : '';
             }
             if (isset($suffix)) {
+                if (isset($this->rules[$field]['array']) && ! \is_array($this->rules[$field]['array'])) {
+                    $this->rules[$field]['array'] = [];
+                }
                 $this->rules[$field]['array'][$suffix] = $rules;
             } else {
                 $this->rules[$field] = $rules;
