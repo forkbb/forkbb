@@ -122,7 +122,8 @@ class Action extends Users
 
             $this->c->DB->commit();
 
-            $this->c->Cache->delete('stats');
+            $this->c->Cache->delete('stats');       //???? перенести в manager
+            $this->c->Cache->delete('forums_mark'); //???? с авто обновлением кеша
 
             return $this->c->Redirect->page('AdminUsers')->message('Users delete redirect');
         }
