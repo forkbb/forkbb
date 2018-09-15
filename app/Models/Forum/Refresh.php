@@ -70,7 +70,8 @@ class Refresh extends Action
      */
     protected function formatModers($str)
     {
-        return empty($str) ? null : \array_flip(\unserialize($str));
+        $moderators = \json_decode($str, true);
+        return $moderators ?: null;
     }
 
     /**

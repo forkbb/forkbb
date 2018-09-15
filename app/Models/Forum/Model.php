@@ -171,7 +171,11 @@ class Model extends DataModel
      */
     public function modDelete(...$users)
     {
-        $moderators = $this->moderators;
+        if (empty($this->a['moderators'])) {
+            return;
+        }
+
+        $moderators = $this->a['moderators'];
 
         foreach ($users as $user) {
             if (! $user instanceof User) {
@@ -180,9 +184,7 @@ class Model extends DataModel
             unset($moderators[$user->id]);
         }
 
-        if ($moderators !== $this->moderators) {
-            $this->moderators = $moderators;
-        }
+        $this->moderators = $moderators;
     }
 
     /**
@@ -304,4 +306,19 @@ class Model extends DataModel
 
         return empty($this->idsList) ? [] : $this->c->topics->view($this);
     }
+
+    /**
+     * Возвращает значения свойств в массиве
+     *
+     * @return array
+     */
+    public function getAttrs()
+    {
+        $data = parent::getAttrs();
+
+        $data['moderators'] = empty($data['moderators']) ? null : \json_encode($data['moderators']);
+
+        return $data;
+    }
+
 }
