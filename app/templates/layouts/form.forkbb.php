@@ -12,7 +12,7 @@
           <p class="f-finfo"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
         @endforeach
     @elseif ($setVal['fields'])
-          <fieldset id="id-fs-{{ $setKey }}" @if ($setVal['class']) class="f-fs-{!! implode(' f-fs-', (array) $setVal['class']) !!}" @endif>
+          <fieldset id="id-fs-{{ $setKey }}" @if ($setVal['class']) class="f-fs-{!! \implode(' f-fs-', (array) $setVal['class']) !!}" @endif>
         @if ($setVal['legend'])
             <legend>{!! $setVal['legend'] !!}</legend>
         @endif
@@ -20,11 +20,11 @@
             @if ('info' === $cur['type'])
             <p id="id-{{ $cur['id'] or $key }}" class="f-child6"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
             @elseif ('wrap' === $cur['type'])
-            <div id="id-{{ $cur['id'] or $key }}" @if ($cur['class']) class="f-wrap-{!! implode(' f-wrap-', (array) $cur['class']) !!}" @endif>
+            <div id="id-{{ $cur['id'] or $key }}" @if ($cur['class']) class="f-wrap-{!! \implode(' f-wrap-', (array) $cur['class']) !!}" @endif>
             @elseif ('endwrap' === $cur['type'])
             </div>
             @else
-            <dl id="id-dl-{{ $cur['id'] or $key }}" @if ($cur['class']) class="f-field-{!! implode(' f-field-', (array) $cur['class']) !!}" @endif>
+            <dl id="id-dl-{{ $cur['id'] or $key }}" @if ($cur['class']) class="f-field-{!! \implode(' f-field-', (array) $cur['class']) !!}" @endif>
               <dt> @if ($cur['caption'])<label class="f-child1 @if ($cur['required']) f-req @endif" @if (false === \strpos('.radio.yield.str.btn.', ".{$cur['type']}.")) for="id-{{ $key }}" @endif>{!! $cur['caption'] !!}</label> @endif</dt>
               <dd>
                 @if ('text' === $cur['type'])
@@ -70,10 +70,10 @@
                                 @endif
                 <optgroup label="{{ $option[0] }}">
                             @else
-                  <option value="{{ $option[0] }}" @if ((\is_array($cur['value']) && in_array($option[0], $cur['value'])) || $option[0] == $cur['value']) selected @endif @if ($option[2]) disabled @endif>{{ $option[1] }}</option>
+                  <option value="{{ $option[0] }}" @if ((\is_array($cur['value']) && \in_array($option[0], $cur['value'])) || $option[0] == $cur['value']) selected @endif @if ($option[2]) disabled @endif>{{ $option[1] }}</option>
                             @endif
                         @else
-                  <option value="{{ $v }}" @if ((\is_array($cur['value']) && in_array($v, $cur['value'])) || $v == $cur['value']) selected @endif>{{ $option }}</option>
+                  <option value="{{ $v }}" @if ((\is_array($cur['value']) && \in_array($v, $cur['value'])) || $v == $cur['value']) selected @endif>{{ $option }}</option>
                         @endif
                     @endforeach
                     @if (null !== $count)

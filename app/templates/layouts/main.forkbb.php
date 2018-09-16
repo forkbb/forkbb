@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ $p->pageTitle }}</title>
 @foreach ($p->pageHeaders as $cur)
-  @if ($cur[0] === 'style')
+    @if ('style' === $cur[0])
   <{!! $cur[0] !!}>{!! $cur[1] !!}</{!! $cur[0] !!}>
-  @else
+    @else
   <{!! $cur[0] !!} {!! $cur[1] !!}>
-  @endif
+    @endif
 @endforeach
 </head>
 <body>
@@ -26,24 +26,24 @@
         <input id="id-mn-checkbox" class="f-menu-checkbox" type="checkbox">
         <label id="id-mn-label" class="f-menu-toggle" for="id-mn-checkbox"></label>
         <ul class="f-menu-items">
-  @foreach ($p->fNavigation as $key => $val)
+    @foreach ($p->fNavigation as $key => $val)
           <li id="id-nav-{!! $key !!}" class="f-menu-item"><!-- inline -->
             <a class="f-menu-a @if ($key == $p->fIndex) active @endif" href="{!! __($val[0]) !!}">{!! __($val[1]) !!}</a>
-    @if ($val[3])
+        @if ($val[3])
             <ul class="f-submenu-items">
-      @foreach ($val[3] as $key => $val)
+            @foreach ($val[3] as $key => $val)
               <li id="id-nav-{!! $key !!}" class="f-menu-item">
-        @if ($val[0])
+                @if ($val[0])
                 <a class="f-menu-a @if ($key == $p->fSubIndex) active @endif" href="{!! __($val[0]) !!}" title="{!! __($val[2]) !!}">{!! __($val[1]) !!}</a>
-        @else
+                @else
                 <span class="f-menu-span">{!! __($val[1]) !!}</span>
-        @endif
+                @endif
               </li>
-      @endforeach
+            @endforeach
             </ul>
-    @endif
+        @endif
           </li><!-- endinline -->
-  @endforeach
+    @endforeach
         </ul>
       </nav>
 @endif
@@ -55,7 +55,7 @@
     </section>
 @endif
 @if ($iswev = $p->fIswev)
-  @include ('layouts/iswev')
+    @include ('layouts/iswev')
 @endif
 @yield ('content')
     <footer class="f-footer">

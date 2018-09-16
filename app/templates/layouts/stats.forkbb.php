@@ -11,11 +11,11 @@
       <dl class="f-stusers">
         <dt>{!! __('User info') !!}</dt>
 @if ($p->stats)
-  @if (\is_string($p->stats->userLast))
+    @if (\is_string($p->stats->userLast))
         <dd>{!! __('Newest user')  !!} {{ $p->stats->userLast }}</dd>
-  @else
+    @else
         <dd>{!! __('Newest user')  !!} <a href="{!! $p->stats->userLast[0] !!}">{{ $p->stats->userLast[1] }}</a></dd>
-  @endif
+    @endif
 @endif
 @if ($p->online)
         <dd>{!! __('Visitors online', num($p->online->numUsers), num($p->online->numGuests)) !!}</dd>
@@ -27,13 +27,13 @@
 @if ($p->online && $p->online->info)
       <dl class="f-inline f-onlinelist"><!-- inline -->
         <dt>{!! __('Online users') !!}</dt>
-  @foreach ($p->online->info as $cur)
-    @if (\is_string($cur))
+    @foreach ($p->online->info as $cur)
+        @if (\is_string($cur))
         <dd>{{ $cur }}</dd>
-    @else
+        @else
         <dd><a href="{!! $cur[0] !!}">{{ $cur[1] }}</a></dd>
-    @endif
-  @endforeach
+        @endif
+    @endforeach
       </dl><!-- endinline -->
 @endif
     </section>

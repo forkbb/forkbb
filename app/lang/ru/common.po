@@ -138,8 +138,8 @@ msgstr "необходимое поле в этой форме."
 msgid "Last post"
 msgstr "Последнее сообщение"
 
-msgid "by"
-msgstr "от"
+msgid "by %s"
+msgstr "от %s"
 
 msgid "New posts"
 msgstr "Новые&nbsp;сообщения"

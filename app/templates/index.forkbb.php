@@ -2,7 +2,7 @@
 @if ($p->categoryes)
     <section class="f-main">
       <ol class="f-ftlist">
-  @foreach ($p->categoryes as $id => $forums)
+    @foreach ($p->categoryes as $id => $forums)
         <li id="cat-{!! $id !!}" class="f-category">
           <h2>{{ current($forums)->cat_name }}</h2>
           <ol class="f-table">
@@ -11,13 +11,13 @@
               <div class="f-hcell f-cstats">{!! __('Stats') !!}</div>
               <div class="f-hcell f-clast">{!! __('Last post') !!}</div>
             </li>
-    @include ('layouts/subforums')
+        @include ('layouts/subforums')
           </ol>
         </li>
-  @endforeach
+    @endforeach
       </ol>
     </section>
-  @if ($p->linkMarkRead)
+    @if ($p->linkMarkRead)
     <div class="f-nav-links">
       <div class="f-nlinks">
         <div class="f-actions-links">
@@ -25,6 +25,6 @@
         </div>
       </div>
     </div>
-  @endif
+    @endif
 @endif
 @include ('layouts/stats')

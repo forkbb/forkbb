@@ -1,43 +1,43 @@
 @section ('crumbs')
       <ul class="f-crumbs">
-  @foreach ($p->crumbs as $cur)
+    @foreach ($p->crumbs as $cur)
         <li class="f-crumb"><!-- inline -->
-    @if ($cur[0])
+        @if ($cur[0])
           <a href="{!! $cur[0] !!}" @if ($cur[2]) class="active" @endif>{{ $cur[1] }}</a>
-    @else
+        @else
           <span @if ($cur[2]) class="active" @endif>{{ $cur[1] }}</span>
-    @endif
+        @endif
         </li><!-- endinline -->
-  @endforeach
+    @endforeach
       </ul>
 @endsection
 @section ('pagination')
-  @if ($p->pagination)
+    @if ($p->pagination)
         <nav class="f-pages">
-    @foreach ($p->pagination as $cur)
-      @if ($cur[2])
+        @foreach ($p->pagination as $cur)
+            @if ($cur[2])
           <a class="f-page active" href="{!! $cur[0] !!}">{{ $cur[1] }}</a>
-      @elseif ('info' === $cur[1])
+            @elseif ('info' === $cur[1])
           <span class="f-pinfo">{!! $cur[0] !!}</span>
-      @elseif ('space' === $cur[1])
+            @elseif ('space' === $cur[1])
           <span class="f-page f-pspacer">{!! __('Spacer') !!}</span>
-      @elseif ('prev' === $cur[1])
+            @elseif ('prev' === $cur[1])
           <a rel="prev" class="f-page f-pprev" href="{!! $cur[0] !!}">{!! __('Previous') !!}</a>
-      @elseif ('next' === $cur[1])
+            @elseif ('next' === $cur[1])
           <a rel="next" class="f-page f-pnext" href="{!! $cur[0] !!}">{!! __('Next') !!}</a>
-      @else
+            @else
           <a class="f-page" href="{!! $cur[0] !!}">{{ $cur[1] }}</a>
-      @endif
-    @endforeach
+            @endif
+        @endforeach
         </nav>
-  @endif
+    @endif
 @endsection
 @extends ('layouts/main')
     <div class="f-nav-links">
 @yield ('crumbs')
 @if ($p->pagination)
       <div class="f-nlinks-b">
-  @yield ('pagination')
+    @yield ('pagination')
       </div>
 @endif
     </div>
@@ -45,7 +45,7 @@
     <section class="f-main f-userlist-form">
       <h2>{!! __($p->user->searchUsers ? 'User search head' : 'User sort head') !!}</h2>
       <div class="f-fdiv">
-  @include ('layouts/form')
+    @include ('layouts/form')
       </div>
     </section>
 @endif
@@ -85,28 +85,28 @@
               </span>
             </span>
           </li>
-  @foreach ($p->userList as $user)
+    @foreach ($p->userList as $user)
           <li class="f-row">
-    @if ($p->user->viewUsers && $user->link)
+        @if ($p->user->viewUsers && $user->link)
             <span class="f-cell f-cusername"><a href="{!! $user->link !!}">{{ $user->username }}</a></span>
-    @else
+        @else
             <span class="f-cell f-cusername">{{ $user->username }}</span>
-    @endif
+        @endif
             <span class="f-cell f-ctitle"><small>(</small><i>{{ $user->title() }}</i><small>),</small></span>
-    @if ($p->user->showPostCount)
+        @if ($p->user->showPostCount)
             <span class="f-cell f-cnumposts">{!! __('<b>%s</b><small> post,</small>', $user->num_posts, num($user->num_posts)) !!}</span>
-    @endif
+        @endif
             <span class="f-cell f-cdatereg">{!! __('<small>registered: </small><b>%s</b>', dt($user->registered, true)) !!}</span>
           </li>
-  @endforeach
+    @endforeach
         </ol>
       </div>
     </section>
-  @if ($p->pagination)
+    @if ($p->pagination)
     <div class="f-nav-links">
       <div class="f-nlinks">
-    @yield ('pagination')
+        @yield ('pagination')
       </div>
     </div>
-  @endif
+    @endif
 @endif

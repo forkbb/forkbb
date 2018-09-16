@@ -10,12 +10,12 @@
           </tr>
         </thead>
         <tbody>
-  @foreach ($p->queries as $cur)
+    @foreach ($p->queries as $cur)
           <tr>
             <td class="tcl">{{ num($cur[1], 3) }}</td>
             <td class="tcr">{{ $cur[0] }}</td>
           </tr>
-  @endforeach
+    @endforeach
           <tr>
             <td class="tcl">{{ num($p->total, 3) }}</td>
             <td class="tcr"></td>

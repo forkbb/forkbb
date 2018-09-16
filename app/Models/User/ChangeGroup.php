@@ -45,7 +45,7 @@ class ChangeGroup extends Action
         }
 
         if (! empty($moderators)) {
-            $root = $this->c->forums->get(0);
+            $root = $this->c->forums->get(0); //???? вызов от группы админов?
             if ($root instanceof Forum) {
                 foreach ($this->c->forums->depthList($root, 0) as $forum) {
                     $forum->modDelete(...$moderators);

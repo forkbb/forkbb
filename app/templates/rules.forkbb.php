@@ -1,14 +1,14 @@
 @section ('crumbs')
       <ul class="f-crumbs">
-  @foreach ($p->crumbs as $cur)
+    @foreach ($p->crumbs as $cur)
         <li class="f-crumb"><!-- inline -->
-    @if ($cur[0])
+        @if ($cur[0])
           <a href="{!! $cur[0] !!}" @if ($cur[2]) class="active" @endif>{{ $cur[1] }}</a>
-    @else
+        @else
           <span @if ($cur[2]) class="active" @endif>{{ $cur[1] }}</span>
-    @endif
+        @endif
         </li><!-- endinline -->
-  @endforeach
+    @endforeach
       </ul>
 @endsection
 @extends ('layouts/main')

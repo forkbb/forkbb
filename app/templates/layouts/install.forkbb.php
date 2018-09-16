@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{!! __('ForkBB Installation') !!}</title>
 @foreach ($p->pageHeaders as $cur)
-  @if ($cur[0] === 'style')
+    @if ('style' === $cur[0])
   <{!! $cur[0] !!}>{!! $cur[1] !!}</{!! $cur[0] !!}>
-  @else
+    @else
   <{!! $cur[0] !!} {!! $cur[1] !!}>
-  @endif
+    @endif
 @endforeach
 </head>
 <body>
@@ -21,25 +21,25 @@
       </div>
     </header>
 @if ($iswev = $p->fIswev)
-  @include ('layouts/iswev')
+    @include ('layouts/iswev')
 @endif
 @if ($form = $p->form1)
     <section class="f-install">
       <h2>{!! __('Choose install language') !!}</h2>
       <div class="f-fdiv">
-  @include ('layouts/form')
+    @include ('layouts/form')
       </div>
     </section>
 @endif
 @if (! $p->fIswev['e'])
-  @if ($form = $p->form2)
+    @if ($form = $p->form2)
     <section class="f-install">
       <h2>{!! __('Install', $p->rev) !!}</h2>
       <div class="f-fdiv">
-    @include ('layouts/form')
+        @include ('layouts/form')
       </div>
     </section>
-  @endif
+    @endif
 @endif
 <!-- debuginfo -->
   </div>

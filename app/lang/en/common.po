@@ -138,8 +138,8 @@ msgstr "is a required field in this form."
 msgid "Last post"
 msgstr "Last post"
 
-msgid "by"
-msgstr "by"
+msgid "by %s"
+msgstr "by %s"
 
 msgid "New posts"
 msgstr "New posts"

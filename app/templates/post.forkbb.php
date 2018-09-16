@@ -1,14 +1,14 @@
 @section ('crumbs')
       <ul class="f-crumbs">
-  @foreach ($p->crumbs as $cur)
+    @foreach ($p->crumbs as $cur)
         <li class="f-crumb"><!-- inline -->
-    @if ($cur[0])
+        @if ($cur[0])
           <a href="{!! $cur[0] !!}" @if ($cur[2]) class="active" @endif>{{ $cur[1] }}</a>
-    @else
+        @else
           <span @if ($cur[2]) class="active" @endif>{{ $cur[1] }}</span>
-    @endif
+        @endif
         </li><!-- endinline -->
-  @endforeach
+    @endforeach
       </ul>
 @endsection
 @extends ('layouts/main')
@@ -29,15 +29,15 @@
     <section class="f-post-form">
       <h2>{!! $p->formTitle !!}</h2>
       <div class="f-fdiv">
-  @include ('layouts/form')
+    @include ('layouts/form')
       </div>
     </section>
 @endif
 @if ($p->posts)
     <section class="f-view-posts">
       <h2>{!! $p->postsTitle !!}</h2>
-  @foreach ($p->posts as $post)
-    @if ($post->id)
+    @foreach ($p->posts as $post)
+        @if ($post->id)
       <article id="p{!! $post->id !!}" class="clearfix f-post">
         <header class="f-post-header clearfix">
           <span class="f-post-posted"><time datetime="{{ utc($post->posted) }}">{{ dt($post->posted) }}</time></span>
@@ -54,7 +54,7 @@
           </div>
         </div>
       </article>
-    @endif
-  @endforeach
+        @endif
+    @endforeach
     </section>
 @endif
