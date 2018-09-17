@@ -13,11 +13,11 @@
 @endforeach
 </head>
 <body>
-  <div class="f-wrap">
-    <header class="f-header">
-      <div class="f-title">
-        <h1>{!! __('ForkBB Installation') !!}</h1>
-        <p class="f-description">{!! __('Welcome') !!}</p>
+  <div id="fork">
+    <header id="fork-header">
+      <div id="id-fhtitle">
+        <<h1 id="id-fhth1">{!! __('ForkBB Installation') !!}</h1>
+        <p id="id-fhtdesc">{!! __('Welcome') !!}</p>
       </div>
     </header>
 @if ($iswev = $p->fIswev)

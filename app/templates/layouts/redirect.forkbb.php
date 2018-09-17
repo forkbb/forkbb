@@ -14,7 +14,7 @@
 @endforeach
 </head>
 <body>
-  <div class="f-wrap">
+  <div id="fork">
     <section class="f-main f-redirect">
       <h2>{!! __('Redirecting') !!}</h2>
       <p>{!! $p->message !!}</p>

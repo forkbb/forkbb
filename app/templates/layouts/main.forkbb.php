@@ -13,16 +13,16 @@
 @endforeach
 </head>
 <body>
-  <div class="f-wrap">
-    <header class="f-header">
-      <div class="f-title">
-        <h1><a href="{!! $p->fRootLink !!}">{{ $p->fTitle }}</a></h1>
+  <div id="fork">
+    <header id="fork-header">
+      <div id="id-fhtitle">
+        <h1 id="id-fhth1"><a id="id-fhtha" href="{!! $p->fRootLink !!}">{{ $p->fTitle }}</a></h1>
 @if ($p->fDescription)
-        <p class="f-description">{!! $p->fDescription !!}</p>
+        <p id="id-fhtdesc">{!! $p->fDescription !!}</p>
 @endif
       </div>
 @if ($p->fNavigation)
-      <nav class="f-main-nav f-menu @if ($p->fNavigation['search']) f-main-nav-search @endif">
+      <nav id="fork-nav" class="f-menu @if ($p->fNavigation['search']) f-main-nav-search @endif">
         <input id="id-mn-checkbox" class="f-menu-checkbox" type="checkbox">
         <label id="id-mn-label" class="f-menu-toggle" for="id-mn-checkbox"></label>
         <ul class="f-menu-items">
@@ -49,19 +49,19 @@
 @endif
     </header>
 @if ($p->fAnnounce)
-    <section class="f-announce">
+    <section id="fork-announce">
       <h2>{!! __('Announcement') !!}</h2>
-      <p class="f-ancontent">{!! $p->fAnnounce !!}</p>
+      <p id="id-facontent">{!! $p->fAnnounce !!}</p>
     </section>
 @endif
 @if ($iswev = $p->fIswev)
     @include ('layouts/iswev')
 @endif
 @yield ('content')
-    <footer class="f-footer">
+    <footer id="fork-footer">
       <h2>{!! __('Board footer') !!}</h2>
       <div></div>
-      <div><p class="poweredby">{!! __('Powered by') !!}</p></div>
+      <div><p id="id-fpoweredby">{!! __('Powered by') !!}</p></div>
     </footer>
 <!-- debuginfo -->
   </div>

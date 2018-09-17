@@ -5,62 +5,6 @@
 .color-primary-3 { color: #D3B58D }
 .color-primary-4 { color: #FCFCFC } /* #FEFCF2  #F8F4E3 #FFEBCD */
 
-/****************/
-/* Сброс стилей */
-/****************/
-
-html,
-body,
-section,
-header,
-footer,
-nav,
-table,
-div,
-form,
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-pre,
-blockquote,
-ul,
-ol,
-li,
-dl,
-dt,
-dd,
-th,
-td,
-fieldset,
-legend,
-img,
-abbr,
-cite,
-address,
-article,
-input,
-textarea,
-a {
-  border: 0;
-  font-style: normal;
-  font-weight: normal;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  word-wrap: break-word;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-ul,
-ol {
-  list-style: none;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 /*******************/
 /* Общие настройки */
 /*******************/
@@ -94,79 +38,170 @@ ol {
   font-style: normal;
 }
 
-html {
-  font-size: 16px;
-  line-height: 1.5;
-}
-
-.f-wrap {
-  padding: 0 0.3125rem;
-  max-width: 64rem;
-  margin: 0 auto;
-}
-
-h1, h2, h3 {
-  font-weight: bold;
-}
-
-h2 {
-  font-size: 1.25rem;
-}
-
-h3 {
-  font-size: 1rem;
-}
-
-.f-header h1,
-.f-category h2,
-.f-category h3 {
-  font-family: "Segoe Print", "Flow Ext";
-}
-
-.f-header h1 {
-  font-size: 2rem;
-}
-
-.f-category h2 {
-  font-size: 1.5rem
-}
-
-.f-category h3 {
-  font-size: 1.25rem;
-}
-
-.f-wrap,
-.f-header,
-.f-announce,
-.f-footer,
-.f-main {
-  position: relative;
+html,
+body,
+#fork,
+#fork a,
+#fork abbr,
+#fork acronym,
+#fork address,
+#fork applet,
+#fork article,
+#fork aside,
+#fork audio,
+#fork b,
+#fork big,
+#fork blockquote,
+#fork canvas,
+#fork caption,
+#fork center,
+#fork cite,
+#fork code,
+#fork dd,
+#fork del,
+#fork details,
+#fork dfn,
+#fork div,
+#fork dl,
+#fork dt,
+#fork em,
+#fork embed,
+#fork fieldset,
+#fork figcaption,
+#fork figure,
+#fork footer,
+#fork form,
+#fork h1,
+#fork h2,
+#fork h3,
+#fork h4,
+#fork h5,
+#fork h6,
+#fork header,
+#fork hgroup,
+#fork i,
+#fork iframe,
+#fork img,
+#fork input,
+#fork ins,
+#fork kbd,
+#fork label,
+#fork legend,
+#fork li,
+#fork mark,
+#fork menu,
+#fork nav,
+#fork object,
+#fork ol,
+#fork output,
+#fork p,
+#fork pre,
+#fork q,
+#fork ruby,
+#fork s,
+#fork samp,
+#fork section,
+#fork small,
+#fork span,
+#fork strike,
+#fork strong,
+#fork sub,
+#fork summary,
+#fork sup,
+#fork table,
+#fork tbody,
+#fork td,
+#fork textarea,
+#fork tfoot,
+#fork th,
+#fork thead,
+#fork time,
+#fork tr,
+#fork tt,
+#fork u,
+#fork ul,
+#fork var,
+#fork video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font: inherit;
+  box-sizing: border-box;
+  word-wrap: break-word;
+	/*vertical-align: baseline;*/
 }
 
 body,
-.f-wrap {
+#fork {
   color: #333333;
   background-color: #FFFFFF;
 }
 
-.f-wrap textarea {
+#fork {
+  padding: 0 0.3125rem;
+  max-width: 64rem;
+  margin: 0 auto;
+  font-style: normal;
+  font-weight: normal;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+  position: relative;
+}
+
+#fork ul,
+#fork ol {
+  list-style: none;
+}
+
+#fork textarea {
   resize: vertical;
 }
 
-.f-wrap a,
-.f-btn {
+#fork select {
+  background-color: #D3B58D;
+}
+
+#fork section > h2 {
+  display: none;
+}
+
+#fork h1,
+#fork h2,
+#fork h3 {
+  font-weight: bold;
+}
+
+#fork h2 {
+  font-size: 1.25rem;
+}
+
+#fork h3 {
+  font-size: 1rem;
+}
+
+#fork #id-fhth1,
+#fork .f-category h2,
+#fork .f-category h3 {
+  font-family: "Segoe Print", "Flow Ext";
+}
+
+#fork .f-category h2 {
+  font-size: 1.5rem
+}
+
+#fork .f-category h3 {
+  font-size: 1.25rem;
+}
+
+#fork a,
+#fork .f-btn {
   color: #583200;
   border-color: #583200;
   cursor: pointer;
   text-decoration: none;
 }
 
-
-.f-wrap a {
-  border-bottom: 0.0625rem solid;
-}
-
-.f-btn {
+#fork .f-btn {
   font-size: 0.875rem;
   line-height: 1.125rem;
   border: 0.0625rem solid;
@@ -183,70 +218,67 @@ body,
   text-align: center;
 }
 
-.f-btn.f-minor {
+#fork .f-btn.f-minor {
   opacity: 0.5;
 }
 
-.f-wrap a:hover,
-.f-wrap a:focus,
-.f-btn:hover,
-.f-btn:focus {
+#fork a:hover,
+#fork a:focus,
+#fork .f-btn:hover,
+#fork .f-btn:focus {
   background-color: #D3B58D;
 }
 
-.f-wrap a:active,
-.f-btn:active {
+#fork a:active,
+#fork .f-btn:active {
   background-color: #814A00;
 }
 
-.f-btn.f-minor:hover,
-.f-btn.f-minor:focus {
+#fork .f-btn.f-minor:hover,
+#fork .f-btn.f-minor:focus {
   opacity: 1;
 }
 
-.clearfix:before,
-.clearfix:after {
+#fork .clearfix:before,
+#fork .clearfix:after {
   content: " ";
   display: table;
 }
 
-.clearfix:after {
+#fork .clearfix:after {
   clear: both;
 }
 
-.left {
+#fork .left {
   float: left;
 }
 
-.right {
+#fork .right {
   float: right;
 }
 
-select {
-  background-color: #D3B58D;
-}
 
-.f-inline > dt,
-.f-inline > dd {
+#fork .f-inline > dt,
+#fork .f-inline > dd {
   display: inline;
 }
 
-.f-inline > dt + dd:before {
+#fork .f-inline > dt + dd:before {
   content: " ";
 }
 
-.f-inline > dd + dd:before {
+#fork .f-inline > dd + dd:before {
   content: ", ";
 }
 
-.f-req:after {
+#fork .f-req:after {
   content: " *";
   color: red;
 }
 
 /* Меню */
 
-.f-menu-toggle:after {
+#fork .f-menu-toggle:after {
   display: block;
   font-size: 1.25rem;
   content: "\2630";
@@ -258,17 +290,17 @@ select {
   cursor: pointer;
 }
 
-.f-menu-checkbox:checked + .f-menu-toggle:after {
+#fork .f-menu-checkbox:checked + .f-menu-toggle:after {
   content: "\2716";
 }
 
-.f-menu-checkbox:focus + .f-menu-toggle:after {
+#fork .f-menu-checkbox:focus + .f-menu-toggle:after {
   color: #D3B58D;
   background-color: #583200;
   border-color: #D3B58D;
 }
 
-.f-menu-items {
+#fork .f-menu-items {
   overflow: hidden;
   /*max-height: 0;*/
   /*transition-duration: 0.5s;*/
@@ -276,12 +308,12 @@ select {
   flex-direction: column;
 }
 
-.f-menu-checkbox:checked ~ .f-menu-items {
+#fork .f-menu-checkbox:checked ~ .f-menu-items {
   /*max-height: 100rem;*/
   display: flex;
 }
 
-.f-menu-a {
+#fork .f-menu-a {
   display: block;
   padding: 0.625rem;
   white-space: nowrap;
@@ -291,43 +323,44 @@ select {
 /* Шапка */
 /*********/
 
-.f-header {
+#fork #fork-header {
   background-color: #AA7939;
   border-bottom: 0.0625rem solid #AA7939;
+  position: relative;
 }
 
-.f-title > h1 {
+#fork-header #id-fhth1 {
   width: calc(100% - 4rem);
   padding: 0.625rem 0 0.625rem 0.625rem;
+  font-size: 2rem;
 }
 
-.f-description {
-  border-top: 1px dotted #D3B58D;
+#fork-header #id-fhtdesc {
+  border-top: 0.0625rem dotted #D3B58D;
   padding: 0.625rem;
   color: #F8F4E3;
 }
 
-.f-title a {
+#fork-header #id-fhtha {
   color: #D3B58D;
-  border: 0;
 }
 
-.f-title a:hover,
-.f-title a:focus {
+#fork-header #id-fhtha:hover,
+#fork-header #id-fhtha:focus {
   background-color: #AA7939;
 }
 
-.f-main-nav {
+#fork-header #fork-nav {
   width: 100%;
   background-color: #F8F4E3;
 }
 
-#id-mn-checkbox {
+#fork-nav #id-mn-checkbox {
   position: absolute;
   opacity: 0;
 }
 
-#id-mn-label {
+#fork-nav #id-mn-label {
   color: #D3B58D;
   border-color: #D3B58D;
   position: absolute;
@@ -335,64 +368,63 @@ select {
   right: 0.625rem;
 }
 
-.f-main-nav .f-menu-items {
+#fork-nav .f-menu-items {
   width: 100%;
   background-color: #F8F4E3;
 }
 
-.f-main-nav .f-menu-a {
+#fork-nav .f-menu-a {
   color: #583200;
   text-transform: uppercase;
   text-align: center;
-  border: 0;
 }
 
-.f-main-nav .f-submenu-items {
+#fork-nav .f-submenu-items {
   background-color: #FFEBCD; /* #D3B58D; */
 }
 
-.f-main-nav .f-submenu-items .f-menu-a {
+#fork-nav .f-submenu-items .f-menu-a {
   text-transform: none;
   padding: 0.3125rem 0.625rem;
 }
 
-.f-main-nav .f-menu-a.active {
+#fork-nav .f-menu-a.active {
   background-color: #814A00;
   color: #F8F4E3;
 }
 
-.f-main-nav .f-menu-a:hover,
-.f-main-nav .f-menu-a:focus {
+#fork-nav .f-menu-a:hover,
+#fork-nav .f-menu-a:focus {
   background-color: #583200;
   color: #F8F4E3;
 }
 
 @media screen and (min-width: 50rem) {
-  #id-mn-checkbox,
-  #id-mn-label {
+  #fork-nav #id-mn-checkbox,
+  #fork-nav #id-mn-label {
     display: none;
   }
 
-  .f-main-nav .f-menu-items {
+  #fork-nav .f-menu-items {
     display: flex;
     flex-wrap: wrap;
     /*max-height: 100rem;*/
     flex-direction: row;
   }
 
-  .f-main-nav .f-menu-item {
+  #fork-nav .f-menu-item {
     min-width: 4rem;
   }
 
-  .f-main-nav .f-menu-a {
+  #fork-nav .f-menu-a {
     text-transform: none;
   }
 
-  .f-main-nav-search {
+  #fork-nav.f-main-nav-search {
     margin-bottom: 2rem;
   }
 
-  #id-nav-search .f-submenu-items {
+  #fork-nav #id-nav-search .f-submenu-items {
     position: absolute;
     left: 0;
     right: 0;
@@ -406,42 +438,38 @@ select {
 /*********/
 /* iswev */
 /********/
-.f-iswev {
+#fork .f-iswev {
   border: 0.0625rem solid;
   margin: 1rem 0;
   padding: 0.625rem;
 }
 
-.f-iswev > h2 {
-  display: none;
-}
-
-.f-info,
-.f-info .f-wcontent > a  {
+#fork .f-info,
+#fork .f-info .f-wcontent > a  {
   color: #00529B;
   background-color: #BDE5F8;
 }
 
-.f-success,
-.f-success .f-wcontent > a {
+#fork .f-success,
+#fork .f-success .f-wcontent > a {
   color: #4F8A10;
   background-color: #DFF2BF;
 }
 
-.f-warning,
-.f-warning .f-wcontent > a {
+#fork .f-warning,
+#fork .f-warning .f-wcontent > a {
   color: #9F6000;
   background-color: #FEEFB3;
 }
 
-.f-error,
-.f-error .f-wcontent > a {
+#fork .f-error,
+#fork .f-error .f-wcontent > a {
   color: #D8000C;
   background-color: #FFBABA;
 }
 
-.f-validation,
-.f-validation .f-wcontent > a {
+#fork .f-validation,
+#fork .f-validation .f-wcontent > a {
   color: #D63301;
   background-color: #FFCCBA;
 }
@@ -449,124 +477,123 @@ select {
 /*********/
 /* Формы */
 /*********/
-.f-fdiv {
+#fork .f-fdiv {
   max-width: 100%;
   border: 0.0625rem solid #AA7939;
   padding: 0.3125rem;
 }
 
-.f-fdiv h2 {
+#fork .f-fdiv h2 {
   padding: 0.3125rem;
 }
 
-.f-fdiv h3 {
+#fork .f-fdiv h3 {
   padding: 0.3125rem;
 }
 
-.f-fdiv dl {
+#fork .f-fdiv dl {
   padding: 0.3125rem;
 }
 
-.f-fdiv .f-btns {
+#fork .f-fdiv .f-btns {
   padding: 0.3125rem;
 }
 
-.f-fdiv .f-btns .f-btn {
+#fork .f-fdiv .f-btns .f-btn {
   margin: 0.3125rem 0;
   min-width: 7rem;
 }
 
-.f-fdiv legend {
+#fork .f-fdiv legend {
   width: 100%;
   padding: 0.3125rem;
   border-bottom: 0.0625rem dotted #AA7939;
   font-weight: bold;
 }
 
-.f-fdiv .f-ctrl,
-.f-fdiv .f-btn {
+#fork .f-fdiv .f-ctrl,
+#fork .f-fdiv .f-btn {
   line-height: 1.25rem;
   padding: 0.5rem;
   font-size: 1rem;
   display: block;
   width: 100%;
-  box-sizing: border-box;
 }
 
-.f-fdiv .f-label {
+#fork .f-fdiv .f-label {
   font-size: 1rem;
   display: inline-block;
 }
 
-.f-field-block .f-label {
+#fork .f-field-block .f-label {
   display: block;
 }
 
-.f-fdiv .f-label > input {
+#fork .f-fdiv .f-label > input {
   margin-left: 0;
   margin-right: 0.3125rem;
 }
 
-.f-fdiv .f-label + .f-label {
+#fork .f-fdiv .f-label + .f-label {
   margin-left: 0.625rem;
 }
 
-.f-field-block .f-label + .f-label {
+#fork .f-field-block .f-label + .f-label {
   margin-left: 0;
 }
 
-.f-fdiv .f-child1,
-.f-fdiv .f-child2,
-.f-fdiv .f-child3,
-.f-fdiv .f-child4,
-.f-fdiv .f-child5,
-.f-fdiv .f-child6 {
+#fork .f-fdiv .f-child1,
+#fork .f-fdiv .f-child2,
+#fork .f-fdiv .f-child3,
+#fork .f-fdiv .f-child4,
+#fork .f-fdiv .f-child5,
+#fork .f-fdiv .f-child6 {
   display: block;
   width: 100%;
   word-wrap: break-word;
 }
 
-.f-fdiv .f-child1 {
+#fork .f-fdiv .f-child1 {
   font-weight: bold;
 }
 
-.f-fdiv .f-child2,
-.f-fdiv .f-child5 {
+#fork .f-fdiv .f-child2,
+#fork .f-fdiv .f-child5 {
   font-size: 0.875rem;
 }
 
-.f-fdiv .f-child2 > input {
+#fork .f-fdiv .f-child2 > input {
   margin-right: 0.625rem;
 }
 
-.f-fdiv .f-child3 {
+#fork .f-fdiv .f-child3 {
   padding: 0.625rem;
   text-align: center;
   font-size: 0.875rem;
 }
 
-.f-fdiv .f-child4 {
+#fork .f-fdiv .f-child4 {
   font-size: 0.8125rem;
   margin-top: 0.3125rem;
   text-align: justify;
 }
 
-.f-fdiv .f-child5 {
+#fork .f-fdiv .f-child5 {
   padding-top: 0.3125rem;
 }
 
-.f-fdiv .f-child6 {
+#fork .f-fdiv .f-child6 {
   padding: 0.3125rem;
   text-align: justify;
   font-size: 0.8125rem;
   clear: both;
 }
 
-.f-fdiv .f-child6 + .f-child6 {
+#fork .f-fdiv .f-child6 + .f-child6 {
   margin-top: -0.3125rem;
 }
 
-.f-fdiv .f-finfo {
+#fork .f-fdiv .f-finfo {
   background-color: #AA7939;
   padding: 0.625rem;
   color: #F8F4E3;
@@ -575,31 +602,31 @@ select {
   overflow: hidden;
 }
 
-.f-fdiv .f-finfo:first-child {
+#fork .f-fdiv .f-finfo:first-child {
   margin-top: -0.3125rem;
 }
 
-.f-fdiv .f-finfo + .f-finfo {
+#fork .f-fdiv .f-finfo + .f-finfo {
   margin-top: -0.625rem;
 }
 
-.f-fdiv fieldset + .f-finfo {
+#fork .f-fdiv fieldset + .f-finfo {
 /*  margin-top: 0.625rem; */
 }
 
-.f-fdiv .f-finfo + fieldset {
+#fork .f-fdiv .f-finfo + fieldset {
 /*  padding-top: 0; */
 }
 
-.f-ctrl {
+#fork .f-ctrl {
   border: 0.0625rem solid #AA7939;
 }
 
-.f-ctrl:focus {
+#fork .f-ctrl:focus {
   box-shadow: inset 0 0 0.5rem 0 rgba(170,121,57,0.75), 0 0 0.5rem 0 rgba(170,121,57,0.75);
 }
 
-.f-ctrl + .f-fhint {
+#fork .f-ctrl + .f-fhint {
   overflow: hidden;
   max-height: 0;
   -webkit-transition: max-height 0.5s, margin 0.5s;
@@ -608,8 +635,8 @@ select {
   transition-delay: 0.2s;
 }
 
-.f-ctrl:focus + .f-fhint,
-.f-ctrl:active + .f-fhint {
+#fork .f-ctrl:focus + .f-fhint,
+#fork .f-ctrl:active + .f-fhint {
   max-height: 10rem;
 }
 
@@ -617,56 +644,47 @@ select {
 /* Объявление */
 /**************/
 
-.f-announce {
+#fork #fork-announce {
   border-bottom: 0.0625rem solid #AA7939;
-}
-
-.f-announce > h2 {
-  display: none;
-}
-
-.f-ancontent {
   padding: 0.625rem;
+  position: relative;
 }
 
 /**********/
 /* Подвал */
 /**********/
 
-.f-footer {
+#fork #fork-footer {
   border-bottom: 0.0625rem solid #AA7939;
   border-top: 0.0625rem solid #AA7939;
   background-color: #F8F4E3;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  position: relative;
 }
 
-.f-footer > h2 {
+#fork-footer > h2 {
   display: none;
 }
 
-.f-footer > div {
+#fork-footer > div {
   padding: 0.625rem;
 }
 
 /*************************/
 /* Отладочная информация */
 /*************************/
-.f-debug {
+#fork #fork-debug {
   font-size: 0.75rem;
   text-align: center;
 }
 
-.f-debug > h2 {
-  display: none;
-}
-
-.f-debugtime {
+#fork-debug #id-fdebugtime {
   padding: 0.3125rem 0.625rem;
 }
 
-.f-debug > table {
+#fork-debug > table {
   text-align: left;
   width: 100%;
   border: 0.0625rem solid #AA7939;
@@ -674,17 +692,17 @@ select {
 /*  word-break: break-all; */
 }
 
-.f-debug thead {
+#fork-debug thead {
   background-color: #F8F4E3;
 }
 
-.f-debug td,
-.f-debug th {
+#fork-debug td,
+#fork-debug th {
   padding: 0.3125rem 0.625rem;
   border-bottom: 0.0625rem solid #AA7939;
 }
 
-.f-debug .tcl {
+#fork-debug .tcl {
   width: 5rem;
 }
 
@@ -692,17 +710,17 @@ select {
 /* Хлебные крошки */
 /******************/
 
-.f-nav-links {
+#fork .f-nav-links {
   margin: 1rem 0;
 }
 
-.f-crumbs {
+#fork .f-crumbs {
   padding: 0 0.625rem;
   display: block;
   overflow: hidden;
 }
 
-.f-crumb {
+#fork .f-crumb {
   display: inline;
 /*  float: left;
   word-break: break-all; */
@@ -710,7 +728,7 @@ select {
   max-width: 100%;
 }
 
-.f-crumb + .f-crumb:before {
+#fork .f-crumb + .f-crumb:before {
   display: inline;
 /*  padding-right: 0.5rem;
   padding-left: 0.5rem; */
@@ -718,73 +736,73 @@ select {
   content: "/ ";
 }
 
-.f-crumb a.active {
-  border: 0;
+#fork .f-crumb a:not(.active) {
+  /*border: 0;*/
+  border-bottom: 0.0625rem solid;
 }
 
-.f-nav-links .f-actions-links,
-.f-nav-links .f-pages {
+#fork .f-nav-links .f-actions-links,
+#fork .f-nav-links .f-pages {
   padding: 0 0.625rem;
 }
 
-.f-nlinks,
-.f-nlinks-a,
-.f-nlinks-b {
+#fork .f-nlinks,
+#fork .f-nlinks-a,
+#fork .f-nlinks-b {
   display: flex;
   flex-wrap: wrap;
 }
 
-.f-nlinks-b {
+#fork .f-nlinks-b {
   margin-top: 0.625rem;
   border-top: 0.0625rem dotted #AA7939;
 }
 
-.f-nlinks-b .f-actions-links,
-.f-nlinks-b .f-pages {
+#fork .f-nlinks-b .f-actions-links,
+#fork .f-nlinks-b .f-pages {
   padding-top: 0.625rem;
 }
 
-.f-nlinks-a {
+#fork .f-nlinks-a {
   margin-bottom: 0.625rem;
   border-bottom: 0.0625rem dotted #AA7939;
   flex-wrap: wrap-reverse;
 }
 
-.f-nlinks-a .f-actions-links,
-.f-nlinks-a .f-pages {
+#fork .f-nlinks-a .f-actions-links,
+#fork .f-nlinks-a .f-pages {
   padding-bottom: 0.625rem;
 }
 
-.f-nav-links .f-actions-links {
+#fork .f-nav-links .f-actions-links {
   margin-left: auto;
   order: 1;
 }
 
-.f-nav-links .f-page {
+#fork .f-nav-links .f-page {
   border: 0.0625rem solid #AA7939;
   padding: 0.125rem 0.375rem;
   font-size: 0.875rem;
-  box-sizing: border-box;
   line-height: 1.125rem;
 }
 
-.f-nav-links .f-pspacer {
+#fork .f-nav-links .f-pspacer {
   border: 0;
   padding: 0;
 }
 
-.f-nav-links .f-page.active {
+#fork .f-nav-links .f-page.active {
   border-color: #814A00;
   background-color: #814A00;
   color: #F8F4E3;
 }
 
-.f-pinfo {
+#fork .f-pinfo {
   display: none;
 }
 
 @media screen and (min-width: 50rem) {
-  .f-pinfo {
+  #fork .f-pinfo {
     font-size: 0.875rem;
     line-height: 1.125rem;
     display: inline;
@@ -794,24 +812,21 @@ select {
 /* Тело */
 /********/
 
-.f-main {
+#fork .f-main {
   margin: 1rem 0;
-}
-
-.f-main > h2 {
-/*  display: none; */
+  position: relative;
 }
 
 /****************/
 /* Обслуживание */
 /****************/
 
-.f-maintenance > h2 {
+#fork .f-maintenance > h2 {
   display: block;
   padding: 0.625rem;
 }
 
-.f-maintenance > p {
+#fork .f-maintenance > p {
   padding: 0.625rem;
 }
 
@@ -819,12 +834,12 @@ select {
 /* Сообщение */
 /*************/
 
-.f-message > h2 {
+#fork .f-message > h2 {
   display: block;
   padding: 0.625rem;
 }
 
-.f-message > p {
+#fork .f-message > p {
   padding: 0.625rem;
 }
 
@@ -832,11 +847,7 @@ select {
 /* Правила */
 /***********/
 
-.f-rules > h2 {
-  display: none;
-}
-
-#id-rules {
+#fork #id-rules {
   padding: 0.625rem;
   border: 0.0625rem solid #AA7939;
   background-color: #F8F4E3;
@@ -845,87 +856,86 @@ select {
 /************/
 /* Редирект */
 /************/
-.f-redirect {
+#fork .f-redirect {
   border: 0.0625rem solid #AA7939;
 }
 
-.f-redirect > h2 {
+#fork .f-redirect > h2 {
   display: block;
   padding: 0.625rem;
   background-color: #F8F4E3;
   border-bottom: 0.0625rem solid #AA7939;
 }
 
-.f-redirect > p {
+#fork .f-redirect > p {
   padding: 0.625rem;
 }
 
 /******************/
 /* Админка - меню */
 /******************/
-.f-admin-menu .f-menu-a {
+#fork .f-admin-menu .f-menu-a {
   text-align: center;
-  border: 0;
   text-transform: uppercase;
 }
 
-.f-admin-menu .f-menu-a.active {
+#fork .f-admin-menu .f-menu-a.active {
   background-color: #814A00;
   color: #F8F4E3;
 }
 
-.f-admin-menu .f-menu-a:hover,
-.f-admin-menu .f-menu-a:focus {
+#fork .f-admin-menu .f-menu-a:hover,
+#fork .f-admin-menu .f-menu-a:focus {
   background-color: #583200;
   color: #F8F4E3;
 }
 
-#id-an-checkbox {
+#fork #id-an-checkbox {
   position: absolute;
   opacity: 0;
 }
 
-#id-an-label {
+#fork #id-an-label {
   position: absolute;
   top: -3.125rem;
   right: 0.625rem;
 }
 
-.f-nav-admin-links,
-.f-nav-admin-one-column-links {
+#fork .f-nav-admin-links,
+#fork .f-nav-admin-one-column-links {
   margin-right: 3.75rem;
 }
 
 @media screen and (min-width: 50rem) {
-  .f-nav-admin-links {
+  #fork .f-nav-admin-links {
     margin-right: 0;
   }
 
-  .f-main-admin {
+  #fork .f-main-admin {
     display: flex;
     flex-wrap: wrap;
   }
 
-  .f-main-admin .f-admin-menu {
+  #fork .f-main-admin .f-admin-menu {
     width: 13rem;
     margin-right: 1rem;
   }
 
-  .f-main-admin .f-admin-wrap {
+  #fork .f-main-admin .f-admin-wrap {
     width: calc(100% - 14rem);
   }
 
-  .f-main-admin #id-an-checkbox,
-  .f-main-admin #id-an-label {
+  #fork .f-main-admin #id-an-checkbox,
+  #fork .f-main-admin #id-an-label {
     display: none;
   }
 
-  .f-main-admin .f-admin-menu .f-menu-items {
+  #fork .f-main-admin .f-admin-menu .f-menu-items {
     /*max-height: 100rem;*/
     display: flex;
   }
 
-  .f-main-admin .f-admin-menu .f-menu-a {
+  #fork .f-main-admin .f-admin-menu .f-menu-a {
     text-align: left;
     text-transform: none;
     border-bottom: 0.0625rem dotted;
@@ -935,124 +945,120 @@ select {
 /***********/
 /* Админка */
 /***********/
-.f-admin:not(:last-child) {
+#fork .f-admin:not(:last-child) {
   margin-bottom: 1rem;
 }
 
-.f-admin > h2 {
-  display: none;
-}
-
-.f-admin > div {
+#fork .f-admin > div {
   background-color: #F8F4E3;
   border: 0.0625rem solid #AA7939;
 }
 
-.f-welcome p,
-.f-grlist p {
+#fork .f-welcome p,
+#fork .f-grlist p {
   padding: 0.625rem;
   text-align: justify;
 }
 
-.f-welcome ul {
+#fork .f-welcome ul {
   padding: 0 0.625rem 0.625rem 0.625rem;
   list-style-type: circle;
   list-style-position: inside;
 }
 
-.f-grlist ol {
+#fork .f-grlist ol {
   padding: 0 0.625rem 0.625rem 0.625rem;
 }
 
-.f-admin dl {
+#fork .f-admin dl {
   border-bottom: 0.0625rem dotted #AA7939;
   margin-bottom: 0.3125rem;
 }
 
-.f-admin legend {
+#fork .f-admin legend {
   margin-bottom: 0.3125rem;
 }
 
-.f-admin .f-fdiv .f-child2 {
+#fork .f-admin .f-fdiv .f-child2 {
   font-size: 1rem;
 }
 
-.f-grlist li {
+#fork .f-grlist li {
   padding: 0.625rem 0;
   border-bottom: 0.0625rem dotted #AA7939;
 }
 
-.f-grlist li:first-child {
+#fork .f-grlist li:first-child {
   border-top: 0.0625rem dotted #AA7939;
 }
 
-.f-grldelete {
+#fork .f-grldelete {
   font-size: 0.875rem;
   white-space: nowrap;
 
 }
 
-.f-phpinfo {
+#fork .f-phpinfo {
   word-break: break-all;
 }
 
-.f-phpinfo-div {
+#fork #id-phpinfo-div {
   overflow-x: auto;
 }
 
-.f-admin .f-wrap-between {
+#fork .f-admin .f-wrap-between {
   display: flex;
   align-items: flex-end;
 }
 
-.f-admin .f-field-bstart,
-.f-admin .f-field-bend {
+#fork .f-admin .f-field-bstart,
+#fork .f-admin .f-field-bend {
   width: 50%;
 }
 
-.f-admin .f-field-bstart .f-child1 {
+#fork .f-admin .f-field-bstart .f-child1 {
   white-space: nowrap;
 }
 
 @media screen and (min-width: 36rem) {
-  .f-admin dl {
+  #fork .f-admin dl {
     display: flex;
   }
 
-  .f-admin dt {
+  #fork .f-admin dt {
     width: 14rem;
     margin-right: 0.625rem;
   }
 
-  .f-admin dd {
+  #fork .f-admin dd {
     width: calc(100% - 14.625rem);
   }
 
-  .f-admin .f-fdiv .f-child1 {
+  #fork .f-admin .f-fdiv .f-child1 {
     font-weight: normal;
   }
 
-  .f-field-full dt {
+  #fork .f-field-full dt {
     display: none;
   }
 
-  .f-field-full dd {
+  #fork .f-field-full dd {
     padding-left: 0;
   }
 
-  .f-admin .f-field-bstart {
+  #fork .f-admin .f-field-bstart {
     width: calc((100% - 14.625rem) / 2 + 14.625rem);
   }
 
-  .f-admin .f-field-bend {
+  #fork .f-admin .f-field-bend {
     width: calc((100% - 14.625rem) / 2);
   }
 
-  .f-admin .f-field-bend > dt {
+  #fork .f-admin .f-field-bend > dt {
     display: none;
   }
 
-  .f-admin .f-field-bend > dd {
+  #fork .f-admin .f-field-bend > dd {
     width: 100%;
   }
 }
@@ -1060,59 +1066,58 @@ select {
 /*********************/
 /* Статистика форума */
 /*********************/
-.f-stats {
+#fork .f-stats {
   border-top: 0.0625rem solid #AA7939;
   font-size: 0.875rem;
   padding: 0.3125rem 0;
 }
 
-.f-stats > h2,
-.f-stats dt {
+#fork .f-stats dt {
   display: none;
 }
 
-.f-stboard,
-.f-stusers {
+#fork .f-stboard,
+#fork .f-stusers {
   padding: 0.3125rem;
 }
 
-.f-stboard {
+#fork .f-stboard {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   border-bottom: 0.0625rem dotted #AA7939;
 }
 
-.f-stboard > dd,
-.f-stusers > dd {
+#fork .f-stboard > dd,
+#fork .f-stusers > dd {
   padding: 0 0.3125rem;
 }
 
-.f-onlinelist {
+#fork .f-onlinelist {
   border-top: 0.0625rem dotted #AA7939;
   padding: 0.3125rem 0.625rem;
   width: 100%
 }
 
-.f-onlinelist > dt {
+#fork .f-onlinelist > dt {
   display: inline;
   font-weight: bold;
 }
 
 @media screen and (min-width: 45rem) {
-  .f-stats {
+  #fork .f-stats {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between
   }
 
-  .f-stboard {
+  #fork .f-stboard {
     display: block;
     border: 0;
     text-align: right;
   }
 
-  .f-stusers {
+  #fork .f-stusers {
     order: -1;
   }
 }
@@ -1120,17 +1125,17 @@ select {
 /*********************/
 /* Логин/Регистрация */
 /*********************/
-.f-lrdiv {
+#fork .f-lrdiv {
   margin: 1rem auto;
   max-width: 20rem;
   border-radius: 0.1875rem;
 }
 
-.f-lrdiv h2 {
+#fork .f-lrdiv h2 {
   text-align: center;
 }
 
-.f-forgetlink {
+#fork .f-forgetlink {
   font-size: 0.875rem;
   float: right;
   font-weight: normal;
@@ -1139,132 +1144,128 @@ select {
 /***************************************/
 /* Таблица разделов, подразделов и тем */
 /***************************************/
-.f-ftlist a {
-  border: 0;
-}
-
-.f-ftlist .f-cell {
+#fork .f-ftlist .f-cell {
   padding-top: 0.625rem;
   padding-bottom: 0.625rem;
   overflow: hidden;
 }
 
-.f-ftlist .f-hcell {
+#fork .f-ftlist .f-hcell {
   display: none;
 }
 
-.f-ftlist .f-category {
+#fork .f-ftlist .f-category {
   margin-top: 0.625rem;
 }
 
-.f-ftlist .f-row {
+#fork .f-ftlist .f-row {
   border-bottom: 0.0625rem solid #AA7939;
 }
 
-.f-ftlist .f-thead {
+#fork .f-ftlist .f-thead {
   border-bottom: 0.125rem solid #AA7939;
 }
 
-.f-ftlist .f-cmain,
-.f-ftlist .f-cstats {
+#fork .f-ftlist .f-cmain,
+#fork .f-ftlist .f-cstats {
   padding-left: 0.625rem;
   padding-right: 0.625rem;
 }
 
-.f-ftlist .f-cstats {
+#fork .f-ftlist .f-cstats {
   padding-top: 0;
   text-align: right;
   font-size: 0.75rem;
 }
 
-.f-ftlist .f-cstats li {
+#fork .f-ftlist .f-cstats li {
   display: inline-block;
 }
 
-.f-ftlist .f-clast {
+#fork .f-ftlist .f-clast {
   display: none;
 }
 
-.f-category > h2 {
+#fork .f-category > h2 {
   padding: 0.625rem 0.625rem 0.3125rem 0.625rem;
 }
 
-.f-ftlist .f-ficon {
+#fork .f-ftlist .f-ficon {
   width: 2rem;
   float: left;
 }
 
-.f-ftlist .f-finfo {
+#fork .f-ftlist .f-finfo {
   margin-left: 2rem;
 }
 
-.f-ftlist .f-fdesc {
+#fork .f-ftlist .f-fdesc {
   font-size: 0.875rem;
 }
 
-.f-fsub {
+#fork .f-fsub {
   margin-left: 0.875rem;
   font-size: 0.875rem;
 }
 
-.f-fsub:before {
+#fork .f-fsub:before {
   font-size: 0.875rem;
   content: "└";
   margin-left: -0.875rem;
 }
 
-.f-fsub > dt {
+#fork .f-fsub > dt {
   display: none;
 }
 
-.f-modlist {
+#fork .f-modlist {
   font-size: 0.875rem;
 }
 
-.f-modlist > dt:before {
+#fork .f-modlist > dt:before {
   content: "(";
 }
 
-.f-modlist:last-child:after {
+#fork .f-modlist:last-child:after {
   content: ")";
 }
 
-.f-ficon:before {
+#fork .f-ficon:before {
   font-family: ForkIcon;
   font-size: 1.2rem;
   color: #814A00;
   content: "\e900";
 }
 
-.f-fnew .f-ficon:before {
+#fork .f-fnew .f-ficon:before {
   content: "\e901";
 }
 
-.f-fredir .f-ficon:before {
+#fork .f-fredir .f-ficon:before {
   content: "\e906";
 }
 
-.f-ftlist .f-newtxt {
+#fork .f-ftlist .f-newtxt {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 0.875rem;
   font-weight: normal;
   white-space: nowrap;
 }
 
-.f-ftlist .f-newtxt:before {
+#fork .f-ftlist .f-newtxt:before {
   content: "[ ";
 }
 
-.f-ftlist .f-newtxt:after {
+#fork .f-ftlist .f-newtxt:after {
   content: " ]";
 }
 
-.f-btn-markread {
+#fork .f-btn-markread {
   opacity: 0.5;
 }
 
-.f-btn-markread:focus,
-.f-btn-markread:hover {
+#fork .f-btn-markread:focus,
+#fork .f-btn-markread:hover {
   opacity: 1;
 }
 
@@ -1293,26 +1294,26 @@ select {
 */
 
 @media screen and (min-width: 50rem) {
-  .f-ftlist .f-cell {
+  #fork .f-ftlist .f-cell {
     display: table-cell;
   }
 
-  .f-ftlist .f-cmain {
+  #fork .f-ftlist .f-cmain {
     width: 100%;
   }
 
-  .f-ftlist .f-cstats {
+  #fork .f-ftlist .f-cstats {
     padding-top: 0.625rem;
     padding-left: 0;
     vertical-align: middle;
     white-space: nowrap;
   }
 
-  .f-ftlist .f-cstats li {
+  #fork .f-ftlist .f-cstats li {
     display: block;
   }
 
-  .f-ftlist .f-clast {
+  #fork .f-ftlist .f-clast {
     width: 15rem;
     padding-right: 0.625rem;
     vertical-align: middle;
@@ -1320,16 +1321,16 @@ select {
     text-align: right;
   }
 
-  .f-ftlist .f-cltopic,
-  .f-ftlist .f-clposter,
-  .f-ftlist .f-cltime {
+  #fork .f-ftlist .f-cltopic,
+  #fork .f-ftlist .f-clposter,
+  #fork .f-ftlist .f-cltime {
     width: 15rem;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
 
-  .f-ftlist .f-cltime {
+  #fork .f-ftlist .f-cltime {
     font-size: 0.75rem;
   }
 }
@@ -1337,19 +1338,15 @@ select {
 /********************/
 /* Страница раздела */
 /********************/
-.f-subforums {
+#fork .f-subforums {
   margin: 1rem 0;
 }
 
-.f-subforums .f-category > h2 {
+#fork .f-subforums .f-category > h2 {
   display: none;
 }
 
-.f-forum > h2 {
-  display: none;
-}
-
-.f-forum h3 {
+#fork .f-forum h3 {
 /*  font-family: Arial, Helvetica, sans-serif;  */
   font-weight: normal;
   font-size: 1rem;
@@ -1358,58 +1355,55 @@ select {
   word-break: break-all;
 }
 
-.f-cmposter,
-.f-cmforum {
+#fork .f-cmposter,
+#fork .f-cmforum {
   font-size: 0.875rem;
   float: left;
 }
 
-.f-cmforum:before {
+#fork .f-cmforum:before {
   content: ", ";
 }
 
-.f-tdot {
+#fork .f-tdot {
   font-weight: bold;
   position: absolute;
   margin-left: -0.5rem;
 }
 
-.f-tpages .f-page {
+#fork .f-tpages .f-page {
   border: 0.0625rem solid #AA7939;
   padding: 0.0625rem 0.3125rem;
   font-size: 0.875rem;
   line-height: 1.125rem;
 }
 
-.f-tpages .f-pspacer {
+#fork .f-tpages .f-pspacer {
     border: 0;
     padding: 0;
 }
 
-.f-tpages .f-page,
-.f-cmforum > a {
+#fork .f-tpages .f-page,
+#fork .f-cmforum > a {
   opacity: 0.4;
 }
 
-.f-tpages:hover .f-page,
-.f-tpages .f-page:focus,
-.f-cmforum > a:focus,
-.f-cmforum > a:hover {
+#fork .f-tpages:hover .f-page,
+#fork .f-tpages .f-page:focus,
+#fork .f-cmforum > a:focus,
+#fork .f-cmforum > a:hover {
   opacity: 1;
 }
 
 /*****************/
 /* Страница темы */
 /*****************/
-.f-topic > h2 {
-  display: none;
-}
 
 /********************/
 /* Сообщение в теме */
 /********************/
 
-.f-post {
+#fork .f-post {
   border-top: 0.0625rem solid #AA7939;
   border-bottom: 0.0625rem solid #AA7939;
   margin-bottom: 0.625rem;
@@ -1418,137 +1412,137 @@ select {
   overflow: hidden;
 }
 
-.f-post-header {
+#fork .f-post-header {
   padding: 0.625rem;
   border-bottom: 0.0625rem solid #AA7939;
   background-color: #D3B58D;
   font-size: 0.875rem;
 }
 
-.f-post-header > h3 {
+#fork .f-post-header > h3 {
   display: none;
 }
 
-.f-post-posted {
+#fork .f-post-posted {
   float: left;
 }
 
-.f-post-edited {
+#fork .f-post-edited {
   float: left;
   font-style: italic;
   margin-left: 0.625rem;
   opacity: 0.5;
 }
 
-.f-post-number {
+#fork .f-post-number {
   float: right;
 }
 
-.f-post-left {
+#fork .f-post-left {
   padding: 0.625rem;
   background-color: #F8F4E3;
 }
 
-.f-post-right {
+#fork .f-post-right {
   padding: 0.625rem 0.625rem 0 0.625rem;
 }
 
-.f-post-footer .f-post-right {
+#fork .f-post-footer .f-post-right {
   text-align: right;
   padding-top: 0;
   padding-bottom: 0.625rem;
 }
 
-.f-post-footer .f-post-right .f-btn {
+#fork .f-post-footer .f-post-right .f-btn {
   opacity: 0.4;
 }
 
-.f-post-footer .f-post-right:hover .f-btn,
-.f-post-footer .f-post-right .f-btn:focus {
+#fork .f-post-footer .f-post-right:hover .f-btn,
+#fork .f-post-footer .f-post-right .f-btn:focus {
   opacity: 1;
 }
 
-.f-post-footer .f-post-left {
+#fork .f-post-footer .f-post-left {
   display: none;
 }
 
-.f-post-footer li {
+#fork .f-post-footer li {
   display: inline;
 }
 
-.f-user-info {
+#fork .f-user-info {
   font-size: 0.875rem;
 }
 
-.f-user-info-add {
+#fork .f-user-info-add {
   display: none;
 }
 
-.f-username {
+#fork .f-username {
   font-size: 1.25rem;
   float: left;
   word-break: break-all;
 }
 
-.f-user-online .f-username::before {
+#fork .f-user-online .f-username::before {
   content: "✔ ";
   color: #4F8A10;
   font-size: 1rem;
 }
 
-.f-username a {
-  border: 0;
+#fork .f-username a {
+/*  border: 0; */
 }
 
-.f-avatar {
+#fork .f-avatar {
   float: right;
 }
 
-.f-avatar img {
+#fork .f-avatar img {
   max-width: 4.6875rem;
   height: auto;
 }
 
-.f-usertitle {
+#fork .f-usertitle {
   clear: left;
 }
 
-.f-post-signature {
+#fork .f-post-signature {
   font-size: 0.875rem;
   opacity: 0.5;
   padding-top: 0;
 }
 
 /*********************/
-.f-bb-u {
+#fork .f-bb-u {
   text-decoration: underline;
 }
 
-.f-bb-header {
+#fork .f-bb-header {
   font-weight: bold;
   font-size: 1.25rem;
 }
 
-.f-bb-after {
+#fork .f-bb-after {
   opacity: 0.5;
   font-style: italic;
 }
 
-.f-bb-quote {
+#fork .f-bb-quote {
   border-left: 0.1875rem solid #AA7939;
   border-top: 0.0625rem solid #AA7939;
 }
 
-.f-bb-q-header {
+#fork .f-bb-q-header {
   padding: 0.625rem;
   background-color: #D3B58D;
 }
 
-.f-bb-q-body {
+#fork .f-bb-q-body {
   padding: 0.625rem;
 }
 
-.f-bb-code {
+#fork .f-bb-code {
   border: 0.0625rem solid #AA7939;
   padding: 0.625rem;
   background-color: #D3B58D;
@@ -1556,40 +1550,41 @@ select {
   max-height: 45rem;
 }
 
-.f-bb-l-disc {
+#fork .f-bb-l-disc {
   list-style-type: disc;
   list-style-position: outside;
   padding-left: 1.5rem;
 }
 
-.f-bb-l-dec {
+#fork .f-bb-l-dec {
   list-style-type: decimal;
   list-style-position: outside;
   padding-left: 1.5rem;
 }
 
-.f-bb-l-lat {
+#fork .f-bb-l-lat {
   list-style-type: lower-alpha;
   list-style-position: outside;
   padding-left: 1.5rem;
 }
 
-.f-post-main p,
-.f-post-main blockquote,
-.f-post-main br,
-.f-post-main pre,
-.f-post-main ol,
-.f-post-main ul {
+#fork .f-post-main p,
+#fork .f-post-main blockquote,
+#fork .f-post-main br,
+#fork .f-post-main pre,
+#fork .f-post-main ol,
+#fork .f-post-main ul {
   margin-bottom: 0.625rem;
 /*  word-wrap: break-word; */
 }
 
 @media screen and (min-width: 50rem) {
-  .f-post {
+  #fork .f-post {
     background-color: #F8F4E3;
   }
 
-  .f-post-body, .f-post-footer {
+  #fork .f-post-body,
+  #fork .f-post-footer {
     width: 100%;
     float: right;
     margin-right: -13rem;
@@ -1598,7 +1593,7 @@ select {
     background-color: #FFFFFF;
   }
 
-  .f-post-left {
+  #fork .f-post-left {
     width: 13rem;
     margin-left: -13rem;
     float: left;
@@ -1606,31 +1601,31 @@ select {
     background-color: transparent;
   }
 
-  .f-post-right {
+  #fork .f-post-right {
     padding-right: 13.625rem;
     position: relative;
   }
 
-  .f-post-footer .f-post-left {
+  #fork .f-post-footer .f-post-left {
     display: block;
     padding-top: 0;
   }
 
-  .f-userstatus {
+  #fork .f-userstatus {
     font-size: 0.875rem;
   }
 
-  .f-user-info-add {
+  #fork .f-user-info-add {
     display: block;
     font-size: 0.875rem;
   /*  word-break: break-all; */
   }
 
-  .f-username, .f-avatar {
+  #fork .f-username, .f-avatar {
     float: none;
   }
 
-  .f-avatar img {
+  #fork .f-avatar img {
     max-width: 100%;
     height: auto;
   }
@@ -1639,78 +1634,79 @@ select {
 /****************/
 /* Предпросмотр */
 /****************/
-.f-preview {
+#fork .f-preview {
   border-top: 0.0625rem solid #AA7939;
 }
 
-.f-preview > h2 {
+#fork .f-preview > h2 {
 /**  font-family: Arial, Helvetica, sans-serif; */
   font-size: 1rem;
   line-height: 1.5;
   padding: 1rem 0.625rem 0.3125rem 0.625rem
 }
 
-.f-preview .f-post-body {
+#fork .f-preview .f-post-body {
   float: none;
   margin: 0;
 }
 
-.f-preview .f-post-right {
+#fork .f-preview .f-post-right {
   padding-right: 0.625rem;
   border-top: 0.0625rem solid #AA7939;
 }
 
 /*****************************/
-.f-post-form {
+#fork .f-post-form {
   border-top: 0.0625rem solid #AA7939;
   margin-bottom: 1rem;
 }
 
-.f-view-posts {
+#fork .f-view-posts {
   margin-bottom: 1rem;
   margin-top: -1rem;
 }
 
-.f-post-form > h2,
-.f-view-posts > h2 {
+#fork .f-post-form > h2,
+#fork .f-view-posts > h2 {
 /**  font-family: Arial, Helvetica, sans-serif; */
+  display: block;
   font-size: 1rem;
   padding-right: 0.625rem;
   padding: 1rem 0.625rem 0.3125rem 0.625rem
 }
 
-.f-post-form > .f-fdiv {
+#fork .f-post-form > .f-fdiv {
   background-color: #F8F4E3;
 }
 
-.f-post-form .f-child1 {
+#fork .f-post-form .f-child1 {
   font-size: 0.875rem;
 }
 
-.f-post-form .f-child5 > li {
+#fork .f-post-form .f-child5 > li {
   display: inline;
 }
 
-.f-post-form .f-child5 a {
-  border: 0;
+#fork .f-post-form .f-child5 a {
+/*  border: 0; */
 }
 
-.f-post-form .f-btn {
+#fork .f-post-form .f-btn {
   width: auto;
   display: inline-block;
 }
 
-#id-message {
+#fork #id-message {
   height: 11rem;
 }
 
 @media screen and (min-width: 50rem) {
-  .f-fdiv .f-field-w1 {
+  #fork .f-fdiv .f-field-w1 {
     width: 30%;
     float: left;
   }
 
-  .f-fdiv .f-field-w2 {
+  #fork .f-fdiv .f-field-w2 {
     width: 70%;
     float: left;
   }
@@ -1719,39 +1715,39 @@ select {
 /*********************/
 /* Админка/Категории */
 /*********************/
-.f-deletecategory-form .f-btn {
+#fork .f-deletecategory-form .f-btn {
   width: auto;
   display: inline-block;
 }
 
-.f-fs-category {
+#fork .f-fs-category {
   display: flex;
   align-items: stretch;
   min-width: 0;
 }
 
-.f-fs-category > legend {
+#fork .f-fs-category > legend {
   display: none;
 }
 
-.f-fs-category .f-child1 {
+#fork .f-fs-category .f-child1 {
   font-weight: normal;
 }
 
-.f-field-category {
+#fork .f-field-category {
   flex-direction: column;
   justify-content: space-between;
 }
 
-.f-field-category > dt {
+#fork .f-field-category > dt {
   display: none;
 }
 
-.f-field-category > dd {
+#fork .f-field-category > dd {
   width: 100%;
 }
 
-.f-fs-category:first-of-type .f-field-category > dt {
+#fork .f-fs-category:first-of-type .f-field-category > dt {
   display: block;
   width: 100%;
   margin: 0;
@@ -1759,15 +1755,15 @@ select {
   overflow: hidden;
 }
 
-.f-field-category.f-field-name {
+#fork .f-field-category.f-field-name {
   width: calc(100% - 8rem);
 }
 
-.f-field-category.f-field-position {
+#fork .f-field-category.f-field-position {
   width: 5rem;
 }
 
-.f-field-category.f-field-delete {
+#fork .f-field-category.f-field-delete {
   width: 3rem;
   overflow: hidden;
   text-align: center;
@@ -1776,39 +1772,39 @@ select {
 /*********************/
 /* Админка/Разделы   */
 /*********************/
-.f-deleteforum-form .f-btn {
+#fork .f-deleteforum-form .f-btn {
   width: auto;
   display: inline-block;
 }
 
-.f-fs-forum {
+#fork .f-fs-forum {
   display: flex;
   align-items: stretch;
   min-width: 0;
 }
 
-.f-fs-forum > legend {
+#fork .f-fs-forum > legend {
   display: none;
 }
 
-.f-fs-forum .f-child1 {
+#fork .f-fs-forum .f-child1 {
   font-weight: normal;
 }
 
-.f-field-forum {
+#fork .f-field-forum {
   flex-direction: column;
   justify-content: space-between;
 }
 
-.f-field-forum > dt {
+#fork .f-field-forum > dt {
   display: none;
 }
 
-.f-field-forum > dd {
+#fork .f-field-forum > dd {
   width: 100%;
 }
 
-.f-finfo + .f-fs-forum .f-field-forum > dt {
+#fork .f-finfo + .f-fs-forum .f-field-forum > dt {
   display: block;
   width: 100%;
   margin: 0;
@@ -1816,62 +1812,62 @@ select {
   overflow: hidden;
 }
 
-.f-field-forum.f-field-name {
+#fork .f-field-forum.f-field-name {
   width: calc(100% - 8rem);
 }
 
-.f-field-forum.f-field-position {
+#fork .f-field-forum.f-field-position {
   width: 5rem;
 }
 
-.f-field-forum.f-field-delete {
+#fork .f-field-forum.f-field-delete {
   width: 3rem;
   overflow: hidden;
   text-align: center;
 }
 
-.f-field-forum.f-field-name .f-btn {
+#fork .f-field-forum.f-field-name .f-btn {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.f-field-depth1 > dd {
+#fork .f-field-depth1 > dd {
   padding-left: 0.625rem;
 }
 
-.f-field-depth2 > dd {
+#fork .f-field-depth2 > dd {
   padding-left: 1.25rem;
 }
 
-.f-field-depth3 > dd {
+#fork .f-field-depth3 > dd {
   padding-left: 1.875rem;
 }
 
-.f-field-depth4 > dd {
+#fork .f-field-depth4 > dd {
   padding-left: 2.5rem;
 }
 
-.f-field-depth5 > dd {
+#fork .f-field-depth5 > dd {
   padding-left: 3.125rem;
 }
 
-.f-fs-permission {
+#fork .f-fs-permission {
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
   min-width: 0;
 }
 
-.f-fs-permission > legend {
+#fork .f-fs-permission > legend {
   margin: 0;
 }
 
-.f-fs-permission .f-child1 {
+#fork .f-fs-permission .f-child1 {
   font-weight: normal;
 }
 
-.f-fs-permission .f-field-cando {
+#fork .f-fs-permission .f-field-cando {
   width: 33.333%;
   text-align: center;
   position: relative;
@@ -1880,13 +1876,13 @@ select {
   justify-content: space-between;
 }
 
-.f-fs-permission .f-field-cando > dt,
-.f-fs-permission .f-field-cando > dd {
+#fork .f-fs-permission .f-field-cando > dt,
+#fork .f-fs-permission .f-field-cando > dd {
   width: 100%;
   margin: 0;
 }
 
-.f-field-on input:not(:checked) + span {
+#fork .f-field-on input:not(:checked) + span {
   opacity: 0.2;
   position: absolute;
   top: 0;
@@ -1896,7 +1892,7 @@ select {
   background: red;
 }
 
-.f-field-off input:checked + span {
+#fork .f-field-off input:checked + span {
   opacity: 0.2;
   position: absolute;
   top: 0;
@@ -1906,7 +1902,7 @@ select {
   background: red;
 }
 
-.f-field-cando input:disabled + span {
+#fork .f-field-cando input:disabled + span {
   opacity: 0.2;
   position: absolute;
   top: 0;
@@ -1916,14 +1912,14 @@ select {
   background: gray;
 }
 
-.f-editforums-form .f-btn[data-name=new],
-.f-editforum-form .f-btn[name=reset] {
+#fork .f-editforums-form .f-btn[data-name=new],
+#fork .f-editforum-form .f-btn[name=reset] {
   float: right;
   width: auto;
   margin-bottom: 0.625rem;
 }
 
-.f-btn.f-disabled {
+#fork .f-btn.f-disabled {
   pointer-events: none;
   cursor: default;
   opacity: 0.5;
@@ -1931,7 +1927,7 @@ select {
 /******************/
 /* Админка/Группы */
 /******************/
-.f-deletegroup-form .f-btn {
+#fork .f-deletegroup-form .f-btn {
   width: auto;
   display: inline-block;
 }
@@ -1939,33 +1935,33 @@ select {
 /*********************/
 /* Админка/Цензура   */
 /*********************/
-.f-fs-censor {
+#fork .f-fs-censor {
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
   min-width: 0;
 }
 
-.f-fs-censor .f-child1 {
+#fork .f-fs-censor .f-child1 {
   font-weight: normal;
 }
 
-.f-fs-censor .f-field-censor  {
+#fork .f-fs-censor .f-field-censor  {
   width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.f-fs-censor .f-field-censor > dt {
+#fork .f-fs-censor .f-field-censor > dt {
   display: none;
 }
 
-.f-fs-censor .f-field-censor > dd {
+#fork .f-fs-censor .f-field-censor > dd {
   width: 100%;
 }
 
-.f-field-censor:nth-child(-n+2) > dt {
+#fork .f-field-censor:nth-child(-n+2) > dt {
   display: block;
   width: 100%;
 }
@@ -1973,67 +1969,63 @@ select {
 /*************/
 /* Установка */
 /*************/
-.f-install {
+#fork .f-install {
   margin: 1rem 0;
 }
 
-.f-install > h2{
+#fork .f-install > h2{
   padding: 0 0.625rem;
 }
 
 /*********/
 /* Поиск */
 /*********/
-.f-search-form > h2 {
-  display: none;
-}
-
-.f-search-form .f-child6:first-child {
+#fork .f-search-form .f-child6:first-child {
   text-align: right;
   padding: 0 0.3125rem;
   margin-bottom: -0.3125rem;
 }
 
-.f-post-search-info {
+#fork .f-post-search-info {
   display: none;
 }
 
-.f-post-search .f-post-header > h3 {
+#fork .f-post-search .f-post-header > h3 {
   font-size: 0.875rem;
   font-weight: normal;
   display: inline-block;
   word-break: break-all;
 }
 
-.f-post-search .f-post-posted {
+#fork .f-post-search .f-post-posted {
   float: none;
 }
 
-.f-psh-topic:before,
-.f-post-search .f-post-posted:before {
+#fork .f-psh-topic:before,
+#fork .f-post-search .f-post-posted:before {
   content: "»";
   padding-left: 0.3125rem;
   padding-right: 0.3125rem;
 }
 
 @media screen and (min-width: 50rem) {
-  .f-search-form .f-fdiv .f-field-w3 {
+  #fork .f-search-form .f-fdiv .f-field-w3 {
     width: 50%;
     float: left;
   }
 
-  .f-search-form .f-fdiv .f-field-w4,
-  .f-userlist-form .f-fdiv .f-field-w4 {
+  #fork .f-search-form .f-fdiv .f-field-w4,
+  #fork .f-userlist-form .f-fdiv .f-field-w4 {
     width: 33.33%;
     float: left;
   }
 
-  .f-search-form .f-label,
-  .f-userlist-form .f-label {
+  #fork .f-search-form .f-label,
+  #fork .f-userlist-form .f-label {
     padding: 0.5rem 0;
   }
 
-  .f-post-search-info {
+  #fork .f-post-search-info {
     display: block;
     font-size: 0.875rem;
     padding-top: 0.625rem;
@@ -2045,124 +2037,112 @@ select {
 /* Список пользователей */
 /************************/
 
-.f-userlist > h2 {
-  padding: 0 0.625rem;
-}
-
-.f-userlist-form > h2 {
-  display: none;
-}
-
-.f-ulist .f-row {
+#fork .f-ulist .f-row {
   border-bottom: 0.0625rem solid #AA7939;
 }
 
-.f-ulist .f-row {
+#fork .f-ulist .f-row {
   padding: 0.625rem;
   overflow: hidden;
 }
 
-.f-ulist .f-thead {
+#fork .f-ulist .f-thead {
   display: none;
 }
 
-.f-ulist .f-thead + .f-row {
+#fork .f-ulist .f-thead + .f-row {
   border-top: 0.125rem solid #AA7939;
 }
 
 @media screen and (min-width: 50rem) {
-  .f-userlist > h2 {
-    display: none;
-  }
-
-  .f-ulist .f-row {
+  #fork .f-ulist .f-row {
     padding: 0;
   }
 
-  .f-ulist .f-thead {
+  #fork .f-ulist .f-thead {
     border-top: 0.125rem solid #AA7939;
     border-bottom: 0.125rem solid #AA7939;
     display: block;
   }
 
-  .f-ulist .f-thead + .f-row {
+  #fork .f-ulist .f-thead + .f-row {
     border-top: 0;
   }
 
-  .f-ulist .f-hcell,
-  .f-ulist .f-cell {
+  #fork .f-ulist .f-hcell,
+  #fork .f-ulist .f-cell {
     display: table-cell;
     vertical-align: middle;
   }
 
-  .f-ulist .f-cell > small,
-  .f-ulist .f-hcell > small {
+  #fork .f-ulist .f-cell > small,
+  #fork .f-ulist .f-hcell > small {
     display: none;
   }
 
-  .f-ulist .f-hcell .f-hc-table {
+  #fork .f-ulist .f-hcell .f-hc-table {
     display: table;
     line-height: 1;
   }
 
-  .f-hc-table .f-hc-tasc,
-  .f-hc-table .f-hc-tdesc {
+  #fork .f-hc-table .f-hc-tasc,
+  #fork .f-hc-table .f-hc-tdesc {
     font-size: 0.75rem;
     display: block;
     text-align: center;
   }
 
-  .f-hc-table .f-hc-tname {
+  #fork .f-hc-table .f-hc-tname {
     padding: 0.125rem 0;
     display: block;
   }
 
-  .f-hc-tasc > a,
-  .f-hc-tdesc > a {
+  #fork .f-hc-tasc > a,
+  #fork .f-hc-tdesc > a {
     padding: 0 0.25rem;
-    border: 0;
+/*    border: 0; */
   }
 
-  .f-hc-tasc > a.active,
-  .f-hc-tdesc > a.active {
+  #fork .f-hc-tasc > a.active,
+  #fork .f-hc-tdesc > a.active {
     border: 0.0625rem solid #814A00;
   }
 
-  .f-ulist .f-cell > b,
-  .f-ulist .f-cell > i {
+  #fork .f-ulist .f-cell > b,
+  #fork .f-ulist .f-cell > i {
     font-style: normal;
     font-weight: normal;
   }
 
-  .f-ulist .f-cusername {
+  #fork .f-ulist .f-cusername {
     padding: 0.625rem 0 0.625rem 0.625rem;
     width: 50%;
   }
 
-  .f-ulist .f-ctitle {
+  #fork .f-ulist .f-ctitle {
     padding: 0.625rem 0 0.625rem 0.625rem;
     width: 50%;
     text-align: right;
   }
 
-  .f-ulist .f-cnumposts {
+  #fork .f-ulist .f-cnumposts {
     padding: 0.625rem 0 0.625rem 0.625rem;
     width: 8rem;
     min-width: 8rem;
     text-align: center;
   }
 
-  .f-ulist .f-cnumposts .f-hc-table {
+  #fork .f-ulist .f-cnumposts .f-hc-table {
     margin: 0 auto;
   }
 
-  .f-ulist .f-cdatereg {
+  #fork .f-ulist .f-cdatereg {
     padding: 0.625rem;
     width: 11rem;
     min-width: 11rem;
   }
 
-  .f-ulist .f-hcell {
+  #fork .f-ulist .f-hcell {
     padding-top: 0.3125rem;
     padding-bottom: 0.3125rem;
   }
@@ -2171,128 +2151,124 @@ select {
 /***********/
 /* Профиль */
 /***********/
-.f-profile > h2 {
-  display: none;
-}
-
-.f-fs-header {
+#fork .f-fs-header {
   display: flex;
   min-width: 0;
   align-items: center;
 }
 
-.f-field-pline .f-child1,
-.f-field-pline .f-str,
-.f-field-pline dt,
-.f-field-pline dd {
+#fork .f-field-pline .f-child1,
+#fork .f-field-pline .f-str,
+#fork .f-field-pline dt,
+#fork .f-field-pline dd {
   display: inline;
   border: 0;
   padding: 0;
   margin: 0;
 }
 
-.f-field-pline .f-child1:after {
+#fork .f-field-pline .f-child1:after {
   content: ": ";
 }
 
-.f-fs-header .f-wrap-usertitle,
-.f-fs-data {
+#fork .f-fs-header .f-wrap-usertitle,
+#fork .f-fs-data {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
 
-.f-fs-header .f-wrap-usertitle {
+#fork .f-fs-header .f-wrap-usertitle {
   width: 100%;
 }
 
-.f-fs-header .f-avatar-img {
+#fork .f-fs-header .f-avatar-img {
   max-width: 4.6875rem;
   height: auto;
 }
 
-.f-fs-header #id-dl-avatar {
+#fork .f-fs-header #id-dl-avatar {
   padding: 0.3125rem 0.3125rem 0.3125rem 0.625rem;
 }
 
-.f-fs-header #id-dl-username {
+#fork .f-fs-header #id-dl-username {
   border-bottom: 0.0625rem solid #AA7939;
 }
 
-.f-fs-header #id-username {
+#fork .f-fs-header #id-username {
   font-weight: bold;
   font-size: 1.5rem;
   text-align: center;
   display: block;
 }
 
-.f-fs-header #id-title {
+#fork .f-fs-header #id-title {
   font-size: 0.875rem;
   text-align: center;
   display: block;
 }
 
-.f-fs-header .f-child1,
-.f-fs-header legend,
-.f-fs-data legend {
+#fork .f-fs-header .f-child1,
+#fork .f-fs-header legend,
+#fork .f-fs-data legend {
   display: none;
 }
 
-.f-fs-header,
-.f-fs-data {
+#fork .f-fs-header,
+#fork .f-fs-data {
   border-bottom: 0.0625rem dotted #AA7939;
 }
 
-#id-fs-note.f-fs-data {
+#fork #id-fs-note.f-fs-data {
 /*   color: #D8000C; */
   background-color: #FFBABA;
 }
 
 @media screen and (min-width: 40rem) {
-  .f-fs-header .f-wrap-usertitle {
+  #fork .f-fs-header .f-wrap-usertitle {
     order: 1;
     width: 67%;
     margin-left: auto;
   }
 
-  .f-fs-header #id-username {
+  #fork .f-fs-header #id-username {
     text-align: left;
   }
 
-  .f-fs-header #id-title {
+  #fork .f-fs-header #id-title {
     text-align: left;
   }
 
-  .f-fs-header #id-dl-username,
-  .f-fs-header #id-dl-title {
+  #fork .f-fs-header #id-dl-username,
+  #fork .f-fs-header #id-dl-title {
     padding-left: 0;
   }
 
-  .f-fs-header .f-avatar-img {
+  #fork .f-fs-header .f-avatar-img {
     max-width: 11.75rem;
   }
 
-  .f-fs-header #id-dl-avatar {
+  #fork .f-fs-header #id-dl-avatar {
     width: 33%;
     text-align: right;
     padding: 0.3125rem 0.625rem 0.3125rem 0.3125rem;
   }
 
-  .f-fs-data dl {
+  #fork .f-fs-data dl {
     display: flex;
   }
 
-  .f-fs-data dt {
+  #fork .f-fs-data dt {
     width: 33%;
     text-align: right;
     padding-right: 0.625rem;
   }
 
-  .f-fs-data dd {
+  #fork .f-fs-data dd {
     width: 67%
   }
 
-  .f-field-pline .f-child1:after {
+  #fork .f-field-pline .f-child1:after {
     content: "";
   }
 }
@@ -2301,55 +2277,55 @@ select {
 /* Профиль - редактирование */
 /****************************/
 
-.f-fs-header-edit dl,
-.f-fs-data-edit:not(#id-fs-activity) dl,
-#id-fs-activity.f-fs-data-edit {
+#fork .f-fs-header-edit dl,
+#fork .f-fs-data-edit:not(#id-fs-activity) dl,
+#fork #id-fs-activity.f-fs-data-edit {
   border-bottom: 0.0625rem dotted #AA7939;
 }
 
-.f-fs-header-edit,
-.f-fs-data-edit {
+#fork .f-fs-header-edit,
+#fork .f-fs-data-edit {
 /*  border-bottom: 0.0625rem solid #AA7939; */
   padding: 0.3125rem 0;
   margin-bottom: 0.3125rem;
 }
 
-.f-fs-header-edit .f-avatar-img {
+#fork .f-fs-header-edit .f-avatar-img {
   max-width: 11.75rem;
   height: auto;
 }
 
-.f-fs-data-edit legend {
+#fork .f-fs-data-edit legend {
   display: none;
 }
 
-.f-fs-data-edit #id-signature {
+#fork .f-fs-data-edit #id-signature {
   height: 11rem;
 }
 
-.f-fs-data-edit #id-admin_note {
+#fork .f-fs-data-edit #id-admin_note {
   background-color: #FFBABA;
 }
 
-#id-dl-delete_avatar .f-child2 {
+#fork #id-dl-delete_avatar .f-child2 {
   font-size: 1rem;
 }
 
 @media screen and (min-width: 40rem) {
-  .f-fs-header-edit dl,
-  .f-fs-data-edit dl {
+  #fork .f-fs-header-edit dl,
+  #fork .f-fs-data-edit dl {
     display: flex;
   }
 
-  .f-fs-header-edit dt,
-  .f-fs-data-edit dt {
+  #fork .f-fs-header-edit dt,
+  #fork .f-fs-data-edit dt {
     width: 33%;
     text-align: right;
     padding-right: 0.625rem;
   }
 
-  .f-fs-header-edit dd,
-  .f-fs-data-edit dd {
+  #fork .f-fs-header-edit dd,
+  #fork .f-fs-data-edit dd {
     width: 67%
   }
 }
@@ -2357,18 +2333,18 @@ select {
 /************************/
 /* Админка/Пользователи */
 /************************/
-.f-search-result-form .f-btns {
+#fork .f-search-result-form .f-btns {
   text-align: right;
 }
 
-.f-search-result-form .f-btns .f-btn,
-.f-delete-users-form .f-btns .f-btn,
-.f-change-group-form .f-btns .f-btn {
+#fork .f-search-result-form .f-btns .f-btn,
+#fork .f-delete-users-form .f-btns .f-btn,
+#fork .f-change-group-form .f-btns .f-btn {
   display: inline-block;
   width: auto;
 }
 
-.f-fs-result {
+#fork .f-fs-result {
   display: flex;
   align-items: stretch;
   min-width: 0;
@@ -2377,48 +2353,48 @@ select {
   padding-bottom: 0.3125rem;
 }
 
-.f-fs-stat {
+#fork .f-fs-stat {
   display: block;
 }
 
-.f-fs-result:first-of-type,
-.f-fs-result .f-field-no-data {
+#fork .f-fs-result:first-of-type,
+#fork .f-fs-result .f-field-no-data {
   display: none;
 }
 
-.f-fs-result > legend {
+#fork .f-fs-result > legend {
   display: none;
 }
 
-.f-fs-result .f-child2 > input {
+#fork .f-fs-result .f-child2 > input {
   margin: 0;
 }
 
-.f-fs-result .f-field-result {
+#fork .f-fs-result .f-field-result {
   border: 0;
   margin: 0;
 }
 
-.f-wrap-main-result {
+#fork .f-wrap-main-result {
   width: calc(100% - 3rem);
 }
 
-.f-fs-result .f-field-result > dt,
-.f-fs-result .f-field-result > dd,
-.f-fs-result .f-field-result .f-str {
+#fork .f-fs-result .f-field-result > dt,
+#fork .f-fs-result .f-field-result > dd,
+#fork .f-fs-result .f-field-result .f-str {
   display: inline;
 }
 
-.f-fs-result .f-field-result .f-child1 {
+#fork .f-fs-result .f-field-result .f-child1 {
   display: inline;
   font-weight: bold;
 }
 
-.f-fs-result .f-field-result .f-child1:after {
+#fork .f-fs-result .f-field-result .f-child1:after {
   content: ": ";
 }
 
-.f-fs-result .f-field-check {
+#fork .f-fs-result .f-field-check {
   border: 0;
   margin: 0;
   width: 3rem;
@@ -2429,11 +2405,11 @@ select {
   flex-direction: column;
 }
 
-.f-fs-result .f-field-check > dt {
+#fork .f-fs-result .f-field-check > dt {
   display: none;
 }
 
-.f-fs-result .f-field-check > dd {
+#fork .f-fs-result .f-field-check > dd {
   display: flex;
   align-items: center;
   height: 100%;
@@ -2441,117 +2417,117 @@ select {
 }
 
 @media screen and (min-width: 36rem) {
-  .f-fs-result .f-field-result > dt,
-  .f-fs-result .f-field-result > dd {
+  #fork .f-fs-result .f-field-result > dt,
+  #fork .f-fs-result .f-field-result > dd {
     display: block;
   }
 
-  .f-fs-result .f-field-result .f-child1 {
+  #fork .f-fs-result .f-field-result .f-child1 {
     display: block;
     font-weight: normal;
   }
 
-  .f-fs-result .f-field-result .f-child1:after {
+  #fork .f-fs-result .f-field-result .f-child1:after {
     content: "";
   }
 }
 
 @media screen and (min-width: 50rem) {
-  .f-fs-stat {
+  #fork .f-fs-stat {
     display: flex;
   }
 
-  .f-wrap-main-result {
+  #fork .f-wrap-main-result {
     display: flex;
   }
 
-  .f-fs-result .f-field-result,
-  .f-fs-result .f-wrap-user-result {
+  #fork .f-fs-result .f-field-result,
+  #fork .f-fs-result .f-wrap-user-result {
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
 
-  .f-fs-result .f-field-result > dt,
-  .f-fs-result:first-of-type .f-field-check > dt {
+  #fork .f-fs-result .f-field-result > dt,
+  #fork .f-fs-result:first-of-type .f-field-check > dt {
     display: block;
     margin: 0;
     width: 100%;
   }
 
-  .f-fs-result .f-field-result > dd {
+  #fork .f-fs-result .f-field-result > dd {
     margin: 0;
     width: 100%;
   }
 
-  .f-fs-result:first-of-type {
+  #fork .f-fs-result:first-of-type {
     display: flex;
     text-align: center;
   }
 
-  .f-fs-result:not(:first-of-type) .f-field-result > dt,
-  .f-fs-result:first-of-type .f-field-result > dd {
+  #fork .f-fs-result:not(:first-of-type) .f-field-result > dt,
+  #fork .f-fs-result:first-of-type .f-field-result > dd {
     display: none;
   }
 
-  .f-fs-result .f-field-result .f-child1,
-  .f-fs-result .f-field-check .f-child1 {
+  #fork .f-fs-result .f-field-result .f-child1,
+  #fork .f-fs-result .f-field-check .f-child1 {
     font-weight: bold;
   }
 
-  .f-fs-result .f-wrap-user-result {
+  #fork .f-fs-result .f-wrap-user-result {
     width: 33%;
   }
 
-  .f-fs-result .f-field-username {
+  #fork .f-fs-result .f-field-username {
     width: 100%;
   }
 
-  .f-fs-result .f-field-email {
+  #fork .f-fs-result .f-field-email {
     width: 100%;
   }
 
-  .f-fs-result .f-field-title {
+  #fork .f-fs-result .f-field-title {
     width: 16%;
     border-left: 0.0625rem dotted #AA7939;
   }
 
-  .f-fs-result .f-field-posts {
+  #fork .f-fs-result .f-field-posts {
     width: 15%;
     border-left: 0.0625rem dotted #AA7939;
   }
 
-  .f-fs-result .f-field-posts > dd {
+  #fork .f-fs-result .f-field-posts > dd {
     text-align: right;
   }
 
-  .f-fs-result .f-field-note {
+  #fork .f-fs-result .f-field-note {
     width: 20%;
     border-left: 0.0625rem dotted #AA7939;
   }
 
-  .f-fs-result .f-field-view-ip {
+  #fork .f-fs-result .f-field-view-ip {
     width: 16%;
     border-left: 0.0625rem dotted #AA7939;
   }
 
-  .f-fs-result .f-field-ip {
+  #fork .f-fs-result .f-field-ip {
     width: 25%;
   }
 
-  .f-fs-result .f-field-last-used {
+  #fork .f-fs-result .f-field-last-used {
     width: 25%;
     border-left: 0.0625rem dotted #AA7939;
     text-align: center;
   }
 
-  .f-fs-result .f-field-used-times {
+  #fork .f-fs-result .f-field-used-times {
     width: 20%;
     border-left: 0.0625rem dotted #AA7939;
     text-align: center;
   }
 
-  .f-fs-result .f-field-action {
+  #fork .f-fs-result .f-field-action {
     width: 30%;
     border-left: 0.0625rem dotted #AA7939;
   }

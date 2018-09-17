@@ -30,8 +30,8 @@ class Statistics extends Admin
                     function($match) {
                         $result = \array_map(
                             function($val) {
-                                $val = \str_replace('body', '.f-phpinfo-div', $val, $count);
-                                return $count ? $val : '.f-phpinfo-div ' . $val;
+                                $val = \str_replace('body', '#id-phpinfo-div', $val, $count);
+                                return $count ? $val : '#id-phpinfo-div ' . $val;
                             },
                             \explode(',', $match[1])
                         );
