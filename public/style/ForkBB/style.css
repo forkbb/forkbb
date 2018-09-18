@@ -49,7 +49,7 @@ body,
 #fork article,
 #fork aside,
 #fork audio,
-#fork b,
+/*#fork b,*/
 #fork big,
 #fork blockquote,
 #fork canvas,
@@ -79,7 +79,7 @@ body,
 #fork h6,
 #fork header,
 #fork hgroup,
-#fork i,
+/*#fork i,*/
 #fork iframe,
 #fork img,
 #fork input,
@@ -98,13 +98,13 @@ body,
 #fork pre,
 #fork q,
 #fork ruby,
-#fork s,
+/*#fork s,*/
 #fork samp,
 #fork section,
 #fork small,
 #fork span,
 #fork strike,
-#fork strong,
+/*#fork strong,*/
 #fork sub,
 #fork summary,
 #fork sup,
@@ -118,7 +118,7 @@ body,
 #fork time,
 #fork tr,
 #fork tt,
-#fork u,
+/*#fork u,*/
 #fork ul,
 #fork var,
 #fork video {
@@ -1144,18 +1144,12 @@ body,
 /***************************************/
 /* Таблица разделов, подразделов и тем */
 /***************************************/
-#fork .f-ftlist .f-cell {
-  padding-top: 0.625rem;
-  padding-bottom: 0.625rem;
-  overflow: hidden;
-}
-
-#fork .f-ftlist .f-hcell {
-  display: none;
-}
-
 #fork .f-ftlist .f-category {
   margin-top: 0.625rem;
+}
+
+#fork .f-ftch2 {
+  padding: 0.625rem 0.625rem 0.3125rem 0.625rem;
 }
 
 #fork .f-ftlist .f-row {
@@ -1166,10 +1160,22 @@ body,
   border-bottom: 0.125rem solid #AA7939;
 }
 
-#fork .f-ftlist .f-cmain,
-#fork .f-ftlist .f-cstats {
-  padding-left: 0.625rem;
-  padding-right: 0.625rem;
+#fork .f-ftlist .f-cell {
+  padding: 0.625rem;
+  overflow: hidden;
+}
+
+#fork .f-ftlist .f-cmain {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+#fork .f-ftlist .f-ficon {
+  width: 2rem;
+}
+
+#fork .f-ftlist .f-finfo {
+  width: calc(100% - 2rem);
 }
 
 #fork .f-ftlist .f-cstats {
@@ -1178,25 +1184,8 @@ body,
   font-size: 0.75rem;
 }
 
-#fork .f-ftlist .f-cstats li {
-  display: inline-block;
-}
-
 #fork .f-ftlist .f-clast {
   display: none;
-}
-
-#fork .f-category > h2 {
-  padding: 0.625rem 0.625rem 0.3125rem 0.625rem;
-}
-
-#fork .f-ftlist .f-ficon {
-  width: 2rem;
-  float: left;
-}
-
-#fork .f-ftlist .f-finfo {
-  margin-left: 2rem;
 }
 
 #fork .f-ftlist .f-fdesc {
@@ -1212,6 +1201,14 @@ body,
   font-size: 0.875rem;
   content: "└";
   margin-left: -0.875rem;
+}
+
+#fork .f-subforums .f-fsub:before {
+  margin-left: 0.875rem;
+}
+
+#fork .f-subforums .f-ftname:before {
+  content: "└ ";
 }
 
 #fork .f-fsub > dt {
@@ -1294,29 +1291,33 @@ body,
 */
 
 @media screen and (min-width: 50rem) {
-  #fork .f-ftlist .f-cell {
-    display: table-cell;
+  #fork .f-ftlist .f-row {
+    display: flex;
+    flex-wrap: nowrap;
   }
 
   #fork .f-ftlist .f-cmain {
-    width: 100%;
+    margin-right: auto;
+
   }
 
   #fork .f-ftlist .f-cstats {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    min-width: 8rem;
     padding-top: 0.625rem;
     padding-left: 0;
-    vertical-align: middle;
     white-space: nowrap;
   }
 
-  #fork .f-ftlist .f-cstats li {
-    display: block;
-  }
-
   #fork .f-ftlist .f-clast {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     width: 15rem;
-    padding-right: 0.625rem;
-    vertical-align: middle;
+    min-width: 15rem;
+    padding-left: 0;
     font-size: 0.875rem;
     text-align: right;
   }
@@ -1324,7 +1325,6 @@ body,
   #fork .f-ftlist .f-cltopic,
   #fork .f-ftlist .f-clposter,
   #fork .f-ftlist .f-cltime {
-    width: 15rem;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -1335,6 +1335,11 @@ body,
   }
 }
 
+#fork .f-ftlist .f-hcell,
+#fork .f-ftlist small {
+  display: none;
+}
+
 /********************/
 /* Страница раздела */
 /********************/
@@ -1342,17 +1347,17 @@ body,
   margin: 1rem 0;
 }
 
-#fork .f-subforums .f-category > h2 {
+#fork .f-subforums .f-ftch2 {
   display: none;
 }
 
 #fork .f-forum h3 {
 /*  font-family: Arial, Helvetica, sans-serif;  */
   font-weight: normal;
-  font-size: 1rem;
+  /*font-size: 1rem;*/
   position: relative;
   display: block;
-  word-break: break-all;
+  /*word-break: break-all;*/
 }
 
 #fork .f-cmposter,

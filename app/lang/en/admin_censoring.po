@@ -31,10 +31,10 @@ msgid "Censoring info"
 msgstr "Below is a list of censor words and their replacement. Wildcards are accepted (i.e. <b>*some*</b> would match <b>somewhere</b> and <b>lonesome</b>). Censor words also affect usernames. New users will not be able to register with usernames containing any censored words. The search is case insensitive."
 
 msgid "Censoring enabled"
-msgstr "<strong>Censoring is enabled in %s.</strong>"
+msgstr "<b>Censoring is enabled in %s.</b>"
 
 msgid "Censoring disabled"
-msgstr "<strong>Censoring is disabled in %s.</strong>"
+msgstr "<b>Censoring is disabled in %s.</b>"
 
 msgid "Censored word label"
 msgstr "Censored word"

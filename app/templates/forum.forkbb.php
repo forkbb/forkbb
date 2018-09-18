@@ -40,7 +40,7 @@
     <section class="f-subforums">
       <ol class="f-ftlist">
         <li id="id-subforums{!! $p->model->id !!}" class="f-category">
-          <h2>{{ __('Sub forum', 2) }}</h2>
+          <h2 class="f-ftch2">{{ __('Sub forum', 2) }}</h2>
           <ol class="f-table">
             <li class="f-row f-thead" value="0">
               <div class="f-hcell f-cmain">{!! __('Sub forum', 1) !!}</div>
@@ -131,18 +131,14 @@
               </div>
             </div>
             <div class="f-cell f-cstats">
-              <ul>
-                <li>{!! __('%s Reply', $topic->num_replies, num($topic->num_replies)) !!}</li>
+              <span>{!! __('%s Reply', $topic->num_replies, num($topic->num_replies)) !!}</span>
             @if ($topic->showViews)
-                <li>{!! __('%s View', $topic->num_views, num($topic->num_views)) !!}</li>
+              <span>{!! __('%s View', $topic->num_views, num($topic->num_views)) !!}</span>
             @endif
-              </ul>
             </div>
             <div class="f-cell f-clast">
-              <ul>
-                <li class="f-cltopic"><a href="{!! $topic->linkLast !!}" title="&quot;{{ cens($topic->subject) }}&quot; - {!! __('Last post') !!}">{{ dt($topic->last_post) }}</a></li>
-                <li class="f-clposter">{!! __('by %s', $topic->last_poster) !!}</li>
-              </ul>
+              <span class="f-cltopic">{!! __('Last post <a href="%1$s">%2$s</a>', $topic->linkLast, dt($topic->last_post)) !!}</span>
+              <span class="f-clposter">{!! __('by %s', $topic->last_poster) !!}</span>
             </div>
           </li>
         @endif

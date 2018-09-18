@@ -102,7 +102,7 @@ msgid "User info"
 msgstr "User information"
 
 msgid "Visitors online"
-msgstr "Registered users online in this topic: <strong>%1$s</strong>, guests: <strong>%2$s</strong>."
+msgstr "Registered users online in this topic: <b>%1$s</b>, guests: <b>%2$s</b>."
 
 msgid "Online users"
 msgstr "Online:"

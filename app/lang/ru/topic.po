@@ -103,7 +103,7 @@ msgid "User info"
 msgstr "Информация о пользователях"
 
 msgid "Visitors online"
-msgstr "Сейчас в этой теме пользователей: <strong>%1$s</strong>, гостей: <strong>%2$s</strong>."
+msgstr "Сейчас в этой теме пользователей: <b>%1$s</b>, гостей: <b>%2$s</b>."
 
 msgid "Online users"
 msgstr "Активны:"

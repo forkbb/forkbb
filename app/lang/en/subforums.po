@@ -25,13 +25,13 @@ msgstr "No parent forum"
 
 msgid "%s Topic"
 msgid_plural "%s Topics"
-msgstr[0] "<strong>%s</strong> Topic"
-msgstr[1] "<strong>%s</strong> Topics"
+msgstr[0] "<b>%s</b> Topic"
+msgstr[1] "<b>%s</b> Topics"
 
 msgid "%s Post"
 msgid_plural "%s Posts"
-msgstr[0] "<strong>%s</strong> Post"
-msgstr[1] "<strong>%s</strong> Posts"
+msgstr[0] "<b>%s</b> Post"
+msgstr[1] "<b>%s</b> Posts"
 
 msgid "Moderated by"
 msgstr "Moderated by"
@@ -44,3 +44,6 @@ msgstr "Mark this forum as read"
 
 msgid "All is read"
 msgstr "All is read"
+
+msgid "Last post in the topic \"<a href=\"%1$s\">%2$s</a>\""
+msgstr "<small>Last post in the topic &quot;</small><a href=\"%1$s\">%2$s</a><small>&quot;</small>"

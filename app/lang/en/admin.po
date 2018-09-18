@@ -94,7 +94,7 @@ msgid "No plugin message"
 msgstr "There is no plugin called %s in the plugin directory."
 
 msgid "Plugin failed message"
-msgstr "Loading of the plugin - <strong>%s</strong> - failed."
+msgstr "Loading of the plugin - <b>%s</b> - failed."
 
 msgid "Data updated redirect"
 msgstr "Data updated. Redirecting …"

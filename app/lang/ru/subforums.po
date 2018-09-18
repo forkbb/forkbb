@@ -26,15 +26,15 @@ msgstr "Нет родительского раздела"
 
 msgid "%s Topic"
 msgid_plural "%s Topics"
-msgstr[0] "<strong>%s</strong> Тема"
-msgstr[1] "<strong>%s</strong> Темы"
-msgstr[2] "<strong>%s</strong> Тем"
+msgstr[0] "<b>%s</b> Тема"
+msgstr[1] "<b>%s</b> Темы"
+msgstr[2] "<b>%s</b> Тем"
 
 msgid "%s Post"
 msgid_plural "%s Posts"
-msgstr[0] "<strong>%s</strong> Сообщение"
-msgstr[1] "<strong>%s</strong> Сообщения"
-msgstr[2] "<strong>%s</strong> Сообщений"
+msgstr[0] "<b>%s</b> Сообщение"
+msgstr[1] "<b>%s</b> Сообщения"
+msgstr[2] "<b>%s</b> Сообщений"
 
 msgid "Moderated by"
 msgid_plural "Moderated by"
@@ -50,3 +50,6 @@ msgstr "Отметить все темы в этом раздел прочита
 
 msgid "All is read"
 msgstr "Всё прочитано"
+
+msgid "Last post in the topic \"<a href=\"%1$s\">%2$s</a>\""
+msgstr "<small>Последнее сообщение в теме &quot;</small><a href=\"%1$s\">%2$s</a><small>&quot;</small>"

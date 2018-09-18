@@ -47,3 +47,6 @@ msgstr "Subscribe to this forum"
 
 msgid "Topic %s was not found in the database"
 msgstr "Topic №%s was not found in the database"
+
+msgid "Last post <a href=\"%1$s\">%2$s</a>"
+msgstr "<small>Last post </small><a href=\"%1$s\">%2$s</a>"

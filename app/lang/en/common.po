@@ -185,13 +185,13 @@ msgstr "Replies"
 
 msgid "%s Reply"
 msgid_plural "%s Replies"
-msgstr[0] "<strong>%s</strong> Reply"
-msgstr[1] "<strong>%s</strong> Replies"
+msgstr[0] "<b>%s</b> Reply"
+msgstr[1] "<b>%s</b> Replies"
 
 msgid "%s View"
 msgid_plural "%s Views"
-msgstr[0] "<strong>%s</strong> View"
-msgstr[1] "<strong>%s</strong> Views"
+msgstr[0] "<b>%s</b> View"
+msgstr[1] "<b>%s</b> Views"
 
 msgid "Pages"
 msgstr "Pages:"

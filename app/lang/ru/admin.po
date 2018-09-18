@@ -94,7 +94,7 @@ msgid "No plugin message"
 msgstr "Нет плагина с именем %s в директории плагинов."
 
 msgid "Plugin failed message"
-msgstr "Загрузить плагин <strong>%s</strong> не удалось."
+msgstr "Загрузить плагин <b>%s</b> не удалось."
 
 msgid "Data updated redirect"
 msgstr "Данные изменены. Переадресация …"

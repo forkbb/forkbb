@@ -49,4 +49,4 @@ msgid "User info"
 msgstr "Информация о пользователях"
 
 msgid "Visitors online"
-msgstr "Сейчас пользователей: <strong>%1$s</strong>, гостей: <strong>%2$s</strong>."
+msgstr "Сейчас пользователей: <b>%1$s</b>, гостей: <b>%2$s</b>."

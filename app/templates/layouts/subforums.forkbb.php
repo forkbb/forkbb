@@ -48,21 +48,17 @@
                 </div>
               </div>
               <div class="f-cell f-cstats">
-                <ul>
-                  <li>{!! __('%s Topic', $cur->tree->num_topics, num($cur->tree->num_topics)) !!}</li>
-                  <li>{!! __('%s Post', $cur->tree->num_posts, num($cur->tree->num_posts)) !!}</li>
-                </ul>
+                <span>{!! __('%s Topic', $cur->tree->num_topics, num($cur->tree->num_topics)) !!}</span>
+                <span>{!! __('%s Post', $cur->tree->num_posts, num($cur->tree->num_posts)) !!}</span>
               </div>
               <div class="f-cell f-clast">
-                <ul>
         @if ($cur->tree->last_post_id)
-                  <li class="f-cltopic"><a href="{!! $cur->tree->linkLast !!}" title="&quot;{{ cens($cur->tree->last_topic) }}&quot; - {!! __('Last post') !!}">{{ cens($cur->tree->last_topic) }}</a></li>
-                  <li class="f-clposter">{!! __('by %s', $cur->tree->last_poster) !!}</li>
-                  <li class="f-cltime">{!! dt($cur->tree->last_post) !!}</li>
+                <span class="f-cltopic">{!! __('Last post in the topic "<a href="%1$s">%2$s</a>"', $cur->tree->linkLast, cens($cur->tree->last_topic)) !!}</span>
+                <span class="f-clposter">{!! __('by %s', $cur->tree->last_poster) !!}</span>
+                <span class="f-cltime">{!! dt($cur->tree->last_post) !!}</span>
         @else
-                  <li class="f-cltopic">{!! __('Never') !!}</li>
+                <span class="f-cltopic">{!! __('Never') !!}</span>
         @endif
-                </ul>
               </div>
             </li>
     @endif
