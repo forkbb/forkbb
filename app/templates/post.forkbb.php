@@ -18,8 +18,8 @@
 @if ($p->previewHtml)
     <section class="f-main f-preview">
       <h2>{!! __('Post preview') !!}</h2>
-      <div class="f-post-body clearfix">
-        <div class="f-post-right f-post-main">
+      <div class="f-post-body">
+        <div class="f-post-main">
           {!! cens($p->previewHtml) !!}
         </div>
       </div>
@@ -38,18 +38,18 @@
       <h2>{!! $p->postsTitle !!}</h2>
     @foreach ($p->posts as $post)
         @if ($post->id)
-      <article id="p{!! $post->id !!}" class="clearfix f-post">
-        <header class="f-post-header clearfix">
+      <article id="p{!! $post->id !!}" class="f-post">
+        <header class="f-post-header">
           <span class="f-post-posted"><time datetime="{{ utc($post->posted) }}">{{ dt($post->posted) }}</time></span>
           <span class="f-post-number"><a href="{!! $post->link !!}" rel="bookmark">#{!! $post->postNumber !!}</a></span>
         </header>
-        <div class="f-post-body clearfix">
-          <address class="f-post-left clearfix">
-            <ul class="f-user-info">
-              <li class="f-username">{{ $post->poster }}</li>
-            </ul>
-          </address>
-          <div class="f-post-right f-post-main">
+        <address class="f-post-user">
+          <ul class="f-user-info">
+            <li class="f-username">{{ $post->poster }}</li>
+          </ul>
+        </address>
+        <div class="f-post-body">
+          <div class="f-post-main">
             {!! $post->html() !!}
           </div>
         </div>

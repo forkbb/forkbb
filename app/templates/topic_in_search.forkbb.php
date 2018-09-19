@@ -48,7 +48,7 @@
         @include ('layouts/iswev')
     @else
       <article id="p{!! $post->id !!}" class="f-post f-post-search @if (1 == $post->user->gender) f-user-male @elseif (2 == $post->user->gender) f-user-female @endif @if ($post->user->online) f-user-online @endif">
-        <header class="f-post-header clearfix">
+        <header class="f-post-header">
           <h3>
             <span class="f-psh-forum"><a href="{!! $post->parent->parent->link !!}" title="{!! __('Go to forum') !!}">{{ $post->parent->parent->forum_name }}</a></span>
             <span class="f-psh-topic"><a href="{!! $post->parent->link !!}" title="{!! __('Go to topic') !!}">@if ($post->id !== $post->parent->first_post_id) {!! __('Re') !!} @endif {{ cens($post->parent->subject) }}</a></span>
@@ -56,34 +56,34 @@
           </h3>
           <span class="f-post-number">#{!! $post->postNumber !!}</span>
         </header>
-        <div class="f-post-body clearfix">
-          <address class="f-post-left">
-            <ul class="f-user-info">
+        <address class="f-post-user">
+          <ul class="f-user-info">
         @if ($p->user->viewUsers && $post->user->link)
-              <li class="f-username"><a href="{!! $post->user->link !!}">{{ $post->user->username }}</a></li>
+            <li class="f-username"><a href="{!! $post->user->link !!}">{{ $post->user->username }}</a></li>
         @else
-              <li class="f-username">{{ $post->user->username }}</li>
+            <li class="f-username">{{ $post->user->username }}</li>
         @endif
-              <li class="f-usertitle">{{ $post->user->title() }}</li>
-            </ul>
-            <ul class="f-post-search-info">
-              <li class="f-psi-forum">{!! __('Forum') !!}: <a href="{!! $post->parent->parent->link !!}">{{ $post->parent->parent->forum_name }}</a></li>
-              <li class="f-psi-topic">{!! __('Topic') !!}: <a href="{!! $post->parent->link !!}">{{ cens($post->parent->subject) }}</a></li>
-              <li class="f-psi-reply">{!! __('%s Reply', $post->parent->num_replies, num($post->parent->num_replies)) !!}</li>
+            <li class="f-usertitle">{{ $post->user->title() }}</li>
+          </ul>
+          <ul class="f-post-search-info">
+            <li class="f-psi-forum">{!! __('Forum') !!}: <a href="{!! $post->parent->parent->link !!}">{{ $post->parent->parent->forum_name }}</a></li>
+            <li class="f-psi-topic">{!! __('Topic') !!}: <a href="{!! $post->parent->link !!}">{{ cens($post->parent->subject) }}</a></li>
+            <li class="f-psi-reply">{!! __('%s Reply', $post->parent->num_replies, num($post->parent->num_replies)) !!}</li>
         @if ($post->parent->showViews)
-              <li class="f-psi-view">{!! __('%s View', $post->parent->num_views, num($post->parent->num_views)) !!}</li>
+            <li class="f-psi-view">{!! __('%s View', $post->parent->num_views, num($post->parent->num_views)) !!}</li>
         @endif
-            </ul>
-          </address>
-          <div class="f-post-right f-post-main">
+          </ul>
+        </address>
+        <div class="f-post-body">
+          <div class="f-post-main">
             {!! $post->html() !!}
           </div>
         </div>
-        <footer class="f-post-footer clearfix">
-          <div class="f-post-left">
+        <footer class="f-post-footer">
+          <div class="f-post-footer-add">
             <span></span>
           </div>
-          <div class="f-post-right">
+          <div class="f-post-btns">
             <ul>
               <li class="f-posttotopic"><a class="f-btn" href="{!! $post->parent->link !!}">{!! __('Go to topic') !!}</a></li>
               <li class="f-posttopost"><a class="f-btn" href="{!! $post->link !!}">{!! __('Go to post') !!}</a></li>

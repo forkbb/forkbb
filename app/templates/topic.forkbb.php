@@ -60,7 +60,7 @@
         @include ('layouts/iswev')
     @else
       <article id="p{!! $post->id !!}" class="f-post @if (1 == $post->user->gender) f-user-male @elseif (2 == $post->user->gender) f-user-female @endif @if ($post->user->online) f-user-online @endif @if (1 === $post->postNumber) f-post-first @endif">
-        <header class="f-post-header clearfix">
+        <header class="f-post-header">
           <h3>@if ($post->postNumber > 1) {!! __('Re') !!} @endif {{ cens($p->model->subject) }}</h3>
           <span class="f-post-posted"><a href="{!! $post->link !!}" rel="bookmark"><time datetime="{{ utc($post->posted) }}">{{ dt($post->posted) }}</time></a></span>
         @if ($post->edited)
@@ -68,51 +68,58 @@
         @endif
           <span class="f-post-number">#{!! $post->postNumber !!}</span>
         </header>
-        <div class="f-post-body clearfix">
-          <address class="f-post-left">
-            <ul class="f-user-info">
+        <address class="f-post-user">
+          <ul class="f-user-info-first">
         @if ($p->user->viewUsers && $post->user->link)
-              <li class="f-username"><a href="{!! $post->user->link !!}">{{ $post->user->username }}</a></li>
+            <li class="f-username"><a href="{!! $post->user->link !!}">{{ $post->user->username }}</a></li>
         @else
-              <li class="f-username">{{ $post->user->username }}</li>
+            <li class="f-username">{{ $post->user->username }}</li>
         @endif
+          </ul>
         @if ($p->user->showAvatar && $post->user->avatar)
-              <li class="f-avatar">
-                <img alt="{{ $post->user->username }}" src="{!! $post->user->avatar !!}">
-              </li>
+          <p class="f-avatar">
+            <img alt="{{ $post->user->username }}" src="{!! $post->user->avatar !!}">
+          </p>
         @endif
-              <li class="f-usertitle">{{ $post->user->title() }}</li>
+          <ul class="f-user-info">
+        @if ($p->user->viewUsers && $post->user->link)
+            <li class="f-username"><a href="{!! $post->user->link !!}">{{ $post->user->username }}</a></li>
+        @else
+            <li class="f-username">{{ $post->user->username }}</li>
+        @endif
+            <li class="f-usertitle">{{ $post->user->title() }}</li>
         @if ($p->user->showUserInfo && $p->user->showPostCount && $post->user->num_posts)
-              <li class="f-postcount">{!! __('%s post', $post->user->num_posts, num($post->user->num_posts)) !!}</li>
+            <li class="f-postcount">{!! __('%s post', $post->user->num_posts, num($post->user->num_posts)) !!}</li>
         @endif
-            </ul>
+          </ul>
         @if (! $post->user->isGuest && $p->user->showUserInfo)
-            <ul class="f-user-info-add">
-              <li>{!! __('Registered:') !!} {{ dt($post->user->registered, true) }}</li>
+          <ul class="f-user-info-add">
+            <li>{!! __('Registered:') !!} {{ dt($post->user->registered, true) }}</li>
             @if ($post->user->location)
-              <li>{!! __('From') !!} {{ cens($post->user->location) }}</li>
+            <li>{!! __('From') !!} {{ cens($post->user->location) }}</li>
             @endif
-            </ul>
+          </ul>
         @endif
-          </address>
-          <div class="f-post-right f-post-main">
+        </address>
+        <div class="f-post-body">
+          <div class="f-post-main">
             {!! $post->html() !!}
           </div>
         @if ($p->user->showSignature && '' != $post->user->signature)
-          <div class="f-post-right f-post-signature">
+          <div class="f-post-signature">
             <hr>
             {!! $post->user->htmlSign !!}
           </div>
         @endif
         </div>
-        <footer class="f-post-footer clearfix">
-          <div class="f-post-left">
+        <footer class="f-post-footer">
+          <div class="f-post-footer-add">
         @if (! $post->user->isGuest)
             <span class="f-userstatus">{!! __($post->user->online ? 'Online' : 'Offline') !!}</span>
         @endif
           </div>
         @if ($post->canReport || $post->canDelete || $post->canEdit || $post->canQuote)
-          <div class="f-post-right">
+          <div class="f-post-btns">
             <ul>
             @if ($post->canReport)
               <li class="f-postreport"><a class="f-btn f-minor" href="{!! $post->linkReport !!}">{!! __('Report') !!}</a></li>

@@ -238,7 +238,7 @@ body,
 #fork .f-btn.f-minor:focus {
   opacity: 1;
 }
-
+/*
 #fork .clearfix:before,
 #fork .clearfix:after {
   content: " ";
@@ -248,7 +248,7 @@ body,
 #fork .clearfix:after {
   clear: both;
 }
-
+*/
 #fork .left {
   float: left;
 }
@@ -1418,6 +1418,8 @@ body,
 }
 
 #fork .f-post-header {
+  display: flex;
+  flex-wrap: wrap;
   padding: 0.625rem;
   border-bottom: 0.0625rem solid #AA7939;
   background-color: #D3B58D;
@@ -1428,64 +1430,44 @@ body,
   display: none;
 }
 
-#fork .f-post-posted {
-  float: left;
-}
-
 #fork .f-post-edited {
-  float: left;
   font-style: italic;
   margin-left: 0.625rem;
   opacity: 0.5;
 }
 
 #fork .f-post-number {
-  float: right;
+  margin-left: auto;
 }
 
-#fork .f-post-left {
+#fork .f-post-user {
+  display: flex;
+  flex-wrap: nowrap;
   padding: 0.625rem;
   background-color: #F8F4E3;
 }
 
-#fork .f-post-right {
-  padding: 0.625rem 0.625rem 0 0.625rem;
-}
-
-#fork .f-post-footer .f-post-right {
-  text-align: right;
-  padding-top: 0;
-  padding-bottom: 0.625rem;
-}
-
-#fork .f-post-footer .f-post-right .f-btn {
-  opacity: 0.4;
-}
-
-#fork .f-post-footer .f-post-right:hover .f-btn,
-#fork .f-post-footer .f-post-right .f-btn:focus {
-  opacity: 1;
-}
-
-#fork .f-post-footer .f-post-left {
-  display: none;
-}
-
-#fork .f-post-footer li {
-  display: inline;
-}
-
 #fork .f-user-info {
   font-size: 0.875rem;
+  margin-right: auto;
 }
 
+#fork .f-user-info-first,
 #fork .f-user-info-add {
   display: none;
 }
 
+#fork .f-avatar {
+  order: 1;
+}
+
+#fork .f-avatar img {
+  max-width: 4.6875rem;
+  height: auto;
+}
+
 #fork .f-username {
   font-size: 1.25rem;
-  float: left;
   word-break: break-all;
 }
 
@@ -1495,22 +1477,37 @@ body,
   font-size: 1rem;
 }
 
-#fork .f-username a {
-/*  border: 0; */
+#fork .f-post-main,
+#fork .f-post-btns,
+#fork .f-post-signature {
+  padding: 0.625rem 0.625rem 0 0.625rem;
 }
 
-#fork .f-avatar {
-  float: right;
+#fork .f-post-btns {
+  text-align: right;
+  padding-top: 0;
+  padding-bottom: 0.625rem;
 }
 
-#fork .f-avatar img {
-  max-width: 4.6875rem;
-  height: auto;
+#fork .f-post-btns .f-btn {
+  opacity: 0.4;
 }
 
-#fork .f-usertitle {
-  clear: left;
+#fork .f-post-btns:hover .f-btn,
+#fork .f-post-btns .f-btn:focus {
+  opacity: 1;
 }
+
+
+
+#fork .f-post-footer-add {
+  display: none;
+}
+
+#fork .f-post-footer li {
+  display: inline;
+}
+
 
 #fork .f-post-signature {
   font-size: 0.875rem;
@@ -1531,6 +1528,7 @@ body,
 #fork .f-bb-after {
   opacity: 0.5;
   font-style: italic;
+  font-size: 0.875rem;
 }
 
 #fork .f-bb-quote {
@@ -1540,7 +1538,7 @@ body,
 
 #fork .f-bb-q-header {
   padding: 0.625rem;
-  background-color: #D3B58D;
+  background-color: #F8F4E3 /*#D3B58D*/;
 }
 
 #fork .f-bb-q-body {
@@ -1550,7 +1548,7 @@ body,
 #fork .f-bb-code {
   border: 0.0625rem solid #AA7939;
   padding: 0.625rem;
-  background-color: #D3B58D;
+  background-color: #F8F4E3 /*#D3B58D*/;
   overflow: auto;
   max-height: 45rem;
 }
@@ -1585,39 +1583,31 @@ body,
 
 @media screen and (min-width: 50rem) {
   #fork .f-post {
-    background-color: #F8F4E3;
+    display: flex;
+    flex-wrap: wrap;
   }
 
-  #fork .f-post-body,
-  #fork .f-post-footer {
+  #fork .f-post-header {
     width: 100%;
-    float: right;
-    margin-right: -13rem;
-    position: relative;
-    border-left: 0.0625rem solid #AA7939;
-    background-color: #FFFFFF;
   }
 
-  #fork .f-post-left {
+  #fork .f-post-user {
+    flex-direction: column;
     width: 13rem;
-    margin-left: -13rem;
-    float: left;
-    position: relative;
-    background-color: transparent;
   }
 
-  #fork .f-post-right {
-    padding-right: 13.625rem;
-    position: relative;
-  }
-
-  #fork .f-post-footer .f-post-left {
+  #fork .f-user-info-first {
     display: block;
-    padding-top: 0;
+    margin-bottom: 0.625rem;
   }
 
-  #fork .f-userstatus {
-    font-size: 0.875rem;
+  #fork .f-user-info .f-username {
+    display: none;
+  }
+
+  #fork .f-avatar {
+    order: 0;
+    text-align: center;
   }
 
   #fork .f-user-info-add {
@@ -1626,8 +1616,28 @@ body,
   /*  word-break: break-all; */
   }
 
-  #fork .f-username, .f-avatar {
-    float: none;
+  #fork .f-post-body,
+  #fork .f-post-btns {
+    width: calc(100% - 13rem);
+    position: relative;
+    border-left: 0.0625rem solid #AA7939;
+  }
+
+  #fork .f-post-footer {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+  }
+
+  #fork .f-post-footer-add {
+    display: block;
+    width: 13rem;
+    padding: 0 0.625rem 0.625rem 0.625rem;
+    background-color: #F8F4E3;
+  }
+
+  #fork .f-userstatus {
+    font-size: 0.875rem;
   }
 
   #fork .f-avatar img {
@@ -1644,6 +1654,7 @@ body,
 }
 
 #fork .f-preview > h2 {
+  display: block;
 /**  font-family: Arial, Helvetica, sans-serif; */
   font-size: 1rem;
   line-height: 1.5;
@@ -1651,13 +1662,8 @@ body,
 }
 
 #fork .f-preview .f-post-body {
-  float: none;
-  margin: 0;
-}
-
-#fork .f-preview .f-post-right {
-  padding-right: 0.625rem;
-  border-top: 0.0625rem solid #AA7939;
+  border-top: 0.125rem solid #AA7939;
+  width: 100%;
 }
 
 /*****************************/
