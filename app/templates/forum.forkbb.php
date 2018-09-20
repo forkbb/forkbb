@@ -124,10 +124,12 @@
                   <span class="f-newtxt"><a href="{!! $topic->linkNew !!}" title="{!! __('New posts info') !!}">{!! __('New posts') !!}</a></span>
             @endif
                 </h3>
-                <p class="f-cmposter">{!! __('by %s', $topic->poster) !!}</p>
+                <p><!-- inline -->
+                  <span class="f-cmposter">{!! __('by %s', $topic->poster) !!}</span>
             @if ($p->searchMode)
-                <p class="f-cmforum"><a href="{!! $topic->parent->link !!}">{{ $topic->parent->forum_name }}</a></p>
+                  <span class="f-cmforum"><a href="{!! $topic->parent->link !!}">{{ $topic->parent->forum_name }}</a></span>
             @endif
+<!-- endinline --></p>
               </div>
             </div>
             <div class="f-cell f-cstats">

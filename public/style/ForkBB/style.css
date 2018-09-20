@@ -153,6 +153,10 @@ body,
   list-style: none;
 }
 
+#fork dl {
+  width: 100%;
+}
+
 #fork textarea {
   resize: vertical;
 }
@@ -238,25 +242,6 @@ body,
 #fork .f-btn.f-minor:focus {
   opacity: 1;
 }
-/*
-#fork .clearfix:before,
-#fork .clearfix:after {
-  content: " ";
-  display: table;
-}
-
-#fork .clearfix:after {
-  clear: both;
-}
-*/
-#fork .left {
-  float: left;
-}
-
-#fork .right {
-  float: right;
-}
-
 
 #fork .f-inline > dt,
 #fork .f-inline > dd {
@@ -586,7 +571,6 @@ body,
   padding: 0.3125rem;
   text-align: justify;
   font-size: 0.8125rem;
-  clear: both;
 }
 
 #fork .f-fdiv .f-child6 + .f-child6 {
@@ -722,22 +706,16 @@ body,
 
 #fork .f-crumb {
   display: inline;
-/*  float: left;
-  word-break: break-all; */
-/*  word-wrap: break-word; */
   max-width: 100%;
 }
 
 #fork .f-crumb + .f-crumb:before {
   display: inline;
-/*  padding-right: 0.5rem;
-  padding-left: 0.5rem; */
   color: #583200;
   content: "/ ";
 }
 
 #fork .f-crumb a:not(.active) {
-  /*border: 0;*/
   border-bottom: 0.0625rem solid;
 }
 
@@ -904,6 +882,10 @@ body,
 #fork .f-nav-admin-links,
 #fork .f-nav-admin-one-column-links {
   margin-right: 3.75rem;
+}
+
+#fork .f-admin-menu .f-menu-item:first-child .f-menu-a {
+  border-top: 0.0625rem dotted;
 }
 
 @media screen and (min-width: 50rem) {
@@ -1352,18 +1334,14 @@ body,
 }
 
 #fork .f-forum h3 {
-/*  font-family: Arial, Helvetica, sans-serif;  */
-  font-weight: normal;
-  /*font-size: 1rem;*/
-  position: relative;
   display: block;
-  /*word-break: break-all;*/
+  font-weight: normal;
+  position: relative;
 }
 
 #fork .f-cmposter,
 #fork .f-cmforum {
   font-size: 0.875rem;
-  float: left;
 }
 
 #fork .f-cmforum:before {
@@ -1498,8 +1476,6 @@ body,
   opacity: 1;
 }
 
-
-
 #fork .f-post-footer-add {
   display: none;
 }
@@ -1507,7 +1483,6 @@ body,
 #fork .f-post-footer li {
   display: inline;
 }
-
 
 #fork .f-post-signature {
   font-size: 0.875rem;
@@ -1712,14 +1687,17 @@ body,
 }
 
 @media screen and (min-width: 50rem) {
-  #fork .f-fdiv .f-field-w1 {
-    width: 30%;
-    float: left;
+  #fork #id-fs-uesm {
+    display: flex;
+    flex-wrap: wrap;
   }
 
-  #fork .f-fdiv .f-field-w2 {
+  #fork .f-field-w1 {
+    width: 30%;
+  }
+
+  #fork .f-field-w2 {
     width: 70%;
-    float: left;
   }
 }
 
@@ -1923,11 +1901,16 @@ body,
   background: gray;
 }
 
+#fork .f-editforums-form .f-btns {
+  display: flex;
+  flex-direction: column;
+}
+
 #fork .f-editforums-form .f-btn[data-name=new],
 #fork .f-editforum-form .f-btn[name=reset] {
-  float: right;
   width: auto;
   margin-bottom: 0.625rem;
+  margin-left: auto;
 }
 
 #fork .f-btn.f-disabled {
@@ -2008,10 +1991,6 @@ body,
   word-break: break-all;
 }
 
-#fork .f-post-search .f-post-posted {
-  float: none;
-}
-
 #fork .f-psh-topic:before,
 #fork .f-post-search .f-post-posted:before {
   content: "»";
@@ -2020,15 +1999,20 @@ body,
 }
 
 @media screen and (min-width: 50rem) {
-  #fork .f-search-form .f-fdiv .f-field-w3 {
-    width: 50%;
-    float: left;
+  #fork #id-fs-what,
+  #fork #id-fs-where,
+  #fork #id-fs-how,
+  #fork #id-fs-users {
+    display: flex;
+    flex-wrap: wrap;
   }
 
-  #fork .f-search-form .f-fdiv .f-field-w4,
-  #fork .f-userlist-form .f-fdiv .f-field-w4 {
+  #fork .f-field-w3 {
+    width: 50%;
+  }
+
+  #fork .f-field-w4 {
     width: 33.33%;
-    float: left;
   }
 
   #fork .f-search-form .f-label,
