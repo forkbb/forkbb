@@ -3,9 +3,9 @@
 @if ($p->stats)
       <dl class="f-stboard">
         <dt>{!! __('Board stats') !!}</dt>
-        <dd>{!! __('No of users') !!} <strong>{!! num($p->stats->userTotal) !!}</strong></dd>
-        <dd>{!! __('No of topics') !!} <strong>{!! num($p->stats->topicTotal) !!}</strong></dd>
-        <dd>{!! __('No of posts') !!} <strong>{!! num($p->stats->postTotal) !!}</strong></dd>
+        <dd>{!! __('No of users') !!} <b>{!! num($p->stats->userTotal) !!}</b></dd>
+        <dd>{!! __('No of topics') !!} <b>{!! num($p->stats->topicTotal) !!}</b></dd>
+        <dd>{!! __('No of posts') !!} <b>{!! num($p->stats->postTotal) !!}</b></dd>
       </dl>
 @endif
       <dl class="f-stusers">

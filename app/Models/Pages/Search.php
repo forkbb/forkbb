@@ -255,6 +255,7 @@ class Search extends Page
                         'html'  => true,
                     ],
                     'keywords' => [
+                        'class'     => 'w0',
                         'type'      => 'text',
                         'maxlength' => 100,
                         'caption'   => \ForkBB\__('Keyword search'),

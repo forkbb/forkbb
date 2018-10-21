@@ -147,6 +147,7 @@ class Userlist extends Page
 
         if ($this->user->searchUsers) {
             $fields['name'] = [
+                'class'     => 'w0',
                 'type'      => 'text',
                 'maxlength' => 25,
                 'value'     => $v->name ?: '*',

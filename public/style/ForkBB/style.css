@@ -154,7 +154,7 @@ body,
 }
 
 #fork dl {
-  width: 100%;
+/*  width: 100%; */
 }
 
 #fork textarea {
@@ -1690,6 +1690,10 @@ body,
   #fork #id-fs-uesm {
     display: flex;
     flex-wrap: wrap;
+  }
+
+  #fork .f-field-w0 {
+    width: 100%;
   }
 
   #fork .f-field-w1 {

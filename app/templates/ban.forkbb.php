@@ -7,7 +7,7 @@
 @endif
 @if ($p->ban['message'])
       <p>{!! __('Ban message 3') !!}</p>
-      <p><strong>{{ $p->ban['message'] }}</strong></p>
+      <p><b>{{ $p->ban['message'] }}</b></p>
 @endif
       <p>{!! __('Ban message 4', $p->adminEmail, $p->adminEmail) !!}</p>
     </section>
