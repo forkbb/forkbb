@@ -1576,6 +1576,7 @@ body,
   #fork .f-post-user {
     flex-direction: column;
     width: 13rem;
+    border-right: 0.0625rem solid #AA7939;
   }
 
   #fork .f-user-info-first {
@@ -1602,7 +1603,6 @@ body,
   #fork .f-post-btns {
     width: calc(100% - 13rem);
     position: relative;
-    border-left: 0.0625rem solid #AA7939;
   }
 
   #fork .f-post-footer {
@@ -1616,6 +1616,7 @@ body,
     width: 13rem;
     padding: 0 0.625rem 0.625rem 0.625rem;
     background-color: #F8F4E3;
+    border-right: 0.0625rem solid #AA7939;
   }
 
   #fork .f-userstatus {
