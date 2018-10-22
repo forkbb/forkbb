@@ -20,7 +20,6 @@ class Rules extends Page
         $this->title      = \ForkBB\__('Forum rules');
         $this->crumbs     = $this->crumbs([$this->c->Router->link('Rules'), \ForkBB\__('Forum rules')]);
         $this->rules      = $this->c->config->o_rules_message;
-        $this->formAction = null;
 
         return $this;
     }
@@ -41,10 +40,41 @@ class Rules extends Page
         $this->title      = \ForkBB\__('Forum rules');
         $this->crumbs     = $this->crumbs(\ForkBB\__('Forum rules'), [$this->c->Router->link('Register'), \ForkBB\__('Register')]);
         $this->rules      = $this->c->config->o_rules == '1' ? $this->c->config->o_rules_message : \ForkBB\__('If no rules');
-        $this->formAction = $this->c->Router->link('RegisterForm');
-        $this->formToken  = $this->c->Csrf->create('RegisterForm');
-        $this->formHash   = $this->c->Csrf->create('Register');
+        $this->form       = $this->formAgree();
 
         return $this;
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     *
+     * @return array
+     */
+    protected function formAgree()
+    {
+        return [
+            'action' => $this->c->Router->link('RegisterForm'),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('RegisterForm'),
+            ],
+            'sets'   => [
+                'agree' => [
+                    'fields' => [
+                        'agree' => [
+                            'type'    => 'checkbox',
+                            'label'   => \ForkBB\__('Agree'),
+                            'value'   => $this->c->Csrf->create('Register'),
+                        ],
+                    ],
+                ],
+            ],
+            'btns'   => [
+                'register' => [
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__('Register'),
+                    'accesskey' => 's',
+                ],
+            ],
+        ];
     }
 }
