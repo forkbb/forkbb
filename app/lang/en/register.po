@@ -21,8 +21,8 @@ msgstr "Treat other people the way you want to be treated yourself."
 msgid "Bad agree"
 msgstr "ID forms obsolete. Please begin <a href=\"%s\">registration</a> again."
 
-msgid "Reg cancel redirect"
-msgstr "No you agree with the forum rules. Registration cancelled. Redirecting …"
+msgid "Reg cancel"
+msgstr "You did not agree with the rules of this board."
 
 msgid "Registration flood"
 msgstr "A new user was registered with the same IP address as you within the last hour. To prevent registration flooding, at least an hour has to pass between registrations from the same IP. Sorry for the inconvenience."

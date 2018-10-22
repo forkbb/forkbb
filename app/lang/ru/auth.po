@@ -24,8 +24,8 @@ msgstr "Аккаунт не активирован."
 msgid "Wrong user/pass"
 msgstr "Неверное имя и/или кодовая фраза. Имя и кодовая фраза чувствительны к регистру!"
 
-msgid "Forgotten pass"
-msgstr "Забыли?"
+msgid "<a href=\"%s\">Forgotten?</a>"
+msgstr "<a href=\"%s\">Забыли?</a>"
 
 msgid "Login redirect"
 msgstr "Успешный вход. Переадресация &hellip;"

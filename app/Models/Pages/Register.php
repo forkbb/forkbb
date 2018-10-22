@@ -47,7 +47,7 @@ class Register extends Page
 
         // нет согласия с правилами
         if (isset($this->fIswev['cancel'])) {
-            return $this->c->Redirect->page('Index')->message('Reg cancel redirect');
+            return $this->c->Message->message('Reg cancel', true, 403);
         }
 
         $this->fIndex     = 'register';
@@ -55,14 +55,70 @@ class Register extends Page
         $this->onlinePos  = 'register';
         $this->titles     = \ForkBB\__('Register');
         $this->robots     = 'noindex';
-        $this->formAction = $this->c->Router->link('RegisterForm');
-        $this->formToken  = $this->c->Csrf->create('RegisterForm');
-        $this->agree      = $v->agree;
-        $this->on         = '1';
-        $this->email      = $v->email;
-        $this->username   = $v->username;
+        $this->form       = $this->formReg($v);
 
         return $this;
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     *
+     * @param Validator $v
+     *
+     * @return array
+     */
+    protected function formReg(Validator $v)
+    {
+        return [
+            'action' => $this->c->Router->link('RegisterForm'),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('RegisterForm'),
+                'agree' => $v->agree,
+                'on'    => '1',
+            ],
+            'sets'   => [
+                'reg' => [
+                    'fields' => [
+                        'email' => [
+                            'autofocus' => true,
+                            'class'     => 'hint',
+                            'type'      => 'text',
+                            'maxlength' => 80,
+                            'value'     => $v->email,
+                            'caption'   => \ForkBB\__('Email'),
+                            'info'      => \ForkBB\__('Email info'),
+                            'required'  => true,
+                            'pattern'   => '.+@.+',
+                        ],
+                        'username' => [
+                            'class'     => 'hint',
+                            'type'      => 'text',
+                            'maxlength' => 25,
+                            'value'     => $v->username,
+                            'caption'   => \ForkBB\__('Username'),
+                            'info'      => \ForkBB\__('Login format'),
+                            'required'  => true,
+                            'pattern'   => '^.{2,25}$',
+                        ],
+                        'password' => [
+                            'class'     => 'hint',
+                            'type'      => 'password',
+                            'caption'   => \ForkBB\__('Passphrase'),
+                            'info'      => \ForkBB\__('Pass format') . ' ' . \ForkBB\__('Pass info'),
+                            'required'  => true,
+                            'pattern'   => '^.{16,}$',
+                        ],
+                    ],
+                ],
+            ],
+            'btns'   => [
+                'register' => [
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__('Sign up'),
+                    'accesskey' => 's',
+                ],
+            ],
+        ];
     }
 
     /**
@@ -163,13 +219,13 @@ class Register extends Page
             // форма сброса пароля
             } else {
                 $auth = $this->c->Auth;
-                $auth->fIswev = ['w' => [\ForkBB\__('Error welcom mail', $this->c->config->o_admin_email)]];
+                $auth->fIswev = ['w', \ForkBB\__('Error welcom mail', $this->c->config->o_admin_email)];
                 return $auth->forget(['_email' => $v->email], 'GET');
             }
         // форма логина
         } else {
             $auth = $this->c->Auth;
-            $auth->fIswev = ['s' => [\ForkBB\__('Reg complete')]];
+            $auth->fIswev = ['s', \ForkBB\__('Reg complete')];
             return $auth->login(['_username' => $v->username], 'GET');
         }
     }
@@ -202,7 +258,7 @@ class Register extends Page
         $this->c->Lang->load('register');
 
         $auth = $this->c->Auth;
-        $auth->fIswev = ['s' => [\ForkBB\__('Reg complete')]];
+        $auth->fIswev = ['s', \ForkBB\__('Reg complete')];
         return $auth->login(['_username' => $user->username], 'GET');
     }
 }

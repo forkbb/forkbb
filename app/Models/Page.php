@@ -293,7 +293,7 @@ abstract class Page extends Model
         if (empty($this->a['fIswev'])) {
             $this->a['fIswev'] = [];
         }
-        if (isset($val[0]) && isset($val[1]) && \is_string($val[0]) && \is_string($val[1])) {
+        if (isset($val[0], $val[1]) && \is_string($val[0]) && \is_string($val[1])) {
             $this->a['fIswev'][$val[0]][] = $val[1];
         } else {
             $this->a['fIswev'] = \array_merge_recursive((array) $this->a['fIswev'], $val);

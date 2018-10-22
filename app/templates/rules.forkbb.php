@@ -20,7 +20,7 @@
       <div id="id-rules">{!! $p->rules !!}</div>
 @if ($form = $p->form)
       <div class="f-fdiv f-lrdiv">
-    @include('layouts/form')
+    @include ('layouts/form')
       </div>
 @endif
     </section>

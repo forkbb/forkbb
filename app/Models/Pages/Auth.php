@@ -72,15 +72,66 @@ class Auth extends Page
         $this->onlinePos  = 'login';
         $this->robots     = 'noindex';
         $this->titles     = \ForkBB\__('Login');
-        $this->formAction = $this->c->Router->link('Login');
-        $this->formToken  = $this->c->Csrf->create('Login');
-        $this->forgetLink = $this->c->Router->link('Forget');
         $this->regLink    = $this->c->config->o_regs_allow == '1' ? $this->c->Router->link('Register') : null;
-        $this->username   = $v ? $v->username : (isset($args['_username']) ? $args['_username'] : '');
-        $this->redirect   = $v ? $v->redirect : $this->c->Router->validate($ref, 'Index');
-        $this->save       = $v ? $v->save : 1;
+
+        $username         = $v ? $v->username : (isset($args['_username']) ? $args['_username'] : '');
+        $save             = $v ? $v->save : 1;
+        $redirect         = $v ? $v->redirect : $this->c->Router->validate($ref, 'Index');
+        $this->form       = $this->formLogin($username, $save, $redirect);
 
         return $this;
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     *
+     * @param array $args
+     *
+     * @return array
+     */
+    protected function formLogin($username, $save, $redirect)
+    {
+        return [
+            'action' => $this->c->Router->link('Login'),
+            'hidden' => [
+                'token'    => $this->c->Csrf->create('Login'),
+                'redirect' => $redirect,
+            ],
+            'sets'   => [
+                'login' => [
+                    'fields' => [
+                        'username' => [
+                            'autofocus' => true,
+                            'type'      => 'text',
+                            'value'     => $username,
+                            'caption'   => \ForkBB\__('Username'),
+                            'required'  => true,
+                        ],
+                        'password' => [
+                            'id'        => 'passinlogin',
+                            'autofocus' => true,
+                            'type'      => 'password',
+                            'caption'   => \ForkBB\__('Passphrase'),
+                            'info'      => \ForkBB\__('<a href="%s">Forgotten?</a>', $this->c->Router->link('Forget')),
+                            'required'  => true,
+                        ],
+                        'save' => [
+                            'type'    => 'checkbox',
+                            'label'   => \ForkBB\__('Remember me'),
+                            'value'   => '1',
+                            'checked' => $save,
+                        ],
+                    ],
+                ],
+            ],
+            'btns'   => [
+                'login' => [
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__('Sign in'),
+                    'accesskey' => 's',
+                ],
+            ],
+        ];
     }
 
     /**
@@ -196,11 +247,51 @@ class Auth extends Page
         $this->onlinePos  = 'passphrase_reset';
         $this->robots     = 'noindex';
         $this->titles     = \ForkBB\__('Passphrase reset');
-        $this->formAction = $this->c->Router->link('Forget');
-        $this->formToken  = $this->c->Csrf->create('Forget');
-        $this->email      = $v ? $v->email : (isset($args['_email']) ? $args['_email'] : '');
+
+        $email            = $v ? $v->email : (isset($args['_email']) ? $args['_email'] : '');
+        $this->form       = $this->formForget($email);
 
         return $this;
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     *
+     * @param string $email
+     *
+     * @return array
+     */
+    protected function formForget($email)
+    {
+        return [
+            'action' => $this->c->Router->link('Forget'),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('Forget'),
+            ],
+            'sets'   => [
+                'forget' => [
+                    'fields' => [
+                        'email' => [
+                            'autofocus' => true,
+                            'type'      => 'text',
+                            'maxlength' => 80,
+                            'value'     => $email,
+                            'caption'   => \ForkBB\__('Email'),
+                            'info'      => \ForkBB\__('Passphrase reset info'),
+                            'required'  => true,
+                            'pattern'   => '.+@.+',
+                        ],
+                    ],
+                ],
+            ],
+            'btns'   => [
+                'submit' => [
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__('Send email'),
+                    'accesskey' => 's',
+                ],
+            ],
+        ];
     }
 
     /**
@@ -213,12 +304,12 @@ class Auth extends Page
      */
     public function changePass(array $args, $method)
     {
-        // что-то пошло не так
         if (! \hash_equals($args['hash'], $this->c->Secury->hash($args['email'] . $args['key']))
             || ! ($user = $this->c->users->load($args['email'], 'email')) instanceof User
             || empty($user->activate_string)
             || ! \hash_equals($user->activate_string, $args['key'])
         ) {
+            // что-то пошло не так
             return $this->c->Message->message('Bad request', false);
         }
 
@@ -267,9 +358,53 @@ class Auth extends Page
         $this->onlinePos  = 'change_passphrase';
         $this->robots     = 'noindex';
         $this->titles     = \ForkBB\__('Passphrase reset');
-        $this->formAction = $this->c->Router->link('ChangePassword', $args);
-        $this->formToken  = $this->c->Csrf->create('ChangePassword', $args);
+        $this->form       = $this->formChange($args);
 
         return $this;
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     *
+     * @param array $args
+     *
+     * @return array
+     */
+    protected function formChange(array $args)
+    {
+        return [
+            'action' => $this->c->Router->link('ChangePassword', $args),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('ChangePassword', $args),
+            ],
+            'sets'   => [
+                'forget' => [
+                    'fields' => [
+                        'password' => [
+                            'autofocus' => true,
+                            'type'      => 'password',
+                            'caption'   => \ForkBB\__('New pass'),
+                            'required'  => true,
+                            'pattern'   => '^.{16,}$',
+                        ],
+                        'password2' => [
+                            'autofocus' => true,
+                            'type'      => 'password',
+                            'caption'   => \ForkBB\__('Confirm new pass'),
+                            'info'      => \ForkBB\__('Pass format') . ' ' . \ForkBB\__('Pass info'),
+                            'required'  => true,
+                            'pattern'   => '^.{16,}$',
+                        ],
+                    ],
+                ],
+            ],
+            'btns'   => [
+                'login' => [
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__('Change passphrase'),
+                    'accesskey' => 's',
+                ],
+            ],
+        ];
     }
 }
