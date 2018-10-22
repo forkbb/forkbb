@@ -71,6 +71,7 @@ trait PostFormTrait
 
         if ($editSubject) {
             $fieldset['subject'] = [
+                'class'     => 'w0',
                 'type'      => 'text',
                 'maxlength' => 70,
                 'caption'   => \ForkBB\__('Subject'),
@@ -82,6 +83,7 @@ trait PostFormTrait
         }
 
         $fieldset['message'] = [
+            'class'    => 'w0',
             'type'     => 'textarea',
             'caption'  => \ForkBB\__('Message'),
             'required' => true,
