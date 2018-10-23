@@ -85,7 +85,9 @@ class Auth extends Page
     /**
      * Подготавливает массив данных для формы
      *
-     * @param array $args
+     * @param string $username
+     * @param mixed $save
+     * @param string $redirect
      *
      * @return array
      */

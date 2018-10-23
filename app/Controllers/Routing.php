@@ -59,7 +59,9 @@ class Routing
         // просмотр разрешен
         if ('1' == $user->g_read_board) {
             // главная
-            $r->add('GET', '/', 'Index:view', 'Index');
+            $r->add('GET', '/',           'Index:view', 'Index');
+            $r->add('GET', '/index.php',  'Redirect:toIndex');
+            $r->add('GET', '/index.html', 'Redirect:toIndex');
             // правила
             if ('1' == $config->o_rules && (! $user->isGuest || '1' == $config->o_regs_allow)) {
                 $r->add('GET', '/rules', 'Rules:view', 'Rules');

@@ -13,7 +13,7 @@ class Redirect extends Page
      */
     public function toIndex()
     {
-        return $this->page('Index')->message('Redirecting to index');
+        return $this->page('Index'); //->message('Redirecting to index');
     }
 
     /**
