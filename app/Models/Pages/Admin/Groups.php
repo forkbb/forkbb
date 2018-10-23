@@ -293,8 +293,6 @@ class Groups extends Admin
             $group->$attr = $value;
         }
 
-        $this->c->DB->beginTransaction();
-
         if (null === $group->g_id) {
             $message = \ForkBB\__('Group added redirect');
             $this->c->groups->insert($group);
@@ -308,8 +306,6 @@ class Groups extends Admin
                 $this->c->users->promote($group);
             }
         }
-
-        $this->c->DB->commit();
 
         $this->c->Cache->delete('forums_mark');
 
@@ -652,15 +648,11 @@ class Groups extends Admin
                 return $this->c->Redirect->page('AdminGroups')->message('No confirm redirect');
             }
 
-            $this->c->DB->beginTransaction();
-
             if ($v->movegroup) {
                 $this->c->groups->delete($group, $this->c->groups->get($v->movegroup));
             } else {
                 $this->c->groups->delete($group);
             }
-
-            $this->c->DB->commit();
 
             return $this->c->Redirect->page('AdminGroups')->message('Group removed redirect');
         }

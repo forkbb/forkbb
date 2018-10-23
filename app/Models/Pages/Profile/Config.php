@@ -66,11 +66,7 @@ class Config extends Profile
 
                 $this->curUser->replAttrs($data, true);
 
-                $this->c->DB->beginTransaction();
-
                 $this->c->users->update($this->curUser);
-
-                $this->c->DB->commit();
 
                 return $this->c->Redirect->page('EditUserBoardConfig', ['id' => $this->curUser->id])->message('Board configuration redirect');
             }

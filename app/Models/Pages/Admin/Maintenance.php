@@ -36,13 +36,9 @@ class Maintenance extends Admin
                 ]);
 
             if ($v->validation($_POST)) {
-                $this->c->DB->beginTransaction();
-
                 $this->c->config->o_maintenance         = $v->o_maintenance;
                 $this->c->config->o_maintenance_message = $v->o_maintenance_message;
                 $this->c->config->save();
-
-                $this->c->DB->commit();
 
                 return $this->c->Redirect->page('AdminMaintenance')->message('Data updated redirect');
             }
@@ -200,8 +196,6 @@ class Maintenance extends Admin
             return $this->view([], 'GET');
         }
 
-        $this->c->DB->beginTransaction();
-
         @\set_time_limit(0);
 
         if ('POST' === $method && $v->clear) {
@@ -209,8 +203,6 @@ class Maintenance extends Admin
         }
 
         $last = $this->c->posts->rebuildIndex($v->start, $v->limit, $v->clear ? 'add' : 'edit');
-
-        $this->c->DB->commit();
 
         if ($last) {
             $args = [

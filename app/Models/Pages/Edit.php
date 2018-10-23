@@ -77,8 +77,6 @@ class Edit extends Page
      */
     protected function endEdit(Post $post, Validator $v)
     {
-        $this->c->DB->beginTransaction();
-
         $now         = \time();
         $executive   = $this->user->isAdmin || $this->user->isModerator($post);
         $topic       = $post->parent;
@@ -147,8 +145,6 @@ class Edit extends Page
         }
 
         $this->c->search->index($post, 'edit');
-
-        $this->c->DB->commit();
 
         return $this->c->Redirect
             ->page('ViewPost', ['id' => $post->id])

@@ -33,8 +33,6 @@ class Categories extends Admin
                 ]);
 
             if ($v->validation($_POST)) {
-                $this->c->DB->beginTransaction();
-
                 foreach ($v->form as $key => $row) {
                     $this->c->categories->set($key, $row);
                 }
@@ -43,8 +41,6 @@ class Categories extends Admin
                 if (\strlen($v->new) > 0) {
                     $this->c->categories->insert($v->new); //????
                 }
-
-                $this->c->DB->commit();
 
                 $this->c->Cache->delete('forums_mark'); //????
 
@@ -153,11 +149,7 @@ class Categories extends Admin
                 return $this->c->Redirect->page('AdminCategories')->message('No confirm redirect');
             }
 
-            $this->c->DB->beginTransaction();
-
             $this->c->categories->delete((int) $args['id']);
-
-            $this->c->DB->commit();
 
             $this->c->Cache->delete('forums_mark'); //????
 

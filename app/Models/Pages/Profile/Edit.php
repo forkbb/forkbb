@@ -118,11 +118,7 @@ class Edit extends Profile
 
                 $this->curUser->replAttrs($data, true);
 
-                $this->c->DB->beginTransaction();
-
                 $this->c->users->update($this->curUser);
-
-                $this->c->DB->commit();
 
                 return $this->c->Redirect->page('EditUserProfile', ['id' => $this->curUser->id])->message('Profile redirect');
             } else {

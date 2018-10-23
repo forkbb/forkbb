@@ -116,11 +116,7 @@ class Action extends Users
                 }
             }
 
-            $this->c->DB->beginTransaction();
-
             $this->c->users->delete(...$this->userList);
-
-            $this->c->DB->commit();
 
             $this->c->Cache->delete('stats');       //???? перенести в manager
             $this->c->Cache->delete('forums_mark'); //???? с авто обновлением кеша
@@ -242,11 +238,7 @@ class Action extends Users
                 return $this->c->Redirect->page('AdminUsers')->message('No confirm redirect');
             }
 
-            $this->c->DB->beginTransaction();
-
             $this->c->users->changeGroup($v->new_group, ...$this->userList);
-
-            $this->c->DB->commit();
 
             $this->c->Cache->delete('stats');       //???? перенести в manager
             $this->c->Cache->delete('forums_mark'); //???? с авто обновлением кеша

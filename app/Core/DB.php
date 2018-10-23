@@ -73,6 +73,8 @@ class DB extends PDO
         ];
 
         parent::__construct($dsn, $username, $password, $options);
+
+        $this->beginTransaction();
     }
 
     /**

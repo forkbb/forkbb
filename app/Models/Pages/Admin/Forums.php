@@ -100,15 +100,11 @@ class Forums extends Admin
                 ]);
 
             if ($v->validation($_POST)) {
-                $this->c->DB->beginTransaction();
-
                 foreach ($v->form as $key => $row) {
                     $forum = $this->c->forums->get((int) $key);
                     $forum->disp_position = $row['disp_position'];
                     $this->c->forums->update($forum);
                 }
-
-                $this->c->DB->commit();
 
                 $this->c->Cache->delete('forums_mark'); //????
 
@@ -232,11 +228,7 @@ class Forums extends Admin
                 return $this->c->Redirect->page('AdminForums')->message('No confirm redirect');
             }
 
-            $this->c->DB->beginTransaction();
-
             $this->c->forums->delete($forum);
-
-            $this->c->DB->commit();
 
             $this->c->Cache->delete('forums_mark'); //????
 
@@ -363,8 +355,6 @@ class Forums extends Admin
             }
 
             if ($valid) {
-                $this->c->DB->beginTransaction();
-
                 if ($v->reset) {
                     $message = 'Perms reverted redirect';
                     $this->c->groups->Perm->reset($forum);
@@ -380,8 +370,6 @@ class Forums extends Admin
 
                     $this->c->groups->Perm->update($forum, $v->perms);
                 }
-
-                $this->c->DB->commit();
 
                 $this->c->Cache->delete('forums_mark');
 

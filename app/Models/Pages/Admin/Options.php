@@ -108,11 +108,7 @@ class Options extends Admin
             }
 
             if ($valid) {
-                $this->c->DB->beginTransaction();
-
                 $config->save();
-
-                $this->c->DB->commit();
 
                 return $this->c->Redirect->page('AdminOptions')->message('Options updated redirect');
             }

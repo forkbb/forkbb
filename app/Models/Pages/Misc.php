@@ -24,11 +24,7 @@ class Misc extends Page
             return $this->c->Redirect->url($forum->link)->message('Bad token');
         }
 
-        $this->c->DB->beginTransaction();
-
         $this->c->forums->markread($forum, $this->user); // ???? флуд интервал?
-
-        $this->c->DB->commit();
 
         $this->c->Lang->load('misc');
 

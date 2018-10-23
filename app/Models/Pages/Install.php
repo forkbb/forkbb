@@ -492,8 +492,6 @@ class Install extends Page
         @\set_time_limit(0);
         $this->c->Cache->clear();
 
-        $this->c->DB->beginTransaction();
-
         // bans
         $schema = [
             'FIELDS' => [
@@ -1167,8 +1165,6 @@ class Install extends Page
         foreach ($smilies as $text => $img) {
             $this->c->DB->exec('INSERT INTO ::smilies (image, text, disp_position) VALUES(?s, ?s, ?i)', [$img, $text, $i++]); //????
         }
-
-        $this->c->DB->commit();
 
         $config = @\file_get_contents($this->c->DIR_CONFIG . '/main.dist.php');
         if (false === $config) {

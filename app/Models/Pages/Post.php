@@ -122,8 +122,6 @@ class Post extends Page
      */
     protected function endPost(Model $model, Validator $v)
     {
-        $this->c->DB->beginTransaction();
-
         $now       = \time();
         $username  = $this->user->isGuest ? $v->username : $this->user->username;
         $merge     = false;
@@ -235,8 +233,6 @@ class Post extends Page
         } else {
             $this->c->search->index($post);
         }
-
-        $this->c->DB->commit();
 
         return $this->c->Redirect
             ->page('ViewPost', ['id' => $merge ? $lastPost->id : $post->id])

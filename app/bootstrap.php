@@ -58,9 +58,16 @@ while (! $page instanceof Page && $cur = \array_pop($controllers)) {
 if (null !== $page->onlinePos) {
     $c->Online->calc($page);
 }
+
 $tpl = $c->View->rendering($page);
+
+if ($c->isInit('DB')) {
+    $c->DB->commit();
+}
+
 if (null !== $tpl && $c->DEBUG > 0) {
     $debug = $c->View->rendering($c->Debug->debug());
     $tpl = \str_replace('<!-- debuginfo -->', $debug, $tpl);
 }
+
 exit($tpl);

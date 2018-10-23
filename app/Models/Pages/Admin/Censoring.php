@@ -31,14 +31,10 @@ class Censoring extends Admin
                 ]);
 
             if ($v->validation($_POST)) {
-                $this->c->DB->beginTransaction();
-
                 $this->c->config->o_censoring = $v->o_censoring;
                 $this->c->config->save();
 
                 $this->c->censorship->save($v->form);
-
-                $this->c->DB->commit();
 
                 $this->c->Cache->delete('censorship'); //????
 
