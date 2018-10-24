@@ -182,3 +182,24 @@ msgstr ""
 
 msgid "Forum indent"
 msgstr "◦ ◦ "
+
+msgid "There is no word for search: '%s'"
+msgstr "There is no word for search: '%s'"
+
+msgid "Logical operator at the end of the search query: '%s'"
+msgstr "Logical operator at the end of the search query: '%s'"
+
+msgid "The order of brackets is broken: '%s'"
+msgstr "The order of brackets is broken: '%s'"
+
+msgid "Empty subquery: '%s'"
+msgstr "Empty subquery: '%s'"
+
+msgid "Logical operator at the end of the search subquery: '%s'"
+msgstr "Logical operator at the end of the search subquery: '%s'"
+
+msgid "Logical operator at the beginning of the search (sub)query: '%s'"
+msgstr "Logical operator at the beginning of the search (sub)query: '%s'"
+
+msgid "Logical operators follow one after another: '%s'"
+msgstr "Logical operators follow one after another: '%s'"

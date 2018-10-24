@@ -25,7 +25,7 @@ msgid "Search criteria legend"
 msgstr "Условия поиска"
 
 msgid "Search info"
-msgstr "Введите одно или несколько слов для поиска. Отделяйте слова пробелами. Используйте условия AND, OR и NOT. Вы можете дополнить условие, указав автора сообщений. Используйте символ звездочки (*) для поиска по части слова."
+msgstr "Введите одно или несколько слов для поиска. Отделяйте слова пробелами. Используйте AND, OR и NOT для уточнения поиска. Вы можете дополнить условие, указав автора сообщений. Используйте символ звездочки (*) для поиска по части слова."
 
 msgid "Keyword search"
 msgstr "Ключевое слово или фраза"
@@ -182,3 +182,24 @@ msgstr ""
 
 msgid "Forum indent"
 msgstr "◦ ◦ "
+
+msgid "There is no word for search: '%s'"
+msgstr "Нет слов для поиска: '%s'"
+
+msgid "Logical operator at the end of the search query: '%s'"
+msgstr "Логический оператор в конце запроса: '%s'"
+
+msgid "The order of brackets is broken: '%s'"
+msgstr "Нарушен порядок скобок: '%s'"
+
+msgid "Empty subquery: '%s'"
+msgstr "Пустой подзапрос: '%s'"
+
+msgid "Logical operator at the end of the search subquery: '%s'"
+msgstr "Логический оператор в конце подзапроса: '%s'"
+
+msgid "Logical operator at the beginning of the search (sub)query: '%s'"
+msgstr "Логический оператор в начале (под)запроса: '%s'"
+
+msgid "Logical operators follow one after another: '%s'"
+msgstr "Логические операторы следуют друг за другом: '%s'"

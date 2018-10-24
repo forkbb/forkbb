@@ -85,9 +85,9 @@ class Prepare extends Method
                         if (! $keyword) {
                             $keyword = true;
                         } elseif (empty($words)) {
-                            $error = 'Syntactic word at the beginning of the search (sub)query: \'%s\'';
+                            $error = 'Logical operator at the beginning of the search (sub)query: \'%s\'';
                         } else {
-                            $error = 'Syntactic words follow one after another: \'%s\'';
+                            $error = 'Logical operators follow one after another: \'%s\'';
                         }
                         $words[] = $key;
                         break;
@@ -101,7 +101,7 @@ class Prepare extends Method
                         if (! $count) {
                             $error = 'Empty subquery: \'%s\'';
                         } elseif ($keyword) {
-                            $error = 'Syntactic word at the end of the search subquery: \'%s\'';
+                            $error = 'Logical operator at the end of the search subquery: \'%s\'';
                         }
                         if (empty($stack)) {
                             $error = 'The order of brackets is broken: \'%s\'';
@@ -160,7 +160,7 @@ class Prepare extends Method
         if (! $count) {
             $error = 'There is no word for search: \'%s\'';
         } elseif ($keyword) {
-            $error = 'Syntactic word at the end of the search query: \'%s\'';
+            $error = 'Logical operator at the end of the search query: \'%s\'';
         } elseif (! empty($stack)) {
             $error = 'The order of brackets is broken: \'%s\'';
         }
