@@ -50,6 +50,22 @@ class Categories extends Admin
             $this->fIswev  = $v->getErrors();
         }
 
+        $this->nameTpl   = 'admin/form';
+        $this->aIndex    = 'categories';
+        $this->form      = $this->formEdit();
+        $this->classForm = 'editcategories';
+        $this->titleForm = \ForkBB\__('Categories');
+
+        return $this;
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     *
+     * @return array
+     */
+    protected function formEdit()
+    {
         $form = [
             'action' => $this->c->Router->link('AdminCategories'),
             'hidden' => [
@@ -96,6 +112,7 @@ class Categories extends Admin
                 'fields' => $fields,
             ];
         }
+
         $form['sets']['new-cat'] = [
             'fields' => [
                 'new' => [
@@ -108,14 +125,9 @@ class Categories extends Admin
             ],
         ];
 
-        $this->nameTpl   = 'admin/form';
-        $this->aIndex    = 'categories';
-        $this->form      = $form;
-        $this->classForm = 'editcategories';
-        $this->titleForm = \ForkBB\__('Categories');
-
-        return $this;
+        return $form;
     }
+
 
     /**
      * Удаление категорий
@@ -156,17 +168,59 @@ class Categories extends Admin
             return $this->c->Redirect->page('AdminCategories')->message('Category deleted redirect');
         }
 
-        $form = [
+        $this->nameTpl   = 'admin/form';
+        $this->aIndex    = 'categories';
+        $this->aCrumbs[] = [$this->c->Router->link('AdminCategoriesDelete', ['id' => $args['id']]), \ForkBB\__('Delete category head')];
+        $this->aCrumbs[] = \ForkBB\__('"%s"', $category['cat_name']);
+        $this->form      = $this->formDelete($args, $category);
+        $this->classForm = 'deletecategory';
+        $this->titleForm = \ForkBB\__('Delete category head');
+
+        return $this;
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     *
+     * @param array $args
+     * @param array $category
+     *
+     * @return array
+     */
+    protected function formDelete(array $args, array $category)
+    {
+        return [
             'action' => $this->c->Router->link('AdminCategoriesDelete', $args),
             'hidden' => [
                 'token' => $this->c->Csrf->create('AdminCategoriesDelete', $args),
             ],
-            'sets'   => [],
+            'sets'   => [
+                'del' => [
+                    'fields' => [
+                        'confirm' => [
+                            'caption' => \ForkBB\__('Confirm delete'),
+                            'type'    => 'checkbox',
+                            'label'   => \ForkBB\__('I want to delete the category %s', $category['cat_name']),
+                            'value'   => '1',
+                            'checked' => false,
+                        ],
+                    ],
+                ],
+                'del-info' => [
+                    'info' => [
+                        'info1' => [
+                            'type'  => '', //????
+                            'value' => \ForkBB\__('Delete category warn'),
+                            'html'  => true,
+                        ],
+                    ],
+                ],
+            ],
             'btns'   => [
                 'delete' => [
                     'type'      => 'submit',
                     'value'     => \ForkBB\__('Delete category'),
-                    'accesskey' => 'd',
+                    'accesskey' => 's',
                 ],
                 'cancel' => [
                     'type'      => 'btn',
@@ -175,36 +229,5 @@ class Categories extends Admin
                 ],
             ],
         ];
-
-        $form['sets']['del'] = [
-            'fields' => [
-                'confirm' => [
-                    'caption' => \ForkBB\__('Confirm delete'),
-                    'type'    => 'checkbox',
-                    'label'   => \ForkBB\__('I want to delete the category %s', $category['cat_name']),
-                    'value'   => '1',
-                    'checked' => false,
-                ],
-            ],
-        ];
-        $form['sets']['del-info'] = [
-            'info' => [
-                'info1' => [
-                    'type'  => '', //????
-                    'value' => \ForkBB\__('Delete category warn'),
-                    'html'  => true,
-                ],
-            ],
-        ];
-
-        $this->nameTpl   = 'admin/form';
-        $this->aIndex    = 'categories';
-        $this->aCrumbs[] = [$this->c->Router->link('AdminCategoriesDelete', ['id' => $args['id']]), \ForkBB\__('Delete category head')];
-        $this->aCrumbs[] = \ForkBB\__('"%s"', $category['cat_name']);
-        $this->form      = $form;
-        $this->classForm = 'deletecategory';
-        $this->titleForm = \ForkBB\__('Delete category head');
-
-        return $this;
     }
 }

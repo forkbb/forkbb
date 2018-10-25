@@ -152,7 +152,7 @@ class Topic extends Page
         $this->stats        = null;
 
         if ($topic->canReply && $this->c->config->o_quickpost == '1') {
-            $this->form     = $this->messageForm($topic, 'NewReply', ['id' => $topic->id], false, false, true);
+            $this->form     = $this->messageForm(['id' => $topic->id], $topic, 'NewReply', false, false, true);
         }
 
         if ($topic->showViews) {

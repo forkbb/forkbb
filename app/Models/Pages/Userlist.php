@@ -10,25 +10,23 @@ use InvalidArgumentException;
 class Userlist extends Page
 {
     /**
-     * Генерирует список доступных групп пользователей
-     *
-     * @param bool $onlyKeys
+     * Возвращает список доступных групп
      *
      * @return array
      */
-    protected function groups($onlyKeys = false)
+    protected function getgroupList()
     {
-        $groups = [
-            -1 => \ForkBB\__('All users'),
+        $list = [
+            'all' => \ForkBB\__('All users'),
         ];
 
         foreach ($this->c->groups->getList() as $group) {
             if (! $group->groupGuest) {
-                $groups[$group->g_id] = $group->g_title;
+                $list[$group->g_id] = $group->g_title;
             }
         }
 
-        return $onlyKeys ? \array_keys($groups) : $groups;
+        return $list;
     }
 
     /**
@@ -48,7 +46,7 @@ class Userlist extends Page
             ->addRules([
                 'sort'  => $prefix . 'string|in:username,registered' . ($this->user->showPostCount ? ',num_posts' : ''),
                 'dir'   => $prefix . 'string|in:ASC,DESC',
-                'group' => $prefix . 'integer|in:' . \implode(',', $this->groups(true)),
+                'group' => $prefix . 'string|in:' . \implode(',', \array_keys($this->groupList)),
                 'name'  => $prefix . 'string:trim|min:1|max:25' . ($this->user->searchUsers ? '' : '|in:*'),
             ]);
 
@@ -71,10 +69,10 @@ class Userlist extends Page
         }
 
         $filters = [];
-        if ($v->group < 1) {
-            $filters['group_id'] = ['!=', 0];
-        } else {
+        if (\is_numeric($v->group)) {
             $filters['group_id'] = ['=', $v->group];
+        } else {
+            $filters['group_id'] = ['!=', 0];
         }
         if (null !== $v->name) {
             $filters['username'] = ['LIKE', $v->name];
@@ -100,7 +98,7 @@ class Userlist extends Page
             $vars = ['page' => $page];
 
             if (4 === $count) {
-                $vars['group'] = -1;
+                $vars['group'] = 'all';
                 $vars['name']  = '*';
             } else {
                 $vars['group'] = $v->group;
@@ -130,6 +128,27 @@ class Userlist extends Page
             $this->fIswev   = ['i', \ForkBB\__('No users found')];
         }
 
+        $this->fIndex       = 'userlist';
+        $this->nameTpl      = 'userlist';
+        $this->onlinePos    = 'userlist';
+        $this->canonical    = $this->c->Router->link('Userlist', $args);
+        $this->robots       = 'noindex';
+        $this->crumbs       = $this->crumbs([$this->c->Router->link('Userlist'), \ForkBB\__('User list')]);
+        $this->pagination   = $this->c->Func->paginate($pages, $page, 'Userlist', $args);
+        $this->form         = $this->formUserlist($v);
+
+        return $this;
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     *
+     * @param Validator $v
+     *
+     * @return array
+     */
+    protected function formUserlist(Validator $v)
+    {
         $form = [
             'action' => $this->c->Router->link('Userlist'),
             'hidden' => [],
@@ -162,7 +181,7 @@ class Userlist extends Page
         $fields['group'] = [
             'class'   => 'w4',
             'type'    => 'select',
-            'options' => $this->groups(),
+            'options' => $this->groupList,
             'value'   => $v->group,
             'caption' => \ForkBB\__('User group'),
         ];
@@ -189,15 +208,6 @@ class Userlist extends Page
         ];
         $form['sets']['users'] = ['fields' => $fields];
 
-        $this->fIndex       = 'userlist';
-        $this->nameTpl      = 'userlist';
-        $this->onlinePos    = 'userlist';
-        $this->canonical    = $this->c->Router->link('Userlist', $args);
-        $this->robots       = 'noindex';
-        $this->form         = $form;
-        $this->crumbs       = $this->crumbs([$this->c->Router->link('Userlist'), \ForkBB\__('User list')]);
-        $this->pagination   = $this->c->Func->paginate($pages, $page, 'Userlist', $args);
-
-        return $this;
+        return $form;
     }
 }

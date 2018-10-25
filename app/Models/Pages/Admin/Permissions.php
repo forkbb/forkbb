@@ -62,7 +62,7 @@ class Permissions extends Admin
 
         $this->aIndex    = 'permissions';
         $this->nameTpl   = 'admin/form';
-        $this->form      = $this->viewForm($config);
+        $this->form      = $this->formEdit($config);
         $this->titleForm = \ForkBB\__('Permissions head');
         $this->classForm = 'editpermissions';
 
@@ -76,7 +76,7 @@ class Permissions extends Admin
      *
      * @return array
      */
-    protected function viewForm(Config $config)
+    protected function formEdit(Config $config)
     {
         $form = [
             'action' => $this->c->Router->link('AdminPermissions'),

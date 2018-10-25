@@ -114,6 +114,22 @@ class Forums extends Admin
             $this->fIswev  = $v->getErrors();
         }
 
+        $this->nameTpl   = 'admin/form';
+        $this->aIndex    = 'forums';
+        $this->form      = $this->formView();
+        $this->classForm = ['editforums', 'inline'];
+        $this->titleForm = \ForkBB\__('Forums');
+
+        return $this;
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     *
+     * @return array
+     */
+    protected function formView()
+    {
         $form = [
             'action' => $this->c->Router->link('AdminForums'),
             'hidden' => [
@@ -130,7 +146,7 @@ class Forums extends Admin
                 'update' => [
                     'type'      => 'submit',
                     'value'     => \ForkBB\__('Update positions'),
-                    'accesskey' => 'u',
+                    'accesskey' => 's',
                 ],
             ],
         ];
@@ -187,13 +203,7 @@ class Forums extends Admin
             }
         }
 
-        $this->nameTpl   = 'admin/form';
-        $this->aIndex    = 'forums';
-        $this->form      = $form;
-        $this->classForm = ['editforums', 'inline'];
-        $this->titleForm = \ForkBB\__('Forums');
-
-        return $this;
+        return $form;
     }
 
     /**
@@ -235,12 +245,55 @@ class Forums extends Admin
             return $this->c->Redirect->page('AdminForums')->message('Forum deleted redirect');
         }
 
-        $form = [
+        $this->nameTpl   = 'admin/form';
+        $this->aIndex    = 'forums';
+        $this->aCrumbs[] = [$this->c->Router->link('AdminForumsDelete', ['id' => $forum->id]), \ForkBB\__('Delete forum head')];
+        $this->aCrumbs[] = \ForkBB\__('"%s"', $forum->forum_name);
+        $this->form      = $this->formDelete($args, $forum);
+        $this->classForm = 'deleteforum';
+        $this->titleForm = \ForkBB\__('Delete forum head');
+
+        return $this;
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     *
+     * @param array $args
+     * @param Forum $forum
+     *
+     * @return array
+     */
+    protected function formDelete(array $args, Forum $forum)
+    {
+        return [
             'action' => $this->c->Router->link('AdminForumsDelete', $args),
             'hidden' => [
                 'token' => $this->c->Csrf->create('AdminForumsDelete', $args),
             ],
-            'sets'   => [],
+            'sets'   => [
+                'confirm' => [
+                    'fields' => [
+                        'confirm' => [
+                            'caption' => \ForkBB\__('Confirm delete'),
+                            'type'    => 'checkbox',
+                            'label'   => \ForkBB\__('I want to delete forum %s', $forum->forum_name),
+                            'value'   => '1',
+                            'checked' => false,
+                        ],
+                    ],
+                ],
+                [
+                    'info' => [
+                        'info1' => [
+                            'type'  => '', //????
+                            'value' => \ForkBB\__('Delete forum warn'),
+                            'html'  => true,
+                        ],
+                    ],
+                ],
+
+            ],
             'btns'   => [
                 'delete' => [
                     'type'      => 'submit',
@@ -254,37 +307,6 @@ class Forums extends Admin
                 ],
             ],
         ];
-
-        $form['sets'][] = [
-            'fields' => [
-                'confirm' => [
-                    'caption' => \ForkBB\__('Confirm delete'),
-                    'type'    => 'checkbox',
-                    'label'   => \ForkBB\__('I want to delete forum %s', $forum->forum_name),
-                    'value'   => '1',
-                    'checked' => false,
-                ],
-            ],
-        ];
-        $form['sets'][] = [
-            'info' => [
-                'info1' => [
-                    'type'  => '', //????
-                    'value' => \ForkBB\__('Delete forum warn'),
-                    'html'  => true,
-                ],
-            ],
-        ];
-
-        $this->nameTpl   = 'admin/form';
-        $this->aIndex    = 'forums';
-        $this->aCrumbs[] = [$this->c->Router->link('AdminForumsDelete', ['id' => $forum->id]), \ForkBB\__('Delete forum head')];
-        $this->aCrumbs[] = \ForkBB\__('"%s"', $forum->forum_name);
-        $this->form      = $form;
-        $this->classForm = 'deleteforum';
-        $this->titleForm = \ForkBB\__('Delete forum head');
-
-        return $this;
     }
 
     /**
@@ -381,21 +403,21 @@ class Forums extends Admin
 
         $this->nameTpl = 'admin/form';
         $this->aIndex  = 'forums';
-        $this->form    = $this->viewForm($forum, $marker, $args);
+        $this->form    = $this->formEdit($args, $forum, $marker);
 
         return $this;
     }
 
     /**
-     * Формирует данные для формы редактирования раздела
+     * Подготавливает массив данных для формы
      *
+     * @param array $args
      * @param Forum $forum
      * @param string $marker
-     * @param array $args
      *
      * @return array
      */
-    protected function viewForm(Forum $forum, $marker, array $args)
+    protected function formEdit(array $args, Forum $forum, $marker)
     {
         $form = [
             'action' => $this->c->Router->link($marker, $args),

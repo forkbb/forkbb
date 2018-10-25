@@ -125,12 +125,51 @@ class Search extends Page
             $this->fIswev = $v->getErrors();
         }
 
-        $form = [
-            'action' => $this->c->Router->link($marker),
+        $this->fIndex    = 'search';
+        $this->nameTpl   = 'search';
+        $this->onlinePos = 'search';
+        $this->canonical = $this->c->Router->link('Search');
+        $this->robots    = 'noindex';
+        $this->form      = $advanced ? $this->formSearchAdvanced($v) : $this->formSearch($v);
+        $this->crumbs    = $this->crumbs();
+
+        return $this;
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     *
+     * @param Validator $v
+     *
+     * @return array
+     */
+    protected function formSearch(Validator $v = null)
+    {
+        return [
+            'action' => $this->c->Router->link('Search'),
             'hidden' => [
-                'token' => $this->c->Csrf->create($marker),
+                'token' => $this->c->Csrf->create('Search'),
             ],
-            'sets'   => [],
+            'sets'   => [
+                'what' => [
+                    'fields' => [
+                        [
+                            'type'  => 'info',
+                            'value' => \ForkBB\__('<a href="%s">Advanced search</a>', $this->c->Router->link('SearchAdvanced')),
+                            'html'  => true,
+                        ],
+                        'keywords' => [
+                            'class'     => 'w0',
+                            'type'      => 'text',
+                            'maxlength' => 100,
+                            'caption'   => \ForkBB\__('Keyword search'),
+                            'value'     => $v ? $v->keywords : '',
+                            'required'  => true,
+                            'autofocus' => true,
+                        ],
+                    ],
+                ],
+            ],
             'btns'   => [
                 'search' => [
                     'type'      => 'submit',
@@ -139,143 +178,137 @@ class Search extends Page
                 ],
             ],
         ];
+    }
 
-        if ($advanced) {
-            $form['sets']['what'] = [
-                'fields' => [
-                    [
-                        'type'  => 'info',
-                        'value' => \ForkBB\__('<a href="%s">Simple search</a>', $this->c->Router->link('Search')),
-                        'html'  => true,
-                    ],
-                    'keywords' => [
-                        'class'     => 'w2',
-                        'type'      => 'text',
-                        'maxlength' => 100,
-                        'caption'   => \ForkBB\__('Keyword search'),
-                        'value'     => $v ? $v->keywords : '',
-                        'required'  => true,
-                        'autofocus' => true,
-                    ],
-                    'author' => [
-                        'class'     => 'w1',
-                        'type'      => 'text',
-                        'maxlength' => 25,
-                        'caption'   => \ForkBB\__('Author search'),
-                        'value'     => $v ? $v->author : '*',
-                        'required'  => true,
-                    ],
-                    [
-                        'type'  => 'info',
-                        'value' => \ForkBB\__('Search info'),
+    /**
+     * Подготавливает массив данных для формы
+     *
+     * @param Validator $v
+     *
+     * @return array
+     */
+    protected function formSearchAdvanced(Validator $v = null)
+    {
+        return [
+            'action' => $this->c->Router->link('SearchAdvanced'),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('SearchAdvanced'),
+            ],
+            'sets'   => [
+                'what' => [
+                    'fields' => [
+                        [
+                            'type'  => 'info',
+                            'value' => \ForkBB\__('<a href="%s">Simple search</a>', $this->c->Router->link('Search')),
+                            'html'  => true,
+                        ],
+                        'keywords' => [
+                            'class'     => 'w2',
+                            'type'      => 'text',
+                            'maxlength' => 100,
+                            'caption'   => \ForkBB\__('Keyword search'),
+                            'value'     => $v ? $v->keywords : '',
+                            'required'  => true,
+                            'autofocus' => true,
+                        ],
+                        'author' => [
+                            'class'     => 'w1',
+                            'type'      => 'text',
+                            'maxlength' => 25,
+                            'caption'   => \ForkBB\__('Author search'),
+                            'value'     => $v ? $v->author : '*',
+                            'required'  => true,
+                        ],
+                        [
+                            'type'  => 'info',
+                            'value' => \ForkBB\__('Search info'),
+                        ],
                     ],
                 ],
-            ];
-            $form['sets']['where'] = [
-                'legend' => \ForkBB\__('Search in legend'),
-                'fields' => [
-                    'forums' => [
-                        'class'   => 'w3',
-                        'type'    => 'multiselect',
-                        'options' => $this->listForOptions,
-                        'value'   => $v ? \explode('.', $v->forums) : null,
-                        'caption' => \ForkBB\__('Forum search'),
-                        'size'    => \min(\count($this->listForOptions), 10),
-                    ],
-                    'serch_in' => [
-                        'class'   => 'w3',
-                        'type'    => 'select',
-                        'options' => [
-                            0 => \ForkBB\__('Message and subject'),
-                            1 => \ForkBB\__('Message only'),
-                            2 => \ForkBB\__('Topic only'),
+                'where' => [
+                    'legend' => \ForkBB\__('Search in legend'),
+                    'fields' => [
+                        'forums' => [
+                            'class'   => 'w3',
+                            'type'    => 'multiselect',
+                            'options' => $this->listForOptions,
+                            'value'   => $v ? \explode('.', $v->forums) : null,
+                            'caption' => \ForkBB\__('Forum search'),
+                            'size'    => \min(\count($this->listForOptions), 10),
                         ],
-                        'value'   => $v ? $v->serch_in : 0,
-                        'caption' => \ForkBB\__('Search in'),
+                        'serch_in' => [
+                            'class'   => 'w3',
+                            'type'    => 'select',
+                            'options' => [
+                                0 => \ForkBB\__('Message and subject'),
+                                1 => \ForkBB\__('Message only'),
+                                2 => \ForkBB\__('Topic only'),
+                            ],
+                            'value'   => $v ? $v->serch_in : 0,
+                            'caption' => \ForkBB\__('Search in'),
+                        ],
+                        [
+                            'type'  => 'info',
+                            'value' => \ForkBB\__('Search in info'),
+                        ],
+                        [
+                            'type'  => 'info',
+                            'value' => \ForkBB\__('Search multiple forums info'),
+                        ],
+
                     ],
-                    [
-                        'type'  => 'info',
-                        'value' => \ForkBB\__('Search in info'),
-                    ],
-                    [
-                        'type'  => 'info',
-                        'value' => \ForkBB\__('Search multiple forums info'),
+                ],
+                'how' => [
+                    'legend' => \ForkBB\__('Search results legend'),
+                    'fields' => [
+                        'sort_by' => [
+                            'class'   => 'w4',
+                            'type'    => 'select',
+                            'options' => [
+                                0 => \ForkBB\__('Sort by post time'),
+                                1 => \ForkBB\__('Sort by author'),
+                                2 => \ForkBB\__('Sort by subject'),
+                                3 => \ForkBB\__('Sort by forum'),
+                            ],
+                            'value'   => $v ? $v->sort_by : 0,
+                            'caption' => \ForkBB\__('Sort by'),
+                        ],
+                        'sort_dir' => [
+                            'class'   => 'w4',
+                            'type'    => 'radio',
+                            'values'  => [
+                                0 => \ForkBB\__('Descending'),
+                                1 => \ForkBB\__('Ascending'),
+                            ],
+                            'value'   => $v ? $v->sort_dir : 0,
+                            'caption' => \ForkBB\__('Sort order'),
+                        ],
+                        'show_as' => [
+                            'class'   => 'w4',
+                            'type'    => 'radio',
+                            'values'  => [
+                                0 => \ForkBB\__('Show as posts'),
+                                1 => \ForkBB\__('Show as topics'),
+                            ],
+                            'value'   => $v ? $v->show_as : 0,
+                            'caption' => \ForkBB\__('Show as'),
+                        ],
+                        [
+                            'type'  => 'info',
+                            'value' => \ForkBB\__('Search results info'),
+                        ],
                     ],
 
                 ],
-            ];
-            $form['sets']['how'] = [
-                'legend' => \ForkBB\__('Search results legend'),
-                'fields' => [
-                    'sort_by' => [
-                        'class'   => 'w4',
-                        'type'    => 'select',
-                        'options' => [
-                            0 => \ForkBB\__('Sort by post time'),
-                            1 => \ForkBB\__('Sort by author'),
-                            2 => \ForkBB\__('Sort by subject'),
-                            3 => \ForkBB\__('Sort by forum'),
-                        ],
-                        'value'   => $v ? $v->sort_by : 0,
-                        'caption' => \ForkBB\__('Sort by'),
-                    ],
-                    'sort_dir' => [
-                        'class'   => 'w4',
-                        'type'    => 'radio',
-                        'values'  => [
-                            0 => \ForkBB\__('Descending'),
-                            1 => \ForkBB\__('Ascending'),
-                        ],
-                        'value'   => $v ? $v->sort_dir : 0,
-                        'caption' => \ForkBB\__('Sort order'),
-                    ],
-                    'show_as' => [
-                        'class'   => 'w4',
-                        'type'    => 'radio',
-                        'values'  => [
-                            0 => \ForkBB\__('Show as posts'),
-                            1 => \ForkBB\__('Show as topics'),
-                        ],
-                        'value'   => $v ? $v->show_as : 0,
-                        'caption' => \ForkBB\__('Show as'),
-                    ],
-                    [
-                        'type'  => 'info',
-                        'value' => \ForkBB\__('Search results info'),
-                    ],
+            ],
+            'btns'   => [
+                'search' => [
+                    'type'      => 'submit',
+                    'value'     => \ForkBB\__('Search btn'),
+                    'accesskey' => 's',
                 ],
-
-            ];
-        } else {
-            $form['sets']['what'] = [
-                'fields' => [
-                    [
-                        'type'  => 'info',
-                        'value' => \ForkBB\__('<a href="%s">Advanced search</a>', $this->c->Router->link('SearchAdvanced')),
-                        'html'  => true,
-                    ],
-                    'keywords' => [
-                        'class'     => 'w0',
-                        'type'      => 'text',
-                        'maxlength' => 100,
-                        'caption'   => \ForkBB\__('Keyword search'),
-                        'value'     => $v ? $v->keywords : '',
-                        'required'  => true,
-                        'autofocus' => true,
-                    ],
-                ],
-            ];
-        }
-
-        $this->fIndex    = 'search';
-        $this->nameTpl   = 'search';
-        $this->onlinePos = 'search';
-        $this->canonical = $this->c->Router->link('Search');
-        $this->robots    = 'noindex';
-        $this->form      = $form;
-        $this->crumbs    = $this->crumbs();
-
-        return $this;
+            ],
+        ];
     }
 
     /**

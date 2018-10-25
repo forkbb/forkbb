@@ -128,7 +128,7 @@ body,
 	font: inherit;
   box-sizing: border-box;
   word-wrap: break-word;
-	/*vertical-align: baseline;*/
+  /*vertical-align: baseline;*/
 }
 
 body,
@@ -146,6 +146,11 @@ body,
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.5;
   position: relative;
+}
+
+#fork div,
+#fork fieldset {
+  min-width: 0;
 }
 
 #fork ul,
@@ -1724,7 +1729,7 @@ body,
 #fork .f-fs-category {
   display: flex;
   align-items: stretch;
-  min-width: 0;
+  /*min-width: 0;*/
 }
 
 #fork .f-fs-category > legend {
@@ -1781,7 +1786,7 @@ body,
 #fork .f-fs-forum {
   display: flex;
   align-items: stretch;
-  min-width: 0;
+  /*min-width: 0;*/
 }
 
 #fork .f-fs-forum > legend {
@@ -1857,7 +1862,7 @@ body,
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
-  min-width: 0;
+  /*min-width: 0;*/
 }
 
 #fork .f-fs-permission > legend {
@@ -1945,7 +1950,7 @@ body,
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
-  min-width: 0;
+  /*min-width: 0;*/
 }
 
 #fork .f-fs-censor .f-child1 {
@@ -2160,7 +2165,7 @@ body,
 /***********/
 #fork .f-fs-header {
   display: flex;
-  min-width: 0;
+  /*min-width: 0;*/
   align-items: center;
 }
 
@@ -2182,7 +2187,7 @@ body,
 #fork .f-fs-data {
   display: flex;
   flex-direction: column;
-  min-width: 0;
+  /*min-width: 0;*/
 }
 
 #fork .f-fs-header .f-wrap-usertitle {
@@ -2354,7 +2359,7 @@ body,
 #fork .f-fs-result {
   display: flex;
   align-items: stretch;
-  min-width: 0;
+  /*min-width: 0;*/
   border-bottom: 0.0625rem dotted #AA7939;
   margin-bottom: 0.3125rem;
   padding-bottom: 0.3125rem;

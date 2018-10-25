@@ -9,21 +9,19 @@ class Ban extends Page
 {
     /**
      * Подготавливает данные для шаблона
-     * 
+     *
      * @param User $user
-     * 
+     *
      * @return Page
      */
     public function ban(User $user)
     {
-        $ban = $user->banInfo;
-        
         $this->httpStatus = 403;
         $this->nameTpl    = 'ban';
 #       $this->onlinePos  = 'ban';
 #       $this->robots     = 'noindex';
         $this->titles     = \ForkBB\__('Info');
-        $this->ban        = $ban;
+        $this->ban        = $user->banInfo;
         $this->adminEmail = $this->c->config->o_admin_email;
 
         return $this;

@@ -50,7 +50,20 @@ class Groups extends Admin
     public function view()
     {
         $this->nameTpl     = 'admin/groups';
-        $this->formNew     = [
+        $this->formNew     = $this->formNew();
+        $this->formDefault = $this->formDefault();
+
+        return $this;
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     *
+     * @return array
+     */
+    protected function formNew()
+    {
+        return [
             'action' => $this->c->Router->link('AdminGroupsNew'),
             'hidden' => [
                 'token' => $this->c->Csrf->create('AdminGroupsNew'),
@@ -74,11 +87,20 @@ class Groups extends Admin
                 'submit' => [
                     'type'      => 'submit',
                     'value'     => \ForkBB\__('Add'),
-                    'accesskey' => 'a',
+                    'accesskey' => 'n',
                 ],
             ],
         ];
-        $this->formDefault = [
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     *
+     * @return array
+     */
+    protected function formDefault()
+    {
+        return [
             'action' => $this->c->Router->link('AdminGroupsDefault'),
             'hidden' => [
                 'token' => $this->c->Csrf->create('AdminGroupsDefault'),
@@ -105,8 +127,6 @@ class Groups extends Admin
                 ],
             ],
         ];
-
-        return $this;
     }
 
     /**
@@ -261,7 +281,7 @@ class Groups extends Admin
         }
 
         $this->nameTpl = 'admin/form';
-        $this->form    = $this->viewForm($group, $marker, $vars);
+        $this->form    = $this->formEdit($vars, $group, $marker);
 
         return $this;
     }
@@ -315,13 +335,13 @@ class Groups extends Admin
     /**
      * Формирует данные для формы редактирования группы
      *
+     * @param array $args
      * @param Group $group
      * @param string $marker
-     * @param array $args
      *
      * @return array
      */
-    protected function viewForm(Group $group, $marker, array $args)
+    protected function formEdit(array $args, Group $group, $marker)
     {
         $form = [
             'action' => $this->c->Router->link($marker, $args),
@@ -657,6 +677,29 @@ class Groups extends Admin
             return $this->c->Redirect->page('AdminGroups')->message('Group removed redirect');
         }
 
+
+        $this->nameTpl   = 'admin/form';
+        $this->aCrumbs[] = [$this->c->Router->link('AdminGroupsDelete', $args), \ForkBB\__('Group delete')];
+        $this->aCrumbs[] = \ForkBB\__('"%s"', $group->g_title);
+        $this->form      = $this->formDelete($args, $group, $count, $groups);
+        $this->titleForm = \ForkBB\__('Group delete');
+        $this->classForm = 'deletegroup';
+
+        return $this;
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     *
+     * @param array $args
+     * @param Group $group
+     * @param int $count
+     * @param array $groups
+     *
+     * @return array
+     */
+    protected function formDelete(array $args, Group $group, $count, array $groups)
+    {
         $form = [
             'action' => $this->c->Router->link('AdminGroupsDelete', $args),
             'hidden' => [
@@ -667,7 +710,7 @@ class Groups extends Admin
                 'delete' => [
                     'type'      => 'submit',
                     'value'     => \ForkBB\__('Delete group'),
-                    'accesskey' => 'd',
+                    'accesskey' => 's',
                 ],
                 'cancel' => [
                     'type'      => 'btn',
@@ -712,13 +755,6 @@ class Groups extends Admin
             ],
         ];
 
-        $this->nameTpl   = 'admin/form';
-        $this->aCrumbs[] = [$this->c->Router->link('AdminGroupsDelete', $args), \ForkBB\__('Group delete')];
-        $this->aCrumbs[] = \ForkBB\__('"%s"', $group->g_title);
-        $this->form      = $form;
-        $this->titleForm = \ForkBB\__('Group delete');
-        $this->classForm = 'deletegroup';
-
-        return $this;
+        return $form;
     }
 }

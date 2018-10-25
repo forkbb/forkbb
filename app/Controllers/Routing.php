@@ -79,7 +79,7 @@ class Routing
             // юзеры
             if ($user->viewUsers) {
                 // список пользователей
-                $r->add('GET',  '/userlist[/{sort:username|registered|num_posts}/{dir:ASC|DESC}/{group:\-1|[1-9]\d*}/{name}][/{page:[1-9]\d*}]', 'Userlist:view', 'Userlist');
+                $r->add('GET',  '/userlist[/{group:all|[1-9]\d*}/{sort:username|registered|num_posts}/{dir:ASC|DESC}/{name}][/{page:[1-9]\d*}]', 'Userlist:view', 'Userlist');
                 $r->add('POST', '/userlist', 'Userlist:view');
                 // юзеры
                 $r->add('GET',           '/user/{id:[2-9]|[1-9]\d+}/{name}',          'ProfileView:view',   'User');

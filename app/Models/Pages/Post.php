@@ -52,7 +52,7 @@ class Post extends Page
         $this->robots    = 'noindex';
         $this->crumbs    = $this->crumbs(\ForkBB\__('Post new topic'), $forum);
         $this->formTitle = \ForkBB\__('Post new topic');
-        $this->form      = $this->messageForm($forum, 'NewTopic', $args, false, true);
+        $this->form      = $this->messageForm($args, $forum, 'NewTopic', false, true);
 
         return $this;
     }
@@ -107,7 +107,7 @@ class Post extends Page
         $this->robots    = 'noindex';
         $this->crumbs    = $this->crumbs(\ForkBB\__('Post a reply'), $topic);
         $this->formTitle = \ForkBB\__('Post a reply');
-        $this->form      = $this->messageForm($topic, 'NewReply', $args);
+        $this->form      = $this->messageForm($args, $topic, 'NewReply');
 
         return $this;
     }
@@ -234,8 +234,6 @@ class Post extends Page
             $this->c->search->index($post);
         }
 
-        return $this->c->Redirect
-            ->page('ViewPost', ['id' => $merge ? $lastPost->id : $post->id])
-            ->message('Post redirect');
+        return $this->c->Redirect->page('ViewPost', ['id' => $merge ? $lastPost->id : $post->id])->message('Post redirect');
     }
 }

@@ -9,16 +9,16 @@ trait PostFormTrait
     /**
      * Возвращает данные для построения формы создания темы/сообщения
      *
+     * @param array $args
      * @param Model $model
      * @param string $marker
-     * @param array $args
      * @param bool $editPost
      * @param bool $editSubject
      * @param bool $quickReply
      *
      * @return array
      */
-    protected function messageForm(Model $model, $marker, array $args, $editPost = false, $editSubject = false, $quickReply = false)
+    protected function messageForm(array $args, Model $model, $marker, $editPost = false, $editSubject = false, $quickReply = false)
     {
         $vars = isset($args['_vars']) ? $args['_vars'] : null;
         unset($args['_vars']);

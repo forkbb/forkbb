@@ -46,7 +46,24 @@ class Maintenance extends Admin
             $this->fIswev = $v->getErrors();
         }
 
-        $this->formMaintenance = [
+        $this->nameTpl         = 'admin/maintenance';
+        $this->aIndex          = 'maintenance';
+        $this->formMaintenance = $this->formMaintenance($config);
+        $this->formRebuild     = $this->formRebuild();
+
+        return $this;
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     *
+     * @param Config $config
+     *
+     * @return array
+     */
+    protected function formMaintenance(Config $config)
+    {
+        return [
             'action' => $this->c->Router->link('AdminMaintenance'),
             'hidden' => [
                 'token' => $this->c->Csrf->create('AdminMaintenance'),
@@ -79,8 +96,16 @@ class Maintenance extends Admin
                 ],
             ],
         ];
+    }
 
-        $this->formRebuild = [
+    /**
+     * Подготавливает массив данных для формы
+     *
+     * @return array
+     */
+    protected function formRebuild()
+    {
+        return [
             'action' => $this->c->Router->link('AdminMaintenanceRebuild'),
             'hidden' => [
                 'token' => $this->c->Csrf->create('AdminMaintenanceRebuild'),
@@ -142,10 +167,6 @@ class Maintenance extends Admin
             ],
         ];
 
-        $this->nameTpl         = 'admin/maintenance';
-        $this->aIndex          = 'maintenance';
-
-        return $this;
     }
 
     /**

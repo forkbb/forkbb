@@ -44,6 +44,22 @@ class Censoring extends Admin
             $this->fIswev  = $v->getErrors();
         }
 
+        $this->nameTpl   = 'admin/form';
+        $this->aIndex    = 'censoring';
+        $this->form      = $this->formEdit();
+        $this->classForm = 'editcensorship';
+        $this->titleForm = \ForkBB\__('Censoring');
+
+        return $this;
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     *
+     * @return array
+     */
+    protected function formEdit()
+    {
         $form = [
             'action' => $this->c->Router->link('AdminCensoring'),
             'hidden' => [
@@ -117,12 +133,6 @@ class Censoring extends Admin
             'fields' => $fieldset,
         ];
 
-        $this->nameTpl   = 'admin/form';
-        $this->aIndex    = 'censoring';
-        $this->form      = $form;
-        $this->classForm = 'editcensorship';
-        $this->titleForm = \ForkBB\__('Censoring');
-
-        return $this;
+        return $form;
     }
 }

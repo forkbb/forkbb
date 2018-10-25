@@ -118,7 +118,7 @@ class Options extends Admin
 
         $this->aIndex    = 'options';
         $this->nameTpl   = 'admin/form';
-        $this->form      = $this->viewForm($config);
+        $this->form      = $this->formEdit($config);
         $this->titleForm = \ForkBB\__('Options head');
         $this->classForm = 'editoptions';
 
@@ -180,7 +180,7 @@ class Options extends Admin
      *
      * @return array
      */
-    protected function viewForm(Config $config)
+    protected function formEdit(Config $config)
     {
         $form = [
             'action' => $this->c->Router->link('AdminOptions'),

@@ -62,7 +62,7 @@ class Edit extends Page
         $this->robots    = 'noindex';
         $this->formTitle = $editSubject ? \ForkBB\__('Edit topic') : \ForkBB\__('Edit post');
         $this->crumbs    = $this->crumbs($this->formTitle, $topic);
-        $this->form      = $this->messageForm($post, 'EditPost', $args, true, $editSubject);
+        $this->form      = $this->messageForm($args, $post, 'EditPost', true, $editSubject);
 
         return $this;
     }
@@ -146,8 +146,6 @@ class Edit extends Page
 
         $this->c->search->index($post, 'edit');
 
-        return $this->c->Redirect
-            ->page('ViewPost', ['id' => $post->id])
-            ->message('Edit redirect');
+        return $this->c->Redirect->page('ViewPost', ['id' => $post->id])->message('Edit redirect');
     }
 }

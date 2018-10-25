@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
+use ForkBB\Models\Post\Model as Post;
 
 class Delete extends Page
 {
@@ -61,7 +62,23 @@ class Delete extends Page
         $this->crumbs     = $this->crumbs($this->formTitle, $topic);
         $this->posts      = [$post];
         $this->postsTitle = \ForkBB\__('Delete info');
-        $this->form       = [
+        $this->form       = $this->formDelete($args, $post, $deleteTopic);
+
+        return $this;
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     *
+     * @param array $args
+     * @param Post $post
+     * @param bool $deleteTopic
+     *
+     * @return array
+     */
+    protected function formDelete(array $args, Post $post, $deleteTopic)
+    {
+        return [
             'action' => $this->c->Router->link('DeletePost', ['id' => $post->id]),
             'hidden' => [
                 'token' => $this->c->Csrf->create('DeletePost', ['id' => $post->id]),
@@ -71,7 +88,7 @@ class Delete extends Page
                     'info' => [
                         'info1' => [
                             'type'    => '', //????
-                            'value'   => \ForkBB\__('Topic') . ' «' . \ForkBB\cens($topic->subject) . '»',
+                            'value'   => \ForkBB\__('Topic') . ' «' . \ForkBB\cens($post->parent->subject) . '»',
                         ],
                         'info2' => [
                             'type'    => '', //????
@@ -104,7 +121,5 @@ class Delete extends Page
                 ],
             ],
         ];
-
-        return $this;
     }
 }
