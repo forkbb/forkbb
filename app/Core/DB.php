@@ -230,10 +230,13 @@ class DB extends PDO
      *
      * @param string $query
      * @param float $time
+     * @param bool $add
      */
-    public function saveQuery($query, $time)
+    public function saveQuery($query, $time, $add = true)
     {
-        $this->qCount++;
+        if ($add) {
+            ++$this->qCount;
+        }
         $this->queries[] = [$query, $time + $this->delta];
         $this->delta = 0;
     }
@@ -345,5 +348,38 @@ class DB extends PDO
         }
 
         return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function beginTransaction()
+    {
+        $start = \microtime(true);
+        $result = parent::beginTransaction();
+        $this->saveQuery('beginTransaction()', \microtime(true) - $start, false);
+        return $result;
+    }
+
+    /**
+     * @return bool
+     */
+    public function commit()
+    {
+        $start = \microtime(true);
+        $result = parent::commit();
+        $this->saveQuery('commit()', \microtime(true) - $start, false);
+        return $result;
+    }
+
+    /**
+     * @return bool
+     */
+    public function rollback()
+    {
+        $start = \microtime(true);
+        $result = parent::rollback();
+        $this->saveQuery('rollback()', \microtime(true) - $start, false);
+        return $result;
     }
 }
