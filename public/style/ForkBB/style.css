@@ -1236,18 +1236,21 @@ body,
   content: "\e906";
 }
 
-#fork .f-ftlist .f-newtxt {
+#fork .f-newtxt,
+#fork .f-unreadtxt {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 0.875rem;
   font-weight: normal;
   white-space: nowrap;
 }
 
-#fork .f-ftlist .f-newtxt:before {
+#fork .f-newtxt:before,
+#fork .f-unreadtxt:before {
   content: "[ ";
 }
 
-#fork .f-ftlist .f-newtxt:after {
+#fork .f-newtxt:after,
+#fork .f-unreadtxt:after {
   content: " ]";
 }
 

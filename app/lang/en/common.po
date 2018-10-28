@@ -145,7 +145,13 @@ msgid "New posts"
 msgstr "New posts"
 
 msgid "New posts info"
-msgstr "Go to the first new post in this topic."
+msgstr "Go to the first new post in this topic"
+
+msgid "Unread posts"
+msgstr "Unread posts"
+
+msgid "Unread posts info"
+msgstr "Go to the first unread post in this topic"
 
 msgid "Username"
 msgstr "Username"

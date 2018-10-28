@@ -123,6 +123,9 @@
             @if (false !== $topic->hasNew)
                   <span class="f-newtxt"><a href="{!! $topic->linkNew !!}" title="{!! __('New posts info') !!}">{!! __('New posts') !!}</a></span>
             @endif
+            @if (false !== $topic->hasUnread)
+                  <span class="f-unreadtxt"><a href="{!! $topic->linkUnread !!}" title="{!! __('Unread posts info') !!}">{!! __('Unread posts') !!}</a></span>
+            @endif
                 </h3>
                 <p><!-- inline -->
                   <span class="f-cmposter">{!! __('by %s', $topic->poster) !!}</span>

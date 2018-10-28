@@ -145,7 +145,13 @@ msgid "New posts"
 msgstr "Новые&nbsp;сообщения"
 
 msgid "New posts info"
-msgstr "Перейти к первому новому сообщению в теме."
+msgstr "Перейти к первому новому сообщению в теме"
+
+msgid "Unread posts"
+msgstr "Непрочитанные&nbsp;сообщения"
+
+msgid "Unread posts info"
+msgstr "Перейти к первому непрочитанному сообщению в теме"
 
 msgid "Username"
 msgstr "Имя"
