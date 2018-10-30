@@ -14,17 +14,21 @@ class ActionP extends Method
      * Поисковые действия по сообщениям
      *
      * @param string $action
+     * @param Forum $root
      * @param int $uid
      *
      * @throws InvalidArgumentException
      *
      * @return false|array
      */
-    public function actionP($action, $uid = null)
+    public function actionP($action, Forum $root, $uid = null)
     {
-        $root = $this->c->forums->get(0);
-        if (! $root instanceof Forum || empty($root->descendants)) {
-            return []; //????
+        $forums = \array_keys($root->descendants);
+        if ($root->id) {
+            $forums[] = $root->id;
+        }
+        if (empty($forums)) {
+            return [];
         }
 
         $sql = null;
@@ -58,7 +62,7 @@ class ActionP extends Method
 
         if (null !== $sql) {
             $vars = [
-                ':forums' => array_keys($root->descendants),
+                ':forums' => $forums,
                 ':uid'    => $uid,
             ];
             $list = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);

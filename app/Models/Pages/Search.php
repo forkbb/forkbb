@@ -421,6 +421,12 @@ class Search extends Page
     {
         $this->c->Lang->load('search');
 
+        $forum = isset($args['forum']) ? (int) $args['forum'] : 0;
+        $forum = $this->c->forums->get($forum);
+        if (! $forum instanceof Forum) {
+            return $this->c->Message->message('Bad request');
+        }
+
         $model        = $this->c->search;
         $model->page  = isset($args['page']) ? (int) $args['page'] : 1;
         $action       = $args['action'];
@@ -435,9 +441,9 @@ class Search extends Page
         switch ($action) {
             case 'search':
                 if (1 === $model->showAs) {
-                    $list          = $model->actionT($action);
+                    $list          = $model->actionT($action, $forum);
                 } else {
-                    $list          = $model->actionP($action);
+                    $list          = $model->actionP($action, $forum);
                     $asTopicsList  = false;
                 }
                 if ('*' === $args['author']) {
@@ -458,10 +464,14 @@ class Search extends Page
                     break;
                 }
                 $uid               = $this->user->id;
-                $list              = $model->actionT($action, $uid);
+                $list              = $model->actionT($action, $forum, $uid);
                 $model->name       = \ForkBB\__('Quick search ' . $action);
                 $model->linkMarker = 'SearchAction';
-                $model->linkArgs   = ['action' => $action];
+                if ($forum->id) {
+                    $model->linkArgs = ['action' => $action, 'forum' => $forum->id];
+                } else {
+                    $model->linkArgs = ['action' => $action];
+                }
                 $this->fSubIndex   = $subIndex[$action];
                 break;
             case 'posts':
@@ -475,13 +485,17 @@ class Search extends Page
                     break;
                 }
                 if ($asTopicsList) {
-                    $list          = $model->actionT($action, $user->id);
+                    $list          = $model->actionT($action, $forum, $user->id);
                 } else {
-                    $list          = $model->actionP($action, $user->id);
+                    $list          = $model->actionP($action, $forum, $user->id);
                 }
                 $model->name       = \ForkBB\__('Quick search user ' . $action, $user->username);
                 $model->linkMarker = 'SearchAction';
-                $model->linkArgs   = ['action' => $action, 'uid' => $user->id];
+                if ($forum->id) {
+                    $model->linkArgs = ['action' => $action, 'uid' => $user->id, 'forum' => $forum->id];
+                } else {
+                    $model->linkArgs = ['action' => $action, 'uid' => $user->id];
+                }
 
                 break;
 #            default:
@@ -492,7 +506,7 @@ class Search extends Page
             return $this->c->Message->message('Bad request');
         } elseif (empty($list)) {
             $this->fIswev = ['i', \ForkBB\__('No hits')];
-            return $this->view(['advanced' => 'advanced'], 'GET');
+            return $this->view([], 'GET', true);
         }
 
         if ($asTopicsList) {
