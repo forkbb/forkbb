@@ -437,6 +437,7 @@ class Search extends Page
             'topics_with_your_posts' => 'with-your-posts',
             'latest_active_topics'   => 'latest',
             'unanswered_topics'      => 'unanswered',
+            'new'                    => 'new',
         ];
         switch ($action) {
             case 'search':
@@ -454,6 +455,7 @@ class Search extends Page
                 $model->linkMarker = $advanced ? 'SearchAdvanced' : 'Search';
                 $model->linkArgs   = $args;
                 break;
+            case 'new':
             case 'topics_with_your_posts':
                 if ($this->user->isGuest) {
                     break;

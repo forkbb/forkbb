@@ -99,7 +99,7 @@ msgstr "сообщения"
 msgid "Search results"
 msgstr "Результаты поиска"
 
-msgid "Quick search show_new"
+msgid "Quick search new"
 msgstr "Темы с новыми сообщениями"
 
 msgid "Quick search latest_active_topics"

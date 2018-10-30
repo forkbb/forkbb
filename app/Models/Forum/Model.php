@@ -97,6 +97,20 @@ class Model extends DataModel
     }
 
     /**
+     * Ссылка на поиск новых сообщений
+     *
+     * @return string
+     */
+    protected function getlinkNew()
+    {
+        if (0 === $this->id) {
+            return $this->c->Router->link('SearchAction', ['action' => 'new']);
+        } else {
+            return $this->c->Router->link('SearchAction', ['action' => 'new', 'forum' => $this->id]);
+        }
+    }
+
+    /**
      * Ссылка на последнее сообщение в разделе
      *
      * @return null|string

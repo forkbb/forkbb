@@ -99,7 +99,7 @@ msgstr "Posts"
 msgid "Search results"
 msgstr "Search results"
 
-msgid "Quick search show_new"
+msgid "Quick search new"
 msgstr "New"
 
 msgid "Quick search latest_active_topics"
