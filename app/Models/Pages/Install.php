@@ -773,7 +773,7 @@ class Install extends Page
                 'first_post_id' => ['INT(10) UNSIGNED', false, 0],
                 'last_post'     => ['INT(10) UNSIGNED', false, 0],
                 'last_post_id'  => ['INT(10) UNSIGNED', false, 0],
-                'last_poster'   => ['VARCHAR(190)', true],
+                'last_poster'   => ['VARCHAR(190)', false, ''],
                 'num_views'     => ['MEDIUMINT(8) UNSIGNED', false, 0],
                 'num_replies'   => ['MEDIUMINT(8) UNSIGNED', false, 0],
                 'closed'        => ['TINYINT(1)', false, 0],
