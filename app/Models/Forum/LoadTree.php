@@ -119,7 +119,7 @@ class LoadTree extends Action
                 LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND mot.tid=t.id)
                 WHERE t.forum_id IN(?ai:forums)
                     AND t.last_post>?i:max
-                    AND t.moved_to IS NULL
+                    AND t.moved_to=0
                     AND (mot.mt_last_visit IS NULL OR t.last_post>mot.mt_last_visit)';
         $stmt = $this->c->DB->query($sql, $vars);
         while ($cur = $stmt->fetch()) {

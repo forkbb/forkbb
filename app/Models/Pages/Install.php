@@ -779,7 +779,7 @@ class Install extends Page
                 'closed'        => ['TINYINT(1)', false, 0],
                 'sticky'        => ['TINYINT(1)', false, 0],
                 'stick_fp'      => ['TINYINT(1)', false, 0],
-                'moved_to'      => ['INT(10) UNSIGNED', true],
+                'moved_to'      => ['INT(10) UNSIGNED', false, 0],
                 'forum_id'      => ['INT(10) UNSIGNED', false, 0],
                 'poll_type'     => ['TINYINT(4)', false, 0],
                 'poll_time'     => ['INT(10) UNSIGNED', false, 0],

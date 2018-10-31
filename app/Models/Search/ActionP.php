@@ -40,20 +40,20 @@ class ActionP extends Method
                 $sql = 'SELECT p.id
                         FROM ::posts AS p
                         INNER JOIN ::topics AS t ON t.id=p.topic_id
-                        WHERE t.forum_id IN (?ai:forums) AND t.moved_to IS NULL AND p.poster_id=?i:uid
+                        WHERE t.forum_id IN (?ai:forums) AND t.moved_to=0 AND p.poster_id=?i:uid
                         ORDER BY p.posted DESC';
                 break;
 
 #            case 'last':
 #                $sql = 'SELECT t.id
 #                        FROM ::topics AS t
-#                        WHERE t.forum_id IN (?ai:forums) AND t.moved_to IS NULL
+#                        WHERE t.forum_id IN (?ai:forums) AND t.moved_to=0
 #                        ORDER BY t.last_post DESC';
 #                break;
 #            case 'unanswered':
 #                $sql = 'SELECT t.id
 #                        FROM ::topics AS t
-#                       WHERE t.forum_id IN (?ai:forums) AND t.moved_to IS NULL AND t.num_replies=0
+#                       WHERE t.forum_id IN (?ai:forums) AND t.moved_to=0 AND t.num_replies=0
 #                        ORDER BY t.last_post DESC';
 #                break;
             default:

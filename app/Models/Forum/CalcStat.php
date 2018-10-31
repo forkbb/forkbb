@@ -32,7 +32,7 @@ class CalcStat extends Method
 
         $sql = 'SELECT t.last_post, t.last_post_id, t.last_poster, t.subject as last_topic
                 FROM ::topics AS t
-                WHERE t.forum_id=?i:fid AND t.moved_to IS NULL
+                WHERE t.forum_id=?i:fid AND t.moved_to=0
                 ORDER BY t.last_post DESC
                 LIMIT 1';
 

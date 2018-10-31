@@ -75,7 +75,7 @@ class Delete extends Action
             $sql = 'SELECT p.poster_id
                     FROM ::topics AS t
                     INNER JOIN ::posts AS p ON t.first_post_id=p.id
-                    WHERE t.forum_id IN (?ai:forums) AND t.moved_to IS NULL
+                    WHERE t.forum_id IN (?ai:forums) AND t.moved_to=0
                     GROUP BY p.poster_id';
             $usersUpd = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
         }
@@ -86,7 +86,7 @@ class Delete extends Action
             $sql = 'SELECT p.poster_id
                     FROM ::topics AS t
                     INNER JOIN ::posts AS p ON t.first_post_id=p.id
-                    WHERE t.id IN (?ai:topics) AND t.moved_to IS NULL
+                    WHERE t.id IN (?ai:topics) AND t.moved_to=0
                     GROUP BY p.poster_id';
             $usersUpd = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
         }

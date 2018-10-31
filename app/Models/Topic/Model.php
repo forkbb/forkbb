@@ -327,6 +327,7 @@ class Model extends DataModel
         if (false !== $this->hasUnread && $this->timeMax > $this->hasUnread) {
             $flag = true;
             $vars[':read'] = $this->timeMax;
+            $vars[':visit'] = $this->last_post;
         }
 
         if ($flag) {
