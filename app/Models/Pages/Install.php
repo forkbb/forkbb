@@ -652,7 +652,7 @@ class Install extends Page
                 'id'           => ['SERIAL', false],
                 'poster'       => ['VARCHAR(190)', false, ''],
                 'poster_id'    => ['INT(10) UNSIGNED', false, 1],
-                'poster_ip'    => ['VARCHAR(45)', true],
+                'poster_ip'    => ['VARCHAR(45)', false, ''],
                 'poster_email' => ['VARCHAR(80)', true],
                 'message'      => ['MEDIUMTEXT', false, ''],
                 'hide_smilies' => ['TINYINT(1)', false, 0],
