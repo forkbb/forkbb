@@ -26,6 +26,7 @@ class Config extends Profile
         if ('POST' === $method) {
             $v = $this->c->Validator->reset()
                 ->addValidators([
+                    'to_zero' => [$this, 'vToZero'],
                 ])->addRules([
                     'token'        => 'token:EditUserBoardConfig',
                     'language'     => 'required|string:trim|in:' . \implode(',', $this->c->Func->getLangs()),
@@ -39,8 +40,8 @@ class Config extends Profile
                     'show_avatars' => 'required|integer|in:0,1',
                     'show_img'     => 'required|integer|in:0,1',
                     'show_img_sig' => 'required|integer|in:0,1',
-                    'disp_topics'  => 'integer|min:10|max:50',
-                    'disp_posts'   => 'integer|min:10|max:50',
+                    'disp_topics'  => 'integer|min:0|max:50|to_zero',
+                    'disp_posts'   => 'integer|min:0|max:50|to_zero',
                 ])->addAliases([
                     'language'     => 'Language',
                     'style'        => 'Style',
@@ -79,6 +80,19 @@ class Config extends Profile
         $this->actionBtns = $this->btns('config');
 
         return $this;
+    }
+
+    /**
+     * Преобразовывает число меньше 10 в 0
+     *
+     * @param Validator $v
+     * @param int $value
+     *
+     * @return string
+     */
+    public function vToZero(Validator $v, $value)
+    {
+        return $value < 10 ? 0 : $value;
     }
 
     /**
@@ -247,17 +261,17 @@ class Config extends Profile
             'fields' => [
                 'disp_topics' => [
                     'type'    => 'number',
-                    'min'     => 10,
+                    'min'     => 0,
                     'max'     => 50,
-                    'value'   => $this->curUser->disp_topics,
+                    'value'   => $this->curUser->__disp_topics,
                     'caption' => \ForkBB\__('Topics per page label'),
                     'info'    => \ForkBB\__('For default'),
                 ],
                 'disp_posts' => [
                     'type'    => 'number',
-                    'min'     => 10,
+                    'min'     => 0,
                     'max'     => 50,
-                    'value'   => $this->curUser->disp_posts,
+                    'value'   => $this->curUser->__disp_posts,
                     'caption' => \ForkBB\__('Posts per page label'),
                     'info'    => \ForkBB\__('For default'),
                 ],

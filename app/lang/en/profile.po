@@ -499,7 +499,7 @@ msgid "Default"
 msgstr "Default"
 
 msgid "For default"
-msgstr "Clean this field for the default settings."
+msgstr "Zero this field for the default settings."
 
 msgid "Time format"
 msgstr "Time format"

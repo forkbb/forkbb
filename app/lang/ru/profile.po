@@ -499,7 +499,7 @@ msgid "Default"
 msgstr "По умолчанию"
 
 msgid "For default"
-msgstr "Очистите поле для использования значения по умолчанию."
+msgstr "Обнулите поле для использования значения по умолчанию."
 
 msgid "Time format"
 msgstr "Формат времени"
