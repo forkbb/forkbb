@@ -91,7 +91,7 @@ class DataModel extends Model
         // без отслеживания
         if (\strpos($name, '__') === 0) {
             $track = null;
-            $name  = substr($name, 2);
+            $name  = \substr($name, 2);
         // с отслеживанием
         } else {
             $track = false;
@@ -115,6 +115,23 @@ class DataModel extends Model
             || ($track && $old !== $this->a[$name])
         ) {
             $this->modified[$name] = true;
+        }
+    }
+
+    /**
+     * Возвращает значение свойства
+     *
+     * @param string $name
+     *
+     * @return mixed
+     */
+    public function __get($name)
+    {
+        if (\strpos($name, '__') === 0) {
+            $name = \substr($name, 2);
+            return isset($this->a[$name]) ? $this->a[$name] : null;
+        } else {
+            return parent::__get($name);
         }
     }
 }
