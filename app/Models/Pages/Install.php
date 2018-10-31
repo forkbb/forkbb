@@ -880,7 +880,7 @@ class Install extends Page
                 'yahoo'            => ['VARCHAR(30)', false, ''],
                 'location'         => ['VARCHAR(30)', false, ''],
                 'signature'        => ['TEXT', false],
-                'disp_topics'      => ['TINYINT(3) UNSIGNED', true],
+                'disp_topics'      => ['TINYINT(3) UNSIGNED', false, 0],
                 'disp_posts'       => ['TINYINT(3) UNSIGNED', true],
                 'email_setting'    => ['TINYINT(1)', false, 1],
                 'notify_with_post' => ['TINYINT(1)', false, 0],
