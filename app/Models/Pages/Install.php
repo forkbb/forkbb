@@ -881,7 +881,7 @@ class Install extends Page
                 'location'         => ['VARCHAR(30)', false, ''],
                 'signature'        => ['TEXT', false],
                 'disp_topics'      => ['TINYINT(3) UNSIGNED', false, 0],
-                'disp_posts'       => ['TINYINT(3) UNSIGNED', true],
+                'disp_posts'       => ['TINYINT(3) UNSIGNED', false, 0],
                 'email_setting'    => ['TINYINT(1)', false, 1],
                 'notify_with_post' => ['TINYINT(1)', false, 0],
                 'auto_notify'      => ['TINYINT(1)', false, 0],
