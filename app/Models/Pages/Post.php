@@ -190,7 +190,7 @@ class Post extends Page
             $post->poster       = $username;
             $post->poster_id    = $this->user->id;
             $post->poster_ip    = $this->user->ip;
-            $post->poster_email = $v->email;
+            $post->poster_email = (string) $v->email;
             $post->message      = $v->message; //?????
             $post->hide_smilies = $v->hide_smilies ? 1 : 0;
 #           $post->edit_post    =
