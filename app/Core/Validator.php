@@ -551,7 +551,7 @@ class Validator
         if (null === $value) {
             return null;
         } elseif (\is_numeric($value)) {
-            return 0 + $value;
+            return 0.0 + $value;
         } else {
             $this->addError('The :alias must be numeric');
             return null;
