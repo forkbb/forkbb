@@ -518,8 +518,13 @@ class Validator
 
     protected function vString(Validator $v, $value, $attr)
     {
-        if (null === $value) {
-            return null;
+        if (null === $value) {                                // для пустого поля типа string
+            if (\preg_match('%(?:^|,)trim(?:,|$)%', $attr)) { // при наличии действия trim
+                $this->addError(true);                        // прерываем его проверку
+                return '';                                    // и возвращаем пустую строку,
+            } else {
+                return null;                                  // а не null
+            }
         } elseif (\is_string($value)) {
             foreach(\explode(',', $attr) as $action) {
                 switch ($action) {
