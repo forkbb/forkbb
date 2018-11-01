@@ -5,7 +5,7 @@
                 <div class="f-ficon"></div>
                 <div class="f-finfo">
                   <h3><span class="f-fredirtext">{!! __('Link to') !!}</span> <a class="f-ftname" href="{!! $cur->redirect_url !!}">{{ $cur->forum_name }}</a></h3>
-        @if ($cur->forum_desc)
+        @if ('' != $cur->forum_desc)
                   <p class="f-fdesc">{!! $cur->forum_desc !!}</p>
         @endif
                 </div>
@@ -30,7 +30,7 @@
             @endforeach
                   </dl><!-- endinline -->
         @endif
-        @if ($cur->forum_desc)
+        @if ('' != $cur->forum_desc)
                   <p class="f-fdesc">{!! $cur->forum_desc !!}</p>
         @endif
         @if ($cur->moderators)
