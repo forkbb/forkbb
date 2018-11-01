@@ -47,7 +47,7 @@ class Userlist extends Page
                 'sort'  => $prefix . 'string|in:username,registered' . ($this->user->showPostCount ? ',num_posts' : ''),
                 'dir'   => $prefix . 'string|in:ASC,DESC',
                 'group' => $prefix . 'string|in:' . \implode(',', \array_keys($this->groupList)),
-                'name'  => $prefix . 'string:trim|min:1|max:25' . ($this->user->searchUsers ? '' : '|in:*'),
+                'name'  => $prefix . 'string|min:1|max:25' . ($this->user->searchUsers ? '' : '|in:*'),
             ]);
 
         $error = true;
