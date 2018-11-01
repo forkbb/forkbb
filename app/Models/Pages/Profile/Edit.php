@@ -101,7 +101,7 @@ class Edit extends Profile
 
             $valid = $v->validation($_FILES + $_POST);
             $data  = $v->getData();
-            unset($data['token'], $data['upload_avatar']);
+            unset($data['token'], $data['upload_avatar'], $data['delete_avatar']);
 
             if ($valid) {
                 if ($v->delete_avatar || $v->upload_avatar instanceof Image) {

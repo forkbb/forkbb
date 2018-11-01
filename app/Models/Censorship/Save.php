@@ -11,7 +11,7 @@ class Save extends Method
      * Сохраняет список нецензурных слов в базу
      *
      * @param array $list
-     * 
+     *
      * @return Censorship
      */
     public function save(array $list)
@@ -22,12 +22,12 @@ class Save extends Method
             if (! isset($list[$id]['search_for']) || ! isset($list[$id]['replace_with'])) {
                 continue;
             }
-            if ('' === trim($list[$id]['search_for'])) {
+            if ('' === \trim($list[$id]['search_for'])) {
                 if ($id > 0) {
                     $forDel[] = $id;
                 }
             } elseif (isset($words[$id])) {
-                if ($list[$id]['search_for'] !== $words[$id]['search_for'] 
+                if ($list[$id]['search_for'] !== $words[$id]['search_for']
                     || $list[$id]['replace_with'] !== $words[$id]['replace_with']
                 ) {
                     $vars = [
@@ -35,8 +35,8 @@ class Save extends Method
                         ':search'  => $list[$id]['search_for'],
                         ':replace' => $list[$id]['replace_with'],
                     ];
-                    $sql = 'UPDATE ::censoring 
-                            SET search_for=?s:search, replace_with=?s:replace 
+                    $sql = 'UPDATE ::censoring
+                            SET search_for=?s:search, replace_with=?s:replace
                             WHERE id=?i:id';
                     $this->c->DB->exec($sql, $vars);
                 }
@@ -45,7 +45,7 @@ class Save extends Method
                     ':search'  => $list[$id]['search_for'],
                     ':replace' => $list[$id]['replace_with'],
                 ];
-                $sql = 'INSERT INTO ::censoring (search_for, replace_with) 
+                $sql = 'INSERT INTO ::censoring (search_for, replace_with)
                         VALUES (?s:search, ?s:replace)';
                 $this->c->DB->exec($sql, $vars);
             }

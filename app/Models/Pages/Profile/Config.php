@@ -88,7 +88,7 @@ class Config extends Profile
      * @param Validator $v
      * @param int $value
      *
-     * @return string
+     * @return int
      */
     public function vToZero(Validator $v, $value)
     {
