@@ -372,9 +372,6 @@ msgstr "Удалить"
 msgid "User delete redirect"
 msgstr "Пользователь удален. Переадресация &hellip;"
 
-msgid "User promote redirect"
-msgstr "Пользователь перемещен. Переадресация &hellip;"
-
 msgid "Group membership redirect"
 msgstr "Группа пользователя изменена. Переадресация &hellip;"
 

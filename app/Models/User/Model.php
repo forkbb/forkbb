@@ -4,7 +4,8 @@ namespace ForkBB\Models\User;
 
 use ForkBB\Models\DataModel;
 use ForkBB\Models\Model as BaseModel;
-use ForkBB\Models\Forum;
+use ForkBB\Models\Forum\Model as Forum;
+use ForkBB\Models\Post\Model as Post;
 use RuntimeException;
 
 class Model extends DataModel
@@ -318,5 +319,31 @@ class Model extends DataModel
     protected function getcanViewIP()
     {
         return $this->isAdmin;
+    }
+
+    /**
+     * Ссылка для продвижения пользователя из указанного сообщения
+     *
+     * @param Post $post
+     *
+     * @return null|string
+     */
+    public function linkPromote(Post $post)
+    {
+        if (($this->isAdmin || ($this->isAdmMod && 1 == $this->g_mod_promote_users))
+            && $this->id !== $post->user->id //????
+            && 0 < $post->user->g_promote_min_posts * $post->user->g_promote_next_group
+        ) {
+            return $this->c->Router->link('AdminUserPromote', [
+                'uid'   => $post->user->id,
+                'pid'   => $post->id,
+                'token' => $this->c->Csrf->create('AdminUserPromote', [
+                    'uid'   => $post->user->id,
+                    'pid'   => $post->id,
+                ]),
+            ]);
+        } else {
+            return null;
+        }
     }
 }

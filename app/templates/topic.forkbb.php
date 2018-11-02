@@ -91,6 +91,9 @@
         @if ($p->user->showUserInfo && $p->user->showPostCount && $post->user->num_posts)
             <li class="f-postcount">{!! __('%s post', $post->user->num_posts, num($post->user->num_posts)) !!}</li>
         @endif
+        @if ($linkPromote = $p->user->linkPromote($post))
+            <li class="f-promoteuser"><a href="{!! $linkPromote !!}">{!! __('Promote user') !!}</a></li>
+        @endif
           </ul>
         @if (! $post->user->isGuest && $p->user->showUserInfo)
           <ul class="f-user-info-add">

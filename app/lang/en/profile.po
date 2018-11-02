@@ -372,9 +372,6 @@ msgstr "Delete"
 msgid "User delete redirect"
 msgstr "User deleted. Redirecting …"
 
-msgid "User promote redirect"
-msgstr "User promoted. Redirecting …"
-
 msgid "Group membership redirect"
 msgstr "Group membership saved. Redirecting …"
 

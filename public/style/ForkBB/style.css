@@ -1470,6 +1470,10 @@ body,
   font-size: 1rem;
 }
 
+#fork .f-user-online .f-userstatus {
+  font-weight: bold;
+}
+
 #fork .f-post-main,
 #fork .f-post-btns,
 #fork .f-post-signature {

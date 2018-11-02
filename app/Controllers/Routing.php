@@ -127,13 +127,15 @@ class Routing
             $r->add('GET', '/admin/statistics', 'AdminStatistics:statistics', 'AdminStatistics');
 
             if ($user->canViewIP) {
-                $r->add('GET',           '/admin/get/host/{ip:[0-9a-fA-F:.]+}',      'AdminHost:view',           'AdminHost');
-                $r->add('GET',           '/admin/users/user/{id:[2-9]|[1-9]\d+}[/{page:[1-9]\d*}]',      'AdminUsersStat:view',            'AdminUserStat');
+                $r->add('GET', '/admin/get/host/{ip:[0-9a-fA-F:.]+}', 'AdminHost:view', 'AdminHost');
+                $r->add('GET', '/admin/users/user/{id:[2-9]|[1-9]\d+}[/{page:[1-9]\d*}]', 'AdminUsersStat:view', 'AdminUserStat');
             }
 
             $r->add(['GET', 'POST'], '/admin/users', 'AdminUsers:view', 'AdminUsers');
             $r->add(['GET', 'POST'], '/admin/users/result/{data}[/{page:[1-9]\d*}]', 'AdminUsersResult:view', 'AdminUsersResult');
             $r->add(['GET', 'POST'], '/admin/users/{action:\w+}/{ids:\d+(?:-\d+)*}', 'AdminUsersAction:view', 'AdminUsersAction');
+
+            $r->add('GET',           '/admin/users/promote/{uid:[2-9]|[1-9]\d+}/{pid:[1-9]\d*}/{token}', 'AdminUsersPromote:promote', 'AdminUserPromote');
         }
         // только админ
         if ($user->isAdmin) {

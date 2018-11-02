@@ -169,7 +169,8 @@ return [
         'AdminUsers'      => \ForkBB\Models\Pages\Admin\Users\View::class,
         'AdminUsersResult' => \ForkBB\Models\Pages\Admin\Users\Result::class,
         'AdminUsersStat'  => \ForkBB\Models\Pages\Admin\Users\Stat::class,
-        'AdminUsersAction'  => \ForkBB\Models\Pages\Admin\Users\Action::class,
+        'AdminUsersAction' => \ForkBB\Models\Pages\Admin\Users\Action::class,
+        'AdminUsersPromote' => \ForkBB\Models\Pages\Admin\Users\Promote::class,
         'AdminHost'       => \ForkBB\Models\Pages\Admin\Host::class,
 
         'ConfigModel'     => \ForkBB\Models\Config\Model::class,

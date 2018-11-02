@@ -350,3 +350,6 @@ msgstr "Select how to view search results"
 
 msgid "No users found"
 msgstr "No users were found matching your criteria."
+
+msgid "User promote redirect"
+msgstr "User promoted. Redirecting …"

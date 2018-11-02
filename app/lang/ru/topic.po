@@ -22,7 +22,7 @@ msgid "From"
 msgstr "Откуда:"
 
 msgid "Promote user"
-msgstr "Переместить пользователя"
+msgstr "Продвинуть пользователя"
 
 msgid "IP address logged"
 msgstr "IP адрес"
