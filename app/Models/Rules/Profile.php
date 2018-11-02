@@ -67,7 +67,7 @@ class Profile extends Rules
 
     protected function geteditEmail()
     {
-        return $this->admin || $this->my; // ???? разрешать ли модераторам менять email?
+        return $this->my || $this->admin;
     }
 
     protected function getviewLastVisit()
@@ -82,7 +82,7 @@ class Profile extends Rules
 
     protected function getdeleteUser()
     {
-        return ! $this->my && ($this->admin || $this->moderator); // ????
+        return ! $this->my && $this->admin;
     }
 
     protected function getviewIP()
@@ -107,6 +107,11 @@ class Profile extends Rules
 
     protected function geteditWebsite()
     {
-        return $this->admin || (($this->moderator || $this->my) && '1' == $this->user->g_post_links);
+        return $this->admin || (($this->moderator || $this->my) && '1' == $this->user->g_post_links); //????
+    }
+
+    protected function getchangeGroup()
+    {
+        return $this->admin || ($this->my && $this->moderator);
     }
 }

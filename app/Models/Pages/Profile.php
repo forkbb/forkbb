@@ -78,6 +78,12 @@ abstract class Profile extends Page
     protected function btns($type)
     {
         $btns = [];
+        if ($this->user->isAdmin && ! $this->rules->editProfile) {
+            $btns['change-user-group'] = [
+                $this->linkChangeGroup(),
+                \ForkBB\__('Change user group'),
+            ];
+        }
         if ($this->rules->banUser) {
             $btns['ban-user'] = [
                 $this->c->Router->link('',  ['id' => $this->curUser->id]),
@@ -109,5 +115,22 @@ abstract class Profile extends Page
             ];
         }
         return $btns;
+    }
+
+    /**
+     * Формирует ссылку на изменение группы пользователя
+     *
+     * @return string
+     */
+    protected function linkChangeGroup()
+    {
+        return $this->c->Router->link('AdminUsersAction',  [
+            'action' => 'change_group',
+            'ids'    => $this->curUser->id,
+            'token'  => $this->c->Csrf->create('AdminUsersAction', [
+                'action' => 'change_group',
+                'ids'    => $this->curUser->id,
+            ]),
+        ]);
     }
 }

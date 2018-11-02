@@ -346,10 +346,10 @@ msgid "Delete ban legend"
 msgstr "Delete (administrators only) or ban user"
 
 msgid "Delete user"
-msgstr "Delete user"
+msgstr "Delete"
 
 msgid "Ban user"
-msgstr "Ban user"
+msgstr "Ban"
 
 msgid "Confirm delete legend"
 msgstr "Important: read before deleting user"
@@ -512,3 +512,9 @@ msgstr "Pagination"
 
 msgid "Board configuration redirect"
 msgstr "Board configuration updated. Redirecting …"
+
+msgid "Group"
+msgstr "Group"
+
+msgid "Change user group"
+msgstr "Change user group"

@@ -80,10 +80,11 @@ abstract class Users extends Admin
      *
      * @param array $selected
      * @param string $action
+     * @param bool $profile
      *
      * @return false|array
      */
-    protected function checkSelected(array $selected, $action)
+    protected function checkSelected(array $selected, $action, $profile = false)
     {
         $selected = \array_map(function ($value) { // ????
             return (int) $value;
@@ -130,7 +131,7 @@ abstract class Users extends Admin
                     }
                     break;
                 case self::ACTION_CHG:
-                    if (! $this->rules->canChangeGroup($user)) {
+                    if (! $this->rules->canChangeGroup($user, $profile)) {
                         $this->fIswev = ['v', \ForkBB\__('You are not allowed to change group for %s', $user->username)];
                         if ($user->isAdmin) {
                             $this->fIswev = ['i', \ForkBB\__('No move admins message')];
@@ -144,6 +145,9 @@ abstract class Users extends Admin
             }
 
             $result[] = $user->id;
+            if ($user->id === $this->user->id) {
+                $this->fIswev = ['i', \ForkBB\__('You are trying to change your own group')];
+            }
         }
 
         if (empty($result)) {

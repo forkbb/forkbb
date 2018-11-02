@@ -37,6 +37,15 @@ class Action extends Users
      */
     public function view(array $args, $method)
     {
+        if (isset($args['token'])) {
+            if (! $this->c->Csrf->verify($args['token'], 'AdminUsersAction', $args)) {
+                return $this->c->Message->message('Bad token');
+            }
+            $profile = true;
+        } else {
+            $profile = false;
+        }
+
         $this->rules = $this->c->UsersRules->init();
 
         $error = false;
@@ -52,7 +61,9 @@ class Action extends Users
                 }
                 break;
             case self::ACTION_CHG:
-                if (! $this->rules->changeGroup) {
+                if ($profile && ! $this->rules->canChangeGroup($this->c->users->load((int) $args['ids']), true)) {
+                    $error = true;
+                } elseif (! $profile && ! $this->rules->changeGroup) {
                     $error = true;
                 }
                 break;
@@ -64,7 +75,7 @@ class Action extends Users
             return $this->c->Message->message('Bad request');
         }
 
-        $ids = $this->checkSelected(\explode('-', $args['ids']), $args['action']);
+        $ids = $this->checkSelected(\explode('-', $args['ids']), $args['action'], $profile);
         if (false === $ids) {
             $message = $this->c->Message->message('Action not available');
             $message->fIswev = $this->fIswev; //????
@@ -78,7 +89,7 @@ class Action extends Users
             case self::ACTION_DEL:
                 return $this->delete($args, $method);
             case self::ACTION_CHG:
-                return $this->change($args, $method);
+                return $this->change($args, $method, $profile);
             default:
                 throw new RuntimeException("The action {$args['action']} is unavailable");
         }
@@ -136,8 +147,7 @@ class Action extends Users
     /**
      * Создает массив данных для формы удаления пользователей
      *
-     * @param array $stat
-     * @param int $number
+     * @param array $args
      *
      * @return array
      */
@@ -198,15 +208,21 @@ class Action extends Users
     /**
      * Возвращает список групп доступных для замены
      *
+     * @param bool $profile
+     *
      * @return array
      */
-    protected function groupListForChange()
+    protected function groupListForChange($profile)
     {
         $list = [];
         foreach ($this->c->groups->getList() as $id => $group) {
-            if (! $group->groupGuest && ! $group->groupAdmin) {
                 $list[$id] = $group->g_title;
-            }
+        }
+        unset($list[$this->c->GROUP_GUEST]);
+        if (! $profile) {
+            unset($list[$this->c->GROUP_ADMIN]);
+        } elseif (! $this->user->isAdmin) {
+            $list = [$this->c->GROUP_MEMBER => $list[$this->c->GROUP_MEMBER]];
         }
         return $list;
     }
@@ -216,17 +232,17 @@ class Action extends Users
      *
      * @param array $args
      * @param string $method
+     * @param bool $profile
      *
      * @return Page
      */
-    protected function change(array $args, $method)
+    protected function change(array $args, $method, $profile)
     {
         if ('POST' === $method) {
-            $groupList = \implode(',', \array_keys($this->groupListForChange()));
             $v = $this->c->Validator->reset()
                 ->addRules([
                     'token'     => 'token:AdminUsersAction',
-                    'new_group' => 'required|integer|in:' . $groupList,
+                    'new_group' => 'required|integer|in:' . \implode(',', \array_keys($this->groupListForChange($profile))),
                     'confirm'   => 'required|integer|in:0,1',
                     'move'      => 'string',
                 ])->addAliases([
@@ -243,14 +259,25 @@ class Action extends Users
             $this->c->Cache->delete('stats');       //???? перенести в manager
             $this->c->Cache->delete('forums_mark'); //???? с авто обновлением кеша
 
-            return $this->c->Redirect->page('AdminUsers')->message('Users move redirect');
+            $redirect = $this->c->Redirect;
+            if ($profile) {
+                $user = $this->c->users->load((int) $args['ids']);
+                if ($this->c->ProfileRules->setUser($user)->editProfile) {
+                    $redirect->page('EditUserProfile', ['id' => $user->id]);
+                } else {
+                    $redirect->page('User', ['id' => $user->id, 'name' => $user->username]);
+                }
+            } else {
+                $redirect->page('AdminUsers');
+            }
+            return $redirect->message('Users move redirect');
         }
 
         $this->nameTpl    = 'admin/form';
         $this->classForm  = 'change-group';
         $this->titleForm  = \ForkBB\__('Change user group');
         $this->aCrumbs[]  = [$this->c->Router->link('AdminUsersAction', $args), \ForkBB\__('Change user group')];
-        $this->form       = $this->formChange($args);
+        $this->form       = $this->formChange($args, $profile);
 
         return $this;
     }
@@ -258,12 +285,12 @@ class Action extends Users
     /**
      * Создает массив данных для формы изменения группы пользователей
      *
-     * @param array $stat
-     * @param int $number
+     * @param array $args
+     * @param bool $profile
      *
      * @return array
      */
-    protected function formChange(array $args)
+    protected function formChange(array $args, $profile)
     {
         $yn    = [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')];
         $names = \implode(', ', $this->nameList($this->userList));
@@ -277,7 +304,7 @@ class Action extends Users
                     'fields' => [
                         'new_group' => [
                             'type'      => 'select',
-                            'options'   => $this->groupListForChange(),
+                            'options'   => $this->groupListForChange($profile),
                             'value'     => $this->c->config->o_default_user_group,
                             'caption'   => \ForkBB\__('New group label'),
                             'info'      => \ForkBB\__('New group help', $names),

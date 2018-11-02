@@ -512,3 +512,9 @@ msgstr "Постраничный вывод"
 
 msgid "Board configuration redirect"
 msgstr "Настройка форума обновлены. Переадресация &hellip;"
+
+msgid "Group"
+msgstr "Группа"
+
+msgid "Change user group"
+msgstr "Изменить группу пользователя"

@@ -63,8 +63,18 @@ class Users extends Rules
         return $this->profileRules->setUser($user)->banUser;
     }
 
-    public function canChangeGroup(User $user)
+    public function canChangeGroup(User $user, $profile = false)
     {
-        return $this->user->isAdmin && ! $user->isAdmin;
+        if (! $this->profileRules instanceof ProfileRules) {
+            $this->profileRules = $this->c->ProfileRules;
+        }
+
+        if ($profile && $this->user->isAdmin) {
+            return true;
+        } elseif (! $profile && $user->isAdmin) {
+            return false;
+        }
+
+        return $this->profileRules->setUser($user)->changeGroup;
     }
 }

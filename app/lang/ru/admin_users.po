@@ -250,7 +250,7 @@ msgid "All groups"
 msgstr "Все группы"
 
 msgid "Unverified users"
-msgstr "Неподтверждённые"
+msgstr "Непроверенные"
 
 msgid "Submit search"
 msgstr "Начать поиск"
@@ -353,3 +353,6 @@ msgstr "По вашему запросу ничего не найдено."
 
 msgid "User promote redirect"
 msgstr "Пользователь продвинут. Переадресация &hellip;"
+
+msgid "You are trying to change your own group"
+msgstr "Вы пытаетесь изменить свою собственную группу."

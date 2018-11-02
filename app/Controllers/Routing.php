@@ -133,7 +133,7 @@ class Routing
 
             $r->add(['GET', 'POST'], '/admin/users', 'AdminUsers:view', 'AdminUsers');
             $r->add(['GET', 'POST'], '/admin/users/result/{data}[/{page:[1-9]\d*}]', 'AdminUsersResult:view', 'AdminUsersResult');
-            $r->add(['GET', 'POST'], '/admin/users/{action:\w+}/{ids:\d+(?:-\d+)*}', 'AdminUsersAction:view', 'AdminUsersAction');
+            $r->add(['GET', 'POST'], '/admin/users/{action:\w+}/{ids:\d+(?:-\d+)*}[/{token}]', 'AdminUsersAction:view', 'AdminUsersAction');
 
             $r->add('GET',           '/admin/users/promote/{uid:[2-9]|[1-9]\d+}/{pid:[1-9]\d*}/{token}', 'AdminUsersPromote:promote', 'AdminUserPromote');
         }

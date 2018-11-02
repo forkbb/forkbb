@@ -353,3 +353,6 @@ msgstr "No users were found matching your criteria."
 
 msgid "User promote redirect"
 msgstr "User promoted. Redirecting …"
+
+msgid "You are trying to change your own group"
+msgstr "You are trying to change your own group."

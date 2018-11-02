@@ -224,6 +224,24 @@ class Edit extends Profile
                 'href'  => $this->c->Router->link('EditUserPass', ['id' => $this->curUser->id]),
             ];
         }
+
+        if ($this->rules->changeGroup) {
+            $fields['group'] = [
+                'type'    => 'link',
+                'caption' => \ForkBB\__('Group'),
+                'value'   => $this->curUser->group_id ? $this->curUser->g_title : \ForkBB\__('Change user group'),
+                'title'   => \ForkBB\__('Change user group'),
+                'href'    => $this->linkChangeGroup(),
+            ];
+        } else {
+            $fields['group'] = [
+                'class'   => 'pline',
+                'type'    => 'str',
+                'caption' => \ForkBB\__('Group'),
+                'value'   => $this->curUser->group_id ? $this->curUser->g_title : '-',
+            ];
+        }
+
         if ($this->rules->setTitle) {
             $fields['title'] = [
                 'type'      => 'text',
