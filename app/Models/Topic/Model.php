@@ -260,6 +260,33 @@ class Model extends DataModel
     }
 
     /**
+     * Возвращает массив сообщений обзора темы
+     *
+     * @return array
+     */
+    public function review()
+    {
+        if ($this->c->config->o_topic_review < 1) {
+            return [];
+        }
+
+        $this->page = 1;
+
+        $vars = [
+            ':tid'    => $this->id,
+            ':rows'   => $this->c->config->o_topic_review,
+        ];
+        $sql = 'SELECT p.id
+                FROM ::posts AS p
+                WHERE p.topic_id=?i:tid
+                ORDER BY p.id DESC
+                LIMIT 0, ?i:rows';
+        $this->idsList = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
+
+        return empty($this->idsList) ? [] : $this->c->posts->view($this, true);
+    }
+
+    /**
      * Вычисляет страницу темы на которой находится данное сообщение
      *
      * @param int $pid

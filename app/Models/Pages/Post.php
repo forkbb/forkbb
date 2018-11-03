@@ -101,13 +101,15 @@ class Post extends Page
             unset($args['quote']);
         }
 
-        $this->nameTpl   = 'post';
-        $this->onlinePos = 'topic-' . $topic->id;
-        $this->canonical = $this->c->Router->link('NewReply', ['id' => $topic->id]);
-        $this->robots    = 'noindex';
-        $this->crumbs    = $this->crumbs(\ForkBB\__('Post a reply'), $topic);
-        $this->formTitle = \ForkBB\__('Post a reply');
-        $this->form      = $this->messageForm($args, $topic, 'NewReply');
+        $this->nameTpl    = 'post';
+        $this->onlinePos  = 'topic-' . $topic->id;
+        $this->canonical  = $this->c->Router->link('NewReply', ['id' => $topic->id]);
+        $this->robots     = 'noindex';
+        $this->crumbs     = $this->crumbs(\ForkBB\__('Post a reply'), $topic);
+        $this->formTitle  = \ForkBB\__('Post a reply');
+        $this->form       = $this->messageForm($args, $topic, 'NewReply');
+        $this->postsTitle = \ForkBB\__('Topic review');
+        $this->posts      = $topic->review();
 
         return $this;
     }

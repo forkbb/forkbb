@@ -70,13 +70,14 @@ class View extends Action
      * Возвращает список сообщений
      *
      * @param mixed $arg
+     * @param bool $review
      *
      * @throws InvalidArgumentException
      * @throws RuntimeException
      *
      * @return array
      */
-    public function view($arg)
+    public function view($arg, $review = false)
     {
         if (! $arg instanceof Topic && ! $arg instanceof Search) {
             throw new InvalidArgumentException('Expected Topic or Search');
@@ -86,13 +87,15 @@ class View extends Action
             throw new RuntimeException('Model does not contain of posts list for display');
         }
 
-        $vars = [
-            ':ids' => $arg->idsList,
-        ];
-        $sql = 'SELECT w.id, w.message, w.poster, w.posted
-                FROM ::warnings AS w
-                WHERE w.id IN (?ai:ids)';
-        $warnings = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_GROUP);
+        if (! $review) {
+            $vars = [
+                ':ids' => $arg->idsList,
+            ];
+            $sql = 'SELECT w.id, w.message, w.poster, w.posted
+                    FROM ::warnings AS w
+                    WHERE w.id IN (?ai:ids)';
+            $warnings = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_GROUP);
+        }
 
         $userIds = [];
         $result  = \array_flip($arg->idsList);
@@ -174,11 +177,17 @@ class View extends Action
             }
         }
 
-        $this->c->users->load(array_keys($userIds));
+        $this->c->users->load(\array_keys($userIds));
 
         $offset    = ($arg->page - 1) * $this->c->user->disp_posts;
-        $postCount = 0;
         $timeMax   = 0;
+        if ($review) {
+            $postCount = $arg->num_replies + 2;
+            $sign      = -1;
+        } else {
+            $postCount = 0;
+            $sign      = 1;
+        }
 
         if ($arg instanceof Topic) {
             foreach ($result as $post) {
@@ -191,7 +200,7 @@ class View extends Action
                     }
                     $post->__postNumber = 1;
                 } else {
-                    ++$postCount;
+                    $postCount += $sign;
                     if (empty($post->id)) {
                         continue;
                     }
