@@ -43,13 +43,13 @@ msgid "Board title label"
 msgstr "Board title"
 
 msgid "Board title help"
-msgstr "The title of this bulletin board (shown at the top of every page). This field <b>not may</b> contain HTML."
+msgstr "The title of this bulletin board (shown at the top of every page)."
 
 msgid "Board desc label"
-msgstr "Board description"
+msgstr "Board description (HTML)"
 
 msgid "Board desc help"
-msgstr "A short description of this bulletin board (shown at the top of every page). This field <b>may</b> contain HTML."
+msgstr "A short description of this bulletin board (shown at the top of every page)."
 
 msgid "Timezone label"
 msgstr "Default time zone"
@@ -61,13 +61,13 @@ msgid "Language label"
 msgstr "Default language"
 
 msgid "Language help"
-msgstr "The default language for guests and users who haven't changed from the default in their profile."
+msgstr "The default language for guests and users attempting to register for the board."
 
 msgid "Default style label"
 msgstr "Default style"
 
 msgid "Default style help"
-msgstr "The default style for guests and users who haven't changed from the default in their profile."
+msgstr "The default style for guests and users attempting to register for the board."
 
 msgid "Timeouts subhead"
 msgstr "Time and timeouts"
@@ -100,7 +100,7 @@ msgid "Redirect time label"
 msgstr "Redirect time"
 
 msgid "Redirect time help"
-msgstr "Number of seconds to wait when redirecting. If set to 0, no redirect page will be displayed (not recommended)."
+msgstr "Number of seconds to wait when redirecting. If set to 0, no redirect page will be displayed."
 
 msgid "Display subhead"
 msgstr "Display"
@@ -283,7 +283,7 @@ msgid "Use avatars label"
 msgstr "Use avatars"
 
 msgid "Use avatars help"
-msgstr "When enabled, users will be able to upload an avatar which will be displayed under their title."
+msgstr "When enabled, users will be able to upload an avatar."
 
 msgid "Upload directory label"
 msgstr "Upload directory"
@@ -322,7 +322,7 @@ msgid "Webmaster e-mail label"
 msgstr "Webmaster email"
 
 msgid "Webmaster e-mail help"
-msgstr "This is the address that all emails sent by the board will be addressed from."
+msgstr "This is the address that all emails sent by the board will be addressed from. <b>Must match the SMTP settings (see below), if specified.</b>"
 
 msgid "Forum subscriptions label"
 msgstr "Forum subscriptions"
@@ -376,7 +376,7 @@ msgid "Verify label"
 msgstr "Verify registrations"
 
 msgid "Verify help"
-msgstr "When enabled, users are emailed a random password when they register. They can then log in and change the password in their profile if they see fit. This feature also requires users to verify new email addresses if they choose to change from the one they registered with. This is an effective way of avoiding registration abuse and making sure that all users have "correct" email addresses in their profiles."
+msgstr "When enabled, after registration, users receive an email with an activation link to their email. This feature also requires users to verify new email addresses if they choose to change from the one they registered with. This is an effective way of avoiding registration abuse and making sure that all users have "correct" email addresses in their profiles."
 
 msgid "Report new label"
 msgstr "Report new registrations"
@@ -391,10 +391,10 @@ msgid "Use rules help"
 msgstr "When enabled, users must agree to a set of rules when registering (enter text below). The rules will always be available through a link in the navigation table at the top of every page."
 
 msgid "Rules label"
-msgstr "Enter your rules here"
+msgstr "Enter your rules here (HTML)"
 
 msgid "Rules help"
-msgstr "Here you can enter any rules or other information that the user must review and accept when registering. If you enabled rules above you have to enter something here, otherwise it will be disabled. This text will not be parsed like regular posts and thus may contain HTML."
+msgstr "Here you can enter any rules or other information that the user must review and accept when registering. If you enabled rules above you have to enter something here, otherwise it will be disabled."
 
 msgid "E-mail default label"
 msgstr "Default email setting"
@@ -412,7 +412,7 @@ msgid "Display announcement help"
 msgstr "Enable this to display the below message in the board."
 
 msgid "Announcement message label"
-msgstr "Announcement message"
+msgstr "Announcement message (HTML)"
 
 msgid "Announcement message help"
-msgstr "This text will not be parsed like regular posts and thus may contain HTML."
+msgstr ""

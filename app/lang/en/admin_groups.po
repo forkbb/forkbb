@@ -178,7 +178,7 @@ msgid "Delete topics label"
 msgstr "Delete topics"
 
 msgid "Delete topics help"
-msgstr "Allow users in this group to delete their own topics (including any replies)."
+msgstr "Allow users in this group to delete their own topics (<b>including any replies</b>)."
 
 msgid "Post links label"
 msgstr "Post links"

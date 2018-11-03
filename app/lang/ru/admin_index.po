@@ -55,10 +55,10 @@ msgid "About head"
 msgstr "О ForkBB"
 
 msgid "ForkBB version label"
-msgstr "Версия"
+msgstr "Ревизия"
 
 msgid "ForkBB version data"
-msgstr "rev.%s"
+msgstr "%s"
 
 msgid "Server statistics label"
 msgstr "Статистика сервера"
