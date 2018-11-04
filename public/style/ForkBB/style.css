@@ -148,6 +148,11 @@ body,
   position: relative;
 }
 
+#fork code,
+#fork pre {
+  font-family: "DejaVu Sans Mono", Consolas, "Droid Sans Mono", Monospace, Monaco, "Courier New", Courier;
+}
+
 #fork div,
 #fork fieldset {
   min-width: 0;
