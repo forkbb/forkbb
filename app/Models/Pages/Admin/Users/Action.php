@@ -238,6 +238,13 @@ class Action extends Users
      */
     protected function change(array $args, $method, $profile)
     {
+        if ($profile) {
+            $user = $this->c->users->load((int) $args['ids']);
+            $link = $this->c->Router->link('EditUserProfile', ['id' => $user->id]);
+        } else {
+            $link = $this->c->Router->link('AdminUsers');
+        }
+
         if ('POST' === $method) {
             $v = $this->c->Validator->reset()
                 ->addRules([
@@ -250,8 +257,10 @@ class Action extends Users
                     'token' => $args,
                 ]);
 
+            $redirect = $this->c->Redirect;
+
             if (! $v->validation($_POST) || $v->confirm !== 1) {
-                return $this->c->Redirect->page('AdminUsers')->message('No confirm redirect');
+                return $redirect->url($link)->message('No confirm redirect');
             }
 
             $this->c->users->changeGroup($v->new_group, ...$this->userList);
@@ -259,11 +268,9 @@ class Action extends Users
             $this->c->Cache->delete('stats');       //???? перенести в manager
             $this->c->Cache->delete('forums_mark'); //???? с авто обновлением кеша
 
-            $redirect = $this->c->Redirect;
             if ($profile) {
-                $user = $this->c->users->load((int) $args['ids']);
                 if ($this->c->ProfileRules->setUser($user)->editProfile) {
-                    $redirect->page('EditUserProfile', ['id' => $user->id]);
+                    $redirect->url($link);
                 } else {
                     $redirect->page('User', ['id' => $user->id, 'name' => $user->username]);
                 }
@@ -277,7 +284,7 @@ class Action extends Users
         $this->classForm  = 'change-group';
         $this->titleForm  = \ForkBB\__('Change user group');
         $this->aCrumbs[]  = [$this->c->Router->link('AdminUsersAction', $args), \ForkBB\__('Change user group')];
-        $this->form       = $this->formChange($args, $profile);
+        $this->form       = $this->formChange($args, $profile, $link);
 
         return $this;
     }
@@ -287,10 +294,11 @@ class Action extends Users
      *
      * @param array $args
      * @param bool $profile
+     * @param string $linkCancel
      *
      * @return array
      */
-    protected function formChange(array $args, $profile)
+    protected function formChange(array $args, $profile, $linkCancel)
     {
         $yn    = [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')];
         $names = \implode(', ', $this->nameList($this->userList));
@@ -327,7 +335,7 @@ class Action extends Users
                 'cancel'  => [
                     'type'      => 'btn',
                     'value'     => \ForkBB\__('Cancel'),
-                    'link'      => $this->c->Router->link('AdminUsers'),
+                    'link'      => $linkCancel,
                 ],
             ],
         ];
