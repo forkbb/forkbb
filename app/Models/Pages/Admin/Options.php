@@ -51,7 +51,6 @@ class Options extends Admin
                     'o_disp_topics_default'   => 'required|integer|min:10|max:50',
                     'o_disp_posts_default'    => 'required|integer|min:10|max:50',
                     'o_disp_users'            => 'required|integer|min:10|max:50',
-                    'o_indent_num_spaces'     => 'required|integer|min:0|max:99',
                     'o_quote_depth'           => 'required|integer|min:0|max:9',
                     'o_quickpost'             => 'required|integer|in:0,1',
                     'o_users_online'          => 'required|integer|in:0,1',
@@ -410,14 +409,6 @@ class Options extends Admin
                     'value'   => $config->o_topic_review,
                     'caption' => \ForkBB\__('Topic review label'),
                     'info'    => \ForkBB\__('Topic review help'),
-                ],
-                'o_indent_num_spaces' => [
-                    'type'    => 'number',
-                    'min'     => 0,
-                    'max'     => 99,
-                    'value'   => $config->o_indent_num_spaces,
-                    'caption' => \ForkBB\__('Indent label'),
-                    'info'    => \ForkBB\__('Indent help'),
                 ],
                 'o_quote_depth' => [
                     'type'    => 'number',

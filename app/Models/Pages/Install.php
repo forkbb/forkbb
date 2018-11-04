@@ -1062,7 +1062,6 @@ class Install extends Page
             'o_disp_topics_default'   => 30,
             'o_disp_posts_default'    => 25,
             'o_disp_users'            => 50,
-            'o_indent_num_spaces'     => 4,
             'o_quote_depth'           => 3,
             'o_quickpost'             => 1,
             'o_users_online'          => 1,

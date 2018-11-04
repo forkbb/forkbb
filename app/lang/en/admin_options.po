@@ -153,12 +153,6 @@ msgstr "Users per page"
 msgid "Users per page help"
 msgstr "The number of users displayed on one page of the list."
 
-msgid "Indent label"
-msgstr "Indent size"
-
-msgid "Indent help"
-msgstr "If set to 8, a regular tab will be used when displaying text within the [code][/code] tag. Otherwise this many spaces will be used to indent the text."
-
 msgid "Quote depth label"
 msgstr "Maximum [quote] depth"
 

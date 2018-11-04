@@ -153,12 +153,6 @@ msgstr "Пользователей на страницу"
 msgid "Users per page help"
 msgstr "Число пользователей отображаемых на одной странице списка."
 
-msgid "Indent label"
-msgstr "Размер отступа"
-
-msgid "Indent help"
-msgstr "Если поставить 8, отступы внутри тегов [code][/code] будут делаться табуляцими. Иначе отступы будут отбиваться пробелами."
-
 msgid "Quote depth label"
 msgstr "Максимальная глубина [quote]"
 
