@@ -483,7 +483,7 @@ class Search extends Page
                     break;
                 }
                 $user              = $this->c->users->load($uid);
-                if (! $user instanceof User) {
+                if (! $user instanceof User || $user->isGuest) {
                     break;
                 }
                 if ($asTopicsList) {

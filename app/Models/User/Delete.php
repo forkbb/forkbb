@@ -4,6 +4,8 @@ namespace ForkBB\Models\User;
 
 use ForkBB\Models\Action;
 use ForkBB\Models\User\Model as User;
+use ForkBB\Models\Forum\Model as Forum;
+use ForkBB\Models\Forum\Manager as ForumManager;
 use InvalidArgumentException;
 use RuntimeException;
 
@@ -41,9 +43,12 @@ class Delete extends Action
         }
 
         if (! empty($moderators)) {
-            $root = $this->c->forums->get(0); //???? вызов от группы админов?
+            $forums = new ForumManager($this->c);
+            $forums->init($this->c->groups->get($this->c->GROUP_ADMIN));
+            $root = $forums->get(0);
+
             if ($root instanceof Forum) {
-                foreach ($this->c->forums->depthList($root, 0) as $forum) {
+                foreach ($root->descendants as $forum) {
                     $forum->modDelete(...$moderators);
                     $this->c->forums->update($forum);
                 }

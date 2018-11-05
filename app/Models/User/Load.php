@@ -59,8 +59,8 @@ class Load extends Action
             return $result;
         } else {
             $count = \count($data);
-            // число найденных пользователей отлично от одного или гость
-            if (1 !== $count || 1 === $data[0]['id']) {
+            // число найденных пользователей отлично от одного
+            if (1 !== $count) {
                 return $count;
             }
             return $this->manager->create($data[0]);

@@ -17,7 +17,7 @@ class Stat extends Users
      */
     public function view(array $args, $method)
     {
-        $stat   = $this->c->posts->userStat($args['id']);
+        $stat   = $this->c->posts->userStat((int) $args['id']);
         $number = \count($stat);
 
         $page  = isset($args['page']) ? (int) $args['page'] : 1;

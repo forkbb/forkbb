@@ -147,7 +147,9 @@ class Auth extends Page
     public function vLoginProcess(Validator $v, $password)
     {
         if (! empty($v->getErrors())) {
-        } elseif (! ($user = $this->c->users->load($v->username, 'username')) instanceof User) {
+        } elseif (! ($user = $this->c->users->load($v->username, 'username')) instanceof User
+            || $user->isGuest
+        ) {
             $v->addError('Wrong user/pass');
         } elseif ($user->isUnverified) {
             $v->addError('Account is not activated', 'w');
@@ -308,6 +310,7 @@ class Auth extends Page
     {
         if (! \hash_equals($args['hash'], $this->c->Secury->hash($args['email'] . $args['key']))
             || ! ($user = $this->c->users->load($args['email'], 'email')) instanceof User
+            || $user->isGuest
             || empty($user->activate_string)
             || ! \hash_equals($user->activate_string, $args['key'])
         ) {

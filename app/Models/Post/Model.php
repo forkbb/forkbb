@@ -43,7 +43,7 @@ class Model extends DataModel
      */
     protected function getuser() //????
     {
-        $user = $this->c->users->get($this->poster_id);
+        $user = $this->c->users->load($this->poster_id);
 
         if (! $user instanceof User) {
             throw new RuntimeException('No user data in post number ' . $this->id);

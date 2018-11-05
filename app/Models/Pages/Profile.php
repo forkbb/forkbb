@@ -19,7 +19,10 @@ abstract class Profile extends Page
     {
         $this->curUser = $this->c->users->load((int) $id);
 
-        if (! $this->curUser instanceof User || ($this->curUser->isUnverified && ! $this->user->isAdmMod)) {
+        if (! $this->curUser instanceof User
+            || $this->curUser->isGuest
+            || ($this->curUser->isUnverified && ! $this->user->isAdmMod)
+        ) {
             return false;
         }
 
