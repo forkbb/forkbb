@@ -85,8 +85,9 @@ class Routing
                 $r->add('GET',           '/user/{id:[2-9]|[1-9]\d+}/{name}',          'ProfileView:view',   'User');
                 $r->add(['GET', 'POST'], '/user/{id:[2-9]|[1-9]\d+}/edit/profile',    'ProfileEdit:edit',   'EditUserProfile');
                 $r->add(['GET', 'POST'], '/user/{id:[2-9]|[1-9]\d+}/edit/config',     'ProfileConfig:config', 'EditUserBoardConfig');
-                $r->add(['GET', 'POST'], '/user/{id:[2-9]|[1-9]\d+}/edit/email',      'ProfileEmail:email',  'EditUserEmail');
+                $r->add(['GET', 'POST'], '/user/{id:[2-9]|[1-9]\d+}/edit/email',      'ProfileEmail:email', 'EditUserEmail');
                 $r->add(['GET', 'POST'], '/user/{id:[2-9]|[1-9]\d+}/edit/passphrase', 'ProfilePass:pass',   'EditUserPass');
+                $r->add(['GET', 'POST'], '/user/{id:[2-9]|[1-9]\d+}/edit/moderation', 'ProfileMod:moderation', 'EditUserModeration');
             } elseif (! $user->isGuest) {
                 // только свой профиль
                 $r->add('GET',           '/user/{id:' . $user->id . '}/{name}',          'ProfileView:view',   'User');

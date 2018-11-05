@@ -177,6 +177,27 @@ class Model extends DataModel
     }
 
     /**
+     * Добавляет указанных пользователей в списка модераторов
+     *
+     * @param array ...$users
+     *
+     * @throws InvalidArgumentException
+     */
+    public function modAdd(...$users)
+    {
+        $moderators = empty($this->a['moderators']) ? [] : $this->a['moderators'];
+
+        foreach ($users as $user) {
+            if (! $user instanceof User) {
+                throw new InvalidArgumentException('Expected User');
+            }
+            $moderators[$user->id] = $user->username;
+        }
+
+        $this->moderators = $moderators;
+    }
+
+    /**
      * Удаляет указанных пользователей из списка модераторов
      *
      * @param array ...$users
@@ -330,7 +351,7 @@ class Model extends DataModel
     {
         $data = parent::getAttrs();
 
-        $data['moderators'] = empty($data['moderators']) ? null : \json_encode($data['moderators']);
+        $data['moderators'] = empty($data['moderators']) ? '' : \json_encode($data['moderators']);
 
         return $data;
     }

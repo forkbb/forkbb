@@ -2297,6 +2297,39 @@ body,
   }
 }
 
+#fork .f-fs-modforum {
+  display: flex;
+  align-items: stretch;
+}
+
+#fork .f-fs-modforum > dl {
+  border-bottom: 0.0625rem dotted #AA7939;
+  margin-bottom: 0.3125rem;
+}
+
+#fork .f-fs-modforum > legend,
+#fork .f-field-modforum > dt {
+  display: none;
+}
+
+#fork .f-fs-modforum .f-child2 > input {
+  margin: 0;
+}
+
+#fork .f-fs-modforum .f-child1 {
+  font-weight: normal;
+}
+
+#fork .f-field-modforum.f-field-moderator {
+  width: 3rem;
+  overflow: hidden;
+  text-align: center;
+}
+
+#fork .f-field-modforum.f-field-name {
+  width: calc(100% - 3rem);
+}
+
 /****************************/
 /* Профиль - редактирование */
 /****************************/

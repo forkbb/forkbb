@@ -375,7 +375,7 @@ msgstr "User deleted. Redirecting …"
 msgid "Group membership redirect"
 msgstr "Group membership saved. Redirecting …"
 
-msgid "Update forums redirect"
+msgid "Update rights redirect"
 msgstr "Forum moderator rights updated. Redirecting …"
 
 msgid "Ban redirect"
@@ -518,3 +518,15 @@ msgstr "Group"
 
 msgid "Change user group"
 msgstr "Change user group"
+
+msgid "Configure moderator rights"
+msgstr "Configure moderator rights"
+
+msgid "Moderator rights"
+msgstr "Moderator rights"
+
+msgid "Forum label"
+msgstr "Forum"
+
+msgid "Moderator label"
+msgstr "Moderator"

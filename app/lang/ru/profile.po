@@ -375,7 +375,7 @@ msgstr "Пользователь удален. Переадресация &helli
 msgid "Group membership redirect"
 msgstr "Группа пользователя изменена. Переадресация &hellip;"
 
-msgid "Update forums redirect"
+msgid "Update rights redirect"
 msgstr "Права модератора обновлены. Переадресация &hellip;"
 
 msgid "Ban redirect"
@@ -518,3 +518,15 @@ msgstr "Группа"
 
 msgid "Change user group"
 msgstr "Изменить группу пользователя"
+
+msgid "Configure moderator rights"
+msgstr "Настроить права модератора"
+
+msgid "Moderator rights"
+msgstr "Права модератора"
+
+msgid "Forum label"
+msgstr "Раздел"
+
+msgid "Moderator label"
+msgstr "Модератор"

@@ -114,4 +114,9 @@ class Profile extends Rules
     {
         return $this->admin || ($this->my && $this->moderator);
     }
+
+    protected function getconfModer()
+    {
+        return $this->user->isAdmin && $this->curUser->isAdmMod && ! $this->curUser->isAdmin;
+    }
 }

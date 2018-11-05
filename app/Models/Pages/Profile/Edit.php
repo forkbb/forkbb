@@ -196,10 +196,6 @@ class Edit extends Profile
 
         // имя, титул и аватара
         $fields = [];
-        $fields['usertitle'] = [
-            'class' => 'usertitle',
-            'type'  => 'wrap',
-        ];
         if ($this->rules->rename) {
             $fields['username'] = [
                 'type'      => 'text',
@@ -217,14 +213,6 @@ class Edit extends Profile
                 'value'   => $this->curUser->username,
             ];
         }
-        if ($this->rules->editPass) {
-            $fields['change_pass'] = [
-                'type'  => 'link',
-                'value' => \ForkBB\__('Change passphrase'),
-                'href'  => $this->c->Router->link('EditUserPass', ['id' => $this->curUser->id]),
-            ];
-        }
-
         if ($this->rules->changeGroup) {
             $fields['group'] = [
                 'type'    => 'link',
@@ -241,7 +229,14 @@ class Edit extends Profile
                 'value'   => $this->curUser->group_id ? $this->curUser->g_title : '-',
             ];
         }
-
+        if ($this->rules->confModer) {
+            $fields['configure-moderator'] = [
+                'type'    => 'link',
+                'value'   => \ForkBB\__('Configure moderator rights'),
+                'title'   => \ForkBB\__('Configure moderator rights'),
+                'href'    => $this->c->Router->link('EditUserModeration', ['id' => $this->curUser->id]),
+            ];
+        }
         if ($this->rules->setTitle) {
             $fields['title'] = [
                 'type'      => 'text',
@@ -258,9 +253,13 @@ class Edit extends Profile
                 'value'   => $this->curUser->title(),
             ];
         }
-        $fields[] = [
-            'type' => 'endwrap',
-        ];
+        if ($this->rules->editPass) {
+            $fields['change_pass'] = [
+                'type'  => 'link',
+                'value' => \ForkBB\__('Change passphrase'),
+                'href'  => $this->c->Router->link('EditUserPass', ['id' => $this->curUser->id]),
+            ];
+        }
         if ($this->rules->useAvatar) {
             if (! $this->curUser->avatar) {
                 $fields['avatar'] = [
