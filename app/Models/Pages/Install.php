@@ -567,7 +567,7 @@ class Install extends Page
                 'forum_name'      => ['VARCHAR(80)', false, 'New forum'],
                 'forum_desc'      => ['TEXT', false],
                 'redirect_url'    => ['VARCHAR(255)', false, ''],
-                'moderators'      => ['TEXT', true],
+                'moderators'      => ['TEXT', false],
                 'num_topics'      => ['MEDIUMINT(8) UNSIGNED', false, 0],
                 'num_posts'       => ['MEDIUMINT(8) UNSIGNED', false, 0],
                 'last_post'       => ['INT(10) UNSIGNED', true],

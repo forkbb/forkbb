@@ -384,6 +384,7 @@ class Forums extends Admin
                     if (empty($args['id'])) {
                         $message = 'Forum added redirect';
                         $forum->disp_position = $this->forumPos($forum);
+                        $forum->moderators    = '';
                         $this->c->forums->insert($forum);
                     } else {
                         $message = 'Forum updated redirect';
