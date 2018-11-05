@@ -124,7 +124,7 @@ trait PostFormTrait
                     'checked' => isset($vars['merge_post']) ? (bool) $vars['merge_post'] : true,
                 ];
             }
-            if ($editPost) {
+            if ($editPost && ! $model->user->isGuest) {
                 $fieldset['edit_post'] = [
                     'type'    => 'checkbox',
                     'label'   => \ForkBB\__('EditPost edit'),
