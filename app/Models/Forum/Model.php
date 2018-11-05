@@ -177,7 +177,7 @@ class Model extends DataModel
     }
 
     /**
-     * Добавляет указанных пользователей в списка модераторов
+     * Добавляет указанных пользователей в список модераторов
      *
      * @param array ...$users
      *
@@ -351,7 +351,9 @@ class Model extends DataModel
     {
         $data = parent::getAttrs();
 
-        $data['moderators'] = empty($data['moderators']) ? '' : \json_encode($data['moderators']);
+        $data['moderators'] = empty($data['moderators']) || ! \is_array($data['moderators'])
+            ? ''
+            : \json_encode($data['moderators']);
 
         return $data;
     }
