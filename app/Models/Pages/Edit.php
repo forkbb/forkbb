@@ -33,7 +33,7 @@ class Edit extends Page
         $this->c->Lang->load('post');
 
         if ($method === 'POST') {
-            $v = $this->messageValidator($topic, 'EditPost', $args, true, $editSubject);
+            $v = $this->messageValidator($post, 'EditPost', $args, true, $editSubject);
 
             if ($v->validation($_POST) && null === $v->preview) {
                 return $this->endEdit($post, $v);

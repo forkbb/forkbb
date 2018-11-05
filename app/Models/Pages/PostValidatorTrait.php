@@ -120,7 +120,7 @@ trait PostValidatorTrait
             } else {
                 $ruleMergePost  = 'absent';
             }
-            if ($editPost) {
+            if ($editPost && ! $model->user->isGuest && ! $model->user->isAdmin) {
                 $ruleEditPost   = 'checkbox';
             } else {
                 $ruleEditPost   = 'absent';
