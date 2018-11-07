@@ -444,12 +444,6 @@ msgstr "Signature has only capital letters"
 msgid "To change email"
 msgstr "Change email address"
 
-msgid "Your passphrase"
-msgstr "Your passphrase"
-
-msgid "Invalid passphrase"
-msgstr "Invalid passphrase"
-
 msgid "Email is old redirect"
 msgstr "Email address is not changed. Redirecting …"
 

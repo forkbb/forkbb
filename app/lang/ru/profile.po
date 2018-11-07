@@ -444,12 +444,6 @@ msgstr "Текст подписи содержит только заглавны
 msgid "To change email"
 msgstr "Изменить адрес электронной почты"
 
-msgid "Your passphrase"
-msgstr "Ваша кодовая фраза"
-
-msgid "Invalid passphrase"
-msgstr "Неверная кодовая фраза"
-
 msgid "Email is old redirect"
 msgstr "Адрес электронной почты оставлен без изменений. Переадресация &hellip;"
 
@@ -511,7 +505,7 @@ msgid "Pagination"
 msgstr "Постраничный вывод"
 
 msgid "Board configuration redirect"
-msgstr "Настройка форума обновлены. Переадресация &hellip;"
+msgstr "Настройки форума обновлены. Переадресация &hellip;"
 
 msgid "Group"
 msgstr "Группа"

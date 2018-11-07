@@ -512,3 +512,9 @@ msgstr "Да"
 
 msgid "No"
 msgstr "Нет"
+
+msgid "Your passphrase"
+msgstr "Ваша кодовая фраза"
+
+msgid "Invalid passphrase"
+msgstr "Неверная кодовая фраза"

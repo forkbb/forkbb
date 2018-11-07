@@ -238,19 +238,28 @@ class Action extends Users
      */
     protected function change(array $args, $method, $profile)
     {
+        $rulePass = 'absent';
+
         if ($profile) {
             $user = $this->c->users->load((int) $args['ids']);
             $link = $this->c->Router->link('EditUserProfile', ['id' => $user->id]);
+
+            if ($user->isAdmin || $user->id === $this->user->id) {
+                $rulePass = 'required|string:trim|check_password';
+            }
         } else {
             $link = $this->c->Router->link('AdminUsers');
         }
 
         if ('POST' === $method) {
             $v = $this->c->Validator->reset()
-                ->addRules([
+                ->addValidators([
+                    'check_password' => [$this, 'vCheckPassword'],
+                ])->addRules([
                     'token'     => 'token:AdminUsersAction',
                     'new_group' => 'required|integer|in:' . \implode(',', \array_keys($this->groupListForChange($profile))),
                     'confirm'   => 'required|integer|in:0,1',
+                    'password'  => $rulePass,
                     'move'      => 'string',
                 ])->addAliases([
                 ])->addArguments([
@@ -259,34 +268,56 @@ class Action extends Users
 
             $redirect = $this->c->Redirect;
 
-            if (! $v->validation($_POST) || $v->confirm !== 1) {
-                return $redirect->url($link)->message('No confirm redirect');
-            }
-
-            $this->c->users->changeGroup($v->new_group, ...$this->userList);
-
-            $this->c->Cache->delete('stats');       //???? перенести в manager
-            $this->c->Cache->delete('forums_mark'); //???? с авто обновлением кеша
-
-            if ($profile) {
-                if ($this->c->ProfileRules->setUser($user)->editProfile) {
-                    $redirect->url($link);
-                } else {
-                    $redirect->page('User', ['id' => $user->id, 'name' => $user->username]);
+            if ($v->validation($_POST)) {
+                if ($v->confirm !== 1) {
+                    return $redirect->url($link)->message('No confirm redirect');
                 }
-            } else {
-                $redirect->page('AdminUsers');
+
+                $this->c->users->changeGroup($v->new_group, ...$this->userList);
+
+                $this->c->Cache->delete('stats');       //???? перенести в manager
+                $this->c->Cache->delete('forums_mark'); //???? с авто обновлением кеша
+
+                if ($profile) {
+                    if ($this->c->ProfileRules->setUser($user)->editProfile) {
+                        $redirect->url($link);
+                    } else {
+                        $redirect->page('User', ['id' => $user->id, 'name' => $user->username]);
+                    }
+                } else {
+                    $redirect->page('AdminUsers');
+                }
+                return $redirect->message('Users move redirect');
+
             }
-            return $redirect->message('Users move redirect');
+
+            $this->fIswev = $v->getErrors();
         }
 
         $this->nameTpl    = 'admin/form';
         $this->classForm  = 'change-group';
         $this->titleForm  = \ForkBB\__('Change user group');
         $this->aCrumbs[]  = [$this->c->Router->link('AdminUsersAction', $args), \ForkBB\__('Change user group')];
-        $this->form       = $this->formChange($args, $profile, $link);
+        $this->form       = $this->formChange($args, $profile, $link, $rulePass !== 'absent');
 
         return $this;
+    }
+
+    /**
+     * Проверяет пароль на совпадение с текущим пользователем
+     *
+     * @param Validator $v
+     * @param string $password
+     *
+     * @return string
+     */
+    public function vCheckPassword(Validator $v, $password)
+    {
+        if (! \password_verify($password, $this->user->password)) {
+            $v->addError('Invalid passphrase');
+        }
+
+        return $password;
     }
 
     /**
@@ -295,10 +326,11 @@ class Action extends Users
      * @param array $args
      * @param bool $profile
      * @param string $linkCancel
+     * @param bool $checkPass
      *
      * @return array
      */
-    protected function formChange(array $args, $profile, $linkCancel)
+    protected function formChange(array $args, $profile, $linkCancel, $checkPass)
     {
         $yn    = [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')];
         $names = \implode(', ', $this->nameList($this->userList));
@@ -339,6 +371,14 @@ class Action extends Users
                 ],
             ],
         ];
+
+        if ($checkPass) {
+            $form['sets']['options']['fields']['password'] = [
+                'type'      => 'password',
+                'caption'   => \ForkBB\__('Your passphrase'),
+                'required'  => true,
+            ];
+        }
 
         return $form;
     }
