@@ -2,6 +2,7 @@
 
 namespace ForkBB\Models\User;
 
+use ForkBB\Core\Container;
 use ForkBB\Models\DataModel;
 use ForkBB\Models\Model as BaseModel;
 use ForkBB\Models\Forum\Model as Forum;
@@ -15,6 +16,24 @@ class Model extends DataModel
      * @var array
      */
     protected $avatarTypes = ['jpg', 'gif', 'png'];
+
+    /**
+     * Конструктор
+     *
+     * @param Container $container
+     */
+    public function __construct(Container $container)
+    {
+        parent::__construct($container);
+
+        $this->dependProp = [
+            'group_id' => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'link', 'viewUsers', 'canViewIP', 'showPostCount', 'searchUsers'],
+            'id' => ['isGuest', 'link', 'avatar', 'online'],
+            'logged' => ['isLogged'],
+            'show_sig' => ['showSignature'],
+            'show_avatars' => ['showAvatar'],
+        ];
+    }
 
     /**
      * Статус неподтвержденного
