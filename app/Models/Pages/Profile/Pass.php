@@ -31,7 +31,7 @@ class Pass extends Profile
                 ])->addRules([
                     'token'     => 'token:EditUserPass',
                     'password'  => 'required|string:trim|check_password',
-                    'new_pass'  => 'required|string:trim,lower|password',
+                    'new_pass'  => 'required|string:trim|password',
                 ])->addAliases([
                     'new_pass'  => 'New pass',
                     'password'  => 'Your passphrase',
