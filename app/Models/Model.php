@@ -26,6 +26,12 @@ class Model
     protected $aCalc = [];
 
     /**
+     * Зависимости свойств
+     * @var array
+     */
+    protected $dependProp = [];
+
+    /**
      * Конструктор
      *
      * @param Container $container
@@ -58,6 +64,10 @@ class Model
     {
         unset($this->a[$name]);     //????
         unset($this->aCalc[$name]); //????
+
+        if (isset($this->dependProp[$name])) {
+            $this->aCalc = \array_diff_key($this->aCalc, \array_flip($this->dependProp[$name]));
+        }
     }
 
     /**
@@ -69,6 +79,10 @@ class Model
     public function __set($name, $val)
     {
         unset($this->aCalc[$name]);
+
+        if (isset($this->dependProp[$name])) {
+            $this->aCalc = \array_diff_key($this->aCalc, \array_flip($this->dependProp[$name]));
+        }
 
         if (\method_exists($this, $method = 'set' . $name)) {
             $this->$method($val);
