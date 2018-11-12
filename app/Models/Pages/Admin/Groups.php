@@ -637,7 +637,7 @@ class Groups extends Admin
             return $this->c->Message->message('Bad request');
         }
 
-        $count = $this->c->users->UsersNumber($group);
+        $count = $this->c->users->usersNumber($group);
         if ($count) {
             $move   = 'required|integer|in:';
             $groups = [];
