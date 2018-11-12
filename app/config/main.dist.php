@@ -89,7 +89,7 @@ return [
         'bans'       => '@ModelBanList:init',
         'censorship' => '@CensorshipModel:init',
         'stats'      => '@ModelStats:init',
-        'admins'     => '@ModelAdminList:init',
+        'admins'     => '@AdminListModel:init',
         'smilies'    => '@ModelSmileyList:init',
         'dbMap'      => '@ModelDBMap:init',
         'stopwords'  => '@ModelStopwords:init',
@@ -194,8 +194,7 @@ return [
         'ModelStats'          => \ForkBB\Models\Stats::class,
         'StatsLoad' => \ForkBB\Models\Stats\Load::class,
 
-        'ModelAdminList'      => \ForkBB\Models\AdminList::class,
-        'AdminListLoad' => \ForkBB\Models\AdminList\Load::class,
+        'AdminListModel' => \ForkBB\Models\AdminList\Model::class,
 
         'ModelSmileyList'     => \ForkBB\Models\SmileyList::class,
         'SmileyListLoad' => \ForkBB\Models\SmileyList\Load::class,
@@ -217,6 +216,7 @@ return [
         'UserManagerFilter'           => \ForkBB\Models\User\Filter::class,
         'UserManagerDelete'           => \ForkBB\Models\User\Delete::class,
         'UserManagerChangeGroup'      => \ForkBB\Models\User\ChangeGroup::class,
+        'UserManagerAdminsIds'        => \ForkBB\Models\User\AdminsIds::class,
 
         'ForumModel'           => \ForkBB\Models\Forum\Model::class,
         'ForumModelCalcStat'   => \ForkBB\Models\Forum\CalcStat::class,

@@ -27,6 +27,7 @@ class Delete extends Action
 
         $ids = [];
         $moderators = [];
+        $adminPresent = false;
         foreach ($users as $user) {
             if (! $user instanceof User) {
                 throw new InvalidArgumentException('Expected User');
@@ -39,6 +40,9 @@ class Delete extends Action
 
             if ($user->isAdmMod) {
                 $moderators[$user->id] = $user;
+            }
+            if ($user->isAdmin) {
+                $adminPresent = true;
             }
         }
 
@@ -69,5 +73,9 @@ class Delete extends Action
         $sql = 'DELETE FROM ::users
                 WHERE id IN (?ai:users)';
         $this->c->DB->exec($sql, $vars);
+
+        if ($adminPresent) {
+            $this->c->admins->reset();
+        }
     }
 }

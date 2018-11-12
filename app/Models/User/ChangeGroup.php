@@ -28,6 +28,7 @@ class ChangeGroup extends Action
 
         $ids = [];
         $moderators = [];
+        $adminPresent = $newGroup->groupAdmin;
         foreach ($users as $user) {
             if (! $user instanceof User) {
                 throw new InvalidArgumentException('Expected User');
@@ -38,6 +39,9 @@ class ChangeGroup extends Action
 
             if (1 != $newGroup->g_moderator && $user->isAdmMod) {
                 $moderators[$user->id] = $user;
+            }
+            if ($user->isAdmin) {
+                $adminPresent = true;
             }
 
             $ids[] = $user->id;
@@ -62,5 +66,9 @@ class ChangeGroup extends Action
                 SET u.group_id = ?i:new
                 WHERE u.id IN (?ai:ids)';
         $this->c->DB->exec($sql, $vars);
+
+        if ($adminPresent) {
+            $this->c->admins->reset();
+        }
     }
 }

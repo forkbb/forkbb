@@ -32,8 +32,8 @@ class Primary
     public function check()
     {
         if ($this->c->config->o_maintenance && ! $this->c->MAINTENANCE_OFF) {
-            if (! \in_array($this->c->Cookie->uId, $this->c->admins->list) //????
-                || ! \in_array($this->c->user->id, $this->c->admins->list) //????
+            if (! isset($this->c->admins->list[$this->c->Cookie->uId])
+                || ! isset($this->c->admins->list[$this->c->user->id])
             ) {
                 if (! $this->c->isInit('user')) {
                     $this->c->user = $this->c->users->create(['id' => 1, 'group_id' => $this->c->GROUP_GUEST]);

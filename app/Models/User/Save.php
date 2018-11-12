@@ -38,12 +38,16 @@ class Save extends Action
             $where  = 'id=?i';
         }
         $set = $vars = [];
+        $resAdmins = false;
         foreach ($modified as $name) {
             if (! isset($fileds[$name])) {
                 continue;
             }
             $vars[] = $values[$name];
             $set[] = $name . '=?' . $fileds[$name];
+            if ('group_id' === $name) {
+                $resAdmins = true;
+            }
         }
         if (empty($set)) {
             return $user;
@@ -55,6 +59,10 @@ class Save extends Action
         }
         $this->c->DB->query('UPDATE ::' . $table . ' SET ' . \implode(', ', $set) . ' WHERE ' . $where, $vars);
         $user->resModified();
+
+        if ($resAdmins) {
+            $this->c->admins->reset();
+        }
 
         return $user;
     }
@@ -90,6 +98,10 @@ class Save extends Action
         $this->c->DB->query('INSERT INTO ::users (' . \implode(', ', $set) . ') VALUES (' . \implode(', ', $set2) . ')', $vars);
         $user->id = $this->c->DB->lastInsertId();
         $user->resModified();
+
+        if ($user->isAdmin) {
+            $this->c->admins->reset();
+        }
 
         return $user->id;
     }
