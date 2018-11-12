@@ -353,8 +353,9 @@ class Auth extends Page
         if ($user->isUnverified) {
             $user->group_id        = $this->c->config->o_default_user_group;
             $user->email_confirmed = 1;
+
             $this->c->users->update($user);
-            $this->c->Cache->delete('stats');
+
             $this->fIswev = ['i', \ForkBB\__('Account activated')];
         }
 

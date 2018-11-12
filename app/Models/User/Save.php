@@ -38,7 +38,7 @@ class Save extends Action
             $where  = 'id=?i';
         }
         $set = $vars = [];
-        $resAdmins = false;
+        $grChange = false;
         foreach ($modified as $name) {
             if (! isset($fileds[$name])) {
                 continue;
@@ -46,7 +46,7 @@ class Save extends Action
             $vars[] = $values[$name];
             $set[] = $name . '=?' . $fileds[$name];
             if ('group_id' === $name) {
-                $resAdmins = true;
+                $grChange = true;
             }
         }
         if (empty($set)) {
@@ -60,8 +60,9 @@ class Save extends Action
         $this->c->DB->query('UPDATE ::' . $table . ' SET ' . \implode(', ', $set) . ' WHERE ' . $where, $vars);
         $user->resModified();
 
-        if ($resAdmins) {
+        if ($grChange) {
             $this->c->admins->reset();
+            $this->c->stats->reset();
         }
 
         return $user;
@@ -101,6 +102,9 @@ class Save extends Action
 
         if ($user->isAdmin) {
             $this->c->admins->reset();
+        }
+        if (! $user->isUnverified) {
+            $this->c->stats->reset();
         }
 
         return $user->id;

@@ -129,7 +129,6 @@ class Action extends Users
 
             $this->c->users->delete(...$this->userList);
 
-            $this->c->Cache->delete('stats');       //???? перенести в manager
             $this->c->Cache->delete('forums_mark'); //???? с авто обновлением кеша
 
             return $this->c->Redirect->page('AdminUsers')->message('Users delete redirect');
@@ -275,7 +274,6 @@ class Action extends Users
 
                 $this->c->users->changeGroup($v->new_group, ...$this->userList);
 
-                $this->c->Cache->delete('stats');       //???? перенести в manager
                 $this->c->Cache->delete('forums_mark'); //???? с авто обновлением кеша
 
                 if ($profile) {

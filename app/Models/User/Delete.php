@@ -77,5 +77,6 @@ class Delete extends Action
         if ($adminPresent) {
             $this->c->admins->reset();
         }
+        $this->c->stats->reset();
     }
 }

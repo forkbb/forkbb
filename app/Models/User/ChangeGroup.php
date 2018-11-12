@@ -29,6 +29,7 @@ class ChangeGroup extends Action
         $ids = [];
         $moderators = [];
         $adminPresent = $newGroup->groupAdmin;
+        $unverPresent = false;
         foreach ($users as $user) {
             if (! $user instanceof User) {
                 throw new InvalidArgumentException('Expected User');
@@ -42,6 +43,9 @@ class ChangeGroup extends Action
             }
             if ($user->isAdmin) {
                 $adminPresent = true;
+            }
+            if ($user->isUnverified) {
+                $unverPresent = true;
             }
 
             $ids[] = $user->id;
@@ -69,6 +73,9 @@ class ChangeGroup extends Action
 
         if ($adminPresent) {
             $this->c->admins->reset();
+        }
+        if ($unverPresent) {
+            $this->c->stats->reset();
         }
     }
 }

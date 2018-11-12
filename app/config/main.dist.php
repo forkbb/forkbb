@@ -88,7 +88,7 @@ return [
         'config'     => '@ConfigModel:init',
         'bans'       => '@ModelBanList:init',
         'censorship' => '@CensorshipModel:init',
-        'stats'      => '@ModelStats:init',
+        'stats'      => '@StatsModel:init',
         'admins'     => '@AdminListModel:init',
         'smilies'    => '@ModelSmileyList:init',
         'dbMap'      => '@ModelDBMap:init',
@@ -191,8 +191,7 @@ return [
         'CensorshipModelLoad'    => \ForkBB\Models\Censorship\Load::class,
         'CensorshipModelSave'    => \ForkBB\Models\Censorship\Save::class,
 
-        'ModelStats'          => \ForkBB\Models\Stats::class,
-        'StatsLoad' => \ForkBB\Models\Stats\Load::class,
+        'StatsModel' => \ForkBB\Models\Stats\Model::class,
 
         'AdminListModel' => \ForkBB\Models\AdminList\Model::class,
 
@@ -217,6 +216,7 @@ return [
         'UserManagerDelete'           => \ForkBB\Models\User\Delete::class,
         'UserManagerChangeGroup'      => \ForkBB\Models\User\ChangeGroup::class,
         'UserManagerAdminsIds'        => \ForkBB\Models\User\AdminsIds::class,
+        'UserManagerStats'            => \ForkBB\Models\User\Stats::class,
 
         'ForumModel'           => \ForkBB\Models\Forum\Model::class,
         'ForumModelCalcStat'   => \ForkBB\Models\Forum\CalcStat::class,

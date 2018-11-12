@@ -157,11 +157,6 @@ class Register extends Page
 
         $newUserId = $this->c->users->insert($user);
 
-        // обновление статистики по пользователям
-        if ('1' != $this->c->config->o_regs_verify) {
-            $this->c->Cache->delete('stats');
-        }
-
         // уведомление о регистрации
         if ('1' == $this->c->config->o_regs_report && '' != $this->c->config->o_mailing_list) {
             $tplData = [
@@ -253,8 +248,6 @@ class Register extends Page
         $user->activate_string = '';
 
         $this->c->users->update($user);
-
-        $this->c->Cache->delete('stats');
 
         $this->c->Lang->load('register');
 
