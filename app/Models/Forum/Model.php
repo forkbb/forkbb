@@ -15,7 +15,7 @@ class Model extends DataModel
      *
      * @throws RuntimeException
      *
-     * @return Models\Forum
+     * @return Forum\Model
      */
     protected function getparent()
     {
@@ -225,7 +225,7 @@ class Model extends DataModel
     /**
      * Возвращает общую статистику по дереву разделов с корнем в текущем разделе
      *
-     * @return Models\Forum
+     * @return Forum\Model
      */
     protected function gettree()
     {

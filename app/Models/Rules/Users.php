@@ -13,7 +13,7 @@ class Users extends Rules
     /**
      * Инициализирует
      *
-     * @return UsersRules
+     * @return Rules\Users
      */
     public function init()
     {

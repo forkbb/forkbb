@@ -2,10 +2,10 @@
 
 namespace ForkBB\Models\Stats;
 
-use ForkBB\Models\Model as BaseModel;
+use ForkBB\Models\Model as ParentModel;
 use PDO;
 
-class Model extends BaseModel
+class Model extends ParentModel
 {
     /**
      * Загружает статистику из кеша/БД

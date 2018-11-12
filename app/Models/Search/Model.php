@@ -2,14 +2,14 @@
 
 namespace ForkBB\Models\Search;
 
-use ForkBB\Models\Model as BaseModel;
+use ForkBB\Models\Model as ParentModel;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Post\Model as Post;
 use PDO;
 use InvalidArgumentException;
 use RuntimeException;
 
-class Model extends BaseModel
+class Model extends ParentModel
 {
     const CJK_REGEX = '['.
         '\x{1100}-\x{11FF}'.  // Hangul Jamo

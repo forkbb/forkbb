@@ -2,14 +2,14 @@
 
 namespace ForkBB\Models\AdminList;
 
-use ForkBB\Models\Model as BaseModel;
+use ForkBB\Models\Model as ParentModel;
 
-class Model extends BaseModel
+class Model extends ParentModel
 {
     /**
      * Загружает список id админов из кеша/БД
      *
-     * @return Models\AdminList
+     * @return AdminList\Model
      */
     public function init()
     {
@@ -25,7 +25,7 @@ class Model extends BaseModel
     /**
      * Сбрасывает кеш списка id админов
      *
-     * @return Models\AdminList
+     * @return AdminList\Model
      */
     public function reset()
     {

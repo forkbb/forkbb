@@ -18,7 +18,7 @@ class Profile extends Rules
      *
      * @param User $curUser
      *
-     * @return ProfileRules
+     * @return Rules\Profile
      */
     public function setUser(User $curUser)
     {

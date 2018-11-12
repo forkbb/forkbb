@@ -13,7 +13,7 @@ class Model extends DataModel
      *
      * @throws RuntimeException
      *
-     * @return Topic
+     * @return Topic\Model
      */
     protected function getparent()
     {
@@ -39,7 +39,7 @@ class Model extends DataModel
      *
      * @throws RuntimeException
      *
-     * @return User
+     * @return User\Model
      */
     protected function getuser() //????
     {

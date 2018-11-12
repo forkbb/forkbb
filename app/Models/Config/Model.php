@@ -9,7 +9,7 @@ class Model extends DataModel
     /**
      * Заполняет модель данными из кеша/БД
      *
-     * @return Config
+     * @return Config\Model
      */
     public function init()
     {

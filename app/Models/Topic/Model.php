@@ -13,7 +13,7 @@ class Model extends DataModel
      *
      * @throws RuntimeException
      *
-     * @return Forum
+     * @return Forum\Model
      */
     protected function getparent()
     {

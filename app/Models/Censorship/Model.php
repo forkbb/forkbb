@@ -9,7 +9,7 @@ class Model extends ParentModel
     /**
      * Загружает список цензуры из кеша/БД
      *
-     * @return Censorship
+     * @return Censorship\Model
      */
     public function init()
     {
