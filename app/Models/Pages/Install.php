@@ -496,11 +496,11 @@ class Install extends Page
         $schema = [
             'FIELDS' => [
                 'id'          => ['SERIAL', false],
-                'username'    => ['VARCHAR(190)', true],
-                'ip'          => ['VARCHAR(255)', true],
-                'email'       => ['VARCHAR(80)', true],
-                'message'     => ['VARCHAR(255)', true],
-                'expire'      => ['INT(10) UNSIGNED', true],
+                'username'    => ['VARCHAR(190)', false, ''],
+                'ip'          => ['VARCHAR(255)', false, ''],
+                'email'       => ['VARCHAR(80)', false, ''],
+                'message'     => ['VARCHAR(255)', false, ''],
+                'expire'      => ['INT(10) UNSIGNED', false, 0],
                 'ban_creator' => ['INT(10) UNSIGNED', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
