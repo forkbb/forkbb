@@ -1,15 +1,15 @@
 <?php
 
-namespace ForkBB\Models;
+namespace ForkBB\Models\BanList;
 
-use ForkBB\Models\Model;
+use ForkBB\Models\Model as ParentModel;
 
-class BanList extends Model
+class Model extends ParentModel
 {
     /**
      * Загружает список банов из кеша/БД
      *
-     * @return BanList
+     * @return BanList\Model
      */
     public function init()
     {

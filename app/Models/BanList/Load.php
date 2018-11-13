@@ -10,7 +10,7 @@ class Load extends Method
      * Загружает список банов из БД
      * Создает кеш
      *
-     * @return BanList
+     * @return BanList\Model
      */
     public function load()
     {
@@ -28,7 +28,7 @@ class Load extends Method
             if (null !== $ips) {
                 foreach (\explode(' ', $ips) as $ip) {
                     $ip = \trim($ip);
-                    if ($ip != '') {
+                    if ('' != $ip) {
                         $ipList[$ip] = $row['id'];
                     }
                 }

@@ -86,7 +86,7 @@ return [
         'Func' => \ForkBB\Core\Func::class,
 
         'config'     => '@ConfigModel:init',
-        'bans'       => '@ModelBanList:init',
+        'bans'       => '@BanListModel:init',
         'censorship' => '@CensorshipModel:init',
         'stats'      => '@StatsModel:init',
         'admins'     => '@AdminListModel:init',
@@ -180,11 +180,11 @@ return [
 
         'OnlineInfo' => \ForkBB\Models\Online\Info::class,
 
-        'ModelBanList'        => \ForkBB\Models\BanList::class,
-        'BanListLoad'     => \ForkBB\Models\BanList\Load::class,
-        'BanListCheck'    => \ForkBB\Models\BanList\Check::class,
-        'BanListDelete'   => \ForkBB\Models\BanList\Delete::class,
-        'BanListIsBanned' => \ForkBB\Models\BanList\IsBanned::class,
+        'BanListModel'         => \ForkBB\Models\BanList\Model::class,
+        'BanListModelLoad'     => \ForkBB\Models\BanList\Load::class,
+        'BanListModelCheck'    => \ForkBB\Models\BanList\Check::class,
+        'BanListModelDelete'   => \ForkBB\Models\BanList\Delete::class,
+        'BanListModelIsBanned' => \ForkBB\Models\BanList\IsBanned::class,
 
         'CensorshipModel'        => \ForkBB\Models\Censorship\Model::class,
         'CensorshipModelRefresh' => \ForkBB\Models\Censorship\Refresh::class,
