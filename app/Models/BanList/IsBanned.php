@@ -22,11 +22,23 @@ class IsBanned extends Method
         }
         $email = $this->model->trimToNull($user->email);
         if (null !== $email) {
-            foreach ($this->model->otherList as $row) {
-                if (null === $row['email']) {
+            foreach ($this->model->otherList as $cur) {
+                if (null === $cur['email']) {
                     continue;
-                } elseif ($email == $row['email']) {
+                } elseif ($email == $cur['email']) {
                     return 2;
+                } elseif (false === \strpos($cur['email'], '@')) {
+                    $len = \strlen($cur['email']);
+                    if ('.' === $cur['email']{0}) {
+                        if (\substr($email, -$len) === $cur['email']) {
+                            return 2;
+                        }
+                    } else {
+                        $tmp = \substr($email, -1-$len);
+                        if ($tmp === '.' . $cur['email'] || $tmp === '@' . $cur['email']) {
+                            return 2;
+                        }
+                    }
                 }
             }
         }
