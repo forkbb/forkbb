@@ -109,13 +109,13 @@ return [
         ],
         'Online' => \ForkBB\Models\Online\Model::class,
         'Cookie' => [
-            'class'   => \ForkBB\Models\Cookie::class,
+            'class'   => \ForkBB\Models\Cookie\Model::class,
             'options' => '%COOKIE%',
         ],
 
         'Parser' => [
             'class' => \ForkBB\Core\Parser::class,
-            'flag'  => ENT_HTML5,
+            'flag'  => \ENT_HTML5,
         ],
         'Files' => [
             'class' => \ForkBB\Core\Files::class,

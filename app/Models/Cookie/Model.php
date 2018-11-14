@@ -1,13 +1,13 @@
 <?php
 
-namespace ForkBB\Models;
+namespace ForkBB\Models\Cookie;
 
-use ForkBB\Models\Model;
+use ForkBB\Models\Model as ParentModel;
 use ForkBB\Models\User\Model as User;
 use ForkBB\Core\Container;
 use RuntimeException;
 
-class Cookie extends Model
+class Model extends ParentModel
 {
     const NAME = 'user';
 
@@ -102,7 +102,7 @@ class Cookie extends Model
     }
 
     /**
-     * Выделение данных из куки аутентификации
+     * Выделяет данные из куки аутентификации пользователя
      */
     protected function init()
     {
@@ -117,9 +117,9 @@ class Cookie extends Model
         if (2 > $ms[2]
             || \time() > $ms[3]
             || ! \hash_equals(
-                     $this->c->Secury->hmac($ms[1] . $ms[2] . $ms[3] . $ms[4], $this->key1),
-                     $ms[5]
-                 )
+                    $this->c->Secury->hmac($ms[1] . $ms[2] . $ms[3] . $ms[4], $this->key1),
+                    $ms[5]
+                )
         ) {
             return;
         }
@@ -131,7 +131,7 @@ class Cookie extends Model
     }
 
     /**
-     * Проверка хэша пароля
+     * Проверяет хэш пароля пользователя
      *
      * @param User $user
      *
@@ -147,7 +147,7 @@ class Cookie extends Model
     }
 
     /**
-     * Установка куки аутентификации юзера
+     * Устанавливает куку аутентификации пользователя
      *
      * @param User $user
      * @param bool $remember
@@ -181,7 +181,7 @@ class Cookie extends Model
     }
 
     /**
-     * Удаление куки аутентификации юзера
+     * Удаляет куку аутентификации пользователя
      *
      * @return bool
      */
@@ -195,7 +195,7 @@ class Cookie extends Model
     }
 
     /**
-     * Устанавливает значение для свойства
+     * Устанавливает значение для свойства модели
      *
      * @param string $name
      * @param mixed $val
