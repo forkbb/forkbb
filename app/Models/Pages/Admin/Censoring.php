@@ -36,8 +36,6 @@ class Censoring extends Admin
 
                 $this->c->censorship->save($v->form);
 
-                $this->c->Cache->delete('censorship'); //????
-
                 return $this->c->Redirect->page('AdminCensoring')->message('Data updated redirect');
             }
 

@@ -58,6 +58,8 @@ class Save extends Method
             $this->c->DB->exec($sql, $vars);
         }
 
+        $this->c->Cache->delete('censorship');
+
         return $this->model;
     }
 }
