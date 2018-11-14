@@ -1,12 +1,12 @@
 <?php
 
-namespace ForkBB\Models;
+namespace ForkBB\Models\Online;
 
-use ForkBB\Models\Model;
+use ForkBB\Models\Model as ParentModel;
 use ForkBB\Models\User\Model as User;
 use ForkBB\Models\Page;
 
-class Online extends Model
+class Model extends ParentModel
 {
     /**
      * Обработка данных пользователей онлайн
@@ -15,7 +15,7 @@ class Online extends Model
      *
      * @param Page $page
      *
-     * @return Online
+     * @return Online\Model
      */
     public function calc(Page $page)
     {
@@ -171,6 +171,8 @@ class Online extends Model
 
     /**
      * Удаление юзера из таблицы online
+     *
+     * @param User $user
      */
     public function delete(User $user)
     {

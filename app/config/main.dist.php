@@ -107,7 +107,7 @@ return [
             'Secury' => '@Secury',
             'key'    => '%user.password%%user.ip%%user.id%%BASE_URL%',
         ],
-        'Online' => \ForkBB\Models\Online::class,
+        'Online' => \ForkBB\Models\Online\Model::class,
         'Cookie' => [
             'class'   => \ForkBB\Models\Cookie::class,
             'options' => '%COOKIE%',
@@ -178,7 +178,7 @@ return [
         'ConfigModelLoad' => \ForkBB\Models\Config\Load::class,
         'ConfigModelSave' => \ForkBB\Models\Config\Save::class,
 
-        'OnlineInfo' => \ForkBB\Models\Online\Info::class,
+        'OnlineModelInfo' => \ForkBB\Models\Online\Info::class,
 
         'BanListModel'         => \ForkBB\Models\BanList\Model::class,
         'BanListModelLoad'     => \ForkBB\Models\BanList\Load::class,
