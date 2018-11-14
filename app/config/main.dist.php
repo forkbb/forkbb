@@ -90,7 +90,7 @@ return [
         'censorship' => '@CensorshipModel:init',
         'stats'      => '@StatsModel:init',
         'admins'     => '@AdminListModel:init',
-        'smilies'    => '@ModelSmileyList:init',
+        'smilies'    => '@SmileyListModel:init',
         'dbMap'      => '@ModelDBMap:init',
         'stopwords'  => '@ModelStopwords:init',
         'forums'     => '@ForumManager:init',
@@ -195,8 +195,8 @@ return [
 
         'AdminListModel' => \ForkBB\Models\AdminList\Model::class,
 
-        'ModelSmileyList'     => \ForkBB\Models\SmileyList::class,
-        'SmileyListLoad' => \ForkBB\Models\SmileyList\Load::class,
+        'SmileyListModel'     => \ForkBB\Models\SmileyList\Model::class,
+        'SmileyListModelLoad' => \ForkBB\Models\SmileyList\Load::class,
 
         'ModelDBMap'          => \ForkBB\Models\DBMap::class,
 

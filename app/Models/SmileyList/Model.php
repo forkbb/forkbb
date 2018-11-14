@@ -1,20 +1,20 @@
 <?php
 
-namespace ForkBB\Models;
+namespace ForkBB\Models\SmileyList;
 
-use ForkBB\Models\Model;
+use ForkBB\Models\Model as ParentModel;
 
-class SmileyList extends Model
+class Model extends ParentModel
 {
     /**
      * Загружает список смайлов из кеша/БД
      *
-     * @return SmileyList
+     * @return SmileyList\Model
      */
     public function init()
     {
         if ($this->c->Cache->has('smilies')) {
-            $this->list  = $this->c->Cache->get('smilies');
+            $this->list = $this->c->Cache->get('smilies');
         } else {
             $this->load();
         }
