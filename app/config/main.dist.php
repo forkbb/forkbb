@@ -91,7 +91,7 @@ return [
         'stats'      => '@StatsModel:init',
         'admins'     => '@AdminListModel:init',
         'smilies'    => '@SmileyListModel:init',
-        'dbMap'      => '@ModelDBMap:init',
+        'dbMap'      => '@DBMapModel:init',
         'stopwords'  => '@StopwordsModel:init',
         'forums'     => '@ForumManager:init',
         'topics'     => \ForkBB\Models\Topic\Manager::class,
@@ -198,7 +198,7 @@ return [
         'SmileyListModel'     => \ForkBB\Models\SmileyList\Model::class,
         'SmileyListModelLoad' => \ForkBB\Models\SmileyList\Load::class,
 
-        'ModelDBMap'          => \ForkBB\Models\DBMap::class,
+        'DBMapModel'          => \ForkBB\Models\DBMap\Model::class,
 
         'StopwordsModel'      => \ForkBB\Models\Stopwords\Model::class,
 

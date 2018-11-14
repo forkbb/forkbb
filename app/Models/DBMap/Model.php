@@ -1,15 +1,15 @@
 <?php
 
-namespace ForkBB\Models;
+namespace ForkBB\Models\DBMap;
 
-use ForkBB\Models\Model;
+use ForkBB\Models\Model as ParentModel;
 
-class DBMap extends Model
+class Model extends ParentModel
 {
     /**
      * Загружает карту БД из кеша/БД
      *
-     * @return DBMap
+     * @return DBMap\Model
      */
     public function init()
     {
@@ -20,6 +20,17 @@ class DBMap extends Model
             $this->c->Cache->set('db_map', $map);
             $this->a = $map;
         }
+        return $this;
+    }
+
+    /**
+     * Сбрасывает кеш карты БД
+     *
+     * @return DBMap\Model
+     */
+    public function reset()
+    {
+        $this->c->Cache->delete('db_map');
         return $this;
     }
 }
