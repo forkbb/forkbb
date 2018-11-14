@@ -34,7 +34,7 @@ class ManagerModel extends Model
     {
         $key = \str_replace(['ForkBB\\Models\\', 'ForkBB\\', '\\'], '', \get_class($this));
 
-        return $this->c->{$key . $name}->setManager($this);
+        return $this->c->{$key . \ucfirst($name)}->setManager($this);
     }
 
     /**
@@ -47,8 +47,6 @@ class ManagerModel extends Model
      */
     public function __call($name, array $args)
     {
-        $key = \str_replace(['ForkBB\\Models\\', 'ForkBB\\', '\\'], '', \get_class($this));
-
-        return $this->c->{$key . \ucfirst($name)}->setManager($this)->$name(...$args);
+        return $this->__get($name)->$name(...$args);
     }
 }
