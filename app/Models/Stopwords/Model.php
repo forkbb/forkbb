@@ -1,15 +1,15 @@
 <?php
 
-namespace ForkBB\Models;
+namespace ForkBB\Models\Stopwords;
 
-use ForkBB\Models\Model;
+use ForkBB\Models\Model as ParentModel;
 
-class Stopwords extends Model
+class Model extends ParentModel
 {
     /**
      * Загружает список игнорируемых при индексации слов из кеша/БД
      *
-     * @return Stopwords
+     * @return Stopwords\Model
      */
     public function init()
     {
@@ -55,7 +55,7 @@ class Stopwords extends Model
     /**
      * Регенерация кэша массива слов с возвращением результата
      *
-     * @return Stopwords
+     * @return Stopwords\Model
      */
     protected function load()
     {

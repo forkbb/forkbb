@@ -92,7 +92,7 @@ return [
         'admins'     => '@AdminListModel:init',
         'smilies'    => '@SmileyListModel:init',
         'dbMap'      => '@ModelDBMap:init',
-        'stopwords'  => '@ModelStopwords:init',
+        'stopwords'  => '@StopwordsModel:init',
         'forums'     => '@ForumManager:init',
         'topics'     => \ForkBB\Models\Topic\Manager::class,
         'posts'      => \ForkBB\Models\Post\Manager::class,
@@ -200,7 +200,7 @@ return [
 
         'ModelDBMap'          => \ForkBB\Models\DBMap::class,
 
-        'ModelStopwords'      => \ForkBB\Models\Stopwords::class,
+        'StopwordsModel'      => \ForkBB\Models\Stopwords\Model::class,
 
         'UserModel'                   => \ForkBB\Models\User\Model::class,
         'UserManagerLoad'             => \ForkBB\Models\User\Load::class,
