@@ -150,7 +150,7 @@ class Options extends Admin
      */
     public function vCheckDir(Validator $v, $dir)
     {
-        $dir = '/' . \trim(\str_replace(['\\', '.'], ['/', ''], $dir), '/'); //?????
+        $dir = '/' . \trim(\str_replace(['\\', '.', '//', ':'], ['/', '', '', ''], $dir), '/'); //?????
 
         return $dir;
     }
