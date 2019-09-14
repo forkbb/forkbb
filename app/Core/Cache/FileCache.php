@@ -2,6 +2,9 @@
 
 namespace ForkBB\Core\Cache;
 
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use RegexIterator;
 use RuntimeException;
 use InvalidArgumentException;
 
@@ -111,18 +114,14 @@ class FileCache implements ProviderCacheInterface
      */
     public function clear()
     {
-        $d = \dir($this->cacheDir);
-        if (! $d) {
-            return false;
-        }
+        $dir = new RecursiveDirectoryIterator($this->cacheDir, RecursiveDirectoryIterator::SKIP_DOTS);
+        $iterator = new RecursiveIteratorIterator($dir);
+        $files = new RegexIterator($iterator, '%\.php$%i', RegexIterator::MATCH);
+
         $result = true;
-        while (($entry = $d->read()) !== false) {
-            if (\substr($entry, -4) == '.php') {
-                $f = \unlink($this->cacheDir . '/' . $entry);
-                $result = $result && $f;
-            }
+        foreach ($files as $file) {
+            $result = \unlink($file->getPathname()) && $result;
         }
-        $d->close();
         return $result;
     }
 
