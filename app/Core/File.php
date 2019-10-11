@@ -125,7 +125,7 @@ class File
 
         $name = \trim(\preg_replace('%[^\w.-]+%', '-', $name), '-');
 
-        if (! isset($name{0})) {
+        if (! isset($name[0])) {
             $name = (string) \time();
         }
 

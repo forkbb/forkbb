@@ -120,7 +120,7 @@ class Lang
             $line = \trim($lines[$i]);
 
             // пустая строка
-            if (! isset($line{0})) {
+            if (! isset($line[0])) {
                 // промежуточные данные
                 if (isset($curComm)) {
                     $cur[$curComm] = $curVal;
@@ -178,11 +178,11 @@ class Lang
                 continue;
 
             // комментарий
-            } elseif ($line{0} == '#') {
+            } elseif ($line[0] == '#') {
                 continue;
 
             // многострочное содержимое
-            } elseif ($line{0} == '"') {
+            } elseif ($line[0] == '"') {
                 if (isset($curComm)) {
                     $curVal .= $this->originalLine($line);
                 }
@@ -255,7 +255,7 @@ class Lang
      */
     protected function originalLine($line)
     {
-        if (isset($line[1]) && $line{0} == '"' && $line{\strlen($line) - 1} == '"') {
+        if (isset($line[1]) && $line[0] == '"' && $line{\strlen($line) - 1} == '"') {
             $line = \substr($line, 1, -1);
         }
         return \str_replace(

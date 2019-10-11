@@ -101,7 +101,7 @@ class Mail
         $local  = $matches[1];
         $domain = $matches[2];
 
-        if ('[' === $domain{0} && ']' === \substr($domain, -1)) {
+        if ('[' === $domain[0] && ']' === \substr($domain, -1)) {
             if (1 === \strpos($domain, 'IPv6:')) {
                 $prefix = 'IPv6:';
                 $ip     = \substr($domain, 6, -1);
@@ -509,7 +509,7 @@ class Mail
                 throw new SmtpException('Couldn\'t get mail server response codes.');
             }
             $response .= $get;
-            if (isset($get{3}) && $get{3} === ' ') {
+            if (isset($get[3]) && $get[3] === ' ') {
                 $return = \substr($get, 0, 3);
                 break;
             }

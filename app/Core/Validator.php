@@ -472,7 +472,7 @@ class Validator
         if (null !== $value) {
             $this->addError('The :alias should be absent');
         }
-        if (isset($attr{0})) {
+        if (isset($attr[0])) {
             return $attr;
         } else {
             return null;

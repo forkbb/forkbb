@@ -98,8 +98,8 @@ class Func
         $result = [];
         if (\is_dir($dir) && ($dh = \opendir($dir)) !== false) {
             while (($entry = \readdir($dh)) !== false) {
-                if (isset($entry{0})
-                    && $entry{0} !== '.'
+                if (isset($entry[0])
+                    && $entry[0] !== '.'
                     && \is_dir("{$dir}/{$entry}")
                     && \is_file("{$dir}/{$entry}/{$file}")
                 ) {

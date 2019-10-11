@@ -112,7 +112,7 @@ class Files
         if (\is_string($value)) {
             $value = \trim($value, "Bb \t\n\r\0\x0B");
 
-            if (! isset($value{0})) {
+            if (! isset($value[0])) {
                 return 0;
             }
 

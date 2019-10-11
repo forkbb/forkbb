@@ -68,7 +68,7 @@ class DBStatement extends PDOStatement
             $bType = $this->types[$type];
             $bValue = $this->db->getValue($key, $params);
 
-            if ($type{0} === 'a') {
+            if ($type[0] === 'a') {
                 if (! \is_array($bValue)) {
                     throw new PDOException("Expected array: key='{$key}'");
                 }

@@ -400,7 +400,7 @@ class Install extends Page
      */
     public function vCheckPrefix(Validator $v, $prefix)
     {
-        if (isset($prefix{0})) {
+        if (isset($prefix[0])) {
             if (! \preg_match('%^[a-z][a-z\d_]*$%i', $prefix)) {
                 $v->addError('Table prefix error');
             } elseif ('sqlite' === $v->dbtype && 'sqlite_' === \strtolower($prefix)) {
