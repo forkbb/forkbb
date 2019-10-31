@@ -75,13 +75,13 @@ class Secury
     public function randomKey($len)
     {
         $key = '';
-        if (\function_exists('random_bytes')) {
+        if (\function_exists('\\random_bytes')) {
             $key .= (string) \random_bytes($len);
         }
-        if (\strlen($key) < $len && \function_exists('mcrypt_create_iv')) {
+        if (\strlen($key) < $len && \function_exists('\\mcrypt_create_iv')) {
             $key .= (string) \mcrypt_create_iv($len, \MCRYPT_DEV_URANDOM);
         }
-        if (\strlen($key) < $len && \function_exists('openssl_random_pseudo_bytes')) {
+        if (\strlen($key) < $len && \function_exists('\\openssl_random_pseudo_bytes')) {
             $tmp = (string) \openssl_random_pseudo_bytes($len, $strong);
             if ($strong) {
                 $key .= $tmp;

@@ -39,7 +39,7 @@ class Image extends File
     {
         parent::__construct($path, $options);
 
-        if (! \extension_loaded('gd') || ! \function_exists('\imagecreatetruecolor')) {
+        if (! \extension_loaded('gd') || ! \function_exists('\\imagecreatetruecolor')) {
             throw new FileException('GD library not connected');
         }
 

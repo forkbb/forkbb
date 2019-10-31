@@ -175,10 +175,10 @@ class Files
     public function isImage($file)
     {
         if (\is_string($file)) {
-            if (\function_exists('\exif_imagetype')) {
+            if (\function_exists('\\exif_imagetype')) {
                 $type = \exif_imagetype($file);
             } elseif (
-                \function_exists('\getimagesize')
+                \function_exists('\\getimagesize')
                 && false !== ($type = @\getimagesize($file))
                 && $type[0] > 0
                 && $type[1] > 0

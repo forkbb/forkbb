@@ -100,13 +100,13 @@ class Statistics extends Admin
         $this->tOther    = $stat;
 
         // Check for the existence of various PHP opcode caches/optimizers
-        if (\ini_get('opcache.enable') && \function_exists('opcache_invalidate')) {
+        if (\ini_get('opcache.enable') && \function_exists('\\opcache_invalidate')) {
             $this->accelerator = 'Zend OPcache';
             $this->linkAcc     = 'https://secure.php.net/opcache/';
         } elseif (\ini_get('wincache.fcenabled')) {
             $this->accelerator = 'Windows Cache for PHP';
             $this->linkAcc     = 'https://secure.php.net/wincache/';
-        } elseif (\ini_get('apc.enabled') && \function_exists('apc_delete_file')) {
+        } elseif (\ini_get('apc.enabled') && \function_exists('\\apc_delete_file')) {
             $this->accelerator = 'Alternative PHP Cache (APC)'; //???? частичная эмуляция APCu
             $this->linkAcc     = 'https://secure.php.net/apc/';
         } elseif (\ini_get('xcache.cacher')) {

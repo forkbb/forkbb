@@ -161,9 +161,9 @@ class FileCache implements ProviderCacheInterface
      */
     protected function invalidate($file)
     {
-        if (\function_exists('opcache_invalidate')) {
+        if (\function_exists('\\opcache_invalidate')) {
             \opcache_invalidate($file, true);
-        } elseif (\function_exists('apc_delete_file')) {
+        } elseif (\function_exists('\\apc_delete_file')) {
             \apc_delete_file($file);
         }
     }

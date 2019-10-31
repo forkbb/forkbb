@@ -120,7 +120,7 @@ class Mail
             $ip          = null;
             $domainASCII = $domain = \mb_strtolower($domain, 'UTF-8');
 
-            if (\preg_match('%[\x80-\xFF]%', $domain) && \function_exists('\idn_to_ascii')) {
+            if (\preg_match('%[\x80-\xFF]%', $domain) && \function_exists('\\idn_to_ascii')) {
                 $domainASCII = \idn_to_ascii($domain, 0, \INTL_IDNA_VARIANT_UTS46);
             }
 

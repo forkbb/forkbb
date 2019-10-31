@@ -119,7 +119,7 @@ class File
      */
     protected function filterName($name)
     {
-        if (\function_exists('\transliterator_transliterate')) {
+        if (\function_exists('\\transliterator_transliterate')) {
             $name = \transliterator_transliterate("Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; [:Punctuation:] Remove; Lower();", $name);
         }
 
