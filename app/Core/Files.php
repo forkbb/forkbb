@@ -28,7 +28,7 @@ class Files
     protected $error;
 
     /**
-     * Список кодов типов картинок и расширений для них
+     * Список кодов типов картинок и расширений для них????
      * @var array
      */
     protected $imageType = [
@@ -51,6 +51,12 @@ class Files
         17 => 'ico',
         18 => 'webp',
     ];
+
+    /**
+     * Список единиц измерения
+     * @var string
+     */
+    protected $units = 'BKMGTPEZY';
 
     /**
      * Конструктор
@@ -101,54 +107,52 @@ class Files
 
     /**
      * Переводит объем информации из одних единиц в другие
+     * кило = 1024, а не 1000
      *
-     * @param int|string $value
+     * @param int|float|string $value
      * @param string $to
      *
-     * @return int
+     * @throws InvalidArgumentException
+     *
+     * @return int|float
      */
     public function size($value, $to = null)
     {
         if (\is_string($value)) {
-            $value = \trim($value, "Bb \t\n\r\0\x0B");
-
-            if (! isset($value[0])) {
-                return 0;
+            if (! \preg_match('%^([^a-z]+)([a-z]+)?$%i', \trim($value), $matches)) {
+                throw new InvalidArgumentException('Expected string indicating the amount of information');
+            }
+            if (! \is_numeric($matches[1])) {
+                throw new InvalidArgumentException('String does not contain number');
             }
 
-            $from = $value{\strlen($value) - 1};
-            $value = (int) $value;
+            $value = 0 + $matches[1];
 
-            switch ($from) {
-                case 'G':
-                case 'g':
-                    $value *= 1024;
-                case 'M':
-                case 'm':
-                    $value *= 1024;
-                case 'K':
-                case 'k':
-                    $value *= 1024;
+            if (! empty($matches[2])) {
+                $unit = \strtoupper($matches[2][0]);
+                $expo = \strpos($this->units, $unit);
+
+                if (false === $expo) {
+                    throw new InvalidArgumentException('Unknown unit');
+                }
+
+                $value *= 1024 ** $expo;
             }
         }
 
         if (\is_string($to)) {
-            $to = \trim($to, "Bb \t\n\r\0\x0B");
+            $to = \trim($to);
+            $unit = \strtoupper($to[0]);
+            $expo = \strpos($this->units, $unit);
 
-            switch ($to) {
-                case 'G':
-                case 'g':
-                    $value /= 1024;
-                case 'M':
-                case 'm':
-                    $value /= 1024;
-                case 'K':
-                case 'k':
-                    $value /= 1024;
+            if (false === $expo) {
+                throw new InvalidArgumentException('Unknown unit');
             }
+
+            $value /= 1024 ** $expo;
         }
 
-        return (int) $value;
+        return 0 + $value;
     }
 
     /**
@@ -162,7 +166,7 @@ class Files
     }
 
     /**
-     * Определяет по содержимому файла расширение картинки
+     * Определяет по содержимому файла расширение картинки????
      *
      * @param mixed $file
      *
@@ -173,7 +177,12 @@ class Files
         if (\is_string($file)) {
             if (\function_exists('\exif_imagetype')) {
                 $type = \exif_imagetype($file);
-            } elseif (false !== ($type = @\getimagesize($file)) && $type[0] > 0 && $type[1] > 0) {
+            } elseif (
+                \function_exists('\getimagesize')
+                && false !== ($type = @\getimagesize($file))
+                && $type[0] > 0
+                && $type[1] > 0
+            ) {
                 $type = $type[2];
             } else {
                 $type = 0;
