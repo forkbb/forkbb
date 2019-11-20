@@ -31,7 +31,7 @@ require __DIR__ . '/functions.php';
 \ForkBB\_init($c);
 
 // https or http?
-if (isset($_SERVER['HTTPS']) && \strtolower($_SERVER['HTTPS']) !== 'off') {
+if (!empty($_SERVER['HTTPS']) && \strtolower($_SERVER['HTTPS']) !== 'off') {
     $c->BASE_URL = \str_replace('http://', 'https://', $c->BASE_URL);
 } else {
     $c->BASE_URL = \str_replace('https://', 'http://', $c->BASE_URL);
