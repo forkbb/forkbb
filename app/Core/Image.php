@@ -88,11 +88,11 @@ class Image extends File
         if ($palette > 0 && ! \imagetruecolortopalette($image, true, $palette)) {
             throw new FileException('Failed to convert image to palette');
         }
-        if (false === \imagecopyresampled($image, $this->image, 0, 0, 0, 0, $width, $height, $oldW, $oldH)) {
-            throw new FileException('Failed to resize image');
-        }
         if (false === \imagealphablending($image, false) || false === \imagesavealpha($image, true)) {
             throw new FileException('Failed to adjust image');
+        }
+        if (false === \imagecopyresampled($image, $this->image, 0, 0, 0, 0, $width, $height, $oldW, $oldH)) {
+            throw new FileException('Failed to resize image');
         }
 
         $this->image = $image;
