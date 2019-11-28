@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "683b977706502db4bb7fc7ba3cd8ca71",
-    "content-hash": "2299621b481bdbc8ce629eee53b1b82e",
+    "hash": "533b558f4bef9f6e04f96421dd776ab4",
+    "content-hash": "6646dc09855f04f546d6d92253e01a30",
     "packages": [
         {
             "name": "artoodetoo/dirk",
-            "version": "dev-master",
+            "version": "dev-visman",
             "source": {
                 "type": "git",
-                "url": "https://github.com/artoodetoo/dirk.git",
-                "reference": "e6c2099435d4d4a13d7e96d0170db6182797b5bd"
+                "url": "https://github.com/MioVisman/dirk.git",
+                "reference": "05cbba461274158699668c9e8075fb2d8fab5967"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/artoodetoo/dirk/zipball/e6c2099435d4d4a13d7e96d0170db6182797b5bd",
-                "reference": "e6c2099435d4d4a13d7e96d0170db6182797b5bd",
+                "url": "https://api.github.com/repos/MioVisman/dirk/zipball/05cbba461274158699668c9e8075fb2d8fab5967",
+                "reference": "05cbba461274158699668c9e8075fb2d8fab5967",
                 "shasum": ""
             },
             "require": {
@@ -33,7 +33,11 @@
                     "R2\\Templating\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "R2\\Templating\\Tests": "tests"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -51,7 +55,10 @@
                 "templating",
                 "views"
             ],
-            "time": "2017-01-10 21:38:22"
+            "support": {
+                "source": "https://github.com/MioVisman/dirk/tree/visman"
+            },
+            "time": "2019-11-28 13:14:33"
         },
         {
             "name": "miovisman/parserus",
@@ -59,12 +66,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/MioVisman/Parserus.git",
-                "reference": "bbdade91cfc4927ebb8b5b984f90a52075f75ece"
+                "reference": "ac9a8fa047083229f7e50df0342fd3871cdbe931"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MioVisman/Parserus/zipball/bbdade91cfc4927ebb8b5b984f90a52075f75ece",
-                "reference": "bbdade91cfc4927ebb8b5b984f90a52075f75ece",
+                "url": "https://api.github.com/repos/MioVisman/Parserus/zipball/ac9a8fa047083229f7e50df0342fd3871cdbe931",
+                "reference": "ac9a8fa047083229f7e50df0342fd3871cdbe931",
                 "shasum": ""
             },
             "require": {
@@ -93,7 +100,7 @@
                 "bbcode",
                 "parser"
             ],
-            "time": "2017-11-21 06:34:31"
+            "time": "2019-10-11 12:06:27"
         }
     ],
     "packages-dev": [],
@@ -106,7 +113,9 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.6.0"
+        "php": ">=5.6.12",
+        "ext-gd": "*",
+        "ext-mbstring": "*"
     },
     "platform-dev": []
 }

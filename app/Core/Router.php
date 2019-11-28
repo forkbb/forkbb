@@ -217,8 +217,8 @@ class Router
 
                 $args = [];
                 foreach ($keys as $key) {
-                    if (isset($matches[$key])) { // ???? может isset($matches[$key]{0}) тут поставить?
-                        $args[$key] = isset($matches[$key]{0}) ? \str_replace($this->subRepl, $this->subSearch, $matches[$key]) : null;
+                    if (isset($matches[$key])) { // ???? может isset($matches[$key][0]) тут поставить?
+                        $args[$key] = isset($matches[$key][0]) ? \str_replace($this->subRepl, $this->subSearch, $matches[$key]) : null;
                     }
                 }
                 return [self::OK, $handler, $args, $marker];
@@ -329,7 +329,7 @@ class Router
                         if (! isset($data[1])) {
                             $data[1] = '[^/\x00-\x1f]+';
                         }
-                        if ($data[0] === '' || $data[1] === '' || \is_numeric($data[0]{0})) {
+                        if ($data[0] === '' || $data[1] === '' || \is_numeric($data[0][0])) {
                             return false;
                         }
                         $pattern .= '(?P<' . $data[0] . '>' . $data[1] . ')';

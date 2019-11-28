@@ -319,7 +319,7 @@ class Dirk extends PhpEngine
      */
     protected function compileExtends($expression)
     {
-        if (isset($expression{0}) && $expression{0} == '(') {
+        if (isset($expression[0]) && $expression[0] == '(') {
             $expression = substr($expression, 1, -1);
         }
         return "<?php \$this->extend({$expression}) ?>";
@@ -333,7 +333,7 @@ class Dirk extends PhpEngine
      */
     protected function compileInclude($expression)
     {
-        if (isset($expression{0}) && $expression{0} == '(') {
+        if (isset($expression[0]) && $expression[0] == '(') {
             $expression = substr($expression, 1, -1);
         }
         return "<?php include \$this->prepare({$expression}) ?>";

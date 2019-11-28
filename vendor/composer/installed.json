@@ -1,17 +1,17 @@
 [
     {
         "name": "artoodetoo/dirk",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "dev-visman",
+        "version_normalized": "dev-visman",
         "source": {
             "type": "git",
-            "url": "https://github.com/artoodetoo/dirk.git",
-            "reference": "e6c2099435d4d4a13d7e96d0170db6182797b5bd"
+            "url": "https://github.com/MioVisman/dirk.git",
+            "reference": "05cbba461274158699668c9e8075fb2d8fab5967"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/artoodetoo/dirk/zipball/e6c2099435d4d4a13d7e96d0170db6182797b5bd",
-            "reference": "e6c2099435d4d4a13d7e96d0170db6182797b5bd",
+            "url": "https://api.github.com/repos/MioVisman/dirk/zipball/05cbba461274158699668c9e8075fb2d8fab5967",
+            "reference": "05cbba461274158699668c9e8075fb2d8fab5967",
             "shasum": ""
         },
         "require": {
@@ -20,7 +20,7 @@
         "require-dev": {
             "phpunit/phpunit": "4.0.*"
         },
-        "time": "2017-01-10 21:38:22",
+        "time": "2019-11-28 13:14:33",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -28,7 +28,11 @@
                 "R2\\Templating\\": "src"
             }
         },
-        "notification-url": "https://packagist.org/downloads/",
+        "autoload-dev": {
+            "psr-4": {
+                "R2\\Templating\\Tests": "tests"
+            }
+        },
         "license": [
             "MIT"
         ],
@@ -45,7 +49,10 @@
             "templates",
             "templating",
             "views"
-        ]
+        ],
+        "support": {
+            "source": "https://github.com/MioVisman/dirk/tree/visman"
+        }
     },
     {
         "name": "miovisman/parserus",
@@ -54,18 +61,18 @@
         "source": {
             "type": "git",
             "url": "https://github.com/MioVisman/Parserus.git",
-            "reference": "bbdade91cfc4927ebb8b5b984f90a52075f75ece"
+            "reference": "ac9a8fa047083229f7e50df0342fd3871cdbe931"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/MioVisman/Parserus/zipball/bbdade91cfc4927ebb8b5b984f90a52075f75ece",
-            "reference": "bbdade91cfc4927ebb8b5b984f90a52075f75ece",
+            "url": "https://api.github.com/repos/MioVisman/Parserus/zipball/ac9a8fa047083229f7e50df0342fd3871cdbe931",
+            "reference": "ac9a8fa047083229f7e50df0342fd3871cdbe931",
             "shasum": ""
         },
         "require": {
             "php": ">=5.4.0"
         },
-        "time": "2017-11-21 06:34:31",
+        "time": "2019-10-11 12:06:27",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

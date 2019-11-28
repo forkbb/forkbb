@@ -132,7 +132,7 @@ class Lang
                 }
 
                 // заголовки
-                if (! isset($cur['msgid']{0})) {
+                if (! isset($cur['msgid'][0])) {
                     if (\preg_match('%Plural\-Forms:\s+nplurals=(\d+);\s*plural=([^;\n\r]+;)%i', $cur[0], $v)) {
                         $nplurals = (int) $v[1];
                         $plural = \str_replace('n', '$n', \trim($v[2]));
@@ -143,18 +143,18 @@ class Lang
                 // перевод
                 } else {
                     // множественный
-                    if (isset($cur['msgid_plural']{0}) || isset($cur[1]{0})) {
-                        if (! isset($cur[1]{0})) {
+                    if (isset($cur['msgid_plural'][0]) || isset($cur[1][0])) {
+                        if (! isset($cur[1][0])) {
                             $cur[1] = $cur['msgid_plural'];
                         }
 
-                        if (! isset($cur[0]{0})) {
+                        if (! isset($cur[0][0])) {
                             $cur[0] = $cur['msgid'];
                         }
 
                         $curVal = [];
                         for ($v = 0; $v < $nplurals; ++$v) {
-                            if (! isset($cur[$v]{0})) {
+                            if (! isset($cur[$v][0])) {
                                 $curVal = null;
                                 break;
                             }
@@ -167,7 +167,7 @@ class Lang
                         }
 
                     // одиночный
-                    } elseif (isset($cur[0])) { // {0}
+                    } elseif (isset($cur[0])) { // [0]
                         $result[$cur['msgid']] = $cur[0];
                     }
                 }
@@ -255,7 +255,7 @@ class Lang
      */
     protected function originalLine($line)
     {
-        if (isset($line[1]) && $line[0] == '"' && $line{\strlen($line) - 1} == '"') {
+        if (isset($line[1]) && $line[0] == '"' && $line[\strlen($line) - 1] == '"') {
             $line = \substr($line, 1, -1);
         }
         return \str_replace(

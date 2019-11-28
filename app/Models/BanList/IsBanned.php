@@ -29,7 +29,7 @@ class IsBanned extends Method
                     return 2;
                 } elseif (false === \strpos($cur['email'], '@')) {
                     $len = \strlen($cur['email']);
-                    if ('.' === $cur['email']{0}) {
+                    if ('.' === $cur['email'][0]) {
                         if (\substr($email, -$len) === $cur['email']) {
                             return 2;
                         }

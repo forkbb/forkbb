@@ -119,7 +119,7 @@ class Secury
         $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
         $result = '';
         for ($i = 0; $i < $len; ++$i) {
-            $result .= $chars{\ord($key{$i}) % 64};
+            $result .= $chars[\ord($key[$i]) % 64];
         }
         return $result;
     }

@@ -16,11 +16,17 @@
             "ForkBB\\": "app/"
         }
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/MioVisman/dirk"
+        }
+    ],
     "require": {
         "php": ">=5.6.12",
         "ext-gd": "*",
         "ext-mbstring": "*",
-        "artoodetoo/dirk": "dev-master",
+        "artoodetoo/dirk": "dev-visman",
         "miovisman/parserus": "dev-master"
     }
 }
