@@ -23,6 +23,12 @@ class ErrorHandler
     protected $logged = false;
 
     /**
+     * Скрываемая часть пути до файла
+     * @var string
+     */
+    protected $hidePath;
+
+    /**
      * Список ошибок
      * @var array
      */
@@ -56,6 +62,7 @@ class ErrorHandler
 
         \ob_start();
         $this->obLevel = \ob_get_level();
+        $this->hidePath = \realpath(__DIR__ . '/../../');
     }
 
     /**
@@ -182,8 +189,9 @@ class ErrorHandler
 
         if (1 == \ini_get('display_errors')) {
             $type = isset($this->type[$error['type']]) ? $this->type[$error['type']] : $this->type[0];
+            $file = \str_replace($this->hidePath, '...', $error['file']);
 
-            echo "PHP {$type}: \"{$error['message']}\" in {$error['file']}:[{$error['line']}]";
+            echo "PHP {$type}: \"{$error['message']}\" in {$file}:[{$error['line']}]";
         } else {
             echo 'Oops';
         }
