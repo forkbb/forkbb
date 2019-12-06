@@ -21,8 +21,19 @@ class Message extends Page
         $this->httpStatus  = $status;
         $this->httpHeaders = $headers;
         $this->titles      = \ForkBB\__('Info');
-        $this->message     = \ForkBB\__($message);
         $this->back        = $back;
+
+
+        if ($status < 200) {
+            $type = 'i';
+        } elseif ($status < 300) {
+            $type = 's';
+        } elseif ($status < 400) {
+            $type = 'w';
+        } else {
+            $type = 'e';
+        }
+        $this->fIswev = [$type, \ForkBB\__($message)];
 
         return $this;
     }

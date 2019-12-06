@@ -823,12 +823,7 @@ body,
 /* Сообщение */
 /*************/
 
-#fork .f-message > h2 {
-  display: block;
-  padding: 0.625rem;
-}
-
-#fork .f-message > p {
+#fork .f-backlink > p {
   padding: 0.625rem;
 }
 
