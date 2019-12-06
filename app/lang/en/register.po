@@ -16,7 +16,7 @@ msgid "Sign up"
 msgstr "Sign up"
 
 msgid "If no rules"
-msgstr "Treat other people the way you want to be treated yourself."
+msgstr "Follow the Golden Rule."
 
 msgid "Bad agree"
 msgstr "ID forms obsolete. Please begin <a href=\"%s\">registration</a> again."
