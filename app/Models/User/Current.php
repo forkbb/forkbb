@@ -259,13 +259,22 @@ class Current extends Action
     {
         if (! empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $langs = $this->c->Func->getLangs();
+            $main = [];
             foreach ($this->c->Func->langParse($_SERVER['HTTP_ACCEPT_LANGUAGE']) as $entry) {
-                $arr = \explode('-', $entry);
+                $arr = \explode('-', $entry, 2);
                 if (isset($arr[1])) {
                     $entry = $arr[0] . '_' . \strtoupper($arr[1]);
+                    $main[] = $arr[0];
                 }
                 if (isset($langs[$entry])) {
                     return $langs[$entry];
+                }
+            }
+            if (! empty($main)) {
+                foreach ($main as $entry) {
+                    if (isset($langs[$entry])) {
+                        return $langs[$entry];
+                    }
                 }
             }
         }
