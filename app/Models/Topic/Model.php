@@ -297,14 +297,14 @@ class Model extends DataModel
             ':tid' => $this->id,
             ':pid' => $pid,
         ];
-        $sql = 'SELECT COUNT(p.id) AS num, j.id AS flag
+        $sql = 'SELECT COUNT(p.id) AS num
                 FROM ::posts AS p
                 INNER JOIN ::posts AS j ON (j.topic_id=?i:tid AND j.id=?i:pid)
-                WHERE p.topic_id=?i:tid AND p.id<?i:pid';
+                WHERE p.topic_id=?i:tid AND p.id<?i:pid'; //???? может на два запроса разбить?
 
         $result = $this->c->DB->query($sql, $vars)->fetch();
 
-        $this->page = empty($result['flag']) ? null : (int) \ceil(($result['num'] + 1) / $this->c->user->disp_posts);
+        $this->page = empty($result) ? null : (int) \ceil(($result['num'] + 1) / $this->c->user->disp_posts);
     }
 
     /**
