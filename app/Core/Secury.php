@@ -90,7 +90,7 @@ class Secury
         if (\strlen($key) < $len) {
             throw new RuntimeException('Could not gather sufficient random data');
         }
-    	return $key;
+        return $key;
     }
 
     /**

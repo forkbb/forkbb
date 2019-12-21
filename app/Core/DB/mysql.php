@@ -171,8 +171,8 @@ class Mysql
      *
      * @return bool
      */
-	public function fieldExists($table, $field, $noPrefix = false)
-	{
+    public function fieldExists($table, $field, $noPrefix = false)
+    {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         try {
             $stmt = $this->db->query('SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:table AND COLUMN_NAME = ?s:field', [':table' => $table, ':field' => $field]);
@@ -182,7 +182,7 @@ class Mysql
             return false;
         }
         return ! empty($result);
-	}
+    }
 
     /**
      * Проверяет наличие индекса в таблице
@@ -301,7 +301,7 @@ class Mysql
     {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $this->testStr($table);
-		return $this->db->exec("DROP TABLE IF EXISTS `{$table}`") !== false;
+        return $this->db->exec("DROP TABLE IF EXISTS `{$table}`") !== false;
     }
 
     /**
@@ -371,8 +371,8 @@ class Mysql
      *
      * @return bool
      */
-	public function alterField($table, $field, $type, $allowNull, $default = null, $after = null, $noPrefix = false)
-	{
+    public function alterField($table, $field, $type, $allowNull, $default = null, $after = null, $noPrefix = false)
+    {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $this->testStr($table);
         $this->testStr($field);
@@ -388,7 +388,7 @@ class Mysql
             $query .= " AFTER `{$after}`";
         }
         return $this->db->exec($query) !== false;
-	}
+    }
 
     /**
      * Удаляет поле из таблицы
