@@ -211,8 +211,8 @@ class Auth extends Page
 
             if ($v->validation($_POST)) {
                 $key  = $this->c->Secury->randomPass(32);
-                $hash = $this->c->Secury->hash($v->email . $key);
-                $link = $this->c->Router->link('ChangePassword', ['email' => $v->email, 'key' => $key, 'hash' => $hash]);
+                $hash = $this->c->Secury->hash($tmpUser->email . $key);
+                $link = $this->c->Router->link('ChangePassword', ['email' => $tmpUser->email, 'key' => $key, 'hash' => $hash]);
                 $tplData = [
                     'fRootLink' => $this->c->Router->link('Index'),
                     'fMailer'   => \ForkBB\__('Mailer', $this->c->config->o_board_title),
@@ -225,7 +225,7 @@ class Auth extends Page
                         ->reset()
                         ->setFolder($this->c->DIR_LANG)
                         ->setLanguage($tmpUser->language)
-                        ->setTo($v->email, $tmpUser->username)
+                        ->setTo($tmpUser->email, $tmpUser->username)
                         ->setFrom($this->c->config->o_webmaster_email, \ForkBB\__('Mailer', $this->c->config->o_board_title))
                         ->setTpl('passphrase_reset.tpl', $tplData)
                         ->send();
