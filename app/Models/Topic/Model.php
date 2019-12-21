@@ -342,8 +342,8 @@ class Model extends DataModel
         $vars = [
             ':uid'   => $this->c->user->id,
             ':tid'   => $this->id,
-            ':read'  => $this->mt_last_read,
-            ':visit' => $this->mt_last_visit,
+            ':read'  => (int) $this->mt_last_read,
+            ':visit' => (int) $this->mt_last_visit,
         ];
         $flag = false;
 

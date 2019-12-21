@@ -191,7 +191,9 @@ class View extends Action
 
         if ($arg instanceof Topic) {
             foreach ($result as $post) {
-                if ($post->posted > $timeMax) {
+				if ($post->id === $arg->last_post_id) { // время последнего сообщения в теме может равняться 
+                    $timeMax = $arg->last_post;         // времени его редактирования, а не создания
+				} elseif ($post->posted > $timeMax) {
                     $timeMax = $post->posted;
                 }
                 if ($post->id === $arg->first_post_id && $offset > 0) {
