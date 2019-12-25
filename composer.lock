@@ -1,11 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "hash": "533b558f4bef9f6e04f96421dd776ab4",
-    "content-hash": "6646dc09855f04f546d6d92253e01a30",
+    "content-hash": "dd233d78a2c422cc3c940a860acb6b41",
     "packages": [
         {
             "name": "artoodetoo/dirk",
@@ -58,7 +57,53 @@
             "support": {
                 "source": "https://github.com/MioVisman/dirk/tree/visman"
             },
-            "time": "2019-11-28 13:14:33"
+            "time": "2019-11-28T13:14:33+00:00"
+        },
+        {
+            "name": "miovisman/normemail",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MioVisman/NormEmail.git",
+                "reference": "c582b1359adf1ee2efa38809e8827ed21138a9ac"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MioVisman/NormEmail/zipball/c582b1359adf1ee2efa38809e8827ed21138a9ac",
+                "reference": "c582b1359adf1ee2efa38809e8827ed21138a9ac",
+                "shasum": ""
+            },
+            "require": {
+                "ext-intl": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MioVisman\\NormEmail\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Visman",
+                    "email": "mio.visman@yandex.ru",
+                    "homepage": "https://github.com/MioVisman"
+                }
+            ],
+            "description": "Normalization of email for bans, for request cache to SFS or for checking the uniqueness of new users.",
+            "homepage": "https://github.com/MioVisman/NormEmail",
+            "keywords": [
+                "ban",
+                "canonical email",
+                "email",
+                "normalization"
+            ],
+            "time": "2019-12-24T15:42:43+00:00"
         },
         {
             "name": "miovisman/parserus",
@@ -100,15 +145,16 @@
                 "bbcode",
                 "parser"
             ],
-            "time": "2019-10-11 12:06:27"
+            "time": "2019-10-11T12:06:27+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
         "artoodetoo/dirk": 20,
-        "miovisman/parserus": 20
+        "miovisman/parserus": 20,
+        "miovisman/normemail": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

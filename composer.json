@@ -4,6 +4,7 @@
     "homepage": "https://github.com/forkbb",
     "type": "project",
     "license": "MIT",
+    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Visman",
@@ -27,6 +28,7 @@
         "ext-gd": "*",
         "ext-mbstring": "*",
         "artoodetoo/dirk": "dev-visman",
-        "miovisman/parserus": "dev-master"
+        "miovisman/parserus": "dev-master",
+        "miovisman/normemail": "dev-master"
     }
 }

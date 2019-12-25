@@ -20,7 +20,7 @@
         "require-dev": {
             "phpunit/phpunit": "4.0.*"
         },
-        "time": "2019-11-28 13:14:33",
+        "time": "2019-11-28T13:14:33+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -55,6 +55,54 @@
         }
     },
     {
+        "name": "miovisman/normemail",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/MioVisman/NormEmail.git",
+            "reference": "c582b1359adf1ee2efa38809e8827ed21138a9ac"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/MioVisman/NormEmail/zipball/c582b1359adf1ee2efa38809e8827ed21138a9ac",
+            "reference": "c582b1359adf1ee2efa38809e8827ed21138a9ac",
+            "shasum": ""
+        },
+        "require": {
+            "ext-intl": "*",
+            "ext-mbstring": "*",
+            "php": ">=5.6.0"
+        },
+        "time": "2019-12-24T15:42:43+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "MioVisman\\NormEmail\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Visman",
+                "email": "mio.visman@yandex.ru",
+                "homepage": "https://github.com/MioVisman"
+            }
+        ],
+        "description": "Normalization of email for bans, for request cache to SFS or for checking the uniqueness of new users.",
+        "homepage": "https://github.com/MioVisman/NormEmail",
+        "keywords": [
+            "ban",
+            "canonical email",
+            "email",
+            "normalization"
+        ]
+    },
+    {
         "name": "miovisman/parserus",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -72,7 +120,7 @@
         "require": {
             "php": ">=5.4.0"
         },
-        "time": "2019-10-11 12:06:27",
+        "time": "2019-10-11T12:06:27+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

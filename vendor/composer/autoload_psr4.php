@@ -7,5 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'R2\\Templating\\' => array($vendorDir . '/artoodetoo/dirk/src'),
+    'MioVisman\\NormEmail\\' => array($vendorDir . '/miovisman/normemail/src'),
     'ForkBB\\' => array($baseDir . '/app'),
 );

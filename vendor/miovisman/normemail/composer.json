@@ -1,0 +1,25 @@
+{
+    "name": "miovisman/normemail",
+    "description": "Normalization of email for bans, for request cache to SFS or for checking the uniqueness of new users.",
+    "keywords": ["email", "normalization", "canonical email", "ban"],
+    "homepage": "https://github.com/MioVisman/NormEmail",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Visman",
+            "email": "mio.visman@yandex.ru",
+            "homepage": "https://github.com/MioVisman"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.0",
+        "ext-mbstring": "*",
+        "ext-intl" : "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "MioVisman\\NormEmail\\": "src/"
+        }
+    }
+}
