@@ -15,6 +15,12 @@ class DataModel extends Model
     protected $modified = [];
 
     /**
+     * Массив состояний отслеживания изменений в свойствах модели
+     * @var array
+     */
+    protected $track = [];
+
+    /**
      * Устанавливает значения для свойств
      * Флаги модификации свойст сброшены
      *
@@ -27,6 +33,7 @@ class DataModel extends Model
         $this->a        = $attrs; //????
         $this->aCalc    = [];
         $this->modified = [];
+        $this->track    = [];
         return $this;
     }
 
@@ -78,6 +85,7 @@ class DataModel extends Model
     public function resModified()
     {
         $this->modified = [];
+        $this->track    = [];
     }
 
     /**
@@ -105,7 +113,11 @@ class DataModel extends Model
             }
         }
 
+        $this->track[$name] = $track;
+
         parent::__set($name, $val);
+
+        unset($this->track[$name]);
 
         if (null === $track) {
             return;
@@ -127,9 +139,11 @@ class DataModel extends Model
      */
     public function __get($name)
     {
+        // без вычисления
         if (\strpos($name, '__') === 0) {
             $name = \substr($name, 2);
             return isset($this->a[$name]) ? $this->a[$name] : null;
+        // с вычислениями
         } else {
             return parent::__get($name);
         }

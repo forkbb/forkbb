@@ -47,8 +47,8 @@ class Email extends Validators
             $ok = false;
         }
         // отсутствует пользователь с таким email (или их больше одного O_o)
-        if (isset($attrs['exists'])) {
-            $user = $this->c->users->load($email, 'email');
+        if ($ok && isset($attrs['exists'])) {
+            $user = $this->c->users->load($this->c->users->create(['email_normal' => $this->c->NormEmail->normalize($email)]));
 
             if (! $user instanceof User) {
                 $v->addError('Invalid email');
@@ -58,12 +58,14 @@ class Email extends Validators
         // email не уникален
         if ($ok && isset($attrs['unique']) && (! $originalUser instanceof User || ! $originalUser->isGuest)) {
             if (true === $user) {
-                $user = $this->c->users->load($email, 'email');
+                $user = $this->c->users->load($this->c->users->create(['email_normal' => $this->c->NormEmail->normalize($email)]));
             }
 
             $id = $originalUser instanceof User ? $originalUser->id : true;
 
-            if (($user instanceof User && $id !== $user->id) || (! $user instanceof User && 0 !== $user)) {
+            if (($user instanceof User && $id !== $user->id)
+                || (\is_array($user) && \count($user) > 1) // ???? эта ветка не реальна? поле email_normal уникально
+            ) {
                 $v->addError('Dupe email');
                 $ok = false;
             }

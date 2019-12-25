@@ -102,7 +102,7 @@ abstract class Users extends Admin
             $this->rules = $this->c->UsersRules->init();
         }
 
-        $userList = $this->c->users->load($selected);
+        $userList = $this->c->users->load(...$selected);
         $result   = [];
         foreach ($userList as $user) {
             if (! $user instanceof User) {

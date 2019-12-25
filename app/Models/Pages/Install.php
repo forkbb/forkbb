@@ -141,7 +141,7 @@ class Install extends Page
                     'dbprefix'     => 'string:trim|max:40|check_prefix',
                     'username'     => 'required|string:trim|min:2|max:25',
                     'password'     => 'required|string|min:16|password',
-                    'email'        => 'required|string:trim,lower|max:80|email',
+                    'email'        => 'required|string:trim|max:80|email',
                     'title'        => 'required|string:trim|max:255',
                     'descr'        => 'string:trim|max:65000 bytes',
                     'baseurl'      => 'required|string:trim|rtrim_url',
@@ -498,7 +498,7 @@ class Install extends Page
                 'id'          => ['SERIAL', false],
                 'username'    => ['VARCHAR(190)', false, ''],
                 'ip'          => ['VARCHAR(255)', false, ''],
-                'email'       => ['VARCHAR(80)', false, ''],
+                'email'       => ['VARCHAR(190)', false, ''],
                 'message'     => ['VARCHAR(255)', false, ''],
                 'expire'      => ['INT(10) UNSIGNED', false, 0],
                 'ban_creator' => ['INT(10) UNSIGNED', false, 0],
@@ -653,7 +653,7 @@ class Install extends Page
                 'poster'       => ['VARCHAR(190)', false, ''],
                 'poster_id'    => ['INT(10) UNSIGNED', false, 1],
                 'poster_ip'    => ['VARCHAR(45)', false, ''],
-                'poster_email' => ['VARCHAR(80)', false, ''],
+                'poster_email' => ['VARCHAR(190)', false, ''],
                 'message'      => ['MEDIUMTEXT', false, ''],
                 'hide_smilies' => ['TINYINT(1)', false, 0],
                 'edit_post'    => ['TINYINT(1)', false, 0],
@@ -868,7 +868,8 @@ class Install extends Page
                 'group_id'         => ['INT(10) UNSIGNED', false, 0],
                 'username'         => ['VARCHAR(190)', false, ''],
                 'password'         => ['VARCHAR(255)', false, ''],
-                'email'            => ['VARCHAR(80)', false, ''],
+                'email'            => ['VARCHAR(190)', false, ''],
+                'email_normal'     => ['VARCHAR(190)', false, ''],
                 'email_confirmed'  => ['TINYINT(1)', false, 0],
                 'title'            => ['VARCHAR(50)', false, ''],
                 'realname'         => ['VARCHAR(40)', false, ''],
@@ -920,8 +921,8 @@ class Install extends Page
             ],
             'PRIMARY KEY' => ['id'],
             'UNIQUE KEYS' => [
-                'username_idx' => ['username(25)'],
-                'email_idx'    => ['email'],
+                'username_idx'     => ['username(25)'],
+                'email_normal_idx' => ['email_normal'],
             ],
             'INDEXES' => [
                 'registered_idx' => ['registered'],
@@ -1035,8 +1036,8 @@ class Install extends Page
         $this->c->DB->exec('UPDATE ::groups SET g_pm_limit=0 WHERE g_id=?i', [$this->c->GROUP_ADMIN]);
 
         $ip = \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: 'unknow';
-        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, email) VALUES (?i, ?s, ?s, ?s)', [$this->c->GROUP_GUEST, \ForkBB\__('Guest '), \ForkBB\__('Guest '), \ForkBB\__('Guest ')]);
-        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, email, language, style, num_posts, last_post, registered, registration_ip, last_visit) VALUES (?i, ?s, ?s, ?s, ?s, ?s, ?i, ?i, ?i, ?s, ?i)', [$this->c->GROUP_ADMIN, $v->username, password_hash($v->password, \PASSWORD_DEFAULT), $v->email, $v->defaultlang, $v->defaultstyle, 1, $now, $now, $ip, $now]);
+        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password) VALUES (?i, ?s, ?s)', [$this->c->GROUP_GUEST, \ForkBB\__('Guest '), \ForkBB\__('Guest ')]);
+        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, email, email_normal, language, style, num_posts, last_post, registered, registration_ip, last_visit) VALUES (?i, ?s, ?s, ?s, ?s, ?s, ?s, ?i, ?i, ?i, ?s, ?i)', [$this->c->GROUP_ADMIN, $v->username, password_hash($v->password, \PASSWORD_DEFAULT), $v->email, $this->c->NormEmail->normalize($v->email), $v->defaultlang, $v->defaultstyle, 1, $now, $now, $ip, $now]);
 
         $pun_config = [
             'i_fork_revision'         => $this->c->FORK_REVISION,

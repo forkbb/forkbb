@@ -82,6 +82,7 @@ return [
             'eol'   => '%EOL%',
         ],
         'Func' => \ForkBB\Core\Func::class,
+        'NormEmail' => \MioVisman\NormEmail\NormEmail::class,
         'Csrf' => [
             'class'  => \ForkBB\Core\Csrf::class,
             'Secury' => '@Secury',

@@ -177,7 +177,8 @@ class View extends Action
             }
         }
 
-        $this->c->users->load(\array_keys($userIds));
+        $ids = \array_keys($userIds);
+        $this->c->users->load(...$ids);
 
         $offset    = ($arg->page - 1) * $this->c->user->disp_posts;
         $timeMax   = 0;
@@ -191,7 +192,7 @@ class View extends Action
 
         if ($arg instanceof Topic) {
             foreach ($result as $post) {
-                if ($post->id === $arg->last_post_id) { // время последнего сообщения в теме может равняться 
+                if ($post->id === $arg->last_post_id) { // время последнего сообщения в теме может равняться
                     $timeMax = $arg->last_post;         // времени его редактирования, а не создания
                 } elseif ($post->posted > $timeMax) {
                     $timeMax = $post->posted;

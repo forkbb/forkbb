@@ -3,46 +3,41 @@
 namespace ForkBB\Models\User;
 
 use ForkBB\Models\Action;
+use ForkBB\Models\User\Model as User;
 use InvalidArgumentException;
 
 class Load extends Action
 {
     /**
-     * Получение пользователя по условию
+     * Получение пользователя
      *
      * @param mixed $value
-     * @param string $field
      *
      * @throws InvalidArgumentException
      *
      * @return mixed
      */
-    public function load($value, $field = 'id')
+    public function load($value)
     {
-        $flag = \is_array($value);
-
-        switch (($flag ? 'a_' : '') . $field) {
-            case 'id':
-                $where = 'u.id=?i:field';
-                break;
-            case 'username':
+        if (\is_array($value)) {
+            $where = 'u.id IN (?ai:field)';
+        } elseif ($value instanceof User) {
+            if ('' != $value->username) {
                 $where = 'u.username=?s:field';
-                break;
-            case 'email':
+                $value = $value->username;
+            } elseif ('' != $value->email) {
                 $where = 'u.email=?s:field';
-                break;
-            case 'a_id':
-                $where = 'u.id IN (?ai:field)';
-                break;
-            case 'a_username':
-                $where = 'u.username IN (?as:field)';
-                break;
-            case 'a_email':
-                $where = 'u.email IN (?as:field)';
-                break;
-            default:
+                $value = $value->email;
+            } elseif ('' != $value->email_normal) {
+                $where = 'u.email_normal=?s:field';
+                $value = $value->email_normal;
+            } else {
                 throw new InvalidArgumentException('Field not supported');
+            }
+        } else {
+            $where = 'u.id=?i:field';
         }
+
         $vars = [':field' => $value];
         $sql = 'SELECT u.*, g.*
                 FROM ::users AS u
@@ -51,19 +46,10 @@ class Load extends Action
 
         $data = $this->c->DB->query($sql, $vars)->fetchAll();
 
-        if ($flag) {
-            $result = [];
-            foreach ($data as $row) {
-                $result[] = $this->manager->create($row);
-            }
-            return $result;
-        } else {
-            $count = \count($data);
-            // число найденных пользователей отлично от одного
-            if (1 !== $count) {
-                return $count;
-            }
-            return $this->manager->create($data[0]);
+        $result = [];
+        foreach ($data as $row) {
+            $result[] = $this->manager->create($row);
         }
+        return $result;
     }
 }

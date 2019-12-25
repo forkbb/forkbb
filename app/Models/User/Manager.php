@@ -4,7 +4,7 @@ namespace ForkBB\Models\User;
 
 use ForkBB\Models\ManagerModel;
 use ForkBB\Models\User\Model as User;
-use RuntimeException;
+use InvalidArgumentException;
 
 class Manager extends ManagerModel
 {
@@ -21,34 +21,55 @@ class Manager extends ManagerModel
     }
 
     /**
-     * Получение пользователя по условию
+     * Получение пользователя(ей) по id, массиву id или по модели User
      *
-     * @param mixed $value
-     * @param string $field
+     * @param mixed ...$args
+     *
+     * @throws InvalidArgumentException
      *
      * @return mixed
      */
-    public function load($value, $field = 'id')
+    public function load(...$args)
     {
-        if (\is_array($value)) {
-            $result = \array_flip($value); // ???? а если пользователь не найдется?
-            if ('id' === $field) {
-                $temp = [];
-                foreach ($value as $id) {
-                    if (\is_string($id)) { // ???? для пользователей из админки
-                        $result[$id] = $id;
-                    } elseif ($this->get($id) instanceof User) {
-                        $result[$id] = $this->get($id);
-                    } else {
-                        $temp[] = $id;
-                    }
+        $result = [];
+        $count = \count($args);
+        $countID = 0;
+        $countUser = 0;
+        $reqIDs = [];
+        $error = false;
+        $user = null;
+
+        foreach ($args as $arg) {
+            if ($arg instanceof User) {
+                ++$countUser;
+                $user = $arg;
+            } elseif (\is_int($arg) && $arg > 0) {
+                ++$countID;
+                if ($this->get($arg) instanceof User) {
+                    $result[$arg] = $this->get($arg);
+                } else {
+                    $result[$arg] = false;
+                    $reqIDs[] = $arg;
                 }
-                $value = $temp;
+            } else {
+                $error = true;
             }
-            if (empty($value)) {
-                return $result;
+        }
+
+        if ($error || $countUser * $countID > 0 || $countUser > 1 || ($countID > 0 && $count > $countID)) {
+            throw new InvalidArgumentException('Expected only integer, integer array or User');
+        }
+
+        if (! empty($reqIDs) || null !== $user) {
+            if (null !== $user) {
+                $data = $user;
+            } elseif (1 === \count($reqIDs)) {
+                $data = \array_pop($reqIDs);
+            } else {
+                $data = $reqIDs;
             }
-            foreach ($this->Load->load($value, $field) as $user) {
+
+            foreach ($this->Load->load($data) as $user) {
                 if ($user instanceof User) {
                     if ($this->get($user->id) instanceof User) {
                         $result[$user->id] = $this->get($user->id);
@@ -58,27 +79,9 @@ class Manager extends ManagerModel
                     }
                 }
             }
-
-            return $result;
-        } else {
-            $user = 'id' === $field ? $this->get($value) : null;
-
-            if (! $user instanceof User) {
-                $user = $this->Load->load($value, $field);
-
-                if ($user instanceof User) {
-                    $test = $this->get($user->id);
-
-                    if ($test instanceof User) {
-                        return $test;
-                    }
-
-                    $this->set($user->id, $user);
-                }
-            }
-
-            return $user;
         }
+
+        return 1 === \count($result) ? \array_pop($result) : $result;
     }
 
     /**

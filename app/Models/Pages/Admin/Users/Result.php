@@ -4,6 +4,7 @@ namespace ForkBB\Models\Pages\Admin\Users;
 
 use ForkBB\Core\Validator;
 use ForkBB\Models\Pages\Admin\Users;
+use ForkBB\Models\User\Model as User;
 
 class Result extends Users
 {
@@ -29,14 +30,14 @@ class Result extends Users
                 return $this->c->Message->message('Bad request');
             }
 
-            $ids    = $this->forIP($data['ip']);
+            $idsN   = $this->forIP($data['ip']);
             $crName = $data['ip'];
         } else {
-            $ids    = $this->forFilter($data);
+            $idsN   = $this->forFilter($data);
             $crName = \ForkBB\__('Results head');
         }
 
-        $number = \count($ids);
+        $number = \count($idsN);
         if (0 == $number) {
             $view = $this->c->AdminUsers;
             $view->fIswev = ['i', \ForkBB\__('No users found')];
@@ -96,8 +97,29 @@ class Result extends Users
         }
 
         $startNum = ($page - 1) * $this->c->config->o_disp_users;
-        $ids      = \array_slice($ids, $startNum, $this->c->config->o_disp_users);
-        $userList = $this->c->users->load($ids);
+        $idsN     = \array_slice($idsN, $startNum, $this->c->config->o_disp_users);
+        $ids      = [];
+        $userList = [];
+
+        foreach ($idsN as $cur) {
+            if (\is_int($cur)) {
+                $ids[] = $cur;
+            }
+            $userList[$cur] = $cur;
+        }
+
+        if (! empty($ids)) {
+            $idsN = $this->c->users->load(...$ids);
+            if (! \is_array($idsN)) {
+                $idsN = [$idsN];
+            }
+
+            foreach ($idsN as $cur)  {
+                if ($cur instanceof User) {
+                    $userList[$cur->id] = $cur;
+                }
+            }
+        }
 
         $this->nameTpl    = 'admin/users_result';
         $this->mainSuffix = '-one-column';

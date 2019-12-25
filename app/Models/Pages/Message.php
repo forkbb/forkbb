@@ -18,7 +18,7 @@ class Message extends Page
     public function message($message, $back = true, $status = 404, array $headers = [])
     {
         $this->nameTpl     = 'message';
-        $this->httpStatus  = $status;
+        $this->httpStatus  = \max(200, $status);
         $this->httpHeaders = $headers;
         $this->titles      = \ForkBB\__('Info');
         $this->back        = $back;

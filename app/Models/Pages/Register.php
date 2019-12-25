@@ -24,7 +24,7 @@ class Register extends Page
                 'token'    => 'token:RegisterForm',
                 'agree'    => 'required|token:Register',
                 'on'       => 'integer',
-                'email'    => 'required_with:on|string:trim,lower|email:noban,unique',
+                'email'    => 'required_with:on|string:trim|email:noban,unique',
                 'username' => 'required_with:on|string:trim,spaces|username',
                 'password' => 'required_with:on|string|min:16|password',
             ])->addAliases([

@@ -92,7 +92,7 @@ class Userlist extends Page
         if ($number) {
             $this->startNum = ($page - 1) * $this->c->config->o_disp_users;
             $ids = \array_slice($ids, $this->startNum, $this->c->config->o_disp_users);
-            $this->userList = $this->c->users->load($ids);
+            $this->userList = $this->c->users->load(...$ids);
 
             $links = [];
             $vars = ['page' => $page];

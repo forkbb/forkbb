@@ -365,4 +365,19 @@ class Model extends DataModel
             return null;
         }
     }
+
+    /**
+     * Установка email и вычисление нормализованного email
+     *
+     * @param string $email
+     */
+    protected function setemail($email)
+    {
+        $this->a['email'] = $email;
+
+        if (isset($email[0])) {
+            $property = (! isset($this->track['email']) ? '__' : '') . 'email_normal';
+            $this->$property = $this->c->NormEmail->normalize($email);
+        }
+    }
 }

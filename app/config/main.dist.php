@@ -84,6 +84,7 @@ return [
             'eol'   => '%EOL%',
         ],
         'Func' => \ForkBB\Core\Func::class,
+        'NormEmail' => \MioVisman\NormEmail\NormEmail::class,
 
         'config'     => '@ConfigModel:init',
         'bans'       => '@BanListModel:init',
