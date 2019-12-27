@@ -144,7 +144,7 @@ abstract class Page extends Model
     protected function maintenance()
     {
         if ($this->c->config->o_maintenance == '1' && $this->user->isAdmin) {
-            $this->a['fIswev']['w']['maintenance'] = \ForkBB\__('Maintenance mode enabled', $this->c->Router->link('AdminMaintenance'));
+            $this->fIswev = ['w', \ForkBB\__('Maintenance mode enabled', $this->c->Router->link('AdminMaintenance'))];
         }
     }
 
@@ -173,15 +173,20 @@ abstract class Page extends Model
      */
     protected function getpageHeaders()
     {
-        $headers = [['link', 'rel="stylesheet" type="text/css" href="' . $this->c->PUBLIC_URL . '/style/' . $this->user->style . '/style.css' . '"']];
+        $headers = [
+            ['link', 'rel="stylesheet" type="text/css" href="' . $this->c->PUBLIC_URL . '/style/' . $this->user->style . '/style.css' . '"'],
+        ];
+
         if ($this->canonical) {
             $headers[] = ['link', 'rel="canonical" href="' . $this->canonical . '"'];
         }
         if ($this->robots) {
             $headers[] = ['meta', 'name="robots" content="' . $this->robots . '"'];
         }
-        if (isset($this->a['pageHeaders']['style'])) {
-            foreach ($this->a['pageHeaders']['style'] as $style) {
+
+        $ph = $this->getAttr('pageHeaders', []);
+        if (isset($ph['style'])) {
+            foreach ($ph['style'] as $style) {
                 $headers[] = ['style', $style];
             }
         }
@@ -192,13 +197,15 @@ abstract class Page extends Model
      * Добавляет стиль на страницу
      *
      * @param string $name
-     * @param string $val
+     * @param string $value
      *
      * @return Page
      */
-    public function addStyle($name, $val)
+    public function addStyle($name, $value)
     {
-        $this->a['pageHeaders']['style'][$name] = $val;
+        $attr = $this->getAttr('pageHeaders', []);
+        $attr['style'][$name] = $value;
+        $this->setAttr('pageHeaders', $attr);
         return $this;
     }
 
@@ -222,7 +229,9 @@ abstract class Page extends Model
         } else {
             $key .= ':';
         }
-        $this->a['httpHeaders'][] = ["{$key} {$value}", $replace];
+        $attr = $this->getAttr('httpHeaders', []);
+        $attr[] = ["{$key} {$value}", $replace];
+        $this->setAttr('httpHeaders', $attr);
         return $this;
     }
 
@@ -243,7 +252,7 @@ abstract class Page extends Model
             ->header('Last-Modified', $now)
             ->header('Expires', $now);
 
-        return $this->a['httpHeaders'];
+        return $this->getAttr('httpHeaders', []);
     }
 
     /**
@@ -271,33 +280,32 @@ abstract class Page extends Model
      * Дописывает в массив титула страницы новый элемент
      * $this->titles = ...
      *
-     * @param string $val
+     * @param string $value
      */
-    public function settitles($val)
+    public function settitles($value)
     {
-        if (empty($this->a['titles'])) {
-            $this->a['titles'] = [$val];
-        } else {
-            $this->a['titles'][] = $val;
-        }
+        $attr = $this->getAttr('titles', []);
+        $attr[] = $value;
+        $this->setAttr('titles', $attr);
     }
 
     /**
      * Добавление новой ошибки
      * $this->fIswev = ...
      *
-     * @param array $val
+     * @param array $value
      */
-    public function setfIswev(array $val)
+    public function setfIswev(array $value)
     {
-        if (empty($this->a['fIswev'])) {
-            $this->a['fIswev'] = [];
-        }
-        if (isset($val[0], $val[1]) && \is_string($val[0]) && \is_string($val[1])) {
-            $this->a['fIswev'][$val[0]][] = $val[1];
+        $attr = $this->getAttr('fIswev', []);
+
+        if (isset($value[0], $value[1]) && \is_string($value[0]) && \is_string($value[1])) {
+            $attr[$value[0]][] = $value[1];
         } else {
-            $this->a['fIswev'] = \array_merge_recursive((array) $this->a['fIswev'], $val);
+            $attr = \array_merge_recursive($attr, $value); // ???? добавить проверку?
         }
+
+        $this->setAttr('fIswev', $attr) ;
     }
 
     /**

@@ -17,8 +17,8 @@ class Users extends Rules
      */
     public function init()
     {
-        $this->a     = [];
-        $this->aCalc = [];
+        $this->setAttrs([]);
+
         $this->ready = true;
         $this->user  = $this->c->user;
 

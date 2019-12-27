@@ -14,11 +14,11 @@ class Model extends ParentModel
     public function init()
     {
         if ($this->c->Cache->has('db_map')) {
-            $this->a = $this->c->Cache->get('db_map');
+            $this->setAttrs($this->c->Cache->get('db_map'));
         } else {
             $map = $this->c->DB->getMap();
             $this->c->Cache->set('db_map', $map);
-            $this->a = $map;
+            $this->setAttrs($map);
         }
         return $this;
     }

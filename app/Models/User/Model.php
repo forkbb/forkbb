@@ -26,7 +26,7 @@ class Model extends DataModel
     {
         parent::__construct($container);
 
-        $this->dependProp = [
+        $this->zDepend = [
             'group_id' => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'link', 'viewUsers', 'canViewIP', 'showPostCount', 'searchUsers'],
             'id' => ['isGuest', 'link', 'avatar', 'online'],
             'logged' => ['isLogged'],
@@ -109,7 +109,13 @@ class Model extends DataModel
      */
     protected function getlogged()
     {
-        return empty($this->a['logged']) ? \time() : $this->a['logged'];
+        $attr = $this->getAttr('logged');
+
+        if (empty($attr)) { // ???? $attr < 1
+            $attr = \time();
+        }
+
+        return $attr;
     }
 
     /**
@@ -119,7 +125,8 @@ class Model extends DataModel
      */
     protected function getisLogged()
     {
-        return ! empty($this->a['logged']);
+        $attr = $this->getAttr('logged');
+        return ! empty($attr);
     }
 
     /**
@@ -130,10 +137,11 @@ class Model extends DataModel
     protected function getlanguage()
     {
         $langs = $this->c->Func->getLangs();
+        $lang = $this->getAttr('language');
 
-        $lang = empty($this->a['language']) || ! isset($langs[$this->a['language']])
-            ? $this->c->config->o_default_lang
-            : $this->a['language'];
+        if (empty($lang) || ! isset($langs[$lang])) {
+            $lang = $this->c->config->o_default_lang;
+        }
 
         if (isset($langs[$lang])) {
             return $lang;
@@ -150,10 +158,11 @@ class Model extends DataModel
     protected function getstyle()
     {
         $styles = $this->c->Func->getStyles();
+        $style = $this->getAttr('style');
 
-        $style = $this->isGuest || empty($this->a['style']) || ! isset($styles[$this->a['style']])
-            ? $this->c->config->o_default_style
-            : $this->a['style'];
+        if ($this->isGuest || empty($style) || ! isset($styles[$style])) {
+            $style = $this->c->config->o_default_style;
+        }
 
         if (isset($styles[$style])) {
             return $style;
@@ -317,7 +326,13 @@ class Model extends DataModel
      */
     protected function getdisp_topics()
     {
-        return (int) (empty($this->a['disp_topics']) ? $this->c->config->o_disp_topics_default : $this->a['disp_topics']);
+        $attr = $this->getAttr('disp_topics');
+
+        if (empty($attr)) {
+            $attr = $this->c->config->o_disp_topics_default;
+        }
+
+        return (int) $attr;
     }
 
     /**
@@ -327,7 +342,13 @@ class Model extends DataModel
      */
     protected function getdisp_posts()
     {
-        return (int) (empty($this->a['disp_posts']) ? $this->c->config->o_disp_posts_default : $this->a['disp_posts']);
+        $attr = $this->getAttr('disp_topics');
+
+        if (empty($attr)) {
+            $attr = $this->c->config->o_disp_posts_default;
+        }
+
+        return (int) $attr;
     }
 
     /**
@@ -373,11 +394,18 @@ class Model extends DataModel
      */
     protected function setemail($email)
     {
-        $this->a['email'] = $email;
+        $this->setAttr('email', $email);
 
-        if (isset($email[0])) {
-            $property = (! isset($this->track['email']) ? '__' : '') . 'email_normal';
-            $this->$property = $this->c->NormEmail->normalize($email);
+        if ('' == $email) {
+            return;
+        }
+
+        $nEmail = $this->c->NormEmail->normalize($email);
+
+        if (isset($this->zTrackFlags['email'])) {
+            $this->email_normal = $nEmail;
+        } else {
+            $this->__email_normal = $nEmail; // ???? $this->setAttr('email_normal', $nEmail);
         }
     }
 }

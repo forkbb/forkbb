@@ -12,16 +12,17 @@ class DataModel extends Model
      * Массив флагов измененных свойств модели
      * @var array
      */
-    protected $modified = [];
+    protected $zModFlags = [];
 
     /**
      * Массив состояний отслеживания изменений в свойствах модели
      * @var array
      */
-    protected $track = [];
+    protected $zTrackFlags = [];
 
     /**
      * Устанавливает значения для свойств
+     * Сбрасывает вычисленные свойства
      * Флаги модификации свойст сброшены
      *
      * @param array $attrs
@@ -30,11 +31,10 @@ class DataModel extends Model
      */
     public function setAttrs(array $attrs)
     {
-        $this->a        = $attrs; //????
-        $this->aCalc    = [];
-        $this->modified = [];
-        $this->track    = [];
-        return $this;
+        $this->zModFlags   = [];
+        $this->zTrackFlags = [];
+
+        return parent::setAttrs($attrs);
     }
 
     /**
@@ -52,7 +52,7 @@ class DataModel extends Model
             $this->__set($name, $value);
 
             if (! $setFlags) {
-                unset($this->modified[$name]);
+                unset($this->zModFlags[$name]);
             }
         }
 
@@ -66,7 +66,7 @@ class DataModel extends Model
      */
     public function getAttrs()
     {
-        return $this->a; //????
+        return $this->zAttrs; //????
     }
 
     /**
@@ -76,7 +76,7 @@ class DataModel extends Model
      */
     public function getModified()
     {
-        return \array_keys($this->modified);
+        return \array_keys($this->zModFlags);
     }
 
     /**
@@ -84,17 +84,17 @@ class DataModel extends Model
      */
     public function resModified()
     {
-        $this->modified = [];
-        $this->track    = [];
+        $this->zModFlags   = [];
+        $this->zTrackFlags = [];
     }
 
     /**
      * Устанавливает значение для свойства
      *
      * @param string $name
-     * @param mixed $val
+     * @param mixed $value
      */
-    public function __set($name, $val)
+    public function __set($name, $value)
     {
         // без отслеживания
         if (\strpos($name, '__') === 0) {
@@ -103,30 +103,30 @@ class DataModel extends Model
         // с отслеживанием
         } else {
             $track = false;
-            if (\array_key_exists($name, $this->a)) {
+            if (\array_key_exists($name, $this->zAttrs)) {
                 $track = true;
-                $old   = $this->a[$name];
+                $old   = $this->zAttrs[$name];
                 // fix
-                if (\is_int($val) && \is_numeric($old) && \is_int(0 + $old)) {
+                if (\is_int($value) && \is_numeric($old) && \is_int(0 + $old)) {
                     $old = (int) $old;
                 }
             }
         }
 
-        $this->track[$name] = $track;
+        $this->zTrackFlags[$name] = $track;
 
-        parent::__set($name, $val);
+        parent::__set($name, $value);
 
-        unset($this->track[$name]);
+        unset($this->zTrackFlags[$name]);
 
         if (null === $track) {
             return;
         }
 
-        if ((! $track && \array_key_exists($name, $this->a))
-            || ($track && $old !== $this->a[$name])
+        if ((! $track && \array_key_exists($name, $this->zAttrs))
+            || ($track && $old !== $this->zAttrs[$name])
         ) {
-            $this->modified[$name] = true;
+            $this->zModFlags[$name] = true;
         }
     }
 
@@ -141,8 +141,7 @@ class DataModel extends Model
     {
         // без вычисления
         if (\strpos($name, '__') === 0) {
-            $name = \substr($name, 2);
-            return isset($this->a[$name]) ? $this->a[$name] : null;
+            return $this->getAttr(\substr($name, 2));
         // с вычислениями
         } else {
             return parent::__get($name);

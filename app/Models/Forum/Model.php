@@ -58,11 +58,14 @@ class Model extends DataModel
     protected function getsubforums()
     {
         $sub = [];
-        if (! empty($this->a['subforums'])) {
-            foreach ($this->a['subforums'] as $id) {
+        $attr = $this->getAttr('subforums');
+
+        if (\is_array($attr)) {
+            foreach ($attr as $id) {
                 $sub[$id] = $this->c->forums->get($id);
             }
         }
+
         return $sub;
     }
 
@@ -74,11 +77,14 @@ class Model extends DataModel
     protected function getdescendants()
     {
         $all = [];
-        if (! empty($this->a['descendants'])) {
-            foreach ($this->a['descendants'] as $id) {
+        $attr = $this->getAttr('descendants');
+
+        if (\is_array($attr)) {
+            foreach ($attr as $id) {
                 $all[$id] = $this->c->forums->get($id);
             }
         }
+
         return $all;
     }
 
@@ -154,13 +160,13 @@ class Model extends DataModel
      */
     protected function getmoderators()
     {
-        if (empty($this->a['moderators'])) {
+        $attr = $this->getAttr('moderators');
+        if (empty($attr) || ! \is_array($attr)) {
             return [];
         }
 
         if ($this->c->user->g_view_users == '1') {
-            $arr = $this->a['moderators'];
-            foreach($arr as $id => &$cur) {
+            foreach($attr as $id => &$cur) {
                 $cur = [
                     $this->c->Router->link('User', [
                         'id'   => $id,
@@ -170,10 +176,9 @@ class Model extends DataModel
                 ];
             }
             unset($cur);
-            return $arr;
-        } else {
-            return $this->a['moderators'];
         }
+
+        return $attr;
     }
 
     /**
@@ -185,16 +190,19 @@ class Model extends DataModel
      */
     public function modAdd(...$users)
     {
-        $moderators = empty($this->a['moderators']) ? [] : $this->a['moderators'];
+        $attr = $this->getAttr('moderators');
+        if (empty($attr) || ! \is_array($attr)) {
+            $attr = [];
+        }
 
         foreach ($users as $user) {
             if (! $user instanceof User) {
                 throw new InvalidArgumentException('Expected User');
             }
-            $moderators[$user->id] = $user->username;
+            $attr[$user->id] = $user->username;
         }
 
-        $this->moderators = $moderators;
+        $this->moderators = $attr;
     }
 
     /**
@@ -206,20 +214,19 @@ class Model extends DataModel
      */
     public function modDelete(...$users)
     {
-        if (empty($this->a['moderators'])) {
+        $attr = $this->getAttr('moderators');
+        if (empty($attr) || ! \is_array($attr)) {
             return;
         }
-
-        $moderators = $this->a['moderators'];
 
         foreach ($users as $user) {
             if (! $user instanceof User) {
                 throw new InvalidArgumentException('Expected User');
             }
-            unset($moderators[$user->id]);
+            unset($attr[$user->id]);
         }
 
-        $this->moderators = $moderators;
+        $this->moderators = $attr;
     }
 
     /**
@@ -229,7 +236,9 @@ class Model extends DataModel
      */
     protected function gettree()
     {
-        if (empty($this->a['tree'])) { //????
+        $attr = $this->getAttr('tree');
+
+        if (empty($attr)) { //????
             $numT   = (int) $this->num_topics;
             $numP   = (int) $this->num_posts;
             $time   = (int) $this->last_post;
@@ -248,7 +257,7 @@ class Model extends DataModel
                     $topic  = $children->last_topic;
                 }
             }
-            $this->a['tree'] = $this->c->forums->create([
+            $attr = $this->c->forums->create([
                 'num_topics'     => $numT,
                 'num_posts'      => $numP,
                 'last_post'      => $time,
@@ -257,8 +266,10 @@ class Model extends DataModel
                 'last_topic'     => $topic,
                 'newMessages'    => $fnew,
             ]);
+
+            $this->setAttr('tree', $attr);
         }
-        return $this->a['tree'];
+        return $attr;
     }
 
     /**

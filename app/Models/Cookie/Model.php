@@ -26,7 +26,7 @@ class Model extends ParentModel
     public function __construct(array $options, Container $container)
     {
         parent::__construct($container);
-        $this->a = $options + [
+        $options = $options + [
             'prefix' => '',
             'domain' => '',
             'path'   => '',
@@ -35,6 +35,7 @@ class Model extends ParentModel
             'key1'   => 'key1',
             'key2'   => 'key2',
         ];
+        $this->setAttrs($options);
         $this->init();
         $this->noSet = true;
     }

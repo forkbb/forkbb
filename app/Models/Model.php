@@ -17,19 +17,19 @@ class Model
      * Данные модели
      * @var array
      */
-    protected $a = [];
+    protected $zAttrs = [];
 
     /**
      * Вычисленные данные модели
      * @var array
      */
-    protected $aCalc = [];
+    protected $zAttrsCalc = [];
 
     /**
      * Зависимости свойств
      * @var array
      */
-    protected $dependProp = [];
+    protected $zDepend = [];
 
     /**
      * Конструктор
@@ -50,8 +50,8 @@ class Model
      */
     public function __isset($name)
     {
-        return \array_key_exists($name, $this->a)
-            || \array_key_exists($name, $this->aCalc)
+        return \array_key_exists($name, $this->zAttrs)
+            || \array_key_exists($name, $this->zAttrsCalc)
             || \method_exists($this, 'get' . $name);
     }
 
@@ -62,11 +62,10 @@ class Model
      */
     public function __unset($name)
     {
-        unset($this->a[$name]);     //????
-        unset($this->aCalc[$name]); //????
+        unset($this->zAttrs[$name], $this->zAttrsCalc[$name]); //????
 
-        if (isset($this->dependProp[$name])) {
-            $this->aCalc = \array_diff_key($this->aCalc, \array_flip($this->dependProp[$name]));
+        if (isset($this->zDepend[$name])) {
+            $this->zAttrsCalc = \array_diff_key($this->zAttrsCalc, \array_flip($this->zDepend[$name]));
         }
     }
 
@@ -74,21 +73,50 @@ class Model
      * Устанавливает значение для свойства
      *
      * @param string $name
-     * @param mixed $val
+     * @param mixed $value
      */
-    public function __set($name, $val)
+    public function __set($name, $value)
     {
-        unset($this->aCalc[$name]);
-
-        if (isset($this->dependProp[$name])) {
-            $this->aCalc = \array_diff_key($this->aCalc, \array_flip($this->dependProp[$name]));
-        }
+        $this->__unset($name);
 
         if (\method_exists($this, $method = 'set' . $name)) {
-            $this->$method($val);
+            $this->$method($value);
         } else {
-            $this->a[$name] = $val;
+            $this->zAttrs[$name] = $value;
         }
+    }
+
+    /**
+     * Устанавливает значение для свойства
+     * Без вычислений, но со сбросом зависимых свойст и вычисленного значения
+     *
+     * @param string $name
+     * @param mixed $value
+     *
+     * @return Model
+     */
+    public function setAttr($name, $value)
+    {
+        $this->__unset($name);
+        $this->zAttrs[$name] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Устанавливает значения для свойств
+     * Сбрасывает вычисленные свойства
+     *
+     * @param array $attrs
+     *
+     * @return Model
+     */
+    public function setAttrs(array $attrs)
+    {
+        $this->zAttrs      = $attrs; //????
+        $this->zAttrsCalc  = [];
+
+        return $this;
     }
 
     /**
@@ -100,13 +128,27 @@ class Model
      */
     public function __get($name)
     {
-        if (\array_key_exists($name, $this->aCalc)) {
-            return $this->aCalc[$name];
+        if (\array_key_exists($name, $this->zAttrsCalc)) {
+            return $this->zAttrsCalc[$name];
         } elseif (\method_exists($this, $method = 'get' . $name)) {
-            return $this->aCalc[$name] = $this->$method();
+            return $this->zAttrsCalc[$name] = $this->$method();
         } else {
-            return isset($this->a[$name]) ? $this->a[$name] : null;
+            return isset($this->zAttrs[$name]) ? $this->zAttrs[$name] : null;
         }
+    }
+
+    /**
+     * Возвращает значение свойства
+     * Без вычислений
+     *
+     * @param string $name
+     * @param mixed $default
+     *
+     * @return mixed
+     */
+    public function getAttr($name, $default = null)
+    {
+        return \array_key_exists($name, $this->zAttrs) ? $this->zAttrs[$name] : $default;
     }
 
     /**

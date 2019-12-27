@@ -126,7 +126,8 @@ class Install extends Page
             $this->fIswev = ['e', \ForkBB\__('No styles')];
         }
 
-        if ('POST' === $method && ! $changeLang && empty($this->a['fIswev']['e'])) { //????
+        $fIswev = $this->getAttr('fIswev'); // ????
+        if ('POST' === $method && ! $changeLang && empty($fIswev['e'])) { //????
             $v = $this->c->Validator->reset()
                 ->addValidators([
                     'check_prefix' => [$this, 'vCheckPrefix'],

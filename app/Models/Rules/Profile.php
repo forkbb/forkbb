@@ -22,10 +22,9 @@ class Profile extends Rules
      */
     public function setUser(User $curUser)
     {
-        $this->a     = [];
-        $this->aCalc = [];
-        $this->ready = true;
+        $this->setAttrs([]);
 
+        $this->ready       = true;
         $this->user        = $this->c->user;
         $this->curUser     = $curUser;
         $this->my          = $curUser->id === $this->user->id;
