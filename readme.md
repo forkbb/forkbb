@@ -6,7 +6,7 @@ ForkBB is an open source forum application. The project is based on [FluxBB_by_V
 
 ## Note
 
-#### Do not use in production.
+### Do not use in production.
 Many functions of the forum are not implemented.
 No: moderator functions, private messages, voting, subscriptions, rss, plugins/extensions system.
 
