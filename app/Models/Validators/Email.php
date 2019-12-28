@@ -8,9 +8,6 @@ use ForkBB\Models\User\Model as User;
 
 class Email extends Validators
 {
-    const FLOOD = 3600;
-    const LENGTH = 80;
-
     /**
      * Проверяет email
      * WARNING!!!
@@ -29,7 +26,7 @@ class Email extends Validators
         if (null === $email) {
             return null;
         // проверка длины email в одном месте
-        } elseif (\mb_strlen($email, 'UTF-8') > self::LENGTH) {
+        } elseif (\mb_strlen($email, 'UTF-8') > $this->c->MAX_EMAIL_LENGTH) {
             $v->addError('Long email');
             return $email;
         // это не email
@@ -82,10 +79,10 @@ class Email extends Validators
             } elseif ($user instanceof User) {
                 $flood = \time() - $user->last_email_sent;
             } else {
-                $flood = self::FLOOD;
+                $flood = $this->c->FLOOD_INTERVAL;
             }
-            if ($flood < self::FLOOD) {
-                $v->addError(\ForkBB\__('Email flood', (int) ((self::FLOOD - $flood) / 60)), 'e');
+            if ($flood < $this->c->FLOOD_INTERVAL) {
+                $v->addError(\ForkBB\__('Email flood', (int) (($this->c->FLOOD_INTERVAL - $flood) / 60)), 'e');
                 $ok = false;
             }
         }

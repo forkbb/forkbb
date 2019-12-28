@@ -236,7 +236,9 @@ class Auth extends Page
                 if ($isSent) {
                     $tmpUser->activate_string = $key;
                     $tmpUser->last_email_sent = \time();
+
                     $this->c->users->update($tmpUser);
+
                     return $this->c->Message->message(\ForkBB\__('Forget mail', $this->c->config->o_admin_email), false, 200);
                 } else {
                     return $this->c->Message->message(\ForkBB\__('Error mail', $this->c->config->o_admin_email), true, 200);

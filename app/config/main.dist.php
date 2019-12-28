@@ -27,21 +27,23 @@ return [
         'salt' => '_SALT_FOR_HMAC_',
     ],
     'JQUERY_LINK'      => '//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js',
-    'DEBUG'            => 2,
+    'DEBUG'            => 0,
     'MAINTENANCE_OFF'  => false,
     'GROUP_ADMIN'      => 1,
     'GROUP_MOD'        => 2,
     'GROUP_GUEST'      => 3,
     'GROUP_MEMBER'     => 4,
-    'BBCODE_INFO' => [
+    'BBCODE_INFO'      => [
         'forSign'  => ['b', 'i', 'u', 'color', 'colour', 'email', 'img', 'url'],
         'smTpl'    => '<img src="{url}" alt="{alt}">',
         'smTplTag' => 'img',
         'smTplBl'  => ['url'],
     ],
-    'MAX_POST_SIZE' => 65536,
-    'MAX_IMG_SIZE'  => '2M',
-    'MAX_FILE_SIZE' => '2M',
+    'MAX_POST_SIZE'    => 65536,
+    'MAX_IMG_SIZE'     => '2M',
+    'MAX_FILE_SIZE'    => '2M',
+    'MAX_EMAIL_LENGTH' => 80,
+    'FLOOD_INTERVAL'   => 3600,
 
     'shared' => [
         'DB' => [
