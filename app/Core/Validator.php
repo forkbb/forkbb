@@ -380,8 +380,8 @@ class Validator
             $error = $this->messages[$field];
         }
         if (\is_array($error)) {
-            $type = $error[1];
-            $error = $error[0];
+            $type = $error[0];
+            $error = $error[1];
         }
 
         $this->errors[$type][] = \ForkBB\__($error, [':alias' => \ForkBB\__($alias), ':attr' => $attr]);
