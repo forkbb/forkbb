@@ -59,7 +59,7 @@ class Email extends Profile
                 ])->addRules([
                     'token'     => 'token:EditUserEmail',
                     'password'  => 'required|string:trim|check_password',
-                    'new_email' => 'required|string:trim,lower|email:noban,unique,flood',
+                    'new_email' => 'required|string:trim|email:noban,unique,flood',
                 ])->addAliases([
                     'new_email' => 'New email',
                     'password'  => 'Your passphrase',

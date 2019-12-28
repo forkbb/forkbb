@@ -201,7 +201,7 @@ class Auth extends Page
                 ->addValidators([
                 ])->addRules([
                     'token' => 'token:Forget',
-                    'email' => 'required|string:trim,lower|email:noban,exists,flood',
+                    'email' => 'required|string:trim|email:noban,exists,flood',
                 ])->addAliases([
                 ])->addMessages([
                     'email.email' => 'Invalid email',

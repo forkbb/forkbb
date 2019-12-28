@@ -63,14 +63,14 @@ class Options extends Admin
                     'o_feed_type'             => 'required|integer|in:0,1,2',
                     'o_feed_ttl'              => 'required|integer|in:0,5,15,30,60',
                     'o_report_method'         => 'required|integer|in:0,1,2',
-                    'o_mailing_list'          => 'string:trim|max:65000 bytes',
+                    'o_mailing_list'          => 'string:trim|max:65000 bytes', // ???? проверка списка email
                     'o_avatars'               => 'required|integer|in:0,1',
                     'o_avatars_dir'           => 'required|string:trim|max:255|check_dir',
                     'o_avatars_width'         => 'required|integer|min:50|max:999',
                     'o_avatars_height'        => 'required|integer|min:50|max:999',
                     'o_avatars_size'          => 'required|integer|min:0|max:9999999',
-                    'o_admin_email'           => 'required|string:trim,lower|email',
-                    'o_webmaster_email'       => 'required|string:trim,lower|email',
+                    'o_admin_email'           => 'required|string:trim|email',
+                    'o_webmaster_email'       => 'required|string:trim|email',
                     'o_forum_subscriptions'   => 'required|integer|in:0,1',
                     'o_topic_subscriptions'   => 'required|integer|in:0,1',
                     'o_smtp_host'             => 'string:trim|max:255',
@@ -592,6 +592,7 @@ class Options extends Admin
                     'caption'   => \ForkBB\__('Admin e-mail label'),
                     'info'      => \ForkBB\__('Admin e-mail help'),
                     'required'  => true,
+                    'pattern'   => '.+@.+',
                 ],
                 'o_webmaster_email' => [
                     'type'      => 'text',
@@ -600,6 +601,7 @@ class Options extends Admin
                     'caption'   => \ForkBB\__('Webmaster e-mail label'),
                     'info'      => \ForkBB\__('Webmaster e-mail help'),
                     'required'  => true,
+                    'pattern'   => '.+@.+',
                 ],
                 'o_forum_subscriptions' => [
                     'type'    => 'radio',

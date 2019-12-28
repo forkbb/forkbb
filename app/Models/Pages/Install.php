@@ -142,7 +142,7 @@ class Install extends Page
                     'dbprefix'     => 'string:trim|max:40|check_prefix',
                     'username'     => 'required|string:trim|min:2|max:25',
                     'password'     => 'required|string|min:16|password',
-                    'email'        => 'required|string:trim|max:80|email',
+                    'email'        => 'required|string:trim|email',
                     'title'        => 'required|string:trim|max:255',
                     'descr'        => 'string:trim|max:65000 bytes',
                     'baseurl'      => 'required|string:trim|rtrim_url',
