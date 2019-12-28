@@ -396,7 +396,7 @@ class Model extends DataModel
     {
         $this->setAttr('email', $email);
 
-        if ('' == $email) {
+        if (empty($email) || false === $this->getAttr('email_normal')) {
             return;
         }
 

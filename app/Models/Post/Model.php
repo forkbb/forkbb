@@ -49,8 +49,11 @@ class Model extends DataModel
             throw new RuntimeException('No user data in post number ' . $this->id);
         } elseif (1 === $this->poster_id) {
             $user = clone $user;
-            $user->__email = $this->poster_email;
-            $user->__username = $this->poster;
+
+            $user->setAttr('email_normal', false); // заблокировать вычисление в модели User
+
+            $user->__email        = $this->poster_email;
+            $user->__username     = $this->poster;
         }
 
         return $user;
