@@ -129,6 +129,9 @@ msgstr "off"
 msgid "Invalid email"
 msgstr "The email address you entered is invalid."
 
+msgid "Long email"
+msgstr "The email address you entered is too long."
+
 msgid "Required"
 msgstr "(Required)"
 

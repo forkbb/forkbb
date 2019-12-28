@@ -9,11 +9,12 @@ use ForkBB\Models\User\Model as User;
 class Email extends Validators
 {
     const FLOOD = 3600;
+    const LENGTH = 80;
 
     /**
      * Проверяет email
      * WARNING!!!
-     * Если передан гость 4-ым параметром, то проверка уникальности email не проводится
+     * Если 4-ым параметром передан гость, то проверка уникальности email не проводится
      *
      * @param Validator $v
      * @param string $email
@@ -27,6 +28,10 @@ class Email extends Validators
         // поле отсутствует
         if (null === $email) {
             return null;
+        // проверка длины email в одном месте
+        } elseif (\mb_strlen($email, 'UTF-8') > self::LENGTH) {
+            $v->addError('Long email');
+            return $email;
         // это не email
         } elseif (false === ($result = $this->c->Mail->valid($email, true))) {
             $v->addError('The :alias is not valid email');
