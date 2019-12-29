@@ -204,12 +204,7 @@ class Files
     {
         $this->error = null;
 
-        if (! isset($file['tmp_name'])
-            || ! isset($file['name'])
-            || ! isset($file['type'])
-            || ! isset($file['error'])
-            || ! isset($file['size'])
-        ) {
+        if (! isset($file['tmp_name'], $file['name'], $file['type'], $file['error'], $file['size'])) {
             $this->error = 'Expected file description array';
             return false;
         }

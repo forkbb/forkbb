@@ -50,9 +50,7 @@ class FileCache implements ProviderCacheInterface
         if (\is_file($file)) {
             require $file;
 
-            if (isset($expire) && isset($data)
-                && ($expire < 1 || $expire > \time())
-            ) {
+            if (isset($expire, $data) && ($expire < 1 || $expire > \time())) {
                 return $data;
             }
         }

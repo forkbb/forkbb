@@ -44,7 +44,7 @@ class Manager extends ManagerModel
 
         $mark = $this->c->Cache->get('forums_mark');
         if (empty($mark)) {
-            $this->c->Cache->set('forums_mark', time());
+            $this->c->Cache->set('forums_mark', \time());
             $list = $this->refresh($group);
         } else {
             $result = $this->c->Cache->get('forums_' . $gid);

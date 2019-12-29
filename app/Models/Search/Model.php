@@ -117,7 +117,7 @@ class Model extends ParentModel
             return $indexing ? null : $word;
         }
 
-        $len = \mb_strlen(trim($word, '?*'), 'UTF-8');
+        $len = \mb_strlen(\trim($word, '?*'), 'UTF-8');
 
         if ($len < 3) {
             return null;

@@ -14,10 +14,7 @@ class Model extends ParentModel
     public function init()
     {
         $data = $this->c->Cache->get('stopwords');
-        if (isset($data['id'])
-            && isset($data['stopwords'])
-            && $data['id'] === $this->generateId()
-        ) {
+        if (isset($data['id'], $data['stopwords']) && $data['id'] === $this->generateId()) {
             $this->list = $data['stopwords'];
         } else {
             $this->load();

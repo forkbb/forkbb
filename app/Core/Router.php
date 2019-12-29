@@ -232,7 +232,7 @@ class Router
     }
 
     /**
-     * Метод добавдяет маршрут
+     * Метод добавляет маршрут
      *
      * @param string|array $method
      * @param string $route

@@ -368,5 +368,4 @@ class Model extends DataModel
 
         return $data;
     }
-
 }

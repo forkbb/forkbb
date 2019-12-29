@@ -351,7 +351,7 @@ class Validator
     /**
      * Добавляет ошибку
      *
-     * @param mixed $error
+     * @param string|bool $error
      * @param string $type
      *
      * @throws RuntimeException
@@ -380,8 +380,7 @@ class Validator
             $error = $this->messages[$field];
         }
         if (\is_array($error)) {
-            $type = $error[0];
-            $error = $error[1];
+            list($type, $error) = $error;
         }
 
         $this->errors[$type][] = \ForkBB\__($error, [':alias' => \ForkBB\__($alias), ':attr' => $attr]);

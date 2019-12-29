@@ -19,7 +19,7 @@ class Save extends Method
         $words  = $this->model->load();
         $forDel = [];
         foreach ($list as $id => $row) {
-            if (! isset($list[$id]['search_for']) || ! isset($list[$id]['replace_with'])) {
+            if (! isset($list[$id]['search_for'], $list[$id]['replace_with'])) {
                 continue;
             }
             if ('' === \trim($list[$id]['search_for'])) {

@@ -37,7 +37,7 @@ class Manager extends ManagerModel
 
     public function set($key, $value)
     {
-        if (! isset($value['cat_name']) || ! isset($value['disp_position'])) {
+        if (! isset($value['cat_name'], $value['disp_position'])) {
             throw new InvalidArgumentException('Expected array with cat_name and disp_position elements');
         }
 
@@ -105,7 +105,7 @@ class Manager extends ManagerModel
 
         foreach ($root->subforums as $forum) {
             if ($forum->cat_id === $cid) {
-                $del = array_merge($del, [$forum], $forum->descendants);
+                $del = \array_merge($del, [$forum], $forum->descendants);
             }
         }
 

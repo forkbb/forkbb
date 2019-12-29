@@ -59,7 +59,7 @@ class Current extends Action
 #                $user->__disp_posts = $this->c->config->o_disp_posts_default;
 #            }
             // Special case: We've timed out, but no other user has browsed the forums since we timed out
-            if ($user->isLogged && $user->logged < time() - $this->c->config->o_timeout_visit) {
+            if ($user->isLogged && $user->logged < \time() - $this->c->config->o_timeout_visit) {
                 $this->manager->updateLastVisit($user); //????
             }
 

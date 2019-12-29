@@ -21,7 +21,7 @@ class UpdateCountTopics extends Action
         foreach ($args as $arg) {
             if ($arg instanceof User) {
                 $ids[$arg->id] = true;
-            } elseif (is_int($arg) && $arg > 0) {
+            } elseif (\is_int($arg) && $arg > 0) {
                 $ids[$arg] = true;
             } else {
                 throw new InvalidArgumentException('Expected user or positive integer id');
