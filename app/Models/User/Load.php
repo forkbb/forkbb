@@ -25,10 +25,7 @@ class Load extends Action
             if ('' != $value->username) {
                 $where = 'u.username=?s:field';
                 $value = $value->username;
-            } elseif ('' != $value->email) {
-                $where = 'u.email=?s:field';
-                $value = $value->email;
-            } elseif ('' != $value->email_normal) {
+            } elseif ('' != $value->email && '' != $value->email_normal) {
                 $where = 'u.email_normal=?s:field';
                 $value = $value->email_normal;
             } else {
