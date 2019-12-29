@@ -25,7 +25,7 @@ class Email extends Validators
         // поле отсутствует
         if (null === $email) {
             return null;
-        // проверка длины email в одном месте
+        // проверка длины email
         } elseif (\mb_strlen($email, 'UTF-8') > $this->c->MAX_EMAIL_LENGTH) {
             $v->addError('Long email');
             return $email;
@@ -41,42 +41,47 @@ class Email extends Validators
         $email = $result;
         $attrs = \array_flip(\explode(',', $attrs));
         $ok    = true;
-        $user  = true;
+        $user  = $this->c->users->create();
+        $user->__email = $email; // + вычисление email_normal
 
-        // email забанен
-        if ($ok && isset($attrs['noban']) && $this->c->bans->isBanned($this->c->users->create(['email' => $email])) > 0) {
+        // провеерка бана email
+        if ($ok && isset($attrs['noban']) && $this->c->bans->isBanned($user) > 0) {
             $v->addError('Banned email');
             $ok = false;
         }
-        // отсутствует пользователь с таким email (или их больше одного O_o)
+        // проверка наличия 1 пользователя с этим email
         if ($ok && isset($attrs['exists'])) {
-            $user = $this->c->users->load($this->c->users->create(['email_normal' => $this->c->NormEmail->normalize($email)]));
+            $user = $this->c->users->load($user);
 
             if (! $user instanceof User) {
                 $v->addError('Invalid email');
                 $ok = false;
             }
         }
-        // email не уникален
+        // проверка уникальности email
         if ($ok && isset($attrs['unique']) && (! $originalUser instanceof User || ! $originalUser->isGuest)) {
-            if (true === $user) {
-                $user = $this->c->users->load($this->c->users->create(['email_normal' => $this->c->NormEmail->normalize($email)]));
+            if ($user->isGuest) {
+                $user = $this->c->users->load($user);
             }
 
-            $id = $originalUser instanceof User ? $originalUser->id : true;
-
-            if (($user instanceof User && $id !== $user->id)
-                || (\is_array($user) && \count($user) > 1) // ???? эта ветка не реальна? поле email_normal уникально
-            ) {
-                $v->addError('Dupe email');
+            if (\is_array($user) && \count($user) > 1) {
                 $ok = false;
+            } elseif ($user instanceof User
+                && $originalUser instanceof User
+                && $user->id !== $originalUser->id
+            ) {
+                $ok = false;
+            }
+
+            if (false === $ok) {
+                $v->addError('Dupe email');
             }
         }
         // проверка на флуд интервал
         if ($ok && isset($attrs['flood'])) {
             if ($originalUser instanceof User && ! $originalUser->isGuest) {
                 $flood = \time() - $originalUser->last_email_sent;
-            } elseif ($user instanceof User) {
+            } elseif ($user instanceof User && ! $user->isGuest) {
                 $flood = \time() - $user->last_email_sent;
             } else {
                 $flood = $this->c->FLOOD_INTERVAL;
@@ -87,7 +92,12 @@ class Email extends Validators
             }
         }
         // возврат данных пользователя через 4-ый параметр
-        if ($ok && $originalUser instanceof User && $originalUser->id < 1 && $user instanceof User) {
+        if ($ok
+            && $originalUser instanceof User
+            && $originalUser->id < 1
+            && $user instanceof User
+            && ! $user->isGuest
+        ) {
             $originalUser->setAttrs($user->getAttrs());
         }
 
