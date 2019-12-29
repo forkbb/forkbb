@@ -40,7 +40,7 @@ class Routing
             // забыли кодовую фразу
             $r->add(['GET', 'POST'],  '/login/forget', 'Auth:forget', 'Forget');
             // смена кодовой фразы
-            $r->add(['GET', 'POST'],  '/login/{email}/{key}/{hash}', 'Auth:changePass', 'ChangePassword');
+            $r->add(['GET', 'POST'],  '/login/{id:\d+}/{key}/{hash}', 'Auth:changePass', 'ChangePassword');
 
             // регистрация
             if ('1' == $config->o_regs_allow) {

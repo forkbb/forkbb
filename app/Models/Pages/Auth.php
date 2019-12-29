@@ -211,8 +211,8 @@ class Auth extends Page
 
             if ($v->validation($_POST)) {
                 $key  = $this->c->Secury->randomPass(32);
-                $hash = $this->c->Secury->hash($tmpUser->email . $key);
-                $link = $this->c->Router->link('ChangePassword', ['email' => $tmpUser->email, 'key' => $key, 'hash' => $hash]);
+                $hash = $this->c->Secury->hash($tmpUser->id . $key);
+                $link = $this->c->Router->link('ChangePassword', ['id' => $tmpUser->id, 'key' => $key, 'hash' => $hash]);
                 $tplData = [
                     'fRootLink' => $this->c->Router->link('Index'),
                     'fMailer'   => \ForkBB\__('Mailer', $this->c->config->o_board_title),
@@ -241,7 +241,7 @@ class Auth extends Page
 
                     return $this->c->Message->message(\ForkBB\__('Forget mail', $this->c->config->o_admin_email), false, 200);
                 } else {
-                    return $this->c->Message->message(\ForkBB\__('Error mail', $this->c->config->o_admin_email), true, 200);
+                    return $this->c->Message->message(\ForkBB\__('Error mail', $this->c->config->o_admin_email), true, 424);
                 }
             }
 
@@ -310,8 +310,8 @@ class Auth extends Page
      */
     public function changePass(array $args, $method)
     {
-        if (! \hash_equals($args['hash'], $this->c->Secury->hash($args['email'] . $args['key']))
-            || ! ($user = $this->c->users->load($this->c->users->create(['email' => $args['email']]))) instanceof User
+        if (! \hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['key']))
+            || ! ($user = $this->c->users->load((int) $args['id'])) instanceof User
             || $user->isGuest
             || empty($user->activate_string)
             || ! \hash_equals($user->activate_string, $args['key'])
