@@ -62,7 +62,18 @@ class Model
      */
     public function __unset($name)
     {
-        unset($this->zAttrs[$name], $this->zAttrsCalc[$name]); //????
+        unset($this->zAttrs[$name]);
+        $this->unsetCalc($name);
+    }
+
+    /**
+     * Удаляет вычесленные зависимые свойства
+     *
+     * @param mixed $name
+     */
+    protected function unsetCalc($name)
+    {
+        unset($this->zAttrsCalc[$name]); //????
 
         if (isset($this->zDepend[$name])) {
             $this->zAttrsCalc = \array_diff_key($this->zAttrsCalc, \array_flip($this->zDepend[$name]));
@@ -77,13 +88,12 @@ class Model
      */
     public function __set($name, $value)
     {
-        $this->__unset($name);
-
         if (\method_exists($this, $method = 'set' . $name)) {
             $this->$method($value);
         } else {
             $this->zAttrs[$name] = $value;
         }
+        $this->unsetCalc($name);
     }
 
     /**
@@ -97,7 +107,7 @@ class Model
      */
     public function setAttr($name, $value)
     {
-        $this->__unset($name);
+        $this->unsetCalc($name);
         $this->zAttrs[$name] = $value;
 
         return $this;
