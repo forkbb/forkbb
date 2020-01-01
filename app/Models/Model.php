@@ -67,7 +67,7 @@ class Model
     }
 
     /**
-     * Удаляет вычесленные зависимые свойства
+     * Удаляет вычисленные зависимые свойства
      *
      * @param mixed $name
      */
@@ -88,12 +88,13 @@ class Model
      */
     public function __set($name, $value)
     {
+        $this->unsetCalc($name);
+
         if (\method_exists($this, $method = 'set' . $name)) {
             $this->$method($value);
         } else {
             $this->zAttrs[$name] = $value;
         }
-        $this->unsetCalc($name);
     }
 
     /**
