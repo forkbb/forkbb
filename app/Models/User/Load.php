@@ -23,7 +23,11 @@ class Load extends Action
             $where = 'u.id IN (?ai:field)';
         } elseif ($value instanceof User) {
             if ('' != $value->username) {
-                $where = 'u.username=?s:field';
+                if (true === $value->ciNameSearch) {
+                    $where = 'LOWER(u.username)=LOWER(?s:field)';
+                } else {
+                    $where = 'u.username=?s:field';
+                }
                 $value = $value->username;
             } elseif ('' != $value->email && '' != $value->email_normal) {
                 $where = 'u.email_normal=?s:field';
