@@ -53,8 +53,8 @@ class Admin extends Page
             'users' => [$r->link('AdminUsers'), \ForkBB\__('Users')],
         ];
 
-        if ($this->user->isAdmin || $this->user->g_mod_ban_users == '1') {
-            $nav['bans'] = ['admin_bans.php', \ForkBB\__('Bans')];
+        if ($this->c->userRules->banUsers) {
+            $nav['bans'] = [$r->link('AdminBans'), \ForkBB\__('Bans')];
         }
         if ($this->user->isAdmin || $this->c->config->o_report_method == '0' || $this->c->config->o_report_method == '2') {
             $nav['reports'] = ['admin_reports.php', \ForkBB\__('Reports')];

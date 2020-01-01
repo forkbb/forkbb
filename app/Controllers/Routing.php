@@ -137,6 +137,12 @@ class Routing
             $r->add(['GET', 'POST'], '/admin/users/{action:\w+}/{ids:\d+(?:-\d+)*}[/{token}]', 'AdminUsersAction:view', 'AdminUsersAction');
 
             $r->add('GET',           '/admin/users/promote/{uid:[2-9]|[1-9]\d+}/{pid:[1-9]\d*}/{token}', 'AdminUsersPromote:promote', 'AdminUserPromote');
+
+            if ($this->c->userRules->banUsers) {
+                $r->add(['GET', 'POST'], '/admin/bans',                                 'AdminBans:view',   'AdminBans');
+                $r->add(['GET', 'POST'], '/admin/bans/new[/{ids:\d+(?:-\d+)*}]',        'AdminBans:newBan', 'AdminBansNew');
+                $r->add('GET',           '/admin/bans/result/{data}[/{page:[1-9]\d*}]', 'AdminBans:result', 'AdminBansResult');
+            }
         }
         // только админ
         if ($user->isAdmin) {

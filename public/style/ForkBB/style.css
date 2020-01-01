@@ -1702,7 +1702,7 @@ body,
   display: inline-block;
 }
 
-#fork #id-message {
+#fork textarea#id-message {
   height: 11rem;
 }
 

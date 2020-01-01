@@ -18,7 +18,7 @@ class Delete extends Method
     {
         if (! empty($ids)) {
             $vars = [
-                ':ids' => $ids
+                ':ids' => $ids,
             ];
             $sql = 'DELETE FROM ::bans WHERE id IN (?ai:ids)';
 

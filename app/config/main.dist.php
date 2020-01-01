@@ -100,6 +100,7 @@ return [
         'topics'     => \ForkBB\Models\Topic\Manager::class,
         'posts'      => \ForkBB\Models\Post\Manager::class,
         'user'       => '@users:current',
+        'userRules'  => '@UsersRules:init',
         'users'      => \ForkBB\Models\User\Manager::class,
         'groups'     => '@GroupManager:init',
         'categories' => '@CategoriesManager:init',
@@ -176,6 +177,7 @@ return [
         'AdminUsersAction' => \ForkBB\Models\Pages\Admin\Users\Action::class,
         'AdminUsersPromote' => \ForkBB\Models\Pages\Admin\Users\Promote::class,
         'AdminHost'       => \ForkBB\Models\Pages\Admin\Host::class,
+        'AdminBans'       => \ForkBB\Models\Pages\Admin\Bans::class,
 
         'ConfigModel'     => \ForkBB\Models\Config\Model::class,
         'ConfigModelLoad' => \ForkBB\Models\Config\Load::class,
@@ -188,6 +190,8 @@ return [
         'BanListModelCheck'    => \ForkBB\Models\BanList\Check::class,
         'BanListModelDelete'   => \ForkBB\Models\BanList\Delete::class,
         'BanListModelIsBanned' => \ForkBB\Models\BanList\IsBanned::class,
+        'BanListModelFilter'   => \ForkBB\Models\BanList\Filter::class,
+        'BanListModelGetList'  => \ForkBB\Models\BanList\GetList::class,
 
         'CensorshipModel'        => \ForkBB\Models\Censorship\Model::class,
         'CensorshipModelRefresh' => \ForkBB\Models\Censorship\Refresh::class,

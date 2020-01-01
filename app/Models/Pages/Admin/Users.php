@@ -55,7 +55,7 @@ abstract class Users extends Admin
      */
     protected function decodeData($data)
     {
-        $data = \explode(':', $data, 2);
+        $data = \explode(':', $data);
 
         if (2 !== \count($data)) {
             return false;
@@ -98,10 +98,6 @@ abstract class Users extends Admin
             return false;
         }
 
-        if (! $this->rules instanceof Rules) {
-            $this->rules = $this->c->UsersRules->init();
-        }
-
         $userList = $this->c->users->load(...$selected);
         $result   = [];
         foreach ($userList as $user) {
@@ -111,7 +107,7 @@ abstract class Users extends Admin
 
             switch ($action) {
                 case self::ACTION_BAN:
-                    if (! $this->rules->canBanUser($user)) {
+                    if (! $this->c->userRules->canBanUser($user)) {
                         $this->fIswev = ['v', \ForkBB\__('You are not allowed to ban the %s', $user->username)];
                         if ($user->isAdmin) {
                             $this->fIswev = ['i', \ForkBB\__('No ban admins message')];
@@ -122,7 +118,7 @@ abstract class Users extends Admin
                     }
                     break;
                 case self::ACTION_DEL:
-                    if (! $this->rules->canDeleteUser($user)) {
+                    if (! $this->c->userRules->canDeleteUser($user)) {
                         $this->fIswev = ['v', \ForkBB\__('You are not allowed to delete the %s', $user->username)];
                         if ($user->isAdmin) {
                             $this->fIswev = ['i', \ForkBB\__('No delete admins message')];
@@ -131,7 +127,7 @@ abstract class Users extends Admin
                     }
                     break;
                 case self::ACTION_CHG:
-                    if (! $this->rules->canChangeGroup($user, $profile)) {
+                    if (! $this->c->userRules->canChangeGroup($user, $profile)) {
                         $this->fIswev = ['v', \ForkBB\__('You are not allowed to change group for %s', $user->username)];
                         if ($user->isAdmin) {
                             $this->fIswev = ['i', \ForkBB\__('No move admins message')];

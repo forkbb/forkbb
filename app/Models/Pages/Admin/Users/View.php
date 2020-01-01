@@ -119,7 +119,7 @@ class View extends Users
         $this->nameTpl    = 'admin/users';
         $this->formSearch = $this->form($data);
 
-        if ($this->c->UsersRules->init()->viewIP) {
+        if ($this->c->userRules->viewIP) {
             $this->formIP = $this->formIP($data);
         }
 

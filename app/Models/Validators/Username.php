@@ -12,11 +12,11 @@ class Username extends Validators
      * Проверяет имя пользователя
      *
      * @param Validator $v
-     * @param string $username
+     * @param null|string $username
      * @param string $z
      * @param mixed $originalUser
      *
-     * @return string
+     * @return null|string
      */
     public function username(Validator $v, $username, $z, $originalUser)
     {

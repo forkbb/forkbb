@@ -46,24 +46,22 @@ class Action extends Users
             $profile = false;
         }
 
-        $this->rules = $this->c->UsersRules->init();
-
         $error = false;
         switch ($args['action']) {
             case self::ACTION_BAN:
-                if (! $this->rules->banUsers) {
+                if (! $this->c->userRules->banUsers) {
                     $error = true;
                 }
                 break;
             case self::ACTION_DEL:
-                if (! $this->rules->deleteUsers) {
+                if (! $this->c->userRules->deleteUsers) {
                     $error = true;
                 }
                 break;
             case self::ACTION_CHG:
-                if ($profile && ! $this->rules->canChangeGroup($this->c->users->load((int) $args['ids']), true)) {
+                if ($profile && ! $this->c->userRules->canChangeGroup($this->c->users->load((int) $args['ids']), true)) {
                     $error = true;
-                } elseif (! $profile && ! $this->rules->changeGroup) {
+                } elseif (! $profile && ! $this->c->userRules->changeGroup) {
                     $error = true;
                 }
                 break;
