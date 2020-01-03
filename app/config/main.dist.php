@@ -192,6 +192,8 @@ return [
         'BanListModelIsBanned' => \ForkBB\Models\BanList\IsBanned::class,
         'BanListModelFilter'   => \ForkBB\Models\BanList\Filter::class,
         'BanListModelGetList'  => \ForkBB\Models\BanList\GetList::class,
+        'BanListModelInsert'   => \ForkBB\Models\BanList\Insert::class,
+        'BanListModelUpdate'   => \ForkBB\Models\BanList\Update::class,
 
         'CensorshipModel'        => \ForkBB\Models\Censorship\Model::class,
         'CensorshipModelRefresh' => \ForkBB\Models\Censorship\Refresh::class,

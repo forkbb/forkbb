@@ -63,6 +63,12 @@ msgstr "New ban"
 msgid "Add ban subhead"
 msgstr "Add ban"
 
+msgid "Edit ban head"
+msgstr "Editable Ban"
+
+msgid "Edit ban subhead"
+msgstr "Edit ban"
+
 msgid "Username label"
 msgstr "Username"
 

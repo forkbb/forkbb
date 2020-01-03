@@ -178,7 +178,7 @@ class View extends Action
         }
 
         $ids = \array_keys($userIds);
-        $this->c->users->load(...$ids);
+        $this->c->users->load($ids);
 
         $offset    = ($arg->page - 1) * $this->c->user->disp_posts;
         $timeMax   = 0;

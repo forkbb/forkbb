@@ -89,7 +89,7 @@ abstract class Profile extends Page
         }
         if ($this->rules->banUser) {
             $btns['ban-user'] = [
-                $this->c->Router->link('',  ['id' => $this->curUser->id]),
+                $this->c->Router->link('AdminBansNew',  ['ids' => $this->curUser->id]),
                 \ForkBB\__('Ban user'),
             ];
         }

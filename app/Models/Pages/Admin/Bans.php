@@ -83,10 +83,10 @@ class Bans extends Admin
             ->addValidators([
             ])->addRules([
                 'token'           => 'token:AdminBans',
-                'username'        => 'string|max:25',
-                'ip'              => 'string|max:40',
-                'email'           => 'string|max:80',
-                'message'         => 'string|max:255',
+                'username'        => 'string:trim|max:25',
+                'ip'              => 'string:trim|max:40',
+                'email'           => 'string:trim|max:80',
+                'message'         => 'string:trim|max:255',
                 'expire_1'        => 'date',
                 'expire_2'        => 'date',
                 'order_by'        => 'required|string|in:id,username,ip,email,expire',
@@ -267,10 +267,10 @@ class Bans extends Admin
         if ($this->banCount < 2) {
             $fields = [];
             $fields['username'] = [
-                'type'      => 'text',
+                'type'      => $this->banCount < 1 ? 'text' : 'str',
                 'maxlength' => 25,
                 'caption'   => \ForkBB\__('Username label'),
-                'info'      => \ForkBB\__('Username help'),
+                'info'      => $this->banCount < 1 ? \ForkBB\__('Username help') : null,
                 'value'     => isset($data['username']) ? $data['username'] : null,
             ];
             $fields['ip'] = [
@@ -341,7 +341,7 @@ class Bans extends Admin
         $filters = [];
 
         foreach ($data as $field => $value) {
-            if ('order_by' === $field || 'direction' === $field) {
+            if ('' == $value || 'order_by' === $field || 'direction' === $field) {
                 continue;
             }
 
@@ -399,7 +399,7 @@ class Bans extends Admin
 
         $startNum = ($page - 1) * $this->c->config->o_disp_users;
         $idsN     = \array_slice($idsN, $startNum, $this->c->config->o_disp_users);
-        $banList  = $this->c->bans->list($idsN);
+        $banList  = $this->c->bans->getList($idsN);
 
         $this->nameTpl    = 'admin/bans_result';
         $this->mainSuffix = '-one-column';
@@ -451,9 +451,18 @@ class Bans extends Admin
                 'accesskey' => null,
             ];
         }
-
-        \array_unshift($users, $this->c->users->create(['id' => -1]));
 */
+        \array_unshift($bans, [
+            'id'           => 0,
+            'username'     => '',
+            'ip'           => '',
+            'email'        => '',
+            'message'      => '',
+            'expire'       => 0,
+            'id_creator'   => -1,
+            'name_creator' => '',
+        ]);
+
         foreach ($bans as $ban) {
             if (! \is_array($ban)) {
                 continue; // ????
@@ -469,13 +478,13 @@ class Bans extends Admin
                 'type'  => 'wrap',
             ];
             $fields["l{$number}-username"] = [
-                'class'   => ['result', 'username'],
+                'class'   => '' == $ban['username'] ? ['result', 'username', 'no-data'] : ['result', 'username'],
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Results username head'),
                 'value'   => $ban['username'],
             ];
             $fields["l{$number}-email"] = [
-                'class'   => ['result', 'email', 'no-data'],
+                'class'   => '' == $ban['email'] ? ['result', 'email', 'no-data'] : ['result', 'email'],
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Results e-mail head'),
                 'value'   => $ban['email'],
@@ -483,27 +492,27 @@ class Bans extends Admin
             $fields[] = [
                 'type' => 'endwrap',
             ];
-            $fields["l{$number}-ip"] = [
-                'class'   => ['result', 'ip'],
+            $fields["l{$number}-ips"] = [
+                'class'   => '' == $ban['ip'] ? ['result', 'ips', 'no-data'] : ['result', 'ips'],
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Results IP address head'),
                 'value'   => $ban['ip'],
             ];
             $fields["l{$number}-expire"] = [
-                'class'   => ['result', 'expire'],
+                'class'   => empty($ban['expire']) ? ['result', 'expire', 'no-data'] : ['result', 'expire'],
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Results expire head'),
-                'value'   => $ban['expire'], // ???? перевод в дату
+                'value'   => empty($ban['expire']) ? '' : \ForkBB\dt($ban['expire'], true),
             ];
             $fields["l{$number}-message"] = [
-                'class'   => ['result', 'message'],
+                'class'   => '' == $ban['message'] ? ['result', 'message', 'no-data'] : ['result', 'message'],
                 'type'    => 'str',
                 'caption' => \ForkBB\__('Results message head'),
                 'value'   => $ban['message'],
             ];
             $fields["l{$number}-creator"] = [
-                'class'   => ['result', 'creator', 'no-data'],
-                'type'    => '1' == $this->c->user->g_view_users ? 'link' : 'str',
+                'class'   => ['result', 'creator'],
+                'type'    => '1' == $this->c->user->g_view_users && $ban['id_creator'] > 1 ? 'link' : 'str',
                 'caption' => \ForkBB\__('Results banned by head'),
                 'value'   => $ban['name_creator'],
                 'href'    => $this->c->Router->link('User', ['id' => $ban['id_creator'], 'name' => $ban['name_creator'],]), // ????
@@ -511,7 +520,38 @@ class Bans extends Admin
             $fields[] = [
                 'type' => 'endwrap',
             ];
-/*
+            $fields["l{$number}-wrap3"] = [
+                'class' => 'btns-result',
+                'type'  => 'wrap',
+            ];
+            $arr = [
+                'id' => $ban['id'],
+            ];
+            $fields["edit-btn{$number}"] = [
+                'class'   => ['result', 'btn-edit'],
+                'type'    => $ban['id'] > 0 ? 'btn' : 'str',
+                'value'   => '✎',
+                'caption' => \ForkBB\__('Results actions head'),
+                'title'   => \ForkBB\__('Edit'),
+                'link'    => $this->c->Router->link('AdminBansEdit', $arr),
+            ];
+            $fields["delete-btn{$number}"] = [
+                'class'   => ['result', 'btn-delete'],
+                'type'    => $ban['id'] > 0 ? 'btn' : 'str',
+                'value'   => '❌',
+                'caption' => \ForkBB\__('Results actions head'),
+                'title'   => \ForkBB\__('Delete'),
+                'link'    => $this->c->Router->link('AdminBansDelete', [
+                    'id'    => $ban['id'],
+                    'token' => $this->c->Csrf->create('AdminBansDelete', $arr),
+                ]),
+            ];
+            $fields[] = [
+                'type' => 'endwrap',
+            ];
+
+
+            /*
             $key = $user->isGuest ? "guest{$number}" : "users[{$user->id}]";
             $fields[$key] = [
                 'class'   => ['check'],
@@ -520,12 +560,13 @@ class Bans extends Admin
                 'value'   => $user->isGuest ? null : $user->id,
                 'checked' => false,
             ];
+*/
             $form['sets']["l{$number}"] = [
                 'class'  => 'result',
-                'legend' => -1 === $user->id ? null : $number,
+                'legend' => $number,
                 'fields' => $fields,
             ];
-*/
+
             ++$number;
         }
 
@@ -540,9 +581,10 @@ class Bans extends Admin
      *
      * @return Page
      */
-    public function newBan(array $args, $method)
+    public function add(array $args, $method)
     {
         $this->banCount = 0;
+        $userList       = [];
 
         if (! empty($args['ids'])) {
             $ids = \explode('-', $args['ids']);
@@ -555,17 +597,19 @@ class Bans extends Admin
             unset($id);
 
             $this->banCount = \count($ids);
-            $tmp   = $this->c->users->load(...$ids);
+            $tmp = $this->c->users->load($ids);
 
-            if (1 === $this->banCount && $tmp instanceof User) {
-                $userList = [$tmp];
-            } elseif (\is_array($tmp) && \count($tmp) === $this->banCount) {
-                $userList = $tmp;
+            if (\is_array($tmp) && \count($tmp) === $this->banCount) {
+                $userList = $tmp; // ???? проверка массива на User'ов?
             } else {
                 return $this->c->Message->message('No user ID message');
             }
 
             foreach ($userList as $user) {
+                if ($this->c->userRules->canBanUser($user)) {
+                    continue;
+                }
+
                 if ($user->isAdmin) {
                     return $this->c->Message->message(\ForkBB\__('User is admin message', $user->username));
                 } elseif ($user->isAdmMod) {
@@ -576,13 +620,60 @@ class Bans extends Admin
             }
         }
 
-        $data = [];
-
         $this->nameTpl        = 'admin/bans';
         $this->formBanPage    = 'AdminBansNew';
         $this->formBanHead    = \ForkBB\__('New ban head');
         $this->formBanSubHead = \ForkBB\__('Add ban subhead');
 
+        return $this->ban(true, $args, $method, $userList);
+    }
+
+    /**
+     * Радактирует бан
+     *
+     * @param array $args
+     * @param string $method
+     *
+     * @return Page
+     */
+    public function edit(array $args, $method)
+    {
+        $this->banCount = 1;
+
+        $id     = (int) $args['id'];
+        $data = $this->c->bans->getList([$id]);
+
+        if (! \is_array($data[$id])) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $ban           = $data[$id];
+        $ban['expire'] = empty($ban['expire']) ? '' : \date('Y-m-d', $ban['expire']);
+        $userList      = [
+            $this->c->users->create(['username' => $ban['username']]),
+        ];
+
+        $this->nameTpl        = 'admin/bans';
+        $this->formBanPage    = 'AdminBansEdit';
+        $this->formBanHead    = \ForkBB\__('Edit ban head');
+        $this->formBanSubHead = \ForkBB\__('Edit ban subhead');
+
+        return $this->ban(false, $args, $method, $userList, $ban);
+    }
+
+    /**
+     * Обрабатывает новый/редактируемый бан
+     *
+     * @param bool $isNew
+     * @param array $args
+     * @param string $method
+     * @param array $userList
+     * @param array $data
+     *
+     * @return Page
+     */
+    protected function ban($isNew, array $args, $method, array $userList, array $data = [])
+    {
         if ('POST' === $method) {
             $v = $this->c->Validator->reset()
             ->addValidators([
@@ -593,10 +684,10 @@ class Bans extends Admin
                 'submit_ban'      => [$this, 'vSubmitBan'],
             ])->addRules([
                 'token'           => 'token:' . $this->formBanPage,
-                'username'        => $this->banCount < 1 ? 'string|max:25|user_ban' : 'absent',
-                'ip'              => $this->banCount < 2 ? 'string:spaces|max:255|ip_ban' : 'absent',
-                'email'           => $this->banCount < 2 ? 'string|max:80|email_ban' : 'absent',
-                'message'         => 'string|max:255',
+                'username'        => $this->banCount < 1 ? 'string:trim|max:25|user_ban' : 'absent',
+                'ip'              => $this->banCount < 2 ? 'string:trim,spaces|max:255|ip_ban' : 'absent',
+                'email'           => $this->banCount < 2 ? 'string:trim|max:80|email_ban' : 'absent',
+                'message'         => 'string:trim|max:255',
                 'expire'          => 'date|expire_ban',
                 'submit'          => 'required|submit_ban',
             ])->addAliases([
@@ -611,10 +702,56 @@ class Bans extends Admin
             ]);
 
             if ($v->validation($_POST)) {
+                $action  = $isNew ? 'insert' : 'update';
+                $id      = $isNew ? null : (int) $args['id'];
+                $message = (string) $v->message;
+                $expire  = empty($v->expire) ? 0 : \strtotime($v->expire . ' UTC');
+
+                if ($this->banCount < 1) {
+                    $userList = [false];
+                }
+
+                foreach ($userList as $user) {
+                    $this->c->bans->$action([
+                        'id'       => $id,
+                        'username' => $this->banCount < 1 ? (string) $v->username : $user->username,
+                        'ip'       => $this->banCount < 2 ? (string) $v->ip : '',
+                        'email'    => $this->banCount < 2 ? (string) $v->email : $user->email,
+                        'message'  => $message,
+                        'expire'   => $expire,
+                    ]);
+                }
+
+                $this->c->bans->load();
+
+                return $this->c->Redirect
+                    ->page('AdminBans')
+                    ->message($isNew ? 'Ban added redirect' : 'Ban edited redirect');
             }
 
+            $data         = $v->getData();
             $this->fIswev = $v->getErrors();
-            $data = $v->getData();
+        }
+
+        if (1 === $this->banCount) {
+            $user = \reset($userList);
+            $data['username'] = $user->username;
+
+            if ($isNew && 'POST' !== $method) {
+                $data['email'] = (string) $user->email;
+
+                $ip  = (string) $user->registration_ip;
+                $ips = $this->c->posts->userStat($user->id);
+                unset($ips[$ip]);
+
+                foreach ($ips as $curIp => $cur) {
+                    if (\strlen($ip . ' ' . $curIp) > 255) {
+                        break;
+                    }
+                    $ip .= ' ' . $curIp;
+                }
+                $data['ip'] = $ip;
+            }
         }
 
         $this->aCrumbs[]      = [$this->c->Router->link($this->formBanPage, $args), $this->formBanSubHead];
@@ -639,12 +776,14 @@ class Bans extends Admin
 
             if (! $user instanceof User) { // ???? может ли вернутся несколько юзеров?
                 $v->addError('No user message');
-            } elseif ($user->isGuest) { // ???? O_o
-                $v->addError('Cannot ban guest message');
-            } elseif ($user->isAdmin) {
-                $v->addError(\ForkBB\__('User is admin message', $user->username));
-            } elseif ($user->isAdmMod) {
-                $v->addError(\ForkBB\__('User is mod message', $user->username));
+            } elseif (! $this->c->userRules->canBanUser($user)) {
+                if ($user->isGuest) { // ???? O_o
+                    $v->addError('Cannot ban guest message');
+                } elseif ($user->isAdmin) {
+                    $v->addError(\ForkBB\__('User is admin message', $user->username));
+                } elseif ($user->isAdmMod) {
+                    $v->addError(\ForkBB\__('User is mod message', $user->username));
+                }
             }
         }
 
@@ -663,7 +802,7 @@ class Bans extends Admin
     {
         if ('' != \trim($ips)) {
             $ending6   = ['', '::'];
-            $ending4   = ['.255', '.255.255', '.255.255.255'];
+            $ending4   = ['', '.255', '.255.255', '.255.255.255'];
             $addresses = \explode(' ', $ips);
 
             foreach ($addresses as $address) {
@@ -700,14 +839,14 @@ class Bans extends Admin
     public function vEmailBan(Validator $v, $email)
     {
         if ('' != \trim($email)) {
-            $error = false;
+            $error = true;
 
-            if (false !== \strpos($email, '@') && false === $this->c->Mail->valid($email)) {
-                $error = true;
-            } elseif ('.' === $email[0] && false === $this->c->Mail->valid('test@sub' . $email)) {
-                $error = true;
-            } elseif (false === $this->c->Mail->valid('test@' . $email)) {
-                $error = true;
+            if (false !== \strpos($email, '@') && false !== $this->c->Mail->valid($email)) {
+                $error = false;
+            } elseif ('.' === $email[0] && false !== $this->c->Mail->valid('test@sub' . $email)) {
+                $error = false;
+            } elseif (false !== $this->c->Mail->valid('test@' . $email)) {
+                $error = false;
             }
 
             if ($error) {
@@ -747,10 +886,32 @@ class Bans extends Admin
      */
     public function vSubmitBan(Validator $v, $value)
     {
-        if ('' == $v->username && '' == $v->ip && '' == $v->email) {
+        if ($this->banCount < 1 && '' == $v->username && '' == $v->ip && '' == $v->email) {
             $v->addError('Must enter message');
         }
 
         return $value;
+    }
+
+    /**
+     * Удаляет бан
+     *
+     * @param array $args
+     * @param string $method
+     *
+     * @return Page
+     */
+    public function delete(array $args, $method)
+    {
+        if (! $this->c->Csrf->verify($args['token'], 'AdminBansDelete', $args)) {
+            return $this->c->Message->message('Bad token');
+        }
+
+        $ids = [
+            (int) $args['id'],
+        ];
+        $this->c->bans->delete($ids);
+
+        return $this->c->Redirect->page('AdminBans')->message('Ban removed redirect');
     }
 }

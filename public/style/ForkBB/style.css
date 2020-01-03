@@ -2497,7 +2497,7 @@ body,
   #fork .f-fs-result .f-wrap-user-result {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around /**center*/;
   }
 
   #fork .f-fs-result .f-field-result > dt,
@@ -2582,5 +2582,51 @@ body,
   #fork .f-fs-result .f-field-action {
     width: 30%;
     border-left: 0.0625rem dotted #AA7939;
+  }
+}
+
+/****************************************/
+/* Админка/Баны от Админка/Пользователи */
+/****************************************/
+#fork .f-wrap-btns-result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 3rem;
+  border-left: 0.0625rem dotted #AA7939;
+}
+
+#fork .f-fs-result .f-wrap-btns-result dt {
+  display: none;
+}
+
+#fork .f-fs-result .f-wrap-btns-result dd {
+  width: 100%;
+}
+
+@media screen and (min-width: 50rem) {
+  #fork .f-fs-result .f-field-ips {
+    width: 19%;
+    border-left: 0.0625rem dotted #AA7939;
+  }
+
+  #fork .f-fs-result .f-field-expire {
+    width: 16%;
+    border-left: 0.0625rem dotted #AA7939;
+  }
+
+  #fork .f-fs-result .f-field-message {
+    width: 16%;
+    border-left: 0.0625rem dotted #AA7939;
+  }
+
+  #fork .f-fs-result .f-field-creator {
+    width: 16%;
+    border-left: 0.0625rem dotted #AA7939;
+  }
+
+  #fork .f-wrap-btns-result .f-btn {
+    padding-top: 0;
+    padding-bottom: 0;
   }
 }

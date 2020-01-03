@@ -63,6 +63,12 @@ msgstr "Новый бан"
 msgid "Add ban subhead"
 msgstr "Добавление бана"
 
+msgid "Edit ban head"
+msgstr "Редактируемый бан"
+
+msgid "Edit ban subhead"
+msgstr "Редактирование бана"
+
 msgid "Username label"
 msgstr "Имя пользователя"
 
@@ -163,7 +169,7 @@ msgid "Results head"
 msgstr "Результаты поиска"
 
 msgid "Results username head"
-msgstr "Пользователь"
+msgstr "Имя пользователя"
 
 msgid "Results e-mail head"
 msgstr "Email"

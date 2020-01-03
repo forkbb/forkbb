@@ -140,8 +140,10 @@ class Routing
 
             if ($this->c->userRules->banUsers) {
                 $r->add(['GET', 'POST'], '/admin/bans',                                 'AdminBans:view',   'AdminBans');
-                $r->add(['GET', 'POST'], '/admin/bans/new[/{ids:\d+(?:-\d+)*}]',        'AdminBans:newBan', 'AdminBansNew');
+                $r->add(['GET', 'POST'], '/admin/bans/new[/{ids:\d+(?:-\d+)*}]',        'AdminBans:add',    'AdminBansNew');
+                $r->add(['GET', 'POST'], '/admin/bans/edit/{id:[1-9]\d*}',              'AdminBans:edit',   'AdminBansEdit');
                 $r->add('GET',           '/admin/bans/result/{data}[/{page:[1-9]\d*}]', 'AdminBans:result', 'AdminBansResult');
+                $r->add('GET',           '/admin/bans/delete/{id:[1-9]\d*}/{token}',    'AdminBans:delete', 'AdminBansDelete');
             }
         }
         // только админ

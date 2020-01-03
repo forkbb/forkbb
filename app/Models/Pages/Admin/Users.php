@@ -98,7 +98,7 @@ abstract class Users extends Admin
             return false;
         }
 
-        $userList = $this->c->users->load(...$selected);
+        $userList = $this->c->users->load($selected);
         $result   = [];
         foreach ($userList as $user) {
             if (! $user instanceof User) {
@@ -109,10 +109,8 @@ abstract class Users extends Admin
                 case self::ACTION_BAN:
                     if (! $this->c->userRules->canBanUser($user)) {
                         $this->fIswev = ['v', \ForkBB\__('You are not allowed to ban the %s', $user->username)];
-                        if ($user->isAdmin) {
+                        if ($user->isAdmMod) {
                             $this->fIswev = ['i', \ForkBB\__('No ban admins message')];
-                        } elseif ($user->isAdmMod) {
-                            $this->fIswev = ['i', \ForkBB\__('No ban mods message')];
                         }
                         return false;
                     }
@@ -120,7 +118,7 @@ abstract class Users extends Admin
                 case self::ACTION_DEL:
                     if (! $this->c->userRules->canDeleteUser($user)) {
                         $this->fIswev = ['v', \ForkBB\__('You are not allowed to delete the %s', $user->username)];
-                        if ($user->isAdmin) {
+                        if ($user->isAdmMod) {
                             $this->fIswev = ['i', \ForkBB\__('No delete admins message')];
                         }
                         return false;

@@ -23,52 +23,46 @@ class Manager extends ManagerModel
     /**
      * Получение пользователя(ей) по id, массиву id или по модели User
      *
-     * @param mixed ...$args
+     * @param mixed $value
      *
      * @throws InvalidArgumentException
      *
      * @return mixed
      */
-    public function load(...$args)
+    public function load($value)
     {
-        $result = [];
-        $count = \count($args);
-        $countID = 0;
-        $countUser = 0;
-        $reqIDs = [];
-        $error = false;
-        $user = null;
+        $error      = false;
+        $result     = [];
+        $returnUser = true;
 
-        foreach ($args as $arg) {
-            if ($arg instanceof User) {
-                ++$countUser;
-                $user = $arg;
-            } elseif (\is_int($arg) && $arg > 0) {
-                ++$countID;
-                if ($this->get($arg) instanceof User) {
-                    $result[$arg] = $this->get($arg);
+        if ($value instanceof User) {
+            $data = $value;
+        } elseif (\is_int($value) && $value > 0) {
+            $data = $value;
+        } elseif (\is_array($value)) {
+            $data = [];
+            foreach ($value as $arg) {
+                if (\is_int($arg) && $arg > 0) {
+                    if ($this->get($arg) instanceof User) {
+                        $result[$arg] = $this->get($arg);
+                    } else {
+                        $result[$arg] = false;
+                        $data[]       = $arg;
+                    }
                 } else {
-                    $result[$arg] = false;
-                    $reqIDs[] = $arg;
+                    $error = true;
                 }
-            } else {
-                $error = true;
             }
+            $returnUser = false;
+        } else {
+            $error = true;
         }
 
-        if ($error || $countUser * $countID > 0 || $countUser > 1 || ($countID > 0 && $count > $countID)) {
+        if ($error) {
             throw new InvalidArgumentException('Expected only integer, integer array or User');
         }
 
-        if (! empty($reqIDs) || null !== $user) {
-            if (null !== $user) {
-                $data = $user;
-            } elseif (1 === \count($reqIDs)) {
-                $data = \array_pop($reqIDs);
-            } else {
-                $data = $reqIDs;
-            }
-
+        if (! empty($data)) {
             foreach ($this->Load->load($data) as $user) {
                 if ($user instanceof User) {
                     if ($this->get($user->id) instanceof User) {
@@ -81,7 +75,7 @@ class Manager extends ManagerModel
             }
         }
 
-        return 1 === \count($result) ? \array_pop($result) : $result;
+        return $returnUser && 1 === \count($result) ? \array_pop($result) : $result;
     }
 
     /**

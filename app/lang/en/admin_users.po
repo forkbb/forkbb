@@ -40,13 +40,10 @@ msgid "No move admins message"
 msgstr "For security reasons, you are not allowed to move multiple administrators to another group. If you want to move these administrators, you can do so on their respective user profiles."
 
 msgid "No delete admins message"
-msgstr "Administrators cannot be deleted. In order to delete administrators, you must first move them to a different user group."
+msgstr "Administrators/moderators cannot be deleted. In order to delete administrators/moderators, you must first move them to a different user group."
 
 msgid "No ban admins message"
-msgstr "Administrators cannot be banned. In order to ban administrators, you must first move them to a different user group."
-
-msgid "No ban mods message"
-msgstr "Moderators cannot be banned. In order to ban moderators, you must first move them to a different user group."
+msgstr "Administrators/moderators cannot be banned. In order to ban administrators/moderators, you must first move them to a different user group."
 
 msgid "Change user group"
 msgstr "Change user group"

@@ -86,7 +86,11 @@ class Result extends Users
                 if (empty($this->fIswev)) {
                     $selected = $this->checkSelected($v->users, $action);
                     if (\is_array($selected)) {
-                        return $this->c->Redirect->page('AdminUsersAction', ['action' => $action, 'ids' => \implode('-', $selected)]);
+                        if (self::ACTION_BAN === $action) {
+                            return $this->c->Redirect->page('AdminBansNew', ['ids' => \implode('-', $selected)]);
+                        } else {
+                            return $this->c->Redirect->page('AdminUsersAction', ['action' => $action, 'ids' => \implode('-', $selected)]);
+                        }
                     }
                 }
             }
@@ -107,10 +111,7 @@ class Result extends Users
         }
 
         if (! empty($ids)) {
-            $idsN = $this->c->users->load(...$ids);
-            if (! \is_array($idsN)) {
-                $idsN = [$idsN];
-            }
+            $idsN = $this->c->users->load($ids);
 
             foreach ($idsN as $cur)  {
                 if ($cur instanceof User) {

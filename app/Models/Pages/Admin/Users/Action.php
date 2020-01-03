@@ -48,11 +48,13 @@ class Action extends Users
 
         $error = false;
         switch ($args['action']) {
+/*
             case self::ACTION_BAN:
                 if (! $this->c->userRules->banUsers) {
                     $error = true;
                 }
                 break;
+*/
             case self::ACTION_DEL:
                 if (! $this->c->userRules->deleteUsers) {
                     $error = true;
@@ -80,10 +82,12 @@ class Action extends Users
             return $message;
         }
 
-        $this->userList = $this->c->users->load(...$ids);
+        $this->userList = $this->c->users->load($ids);
         switch ($args['action']) {
+/*
             case self::ACTION_BAN:
                 return $this->ban($args, $method);
+*/
             case self::ACTION_DEL:
                 return $this->delete($args, $method);
             case self::ACTION_CHG:

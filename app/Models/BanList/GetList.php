@@ -18,12 +18,12 @@ class GetList extends Method
         $vars = [
             ':ids' => $ids,
         ];
-        $sql = 'SELECT b.id, b.username, b.ip, b.email, b.message, b.expire, u.id as id_creator, u.username as name_creator
-                LEFT JOIN ::users AS u ON u.id=b.ban_creator
+        $sql = 'SELECT b.id, b.username, b.ip, b.email, b.message, b.expire, u.id AS id_creator, u.username AS name_creator
                 FROM ::bans AS b
-                WHERE id IN (?ai:ids)';
+                LEFT JOIN ::users AS u ON u.id=b.ban_creator
+                WHERE b.id IN (?ai:ids)';
 
-        $this->c->DB->query($sql, $vars);
+        $stmt = $this->c->DB->query($sql, $vars);
 
         $list = \array_fill_keys($ids, false);
 
