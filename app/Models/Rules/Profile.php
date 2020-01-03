@@ -76,12 +76,18 @@ class Profile extends Rules
 
     protected function getbanUser()
     {
-        return ! $this->my && ($this->admin || ($this->moderator && '1' == $this->user->g_mod_ban_users));
+        return ! $this->my
+            && ($this->admin || ($this->moderator && '1' == $this->user->g_mod_ban_users))
+            && ! $this->curUser->isAdmMod
+            && ! $this->curUser->isGuest;
     }
 
     protected function getdeleteUser()
     {
-        return ! $this->my && $this->admin;
+        return ! $this->my
+            && $this->admin
+            && ! $this->curUser->isAdmMod
+            && ! $this->curUser->isGuest;
     }
 
     protected function getviewIP()
