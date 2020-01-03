@@ -91,7 +91,7 @@
                 @elseif ('password' === $cur['type'])
                 <input @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="password" @if ($cur['maxlength']) maxlength="{{ $cur['maxlength'] }}" @endif @if ($cur['pattern']) pattern="{{ $cur['pattern'] }}" @endif @if (isset($cur['value'])) value="{{ $cur['value'] }}" @endif>
                 @elseif ('btn' === $cur['type'])
-                <a class="f-btn @if ($cur['disabled']) f-disabled @endif" href="{!! $cur['link'] !!}" @if ($cur['disabled']) tabindex="-1" @endif>{{ $cur['value'] }}</a>
+                <a class="f-btn @if ($cur['disabled']) f-disabled @endif" href="{!! $cur['link'] !!}" title="{{ $cur['title'] or '' }}" @if ($cur['disabled']) tabindex="-1" @endif>{{ $cur['value'] }}</a>
                 @elseif ('str' === $cur['type'])
                 <p class="f-str" id="id-{{ $key }}">{{ $cur['value'] }}</p>
                 @elseif ('link' === $cur['type'])
