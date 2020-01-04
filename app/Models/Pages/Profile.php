@@ -88,10 +88,21 @@ abstract class Profile extends Page
             ];
         }
         if ($this->rules->banUser) {
-            $btns['ban-user'] = [
-                $this->c->Router->link('AdminBansNew',  ['ids' => $this->curUser->id]),
-                \ForkBB\__('Ban user'),
-            ];
+            if (isset($this->c->bans->userList[\mb_strtolower($this->curUser->username)])) { //????
+                $id = $this->c->bans->userList[\mb_strtolower($this->curUser->username)];
+                $btns['unban-user'] = [
+                    $this->c->Router->link('AdminBansDelete', [
+                        'id'    => $id,
+                        'token' => $this->c->Csrf->create('AdminBansDelete', ['id' => $id]),
+                    ]),
+                    \ForkBB\__('Unban user'),
+                ];
+            } else {
+                $btns['ban-user'] = [
+                    $this->c->Router->link('AdminBansNew',  ['ids' => $this->curUser->id]),
+                    \ForkBB\__('Ban user'),
+                ];
+            }
         }
         if ($this->rules->deleteUser) {
             $btns['delete-user'] = [

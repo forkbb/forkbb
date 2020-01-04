@@ -351,6 +351,9 @@ msgstr "Удалить"
 msgid "Ban user"
 msgstr "Забанить"
 
+msgid "Unban user"
+msgstr "Разбанить"
+
 msgid "Confirm delete legend"
 msgstr "ВАЖНО: прочтите перед удалением пользователя"
 

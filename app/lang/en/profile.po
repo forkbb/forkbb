@@ -351,6 +351,9 @@ msgstr "Delete"
 msgid "Ban user"
 msgstr "Ban"
 
+msgid "Unban user"
+msgstr "Unban"
+
 msgid "Confirm delete legend"
 msgstr "Important: read before deleting user"
 
