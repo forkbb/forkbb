@@ -6,6 +6,7 @@ use ForkBB\Core\Container;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Pages\Admin;
 use ForkBB\Models\User\Model as User;
+use RuntimeException;
 
 class Bans extends Admin
 {
@@ -687,9 +688,16 @@ class Bans extends Admin
 
                 $this->c->bans->load();
 
-                return $this->c->Redirect
-                    ->page('AdminBans')
-                    ->message($isNew ? 'Ban added redirect' : 'Ban edited redirect');
+                $redirect = $this->c->Redirect;
+
+                if ($isNew && ! empty($args['uid']) && 1 === $this->banCount) {
+                    $user = \reset($userList);
+                    $redirect->url($user->link);
+                } else {
+                    $redirect->page('AdminBans');
+                }
+
+                return $redirect->message($isNew ? 'Ban added redirect' : 'Ban edited redirect');
             }
 
             $data         = $v->getData();
@@ -862,6 +870,8 @@ class Bans extends Admin
      * @param array $args
      * @param string $method
      *
+     * @throws RuntimeException
+     *
      * @return Page
      */
     public function delete(array $args, $method)
@@ -875,6 +885,20 @@ class Bans extends Admin
         ];
         $this->c->bans->delete($ids);
 
-        return $this->c->Redirect->page('AdminBans')->message('Ban removed redirect');
+        $redirect = $this->c->Redirect;
+
+        if (empty($args['uid'])) {
+            $redirect->page('AdminBans');
+        } else {
+            $user = $this->c->users->load((int) $args['uid']);
+
+            if (! $user instanceof User) {
+                throw new RuntimeException('User profile not found');
+            }
+
+            $redirect->url($user->link);
+        }
+
+        return $redirect->message('Ban removed redirect');
     }
 }

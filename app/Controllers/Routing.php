@@ -139,11 +139,11 @@ class Routing
             $r->add('GET',           '/admin/users/promote/{uid:[2-9]|[1-9]\d+}/{pid:[1-9]\d*}/{token}', 'AdminUsersPromote:promote', 'AdminUserPromote');
 
             if ($this->c->userRules->banUsers) {
-                $r->add(['GET', 'POST'], '/admin/bans',                                 'AdminBans:view',   'AdminBans');
-                $r->add(['GET', 'POST'], '/admin/bans/new[/{ids:\d+(?:-\d+)*}]',        'AdminBans:add',    'AdminBansNew');
-                $r->add(['GET', 'POST'], '/admin/bans/edit/{id:[1-9]\d*}',              'AdminBans:edit',   'AdminBansEdit');
-                $r->add('GET',           '/admin/bans/result/{data}[/{page:[1-9]\d*}]', 'AdminBans:result', 'AdminBansResult');
-                $r->add('GET',           '/admin/bans/delete/{id:[1-9]\d*}/{token}',    'AdminBans:delete', 'AdminBansDelete');
+                $r->add(['GET', 'POST'], '/admin/bans',                                                     'AdminBans:view',   'AdminBans');
+                $r->add(['GET', 'POST'], '/admin/bans/new[/{ids:\d+(?:-\d+)*}[/{uid:[2-9]|[1-9]\d+}]]',     'AdminBans:add',    'AdminBansNew');
+                $r->add(['GET', 'POST'], '/admin/bans/edit/{id:[1-9]\d*}',                                  'AdminBans:edit',   'AdminBansEdit');
+                $r->add('GET',           '/admin/bans/result/{data}[/{page:[1-9]\d*}]',                     'AdminBans:result', 'AdminBansResult');
+                $r->add('GET',           '/admin/bans/delete/{id:[1-9]\d*}/{token}[/{uid:[2-9]|[1-9]\d+}]', 'AdminBans:delete', 'AdminBansDelete');
             }
         }
         // только админ

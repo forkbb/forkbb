@@ -93,13 +93,20 @@ abstract class Profile extends Page
                 $btns['unban-user'] = [
                     $this->c->Router->link('AdminBansDelete', [
                         'id'    => $id,
-                        'token' => $this->c->Csrf->create('AdminBansDelete', ['id' => $id]),
+                        'uid'   => $this->curUser->id,
+                        'token' => $this->c->Csrf->create('AdminBansDelete', [
+                            'id'  => $id,
+                            'uid' => $this->curUser->id,
+                        ]),
                     ]),
                     \ForkBB\__('Unban user'),
                 ];
             } else {
                 $btns['ban-user'] = [
-                    $this->c->Router->link('AdminBansNew',  ['ids' => $this->curUser->id]),
+                    $this->c->Router->link('AdminBansNew',  [
+                        'ids' => $this->curUser->id,
+                        'uid' => $this->curUser->id,
+                    ]),
                     \ForkBB\__('Ban user'),
                 ];
             }
