@@ -422,36 +422,9 @@ class Bans extends Admin
     protected function form(array $bans, $number, array $args)
     {
         $form = [
-            'action' => $this->c->Router->link('AdminBansResult', $args),
-            'hidden' => [
-                'token' => $this->c->Csrf->create('AdminBansResult', $args),
-            ],
             'sets'   => [],
-            'btns'   => [],
         ];
-/*
-        if ($this->rules->banUsers) {
-            $form['btns']['ban'] = [
-                'type'      => 'submit',
-                'value'     => \ForkBB\__('Ban'),
-                'accesskey' => null,
-            ];
-        }
-        if ($this->rules->deleteUsers) {
-            $form['btns']['delete'] = [
-                'type'      => 'submit',
-                'value'     => \ForkBB\__('Delete'),
-                'accesskey' => null,
-            ];
-        }
-        if ($this->rules->changeGroup) {
-            $form['btns']['change_group'] = [
-                'type'      => 'submit',
-                'value'     => \ForkBB\__('Change group'),
-                'accesskey' => null,
-            ];
-        }
-*/
+        // пустой бан для заголовка
         \array_unshift($bans, [
             'id'           => 0,
             'username'     => '',
@@ -524,6 +497,7 @@ class Bans extends Admin
                 'class' => 'btns-result',
                 'type'  => 'wrap',
             ];
+
             $arr = [
                 'id' => $ban['id'],
             ];
@@ -550,17 +524,6 @@ class Bans extends Admin
                 'type' => 'endwrap',
             ];
 
-
-            /*
-            $key = $user->isGuest ? "guest{$number}" : "users[{$user->id}]";
-            $fields[$key] = [
-                'class'   => ['check'],
-                'caption' => \ForkBB\__('Select'),
-                'type'    => $user->isGuest ? 'str' : 'checkbox',
-                'value'   => $user->isGuest ? null : $user->id,
-                'checked' => false,
-            ];
-*/
             $form['sets']["l{$number}"] = [
                 'class'  => 'result',
                 'legend' => $number,
