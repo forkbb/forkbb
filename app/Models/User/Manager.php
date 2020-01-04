@@ -38,6 +38,10 @@ class Manager extends ManagerModel
         if ($value instanceof User) {
             $data = $value;
         } elseif (\is_int($value) && $value > 0) {
+            // пользователь есть в кеше
+            if ($this->get($value) instanceof User) {
+                return $this->get($value);
+            }
             $data = $value;
         } elseif (\is_array($value)) {
             $data = [];
@@ -75,7 +79,7 @@ class Manager extends ManagerModel
             }
         }
 
-        return $returnUser && 1 === \count($result) ? \array_pop($result) : $result;
+        return $returnUser && 1 === \count($result) ? \reset($result) : $result;
     }
 
     /**
