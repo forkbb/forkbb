@@ -154,6 +154,7 @@ class Register extends Page
         $user->style           = $this->user->style;
         $user->registered      = \time();
         $user->registration_ip = $this->user->ip;
+        $user->signature       = '';
 
         $newUserId = $this->c->users->insert($user);
 
