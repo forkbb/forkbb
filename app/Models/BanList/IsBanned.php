@@ -17,31 +17,48 @@ class IsBanned extends Method
     public function isBanned(User $user)
     {
         $name  = $this->model->trimToNull($user->username, true);
+        // бан имени пользователя
         if (null !== $name && isset($this->model->userList[$name])) {
-            return 1;
+            return $this->model->userList[$name];
         }
-        $email = $this->model->trimToNull($user->email);
-        if (null !== $email) {
-            foreach ($this->model->otherList as $cur) {
-                if (null === $cur['email']) {
-                    continue;
-                } elseif ($email == $cur['email']) {
-                    return 2;
-                } elseif (false === \strpos($cur['email'], '@')) {
-                    $len = \strlen($cur['email']);
-                    if ('.' === $cur['email'][0]) {
-                        if (\substr($email, -$len) === $cur['email']) {
-                            return 2;
-                        }
-                    } else {
-                        $tmp = \substr($email, -1-$len);
-                        if ($tmp === '.' . $cur['email'] || $tmp === '@' . $cur['email']) {
-                            return 2;
-                        }
-                    }
+        // бан email
+        if ($user->isGuest && ! empty($this->model->emailList) && $user->email && $user->email_normal) { // ????
+            $email = $this->model->trimToNull($user->email_normal);
+            $stage = 0;
+
+            do {
+                if (isset($this->model->emailList[$email])) {
+                    return $this->model->emailList[$email];
                 }
-            }
+
+                switch ($stage) {                               // "super@user"@example.com
+                    case 0:
+                        $pos = \strrpos($email, '@');
+
+                        if (false !== $pos) {
+                            $email = \substr($email, $pos + 1); // -> example.com
+                            break;
+                        }
+
+                        ++$stage;
+                    case 1:
+                        $email = '.' . $email;                  // -> .example.com
+                        $pos = true;
+                        break;
+                    default:
+                        $pos = \strpos($email, '.', 1);
+
+                        if (false !== $pos) {
+                            $email = \substr($email, $pos);     // -> .com
+                        }
+
+                        break;
+                }
+
+                ++$stage;
+            } while (false !== $pos);
         }
+
         return 0;
     }
 }

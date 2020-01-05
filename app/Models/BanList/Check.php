@@ -23,45 +23,60 @@ class Check extends Method
         }
 
         // удаление просроченных банов
-        $now = \time();
-        $ids = [];
-        foreach ($this->model->otherList as $id => $row) {
-            if (null !== $row['expire'] && $row['expire'] < $now) {
-                $ids[] = $id;
+        if (! empty($this->model->banList)) { // ???? зачем при каждом запуске проверять просроченность?
+            $ids = [];
+            $now = \time();
+
+            foreach ($this->model->banList as $id => $row) {
+                if (null !== $row['expire'] && $row['expire'] < $now) {
+                    $ids[] = $id;
+                }
             }
-        }
-        if (! empty($ids)) {
-            $this->model->delete($ids);
+
+            if (! empty($ids)) {
+                $this->model->delete($ids);
+            }
         }
 
         // проверка гостя
         if ($user->isGuest) {
-            $ip = $this->model->trimToNull($user->ip);
-            if (null === $ip) {
-                return false; //????
-            }
-            $add = \strpos($ip, ':') === false ? '.' : ':'; //????
-            $ip .= $add;
-            foreach ($this->model->ipList as $addr => $id) {
-                $addr .= $add;
-                if (\substr($ip, 0, \strlen($addr)) == $addr) {
-                    if (isset($this->model->otherList[$id])) {
-                        $user->__banInfo = $this->model->otherList[$id];
+            if (! empty($this->model->ipList)) {
+                $ip = $this->model->trimToNull($user->ip);
+
+                if (null !== $ip) {
+                    $list    = $this->model->ipList;
+                    $letters = \str_split($this->model->ip2hex($ip));
+
+                    foreach ($letters as $letter) {
+                        if (! isset($list[$letter])) {
+                            break;
+                        } elseif (\is_array($list[$letter])) {
+                            $list = $list[$letter];
+                        } else {
+                            $id = $list[$letter];
+
+                            if (isset($this->model->banList[$id])) {
+                                $user->__banInfo = $this->model->banList[$id];
+                            }
+
+                            return true;
+                        }
                     }
-                    return true;
                 }
             }
         // проверка пользователя
         } else {
-            $name = $this->model->trimToNull($user->username, true);
-            if (isset($this->model->userList[$name])) {
-                $id = $this->model->userList[$name];
-                if (isset($this->model->otherList[$id])) {
-                    $user->__banInfo = $this->model->otherList[$id];
+            $id = $this->model->isBanned($user);
+
+            if ($id > 0) {
+                if (isset($this->model->banList[$id])) {
+                    $user->__banInfo = $this->model->banList[$id];
                 }
+
                 return true;
             }
         }
+
         return false;
     }
 }

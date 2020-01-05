@@ -15,8 +15,11 @@ class Load extends Method
     public function load()
     {
         $userList  = [];
+        $emailList = [];
         $ipList    = [];
-        $otherList = [];
+        $banList   = [];
+
+
         $stmt = $this->c->DB->query('SELECT b.id, b.username, b.ip, b.email, b.message, b.expire FROM ::bans AS b');
         while ($row = $stmt->fetch()) {
             $name = $this->model->trimToNull($row['username'], true);
@@ -24,35 +27,56 @@ class Load extends Method
                 $userList[$name] = $row['id'];
             }
 
+            $email   = $this->model->trimToNull($row['email']);
+            if (null !== $email) {
+                $email = $this->c->NormEmail->normalize($email);
+                $emailList[$email] = $row['id']; // ???? TODO если домен забанен, то email не добавлять
+            }
+
             $ips = $this->model->trimToNull($row['ip']);
             if (null !== $ips) {
                 foreach (\explode(' ', $ips) as $ip) {
-                    $ip = \trim($ip);
-                    if ('' != $ip) {
-                        $ipList[$ip] = $row['id'];
+                    $list    = &$ipList;
+                    $letters = \str_split($this->model->ip2hex($ip));
+                    $count   = \count($letters);
+
+                    foreach ($letters as $letter) {
+                        if (--$count) {
+                            if (! isset($list[$letter])) {
+                                $list[$letter] = [];
+                            } elseif (! \is_array($list[$letter])) {
+                                break;
+                            }
+                            $list = &$list[$letter];
+                        } else {
+                            $list[$letter] = $row['id']; // ???? может не перезаписывать предыдущий бан?
+                        }
                     }
+
+                    unset($list);
                 }
             }
 
-            $email   = $this->model->trimToNull($row['email']);
             $message = $this->model->trimToNull($row['message']);
             $expire  = empty($row['expire']) ? null : $row['expire'];
-            if (! isset($email) && ! isset($message) && ! isset($expire)) {
+
+            if (null === $message && null === $expire) {
                 continue;
             }
 
-            $otherList[$row['id']] = [
-                'email'    => $email,
+            $banList[$row['id']] = [
                 'message'  => $message,
                 'expire'   => $expire,
             ];
         }
-        $this->model->otherList = $otherList;
+        $this->model->banList   = $banList;
         $this->model->userList  = $userList;
+        $this->model->emailList = $emailList;
         $this->model->ipList    = $ipList;
         $this->c->Cache->set('banlist', [
-            'otherList' => $otherList,
+            'banList'   => $banList,
             'userList'  => $userList,
+            'emailList' => $emailList,
             'ipList'    => $ipList,
         ]);
         return $this->model;
