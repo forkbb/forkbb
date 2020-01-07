@@ -23,6 +23,7 @@ class Ban extends Page
         $this->titles     = \ForkBB\__('Info');
         $this->ban        = $user->banInfo;
         $this->adminEmail = $this->c->config->o_admin_email;
+        $this->bannedIp   = $user->isGuest;
 
         return $this;
     }

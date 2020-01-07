@@ -87,6 +87,9 @@ msgstr "Submit"
 msgid "Ban message"
 msgstr "You are banned from this forum."
 
+msgid "Ban message 1"
+msgstr "Your IP is blocked from this forum."
+
 msgid "Ban message 2"
 msgstr "The ban expires at the end of %s"
 

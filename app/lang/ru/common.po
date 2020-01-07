@@ -87,6 +87,9 @@ msgstr "Отправить"
 msgid "Ban message"
 msgstr "Ваша учетная запись заблокирована."
 
+msgid "Ban message 1"
+msgstr "Ваш IP заблокирован."
+
 msgid "Ban message 2"
 msgstr "Блокировка заканчивается %s"
 
