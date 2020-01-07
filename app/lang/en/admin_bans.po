@@ -24,6 +24,9 @@ msgstr "The user %s is an administrator and can't be banned. If you want to ban 
 msgid "User is mod message"
 msgstr "The user %s is a moderator and can't be banned. If you want to ban a moderator, you must first demote him/her."
 
+msgid "User is ban"
+msgstr "The user %s is ban."
+
 msgid "Must enter message"
 msgstr "You must enter either a username, an IP address or an email address (at least)."
 

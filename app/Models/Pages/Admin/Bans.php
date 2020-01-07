@@ -570,6 +570,10 @@ class Bans extends Admin
             }
 
             foreach ($userList as $user) {
+                if ($this->c->bans->isBanned($user)) {
+                    return $this->c->Message->message(\ForkBB\__('User is ban', $user->username));
+                }
+
                 if ($this->c->userRules->canBanUser($user)) {
                     continue;
                 }
@@ -747,6 +751,8 @@ class Bans extends Admin
 
             if (! $user instanceof User) { // ???? может ли вернутся несколько юзеров?
                 $v->addError('No user message');
+            } elseif ($this->c->bans->isBanned($user)) {
+                $v->addError(\ForkBB\__('User is ban', $user->username));
             } elseif (! $this->c->userRules->canBanUser($user)) {
                 if ($user->isGuest) { // ???? O_o
                     $v->addError('Cannot ban guest message');

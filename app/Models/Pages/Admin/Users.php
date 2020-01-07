@@ -107,6 +107,10 @@ abstract class Users extends Admin
 
             switch ($action) {
                 case self::ACTION_BAN:
+                    if ($this->c->bans->isBanned($user)) {
+                        $this->fIswev = ['i', \ForkBB\__('User is ban', $user->username)];
+                        return false;
+                    }
                     if (! $this->c->userRules->canBanUser($user)) {
                         $this->fIswev = ['v', \ForkBB\__('You are not allowed to ban the %s', $user->username)];
                         if ($user->isAdmMod) {

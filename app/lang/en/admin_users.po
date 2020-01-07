@@ -353,3 +353,6 @@ msgstr "User promoted. Redirecting …"
 
 msgid "You are trying to change your own group"
 msgstr "You are trying to change your own group."
+
+msgid "User is ban"
+msgstr "The user %s is ban."
