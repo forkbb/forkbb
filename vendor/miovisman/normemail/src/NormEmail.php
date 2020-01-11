@@ -131,20 +131,27 @@ class NormEmail
             $local = \substr($email, 0, $pos);
         }
 
-        $domain = \mb_strtolower($domain, 'UTF-8');
+        $prefix = '';
 
-        // TODO: Process the dot at the beginning of the domain for the ban of the domains array (ban by the domain name without the local part)
+        if (isset($domain[0])) {
+            $domain = \mb_strtolower($domain, 'UTF-8');
 
-        if ('[' !== $domain[0] && \preg_match('%[\x80-\xFF]%', $domain)) {
-            $parts = \explode('.', $domain);
-            foreach ($parts as &$part) {
-                $ascii = \idn_to_ascii($part, \IDNA_DEFAULT, \INTL_IDNA_VARIANT_UTS46);
-                if (false !== $ascii) {
-                    $part = $ascii;
-                }
+            if ('.' === $domain[0]) {
+                $prefix = '.';
+                $domain = \substr($domain, 1);
             }
-            unset($part);
-            $domain = \implode('.', $parts);
+
+            if ('[' !== $domain[0] && \preg_match('%[\x80-\xFF]%', $domain)) {
+                $parts = \explode('.', $domain);
+                foreach ($parts as &$part) {
+                    $ascii = \idn_to_ascii($part, \IDNA_DEFAULT, \INTL_IDNA_VARIANT_UTS46);
+                    if (false !== $ascii) {
+                        $part = $ascii;
+                    }
+                }
+                unset($part);
+                $domain = \implode('.', $parts);
+            }
         }
 
         do {
@@ -193,9 +200,9 @@ class NormEmail
         }
 
         if ('' == $local) {
-            return $domain; // '@myhost.com' --> 'myhost.com'
+            return $prefix . $domain; // '@myhost.com' --> 'myhost.com'
         } else {
-            return $local . '@' . $domain;
+            return $local . '@' . $prefix . $domain;
         }
     }
 }

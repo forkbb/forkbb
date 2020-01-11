@@ -23,16 +23,19 @@ $email = $nEmail->normalize($email);
 
 ```
 // some string
+                                      =>
 ExampLe                               => example
+ExampLe@                              => example@
 exaMple.COM                           => example.com
 .example.com                          => .example.com
-@example.com                          => example.com
-"example.com                          => "example.com
+@examPLe.com                          => example.com
+"examPLe.com                          => "example.com
 "USER+++NAME@EXAMpLE.com              => "USER+++NAME@example.com
 googlemail.com                        => gmail.com
 pm.me                                 => protonmail.com
 yandex.tj                             => yandex.ru
 ya.ru                                 => yandex.ru
+.ya.ru                                => .yandex.ru
 
 // Unicode
 ПОЛЬЗОВАТЕЛЬ@домен.РУ                 => пользователь@xn--d1acufc.xn--p1ag

@@ -65,12 +65,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/MioVisman/NormEmail.git",
-                "reference": "c582b1359adf1ee2efa38809e8827ed21138a9ac"
+                "reference": "2e657463266b1249e97d15c6795dd14248097cb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MioVisman/NormEmail/zipball/c582b1359adf1ee2efa38809e8827ed21138a9ac",
-                "reference": "c582b1359adf1ee2efa38809e8827ed21138a9ac",
+                "url": "https://api.github.com/repos/MioVisman/NormEmail/zipball/2e657463266b1249e97d15c6795dd14248097cb3",
+                "reference": "2e657463266b1249e97d15c6795dd14248097cb3",
                 "shasum": ""
             },
             "require": {
@@ -103,7 +103,7 @@
                 "email",
                 "normalization"
             ],
-            "time": "2019-12-24T15:42:43+00:00"
+            "time": "2020-01-11T04:21:13+00:00"
         },
         {
             "name": "miovisman/parserus",
