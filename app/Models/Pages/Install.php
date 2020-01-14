@@ -571,10 +571,10 @@ class Install extends Page
                 'moderators'      => ['TEXT', false],
                 'num_topics'      => ['MEDIUMINT(8) UNSIGNED', false, 0],
                 'num_posts'       => ['MEDIUMINT(8) UNSIGNED', false, 0],
-                'last_post'       => ['INT(10) UNSIGNED', true],
-                'last_post_id'    => ['INT(10) UNSIGNED', true],
-                'last_poster'     => ['VARCHAR(190)', true],
-                'last_topic'      => ['VARCHAR(255)', true],
+                'last_post'       => ['INT(10) UNSIGNED', false, 0],
+                'last_post_id'    => ['INT(10) UNSIGNED', false, 0],
+                'last_poster'     => ['VARCHAR(190)', false, ''],
+                'last_topic'      => ['VARCHAR(255)', false, ''],
                 'sort_by'         => ['TINYINT(1)', false, 0],
                 'disp_position'   => ['INT(10)', false, 0],
                 'cat_id'          => ['INT(10) UNSIGNED', false, 0],
@@ -631,8 +631,8 @@ class Install extends Page
                 'user_id'     => ['INT(10) UNSIGNED', false, 1],
                 'ident'       => ['VARCHAR(190)', false, ''],
                 'logged'      => ['INT(10) UNSIGNED', false, 0],
-                'last_post'   => ['INT(10) UNSIGNED', true],
-                'last_search' => ['INT(10) UNSIGNED', true],
+                'last_post'   => ['INT(10) UNSIGNED', false, 0],
+                'last_search' => ['INT(10) UNSIGNED', false, 0],
                 'o_position'  => ['VARCHAR(100)', false, ''],
                 'o_name'      => ['VARCHAR(190)', false, ''],
             ],
@@ -655,13 +655,13 @@ class Install extends Page
                 'poster_id'    => ['INT(10) UNSIGNED', false, 1],
                 'poster_ip'    => ['VARCHAR(45)', false, ''],
                 'poster_email' => ['VARCHAR(190)', false, ''],
-                'message'      => ['MEDIUMTEXT', false, ''],
+                'message'      => ['MEDIUMTEXT', false],
                 'hide_smilies' => ['TINYINT(1)', false, 0],
                 'edit_post'    => ['TINYINT(1)', false, 0],
                 'posted'       => ['INT(10) UNSIGNED', false, 0],
-                'edited'       => ['INT(10) UNSIGNED', true],
-                'edited_by'    => ['VARCHAR(190)', true],
-                'user_agent'   => ['VARCHAR(255)', true],
+                'edited'       => ['INT(10) UNSIGNED', false, 0],
+                'edited_by'    => ['VARCHAR(190)', false, ''],
+                'user_agent'   => ['VARCHAR(255)', false, ''],
                 'topic_id'     => ['INT(10) UNSIGNED', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
@@ -682,9 +682,9 @@ class Install extends Page
                 'forum_id'    => ['INT(10) UNSIGNED', false, 0],
                 'reported_by' => ['INT(10) UNSIGNED', false, 0],
                 'created'     => ['INT(10) UNSIGNED', false, 0],
-                'message'     => ['TEXT', true],
-                'zapped'      => ['INT(10) UNSIGNED', true],
-                'zapped_by'   => ['INT(10) UNSIGNED', true],
+                'message'     => ['TEXT', false],
+                'zapped'      => ['INT(10) UNSIGNED', false, 0],
+                'zapped_by'   => ['INT(10) UNSIGNED', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
             'INDEXES' => [
@@ -697,7 +697,7 @@ class Install extends Page
         // search_cache
         $schema = [
             'FIELDS' => [
-                'search_data' => ['MEDIUMTEXT', true],
+                'search_data' => ['MEDIUMTEXT', false],
                 'search_time' => ['INT(10) UNSIGNED', false, 0],
                 'search_key'  => ['VARCHAR(190)', false, '', 'bin'],
             ],
@@ -818,12 +818,12 @@ class Install extends Page
                 'id'           => ['SERIAL', false],
                 'poster'       => ['VARCHAR(190)', false, ''],
                 'poster_id'    => ['INT(10) UNSIGNED', false, 1],
-                'poster_ip'    => ['VARCHAR(45)', true],
-                'message'      => ['TEXT', true],
+                'poster_ip'    => ['VARCHAR(45)', false, ''],
+                'message'      => ['TEXT', false],
                 'hide_smilies' => ['TINYINT(1)', false, 0],
                 'posted'       => ['INT(10) UNSIGNED', false, 0],
-                'edited'       => ['INT(10) UNSIGNED', true],
-                'edited_by'    => ['VARCHAR(190)', true],
+                'edited'       => ['INT(10) UNSIGNED', false, 0],
+                'edited_by'    => ['VARCHAR(190)', false, ''],
                 'post_new'     => ['TINYINT(1)', false, 1],
                 'topic_id'     => ['INT(10) UNSIGNED', false, 0],
             ],
@@ -900,10 +900,10 @@ class Install extends Page
                 'style'            => ['VARCHAR(25)', false, ''],
                 'num_posts'        => ['INT(10) UNSIGNED', false, 0],
                 'num_topics'       => ['INT(10) UNSIGNED', false, 0],
-                'last_post'        => ['INT(10) UNSIGNED', true],
-                'last_search'      => ['INT(10) UNSIGNED', true],
-                'last_email_sent'  => ['INT(10) UNSIGNED', true],
-                'last_report_sent' => ['INT(10) UNSIGNED', true],
+                'last_post'        => ['INT(10) UNSIGNED', false, 0],
+                'last_search'      => ['INT(10) UNSIGNED', false, 0],
+                'last_email_sent'  => ['INT(10) UNSIGNED', false, 0],
+                'last_report_sent' => ['INT(10) UNSIGNED', false, 0],
                 'registered'       => ['INT(10) UNSIGNED', false, 0],
                 'registration_ip'  => ['VARCHAR(45)', false, ''],
                 'last_visit'       => ['INT(10) UNSIGNED', false, 0],
@@ -914,7 +914,7 @@ class Install extends Page
                 'messages_flag'    => ['TINYINT(1)', false, 0],
                 'messages_new'     => ['INT(10) UNSIGNED', false, 0],
                 'messages_all'     => ['INT(10) UNSIGNED', false, 0],
-                'pmsn_last_post'   => ['INT(10) UNSIGNED', true],
+                'pmsn_last_post'   => ['INT(10) UNSIGNED', false, 0],
                 'warning_flag'     => ['TINYINT(1)', false, 0],
                 'warning_all'      => ['INT(10) UNSIGNED', false, 0],
                 'gender'           => ['TINYINT(4) UNSIGNED', false, 0],
@@ -952,7 +952,7 @@ class Install extends Page
                 'poster'    => ['VARCHAR(190)', false, ''],
                 'poster_id' => ['INT(10) UNSIGNED', false, 0],
                 'posted'    => ['INT(10) UNSIGNED', false, 0],
-                'message'   => ['TEXT', true],
+                'message'   => ['TEXT', false],
             ],
             'PRIMARY KEY' => ['id'],
             'ENGINE' => $this->DBEngine,
@@ -978,7 +978,7 @@ class Install extends Page
             'FIELDS' => [
                 'tid' => ['INT(10) UNSIGNED', false],
                 'uid' => ['INT(10) UNSIGNED', false],
-                'rez' => ['TEXT', true],
+                'rez' => ['TEXT', false],
             ],
             'PRIMARY KEY' => ['tid', 'uid'],
             'ENGINE' => $this->DBEngine,
@@ -1037,8 +1037,8 @@ class Install extends Page
         $this->c->DB->exec('UPDATE ::groups SET g_pm_limit=0 WHERE g_id=?i', [$this->c->GROUP_ADMIN]);
 
         $ip = \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: 'unknow';
-        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password) VALUES (?i, ?s, ?s)', [$this->c->GROUP_GUEST, \ForkBB\__('Guest '), \ForkBB\__('Guest ')]);
-        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, email, email_normal, language, style, num_posts, last_post, registered, registration_ip, last_visit) VALUES (?i, ?s, ?s, ?s, ?s, ?s, ?s, ?i, ?i, ?i, ?s, ?i)', [$this->c->GROUP_ADMIN, $v->username, password_hash($v->password, \PASSWORD_DEFAULT), $v->email, $this->c->NormEmail->normalize($v->email), $v->defaultlang, $v->defaultstyle, 1, $now, $now, $ip, $now]);
+        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, signature) VALUES (?i, ?s, ?s, \'\')', [$this->c->GROUP_GUEST, \ForkBB\__('Guest '), \ForkBB\__('Guest ')]);
+        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, email, email_normal, language, style, num_posts, last_post, registered, registration_ip, last_visit, signature) VALUES (?i, ?s, ?s, ?s, ?s, ?s, ?s, ?i, ?i, ?i, ?s, ?i, \'\')', [$this->c->GROUP_ADMIN, $v->username, password_hash($v->password, \PASSWORD_DEFAULT), $v->email, $this->c->NormEmail->normalize($v->email), $v->defaultlang, $v->defaultstyle, 1, $now, $now, $ip, $now]);
 
         $pun_config = [
             'i_fork_revision'         => $this->c->FORK_REVISION,
@@ -1074,7 +1074,7 @@ class Install extends Page
             'o_additional_navlinks'   => '',
             'o_report_method'         => 0,
             'o_regs_report'           => 0,
-            'o_default_email_setting' => 1,
+            'o_default_email_setting' => 2,
             'o_mailing_list'          => $v->email,
             'o_avatars'               => \in_array(\strtolower(@\ini_get('file_uploads')), ['on', 'true', '1']) ? 1 : 0,
             'o_avatars_dir'           => '/img/avatars',
@@ -1138,7 +1138,7 @@ class Install extends Page
         }
 
         $this->c->DB->exec('INSERT INTO ::categories (cat_name, disp_position) VALUES (?s, ?i)', [\ForkBB\__('Test category'), 1]);
-        $this->c->DB->exec('INSERT INTO ::forums (forum_name, forum_desc, num_topics, num_posts, last_post, last_post_id, last_poster, last_topic, disp_position, cat_id) VALUES (?s, ?s, ?i, ?i, ?i, ?i, ?s, ?s, ?i, ?i)', [\ForkBB\__('Test forum'), \ForkBB\__('This is just a test forum'), 1, 1, $now, 1, $v->username, \ForkBB\__('Test post'), 1, 1]);
+        $this->c->DB->exec('INSERT INTO ::forums (forum_name, forum_desc, num_topics, num_posts, last_post, last_post_id, last_poster, last_topic, disp_position, cat_id, moderators) VALUES (?s, ?s, ?i, ?i, ?i, ?i, ?s, ?s, ?i, ?i, \'\')', [\ForkBB\__('Test forum'), \ForkBB\__('This is just a test forum'), 1, 1, $now, 1, $v->username, \ForkBB\__('Test post'), 1, 1]);
         $this->c->DB->exec('INSERT INTO ::topics (poster, subject, posted, first_post_id, last_post, last_post_id, last_poster, forum_id) VALUES(?s, ?s, ?i, ?i, ?i, ?i, ?s, ?i)', [$v->username, \ForkBB\__('Test post'), $now, 1, $now, 1, $v->username, 1]);
         $this->c->DB->exec('INSERT INTO ::posts (poster, poster_id, poster_ip, message, posted, topic_id) VALUES(?s, ?i, ?s, ?s, ?i, ?i)', [$v->username, 2, $ip, \ForkBB\__('Test message'), $now, 1]);
 

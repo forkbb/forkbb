@@ -9,9 +9,9 @@ class CalcStat extends Method
 {
     /**
      * Пересчитывает статистику темы
-     * 
+     *
      * @throws RuntimeException
-     * 
+     *
      * @return Topic
      */
     public function calcStat()
@@ -41,7 +41,7 @@ class CalcStat extends Method
         $this->model->num_replies  = $num_replies;
         $this->model->last_post_id = $result['last_post_id'];
         $this->model->last_poster  = $result['last_poster'];
-        $this->model->last_post    = (int) $result['edited'] > $result['posted'] ? (int) $result['edited'] : $result['posted'];
+        $this->model->last_post    = $result['edited'] > 0 && $result['edited'] > $result['posted'] ? $result['edited'] : $result['posted'];
 
         return $this->model;
     }

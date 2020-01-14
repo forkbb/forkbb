@@ -22,6 +22,9 @@ return [
     'GROUP_MEMBER'     => 4,
     'GROUP_NEW_MEMBER' => 5,
     'EOL'              => PHP_EOL,
+    'MAX_EMAIL_LENGTH' => 80,
+    'FLOOD_INTERVAL'   => 3600,
+
 
     'HMAC' => [
         'algo' => 'sha1',
