@@ -56,13 +56,14 @@ class ErrorHandler
      */
     public function __construct()
     {
+        $this->hidePath = \realpath(__DIR__ . '/../../');
+
         \set_error_handler([$this, 'errorHandler']);
         \set_exception_handler([$this, 'exceptionHandler']);
         \register_shutdown_function([$this, 'shutdownHandler']);
 
         \ob_start();
         $this->obLevel = \ob_get_level();
-        $this->hidePath = \realpath(__DIR__ . '/../../');
     }
 
     /**
@@ -93,6 +94,7 @@ class ErrorHandler
             'message' => $message,
             'file'    => $file,
             'line'    => $line,
+            'trace'   => \debug_backtrace(0),
         ];
         $this->log($error);
 
@@ -117,6 +119,7 @@ class ErrorHandler
             'message' => $e->getMessage(),
             'file'    => $e->getFile(),
             'line'    => $e->getLine(),
+            'trace'   => $e->getTrace(),
         ];
     }
 
@@ -171,9 +174,7 @@ class ErrorHandler
     protected function log(array $error)
     {
         $this->logged = true;
-        $type = isset($this->type[$error['type']]) ? $this->type[$error['type']] : $this->type[0];
-        $message = "PHP {$type}: \"{$error['message']}\" in {$error['file']}:[{$error['line']}]";
-        $message = \preg_replace('%[\x00-\x1F]%', ' ', $message);
+        $message = \preg_replace('%[\x00-\x1F]%', ' ', $this->message($error));
 
         \error_log($message);
     }
@@ -187,13 +188,108 @@ class ErrorHandler
     {
         \header('HTTP/1.1 500 Internal Server Error');
 
-        if (1 == \ini_get('display_errors')) {
-            $type = isset($this->type[$error['type']]) ? $this->type[$error['type']] : $this->type[0];
-            $file = \str_replace($this->hidePath, '...', $error['file']);
+        echo <<<'EOT'
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>500 Internal Server Error</title>
+</head>
+<body>
 
-            echo "PHP {$type}: \"{$error['message']}\" in {$file}:[{$error['line']}]";
+EOT;
+
+        if (1 == \ini_get('display_errors')) {
+            echo '<p>' . $this->e($this->message($error)) . '</p>';
+
+            if (isset($error['trace']) && \is_array($error['trace'])) {
+                echo '<div><p>Trace:</p><ol>';
+
+                foreach ($error['trace'] as $cur) {
+                    if (isset($cur['file'], $cur['line'], $error['file'], $error['line'])
+                        && $error['line'] === $cur['line']
+                        && $error['file'] === $cur['file']
+                    ) {
+                        continue;
+                    }
+
+                    $line = isset($cur['file']) ? $cur['file'] : '-';
+                    $line .= '(' . (isset($cur['line']) ? $cur['line'] : '-') . '): ';
+                    if (isset($cur['class'])) {
+                        $line .= $cur['class'] . $cur['type'];
+                    }
+                    $line .= (isset($cur['function']) ? $cur['function'] : 'unknown') . '(';
+
+                    if (! empty($cur['args']) && \is_array($cur['args'])) {
+                        $comma = '';
+
+                        foreach($cur['args'] as $arg) {
+                            $type = \gettype($arg);
+
+                            switch ($type) {
+                                case 'boolean':
+                                    $type = $arg ? 'true' : 'false';
+                                    break;
+                                case 'array':
+                                    $type .= '(' . \count($arg) . ')';
+                                    break;
+                                case 'resource':
+                                    $type = \get_resource_type($arg);
+                                    break;
+                                case 'object':
+                                    $type .= '{' . \get_class($arg) . '}';
+                                    break;
+                            }
+
+                            $line .= $comma . $type;
+                            $comma = ', ';
+                        }
+                    }
+                    $line .= ')';
+
+                    $line = $this->e(\str_replace($this->hidePath, '...', $line));
+                    echo "<li>{$line}</li>";
+                }
+
+                echo '</ol></div>';
+            }
         } else {
-            echo 'Oops';
+            echo '<p>Oops</p>';
         }
+
+        echo <<<'EOT'
+
+</body>
+</html>
+
+EOT;
+
+    }
+
+    /**
+     * Формирует сообщение
+     *
+     * @param array $error
+     *
+     * @return string
+     */
+    protected function message(array $error)
+    {
+        $type = isset($this->type[$error['type']]) ? $this->type[$error['type']] : $this->type[0];
+        $file = \str_replace($this->hidePath, '...', $error['file']);
+        return "PHP {$type}: \"{$error['message']}\" in {$file}:[{$error['line']}]";
+    }
+
+    /**
+     * Экранирует спецсимволов HTML-сущностями
+     *
+     * @param  string $arg
+     *
+     * @return string
+     */
+    protected function e($arg)
+    {
+        return \htmlspecialchars($arg, \ENT_HTML5 | \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8');
     }
 }
