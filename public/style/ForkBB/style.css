@@ -1635,7 +1635,8 @@ body,
     font-size: 0.875rem;
   }
 
-  #fork .f-avatar img {
+  #fork .f-avatar img,
+  #fork .f-post-body img {
     max-width: 100%;
     height: auto;
   }
