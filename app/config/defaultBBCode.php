@@ -294,12 +294,12 @@ return [
          // тег в подписи
          if ($parser->attr('isSign')) {
             if ($parser->attr('showImgSign')) {
-                return '<img src="' . $body . '" alt="' . $attrs['Def'] . '" class="sigimage" />';
+                return '<img src="' . $body . '" alt="' . $attrs['Def'] . '" loading="lazy" class="sigimage" />';
             }
          } else {
          // тег в теле сообщения
             if ($parser->attr('showImg')) {
-                return '<span class="postimg"><img src="' . $body . '" alt="' . $attrs['Def'] . '" /></span>';
+                return '<span class="postimg"><img src="' . $body . '" alt="' . $attrs['Def'] . '" loading="lazy" /></span>';
             }
          }
 

@@ -78,7 +78,7 @@
           </ul>
         @if ($p->user->showAvatar && $post->user->avatar)
           <p class="f-avatar">
-            <img alt="{{ $post->user->username }}" src="{!! $post->user->avatar !!}">
+            <img alt="{{ $post->user->username }}" src="{!! $post->user->avatar !!}" loading="lazy">
           </p>
         @endif
           <ul class="f-user-info">
