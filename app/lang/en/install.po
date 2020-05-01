@@ -70,7 +70,7 @@ msgid "Table prefix"
 msgstr "Table prefix"
 
 msgid "Info 6"
-msgstr "If you want to run multiple ForkBB installations in a single database, change this. The prefix may contain the letters a to z, any numbers and the underscore character. They must however start with a letter. The maximum length is 40 characters."
+msgstr "The prefix may contain the letters a to z, any numbers and the underscore character. They must however start with a letter. The maximum length is 40 characters."
 
 msgid "Administration setup"
 msgstr "<b>Administration setup</b>"
