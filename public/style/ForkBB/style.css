@@ -1459,6 +1459,11 @@ body,
   height: auto;
 }
 
+#fork .f-post-body img {
+  max-width: 100%;
+  height: auto;
+}
+
 #fork .f-username {
   font-size: 1.25rem;
   word-break: break-all;
@@ -1635,10 +1640,8 @@ body,
     font-size: 0.875rem;
   }
 
-  #fork .f-avatar img,
-  #fork .f-post-body img {
+  #fork .f-avatar img {
     max-width: 100%;
-    height: auto;
   }
 } /* @media screen and (min-width: 50rem) */
 
@@ -1703,7 +1706,8 @@ body,
   display: inline-block;
 }
 
-#fork textarea#id-message {
+#fork textarea#id-message,
+#fork textarea#id-reason {
   height: 11rem;
 }
 
@@ -1724,6 +1728,13 @@ body,
   #fork .f-field-w2 {
     width: 70%;
   }
+}
+
+/**********/
+/* Репорт */
+/**********/
+#id-fs-report > legend {
+  display: none;
 }
 
 /*********************/

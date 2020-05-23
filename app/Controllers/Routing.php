@@ -122,7 +122,10 @@ class Routing
             $r->add(self::GET, '/post/{id:[1-9]\d*}#p{id}',  'Topic:viewPost', 'ViewPost'  );
             $r->add(self::DUO, '/post/{id:[1-9]\d*}/edit',   'Edit:edit',      'EditPost'  );
             $r->add(self::DUO, '/post/{id:[1-9]\d*}/delete', 'Delete:delete',  'DeletePost');
-            $r->add(self::GET, '/post/{id:[1-9]\d*}/report', 'Report:report',  'ReportPost');
+            // сигналы (репорты)
+            if (! $user->isAdmin && ! $user->isGuest) { // ????
+                $r->add(self::DUO, '/post/{id:[1-9]\d*}/report', 'Report:report', 'ReportPost');
+            }
 
         }
         // админ и модератор

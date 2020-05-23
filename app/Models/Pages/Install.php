@@ -920,6 +920,7 @@ class Install extends Page
                 'warning_all'      => ['INT(10) UNSIGNED', false, 0],
                 'gender'           => ['TINYINT(4) UNSIGNED', false, 0],
                 'u_mark_all_read'  => ['INT(10) UNSIGNED', false, 0],
+                'last_report_id'   => ['INT(10) UNSIGNED', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
             'UNIQUE KEYS' => [

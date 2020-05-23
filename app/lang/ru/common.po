@@ -457,7 +457,7 @@ msgid "After time d"
 msgstr " дн"
 
 msgid "New reports"
-msgstr "Есть новые сигналы"
+msgstr "<a href=\"%s\">Есть новые сигналы</a>"
 
 msgid "Maintenance mode enabled"
 msgstr "<a href=\"%s\">Включен режим обслуживания!</a>"

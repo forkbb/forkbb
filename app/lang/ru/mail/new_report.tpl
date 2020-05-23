@@ -1,9 +1,9 @@
-Subject: Сигнал(<forum_id>) - '<topic_subject>'
+Subject: Сигнал(<forumId>) - '<topicSubject>'
 
-Пользователь '<username>' отправил сигнал на сообщение: <post_url>
+Пользователь '<username>' отправил сигнал на сообщение: <postLink>
 
 Причина: <reason>
 
 --
-Отправитель <board_mailer>
+Отправитель <fMailer>
 (Не отвечайте на это сообщение)

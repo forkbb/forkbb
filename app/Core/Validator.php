@@ -536,6 +536,9 @@ class Validator
                     case 'spaces':
                         $value = \preg_replace('%\s+%u', ' ', $value);
                         break;
+                    case 'linebreaks':
+                        $value = \str_replace(["\r\n", "\r"], "\n", $value);
+                        break;
                 }
             }
             return $value;

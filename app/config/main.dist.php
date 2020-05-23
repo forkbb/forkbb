@@ -99,6 +99,7 @@ return [
         'forums'     => '@ForumManager:init',
         'topics'     => \ForkBB\Models\Topic\Manager::class,
         'posts'      => \ForkBB\Models\Post\Manager::class,
+        'reports'    => \ForkBB\Models\Report\Manager::class,
         'user'       => '@users:current',
         'userRules'  => '@UsersRules:init',
         'users'      => \ForkBB\Models\User\Manager::class,
@@ -156,6 +157,7 @@ return [
         'Ban'             => \ForkBB\Models\Pages\Ban::class,
         'Debug'           => \ForkBB\Models\Pages\Debug::class,
         'Misc'            => \ForkBB\Models\Pages\Misc::class,
+        'Report'          => \ForkBB\Models\Pages\Report::class,
         'ProfileView'     => \ForkBB\Models\Pages\Profile\View::class,
         'ProfileEdit'     => \ForkBB\Models\Pages\Profile\Edit::class,
         'ProfileConfig'   => \ForkBB\Models\Pages\Profile\Config::class,
@@ -252,6 +254,9 @@ return [
         'PostManagerRebuildIndex' => \ForkBB\Models\Post\RebuildIndex::class,
         'PostManagerUserInfoFromIP' => \ForkBB\Models\Post\UserInfoFromIP::class,
         'PostManagerUserStat'     => \ForkBB\Models\Post\UserStat::class,
+
+        'ReportModel'             => \ForkBB\Models\Report\Model::class,
+        'ReportManagerSave'       => \ForkBB\Models\Report\Save::class,
 
         'GroupModel'         => \ForkBB\Models\Group\Model::class,
         'GroupManager'       => \ForkBB\Models\Group\Manager::class,

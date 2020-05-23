@@ -172,7 +172,7 @@ class Register extends Page
                 $this->c->Mail
                     ->reset()
                     ->setFolder($this->c->DIR_LANG)
-                    ->setLanguage($this->c->config->o_default_lang)
+                    ->setLanguage($this->c->config->o_default_lang) // ????
                     ->setTo($this->c->config->o_mailing_list)
                     ->setFrom($this->c->config->o_webmaster_email, \ForkBB\__('Mailer', $this->c->config->o_board_title))
                     ->setTpl('new_user.tpl', $tplData)

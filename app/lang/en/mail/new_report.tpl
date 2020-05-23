@@ -1,9 +1,9 @@
-Subject: Report(<forum_id>) - '<topic_subject>'
+Subject: Report(<forumId>) - '<topicSubject>'
 
-User '<username>' has reported the following message: <post_url>
+User '<username>' has reported the following message: <postLink>
 
 Reason: <reason>
 
 --
-<board_mailer> Mailer
+<fMailer> Mailer
 (Do not reply to this message)

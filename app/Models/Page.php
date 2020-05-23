@@ -146,6 +146,10 @@ abstract class Page extends Model
         if ($this->c->config->o_maintenance == '1' && $this->user->isAdmin) {
             $this->fIswev = ['w', \ForkBB\__('Maintenance mode enabled', $this->c->Router->link('AdminMaintenance'))];
         }
+
+        if ($this->user->isAdmMod && $this->user->last_report_id < $this->c->reports->lastId()) {
+            $this->fIswev = ['i', \ForkBB\__('New reports', $this->c->Router->link('AdminReports'))];
+        }
     }
 
     /**
