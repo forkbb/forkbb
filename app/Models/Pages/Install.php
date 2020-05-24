@@ -10,7 +10,7 @@ use RuntimeException;
 
 class Install extends Page
 {
-    const PHP_MIN = '5.6.12';
+    const PHP_MIN = '7.2.0';
 
     /**
      * Для MySQL

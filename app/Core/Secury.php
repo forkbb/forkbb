@@ -64,36 +64,6 @@ class Secury
     }
 
     /**
-     * Возвращает случайный набор байтов заданной длины
-     *
-     * @param int $len
-     *
-     * @throws RuntimeException
-     *
-     * @return string
-     */
-    public function randomKey(int $len): string
-    {
-        $key = '';
-        if (\function_exists('\\random_bytes')) {
-            $key .= (string) \random_bytes($len);
-        }
-        if (\strlen($key) < $len && \function_exists('\\mcrypt_create_iv')) {
-            $key .= (string) \mcrypt_create_iv($len, \MCRYPT_DEV_URANDOM);
-        }
-        if (\strlen($key) < $len && \function_exists('\\openssl_random_pseudo_bytes')) {
-            $tmp = (string) \openssl_random_pseudo_bytes($len, $strong);
-            if ($strong) {
-                $key .= $tmp;
-            }
-        }
-        if (\strlen($key) < $len) {
-            throw new RuntimeException('Could not gather sufficient random data');
-        }
-        return $key;
-    }
-
-    /**
      * Возвращает случайную строку заданной длины состоящую из символов 0-9 и a-f
      *
      * @param int $len
@@ -102,7 +72,7 @@ class Secury
      */
     public function randomHash(int $len): string
     {
-        return \substr(\bin2hex($this->randomKey($len)), 0, $len);
+        return \substr(\bin2hex(\random_bytes($len)), 0, $len);
     }
 
     /**
@@ -115,7 +85,7 @@ class Secury
      */
     public function randomPass(int $len): string
     {
-        $key = $this->randomKey($len);
+        $key = \random_bytes($len);
         $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
         $result = '';
         for ($i = 0; $i < $len; ++$i) {

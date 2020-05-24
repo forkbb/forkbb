@@ -24,7 +24,7 @@
         }
     ],
     "require": {
-        "php": ">=5.6.12",
+        "php": ">=7.2.0",
         "ext-gd": "*",
         "ext-mbstring": "*",
         "artoodetoo/dirk": "dev-visman",
