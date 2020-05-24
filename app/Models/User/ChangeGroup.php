@@ -14,12 +14,12 @@ class ChangeGroup extends Action
      * Обновляет группу указанных пользователей
      *
      * @param int $newGroupId
-     * @param array ...$users
+     * @param User ...$users
      *
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    public function changeGroup(int $newGroupId, ...$users): void
+    public function changeGroup(int $newGroupId, User ...$users): void
     {
         $newGroup = $this->c->groups->get($newGroupId);
         if (null === $newGroup || $newGroup->groupGuest) {

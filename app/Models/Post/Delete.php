@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Post;
 
 use ForkBB\Models\Action;
+use ForkBB\Models\DataModel;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Post\Model as Post;
 use ForkBB\Models\Topic\Model as Topic;
@@ -16,12 +17,12 @@ class Delete extends Action
     /**
      * Удаляет тему(ы)
      *
-     * @param mixed ...$args
+     * @param DataModel ...$args
      *
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    public function delete(...$args): void
+    public function delete(DataModel ...$args): void
     {
         if (empty($args)) {
             throw new InvalidArgumentException('No arguments, expected User(s), Forum(s), Topic(s) or Post(s)');
@@ -68,7 +69,7 @@ class Delete extends Action
                 }
                 $posts[$arg->id]         = $arg->id;
                 $parents[$arg->topic_id] = $arg->parent;
-                $users[$post->poster_id] = $post->poster_id;
+                $users[$arg->poster_id]  = $arg->poster_id;
                 $isPost                  = 1;
             } else {
                 throw new InvalidArgumentException('Expected User(s), Forum(s), Topic(s) or Post(s)');

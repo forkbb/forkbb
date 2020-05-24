@@ -3,10 +3,9 @@
 namespace ForkBB\Models\Categories;
 
 use ForkBB\Models\ManagerModel;
-//use ForkBB\Models\Categories\Model as Categories;
+use PDO;
 use InvalidArgumentException;
 use RuntimeException;
-use PDO;
 
 class Manager extends ManagerModel
 {

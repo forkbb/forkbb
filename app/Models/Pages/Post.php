@@ -20,7 +20,7 @@ class Post extends Page
      *
      * @return Page
      */
-    public function newTopic(array $args, string $method): Post
+    public function newTopic(array $args, string $method): Page
     {
         $forum = $this->c->forums->get((int) $args['id']);
 
@@ -64,7 +64,7 @@ class Post extends Page
      *
      * @return Page
      */
-    public function newReply(array $args, string $method): Post
+    public function newReply(array $args, string $method): Page
     {
         $topic = $this->c->topics->load((int) $args['id']);
 
@@ -121,7 +121,7 @@ class Post extends Page
      *
      * @return Page
      */
-    protected function endPost(Model $model, Validator $v): Post
+    protected function endPost(Model $model, Validator $v): Page
     {
         $now       = \time();
         $username  = $this->user->isGuest ? $v->username : $this->user->username;

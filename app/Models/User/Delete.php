@@ -14,12 +14,12 @@ class Delete extends Action
     /**
      * Удаляет пользователя(ей)
      *
-     * @param mixed ...$users
+     * @param User ...$users
      *
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    public function delete(...$users): void
+    public function delete(User ...$users): void
     {
         if (empty($users)) {
             throw new InvalidArgumentException('No arguments, expected User(s)');

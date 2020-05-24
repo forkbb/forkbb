@@ -3,7 +3,7 @@
 namespace ForkBB\Models\Config;
 
 use ForkBB\Models\Method;
-use ForkBB\Models\Config\Model;
+use ForkBB\Models\Config\Model as Config;
 
 class Save extends Method
 {
@@ -13,7 +13,7 @@ class Save extends Method
      *
      * @return Config
      */
-    public function save(): Model
+    public function save(): Config
     {
         $modified = $this->model->getModified();
         if (empty($modified)) {

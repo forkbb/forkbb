@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Search;
 
 use ForkBB\Models\Method;
+use ForkBB\Models\DataModel;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Post\Model as Post;
 use ForkBB\Models\Topic\Model as Topic;
@@ -16,12 +17,12 @@ class Delete extends Method
     /**
      * Удаление индекса
      *
-     * @param mixed ...$args
+     * @param DataModel ...$args
      *
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    public function delete(...$args): void
+    public function delete(DataModel ...$args): void
     {
         if (empty($args)) {
             throw new InvalidArgumentException('No arguments, expected User(s), Forum(s), Topic(s) or Post(s)');

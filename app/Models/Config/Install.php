@@ -3,7 +3,7 @@
 namespace ForkBB\Models\Config;
 
 use ForkBB\Models\Method;
-use ForkBB\Models\Config\Model;
+use ForkBB\Models\Config\Model as Config;
 
 class Install extends Method
 {
@@ -12,7 +12,7 @@ class Install extends Method
      *
      * @return Config
      */
-    public function install(): Model
+    public function install(): Config
     {
         $this->model->setAttrs($this->c->forConfig);
         return $this->model;

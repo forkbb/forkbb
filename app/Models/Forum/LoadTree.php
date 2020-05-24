@@ -3,7 +3,7 @@
 namespace ForkBB\Models\Forum;
 
 use ForkBB\Models\Action;
-use ForkBB\Models\Forum\Model;
+use ForkBB\Models\Forum\Model as Forum;
 
 class LoadTree extends Action
 {
@@ -14,7 +14,7 @@ class LoadTree extends Action
      *
      * @return null|Forum
      */
-    public function loadTree(int $rootId): ?Model
+    public function loadTree(int $rootId): ?Forum
     {
         $root = $this->manager->get($rootId);
         if (null === $root) {

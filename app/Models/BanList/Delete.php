@@ -3,7 +3,7 @@
 namespace ForkBB\Models\BanList;
 
 use ForkBB\Models\Method;
-use ForkBB\Models\BanList\Model;
+use ForkBB\Models\BanList\Model as BanList;
 
 class Delete extends Method
 {
@@ -15,7 +15,7 @@ class Delete extends Method
      *
      * @return BanList\Model
      */
-    public function delete(array $ids): Model
+    public function delete(array $ids): BanList
     {
         if (! empty($ids)) {
             $vars = [

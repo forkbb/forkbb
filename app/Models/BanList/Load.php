@@ -3,7 +3,7 @@
 namespace ForkBB\Models\BanList;
 
 use ForkBB\Models\Method;
-use ForkBB\Models\BanList\Model;
+use ForkBB\Models\BanList\Model as BanList;
 
 class Load extends Method
 {
@@ -13,7 +13,7 @@ class Load extends Method
      *
      * @return BanList\Model
      */
-    public function load(): Model
+    public function load(): BanList
     {
         $userList  = [];
         $emailList = [];

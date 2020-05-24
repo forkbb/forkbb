@@ -5,9 +5,9 @@ namespace ForkBB\Models\Forum;
 use ForkBB\Models\DataModel;
 use ForkBB\Models\User\Model as User;
 use ForkBB\Models\Forum\Model as Forum;
+use PDO;
 use RuntimeException;
 use InvalidArgumentException;
-use PDO;
 
 class Model extends DataModel
 {
@@ -185,11 +185,11 @@ class Model extends DataModel
     /**
      * Добавляет указанных пользователей в список модераторов
      *
-     * @param array ...$users
+     * @param User ...$users
      *
      * @throws InvalidArgumentException
      */
-    public function modAdd(...$users): void
+    public function modAdd(User ...$users): void
     {
         $attr = $this->getAttr('moderators');
         if (empty($attr) || ! \is_array($attr)) {
@@ -209,11 +209,11 @@ class Model extends DataModel
     /**
      * Удаляет указанных пользователей из списка модераторов
      *
-     * @param array ...$users
+     * @param User ...$users
      *
      * @throws InvalidArgumentException
      */
-    public function modDelete(...$users): void
+    public function modDelete(User ...$users): void
     {
         $attr = $this->getAttr('moderators');
         if (empty($attr) || ! \is_array($attr)) {

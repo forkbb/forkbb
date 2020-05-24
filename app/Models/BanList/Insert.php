@@ -3,8 +3,8 @@
 namespace ForkBB\Models\BanList;
 
 use ForkBB\Models\Method;
+use ForkBB\Models\BanList\Model as BanList;
 use InvalidArgumentException;
-use ForkBB\Models\BanList\Model;
 
 class Insert extends Method
 {
@@ -15,7 +15,7 @@ class Insert extends Method
      *
      * @return BanList\Model
      */
-    public function insert(array $ban): Model
+    public function insert(array $ban): BanList
     {
         if (isset($ban['id'])
             || ! isset($ban['username'])
