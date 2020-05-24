@@ -19,7 +19,7 @@ class Delete extends Action
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    public function delete(...$users)
+    public function delete(...$users): void
     {
         if (empty($users)) {
             throw new InvalidArgumentException('No arguments, expected User(s)');

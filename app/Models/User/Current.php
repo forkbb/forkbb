@@ -3,6 +3,7 @@
 namespace ForkBB\Models\User;
 
 use ForkBB\Models\Action;
+use ForkBB\Models\User\Model as User;
 use RuntimeException;
 
 class Current extends Action
@@ -13,7 +14,7 @@ class Current extends Action
      *
      * @return User
      */
-    public function current()
+    public function current(): User
     {
         $cookie = $this->c->Cookie;
         $user = $this->load((int) $cookie->uId);
@@ -78,7 +79,7 @@ class Current extends Action
      *
      * @return User;
      */
-    protected function load($id)
+    protected function load(int $id): User
     {
         $data = null;
         $ip = $this->getIp();
@@ -103,7 +104,7 @@ class Current extends Action
      *
      * @return string
      */
-    protected function getIp()
+    protected function getIp(): string
     {
        return \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: 'unknow';
     }
@@ -113,7 +114,7 @@ class Current extends Action
      *
      * @return string
      */
-    protected function getUserAgent()
+    protected function getUserAgent(): string
     {
         $ua = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
         return \is_string($ua) ? \trim($ua) : '';
@@ -165,7 +166,7 @@ class Current extends Action
      *
      * @return string
      */
-    protected function nameBot($agent, $agentL)
+    protected function nameBot(string $agent, string $agentL): string
     {
         if (\strpos($agentL, 'mozilla') !== false) {
             $agent = \preg_replace('%Mozilla.*?compatible%i', ' ', $agent);
@@ -255,7 +256,7 @@ class Current extends Action
      *
      * @return string
      */
-    protected function getLangFromHTTP()
+    protected function getLangFromHTTP(): string
     {
         if (! empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $langs = $this->c->Func->getLangs();

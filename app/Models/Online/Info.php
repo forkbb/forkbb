@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Online;
 
 use ForkBB\Models\Method;
+use ForkBB\Models\Online\Model as Online;
 
 class Info extends Method
 {
@@ -11,7 +12,7 @@ class Info extends Method
      *
      * @return null|Online\Model
      */
-    public function info()
+    public function info(): ?Online
     {
         if (! $this->model->detail) {
             return null;

@@ -3,6 +3,7 @@
 namespace ForkBB\Controllers;
 
 use ForkBB\Core\Container;
+use ForkBB\Models\Page;
 
 class Primary
 {
@@ -29,7 +30,7 @@ class Primary
      *
      * @return Page|null
      */
-    public function check()
+    public function check(): ?Page
     {
         if ($this->c->config->o_maintenance && ! $this->c->MAINTENANCE_OFF) {
             if (! isset($this->c->admins->list[$this->c->Cookie->uId])
@@ -50,5 +51,7 @@ class Primary
         if (! $this->c->user->isAdmin && $this->c->bans->check($this->c->user)) {
             return $this->c->Ban->ban($this->c->user);
         }
+
+        return null;
     }
 }

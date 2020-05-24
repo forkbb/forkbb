@@ -22,7 +22,7 @@ class Manager extends ManagerModel
      *
      * @return Forum
      */
-    public function create(array $attrs = [])
+    public function create(array $attrs = []): Forum
     {
         return $this->c->ForumModel->setAttrs($attrs);
     }
@@ -34,7 +34,7 @@ class Manager extends ManagerModel
      *
      * @return Manager
      */
-    public function init(Group $group = null)
+    public function init(Group $group = null): self
     {
         if (null === $group) {
             $gid = $this->c->user->group_id;
@@ -66,7 +66,7 @@ class Manager extends ManagerModel
      *
      * @return null|Forum
      */
-    public function get($id)
+    public function get($id): ?Forum
     {
         $forum = parent::get($id);
 
@@ -88,7 +88,7 @@ class Manager extends ManagerModel
      *
      * @return Forum
      */
-    public function update(Forum $forum)
+    public function update(Forum $forum): Forum
     {
         return $this->Save->update($forum);
     }
@@ -100,7 +100,7 @@ class Manager extends ManagerModel
      *
      * @return int
      */
-    public function insert(Forum $forum)
+    public function insert(Forum $forum): int
     {
         $id = $this->Save->insert($forum);
         $this->set($id, $forum);
@@ -116,7 +116,7 @@ class Manager extends ManagerModel
      *
      * @return array
      */
-    public function depthList(Forum $forum, $depth, array $list = [])
+    public function depthList(Forum $forum, int $depth, array $list = []): array
     {
         ++$depth;
         foreach ($forum->subforums as $sub) {

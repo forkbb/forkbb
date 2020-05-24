@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Pages\Admin;
 
 use ForkBB\Core\Container;
+use ForkBB\Models\Page;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Pages\Admin;
 
@@ -16,7 +17,7 @@ class Categories extends Admin
      *
      * @return Page
      */
-    public function view(array $args, $method)
+    public function view(array $args, string $method): Page
     {
         $this->c->Lang->load('admin_categories');
 
@@ -64,7 +65,7 @@ class Categories extends Admin
      *
      * @return array
      */
-    protected function formEdit()
+    protected function formEdit(): array
     {
         $form = [
             'action' => $this->c->Router->link('AdminCategories'),
@@ -137,7 +138,7 @@ class Categories extends Admin
      *
      * @return Page
      */
-    public function delete(array $args, $method)
+    public function delete(array $args, string $method): Page
     {
         $category = $this->c->categories->get((int) $args['id']);
         if (! $category) {
@@ -187,7 +188,7 @@ class Categories extends Admin
      *
      * @return array
      */
-    protected function formDelete(array $args, array $category)
+    protected function formDelete(array $args, array $category): array
     {
         return [
             'action' => $this->c->Router->link('AdminCategoriesDelete', $args),

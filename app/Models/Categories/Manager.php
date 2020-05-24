@@ -21,7 +21,7 @@ class Manager extends ManagerModel
      *
      * @return Manager
      */
-    public function init()
+    public function init(): self
     {
         $sql = 'SELECT c.id, c.cat_name, c.disp_position
                 FROM ::categories AS c
@@ -30,12 +30,12 @@ class Manager extends ManagerModel
         return $this;
     }
 
-    public function getList()
+    public function getList(): array
     {
         return $this->repository;
     }
 
-    public function set($key, $value)
+    public function set($key, $value): self
     {
         if (! isset($value['cat_name'], $value['disp_position'])) {
             throw new InvalidArgumentException('Expected array with cat_name and disp_position elements');
@@ -52,9 +52,11 @@ class Manager extends ManagerModel
         if ($old != $value) {
             $this->modified[$key] = true;
         }
+
+        return $this;
     }
 
-    public function update()
+    public function update(): self
     {
         foreach ($this->modified as $key => $value) {
             $cat = $this->get($key);
@@ -73,7 +75,7 @@ class Manager extends ManagerModel
         return $this;
     }
 
-    public function insert($name)
+    public function insert(string $name): int
     {
         $pos = 0;
         foreach ($this->repository as $cat) {
@@ -98,7 +100,7 @@ class Manager extends ManagerModel
         return $cid;
     }
 
-    public function delete($cid)
+    public function delete(int $cid): self
     {
         $root = $this->c->forums->get(0);
         $del  = [];

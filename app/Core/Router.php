@@ -91,7 +91,7 @@ class Router
      *
      * @return string
      */
-    public function validate($url, $defMarker, array $defArgs = [])
+    public function validate($url, string $defMarker, array $defArgs = []): string
     {
         if (\is_string($url)
             && \parse_url($url, PHP_URL_HOST) === $this->host
@@ -116,7 +116,7 @@ class Router
      *
      * @return string
      */
-    public function link($marker = null, array $args = [])
+    public function link(string $marker = null, array $args = []): string
     {
         $result = $this->baseUrl;
         $anchor = isset($args['#']) ? '#' . \rawurlencode($args['#']) : '';
@@ -167,7 +167,7 @@ class Router
      *
      * @return array
      */
-    public function route($method, $uri)
+    public function route(string $method, string $uri): array
     {
         $head = $method == 'HEAD';
 
@@ -239,7 +239,7 @@ class Router
      * @param string $handler
      * @param string $marker
      */
-    public function add($method, $route, $handler, $marker = null)
+    public function add($method, string $route, string $handler, string $marker = null): void
     {
         if (\is_array($method)) {
             foreach ($method as $m) {
@@ -293,9 +293,9 @@ class Router
      *
      * @param string $route
      *
-     * @return array|false
+     * @return array|null
      */
-    protected function parse($route)
+    protected function parse(string $route): ?array
     {
         $parts = \preg_split('%([\[\]{}/])%', $route, -1, \PREG_SPLIT_NO_EMPTY | \PREG_SPLIT_DELIM_CAPTURE);
 
@@ -323,14 +323,14 @@ class Router
             if ($var) {
                 switch ($part) {
                     case '{':
-                        return false;
+                        return null;
                     case '}':
                         $data = \explode(':', $buffer, 2);
                         if (! isset($data[1])) {
                             $data[1] = '[^/\x00-\x1f]+';
                         }
                         if ($data[0] === '' || $data[1] === '' || \is_numeric($data[0][0])) {
-                            return false;
+                            return null;
                         }
                         $pattern .= '(?P<' . $data[0] . '>' . $data[1] . ')';
                         $args[]   = $data[0];
@@ -350,7 +350,7 @@ class Router
                         $temp    .= $part;
                         break;
                     default:
-                        return false;
+                        return null;
                 }
             } else {
                 switch ($part) {
@@ -364,7 +364,7 @@ class Router
                     case ']':
                         --$s;
                         if ($s < 0) {
-                            return false;
+                            return null;
                         }
                         $pattern .= ')?';
                         $req      = true;
@@ -374,7 +374,7 @@ class Router
                         $var = true;
                         break;
                     case '}':
-                        return false;
+                        return null;
                     default:
                         $pattern .= \preg_quote($part, '%');
                         $temp    .= $part;
@@ -382,7 +382,7 @@ class Router
             }
         }
         if ($var || $s) {
-            return false;
+            return null;
         }
         $pattern .= '$%D';
         return [$base, $pattern, $args, $temp, $argsReq];

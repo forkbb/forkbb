@@ -24,7 +24,7 @@ class Perm extends Action
      *
      * @return array
      */
-    public function get(Forum $forum)
+    public function get(Forum $forum): array
     {
         $vars = [
             ':fid' => $forum->id > 0 ? $forum->id : 0,
@@ -66,7 +66,7 @@ class Perm extends Action
      *
      * @throws RuntimeException
      */
-    public function update(Forum $forum, array $perms)
+    public function update(Forum $forum, array $perms): void
     {
         if ($forum->id < 1) {
             throw new RuntimeException('The forum does not have ID');
@@ -122,7 +122,7 @@ class Perm extends Action
      *
      * @throws RuntimeException
      */
-    public function reset(Forum $forum)
+    public function reset(Forum $forum): void
     {
         if ($forum->id < 1) {
             throw new RuntimeException('The forum does not have ID');
@@ -143,7 +143,7 @@ class Perm extends Action
      *
      * @throws RuntimeException
      */
-    public function delete(Group $group)
+    public function delete(Group $group): void
     {
         if ($group->g_id < 1) {
             throw new RuntimeException('The group does not have ID');
@@ -165,7 +165,7 @@ class Perm extends Action
      *
      * @throws RuntimeException
      */
-    public function copy(Group $from, Group $to)
+    public function copy(Group $from, Group $to): void
     {
         if ($from->g_id < 1 || $to->g_id < 1) {
             throw new RuntimeException('The group does not have ID');

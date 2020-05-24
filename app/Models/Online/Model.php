@@ -17,7 +17,7 @@ class Model extends ParentModel
      *
      * @return Online\Model
      */
-    public function calc(Page $page)
+    public function calc(Page $page): self
     {
         if ($this->done) {
             return $this;
@@ -138,7 +138,7 @@ class Model extends ParentModel
      *
      * @param string $position
      */
-    protected function updateUser($position)
+    protected function updateUser(string $position): void
     {
         // гость
         if ($this->c->user->isGuest) {
@@ -174,7 +174,7 @@ class Model extends ParentModel
      *
      * @param User $user
      */
-    public function delete(User $user)
+    public function delete(User $user): void
     {
         if ($user->isGuest) {
             $this->c->DB->exec('DELETE FROM ::online WHERE user_id=1 AND ident=?s:ip', [':ip' => $user->ip]);

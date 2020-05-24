@@ -17,7 +17,7 @@ class Save extends Action
      *
      * @return Report
      */
-    public function update(Report $report)
+    public function update(Report $report): Report
     {
         if ($report->id < 1) {
             throw new RuntimeException('The model does not have ID');
@@ -55,7 +55,7 @@ class Save extends Action
      *
      * @return int
      */
-    public function insert(Report $report)
+    public function insert(Report $report): int
     {
         if (null !== $report->id) {
             throw new RuntimeException('The model has ID');

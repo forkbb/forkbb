@@ -48,7 +48,7 @@ class Model
      *
      * @return bool
      */
-    public function __isset($name)
+    public function __isset($name): bool
     {
         return \array_key_exists($name, $this->zAttrs)
             || \array_key_exists($name, $this->zAttrsCalc)
@@ -60,7 +60,7 @@ class Model
      *
      * @param mixed $name
      */
-    public function __unset($name)
+    public function __unset($name): void
     {
         unset($this->zAttrs[$name]);
         $this->unsetCalc($name);
@@ -71,7 +71,7 @@ class Model
      *
      * @param mixed $name
      */
-    protected function unsetCalc($name)
+    protected function unsetCalc($name): void
     {
         unset($this->zAttrsCalc[$name]); //????
 
@@ -86,7 +86,7 @@ class Model
      * @param string $name
      * @param mixed $value
      */
-    public function __set($name, $value)
+    public function __set(string $name, $value): void
     {
         $this->unsetCalc($name);
 
@@ -106,7 +106,7 @@ class Model
      *
      * @return Model
      */
-    public function setAttr($name, $value)
+    public function setAttr(string $name, $value): self
     {
         $this->unsetCalc($name);
         $this->zAttrs[$name] = $value;
@@ -122,7 +122,7 @@ class Model
      *
      * @return Model
      */
-    public function setAttrs(array $attrs)
+    public function setAttrs(array $attrs): self
     {
         $this->zAttrs      = $attrs; //????
         $this->zAttrsCalc  = [];
@@ -137,7 +137,7 @@ class Model
      *
      * @return mixed
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         if (\array_key_exists($name, $this->zAttrsCalc)) {
             return $this->zAttrsCalc[$name];
@@ -157,7 +157,7 @@ class Model
      *
      * @return mixed
      */
-    public function getAttr($name, $default = null)
+    public function getAttr(string $name, $default = null)
     {
         return \array_key_exists($name, $this->zAttrs) ? $this->zAttrs[$name] : $default;
     }
@@ -170,7 +170,7 @@ class Model
      *
      * @return mixed
      */
-    public function __call($name, array $args)
+    public function __call(string $name, array $args)
     {
         $key = \str_replace(['ForkBB\\Models\\', 'ForkBB\\', '\\'], '', \get_class($this));
 

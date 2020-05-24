@@ -21,7 +21,7 @@ class Rules extends Model
      *
      * @return mixed
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         if (true === $this->ready) {
             return parent::__get($name);

@@ -2,8 +2,8 @@
 
 namespace ForkBB\Models\Pages;
 
-use ForkBB\Models\Page;
 use ForkBB\Core\Validator;
+use ForkBB\Models\Page;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\User\Model as User;
 use InvalidArgumentException;
@@ -13,7 +13,7 @@ class Search extends Page
     /**
      * Составление списка категорий/разделов для выбора
      */
-    protected function calcList()
+    protected function calcList(): void
     {
         $cid     = null;
         $options = [];
@@ -48,7 +48,7 @@ class Search extends Page
      *
      * @return Page
      */
-    public function viewAdvanced(array $args, $method)
+    public function viewAdvanced(array $args, string $method): Page
     {
         return $this->view($args, $method, true);
     }
@@ -62,7 +62,7 @@ class Search extends Page
      *
      * @return Page
      */
-    public function view(array $args, $method, $advanced = false)
+    public function view(array $args, string $method, bool $advanced = false): Page
     {
         $this->c->Lang->load('search');
         $this->calcList();
@@ -143,7 +143,7 @@ class Search extends Page
      *
      * @return array
      */
-    protected function formSearch(Validator $v = null)
+    protected function formSearch(Validator $v = null): array
     {
         return [
             'action' => $this->c->Router->link('Search'),
@@ -187,7 +187,7 @@ class Search extends Page
      *
      * @return array
      */
-    protected function formSearchAdvanced(Validator $v = null)
+    protected function formSearchAdvanced(Validator $v = null): array
     {
         return [
             'action' => $this->c->Router->link('SearchAdvanced'),
@@ -417,7 +417,7 @@ class Search extends Page
      *
      * @return Page
      */
-    public function action(array $args, $method, $advanced = false)
+    public function action(array $args, string $method, bool $advanced = false): Page
     {
         $this->c->Lang->load('search');
 
@@ -541,7 +541,7 @@ class Search extends Page
      *
      * @return array
      */
-    protected function crumbs(...$crumbs)
+    protected function crumbs(...$crumbs): array
     {
         $crumbs[] = [$this->c->Router->link('Search'), \ForkBB\__('Search')];
         return parent::crumbs(...$crumbs);

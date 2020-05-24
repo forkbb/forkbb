@@ -13,7 +13,7 @@ class GetList extends Method
      *
      * @return array
      */
-    public function getList(array $ids)
+    public function getList(array $ids): array
     {
         $vars = [
             ':ids' => $ids,

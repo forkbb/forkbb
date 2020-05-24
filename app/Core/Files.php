@@ -88,7 +88,7 @@ class Files
      *
      * @return int
      */
-    public function maxImgSize($unit = null)
+    public function maxImgSize(string $unit = null): int
     {
         return $this->size($this->maxImgSize, $unit);
     }
@@ -100,7 +100,7 @@ class Files
      *
      * @return int
      */
-    public function maxFileSize($unit = null)
+    public function maxFileSize(string $unit = null): int
     {
         return $this->size($this->maxFileSize, $unit);
     }
@@ -116,7 +116,7 @@ class Files
      *
      * @return int|float
      */
-    public function size($value, $to = null)
+    public function size($value, string $to = null)
     {
         if (\is_string($value)) {
             if (! \preg_match('%^([^a-z]+)([a-z]+)?$%i', \trim($value), $matches)) {
@@ -160,7 +160,7 @@ class Files
      *
      * @return null|string
      */
-    public function error()
+    public function error(): ?string
     {
         return $this->error;
     }
@@ -170,9 +170,9 @@ class Files
      *
      * @param mixed $file
      *
-     * @return false|string
+     * @return string|null
      */
-    public function isImage($file)
+    public function isImage($file): ?string
     {
         if (\is_string($file)) {
             if (\function_exists('\\exif_imagetype')) {
@@ -187,10 +187,10 @@ class Files
             } else {
                 $type = 0;
             }
-            return isset($this->imageType[$type]) ? $this->imageType[$type] : false;
+            return isset($this->imageType[$type]) ? $this->imageType[$type] : null;
         }
 
-        return $file instanceof Image ? $file->ext() : false;
+        return $file instanceof Image ? $file->ext() : null;
     }
 
     /**
@@ -291,7 +291,7 @@ class Files
 
         $isImage = $this->isImage($file['tmp_name']);
 
-        if (false !== $isImage) {
+        if (null !== $isImage) {
             $ext     = $isImage;
             $isImage = 'swf' !== $isImage; // флеш не будет картинкой
         }

@@ -4,6 +4,7 @@ namespace ForkBB\Models\Post;
 
 use ForkBB\Models\DataModel;
 use ForkBB\Models\User\Model as User;
+use ForkBB\Models\Topic\Model as Topic;
 use RuntimeException;
 
 class Model extends DataModel
@@ -15,7 +16,7 @@ class Model extends DataModel
      *
      * @return Topic\Model
      */
-    protected function getparent()
+    protected function getparent(): Topic
     {
         if ($this->topic_id < 1) {
             throw new RuntimeException('Parent is not defined');
@@ -29,7 +30,7 @@ class Model extends DataModel
      *
      * @return string
      */
-    protected function getlink()
+    protected function getlink(): string
     {
         return $this->c->Router->link('ViewPost', ['id' => $this->id]);
     }
@@ -41,7 +42,7 @@ class Model extends DataModel
      *
      * @return User\Model
      */
-    protected function getuser() //????
+    protected function getuser(): User //????
     {
         $user = $this->c->users->load($this->poster_id);
 
@@ -59,17 +60,17 @@ class Model extends DataModel
         return $user;
     }
 
-    protected function getcanReport()
+    protected function getcanReport(): bool
     {
         return ! $this->c->user->isAdmin && ! $this->c->user->isGuest;
     }
 
-    protected function getlinkReport()
+    protected function getlinkReport(): string
     {
         return $this->c->Router->link('ReportPost', ['id' => $this->id]);
     }
 
-    protected function getcanDelete()
+    protected function getcanDelete(): bool
     {
         if ($this->c->user->isGuest) {
             return false;
@@ -89,12 +90,12 @@ class Model extends DataModel
             );
     }
 
-    protected function getlinkDelete()
+    protected function getlinkDelete(): string
     {
         return $this->c->Router->link('DeletePost', ['id' => $this->id]);
     }
 
-    protected function getcanEdit()
+    protected function getcanEdit(): bool
     {
         if ($this->c->user->isGuest) {
             return false;
@@ -112,17 +113,17 @@ class Model extends DataModel
             );
     }
 
-    protected function getlinkEdit()
+    protected function getlinkEdit(): string
     {
         return $this->c->Router->link('EditPost', ['id' => $this->id]);
     }
 
-    protected function getcanQuote()
+    protected function getcanQuote(): bool
     {
         return $this->parent->canReply;
     }
 
-    protected function getlinkQuote()
+    protected function getlinkQuote(): string
     {
         return $this->c->Router->link('NewReply', ['id' => $this->parent->id, 'quote' => $this->id]);
     }
@@ -132,7 +133,7 @@ class Model extends DataModel
      *
      * @return string
      */
-    public function html()
+    public function html(): string
     {
         return $this->c->censorship->censor($this->c->Parser->parseMessage($this->message, (bool) $this->hide_smilies));
     }

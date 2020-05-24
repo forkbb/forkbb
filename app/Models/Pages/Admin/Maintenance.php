@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Pages\Admin;
 
 use ForkBB\Core\Validator;
+use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin;
 use ForkBB\Models\Config\Model as Config;
 
@@ -16,7 +17,7 @@ class Maintenance extends Admin
      *
      * @return Page
      */
-    public function view(array $args, $method)
+    public function view(array $args, string $method): Page
     {
         $this->c->Lang->load('admin_maintenance');
 
@@ -61,7 +62,7 @@ class Maintenance extends Admin
      *
      * @return array
      */
-    protected function formMaintenance(Config $config)
+    protected function formMaintenance(Config $config): array
     {
         return [
             'action' => $this->c->Router->link('AdminMaintenance'),
@@ -103,7 +104,7 @@ class Maintenance extends Admin
      *
      * @return array
      */
-    protected function formRebuild()
+    protected function formRebuild(): array
     {
         return [
             'action' => $this->c->Router->link('AdminMaintenanceRebuild'),
@@ -193,7 +194,7 @@ class Maintenance extends Admin
      *
      * @return Page
      */
-    public function rebuild(array $args, $method)
+    public function rebuild(array $args, string $method): Page
     {
         $this->c->Lang->load('admin_maintenance');
 

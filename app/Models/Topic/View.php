@@ -22,7 +22,7 @@ class View extends Action
      *
      * @return array
      */
-    public function view($arg)
+    public function view($arg): array
     {
         if ($arg instanceof Forum) {
             $expanded = false;

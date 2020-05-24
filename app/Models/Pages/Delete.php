@@ -15,7 +15,7 @@ class Delete extends Page
      *
      * @return Page
      */
-    public function delete(array $args, $method)
+    public function delete(array $args, string $method): Page
     {
         $post = $this->c->posts->load((int) $args['id']);
 
@@ -76,7 +76,7 @@ class Delete extends Page
      *
      * @return array
      */
-    protected function formDelete(array $args, Post $post, $deleteTopic)
+    protected function formDelete(array $args, Post $post, bool $deleteTopic): array
     {
         return [
             'action' => $this->c->Router->link('DeletePost', ['id' => $post->id]),

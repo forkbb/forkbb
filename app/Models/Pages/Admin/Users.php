@@ -5,7 +5,6 @@ namespace ForkBB\Models\Pages\Admin;
 use ForkBB\Core\Container;
 use ForkBB\Models\Pages\Admin;
 use ForkBB\Models\User\Model as User;
-use ForkBB\Models\Rules;
 
 abstract class Users extends Admin
 {
@@ -34,7 +33,7 @@ abstract class Users extends Admin
      *
      * @return string
      */
-    protected function encodeData($data)
+    protected function encodeData($data): string
     {
         if (\is_array($data)) {
             unset($data['token']);
@@ -53,7 +52,7 @@ abstract class Users extends Admin
      *
      * @return mixed
      */
-    protected function decodeData($data)
+    protected function decodeData(string $data)
     {
         $data = \explode(':', $data);
 
@@ -84,7 +83,7 @@ abstract class Users extends Admin
      *
      * @return false|array
      */
-    protected function checkSelected(array $selected, $action, $profile = false)
+    protected function checkSelected(array $selected, string $action, bool $profile = false)
     {
         $selected = \array_map(function ($value) { // ????
             return (int) $value;

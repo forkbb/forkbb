@@ -2,6 +2,7 @@
 
 namespace ForkBB\Models\Pages\Profile;
 
+use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
 
 class View extends Profile
@@ -14,7 +15,7 @@ class View extends Profile
      *
      * @return Page
      */
-    public function view(array $args, $method)
+    public function view(array $args, string $method): Page
     {
         if (false === $this->initProfile($args['id'])) {
             return $this->c->Message->message('Bad request');
@@ -34,7 +35,7 @@ class View extends Profile
      *
      * @return array
      */
-    protected function form()
+    protected function form(): array
     {
         $form = [
             'sets' => []

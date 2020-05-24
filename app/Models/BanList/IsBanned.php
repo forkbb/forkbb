@@ -14,7 +14,7 @@ class IsBanned extends Method
      *
      * @return int
      */
-    public function isBanned(User $user)
+    public function isBanned(User $user): int
     {
         $name  = $this->model->trimToNull($user->username, true);
         // бан имени пользователя

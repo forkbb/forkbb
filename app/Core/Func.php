@@ -45,7 +45,7 @@ class Func
      *
      * @return array
      */
-    public function getStyles()
+    public function getStyles(): array
     {
         if (! \is_array($this->styles)) {
             $this->styles = $this->getFoldersWithFile($this->c->DIR_PUBLIC . '/style', 'style.css');
@@ -58,7 +58,7 @@ class Func
      *
      * @return array
      */
-    public function getLangs()
+    public function getLangs(): array
     {
         if (! \is_array($this->langs)) {
             $this->langs = $this->getFoldersWithFile($this->c->DIR_LANG, 'common.po');
@@ -71,7 +71,7 @@ class Func
      *
      * @return array
      */
-    public function getNameLangs()
+    public function getNameLangs(): array
     {
         if (! \is_array($this->nameLangs)) {
             $langs = $this->getLangs();
@@ -93,7 +93,7 @@ class Func
      *
      * @return array
      */
-    public function getFoldersWithFile($dir, $file)
+    public function getFoldersWithFile(string $dir, string $file): array
     {
         $result = [];
         if (\is_dir($dir) && ($dh = \opendir($dir)) !== false) {
@@ -123,7 +123,7 @@ class Func
      *
      * @return array
      */
-    public function paginate($all, $cur, $marker, array $args = [], $info = 'Page %1$s of %2$s')
+    public function paginate(int $all, int $cur, string $marker, array $args = [], string $info = 'Page %1$s of %2$s'): array
     {
         $pages = [];
         if ($all < 2) {
@@ -173,7 +173,7 @@ class Func
      *
      * @return array
      */
-    public function langParse($str)
+    public function langParse(string $str): array
     {
         $result = [];
 

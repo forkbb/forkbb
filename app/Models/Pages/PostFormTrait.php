@@ -18,7 +18,7 @@ trait PostFormTrait
      *
      * @return array
      */
-    protected function messageForm(array $args, Model $model, $marker, $editPost = false, $editSubject = false, $quickReply = false)
+    protected function messageForm(array $args, Model $model, string $marker, bool $editPost = false, bool $editSubject = false, bool $quickReply = false): array
     {
         $vars = isset($args['_vars']) ? $args['_vars'] : null;
         unset($args['_vars']);

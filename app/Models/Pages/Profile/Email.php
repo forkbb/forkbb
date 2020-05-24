@@ -4,6 +4,7 @@ namespace ForkBB\Models\Pages\Profile;
 
 use ForkBB\Core\Validator;
 use ForkBB\Core\Exceptions\MailException;
+use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
 use ForkBB\Models\User\Model as User;
 
@@ -17,7 +18,7 @@ class Email extends Profile
      *
      * @return Page
      */
-    public function setEmail(array $args, $method)
+    public function setEmail(array $args, string $method): Page
     {
         if ($this->user->id !== (int) $args['id']
             || ! \hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['email'] . $args['key']))
@@ -46,7 +47,7 @@ class Email extends Profile
      *
      * @return Page
      */
-    public function email(array $args, $method)
+    public function email(array $args, string $method): Page
     {
         if (false === $this->initProfile($args['id']) || ! $this->rules->editEmail) {
             return $this->c->Message->message('Bad request');
@@ -139,7 +140,7 @@ class Email extends Profile
      *
      * @return array
      */
-    protected function form()
+    protected function form(): array
     {
         $form = [
             'action' => $this->c->Router->link('EditUserEmail', ['id' => $this->curUser->id]),

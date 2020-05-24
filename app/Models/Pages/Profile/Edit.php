@@ -5,6 +5,7 @@ namespace ForkBB\Models\Pages\Profile;
 use ForkBB\Core\Image;
 use ForkBB\Core\Validator;
 use ForkBB\Core\Exceptions\MailException;
+use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
 use ForkBB\Models\User\Model as User;
 
@@ -18,7 +19,7 @@ class Edit extends Profile
      *
      * @return Page
      */
-    public function edit(array $args, $method)
+    public function edit(array $args, string $method): Page
     {
         if (false === $this->initProfile($args['id']) || ! $this->rules->editProfile) {
             return $this->c->Message->message('Bad request');
@@ -177,7 +178,7 @@ class Edit extends Profile
      *
      * @return array
      */
-    protected function form()
+    protected function form(): array
     {
         $form = [
             'action' => $this->c->Router->link('EditUserProfile', ['id' => $this->curUser->id]),

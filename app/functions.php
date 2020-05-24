@@ -9,28 +9,28 @@ use ForkBB\Core\Container;
  *
  * @param Container $c
  */
-function _init(Container $c)
+function _init(Container $c): void
 {
-    __($c);
-    cens($c);
-    dt($c);
+    __(null, $c);
+    cens('', $c);
+    dt(0, true, '', '', true, true, $c);
 }
 
 /**
  * Транслирует строку с подстановкой аргументов
  *
- * @param Container|string $arg
+ * @param string $arg
  * @param mixed ...$args
  *
  * @return string
  */
-function __($arg, ...$args)
+function __(?string $arg, ...$args): string
 {
     static $c;
 
-    if (empty($c)) {
-        $c = $arg;
-        return;
+    if (null === $arg && $args[0] instanceof Container) {
+        $c = $args[0];
+        return '';
     }
 
     $tr = $c->Lang->get($arg);
@@ -62,7 +62,7 @@ function __($arg, ...$args)
  *
  * @return string
  */
-function e($arg)
+function e(string $arg): string
 {
     return \htmlspecialchars($arg, \ENT_HTML5 | \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8');
 }
@@ -70,17 +70,18 @@ function e($arg)
 /**
  * Цензура
  *
- * @param Container|string $arg
+ * @param string $arg
+ * @param Container $container
  *
  * @return string
  */
-function cens($arg)
+function cens(string $arg, Container $container = null): string
 {
     static $c;
 
-    if (empty($c)) {
-        $c = $arg;
-        return;
+    if (null !== $container) {
+        $c = $container;
+        return '';
     }
 
     return $c->censorship->censor($arg);
@@ -94,7 +95,7 @@ function cens($arg)
  *
  * @return string
  */
-function num($number, $decimals = 0)
+function num($number, int $decimals = 0): string
 {
     return \is_numeric($number)
         ? \number_format($number, $decimals, __('lang_decimal_point'), __('lang_thousands_sep'))
@@ -104,22 +105,23 @@ function num($number, $decimals = 0)
 /**
  * Возвращает дату/время в формате текущего пользователя
  *
- * @param Container|int $arg
+ * @param int $arg
  * @param bool $dateOnly
  * @param string $dateFormat
  * @param string $timeFormat
  * @param bool $timeOnly
  * @param bool $noText
+ * @param Container $container
  *
  * @return string
  */
-function dt($arg, $dateOnly = false, $dateFormat = null, $timeFormat = null, $timeOnly = false, $noText = false)
+function dt(int $arg, bool $dateOnly = false, string $dateFormat = null, string $timeFormat = null, bool $timeOnly = false, bool $noText = false, Container $container = null): string
 {
     static $c;
 
-    if (empty($c)) {
-        $c = $arg;
-        return;
+    if (null !== $container) {
+        $c = $container;
+        return '';
     }
 
     if (empty($arg)) {
@@ -164,7 +166,7 @@ function dt($arg, $dateOnly = false, $dateFormat = null, $timeFormat = null, $ti
  *
  * @return string
  */
-function utc($timestamp)
+function utc(int $timestamp): string
 {
     return \gmdate('c', $timestamp); // Y-m-d\TH:i:s\Z
 }
@@ -176,7 +178,7 @@ function utc($timestamp)
  *
  * @return string
  */
-function size($size)
+function size(int $size): string
 {
     $units = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB'];
 

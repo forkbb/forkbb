@@ -18,7 +18,7 @@ class Markread extends Action
      *
      * @return Forum
      */
-    public function markread(Forum $forum, User $user)
+    public function markread(Forum $forum, User $user): Forum
     {
         if ($user->isGuest) {
             throw new RuntimeException('Expected user, not guest');

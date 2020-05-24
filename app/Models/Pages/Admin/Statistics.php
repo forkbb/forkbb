@@ -2,6 +2,7 @@
 
 namespace ForkBB\Models\Pages\Admin;
 
+use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin;
 
 class Statistics extends Admin
@@ -11,7 +12,7 @@ class Statistics extends Admin
      *
      * @return Page
      */
-    public function info()
+    public function info(): Page
     {
         // Is phpinfo() a disabled function?
         if (\strpos(\strtolower((string) \ini_get('disable_functions')), 'phpinfo') !== false) {
@@ -59,7 +60,7 @@ class Statistics extends Admin
      *
      * @return Page
      */
-    public function statistics()
+    public function statistics(): Page
     {
         $this->c->Lang->load('admin_index');
 

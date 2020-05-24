@@ -17,7 +17,7 @@ class Save extends Action
      *
      * @return Topic
      */
-    public function update(Topic $topic)
+    public function update(Topic $topic): Topic
     {
         if ($topic->id < 1) {
             throw new RuntimeException('The model does not have ID');
@@ -55,7 +55,7 @@ class Save extends Action
      *
      * @return int
      */
-    public function insert(Topic $topic)
+    public function insert(Topic $topic): int
     {
         if (null !== $topic->id) {
             throw new RuntimeException('The model has ID');

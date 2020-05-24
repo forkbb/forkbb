@@ -64,7 +64,7 @@ class Image extends File
      *
      * @return Image
      */
-    public function resize($maxW, $maxH)
+    public function resize(int $maxW, int $maxH): self
     {
         $oldW   = \imagesx($this->image);
         $oldH   = \imagesy($this->image);
@@ -105,14 +105,14 @@ class Image extends File
      *
      * @param string $path
      *
-     * @return false|array
+     * @return null|array
      */
-    protected function pathinfo($path)
+    protected function pathinfo(string $path): ?array
     {
         $info = parent::pathinfo($path);
 
-        if (false === $info) {
-            return false;
+        if (null === $info) {
+            return null;
         }
 
         if (\is_array($info['extension'])) {
@@ -133,7 +133,7 @@ class Image extends File
      *
      * @return bool
      */
-    protected function fileProc($path)
+    protected function fileProc(string $path): bool
     {
         switch (\pathinfo($path, \PATHINFO_EXTENSION)) {
             case 'jpg':

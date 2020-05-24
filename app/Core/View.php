@@ -85,7 +85,7 @@ EOD;
      *
      * @return null|string
      */
-    public function rendering(Page $p)
+    public function rendering(Page $p): ?string
     {
         foreach ($p->httpHeaders as $header) {
             \header($header[0], $header[1]);

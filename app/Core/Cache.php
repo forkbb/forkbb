@@ -30,7 +30,7 @@ class Cache
      *
      * @return mixed
      */
-    public function get($key, $default = null)
+    public function get(string $key, $default = null)
     {
         return $this->provider->get($key, $default);
     }
@@ -44,7 +44,7 @@ class Cache
      *
      * @return bool
      */
-    public function set($key, $value, $ttl = null)
+    public function set(string $key, $value, int $ttl = null): bool
     {
         return $this->provider->set($key, $value, $ttl);
     }
@@ -56,7 +56,7 @@ class Cache
      *
      * @return bool
      */
-    public function delete($key)
+    public function delete(striing $key): bool
     {
         return $this->provider->delete($key);
     }
@@ -66,7 +66,7 @@ class Cache
      *
      * @return bool
      */
-    public function clear()
+    public function clear(): bool
     {
         return $this->provider->clear();
     }
@@ -78,7 +78,7 @@ class Cache
      *
      * @return bool
      */
-    public function has($key)
+    public function has(string $key): bool
     {
         return $this->provider->has($key);
     }

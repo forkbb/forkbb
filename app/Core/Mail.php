@@ -89,7 +89,7 @@ class Mail
      *
      * @return false|string
      */
-    public function valid($email, $strict = false, $idna = false)
+    public function valid($email, bool $strict = false, bool $idna = false)
     {
         if (! \is_string($email)
             || \mb_strlen($email, 'UTF-8') > 80 //???? for DB
@@ -148,7 +148,7 @@ class Mail
      *
      * @return Mail
      */
-    public function reset()
+    public function reset(): self
     {
         $this->to = [];
         $this->headers = [];
@@ -163,7 +163,7 @@ class Mail
      *
      * @return Mail
      */
-    public function setSubject($subject)
+    public function setSubject(string $subject): self
     {
         $this->headers['Subject'] = $this->encodeText(\preg_replace('%[\x00-\x1F]%', '', \trim($subject)));
         return $this;
@@ -177,10 +177,9 @@ class Mail
      *
      * @return Mail
      */
-    public function addTo($email, $name = null)
+    public function addTo($email, string $name = null): self
     {
-        if (\is_array($email)) {
-        } else {
+        if (! \is_array($email)) {
             $email = \preg_split('%[,\n\r]%', (string) $email, -1, PREG_SPLIT_NO_EMPTY);
         }
         foreach($email as $cur) {
@@ -200,7 +199,7 @@ class Mail
      *
      * @return Mail
      */
-    public function setTo($email, $name = null)
+    public function setTo($email, string $name = null): self
     {
         $this->to = [];
         return $this->addTo($email, $name);
@@ -214,7 +213,7 @@ class Mail
      *
      * @return Mail
      */
-    public function setFrom($email, $name = null)
+    public function setFrom(string $email, string $name = null): self
     {
         $email = $this->valid($email, false, true);
         if (false !== $email) {
@@ -231,7 +230,7 @@ class Mail
      *
      * @return Mail
      */
-    public function setReplyTo($email, $name = null)
+    public function setReplyTo(string $email, string $name = null): self
     {
         $email = $this->valid($email, false, true);
         if (false !== $email) {
@@ -248,7 +247,7 @@ class Mail
      *
      * @return string
      */
-    protected function formatAddress($email, $name = null)
+    protected function formatAddress($email, string $name = null): string
     {
         if (! \is_string($name) || \strlen(\trim($name)) == 0) {
             return $email;
@@ -265,7 +264,7 @@ class Mail
      *
      * @return string
      */
-    protected function encodeText($str)
+    protected function encodeText(string $str): string
     {
         if (\preg_match('%[^\x20-\x7F]%', $str)) {
             return '=?UTF-8?B?' . \base64_encode($str) . '?=';
@@ -281,7 +280,7 @@ class Mail
      *
      * @return string
      */
-    protected function filterName($name)
+    protected function filterName(string $name): string
     {
         return \addcslashes(\preg_replace('%[\x00-\x1F]%', '', \trim($name)), '\\"');
     }
@@ -293,7 +292,7 @@ class Mail
      *
      * @return Mail
      */
-    public function setFolder($folder)
+    public function setFolder(string $folder): self
     {
         $this->folder = $folder;
         return $this;
@@ -306,7 +305,7 @@ class Mail
      *
      * @return Mail
      */
-    public function setLanguage($language)
+    public function setLanguage(string $language): self
     {
         $this->language = $language;
         return $this;
@@ -322,7 +321,7 @@ class Mail
      *
      * @return Mail
      */
-    public function setTpl($tpl, array $data)
+    public function setTpl(string $tpl, array $data): self
     {
         $file = \rtrim($this->folder, '\\/') . '/' . $this->language . '/mail/' . $tpl;
         if (! \is_file($file)) {
@@ -347,7 +346,7 @@ class Mail
      *
      * @return Mail
      */
-    public function setMessage($message)
+    public function setMessage(string $message): self
     {
         $this->message = \str_replace("\0", $this->EOL,
                          \str_replace(["\r\n", "\n", "\r"], "\0",
@@ -363,7 +362,7 @@ class Mail
      *
      * @return bool
      */
-    public function send()
+    public function send(): bool
     {
         if (empty($this->to)) {
             throw new MailException('No recipient for the email.');
@@ -398,7 +397,7 @@ class Mail
      *
      * @return bool
      */
-    protected function mail()
+    protected function mail(): bool
     {
         $to = \implode(', ', $this->to);
         $subject = $this->headers['Subject'];
@@ -415,7 +414,7 @@ class Mail
      *
      * @return string
      */
-    protected function strHeaders(array $headers)
+    protected function strHeaders(array $headers): string
     {
         foreach ($headers as $key => &$value) {
             $value = $key . ': ' . $value;
@@ -431,7 +430,7 @@ class Mail
      *
      * @return bool
      */
-    protected function smtp()
+    protected function smtp(): bool
     {
         // подлючение
         if (! \is_resource($this->connect)) {
@@ -461,7 +460,7 @@ class Mail
     /**
      * Hello SMTP server
      */
-    protected function smtpHello()
+    protected function smtpHello(): void
     {
         switch ($this->auth) {
             case 1:
@@ -496,9 +495,9 @@ class Mail
      *
      * @return string
      */
-    protected function smtpData($data, $code)
+    protected function smtpData(string $data, $code): string
     {
-        if (\is_resource($this->connect) && \is_string($data)) {
+        if (\is_resource($this->connect)) {
             if (@\fwrite($this->connect, $data . $this->EOL) === false) {
                 throw new SmtpException('Couldn\'t send data to mail server.');
             }
@@ -527,7 +526,7 @@ class Mail
      *
      * @return string
      */
-    protected function getEmailFrom($str)
+    protected function getEmailFrom(string $str): string
     {
         $match = \explode('" <', $str);
         if (\count($match) == 2 && \substr($match[1], -1) == '>') {
@@ -542,7 +541,7 @@ class Mail
      *
      * @return string
      */
-    protected function hostname()
+    protected function hostname(): string
     {
         return empty($_SERVER['SERVER_NAME'])
             ? (isset($_SERVER['SERVER_ADDR']) ? '[' . $_SERVER['SERVER_ADDR'] . ']' : '[127.0.0.1]')

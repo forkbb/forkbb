@@ -14,7 +14,7 @@ class Register extends Page
      *
      * @return Page
      */
-    public function reg()
+    public function reg(): Page
     {
         $this->c->Lang->load('register');
 
@@ -67,7 +67,7 @@ class Register extends Page
      *
      * @return array
      */
-    protected function formReg(Validator $v)
+    protected function formReg(Validator $v): array
     {
         return [
             'action' => $this->c->Router->link('RegisterForm'),
@@ -128,7 +128,7 @@ class Register extends Page
      *
      * @return Page
      */
-    protected function regEnd(Validator $v)
+    protected function regEnd(Validator $v): Page
     {
         if ('1' == $this->c->config->o_regs_verify) {
             $groupId = 0;
@@ -233,7 +233,7 @@ class Register extends Page
      *
      * @return Page
      */
-    public function activate(array $args)
+    public function activate(array $args): Page
     {
         if (! \hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['key']))
             || ! ($user = $this->c->users->load($args['id'])) instanceof User

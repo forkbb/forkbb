@@ -15,7 +15,7 @@ class UserStat extends Action
      *
      * @return array
      */
-    public function userStat($id)
+    public function userStat(int $id): array
     {
         $vars = [
             ':id' => $id,

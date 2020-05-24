@@ -11,7 +11,7 @@ class Model extends ParentModel
      *
      * @return BanList\Model
      */
-    public function init()
+    public function init(): self
     {
         if ($this->c->Cache->has('banlist')) {
             $list = $this->c->Cache->get('banlist');
@@ -39,7 +39,7 @@ class Model extends ParentModel
      *
      * @return null|string
      */
-    public function trimToNull($val, $toLower = false)
+    public function trimToNull($val, bool $toLower = false): ?string
     {
         $val = \trim($val);
         if ($val == '') {
@@ -58,7 +58,7 @@ class Model extends ParentModel
      *
      * @return string
      */
-    public function ip2hex($ip)
+    public function ip2hex(string $ip): string
     {
         $bin = \inet_pton($ip);
 

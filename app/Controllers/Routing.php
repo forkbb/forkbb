@@ -3,12 +3,14 @@
 namespace ForkBB\Controllers;
 
 use ForkBB\Core\Container;
+use ForkBB\Models\Page;
 
 class Routing
 {
     const DUO = ['GET', 'POST'];
     const GET = 'GET';
     const PST = 'POST';
+
     /**
      * Контейнер
      * @var Container
@@ -30,7 +32,7 @@ class Routing
      *
      * @return Page
      */
-    public function routing()
+    public function routing(): Page
     {
         $user = $this->c->user;
         $config = $this->c->config;

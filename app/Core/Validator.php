@@ -103,7 +103,7 @@ class Validator
      *
      * @return Validator
      */
-    public function reset()
+    public function reset(): self
     {
         $this->validators = [
             'absent'        => [$this, 'vAbsent'],
@@ -145,7 +145,7 @@ class Validator
      *
      * @return Validator
      */
-    public function addValidators(array $validators)
+    public function addValidators(array $validators): self
     {
         $this->validators = \array_replace($this->validators, $validators);
         return $this;
@@ -160,7 +160,7 @@ class Validator
      *
      * @return Validator
      */
-    public function addRules(array $list)
+    public function addRules(array $list): self
     {
         foreach ($list as $field => $raw) {
             $suffix = null;
@@ -206,7 +206,7 @@ class Validator
      *
      * @return Validator
      */
-    public function addArguments(array $arguments)
+    public function addArguments(array $arguments): self
     {
         $this->arguments = \array_replace($this->arguments, $arguments);
         return $this;
@@ -219,7 +219,7 @@ class Validator
      *
      * @return Validator
      */
-    public function addMessages(array $messages)
+    public function addMessages(array $messages): self
     {
         $this->messages = \array_replace($this->messages, $messages);
         return $this;
@@ -232,7 +232,7 @@ class Validator
      *
      * @return Validator
      */
-    public function addAliases(array $aliases)
+    public function addAliases(array $aliases): self
     {
         $this->aliases = \array_replace($this->aliases, $aliases);
         return $this;
@@ -247,7 +247,7 @@ class Validator
      *
      * @return bool
      */
-    public function validation(array $raw)
+    public function validation(array $raw): bool
     {
         if (empty($this->rules)) {
             throw new RuntimeException('Rules not found');
@@ -270,7 +270,7 @@ class Validator
      *
      * @return bool
      */
-    public function __isset($field)
+    public function __isset(string $field): bool
     {
         return isset($this->result[$field]);
     }
@@ -285,7 +285,7 @@ class Validator
      *
      * @return mixed
      */
-    public function __get($field)
+    public function __get(string $field)
     {
         if (isset($this->status[$field])) {
             return $this->result[$field];
@@ -326,7 +326,7 @@ class Validator
      *
      * @return mixed
      */
-    protected function checkValue($value, array $rules, $field)
+    protected function checkValue($value, array $rules, string $field)
     {
         foreach ($rules as $validator => $attr) {
             // данные для обработчика ошибок
@@ -356,7 +356,7 @@ class Validator
      *
      * @throws RuntimeException
      */
-    public function addError($error, $type = 'v')
+    public function addError($error, string $type = 'v'): void
     {
         if (empty($vars = \end($this->curData))) {
             throw new RuntimeException('The array of variables is empty');
@@ -395,7 +395,7 @@ class Validator
      *
      * @return mixed
      */
-    protected function getArguments($field, $rule)
+    protected function getArguments(string $field, string $rule)
     {
         if (isset($this->arguments[$field . '.' . $rule])) {
             return $this->arguments[$field . '.' . $rule];
@@ -413,7 +413,7 @@ class Validator
      *
      * @return bool
      */
-    public function getStatus($field)
+    public function getStatus(string $field): bool
     {
         if (! isset($this->status[$field])) {
             $this->__get($field);
@@ -431,7 +431,7 @@ class Validator
      *
      * @return array
      */
-    public function getData($all = false)
+    public function getData(bool $all = false): array
     {
         if (empty($this->status)) {
             throw new RuntimeException('Data not found');
@@ -451,7 +451,7 @@ class Validator
      *
      * @return array
      */
-    public function getErrors()
+    public function getErrors(): array
     {
         return $this->errors;
     }
@@ -786,12 +786,12 @@ class Validator
 
         if (\is_array($value)) {
             foreach ($value as $file) {
-                if (false === $this->c->Files->isImage($file)) {
+                if (null === $this->c->Files->isImage($file)) {
                     $this->addError('The :alias not contains image');
                     return null;
                 }
             }
-        } elseif (null !== $value && false === $this->c->Files->isImage($value)) {
+        } elseif (null !== $value && null === $this->c->Files->isImage($value)) {
             $this->addError('The :alias not contains image');
             return null;
         }

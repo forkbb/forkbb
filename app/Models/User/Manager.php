@@ -15,7 +15,7 @@ class Manager extends ManagerModel
      *
      * @return User
      */
-    public function create(array $attrs = [])
+    public function create(array $attrs = []): User
     {
         return $this->c->UserModel->setAttrs($attrs);
     }
@@ -89,7 +89,7 @@ class Manager extends ManagerModel
      *
      * @return User
      */
-    public function update(User $user)
+    public function update(User $user): User
     {
         return $this->Save->update($user);
     }
@@ -101,7 +101,7 @@ class Manager extends ManagerModel
      *
      * @return int
      */
-    public function insert(User $user)
+    public function insert(User $user): int
     {
         $id = $this->Save->insert($user);
         $this->set($id, $user);

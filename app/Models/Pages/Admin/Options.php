@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Pages\Admin;
 
 use ForkBB\Core\Validator;
+use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin;
 use ForkBB\Models\Config\Model as Config;
 
@@ -16,7 +17,7 @@ class Options extends Admin
      *
      * @return Page
      */
-    public function edit(array $args, $method)
+    public function edit(array $args, string $method): Page
     {
         $this->c->Lang->load('admin_options');
         $this->c->Lang->load('profile_other');
@@ -179,7 +180,7 @@ class Options extends Admin
      *
      * @return array
      */
-    protected function formEdit(Config $config)
+    protected function formEdit(Config $config): array
     {
         $form = [
             'action' => $this->c->Router->link('AdminOptions'),

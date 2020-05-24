@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Topic;
 
 use ForkBB\Models\Method;
+use ForkBB\Models\Topic\Model as Topic;
 use RuntimeException;
 
 class CalcStat extends Method
@@ -14,7 +15,7 @@ class CalcStat extends Method
      *
      * @return Topic
      */
-    public function calcStat()
+    public function calcStat(): Topic
     {
         if ($this->model->id < 1) {
             throw new RuntimeException('The model does not have ID');

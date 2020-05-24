@@ -11,7 +11,7 @@ class Index extends Page
      *
      * @return Page
      */
-    public function view()
+    public function view(): Page
     {
         $this->c->Lang->load('index');
         $this->c->Lang->load('subforums');

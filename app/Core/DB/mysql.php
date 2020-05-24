@@ -67,7 +67,7 @@ class Mysql
      *
      * @throws PDOException
      */
-    public function __call($name, array $args)
+    public function __call(string $name, array $args)
     {
         throw new PDOException("Method '{$name}' not found in DB driver.");
     }
@@ -79,7 +79,7 @@ class Mysql
      *
      * @throws PDOException
      */
-    protected function testStr($str)
+    protected function testStr(string $str): void
     {
         if (! \is_string($str) || \preg_match('%[^a-zA-Z0-9_]%', $str)) {
             throw new PDOException("Name '{$str}' have bad characters.");
@@ -93,7 +93,7 @@ class Mysql
      *
      * @return string
      */
-    protected function replIdxs(array $arr)
+    protected function replIdxs(array $arr): string
     {
         foreach ($arr as &$value) {
             if (\preg_match('%^(.*)\s*(\(\d+\))$%', $value, $matches)) {
@@ -115,7 +115,7 @@ class Mysql
      *
      * @return string
      */
-    protected function replType($type)
+    protected function replType(string $type): string
     {
         return \preg_replace(\array_keys($this->dbTypeRepl), \array_values($this->dbTypeRepl), $type);
     }
@@ -129,7 +129,8 @@ class Mysql
      *
      * @return string
      */
-    protected function convToStr($data) {
+    protected function convToStr($data): string
+    {
         if (\is_string($data)) {
             return $this->db->quote($data);
         } elseif (\is_numeric($data)) {
@@ -149,7 +150,7 @@ class Mysql
      *
      * @return bool
      */
-    public function tableExists($table, $noPrefix = false)
+    public function tableExists(string $table, bool $noPrefix = false): bool
     {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         try {
@@ -171,7 +172,7 @@ class Mysql
      *
      * @return bool
      */
-    public function fieldExists($table, $field, $noPrefix = false)
+    public function fieldExists(string $table, string $field, bool $noPrefix = false): bool
     {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         try {
@@ -193,7 +194,7 @@ class Mysql
      *
      * @return bool
      */
-    public function indexExists($table, $index, $noPrefix = false)
+    public function indexExists(string $table, string $index, bool $noPrefix = false): bool
     {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $index = $index == 'PRIMARY' ? $index : $table . '_' . $index;
@@ -216,7 +217,7 @@ class Mysql
      *
      * @return bool
      */
-    public function createTable($table, array $schema, $noPrefix = false)
+    public function createTable(string $table, array $schema, bool $noPrefix = false): bool
     {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $this->testStr($table);
@@ -297,7 +298,7 @@ class Mysql
      *
      * @return bool
      */
-    public function dropTable($table, $noPrefix = false)
+    public function dropTable(string $table, bool $noPrefix = false): bool
     {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $this->testStr($table);
@@ -313,7 +314,7 @@ class Mysql
      *
      * @return bool
      */
-    public function renameTable($old, $new, $noPrefix = false)
+    public function renameTable(string $old, string $new, bool $noPrefix = false): bool
     {
         if ($this->tableExists($new, $noPrefix) && ! $this->tableExists($old, $noPrefix)) {
             return true;
@@ -330,6 +331,7 @@ class Mysql
      *
      * @param string $table
      * @param string $field
+     * @param string $type
      * @param bool $allowNull
      * @param mixed $default
      * @param string $after
@@ -337,7 +339,7 @@ class Mysql
      *
      * @return bool
      */
-    public function addField($table, $field, $type, $allowNull, $default = null, $after = null, $noPrefix = false)
+    public function addField(string $table, string $field, string $type, bool $allowNull, $default = null, string $after = null, bool $noPrefix = false): bool
     {
         if ($this->fieldExists($table, $field, $noPrefix)) {
             return true;
@@ -364,6 +366,7 @@ class Mysql
      *
      * @param string $table
      * @param string $field
+     * @param string $type
      * @param bool $allowNull
      * @param mixed $default
      * @param string $after
@@ -371,7 +374,7 @@ class Mysql
      *
      * @return bool
      */
-    public function alterField($table, $field, $type, $allowNull, $default = null, $after = null, $noPrefix = false)
+    public function alterField(string $table, string $field, string $type, bool $allowNull, $default = null, string $after = null, bool $noPrefix = false): bool
     {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $this->testStr($table);
@@ -399,7 +402,7 @@ class Mysql
      *
      * @return bool
      */
-    public function dropField($table, $field, $noPrefix = false)
+    public function dropField(string $table, string $field, bool $noPrefix = false): bool
     {
         if (! $this->fieldExists($table, $field, $noPrefix)) {
             return true;
@@ -421,7 +424,7 @@ class Mysql
      *
      * @return bool
      */
-    public function addIndex($table, $index, array $fields, $unique = false, $noPrefix = false)
+    public function addIndex(string $table, string $index, array $fields, bool $unique = false, bool $noPrefix = false): bool
     {
         if ($this->indexExists($table, $index, $noPrefix)) {
             return true;
@@ -453,7 +456,7 @@ class Mysql
      *
      * @return bool
      */
-    public function dropIndex($table, $index, $noPrefix = false)
+    public function dropIndex(string $table, string $index, bool $noPrefix = false): bool
     {
         if (! $this->indexExists($table, $index, $noPrefix)) {
             return true;
@@ -479,7 +482,7 @@ class Mysql
      *
      * @return bool
      */
-    public function truncateTable($table, $noPrefix = false)
+    public function truncateTable(string $table, bool $noPrefix = false): bool
     {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $this->testStr($table);
@@ -489,9 +492,9 @@ class Mysql
     /**
      * Статистика
      *
-     * @return array|string
+     * @return array
      */
-    public function statistics()
+    public function statistics(): array
     {
         $this->testStr($this->dbPrefix);
         $prefix = str_replace('_', '\\_', $this->dbPrefix);
@@ -532,7 +535,7 @@ class Mysql
      *
      * @return array
      */
-    public function getMap()
+    public function getMap(): array
     {
         $stmt = $this->db->query('SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME LIKE ?s', ["{$this->dbPrefix}%"]);
         $result = [];

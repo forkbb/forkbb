@@ -97,7 +97,7 @@ trait PostValidatorTrait
      *
      * @return Validator
      */
-    protected function messageValidator(Model $model, $marker, array $args, $editPost = false, $editSubject = false)
+    protected function messageValidator(Model $model, string $marker, array $args, bool $editPost = false, bool $editSubject = false): Validator
     {
         if ($this->user->isGuest) {
             $ruleEmail    = ('1' == $this->c->config->p_force_guest_email ? 'required|' : '') . 'string:trim|email:noban';

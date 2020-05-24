@@ -32,7 +32,7 @@ class Maintenance extends Page
     /**
      * Подготовка страницы к отображению
      */
-    public function prepare()
+    public function prepare(): void
     {
     }
 }

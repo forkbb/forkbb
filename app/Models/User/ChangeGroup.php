@@ -19,7 +19,7 @@ class ChangeGroup extends Action
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    public function changeGroup($newGroupId, ...$users)
+    public function changeGroup(int $newGroupId, ...$users): void
     {
         $newGroup = $this->c->groups->get($newGroupId);
         if (null === $newGroup || $newGroup->groupGuest) {

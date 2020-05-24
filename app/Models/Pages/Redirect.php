@@ -11,7 +11,7 @@ class Redirect extends Page
      *
      * @return Page
      */
-    public function toIndex()
+    public function toIndex(): Page
     {
         return $this->page('Index'); //->message('Redirecting to index');
     }
@@ -24,7 +24,7 @@ class Redirect extends Page
      *
      * @return Page
      */
-    public function page($marker, array $args = [])
+    public function page(string $marker, array $args = []): Page
     {
         $this->link = $this->c->Router->link($marker, $args);
         return $this;
@@ -37,7 +37,7 @@ class Redirect extends Page
      *
      * @return Page
      */
-    public function url($url)
+    public function url(string $url): Page
     {
         $this->link = $url;
         return $this;
@@ -50,7 +50,7 @@ class Redirect extends Page
      *
      * @return Page
      */
-    public function message($message)
+    public function message(string $message): Page
     {
         // переадресация без вывода сообщения
         if ($this->c->config->o_redirect_delay == '0') {
@@ -72,7 +72,7 @@ class Redirect extends Page
      *
      * @return array
      */
-    protected function getHttpHeaders()
+    protected function getHttpHeaders(): array
     {
         if (null === $this->nameTpl) {
             $this->header('Location', $this->link);
@@ -83,7 +83,7 @@ class Redirect extends Page
     /**
      * Подготовка страницы к отображению
      */
-    public function prepare()
+    public function prepare(): void
     {
     }
 }

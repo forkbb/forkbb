@@ -4,6 +4,7 @@ namespace ForkBB\Models\Pages\Profile;
 
 use ForkBB\Core\Image;
 use ForkBB\Core\Validator;
+use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
 use ForkBB\Models\User\Model as User;
 use ForkBB\Models\Forum\Model as Forum;
@@ -19,7 +20,7 @@ class Mod extends Profile
      *
      * @return Page
      */
-    public function moderation(array $args, $method)
+    public function moderation(array $args, string $method): Page
     {
         if (false === $this->initProfile($args['id']) || ! $this->rules->confModer) {
             return $this->c->Message->message('Bad request');
@@ -70,7 +71,7 @@ class Mod extends Profile
      *
      * @return array
      */
-    protected function getcurForums()
+    protected function getcurForums(): array
     {
         $forums = new ForumManager($this->c);
         $forums->init($this->c->groups->get($this->curUser->group_id));
@@ -84,7 +85,7 @@ class Mod extends Profile
      *
      * @return array
      */
-    protected function form()
+    protected function form(): array
     {
         $form = [
             'action' => $this->c->Router->link('EditUserModeration', ['id' => $this->curUser->id]),

@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Pages\Admin\Users;
 
 use ForkBB\Core\Validator;
+use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin\Users;
 use ForkBB\Models\User\Model as User;
 
@@ -16,7 +17,7 @@ class Result extends Users
      *
      * @return Page
      */
-    public function view(array $args, $method)
+    public function view(array $args, string $method): Page
     {
         $data = $this->decodeData($args['data']);
         if (false === $data) {
@@ -136,7 +137,7 @@ class Result extends Users
      *
      * @return array
      */
-    protected function forIP($ip)
+    protected function forIP(string $ip): array
     {
         $fromPosts = $this->c->posts->userInfoFromIP($ip);
         $ids       = $this->c->users->filter([
@@ -161,7 +162,7 @@ class Result extends Users
      *
      * @return array
      */
-    protected function forFilter(array $data)
+    protected function forFilter(array $data): array
     {
         $order = [
             $data['order_by'] => $data['direction'],
@@ -208,7 +209,7 @@ class Result extends Users
      *
      * @return array
      */
-    protected function form(array $users, $number, array $args)
+    protected function form(array $users, int $number, array $args): array
     {
         $form = [
             'action' => $this->c->Router->link('AdminUsersResult', $args),

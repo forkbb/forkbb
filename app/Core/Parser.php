@@ -29,7 +29,7 @@ class Parser extends Parserus
     /**
      * Инициализация данных
      */
-    protected function init()
+    protected function init(): void
     {
         if ($this->c->config->p_message_bbcode == '1' || $this->c->config->p_sig_bbcode == '1') {
             $bbcodes = include $this->c->DIR_CONFIG . '/defaultBBCode.php';
@@ -63,7 +63,7 @@ class Parser extends Parserus
      *
      * @return Parser
      */
-    public function addBBCode(array $bb)
+    public function addBBCode(array $bb): self
     {
         if ($bb['tag'] == 'quote') {
             $bb['self nesting'] = (int) $this->c->config->o_quote_depth;
@@ -81,7 +81,7 @@ class Parser extends Parserus
      *
      * @return string
      */
-    public function prepare($text, $isSignature = false)
+    public function prepare(string $text, bool $isSignature = false): string
     {
         if ($isSignature) {
             $whiteList = $this->c->config->p_sig_bbcode == '1' ? $this->c->BBCODE_INFO['forSign'] : [];
@@ -112,7 +112,7 @@ class Parser extends Parserus
      *
      * @return string
      */
-    public function parseMessage($text = null, $hideSmilies = false)
+    public function parseMessage(string $text = null, bool $hideSmilies = false): string
     {
         // при null предполагается брать данные после prepare()
         if (null !== $text) {
@@ -139,7 +139,7 @@ class Parser extends Parserus
      *
      * @return string
      */
-    public function parseSignature($text = null)
+    public function parseSignature(string $text = null): string
     {
         // при null предполагается брать данные после prepare()
         if (null !== $text) {

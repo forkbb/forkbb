@@ -3,12 +3,13 @@
 namespace ForkBB\Models\Post;
 
 use ForkBB\Models\Action;
+use ForkBB\Models\Post\Model as Post;
 
 class Load extends Action
 {
     protected $aliases;
 
-    protected function queryFields(array $args)
+    protected function queryFields(array $args): string
     {
         $result  = [];
         $fields  = [];
@@ -43,7 +44,7 @@ class Load extends Action
         return \implode(', ', $result);
     }
 
-    protected function setData(array $args, array $data)
+    protected function setData(array $args, array $data): void
     {
         foreach ($args as $aliases => $model) {
             $attrs = [];
@@ -69,7 +70,7 @@ class Load extends Action
      *
      * @return null|Post
      */
-    public function loadFromTopic($id, $tid)
+    public function loadFromTopic(int $id, int $tid): ?Post
     {
         $vars = [
             ':pid' => $id,
@@ -105,7 +106,7 @@ class Load extends Action
      *
      * @return null|Post
      */
-    public function load($id)
+    public function load(int $id): ?Post
     {
         if ($this->c->user->isGuest) {
             $vars = [

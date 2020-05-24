@@ -20,7 +20,7 @@ class Refresh extends Action
      *
      * @return array
      */
-    public function refresh(Group $group = null)
+    public function refresh(Group $group = null): array
     {
         if (null === $group) {
             $gid  = $this->c->user->group_id;
@@ -68,7 +68,7 @@ class Refresh extends Action
      *
      * @return null|array
      */
-    protected function formatModers($str)
+    protected function formatModers(string $str): ?array
     {
         $moderators = \json_decode($str, true);
         return $moderators ?: null;
@@ -82,7 +82,7 @@ class Refresh extends Action
      *
      * @return array
      */
-    protected function createList(array $list, $parent = 0)
+    protected function createList(array $list, int $parent = 0): array
     {
         $sub = [];
         $all = [];

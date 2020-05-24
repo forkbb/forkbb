@@ -4,6 +4,7 @@ namespace ForkBB\Models\Config;
 
 use ForkBB\Models\Method;
 use PDO;
+use ForkBB\Models\Config\Model;
 
 class Load extends Method
 {
@@ -13,7 +14,7 @@ class Load extends Method
      *
      * @return Config
      */
-    public function load()
+    public function load(): Model
     {
         $config = $this->c->DB->query('SELECT cf.conf_name, cf.conf_value FROM ::config AS cf')->fetchAll(PDO::FETCH_KEY_PAIR);
         $this->model->setAttrs($config);

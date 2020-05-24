@@ -43,7 +43,7 @@ abstract class Page extends Model
     /**
      * Подготовка страницы к отображению
      */
-    public function prepare()
+    public function prepare(): void
     {
         $this->fNavigation = $this->fNavigation();
         $this->maintenance();
@@ -54,7 +54,7 @@ abstract class Page extends Model
      *
      * @return array
      */
-    protected function fNavigation()
+    protected function fNavigation(): array
     {
         $r = $this->c->Router;
 
@@ -141,7 +141,7 @@ abstract class Page extends Model
     /**
      * Вывод информации о режиме обслуживания для админа
      */
-    protected function maintenance()
+    protected function maintenance(): void
     {
         if ($this->c->config->o_maintenance == '1' && $this->user->isAdmin) {
             $this->fIswev = ['w', \ForkBB\__('Maintenance mode enabled', $this->c->Router->link('AdminMaintenance'))];
@@ -160,7 +160,7 @@ abstract class Page extends Model
      *
      * @return string
      */
-    protected function getpageTitle(array $titles = [])
+    protected function getpageTitle(array $titles = []): string
     {
         if (empty($titles)) {
             $titles = $this->titles;
@@ -175,7 +175,7 @@ abstract class Page extends Model
      *
      * @return array
      */
-    protected function getpageHeaders()
+    protected function getpageHeaders(): array
     {
         $headers = [
             ['link', 'rel="stylesheet" type="text/css" href="' . $this->c->PUBLIC_URL . '/style/' . $this->user->style . '/style.css' . '"'],
@@ -205,7 +205,7 @@ abstract class Page extends Model
      *
      * @return Page
      */
-    public function addStyle($name, $value)
+    public function addStyle(string $name, string $value): self
     {
         $attr = $this->getAttr('pageHeaders', []);
         $attr['style'][$name] = $value;
@@ -222,7 +222,7 @@ abstract class Page extends Model
      *
      * @return Page
      */
-    public function header($key, $value, $replace = true)
+    public function header(string $key, string $value, $replace = true): self
     {
         if ('HTTP/' === \substr($key, 0, 5)) {
             if (\preg_match('%^HTTP/\d\.\d%', $_SERVER['SERVER_PROTOCOL'], $match)) {
@@ -245,7 +245,7 @@ abstract class Page extends Model
      *
      * @return array
      */
-    protected function gethttpHeaders()
+    protected function gethttpHeaders(): array
     {
         $now = gmdate('D, d M Y H:i:s') . ' GMT';
 
@@ -265,7 +265,7 @@ abstract class Page extends Model
      *
      * @return Page
      */
-    protected function httpStatus()
+    protected function httpStatus(): self
     {
         $list = [
             403 => '403 Forbidden',
@@ -287,7 +287,7 @@ abstract class Page extends Model
      *
      * @param string $value
      */
-    public function settitles($value)
+    public function settitles(string $value): void
     {
         $attr = $this->getAttr('titles', []);
         $attr[] = $value;
@@ -300,7 +300,7 @@ abstract class Page extends Model
      *
      * @param array $value
      */
-    public function setfIswev(array $value)
+    public function setfIswev(array $value): void
     {
         $attr = $this->getAttr('fIswev', []);
 
@@ -321,7 +321,7 @@ abstract class Page extends Model
      *
      * @return array
      */
-    protected function crumbs(...$crumbs)
+    protected function crumbs(...$crumbs): array
     {
         $result = [];
         $active = true;

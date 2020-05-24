@@ -2,6 +2,7 @@
 
 namespace ForkBB\Models\Pages\Admin\Users;
 
+use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin\Users;
 
 class Promote extends Users
@@ -14,7 +15,7 @@ class Promote extends Users
      *
      * @return Page
      */
-    public function promote(array $args, $method)
+    public function promote(array $args, string $method): Page
     {
         if (! $this->c->Csrf->verify($args['token'], 'AdminUserPromote', $args)) {
             return $this->c->Message->message('Bad token');

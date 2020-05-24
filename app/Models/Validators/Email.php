@@ -20,7 +20,7 @@ class Email extends Validators
      *
      * @return string
      */
-    public function email(Validator $v, $email, $attrs, $originalUser)
+    public function email(Validator $v, $email, $attrs, $originalUser): ?string
     {
         // поле отсутствует
         if (null === $email) {

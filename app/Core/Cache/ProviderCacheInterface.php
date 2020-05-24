@@ -12,7 +12,7 @@ interface ProviderCacheInterface
      *
      * @return mixed
      */
-    public function get($key, $default = null);
+    public function get(string $key, $default = null);
 
     /**
      * Установка данных в кэш по ключу
@@ -23,7 +23,7 @@ interface ProviderCacheInterface
      *
      * @return bool
      */
-    public function set($key, $value, $ttl = null);
+    public function set(string $key, $value, int $ttl = null): bool;
 
     /**
      * Удаление данных по ключу
@@ -32,14 +32,14 @@ interface ProviderCacheInterface
      *
      * @return bool
      */
-    public function delete($key);
+    public function delete(string $key): bool;
 
     /**
      * Очистка кэша
      *
      * @return bool
      */
-    public function clear();
+    public function clear(): bool;
 
     /**
      * Проверка наличия ключа
@@ -48,5 +48,5 @@ interface ProviderCacheInterface
      *
      * @return bool
      */
-    public function has($key);
+    public function has(string $key): bool;
 }

@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Pages\Admin\Users;
 
 use ForkBB\Core\Validator;
+use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin\Users;
 use RuntimeException;
 
@@ -15,7 +16,7 @@ class Action extends Users
      *
      * @return array
      */
-    protected function nameList(array $users)
+    protected function nameList(array $users): array
     {
         $result = [];
         foreach ($users as $user) {
@@ -35,7 +36,7 @@ class Action extends Users
      *
      * @return Page
      */
-    public function view(array $args, $method)
+    public function view(array $args, string $method): Page
     {
         if (isset($args['token'])) {
             if (! $this->c->Csrf->verify($args['token'], 'AdminUsersAction', $args)) {
@@ -105,7 +106,7 @@ class Action extends Users
      *
      * @return Page
      */
-    protected function delete(array $args, $method)
+    protected function delete(array $args, string $method): Page
     {
         if ('POST' === $method) {
             $v = $this->c->Validator->reset()
@@ -152,7 +153,7 @@ class Action extends Users
      *
      * @return array
      */
-    protected function formDelete(array $args)
+    protected function formDelete(array $args): array
     {
         $yn    = [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')];
         $names = \implode(', ', $this->nameList($this->userList));
@@ -213,7 +214,7 @@ class Action extends Users
      *
      * @return array
      */
-    protected function groupListForChange($profile)
+    protected function groupListForChange(bool $profile): array
     {
         $list = [];
         foreach ($this->c->groups->getList() as $id => $group) {
@@ -237,7 +238,7 @@ class Action extends Users
      *
      * @return Page
      */
-    protected function change(array $args, $method, $profile)
+    protected function change(array $args, string $method, bool $profile): Page
     {
         $rulePass = 'absent';
 
@@ -330,7 +331,7 @@ class Action extends Users
      *
      * @return array
      */
-    protected function formChange(array $args, $profile, $linkCancel, $checkPass)
+    protected function formChange(array $args, bool $profile, string $linkCancel, bool $checkPass): array
     {
         $yn    = [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')];
         $names = \implode(', ', $this->nameList($this->userList));

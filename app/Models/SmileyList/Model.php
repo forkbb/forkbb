@@ -11,7 +11,7 @@ class Model extends ParentModel
      *
      * @return SmileyList\Model
      */
-    public function init()
+    public function init(): self
     {
         if ($this->c->Cache->has('smilies')) {
             $this->list = $this->c->Cache->get('smilies');

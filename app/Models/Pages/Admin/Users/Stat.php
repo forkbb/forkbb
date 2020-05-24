@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Pages\Admin\Users;
 
 use ForkBB\Core\Validator;
+use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin\Users;
 
 class Stat extends Users
@@ -15,7 +16,7 @@ class Stat extends Users
      *
      * @return Page
      */
-    public function view(array $args, $method)
+    public function view(array $args, string $method): Page
     {
         $stat   = $this->c->posts->userStat((int) $args['id']);
         $number = \count($stat);
@@ -53,7 +54,7 @@ class Stat extends Users
      *
      * @return array
      */
-    protected function form(array $stat, $number)
+    protected function form(array $stat, int $number): array
     {
         $form = [
             'action' => null,

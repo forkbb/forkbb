@@ -15,7 +15,7 @@ class UpdateCountPosts extends Action
      *
      * @throws InvalidArgumentException
      */
-    public function updateCountPosts(...$args)
+    public function updateCountPosts(...$args): void
     {
         $ids = [];
         foreach ($args as $arg) {

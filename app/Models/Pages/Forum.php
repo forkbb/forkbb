@@ -13,7 +13,7 @@ class Forum extends Page
      *
      * @return Page
      */
-    public function view(array $args)
+    public function view(array $args): Page
     {
         $this->c->Lang->load('forum');
         $this->c->Lang->load('subforums');

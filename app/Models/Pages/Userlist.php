@@ -2,8 +2,8 @@
 
 namespace ForkBB\Models\Pages;
 
-use ForkBB\Models\Page;
 use ForkBB\Core\Validator;
+use ForkBB\Models\Page;
 use ForkBB\Models\Forum\Model as Forum;
 use InvalidArgumentException;
 
@@ -14,7 +14,7 @@ class Userlist extends Page
      *
      * @return array
      */
-    protected function getgroupList()
+    protected function getgroupList(): array
     {
         $list = [
             'all' => \ForkBB\__('All users'),
@@ -37,7 +37,7 @@ class Userlist extends Page
      *
      * @return Page
      */
-    public function view(array $args, $method)
+    public function view(array $args, string $method): Page
     {
         $this->c->Lang->load('userlist');
 
@@ -147,7 +147,7 @@ class Userlist extends Page
      *
      * @return array
      */
-    protected function formUserlist(Validator $v)
+    protected function formUserlist(Validator $v): array
     {
         $form = [
             'action' => $this->c->Router->link('Userlist'),

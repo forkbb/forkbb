@@ -2,6 +2,7 @@
 
 namespace ForkBB\Models\Pages\Admin;
 
+use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin;
 
 class Index extends Admin
@@ -11,7 +12,7 @@ class Index extends Admin
      *
      * @return Page
      */
-    public function index()
+    public function index(): Page
     {
         $this->c->Lang->load('admin_index');
 

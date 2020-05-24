@@ -10,12 +10,12 @@ class UpdateLastVisit extends Action
 {
     /**
      * Обновляет время последнего визита пользователя
-     * 
+     *
      * @param User $user
      *
      * @throws RuntimeException
      */
-    public function updateLastVisit(User $user)
+    public function updateLastVisit(User $user): void
     {
         if ($user->id < 2) {
             throw new RuntimeException('Expected user');

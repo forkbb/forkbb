@@ -16,7 +16,7 @@ class Topic extends Page
      *
      * @return Page
      */
-    public function viewNew(array $args)
+    public function viewNew(array $args): Page
     {
         return $this->view('new', $args);
     }
@@ -28,7 +28,7 @@ class Topic extends Page
      *
      * @return Page
      */
-    public function viewUnread(array $args)
+    public function viewUnread(array $args): Page
     {
         return $this->view('unread', $args);
     }
@@ -40,7 +40,7 @@ class Topic extends Page
      *
      * @return Page
      */
-    public function viewLast(array $args)
+    public function viewLast(array $args): Page
     {
         return $this->view('last', $args);
     }
@@ -53,7 +53,7 @@ class Topic extends Page
      *
      * @return Page
      */
-    public function viewPost(array $args)
+    public function viewPost(array $args): Page
     {
         return $this->view('post', $args);
     }
@@ -65,7 +65,7 @@ class Topic extends Page
      *
      * @return Page
      */
-    public function viewTopic(array $args)
+    public function viewTopic(array $args): Page
     {
         return $this->view('topic', $args);
     }
@@ -76,7 +76,7 @@ class Topic extends Page
      *
      * @param Page
      */
-    protected function go($type, ModelTopic $topic)
+    protected function go(string $type, ModelTopic $topic): Page
     {
         switch ($type) {
             case 'new':
@@ -103,7 +103,7 @@ class Topic extends Page
      *
      * @return Page
      */
-    protected function view($type, array $args)
+    protected function view(string $type, array $args): Page
     {
         if ($type === 'post') {
             $post  = $this->c->posts->load((int) $args['id']);

@@ -12,7 +12,7 @@ class Load extends Method
      *
      * @return array
      */
-    public function load()
+    public function load(): array
     {
         $sql = 'SELECT ce.id, ce.search_for, ce.replace_with
                 FROM ::censoring AS ce

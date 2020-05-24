@@ -18,7 +18,7 @@ class Delete extends Action
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    public function delete(Group $group, Group $new = null)
+    public function delete(Group $group, Group $new = null): void
     {
         if (null !== $new) {
             $this->c->users->promote($group, $new);

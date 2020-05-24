@@ -18,7 +18,7 @@ class Filter extends Action
      *
      * @return array
      */
-    public function filter(array $filters, array $order = [])
+    public function filter(array $filters, array $order = []): array
     {
         $fields  = $this->c->dbMap->users;
         $orderBy = [];

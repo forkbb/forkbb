@@ -32,7 +32,7 @@ class Execute extends Method
      *
      * @return bool
      */
-    public function execute(Validator $v, array $forumIdxs, $flood)
+    public function execute(Validator $v, array $forumIdxs, bool $flood): bool
     {
         if (! \is_array($this->model->queryWords) || ! \is_string($this->model->queryText)) {
             throw new RuntimeException('No query data');
@@ -107,7 +107,7 @@ class Execute extends Method
      *
      * @return array
      */
-    protected function exec(array $words, array $vars)
+    protected function exec(array $words, array $vars): array
     {
         $type  = 'AND';
         $count = 0;
@@ -185,7 +185,7 @@ class Execute extends Method
      *
      * @return array
      */
-    protected function buildSelect(Validator $v, array $forumIdxs)
+    protected function buildSelect(Validator $v, array $forumIdxs): array
     {
         $vars     = [];
         $whereIdx = [];

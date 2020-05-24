@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Censorship;
 
 use ForkBB\Models\Method;
+use ForkBB\Models\Censorship\Model;
 
 class Refresh extends Method
 {
@@ -12,7 +13,7 @@ class Refresh extends Method
      *
      * @return Censorship
      */
-    public function refresh()
+    public function refresh(): Model
     {
         $stmt = $this->c->DB->query('SELECT ce.id, ce.search_for, ce.replace_with FROM ::censoring AS ce');
         $search  = [];

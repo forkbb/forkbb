@@ -17,7 +17,7 @@ class Index extends Method
      * @param Post $post
      * @param string $mode
      */
-    public function index(Post $post, $mode = 'add')
+    public function index(Post $post, string $mode = 'add'): void
     {
         //???? пост после валидации должен иметь дерево тегов
         $mesWords = $this->words(\mb_strtolower($this->c->Parser->getText(), 'UTF-8'));
@@ -134,7 +134,7 @@ class Index extends Method
      *
      * @return array
      */
-    protected function words($text)
+    protected function words(string $text): array
     {
         $text = $this->model->cleanText($text, true);
 

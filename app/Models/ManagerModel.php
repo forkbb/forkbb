@@ -16,7 +16,7 @@ class ManagerModel extends Model
         return isset($this->repository[$key]) ? $this->repository[$key] : null;
     }
 
-    public function set($key, $value)
+    public function set($key, $value): self
     {
         $this->repository[$key] = $value;
 
@@ -30,7 +30,7 @@ class ManagerModel extends Model
      *
      * @return mixed
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         $key = \str_replace(['ForkBB\\Models\\', 'ForkBB\\', '\\'], '', \get_class($this));
 
@@ -45,7 +45,7 @@ class ManagerModel extends Model
      *
      * @return mixed
      */
-    public function __call($name, array $args)
+    public function __call(string $name, array $args)
     {
         return $this->__get($name)->$name(...$args);
     }

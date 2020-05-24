@@ -40,7 +40,7 @@ class Model extends DataModel
      *
      * @return bool
      */
-    protected function getisUnverified()
+    protected function getisUnverified(): bool
     {
         return 0 === $this->group_id;
     }
@@ -50,7 +50,7 @@ class Model extends DataModel
      *
      * @return bool
      */
-    protected function getisGuest()
+    protected function getisGuest(): bool
     {
         return $this->group_id === $this->c->GROUP_GUEST
             || $this->id < 2
@@ -62,7 +62,7 @@ class Model extends DataModel
      *
      * @return bool
      */
-    protected function getisAdmin()
+    protected function getisAdmin(): bool
     {
         return $this->group_id === $this->c->GROUP_ADMIN;
     }
@@ -72,7 +72,7 @@ class Model extends DataModel
      *
      * @return bool
      */
-    protected function getisAdmMod()
+    protected function getisAdmMod(): bool
     {
         return $this->group_id === $this->c->GROUP_ADMIN
             || 1 == $this->g_moderator;
@@ -87,7 +87,7 @@ class Model extends DataModel
      *
      * @return bool
      */
-    public function isModerator(BaseModel $model)
+    public function isModerator(BaseModel $model): bool
     {
         if (1 != $this->g_moderator) {
             return false;
@@ -107,7 +107,7 @@ class Model extends DataModel
      *
      * @return int
      */
-    protected function getlogged()
+    protected function getlogged(): int
     {
         $attr = $this->getAttr('logged');
 
@@ -123,7 +123,7 @@ class Model extends DataModel
      *
      * @return bool
      */
-    protected function getisLogged()
+    protected function getisLogged(): bool
     {
         $attr = $this->getAttr('logged');
         return ! empty($attr);
@@ -134,7 +134,7 @@ class Model extends DataModel
      *
      * @return string
      */
-    protected function getlanguage()
+    protected function getlanguage(): string
     {
         $langs = $this->c->Func->getLangs();
         $lang = $this->getAttr('language');
@@ -155,7 +155,7 @@ class Model extends DataModel
      *
      * @return string
      */
-    protected function getstyle()
+    protected function getstyle(): string
     {
         $styles = $this->c->Func->getStyles();
         $style = $this->getAttr('style');
@@ -176,7 +176,7 @@ class Model extends DataModel
      *
      * @return null|string
      */
-    protected function getlink()
+    protected function getlink(): ?string
     {
         if ($this->isGuest) {
             return null;
@@ -190,7 +190,7 @@ class Model extends DataModel
      *
      * @return null|string
      */
-    protected function getavatar()
+    protected function getavatar(): ?string
     {
         foreach ($this->avatarTypes as $type) {
             $path = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$this->id}.{$type}";
@@ -206,7 +206,7 @@ class Model extends DataModel
     /**
      * Удаляет аватару пользователя
      */
-    public function deleteAvatar()
+    public function deleteAvatar(): void
     {
         foreach ($this->avatarTypes as $type) {
             $path = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$this->id}.{$type}";
@@ -222,7 +222,7 @@ class Model extends DataModel
      *
      * @return string
      */
-    public function title()
+    public function title(): string
     {
         if (isset($this->c->bans->userList[\mb_strtolower($this->username)])) { //????
             return \ForkBB\__('Banned');
@@ -244,7 +244,7 @@ class Model extends DataModel
      *
      * @return bool
      */
-    protected function getonline()
+    protected function getonline(): bool
     {
         return isset($this->c->Online->online[$this->id]);
     }
@@ -254,7 +254,7 @@ class Model extends DataModel
      *
      * @return string
      */
-    protected function gethtmlSign()
+    protected function gethtmlSign(): string
     {
         return $this->c->censorship->censor($this->c->Parser->parseSignature($this->signature));
     }
@@ -264,7 +264,7 @@ class Model extends DataModel
      *
      * @return bool
      */
-    protected function getviewUsers()
+    protected function getviewUsers(): bool
     {
         return 1 == $this->g_view_users || $this->isAdmin;
     }
@@ -274,7 +274,7 @@ class Model extends DataModel
      *
      * @return bool
      */
-    protected function getsearchUsers()
+    protected function getsearchUsers(): bool
     {
         return 1 == $this->g_search_users || $this->isAdmin;
     }
@@ -284,7 +284,7 @@ class Model extends DataModel
      *
      * @return bool
      */
-    protected function getshowAvatar()
+    protected function getshowAvatar(): bool
     {
         return '1' == $this->c->config->o_avatars && 1 == $this->show_avatars;
     }
@@ -294,7 +294,7 @@ class Model extends DataModel
      *
      * @return bool
      */
-    protected function getshowUserInfo()
+    protected function getshowUserInfo(): bool
     {
         return '1' == $this->c->config->o_show_user_info;
     }
@@ -304,7 +304,7 @@ class Model extends DataModel
      *
      * @return bool
      */
-    protected function getshowSignature()
+    protected function getshowSignature(): bool
     {
         return '1' == $this->c->config->o_signatures && 1 == $this->show_sig;
     }
@@ -314,7 +314,7 @@ class Model extends DataModel
      *
      * @return bool
      */
-    protected function getshowPostCount()
+    protected function getshowPostCount(): bool
     {
         return '1' == $this->c->config->o_show_post_count || $this->isAdmMod;
     }
@@ -324,7 +324,7 @@ class Model extends DataModel
      *
      * @return int
      */
-    protected function getdisp_topics()
+    protected function getdisp_topics(): int
     {
         $attr = $this->getAttr('disp_topics');
 
@@ -340,7 +340,7 @@ class Model extends DataModel
      *
      * @return int
      */
-    protected function getdisp_posts()
+    protected function getdisp_posts(): int
     {
         $attr = $this->getAttr('disp_topics');
 
@@ -356,7 +356,7 @@ class Model extends DataModel
      *
      * @return bool
      */
-    protected function getcanViewIP()
+    protected function getcanViewIP(): bool
     {
         return $this->isAdmin;
     }
@@ -368,7 +368,7 @@ class Model extends DataModel
      *
      * @return null|string
      */
-    public function linkPromote(Post $post)
+    public function linkPromote(Post $post): ?string
     {
         if (($this->isAdmin || ($this->isAdmMod && 1 == $this->g_mod_promote_users))
             && $this->id !== $post->user->id //????
@@ -392,7 +392,7 @@ class Model extends DataModel
      *
      * @param string $email
      */
-    protected function setemail($email)
+    protected function setemail(string $email): void
     {
         $this->setAttr('email', $email);
 

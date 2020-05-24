@@ -11,7 +11,7 @@ class Model extends DataModel
      *
      * @return Config\Model
      */
-    public function init()
+    public function init(): self
     {
         if ($this->c->Cache->has('config')) {
             $this->setAttrs($this->c->Cache->get('config'));

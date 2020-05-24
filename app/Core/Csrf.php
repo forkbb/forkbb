@@ -20,9 +20,9 @@ class Csrf
      * Конструктор
      *
      * @param Secury $secury
-     * @param User $user
+     * @param string $key
      */
-    public function __construct(Secury $secury, $key)
+    public function __construct(Secury $secury, string $key)
     {
         $this->secury = $secury;
         $this->key = \sha1($key);
@@ -37,7 +37,7 @@ class Csrf
      *
      * @return string
      */
-    public function create($marker, array $args = [], $time = null)
+    public function create(string $marker, array $args = [], $time = null): string
     {
          unset($args['token'], $args['#']);
          \ksort($args);
@@ -58,7 +58,7 @@ class Csrf
      *
      * @return bool
      */
-    public function verify($token, $marker, array $args = [])
+    public function verify($token, string $marker, array $args = []): bool
     {
         return \is_string($token)
             && \preg_match('%f(\d+)$%D', $token, $matches)

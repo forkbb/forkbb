@@ -2,6 +2,7 @@
 
 namespace ForkBB\Models\Pages\Admin;
 
+use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin;
 
 class Censoring extends Admin
@@ -14,7 +15,7 @@ class Censoring extends Admin
      *
      * @return Page
      */
-    public function edit(array $args, $method)
+    public function edit(array $args, string $method): Page
     {
         $this->c->Lang->load('admin_censoring');
 
@@ -56,7 +57,7 @@ class Censoring extends Admin
      *
      * @return array
      */
-    protected function formEdit()
+    protected function formEdit(): array
     {
         $form = [
             'action' => $this->c->Router->link('AdminCensoring'),

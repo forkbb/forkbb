@@ -16,7 +16,7 @@ class Auth extends Page
      *
      * @return Page
      */
-    public function logout($args)
+    public function logout(array $args): Page
     {
         if (! $this->c->Csrf->verify($args['token'], 'Logout', $args)) {
             return $this->c->Redirect->page('Index')->message('Bad token');
@@ -38,7 +38,7 @@ class Auth extends Page
      *
      * @return Page
      */
-    public function login(array $args, $method)
+    public function login(array $args, string $method): Page
     {
         $this->c->Lang->load('auth');
 
@@ -91,7 +91,7 @@ class Auth extends Page
      *
      * @return array
      */
-    protected function formLogin($username, $save, $redirect)
+    protected function formLogin(string $username, $save, string $redirect): array
     {
         return [
             'action' => $this->c->Router->link('Login'),
@@ -188,7 +188,7 @@ class Auth extends Page
      *
      * @return Page
      */
-    public function forget(array $args, $method)
+    public function forget(array $args, string $method): Page
     {
         $this->c->Lang->load('auth');
 
@@ -267,7 +267,7 @@ class Auth extends Page
      *
      * @return array
      */
-    protected function formForget($email)
+    protected function formForget(string $email): array
     {
         return [
             'action' => $this->c->Router->link('Forget'),
@@ -308,7 +308,7 @@ class Auth extends Page
      *
      * @return Page
      */
-    public function changePass(array $args, $method)
+    public function changePass(array $args, string $method): Page
     {
         if (! \hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['key']))
             || ! ($user = $this->c->users->load((int) $args['id'])) instanceof User
@@ -378,7 +378,7 @@ class Auth extends Page
      *
      * @return array
      */
-    protected function formChange(array $args)
+    protected function formChange(array $args): array
     {
         return [
             'action' => $this->c->Router->link('ChangePassword', $args),

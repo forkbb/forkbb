@@ -31,7 +31,7 @@ abstract class Validators
      *
      * @throws RuntimeException
      */
-    public function __call($name, array $args)
+    public function __call(string $name, array $args)
     {
         throw new RuntimeException($name . ' validator not found');
     }

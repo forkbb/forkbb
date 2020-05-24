@@ -3,8 +3,8 @@
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Core\Validator;
-use ForkBB\Models\Post\Model as Post;
 use ForkBB\Models\Page;
+use ForkBB\Models\Post\Model as Post;
 
 class Edit extends Page
 {
@@ -19,7 +19,7 @@ class Edit extends Page
      *
      * @return Page
      */
-    public function edit(array $args, $method)
+    public function edit(array $args, string $method): Page
     {
         $post = $this->c->posts->load((int) $args['id']);
 
@@ -75,7 +75,7 @@ class Edit extends Page
      *
      * @return Page
      */
-    protected function endEdit(Post $post, Validator $v)
+    protected function endEdit(Post $post, Validator $v): Page
     {
         $now         = \time();
         $executive   = $this->user->isAdmin || $this->user->isModerator($post);

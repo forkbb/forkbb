@@ -105,7 +105,7 @@ class File
      *
      * @return null|string
      */
-    public function error()
+    public function error(): ?string
     {
         return $this->error;
     }
@@ -117,7 +117,7 @@ class File
      *
      * @return string
      */
-    protected function filterName($name)
+    protected function filterName(string $name): string
     {
         if (\function_exists('\\transliterator_transliterate')) {
             $name = \transliterator_transliterate("Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; [:Punctuation:] Remove; Lower();", $name);
@@ -137,13 +137,13 @@ class File
      *
      * @param string $path
      *
-     * @return false|array
+     * @return null|array
      */
-    protected function pathinfo($path)
+    protected function pathinfo(string $path): ?array
     {
         if (! \preg_match($this->pattern, $path, $matches)) {
             $this->error = 'The path/name format is broken';
-            return false;
+            return null;
         }
 
         if ('*' === $matches[2]) {
@@ -152,7 +152,7 @@ class File
 
         if ('*' === $matches[3]) {
             $matches[3] = $this->ext;
-        } elseif ('(' === $matches[3]{0} && ')' === $matches[3]{\strlen($matches[3]) - 1}) {
+        } elseif ('(' === $matches[3][0] && ')' === $matches[3][\strlen($matches[3]) - 1]) {
             $matches[3] = \explode('|', \substr($matches[3], 1, -1));
 
             if (1 === \count($matches[3])) {
@@ -174,7 +174,7 @@ class File
      *
      * @return File
      */
-    public function rename($rename)
+    public function rename(bool $rename): self
     {
         $this->rename = $rename;
 
@@ -188,7 +188,7 @@ class File
      *
      * @return File
      */
-    public function rewrite($rewrite)
+    public function rewrite(bool $rewrite): self
     {
         $this->rewrite = $rewrite;
 
@@ -202,7 +202,7 @@ class File
      *
      * @return bool
      */
-    protected function dirProc($dirname)
+    protected function dirProc(string $dirname): bool
     {
         if (! \is_dir($dirname)) {
             if (! @\mkdir($dirname, 0755)) {
@@ -225,7 +225,7 @@ class File
      *
      * @return bool
      */
-    protected function fileProc($path)
+    protected function fileProc(string $path): bool
     {
         if (\is_string($this->data)) {
             if (! \file_put_contents($this->path, $path)) {
@@ -250,11 +250,11 @@ class File
      *
      * @return bool
      */
-    public function toFile($path)
+    public function toFile(string $path): bool
     {
         $info = $this->pathinfo($path);
 
-        if (false === $info || ! $this->dirProc($info['dirname'])) {
+        if (null === $info || ! $this->dirProc($info['dirname'])) {
             return false;
         }
 
@@ -283,22 +283,22 @@ class File
         }
     }
 
-    public function name()
+    public function name(): string
     {
         return $this->name;
     }
 
-    public function ext()
+    public function ext(): string
     {
         return $this->ext;
     }
 
-    public function size()
+    public function size(): int
     {
         return $this->size;
     }
 
-    public function path()
+    public function path(): string
     {
         return $this->path;
     }

@@ -11,7 +11,7 @@ class Debug extends Page
      *
      * @return Page
      */
-    public function debug()
+    public function debug(): Page
     {
         if ($this->c->isInit('DB')) {
             $this->numQueries = $this->c->DB->getCount();
@@ -41,7 +41,7 @@ class Debug extends Page
     /**
      * Подготовка страницы к отображению
      */
-    public function prepare()
+    public function prepare(): void
     {
     }
 
@@ -51,7 +51,7 @@ class Debug extends Page
      *
      * @return array
      */
-    protected function getHttpHeaders()
+    protected function getHttpHeaders(): array
     {
         return [];
     }

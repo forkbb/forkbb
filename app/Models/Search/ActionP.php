@@ -21,7 +21,7 @@ class ActionP extends Method
      *
      * @return false|array
      */
-    public function actionP($action, Forum $root, $uid = null)
+    public function actionP(string $action, Forum $root, int $uid = null)
     {
         $forums = \array_keys($root->descendants);
         if ($root->id) {

@@ -3,6 +3,7 @@
 namespace ForkBB\Controllers;
 
 use ForkBB\Core\Container;
+use ForkBB\Models\Page;
 
 class Install
 {
@@ -27,7 +28,7 @@ class Install
      *
      * @return Page
      */
-    public function routing()
+    public function routing(): Page
     {
         $uri = $_SERVER['REQUEST_URI'];
         if (($pos = \strpos($uri, '?')) !== false) {

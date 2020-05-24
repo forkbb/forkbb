@@ -9,12 +9,12 @@ class PreviousPost extends Action
 {
     /**
      * Вычисляет номер сообщения перед указанным
-     * 
+     *
      * @param Post $post
-     * 
+     *
      * @return null|int
      */
-    public function previousPost(Post $post)
+    public function previousPost(Post $post): ?int
     {
         $vars = [
             ':pid' => $post->id,

@@ -31,12 +31,12 @@ class Method
 
     /**
      * Объявление модели
-     * 
+     *
      * @param Model $model
-     * 
+     *
      * @return Method
      */
-    public function setModel(Model $model)
+    public function setModel(Model $model): self
     {
         $this->model = $model;
         return $this;

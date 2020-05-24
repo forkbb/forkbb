@@ -12,7 +12,7 @@ class AdminsIds extends Action
      *
      * @return array
      */
-    public function adminsIds()
+    public function adminsIds(): array
     {
         $vars = [
             ':gid' => $this->c->GROUP_ADMIN,

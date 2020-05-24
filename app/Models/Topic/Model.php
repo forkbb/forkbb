@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Topic;
 
 use ForkBB\Models\DataModel;
+use ForkBB\Models\Forum\Model as Forum;
 use PDO;
 use RuntimeException;
 
@@ -15,7 +16,7 @@ class Model extends DataModel
      *
      * @return Forum\Model
      */
-    protected function getparent()
+    protected function getparent(): Forum
     {
         if ($this->forum_id < 1) {
             throw new RuntimeException('Parent is not defined');
@@ -29,7 +30,7 @@ class Model extends DataModel
      *
      * @return bool
      */
-    protected function getcanReply()
+    protected function getcanReply(): bool
     {
         if ($this->c->user->isAdmin) {
             return true;
@@ -50,7 +51,7 @@ class Model extends DataModel
      *
      * @return string
      */
-    protected function getlink()
+    protected function getlink(): string
     {
         return $this->c->Router->link('Topic', ['id' => $this->moved_to ?: $this->id, 'name' => \ForkBB\cens($this->subject)]);
     }
@@ -60,7 +61,7 @@ class Model extends DataModel
      *
      * @return string
      */
-    protected function getlinkReply()
+    protected function getlinkReply(): string
     {
         return $this->c->Router->link('NewReply', ['id' => $this->id]);
     }
@@ -70,7 +71,7 @@ class Model extends DataModel
      *
      * @return null|string
      */
-    protected function getlinkLast()
+    protected function getlinkLast(): ?string
     {
         if ($this->moved_to) {
             return null;
@@ -84,7 +85,7 @@ class Model extends DataModel
      *
      * @return string
      */
-    protected function getlinkNew()
+    protected function getlinkNew(): string
     {
         return $this->c->Router->link('TopicViewNew', ['id' => $this->id]);
     }
@@ -92,7 +93,7 @@ class Model extends DataModel
     /**
      * Ссылка для перехода на первое не прочитанное сообщение в теме
      */
-    protected function getlinkUnread()
+    protected function getlinkUnread(): string
     {
         return $this->c->Router->link('TopicViewUnread', ['id' => $this->id]);
     }
@@ -143,7 +144,7 @@ class Model extends DataModel
      *
      * @return int
      */
-    protected function getfirstNew()
+    protected function getfirstNew(): int
     {
         if (false === $this->hasNew) {
             return 0;
@@ -165,7 +166,7 @@ class Model extends DataModel
      *
      * @return int
      */
-    protected function getfirstUnread()
+    protected function getfirstUnread(): int
     {
         if (false === $this->hasUnread) {
             return 0;
@@ -189,7 +190,7 @@ class Model extends DataModel
      *
      * @return int
      */
-    protected function getnumPages()
+    protected function getnumPages(): int
     {
         if (null === $this->num_replies) {
             throw new RuntimeException('The model does not have the required data');
@@ -203,7 +204,7 @@ class Model extends DataModel
      *
      * @return array
      */
-    protected function getpagination()
+    protected function getpagination(): array
     {
         $page = (int) $this->page;
 
@@ -220,7 +221,7 @@ class Model extends DataModel
      *
      * @return bool
      */
-    public function hasPage()
+    public function hasPage(): bool
     {
         return $this->page > 0 && $this->page <= $this->numPages;
     }
@@ -232,7 +233,7 @@ class Model extends DataModel
      *
      * @return array
      */
-    public function pageData()
+    public function pageData(): array
     {
         if (! $this->hasPage()) {
             throw new InvalidArgumentException('Bad number of displayed page');
@@ -264,7 +265,7 @@ class Model extends DataModel
      *
      * @return array
      */
-    public function review()
+    public function review(): array
     {
         if ($this->c->config->o_topic_review < 1) {
             return [];
@@ -291,7 +292,7 @@ class Model extends DataModel
      *
      * @param int $pid
      */
-    public function calcPage($pid)
+    public function calcPage(int $pid): void
     {
         $vars = [
             ':tid' => $this->id,
@@ -312,7 +313,7 @@ class Model extends DataModel
      *
      * @return bool
      */
-    protected function getshowViews()
+    protected function getshowViews(): bool
     {
         return $this->c->config->o_topic_views == '1';
     }
@@ -320,7 +321,7 @@ class Model extends DataModel
     /**
      * Увеличивает на 1 количество просмотров темы
      */
-    public function incViews()
+    public function incViews(): void
     {
         $vars = [
             ':tid' => $this->id,
@@ -333,7 +334,7 @@ class Model extends DataModel
     /**
      * Обновление меток последнего визита и последнего прочитанного сообщения
      */
-    public function updateVisits()
+    public function updateVisits(): void
     {
         if ($this->c->user->isGuest) {
             return;

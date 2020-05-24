@@ -18,7 +18,7 @@ class Promote extends Action
      *
      * @return int
      */
-    public function promote(...$args)
+    public function promote(...$args): int
     {
         $count = \count($args);
 

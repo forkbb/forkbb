@@ -14,7 +14,7 @@ class TruncateIndex extends Method
     /**
      * Очистка поискового индекса
      */
-    public function truncateIndex()
+    public function truncateIndex(): void
     {
         $this->c->DB->truncateTable('search_cache');
         $this->c->DB->truncateTable('search_matches');

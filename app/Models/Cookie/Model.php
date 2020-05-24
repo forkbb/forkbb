@@ -53,7 +53,7 @@ class Model extends ParentModel
      *
      * @return bool
      */
-    public function set($name, $value, $expire = 0, $path = null, $domain = null, $secure = false, $httponly = true)
+    public function set(string $name, string $value, int $expire = 0, string $path = null, string $domain = null, bool $secure = false, bool $httponly = true): bool
     {
         $result = \setcookie(
             $this->prefix . $name,
@@ -78,7 +78,7 @@ class Model extends ParentModel
      *
      * @return mixed
      */
-    public function get($name, $default = null)
+    public function get(string $name, $default = null)
     {
         $name = $this->prefix . $name;
         return isset($_COOKIE[$name]) ? $this->c->Secury->replInvalidChars($_COOKIE[$name]) : $default;
@@ -93,7 +93,7 @@ class Model extends ParentModel
      *
      * @return bool
      */
-    public function delete($name, $path = null, $domain = null)
+    public function delete(string $name, string $path = null, string $domain = null): bool
     {
         $result = $this->set($name, '', 1, $path, $domain);
         if ($result) {
@@ -105,7 +105,7 @@ class Model extends ParentModel
     /**
      * Выделяет данные из куки аутентификации пользователя
      */
-    protected function init()
+    protected function init(): void
     {
         $ckUser = $this->get(self::NAME);
 
@@ -138,7 +138,7 @@ class Model extends ParentModel
      *
      * @return bool
      */
-    public function verifyUser(User $user)
+    public function verifyUser(User $user): bool
     {
         return $this->uId === (int) $user->id
             && \hash_equals(
@@ -155,7 +155,7 @@ class Model extends ParentModel
      *
      * @return bool
      */
-    public function setUser(User $user, $remember = null)
+    public function setUser(User $user, bool $remember = null): bool
     {
         if ($user->isGuest) {
             return $this->deleteUser();
@@ -186,7 +186,7 @@ class Model extends ParentModel
      *
      * @return bool
      */
-    public function deleteUser()
+    public function deleteUser(): bool
     {
         if (null === $this->get(self::NAME)) {
             return true;
@@ -203,7 +203,7 @@ class Model extends ParentModel
      *
      * @throws RuntimeException
      */
-    public function __set($name, $val)
+    public function __set(string $name, $val): void
     {
         if ($this->noSet) {
             throw new RuntimeException('Model attributes in read-only mode');

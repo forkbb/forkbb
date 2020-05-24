@@ -11,7 +11,7 @@ class Model extends ParentModel
      *
      * @return Censorship\Model
      */
-    public function init()
+    public function init(): self
     {
         if ('1' == $this->c->config->o_censoring) {
             if ($this->c->Cache->has('censorship')) {
@@ -32,7 +32,7 @@ class Model extends ParentModel
      *
      * @return string
      */
-    public function censor($str)
+    public function censor(string $str): string
     {
         if ('1' == $this->c->config->o_censoring) {
             return (string) \preg_replace($this->searchList, $this->replaceList,  $str);

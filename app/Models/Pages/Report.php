@@ -17,7 +17,7 @@ class Report extends Page
      *
      * @return Page
      */
-    public function report(array $args, $method)
+    public function report(array $args, string $method): Page
     {
         $post = $this->c->posts->load((int) $args['id']);
 
@@ -105,7 +105,7 @@ class Report extends Page
      *
      * @return array
      */
-    protected function formReport(array $args, array $data)
+    protected function formReport(array $args, array $data): array
     {
         return [
             'action' => $this->c->Router->link('ReportPost', $args),
@@ -149,7 +149,7 @@ class Report extends Page
      *
      * @return bool
      */
-    protected function sendReport(ReportModel $report)
+    protected function sendReport(ReportModel $report): bool
     {
         $tplData = [
             'fMailer' => \ForkBB\__('Mailer', $this->c->config->o_board_title),

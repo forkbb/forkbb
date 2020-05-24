@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Pages\Admin\Users;
 
 use ForkBB\Core\Validator;
+use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin\Users;
 
 class View extends Users
@@ -14,7 +15,7 @@ class View extends Users
      *
      * @return array
      */
-    protected function groups($onlyKeys = false)
+    protected function groups(bool $onlyKeys = false): array
     {
         $groups = [
             -1 => \ForkBB\__('All groups'),
@@ -39,7 +40,7 @@ class View extends Users
      *
      * @return Page
      */
-    public function view(array $args, $method, array $data = [])
+    public function view(array $args, string $method, array $data = []): Page
     {
         if ('POST' === $method) {
             $v = $this->c->Validator->reset()
@@ -133,7 +134,7 @@ class View extends Users
      *
      * @return array
      */
-    protected function form(array $data)
+    protected function form(array $data): array
     {
         $form = [
             'action' => $this->c->Router->link('AdminUsers'),
@@ -359,7 +360,7 @@ class View extends Users
      *
      * @return array
      */
-    protected function formIP(array $data)
+    protected function formIP(array $data): array
     {
         $form = [
             'action' => $this->c->Router->link('AdminUsers'),

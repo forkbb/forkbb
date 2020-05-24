@@ -17,7 +17,7 @@ class Save extends Action
      *
      * @return Group
      */
-    public function update(Group $group)
+    public function update(Group $group): Group
     {
         if ($group->g_id < 1) {
             throw new RuntimeException('The model does not have ID');
@@ -55,7 +55,7 @@ class Save extends Action
      *
      * @return int
      */
-    public function insert(Group $group)
+    public function insert(Group $group): int
     {
         if (null !== $group->g_id) {
             throw new RuntimeException('The model has ID');

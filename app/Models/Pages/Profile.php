@@ -15,7 +15,7 @@ abstract class Profile extends Page
      *
      * @return bool
      */
-    protected function initProfile($id)
+    protected function initProfile($id): bool
     {
         $this->curUser = $this->c->users->load((int) $id);
 
@@ -63,7 +63,7 @@ abstract class Profile extends Page
      *
      * @return array
      */
-    protected function crumbs(...$crumbs)
+    protected function crumbs(...$crumbs): array
     {
         $crumbs[] = [$this->curUser->link, \ForkBB\__('User %s', $this->curUser->username)];
         $crumbs[] = [$this->c->Router->link('Userlist'), \ForkBB\__('User list')];
@@ -78,7 +78,7 @@ abstract class Profile extends Page
      *
      * @return array
      */
-    protected function btns($type)
+    protected function btns(string $type): array
     {
         $btns = [];
         if ($this->user->isAdmin && ! $this->rules->editProfile) {
@@ -143,7 +143,7 @@ abstract class Profile extends Page
      *
      * @return string
      */
-    protected function linkChangeGroup()
+    protected function linkChangeGroup(): string
     {
         return $this->c->Router->link('AdminUsersAction',  [
             'action' => 'change_group',

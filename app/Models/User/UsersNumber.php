@@ -14,7 +14,7 @@ class UsersNumber extends Action
      *
      * @return int
      */
-    public function usersNumber(Group $group)
+    public function usersNumber(Group $group): int
     {
         if (empty($group->g_id) || $group->g_id === $this->c->GROUP_GUEST) {
             return 0;

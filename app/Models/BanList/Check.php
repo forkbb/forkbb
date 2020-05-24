@@ -15,7 +15,7 @@ class Check extends Method
      *
      * @return bool
      */
-    public function check(User $user)
+    public function check(User $user): bool
     {
         // админ
         if ($user->isAdmin) {

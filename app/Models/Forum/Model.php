@@ -4,6 +4,7 @@ namespace ForkBB\Models\Forum;
 
 use ForkBB\Models\DataModel;
 use ForkBB\Models\User\Model as User;
+use ForkBB\Models\Forum\Model as Forum;
 use RuntimeException;
 use InvalidArgumentException;
 use PDO;
@@ -17,7 +18,7 @@ class Model extends DataModel
      *
      * @return Forum\Model
      */
-    protected function getparent()
+    protected function getparent(): ?Forum
     {
         if (null === $this->parent_forum_id && $this->id !== 0) {
             throw new RuntimeException('Parent is not defined');
@@ -31,7 +32,7 @@ class Model extends DataModel
      *
      * @return bool
      */
-    protected function getcanCreateTopic()
+    protected function getcanCreateTopic(): bool
     {
         $user = $this->c->user;
         return $this->post_topics == 1
@@ -45,7 +46,7 @@ class Model extends DataModel
      *
      * @return bool
      */
-    protected function getcanMarkRead()
+    protected function getcanMarkRead(): bool
     {
         return ! $this->c->user->isGuest; // ????
     }
@@ -55,7 +56,7 @@ class Model extends DataModel
      *
      * @return array
      */
-    protected function getsubforums()
+    protected function getsubforums(): array
     {
         $sub = [];
         $attr = $this->getAttr('subforums');
@@ -74,7 +75,7 @@ class Model extends DataModel
      *
      * @return array
      */
-    protected function getdescendants()
+    protected function getdescendants(): array
     {
         $all = [];
         $attr = $this->getAttr('descendants');
@@ -93,7 +94,7 @@ class Model extends DataModel
      *
      * @return string
      */
-    protected function getlink()
+    protected function getlink(): string
     {
         if (0 === $this->id) {
             return $this->c->Router->link('Index');
@@ -107,7 +108,7 @@ class Model extends DataModel
      *
      * @return string
      */
-    protected function getlinkNew()
+    protected function getlinkNew(): string
     {
         if (0 === $this->id) {
             return $this->c->Router->link('SearchAction', ['action' => 'new']);
@@ -121,7 +122,7 @@ class Model extends DataModel
      *
      * @return null|string
      */
-    protected function getlinkLast()
+    protected function getlinkLast(): ?string
     {
         if ($this->last_post_id < 1) {
             return null;
@@ -135,7 +136,7 @@ class Model extends DataModel
      *
      * @return string
      */
-    protected function getlinkCreateTopic()
+    protected function getlinkCreateTopic(): string
     {
         return $this->c->Router->link('NewTopic', ['id' => $this->id]);
     }
@@ -145,7 +146,7 @@ class Model extends DataModel
      *
      * @return string
      */
-    protected function getlinkMarkRead()
+    protected function getlinkMarkRead(): string
     {
         return $this->c->Router->link('MarkRead', [
                 'id'    => $this->id,
@@ -158,7 +159,7 @@ class Model extends DataModel
      *
      * @return array
      */
-    protected function getmoderators()
+    protected function getmoderators(): array
     {
         $attr = $this->getAttr('moderators');
         if (empty($attr) || ! \is_array($attr)) {
@@ -188,7 +189,7 @@ class Model extends DataModel
      *
      * @throws InvalidArgumentException
      */
-    public function modAdd(...$users)
+    public function modAdd(...$users): void
     {
         $attr = $this->getAttr('moderators');
         if (empty($attr) || ! \is_array($attr)) {
@@ -212,7 +213,7 @@ class Model extends DataModel
      *
      * @throws InvalidArgumentException
      */
-    public function modDelete(...$users)
+    public function modDelete(...$users): void
     {
         $attr = $this->getAttr('moderators');
         if (empty($attr) || ! \is_array($attr)) {
@@ -234,7 +235,7 @@ class Model extends DataModel
      *
      * @return Forum\Model
      */
-    protected function gettree()
+    protected function gettree(): Forum
     {
         $attr = $this->getAttr('tree');
 
@@ -279,7 +280,7 @@ class Model extends DataModel
      *
      * @return int
      */
-    protected function getnumPages()
+    protected function getnumPages(): int
     {
         if (null === $this->num_topics) {
             throw new RuntimeException('The model does not have the required data');
@@ -293,7 +294,7 @@ class Model extends DataModel
      *
      * @return array
      */
-    protected function getpagination()
+    protected function getpagination(): array
     {
         return $this->c->Func->paginate($this->numPages, $this->page, 'Forum', ['id' => $this->id, 'name' => $this->forum_name]);
     }
@@ -303,7 +304,7 @@ class Model extends DataModel
      *
      * @return bool
      */
-    public function hasPage()
+    public function hasPage(): bool
     {
         return $this->page > 0 && $this->page <= $this->numPages;
     }
@@ -315,7 +316,7 @@ class Model extends DataModel
      *
      * @return array
      */
-    public function pageData()
+    public function pageData(): array
     {
         if (! $this->hasPage()) {
             throw new InvalidArgumentException('Bad number of displayed page');
@@ -358,7 +359,7 @@ class Model extends DataModel
      *
      * @return array
      */
-    public function getAttrs()
+    public function getAttrs(): array
     {
         $data = parent::getAttrs();
 

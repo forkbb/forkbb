@@ -15,7 +15,7 @@ class UpdateCountTopics extends Action
      *
      * @throws InvalidArgumentException
      */
-    public function updateCountTopics(...$args)
+    public function updateCountTopics(...$args): void
     {
         $ids = [];
         foreach ($args as $arg) {

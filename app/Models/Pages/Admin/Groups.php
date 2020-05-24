@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Pages\Admin;
 
 use ForkBB\Core\Container;
+use ForkBB\Models\Page;
 use ForkBB\Models\Group\Model as Group;
 use ForkBB\Models\Pages\Admin;
 
@@ -47,7 +48,7 @@ class Groups extends Admin
      *
      * @return Page
      */
-    public function view()
+    public function view(): Page
     {
         $this->nameTpl     = 'admin/groups';
         $this->formNew     = $this->formNew();
@@ -61,7 +62,7 @@ class Groups extends Admin
      *
      * @return array
      */
-    protected function formNew()
+    protected function formNew(): array
     {
         return [
             'action' => $this->c->Router->link('AdminGroupsNew'),
@@ -98,7 +99,7 @@ class Groups extends Admin
      *
      * @return array
      */
-    protected function formDefault()
+    protected function formDefault(): array
     {
         return [
             'action' => $this->c->Router->link('AdminGroupsDefault'),
@@ -134,7 +135,7 @@ class Groups extends Admin
      *
      * @return Page
      */
-    public function defaultSet()
+    public function defaultSet(): Page
     {
         $v = $this->c->Validator->reset()
             ->addRules([
@@ -163,7 +164,7 @@ class Groups extends Admin
      *
      * @return Page
      */
-    public function edit(array $args, $method)
+    public function edit(array $args, string $method): Page
     {
         // начало создания новой группы
         if (empty($args['id']) && empty($args['base'])) {
@@ -295,7 +296,7 @@ class Groups extends Admin
      *
      * @return Page
      */
-    public function save(Group $group, Group $baseGroup, array $data)
+    public function save(Group $group, Group $baseGroup, array $data): Page
     {
         if (! $group->groupAdmin && isset($data['g_moderator']) && 0 === $data['g_moderator']) {
             $data['g_mod_edit_users']       = 0;
@@ -341,7 +342,7 @@ class Groups extends Admin
      *
      * @return array
      */
-    protected function formEdit(array $args, Group $group, $marker)
+    protected function formEdit(array $args, Group $group, string $marker): array
     {
         $form = [
             'action' => $this->c->Router->link($marker, $args),
@@ -629,7 +630,7 @@ class Groups extends Admin
      *
      * @return Page
      */
-    public function delete(array $args, $method)
+    public function delete(array $args, string $method): Page
     {
         $group = $this->c->groups->get((int) $args['id']);
 
@@ -698,7 +699,7 @@ class Groups extends Admin
      *
      * @return array
      */
-    protected function formDelete(array $args, Group $group, $count, array $groups)
+    protected function formDelete(array $args, Group $group, int $count, array $groups): array
     {
         $form = [
             'action' => $this->c->Router->link('AdminGroupsDelete', $args),

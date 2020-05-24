@@ -16,7 +16,7 @@ class Manager extends ManagerModel
      *
      * @return Report
      */
-    public function create(array $attrs = [])
+    public function create(array $attrs = []): Report
     {
         return $this->c->ReportModel->setAttrs($attrs);
     }
@@ -29,7 +29,7 @@ class Manager extends ManagerModel
      *
      * @return null|Report
      */
-    public function load($id, $tid = null)
+    public function load(int $id, int $tid = null): ?Report
     {
         $post = $this->get($id);
 
@@ -56,7 +56,7 @@ class Manager extends ManagerModel
      *
      * @return Report
      */
-    public function update(Report $post)
+    public function update(Report $post): Report
     {
         return $this->Save->update($post);
     }
@@ -68,7 +68,7 @@ class Manager extends ManagerModel
      *
      * @return int
      */
-    public function insert(Report $post)
+    public function insert(Report $post): int
     {
         $id = $this->Save->insert($post);
         $this->set($id, $post);
@@ -80,7 +80,7 @@ class Manager extends ManagerModel
      *
      * @return int
      */
-    public function lastId()
+    public function lastId(): int
     {
         if ($this->c->Cache->has('report')) {
             $last = $this->list = $this->c->Cache->get('report');

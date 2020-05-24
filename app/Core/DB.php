@@ -56,7 +56,7 @@ class DB extends PDO
      *
      * @throws PDOException
      */
-    public function __construct($dsn, $username = null, $password = null, array $options = [], $prefix = '')
+    public function __construct(string $dsn, string $username = null, string $password = null, array $options = [], string $prefix = '')
     {
         $type = \strstr($dsn, ':', true);
         if (
@@ -89,7 +89,7 @@ class DB extends PDO
      *
      * @return mixed
      */
-    public function __call($name, array $args)
+    public function __call(string $name, array $args)
     {
         if (empty($this->dbDrv)) {
             $drv = 'ForkBB\\Core\\DB\\' . \ucfirst($this->dbType);
@@ -105,7 +105,7 @@ class DB extends PDO
      *
      * @return bool
      */
-    protected function isOptions(array $arr)
+    protected function isOptions(array $arr): bool
     {
         $verify = [self::ATTR_CURSOR => [self::CURSOR_FWDONLY, self::CURSOR_SCROLL]];
 
@@ -127,7 +127,7 @@ class DB extends PDO
      *
      * @return array
      */
-    protected function parse(&$query, array $params)
+    protected function parse(string &$query, array $params): array
     {
         $idxIn = 0;
         $idxOut = 1;
@@ -214,7 +214,7 @@ class DB extends PDO
      *
      * @return int
      */
-    public function getCount()
+    public function getCount(): int
     {
         return $this->qCount;
     }
@@ -224,7 +224,7 @@ class DB extends PDO
      *
      * @return array
      */
-    public function getQueries()
+    public function getQueries(): array
     {
         return $this->queries;
     }
@@ -236,7 +236,7 @@ class DB extends PDO
      * @param float $time
      * @param bool $add
      */
-    public function saveQuery($query, $time, $add = true)
+    public function saveQuery(string $query, float $time, bool $add = true): void
     {
         if ($add) {
             ++$this->qCount;
@@ -286,7 +286,7 @@ class DB extends PDO
      *
      * @return PDOStatement
      */
-    public function prepare($query, $arg1 = null, $arg2 = null)
+    public function prepare($query, $arg1 = null, $arg2 = null): PDOStatement
     {
         if (empty($arg1) === empty($arg2) || ! empty($arg2)) {
             $params = $arg1;
@@ -320,7 +320,7 @@ class DB extends PDO
      *
      * @return PDOStatement|false
      */
-    public function query($query, ...$args)
+    public function query(string $query, ...$args)
     {
         if (isset($args[0]) && \is_array($args[0])) {
             $params = \array_shift($args);
@@ -357,7 +357,7 @@ class DB extends PDO
     /**
      * @return bool
      */
-    public function beginTransaction()
+    public function beginTransaction(): bool
     {
         $start = \microtime(true);
         $result = parent::beginTransaction();
@@ -368,7 +368,7 @@ class DB extends PDO
     /**
      * @return bool
      */
-    public function commit()
+    public function commit(): bool
     {
         $start = \microtime(true);
         $result = parent::commit();
@@ -379,7 +379,7 @@ class DB extends PDO
     /**
      * @return bool
      */
-    public function rollback()
+    public function rollback(): bool
     {
         $start = \microtime(true);
         $result = parent::rollback();

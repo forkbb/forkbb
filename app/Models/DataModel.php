@@ -29,7 +29,7 @@ class DataModel extends Model
      *
      * @return DataModel
      */
-    public function setAttrs(array $attrs)
+    public function setAttrs(array $attrs): self
     {
         $this->zModFlags   = [];
         $this->zTrackFlags = [];
@@ -46,7 +46,7 @@ class DataModel extends Model
      *
      * @return DataModel
      */
-    public function replAttrs(array $attrs, $setFlags = false)
+    public function replAttrs(array $attrs, bool $setFlags = false): self
     {
         foreach ($attrs as $name => $value) {
             $this->__set($name, $value);
@@ -64,7 +64,7 @@ class DataModel extends Model
      *
      * @return array
      */
-    public function getAttrs()
+    public function getAttrs(): array
     {
         return $this->zAttrs; //????
     }
@@ -74,7 +74,7 @@ class DataModel extends Model
      *
      * @return array
      */
-    public function getModified()
+    public function getModified(): array
     {
         return \array_keys($this->zModFlags);
     }
@@ -82,7 +82,7 @@ class DataModel extends Model
     /**
      * Обнуляет массив флагов измененных свойств модели
      */
-    public function resModified()
+    public function resModified(): void
     {
         $this->zModFlags   = [];
         $this->zTrackFlags = [];
@@ -94,7 +94,7 @@ class DataModel extends Model
      * @param string $name
      * @param mixed $value
      */
-    public function __set($name, $value)
+    public function __set(string $name, $value): void
     {
         // без отслеживания
         if (\strpos($name, '__') === 0) {
@@ -137,7 +137,7 @@ class DataModel extends Model
      *
      * @return mixed
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         // без вычисления
         if (\strpos($name, '__') === 0) {

@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Pages\Profile;
 
 use ForkBB\Core\Validator;
+use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
 
 class Config extends Profile
@@ -15,7 +16,7 @@ class Config extends Profile
      *
      * @return Page
      */
-    public function config(array $args, $method)
+    public function config(array $args, string $method): Page
     {
         if (false === $this->initProfile($args['id']) || ! $this->rules->editConfig) {
             return $this->c->Message->message('Bad request');
@@ -100,7 +101,7 @@ class Config extends Profile
      *
      * @return array
      */
-    protected function form()
+    protected function form(): array
     {
         $form = [
             'action' => $this->c->Router->link('EditUserBoardConfig', ['id' => $this->curUser->id]),

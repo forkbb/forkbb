@@ -14,7 +14,7 @@ class Load extends Action
      *
      * @return null|Topic
      */
-    public function load($id)
+    public function load($id): ?Topic
     {
         $vars = [
             ':tid' => $id,

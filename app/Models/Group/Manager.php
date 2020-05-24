@@ -21,12 +21,12 @@ class Manager extends ManagerModel
      *
      * @return Group
      */
-    public function create(array $attrs = [])
+    public function create(array $attrs = []): Group
     {
         return $this->c->GroupModel->setAttrs($attrs);
     }
 
-    public function getList()
+    public function getList(): array
     {
         return $this->repository;
     }
@@ -36,7 +36,7 @@ class Manager extends ManagerModel
      *
      * @return Manager
      */
-    public function init()
+    public function init(): self
     {
         if (empty($this->flag)) {
             $stmt = $this->c->DB->query('SELECT g.* FROM ::groups AS g ORDER BY g.g_id');
@@ -55,7 +55,7 @@ class Manager extends ManagerModel
      *
      * @return null|Group
      */
-    public function get($id)
+    public function get($id): ?Group
     {
         $group = parent::get($id);
 
@@ -69,7 +69,7 @@ class Manager extends ManagerModel
      *
      * @return Group
      */
-    public function update(Group $group)
+    public function update(Group $group): Group
     {
         return $this->Save->update($group);
     }
@@ -81,7 +81,7 @@ class Manager extends ManagerModel
      *
      * @return int
      */
-    public function insert(Group $group)
+    public function insert(Group $group): int
     {
         $id = $this->Save->insert($group);
         $this->set($id, $group);

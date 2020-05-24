@@ -16,9 +16,9 @@ class Prepare extends Method
      *
      * @param string $query
      *
-     * @return array
+     * @return bool
      */
-    public function prepare($query)
+    public function prepare(string $query): bool
     {
         if (\substr_count($query, '"') % 2) {
             $this->model->queryError = 'Odd number of quotes: \'%s\'';
@@ -179,7 +179,7 @@ class Prepare extends Method
      *
      * @return string
      */
-    protected function queryText(array $words)
+    protected function queryText(array $words): string
     {
         $space  = '';
         $result = '';

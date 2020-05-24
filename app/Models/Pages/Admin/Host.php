@@ -2,6 +2,7 @@
 
 namespace ForkBB\Models\Pages\Admin;
 
+use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin;
 
 class Host extends Admin
@@ -14,7 +15,7 @@ class Host extends Admin
      *
      * @return Page
      */
-    public function view(array $args, $method)
+    public function view(array $args, string $method): Page
     {
         $this->c->Lang->load('admin_host');
 

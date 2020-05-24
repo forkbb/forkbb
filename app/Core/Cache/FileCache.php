@@ -44,7 +44,7 @@ class FileCache implements ProviderCacheInterface
      *
      * @return mixed
      */
-    public function get($key, $default = null)
+    public function get(string $key, $default = null)
     {
         $file = $this->file($key);
         if (\is_file($file)) {
@@ -68,7 +68,7 @@ class FileCache implements ProviderCacheInterface
      *
      * @return bool
      */
-    public function set($key, $value, $ttl = null)
+    public function set(string $key, $value, int $ttl = null): bool
     {
         $file = $this->file($key);
         $expire = null === $ttl || $ttl < 1 ? 0 : \time() + $ttl;
@@ -90,7 +90,7 @@ class FileCache implements ProviderCacheInterface
      *
      * @return bool
      */
-    public function delete($key)
+    public function delete(string $key): bool
     {
         $file = $this->file($key);
         if (\is_file($file)) {
@@ -110,7 +110,7 @@ class FileCache implements ProviderCacheInterface
      *
      * @return bool
      */
-    public function clear()
+    public function clear(): bool
     {
         $dir = new RecursiveDirectoryIterator($this->cacheDir, RecursiveDirectoryIterator::SKIP_DOTS);
         $iterator = new RecursiveIteratorIterator($dir);
@@ -130,7 +130,7 @@ class FileCache implements ProviderCacheInterface
      *
      * @return bool
      */
-    public function has($key)
+    public function has(string $key): bool
     {
         return null !== $this->get($key);
     }
@@ -144,7 +144,7 @@ class FileCache implements ProviderCacheInterface
      *
      * @return string
      */
-    protected function file($key)
+    protected function file(string $key): string
     {
         if (\is_string($key) && \preg_match('%^[a-z0-9_-]+$%Di', $key)) {
             return $this->cacheDir . '/cache_' . $key . '.php';
@@ -157,7 +157,7 @@ class FileCache implements ProviderCacheInterface
      *
      * @param string $file
      */
-    protected function invalidate($file)
+    protected function invalidate(string $file): void
     {
         if (\function_exists('\\opcache_invalidate')) {
             \opcache_invalidate($file, true);

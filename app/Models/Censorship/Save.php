@@ -4,6 +4,7 @@ namespace ForkBB\Models\Censorship;
 
 use ForkBB\Models\Method;
 use PDO;
+use ForkBB\Models\Censorship\Model;
 
 class Save extends Method
 {
@@ -14,7 +15,7 @@ class Save extends Method
      *
      * @return Censorship
      */
-    public function save(array $list)
+    public function save(array $list): Model
     {
         $words  = $this->model->load();
         $forDel = [];

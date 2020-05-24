@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Pages\Admin;
 
 use ForkBB\Core\Container;
+use ForkBB\Models\Page;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Pages\Admin;
 
@@ -13,7 +14,7 @@ class Forums extends Admin
      *
      * @param Forum $forum
      */
-    protected function calcList(Forum $forum)
+    protected function calcList(Forum $forum): void
     {
         $cid        = null;
         $categories = $this->c->categories->getList();
@@ -56,7 +57,7 @@ class Forums extends Admin
      *
      * @return int
      */
-    protected function forumPos(Forum $forum)
+    protected function forumPos(Forum $forum): int
     {
         if (\is_int($forum->disp_position)) {
             return $forum->disp_position;
@@ -85,7 +86,7 @@ class Forums extends Admin
      *
      * @return Page
      */
-    public function view(array $args, $method)
+    public function view(array $args, string $method): Page
     {
         $this->c->Lang->load('admin_forums');
 
@@ -128,7 +129,7 @@ class Forums extends Admin
      *
      * @return array
      */
-    protected function formView()
+    protected function formView(): array
     {
         $form = [
             'action' => $this->c->Router->link('AdminForums'),
@@ -214,7 +215,7 @@ class Forums extends Admin
      *
      * @return Page
      */
-    public function delete(array $args, $method)
+    public function delete(array $args, string $method): Page
     {
         $forum = $this->c->forums->get((int) $args['id']);
         if (! $forum instanceof Forum || $forum->subforums) {
@@ -264,7 +265,7 @@ class Forums extends Admin
      *
      * @return array
      */
-    protected function formDelete(array $args, Forum $forum)
+    protected function formDelete(array $args, Forum $forum): array
     {
         return [
             'action' => $this->c->Router->link('AdminForumsDelete', $args),
@@ -318,7 +319,7 @@ class Forums extends Admin
      *
      * @return Page
      */
-    public function edit(array $args, $method)
+    public function edit(array $args, string $method): Page
     {
         $this->c->Lang->load('admin_forums');
 
@@ -418,7 +419,7 @@ class Forums extends Admin
      *
      * @return array
      */
-    protected function formEdit(array $args, Forum $forum, $marker)
+    protected function formEdit(array $args, Forum $forum, string $marker): array
     {
         $form = [
             'action' => $this->c->Router->link($marker, $args),

@@ -18,7 +18,7 @@ class Username extends Validators
      *
      * @return null|string
      */
-    public function username(Validator $v, $username, $z, $originalUser)
+    public function username(Validator $v, $username, $z, $originalUser): ?string
     {
         if ($originalUser instanceof User) {
             $id   = $originalUser->id;

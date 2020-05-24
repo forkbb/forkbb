@@ -17,7 +17,7 @@ class Save extends Action
      *
      * @return Post
      */
-    public function update(Post $post)
+    public function update(Post $post): Post
     {
         if ($post->id < 1) {
             throw new RuntimeException('The model does not have ID');
@@ -55,7 +55,7 @@ class Save extends Action
      *
      * @return int
      */
-    public function insert(Post $post)
+    public function insert(Post $post): int
     {
         if (null !== $post->id) {
             throw new RuntimeException('The model has ID');

@@ -11,7 +11,7 @@ class Stats extends Action
      *
      * @return array
      */
-    public function stats()
+    public function stats(): array
     {
         $total = $this->c->DB->query('SELECT COUNT(u.id)-1 FROM ::users AS u WHERE u.group_id!=0')->fetchColumn();
         $last  = $this->c->DB->query('SELECT u.id, u.username FROM ::users AS u WHERE u.group_id!=0 ORDER BY u.registered DESC LIMIT 1')->fetch();

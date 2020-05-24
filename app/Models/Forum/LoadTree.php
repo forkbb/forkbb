@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Forum;
 
 use ForkBB\Models\Action;
+use ForkBB\Models\Forum\Model;
 
 class LoadTree extends Action
 {
@@ -13,7 +14,7 @@ class LoadTree extends Action
      *
      * @return null|Forum
      */
-    public function loadTree($rootId)
+    public function loadTree(int $rootId): ?Model
     {
         $root = $this->manager->get($rootId);
         if (null === $root) {
@@ -44,7 +45,7 @@ class LoadTree extends Action
      *
      * @param array $list
      */
-    protected function loadData(array $list)
+    protected function loadData(array $list): void
     {
         if (empty($list)) {
             return;
@@ -88,7 +89,7 @@ class LoadTree extends Action
      *
      * @param array $list
      */
-    protected function checkForNew(array $list)
+    protected function checkForNew(array $list): void
     {
         if (empty($list) || $this->c->user->isGuest) {
             return;

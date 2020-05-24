@@ -40,7 +40,7 @@ class Model extends ParentModel
      *
      * @return string
      */
-    protected function getlink()
+    protected function getlink(): string
     {
         return $this->c->Router->link($this->linkMarker, $this->linkArgs);
     }
@@ -50,7 +50,7 @@ class Model extends ParentModel
      *
      * @return array
      */
-    protected function getpagination()
+    protected function getpagination(): array
     {
         return $this->c->Func->paginate($this->numPages, $this->page, $this->linkMarker, $this->linkArgs);
     }
@@ -60,7 +60,7 @@ class Model extends ParentModel
      *
      * @return bool
      */
-    public function hasPage()
+    public function hasPage(): bool
     {
         return $this->page > 0 && $this->page <= $this->numPages;
     }
@@ -73,7 +73,7 @@ class Model extends ParentModel
      *
      * @return string
      */
-    public function cleanText($text, $indexing = false)
+    public function cleanText(string $text, bool $indexing = false): string
     {
         $text = \str_replace(['`', '’', 'ё'], ['\'', '\'', 'е'], $text);
         // четыре одинаковых буквы в одну
@@ -107,7 +107,7 @@ class Model extends ParentModel
      *
      * @return null|string
      */
-    public function word($word, $indexing = false)
+    public function word(string $word, bool $indexing = false): ?string
     {
         if (isset($this->c->stopwords->list[$word])) {
             return null;
@@ -137,7 +137,7 @@ class Model extends ParentModel
      *
      * @return bool
      */
-    public function isCJKWord($word)
+    public function isCJKWord(string $word): bool
     {
         return \preg_match('%' . self::CJK_REGEX . '%u', $word) ? true : false; //?????
     }

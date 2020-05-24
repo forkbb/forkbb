@@ -15,7 +15,7 @@ class Manager extends ManagerModel
      *
      * @return Topic
      */
-    public function create(array $attrs = [])
+    public function create(array $attrs = []): Topic
     {
         return $this->c->TopicModel->setAttrs($attrs);
     }
@@ -27,7 +27,7 @@ class Manager extends ManagerModel
      *
      * @return null|Topic
      */
-    public function load($id)
+    public function load(int $id): ?Topic
     {
         $topic = $this->get($id);
 
@@ -46,7 +46,7 @@ class Manager extends ManagerModel
      *
      * @return Topic
      */
-    public function update(Topic $topic)
+    public function update(Topic $topic): Topic
     {
         return $this->Save->update($topic);
     }
@@ -58,7 +58,7 @@ class Manager extends ManagerModel
      *
      * @return int
      */
-    public function insert(Topic $topic)
+    public function insert(Topic $topic): int
     {
         $id = $this->Save->insert($topic);
         $this->set($id, $topic);

@@ -10,25 +10,25 @@ class Manager extends ManagerModel
 {
     /**
      * Создает новую модель сообщения
-     * 
+     *
      * @param array $attrs
-     * 
+     *
      * @return Post
      */
-    public function create(array $attrs = [])
+    public function create(array $attrs = []): Post
     {
         return $this->c->PostModel->setAttrs($attrs);
     }
 
     /**
-     * Загружает сообщение из БД 
-     * 
+     * Загружает сообщение из БД
+     *
      * @param int $id
      * @param int $tid
-     * 
+     *
      * @return null|Post
      */
-    public function load($id, $tid = null)
+    public function load(int $id, int $tid = null): ?Post
     {
         $post = $this->get($id);
 
@@ -52,10 +52,10 @@ class Manager extends ManagerModel
      * Обновляет сообщение в БД
      *
      * @param Post $post
-     * 
+     *
      * @return Post
      */
-    public function update(Post $post)
+    public function update(Post $post): Post
     {
         return $this->Save->update($post);
     }
@@ -64,10 +64,10 @@ class Manager extends ManagerModel
      * Добавляет новое сообщение в БД
      *
      * @param Post $post
-     * 
+     *
      * @return int
      */
-    public function insert(Post $post)
+    public function insert(Post $post): int
     {
         $id = $this->Save->insert($post);
         $this->set($id, $post);

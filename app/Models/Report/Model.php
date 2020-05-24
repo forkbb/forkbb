@@ -16,7 +16,7 @@ class Model extends DataModel
      *
      * @throws RuntimeException
      */
-    protected function setauthor(User $user)
+    protected function setauthor(User $user): void
     {
         if ($user->isGuest) {
             throw new RuntimeException('Bad author');
@@ -32,7 +32,7 @@ class Model extends DataModel
      *
      * @return User
      */
-    protected function getauthor()
+    protected function getauthor(): User
     {
         if ($this->reported_by < 1) {
             throw new RuntimeException('No author data');
@@ -57,7 +57,7 @@ class Model extends DataModel
      *
      * @throws RuntimeException
      */
-    protected function setpost(Post $post)
+    protected function setpost(Post $post): void
     {
         if ($post->id < 1) {
             throw new RuntimeException('Bad post');
@@ -73,7 +73,7 @@ class Model extends DataModel
      *
      * @return null|Post
      */
-    protected function getpost()
+    protected function getpost(): ?Post
     {
         if ($this->post_id < 1) {
             throw new RuntimeException('No post data');

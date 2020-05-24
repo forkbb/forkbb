@@ -14,7 +14,7 @@ class UserInfoFromIP extends Action
      *
      * @return array
      */
-    public function userInfoFromIP($ip)
+    public function userInfoFromIP(string $ip): array
     {
         $vars = [
             ':ip' => $ip,

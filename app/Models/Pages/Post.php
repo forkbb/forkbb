@@ -4,9 +4,8 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Core\Validator;
 use ForkBB\Models\Model;
-use ForkBB\Models\Forum;
-use ForkBB\Models\Topic\Model as Topic;
 use ForkBB\Models\Page;
+use ForkBB\Models\Topic\Model as Topic;
 
 class Post extends Page
 {
@@ -21,7 +20,7 @@ class Post extends Page
      *
      * @return Page
      */
-    public function newTopic(array $args, $method)
+    public function newTopic(array $args, string $method): Post
     {
         $forum = $this->c->forums->get((int) $args['id']);
 
@@ -65,7 +64,7 @@ class Post extends Page
      *
      * @return Page
      */
-    public function newReply(array $args, $method)
+    public function newReply(array $args, string $method): Post
     {
         $topic = $this->c->topics->load((int) $args['id']);
 
@@ -122,7 +121,7 @@ class Post extends Page
      *
      * @return Page
      */
-    protected function endPost(Model $model, Validator $v)
+    protected function endPost(Model $model, Validator $v): Post
     {
         $now       = \time();
         $username  = $this->user->isGuest ? $v->username : $this->user->username;

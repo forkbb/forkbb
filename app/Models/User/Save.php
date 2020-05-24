@@ -17,7 +17,7 @@ class Save extends Action
      *
      * @return User
      */
-    public function update(User $user)
+    public function update(User $user): User
     {
         if ($user->id < 1) {
             throw new RuntimeException('The model does not have ID');
@@ -77,7 +77,7 @@ class Save extends Action
      *
      * @return int
      */
-    public function insert(User $user)
+    public function insert(User $user): int
     {
         if (null !== $user->id) {
             throw new RuntimeException('The model has ID');

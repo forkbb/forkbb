@@ -40,7 +40,7 @@ class Secury
      *
      * @return string
      */
-    public function hash($data)
+    public function hash(string $data): string
     {
         return $this->hmac($data, \md5(__DIR__));
     }
@@ -55,7 +55,7 @@ class Secury
      *
      * @return string
      */
-    public function hmac($data, $key)
+    public function hmac(string $data, string $key): string
     {
         if (empty($key)) {
             throw new InvalidArgumentException('Key can not be empty');
@@ -72,7 +72,7 @@ class Secury
      *
      * @return string
      */
-    public function randomKey($len)
+    public function randomKey(int $len): string
     {
         $key = '';
         if (\function_exists('\\random_bytes')) {
@@ -100,7 +100,7 @@ class Secury
      *
      * @return string
      */
-    public function randomHash($len)
+    public function randomHash(int $len): string
     {
         return \substr(\bin2hex($this->randomKey($len)), 0, $len);
     }
@@ -113,7 +113,7 @@ class Secury
      *
      * @return string
      */
-    public function randomPass($len)
+    public function randomPass(int $len): string
     {
         $key = $this->randomKey($len);
         $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';

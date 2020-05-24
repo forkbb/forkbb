@@ -41,7 +41,7 @@ class Container
      *
      * @param array config
      */
-    public function config(array $config)
+    public function config(array $config): void
     {
         if (isset($config['shared'])) {
             $this->shared = \array_replace_recursive($this->shared, $config['shared']);
@@ -62,7 +62,7 @@ class Container
      *
      * @return mixed
      */
-    public function __get($id)
+    public function __get(string $id)
     {
         if (isset($this->instances[$id]) || \array_key_exists($id, $this->instances)) { //????
             return $this->instances[$id];
@@ -116,7 +116,7 @@ class Container
      * @param string $id
      * @param mixed $service
      */
-    public function __set($id, $service)
+    public function __set(string $id, $service): void
     {
         if (\strpos($id, '.') !== false) {
             //????
@@ -135,10 +135,10 @@ class Container
      */
     public function fromArray(array $array, array $tree)
     {
-        $ptr = & $array;
+        $ptr = &$array;
         foreach ($tree as $s) {
             if (isset($ptr[$s])) {
-                $ptr = & $ptr[$s];
+                $ptr = &$ptr[$s];
             } else {
                 return null;
             }
@@ -157,7 +157,7 @@ class Container
      *
      * @return ContainerInterface Self reference
      */
-    public function setParameter($name, $value)
+    public function setParameter(string $name, $value): self
     {
         $segments = \explode('.', $name);
         $n = \count($segments);
@@ -212,7 +212,7 @@ class Container
      *
      * @return bool
      */
-    public function isInit($name)
+    public function isInit(string $name): bool
     {
         return \array_key_exists($name, $this->instances);
     }

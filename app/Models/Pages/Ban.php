@@ -14,7 +14,7 @@ class Ban extends Page
      *
      * @return Page
      */
-    public function ban(User $user)
+    public function ban(User $user): Page
     {
         $this->httpStatus = 403;
         $this->nameTpl    = 'ban';
@@ -31,7 +31,7 @@ class Ban extends Page
     /**
      * Подготовка страницы к отображению
      */
-    public function prepare()
+    public function prepare(): void
     {
     }
 }

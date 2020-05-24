@@ -32,7 +32,7 @@ class Admin extends Page
     /**
      * Подготовка страницы к отображению
      */
-    public function prepare()
+    public function prepare(): void
     {
         $this->aNavigation = $this->aNavigation();
         $this->crumbs      = $this->crumbs(...$this->aCrumbs);
@@ -45,7 +45,7 @@ class Admin extends Page
      *
      * @return array
      */
-    protected function aNavigation()
+    protected function aNavigation(): array
     {
         $r   = $this->c->Router;
         $nav = [
@@ -83,7 +83,7 @@ class Admin extends Page
      *
      * @return array
      */
-    protected function crumbs(...$crumbs)
+    protected function crumbs(...$crumbs): array
     {
         if ('index' !== $this->aIndex) {
             if (isset($this->aNavigation[$this->aIndex])) {

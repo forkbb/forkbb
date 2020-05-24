@@ -2,6 +2,8 @@
 
 namespace ForkBB\Core;
 
+use Throwable;
+
 class ErrorHandler
 {
     /**
@@ -87,7 +89,7 @@ class ErrorHandler
      *
      * @return bool
      */
-    public function errorHandler($type, $message, $file, $line)
+    public function errorHandler(int $type, string $message, string $file, string $line): bool
     {
         $error = [
             'type'    => $type,
@@ -112,7 +114,7 @@ class ErrorHandler
      *
      * @param Exception|Throwable $e
      */
-    public function exceptionHandler($e)
+    public function exceptionHandler(Throwable $e): void
     {
         $this->error = [
             'type'    => 0, //????
@@ -126,7 +128,7 @@ class ErrorHandler
     /**
      * Окончательно обрабатывает ошибки (в том числе фатальные) и исключения
      */
-    public function shutdownHandler()
+    public function shutdownHandler(): void
     {
         if (isset($this->error['type'])) {
             $show = true;
@@ -171,7 +173,7 @@ class ErrorHandler
      *
      * @param array $error
      */
-    protected function log(array $error)
+    protected function log(array $error): void
     {
         $this->logged = true;
         $message = \preg_replace('%[\x00-\x1F]%', ' ', $this->message($error));
@@ -184,7 +186,7 @@ class ErrorHandler
      *
      * @param array $error
      */
-    protected function show(array $error)
+    protected function show(array $error): void
     {
         \header('HTTP/1.1 500 Internal Server Error');
 
@@ -274,7 +276,7 @@ EOT;
      *
      * @return string
      */
-    protected function message(array $error)
+    protected function message(array $error): string
     {
         $type = isset($this->type[$error['type']]) ? $this->type[$error['type']] : $this->type[0];
         $file = \str_replace($this->hidePath, '...', $error['file']);
@@ -288,7 +290,7 @@ EOT;
      *
      * @return string
      */
-    protected function e($arg)
+    protected function e(string $arg): string
     {
         return \htmlspecialchars($arg, \ENT_HTML5 | \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8');
     }

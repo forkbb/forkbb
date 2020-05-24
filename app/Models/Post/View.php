@@ -14,7 +14,7 @@ class View extends Action
 {
     protected $aliases;
 
-    protected function queryFields(array $args)
+    protected function queryFields(array $args): string
     {
         $result  = [];
         $fields  = [];
@@ -49,7 +49,7 @@ class View extends Action
         return \implode(', ', $result);
     }
 
-    protected function setData(array $args, array $data)
+    protected function setData(array $args, array $data): void
     {
         foreach ($args as $aliases => $model) {
             $attrs = [];
@@ -77,7 +77,7 @@ class View extends Action
      *
      * @return array
      */
-    public function view($arg, $review = false)
+    public function view($arg, bool $review = false): array
     {
         if (! $arg instanceof Topic && ! $arg instanceof Search) {
             throw new InvalidArgumentException('Expected Topic or Search');

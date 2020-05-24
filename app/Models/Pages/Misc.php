@@ -13,7 +13,7 @@ class Misc extends Page
      *
      * @return Page
      */
-    public function markread(array $args)
+    public function markread(array $args): Page
     {
         $forum = $this->c->forums->loadTree($args['id']);
         if (null === $forum) {

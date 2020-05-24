@@ -31,12 +31,12 @@ class Action
 
     /**
      * Объявление менеджера
-     * 
+     *
      * @param ManagerModel $manager
-     * 
+     *
      * @return Action
      */
-    public function setManager(ManagerModel $manager)
+    public function setManager(ManagerModel $manager): self
     {
         $this->manager = $manager;
         return $this;

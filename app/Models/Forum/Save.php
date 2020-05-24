@@ -17,7 +17,7 @@ class Save extends Action
      *
      * @return Forum
      */
-    public function update(Forum $forum)
+    public function update(Forum $forum): Forum
     {
         if ($forum->id < 1) {
             throw new RuntimeException('The model does not have ID');
@@ -71,7 +71,7 @@ class Save extends Action
      *
      * @return int
      */
-    public function insert(Forum $forum)
+    public function insert(Forum $forum): int
     {
         if (null !== $forum->id) {
             throw new RuntimeException('The model has ID');

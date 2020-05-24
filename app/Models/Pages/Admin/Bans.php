@@ -4,6 +4,7 @@ namespace ForkBB\Models\Pages\Admin;
 
 use ForkBB\Core\Container;
 use ForkBB\Core\Validator;
+use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin;
 use ForkBB\Models\User\Model as User;
 use RuntimeException;
@@ -31,7 +32,7 @@ class Bans extends Admin
      *
      * @return string
      */
-    protected function encodeData(array $data)
+    protected function encodeData(array $data): string
     {
         unset($data['token']);
         $data = \base64_encode(\json_encode($data));
@@ -46,7 +47,7 @@ class Bans extends Admin
      *
      * @return mixed
      */
-    protected function decodeData($data)
+    protected function decodeData(string $data)
     {
         $data = \explode(':', $data);
 
@@ -72,7 +73,7 @@ class Bans extends Admin
      *
      * @return Page
      */
-    public function view(array $args, $method, array $data = [])
+    public function view(array $args, string $method, array $data = []): Page
     {
         $this->nameTpl        = 'admin/bans';
         $this->formBanPage    = 'AdminBansNew';
@@ -128,7 +129,7 @@ class Bans extends Admin
      *
      * @return array
      */
-    protected function formSearch(array $data = [])
+    protected function formSearch(array $data = []): array
     {
         $form = [
             'action' => $this->c->Router->link('AdminBans'),
@@ -248,7 +249,7 @@ class Bans extends Admin
      *
      * @return array
      */
-    protected function formBan(array $data = [], array $args = [])
+    protected function formBan(array $data = [], array $args = []): array
     {
         $form = [
             'action' => $this->c->Router->link($this->formBanPage, $args),
@@ -334,7 +335,7 @@ class Bans extends Admin
      *
      * @return array
      */
-    protected function forFilter(array $data)
+    protected function forFilter(array $data): array
     {
         $order = [
             $data['order_by'] => $data['direction'],
@@ -376,7 +377,7 @@ class Bans extends Admin
      *
      * @return Page
      */
-    public function result(array $args, $method)
+    public function result(array $args, string $method): Page
     {
         $data = $this->decodeData($args['data']);
         if (false === $data) {
@@ -420,7 +421,7 @@ class Bans extends Admin
      *
      * @return array
      */
-    protected function form(array $bans, $number, array $args)
+    protected function form(array $bans, int $number, array $args): array
     {
         $form = [
             'sets'   => [],
@@ -545,7 +546,7 @@ class Bans extends Admin
      *
      * @return Page
      */
-    public function add(array $args, $method)
+    public function add(array $args, string $method): Page
     {
         $this->banCount = 0;
         $userList       = [];
@@ -604,7 +605,7 @@ class Bans extends Admin
      *
      * @return Page
      */
-    public function edit(array $args, $method)
+    public function edit(array $args, string $method): Page
     {
         $this->banCount = 1;
 
@@ -640,7 +641,7 @@ class Bans extends Admin
      *
      * @return Page
      */
-    protected function ban($isNew, array $args, $method, array $userList, array $data = [])
+    protected function ban(bool $isNew, array $args, string $method, array $userList, array $data = []): Page
     {
         if ('POST' === $method) {
             $v = $this->c->Validator->reset()
@@ -880,7 +881,7 @@ class Bans extends Admin
      *
      * @return Page
      */
-    public function delete(array $args, $method)
+    public function delete(array $args, string $method): Page
     {
         if (! $this->c->Csrf->verify($args['token'], 'AdminBansDelete', $args)) {
             return $this->c->Message->message('Bad token');

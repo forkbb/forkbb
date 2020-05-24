@@ -49,7 +49,7 @@ class DBStatement extends PDOStatement
      *
      * @param array $map
      */
-    public function setMap(array $map)
+    public function setMap(array $map): void
     {
         $this->map = $map;
     }
@@ -61,7 +61,7 @@ class DBStatement extends PDOStatement
      *
      * @throws PDOException
      */
-    public function bindValueList(array $params)
+    public function bindValueList(array $params): void
     {
         foreach ($this->map as $key => $data) {
             $type = \array_shift($data);
@@ -90,7 +90,7 @@ class DBStatement extends PDOStatement
      *
      * @return bool
      */
-    public function execute($params = null)
+    public function execute($params = null): bool
     {
         if (\is_array($params) && ! empty($params)) {
             $this->bindValueList($params);

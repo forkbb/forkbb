@@ -30,7 +30,7 @@ class Install extends Page
      *
      * @return array
      */
-    protected function DBTypes()
+    protected function DBTypes(): array
     {
         $dbTypes = [];
         $pdoDrivers = PDO::getAvailableDrivers();
@@ -63,7 +63,7 @@ class Install extends Page
      *
      * @return Page
      */
-    public function install(array $args, $method)
+    public function install(array $args, string $method): Page
     {
         $changeLang = false;
         if ('POST' === $method) {
@@ -489,7 +489,7 @@ class Install extends Page
      *
      * @return Page
      */
-    protected function installEnd(Validator $v)
+    protected function installEnd(Validator $v): Page
     {
         @\set_time_limit(0);
         $this->c->Cache->clear();

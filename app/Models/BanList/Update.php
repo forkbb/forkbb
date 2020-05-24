@@ -4,6 +4,7 @@ namespace ForkBB\Models\BanList;
 
 use ForkBB\Models\Method;
 use InvalidArgumentException;
+use ForkBB\Models\BanList\Model;
 
 class Update extends Method
 {
@@ -14,7 +15,7 @@ class Update extends Method
      *
      * @return BanList\Model
      */
-    public function update(array $ban)
+    public function update(array $ban): Model
     {
         if (empty($ban['id'])
             || ! isset($ban['username'])

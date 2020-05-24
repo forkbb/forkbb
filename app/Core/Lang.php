@@ -43,7 +43,7 @@ class Lang
      *
      * @return string|array
      */
-    public function get($message, $lang = null)
+    public function get(string $message, string $lang = null)
     {
         if ($lang && isset($this->tr[$lang][$message])) {
             return $this->tr[$lang][$message];
@@ -65,7 +65,7 @@ class Lang
      * @param string $lang
      * @param string $path
      */
-    public function load($name, $lang = null, $path = null)
+    public function load(string $name, string $lang = null, string $path = null): void
     {
         if ($lang) {
             if (isset($this->loaded[$name][$lang])) {
@@ -105,7 +105,7 @@ class Lang
      *
      * @return array
      */
-    protected function arrayFromStr($str)
+    protected function arrayFromStr(string $str): array
     {
         $lines = \explode("\n", $str);
         $count = \count($lines);
@@ -253,7 +253,7 @@ class Lang
      *
      * @return string
      */
-    protected function originalLine($line)
+    protected function originalLine(string $line): string
     {
         if (isset($line[1]) && $line[0] == '"' && $line[\strlen($line) - 1] == '"') {
             $line = \substr($line, 1, -1);

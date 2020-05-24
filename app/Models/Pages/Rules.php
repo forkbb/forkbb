@@ -11,7 +11,7 @@ class Rules extends Page
      *
      * @return Page
      */
-    public function view()
+    public function view(): Page
     {
         $this->fIndex     = 'rules';
         $this->nameTpl    = 'rules';
@@ -29,7 +29,7 @@ class Rules extends Page
      *
      * @return Page
      */
-    public function confirmation()
+    public function confirmation(): Page
     {
         $this->c->Lang->load('register');
 
@@ -50,7 +50,7 @@ class Rules extends Page
      *
      * @return array
      */
-    protected function formAgree()
+    protected function formAgree(): array
     {
         return [
             'action' => $this->c->Router->link('RegisterForm'),

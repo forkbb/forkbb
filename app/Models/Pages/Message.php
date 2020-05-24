@@ -12,10 +12,11 @@ class Message extends Page
      * @param string $message
      * @param bool $back
      * @param int $status
+     * @param array $headers
      *
      * @return Page
      */
-    public function message($message, $back = true, $status = 404, array $headers = [])
+    public function message(string $message, bool $back = true, int $status = 404, array $headers = []): Page
     {
         $this->nameTpl     = 'message';
         $this->httpStatus  = \max(200, $status);
