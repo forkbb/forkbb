@@ -1040,7 +1040,7 @@ class Install extends Page
 
         $ip = \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: 'unknow';
         $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, signature) VALUES (?i, ?s, ?s, \'\')', [$this->c->GROUP_GUEST, \ForkBB\__('Guest '), \ForkBB\__('Guest ')]);
-        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, email, email_normal, language, style, num_posts, last_post, registered, registration_ip, last_visit, signature) VALUES (?i, ?s, ?s, ?s, ?s, ?s, ?s, ?i, ?i, ?i, ?s, ?i, \'\')', [$this->c->GROUP_ADMIN, $v->username, password_hash($v->password, \PASSWORD_DEFAULT), $v->email, $this->c->NormEmail->normalize($v->email), $v->defaultlang, $v->defaultstyle, 1, $now, $now, $ip, $now]);
+        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, email, email_normal, language, style, num_posts, last_post, registered, registration_ip, last_visit, signature, num_topics) VALUES (?i, ?s, ?s, ?s, ?s, ?s, ?s, 1, ?i, ?i, ?s, ?i, \'\', 1)', [$this->c->GROUP_ADMIN, $v->username, password_hash($v->password, \PASSWORD_DEFAULT), $v->email, $this->c->NormEmail->normalize($v->email), $v->defaultlang, $v->defaultstyle, $now, $now, $ip, $now]);
 
         $pun_config = [
             'i_fork_revision'         => $this->c->FORK_REVISION,
