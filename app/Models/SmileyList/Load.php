@@ -3,7 +3,7 @@
 namespace ForkBB\Models\SmileyList;
 
 use ForkBB\Models\Method;
-use orkBB\Models\SmileyList\Model as SmileyList;
+use ForkBB\Models\SmileyList\Model as SmileyList;
 use PDO;
 
 class Load extends Method
