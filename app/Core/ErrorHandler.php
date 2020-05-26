@@ -216,12 +216,12 @@ EOT;
                         continue;
                     }
 
-                    $line = isset($cur['file']) ? $cur['file'] : '-';
-                    $line .= '(' . (isset($cur['line']) ? $cur['line'] : '-') . '): ';
+                    $line = $cur['file'] ?? '-';
+                    $line .= '(' . ($cur['line'] ?? '-') . '): ';
                     if (isset($cur['class'])) {
                         $line .= $cur['class'] . $cur['type'];
                     }
-                    $line .= (isset($cur['function']) ? $cur['function'] : 'unknown') . '(';
+                    $line .= ($cur['function'] ?? 'unknown') . '(';
 
                     if (! empty($cur['args']) && \is_array($cur['args'])) {
                         $comma = '';
@@ -278,7 +278,7 @@ EOT;
      */
     protected function message(array $error): string
     {
-        $type = isset($this->type[$error['type']]) ? $this->type[$error['type']] : $this->type[0];
+        $type = $this->type[$error['type']] ?? $this->type[0];
         $file = \str_replace($this->hidePath, '...', $error['file']);
         return "PHP {$type}: \"{$error['message']}\" in {$file}:[{$error['line']}]";
     }

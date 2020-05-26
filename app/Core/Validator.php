@@ -184,7 +184,7 @@ class Validator
                         throw new RuntimeException($vs[0] . ' validator not found');
                      }
                  }
-                 $rules[$vs[0]] = isset($vs[1]) ? $vs[1] : '';
+                 $rules[$vs[0]] = $vs[1] ?? '';
             }
             if (isset($suffix)) {
                 if (isset($this->rules[$field]['array']) && ! \is_array($this->rules[$field]['array'])) {
@@ -371,7 +371,7 @@ class Validator
         \extract($vars);
 
         // псевдоним имени поля
-        $alias = isset($this->aliases[$field]) ? $this->aliases[$field] : $field;
+        $alias = $this->aliases[$field] ?? $field;
 
         // текст ошибки
         if (isset($this->messages[$field . '.' . $rule])) {

@@ -13,7 +13,7 @@ class ManagerModel extends Model
 
     public function get($key)
     {
-        return isset($this->repository[$key]) ? $this->repository[$key] : null;
+        return $this->repository[$key] ?? null;
     }
 
     public function set($key, $value): self

@@ -20,7 +20,7 @@ trait PostFormTrait
      */
     protected function messageForm(array $args, Model $model, string $marker, bool $editPost = false, bool $editSubject = false, bool $quickReply = false): array
     {
-        $vars = isset($args['_vars']) ? $args['_vars'] : null;
+        $vars = $args['_vars'] ?? null;
         unset($args['_vars']);
 
         $autofocus = $quickReply ? null : true;
@@ -54,7 +54,7 @@ trait PostFormTrait
                 'caption'   => \ForkBB\__('Username'),
                 'required'  => true,
                 'pattern'   => '^.{2,25}$',
-                'value'     => isset($vars['username']) ? $vars['username'] : null,
+                'value'     => $vars['username'] ?? null,
                 'autofocus' => $autofocus,
             ];
             $fieldset['email'] = [
@@ -64,7 +64,7 @@ trait PostFormTrait
                 'caption'   => \ForkBB\__('Email'),
                 'required'  => '1' == $this->c->config->p_force_guest_email,
                 'pattern'   => '.+@.+',
-                'value'     => isset($vars['email']) ? $vars['email'] : null,
+                'value'     => $vars['email'] ?? null,
             ];
             $autofocus = null;
         }
@@ -76,7 +76,7 @@ trait PostFormTrait
                 'maxlength' => 70,
                 'caption'   => \ForkBB\__('Subject'),
                 'required'  => true,
-                'value'     => isset($vars['subject']) ? $vars['subject'] : null,
+                'value'     => $vars['subject'] ?? null,
                 'autofocus' => $autofocus,
             ];
             $autofocus = null;
@@ -87,7 +87,7 @@ trait PostFormTrait
             'type'     => 'textarea',
             'caption'  => \ForkBB\__('Message'),
             'required' => true,
-            'value'    => isset($vars['message']) ? $vars['message'] : null,
+            'value'    => $vars['message'] ?? null,
             'bb'       => [
                 ['link', \ForkBB\__('BBCode'), \ForkBB\__($this->c->config->p_message_bbcode == '1' ? 'on' : 'off')],
                 ['link', \ForkBB\__('url tag'), \ForkBB\__($this->c->config->p_message_bbcode == '1' && $this->user->g_post_links == '1' ? 'on' : 'off')],

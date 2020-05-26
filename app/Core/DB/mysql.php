@@ -547,7 +547,7 @@ class Mysql
                 $result[$tableNoPref] = [];
             }
             $type = \strtolower($row['DATA_TYPE']);
-            $result[$tableNoPref][$row['COLUMN_NAME']] = isset($this->types[$type]) ? $this->types[$type] : 's';
+            $result[$tableNoPref][$row['COLUMN_NAME']] = $this->types[$type] ?? 's';
         }
         return $result;
     }

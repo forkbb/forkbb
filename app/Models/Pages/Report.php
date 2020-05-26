@@ -120,7 +120,7 @@ class Report extends Page
                             'type'      => 'textarea',
                             'caption'   => \ForkBB\__('Reason'),
                             'required'  => true,
-                            'value'     => isset($data['reason']) ? $data['reason'] : null,
+                            'value'     => $data['reason'] ?? null,
                             'autofocus' => true,
                         ],
                     ],

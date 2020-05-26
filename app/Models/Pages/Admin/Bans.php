@@ -158,25 +158,25 @@ class Bans extends Admin
             'type'      => 'text',
             'maxlength' => 25,
             'caption'   => \ForkBB\__('Username label'),
-            'value'     => isset($data['username']) ? $data['username'] : null,
+            'value'     => $data['username'] ?? null,
         ];
         $fields['ip'] = [
             'type'      => 'text',
             'maxlength' => 40,
             'caption'   => \ForkBB\__('IP label'),
-            'value'     => isset($data['ip']) ? $data['ip'] : null,
+            'value'     => $data['ip'] ?? null,
         ];
         $fields['email'] = [
             'type'      => 'text',
             'maxlength' => 80,
             'caption'   => \ForkBB\__('E-mail label'),
-            'value'     => isset($data['email']) ? $data['email'] : null,
+            'value'     => $data['email'] ?? null,
         ];
         $fields['message'] = [
             'type'      => 'text',
             'maxlength' => 255,
             'caption'   => \ForkBB\__('Message label'),
-            'value'     => isset($data['message']) ? $data['message'] : null,
+            'value'     => $data['message'] ?? null,
         ];
         $fields['between1'] = [
             'class' => 'between',
@@ -186,14 +186,14 @@ class Bans extends Admin
             'class'     => 'bstart',
             'type'      => 'text',
             'maxlength' => 100,
-            'value'     => isset($data['expire_1']) ? $data['expire_1'] : null,
+            'value'     => $data['expire_1'] ?? null,
             'caption'   => \ForkBB\__('Expire date label'),
         ];
         $fields['expire_2'] = [
             'class'     => 'bend',
             'type'      => 'text',
             'maxlength' => 100,
-            'value'     => isset($data['expire_2']) ? $data['expire_2'] : null,
+            'value'     => $data['expire_2'] ?? null,
         ];
         $fields[] = [
             'type' => 'endwrap',
@@ -218,7 +218,7 @@ class Bans extends Admin
                 'email'    => \ForkBB\__('Order by e-mail'),
                 'expire'   => \ForkBB\__('Order by expire'),
             ],
-            'value'   => isset($data['order_by']) ? $data['order_by'] : 'id',
+            'value'   => $data['order_by'] ?? 'id',
             'caption' => \ForkBB\__('Order by label'),
         ];
         $fields['direction'] = [
@@ -228,7 +228,7 @@ class Bans extends Admin
                 'ASC'  => \ForkBB\__('Ascending'),
                 'DESC' => \ForkBB\__('Descending'),
             ],
-            'value'   => isset($data['direction']) ? $data['direction'] : 'DESC',
+            'value'   => $data['direction'] ?? 'DESC',
         ];
         $fields[] = [
             'type' => 'endwrap',
@@ -273,21 +273,21 @@ class Bans extends Admin
                 'maxlength' => 25,
                 'caption'   => \ForkBB\__('Username label'),
                 'info'      => $this->banCount < 1 ? \ForkBB\__('Username help') : null,
-                'value'     => isset($data['username']) ? $data['username'] : null,
+                'value'     => $data['username'] ?? null,
             ];
             $fields['ip'] = [
                 'type'      => 'text',
                 'maxlength' => 255,
                 'caption'   => \ForkBB\__('IP label'),
                 'info'      => \ForkBB\__('IP help'),
-                'value'     => isset($data['ip']) ? $data['ip'] : null,
+                'value'     => $data['ip'] ?? null,
             ];
             $fields['email'] = [
                 'type'      => 'text',
                 'maxlength' => 80,
                 'caption'   => \ForkBB\__('E-mail label'),
                 'info'      => \ForkBB\__('E-mail help'),
-                'value'     => isset($data['email']) ? $data['email'] : null,
+                'value'     => $data['email'] ?? null,
             ];
             $form['sets']['ban-attrs'] = [
                 'legend' => $this->formBanSubHead,
@@ -301,14 +301,14 @@ class Bans extends Admin
             'maxlength' => 255,
             'caption'   => \ForkBB\__('Ban message label'),
             'info'      => \ForkBB\__('Ban message help'),
-            'value'     => isset($data['message']) ? $data['message'] : null,
+            'value'     => $data['message'] ?? null,
         ];
         $fields['expire'] = [
             'type'      => 'text',
             'maxlength' => 100,
             'caption'   => \ForkBB\__('Expire date label'),
             'info'      => \ForkBB\__('Expire date help'),
-            'value'     => isset($data['expire']) ? $data['expire'] : null,
+            'value'     => $data['expire'] ?? null,
         ];
 /*
         $yn     = [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')];

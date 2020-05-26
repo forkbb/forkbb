@@ -187,7 +187,7 @@ class Files
             } else {
                 $type = 0;
             }
-            return isset($this->imageType[$type]) ? $this->imageType[$type] : null;
+            return $this->imageType[$type] ?? null;
         }
 
         return $file instanceof Image ? $file->ext() : null;

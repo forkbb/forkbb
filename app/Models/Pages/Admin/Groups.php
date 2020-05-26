@@ -186,7 +186,7 @@ class Groups extends Admin
             $next = false;
         // продолжение редактирования/создания
         } else {
-            $gid  = (int) (isset($args['id']) ? $args['id'] : $args['base']);
+            $gid  = (int) ($args['id'] ?? $args['base']);
             $next = true;
         }
 

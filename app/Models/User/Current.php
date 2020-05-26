@@ -116,7 +116,7 @@ class Current extends Action
      */
     protected function getUserAgent(): string
     {
-        $ua = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+        $ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
         return \is_string($ua) ? \trim($ua) : '';
     }
 

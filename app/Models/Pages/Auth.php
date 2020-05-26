@@ -65,7 +65,7 @@ class Auth extends Page
             $this->fIswev = $v->getErrors();
         }
 
-        $ref = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+        $ref = $_SERVER['HTTP_REFERER'] ?? '';
 
         $this->fIndex     = 'login';
         $this->nameTpl    = 'login';
@@ -74,7 +74,7 @@ class Auth extends Page
         $this->titles     = \ForkBB\__('Login');
         $this->regLink    = $this->c->config->o_regs_allow == '1' ? $this->c->Router->link('Register') : null;
 
-        $username         = $v ? $v->username : (isset($args['_username']) ? $args['_username'] : '');
+        $username         = $v ? $v->username : ($args['_username'] ?? '');
         $save             = $v ? $v->save : 1;
         $redirect         = $v ? $v->redirect : $this->c->Router->validate($ref, 'Index');
         $this->form       = $this->formLogin($username, $save, $redirect);
@@ -254,7 +254,7 @@ class Auth extends Page
         $this->robots     = 'noindex';
         $this->titles     = \ForkBB\__('Passphrase reset');
 
-        $email            = $v ? $v->email : (isset($args['_email']) ? $args['_email'] : '');
+        $email            = $v ? $v->email : ($args['_email'] ?? '');
         $this->form       = $this->formForget($email);
 
         return $this;

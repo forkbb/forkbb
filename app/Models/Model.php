@@ -144,7 +144,7 @@ class Model
         } elseif (\method_exists($this, $method = 'get' . $name)) {
             return $this->zAttrsCalc[$name] = $this->$method();
         } else {
-            return isset($this->zAttrs[$name]) ? $this->zAttrs[$name] : null;
+            return $this->zAttrs[$name] ?? null;
         }
     }
 

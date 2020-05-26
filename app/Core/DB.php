@@ -140,7 +140,7 @@ class DB extends PDO
                 }
 
                 $type = empty($matches[2]) ? 's' : $matches[2];
-                $key = isset($matches[4]) ? $matches[4] : (isset($matches[3]) ? $matches[3] : $idxIn++);
+                $key = $matches[4] ?? ($matches[3] ?? $idxIn++);
                 $value = $this->getValue($key, $params);
 
                 switch ($type) {
