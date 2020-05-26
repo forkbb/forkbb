@@ -27,7 +27,7 @@ class Secury
         if (empty($hmac['salt']) || empty($hmac['algo'])) {
             throw new InvalidArgumentException('Algorithm and salt can not be empty');
         }
-        if (! \in_array($hmac['algo'], \hash_algos())) {
+        if (! \in_array($hmac['algo'], \hash_hmac_algos())) {
             throw new UnexpectedValueException('Algorithm not supported');
         }
         $this->hmac = $hmac;
