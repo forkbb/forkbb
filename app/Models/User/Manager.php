@@ -59,6 +59,7 @@ class Manager extends ManagerModel
             } else {
                 $result[$id] = null;
                 $data[]      = $id;
+                $this->set($id, null);
             }
         }
 
