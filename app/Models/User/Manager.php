@@ -21,65 +21,86 @@ class Manager extends ManagerModel
     }
 
     /**
-     * Получение пользователя(ей) по id, массиву id или по модели User
-     *
-     * @param mixed $value
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return mixed
+     * Получает пользователя по id
      */
-    public function load($value)
+    public function load(int $id): ?User
     {
-        $error      = false;
-        $result     = [];
-        $returnUser = true;
-
-        if ($value instanceof User) {
-            $data = $value;
-        } elseif (\is_int($value) && $value > 0) {
-            // пользователь есть в кеше
-            if ($this->get($value) instanceof User) {
-                return $this->get($value);
-            }
-            $data = $value;
-        } elseif (\is_array($value)) {
-            $data = [];
-            foreach ($value as $arg) {
-                if (\is_int($arg) && $arg > 0) {
-                    if ($this->get($arg) instanceof User) {
-                        $result[$arg] = $this->get($arg);
-                    } else {
-                        $result[$arg] = false;
-                        $data[]       = $arg;
-                    }
-                } else {
-                    $error = true;
-                }
-            }
-            $returnUser = false;
+        if ($this->isset($id)) {
+            return $this->get($id);
         } else {
-            $error = true;
+            $user = $this->Load->load($id);
+            $this->set($id, $user);
+            return $user;
         }
+    }
 
-        if ($error) {
-            throw new InvalidArgumentException('Expected only integer, integer array or User');
-        }
+    /**
+     * Получает массив пользователей по ids
+     */
+    public function loadByIds(array $ids): array
+    {
+        $result = [];
+        $data   = [];
 
-        if (! empty($data)) {
-            foreach ($this->Load->load($data) as $user) {
-                if ($user instanceof User) {
-                    if ($this->get($user->id) instanceof User) {
-                        $result[$user->id] = $this->get($user->id);
-                    } else {
-                        $result[$user->id] = $user;
-                        $this->set($user->id, $user);
-                    }
-                }
+        foreach ($ids as $id) {
+            if (! \is_int($id) || $id < 1) {
+                throw new InvalidArgumentException('Expected a positive integer');
+            }
+            if ($this->isset($id)) {
+                $result[$id] = $this->get($id);
+            } else {
+                $result[$id] = null;
+                $data[]      = $id;
             }
         }
 
-        return $returnUser && 1 === \count($result) ? \reset($result) : $result;
+        if (empty($data)) {
+            return $result;
+        }
+
+        foreach ($this->Load->loadByIds($data) as $user) {
+            if ($user instanceof User) {
+                $result[$user->id] = $user;
+                $this->set($user->id, $user);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Возвращает результат
+     */
+    protected function returnUser(?User $user): ?User
+    {
+        if ($user instanceof User) {
+            $loadedUser = $this->get($user->id);
+
+            if ($loadedUser instanceof User) {
+                return $loadedUser;
+            } else {
+                $this->set($user->id, $user);
+                return $user;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Получает пользователя по имени
+     */
+    public function loadByName(string $name, bool $caseInsencytive = false): ?User
+    {
+        return $this->returnUser($this->Load->loadByName($name, $caseInsencytive));
+    }
+
+    /**
+     * Получает пользователя по email
+     */
+    public function loadByEmail(string $email): ?User
+    {
+        return $this->returnUser($this->Load->loadByEmail($email));
     }
 
     /**

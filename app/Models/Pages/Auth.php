@@ -147,7 +147,7 @@ class Auth extends Page
     public function vLoginProcess(Validator $v, $password)
     {
         if (! empty($v->getErrors())) {
-        } elseif (! ($user = $this->c->users->load($this->c->users->create(['username' => $v->username]))) instanceof User
+        } elseif (! ($user = $this->c->users->loadByName($v->username)) instanceof User
             || $user->isGuest
         ) {
             $v->addError('Wrong user/pass');

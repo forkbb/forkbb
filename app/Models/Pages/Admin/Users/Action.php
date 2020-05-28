@@ -83,7 +83,7 @@ class Action extends Users
             return $message;
         }
 
-        $this->userList = $this->c->users->load($ids);
+        $this->userList = $this->c->users->loadByIds($ids);
         switch ($args['action']) {
 /*
             case self::ACTION_BAN:

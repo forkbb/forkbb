@@ -112,7 +112,7 @@ class Result extends Users
         }
 
         if (! empty($ids)) {
-            $idsN = $this->c->users->load($ids);
+            $idsN = $this->c->users->loadByIds($ids);
 
             foreach ($idsN as $cur)  {
                 if ($cur instanceof User) {

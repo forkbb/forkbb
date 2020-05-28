@@ -562,7 +562,7 @@ class Bans extends Admin
             unset($id);
 
             $this->banCount = \count($ids);
-            $tmp = $this->c->users->load($ids);
+            $tmp = $this->c->users->loadByIds($ids);
 
             if (\is_array($tmp) && \count($tmp) === $this->banCount) {
                 $userList = $tmp; // ???? проверка массива на User'ов?
@@ -747,8 +747,7 @@ class Bans extends Admin
     public function vUserBan(Validator $v, $username)
     {
         if (empty($v->getErrors()) && '' != \trim($username)) {
-            $user = $this->c->users->create(['username' => $username, 'ciNameSearch' => true]);
-            $user = $this->c->users->load($user);
+            $user = $this->c->users->loadByName($username, true);
 
             if (! $user instanceof User) { // ???? может ли вернутся несколько юзеров?
                 $v->addError('No user message');

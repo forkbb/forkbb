@@ -51,7 +51,7 @@ class Email extends Validators
         }
         // проверка наличия 1 пользователя с этим email
         if ($ok && isset($attrs['exists'])) {
-            $user = $this->c->users->load($user);
+            $user = $this->c->users->loadByEmail($email); // ???? перехват исключения?
 
             if (! $user instanceof User) {
                 $v->addError('Invalid email');
@@ -61,12 +61,10 @@ class Email extends Validators
         // проверка уникальности email
         if ($ok && isset($attrs['unique']) && (! $originalUser instanceof User || ! $originalUser->isGuest)) {
             if ($user->isGuest) {
-                $user = $this->c->users->load($user);
+                $user = $this->c->users->loadByEmail($email); // ???? перехват исключения?
             }
 
-            if (\is_array($user) && \count($user) > 1) {
-                $ok = false;
-            } elseif ($user instanceof User
+            if ($user instanceof User
                 && $originalUser instanceof User
                 && $user->id !== $originalUser->id
             ) {

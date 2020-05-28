@@ -97,7 +97,7 @@ abstract class Users extends Admin
             return false;
         }
 
-        $userList = $this->c->users->load($selected);
+        $userList = $this->c->users->loadByIds($selected);
         $result   = [];
         foreach ($userList as $user) {
             if (! $user instanceof User) {

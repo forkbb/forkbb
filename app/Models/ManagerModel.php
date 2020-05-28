@@ -23,6 +23,11 @@ class ManagerModel extends Model
         return $this;
     }
 
+    public function isset($key): bool
+    {
+        return \array_key_exists($key, $this->repository);
+    }
+
     /**
      * Возвращает action по его имени
      *
