@@ -4,6 +4,7 @@ namespace ForkBB\Models\Post;
 
 use ForkBB\Models\Action;
 use ForkBB\Models\Post\Model as Post;
+use InvalidArgumentException;
 
 class Load extends Action
 {
@@ -68,10 +69,19 @@ class Load extends Action
      * @param int $id
      * @param int $tid
      *
+     * @throws InvalidArgumentException
+     *
      * @return null|Post
      */
     public function loadFromTopic(int $id, int $tid): ?Post
     {
+        if ($id < 1) {
+            throw new InvalidArgumentException('Expected a positive post id');
+        }
+        if ($tid < 1) {
+            throw new InvalidArgumentException('Expected a positive topic id');
+        }
+
         $vars = [
             ':pid' => $id,
             ':tid' => $tid,
@@ -104,10 +114,16 @@ class Load extends Action
      *
      * @param int $id
      *
+     * @throws InvalidArgumentException
+     *
      * @return null|Post
      */
     public function load(int $id): ?Post
     {
+        if ($id < 1) {
+            throw new InvalidArgumentException('Expected a positive post id');
+        }
+
         if ($this->c->user->isGuest) {
             $vars = [
                 ':pid' => $id,

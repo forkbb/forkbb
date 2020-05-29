@@ -4,7 +4,6 @@ namespace ForkBB\Models\Post;
 
 use ForkBB\Models\ManagerModel;
 use ForkBB\Models\Post\Model as Post;
-use RuntimeException;
 
 class Manager extends ManagerModel
 {
@@ -30,10 +29,10 @@ class Manager extends ManagerModel
      */
     public function load(int $id, int $tid = null): ?Post
     {
-        $post = $this->get($id);
+        if ($this->isset($id)) {
+            $post = $this->get($id);
 
-        if ($post instanceof Post) {
-            if (null !== $tid && $post->topic_id !== $tid) {
+            if ($post instanceof Post && null !== $tid && $post->topic_id !== $tid) {
                 return null;
             }
         } else {
