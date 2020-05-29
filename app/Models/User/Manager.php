@@ -4,7 +4,6 @@ namespace ForkBB\Models\User;
 
 use ForkBB\Models\ManagerModel;
 use ForkBB\Models\User\Model as User;
-use InvalidArgumentException;
 
 class Manager extends ManagerModel
 {
@@ -22,15 +21,9 @@ class Manager extends ManagerModel
 
     /**
      * Получает пользователя по id
-     *
-     * @throws InvalidArgumentException
      */
     public function load(int $id): ?User
     {
-        if ($id < 1) {
-            throw new InvalidArgumentException('Expected id > 0');
-        }
-
         if ($this->isset($id)) {
             return $this->get($id);
         } else {
@@ -42,8 +35,6 @@ class Manager extends ManagerModel
 
     /**
      * Получает массив пользователей по ids
-     *
-     * @throws InvalidArgumentException
      */
     public function loadByIds(array $ids): array
     {
@@ -51,9 +42,6 @@ class Manager extends ManagerModel
         $data   = [];
 
         foreach ($ids as $id) {
-            if (! \is_int($id) || $id < 1) {
-                throw new InvalidArgumentException('Expected id > 0');
-            }
             if ($this->isset($id)) {
                 $result[$id] = $this->get($id);
             } else {

@@ -23,9 +23,15 @@ class Load extends Action
 
     /**
      * Получает пользователя по id
+     *
+     * @throws InvalidArgumentException
      */
     public function load(int $id): ?User
     {
+        if ($id < 1) {
+            throw new InvalidArgumentException('Expected a positive user id');
+        }
+
         $vars = [':id' => $id];
         $sql  = $this->createQuery('u.id=?i:id');
         $data = $this->c->DB->query($sql, $vars)->fetch();
@@ -35,9 +41,17 @@ class Load extends Action
 
     /**
      * Получает массив пользователей по ids
+     *
+     * @throws InvalidArgumentException
      */
     public function loadByIds(array $ids): array
     {
+        foreach ($ids as $id) {
+            if (! \is_int($id) || $id < 1) {
+                throw new InvalidArgumentException('Expected a positive user id');
+            }
+        }
+
         $vars = [':ids' => $ids];
         $sql  = $this->createQuery('u.id IN (?ai:ids)');
         $data = $this->c->DB->query($sql, $vars)->fetchAll();
