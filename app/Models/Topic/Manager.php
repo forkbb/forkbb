@@ -4,7 +4,6 @@ namespace ForkBB\Models\Topic;
 
 use ForkBB\Models\ManagerModel;
 use ForkBB\Models\Topic\Model as Topic;
-use RuntimeException;
 
 class Manager extends ManagerModel
 {
@@ -29,14 +28,13 @@ class Manager extends ManagerModel
      */
     public function load(int $id): ?Topic
     {
-        $topic = $this->get($id);
-
-        if (! $topic instanceof Topic) {
+        if ($this->isset($id)) {
+            return $this->get($id);
+        } else {
             $topic = $this->Load->load($id);
             $this->set($id, $topic);
+            return $topic;
         }
-
-        return $topic;
     }
 
     /**

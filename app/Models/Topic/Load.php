@@ -4,6 +4,7 @@ namespace ForkBB\Models\Topic;
 
 use ForkBB\Models\Action;
 use ForkBB\Models\Topic\Model as Topic;
+use InvalidArgumentException;
 
 class Load extends Action
 {
@@ -14,8 +15,12 @@ class Load extends Action
      *
      * @return null|Topic
      */
-    public function load($id): ?Topic
+    public function load(int $id): ?Topic
     {
+        if ($id < 1) {
+            throw new InvalidArgumentException('Expected a positive topic id');
+        }
+
         $vars = [
             ':tid' => $id,
             ':uid' => $this->c->user->id,
