@@ -1,5 +1,9 @@
 AddDefaultCharset UTF-8
 
+<IfModule mod_autoindex.c>
+    Options -Indexes
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   #RewriteBase /
@@ -8,6 +12,8 @@ AddDefaultCharset UTF-8
   RewriteRule ^robots\.txt$ public/robots.txt [L]
 
   RewriteRule !^public/. index.php [L]
+
+  RewriteRule \.dist\. index.php [L]
 
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteRule ^public/ index.php [L]

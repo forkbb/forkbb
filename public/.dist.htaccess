@@ -1,8 +1,14 @@
 AddDefaultCharset UTF-8
 
+<IfModule mod_autoindex.c>
+    Options -Indexes
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   #RewriteBase /
+
+  RewriteRule \.dist\. index.php [L]
 
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_URI} !^/favicon\.ico$
