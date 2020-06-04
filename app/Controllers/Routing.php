@@ -153,6 +153,9 @@ class Routing
                 $r->add(self::GET, '/admin/bans/result/{data}[/{page:[1-9]\d*}]',                     'AdminBans:result', 'AdminBansResult');
                 $r->add(self::GET, '/admin/bans/delete/{id:[1-9]\d*}/{token}[/{uid:[2-9]|[1-9]\d+}]', 'AdminBans:delete', 'AdminBansDelete');
             }
+
+            $r->add(self::GET, '/admin/reports',                           'AdminReports:view', 'AdminReports');
+            $r->add(self::GET, '/admin/reports/zap/{id:[1-9]\d*}/{token}', 'AdminReports:zap',  'AdminReportsZap');
         }
         // только админ
         if ($user->isAdmin) {

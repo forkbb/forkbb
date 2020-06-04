@@ -44,7 +44,48 @@ class Model extends DataModel
             $user = $this->c->users->create();
 
             $user->__id       = $this->reported_by;
-            $user->__username = 'User #' . $this->reported_by;
+            $user->__username = '{User #' . $this->reported_by .'}';
+        }
+
+        return $user;
+    }
+
+    /**
+     * Устанавливает расмотревшего
+     *
+     * @param User $user
+     *
+     * @throws RuntimeException
+     */
+    protected function setmarker(User $user): void
+    {
+        if ($user->isGuest) {
+            throw new RuntimeException('Bad marker');
+        }
+
+        $this->zapped_by = $user->id;
+    }
+
+    /**
+     * Рвассмотревший
+     *
+     * @throws RuntimeException
+     *
+     * @return User
+     */
+    protected function getmarker(): User
+    {
+        if ($this->zapped_by < 1) {
+            throw new RuntimeException('No marker data');
+        }
+
+        $user = $this->c->users->load($this->zapped_by);
+
+        if (! $user instanceof User || $user->isGuest) {
+            $user = $this->c->users->create();
+
+            $user->__id       = $this->zapped_by;
+            $user->__username = '{User #' . $this->zapped_by .'}';
         }
 
         return $user;
@@ -80,5 +121,20 @@ class Model extends DataModel
         }
 
         return $this->c->posts->load($this->post_id);
+    }
+
+    /**
+     * Ссылка на рассмотрение
+     */
+    public function getlinkZap(): string
+    {
+        if (empty($this->zapped)) {
+            return $this->c->Router->link('AdminReportsZap', [
+                'id'    => $this->id,
+                'token' => $this->c->Csrf->create('AdminReportsZap', ['id' => $this->id]),
+            ]);
+        } else {
+            return '';
+        }
     }
 }

@@ -1,0 +1,58 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+
+msgid "Report zapped redirect"
+msgstr "Сигнал рассмотрен. Переадресация …"
+
+msgid "New reports "
+msgstr "Новые сигналы"
+
+msgid "Deleted user"
+msgstr "Пользователь удалён"
+
+msgid "Deleted"
+msgstr "Удалено"
+
+msgid "Post #%s"
+msgstr "Сообщение #%s"
+
+msgid "Post #%s "
+msgstr "<a href=\"%6$s\">%5$s</a> » <a href=\"%4$s\">%3$s</a> » <a href=\"%2$s\">Сообщение #%1$s</a>"
+
+msgid "Reported %s"
+msgstr "Сигнал подан %s"
+
+msgid "Reported by"
+msgstr "Просигналил"
+
+msgid "Reason"
+msgstr "Причина"
+
+msgid "Zap"
+msgstr "Рассмотрено"
+
+msgid "No new reports"
+msgstr "Нет новых сигналов."
+
+msgid "10 last read reports"
+msgstr "Последние 10 из уже рассмотренных"
+
+msgid "NA"
+msgstr "Н/Д"
+
+msgid "Marked as read %1$s by %2$s"
+msgstr "Рассмотрен %1$s, %2$s"
+
+msgid "No zapped reports"
+msgstr "Пока нет рассмотренных сигналов."

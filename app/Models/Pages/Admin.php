@@ -57,7 +57,7 @@ class Admin extends Page
             $nav['bans'] = [$r->link('AdminBans'), \ForkBB\__('Bans')];
         }
         if ($this->user->isAdmin || $this->c->config->o_report_method == '0' || $this->c->config->o_report_method == '2') {
-            $nav['reports'] = ['admin_reports.php', \ForkBB\__('Reports')];
+            $nav['reports'] = [$r->link('AdminReports'), \ForkBB\__('Reports')];
         }
 
         if ($this->user->isAdmin) {

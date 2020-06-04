@@ -180,6 +180,7 @@ return [
         'AdminUsersPromote' => \ForkBB\Models\Pages\Admin\Users\Promote::class,
         'AdminHost'       => \ForkBB\Models\Pages\Admin\Host::class,
         'AdminBans'       => \ForkBB\Models\Pages\Admin\Bans::class,
+        'AdminReports'    => \ForkBB\Models\Pages\Admin\Reports::class,
 
         'ConfigModel'     => \ForkBB\Models\Config\Model::class,
         'ConfigModelLoad' => \ForkBB\Models\Config\Load::class,
@@ -257,6 +258,7 @@ return [
 
         'ReportModel'             => \ForkBB\Models\Report\Model::class,
         'ReportManagerSave'       => \ForkBB\Models\Report\Save::class,
+        'ReportManagerLoad'       => \ForkBB\Models\Report\Load::class,
 
         'GroupModel'         => \ForkBB\Models\Group\Model::class,
         'GroupManager'       => \ForkBB\Models\Group\Manager::class,

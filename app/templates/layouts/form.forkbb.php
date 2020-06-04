@@ -93,7 +93,7 @@
                 @elseif ('btn' === $cur['type'])
                 <a class="f-btn @if ($cur['disabled']) f-disabled @endif" href="{!! $cur['link'] !!}" title="{{ $cur['title'] or '' }}" @if ($cur['disabled']) tabindex="-1" @endif>{{ $cur['value'] }}</a>
                 @elseif ('str' === $cur['type'])
-                <p class="f-str" id="id-{{ $key }}">{{ $cur['value'] }}</p>
+                <p class="f-str" id="id-{{ $key }}"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
                 @elseif ('link' === $cur['type'])
                 <a class="f-link" id="id-{{ $key }}" href="{{ $cur['href'] or '' }}" title="{{ $cur['title'] or '' }}">{{ $cur['value'] or '' }}</a>
                 @elseif ('yield' === $cur['type'])

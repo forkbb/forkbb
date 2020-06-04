@@ -10,7 +10,7 @@ use RuntimeException;
 class Manager extends ManagerModel
 {
     /**
-     * Создает новую модель сообщения
+     * Создает новую модель сигнала
      *
      * @param array $attrs
      *
@@ -22,56 +22,67 @@ class Manager extends ManagerModel
     }
 
     /**
-     * Загружает сообщение из БД
+     * Загружает сигнал из БД
      *
      * @param int $id
-     * @param int $tid
      *
      * @return null|Report
      */
-    public function load(int $id, int $tid = null): ?Report
+    public function load(int $id): ?Report
     {
-        $post = $this->get($id);
-
-        if ($post instanceof Report) {
-            if (null !== $tid && $post->topic_id !== $tid) {
-                return null;
-            }
+        if ($this->isset($id)) {
+            return $this->get($id);
         } else {
-            if (null !== $tid) {
-                $post = $this->Load->loadFromTopic($id, $tid);
-            } else {
-                $post = $this->Load->load($id);
-            }
-            $this->set($id, $post);
+            $report = $this->Load->load($id);
+            $this->set($id, $report);
+            return $report;
         }
-
-        return $post;
     }
 
     /**
-     * Обновляет сообщение в БД
+     * Загрузка сигналов из БД
      *
-     * @param Report $post
+     * @param bool $noZapped
+     *
+     * @return array
+     */
+    public function loadList(bool $noZapped = true): array
+    {
+        $result = [];
+        foreach ($this->Load->loadList($noZapped) as $report) {
+            if ($this->isset($report->id)) {
+                $result[] = $this->get($report->id);
+            } else {
+                $result[] = $report;
+                $this->set($report->id, $report);
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * Обновляет сигнал в БД
+     *
+     * @param Report $report
      *
      * @return Report
      */
-    public function update(Report $post): Report
+    public function update(Report $report): Report
     {
-        return $this->Save->update($post);
+        return $this->Save->update($report);
     }
 
     /**
-     * Добавляет новое сообщение в БД
+     * Добавляет новый сигнал в БД
      *
-     * @param Report $post
+     * @param Report $report
      *
      * @return int
      */
-    public function insert(Report $post): int
+    public function insert(Report $report): int
     {
-        $id = $this->Save->insert($post);
-        $this->set($id, $post);
+        $id = $this->Save->insert($report);
+        $this->set($id, $report);
         return $id;
     }
 
@@ -91,5 +102,27 @@ class Manager extends ManagerModel
         }
 
         return $last;
+    }
+
+    /**
+     * Удаляет старые обработанные сигналы
+     */
+    public function clear(): void
+    {
+        $sql = 'SELECT r.zapped
+                FROM ::reports as r
+                WHERE r.zapped!=0
+                ORDER BY r.zapped DESC
+                LIMIT 10,1';
+        $time = (int) $this->c->DB->query($sql)->fetchColumn();
+
+        if ($time > 0) {
+            $vars = [
+                ':time' => $time,
+            ];
+            $sql = 'DELETE FROM ::reports
+                    WHERE zapped<=?i:time';
+            $this->c->DB->exec($sql, $vars);
+        }
     }
 }

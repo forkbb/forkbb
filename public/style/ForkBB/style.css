@@ -1733,6 +1733,10 @@ body,
 /**********/
 /* Репорт */
 /**********/
+#fork .f-reports > h2 {
+  display: block;
+}
+
 #id-fs-report > legend {
   display: none;
 }
