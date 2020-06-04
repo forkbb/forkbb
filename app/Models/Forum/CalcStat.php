@@ -40,10 +40,10 @@ class CalcStat extends Method
         $result = $this->c->DB->query($sql, $vars)->fetch();
 
         if (empty($result)) {
-            $this->model->last_post    = null;
-            $this->model->last_post_id = null;
-            $this->model->last_poster  = null;
-            $this->model->last_topic   = null;
+            $this->model->last_post    = 0;
+            $this->model->last_post_id = 0;
+            $this->model->last_poster  = 0;
+            $this->model->last_topic   = 0;
         } else {
             $this->model->last_post    = $result['last_post'];
             $this->model->last_post_id = $result['last_post_id'];
