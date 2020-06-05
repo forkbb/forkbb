@@ -17,7 +17,7 @@ class Save extends Method
     {
         $modified = $this->model->getModified();
         if (empty($modified)) {
-            return;
+            return $this->model;
         }
 
         $values = $this->model->getAttrs();
