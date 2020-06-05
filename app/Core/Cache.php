@@ -56,7 +56,7 @@ class Cache
      *
      * @return bool
      */
-    public function delete(striing $key): bool
+    public function delete(string $key): bool
     {
         return $this->provider->delete($key);
     }
