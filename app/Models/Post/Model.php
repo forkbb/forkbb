@@ -22,7 +22,7 @@ class Model extends DataModel
             throw new RuntimeException('Parent is not defined');
         }
 
-        return $this->c->topics->get($this->topic_id);
+        return $this->c->topics->load($this->topic_id);
     }
 
     /**
