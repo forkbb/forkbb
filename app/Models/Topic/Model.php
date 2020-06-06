@@ -14,9 +14,9 @@ class Model extends DataModel
      *
      * @throws RuntimeException
      *
-     * @return Forum\Model
+     * @return Forum|null
      */
-    protected function getparent(): Forum
+    protected function getparent(): ?Forum
     {
         if ($this->forum_id < 1) {
             throw new RuntimeException('Parent is not defined');
@@ -25,10 +25,10 @@ class Model extends DataModel
         $forum = $this->c->forums->get($this->forum_id);
 
         if (! $forum instanceof Forum || $forum->redirect_url) {
-            throw new RuntimeException("Parent({$this->forum_id}) is broken for topic number {$this->id}");
+            return null;
+        } else {
+            return $forum;
         }
-
-        return $forum;
     }
 
     /**

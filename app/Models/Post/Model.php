@@ -3,8 +3,9 @@
 namespace ForkBB\Models\Post;
 
 use ForkBB\Models\DataModel;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Topic\Model as Topic;
+use ForkBB\Models\User\Model as User;
 use RuntimeException;
 
 class Model extends DataModel
@@ -14,9 +15,9 @@ class Model extends DataModel
      *
      * @throws RuntimeException
      *
-     * @return Topic\Model
+     * @return Topic|null
      */
-    protected function getparent(): Topic
+    protected function getparent(): ?Topic
     {
         if ($this->topic_id < 1) {
             throw new RuntimeException('Parent is not defined');
@@ -24,11 +25,11 @@ class Model extends DataModel
 
         $topic = $this->c->topics->load($this->topic_id);
 
-        if (! $topic instanceof Topic || $topic->moved_to || ! $topic->parent) {
-            throw new RuntimeException("Parent({$this->topic_id}) is broken for post number {$this->id}");
+        if (! $topic instanceof Topic || $topic->moved_to || ! $topic->parent instanceof Forum) {
+            return null;
+        } else {
+            return $topic;
         }
-
-        return $topic;
     }
 
     /**
