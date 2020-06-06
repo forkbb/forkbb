@@ -62,14 +62,16 @@ class Load extends Action
         }
 
         $topic = $this->manager->create($data);
+        $forum = $topic->parent;
 
-        if (! $topic->parent instanceof Forum) {
+        if ($forum instanceof Forum) {
+            $forum->__mf_mark_all_read = $topic->mf_mark_all_read;
+            return $topic;
+        } else {
             return null;
         }
 
-        $topic->parent->__mf_mark_all_read = $topic->mf_mark_all_read;
 
-        return $topic;
     }
 
     /**
