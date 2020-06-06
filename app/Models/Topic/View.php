@@ -25,9 +25,9 @@ class View extends Action
     public function view($arg): array
     {
         if ($arg instanceof Forum) {
-            $expanded = false;
+            $full = false;
         } elseif ($arg instanceof Search) {
-            $expanded = true;
+            $full = true;
         } else {
             throw new InvalidArgumentException('Expected Forum or Search');
         }
@@ -36,46 +36,23 @@ class View extends Action
             throw new RuntimeException('Model does not contain of topics list for display');
         }
 
-        $vars = [
-            ':uid' => $this->c->user->id,
-            ':ids' => $arg->idsList,
-        ];
+        $result = $this->c->topics->loadByIds($arg->idsList, $full);
 
         if (! $this->c->user->isGuest && '1' == $this->c->config->o_show_dot) {
+            $vars = [
+                ':uid' => $this->c->user->id,
+                ':ids' => $arg->idsList,
+            ];
             $sql = 'SELECT p.topic_id
                     FROM ::posts AS p
                     WHERE p.poster_id=?i:uid AND p.topic_id IN (?ai:ids)
                     GROUP BY p.topic_id';
             $dots = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
-            $dots = \array_flip($dots);
-        } else {
-            $dots = [];
-        }
 
-        if ($this->c->user->isGuest) {
-            $sql = 'SELECT t.*
-                    FROM ::topics AS t
-                    WHERE t.id IN(?ai:ids)';
-        } elseif ($expanded) {
-            $sql = 'SELECT t.*, mof.mf_mark_all_read, mot.mt_last_visit, mot.mt_last_read
-                    FROM ::topics AS t
-                    LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND t.forum_id=mof.fid)
-                    LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND t.id=mot.tid)
-                    WHERE t.id IN (?ai:ids)';
-        } else {
-            $sql = 'SELECT t.*, mot.mt_last_visit, mot.mt_last_read
-                    FROM ::topics AS t
-                    LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND t.id=mot.tid)
-                    WHERE t.id IN (?ai:ids)';
-        }
-        $stmt = $this->c->DB->query($sql, $vars);
-
-        $result = \array_flip($arg->idsList);
-        while ($row = $stmt->fetch()) {
-            $row['dot'] = isset($dots[$row['id']]);
-            $result[$row['id']] = $this->manager->create($row);
-            if ($expanded && ! $this->c->user->isGuest) {
-                $result[$row['id']]->parent->__mf_mark_all_read = $row['mf_mark_all_read'];
+            foreach ($dots as $id) {
+                if (isset($result[$id]) && $result[$id] instanceof Topic) {
+                    $result[$id]->__dot = true;
+                }
             }
         }
 

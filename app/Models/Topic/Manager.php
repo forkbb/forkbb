@@ -20,7 +20,7 @@ class Manager extends ManagerModel
     }
 
     /**
-     * Загружает тему из БД
+     * Получает тему по id
      *
      * @param int $id
      *
@@ -35,6 +35,38 @@ class Manager extends ManagerModel
             $this->set($id, $topic);
             return $topic;
         }
+    }
+
+    /**
+     * Получает массив тем по ids
+     */
+    public function loadByIds(array $ids, bool $full = true): array
+    {
+        $result = [];
+        $data   = [];
+
+        foreach ($ids as $id) {
+            if ($this->isset($id)) {
+                $result[$id] = $this->get($id);
+            } else {
+                $result[$id] = null;
+                $data[]      = $id;
+                $this->set($id, null);
+            }
+        }
+
+        if (empty($data)) {
+            return $result;
+        }
+
+        foreach ($this->Load->loadByIds($data, $full) as $topic) {
+            if ($topic instanceof Topic) {
+                $result[$topic->id] = $topic;
+                $this->set($topic->id, $topic);
+            }
+        }
+
+        return $result;
     }
 
     /**
