@@ -10,9 +10,9 @@ use ForkBB\Core\Exceptions\ForkException;
 class Load extends Action
 {
     /**
-     * Создает запрос
+     * Создает текст запрос
      */
-    protected function createQuery(string $where): string
+    protected function getSql(string $where): string
     {
         $sql = 'SELECT u.*, g.*
                 FROM ::users AS u
@@ -22,7 +22,7 @@ class Load extends Action
     }
 
     /**
-     * Получает пользователя по id
+     * Загружает пользователя из БД
      *
      * @throws InvalidArgumentException
      */
@@ -33,14 +33,14 @@ class Load extends Action
         }
 
         $vars = [':id' => $id];
-        $sql  = $this->createQuery('u.id=?i:id');
+        $sql  = $this->getSql('u.id=?i:id');
         $data = $this->c->DB->query($sql, $vars)->fetch();
 
         return empty($data['id']) ? null : $this->manager->create($data);
     }
 
     /**
-     * Получает массив пользователей по ids
+     * Загружает список пользователей из БД
      *
      * @throws InvalidArgumentException
      */
@@ -53,7 +53,7 @@ class Load extends Action
         }
 
         $vars = [':ids' => $ids];
-        $sql  = $this->createQuery('u.id IN (?ai:ids)');
+        $sql  = $this->getSql('u.id IN (?ai:ids)');
         $data = $this->c->DB->query($sql, $vars)->fetchAll();
 
         $result = [];
@@ -88,7 +88,7 @@ class Load extends Action
     {
         $where = $caseInsencytive ? 'LOWER(u.username)=LOWER(?s:name)' : 'u.username=?s:name';
         $vars  = [':name' => $name];
-        $sql   = $this->createQuery($where);
+        $sql   = $this->getSql($where);
 
         return $this->returnUser($sql, $vars);
     }
@@ -99,7 +99,7 @@ class Load extends Action
     public function loadByEmail(string $email): ?User
     {
         $vars = [':email' => $this->c->NormEmail->normalize($email)];
-        $sql  = $this->createQuery('u.email_normal=?s:email');
+        $sql  = $this->getSql('u.email_normal=?s:email');
 
         return $this->returnUser($sql, $vars);
     }
