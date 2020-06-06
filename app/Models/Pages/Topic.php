@@ -3,7 +3,7 @@
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
-use ForkBB\Models\Topic\Model as ModelTopic;
+use ForkBB\Models\Topic\Model as TopicModel;
 
 class Topic extends Page
 {
@@ -72,11 +72,11 @@ class Topic extends Page
 
     /**
      * @param string $type
-     * @param ModelTopic $topic
+     * @param TopicModel $topic
      *
      * @param Page
      */
-    protected function go(string $type, ModelTopic $topic): Page
+    protected function go(string $type, TopicModel $topic): Page
     {
         switch ($type) {
             case 'new':
@@ -112,7 +112,7 @@ class Topic extends Page
             $topic = $this->c->topics->load((int) $args['id']);
         }
 
-        if (empty($topic) || ! $topic->last_post_id) {
+        if (! $topic instanceof TopicModel || ! $topic->last_post_id) {
             return $this->c->Message->message('Bad request');
         }
 
