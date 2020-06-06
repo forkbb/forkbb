@@ -45,6 +45,38 @@ class Manager extends ManagerModel
     }
 
     /**
+     * Получает массив сообщений по ids
+     */
+    public function loadByIds(array $ids, bool $withTopics = true): array
+    {
+        $result = [];
+        $data   = [];
+
+        foreach ($ids as $id) {
+            if ($this->isset($id)) {
+                $result[$id] = $this->get($id);
+            } else {
+                $result[$id] = null;
+                $data[]      = $id;
+                $this->set($id, null);
+            }
+        }
+
+        if (empty($data)) {
+            return $result;
+        }
+
+        foreach ($this->Load->loadByIds($data, $withTopics) as $post) {
+            if ($post instanceof Post) {
+                $result[$post->id] = $post;
+                $this->set($post->id, $post);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Обновляет сообщение в БД
      *
      * @param Post $post

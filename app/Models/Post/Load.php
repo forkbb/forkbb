@@ -6,6 +6,7 @@ use ForkBB\Models\Action;
 use ForkBB\Models\Post\Model as Post;
 use ForkBB\Models\Topic\Model as Topic;
 use InvalidArgumentException;
+use RuntimeException;
 
 class Load extends Action
 {
@@ -60,7 +61,7 @@ class Load extends Action
         $post  = $this->manager->create($data);
         $topic = $post->parent;
 
-        if (! $topic instanceof Topic || $topic->moved_to || ! $topic->parent) {
+        if (! $topic instanceof Topic) {
             return null;
         }
         if (null !== $tid && $topic->id !== $tid) {
@@ -68,5 +69,52 @@ class Load extends Action
         }
 
         return $post;
+    }
+
+    /**
+     * Загружает список сообщений из БД
+     *
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
+     */
+    public function loadByIds(array $ids, bool $withTopics): array
+    {
+        foreach ($ids as $id) {
+            if (! \is_int($id) || $id < 1) {
+                throw new InvalidArgumentException('Expected a positive topic id');
+            }
+        }
+
+        $vars = [
+            ':ids' => $ids,
+        ];
+        $sql  = $this->getSql('p.id IN (?ai:ids)');
+        $stmt = $this->c->DB->query($sql, $vars);
+
+        $result   = [];
+        $topicIds = [];
+        while ($row = $stmt->fetch()) {
+            $post = $this->manager->create($row);
+            $topicIds[$post->topic_id] = $post->topic_id;
+            $result[] = $post;
+        }
+
+        if ($withTopics) {
+            $this->c->topics->loadByIds($topicIds, true);
+            foreach ($result as &$post) {
+                if (! $post->parent instanceof Topic) {
+                    $post = null;
+                }
+            }
+            unset($post);
+        } else {
+            foreach ($topicIds as $id) {
+                if (! $this->c->topics->isset($id) || ! $this->c->topics->get($id) instanceof Topic) {
+                    throw new RuntimeException("Topic number {$id} not loaded");
+                }
+            }
+        }
+
+        return $result;
     }
 }
