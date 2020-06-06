@@ -20,7 +20,8 @@ class Manager extends ManagerModel
     }
 
     /**
-     * Загружает сообщение из БД
+     * Получает сообщение по id
+     * Получает сообщение по id и tid темы (с проверкой вхождения)
      *
      * @param int $id
      * @param int $tid
@@ -36,11 +37,7 @@ class Manager extends ManagerModel
                 return null;
             }
         } else {
-            if (null !== $tid) {
-                $post = $this->Load->loadFromTopic($id, $tid);
-            } else {
-                $post = $this->Load->load($id);
-            }
+            $post = $this->Load->load($id, $tid);
             $this->set($id, $post);
         }
 
