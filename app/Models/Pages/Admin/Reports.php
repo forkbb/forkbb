@@ -9,6 +9,25 @@ use ForkBB\Models\Report\Model as Report;
 
 class Reports extends Admin
 {
+    protected $userIds = [];
+    protected $postIds = [];
+
+    /**
+     * Выделяет данные из списка сигналов
+     *
+     * @param array $reports
+     */
+    protected function dataFromReports(array $reports): void
+    {
+        foreach ($reports as $report) {
+            $this->userIds[$report->reported_by] = $report->reported_by;
+            $this->userIds[$report->zapped_by]   = $report->zapped_by;
+            $this->postIds[$report->post_id]     = $report->post_id;
+        }
+
+        unset($this->userIds[0]);
+    }
+
     /**
      * Подготавливает данные для шаблона
      *
@@ -24,10 +43,19 @@ class Reports extends Admin
 
         $this->c->Lang->load('admin_reports');
 
+        $listNew = $this->c->reports->loadList(true);
+        $listOld = $this->c->reports->loadList(false);
+
+        $this->dataFromReports($listNew);
+        $this->dataFromReports($listOld);
+
+        $this->c->users->loadByIds($this->userIds);
+        //$this->c->posts->loadByIds($this->postIds);
+
         $this->nameTpl  = 'admin/reports';
         $this->aIndex   = 'reports';
-        $this->formNew  = $this->form(true);
-        $this->formOld  = $this->form(false);
+        $this->formNew  = $this->form(true, $listNew);
+        $this->formOld  = $this->form(false, $listOld);
 
         return $this;
     }
@@ -36,16 +64,17 @@ class Reports extends Admin
      * Формирует данные для формы
      *
      * @param bool $noZapped
+     * @param array $reports
      *
      * @return array
      */
-    protected function form(bool $noZapped): array
+    protected function form(bool $noZapped, array $reports): array
     {
         $form = [
             'sets'   => [],
         ];
 
-        foreach ($this->c->reports->loadList($noZapped) as $report) {
+        foreach ($reports as $report) {
             if ($noZapped) {
                 $cur = [
                     'legend' => \ForkBB\__('Reported %s', \ForkBB\dt($report->created)),
@@ -128,7 +157,6 @@ class Reports extends Admin
         $report = $this->c->reports->load((int) $args['id']);
 
         if ($report instanceof Report) {
-            $report->zapped = \time(); // ???? перенести в модель?
             $report->marker = $this->user;
 
             $this->c->reports->update($report);

@@ -26,7 +26,7 @@ class Model extends DataModel
     }
 
     /**
-     * Автор репорта
+     * Автор сигнала
      *
      * @throws RuntimeException
      *
@@ -59,11 +59,14 @@ class Model extends DataModel
      */
     protected function setmarker(User $user): void
     {
-        if ($user->isGuest) {
+        if (! empty($this->zapped_by)) {
+            throw new RuntimeException('Report already has a marker');
+        } elseif ($user->isGuest) {
             throw new RuntimeException('Bad marker');
         }
 
         $this->zapped_by = $user->id;
+        $this->zapped    = \time();
     }
 
     /**
