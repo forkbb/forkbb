@@ -22,7 +22,13 @@ class Model extends DataModel
             throw new RuntimeException('Parent is not defined');
         }
 
-        return $this->c->forums->get($this->forum_id);
+        $forum = $this->c->forums->get($this->forum_id);
+
+        if (! $forum instanceof Forum || $forum->redirect_url) {
+            throw new RuntimeException("Parent({$this->forum_id}) is broken for topic number {$this->id}");
+        }
+
+        return $forum;
     }
 
     /**
