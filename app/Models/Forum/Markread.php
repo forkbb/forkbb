@@ -63,5 +63,7 @@ class Markread extends Action
         } else {
             throw new RuntimeException('The model does not have ID');
         }
+
+        return $forum;
     }
 }
