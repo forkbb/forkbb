@@ -50,7 +50,7 @@ class Reports extends Admin
         $this->dataFromReports($listOld);
 
         $this->c->users->loadByIds($this->userIds);
-        //$this->c->posts->loadByIds($this->postIds);
+        $this->c->posts->loadByIds($this->postIds);
 
         $this->nameTpl  = 'admin/reports';
         $this->aIndex   = 'reports';
