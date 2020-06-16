@@ -124,7 +124,35 @@ class View extends Users
             $this->formIP = $this->formIP($data);
         }
 
+        if ($this->user->isAdmin) {
+            $this->formNew = $this->formNew();
+        }
+
         return $this;
+    }
+
+    /**
+     * Создает массив данных для кнопки добавления пользователя
+     *
+     * @return array
+     */
+    protected function formNew(): array
+    {
+        $form = [
+            'action' => $this->c->Router->link('AdminUsers'),
+            'hidden' => [],
+            'sets'   => [],
+            'btns'   => [
+                'new' => [
+                    'type'      => 'btn',
+                    'value'     => \ForkBB\__('New user'),
+                    'link'      => $this->c->Router->link('AdminUsersNew'),
+                    'accesskey' => 'n',
+                ],
+            ],
+        ];
+
+        return $form;
     }
 
     /**

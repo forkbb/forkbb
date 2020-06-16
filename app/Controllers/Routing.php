@@ -146,6 +146,10 @@ class Routing
 
             $r->add(self::GET, '/admin/users/promote/{uid:[2-9]|[1-9]\d+}/{pid:[1-9]\d*}/{token}', 'AdminUsersPromote:promote', 'AdminUserPromote');
 
+            if ($user->isAdmin) {
+                $r->add(self::DUO, '/admin/users/new', 'AdminUsersNew:view', 'AdminUsersNew');
+            }
+
             if ($this->c->userRules->banUsers) {
                 $r->add(self::DUO, '/admin/bans',                                                     'AdminBans:view',   'AdminBans');
                 $r->add(self::DUO, '/admin/bans/new[/{ids:\d+(?:-\d+)*}[/{uid:[2-9]|[1-9]\d+}]]',     'AdminBans:add',    'AdminBansNew');

@@ -178,6 +178,7 @@ return [
         'AdminUsersStat'  => \ForkBB\Models\Pages\Admin\Users\Stat::class,
         'AdminUsersAction' => \ForkBB\Models\Pages\Admin\Users\Action::class,
         'AdminUsersPromote' => \ForkBB\Models\Pages\Admin\Users\Promote::class,
+        'AdminUsersNew'   => \ForkBB\Models\Pages\Admin\Users\NewUser::class,
         'AdminHost'       => \ForkBB\Models\Pages\Admin\Host::class,
         'AdminBans'       => \ForkBB\Models\Pages\Admin\Bans::class,
         'AdminReports'    => \ForkBB\Models\Pages\Admin\Reports::class,

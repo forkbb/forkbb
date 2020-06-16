@@ -356,3 +356,18 @@ msgstr "Вы пытаетесь изменить свою собственную
 
 msgid "User is ban"
 msgstr "Пользователь %s забанен."
+
+msgid "New user head"
+msgstr "Новый пользователь"
+
+msgid "New user"
+msgstr "Новый пользователь"
+
+msgid "Add user"
+msgstr "Добавление пользователя"
+
+msgid "Add user legend"
+msgstr "Добавление пользователя"
+
+msgid "New user added redirect"
+msgstr "Новый пользователь добавлен. Переадресация …"

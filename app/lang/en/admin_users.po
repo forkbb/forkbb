@@ -356,3 +356,18 @@ msgstr "You are trying to change your own group."
 
 msgid "User is ban"
 msgstr "The user %s is ban."
+
+msgid "New user head"
+msgstr "New user"
+
+msgid "New user"
+msgstr "New user"
+
+msgid "Add user"
+msgstr "Add user"
+
+msgid "Add user legend"
+msgstr "Add user"
+
+msgid "New user added redirect"
+msgstr "New user added. Redirecting …"
