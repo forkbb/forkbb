@@ -132,6 +132,8 @@ return [
         'VLusername' => \ForkBB\Models\Validators\Username::class,
         'VLemail'    => \ForkBB\Models\Validators\Email::class,
 
+        'ProfileRules' => \ForkBB\Models\Rules\Profile::class,
+        'UsersRules'   => \ForkBB\Models\Rules\Users::class,
     ],
     'multiple'  => [
         'CtrlPrimary' => \ForkBB\Controllers\Primary::class,
@@ -276,8 +278,5 @@ return [
         'SearchModelTruncateIndex'   => \ForkBB\Models\Search\TruncateIndex::class,
         'SearchModelPrepare' => \ForkBB\Models\Search\Prepare::class,
         'SearchModelExecute' => \ForkBB\Models\Search\Execute::class,
-
-        'ProfileRules' => \ForkBB\Models\Rules\Profile::class,
-        'UsersRules'   => \ForkBB\Models\Rules\Users::class,
     ],
 ];

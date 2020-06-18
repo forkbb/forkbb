@@ -135,7 +135,7 @@ class Routing
             $r->add(self::GET, '/admin/', 'AdminIndex:index', 'Admin');
             $r->add(self::GET, '/admin/statistics', 'AdminStatistics:statistics', 'AdminStatistics');
 
-            if ($user->canViewIP) {
+            if ($this->c->userRules->viewIP) {
                 $r->add(self::GET, '/admin/get/host/{ip:[0-9a-fA-F:.]+}', 'AdminHost:view', 'AdminHost');
                 $r->add(self::GET, '/admin/users/user/{id:[2-9]|[1-9]\d+}[/{page:[1-9]\d*}]', 'AdminUsersStat:view', 'AdminUserStat');
             }

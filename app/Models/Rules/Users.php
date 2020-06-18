@@ -27,7 +27,7 @@ class Users extends Rules
 
     protected function getviewIP(): bool
     {
-        return $this->user->canViewIP;
+        return $this->user->isAdmin;
     }
 
     protected function getdeleteUsers(): bool

@@ -27,7 +27,7 @@ class Model extends DataModel
         parent::__construct($container);
 
         $this->zDepend = [
-            'group_id' => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'link', 'viewUsers', 'canViewIP', 'showPostCount', 'searchUsers'],
+            'group_id' => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'link', 'viewUsers', 'showPostCount', 'searchUsers'],
             'id' => ['isGuest', 'link', 'avatar', 'online'],
             'logged' => ['isLogged'],
             'show_sig' => ['showSignature'],
@@ -349,16 +349,6 @@ class Model extends DataModel
         }
 
         return (int) $attr;
-    }
-
-    /**
-     * Статус показа ip пользователей
-     *
-     * @return bool
-     */
-    protected function getcanViewIP(): bool
-    {
-        return $this->isAdmin;
     }
 
     /**
