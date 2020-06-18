@@ -161,8 +161,8 @@
             @endif
             @if ($p->model->canCreateTopic)
           <a class="f-btn f-btn-create-topic" href="{!! $p->model->linkCreateTopic !!}">{!! __('Post topic') !!}</a>
-        </div>
             @endif
+        </div>
         @endif
         @yield ('pagination')
       </div>
