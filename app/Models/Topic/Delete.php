@@ -27,15 +27,16 @@ class Delete extends Action
             throw new InvalidArgumentException('No arguments, expected User(s), Forum(s) or Topic(s)');
         }
 
-        $users    = [];
-        $usersDel = [];
-        $usersUpd = [];
-        $forums   = [];
-        $topics   = [];
-        $parents  = [];
-        $isUser   = 0;
-        $isForum  = 0;
-        $isTopic  = 0;
+        $users        = [];
+        $usersToGuest = [];
+        $usersDel     = [];
+        $usersUpd     = [];
+        $forums       = [];
+        $topics       = [];
+        $parents      = [];
+        $isUser       = 0;
+        $isForum      = 0;
+        $isTopic      = 0;
 
         foreach ($args as $arg) {
             if ($arg instanceof User) {
@@ -44,6 +45,8 @@ class Delete extends Action
                 }
                 if (true === $arg->deleteAllPost) {
                     $usersDel[] = $arg->id;
+                } else {
+                    $usersToGuest[] = $arg->id;
                 }
                 $users[] = $arg->id;
                 $isUser  = 1;
@@ -121,6 +124,20 @@ class Delete extends Action
             ];
             $sql = 'DELETE FROM ::mark_of_topic
                     WHERE uid IN (?ai:users)';
+            $this->c->DB->exec($sql, $vars);
+        }
+        if ($usersToGuest) {
+            $vars = [
+                ':users' => $usersToGuest,
+            ];
+            $sql = 'UPDATE ::topics
+                    SET poster_id=1
+                    WHERE poster_id IN (?ai:users)';
+            $this->c->DB->exec($sql, $vars);
+
+            $sql = 'UPDATE ::topics
+                    SET last_poster_id=1
+                    WHERE last_poster_id IN (?ai:users)';
             $this->c->DB->exec($sql, $vars);
         }
         if ($forums) {
