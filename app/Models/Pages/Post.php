@@ -134,7 +134,7 @@ class Post extends Page
             $forum       = $model->parent;
             $topic       = $model;
 
-            if (! $this->user->isGuest && $topic->last_poster === $username) {
+            if (! $this->user->isGuest && $topic->last_poster_id === $this->user->id) {
                 if ($executive) {
                     if ($v->merge_post) {
                         $merge = true;
@@ -153,13 +153,15 @@ class Post extends Page
             $forum       = $model;
             $topic       = $this->c->topics->create();
 
-            $topic->subject     = $v->subject;
-            $topic->poster      = $username;
-            $topic->last_poster = $username;
-            $topic->posted      = $now;
-            $topic->last_post   = $now;
-            $topic->sticky      = $v->stick_topic ? 1 : 0;
-            $topic->stick_fp    = $v->stick_fp ? 1 : 0;
+            $topic->subject        = $v->subject;
+            $topic->poster         = $username;
+            $topic->poster_id      = $this->user->id;
+            $topic->last_poster    = $username;
+            $topic->last_poster_id = $this->user->id;
+            $topic->posted         = $now;
+            $topic->last_post      = $now;
+            $topic->sticky         = $v->stick_topic ? 1 : 0;
+            $topic->stick_fp       = $v->stick_fp ? 1 : 0;
 #           $topic->poll_type   = ;
 #           $topic->poll_time   = ;
 #           $topic->poll_term   = ;

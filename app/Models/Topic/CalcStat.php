@@ -30,7 +30,7 @@ class CalcStat extends Method
 
         $num_replies = $this->c->DB->query($sql, $vars)->fetchColumn();
 
-        $sql = 'SELECT p.id AS last_post_id, p.poster AS last_poster, p.posted, p.edited
+        $sql = 'SELECT p.id, p.poster, p.poster_id, p.posted, p.edited
                 FROM ::posts AS p
                 WHERE p.topic_id=?i:tid
                 ORDER BY p.id DESC
@@ -39,10 +39,11 @@ class CalcStat extends Method
         $result = $this->c->DB->query($sql, $vars)->fetch();
 
         //????
-        $this->model->num_replies  = $num_replies;
-        $this->model->last_post_id = $result['last_post_id'];
-        $this->model->last_poster  = $result['last_poster'];
-        $this->model->last_post    = $result['edited'] > 0 && $result['edited'] > $result['posted'] ? $result['edited'] : $result['posted'];
+        $this->model->num_replies    = $num_replies;
+        $this->model->last_post_id   = $result['id'];
+        $this->model->last_poster    = $result['poster'];
+        $this->model->last_poster_id = $result['poster_id'];
+        $this->model->last_post      = $result['edited'] > 0 && $result['edited'] > $result['posted'] ? $result['edited'] : $result['posted'];
 
         return $this->model;
     }
