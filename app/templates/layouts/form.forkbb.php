@@ -1,5 +1,5 @@
 @if ($form['action'])
-        <form class="f-form" method="post" action="{!! $form['action'] !!}" @if ($form['enctype']) enctype="{{ $form['enctype'] }}" @endif>
+        <form @if ($form['id']) id="{!! $form['id'] !!}" @endif class="f-form" method="post" action="{!! $form['action'] !!}" @if ($form['enctype']) enctype="{{ $form['enctype'] }}" @endif>
     @if ($form['hidden'])
         @foreach ($form['hidden'] as $key => $val)
           <input type="hidden" name="{{ $key }}" value="{{ $val }}">
