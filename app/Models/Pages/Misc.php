@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
+use ForkBB\Models\Forum\Model as Forum;
 
 class Misc extends Page
 {
@@ -15,8 +16,8 @@ class Misc extends Page
      */
     public function markread(array $args): Page
     {
-        $forum = $this->c->forums->loadTree($args['id']);
-        if (null === $forum) {
+        $forum = $this->c->forums->loadTree((int) $args['id']);
+        if (! $forum instanceof Forum) {
             return $this->c->Message->message('Bad request');
         }
 
