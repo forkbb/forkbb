@@ -638,19 +638,19 @@ class Groups extends Admin
             return $this->c->Message->message('Bad request');
         }
 
-        $count = $this->c->users->usersNumber($group);
+        $count  = $this->c->users->usersNumber($group);
+        $groups = [];
         if ($count) {
-            $move   = 'required|integer|in:';
-            $groups = [];
+            $move = 'required|integer|in:';
             foreach ($this->groupsList as $key => $cur) {
                 if ($key === $this->c->GROUP_GUEST || $key === $group->g_id) {
                     continue;
                 }
                 $groups[$key] = $cur[0];
             }
-            $move  .= \implode(',', \array_keys($groups));
+            $move .= \implode(',', \array_keys($groups));
         } else {
-            $move   = 'absent';
+            $move = 'absent';
         }
 
         if ('POST' === $method) {
