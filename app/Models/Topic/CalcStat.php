@@ -23,13 +23,6 @@ class CalcStat extends Method
 
         if ($this->model->moved_to) {
             $num_replies = 0;
-            $result = [
-                'id'        => 0,
-                'poster'    => '',
-                'poster_id' => 0,
-                'posted'    => 0,
-                'edited'    => 0,
-            ];
         } else {
             $vars = [
                 ':tid' => $this->model->id
@@ -47,14 +40,15 @@ class CalcStat extends Method
                     LIMIT 1';
 
             $result = $this->c->DB->query($sql, $vars)->fetch();
+
+            $this->model->last_post_id   = $result['id'];
+            $this->model->last_poster    = $result['poster'];
+            $this->model->last_poster_id = $result['poster_id'];
+            $this->model->last_post      = $result['edited'] > 0 && $result['edited'] > $result['posted'] ? $result['edited'] : $result['posted'];
         }
 
         //????
-        $this->model->num_replies    = $num_replies;
-        $this->model->last_post_id   = $result['id'];
-        $this->model->last_poster    = $result['poster'];
-        $this->model->last_poster_id = $result['poster_id'];
-        $this->model->last_post      = $result['edited'] > 0 && $result['edited'] > $result['posted'] ? $result['edited'] : $result['posted'];
+        $this->model->num_replies = $num_replies;
 
         return $this->model;
     }

@@ -22,13 +22,19 @@ class CalcStat extends Method
         }
 
         $vars = [':fid' => $this->model->id];
+        $sql = 'SELECT COUNT(t.id)
+                FROM ::topics AS t
+                WHERE t.forum_id=?i:fid AND t.moved_to!=0';
+
+        $moved = $this->c->DB->query($sql, $vars)->fetchColumn();
+
         $sql = 'SELECT COUNT(t.id) as num_topics, SUM(t.num_replies) as num_replies
                 FROM ::topics AS t
-                WHERE t.forum_id=?i:fid';
+                WHERE t.forum_id=?i:fid AND t.moved_to=0';
 
         $result = $this->c->DB->query($sql, $vars)->fetch();
 
-        $this->model->num_topics = $result['num_topics'];
+        $this->model->num_topics = $result['num_topics'] + $moved;
         $this->model->num_posts  = $result['num_topics'] + $result['num_replies'];
 
         $sql = 'SELECT t.last_post, t.last_post_id, t.last_poster, t.subject as last_topic
