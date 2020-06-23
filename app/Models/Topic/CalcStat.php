@@ -21,22 +21,33 @@ class CalcStat extends Method
             throw new RuntimeException('The model does not have ID');
         }
 
-        $vars = [
-            ':tid' => $this->model->id
-        ];
-        $sql = 'SELECT COUNT(p.id) - 1
-                FROM ::posts AS p
-                WHERE p.topic_id=?i:tid';
+        if ($this->model->moved_to) {
+            $num_replies = 0;
+            $result = [
+                'id'        => 0,
+                'poster'    => '',
+                'poster_id' => 0,
+                'posted'    => 0,
+                'edited'    => 0,
+            ];
+        } else {
+            $vars = [
+                ':tid' => $this->model->id
+            ];
+            $sql = 'SELECT COUNT(p.id) - 1
+                    FROM ::posts AS p
+                    WHERE p.topic_id=?i:tid';
 
-        $num_replies = $this->c->DB->query($sql, $vars)->fetchColumn();
+            $num_replies = $this->c->DB->query($sql, $vars)->fetchColumn();
 
-        $sql = 'SELECT p.id, p.poster, p.poster_id, p.posted, p.edited
-                FROM ::posts AS p
-                WHERE p.topic_id=?i:tid
-                ORDER BY p.id DESC
-                LIMIT 1';
+            $sql = 'SELECT p.id, p.poster, p.poster_id, p.posted, p.edited
+                    FROM ::posts AS p
+                    WHERE p.topic_id=?i:tid
+                    ORDER BY p.id DESC
+                    LIMIT 1';
 
-        $result = $this->c->DB->query($sql, $vars)->fetch();
+            $result = $this->c->DB->query($sql, $vars)->fetch();
+        }
 
         //????
         $this->model->num_replies    = $num_replies;
