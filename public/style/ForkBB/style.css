@@ -724,6 +724,10 @@ body,
   max-width: 100%;
 }
 
+#fork .f-crumb:last-child {
+  font-weight: bold;
+}
+
 #fork .f-crumb + .f-crumb:before {
   display: inline;
   color: #583200;
