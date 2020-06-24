@@ -162,6 +162,9 @@ class Routing
                 $r->add(self::GET, '/admin/reports',                           'AdminReports:view', 'AdminReports');
                 $r->add(self::GET, '/admin/reports/zap/{id:[1-9]\d*}/{token}', 'AdminReports:zap',  'AdminReportsZap');
             }
+
+            $r->add(self::PST, '/moderate', 'Moderate:action', 'Moderate');
+
         }
         // только админ
         if ($user->isAdmin) {

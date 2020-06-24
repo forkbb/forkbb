@@ -515,6 +515,10 @@ body,
   width: 100%;
 }
 
+#fork .f-fdiv .f-btn[name=delete] {
+  color: red;
+}
+
 #fork .f-fdiv .f-label {
   font-size: 1rem;
   display: inline-block;
@@ -1168,6 +1172,23 @@ body,
   width: 2rem;
 }
 
+#fork .f-ftlist .f-fch {
+  display: none;
+}
+
+#fork .f-ftlist .f-fch + .f-ficon {
+  position: relative;
+  cursor: pointer;
+}
+
+#fork .f-ftlist .f-fch:checked + .f-ficon:after {
+  content: "\2713";
+  color: red;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
 #fork .f-ftlist .f-finfo {
   width: calc(100% - 2rem);
 }
@@ -1739,6 +1760,33 @@ body,
 
 #id-fs-report > legend {
   display: none;
+}
+
+/*****************/
+/* Модерирование */
+/*****************/
+#fork .f-moderate {
+  border-top: 0.0625rem solid #AA7939;
+  margin: 1rem 0;
+  position: relative;
+}
+
+#fork .f-moderate .f-fdivm {
+  padding: 1rem 0.625rem 0 0.625rem;
+}
+
+#fork .f-moderate .f-btn {
+  opacity: 0.4;
+}
+
+#fork .f-moderate .f-btns:hover .f-btn,
+#fork .f-moderate .f-btn:focus {
+  opacity: 1;
+}
+
+#fork .f-moderate-form .f-btn {
+  width: auto;
+  display: inline-block;
 }
 
 /*********************/

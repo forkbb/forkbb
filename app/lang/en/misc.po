@@ -123,8 +123,8 @@ msgstr "Move topic"
 msgid "Move topics"
 msgstr "Move topics"
 
-msgid "Move legend"
-msgstr "Select destination of move"
+msgid "Invalid destination"
+msgstr "Invalid destination."
 
 msgid "Move to"
 msgstr "Move to"
@@ -148,7 +148,7 @@ msgid "Delete topics"
 msgstr "Delete topics"
 
 msgid "Delete topics comply"
-msgstr "Are you sure you want to delete the selected topics?"
+msgstr "Delete the selected topics (<b>All posts from these topics will be deleted</b>)"
 
 msgid "Delete topics redirect"
 msgstr "Topics deleted. Redirecting …"
@@ -164,9 +164,6 @@ msgstr "Topic closed. Redirecting …"
 
 msgid "Close topics redirect"
 msgstr "Topics closed. Redirecting …"
-
-msgid "No topics selected"
-msgstr "You must select at least one topic for move/delete/open/close."
 
 msgid "Not enough topics selected"
 msgstr "You must select at least two topics for merge."
@@ -208,7 +205,7 @@ msgid "Cannot select first"
 msgstr "First post cannot be selected for split/delete."
 
 msgid "Delete posts comply"
-msgstr "Are you sure you want to delete the selected posts?"
+msgstr "Delete the selected posts"
 
 msgid "Delete posts redirect"
 msgstr "Posts deleted. Redirecting …"
@@ -233,3 +230,36 @@ msgstr "Posts moved. Redirecting …"
 
 msgid "Post from topic"
 msgstr "This post is moved from topic"
+
+msgid "Topic «%s»"
+msgstr "Topic «%s»"
+
+msgid "All posts will be posted in the «%s» topic"
+msgstr "All posts will be posted in the «%s» topic."
+
+msgid "Action not available"
+msgstr "Action not available."
+
+msgid "No object selected"
+msgstr "You must select at least one object for the action."
+
+msgid "Open topics"
+msgstr "Open topics"
+
+msgid "Close topics"
+msgstr "Close topics"
+
+msgid "Confirm action"
+msgstr "Confirm action"
+
+msgid "Topic links cannot be merged"
+msgstr "Topic links cannot be merged."
+
+msgid "Category prefix"
+msgstr ""
+
+msgid "Forum prefix"
+msgstr ""
+
+msgid "Forum indent"
+msgstr "◦ ◦ "

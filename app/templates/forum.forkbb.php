@@ -84,7 +84,12 @@
         @elseif ($topic->moved_to)
           <li id="topic-{!! $topic->id !!}" class="f-row f-fredir">
             <div class="f-cell f-cmain">
+            @if ($p->enableMod)
+              <input id="checkbox-{!! $topic->id !!}" class="f-fch" type="checkbox" name="ids[{!! $topic->id !!}]" value="{!! $topic->id !!}" form="id-form-mod">
+              <label class="f-ficon" for="checkbox-{!! $topic->id !!}"></label>
+            @else
               <div class="f-ficon"></div>
+            @endif
               <div class="f-finfo">
                 <h3><span class="f-fredirtext">{!! __('Moved') !!}</span> <a class="f-ftname" href="{!! $topic->link !!}">{{ cens($topic->subject) }}</a></h3>
               </div>
@@ -93,7 +98,12 @@
         @else
           <li id="topic-{!! $topic->id !!}" class="f-row @if (false !== $topic->hasNew) f-fnew @endif @if (false !== $topic->hasUnread) f-funread @endif @if ($topic->sticky) f-fsticky @endif @if ($topic->closed) f-fclosed @endif @if ($topic->poll_type) f-fpoll @endif @if ($topic->dot) f-fposted @endif">
             <div class="f-cell f-cmain">
+            @if ($p->enableMod)
+              <input id="checkbox-{!! $topic->id !!}" class="f-fch" type="checkbox" name="ids[{!! $topic->id !!}]" value="{!! $topic->id !!}" form="id-form-mod">
+              <label class="f-ficon" for="checkbox-{!! $topic->id !!}"></label>
+            @else
               <div class="f-ficon"></div>
+            @endif
               <div class="f-finfo">
                 <h3>
             @if ($topic->dot)
@@ -169,4 +179,12 @@
     @endif
     @yield ('crumbs')
     </div>
+@endif
+@if ($p->enableMod && $form = $p->formMod)
+    <section class="f-moderate">
+      <h2>{!! __('Moderate') !!}</h2>
+      <div class="f-fdivm">
+    @include ('layouts/form')
+      </div>
+    </section>
 @endif

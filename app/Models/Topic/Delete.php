@@ -118,6 +118,8 @@ class Delete extends Action
 
         //???? подписки, опросы, предупреждения
 
+        // удаление тем-ссылок на удаляемые темы
+
         if ($users) {
             $vars = [
                 ':users' => $users,
@@ -168,7 +170,7 @@ class Delete extends Action
                     WHERE id IN (?ai:topics)';
             $this->c->DB->exec($sql, $vars);
 
-            foreach($parents as $forum) {
+            foreach ($parents as $forum) {
                 $this->c->forums->update($forum->calcStat());
             }
         }

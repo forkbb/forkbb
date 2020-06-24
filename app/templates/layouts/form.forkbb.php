@@ -2,7 +2,13 @@
         <form @if ($form['id']) id="{!! $form['id'] !!}" @endif class="f-form" method="post" action="{!! $form['action'] !!}" @if ($form['enctype']) enctype="{{ $form['enctype'] }}" @endif>
     @if ($form['hidden'])
         @foreach ($form['hidden'] as $key => $val)
+            @if (\is_array($val))
+                @foreach ($val as $k => $v)
+          <input type="hidden" name="{{ $key }}[{{ $k }}]" value="{{ $v }}">
+                @endforeach
+            @else
           <input type="hidden" name="{{ $key }}" value="{{ $val }}">
+            @endif
         @endforeach
     @endif
 @endif

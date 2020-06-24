@@ -123,8 +123,8 @@ msgstr "Перенос темы"
 msgid "Move topics"
 msgstr "Перенос тем"
 
-msgid "Move legend"
-msgstr "Выберите раздел-получатель"
+msgid "Invalid destination"
+msgstr "Неверная цель переноса."
 
 msgid "Move to"
 msgstr "Перенести в"
@@ -148,7 +148,7 @@ msgid "Delete topics"
 msgstr "Удаление тем"
 
 msgid "Delete topics comply"
-msgstr "Вы уверены, что хотите удалить отмеченные темы?"
+msgstr "Удалить выбранные темы (<b>Все сообщения из этих тем будут удалены</b>)"
 
 msgid "Delete topics redirect"
 msgstr "Темы удалены. Переадресация &hellip;"
@@ -164,9 +164,6 @@ msgstr "Тема закрыта. Переадресация &hellip;"
 
 msgid "Close topics redirect"
 msgstr "Темы закрыты. Переадресация &hellip;"
-
-msgid "No topics selected"
-msgstr "Вы должны выбрать хотя бы одну тему для переноса/удаления/открытия/закрытия."
 
 msgid "Not enough topics selected"
 msgstr "Вы должны выбрать хотя бы две темы для объединения."
@@ -208,7 +205,7 @@ msgid "Cannot select first"
 msgstr "Первое сообщение не может быть выбрано."
 
 msgid "Delete posts comply"
-msgstr "Вы уверены, что хотите удалить выбранные сообщения?"
+msgstr "Удалить выбранные сообщения"
 
 msgid "Delete posts redirect"
 msgstr "Сообщения удалены. Переадресация &hellip;"
@@ -233,3 +230,36 @@ msgstr "Сообщения перенесены. Переадресация &hel
 
 msgid "Post from topic"
 msgstr "Это сообщение перенесено из темы"
+
+msgid "Topic «%s»"
+msgstr "Тема «%s»"
+
+msgid "All posts will be posted in the «%s» topic"
+msgstr "Все сообщения будут размещены в теме «%s»."
+
+msgid "Action not available"
+msgstr "Действие недоступно."
+
+msgid "No object selected"
+msgstr "Вы должны выбрать хотя бы один объект для действия."
+
+msgid "Open topics"
+msgstr "Открытие тем"
+
+msgid "Close topics"
+msgstr "Закрытие тем"
+
+msgid "Confirm action"
+msgstr "Подтвердить действие"
+
+msgid "Topic links cannot be merged"
+msgstr "Ссылки на темы не могут быть объединены."
+
+msgid "Category prefix"
+msgstr ""
+
+msgid "Forum prefix"
+msgstr ""
+
+msgid "Forum indent"
+msgstr "◦ ◦ "

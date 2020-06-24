@@ -159,6 +159,7 @@ return [
         'Ban'             => \ForkBB\Models\Pages\Ban::class,
         'Debug'           => \ForkBB\Models\Pages\Debug::class,
         'Misc'            => \ForkBB\Models\Pages\Misc::class,
+        'Moderate'        => \ForkBB\Models\Pages\Moderate::class,
         'Report'          => \ForkBB\Models\Pages\Report::class,
         'ProfileView'     => \ForkBB\Models\Pages\Profile\View::class,
         'ProfileEdit'     => \ForkBB\Models\Pages\Profile\Edit::class,
@@ -248,6 +249,9 @@ return [
         'TopicManagerSave'   => \ForkBB\Models\Topic\Save::class,
         'TopicManagerDelete' => \ForkBB\Models\Topic\Delete::class,
         'TopicManagerView'   => \ForkBB\Models\Topic\View::class,
+        'TopicManagerAccess' => \ForkBB\Models\Topic\Access::class,
+        'TopicManagerMerge'  => \ForkBB\Models\Topic\Merge::class,
+        'TopicManagerMove'   => \ForkBB\Models\Topic\Move::class,
 
         'PostModel'               => \ForkBB\Models\Post\Model::class,
         'PostManagerLoad'         => \ForkBB\Models\Post\Load::class,
