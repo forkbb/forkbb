@@ -33,6 +33,19 @@ class CalcStat extends Method
 
             $num_replies = $this->c->DB->query($sql, $vars)->fetchColumn();
 
+            $sql = 'SELECT p.id, p.poster, p.poster_id, p.posted
+                    FROM ::posts AS p
+                    WHERE p.topic_id=?i:tid
+                    ORDER BY p.id
+                    LIMIT 1';
+
+            $result = $this->c->DB->query($sql, $vars)->fetch();
+
+            $this->model->poster        = $result['poster'];
+            $this->model->poster_id     = $result['poster_id'];
+            $this->model->posted        = $result['posted'];
+            $this->model->first_post_id = $result['id'];
+
             $sql = 'SELECT p.id, p.poster, p.poster_id, p.posted, p.edited
                     FROM ::posts AS p
                     WHERE p.topic_id=?i:tid
