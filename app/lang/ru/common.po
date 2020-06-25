@@ -366,30 +366,6 @@ msgstr "Перейти"
 msgid "Go"
 msgstr " Иди "
 
-msgid "Moderate topic"
-msgstr "Модерирование темы"
-
-msgid "All"
-msgstr "All"
-
-msgid "Move topic"
-msgstr "Перенести тему"
-
-msgid "Open topic"
-msgstr "Открыть тему"
-
-msgid "Close topic"
-msgstr "Закрыть тему"
-
-msgid "Unstick topic"
-msgstr "Снять выделение темы"
-
-msgid "Stick topic"
-msgstr "Выделить тему"
-
-msgid "Moderate forum"
-msgstr "Модерирование раздела"
-
 msgid "Powered by"
 msgstr "Под управлением <a href=\"https://github.com/forkbb\">ForkBB</a>"
 
@@ -524,3 +500,6 @@ msgstr "Ваша кодовая фраза"
 
 msgid "Invalid passphrase"
 msgstr "Неверная кодовая фраза"
+
+msgid "Stick topic"
+msgstr "Выделить тему"

@@ -48,7 +48,7 @@ class Forum extends Page
             $this->c->Lang->load('misc');
 
             $this->enableMod = true;
-            $this->formMod   = $this->formMod($forum->id, $forum->page);
+            $this->formMod   = $this->formMod($forum);
         }
 
         return $this;
@@ -57,20 +57,19 @@ class Forum extends Page
     /**
      * Создает массив данных для формы модерации
      *
-     * @param int $id
-     * @param int $page
+     * @param ForumModel $forum
      *
      * @return array
      */
-    protected function formMod(int $id, int $page): array
+    protected function formMod(ForumModel $forum): array
     {
         $form = [
             'id'     => 'id-form-mod',
             'action' => $this->c->Router->link('Moderate'),
             'hidden' => [
                 'token' => $this->c->Csrf->create('Moderate'),
-                'forum' => $id,
-                'page'  => $page,
+                'forum' => $forum->id,
+                'page'  => $forum->page,
                 'step'  => 1,
             ],
             'sets'   => [],

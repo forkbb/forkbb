@@ -262,6 +262,7 @@ return [
         'PostManagerRebuildIndex' => \ForkBB\Models\Post\RebuildIndex::class,
         'PostManagerUserInfoFromIP' => \ForkBB\Models\Post\UserInfoFromIP::class,
         'PostManagerUserStat'     => \ForkBB\Models\Post\UserStat::class,
+        'PostManagerMove'         => \ForkBB\Models\Post\Move::class,
 
         'ReportModel'             => \ForkBB\Models\Report\Model::class,
         'ReportManagerSave'       => \ForkBB\Models\Report\Save::class,

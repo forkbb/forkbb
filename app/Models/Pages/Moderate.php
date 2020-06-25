@@ -7,20 +7,29 @@ use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Topic\Model as Topic;
+use ForkBB\Models\Post\Model as Post;
 
 class Moderate extends Page
 {
+    const INFORUM = 1; // действие для форума
+    const INTOPIC = 2; // действие для темы
+    const TOTOPIC = 4; // список постов сменить на тему
+    const IFTOTPC = 8; // список постов сменить на тему, если в нем только первый пост темы
+
     /**
      * Список действий
      * @var array
      */
     protected $actions = [
-        'open'   => true,
-        'close'  => true,
-        'delete' => true,
-        'move'   => true,
-        'merge'  => true,
-        'cancel' => true,
+        'open'    => self::INFORUM + self::INTOPIC + self::TOTOPIC,
+        'close'   => self::INFORUM + self::INTOPIC + self::TOTOPIC,
+        'delete'  => self::INFORUM + self::INTOPIC + self::IFTOTPC,
+        'move'    => self::INFORUM + self::INTOPIC + self::IFTOTPC,
+        'merge'   => self::INFORUM,
+        'cancel'  => self::INFORUM + self::INTOPIC,
+        'unstick' => self::INTOPIC + self::TOTOPIC,
+        'stick'   => self::INTOPIC + self::TOTOPIC,
+        'split'   => self::INTOPIC,
     ];
 
     /**
@@ -43,7 +52,7 @@ class Moderate extends Page
     /**
      * Составление списка категорий/разделов для выбора
      */
-    protected function calcList(int $curForum): void
+    protected function calcList(int $curForum, bool $noUseCurForum = true): void
     {
         $cid     = null;
         $options = [];
@@ -58,7 +67,7 @@ class Moderate extends Page
 
                 $indent = \str_repeat(\ForkBB\__('Forum indent'), $f->depth);
 
-                if ($f->redirect_url || $f->id === $curForum) {
+                if ($f->redirect_url || ($noUseCurForum && $f->id === $curForum)) {
                     $options[] = [$f->id, $indent . \ForkBB\__('Forum prefix') . $f->forum_name, true];
                 } else {
                     $options[] = [$f->id, $indent . \ForkBB\__('Forum prefix') . $f->forum_name];
@@ -81,28 +90,38 @@ class Moderate extends Page
     public function vActionProcess(Validator $v, $action)
     {
         if (empty($v->getErrors())) {
-            $sum = 0;
+            $type = $v->topic ? self::INTOPIC : self::INFORUM;
+            $sum  = 0;
             foreach ($this->actions as $key => $val) {
                 if (isset($v->{$key})) {
                     $action = $key;
                     ++$sum;
                 }
             }
-            // нажата только одна кнопка из доступных
-            if (1 !== $sum) {
+            // нажата не одна кнопка или недоступная кнопка
+            if (1 !== $sum || ! ($type & $this->actions[$action])) {
                 $v->addError('Action not available');
+            // не выбрано ни одного сообщения для действий прямо этого требующих
+            } elseif ($v->topic
+                && 1 === \count($v->ids)
+                && ! ((self::TOTOPIC + self::IFTOTPC) & $this->actions[$action])
+            ) {
+                $v->addError('No object selected');
             }
+
             // объединение тем
             if ('merge' === $action && \count($v->ids) < 2) {
                 $v->addError('Not enough topics selected');
-            // перенос тем
-            } elseif ('move' === $action) {
-                $this->calcList($v->forum);
+            // перенос тем или разделение постов
+            } elseif ('move' === $action || 'split' === $action) {
+                $this->calcList($v->forum, 'move' === $action);
 
                 if (empty($this->listOfIndexes)) {
                     $v->addError('Nowhere to move');
                 } elseif (1 === $v->confirm && ! \in_array($v->destination, $this->listOfIndexes)) {
                     $v->addError('Invalid destination');
+                } elseif ('split' === $action && 1 === $v->confirm && '' == $v->subject) {
+                    $v->addError('No subject');
                 }
             }
         }
@@ -132,6 +151,7 @@ class Moderate extends Page
                 'ids.*'       => 'required|integer|min:1|max:9999999999',
                 'confirm'     => 'integer',
                 'redirect'    => 'integer',
+                'subject'     => 'string:trim,spaces|min:1|max:70',
                 'destination' => 'integer',
                 'open'        => 'string',
                 'close'       => 'string',
@@ -139,6 +159,9 @@ class Moderate extends Page
                 'move'        => 'string',
                 'merge'       => 'string',
                 'cancel'      => 'string',
+                'unstick'     => 'string',
+                'stick'       => 'string',
+                'split'       => 'string',
                 'action'      => 'action_process',
             ])->addAliases([
             ])->addArguments([
@@ -166,7 +189,27 @@ class Moderate extends Page
             if (! $this->curTopic instanceof Topic || $this->curTopic->parent !== $this->curForum) {
                 return $this->c->Message->message('Bad request');
             }
-            // посты
+
+            $objects = null;
+            $curType = $this->actions[$v->action];
+            $ids     = $v->ids;
+            $firstId = $this->curTopic->first_post_id;
+            if (self::TOTOPIC & $curType) {
+                $objects = [$this->curTopic];
+            } elseif (self::IFTOTPC & $curType) {
+                if (1 === \count($ids) && \reset($ids) === $firstId) {
+                    $objects = [$this->curTopic];
+                }
+            }
+            if (null === $objects) {
+                $objects = $this->c->posts->loadByIds(\array_diff($ids, [$firstId]), false);
+                foreach ($objects as $post) {
+                    if (! $post instanceof Post || $post->parent !== $this->curTopic) {
+                        return $this->c->Message->message('Bad request');
+                    }
+                }
+                $this->processAsPosts = true;
+            }
 
             $this->backLink = $this->c->Router->link('Topic', [
                 'id'   => $this->curTopic->id,
@@ -180,6 +223,7 @@ class Moderate extends Page
                     return $this->c->Message->message('Bad request');
                 }
             }
+
             $this->backLink = $this->c->Router->link('Forum', [
                 'id'   => $this->curForum->id,
                 'name' => $this->curForum->forum_name,
@@ -201,7 +245,7 @@ class Moderate extends Page
             case 1:
                 $this->formTitle   = \ForkBB\__('Open topics');
                 $this->buttonValue = \ForkBB\__('Open');
-                $this->crumbs      = $this->crumbs($this->formTitle, \ForkBB\__('Moderate'), $this->curForum);
+                $this->crumbs      = $this->crumbs($this->formTitle, \ForkBB\__('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->form        = $this->formConfirm($topics, $v);
                 return $this;
             case 2:
@@ -224,7 +268,7 @@ class Moderate extends Page
             case 1:
                 $this->formTitle   = \ForkBB\__('Close topics');
                 $this->buttonValue = \ForkBB\__('Close');
-                $this->crumbs      = $this->crumbs($this->formTitle, \ForkBB\__('Moderate'), $this->curForum);
+                $this->crumbs      = $this->crumbs($this->formTitle, \ForkBB\__('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->form        = $this->formConfirm($topics, $v);
                 return $this;
             case 2:
@@ -241,11 +285,13 @@ class Moderate extends Page
         }
     }
 
-    protected function actionDelete(array $topics, Validator $v): Page
+    protected function actionDelete(array $objects, Validator $v): Page
     {
         if (! $this->user->isAdmin) { //???? разобраться с правами на удаление
-            foreach ($topics as $topic) {
-                if (isset($this->c->admins->list[$topic->poster_id])) {
+            foreach ($objects as $object) {
+                if (($object instanceof Topic && isset($this->c->admins->list[$object->poster_id]))
+                    || ($object instanceof Post && ! $object->canDelete)
+                ) {
                     return $this->c->Message->message('No permission', true, 403); //???? причина
                 }
             }
@@ -253,18 +299,24 @@ class Moderate extends Page
 
         switch ($v->step) {
             case 1:
-                $this->formTitle   = \ForkBB\__('Delete topics');
+                $this->formTitle   = \ForkBB\__(true === $this->processAsPosts ? 'Delete posts' : 'Delete topics');
                 $this->buttonValue = \ForkBB\__('Delete');
-                $this->crumbs      = $this->crumbs($this->formTitle, \ForkBB\__('Moderate'), $this->curForum);
-                $this->form        = $this->formConfirm($topics, $v);
+                $this->crumbs      = $this->crumbs($this->formTitle, \ForkBB\__('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
+                $this->form        = $this->formConfirm($objects, $v);
                 return $this;
             case 2:
                 if (1 === $v->confirm) {
-                    $this->c->topics->delete(...$topics);
+                    if (true === $this->processAsPosts) {
+                        $this->c->posts->delete(...$objects);
+                        $message = 'Delete posts redirect';
+                    } else {
+                        $this->c->topics->delete(...$objects);
+                        $message = 'Delete topics redirect';
+                    }
 
-                    return $this->c->Redirect->url($this->curForum->link)->message('Delete topics redirect');
+                    return $this->c->Redirect->url($this->curForum->link)->message($message);
                 } else {
-                    return $this->actionCancel($topics, $v);
+                    return $this->actionCancel($objects, $v);
                 }
             default:
                 return $this->c->Message->message('Bad request');
@@ -277,7 +329,7 @@ class Moderate extends Page
             case 1:
                 $this->formTitle   = \ForkBB\__('Move topics');
                 $this->buttonValue = \ForkBB\__('Move');
-                $this->crumbs      = $this->crumbs($this->formTitle, \ForkBB\__('Moderate'), $this->curForum);
+                $this->crumbs      = $this->crumbs($this->formTitle, \ForkBB\__('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->chkRedirect = true;
                 $this->form        = $this->formConfirm($topics, $v);
                 return $this;
@@ -330,6 +382,86 @@ class Moderate extends Page
         }
     }
 
+    protected function actionUnstick(array $topics, Validator $v): Page
+    {
+        switch ($v->step) {
+            case 1:
+                $this->formTitle   = \ForkBB\__('Unstick topics');
+                $this->buttonValue = \ForkBB\__('Unstick');
+                $this->crumbs      = $this->crumbs($this->formTitle, \ForkBB\__('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
+                $this->form        = $this->formConfirm($topics, $v);
+                return $this;
+            case 2:
+                if (1 === $v->confirm) {
+                    foreach ($topics as $topic) {
+                        $topic->sticky = 0;
+                        $this->c->topics->update($topic);
+                    }
+
+                    $message = 1 === \count($topics) ? 'Unstick topic redirect' : 'Unstick topics redirect';
+                    return $this->c->Redirect->url($this->backLink)->message($message);
+                } else {
+                    return $this->actionCancel($topics, $v);
+                }
+            default:
+                return $this->c->Message->message('Bad request');
+        }
+    }
+
+    protected function actionStick(array $topics, Validator $v): Page
+    {
+        switch ($v->step) {
+            case 1:
+                $this->formTitle   = \ForkBB\__('Stick topics');
+                $this->buttonValue = \ForkBB\__('Stick');
+                $this->crumbs      = $this->crumbs($this->formTitle, \ForkBB\__('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
+                $this->form        = $this->formConfirm($topics, $v);
+                return $this;
+            case 2:
+                if (1 === $v->confirm) {
+                    foreach ($topics as $topic) {
+                        $topic->sticky = 1;
+                        $this->c->topics->update($topic);
+                    }
+
+                    $message = 1 === \count($topics) ? 'Stick topic redirect' : 'Stick topics redirect';
+                    return $this->c->Redirect->url($this->backLink)->message($message);
+                } else {
+                    return $this->actionCancel($topics, $v);
+                }
+            default:
+                return $this->c->Message->message('Bad request');
+        }
+    }
+
+    protected function actionSplit(array $posts, Validator $v): Page
+    {
+        switch ($v->step) {
+            case 1:
+                $this->formTitle   = \ForkBB\__('Split posts');
+                $this->buttonValue = \ForkBB\__('Split');
+                $this->needSubject = true;
+                $this->crumbs      = $this->crumbs($this->formTitle, \ForkBB\__('Moderate'), $this->curTopic);
+                $this->form        = $this->formConfirm($posts, $v);
+                return $this;
+            case 2:
+                if (1 === $v->confirm) {
+                    $newTopic           = $this->c->topics->create();
+                    $newTopic->subject  = $v->subject;
+                    $newTopic->forum_id = $v->forum;
+                    $this->c->topics->insert($newTopic);
+
+                    $this->c->posts->move(false, $newTopic, ...$posts);
+
+                    return $this->c->Redirect->url($this->curForum->link)->message('Split posts redirect');
+                } else {
+                    return $this->actionCancel($posts, $v);
+                }
+            default:
+                return $this->c->Message->message('Bad request');
+        }
+    }
+
     /**
      * Подготавливает массив данных для формы подтверждения
      *
@@ -346,25 +478,26 @@ class Moderate extends Page
                 'token'  => $this->c->Csrf->create('Moderate'),
                 'step'   => $v->step + 1,
                 'forum'  => $v->forum,
+                'ids'    => $v->ids,
             ],
             'sets' => [],
             'btns' => [],
         ];
+        $autofocus = true;
 
         if ($v->topic) {
             $form['hidden']['topic'] = $v->topic;
         }
 
         $headers = [];
-        $ids     = [];
         foreach ($objects as $object) {
             if ($object instanceof Topic) {
                 $headers[] = \ForkBB\__('Topic «%s»', \ForkBB\cens(($object->subject)));
-                $ids[]     = $object->id;
+            } else {
+                $headers[] = \ForkBB\__('Post «%1$s by %2$s»', \ForkBB\dt($object->posted), $object->poster);
             }
         }
 
-        $form['hidden']['ids'] = $ids;
         $form['sets']['info'] = [
             'info' => [
                 'info1' => [
@@ -383,44 +516,48 @@ class Moderate extends Page
             ];
         }
 
-        if ($this->listForOptions) {
-            $form['sets']['destination'] = [
-                'fields' => [
-                    'destination' => [
-                        'type'     => 'select',
-                        'options'  => $this->listForOptions,
-                        'value'    => null,
-                        'caption'  => \ForkBB\__('Move to'),
-                        'required' => true,
-                    ],
-                ],
+        $fields = [];
+
+        if ($this->needSubject) {
+            $fields['subject'] = [
+                'type'      => 'text',
+                'maxlength' => 70,
+                'caption'   => \ForkBB\__('New subject'),
+                'required'  => true,
+                'value'     => '' == $v->subject ? $this->curTopic->subject : $v->subject,
+                'autofocus' => $autofocus,
             ];
+            $autofocus = null;
+        }
+
+        if ($this->listForOptions) {
+            $fields['destination'] = [
+                'type'      => 'select',
+                'options'   => $this->listForOptions,
+                'value'     => null,
+                'caption'   => \ForkBB\__('Move to'),
+                'required'  => true,
+                'autofocus' => $autofocus,
+            ];
+            $autofocus = null;
         }
 
         if (true === $this->chkRedirect) {
-            $form['sets']['redirect'] = [
-                'fields' => [
-                    'redirect' => [
-                        'type'    => 'checkbox',
-                        'label'   => \ForkBB\__('Leave redirect'),
-                        'value'   => '1',
-                        'checked' => true,
-                    ],
-                ],
+            $fields['redirect'] = [
+                'type'    => 'checkbox',
+                'label'   => \ForkBB\__('Leave redirect'),
+                'value'   => '1',
+                'checked' => true,
             ];
         }
 
-        $form['sets']['confirm'] = [
-            'fields' => [
-                'confirm' => [
-                    'type'    => 'checkbox',
-                    'label'   => \ForkBB\__('Confirm action'),
-                    'value'   => '1',
-                    'checked' => false,
-                ],
-            ],
+        $fields['confirm'] = [
+            'type'    => 'checkbox',
+            'label'   => \ForkBB\__('Confirm action'),
+            'value'   => '1',
+            'checked' => false,
         ];
-
+        $form['sets']['moderate']['fields'] = $fields;
         $form['btns'][$v->action] = [
             'type'      => 'submit',
             'value'     => $this->buttonValue,

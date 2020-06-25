@@ -364,30 +364,6 @@ msgstr "Jump to"
 msgid "Go"
 msgstr " Go "
 
-msgid "Moderate topic"
-msgstr "Moderate topic"
-
-msgid "All"
-msgstr "All"
-
-msgid "Move topic"
-msgstr "Move topic"
-
-msgid "Open topic"
-msgstr "Open topic"
-
-msgid "Close topic"
-msgstr "Close topic"
-
-msgid "Unstick topic"
-msgstr "Unstick topic"
-
-msgid "Stick topic"
-msgstr "Stick topic"
-
-msgid "Moderate forum"
-msgstr "Moderate forum"
-
 msgid "Powered by"
 msgstr "Powered by <a href=\"https://github.com/forkbb\">ForkBB</a>"
 
@@ -522,3 +498,6 @@ msgstr "Your passphrase"
 
 msgid "Invalid passphrase"
 msgstr "Invalid passphrase"
+
+msgid "Stick topic"
+msgstr "Stick topic"

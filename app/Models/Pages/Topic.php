@@ -155,11 +155,84 @@ class Topic extends Page
             $this->form     = $this->messageForm(['id' => $topic->id], $topic, 'NewReply', false, false, true);
         }
 
+        if ($this->user->isAdmin || $this->user->isModerator($topic)) {
+            $this->c->Lang->load('misc');
+
+            $this->enableMod = true;
+            $this->formMod   = $this->formMod($topic);
+        }
+
         if ($topic->showViews) {
             $topic->incViews();
         }
         $topic->updateVisits();
 
         return $this;
+    }
+
+    /**
+     * Создает массив данных для формы модерации
+     *
+     * @param TopicModel $topic
+     *
+     * @return array
+     */
+    protected function formMod(TopicModel $topic): array
+    {
+        $form = [
+            'id'     => 'id-form-mod',
+            'action' => $this->c->Router->link('Moderate'),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('Moderate'),
+                'forum' => $topic->parent->id,
+                'topic' => $topic->id,
+                'page'  => $topic->page,
+                'ids'   => [$topic->first_post_id => $topic->first_post_id],
+                'step'  => 1,
+            ],
+            'sets'   => [],
+            'btns'   => [],
+        ];
+
+        if ($topic->closed) {
+            $form['btns']['open'] = [
+                'type'      => 'submit',
+                'value'     => \ForkBB\__('Open topic'),
+            ];
+        } else {
+            $form['btns']['close'] = [
+                'type'      => 'submit',
+                'value'     => \ForkBB\__('Close topic'),
+            ];
+        }
+
+        if ($topic->sticky) {
+            $form['btns']['unstick'] = [
+                'type'      => 'submit',
+                'value'     => \ForkBB\__('Unstick topic'),
+            ];
+        } else {
+            $form['btns']['stick'] = [
+                'type'      => 'submit',
+                'value'     => \ForkBB\__('Stick topic'),
+            ];
+        }
+
+        $form['btns'] += [
+            'move' => [
+                'type'      => 'submit',
+                'value'     => \ForkBB\__('Move topic'),
+            ],
+            'delete' => [
+                'type'      => 'submit',
+                'value'     => \ForkBB\__('Delete'),
+            ],
+            'split' => [
+                'type'      => 'submit',
+                'value'     => \ForkBB\__('Split'),
+            ],
+        ];
+
+        return $form;
     }
 }

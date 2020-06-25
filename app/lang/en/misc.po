@@ -93,8 +93,8 @@ msgstr "Your subscription has been removed. Redirecting …"
 msgid "Moderate"
 msgstr "Moderate"
 
-msgid "Select"
-msgstr "Select"
+msgid "Select for moderation"
+msgstr "Select for moderation"
 
 msgid "Move"
 msgstr "Move"
@@ -171,8 +171,14 @@ msgstr "You must select at least two topics for merge."
 msgid "Stick topic redirect"
 msgstr "Topic sticked. Redirecting …"
 
+msgid "Stick topics redirect"
+msgstr "Topics sticked. Redirecting …"
+
 msgid "Unstick topic redirect"
 msgstr "Topic unsticked. Redirecting …"
+
+msgid "Unstick topics redirect"
+msgstr "Topics unsticked. Redirecting …"
 
 msgid "Merge topics"
 msgstr "Merge topics"
@@ -185,6 +191,9 @@ msgstr "Please confirm merge"
 
 msgid "New subject"
 msgstr "New subject"
+
+msgid "No subject"
+msgstr "No subject for new topic."
 
 msgid "Confirm split legend"
 msgstr "Please confirm split of selected posts and select destination of move."
@@ -234,6 +243,9 @@ msgstr "This post is moved from topic"
 msgid "Topic «%s»"
 msgstr "Topic «%s»"
 
+msgid "Post «%1$s by %2$s»"
+msgstr "Post «%1$s by %2$s»"
+
 msgid "All posts will be posted in the «%s» topic"
 msgstr "All posts will be posted in the «%s» topic."
 
@@ -263,3 +275,36 @@ msgstr ""
 
 msgid "Forum indent"
 msgstr "◦ ◦ "
+
+msgid "Moderate topic"
+msgstr "Moderate topic"
+
+msgid "All"
+msgstr "All"
+
+msgid "Move topic"
+msgstr "Move topic"
+
+msgid "Open topic"
+msgstr "Open topic"
+
+msgid "Close topic"
+msgstr "Close topic"
+
+msgid "Unstick topic"
+msgstr "Unstick topic"
+
+msgid "Unstick topics"
+msgstr "Unstick topics"
+
+msgid "Unstick"
+msgstr "Unstick"
+
+msgid "Stick topics"
+msgstr "Stick topics"
+
+msgid "Stick"
+msgstr "Stick"
+
+msgid "Moderate forum"
+msgstr "Moderate forum"

@@ -86,7 +86,7 @@
             <div class="f-cell f-cmain">
             @if ($p->enableMod)
               <input id="checkbox-{!! $topic->id !!}" class="f-fch" type="checkbox" name="ids[{!! $topic->id !!}]" value="{!! $topic->id !!}" form="id-form-mod">
-              <label class="f-ficon" for="checkbox-{!! $topic->id !!}"></label>
+              <label class="f-ficon" for="checkbox-{!! $topic->id !!}" title="{{ __('Select for moderation') }}"></label>
             @else
               <div class="f-ficon"></div>
             @endif
@@ -100,7 +100,7 @@
             <div class="f-cell f-cmain">
             @if ($p->enableMod)
               <input id="checkbox-{!! $topic->id !!}" class="f-fch" type="checkbox" name="ids[{!! $topic->id !!}]" value="{!! $topic->id !!}" form="id-form-mod">
-              <label class="f-ficon" for="checkbox-{!! $topic->id !!}"></label>
+              <label class="f-ficon" for="checkbox-{!! $topic->id !!}" title="{{ __('Select for moderation') }}"></label>
             @else
               <div class="f-ficon"></div>
             @endif

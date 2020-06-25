@@ -774,6 +774,7 @@ body,
 #fork .f-nav-links .f-actions-links {
   margin-left: auto;
   order: 1;
+  text-align: right;
 }
 
 #fork .f-nav-links .f-page {
@@ -1174,23 +1175,6 @@ body,
 
 #fork .f-ftlist .f-ficon {
   width: 2rem;
-}
-
-#fork .f-ftlist .f-fch {
-  display: none;
-}
-
-#fork .f-ftlist .f-fch + .f-ficon {
-  position: relative;
-  cursor: pointer;
-}
-
-#fork .f-ftlist .f-fch:checked + .f-ficon:after {
-  content: "\2713";
-  color: red;
-  position: absolute;
-  bottom: 0;
-  left: 0;
 }
 
 #fork .f-ftlist .f-finfo {
@@ -1795,6 +1779,35 @@ body,
 #fork .f-moderate-form .f-btn {
   width: auto;
   display: inline-block;
+}
+
+#fork .f-ftlist .f-fch,
+#fork .f-post-checkbox {
+  display: none;
+}
+
+#fork .f-ftlist label.f-ficon {
+  position: relative;
+  cursor: pointer;
+}
+
+#fork .f-post-checkbox + .f-post-header {
+  position: relative;
+}
+
+#fork label.f-post-posted {
+  cursor: pointer;
+}
+
+#fork .f-ftlist .f-fch:checked + .f-ficon:after,
+#fork .f-post-checkbox:checked + .f-post-header:before {
+  content: "✔";
+  color: red;
+  position: absolute;
+  bottom: 0;
+  left: 0.625rem;
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 /*********************/

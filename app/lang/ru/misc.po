@@ -93,8 +93,8 @@ msgstr "Подписка удалена. Переадресация &hellip;"
 msgid "Moderate"
 msgstr "Модерирование"
 
-msgid "Select"
-msgstr "Выбрать"
+msgid "Select for moderation"
+msgstr "Выбрать для модерирования"
 
 msgid "Move"
 msgstr "Перенести"
@@ -171,8 +171,14 @@ msgstr "Вы должны выбрать хотя бы две темы для о
 msgid "Stick topic redirect"
 msgstr "Тема выделена. Переадресация &hellip;"
 
+msgid "Stick topics redirect"
+msgstr "Темы выделены. Переадресация &hellip;"
+
 msgid "Unstick topic redirect"
 msgstr "Выделение темы снято. Переадресация &hellip;"
+
+msgid "Unstick topics redirect"
+msgstr "Выделение тем снято. Переадресация &hellip;"
 
 msgid "Merge topics"
 msgstr "Объединение тем"
@@ -185,6 +191,9 @@ msgstr "Пожалуйста, подтвердите объединение"
 
 msgid "New subject"
 msgstr "Название новой темы"
+
+msgid "No subject"
+msgstr "Не задан заголовок для новой темы."
 
 msgid "Confirm split legend"
 msgstr "Пожалуйста, подтвердите разделение выбранных сообщений и укажите место переноса."
@@ -234,6 +243,9 @@ msgstr "Это сообщение перенесено из темы"
 msgid "Topic «%s»"
 msgstr "Тема «%s»"
 
+msgid "Post «%1$s by %2$s»"
+msgstr "Сообщение «%1$s от %2$s»"
+
 msgid "All posts will be posted in the «%s» topic"
 msgstr "Все сообщения будут размещены в теме «%s»."
 
@@ -263,3 +275,36 @@ msgstr ""
 
 msgid "Forum indent"
 msgstr "◦ ◦ "
+
+msgid "Moderate topic"
+msgstr "Модерирование темы"
+
+msgid "All"
+msgstr "All"
+
+msgid "Move topic"
+msgstr "Перенести тему"
+
+msgid "Open topic"
+msgstr "Открыть тему"
+
+msgid "Close topic"
+msgstr "Закрыть тему"
+
+msgid "Unstick topic"
+msgstr "Снять выделение темы"
+
+msgid "Unstick topics"
+msgstr "Снятие выделение тем"
+
+msgid "Unstick"
+msgstr "Снять выделение"
+
+msgid "Stick topics"
+msgstr "Выделение тем"
+
+msgid "Stick"
+msgstr "Выделить"
+
+msgid "Moderate forum"
+msgstr "Модерирование раздела"

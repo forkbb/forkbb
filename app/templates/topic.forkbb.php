@@ -60,9 +60,16 @@
         @include ('layouts/iswev')
     @else
       <article id="p{!! $post->id !!}" class="f-post @if (1 == $post->user->gender) f-user-male @elseif (2 == $post->user->gender) f-user-female @endif @if ($post->user->online) f-user-online @endif @if (1 === $post->postNumber) f-post-first @endif">
+        @if ($p->enableMod && $post->postNumber > 1)
+        <input id="checkbox-{!! $post->id !!}" class="f-post-checkbox" type="checkbox" name="ids[{!! $post->id !!}]" value="{!! $post->id !!}" form="id-form-mod">
+        @endif
         <header class="f-post-header">
           <h3>@if ($post->postNumber > 1) {!! __('Re') !!} @endif {{ cens($p->model->subject) }}</h3>
+        @if ($p->enableMod && $post->postNumber > 1)
+          <label class="f-post-posted" for="checkbox-{!! $post->id !!}" title="{{ __('Select for moderation') }}"><time datetime="{{ utc($post->posted) }}">{{ dt($post->posted) }}</time></label>
+        @else
           <span class="f-post-posted"><time datetime="{{ utc($post->posted) }}">{{ dt($post->posted) }}</time></span>
+        @endif
         @if ($post->edited)
           <span class="f-post-edited" title="{!! __('Last edit', $post->edited_by, dt($post->edited)) !!}">{!! __('Edited') !!}</span>
         @endif
@@ -160,6 +167,14 @@
     <section class="f-post-form">
       <h2>{!! __('Quick post') !!}</h2>
       <div class="f-fdiv">
+    @include ('layouts/form')
+      </div>
+    </section>
+@endif
+@if ($p->enableMod && $form = $p->formMod)
+    <section class="f-moderate">
+      <h2>{!! __('Moderate') !!}</h2>
+      <div class="f-fdivm">
     @include ('layouts/form')
       </div>
     </section>
