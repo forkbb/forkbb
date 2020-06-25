@@ -1759,7 +1759,7 @@ body,
 /* Репорт */
 /**********/
 #fork .f-reports > h2 {
-  display: block;
+/*  display: block; */
 }
 
 #id-fs-report > legend {
@@ -1771,16 +1771,20 @@ body,
 /*****************/
 #fork .f-moderate {
   border-top: 0.0625rem solid #AA7939;
-  margin: 1rem 0;
   position: relative;
 }
 
 #fork .f-moderate .f-fdivm {
-  padding: 1rem 0.625rem 0 0.625rem;
+  padding: 0.3125rem;
+}
+
+#fork .f-moderate .f-btns {
+  padding: 0.3125rem;
 }
 
 #fork .f-moderate .f-btn {
   opacity: 0.4;
+  margin: 0.3125rem 0;
 }
 
 #fork .f-moderate .f-btns:hover .f-btn,
