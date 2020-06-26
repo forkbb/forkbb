@@ -8,6 +8,19 @@ use ForkBB\Models\Page;
 
 class Model extends ParentModel
 {
+    protected $visits = [];
+    protected $online = [];
+
+    public function lastVisit(User $user): ?int
+    {
+        return $this->visits[$user->id] ?? null;
+    }
+
+    public function isOnline(User $user): bool
+    {
+        return isset($this->online[$user->id]);
+    }
+
     /**
      * Обработка данных пользователей онлайн
      * Обновление данных текущего пользователя
@@ -37,12 +50,10 @@ class Model extends ParentModel
         $now     = \time();
         $tOnline = $now - $this->c->config->o_timeout_online;
         $tVisit  = $now - $this->c->config->o_timeout_visit;
-        $online  = [];
         $users   = [];
         $guests  = [];
         $bots    = [];
-        $deleteG = false;
-        $deleteU = false;
+        $needClean = false;
 
         if ($detail) {
             $sql = 'SELECT o.user_id, o.ident, o.logged, o.o_position, o.o_name FROM ::online AS o ORDER BY o.logged';
@@ -52,23 +63,22 @@ class Model extends ParentModel
         $stmt = $this->c->DB->query($sql);
 
         while ($cur = $stmt->fetch()) {
+            $this->visits[$cur['user_id']] = $cur['logged'];
+
             // посетитель уже не онлайн (или почти не онлайн)
             if ($cur['logged'] < $tOnline) {
-                // пользователь
-                if ($cur['user_id'] > 1) {
-                    if ($cur['logged'] < $tVisit) {
-                        $deleteU = true;
+                if ($cur['logged'] < $tVisit) {
+                    $needClean = true;
+
+                    if ($cur['user_id'] > 1) {
                         $this->c->DB->exec('UPDATE ::users SET last_visit=?i:last WHERE id=?i:id', [':last' => $cur['logged'], ':id' => $cur['user_id']]); //????
                     }
-                // гость
-                } else {
-                    $deleteG = true;
                 }
                 continue;
             }
 
             // пользователи онлайн и общее количество
-            $online[$cur['user_id']] = true;
+            $this->online[$cur['user_id']] = true;
             ++$all;
 
             if (! $detail) {
@@ -82,36 +92,22 @@ class Model extends ParentModel
 
             // пользователь
             if ($cur['user_id'] > 1) {
-                $users[$cur['user_id']] = [
-                    'name'   => $cur['ident'],
-                    'logged' => $cur['logged'],
-                ];
+                $users[$cur['user_id']] = $cur['ident'];
             // гость
             } elseif ($cur['o_name'] == '') {
-                $guests[] = [
-                    'name'   => $cur['ident'],
-                    'logged' => $cur['logged'],
-                ];
+                $guests[] = $cur['ident'];
             // бот
             } else {
-                $bots[$cur['o_name']][] = [
-                    'name'   => $cur['ident'],
-                    'logged' => $cur['logged'],
-                ];
+                $bots[$cur['o_name']][] = $cur['ident'];
             }
         }
 
-        // удаление просроченных пользователей
-        if ($deleteU) {
+        // удаление просроченных посетителей
+        if ($needClean) {
             $this->c->DB->exec('DELETE FROM ::online WHERE logged<?i:visit', [':visit' => $tVisit]);
         }
 
-        // удаление просроченных гостей
-        if ($deleteG) {
-            $this->c->DB->exec('DELETE FROM ::online WHERE user_id=1 AND logged<?i:online', [':online' => $tOnline]);
-        }
-
-        // обновление максимального значение пользоватеелй онлайн
+        // обновление максимального значение посетителей онлайн
         if ($this->c->config->st_max_users < $all) {
             $this->c->config->st_max_users      = $all;
             $this->c->config->st_max_users_time = $now;
@@ -121,8 +117,7 @@ class Model extends ParentModel
         $this->all    = $all;
         $this->detail = $detail;
 
-        unset($online[1]);
-        $this->online = $online;
+        unset($this->online[1]);
 
         if ($detail) {
             $this->users  = $users;
@@ -134,7 +129,7 @@ class Model extends ParentModel
     }
 
     /**
-     * Обновление данных текущего пользователя
+     * Обновление данных текущего посетителя
      *
      * @param string $position
      */

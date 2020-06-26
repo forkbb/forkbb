@@ -24,6 +24,9 @@ class View extends Profile
         $this->canonical  = $this->curUser->link;
         $this->robots     = null;
         $this->crumbs     = $this->crumbs();
+
+        $this->c->Online->calc($this); // для $this->curUser->lastVisit
+
         $this->form       = $this->form();
         $this->actionBtns = $this->btns('view');
 
@@ -209,7 +212,7 @@ class View extends Profile
             $fields['lastvisit'] = [
                 'class'   => 'pline',
                 'type'    => 'str',
-                'value'   => \ForkBB\dt($this->curUser->last_visit, true),
+                'value'   => \ForkBB\dt($this->curUser->lastVisit, true),
                 'caption' => \ForkBB\__('Last visit info'),
             ];
         }

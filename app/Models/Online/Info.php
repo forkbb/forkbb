@@ -21,20 +21,20 @@ class Info extends Method
         $this->model->maxNum = $this->c->config->st_max_users;
         $this->model->maxTime = $this->c->config->st_max_users_time;
 
-        $info   = [];
+        $info = [];
         if ($this->c->user->g_view_users == '1') {
-            foreach ($this->model->users as $id => $user) {
+            foreach ($this->model->users as $id => $name) {
                 $info[] = [
                     $this->c->Router->link('User', [
                         'id' => $id,
-                        'name' => $user['name'],
+                        'name' => $name,
                     ]),
-                    $user['name'],
+                    $name,
                 ];
             }
         } else {
-            foreach ($this->model->users as $user) {
-                $info[] = $user['name'];
+            foreach ($this->model->users as $name) {
+                $info[] = $name;
             }
         }
         $this->model->numUsers = \count($info);

@@ -27,10 +27,11 @@ class Model extends DataModel
         parent::__construct($container);
 
         $this->zDepend = [
-            'group_id' => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'link', 'viewUsers', 'showPostCount', 'searchUsers'],
-            'id' => ['isGuest', 'link', 'avatar', 'online'],
-            'logged' => ['isLogged'],
-            'show_sig' => ['showSignature'],
+            'group_id'     => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'link', 'viewUsers', 'showPostCount', 'searchUsers'],
+            'id'           => ['isGuest', 'link', 'avatar', 'online'],
+            'last_visit'   => ['lastVisit'],
+            'logged'       => ['isLogged'],
+            'show_sig'     => ['showSignature'],
             'show_avatars' => ['showAvatar'],
         ];
     }
@@ -127,6 +128,16 @@ class Model extends DataModel
     {
         $attr = $this->getAttr('logged');
         return ! empty($attr);
+    }
+
+    /**
+     * Время последнего визита
+     *
+     * @return int
+     */
+    protected function getlastVisit(): int
+    {
+        return $this->c->Online->lastVisit($this) ?? $this->last_visit;
     }
 
     /**
@@ -246,7 +257,7 @@ class Model extends DataModel
      */
     protected function getonline(): bool
     {
-        return isset($this->c->Online->online[$this->id]);
+        return $this->c->Online->isOnline($this);
     }
 
     /**
