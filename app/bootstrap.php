@@ -31,7 +31,7 @@ require __DIR__ . '/functions.php';
 \ForkBB\_init($c);
 
 // https or http?
-if (!empty($_SERVER['HTTPS']) && \strtolower($_SERVER['HTTPS']) !== 'off') {
+if (! empty($_SERVER['HTTPS']) && \strtolower($_SERVER['HTTPS']) !== 'off') {
     $c->BASE_URL = \str_replace('http://', 'https://', $c->BASE_URL);
 } else {
     $c->BASE_URL = \str_replace('https://', 'http://', $c->BASE_URL);
@@ -49,10 +49,13 @@ $c->DIR_LANG   = __DIR__ . '/lang';
 $c->DATE_FORMATS = [$c->config->o_date_format, 'Y-m-d', 'Y-d-m', 'd-m-Y', 'm-d-Y', 'M j Y', 'jS M Y'];
 $c->TIME_FORMATS = [$c->config->o_time_format, 'H:i:s', 'H:i', 'g:i:s a', 'g:i a'];
 
-$controllers = ['Routing', 'Primary'];
-$page = null;
-while (! $page instanceof Page && $cur = \array_pop($controllers)) {
-    $page = $c->$cur;
+$controllers = ['Primary', 'Routing'];
+foreach ($controllers as $controller) {
+    $page = $c->{$controller};
+
+    if ($page instanceof Page) {
+        break;
+    }
 }
 
 if (null !== $page->onlinePos) {
