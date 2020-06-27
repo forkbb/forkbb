@@ -64,14 +64,14 @@ class Container
      */
     public function __get(string $id)
     {
-        if (isset($this->instances[$id]) || \array_key_exists($id, $this->instances)) { //????
+        if (\array_key_exists($id, $this->instances)) { //???? isset($this->instances[$id]) ||
             return $this->instances[$id];
-        } elseif (\strpos($id, '.') !== false) {
-            $tree = \explode('.', $id);
+        } elseif (false !== \strpos($id, '.')) {
+            $tree    = \explode('.', $id);
             $service = $this->__get(\array_shift($tree));
             if (\is_array($service)) {
                 return $this->fromArray($service, $tree);
-            } elseif (is_object($service)) {
+            } elseif (\is_object($service)) {
                 return $service->{$tree[0]};
             } else {
                 return null;
@@ -79,28 +79,28 @@ class Container
         }
         if (isset($this->shared[$id])) {
             $toShare = true;
-            $config = (array) $this->shared[$id];
+            $config  = (array) $this->shared[$id];
         } elseif (isset($this->multiple[$id])) {
             $toShare = false;
-            $config = (array) $this->multiple[$id];
+            $config  = (array) $this->multiple[$id];
         } else {
             throw new InvalidArgumentException('Wrong property name: ' . $id);
         }
         // N.B. "class" is just the first element, regardless of its key
         $class = \array_shift($config);
-        $args = [];
+        $args  = [];
         // If you want to susbtitute some values in arguments, use non-numeric keys for them
         foreach ($config as $k => $v) {
             $args[] = \is_numeric($k) ? $v : $this->resolve($v);
         }
         // Special case: reference to factory method
-        if ($class[0] == '@' && \strpos($class, ':') !== false) {
+        if ('@' === $class[0]  && false !== \strpos($class, ':')) {
             list($name, $method) = \explode(':', \substr($class, 1), 2);
             $factory = $this->__get($name);
             $service = $factory->$method(...$args);
         } else {
             // Adding this container in the arguments for constructor
-            $args[] = $this;
+            $args[]  = $this;
             $service = new $class(...$args);
         }
         if ($toShare) {
@@ -118,7 +118,7 @@ class Container
      */
     public function __set(string $id, $service): void
     {
-        if (\strpos($id, '.') !== false) {
+        if (false !== \strpos($id, '.')) {
             //????
         } else {
             $this->instances[$id] = $service;
@@ -160,8 +160,8 @@ class Container
     public function setParameter(string $name, $value): self
     {
         $segments = \explode('.', $name);
-        $n = \count($segments);
-        $ptr = &$this->config;
+        $n        = \count($segments);
+        $ptr      = &$this->config;
         foreach ($segments as $s) {
             if (--$n) {
                 if (! \array_key_exists($s, $ptr)) {
@@ -181,7 +181,7 @@ class Container
     protected function resolve($value)
     {
         if (\is_string($value)) {
-            if (\strpos($value, '%') !== false) {
+            if (false !== \strpos($value, '%')) {
                 // whole string substitution can return any type of value
                 if (\preg_match('~^%([a-z0-9_]+(?:\.[a-z0-9_]+)*)%$~i', $value, $matches)) {
                     $value = $this->__get($matches[1]);
@@ -195,7 +195,7 @@ class Container
                         $value
                     );
                 }
-            } elseif (isset($value[0]) && $value[0] === '@') {
+            } elseif (isset($value[0]) && '@' === $value[0]) {
                 return $this->__get(\substr($value, 1));
             }
         } elseif (\is_array($value)) {
