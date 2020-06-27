@@ -24,9 +24,11 @@ class Maintenance extends Page
 #       $this->robots             = 'noindex';
         $this->titles             = \ForkBB\__('Maintenance');
 #       $this->fNavigation        = null; //????
-        $this->maintenanceMessage = $this->c->config->o_maintenance_message;
+#       $this->maintenanceMessage = $this->c->config->o_maintenance_message;
 
         $this->header('Retry-After', '3600');
+
+        $this->fIswev = ['i', \ForkBB\__($this->c->config->o_maintenance_message)];
     }
 
     /**
