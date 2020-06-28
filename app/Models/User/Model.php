@@ -30,7 +30,6 @@ class Model extends DataModel
             'group_id'     => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'link', 'viewUsers', 'showPostCount', 'searchUsers'],
             'id'           => ['isGuest', 'link', 'avatar', 'online'],
             'last_visit'   => ['currentVisit'],
-            'logged'       => ['isLogged'],
             'show_sig'     => ['showSignature'],
             'show_avatars' => ['showAvatar'],
         ];
@@ -101,33 +100,6 @@ class Model extends DataModel
             }
         }
         return isset($model->moderators[$this->id]);
-    }
-
-    /**
-     * Время последнего действия пользователя
-     *
-     * @return int
-     */
-    protected function getlogged(): int
-    {
-        $attr = $this->getAttr('logged');
-
-        if (empty($attr)) { // ???? $attr < 1
-            $attr = \time();
-        }
-
-        return $attr;
-    }
-
-    /**
-     * Статус наличия данных пользователя в таблице online //????
-     *
-     * @return bool
-     */
-    protected function getisLogged(): bool
-    {
-        $attr = $this->getAttr('logged');
-        return ! empty($attr);
     }
 
     /**

@@ -34,38 +34,18 @@ class Current extends Action
         $cookie->setUser($user);
 
         if ($user->isGuest) {
-            $user->__isBot = $this->isBot();
-#            $user->__disp_topics = $this->c->config->o_disp_topics_default;
-#            $user->__disp_posts = $this->c->config->o_disp_posts_default;
+            $user->__isBot    = $this->isBot();
             $user->__timezone = $this->c->config->o_default_timezone;
-            $user->__dst = $this->c->config->o_default_dst;
-#            $user->language = $this->c->config->o_default_lang;
-#            $user->style = $this->c->config->o_default_style;
+            $user->__dst      = $this->c->config->o_default_dst;
             $user->__language = $this->getLangFromHTTP();
-
-            // быстрое переключение языка - Visman
-/*            $language = $this->cookie->get('glang');
-            if (null !== $language) {
-                $language = preg_replace('%[^a-zA-Z0-9_]%', '', $language);
-                $languages = forum_list_langs();
-                if (in_array($language, $languages)) {
-                    $user->language = $language;
-                }
-            } */
         } else {
             $user->__isBot = false;
-#            if (! $user->disp_topics) {
-#                $user->__disp_topics = $this->c->config->o_disp_topics_default;
-#            }
-#            if (! $user->disp_posts) {
-#                $user->__disp_posts = $this->c->config->o_disp_posts_default;
-#            }
             // Special case: We've timed out, but no other user has browsed the forums since we timed out
             if (
-                $user->isLogged
+                $user->logged > 0
                 && $user->logged < \time() - $this->c->config->o_timeout_visit
             ) {
-                $this->manager->updateLastVisit($user); //????
+                $this->manager->updateLastVisit($user);
             }
 
             $this->manager->set($user->id, $user);

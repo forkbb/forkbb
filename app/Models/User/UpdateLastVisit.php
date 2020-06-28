@@ -17,10 +17,10 @@ class UpdateLastVisit extends Action
      */
     public function updateLastVisit(User $user): void
     {
-        if ($user->id < 2) {
+        if ($user->isGuest) {
             throw new RuntimeException('Expected user');
         }
-        if ($user->isLogged) {
+        if ($user->logged > 0) {
             $this->c->DB->exec('UPDATE ::users SET last_visit=?i:loggid WHERE id=?i:id', [':loggid' => $user->logged, ':id' => $user->id]);
             $user->__last_visit = $user->logged;
         }
