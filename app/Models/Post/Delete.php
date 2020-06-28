@@ -64,7 +64,10 @@ class Delete extends Action
                 $topics[$arg->id] = $arg;
                 $isTopic          = 1;
             } elseif ($arg instanceof Post) {
-                if (! $arg->parent instanceof Topic || ! $arg->parent->parent instanceof Forum) {
+                if (
+                    ! $arg->parent instanceof Topic
+                    || ! $arg->parent->parent instanceof Forum
+                ) {
                     throw new RuntimeException('Parents unavailable');
                 }
                 $posts[$arg->id]         = $arg->id;

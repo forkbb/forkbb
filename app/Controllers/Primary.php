@@ -33,7 +33,8 @@ class Primary
     public function check(): ?Page
     {
         if ($this->c->config->o_maintenance && ! $this->c->MAINTENANCE_OFF) {
-            if (! isset($this->c->admins->list[$this->c->Cookie->uId])
+            if (
+                ! isset($this->c->admins->list[$this->c->Cookie->uId])
                 || ! isset($this->c->admins->list[$this->c->user->id])
             ) {
                 if (! $this->c->isInit('user')) {
@@ -48,7 +49,10 @@ class Primary
             exit;
         }
 
-        if (! $this->c->user->isAdmin && $this->c->bans->check($this->c->user)) {
+        if (
+            ! $this->c->user->isAdmin
+            && $this->c->bans->check($this->c->user)
+        ) {
             return $this->c->Ban->ban($this->c->user);
         }
 

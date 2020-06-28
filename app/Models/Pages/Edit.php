@@ -23,7 +23,10 @@ class Edit extends Page
     {
         $post = $this->c->posts->load((int) $args['id']);
 
-        if (empty($post) || ! $post->canEdit) {
+        if (
+            empty($post)
+            || ! $post->canEdit
+        ) {
             return $this->c->Message->message('Bad request');
         }
 
@@ -32,17 +35,23 @@ class Edit extends Page
 
         $this->c->Lang->load('post');
 
-        if ($method === 'POST') {
+        if ('POST' === $method) {
             $v = $this->messageValidator($post, 'EditPost', $args, true, $editSubject);
 
-            if ($v->validation($_POST) && null === $v->preview) {
+            if (
+                $v->validation($_POST)
+                && null === $v->preview
+            ) {
                 return $this->endEdit($post, $v);
             }
 
             $this->fIswev  = $v->getErrors();
             $args['_vars'] = $v->getData(); //????
 
-            if (null !== $v->preview && ! $v->getErrors()) {
+            if (
+                null !== $v->preview
+                && ! $v->getErrors()
+            ) {
                 $this->previewHtml = $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies);
             }
         } else {
@@ -97,11 +106,17 @@ class Edit extends Page
             }
         }
         // показ смайлов
-        if ($this->c->config->o_smilies == '1' && (bool) $post->hide_smilies !== (bool) $v->hide_smilies ) {
+        if (
+            '1' == $this->c->config->o_smilies
+            && (bool) $post->hide_smilies !== (bool) $v->hide_smilies
+        ) {
             $post->hide_smilies  = $v->hide_smilies ? 1 : 0;
         }
         // редактирование без ограничений
-        if ($executive && (bool) $post->edit_post !== (bool) $v->edit_post) {
+        if (
+            $executive
+            && (bool) $post->edit_post !== (bool) $v->edit_post
+        ) {
             $post->edit_post     = $v->edit_post ? 1 : 0;
         }
 
@@ -114,11 +129,17 @@ class Edit extends Page
                 $calcForum       = true;
             }
             // выделение темы
-            if ($executive && (bool) $topic->sticky !== (bool) $v->stick_topic) {
+            if (
+                $executive
+                && (bool) $topic->sticky !== (bool) $v->stick_topic
+            ) {
                 $topic->sticky   = $v->stick_topic ? 1 : 0;
             }
             // закрепление первого сообшения
-            if ($executive && (bool) $topic->stick_fp !== (bool) $v->stick_fp) {
+            if (
+                $executive
+                && (bool) $topic->stick_fp !== (bool) $v->stick_fp
+            ) {
                 $topic->stick_fp = $v->stick_fp ? 1 : 0;
             }
         }
@@ -139,7 +160,10 @@ class Edit extends Page
         $this->c->forums->update($topic->parent);
 
         // антифлуд
-        if ($calcPost || $calcForum) {
+        if (
+            $calcPost
+            || $calcForum
+        ) {
             $this->user->last_post = $now; //????
             $this->c->users->update($this->user);
         }

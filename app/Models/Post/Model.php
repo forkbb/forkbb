@@ -25,7 +25,11 @@ class Model extends DataModel
 
         $topic = $this->c->topics->load($this->topic_id);
 
-        if (! $topic instanceof Topic || $topic->moved_to || ! $topic->parent instanceof Forum) {
+        if (
+            ! $topic instanceof Topic
+            || $topic->moved_to
+            || ! $topic->parent instanceof Forum
+        ) {
             return null;
         } else {
             return $topic;
@@ -81,18 +85,32 @@ class Model extends DataModel
     {
         if ($this->c->user->isGuest) {
             return false;
-        } elseif ($this->c->user->isAdmin || ($this->c->user->isModerator($this) && ! $this->user->isAdmin)) {
+        } elseif (
+            $this->c->user->isAdmin
+            || (
+                $this->c->user->isModerator($this)
+                && ! $this->user->isAdmin
+            )
+        ) {
             return true;
-        } elseif ($this->parent->closed == '1') {
+        } elseif ('1' == $this->parent->closed) {
             return false;
         }
 
         return $this->user->id === $this->c->user->id
-            && (($this->id == $this->parent->first_post_id && $this->c->user->g_delete_topics == '1')
-                || ($this->id != $this->parent->first_post_id && $this->c->user->g_delete_posts == '1')
+            && (
+                (
+                    $this->id == $this->parent->first_post_id
+                    && '1' == $this->c->user->g_delete_topics
+                )
+                || (
+                    $this->id != $this->parent->first_post_id
+                    && '1' == $this->c->user->g_delete_posts
+                )
             )
-            && ($this->c->user->g_deledit_interval == '0'
-                || $this->edit_post == '1'
+            && (
+                '0' == $this->c->user->g_deledit_interval
+                || '1' == $this->edit_post
                 || \time() - $this->posted < $this->c->user->g_deledit_interval
             );
     }
@@ -106,16 +124,23 @@ class Model extends DataModel
     {
         if ($this->c->user->isGuest) {
             return false;
-        } elseif ($this->c->user->isAdmin || ($this->c->user->isModerator($this) && ! $this->user->isAdmin)) {
+        } elseif (
+            $this->c->user->isAdmin
+            || (
+                $this->c->user->isModerator($this)
+                && ! $this->user->isAdmin
+            )
+        ) {
             return true;
-        } elseif ($this->parent->closed == '1') {
+        } elseif ('1' == $this->parent->closed) {
             return false;
         }
 
         return $this->user->id === $this->c->user->id
-            && $this->c->user->g_edit_posts == '1'
-            && ($this->c->user->g_deledit_interval == '0'
-                || $this->edit_post == '1'
+            && '1' == $this->c->user->g_edit_posts
+            && (
+                '0' == $this->c->user->g_deledit_interval
+                || '1' == $this->edit_post
                 || \time() - $this->posted < $this->c->user->g_deledit_interval
             );
     }

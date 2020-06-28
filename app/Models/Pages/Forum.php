@@ -44,7 +44,10 @@ class Forum extends Page
 
         if (empty($this->topics)) {
             $this->fIswev = ['i', \ForkBB\__('Empty forum')];
-        } elseif ($this->user->isAdmin || $this->user->isModerator($forum)) {
+        } elseif (
+            $this->user->isAdmin
+            || $this->user->isModerator($forum)
+        ) {
             $this->c->Lang->load('misc');
 
             $this->enableMod = true;

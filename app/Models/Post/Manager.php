@@ -33,7 +33,11 @@ class Manager extends ManagerModel
         if ($this->isset($id)) {
             $post = $this->get($id);
 
-            if ($post instanceof Post && null !== $tid && $post->topic_id !== $tid) {
+            if (
+                $post instanceof Post
+                && null !== $tid
+                && $post->topic_id !== $tid
+            ) {
                 return null;
             }
         } else {

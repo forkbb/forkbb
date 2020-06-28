@@ -34,7 +34,7 @@ class Save extends Action
                 continue;
             }
             $vars[] = $values[$name];
-            $set[] = $name . '=?' . $fileds[$name];
+            $set[]  = $name . '=?' . $fileds[$name];
         }
         if (empty($set)) {
             return $report;

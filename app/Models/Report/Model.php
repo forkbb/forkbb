@@ -40,7 +40,10 @@ class Model extends DataModel
 
         $user = $this->c->users->load($this->reported_by);
 
-        if (! $user instanceof User || $user->isGuest) {
+        if (
+            ! $user instanceof User
+            || $user->isGuest
+        ) {
             $user = $this->c->users->create();
 
             $user->__id       = $this->reported_by;
@@ -84,7 +87,10 @@ class Model extends DataModel
 
         $user = $this->c->users->load($this->zapped_by);
 
-        if (! $user instanceof User || $user->isGuest) {
+        if (
+            ! $user instanceof User
+            || $user->isGuest
+        ) {
             $user = $this->c->users->create();
 
             $user->__id       = $this->zapped_by;

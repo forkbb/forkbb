@@ -187,7 +187,10 @@ class Validator
                  $rules[$vs[0]] = $vs[1] ?? '';
             }
             if (isset($suffix)) {
-                if (isset($this->rules[$field]['array']) && ! \is_array($this->rules[$field]['array'])) {
+                if (
+                    isset($this->rules[$field]['array'])
+                    && ! \is_array($this->rules[$field]['array'])
+                ) {
                     $this->rules[$field]['array'] = [];
                 }
                 $this->rules[$field]['array'][$suffix] = $rules;
@@ -294,15 +297,25 @@ class Validator
         }
 
         $value = null;
-        if (! isset($this->raw[$field]) && isset($this->rules[$field]['required'])) {
+        if (
+            ! isset($this->raw[$field])
+            && isset($this->rules[$field]['required'])
+        ) {
             $rules = ['required' => ''];
         } else {
             $rules = $this->rules[$field];
             if (isset($this->raw[$field])) {
                 $value = $this->c->Secury->replInvalidChars($this->raw[$field]);
                 // пустое поле в соответствии с правилом 'required' должно быть равно null
-                if ((\is_string($value) && 0 === \strlen(\preg_replace('%^\s+|\s+$%u', '', $value)))
-                    || (\is_array($value) && empty($value))
+                if (
+                    (
+                        \is_string($value)
+                        && 0 === \strlen(\preg_replace('%^\s+|\s+$%u', '', $value))
+                    )
+                    || (
+                        \is_array($value)
+                        && empty($value)
+                    )
                 ) {
                     $value = null;
                 }
@@ -564,7 +577,10 @@ class Validator
     {
         if (null === $value) {
             return null;
-        } elseif (\is_numeric($value) && \is_int(0 + $value)) {
+        } elseif (
+            \is_numeric($value)
+            && \is_int(0 + $value)
+        ) {
             return (int) $value;
         } else {
             $this->addError('The :alias must be integer');
@@ -574,7 +590,10 @@ class Validator
 
     protected function vArray(Validator $v, $value, $attr)
     {
-        if (null !== $value && ! \is_array($value)) {
+        if (
+            null !== $value
+            && ! \is_array($value)
+        ) {
             $this->addError('The :alias must be array');
             return null;
         } elseif (! $attr) {
@@ -627,8 +646,15 @@ class Validator
     {
         if (\is_string($value)) {
             $isBytes = \strpos($attr, 'bytes');
-            if (($isBytes && \strlen($value) < (int) $attr)
-                || (! $isBytes && \mb_strlen($value, 'UTF-8') < $attr)
+            if (
+                (
+                    $isBytes
+                    && \strlen($value) < (int) $attr
+                )
+                || (
+                    ! $isBytes
+                    && \mb_strlen($value, 'UTF-8') < $attr
+                )
             ) {
                 $this->addError('The :alias minimum is :attr characters');
             }
@@ -651,8 +677,15 @@ class Validator
     {
         if (\is_string($value)) {
             $isBytes = \strpos($attr, 'bytes');
-            if (($isBytes && \strlen($value) > (int) $attr)
-                || (! $isBytes && \mb_strlen($value, 'UTF-8') > $attr)
+            if (
+                (
+                    $isBytes
+                    && \strlen($value) > (int) $attr
+                )
+                || (
+                    ! $isBytes
+                    && \mb_strlen($value, 'UTF-8') > $attr
+                )
             ) {
                 $this->addError('The :alias maximum is :attr characters');
             }
@@ -689,7 +722,10 @@ class Validator
         if (! \is_array($args)) {
             $args = [];
         }
-        if (! \is_string($value) || ! $this->c->Csrf->verify($value, $attr, $args)) {
+        if (
+            ! \is_string($value)
+            || ! $this->c->Csrf->verify($value, $attr, $args)
+        ) {
             $this->addError('Bad token', 'e');
             return null;
         } else {
@@ -712,7 +748,10 @@ class Validator
 
     protected function vSame(Validator $v, $value, $attr)
     {
-        if (! $this->getStatus($attr) || $value === $this->__get($attr)) {
+        if (
+            ! $this->getStatus($attr)
+            || $value === $this->__get($attr)
+        ) {
             return $value;
         } else {
             $this->addError('The :alias must be same with original');
@@ -722,8 +761,12 @@ class Validator
 
     protected function vRegex(Validator $v, $value, $attr)
     {
-        if (null !== $value
-            && (! \is_string($value) || ! \preg_match($attr, $value))
+        if (
+            null !== $value
+            && (
+                ! \is_string($value)
+                || ! \preg_match($attr, $value)
+            )
         ) {
             $this->addError('The :alias is not valid format');
             return null;
@@ -739,7 +782,10 @@ class Validator
 
     protected function vIn(Validator $v, $value, $attr)
     {
-        if (null !== $value && ! \in_array($value, \explode(',', $attr))) {
+        if (
+            null !== $value
+            && ! \in_array($value, \explode(',', $attr))
+        ) {
             $this->addError('The :alias contains an invalid value');
         }
         return $value;
@@ -747,7 +793,10 @@ class Validator
 
     protected function vNotIn(Validator $v, $value, $attr)
     {
-        if (null !== $value && \in_array($value, \explode(',', $attr))) {
+        if (
+            null !== $value
+            && \in_array($value, \explode(',', $attr))
+        ) {
             $this->addError('The :alias contains an invalid value');
         }
         return $value;
@@ -791,7 +840,10 @@ class Validator
                     return null;
                 }
             }
-        } elseif (null !== $value && null === $this->c->Files->isImage($value)) {
+        } elseif (
+            null !== $value
+            && null === $this->c->Files->isImage($value)
+        ) {
             $this->addError('The :alias not contains image');
             return null;
         }
@@ -802,7 +854,10 @@ class Validator
     {
         if (null === $value) {
             return null;
-        } elseif (! \is_string($value) || false === \strtotime($value . ' UTC')) {
+        } elseif (
+            ! \is_string($value)
+            || false === \strtotime($value . ' UTC')
+        ) {
             $v->addError('The :alias does not contain a date');
             return \is_string($value) ? $value : null;
         }

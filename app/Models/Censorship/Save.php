@@ -28,7 +28,8 @@ class Save extends Method
                     $forDel[] = $id;
                 }
             } elseif (isset($words[$id])) {
-                if ($list[$id]['search_for'] !== $words[$id]['search_for']
+                if (
+                    $list[$id]['search_for'] !== $words[$id]['search_for']
                     || $list[$id]['replace_with'] !== $words[$id]['replace_with']
                 ) {
                     $vars = [

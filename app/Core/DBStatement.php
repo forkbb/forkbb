@@ -64,11 +64,11 @@ class DBStatement extends PDOStatement
     public function bindValueList(array $params): void
     {
         foreach ($this->map as $key => $data) {
-            $type = \array_shift($data);
-            $bType = $this->types[$type];
+            $type   = \array_shift($data);
+            $bType  = $this->types[$type];
             $bValue = $this->db->getValue($key, $params);
 
-            if ($type[0] === 'a') {
+            if ('a' === $type[0]) {
                 if (! \is_array($bValue)) {
                     throw new PDOException("Expected array: key='{$key}'");
                 }
@@ -92,10 +92,13 @@ class DBStatement extends PDOStatement
      */
     public function execute($params = null): bool
     {
-        if (\is_array($params) && ! empty($params)) {
+        if (
+            \is_array($params)
+            && ! empty($params)
+        ) {
             $this->bindValueList($params);
         }
-        $start = \microtime(true);
+        $start  = \microtime(true);
         $result = parent::execute();
         $this->db->saveQuery($this->queryString, \microtime(true) - $start);
         return $result;

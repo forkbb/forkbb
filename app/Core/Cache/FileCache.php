@@ -26,7 +26,10 @@ class FileCache implements ProviderCacheInterface
      */
     public function __construct($dir)
     {
-        if (empty($dir) || ! \is_string($dir)) {
+        if (
+            empty($dir)
+            || ! \is_string($dir)
+        ) {
             throw new InvalidArgumentException('Cache directory must be set to a string');
         } elseif (! \is_dir($dir)) {
             throw new RuntimeException("`$dir`: Not a directory");
@@ -50,7 +53,13 @@ class FileCache implements ProviderCacheInterface
         if (\is_file($file)) {
             require $file;
 
-            if (isset($expire, $data) && ($expire < 1 || $expire > \time())) {
+            if (
+                isset($expire, $data)
+                && (
+                    $expire < 1
+                    || $expire > \time()
+                )
+            ) {
                 return $data;
             }
         }
@@ -70,8 +79,8 @@ class FileCache implements ProviderCacheInterface
      */
     public function set(string $key, $value, int $ttl = null): bool
     {
-        $file = $this->file($key);
-        $expire = null === $ttl || $ttl < 1 ? 0 : \time() + $ttl;
+        $file    = $this->file($key);
+        $expire  = null === $ttl || $ttl < 1 ? 0 : \time() + $ttl;
         $content = "<?php\n\n" . '$expire = ' . $expire . ";\n\n" . '$data = ' . \var_export($value, true) . ";\n";
         if (false === \file_put_contents($file, $content, \LOCK_EX)) {
             throw new RuntimeException("The key '$key' can not be saved");
@@ -112,9 +121,9 @@ class FileCache implements ProviderCacheInterface
      */
     public function clear(): bool
     {
-        $dir = new RecursiveDirectoryIterator($this->cacheDir, RecursiveDirectoryIterator::SKIP_DOTS);
+        $dir      = new RecursiveDirectoryIterator($this->cacheDir, RecursiveDirectoryIterator::SKIP_DOTS);
         $iterator = new RecursiveIteratorIterator($dir);
-        $files = new RegexIterator($iterator, '%\.php$%i', RegexIterator::MATCH);
+        $files    = new RegexIterator($iterator, '%\.php$%i', RegexIterator::MATCH);
 
         $result = true;
         foreach ($files as $file) {
@@ -146,7 +155,10 @@ class FileCache implements ProviderCacheInterface
      */
     protected function file(string $key): string
     {
-        if (\is_string($key) && \preg_match('%^[a-z0-9_-]+$%Di', $key)) {
+        if (
+            \is_string($key)
+            && \preg_match('%^[a-z0-9_-]+$%Di', $key)
+        ) {
             return $this->cacheDir . '/cache_' . $key . '.php';
         }
         throw new InvalidArgumentException("Key '$key' contains invalid characters.");

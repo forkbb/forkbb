@@ -17,7 +17,8 @@ class Update extends Method
      */
     public function update(array $ban): BanList
     {
-        if (empty($ban['id'])
+        if (
+            empty($ban['id'])
             || ! isset($ban['username'])
             || ! isset($ban['ip'])
             || ! isset($ban['email'])
@@ -27,7 +28,11 @@ class Update extends Method
             throw new InvalidArgumentException('Expected an array with a ban description');
         }
 
-        if ('' == $ban['username'] && '' == $ban['ip'] && '' == $ban['email']) {
+        if (
+            '' == $ban['username']
+            && '' == $ban['ip']
+            && '' == $ban['email']
+        ) {
             throw new InvalidArgumentException('Empty ban');
         }
 

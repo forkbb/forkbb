@@ -53,7 +53,7 @@ class Redirect extends Page
     public function message(string $message): Page
     {
         // переадресация без вывода сообщения
-        if ($this->c->config->o_redirect_delay == '0') {
+        if ('0' == $this->c->config->o_redirect_delay) {
             return $this;
         }
 

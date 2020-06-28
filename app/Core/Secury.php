@@ -24,7 +24,10 @@ class Secury
      */
     public function __construct(array $hmac)
     {
-        if (empty($hmac['salt']) || empty($hmac['algo'])) {
+        if (
+            empty($hmac['salt'])
+            || empty($hmac['algo'])
+        ) {
             throw new InvalidArgumentException('Algorithm and salt can not be empty');
         }
         if (! \in_array($hmac['algo'], \hash_hmac_algos())) {

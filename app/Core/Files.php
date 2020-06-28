@@ -141,7 +141,7 @@ class Files
         }
 
         if (\is_string($to)) {
-            $to = \trim($to);
+            $to   = \trim($to);
             $unit = \strtoupper($to[0]);
             $expo = \strpos($this->units, $unit);
 
@@ -213,7 +213,10 @@ class Files
             $result = [];
             foreach ($file['tmp_name'] as $key => $value) {
                 // изображение не было отправлено
-                if ('' === $file['name'][$key] && empty($file['size'][$key])) {
+                if (
+                    '' === $file['name'][$key]
+                    && empty($file['size'][$key])
+                ) {
                     continue;
                 }
 

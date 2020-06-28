@@ -167,7 +167,10 @@ class Options extends Admin
      */
     public function vCheckEmpty(Validator $v, $value, $attr)
     {
-        if (0 !== $value && 0 === \strlen($v->$attr)) {
+        if (
+            0 !== $value
+            && 0 === \strlen($v->$attr)
+        ) {
             $value = 0;
         }
         return $value;

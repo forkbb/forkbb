@@ -34,7 +34,11 @@ class Forums extends Admin
 
                 $indent = \str_repeat(\ForkBB\__('Forum indent'), $f->depth);
 
-                if ($f->id === $forum->id || isset($forum->descendants[$f->id]) || $f->redirect_url) {
+                if (
+                    $f->id === $forum->id
+                    || isset($forum->descendants[$f->id])
+                    || $f->redirect_url
+                ) {
                     $options[] = [$f->id, $indent . \ForkBB\__('Forum prefix') . $f->forum_name, true];
                 } else {
                     $options[] = [$f->id, $indent . \ForkBB\__('Forum prefix') . $f->forum_name];
@@ -218,7 +222,10 @@ class Forums extends Admin
     public function delete(array $args, string $method): Page
     {
         $forum = $this->c->forums->get((int) $args['id']);
-        if (! $forum instanceof Forum || $forum->subforums) {
+        if (
+            ! $forum instanceof Forum
+            || $forum->subforums
+        ) {
             return $this->c->Message->message('Bad request');
         }
 
@@ -235,7 +242,10 @@ class Forums extends Admin
                     'token' => $args,
                 ]);
 
-            if (! $v->validation($_POST) || $v->confirm !== 1) {
+            if (
+                ! $v->validation($_POST)
+                || 1 !== $v->confirm
+            ) {
                 return $this->c->Redirect->page('AdminForums')->message('No confirm redirect');
             }
 

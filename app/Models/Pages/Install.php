@@ -127,7 +127,11 @@ class Install extends Page
         }
 
         $fIswev = $this->getAttr('fIswev'); // ????
-        if ('POST' === $method && ! $changeLang && empty($fIswev['e'])) { //????
+        if (
+            'POST' === $method
+            && ! $changeLang
+            && empty($fIswev['e'])
+        ) { //????
             $v = $this->c->Validator->reset()
                 ->addValidators([
                     'check_prefix' => [$this, 'vCheckPrefix'],
@@ -405,7 +409,10 @@ class Install extends Page
         if (isset($prefix[0])) {
             if (! \preg_match('%^[a-z][a-z\d_]*$%i', $prefix)) {
                 $v->addError('Table prefix error');
-            } elseif ('sqlite' === $v->dbtype && 'sqlite_' === \strtolower($prefix)) {
+            } elseif (
+                'sqlite' === $v->dbtype
+                && 'sqlite_' === \strtolower($prefix)
+            ) {
                 $v->addError('Prefix reserved');
             }
         }
@@ -475,7 +482,10 @@ class Install extends Page
         }
 
         // база MySQL, кодировка базы отличается от UTF-8 (4 байта)
-        if (isset($stat['character_set_database']) && 'utf8mb4' !== $stat['character_set_database']) {
+        if (
+            isset($stat['character_set_database'])
+            && 'utf8mb4' !== $stat['character_set_database']
+        ) {
             $v->addError('Bad database charset');
         }
 

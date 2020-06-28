@@ -15,9 +15,9 @@ class Model extends ParentModel
     {
         if ('1' == $this->c->config->o_censoring) {
             if ($this->c->Cache->has('censorship')) {
-                $list = $this->c->Cache->get('censorship');
-                $this->searchList   = $list['searchList'];
-                $this->replaceList  = $list['replaceList'];
+                $list              = $this->c->Cache->get('censorship');
+                $this->searchList  = $list['searchList'];
+                $this->replaceList = $list['replaceList'];
             } else {
                 $this->refresh();
             }

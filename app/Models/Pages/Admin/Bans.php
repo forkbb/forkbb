@@ -55,7 +55,8 @@ class Bans extends Admin
             return false;
         }
 
-        if (! \hash_equals($data[1], $this->c->Secury->hash($data[0]))
+        if (
+            ! \hash_equals($data[1], $this->c->Secury->hash($data[0]))
             || ! \is_array($data = \json_decode(\base64_decode($data[0], true), true))
         ) {
             return false;
@@ -343,7 +344,11 @@ class Bans extends Admin
         $filters = [];
 
         foreach ($data as $field => $value) {
-            if ('' == $value || 'order_by' === $field || 'direction' === $field) {
+            if (
+                '' == $value
+                || 'order_by' === $field
+                || 'direction' === $field
+            ) {
                 continue;
             }
 
@@ -564,7 +569,10 @@ class Bans extends Admin
             $this->banCount = \count($ids);
             $tmp = $this->c->users->loadByIds($ids);
 
-            if (\is_array($tmp) && \count($tmp) === $this->banCount) {
+            if (
+                \is_array($tmp)
+                && \count($tmp) === $this->banCount
+            ) {
                 $userList = $tmp; // ???? проверка массива на User'ов?
             } else {
                 return $this->c->Message->message('No user ID message');
@@ -695,7 +703,11 @@ class Bans extends Admin
 
                 $redirect = $this->c->Redirect;
 
-                if ($isNew && ! empty($args['uid']) && 1 === $this->banCount) {
+                if (
+                    $isNew
+                    && ! empty($args['uid'])
+                    && 1 === $this->banCount
+                ) {
                     $user = \reset($userList);
                     $redirect->url($user->link);
                 } else {
@@ -713,7 +725,10 @@ class Bans extends Admin
             $user = \reset($userList);
             $data['username'] = $user->username;
 
-            if ($isNew && 'POST' !== $method) {
+            if (
+                $isNew
+                && 'POST' !== $method
+            ) {
                 $data['email'] = (string) $user->email;
 
                 $ip  = (string) $user->registration_ip;
@@ -746,7 +761,10 @@ class Bans extends Admin
      */
     public function vUserBan(Validator $v, $username)
     {
-        if (empty($v->getErrors()) && '' != \trim($username)) {
+        if (
+            empty($v->getErrors())
+            && '' != \trim($username)
+        ) {
             $user = $this->c->users->loadByName($username, true);
 
             if (! $user instanceof User) { // ???? может ли вернутся несколько юзеров?
@@ -818,9 +836,15 @@ class Bans extends Admin
         if ('' != \trim($email)) {
             $error = true;
 
-            if (false !== \strpos($email, '@') && false !== $this->c->Mail->valid($email)) {
+            if (
+                false !== \strpos($email, '@')
+                && false !== $this->c->Mail->valid($email)
+            ) {
                 $error = false;
-            } elseif ('.' === $email[0] && false !== $this->c->Mail->valid('test@sub' . $email)) {
+            } elseif (
+                '.' === $email[0]
+                && false !== $this->c->Mail->valid('test@sub' . $email)
+            ) {
                 $error = false;
             } elseif (false !== $this->c->Mail->valid('test@' . $email)) {
                 $error = false;
@@ -863,7 +887,12 @@ class Bans extends Admin
      */
     public function vSubmitBan(Validator $v, $value)
     {
-        if ($this->banCount < 1 && '' == $v->username && '' == $v->ip && '' == $v->email) {
+        if (
+            $this->banCount < 1
+            && '' == $v->username
+            && '' == $v->ip
+            && '' == $v->email
+        ) {
             $v->addError('Must enter message');
         }
 

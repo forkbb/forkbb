@@ -17,7 +17,8 @@ class Insert extends Method
      */
     public function insert(array $ban): BanList
     {
-        if (isset($ban['id'])
+        if (
+            isset($ban['id'])
             || ! isset($ban['username'])
             || ! isset($ban['ip'])
             || ! isset($ban['email'])
@@ -27,7 +28,11 @@ class Insert extends Method
             throw new InvalidArgumentException('Expected an array with a ban description');
         }
 
-        if ('' == $ban['username'] && '' == $ban['ip'] && '' == $ban['email']) {
+        if (
+            '' == $ban['username']
+            && '' == $ban['ip']
+            && '' == $ban['email']
+        ) {
             throw new InvalidArgumentException('Empty ban');
         }
 

@@ -21,7 +21,10 @@ class Pass extends Profile
      */
     public function pass(array $args, string $method): Page
     {
-        if (false === $this->initProfile($args['id']) || ! $this->rules->editPass) {
+        if (
+            false === $this->initProfile($args['id'])
+            || ! $this->rules->editPass
+        ) {
             return $this->c->Message->message('Bad request');
         }
 

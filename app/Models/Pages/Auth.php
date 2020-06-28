@@ -72,7 +72,7 @@ class Auth extends Page
         $this->onlinePos  = 'login';
         $this->robots     = 'noindex';
         $this->titles     = \ForkBB\__('Login');
-        $this->regLink    = $this->c->config->o_regs_allow == '1' ? $this->c->Router->link('Register') : null;
+        $this->regLink    = '1' == $this->c->config->o_regs_allow ? $this->c->Router->link('Register') : null;
 
         $username         = $v ? $v->username : ($args['_username'] ?? '');
         $save             = $v ? $v->save : 1;
@@ -147,7 +147,8 @@ class Auth extends Page
     public function vLoginProcess(Validator $v, $password)
     {
         if (! empty($v->getErrors())) {
-        } elseif (! ($user = $this->c->users->loadByName($v->username)) instanceof User
+        } elseif (
+            ! ($user = $this->c->users->loadByName($v->username)) instanceof User
             || $user->isGuest
         ) {
             $v->addError('Wrong user/pass');
@@ -159,7 +160,8 @@ class Auth extends Page
                 $v->addError('Wrong user/pass');
             } else {
                 // перезаписываем ip админа и модератора - Visman
-                if ($user->isAdmMod
+                if (
+                    $user->isAdmMod
                     && $this->c->config->o_check_ip
                     && $user->registration_ip != $this->user->ip
                 ) {
@@ -310,7 +312,8 @@ class Auth extends Page
      */
     public function changePass(array $args, string $method): Page
     {
-        if (! \hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['key']))
+        if (
+            ! \hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['key']))
             || ! ($user = $this->c->users->load((int) $args['id'])) instanceof User
             || $user->isGuest
             || empty($user->activate_string)

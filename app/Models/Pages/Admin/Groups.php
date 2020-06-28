@@ -32,7 +32,10 @@ class Groups extends Admin
             if (! \in_array($group->g_id, $notForNew)) {
                 $groupsNew[$key] = $group->g_title;
             }
-            if (! \in_array($group->g_id, $notForDefault) && $group->g_moderator == 0) {
+            if (
+                ! \in_array($group->g_id, $notForDefault)
+                && 0 == $group->g_moderator
+            ) {
                 $groupsDefault[$key] = $group->g_title;
             }
         }
@@ -167,7 +170,10 @@ class Groups extends Admin
     public function edit(array $args, string $method): Page
     {
         // начало создания новой группы
-        if (empty($args['id']) && empty($args['base'])) {
+        if (
+            empty($args['id'])
+            && empty($args['base'])
+        ) {
             $v = $this->c->Validator->reset()
                 ->addRules([
                     'token'     => 'token:AdminGroupsNew',
@@ -217,7 +223,10 @@ class Groups extends Admin
             $this->classForm = 'creategroup';
         }
 
-        if ('POST' === $method && $next) {
+        if (
+            'POST' === $method
+            && $next
+        ) {
             $reserve = [];
             foreach ($this->groupsList as $key => $cur) {
                 if ($group->g_id !== $key) {
@@ -261,7 +270,11 @@ class Groups extends Admin
                     'g_report_flood'         => 'integer|min:0|max:999999',
                 ]);
 
-                if (! $group->groupGuest && ! $group->groupMember && $group->g_id != $this->c->config->o_default_user_group) {
+                if (
+                    ! $group->groupGuest
+                    && ! $group->groupMember
+                    && $group->g_id != $this->c->config->o_default_user_group
+                ) {
                     $v->addRules([
                         'g_moderator'            => 'integer|in:0,1',
                         'g_mod_edit_users'       => 'integer|in:0,1',
@@ -298,14 +311,21 @@ class Groups extends Admin
      */
     public function save(Group $group, Group $baseGroup, array $data): Page
     {
-        if (! $group->groupAdmin && isset($data['g_moderator']) && 0 === $data['g_moderator']) {
+        if (
+            ! $group->groupAdmin
+            && isset($data['g_moderator'])
+            && 0 === $data['g_moderator']
+        ) {
             $data['g_mod_edit_users']       = 0;
             $data['g_mod_rename_users']     = 0;
             $data['g_mod_change_passwords'] = 0;
             $data['g_mod_promote_users']    = 0;
             $data['g_mod_ban_users']        = 0;
         }
-        if (isset($data['g_promote_next_group']) && $data['g_promote_next_group'] * $data['g_promote_min_posts'] == 0) {
+        if (
+            isset($data['g_promote_next_group'])
+            && 0 == $data['g_promote_next_group'] * $data['g_promote_min_posts']
+        ) {
             $data['g_promote_next_group'] = 0;
             $data['g_promote_min_posts']  = 0;
         }
@@ -398,7 +418,10 @@ class Groups extends Admin
             $options = [0 => \ForkBB\__('Disable promotion')];
 
             foreach ($this->groupsNew as $key => $title) {
-                if ($key === $group->g_id || $key === $this->c->GROUP_GUEST) {
+                if (
+                    $key === $group->g_id
+                    || $key === $this->c->GROUP_GUEST
+                ) {
                     continue;
                 }
                 $options[$key] = $title;
@@ -423,7 +446,11 @@ class Groups extends Admin
 
         $yn = [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')];
 
-        if (! $group->groupGuest && ! $group->groupMember && $group->g_id != $this->c->config->o_default_user_group) {
+        if (
+            ! $group->groupGuest
+            && ! $group->groupMember
+            && $group->g_id != $this->c->config->o_default_user_group
+        ) {
             $fieldset['g_moderator'] = [
                 'type'    => 'radio',
                 'value'   => $group->g_moderator,
@@ -634,7 +661,10 @@ class Groups extends Admin
     {
         $group = $this->c->groups->get((int) $args['id']);
 
-        if (null === $group || ! $group->canDelete) {
+        if (
+            null === $group
+            || ! $group->canDelete
+        ) {
             return $this->c->Message->message('Bad request');
         }
 
@@ -643,7 +673,10 @@ class Groups extends Admin
         if ($count) {
             $move = 'required|integer|in:';
             foreach ($this->groupsList as $key => $cur) {
-                if ($key === $this->c->GROUP_GUEST || $key === $group->g_id) {
+                if (
+                    $key === $this->c->GROUP_GUEST
+                    || $key === $group->g_id
+                ) {
                     continue;
                 }
                 $groups[$key] = $cur[0];
@@ -665,7 +698,10 @@ class Groups extends Admin
                     'token' => $args,
                 ]);
 
-            if (! $v->validation($_POST) || $v->confirm !== 1) {
+            if (
+                ! $v->validation($_POST)
+                || 1 !== $v->confirm
+            ) {
                 return $this->c->Redirect->page('AdminGroups')->message('No confirm redirect');
             }
 

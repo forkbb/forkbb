@@ -94,7 +94,10 @@ class Container
             $args[] = \is_numeric($k) ? $v : $this->resolve($v);
         }
         // Special case: reference to factory method
-        if ('@' === $class[0]  && false !== \strpos($class, ':')) {
+        if (
+            '@' === $class[0]
+            && false !== \strpos($class, ':')
+        ) {
             list($name, $method) = \explode(':', \substr($class, 1), 2);
             $factory = $this->__get($name);
             $service = $factory->$method(...$args);
@@ -195,7 +198,10 @@ class Container
                         $value
                     );
                 }
-            } elseif (isset($value[0]) && '@' === $value[0]) {
+            } elseif (
+                isset($value[0])
+                && '@' === $value[0]
+            ) {
                 return $this->__get(\substr($value, 1));
             }
         } elseif (\is_array($value)) {

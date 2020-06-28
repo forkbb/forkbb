@@ -20,7 +20,10 @@ class Model extends DataModel
      */
     protected function getparent(): ?Forum
     {
-        if (null === $this->parent_forum_id && $this->id !== 0) {
+        if (
+            null === $this->parent_forum_id
+            && 0 !== $this->id
+        ) {
             throw new RuntimeException('Parent is not defined');
         }
 
@@ -35,8 +38,8 @@ class Model extends DataModel
     protected function getcanCreateTopic(): bool
     {
         $user = $this->c->user;
-        return $this->post_topics == 1
-            || (null === $this->post_topics && $user->g_post_topics == 1)
+        return 1 == $this->post_topics
+            || (null === $this->post_topics && 1 == $user->g_post_topics)
             || $user->isAdmin
             || $user->isModerator($this);
     }
@@ -162,11 +165,14 @@ class Model extends DataModel
     protected function getmoderators(): array
     {
         $attr = $this->getAttr('moderators');
-        if (empty($attr) || ! \is_array($attr)) {
+        if (
+            empty($attr)
+            || ! \is_array($attr)
+        ) {
             return [];
         }
 
-        if ($this->c->user->g_view_users == '1') {
+        if ('1' == $this->c->user->g_view_users) {
             foreach($attr as $id => &$cur) {
                 $cur = [
                     $this->c->Router->link('User', [
@@ -192,7 +198,10 @@ class Model extends DataModel
     public function modAdd(User ...$users): void
     {
         $attr = $this->getAttr('moderators');
-        if (empty($attr) || ! \is_array($attr)) {
+        if (
+            empty($attr)
+            || ! \is_array($attr)
+        ) {
             $attr = [];
         }
 
@@ -216,7 +225,10 @@ class Model extends DataModel
     public function modDelete(User ...$users): void
     {
         $attr = $this->getAttr('moderators');
-        if (empty($attr) || ! \is_array($attr)) {
+        if (
+            empty($attr)
+            || ! \is_array($attr)
+        ) {
             return;
         }
 

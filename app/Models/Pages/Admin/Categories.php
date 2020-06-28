@@ -158,7 +158,10 @@ class Categories extends Admin
                     'token' => $args,
                 ]);
 
-            if (! $v->validation($_POST) || $v->confirm !== 1) {
+            if (
+                ! $v->validation($_POST)
+                || 1 !== $v->confirm
+            ) {
                 return $this->c->Redirect->page('AdminCategories')->message('No confirm redirect');
             }
 

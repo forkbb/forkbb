@@ -14,7 +14,10 @@ class Model extends ParentModel
     public function init(): self
     {
         $data = $this->c->Cache->get('stopwords');
-        if (isset($data['id'], $data['stopwords']) && $data['id'] === $this->generateId()) {
+        if (
+            isset($data['id'], $data['stopwords'])
+            && $data['id'] === $this->generateId()
+        ) {
             $this->list = $data['stopwords'];
         } else {
             $this->load();
@@ -34,7 +37,7 @@ class Model extends ParentModel
         }
 
         $files = \glob($this->c->DIR_LANG . '/*/stopwords.txt');
-        if ($files === false) {
+        if (false === $files) {
             return 'cache_id_error';
         }
 

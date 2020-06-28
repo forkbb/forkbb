@@ -47,7 +47,10 @@ class Load extends Action
     public function loadByIds(array $ids): array
     {
         foreach ($ids as $id) {
-            if (! \is_int($id) || $id < 1) {
+            if (
+                ! \is_int($id)
+                || $id < 1
+            ) {
                 throw new InvalidArgumentException('Expected a positive user id');
             }
         }

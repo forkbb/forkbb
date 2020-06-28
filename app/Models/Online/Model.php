@@ -41,18 +41,18 @@ class Model extends ParentModel
         if (null === $position) {
             return $this;
         }
-        $detail = $page->onlineDetail && $this->c->config->o_users_online == '1';
+        $detail = $page->onlineDetail && '1' == $this->c->config->o_users_online;
         $filter = $page->onlineFilter;
 
         $this->updateUser($position);
 
-        $all     = 0;
-        $now     = \time();
-        $tOnline = $now - $this->c->config->o_timeout_online;
-        $tVisit  = $now - $this->c->config->o_timeout_visit;
-        $users   = [];
-        $guests  = [];
-        $bots    = [];
+        $all       = 0;
+        $now       = \time();
+        $tOnline   = $now - $this->c->config->o_timeout_online;
+        $tVisit    = $now - $this->c->config->o_timeout_visit;
+        $users     = [];
+        $guests    = [];
+        $bots      = [];
         $needClean = false;
 
         if ($detail) {
@@ -86,7 +86,10 @@ class Model extends ParentModel
             }
 
             // включен фильтр и проверка не пройдена
-            if ($filter && $cur['o_position'] !== $position) {
+            if (
+                $filter
+                && $cur['o_position'] !== $position
+            ) {
                 continue;
             }
 
@@ -94,7 +97,7 @@ class Model extends ParentModel
             if ($cur['user_id'] > 1) {
                 $users[$cur['user_id']] = $cur['ident'];
             // гость
-            } elseif ($cur['o_name'] == '') {
+            } elseif ('' == $cur['o_name']) {
                 $guests[] = $cur['ident'];
             // бот
             } else {

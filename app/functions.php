@@ -28,7 +28,10 @@ function __(?string $arg, ...$args): string
 {
     static $c;
 
-    if (null === $arg && $args[0] instanceof Container) {
+    if (
+        null === $arg
+        && $args[0] instanceof Container
+    ) {
         $c = $args[0];
         return '';
     }
@@ -36,7 +39,10 @@ function __(?string $arg, ...$args): string
     $tr = $c->Lang->get($arg);
 
     if (\is_array($tr)) {
-        if (isset($args[0]) && \is_int($args[0])) {
+        if (
+            isset($args[0])
+            && \is_int($args[0])
+        ) {
             $n = \array_shift($args);
             eval('$n = (int) ' . $tr['plural']);
             $tr = $tr[$n];

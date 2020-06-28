@@ -61,7 +61,7 @@ class LoadTree extends Action
                            f.last_post, f.last_post_id, f.last_poster, f.last_topic
                     FROM ::forums AS f
                     WHERE id IN (?ai:forums)';
-        } elseif ($this->c->config->o_forum_subscriptions == '1') {
+        } elseif ('1' == $this->c->config->o_forum_subscriptions) {
             $sql = 'SELECT f.id, f.forum_desc, f.num_topics, f.sort_by, f.num_posts,
                            f.last_post, f.last_post_id, f.last_poster, f.last_topic,
                            mof.mf_mark_all_read, s.user_id AS is_subscribed
@@ -91,7 +91,10 @@ class LoadTree extends Action
      */
     protected function checkForNew(array $list): void
     {
-        if (empty($list) || $this->c->user->isGuest) {
+        if (
+            empty($list)
+            || $this->c->user->isGuest
+        ) {
             return;
         }
 

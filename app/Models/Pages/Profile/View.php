@@ -65,7 +65,10 @@ class View extends Profile
         $fields[] = [
             'type' => 'endwrap',
         ];
-        if ($this->rules->useAvatar && $this->curUser->avatar) {
+        if (
+            $this->rules->useAvatar
+            && $this->curUser->avatar
+        ) {
             $fields['avatar'] = [
                 'type'    => 'yield',
                 'caption' => \ForkBB\__('Avatar'),
@@ -79,7 +82,10 @@ class View extends Profile
         ];
 
         // примечание администрации
-        if ($this->user->isAdmMod && '' != $this->curUser->admin_note) {
+        if (
+            $this->user->isAdmMod
+            && '' != $this->curUser->admin_note
+        ) {
             $form['sets']['note'] = [
                 'class'  => 'data',
                 'legend' => \ForkBB\__('Admin note'),
@@ -109,7 +115,10 @@ class View extends Profile
             1 => \ForkBB\__('Male'),
             2 => \ForkBB\__('Female'),
         ];
-        if ($this->curUser->gender && isset($genders[$this->curUser->gender])) {
+        if (
+            $this->curUser->gender
+            && isset($genders[$this->curUser->gender])
+        ) {
             $fields['gender'] = [
                 'class'   => 'pline',
                 'type'    => 'str',
@@ -163,7 +172,10 @@ class View extends Profile
                 ];
             }
         }
-        if ($this->rules->viewWebsite && $this->curUser->url) {
+        if (
+            $this->rules->viewWebsite
+            && $this->curUser->url
+        ) {
             $fields['url'] = [
                 'id'      => 'website',
                 'class'   => 'pline',
@@ -222,7 +234,10 @@ class View extends Profile
             'value'   => \ForkBB\dt($this->curUser->last_post, true),
             'caption' => \ForkBB\__('Last post info'),
         ];
-        if ($this->curUser->num_posts || $this->curUser->num_topics) {
+        if (
+            $this->curUser->num_posts
+            || $this->curUser->num_topics
+        ) {
             if ('1' == $this->user->g_search) {
                 $fields['posts'] = [
                     'class'   => 'pline',
@@ -255,7 +270,10 @@ class View extends Profile
                 ];
             }
         }
-        if ($this->rules->viewIP && false !== \filter_var($this->curUser->registration_ip, \FILTER_VALIDATE_IP)) {
+        if (
+            $this->rules->viewIP
+            && false !== \filter_var($this->curUser->registration_ip, \FILTER_VALIDATE_IP)
+        ) {
             $fields['ip'] = [
                 'class'   => 'pline',
                 'type'    => 'link',

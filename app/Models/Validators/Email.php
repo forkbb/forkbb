@@ -45,12 +45,19 @@ class Email extends Validators
         $user->__email = $email; // + вычисление email_normal
 
         // провеерка бана email
-        if ($ok && isset($attrs['noban']) && $this->c->bans->isBanned($user) > 0) {
+        if (
+            $ok
+            && isset($attrs['noban'])
+            && $this->c->bans->isBanned($user) > 0
+        ) {
             $v->addError('Banned email');
             $ok = false;
         }
         // проверка наличия 1 пользователя с этим email
-        if ($ok && isset($attrs['exists'])) {
+        if (
+            $ok
+            && isset($attrs['exists'])
+        ) {
             $user = $this->c->users->loadByEmail($email); // ???? перехват исключения?
 
             if (! $user instanceof User) {
@@ -59,12 +66,20 @@ class Email extends Validators
             }
         }
         // проверка уникальности email
-        if ($ok && isset($attrs['unique']) && (! $originalUser instanceof User || ! $originalUser->isGuest)) {
+        if (
+            $ok
+            && isset($attrs['unique'])
+            && (
+                ! $originalUser instanceof User
+                || ! $originalUser->isGuest
+            )
+        ) {
             if ($user->isGuest) {
                 $user = $this->c->users->loadByEmail($email); // ???? перехват исключения?
             }
 
-            if ($user instanceof User
+            if (
+                $user instanceof User
                 && $originalUser instanceof User
                 && $user->id !== $originalUser->id
             ) {
@@ -76,10 +91,19 @@ class Email extends Validators
             }
         }
         // проверка на флуд интервал
-        if ($ok && isset($attrs['flood'])) {
-            if ($originalUser instanceof User && ! $originalUser->isGuest) {
+        if (
+            $ok
+            && isset($attrs['flood'])
+        ) {
+            if (
+                $originalUser instanceof User
+                && ! $originalUser->isGuest
+            ) {
                 $flood = \time() - $originalUser->last_email_sent;
-            } elseif ($user instanceof User && ! $user->isGuest) {
+            } elseif (
+                $user instanceof User
+                && ! $user->isGuest
+            ) {
                 $flood = \time() - $user->last_email_sent;
             } else {
                 $flood = $this->c->FLOOD_INTERVAL;
@@ -90,7 +114,8 @@ class Email extends Validators
             }
         }
         // возврат данных пользователя через 4-ый параметр
-        if ($ok
+        if (
+            $ok
             && $originalUser instanceof User
             && $originalUser->id < 1
             && $user instanceof User

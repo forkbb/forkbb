@@ -22,7 +22,7 @@ class Info extends Method
         $this->model->maxTime = $this->c->config->st_max_users_time;
 
         $info = [];
-        if ($this->c->user->g_view_users == '1') {
+        if ('1' == $this->c->user->g_view_users) {
             foreach ($this->model->users as $id => $name) {
                 $info[] = [
                     $this->c->Router->link('User', [

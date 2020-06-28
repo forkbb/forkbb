@@ -148,9 +148,12 @@ class Model extends DataModel
     protected function getlanguage(): string
     {
         $langs = $this->c->Func->getLangs();
-        $lang = $this->getAttr('language');
+        $lang  = $this->getAttr('language');
 
-        if (empty($lang) || ! isset($langs[$lang])) {
+        if (
+            empty($lang)
+            || ! isset($langs[$lang])
+        ) {
             $lang = $this->c->config->o_default_lang;
         }
 
@@ -169,9 +172,13 @@ class Model extends DataModel
     protected function getstyle(): string
     {
         $styles = $this->c->Func->getStyles();
-        $style = $this->getAttr('style');
+        $style  = $this->getAttr('style');
 
-        if ($this->isGuest || empty($style) || ! isset($styles[$style])) {
+        if (
+            $this->isGuest
+            || empty($style)
+            || ! isset($styles[$style])
+        ) {
             $style = $this->c->config->o_default_style;
         }
 
@@ -206,7 +213,10 @@ class Model extends DataModel
         foreach ($this->avatarTypes as $type) {
             $path = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$this->id}.{$type}";
 
-            if (\is_file($path) && \getimagesize($path)) {
+            if (
+                \is_file($path)
+                && \getimagesize($path)
+            ) {
                 return $this->c->PUBLIC_URL . "{$this->c->config->o_avatars_dir}/{$this->id}.{$type}";
             }
         }
@@ -237,9 +247,9 @@ class Model extends DataModel
     {
         if (isset($this->c->bans->userList[\mb_strtolower($this->username)])) { //????
             return \ForkBB\__('Banned');
-        } elseif ($this->title != '') {
+        } elseif ('' != $this->title) {
             return \ForkBB\cens($this->title);
-        } elseif ($this->g_user_title != '') {
+        } elseif ('' != $this->g_user_title) {
             return \ForkBB\cens($this->g_user_title);
         } elseif ($this->isGuest) {
             return \ForkBB\__('Guest');
@@ -371,7 +381,14 @@ class Model extends DataModel
      */
     public function linkPromote(Post $post): ?string
     {
-        if (($this->isAdmin || ($this->isAdmMod && 1 == $this->g_mod_promote_users))
+        if (
+            (
+                $this->isAdmin
+                || (
+                    $this->isAdmMod
+                    && 1 == $this->g_mod_promote_users
+                )
+            )
             && $this->id !== $post->user->id //????
             && 0 < $post->user->g_promote_min_posts * $post->user->g_promote_next_group
         ) {
@@ -397,7 +414,10 @@ class Model extends DataModel
     {
         $this->setAttr('email', $email);
 
-        if (empty($email) || false === $this->getAttr('email_normal')) {
+        if (
+            empty($email)
+            || false === $this->getAttr('email_normal')
+        ) {
             return;
         }
 

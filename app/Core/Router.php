@@ -93,10 +93,11 @@ class Router
      */
     public function validate($url, string $defMarker, array $defArgs = []): string
     {
-        if (\is_string($url)
+        if (
+            \is_string($url)
             && \parse_url($url, PHP_URL_HOST) === $this->host
             && ($route = $this->route('GET', \rawurldecode(\parse_url($url, \PHP_URL_PATH))))
-            && $route[0] === self::OK
+            && self::OK === $route[0]
         ) {
             if (isset($route[3])) {
                 return $this->link($route[3], $route[2]);
@@ -139,7 +140,10 @@ class Router
             // значение есть
             if (isset($args[$name])) {
                 // кроме page = 1
-                if ($name !== 'page' || $args[$name] !== 1) {
+                if (
+                    'page' !== $name
+                    || 1 !== $args[$name]
+                ) {
                     $data['{' . $name . '}'] = \rawurlencode(\str_replace($this->subSearch, $this->subRepl, $args[$name]));
                     continue;
                 }
@@ -169,9 +173,15 @@ class Router
      */
     public function route(string $method, string $uri): array
     {
-        $head = $method == 'HEAD';
+        $head = 'HEAD' == $method;
 
-        if (empty($this->methods[$method]) && (! $head || empty($this->methods['GET']))) {
+        if (
+            empty($this->methods[$method])
+            && (
+                ! $head
+                || empty($this->methods['GET'])
+            )
+        ) {
             return [self::NOT_IMPLEMENTED];
         }
 
@@ -189,7 +199,10 @@ class Router
             if (isset($this->statical[$uri][$method])) {
                 list($handler, $marker) = $this->statical[$uri][$method];
                 return [self::OK, $handler, [], $marker];
-            } elseif ($head && isset($this->statical[$uri]['GET'])) {
+            } elseif (
+                $head
+                && isset($this->statical[$uri]['GET'])
+            ) {
                 list($handler, $marker) = $this->statical[$uri]['GET'];
                 return [self::OK, $handler, [], $marker];
             } else {
@@ -197,7 +210,7 @@ class Router
             }
         }
 
-        $pos = \strpos($uri, '/', 1);
+        $pos  = \strpos($uri, '/', 1);
         $base = false === $pos ? $uri : \substr($uri, 0, $pos);
 
         if (isset($this->dynamic[$base])) {
@@ -208,7 +221,10 @@ class Router
 
                 if (isset($data[$method])) {
                     list($handler, $keys, $marker) = $data[$method];
-                } elseif ($head && isset($data['GET'])) {
+                } elseif (
+                    $head
+                    && isset($data['GET'])
+                ) {
                     list($handler, $keys, $marker) = $data['GET'];
                 } else {
                     $allowed += \array_keys($data);
@@ -301,11 +317,15 @@ class Router
 
         $s = 1;
         $base = $parts[0];
-        if ($parts[0] === '/') {
-            $s = 2;
+        if ('/' === $parts[0]) {
+            $s     = 2;
             $base .= $parts[1];
         }
-        if (isset($parts[$s]) && $parts[$s] !== '/' && $parts[$s] !== '[') {
+        if (
+            isset($parts[$s])
+            && '/' !== $parts[$s]
+            && '[' !== $parts[$s]
+        ) {
             $base = '/';
         }
 
@@ -329,7 +349,11 @@ class Router
                         if (! isset($data[1])) {
                             $data[1] = '[^/\x00-\x1f]+';
                         }
-                        if ($data[0] === '' || $data[1] === '' || \is_numeric($data[0][0])) {
+                        if (
+                            '' === $data[0]
+                            || '' === $data[1]
+                            || \is_numeric($data[0][0])
+                        ) {
                             return null;
                         }
                         $pattern .= '(?P<' . $data[0] . '>' . $data[1] . ')';
@@ -381,7 +405,10 @@ class Router
                 }
             }
         }
-        if ($var || $s) {
+        if (
+            $var
+            || $s
+        ) {
             return null;
         }
         $pattern .= '$%D';

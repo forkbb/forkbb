@@ -39,7 +39,10 @@ class Load extends Action
         if ($id < 1) {
             throw new InvalidArgumentException('Expected a positive post id');
         }
-        if (null !== $tid && $tid < 1) {
+        if (
+            null !== $tid
+            && $tid < 1
+        ) {
             throw new InvalidArgumentException('Expected a positive topic id');
         }
 
@@ -47,11 +50,7 @@ class Load extends Action
             ':pid' => $id,
             ':tid' => $tid,
         ];
-        $sql  = $this->getSql(
-            null !== $tid ?
-            'p.id=?i:pid AND p.topic_id=?i:tid' :
-            'p.id=?i:pid'
-        );
+        $sql = $this->getSql(null !== $tid ? 'p.id=?i:pid AND p.topic_id=?i:tid' : 'p.id=?i:pid');
         $data = $this->c->DB->query($sql, $vars)->fetch();
 
         if (empty($data)) {
@@ -64,7 +63,10 @@ class Load extends Action
         if (! $topic instanceof Topic) {
             return null;
         }
-        if (null !== $tid && $topic->id !== $tid) {
+        if (
+            null !== $tid
+            && $topic->id !== $tid
+        ) {
             return null;
         }
 
@@ -80,7 +82,10 @@ class Load extends Action
     public function loadByIds(array $ids, bool $withTopics): array
     {
         foreach ($ids as $id) {
-            if (! \is_int($id) || $id < 1) {
+            if (
+                ! \is_int($id)
+                || $id < 1
+            ) {
                 throw new InvalidArgumentException('Expected a positive topic id');
             }
         }
@@ -109,7 +114,10 @@ class Load extends Action
             unset($post);
         } else {
             foreach ($topicIds as $id) {
-                if (! $this->c->topics->isset($id) || ! $this->c->topics->get($id) instanceof Topic) {
+                if (
+                    ! $this->c->topics->isset($id)
+                    || ! $this->c->topics->get($id) instanceof Topic
+                ) {
                     throw new RuntimeException("Topic number {$id} not loaded");
                 }
             }

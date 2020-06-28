@@ -20,7 +20,8 @@ class Email extends Profile
      */
     public function setEmail(array $args, string $method): Page
     {
-        if ($this->user->id !== (int) $args['id']
+        if (
+            $this->user->id !== (int) $args['id']
             || ! \hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['email'] . $args['key']))
             || empty($this->user->activate_string)
             || ! \hash_equals($this->user->activate_string, $args['key'])
@@ -49,7 +50,10 @@ class Email extends Profile
      */
     public function email(array $args, string $method): Page
     {
-        if (false === $this->initProfile($args['id']) || ! $this->rules->editEmail) {
+        if (
+            false === $this->initProfile($args['id'])
+            || ! $this->rules->editEmail
+        ) {
             return $this->c->Message->message('Bad request');
         }
 
@@ -75,7 +79,10 @@ class Email extends Profile
                     return $this->c->Redirect->page('EditUserProfile', ['id' => $this->curUser->id])->message('Email is old redirect');
                 }
 
-                if ($this->user->isAdmin || '1' != $this->c->config->o_regs_verify) {
+                if (
+                    $this->user->isAdmin
+                    || '1' != $this->c->config->o_regs_verify
+                ) {
                     $this->curUser->email           = $v->new_email;
                     $this->curUser->email_confirmed = 0;
 

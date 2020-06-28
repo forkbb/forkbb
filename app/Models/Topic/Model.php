@@ -24,7 +24,10 @@ class Model extends DataModel
 
         $forum = $this->c->forums->get($this->forum_id);
 
-        if (! $forum instanceof Forum || $forum->redirect_url) {
+        if (
+            ! $forum instanceof Forum
+            || $forum->redirect_url
+        ) {
             return null;
         } else {
             return $forum;
@@ -40,10 +43,17 @@ class Model extends DataModel
     {
         if ($this->c->user->isAdmin) {
             return true;
-        } elseif ($this->closed || $this->c->user->isBot) {
+        } elseif (
+            $this->closed
+            || $this->c->user->isBot
+        ) {
             return false;
-        } elseif ($this->parent->post_replies == '1'
-            || (null === $this->parent->post_replies && $this->c->user->g_post_replies == '1')
+        } elseif (
+            '1' == $this->parent->post_replies
+            || (
+                null === $this->parent->post_replies
+                && '1' == $this->c->user->g_post_replies
+            )
             || $this->c->user->isModerator($this)
         ) {
             return true;
@@ -111,7 +121,10 @@ class Model extends DataModel
      */
     protected function gethasNew()
     {
-        if ($this->c->user->isGuest || $this->moved_to) {
+        if (
+            $this->c->user->isGuest
+            || $this->moved_to
+        ) {
             return false;
         }
 
@@ -132,7 +145,10 @@ class Model extends DataModel
      */
     protected function gethasUnread()
     {
-        if ($this->c->user->isGuest || $this->moved_to) {
+        if (
+            $this->c->user->isGuest
+            || $this->moved_to
+        ) {
             return false;
         }
 
@@ -214,7 +230,10 @@ class Model extends DataModel
     {
         $page = (int) $this->page;
 
-        if ($page < 1 && $this->numPages === 1) {
+        if (
+            $page < 1
+            && 1 === $this->numPages
+        ) {
             // 1 страницу в списке тем раздела не отображаем
             return [];
         } else { //????
@@ -257,7 +276,14 @@ class Model extends DataModel
                 LIMIT ?i:offset, ?i:rows';
         $list = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
-        if (! empty($list) && ($this->stick_fp || $this->poll_type) && ! \in_array($this->first_post_id, $list)) {
+        if (
+            ! empty($list)
+            && (
+                $this->stick_fp
+                || $this->poll_type
+            )
+            && ! \in_array($this->first_post_id, $list)
+        ) {
             \array_unshift($list, $this->first_post_id);
         }
 
@@ -321,7 +347,7 @@ class Model extends DataModel
      */
     protected function getshowViews(): bool
     {
-        return $this->c->config->o_topic_views == '1';
+        return '1' == $this->c->config->o_topic_views;
     }
 
     /**
@@ -358,14 +384,20 @@ class Model extends DataModel
             $flag = true;
             $vars[':visit'] = $this->last_post;
         }
-        if (false !== $this->hasUnread && $this->timeMax > $this->hasUnread) {
+        if (
+            false !== $this->hasUnread
+            && $this->timeMax > $this->hasUnread
+        ) {
             $flag = true;
             $vars[':read'] = $this->timeMax;
             $vars[':visit'] = $this->last_post;
         }
 
         if ($flag) {
-            if (empty($this->mt_last_read) && empty($this->mt_last_visit)) {
+            if (
+                empty($this->mt_last_read)
+                && empty($this->mt_last_visit)
+            ) {
                 $sql = 'INSERT INTO ::mark_of_topic (uid, tid, mt_last_visit, mt_last_read)
                         SELECT ?i:uid, ?i:tid, ?i:visit, ?i:read
                         FROM ::groups

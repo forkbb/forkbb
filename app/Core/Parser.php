@@ -31,13 +31,20 @@ class Parser extends Parserus
      */
     protected function init(): void
     {
-        if ($this->c->config->p_message_bbcode == '1' || $this->c->config->p_sig_bbcode == '1') {
+        if (
+            '1' == $this->c->config->p_message_bbcode
+            || '1' == $this->c->config->p_sig_bbcode
+        ) {
             $bbcodes = include $this->c->DIR_CONFIG . '/defaultBBCode.php';
             $this->setBBCodes($bbcodes);
         }
 
-        if ($this->c->user->show_smilies == '1'
-            && ($this->c->config->o_smilies_sig == '1' || $this->c->config->o_smilies == '1')
+        if (
+            '1' == $this->c->user->show_smilies
+            && (
+                '1' == $this->c->config->o_smilies_sig
+                || '1' == $this->c->config->o_smilies
+            )
         ) {
             $smilies = $this->c->smilies->list; //????
 
@@ -52,8 +59,8 @@ class Parser extends Parserus
         }
 
         $this->setAttr('baseUrl', $this->c->BASE_URL);
-        $this->setAttr('showImg', $this->c->user->show_img != '0');
-        $this->setAttr('showImgSign', $this->c->user->show_img_sig != '0');
+        $this->setAttr('showImg', '0' != $this->c->user->show_img);
+        $this->setAttr('showImgSign', '0' != $this->c->user->show_img_sig);
     }
 
     /**
@@ -65,7 +72,7 @@ class Parser extends Parserus
      */
     public function addBBCode(array $bb): self
     {
-        if ($bb['tag'] == 'quote') {
+        if ('quote' == $bb['tag']) {
             $bb['self nesting'] = (int) $this->c->config->o_quote_depth;
         }
         return parent::addBBCode($bb);
@@ -84,11 +91,11 @@ class Parser extends Parserus
     public function prepare(string $text, bool $isSignature = false): string
     {
         if ($isSignature) {
-            $whiteList = $this->c->config->p_sig_bbcode == '1' ? $this->c->BBCODE_INFO['forSign'] : [];
-            $blackList = $this->c->config->p_sig_img_tag == '1' ? [] : ['img'];
+            $whiteList = '1' == $this->c->config->p_sig_bbcode ? $this->c->BBCODE_INFO['forSign'] : [];
+            $blackList = '1' == $this->c->config->p_sig_img_tag ? [] : ['img'];
         } else {
-            $whiteList = $this->c->config->p_message_bbcode == '1' ? null : [];
-            $blackList = $this->c->config->p_message_img_tag == '1' ? [] : ['img'];
+            $whiteList = '1' == $this->c->config->p_message_bbcode ? null : [];
+            $blackList = '1' == $this->c->config->p_message_img_tag ? [] : ['img'];
         }
 
         $this->setAttr('isSign', $isSignature)
@@ -97,7 +104,7 @@ class Parser extends Parserus
              ->parse($text, ['strict' => true])
              ->stripEmptyTags(" \n\t\r\v", true);
 
-        if ($this->c->config->o_make_links == '1') {
+        if ('1' == $this->c->config->o_make_links) {
             $this->detectUrls();
         }
 
@@ -116,8 +123,8 @@ class Parser extends Parserus
     {
         // при null предполагается брать данные после prepare()
         if (null !== $text) {
-            $whiteList = $this->c->config->p_message_bbcode == '1' ? null : [];
-            $blackList = $this->c->config->p_message_img_tag == '1' ? [] : ['img'];
+            $whiteList = '1' == $this->c->config->p_message_bbcode ? null : [];
+            $blackList = '1' == $this->c->config->p_message_img_tag ? [] : ['img'];
 
             $this->setAttr('isSign', false)
                  ->setWhiteList($whiteList)
@@ -125,7 +132,10 @@ class Parser extends Parserus
                  ->parse($text);
         }
 
-        if (! $hideSmilies && $this->c->config->o_smilies == '1') {
+        if (
+            ! $hideSmilies
+            && '1' == $this->c->config->o_smilies
+        ) {
             $this->detectSmilies();
         }
 
@@ -143,8 +153,8 @@ class Parser extends Parserus
     {
         // при null предполагается брать данные после prepare()
         if (null !== $text) {
-            $whiteList = $this->c->config->p_sig_bbcode == '1' ? $this->c->BBCODE_INFO['forSign'] : [];
-            $blackList = $this->c->config->p_sig_img_tag == '1' ? [] : ['img'];
+            $whiteList = '1' == $this->c->config->p_sig_bbcode ? $this->c->BBCODE_INFO['forSign'] : [];
+            $blackList = '1' == $this->c->config->p_sig_img_tag ? [] : ['img'];
 
             $this->setAttr('isSign', true)
                  ->setWhiteList($whiteList)
@@ -152,7 +162,7 @@ class Parser extends Parserus
                  ->parse($text);
         }
 
-        if ($this->c->config->o_smilies_sig == '1') {
+        if ('1' == $this->c->config->o_smilies_sig) {
             $this->detectSmilies();
         }
 

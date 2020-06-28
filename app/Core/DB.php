@@ -105,12 +105,15 @@ class DB extends PDO
      *
      * @return bool
      */
-    protected function isOptions(array $arr): bool
+    protected function isOptions(array $options): bool
     {
         $verify = [self::ATTR_CURSOR => [self::CURSOR_FWDONLY, self::CURSOR_SCROLL]];
 
-        foreach ($arr as $key => $value) {
-           if (! isset($verify[$key]) || ! \in_array($value, $verify[$key])) {
+        foreach ($options as $key => $value) {
+           if (
+               ! isset($verify[$key])
+               || ! \in_array($value, $verify[$key])
+            ) {
                return false;
            }
         }
@@ -129,18 +132,18 @@ class DB extends PDO
      */
     protected function parse(string &$query, array $params): array
     {
-        $idxIn = 0;
+        $idxIn  = 0;
         $idxOut = 1;
-        $map = [];
-        $query = \preg_replace_callback(
+        $map    = [];
+        $query  = \preg_replace_callback(
             '%(?=[?:])(?<![\w?:])(?:::(\w+)|\?(?![?:])(?:(\w+)(?::(\w+))?)?|:(\w+))%',
             function($matches) use ($params, &$idxIn, &$idxOut, &$map) {
                 if (! empty($matches[1])) {
                     return $this->dbPrefix . $matches[1];
                 }
 
-                $type = empty($matches[2]) ? 's' : $matches[2];
-                $key = $matches[4] ?? ($matches[3] ?? $idxIn++);
+                $type  = empty($matches[2]) ? 's' : $matches[2];
+                $key   = $matches[4] ?? ($matches[3] ?? $idxIn++);
                 $value = $this->getValue($key, $params);
 
                 switch ($type) {
@@ -157,7 +160,7 @@ class DB extends PDO
                         break;
                     default:
                         $value = [1];
-                        $type = 's';
+                        $type  = 's';
                         break;
                 }
 
@@ -171,8 +174,8 @@ class DB extends PDO
 
                 $res = [];
                 foreach ($value as $val) {
-                    $name = ':' . $idxOut++;
-                    $res[] = $name;
+                    $name        = ':' . $idxOut++;
+                    $res[]       = $name;
                     $map[$key][] = $name;
                 }
                 return \implode(',', $res);
@@ -196,12 +199,15 @@ class DB extends PDO
     {
         if (
             \is_string($key)
-            && (isset($params[':' . $key]) || \array_key_exists(':' . $key, $params))
+            && \array_key_exists(':' . $key, $params)
         ) {
             return $params[':' . $key];
         } elseif (
-            (\is_string($key) || \is_int($key))
-            && (isset($params[$key]) || \array_key_exists($key, $params))
+            (
+                \is_string($key)
+                || \is_int($key)
+            )
+            && \array_key_exists($key, $params)
         ) {
             return $params[$key];
         }
@@ -242,7 +248,7 @@ class DB extends PDO
             ++$this->qCount;
         }
         $this->queries[] = [$query, $time + $this->delta];
-        $this->delta = 0;
+        $this->delta     = 0;
     }
 
     /**
@@ -264,8 +270,8 @@ class DB extends PDO
             return $result;
         }
 
-        $start = \microtime(true);
-        $stmt  = parent::prepare($query);
+        $start       = \microtime(true);
+        $stmt        = parent::prepare($query);
         $this->delta = \microtime(true) - $start;
 
         $stmt->setMap($map);
@@ -288,21 +294,24 @@ class DB extends PDO
      */
     public function prepare($query, $arg1 = null, $arg2 = null): PDOStatement
     {
-        if (empty($arg1) === empty($arg2) || ! empty($arg2)) {
-            $params = $arg1;
+        if (
+            empty($arg1) === empty($arg2)
+            || ! empty($arg2)
+        ) {
+            $params  = $arg1;
             $options = $arg2;
         } elseif ($this->isOptions($arg1)) {
-            $params = [];
+            $params  = [];
             $options = $arg1;
         } else {
-            $params = $arg1;
+            $params  = $arg1;
             $options = [];
         }
 
         $map = $this->parse($query, $params);
 
-        $start = \microtime(true);
-        $stmt  = parent::prepare($query, $options);
+        $start       = \microtime(true);
+        $stmt        = parent::prepare($query, $options);
         $this->delta = \microtime(true) - $start;
 
         $stmt->setMap($map);
@@ -322,7 +331,10 @@ class DB extends PDO
      */
     public function query(string $query, ...$args)
     {
-        if (isset($args[0]) && \is_array($args[0])) {
+        if (
+            isset($args[0])
+            && \is_array($args[0])
+        ) {
             $params = \array_shift($args);
         } else {
             $params = [];
@@ -337,8 +349,8 @@ class DB extends PDO
             return $result;
         }
 
-        $start = \microtime(true);
-        $stmt  = parent::prepare($query);
+        $start       = \microtime(true);
+        $stmt        = parent::prepare($query);
         $this->delta = \microtime(true) - $start;
 
         $stmt->setMap($map);
@@ -359,7 +371,7 @@ class DB extends PDO
      */
     public function beginTransaction(): bool
     {
-        $start = \microtime(true);
+        $start  = \microtime(true);
         $result = parent::beginTransaction();
         $this->saveQuery('beginTransaction()', \microtime(true) - $start, false);
         return $result;
@@ -370,7 +382,7 @@ class DB extends PDO
      */
     public function commit(): bool
     {
-        $start = \microtime(true);
+        $start  = \microtime(true);
         $result = parent::commit();
         $this->saveQuery('commit()', \microtime(true) - $start, false);
         return $result;
@@ -381,7 +393,7 @@ class DB extends PDO
      */
     public function rollback(): bool
     {
-        $start = \microtime(true);
+        $start  = \microtime(true);
         $result = parent::rollback();
         $this->saveQuery('rollback()', \microtime(true) - $start, false);
         return $result;

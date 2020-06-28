@@ -70,7 +70,10 @@ class Search extends Page
         $marker = $advanced ? 'SearchAdvanced' : 'Search';
 
         $v = null;
-        if ('POST' === $method || isset($args['keywords'])) {
+        if (
+            'POST' === $method
+            || isset($args['keywords'])
+        ) {
             $v = $this->c->Validator->reset()
                 ->addValidators([
                     'check_query'  => [$this, 'vCheckQuery'],
@@ -116,9 +119,15 @@ class Search extends Page
                 'keywords'     => 'required|string:trim|max:100|check_query:' . $method,
             ]);
 
-            if ('POST' === $method && $v->validation($_POST)) {
+            if (
+                'POST' === $method
+                && $v->validation($_POST)
+            ) {
                 return $this->c->Redirect->page($marker, $v->getData());
-            } elseif ('GET' === $method && $v->validation($args)) {
+            } elseif (
+                'GET' === $method
+                && $v->validation($args)
+            ) {
                 return $this->action(\array_merge($args, $v->getData(), ['action' => 'search']), $method, $advanced);
             }
 
@@ -325,7 +334,10 @@ class Search extends Page
         if (empty($v->getErrors())) {
             $flood = $this->user->last_search && \time() - $this->user->last_search < $this->user->g_search_flood;
 
-            if ('POST' !== $method || ! $flood) {
+            if (
+                'POST' !== $method
+                || ! $flood
+            ) {
                 $search = $this->c->search;
 
                 if (! $search->prepare($query)) {
@@ -339,7 +351,10 @@ class Search extends Page
                             $v->addError('No hits', 'i');
                         }
 
-                        if ($search->queryNoCache && $this->user->g_search_flood) {
+                        if (
+                            $search->queryNoCache
+                            && $this->user->g_search_flood
+                        ) {
                             $this->user->last_search = \time();
                             $this->c->users->update($this->user); //?????
                         }
@@ -366,7 +381,10 @@ class Search extends Page
     public function vCheckForums(Validator $v, $forums)
     {
         if ('*' !== $forums) {
-            if (\is_string($forums) && \preg_match('%^\d+(?:\.\d+)*$%D', $forums)) {
+            if (
+                \is_string($forums)
+                && \preg_match('%^\d+(?:\.\d+)*$%D', $forums)
+            ) {
                 $forums = \explode('.', $forums);
             } elseif (null === $forums) {
                 $forums = '*';
@@ -399,7 +417,10 @@ class Search extends Page
     {
         $name = \preg_replace('%\*+%', '*', $name);
 
-        if ('*' !== $name && ! \preg_match('%[\p{L}\p{N}]%', $name)) {
+        if (
+            '*' !== $name
+            && ! \preg_match('%[\p{L}\p{N}]%', $name)
+        ) {
             $v->addError('The :alias is not valid format');
         }
 
@@ -483,7 +504,10 @@ class Search extends Page
                     break;
                 }
                 $user              = $this->c->users->load($uid);
-                if (! $user instanceof User || $user->isGuest) {
+                if (
+                    ! $user instanceof User
+                    || $user->isGuest
+                ) {
                     break;
                 }
                 if ($asTopicsList) {

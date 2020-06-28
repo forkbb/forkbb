@@ -89,10 +89,10 @@ trait PostFormTrait
             'required' => true,
             'value'    => $vars['message'] ?? null,
             'bb'       => [
-                ['link', \ForkBB\__('BBCode'), \ForkBB\__($this->c->config->p_message_bbcode == '1' ? 'on' : 'off')],
-                ['link', \ForkBB\__('url tag'), \ForkBB\__($this->c->config->p_message_bbcode == '1' && $this->user->g_post_links == '1' ? 'on' : 'off')],
-                ['link', \ForkBB\__('img tag'), \ForkBB\__($this->c->config->p_message_bbcode == '1' && $this->c->config->p_message_img_tag == '1' ? 'on' : 'off')],
-                ['link', \ForkBB\__('Smilies'), \ForkBB\__($this->c->config->o_smilies == '1' ? 'on' : 'off')],
+                ['link', \ForkBB\__('BBCode'), \ForkBB\__('1' == $this->c->config->p_message_bbcode ? 'on' : 'off')],
+                ['link', \ForkBB\__('url tag'), \ForkBB\__('1' == $this->c->config->p_message_bbcode && '1' == $this->user->g_post_links ? 'on' : 'off')],
+                ['link', \ForkBB\__('img tag'), \ForkBB\__('1' == $this->c->config->p_message_bbcode && '1' == $this->c->config->p_message_img_tag ? 'on' : 'off')],
+                ['link', \ForkBB\__('Smilies'), \ForkBB\__('1' == $this->c->config->o_smilies ? 'on' : 'off')],
             ],
             'autofocus' => $autofocus,
         ];
@@ -102,7 +102,10 @@ trait PostFormTrait
         $autofocus = null;
 
         $fieldset = [];
-        if ($this->user->isAdmin || $this->user->isModerator($model)) {
+        if (
+            $this->user->isAdmin
+            || $this->user->isModerator($model)
+        ) {
             if ($editSubject) {
                 $fieldset['stick_topic'] = [
                     'type'    => 'checkbox',
@@ -124,7 +127,11 @@ trait PostFormTrait
                     'checked' => isset($vars['merge_post']) ? (bool) $vars['merge_post'] : true,
                 ];
             }
-            if ($editPost && ! $model->user->isGuest && ! $model->user->isAdmin) {
+            if (
+                $editPost
+                && ! $model->user->isGuest
+                && ! $model->user->isAdmin
+            ) {
                 $fieldset['edit_post'] = [
                     'type'    => 'checkbox',
                     'label'   => \ForkBB\__('EditPost edit'),
@@ -133,7 +140,10 @@ trait PostFormTrait
                 ];
             }
         }
-        if (! $quickReply && $this->c->config->o_smilies == '1') {
+        if (
+            ! $quickReply
+            && '1' == $this->c->config->o_smilies
+        ) {
             $fieldset['hide_smilies'] = [
                 'type'    => 'checkbox',
                 'label'   => \ForkBB\__('Hide smilies'),

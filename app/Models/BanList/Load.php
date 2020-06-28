@@ -61,7 +61,10 @@ class Load extends Method
             $message = $this->model->trimToNull($row['message']);
             $expire  = empty($row['expire']) ? null : $row['expire'];
 
-            if (null === $message && null === $expire) {
+            if (
+                null === $message
+                && null === $expire
+            ) {
                 continue;
             }
 

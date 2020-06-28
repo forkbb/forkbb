@@ -39,7 +39,10 @@ class Image extends File
     {
         parent::__construct($path, $options);
 
-        if (! \extension_loaded('gd') || ! \function_exists('\\imagecreatetruecolor')) {
+        if (
+            ! \extension_loaded('gd')
+            || ! \function_exists('\\imagecreatetruecolor')
+        ) {
             throw new FileException('GD library not connected');
         }
 
@@ -85,10 +88,16 @@ class Image extends File
         }
         \imagecolortransparent($image, $color);
         $palette = \imagecolorstotal($this->image);
-        if ($palette > 0 && ! \imagetruecolortopalette($image, true, $palette)) {
+        if (
+            $palette > 0
+            && ! \imagetruecolortopalette($image, true, $palette)
+        ) {
             throw new FileException('Failed to convert image to palette');
         }
-        if (false === \imagealphablending($image, false) || false === \imagesavealpha($image, true)) {
+        if (
+            false === \imagealphablending($image, false)
+            || false === \imagesavealpha($image, true)
+        ) {
             throw new FileException('Failed to adjust image');
         }
         if (false === \imagecopyresampled($image, $this->image, 0, 0, 0, 0, $width, $height, $oldW, $oldH)) {
@@ -141,7 +150,7 @@ class Image extends File
                 break;
             case 'png':
                 $quality = \floor((100 - $this->quality) / 11);
-                $result = @\imagepng($this->image, $path, $quality);
+                $result  = @\imagepng($this->image, $path, $quality);
                 break;
             case 'gif':
                 $result = @\imagegif($this->image, $path);

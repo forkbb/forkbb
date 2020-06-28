@@ -21,7 +21,10 @@ class Edit extends Profile
      */
     public function edit(array $args, string $method): Page
     {
-        if (false === $this->initProfile($args['id']) || ! $this->rules->editProfile) {
+        if (
+            false === $this->initProfile($args['id'])
+            || ! $this->rules->editProfile
+        ) {
             return $this->c->Message->message('Bad request');
         }
 
@@ -105,7 +108,10 @@ class Edit extends Profile
             unset($data['token'], $data['upload_avatar'], $data['delete_avatar']);
 
             if ($valid) {
-                if ($v->delete_avatar || $v->upload_avatar instanceof Image) {
+                if (
+                    $v->delete_avatar
+                    || $v->upload_avatar instanceof Image
+                ) {
                     $this->curUser->deleteAvatar();
                 }
 
@@ -148,13 +154,14 @@ class Edit extends Profile
     {
         if ('' != $signature) {
             // после цензуры текст сообщения пустой
-            if (\ForkBB\cens($signature) == '') {
+            if ('' == \ForkBB\cens($signature)) {
                 $v->addError('No signature after censoring');
             // количество строк
             } elseif (\substr_count($signature, "\n") >= $this->c->config->p_sig_lines) {
                 $v->addError('Signature has too many lines');
             // текст сообщения только заглавными буквами
-            } elseif (! $this->c->user->isAdmin
+            } elseif (
+                ! $this->c->user->isAdmin
                 && '0' == $this->c->config->p_sig_all_caps
                 && \preg_match('%\p{Lu}%u', $signature)
                 && ! \preg_match('%\p{Ll}%u', $signature)
@@ -391,7 +398,10 @@ class Edit extends Profile
                 'caption'   => \ForkBB\__('Website'),
                 'value'     => $this->curUser->url,
             ];
-        } elseif ($this->rules->viewWebsite && $this->curUser->url) {
+        } elseif (
+            $this->rules->viewWebsite
+            && $this->curUser->url
+        ) {
             $fields['url'] = [
                 'id'      => 'website',
                 'class'   => 'pline',

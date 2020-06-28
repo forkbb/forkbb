@@ -63,9 +63,16 @@ class Mail
      */
     public function __construct($host, $user, $pass, $ssl, $eol)
     {
-        if (\is_string($host) && \strlen(\trim($host)) > 0 ) {
+        if (
+            \is_string($host)
+            && \strlen(\trim($host)) > 0
+        ) {
             list($host, $port) = \explode(':', $host);
-            if (empty($port) || $port < 1 || $port > 65535) {
+            if (
+                empty($port)
+                || $port < 1
+                || $port > 65535
+            ) {
                 $port = 25;
             }
             $this->smtp = [
@@ -91,7 +98,8 @@ class Mail
      */
     public function valid($email, bool $strict = false, bool $idna = false)
     {
-        if (! \is_string($email)
+        if (
+            ! \is_string($email)
             || \mb_strlen($email, 'UTF-8') > 80 //???? for DB
             || ! \preg_match('%^(?!\.)((?:(?:^|\.)(?>"(?!\s)(?:\x5C[^\x00-\x1F]|[^\x00-\x1F\x5C"])++(?<!\s)"|[a-zA-Z0-9!#$\%&\'*+/=?^_`{|}~-]+))+)@([^\x00-\x1F\s@]++)$%Du', $email, $matches)
             || \mb_strlen($matches[1], 'UTF-8') > 64
@@ -101,7 +109,10 @@ class Mail
         $local  = $matches[1];
         $domain = $matches[2];
 
-        if ('[' === $domain[0] && ']' === \substr($domain, -1)) {
+        if (
+            '[' === $domain[0]
+            && ']' === \substr($domain, -1)
+        ) {
             if (1 === \strpos($domain, 'IPv6:')) {
                 $prefix = 'IPv6:';
                 $ip     = \substr($domain, 6, -1);
@@ -120,11 +131,17 @@ class Mail
             $ip          = null;
             $domainASCII = $domain = \mb_strtolower($domain, 'UTF-8');
 
-            if (\preg_match('%[\x80-\xFF]%', $domain) && \function_exists('\\idn_to_ascii')) {
+            if (
+                \preg_match('%[\x80-\xFF]%', $domain)
+                && \function_exists('\\idn_to_ascii')
+            ) {
                 $domainASCII = \idn_to_ascii($domain, 0, \INTL_IDNA_VARIANT_UTS46);
             }
 
-            if ('localhost' == $domain || ! \preg_match('%^(?:(?:xn\-\-)?[a-z0-9]+(?:\-[a-z0-9]+)*(?:$|\.(?!$)))+$%', $domainASCII)) {
+            if (
+                'localhost' == $domain
+                || ! \preg_match('%^(?:(?:xn\-\-)?[a-z0-9]+(?:\-[a-z0-9]+)*(?:$|\.(?!$)))+$%', $domainASCII)
+            ) {
                 return false;
             }
         }
@@ -249,7 +266,10 @@ class Mail
      */
     protected function formatAddress($email, string $name = null): string
     {
-        if (! \is_string($name) || \strlen(\trim($name)) == 0) {
+        if (
+            ! \is_string($name)
+            || 0 == \strlen(\trim($name))
+        ) {
             return $email;
         } else {
             $name = $this->encodeText($this->filterName($name));
@@ -373,16 +393,16 @@ class Mail
         if (! isset($this->headers['Subject'])) {
             throw new MailException('The subject of the email is empty.');
         }
-        if (trim($this->message) == '') {
+        if ('' == \trim($this->message)) {
             throw new MailException('The body of the email is empty.');
         }
 
         $this->headers = \array_replace($this->headers, [
-            'Date' => \gmdate('r'),
-            'MIME-Version' => '1.0',
+            'Date'                      => \gmdate('r'),
+            'MIME-Version'              => '1.0',
             'Content-transfer-encoding' => '8bit',
-            'Content-type' => 'text/plain; charset=utf-8',
-            'X-Mailer' => 'ForkBB Mailer',
+            'Content-type'              => 'text/plain; charset=utf-8',
+            'X-Mailer'                  => 'ForkBB Mailer',
         ]);
 
         if (\is_array($this->smtp)) {
@@ -399,7 +419,7 @@ class Mail
      */
     protected function mail(): bool
     {
-        $to = \implode(', ', $this->to);
+        $to      = \implode(', ', $this->to);
         $subject = $this->headers['Subject'];
         $headers = $this->headers;
         unset($headers['Subject']);
@@ -434,7 +454,7 @@ class Mail
     {
         // подлючение
         if (! \is_resource($this->connect)) {
-            if (($connect = @\fsockopen($this->smtp['host'], $this->smtp['port'], $errno, $errstr, 5)) === false) {
+            if (false === ($connect = @\fsockopen($this->smtp['host'], $this->smtp['port'], $errno, $errstr, 5))) {
                 throw new SmtpException('Couldn\'t connect to smtp host "' . $this->smtp['host'] . ':' . $this->smtp['port'] . '" (' . $errno . ') (' . $errstr . ').');
             }
             \stream_set_timeout($connect, 5);
@@ -467,9 +487,12 @@ class Mail
                 $this->smtpData('EHLO ' . $this->hostname(), '250');
                 return;
             case 0:
-                if ($this->smtp['user'] != '' && $this->smtp['pass'] != '') {
+                if (
+                    '' != $this->smtp['user']
+                    && '' != $this->smtp['pass']
+                ) {
                    $code = $this->smtpData('EHLO ' . $this->hostname(), ['250', '500', '501', '502', '550']);
-                   if ($code === '250') {
+                   if ('250' === $code) {
                        $this->smtpData('AUTH LOGIN', '334');
                        $this->smtpData(\base64_encode($this->smtp['user']), '334');
                        $this->smtpData(\base64_encode($this->smtp['pass']), '235');
@@ -498,22 +521,28 @@ class Mail
     protected function smtpData(string $data, $code): string
     {
         if (\is_resource($this->connect)) {
-            if (@\fwrite($this->connect, $data . $this->EOL) === false) {
+            if (false === @\fwrite($this->connect, $data . $this->EOL)) {
                 throw new SmtpException('Couldn\'t send data to mail server.');
             }
         }
         $response = '';
         while (\is_resource($this->connect) && ! \feof($this->connect)) {
-            if (($get = @\fgets($this->connect, 512)) === false) {
+            if (false === ($get = @\fgets($this->connect, 512))) {
                 throw new SmtpException('Couldn\'t get mail server response codes.');
             }
             $response .= $get;
-            if (isset($get[3]) && $get[3] === ' ') {
+            if (
+                isset($get[3])
+                && ' ' === $get[3]
+            ) {
                 $return = \substr($get, 0, 3);
                 break;
             }
         }
-        if ($code !== null && ! \in_array($return, (array) $code)) {
+        if (
+            null !== $code
+            && ! \in_array($return, (array) $code)
+        ) {
             throw new SmtpException('Unable to send email. Response of mail server: "' . $get . '"');
         }
         return $return;
@@ -529,7 +558,10 @@ class Mail
     protected function getEmailFrom(string $str): string
     {
         $match = \explode('" <', $str);
-        if (\count($match) == 2 && \substr($match[1], -1) == '>') {
+        if (
+            2 == \count($match)
+            && '>' == \substr($match[1], -1)
+        ) {
             return \rtrim($match[1], '>');
         } else {
             return $str;

@@ -28,7 +28,10 @@ class Check extends Method
             $now = \time();
 
             foreach ($this->model->banList as $id => $row) {
-                if (null !== $row['expire'] && $row['expire'] < $now) {
+                if (
+                    null !== $row['expire']
+                    && $row['expire'] < $now
+                ) {
                     $ids[] = $id;
                 }
             }

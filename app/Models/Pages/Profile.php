@@ -19,9 +19,13 @@ abstract class Profile extends Page
     {
         $this->curUser = $this->c->users->load((int) $id);
 
-        if (! $this->curUser instanceof User
+        if (
+            ! $this->curUser instanceof User
             || $this->curUser->isGuest
-            || ($this->curUser->isUnverified && ! $this->user->isAdmMod)
+            || (
+                $this->curUser->isUnverified
+                && ! $this->user->isAdmMod
+            )
         ) {
             return false;
         }
@@ -81,7 +85,10 @@ abstract class Profile extends Page
     protected function btns(string $type): array
     {
         $btns = [];
-        if ($this->user->isAdmin && ! $this->rules->editProfile) {
+        if (
+            $this->user->isAdmin
+            && ! $this->rules->editProfile
+        ) {
             $btns['change-user-group'] = [
                 $this->linkChangeGroup(),
                 \ForkBB\__('Change user group'),
@@ -117,7 +124,10 @@ abstract class Profile extends Page
                 \ForkBB\__('Delete user'),
             ];
         }
-        if ('edit' != $type && $this->rules->editProfile) {
+        if (
+            'edit' != $type
+            && $this->rules->editProfile
+        ) {
             $btns['edit-profile'] = [
                 $this->c->Router->link('EditUserProfile',  ['id' => $this->curUser->id]),
                 \ForkBB\__('Edit '),
@@ -129,7 +139,10 @@ abstract class Profile extends Page
                 \ForkBB\__('View '),
             ];
         }
-        if ('config' != $type && $this->rules->editConfig) {
+        if (
+            'config' != $type
+            && $this->rules->editConfig
+        ) {
             $btns['edit-settings'] = [
                 $this->c->Router->link('EditUserBoardConfig', ['id' => $this->curUser->id]),
                 \ForkBB\__('Configure '),

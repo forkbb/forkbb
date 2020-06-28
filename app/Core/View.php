@@ -61,7 +61,7 @@ use function \ForkBB\{__, cens, num, dt, utc, size};
 ?>
 EOD;
 
-        if (\strpos($value, '<!-- inline -->') === false) {
+        if (false === \strpos($value, '<!-- inline -->')) {
             return $perfix . $value;
         }
         return $perfix . \preg_replace_callback(

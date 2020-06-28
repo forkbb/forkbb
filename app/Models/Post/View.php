@@ -25,11 +25,17 @@ class View extends Action
      */
     public function view($arg, bool $review = false): array
     {
-        if (! $arg instanceof Topic && ! $arg instanceof Search) {
+        if (
+            ! $arg instanceof Topic
+            && ! $arg instanceof Search
+        ) {
             throw new InvalidArgumentException('Expected Topic or Search');
         }
 
-        if (empty($arg->idsList) || ! \is_array($arg->idsList)) {
+        if (
+            empty($arg->idsList)
+            || ! \is_array($arg->idsList)
+        ) {
             throw new RuntimeException('Model does not contain of posts list for display');
         }
 
@@ -74,7 +80,10 @@ class View extends Action
                 } elseif ($post->posted > $timeMax) {
                     $timeMax = $post->posted;
                 }
-                if ($post->id === $arg->first_post_id && $offset > 0) {
+                if (
+                    $post->id === $arg->first_post_id
+                    && $offset > 0
+                ) {
                     if (empty($post->id)) {
                         continue;
                     }

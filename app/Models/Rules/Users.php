@@ -69,9 +69,15 @@ class Users extends Rules
             $this->profileRules = $this->c->ProfileRules;
         }
 
-        if ($profile && $this->user->isAdmin) {
+        if (
+            $profile
+            && $this->user->isAdmin
+        ) {
             return true;
-        } elseif (! $profile && $user->isAdmin) {
+        } elseif (
+            ! $profile
+            && $user->isAdmin
+        ) {
             return false;
         }
 

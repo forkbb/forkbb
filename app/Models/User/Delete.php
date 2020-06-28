@@ -25,8 +25,8 @@ class Delete extends Action
             throw new InvalidArgumentException('No arguments, expected User(s)');
         }
 
-        $ids = [];
-        $moderators = [];
+        $ids          = [];
+        $moderators   = [];
         $adminPresent = false;
         foreach ($users as $user) {
             if (! $user instanceof User) {

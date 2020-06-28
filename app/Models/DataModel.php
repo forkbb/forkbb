@@ -97,7 +97,7 @@ class DataModel extends Model
     public function __set(string $name, $value): void
     {
         // без отслеживания
-        if (\strpos($name, '__') === 0) {
+        if (0 === \strpos($name, '__')) {
             $track = null;
             $name  = \substr($name, 2);
         // с отслеживанием
@@ -107,7 +107,11 @@ class DataModel extends Model
                 $track = true;
                 $old   = $this->zAttrs[$name];
                 // fix
-                if (\is_int($value) && \is_numeric($old) && \is_int(0 + $old)) {
+                if (
+                    \is_int($value)
+                    && \is_numeric($old)
+                    && \is_int(0 + $old)
+                ) {
                     $old = (int) $old;
                 }
             }
@@ -123,8 +127,15 @@ class DataModel extends Model
             return;
         }
 
-        if ((! $track && \array_key_exists($name, $this->zAttrs))
-            || ($track && $old !== $this->zAttrs[$name])
+        if (
+            (
+                ! $track
+                && \array_key_exists($name, $this->zAttrs)
+            )
+            || (
+                $track
+                && $old !== $this->zAttrs[$name]
+            )
         ) {
             $this->zModFlags[$name] = true;
         }
@@ -140,7 +151,7 @@ class DataModel extends Model
     public function __get(string $name)
     {
         // без вычисления
-        if (\strpos($name, '__') === 0) {
+        if (0 === \strpos($name, '__')) {
             return $this->getAttr(\substr($name, 2));
         // с вычислениями
         } else {

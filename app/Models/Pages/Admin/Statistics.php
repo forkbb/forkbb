@@ -15,7 +15,7 @@ class Statistics extends Admin
     public function info(): Page
     {
         // Is phpinfo() a disabled function?
-        if (\strpos(\strtolower((string) \ini_get('disable_functions')), 'phpinfo') !== false) {
+        if (false !== \strpos(\strtolower((string) \ini_get('disable_functions')), 'phpinfo')) {
             $this->c->Message->message('PHPinfo disabled message', true, 200);
         }
 
@@ -46,11 +46,11 @@ class Statistics extends Admin
             $phpinfo = '- - -';
         }
 
-        $this->nameTpl   = 'admin/phpinfo';
+        $this->nameTpl    = 'admin/phpinfo';
         $this->mainSuffix = '-one-column';
-        $this->aCrumbs[] = [$this->c->Router->link('AdminInfo'), 'phpinfo()'];
-        $this->aCrumbs[] = [$this->c->Router->link('AdminStatistics'), \ForkBB\__('Server statistics')];
-        $this->phpinfo   = $phpinfo;
+        $this->aCrumbs[]  = [$this->c->Router->link('AdminInfo'), 'phpinfo()'];
+        $this->aCrumbs[]  = [$this->c->Router->link('AdminStatistics'), \ForkBB\__('Server statistics')];
+        $this->phpinfo    = $phpinfo;
 
         return $this;
     }
@@ -69,9 +69,12 @@ class Statistics extends Admin
         $this->linkInfo  = $this->c->Router->link('AdminInfo');
 
         // Get the server load averages (if possible)
-        if (@\file_exists('/proc/loadavg') && \is_readable('/proc/loadavg')) {
+        if (
+            @\file_exists('/proc/loadavg')
+            && \is_readable('/proc/loadavg')
+        ) {
             // We use @ just in case
-            $fh = @\fopen('/proc/loadavg', 'r');
+            $fh  = @\fopen('/proc/loadavg', 'r');
             $ave = @\fread($fh, 64);
             @\fclose($fh);
 
@@ -84,7 +87,10 @@ class Statistics extends Admin
 
             $ave = @\explode(' ', $ave);
             $this->serverLoad = isset($ave[2]) ? $ave[0].' '.$ave[1].' '.$ave[2] : \ForkBB\__('Not available');
-        } elseif (! \in_array(\PHP_OS, ['WINNT', 'WIN32']) && \preg_match('%averages?: ([\d\.]+),?\s+([\d\.]+),?\s+([\d\.]+)%i', @\exec('uptime'), $ave)) {
+        } elseif (
+            ! \in_array(\PHP_OS, ['WINNT', 'WIN32'])
+            && \preg_match('%averages?: ([\d\.]+),?\s+([\d\.]+),?\s+([\d\.]+)%i', @\exec('uptime'), $ave)
+        ) {
             $this->serverLoad = $ave[1].' '.$ave[2].' '.$ave[3];
         } else {
             $this->serverLoad = \ForkBB\__('Not available');
@@ -101,13 +107,19 @@ class Statistics extends Admin
         $this->tOther    = $stat;
 
         // Check for the existence of various PHP opcode caches/optimizers
-        if (\ini_get('opcache.enable') && \function_exists('\\opcache_invalidate')) {
+        if (
+            \ini_get('opcache.enable')
+            && \function_exists('\\opcache_invalidate')
+        ) {
             $this->accelerator = 'Zend OPcache';
             $this->linkAcc     = 'https://secure.php.net/opcache/';
         } elseif (\ini_get('wincache.fcenabled')) {
             $this->accelerator = 'Windows Cache for PHP';
             $this->linkAcc     = 'https://secure.php.net/wincache/';
-        } elseif (\ini_get('apc.enabled') && \function_exists('\\apc_delete_file')) {
+        } elseif (
+            \ini_get('apc.enabled')
+            && \function_exists('\\apc_delete_file')
+        ) {
             $this->accelerator = 'Alternative PHP Cache (APC)'; //???? частичная эмуляция APCu
             $this->linkAcc     = 'https://secure.php.net/apc/';
         } elseif (\ini_get('xcache.cacher')) {

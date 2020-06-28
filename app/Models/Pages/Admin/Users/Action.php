@@ -62,9 +62,15 @@ class Action extends Users
                 }
                 break;
             case self::ACTION_CHG:
-                if ($profile && ! $this->c->userRules->canChangeGroup($this->c->users->load((int) $args['ids']), true)) {
+                if (
+                    $profile
+                    && ! $this->c->userRules->canChangeGroup($this->c->users->load((int) $args['ids']), true)
+                ) {
                     $error = true;
-                } elseif (! $profile && ! $this->c->userRules->changeGroup) {
+                } elseif (
+                    ! $profile
+                    && ! $this->c->userRules->changeGroup
+                ) {
                     $error = true;
                 }
                 break;
@@ -120,7 +126,10 @@ class Action extends Users
                     'token' => $args,
                 ]);
 
-            if (! $v->validation($_POST) || $v->confirm !== 1) {
+            if (
+                ! $v->validation($_POST)
+                || 1 !== $v->confirm
+            ) {
                 return $this->c->Redirect->page('AdminUsers')->message('No confirm redirect');
             }
 
@@ -246,7 +255,10 @@ class Action extends Users
             $user = $this->c->users->load((int) $args['ids']);
             $link = $this->c->Router->link('EditUserProfile', ['id' => $user->id]);
 
-            if ($user->isAdmin || $user->id === $this->user->id) {
+            if (
+                $user->isAdmin
+                || $user->id === $this->user->id
+            ) {
                 $rulePass = 'required|string:trim|check_password';
             }
         } else {
@@ -271,7 +283,7 @@ class Action extends Users
             $redirect = $this->c->Redirect;
 
             if ($v->validation($_POST)) {
-                if ($v->confirm !== 1) {
+                if (1 !== $v->confirm) {
                     return $redirect->url($link)->message('No confirm redirect');
                 }
 
@@ -299,7 +311,7 @@ class Action extends Users
         $this->classForm  = 'change-group';
         $this->titleForm  = \ForkBB\__('Change user group');
         $this->aCrumbs[]  = [$this->c->Router->link('AdminUsersAction', $args), \ForkBB\__('Change user group')];
-        $this->form       = $this->formChange($args, $profile, $link, $rulePass !== 'absent');
+        $this->form       = $this->formChange($args, $profile, $link, 'absent' !== $rulePass);
 
         return $this;
     }

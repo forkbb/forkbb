@@ -44,7 +44,8 @@ class Prepare extends Method
                 // не стоп-слово и минимальная длина удовлетворяет условию
                 if (null !== $this->model->word($subQuery)) {
                     // подстрока является словом и нет символов CJK языков
-                    if (false === \strpos($subQuery, ' ')
+                    if (
+                        false === \strpos($subQuery, ' ')
                         && ! $this->model->isCJKWord($subQuery)
                         && $this->model->cleanText($subQuery) === $subQuery
                     ) {
@@ -142,7 +143,10 @@ class Prepare extends Method
                             if (! $keyword) {
                                 $words[] = 'AND';
                             }
-                            if (1 === $countT || 'AND' === \end($words)) {
+                            if (
+                                1 === $countT
+                                || 'AND' === \end($words)
+                            ) {
                                 $words  = \array_merge($words, $temp);
                                 $count += $countT;
                             } else {
@@ -184,7 +188,10 @@ class Prepare extends Method
         $space  = '';
         $result = '';
         foreach ($words as $word) {
-            if (isset($word['type']) && 'CJK' === $word['type']) {
+            if (
+                isset($word['type'])
+                && 'CJK' === $word['type']
+            ) {
                 $word = '"' . $word['word'] . '"';
             } elseif (\is_array($word)) {
                 $word = '(' . $this->queryText($word) . ')';

@@ -34,7 +34,7 @@ abstract class Page extends Model
         $this->fTitle       = $container->config->o_board_title;
         $this->fDescription = $container->config->o_board_desc;
         $this->fRootLink    = $container->Router->link('Index');
-        if ($container->config->o_announcement == '1') {
+        if ('1' == $container->config->o_announcement) {
             $this->fAnnounce = $container->config->o_announcement_message;
         }
         $this->user         = $this->c->user; // передача текущего юзера в шаблон
@@ -62,17 +62,28 @@ abstract class Page extends Model
             'index' => [$r->link('Index'), 'Index']
         ];
 
-        if ($this->user->g_read_board == '1' && $this->user->viewUsers) {
+        if (
+            '1' == $this->user->g_read_board
+            && $this->user->viewUsers
+        ) {
             $nav['userlist'] = [$r->link('Userlist'), 'User list'];
         }
 
-        if ($this->c->config->o_rules == '1'
-            && (! $this->user->isGuest || $this->user->g_read_board == '1' || $this->c->config->o_regs_allow == '1')
+        if (
+            '1' == $this->c->config->o_rules
+            && (
+                ! $this->user->isGuest
+                || '1' == $this->user->g_read_board
+                || '1' == $this->c->config->o_regs_allow
+            )
         ) {
             $nav['rules'] = [$r->link('Rules'), 'Rules'];
         }
 
-        if ($this->user->g_read_board == '1' && $this->user->g_search == '1') {
+        if (
+            '1' == $this->user->g_read_board
+            && '1' == $this->user->g_search
+        ) {
             $sub = [];
             $sub['latest'] = [
                 $r->link('SearchAction', ['action' => 'latest_active_topics']),
@@ -97,11 +108,17 @@ abstract class Page extends Model
 
         if ($this->user->isGuest) {
             $nav['register'] = [$r->link('Register'), 'Register'];
-            $nav['login'] = [$r->link('Login'), 'Login'];
+            $nav['login']    = [$r->link('Login'), 'Login'];
         } else {
             $nav['profile'] = [$this->user->link, 'Profile'];
             // New PMS
-            if ($this->c->config->o_pms_enabled == '1' && ($this->user->isAdmin || $this->user->messages_new > 0)) { //????
+            if (
+                '1' == $this->c->config->o_pms_enabled
+                && (
+                    $this->user->isAdmin
+                    || $this->user->messages_new > 0
+                )
+            ) { //????
                 $nav['pmsnew'] = ['pmsnew.php', 'PM']; //'<li id="nav"'.((PUN_ACTIVE_PAGE == 'pms_new' || $user['messages_new'] > 0) ? ' class="isactive"' : '').'><a href="pmsnew.php">'.\ForkBB\__('PM').(($user['messages_new'] > 0) ? ' (<span'.((empty($this->c->config->o_pms_flasher) || PUN_ACTIVE_PAGE == 'pms_new') ? '' : ' class="remflasher"' ).'>'.$user['messages_new'].'</span>)' : '').'</a></li>';
             }
             // New PMS
@@ -110,12 +127,13 @@ abstract class Page extends Model
                 $nav['admin'] = [$r->link('Admin'), 'Admin'];
             }
 
-            $nav['logout'] = [$r->link('Logout', [
-                'token' => $this->c->Csrf->create('Logout'),
-            ]), 'Logout'];
+            $nav['logout'] = [$r->link('Logout', ['token' => $this->c->Csrf->create('Logout')]), 'Logout'];
         }
 
-        if ($this->user->g_read_board == '1' && $this->c->config->o_additional_navlinks != '') {
+        if (
+            '1' == $this->user->g_read_board
+            && '' != $this->c->config->o_additional_navlinks
+        ) {
             // position|name|link[|id]\n
             if (\preg_match_all('%^(\d+)\|([^\|\n\r]+)\|([^\|\n\r]+)(?:\|([^\|\n\r]+))?%m', $this->c->config->o_additional_navlinks . "\n", $matches)) {
                $k = \count($matches[0]);
@@ -143,11 +161,17 @@ abstract class Page extends Model
      */
     protected function maintenance(): void
     {
-        if ($this->c->config->o_maintenance == '1' && $this->user->isAdmin) {
+        if (
+            '1' == $this->c->config->o_maintenance
+            && $this->user->isAdmin
+        ) {
             $this->fIswev = ['w', \ForkBB\__('Maintenance mode enabled', $this->c->Router->link('AdminMaintenance'))];
         }
 
-        if ($this->user->isAdmMod && $this->user->last_report_id < $this->c->reports->lastId()) {
+        if (
+            $this->user->isAdmMod
+            && $this->user->last_report_id < $this->c->reports->lastId()
+        ) {
             $this->fIswev = ['i', \ForkBB\__('New reports', $this->c->Router->link('AdminReports'))];
         }
     }
@@ -233,7 +257,7 @@ abstract class Page extends Model
         } else {
             $key .= ':';
         }
-        $attr = $this->getAttr('httpHeaders', []);
+        $attr   = $this->getAttr('httpHeaders', []);
         $attr[] = ["{$key} {$value}", $replace];
         $this->setAttr('httpHeaders', $attr);
         return $this;
@@ -304,7 +328,11 @@ abstract class Page extends Model
     {
         $attr = $this->getAttr('fIswev', []);
 
-        if (isset($value[0], $value[1]) && \is_string($value[0]) && \is_string($value[1])) {
+        if (
+            isset($value[0], $value[1])
+            && \is_string($value[0])
+            && \is_string($value[1])
+        ) {
             $attr[$value[0]][] = $value[1];
         } else {
             $attr = \array_merge_recursive($attr, $value); // ???? добавить проверку?
@@ -355,7 +383,10 @@ abstract class Page extends Model
                     $crumb        = $crumb->parent;
                 } while ($crumb instanceof Model && null !== $crumb->parent);
             // ссылка (передана массивом)
-            } elseif (\is_array($crumb) && isset($crumb[0], $crumb[1])) {
+            } elseif (
+                \is_array($crumb)
+                && isset($crumb[0], $crumb[1])
+            ) {
                 $result[]     = [$crumb[0], $crumb[1], $active];
                 $this->titles = $crumb[1];
             // строка

@@ -91,7 +91,10 @@ class Perm extends Action
                 }
             }
 
-            if ($modDef || $modPerm) {
+            if (
+                $modDef
+                || $modPerm
+            ) {
                 $vars = [
                     ':gid' => $id,
                     ':fid' => $forum->id,
@@ -167,7 +170,10 @@ class Perm extends Action
      */
     public function copy(Group $from, Group $to): void
     {
-        if ($from->g_id < 1 || $to->g_id < 1) {
+        if (
+            $from->g_id < 1
+            || $to->g_id < 1
+        ) {
             throw new RuntimeException('The group does not have ID');
         }
 

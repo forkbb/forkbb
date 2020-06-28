@@ -87,7 +87,10 @@ class Refresh extends Action
         $sub = [];
         $all = [];
         foreach ($list as $id => $f) {
-            if ($parent === $id || $parent !== $f['parent_forum_id']) {
+            if (
+                $parent === $id
+                || $parent !== $f['parent_forum_id']
+            ) {
                 continue;
             }
             $sub[] = $id;

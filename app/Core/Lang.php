@@ -45,7 +45,10 @@ class Lang
      */
     public function get(string $message, string $lang = null)
     {
-        if ($lang && isset($this->tr[$lang][$message])) {
+        if (
+            $lang
+            && isset($this->tr[$lang][$message])
+        ) {
             return $this->tr[$lang][$message];
         }
 
@@ -77,7 +80,7 @@ class Lang
         $lang = $lang ?: $this->c->user->language;
         $path = $path ?: $this->c->DIR_LANG;
         do {
-            $flag = true;
+            $flag     = true;
             $fullPath = $path . '/'. $lang . '/' . $name . '.po';
             if (\is_file($fullPath)) {
                 $file = \file_get_contents($fullPath);
@@ -87,7 +90,7 @@ class Lang
                     $this->tr[$lang] = $this->arrayFromStr($file);
                 }
                 $flag = false;
-            } elseif ($lang === 'en') {
+            } elseif ('en' === $lang) {
                 $flag = false;
             }
             $lang = 'en';
@@ -107,14 +110,14 @@ class Lang
      */
     protected function arrayFromStr(string $str): array
     {
-        $lines = \explode("\n", $str);
-        $count = \count($lines);
-        $result = [];
-        $cur = [];
-        $curComm = null;
-        $curVal = '';
+        $lines    = \explode("\n", $str);
+        $count    = \count($lines);
+        $result   = [];
+        $cur      = [];
+        $curComm  = null;
+        $curVal   = '';
         $nplurals = 2;
-        $plural = '($n != 1);';
+        $plural   = '($n != 1);';
 
         for ($i = 0; $i < $count; ++$i) {
             $line = \trim($lines[$i]);
@@ -143,7 +146,10 @@ class Lang
                 // перевод
                 } else {
                     // множественный
-                    if (isset($cur['msgid_plural'][0]) || isset($cur[1][0])) {
+                    if (
+                        isset($cur['msgid_plural'][0])
+                        || isset($cur[1][0])
+                    ) {
                         if (! isset($cur[1][0])) {
                             $cur[1] = $cur['msgid_plural'];
                         }
@@ -162,7 +168,7 @@ class Lang
                         }
 
                         if (isset($curVal)) {
-                            $curVal['plural'] = $plural;
+                            $curVal['plural']      = $plural;
                             $result[$cur['msgid']] = $curVal;
                         }
 
@@ -173,16 +179,16 @@ class Lang
                 }
 
                 $curComm = null;
-                $curVal = '';
-                $cur = [];
+                $curVal  = '';
+                $cur     = [];
                 continue;
 
             // комментарий
-            } elseif ($line[0] == '#') {
+            } elseif ('#' == $line[0]) {
                 continue;
 
             // многострочное содержимое
-            } elseif ($line[0] == '"') {
+            } elseif ('"' == $line[0]) {
                 if (isset($curComm)) {
                     $curVal .= $this->originalLine($line);
                 }
@@ -194,47 +200,47 @@ class Lang
             }
 
             // выделение команды
-            $v = \explode(' ', $line, 2);
+            $v       = \explode(' ', $line, 2);
             $command = $v[0];
-            $v = isset($v[1]) ? $this->originalLine(\trim($v[1])) : '';
+            $v       = isset($v[1]) ? $this->originalLine(\trim($v[1])) : '';
 
             switch ($command) {
                 case 'msgctxt':
                 case 'msgid':
                 case 'msgid_plural':
                     $curComm = $command;
-                    $curVal = $v;
+                    $curVal  = $v;
                     break;
 
                 case 'msgstr':
                 case 'msgstr[0]':
                     $curComm = 0;
-                    $curVal = $v;
+                    $curVal  = $v;
                     break;
 
                 case 'msgstr[1]':
                     $curComm = 1;
-                    $curVal = $v;
+                    $curVal  = $v;
                     break;
 
                 case 'msgstr[2]':
                     $curComm = 2;
-                    $curVal = $v;
+                    $curVal  = $v;
                     break;
 
                 case 'msgstr[3]':
                     $curComm = 3;
-                    $curVal = $v;
+                    $curVal  = $v;
                     break;
 
                 case 'msgstr[4]':
                     $curComm = 4;
-                    $curVal = $v;
+                    $curVal  = $v;
                     break;
 
                 case 'msgstr[5]':
                     $curComm = 5;
-                    $curVal = $v;
+                    $curVal  = $v;
                     break;
 
                 default:
@@ -255,7 +261,11 @@ class Lang
      */
     protected function originalLine(string $line): string
     {
-        if (isset($line[1]) && $line[0] == '"' && $line[\strlen($line) - 1] == '"') {
+        if (
+            isset($line[1])
+            && '"' == $line[0]
+            && '"' == $line[\strlen($line) - 1]
+        ) {
             $line = \substr($line, 1, -1);
         }
         return \str_replace(

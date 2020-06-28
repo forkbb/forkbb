@@ -55,7 +55,7 @@ class Mysql
      */
     public function __construct(DB $db, $prefix)
     {
-        $this->db = $db;
+        $this->db       = $db;
         $this->dbPrefix = $prefix;
     }
 
@@ -81,7 +81,10 @@ class Mysql
      */
     protected function testStr(string $str): void
     {
-        if (! \is_string($str) || \preg_match('%[^a-zA-Z0-9_]%', $str)) {
+        if (
+            ! \is_string($str)
+            || \preg_match('%[^a-zA-Z0-9_]%', $str)
+        ) {
             throw new PDOException("Name '{$str}' have bad characters.");
         }
     }
@@ -154,7 +157,7 @@ class Mysql
     {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         try {
-            $stmt = $this->db->query('SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:table', [':table' => $table]);
+            $stmt   = $this->db->query('SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:table', [':table' => $table]);
             $result = $stmt->fetch();
             $stmt->closeCursor();
         } catch (PDOException $e) {
@@ -176,7 +179,7 @@ class Mysql
     {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         try {
-            $stmt = $this->db->query('SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:table AND COLUMN_NAME = ?s:field', [':table' => $table, ':field' => $field]);
+            $stmt   = $this->db->query('SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:table AND COLUMN_NAME = ?s:field', [':table' => $table, ':field' => $field]);
             $result = $stmt->fetch();
             $stmt->closeCursor();
         } catch (PDOException $e) {
@@ -197,9 +200,9 @@ class Mysql
     public function indexExists(string $table, string $index, bool $noPrefix = false): bool
     {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
-        $index = $index == 'PRIMARY' ? $index : $table . '_' . $index;
+        $index = 'PRIMARY' == $index ? $index : $table . '_' . $index;
         try {
-            $stmt = $this->db->query('SELECT 1 FROM INFORMATION_SCHEMA.STATISTICS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:table AND INDEX_NAME = ?s:index', [':table' => $table, ':index' => $index]);
+            $stmt   = $this->db->query('SELECT 1 FROM INFORMATION_SCHEMA.STATISTICS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:table AND INDEX_NAME = ?s:index', [':table' => $table, ':index' => $index]);
             $result = $stmt->fetch();
             $stmt->closeCursor();
         } catch (PDOException $e) {
@@ -229,7 +232,10 @@ class Mysql
             // сравнение
             if (\preg_match('%^(?:CHAR|VARCHAR|TINYTEXT|TEXT|MEDIUMTEXT|LONGTEXT|ENUM|SET)%i', $data[0])) {
                 $query .= ' CHARACTER SET utf8mb4 COLLATE utf8mb4_';
-                if (isset($data[3]) && \is_string($data[3])) {
+                if (
+                    isset($data[3])
+                    && \is_string($data[3])
+                ) {
                     $this->testStr($data[3]);
                     $query .= $data[3];
                 } else {
@@ -287,7 +293,7 @@ class Mysql
         }
         $this->testStr($engine);
         $query = \rtrim($query, ', ') . ") ENGINE={$engine} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
-        return $this->db->exec($query) !== false;
+        return false !== $this->db->exec($query);
     }
 
     /**
@@ -302,7 +308,7 @@ class Mysql
     {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $this->testStr($table);
-        return $this->db->exec("DROP TABLE IF EXISTS `{$table}`") !== false;
+        return false !== $this->db->exec("DROP TABLE IF EXISTS `{$table}`");
     }
 
     /**
@@ -316,14 +322,17 @@ class Mysql
      */
     public function renameTable(string $old, string $new, bool $noPrefix = false): bool
     {
-        if ($this->tableExists($new, $noPrefix) && ! $this->tableExists($old, $noPrefix)) {
+        if (
+            $this->tableExists($new, $noPrefix)
+            && ! $this->tableExists($old, $noPrefix)
+        ) {
             return true;
         }
         $old = ($noPrefix ? '' : $this->dbPrefix) . $old;
         $this->testStr($old);
         $new = ($noPrefix ? '' : $this->dbPrefix) . $new;
         $this->testStr($new);
-        return $this->db->exec("ALTER TABLE `{$old}` RENAME TO `{$new}`") !== false;
+        return false !== $this->db->exec("ALTER TABLE `{$old}` RENAME TO `{$new}`");
     }
 
     /**
@@ -358,7 +367,7 @@ class Mysql
             $this->testStr($after);
             $query .= " AFTER `{$after}`";
         }
-        return $this->db->exec($query) !== false;
+        return false !== $this->db->exec($query);
     }
 
     /**
@@ -390,7 +399,7 @@ class Mysql
             $this->testStr($after);
             $query .= " AFTER `{$after}`";
         }
-        return $this->db->exec($query) !== false;
+        return false !== $this->db->exec($query);
     }
 
     /**
@@ -410,7 +419,7 @@ class Mysql
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $this->testStr($table);
         $this->testStr($field);
-        return $this->db->exec("ALTER TABLE `{$table}` DROP COLUMN `{$field}`") !== false;
+        return false !== $this->db->exec("ALTER TABLE `{$table}` DROP COLUMN `{$field}`");
     }
 
     /**
@@ -432,7 +441,7 @@ class Mysql
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $this->testStr($table);
         $query = "ALTER TABLE `{$table}` ADD ";
-        if ($index == 'PRIMARY') {
+        if ('PRIMARY' == $index) {
             $query .= 'PRIMARY KEY';
         } else {
             $index = $table . '_' . $index;
@@ -444,7 +453,7 @@ class Mysql
             }
         }
         $query .= ' (' . $this->replIdxs($fields) . ')';
-        return $this->db->exec($query) !== false;
+        return false !== $this->db->exec($query);
     }
 
     /**
@@ -464,14 +473,14 @@ class Mysql
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $this->testStr($table);
         $query = "ALTER TABLE `{$table}` ";
-        if ($index == 'PRIMARY') {
+        if ('PRIMARY' == $index) {
             $query .= "DROP PRIMARY KEY";
         } else {
             $index = $table . '_' . $index;
             $this->testStr($index);
             $query .= "DROP INDEX `{$index}`";
         }
-        return $this->db->exec($query) !== false;
+        return false !== $this->db->exec($query);
     }
 
     /**
@@ -486,7 +495,7 @@ class Mysql
     {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $this->testStr($table);
-        return $this->db->exec("TRUNCATE TABLE `{$table}`") !== false;
+        return false !== $this->db->exec("TRUNCATE TABLE `{$table}`");
     }
 
     /**
@@ -497,10 +506,10 @@ class Mysql
     public function statistics(): array
     {
         $this->testStr($this->dbPrefix);
-        $prefix = str_replace('_', '\\_', $this->dbPrefix);
-        $stmt = $this->db->query("SHOW TABLE STATUS LIKE '{$prefix}%'");
+        $prefix  = str_replace('_', '\\_', $this->dbPrefix);
+        $stmt    = $this->db->query("SHOW TABLE STATUS LIKE '{$prefix}%'");
         $records = $size = 0;
-        $engine = [];
+        $engine  = [];
         while ($row = $stmt->fetch()) {
             $records += $row['Rows'];
             $size += $row['Data_length'] + $row['Index_length'];

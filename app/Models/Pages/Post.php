@@ -24,7 +24,11 @@ class Post extends Page
     {
         $forum = $this->c->forums->get((int) $args['id']);
 
-        if (empty($forum) || $forum->redirect_url || ! $forum->canCreateTopic) {
+        if (
+            empty($forum)
+            || $forum->redirect_url
+            || ! $forum->canCreateTopic
+        ) {
             return $this->c->Message->message('Bad request');
         }
 
@@ -33,14 +37,20 @@ class Post extends Page
         if ('POST' === $method) {
             $v = $this->messageValidator($forum, 'NewTopic', $args, false, true);
 
-            if ($v->validation($_POST) && null === $v->preview) {
+            if (
+                $v->validation($_POST)
+                && null === $v->preview
+            ) {
                 return $this->endPost($forum, $v);
             }
 
             $this->fIswev  = $v->getErrors();
             $args['_vars'] = $v->getData(); //????
 
-            if (null !== $v->preview && ! $v->getErrors()) {
+            if (
+                null !== $v->preview
+                && ! $v->getErrors()
+            ) {
                 $this->previewHtml = $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies);
             }
         }
@@ -68,7 +78,11 @@ class Post extends Page
     {
         $topic = $this->c->topics->load((int) $args['id']);
 
-        if (empty($topic) || $topic->moved_to || ! $topic->canReply) {
+        if (
+            empty($topic)
+            || $topic->moved_to
+            || ! $topic->canReply
+        ) {
             return $this->c->Message->message('Bad request');
         }
 
@@ -77,14 +91,20 @@ class Post extends Page
         if ('POST' === $method) {
             $v = $this->messageValidator($topic, 'NewReply', $args);
 
-            if ($v->validation($_POST) && null === $v->preview) {
+            if (
+                $v->validation($_POST)
+                && null === $v->preview
+            ) {
                 return $this->endPost($topic, $v);
             }
 
             $this->fIswev  = $v->getErrors();
             $args['_vars'] = $v->getData(); //????
 
-            if (null !== $v->preview && ! $v->getErrors()) {
+            if (
+                null !== $v->preview
+                && ! $v->getErrors()
+            ) {
                 $this->previewHtml = $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies);
             }
         } elseif (isset($args['quote'])) {
@@ -134,13 +154,17 @@ class Post extends Page
             $forum       = $model->parent;
             $topic       = $model;
 
-            if (! $this->user->isGuest && $topic->last_poster_id === $this->user->id) {
+            if (
+                ! $this->user->isGuest
+                && $topic->last_poster_id === $this->user->id
+            ) {
                 if ($executive) {
                     if ($v->merge_post) {
                         $merge = true;
                     }
                 } else {
-                    if ($this->c->config->o_merge_timeout > 0 // ???? стоит завязать на время редактирование сообщений?
+                    if (
+                        $this->c->config->o_merge_timeout > 0 // ???? стоит завязать на время редактирование сообщений?
                         && $now - $topic->last_post < $this->c->config->o_merge_timeout
                     ) {
                         $merge = true;
@@ -216,11 +240,17 @@ class Post extends Page
         $this->c->forums->update($forum->calcStat());
 
         // обновление данных текущего пользователя
-        if (! $merge && ! $this->user->isGuest) {
-            if ($forum->no_sum_mess != '1') {
+        if (
+            ! $merge
+            && ! $this->user->isGuest
+        ) {
+            if ('1' != $forum->no_sum_mess) {
                 $this->user->num_posts = $this->user->num_posts + 1;
 
-                if (0 != $this->user->g_promote_next_group && $this->user->num_posts >= $this->user->g_promote_min_posts) {
+                if (
+                    0 != $this->user->g_promote_next_group
+                    && $this->user->num_posts >= $this->user->g_promote_min_posts
+                ) {
                     $this->user->group_id = $this->user->g_promote_next_group;
                 }
             }

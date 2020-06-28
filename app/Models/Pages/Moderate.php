@@ -67,7 +67,13 @@ class Moderate extends Page
 
                 $indent = \str_repeat(\ForkBB\__('Forum indent'), $f->depth);
 
-                if ($f->redirect_url || ($noUseCurForum && $f->id === $curForum)) {
+                if (
+                    $f->redirect_url
+                    || (
+                        $noUseCurForum
+                        && $f->id === $curForum
+                    )
+                ) {
                     $options[] = [$f->id, $indent . \ForkBB\__('Forum prefix') . $f->forum_name, true];
                 } else {
                     $options[] = [$f->id, $indent . \ForkBB\__('Forum prefix') . $f->forum_name];
@@ -99,10 +105,14 @@ class Moderate extends Page
                 }
             }
             // нажата не одна кнопка или недоступная кнопка
-            if (1 !== $sum || ! ($type & $this->actions[$action])) {
+            if (
+                1 !== $sum
+                || ! ($type & $this->actions[$action])
+            ) {
                 $v->addError('Action not available');
             // не выбрано ни одного сообщения для действий прямо этого требующих
-            } elseif ($v->topic
+            } elseif (
+                $v->topic
                 && 1 === \count($v->ids)
                 && ! ((self::TOTOPIC + self::IFTOTPC) & $this->actions[$action])
             ) {
@@ -110,17 +120,30 @@ class Moderate extends Page
             }
 
             // объединение тем
-            if ('merge' === $action && \count($v->ids) < 2) {
+            if (
+                'merge' === $action
+                && \count($v->ids) < 2
+            ) {
                 $v->addError('Not enough topics selected');
             // перенос тем или разделение постов
-            } elseif ('move' === $action || 'split' === $action) {
+            } elseif (
+                'move' === $action
+                || 'split' === $action
+            ) {
                 $this->calcList($v->forum, 'move' === $action);
 
                 if (empty($this->listOfIndexes)) {
                     $v->addError('Nowhere to move');
-                } elseif (1 === $v->confirm && ! \in_array($v->destination, $this->listOfIndexes)) {
+                } elseif (
+                    1 === $v->confirm
+                    && ! \in_array($v->destination, $this->listOfIndexes)
+                ) {
                     $v->addError('Invalid destination');
-                } elseif ('split' === $action && 1 === $v->confirm && '' == $v->subject) {
+                } elseif (
+                    'split' === $action
+                    && 1 === $v->confirm
+                    && '' == $v->subject
+                ) {
                     $v->addError('No subject');
                 }
             }
@@ -178,7 +201,10 @@ class Moderate extends Page
         $this->curForum = $this->c->forums->loadTree($v->forum);
         if (! $this->curForum instanceof Forum) {
             return $this->c->Message->message('Bad request');
-        } elseif (! $this->user->isAdmin && ! $this->user->isModerator($this->curForum)) {
+        } elseif (
+            ! $this->user->isAdmin
+            && ! $this->user->isModerator($this->curForum)
+        ) {
             return $this->c->Message->message('No permission', true, 403);
         }
 
@@ -186,7 +212,10 @@ class Moderate extends Page
 
         if ($v->topic) {
             $this->curTopic = $this->c->topics->load($v->topic);
-            if (! $this->curTopic instanceof Topic || $this->curTopic->parent !== $this->curForum) {
+            if (
+                ! $this->curTopic instanceof Topic
+                || $this->curTopic->parent !== $this->curForum
+            ) {
                 return $this->c->Message->message('Bad request');
             }
 
@@ -197,14 +226,20 @@ class Moderate extends Page
             if (self::TOTOPIC & $curType) {
                 $objects = [$this->curTopic];
             } elseif (self::IFTOTPC & $curType) {
-                if (1 === \count($ids) && \reset($ids) === $firstId) {
+                if (
+                    1 === \count($ids)
+                    && \reset($ids) === $firstId
+                ) {
                     $objects = [$this->curTopic];
                 }
             }
             if (null === $objects) {
                 $objects = $this->c->posts->loadByIds(\array_diff($ids, [$firstId]), false);
                 foreach ($objects as $post) {
-                    if (! $post instanceof Post || $post->parent !== $this->curTopic) {
+                    if (
+                        ! $post instanceof Post
+                        || $post->parent !== $this->curTopic
+                    ) {
                         return $this->c->Message->message('Bad request');
                     }
                 }
@@ -219,7 +254,10 @@ class Moderate extends Page
         } else {
             $objects = $this->c->topics->loadByIds($v->ids, false);
             foreach ($objects as $topic) {
-                if (! $topic instanceof Topic || $topic->parent !== $this->curForum) {
+                if (
+                    ! $topic instanceof Topic
+                    || $topic->parent !== $this->curForum
+                ) {
                     return $this->c->Message->message('Bad request');
                 }
             }
@@ -289,8 +327,15 @@ class Moderate extends Page
     {
         if (! $this->user->isAdmin) { //???? разобраться с правами на удаление
             foreach ($objects as $object) {
-                if (($object instanceof Topic && isset($this->c->admins->list[$object->poster_id]))
-                    || ($object instanceof Post && ! $object->canDelete)
+                if (
+                    (
+                        $object instanceof Topic
+                        && isset($this->c->admins->list[$object->poster_id])
+                    )
+                    || (
+                        $object instanceof Post
+                        && ! $object->canDelete
+                    )
                 ) {
                     return $this->c->Message->message('No permission', true, 403); //???? причина
                 }
@@ -354,7 +399,8 @@ class Moderate extends Page
             if ($topic->moved_to) {
                 return $this->c->Message->message('Topic links cannot be merged');
             }
-            if (! $this->firstTopic instanceof Topic
+            if (
+                ! $this->firstTopic instanceof Topic
                 || $topic->first_post_id < $this->firstTopic->first_post_id
             ) {
                 $this->firstTopic = $topic;

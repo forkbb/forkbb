@@ -31,7 +31,7 @@ class Install
     public function routing(): Page
     {
         $uri = $_SERVER['REQUEST_URI'];
-        if (($pos = \strpos($uri, '?')) !== false) {
+        if (false !== ($pos = \strpos($uri, '?'))) {
             $uri = \substr($uri, 0, $pos);
         }
         $uri = \rawurldecode($uri);
@@ -45,7 +45,7 @@ class Install
         $method = $_SERVER['REQUEST_METHOD'];
 
         $route = $r->route($method, $uri);
-        $page = null;
+        $page  = null;
         switch ($route[0]) {
             case $r::OK:
                 // ... 200 OK

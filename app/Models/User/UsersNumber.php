@@ -16,7 +16,10 @@ class UsersNumber extends Action
      */
     public function usersNumber(Group $group): int
     {
-        if (empty($group->g_id) || $group->g_id === $this->c->GROUP_GUEST) {
+        if (
+            empty($group->g_id)
+            || $group->g_id === $this->c->GROUP_GUEST
+        ) {
             return 0;
         }
 

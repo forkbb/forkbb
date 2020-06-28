@@ -28,7 +28,10 @@ class Filter extends Action
             if (! isset($fields[$field])) {
                 throw new InvalidArgumentException("The '{$field}' field is not found");
             }
-            if ('ASC' !== $dir && 'DESC' !== $dir) {
+            if (
+                'ASC' !== $dir
+                && 'DESC' !== $dir
+            ) {
                 throw new InvalidArgumentException('The sort direction is not defined');
             }
             $orderBy[] = "u.{$field} {$dir}";

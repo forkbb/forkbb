@@ -35,7 +35,7 @@ class Load extends Action
             return null;
         }
 
-        $report  = $this->manager->create($data);
+        $report = $this->manager->create($data);
 
         return $report;
     }
@@ -50,7 +50,7 @@ class Load extends Action
     public function loadList(bool $noZapped): array
     {
         $result = [];
-        $vars = [];
+        $vars   = [];
 
         if ($noZapped) {
             $sql = 'SELECT r.*

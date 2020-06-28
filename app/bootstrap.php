@@ -31,7 +31,10 @@ require __DIR__ . '/functions.php';
 \ForkBB\_init($c);
 
 // https or http?
-if (! empty($_SERVER['HTTPS']) && \strtolower($_SERVER['HTTPS']) !== 'off') {
+if (
+    ! empty($_SERVER['HTTPS'])
+    && 'off' !== \strtolower($_SERVER['HTTPS'])
+) {
     $c->BASE_URL = \str_replace('http://', 'https://', $c->BASE_URL);
 } else {
     $c->BASE_URL = \str_replace('https://', 'http://', $c->BASE_URL);
@@ -68,7 +71,10 @@ if ($c->isInit('DB')) {
     $c->DB->commit();
 }
 
-if (null !== $tpl && $c->DEBUG > 0) {
+if (
+    null !== $tpl
+    && $c->DEBUG > 0
+) {
     $debug = $c->View->rendering($c->Debug->debug());
     $tpl = \str_replace('<!-- debuginfo -->', $debug, $tpl);
 }

@@ -105,14 +105,17 @@ class Topic extends Page
      */
     protected function view(string $type, array $args): Page
     {
-        if ($type === 'post') {
+        if ('post' === $type) {
             $post  = $this->c->posts->load((int) $args['id']);
             $topic = null === $post ? null : $post->parent;
         } else {
             $topic = $this->c->topics->load((int) $args['id']);
         }
 
-        if (! $topic instanceof TopicModel || ! $topic->last_post_id) {
+        if (
+            ! $topic instanceof TopicModel
+            || ! $topic->last_post_id
+        ) {
             return $this->c->Message->message('Bad request');
         }
 
@@ -151,11 +154,17 @@ class Topic extends Page
         $this->online       = $this->c->Online->calc($this)->info();
         $this->stats        = null;
 
-        if ($topic->canReply && $this->c->config->o_quickpost == '1') {
+        if (
+            $topic->canReply
+            && '1' == $this->c->config->o_quickpost
+        ) {
             $this->form     = $this->messageForm(['id' => $topic->id], $topic, 'NewReply', false, false, true);
         }
 
-        if ($this->user->isAdmin || $this->user->isModerator($topic)) {
+        if (
+            $this->user->isAdmin
+            || $this->user->isModerator($topic)
+        ) {
             $this->c->Lang->load('misc');
 
             $this->enableMod = true;

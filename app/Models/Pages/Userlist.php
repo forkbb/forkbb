@@ -57,7 +57,10 @@ class Userlist extends Page
                    + (int) (null === $v->group)
                    + (int) (null === $v->name);
 
-            if (0 === $count || 4 === $count) {
+            if (
+                0 === $count
+                || 4 === $count
+            ) {
                 $error = false;
             }
         }
@@ -114,7 +117,10 @@ class Userlist extends Page
                     $vars['dir'] = $dir;
                     $links[$i * 2 + $j] = $this->c->Router->link('Userlist', $vars);
 
-                    if ($v->sort === $sort && $v->dir === $dir) {
+                    if (
+                        $v->sort === $sort
+                        && $v->dir === $dir
+                    ) {
                         $this->activeLink = $i * 2 + $j;
                     }
                 }

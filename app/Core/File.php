@@ -152,7 +152,10 @@ class File
 
         if ('*' === $matches[3]) {
             $matches[3] = $this->ext;
-        } elseif ('(' === $matches[3][0] && ')' === $matches[3][\strlen($matches[3]) - 1]) {
+        } elseif (
+            '(' === $matches[3][0]
+            && ')' === $matches[3][\strlen($matches[3]) - 1]
+        ) {
             $matches[3] = \explode('|', \substr($matches[3], 1, -1));
 
             if (1 === \count($matches[3])) {
@@ -254,7 +257,10 @@ class File
     {
         $info = $this->pathinfo($path);
 
-        if (null === $info || ! $this->dirProc($info['dirname'])) {
+        if (
+            null === $info
+            || ! $this->dirProc($info['dirname'])
+        ) {
             return false;
         }
 
@@ -265,7 +271,10 @@ class File
                 ++$i;
                 $info['filename'] = $old . '_' . $i;
             }
-        } elseif (! $this->rewrite && \file_exists($info['dirname'] . $info['filename'] . '.' . $info['extension'])) {
+        } elseif (
+            ! $this->rewrite
+            && \file_exists($info['dirname'] . $info['filename'] . '.' . $info['extension'])
+        ) {
             $this->error = 'Such file already exists';
             return false;
         }

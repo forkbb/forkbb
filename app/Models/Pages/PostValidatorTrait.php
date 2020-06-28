@@ -18,10 +18,11 @@ trait PostValidatorTrait
     public function vCheckSubject(Validator $v, $subject, $attr, $executive)
     {
         // после цензуры заголовок темы путой
-        if (\ForkBB\cens($subject) == '') {
+        if ('' == \ForkBB\cens($subject)) {
             $v->addError('No subject after censoring');
         // заголовок темы только заглавными буквами
-        } elseif (! $executive
+        } elseif (
+            ! $executive
             && '0' == $this->c->config->p_subject_all_caps
             && \preg_match('%\p{Lu}%u', $subject)
             && ! \preg_match('%\p{Ll}%u', $subject)
@@ -42,10 +43,11 @@ trait PostValidatorTrait
     public function vCheckMessage(Validator $v, $message, $attr, $executive)
     {
         // после цензуры текст сообщения пустой
-        if (\ForkBB\cens($message) == '') {
+        if ('' == \ForkBB\cens($message)) {
             $v->addError('No message after censoring');
         // текст сообщения только заглавными буквами
-        } elseif (! $executive
+        } elseif (
+            ! $executive
             && '0' == $this->c->config->p_message_all_caps
             && \preg_match('%\p{Lu}%u', $message)
             && ! \preg_match('%\p{Ll}%u', $message)
@@ -107,7 +109,10 @@ trait PostValidatorTrait
             $ruleUsername = 'absent';
         }
 
-        if ($this->user->isAdmin || $this->user->isModerator($model)) {
+        if (
+            $this->user->isAdmin
+            || $this->user->isModerator($model)
+        ) {
             if ($editSubject) {
                 $ruleStickTopic = 'checkbox';
                 $ruleStickFP    = 'checkbox';
@@ -115,12 +120,19 @@ trait PostValidatorTrait
                 $ruleStickTopic = 'absent';
                 $ruleStickFP    = 'absent';
             }
-            if (! $editSubject && ! $editPost) {
+            if (
+                ! $editSubject
+                && ! $editPost
+            ) {
                 $ruleMergePost  = 'checkbox';
             } else {
                 $ruleMergePost  = 'absent';
             }
-            if ($editPost && ! $model->user->isGuest && ! $model->user->isAdmin) {
+            if (
+                $editPost
+                && ! $model->user->isGuest
+                && ! $model->user->isAdmin
+            ) {
                 $ruleEditPost   = 'checkbox';
             } else {
                 $ruleEditPost   = 'absent';

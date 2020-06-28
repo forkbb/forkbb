@@ -74,11 +74,20 @@ class Result extends Users
             ]);
 
             if ($v->validation($_POST)) {
-                if (! empty($v->ban) && $this->c->userRules->banUsers) {
+                if (
+                    ! empty($v->ban)
+                    && $this->c->userRules->banUsers
+                ) {
                     $action = self::ACTION_BAN;
-                } elseif (! empty($v->delete) && $this->c->userRules->deleteUsers) {
+                } elseif (
+                    ! empty($v->delete)
+                    && $this->c->userRules->deleteUsers
+                ) {
                     $action = self::ACTION_DEL;
-                } elseif (! empty($v->change_group) && $this->c->userRules->changeGroup) {
+                } elseif (
+                    ! empty($v->change_group)
+                    && $this->c->userRules->changeGroup
+                ) {
                     $action = self::ACTION_CHG;
                 } else {
                     $this->fIswev = ['v', \ForkBB\__('Action not available')];
@@ -174,7 +183,11 @@ class Result extends Users
         }
 
         foreach ($data as $field => $value) {
-            if ('order_by' === $field || 'direction' === $field || 'user_group' === $field) {
+            if (
+                'order_by' === $field
+                || 'direction' === $field
+                || 'user_group' === $field
+            ) {
                 continue;
             }
 

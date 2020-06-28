@@ -96,10 +96,14 @@ class Func
     public function getFoldersWithFile(string $dir, string $file): array
     {
         $result = [];
-        if (\is_dir($dir) && ($dh = \opendir($dir)) !== false) {
-            while (($entry = \readdir($dh)) !== false) {
-                if (isset($entry[0])
-                    && $entry[0] !== '.'
+        if (
+            \is_dir($dir)
+            && false !== ($dh = \opendir($dir))
+        ) {
+            while (false !== ($entry = \readdir($dh))) {
+                if (
+                    isset($entry[0])
+                    && '.' !== $entry[0]
                     && \is_dir("{$dir}/{$entry}")
                     && \is_file("{$dir}/{$entry}/{$file}")
                 ) {
@@ -131,13 +135,13 @@ class Func
         } else {
             if ($cur > 0) {
                 $pages[] = [\ForkBB\__($info, $cur, $all), 'info', null];
-                $cur = \min(\max(1, $cur), $all);
+                $cur     = \min(\max(1, $cur), $all);
                 if ($cur > 1) {
                     $pages[] = [$this->c->Router->link($marker, ['page' => $cur - 1] + $args), 'prev', null];
                 }
-                $tpl = [1 => 1];
+                $tpl   = [1 => 1];
                 $start = $cur < 6 ? 2 : $cur - 2;
-                $end = $all - $cur < 5 ? $all : $cur + 3;
+                $end   = $all - $cur < 5 ? $all : $cur + 3;
                 for ($i = $start; $i < $end; ++$i) {
                     $tpl[$i] = $i;
                 }
@@ -159,7 +163,10 @@ class Func
                 }
                 $k = $i;
             }
-            if ($cur > 0 && $cur < $all) {
+            if (
+                $cur > 0
+                && $cur < $all
+            ) {
                 $pages[] = [$this->c->Router->link($marker, ['page' => $cur + 1] + $args), 'next', null];
             }
         }
@@ -179,9 +186,14 @@ class Func
 
         foreach (\explode(',', $str) as $step) {
             $dsr = \explode(';', $step, 2);
-            if (isset($dsr[1])) {
+            if (
+                isset($dsr[1])) {
                 $q = \trim(\ltrim(\ltrim($dsr[1], 'q '), '='));
-                if (! \is_numeric($q) || $q < 0 || $q > 1) {
+                if (
+                    ! \is_numeric($q)
+                    || $q < 0
+                    || $q > 1
+                ) {
                     continue;
                 }
                 $q = (float) $q;

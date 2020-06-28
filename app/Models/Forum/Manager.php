@@ -48,7 +48,10 @@ class Manager extends ManagerModel
             $list = $this->refresh($group);
         } else {
             $result = $this->c->Cache->get('forums_' . $gid);
-            if (empty($result['time']) || $result['time'] < $mark) {
+            if (
+                empty($result['time'])
+                || $result['time'] < $mark
+            ) {
                 $list = $this->refresh($group);
             } else {
                 $list = $result['list'];

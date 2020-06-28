@@ -34,9 +34,9 @@ class Routing
      */
     public function routing(): Page
     {
-        $user = $this->c->user;
+        $user   = $this->c->user;
         $config = $this->c->config;
-        $r = $this->c->Router;
+        $r      = $this->c->Router;
 
         // регистрация/вход/выход
         if ($user->isGuest) {
@@ -68,7 +68,13 @@ class Routing
             $r->add(self::GET, '/index.php',  'Redirect:toIndex');
             $r->add(self::GET, '/index.html', 'Redirect:toIndex');
             // правила
-            if ('1' == $config->o_rules && (! $user->isGuest || '1' == $config->o_regs_allow)) {
+            if (
+                '1' == $config->o_rules
+                && (
+                    ! $user->isGuest
+                    || '1' == $config->o_regs_allow
+                )
+            ) {
                 $r->add(self::GET, '/rules', 'Rules:view', 'Rules');
             }
             // поиск
@@ -125,7 +131,10 @@ class Routing
             $r->add(self::DUO, '/post/{id:[1-9]\d*}/edit',   'Edit:edit',      'EditPost'  );
             $r->add(self::DUO, '/post/{id:[1-9]\d*}/delete', 'Delete:delete',  'DeletePost');
             // сигналы (репорты)
-            if (! $user->isAdmin && ! $user->isGuest) { // ????
+            if (
+                ! $user->isAdmin
+                && ! $user->isGuest
+            ) { // ????
                 $r->add(self::DUO, '/post/{id:[1-9]\d*}/report', 'Report:report', 'ReportPost');
             }
 
@@ -158,7 +167,11 @@ class Routing
                 $r->add(self::GET, '/admin/bans/delete/{id:[1-9]\d*}/{token}[/{uid:[2-9]|[1-9]\d+}]', 'AdminBans:delete', 'AdminBansDelete');
             }
 
-            if ($user->isAdmin || $config->o_report_method == '0' || $config->o_report_method == '2') {
+            if (
+                $user->isAdmin
+                || '0' == $config->o_report_method
+                || '2' == $config->o_report_method
+            ) {
                 $r->add(self::GET, '/admin/reports',                           'AdminReports:view', 'AdminReports');
                 $r->add(self::GET, '/admin/reports/zap/{id:[1-9]\d*}/{token}', 'AdminReports:zap',  'AdminReportsZap');
             }
@@ -190,14 +203,14 @@ class Routing
         }
 
         $uri = $_SERVER['REQUEST_URI'];
-        if (($pos = \strpos($uri, '?')) !== false) {
+        if (false !== ($pos = \strpos($uri, '?'))) {
             $uri = \substr($uri, 0, $pos);
         }
         $uri    = \rawurldecode($uri);
         $method = $_SERVER['REQUEST_METHOD'];
 
         $route = $r->route($method, $uri);
-        $page = null;
+        $page  = null;
         switch ($route[0]) {
             case $r::OK:
                 // ... 200 OK
@@ -206,7 +219,10 @@ class Routing
                 break;
             case $r::NOT_FOUND:
                 // ... 404 Not Found
-                if ($user->g_read_board != '1' && $user->isGuest) {
+                if (
+                    '1' != $user->g_read_board
+                    && $user->isGuest
+                ) {
                     $page = $this->c->Redirect->page('Login');
                 } else {
                     $page = $this->c->Message->message('Bad request');

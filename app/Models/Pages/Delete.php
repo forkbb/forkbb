@@ -19,7 +19,10 @@ class Delete extends Page
     {
         $post = $this->c->posts->load((int) $args['id']);
 
-        if (empty($post) || ! $post->canDelete) {
+        if (
+            empty($post)
+            || ! $post->canDelete
+        ) {
             return $this->c->Message->message('Bad request');
         }
 
@@ -28,7 +31,7 @@ class Delete extends Page
 
         $this->c->Lang->load('delete');
 
-        if ($method === 'POST') {
+        if ('POST' === $method) {
             $v = $this->c->Validator->reset()
                 ->addRules([
                     'token'   => 'token:DeletePost',
@@ -39,7 +42,10 @@ class Delete extends Page
                     'token' => $args,
                 ]);
 
-            if (! $v->validation($_POST) || $v->confirm !== 1) {
+            if (
+                ! $v->validation($_POST)
+                || 1 !== $v->confirm
+            ) {
                 return $this->c->Redirect->page('ViewPost', $args)->message('No confirm redirect');
             }
 

@@ -32,13 +32,19 @@ class View extends Action
             throw new InvalidArgumentException('Expected Forum or Search');
         }
 
-        if (empty($arg->idsList) || ! \is_array($arg->idsList)) {
+        if (
+            empty($arg->idsList)
+            || ! \is_array($arg->idsList)
+        ) {
             throw new RuntimeException('Model does not contain of topics list for display');
         }
 
         $result = $this->c->topics->loadByIds($arg->idsList, $full);
 
-        if (! $this->c->user->isGuest && '1' == $this->c->config->o_show_dot) {
+        if (
+            ! $this->c->user->isGuest
+            && '1' == $this->c->config->o_show_dot
+        ) {
             $vars = [
                 ':uid' => $this->c->user->id,
                 ':ids' => $arg->idsList,
@@ -50,7 +56,10 @@ class View extends Action
             $dots = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
             foreach ($dots as $id) {
-                if (isset($result[$id]) && $result[$id] instanceof Topic) {
+                if (
+                    isset($result[$id])
+                    && $result[$id] instanceof Topic
+                ) {
                     $result[$id]->__dot = true;
                 }
             }

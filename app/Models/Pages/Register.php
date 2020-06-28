@@ -39,7 +39,10 @@ class Register extends Page
             ]);
 
         // завершение регистрации
-        if ($v->validation($_POST) && 1 === $v->on) {
+        if (
+            $v->validation($_POST)
+            && 1 === $v->on
+        ) {
             return $this->regEnd($v);
         }
 
@@ -159,7 +162,10 @@ class Register extends Page
         $newUserId = $this->c->users->insert($user);
 
         // уведомление о регистрации
-        if ('1' == $this->c->config->o_regs_report && '' != $this->c->config->o_mailing_list) {
+        if (
+            '1' == $this->c->config->o_regs_report
+            && '' != $this->c->config->o_mailing_list
+        ) {
             $tplData = [
                 'fTitle' => $this->c->config->o_board_title,
                 'fRootLink' => $this->c->Router->link('Index'),
@@ -235,7 +241,8 @@ class Register extends Page
      */
     public function activate(array $args): Page
     {
-        if (! \hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['key']))
+        if (
+            ! \hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['key']))
             || ! ($user = $this->c->users->load((int) $args['id'])) instanceof User
             || $user->isGuest
             || empty($user->activate_string)

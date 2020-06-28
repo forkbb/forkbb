@@ -42,7 +42,7 @@ class Model extends ParentModel
     public function trimToNull($val, bool $toLower = false): ?string
     {
         $val = \trim($val);
-        if ($val == '') {
+        if ('' == $val) {
             return null;
         } elseif ($toLower) {
             return \mb_strtolower($val, 'UTF-8');

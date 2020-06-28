@@ -45,7 +45,10 @@ class Username extends Validators
             } elseif ($this->c->bans->isBanned($user) > 0) {
                 $v->addError('Banned username');
             // есть пользователь с похожим именем
-            } elseif (empty($v->getErrors()) && ! $this->c->users->isUniqueName($user)) { // ???? как вычислить похожее?
+            } elseif (
+                empty($v->getErrors())
+                && ! $this->c->users->isUniqueName($user) // ???? как вычислить похожее?
+            ) {
                 $v->addError('Username not unique');
             }
         }

@@ -180,7 +180,10 @@ class Maintenance extends Admin
      */
     public function vCheckMessage(Validator $v, $value)
     {
-        if (1 === $v->o_maintenance && 0 === strlen($value)) {
+        if (
+            1 === $v->o_maintenance
+            && 0 === \strlen($value)
+        ) {
             $value = \ForkBB\__('Default maintenance message');
         }
         return $value;
@@ -211,8 +214,15 @@ class Maintenance extends Admin
             ])->addMessages([
             ]);
 
-        if (('POST' === $method && ! $v->validation($_POST))
-            || ('POST' !== $method && ! $v->validation($args))
+        if (
+            (
+                'POST' === $method
+                && ! $v->validation($_POST)
+            )
+            || (
+                'POST' !== $method
+                && ! $v->validation($args)
+            )
         ) {
             $this->fIswev = $v->getErrors();
             return $this->view([], 'GET');
@@ -220,7 +230,10 @@ class Maintenance extends Admin
 
         @\set_time_limit(0);
 
-        if ('POST' === $method && $v->clear) {
+        if (
+            'POST' === $method
+            && $v->clear
+        ) {
             $this->c->search->truncateIndex();
         }
 

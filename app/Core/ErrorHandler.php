@@ -150,7 +150,10 @@ class ErrorHandler
             }
         }
 
-        if (isset($this->error['type']) && ! $this->logged) {
+        if (
+            isset($this->error['type'])
+            && ! $this->logged
+        ) {
             $this->log($this->error);
         }
 
@@ -205,11 +208,15 @@ EOT;
         if (1 == \ini_get('display_errors')) {
             echo '<p>' . $this->e($this->message($error)) . '</p>';
 
-            if (isset($error['trace']) && \is_array($error['trace'])) {
+            if (
+                isset($error['trace'])
+                && \is_array($error['trace'])
+            ) {
                 echo '<div><p>Trace:</p><ol>';
 
                 foreach ($error['trace'] as $cur) {
-                    if (isset($cur['file'], $cur['line'], $error['file'], $error['line'])
+                    if (
+                        isset($cur['file'], $cur['line'], $error['file'], $error['line'])
                         && $error['line'] === $cur['line']
                         && $error['file'] === $cur['file']
                     ) {
@@ -223,7 +230,10 @@ EOT;
                     }
                     $line .= ($cur['function'] ?? 'unknown') . '(';
 
-                    if (! empty($cur['args']) && \is_array($cur['args'])) {
+                    if (
+                        ! empty($cur['args'])
+                        && \is_array($cur['args'])
+                    ) {
                         $comma = '';
 
                         foreach($cur['args'] as $arg) {

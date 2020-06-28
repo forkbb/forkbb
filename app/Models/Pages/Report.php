@@ -50,7 +50,10 @@ class Report extends Page
             ])->addMessages([
             ]);
 
-            if ($v->validation($_POST) && 0 === $floodSize) {
+            if (
+                $v->validation($_POST)
+                && 0 === $floodSize
+            ) {
                 $report = $this->c->reports->create();
 
                 $report->author = $this->user;

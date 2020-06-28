@@ -22,7 +22,10 @@ class Mod extends Profile
      */
     public function moderation(array $args, string $method): Page
     {
-        if (false === $this->initProfile($args['id']) || ! $this->rules->confModer) {
+        if (
+            false === $this->initProfile($args['id'])
+            || ! $this->rules->confModer
+        ) {
             return $this->c->Message->message('Bad request');
         }
 
@@ -40,7 +43,10 @@ class Mod extends Profile
 
             if ($v->validation($_POST)) {
                 foreach ($this->c->forums->get(0)->descendants as $forum) {
-                    if (isset($v->moderator[$forum->id]) && $v->moderator[$forum->id] === $forum->id) {
+                    if (
+                        isset($v->moderator[$forum->id])
+                        && $v->moderator[$forum->id] === $forum->id
+                    ) {
                         $forum->modAdd($this->curUser);
                     } else {
                         $forum->modDelete($this->curUser);

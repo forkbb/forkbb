@@ -17,12 +17,13 @@ class Current extends Action
     public function current(): User
     {
         $cookie = $this->c->Cookie;
-        $user = $this->load((int) $cookie->uId);
+        $user   = $this->load((int) $cookie->uId);
 
         if (! $user->isGuest) {
             if (! $cookie->verifyUser($user)) {
                 $user = $this->load(1);
-            } elseif ($this->c->config->o_check_ip == '1'
+            } elseif (
+                '1' == $this->c->config->o_check_ip
                 && $user->isAdmMod
                 && $user->registration_ip !== $user->ip
             ) {
@@ -60,7 +61,10 @@ class Current extends Action
 #                $user->__disp_posts = $this->c->config->o_disp_posts_default;
 #            }
             // Special case: We've timed out, but no other user has browsed the forums since we timed out
-            if ($user->isLogged && $user->logged < \time() - $this->c->config->o_timeout_visit) {
+            if (
+                $user->isLogged
+                && $user->logged < \time() - $this->c->config->o_timeout_visit
+            ) {
                 $this->manager->updateLastVisit($user); //????
             }
 
@@ -82,7 +86,7 @@ class Current extends Action
     protected function load(int $id): User
     {
         $data = null;
-        $ip = $this->getIp();
+        $ip   = $this->getIp();
         if ($id > 1) {
             $data = $this->c->DB->query('SELECT u.*, g.*, o.logged FROM ::users AS u INNER JOIN ::groups AS g ON u.group_id=g.g_id LEFT JOIN ::online AS o ON o.user_id=u.id WHERE u.id=?i:id', [':id' => $id])->fetch();
         }
@@ -93,8 +97,8 @@ class Current extends Action
             }
         }
 
-        $user = $this->manager->create($data);
-        $user->__ip = $ip;
+        $user              = $this->manager->create($data);
+        $user->__ip        = $ip;
         $user->__userAgent = $this->getUserAgent();
         return $user;
     }
@@ -129,29 +133,34 @@ class Current extends Action
     protected function isBot()
     {
         $agent = $this->getUserAgent();
-        if ($agent == '') {
+        if ('' == $agent) {
             return false;
         }
         $agentL = \strtolower($agent);
 
-        if (\strpos($agentL, 'bot') !== false
-            || \strpos($agentL, 'spider') !== false
-            || \strpos($agentL, 'crawler') !== false
-            || \strpos($agentL, 'http') !== false
+        if (
+            false !== \strpos($agentL, 'bot')
+            || false !== \strpos($agentL, 'spider')
+            || false !== \strpos($agentL, 'crawler')
+            || false !== \strpos($agentL, 'http')
         ) {
             return $this->nameBot($agent, $agentL);
         }
 
-        if (\strpos($agent, 'Mozilla/') !== false
-            && (\strpos($agent, 'Gecko') !== false
-                || (\strpos($agent, '(compatible; MSIE ') !== false
-                    && \strpos($agent, 'Windows') !== false
+        if (
+            false !== \strpos($agent, 'Mozilla/')
+            && (
+                false !== \strpos($agent, 'Gecko')
+                || (
+                    false !== \strpos($agent, '(compatible; MSIE ')
+                    && false !== \strpos($agent, 'Windows')
                 )
             )
         ) {
             return false;
-        } elseif (\strpos($agent, 'Opera/') !== false
-            && \strpos($agent, 'Presto/') !== false
+        } elseif (
+            false !== \strpos($agent, 'Opera/')
+            && false !== \strpos($agent, 'Presto/')
         ) {
             return false;
         }
@@ -168,21 +177,22 @@ class Current extends Action
      */
     protected function nameBot(string $agent, string $agentL): string
     {
-        if (\strpos($agentL, 'mozilla') !== false) {
+        if (false !== \strpos($agentL, 'mozilla')) {
             $agent = \preg_replace('%Mozilla.*?compatible%i', ' ', $agent);
         }
-        if (\strpos($agentL, 'http') !== false || \strpos($agentL, 'www.') !== false) {
+        if (false !== \strpos($agentL, 'http') || false !== \strpos($agentL, 'www.')) {
             $agent = \preg_replace('%(?:https?://|www\.)[^\)]*(\)[^/]+$)?%i', ' ', $agent);
         }
-        if (\strpos($agent, '@') !== false) {
+        if (false !== \strpos($agent, '@')) {
             $agent = \preg_replace('%\b[a-z0-9_\.-]+@[^\)]+%i', ' ', $agent);
         }
 
         $agentL = \strtolower($agent);
-        if (\strpos($agentL, 'bot') !== false
-            || \strpos($agentL, 'spider') !== false
-            || \strpos($agentL, 'crawler') !== false
-            || \strpos($agentL, 'engine') !== false
+        if (
+            false !== \strpos($agentL, 'bot')
+            || false !== \strpos($agentL, 'spider')
+            || false !== \strpos($agentL, 'crawler')
+            || false !== \strpos($agentL, 'engine')
         ) {
             $f = true;
             $p = '%(?<=[^a-z\d\.-])(?:robot|bot|spider|crawler)\b.*%i';
@@ -191,8 +201,10 @@ class Current extends Action
             $p = '%^$%';
         }
 
-        if ($f && \preg_match('%\b(([a-z\d\.! _-]+)?(?:robot|(?<!ro)bot|spider|crawler|engine)(?(2)[a-z\d\.! _-]*|[a-z\d\.! _-]+))%i', $agent, $matches))
-        {
+        if (
+            $f
+            && \preg_match('%\b(([a-z\d\.! _-]+)?(?:robot|(?<!ro)bot|spider|crawler|engine)(?(2)[a-z\d\.! _-]*|[a-z\d\.! _-]+))%i', $agent, $matches)
+        ) {
             $agent = $matches[1];
 
             $pat = [
@@ -237,9 +249,10 @@ class Current extends Action
             return 'Unknown';
         }
 
-        $a = \explode(' ', $agent);
+        $a     = \explode(' ', $agent);
         $agent = $a[0];
-        if (\strlen($agent) < 20
+        if (
+            \strlen($agent) < 20
             && ! empty($a[1])
             && \strlen($agent . ' ' . $a[1]) < 26
         ) {
@@ -260,11 +273,11 @@ class Current extends Action
     {
         if (! empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $langs = $this->c->Func->getLangs();
-            $main = [];
+            $main  = [];
             foreach ($this->c->Func->langParse($_SERVER['HTTP_ACCEPT_LANGUAGE']) as $entry) {
                 $arr = \explode('-', $entry, 2);
                 if (isset($arr[1])) {
-                    $entry = $arr[0] . '_' . \strtoupper($arr[1]);
+                    $entry  = $arr[0] . '_' . \strtoupper($arr[1]);
                     $main[] = $arr[0];
                 }
                 if (isset($langs[$entry])) {

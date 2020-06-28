@@ -109,13 +109,15 @@ class Model extends ParentModel
     {
         $ckUser = $this->get(self::NAME);
 
-        if (null === $ckUser
+        if (
+            null === $ckUser
             || ! \preg_match('%^(\-)?(\d{1,10})_(\d{10})_([a-f\d]{32,})_([a-f\d]{32,})$%Di', $ckUser, $ms)
         ) {
             return;
         }
 
-        if (2 > $ms[2]
+        if (
+            2 > $ms[2]
             || \time() > $ms[3]
             || ! \hash_equals(
                     $this->c->Secury->hmac($ms[1] . $ms[2] . $ms[3] . $ms[4], $this->key1),
@@ -161,7 +163,8 @@ class Model extends ParentModel
             return $this->deleteUser();
         }
 
-        if ($remember
+        if (
+            $remember
             || (null === $remember
                 && $this->uId === (int) $user->id
                 && $this->uRemember

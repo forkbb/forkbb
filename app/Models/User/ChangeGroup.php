@@ -22,7 +22,10 @@ class ChangeGroup extends Action
     public function changeGroup(int $newGroupId, User ...$users): void
     {
         $newGroup = $this->c->groups->get($newGroupId);
-        if (null === $newGroup || $newGroup->groupGuest) {
+        if (
+            null === $newGroup
+            || $newGroup->groupGuest
+        ) {
             throw new InvalidArgumentException('Expected group number');
         }
 
@@ -38,7 +41,10 @@ class ChangeGroup extends Action
                 throw new RuntimeException('Guest can not change group');
             }
 
-            if (1 != $newGroup->g_moderator && $user->isAdmMod) {
+            if (
+                1 != $newGroup->g_moderator
+                && $user->isAdmMod
+            ) {
                 $moderators[$user->id] = $user;
             }
             if ($user->isAdmin) {

@@ -39,7 +39,7 @@ class Rules extends Page
         $this->robots     = 'noindex';
         $this->title      = \ForkBB\__('Forum rules');
         $this->crumbs     = $this->crumbs(\ForkBB\__('Forum rules'), [$this->c->Router->link('Register'), \ForkBB\__('Register')]);
-        $this->rules      = $this->c->config->o_rules == '1' ? $this->c->config->o_rules_message : \ForkBB\__('If no rules');
+        $this->rules      = '1' == $this->c->config->o_rules ? $this->c->config->o_rules_message : \ForkBB\__('If no rules');
         $this->form       = $this->formAgree();
 
         return $this;

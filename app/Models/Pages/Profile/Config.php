@@ -18,7 +18,10 @@ class Config extends Profile
      */
     public function config(array $args, string $method): Page
     {
-        if (false === $this->initProfile($args['id']) || ! $this->rules->editConfig) {
+        if (
+            false === $this->initProfile($args['id'])
+            || ! $this->rules->editConfig
+        ) {
             return $this->c->Message->message('Bad request');
         }
 

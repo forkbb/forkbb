@@ -65,7 +65,8 @@ abstract class Users extends Admin
             return false === $ip ? false : ['ip' => $ip];
         }
 
-        if (! \hash_equals($data[1], $this->c->Secury->hash($data[0]))
+        if (
+            ! \hash_equals($data[1], $this->c->Secury->hash($data[0]))
             || ! \is_array($data = \json_decode(\base64_decode($data[0], true), true))
         ) {
             return false;

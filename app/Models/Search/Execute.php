@@ -34,7 +34,10 @@ class Execute extends Method
      */
     public function execute(Validator $v, array $forumIdxs, bool $flood): bool
     {
-        if (! \is_array($this->model->queryWords) || ! \is_string($this->model->queryText)) {
+        if (
+            ! \is_array($this->model->queryWords)
+            || ! \is_string($this->model->queryText)
+        ) {
             throw new RuntimeException('No query data');
         }
 
@@ -62,7 +65,10 @@ class Execute extends Method
                 LIMIT 1';
         $row = $this->c->DB->query($sql, $vars)->fetch();
 
-        if (! empty($row['search_time']) && \time() - $row['search_time'] < 60 * 5) { //????
+        if (
+            ! empty($row['search_time'])
+            && \time() - $row['search_time'] < 60 * 5
+        ) { //????
             $result                    = \explode("\n", $row['search_data']);
             $this->model->queryIds     = '' == $result[0] ? [] : \array_map('\\intval', \explode(',', $result[0]));
             $this->model->queryNoCache = false;
@@ -115,21 +121,38 @@ class Execute extends Method
 
         foreach ($words as $word) {
             // служебное слово
-            if ('AND' === $word || 'OR' === $word || 'NOT' === $word) {
+            if (
+                'AND' === $word
+                || 'OR' === $word
+                || 'NOT' === $word
+            ) {
                 $type = $word;
                 continue;
             }
 
             // если до сих пор ни чего не найдено и тип операции не ИЛИ, то выполнять не надо
-            if ($count && empty($ids) && 'OR' !== $type) {
+            if (
+                $count
+                && empty($ids)
+                && 'OR' !== $type
+            ) {
                 continue;
             }
 
-            if (\is_array($word) && (! isset($word['type']) || 'CJK' !== $word['type'])) {
+            if (
+                \is_array($word)
+                && (
+                    ! isset($word['type'])
+                    || 'CJK' !== $word['type']
+                )
+            ) {
                 $ids = $this->exec($word, $vars);
             } else {
                 $CJK = false;
-                if (isset($word['type']) && 'CJK' === $word['type']) {
+                if (
+                    isset($word['type'])
+                    && 'CJK' === $word['type']
+                ) {
                     $CJK  = true;
                     $word = '*' . \trim($word['word'], '*') . '*';
                 }
@@ -195,7 +218,10 @@ class Execute extends Method
         $useTCJK  = false;
         $usePCJK  = false;
 
-        if ('*' !== $v->forums || ! $this->c->user->isAdmin) {
+        if (
+            '*' !== $v->forums
+            || ! $this->c->user->isAdmin
+        ) {
             $useTIdx                 = true;
             $whereIdx[]              = 't.forum_id IN (?ai:forums)';
             $whereCJK[]              = 't.forum_id IN (?ai:forums)';
