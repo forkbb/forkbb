@@ -11,7 +11,7 @@ class Model extends ParentModel
     protected $visits = [];
     protected $online = [];
 
-    public function lastVisit(User $user): ?int
+    public function currentVisit(User $user): ?int
     {
         return $this->visits[$user->id] ?? null;
     }

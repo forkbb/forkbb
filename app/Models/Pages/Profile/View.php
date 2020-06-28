@@ -224,7 +224,7 @@ class View extends Profile
             $fields['lastvisit'] = [
                 'class'   => 'pline',
                 'type'    => 'str',
-                'value'   => \ForkBB\dt($this->curUser->lastVisit, true),
+                'value'   => \ForkBB\dt($this->curUser->currentVisit, true),
                 'caption' => \ForkBB\__('Last visit info'),
             ];
         }

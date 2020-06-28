@@ -29,7 +29,7 @@ class Model extends DataModel
         $this->zDepend = [
             'group_id'     => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'link', 'viewUsers', 'showPostCount', 'searchUsers'],
             'id'           => ['isGuest', 'link', 'avatar', 'online'],
-            'last_visit'   => ['lastVisit'],
+            'last_visit'   => ['currentVisit'],
             'logged'       => ['isLogged'],
             'show_sig'     => ['showSignature'],
             'show_avatars' => ['showAvatar'],
@@ -135,9 +135,9 @@ class Model extends DataModel
      *
      * @return int
      */
-    protected function getlastVisit(): int
+    protected function getcurrentVisit(): int
     {
-        return $this->c->Online->lastVisit($this) ?? $this->last_visit;
+        return $this->c->Online->currentVisit($this) ?? $this->last_visit;
     }
 
     /**
