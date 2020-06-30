@@ -19,11 +19,8 @@ class Update extends Method
     {
         if (
             empty($ban['id'])
-            || ! isset($ban['username'])
-            || ! isset($ban['ip'])
-            || ! isset($ban['email'])
-            || ! isset($ban['message'])
-            || ! isset($ban['expire'])
+            || ! \is_int($ban['id'])
+            || ! isset($ban['username'], $ban['ip'], $ban['email'], $ban['message'], $ban['expire'])
         ) {
             throw new InvalidArgumentException('Expected an array with a ban description');
         }

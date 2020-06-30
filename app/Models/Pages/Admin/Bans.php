@@ -918,7 +918,7 @@ class Bans extends Admin
         $ids = [
             (int) $args['id'],
         ];
-        $this->c->bans->delete($ids);
+        $this->c->bans->delete(...$ids);
 
         $redirect = $this->c->Redirect;
 

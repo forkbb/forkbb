@@ -37,7 +37,7 @@ class Check extends Method
             }
 
             if (! empty($ids)) {
-                $this->model->delete($ids);
+                $this->model->delete(...$ids);
             }
         }
 

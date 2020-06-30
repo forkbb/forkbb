@@ -19,11 +19,7 @@ class Insert extends Method
     {
         if (
             isset($ban['id'])
-            || ! isset($ban['username'])
-            || ! isset($ban['ip'])
-            || ! isset($ban['email'])
-            || ! isset($ban['message'])
-            || ! isset($ban['expire'])
+            || ! isset($ban['username'], $ban['ip'], $ban['email'], $ban['message'], $ban['expire'])
         ) {
             throw new InvalidArgumentException('Expected an array with a ban description');
         }

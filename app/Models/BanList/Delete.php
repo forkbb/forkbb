@@ -11,11 +11,11 @@ class Delete extends Method
      * Удаляет из банов записи по списку номеров
      * Обновляет кеш
      *
-     * @param array $ids
+     * @param int ...$ids
      *
      * @return BanList\Model
      */
-    public function delete(array $ids): BanList
+    public function delete(int ...$ids): BanList
     {
         if (! empty($ids)) {
             $vars = [
@@ -26,6 +26,7 @@ class Delete extends Method
             $this->c->DB->exec($sql, $vars);
             $this->model->load();
         }
+
         return $this->model;
     }
 }

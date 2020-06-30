@@ -17,19 +17,18 @@ class IsBanned extends Method
     public function isBanned(User $user): int
     {
         $name  = $this->model->trimToNull($user->username, true);
-        // бан имени пользователя
         if (
             null !== $name
             && isset($this->model->userList[$name])
         ) {
             return $this->model->userList[$name];
         }
-        // бан email
+
         if (
             $user->isGuest
             && ! empty($this->model->emailList)
-            && $user->email && $user->email_normal
-        ) { // ????
+            && $user->email_normal
+        ) {
             $email = $this->model->trimToNull($user->email_normal);
             $stage = 0;
 
