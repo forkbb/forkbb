@@ -2,9 +2,9 @@
 
 namespace ForkBB\Models\Cookie;
 
+use ForkBB\Core\Container;
 use ForkBB\Models\Model as ParentModel;
 use ForkBB\Models\User\Model as User;
-use ForkBB\Core\Container;
 use RuntimeException;
 
 class Model extends ParentModel
@@ -165,21 +165,22 @@ class Model extends ParentModel
 
         if (
             $remember
-            || (null === $remember
+            || (
+                null === $remember
                 && $this->uId === (int) $user->id
                 && $this->uRemember
             )
         ) {
             $expTime = \time() + $this->time;
-            $expire = $expTime;
-            $pfx = '';
+            $expire  = $expTime;
+            $pfx     = '';
         } else {
             $expTime = \time() + $this->c->config->o_timeout_visit;
-            $expire = 0;
-            $pfx = '-';
+            $expire  = 0;
+            $pfx     = '-';
         }
         $passHash = $this->c->Secury->hmac($user->password . $expTime, $this->key2);
-        $ckHash = $this->c->Secury->hmac($pfx . $user->id . $expTime . $passHash, $this->key1);
+        $ckHash   = $this->c->Secury->hmac($pfx . $user->id . $expTime . $passHash, $this->key1);
 
         return $this->set(self::NAME, $pfx . $user->id . '_' . $expTime . '_' . $passHash . '_' . $ckHash, $expire);
     }

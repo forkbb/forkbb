@@ -124,7 +124,7 @@ class Manager extends ManagerModel
         ++$depth;
         foreach ($forum->subforums as $sub) {
             $sub->__depth = $depth;
-            $list[] = $sub;
+            $list[]       = $sub;
 
             $list = $this->depthList($sub, $depth, $list);
         }

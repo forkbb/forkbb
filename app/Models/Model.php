@@ -124,8 +124,8 @@ class Model
      */
     public function setAttrs(array $attrs): self
     {
-        $this->zAttrs      = $attrs; //????
-        $this->zAttrsCalc  = [];
+        $this->zAttrs     = $attrs; //????
+        $this->zAttrsCalc = [];
 
         return $this;
     }

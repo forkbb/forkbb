@@ -4,7 +4,6 @@ namespace ForkBB\Models\Group;
 
 use ForkBB\Models\ManagerModel;
 use ForkBB\Models\Group\Model as Group;
-use RuntimeException;
 
 class Manager extends ManagerModel
 {

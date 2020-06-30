@@ -46,7 +46,7 @@ class Refresh extends Action
             $stmt = $this->c->DB->query($sql, $vars);
             while ($row = $stmt->fetch()) {
                 $row['moderators'] = $this->formatModers($row['moderators']);
-                $list[$row['id']] = $row;
+                $list[$row['id']]  = $row;
             }
 
             if (! empty($list)) {

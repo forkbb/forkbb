@@ -4,8 +4,6 @@ namespace ForkBB\Models\Group;
 
 use ForkBB\Models\Action;
 use ForkBB\Models\Group\Model as Group;
-use InvalidArgumentException;
-use RuntimeException;
 
 class Delete extends Action
 {
@@ -14,9 +12,6 @@ class Delete extends Action
      *
      * @param Group $group
      * @param Group $new
-     *
-     * @throws InvalidArgumentException
-     * @throws RuntimeException
      */
     public function delete(Group $group, Group $new = null): void
     {

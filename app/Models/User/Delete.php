@@ -29,9 +29,6 @@ class Delete extends Action
         $moderators   = [];
         $adminPresent = false;
         foreach ($users as $user) {
-            if (! $user instanceof User) {
-                throw new InvalidArgumentException('Expected User');
-            }
             if ($user->isGuest) {
                 throw new RuntimeException('Guest can not be deleted');
             }

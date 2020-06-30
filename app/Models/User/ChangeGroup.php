@@ -29,14 +29,11 @@ class ChangeGroup extends Action
             throw new InvalidArgumentException('Expected group number');
         }
 
-        $ids = [];
-        $moderators = [];
+        $ids          = [];
+        $moderators   = [];
         $adminPresent = $newGroup->groupAdmin;
         $unverPresent = false;
         foreach ($users as $user) {
-            if (! $user instanceof User) {
-                throw new InvalidArgumentException('Expected User');
-            }
             if ($user->isGuest) {
                 throw new RuntimeException('Guest can not change group');
             }

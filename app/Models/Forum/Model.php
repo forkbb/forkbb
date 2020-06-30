@@ -39,7 +39,10 @@ class Model extends DataModel
     {
         $user = $this->c->user;
         return 1 == $this->post_topics
-            || (null === $this->post_topics && 1 == $user->g_post_topics)
+            || (
+                null === $this->post_topics
+                && 1 == $user->g_post_topics
+            )
             || $user->isAdmin
             || $user->isModerator($this);
     }

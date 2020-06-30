@@ -100,7 +100,7 @@ class LoadTree extends Action
 
         // предварительная проверка разделов
         $time = [];
-        $max = \max((int) $this->c->user->last_visit, (int) $this->c->user->u_mark_all_read);
+        $max  = \max((int) $this->c->user->last_visit, (int) $this->c->user->u_mark_all_read);
         foreach ($list as $forum) {
             $t = \max($max, (int) $forum->mf_mark_all_read);
             if ($forum->last_post > $t) {
