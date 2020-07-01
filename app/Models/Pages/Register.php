@@ -6,6 +6,7 @@ use ForkBB\Core\Validator;
 use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\Page;
 use ForkBB\Models\User\Model as User;
+use function \ForkBB\__;
 
 class Register extends Page
 {
@@ -33,7 +34,7 @@ class Register extends Page
                 'password' => 'Passphrase',
             ])->addMessages([
                 'agree.required'    => ['cancel', 'cancel'],
-                'agree.token'       => ['w', \ForkBB\__('Bad agree', $this->c->Router->link('Register'))],
+                'agree.token'       => ['w', __('Bad agree', $this->c->Router->link('Register'))],
                 'password.password' => 'Pass format',
                 'username.login'    => 'Login format',
             ]);
@@ -56,7 +57,7 @@ class Register extends Page
         $this->fIndex     = 'register';
         $this->nameTpl    = 'register';
         $this->onlinePos  = 'register';
-        $this->titles     = \ForkBB\__('Register');
+        $this->titles     = __('Register');
         $this->robots     = 'noindex';
         $this->form       = $this->formReg($v);
 
@@ -88,8 +89,8 @@ class Register extends Page
                             'type'      => 'text',
                             'maxlength' => 80,
                             'value'     => $v->email,
-                            'caption'   => \ForkBB\__('Email'),
-                            'info'      => \ForkBB\__('Email info'),
+                            'caption'   => __('Email'),
+                            'info'      => __('Email info'),
                             'required'  => true,
                             'pattern'   => '.+@.+',
                         ],
@@ -98,16 +99,16 @@ class Register extends Page
                             'type'      => 'text',
                             'maxlength' => 25,
                             'value'     => $v->username,
-                            'caption'   => \ForkBB\__('Username'),
-                            'info'      => \ForkBB\__('Login format'),
+                            'caption'   => __('Username'),
+                            'info'      => __('Login format'),
                             'required'  => true,
                             'pattern'   => '^.{2,25}$',
                         ],
                         'password' => [
                             'class'     => 'hint',
                             'type'      => 'password',
-                            'caption'   => \ForkBB\__('Passphrase'),
-                            'info'      => \ForkBB\__('Pass format') . ' ' . \ForkBB\__('Pass info'),
+                            'caption'   => __('Passphrase'),
+                            'info'      => __('Pass format') . ' ' . __('Pass info'),
                             'required'  => true,
                             'pattern'   => '^.{16,}$',
                         ],
@@ -117,7 +118,7 @@ class Register extends Page
             'btns'   => [
                 'register' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Sign up'),
+                    'value'     => __('Sign up'),
                     'accesskey' => 's',
                 ],
             ],
@@ -167,11 +168,11 @@ class Register extends Page
             && '' != $this->c->config->o_mailing_list
         ) {
             $tplData = [
-                'fTitle' => $this->c->config->o_board_title,
+                'fTitle'    => $this->c->config->o_board_title,
                 'fRootLink' => $this->c->Router->link('Index'),
-                'fMailer' => \ForkBB\__('Mailer', $this->c->config->o_board_title),
-                'username' => $v->username,
-                'userLink' => $this->c->Router->link('User', ['id' => $newUserId, 'name' => $v->username]),
+                'fMailer'   => __('Mailer', $this->c->config->o_board_title),
+                'username'  => $v->username,
+                'userLink'  => $this->c->Router->link('User', ['id' => $newUserId, 'name' => $v->username]),
             ];
 
             try {
@@ -180,7 +181,7 @@ class Register extends Page
                     ->setFolder($this->c->DIR_LANG)
                     ->setLanguage($this->c->config->o_default_lang) // ????
                     ->setTo($this->c->config->o_mailing_list)
-                    ->setFrom($this->c->config->o_webmaster_email, \ForkBB\__('Mailer', $this->c->config->o_board_title))
+                    ->setFrom($this->c->config->o_webmaster_email, __('Mailer', $this->c->config->o_board_title))
                     ->setTpl('new_user.tpl', $tplData)
                     ->send();
             } catch (MailException $e) {
@@ -195,11 +196,11 @@ class Register extends Page
             $hash = $this->c->Secury->hash($newUserId . $key);
             $link = $this->c->Router->link('RegActivate', ['id' => $newUserId, 'key' => $key, 'hash' => $hash]);
             $tplData = [
-                'fTitle' => $this->c->config->o_board_title,
+                'fTitle'    => $this->c->config->o_board_title,
                 'fRootLink' => $this->c->Router->link('Index'),
-                'fMailer' => \ForkBB\__('Mailer', $this->c->config->o_board_title),
-                'username' => $v->username,
-                'link' => $link,
+                'fMailer'   => __('Mailer', $this->c->config->o_board_title),
+                'username'  => $v->username,
+                'link'      => $link,
             ];
 
             try {
@@ -208,7 +209,7 @@ class Register extends Page
                     ->setFolder($this->c->DIR_LANG)
                     ->setLanguage($this->user->language)
                     ->setTo($v->email)
-                    ->setFrom($this->c->config->o_webmaster_email, \ForkBB\__('Mailer', $this->c->config->o_board_title))
+                    ->setFrom($this->c->config->o_webmaster_email, __('Mailer', $this->c->config->o_board_title))
                     ->setTpl('welcome.tpl', $tplData)
                     ->send();
             } catch (MailException $e) {
@@ -217,17 +218,17 @@ class Register extends Page
 
             // письмо активации аккаунта отправлено
             if ($isSent) {
-                return $this->c->Message->message(\ForkBB\__('Reg email', $this->c->config->o_admin_email), false, 200);
+                return $this->c->Message->message(__('Reg email', $this->c->config->o_admin_email), false, 200);
             // форма сброса пароля
             } else {
-                $auth = $this->c->Auth;
-                $auth->fIswev = ['w', \ForkBB\__('Error welcom mail', $this->c->config->o_admin_email)];
+                $auth         = $this->c->Auth;
+                $auth->fIswev = ['w', __('Error welcom mail', $this->c->config->o_admin_email)];
                 return $auth->forget(['_email' => $v->email], 'GET');
             }
         // форма логина
         } else {
-            $auth = $this->c->Auth;
-            $auth->fIswev = ['s', \ForkBB\__('Reg complete')];
+            $auth         = $this->c->Auth;
+            $auth->fIswev = ['s', __('Reg complete')];
             return $auth->login(['_username' => $v->username], 'GET');
         }
     }
@@ -259,8 +260,8 @@ class Register extends Page
 
         $this->c->Lang->load('register');
 
-        $auth = $this->c->Auth;
-        $auth->fIswev = ['s', \ForkBB\__('Reg complete')];
+        $auth         = $this->c->Auth;
+        $auth->fIswev = ['s', __('Reg complete')];
         return $auth->login(['_username' => $user->username], 'GET');
     }
 }

@@ -6,6 +6,7 @@ use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin\Users;
 use RuntimeException;
+use function \ForkBB\__;
 
 class NewUser extends Users
 {
@@ -72,7 +73,7 @@ class NewUser extends Users
 
         $this->nameTpl    = 'admin/users';
         $this->formNew    = $this->formNew($data);
-        $this->aCrumbs[]  = [$this->c->Router->link('AdminUsersNew'), \ForkBB\__('Add user')];
+        $this->aCrumbs[]  = [$this->c->Router->link('AdminUsersNew'), __('Add user')];
 
 
         return $this;
@@ -94,15 +95,15 @@ class NewUser extends Users
             ],
             'sets'   => [
                 'reg' => [
-                    'legend' => \ForkBB\__('Add user legend'),
+                    'legend' => __('Add user legend'),
                     'fields' => [
                         'username' => [
                             'autofocus' => true,
                             'type'      => 'text',
                             'maxlength' => 25,
                             'value'     => $data['username'] ?? null,
-                            'caption'   => \ForkBB\__('Username'),
-                            'info'      => \ForkBB\__('Login format'),
+                            'caption'   => __('Username'),
+                            'info'      => __('Login format'),
                             'required'  => true,
                             'pattern'   => '^.{2,25}$',
                         ],
@@ -110,15 +111,15 @@ class NewUser extends Users
                             'type'      => 'text',
                             'maxlength' => 80,
                             'value'     => $data['email'] ?? null,
-                            'caption'   => \ForkBB\__('Email'),
-                            'info'      => \ForkBB\__('Email info'),
+                            'caption'   => __('Email'),
+                            'info'      => __('Email info'),
                             'required'  => true,
                             'pattern'   => '.+@.+',
                         ],
                         'password' => [
                             'type'      => 'text',
-                            'caption'   => \ForkBB\__('Passphrase'),
-                            'info'      => \ForkBB\__('Pass format') . ' ' . \ForkBB\__('Pass info'),
+                            'caption'   => __('Passphrase'),
+                            'info'      => __('Pass format') . ' ' . __('Pass info'),
                             'required'  => true,
                             'pattern'   => '^.{16,}$',
                         ],
@@ -128,7 +129,7 @@ class NewUser extends Users
             'btns'   => [
                 'add' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Add'),
+                    'value'     => __('Add'),
                     'accesskey' => 's',
                 ],
             ],

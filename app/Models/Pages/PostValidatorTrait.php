@@ -4,6 +4,7 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Core\Validator;
 use ForkBB\Models\Model;
+use function \ForkBB\__;
 
 trait PostValidatorTrait
 {
@@ -82,7 +83,7 @@ trait PostValidatorTrait
         $time = \time() - (int) $this->user->last_post;
 
         if ($time < $this->user->g_post_flood) {
-            $v->addError(\ForkBB\__('Flood start', $this->user->g_post_flood, $this->user->g_post_flood - $time), 'e');
+            $v->addError(__('Flood start', $this->user->g_post_flood, $this->user->g_post_flood - $time), 'e');
         }
 
         return $submit;

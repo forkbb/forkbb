@@ -4,6 +4,7 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
 use ForkBB\Models\Topic\Model as TopicModel;
+use function \ForkBB\__;
 
 class Topic extends Page
 {
@@ -206,39 +207,39 @@ class Topic extends Page
         if ($topic->closed) {
             $form['btns']['open'] = [
                 'type'      => 'submit',
-                'value'     => \ForkBB\__('Open topic'),
+                'value'     => __('Open topic'),
             ];
         } else {
             $form['btns']['close'] = [
                 'type'      => 'submit',
-                'value'     => \ForkBB\__('Close topic'),
+                'value'     => __('Close topic'),
             ];
         }
 
         if ($topic->sticky) {
             $form['btns']['unstick'] = [
                 'type'      => 'submit',
-                'value'     => \ForkBB\__('Unstick topic'),
+                'value'     => __('Unstick topic'),
             ];
         } else {
             $form['btns']['stick'] = [
                 'type'      => 'submit',
-                'value'     => \ForkBB\__('Stick topic'),
+                'value'     => __('Stick topic'),
             ];
         }
 
         $form['btns'] += [
             'move' => [
                 'type'      => 'submit',
-                'value'     => \ForkBB\__('Move topic'),
+                'value'     => __('Move topic'),
             ],
             'delete' => [
                 'type'      => 'submit',
-                'value'     => \ForkBB\__('Delete'),
+                'value'     => __('Delete'),
             ],
             'split' => [
                 'type'      => 'submit',
-                'value'     => \ForkBB\__('Split'),
+                'value'     => __('Split'),
             ],
         ];
 

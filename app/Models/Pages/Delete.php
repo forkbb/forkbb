@@ -4,6 +4,7 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
 use ForkBB\Models\Post\Model as Post;
+use function \ForkBB\__;
 
 class Delete extends Page
 {
@@ -64,10 +65,10 @@ class Delete extends Page
         $this->onlinePos  = 'topic-' . $topic->id;
         $this->canonical  = $post->linkDelete;
         $this->robots     = 'noindex';
-        $this->formTitle  = \ForkBB\__($deleteTopic ? 'Delete topic' : 'Delete post');
+        $this->formTitle  = __($deleteTopic ? 'Delete topic' : 'Delete post');
         $this->crumbs     = $this->crumbs($this->formTitle, $topic);
         $this->posts      = [$post];
-        $this->postsTitle = \ForkBB\__('Delete info');
+        $this->postsTitle = __('Delete info');
         $this->form       = $this->formDelete($args, $post, $deleteTopic);
 
         return $this;
@@ -94,11 +95,11 @@ class Delete extends Page
                     'info' => [
                         'info1' => [
                             'type'    => '', //????
-                            'value'   => \ForkBB\__('Topic') . ' «' . \ForkBB\cens($post->parent->subject) . '»',
+                            'value'   => __('Topic') . ' «' . \ForkBB\cens($post->parent->subject) . '»',
                         ],
                         'info2' => [
                             'type'    => '', //????
-                            'value'   => \ForkBB\__($deleteTopic ? 'Topic by' : 'Reply by', $post->poster, \ForkBB\dt($post->posted)),
+                            'value'   => __($deleteTopic ? 'Topic by' : 'Reply by', $post->poster, \ForkBB\dt($post->posted)),
                             'html'    => true,
                         ],
                     ],
@@ -107,7 +108,7 @@ class Delete extends Page
                     'fields' => [
                         'confirm' => [
                             'type'    => 'checkbox',
-                            'label'   => \ForkBB\__($deleteTopic ? 'Confirm delete topic' : 'Confirm delete post'),
+                            'label'   => __($deleteTopic ? 'Confirm delete topic' : 'Confirm delete post'),
                             'value'   => '1',
                             'checked' => false,
                         ],
@@ -117,12 +118,12 @@ class Delete extends Page
             'btns'   => [
                 'delete'  => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__($deleteTopic ? 'Delete  topic' : 'Delete  post'),
+                    'value'     => __($deleteTopic ? 'Delete  topic' : 'Delete  post'),
                     'accesskey' => 'd',
                 ],
                 'cancel'  => [
                     'type'      => 'btn',
-                    'value'     => \ForkBB\__('Cancel'),
+                    'value'     => __('Cancel'),
                     'link'      => $this->c->Router->link('ViewPost', $args),
                 ],
             ],

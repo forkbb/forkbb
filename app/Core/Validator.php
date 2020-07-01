@@ -6,6 +6,7 @@ use ForkBB\Core\Container;
 use ForkBB\Core\File;
 use ForkBB\Core\Validators;
 use RuntimeException;
+use function \ForkBB\__;
 
 class Validator
 {
@@ -396,7 +397,7 @@ class Validator
             list($type, $error) = $error;
         }
 
-        $this->errors[$type][] = \ForkBB\__($error, [':alias' => \ForkBB\__($alias), ':attr' => $attr]);
+        $this->errors[$type][] = __($error, [':alias' => __($alias), ':attr' => $attr]);
         $this->error           = true;
     }
 

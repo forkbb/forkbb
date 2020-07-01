@@ -7,6 +7,7 @@ use ForkBB\Models\Page;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\User\Model as User;
 use InvalidArgumentException;
+use function \ForkBB\__;
 
 class Search extends Page
 {
@@ -23,15 +24,15 @@ class Search extends Page
             foreach ($this->c->forums->depthList($root, -1) as $f) {
                 if ($cid !== $f->cat_id) {
                     $cid       = $f->cat_id;
-                    $options[] = [\ForkBB\__('Category prefix') . $f->cat_name];
+                    $options[] = [__('Category prefix') . $f->cat_name];
                 }
 
-                $indent = \str_repeat(\ForkBB\__('Forum indent'), $f->depth);
+                $indent = \str_repeat(__('Forum indent'), $f->depth);
 
                 if ($f->redirect_url) {
-                    $options[] = [$f->id, $indent . \ForkBB\__('Forum prefix') . $f->forum_name, true];
+                    $options[] = [$f->id, $indent . __('Forum prefix') . $f->forum_name, true];
                 } else {
-                    $options[] = [$f->id, $indent . \ForkBB\__('Forum prefix') . $f->forum_name];
+                    $options[] = [$f->id, $indent . __('Forum prefix') . $f->forum_name];
                     $idxs[]    = $f->id;
                 }
             }
@@ -164,14 +165,14 @@ class Search extends Page
                     'fields' => [
                         [
                             'type'  => 'info',
-                            'value' => \ForkBB\__('<a href="%s">Advanced search</a>', $this->c->Router->link('SearchAdvanced')),
+                            'value' => __('<a href="%s">Advanced search</a>', $this->c->Router->link('SearchAdvanced')),
                             'html'  => true,
                         ],
                         'keywords' => [
                             'class'     => 'w0',
                             'type'      => 'text',
                             'maxlength' => 100,
-                            'caption'   => \ForkBB\__('Keyword search'),
+                            'caption'   => __('Keyword search'),
                             'value'     => $v ? $v->keywords : '',
                             'required'  => true,
                             'autofocus' => true,
@@ -182,7 +183,7 @@ class Search extends Page
             'btns'   => [
                 'search' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Search btn'),
+                    'value'     => __('Search btn'),
                     'accesskey' => 's',
                 ],
             ],
@@ -208,14 +209,14 @@ class Search extends Page
                     'fields' => [
                         [
                             'type'  => 'info',
-                            'value' => \ForkBB\__('<a href="%s">Simple search</a>', $this->c->Router->link('Search')),
+                            'value' => __('<a href="%s">Simple search</a>', $this->c->Router->link('Search')),
                             'html'  => true,
                         ],
                         'keywords' => [
                             'class'     => 'w2',
                             'type'      => 'text',
                             'maxlength' => 100,
-                            'caption'   => \ForkBB\__('Keyword search'),
+                            'caption'   => __('Keyword search'),
                             'value'     => $v ? $v->keywords : '',
                             'required'  => true,
                             'autofocus' => true,
@@ -224,87 +225,87 @@ class Search extends Page
                             'class'     => 'w1',
                             'type'      => 'text',
                             'maxlength' => 25,
-                            'caption'   => \ForkBB\__('Author search'),
+                            'caption'   => __('Author search'),
                             'value'     => $v ? $v->author : '*',
                             'required'  => true,
                         ],
                         [
                             'type'  => 'info',
-                            'value' => \ForkBB\__('Search info'),
+                            'value' => __('Search info'),
                         ],
                     ],
                 ],
                 'where' => [
-                    'legend' => \ForkBB\__('Search in legend'),
+                    'legend' => __('Search in legend'),
                     'fields' => [
                         'forums' => [
                             'class'   => 'w3',
                             'type'    => 'multiselect',
                             'options' => $this->listForOptions,
                             'value'   => $v ? \explode('.', $v->forums) : null,
-                            'caption' => \ForkBB\__('Forum search'),
+                            'caption' => __('Forum search'),
                             'size'    => \min(\count($this->listForOptions), 10),
                         ],
                         'serch_in' => [
                             'class'   => 'w3',
                             'type'    => 'select',
                             'options' => [
-                                0 => \ForkBB\__('Message and subject'),
-                                1 => \ForkBB\__('Message only'),
-                                2 => \ForkBB\__('Topic only'),
+                                0 => __('Message and subject'),
+                                1 => __('Message only'),
+                                2 => __('Topic only'),
                             ],
                             'value'   => $v ? $v->serch_in : 0,
-                            'caption' => \ForkBB\__('Search in'),
+                            'caption' => __('Search in'),
                         ],
                         [
                             'type'  => 'info',
-                            'value' => \ForkBB\__('Search in info'),
+                            'value' => __('Search in info'),
                         ],
                         [
                             'type'  => 'info',
-                            'value' => \ForkBB\__('Search multiple forums info'),
+                            'value' => __('Search multiple forums info'),
                         ],
 
                     ],
                 ],
                 'how' => [
-                    'legend' => \ForkBB\__('Search results legend'),
+                    'legend' => __('Search results legend'),
                     'fields' => [
                         'sort_by' => [
                             'class'   => 'w4',
                             'type'    => 'select',
                             'options' => [
-                                0 => \ForkBB\__('Sort by post time'),
-                                1 => \ForkBB\__('Sort by author'),
-                                2 => \ForkBB\__('Sort by subject'),
-                                3 => \ForkBB\__('Sort by forum'),
+                                0 => __('Sort by post time'),
+                                1 => __('Sort by author'),
+                                2 => __('Sort by subject'),
+                                3 => __('Sort by forum'),
                             ],
                             'value'   => $v ? $v->sort_by : 0,
-                            'caption' => \ForkBB\__('Sort by'),
+                            'caption' => __('Sort by'),
                         ],
                         'sort_dir' => [
                             'class'   => 'w4',
                             'type'    => 'radio',
                             'values'  => [
-                                0 => \ForkBB\__('Descending'),
-                                1 => \ForkBB\__('Ascending'),
+                                0 => __('Descending'),
+                                1 => __('Ascending'),
                             ],
                             'value'   => $v ? $v->sort_dir : 0,
-                            'caption' => \ForkBB\__('Sort order'),
+                            'caption' => __('Sort order'),
                         ],
                         'show_as' => [
                             'class'   => 'w4',
                             'type'    => 'radio',
                             'values'  => [
-                                0 => \ForkBB\__('Show as posts'),
-                                1 => \ForkBB\__('Show as topics'),
+                                0 => __('Show as posts'),
+                                1 => __('Show as topics'),
                             ],
                             'value'   => $v ? $v->show_as : 0,
-                            'caption' => \ForkBB\__('Show as'),
+                            'caption' => __('Show as'),
                         ],
                         [
                             'type'  => 'info',
-                            'value' => \ForkBB\__('Search results info'),
+                            'value' => __('Search results info'),
                         ],
                     ],
 
@@ -313,7 +314,7 @@ class Search extends Page
             'btns'   => [
                 'search' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Search btn'),
+                    'value'     => __('Search btn'),
                     'accesskey' => 's',
                 ],
             ],
@@ -341,7 +342,7 @@ class Search extends Page
                 $search = $this->c->search;
 
                 if (! $search->prepare($query)) {
-                    $v->addError(\ForkBB\__($search->queryError, $search->queryText));
+                    $v->addError(__($search->queryError, $search->queryText));
                 } else {
 
                     if ($this->c->search->execute($v, $this->listOfIndexes, $flood)) {
@@ -363,7 +364,7 @@ class Search extends Page
             }
 
             if ($flood) {
-                $v->addError(\ForkBB\__('Search flood', $this->user->g_search_flood, $this->user->g_search_flood - \time() + $this->user->last_search));
+                $v->addError(__('Search flood', $this->user->g_search_flood, $this->user->g_search_flood - \time() + $this->user->last_search));
             }
         }
 
@@ -469,9 +470,9 @@ class Search extends Page
                     $asTopicsList  = false;
                 }
                 if ('*' === $args['author']) {
-                    $model->name   = \ForkBB\__('Search query: %s', $args['keywords']);
+                    $model->name   = __('Search query: %s', $args['keywords']);
                 } else {
-                    $model->name   = \ForkBB\__('Search query: %1$s and Author: %2$s', $args['keywords'], $args['author']);
+                    $model->name   = __('Search query: %1$s and Author: %2$s', $args['keywords'], $args['author']);
                 }
                 $model->linkMarker = $advanced ? 'SearchAdvanced' : 'Search';
                 $model->linkArgs   = $args;
@@ -488,7 +489,7 @@ class Search extends Page
                 }
                 $uid               = $this->user->id;
                 $list              = $model->actionT($action, $forum, $uid);
-                $model->name       = \ForkBB\__('Quick search ' . $action);
+                $model->name       = __('Quick search ' . $action);
                 $model->linkMarker = 'SearchAction';
                 if ($forum->id) {
                     $model->linkArgs = ['action' => $action, 'forum' => $forum->id];
@@ -515,7 +516,7 @@ class Search extends Page
                 } else {
                     $list          = $model->actionP($action, $forum, $user->id);
                 }
-                $model->name       = \ForkBB\__('Quick search user ' . $action, $user->username);
+                $model->name       = __('Quick search user ' . $action, $user->username);
                 $model->linkMarker = 'SearchAction';
                 if ($forum->id) {
                     $model->linkArgs = ['action' => $action, 'uid' => $user->id, 'forum' => $forum->id];
@@ -531,7 +532,7 @@ class Search extends Page
         if (false === $list) {
             return $this->c->Message->message('Bad request');
         } elseif (empty($list)) {
-            $this->fIswev = ['i', \ForkBB\__('No hits')];
+            $this->fIswev = ['i', __('No hits')];
             return $this->view([], 'GET', true);
         }
 
@@ -567,7 +568,7 @@ class Search extends Page
      */
     protected function crumbs(...$crumbs): array
     {
-        $crumbs[] = [$this->c->Router->link('Search'), \ForkBB\__('Search')];
+        $crumbs[] = [$this->c->Router->link('Search'), __('Search')];
         return parent::crumbs(...$crumbs);
     }
 }

@@ -7,7 +7,6 @@ use ForkBB\Models\Method;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Post\Model as Post;
 use PDO;
-use InvalidArgumentException;
 use RuntimeException;
 
 class Execute extends Method

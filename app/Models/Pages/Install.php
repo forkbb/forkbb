@@ -7,6 +7,7 @@ use ForkBB\Models\Page;
 use PDO;
 use PDOException;
 use RuntimeException;
+use function \ForkBB\__;
 
 class Install extends Page
 {
@@ -85,13 +86,13 @@ class Install extends Page
 
         // версия PHP
         if (\version_compare(\PHP_VERSION, self::PHP_MIN, '<')) {
-            $this->fIswev = ['e', \ForkBB\__('You are running error', 'PHP', \PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN)];
+            $this->fIswev = ['e', __('You are running error', 'PHP', \PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN)];
         }
 
         // типы БД
         $this->dbTypes = $this->DBTypes();
         if (empty($this->dbTypes)) {
-            $this->fIswev = ['e', \ForkBB\__('No DB extensions')];
+            $this->fIswev = ['e', __('No DB extensions')];
         }
 
         // доступность папок на запись
@@ -103,27 +104,27 @@ class Install extends Page
         foreach ($folders as $folder) {
             if (! \is_writable($folder)) {
                 $folder = \str_replace(\dirname($this->c->DIR_APP), '', $folder);
-                $this->fIswev = ['e', \ForkBB\__('Alert folder', $folder)];
+                $this->fIswev = ['e', __('Alert folder', $folder)];
             }
         }
 
         // доступность шаблона конфигурации
         $config = @\file_get_contents($this->c->DIR_CONFIG . '/main.dist.php');
         if (false === $config) {
-            $this->fIswev = ['e', \ForkBB\__('No access to main.dist.php')];
+            $this->fIswev = ['e', __('No access to main.dist.php')];
         }
         unset($config);
 
         // языки
         $langs = $this->c->Func->getNameLangs();
         if (empty($langs)) {
-            $this->fIswev = ['e', \ForkBB\__('No language packs')];
+            $this->fIswev = ['e', __('No language packs')];
         }
 
         // стили
         $styles = $this->c->Func->getStyles();
         if (empty($styles)) {
-            $this->fIswev = ['e', \ForkBB\__('No styles')];
+            $this->fIswev = ['e', __('No styles')];
         }
 
         $fIswev = $this->getAttr('fIswev'); // ????
@@ -190,8 +191,8 @@ class Install extends Page
                                 'type'    => 'select',
                                 'options' => $langs,
                                 'value'   => $this->user->language,
-                                'caption' => \ForkBB\__('Install language'),
-                                'info'    => \ForkBB\__('Choose install language info'),
+                                'caption' => __('Install language'),
+                                'info'    => __('Choose install language info'),
                             ],
                         ],
                     ],
@@ -199,7 +200,7 @@ class Install extends Page
                 'btns'   => [
                     'changelang'  => [
                         'type'  => 'submit',
-                        'value' => \ForkBB\__('Change language'),
+                        'value' => __('Change language'),
                     ],
                 ],
             ];
@@ -216,12 +217,12 @@ class Install extends Page
                     'info' => [
                         'info1' => [
                             'type'  => '', //????
-                            'value' => \ForkBB\__('Database setup'),
+                            'value' => __('Database setup'),
                             'html'  => true,
                         ],
                         'info2' => [
                             'type'  => '', //????
-                            'value' => \ForkBB\__('Info 1'),
+                            'value' => __('Info 1'),
                         ],
                     ],
                 ],
@@ -231,41 +232,41 @@ class Install extends Page
                             'type'     => 'select',
                             'options'  => $this->dbTypes,
                             'value'    => $v ? $v->dbtype : 'mysql_innodb',
-                            'caption'  => \ForkBB\__('Database type'),
-                            'info'     => \ForkBB\__('Info 2'),
+                            'caption'  => __('Database type'),
+                            'info'     => __('Info 2'),
                             'required' => true,
                         ],
                         'dbhost' => [
                             'type'     => 'text',
                             'value'    => $v ? $v->dbhost : 'localhost',
-                            'caption'  => \ForkBB\__('Database server hostname'),
-                            'info'     => \ForkBB\__('Info 3'),
+                            'caption'  => __('Database server hostname'),
+                            'info'     => __('Info 3'),
                             'required' => true,
                         ],
                         'dbname' => [
                             'type'     => 'text',
                             'value'    => $v ? $v->dbname : '',
-                            'caption'  => \ForkBB\__('Database name'),
-                            'info'     => \ForkBB\__('Info 4'),
+                            'caption'  => __('Database name'),
+                            'info'     => __('Info 4'),
                             'required' => true,
                         ],
                         'dbuser' => [
                             'type'    => 'text',
                             'value'   => $v ? $v->dbuser : '',
-                            'caption' => \ForkBB\__('Database username'),
+                            'caption' => __('Database username'),
                         ],
                         'dbpass' => [
                             'type'    => 'password',
                             'value'   => '',
-                            'caption' => \ForkBB\__('Database password'),
-                            'info'    => \ForkBB\__('Info 5'),
+                            'caption' => __('Database password'),
+                            'info'    => __('Info 5'),
                         ],
                         'dbprefix' => [
                             'type'      => 'text',
                             'maxlength' => 40,
                             'value'     => $v ? $v->dbprefix : '',
-                            'caption'   => \ForkBB\__('Table prefix'),
-                            'info'      => \ForkBB\__('Info 6'),
+                            'caption'   => __('Table prefix'),
+                            'info'      => __('Info 6'),
                             'required' => true,
                         ],
                     ],
@@ -274,12 +275,12 @@ class Install extends Page
                     'info' => [
                         'info1' => [
                             'type'  => '', //????
-                            'value' => \ForkBB\__('Administration setup'),
+                            'value' => __('Administration setup'),
                             'html'  => true,
                         ],
                         'info2' => [
                             'type'  => '', //????
-                            'value' => \ForkBB\__('Info 7'),
+                            'value' => __('Info 7'),
                         ],
                     ],
                 ],
@@ -290,16 +291,16 @@ class Install extends Page
                             'maxlength' => 25,
                             'pattern'   => '^.{2,25}$',
                             'value'     => $v ? $v->username : '',
-                            'caption'   => \ForkBB\__('Administrator username'),
-                            'info'      => \ForkBB\__('Info 8'),
+                            'caption'   => __('Administrator username'),
+                            'info'      => __('Info 8'),
                             'required'  => true,
                         ],
                         'password' => [
                             'type'     => 'password',
                             'pattern'  => '^.{16,}$',
                             'value'    => '',
-                            'caption'  => \ForkBB\__('Administrator passphrase'),
-                            'info'     => \ForkBB\__('Info 9'),
+                            'caption'  => __('Administrator passphrase'),
+                            'info'     => __('Info 9'),
                             'required' => true,
                         ],
                         'email' => [
@@ -307,8 +308,8 @@ class Install extends Page
                             'maxlength' => 80,
                             'pattern'   => '.+@.+',
                             'value'     => $v ? $v->email : '',
-                            'caption'   => \ForkBB\__('Administrator email'),
-                            'info'      => \ForkBB\__('Info 10'),
+                            'caption'   => __('Administrator email'),
+                            'info'      => __('Info 10'),
                             'required'  => true,
                         ],
 
@@ -318,12 +319,12 @@ class Install extends Page
                     'info' => [
                         'info1' => [
                             'type'  => '', //????
-                            'value' => \ForkBB\__('Board setup'),
+                            'value' => __('Board setup'),
                             'html'  => true,
                         ],
                         'info2' => [
                             'type'  => '', //????
-                            'value' => \ForkBB\__('Info 11'),
+                            'value' => __('Info 11'),
                         ],
                     ],
                 ],
@@ -332,35 +333,35 @@ class Install extends Page
                         'title' => [
                             'type'      => 'text',
                             'maxlength' => 255,
-                            'value'     => $v ? $v->title : \ForkBB\__('My ForkBB Forum'),
-                            'caption'   => \ForkBB\__('Board title'),
+                            'value'     => $v ? $v->title : __('My ForkBB Forum'),
+                            'caption'   => __('Board title'),
                             'required'  => true,
                         ],
                         'descr' => [
                             'type'      => 'text',
                             'maxlength' => 16000,
-                            'value'     => $v ? $v->descr : \ForkBB\__('Description'),
-                            'caption'   => \ForkBB\__('Board description'),
+                            'value'     => $v ? $v->descr : __('Description'),
+                            'caption'   => __('Board description'),
                         ],
                         'baseurl' => [
                             'type'      => 'text',
                             'maxlength' => 1024,
                             'value'     => $v ? $v->baseurl : $this->c->BASE_URL,
-                            'caption'   => \ForkBB\__('Base URL'),
+                            'caption'   => __('Base URL'),
                             'required'  => true,
                         ],
                         'defaultlang' => [
                             'type'      => 'select',
                             'options'   => $langs,
                             'value'     => $v ? $v->defaultlang : $this->user->language,
-                            'caption'   => \ForkBB\__('Default language'),
+                            'caption'   => __('Default language'),
                             'required'  => true,
                         ],
                         'defaultstyle' => [
                             'type'      => 'select',
                             'options'   => $styles,
                             'value'     => $v ? $v->defaultstyle : $this->user->style,
-                            'caption'   => \ForkBB\__('Default style'),
+                            'caption'   => __('Default style'),
                             'required'  => true,
                         ],
 
@@ -370,7 +371,7 @@ class Install extends Page
             'btns'   => [
                 'submit'  => [
                     'type'  => 'submit',
-                    'value' => \ForkBB\__('Start install'),
+                    'value' => __('Start install'),
                 ],
             ],
         ];
@@ -474,7 +475,7 @@ class Install extends Page
         try {
             $stmt = $this->c->DB->query('SELECT 1 FROM ::users LIMIT 1');
             if (! empty($stmt->fetch())) {
-                $v->addError(\ForkBB\__('Existing table error', $v->dbprefix, $v->dbname));
+                $v->addError(__('Existing table error', $v->dbprefix, $v->dbname));
                 return $dbhost;
             }
         } catch (PDOException $e) {
@@ -1038,12 +1039,12 @@ class Install extends Page
         $now = \time();
 
         $groups = [
-            // g_id,                     g_title,                      g_user_title,        g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_post_links, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood, g_promote_min_posts, g_promote_next_group
-            [$this->c->GROUP_ADMIN,      \ForkBB\__('Administrators'), \ForkBB\__('Administrator '), 0,           0,                0,                  0,                      0,               1,                1,            1,            1,              1,             1,            1,              1,              1,             1,         1,        1,              1,            0,            0,              0,             0,                 0,                 0],
-            [$this->c->GROUP_MOD,        \ForkBB\__('Moderators'),     \ForkBB\__('Moderator '),     1,           1,                1,                  1,                      1,               1,                1,            1,            1,              1,             1,            1,              1,              1,             1,         1,        1,              1,            0,            0,              0,             0,                 0,                 0],
-            [$this->c->GROUP_GUEST,      \ForkBB\__('Guests'),         '',                           0,           0,                0,                  0,                      0,               0,                1,            1,            0,              0,             0,            0,              0,              0,             0,         1,        1,              0,            120,          60,             0,             0,                 0,                 0],
-            [$this->c->GROUP_MEMBER,     \ForkBB\__('Members'),        '',                           0,           0,                0,                  0,                      0,               0,                1,            1,            1,              1,             1,            1,              1,              1,             0,         1,        1,              1,            30,           30,             60,            60,                0,                 0],
-            [$this->c->GROUP_NEW_MEMBER, \ForkBB\__('New members'),    \ForkBB\__('New member'),     0,           0,                0,                  0,                      0,               0,                1,            1,            1,              1,             1,            1,              1,              0,             0,         1,        1,              1,            60,           30,             120,           60,                5,                 $this->c->GROUP_MEMBER],
+            // g_id,                     g_title,              g_user_title,        g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_post_links, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood, g_promote_min_posts, g_promote_next_group
+            [$this->c->GROUP_ADMIN,      __('Administrators'), __('Administrator '), 0,           0,                0,                  0,                      0,               1,                1,            1,            1,              1,             1,            1,              1,              1,             1,         1,        1,              1,            0,            0,              0,             0,                 0,                 0],
+            [$this->c->GROUP_MOD,        __('Moderators'),     __('Moderator '),     1,           1,                1,                  1,                      1,               1,                1,            1,            1,              1,             1,            1,              1,              1,             1,         1,        1,              1,            0,            0,              0,             0,                 0,                 0],
+            [$this->c->GROUP_GUEST,      __('Guests'),         '',                   0,           0,                0,                  0,                      0,               0,                1,            1,            0,              0,             0,            0,              0,              0,             0,         1,        1,              0,            120,          60,             0,             0,                 0,                 0],
+            [$this->c->GROUP_MEMBER,     __('Members'),        '',                   0,           0,                0,                  0,                      0,               0,                1,            1,            1,              1,             1,            1,              1,              1,             0,         1,        1,              1,            30,           30,             60,            60,                0,                 0],
+            [$this->c->GROUP_NEW_MEMBER, __('New members'),    __('New member'),     0,           0,                0,                  0,                      0,               0,                1,            1,            1,              1,             1,            1,              1,              0,             0,         1,        1,              1,            60,           30,             120,           60,                5,                 $this->c->GROUP_MEMBER],
         ];
         foreach ($groups as $group) { //???? $db_type != 'pgsql'
             $this->c->DB->exec('INSERT INTO ::groups (g_id, g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_post_links, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood, g_promote_min_posts, g_promote_next_group) VALUES (?i, ?s, ?s, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i)', $group) ;
@@ -1051,7 +1052,7 @@ class Install extends Page
         $this->c->DB->exec('UPDATE ::groups SET g_pm_limit=0 WHERE g_id=?i', [$this->c->GROUP_ADMIN]);
 
         $ip = \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: 'unknow';
-        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, signature) VALUES (?i, ?s, ?s, \'\')', [$this->c->GROUP_GUEST, \ForkBB\__('Guest '), \ForkBB\__('Guest ')]);
+        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, signature) VALUES (?i, ?s, ?s, \'\')', [$this->c->GROUP_GUEST, __('Guest '), __('Guest ')]);
         $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, email, email_normal, language, style, num_posts, last_post, registered, registration_ip, last_visit, signature, num_topics) VALUES (?i, ?s, ?s, ?s, ?s, ?s, ?s, 1, ?i, ?i, ?s, ?i, \'\', 1)', [$this->c->GROUP_ADMIN, $v->username, password_hash($v->password, \PASSWORD_DEFAULT), $v->email, $this->c->NormEmail->normalize($v->email), $v->defaultlang, $v->defaultstyle, $now, $now, $ip, $now]);
 
         $pun_config = [
@@ -1107,11 +1108,11 @@ class Install extends Page
             'o_regs_allow'            => 1,
             'o_regs_verify'           => 1,
             'o_announcement'          => 0,
-            'o_announcement_message'  => \ForkBB\__('Announcement '),
+            'o_announcement_message'  => __('Announcement '),
             'o_rules'                 => 0,
-            'o_rules_message'         => \ForkBB\__('Rules '),
+            'o_rules_message'         => __('Rules '),
             'o_maintenance'           => 0,
-            'o_maintenance_message'   => \ForkBB\__('Maintenance message '),
+            'o_maintenance_message'   => __('Maintenance message '),
             'o_default_dst'           => 0,
             'o_feed_type'             => 2,
             'o_feed_ttl'              => 0,
@@ -1151,10 +1152,10 @@ class Install extends Page
             $this->c->DB->exec('INSERT INTO ::config (conf_name, conf_value) VALUES (?s, ?s)', [$conf_name, $conf_value]);
         }
 
-        $this->c->DB->exec('INSERT INTO ::categories (cat_name, disp_position) VALUES (?s, ?i)', [\ForkBB\__('Test category'), 1]);
-        $this->c->DB->exec('INSERT INTO ::forums (forum_name, forum_desc, num_topics, num_posts, last_post, last_post_id, last_poster, last_topic, disp_position, cat_id, moderators) VALUES (?s, ?s, ?i, ?i, ?i, ?i, ?s, ?s, ?i, ?i, \'\')', [\ForkBB\__('Test forum'), \ForkBB\__('This is just a test forum'), 1, 1, $now, 1, $v->username, \ForkBB\__('Test post'), 1, 1]);
-        $this->c->DB->exec('INSERT INTO ::topics (poster, subject, posted, first_post_id, last_post, last_post_id, last_poster, forum_id) VALUES(?s, ?s, ?i, ?i, ?i, ?i, ?s, ?i)', [$v->username, \ForkBB\__('Test post'), $now, 1, $now, 1, $v->username, 1]);
-        $this->c->DB->exec('INSERT INTO ::posts (poster, poster_id, poster_ip, message, posted, topic_id) VALUES(?s, ?i, ?s, ?s, ?i, ?i)', [$v->username, 2, $ip, \ForkBB\__('Test message'), $now, 1]);
+        $this->c->DB->exec('INSERT INTO ::categories (cat_name, disp_position) VALUES (?s, ?i)', [__('Test category'), 1]);
+        $this->c->DB->exec('INSERT INTO ::forums (forum_name, forum_desc, num_topics, num_posts, last_post, last_post_id, last_poster, last_topic, disp_position, cat_id, moderators) VALUES (?s, ?s, ?i, ?i, ?i, ?i, ?s, ?s, ?i, ?i, \'\')', [__('Test forum'), __('This is just a test forum'), 1, 1, $now, 1, $v->username, __('Test post'), 1, 1]);
+        $this->c->DB->exec('INSERT INTO ::topics (poster, subject, posted, first_post_id, last_post, last_post_id, last_poster, forum_id) VALUES(?s, ?s, ?i, ?i, ?i, ?i, ?s, ?i)', [$v->username, __('Test post'), $now, 1, $now, 1, $v->username, 1]);
+        $this->c->DB->exec('INSERT INTO ::posts (poster, poster_id, poster_ip, message, posted, topic_id) VALUES(?s, ?i, ?s, ?s, ?i, ?i)', [$v->username, 2, $ip, __('Test message'), $now, 1]);
 
         $smilies = [
             ':)'         => 'smile.png',

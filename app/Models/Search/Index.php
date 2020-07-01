@@ -3,11 +3,8 @@
 namespace ForkBB\Models\Search;
 
 use ForkBB\Models\Method;
-use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Post\Model as Post;
 use PDO;
-use InvalidArgumentException;
-use RuntimeException;
 
 class Index extends Method
 {
@@ -115,9 +112,9 @@ class Index extends Method
             }
 
             $vars = [
-                ':pid'    => $post->id,
-                ':subj'   => 's' === $key ? 1 : 0,
-                ':words'  => $list,
+                ':pid'   => $post->id,
+                ':subj'  => 's' === $key ? 1 : 0,
+                ':words' => $list,
             ];
             $sql = 'INSERT INTO ::search_matches (post_id, word_id, subject_match)
                     SELECT ?i:pid, id, ?i:subj

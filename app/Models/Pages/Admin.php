@@ -4,6 +4,7 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Core\Container;
 use ForkBB\Models\Page;
+use function \ForkBB\__;
 
 class Admin extends Page
 {
@@ -49,30 +50,30 @@ class Admin extends Page
     {
         $r   = $this->c->Router;
         $nav = [
-            'index' => [$r->link('Admin'), \ForkBB\__('Admin index')],
-            'users' => [$r->link('AdminUsers'), \ForkBB\__('Users')],
+            'index' => [$r->link('Admin'), __('Admin index')],
+            'users' => [$r->link('AdminUsers'), __('Users')],
         ];
 
         if ($this->c->userRules->banUsers) {
-            $nav['bans'] = [$r->link('AdminBans'), \ForkBB\__('Bans')];
+            $nav['bans'] = [$r->link('AdminBans'), __('Bans')];
         }
         if (
             $this->user->isAdmin
             || '0' == $this->c->config->o_report_method
             || '2' == $this->c->config->o_report_method
         ) {
-            $nav['reports'] = [$r->link('AdminReports'), \ForkBB\__('Reports')];
+            $nav['reports'] = [$r->link('AdminReports'), __('Reports')];
         }
 
         if ($this->user->isAdmin) {
             $nav += [
-                'options'     => [$r->link('AdminOptions'), \ForkBB\__('Admin options')],
-                'permissions' => [$r->link('AdminPermissions'), \ForkBB\__('Permissions')],
-                'categories'  => [$r->link('AdminCategories'), \ForkBB\__('Categories')],
-                'forums'      => [$r->link('AdminForums'), \ForkBB\__('Forums')],
-                'groups'      => [$r->link('AdminGroups'), \ForkBB\__('User groups')],
-                'censoring'   => [$r->link('AdminCensoring'), \ForkBB\__('Censoring')],
-                'maintenance' => [$r->link('AdminMaintenance'), \ForkBB\__('Maintenance')]
+                'options'     => [$r->link('AdminOptions'), __('Admin options')],
+                'permissions' => [$r->link('AdminPermissions'), __('Permissions')],
+                'categories'  => [$r->link('AdminCategories'), __('Categories')],
+                'forums'      => [$r->link('AdminForums'), __('Forums')],
+                'groups'      => [$r->link('AdminGroups'), __('User groups')],
+                'censoring'   => [$r->link('AdminCensoring'), __('Censoring')],
+                'maintenance' => [$r->link('AdminMaintenance'), __('Maintenance')]
             ];
         }
 
@@ -97,7 +98,7 @@ class Admin extends Page
             }
         }
 
-        $crumbs[] = [$this->c->Router->link('Admin'), \ForkBB\__('Admin title')];
+        $crumbs[] = [$this->c->Router->link('Admin'), __('Admin title')];
 
         return parent::crumbs(...$crumbs);
     }

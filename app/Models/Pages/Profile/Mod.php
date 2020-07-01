@@ -9,6 +9,7 @@ use ForkBB\Models\Pages\Profile;
 use ForkBB\Models\User\Model as User;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Forum\Manager as ForumManager;
+use function \ForkBB\__;
 
 class Mod extends Profile
 {
@@ -63,8 +64,8 @@ class Mod extends Profile
         }
 
         $this->crumbs     = $this->crumbs(
-            [$this->c->Router->link('EditUserModeration', ['id' => $this->curUser->id]), \ForkBB\__('Moderator rights')],
-            [$this->c->Router->link('EditUserProfile', ['id' => $this->curUser->id]), \ForkBB\__('Editing profile')]
+            [$this->c->Router->link('EditUserModeration', ['id' => $this->curUser->id]), __('Moderator rights')],
+            [$this->c->Router->link('EditUserProfile', ['id' => $this->curUser->id]), __('Editing profile')]
         );
         $this->form       = $this->form();
         $this->actionBtns = $this->btns('edit');
@@ -102,7 +103,7 @@ class Mod extends Profile
             'btns'   => [
                 'save' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Save'),
+                    'value'     => __('Save'),
                     'accesskey' => 's',
                 ],
             ],
@@ -132,7 +133,7 @@ class Mod extends Profile
                     'class'   => ['modforum', 'name', 'depth' . $forum->depth],
                     'type'    => 'str',
                     'value'   => $forum->forum_name,
-                    'caption' => \ForkBB\__('Forum label'),
+                    'caption' => __('Forum label'),
                 ];
                 $fields["moderator[{$forum->id}]"] = [
                     'class'    => ['modforum', 'moderator'],
@@ -140,7 +141,7 @@ class Mod extends Profile
                     'value'    => $forum->id,
                     'checked'  => isset($this->curForums[$forum->id]) && $this->curUser->isModerator($forum),
                     'disabled' => ! isset($this->curForums[$forum->id]) || '' != $this->curForums[$forum->id]->redirect_url,
-                    'caption'  => \ForkBB\__('Moderator label'),
+                    'caption'  => __('Moderator label'),
                 ];
                 $form['sets']["forum{$forum->id}"] = [
                     'class'  => 'modforum',

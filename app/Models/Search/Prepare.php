@@ -3,11 +3,6 @@
 namespace ForkBB\Models\Search;
 
 use ForkBB\Models\Method;
-use ForkBB\Models\Forum\Model as Forum;
-use ForkBB\Models\Post\Model as Post;
-use PDO;
-use InvalidArgumentException;
-use RuntimeException;
 
 class Prepare extends Method
 {
@@ -197,7 +192,7 @@ class Prepare extends Method
                 $word = '(' . $this->queryText($word) . ')';
             }
             $result .= $space . $word;
-            $space = ' ';
+            $space   = ' ';
         }
         return $result;
     }

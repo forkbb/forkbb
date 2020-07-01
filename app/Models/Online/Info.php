@@ -18,7 +18,7 @@ class Info extends Method
             return null;
         }
 
-        $this->model->maxNum = $this->c->config->st_max_users;
+        $this->model->maxNum  = $this->c->config->st_max_users;
         $this->model->maxTime = $this->c->config->st_max_users_time;
 
         $info = [];
@@ -42,7 +42,7 @@ class Info extends Method
         $s = 0;
         foreach ($this->model->bots as $bot => $arr) {
             $count = \count($arr);
-            $s += $count;
+            $s    += $count;
             if ($count > 1) {
                 $info[] = '[Bot] ' . $bot . ' (' . $count . ')';
             } else {

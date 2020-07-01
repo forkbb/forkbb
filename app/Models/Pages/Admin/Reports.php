@@ -6,6 +6,7 @@ use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin;
 use ForkBB\Models\Post\Model as Post;
 use ForkBB\Models\Report\Model as Report;
+use function \ForkBB\__;
 
 class Reports extends Admin
 {
@@ -77,11 +78,11 @@ class Reports extends Admin
         foreach ($reports as $report) {
             if ($noZapped) {
                 $cur = [
-                    'legend' => \ForkBB\__('Reported %s', \ForkBB\dt($report->created)),
+                    'legend' => __('Reported %s', \ForkBB\dt($report->created)),
                 ];
             } else {
                 $cur = [
-                    'legend' => \ForkBB\__('Marked as read %1$s by %2$s', \ForkBB\dt($report->zapped), $report->marker->username),
+                    'legend' => __('Marked as read %1$s by %2$s', \ForkBB\dt($report->zapped), $report->marker->username),
                 ];
             }
             $cur['fields'] = [];
@@ -90,7 +91,7 @@ class Reports extends Admin
                 'type'    => $author->isGuest ? 'str' : 'link',
                 'value'   => $author->username,
                 'title'   => $author->username,
-                'caption' => \ForkBB\__('Reported by'),
+                'caption' => __('Reported by'),
                 'href'    => $author->link,
             ];
             $post = $report->post;
@@ -99,25 +100,25 @@ class Reports extends Admin
                 $forum = $topic->parent;
                 $cur['fields']['post' . $report->id] = [
                     'type'    => 'str',
-                    'value'   => \ForkBB\__('Post #%s ', $post->id, $post->link, $topic->subject, $topic->link, $forum->forum_name, $forum->link),
+                    'value'   => __('Post #%s ', $post->id, $post->link, $topic->subject, $topic->link, $forum->forum_name, $forum->link),
                     'html'    => true,
                 ];
             } else {
                 $cur['fields']['post' . $report->id] = [
                     'type'    => 'str',
-                    'value'   => \ForkBB\__('Post #%s', $report->post_id),
+                    'value'   => __('Post #%s', $report->post_id),
                 ];
             }
             $cur['fields']['reason' . $report->id] = [
                 'type'    => 'str',
                 'value'   => $report->message,
-                'caption' => \ForkBB\__('Reason'),
+                'caption' => __('Reason'),
             ];
             if ($noZapped) {
                 $cur['fields']['zap' . $report->id] = [
                     'type'    => 'btn',
-                    'value'   => \ForkBB\__('Zap'),
-                    'title'   => \ForkBB\__('Zap'),
+                    'value'   => __('Zap'),
+                    'title'   => __('Zap'),
                     'link'    => $report->linkZap,
                 ];
             }
@@ -129,7 +130,7 @@ class Reports extends Admin
                 'info' => [
                     'info1' => [
                         'type'  => '', //????
-                        'value' => $noZapped ? \ForkBB\__('No new reports') : \ForkBB\__('No zapped reports'),
+                        'value' => $noZapped ? __('No new reports') : __('No zapped reports'),
                     ],
                 ],
             ];

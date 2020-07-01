@@ -4,6 +4,7 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
 use ForkBB\Models\Forum\Model as ForumModel;
+use function \ForkBB\__;
 
 class Forum extends Page
 {
@@ -43,7 +44,7 @@ class Forum extends Page
         $this->crumbs     = $this->crumbs($forum);
 
         if (empty($this->topics)) {
-            $this->fIswev = ['i', \ForkBB\__('Empty forum')];
+            $this->fIswev = ['i', __('Empty forum')];
         } elseif (
             $this->user->isAdmin
             || $this->user->isModerator($forum)
@@ -79,23 +80,23 @@ class Forum extends Page
             'btns'   => [
                 'open' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Open'),
+                    'value'     => __('Open'),
                 ],
                 'close' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Close'),
+                    'value'     => __('Close'),
                 ],
                 'delete' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Delete'),
+                    'value'     => __('Delete'),
                 ],
                 'move' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Move'),
+                    'value'     => __('Move'),
                 ],
                 'merge' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Merge'),
+                    'value'     => __('Merge'),
                 ],
             ],
         ];

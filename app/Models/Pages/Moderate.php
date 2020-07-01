@@ -8,6 +8,7 @@ use ForkBB\Models\Page;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Topic\Model as Topic;
 use ForkBB\Models\Post\Model as Post;
+use function \ForkBB\__;
 
 class Moderate extends Page
 {
@@ -62,10 +63,10 @@ class Moderate extends Page
             foreach ($this->c->forums->depthList($root, -1) as $f) {
                 if ($cid !== $f->cat_id) {
                     $cid       = $f->cat_id;
-                    $options[] = [\ForkBB\__('Category prefix') . $f->cat_name];
+                    $options[] = [__('Category prefix') . $f->cat_name];
                 }
 
-                $indent = \str_repeat(\ForkBB\__('Forum indent'), $f->depth);
+                $indent = \str_repeat(__('Forum indent'), $f->depth);
 
                 if (
                     $f->redirect_url
@@ -74,9 +75,9 @@ class Moderate extends Page
                         && $f->id === $curForum
                     )
                 ) {
-                    $options[] = [$f->id, $indent . \ForkBB\__('Forum prefix') . $f->forum_name, true];
+                    $options[] = [$f->id, $indent . __('Forum prefix') . $f->forum_name, true];
                 } else {
-                    $options[] = [$f->id, $indent . \ForkBB\__('Forum prefix') . $f->forum_name];
+                    $options[] = [$f->id, $indent . __('Forum prefix') . $f->forum_name];
                     $idxs[]    = $f->id;
                 }
             }
@@ -193,7 +194,7 @@ class Moderate extends Page
             ]);
 
         if (! $v->validation($_POST)) {
-            $message = $this->c->Message->message('Bad request');
+            $message         = $this->c->Message->message('Bad request');
             $message->fIswev = $v->getErrors();
             return $message;
         }
@@ -281,9 +282,9 @@ class Moderate extends Page
     {
         switch ($v->step) {
             case 1:
-                $this->formTitle   = \ForkBB\__('Open topics');
-                $this->buttonValue = \ForkBB\__('Open');
-                $this->crumbs      = $this->crumbs($this->formTitle, \ForkBB\__('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
+                $this->formTitle   = __('Open topics');
+                $this->buttonValue = __('Open');
+                $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->form        = $this->formConfirm($topics, $v);
                 return $this;
             case 2:
@@ -304,9 +305,9 @@ class Moderate extends Page
     {
         switch ($v->step) {
             case 1:
-                $this->formTitle   = \ForkBB\__('Close topics');
-                $this->buttonValue = \ForkBB\__('Close');
-                $this->crumbs      = $this->crumbs($this->formTitle, \ForkBB\__('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
+                $this->formTitle   = __('Close topics');
+                $this->buttonValue = __('Close');
+                $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->form        = $this->formConfirm($topics, $v);
                 return $this;
             case 2:
@@ -344,9 +345,9 @@ class Moderate extends Page
 
         switch ($v->step) {
             case 1:
-                $this->formTitle   = \ForkBB\__(true === $this->processAsPosts ? 'Delete posts' : 'Delete topics');
-                $this->buttonValue = \ForkBB\__('Delete');
-                $this->crumbs      = $this->crumbs($this->formTitle, \ForkBB\__('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
+                $this->formTitle   = __(true === $this->processAsPosts ? 'Delete posts' : 'Delete topics');
+                $this->buttonValue = __('Delete');
+                $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->form        = $this->formConfirm($objects, $v);
                 return $this;
             case 2:
@@ -372,9 +373,9 @@ class Moderate extends Page
     {
         switch ($v->step) {
             case 1:
-                $this->formTitle   = \ForkBB\__('Move topics');
-                $this->buttonValue = \ForkBB\__('Move');
-                $this->crumbs      = $this->crumbs($this->formTitle, \ForkBB\__('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
+                $this->formTitle   = __('Move topics');
+                $this->buttonValue = __('Move');
+                $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->chkRedirect = true;
                 $this->form        = $this->formConfirm($topics, $v);
                 return $this;
@@ -409,9 +410,9 @@ class Moderate extends Page
 
         switch ($v->step) {
             case 1:
-                $this->formTitle   = \ForkBB\__('Merge topics');
-                $this->buttonValue = \ForkBB\__('Merge');
-                $this->crumbs      = $this->crumbs($this->formTitle, \ForkBB\__('Moderate'), $this->curForum);
+                $this->formTitle   = __('Merge topics');
+                $this->buttonValue = __('Merge');
+                $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $this->curForum);
                 $this->chkRedirect = true;
                 $this->form        = $this->formConfirm($topics, $v);
                 return $this;
@@ -432,9 +433,9 @@ class Moderate extends Page
     {
         switch ($v->step) {
             case 1:
-                $this->formTitle   = \ForkBB\__('Unstick topics');
-                $this->buttonValue = \ForkBB\__('Unstick');
-                $this->crumbs      = $this->crumbs($this->formTitle, \ForkBB\__('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
+                $this->formTitle   = __('Unstick topics');
+                $this->buttonValue = __('Unstick');
+                $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->form        = $this->formConfirm($topics, $v);
                 return $this;
             case 2:
@@ -458,9 +459,9 @@ class Moderate extends Page
     {
         switch ($v->step) {
             case 1:
-                $this->formTitle   = \ForkBB\__('Stick topics');
-                $this->buttonValue = \ForkBB\__('Stick');
-                $this->crumbs      = $this->crumbs($this->formTitle, \ForkBB\__('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
+                $this->formTitle   = __('Stick topics');
+                $this->buttonValue = __('Stick');
+                $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->form        = $this->formConfirm($topics, $v);
                 return $this;
             case 2:
@@ -484,10 +485,10 @@ class Moderate extends Page
     {
         switch ($v->step) {
             case 1:
-                $this->formTitle   = \ForkBB\__('Split posts');
-                $this->buttonValue = \ForkBB\__('Split');
+                $this->formTitle   = __('Split posts');
+                $this->buttonValue = __('Split');
                 $this->needSubject = true;
-                $this->crumbs      = $this->crumbs($this->formTitle, \ForkBB\__('Moderate'), $this->curTopic);
+                $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $this->curTopic);
                 $this->form        = $this->formConfirm($posts, $v);
                 return $this;
             case 2:
@@ -538,9 +539,9 @@ class Moderate extends Page
         $headers = [];
         foreach ($objects as $object) {
             if ($object instanceof Topic) {
-                $headers[] = \ForkBB\__('Topic «%s»', \ForkBB\cens(($object->subject)));
+                $headers[] = __('Topic «%s»', \ForkBB\cens(($object->subject)));
             } else {
-                $headers[] = \ForkBB\__('Post «%1$s by %2$s»', \ForkBB\dt($object->posted), $object->poster);
+                $headers[] = __('Post «%1$s by %2$s»', \ForkBB\dt($object->posted), $object->poster);
             }
         }
 
@@ -557,7 +558,7 @@ class Moderate extends Page
         if ($this->firstTopic instanceof Topic) {
             $form['sets']['info']['info']['info2'] = [
                 'type'    => '', //????
-                'value'   => \ForkBB\__('All posts will be posted in the «%s» topic', $this->firstTopic->subject),
+                'value'   => __('All posts will be posted in the «%s» topic', $this->firstTopic->subject),
 //                'html'    => true,
             ];
         }
@@ -568,7 +569,7 @@ class Moderate extends Page
             $fields['subject'] = [
                 'type'      => 'text',
                 'maxlength' => 70,
-                'caption'   => \ForkBB\__('New subject'),
+                'caption'   => __('New subject'),
                 'required'  => true,
                 'value'     => '' == $v->subject ? $this->curTopic->subject : $v->subject,
                 'autofocus' => $autofocus,
@@ -581,7 +582,7 @@ class Moderate extends Page
                 'type'      => 'select',
                 'options'   => $this->listForOptions,
                 'value'     => null,
-                'caption'   => \ForkBB\__('Move to'),
+                'caption'   => __('Move to'),
                 'required'  => true,
                 'autofocus' => $autofocus,
             ];
@@ -591,7 +592,7 @@ class Moderate extends Page
         if (true === $this->chkRedirect) {
             $fields['redirect'] = [
                 'type'    => 'checkbox',
-                'label'   => \ForkBB\__('Leave redirect'),
+                'label'   => __('Leave redirect'),
                 'value'   => '1',
                 'checked' => true,
             ];
@@ -599,7 +600,7 @@ class Moderate extends Page
 
         $fields['confirm'] = [
             'type'    => 'checkbox',
-            'label'   => \ForkBB\__('Confirm action'),
+            'label'   => __('Confirm action'),
             'value'   => '1',
             'checked' => false,
         ];
@@ -611,7 +612,7 @@ class Moderate extends Page
         ];
         $form['btns']['cancel'] = [
             'type'      => 'submit',
-            'value'     => \ForkBB\__('Cancel'),
+            'value'     => __('Cancel'),
         ];
 
         return $form;

@@ -5,6 +5,7 @@ namespace ForkBB\Models\Pages\Profile;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
+use function \ForkBB\__;
 
 class Config extends Profile
 {
@@ -79,7 +80,7 @@ class Config extends Profile
             $this->fIswev = $v->getErrors();
         }
 
-        $this->crumbs     = $this->crumbs([$this->c->Router->link('EditUserBoardConfig', ['id' => $this->curUser->id]), \ForkBB\__('Board configuration')]);
+        $this->crumbs     = $this->crumbs([$this->c->Router->link('EditUserBoardConfig', ['id' => $this->curUser->id]), __('Board configuration')]);
         $this->form       = $this->form();
         $this->actionBtns = $this->btns('config');
 
@@ -115,152 +116,152 @@ class Config extends Profile
             'btns'   => [
                 'save' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Save changes'),
+                    'value'     => __('Save changes'),
                     'accesskey' => 's',
                 ],
             ],
         ];
 
-        $yn     = [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')];
+        $yn     = [1 => __('Yes'), 0 => __('No')];
         $langs  = $this->c->Func->getNameLangs();
         $styles = $this->c->Func->getStyles();
         $timeFormat = [];
         foreach ($this->c->TIME_FORMATS as $key => $value) {
-            $timeFormat[$key] = \ForkBB\dt(\time(), false, null, $value, true, true) . ($key ? '' : ' (' . \ForkBB\__('Default') . ')');
+            $timeFormat[$key] = \ForkBB\dt(\time(), false, null, $value, true, true) . ($key ? '' : ' (' . __('Default') . ')');
         }
         $dateFormat = [];
         foreach ($this->c->DATE_FORMATS as $key => $value) {
-            $dateFormat[$key] = \ForkBB\dt(\time(), true, $value, null, false, true) . ($key ? '' : ' (' . \ForkBB\__('Default') . ')');
+            $dateFormat[$key] = \ForkBB\dt(\time(), true, $value, null, false, true) . ($key ? '' : ' (' . __('Default') . ')');
         }
 
         $form['sets']['essentials'] = [
-            'legend' => \ForkBB\__('Essentials'),
+            'legend' => __('Essentials'),
             'class'  => 'data-edit',
             'fields' => [
                 'language' => [
                     'type'    => 'select',
                     'options' => $langs,
                     'value'   => $this->curUser->language,
-                    'caption' => \ForkBB\__('Language'),
+                    'caption' => __('Language'),
                 ],
                 'style' => [
                     'type'    => 'select',
                     'options' => $styles,
                     'value'   => $this->curUser->style,
-                    'caption' => \ForkBB\__('Style'),
+                    'caption' => __('Style'),
                 ],
                 'timezone' => [
                     'type'    => 'select',
                     'options' => [
-                        '-12'   => \ForkBB\__('UTC-12:00'),
-                        '-11'   => \ForkBB\__('UTC-11:00'),
-                        '-10'   => \ForkBB\__('UTC-10:00'),
-                        '-9.5'  => \ForkBB\__('UTC-09:30'),
-                        '-9'    => \ForkBB\__('UTC-09:00'),
-                        '-8.5'  => \ForkBB\__('UTC-08:30'),
-                        '-8'    => \ForkBB\__('UTC-08:00'),
-                        '-7'    => \ForkBB\__('UTC-07:00'),
-                        '-6'    => \ForkBB\__('UTC-06:00'),
-                        '-5'    => \ForkBB\__('UTC-05:00'),
-                        '-4'    => \ForkBB\__('UTC-04:00'),
-                        '-3.5'  => \ForkBB\__('UTC-03:30'),
-                        '-3'    => \ForkBB\__('UTC-03:00'),
-                        '-2'    => \ForkBB\__('UTC-02:00'),
-                        '-1'    => \ForkBB\__('UTC-01:00'),
-                        '0'     => \ForkBB\__('UTC'),
-                        '1'     => \ForkBB\__('UTC+01:00'),
-                        '2'     => \ForkBB\__('UTC+02:00'),
-                        '3'     => \ForkBB\__('UTC+03:00'),
-                        '3.5'   => \ForkBB\__('UTC+03:30'),
-                        '4'     => \ForkBB\__('UTC+04:00'),
-                        '4.5'   => \ForkBB\__('UTC+04:30'),
-                        '5'     => \ForkBB\__('UTC+05:00'),
-                        '5.5'   => \ForkBB\__('UTC+05:30'),
-                        '5.75'  => \ForkBB\__('UTC+05:45'),
-                        '6'     => \ForkBB\__('UTC+06:00'),
-                        '6.5'   => \ForkBB\__('UTC+06:30'),
-                        '7'     => \ForkBB\__('UTC+07:00'),
-                        '8'     => \ForkBB\__('UTC+08:00'),
-                        '8.75'  => \ForkBB\__('UTC+08:45'),
-                        '9'     => \ForkBB\__('UTC+09:00'),
-                        '9.5'   => \ForkBB\__('UTC+09:30'),
-                        '10'    => \ForkBB\__('UTC+10:00'),
-                        '10.5'  => \ForkBB\__('UTC+10:30'),
-                        '11'    => \ForkBB\__('UTC+11:00'),
-                        '11.5'  => \ForkBB\__('UTC+11:30'),
-                        '12'    => \ForkBB\__('UTC+12:00'),
-                        '12.75' => \ForkBB\__('UTC+12:45'),
-                        '13'    => \ForkBB\__('UTC+13:00'),
-                        '14'    => \ForkBB\__('UTC+14:00'),
+                        '-12'   => __('UTC-12:00'),
+                        '-11'   => __('UTC-11:00'),
+                        '-10'   => __('UTC-10:00'),
+                        '-9.5'  => __('UTC-09:30'),
+                        '-9'    => __('UTC-09:00'),
+                        '-8.5'  => __('UTC-08:30'),
+                        '-8'    => __('UTC-08:00'),
+                        '-7'    => __('UTC-07:00'),
+                        '-6'    => __('UTC-06:00'),
+                        '-5'    => __('UTC-05:00'),
+                        '-4'    => __('UTC-04:00'),
+                        '-3.5'  => __('UTC-03:30'),
+                        '-3'    => __('UTC-03:00'),
+                        '-2'    => __('UTC-02:00'),
+                        '-1'    => __('UTC-01:00'),
+                        '0'     => __('UTC'),
+                        '1'     => __('UTC+01:00'),
+                        '2'     => __('UTC+02:00'),
+                        '3'     => __('UTC+03:00'),
+                        '3.5'   => __('UTC+03:30'),
+                        '4'     => __('UTC+04:00'),
+                        '4.5'   => __('UTC+04:30'),
+                        '5'     => __('UTC+05:00'),
+                        '5.5'   => __('UTC+05:30'),
+                        '5.75'  => __('UTC+05:45'),
+                        '6'     => __('UTC+06:00'),
+                        '6.5'   => __('UTC+06:30'),
+                        '7'     => __('UTC+07:00'),
+                        '8'     => __('UTC+08:00'),
+                        '8.75'  => __('UTC+08:45'),
+                        '9'     => __('UTC+09:00'),
+                        '9.5'   => __('UTC+09:30'),
+                        '10'    => __('UTC+10:00'),
+                        '10.5'  => __('UTC+10:30'),
+                        '11'    => __('UTC+11:00'),
+                        '11.5'  => __('UTC+11:30'),
+                        '12'    => __('UTC+12:00'),
+                        '12.75' => __('UTC+12:45'),
+                        '13'    => __('UTC+13:00'),
+                        '14'    => __('UTC+14:00'),
                     ],
                     'value'   => $this->curUser->timezone,
-                    'caption' => \ForkBB\__('Time zone'),
+                    'caption' => __('Time zone'),
                 ],
                 'dst' => [
                     'type'    => 'radio',
                     'value'   => $this->curUser->dst,
                     'values'  => $yn,
-                    'caption' => \ForkBB\__('DST label'),
-                    'info'    => \ForkBB\__('DST help'),
+                    'caption' => __('DST label'),
+                    'info'    => __('DST help'),
                 ],
                 'time_format' => [
                     'type'    => 'select',
                     'options' => $timeFormat,
                     'value'   => $this->curUser->time_format,
-                    'caption' => \ForkBB\__('Time format'),
+                    'caption' => __('Time format'),
                 ],
                 'date_format' => [
                     'type'    => 'select',
                     'options' => $dateFormat,
                     'value'   => $this->curUser->date_format,
-                    'caption' => \ForkBB\__('Date format'),
+                    'caption' => __('Date format'),
                 ],
 
             ],
         ];
         $form['sets']['viewing-posts'] = [
-            'legend' => \ForkBB\__('Viewing posts'),
+            'legend' => __('Viewing posts'),
             'class'  => 'data-edit',
             'fields' => [
                 'show_smilies' => [
                     'type'    => 'radio',
                     'value'   => $this->curUser->show_smilies,
                     'values'  => $yn,
-                    'caption' => \ForkBB\__('Smilies label'),
-                    'info'    => \ForkBB\__('Smilies info'),
+                    'caption' => __('Smilies label'),
+                    'info'    => __('Smilies info'),
                 ],
                 'show_sig' => [
                     'type'    => 'radio',
                     'value'   => $this->curUser->show_sig,
                     'values'  => $yn,
-                    'caption' => \ForkBB\__('Sigs label'),
-                    'info'    => \ForkBB\__('Sigs info'),
+                    'caption' => __('Sigs label'),
+                    'info'    => __('Sigs info'),
                 ],
                 'show_avatars' => [
                     'type'    => 'radio',
                     'value'   => $this->curUser->show_avatars,
                     'values'  => $yn,
-                    'caption' => \ForkBB\__('Avatars label'),
-                    'info'    => \ForkBB\__('Avatars info'),
+                    'caption' => __('Avatars label'),
+                    'info'    => __('Avatars info'),
                 ],
                 'show_img' => [
                     'type'    => 'radio',
                     'value'   => $this->curUser->show_img,
                     'values'  => $yn,
-                    'caption' => \ForkBB\__('Images label'),
-                    'info'    => \ForkBB\__('Images info'),
+                    'caption' => __('Images label'),
+                    'info'    => __('Images info'),
                 ],
                 'show_img_sig' => [
                     'type'    => 'radio',
                     'value'   => $this->curUser->show_img_sig,
                     'values'  => $yn,
-                    'caption' => \ForkBB\__('Images sigs label'),
-                    'info'    => \ForkBB\__('Images sigs info'),
+                    'caption' => __('Images sigs label'),
+                    'info'    => __('Images sigs info'),
                 ],
             ],
         ];
         $form['sets']['pagination'] = [
-            'legend' => \ForkBB\__('Pagination'),
+            'legend' => __('Pagination'),
             'class'  => 'data-edit',
             'fields' => [
                 'disp_topics' => [
@@ -268,16 +269,16 @@ class Config extends Profile
                     'min'     => 0,
                     'max'     => 50,
                     'value'   => $this->curUser->__disp_topics,
-                    'caption' => \ForkBB\__('Topics per page label'),
-                    'info'    => \ForkBB\__('For default'),
+                    'caption' => __('Topics per page label'),
+                    'info'    => __('For default'),
                 ],
                 'disp_posts' => [
                     'type'    => 'number',
                     'min'     => 0,
                     'max'     => 50,
                     'value'   => $this->curUser->__disp_posts,
-                    'caption' => \ForkBB\__('Posts per page label'),
-                    'info'    => \ForkBB\__('For default'),
+                    'caption' => __('Posts per page label'),
+                    'info'    => __('For default'),
                 ],
             ],
         ];

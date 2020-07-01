@@ -5,6 +5,7 @@ namespace ForkBB\Models\Validators;
 use ForkBB\Core\Validator;
 use ForkBB\Core\Validators;
 use ForkBB\Models\User\Model as User;
+use function \ForkBB\__;
 
 class Email extends Validators
 {
@@ -109,7 +110,7 @@ class Email extends Validators
                 $flood = $this->c->FLOOD_INTERVAL;
             }
             if ($flood < $this->c->FLOOD_INTERVAL) {
-                $v->addError(\ForkBB\__('Email flood', (int) (($this->c->FLOOD_INTERVAL - $flood) / 60)), 'e');
+                $v->addError(__('Email flood', (int) (($this->c->FLOOD_INTERVAL - $flood) / 60)), 'e');
                 $ok = false;
             }
         }

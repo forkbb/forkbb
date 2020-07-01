@@ -8,6 +8,7 @@ use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
 use ForkBB\Models\User\Model as User;
+use function \ForkBB\__;
 
 class Pass extends Profile
 {
@@ -54,7 +55,7 @@ class Pass extends Profile
 
                 if ($this->rules->my) {
 #                    $auth = $this->c->Auth;
-#                    $auth->fIswev = ['s' => [\ForkBB\__('Pass updated')]];
+#                    $auth->fIswev = ['s' => [__('Pass updated')]];
 #                    return $auth->login(['_username' => $this->curUser->username], 'GET');
                     return $this->c->Redirect->page('Login')->message('Pass updated'); // ???? нужна передача данных между скриптами не привязанная к пользователю
                 } else {
@@ -66,8 +67,8 @@ class Pass extends Profile
         }
 
         $this->crumbs     = $this->crumbs(
-            [$this->c->Router->link('EditUserPass', ['id' => $this->curUser->id]), \ForkBB\__('Change pass')],
-            [$this->c->Router->link('EditUserProfile', ['id' => $this->curUser->id]), \ForkBB\__('Editing profile')]
+            [$this->c->Router->link('EditUserPass', ['id' => $this->curUser->id]), __('Change pass')],
+            [$this->c->Router->link('EditUserProfile', ['id' => $this->curUser->id]), __('Editing profile')]
         );
         $this->form       = $this->form();
         $this->actionBtns = $this->btns('edit');
@@ -94,14 +95,14 @@ class Pass extends Profile
                         'new_pass' => [
                             'type'      => 'password',
                             'maxlength' => 25,
-                            'caption'   => \ForkBB\__('New pass'),
+                            'caption'   => __('New pass'),
                             'required'  => true,
                             'pattern'   => '^.{16,}$',
-                            'info'      => \ForkBB\__('Pass format') . ' ' . \ForkBB\__('Pass info'),
+                            'info'      => __('Pass format') . ' ' . __('Pass info'),
                         ],
                         'password' => [
                             'type'      => 'password',
-                            'caption'   => \ForkBB\__('Your passphrase'),
+                            'caption'   => __('Your passphrase'),
                             'required'  => true,
                         ],
                     ],
@@ -110,7 +111,7 @@ class Pass extends Profile
             'btns'   => [
                 'submit' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Submit'),
+                    'value'     => __('Submit'),
                     'accesskey' => 's',
                 ],
             ],

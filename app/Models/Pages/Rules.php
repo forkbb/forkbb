@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
+use function \ForkBB\__;
 
 class Rules extends Page
 {
@@ -17,8 +18,8 @@ class Rules extends Page
         $this->nameTpl    = 'rules';
         $this->onlinePos  = 'rules';
         $this->canonical  = $this->c->Router->link('Rules');
-        $this->title      = \ForkBB\__('Forum rules');
-        $this->crumbs     = $this->crumbs([$this->c->Router->link('Rules'), \ForkBB\__('Forum rules')]);
+        $this->title      = __('Forum rules');
+        $this->crumbs     = $this->crumbs([$this->c->Router->link('Rules'), __('Forum rules')]);
         $this->rules      = $this->c->config->o_rules_message;
 
         return $this;
@@ -37,9 +38,9 @@ class Rules extends Page
         $this->nameTpl    = 'rules';
         $this->onlinePos  = 'rules';
         $this->robots     = 'noindex';
-        $this->title      = \ForkBB\__('Forum rules');
-        $this->crumbs     = $this->crumbs(\ForkBB\__('Forum rules'), [$this->c->Router->link('Register'), \ForkBB\__('Register')]);
-        $this->rules      = '1' == $this->c->config->o_rules ? $this->c->config->o_rules_message : \ForkBB\__('If no rules');
+        $this->title      = __('Forum rules');
+        $this->crumbs     = $this->crumbs(__('Forum rules'), [$this->c->Router->link('Register'), __('Register')]);
+        $this->rules      = '1' == $this->c->config->o_rules ? $this->c->config->o_rules_message : __('If no rules');
         $this->form       = $this->formAgree();
 
         return $this;
@@ -62,7 +63,7 @@ class Rules extends Page
                     'fields' => [
                         'agree' => [
                             'type'    => 'checkbox',
-                            'label'   => \ForkBB\__('Agree'),
+                            'label'   => __('Agree'),
                             'value'   => $this->c->Csrf->create('Register'),
                         ],
                     ],
@@ -71,7 +72,7 @@ class Rules extends Page
             'btns'   => [
                 'register' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Register'),
+                    'value'     => __('Register'),
                     'accesskey' => 's',
                 ],
             ],

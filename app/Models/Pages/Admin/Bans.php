@@ -8,6 +8,7 @@ use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin;
 use ForkBB\Models\User\Model as User;
 use RuntimeException;
+use function \ForkBB\__;
 
 class Bans extends Admin
 {
@@ -78,8 +79,8 @@ class Bans extends Admin
     {
         $this->nameTpl        = 'admin/bans';
         $this->formBanPage    = 'AdminBansNew';
-        $this->formBanHead    = \ForkBB\__('New ban head');
-        $this->formBanSubHead = \ForkBB\__('Add ban subhead');
+        $this->formBanHead    = __('New ban head');
+        $this->formBanSubHead = __('Add ban subhead');
 
         if ('POST' === $method) {
             $v = $this->c->Validator->reset()
@@ -111,12 +112,12 @@ class Bans extends Admin
                 return $this->c->Redirect->page('AdminBansResult', ['data' => $this->encodeData($v->getData())]);
             }
 
-            $this->fIswev = $v->getErrors();
+            $this->fIswev     = $v->getErrors();
             $this->formSearch = $this->formSearch($v->getData());
         } else {
             $this->formSearch = $this->formSearch($data);
             if (empty($data)) {
-                $this->formBan    = $this->formBan();
+                $this->formBan = $this->formBan();
             }
         }
 
@@ -141,7 +142,7 @@ class Bans extends Admin
             'btns'   => [
                 'search' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Submit search'),
+                    'value'     => __('Submit search'),
                     'accesskey' => 's',
                 ],
             ],
@@ -150,7 +151,7 @@ class Bans extends Admin
             'info' => [
                 'info1' => [
                     'type'  => '', //????
-                    'value' => \ForkBB\__('Ban search info'),
+                    'value' => __('Ban search info'),
                 ],
             ],
         ];
@@ -158,25 +159,25 @@ class Bans extends Admin
         $fields['username'] = [
             'type'      => 'text',
             'maxlength' => 25,
-            'caption'   => \ForkBB\__('Username label'),
+            'caption'   => __('Username label'),
             'value'     => $data['username'] ?? null,
         ];
         $fields['ip'] = [
             'type'      => 'text',
             'maxlength' => 40,
-            'caption'   => \ForkBB\__('IP label'),
+            'caption'   => __('IP label'),
             'value'     => $data['ip'] ?? null,
         ];
         $fields['email'] = [
             'type'      => 'text',
             'maxlength' => 80,
-            'caption'   => \ForkBB\__('E-mail label'),
+            'caption'   => __('E-mail label'),
             'value'     => $data['email'] ?? null,
         ];
         $fields['message'] = [
             'type'      => 'text',
             'maxlength' => 255,
-            'caption'   => \ForkBB\__('Message label'),
+            'caption'   => __('Message label'),
             'value'     => $data['message'] ?? null,
         ];
         $fields['between1'] = [
@@ -188,7 +189,7 @@ class Bans extends Admin
             'type'      => 'text',
             'maxlength' => 100,
             'value'     => $data['expire_1'] ?? null,
-            'caption'   => \ForkBB\__('Expire date label'),
+            'caption'   => __('Expire date label'),
         ];
         $fields['expire_2'] = [
             'class'     => 'bend',
@@ -200,7 +201,7 @@ class Bans extends Admin
             'type' => 'endwrap',
         ];
         $form['sets']['filters'] = [
-            'legend' => \ForkBB\__('Ban search subhead'),
+            'legend' => __('Ban search subhead'),
             'fields' => $fields,
         ];
 
@@ -213,21 +214,21 @@ class Bans extends Admin
             'class'   => 'bstart',
             'type'    => 'select',
             'options' => [
-                'id'       => \ForkBB\__('Order by id'),
-                'username' => \ForkBB\__('Order by username'),
-                'ip'       => \ForkBB\__('Order by ip'),
-                'email'    => \ForkBB\__('Order by e-mail'),
-                'expire'   => \ForkBB\__('Order by expire'),
+                'id'       => __('Order by id'),
+                'username' => __('Order by username'),
+                'ip'       => __('Order by ip'),
+                'email'    => __('Order by e-mail'),
+                'expire'   => __('Order by expire'),
             ],
             'value'   => $data['order_by'] ?? 'id',
-            'caption' => \ForkBB\__('Order by label'),
+            'caption' => __('Order by label'),
         ];
         $fields['direction'] = [
             'class'   => 'bend',
             'type'    => 'select',
             'options' => [
-                'ASC'  => \ForkBB\__('Ascending'),
-                'DESC' => \ForkBB\__('Descending'),
+                'ASC'  => __('Ascending'),
+                'DESC' => __('Descending'),
             ],
             'value'   => $data['direction'] ?? 'DESC',
         ];
@@ -235,7 +236,7 @@ class Bans extends Admin
             'type' => 'endwrap',
         ];
         $form['sets']['sorting'] = [
-            'legend' => \ForkBB\__('Search results legend'),
+            'legend' => __('Search results legend'),
             'fields' => $fields,
         ];
 
@@ -261,7 +262,7 @@ class Bans extends Admin
             'btns'   => [
                 'submit' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Submit'),
+                    'value'     => __('Submit'),
                     'accesskey' => 's',
                 ],
             ],
@@ -272,22 +273,22 @@ class Bans extends Admin
             $fields['username'] = [
                 'type'      => $this->banCount < 1 ? 'text' : 'str',
                 'maxlength' => 25,
-                'caption'   => \ForkBB\__('Username label'),
-                'info'      => $this->banCount < 1 ? \ForkBB\__('Username help') : null,
+                'caption'   => __('Username label'),
+                'info'      => $this->banCount < 1 ? __('Username help') : null,
                 'value'     => $data['username'] ?? null,
             ];
             $fields['ip'] = [
                 'type'      => 'text',
                 'maxlength' => 255,
-                'caption'   => \ForkBB\__('IP label'),
-                'info'      => \ForkBB\__('IP help'),
+                'caption'   => __('IP label'),
+                'info'      => __('IP help'),
                 'value'     => $data['ip'] ?? null,
             ];
             $fields['email'] = [
                 'type'      => 'text',
                 'maxlength' => 80,
-                'caption'   => \ForkBB\__('E-mail label'),
-                'info'      => \ForkBB\__('E-mail help'),
+                'caption'   => __('E-mail label'),
+                'info'      => __('E-mail help'),
                 'value'     => $data['email'] ?? null,
             ];
             $form['sets']['ban-attrs'] = [
@@ -300,29 +301,29 @@ class Bans extends Admin
         $fields['message'] = [
             'type'      => 'text',
             'maxlength' => 255,
-            'caption'   => \ForkBB\__('Ban message label'),
-            'info'      => \ForkBB\__('Ban message help'),
+            'caption'   => __('Ban message label'),
+            'info'      => __('Ban message help'),
             'value'     => $data['message'] ?? null,
         ];
         $fields['expire'] = [
             'type'      => 'text',
             'maxlength' => 100,
-            'caption'   => \ForkBB\__('Expire date label'),
-            'info'      => \ForkBB\__('Expire date help'),
+            'caption'   => __('Expire date label'),
+            'info'      => __('Expire date help'),
             'value'     => $data['expire'] ?? null,
         ];
 /*
-        $yn     = [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')];
+        $yn     = [1 => __('Yes'), 0 => __('No')];
         $fields['o_default_dst'] = [
             'type'      => 'radio',
             'value'     => $config->o_default_dst,
             'values'    => $yn,
-            'caption'   => \ForkBB\__('DST label'),
-            'info'      => \ForkBB\__('DST help'),
+            'caption'   => __('DST label'),
+            'info'      => __('DST help'),
         ];
 */
         $form['sets']['ban-exp'] = [
-            'legend' => \ForkBB\__('Message expiry subhead'),
+            'legend' => __('Message expiry subhead'),
             'fields' => $fields,
         ];
 
@@ -393,7 +394,7 @@ class Bans extends Admin
 
         $number = \count($idsN);
         if (0 == $number) {
-            $this->fIswev = ['i', \ForkBB\__('No bans found')];
+            $this->fIswev = ['i', __('No bans found')];
             return $this->view([], 'GET', $data);
         }
 
@@ -410,7 +411,7 @@ class Bans extends Admin
 
         $this->nameTpl    = 'admin/bans_result';
         $this->mainSuffix = '-one-column';
-        $this->aCrumbs[]  = [$this->c->Router->link('AdminBansResult', ['data' => $args['data']]), \ForkBB\__('Results head')];
+        $this->aCrumbs[]  = [$this->c->Router->link('AdminBansResult', ['data' => $args['data']]), __('Results head')];
         $this->formResult = $this->form($banList, $startNum, $args);
         $this->pagination = $this->c->Func->paginate($pages, $page, 'AdminBansResult', ['data' => $args['data']]);
 
@@ -460,13 +461,13 @@ class Bans extends Admin
             $fields["l{$number}-username"] = [
                 'class'   => '' == $ban['username'] ? ['result', 'username', 'no-data'] : ['result', 'username'],
                 'type'    => 'str',
-                'caption' => \ForkBB\__('Results username head'),
+                'caption' => __('Results username head'),
                 'value'   => $ban['username'],
             ];
             $fields["l{$number}-email"] = [
                 'class'   => '' == $ban['email'] ? ['result', 'email', 'no-data'] : ['result', 'email'],
                 'type'    => 'str',
-                'caption' => \ForkBB\__('Results e-mail head'),
+                'caption' => __('Results e-mail head'),
                 'value'   => $ban['email'],
             ];
             $fields[] = [
@@ -475,25 +476,25 @@ class Bans extends Admin
             $fields["l{$number}-ips"] = [
                 'class'   => '' == $ban['ip'] ? ['result', 'ips', 'no-data'] : ['result', 'ips'],
                 'type'    => 'str',
-                'caption' => \ForkBB\__('Results IP address head'),
+                'caption' => __('Results IP address head'),
                 'value'   => $ban['ip'],
             ];
             $fields["l{$number}-expire"] = [
                 'class'   => empty($ban['expire']) ? ['result', 'expire', 'no-data'] : ['result', 'expire'],
                 'type'    => 'str',
-                'caption' => \ForkBB\__('Results expire head'),
+                'caption' => __('Results expire head'),
                 'value'   => empty($ban['expire']) ? '' : \ForkBB\dt($ban['expire'], true),
             ];
             $fields["l{$number}-message"] = [
                 'class'   => '' == $ban['message'] ? ['result', 'message', 'no-data'] : ['result', 'message'],
                 'type'    => 'str',
-                'caption' => \ForkBB\__('Results message head'),
+                'caption' => __('Results message head'),
                 'value'   => $ban['message'],
             ];
             $fields["l{$number}-creator"] = [
                 'class'   => ['result', 'creator'],
                 'type'    => '1' == $this->c->user->g_view_users && $ban['id_creator'] > 1 ? 'link' : 'str',
-                'caption' => \ForkBB\__('Results banned by head'),
+                'caption' => __('Results banned by head'),
                 'value'   => $ban['name_creator'],
                 'href'    => $this->c->Router->link('User', ['id' => $ban['id_creator'], 'name' => $ban['name_creator'],]), // ????
             ];
@@ -512,16 +513,16 @@ class Bans extends Admin
                 'class'   => ['result', 'btn-edit'],
                 'type'    => $ban['id'] > 0 ? 'btn' : 'str',
                 'value'   => '✎',
-                'caption' => \ForkBB\__('Results actions head'),
-                'title'   => \ForkBB\__('Edit'),
+                'caption' => __('Results actions head'),
+                'title'   => __('Edit'),
                 'link'    => $this->c->Router->link('AdminBansEdit', $arr),
             ];
             $fields["delete-btn{$number}"] = [
                 'class'   => ['result', 'btn-delete'],
                 'type'    => $ban['id'] > 0 ? 'btn' : 'str',
                 'value'   => '❌',
-                'caption' => \ForkBB\__('Results actions head'),
-                'title'   => \ForkBB\__('Delete'),
+                'caption' => __('Results actions head'),
+                'title'   => __('Delete'),
                 'link'    => $this->c->Router->link('AdminBansDelete', [
                     'id'    => $ban['id'],
                     'token' => $this->c->Csrf->create('AdminBansDelete', $arr),
@@ -580,7 +581,7 @@ class Bans extends Admin
 
             foreach ($userList as $user) {
                 if ($this->c->bans->isBanned($user)) {
-                    return $this->c->Message->message(\ForkBB\__('User is ban', $user->username));
+                    return $this->c->Message->message(__('User is ban', $user->username));
                 }
 
                 if ($this->c->userRules->canBanUser($user)) {
@@ -588,9 +589,9 @@ class Bans extends Admin
                 }
 
                 if ($user->isAdmin) {
-                    return $this->c->Message->message(\ForkBB\__('User is admin message', $user->username));
+                    return $this->c->Message->message(__('User is admin message', $user->username));
                 } elseif ($user->isAdmMod) {
-                    return $this->c->Message->message(\ForkBB\__('User is mod message', $user->username));
+                    return $this->c->Message->message(__('User is mod message', $user->username));
                 } elseif ($user->isGuest) { // ???? O_o
                     return $this->c->Message->message('Cannot ban guest message');
                 }
@@ -599,8 +600,8 @@ class Bans extends Admin
 
         $this->nameTpl        = 'admin/bans';
         $this->formBanPage    = 'AdminBansNew';
-        $this->formBanHead    = \ForkBB\__('New ban head');
-        $this->formBanSubHead = \ForkBB\__('Add ban subhead');
+        $this->formBanHead    = __('New ban head');
+        $this->formBanSubHead = __('Add ban subhead');
 
         return $this->ban(true, $args, $method, $userList);
     }
@@ -632,8 +633,8 @@ class Bans extends Admin
 
         $this->nameTpl        = 'admin/bans';
         $this->formBanPage    = 'AdminBansEdit';
-        $this->formBanHead    = \ForkBB\__('Edit ban head');
-        $this->formBanSubHead = \ForkBB\__('Edit ban subhead');
+        $this->formBanHead    = __('Edit ban head');
+        $this->formBanSubHead = __('Edit ban subhead');
 
         return $this->ban(false, $args, $method, $userList, $ban);
     }
@@ -770,14 +771,14 @@ class Bans extends Admin
             if (! $user instanceof User) { // ???? может ли вернутся несколько юзеров?
                 $v->addError('No user message');
             } elseif ($this->c->bans->isBanned($user)) {
-                $v->addError(\ForkBB\__('User is ban', $user->username));
+                $v->addError(__('User is ban', $user->username));
             } elseif (! $this->c->userRules->canBanUser($user)) {
                 if ($user->isGuest) { // ???? O_o
                     $v->addError('Cannot ban guest message');
                 } elseif ($user->isAdmin) {
-                    $v->addError(\ForkBB\__('User is admin message', $user->username));
+                    $v->addError(__('User is admin message', $user->username));
                 } elseif ($user->isAdmMod) {
-                    $v->addError(\ForkBB\__('User is mod message', $user->username));
+                    $v->addError(__('User is mod message', $user->username));
                 }
             }
         }
@@ -815,7 +816,7 @@ class Bans extends Admin
                     }
                 }
 
-                $v->addError(\ForkBB\__('Invalid IP message (%s)', $address));
+                $v->addError(__('Invalid IP message (%s)', $address));
                 break;
             }
         }

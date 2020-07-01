@@ -3,11 +3,6 @@
 namespace ForkBB\Models\Search;
 
 use ForkBB\Models\Model as ParentModel;
-use ForkBB\Models\Forum\Model as Forum;
-use ForkBB\Models\Post\Model as Post;
-use PDO;
-use InvalidArgumentException;
-use RuntimeException;
 
 class Model extends ParentModel
 {

@@ -22,7 +22,7 @@ class CalcStat extends Method
         }
 
         if ($this->model->moved_to) {
-            $num_replies = 0;
+            $numReplies = 0;
         } else {
             $vars = [
                 ':tid' => $this->model->id
@@ -31,7 +31,7 @@ class CalcStat extends Method
                     FROM ::posts AS p
                     WHERE p.topic_id=?i:tid';
 
-            $num_replies = $this->c->DB->query($sql, $vars)->fetchColumn();
+            $numReplies = $this->c->DB->query($sql, $vars)->fetchColumn();
 
             $sql = 'SELECT p.id, p.poster, p.poster_id, p.posted
                     FROM ::posts AS p
@@ -57,11 +57,13 @@ class CalcStat extends Method
             $this->model->last_post_id   = $result['id'];
             $this->model->last_poster    = $result['poster'];
             $this->model->last_poster_id = $result['poster_id'];
-            $this->model->last_post      = $result['edited'] > 0 && $result['edited'] > $result['posted'] ? $result['edited'] : $result['posted'];
+            $this->model->last_post      = $result['edited'] > 0 && $result['edited'] > $result['posted']
+                ? $result['edited']
+                : $result['posted'];
         }
 
         //????
-        $this->model->num_replies = $num_replies;
+        $this->model->num_replies = $numReplies;
 
         return $this->model;
     }

@@ -4,6 +4,7 @@ namespace ForkBB\Models\Pages\Profile;
 
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
+use function \ForkBB\__;
 
 class View extends Profile
 {
@@ -53,13 +54,13 @@ class View extends Profile
         $fields['username'] = [
             'class'   => 'pline',
             'type'    => 'str',
-            'caption' => \ForkBB\__('Username'),
+            'caption' => __('Username'),
             'value'   => $this->curUser->username,
         ];
         $fields['title'] = [
             'class'   => 'pline',
             'type'    => 'str',
-            'caption' => \ForkBB\__('Title'),
+            'caption' => __('Title'),
             'value'   => $this->curUser->title(),
         ];
         $fields[] = [
@@ -71,13 +72,13 @@ class View extends Profile
         ) {
             $fields['avatar'] = [
                 'type'    => 'yield',
-                'caption' => \ForkBB\__('Avatar'),
+                'caption' => __('Avatar'),
                 'value'   => 'avatar',
             ];
         }
         $form['sets']['header'] = [
             'class'  => 'header',
-#            'legend' => \ForkBB\__('Options'),
+#            'legend' => __('Options'),
             'fields' => $fields,
         ];
 
@@ -88,12 +89,12 @@ class View extends Profile
         ) {
             $form['sets']['note'] = [
                 'class'  => 'data',
-                'legend' => \ForkBB\__('Admin note'),
+                'legend' => __('Admin note'),
                 'fields' => [
                     'admin_note' => [
                         'class'     => 'pline',
                         'type'      => 'str',
-                        'caption'   => \ForkBB\__('Admin note'),
+                        'caption'   => __('Admin note'),
                         'value'     => $this->curUser->admin_note,
                     ],
                 ],
@@ -106,14 +107,14 @@ class View extends Profile
             $fields['realname'] = [
                 'class'   => 'pline',
                 'type'    => 'str',
-                'caption' => \ForkBB\__('Realname'),
+                'caption' => __('Realname'),
                 'value'   => \ForkBB\cens($this->curUser->realname),
             ];
         }
         $genders = [
-            0 => \ForkBB\__('Do not display'),
-            1 => \ForkBB\__('Male'),
-            2 => \ForkBB\__('Female'),
+            0 => __('Do not display'),
+            1 => __('Male'),
+            2 => __('Female'),
         ];
         if (
             $this->curUser->gender
@@ -123,21 +124,21 @@ class View extends Profile
                 'class'   => 'pline',
                 'type'    => 'str',
                 'value'   => $genders[$this->curUser->gender],
-                'caption' => \ForkBB\__('Gender'),
+                'caption' => __('Gender'),
             ];
         }
         if ('' != $this->curUser->location) {
             $fields['location'] = [
                 'class'   => 'pline',
                 'type'    => 'str',
-                'caption' => \ForkBB\__('Location'),
+                'caption' => __('Location'),
                 'value'   => \ForkBB\cens($this->curUser->location),
             ];
         }
         if (! empty($fields)) {
             $form['sets']['personal'] = [
                 'class'  => 'data',
-                'legend' => \ForkBB\__('Personal information'),
+                'legend' => __('Personal information'),
                 'fields' => $fields,
             ];
         }
@@ -148,7 +149,7 @@ class View extends Profile
             $fields['open-email'] = [
                 'class'   => 'pline',
                 'type'    => 2 === $this->curUser->email_setting ? 'str' : 'link',
-                'caption' => \ForkBB\__('Email info'),
+                'caption' => __('Email info'),
                 'value'   => \ForkBB\cens($this->curUser->email),
                 'href'    => 'mailto:' . $this->curUser->email,
             ];
@@ -158,7 +159,7 @@ class View extends Profile
                 $fields['email'] = [
                     'class'   => 'pline',
                     'type'    => 'link',
-                    'caption' => \ForkBB\__('Email info'),
+                    'caption' => __('Email info'),
                     'value'   => \ForkBB\cens($this->curUser->email),
                     'href'    => 'mailto:' . $this->curUser->email,
                 ];
@@ -166,8 +167,8 @@ class View extends Profile
                 $fields['email'] = [
                     'class'   => 'pline',
                     'type'    => 'link',
-                    'caption' => \ForkBB\__('Email info'),
-                    'value'   => \ForkBB\__('Send email'),
+                    'caption' => __('Email info'),
+                    'value'   => __('Send email'),
                     'href'    => $this->c->Router->link('', ['id' => $this->curUser->id]), // ????
                 ];
             }
@@ -180,7 +181,7 @@ class View extends Profile
                 'id'      => 'website',
                 'class'   => 'pline',
                 'type'    => 'link',
-                'caption' => \ForkBB\__('Website'),
+                'caption' => __('Website'),
                 'value'   => \ForkBB\cens($this->curUser->url),
                 'href'    => \ForkBB\cens($this->curUser->url),
             ];
@@ -188,7 +189,7 @@ class View extends Profile
         if (! empty($fields)) {
             $form['sets']['contacts'] = [
                 'class'  => 'data',
-                'legend' => \ForkBB\__('Contact details'),
+                'legend' => __('Contact details'),
                 'fields' => $fields,
             ];
         }
@@ -199,14 +200,14 @@ class View extends Profile
             if ('' != $this->curUser->signature) {
                 $fields['signature'] = [
                     'type'    => 'yield',
-                    'caption' => \ForkBB\__('Signature'),
+                    'caption' => __('Signature'),
                     'value'   => 'signature',
                 ];
             }
             if (! empty($fields)) {
                 $form['sets']['signature'] = [
                     'class'  => 'data',
-                    'legend' => \ForkBB\__('Signature'),
+                    'legend' => __('Signature'),
                     'fields' => $fields,
                 ];
             }
@@ -218,21 +219,21 @@ class View extends Profile
             'class'   => 'pline',
             'type'    => 'str',
             'value'   => \ForkBB\dt($this->curUser->registered, true),
-            'caption' => \ForkBB\__('Registered info'),
+            'caption' => __('Registered info'),
         ];
         if ($this->rules->viewLastVisit) {
             $fields['lastvisit'] = [
                 'class'   => 'pline',
                 'type'    => 'str',
                 'value'   => \ForkBB\dt($this->curUser->currentVisit, true),
-                'caption' => \ForkBB\__('Last visit info'),
+                'caption' => __('Last visit info'),
             ];
         }
         $fields['lastpost'] = [
             'class'   => 'pline',
             'type'    => 'str',
             'value'   => \ForkBB\dt($this->curUser->last_post, true),
-            'caption' => \ForkBB\__('Last post info'),
+            'caption' => __('Last post info'),
         ];
         if (
             $this->curUser->num_posts
@@ -242,30 +243,30 @@ class View extends Profile
                 $fields['posts'] = [
                     'class'   => 'pline',
                     'type'    => 'link',
-                    'caption' => \ForkBB\__('Posts info'),
-                    'value'   => $this->user->showPostCount ? \ForkBB\num($this->curUser->num_posts) : \ForkBB\__('Show posts'),
+                    'caption' => __('Posts info'),
+                    'value'   => $this->user->showPostCount ? \ForkBB\num($this->curUser->num_posts) : __('Show posts'),
                     'href'    => $this->c->Router->link('SearchAction', ['action' => 'posts', 'uid' => $this->curUser->id]),
-                    'title'   => \ForkBB\__('Show posts'),
+                    'title'   => __('Show posts'),
                 ];
                 $fields['topics'] = [
                     'class'   => 'pline',
                     'type'    => 'link',
-                    'caption' => \ForkBB\__('Topics info'),
-                    'value'   => $this->user->showPostCount ? \ForkBB\num($this->curUser->num_topics) : \ForkBB\__('Show topics'),
+                    'caption' => __('Topics info'),
+                    'value'   => $this->user->showPostCount ? \ForkBB\num($this->curUser->num_topics) : __('Show topics'),
                     'href'    => $this->c->Router->link('SearchAction', ['action' => 'topics', 'uid' => $this->curUser->id]),
-                    'title'   => \ForkBB\__('Show topics'),
+                    'title'   => __('Show topics'),
                 ];
             } elseif ($this->user->showPostCount) {
                 $fields['posts'] = [
                     'class'   => 'pline',
                     'type'    => 'str',
-                    'caption' => \ForkBB\__('Posts info'),
+                    'caption' => __('Posts info'),
                     'value'   => \ForkBB\num($this->curUser->num_posts),
                 ];
                 $fields['topics'] = [
                     'class'   => 'pline',
                     'type'    => 'str',
-                    'caption' => \ForkBB\__('Topics info'),
+                    'caption' => __('Topics info'),
                     'value'   => \ForkBB\num($this->curUser->num_topics),
                 ];
             }
@@ -277,15 +278,15 @@ class View extends Profile
             $fields['ip'] = [
                 'class'   => 'pline',
                 'type'    => 'link',
-                'caption' => \ForkBB\__('IP'),
+                'caption' => __('IP'),
                 'value'   => $this->curUser->registration_ip,
                 'href'    => $this->c->Router->link('AdminHost', ['ip' => $this->curUser->registration_ip]),
-                'title'   => \ForkBB\__('IP title'),
+                'title'   => __('IP title'),
             ];
         }
         $form['sets']['activity'] = [
             'class'  => 'data',
-            'legend' => \ForkBB\__('User activity'),
+            'legend' => __('User activity'),
             'fields' => $fields,
         ];
 

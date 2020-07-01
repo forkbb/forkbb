@@ -5,6 +5,7 @@ namespace ForkBB\Models;
 use ForkBB\Core\Container;
 use ForkBB\Models\Model;
 use RuntimeException;
+use function \ForkBB\__;
 
 abstract class Page extends Model
 {
@@ -119,7 +120,7 @@ abstract class Page extends Model
                     || $this->user->messages_new > 0
                 )
             ) { //????
-                $nav['pmsnew'] = ['pmsnew.php', 'PM']; //'<li id="nav"'.((PUN_ACTIVE_PAGE == 'pms_new' || $user['messages_new'] > 0) ? ' class="isactive"' : '').'><a href="pmsnew.php">'.\ForkBB\__('PM').(($user['messages_new'] > 0) ? ' (<span'.((empty($this->c->config->o_pms_flasher) || PUN_ACTIVE_PAGE == 'pms_new') ? '' : ' class="remflasher"' ).'>'.$user['messages_new'].'</span>)' : '').'</a></li>';
+                $nav['pmsnew'] = ['pmsnew.php', 'PM']; //'<li id="nav"'.((PUN_ACTIVE_PAGE == 'pms_new' || $user['messages_new'] > 0) ? ' class="isactive"' : '').'><a href="pmsnew.php">'.__('PM').(($user['messages_new'] > 0) ? ' (<span'.((empty($this->c->config->o_pms_flasher) || PUN_ACTIVE_PAGE == 'pms_new') ? '' : ' class="remflasher"' ).'>'.$user['messages_new'].'</span>)' : '').'</a></li>';
             }
             // New PMS
 
@@ -165,14 +166,14 @@ abstract class Page extends Model
             '1' == $this->c->config->o_maintenance
             && $this->user->isAdmin
         ) {
-            $this->fIswev = ['w', \ForkBB\__('Maintenance mode enabled', $this->c->Router->link('AdminMaintenance'))];
+            $this->fIswev = ['w', __('Maintenance mode enabled', $this->c->Router->link('AdminMaintenance'))];
         }
 
         if (
             $this->user->isAdmMod
             && $this->user->last_report_id < $this->c->reports->lastId()
         ) {
-            $this->fIswev = ['i', \ForkBB\__('New reports', $this->c->Router->link('AdminReports'))];
+            $this->fIswev = ['i', __('New reports', $this->c->Router->link('AdminReports'))];
         }
     }
 
@@ -190,7 +191,7 @@ abstract class Page extends Model
             $titles = $this->titles;
         }
         $titles[] = $this->c->config->o_board_title;
-        return \implode(\ForkBB\__('Title separator'), $titles);
+        return \implode(__('Title separator'), $titles);
     }
 
     /**
@@ -376,7 +377,7 @@ abstract class Page extends Model
                     $active   = null;
 
                     if ($crumb->page > 1) {
-                        $name .= ' ' . \ForkBB\__('Page %s', $crumb->page);
+                        $name .= ' ' . __('Page %s', $crumb->page);
                     }
 
                     $this->titles = $name;
@@ -397,7 +398,7 @@ abstract class Page extends Model
             $active = null;
         }
         // главная страница
-        $result[] = [$this->c->Router->link('Index'), \ForkBB\__('Index'), $active];
+        $result[] = [$this->c->Router->link('Index'), __('Index'), $active];
 
         return \array_reverse($result);
     }

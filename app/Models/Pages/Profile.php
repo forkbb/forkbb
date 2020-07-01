@@ -5,6 +5,7 @@ namespace ForkBB\Models\Pages;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\User\Model as User;
+use function \ForkBB\__;
 
 abstract class Profile extends Page
 {
@@ -37,7 +38,7 @@ abstract class Profile extends Page
         $this->fIndex    = $this->rules->my ? 'profile' : 'userlist';
         $this->nameTpl   = 'profile';
         $this->onlinePos = 'profile-' . $this->curUser->id; // ????
-        $this->title     = \ForkBB\__('%s\'s profile', $this->curUser->username);
+        $this->title     = __('%s\'s profile', $this->curUser->username);
 
         return true;
     }
@@ -69,8 +70,8 @@ abstract class Profile extends Page
      */
     protected function crumbs(...$crumbs): array
     {
-        $crumbs[] = [$this->curUser->link, \ForkBB\__('User %s', $this->curUser->username)];
-        $crumbs[] = [$this->c->Router->link('Userlist'), \ForkBB\__('User list')];
+        $crumbs[] = [$this->curUser->link, __('User %s', $this->curUser->username)];
+        $crumbs[] = [$this->c->Router->link('Userlist'), __('User list')];
 
         return parent::crumbs(...$crumbs);
     }
@@ -91,7 +92,7 @@ abstract class Profile extends Page
         ) {
             $btns['change-user-group'] = [
                 $this->linkChangeGroup(),
-                \ForkBB\__('Change user group'),
+                __('Change user group'),
             ];
         }
         if ($this->rules->banUser) {
@@ -106,7 +107,7 @@ abstract class Profile extends Page
                             'uid' => $this->curUser->id,
                         ]),
                     ]),
-                    \ForkBB\__('Unban user'),
+                    __('Unban user'),
                 ];
             } else {
                 $btns['ban-user'] = [
@@ -114,14 +115,14 @@ abstract class Profile extends Page
                         'ids' => $this->curUser->id,
                         'uid' => $this->curUser->id,
                     ]),
-                    \ForkBB\__('Ban user'),
+                    __('Ban user'),
                 ];
             }
         }
         if ($this->rules->deleteUser) {
             $btns['delete-user'] = [
                 $this->c->Router->link('AdminUsersAction',  ['action' => 'delete', 'ids' => $this->curUser->id]), // ????
-                \ForkBB\__('Delete user'),
+                __('Delete user'),
             ];
         }
         if (
@@ -130,13 +131,13 @@ abstract class Profile extends Page
         ) {
             $btns['edit-profile'] = [
                 $this->c->Router->link('EditUserProfile',  ['id' => $this->curUser->id]),
-                \ForkBB\__('Edit '),
+                __('Edit '),
             ];
         }
         if ('view' != $type) {
             $btns['view-profile'] = [
                 $this->curUser->link,
-                \ForkBB\__('View '),
+                __('View '),
             ];
         }
         if (
@@ -145,7 +146,7 @@ abstract class Profile extends Page
         ) {
             $btns['edit-settings'] = [
                 $this->c->Router->link('EditUserBoardConfig', ['id' => $this->curUser->id]),
-                \ForkBB\__('Configure '),
+                __('Configure '),
             ];
         }
         return $btns;

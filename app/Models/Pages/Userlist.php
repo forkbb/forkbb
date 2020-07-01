@@ -6,6 +6,7 @@ use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Forum\Model as Forum;
 use InvalidArgumentException;
+use function \ForkBB\__;
 
 class Userlist extends Page
 {
@@ -17,7 +18,7 @@ class Userlist extends Page
     protected function getgroupList(): array
     {
         $list = [
-            'all' => \ForkBB\__('All users'),
+            'all' => __('All users'),
         ];
 
         foreach ($this->c->groups->getList() as $group) {
@@ -94,7 +95,7 @@ class Userlist extends Page
 
         if ($number) {
             $this->startNum = ($page - 1) * $this->c->config->o_disp_users;
-            $ids = \array_slice($ids, $this->startNum, $this->c->config->o_disp_users);
+            $ids            = \array_slice($ids, $this->startNum, $this->c->config->o_disp_users);
             $this->userList = $this->c->users->loadByIds($ids);
 
             $links = [];
@@ -114,7 +115,7 @@ class Userlist extends Page
                 $vars['sort'] = $sort;
 
                 foreach (['ASC', 'DESC'] as $j => $dir) {
-                    $vars['dir'] = $dir;
+                    $vars['dir']        = $dir;
                     $links[$i * 2 + $j] = $this->c->Router->link('Userlist', $vars);
 
                     if (
@@ -131,7 +132,7 @@ class Userlist extends Page
             $this->startNum = 0;
             $this->userList = null;
             $this->links    = [null, null, null, null, null, null];
-            $this->fIswev   = ['i', \ForkBB\__('No users found')];
+            $this->fIswev   = ['i', __('No users found')];
         }
 
         $this->fIndex       = 'userlist';
@@ -139,7 +140,7 @@ class Userlist extends Page
         $this->onlinePos    = 'userlist';
         $this->canonical    = $this->c->Router->link('Userlist', $args);
         $this->robots       = 'noindex';
-        $this->crumbs       = $this->crumbs([$this->c->Router->link('Userlist'), \ForkBB\__('User list')]);
+        $this->crumbs       = $this->crumbs([$this->c->Router->link('Userlist'), __('User list')]);
         $this->pagination   = $this->c->Func->paginate($pages, $page, 'Userlist', $args);
         $this->form         = $this->formUserlist($v);
 
@@ -162,7 +163,7 @@ class Userlist extends Page
             'btns'   => [
                 'submit' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__($this->user->searchUsers ? 'Search btn' : 'Submit'),
+                    'value'     => __($this->user->searchUsers ? 'Search btn' : 'Submit'),
                     'accesskey' => 's',
                 ],
             ],
@@ -176,8 +177,8 @@ class Userlist extends Page
                 'type'      => 'text',
                 'maxlength' => 25,
                 'value'     => $v->name ?: '*',
-                'caption'   => \ForkBB\__('Username'),
-                'info'      => \ForkBB\__('User search info'),
+                'caption'   => __('Username'),
+                'info'      => __('User search info'),
                 'required'  => true,
 #               'autofocus' => true,
             ];
@@ -189,28 +190,28 @@ class Userlist extends Page
             'type'    => 'select',
             'options' => $this->groupList,
             'value'   => $v->group,
-            'caption' => \ForkBB\__('User group'),
+            'caption' => __('User group'),
         ];
         $fields['sort'] = [
             'class'   => 'w4',
             'type'    => 'select',
             'options' => [
-                ['username', \ForkBB\__('Sort by name')],
-                ['num_posts', \ForkBB\__('Sort by number'), $this->user->showPostCount ? null : true],
-                ['registered', \ForkBB\__('Sort by date')],
+                ['username', __('Sort by name')],
+                ['num_posts', __('Sort by number'), $this->user->showPostCount ? null : true],
+                ['registered', __('Sort by date')],
             ],
             'value'   => $v->sort,
-            'caption' => \ForkBB\__('Sort users by'),
+            'caption' => __('Sort users by'),
         ];
         $fields['dir'] = [
             'class'   => 'w4',
             'type'    => 'radio',
             'value'   => $v->dir ?: 'ASC',
             'values'  => [
-                'ASC'  => \ForkBB\__('Ascending'),
-                'DESC' => \ForkBB\__('Descending'),
+                'ASC'  => __('Ascending'),
+                'DESC' => __('Descending'),
             ],
-            'caption' => \ForkBB\__('User sort order'),
+            'caption' => __('User sort order'),
         ];
         $form['sets']['users'] = ['fields' => $fields];
 

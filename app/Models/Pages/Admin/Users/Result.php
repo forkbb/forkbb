@@ -6,6 +6,7 @@ use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin\Users;
 use ForkBB\Models\User\Model as User;
+use function \ForkBB\__;
 
 class Result extends Users
 {
@@ -33,13 +34,13 @@ class Result extends Users
             $crName = $data['ip'];
         } else {
             $idsN   = $this->forFilter($data);
-            $crName = \ForkBB\__('Results head');
+            $crName = __('Results head');
         }
 
         $number = \count($idsN);
         if (0 == $number) {
             $view = $this->c->AdminUsers;
-            $view->fIswev = ['i', \ForkBB\__('No users found')];
+            $view->fIswev = ['i', __('No users found')];
 
             return $view->view([], 'GET', $data);
         }
@@ -90,7 +91,7 @@ class Result extends Users
                 ) {
                     $action = self::ACTION_CHG;
                 } else {
-                    $this->fIswev = ['v', \ForkBB\__('Action not available')];
+                    $this->fIswev = ['v', __('Action not available')];
                 }
 
                 if (empty($this->fIswev)) {
@@ -236,21 +237,21 @@ class Result extends Users
         if ($this->c->userRules->banUsers) {
             $form['btns']['ban'] = [
                 'type'      => 'submit',
-                'value'     => \ForkBB\__('Ban'),
+                'value'     => __('Ban'),
                 'accesskey' => null,
             ];
         }
         if ($this->c->userRules->deleteUsers) {
             $form['btns']['delete'] = [
                 'type'      => 'submit',
-                'value'     => \ForkBB\__('Delete'),
+                'value'     => __('Delete'),
                 'accesskey' => null,
             ];
         }
         if ($this->c->userRules->changeGroup) {
             $form['btns']['change_group'] = [
                 'type'      => 'submit',
-                'value'     => \ForkBB\__('Change group'),
+                'value'     => __('Change group'),
                 'accesskey' => null,
             ];
         }
@@ -274,14 +275,14 @@ class Result extends Users
             $fields["l{$number}-username"] = [
                 'class'   => ['result', 'username'],
                 'type'    => $user->isGuest ? 'str' : 'link',
-                'caption' => \ForkBB\__('Results username head'),
+                'caption' => __('Results username head'),
                 'value'   => $user->username,
                 'href'    => $user->link,
             ];
             $fields["l{$number}-email"] = [
                 'class'   => $user->isGuest ? ['result', 'email', 'no-data'] : ['result', 'email'],
                 'type'    => $user->isGuest ? 'str' : 'link',
-                'caption' => \ForkBB\__('Results e-mail head'),
+                'caption' => __('Results e-mail head'),
                 'value'   => $user->isGuest ? '' : $user->email,
                 'href'    => $user->isGuest ? '' : 'mailto:' . $user->email,
             ];
@@ -291,21 +292,21 @@ class Result extends Users
             $fields["l{$number}-title"] = [
                 'class'   => ['result', 'title'],
                 'type'    => 'str',
-                'caption' => \ForkBB\__('Results title head'),
+                'caption' => __('Results title head'),
                 'value'   => -1 === $user->id ? null : $user->title(),
             ];
             $fields["l{$number}-posts"] = [
                 'class'   => $user->isGuest ? ['result', 'posts', 'no-data'] : ['result', 'posts'],
                 'type'    => $user->num_posts ? 'link' : 'str',
-                'caption' => \ForkBB\__('Results posts head'),
+                'caption' => __('Results posts head'),
                 'value'   => $user->num_posts ? \ForkBB\num($user->num_posts) : null,
                 'href'    => $this->c->Router->link('SearchAction', ['action' => 'posts', 'uid' => $user->id]),
-                'title'   => \ForkBB\__('Results show posts link'),
+                'title'   => __('Results show posts link'),
             ];
             $fields["l{$number}-note"] = [
                 'class'   => '' === \trim($user->admin_note) ? ['result', 'note', 'no-data'] : ['result', 'note'],
                 'type'    => 'str',
-                'caption' => \ForkBB\__('Примечание админа'),
+                'caption' => __('Примечание админа'),
                 'value'   => $user->admin_note,
             ];
 
@@ -313,8 +314,8 @@ class Result extends Users
                 $fields["l{$number}-view-ip"] = [
                     'class'   => $user->isGuest ? ['result', 'view-ip', 'no-data'] : ['result', 'view-ip'],
                     'type'    => $user->isGuest || ! $user->num_posts ? 'str' : 'link',
-                    'caption' => \ForkBB\__('Results action head'),
-                    'value'   => $user->isGuest ? null : \ForkBB\__('Results view IP link'),
+                    'caption' => __('Results action head'),
+                    'value'   => $user->isGuest ? null : __('Results view IP link'),
                     'href'    => $this->c->Router->link('AdminUserStat', ['id' => $user->id]),
                 ];
             }
@@ -325,7 +326,7 @@ class Result extends Users
             $key = $user->isGuest ? "guest{$number}" : "users[{$user->id}]";
             $fields[$key] = [
                 'class'   => ['check'],
-                'caption' => \ForkBB\__('Select'),
+                'caption' => __('Select'),
                 'type'    => $user->isGuest ? 'str' : 'checkbox',
                 'value'   => $user->isGuest ? null : $user->id,
                 'checked' => false,

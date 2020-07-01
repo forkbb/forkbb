@@ -4,6 +4,7 @@ namespace ForkBB\Models\Pages\Admin;
 
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin;
+use function \ForkBB\__;
 
 class Censoring extends Admin
 {
@@ -47,7 +48,7 @@ class Censoring extends Admin
         $this->aIndex    = 'censoring';
         $this->form      = $this->formEdit();
         $this->classForm = 'editcensorship';
-        $this->titleForm = \ForkBB\__('Censoring');
+        $this->titleForm = __('Censoring');
 
         return $this;
     }
@@ -70,9 +71,9 @@ class Censoring extends Admin
                         'o_censoring' => [
                             'type'    => 'radio',
                             'value'   => $this->c->config->o_censoring,
-                            'values'  => [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')],
-                            'caption' => \ForkBB\__('Censor words label'),
-                            'info'    => \ForkBB\__('Censor words help'),
+                            'values'  => [1 => __('Yes'), 0 => __('No')],
+                            'caption' => __('Censor words label'),
+                            'info'    => __('Censor words help'),
                         ],
                     ],
                 ],
@@ -80,7 +81,7 @@ class Censoring extends Admin
                     'info' => [
                         'info1' => [
                             'type'  => '', //????
-                            'value' => \ForkBB\__('Censoring info'),
+                            'value' => __('Censoring info'),
                             'html'  => true,
                         ],
                     ],
@@ -89,7 +90,7 @@ class Censoring extends Admin
             'btns'   => [
                 'submit' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Save changes'),
+                    'value'     => __('Save changes'),
                     'accesskey' => 's',
                 ],
             ],
@@ -102,14 +103,14 @@ class Censoring extends Admin
                 'type'      => 'text',
                 'maxlength' => 60,
                 'value'     => $row['search_for'],
-                'caption'   => \ForkBB\__('Censored word label'),
+                'caption'   => __('Censored word label'),
             ];
             $fieldset["form[{$id}][replace_with]"] = [
                 'class'     => ['censor'],
                 'type'      => 'text',
                 'maxlength' => 60,
                 'value'     => $row['replace_with'],
-                'caption'   => \ForkBB\__('Replacement label'),
+                'caption'   => __('Replacement label'),
             ];
         }
         $fieldset["form[0][search_for]"] = [
@@ -117,14 +118,14 @@ class Censoring extends Admin
             'type'      => 'text',
             'maxlength' => 60,
             'value'     => '',
-            'caption'   => \ForkBB\__('Censored word label'),
+            'caption'   => __('Censored word label'),
         ];
         $fieldset["form[0][replace_with]"] = [
             'class'     => ['censor'],
             'type'      => 'text',
             'maxlength' => 60,
             'value'     => '',
-            'caption'   => \ForkBB\__('Replacement label'),
+            'caption'   => __('Replacement label'),
         ];
 
         $form['sets']['cens'] = [

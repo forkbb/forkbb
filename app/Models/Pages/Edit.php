@@ -5,6 +5,7 @@ namespace ForkBB\Models\Pages;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Post\Model as Post;
+use function \ForkBB\__;
 
 class Edit extends Page
 {
@@ -69,7 +70,7 @@ class Edit extends Page
         $this->onlinePos = 'topic-' . $topic->id;
         $this->canonical = $post->linkEdit;
         $this->robots    = 'noindex';
-        $this->formTitle = $editSubject ? \ForkBB\__('Edit topic') : \ForkBB\__('Edit post');
+        $this->formTitle = $editSubject ? __('Edit topic') : __('Edit post');
         $this->crumbs    = $this->crumbs($this->formTitle, $topic);
         $this->form      = $this->messageForm($args, $post, 'EditPost', true, $editSubject);
 

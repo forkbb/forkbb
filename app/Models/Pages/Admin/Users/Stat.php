@@ -5,6 +5,7 @@ namespace ForkBB\Models\Pages\Admin\Users;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin\Users;
+use function \ForkBB\__;
 
 class Stat extends Users
 {
@@ -34,7 +35,7 @@ class Stat extends Users
         $user = $this->c->users->load((int) $args['id']);
 
         if (0 == $number) {
-            $this->fIswev = ['i', \ForkBB\__('Results no posts found')];
+            $this->fIswev = ['i', __('Results no posts found')];
         }
 
         $this->nameTpl    = 'admin/users_result';
@@ -72,27 +73,27 @@ class Stat extends Users
             $fields["l{$number}-ip"] = [
                 'class'   => ['result', 'ip'],
                 'type'    => $flag ? 'link' : 'str',
-                'caption' => \ForkBB\__('Results IP address head'),
+                'caption' => __('Results IP address head'),
                 'value'   => $flag ? $ip : null,
                 'href'    => $flag ? $this->c->Router->link('AdminHost', ['ip' => $ip]) : null,
             ];
             $fields["l{$number}-last-used"] = [
                 'class'   => ['result', 'last-used'],
                 'type'    => 'str',
-                'caption' => \ForkBB\__('Results last used head'),
+                'caption' => __('Results last used head'),
                 'value'   => $flag ? \ForkBB\dt($data['last_used']) : null,
             ];
             $fields["l{$number}-used-times"] = [
                 'class'   => ['result', 'used-times'],
                 'type'    => 'str',
-                'caption' => \ForkBB\__('Results times found head'),
+                'caption' => __('Results times found head'),
                 'value'   => $flag ? \ForkBB\num($data['used_times']) : null,
             ];
             $fields["l{$number}-action"] = [
                 'class'   => ['result', 'action'],
                 'type'    => $flag ? 'link' : 'str',
-                'caption' => \ForkBB\__('Results action head'),
-                'value'   => $flag ? \ForkBB\__('Results find more link') : null,
+                'caption' => __('Results action head'),
+                'value'   => $flag ? __('Results find more link') : null,
                 'href'    => $flag ? $this->c->Router->link('AdminUsersResult', ['data' => $this->encodeData($ip)]) : null,
             ];
 

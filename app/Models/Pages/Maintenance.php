@@ -4,6 +4,7 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Core\Container;
 use ForkBB\Models\Page;
+use function \ForkBB\__;
 
 class Maintenance extends Page
 {
@@ -22,13 +23,13 @@ class Maintenance extends Page
         $this->nameTpl            = 'maintenance';
 #       $this->onlinePos          = null; //????
 #       $this->robots             = 'noindex';
-        $this->titles             = \ForkBB\__('Maintenance');
+        $this->titles             = __('Maintenance');
 #       $this->fNavigation        = null; //????
 #       $this->maintenanceMessage = $this->c->config->o_maintenance_message;
 
         $this->header('Retry-After', '3600');
 
-        $this->fIswev = ['i', \ForkBB\__($this->c->config->o_maintenance_message)];
+        $this->fIswev = ['i', __($this->c->config->o_maintenance_message)];
     }
 
     /**

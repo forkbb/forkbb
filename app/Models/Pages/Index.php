@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
+use function \ForkBB\__;
 
 class Index extends Page
 {
@@ -23,14 +24,15 @@ class Index extends Page
                     'name' => $this->c->stats->userLast['username'],
                 ]),
                 $this->c->stats->userLast['username'],
-            ] : $this->c->stats->userLast['username'];
+            ]
+            : $this->c->stats->userLast['username'];
 
         // для таблицы разделов
         $root   = $this->c->forums->loadTree(0);
         $forums = empty($root) ? [] : $root->subforums;
         $ctgs   = [];
         if (empty($forums)) {
-            $this->fIswev = ['i', \ForkBB\__('Empty board')];
+            $this->fIswev = ['i', __('Empty board')];
         } else {
             foreach($forums as $forum) {
                 $ctgs[$forum->cat_id][] = $forum;

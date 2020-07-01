@@ -7,6 +7,7 @@ use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
 use ForkBB\Models\User\Model as User;
+use function \ForkBB\__;
 
 class Email extends Profile
 {
@@ -95,7 +96,7 @@ class Email extends Profile
                     $link = $this->c->Router->link('SetNewEmail', ['id' => $this->curUser->id, 'email' => $v->new_email, 'key' => $key, 'hash' => $hash]);
                     $tplData = [
                         'fRootLink' => $this->c->Router->link('Index'),
-                        'fMailer'   => \ForkBB\__('Mailer', $this->c->config->o_board_title),
+                        'fMailer'   => __('Mailer', $this->c->config->o_board_title),
                         'username'  => $this->curUser->username,
                         'link'      => $link,
                     ];
@@ -106,7 +107,7 @@ class Email extends Profile
                             ->setFolder($this->c->DIR_LANG)
                             ->setLanguage($this->curUser->language)
                             ->setTo($v->new_email, $this->curUser->username)
-                            ->setFrom($this->c->config->o_webmaster_email, \ForkBB\__('Mailer', $this->c->config->o_board_title))
+                            ->setFrom($this->c->config->o_webmaster_email, __('Mailer', $this->c->config->o_board_title))
                             ->setTpl('activate_email.tpl', $tplData)
                             ->send();
                     } catch (MailException $e) {
@@ -119,9 +120,9 @@ class Email extends Profile
 
                         $this->c->users->update($this->curUser);
 
-                        return $this->c->Message->message(\ForkBB\__('Activate email sent', $this->c->config->o_admin_email), false, 200);
+                        return $this->c->Message->message(__('Activate email sent', $this->c->config->o_admin_email), false, 200);
                     } else {
-                        return $this->c->Message->message(\ForkBB\__('Error mail', $this->c->config->o_admin_email), true, 200);
+                        return $this->c->Message->message(__('Error mail', $this->c->config->o_admin_email), true, 200);
                     }
                 }
             } else {
@@ -133,8 +134,8 @@ class Email extends Profile
 
 
         $this->crumbs     = $this->crumbs(
-            [$this->c->Router->link('EditUserEmail', ['id' => $this->curUser->id]), \ForkBB\__('Change email')],
-            [$this->c->Router->link('EditUserProfile', ['id' => $this->curUser->id]), \ForkBB\__('Editing profile')]
+            [$this->c->Router->link('EditUserEmail', ['id' => $this->curUser->id]), __('Change email')],
+            [$this->c->Router->link('EditUserProfile', ['id' => $this->curUser->id]), __('Editing profile')]
         );
         $this->form       = $this->form();
         $this->actionBtns = $this->btns('edit');
@@ -161,15 +162,15 @@ class Email extends Profile
                         'new_email' => [
                             'type'      => 'text',
                             'maxlength' => 80,
-                            'caption'   => \ForkBB\__('New email'),
+                            'caption'   => __('New email'),
                             'required'  => true,
                             'pattern'   => '.+@.+',
                             'value'     => $this->curUser->email,
-                            'info'      => ! $this->user->isAdmin && '1' == $this->c->config->o_regs_verify ? \ForkBB\__('Email instructions') : null,
+                            'info'      => ! $this->user->isAdmin && '1' == $this->c->config->o_regs_verify ? __('Email instructions') : null,
                         ],
                         'password' => [
                             'type'      => 'password',
-                            'caption'   => \ForkBB\__('Your passphrase'),
+                            'caption'   => __('Your passphrase'),
                             'required'  => true,
                         ],
                     ],
@@ -178,7 +179,7 @@ class Email extends Profile
             'btns'   => [
                 'submit' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Submit'),
+                    'value'     => __('Submit'),
                     'accesskey' => 's',
                 ],
             ],

@@ -6,6 +6,7 @@ use ForkBB\Core\Container;
 use ForkBB\Models\Page;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Pages\Admin;
+use function \ForkBB\__;
 
 class Categories extends Admin
 {
@@ -55,7 +56,7 @@ class Categories extends Admin
         $this->aIndex    = 'categories';
         $this->form      = $this->formEdit();
         $this->classForm = 'editcategories';
-        $this->titleForm = \ForkBB\__('Categories');
+        $this->titleForm = __('Categories');
 
         return $this;
     }
@@ -76,7 +77,7 @@ class Categories extends Admin
             'btns'   => [
                 'submit' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Save changes'),
+                    'value'     => __('Save changes'),
                     'accesskey' => 's',
                 ],
             ],
@@ -89,7 +90,7 @@ class Categories extends Admin
                 'type'      => 'text',
                 'maxlength' => 80,
                 'value'     => $row['cat_name'],
-                'caption'   => \ForkBB\__('Category name label'),
+                'caption'   => __('Category name label'),
                 'required'  => true,
             ];
             $fields["form[{$key}][disp_position]"] = [
@@ -98,13 +99,13 @@ class Categories extends Admin
                 'min'     => 0,
                 'max'     => 9999999999,
                 'value'   => $row['disp_position'],
-                'caption' => \ForkBB\__('Category position label'),
+                'caption' => __('Category position label'),
             ];
             $fields["delete-btn{$key}"] = [
                 'class'   => ['delete', 'category'],
                 'type'    => 'btn',
                 'value'   => '❌',
-                'caption' => \ForkBB\__('Delete'),
+                'caption' => __('Delete'),
                 'link'    => $this->c->Router->link('AdminCategoriesDelete', ['id' => $key]),
             ];
             $form['sets']["category{$key}"] = [
@@ -120,8 +121,8 @@ class Categories extends Admin
                     'class'     => 'new',
                     'type'      => 'text',
                     'maxlength' => 80,
-                    'caption'   => \ForkBB\__('Add category label'),
-                    'info'      => \ForkBB\__('Add category help', $this->c->Router->link('AdminForums'), \ForkBB\__('Forums')),
+                    'caption'   => __('Add category label'),
+                    'info'      => __('Add category help', $this->c->Router->link('AdminForums'), __('Forums')),
                 ],
             ],
         ];
@@ -174,11 +175,11 @@ class Categories extends Admin
 
         $this->nameTpl   = 'admin/form';
         $this->aIndex    = 'categories';
-        $this->aCrumbs[] = [$this->c->Router->link('AdminCategoriesDelete', ['id' => $args['id']]), \ForkBB\__('Delete category head')];
-        $this->aCrumbs[] = \ForkBB\__('"%s"', $category['cat_name']);
+        $this->aCrumbs[] = [$this->c->Router->link('AdminCategoriesDelete', ['id' => $args['id']]), __('Delete category head')];
+        $this->aCrumbs[] = __('"%s"', $category['cat_name']);
         $this->form      = $this->formDelete($args, $category);
         $this->classForm = 'deletecategory';
-        $this->titleForm = \ForkBB\__('Delete category head');
+        $this->titleForm = __('Delete category head');
 
         return $this;
     }
@@ -202,9 +203,9 @@ class Categories extends Admin
                 'del' => [
                     'fields' => [
                         'confirm' => [
-                            'caption' => \ForkBB\__('Confirm delete'),
+                            'caption' => __('Confirm delete'),
                             'type'    => 'checkbox',
-                            'label'   => \ForkBB\__('I want to delete the category %s', $category['cat_name']),
+                            'label'   => __('I want to delete the category %s', $category['cat_name']),
                             'value'   => '1',
                             'checked' => false,
                         ],
@@ -214,7 +215,7 @@ class Categories extends Admin
                     'info' => [
                         'info1' => [
                             'type'  => '', //????
-                            'value' => \ForkBB\__('Delete category warn'),
+                            'value' => __('Delete category warn'),
                             'html'  => true,
                         ],
                     ],
@@ -223,12 +224,12 @@ class Categories extends Admin
             'btns'   => [
                 'delete' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Delete category'),
+                    'value'     => __('Delete category'),
                     'accesskey' => 's',
                 ],
                 'cancel' => [
                     'type'      => 'btn',
-                    'value'     => \ForkBB\__('Cancel'),
+                    'value'     => __('Cancel'),
                     'link'      => $this->c->Router->link('AdminCategories'),
                 ],
             ],

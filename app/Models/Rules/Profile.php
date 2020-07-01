@@ -5,7 +5,6 @@ namespace ForkBB\Models\Rules;
 use ForkBB\Models\Model;
 use ForkBB\Models\Rules;
 use ForkBB\Models\User\Model as User;
-use RuntimeException;
 
 class Profile extends Rules
 {

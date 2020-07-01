@@ -3,6 +3,7 @@
 namespace ForkBB\Core;
 
 use ForkBB\Core\Container;
+use function \ForkBB\__;
 
 class Func
 {
@@ -134,7 +135,7 @@ class Func
 //            $pages[] = [null, 1, true];
         } else {
             if ($cur > 0) {
-                $pages[] = [\ForkBB\__($info, $cur, $all), 'info', null];
+                $pages[] = [__($info, $cur, $all), 'info', null];
                 $cur     = \min(\max(1, $cur), $all);
                 if ($cur > 1) {
                     $pages[] = [$this->c->Router->link($marker, ['page' => $cur - 1] + $args), 'prev', null];

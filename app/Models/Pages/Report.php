@@ -6,6 +6,7 @@ use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\Page;
 use ForkBB\Models\Post\Model as Post;
 use ForkBB\Models\Report\Model as ReportModel;
+use function \ForkBB\__;
 
 class Report extends Page
 {
@@ -32,7 +33,7 @@ class Report extends Page
         $floodSize = \time() - (int) $this->user->last_report_sent;
         $floodSize = $floodSize < $this->user->g_report_flood ? $this->user->g_report_flood - $floodSize : 0;
         if ($floodSize > 0) {
-            $this->fIswev = ['e', \ForkBB\__('Report flood', $this->user->g_report_flood, $floodSize)];
+            $this->fIswev = ['e', __('Report flood', $this->user->g_report_flood, $floodSize)];
         }
 
         $data = [];
@@ -56,8 +57,8 @@ class Report extends Page
             ) {
                 $report = $this->c->reports->create();
 
-                $report->author = $this->user;
-                $report->post = $post;
+                $report->author  = $this->user;
+                $report->post    = $post;
                 $report->message = $v->reason;
 
                 $result = true;
@@ -93,8 +94,8 @@ class Report extends Page
 //        $this->onlinePos = 'forum-' . $forum->id;
 //        $this->canonical = $this->c->Router->link('NewTopic', ['id' => $forum->id]);
         $this->robots    = 'noindex';
-        $this->crumbs    = $this->crumbs(\ForkBB\__('Report post'), $topic);
-        $this->formTitle = \ForkBB\__('Report post');
+        $this->crumbs    = $this->crumbs(__('Report post'), $topic);
+        $this->formTitle = __('Report post');
         $this->form      = $this->formReport($args, $data);
 
         return $this;
@@ -117,11 +118,11 @@ class Report extends Page
             ],
             'sets'   => [
                 'report' => [
-                    'legend' => \ForkBB\__('Reason desc'),
+                    'legend' => __('Reason desc'),
                     'fields' => [
                         'reason' => [
                             'type'      => 'textarea',
-                            'caption'   => \ForkBB\__('Reason'),
+                            'caption'   => __('Reason'),
                             'required'  => true,
                             'value'     => $data['reason'] ?? null,
                             'autofocus' => true,
@@ -132,12 +133,12 @@ class Report extends Page
             'btns'   => [
                 'submit' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Submit'),
+                    'value'     => __('Submit'),
                     'accesskey' => 's',
                 ],
                 'back' => [
                     'type'      => 'btn',
-                    'value'     => \ForkBB\__('Go back'),
+                    'value'     => __('Go back'),
                     'link'      => 'javascript:history.go(-1)',
                     'class'     => 'f-minor',
                 ],
@@ -155,7 +156,7 @@ class Report extends Page
     protected function sendReport(ReportModel $report): bool
     {
         $tplData = [
-            'fMailer' => \ForkBB\__('Mailer', $this->c->config->o_board_title),
+            'fMailer' => __('Mailer', $this->c->config->o_board_title),
             'username' => $report->author->username,
             'postLink' => $this->c->Router->link('ViewPost', ['id' => $report->post->id]),
             'reason' => $report->message,
@@ -168,7 +169,7 @@ class Report extends Page
             ->setFolder($this->c->DIR_LANG)
             ->setLanguage($this->c->config->o_default_lang) // ????
             ->setTo($this->c->config->o_mailing_list)
-            ->setFrom($this->c->config->o_webmaster_email, \ForkBB\__('Mailer', $this->c->config->o_board_title))
+            ->setFrom($this->c->config->o_webmaster_email, __('Mailer', $this->c->config->o_board_title))
             ->setTpl('new_report.tpl', $tplData)
             ->send();
     }

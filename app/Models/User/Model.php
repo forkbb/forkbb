@@ -8,6 +8,7 @@ use ForkBB\Models\Model as BaseModel;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Post\Model as Post;
 use RuntimeException;
+use function \ForkBB\__;
 
 class Model extends DataModel
 {
@@ -218,17 +219,17 @@ class Model extends DataModel
     public function title(): string
     {
         if (isset($this->c->bans->userList[\mb_strtolower($this->username)])) { //????
-            return \ForkBB\__('Banned');
+            return __('Banned');
         } elseif ('' != $this->title) {
             return \ForkBB\cens($this->title);
         } elseif ('' != $this->g_user_title) {
             return \ForkBB\cens($this->g_user_title);
         } elseif ($this->isGuest) {
-            return \ForkBB\__('Guest');
+            return __('Guest');
         } elseif ($this->isUnverified) {
-            return \ForkBB\__('Unverified');
+            return __('Unverified');
         } else {
-            return \ForkBB\__('Member');
+            return __('Member');
         }
     }
 

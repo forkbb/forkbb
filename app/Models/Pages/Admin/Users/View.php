@@ -5,6 +5,7 @@ namespace ForkBB\Models\Pages\Admin\Users;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin\Users;
+use function \ForkBB\__;
 
 class View extends Users
 {
@@ -18,8 +19,8 @@ class View extends Users
     protected function groups(bool $onlyKeys = false): array
     {
         $groups = [
-            -1 => \ForkBB\__('All groups'),
-            0  => \ForkBB\__('Unverified users'),
+            -1 => __('All groups'),
+            0  => __('Unverified users'),
         ];
 
         foreach ($this->c->groups->getList() as $group) {
@@ -53,7 +54,7 @@ class View extends Users
                 $ip = \filter_var($v->ip, \FILTER_VALIDATE_IP);
 
                 if (false === $ip) {
-                    $this->fIswev = ['v', \ForkBB\__('Bad IP message')];
+                    $this->fIswev = ['v', __('Bad IP message')];
                     $data         = $v->getData();
                 } else {
                     return $this->c->Redirect->page('AdminUsersResult', ['data' => $this->encodeData($ip)]);
@@ -145,7 +146,7 @@ class View extends Users
             'btns'   => [
                 'new' => [
                     'type'      => 'btn',
-                    'value'     => \ForkBB\__('New user'),
+                    'value'     => __('New user'),
                     'link'      => $this->c->Router->link('AdminUsersNew'),
                     'accesskey' => 'n',
                 ],
@@ -173,7 +174,7 @@ class View extends Users
             'btns'   => [
                 'search' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Submit search'),
+                    'value'     => __('Submit search'),
                     'accesskey' => 's',
                 ],
             ],
@@ -182,7 +183,7 @@ class View extends Users
             'info' => [
                 'info1' => [
                     'type'  => '', //????
-                    'value' => \ForkBB\__('User search info'),
+                    'value' => __('User search info'),
                 ],
             ],
         ];
@@ -190,62 +191,62 @@ class View extends Users
         $fields['username'] = [
             'type'      => 'text',
             'maxlength' => 25,
-            'caption'   => \ForkBB\__('Username label'),
+            'caption'   => __('Username label'),
             'value'     => $data['username'] ?? null,
         ];
         $fields['email'] = [
             'type'      => 'text',
             'maxlength' => 80,
-            'caption'   => \ForkBB\__('E-mail address label'),
+            'caption'   => __('E-mail address label'),
             'value'     => $data['email'] ?? null,
         ];
         $fields['title'] = [
             'type'      => 'text',
             'maxlength' => 50,
-            'caption'   => \ForkBB\__('Title label'),
+            'caption'   => __('Title label'),
             'value'     => $data['title'] ?? null,
         ];
         $fields['realname'] = [
             'type'      => 'text',
             'maxlength' => 40,
-            'caption'   => \ForkBB\__('Real name label'),
+            'caption'   => __('Real name label'),
             'value'     => $data['realname'] ?? null,
         ];
         $genders = [
-            0 => \ForkBB\__('Do not display'),
-            1 => \ForkBB\__('Male'),
-            2 => \ForkBB\__('Female'),
+            0 => __('Do not display'),
+            1 => __('Male'),
+            2 => __('Female'),
         ];
         $fields['gender'] = [
 #            'class'   => 'block',
             'type'    => 'radio',
             'value'   => $data['gender'] ?? -1,
             'values'  => $genders,
-            'caption' => \ForkBB\__('Gender label'),
+            'caption' => __('Gender label'),
         ];
         $fields['url'] = [
             'id'        => 'website',
             'type'      => 'text',
             'maxlength' => 100,
-            'caption'   => \ForkBB\__('Website label'),
+            'caption'   => __('Website label'),
             'value'     => $data['url'] ?? null,
         ];
         $fields['location'] = [
             'type'      => 'text',
             'maxlength' => 30,
-            'caption'   => \ForkBB\__('Location label'),
+            'caption'   => __('Location label'),
             'value'     => $data['location'] ?? null,
         ];
         $fields['signature'] = [
             'type'      => 'text',
             'maxlength' => 512,
-            'caption'   => \ForkBB\__('Signature label'),
+            'caption'   => __('Signature label'),
             'value'     => $data['signature'] ?? null,
         ];
         $fields['admin_note'] = [
             'type'      => 'text',
             'maxlength' => 30,
-            'caption'   => \ForkBB\__('Admin note label'),
+            'caption'   => __('Admin note label'),
             'value'     => $data['admin_note'] ?? null,
         ];
         $fields['between1'] = [
@@ -258,7 +259,7 @@ class View extends Users
             'min'     => 0,
             'max'     => 9999999999,
             'value'   => $data['num_posts_1'] ?? null,
-            'caption' => \ForkBB\__('Posts label'),
+            'caption' => __('Posts label'),
         ];
         $fields['num_posts_2'] = [
             'type'    => 'number',
@@ -279,7 +280,7 @@ class View extends Users
             'type'      => 'text',
             'maxlength' => 100,
             'value'     => $data['last_post_1'] ?? null,
-            'caption'   => \ForkBB\__('Last post label'),
+            'caption'   => __('Last post label'),
         ];
         $fields['last_post_2'] = [
             'class'     => 'bend',
@@ -299,7 +300,7 @@ class View extends Users
             'type'      => 'text',
             'maxlength' => 100,
             'value'     => $data['last_visit_1'] ?? null,
-            'caption'   => \ForkBB\__('Last visit label'),
+            'caption'   => __('Last visit label'),
         ];
         $fields['last_visit_2'] = [
             'class'     => 'bend',
@@ -319,7 +320,7 @@ class View extends Users
             'type'      => 'text',
             'maxlength' => 100,
             'value'     => $data['registered_1'] ?? null,
-            'caption'   => \ForkBB\__('Registered label'),
+            'caption'   => __('Registered label'),
         ];
         $fields['registered_2'] = [
             'class'     => 'bend',
@@ -331,7 +332,7 @@ class View extends Users
             'type' => 'endwrap',
         ];
         $form['sets']['filters'] = [
-            'legend' => \ForkBB\__('User search subhead'),
+            'legend' => __('User search subhead'),
             'fields' => $fields,
         ];
 
@@ -344,22 +345,22 @@ class View extends Users
             'class'   => 'bstart',
             'type'    => 'select',
             'options' => [
-                'username'   => \ForkBB\__('Order by username'),
-                'email'      => \ForkBB\__('Order by e-mail'),
-                'num_posts'  => \ForkBB\__('Order by posts'),
-                'last_post'  => \ForkBB\__('Order by last post'),
-                'last_visit' => \ForkBB\__('Order by last visit'),
-                'registered' => \ForkBB\__('Order by registered'),
+                'username'   => __('Order by username'),
+                'email'      => __('Order by e-mail'),
+                'num_posts'  => __('Order by posts'),
+                'last_post'  => __('Order by last post'),
+                'last_visit' => __('Order by last visit'),
+                'registered' => __('Order by registered'),
             ],
             'value'   => $data['order_by'] ?? 'registered',
-            'caption' => \ForkBB\__('Order by label'),
+            'caption' => __('Order by label'),
         ];
         $fields['direction'] = [
             'class'   => 'bend',
             'type'    => 'select',
             'options' => [
-                'ASC'  => \ForkBB\__('Ascending'),
-                'DESC' => \ForkBB\__('Descending'),
+                'ASC'  => __('Ascending'),
+                'DESC' => __('Descending'),
             ],
             'value'   => $data['direction'] ?? 'DESC',
         ];
@@ -370,11 +371,11 @@ class View extends Users
             'type'    => 'select',
             'options' => $this->groups(),
             'value'   => $data['user_group'] ?? -1,
-            'caption' => \ForkBB\__('User group label'),
+            'caption' => __('User group label'),
         ];
 
         $form['sets']['sorting'] = [
-            'legend' => \ForkBB\__('Search results legend'),
+            'legend' => __('Search results legend'),
             'fields' => $fields,
         ];
 
@@ -399,7 +400,7 @@ class View extends Users
             'btns'   => [
                 'find' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Find IP address'),
+                    'value'     => __('Find IP address'),
                     'accesskey' => 'f',
                 ],
             ],
@@ -408,12 +409,12 @@ class View extends Users
         $fields['ip'] = [
             'type'      => 'text',
             'maxlength' => 49,
-            'caption'   => \ForkBB\__('IP address label'),
+            'caption'   => __('IP address label'),
             'value'     => $data['ip'] ?? null,
             'required'  => true,
         ];
         $form['sets']['ip'] = [
-            'legend' => \ForkBB\__('IP search subhead'),
+            'legend' => __('IP search subhead'),
             'fields' => $fields,
         ];
 

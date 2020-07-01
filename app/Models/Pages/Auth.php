@@ -6,6 +6,7 @@ use ForkBB\Core\Validator;
 use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\Page;
 use ForkBB\Models\User\Model as User;
+use function \ForkBB\__;
 
 class Auth extends Page
 {
@@ -71,7 +72,7 @@ class Auth extends Page
         $this->nameTpl    = 'login';
         $this->onlinePos  = 'login';
         $this->robots     = 'noindex';
-        $this->titles     = \ForkBB\__('Login');
+        $this->titles     = __('Login');
         $this->regLink    = '1' == $this->c->config->o_regs_allow ? $this->c->Router->link('Register') : null;
 
         $username         = $v ? $v->username : ($args['_username'] ?? '');
@@ -106,20 +107,20 @@ class Auth extends Page
                             'autofocus' => true,
                             'type'      => 'text',
                             'value'     => $username,
-                            'caption'   => \ForkBB\__('Username'),
+                            'caption'   => __('Username'),
                             'required'  => true,
                         ],
                         'password' => [
                             'id'        => 'passinlogin',
                             'autofocus' => true,
                             'type'      => 'password',
-                            'caption'   => \ForkBB\__('Passphrase'),
-                            'info'      => \ForkBB\__('<a href="%s">Forgotten?</a>', $this->c->Router->link('Forget')),
+                            'caption'   => __('Passphrase'),
+                            'info'      => __('<a href="%s">Forgotten?</a>', $this->c->Router->link('Forget')),
                             'required'  => true,
                         ],
                         'save' => [
                             'type'    => 'checkbox',
-                            'label'   => \ForkBB\__('Remember me'),
+                            'label'   => __('Remember me'),
                             'value'   => '1',
                             'checked' => $save,
                         ],
@@ -129,7 +130,7 @@ class Auth extends Page
             'btns'   => [
                 'login' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Sign in'),
+                    'value'     => __('Sign in'),
                     'accesskey' => 's',
                 ],
             ],
@@ -217,7 +218,7 @@ class Auth extends Page
                 $link = $this->c->Router->link('ChangePassword', ['id' => $tmpUser->id, 'key' => $key, 'hash' => $hash]);
                 $tplData = [
                     'fRootLink' => $this->c->Router->link('Index'),
-                    'fMailer'   => \ForkBB\__('Mailer', $this->c->config->o_board_title),
+                    'fMailer'   => __('Mailer', $this->c->config->o_board_title),
                     'username'  => $tmpUser->username,
                     'link'      => $link,
                 ];
@@ -228,7 +229,7 @@ class Auth extends Page
                         ->setFolder($this->c->DIR_LANG)
                         ->setLanguage($tmpUser->language)
                         ->setTo($tmpUser->email, $tmpUser->username)
-                        ->setFrom($this->c->config->o_webmaster_email, \ForkBB\__('Mailer', $this->c->config->o_board_title))
+                        ->setFrom($this->c->config->o_webmaster_email, __('Mailer', $this->c->config->o_board_title))
                         ->setTpl('passphrase_reset.tpl', $tplData)
                         ->send();
                 } catch (MailException $e) {
@@ -241,9 +242,9 @@ class Auth extends Page
 
                     $this->c->users->update($tmpUser);
 
-                    return $this->c->Message->message(\ForkBB\__('Forget mail', $this->c->config->o_admin_email), false, 200);
+                    return $this->c->Message->message(__('Forget mail', $this->c->config->o_admin_email), false, 200);
                 } else {
-                    return $this->c->Message->message(\ForkBB\__('Error mail', $this->c->config->o_admin_email), true, 424);
+                    return $this->c->Message->message(__('Error mail', $this->c->config->o_admin_email), true, 424);
                 }
             }
 
@@ -254,7 +255,7 @@ class Auth extends Page
         $this->nameTpl    = 'passphrase_reset';
         $this->onlinePos  = 'passphrase_reset';
         $this->robots     = 'noindex';
-        $this->titles     = \ForkBB\__('Passphrase reset');
+        $this->titles     = __('Passphrase reset');
 
         $email            = $v ? $v->email : ($args['_email'] ?? '');
         $this->form       = $this->formForget($email);
@@ -284,8 +285,8 @@ class Auth extends Page
                             'type'      => 'text',
                             'maxlength' => 80,
                             'value'     => $email,
-                            'caption'   => \ForkBB\__('Email'),
-                            'info'      => \ForkBB\__('Passphrase reset info'),
+                            'caption'   => __('Email'),
+                            'info'      => __('Passphrase reset info'),
                             'required'  => true,
                             'pattern'   => '.+@.+',
                         ],
@@ -295,7 +296,7 @@ class Auth extends Page
             'btns'   => [
                 'submit' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Send email'),
+                    'value'     => __('Send email'),
                     'accesskey' => 's',
                 ],
             ],
@@ -348,7 +349,7 @@ class Auth extends Page
 
                 $this->c->users->update($user);
 
-                $this->fIswev = ['s', \ForkBB\__('Pass updated')];
+                $this->fIswev = ['s', __('Pass updated')];
                 return $this->login([], 'GET');
             }
 
@@ -361,14 +362,14 @@ class Auth extends Page
 
             $this->c->users->update($user);
 
-            $this->fIswev = ['i', \ForkBB\__('Account activated')];
+            $this->fIswev = ['i', __('Account activated')];
         }
 
         $this->fIndex     = 'login';
         $this->nameTpl    = 'change_passphrase';
         $this->onlinePos  = 'change_passphrase';
         $this->robots     = 'noindex';
-        $this->titles     = \ForkBB\__('Passphrase reset');
+        $this->titles     = __('Passphrase reset');
         $this->form       = $this->formChange($args);
 
         return $this;
@@ -394,15 +395,15 @@ class Auth extends Page
                         'password' => [
                             'autofocus' => true,
                             'type'      => 'password',
-                            'caption'   => \ForkBB\__('New pass'),
+                            'caption'   => __('New pass'),
                             'required'  => true,
                             'pattern'   => '^.{16,}$',
                         ],
                         'password2' => [
                             'autofocus' => true,
                             'type'      => 'password',
-                            'caption'   => \ForkBB\__('Confirm new pass'),
-                            'info'      => \ForkBB\__('Pass format') . ' ' . \ForkBB\__('Pass info'),
+                            'caption'   => __('Confirm new pass'),
+                            'info'      => __('Pass format') . ' ' . __('Pass info'),
                             'required'  => true,
                             'pattern'   => '^.{16,}$',
                         ],
@@ -412,7 +413,7 @@ class Auth extends Page
             'btns'   => [
                 'login' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Change passphrase'),
+                    'value'     => __('Change passphrase'),
                     'accesskey' => 's',
                 ],
             ],

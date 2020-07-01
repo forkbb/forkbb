@@ -6,6 +6,7 @@ use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin;
 use ForkBB\Models\Config\Model as Config;
+use function \ForkBB\__;
 
 class Permissions extends Admin
 {
@@ -64,7 +65,7 @@ class Permissions extends Admin
         $this->aIndex    = 'permissions';
         $this->nameTpl   = 'admin/form';
         $this->form      = $this->formEdit($config);
-        $this->titleForm = \ForkBB\__('Permissions head');
+        $this->titleForm = __('Permissions head');
         $this->classForm = 'editpermissions';
 
         return $this;
@@ -88,94 +89,94 @@ class Permissions extends Admin
             'btns'   => [
                 'save' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Save changes'),
+                    'value'     => __('Save changes'),
                     'accesskey' => 's',
                 ],
             ],
         ];
 
-        $yn = [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')];
+        $yn = [1 => __('Yes'), 0 => __('No')];
 
         $form['sets']['posting'] = [
-            'legend' => \ForkBB\__('Posting subhead'),
+            'legend' => __('Posting subhead'),
             'fields' => [
                 'p_message_bbcode' => [
                     'type'    => 'radio',
                     'value'   => $config->p_message_bbcode,
                     'values'  => $yn,
-                    'caption' => \ForkBB\__('BBCode label'),
-                    'info'    => \ForkBB\__('BBCode help'),
+                    'caption' => __('BBCode label'),
+                    'info'    => __('BBCode help'),
                 ],
                 'p_message_img_tag' => [
                     'type'    => 'radio',
                     'value'   => $config->p_message_img_tag,
                     'values'  => $yn,
-                    'caption' => \ForkBB\__('Image tag label'),
-                    'info'    => \ForkBB\__('Image tag help'),
+                    'caption' => __('Image tag label'),
+                    'info'    => __('Image tag help'),
                 ],
                 'p_message_all_caps' => [
                     'type'    => 'radio',
                     'value'   => $config->p_message_all_caps,
                     'values'  => $yn,
-                    'caption' => \ForkBB\__('All caps message label'),
-                    'info'    => \ForkBB\__('All caps message help'),
+                    'caption' => __('All caps message label'),
+                    'info'    => __('All caps message help'),
                 ],
                 'p_subject_all_caps' => [
                     'type'    => 'radio',
                     'value'   => $config->p_subject_all_caps,
                     'values'  => $yn,
-                    'caption' => \ForkBB\__('All caps subject label'),
-                    'info'    => \ForkBB\__('All caps subject help'),
+                    'caption' => __('All caps subject label'),
+                    'info'    => __('All caps subject help'),
                 ],
                 'p_force_guest_email' => [
                     'type'    => 'radio',
                     'value'   => $config->p_force_guest_email,
                     'values'  => $yn,
-                    'caption' => \ForkBB\__('Require e-mail label'),
-                    'info'    => \ForkBB\__('Require e-mail help'),
+                    'caption' => __('Require e-mail label'),
+                    'info'    => __('Require e-mail help'),
                 ],
             ],
         ];
 
         $form['sets']['signatures'] = [
-            'legend' => \ForkBB\__('Signatures subhead'),
+            'legend' => __('Signatures subhead'),
             'fields' => [
                 'p_sig_bbcode' => [
                     'type'    => 'radio',
                     'value'   => $config->p_sig_bbcode,
                     'values'  => $yn,
-                    'caption' => \ForkBB\__('BBCode sigs label'),
-                    'info'    => \ForkBB\__('BBCode sigs help'),
+                    'caption' => __('BBCode sigs label'),
+                    'info'    => __('BBCode sigs help'),
                 ],
                 'p_sig_img_tag' => [
                     'type'    => 'radio',
                     'value'   => $config->p_sig_img_tag,
                     'values'  => $yn,
-                    'caption' => \ForkBB\__('Image tag sigs label'),
-                    'info'    => \ForkBB\__('Image tag sigs help'),
+                    'caption' => __('Image tag sigs label'),
+                    'info'    => __('Image tag sigs help'),
                 ],
                 'p_sig_all_caps' => [
                     'type'    => 'radio',
                     'value'   => $config->p_sig_all_caps,
                     'values'  => $yn,
-                    'caption' => \ForkBB\__('All caps sigs label'),
-                    'info'    => \ForkBB\__('All caps sigs help'),
+                    'caption' => __('All caps sigs label'),
+                    'info'    => __('All caps sigs help'),
                 ],
                 'p_sig_length' => [
                     'type'    => 'number',
                     'min'     => 0,
                     'max'     => 16000,
                     'value'   => $config->p_sig_length,
-                    'caption' => \ForkBB\__('Max sig length label'),
-                    'info'    => \ForkBB\__('Max sig length help'),
+                    'caption' => __('Max sig length label'),
+                    'info'    => __('Max sig length help'),
                 ],
                 'p_sig_lines' => [
                     'type'    => 'number',
                     'min'     => 0,
                     'max'     => 100,
                     'value'   => $config->p_sig_lines,
-                    'caption' => \ForkBB\__('Max sig lines label'),
-                    'info'    => \ForkBB\__('Max sig lines help'),
+                    'caption' => __('Max sig lines label'),
+                    'info'    => __('Max sig lines help'),
                 ],
 
             ],

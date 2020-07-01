@@ -6,6 +6,7 @@ use ForkBB\Core\Validator;
 use ForkBB\Models\Model;
 use ForkBB\Models\Page;
 use ForkBB\Models\Topic\Model as Topic;
+use function \ForkBB\__;
 
 class Post extends Page
 {
@@ -59,8 +60,8 @@ class Post extends Page
         $this->onlinePos = 'forum-' . $forum->id;
         $this->canonical = $this->c->Router->link('NewTopic', ['id' => $forum->id]);
         $this->robots    = 'noindex';
-        $this->crumbs    = $this->crumbs(\ForkBB\__('Post new topic'), $forum);
-        $this->formTitle = \ForkBB\__('Post new topic');
+        $this->crumbs    = $this->crumbs(__('Post new topic'), $forum);
+        $this->formTitle = __('Post new topic');
         $this->form      = $this->messageForm($args, $forum, 'NewTopic', false, true);
 
         return $this;
@@ -124,10 +125,10 @@ class Post extends Page
         $this->onlinePos  = 'topic-' . $topic->id;
         $this->canonical  = $this->c->Router->link('NewReply', ['id' => $topic->id]);
         $this->robots     = 'noindex';
-        $this->crumbs     = $this->crumbs(\ForkBB\__('Post a reply'), $topic);
-        $this->formTitle  = \ForkBB\__('Post a reply');
+        $this->crumbs     = $this->crumbs(__('Post a reply'), $topic);
+        $this->formTitle  = __('Post a reply');
         $this->form       = $this->messageForm($args, $topic, 'NewReply');
-        $this->postsTitle = \ForkBB\__('Topic review');
+        $this->postsTitle = __('Topic review');
         $this->posts      = $topic->review();
 
         return $this;

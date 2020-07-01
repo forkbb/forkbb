@@ -5,6 +5,7 @@ namespace ForkBB\Models\Pages\Admin;
 use ForkBB\Core\Container;
 use ForkBB\Models\Pages\Admin;
 use ForkBB\Models\User\Model as User;
+use function \ForkBB\__;
 
 abstract class Users extends Admin
 {
@@ -94,7 +95,7 @@ abstract class Users extends Admin
         });
 
         if (! empty($bad)) {
-            $this->fIswev = ['v', \ForkBB\__('Action not available')];
+            $this->fIswev = ['v', __('Action not available')];
             return false;
         }
 
@@ -108,48 +109,48 @@ abstract class Users extends Admin
             switch ($action) {
                 case self::ACTION_BAN:
                     if ($this->c->bans->isBanned($user)) {
-                        $this->fIswev = ['i', \ForkBB\__('User is ban', $user->username)];
+                        $this->fIswev = ['i', __('User is ban', $user->username)];
                         return false;
                     }
                     if (! $this->c->userRules->canBanUser($user)) {
-                        $this->fIswev = ['v', \ForkBB\__('You are not allowed to ban the %s', $user->username)];
+                        $this->fIswev = ['v', __('You are not allowed to ban the %s', $user->username)];
                         if ($user->isAdmMod) {
-                            $this->fIswev = ['i', \ForkBB\__('No ban admins message')];
+                            $this->fIswev = ['i', __('No ban admins message')];
                         }
                         return false;
                     }
                     break;
                 case self::ACTION_DEL:
                     if (! $this->c->userRules->canDeleteUser($user)) {
-                        $this->fIswev = ['v', \ForkBB\__('You are not allowed to delete the %s', $user->username)];
+                        $this->fIswev = ['v', __('You are not allowed to delete the %s', $user->username)];
                         if ($user->isAdmMod) {
-                            $this->fIswev = ['i', \ForkBB\__('No delete admins message')];
+                            $this->fIswev = ['i', __('No delete admins message')];
                         }
                         return false;
                     }
                     break;
                 case self::ACTION_CHG:
                     if (! $this->c->userRules->canChangeGroup($user, $profile)) {
-                        $this->fIswev = ['v', \ForkBB\__('You are not allowed to change group for %s', $user->username)];
+                        $this->fIswev = ['v', __('You are not allowed to change group for %s', $user->username)];
                         if ($user->isAdmin) {
-                            $this->fIswev = ['i', \ForkBB\__('No move admins message')];
+                            $this->fIswev = ['i', __('No move admins message')];
                         }
                         return false;
                     }
                     break;
                 default:
-                    $this->fIswev = ['v', \ForkBB\__('Action not available')];
+                    $this->fIswev = ['v', __('Action not available')];
                     return false;
             }
 
             $result[] = $user->id;
             if ($user->id === $this->user->id) {
-                $this->fIswev = ['i', \ForkBB\__('You are trying to change your own group')];
+                $this->fIswev = ['i', __('You are trying to change your own group')];
             }
         }
 
         if (empty($result)) {
-            $this->fIswev = ['v', \ForkBB\__('No users selected')];
+            $this->fIswev = ['v', __('No users selected')];
             return false;
         }
 

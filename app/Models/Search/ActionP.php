@@ -6,7 +6,6 @@ use ForkBB\Models\Method;
 use ForkBB\Models\Forum\Model as Forum;
 use PDO;
 use InvalidArgumentException;
-use RuntimeException;
 
 class ActionP extends Method
 {
@@ -78,7 +77,11 @@ class ActionP extends Method
             return [];
         }
 
-        $this->model->idsList = \array_slice($list, ($this->model->page - 1) * $this->c->user->disp_posts, $this->c->user->disp_posts);
+        $this->model->idsList = \array_slice(
+            $list,
+            ($this->model->page - 1) * $this->c->user->disp_posts,
+            $this->c->user->disp_posts
+        );
 
         return $this->c->posts->view($this->model);
     }

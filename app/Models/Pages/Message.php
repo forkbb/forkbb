@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
+use function \ForkBB\__;
 
 class Message extends Page
 {
@@ -21,7 +22,7 @@ class Message extends Page
         $this->nameTpl     = 'message';
         $this->httpStatus  = \max(200, $status);
         $this->httpHeaders = $headers;
-        $this->titles      = \ForkBB\__('Info');
+        $this->titles      = __('Info');
         $this->back        = $back;
 
 
@@ -34,7 +35,7 @@ class Message extends Page
         } else {
             $type = 'e';
         }
-        $this->fIswev = [$type, \ForkBB\__($message)];
+        $this->fIswev = [$type, __($message)];
 
         return $this;
     }

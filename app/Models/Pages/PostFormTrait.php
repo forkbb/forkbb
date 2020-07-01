@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Model;
+use function \ForkBB\__;
 
 trait PostFormTrait
 {
@@ -33,12 +34,12 @@ trait PostFormTrait
             'btns'   => [
                 'submit' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Submit'),
+                    'value'     => __('Submit'),
                     'accesskey' => 's',
                 ],
                 'preview' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Preview'),
+                    'value'     => __('Preview'),
                     'accesskey' => 'p',
                     'class'     => 'f-minor',
                 ],
@@ -51,7 +52,7 @@ trait PostFormTrait
                 'class'     => 'w1',
                 'type'      => 'text',
                 'maxlength' => 25,
-                'caption'   => \ForkBB\__('Username'),
+                'caption'   => __('Username'),
                 'required'  => true,
                 'pattern'   => '^.{2,25}$',
                 'value'     => $vars['username'] ?? null,
@@ -61,7 +62,7 @@ trait PostFormTrait
                 'class'     => 'w2',
                 'type'      => 'text',
                 'maxlength' => 80,
-                'caption'   => \ForkBB\__('Email'),
+                'caption'   => __('Email'),
                 'required'  => '1' == $this->c->config->p_force_guest_email,
                 'pattern'   => '.+@.+',
                 'value'     => $vars['email'] ?? null,
@@ -74,7 +75,7 @@ trait PostFormTrait
                 'class'     => 'w0',
                 'type'      => 'text',
                 'maxlength' => 70,
-                'caption'   => \ForkBB\__('Subject'),
+                'caption'   => __('Subject'),
                 'required'  => true,
                 'value'     => $vars['subject'] ?? null,
                 'autofocus' => $autofocus,
@@ -85,14 +86,14 @@ trait PostFormTrait
         $fieldset['message'] = [
             'class'    => 'w0',
             'type'     => 'textarea',
-            'caption'  => \ForkBB\__('Message'),
+            'caption'  => __('Message'),
             'required' => true,
             'value'    => $vars['message'] ?? null,
             'bb'       => [
-                ['link', \ForkBB\__('BBCode'), \ForkBB\__('1' == $this->c->config->p_message_bbcode ? 'on' : 'off')],
-                ['link', \ForkBB\__('url tag'), \ForkBB\__('1' == $this->c->config->p_message_bbcode && '1' == $this->user->g_post_links ? 'on' : 'off')],
-                ['link', \ForkBB\__('img tag'), \ForkBB\__('1' == $this->c->config->p_message_bbcode && '1' == $this->c->config->p_message_img_tag ? 'on' : 'off')],
-                ['link', \ForkBB\__('Smilies'), \ForkBB\__('1' == $this->c->config->o_smilies ? 'on' : 'off')],
+                ['link', __('BBCode'), __('1' == $this->c->config->p_message_bbcode ? 'on' : 'off')],
+                ['link', __('url tag'), __('1' == $this->c->config->p_message_bbcode && '1' == $this->user->g_post_links ? 'on' : 'off')],
+                ['link', __('img tag'), __('1' == $this->c->config->p_message_bbcode && '1' == $this->c->config->p_message_img_tag ? 'on' : 'off')],
+                ['link', __('Smilies'), __('1' == $this->c->config->o_smilies ? 'on' : 'off')],
             ],
             'autofocus' => $autofocus,
         ];
@@ -109,20 +110,20 @@ trait PostFormTrait
             if ($editSubject) {
                 $fieldset['stick_topic'] = [
                     'type'    => 'checkbox',
-                    'label'   => \ForkBB\__('Stick topic'),
+                    'label'   => __('Stick topic'),
                     'value'   => '1',
                     'checked' => isset($vars['stick_topic']) ? (bool) $vars['stick_topic'] : false,
                 ];
                 $fieldset['stick_fp'] = [
                     'type'    => 'checkbox',
-                    'label'   => \ForkBB\__('Stick first post'),
+                    'label'   => __('Stick first post'),
                     'value'   => '1',
                     'checked' => isset($vars['stick_fp']) ? (bool) $vars['stick_fp'] : false,
                 ];
             } elseif (! $editPost) {
                 $fieldset['merge_post'] = [
                     'type'    => 'checkbox',
-                    'label'   => \ForkBB\__('Merge posts'),
+                    'label'   => __('Merge posts'),
                     'value'   => '1',
                     'checked' => isset($vars['merge_post']) ? (bool) $vars['merge_post'] : true,
                 ];
@@ -134,7 +135,7 @@ trait PostFormTrait
             ) {
                 $fieldset['edit_post'] = [
                     'type'    => 'checkbox',
-                    'label'   => \ForkBB\__('EditPost edit'),
+                    'label'   => __('EditPost edit'),
                     'value'   => '1',
                     'checked' => isset($vars['edit_post']) ? (bool) $vars['edit_post'] : false,
                 ];
@@ -146,14 +147,14 @@ trait PostFormTrait
         ) {
             $fieldset['hide_smilies'] = [
                 'type'    => 'checkbox',
-                'label'   => \ForkBB\__('Hide smilies'),
+                'label'   => __('Hide smilies'),
                 'value'   => '1',
                 'checked' => isset($vars['hide_smilies']) ? (bool) $vars['hide_smilies'] : false,
             ];
         }
         if ($fieldset) {
             $form['sets']['sett'] = [
-                'legend' => \ForkBB\__('Options'),
+                'legend' => __('Options'),
                 'fields' => $fieldset,
             ];
         }

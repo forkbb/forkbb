@@ -6,6 +6,7 @@ use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin\Users;
 use RuntimeException;
+use function \ForkBB\__;
 
 class Action extends Users
 {
@@ -148,8 +149,8 @@ class Action extends Users
 
         $this->nameTpl    = 'admin/form';
         $this->classForm  = 'delete-users';
-        $this->titleForm  = \ForkBB\__('Deleting users');
-        $this->aCrumbs[]  = [$this->c->Router->link('AdminUsersAction', $args), \ForkBB\__('Deleting users')];
+        $this->titleForm  = __('Deleting users');
+        $this->aCrumbs[]  = [$this->c->Router->link('AdminUsersAction', $args), __('Deleting users')];
         $this->form       = $this->formDelete($args);
 
         return $this;
@@ -164,7 +165,7 @@ class Action extends Users
      */
     protected function formDelete(array $args): array
     {
-        $yn    = [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')];
+        $yn    = [1 => __('Yes'), 0 => __('No')];
         $names = \implode(', ', $this->nameList($this->userList));
         $form  = [
             'action' => $this->c->Router->link('AdminUsersAction', $args),
@@ -178,14 +179,14 @@ class Action extends Users
                             'type'    => 'radio',
                             'value'   => 0,
                             'values'  => $yn,
-                            'caption' => \ForkBB\__('Delete users'),
-                            'info'    => \ForkBB\__('Confirm delete info', $names),
+                            'caption' => __('Delete users'),
+                            'info'    => __('Confirm delete info', $names),
                         ],
                         'delete_posts' => [
                             'type'    => 'radio',
                             'value'   => 0,
                             'values'  => $yn,
-                            'caption' => \ForkBB\__('Delete posts'),
+                            'caption' => __('Delete posts'),
                         ],
                     ],
                 ],
@@ -193,7 +194,7 @@ class Action extends Users
                     'info' => [
                         'info2' => [
                             'type'    => '', //????
-                            'value'   => \ForkBB\__('Delete warning'),
+                            'value'   => __('Delete warning'),
                             'html'    => true,
                         ],
                     ],
@@ -202,12 +203,12 @@ class Action extends Users
             'btns'   => [
                 'delete'  => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Delete users'),
+                    'value'     => __('Delete users'),
                     'accesskey' => 'd',
                 ],
                 'cancel'  => [
                     'type'      => 'btn',
-                    'value'     => \ForkBB\__('Cancel'),
+                    'value'     => __('Cancel'),
                     'link'      => $this->c->Router->link('AdminUsers'),
                 ],
             ],
@@ -309,8 +310,8 @@ class Action extends Users
 
         $this->nameTpl    = 'admin/form';
         $this->classForm  = 'change-group';
-        $this->titleForm  = \ForkBB\__('Change user group');
-        $this->aCrumbs[]  = [$this->c->Router->link('AdminUsersAction', $args), \ForkBB\__('Change user group')];
+        $this->titleForm  = __('Change user group');
+        $this->aCrumbs[]  = [$this->c->Router->link('AdminUsersAction', $args), __('Change user group')];
         $this->form       = $this->formChange($args, $profile, $link, 'absent' !== $rulePass);
 
         return $this;
@@ -345,7 +346,7 @@ class Action extends Users
      */
     protected function formChange(array $args, bool $profile, string $linkCancel, bool $checkPass): array
     {
-        $yn    = [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')];
+        $yn    = [1 => __('Yes'), 0 => __('No')];
         $names = \implode(', ', $this->nameList($this->userList));
         $form  = [
             'action' => $this->c->Router->link('AdminUsersAction', $args),
@@ -359,14 +360,14 @@ class Action extends Users
                             'type'      => 'select',
                             'options'   => $this->groupListForChange($profile),
                             'value'     => $this->c->config->o_default_user_group,
-                            'caption'   => \ForkBB\__('New group label'),
-                            'info'      => \ForkBB\__('New group help', $names),
+                            'caption'   => __('New group label'),
+                            'info'      => __('New group help', $names),
                         ],
                         'confirm' => [
                             'type'    => 'radio',
                             'value'   => 0,
                             'values'  => $yn,
-                            'caption' => \ForkBB\__('Move users'),
+                            'caption' => __('Move users'),
                         ],
                     ],
                 ],
@@ -374,12 +375,12 @@ class Action extends Users
             'btns'   => [
                 'move'  => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Move users'),
+                    'value'     => __('Move users'),
                     'accesskey' => 'm',
                 ],
                 'cancel'  => [
                     'type'      => 'btn',
-                    'value'     => \ForkBB\__('Cancel'),
+                    'value'     => __('Cancel'),
                     'link'      => $linkCancel,
                 ],
             ],
@@ -388,7 +389,7 @@ class Action extends Users
         if ($checkPass) {
             $form['sets']['options']['fields']['password'] = [
                 'type'      => 'password',
-                'caption'   => \ForkBB\__('Your passphrase'),
+                'caption'   => __('Your passphrase'),
                 'required'  => true,
             ];
         }

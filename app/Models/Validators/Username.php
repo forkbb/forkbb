@@ -5,6 +5,7 @@ namespace ForkBB\Models\Validators;
 use ForkBB\Core\Validator;
 use ForkBB\Core\Validators;
 use ForkBB\Models\User\Model as User;
+use function \ForkBB\__;
 
 class Username extends Validators
 {
@@ -36,7 +37,7 @@ class Username extends Validators
             if (! \preg_match('%^(?=.{2,25}$)\p{L}[\p{L}\p{N}\x20\._-]+$%uD', $username)) {
                 $v->addError('The :alias is not valid format'); // ???? выводить отдельное сообщение для username
             // username = Гость
-            } elseif (\preg_match('%^(guest|' . \preg_quote(\ForkBB\__('Guest'), '%') . ')$%iu', $username)) { // ???? а зачем?
+            } elseif (\preg_match('%^(guest|' . \preg_quote(__('Guest'), '%') . ')$%iu', $username)) { // ???? а зачем?
                 $v->addError('Username guest');
             // цензура
             } elseif ($this->c->censorship->censor($username) !== $username) {

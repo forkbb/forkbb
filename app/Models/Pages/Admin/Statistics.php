@@ -4,6 +4,7 @@ namespace ForkBB\Models\Pages\Admin;
 
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin;
+use function \ForkBB\__;
 
 class Statistics extends Admin
 {
@@ -49,7 +50,7 @@ class Statistics extends Admin
         $this->nameTpl    = 'admin/phpinfo';
         $this->mainSuffix = '-one-column';
         $this->aCrumbs[]  = [$this->c->Router->link('AdminInfo'), 'phpinfo()'];
-        $this->aCrumbs[]  = [$this->c->Router->link('AdminStatistics'), \ForkBB\__('Server statistics')];
+        $this->aCrumbs[]  = [$this->c->Router->link('AdminStatistics'), __('Server statistics')];
         $this->phpinfo    = $phpinfo;
 
         return $this;
@@ -65,7 +66,7 @@ class Statistics extends Admin
         $this->c->Lang->load('admin_index');
 
         $this->nameTpl   = 'admin/statistics';
-        $this->aCrumbs[] = [$this->c->Router->link('AdminStatistics'), \ForkBB\__('Server statistics')];
+        $this->aCrumbs[] = [$this->c->Router->link('AdminStatistics'), __('Server statistics')];
         $this->linkInfo  = $this->c->Router->link('AdminInfo');
 
         // Get the server load averages (if possible)
@@ -86,14 +87,14 @@ class Statistics extends Admin
             }
 
             $ave = @\explode(' ', $ave);
-            $this->serverLoad = isset($ave[2]) ? $ave[0].' '.$ave[1].' '.$ave[2] : \ForkBB\__('Not available');
+            $this->serverLoad = isset($ave[2]) ? $ave[0].' '.$ave[1].' '.$ave[2] : __('Not available');
         } elseif (
             ! \in_array(\PHP_OS, ['WINNT', 'WIN32'])
             && \preg_match('%averages?: ([\d\.]+),?\s+([\d\.]+),?\s+([\d\.]+)%i', @\exec('uptime'), $ave)
         ) {
             $this->serverLoad = $ave[1].' '.$ave[2].' '.$ave[3];
         } else {
-            $this->serverLoad = \ForkBB\__('Not available');
+            $this->serverLoad = __('Not available');
         }
 
         // Get number of current visitors
@@ -126,7 +127,7 @@ class Statistics extends Admin
             $this->accelerator = 'XCache';
             $this->linkAcc     = 'https://xcache.lighttpd.net/';
         } else {
-            $this->accelerator = \ForkBB\__('NA');
+            $this->accelerator = __('NA');
             $this->linkAcc     = null;
         }
 

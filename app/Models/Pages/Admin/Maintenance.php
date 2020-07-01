@@ -6,6 +6,7 @@ use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin;
 use ForkBB\Models\Config\Model as Config;
+use function \ForkBB\__;
 
 class Maintenance extends Admin
 {
@@ -71,20 +72,20 @@ class Maintenance extends Admin
             ],
             'sets'   => [
                 'maint' => [
-                    'legend' => \ForkBB\__('Maintenance head'),
+                    'legend' => __('Maintenance head'),
                     'fields' => [
                         'o_maintenance' => [
                             'type'    => 'radio',
                             'value'   => $config->o_maintenance,
-                            'values'  => [1 => \ForkBB\__('Yes'), 0 => \ForkBB\__('No')],
-                            'caption' => \ForkBB\__('Maintenance mode label'),
-                            'info'    => \ForkBB\__('Maintenance mode help'),
+                            'values'  => [1 => __('Yes'), 0 => __('No')],
+                            'caption' => __('Maintenance mode label'),
+                            'info'    => __('Maintenance mode help'),
                         ],
                         'o_maintenance_message' => [
                             'type'    => 'textarea',
                             'value'   => $config->o_maintenance_message,
-                            'caption' => \ForkBB\__('Maintenance message label'),
-                            'info'    => \ForkBB\__('Maintenance message help'),
+                            'caption' => __('Maintenance message label'),
+                            'info'    => __('Maintenance message help'),
                         ],
                     ],
                 ],
@@ -92,7 +93,7 @@ class Maintenance extends Admin
             'btns'   => [
                 'submit' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Save changes'),
+                    'value'     => __('Save changes'),
                     'accesskey' => 's',
                 ],
             ],
@@ -116,36 +117,36 @@ class Maintenance extends Admin
                     'info' => [
                         'info1' => [
                             'type'  => '', //????
-                            'value' => \ForkBB\__('Rebuild index info'),
+                            'value' => __('Rebuild index info'),
                             'html'  => true,
                         ],
                     ],
                 ],
                 'indx' => [
-                    'legend' => \ForkBB\__('Rebuild index head'),
+                    'legend' => __('Rebuild index head'),
                     'fields' => [
                         'limit' => [
                             'type'    => 'number',
                             'min'     => 1,
                             'max'     => 9999,
                             'value'   => 100,
-                            'caption' => \ForkBB\__('Posts per cycle label'),
-                            'info'    => \ForkBB\__('Posts per cycle help'),
+                            'caption' => __('Posts per cycle label'),
+                            'info'    => __('Posts per cycle help'),
                         ],
                         'start' => [
                             'type'    => 'number',
                             'min'     => 1,
                             'max'     => 9999999999,
                             'value'   => 1,
-                            'caption' => \ForkBB\__('Starting post label'),
-                            'info'    => \ForkBB\__('Starting post help'),
+                            'caption' => __('Starting post label'),
+                            'info'    => __('Starting post help'),
                         ],
                         'clear' => [
                             'type'    => 'checkbox',
                             'value'   => '1',
                             'checked' => true,
-                            'caption' => \ForkBB\__('Empty index label'),
-                            'label'   => \ForkBB\__('Empty index help'),
+                            'caption' => __('Empty index label'),
+                            'label'   => __('Empty index help'),
                         ],
                     ],
                 ],
@@ -153,7 +154,7 @@ class Maintenance extends Admin
                     'info' => [
                         'info1' => [
                             'type'  => '', //????
-                            'value' => \ForkBB\__('Rebuild completed info'),
+                            'value' => __('Rebuild completed info'),
                             'html'  => true,
                         ],
                     ],
@@ -162,7 +163,7 @@ class Maintenance extends Admin
             'btns'   => [
                 'rebuild' => [
                     'type'      => 'submit',
-                    'value'     => \ForkBB\__('Rebuild index'),
+                    'value'     => __('Rebuild index'),
                     'accesskey' => 'r',
                 ],
             ],
@@ -184,7 +185,7 @@ class Maintenance extends Admin
             1 === $v->o_maintenance
             && 0 === \strlen($value)
         ) {
-            $value = \ForkBB\__('Default maintenance message');
+            $value = __('Default maintenance message');
         }
         return $value;
     }
@@ -248,7 +249,7 @@ class Maintenance extends Admin
             ];
             $args['token'] = $this->c->Csrf->create('AdminRebuildIndex', $args);
 
-            return $this->c->Redirect->page('AdminRebuildIndex', $args)->message(\ForkBB\__('Processed posts', $v->start, $last));
+            return $this->c->Redirect->page('AdminRebuildIndex', $args)->message(__('Processed posts', $v->start, $last));
         } else {
             return $this->c->Redirect->page('AdminMaintenance')->message('Rebuilding index end');
         }

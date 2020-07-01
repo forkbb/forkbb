@@ -4,6 +4,7 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
 use ForkBB\Models\User\Model as User;
+use function \ForkBB\__;
 
 class Ban extends Page
 {
@@ -20,7 +21,7 @@ class Ban extends Page
         $this->nameTpl    = 'ban';
 #       $this->onlinePos  = 'ban';
 #       $this->robots     = 'noindex';
-        $this->titles     = \ForkBB\__('Info');
+        $this->titles     = __('Info');
         $this->ban        = $user->banInfo;
         $this->adminEmail = $this->c->config->o_admin_email;
         $this->bannedIp   = $user->isGuest;

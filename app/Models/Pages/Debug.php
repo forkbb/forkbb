@@ -17,7 +17,7 @@ class Debug extends Page
             $this->numQueries = $this->c->DB->getCount();
 
             if ($this->c->DEBUG > 1 ) {
-                $total = 0;
+                $total   = 0;
                 $queries = $this->c->DB->getQueries();
                 foreach ($queries as $cur) {
                     $total += $cur[1];
