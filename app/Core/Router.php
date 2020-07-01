@@ -11,6 +11,10 @@ class Router
     const METHOD_NOT_ALLOWED = 405;
     const NOT_IMPLEMENTED = 501;
 
+    const DUO = ['GET', 'POST'];
+    const GET = 'GET';
+    const PST = 'POST';
+
     /**
      * Массив постоянных маршрутов
      * @var array
