@@ -17,15 +17,15 @@ class UserStat extends Action
      */
     public function userStat(int $id): array
     {
-        $vars = [
+        $vars  = [
             ':id' => $id,
         ];
-        $sql = 'SELECT p.poster_ip, MAX(p.posted) AS last_used, COUNT(p.id) AS used_times
-                FROM ::posts AS p
-                WHERE p.poster_id=?i:id
-                GROUP BY p.poster_ip
-                ORDER BY last_used DESC';
+        $query = 'SELECT p.poster_ip, MAX(p.posted) AS last_used, COUNT(p.id) AS used_times
+            FROM ::posts AS p
+            WHERE p.poster_id=?i:id
+            GROUP BY p.poster_ip
+            ORDER BY last_used DESC';
 
-        return $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_UNIQUE);
+        return $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_UNIQUE);
     }
 }

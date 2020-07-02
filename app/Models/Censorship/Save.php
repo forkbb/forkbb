@@ -32,32 +32,37 @@ class Save extends Method
                     $list[$id]['search_for'] !== $words[$id]['search_for']
                     || $list[$id]['replace_with'] !== $words[$id]['replace_with']
                 ) {
-                    $vars = [
+                    $vars  = [
                         ':id'      => $id,
                         ':search'  => $list[$id]['search_for'],
                         ':replace' => $list[$id]['replace_with'],
                     ];
-                    $sql = 'UPDATE ::censoring
-                            SET search_for=?s:search, replace_with=?s:replace
-                            WHERE id=?i:id';
-                    $this->c->DB->exec($sql, $vars);
+                    $query = 'UPDATE ::censoring
+                        SET search_for=?s:search, replace_with=?s:replace
+                        WHERE id=?i:id';
+
+                    $this->c->DB->exec($query, $vars);
                 }
             } elseif (0 === $id) {
-                $vars = [
+                $vars  = [
                     ':search'  => $list[$id]['search_for'],
                     ':replace' => $list[$id]['replace_with'],
                 ];
-                $sql = 'INSERT INTO ::censoring (search_for, replace_with)
-                        VALUES (?s:search, ?s:replace)';
-                $this->c->DB->exec($sql, $vars);
+                $query = 'INSERT INTO ::censoring (search_for, replace_with)
+                    VALUES (?s:search, ?s:replace)';
+
+                $this->c->DB->exec($query, $vars);
             }
         }
         if ($forDel) {
-            $vars = [
+            $vars  = [
                 ':del' => $forDel
             ];
-            $sql = 'DELETE FROM ::censoring WHERE id IN (?ai:del)';
-            $this->c->DB->exec($sql, $vars);
+            $query = 'DELETE
+                FROM ::censoring
+                WHERE id IN (?ai:del)';
+
+            $this->c->DB->exec($query, $vars);
         }
 
         $this->c->Cache->delete('censorship');

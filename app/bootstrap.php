@@ -42,15 +42,15 @@ if (
 $c->PUBLIC_URL = $c->BASE_URL . $forkPublicPrefix;
 
 $c->FORK_REVISION = 1;
-$c->START = $forkStart;
-$c->DIR_APP    = __DIR__;
-$c->DIR_PUBLIC = $forkPublic;
-$c->DIR_CONFIG = __DIR__ . '/config';
-$c->DIR_CACHE  = __DIR__ . '/cache';
-$c->DIR_VIEWS  = __DIR__ . '/templates';
-$c->DIR_LANG   = __DIR__ . '/lang';
-$c->DATE_FORMATS = [$c->config->o_date_format, 'Y-m-d', 'Y-d-m', 'd-m-Y', 'm-d-Y', 'M j Y', 'jS M Y'];
-$c->TIME_FORMATS = [$c->config->o_time_format, 'H:i:s', 'H:i', 'g:i:s a', 'g:i a'];
+$c->START         = $forkStart;
+$c->DIR_APP       = __DIR__;
+$c->DIR_PUBLIC    = $forkPublic;
+$c->DIR_CONFIG    = __DIR__ . '/config';
+$c->DIR_CACHE     = __DIR__ . '/cache';
+$c->DIR_VIEWS     = __DIR__ . '/templates';
+$c->DIR_LANG      = __DIR__ . '/lang';
+$c->DATE_FORMATS  = [$c->config->o_date_format, 'Y-m-d', 'Y-d-m', 'd-m-Y', 'm-d-Y', 'M j Y', 'jS M Y'];
+$c->TIME_FORMATS  = [$c->config->o_time_format, 'H:i:s', 'H:i', 'g:i:s a', 'g:i a'];
 
 $controllers = ['Primary', 'Routing'];
 foreach ($controllers as $controller) {
@@ -76,7 +76,7 @@ if (
     && $c->DEBUG > 0
 ) {
     $debug = $c->View->rendering($c->Debug->debug());
-    $tpl = \str_replace('<!-- debuginfo -->', $debug, $tpl);
+    $tpl   = \str_replace('<!-- debuginfo -->', $debug, $tpl);
 }
 
 exit($tpl);

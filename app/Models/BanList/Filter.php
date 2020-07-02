@@ -98,18 +98,18 @@ class Filter extends Method
         }
 
         if (empty($where)) {
-            $sql = "SELECT b.id
-                    FROM ::bans AS b
-                    ORDER BY {$orderBy}";
+            $query = "SELECT b.id
+                FROM ::bans AS b
+                ORDER BY {$orderBy}";
         } else {
             $where = \implode(' AND ', $where);
-            $sql = "SELECT b.id
-                    FROM ::bans AS b
-                    WHERE {$where}
-                    ORDER BY {$orderBy}";
+            $query = "SELECT b.id
+                FROM ::bans AS b
+                WHERE {$where}
+                ORDER BY {$orderBy}";
         }
 
-        $ids = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
+        $ids = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
         return $ids;
     }

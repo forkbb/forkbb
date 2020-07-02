@@ -64,12 +64,14 @@ class Delete extends Action
             $this->c->Online->delete($user);
         }
 
-        $vars = [
+        $vars  = [
             ':users' => $ids,
         ];
-        $sql = 'DELETE FROM ::users
-                WHERE id IN (?ai:users)';
-        $this->c->DB->exec($sql, $vars);
+        $query = 'DELETE
+            FROM ::users
+            WHERE id IN (?ai:users)';
+
+        $this->c->DB->exec($query, $vars);
 
         if ($adminPresent) {
             $this->c->admins->reset();

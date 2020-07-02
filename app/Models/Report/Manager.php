@@ -96,7 +96,12 @@ class Manager extends ManagerModel
         if ($this->c->Cache->has('report')) {
             $last = $this->list = $this->c->Cache->get('report');
         } else {
-            $last = (int) $this->c->DB->query('SELECT r.id FROM ::reports AS r ORDER BY r.id DESC LIMIT 1')->fetchColumn();
+            $query = 'SELECT r.id
+                FROM ::reports AS r
+                ORDER BY r.id DESC
+                LIMIT 1';
+
+            $last = (int) $this->c->DB->query($query)->fetchColumn();
 
             $this->c->Cache->set('report', $last);
         }
@@ -109,20 +114,23 @@ class Manager extends ManagerModel
      */
     public function clear(): void
     {
-        $sql = 'SELECT r.zapped
-                FROM ::reports as r
-                WHERE r.zapped!=0
-                ORDER BY r.zapped DESC
-                LIMIT 10,1';
-        $time = (int) $this->c->DB->query($sql)->fetchColumn();
+        $query = 'SELECT r.zapped
+            FROM ::reports as r
+            WHERE r.zapped!=0
+            ORDER BY r.zapped DESC
+            LIMIT 10,1';
+
+        $time = (int) $this->c->DB->query($query)->fetchColumn();
 
         if ($time > 0) {
-            $vars = [
+            $vars  = [
                 ':time' => $time,
             ];
-            $sql = 'DELETE FROM ::reports
-                    WHERE zapped<=?i:time';
-            $this->c->DB->exec($sql, $vars);
+            $query = 'DELETE
+                FROM ::reports
+                WHERE zapped<=?i:time';
+
+            $this->c->DB->exec($query, $vars);
         }
     }
 }

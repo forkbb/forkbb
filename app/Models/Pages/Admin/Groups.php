@@ -210,7 +210,13 @@ class Groups extends Admin
             $marker          = 'AdminGroupsEdit';
             $vars            = ['id' => $group->g_id];
             $notNext        .= ',' . $group->g_id;
-            $this->aCrumbs[] = [$this->c->Router->link($marker, $vars), __('Edit group')];
+            $this->aCrumbs[] = [
+                $this->c->Router->link(
+                    $marker,
+                    $vars
+                ),
+                __('Edit group'),
+            ];
             $this->aCrumbs[] = __('"%s"', $group->g_title);
             $this->titleForm = __('Edit group');
             $this->classForm = 'editgroup';
@@ -366,9 +372,15 @@ class Groups extends Admin
     protected function formEdit(array $args, Group $group, string $marker): array
     {
         $form = [
-            'action' => $this->c->Router->link($marker, $args),
+            'action' => $this->c->Router->link(
+                $marker,
+                $args
+            ),
             'hidden' => [
-                'token' => $this->c->Csrf->create($marker, $args),
+                'token' => $this->c->Csrf->create(
+                    $marker,
+                    $args
+                ),
             ],
             'sets'   => [],
             'btns'   => [
@@ -717,7 +729,13 @@ class Groups extends Admin
 
 
         $this->nameTpl   = 'admin/form';
-        $this->aCrumbs[] = [$this->c->Router->link('AdminGroupsDelete', $args), __('Group delete')];
+        $this->aCrumbs[] = [
+            $this->c->Router->link(
+                'AdminGroupsDelete',
+                $args
+            ),
+            __('Group delete'),
+        ];
         $this->aCrumbs[] = __('"%s"', $group->g_title);
         $this->form      = $this->formDelete($args, $group, $count, $groups);
         $this->titleForm = __('Group delete');
@@ -739,9 +757,15 @@ class Groups extends Admin
     protected function formDelete(array $args, Group $group, int $count, array $groups): array
     {
         $form = [
-            'action' => $this->c->Router->link('AdminGroupsDelete', $args),
+            'action' => $this->c->Router->link(
+                'AdminGroupsDelete',
+                $args
+            ),
             'hidden' => [
-                'token' => $this->c->Csrf->create('AdminGroupsDelete', $args),
+                'token' => $this->c->Csrf->create(
+                    'AdminGroupsDelete',
+                    $args
+                ),
             ],
             'sets'   => [],
             'btns'   => [

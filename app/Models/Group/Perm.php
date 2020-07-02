@@ -26,16 +26,17 @@ class Perm extends Action
      */
     public function get(Forum $forum): array
     {
-        $vars = [
+        $vars  = [
             ':fid' => $forum->id > 0 ? $forum->id : 0,
             ':adm' => $this->c->GROUP_ADMIN,
         ];
-        $sql = 'SELECT g.g_id, fp.read_forum, fp.post_replies, fp.post_topics
-                FROM ::groups AS g
-                LEFT JOIN ::forum_perms AS fp ON (g.g_id=fp.group_id AND fp.forum_id=?i:fid)
-                WHERE g.g_id!=?i:adm
-                ORDER BY g.g_id';
-        $perms = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_UNIQUE);
+        $query = 'SELECT g.g_id, fp.read_forum, fp.post_replies, fp.post_topics
+            FROM ::groups AS g
+            LEFT JOIN ::forum_perms AS fp ON (g.g_id=fp.group_id AND fp.forum_id=?i:fid)
+            WHERE g.g_id!=?i:adm
+            ORDER BY g.g_id';
+
+        $perms = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_UNIQUE);
 
         $result = [];
         foreach ($perms as $gid => $perm) {
@@ -95,13 +96,15 @@ class Perm extends Action
                 $modDef
                 || $modPerm
             ) {
-                $vars = [
+                $vars  = [
                     ':gid' => $id,
                     ':fid' => $forum->id,
                 ];
-                $sql = 'DELETE FROM ::forum_perms
-                        WHERE group_id=?i:gid AND forum_id=?i:fid';
-                $this->c->DB->exec($sql, $vars);
+                $query = 'DELETE
+                    FROM ::forum_perms
+                    WHERE group_id=?i:gid AND forum_id=?i:fid';
+
+                $this->c->DB->exec($query, $vars);
             }
 
             if ($modDef) {
@@ -112,8 +115,10 @@ class Perm extends Action
                 $list[] = 'group_id';
                 $list[] = 'forum_id';
                 $list2  = \array_fill(0, \count($list), '?i');
-                $sql = 'INSERT INTO ::forum_perms (' . \implode(', ', $list) . ') VALUES (' . \implode(', ', $list2) . ')';
-                $this->c->DB->exec($sql, $vars);
+                $query  = 'INSERT INTO ::forum_perms (' . \implode(', ', $list) . ')
+                    VALUES (' . \implode(', ', $list2) . ')';
+
+                $this->c->DB->exec($query, $vars);
             }
         }
     }
@@ -131,12 +136,14 @@ class Perm extends Action
             throw new RuntimeException('The forum does not have ID');
         }
 
-        $vars = [
+        $vars  = [
             ':fid' => $forum->id,
         ];
-        $sql = 'DELETE FROM ::forum_perms
-                WHERE forum_id=?i:fid';
-        $this->c->DB->exec($sql, $vars);
+        $query = 'DELETE
+            FROM ::forum_perms
+            WHERE forum_id=?i:fid';
+
+        $this->c->DB->exec($query, $vars);
     }
 
     /**
@@ -152,12 +159,14 @@ class Perm extends Action
             throw new RuntimeException('The group does not have ID');
         }
 
-        $vars = [
+        $vars  = [
             ':gid' => $group->g_id,
         ];
-        $sql = 'DELETE FROM ::forum_perms
-                WHERE group_id=?i:gid';
-        $this->c->DB->exec($sql, $vars);
+        $query = 'DELETE
+            FROM ::forum_perms
+            WHERE group_id=?i:gid';
+
+        $this->c->DB->exec($query, $vars);
     }
 
     /**
@@ -179,15 +188,15 @@ class Perm extends Action
 
         $this->delete($to);
 
-        $vars = [
+        $vars  = [
             ':old' => $from->g_id,
             ':new' => $to->g_id,
         ];
-        $sql = 'INSERT INTO ::forum_perms (group_id, forum_id, read_forum, post_replies, post_topics)
-                SELECT ?i:new, forum_id, read_forum, post_replies, post_topics
-                FROM ::forum_perms
-                WHERE group_id=?i:old';
+        $query = 'INSERT INTO ::forum_perms (group_id, forum_id, read_forum, post_replies, post_topics)
+            SELECT ?i:new, forum_id, read_forum, post_replies, post_topics
+            FROM ::forum_perms
+            WHERE group_id=?i:old';
 
-        $this->c->DB->exec($sql, $vars);
+        $this->c->DB->exec($query, $vars);
     }
 }

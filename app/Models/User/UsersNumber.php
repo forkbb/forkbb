@@ -23,11 +23,13 @@ class UsersNumber extends Action
             return 0;
         }
 
-        $vars = [
+        $vars  = [
             ':gid' => $group->g_id,
         ];
-        $sql = 'SELECT COUNT(u.id) FROM ::users AS u WHERE u.group_id=?i:gid';
+        $query = 'SELECT COUNT(u.id)
+            FROM ::users AS u
+            WHERE u.group_id=?i:gid';
 
-        return $this->c->DB->query($sql, $vars)->fetchColumn();
+        return $this->c->DB->query($query, $vars)->fetchColumn();
     }
 }

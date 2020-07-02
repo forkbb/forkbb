@@ -14,11 +14,12 @@ class Load extends Action
      */
     protected function getSql(string $where): string
     {
-        $sql = 'SELECT u.*, g.*
-                FROM ::users AS u
-                LEFT JOIN ::groups AS g ON u.group_id=g.g_id
-                WHERE ' . $where;
-        return $sql;
+        $query = 'SELECT u.*, g.*
+            FROM ::users AS u
+            LEFT JOIN ::groups AS g ON u.group_id=g.g_id
+            WHERE ' . $where;
+
+        return $query;
     }
 
     /**
@@ -32,9 +33,10 @@ class Load extends Action
             throw new InvalidArgumentException('Expected a positive user id');
         }
 
-        $vars = [':id' => $id];
-        $sql  = $this->getSql('u.id=?i:id');
-        $data = $this->c->DB->query($sql, $vars)->fetch();
+        $vars  = [':id' => $id];
+        $query = $this->getSql('u.id=?i:id');
+
+        $data = $this->c->DB->query($query, $vars)->fetch();
 
         return empty($data['id']) ? null : $this->manager->create($data);
     }
@@ -55,9 +57,10 @@ class Load extends Action
             }
         }
 
-        $vars = [':ids' => $ids];
-        $sql  = $this->getSql('u.id IN (?ai:ids)');
-        $data = $this->c->DB->query($sql, $vars)->fetchAll();
+        $vars  = [':ids' => $ids];
+        $query = $this->getSql('u.id IN (?ai:ids)');
+
+        $data = $this->c->DB->query($query, $vars)->fetchAll();
 
         $result = [];
         foreach ($data as $row) {
@@ -71,9 +74,9 @@ class Load extends Action
      *
      * @throws ForkException
      */
-    protected function returnUser(string $sql, array $vars): ?User
+    protected function returnUser(string $query, array $vars): ?User
     {
-        $data  = $this->c->DB->query($sql, $vars)->fetchAll();
+        $data = $this->c->DB->query($query, $vars)->fetchAll();
 
         if (empty($data)) {
             return null;
@@ -91,9 +94,9 @@ class Load extends Action
     {
         $where = $caseInsencytive ? 'LOWER(u.username)=LOWER(?s:name)' : 'u.username=?s:name';
         $vars  = [':name' => $name];
-        $sql   = $this->getSql($where);
+        $query = $this->getSql($where);
 
-        return $this->returnUser($sql, $vars);
+        return $this->returnUser($query, $vars);
     }
 
     /**
@@ -101,9 +104,9 @@ class Load extends Action
      */
     public function loadByEmail(string $email): ?User
     {
-        $vars = [':email' => $this->c->NormEmail->normalize($email)];
-        $sql  = $this->getSql('u.email_normal=?s:email');
+        $vars  = [':email' => $this->c->NormEmail->normalize($email)];
+        $query = $this->getSql('u.email_normal=?s:email');
 
-        return $this->returnUser($sql, $vars);
+        return $this->returnUser($query, $vars);
     }
 }

@@ -40,7 +40,15 @@ class Stat extends Users
 
         $this->nameTpl    = 'admin/users_result';
         $this->mainSuffix = '-one-column';
-        $this->aCrumbs[]  = [$this->c->Router->link('AdminUserStat', ['id' => $args['id']]), $user->username];
+        $this->aCrumbs[]  = [
+            $this->c->Router->link(
+                'AdminUserStat',
+                [
+                    'id' => $args['id'],
+                ]
+            ),
+            $user->username,
+        ];
         $this->formResult = $this->form($stat, $startNum);
         $this->pagination = $this->c->Func->paginate($pages, $page, 'AdminUserStat', ['id' => $args['id']]);
 
@@ -75,7 +83,14 @@ class Stat extends Users
                 'type'    => $flag ? 'link' : 'str',
                 'caption' => __('Results IP address head'),
                 'value'   => $flag ? $ip : null,
-                'href'    => $flag ? $this->c->Router->link('AdminHost', ['ip' => $ip]) : null,
+                'href'    => $flag
+                    ? $this->c->Router->link(
+                        'AdminHost',
+                        [
+                            'ip' => $ip,
+                        ]
+                    )
+                    : null,
             ];
             $fields["l{$number}-last-used"] = [
                 'class'   => ['result', 'last-used'],
@@ -94,7 +109,14 @@ class Stat extends Users
                 'type'    => $flag ? 'link' : 'str',
                 'caption' => __('Results action head'),
                 'value'   => $flag ? __('Results find more link') : null,
-                'href'    => $flag ? $this->c->Router->link('AdminUsersResult', ['data' => $this->encodeData($ip)]) : null,
+                'href'    => $flag
+                    ? $this->c->Router->link(
+                        'AdminUsersResult',
+                        [
+                            'data' => $this->encodeData($ip),
+                        ]
+                    )
+                    : null,
             ];
 
             $form['sets']["l{$number}"] = [

@@ -52,24 +52,26 @@ class Merge extends Action
         }
 
         //???? перенести обработку в посты?
-        $vars = [
+        $vars  = [
             'start'  => "[from]",
             'end'    => "[/from]\n",
             'topics' => $ids,
         ];
-        $sql = 'UPDATE ::posts AS p, ::topics as t
-                SET p.message=CONCAT(?s:start, t.subject, ?s:end, p.message)
-                WHERE p.topic_id IN (?ai:topics) AND t.id=p.topic_id';
-        $this->c->DB->exec($sql, $vars);
+        $query = 'UPDATE ::posts AS p, ::topics as t
+            SET p.message=CONCAT(?s:start, t.subject, ?s:end, p.message)
+            WHERE p.topic_id IN (?ai:topics) AND t.id=p.topic_id';
 
-        $vars = [
+        $this->c->DB->exec($query, $vars);
+
+        $vars  = [
             'id'     => $firstTopic->id,
             'topics' => $ids,
         ];
-        $sql = 'UPDATE ::posts AS p
-                SET p.topic_id=?i:id
-                WHERE p.topic_id IN (?ai:topics)';
-        $this->c->DB->exec($sql, $vars);
+        $query = 'UPDATE ::posts AS p
+            SET p.topic_id=?i:id
+            WHERE p.topic_id IN (?ai:topics)';
+
+        $this->c->DB->exec($query, $vars);
 
         // добавить перенос подписок на первую тему?
 
@@ -79,13 +81,14 @@ class Merge extends Action
                 $this->c->topics->update($topic->calcStat());
             }
 
-            $vars = [
+            $vars  = [
                 'topics' => $ids,
             ];
-            $sql = 'SELECT t.id
-                    FROM ::topics AS t
-                    WHERE t.moved_to IN (?ai:topics)';
-            $linkTopics = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
+            $query = 'SELECT t.id
+                FROM ::topics AS t
+                WHERE t.moved_to IN (?ai:topics)';
+
+            $linkTopics = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
             foreach ($linkTopics as $topic) {
                 $topic->moved_to = $firstTopic->id;

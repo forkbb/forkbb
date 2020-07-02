@@ -105,7 +105,13 @@ class Model extends DataModel
         if (0 === $this->id) {
             return $this->c->Router->link('Index');
         } else {
-            return $this->c->Router->link('Forum', ['id' => $this->id, 'name' => $this->forum_name]);
+            return $this->c->Router->link(
+                'Forum',
+                [
+                    'id'   => $this->id,
+                    'name' => $this->forum_name,
+                ]
+            );
         }
     }
 
@@ -117,9 +123,20 @@ class Model extends DataModel
     protected function getlinkNew(): string
     {
         if (0 === $this->id) {
-            return $this->c->Router->link('SearchAction', ['action' => 'new']);
+            return $this->c->Router->link(
+                'SearchAction',
+                [
+                    'action' => 'new',
+                ]
+            );
         } else {
-            return $this->c->Router->link('SearchAction', ['action' => 'new', 'forum' => $this->id]);
+            return $this->c->Router->link(
+                'SearchAction',
+                [
+                    'action' => 'new',
+                    'forum' => $this->id,
+                ]
+            );
         }
     }
 
@@ -133,7 +150,12 @@ class Model extends DataModel
         if ($this->last_post_id < 1) {
             return null;
         } else {
-            return $this->c->Router->link('ViewPost', ['id' => $this->last_post_id]);
+            return $this->c->Router->link(
+                'ViewPost',
+                [
+                    'id' => $this->last_post_id,
+                ]
+            );
         }
     }
 
@@ -144,7 +166,12 @@ class Model extends DataModel
      */
     protected function getlinkCreateTopic(): string
     {
-        return $this->c->Router->link('NewTopic', ['id' => $this->id]);
+        return $this->c->Router->link(
+            'NewTopic',
+            [
+                'id' => $this->id,
+            ]
+        );
     }
 
     /**
@@ -154,10 +181,17 @@ class Model extends DataModel
      */
     protected function getlinkMarkRead(): string
     {
-        return $this->c->Router->link('MarkRead', [
+        return $this->c->Router->link(
+            'MarkRead', [
                 'id'    => $this->id,
-                'token' => $this->c->Csrf->create('MarkRead', ['id' => $this->id]),
-            ]);
+                'token' => $this->c->Csrf->create(
+                    'MarkRead',
+                    [
+                        'id' => $this->id,
+                    ]
+                ),
+            ]
+        );
     }
 
     /**
@@ -311,7 +345,12 @@ class Model extends DataModel
      */
     protected function getpagination(): array
     {
-        return $this->c->Func->paginate($this->numPages, $this->page, 'Forum', ['id' => $this->id, 'name' => $this->forum_name]);
+        return $this->c->Func->paginate(
+            $this->numPages,
+            $this->page,
+            'Forum',
+            ['id' => $this->id, 'name' => $this->forum_name]
+        );
     }
 
     /**
@@ -353,18 +392,18 @@ class Model extends DataModel
                 break;
         }
 
-        $vars = [
+        $vars  = [
             ':fid'    => $this->id,
             ':offset' => ($this->page - 1) * $this->c->user->disp_topics,
             ':rows'   => $this->c->user->disp_topics,
         ];
-        $sql = "SELECT t.id
-                FROM ::topics AS t
-                WHERE t.forum_id=?i:fid
-                ORDER BY t.sticky DESC, {$sortBy}, t.id DESC
-                LIMIT ?i:offset, ?i:rows";
+        $query = "SELECT t.id
+            FROM ::topics AS t
+            WHERE t.forum_id=?i:fid
+            ORDER BY t.sticky DESC, {$sortBy}, t.id DESC
+            LIMIT ?i:offset, ?i:rows";
 
-        $this->idsList = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
+        $this->idsList = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
         return empty($this->idsList) ? [] : $this->c->topics->view($this);
     }

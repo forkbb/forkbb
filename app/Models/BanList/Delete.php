@@ -18,12 +18,14 @@ class Delete extends Method
     public function delete(int ...$ids): BanList
     {
         if (! empty($ids)) {
-            $vars = [
+            $vars  = [
                 ':ids' => $ids,
             ];
-            $sql = 'DELETE FROM ::bans WHERE id IN (?ai:ids)';
+            $query = 'DELETE
+                FROM ::bans
+                WHERE id IN (?ai:ids)';
 
-            $this->c->DB->exec($sql, $vars);
+            $this->c->DB->exec($query, $vars);
             $this->model->load();
         }
 

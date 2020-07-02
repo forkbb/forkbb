@@ -24,35 +24,35 @@ class CalcStat extends Method
         if ($this->model->moved_to) {
             $numReplies = 0;
         } else {
-            $vars = [
+            $vars  = [
                 ':tid' => $this->model->id
             ];
-            $sql = 'SELECT COUNT(p.id) - 1
-                    FROM ::posts AS p
-                    WHERE p.topic_id=?i:tid';
+            $query = 'SELECT COUNT(p.id) - 1
+                FROM ::posts AS p
+                WHERE p.topic_id=?i:tid';
 
-            $numReplies = $this->c->DB->query($sql, $vars)->fetchColumn();
+            $numReplies = $this->c->DB->query($query, $vars)->fetchColumn();
 
-            $sql = 'SELECT p.id, p.poster, p.poster_id, p.posted
-                    FROM ::posts AS p
-                    WHERE p.topic_id=?i:tid
-                    ORDER BY p.id
-                    LIMIT 1';
+            $query = 'SELECT p.id, p.poster, p.poster_id, p.posted
+                FROM ::posts AS p
+                WHERE p.topic_id=?i:tid
+                ORDER BY p.id
+                LIMIT 1';
 
-            $result = $this->c->DB->query($sql, $vars)->fetch();
+            $result = $this->c->DB->query($query, $vars)->fetch();
 
             $this->model->poster        = $result['poster'];
             $this->model->poster_id     = $result['poster_id'];
             $this->model->posted        = $result['posted'];
             $this->model->first_post_id = $result['id'];
 
-            $sql = 'SELECT p.id, p.poster, p.poster_id, p.posted, p.edited
-                    FROM ::posts AS p
-                    WHERE p.topic_id=?i:tid
-                    ORDER BY p.id DESC
-                    LIMIT 1';
+            $query = 'SELECT p.id, p.poster, p.poster_id, p.posted, p.edited
+                FROM ::posts AS p
+                WHERE p.topic_id=?i:tid
+                ORDER BY p.id DESC
+                LIMIT 1';
 
-            $result = $this->c->DB->query($sql, $vars)->fetch();
+            $result = $this->c->DB->query($query, $vars)->fetch();
 
             $this->model->last_post_id   = $result['id'];
             $this->model->last_poster    = $result['poster'];

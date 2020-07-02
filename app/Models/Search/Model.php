@@ -37,7 +37,10 @@ class Model extends ParentModel
      */
     protected function getlink(): string
     {
-        return $this->c->Router->link($this->linkMarker, $this->linkArgs);
+        return $this->c->Router->link(
+            $this->linkMarker,
+            $this->linkArgs
+        );
     }
 
     /**

@@ -133,7 +133,15 @@ class Result extends Users
 
         $this->nameTpl    = 'admin/users_result';
         $this->mainSuffix = '-one-column';
-        $this->aCrumbs[]  = [$this->c->Router->link('AdminUsersResult', ['data' => $args['data']]), $crName];
+        $this->aCrumbs[]  = [
+            $this->c->Router->link(
+                'AdminUsersResult',
+                [
+                    'data' => $args['data'],
+                ]
+            ),
+            $crName,
+        ];
         $this->formResult = $this->form($userList, $startNum, $args);
         $this->pagination = $this->c->Func->paginate($pages, $page, 'AdminUsersResult', ['data' => $args['data']]);
 
@@ -226,9 +234,15 @@ class Result extends Users
     protected function form(array $users, int $number, array $args): array
     {
         $form = [
-            'action' => $this->c->Router->link('AdminUsersResult', $args),
+            'action' => $this->c->Router->link(
+                'AdminUsersResult',
+                $args
+            ),
             'hidden' => [
-                'token' => $this->c->Csrf->create('AdminUsersResult', $args),
+                'token' => $this->c->Csrf->create(
+                    'AdminUsersResult',
+                    $args
+                ),
             ],
             'sets'   => [],
             'btns'   => [],
@@ -300,7 +314,13 @@ class Result extends Users
                 'type'    => $user->num_posts ? 'link' : 'str',
                 'caption' => __('Results posts head'),
                 'value'   => $user->num_posts ? \ForkBB\num($user->num_posts) : null,
-                'href'    => $this->c->Router->link('SearchAction', ['action' => 'posts', 'uid' => $user->id]),
+                'href'    => $this->c->Router->link(
+                    'SearchAction',
+                    [
+                        'action' => 'posts',
+                        'uid'    => $user->id,
+                    ]
+                ),
                 'title'   => __('Results show posts link'),
             ];
             $fields["l{$number}-note"] = [
@@ -316,7 +336,12 @@ class Result extends Users
                     'type'    => $user->isGuest || ! $user->num_posts ? 'str' : 'link',
                     'caption' => __('Results action head'),
                     'value'   => $user->isGuest ? null : __('Results view IP link'),
-                    'href'    => $this->c->Router->link('AdminUserStat', ['id' => $user->id]),
+                    'href'    => $this->c->Router->link(
+                        'AdminUserStat',
+                        [
+                            'id' => $user->id,
+                        ]
+                    ),
                 ];
             }
 

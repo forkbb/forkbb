@@ -22,12 +22,15 @@ class Access extends Action
         }
 
         if (! empty($ids)) {
-            $vars = [
+            $vars  = [
                 ':ids'    => $ids,
                 ':closed' => $open ? 0 : 1,
             ];
-            $sql = 'UPDATE ::topics SET closed=?i:closed WHERE id IN (?ai:ids)';
-            $this->c->DB->exec($sql, $vars);
+            $query = 'UPDATE ::topics
+                SET closed=?i:closed
+                WHERE id IN (?ai:ids)';
+
+            $this->c->DB->exec($query, $vars);
         }
     }
 }

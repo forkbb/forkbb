@@ -69,10 +69,11 @@ class ChangeGroup extends Action
             ':new' => $newGroupId,
             ':ids' => $ids,
         ];
-        $sql = 'UPDATE ::users AS u
-                SET u.group_id = ?i:new
-                WHERE u.id IN (?ai:ids)';
-        $this->c->DB->exec($sql, $vars);
+        $query = 'UPDATE ::users AS u
+            SET u.group_id = ?i:new
+            WHERE u.id IN (?ai:ids)';
+
+        $this->c->DB->exec($query, $vars);
 
         if ($adminPresent) {
             $this->c->admins->reset();

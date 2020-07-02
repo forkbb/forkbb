@@ -15,16 +15,15 @@ class GetList extends Method
      */
     public function getList(array $ids): array
     {
-        $vars = [
+        $vars  = [
             ':ids' => $ids,
         ];
-        $sql = 'SELECT b.id, b.username, b.ip, b.email, b.message, b.expire, u.id AS id_creator, u.username AS name_creator
-                FROM ::bans AS b
-                LEFT JOIN ::users AS u ON u.id=b.ban_creator
-                WHERE b.id IN (?ai:ids)';
+        $query = 'SELECT b.id, b.username, b.ip, b.email, b.message, b.expire, u.id AS id_creator, u.username AS name_creator
+            FROM ::bans AS b
+            LEFT JOIN ::users AS u ON u.id=b.ban_creator
+            WHERE b.id IN (?ai:ids)';
 
-        $stmt = $this->c->DB->query($sql, $vars);
-
+        $stmt = $this->c->DB->query($query, $vars);
         $list = \array_fill_keys($ids, false);
 
         while ($row = $stmt->fetch()) {

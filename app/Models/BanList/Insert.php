@@ -34,9 +34,10 @@ class Insert extends Method
 
         $ban['creator'] = $this->c->user->id;
 
-        $sql = 'INSERT INTO ::bans (username, ip, email, message, expire, ban_creator)
-                VALUES (?s:username, ?s:ip, ?s:email, ?s:message, ?i:expire, ?i:creator)';
-        $this->c->DB->exec($sql, $ban);
+        $query = 'INSERT INTO ::bans (username, ip, email, message, expire, ban_creator)
+            VALUES (?s:username, ?s:ip, ?s:email, ?s:message, ?i:expire, ?i:creator)';
+
+        $this->c->DB->exec($query, $ban);
 
         return $this->model;
     }

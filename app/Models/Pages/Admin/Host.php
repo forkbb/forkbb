@@ -33,7 +33,12 @@ class Host extends Admin
         $this->back    = true;
         $this->fIswev  = [
             'i',
-            __('Host info', $ip, $host, $this->c->Router->link('AdminUsersResult', ['data' => "ip:{$ip}"])),
+            __('Host info', $ip, $host, $this->c->Router->link(
+                'AdminUsersResult',
+                [
+                    'data' => "ip:{$ip}",
+                ]
+            )),
         ];
 
         return $this;

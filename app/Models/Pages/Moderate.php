@@ -247,11 +247,14 @@ class Moderate extends Page
                 $this->processAsPosts = true;
             }
 
-            $this->backLink = $this->c->Router->link('Topic', [
-                'id'   => $this->curTopic->id,
-                'name' => $this->curTopic->subject,
-                'page' => $page
-            ]);
+            $this->backLink = $this->c->Router->link(
+                'Topic',
+                [
+                    'id'   => $this->curTopic->id,
+                    'name' => $this->curTopic->subject,
+                    'page' => $page,
+                ]
+            );
         } else {
             $objects = $this->c->topics->loadByIds($v->ids, false);
             foreach ($objects as $topic) {
@@ -263,11 +266,14 @@ class Moderate extends Page
                 }
             }
 
-            $this->backLink = $this->c->Router->link('Forum', [
-                'id'   => $this->curForum->id,
-                'name' => $this->curForum->forum_name,
-                'page' => $page
-            ]);
+            $this->backLink = $this->c->Router->link(
+                'Forum',
+                [
+                    'id'   => $this->curForum->id,
+                    'name' => $this->curForum->forum_name,
+                    'page' => $page,
+                ]
+            );
         }
 
         return $this->{'action' . \ucfirst($v->action)}($objects, $v);

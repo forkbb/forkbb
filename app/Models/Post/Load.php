@@ -15,10 +15,11 @@ class Load extends Action
      */
     protected function getSql(string $where): string
     {
-        $sql = 'SELECT p.*
-                FROM ::posts AS p
-                WHERE ' . $where;
-        return $sql;
+        $query = 'SELECT p.*
+            FROM ::posts AS p
+            WHERE ' . $where;
+
+        return $query;
     }
 
     /**
@@ -46,12 +47,13 @@ class Load extends Action
             throw new InvalidArgumentException('Expected a positive topic id');
         }
 
-        $vars = [
+        $vars  = [
             ':pid' => $id,
             ':tid' => $tid,
         ];
-        $sql = $this->getSql(null !== $tid ? 'p.id=?i:pid AND p.topic_id=?i:tid' : 'p.id=?i:pid');
-        $data = $this->c->DB->query($sql, $vars)->fetch();
+        $query = $this->getSql(null !== $tid ? 'p.id=?i:pid AND p.topic_id=?i:tid' : 'p.id=?i:pid');
+
+        $data = $this->c->DB->query($query, $vars)->fetch();
 
         if (empty($data)) {
             return null;
@@ -90,11 +92,12 @@ class Load extends Action
             }
         }
 
-        $vars = [
+        $vars  = [
             ':ids' => $ids,
         ];
-        $sql  = $this->getSql('p.id IN (?ai:ids)');
-        $stmt = $this->c->DB->query($sql, $vars);
+        $query = $this->getSql('p.id IN (?ai:ids)');
+
+        $stmt = $this->c->DB->query($query, $vars);
 
         $result   = [];
         $topicIds = [];

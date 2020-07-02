@@ -58,7 +58,12 @@ class Post extends Page
 
         $this->nameTpl   = 'post';
         $this->onlinePos = 'forum-' . $forum->id;
-        $this->canonical = $this->c->Router->link('NewTopic', ['id' => $forum->id]);
+        $this->canonical = $this->c->Router->link(
+            'NewTopic',
+            [
+                'id' => $forum->id,
+            ]
+        );
         $this->robots    = 'noindex';
         $this->crumbs    = $this->crumbs(__('Post new topic'), $forum);
         $this->formTitle = __('Post new topic');
@@ -123,7 +128,12 @@ class Post extends Page
 
         $this->nameTpl    = 'post';
         $this->onlinePos  = 'topic-' . $topic->id;
-        $this->canonical  = $this->c->Router->link('NewReply', ['id' => $topic->id]);
+        $this->canonical  = $this->c->Router->link(
+            'NewReply',
+            [
+                'id' => $topic->id,
+            ]
+        );
         $this->robots     = 'noindex';
         $this->crumbs     = $this->crumbs(__('Post a reply'), $topic);
         $this->formTitle  = __('Post a reply');

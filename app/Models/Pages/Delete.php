@@ -86,9 +86,19 @@ class Delete extends Page
     protected function formDelete(array $args, Post $post, bool $deleteTopic): array
     {
         return [
-            'action' => $this->c->Router->link('DeletePost', ['id' => $post->id]),
+            'action' => $this->c->Router->link(
+                'DeletePost',
+                [
+                    'id' => $post->id,
+                ]
+            ),
             'hidden' => [
-                'token' => $this->c->Csrf->create('DeletePost', ['id' => $post->id]),
+                'token' => $this->c->Csrf->create(
+                    'DeletePost',
+                    [
+                        'id' => $post->id,
+                    ]
+                ),
             ],
             'sets'   => [
                 'info' => [
@@ -124,7 +134,10 @@ class Delete extends Page
                 'cancel'  => [
                     'type'      => 'btn',
                     'value'     => __('Cancel'),
-                    'link'      => $this->c->Router->link('ViewPost', $args),
+                    'link'      => $this->c->Router->link(
+                        'ViewPost',
+                        $args
+                    ),
                 ],
             ],
         ];

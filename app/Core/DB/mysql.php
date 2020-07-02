@@ -157,7 +157,14 @@ class Mysql
     {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         try {
-            $stmt   = $this->db->query('SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:table', [':table' => $table]);
+            $vars  = [
+                ':table' => $table,
+            ];
+            $query = 'SELECT 1
+                FROM INFORMATION_SCHEMA.TABLES
+                WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:table';
+
+            $stmt   = $this->db->query($query, $vars);
             $result = $stmt->fetch();
             $stmt->closeCursor();
         } catch (PDOException $e) {
@@ -179,7 +186,15 @@ class Mysql
     {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         try {
-            $stmt   = $this->db->query('SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:table AND COLUMN_NAME = ?s:field', [':table' => $table, ':field' => $field]);
+            $vars  = [
+                ':table' => $table,
+                ':field' => $field,
+            ];
+            $query = 'SELECT 1
+                FROM INFORMATION_SCHEMA.COLUMNS
+                WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:table AND COLUMN_NAME = ?s:field';
+
+            $stmt   = $this->db->query($query, $vars);
             $result = $stmt->fetch();
             $stmt->closeCursor();
         } catch (PDOException $e) {
@@ -202,7 +217,15 @@ class Mysql
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $index = 'PRIMARY' == $index ? $index : $table . '_' . $index;
         try {
-            $stmt   = $this->db->query('SELECT 1 FROM INFORMATION_SCHEMA.STATISTICS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:table AND INDEX_NAME = ?s:index', [':table' => $table, ':index' => $index]);
+            $vars  = [
+                ':table' => $table,
+                ':index' => $index,
+            ];
+            $query = 'SELECT 1
+                FROM INFORMATION_SCHEMA.STATISTICS
+                WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:table AND INDEX_NAME = ?s:index';
+
+            $stmt   = $this->db->query($query, $vars);
             $result = $stmt->fetch();
             $stmt->closeCursor();
         } catch (PDOException $e) {
@@ -546,9 +569,16 @@ class Mysql
      */
     public function getMap(): array
     {
-        $stmt = $this->db->query('SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME LIKE ?s', ["{$this->dbPrefix}%"]);
+        $vars  = [
+            "{$this->dbPrefix}%",
+        ];
+        $query = 'SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE
+            FROM INFORMATION_SCHEMA.COLUMNS
+            WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME LIKE ?s';
+
+        $stmt   = $this->db->query($query, $vars);
         $result = [];
-        $table = null;
+        $table  = null;
         while ($row = $stmt->fetch()) {
             if ($table !== $row['TABLE_NAME']) {
                 $table = $row['TABLE_NAME'];

@@ -57,28 +57,28 @@ class LoadTree extends Action
         ];
 
         if ($this->c->user->isGuest) {
-            $sql = 'SELECT f.id, f.forum_desc, f.num_topics, f.sort_by, f.num_posts,
-                           f.last_post, f.last_post_id, f.last_poster, f.last_topic
-                    FROM ::forums AS f
-                    WHERE id IN (?ai:forums)';
+            $query = 'SELECT f.id, f.forum_desc, f.num_topics, f.sort_by, f.num_posts,
+                    f.last_post, f.last_post_id, f.last_poster, f.last_topic
+                FROM ::forums AS f
+                WHERE id IN (?ai:forums)';
         } elseif ('1' == $this->c->config->o_forum_subscriptions) {
-            $sql = 'SELECT f.id, f.forum_desc, f.num_topics, f.sort_by, f.num_posts,
-                           f.last_post, f.last_post_id, f.last_poster, f.last_topic,
-                           mof.mf_mark_all_read, s.user_id AS is_subscribed
-                    FROM ::forums AS f
-                    LEFT JOIN ::forum_subscriptions AS s ON (s.user_id=?i:uid AND s.forum_id=f.id)
-                    LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND mof.fid=f.id)
-                    WHERE f.id IN (?ai:forums)';
+            $query = 'SELECT f.id, f.forum_desc, f.num_topics, f.sort_by, f.num_posts,
+                    f.last_post, f.last_post_id, f.last_poster, f.last_topic,
+                    mof.mf_mark_all_read, s.user_id AS is_subscribed
+                FROM ::forums AS f
+                LEFT JOIN ::forum_subscriptions AS s ON (s.user_id=?i:uid AND s.forum_id=f.id)
+                LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND mof.fid=f.id)
+                WHERE f.id IN (?ai:forums)';
         } else {
-            $sql = 'SELECT f.id, f.forum_desc, f.num_topics, f.sort_by, f.num_posts,
-                           f.last_post, f.last_post_id, f.last_poster, f.last_topic,
-                           mof.mf_mark_all_read
-                    FROM ::forums AS f
-                    LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:id AND mof.fid=f.id)
-                    WHERE f.id IN (?ai:forums)';
+            $query = 'SELECT f.id, f.forum_desc, f.num_topics, f.sort_by, f.num_posts,
+                    f.last_post, f.last_post_id, f.last_poster, f.last_topic,
+                    mof.mf_mark_all_read
+                FROM ::forums AS f
+                LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:id AND mof.fid=f.id)
+                WHERE f.id IN (?ai:forums)';
         }
 
-        $stmt = $this->c->DB->query($sql, $vars);
+        $stmt = $this->c->DB->query($query, $vars);
         while ($cur = $stmt->fetch()) {
             $list[$cur['id']]->replAttrs($cur)->__ready = true;
         }
@@ -113,19 +113,20 @@ class LoadTree extends Action
         }
 
         // проверка по темам
-        $vars = [
+        $vars  = [
             ':uid'    => $this->c->user->id,
             ':forums' => \array_keys($time),
             ':max'    => $max,
         ];
-        $sql = 'SELECT t.forum_id, t.last_post
-                FROM ::topics AS t
-                LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND mot.tid=t.id)
-                WHERE t.forum_id IN(?ai:forums)
-                    AND t.last_post>?i:max
-                    AND t.moved_to=0
-                    AND (mot.mt_last_visit IS NULL OR t.last_post>mot.mt_last_visit)';
-        $stmt = $this->c->DB->query($sql, $vars);
+        $query = 'SELECT t.forum_id, t.last_post
+            FROM ::topics AS t
+            LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND mot.tid=t.id)
+            WHERE t.forum_id IN(?ai:forums)
+                AND t.last_post>?i:max
+                AND t.moved_to=0
+                AND (mot.mt_last_visit IS NULL OR t.last_post>mot.mt_last_visit)';
+
+        $stmt = $this->c->DB->query($query, $vars);
         while ($cur = $stmt->fetch()) {
             if ($cur['last_post'] > $time[$cur['forum_id']]) {
                 $list[$cur['forum_id']]->__newMessages = true; //????

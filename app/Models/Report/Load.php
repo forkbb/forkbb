@@ -23,13 +23,14 @@ class Load extends Action
             throw new InvalidArgumentException('Expected a positive report id');
         }
 
-        $vars = [
+        $vars  = [
             ':id' => $id,
         ];
-        $sql = 'SELECT r.*
-                FROM ::reports AS r
-                WHERE r.id=?i:id';
-        $data = $this->c->DB->query($sql, $vars)->fetch();
+        $query = 'SELECT r.*
+            FROM ::reports AS r
+            WHERE r.id=?i:id';
+
+        $data = $this->c->DB->query($query, $vars)->fetch();
 
         if (empty($data)) {
             return null;
@@ -53,18 +54,18 @@ class Load extends Action
         $vars   = [];
 
         if ($noZapped) {
-            $sql = 'SELECT r.*
-                    FROM ::reports AS r
-                    WHERE r.zapped=0
-                    ORDER BY r.id DESC';
+            $query = 'SELECT r.*
+                FROM ::reports AS r
+                WHERE r.zapped=0
+                ORDER BY r.id DESC';
         } else {
-            $sql = 'SELECT r.*
-                    FROM ::reports AS r
-                    WHERE r.zapped!=0
-                    ORDER BY r.zapped DESC'; // LIMIT 10 не нужен, если при обработке сигнала будут удалены старые
+            $query = 'SELECT r.*
+                FROM ::reports AS r
+                WHERE r.zapped!=0
+                ORDER BY r.zapped DESC'; // LIMIT 10 не нужен, если при обработке сигнала будут удалены старые
         }
 
-        $data = $this->c->DB->query($sql, $vars)->fetchAll();
+        $data = $this->c->DB->query($query, $vars)->fetchAll();
 
         foreach ($data as $row) {
             $result[] = $this->manager->create($row);

@@ -150,7 +150,13 @@ class Action extends Users
         $this->nameTpl    = 'admin/form';
         $this->classForm  = 'delete-users';
         $this->titleForm  = __('Deleting users');
-        $this->aCrumbs[]  = [$this->c->Router->link('AdminUsersAction', $args), __('Deleting users')];
+        $this->aCrumbs[]  = [
+            $this->c->Router->link(
+                'AdminUsersAction',
+                $args
+            ),
+            __('Deleting users'),
+        ];
         $this->form       = $this->formDelete($args);
 
         return $this;
@@ -168,9 +174,15 @@ class Action extends Users
         $yn    = [1 => __('Yes'), 0 => __('No')];
         $names = \implode(', ', $this->nameList($this->userList));
         $form  = [
-            'action' => $this->c->Router->link('AdminUsersAction', $args),
+            'action' => $this->c->Router->link(
+                'AdminUsersAction',
+                $args
+            ),
             'hidden' => [
-                'token' => $this->c->Csrf->create('AdminUsersAction', $args),
+                'token' => $this->c->Csrf->create(
+                    'AdminUsersAction',
+                    $args
+                ),
             ],
             'sets'   => [
                 'options' => [
@@ -254,7 +266,12 @@ class Action extends Users
 
         if ($profile) {
             $user = $this->c->users->load((int) $args['ids']);
-            $link = $this->c->Router->link('EditUserProfile', ['id' => $user->id]);
+            $link = $this->c->Router->link(
+                'EditUserProfile',
+                [
+                    'id' => $user->id,
+                ]
+            );
 
             if (
                 $user->isAdmin
@@ -311,7 +328,13 @@ class Action extends Users
         $this->nameTpl    = 'admin/form';
         $this->classForm  = 'change-group';
         $this->titleForm  = __('Change user group');
-        $this->aCrumbs[]  = [$this->c->Router->link('AdminUsersAction', $args), __('Change user group')];
+        $this->aCrumbs[]  = [
+            $this->c->Router->link(
+                'AdminUsersAction',
+                $args
+            ),
+            __('Change user group'),
+        ];
         $this->form       = $this->formChange($args, $profile, $link, 'absent' !== $rulePass);
 
         return $this;
@@ -349,9 +372,15 @@ class Action extends Users
         $yn    = [1 => __('Yes'), 0 => __('No')];
         $names = \implode(', ', $this->nameList($this->userList));
         $form  = [
-            'action' => $this->c->Router->link('AdminUsersAction', $args),
+            'action' => $this->c->Router->link(
+                'AdminUsersAction',
+                $args
+            ),
             'hidden' => [
-                'token' => $this->c->Csrf->create('AdminUsersAction', $args),
+                'token' => $this->c->Csrf->create(
+                    'AdminUsersAction',
+                    $args
+                ),
             ],
             'sets'   => [
                 'options' => [

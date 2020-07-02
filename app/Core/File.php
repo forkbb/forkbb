@@ -120,7 +120,10 @@ class File
     protected function filterName(string $name): string
     {
         if (\function_exists('\\transliterator_transliterate')) {
-            $name = \transliterator_transliterate("Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; [:Punctuation:] Remove; Lower();", $name);
+            $name = \transliterator_transliterate(
+                "Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; [:Punctuation:] Remove; Lower();",
+                $name
+            );
         }
 
         $name = \trim(\preg_replace('%[^\w.-]+%', '-', $name), '-');

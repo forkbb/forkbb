@@ -40,7 +40,12 @@ class Install
         $this->c->user = $this->c->users->create(['id' => 2, 'group_id' => $this->c->GROUP_ADMIN]);
 
         $r = $this->c->Router;
-        $r->add($r::DUO, '/install', 'Install:install', 'Install');
+        $r->add(
+            $r::DUO,
+            '/install',
+            'Install:install',
+            'Install'
+        );
 
         $method = $_SERVER['REQUEST_METHOD'];
 

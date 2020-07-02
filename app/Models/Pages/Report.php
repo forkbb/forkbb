@@ -112,9 +112,15 @@ class Report extends Page
     protected function formReport(array $args, array $data): array
     {
         return [
-            'action' => $this->c->Router->link('ReportPost', $args),
+            'action' => $this->c->Router->link(
+                'ReportPost',
+                $args
+            ),
             'hidden' => [
-                'token' => $this->c->Csrf->create('ReportPost', $args),
+                'token' => $this->c->Csrf->create(
+                    'ReportPost',
+                    $args
+                ),
             ],
             'sets'   => [
                 'report' => [
@@ -158,7 +164,12 @@ class Report extends Page
         $tplData = [
             'fMailer' => __('Mailer', $this->c->config->o_board_title),
             'username' => $report->author->username,
-            'postLink' => $this->c->Router->link('ViewPost', ['id' => $report->post->id]),
+            'postLink' => $this->c->Router->link(
+                'ViewPost',
+                [
+                    'id' => $report->post->id,
+                ]
+            ),
             'reason' => $report->message,
             'forumId' => $report->post->parent->parent->id,
             'topicSubject' => $report->post->parent->subject,

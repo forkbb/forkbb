@@ -33,10 +33,11 @@ class Update extends Method
             throw new InvalidArgumentException('Empty ban');
         }
 
-        $sql = 'UPDATE ::bans
-                SET username=?s:username, ip=?s:ip, email=?s:email, message=?s:message, expire=?i:expire
-                WHERE id=?i:id';
-        $this->c->DB->exec($sql, $ban);
+        $query = 'UPDATE ::bans
+            SET username=?s:username, ip=?s:ip, email=?s:email, message=?s:message, expire=?i:expire
+            WHERE id=?i:id';
+
+        $this->c->DB->exec($query, $ban);
 
         return $this->model;
     }

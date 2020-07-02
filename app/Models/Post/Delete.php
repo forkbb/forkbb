@@ -88,35 +88,40 @@ class Delete extends Action
         //???? подписки, опросы, предупреждения
 
         if ($usersToGuest) {
-            $vars = [
+            $vars  = [
                 ':users' => $usersToGuest,
             ];
-            $sql = 'UPDATE ::posts
-                    SET poster_id=1
-                    WHERE poster_id IN (?ai:users)';
-            $this->c->DB->exec($sql, $vars);
+            $query = 'UPDATE ::posts
+                SET poster_id=1
+                WHERE poster_id IN (?ai:users)';
+
+            $this->c->DB->exec($query, $vars);
         }
         if ($usersDel) {
-            $vars = [
+            $vars  = [
                 ':users' => $usersDel,
             ];
-            $sql = 'SELECT p.topic_id
-                    FROM ::posts as p
-                    WHERE p.poster_id IN (?ai:users)
-                    GROUP BY p.topic_id';
-            $parents = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
+            $query = 'SELECT p.topic_id
+                FROM ::posts as p
+                WHERE p.poster_id IN (?ai:users)
+                GROUP BY p.topic_id';
 
-            $sql = 'SELECT t.id
-                    FROM ::topics AS t
-                    INNER JOIN ::posts AS p ON t.first_post_id=p.id
-                    WHERE p.poster_id IN (?ai:users)';
-            $notUse = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
+            $parents = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
+
+            $query = 'SELECT t.id
+                FROM ::topics AS t
+                INNER JOIN ::posts AS p ON t.first_post_id=p.id
+                WHERE p.poster_id IN (?ai:users)';
+
+            $notUse = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
             $parents = \array_diff($parents, $notUse); //????
 
-            $sql = 'DELETE FROM ::posts
-                    WHERE poster_id IN (?ai:users)';
-            $this->c->DB->exec($sql, $vars);
+            $query = 'DELETE
+                FROM ::posts
+                WHERE poster_id IN (?ai:users)';
+
+            $this->c->DB->exec($query, $vars);
 
             foreach ($parents as &$parent) {
                 $parent = $this->c->topics->load($parent); //???? ааааАААААААААААААА О_о
@@ -124,45 +129,52 @@ class Delete extends Action
             unset($parent);
         }
         if ($forums) {
-            $vars = [
+            $vars  = [
                 ':forums' => \array_keys($forums),
             ];
-            $sql = 'SELECT p.poster_id
-                    FROM ::posts AS p
-                    INNER JOIN ::topics AS t ON t.id=p.topic_id
-                    WHERE t.forum_id IN (?ai:forums)
-                    GROUP BY p.poster_id';
-            $users = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
+            $query = 'SELECT p.poster_id
+                FROM ::posts AS p
+                INNER JOIN ::topics AS t ON t.id=p.topic_id
+                WHERE t.forum_id IN (?ai:forums)
+                GROUP BY p.poster_id';
 
-            $sql = 'DELETE FROM ::posts
-                    WHERE topic_id IN (
-                        SELECT id
-                        FROM ::topics
-                        WHERE forum_id IN (?ai:forums)
-                    )';
-            $this->c->DB->exec($sql, $vars);
+            $users = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
+
+            $query = 'DELETE
+                FROM ::posts
+                WHERE topic_id IN (
+                    SELECT id
+                    FROM ::topics
+                    WHERE forum_id IN (?ai:forums)
+                )';
+            $this->c->DB->exec($query, $vars);
         }
         if ($topics) {
-            $vars = [
+            $vars  = [
                 ':topics' => \array_keys($topics),
             ];
-            $sql = 'SELECT p.poster_id
-                    FROM ::posts AS p
-                    WHERE p.topic_id IN (?ai:topics)
-                    GROUP BY p.poster_id';
-            $users = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
+            $query = 'SELECT p.poster_id
+                FROM ::posts AS p
+                WHERE p.topic_id IN (?ai:topics)
+                GROUP BY p.poster_id';
 
-            $sql = 'DELETE FROM ::posts
-                    WHERE topic_id IN (?ai:topics)';
-            $this->c->DB->exec($sql, $vars);
+            $users = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
+
+            $query = 'DELETE
+                FROM ::posts
+                WHERE topic_id IN (?ai:topics)';
+
+            $this->c->DB->exec($query, $vars);
         }
         if ($posts) {
-            $vars = [
+            $vars  = [
                 ':posts' => $posts,
             ];
-            $sql = 'DELETE FROM ::posts
-                    WHERE id IN (?ai:posts)';
-            $this->c->DB->exec($sql, $vars);
+            $query = 'DELETE
+                FROM ::posts
+                WHERE id IN (?ai:posts)';
+
+            $this->c->DB->exec($query, $vars);
         }
         if ($parents) {
             $topics  = $parents;

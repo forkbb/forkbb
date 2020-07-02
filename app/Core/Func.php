@@ -138,7 +138,17 @@ class Func
                 $pages[] = [__($info, $cur, $all), 'info', null];
                 $cur     = \min(\max(1, $cur), $all);
                 if ($cur > 1) {
-                    $pages[] = [$this->c->Router->link($marker, ['page' => $cur - 1] + $args), 'prev', null];
+                    $pages[] = [
+                        $this->c->Router->link(
+                            $marker,
+                            [
+                                'page' => $cur - 1,
+                            ]
+                            + $args
+                        ),
+                        'prev',
+                        null,
+                    ];
                 }
                 $tpl   = [1 => 1];
                 $start = $cur < 6 ? 2 : $cur - 2;
@@ -160,7 +170,17 @@ class Func
                 if ($i === $cur) {
                     $pages[] = [null, $i, true];
                 } else {
-                    $pages[] = [$this->c->Router->link($marker, ['page' => $i] + $args), $i, null];
+                    $pages[] = [
+                        $this->c->Router->link(
+                            $marker,
+                            [
+                                'page' => $i,
+                            ]
+                            + $args
+                        ),
+                        $i,
+                        null,
+                    ];
                 }
                 $k = $i;
             }
@@ -168,7 +188,17 @@ class Func
                 $cur > 0
                 && $cur < $all
             ) {
-                $pages[] = [$this->c->Router->link($marker, ['page' => $cur + 1] + $args), 'next', null];
+                $pages[] = [
+                    $this->c->Router->link(
+                        $marker,
+                        [
+                            'page' => $cur + 1,
+                        ]
+                        + $args
+                    ),
+                    'next',
+                    null,
+                ];
             }
         }
         return $pages;

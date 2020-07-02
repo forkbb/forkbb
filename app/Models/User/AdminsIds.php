@@ -14,11 +14,13 @@ class AdminsIds extends Action
      */
     public function adminsIds(): array
     {
-        $vars = [
+        $vars  = [
             ':gid' => $this->c->GROUP_ADMIN,
         ];
-        $sql = 'SELECT u.id FROM ::users AS u WHERE u.group_id=?i:gid';
+        $query = 'SELECT u.id
+            FROM ::users AS u
+            WHERE u.group_id=?i:gid';
 
-        return $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
+        return $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
     }
 }

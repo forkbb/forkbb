@@ -66,12 +66,14 @@ class Delete extends Action
         //???? подписки, опросы, предупреждения
 
         if ($users) {
-            $vars = [
+            $vars  = [
                 ':users' => $users,
             ];
-            $sql = 'DELETE FROM ::mark_of_forum
-                    WHERE uid IN (?ai:users)';
-            $this->c->DB->exec($sql, $vars);
+            $query = 'DELETE
+                FROM ::mark_of_forum
+                WHERE uid IN (?ai:users)';
+
+            $this->c->DB->exec($query, $vars);
 
             //???? удаление модераторов из разделов
         }
@@ -80,16 +82,20 @@ class Delete extends Action
                 $this->c->groups->Perm->reset($forum);
             }
 
-            $vars = [
+            $vars  = [
                 ':forums' => \array_keys($forums),
             ];
-            $sql = 'DELETE FROM ::mark_of_forum
-                    WHERE fid IN (?ai:forums)';
-            $this->c->DB->exec($sql, $vars);
+            $query = 'DELETE
+                FROM ::mark_of_forum
+                WHERE fid IN (?ai:forums)';
 
-            $sql = 'DELETE FROM ::forums
-                    WHERE id IN (?ai:forums)';
-            $this->c->DB->exec($sql, $vars);
+            $this->c->DB->exec($query, $vars);
+
+            $query = 'DELETE
+                FROM ::forums
+                WHERE id IN (?ai:forums)';
+
+            $this->c->DB->exec($query, $vars);
         }
     }
 }

@@ -25,10 +25,13 @@ class Info extends Method
         if ('1' == $this->c->user->g_view_users) {
             foreach ($this->model->users as $id => $name) {
                 $info[] = [
-                    $this->c->Router->link('User', [
-                        'id' => $id,
-                        'name' => $name,
-                    ]),
+                    $this->c->Router->link(
+                        'User',
+                        [
+                            'id'   => $id,
+                            'name' => $name,
+                        ]
+                    ),
                     $name,
                 ];
             }

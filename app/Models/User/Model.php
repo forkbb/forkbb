@@ -172,7 +172,13 @@ class Model extends DataModel
         if ($this->isGuest) {
             return null;
         } else {
-            return $this->c->Router->link('User', ['id' => $this->id, 'name' => $this->username]);
+            return $this->c->Router->link(
+                'User',
+                [
+                    'id'   => $this->id,
+                    'name' => $this->username,
+                ]
+            );
         }
     }
 
@@ -365,14 +371,20 @@ class Model extends DataModel
             && $this->id !== $post->user->id //????
             && 0 < $post->user->g_promote_min_posts * $post->user->g_promote_next_group
         ) {
-            return $this->c->Router->link('AdminUserPromote', [
-                'uid'   => $post->user->id,
-                'pid'   => $post->id,
-                'token' => $this->c->Csrf->create('AdminUserPromote', [
+            return $this->c->Router->link(
+                'AdminUserPromote',
+                [
                     'uid'   => $post->user->id,
                     'pid'   => $post->id,
-                ]),
-            ]);
+                    'token' => $this->c->Csrf->create(
+                        'AdminUserPromote',
+                        [
+                            'uid' => $post->user->id,
+                            'pid' => $post->id,
+                        ]
+                    ),
+                ]
+            );
         } else {
             return null;
         }

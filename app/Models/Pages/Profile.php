@@ -99,29 +99,44 @@ abstract class Profile extends Page
             if (isset($this->c->bans->userList[\mb_strtolower($this->curUser->username)])) { //????
                 $id = $this->c->bans->userList[\mb_strtolower($this->curUser->username)];
                 $btns['unban-user'] = [
-                    $this->c->Router->link('AdminBansDelete', [
-                        'id'    => $id,
-                        'uid'   => $this->curUser->id,
-                        'token' => $this->c->Csrf->create('AdminBansDelete', [
-                            'id'  => $id,
-                            'uid' => $this->curUser->id,
-                        ]),
-                    ]),
+                    $this->c->Router->link(
+                        'AdminBansDelete',
+                        [
+                            'id'    => $id,
+                            'uid'   => $this->curUser->id,
+                            'token' => $this->c->Csrf->create(
+                                'AdminBansDelete',
+                                [
+                                    'id'  => $id,
+                                    'uid' => $this->curUser->id,
+                                ]
+                            ),
+                        ]
+                    ),
                     __('Unban user'),
                 ];
             } else {
                 $btns['ban-user'] = [
-                    $this->c->Router->link('AdminBansNew',  [
-                        'ids' => $this->curUser->id,
-                        'uid' => $this->curUser->id,
-                    ]),
+                    $this->c->Router->link(
+                        'AdminBansNew',
+                        [
+                            'ids' => $this->curUser->id,
+                            'uid' => $this->curUser->id,
+                        ]
+                    ),
                     __('Ban user'),
                 ];
             }
         }
         if ($this->rules->deleteUser) {
             $btns['delete-user'] = [
-                $this->c->Router->link('AdminUsersAction',  ['action' => 'delete', 'ids' => $this->curUser->id]), // ????
+                $this->c->Router->link(
+                    'AdminUsersAction',
+                    [
+                        'action' => 'delete',
+                        'ids'    => $this->curUser->id,
+                    ]
+                ), // ????
                 __('Delete user'),
             ];
         }
@@ -130,7 +145,12 @@ abstract class Profile extends Page
             && $this->rules->editProfile
         ) {
             $btns['edit-profile'] = [
-                $this->c->Router->link('EditUserProfile',  ['id' => $this->curUser->id]),
+                $this->c->Router->link(
+                    'EditUserProfile',
+                    [
+                        'id' => $this->curUser->id,
+                    ]
+                ),
                 __('Edit '),
             ];
         }
@@ -145,7 +165,12 @@ abstract class Profile extends Page
             && $this->rules->editConfig
         ) {
             $btns['edit-settings'] = [
-                $this->c->Router->link('EditUserBoardConfig', ['id' => $this->curUser->id]),
+                $this->c->Router->link(
+                    'EditUserBoardConfig',
+                    [
+                        'id' => $this->curUser->id,
+                    ]
+                ),
                 __('Configure '),
             ];
         }
@@ -159,13 +184,19 @@ abstract class Profile extends Page
      */
     protected function linkChangeGroup(): string
     {
-        return $this->c->Router->link('AdminUsersAction',  [
-            'action' => 'change_group',
-            'ids'    => $this->curUser->id,
-            'token'  => $this->c->Csrf->create('AdminUsersAction', [
+        return $this->c->Router->link(
+            'AdminUsersAction',
+            [
                 'action' => 'change_group',
                 'ids'    => $this->curUser->id,
-            ]),
-        ]);
+                'token'  => $this->c->Csrf->create(
+                    'AdminUsersAction',
+                    [
+                        'action' => 'change_group',
+                        'ids'    => $this->curUser->id,
+                    ]
+                ),
+            ]
+        );
     }
 }

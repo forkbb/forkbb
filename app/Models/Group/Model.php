@@ -8,7 +8,12 @@ class Model extends DataModel
 {
     protected function getlinkEdit(): string
     {
-        return $this->c->Router->link('AdminGroupsEdit', ['id' => $this->g_id]);
+        return $this->c->Router->link(
+            'AdminGroupsEdit',
+            [
+                'id' => $this->g_id,
+            ]
+        );
     }
 
     protected function getcanDelete(): bool
@@ -24,7 +29,14 @@ class Model extends DataModel
 
     protected function getlinkDelete(): ?string
     {
-        return $this->canDelete ? $this->c->Router->link('AdminGroupsDelete', ['id' => $this->g_id]) : null;
+        return $this->canDelete
+            ? $this->c->Router->link(
+                'AdminGroupsDelete',
+                [
+                    'id' => $this->g_id,
+                ]
+            )
+            : null;
     }
 
     protected function getgroupGuest(): bool

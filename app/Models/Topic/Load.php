@@ -15,23 +15,24 @@ class Load extends Action
     protected function getSql(string $where, bool $full): string
     {
         if ($this->c->user->isGuest) {
-            $sql = 'SELECT t.*
-                    FROM ::topics AS t
-                    WHERE ' . $where;
+            $query = 'SELECT t.*
+                FROM ::topics AS t
+                WHERE ' . $where;
         } elseif ($full) {
-            $sql = 'SELECT t.*, s.user_id AS is_subscribed, mof.mf_mark_all_read, mot.mt_last_visit, mot.mt_last_read
-                    FROM ::topics AS t
-                    LEFT JOIN ::topic_subscriptions AS s ON (t.id=s.topic_id AND s.user_id=?i:uid)
-                    LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND t.forum_id=mof.fid)
-                    LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND t.id=mot.tid)
-                    WHERE ' . $where;
+            $query = 'SELECT t.*, s.user_id AS is_subscribed, mof.mf_mark_all_read, mot.mt_last_visit, mot.mt_last_read
+                FROM ::topics AS t
+                LEFT JOIN ::topic_subscriptions AS s ON (t.id=s.topic_id AND s.user_id=?i:uid)
+                LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND t.forum_id=mof.fid)
+                LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND t.id=mot.tid)
+                WHERE ' . $where;
         } else {
-            $sql = 'SELECT t.*, mot.mt_last_visit, mot.mt_last_read
-                    FROM ::topics AS t
-                    LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND t.id=mot.tid)
-                    WHERE ' . $where;
+            $query = 'SELECT t.*, mot.mt_last_visit, mot.mt_last_read
+                FROM ::topics AS t
+                LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND t.id=mot.tid)
+                WHERE ' . $where;
         }
-        return $sql;
+
+        return $query;
     }
 
     /**
@@ -49,12 +50,13 @@ class Load extends Action
             throw new InvalidArgumentException('Expected a positive topic id');
         }
 
-        $vars = [
+        $vars  = [
             ':tid' => $id,
             ':uid' => $this->c->user->id,
         ];
-        $sql  = $this->getSql('t.id=?i:tid', true);
-        $data = $this->c->DB->query($sql, $vars)->fetch();
+        $query = $this->getSql('t.id=?i:tid', true);
+
+        $data = $this->c->DB->query($query, $vars)->fetch();
 
         // тема отсутствует или недоступна
         if (empty($data)) {
@@ -90,12 +92,13 @@ class Load extends Action
             }
         }
 
-        $vars = [
+        $vars  = [
             ':ids' => $ids,
             ':uid' => $this->c->user->id,
         ];
-        $sql  = $this->getSql('t.id IN (?ai:ids)', $full);
-        $stmt = $this->c->DB->query($sql, $vars);
+        $query = $this->getSql('t.id IN (?ai:ids)', $full);
+
+        $stmt = $this->c->DB->query($query, $vars);
 
         $result = [];
         while ($row = $stmt->fetch()) {

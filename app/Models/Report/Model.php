@@ -138,10 +138,18 @@ class Model extends DataModel
     public function getlinkZap(): string
     {
         if (empty($this->zapped)) {
-            return $this->c->Router->link('AdminReportsZap', [
-                'id'    => $this->id,
-                'token' => $this->c->Csrf->create('AdminReportsZap', ['id' => $this->id]),
-            ]);
+            return $this->c->Router->link(
+                'AdminReportsZap',
+                [
+                    'id'    => $this->id,
+                    'token' => $this->c->Csrf->create(
+                        'AdminReportsZap',
+                        [
+                            'id' => $this->id,
+                        ]
+                    ),
+                ]
+            );
         } else {
             return '';
         }

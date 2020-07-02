@@ -18,19 +18,18 @@ class RebuildIndex extends Action
      */
     public function rebuildIndex(int $start, int $limit, string $mode): int
     {
-        $vars = [
+        $vars  = [
             ':start' => $start,
             ':limit' => $limit,
         ];
+        $query = 'SELECT p.id, p.message, t.id as topic_id, t.subject, t.first_post_id
+            FROM ::posts AS p
+            INNER JOIN ::topics AS t ON t.id=p.topic_id
+            WHERE p.id>=?i:start
+            ORDER BY p.id ASC
+            LIMIT ?i:limit';
 
-        $sql = 'SELECT p.id, p.message, t.id as topic_id, t.subject, t.first_post_id
-                FROM ::posts AS p
-                INNER JOIN ::topics AS t ON t.id=p.topic_id
-                WHERE p.id>=?i:start
-                ORDER BY p.id ASC
-                LIMIT ?i:limit';
-
-        $stmt   = $this->c->DB->query($sql, $vars);
+        $stmt   = $this->c->DB->query($query, $vars);
         $number = 0;
 
         while ($row = $stmt->fetch()) {

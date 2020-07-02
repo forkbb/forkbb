@@ -29,37 +29,46 @@ class Markread extends Action
 
             $this->c->users->update($user);
 
-            $vars = [
+            $vars  = [
                 ':uid' => $user->id,
             ];
-            $sql = 'DELETE FROM ::mark_of_topic WHERE uid=?i:uid';
-            $this->c->DB->exec($sql, $vars);
+            $query = 'DELETE
+                FROM ::mark_of_topic
+                WHERE uid=?i:uid';
 
-            $sql = 'DELETE FROM ::mark_of_forum WHERE uid=?i:uid';
-            $this->c->DB->exec($sql, $vars);
+            $this->c->DB->exec($query, $vars);
+
+            $query = 'DELETE
+                FROM ::mark_of_forum
+                WHERE uid=?i:uid';
+
+            $this->c->DB->exec($query, $vars);
         } elseif ($forum->id > 0) {
-            $vars = [
+            $vars  = [
                 ':uid'  => $user->id,
                 ':fid'  => $forum->id,
                 ':mark' => \time(),
             ];
-            $sql = 'DELETE FROM ::mark_of_topic
-                    WHERE uid=?i:uid AND tid IN (
-                        SELECT id
-                        FROM ::topics
-                        WHERE forum_id=?i:fid
-                    )';
-            $this->c->DB->exec($sql, $vars);
+            $query = 'DELETE
+                FROM ::mark_of_topic
+                WHERE uid=?i:uid AND tid IN (
+                    SELECT id
+                    FROM ::topics
+                    WHERE forum_id=?i:fid
+                )';
+
+            $this->c->DB->exec($query, $vars);
 
             if ($user->mf_mark_all_read) {                                           // ????
-                $sql = 'UPDATE ::mark_of_forum
-                        SET mf_mark_all_read=?i:mark
-                        WHERE uid=?i:uid AND fid=?i:fid';
+                $query = 'UPDATE ::mark_of_forum
+                    SET mf_mark_all_read=?i:mark
+                    WHERE uid=?i:uid AND fid=?i:fid';
             } else {                                                                 // ????
-                $sql = 'INSERT INTO ::mark_of_forum (uid, fid, mf_mark_all_read)
-                        VALUES (?i:uid, ?i:fid, ?i:mark)';
+                $query = 'INSERT INTO ::mark_of_forum (uid, fid, mf_mark_all_read)
+                    VALUES (?i:uid, ?i:fid, ?i:mark)';
             }
-            $this->c->DB->exec($sql, $vars);
+
+            $this->c->DB->exec($query, $vars);
         } else {
             throw new RuntimeException('The model does not have ID');
         }

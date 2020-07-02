@@ -67,8 +67,24 @@ class Pass extends Profile
         }
 
         $this->crumbs     = $this->crumbs(
-            [$this->c->Router->link('EditUserPass', ['id' => $this->curUser->id]), __('Change pass')],
-            [$this->c->Router->link('EditUserProfile', ['id' => $this->curUser->id]), __('Editing profile')]
+            [
+                $this->c->Router->link(
+                    'EditUserPass',
+                    [
+                        'id' => $this->curUser->id,
+                    ]
+                ),
+                __('Change pass'),
+            ],
+            [
+                $this->c->Router->link(
+                    'EditUserProfile',
+                    [
+                        'id' => $this->curUser->id,
+                    ]
+                ),
+                __('Editing profile'),
+            ]
         );
         $this->form       = $this->form();
         $this->actionBtns = $this->btns('edit');
@@ -84,9 +100,19 @@ class Pass extends Profile
     protected function form(): array
     {
         $form = [
-            'action' => $this->c->Router->link('EditUserPass', ['id' => $this->curUser->id]),
+            'action' => $this->c->Router->link(
+                'EditUserPass',
+                [
+                    'id' => $this->curUser->id,
+                ]
+            ),
             'hidden' => [
-                'token' => $this->c->Csrf->create('EditUserPass', ['id' => $this->curUser->id]),
+                'token' => $this->c->Csrf->create(
+                    'EditUserPass',
+                    [
+                        'id' => $this->curUser->id,
+                    ]
+                ),
             ],
             'sets'   => [
                 'new-pass' => [

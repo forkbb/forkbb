@@ -30,41 +30,29 @@ class ActionP extends Method
             return [];
         }
 
-        $sql = null;
+        $query = null;
         switch ($action) {
             case 'search':
                 $list = $this->model->queryIds;
                 break;
             case 'posts':
-                $sql = 'SELECT p.id
-                        FROM ::posts AS p
-                        INNER JOIN ::topics AS t ON t.id=p.topic_id
-                        WHERE t.forum_id IN (?ai:forums) AND t.moved_to=0 AND p.poster_id=?i:uid
-                        ORDER BY p.posted DESC';
+                $query = 'SELECT p.id
+                    FROM ::posts AS p
+                    INNER JOIN ::topics AS t ON t.id=p.topic_id
+                    WHERE t.forum_id IN (?ai:forums) AND t.moved_to=0 AND p.poster_id=?i:uid
+                    ORDER BY p.posted DESC';
                 break;
-
-#            case 'last':
-#                $sql = 'SELECT t.id
-#                        FROM ::topics AS t
-#                        WHERE t.forum_id IN (?ai:forums) AND t.moved_to=0
-#                        ORDER BY t.last_post DESC';
-#                break;
-#            case 'unanswered':
-#                $sql = 'SELECT t.id
-#                        FROM ::topics AS t
-#                       WHERE t.forum_id IN (?ai:forums) AND t.moved_to=0 AND t.num_replies=0
-#                        ORDER BY t.last_post DESC';
-#                break;
             default:
                 throw new InvalidArgumentException('Unknown action: ' . $action);
         }
 
-        if (null !== $sql) {
+        if (null !== $query) {
             $vars = [
                 ':forums' => $forums,
                 ':uid'    => $uid,
             ];
-            $list = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
+
+            $list = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
         }
 
         $this->model->numPages = (int) \ceil((\count($list) ?: 1) / $this->c->user->disp_posts);

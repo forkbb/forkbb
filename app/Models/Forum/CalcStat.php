@@ -21,29 +21,29 @@ class CalcStat extends Method
             throw new RuntimeException('The model does not have ID');
         }
 
-        $vars = [':fid' => $this->model->id];
-        $sql = 'SELECT COUNT(t.id)
-                FROM ::topics AS t
-                WHERE t.forum_id=?i:fid AND t.moved_to!=0';
+        $vars  = [':fid' => $this->model->id];
+        $query = 'SELECT COUNT(t.id)
+            FROM ::topics AS t
+            WHERE t.forum_id=?i:fid AND t.moved_to!=0';
 
-        $moved = $this->c->DB->query($sql, $vars)->fetchColumn();
+        $moved = $this->c->DB->query($query, $vars)->fetchColumn();
 
-        $sql = 'SELECT COUNT(t.id) as num_topics, SUM(t.num_replies) as num_replies
-                FROM ::topics AS t
-                WHERE t.forum_id=?i:fid AND t.moved_to=0';
+        $query = 'SELECT COUNT(t.id) as num_topics, SUM(t.num_replies) as num_replies
+            FROM ::topics AS t
+            WHERE t.forum_id=?i:fid AND t.moved_to=0';
 
-        $result = $this->c->DB->query($sql, $vars)->fetch();
+        $result = $this->c->DB->query($query, $vars)->fetch();
 
         $this->model->num_topics = $result['num_topics'] + $moved;
         $this->model->num_posts  = $result['num_topics'] + $result['num_replies'];
 
-        $sql = 'SELECT t.last_post, t.last_post_id, t.last_poster, t.subject as last_topic
-                FROM ::topics AS t
-                WHERE t.forum_id=?i:fid AND t.moved_to=0
-                ORDER BY t.last_post DESC
-                LIMIT 1';
+        $query = 'SELECT t.last_post, t.last_post_id, t.last_poster, t.subject as last_topic
+            FROM ::topics AS t
+            WHERE t.forum_id=?i:fid AND t.moved_to=0
+            ORDER BY t.last_post DESC
+            LIMIT 1';
 
-        $result = $this->c->DB->query($sql, $vars)->fetch();
+        $result = $this->c->DB->query($query, $vars)->fetch();
 
         if (empty($result)) {
             $this->model->last_post    = 0;

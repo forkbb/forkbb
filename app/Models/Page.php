@@ -87,19 +87,34 @@ abstract class Page extends Model
         ) {
             $sub = [];
             $sub['latest'] = [
-                $r->link('SearchAction', ['action' => 'latest_active_topics']),
+                $r->link(
+                    'SearchAction',
+                    [
+                        'action' => 'latest_active_topics',
+                    ]
+                ),
                 'Latest active topics',
                 'Find latest active topics',
             ];
             if (! $this->user->isGuest) {
                 $sub['with-your-posts'] = [
-                    $r->link('SearchAction', ['action' => 'topics_with_your_posts']),
+                    $r->link(
+                        'SearchAction',
+                        [
+                            'action' => 'topics_with_your_posts',
+                        ]
+                    ),
                     'Topics with your posts',
                     'Find topics with your posts',
                 ];
             }
             $sub['unanswered'] = [
-                $r->link('SearchAction', ['action' => 'unanswered_topics']),
+                $r->link(
+                    'SearchAction',
+                    [
+                        'action' => 'unanswered_topics',
+                    ]
+                ),
                 'Unanswered topics',
                 'Find unanswered topics',
             ];
@@ -128,7 +143,15 @@ abstract class Page extends Model
                 $nav['admin'] = [$r->link('Admin'), 'Admin'];
             }
 
-            $nav['logout'] = [$r->link('Logout', ['token' => $this->c->Csrf->create('Logout')]), 'Logout'];
+            $nav['logout'] = [
+                $r->link(
+                    'Logout',
+                    [
+                        'token' => $this->c->Csrf->create('Logout'),
+                    ]
+                ),
+                'Logout',
+            ];
         }
 
         if (

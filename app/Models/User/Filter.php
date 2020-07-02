@@ -98,13 +98,12 @@ class Filter extends Action
         }
 
         $where = \implode(' AND ', $where);
+        $query = "SELECT u.id
+            FROM ::users AS u
+            WHERE {$where}
+            ORDER BY {$orderBy}";
 
-        $sql = "SELECT u.id
-                FROM ::users AS u
-                WHERE {$where}
-                ORDER BY {$orderBy}";
-
-        $ids = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
+        $ids = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
         return $ids;
     }

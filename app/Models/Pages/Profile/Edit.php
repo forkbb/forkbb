@@ -136,7 +136,17 @@ class Edit extends Profile
             }
         }
 
-        $this->crumbs     = $this->crumbs([$this->c->Router->link('EditUserProfile', ['id' => $this->curUser->id]), __('Editing profile')]);
+        $this->crumbs     = $this->crumbs(
+            [
+                $this->c->Router->link(
+                    'EditUserProfile',
+                    [
+                        'id' => $this->curUser->id,
+                    ]
+                ),
+                __('Editing profile'),
+            ]
+        );
         $this->form       = $this->form();
         $this->actionBtns = $this->btns('edit');
 
@@ -189,9 +199,19 @@ class Edit extends Profile
     protected function form(): array
     {
         $form = [
-            'action' => $this->c->Router->link('EditUserProfile', ['id' => $this->curUser->id]),
+            'action' => $this->c->Router->link(
+                'EditUserProfile',
+                [
+                    'id' => $this->curUser->id,
+                ]
+            ),
             'hidden' => [
-                'token' => $this->c->Csrf->create('EditUserProfile', ['id' => $this->curUser->id]),
+                'token' => $this->c->Csrf->create(
+                    'EditUserProfile',
+                    [
+                        'id' => $this->curUser->id,
+                    ]
+                ),
             ],
             'sets'   => [],
             'btns'   => [
@@ -243,7 +263,12 @@ class Edit extends Profile
                 'type'    => 'link',
                 'value'   => __('Configure moderator rights'),
                 'title'   => __('Configure moderator rights'),
-                'href'    => $this->c->Router->link('EditUserModeration', ['id' => $this->curUser->id]),
+                'href'    => $this->c->Router->link(
+                    'EditUserModeration',
+                    [
+                        'id' => $this->curUser->id,
+                    ]
+                ),
             ];
         }
         if ($this->rules->setTitle) {
@@ -266,7 +291,12 @@ class Edit extends Profile
             $fields['change_pass'] = [
                 'type'  => 'link',
                 'value' => __('Change passphrase'),
-                'href'  => $this->c->Router->link('EditUserPass', ['id' => $this->curUser->id]),
+                'href'  => $this->c->Router->link(
+                    'EditUserPass',
+                    [
+                        'id' => $this->curUser->id,
+                    ]
+                ),
             ];
         }
         if ($this->rules->useAvatar) {
@@ -376,7 +406,12 @@ class Edit extends Profile
             $fields['change_email'] = [
                 'type'  => 'link',
                 'value' => __('To change email'),
-                'href'  => $this->c->Router->link('EditUserEmail', ['id' => $this->curUser->id]),
+                'href'  => $this->c->Router->link(
+                    'EditUserEmail',
+                    [
+                        'id' => $this->curUser->id,
+                    ]
+                ),
             ];
         }
         $fields['email_setting'] = [

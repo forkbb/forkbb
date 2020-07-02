@@ -106,7 +106,12 @@ class Categories extends Admin
                 'type'    => 'btn',
                 'value'   => '❌',
                 'caption' => __('Delete'),
-                'link'    => $this->c->Router->link('AdminCategoriesDelete', ['id' => $key]),
+                'link'    => $this->c->Router->link(
+                    'AdminCategoriesDelete',
+                    [
+                        'id' => $key,
+                    ]
+                ),
             ];
             $form['sets']["category{$key}"] = [
                 'class'  => 'category',
@@ -175,7 +180,15 @@ class Categories extends Admin
 
         $this->nameTpl   = 'admin/form';
         $this->aIndex    = 'categories';
-        $this->aCrumbs[] = [$this->c->Router->link('AdminCategoriesDelete', ['id' => $args['id']]), __('Delete category head')];
+        $this->aCrumbs[] = [
+            $this->c->Router->link(
+                'AdminCategoriesDelete',
+                [
+                    'id' => $args['id'],
+                ]
+            ),
+            __('Delete category head'),
+        ];
         $this->aCrumbs[] = __('"%s"', $category['cat_name']);
         $this->form      = $this->formDelete($args, $category);
         $this->classForm = 'deletecategory';
@@ -195,9 +208,15 @@ class Categories extends Admin
     protected function formDelete(array $args, array $category): array
     {
         return [
-            'action' => $this->c->Router->link('AdminCategoriesDelete', $args),
+            'action' => $this->c->Router->link(
+                'AdminCategoriesDelete',
+                $args
+            ),
             'hidden' => [
-                'token' => $this->c->Csrf->create('AdminCategoriesDelete', $args),
+                'token' => $this->c->Csrf->create(
+                    'AdminCategoriesDelete',
+                    $args
+                ),
             ],
             'sets'   => [
                 'del' => [

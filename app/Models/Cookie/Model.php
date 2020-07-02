@@ -81,7 +81,9 @@ class Model extends ParentModel
     public function get(string $name, $default = null)
     {
         $name = $this->prefix . $name;
-        return isset($_COOKIE[$name]) ? $this->c->Secury->replInvalidChars($_COOKIE[$name]) : $default;
+        return isset($_COOKIE[$name])
+            ? $this->c->Secury->replInvalidChars($_COOKIE[$name])
+            : $default;
     }
 
     /**
@@ -182,7 +184,11 @@ class Model extends ParentModel
         $passHash = $this->c->Secury->hmac($user->password . $expTime, $this->key2);
         $ckHash   = $this->c->Secury->hmac($pfx . $user->id . $expTime . $passHash, $this->key1);
 
-        return $this->set(self::NAME, $pfx . $user->id . '_' . $expTime . '_' . $passHash . '_' . $ckHash, $expire);
+        return $this->set(
+            self::NAME,
+            $pfx . $user->id . '_' . $expTime . '_' . $passHash . '_' . $ckHash,
+            $expire
+        );
     }
 
     /**

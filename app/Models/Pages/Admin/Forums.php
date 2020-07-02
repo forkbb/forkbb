@@ -182,7 +182,12 @@ class Forums extends Admin
                     'type'    => 'btn',
                     'value'   => $forum->forum_name,
                     'caption' => __('Forum label'),
-                    'link'    => $this->c->Router->link('AdminForumsEdit', ['id' => $forum->id]),
+                    'link'    => $this->c->Router->link(
+                        'AdminForumsEdit',
+                        [
+                            'id' => $forum->id,
+                        ]
+                    ),
                 ];
                 $fields["form[{$forum->id}][disp_position]"] = [
                     'class'   => ['position', 'forum'],
@@ -198,7 +203,14 @@ class Forums extends Admin
                     'type'     => 'btn',
                     'value'    => '❌',
                     'caption'  => __('Delete'),
-                    'link'     => $disabled ? '#' : $this->c->Router->link('AdminForumsDelete', ['id' => $forum->id]),
+                    'link'     => $disabled
+                        ? '#'
+                        : $this->c->Router->link(
+                            'AdminForumsDelete',
+                            [
+                                'id' => $forum->id,
+                            ]
+                        ),
                     'disabled' => $disabled,
                 ];
                 $form['sets']["forum{$forum->id}"] = [
@@ -259,7 +271,15 @@ class Forums extends Admin
 
         $this->nameTpl   = 'admin/form';
         $this->aIndex    = 'forums';
-        $this->aCrumbs[] = [$this->c->Router->link('AdminForumsDelete', ['id' => $forum->id]), __('Delete forum head')];
+        $this->aCrumbs[] = [
+            $this->c->Router->link(
+                'AdminForumsDelete',
+                [
+                    'id' => $forum->id,
+                ]
+            ),
+            __('Delete forum head'),
+        ];
         $this->aCrumbs[] = __('"%s"', $forum->forum_name);
         $this->form      = $this->formDelete($args, $forum);
         $this->classForm = 'deleteforum';
@@ -279,9 +299,15 @@ class Forums extends Admin
     protected function formDelete(array $args, Forum $forum): array
     {
         return [
-            'action' => $this->c->Router->link('AdminForumsDelete', $args),
+            'action' => $this->c->Router->link(
+                'AdminForumsDelete',
+                $args
+            ),
             'hidden' => [
-                'token' => $this->c->Csrf->create('AdminForumsDelete', $args),
+                'token' => $this->c->Csrf->create(
+                    'AdminForumsDelete',
+                    $args
+                ),
             ],
             'sets'   => [
                 'confirm' => [
@@ -337,13 +363,19 @@ class Forums extends Admin
         if (empty($args['id'])) {
             $forum           = $this->c->forums->create();
             $marker          = 'AdminForumsNew';
-            $this->aCrumbs[] = [$this->c->Router->link($marker), __('Add forum head')];
+            $this->aCrumbs[] = [
+                $this->c->Router->link($marker),
+                __('Add forum head'),
+            ];
             $this->titleForm = __('Add forum head');
             $this->classForm = 'createforum';
         } else {
             $forum           = $this->c->forums->loadTree((int) $args['id']); //?????
             $marker          = 'AdminForumsEdit';
-            $this->aCrumbs[] = [$this->c->Router->link($marker, $args), __('Edit forum head')];
+            $this->aCrumbs[] = [
+                $this->c->Router->link($marker, $args),
+                __('Edit forum head'),
+            ];
             $this->aCrumbs[] = __('"%s"', $forum->forum_name);
             $this->titleForm = __('Edit forum head');
             $this->classForm = 'editforum';
@@ -433,9 +465,15 @@ class Forums extends Admin
     protected function formEdit(array $args, Forum $forum, string $marker): array
     {
         $form = [
-            'action' => $this->c->Router->link($marker, $args),
+            'action' => $this->c->Router->link(
+                $marker,
+                $args
+            ),
             'hidden' => [
-                'token' => $this->c->Csrf->create($marker, $args),
+                'token' => $this->c->Csrf->create(
+                    $marker,
+                    $args
+                ),
             ],
             'sets'   => [],
             'btns'   => [],

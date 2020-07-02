@@ -22,10 +22,12 @@ class Manager extends ManagerModel
      */
     public function init(): self
     {
-        $sql = 'SELECT c.id, c.cat_name, c.disp_position
-                FROM ::categories AS c
-                ORDER BY c.disp_position';
-        $this->repository = $this->c->DB->query($sql)->fetchAll(PDO::FETCH_UNIQUE);
+        $query = 'SELECT c.id, c.cat_name, c.disp_position
+            FROM ::categories AS c
+            ORDER BY c.disp_position';
+
+        $this->repository = $this->c->DB->query($query)->fetchAll(PDO::FETCH_UNIQUE);
+
         return $this;
     }
 
@@ -58,16 +60,17 @@ class Manager extends ManagerModel
     public function update(): self
     {
         foreach ($this->modified as $key => $value) {
-            $cat = $this->get($key);
-            $vars = [
+            $cat   = $this->get($key);
+            $vars  = [
                 ':name'     => $cat['cat_name'],
                 ':position' => $cat['disp_position'],
                 ':cid'      => $key,
             ];
-            $sql = 'UPDATE ::categories
-                    SET cat_name=?s:name, disp_position=?i:position
-                    WHERE id=?i:cid';
-            $this->c->DB->query($sql, $vars); //????
+            $query = 'UPDATE ::categories
+                SET cat_name=?s:name, disp_position=?i:position
+                WHERE id=?i:cid';
+
+            $this->c->DB->query($query, $vars); //????
         }
         $this->modified = [];
 
@@ -84,13 +87,13 @@ class Manager extends ManagerModel
         }
         ++$pos;
 
-        $vars = [
+        $vars  = [
             ':name'     => $name,
             ':position' => $pos,
         ];
-        $sql = 'INSERT INTO ::categories (cat_name, disp_position)
-                VALUES (?s:name, ?i:position)';
-        $this->c->DB->query($sql, $vars);
+        $query = 'INSERT INTO ::categories (cat_name, disp_position)
+            VALUES (?s:name, ?i:position)';
+        $this->c->DB->query($query, $vars);
 
         $cid = $this->c->DB->lastInsertId();
 
@@ -114,12 +117,14 @@ class Manager extends ManagerModel
             $this->c->forums->delete(...$del);
         }
 
-        $vars = [
+        $vars  = [
             ':cid' => $cid,
         ];
-        $sql = 'DELETE FROM ::categories
-                WHERE id=?i:cid';
-        $this->c->DB->exec($sql, $vars);
+        $query = 'DELETE
+            FROM ::categories
+            WHERE id=?i:cid';
+
+        $this->c->DB->exec($query, $vars);
 
         return $this;
     }

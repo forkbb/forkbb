@@ -45,15 +45,16 @@ class View extends Action
             ! $this->c->user->isGuest
             && '1' == $this->c->config->o_show_dot
         ) {
-            $vars = [
+            $vars  = [
                 ':uid' => $this->c->user->id,
                 ':ids' => $arg->idsList,
             ];
-            $sql = 'SELECT p.topic_id
-                    FROM ::posts AS p
-                    WHERE p.poster_id=?i:uid AND p.topic_id IN (?ai:ids)
-                    GROUP BY p.topic_id';
-            $dots = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
+            $query = 'SELECT p.topic_id
+                FROM ::posts AS p
+                WHERE p.poster_id=?i:uid AND p.topic_id IN (?ai:ids)
+                GROUP BY p.topic_id';
+
+            $dots = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
             foreach ($dots as $id) {
                 if (

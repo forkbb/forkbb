@@ -54,15 +54,16 @@ class Execute extends Method
                $v->author . '-' .
                $v->forums;
 
-        $vars = [
+        $vars  = [
             ':key' => $key,
         ];
-        $sql = 'SELECT sc.search_time, sc.search_data
-                FROM ::search_cache AS sc
-                WHERE sc.search_key=?s:key
-                ORDER BY sc.search_time DESC
-                LIMIT 1';
-        $row = $this->c->DB->query($sql, $vars)->fetch();
+        $query = 'SELECT sc.search_time, sc.search_data
+            FROM ::search_cache AS sc
+            WHERE sc.search_key=?s:key
+            ORDER BY sc.search_time DESC
+            LIMIT 1';
+
+        $row = $this->c->DB->query($query, $vars)->fetch();
 
         if (
             ! empty($row['search_time'])
@@ -77,26 +78,25 @@ class Execute extends Method
         }
 
         $ids = $this->exec($this->model->queryWords, $queryVars);
-
         if (1 === $v->sort_dir) {
             \asort($ids, $this->sortType);
         } else {
             \arsort($ids, $this->sortType);
         }
-
         $ids = \array_keys($ids);
 
-        $data = [
+        $data  = [
             \implode(',', $ids),
         ];
-        $vars = [
+        $vars  = [
             ':data' => \implode("\n", $data),
             ':key'  => $key,
             ':time' => \time(),
         ];
-        $sql = 'INSERT INTO ::search_cache (search_key, search_time, search_data)
-                VALUES (?s:key, ?i:time, ?s:data)';
-        $this->c->DB->exec($sql, $vars);
+        $query = 'INSERT INTO ::search_cache (search_key, search_time, search_data)
+            VALUES (?s:key, ?i:time, ?s:data)';
+
+        $this->c->DB->exec($query, $vars);
 
         $this->model->queryIds     = $ids;
         $this->model->queryNoCache = true;

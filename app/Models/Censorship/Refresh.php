@@ -19,7 +19,9 @@ class Refresh extends Method
         $search  = [];
         $replace = [];
         while ($row = $stmt->fetch()) {
-            $search[$row['id']]  = '%(?<![\p{L}\p{N}])(' . \str_replace('\*', '[\p{L}\p{N}]*?', \preg_quote($row['search_for'], '%')).')(?![\p{L}\p{N}])%iu';
+            $search[$row['id']]  = '%(?<![\p{L}\p{N}])('
+                . \str_replace('\*', '[\p{L}\p{N}]*?', \preg_quote($row['search_for'], '%'))
+                . ')(?![\p{L}\p{N}])%iu';
             $replace[$row['id']] = $row['replace_with'];
         }
         $this->model->searchList  = $search;

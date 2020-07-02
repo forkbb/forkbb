@@ -116,7 +116,10 @@ class Userlist extends Page
 
                 foreach (['ASC', 'DESC'] as $j => $dir) {
                     $vars['dir']        = $dir;
-                    $links[$i * 2 + $j] = $this->c->Router->link('Userlist', $vars);
+                    $links[$i * 2 + $j] = $this->c->Router->link(
+                        'Userlist',
+                        $vars
+                    );
 
                     if (
                         $v->sort === $sort
@@ -138,7 +141,10 @@ class Userlist extends Page
         $this->fIndex       = 'userlist';
         $this->nameTpl      = 'userlist';
         $this->onlinePos    = 'userlist';
-        $this->canonical    = $this->c->Router->link('Userlist', $args);
+        $this->canonical    = $this->c->Router->link(
+            'Userlist',
+            $args
+        );
         $this->robots       = 'noindex';
         $this->crumbs       = $this->crumbs([$this->c->Router->link('Userlist'), __('User list')]);
         $this->pagination   = $this->c->Func->paginate($pages, $page, 'Userlist', $args);

@@ -215,7 +215,14 @@ class Auth extends Page
             if ($v->validation($_POST)) {
                 $key  = $this->c->Secury->randomPass(32);
                 $hash = $this->c->Secury->hash($tmpUser->id . $key);
-                $link = $this->c->Router->link('ChangePassword', ['id' => $tmpUser->id, 'key' => $key, 'hash' => $hash]);
+                $link = $this->c->Router->link(
+                    'ChangePassword',
+                    [
+                        'id'   => $tmpUser->id,
+                        'key'  => $key,
+                        'hash' => $hash,
+                    ]
+                );
                 $tplData = [
                     'fRootLink' => $this->c->Router->link('Index'),
                     'fMailer'   => __('Mailer', $this->c->config->o_board_title),
@@ -385,9 +392,15 @@ class Auth extends Page
     protected function formChange(array $args): array
     {
         return [
-            'action' => $this->c->Router->link('ChangePassword', $args),
+            'action' => $this->c->Router->link(
+                'ChangePassword',
+                $args
+            ),
             'hidden' => [
-                'token' => $this->c->Csrf->create('ChangePassword', $args),
+                'token' => $this->c->Csrf->create(
+                    'ChangePassword',
+                    $args
+                ),
             ],
             'sets'   => [
                 'forget' => [

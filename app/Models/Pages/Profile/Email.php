@@ -93,7 +93,15 @@ class Email extends Profile
                 } else {
                     $key  = $this->c->Secury->randomPass(33);
                     $hash = $this->c->Secury->hash($this->curUser->id . $v->new_email . $key);
-                    $link = $this->c->Router->link('SetNewEmail', ['id' => $this->curUser->id, 'email' => $v->new_email, 'key' => $key, 'hash' => $hash]);
+                    $link = $this->c->Router->link(
+                        'SetNewEmail',
+                        [
+                            'id'    => $this->curUser->id,
+                            'email' => $v->new_email,
+                            'key'   => $key,
+                            'hash'  => $hash,
+                        ]
+                    );
                     $tplData = [
                         'fRootLink' => $this->c->Router->link('Index'),
                         'fMailer'   => __('Mailer', $this->c->config->o_board_title),
@@ -134,8 +142,24 @@ class Email extends Profile
 
 
         $this->crumbs     = $this->crumbs(
-            [$this->c->Router->link('EditUserEmail', ['id' => $this->curUser->id]), __('Change email')],
-            [$this->c->Router->link('EditUserProfile', ['id' => $this->curUser->id]), __('Editing profile')]
+            [
+                $this->c->Router->link(
+                    'EditUserEmail',
+                    [
+                        'id' => $this->curUser->id,
+                    ]
+                ),
+                __('Change email'),
+            ],
+            [
+                $this->c->Router->link(
+                    'EditUserProfile',
+                    [
+                        'id' => $this->curUser->id,
+                    ]
+                ),
+                __('Editing profile'),
+            ]
         );
         $this->form       = $this->form();
         $this->actionBtns = $this->btns('edit');
@@ -151,9 +175,19 @@ class Email extends Profile
     protected function form(): array
     {
         $form = [
-            'action' => $this->c->Router->link('EditUserEmail', ['id' => $this->curUser->id]),
+            'action' => $this->c->Router->link(
+                'EditUserEmail',
+                [
+                    'id' => $this->curUser->id,
+                ]
+            ),
             'hidden' => [
-                'token' => $this->c->Csrf->create('EditUserEmail', ['id' => $this->curUser->id]),
+                'token' => $this->c->Csrf->create(
+                    'EditUserEmail',
+                    [
+                        'id' => $this->curUser->id,
+                    ]
+                ),
             ],
             'sets'   => [
                 'new-email' => [

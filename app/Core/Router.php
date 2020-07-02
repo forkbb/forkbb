@@ -159,7 +159,11 @@ class Router
             // значение не обязательно
             } else {
 //                $link = preg_replace('%\[[^\[\]{}]*{' . preg_quote($name, '%') . '}[^\[\]{}]*\]%', '', $link);
-                $link = \preg_replace('%\[[^\[\]]*?{' . \preg_quote($name, '%') . '}[^\[\]]*+(\[((?>[^\[\]]*+)|(?1))+\])*?\]%', '', $link);
+                $link = \preg_replace(
+                    '%\[[^\[\]]*?{' . \preg_quote($name, '%') . '}[^\[\]]*+(\[((?>[^\[\]]*+)|(?1))+\])*?\]%',
+                    '',
+                    $link
+                );
             }
         }
         $link = \str_replace(['[', ']'], '', $link);
@@ -238,7 +242,9 @@ class Router
                 $args = [];
                 foreach ($keys as $key) {
                     if (isset($matches[$key])) { // ???? может isset($matches[$key][0]) тут поставить?
-                        $args[$key] = isset($matches[$key][0]) ? \str_replace($this->subRepl, $this->subSearch, $matches[$key]) : null;
+                        $args[$key] = isset($matches[$key][0])
+                            ? \str_replace($this->subRepl, $this->subSearch, $matches[$key])
+                            : null;
                     }
                 }
                 return [self::OK, $handler, $args, $marker];

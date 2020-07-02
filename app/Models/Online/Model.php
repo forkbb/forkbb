@@ -56,11 +56,19 @@ class Model extends ParentModel
         $needClean = false;
 
         if ($detail) {
-            $sql = 'SELECT o.user_id, o.ident, o.logged, o.o_position, o.o_name FROM ::online AS o ORDER BY o.logged';
+            $query = 'SELECT o.user_id, o.ident, o.logged, o.o_position, o.o_name
+                FROM ::online AS o
+                ORDER BY o.logged';
         } else {
-            $sql = 'SELECT o.user_id, o.ident, o.logged FROM ::online AS o ORDER BY o.logged';
+            $query = 'SELECT o.user_id, o.ident, o.logged
+                FROM ::online AS o
+                ORDER BY o.logged';
         }
-        $stmt = $this->c->DB->query($sql);
+        $stmt = $this->c->DB->query($query);
+
+        $query = 'UPDATE ::users
+            SET last_visit=?i:last
+            WHERE id=?i:id';
 
         while ($cur = $stmt->fetch()) {
             $this->visits[$cur['user_id']] = $cur['logged'];
@@ -71,7 +79,12 @@ class Model extends ParentModel
                     $needClean = true;
 
                     if ($cur['user_id'] > 1) {
-                        $this->c->DB->exec('UPDATE ::users SET last_visit=?i:last WHERE id=?i:id', [':last' => $cur['logged'], ':id' => $cur['user_id']]); //????
+                        $vars = [
+                            ':last' => $cur['logged'],
+                            ':id' => $cur['user_id'],
+                        ];
+
+                        $this->c->DB->exec($query, $vars); //????
                     }
                 }
                 continue;
@@ -107,7 +120,13 @@ class Model extends ParentModel
 
         // удаление просроченных посетителей
         if ($needClean) {
-            $this->c->DB->exec('DELETE FROM ::online WHERE logged<?i:visit', [':visit' => $tVisit]);
+            $vars = [
+                ':visit' => $tVisit,
+            ];
+            $query = 'DELETE FROM ::online
+                    WHERE logged<?i:visit';
+
+            $this->c->DB->exec($query, $vars);
         }
 
         // обновление максимального значение посетителей онлайн
@@ -146,11 +165,24 @@ class Model extends ParentModel
                 ':name'   => (string) $this->c->user->isBot,
                 ':ip'     => $this->c->user->ip
             ];
+
             if ($this->c->user->logged > 0) {
-                $this->c->DB->exec('UPDATE ::online SET logged=?i:logged, o_position=?s:pos, o_name=?s:name WHERE user_id=1 AND ident=?s:ip', $vars);
+                $query = 'UPDATE ::online
+                    SET logged=?i:logged, o_position=?s:pos, o_name=?s:name
+                    WHERE user_id=1 AND ident=?s:ip';
             } else {
-                $this->c->DB->exec('INSERT INTO ::online (user_id, ident, logged, o_position, o_name) SELECT 1, ?s:ip, ?i:logged, ?s:pos, ?s:name FROM ::groups WHERE NOT EXISTS (SELECT 1 FROM ::online WHERE user_id=1 AND ident=?s:ip) LIMIT 1', $vars);
+                $query = 'INSERT INTO ::online (user_id, ident, logged, o_position, o_name)
+                    SELECT 1, ?s:ip, ?i:logged, ?s:pos, ?s:name
+                    FROM ::groups
+                    WHERE NOT EXISTS (
+                        SELECT 1
+                        FROM ::online
+                        WHERE user_id=1 AND ident=?s:ip
+                    )
+                    LIMIT 1';
             }
+
+            $this->c->DB->exec($query, $vars);
         } else {
         // пользователь
             $vars = [
@@ -159,11 +191,24 @@ class Model extends ParentModel
                 ':id'     => $this->c->user->id,
                 ':name'   => $this->c->user->username,
             ];
+
             if ($this->c->user->logged > 0) {
-                $this->c->DB->exec('UPDATE ::online SET logged=?i:logged, o_position=?s:pos WHERE user_id=?i:id', $vars);
+                $query = 'UPDATE ::online
+                    SET logged=?i:logged, o_position=?s:pos
+                    WHERE user_id=?i:id';
             } else {
-                $this->c->DB->exec('INSERT INTO ::online (user_id, ident, logged, o_position) SELECT ?i:id, ?s:name, ?i:logged, ?s:pos FROM ::groups WHERE NOT EXISTS (SELECT 1 FROM ::online WHERE user_id=?i:id) LIMIT 1', $vars);
+                $query = 'INSERT INTO ::online (user_id, ident, logged, o_position)
+                    SELECT ?i:id, ?s:name, ?i:logged, ?s:pos
+                    FROM ::groups
+                    WHERE NOT EXISTS (
+                        SELECT 1
+                        FROM ::online
+                        WHERE user_id=?i:id
+                    )
+                    LIMIT 1';
             }
+
+            $this->c->DB->exec($query, $vars);
         }
     }
 
@@ -175,9 +220,21 @@ class Model extends ParentModel
     public function delete(User $user): void
     {
         if ($user->isGuest) {
-            $this->c->DB->exec('DELETE FROM ::online WHERE user_id=1 AND ident=?s:ip', [':ip' => $user->ip]);
+            $vars  = [
+                ':ip' => $user->ip,
+            ];
+            $query = 'DELETE
+                FROM ::online
+                WHERE user_id=1 AND ident=?s:ip';
         } else {
-            $this->c->DB->exec('DELETE FROM ::online WHERE user_id=?i:id', [':id' => $user->id]);
+            $vars  = [
+                ':id' => $user->id,
+            ];
+            $query = 'DELETE
+                FROM ::online
+                WHERE user_id=?i:id';
         }
+
+        $this->c->DB->exec($query, $vars);
     }
 }

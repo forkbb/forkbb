@@ -172,7 +172,13 @@ class Register extends Page
                 'fRootLink' => $this->c->Router->link('Index'),
                 'fMailer'   => __('Mailer', $this->c->config->o_board_title),
                 'username'  => $v->username,
-                'userLink'  => $this->c->Router->link('User', ['id' => $newUserId, 'name' => $v->username]),
+                'userLink'  => $this->c->Router->link(
+                    'User',
+                    [
+                        'id'   => $newUserId,
+                        'name' => $v->username,
+                    ]
+                ),
             ];
 
             try {
@@ -194,7 +200,14 @@ class Register extends Page
         // отправка письма активации аккаунта
         if ('1' == $this->c->config->o_regs_verify) {
             $hash = $this->c->Secury->hash($newUserId . $key);
-            $link = $this->c->Router->link('RegActivate', ['id' => $newUserId, 'key' => $key, 'hash' => $hash]);
+            $link = $this->c->Router->link(
+                'RegActivate',
+                [
+                    'id'   => $newUserId,
+                    'key'  => $key,
+                    'hash' => $hash,
+                ]
+            );
             $tplData = [
                 'fTitle'    => $this->c->config->o_board_title,
                 'fRootLink' => $this->c->Router->link('Index'),

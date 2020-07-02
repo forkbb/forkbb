@@ -254,9 +254,15 @@ class Bans extends Admin
     protected function formBan(array $data = [], array $args = []): array
     {
         $form = [
-            'action' => $this->c->Router->link($this->formBanPage, $args),
+            'action' => $this->c->Router->link(
+                $this->formBanPage,
+                $args
+            ),
             'hidden' => [
-                'token' => $this->c->Csrf->create($this->formBanPage, $args),
+                'token' => $this->c->Csrf->create(
+                    $this->formBanPage,
+                    $args
+                ),
             ],
             'sets'   => [],
             'btns'   => [
@@ -411,7 +417,15 @@ class Bans extends Admin
 
         $this->nameTpl    = 'admin/bans_result';
         $this->mainSuffix = '-one-column';
-        $this->aCrumbs[]  = [$this->c->Router->link('AdminBansResult', ['data' => $args['data']]), __('Results head')];
+        $this->aCrumbs[]  = [
+            $this->c->Router->link(
+                'AdminBansResult',
+                [
+                    'data' => $args['data'],
+                ]
+            ),
+            __('Results head'),
+        ];
         $this->formResult = $this->form($banList, $startNum, $args);
         $this->pagination = $this->c->Func->paginate($pages, $page, 'AdminBansResult', ['data' => $args['data']]);
 
@@ -496,7 +510,13 @@ class Bans extends Admin
                 'type'    => '1' == $this->c->user->g_view_users && $ban['id_creator'] > 1 ? 'link' : 'str',
                 'caption' => __('Results banned by head'),
                 'value'   => $ban['name_creator'],
-                'href'    => $this->c->Router->link('User', ['id' => $ban['id_creator'], 'name' => $ban['name_creator'],]), // ????
+                'href'    => $this->c->Router->link(
+                    'User',
+                    [
+                        'id'   => $ban['id_creator'],
+                        'name' => $ban['name_creator'],
+                    ]
+                ), // ????
             ];
             $fields[] = [
                 'type' => 'endwrap',
@@ -515,7 +535,10 @@ class Bans extends Admin
                 'value'   => '✎',
                 'caption' => __('Results actions head'),
                 'title'   => __('Edit'),
-                'link'    => $this->c->Router->link('AdminBansEdit', $arr),
+                'link'    => $this->c->Router->link(
+                    'AdminBansEdit',
+                    $arr
+                ),
             ];
             $fields["delete-btn{$number}"] = [
                 'class'   => ['result', 'btn-delete'],
@@ -523,10 +546,16 @@ class Bans extends Admin
                 'value'   => '❌',
                 'caption' => __('Results actions head'),
                 'title'   => __('Delete'),
-                'link'    => $this->c->Router->link('AdminBansDelete', [
-                    'id'    => $ban['id'],
-                    'token' => $this->c->Csrf->create('AdminBansDelete', $arr),
-                ]),
+                'link'    => $this->c->Router->link(
+                    'AdminBansDelete',
+                    [
+                        'id'    => $ban['id'],
+                        'token' => $this->c->Csrf->create(
+                            'AdminBansDelete',
+                            $arr
+                        ),
+                    ]
+                ),
             ];
             $fields[] = [
                 'type' => 'endwrap',
@@ -746,8 +775,14 @@ class Bans extends Admin
             }
         }
 
-        $this->aCrumbs[]      = [$this->c->Router->link($this->formBanPage, $args), $this->formBanSubHead];
-        $this->formBan        = $this->formBan($data, $args);
+        $this->aCrumbs[] = [
+            $this->c->Router->link(
+                $this->formBanPage,
+                $args
+            ),
+            $this->formBanSubHead,
+        ];
+        $this->formBan   = $this->formBan($data, $args);
 
         return $this;
     }

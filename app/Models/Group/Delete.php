@@ -21,11 +21,13 @@ class Delete extends Action
 
         $this->manager->Perm->delete($group);
 
-        $vars = [
+        $vars  = [
             ':gid' => $group->g_id,
         ];
-        $sql = 'DELETE FROM ::groups
-                WHERE g_id=?i:gid';
-        $this->c->DB->exec($sql, $vars);
+        $query = 'DELETE
+            FROM ::groups
+            WHERE g_id=?i:gid';
+
+        $this->c->DB->exec($query, $vars);
     }
 }

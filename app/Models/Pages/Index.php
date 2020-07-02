@@ -19,10 +19,13 @@ class Index extends Page
 
         // крайний пользователь // ???? может в stats переместить?
         $this->c->stats->userLast = $this->user->viewUsers
-            ? [ $this->c->Router->link('User', [
-                    'id'   => $this->c->stats->userLast['id'],
-                    'name' => $this->c->stats->userLast['username'],
-                ]),
+            ? [
+                $this->c->Router->link(
+                    'User', [
+                        'id'   => $this->c->stats->userLast['id'],
+                        'name' => $this->c->stats->userLast['username'],
+                    ]
+                ),
                 $this->c->stats->userLast['username'],
             ]
             : $this->c->stats->userLast['username'];
@@ -49,10 +52,18 @@ class Index extends Page
         $this->categoryes   = $ctgs;
 
         if (! $this->user->isGuest) {
-            $this->linkMarkRead = $this->c->Router->link('MarkRead', [
+            $this->linkMarkRead = $this->c->Router->link(
+                'MarkRead',
+                [
                     'id'    => 0,
-                    'token' => $this->c->Csrf->create('MarkRead', ['id' => 0]),
-                ]);
+                    'token' => $this->c->Csrf->create(
+                        'MarkRead',
+                        [
+                            'id' => 0,
+                        ]
+                    ),
+                ]
+            );
         }
 
         return $this;

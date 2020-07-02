@@ -169,7 +169,12 @@ class View extends Profile
                     'type'    => 'link',
                     'caption' => __('Email info'),
                     'value'   => __('Send email'),
-                    'href'    => $this->c->Router->link('', ['id' => $this->curUser->id]), // ????
+                    'href'    => $this->c->Router->link(
+                        '', // ????
+                        [
+                            'id' => $this->curUser->id,
+                        ]
+                    ),
                 ];
             }
         }
@@ -245,7 +250,13 @@ class View extends Profile
                     'type'    => 'link',
                     'caption' => __('Posts info'),
                     'value'   => $this->user->showPostCount ? \ForkBB\num($this->curUser->num_posts) : __('Show posts'),
-                    'href'    => $this->c->Router->link('SearchAction', ['action' => 'posts', 'uid' => $this->curUser->id]),
+                    'href'    => $this->c->Router->link(
+                        'SearchAction',
+                        [
+                            'action' => 'posts',
+                            'uid'    => $this->curUser->id,
+                        ]
+                    ),
                     'title'   => __('Show posts'),
                 ];
                 $fields['topics'] = [
@@ -253,7 +264,13 @@ class View extends Profile
                     'type'    => 'link',
                     'caption' => __('Topics info'),
                     'value'   => $this->user->showPostCount ? \ForkBB\num($this->curUser->num_topics) : __('Show topics'),
-                    'href'    => $this->c->Router->link('SearchAction', ['action' => 'topics', 'uid' => $this->curUser->id]),
+                    'href'    => $this->c->Router->link(
+                        'SearchAction',
+                        [
+                            'action' => 'topics',
+                            'uid'    => $this->curUser->id,
+                        ]
+                    ),
                     'title'   => __('Show topics'),
                 ];
             } elseif ($this->user->showPostCount) {
@@ -280,7 +297,12 @@ class View extends Profile
                 'type'    => 'link',
                 'caption' => __('IP'),
                 'value'   => $this->curUser->registration_ip,
-                'href'    => $this->c->Router->link('AdminHost', ['ip' => $this->curUser->registration_ip]),
+                'href'    => $this->c->Router->link(
+                    'AdminHost',
+                    [
+                        'ip' => $this->curUser->registration_ip,
+                    ]
+                ),
                 'title'   => __('IP title'),
             ];
         }

@@ -40,8 +40,10 @@ class Save extends Action
             return $forum;
         }
         $vars[] = $forum->id;
+        $query = 'UPDATE ::forums
+            SET ' . \implode(', ', $set) . ' WHERE id=?i';
 
-        $this->c->DB->exec('UPDATE ::forums SET ' . \implode(', ', $set) . ' WHERE id=?i', $vars);
+        $this->c->DB->exec($query, $vars);
 
         // модификация категории у потомков при ее изменении
         if (
@@ -51,13 +53,15 @@ class Save extends Action
             foreach ($forum->descendants as $f) {
                 $f->__cat_id = $values['cat_id'];
             }
-            $vars = [
+            $vars  = [
                 ':ids'      => \array_keys($forum->descendants),
                 ':category' => $values['cat_id'],
             ];
-            $sql = 'UPDATE ::forums SET cat_id=?i:category WHERE id IN (?ai:ids)';
+            $query = 'UPDATE ::forums
+                SET cat_id=?i:category
+                WHERE id IN (?ai:ids)';
 
-            $this->c->DB->exec($sql, $vars);
+            $this->c->DB->exec($query, $vars);
         }
 
         $forum->resModified();
@@ -93,7 +97,11 @@ class Save extends Action
         if (empty($set)) {
             throw new RuntimeException('The model is empty');
         }
-        $this->c->DB->query('INSERT INTO ::forums (' . \implode(', ', $set) . ') VALUES (' . \implode(', ', $set2) . ')', $vars);
+
+        $query = 'INSERT INTO ::forums (' . \implode(', ', $set) . ')
+            VALUES (' . \implode(', ', $set2) . ')';
+
+        $this->c->DB->query($query, $vars);
         $forum->id = $this->c->DB->lastInsertId();
         $forum->resModified();
 

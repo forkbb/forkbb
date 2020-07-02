@@ -40,13 +40,14 @@ class View extends Action
         }
 
         if (! $review) {
-            $vars = [
+            $vars  = [
                 ':ids' => $arg->idsList,
             ];
-            $sql = 'SELECT w.id, w.message, w.poster, w.posted
-                    FROM ::warnings AS w
-                    WHERE w.id IN (?ai:ids)';
-            $warnings = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_GROUP);
+            $query = 'SELECT w.id, w.message, w.poster, w.posted
+                FROM ::warnings AS w
+                WHERE w.id IN (?ai:ids)';
+
+            $warnings = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_GROUP);
         }
 
         $userIds = [];

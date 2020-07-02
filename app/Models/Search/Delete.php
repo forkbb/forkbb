@@ -76,51 +76,55 @@ class Delete extends Method
             throw new InvalidArgumentException('Expected only User(s), Forum(s), Topic(s) or Post(s)');
         }
 
-        $sql = null;
+        $query = null;
 
         if ($users) {
-            $vars = [
+            $vars  = [
                 ':users' => $users,
             ];
-            $sql = 'DELETE FROM ::search_matches
-                    WHERE post_id IN (
-                        SELECT p.id
-                        FROM ::posts AS p
-                        WHERE p.poster_id IN (?ai:users)
-                    )';
+            $query = 'DELETE
+                FROM ::search_matches
+                WHERE post_id IN (
+                    SELECT p.id
+                    FROM ::posts AS p
+                    WHERE p.poster_id IN (?ai:users)
+                )';
         }
         if ($forums) {
-            $vars = [
+            $vars  = [
                 ':forums' => \array_keys($forums),
             ];
-            $sql = 'DELETE FROM ::search_matches
-                    WHERE post_id IN (
-                        SELECT p.id
-                        FROM ::posts AS p
-                        INNER JOIN ::topics AS t ON t.id=p.topic_id
-                        WHERE t.forum_id IN (?ai:forums)
-                    )';
+            $query = 'DELETE
+                FROM ::search_matches
+                WHERE post_id IN (
+                    SELECT p.id
+                    FROM ::posts AS p
+                    INNER JOIN ::topics AS t ON t.id=p.topic_id
+                    WHERE t.forum_id IN (?ai:forums)
+                )';
         }
         if ($topics) {
-            $vars = [
+            $vars  = [
                 ':topics' => \array_keys($topics),
             ];
-            $sql = 'DELETE FROM ::search_matches
-                    WHERE post_id IN (
-                        SELECT p.id
-                        FROM ::posts AS p
-                        WHERE p.topic_id IN (?ai:topics)
-                    )';
+            $query = 'DELETE
+                FROM ::search_matches
+                WHERE post_id IN (
+                    SELECT p.id
+                    FROM ::posts AS p
+                    WHERE p.topic_id IN (?ai:topics)
+                )';
         }
         if ($posts) {
-            $vars = [
+            $vars  = [
                 ':posts' => \array_keys($posts),
             ];
-            $sql = 'DELETE FROM ::search_matches
-                    WHERE post_id IN (?ai:posts)';
+            $query = 'DELETE
+                FROM ::search_matches
+                WHERE post_id IN (?ai:posts)';
         }
-        if ($sql) {
-            $this->c->DB->exec($sql, $vars);
+        if ($query) {
+            $this->c->DB->exec($query, $vars);
         }
     }
 }

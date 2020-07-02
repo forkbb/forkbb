@@ -38,7 +38,14 @@ class Forum extends Page
         $this->fIndex     = 'index';
         $this->nameTpl    = 'forum';
         $this->onlinePos  = 'forum-' . $args['id'];
-        $this->canonical  = $this->c->Router->link('Forum', ['id' => $args['id'], 'name' => $forum->forum_name, 'page' => $forum->page]);
+        $this->canonical  = $this->c->Router->link(
+            'Forum',
+            [
+                'id'   => $args['id'],
+                'name' => $forum->forum_name,
+                'page' => $forum->page,
+            ]
+        );
         $this->model      = $forum;
         $this->topics     = $forum->pageData();
         $this->crumbs     = $this->crumbs($forum);

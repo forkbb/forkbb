@@ -16,16 +16,16 @@ class UserInfoFromIP extends Action
      */
     public function userInfoFromIP(string $ip): array
     {
-        $vars = [
+        $vars  = [
             ':ip' => $ip,
         ];
-        $sql = 'SELECT p.poster_id, p.poster
-                FROM ::posts AS p
-                WHERE p.poster_ip=?s:ip
-                GROUP BY p.poster_id, p.poster
-                ORDER BY p.poster';
+        $query = 'SELECT p.poster_id, p.poster
+            FROM ::posts AS p
+            WHERE p.poster_ip=?s:ip
+            GROUP BY p.poster_id, p.poster
+            ORDER BY p.poster';
 
-        $stmt   = $this->c->DB->query($sql, $vars);
+        $stmt   = $this->c->DB->query($query, $vars);
         $result = [];
         $ids    = [];
 

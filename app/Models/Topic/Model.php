@@ -69,7 +69,13 @@ class Model extends DataModel
      */
     protected function getlink(): string
     {
-        return $this->c->Router->link('Topic', ['id' => $this->moved_to ?: $this->id, 'name' => \ForkBB\cens($this->subject)]);
+        return $this->c->Router->link(
+            'Topic',
+            [
+                'id'   => $this->moved_to ?: $this->id,
+                'name' => \ForkBB\cens($this->subject),
+            ]
+        );
     }
 
     /**
@@ -79,7 +85,12 @@ class Model extends DataModel
      */
     protected function getlinkReply(): string
     {
-        return $this->c->Router->link('NewReply', ['id' => $this->id]);
+        return $this->c->Router->link(
+            'NewReply',
+            [
+                'id' => $this->id,
+            ]
+        );
     }
 
     /**
@@ -92,7 +103,12 @@ class Model extends DataModel
         if ($this->moved_to) {
             return null;
         } else {
-            return $this->c->Router->link('ViewPost', ['id' => $this->last_post_id]);
+            return $this->c->Router->link(
+                'ViewPost',
+                [
+                    'id' => $this->last_post_id,
+                ]
+            );
         }
     }
 
@@ -103,7 +119,12 @@ class Model extends DataModel
      */
     protected function getlinkNew(): string
     {
-        return $this->c->Router->link('TopicViewNew', ['id' => $this->id]);
+        return $this->c->Router->link(
+            'TopicViewNew',
+            [
+                'id' => $this->id,
+            ]
+        );
     }
 
     /**
@@ -111,7 +132,12 @@ class Model extends DataModel
      */
     protected function getlinkUnread(): string
     {
-        return $this->c->Router->link('TopicViewUnread', ['id' => $this->id]);
+        return $this->c->Router->link(
+            'TopicViewUnread',
+            [
+                'id' => $this->id,
+            ]
+        );
     }
 
     /**
@@ -172,13 +198,15 @@ class Model extends DataModel
             return 0;
         }
 
-        $vars = [
+        $vars  = [
             ':tid'   => $this->id,
             ':visit' => $this->hasNew,
         ];
-        $sql = 'SELECT MIN(p.id) FROM ::posts AS p WHERE p.topic_id=?i:tid AND p.posted>?i:visit';
+        $query = 'SELECT MIN(p.id)
+            FROM ::posts AS p
+            WHERE p.topic_id=?i:tid AND p.posted>?i:visit';
 
-        $pid = $this->c->DB->query($sql, $vars)->fetchColumn();
+        $pid = $this->c->DB->query($query, $vars)->fetchColumn();
 
         return $pid ?: 0;
     }
@@ -194,13 +222,15 @@ class Model extends DataModel
             return 0;
         }
 
-        $vars = [
+        $vars  = [
             ':tid'   => $this->id,
             ':visit' => $this->hasUnread,
         ];
-        $sql = 'SELECT MIN(p.id) FROM ::posts AS p WHERE p.topic_id=?i:tid AND p.posted>?i:visit';
+        $query = 'SELECT MIN(p.id)
+            FROM ::posts AS p
+            WHERE p.topic_id=?i:tid AND p.posted>?i:visit';
 
-        $pid = $this->c->DB->query($sql, $vars)->fetchColumn();
+        $pid = $this->c->DB->query($query, $vars)->fetchColumn();
 
         return $pid ?: 0;
     }
@@ -264,17 +294,18 @@ class Model extends DataModel
             throw new InvalidArgumentException('Bad number of displayed page');
         }
 
-        $vars = [
+        $vars  = [
             ':tid'    => $this->id,
             ':offset' => ($this->page - 1) * $this->c->user->disp_posts,
             ':rows'   => $this->c->user->disp_posts,
         ];
-        $sql = 'SELECT p.id
-                FROM ::posts AS p
-                WHERE p.topic_id=?i:tid
-                ORDER BY p.id
-                LIMIT ?i:offset, ?i:rows';
-        $list = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
+        $query = 'SELECT p.id
+            FROM ::posts AS p
+            WHERE p.topic_id=?i:tid
+            ORDER BY p.id
+            LIMIT ?i:offset, ?i:rows';
+
+        $list = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
         if (
             ! empty($list)
@@ -305,16 +336,17 @@ class Model extends DataModel
 
         $this->page = 1;
 
-        $vars = [
-            ':tid'    => $this->id,
-            ':rows'   => $this->c->config->o_topic_review,
+        $vars  = [
+            ':tid'  => $this->id,
+            ':rows' => $this->c->config->o_topic_review,
         ];
-        $sql = 'SELECT p.id
-                FROM ::posts AS p
-                WHERE p.topic_id=?i:tid
-                ORDER BY p.id DESC
-                LIMIT 0, ?i:rows';
-        $this->idsList = $this->c->DB->query($sql, $vars)->fetchAll(PDO::FETCH_COLUMN);
+        $query = 'SELECT p.id
+            FROM ::posts AS p
+            WHERE p.topic_id=?i:tid
+            ORDER BY p.id DESC
+            LIMIT 0, ?i:rows';
+
+        $this->idsList = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
         return empty($this->idsList) ? [] : $this->c->posts->view($this, true);
     }
@@ -326,16 +358,16 @@ class Model extends DataModel
      */
     public function calcPage(int $pid): void
     {
-        $vars = [
+        $vars  = [
             ':tid' => $this->id,
             ':pid' => $pid,
         ];
-        $sql = 'SELECT COUNT(p.id) AS num
-                FROM ::posts AS p
-                INNER JOIN ::posts AS j ON (j.topic_id=?i:tid AND j.id=?i:pid)
-                WHERE p.topic_id=?i:tid AND p.id<?i:pid'; //???? может на два запроса разбить?
+        $query = 'SELECT COUNT(p.id) AS num
+            FROM ::posts AS p
+            INNER JOIN ::posts AS j ON (j.topic_id=?i:tid AND j.id=?i:pid)
+            WHERE p.topic_id=?i:tid AND p.id<?i:pid'; //???? может на два запроса разбить?
 
-        $result = $this->c->DB->query($sql, $vars)->fetch();
+        $result = $this->c->DB->query($query, $vars)->fetch();
 
         $this->page = empty($result) ? null : (int) \ceil(($result['num'] + 1) / $this->c->user->disp_posts);
     }
@@ -355,12 +387,14 @@ class Model extends DataModel
      */
     public function incViews(): void
     {
-        $vars = [
+        $vars  = [
             ':tid' => $this->id,
         ];
-        $sql = 'UPDATE ::topics SET num_views=num_views+1 WHERE id=?i:tid';
+        $query = 'UPDATE ::topics
+            SET num_views=num_views+1
+            WHERE id=?i:tid';
 
-        $this->c->DB->query($sql, $vars);
+        $this->c->DB->query($query, $vars);
     }
 
     /**
@@ -398,19 +432,22 @@ class Model extends DataModel
                 empty($this->mt_last_read)
                 && empty($this->mt_last_visit)
             ) {
-                $sql = 'INSERT INTO ::mark_of_topic (uid, tid, mt_last_visit, mt_last_read)
-                        SELECT ?i:uid, ?i:tid, ?i:visit, ?i:read
-                        FROM ::groups
-                        WHERE NOT EXISTS (SELECT 1
-                                          FROM ::mark_of_topic
-                                          WHERE uid=?i:uid AND tid=?i:tid)
-                        LIMIT 1';
+                $query = 'INSERT INTO ::mark_of_topic (uid, tid, mt_last_visit, mt_last_read)
+                    SELECT ?i:uid, ?i:tid, ?i:visit, ?i:read
+                    FROM ::groups
+                    WHERE NOT EXISTS (
+                        SELECT 1
+                        FROM ::mark_of_topic
+                        WHERE uid=?i:uid AND tid=?i:tid
+                    )
+                    LIMIT 1';
             } else {
-                $sql = 'UPDATE ::mark_of_topic
-                        SET mt_last_visit=?i:visit, mt_last_read=?i:read
-                        WHERE uid=?i:uid AND tid=?i:tid';
+                $query = 'UPDATE ::mark_of_topic
+                    SET mt_last_visit=?i:visit, mt_last_read=?i:read
+                    WHERE uid=?i:uid AND tid=?i:tid';
             }
-            $this->c->DB->exec($sql, $vars);
+
+            $this->c->DB->exec($query, $vars);
         }
     }
 }

@@ -43,7 +43,12 @@ class Model extends DataModel
      */
     protected function getlink(): string
     {
-        return $this->c->Router->link('ViewPost', ['id' => $this->id]);
+        return $this->c->Router->link(
+            'ViewPost',
+            [
+                'id' => $this->id,
+            ]
+        );
     }
 
     /**
@@ -78,7 +83,12 @@ class Model extends DataModel
 
     protected function getlinkReport(): string
     {
-        return $this->c->Router->link('ReportPost', ['id' => $this->id]);
+        return $this->c->Router->link(
+            'ReportPost',
+            [
+                'id' => $this->id,
+            ]
+        );
     }
 
     protected function getcanDelete(): bool
@@ -117,7 +127,12 @@ class Model extends DataModel
 
     protected function getlinkDelete(): string
     {
-        return $this->c->Router->link('DeletePost', ['id' => $this->id]);
+        return $this->c->Router->link(
+            'DeletePost',
+            [
+                'id' => $this->id,
+            ]
+        );
     }
 
     protected function getcanEdit(): bool
@@ -147,7 +162,12 @@ class Model extends DataModel
 
     protected function getlinkEdit(): string
     {
-        return $this->c->Router->link('EditPost', ['id' => $this->id]);
+        return $this->c->Router->link(
+            'EditPost',
+            [
+                'id' => $this->id,
+            ]
+        );
     }
 
     protected function getcanQuote(): bool
@@ -157,7 +177,13 @@ class Model extends DataModel
 
     protected function getlinkQuote(): string
     {
-        return $this->c->Router->link('NewReply', ['id' => $this->parent->id, 'quote' => $this->id]);
+        return $this->c->Router->link(
+            'NewReply',
+            [
+                'id'    => $this->parent->id,
+                'quote' => $this->id,
+            ]
+        );
     }
 
     /**
