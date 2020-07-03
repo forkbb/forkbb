@@ -40,7 +40,13 @@ class Save extends Action
             return $group;
         }
         $vars[] = $group->g_id;
-        $this->c->DB->query('UPDATE ::groups SET ' . \implode(', ', $set) . ' WHERE g_id=?i', $vars);
+
+        $set   = \implode(', ', $set);
+        $query = "UPDATE ::groups
+            SET {$set}
+            WHERE g_id=?i";
+
+        $this->c->DB->exec($query, $vars);
         $group->resModified();
 
         return $group;
@@ -74,7 +80,12 @@ class Save extends Action
         if (empty($set)) {
             throw new RuntimeException('The model is empty');
         }
-        $this->c->DB->query('INSERT INTO ::groups (' . \implode(', ', $set) . ') VALUES (' . \implode(', ', $set2) . ')', $vars);
+        $set   = \implode(', ', $set);
+        $set2  = \implode(', ', $set2);
+        $query = "INSERT INTO ::groups ({$set})
+            VALUES ({$set2})";
+
+        $this->c->DB->exec($query, $vars);
         $group->g_id = $this->c->DB->lastInsertId();
         $group->resModified();
 

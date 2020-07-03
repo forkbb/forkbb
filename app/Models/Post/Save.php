@@ -40,7 +40,13 @@ class Save extends Action
             return $post;
         }
         $vars[] = $post->id;
-        $this->c->DB->query('UPDATE ::posts SET ' . \implode(', ', $set) . ' WHERE id=?i', $vars);
+
+        $set   = \implode(', ', $set);
+        $query = "UPDATE ::posts
+            SET {$set}
+            WHERE id=?i";
+
+        $this->c->DB->exec($query, $vars);
         $post->resModified();
 
         return $post;
@@ -74,7 +80,12 @@ class Save extends Action
         if (empty($set)) {
             throw new RuntimeException('The model is empty');
         }
-        $this->c->DB->query('INSERT INTO ::posts (' . \implode(', ', $set) . ') VALUES (' . \implode(', ', $set2) . ')', $vars);
+        $set   = \implode(', ', $set);
+        $set2  = \implode(', ', $set2);
+        $query = "INSERT INTO ::posts ({$set})
+            VALUES ({$set2})";
+
+        $this->c->DB->exec($query, $vars);
         $post->id = $this->c->DB->lastInsertId();
         $post->resModified();
 

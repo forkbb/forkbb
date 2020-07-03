@@ -16,7 +16,11 @@ class Load extends Method
      */
     public function load(): SmileyList
     {
-        $list = $this->c->DB->query('SELECT sm.text, sm.image FROM ::smilies AS sm ORDER BY sm.disp_position')->fetchAll(PDO::FETCH_KEY_PAIR); //???? text уникальное?
+        $query = 'SELECT sm.text, sm.image
+            FROM ::smilies AS sm
+            ORDER BY sm.disp_position';
+
+        $list = $this->c->DB->query($query)->fetchAll(PDO::FETCH_KEY_PAIR); //???? text уникальное?
         $this->model->list = $list;
         $this->c->Cache->set('smilies', $list);
 

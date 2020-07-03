@@ -23,7 +23,10 @@ class Model extends ParentModel
         $this->userTotal = $list['total'];
         $this->userLast  = $list['last'];
 
-        list($this->topicTotal, $this->postTotal) = $this->c->DB->query('SELECT SUM(f.num_topics), SUM(f.num_posts) FROM ::forums AS f')->fetch(PDO::FETCH_NUM);
+        $query = 'SELECT SUM(f.num_topics), SUM(f.num_posts)
+            FROM ::forums AS f';
+
+        list($this->topicTotal, $this->postTotal) = $this->c->DB->query($query)->fetch(PDO::FETCH_NUM);
 
         return $this;
     }

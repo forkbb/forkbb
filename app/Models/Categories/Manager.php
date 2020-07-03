@@ -70,7 +70,7 @@ class Manager extends ManagerModel
                 SET cat_name=?s:name, disp_position=?i:position
                 WHERE id=?i:cid';
 
-            $this->c->DB->query($query, $vars); //????
+            $this->c->DB->exec($query, $vars);
         }
         $this->modified = [];
 
@@ -93,10 +93,9 @@ class Manager extends ManagerModel
         ];
         $query = 'INSERT INTO ::categories (cat_name, disp_position)
             VALUES (?s:name, ?i:position)';
-        $this->c->DB->query($query, $vars);
 
+        $this->c->DB->exec($query, $vars);
         $cid = $this->c->DB->lastInsertId();
-
         parent::set($cid, ['cat_name' => $name, 'disp_position' => $pos]);
 
         return $cid;

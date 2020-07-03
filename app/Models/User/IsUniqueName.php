@@ -16,12 +16,16 @@ class IsUniqueName extends Action
      */
     public function isUniqueName(User $user): bool
     {
-        $vars = [
+        $vars  = [
             ':id'    => (int) $user->id,
             ':name'  => $user->username,
             ':other' => \preg_replace('%[^\p{L}\p{N}]%u', '', $user->username), //???? что за бред :)
         ];
-        $result = $this->c->DB->query('SELECT u.username FROM ::users AS u WHERE (LOWER(u.username)=LOWER(?s:name) OR LOWER(u.username)=LOWER(?s:other)) AND u.id!=?i:id', $vars)->fetchAll();
+        $query = 'SELECT u.username
+            FROM ::users AS u
+            WHERE (LOWER(u.username)=LOWER(?s:name) OR LOWER(u.username)=LOWER(?s:other)) AND u.id!=?i:id';
+
+        $result = $this->c->DB->query($query, $vars)->fetchAll();
 
         return ! \count($result);
     }

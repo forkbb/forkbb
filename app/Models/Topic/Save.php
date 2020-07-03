@@ -40,7 +40,13 @@ class Save extends Action
             return $topic;
         }
         $vars[] = $topic->id;
-        $this->c->DB->query('UPDATE ::topics SET ' . \implode(', ', $set) . ' WHERE id=?i', $vars);
+
+        $set   = \implode(', ', $set);
+        $query = "UPDATE ::topics
+            SET {$set}
+            WHERE id=?i";
+
+        $this->c->DB->exec($query, $vars);
         $topic->resModified();
 
         return $topic;
@@ -74,7 +80,12 @@ class Save extends Action
         if (empty($set)) {
             throw new RuntimeException('The model is empty');
         }
-        $this->c->DB->query('INSERT INTO ::topics (' . \implode(', ', $set) . ') VALUES (' . \implode(', ', $set2) . ')', $vars);
+        $set   = \implode(', ', $set);
+        $set2  = \implode(', ', $set2);
+        $query = "INSERT INTO ::topics ({$set})
+            VALUES ({$set2})";
+
+        $this->c->DB->exec($query, $vars);
         $topic->id = $this->c->DB->lastInsertId();
         $topic->resModified();
 

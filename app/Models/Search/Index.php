@@ -79,8 +79,9 @@ class Index extends Method
             $newWords = \array_diff($allWords, $oldWords);
 
             if (! empty($newWords)) {
-                $query  = 'INSERT INTO ::search_words (word) VALUES(?s:word)';
-                $stmt = null;
+                $query = 'INSERT INTO ::search_words (word)
+                    VALUES(?s:word)';
+                $stmt  = null;
                 foreach ($newWords as $word) {
                     if (null === $stmt) {
                         $stmt = $this->c->DB->prepare($query, [':word' => $word]);

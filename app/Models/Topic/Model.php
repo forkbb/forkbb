@@ -402,7 +402,7 @@ class Model extends DataModel
             SET num_views=num_views+1
             WHERE id=?i:tid';
 
-        $this->c->DB->query($query, $vars);
+        $this->c->DB->exec($query, $vars);
     }
 
     /**

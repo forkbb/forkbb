@@ -63,7 +63,12 @@ class Save extends Action
         } else {
             $vars[] = $user->id;
         }
-        $this->c->DB->query('UPDATE ::' . $table . ' SET ' . \implode(', ', $set) . ' WHERE ' . $where, $vars);
+        $set   = \implode(', ', $set);
+        $query = "UPDATE ::{$table}
+            SET {$set}
+            WHERE {$where}";
+
+        $this->c->DB->exec($query, $vars);
         $user->resModified();
 
         if ($grChange) {
@@ -102,7 +107,12 @@ class Save extends Action
         if (empty($set)) {
             throw new RuntimeException('The model is empty');
         }
-        $this->c->DB->query('INSERT INTO ::users (' . \implode(', ', $set) . ') VALUES (' . \implode(', ', $set2) . ')', $vars);
+        $set   = \implode(', ', $set);
+        $set2  = \implode(', ', $set2);
+        $query = "INSERT INTO ::users ({$set})
+            VALUES ({$set2})";
+
+        $this->c->DB->exec($query, $vars);
         $user->id = $this->c->DB->lastInsertId();
         $user->resModified();
 

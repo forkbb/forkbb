@@ -101,7 +101,7 @@ class Save extends Action
         $query = 'INSERT INTO ::forums (' . \implode(', ', $set) . ')
             VALUES (' . \implode(', ', $set2) . ')';
 
-        $this->c->DB->query($query, $vars);
+        $this->c->DB->exec($query, $vars);
         $forum->id = $this->c->DB->lastInsertId();
         $forum->resModified();
 

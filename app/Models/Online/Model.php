@@ -64,6 +64,7 @@ class Model extends ParentModel
                 FROM ::online AS o
                 ORDER BY o.logged';
         }
+
         $stmt = $this->c->DB->query($query);
 
         $query = 'UPDATE ::users
@@ -84,7 +85,7 @@ class Model extends ParentModel
                             ':id' => $cur['user_id'],
                         ];
 
-                        $this->c->DB->exec($query, $vars); //????
+                        $this->c->DB->exec($query, $vars);
                     }
                 }
                 continue;

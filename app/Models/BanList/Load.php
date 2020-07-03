@@ -20,8 +20,10 @@ class Load extends Method
         $ipList    = [];
         $banList   = [];
 
+        $query = 'SELECT b.id, b.username, b.ip, b.email, b.message, b.expire
+            FROM ::bans AS b';
 
-        $stmt = $this->c->DB->query('SELECT b.id, b.username, b.ip, b.email, b.message, b.expire FROM ::bans AS b');
+        $stmt = $this->c->DB->query($query);
         while ($row = $stmt->fetch()) {
             $name = $this->model->trimToNull($row['username'], true);
             if (null !== $name) {

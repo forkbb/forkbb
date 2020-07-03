@@ -38,7 +38,11 @@ class Manager extends ManagerModel
     public function init(): self
     {
         if (empty($this->flag)) {
-            $stmt = $this->c->DB->query('SELECT g.* FROM ::groups AS g ORDER BY g.g_id');
+            $query = 'SELECT g.*
+                FROM ::groups AS g
+                ORDER BY g.g_id';
+
+            $stmt = $this->c->DB->query($query);
             while ($row = $stmt->fetch()) {
                 $this->set($row['g_id'], $this->create($row));
             }

@@ -115,8 +115,11 @@ class Perm extends Action
                 $list[] = 'group_id';
                 $list[] = 'forum_id';
                 $list2  = \array_fill(0, \count($list), '?i');
-                $query  = 'INSERT INTO ::forum_perms (' . \implode(', ', $list) . ')
-                    VALUES (' . \implode(', ', $list2) . ')';
+
+                $list   = \implode(', ', $list);
+                $list2  = \implode(', ', $list2);
+                $query  = "INSERT INTO ::forum_perms ({$list})
+                    VALUES ({$list2})";
 
                 $this->c->DB->exec($query, $vars);
             }

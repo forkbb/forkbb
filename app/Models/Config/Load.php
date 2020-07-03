@@ -16,7 +16,10 @@ class Load extends Method
      */
     public function load(): Config
     {
-        $config = $this->c->DB->query('SELECT cf.conf_name, cf.conf_value FROM ::config AS cf')->fetchAll(PDO::FETCH_KEY_PAIR);
+        $query = 'SELECT cf.conf_name, cf.conf_value
+            FROM ::config AS cf';
+
+        $config = $this->c->DB->query($query)->fetchAll(PDO::FETCH_KEY_PAIR);
         $this->model->setAttrs($config);
         $this->c->Cache->set('config', $config);
 

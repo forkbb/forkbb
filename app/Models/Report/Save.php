@@ -40,7 +40,13 @@ class Save extends Action
             return $report;
         }
         $vars[] = $report->id;
-        $this->c->DB->query('UPDATE ::reports SET ' . \implode(', ', $set) . ' WHERE id=?i', $vars);
+
+        $set   = \implode(', ', $set);
+        $query = "UPDATE ::reports
+            SET {$set}
+            WHERE id=?i";
+
+        $this->c->DB->exec($query, $vars);
         $report->resModified();
 
         return $report;
@@ -77,7 +83,12 @@ class Save extends Action
         if (empty($set)) {
             throw new RuntimeException('The model is empty');
         }
-        $this->c->DB->query('INSERT INTO ::reports (' . \implode(', ', $set) . ') VALUES (' . \implode(', ', $set2) . ')', $vars);
+        $set   = \implode(', ', $set);
+        $set2  = \implode(', ', $set2);
+        $query = "INSERT INTO ::reports ({$set})
+            VALUES ({$set2})";
+
+        $this->c->DB->exec($query, $vars);
         $report->id = $this->c->DB->lastInsertId();
         $report->resModified();
 

@@ -21,7 +21,15 @@ class UpdateLastVisit extends Action
             throw new RuntimeException('Expected user');
         }
         if ($user->logged > 0) {
-            $this->c->DB->exec('UPDATE ::users SET last_visit=?i:loggid WHERE id=?i:id', [':loggid' => $user->logged, ':id' => $user->id]);
+            $vars  = [
+                ':loggid' => $user->logged,
+                ':id'     => $user->id,
+            ];
+            $query = 'UPDATE ::users
+                SET last_visit=?i:loggid
+                WHERE id=?i:id';
+
+            $this->c->DB->exec($query, $vars);
             $user->__last_visit = $user->logged;
         }
     }
