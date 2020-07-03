@@ -533,6 +533,7 @@ class Search extends Page
             return $this->c->Message->message('Bad request');
         } elseif (empty($list)) {
             $this->fIswev = ['i', __('No hits')];
+
             return $this->view([], 'GET', true);
         }
 
@@ -569,6 +570,7 @@ class Search extends Page
     protected function crumbs(...$crumbs): array
     {
         $crumbs[] = [$this->c->Router->link('Search'), __('Search')];
+
         return parent::crumbs(...$crumbs);
     }
 }

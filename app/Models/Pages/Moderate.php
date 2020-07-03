@@ -196,6 +196,7 @@ class Moderate extends Page
         if (! $v->validation($_POST)) {
             $message         = $this->c->Message->message('Bad request');
             $message->fIswev = $v->getErrors();
+
             return $message;
         }
 
@@ -292,12 +293,14 @@ class Moderate extends Page
                 $this->buttonValue = __('Open');
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->form        = $this->formConfirm($topics, $v);
+
                 return $this;
             case 2:
                 if (1 === $v->confirm) {
                     $this->c->topics->access(true, ...$topics);
 
                     $message = 1 === \count($topics) ? 'Open topic redirect' : 'Open topics redirect';
+
                     return $this->c->Redirect->url($this->backLink)->message($message);
                 } else {
                     return $this->actionCancel($topics, $v);
@@ -315,12 +318,14 @@ class Moderate extends Page
                 $this->buttonValue = __('Close');
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->form        = $this->formConfirm($topics, $v);
+
                 return $this;
             case 2:
                 if (1 === $v->confirm) {
                     $this->c->topics->access(false, ...$topics);
 
                     $message = 1 === \count($topics) ? 'Close topic redirect' : 'Close topics redirect';
+
                     return $this->c->Redirect->url($this->backLink)->message($message);
                 } else {
                     return $this->actionCancel($topics, $v);
@@ -355,6 +360,7 @@ class Moderate extends Page
                 $this->buttonValue = __('Delete');
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->form        = $this->formConfirm($objects, $v);
+
                 return $this;
             case 2:
                 if (1 === $v->confirm) {
@@ -384,6 +390,7 @@ class Moderate extends Page
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->chkRedirect = true;
                 $this->form        = $this->formConfirm($topics, $v);
+
                 return $this;
             case 2:
                 if (1 === $v->confirm) {
@@ -391,6 +398,7 @@ class Moderate extends Page
                     $this->c->topics->move(1 === $v->redirect, $forum, ...$topics);
 
                     $message = 1 === \count($topics) ? 'Move topic redirect' : 'Move topics redirect';
+
                     return $this->c->Redirect->url($this->curForum->link)->message($message);
                 } else {
                     return $this->actionCancel($topics, $v);
@@ -421,6 +429,7 @@ class Moderate extends Page
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $this->curForum);
                 $this->chkRedirect = true;
                 $this->form        = $this->formConfirm($topics, $v);
+
                 return $this;
             case 2:
                 if (1 === $v->confirm) {
@@ -443,6 +452,7 @@ class Moderate extends Page
                 $this->buttonValue = __('Unstick');
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->form        = $this->formConfirm($topics, $v);
+
                 return $this;
             case 2:
                 if (1 === $v->confirm) {
@@ -452,6 +462,7 @@ class Moderate extends Page
                     }
 
                     $message = 1 === \count($topics) ? 'Unstick topic redirect' : 'Unstick topics redirect';
+
                     return $this->c->Redirect->url($this->backLink)->message($message);
                 } else {
                     return $this->actionCancel($topics, $v);
@@ -469,6 +480,7 @@ class Moderate extends Page
                 $this->buttonValue = __('Stick');
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->form        = $this->formConfirm($topics, $v);
+
                 return $this;
             case 2:
                 if (1 === $v->confirm) {
@@ -478,6 +490,7 @@ class Moderate extends Page
                     }
 
                     $message = 1 === \count($topics) ? 'Stick topic redirect' : 'Stick topics redirect';
+
                     return $this->c->Redirect->url($this->backLink)->message($message);
                 } else {
                     return $this->actionCancel($topics, $v);
@@ -496,6 +509,7 @@ class Moderate extends Page
                 $this->needSubject = true;
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $this->curTopic);
                 $this->form        = $this->formConfirm($posts, $v);
+
                 return $this;
             case 2:
                 if (1 === $v->confirm) {

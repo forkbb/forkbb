@@ -24,6 +24,7 @@ class Model extends DataModel
             $this->c->GROUP_GUEST,
             $this->c->GROUP_MEMBER
         ];
+
         return ! \in_array($this->g_id, $notDeleted) && $this->g_id != $this->c->config->o_default_user_group;
     }
 

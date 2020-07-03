@@ -30,6 +30,7 @@ class Refresh extends Method
             'searchList'  => $search,
             'replaceList' => $replace,
         ]);
+
         return $this->model;
     }
 }

@@ -146,6 +146,7 @@ class File
     {
         if (! \preg_match($this->pattern, $path, $matches)) {
             $this->error = 'The path/name format is broken';
+
             return null;
         }
 
@@ -213,11 +214,13 @@ class File
         if (! \is_dir($dirname)) {
             if (! @\mkdir($dirname, 0755)) {
                 $this->error = 'Can not create directory';
+
                 return false;
             }
         }
         if (! \is_writable($dirname)) {
             $this->error = 'No write access for directory';
+
             return false;
         }
 
@@ -236,11 +239,13 @@ class File
         if (\is_string($this->data)) {
             if (! \file_put_contents($this->path, $path)) {
                 $this->error = 'Error writing file';
+
                 return false;
             }
         } else {
             if (! \copy($this->path, $path)) {
                 $this->error = 'Error copying file';
+
                 return false;
             }
         }
@@ -279,6 +284,7 @@ class File
             && \file_exists($info['dirname'] . $info['filename'] . '.' . $info['extension'])
         ) {
             $this->error = 'Such file already exists';
+
             return false;
         }
 
@@ -289,6 +295,7 @@ class File
             $this->name = $info['filename'];
             $this->ext  = $info['extension'];
             $this->size = \filesize($path);
+
             return true;
         } else {
             return false;

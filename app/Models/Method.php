@@ -39,6 +39,7 @@ class Method
     public function setModel(Model $model): self
     {
         $this->model = $model;
+
         return $this;
     }
 }

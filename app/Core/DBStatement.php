@@ -101,6 +101,7 @@ class DBStatement extends PDOStatement
         $start  = \microtime(true);
         $result = parent::execute();
         $this->db->saveQuery($this->queryString, \microtime(true) - $start);
+
         return $result;
     }
 }

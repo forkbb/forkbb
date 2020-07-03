@@ -139,6 +139,7 @@ class Options extends Admin
         if ($timeout >= $v->o_timeout_visit) {
             $v->addError('Timeout error message');
         }
+
         return $timeout;
     }
 
@@ -174,6 +175,7 @@ class Options extends Admin
         ) {
             $value = 0;
         }
+
         return $value;
     }
 

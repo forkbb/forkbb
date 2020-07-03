@@ -18,6 +18,7 @@ class Model extends ParentModel
         } else {
             $this->load();
         }
+
         return $this;
     }
 }

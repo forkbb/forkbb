@@ -80,6 +80,7 @@ class Current extends Action
         $user              = $this->manager->create($data);
         $user->__ip        = $ip;
         $user->__userAgent = $this->getUserAgent();
+
         return $user;
     }
 
@@ -144,6 +145,7 @@ class Current extends Action
         ) {
             return false;
         }
+
         return $this->nameBot($agent, $agentL);
     }
 
@@ -240,6 +242,7 @@ class Current extends Action
         } elseif (\strlen($agent) > 25) {
             $agent = 'Unknown';
         }
+
         return $agent;
     }
 
@@ -272,6 +275,7 @@ class Current extends Action
                 }
             }
         }
+
         return $this->c->config->o_default_lang;
     }
 }

@@ -31,6 +31,7 @@ class Redirect extends Page
             $marker,
             $args
         );
+
         return $this;
     }
 
@@ -44,6 +45,7 @@ class Redirect extends Page
     public function url(string $url): Page
     {
         $this->link = $url;
+
         return $this;
     }
 
@@ -81,6 +83,7 @@ class Redirect extends Page
         if (null === $this->nameTpl) {
             $this->header('Location', $this->link);
         }
+
         return parent::getHttpHeaders();
     }
 

@@ -103,6 +103,7 @@ class Manager extends ManagerModel
     {
         $id = $this->Save->insert($post);
         $this->set($id, $post);
+
         return $id;
     }
 }

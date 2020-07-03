@@ -174,6 +174,7 @@ abstract class Profile extends Page
                 __('Configure '),
             ];
         }
+
         return $btns;
     }
 

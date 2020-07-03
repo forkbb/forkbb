@@ -174,6 +174,7 @@ class Mail
         $this->to = [];
         $this->headers = [];
         $this->message = null;
+
         return $this;
     }
 
@@ -187,6 +188,7 @@ class Mail
     public function setSubject(string $subject): self
     {
         $this->headers['Subject'] = $this->encodeText(\preg_replace('%[\x00-\x1F]%', '', \trim($subject)));
+
         return $this;
     }
 
@@ -209,6 +211,7 @@ class Mail
                 $this->to[] = $this->formatAddress($cur, $name);
             }
         }
+
         return $this;
     }
 
@@ -223,6 +226,7 @@ class Mail
     public function setTo($email, string $name = null): self
     {
         $this->to = [];
+
         return $this->addTo($email, $name);
     }
 
@@ -240,6 +244,7 @@ class Mail
         if (false !== $email) {
             $this->headers['From'] = $this->formatAddress($email, $name);
         }
+
         return $this;
     }
 
@@ -257,6 +262,7 @@ class Mail
         if (false !== $email) {
             $this->headers['Reply-To'] = $this->formatAddress($email, $name);
         }
+
         return $this;
     }
 
@@ -277,6 +283,7 @@ class Mail
             return $email;
         } else {
             $name = $this->encodeText($this->filterName($name));
+
             return \sprintf('"%s" <%s>', $name, $email);
         }
     }
@@ -319,6 +326,7 @@ class Mail
     public function setFolder(string $folder): self
     {
         $this->folder = $folder;
+
         return $this;
     }
 
@@ -332,6 +340,7 @@ class Mail
     public function setLanguage(string $language): self
     {
         $this->language = $language;
+
         return $this;
     }
 
@@ -360,6 +369,7 @@ class Mail
             throw new MailException('The template is empty (' . $file . ').');
         }
         $this->setSubject(\substr($subject, 8));
+
         return $this->setMessage($tpl);
     }
 
@@ -376,6 +386,7 @@ class Mail
                          \str_replace(["\r\n", "\n", "\r"], "\0",
                          \str_replace("\0", '', \trim($message))));
 //        $this->message = wordwrap ($this->message, 75, $this->EOL, false);
+
         return $this;
     }
 
@@ -428,6 +439,7 @@ class Mail
         $headers = $this->headers;
         unset($headers['Subject']);
         $headers = $this->strHeaders($headers);
+
         return @\mail($to, $subject, $this->message, $headers);
     }
 
@@ -444,6 +456,7 @@ class Mail
             $value = $key . ': ' . $value;
         }
         unset($value);
+
         return \implode($this->EOL, $headers);
     }
 
@@ -478,6 +491,7 @@ class Mail
             $this->smtpData('To: ' . $to . $this->EOL . $headers . $message, '250');
             $this->smtpData('NOOP', '250');
         }
+
         return true;
     }
 
@@ -549,6 +563,7 @@ class Mail
         ) {
             throw new SmtpException('Unable to send email. Response of mail server: "' . $get . '"');
         }
+
         return $return;
     }
 

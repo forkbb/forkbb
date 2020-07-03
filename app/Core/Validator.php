@@ -136,6 +136,7 @@ class Validator
         $this->errors    = [];
         $this->fields    = [];
         $this->status    = [];
+
         return $this;
     }
 
@@ -149,6 +150,7 @@ class Validator
     public function addValidators(array $validators): self
     {
         $this->validators = \array_replace($this->validators, $validators);
+
         return $this;
     }
 
@@ -200,6 +202,7 @@ class Validator
             }
             $this->fields[$field] = $field;
         }
+
         return $this;
     }
 
@@ -213,6 +216,7 @@ class Validator
     public function addArguments(array $arguments): self
     {
         $this->arguments = \array_replace($this->arguments, $arguments);
+
         return $this;
     }
 
@@ -226,6 +230,7 @@ class Validator
     public function addMessages(array $messages): self
     {
         $this->messages = \array_replace($this->messages, $messages);
+
         return $this;
     }
 
@@ -239,6 +244,7 @@ class Validator
     public function addAliases(array $aliases): self
     {
         $this->aliases = \array_replace($this->aliases, $aliases);
+
         return $this;
     }
 
@@ -264,6 +270,7 @@ class Validator
             $this->__get($field);
         }
         $this->raw     = null;
+
         return empty($this->errors);
     }
 
@@ -359,6 +366,7 @@ class Validator
                 break;
             }
         }
+
         return $value;
     }
 
@@ -379,6 +387,7 @@ class Validator
         // нет ошибки, для выхода из цикла проверки правил
         if (true === $error) {
             $this->error = false;
+
             return;
         }
 
@@ -432,6 +441,7 @@ class Validator
         if (! isset($this->status[$field])) {
             $this->__get($field);
         }
+
         return $this->status[$field];
     }
 
@@ -506,6 +516,7 @@ class Validator
             return $value;
         }
         $this->addError('The :alias is required');
+
         return null;
     }
 
@@ -519,14 +530,8 @@ class Validator
         if (null === $value) {                       // если данное поле отсутствует,
             $this->addError(true);                   // то прерываем его проверку
         }
-        return $value;
 
-#        list(, $error) = $this->vRequired($v, $value);
-#        if (false === $error) {
-#            return [null, 'The :alias is not required'];
-#        } else {
-#            return [$value, true];
-#        }
+        return $value;
     }
 
     protected function vString(Validator $v, $value, $attr)
@@ -558,6 +563,7 @@ class Validator
             return $value;
         } else {
             $this->addError('The :alias must be string');
+
             return null;
         }
     }
@@ -570,6 +576,7 @@ class Validator
             return 0.0 + $value;
         } else {
             $this->addError('The :alias must be numeric');
+
             return null;
         }
     }
@@ -585,6 +592,7 @@ class Validator
             return (int) $value;
         } else {
             $this->addError('The :alias must be integer');
+
             return null;
         }
     }
@@ -596,6 +604,7 @@ class Validator
             && ! \is_array($value)
         ) {
             $this->addError('The :alias must be array');
+
             return null;
         } elseif (! $attr) {
             return $value;
@@ -609,6 +618,7 @@ class Validator
         foreach ($attr as $name => $rules) {
             $this->recArray($value, $result, $name, $rules, $vars['field'] . '.' . $name);
         }
+
         return $result;
     }
 
@@ -669,8 +679,10 @@ class Validator
             }
         } elseif (null !== $value) {
             $this->addError('The :alias minimum is :attr');
+
             return null;
         }
+
         return $value;
     }
 
@@ -700,6 +712,7 @@ class Validator
                 foreach ($value as $file) {
                     if ($file->size() > $attr) {
                         $this->addError('The :alias contains too large a file');
+
                         return null;
                     }
                 }
@@ -709,12 +722,15 @@ class Validator
         } elseif ($value instanceof File) {
             if ($value->size() > $attr * 1024) {
                 $this->addError('The :alias contains too large a file');
+
                 return null;
             }
         } elseif (null !== $value) {
             $this->addError('The :alias maximum is :attr'); //????
+
             return null;
         }
+
         return $value;
     }
 
@@ -744,6 +760,7 @@ class Validator
         if (! \is_array($args)) {
             $args = [];
         }
+
         return $this->c->Router->validate($value, $attr, $args);
     }
 
@@ -756,6 +773,7 @@ class Validator
             return $value;
         } else {
             $this->addError('The :alias must be same with original');
+
             return null;
         }
     }
@@ -770,6 +788,7 @@ class Validator
             )
         ) {
             $this->addError('The :alias is not valid format');
+
             return null;
         } else {
             return $value;
@@ -789,6 +808,7 @@ class Validator
         ) {
             $this->addError('The :alias contains an invalid value');
         }
+
         return $value;
     }
 
@@ -811,6 +831,7 @@ class Validator
         }
         if (! \is_array($value)) {
             $this->addError('The :alias not contains file');
+
             return null;
         }
         $value = $this->c->Files->upload($value);
@@ -818,6 +839,7 @@ class Validator
             return null;
         } elseif (false === $value) {
             $this->addError($this->c->Files->error());
+
             return null;
         } elseif ('multiple' === $attr) {
             if (! \is_array($value)) {
@@ -825,8 +847,10 @@ class Validator
             }
         } elseif (\is_array($value)) {
             $this->addError('The :alias contains more than one file');
+
             return null;
         }
+
         return $value;
     }
 
@@ -838,6 +862,7 @@ class Validator
             foreach ($value as $file) {
                 if (null === $this->c->Files->isImage($file)) {
                     $this->addError('The :alias not contains image');
+
                     return null;
                 }
             }
@@ -846,8 +871,10 @@ class Validator
             && null === $this->c->Files->isImage($value)
         ) {
             $this->addError('The :alias not contains image');
+
             return null;
         }
+
         return $value;
     }
 
@@ -860,8 +887,10 @@ class Validator
             || false === \strtotime($value . ' UTC')
         ) {
             $v->addError('The :alias does not contain a date');
+
             return \is_string($value) ? $value : null;
         }
+
         return $value;
     }
 }

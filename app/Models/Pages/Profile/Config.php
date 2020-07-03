@@ -128,7 +128,7 @@ class Config extends Profile
                 'token' => $this->c->Csrf->create(
                     'EditUserBoardConfig',
                     [
-                        'id' => $this->curUser->id
+                        'id' => $this->curUser->id,
                     ]
                 ),
             ],

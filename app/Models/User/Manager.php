@@ -29,6 +29,7 @@ class Manager extends ManagerModel
         } else {
             $user = $this->Load->load($id);
             $this->set($id, $user);
+
             return $user;
         }
     }
@@ -123,6 +124,7 @@ class Manager extends ManagerModel
     {
         $id = $this->Save->insert($user);
         $this->set($id, $user);
+
         return $id;
     }
 }

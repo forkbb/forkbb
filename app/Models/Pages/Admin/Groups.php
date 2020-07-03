@@ -152,10 +152,12 @@ class Groups extends Admin
 
         if (! $v->validation($_POST)) {
             $this->fIswev = $v->getErrors();
+
             return $this->view();
         }
         $this->c->config->o_default_user_group = $v->defaultgroup;
         $this->c->config->save();
+
         return $this->c->Redirect->page('AdminGroups')->message('Default group redirect');
     }
 
@@ -186,6 +188,7 @@ class Groups extends Admin
 
             if (! $v->validation($_POST)) {
                 $this->fIswev = $v->getErrors();
+
                 return $this->view();
             }
 
@@ -424,6 +427,7 @@ class Groups extends Admin
             $form['sets']['group-data'] = [
                 'fields' => $fieldset,
             ];
+
             return $form;
         }
 

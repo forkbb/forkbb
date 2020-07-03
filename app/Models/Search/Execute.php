@@ -72,6 +72,7 @@ class Execute extends Method
             $result                    = \explode("\n", $row['search_data']);
             $this->model->queryIds     = '' == $result[0] ? [] : \array_map('\\intval', \explode(',', $result[0]));
             $this->model->queryNoCache = false;
+
             return true;
         } elseif ($flood) {
             return false;

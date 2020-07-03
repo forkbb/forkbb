@@ -36,6 +36,7 @@ class Model extends ParentModel
     public function reset(): self
     {
         $this->c->Cache->delete('stats');
+
         return $this;
     }
 }

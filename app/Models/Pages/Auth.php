@@ -28,6 +28,7 @@ class Auth extends Page
         $this->c->users->updateLastVisit($this->user);
 
         $this->c->Lang->load('auth');
+
         return $this->c->Redirect->page('Index')->message('Logout redirect');
     }
 
@@ -357,6 +358,7 @@ class Auth extends Page
                 $this->c->users->update($user);
 
                 $this->fIswev = ['s', __('Pass updated')];
+
                 return $this->login([], 'GET');
             }
 

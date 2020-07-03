@@ -33,10 +33,12 @@ class Statistics extends Admin
                         $result = \array_map(
                             function($val) {
                                 $val = \str_replace('body', '#id-phpinfo-div', $val, $count);
+
                                 return $count ? $val : '#id-phpinfo-div ' . $val;
                             },
                             \explode(',', $match[1])
                         );
+
                         return \implode(', ', $result) . $match[2];
                     },
                     $matches[1]
@@ -49,8 +51,14 @@ class Statistics extends Admin
 
         $this->nameTpl    = 'admin/phpinfo';
         $this->mainSuffix = '-one-column';
-        $this->aCrumbs[]  = [$this->c->Router->link('AdminInfo'), 'phpinfo()'];
-        $this->aCrumbs[]  = [$this->c->Router->link('AdminStatistics'), __('Server statistics')];
+        $this->aCrumbs[]  = [
+            $this->c->Router->link('AdminInfo'),
+            'phpinfo()',
+        ];
+        $this->aCrumbs[]  = [
+            $this->c->Router->link('AdminStatistics'),
+            __('Server statistics'),
+        ];
         $this->phpinfo    = $phpinfo;
 
         return $this;
@@ -66,7 +74,10 @@ class Statistics extends Admin
         $this->c->Lang->load('admin_index');
 
         $this->nameTpl   = 'admin/statistics';
-        $this->aCrumbs[] = [$this->c->Router->link('AdminStatistics'), __('Server statistics')];
+        $this->aCrumbs[] = [
+            $this->c->Router->link('AdminStatistics'),
+            __('Server statistics'),
+        ];
         $this->linkInfo  = $this->c->Router->link('AdminInfo');
 
         // Get the server load averages (if possible)

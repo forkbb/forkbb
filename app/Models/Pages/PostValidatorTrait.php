@@ -30,6 +30,7 @@ trait PostValidatorTrait
         ) {
             $v->addError('All caps subject');
         }
+
         return $subject;
     }
 

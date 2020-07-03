@@ -40,6 +40,7 @@ class Primary
                 if (! $this->c->isInit('user')) {
                     $this->c->user = $this->c->users->create(['id' => 1, 'group_id' => $this->c->GROUP_GUEST]);
                 }
+
                 return $this->c->Maintenance;
             }
         }

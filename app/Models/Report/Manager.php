@@ -35,6 +35,7 @@ class Manager extends ManagerModel
         } else {
             $report = $this->Load->load($id);
             $this->set($id, $report);
+
             return $report;
         }
     }
@@ -57,6 +58,7 @@ class Manager extends ManagerModel
                 $this->set($report->id, $report);
             }
         }
+
         return $result;
     }
 
@@ -83,6 +85,7 @@ class Manager extends ManagerModel
     {
         $id = $this->Save->insert($report);
         $this->set($id, $report);
+
         return $id;
     }
 

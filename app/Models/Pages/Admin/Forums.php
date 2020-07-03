@@ -80,6 +80,7 @@ class Forums extends Admin
                 $max = $f->disp_position;
             }
         }
+
         return $max + 1;
     }
 

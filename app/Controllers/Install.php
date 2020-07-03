@@ -61,6 +61,7 @@ class Install
                 $page = $this->c->Redirect->page('Install')->message('Redirect to install');
                 break;
         }
+
         return $page;
     }
 }

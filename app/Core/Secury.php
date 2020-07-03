@@ -63,6 +63,7 @@ class Secury
         if (empty($key)) {
             throw new InvalidArgumentException('Key can not be empty');
         }
+
         return \hash_hmac($this->hmac['algo'], $data, $key . $this->hmac['salt']);
     }
 
@@ -94,6 +95,7 @@ class Secury
         for ($i = 0; $i < $len; ++$i) {
             $result .= $chars[\ord($key[$i]) % 64];
         }
+
         return $result;
     }
 

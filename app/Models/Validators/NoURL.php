@@ -27,6 +27,7 @@ class NoURL extends Validators
         ) {
             $v->addError('The :alias contains a link');
         }
+
         return $value;
     }
 }

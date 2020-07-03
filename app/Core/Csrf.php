@@ -46,6 +46,7 @@ class Csrf
              $marker .= $key . '|' . (string) $value . '|';
          }
          $time = $time ?: \time();
+
          return $this->secury->hmac($marker, $time . $this->key) . 'f' . $time;
     }
 

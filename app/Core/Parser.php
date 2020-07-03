@@ -75,6 +75,7 @@ class Parser extends Parserus
         if ('quote' == $bb['tag']) {
             $bb['self nesting'] = (int) $this->c->config->o_quote_depth;
         }
+
         return parent::addBBCode($bb);
     }
 

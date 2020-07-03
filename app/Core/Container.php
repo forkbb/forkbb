@@ -109,6 +109,7 @@ class Container
         if ($toShare) {
             $this->instances[$id] = $service;
         }
+
         return $service;
     }
 
@@ -146,6 +147,7 @@ class Container
                 return null;
             }
         }
+
         return $ptr;
     }
 
@@ -210,6 +212,7 @@ class Container
             }
             unset($v);
         }
+
         return $value;
     }
 

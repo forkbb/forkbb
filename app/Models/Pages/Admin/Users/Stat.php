@@ -50,7 +50,14 @@ class Stat extends Users
             $user->username,
         ];
         $this->formResult = $this->form($stat, $startNum);
-        $this->pagination = $this->c->Func->paginate($pages, $page, 'AdminUserStat', ['id' => $args['id']]);
+        $this->pagination = $this->c->Func->paginate(
+            $pages,
+            $page,
+            'AdminUserStat',
+            [
+                'id' => $args['id'],
+            ]
+        );
 
         return $this;
     }

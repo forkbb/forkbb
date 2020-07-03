@@ -38,6 +38,7 @@ class Bans extends Admin
         unset($data['token']);
         $data = \base64_encode(\json_encode($data));
         $hash = $this->c->Secury->hash($data);
+
         return "{$data}:{$hash}";
     }
 
@@ -401,6 +402,7 @@ class Bans extends Admin
         $number = \count($idsN);
         if (0 == $number) {
             $this->fIswev = ['i', __('No bans found')];
+
             return $this->view([], 'GET', $data);
         }
 
@@ -427,7 +429,14 @@ class Bans extends Admin
             __('Results head'),
         ];
         $this->formResult = $this->form($banList, $startNum, $args);
-        $this->pagination = $this->c->Func->paginate($pages, $page, 'AdminBansResult', ['data' => $args['data']]);
+        $this->pagination = $this->c->Func->paginate(
+            $pages,
+            $page,
+            'AdminBansResult',
+            [
+                'data' => $args['data'],
+            ]
+        );
 
         return $this;
     }

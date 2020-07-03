@@ -29,10 +29,12 @@ class Email extends Validators
         // проверка длины email
         } elseif (\mb_strlen($email, 'UTF-8') > $this->c->MAX_EMAIL_LENGTH) {
             $v->addError('Long email');
+
             return $email;
         // это не email
         } elseif (false === ($result = $this->c->Mail->valid($email, true))) {
             $v->addError('The :alias is not valid email');
+
             return $email;
         // есть другие ошибки
         } elseif (! empty($v->getErrors())) {

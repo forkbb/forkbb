@@ -267,7 +267,15 @@ class Model extends DataModel
             // 1 страницу в списке тем раздела не отображаем
             return [];
         } else { //????
-            return $this->c->Func->paginate($this->numPages, $page, 'Topic', ['id' => $this->id, 'name' => \ForkBB\cens($this->subject)]);
+            return $this->c->Func->paginate(
+                $this->numPages,
+                $page,
+                'Topic',
+                [
+                    'id'   => $this->id,
+                    'name' => \ForkBB\cens($this->subject),
+                ]
+            );
         }
     }
 

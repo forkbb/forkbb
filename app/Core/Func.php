@@ -51,6 +51,7 @@ class Func
         if (! \is_array($this->styles)) {
             $this->styles = $this->getFoldersWithFile($this->c->DIR_PUBLIC . '/style', 'style.css');
         }
+
         return $this->styles;
     }
 
@@ -64,6 +65,7 @@ class Func
         if (! \is_array($this->langs)) {
             $this->langs = $this->getFoldersWithFile($this->c->DIR_LANG, 'common.po');
         }
+
         return $this->langs;
     }
 
@@ -114,6 +116,7 @@ class Func
             \closedir($dh);
             \asort($result, \SORT_NATURAL);
         }
+
         return $result;
     }
 
@@ -201,6 +204,7 @@ class Func
                 ];
             }
         }
+
         return $pages;
     }
 

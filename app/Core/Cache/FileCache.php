@@ -63,6 +63,7 @@ class FileCache implements ProviderCacheInterface
                 return $data;
             }
         }
+
         return $default;
     }
 
@@ -86,6 +87,7 @@ class FileCache implements ProviderCacheInterface
             throw new RuntimeException("The key '$key' can not be saved");
         } else {
             $this->invalidate($file);
+
             return true;
         }
     }
@@ -105,6 +107,7 @@ class FileCache implements ProviderCacheInterface
         if (\is_file($file)) {
             if (\unlink($file)) {
                 $this->invalidate($file);
+
                 return true;
             } else {
                 throw new RuntimeException("The key `$key` could not be removed");
@@ -129,6 +132,7 @@ class FileCache implements ProviderCacheInterface
         foreach ($files as $file) {
             $result = \unlink($file->getPathname()) && $result;
         }
+
         return $result;
     }
 

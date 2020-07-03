@@ -18,6 +18,7 @@ class Model extends DataModel
         } else {
             $this->load();
         }
+
         return $this;
     }
 }

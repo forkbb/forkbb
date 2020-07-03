@@ -67,6 +67,7 @@ class Model extends ParentModel
         if ($result) {
             $_COOKIE[$this->prefix . $name] = $value;
         }
+
         return $result;
     }
 
@@ -81,6 +82,7 @@ class Model extends ParentModel
     public function get(string $name, $default = null)
     {
         $name = $this->prefix . $name;
+
         return isset($_COOKIE[$name])
             ? $this->c->Secury->replInvalidChars($_COOKIE[$name])
             : $default;
@@ -101,6 +103,7 @@ class Model extends ParentModel
         if ($result) {
             unset($_COOKIE[$this->prefix . $name]);
         }
+
         return $result;
     }
 

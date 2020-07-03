@@ -268,6 +268,7 @@ class Lang
         ) {
             $line = \substr($line, 1, -1);
         }
+
         return \str_replace(
             ['\\n', '\\t', '\\"', '\\\\'],
             ["\n",  "\t",  '"',  '\\'],

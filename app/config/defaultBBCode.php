@@ -236,10 +236,10 @@ return [
              $arr[] = $hours . __('After time H');
          }
          if ($min > 0) {
-             $arr[] = (($min < 10) ? '0' . $min : $min) . __('After time i');
+             $arr[] = ($min < 10 ? '0' . $min : $min) . __('After time i');
          }
          if ($sec > 0) {
-             $arr[] = (($sec < 10) ? '0' . $sec : $sec) . __('After time s');
+             $arr[] = ($sec < 10 ? '0' . $sec : $sec) . __('After time s');
          }
 
          $attr = __('After time') . ' ' . implode(' ', $arr);

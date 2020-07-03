@@ -52,6 +52,7 @@ class Save extends Method
             }
         }
         $this->c->Cache->delete('config');
+
         return $this->model;
     }
 }

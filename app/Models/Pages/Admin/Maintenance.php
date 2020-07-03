@@ -187,6 +187,7 @@ class Maintenance extends Admin
         ) {
             $value = __('Default maintenance message');
         }
+
         return $value;
     }
 
@@ -226,6 +227,7 @@ class Maintenance extends Admin
             )
         ) {
             $this->fIswev = $v->getErrors();
+
             return $this->view([], 'GET');
         }
 
@@ -247,7 +249,10 @@ class Maintenance extends Admin
                 'start' => $last + 1,
                 'clear' => $v->clear ? '1' : '0',
             ];
-            $args['token'] = $this->c->Csrf->create('AdminRebuildIndex', $args);
+            $args['token'] = $this->c->Csrf->create(
+                'AdminRebuildIndex',
+                $args
+            );
 
             return $this->c->Redirect->page('AdminRebuildIndex', $args)->message(__('Processed posts', $v->start, $last));
         } else {

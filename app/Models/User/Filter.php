@@ -103,8 +103,6 @@ class Filter extends Action
             WHERE {$where}
             ORDER BY {$orderBy}";
 
-        $ids = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
-
-        return $ids;
+        return $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
     }
 }

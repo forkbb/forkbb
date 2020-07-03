@@ -39,6 +39,7 @@ class Action
     public function setManager(ManagerModel $manager): self
     {
         $this->manager = $manager;
+
         return $this;
     }
 }

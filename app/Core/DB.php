@@ -95,6 +95,7 @@ class DB extends PDO
             $drv = 'ForkBB\\Core\\DB\\' . \ucfirst($this->dbType);
             $this->dbDrv = new $drv($this, $this->dbPrefix);
         }
+
         return $this->dbDrv->$name(...$args);
     }
 
@@ -117,6 +118,7 @@ class DB extends PDO
                return false;
            }
         }
+
         return true;
     }
 
@@ -178,10 +180,12 @@ class DB extends PDO
                     $res[]       = $name;
                     $map[$key][] = $name;
                 }
+
                 return \implode(',', $res);
             },
             $query
         );
+
         return $map;
     }
 
@@ -267,6 +271,7 @@ class DB extends PDO
             $start  = \microtime(true);
             $result = parent::exec($query);
             $this->saveQuery($query, \microtime(true) - $start);
+
             return $result;
         }
 
@@ -346,6 +351,7 @@ class DB extends PDO
             $start  = \microtime(true);
             $result = parent::query($query, ...$args);
             $this->saveQuery($query, \microtime(true) - $start);
+
             return $result;
         }
 
@@ -374,6 +380,7 @@ class DB extends PDO
         $start  = \microtime(true);
         $result = parent::beginTransaction();
         $this->saveQuery('beginTransaction()', \microtime(true) - $start, false);
+
         return $result;
     }
 
@@ -385,6 +392,7 @@ class DB extends PDO
         $start  = \microtime(true);
         $result = parent::commit();
         $this->saveQuery('commit()', \microtime(true) - $start, false);
+
         return $result;
     }
 
@@ -396,6 +404,7 @@ class DB extends PDO
         $start  = \microtime(true);
         $result = parent::rollback();
         $this->saveQuery('rollback()', \microtime(true) - $start, false);
+
         return $result;
     }
 }

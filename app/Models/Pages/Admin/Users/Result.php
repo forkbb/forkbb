@@ -143,7 +143,14 @@ class Result extends Users
             $crName,
         ];
         $this->formResult = $this->form($userList, $startNum, $args);
-        $this->pagination = $this->c->Func->paginate($pages, $page, 'AdminUsersResult', ['data' => $args['data']]);
+        $this->pagination = $this->c->Func->paginate(
+            $pages,
+            $page,
+            'AdminUsersResult',
+            [
+                'data' => $args['data'],
+            ]
+        );
 
         return $this;
     }
@@ -170,6 +177,7 @@ class Result extends Users
         }
 
         $ids = \array_flip($ids);
+
         return \array_merge($fromPosts, $ids);
     }
 

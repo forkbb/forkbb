@@ -44,6 +44,7 @@ class Manager extends ManagerModel
             }
             $this->flag = true;
         }
+
         return $this;
     }
 
@@ -84,6 +85,7 @@ class Manager extends ManagerModel
     {
         $id = $this->Save->insert($group);
         $this->set($id, $group);
+
         return $id;
     }
 }

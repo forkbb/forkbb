@@ -147,6 +147,7 @@ class Index extends Method
                 $words[] = $word;
             }
         }
+
         return $words;
     }
 }

@@ -40,6 +40,7 @@ abstract class Users extends Admin
             unset($data['token']);
             $data = \base64_encode(\json_encode($data));
             $hash = $this->c->Secury->hash($data);
+
             return "{$data}:{$hash}";
         } else {
             return "ip:{$data}";
@@ -63,6 +64,7 @@ abstract class Users extends Admin
 
         if ('ip' === $data[0]) {
             $ip = \filter_var($data[1], \FILTER_VALIDATE_IP);
+
             return false === $ip ? false : ['ip' => $ip];
         }
 
@@ -96,6 +98,7 @@ abstract class Users extends Admin
 
         if (! empty($bad)) {
             $this->fIswev = ['v', __('Action not available')];
+
             return false;
         }
 
@@ -110,6 +113,7 @@ abstract class Users extends Admin
                 case self::ACTION_BAN:
                     if ($this->c->bans->isBanned($user)) {
                         $this->fIswev = ['i', __('User is ban', $user->username)];
+
                         return false;
                     }
                     if (! $this->c->userRules->canBanUser($user)) {
@@ -117,6 +121,7 @@ abstract class Users extends Admin
                         if ($user->isAdmMod) {
                             $this->fIswev = ['i', __('No ban admins message')];
                         }
+
                         return false;
                     }
                     break;
@@ -126,6 +131,7 @@ abstract class Users extends Admin
                         if ($user->isAdmMod) {
                             $this->fIswev = ['i', __('No delete admins message')];
                         }
+
                         return false;
                     }
                     break;
@@ -135,11 +141,13 @@ abstract class Users extends Admin
                         if ($user->isAdmin) {
                             $this->fIswev = ['i', __('No move admins message')];
                         }
+
                         return false;
                     }
                     break;
                 default:
                     $this->fIswev = ['v', __('Action not available')];
+
                     return false;
             }
 
@@ -151,6 +159,7 @@ abstract class Users extends Admin
 
         if (empty($result)) {
             $this->fIswev = ['v', __('No users selected')];
+
             return false;
         }
 

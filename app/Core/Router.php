@@ -190,14 +190,18 @@ class Router
                 || empty($this->methods['GET'])
             )
         ) {
-            return [self::NOT_IMPLEMENTED];
+            return [
+                self::NOT_IMPLEMENTED,
+            ];
         }
 
         if ($this->length) {
             if (0 === \strpos($uri, $this->prefix)) {
                 $uri = \substr($uri, $this->length);
             } else {
-                return [self::NOT_FOUND];
+                return [
+                    self::NOT_FOUND,
+                ];
             }
         }
 
@@ -206,13 +210,25 @@ class Router
         if (isset($this->statical[$uri])) {
             if (isset($this->statical[$uri][$method])) {
                 list($handler, $marker) = $this->statical[$uri][$method];
-                return [self::OK, $handler, [], $marker];
+
+                return [
+                    self::OK,
+                    $handler,
+                    [],
+                    $marker,
+                ];
             } elseif (
                 $head
                 && isset($this->statical[$uri]['GET'])
             ) {
                 list($handler, $marker) = $this->statical[$uri]['GET'];
-                return [self::OK, $handler, [], $marker];
+
+                return [
+                    self::OK,
+                    $handler,
+                    [],
+                    $marker,
+                ];
             } else {
                 $allowed = \array_keys($this->statical[$uri]);
             }
@@ -247,13 +263,24 @@ class Router
                             : null;
                     }
                 }
-                return [self::OK, $handler, $args, $marker];
+
+                return [
+                    self::OK,
+                    $handler,
+                    $args,
+                    $marker,
+                ];
             }
         }
         if (empty($allowed)) {
-            return [self::NOT_FOUND];
+            return [
+                self::NOT_FOUND,
+            ];
         } else {
-            return [self::METHOD_NOT_ALLOWED, $allowed];
+            return [
+                self::METHOD_NOT_ALLOWED,
+                $allowed,
+            ];
         }
     }
 
@@ -422,6 +449,13 @@ class Router
             return null;
         }
         $pattern .= '$%D';
-        return [$base, $pattern, $args, $temp, $argsReq];
+
+        return [
+            $base,
+            $pattern,
+            $args,
+            $temp,
+            $argsReq,
+        ];
     }
 }

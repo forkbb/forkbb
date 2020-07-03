@@ -66,6 +66,7 @@ class Load extends Action
         foreach ($data as $row) {
             $result[] = $this->manager->create($row);
         }
+
         return $result;
     }
 

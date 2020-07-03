@@ -58,6 +58,7 @@ class Refresh extends Action
             'time' => \time(),
             'list' => $this->list,
         ]);
+
         return $this->list;
     }
 
@@ -71,6 +72,7 @@ class Refresh extends Action
     protected function formatModers(string $str): ?array
     {
         $moderators = \json_decode($str, true);
+
         return $moderators ?: null;
     }
 
@@ -110,6 +112,7 @@ class Refresh extends Action
         $this->list[$parent] = \array_filter($list[$parent], function($val) {
             return null !== $val;
         });
+
         return $all;
     }
 }

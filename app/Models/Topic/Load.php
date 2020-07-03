@@ -68,6 +68,7 @@ class Load extends Action
 
         if ($forum instanceof Forum) {
             $forum->__mf_mark_all_read = $topic->mf_mark_all_read;
+
             return $topic;
         } else {
             return null;
@@ -112,6 +113,7 @@ class Load extends Action
                 }
             }
         }
+
         return $result;
     }
 }

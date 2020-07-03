@@ -236,12 +236,14 @@ class Register extends Page
             } else {
                 $auth         = $this->c->Auth;
                 $auth->fIswev = ['w', __('Error welcom mail', $this->c->config->o_admin_email)];
+
                 return $auth->forget(['_email' => $v->email], 'GET');
             }
         // форма логина
         } else {
             $auth         = $this->c->Auth;
             $auth->fIswev = ['s', __('Reg complete')];
+
             return $auth->login(['_username' => $v->username], 'GET');
         }
     }
@@ -275,6 +277,7 @@ class Register extends Page
 
         $auth         = $this->c->Auth;
         $auth->fIswev = ['s', __('Reg complete')];
+
         return $auth->login(['_username' => $user->username], 'GET');
     }
 }

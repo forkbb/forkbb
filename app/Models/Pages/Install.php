@@ -53,6 +53,7 @@ class Install extends Page
                 }
             }
         }
+
         return $dbTypes;
     }
 
@@ -417,6 +418,7 @@ class Install extends Page
                 $v->addError('Prefix reserved');
             }
         }
+
         return $prefix;
     }
 
@@ -468,6 +470,7 @@ class Install extends Page
             $stat = $this->c->DB->statistics();
         } catch (PDOException $e) {
             $v->addError($e->getMessage());
+
             return $dbhost;
         }
 
@@ -476,6 +479,7 @@ class Install extends Page
             $stmt = $this->c->DB->query('SELECT 1 FROM ::users LIMIT 1');
             if (! empty($stmt->fetch())) {
                 $v->addError(__('Existing table error', $v->dbprefix, $v->dbname));
+
                 return $dbhost;
             }
         } catch (PDOException $e) {

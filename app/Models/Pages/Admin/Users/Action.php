@@ -24,6 +24,7 @@ class Action extends Users
             $result[] = $user->username;
         }
         \sort($result, \SORT_STRING | \SORT_FLAG_CASE);
+
         return $result;
     }
 
@@ -87,6 +88,7 @@ class Action extends Users
         if (false === $ids) {
             $message = $this->c->Message->message('Action not available');
             $message->fIswev = $this->fIswev; //????
+
             return $message;
         }
 
@@ -248,6 +250,7 @@ class Action extends Users
         } elseif (! $this->user->isAdmin) {
             $list = [$this->c->GROUP_MEMBER => $list[$this->c->GROUP_MEMBER]];
         }
+
         return $list;
     }
 
@@ -318,6 +321,7 @@ class Action extends Users
                 } else {
                     $redirect->page('AdminUsers');
                 }
+
                 return $redirect->message('Users move redirect');
 
             }

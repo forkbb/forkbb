@@ -20,6 +20,7 @@ class Model extends ParentModel
             $this->c->Cache->set('db_map', $map);
             $this->setAttrs($map);
         }
+
         return $this;
     }
 
@@ -31,6 +32,7 @@ class Model extends ParentModel
     public function reset(): self
     {
         $this->c->Cache->delete('db_map');
+
         return $this;
     }
 }

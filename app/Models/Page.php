@@ -177,6 +177,7 @@ abstract class Page extends Model
                }
             }
         }
+
         return $nav;
     }
 
@@ -214,6 +215,7 @@ abstract class Page extends Model
             $titles = $this->titles;
         }
         $titles[] = $this->c->config->o_board_title;
+
         return \implode(__('Title separator'), $titles);
     }
 
@@ -242,6 +244,7 @@ abstract class Page extends Model
                 $headers[] = ['style', $style];
             }
         }
+
         return $headers;
     }
 
@@ -258,6 +261,7 @@ abstract class Page extends Model
         $attr = $this->getAttr('pageHeaders', []);
         $attr['style'][$name] = $value;
         $this->setAttr('pageHeaders', $attr);
+
         return $this;
     }
 
@@ -284,6 +288,7 @@ abstract class Page extends Model
         $attr   = $this->getAttr('httpHeaders', []);
         $attr[] = ["{$key} {$value}", $replace];
         $this->setAttr('httpHeaders', $attr);
+
         return $this;
     }
 
@@ -326,6 +331,7 @@ abstract class Page extends Model
         if (isset($list[$this->httpStatus])) {
             $this->header('HTTP/1.0', $list[$this->httpStatus]);
         }
+
         return $this;
     }
 

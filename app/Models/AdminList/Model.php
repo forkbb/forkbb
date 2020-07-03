@@ -19,6 +19,7 @@ class Model extends ParentModel
             $this->list = \array_flip($this->c->users->adminsIds());
             $this->c->Cache->set('admins', $this->list);
         }
+
         return $this;
     }
 
@@ -30,6 +31,7 @@ class Model extends ParentModel
     public function reset(): self
     {
         $this->c->Cache->delete('admins');
+
         return $this;
     }
 }

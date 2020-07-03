@@ -33,6 +33,7 @@ class Manager extends ManagerModel
         } else {
             $topic = $this->Load->load($id);
             $this->set($id, $topic);
+
             return $topic;
         }
     }
@@ -92,6 +93,7 @@ class Manager extends ManagerModel
     {
         $id = $this->Save->insert($topic);
         $this->set($id, $topic);
+
         return $id;
     }
 }

@@ -59,6 +59,7 @@ class Manager extends ManagerModel
         }
 
         $this->forumList = $list;
+
         return $this;
     }
 
@@ -107,6 +108,7 @@ class Manager extends ManagerModel
     {
         $id = $this->Save->insert($forum);
         $this->set($id, $forum);
+
         return $id;
     }
 
@@ -128,6 +130,7 @@ class Manager extends ManagerModel
 
             $list = $this->depthList($sub, $depth, $list);
         }
+
         return $list;
     }
 }

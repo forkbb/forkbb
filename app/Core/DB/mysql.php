@@ -108,6 +108,7 @@ class Mysql
             }
             unset($value);
         }
+
         return \implode(',', $arr);
     }
 
@@ -170,6 +171,7 @@ class Mysql
         } catch (PDOException $e) {
             return false;
         }
+
         return ! empty($result);
     }
 
@@ -200,6 +202,7 @@ class Mysql
         } catch (PDOException $e) {
             return false;
         }
+
         return ! empty($result);
     }
 
@@ -231,6 +234,7 @@ class Mysql
         } catch (PDOException $e) {
             return false;
         }
+
         return ! empty($result);
     }
 
@@ -316,6 +320,7 @@ class Mysql
         }
         $this->testStr($engine);
         $query = \rtrim($query, ', ') . ") ENGINE={$engine} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
+
         return false !== $this->db->exec($query);
     }
 
@@ -331,6 +336,7 @@ class Mysql
     {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $this->testStr($table);
+
         return false !== $this->db->exec("DROP TABLE IF EXISTS `{$table}`");
     }
 
@@ -355,6 +361,7 @@ class Mysql
         $this->testStr($old);
         $new = ($noPrefix ? '' : $this->dbPrefix) . $new;
         $this->testStr($new);
+
         return false !== $this->db->exec("ALTER TABLE `{$old}` RENAME TO `{$new}`");
     }
 
@@ -390,6 +397,7 @@ class Mysql
             $this->testStr($after);
             $query .= " AFTER `{$after}`";
         }
+
         return false !== $this->db->exec($query);
     }
 
@@ -422,6 +430,7 @@ class Mysql
             $this->testStr($after);
             $query .= " AFTER `{$after}`";
         }
+
         return false !== $this->db->exec($query);
     }
 
@@ -442,6 +451,7 @@ class Mysql
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $this->testStr($table);
         $this->testStr($field);
+
         return false !== $this->db->exec("ALTER TABLE `{$table}` DROP COLUMN `{$field}`");
     }
 
@@ -476,6 +486,7 @@ class Mysql
             }
         }
         $query .= ' (' . $this->replIdxs($fields) . ')';
+
         return false !== $this->db->exec($query);
     }
 
@@ -503,6 +514,7 @@ class Mysql
             $this->testStr($index);
             $query .= "DROP INDEX `{$index}`";
         }
+
         return false !== $this->db->exec($query);
     }
 
@@ -518,6 +530,7 @@ class Mysql
     {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $this->testStr($table);
+
         return false !== $this->db->exec("TRUNCATE TABLE `{$table}`");
     }
 
@@ -588,6 +601,7 @@ class Mysql
             $type = \strtolower($row['DATA_TYPE']);
             $result[$tableNoPref][$row['COLUMN_NAME']] = $this->types[$type] ?? 's';
         }
+
         return $result;
     }
 }

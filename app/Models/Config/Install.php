@@ -15,6 +15,7 @@ class Install extends Method
     public function install(): Config
     {
         $this->model->setAttrs($this->c->forConfig);
+
         return $this->model;
     }
 }

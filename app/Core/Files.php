@@ -187,6 +187,7 @@ class Files
             } else {
                 $type = 0;
             }
+
             return $this->imageType[$type] ?? null;
         }
 
@@ -206,6 +207,7 @@ class Files
 
         if (! isset($file['tmp_name'], $file['name'], $file['type'], $file['error'], $file['size'])) {
             $this->error = 'Expected file description array';
+
             return false;
         }
 
@@ -234,6 +236,7 @@ class Files
 
                 $result[] = $cur;
             }
+
             return empty($result) ? null : $result;
         } else {
             return '' === $file['name'] && empty($file['size']) ? null : $this->uploadOneFile($file);
@@ -276,11 +279,13 @@ class Files
                     $this->error = 'Unknown upload error';
                     break;
             }
+
             return false;
         }
 
         if (! \is_uploaded_file($file['tmp_name'])) {
             $this->error = 'The specified file was not uploaded';
+
             return false;
         }
 
@@ -302,11 +307,13 @@ class Files
         if ($isImage) {
             if ($file['size'] > $this->maxImgSize) {
                 $this->error = 'The image too large';
+
                 return false;
             }
         } else {
             if ($file['size'] > $this->maxFileSize) {
                 $this->error = 'The file too large';
+
                 return false;
             }
         }
@@ -327,6 +334,7 @@ class Files
             }
         } catch (FileException $e) {
             $this->error = $e->getMessage();
+
             return false;
         }
     }

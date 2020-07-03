@@ -83,6 +83,7 @@ class Load extends Method
             'emailList' => $emailList,
             'ipList'    => $ipList,
         ]);
+
         return $this->model;
     }
 }

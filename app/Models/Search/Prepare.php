@@ -19,6 +19,7 @@ class Prepare extends Method
             $this->model->queryError = 'Odd number of quotes: \'%s\'';
             $this->model->queryWords = [];
             $this->model->queryText  = $query;
+
             return false;
         }
 
@@ -194,6 +195,7 @@ class Prepare extends Method
             $result .= $space . $word;
             $space   = ' ';
         }
+
         return $result;
     }
 }

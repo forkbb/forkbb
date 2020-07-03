@@ -625,6 +625,7 @@ class Routing
                 $page = $this->c->Message->message('Bad request', true, 501);
                 break;
         }
+
         return $page;
     }
 }

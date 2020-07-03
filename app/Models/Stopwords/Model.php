@@ -22,6 +22,7 @@ class Model extends ParentModel
         } else {
             $this->load();
         }
+
         return $this;
     }
 
@@ -63,6 +64,7 @@ class Model extends ParentModel
 
         if (! \is_array($this->files)) {
             $this->list = [];
+
             return $this;
         }
 
@@ -78,6 +80,7 @@ class Model extends ParentModel
 
         $this->c->Cache->set('stopwords', ['id' => $id, 'stopwords' => $stopwords]);
         $this->list = $stopwords;
+
         return $this;
     }
 }

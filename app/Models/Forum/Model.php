@@ -38,6 +38,7 @@ class Model extends DataModel
     protected function getcanCreateTopic(): bool
     {
         $user = $this->c->user;
+
         return 1 == $this->post_topics
             || (
                 null === $this->post_topics
@@ -212,10 +213,13 @@ class Model extends DataModel
         if ('1' == $this->c->user->g_view_users) {
             foreach($attr as $id => &$cur) {
                 $cur = [
-                    $this->c->Router->link('User', [
-                        'id'   => $id,
-                        'name' => $cur,
-                    ]),
+                    $this->c->Router->link(
+                        'User',
+                        [
+                            'id'   => $id,
+                            'name' => $cur,
+                        ]
+                    ),
                     $cur,
                 ];
             }
@@ -319,6 +323,7 @@ class Model extends DataModel
 
             $this->setAttr('tree', $attr);
         }
+
         return $attr;
     }
 
@@ -349,7 +354,10 @@ class Model extends DataModel
             $this->numPages,
             $this->page,
             'Forum',
-            ['id' => $this->id, 'name' => $this->forum_name]
+            [
+                'id'   => $this->id,
+                'name' => $this->forum_name,
+            ]
         );
     }
 

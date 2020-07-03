@@ -157,11 +157,13 @@ class Image extends File
                 break;
             default:
                 $this->error = 'File type not supported';
+
                 return false;
         }
 
         if (! $result) {
             $this->error = 'Error writing file';
+
             return false;
         }
         @\chmod($path, 0644);

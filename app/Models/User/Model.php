@@ -100,6 +100,7 @@ class Model extends DataModel
                 throw new RuntimeException('Moderator\'s rights can not be found');
             }
         }
+
         return isset($model->moderators[$this->id]);
     }
 

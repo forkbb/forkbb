@@ -22,6 +22,7 @@ class Model extends ParentModel
                 $this->refresh();
             }
         }
+
         return $this;
     }
 

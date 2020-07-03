@@ -19,7 +19,12 @@ class Rules extends Page
         $this->onlinePos  = 'rules';
         $this->canonical  = $this->c->Router->link('Rules');
         $this->title      = __('Forum rules');
-        $this->crumbs     = $this->crumbs([$this->c->Router->link('Rules'), __('Forum rules')]);
+        $this->crumbs     = $this->crumbs(
+            [
+                $this->c->Router->link('Rules'),
+                __('Forum rules'),
+            ]
+        );
         $this->rules      = $this->c->config->o_rules_message;
 
         return $this;
@@ -39,7 +44,13 @@ class Rules extends Page
         $this->onlinePos  = 'rules';
         $this->robots     = 'noindex';
         $this->title      = __('Forum rules');
-        $this->crumbs     = $this->crumbs(__('Forum rules'), [$this->c->Router->link('Register'), __('Register')]);
+        $this->crumbs     = $this->crumbs(
+            __('Forum rules'),
+            [
+                $this->c->Router->link('Register'),
+                __('Register'),
+            ]
+        );
         $this->rules      = '1' == $this->c->config->o_rules ? $this->c->config->o_rules_message : __('If no rules');
         $this->form       = $this->formAgree();
 

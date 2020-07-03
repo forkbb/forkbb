@@ -64,6 +64,7 @@ EOD;
         if (false === \strpos($value, '<!-- inline -->')) {
             return $perfix . $value;
         }
+
         return $perfix . \preg_replace_callback(
             '%<!-- inline -->([^<]*(?:<(?!!-- endinline -->)[^<]*)*+)(?:<!-- endinline -->)?%',
             function ($matches) {
@@ -105,6 +106,7 @@ EOD;
             require($this->prepare($_name));
             $this->endBlock(true);
         }
+
         return $this->block('content');
     }
 

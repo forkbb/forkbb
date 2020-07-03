@@ -106,6 +106,7 @@ class ErrorHandler
         }
 
         $this->logged = false;
+
         return true;
     }
 
@@ -290,6 +291,7 @@ EOT;
     {
         $type = $this->type[$error['type']] ?? $this->type[0];
         $file = \str_replace($this->hidePath, '...', $error['file']);
+
         return "PHP {$type}: \"{$error['message']}\" in {$file}:[{$error['line']}]";
     }
 

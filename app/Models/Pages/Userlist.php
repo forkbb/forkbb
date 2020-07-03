@@ -146,7 +146,12 @@ class Userlist extends Page
             $args
         );
         $this->robots       = 'noindex';
-        $this->crumbs       = $this->crumbs([$this->c->Router->link('Userlist'), __('User list')]);
+        $this->crumbs       = $this->crumbs(
+            [
+                $this->c->Router->link('Userlist'),
+                __('User list'),
+            ]
+        );
         $this->pagination   = $this->c->Func->paginate($pages, $page, 'Userlist', $args);
         $this->form         = $this->formUserlist($v);
 
