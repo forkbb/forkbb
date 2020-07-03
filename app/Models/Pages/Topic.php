@@ -152,7 +152,7 @@ class Topic extends Page
             'Topic',
             [
                 'id'   => $topic->id,
-                'name' => \ForkBB\cens($topic->subject),
+                'name' => $topic->censSubject,
                 'page' => $topic->page
             ]
         );

@@ -105,7 +105,7 @@ class Delete extends Page
                     'info' => [
                         'info1' => [
                             'type'    => '', //????
-                            'value'   => __('Topic') . ' «' . \ForkBB\cens($post->parent->subject) . '»',
+                            'value'   => __('Topic') . ' «' . $post->parent->censSubject . '»',
                         ],
                         'info2' => [
                             'type'    => '', //????

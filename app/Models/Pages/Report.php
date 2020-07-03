@@ -162,17 +162,17 @@ class Report extends Page
     protected function sendReport(ReportModel $report): bool
     {
         $tplData = [
-            'fMailer' => __('Mailer', $this->c->config->o_board_title),
-            'username' => $report->author->username,
-            'postLink' => $this->c->Router->link(
+            'fMailer'      => __('Mailer', $this->c->config->o_board_title),
+            'username'     => $report->author->username,
+            'postLink'     => $this->c->Router->link(
                 'ViewPost',
                 [
                     'id' => $report->post->id,
                 ]
             ),
-            'reason' => $report->message,
-            'forumId' => $report->post->parent->parent->id,
-            'topicSubject' => $report->post->parent->subject,
+            'reason'       => $report->message,
+            'forumId'      => $report->post->parent->parent->id,
+            'topicSubject' => $report->post->parent->censSubject,
         ];
 
         return $this->c->Mail

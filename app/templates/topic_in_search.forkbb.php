@@ -51,7 +51,7 @@
         <header class="f-post-header">
           <h3>
             <span class="f-psh-forum"><a href="{!! $post->parent->parent->link !!}" title="{!! __('Go to forum') !!}">{{ $post->parent->parent->forum_name }}</a></span>
-            <span class="f-psh-topic"><a href="{!! $post->parent->link !!}" title="{!! __('Go to topic') !!}">@if ($post->id !== $post->parent->first_post_id) {!! __('Re') !!} @endif {{ cens($post->parent->subject) }}</a></span>
+            <span class="f-psh-topic"><a href="{!! $post->parent->link !!}" title="{!! __('Go to topic') !!}">@if ($post->id !== $post->parent->first_post_id) {!! __('Re') !!} @endif {{ $post->parent->censSubject }}</a></span>
             <span class="f-post-posted"><a href="{!! $post->link !!}" title="{!! __('Go to post') !!}" rel="bookmark"><time datetime="{{ utc($post->posted) }}">{{ dt($post->posted) }}</time></a></span>
           </h3>
           <span class="f-post-number">#{!! $post->postNumber !!}</span>
@@ -74,7 +74,7 @@
           </ul>
           <ul class="f-post-search-info">
             <li class="f-psi-forum">{!! __('Forum') !!}: <a href="{!! $post->parent->parent->link !!}">{{ $post->parent->parent->forum_name }}</a></li>
-            <li class="f-psi-topic">{!! __('Topic') !!}: <a href="{!! $post->parent->link !!}">{{ cens($post->parent->subject) }}</a></li>
+            <li class="f-psi-topic">{!! __('Topic') !!}: <a href="{!! $post->parent->link !!}">{{ $post->parent->censSubject }}</a></li>
             <li class="f-psi-reply">{!! __('%s Reply', $post->parent->num_replies, num($post->parent->num_replies)) !!}</li>
         @if ($post->parent->showViews)
             <li class="f-psi-view">{!! __('%s View', $post->parent->num_views, num($post->parent->num_views)) !!}</li>

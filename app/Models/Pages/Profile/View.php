@@ -108,7 +108,7 @@ class View extends Profile
                 'class'   => 'pline',
                 'type'    => 'str',
                 'caption' => __('Realname'),
-                'value'   => \ForkBB\cens($this->curUser->realname),
+                'value'   => $this->c->censorship->censor($this->curUser->realname),
             ];
         }
         $genders = [
@@ -132,7 +132,7 @@ class View extends Profile
                 'class'   => 'pline',
                 'type'    => 'str',
                 'caption' => __('Location'),
-                'value'   => \ForkBB\cens($this->curUser->location),
+                'value'   => $this->c->censorship->censor($this->curUser->location),
             ];
         }
         if (! empty($fields)) {
@@ -150,7 +150,7 @@ class View extends Profile
                 'class'   => 'pline',
                 'type'    => 2 === $this->curUser->email_setting ? 'str' : 'link',
                 'caption' => __('Email info'),
-                'value'   => \ForkBB\cens($this->curUser->email),
+                'value'   => $this->c->censorship->censor($this->curUser->email),
                 'href'    => 'mailto:' . $this->curUser->email,
             ];
         }
@@ -160,7 +160,7 @@ class View extends Profile
                     'class'   => 'pline',
                     'type'    => 'link',
                     'caption' => __('Email info'),
-                    'value'   => \ForkBB\cens($this->curUser->email),
+                    'value'   => $this->c->censorship->censor($this->curUser->email),
                     'href'    => 'mailto:' . $this->curUser->email,
                 ];
             } elseif (1 === $this->curUser->email_setting) {
@@ -187,8 +187,8 @@ class View extends Profile
                 'class'   => 'pline',
                 'type'    => 'link',
                 'caption' => __('Website'),
-                'value'   => \ForkBB\cens($this->curUser->url),
-                'href'    => \ForkBB\cens($this->curUser->url),
+                'value'   => $this->c->censorship->censor($this->curUser->url),
+                'href'    => $this->c->censorship->censor($this->curUser->url),
             ];
         }
         if (! empty($fields)) {

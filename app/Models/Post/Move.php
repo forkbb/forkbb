@@ -25,7 +25,7 @@ class Move extends Action
             $topics[$post->topic_id] = $post->parent;
 
             if ($useFrom) {
-                $post->message = "[from]{$post->parent->subject}[/from]\n" . $post->message;
+                $post->message = "[from]{$post->parent->censSubject}[/from]\n" . $post->message;
             }
             $post->topic_id = $toTopic->id;
             $this->c->posts->update($post);

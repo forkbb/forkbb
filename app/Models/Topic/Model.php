@@ -2,6 +2,7 @@
 
 namespace ForkBB\Models\Topic;
 
+use ForkBB\Core\Container;
 use ForkBB\Models\DataModel;
 use ForkBB\Models\Forum\Model as Forum;
 use PDO;
@@ -9,6 +10,20 @@ use RuntimeException;
 
 class Model extends DataModel
 {
+    /**
+     * Конструктор
+     *
+     * @param Container $container
+     */
+    public function __construct(Container $container)
+    {
+        parent::__construct($container);
+
+        $this->zDepend = [
+            'subject' => ['censSubject'],
+        ];
+    }
+
     /**
      * Получение родительского раздела
      *
@@ -63,6 +78,14 @@ class Model extends DataModel
     }
 
     /**
+     * Цензурированный заголовок топика
+     */
+    protected function getcensSubject(): string
+    {
+        return $this->c->censorship->censor($this->subject);
+    }
+
+    /**
      * Ссылка на тему
      *
      * @return string
@@ -73,7 +96,7 @@ class Model extends DataModel
             'Topic',
             [
                 'id'   => $this->moved_to ?: $this->id,
-                'name' => \ForkBB\cens($this->subject),
+                'name' => $this->censSubject,
             ]
         );
     }
@@ -273,7 +296,7 @@ class Model extends DataModel
                 'Topic',
                 [
                     'id'   => $this->id,
-                    'name' => \ForkBB\cens($this->subject),
+                    'name' => $this->censSubject,
                 ]
             );
         }

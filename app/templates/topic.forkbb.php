@@ -54,7 +54,7 @@
 @endif
     </div>
     <section class="f-main f-topic">
-      <h2>{{ cens($p->model->subject) }}</h2>
+      <h2>{{ $p->model->censSubject }}</h2>
 @foreach ($p->posts as $id => $post)
     @if (empty($post->id) && $iswev = ['e' => [__('Message %s was not found in the database', $id)]])
         @include ('layouts/iswev')
@@ -64,7 +64,7 @@
         <input id="checkbox-{!! $post->id !!}" class="f-post-checkbox" type="checkbox" name="ids[{!! $post->id !!}]" value="{!! $post->id !!}" form="id-form-mod">
         @endif
         <header class="f-post-header">
-          <h3>@if ($post->postNumber > 1) {!! __('Re') !!} @endif {{ cens($p->model->subject) }}</h3>
+          <h3>@if ($post->postNumber > 1) {!! __('Re') !!} @endif {{ $p->model->censSubject }}</h3>
         @if ($p->enableMod && $post->postNumber > 1)
           <label class="f-post-posted" for="checkbox-{!! $post->id !!}" title="{{ __('Select for moderation') }}"><time datetime="{{ utc($post->posted) }}">{{ dt($post->posted) }}</time></label>
         @else

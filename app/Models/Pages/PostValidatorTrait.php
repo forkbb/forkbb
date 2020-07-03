@@ -19,7 +19,7 @@ trait PostValidatorTrait
     public function vCheckSubject(Validator $v, $subject, $attr, $executive)
     {
         // после цензуры заголовок темы путой
-        if ('' == \ForkBB\cens($subject)) {
+        if ('' == $this->c->censorship->censor($subject)) {
             $v->addError('No subject after censoring');
         // заголовок темы только заглавными буквами
         } elseif (
@@ -45,7 +45,7 @@ trait PostValidatorTrait
     public function vCheckMessage(Validator $v, $message, $attr, $executive)
     {
         // после цензуры текст сообщения пустой
-        if ('' == \ForkBB\cens($message)) {
+        if ('' == $this->c->censorship->censor($message)) {
             $v->addError('No message after censoring');
         // текст сообщения только заглавными буквами
         } elseif (

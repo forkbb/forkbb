@@ -165,7 +165,7 @@ class Edit extends Profile
     {
         if ('' != $signature) {
             // после цензуры текст сообщения пустой
-            if ('' == \ForkBB\cens($signature)) {
+            if ('' == $this->c->censorship->censor($signature)) {
                 $v->addError('No signature after censoring');
             // количество строк
             } elseif (\substr_count($signature, "\n") >= $this->c->config->p_sig_lines) {
@@ -399,7 +399,7 @@ class Edit extends Profile
                 'class'   => 'pline',
                 'type'    => 'str',
                 'caption' => __('Email info'),
-                'value'   => \ForkBB\cens($this->curUser->email),
+                'value'   => $this->c->censorship->censor($this->curUser->email),
             ];
         }
         if ($this->rules->editEmail) {
@@ -443,8 +443,8 @@ class Edit extends Profile
                 'class'   => 'pline',
                 'type'    => 'link',
                 'caption' => __('Website'),
-                'value'   => \ForkBB\cens($this->curUser->url),
-                'href'    => \ForkBB\cens($this->curUser->url),
+                'value'   => $this->c->censorship->censor($this->curUser->url),
+                'href'    => $this->c->censorship->censor($this->curUser->url),
             ];
         }
         $form['sets']['contacts'] = [

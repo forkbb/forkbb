@@ -228,9 +228,9 @@ class Model extends DataModel
         if (isset($this->c->bans->userList[\mb_strtolower($this->username)])) { //????
             return __('Banned');
         } elseif ('' != $this->title) {
-            return \ForkBB\cens($this->title);
+            return $this->c->censorship->censor($this->title);
         } elseif ('' != $this->g_user_title) {
-            return \ForkBB\cens($this->g_user_title);
+            return $this->c->censorship->censor($this->g_user_title);
         } elseif ($this->isGuest) {
             return __('Guest');
         } elseif ($this->isUnverified) {
