@@ -53,7 +53,9 @@ class Edit extends Page
                 null !== $v->preview
                 && ! $v->getErrors()
             ) {
-                $this->previewHtml = $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies);
+                $this->previewHtml = $this->c->censorship->censor(
+                    $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies)
+                );
             }
         } else {
             $args['_vars'] = [ //????

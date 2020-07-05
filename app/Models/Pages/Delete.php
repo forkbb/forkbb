@@ -105,7 +105,7 @@ class Delete extends Page
                     'info' => [
                         'info1' => [
                             'type'    => '', //????
-                            'value'   => __('Topic') . ' «' . $post->parent->censSubject . '»',
+                            'value'   => __('Topic') . ' «' . $post->parent->censorSubject . '»',
                         ],
                         'info2' => [
                             'type'    => '', //????

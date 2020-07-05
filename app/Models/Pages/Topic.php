@@ -152,7 +152,7 @@ class Topic extends Page
             'Topic',
             [
                 'id'   => $topic->id,
-                'name' => $topic->censSubject,
+                'name' => $topic->censorSubject,
                 'page' => $topic->page
             ]
         );

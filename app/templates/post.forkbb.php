@@ -20,7 +20,7 @@
       <h2>{!! __('Post preview') !!}</h2>
       <div class="f-post-body">
         <div class="f-post-main">
-          {!! cens($p->previewHtml) !!}
+          {!! $p->previewHtml !!}
         </div>
       </div>
     </section>

@@ -12,7 +12,6 @@ use ForkBB\Core\Container;
 function _init(Container $c): void
 {
     __(null, $c);
-    cens('', $c);
     dt(0, true, '', '', true, true, $c);
 }
 
@@ -71,26 +70,6 @@ function __(?string $arg, ...$args): string
 function e(string $arg): string
 {
     return \htmlspecialchars($arg, \ENT_HTML5 | \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8');
-}
-
-/**
- * Цензура
- *
- * @param string $arg
- * @param Container $container
- *
- * @return string
- */
-function cens(string $arg, Container $container = null): string
-{
-    static $c;
-
-    if (null !== $container) {
-        $c = $container;
-        return '';
-    }
-
-    return $c->censorship->censor($arg);
 }
 
 /**

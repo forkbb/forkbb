@@ -3,8 +3,6 @@
 namespace ForkBB\Models;
 
 use ForkBB\Models\Model;
-use InvalidArgumentException;
-use RuntimeException;
 
 class DataModel extends Model
 {

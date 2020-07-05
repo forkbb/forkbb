@@ -56,7 +56,7 @@ class View extends Dirk
         $perfix = <<<'EOD'
 <?php
 
-use function \ForkBB\{__, cens, num, dt, utc, size};
+use function \ForkBB\{__, num, dt, utc, size};
 
 ?>
 EOD;

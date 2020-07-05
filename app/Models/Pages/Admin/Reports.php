@@ -100,7 +100,7 @@ class Reports extends Admin
                 $forum = $topic->parent;
                 $cur['fields']['post' . $report->id] = [
                     'type'    => 'str',
-                    'value'   => __('Post #%s ', $post->id, $post->link, $topic->censSubject, $topic->link, $forum->forum_name, $forum->link),
+                    'value'   => __('Post #%s ', $post->id, $post->link, $topic->censorSubject, $topic->link, $forum->forum_name, $forum->link),
                     'html'    => true,
                 ];
             } else {

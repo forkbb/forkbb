@@ -399,7 +399,7 @@ class Edit extends Profile
                 'class'   => 'pline',
                 'type'    => 'str',
                 'caption' => __('Email info'),
-                'value'   => $this->c->censorship->censor($this->curUser->email),
+                'value'   => $this->curUser->censorEmail,
             ];
         }
         if ($this->rules->editEmail) {
@@ -443,8 +443,8 @@ class Edit extends Profile
                 'class'   => 'pline',
                 'type'    => 'link',
                 'caption' => __('Website'),
-                'value'   => $this->c->censorship->censor($this->curUser->url),
-                'href'    => $this->c->censorship->censor($this->curUser->url),
+                'value'   => $this->curUser->censorUrl,
+                'href'    => $this->curUser->censorUrl,
             ];
         }
         $form['sets']['contacts'] = [

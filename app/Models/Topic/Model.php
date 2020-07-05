@@ -15,14 +15,14 @@ class Model extends DataModel
      *
      * @param Container $container
      */
-    public function __construct(Container $container)
-    {
-        parent::__construct($container);
-
-        $this->zDepend = [
-            'subject' => ['censSubject'],
-        ];
-    }
+#    public function __construct(Container $container)
+#    {
+#        parent::__construct($container);
+#
+#        $this->zDepend = [
+#            'subject' => ['censSubject'],
+#       ];
+#    }
 
     /**
      * Получение родительского раздела
@@ -78,14 +78,6 @@ class Model extends DataModel
     }
 
     /**
-     * Цензурированный заголовок топика
-     */
-    protected function getcensSubject(): string
-    {
-        return $this->c->censorship->censor($this->subject);
-    }
-
-    /**
      * Ссылка на тему
      *
      * @return string
@@ -96,7 +88,7 @@ class Model extends DataModel
             'Topic',
             [
                 'id'   => $this->moved_to ?: $this->id,
-                'name' => $this->censSubject,
+                'name' => $this->censorSubject,
             ]
         );
     }
@@ -296,7 +288,7 @@ class Model extends DataModel
                 'Topic',
                 [
                     'id'   => $this->id,
-                    'name' => $this->censSubject,
+                    'name' => $this->censorSubject,
                 ]
             );
         }

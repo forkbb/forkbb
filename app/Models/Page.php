@@ -396,7 +396,7 @@ abstract class Page extends Model
                         $name = $crumb->forum_name;
                     // для темы
                     } elseif (isset($crumb->subject)) {
-                        $name = $crumb->censSubject;
+                        $name = $crumb->censorSubject;
                     // все остальное
                     } else {
                         $name = 'no name';

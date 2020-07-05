@@ -91,7 +91,7 @@
               <div class="f-ficon"></div>
             @endif
               <div class="f-finfo">
-                <h3><span class="f-fredirtext">{!! __('Moved') !!}</span> <a class="f-ftname" href="{!! $topic->link !!}">{{ $topic->censSubject }}</a></h3>
+                <h3><span class="f-fredirtext">{!! __('Moved') !!}</span> <a class="f-ftname" href="{!! $topic->link !!}">{{ $topic->censorSubject }}</a></h3>
               </div>
             </div>
           </li>
@@ -118,7 +118,7 @@
             @if ($topic->poll_type)
                   <span class="f-polltxt">{!! __('Poll') !!}</span>
             @endif
-                  <a class="f-ftname" href="{!! $topic->link !!}">{{ $topic->censSubject }}</a>
+                  <a class="f-ftname" href="{!! $topic->link !!}">{{ $topic->censorSubject }}</a>
             @if ($topic->pagination)
                   <span class="f-tpages">
                 @foreach ($topic->pagination as $cur)

@@ -3,7 +3,6 @@
 namespace ForkBB\Models;
 
 use ForkBB\Core\Container;
-use RuntimeException;
 
 class Model
 {
@@ -73,7 +72,8 @@ class Model
      */
     protected function unsetCalc($name): void
     {
-        unset($this->zAttrsCalc[$name]); //????
+        unset($this->zAttrsCalc[$name]);
+        unset($this->zAttrsCalc['censor' . \ucfirst($name)]);
 
         if (isset($this->zDepend[$name])) {
             $this->zAttrsCalc = \array_diff_key($this->zAttrsCalc, \array_flip($this->zDepend[$name]));
@@ -143,8 +143,15 @@ class Model
             return $this->zAttrsCalc[$name];
         } elseif (\method_exists($this, $method = 'get' . $name)) {
             return $this->zAttrsCalc[$name] = $this->$method();
+        } elseif (\array_key_exists($name, $this->zAttrs)) {
+            return $this->zAttrs[$name];
+        } elseif (
+            0 === \strpos($name, 'censor')
+            && isset($this->zAttrs[$root = \lcfirst(\substr($name, 6))])
+        ) {
+            return $this->zAttrsCalc[$name] = $this->c->censorship->censor($this->zAttrs[$root]);
         } else {
-            return $this->zAttrs[$name] ?? null;
+            return null;
         }
     }
 

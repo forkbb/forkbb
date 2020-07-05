@@ -108,7 +108,7 @@ class View extends Profile
                 'class'   => 'pline',
                 'type'    => 'str',
                 'caption' => __('Realname'),
-                'value'   => $this->c->censorship->censor($this->curUser->realname),
+                'value'   => $this->curUser->censorRealname,
             ];
         }
         $genders = [
@@ -132,7 +132,7 @@ class View extends Profile
                 'class'   => 'pline',
                 'type'    => 'str',
                 'caption' => __('Location'),
-                'value'   => $this->c->censorship->censor($this->curUser->location),
+                'value'   => $this->curUser->censorLocation,
             ];
         }
         if (! empty($fields)) {
@@ -150,8 +150,8 @@ class View extends Profile
                 'class'   => 'pline',
                 'type'    => 2 === $this->curUser->email_setting ? 'str' : 'link',
                 'caption' => __('Email info'),
-                'value'   => $this->c->censorship->censor($this->curUser->email),
-                'href'    => 'mailto:' . $this->curUser->email,
+                'value'   => $this->curUser->censorEmail,
+                'href'    => 'mailto:' . $this->curUser->censorEmail,
             ];
         }
         if ($this->rules->viewEmail) {
@@ -160,8 +160,8 @@ class View extends Profile
                     'class'   => 'pline',
                     'type'    => 'link',
                     'caption' => __('Email info'),
-                    'value'   => $this->c->censorship->censor($this->curUser->email),
-                    'href'    => 'mailto:' . $this->curUser->email,
+                    'value'   => $this->curUser->censorEmail,
+                    'href'    => 'mailto:' . $this->curUser->censorEmail,
                 ];
             } elseif (1 === $this->curUser->email_setting) {
                 $fields['email'] = [
@@ -187,8 +187,8 @@ class View extends Profile
                 'class'   => 'pline',
                 'type'    => 'link',
                 'caption' => __('Website'),
-                'value'   => $this->c->censorship->censor($this->curUser->url),
-                'href'    => $this->c->censorship->censor($this->curUser->url),
+                'value'   => $this->curUser->censorUrl,
+                'href'    => $this->curUser->censorUrl,
             ];
         }
         if (! empty($fields)) {
