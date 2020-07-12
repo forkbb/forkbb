@@ -274,13 +274,14 @@ abstract class Page extends Model
      *
      * @return Page
      */
-    public function header(string $key, string $value, $replace = true): self
+    public function header(string $key, string $value, bool $replace = true): self
     {
         if ('HTTP/' === \substr($key, 0, 5)) {
-            if (\preg_match('%^HTTP/\d\.\d%', $_SERVER['SERVER_PROTOCOL'], $match)) {
-                $key = $match[0];
-            } else {
-                $key = 'HTTP/1.1';
+            if (
+                ! empty($_SERVER['SERVER_PROTOCOL'])
+                && 'HTTP/' === \strtoupper(\substr($_SERVER['SERVER_PROTOCOL'], 0, 5))
+            ) {
+                $key = 'HTTP/' . \substr($_SERVER['SERVER_PROTOCOL'], 5);
             }
         } else {
             $key .= ':';
@@ -300,7 +301,7 @@ abstract class Page extends Model
      */
     protected function gethttpHeaders(): array
     {
-        $now = gmdate('D, d M Y H:i:s') . ' GMT';
+        $now = \gmdate('D, d M Y H:i:s') . ' GMT';
 
         $this->httpStatus()
             ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
