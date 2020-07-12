@@ -80,7 +80,10 @@ class Redirect extends Page
      */
     protected function getHttpHeaders(): array
     {
-        if ('0' == $this->c->config->o_redirect_delay) {
+        if (
+            '0' == $this->c->config->o_redirect_delay
+            || null === $this->nameTpl
+        ) {
             $this->httpStatus = 302;
             $this->nameTpl    = null;
 
