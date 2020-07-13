@@ -19,10 +19,10 @@ msgid "lang_identifier"
 msgstr "ru"
 
 msgid "lang_decimal_point"
-msgstr "."
+msgstr ","
 
 msgid "lang_thousands_sep"
-msgstr ","
+msgstr " "
 
 msgid "Cancel"
 msgstr "Отменить"

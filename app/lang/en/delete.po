@@ -25,10 +25,10 @@ msgid "Delete  topic"
 msgstr "Delete topic"
 
 msgid "Confirm delete post"
-msgstr "Delete post"
+msgstr "Confirm delete post"
 
 msgid "Confirm delete topic"
-msgstr "Delete topic (<b>All posts will be deleted from this topic</b>)"
+msgstr "Confirm delete topic (<b>All posts will be deleted from this topic</b>)"
 
 msgid "Warning"
 msgstr "You are about to permanently delete this post."

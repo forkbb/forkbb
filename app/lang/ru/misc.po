@@ -262,7 +262,7 @@ msgid "Close topics"
 msgstr "Закрытие тем"
 
 msgid "Confirm action"
-msgstr "Подтвердить действие"
+msgstr "Подтверждаю действие"
 
 msgid "Topic links cannot be merged"
 msgstr "Ссылки на темы не могут быть объединены."

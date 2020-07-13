@@ -25,10 +25,10 @@ msgid "Delete  topic"
 msgstr "Удалить тему"
 
 msgid "Confirm delete post"
-msgstr "Удалить сообщение"
+msgstr "Подтверждаю удаление сообщения"
 
 msgid "Confirm delete topic"
-msgstr "Удалить тему (<b>Все сообщения из этой темы будут удалены</b>)"
+msgstr "Подтверждаю удаление темы (<b>Все сообщения из этой темы будут удалены</b>)"
 
 msgid "Warning"
 msgstr "Внимание! Вы собираетесь навсегда удалить сообщение."
