@@ -12,7 +12,7 @@ No: private messages, voting, subscriptions, rss, plugins/extensions system.
 
 ## Requirements
 
-* PHP 7.2+
+* PHP 7.3+
 * A database such as MySQL 5.5.3 or later (_Drivers for other databases are not realized now_)
 
 ## Install

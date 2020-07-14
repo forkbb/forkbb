@@ -11,7 +11,7 @@ use function \ForkBB\__;
 
 class Install extends Page
 {
-    const PHP_MIN = '7.2.0';
+    const PHP_MIN = '7.3.0';
 
     /**
      * Для MySQL
