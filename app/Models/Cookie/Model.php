@@ -27,13 +27,14 @@ class Model extends ParentModel
     {
         parent::__construct($container);
         $options = $options + [
-            'prefix' => '',
-            'domain' => '',
-            'path'   => '',
-            'secure' => false,
-            'time'   => 31536000,
-            'key1'   => 'key1',
-            'key2'   => 'key2',
+            'prefix'   => '',
+            'domain'   => '',
+            'path'     => '/',
+            'secure'   => false,
+            'samesite' => 'Lax',
+            'time'     => 31536000,
+            'key1'     => 'key1',
+            'key2'     => 'key2',
         ];
         $this->setAttrs($options);
         $this->init();
@@ -50,22 +51,36 @@ class Model extends ParentModel
      * @param string $domain
      * @param bool $secure
      * @param bool $httponly
+     * @param string $samesite
      *
      * @return bool
      */
-    public function set(string $name, string $value, int $expire = 0, string $path = null, string $domain = null, bool $secure = false, bool $httponly = true): bool
-    {
+    public function set(
+        string $name,
+        string $value,
+        int $expire = 0,
+        string $path = null,
+        string $domain = null,
+        bool $secure = false,
+        bool $httponly = true,
+        string $samesite = null
+    ): bool {
+        $name   = $this->prefix . $name;
         $result = \setcookie(
-            $this->prefix . $name,
+            $name,
             $value,
-            $expire,
-            $path ?: $this->path,
-            $domain ?: $this->domain,
-            (bool) $this->secure || (bool) $secure,
-            (bool) $httponly
+            [
+                'expires'  => $expire,
+                'path'     => $path ?? $this->path,
+                'domain'   => $domain ?? $this->domain,
+                'secure'   => (bool) $this->secure || $secure,
+                'httponly' => $httponly,
+                'samesite' => $samesite ?? $this->samesite,
+            ]
         );
+
         if ($result) {
-            $_COOKIE[$this->prefix . $name] = $value;
+            $_COOKIE[$name] = $value;
         }
 
         return $result;

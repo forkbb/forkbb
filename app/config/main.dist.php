@@ -14,13 +14,14 @@ return [
     'DB_OPTIONS'  => [],
     'DB_PREFIX'   => '_DB_PREFIX_',
     'COOKIE' => [
-        'prefix' => '_COOKIE_PREFIX_',
-        'domain' => '',
-        'path'   => '/',
-        'secure' => false,
-        'time'   => 31536000,
-        'key1'   => '_COOKIE_KEY1_',
-        'key2'   => '_COOKIE_KEY2_',
+        'prefix'   => '_COOKIE_PREFIX_',
+        'domain'   => '',
+        'path'     => '/',
+        'secure'   => false,
+        'samesite' => 'Lax', // Strict, Lax or None
+        'time'     => 31536000,
+        'key1'     => '_COOKIE_KEY1_',
+        'key2'     => '_COOKIE_KEY2_',
     ],
     'HMAC' => [
         'algo' => 'sha1',
