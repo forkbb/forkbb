@@ -26,6 +26,12 @@ class Lang
     protected $loaded = [];
 
     /**
+     * Порядок перебора языка
+     * @var array
+     */
+    protected $langOrder = [];
+
+    /**
      * Конструктор
      *
      * @param Container $container
@@ -46,15 +52,15 @@ class Lang
     public function get(string $message, string $lang = null)
     {
         if (
-            $lang
+            null !== $lang
             && isset($this->tr[$lang][$message])
         ) {
             return $this->tr[$lang][$message];
         }
 
-        foreach ($this->tr as $lang) {
-            if (isset($lang[$message])) {
-                return $lang[$message];
+        foreach ($this->langOrder as $lang) {
+            if (isset($this->tr[$lang][$message])) {
+                return $this->tr[$lang][$message];
             }
         }
 
@@ -62,7 +68,7 @@ class Lang
     }
 
     /**
-     * Загрузка языкового файла
+     * Загружает языковой файл
      *
      * @param string $name
      * @param string $lang
@@ -70,37 +76,48 @@ class Lang
      */
     public function load(string $name, string $lang = null, string $path = null): void
     {
-        if ($lang) {
+        if (null !== $lang) {
+            // смена порядка перебора языка
+            $this->langOrder = [$lang => $lang] + $this->langOrder;
+
             if (isset($this->loaded[$name][$lang])) {
                 return;
             }
         } elseif (isset($this->loaded[$name])) {
             return;
         }
+
         $lang = $lang ?: $this->c->user->language;
         $path = $path ?: $this->c->DIR_LANG;
+
         do {
             $flag     = true;
-            $fullPath = $path . '/'. $lang . '/' . $name . '.po';
+            $fullPath = "{$path}/{$lang}/{$name}.po";
+
             if (\is_file($fullPath)) {
                 $file = \file_get_contents($fullPath);
+
                 if (isset($this->tr[$lang])) {
                     $this->tr[$lang] += $this->arrayFromStr($file);
                 } else {
-                    $this->tr[$lang] = $this->arrayFromStr($file);
+                    $this->tr[$lang]  = $this->arrayFromStr($file);
                 }
+
+                $this->loaded[$name][$lang] = true;
+                // порядок перебора языка не изменяется
+                $this->langOrder += [$lang => $lang];
+
                 $flag = false;
             } elseif ('en' === $lang) {
                 $flag = false;
             }
+
             $lang = 'en';
         } while ($flag);
-
-        $this->loaded[$name][$lang] = true;
     }
 
     /**
-     * Получение массива перевода из строки (.po файла)
+     * Получает массив перевода из строки (.po файла)
      *
      * @param string $str
      *
@@ -138,9 +155,9 @@ class Lang
                 if (! isset($cur['msgid'][0])) {
                     if (\preg_match('%Plural\-Forms:\s+nplurals=(\d+);\s*plural=([^;\n\r]+;)%i', $cur[0], $v)) {
                         $nplurals = (int) $v[1];
-                        $plural = \str_replace('n', '$n', \trim($v[2]));
-                        $plural = \str_replace(':', ': (', $plural, $curVal);
-                        $plural = \str_replace(';', \str_repeat(')', $curVal). ';', $plural);
+                        $plural   = \str_replace('n', '$n', \trim($v[2]));
+                        $plural   = \str_replace(':', ': (', $plural, $curVal);
+                        $plural   = \str_replace(';', \str_repeat(')', $curVal). ';', $plural);
                     }
 
                 // перевод
@@ -252,7 +269,7 @@ class Lang
     }
 
     /**
-     * Получение оригинальной строки с удалением кавычек
+     * Получает оригинальную строку с удалением кавычек
      * и преобразованием спецсимволов
      *
      * @param string $line
