@@ -167,6 +167,8 @@ class Register extends Page
             '1' == $this->c->config->o_regs_report
             && '' != $this->c->config->o_mailing_list
         ) {
+            $this->c->Lang->load('common', $this->c->config->o_default_lang);
+
             $tplData = [
                 'fTitle'    => $this->c->config->o_board_title,
                 'fRootLink' => $this->c->Router->link('Index'),
@@ -185,7 +187,7 @@ class Register extends Page
                 $this->c->Mail
                     ->reset()
                     ->setFolder($this->c->DIR_LANG)
-                    ->setLanguage($this->c->config->o_default_lang) // ????
+                    ->setLanguage($this->c->config->o_default_lang)
                     ->setTo($this->c->config->o_mailing_list)
                     ->setFrom($this->c->config->o_webmaster_email, __('Mailer', $this->c->config->o_board_title))
                     ->setTpl('new_user.tpl', $tplData)
@@ -195,6 +197,7 @@ class Register extends Page
             }
         }
 
+        $this->c->Lang->load('common', $this->user->language);
         $this->c->Lang->load('register');
 
         // отправка письма активации аккаунта
