@@ -102,7 +102,7 @@ return [
         'Primary' => '@PrimaryController:routing',
 
         'Debug'    => \ForkBB\Models\Pages\Debug::class,
-        'Install'  => \ForkBB\Models\Pages\Install::class,
+        'Install'  => \ForkBB\Models\Pages\Admin\Install::class,
         'Redirect' => \ForkBB\Models\Pages\Redirect::class,
 
         'UserModel' => \ForkBB\Models\User\Model::class,

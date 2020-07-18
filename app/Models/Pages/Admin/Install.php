@@ -1,15 +1,16 @@
 <?php
 
-namespace ForkBB\Models\Pages;
+namespace ForkBB\Models\Pages\Admin;
 
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
+use ForkBB\Models\Pages\Admin;
 use PDO;
 use PDOException;
 use RuntimeException;
 use function \ForkBB\__;
 
-class Install extends Page
+class Install extends Admin
 {
     const PHP_MIN = '7.3.0';
 
@@ -22,7 +23,7 @@ class Install extends Page
     /**
      * Подготовка страницы к отображению
      */
-    public function prepare()
+    public function prepare(): void
     {
     }
 
@@ -379,7 +380,6 @@ class Install extends Page
 
         $this->nameTpl    = 'layouts/install';
         $this->onlinePos  = null;
-        $this->robots     = 'noindex';
         $this->rev        = $this->c->FORK_REVISION;
 
         return $this;

@@ -36,13 +36,13 @@ class Install
         }
         $uri = \rawurldecode($uri);
 
-        $this->c->Lang->load('common', $this->c->config->o_default_lang);
         $this->c->user = $this->c->users->create(['id' => 2, 'group_id' => $this->c->GROUP_ADMIN]);
+        $this->c->Lang->load('common');
 
         $r = $this->c->Router;
         $r->add(
             $r::DUO,
-            '/install',
+            '/admin/install',
             'Install:install',
             'Install'
         );
