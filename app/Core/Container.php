@@ -50,7 +50,9 @@ class Container
             $this->multiple = \array_replace_recursive($this->multiple, $config['multiple']);
         }
         unset($config['shared'], $config['multiple']);
-        $this->config = \array_replace_recursive($this->config, $config);
+        if (! empty($config)) {
+            $this->config = \array_replace_recursive($this->config, $config);
+        }
     }
 
     /**
