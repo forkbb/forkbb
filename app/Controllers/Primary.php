@@ -46,8 +46,16 @@ class Primary
         }
 
         if ($this->c->config->i_fork_revision < $this->c->FORK_REVISION) {
-            \header('Location: db_update.php'); //????
-            exit;
+            $confChange = [
+                'multiple' => [
+                    'CtrlRouting' => \ForkBB\Controllers\Update::class,
+
+                    'AdminUpdate' => \ForkBB\Models\Pages\Admin\Update::class,
+                ],
+            ];
+            $this->c->config($confChange);
+
+            return null;
         }
 
         if (
