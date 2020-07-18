@@ -84,7 +84,7 @@ class Install extends Admin
         }
         $v = null;
 
-        $this->c->Lang->load('install');
+        $this->c->Lang->load('admin_install');
 
         // версия PHP
         if (\version_compare(\PHP_VERSION, self::PHP_MIN, '<')) {
