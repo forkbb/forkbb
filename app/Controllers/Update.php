@@ -36,10 +36,16 @@ class Update
         }
         $uri = \rawurldecode($uri);
 
-        $this->c->user = $this->c->users->create(['id' => 2, 'group_id' => $this->c->GROUP_ADMIN]);
+        $this->c->user = $this->c->users->create(['id' => 2, 'group_id' => $this->c->GROUP_ADMIN]); //???? id?
         $this->c->Lang->load('common');
 
         $r = $this->c->Router;
+        $r->add(
+            $r::GET,
+            '/admin/update/{uid}/{stage:\d+}[/{start:\d+}]',
+            'AdminUpdate:stage',
+            'AdminUpdateStage'
+        );
         $r->add(
             $r::DUO,
             '/admin/update',

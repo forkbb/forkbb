@@ -1,0 +1,205 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+
+msgid "Update ForkBB"
+msgstr "Обновление ForkBB"
+
+msgid "Update script is running"
+msgstr "Выполняется скрипт обновления."
+
+msgid "Update message"
+msgstr "База данных вашего ForkBB устарела и требует обновления для дальнейшей работы. Если вы администратор этого форума, следуйте, пожалуйста, ниже указанным инструкциям."
+
+msgid "Note"
+msgstr "Примечание:"
+
+msgid "Members message"
+msgstr "Действие может выполнить только администратор форума. Причины для волнения нет - вскоре форум снова будет функционировать!"
+
+msgid "Administrator only"
+msgstr "Этот шаг только для администратора форума!"
+
+msgid "Database password info"
+msgstr "Для обновления базы данных, пожалуйста, введите ее пароль доступа, указанный при установке форума. Если вы не помните пароль, загляните в файл 'config.php' вашего форума."
+
+msgid "Database password note"
+msgstr "Если вы используете SQLite (и следовательно не имеете пароля для доступа к базе), пожалуйста, используйте имя файла базы данных. Вводимое имя должно точно соответствовать тому, что указано в конфигурационном файле."
+
+msgid "Database password"
+msgstr "Пароль базы данных"
+
+msgid "Maintenance"
+msgstr "Обслуживание"
+
+msgid "Maintenance message info"
+msgstr "Сообщение, которое будет показано пользователям во время процесса обновления. Этот текст не обрабатывается парсером, может содержать HTML."
+
+msgid "Maintenance message"
+msgstr "Сообщение обслуживания"
+
+msgid "You are running error"
+msgstr "Вы используете %1$s версии %2$s. ForkBB rev.%3$s требует как минимум %1$s %4$s для своей работы. Вы должны обновить ваш %1$s, прежде чем продолжить."
+
+msgid "Version mismatch error"
+msgstr "Несоответствие версии. База данных не может быть сконвертирована этим скриптом до структуры текущей ревизии ForkBB."
+
+msgid "Invalid file error"
+msgstr "Неправильное имя файла базы данных. Имя файла базы данных SQLite должно точно соответствовать тому, что указано в конфигурационном файле '%s'"
+
+msgid "Invalid password error"
+msgstr "Неправильный пароль базы данных. Для обновления ForkBB вы должны ввести пароль к базе форума в соответствии с данными из '%s'"
+
+msgid "No password error"
+msgstr "Отсутствует пароль базы данных"
+
+msgid "Script runs error"
+msgstr "Похоже, скрипт обновления уже запущен другим пользователем."
+
+msgid "No update error"
+msgstr "Форум обновлять не нужно, так как версии совпадают"
+
+msgid "Intro 1"
+msgstr "Этот скрипт обновит базу данных вашего форума. Процедура обновления может занять от нескольких секунд до нескольких часов. Сделайте, пожалуйста, резервную копию базы форума."
+
+msgid "Intro 2"
+msgstr "Вы прочитали документацию по обновлению форума? Если нет, то сначала прочитайте ее."
+
+msgid "No charset conversion"
+msgstr "<strong>ВАЖНО!</strong> ForkBB обнаружил, что ваш PHP не содержит механизмов преобразования текста из одной кодировки в другую кроме как из ISO-8859-1 в UTF-8. То есть, если текущая кодировка базы данных отличается от ISO-8859-1, ForkBB не сможет преобразовать ее в UTF-8. Вы должны сделать это вручную. Или подключите к PHP библиотеки iconv и(или) mb_convert_encoding."
+
+msgid "Enable conversion"
+msgstr "<strong>Разрешить преобразование:</strong> Если включено, то скрипт после преобразования структуры базы данных выполнит перекодировку всех текстовых полей в таблицах из текущей кодировки в UTF-8. Требуется только при обновлении форума с версии 1.2."
+
+msgid "Current character set"
+msgstr "<strong>Текущая кодировка:</strong> Если основной язык на вашем форуме английский, оставьте значение по умолчанию. Если основной язык на вашем форуме не английский, то введите кодировку основного языкового пакета (обычно для русскоговорящего форума версии 1.2 это <strong>cp1251</strong>) <em>Ошибка в указании текущей кодировке испортит данные в базе при преобразовании!</em> Примечание: Требуется даже если старая база данных была в UTF-8."
+
+msgid "Charset conversion"
+msgstr "Преобразование кодировки"
+
+msgid "Enable conversion label"
+msgstr "<strong>Разрешить преобразование</strong> (произвести конвертацию кодировки базы данных)."
+
+msgid "Current character set label"
+msgstr "Текущая кодировка"
+
+msgid "Current character set info"
+msgstr "По умолчанию для английского языка, иначе кодировка основного языкового пакета."
+
+msgid "Start update"
+msgstr "Начать обновление"
+
+msgid "Error converting users"
+msgstr "Ошибка конвертации пользователей"
+
+msgid "Error info 1"
+msgstr "Возникла ошибка конвертации некоторых пользователей. Она могла произойти при переходе с версии 1.2, если несколько пользователей зарегистрировались с очень похожими именами, например "bob" и "böb"."
+
+msgid "Error info 2"
+msgstr "Ниже приведен список пользователей вызвавших ошибку. Пожалуйста, выберите для каждого новое имя. Переименованным пользователям автоматически будут отправлены электронные письма с уведомлением."
+
+msgid "New username"
+msgstr "Новое имя пользователя"
+
+msgid "Required"
+msgstr "(Обязательно)"
+
+msgid "Correct errors"
+msgstr "Следующие ошибки должны быть исправлены:"
+
+msgid "Rename users"
+msgstr "Переименовать пользователей"
+
+msgid "Successfully updated"
+msgstr "База данных форума обновлена."
+
+msgid "go to index"
+msgstr "перейти на главную страницу"
+
+msgid "Unable to write update lock"
+msgstr "Невозможно установить блокировку повторного запуска обновления."
+
+msgid "Converting"
+msgstr "Конвертируется %s …"
+
+msgid "Converting item"
+msgstr "Конвертируется %1$s %2$s …"
+
+msgid "Preparsing item"
+msgstr "Препарсинг %1$s %2$s …"
+
+msgid "Rebuilding index item"
+msgstr "Восстановление индекса для %1$s %2$s"
+
+msgid "Click here"
+msgstr "Кликните здесь"
+
+msgid "Automatic redirect failed"
+msgstr "Автоматическая переадресация выключена. %s чтобы продолжить …"
+
+msgid "ban"
+msgstr "БАН"
+
+msgid "categories"
+msgstr "КАТЕГОРИИ"
+
+msgid "censor words"
+msgstr "ЦЕНЗУРИРУЕМЫЕ СЛОВА"
+
+msgid "configuration"
+msgstr "КОНФИГУРАЦИЯ"
+
+msgid "forums"
+msgstr "РАЗДЕЛЫ"
+
+msgid "groups"
+msgstr "ГРУППЫ"
+
+msgid "post"
+msgstr "СООБЩЕНИЕ"
+
+msgid "report"
+msgstr "ОТЧЕТ"
+
+msgid "topic"
+msgstr "ТЕМА"
+
+msgid "user"
+msgstr "ПОЛЬЗОВАТЕЛЬ"
+
+msgid "signature"
+msgstr "ПОДПИСЬ"
+
+msgid "Username too short error"
+msgstr "Имя пользователя должно быть хотя бы 2 символа длиной. Пожалуйста выберите другое (более длинное) имя."
+
+msgid "Username too long error"
+msgstr "Имя пользователя должно быть не более 25 символов. Пожалуйста выберите другое (менее длинное) имя."
+
+msgid "Username Guest reserved error"
+msgstr "Имя "гость" зарезервировано. Пожалуйста выберите другое."
+
+msgid "Username IP format error"
+msgstr "Имя пользователя не может быть похоже на IP адрес. Пожалуйста выберите другое имя."
+
+msgid "Username bad characters error"
+msgstr "Имя не может содержать символы ', \" или [ и ] одновременно. Пожалуйста выберите другое имя."
+
+msgid "Username BBCode error"
+msgstr "Имя не должно содержать символы форматирования (BBCode) которые используются на форуме. Пожалуйста выберите другое имя."
+
+msgid "Username duplicate error"
+msgstr "Есть очень похожее имя - %s. Имена должны отличасться хотя бы одним алфавитно-цифровым символом (a-z или 0-9). Пожалуйста выберите другое имя."
+
+msgid "Stage %1$s (%2$s)"
+msgstr "Шаг %1$s (%2$s)"
