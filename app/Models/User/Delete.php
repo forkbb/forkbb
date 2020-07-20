@@ -62,6 +62,8 @@ class Delete extends Action
 
         foreach ($users as $user) {
             $this->c->Online->delete($user);
+
+            $user->deleteAvatar();
         }
 
         $vars  = [
