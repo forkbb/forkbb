@@ -527,3 +527,6 @@ msgstr "Forum"
 
 msgid "Moderator label"
 msgstr "Moderator"
+
+msgid "Private information"
+msgstr "Private information"

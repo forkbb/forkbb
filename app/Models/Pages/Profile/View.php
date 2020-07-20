@@ -112,14 +112,10 @@ class View extends Profile
             ];
         }
         $genders = [
-            0 => __('Do not display'),
             1 => __('Male'),
             2 => __('Female'),
         ];
-        if (
-            $this->curUser->gender
-            && isset($genders[$this->curUser->gender])
-        ) {
+        if (isset($genders[$this->curUser->gender])) {
             $fields['gender'] = [
                 'class'   => 'pline',
                 'type'    => 'str',
@@ -145,15 +141,6 @@ class View extends Profile
 
         // контактная информация
         $fields = [];
-        if ($this->rules->viewOEmail) {
-            $fields['open-email'] = [
-                'class'   => 'pline',
-                'type'    => 2 === $this->curUser->email_setting ? 'str' : 'link',
-                'caption' => __('Email info'),
-                'value'   => $this->curUser->censorEmail,
-                'href'    => 'mailto:' . $this->curUser->censorEmail,
-            ];
-        }
         if ($this->rules->viewEmail) {
             if (0 === $this->curUser->email_setting) {
                 $fields['email'] = [
@@ -288,6 +275,23 @@ class View extends Profile
                 ];
             }
         }
+        $form['sets']['activity'] = [
+            'class'  => 'data',
+            'legend' => __('User activity'),
+            'fields' => $fields,
+        ];
+
+        // приватная информация
+        $fields = [];
+        if ($this->rules->viewOEmail) {
+            $fields['open-email'] = [
+                'class'   => 'pline',
+                'type'    => 2 === $this->curUser->email_setting ? 'str' : 'link',
+                'caption' => __('Email info'),
+                'value'   => $this->curUser->censorEmail,
+                'href'    => 'mailto:' . $this->curUser->censorEmail,
+            ];
+        }
         if (
             $this->rules->viewIP
             && false !== \filter_var($this->curUser->registration_ip, \FILTER_VALIDATE_IP)
@@ -306,11 +310,12 @@ class View extends Profile
                 'title'   => __('IP title'),
             ];
         }
-        $form['sets']['activity'] = [
+        $form['sets']['private'] = [
             'class'  => 'data',
-            'legend' => __('User activity'),
+            'legend' => __('Private information'),
             'fields' => $fields,
         ];
+
 
         return $form;
     }

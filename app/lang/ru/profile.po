@@ -527,3 +527,6 @@ msgstr "Раздел"
 
 msgid "Moderator label"
 msgstr "Модератор"
+
+msgid "Private information"
+msgstr "Приватная информация"
