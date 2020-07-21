@@ -1444,28 +1444,56 @@ body,
 
 #fork .f-post-user {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   padding: 0.625rem;
   background-color: #F8F4E3;
-}
-
-#fork .f-user-info {
+  border-bottom: 0.0625rem solid #AA7939;
   font-size: 0.875rem;
-  margin-right: auto;
 }
 
-#fork .f-user-info-first,
-#fork .f-user-info-add {
+#fork .f-user-info-first {
   display: none;
 }
 
 #fork .f-avatar {
   order: 1;
+  flex-grow: 0.5;
+  text-align: right;
+  margin-bottom: 0.3125rem;
 }
 
 #fork .f-avatar img {
   max-width: 4.6875rem;
   height: auto;
+}
+
+#fork .f-user-info {
+  flex-grow: 0.5;
+  margin-bottom: 0.3125rem;
+}
+
+#fork .f-user-info-add {
+  width: 100%;
+  order: 2;
+}
+
+#fork .f-user-info > li:not(.f-username),
+#fork .f-user-info-add > li {
+  display: inline-block;
+}
+
+#fork .f-user-info > li:not(.f-username):before,
+#fork .f-user-info-add > li:before {
+  content: "\2022";
+  padding-right: 0.3125rem;
+}
+
+#fork .f-avatar + .f-user-info > li:not(.f-username) {
+  display: block;
+}
+
+#fork .f-avatar + .f-user-info > li:not(.f-username):before {
+  display: none;
 }
 
 #fork .f-post-body img {
@@ -1603,6 +1631,7 @@ body,
     flex-direction: column;
     width: 13rem;
     border-right: 0.0625rem solid #AA7939;
+    border-bottom: 0;
   }
 
   #fork .f-user-info-first {
@@ -1619,11 +1648,16 @@ body,
     text-align: center;
   }
 
-  #fork .f-user-info-add {
+  #fork .f-user-info > li:not(.f-username),
+  #fork .f-user-info-add > li {
     display: block;
-    font-size: 0.875rem;
-  /*  word-break: break-all; */
   }
+
+  #fork .f-user-info > li:not(.f-username):before,
+  #fork .f-user-info-add > li:before {
+    display: none;
+  }
+
 
   #fork .f-post-body,
   #fork .f-post-btns {
