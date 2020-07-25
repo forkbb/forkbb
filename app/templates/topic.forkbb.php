@@ -104,7 +104,10 @@
           </ul>
         @if (! $post->user->isGuest && $p->user->showUserInfo)
           <ul class="f-user-info-add">
-            <li>{!! __('Registered:') !!} {{ dt($post->user->registered, true) }}</li>
+            @if ($p->user->isAdmMod && '' != $post->user->admin_note)
+            <li class="f-admin-note" title="{!! __('Admin note') !!}">{{ $post->user->admin_note }}</li>
+            @endif
+            <li>{!! __('Registered: %s', dt($post->user->registered, true)) !!}</li>
             @if ($post->user->location)
             <li>{!! __('From') !!} {{ $post->user->censorLocation }}</li>
             @endif

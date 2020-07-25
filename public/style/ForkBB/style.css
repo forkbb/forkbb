@@ -1551,6 +1551,12 @@ body,
   padding-top: 0;
 }
 
+#fork .f-admin-note {
+  color: #D8000C;
+/**  background-color: #FFBABA; */
+}
+
+
 /*********************/
 #fork .f-bb-u {
   text-decoration: underline;
