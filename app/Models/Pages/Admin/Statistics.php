@@ -129,19 +129,16 @@ class Statistics extends Admin
             && \function_exists('\\opcache_invalidate')
         ) {
             $this->accelerator = 'Zend OPcache';
-            $this->linkAcc     = 'https://secure.php.net/opcache/';
+            $this->linkAcc     = 'https://www.php.net/opcache/';
         } elseif (\ini_get('wincache.fcenabled')) {
             $this->accelerator = 'Windows Cache for PHP';
-            $this->linkAcc     = 'https://secure.php.net/wincache/';
+            $this->linkAcc     = 'https://www.php.net/wincache/';
         } elseif (
             \ini_get('apc.enabled')
             && \function_exists('\\apc_delete_file')
         ) {
             $this->accelerator = 'Alternative PHP Cache (APC)'; //???? частичная эмуляция APCu
-            $this->linkAcc     = 'https://secure.php.net/apc/';
-        } elseif (\ini_get('xcache.cacher')) {
-            $this->accelerator = 'XCache';
-            $this->linkAcc     = 'https://xcache.lighttpd.net/';
+            $this->linkAcc     = 'https://www.php.net/apc/';
         } else {
             $this->accelerator = __('NA');
             $this->linkAcc     = null;
