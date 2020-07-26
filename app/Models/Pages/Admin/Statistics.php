@@ -81,31 +81,36 @@ class Statistics extends Admin
         $this->linkInfo  = $this->c->Router->link('AdminInfo');
 
         // Get the server load averages (if possible)
-        if (
-            @\file_exists('/proc/loadavg')
-            && \is_readable('/proc/loadavg')
-        ) {
-            // We use @ just in case
-            $fh  = @\fopen('/proc/loadavg', 'r');
-            $ave = @\fread($fh, 64);
-            @\fclose($fh);
+        $this->serverLoad = __('Not available');
+        switch (\PHP_OS_FAMILY) {
+            case 'Windows':
+                @\exec('wmic cpu get loadpercentage /all', $output);
+                if (
+                    ! empty($output)
+                    && \preg_match('%(?:^|==)(\d+)(?:$|==)%', \implode('==', $output) , $loadPercentage)
+                ) {
+                    $this->serverLoad = $loadPercentage[1] . ' %';
+                }
+                break;
+            default:
+                if (\function_exists('\\sys_getloadavg')) {
+                    $loadAverages     = \sys_getloadavg();
+                    $this->serverLoad = $loadAverages[0] . ' ' . $loadAverages[1] . ' ' . $loadAverages[2];
+                    break;
+                }
 
-            if (($fh = @\fopen('/proc/loadavg', 'r'))) {
-                $ave = \fread($fh, 64);
-                \fclose($fh);
-            } else {
-                $ave = '';
-            }
-
-            $ave = @\explode(' ', $ave);
-            $this->serverLoad = isset($ave[2]) ? $ave[0].' '.$ave[1].' '.$ave[2] : __('Not available');
-        } elseif (
-            ! \in_array(\PHP_OS, ['WINNT', 'WIN32'])
-            && \preg_match('%averages?: ([\d\.]+),?\s+([\d\.]+),?\s+([\d\.]+)%i', @\exec('uptime'), $ave)
-        ) {
-            $this->serverLoad = $ave[1].' '.$ave[2].' '.$ave[3];
-        } else {
-            $this->serverLoad = __('Not available');
+                @\exec('uptime', $output);
+                if (
+                    ! empty($output)
+                    && \preg_match(
+                        '%averages?: ([0-9\.]+),?\s+([0-9\.]+),?\s+([0-9\.]+)%i',
+                        \implode(' ', $output) ,
+                        $loadAverages
+                    )
+                ) {
+                    $this->serverLoad = $loadAverages[1] . ' ' . $loadAverages[2] . ' ' . $loadAverages[3];
+                    break;
+                }
         }
 
         // Get number of current visitors
