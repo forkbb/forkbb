@@ -4,7 +4,7 @@ namespace ForkBB\Models\Pages\Admin;
 
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin;
-use function \ForkBB\__;
+use function \ForkBB\{__, num};
 
 class Statistics extends Admin
 {
@@ -95,7 +95,11 @@ class Statistics extends Admin
             default:
                 if (\function_exists('\\sys_getloadavg')) {
                     $loadAverages     = \sys_getloadavg();
-                    $this->serverLoad = $loadAverages[0] . ' ' . $loadAverages[1] . ' ' . $loadAverages[2];
+                    $this->serverLoad = num($loadAverages[0], 2)
+                        . ' '
+                        . num($loadAverages[1], 2)
+                        . ' '
+                        . num($loadAverages[2], 2);
                     break;
                 }
 
@@ -108,7 +112,11 @@ class Statistics extends Admin
                         $loadAverages
                     )
                 ) {
-                    $this->serverLoad = $loadAverages[1] . ' ' . $loadAverages[2] . ' ' . $loadAverages[3];
+                    $this->serverLoad = num($loadAverages[1], 2)
+                        . ' '
+                        . num($loadAverages[2], 2)
+                        . ' '
+                        . num($loadAverages[3], 2);
                     break;
                 }
         }
