@@ -2593,6 +2593,10 @@ body,
   width: 100%
 }
 
+#fork .f-fs-result .f-field-note > dd {
+  color: #D8000C;
+}
+
 @media screen and (min-width: 36rem) {
   #fork .f-fs-result .f-field-result > dt,
   #fork .f-fs-result .f-field-result > dd {
