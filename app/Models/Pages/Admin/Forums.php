@@ -397,6 +397,7 @@ class Forums extends Admin
                     'parent'               => 'required|integer|in:' . implode(',', $this->listOfIndexes),
                     'sort_by'              => 'required|integer|in:0,1,2',
                     'redirect_url'         => 'string:trim|max:255', //????
+                    'no_sum_mess'          => 'required|integer|in:0,1',
                     'perms.*.read_forum'   => 'checkbox',
                     'perms.*.post_replies' => 'checkbox',
                     'perms.*.post_topics'  => 'checkbox',
@@ -413,6 +414,7 @@ class Forums extends Admin
             $forum->forum_desc   = $v->forum_desc;
             $forum->sort_by      = $v->sort_by;
             $forum->redirect_url = $v->redirect_url;
+            $forum->no_sum_mess  = $v->no_sum_mess;
             if ($v->parent > 0) {
                 $forum->parent_forum_id = $v->parent;
                 $forum->cat_id          = $this->c->forums->get($v->parent)->cat_id;
@@ -533,6 +535,13 @@ class Forums extends Admin
                     'caption'   => __('Redirect label'),
                     'info'      => __('Redirect help'),
                     'disabled'  => $forum->num_topics || $forum->subforums ? true : null,
+                ],
+                'no_sum_mess' => [
+                    'type'    => 'radio',
+                    'value'   => $forum->no_sum_mess,
+                    'values'  => [0 => __('Yes'), 1 => __('No')],
+                    'caption' => __('Count messages label'),
+                    'info'    => __('Count messages help', $this->c->Router->link('AdminUsers'), __('Users')),
                 ],
             ],
         ];

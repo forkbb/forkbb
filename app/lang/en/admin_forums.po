@@ -125,3 +125,9 @@ msgstr ""
 
 msgid "Forum indent"
 msgstr "◦ ◦ "
+
+msgid "Count messages label"
+msgstr "Count messages for users"
+
+msgid "Count messages help"
+msgstr "If YES, then new messages from users in this forum will increase their counter of messages in the profile. You can recalculate messages from all users in <a href=\"%1$s\">%2$s</a>."
