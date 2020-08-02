@@ -44,13 +44,13 @@ class UpdateCountTopics extends Action
         }
 
         $query = 'UPDATE ::users AS u
-            SET u.num_topics = (
+            SET u.num_topics = COALESCE((
                 SELECT COUNT(t.id)
                 FROM ::topics AS t
                 INNER JOIN ::posts AS p ON t.first_post_id=p.id
                 WHERE p.poster_id=u.id AND t.moved_to=0
                 GROUP BY p.poster_id
-            )
+            ), 0)
             WHERE ' . $where;
 
         $this->c->DB->exec($query, $vars);
