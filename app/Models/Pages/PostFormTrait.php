@@ -47,7 +47,7 @@ trait PostFormTrait
                     'type'      => 'submit',
                     'value'     => __('Preview'),
 //                    'accesskey' => 'p',
-                    'class'     => 'f-minor',
+                    'class'     => 'f-opacity',
                 ],
             ],
         ];

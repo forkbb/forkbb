@@ -232,7 +232,7 @@ body,
   text-align: center;
 }
 
-#fork .f-btn.f-minor {
+#fork .f-btn.f-opacity {
   opacity: 0.5;
 }
 
@@ -248,8 +248,8 @@ body,
   background-color: #814A00;
 }
 
-#fork .f-btn.f-minor:hover,
-#fork .f-btn.f-minor:focus {
+#fork .f-btn.f-opacity:hover,
+#fork .f-btn.f-opacity:focus {
   opacity: 1;
 }
 
@@ -1261,15 +1261,6 @@ body,
 #fork .f-newtxt:after,
 #fork .f-unreadtxt:after {
   content: " ]";
-}
-
-#fork .f-btn-markread {
-  opacity: 0.5;
-}
-
-#fork .f-btn-markread:focus,
-#fork .f-btn-markread:hover {
-  opacity: 1;
 }
 
 /*

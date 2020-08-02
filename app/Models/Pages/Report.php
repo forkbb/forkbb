@@ -146,7 +146,7 @@ class Report extends Page
                     'type'      => 'btn',
                     'value'     => __('Go back'),
                     'link'      => 'javascript:history.go(-1)',
-                    'class'     => 'f-minor',
+                    'class'     => 'f-opacity',
                 ],
             ],
         ];

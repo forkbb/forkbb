@@ -487,6 +487,7 @@ class Forums extends Admin
                 'type'      => 'submit',
                 'value'     => __('Revert to default'),
 //                'accesskey' => 'r',
+                'class'     => 'f-opacity',
             ];
         }
 
