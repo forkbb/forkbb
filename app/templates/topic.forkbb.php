@@ -15,8 +15,9 @@
     @if ($p->model->canReply || $p->model->closed)
         <div class="f-actions-links">
         @if ($p->model->closed)
-          {!! __('Topic closed') !!}
-        @else
+          <span class="f-btn f-btn-topic-closed">{!! __('Topic closed') !!}</span>
+        @endif
+        @if ($p->model->canReply)
           <a class="f-btn f-btn-post-reply" href="{!! $p->model->linkReply !!}">{!! __('Post reply') !!}</a>
         @endif
         </div>

@@ -1375,6 +1375,12 @@ body,
 /* Страница темы */
 /*****************/
 
+#fork .f-btn-topic-closed {
+  pointer-events: none;
+  cursor: default;
+  background-color: #FFBABA;
+}
+
 /********************/
 /* Сообщение в теме */
 /********************/
