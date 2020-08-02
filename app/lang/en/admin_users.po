@@ -371,3 +371,15 @@ msgstr "Add user"
 
 msgid "New user added redirect"
 msgstr "New user added. Redirecting …"
+
+msgid "Updated the number of users posts redirect"
+msgstr "Updated the number of users posts. Redirecting …"
+
+msgid "Recalculate"
+msgstr "Recalculate"
+
+msgid "Recalculate head"
+msgstr "Recalculation of the number of users posts"
+
+msgid "Number of users posts"
+msgstr "Number of users posts"

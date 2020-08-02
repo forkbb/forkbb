@@ -371,3 +371,15 @@ msgstr "Добавление пользователя"
 
 msgid "New user added redirect"
 msgstr "Новый пользователь добавлен. Переадресация …"
+
+msgid "Updated the number of users posts redirect"
+msgstr "Сообщения пользователей пересчитаны. Переадресация …"
+
+msgid "Recalculate"
+msgstr "Пересчитать"
+
+msgid "Recalculate head"
+msgstr "Пересчет количества сообщений пользователей"
+
+msgid "Number of users posts"
+msgstr "Количество сообщений пользователей"

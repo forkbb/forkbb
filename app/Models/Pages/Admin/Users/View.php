@@ -126,7 +126,8 @@ class View extends Users
         }
 
         if ($this->user->isAdmin) {
-            $this->formNew = $this->formNew();
+            $this->formNew         = $this->formNew();
+            $this->formRecalculate = $this->formRecalculate();
         }
 
         return $this;
@@ -142,11 +143,16 @@ class View extends Users
         $form = [
             'action' => $this->c->Router->link('AdminUsers'),
             'hidden' => [],
-            'sets'   => [],
+            'sets'   => [
+                'new' => [
+                    'legend' => __('New user'),
+                    'fields' => [],
+                ]
+            ],
             'btns'   => [
                 'new' => [
                     'type'      => 'btn',
-                    'value'     => __('New user'),
+                    'value'     => __('Add'),
                     'link'      => $this->c->Router->link('AdminUsersNew'),
                     'accesskey' => 'n',
                 ],
@@ -416,6 +422,64 @@ class View extends Users
         $form['sets']['ip'] = [
             'legend' => __('IP search subhead'),
             'fields' => $fields,
+        ];
+
+        return $form;
+    }
+
+    /**
+     * Пересчитывает количество сообщений пользователей
+     *
+     * @param array $args
+     * @param string $method
+     *
+     * @return Page
+     */
+    public function recalculate(array $args, string $method): Page
+    {
+        $v = $this->c->Validator->reset()
+        ->addValidators([
+        ])->addRules([
+            'token' => 'token:AdminUsersRecalculate',
+        ])->addAliases([
+        ])->addArguments([
+        ])->addMessages([
+        ]);
+
+        if (! $v->validation($_POST)) {
+            return $this->c->Message->message('Bad token');
+        }
+
+        $this->c->users->updateCountPosts();
+
+        return $this->c->Redirect->page('AdminUsers')->message('Updated the number of users posts redirect');
+    }
+
+    /**
+     * Создает массив данных для формы пересчета количества сообщений
+     *
+     * @return array
+     */
+    protected function formRecalculate(): array
+    {
+        $form = [
+            'action' => $this->c->Router->link('AdminUsersRecalculate'),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('AdminUsersRecalculate'),
+            ],
+            'sets'   => [
+                'recalculate' => [
+                    'legend' => __('Number of users posts'),
+                    'fields' => [],
+                ]
+            ],
+            'btns'   => [
+                'recalculate' => [
+                    'type'      => 'submit',
+                    'value'     => __('Recalculate'),
+                    'accesskey' => 'r',
+                ],
+            ],
         ];
 
         return $form;

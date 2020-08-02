@@ -415,6 +415,12 @@ class Routing
                     'AdminUsersNew:view',
                     'AdminUsersNew'
                 );
+                $r->add(
+                    $r::PST,
+                    '/admin/users/recalculate',
+                    'AdminUsers:recalculate',
+                    'AdminUsersRecalculate'
+                );
             }
 
             if ($this->c->userRules->banUsers) {

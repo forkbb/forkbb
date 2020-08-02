@@ -23,3 +23,11 @@
         </div>
       </section>
 @endif
+@if ($form = $p->formRecalculate)
+      <section class="f-admin f-recalculate-form">
+        <h2>{!! __('Recalculate head') !!}</h2>
+        <div class="f-fdiv">
+    @include ('layouts/form')
+        </div>
+      </section>
+@endif

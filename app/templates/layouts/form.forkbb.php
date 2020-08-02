@@ -17,7 +17,7 @@
         @foreach ($setVal['info'] as $key => $cur)
           <p class="f-finfo"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
         @endforeach
-    @elseif ($setVal['fields'])
+    @elseif (isset($setVal['fields']))
           <fieldset id="id-fs-{{ $setKey }}" @if ($setVal['class']) class="f-fs-{!! \implode(' f-fs-', (array) $setVal['class']) !!}" @endif>
         @if ($setVal['legend'])
             <legend>{!! $setVal['legend'] !!}</legend>
