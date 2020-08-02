@@ -269,7 +269,7 @@ class Bans extends Admin
             'btns'   => [
                 'submit' => [
                     'type'      => 'submit',
-                    'value'     => __('Submit'),
+                    'value'     => __('AdminBansNew' === $this->formBanPage ? 'Add' : 'Update'),
 //                    'accesskey' => 's',
                 ],
             ],
