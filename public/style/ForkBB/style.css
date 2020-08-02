@@ -667,6 +667,7 @@ body,
   border: 0.0625rem solid #AA7939;
   border-collapse: collapse;
 /*  word-break: break-all; */
+  table-layout: fixed;
 }
 
 #fork-debug thead {
@@ -1625,8 +1626,13 @@ body,
   }
 
   #fork .f-avatar {
+    flex-grow: 0;
     order: 0;
     text-align: center;
+  }
+
+  #fork .f-user-info {
+    flex-grow: 0;
   }
 
   #fork .f-user-info > li:not(.f-username),
@@ -1686,6 +1692,7 @@ body,
 
 #fork .f-preview .f-post-body {
   border-top: 0.125rem solid #AA7939;
+  border-left: 0.125rem solid #AA7939;
   width: 100%;
 }
 
@@ -1732,7 +1739,7 @@ body,
 
 #fork textarea#id-message,
 #fork textarea#id-reason {
-  height: 11rem;
+  height: 15rem;
 }
 
 @media screen and (min-width: 50rem) {
