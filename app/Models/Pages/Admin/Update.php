@@ -114,6 +114,30 @@ class Update extends Admin
     }
 
     /**
+     * Содержимое файла main.php
+     * @var string
+     */
+    protected $configFile;
+
+    /**
+     * Начальная позиция массива конфига в файле main.php
+     */
+    protected $configArrPos;
+
+    protected function loadAndCheckConfig(): bool
+    {
+        $this->configFile = \file_get_contents($this->c->DIR_CONFIG . '/main.php');
+
+        if (\preg_match('%\[\s+\'BASE_URL\'\s+=>%', $this->configFile, $matches, \PREG_OFFSET_CAPTURE)) {
+            $this->configArrPos = $matches[0][1];
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Подготавливает данные для страницы обновления форума
      *
      * @param array $args
@@ -125,16 +149,6 @@ class Update extends Admin
     {
         if (true === $this->hasLock()) {
             return $this->returnMaintenance(false);
-        }
-
-        // версия PHP
-        if (\version_compare(\PHP_VERSION, self::PHP_MIN, '<')) {
-            $this->fIswev = ['e', __('You are running error', 'PHP', \PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN)];
-        }
-
-        // база не от ForkBB
-        if ($this->c->config->i_fork_revision < 1) {
-            $this->fIswev = ['e', __('Version mismatch error')];
         }
 
         if (
@@ -155,6 +169,33 @@ class Update extends Admin
                 ]);
 
                 if ($v->validation($_POST)) {
+                    // версия PHP
+                    if (\version_compare(\PHP_VERSION, self::PHP_MIN, '<')) {
+                        return $this->c->Message->message(
+                            __('You are running error', 'PHP', \PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN),
+                            true,
+                            503
+                        );
+                    }
+
+                    // база не от ForkBB ????
+                    if ($this->c->config->i_fork_revision < 1) {
+                        return $this->c->Message->message(
+                            'Version mismatch error',
+                            true,
+                            503
+                        );
+                    }
+
+                    // загрузка и проверка конфига
+                    if (true !== $this->loadAndCheckConfig()) {
+                        return $this->c->Message->message(
+                            'The structure of the main.php file is undefined',
+                            true,
+                            503
+                        );
+                    }
+
                     $uid = $this->setLock();
 
                     if (null === $uid) {
@@ -312,6 +353,15 @@ class Update extends Admin
 #     */
 #    protected function stageNumber1(array $args): ?int
 #    {
+#        $this->configAdd(
+#            [
+#                'multiple' => [
+#                    'AdminUsersRecalculate' => '\ForkBB\Models\Pages\Admin\Users\Recalculate::class'
+#                ],
+#            ],
+#            'after:AdminUsersNew'
+#        );
 #
+#        return null;
 #    }
 }

@@ -203,3 +203,6 @@ msgstr "Someone is already registered with the username %s. The username you ent
 
 msgid "Stage %1$s (%2$s)"
 msgstr "Stage %1$s (%2$s)"
+
+msgid "The structure of the main.php file is undefined"
+msgstr "The structure of the main.php file is undefined."

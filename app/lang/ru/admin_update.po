@@ -203,3 +203,6 @@ msgstr "Есть очень похожее имя - %s. Имена должны 
 
 msgid "Stage %1$s (%2$s)"
 msgstr "Шаг %1$s (%2$s)"
+
+msgid "The structure of the main.php file is undefined"
+msgstr "Структура файла main.php не определена."
