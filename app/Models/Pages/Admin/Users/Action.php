@@ -218,7 +218,7 @@ class Action extends Users
                 'delete'  => [
                     'type'      => 'submit',
                     'value'     => __('Delete users'),
-                    'accesskey' => 'd',
+//                    'accesskey' => 'd',
                 ],
                 'cancel'  => [
                     'type'      => 'btn',
@@ -409,7 +409,7 @@ class Action extends Users
                 'move'  => [
                     'type'      => 'submit',
                     'value'     => __('Move users'),
-                    'accesskey' => 'm',
+//                    'accesskey' => 'm',
                 ],
                 'cancel'  => [
                     'type'      => 'btn',

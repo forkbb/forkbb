@@ -140,7 +140,7 @@ class Report extends Page
                 'submit' => [
                     'type'      => 'submit',
                     'value'     => __('Submit'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
                 'back' => [
                     'type'      => 'btn',

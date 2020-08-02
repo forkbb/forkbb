@@ -84,7 +84,7 @@ class Rules extends Page
                 'register' => [
                     'type'      => 'submit',
                     'value'     => __('Register'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
             ],
         ];

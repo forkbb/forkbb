@@ -129,7 +129,7 @@ class Delete extends Page
                 'delete'  => [
                     'type'      => 'submit',
                     'value'     => __($deleteTopic ? 'Delete  topic' : 'Delete  post'),
-                    'accesskey' => 'd',
+//                    'accesskey' => 'd',
                 ],
                 'cancel'  => [
                     'type'      => 'btn',

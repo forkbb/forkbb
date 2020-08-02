@@ -41,12 +41,12 @@ trait PostFormTrait
                 'submit' => [
                     'type'      => 'submit',
                     'value'     => __('Submit'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
                 'preview' => [
                     'type'      => 'submit',
                     'value'     => __('Preview'),
-                    'accesskey' => 'p',
+//                    'accesskey' => 'p',
                     'class'     => 'f-minor',
                 ],
             ],

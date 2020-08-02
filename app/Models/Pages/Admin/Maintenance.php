@@ -94,7 +94,7 @@ class Maintenance extends Admin
                 'submit' => [
                     'type'      => 'submit',
                     'value'     => __('Save changes'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
             ],
         ];
@@ -164,7 +164,7 @@ class Maintenance extends Admin
                 'rebuild' => [
                     'type'      => 'submit',
                     'value'     => __('Rebuild index'),
-                    'accesskey' => 'r',
+//                    'accesskey' => 'r',
                 ],
             ],
         ];

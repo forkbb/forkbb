@@ -198,7 +198,7 @@ class Options extends Admin
                 'save'  => [
                     'type'      => 'submit',
                     'value'     => __('Save changes'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
             ],
         ];

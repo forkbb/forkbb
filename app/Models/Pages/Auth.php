@@ -132,7 +132,7 @@ class Auth extends Page
                 'login' => [
                     'type'      => 'submit',
                     'value'     => __('Sign in'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
             ],
         ];
@@ -305,7 +305,7 @@ class Auth extends Page
                 'submit' => [
                     'type'      => 'submit',
                     'value'     => __('Send email'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
             ],
         ];
@@ -429,7 +429,7 @@ class Auth extends Page
                 'login' => [
                     'type'      => 'submit',
                     'value'     => __('Change passphrase'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
             ],
         ];

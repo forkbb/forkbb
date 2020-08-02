@@ -154,7 +154,7 @@ class View extends Users
                     'type'      => 'btn',
                     'value'     => __('Add'),
                     'link'      => $this->c->Router->link('AdminUsersNew'),
-                    'accesskey' => 'n',
+//                    'accesskey' => 'n',
                 ],
             ],
         ];
@@ -181,7 +181,7 @@ class View extends Users
                 'search' => [
                     'type'      => 'submit',
                     'value'     => __('Submit search'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
             ],
         ];
@@ -407,7 +407,7 @@ class View extends Users
                 'find' => [
                     'type'      => 'submit',
                     'value'     => __('Find IP address'),
-                    'accesskey' => 'f',
+//                    'accesskey' => 'f',
                 ],
             ],
         ];
@@ -477,7 +477,7 @@ class View extends Users
                 'recalculate' => [
                     'type'      => 'submit',
                     'value'     => __('Recalculate'),
-                    'accesskey' => 'r',
+//                    'accesskey' => 'r',
                 ],
             ],
         ];

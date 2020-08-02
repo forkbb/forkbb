@@ -148,12 +148,12 @@ class Forums extends Admin
                     'type'      => 'btn',
                     'value'     => __('New forum'),
                     'link'      => $this->c->Router->link('AdminForumsNew'),
-                    'accesskey' => 'n',
+//                    'accesskey' => 'n',
                 ],
                 'update' => [
                     'type'      => 'submit',
                     'value'     => __('Update positions'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
             ],
         ];
@@ -337,7 +337,7 @@ class Forums extends Admin
                 'delete' => [
                     'type'      => 'submit',
                     'value'     => __('Delete forum'),
-                    'accesskey' => 'd',
+//                    'accesskey' => 'd',
                 ],
                 'cancel' => [
                     'type'      => 'btn',
@@ -486,14 +486,14 @@ class Forums extends Admin
             $form['btns']['reset'] = [
                 'type'      => 'submit',
                 'value'     => __('Revert to default'),
-                'accesskey' => 'r',
+//                'accesskey' => 'r',
             ];
         }
 
         $form['btns']['submit'] = [
             'type'      => 'submit',
             'value'     => empty($forum->id) ? __('Add') : __('Update'),
-            'accesskey' => 's',
+//            'accesskey' => 's',
         ];
 
         $form['sets']['forum'] = [

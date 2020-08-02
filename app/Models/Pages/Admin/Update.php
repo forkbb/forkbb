@@ -286,7 +286,7 @@ class Update extends Admin
                         'info1' => [
                             'type'  => '', //????
                             'value' => __('Members message'),
-#                            'html'  => true,
+//                            'html'  => true,
                         ],
                     ],
                 ],
@@ -295,7 +295,7 @@ class Update extends Admin
                 'start' => [
                     'type'      => 'submit',
                     'value'     => __('Start update'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
             ],
         ];

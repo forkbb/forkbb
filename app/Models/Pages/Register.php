@@ -119,7 +119,7 @@ class Register extends Page
                 'register' => [
                     'type'      => 'submit',
                     'value'     => __('Sign up'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
             ],
         ];

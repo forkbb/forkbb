@@ -132,7 +132,7 @@ class NewUser extends Users
                 'add' => [
                     'type'      => 'submit',
                     'value'     => __('Add'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
             ],
         ];

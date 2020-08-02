@@ -78,7 +78,7 @@ class Categories extends Admin
                 'submit' => [
                     'type'      => 'submit',
                     'value'     => __('Save changes'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
             ],
         ];
@@ -244,7 +244,7 @@ class Categories extends Admin
                 'delete' => [
                     'type'      => 'submit',
                     'value'     => __('Delete category'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
                 'cancel' => [
                     'type'      => 'btn',

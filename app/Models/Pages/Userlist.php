@@ -175,7 +175,7 @@ class Userlist extends Page
                 'submit' => [
                     'type'      => 'submit',
                     'value'     => __($this->user->searchUsers ? 'Search btn' : 'Submit'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
             ],
         ];

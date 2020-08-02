@@ -144,7 +144,7 @@ class Bans extends Admin
                 'search' => [
                     'type'      => 'submit',
                     'value'     => __('Submit search'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
             ],
         ];
@@ -270,7 +270,7 @@ class Bans extends Admin
                 'submit' => [
                     'type'      => 'submit',
                     'value'     => __('Submit'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
             ],
         ];

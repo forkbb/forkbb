@@ -92,7 +92,7 @@ class Groups extends Admin
                 'submit' => [
                     'type'      => 'submit',
                     'value'     => __('Add'),
-                    'accesskey' => 'n',
+//                    'accesskey' => 'n',
                 ],
             ],
         ];
@@ -128,7 +128,7 @@ class Groups extends Admin
                 'submit'  => [
                     'type'      => 'submit',
                     'value'     => __('Update'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
             ],
         ];
@@ -390,7 +390,7 @@ class Groups extends Admin
                 'submit'  => [
                     'type'      => 'submit',
                     'value'     => null === $group->g_id ? __('Add') : __('Update'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
             ],
         ];
@@ -776,7 +776,7 @@ class Groups extends Admin
                 'delete' => [
                     'type'      => 'submit',
                     'value'     => __('Delete group'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
                 'cancel' => [
                     'type'      => 'btn',

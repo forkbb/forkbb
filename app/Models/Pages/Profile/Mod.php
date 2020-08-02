@@ -130,7 +130,7 @@ class Mod extends Profile
                 'save' => [
                     'type'      => 'submit',
                     'value'     => __('Save'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
             ],
         ];

@@ -91,7 +91,7 @@ class Censoring extends Admin
                 'submit' => [
                     'type'      => 'submit',
                     'value'     => __('Save changes'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
             ],
         ];

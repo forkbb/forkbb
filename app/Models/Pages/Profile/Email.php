@@ -214,7 +214,7 @@ class Email extends Profile
                 'submit' => [
                     'type'      => 'submit',
                     'value'     => __('Submit'),
-                    'accesskey' => 's',
+//                    'accesskey' => 's',
                 ],
             ],
         ];
