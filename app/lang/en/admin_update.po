@@ -206,3 +206,21 @@ msgstr "Stage %1$s (%2$s)"
 
 msgid "The structure of the main.php file is undefined"
 msgstr "The structure of the main.php file is undefined."
+
+msgid "The %s table already exists. Delete it."
+msgstr "The %s table already exists. Delete it."
+
+msgid "Unable to create %s table"
+msgstr "Unable to create %s table."
+
+msgid "Unable to add test_field field to %s table"
+msgstr "Unable to add test_field field to %s table."
+
+msgid "Unable to insert line to %s table"
+msgstr "Unable to insert line to %s table."
+
+msgid "Unable to drop test_field field from %s table"
+msgstr "Unable to drop test_field field from %s table."
+
+msgid "Unable to drop %s table"
+msgstr "Unable to drop %s table."

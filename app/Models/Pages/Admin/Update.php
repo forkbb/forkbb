@@ -15,10 +15,12 @@ class Update extends Admin
 {
     const PHP_MIN = '7.3.0';
 
+    const LATEST_REV_WITH_DB_CHANGES = 2;
+
     const LOCK_NAME = 'lock_update';
     const LOCk_TTL  = 1800;
 
-    const CONFIG_FILE = 'config/main.php';
+    const CONFIG_FILE = 'main.php';
 
     /**
      * Конструктор
@@ -126,7 +128,7 @@ class Update extends Admin
 
     protected function loadAndCheckConfig(): bool
     {
-        $this->configFile = \file_get_contents($this->c->DIR_CONFIG . '/main.php');
+        $this->configFile = \file_get_contents($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
 
         if (\preg_match('%\[\s+\'BASE_URL\'\s+=>%', $this->configFile, $matches, \PREG_OFFSET_CAPTURE)) {
             $this->configArrPos = $matches[0][1];
@@ -169,31 +171,91 @@ class Update extends Admin
                 ]);
 
                 if ($v->validation($_POST)) {
+                    $e = null;
+
                     // версия PHP
-                    if (\version_compare(\PHP_VERSION, self::PHP_MIN, '<')) {
-                        return $this->c->Message->message(
-                            __('You are running error', 'PHP', \PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN),
-                            true,
-                            503
-                        );
+                    if (
+                        null === $e
+                        && \version_compare(\PHP_VERSION, self::PHP_MIN, '<')
+                    ) {
+                        $e = __('You are running error', 'PHP', \PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN);
                     }
 
                     // база не от ForkBB ????
-                    if ($this->c->config->i_fork_revision < 1) {
-                        return $this->c->Message->message(
-                            'Version mismatch error',
-                            true,
-                            503
-                        );
+                    if (
+                        null === $e
+                        && $this->c->config->i_fork_revision < 1
+                    ) {
+                        $e = 'Version mismatch error';
                     }
 
                     // загрузка и проверка конфига
-                    if (true !== $this->loadAndCheckConfig()) {
-                        return $this->c->Message->message(
-                            'The structure of the main.php file is undefined',
-                            true,
-                            503
-                        );
+                    if (
+                        null === $e
+                        && true !== $this->loadAndCheckConfig()
+                    ) {
+                        $e = 'The structure of the main.php file is undefined';
+                    }
+
+                    // проверка доступности базы данных на изменения
+                    if (
+                        null === $e
+                        && $this->c->config->i_fork_revision < self::LATEST_REV_WITH_DB_CHANGES
+                    ) {
+                        $test_table = 'test_tb_for_update';
+
+                        if (
+                            null === $e
+                            && true === $this->c->DB->tableExists($test_table)
+                        ) {
+                            $e = __('The %s table already exists. Delete it.', $test_table);
+                        }
+
+                        $schema = [
+                            'FIELDS' => [
+                                'id' => ['SERIAL', false],
+                            ],
+                            'PRIMARY KEY' => ['id'],
+                        ];
+                        if (
+                            null === $e
+                            && false === $this->c->DB->createTable($test_table, $schema)
+                        ) {
+                            $e = __('Unable to create %s table', $test_table);
+                        }
+
+                        if (
+                            null === $e
+                            && false === $this->c->DB->addField($test_table, 'test_field', 'VARCHAR(80)', false, '')
+                        ) {
+                            $e = __('Unable to add test_field field to %s table', $test_table);
+                        }
+
+                        $sql = "INSERT INTO ::{$test_table} (test_field) VALUES ('TEST_VALUE')";
+                        if (
+                            null === $e
+                            && false === $this->c->DB->exec($sql)
+                        ) {
+                            $e = __('Unable to insert line to %s table', $test_table);
+                        }
+
+                        if (
+                            null === $e
+                            && false === $this->c->DB->dropField($test_table, 'test_field')
+                        ) {
+                            $e = __('Unable to drop test_field field from %s table', $test_table);
+                        }
+
+                        if (
+                            null === $e
+                            && false === $this->c->DB->dropTable($test_table)
+                        ) {
+                            $e = __('Unable to drop %s table', $test_table);
+                        }
+                    }
+
+                    if (\is_string($e)) {
+                        return $this->c->Message->message($e, true, 503);
                     }
 
                     $uid = $this->setLock();

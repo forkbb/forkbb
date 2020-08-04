@@ -206,3 +206,21 @@ msgstr "Шаг %1$s (%2$s)"
 
 msgid "The structure of the main.php file is undefined"
 msgstr "Структура файла main.php не определена."
+
+msgid "The %s table already exists. Delete it."
+msgstr "Таблица %s уже существует. Удалите её."
+
+msgid "Unable to create %s table"
+msgstr "Невозможно создать таблицу %s."
+
+msgid "Unable to add test_field field to %s table"
+msgstr "Невозможно добавить поле test_field в таблицу %s."
+
+msgid "Unable to insert line to %s table"
+msgstr "Невозможно вставить строку в таблицу %s."
+
+msgid "Unable to drop test_field field from %s table"
+msgstr "Невозможно удалить поле test_field из таблицы %s."
+
+msgid "Unable to drop %s table"
+msgstr "Невозможно удалить таблицу %s."
