@@ -124,4 +124,9 @@ class Profile extends Rules
     {
         return $this->user->isAdmin && $this->curUser->isAdmMod && ! $this->curUser->isAdmin;
     }
+
+    protected function geteditIpCheckType(): bool
+    {
+        return $this->my || $this->admin;
+    }
 }

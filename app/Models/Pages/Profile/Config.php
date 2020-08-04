@@ -47,7 +47,11 @@ class Config extends Profile
                     'show_img_sig'  => 'required|integer|in:0,1',
                     'disp_topics'   => 'integer|min:0|max:50|to_zero',
                     'disp_posts'    => 'integer|min:0|max:50|to_zero',
-                    'ip_check_type' => 'required|integer|in:0,1,2',
+                    'ip_check_type' => 'required|integer|in:' . (
+                        $this->rules->editIpCheckType
+                        ? '0,1,2'
+                        : (int) $this->curUser->ip_check_type
+                    ),
                 ])->addAliases([
                     'language'      => 'Language',
                     'style'         => 'Style',
@@ -73,6 +77,10 @@ class Config extends Profile
                 unset($data['token']);
 
                 $this->curUser->replAttrs($data, true);
+
+                if ($this->curUser->isModified('ip_check_type')) {
+//                    $this->curUser->updateLoginIpCache(); // ????
+                }
 
                 $this->c->users->update($this->curUser);
 
@@ -309,15 +317,16 @@ class Config extends Profile
             'class'  => 'data-edit',
             'fields' => [
                 'ip_check_type' => [
-                    'type'    => 'select',
-                    'options' => [
+                    'type'     => 'select',
+                    'options'  => [
                         '0' => __('Disable check'),
                         '1' => __('Not strict check'),
                         '2' => __('Strict check'),
                     ],
-                    'value'   => $this->curUser->ip_check_type,
-                    'caption' => __('IP check'),
-                    'info'    => __('IP check info'),
+                    'value'    => $this->curUser->ip_check_type,
+                    'caption'  => __('IP check'),
+                    'info'     => __('IP check info'),
+                    'disabled' => $this->rules->editIpCheckType ? null : true,
                 ],
             ],
         ];
