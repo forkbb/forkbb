@@ -78,6 +78,14 @@ class DataModel extends Model
     }
 
     /**
+     * Возвращает модифицировано ли свойство модели
+     */
+    public function isModified(string $name): bool
+    {
+        return ! empty($this->zModFlags[$name]);
+    }
+
+    /**
      * Обнуляет массив флагов измененных свойств модели
      */
     public function resModified(): void
