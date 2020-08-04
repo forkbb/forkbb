@@ -26,7 +26,7 @@ class Profile extends Rules
         $this->ready       = true;
         $this->user        = $this->c->user;
         $this->curUser     = $curUser;
-        $this->my          = $curUser->id === $this->user->id;
+        $this->my          = ! $curUser->isGuest && $curUser->id === $this->user->id;
         $this->admin       = $this->user->isAdmin && ($this->my || ! $curUser->isAdmin);
         $this->moderator   = $this->user->isAdmMod && ($this->my || ! $curUser->isAdmMod);
         $this->editProfile = $this->my || $this->admin || ($this->moderator && '1' == $this->user->g_mod_edit_users);
