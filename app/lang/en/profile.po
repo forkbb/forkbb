@@ -530,3 +530,21 @@ msgstr "Moderator"
 
 msgid "Private information"
 msgstr "Private information"
+
+msgid "Security"
+msgstr "Security"
+
+msgid "IP check"
+msgstr "IP check"
+
+msgid "Disable check"
+msgstr "Off"
+
+msgid "Not strict check"
+msgstr "Not strict"
+
+msgid "Strict check"
+msgstr "Strict"
+
+msgid "IP check info"
+msgstr "<b>Strict</b> - if your ip address has changed, you will be logout;<br><b>Not strict</b> - this board remembers 10-20 of your last ip addresses, if your current ip address is not in this list, you will be logout;<br><b>Off</b> - changing your ip address does not affect anything."
