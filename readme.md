@@ -1,4 +1,4 @@
-# ForkBB rev 1 Pre-Alpha Readme
+# ForkBB rev 2 Pre-Alpha Readme
 
 ## About
 

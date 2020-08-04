@@ -387,7 +387,7 @@ class Mysql
         $this->testStr($table);
         $this->testStr($field);
         $query = "ALTER TABLE `{$table}` ADD `{$field}` " . $this->replType($type);
-        if ($allowNull) {
+        if (! $allowNull) {
             $query .= ' NOT NULL';
         }
         if (null !== $default) {
@@ -420,7 +420,7 @@ class Mysql
         $this->testStr($table);
         $this->testStr($field);
         $query = "ALTER TABLE `{$table}` MODIFY `{$field}` " . $this->replType($type);
-        if ($allowNull) {
+        if (! $allowNull) {
             $query .= ' NOT NULL';
         }
         if (null !== $default) {

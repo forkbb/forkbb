@@ -426,4 +426,19 @@ class Update extends Admin
 #
 #        return null;
 #    }
+
+    /**
+     * rev.1 to rev.2
+     */
+    protected function stageNumber1(array $args): ?int
+    {
+        $this->c->DB->alterField('users', 'gender', 'TINYINT UNSIGNED', false, 0);
+        $this->c->DB->alterField('users', 'disp_topics', 'TINYINT UNSIGNED', false, 0);
+        $this->c->DB->alterField('users', 'disp_posts', 'TINYINT UNSIGNED', false, 0);
+
+        $this->c->DB->addField('users', 'ip_check_type', 'TINYINT UNSIGNED', false, 0);
+        $this->c->DB->addField('users', 'login_ip_cache', 'VARCHAR(255)', false, '');
+
+        return null;
+    }
 }
