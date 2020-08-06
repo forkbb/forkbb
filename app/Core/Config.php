@@ -49,9 +49,6 @@ class Config
             $this->configArrPos     = $matches[0][1];
             $this->configWhitespace = $matches[1][0];
 
-
-            exit(var_dump($this->getArray()));
-
             return;
         }
 
