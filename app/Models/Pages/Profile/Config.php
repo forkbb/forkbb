@@ -79,7 +79,7 @@ class Config extends Profile
                 $this->curUser->replAttrs($data, true);
 
                 if ($this->curUser->isModified('ip_check_type')) {
-//                    $this->curUser->updateLoginIpCache(); // ????
+//                    $this->c->users->updateLoginIpCache($this->curUser); // ????
                 }
 
                 $this->c->users->update($this->curUser);

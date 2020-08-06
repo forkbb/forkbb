@@ -2,6 +2,7 @@
 
 namespace ForkBB\Models\Pages\Admin;
 
+use ForkBB\Core\Config;
 use ForkBB\Core\Container;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
@@ -9,6 +10,7 @@ use ForkBB\Models\Pages\Admin;
 use PDO;
 use PDOException;
 use RuntimeException;
+use ForkBB\Core\Exceptions\ForkException;
 use function \ForkBB\__;
 
 class Update extends Admin
@@ -21,6 +23,12 @@ class Update extends Admin
     const LOCk_TTL  = 1800;
 
     const CONFIG_FILE = 'main.php';
+
+    /**
+     * Конфиг
+     * @var Config
+     */
+    protected $coreConfig;
 
     /**
      * Конструктор
@@ -116,30 +124,6 @@ class Update extends Admin
     }
 
     /**
-     * Содержимое файла main.php
-     * @var string
-     */
-    protected $configFile;
-
-    /**
-     * Начальная позиция массива конфига в файле main.php
-     */
-    protected $configArrPos;
-
-    protected function loadAndCheckConfig(): bool
-    {
-        $this->configFile = \file_get_contents($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
-
-        if (\preg_match('%\[\s+\'BASE_URL\'\s+=>%', $this->configFile, $matches, \PREG_OFFSET_CAPTURE)) {
-            $this->configArrPos = $matches[0][1];
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * Подготавливает данные для страницы обновления форума
      *
      * @param array $args
@@ -190,11 +174,12 @@ class Update extends Admin
                     }
 
                     // загрузка и проверка конфига
-                    if (
-                        null === $e
-                        && true !== $this->loadAndCheckConfig()
-                    ) {
-                        $e = 'The structure of the main.php file is undefined';
+                    if (null === $e) {
+                        try {
+                            $this->coreConfig = new Config($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+                        } catch (ForkException $excp) {
+                            $e = $excp->getMessage();
+                        }
                     }
 
                     // проверка доступности базы данных на изменения
@@ -415,7 +400,7 @@ class Update extends Admin
 #     */
 #    protected function stageNumber1(array $args): ?int
 #    {
-#        $this->configAdd(
+#        $this->coreConfig->add(
 #            [
 #                'multiple' => [
 #                    'AdminUsersRecalculate' => '\ForkBB\Models\Pages\Admin\Users\Recalculate::class'
