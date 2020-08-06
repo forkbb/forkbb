@@ -17,11 +17,6 @@ class Check extends Method
      */
     public function check(User $user): bool
     {
-        // админ
-        if ($user->isAdmin) {
-            return false;
-        }
-
         // удаление просроченных банов
         if (! empty($this->model->banList)) { // ???? зачем при каждом запуске проверять просроченность?
             $ids = [];
@@ -39,6 +34,11 @@ class Check extends Method
             if (! empty($ids)) {
                 $this->model->delete(...$ids);
             }
+        }
+
+        // админ
+        if ($user->isAdmin) {
+            return false;
         }
 
         // проверка гостя

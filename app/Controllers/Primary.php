@@ -58,10 +58,7 @@ class Primary
             return null;
         }
 
-        if (
-            ! $this->c->user->isAdmin
-            && $this->c->bans->check($this->c->user)
-        ) {
+        if ($this->c->bans->check($this->c->user)) {
             return $this->c->Ban->ban($this->c->user);
         }
 
