@@ -25,9 +25,9 @@ class DataModel extends Model
      *
      * @param array $attrs
      *
-     * @return DataModel
+     * @return Model
      */
-    public function setAttrs(array $attrs): self
+    public function setAttrs(array $attrs): Model
     {
         $this->zModFlags   = [];
         $this->zTrackFlags = [];
@@ -44,7 +44,7 @@ class DataModel extends Model
      *
      * @return DataModel
      */
-    public function replAttrs(array $attrs, bool $setFlags = false): self
+    public function replAttrs(array $attrs, bool $setFlags = false): DataModel
     {
         foreach ($attrs as $name => $value) {
             $this->__set($name, $value);

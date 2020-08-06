@@ -11,7 +11,7 @@ class Model extends ParentModel
      *
      * @return BanList\Model
      */
-    public function init(): self
+    public function init(): Model
     {
         if ($this->c->Cache->has('banlist')) {
             $list = $this->c->Cache->get('banlist');

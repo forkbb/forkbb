@@ -11,7 +11,7 @@ class Model extends ParentModel
      *
      * @return AdminList\Model
      */
-    public function init(): self
+    public function init(): Model
     {
         if ($this->c->Cache->has('admins')) {
             $this->list = $this->c->Cache->get('admins');
@@ -28,7 +28,7 @@ class Model extends ParentModel
      *
      * @return AdminList\Model
      */
-    public function reset(): self
+    public function reset(): Model
     {
         $this->c->Cache->delete('admins');
 

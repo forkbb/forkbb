@@ -68,9 +68,9 @@ class Parser extends Parserus
      *
      * @param array $bb
      *
-     * @return Parser
+     * @return Parserus
      */
-    public function addBBCode(array $bb): self
+    public function addBBCode(array $bb): Parserus
     {
         if ('quote' == $bb['tag']) {
             $bb['self nesting'] = (int) $this->c->config->o_quote_depth;

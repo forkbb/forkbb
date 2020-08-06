@@ -12,7 +12,7 @@ class Model extends ParentModel
      *
      * @return Models\Stats
      */
-    public function init(): self
+    public function init(): Model
     {
         if ($this->c->Cache->has('stats')) {
             $list = $this->c->Cache->get('stats');
@@ -36,7 +36,7 @@ class Model extends ParentModel
      *
      * @return Models\Stats
      */
-    public function reset(): self
+    public function reset(): Model
     {
         $this->c->Cache->delete('stats');
 

@@ -36,7 +36,7 @@ class Method
      *
      * @return Method
      */
-    public function setModel(Model $model): self
+    public function setModel(Model $model): Method
     {
         $this->model = $model;
 

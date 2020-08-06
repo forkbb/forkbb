@@ -30,7 +30,7 @@ class Model extends ParentModel
      *
      * @return Online\Model
      */
-    public function calc(Page $page): self
+    public function calc(Page $page): Model
     {
         if ($this->done) {
             return $this;

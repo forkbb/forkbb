@@ -169,7 +169,7 @@ class Mail
      *
      * @return Mail
      */
-    public function reset(): self
+    public function reset(): Mail
     {
         $this->to = [];
         $this->headers = [];
@@ -185,7 +185,7 @@ class Mail
      *
      * @return Mail
      */
-    public function setSubject(string $subject): self
+    public function setSubject(string $subject): Mail
     {
         $this->headers['Subject'] = $this->encodeText(\preg_replace('%[\x00-\x1F]%', '', \trim($subject)));
 
@@ -200,7 +200,7 @@ class Mail
      *
      * @return Mail
      */
-    public function addTo($email, string $name = null): self
+    public function addTo($email, string $name = null): Mail
     {
         if (! \is_array($email)) {
             $email = \preg_split('%[,\n\r]%', (string) $email, -1, PREG_SPLIT_NO_EMPTY);
@@ -223,7 +223,7 @@ class Mail
      *
      * @return Mail
      */
-    public function setTo($email, string $name = null): self
+    public function setTo($email, string $name = null): Mail
     {
         $this->to = [];
 
@@ -238,7 +238,7 @@ class Mail
      *
      * @return Mail
      */
-    public function setFrom(string $email, string $name = null): self
+    public function setFrom(string $email, string $name = null): Mail
     {
         $email = $this->valid($email, false, true);
         if (false !== $email) {
@@ -256,7 +256,7 @@ class Mail
      *
      * @return Mail
      */
-    public function setReplyTo(string $email, string $name = null): self
+    public function setReplyTo(string $email, string $name = null): Mail
     {
         $email = $this->valid($email, false, true);
         if (false !== $email) {
@@ -323,7 +323,7 @@ class Mail
      *
      * @return Mail
      */
-    public function setFolder(string $folder): self
+    public function setFolder(string $folder): Mail
     {
         $this->folder = $folder;
 
@@ -337,7 +337,7 @@ class Mail
      *
      * @return Mail
      */
-    public function setLanguage(string $language): self
+    public function setLanguage(string $language): Mail
     {
         $this->language = $language;
 
@@ -354,7 +354,7 @@ class Mail
      *
      * @return Mail
      */
-    public function setTpl(string $tpl, array $data): self
+    public function setTpl(string $tpl, array $data): Mail
     {
         $file = \rtrim($this->folder, '\\/') . '/' . $this->language . '/mail/' . $tpl;
         if (! \is_file($file)) {
@@ -380,7 +380,7 @@ class Mail
      *
      * @return Mail
      */
-    public function setMessage(string $message): self
+    public function setMessage(string $message): Mail
     {
         $this->message = \str_replace("\0", $this->EOL,
                          \str_replace(["\r\n", "\n", "\r"], "\0",

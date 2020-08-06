@@ -11,7 +11,7 @@ class Model extends ParentModel
      *
      * @return DBMap\Model
      */
-    public function init(): self
+    public function init(): Model
     {
         if ($this->c->Cache->has('db_map')) {
             $this->setAttrs($this->c->Cache->get('db_map'));
@@ -29,7 +29,7 @@ class Model extends ParentModel
      *
      * @return DBMap\Model
      */
-    public function reset(): self
+    public function reset(): Model
     {
         $this->c->Cache->delete('db_map');
 

@@ -11,7 +11,7 @@ class Model extends ParentModel
      *
      * @return Stopwords\Model
      */
-    public function init(): self
+    public function init(): Model
     {
         $data = $this->c->Cache->get('stopwords');
         if (
@@ -58,7 +58,7 @@ class Model extends ParentModel
      *
      * @return Stopwords\Model
      */
-    protected function load(): self
+    protected function load(): Model
     {
         $id = $this->generateId();
 

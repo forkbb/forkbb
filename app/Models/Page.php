@@ -256,7 +256,7 @@ abstract class Page extends Model
      *
      * @return Page
      */
-    public function addStyle(string $name, string $value): self
+    public function addStyle(string $name, string $value): Page
     {
         $attr = $this->getAttr('pageHeaders', []);
         $attr['style'][$name] = $value;
@@ -274,7 +274,7 @@ abstract class Page extends Model
      *
      * @return Page
      */
-    public function header(string $key, string $value, bool $replace = true): self
+    public function header(string $key, string $value, bool $replace = true): Page
     {
         if ('HTTP/' === \substr($key, 0, 5)) {
             if (
@@ -319,7 +319,7 @@ abstract class Page extends Model
      *
      * @return Page
      */
-    protected function httpStatus(): self
+    protected function httpStatus(): Page
     {
         $list = [
             403 => '403 Forbidden',

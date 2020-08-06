@@ -67,7 +67,7 @@ class Image extends File
      *
      * @return Image
      */
-    public function resize(int $maxW, int $maxH): self
+    public function resize(int $maxW, int $maxH): Image
     {
         $oldW   = \imagesx($this->image);
         $oldH   = \imagesy($this->image);

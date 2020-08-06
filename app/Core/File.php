@@ -181,7 +181,7 @@ class File
      *
      * @return File
      */
-    public function rename(bool $rename): self
+    public function rename(bool $rename): File
     {
         $this->rename = $rename;
 
@@ -195,7 +195,7 @@ class File
      *
      * @return File
      */
-    public function rewrite(bool $rewrite): self
+    public function rewrite(bool $rewrite): File
     {
         $this->rewrite = $rewrite;
 

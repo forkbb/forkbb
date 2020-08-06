@@ -106,7 +106,7 @@ class Model
      *
      * @return Model
      */
-    public function setAttr(string $name, $value): self
+    public function setAttr(string $name, $value): Model
     {
         $this->unsetCalc($name);
         $this->zAttrs[$name] = $value;
@@ -122,7 +122,7 @@ class Model
      *
      * @return Model
      */
-    public function setAttrs(array $attrs): self
+    public function setAttrs(array $attrs): Model
     {
         $this->zAttrs     = $attrs; //????
         $this->zAttrsCalc = [];

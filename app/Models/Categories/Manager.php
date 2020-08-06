@@ -20,7 +20,7 @@ class Manager extends ManagerModel
      *
      * @return Manager
      */
-    public function init(): self
+    public function init(): Manager
     {
         $query = 'SELECT c.id, c.cat_name, c.disp_position
             FROM ::categories AS c
@@ -36,7 +36,7 @@ class Manager extends ManagerModel
         return $this->repository;
     }
 
-    public function set($key, $value): self
+    public function set($key, $value): ManagerModel
     {
         if (! isset($value['cat_name'], $value['disp_position'])) {
             throw new InvalidArgumentException('Expected array with cat_name and disp_position elements');
@@ -57,7 +57,7 @@ class Manager extends ManagerModel
         return $this;
     }
 
-    public function update(): self
+    public function update(): Manager
     {
         foreach ($this->modified as $key => $value) {
             $cat   = $this->get($key);
@@ -101,7 +101,7 @@ class Manager extends ManagerModel
         return $cid;
     }
 
-    public function delete(int $cid): self
+    public function delete(int $cid): Manager
     {
         $root = $this->c->forums->get(0);
         $del  = [];

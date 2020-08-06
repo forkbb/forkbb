@@ -14,7 +14,7 @@ class Users extends Rules
      *
      * @return Rules\Users
      */
-    public function init(): self
+    public function init(): Users
     {
         $this->setAttrs([]);
 

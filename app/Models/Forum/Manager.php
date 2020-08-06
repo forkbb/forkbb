@@ -34,7 +34,7 @@ class Manager extends ManagerModel
      *
      * @return Manager
      */
-    public function init(Group $group = null): self
+    public function init(Group $group = null): Manager
     {
         if (null === $group) {
             $gid = $this->c->user->group_id;

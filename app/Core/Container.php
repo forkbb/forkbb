@@ -162,9 +162,9 @@ class Container
      *
      * @throws InvalidArgumentException
      *
-     * @return ContainerInterface Self reference
+     * @return Container
      */
-    public function setParameter(string $name, $value): self
+    public function setParameter(string $name, $value): Container
     {
         $segments = \explode('.', $name);
         $n        = \count($segments);

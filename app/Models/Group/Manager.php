@@ -35,7 +35,7 @@ class Manager extends ManagerModel
      *
      * @return Manager
      */
-    public function init(): self
+    public function init(): Manager
     {
         if (empty($this->flag)) {
             $query = 'SELECT g.*

@@ -16,7 +16,7 @@ class ManagerModel extends Model
         return $this->repository[$key] ?? null;
     }
 
-    public function set($key, $value): self
+    public function set($key, $value): ManagerModel
     {
         $this->repository[$key] = $value;
 

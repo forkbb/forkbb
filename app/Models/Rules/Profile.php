@@ -19,7 +19,7 @@ class Profile extends Rules
      *
      * @return Rules\Profile
      */
-    public function setUser(User $curUser): self
+    public function setUser(User $curUser): Profile
     {
         $this->setAttrs([]);
 

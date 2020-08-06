@@ -36,7 +36,7 @@ class Action
      *
      * @return Action
      */
-    public function setManager(ManagerModel $manager): self
+    public function setManager(ManagerModel $manager): Action
     {
         $this->manager = $manager;
 

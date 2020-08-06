@@ -11,7 +11,7 @@ class Model extends ParentModel
      *
      * @return Censorship\Model
      */
-    public function init(): self
+    public function init(): Model
     {
         if ('1' == $this->c->config->o_censoring) {
             if ($this->c->Cache->has('censorship')) {

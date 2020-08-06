@@ -104,7 +104,7 @@ class Validator
      *
      * @return Validator
      */
-    public function reset(): self
+    public function reset(): Validator
     {
         $this->validators = [
             'absent'        => [$this, 'vAbsent'],
@@ -147,7 +147,7 @@ class Validator
      *
      * @return Validator
      */
-    public function addValidators(array $validators): self
+    public function addValidators(array $validators): Validator
     {
         $this->validators = \array_replace($this->validators, $validators);
 
@@ -163,7 +163,7 @@ class Validator
      *
      * @return Validator
      */
-    public function addRules(array $list): self
+    public function addRules(array $list): Validator
     {
         foreach ($list as $field => $raw) {
             $suffix = null;
@@ -213,7 +213,7 @@ class Validator
      *
      * @return Validator
      */
-    public function addArguments(array $arguments): self
+    public function addArguments(array $arguments): Validator
     {
         $this->arguments = \array_replace($this->arguments, $arguments);
 
@@ -227,7 +227,7 @@ class Validator
      *
      * @return Validator
      */
-    public function addMessages(array $messages): self
+    public function addMessages(array $messages): Validator
     {
         $this->messages = \array_replace($this->messages, $messages);
 
@@ -241,7 +241,7 @@ class Validator
      *
      * @return Validator
      */
-    public function addAliases(array $aliases): self
+    public function addAliases(array $aliases): Validator
     {
         $this->aliases = \array_replace($this->aliases, $aliases);
 
