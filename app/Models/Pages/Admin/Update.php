@@ -2,7 +2,7 @@
 
 namespace ForkBB\Models\Pages\Admin;
 
-use ForkBB\Core\Config;
+use ForkBB\Core\Config as CoreConfig;
 use ForkBB\Core\Container;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
@@ -23,12 +23,6 @@ class Update extends Admin
     const LOCk_TTL  = 1800;
 
     const CONFIG_FILE = 'main.php';
-
-    /**
-     * Конфиг
-     * @var Config
-     */
-    protected $coreConfig;
 
     /**
      * Конструктор
@@ -176,7 +170,7 @@ class Update extends Admin
                     // загрузка и проверка конфига
                     if (null === $e) {
                         try {
-                            $this->coreConfig = new Config($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+                            $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
                         } catch (ForkException $excp) {
                             $e = $excp->getMessage();
                         }
@@ -358,38 +352,42 @@ class Update extends Admin
      */
     public function stage(array $args, string $method): Page
     {
-        $uid = $this->setLock($args['uid']);
+        try {
+            $uid = $this->setLock($args['uid']);
 
-        if (null === $uid) {
-            return $this->returnMaintenance();
-        }
-
-        $stage = \max((int) $args['stage'], (int) $this->c->config->i_fork_revision);
-
-        do {
-            if (\method_exists($this, 'stageNumber' . $stage)) {
-                $start = $this->{'stageNumber' . $stage}($args);
-
-                if (null === $start) {
-                    ++$stage;
-                }
-
-                return $this->c->Redirect->page(
-                    'AdminUpdateStage',
-                    ['uid' => $uid, 'stage' => $stage, 'start' => $start]
-                )->message(__('Stage %1$s (%2$s)', $stage, (int) $start));
+            if (null === $uid) {
+                return $this->returnMaintenance();
             }
 
-            ++$stage;
-        } while ($stage < $this->c->FORK_REVISION);
+            $stage = \max((int) $args['stage'], (int) $this->c->config->i_fork_revision);
 
-        $this->c->config->i_fork_revision = $this->c->FORK_REVISION;
+            do {
+                if (\method_exists($this, 'stageNumber' . $stage)) {
+                    $start = $this->{'stageNumber' . $stage}($args);
 
-        $this->c->config->save();
+                    if (null === $start) {
+                        ++$stage;
+                    }
 
-        $this->c->Cache->clear();
+                    return $this->c->Redirect->page(
+                        'AdminUpdateStage',
+                        ['uid' => $uid, 'stage' => $stage, 'start' => $start]
+                    )->message(__('Stage %1$s (%2$s)', $stage, (int) $start));
+                }
 
-        return $this->c->Redirect->page('Index')->message('Successfully updated');
+                ++$stage;
+            } while ($stage < $this->c->FORK_REVISION);
+
+            $this->c->config->i_fork_revision = $this->c->FORK_REVISION;
+
+            $this->c->config->save();
+
+            $this->c->Cache->clear();
+
+            return $this->c->Redirect->page('Index')->message('Successfully updated');
+        } catch (ForkException $excp) {
+            return $this->c->Message->message($excp->getMessage(), true, 503);
+        }
     }
 
 #    /**
@@ -400,14 +398,15 @@ class Update extends Admin
 #     */
 #    protected function stageNumber1(array $args): ?int
 #    {
-#        $this->coreConfig->add(
-#            [
-#                'multiple' => [
-#                    'AdminUsersRecalculate' => '\ForkBB\Models\Pages\Admin\Users\Recalculate::class'
-#                ],
-#            ],
-#            'after:AdminUsersNew'
+#        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+#
+#        $coreConfig->add(
+#            'multiple=>AdminUsersRecalculate',
+#            '\\ForkBB\\Models\\Pages\\Admin\\Users\\Recalculate::class',
+#            'AdminUsersNew'
 #        );
+#
+#        $coreConfig->save();
 #
 #        return null;
 #    }
@@ -423,6 +422,27 @@ class Update extends Admin
 
         $this->c->DB->addField('users', 'ip_check_type', 'TINYINT UNSIGNED', false, 0);
         $this->c->DB->addField('users', 'login_ip_cache', 'VARCHAR(255)', false, '');
+
+        return null;
+    }
+
+    /**
+     * rev.2 to rev.3
+     */
+    protected function stageNumber2(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+
+        $coreConfig->add(
+            'multiple=>AdminUsersRecalculate',
+            '\\ForkBB\\Models\\Pages\\Admin\\Users\\Recalculate::class',
+            'AdminUsersNew'
+        );
+        $coreConfig->add(
+            'EOL',
+            '\\PHP_EOL'
+        );
+        $coreConfig->save();
 
         return null;
     }
