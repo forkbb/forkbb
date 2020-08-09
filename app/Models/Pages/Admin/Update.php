@@ -446,4 +446,25 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.3 to rev.4
+     */
+    protected function stageNumber3(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+
+        $result = $coreConfig->delete(
+            'multiple=>AdminUsersRecalculate',
+        );
+
+        $coreConfig->add(
+            'multiple=>UserManagerUpdateLoginIpCache',
+            '\\ForkBB\\Models\\User\\UpdateLoginIpCache::class',
+            'UserManagerUpdateCountTopics'
+        );
+        $coreConfig->save();
+
+        return null;
+    }
 }
