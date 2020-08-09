@@ -17,19 +17,36 @@ class Config
      * Содержимое файла конфига
      * @var string
      */
-    protected $configFile;
+    protected $fileContents;
 
     /**
      * Начальная позиция массива конфига
      * @var int
      */
-    protected $configArrPos;
+    protected $arrayStartPos;
 
     /**
-     * Отступ элементов конфига первого уровня от начала строки
-     * @var string
+     * Массив токенов
+     * @var array
      */
-    protected $configWhitespace;
+    protected $tokens;
+
+    /**
+     * Текущая позиция в массиве токенов
+     * @var int
+     */
+    protected $position;
+
+    /**
+     * Массив полученый из файла настройки путем его парсинга
+     * @var array
+     */
+    protected $configArray;
+
+    /**
+     * Строка массива конфига в файле конфигурации
+     */
+    protected $configStr;
 
     public function __construct(string $path)
     {
@@ -43,11 +60,12 @@ class Config
             throw new ForkException('Config can not be write');
         }
 
-        $this->configFile = \file_get_contents($path);
+        $this->fileContents = \file_get_contents($path);
+        $this->path         = $path;
 
-        if (\preg_match('%\[[\n\r]+(\ +)\'BASE_URL\'\s+=>%', $this->configFile, $matches, \PREG_OFFSET_CAPTURE)) {
-            $this->configArrPos     = $matches[0][1];
-            $this->configWhitespace = $matches[1][0];
+        if (\preg_match('%\[\s*\'BASE_URL\'\s+=>%s', $this->fileContents, $matches, \PREG_OFFSET_CAPTURE)) {
+            $this->arrayStartPos = $matches[0][1];
+            $this->configArray   = $this->getArray();
 
             return;
         }
@@ -56,22 +74,14 @@ class Config
     }
 
     /**
-     * Добавляет/заменяет данные в конфиг(е)
+     * Получает массив настроек из файла конфига
      */
-    public function add(array $data, string $position = null): bool
-    {
-
-    }
-
-    protected $tokens;
-    protected $position;
-
     protected function getArray(): array
     {
         if (
             false === \preg_match_all(
-                '%//[^\n\r]*+|\'.*?(?<!\\\\)\'|".*?(?<!\\\\)"|\s+|\[|\]|,|=>|\S+(?<![,\]\)])%s',
-                \substr($this->configFile, $this->configArrPos),
+                '%//[^\r\n]*+|#[^\r\n]*+|/\*.*?\*/|\'.*?(?<!\\\\)\'|".*?(?<!\\\\)"|\s+|\[|\]|,|=>|\S+(?<![,\]\)])%s',
+                \substr($this->fileContents, $this->arrayStartPos),
                 $matches
             )
             || empty($matches)
@@ -79,20 +89,56 @@ class Config
             throw new ForkException('Config array cannot be parsed');
         }
 
-        $this->tokens   = $matches[0];
-        $this->position = 0;
+        $this->tokens    = $matches[0];
+        $this->position  = 0;
+        $this->configStr = '';
 
         return $this->parse('ZERO');
     }
 
+    /**
+     * Очищает ключ от кавычек
+     */
+    protected function clearKey($key)
+    {
+        if (! \is_string($key)) {
+            throw new ForkException('Config array cannot be parsed');
+        }
+
+        if ((
+                '\'' === $key[0]
+                && \strlen($key) > 1
+                && '\'' === $key[-1]
+            )
+            || (
+                '"' === $key[0]
+                && \strlen($key) > 1
+                && '"' === $key[-1]
+            )
+        ) {
+            return \substr($key, 1, -1);
+        }
+
+        return $key;
+    }
+
+    /**
+     * Создает массив конфига из токенов (массива подстрок)
+     */
     protected function parse($type): array
     {
-        $result = [];
-        $value  = null;
-        $key    = null;
+        $result       = [];
+        $value        = null;
+        $key          = null;
+        $other        = '';
+        $value_before = '';
+        $value_after  = '';
+        $key_before   = '';
+        $key_after    = '';
 
         while (isset($this->tokens[$this->position])) {
-            $token = $this->tokens[$this->position];
+            $token            = $this->tokens[$this->position];
+            $this->configStr .= $token;
 
             // открытие массива
             if ('[' === $token) {
@@ -102,91 +148,285 @@ class Config
                         break;
                     case 'NEW':
                     case '=>':
-                        $value = $this->parse('ZERO');
-                        $type  = 'VALUE';
+                        $value        = $this->parse('ZERO');
+                        $value_before = $other;
+                        $other        = '';
+                        $type         = 'VALUE';
                         break;
                     default:
-                        exit('error' . $this->position);
+                        throw new ForkException('Config array cannot be parsed');
                 }
+
             // закрытие массива
             } elseif (']' === $token) {
                 switch ($type) {
                     case 'NEW':
-                        break;
                     case 'VALUE':
-                        if (null !== $key) {
-                            $result[$key] = $value;
-                            break;
-                        }
                     case 'VALUE_OR_KEY':
-                        $result[] = $value;
-                        break;
-                    default:
-                        exit('error' . $this->position);
-                }
+                        if (null !== $value) {
+                            $value = [
+                                'value'        => $value,
+                                'value_before' => $value_before,
+                                'value_after'  => $other,
+                                'key_before'   => $key_before,
+                                'key_after'    => $key_after,
+                            ];
 
-                return $result;
+                            if (null !== $key) {
+                                $result[$this->clearKey($key)] = $value;
+                            } else {
+                                $result[] = $value;
+                            }
+                        } elseif (null != $key) {
+                            throw new ForkException('Config array cannot be parsed');
+                        }
+
+                        return $result;
+                    default:
+                        throw new ForkException('Config array cannot be parsed');
+                }
             // новый элемент
             } elseif (',' === $token) {
                 switch ($type) {
                     case 'VALUE':
-                        if (null !== $key) {
-                            $result[$key] = $value;
-                            break;
-                        }
                     case 'VALUE_OR_KEY':
-                        $result[] = $value;
+                        $type = 'NEW';
                         break;
                     default:
-                        exit('error' . $this->position);
+                        throw new ForkException('Config array cannot be parsed');
                 }
-
-                $type  = 'NEW';
-                $value = null;
-                $key   = null;
             // присвоение значения
             } elseif ('=>' === $token) {
                 switch ($type) {
                     case 'VALUE_OR_KEY':
-                        $key   = $value;
-                        $value = null;
-                        $type = '=>';
+                        $key          = $value;
+                        $key_before   = $value_before;
+                        $key_after    = $other;
+                        $other        = '';
+                        $value        = null;
+                        $value_before = '';
+                        $type         = '=>';
                         break;
                     default:
-                        exit('error' . $this->position);
+                        throw new ForkException('Config array cannot be parsed');
                 }
-            // комментарий
-            } elseif (0 === \strpos($token, '//')) {
 
-            // пробел
-            } elseif ('' === \trim($token)) {
+            // пробел, комментарий
+            } elseif (
+                '' === \trim($token)
+                || 0 === \strpos($token, '//')
+                || 0 === \strpos($token, '/*')
+                || '#' === $token[0]
+            ) {
                 switch ($type) {
                     case 'NEW':
                     case 'VALUE_OR_KEY':
                     case 'VALUE':
                     case '=>':
-                            $lastSpace = $token;
+                            $other .= $token;
                         break;
                     default:
-                        exit('error' . $this->position);
+                        throw new ForkException('Config array cannot be parsed');
                 }
             // какое-то значение
             } else {
                 switch ($type) {
                     case 'NEW':
+                        if (null !== $value) {
+                            \preg_match('%^([^\r\n]*+)(.*)$%s', $other, $matches);
+                            $value_after = $matches[1];
+                            $other       = $matches[2];
+
+                            $value = [
+                                'value'        => $value,
+                                'value_before' => $value_before,
+                                'value_after'  => $value_after,
+                                'key_before'   => $key_before,
+                                'key_after'    => $key_after,
+                            ];
+
+                            $value_before = '';
+                            $value_after  = '';
+                            $key_before   = '';
+                            $key_after    = '';
+
+                            if (null !== $key) {
+                                $result[$this->clearKey($key)] = $value;
+                            } else {
+                                $result[] = $value;
+                            }
+
+                            $value = null;
+                            $key   = null;
+                        } elseif (null != $key) {
+                            throw new ForkException('Config array cannot be parsed');
+                        }
+
                         $type = 'VALUE_OR_KEY';
                         break;
                     case '=>':
                         $type = 'VALUE';
                         break;
                     default:
-                        exit('error' . $this->position);
+                        throw new ForkException('Config array cannot be parsed');
                 }
 
-                $value = $token;
+                $value        = $token;
+                $value_before = $other;
+                $other        = '';
             }
 
             ++$this->position;
         }
+    }
+
+    protected function isFormat($data): bool
+    {
+        return \is_array($data)
+        && \array_key_exists('value', $data)
+        && \array_key_exists('value_before', $data)
+        && \array_key_exists('value_after', $data)
+        && \array_key_exists('key_before', $data)
+        && \array_key_exists('key_after', $data);
+    }
+
+    /**
+     * Добавляет/заменяет данные в конфиг(е)
+     */
+    public function add(string $path, $value, string $after = null): bool
+    {
+        if (empty($this->configArray)) {
+            $this->configArray = $this->getArray();
+        }
+
+        $pathArray = \explode('=>', $path);
+        $size      = \count($pathArray);
+        $i         = 0;
+        $config    = &$this->configArray;
+
+        while ($i < $size - 1) {
+            $key = $pathArray[$i];
+
+            if (\is_numeric($key)) { //???? O_o
+                $config[] = [];
+                $config   = &$config[\array_key_last($config)];
+            } else {
+                if (! isset($config[$key])) {
+                    $config[$key] = [];
+                }
+
+                if (
+                    \array_key_exists('value', $config[$key])
+                    && \array_key_exists('value_before', $config[$key])
+                    && \array_key_exists('value_after', $config[$key])
+                    && \array_key_exists('key_before', $config[$key])
+                    && \array_key_exists('key_after', $config[$key])
+                ) {
+                    $config = &$config[$key]['value'];
+                } else {
+                    $config = &$config[$key];
+                }
+            }
+
+            ++$i;
+        }
+
+        $key = $pathArray[$i];
+
+        if (
+            \is_numeric($key) //???? O_o
+            || \is_numeric($after)
+        ) {
+            $config[] = $value;
+        } elseif (isset($config[$key])) {
+            if ($this->isFormat($config[$key])) {
+                $config[$key]['value'] = $value;
+            } else {
+                $config[$key] = $value;
+            }
+        } elseif (
+            null === $after
+            || ! isset($config[$after])
+        ) {
+            $config[$key] = $value;
+        } else {
+            $new = [];
+
+            foreach ($config as $k => $v) {
+                if (\is_int($k)) {
+                    $new[] = $v;
+                } else {
+                    $new[$k] = $v;
+
+                    if ($k === $after) {
+                        $new[$key] = $value;
+                    }
+                }
+            }
+
+            $config = $new;
+        }
+
+        return true;
+    }
+
+    /**
+     * Записывает файл конфига с перестройкой массива
+     */
+    public function save(): void
+    {
+        $contents = \str_replace(
+            $this->configStr,
+            $this->toStr($this->configArray, 1),
+            $this->fileContents,
+            $count
+        );
+
+        if (1 !== $count) {
+            throw new ForkException('Config array cannot be replace');
+        }
+
+        if (false === \file_put_contents($this->path, $contents, \LOCK_EX)) {
+            throw new ForkException('Config can not be write');
+        }
+    }
+
+    /**
+     * Преобразует массив в строку
+     */
+    protected function toStr(array $data, int $level): string
+    {
+        $space  = \str_repeat('    ', $level);
+        $result = '[';
+
+        foreach ($data as $key => $cur) {
+            if ($this->isFormat($cur)) {
+                if (\is_string($key)) {
+                    $result .= "{$cur['key_before']}'{$key}'{$cur['key_after']}=>{$cur['value_before']}";
+                } else {
+                    $result .= "{$cur['value_before']}";
+                }
+
+                if (\is_array($cur['value'])) {
+                    $result .= $this->toStr($cur['value'], $level + 1) . ",{$cur['value_after']}";
+                } else {
+                    $result .= "{$cur['value']},{$cur['value_after']}";
+                }
+            } else {
+                if (\is_string($key)) {
+                    $result .=  "\n{$space}'{$key}' => ";
+                } else {
+                    $result .= ' ';
+                }
+
+                if (\is_array($cur)) {
+                    $result .= $this->toStr($cur, $level + 1) . ',';
+                } else {
+                    $result .= "{$cur},";
+                }
+            }
+        }
+
+        return \rtrim($result, ',') . ']';
     }
 }
