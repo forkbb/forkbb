@@ -148,10 +148,11 @@ class Config
                         break;
                     case 'NEW':
                     case '=>':
-                        $value        = $this->parse('ZERO');
-                        $value_before = $other;
-                        $other        = '';
-                        $type         = 'VALUE';
+                        $this->configStr = \substr($this->configStr, 0, -1);
+                        $value           = $this->parse('ZERO');
+                        $value_before    = $other;
+                        $other           = '';
+                        $type            = 'VALUE';
                         break;
                     default:
                         throw new ForkException('Config array cannot be parsed');
