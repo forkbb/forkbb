@@ -292,7 +292,7 @@ class Config
     }
 
     /**
-     * Добавляет/заменяет данные в конфиг(е)
+     * Добавляет/заменяет элемент в конфиг(е)
      */
     public function add(string $path, $value, string $after = null): bool
     {
@@ -316,13 +316,7 @@ class Config
                     $config[$key] = [];
                 }
 
-                if (
-                    \array_key_exists('value', $config[$key])
-                    && \array_key_exists('value_before', $config[$key])
-                    && \array_key_exists('value_after', $config[$key])
-                    && \array_key_exists('key_before', $config[$key])
-                    && \array_key_exists('key_after', $config[$key])
-                ) {
+                if ($this->isFormat($config[$key])) {
                     $config = &$config[$key]['value'];
                 } else {
                     $config = &$config[$key];
@@ -369,6 +363,48 @@ class Config
         }
 
         return true;
+    }
+
+    /**
+     * Удаляет элемент из конфига
+     */
+    public function delete(string $path)
+    {
+        if (empty($this->configArray)) {
+            $this->configArray = $this->getArray();
+        }
+
+        $pathArray = \explode('=>', $path);
+        $size      = \count($pathArray);
+        $i         = 0;
+        $config    = &$this->configArray;
+
+        while ($i < $size - 1) {
+            $key = $pathArray[$i];
+
+            if (! \array_key_exists($key, $config)) {
+                return false;
+            }
+
+            if ($this->isFormat($config[$key])) {
+                $config = &$config[$key]['value'];
+            } else {
+                $config = &$config[$key];
+            }
+
+            ++$i;
+        }
+
+        $key = $pathArray[$i];
+
+        if (! \array_key_exists($key, $config)) {
+            return false;
+        } else {
+            $result = $config[$key];
+            unset($config[$key]);
+
+            return $result;
+        }
     }
 
     /**
