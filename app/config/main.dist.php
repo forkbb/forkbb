@@ -7,7 +7,7 @@
 
 return [
     'BASE_URL'    => '_BASE_URL_',
-    'EOL'         => PHP_EOL, // Define line breaks in mail headers; possible values can be PHP_EOL, "\r\n", "\n" or "\r"
+    'EOL'         => \PHP_EOL, // Define line breaks in mail headers; possible values can be \PHP_EOL, "\r\n", "\n" or "\r"
     'DB_DSN'      => '_DB_DSN_',
     'DB_USERNAME' => '_DB_USERNAME_',
     'DB_PASSWORD' => '_DB_PASSWORD_',
@@ -183,6 +183,7 @@ return [
         'AdminUsersAction' => \ForkBB\Models\Pages\Admin\Users\Action::class,
         'AdminUsersPromote' => \ForkBB\Models\Pages\Admin\Users\Promote::class,
         'AdminUsersNew'   => \ForkBB\Models\Pages\Admin\Users\NewUser::class,
+        'AdminUsersRecalculate' => \ForkBB\Models\Pages\Admin\Users\Recalculate::class,
         'AdminHost'       => \ForkBB\Models\Pages\Admin\Host::class,
         'AdminBans'       => \ForkBB\Models\Pages\Admin\Bans::class,
         'AdminReports'    => \ForkBB\Models\Pages\Admin\Reports::class,
