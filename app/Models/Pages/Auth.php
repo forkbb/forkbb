@@ -161,14 +161,8 @@ class Auth extends Page
             if (! \password_verify($password, $user->password)) {
                 $v->addError('Wrong user/pass');
             } else {
-                // перезаписываем ip админа и модератора - Visman
-                if (
-                    $user->isAdmMod
-                    && $this->c->config->o_check_ip
-                    && $user->registration_ip != $this->user->ip
-                ) {
-                    $user->registration_ip = $this->user->ip;
-                }
+                $this->c->users->updateLoginIpCache($user, true); // ????
+
                 // сбросить запрос на смену кодовой фразы
                 if (32 === \strlen($user->activate_string)) {
                     $user->activate_string = '';

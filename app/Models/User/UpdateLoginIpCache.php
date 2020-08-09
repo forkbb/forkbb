@@ -42,7 +42,7 @@ class UpdateLoginIpCache extends Action
         $hexIp = \bin2hex(\inet_pton($this->c->user->ip)); // ???? проверка на пустоту?
 
         if (1 === $user->ip_check_type) {
-            $ipStr = \str_replace("|{$hexIp}|", "|", "|{$user->login_ip_cache}|");
+            $ipStr = \trim(\str_replace("|{$hexIp}|", "|", "|{$user->login_ip_cache}|"), '|');
             $ipStr = \trim("{$hexIp}|{$ipStr}", '|');
 
             while (

@@ -22,12 +22,12 @@ class Current extends Action
         if (! $user->isGuest) {
             if (! $cookie->verifyUser($user)) {
                 $user = $this->load(1);
-            } elseif (
-                '1' == $this->c->config->o_check_ip
-                && $user->isAdmMod
-                && $user->registration_ip !== $user->ip
-            ) {
-                $user = $this->load(1);
+            } elseif ($user->ip_check_type > 0) {
+                $hexIp = \bin2hex(\inet_pton($user->ip)); // ???? проверка на пустоту?
+
+                if (false === \strpos("|{$user->login_ip_cache}|", "|{$hexIp}|")) {
+                    $user = $this->load(1);
+                }
             }
         }
 
