@@ -317,6 +317,9 @@ body,
   width: calc(100% - 4rem);
   padding: 0.625rem 0 0.625rem 0.625rem;
   font-size: 2rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 #fork-header #id-fhtdesc {
@@ -384,6 +387,11 @@ body,
 }
 
 @media screen and (min-width: 50rem) {
+  #fork-header #id-fhth1 {
+    overflow: auto;
+    white-space: normal;
+  }
+
   #fork-nav #id-mn-checkbox,
   #fork-nav #id-mn-label {
     display: none;
