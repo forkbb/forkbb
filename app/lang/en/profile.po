@@ -399,9 +399,6 @@ msgstr "Contact details"
 msgid "Personal information"
 msgstr "Personal information"
 
-msgid "User %s"
-msgstr "%s"
-
 msgid "Email settings label"
 msgstr "Email settings"
 

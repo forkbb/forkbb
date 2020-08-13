@@ -46,28 +46,35 @@ abstract class Page extends Model
      */
     public function prepare(): void
     {
-        $this->fNavigation = $this->fNavigation();
-        $this->maintenance();
+        $this->boardNavigation();
+        $this->iswevMessages();
     }
 
     /**
-     * Возвращает массив ссылок с описанием для построения навигации
-     *
-     * @return array
+     * Задает массивы главной навигации форума
      */
-    protected function fNavigation(): array
+    protected function boardNavigation(): void
     {
         $r = $this->c->Router;
 
-        $nav = [
-            'index' => [$r->link('Index'), 'Index']
+        $navUser = [];
+        $navGen  = [
+            'index' => [
+                $r->link('Index'),
+                'Index',
+                'Index',
+            ],
         ];
 
         if (
             '1' == $this->user->g_read_board
             && $this->user->viewUsers
         ) {
-            $nav['userlist'] = [$r->link('Userlist'), 'User list'];
+            $navGen['userlist'] = [
+                $r->link('Userlist'),
+                'User list',
+                'User list',
+            ];
         }
 
         if (
@@ -78,7 +85,11 @@ abstract class Page extends Model
                 || '1' == $this->c->config->o_regs_allow
             )
         ) {
-            $nav['rules'] = [$r->link('Rules'), 'Rules'];
+            $navGen['rules'] = [
+                $r->link('Rules'),
+                'Rules',
+                'Rules',
+            ];
         }
 
         if (
@@ -119,14 +130,32 @@ abstract class Page extends Model
                 'Find unanswered topics',
             ];
 
-            $nav['search'] = [$r->link('Search'), 'Search', null, $sub];
+            $navGen['search'] = [
+                $r->link('Search'),
+                'Search',
+                'Search',
+                $sub
+            ];
         }
 
         if ($this->user->isGuest) {
-            $nav['register'] = [$r->link('Register'), 'Register'];
-            $nav['login']    = [$r->link('Login'), 'Login'];
+            $navUser['register'] = [
+                $r->link('Register'),
+                'Register',
+                'Register',
+            ];
+            $navUser['login'] = [
+                $r->link('Login'),
+                'Login',
+                'Login',
+            ];
         } else {
-            $nav['profile'] = [$this->user->link, 'Profile'];
+            $navUser['profile'] = [
+                $this->user->link,
+                __('User %s', $this->user->username),
+                'Profile',
+            ];
+
             // New PMS
             if (
                 '1' == $this->c->config->o_pms_enabled
@@ -135,21 +164,30 @@ abstract class Page extends Model
                     || $this->user->messages_new > 0
                 )
             ) { //????
-                $nav['pmsnew'] = ['pmsnew.php', 'PM']; //'<li id="nav"'.((PUN_ACTIVE_PAGE == 'pms_new' || $user['messages_new'] > 0) ? ' class="isactive"' : '').'><a href="pmsnew.php">'.__('PM').(($user['messages_new'] > 0) ? ' (<span'.((empty($this->c->config->o_pms_flasher) || PUN_ACTIVE_PAGE == 'pms_new') ? '' : ' class="remflasher"' ).'>'.$user['messages_new'].'</span>)' : '').'</a></li>';
+                $navUser['pmsnew'] = [
+                    'pmsnew.php',
+                    'PM',
+                    'PM',
+                ]; //'<li id="nav"'.((PUN_ACTIVE_PAGE == 'pms_new' || $user['messages_new'] > 0) ? ' class="isactive"' : '').'><a href="pmsnew.php">'.__('PM').(($user['messages_new'] > 0) ? ' (<span'.((empty($this->c->config->o_pms_flasher) || PUN_ACTIVE_PAGE == 'pms_new') ? '' : ' class="remflasher"' ).'>'.$user['messages_new'].'</span>)' : '').'</a></li>';
             }
             // New PMS
 
             if ($this->user->isAdmMod) {
-                $nav['admin'] = [$r->link('Admin'), 'Admin'];
+                $navUser['admin'] = [
+                    $r->link('Admin'),
+                    'Admin',
+                    'Admin',
+                ];
             }
 
-            $nav['logout'] = [
+            $navUser['logout'] = [
                 $r->link(
                     'Logout',
                     [
                         'token' => $this->c->Csrf->create('Logout'),
                     ]
                 ),
+                'Logout',
                 'Logout',
             ];
         }
@@ -165,26 +203,27 @@ abstract class Page extends Model
                    if (empty($matches[4][$i])) {
                        $matches[4][$i] = 'extra' . $i;
                    }
-                   if (isset($nav[$matches[4][$i]])) {
-                       $nav[$matches[4][$i]] = [$matches[3][$i], $matches[2][$i]];
+                   if (isset($navGen[$matches[4][$i]])) {
+                       $navGen[$matches[4][$i]] = [$matches[3][$i], $matches[2][$i]];
                    } else {
-                       $nav = \array_merge(
-                           \array_slice($nav, 0, $matches[1][$i]),
+                       $navGen = \array_merge(
+                           \array_slice($navGen, 0, $matches[1][$i]),
                            [$matches[4][$i] => [$matches[3][$i], $matches[2][$i]]],
-                           \array_slice($nav, $matches[1][$i])
+                           \array_slice($navGen, $matches[1][$i])
                        );
                    }
                }
             }
         }
 
-        return $nav;
+        $this->fNavigation     = $navGen;
+        $this->fNavigationUser = $navUser;
     }
 
     /**
-     * Вывод информации о режиме обслуживания для админа
+     * Задает вывод различных сообщений по условиям
      */
-    protected function maintenance(): void
+    protected function iswevMessages(): void
     {
         if (
             '1' == $this->c->config->o_maintenance

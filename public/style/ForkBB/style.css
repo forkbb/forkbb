@@ -340,6 +340,8 @@ body,
 #fork-header #fork-nav {
   width: 100%;
   background-color: #F8F4E3;
+  display: flex;
+  flex-direction: column;
 }
 
 #fork-nav #id-mn-checkbox {
@@ -356,14 +358,29 @@ body,
 }
 
 #fork-nav .f-menu-items {
-  width: 100%;
   background-color: #F8F4E3;
+  border-bottom: 0.0625rem solid #AA7939;
+}
+
+#fork-nav .f-menu-user-items {
+  background-color: #F8F4E3;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+#fork-nav .f-menu-user-items .f-menu-item {
+  min-width: 4rem;
 }
 
 #fork-nav .f-menu-a {
   color: #583200;
   text-transform: uppercase;
   text-align: center;
+}
+
+#fork-nav .f-menu-user-items .f-menu-a {
+  text-transform: none;
 }
 
 #fork-nav .f-submenu-items {
@@ -386,6 +403,10 @@ body,
   color: #F8F4E3;
 }
 
+#fork-nav #id-nav-profile span {
+  font-weight: bold;
+}
+
 @media screen and (min-width: 50rem) {
   #fork-header #id-fhth1 {
     overflow: auto;
@@ -397,11 +418,17 @@ body,
     display: none;
   }
 
+  #fork-header #fork-nav {
+    flex-direction: row;
+  }
+
   #fork-nav .f-menu-items {
     display: flex;
     flex-wrap: wrap;
     /*max-height: 100rem;*/
     flex-direction: row;
+    margin-right: auto;
+    border-bottom: 0;
   }
 
   #fork-nav .f-menu-item {
@@ -888,7 +915,7 @@ body,
 
 #fork #id-an-label {
   position: absolute;
-  top: -3.125rem;
+  top: -2.875rem;
   right: 0.625rem;
 }
 
@@ -1617,12 +1644,12 @@ body,
   padding-left: 1.5rem;
 }
 
-#fork .f-post-main p,
-#fork .f-post-main blockquote,
-#fork .f-post-main br,
-#fork .f-post-main pre,
-#fork .f-post-main ol,
-#fork .f-post-main ul {
+#fork .f-post-body p,
+#fork .f-post-body blockquote,
+#fork .f-post-body br,
+#fork .f-post-body pre,
+#fork .f-post-body ol,
+#fork .f-post-body ul {
   margin-bottom: 0.625rem;
 /*  word-wrap: break-word; */
 }

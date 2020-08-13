@@ -503,3 +503,6 @@ msgstr "Неверная кодовая фраза"
 
 msgid "Stick topic"
 msgstr "Выделить тему"
+
+msgid "User %s"
+msgstr "%s"
