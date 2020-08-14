@@ -12,7 +12,7 @@
   font-family: "FontAwesomeFree";
   font-style: normal;
   font-weight: 400;
-  font-display: block;
+  /* font-display: block; */
   src: url("font/fa/fa-regular-400.woff2") format("woff2"), url("font/fa/fa-regular-400.woff") format("woff");
 }
 
@@ -20,7 +20,7 @@
   font-family: "FontAwesomeFree";
   font-style: normal;
   font-weight: 900;
-  font-display: block;
+  /* font-display: block; */
   src: url("font/fa/fa-solid-900.woff2") format("woff2"), url("font/fa/fa-solid-900.woff") format("woff");
 }
 
@@ -303,6 +303,11 @@ body,
   white-space: nowrap;
 }
 
+#fork .f-menu-a:before {
+  font-family: "FontAwesomeFree";
+  font-weight: 900;
+}
+
 /*********/
 /* Шапка */
 /*********/
@@ -362,25 +367,10 @@ body,
   border-bottom: 0.0625rem solid #AA7939;
 }
 
-#fork-nav .f-menu-user-items {
-  background-color: #F8F4E3;
-  display: flex;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-}
-
-#fork-nav .f-menu-user-items .f-menu-item {
-  min-width: 4rem;
-}
-
 #fork-nav .f-menu-a {
   color: #583200;
   text-transform: uppercase;
   text-align: center;
-}
-
-#fork-nav .f-menu-user-items .f-menu-a {
-  text-transform: none;
 }
 
 #fork-nav .f-submenu-items {
@@ -403,8 +393,70 @@ body,
   color: #F8F4E3;
 }
 
+#fork-nav .f-menu-user-items {
+  background-color: #F8F4E3;
+  display: flex;
+  justify-content: flex-end;
+/*  flex-wrap: wrap; */
+}
+
+#fork-nav .f-menu-user-items .f-menu-item {
+  min-width: 2.5rem;
+}
+
+#fork-nav .f-menu-user-items .f-menu-a {
+  text-transform: none;
+  white-space: normal;
+  font-size: 0.1px;
+}
+
+#fork-nav .f-menu-user-items span {
+  white-space: nowrap;
+}
+
+#fork #id-nav-profile .f-menu-a:before {
+  content: "\f007\20";
+}
+
+#fork #id-nav-pmsnew .f-menu-a:before {
+  font-weight: 400;
+  content: "\f0e0\20";
+}
+
+#fork #id-nav-admin .f-menu-a:before {
+  content: "\f7d9\20";
+}
+
+#fork #id-nav-logout .f-menu-a:before {
+  content: "\f2f5\20";
+}
+
+#fork #id-nav-register .f-menu-a:before {
+  content: "\f234\20";
+}
+
+#fork #id-nav-login .f-menu-a:before {
+  content: "\f2f6\20";
+}
+
+#fork-nav .f-menu-user-items .f-menu-a::first-line {
+  font-size: 1rem;
+}
+
 #fork-nav #id-nav-profile span {
   font-weight: bold;
+}
+
+#fork #id-nav-index .f-menu-a:before {
+  content: "\f015\20";
+}
+
+#fork #id-nav-userlist .f-menu-a:before {
+  content: "\f0c0\20";
+}
+
+#fork #id-nav-search > .f-menu-a:before {
+  content: "\f002\20";
 }
 
 @media screen and (min-width: 50rem) {
@@ -452,6 +504,15 @@ body,
     display: flex;
     font-size: 0.875rem;
   }
+
+  #fork #id-nav-profile.f-menu-item {
+    min-width: 4rem;
+  }
+
+  #fork #id-nav-profile .f-menu-a:before {
+    content: "";
+  }
+
 } /* @media screen and (min-width: 50rem) */
 
 /*********/
