@@ -2,7 +2,7 @@
 
 ## About
 
-ForkBB is an open source forum application. The project is based on [FluxBB_by_Visman](https://github.com/MioVisman/FluxBB_by_Visman)
+ForkBB is a free and open source forum software. The project is based on [FluxBB_by_Visman](https://github.com/MioVisman/FluxBB_by_Visman)
 
 ## Note
 
