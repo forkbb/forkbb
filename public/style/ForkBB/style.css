@@ -457,6 +457,10 @@ body,
   content: "\f0c0\20";
 }
 
+#fork #id-nav-rules .f-menu-a:before {
+  content: "\f05a\20";
+}
+
 #fork #id-nav-search > .f-menu-a:before {
   content: "\f002\20";
 }
@@ -1340,22 +1344,44 @@ body,
   font-size: 1.2rem;
 }
 
-#fork .f-newtxt,
-#fork .f-unreadtxt {
+#fork .f-tnew,
+#fork .f-tunread {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 0.875rem;
   font-weight: normal;
   white-space: nowrap;
 }
 
-#fork .f-newtxt:before,
-#fork .f-unreadtxt:before {
+#fork .f-tnew:before,
+#fork .f-tunread:before {
   content: "[ ";
 }
 
-#fork .f-newtxt:after,
-#fork .f-unreadtxt:after {
+#fork .f-tnew:after,
+#fork .f-tunread:after {
   content: " ]";
+}
+
+#fork .f-newtxt,
+#fork .f-unreadtxt {
+  display: none;
+}
+
+#fork .f-fnew > a:before,
+#fork .f-tnew > a:before {
+  font-family: "FontAwesomeFree";
+  font-weight: 900;
+  font-size: 0.875rem;
+  content: "\f086";
+  padding: 0 0.25rem;
+}
+
+#fork .f-tunread > a:before {
+  font-family: "FontAwesomeFree";
+  font-weight: 900;
+  font-size: 0.875rem;
+  content: "\f070";
+  padding: 0 0.25rem;
 }
 
 /*
@@ -1486,6 +1512,41 @@ body,
 #fork .f-cmforum > a:focus,
 #fork .f-cmforum > a:hover {
   opacity: 1;
+}
+
+#fork .f-tmoved,
+#fork .f-stickytxt,
+#fork .f-closedtxt,
+#fork .f-polltxt {
+  display: none;
+}
+
+#fork .f-tsticky:before {
+  font-family: "FontAwesomeFree";
+  font-weight: 900;
+  font-size: 0.875rem;
+  content: "\f30c";
+  color: #D8000C;
+}
+
+#fork .f-fclosed .f-ficon:before {
+  color: #C8CCD1;
+}
+
+#fork .f-tclosed:before {
+  font-family: "FontAwesomeFree";
+  font-weight: 900;
+  font-size: 0.875rem;
+  content: "\f023";
+  color: #C8CCD1;
+}
+
+
+#fork .f-tpoll:before {
+  font-family: "FontAwesomeFree";
+  font-weight: 900;
+  font-size: 0.875rem;
+  content: "\f681";
 }
 
 /*****************/

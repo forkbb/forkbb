@@ -91,7 +91,7 @@
               <div class="f-ficon"></div>
             @endif
               <div class="f-finfo">
-                <h3><span class="f-fredirtext">{!! __('Moved') !!}</span> <a class="f-ftname" href="{!! $topic->link !!}">{{ $topic->censorSubject }}</a></h3>
+                <h3><span class="f-tmoved" title="{!! __('Moved') !!}"><span class="f-movedtxt">{!! __('Moved') !!}</span></span> <a class="f-ftname" href="{!! $topic->link !!}">{{ $topic->censorSubject }}</a></h3>
               </div>
             </div>
           </li>
@@ -107,16 +107,16 @@
               <div class="f-finfo">
                 <h3>
             @if ($topic->dot)
-                  <span class="f-tdot">·</span>
+                  <span class="f-tdot"><span class="f-dottxt">·</span></span>
             @endif
             @if ($topic->sticky)
-                  <span class="f-stickytxt">{!! __('Sticky') !!}</span>
+                  <span class="f-tsticky" title="{!! __('Sticky') !!}"><span class="f-stickytxt">{!! __('Sticky') !!}</span></span>
             @endif
             @if ($topic->closed)
-                  <span class="f-closedtxt">{!! __('Closed') !!}</span>
+                  <span class="f-tclosed" title="{!! __('Closed') !!}"><span class="f-closedtxt">{!! __('Closed') !!}</span></span>
             @endif
             @if ($topic->poll_type)
-                  <span class="f-polltxt">{!! __('Poll') !!}</span>
+                  <span class="f-tpoll" title="{!! __('Poll') !!}"><span class="f-polltxt">{!! __('Poll') !!}</span></span>
             @endif
                   <a class="f-ftname" href="{!! $topic->link !!}">{{ $topic->censorSubject }}</a>
             @if ($topic->pagination)
@@ -131,10 +131,10 @@
                   </span>
             @endif
             @if (false !== $topic->hasNew)
-                  <span class="f-newtxt"><a href="{!! $topic->linkNew !!}" title="{!! __('New posts info') !!}">{!! __('New posts') !!}</a></span>
+                  <span class="f-tnew"><a href="{!! $topic->linkNew !!}" title="{!! __('New posts info') !!}"><span class="f-newtxt">{!! __('New posts') !!}</span></a></span>
             @endif
             @if (false !== $topic->hasUnread)
-                  <span class="f-unreadtxt"><a href="{!! $topic->linkUnread !!}" title="{!! __('Unread posts info') !!}">{!! __('Unread posts') !!}</a></span>
+                  <span class="f-tunread"><a href="{!! $topic->linkUnread !!}" title="{!! __('Unread posts info') !!}"><span class="f-unreadtxt">{!! __('Unread posts') !!}</span></a></span>
             @endif
                 </h3>
                 <p><!-- inline -->

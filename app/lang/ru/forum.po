@@ -22,10 +22,10 @@ msgid "Moved"
 msgstr "Перенесено"
 
 msgid "Sticky"
-msgstr "&#8657;&#160;"
+msgstr "Важно"
 
 msgid "Closed"
-msgstr "Закрыто:"
+msgstr "Закрыто"
 
 msgid "Poll"
 msgstr "Опрос"

@@ -19,13 +19,13 @@ msgid "Views"
 msgstr "Views"
 
 msgid "Moved"
-msgstr "Moved:"
+msgstr "Moved"
 
 msgid "Sticky"
-msgstr "&#8657;&#160;"
+msgstr "Sticky"
 
 msgid "Closed"
-msgstr "Closed:"
+msgstr "Closed"
 
 msgid "Poll"
 msgstr "Poll"
