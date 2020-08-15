@@ -301,6 +301,8 @@ body,
   display: block;
   padding: 0.625rem;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #fork .f-menu-a:before {
@@ -397,7 +399,7 @@ body,
   background-color: #F8F4E3;
   display: flex;
   justify-content: flex-end;
-/*  flex-wrap: wrap; */
+  flex-wrap: wrap;
 }
 
 #fork-nav .f-menu-user-items .f-menu-item {
@@ -406,13 +408,13 @@ body,
 
 #fork-nav .f-menu-user-items .f-menu-a {
   text-transform: none;
-  white-space: normal;
-  font-size: 0.1px;
+/*  white-space: normal;
+  font-size: 0.1px; */
 }
 
-#fork-nav .f-menu-user-items span {
+/* #fork-nav .f-menu-user-items span {
   white-space: nowrap;
-}
+} */
 
 #fork #id-nav-profile .f-menu-a:before {
   content: "\f007\20";
@@ -439,9 +441,9 @@ body,
   content: "\f2f6\20";
 }
 
-#fork-nav .f-menu-user-items .f-menu-a::first-line {
+/* #fork-nav .f-menu-user-items .f-menu-a::first-line {
   font-size: 1rem;
-}
+} */
 
 #fork-nav #id-nav-profile span {
   font-weight: bold;
