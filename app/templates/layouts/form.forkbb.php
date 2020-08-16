@@ -121,9 +121,9 @@
           <p class="f-btns">
     @foreach ($form['btns'] as $key => $cur)
         @if ('submit' === $cur['type'])
-            <input class="f-btn @if($cur['class']) {{ $cur['class'] }} @endif" type="{{ $cur['type'] }}" name="{{ $key }}" value="{{ $cur['value'] }}" @if (isset($cur['accesskey'])) accesskey="{{ $cur['accesskey'] }}" @endif>
+            <button class="f-btn @if($cur['class']) {{ $cur['class'] }} @endif" name="{{ $key }}" value="{{ $cur['value'] }}" @if (isset($cur['accesskey'])) accesskey="{{ $cur['accesskey'] }}" @endif title="{{ $cur['value'] }}"><span>{{ $cur['value'] }}</span></button>
         @elseif ('btn'=== $cur['type'])
-            <a class="f-btn @if($cur['class']) {{ $cur['class'] }} @endif" data-name="{{ $key }}" href="{!! $cur['link'] !!}" @if (isset($cur['accesskey'])) accesskey="{{ $cur['accesskey'] }}" @endif>{{ $cur['value'] }}</a>
+            <a class="f-btn @if($cur['class']) {{ $cur['class'] }} @endif" data-name="{{ $key }}" href="{!! $cur['link'] !!}" @if (isset($cur['accesskey'])) accesskey="{{ $cur['accesskey'] }}" @endif title="{{ $cur['value'] }}"><span>{{ $cur['value'] }}<span></a>
         @endif
     @endforeach
           </p>

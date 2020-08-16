@@ -60,7 +60,7 @@
     @yield ('pagination')
     @if ($p->model->canCreateTopic)
         <div class="f-actions-links">
-          <a class="f-btn f-btn-create-topic" href="{!! $p->model->linkCreateTopic !!}">{!! __('Post topic') !!}</a>
+          <a class="f-btn f-btn-create-topic" title="{!! __('Post topic') !!}" href="{!! $p->model->linkCreateTopic !!}"><span>{!! __('Post topic') !!}</span></a>
         </div>
     @endif
       </div>
@@ -167,10 +167,10 @@
         @if ($p->model->canCreateTopic || $p->model->canMarkRead)
         <div class="f-actions-links">
             @if ($p->model->canMarkRead)
-          <a class="f-btn f-btn-markread f-opacity" title="{!! __('Mark forum read') !!}" href="{!! $p->model->linkMarkRead !!}">{!! __('All is read') !!}</a>
+          <a class="f-btn f-btn-markread f-opacity" title="{!! __('Mark forum read') !!}" href="{!! $p->model->linkMarkRead !!}"><span>{!! __('All is read') !!}</span></a>
             @endif
             @if ($p->model->canCreateTopic)
-          <a class="f-btn f-btn-create-topic" href="{!! $p->model->linkCreateTopic !!}">{!! __('Post topic') !!}</a>
+          <a class="f-btn f-btn-create-topic" title="{!! __('Post topic') !!}" href="{!! $p->model->linkCreateTopic !!}"><span>{!! __('Post topic') !!}</span></a>
             @endif
         </div>
         @endif

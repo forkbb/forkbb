@@ -15,10 +15,10 @@
     @if ($p->model->canReply || $p->model->closed)
         <div class="f-actions-links">
         @if ($p->model->closed)
-          <span class="f-btn f-btn-topic-closed">{!! __('Topic closed') !!}</span>
+          <a class="f-btn f-btn-topic-closed" title="{!! __('Topic closed') !!}"><span>{!! __('Topic closed') !!}</span></a>
         @endif
         @if ($p->model->canReply)
-          <a class="f-btn f-btn-post-reply" href="{!! $p->model->linkReply !!}">{!! __('Post reply') !!}</a>
+          <a class="f-btn f-btn-post-reply" title="{!! __('Post reply') !!}" href="{!! $p->model->linkReply !!}"><span>{!! __('Post reply') !!}</span></a>
         @endif
         </div>
     @endif
@@ -136,16 +136,16 @@
           <div class="f-post-btns">
             <ul>
             @if ($post->canReport)
-              <li class="f-postreport"><a class="f-btn f-minor" href="{!! $post->linkReport !!}">{!! __('Report') !!}</a></li>
+              <li class="f-postreport"><a class="f-btn f-minor" title="{!! __('Report') !!}" href="{!! $post->linkReport !!}"><span>{!! __('Report') !!}</span></a></li>
             @endif
             @if ($post->canDelete)
-              <li class="f-postdelete"><a class="f-btn" href="{!! $post->linkDelete !!}">{!! __('Delete') !!}</a></li>
+              <li class="f-postdelete"><a class="f-btn" title="{!! __('Delete') !!}" href="{!! $post->linkDelete !!}"><span>{!! __('Delete') !!}</span></a></li>
             @endif
             @if ($post->canEdit)
-              <li class="f-postedit"><a class="f-btn" href="{!! $post->linkEdit !!}">{!! __('Edit') !!}</a></li>
+              <li class="f-postedit"><a class="f-btn" title="{!! __('Edit') !!}" href="{!! $post->linkEdit !!}"><span>{!! __('Edit') !!}</span></a></li>
             @endif
             @if ($post->canQuote)
-              <li class="f-postquote"><a class="f-btn" href="{!! $post->linkQuote !!}">{!! __('Quote') !!}</a></li>
+              <li class="f-postquote"><a class="f-btn" title="{!! __('Quote') !!}" href="{!! $post->linkQuote !!}"><span>{!! __('Quote') !!}</span></a></li>
             @endif
             </ul>
           </div>
