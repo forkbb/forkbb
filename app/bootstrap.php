@@ -11,6 +11,7 @@ use RuntimeException;
 \ini_set('display_errors', 0);
 \ini_set('log_errors', 1);
 
+\setlocale(\LC_ALL, 'C');
 \mb_language('uni');
 \mb_internal_encoding('UTF-8');
 \mb_substitute_character(0xFFFD);
