@@ -467,4 +467,29 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.4 to rev.5
+     */
+    protected function stageNumber4(array $args): ?int
+    {
+        unset($this->c->config->o_date_format);
+        unset($this->c->config->o_time_format);
+
+        $this->c->config->save();
+
+        $query = 'UPDATE ::users
+            SET time_format=time_format+1
+            WHERE time_format>0';
+
+        $this->c->DB->exec($query);
+
+        $query = 'UPDATE ::users
+            SET date_format=date_format+1
+            WHERE date_format>0';
+
+        $this->c->DB->exec($query);
+
+        return null;
+    }
 }

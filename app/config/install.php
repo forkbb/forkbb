@@ -35,8 +35,6 @@ return [
         'o_default_lang'   => 'en',
         'o_default_style'  => 'ForkBB',
         'o_redirect_delay' => 0,
-        'o_date_format'    => 'Y-m-d',
-        'o_time_format'    => 'H:i:s',
         'o_maintenance'    => 0,
         'o_smtp_host'      => '',
         'o_smtp_user'      => '',

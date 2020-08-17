@@ -39,8 +39,6 @@ class Options extends Admin
                     'o_default_dst'           => 'required|integer|in:0,1',
                     'o_default_lang'          => 'required|string:trim|in:' . \implode(',', $this->c->Func->getLangs()),
                     'o_default_style'         => 'required|string:trim|in:' . \implode(',', $this->c->Func->getStyles()),
-                    'o_time_format'           => 'required|string:trim|max:25',
-                    'o_date_format'           => 'required|string:trim|max:25',
                     'o_timeout_visit'         => 'required|integer|min:0|max:99999',
                     'o_timeout_online'        => 'required|integer|min:0|max:99999|check_timeout',
                     'o_redirect_delay'        => 'required|integer|min:0|max:99999',
@@ -298,28 +296,10 @@ class Options extends Admin
         ];
 
         $timestamp = \time() + ($this->user->timezone + $this->user->dst) * 3600;
-        $time      = \ForkBB\dt($timestamp, false, $config->o_date_format, $config->o_time_format, true, true);
-        $date      = \ForkBB\dt($timestamp, true, $config->o_date_format, $config->o_time_format, false, true);
 
         $form['sets']['timeouts'] = [
             'legend' => __('Timeouts subhead'),
             'fields' => [
-                'o_time_format' => [
-                    'type'      => 'text',
-                    'maxlength' => 25,
-                    'value'     => $config->o_time_format,
-                    'caption'   => __('Time format label'),
-                    'info'      => __('Time format help', $time),
-                    'required'  => true,
-                ],
-                'o_date_format' => [
-                    'type'      => 'text',
-                    'maxlength' => 25,
-                    'value'     => $config->o_date_format,
-                    'caption'   => __('Date format label'),
-                    'info'      => __('Date format help', $date),
-                    'required'  => true,
-                ],
                 'o_timeout_visit' => [
                     'type'    => 'number',
                     'min'     => 0,

@@ -20,6 +20,16 @@ abstract class Page extends Model
 
         $container->Lang->load('common');
 
+        $formats                 = $container->DATE_FORMATS;
+        $formats[0]              = __($formats[0]);
+        $formats[1]              = __($formats[1]);
+        $container->DATE_FORMATS = $formats;
+
+        $formats                 = $container->TIME_FORMATS;
+        $formats[0]              = __($formats[0]);
+        $formats[1]              = __($formats[1]);
+        $container->TIME_FORMATS = $formats;
+
         $this->fIndex       = 'index'; # string      Указатель на активный пункт навигации
         $this->httpStatus   = 200;     # int         HTTP статус ответа для данной страницы
         $this->httpHeaders  = [];      # array       HTTP заголовки отличные от статуса

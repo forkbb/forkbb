@@ -486,8 +486,8 @@ msgstr "Основное"
 msgid "Time zone"
 msgstr "Часовой пояс"
 
-msgid "Default"
-msgstr "По умолчанию"
+msgid "Default for language"
+msgstr "По умолчанию для языка"
 
 msgid "For default"
 msgstr "Обнулите поле для использования значения по умолчанию."

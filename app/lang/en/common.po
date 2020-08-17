@@ -24,6 +24,22 @@ msgstr "."
 msgid "lang_thousands_sep"
 msgstr ","
 
+# date format short ([0])
+msgid "Y-m-d"
+msgstr "Y-m-d"
+
+# date format long ([1])
+msgid "d M Y"
+msgstr "d M Y"
+
+# time format short ([1])
+msgid "H:i"
+msgstr "H:i"
+
+# time format long ([0])
+msgid "H:i:s"
+msgstr "H:i:s"
+
 msgid "Cancel"
 msgstr "Cancel"
 

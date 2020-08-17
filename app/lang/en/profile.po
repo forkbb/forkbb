@@ -486,8 +486,8 @@ msgstr "Essentials"
 msgid "Time zone"
 msgstr "Time zone"
 
-msgid "Default"
-msgstr "Default"
+msgid "Default for language"
+msgstr "Default for language"
 
 msgid "For default"
 msgstr "Zero this field for the default settings."
