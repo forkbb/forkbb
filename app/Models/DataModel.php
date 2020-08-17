@@ -82,7 +82,7 @@ class DataModel extends Model
      */
     public function isModified(string $name): bool
     {
-        return ! empty($this->zModFlags[$name]);
+        return isset($this->zModFlags[$name]);
     }
 
     /**
@@ -163,5 +163,17 @@ class DataModel extends Model
         } else {
             return parent::__get($name);
         }
+    }
+
+    /**
+     * Удаляет свойство ????
+     *
+     * @param mixed $name
+     */
+    public function __unset($name): void
+    {
+        $this->zModFlags[$name] = false;
+
+        parent::__unset($name);
     }
 }
