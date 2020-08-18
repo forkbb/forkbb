@@ -317,14 +317,26 @@ msgstr "Your list was too long to parse, please make it smaller!"
 msgid "Index"
 msgstr "Index"
 
+msgid "Home page"
+msgstr "Home page"
+
 msgid "User list"
+msgstr "User list"
+
+msgid "List of users"
 msgstr "User list"
 
 msgid "Rules"
 msgstr "Rules"
 
+msgid "Board rules"
+msgstr "Board rules"
+
 msgid "Search"
 msgstr "Search"
+
+msgid "Search topics and posts"
+msgstr "Search topics and posts"
 
 msgid "Register"
 msgstr "Register"
@@ -338,6 +350,9 @@ msgstr "You are not logged in."
 msgid "Profile"
 msgstr "Profile"
 
+msgid "Your profile"
+msgstr "Your profile"
+
 msgid "Logout"
 msgstr "Logout"
 
@@ -347,6 +362,9 @@ msgstr "Logged in as"
 msgid "Admin"
 msgstr "Administration"
 
+msgid "Administration functions"
+msgstr "Administration functions"
+
 msgid "Last visit"
 msgstr "Last visit: %s"
 
@@ -355,6 +373,9 @@ msgstr " - "
 
 msgid "PM"
 msgstr "PM"
+
+msgid "Private messages"
+msgstr "Private messages"
 
 msgid "PMsend"
 msgstr "Send private message"

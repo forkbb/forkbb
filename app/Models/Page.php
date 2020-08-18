@@ -72,7 +72,7 @@ abstract class Page extends Model
             'index' => [
                 $r->link('Index'),
                 'Index',
-                'Index',
+                'Home page',
             ],
         ];
 
@@ -83,7 +83,7 @@ abstract class Page extends Model
             $navGen['userlist'] = [
                 $r->link('Userlist'),
                 'User list',
-                'User list',
+                'List of users',
             ];
         }
 
@@ -98,7 +98,7 @@ abstract class Page extends Model
             $navGen['rules'] = [
                 $r->link('Rules'),
                 'Rules',
-                'Rules',
+                'Board rules',
             ];
         }
 
@@ -143,7 +143,7 @@ abstract class Page extends Model
             $navGen['search'] = [
                 $r->link('Search'),
                 'Search',
-                'Search',
+                'Search topics and posts',
                 $sub
             ];
         }
@@ -163,7 +163,7 @@ abstract class Page extends Model
             $navUser['profile'] = [
                 $this->user->link,
                 __('User %s', $this->user->username),
-                'Profile',
+                'Your profile',
             ];
 
             // New PMS
@@ -177,7 +177,7 @@ abstract class Page extends Model
                 $navUser['pmsnew'] = [
                     'pmsnew.php',
                     'PM',
-                    'PM',
+                    'Private messages',
                 ]; //'<li id="nav"'.((PUN_ACTIVE_PAGE == 'pms_new' || $user['messages_new'] > 0) ? ' class="isactive"' : '').'><a href="pmsnew.php">'.__('PM').(($user['messages_new'] > 0) ? ' (<span'.((empty($this->c->config->o_pms_flasher) || PUN_ACTIVE_PAGE == 'pms_new') ? '' : ' class="remflasher"' ).'>'.$user['messages_new'].'</span>)' : '').'</a></li>';
             }
             // New PMS
@@ -186,7 +186,7 @@ abstract class Page extends Model
                 $navUser['admin'] = [
                     $r->link('Admin'),
                     'Admin',
-                    'Admin',
+                    'Administration functions',
                 ];
             }
 

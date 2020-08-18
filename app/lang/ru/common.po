@@ -319,14 +319,26 @@ msgstr "Ваш список слишком велик, пожалуйста ум
 msgid "Index"
 msgstr "Форум"
 
+msgid "Home page"
+msgstr "Главная страница форума"
+
 msgid "User list"
 msgstr "Пользователи"
+
+msgid "List of users"
+msgstr "Список пользователей"
 
 msgid "Rules"
 msgstr "Правила"
 
+msgid "Board rules"
+msgstr "Правила форума"
+
 msgid "Search"
 msgstr "Поиск"
+
+msgid "Search topics and posts"
+msgstr "Поиск тем и сообщений"
 
 msgid "Register"
 msgstr "Регистрация"
@@ -340,6 +352,9 @@ msgstr "Вы не вошли."
 msgid "Profile"
 msgstr "Профиль"
 
+msgid "Your profile"
+msgstr "Ваш профиль"
+
 msgid "Logout"
 msgstr "Выход"
 
@@ -349,6 +364,9 @@ msgstr "Вы вошли как"
 msgid "Admin"
 msgstr "Админка"
 
+msgid "Administration functions"
+msgstr "Функции администрирования"
+
 msgid "Last visit"
 msgstr "Последний визит: %s"
 
@@ -357,6 +375,9 @@ msgstr " - "
 
 msgid "PM"
 msgstr "ЛС"
+
+msgid "Private messages"
+msgstr "Личные сообщения"
 
 msgid "PMsend"
 msgstr "Отправить личное сообщение"
