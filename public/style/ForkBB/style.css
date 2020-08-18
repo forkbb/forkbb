@@ -1521,6 +1521,10 @@ body,
   display: none;
 }
 
+#fork .f-fsticky .f-ficon:before {
+  color: #D8000C;
+}
+
 #fork .f-tsticky:before {
   font-family: "FontAwesomeFree";
   font-weight: 900;
