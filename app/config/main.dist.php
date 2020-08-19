@@ -162,6 +162,7 @@ return [
         'Misc'            => \ForkBB\Models\Pages\Misc::class,
         'Moderate'        => \ForkBB\Models\Pages\Moderate::class,
         'Report'          => \ForkBB\Models\Pages\Report::class,
+        'Email'           => \ForkBB\Models\Pages\Email::class,
         'ProfileView'     => \ForkBB\Models\Pages\Profile\View::class,
         'ProfileEdit'     => \ForkBB\Models\Pages\Profile\Edit::class,
         'ProfileConfig'   => \ForkBB\Models\Pages\Profile\Config::class,

@@ -492,4 +492,21 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.5 to rev.6
+     */
+    protected function stageNumber5(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+
+        $coreConfig->add(
+            'multiple=>Email',
+            '\\ForkBB\\Models\\Pages\\Email::class',
+            'Report'
+        );
+        $coreConfig->save();
+
+        return null;
+    }
 }
