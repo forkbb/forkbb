@@ -31,13 +31,13 @@ msgid "Too long email message"
 msgstr "Messages cannot be longer than 65535 characters (64 KB)."
 
 msgid "Email flood"
-msgstr "At least %s seconds have to pass between sent emails. Please wait %s seconds and try sending again."
+msgstr "At least %1$s seconds have to pass between sent emails. Please wait %2$s seconds and try sending again."
 
 msgid "Email sent redirect"
 msgstr "Email sent. Redirecting …"
 
-msgid "Send email to"
-msgstr "Send email to"
+msgid "Send email to %s"
+msgstr "Send email to %s"
 
 msgid "Email subject"
 msgstr "Subject"
@@ -58,7 +58,7 @@ msgid "Reason too long"
 msgstr "Your message must be under 65535 bytes (~64kb)."
 
 msgid "Report flood"
-msgstr "At least %s seconds have to pass between reports. Please wait %s seconds and try sending again."
+msgstr "At least %1$s seconds have to pass between reports. Please wait %2$s seconds and try sending again."
 
 msgid "Report redirect"
 msgstr "Post reported. Redirecting …"
@@ -308,3 +308,6 @@ msgstr "Stick"
 
 msgid "Moderate forum"
 msgstr "Moderate forum"
+
+msgid "When sending email there was an error"
+msgstr "When sending email there was an error. Please try again later."

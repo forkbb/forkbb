@@ -350,6 +350,18 @@ class Routing
                     'ReportPost'
                 );
             }
+            // отправка email
+            if (
+                ! $user->isGuest
+                && '1' == $user->g_send_email
+            ) {
+                $r->add(
+                    $r::DUO,
+                    '/send_email/{id:[2-9]|[1-9]\d+}',
+                    'Email:email',
+                    'SendEmail'
+                );
+            }
 
         }
         // админ и модератор

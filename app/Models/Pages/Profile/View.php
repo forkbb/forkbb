@@ -150,14 +150,14 @@ class View extends Profile
                     'value'   => $this->curUser->censorEmail,
                     'href'    => 'mailto:' . $this->curUser->censorEmail,
                 ];
-            } elseif (1 === $this->curUser->email_setting) {
+            } elseif ($this->rules->sendEmail) {
                 $fields['email'] = [
                     'class'   => 'pline',
                     'type'    => 'link',
                     'caption' => __('Email info'),
                     'value'   => __('Send email'),
                     'href'    => $this->c->Router->link(
-                        '', // ????
+                        'SendEmail',
                         [
                             'id' => $this->curUser->id,
                         ]

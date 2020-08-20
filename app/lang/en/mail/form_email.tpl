@@ -1,13 +1,15 @@
-Subject: <mail_subject>
+Subject: <mailSubject>
 
-<sender> from <board_title> has sent you a message. You can reply to <sender> by replying to this email.
+Hello <username>,
+
+<sender> from <fTitle> has sent you a message. You can reply to <sender> by replying to this email.
 
 The message reads as follows:
 -----------------------------------------------------------------------
 
-<mail_message>
+<mailMessage>
 
 -----------------------------------------------------------------------
 
 --
-<board_mailer> Mailer
+<fMailer> Mailer
