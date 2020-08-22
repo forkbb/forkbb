@@ -371,6 +371,7 @@ abstract class Page extends Model
     protected function httpStatus(): Page
     {
         $list = [
+            302 => '302 Moved Temporarily',
             403 => '403 Forbidden',
             404 => '404 Not Found',
             405 => '405 Method Not Allowed',
