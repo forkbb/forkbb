@@ -17,7 +17,7 @@ class Update extends Admin
 {
     const PHP_MIN = '7.3.0';
 
-    const LATEST_REV_WITH_DB_CHANGES = 2;
+    const LATEST_REV_WITH_DB_CHANGES = 7;
 
     const LOCK_NAME = 'lock_update';
     const LOCk_TTL  = 1800;
@@ -506,6 +506,52 @@ class Update extends Admin
             'Report'
         );
         $coreConfig->save();
+
+        return null;
+    }
+
+    /**
+     * rev.6 to rev.7
+     */
+    protected function stageNumber6(array $args): ?int
+    {
+        $this->c->DB->addField('groups', 'g_sig_use', 'TINYINT(1)', false, 1);
+        $this->c->DB->addField('groups', 'g_sig_length', 'SMALLINT UNSIGNED', false, 400);
+        $this->c->DB->addField('groups', 'g_sig_lines', 'TINYINT UNSIGNED', false, 4);
+
+        $vars  = [
+            ':sig_use'    => '1' == $this->c->config->o_signatures ? 1 : 0,
+            ':sig_length' => $this->c->config->p_sig_length > 10000 ? 10000 : (int) $this->c->config->p_sig_length,
+            ':sig_lines'  => $this->c->config->p_sig_lines> 255 ? 255 : (int) $this->c->config->p_sig_lines,
+        ];
+        $query = 'UPDATE ::groups
+            SET g_sig_use=?i:sig_use, g_sig_length=?i:sig_length, g_sig_lines=?i:sig_lines';
+
+        $this->c->DB->query($query, $vars);
+
+        $vars  = [
+            ':grp' => $this->c->GROUP_ADMIN,
+        ];
+        $query = 'UPDATE ::groups
+            SET g_sig_use=1, g_sig_length=10000, g_sig_lines=255
+            WHERE g_id=?i:grp';
+
+        $this->c->DB->query($query, $vars);
+
+        $vars  = [
+            ':grp' => $this->c->GROUP_GUEST,
+        ];
+        $query = 'UPDATE ::groups
+            SET g_sig_use=0, g_sig_length=0, g_sig_lines=0
+            WHERE g_id=?i:grp';
+
+        $this->c->DB->query($query, $vars);
+
+        unset($this->c->config->o_signatures);
+        unset($this->c->config->p_sig_length);
+        unset($this->c->config->p_sig_lines);
+
+        $this->c->config->save();
 
         return null;
     }

@@ -254,3 +254,21 @@ msgstr "Недопустимая группа по умолчанию."
 
 msgid "Invalid group to create on base"
 msgstr "Недопустимая группа для создания на основании."
+
+msgid "Signatures label"
+msgstr "Подписи"
+
+msgid "Signatures help"
+msgstr "Разрешить пользователям использовать подписи под своими сообщениями."
+
+msgid "Max sig length label"
+msgstr "Макс. длина сообщения"
+
+msgid "Max sig length help"
+msgstr "Максимальное количество букв в подписи пользователя."
+
+msgid "Max sig lines label"
+msgstr "Макс. строк сообщения"
+
+msgid "Max sig lines help"
+msgstr "Максимальное количество строк в подписи пользователя."

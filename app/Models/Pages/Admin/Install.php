@@ -635,6 +635,9 @@ class Install extends Admin
                 'g_deledit_interval'     => ['INT(10)', false, 0],
                 'g_pm'                   => ['TINYINT(1)', false, 1],
                 'g_pm_limit'             => ['INT(10) UNSIGNED', false, 100],
+                'g_sig_use'              => ['TINYINT(1)', false, 1],
+                'g_sig_length'           => ['SMALLINT UNSIGNED', false, 400],
+                'g_sig_lines'            => ['TINYINT UNSIGNED', false, 4],
             ],
             'PRIMARY KEY' => ['g_id'],
             'ENGINE' => $this->DBEngine,
@@ -1045,15 +1048,15 @@ class Install extends Admin
         $now = \time();
 
         $groups = [
-            // g_id,                     g_title,              g_user_title,        g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_post_links, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood, g_promote_min_posts, g_promote_next_group
-            [$this->c->GROUP_ADMIN,      __('Administrators'), __('Administrator '), 0,           0,                0,                  0,                      0,               1,                1,            1,            1,              1,             1,            1,              1,              1,             1,         1,        1,              1,            0,            0,              0,             0,                 0,                 0],
-            [$this->c->GROUP_MOD,        __('Moderators'),     __('Moderator '),     1,           1,                1,                  1,                      1,               1,                1,            1,            1,              1,             1,            1,              1,              1,             1,         1,        1,              1,            0,            0,              0,             0,                 0,                 0],
-            [$this->c->GROUP_GUEST,      __('Guests'),         '',                   0,           0,                0,                  0,                      0,               0,                1,            1,            0,              0,             0,            0,              0,              0,             0,         1,        1,              0,            120,          60,             0,             0,                 0,                 0],
-            [$this->c->GROUP_MEMBER,     __('Members'),        '',                   0,           0,                0,                  0,                      0,               0,                1,            1,            1,              1,             1,            1,              1,              1,             0,         1,        1,              1,            30,           30,             60,            60,                0,                 0],
-            [$this->c->GROUP_NEW_MEMBER, __('New members'),    __('New member'),     0,           0,                0,                  0,                      0,               0,                1,            1,            1,              1,             1,            1,              1,              0,             0,         1,        1,              1,            60,           30,             120,           60,                5,                 $this->c->GROUP_MEMBER],
+            // g_id,                     g_title,              g_user_title,        g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_post_links, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood, g_promote_min_posts, g_promote_next_group, g_sig_use, g_sig_length, g_sig_lines
+            [$this->c->GROUP_ADMIN,      __('Administrators'), __('Administrator '), 0,          0,                0,                  0,                      0,               1,                   1,            1,            1,              1,             1,            1,              1,               1,            1,           1,        1,              1,            0,            0,              0,             0,              0,                   0,                    1,         10000,        255],
+            [$this->c->GROUP_MOD,        __('Moderators'),     __('Moderator '),     1,          1,                1,                  1,                      1,               1,                   1,            1,            1,              1,             1,            1,              1,               1,            1,           1,        1,              1,            0,            0,              0,             0,              0,                   0,                    1,         400,          4],
+            [$this->c->GROUP_GUEST,      __('Guests'),         '',                   0,          0,                0,                  0,                      0,               0,                   1,            1,            0,              0,             0,            0,              0,               0,            0,           1,        1,              0,            120,          60,             0,             0,              0,                   0,                    0,         0,            0],
+            [$this->c->GROUP_MEMBER,     __('Members'),        '',                   0,          0,                0,                  0,                      0,               0,                   1,            1,            1,              1,             1,            1,              1,               1,            0,           1,        1,              1,            30,           30,             60,            60,             0,                   0,                    1,         400,          4],
+            [$this->c->GROUP_NEW_MEMBER, __('New members'),    __('New member'),     0,          0,                0,                  0,                      0,               0,                   1,            1,            1,              1,             1,            1,              1,               0,            0,           1,        1,              1,            60,           30,             120,           60,             5,                   $this->c->GROUP_MEMBER, 1,       400,          4],
         ];
         foreach ($groups as $group) { //???? $db_type != 'pgsql'
-            $this->c->DB->exec('INSERT INTO ::groups (g_id, g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_post_links, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood, g_promote_min_posts, g_promote_next_group) VALUES (?i, ?s, ?s, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i)', $group) ;
+            $this->c->DB->exec('INSERT INTO ::groups (g_id, g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_post_links, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood, g_promote_min_posts, g_promote_next_group, g_sig_use, g_sig_length, g_sig_lines) VALUES (?i, ?s, ?s, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i)', $group) ;
         }
         $this->c->DB->exec('UPDATE ::groups SET g_pm_limit=0 WHERE g_id=?i', [$this->c->GROUP_ADMIN]);
 
@@ -1072,7 +1075,6 @@ class Install extends Admin
             'o_show_version'          => 0,
             'o_show_user_info'        => 1,
             'o_show_post_count'       => 1,
-            'o_signatures'            => 1,
             'o_smilies'               => 1,
             'o_smilies_sig'           => 1,
             'o_make_links'            => 1,
@@ -1127,8 +1129,6 @@ class Install extends Admin
             'p_sig_all_caps'          => 1,
             'p_sig_bbcode'            => 1,
             'p_sig_img_tag'           => 0,
-            'p_sig_length'            => 400,
-            'p_sig_lines'             => 4,
             'p_force_guest_email'     => 1,
             'o_pms_enabled'           => 1,                    // New PMS - Visman
             'o_pms_min_kolvo'         => 0,

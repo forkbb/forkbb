@@ -54,7 +54,6 @@ class Options extends Admin
                     'o_quote_depth'           => 'required|integer|min:0|max:9',
                     'o_quickpost'             => 'required|integer|in:0,1',
                     'o_users_online'          => 'required|integer|in:0,1',
-                    'o_signatures'            => 'required|integer|in:0,1',
                     'o_show_dot'              => 'required|integer|in:0,1',
                     'o_topic_views'           => 'required|integer|in:0,1',
                     'o_quickjump'             => 'required|integer|in:0,1',
@@ -424,13 +423,6 @@ class Options extends Admin
                     'values'  => $yn,
                     'caption' => __('Users online label'),
                     'info'    => __('Users online help'),
-                ],
-                'o_signatures' => [
-                    'type'    => 'radio',
-                    'value'   => $config->o_signatures,
-                    'values'  => $yn,
-                    'caption' => __('Signatures label'),
-                    'info'    => __('Signatures help'),
                 ],
                 'o_show_dot' => [
                     'type'    => 'radio',

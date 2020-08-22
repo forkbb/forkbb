@@ -37,8 +37,6 @@ class Permissions extends Admin
                     'p_sig_bbcode'        => 'required|integer|in:0,1',
                     'p_sig_img_tag'       => 'required|integer|in:0,1',
                     'p_sig_all_caps'      => 'required|integer|in:0,1',
-                    'p_sig_length'        => 'required|integer|min:0|max:16000',
-                    'p_sig_lines'         => 'required|integer|min:0|max:100',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -161,22 +159,6 @@ class Permissions extends Admin
                     'values'  => $yn,
                     'caption' => __('All caps sigs label'),
                     'info'    => __('All caps sigs help'),
-                ],
-                'p_sig_length' => [
-                    'type'    => 'number',
-                    'min'     => 0,
-                    'max'     => 16000,
-                    'value'   => $config->p_sig_length,
-                    'caption' => __('Max sig length label'),
-                    'info'    => __('Max sig length help'),
-                ],
-                'p_sig_lines' => [
-                    'type'    => 'number',
-                    'min'     => 0,
-                    'max'     => 100,
-                    'value'   => $config->p_sig_lines,
-                    'caption' => __('Max sig lines label'),
-                    'info'    => __('Max sig lines help'),
                 ],
 
             ],

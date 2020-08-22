@@ -65,7 +65,7 @@ class Edit extends Profile
             }
 
             if ($this->rules->useSignature) {
-                $ruleSignature = "string:trim|max:{$this->c->config->p_sig_length}|check_signature";
+                $ruleSignature = "string:trim|max:{$this->curUser->g_sig_length}|check_signature";
             } else {
                 $ruleSignature = 'absent';
             }
@@ -168,7 +168,7 @@ class Edit extends Profile
             if ('' == $this->c->censorship->censor($signature)) {
                 $v->addError('No signature after censoring');
             // количество строк
-            } elseif (\substr_count($signature, "\n") >= $this->c->config->p_sig_lines) {
+            } elseif (\substr_count($signature, "\n") >= $this->curUser->g_sig_lines) {
                 $v->addError('Signature has too many lines');
             // текст сообщения только заглавными буквами
             } elseif (
@@ -460,7 +460,7 @@ class Edit extends Profile
                 'type'    => 'textarea',
                 'value'   => $this->curUser->signature,
                 'caption' => __('Signature'),
-                'info'    => __('Sig max size', \ForkBB\num($this->c->config->p_sig_length), \ForkBB\num($this->c->config->p_sig_lines)),
+                'info'    => __('Sig max size', \ForkBB\num($this->curUser->g_sig_length), \ForkBB\num($this->curUser->g_sig_lines)),
             ];
             $form['sets']['signature'] = [
                 'class'  => 'data-edit',

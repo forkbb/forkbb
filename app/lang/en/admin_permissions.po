@@ -71,15 +71,3 @@ msgstr "All caps signature"
 
 msgid "All caps sigs help"
 msgstr "Allow a signature to contain only capital letters."
-
-msgid "Max sig length label"
-msgstr "Maximum signature length"
-
-msgid "Max sig length help"
-msgstr "The maximum number of characters a user signature may contain."
-
-msgid "Max sig lines label"
-msgstr "Maximum signature lines"
-
-msgid "Max sig lines help"
-msgstr "The maximum number of lines a user signature may contain."

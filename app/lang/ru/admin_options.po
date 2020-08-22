@@ -174,12 +174,6 @@ msgstr "Пользователи online"
 msgid "Users online help"
 msgstr "Показывать на главной странице форума информацию о гостях и зарегистрированных пользователях online."
 
-msgid "Signatures label"
-msgstr "Подписи"
-
-msgid "Signatures help"
-msgstr "Разрешить пользователям использовать подписи под своими сообщениями."
-
 msgid "User has posted label"
 msgstr "Метка участия"
 

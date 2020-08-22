@@ -174,12 +174,6 @@ msgstr "Users online"
 msgid "Users online help"
 msgstr "Display info on the index page about guests and registered users currently browsing the board."
 
-msgid "Signatures label"
-msgstr "Signatures"
-
-msgid "Signatures help"
-msgstr "Allow users to attach a signature to their posts."
-
 msgid "User has posted label"
 msgstr "User has posted earlier"
 

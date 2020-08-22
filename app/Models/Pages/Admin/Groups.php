@@ -294,6 +294,14 @@ class Groups extends Admin
                         'g_mod_ban_users'        => 'integer|in:0,1',
                     ]);
                 }
+
+                if (! $group->groupGuest) {
+                    $v->addRules([
+                        'g_sig_use'              => 'required|integer|in:0,1',
+                        'g_sig_length'           => 'required|integer|min:0|max:10000',
+                        'g_sig_lines'            => 'required|integer|min:0|max:255',
+                    ]);
+                }
             }
 
             if ($v->validation($_POST)) {
@@ -646,6 +654,30 @@ class Groups extends Admin
                 'caption' => __('Report flood label'),
                 'info'    => __('Report flood help'),
             ];
+            $fieldset['g_sig_use'] = [
+                'type'    => 'radio',
+                'value'   => $group->g_sig_use,
+                'values'  => $yn,
+                'caption' => __('Signatures label'),
+                'info'    => __('Signatures help'),
+            ];
+            $fieldset['g_sig_length'] = [
+                'type'    => 'number',
+                'min'     => 0,
+                'max'     => 16000,
+                'value'   => $group->g_sig_length,
+                'caption' => __('Max sig length label'),
+                'info'    => __('Max sig length help'),
+            ];
+            $fieldset['g_sig_lines'] = [
+                'type'    => 'number',
+                'min'     => 0,
+                'max'     => 100,
+                'value'   => $group->g_sig_lines,
+                'caption' => __('Max sig lines label'),
+                'info'    => __('Max sig lines help'),
+            ];
+
         }
 
         $form['sets']['group-data'] = [

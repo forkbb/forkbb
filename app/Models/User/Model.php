@@ -307,7 +307,7 @@ class Model extends DataModel
      */
     protected function getshowSignature(): bool
     {
-        return '1' == $this->c->config->o_signatures && 1 == $this->show_sig;
+        return 1 == $this->show_sig;
     }
 
     /**

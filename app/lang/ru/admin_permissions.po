@@ -71,15 +71,3 @@ msgstr "Подпись заглавными"
 
 msgid "All caps sigs help"
 msgstr "Разрешить подписи, состоящие из одних заглавных букв."
-
-msgid "Max sig length label"
-msgstr "Макс. длина сообщения"
-
-msgid "Max sig length help"
-msgstr "Максимальное количество букв в подписи пользователя."
-
-msgid "Max sig lines label"
-msgstr "Макс. строк сообщения"
-
-msgid "Max sig lines help"
-msgstr "Максимальное количество строк в подписи пользователя."
