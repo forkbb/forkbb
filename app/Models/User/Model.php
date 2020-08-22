@@ -251,6 +251,18 @@ class Model extends DataModel
     }
 
     /**
+     * Статус наличия подписи
+     *
+     * @return bool
+     */
+    protected function getisSignature(): bool
+    {
+        return $this->g_sig_length > 0
+            && $this->g_sig_lines > 0
+            && '' != $this->signature;
+    }
+
+    /**
      * HTML код подписи
      *
      * @return string

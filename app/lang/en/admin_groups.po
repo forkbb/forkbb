@@ -255,20 +255,17 @@ msgstr "Invalid default group."
 msgid "Invalid group to create on base"
 msgstr "Invalid group to create on base."
 
-msgid "Signatures label"
+msgid "Signatures"
 msgstr "Signatures"
-
-msgid "Signatures help"
-msgstr "Allow users to attach a signature to their posts."
 
 msgid "Max sig length label"
 msgstr "Maximum signature length"
 
 msgid "Max sig length help"
-msgstr "The maximum number of characters a user signature may contain."
+msgstr "The maximum number of characters a user signature may contain. 0 - disables signatures."
 
 msgid "Max sig lines label"
 msgstr "Maximum signature lines"
 
 msgid "Max sig lines help"
-msgstr "The maximum number of lines a user signature may contain."
+msgstr "The maximum number of lines a user signature may contain. 0 - disables signatures."

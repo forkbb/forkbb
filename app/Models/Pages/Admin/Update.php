@@ -17,7 +17,7 @@ class Update extends Admin
 {
     const PHP_MIN = '7.3.0';
 
-    const LATEST_REV_WITH_DB_CHANGES = 7;
+    const LATEST_REV_WITH_DB_CHANGES = 8;
 
     const LOCK_NAME = 'lock_update';
     const LOCk_TTL  = 1800;
@@ -552,6 +552,16 @@ class Update extends Admin
         unset($this->c->config->p_sig_lines);
 
         $this->c->config->save();
+
+        return null;
+    }
+
+    /**
+     * rev.7 to rev.8
+     */
+    protected function stageNumber7(array $args): ?int
+    {
+        $this->c->DB->dropField('groups', 'g_sig_use');
 
         return null;
     }

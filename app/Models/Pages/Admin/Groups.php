@@ -297,7 +297,6 @@ class Groups extends Admin
 
                 if (! $group->groupGuest) {
                     $v->addRules([
-                        'g_sig_use'              => 'required|integer|in:0,1',
                         'g_sig_length'           => 'required|integer|min:0|max:10000',
                         'g_sig_lines'            => 'required|integer|min:0|max:255',
                     ]);
@@ -654,13 +653,26 @@ class Groups extends Admin
                 'caption' => __('Report flood label'),
                 'info'    => __('Report flood help'),
             ];
-            $fieldset['g_sig_use'] = [
-                'type'    => 'radio',
-                'value'   => $group->g_sig_use,
-                'values'  => $yn,
-                'caption' => __('Signatures label'),
-                'info'    => __('Signatures help'),
+
+        }
+
+        $form['sets']['group-data'] = [
+            'fields' => $fieldset,
+        ];
+
+        if (! empty($group->g_moderator)) {
+            $form['sets']['mod-info'] = [
+                'info' => [
+                    'info1' => [
+                        'type'  => '', //????
+                        'value' => __('Moderator info'),
+                    ],
+                ],
             ];
+        }
+
+        $fieldset = [];
+        if (! $group->groupGuest) {
             $fieldset['g_sig_length'] = [
                 'type'    => 'number',
                 'min'     => 0,
@@ -678,20 +690,9 @@ class Groups extends Admin
                 'info'    => __('Max sig lines help'),
             ];
 
-        }
-
-        $form['sets']['group-data'] = [
-            'fields' => $fieldset,
-        ];
-
-        if (! empty($group->g_moderator)) {
-            $form['sets']['mod-info'] = [
-                'info' => [
-                    'info1' => [
-                        'type'  => '', //????
-                        'value' => __('Moderator info'),
-                    ],
-                ],
+            $form['sets']['group-data-signature'] = [
+                'legend' => __('Signatures'),
+                'fields' => $fieldset,
             ];
         }
 

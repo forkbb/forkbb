@@ -122,7 +122,7 @@ class Profile extends Rules
 
     protected function getuseSignature(): bool
     {
-        return '1' == $this->curUser->g_sig_use;
+        return $this->curUser->g_sig_length > 0 && $this->curUser->g_sig_lines > 0;
     }
 
     protected function getviewWebsite(): bool
