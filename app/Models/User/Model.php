@@ -33,6 +33,7 @@ class Model extends DataModel
             'last_visit'   => ['currentVisit'],
             'show_sig'     => ['showSignature'],
             'show_avatars' => ['showAvatar'],
+            'signature'    => ['isSignature'],
         ];
     }
 
