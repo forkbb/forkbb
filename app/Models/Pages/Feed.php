@@ -10,8 +10,17 @@ use function \ForkBB\__;
 
 class Feed extends Page
 {
-    protected function exit(string $message): Page
+    protected function exit(string $message, int $status = 404): Page
     {
+        $this->plainText    = __($message);
+        $this->nameTpl      = 'layouts/plain';
+        $this->httpStatus   = \max(200, $status);
+        $this->onlinePos    = 'feed';
+        $this->onlineDetail = false;
+        $this->onlineFilter = false;
+
+        $this->header('Content-type', 'text/plain; charset=utf-8');
+
         return $this;
     }
 
