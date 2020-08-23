@@ -16,6 +16,12 @@ abstract class Page extends Model
     protected $pageHeaders = [];
 
     /**
+     * Http заголовки
+     * @var array
+     */
+    protected $httpHeaders = [];
+
+    /**
      * Конструктор
      *
      * @param Container $container
@@ -38,7 +44,7 @@ abstract class Page extends Model
 
         $this->fIndex       = 'index'; # string      Указатель на активный пункт навигации
         $this->httpStatus   = 200;     # int         HTTP статус ответа для данной страницы
-        $this->httpHeaders  = [];      # array       HTTP заголовки отличные от статуса
+#       $this->httpHeaders  = [];      # array       HTTP заголовки отличные от статуса
 #       $this->nameTpl      = null;    # null|string Имя шаблона
 #       $this->titles       = [];      # array       Массив титула страницы | setTitles()
         $this->fIswev       = [];      # array       Массив info, success, warning, error, validation информации
@@ -61,6 +67,15 @@ abstract class Page extends Model
             'type' => 'text/css',
             'href' => $this->c->PUBLIC_URL . '/style/' . $this->user->style . '/style.css',
         ]);
+
+        $now = \gmdate('D, d M Y H:i:s') . ' GMT';
+
+        $this->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+//            ->header('Cache-Control', 'private, no-cache')
+            ->header('Content-type', 'text/html; charset=utf-8')
+            ->header('Date', $now)
+            ->header('Last-Modified', $now)
+            ->header('Expires', $now);
     }
 
     /**
@@ -344,9 +359,7 @@ abstract class Page extends Model
         } else {
             $key .= ':';
         }
-        $attr   = $this->getAttr('httpHeaders', []);
-        $attr[] = ["{$key} {$value}", $replace];
-        $this->setAttr('httpHeaders', $attr);
+        $this->httpHeaders[] = ["{$key} {$value}", $replace];
 
         return $this;
     }
@@ -359,17 +372,9 @@ abstract class Page extends Model
      */
     protected function gethttpHeaders(): array
     {
-        $now = \gmdate('D, d M Y H:i:s') . ' GMT';
+        $this->httpStatus();
 
-        $this->httpStatus()
-            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
-//            ->header('Cache-Control', 'private, no-cache')
-            ->header('Content-type', 'text/html; charset=utf-8')
-            ->header('Date', $now)
-            ->header('Last-Modified', $now)
-            ->header('Expires', $now);
-
-        return $this->getAttr('httpHeaders', []);
+        return $this->httpHeaders;
     }
 
     /**
