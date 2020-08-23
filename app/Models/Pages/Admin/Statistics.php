@@ -43,7 +43,7 @@ class Statistics extends Admin
                     },
                     $matches[1]
                 );
-                $this->addStyle('phpinfo', $style);
+                $this->pageHeader('phpinfo', 'style', [$style]);
             }
         } else {
             $phpinfo = '- - -';

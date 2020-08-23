@@ -10,6 +10,12 @@ use function \ForkBB\__;
 abstract class Page extends Model
 {
     /**
+     * Заголовки страницы
+     * @var array
+     */
+    protected $pageHeaders = [];
+
+    /**
      * Конструктор
      *
      * @param Container $container
@@ -49,6 +55,12 @@ abstract class Page extends Model
             $this->fAnnounce = $container->config->o_announcement_message;
         }
         $this->user         = $this->c->user; // передача текущего юзера в шаблон
+
+        $this->pageHeader('mainStyle', 'link', [
+            'rel'  => 'stylesheet',
+            'type' => 'text/css',
+            'href' => $this->c->PUBLIC_URL . '/style/' . $this->user->style . '/style.css',
+        ]);
     }
 
     /**
@@ -269,6 +281,25 @@ abstract class Page extends Model
     }
 
     /**
+     * Задает/получает заголовок страницы
+     *
+     * @return mixed
+     */
+    public function pageHeader(string $name, string $type, array $values = null)
+    {
+        if (null === $values) {
+            return $this->pageHeaders["{$name}_{$type}"] ?? null;
+        } else {
+            $this->pageHeaders["{$name}_{$type}"] = [
+                'type'   => $type,
+                'values' => $values
+            ];
+
+            return $this;
+        }
+    }
+
+    /**
      * Возвращает массива заголовков страницы
      * $this->pageHeaders
      *
@@ -276,42 +307,20 @@ abstract class Page extends Model
      */
     protected function getpageHeaders(): array
     {
-        $headers = [
-            ['link', 'rel="stylesheet" type="text/css" href="' . $this->c->PUBLIC_URL . '/style/' . $this->user->style . '/style.css' . '"'],
-        ];
-
         if ($this->canonical) {
-            $headers[] = ['link', 'rel="canonical" href="' . $this->canonical . '"'];
+            $this->pageHeader('canonical', 'link', [
+                'rel'  => 'canonical',
+                'href' => $this->canonical,
+            ]);
         }
         if ($this->robots) {
-            $headers[] = ['meta', 'name="robots" content="' . $this->robots . '"'];
+            $this->pageHeader('robots', 'meta', [
+                'name'    => 'robots',
+                'content' => $this->robots,
+            ]);
         }
 
-        $ph = $this->getAttr('pageHeaders', []);
-        if (isset($ph['style'])) {
-            foreach ($ph['style'] as $style) {
-                $headers[] = ['style', $style];
-            }
-        }
-
-        return $headers;
-    }
-
-    /**
-     * Добавляет стиль на страницу
-     *
-     * @param string $name
-     * @param string $value
-     *
-     * @return Page
-     */
-    public function addStyle(string $name, string $value): Page
-    {
-        $attr = $this->getAttr('pageHeaders', []);
-        $attr['style'][$name] = $value;
-        $this->setAttr('pageHeaders', $attr);
-
-        return $this;
+        return $this->pageHeaders;
     }
 
     /**

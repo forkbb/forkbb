@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="refresh" content="{!! $p->timeout !!};URL={{ $p->link }}">
   <title>{{ $p->pageTitle }}</title>
-@foreach ($p->pageHeaders as $cur)
-    @if ('style' === $cur[0])
-  <{!! $cur[0] !!}>{!! $cur[1] !!}</{!! $cur[0] !!}>
+@foreach ($p->pageHeaders as $pageHeader)
+    @if ('style' === $pageHeader['type'])
+  <style>{!! $pageHeader['values'][0] !!}</style>
     @else
-  <{!! $cur[0] !!} {!! $cur[1] !!}>
+  <{!! $pageHeader['type'] !!} @foreach ($pageHeader['values'] as $key => $val) {!! $key !!}="{{ $val }}" @endforeach>
     @endif
 @endforeach
 </head>
