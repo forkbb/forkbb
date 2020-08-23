@@ -467,7 +467,7 @@ class Options extends Admin
             'fields' => [
                 'o_feed_type' => [
                     'type'    => 'radio',
-                    'value'   => $config->o_feed_typet,
+                    'value'   => $config->o_feed_type,
                     'values'  => [
                         0 => __('No feeds'),
                         1 => __('RSS'),
