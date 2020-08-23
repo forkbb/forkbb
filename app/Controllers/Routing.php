@@ -362,6 +362,13 @@ class Routing
                     'SendEmail'
                 );
             }
+            // feed
+            $r->add(
+                $r::GET,
+                '/feed/{type:atom|rss}[/forum/{fid:[1-9]\d*}][/topic/{tid:[1-9]\d*}]',
+                'Feed:view',
+                'Feed'
+            );
 
         }
         // админ и модератор
