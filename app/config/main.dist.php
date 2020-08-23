@@ -163,6 +163,7 @@ return [
         'Moderate'        => \ForkBB\Models\Pages\Moderate::class,
         'Report'          => \ForkBB\Models\Pages\Report::class,
         'Email'           => \ForkBB\Models\Pages\Email::class,
+        'Feed'            => \ForkBB\Models\Pages\Feed::class,
         'ProfileView'     => \ForkBB\Models\Pages\Profile\View::class,
         'ProfileEdit'     => \ForkBB\Models\Pages\Profile\Edit::class,
         'ProfileConfig'   => \ForkBB\Models\Pages\Profile\Config::class,
@@ -266,6 +267,7 @@ return [
         'PostManagerUserInfoFromIP' => \ForkBB\Models\Post\UserInfoFromIP::class,
         'PostManagerUserStat'     => \ForkBB\Models\Post\UserStat::class,
         'PostManagerMove'         => \ForkBB\Models\Post\Move::class,
+        'PostManagerFeed'         => \ForkBB\Models\Post\Feed::class,
 
         'ReportModel'             => \ForkBB\Models\Report\Model::class,
         'ReportManagerSave'       => \ForkBB\Models\Report\Save::class,

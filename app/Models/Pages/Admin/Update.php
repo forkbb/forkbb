@@ -565,4 +565,26 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.8 to rev.9
+     */
+    protected function stageNumber8(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+
+        $coreConfig->add(
+            'multiple=>Feed',
+            '\\ForkBB\\Models\\Pages\\Feed::class',
+            'Email'
+        );
+        $coreConfig->add(
+            'multiple=>PostManagerFeed',
+            '\\ForkBB\\Models\\Post\\Feed::class',
+            'PostManagerMove'
+        );
+        $coreConfig->save();
+
+        return null;
+    }
 }
