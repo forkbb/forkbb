@@ -427,14 +427,11 @@ msgstr "Запрос"
 msgid "Total query time"
 msgstr "Итого: %s"
 
-msgid "The most recent posts at %s board"
-msgstr "Самые свежие сообщения на форуме \"%s\"."
+msgid "RSS description"
+msgstr "Самые свежие темы на %s."
 
-msgid "The most recent posts in %s forum"
-msgstr "Самые свежие сообщения в разделе \"%s\"."
-
-msgid "The most recent posts in %s topic"
-msgstr "Самые свежие сообщения в теме \"%s\"."
+msgid "RSS description topic"
+msgstr "Самые свежие сообщения в %s."
 
 msgid "RSS reply"
 msgstr "Re: "

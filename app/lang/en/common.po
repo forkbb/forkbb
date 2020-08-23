@@ -425,14 +425,11 @@ msgstr "Query"
 msgid "Total query time"
 msgstr "Total query time: %s"
 
-msgid "The most recent posts at %s board"
-msgstr "The most recent posts at \"%s\" board."
+msgid "RSS description"
+msgstr "The most recent topics at %s."
 
-msgid "The most recent posts in %s forum"
-msgstr "The most recent posts in \"%s\" forum."
-
-msgid "The most recent posts in %s topic"
-msgstr "The most recent posts in \"%s\" topic."
+msgid "RSS description topic"
+msgstr "The most recent posts in %s."
 
 msgid "RSS reply"
 msgstr "Re: "
