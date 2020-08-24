@@ -53,6 +53,10 @@ class View extends Dirk
      */
     protected function compileTransformations($value)
     {
+        if ('<?xml ' === \substr($value, 0, 6)) {
+            $value = \str_replace(' \\ENT_HTML5 | \\ENT_QUOTES | \\ENT_SUBSTITUTE,', ' \\ENT_XML1,', $value);
+        }
+
         $perfix = <<<'EOD'
 <?php
 
