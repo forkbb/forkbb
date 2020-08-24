@@ -10,6 +10,11 @@ use function \ForkBB\__;
 
 class Feed extends Page
 {
+    const MAX_LEN_CONT = 1000;
+
+    /**
+     * Возвращает шаблон с простым текстом
+     */
     protected function exit(string $message, int $status = 404): Page
     {
         $this->plainText    = __($message);
@@ -65,26 +70,14 @@ class Feed extends Page
 
             $items = $this->c->posts->feed($topic);
             if (! empty($items)) {
-                $uids = [];
                 foreach ($items as $cur) {
-                    $uids[$cur['uid']] = $cur['uid'];
-                }
-                unset($uids[1]);
-
-                $this->c->users->loadByIds($uids);
-
-                foreach ($items as $cur) {
-                    $user  = $this->c->users->get($cur['uid']);
-                    $email = $user instanceof User && 0 === $user->email_setting ? $user->email : null;
                     $item  = [
                         'id'        => $this->c->Router->link('ViewPost', ['id' => $cur['pid']]),
                         'title'     => $topic->subject,
                         'updated'   => $cur['edited'] > $cur['posted'] ? $cur['edited'] : $cur['posted'],
                         'link'      => $this->c->Router->link('ViewPost', ['id' => $cur['pid']]),
                         'author'    => $cur['username'],
-                        'email'     => $email ?? 'dummy@example.com',
-                        'isEmail'   => null !== $email,
-                        'content'   => $this->c->Parser->parseMessage($cur['content'], (bool) $cur['hide_smilies']),
+                        'content'   => $this->c->Parser->parseMessage($this->trimContent($cur['content']), (bool) $cur['hide_smilies']),
                         'published' => $cur['posted'],
                     ];
 
@@ -110,22 +103,12 @@ class Feed extends Page
                 $feed['description'] = __('The most recent posts at %s board', $this->c->config->o_board_title);
             } else {
                 $feed['description'] = __('The most recent posts in %s forum', $forum->forum_name);
-                $feed['title']      .=  __('Title separator') . $forum->forum_name;
+                $feed['title']      .= __('Title separator') . $forum->forum_name;
             }
 
             $items = $this->c->posts->feed($forum);
             if (! empty($items)) {
-                $uids = [];
                 foreach ($items as $cur) {
-                    $uids[$cur['uid']] = $cur['uid'];
-                }
-                unset($uids[1]);
-
-                $this->c->users->loadByIds($uids);
-
-                foreach ($items as $cur) {
-                    $user  = $this->c->users->get($cur['uid']);
-                    $email = $user instanceof User && 0 === $user->email_setting ? $user->email : null;
                     $fName = $this->c->forums->get($cur['fid'])->forum_name;
                     $item  = [
                         'id'        => $this->c->Router->link('ViewPost', ['id' => $cur['pid']]),
@@ -133,9 +116,7 @@ class Feed extends Page
                         'updated'   => $cur['edited'] > $cur['posted'] ? $cur['edited'] : $cur['posted'],
                         'link'      => $this->c->Router->link('ViewPost', ['id' => $cur['pid']]),
                         'author'    => $cur['username'],
-                        'email'     => $email ?? 'dummy@example.com',
-                        'isEmail'   => null !== $email,
-                        'content'   => $this->c->Parser->parseMessage($cur['content'], (bool) $cur['hide_smilies']),
+                        'content'   => $this->c->Parser->parseMessage($this->trimContent($cur['content']), (bool) $cur['hide_smilies']),
                         'published' => $cur['posted'],
                     ];
 
@@ -156,10 +137,20 @@ class Feed extends Page
     }
 
     /**
-     * Экранирует в соответствии с XML 1.
+     * Сокращает длину сообщения
      */
-    public function e(string $text): string
+    protected function trimContent(string $text): string
     {
-        return \htmlspecialchars($text, \ENT_XML1 , 'UTF-8');
+        if (\mb_strlen($text, 'UTF-8') > self::MAX_LEN_CONT) {
+            $result = \mb_substr($text, 0, self::MAX_LEN_CONT, 'UTF-8');
+            $result = \substr($result, 0, \strrpos($result, ' '));
+            $result = \rtrim($result, "!,.-\n\t ");
+
+            if (isset($result[0])) {
+                $text = $result . '…';
+            }
+        }
+
+        return $text;
     }
 }

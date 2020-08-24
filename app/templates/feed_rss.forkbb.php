@@ -12,7 +12,7 @@
       <title>{{ $item['title'] }}</title>
       <link>{{ $item['link'] }}</link>
       <description>{{ $item['content'] }}</description>
-      <author>{{ $item['email'] }} ({{ $item['author'] }})</author>
+      <author>dummy@example.com ({{ $item['author'] }})</author>
       <guid>{{ $item['id'] }}</guid>
       <pubDate>{{ \gmdate('r', $item['published']) }}</pubDate>
     </item>

@@ -15,9 +15,6 @@
     <published>{{ \gmdate('c', $item['published']) }}</published>
     <author>
       <name>{{ $item['author'] }}</name>
-    @if ($item['isEmail'])
-      <email>{{ $item['email'] }}</email>
-    @endif
     </author>
     <content type="html">{{ $item['content'] }}</content>
   </entry>
