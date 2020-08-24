@@ -36,6 +36,9 @@ class Feed extends Action
 
         } else if ($model instanceof Forum) {
             $ids = \array_keys($model->descendants);
+            if ($model->id) {
+                $ids[] = $model->id;
+            }
 
             if (empty($ids)) {
                 return [];
