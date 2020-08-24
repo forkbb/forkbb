@@ -70,8 +70,8 @@ abstract class Page extends Model
 
         $now = \gmdate('D, d M Y H:i:s') . ' GMT';
 
-        $this->header('Cache-Control', 'no-cache, no-store, must-revalidate')
-//            ->header('Cache-Control', 'private, no-cache')
+        $this //->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Cache-Control', 'private, no-cache')
             ->header('Content-type', 'text/html; charset=utf-8')
             ->header('Date', $now)
             ->header('Last-Modified', $now)
