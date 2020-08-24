@@ -85,42 +85,57 @@ class Feed extends Page
                 }
             }
         } else {
-            $forum = $this->c->forums->loadTree($fid);
-
-            if (! $forum instanceof Forum) {
-                return $this->exit('Bad request');
-            }
-
-            $feed = [
-                'id'            => $this->c->Router->link('Feed', $args),
-                'title'         => $this->c->config->o_board_title,
-                'link'          => $forum->link,
-                'updated'       => $forum->tree->last_post,
-                'items'         => [],
-            ];
-
-            if (0 === $fid) {
-                $feed['description'] = __('The most recent posts at %s board', $this->c->config->o_board_title);
+            if ($this->c->config->o_feed_ttl > 0) {
+                $cacheId = 'feed' . \sha1("{$this->user->group_id}|{$this->user->language}|{$fid}");
             } else {
-                $feed['description'] = __('The most recent posts in %s forum', $forum->forum_name);
-                $feed['title']      .= __('Title separator') . $forum->forum_name;
+                $cacheId = null;
             }
 
-            $items = $this->c->posts->feed($forum);
-            if (! empty($items)) {
-                foreach ($items as $cur) {
-                    $fName = $this->c->forums->get($cur['fid'])->forum_name;
-                    $item  = [
-                        'id'        => $this->c->Router->link('ViewPost', ['id' => $cur['pid']]),
-                        'title'     => $fName . __('Title separator') . $cur['topic_name'],
-                        'updated'   => $cur['edited'] > $cur['posted'] ? $cur['edited'] : $cur['posted'],
-                        'link'      => $this->c->Router->link('ViewPost', ['id' => $cur['pid']]),
-                        'author'    => $cur['username'],
-                        'content'   => $this->c->Parser->parseMessage($this->trimContent($cur['content']), (bool) $cur['hide_smilies']),
-                        'published' => $cur['posted'],
-                    ];
+            if (null !== $cacheId && $this->c->Cache->has($cacheId)) {
+                $feed = $this->c->Cache->get($cacheId);
+            } else {
+                $forum = $this->c->forums->loadTree($fid);
 
-                    $feed['items'][] = $item;
+                if (! $forum instanceof Forum) {
+                    return $this->exit('Bad request');
+                }
+
+                $feed = [
+                    'id'            => $this->c->Router->link('Feed', $args),
+                    'title'         => $this->c->config->o_board_title,
+                    'link'          => $forum->link,
+                    'updated'       => $forum->tree->last_post,
+                    'items'         => [],
+                ];
+
+                if (0 === $fid) {
+                    $feed['description'] = __('The most recent posts at %s board', $this->c->config->o_board_title);
+                } else {
+                    $feed['description'] = __('The most recent posts in %s forum', $forum->forum_name);
+                    $feed['title']      .= __('Title separator') . $forum->forum_name;
+                }
+
+                $items = $this->c->posts->feed($forum);
+                if (! empty($items)) {
+                    foreach ($items as $cur) {
+                        $fName = $this->c->forums->get($cur['fid'])->forum_name;
+                        $item  = [
+                            'id'        => $this->c->Router->link('ViewPost', ['id' => $cur['pid']]),
+                            'title'     => $fName . __('Title separator') . $cur['topic_name'],
+                            'updated'   => $cur['edited'] > $cur['posted'] ? $cur['edited'] : $cur['posted'],
+                            'link'      => $this->c->Router->link('ViewPost', ['id' => $cur['pid']]),
+                            'author'    => $cur['username'],
+                            'content'   => $this->c->Parser->parseMessage($this->trimContent($cur['content']), (bool) $cur['hide_smilies']),
+                            'published' => $cur['posted'],
+                        ];
+
+                        $feed['items'][] = $item;
+                    }
+                }
+
+
+                if (null !== $cacheId) {
+                    $this->c->Cache->set($cacheId, $feed, 60 * $this->c->config->o_feed_ttl);
                 }
             }
         }
