@@ -87,8 +87,10 @@ EOD;
      */
     public function rendering(Page $p): ?string
     {
-        foreach ($p->httpHeaders as $header) {
-            \header($header[0], $header[1]);
+        foreach ($p->httpHeaders as $catHeader) {
+            foreach ($catHeader as $header) {
+                \header($header[0], $header[1]);
+            }
         }
 
         if (null === $p->nameTpl) {

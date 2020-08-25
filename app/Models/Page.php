@@ -44,7 +44,6 @@ abstract class Page extends Model
 
         $this->fIndex       = 'index'; # string      Указатель на активный пункт навигации
         $this->httpStatus   = 200;     # int         HTTP статус ответа для данной страницы
-#       $this->httpHeaders  = [];      # array       HTTP заголовки отличные от статуса
 #       $this->nameTpl      = null;    # null|string Имя шаблона
 #       $this->titles       = [];      # array       Массив титула страницы | setTitles()
         $this->fIswev       = [];      # array       Массив info, success, warning, error, validation информации
@@ -72,7 +71,7 @@ abstract class Page extends Model
 
         $this //->header('Cache-Control', 'no-cache, no-store, must-revalidate')
             ->header('Cache-Control', 'private, no-cache')
-            ->header('Content-type', 'text/html; charset=utf-8')
+            ->header('Content-Type', 'text/html; charset=utf-8')
             ->header('Date', $now)
             ->header('Last-Modified', $now)
             ->header('Expires', $now);
@@ -339,27 +338,35 @@ abstract class Page extends Model
     }
 
     /**
-     * Добавляет HTTP заголовок
-     *
-     * @param string $key
-     * @param string $value
-     * @param bool   $replace
-     *
-     * @return Page
+     * Добавляет/заменяет/удаляет HTTP заголовок
      */
-    public function header(string $key, string $value, bool $replace = true): Page
+    public function header(string $header, ?string $value, bool $replace = true): Page
     {
-        if ('HTTP/' === \substr($key, 0, 5)) {
+        $key = \strtolower($header);
+
+        if ('http/' === \substr($key, 0, 5)) {
+            $key     = 'http/';
+            $replace = true;
+
             if (
                 ! empty($_SERVER['SERVER_PROTOCOL'])
                 && 'HTTP/' === \strtoupper(\substr($_SERVER['SERVER_PROTOCOL'], 0, 5))
             ) {
-                $key = 'HTTP/' . \substr($_SERVER['SERVER_PROTOCOL'], 5);
+                $header = 'HTTP/' . \substr($_SERVER['SERVER_PROTOCOL'], 5);
             }
         } else {
-            $key .= ':';
+            $header .= ':';
         }
-        $this->httpHeaders[] = ["{$key} {$value}", $replace];
+
+        if (null === $value) {
+            unset($this->httpHeaders[$key]);
+        } elseif (true === $replace || empty($this->httpHeaders[$key])) {
+            $this->httpHeaders[$key] = [
+                ["{$header} {$value}", $replace],
+            ];
+        } else {
+            $this->httpHeaders[$key][] = ["{$header} {$value}", $replace];
+        }
 
         return $this;
     }
