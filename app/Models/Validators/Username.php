@@ -36,9 +36,6 @@ class Username extends Validators
             // 2-25 символов, буквы, цифры, пробел, подчеркивание, точка и тире
             if (! \preg_match('%^(?=.{2,25}$)\p{L}[\p{L}\p{N}\x20\._-]+$%uD', $username)) {
                 $v->addError('Login format');
-            // username = Гость
-            } elseif (\preg_match('%^(guest|' . \preg_quote(__('Guest'), '%') . ')$%iu', $username)) { // ???? а зачем?
-                $v->addError('Username guest');
             // цензура
             } elseif ($this->c->censorship->censor($username) !== $username) {
                 $v->addError('Username censor');
