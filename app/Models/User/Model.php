@@ -270,7 +270,9 @@ class Model extends DataModel
      */
     protected function gethtmlSign(): string
     {
-        return $this->c->censorship->censor($this->c->Parser->parseSignature($this->signature));
+        return $this->isSignature
+            ? $this->c->censorship->censor($this->c->Parser->parseSignature($this->signature))
+            : '';
     }
 
     /**
