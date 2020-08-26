@@ -112,7 +112,7 @@ class Email extends Validators
                 $flood = $this->c->FLOOD_INTERVAL;
             }
             if ($flood < $this->c->FLOOD_INTERVAL) {
-                $v->addError(__('Email flood', (int) (($this->c->FLOOD_INTERVAL - $flood) / 60)), 'e');
+                $v->addError(__('Account email flood', (int) (($this->c->FLOOD_INTERVAL - $flood) / 60)), 'e');
                 $ok = false;
             }
         }
