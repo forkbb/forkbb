@@ -104,18 +104,3 @@ msgstr "Merge with previous if it yours"
 
 msgid "Edit redirect"
 msgstr "Post updated. Redirecting …"
-
-msgid "Login format"
-msgstr "The username must begin with a letter. May contain letters, numbers, spaces, dots, dashes and underscores."
-
-msgid "Banned email"
-msgstr "The email address you entered is banned in this forum."
-
-msgid "Username guest"
-msgstr "The username guest is reserved. Please choose another username."
-
-msgid "Username censor"
-msgstr "The username you entered contains one or more censored words. Please choose another username."
-
-msgid "Banned username"
-msgstr "The username you entered is banned in this forum. Please choose another username."

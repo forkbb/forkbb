@@ -20,6 +20,7 @@ class Options extends Admin
      */
     public function edit(array $args, string $method): Page
     {
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('admin_options');
         $this->c->Lang->load('profile_other');
 

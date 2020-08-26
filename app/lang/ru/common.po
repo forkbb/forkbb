@@ -145,12 +145,6 @@ msgstr "вкл."
 msgid "off"
 msgstr "выкл."
 
-msgid "Invalid email"
-msgstr "Указанный почтовый адрес неверен."
-
-msgid "Long email"
-msgstr "Указанный почтовый адрес слишком длинный."
-
 msgid "Required"
 msgstr "(Обязательно)"
 

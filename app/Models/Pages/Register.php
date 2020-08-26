@@ -17,6 +17,7 @@ class Register extends Page
      */
     public function reg(): Page
     {
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('register');
 
         $v = $this->c->Validator->reset()

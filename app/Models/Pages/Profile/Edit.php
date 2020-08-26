@@ -29,6 +29,7 @@ class Edit extends Profile
             return $this->c->Message->message('Bad request');
         }
 
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('profile_other');
 
         if ('POST' === $method) {

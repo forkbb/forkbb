@@ -65,6 +65,7 @@ class Search extends Page
      */
     public function view(array $args, string $method, bool $advanced = false): Page
     {
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('search');
         $this->calcList();
 

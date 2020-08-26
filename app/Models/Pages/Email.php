@@ -39,6 +39,7 @@ class Email extends Page
             return $this->c->Message->message($message);
         }
 
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('misc');
 
         $floodSize = \time() - (int) $this->user->last_email_sent;

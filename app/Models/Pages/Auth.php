@@ -42,6 +42,7 @@ class Auth extends Page
      */
     public function login(array $args, string $method): Page
     {
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('auth');
 
         $v = null;
@@ -188,6 +189,7 @@ class Auth extends Page
      */
     public function forget(array $args, string $method): Page
     {
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('auth');
 
         $v = null;
@@ -326,6 +328,7 @@ class Auth extends Page
             return $this->c->Message->message('Bad request', false);
         }
 
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('auth');
 
         if ('POST' === $method) {

@@ -19,6 +19,7 @@ class Groups extends Admin
     {
         parent::__construct($container);
 
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('admin_groups');
 
         $groupsList    = [];

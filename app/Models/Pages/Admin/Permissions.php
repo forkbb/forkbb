@@ -20,6 +20,7 @@ class Permissions extends Admin
      */
     public function edit(array $args, string $method): Page
     {
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('admin_permissions');
 
         $config = clone $this->c->config;

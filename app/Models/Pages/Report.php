@@ -28,6 +28,7 @@ class Report extends Page
 
         $topic = $post->parent;
 
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('misc');
 
         $floodSize = \time() - (int) $this->user->last_report_sent;

@@ -18,6 +18,7 @@ class Censoring extends Admin
      */
     public function edit(array $args, string $method): Page
     {
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('admin_censoring');
 
         if ('POST' === $method) {

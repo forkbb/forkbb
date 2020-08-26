@@ -58,6 +58,8 @@ class Email extends Profile
             return $this->c->Message->message('Bad request');
         }
 
+        $this->c->Lang->load('validator');
+
         if ('POST' === $method) {
             $v = $this->c->Validator->reset()
                 ->addValidators([

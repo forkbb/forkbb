@@ -20,6 +20,7 @@ class Categories extends Admin
      */
     public function view(array $args, string $method): Page
     {
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('admin_categories');
 
         if ('POST' === $method) {
@@ -151,6 +152,7 @@ class Categories extends Admin
             return $this->c->Message->message('Bad request');
         }
 
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('admin_categories');
 
         if ('POST' === $method) {

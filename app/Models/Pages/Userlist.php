@@ -40,6 +40,7 @@ class Userlist extends Page
      */
     public function view(array $args, string $method): Page
     {
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('userlist');
 
         $prefix = 'POST' === $method ? 'required|' : '';

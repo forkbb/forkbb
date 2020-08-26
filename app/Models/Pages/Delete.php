@@ -30,6 +30,7 @@ class Delete extends Page
         $topic       = $post->parent;
         $deleteTopic = $post->id === $topic->first_post_id;
 
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('delete');
 
         if ('POST' === $method) {

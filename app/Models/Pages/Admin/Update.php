@@ -33,6 +33,7 @@ class Update extends Admin
     {
         parent::__construct($container);
 
+        $container->Lang->load('validator');
         $container->Lang->load('admin_update');
 
         $this->aIndex     = 'update';

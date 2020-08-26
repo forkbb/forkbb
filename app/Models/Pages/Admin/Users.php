@@ -24,6 +24,7 @@ abstract class Users extends Admin
 
         $this->aIndex = 'users';
 
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('admin_users');
     }
 

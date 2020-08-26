@@ -15,9 +15,6 @@ msgstr ""
 msgid "Sign in"
 msgstr "Sign in"
 
-msgid "Banned email"
-msgstr "The email address you entered is banned in this forum."
-
 msgid "Account is not activated"
 msgstr "Account is not activated."
 
@@ -65,12 +62,6 @@ msgstr "New passphrase"
 
 msgid "Confirm new pass"
 msgstr "Confirm new passphrase"
-
-msgid "Pass format"
-msgstr "Passphrase must contain a few words."
-
-msgid "Pass info"
-msgstr "Passphrase must be at least 16 characters long. Passphrase are case sensitive."
 
 msgid "Pass updated"
 msgstr "Your passphrase has been updated. You can now login with your new passphrase."

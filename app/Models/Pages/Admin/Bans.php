@@ -23,6 +23,7 @@ class Bans extends Admin
 
         $this->aIndex = 'bans';
 
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('admin_bans');
     }
 

@@ -103,6 +103,8 @@ trait PostValidatorTrait
      */
     protected function messageValidator(Model $model, string $marker, array $args, bool $editPost = false, bool $editSubject = false): Validator
     {
+        $this->c->Lang->load('validator');
+
         if ($this->user->isGuest) {
             $ruleEmail    = ('1' == $this->c->config->p_force_guest_email ? 'required|' : '') . 'string:trim|email:noban';
             $ruleUsername = 'required|string:trim,spaces|username';

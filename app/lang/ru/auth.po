@@ -15,9 +15,6 @@ msgstr ""
 msgid "Sign in"
 msgstr "Войти"
 
-msgid "Banned email"
-msgstr "Введенный почтовый адрес заблокирован."
-
 msgid "Account is not activated"
 msgstr "Аккаунт не активирован."
 
@@ -65,12 +62,6 @@ msgstr "Новая кодовая фраза"
 
 msgid "Confirm new pass"
 msgstr "Ещё раз"
-
-msgid "Pass format"
-msgstr "Кодовая фраза должна содержать несколько слов."
-
-msgid "Pass info"
-msgstr "Кодовая фраза должна состоять минимум из 16 символов. Она чувствительна к регистру вводимых букв."
 
 msgid "Pass updated"
 msgstr "Ваша кодовая фраза изменена. Вы можете войти на форум с ее помощью."

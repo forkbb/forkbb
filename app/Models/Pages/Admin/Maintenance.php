@@ -20,6 +20,7 @@ class Maintenance extends Admin
      */
     public function view(array $args, string $method): Page
     {
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('admin_maintenance');
 
         $config = clone $this->c->config;
@@ -201,6 +202,7 @@ class Maintenance extends Admin
      */
     public function rebuild(array $args, string $method): Page
     {
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('admin_maintenance');
 
         $v = $this->c->Validator->reset()

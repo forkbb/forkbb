@@ -30,24 +30,6 @@ msgstr "A new user was registered with the same IP address as you within the las
 msgid "Agree"
 msgstr "Agree"
 
-msgid "Username guest"
-msgstr "The username guest is reserved. Please choose another username."
-
-msgid "Username censor"
-msgstr "The username you entered contains one or more censored words. Please choose another username."
-
-msgid "Banned username"
-msgstr "The username you entered is banned in this forum. Please choose another username."
-
-msgid "Username not unique"
-msgstr "The username you entered is not unique. Please choose another username."
-
-msgid "Banned email"
-msgstr "The email address you entered is banned in this forum. Please choose another email address."
-
-msgid "Dupe email"
-msgstr "Someone else is already registered with that email address. Please choose another email address."
-
 msgid "Reg email"
 msgstr "Thank you for registering. A letter with a link to activate your account was sent to the specified address. If it doesn't arrive you can contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."
 
@@ -56,15 +38,6 @@ msgstr "Registration complete. You can log in the forums."
 
 msgid "Email info"
 msgstr "Please enter a valid email address. It will be used to activate your account."
-
-msgid "Pass format"
-msgstr "Passphrase must contain a few words."
-
-msgid "Pass info"
-msgstr "Passphrase must be at least 16 characters long. Passphrase are case sensitive."
-
-msgid "Login format"
-msgstr "The username must begin with a letter. May contain letters, numbers, spaces, dots, dashes and underscores."
 
 msgid "Error welcom mail"
 msgstr "When sending email there was an error. Please use the passphrase reset form for activate your account or contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."

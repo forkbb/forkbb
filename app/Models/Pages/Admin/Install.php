@@ -84,6 +84,7 @@ class Install extends Admin
         }
         $v = null;
 
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('admin_install');
 
         // версия PHP

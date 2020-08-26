@@ -94,6 +94,7 @@ class Forums extends Admin
      */
     public function view(array $args, string $method): Page
     {
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('admin_forums');
 
         if ('POST' === $method) {
@@ -243,6 +244,7 @@ class Forums extends Admin
             return $this->c->Message->message('Bad request');
         }
 
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('admin_forums');
 
         if ('POST' === $method) {
@@ -359,6 +361,7 @@ class Forums extends Admin
      */
     public function edit(array $args, string $method): Page
     {
+        $this->c->Lang->load('validator');
         $this->c->Lang->load('admin_forums');
 
         if (empty($args['id'])) {
