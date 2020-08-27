@@ -26,10 +26,18 @@ class Move extends Action
                 continue;
             }
             if ($redirect) {
-                $rTopic              = clone $topic;
-                $rTopic->id          = null;
-                $rTopic->moved_to    = $topic->id;
-                $rTopic->num_replies = 0;
+                $rTopic                 = $this->c->topics->create();
+                $rTopic->poster         = $topic->poster;
+                $rTopic->poster_id      = $topic->poster_id;
+                $rTopic->subject        = $topic->subject;
+                $rTopic->posted         = $topic->posted;
+//                $rTopic->first_post_id  = $topic->first_post_id;
+                $rTopic->last_post      = $topic->last_post;
+//                $rTopic->last_post_id   = $topic->last_post_id;
+//                $rTopic->last_poster    = $topic->last_poster;
+//                $rTopic->last_poster_id = $topic->last_poster_id;
+                $rTopic->moved_to       = $topic->id;
+                $rTopic->forum_id       = $topic->forum_id;
 
                 $this->c->topics->insert($rTopic);
             }
