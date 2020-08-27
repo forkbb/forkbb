@@ -189,12 +189,14 @@ class View extends Profile
         // подпись
         if ($this->rules->useSignature) {
             $fields = [];
-            if ('' != $this->curUser->signature) {
+            if ($this->curUser->isSignature) {
                 $fields['signature'] = [
                     'type'    => 'yield',
                     'caption' => __('Signature'),
                     'value'   => 'signature',
                 ];
+
+                $this->signatureSection = true;
             }
             if (! empty($fields)) {
                 $form['sets']['signature'] = [

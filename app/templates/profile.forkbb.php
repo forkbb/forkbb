@@ -12,7 +12,7 @@
       </ul>
 @endsection
 @section ('avatar')<img class="f-avatar-img" src="{!! $p->curUser->avatar !!}" alt="{{ $p->curUser->username }}"> @endsection
-@section ('signature'){!! $p->curUser->htmlSign !!} @endsection
+@section ('signature') @if ($p->signatureSection){!! $p->curUser->htmlSign !!} @endif @endsection
 @extends ('layouts/main')
     <div class="f-nav-links">
 @yield ('crumbs')
