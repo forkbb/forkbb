@@ -643,7 +643,14 @@ class Routing
                 break;
             case $r::METHOD_NOT_ALLOWED:
                 // ... 405 Method Not Allowed
-                $page = $this->c->Message->message('Bad request', true, 405, ['Allow: ' . \implode(',', $route[1])]);
+                $page = $this->c->Message->message(
+                    'Bad request',
+                    true,
+                    405,
+                    [
+                        ['Allow', \implode(',', $route[1])],
+                    ]
+                );
                 break;
             case $r::NOT_IMPLEMENTED:
                 // ... 501 Not implemented
