@@ -131,7 +131,7 @@ class Manager extends ManagerModel
             ];
             $query = 'DELETE
                 FROM ::reports
-                WHERE zapped<=?i:time';
+                WHERE zapped!=0 AND zapped<=?i:time';
 
             $this->c->DB->exec($query, $vars);
         }
