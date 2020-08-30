@@ -84,7 +84,11 @@ class Report extends Page
                     $this->c->users->update($this->user);
                 }
 
-                return $this->c->Redirect->page('ViewPost', ['id' => $post->id])->message('Report redirect');
+                if (false === $result && '1' == $this->c->config->o_report_method) {
+                    $this->fIswev = ['e', __('Error mail', $this->c->config->o_admin_email)];
+                } else {
+                    return $this->c->Redirect->page('ViewPost', ['id' => $post->id])->message('Report redirect');
+                }
             }
 
             $this->fIswev = $v->getErrors();
