@@ -182,6 +182,7 @@ class Report extends Page
 
         return $this->c->Mail
             ->reset()
+            ->setMaxRecipients((int) $this->c->config->i_email_max_recipients)
             ->setFolder($this->c->DIR_LANG)
             ->setLanguage($this->c->config->o_default_lang) // ????
             ->setTo($this->c->config->o_mailing_list)

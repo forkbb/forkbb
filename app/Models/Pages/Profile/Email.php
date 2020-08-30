@@ -114,6 +114,7 @@ class Email extends Profile
                     try {
                         $isSent = $this->c->Mail
                             ->reset()
+                            ->setMaxRecipients(1)
                             ->setFolder($this->c->DIR_LANG)
                             ->setLanguage($this->curUser->language)
                             ->setTo($v->new_email, $this->curUser->username)

@@ -230,6 +230,7 @@ class Auth extends Page
                 try {
                     $isSent = $this->c->Mail
                         ->reset()
+                        ->setMaxRecipients(1)
                         ->setFolder($this->c->DIR_LANG)
                         ->setLanguage($tmpUser->language)
                         ->setTo($tmpUser->email, $tmpUser->username)

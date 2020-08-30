@@ -183,6 +183,7 @@ class Email extends Page
 
         return $this->c->Mail
             ->reset()
+            ->setMaxRecipients(1)
             ->setFolder($this->c->DIR_LANG)
             ->setLanguage($this->curUser->language)
             ->setTo($this->curUser->email)
