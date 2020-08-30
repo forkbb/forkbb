@@ -73,6 +73,7 @@ class Options extends Admin
                     'o_webmaster_email'       => 'required|string:trim|email',
                     'o_forum_subscriptions'   => 'required|integer|in:0,1',
                     'o_topic_subscriptions'   => 'required|integer|in:0,1',
+                    'i_email_max_recipients'  => 'required|integer|min:1|max:99999',
                     'o_smtp_host'             => 'string:trim|max:255',
                     'o_smtp_user'             => 'string:trim|max:255',
                     'o_smtp_pass'             => 'string:trim|max:255', //??????
@@ -596,6 +597,14 @@ class Options extends Admin
                     'values'  => $yn,
                     'caption' => __('Topic subscriptions label'),
                     'info'    => __('Topic subscriptions help'),
+                ],
+                'i_email_max_recipients' => [
+                    'type'    => 'number',
+                    'min'     => 1,
+                    'max'     => 99999,
+                    'value'   => $config->i_email_max_recipients,
+                    'caption' => __('Email max recipients label'),
+                    'info'    => __('Email max recipients help'),
                 ],
                 'o_smtp_host' => [
                     'type'      => 'text',

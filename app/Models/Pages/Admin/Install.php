@@ -1107,6 +1107,7 @@ class Install extends Admin
             'o_webmaster_email'       => $v->email,
             'o_forum_subscriptions'   => 1,
             'o_topic_subscriptions'   => 1,
+            'i_email_max_recipients'  => 1,
             'o_smtp_host'             => NULL,
             'o_smtp_user'             => NULL,
             'o_smtp_pass'             => NULL,

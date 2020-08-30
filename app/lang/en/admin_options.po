@@ -404,3 +404,9 @@ msgstr "Announcement message (HTML)"
 
 msgid "Announcement message help"
 msgstr ""
+
+msgid "Email max recipients label"
+msgstr "Max recipients"
+
+msgid "Email max recipients help"
+msgstr "The maximum number of recipients for one email. Depends on your mail server."

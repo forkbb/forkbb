@@ -17,7 +17,7 @@ class Update extends Admin
 {
     const PHP_MIN = '7.3.0';
 
-    const LATEST_REV_WITH_DB_CHANGES = 8;
+    const LATEST_REV_WITH_DB_CHANGES = 9;
 
     const LOCK_NAME = 'lock_update';
     const LOCk_TTL  = 1800;
@@ -585,6 +585,18 @@ class Update extends Admin
             'PostManagerMove'
         );
         $coreConfig->save();
+
+        return null;
+    }
+
+    /**
+     * rev.9 to rev.10
+     */
+    protected function stageNumber9(array $args): ?int
+    {
+        $this->c->config->i_email_max_recipients = 1;
+
+        $this->c->config->save();
 
         return null;
     }
