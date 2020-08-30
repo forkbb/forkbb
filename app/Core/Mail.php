@@ -18,6 +18,11 @@ class Mail
     protected $language;
 
     /**
+     * @var string
+     */
+    protected $from;
+
+    /**
      * @var array
      */
     protected $to = [];
@@ -53,14 +58,10 @@ class Mail
     protected $auth = 0;
 
     /**
-     * Конструктор
-     *
-     * @param mixed $host
-     * @param mixed $user
-     * @param mixed $pass
-     * @param mixed $ssl
-     * @param mixed $eol
+     * var int
      */
+    protected $maxRecipients = 1;
+
     public function __construct($host, $user, $pass, $ssl, $eol)
     {
         if (
@@ -68,6 +69,7 @@ class Mail
             && \strlen(\trim($host)) > 0
         ) {
             list($host, $port) = \explode(':', $host);
+
             if (
                 empty($port)
                 || $port < 1
@@ -75,6 +77,7 @@ class Mail
             ) {
                 $port = 25;
             }
+
             $this->smtp = [
                 'host' => ($ssl ? 'ssl://' : '') . $host,
                 'port' => (int) $port,
@@ -83,16 +86,12 @@ class Mail
             ];
             $this->EOL = "\r\n";
         } else {
-            $this->EOL = \in_array($eol, ["\r\n", "\n", "\r"]) ? $eol : PHP_EOL;
+            $this->EOL = \in_array($eol, ["\r\n", "\n", "\r"]) ? $eol : \PHP_EOL;
         }
     }
 
     /**
      * Валидация email
-     *
-     * @param mixed $email
-     * @param bool $strict
-     * @param bool $idna
      *
      * @return false|string
      */
@@ -156,6 +155,7 @@ class Mail
             } else {
                 $mx = @\dns_get_record($domainASCII, \DNS_MX);
             }
+
             if (empty($mx)) {
                 return false;
             }
@@ -165,13 +165,21 @@ class Mail
     }
 
     /**
+     * Устанавливает максимальное кол-во получателей в одном письме
+     */
+    public function setMaxRecipients(int $max): Mail
+    {
+        $this->maxRecipients = $max;
+
+        return $this;
+    }
+
+    /**
      * Сброс
-     *
-     * @return Mail
      */
     public function reset(): Mail
     {
-        $this->to = [];
+        $this->to      = [];
         $this->headers = [];
         $this->message = null;
 
@@ -180,10 +188,6 @@ class Mail
 
     /**
      * Задает тему письма
-     *
-     * @param string $subject
-     *
-     * @return Mail
      */
     public function setSubject(string $subject): Mail
     {
@@ -196,19 +200,18 @@ class Mail
      * Добавляет заголовок To
      *
      * @param string|array $email
-     * @param string $name
-     *
-     * @return Mail
      */
     public function addTo($email, string $name = null): Mail
     {
         if (! \is_array($email)) {
-            $email = \preg_split('%[,\n\r]%', (string) $email, -1, PREG_SPLIT_NO_EMPTY);
+            $email = \preg_split('%[,\n\r]%', (string) $email, -1, \PREG_SPLIT_NO_EMPTY);
         }
+
         foreach($email as $cur) {
             $cur = $this->valid(\trim((string) $cur), false, true);
+
             if (false !== $cur) {
-                $this->to[] = $this->formatAddress($cur, $name);
+                $this->to[$cur] = $name ?? '';
             }
         }
 
@@ -219,29 +222,23 @@ class Mail
      * Задает заголовок To
      *
      * @param string|array $email
-     * @param string $name
-     *
-     * @return Mail
      */
     public function setTo($email, string $name = null): Mail
     {
         $this->to = [];
 
-        return $this->addTo($email, $name);
+        return $this->addTo($email, $name ?? '');
     }
 
     /**
      * Задает заголовок From
-     *
-     * @param string $email
-     * @param string $name
-     *
-     * @return Mail
      */
     public function setFrom(string $email, string $name = null): Mail
     {
         $email = $this->valid($email, false, true);
+
         if (false !== $email) {
+            $this->from            = $email;
             $this->headers['From'] = $this->formatAddress($email, $name);
         }
 
@@ -250,15 +247,11 @@ class Mail
 
     /**
      * Задает заголовок Reply-To
-     *
-     * @param string $email
-     * @param string $name
-     *
-     * @return Mail
      */
     public function setReplyTo(string $email, string $name = null): Mail
     {
         $email = $this->valid($email, false, true);
+
         if (false !== $email) {
             $this->headers['Reply-To'] = $this->formatAddress($email, $name);
         }
@@ -268,17 +261,12 @@ class Mail
 
     /**
      * Форматирование адреса
-     *
-     * @param string|array $email
-     * @param string $name
-     *
-     * @return string
      */
-    protected function formatAddress($email, string $name = null): string
+    protected function formatAddress(string $email, ?string $name): string
     {
         if (
-            ! \is_string($name)
-            || 0 == \strlen(\trim($name))
+            null === $name
+            || ! isset($name[0])
         ) {
             return $email;
         } else {
@@ -290,10 +278,6 @@ class Mail
 
     /**
      * Кодирование заголовка/имени
-     *
-     * @param string $str
-     *
-     * @return string
      */
     protected function encodeText(string $str): string
     {
@@ -306,10 +290,6 @@ class Mail
 
     /**
      * Фильтрация имени
-     *
-     * @param string $name
-     *
-     * @return string
      */
     protected function filterName(string $name): string
     {
@@ -318,10 +298,6 @@ class Mail
 
     /**
      * Установка папки для поиска шаблонов писем
-     *
-     * @param string $folder
-     *
-     * @return Mail
      */
     public function setFolder(string $folder): Mail
     {
@@ -332,10 +308,6 @@ class Mail
 
     /**
      * Установка языка для поиска шаблонов писем
-     *
-     * @param string $language
-     *
-     * @return Mail
      */
     public function setLanguage(string $language): Mail
     {
@@ -346,28 +318,27 @@ class Mail
 
     /**
      * Задает сообщение по шаблону
-     *
-     * @param string $tpl
-     * @param array $data
-     *
-     * @throws MailException
-     *
-     * @return Mail
      */
     public function setTpl(string $tpl, array $data): Mail
     {
         $file = \rtrim($this->folder, '\\/') . '/' . $this->language . '/mail/' . $tpl;
+
         if (! \is_file($file)) {
-            throw new MailException('The template isn\'t found (' . $file . ').');
+            throw new MailException("The template isn't found ({$file}).");
         }
+
         $tpl = \trim(\file_get_contents($file));
+
         foreach ($data as $key => $val) {
             $tpl = \str_replace('<' . $key . '>', (string) $val, $tpl);
         }
+
         list($subject, $tpl) = \explode("\n", $tpl, 2);
+
         if (! isset($tpl)) {
-            throw new MailException('The template is empty (' . $file . ').');
+            throw new MailException("The template is empty ({$file}).");
         }
+
         $this->setSubject(\substr($subject, 8));
 
         return $this->setMessage($tpl);
@@ -375,16 +346,14 @@ class Mail
 
     /**
      * Задает сообщение
-     *
-     * @param string $message
-     *
-     * @return Mail
      */
     public function setMessage(string $message): Mail
     {
         $this->message = \str_replace("\0", $this->EOL,
-                         \str_replace(["\r\n", "\n", "\r"], "\0",
-                         \str_replace("\0", '', \trim($message))));
+                            \str_replace(["\r\n", "\n", "\r"], "\0",
+                                \str_replace("\0", '', \trim($message))
+                            )
+                        );
 //        $this->message = wordwrap ($this->message, 75, $this->EOL, false);
 
         return $this;
@@ -392,10 +361,6 @@ class Mail
 
     /**
      * Отправляет письмо
-     *
-     * @throws MailException
-     *
-     * @return bool
      */
     public function send(): bool
     {
@@ -434,21 +399,46 @@ class Mail
      */
     protected function mail(): bool
     {
-        $to      = \implode(', ', $this->to);
         $subject = $this->headers['Subject'];
         $headers = $this->headers;
         unset($headers['Subject']);
-        $headers = $this->strHeaders($headers);
 
-        return @\mail($to, $subject, $this->message, $headers);
+        if (
+            1 === \count($this->to)
+            || $this->maxRecipients <= 1
+        ) {
+            foreach ($this->to as $to => $name) {
+                $headers['To'] = $this->formatAddress($to, $name);
+                $result        = @\mail($to, $subject, $this->message, $headers);
+
+                if (true !== $result) {
+                    return false;
+                }
+            }
+        } else {
+            $to        = $this->from;
+            $arrArrBcc = \array_chunk($this->to, $this->maxRecipients, true);
+
+            foreach ($arrArrBcc as $arrBcc) {
+                foreach ($arrBcc as $email => &$name) {
+                    $name = $this->formatAddress($email, $name);
+                }
+                unset($name);
+
+                $headers['Bcc'] = \implode(', ', $arrBcc);
+                $result         = @\mail($to, $subject, $this->message, $headers);
+
+                if (true !== $result) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     /**
      * Переводит заголовки из массива в строку
-     *
-     * @param array $headers
-     *
-     * @return string
      */
     protected function strHeaders(array $headers): string
     {
@@ -462,34 +452,66 @@ class Mail
 
     /**
      * Отправка письма через smtp
-     *
-     * @throws SmtpException
-     *
-     * @return bool
      */
     protected function smtp(): bool
     {
         // подлючение
         if (! \is_resource($this->connect)) {
             if (false === ($connect = @\fsockopen($this->smtp['host'], $this->smtp['port'], $errno, $errstr, 5))) {
-                throw new SmtpException('Couldn\'t connect to smtp host "' . $this->smtp['host'] . ':' . $this->smtp['port'] . '" (' . $errno . ') (' . $errstr . ').');
+                throw new SmtpException("Couldn't connect to smtp host \"{$this->smtp['host']}:{$this->smtp['port']}\" ({$errno}) ({$errstr}).");
             }
             \stream_set_timeout($connect, 5);
             $this->connect = $connect;
             $this->smtpData(null, '220');
         }
 
-        $message = $this->EOL . \str_replace("\n.", "\n..", $this->EOL . $this->message) . $this->EOL . '.';
+        $message = $this->EOL
+            . \str_replace("\n.", "\n..", $this->EOL . $this->message)
+            . $this->EOL
+            . '.'
+            . $this->EOL;
         $headers = $this->strHeaders($this->headers);
 
-        // цикл по получателям
-        foreach ($this->to as $to) {
+        if (
+            1 === \count($this->to)
+            || $this->maxRecipients <= 1
+        ) {
             $this->smtpHello();
-            $this->smtpData('MAIL FROM: <' . $this->getEmailFrom($this->headers['From']). '>', '250');
-            $this->smtpData('RCPT TO: <' . $this->getEmailFrom($to) . '>', ['250', '251']);
-            $this->smtpData('DATA', '354');
-            $this->smtpData('To: ' . $to . $this->EOL . $headers . $message, '250');
-            $this->smtpData('NOOP', '250');
+
+            foreach ($this->to as $email => $name) {
+                $this->smtpData("MAIL FROM:<{$this->from}>", '250');
+                $this->smtpData("RCPT TO:<{$email}>", ['250', '251']);
+                $this->smtpData('DATA', '354');
+                $this->smtpData(
+                    'To: '
+                    . $this->formatAddress($email, $name)
+                    . $this->EOL
+                    . $headers
+                    . $message,
+                    '250'
+                );
+                $this->smtpData('NOOP', '250');
+            }
+        } else {
+            $arrRecipients = \array_chunk($this->to, $this->maxRecipients, true);
+
+            $this->smtpHello();
+
+            foreach ($arrRecipients as $recipients) {
+                $this->smtpData("MAIL FROM:<{$this->from}>", '250');
+
+                foreach ($recipients as $email => $name) {
+                    $this->smtpData("RCPT TO:<{$email}>", ['250', '251']);
+                }
+
+                $this->smtpData('DATA', '354');
+                $this->smtpData(
+                    $headers
+                    . $message,
+                    '250'
+                );
+                $this->smtpData('NOOP', '250');
+            }
         }
 
         return true;
@@ -503,6 +525,7 @@ class Mail
         switch ($this->auth) {
             case 1:
                 $this->smtpData('EHLO ' . $this->hostname(), '250');
+
                 return;
             case 0:
                 if (
@@ -510,11 +533,13 @@ class Mail
                     && '' != $this->smtp['pass']
                 ) {
                    $code = $this->smtpData('EHLO ' . $this->hostname(), ['250', '500', '501', '502', '550']);
+
                    if ('250' === $code) {
                        $this->smtpData('AUTH LOGIN', '334');
                        $this->smtpData(\base64_encode($this->smtp['user']), '334');
                        $this->smtpData(\base64_encode($this->smtp['pass']), '235');
                        $this->auth = 1;
+
                        return;
                    }
                 }
@@ -528,27 +553,23 @@ class Mail
      * Отправляет данные на сервер
      * Проверяет ответ
      * Возвращает код ответа
-     *
-     * @param string $data
-     * @param mixed $code
-     *
-     * @throws SmtpException
-     *
-     * @return string
      */
-    protected function smtpData(string $data, $code): string
+    protected function smtpData(?string $data, $code): string
     {
-        if (\is_resource($this->connect)) {
+        if (\is_resource($this->connect) && null !== $data) {
             if (false === @\fwrite($this->connect, $data . $this->EOL)) {
                 throw new SmtpException('Couldn\'t send data to mail server.');
             }
         }
+
         $response = '';
         while (\is_resource($this->connect) && ! \feof($this->connect)) {
             if (false === ($get = @\fgets($this->connect, 512))) {
                 throw new SmtpException('Couldn\'t get mail server response codes.');
             }
+
             $response .= $get;
+
             if (
                 isset($get[3])
                 && ' ' === $get[3]
@@ -557,40 +578,19 @@ class Mail
                 break;
             }
         }
+
         if (
             null !== $code
             && ! \in_array($return, (array) $code)
         ) {
-            throw new SmtpException('Unable to send email. Response of mail server: "' . $get . '"');
+            throw new SmtpException("Unable to send email. Response of mail server: \"{$response}\"");
         }
 
         return $return;
     }
 
     /**
-     * Выделяет email из заголовка
-     *
-     * @param string $str
-     *
-     * @return string
-     */
-    protected function getEmailFrom(string $str): string
-    {
-        $match = \explode('" <', $str);
-        if (
-            2 == \count($match)
-            && '>' == \substr($match[1], -1)
-        ) {
-            return \rtrim($match[1], '>');
-        } else {
-            return $str;
-        }
-    }
-
-    /**
      * Возвращает имя сервера или его ip
-     *
-     * @return string
      */
     protected function hostname(): string
     {
@@ -600,17 +600,17 @@ class Mail
     }
 
     /**
-     * Деструктор
+     * Завершает сеанс smtp
      */
     public function __destruct()
     {
-        // завершение сеанса smtp
         if (\is_resource($this->connect)) {
             try {
                 $this->smtpData('QUIT', null);
             } catch (MailException $e) {
                 //????
             }
+
             @\fclose($this->connect);
         }
     }
