@@ -150,7 +150,7 @@ class Reports extends Admin
     public function zap(array $args, string $method): Page
     {
         if (! $this->c->Csrf->verify($args['token'], 'AdminReportsZap', $args)) {
-            return $this->c->Redirect->url($forum->link)->message('Bad token');
+            return $this->c->Message->message('Bad token');
         }
 
         $this->c->Lang->load('admin_reports');
