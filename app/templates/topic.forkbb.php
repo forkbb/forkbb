@@ -174,6 +174,14 @@
 @endif
 @yield ('crumbs')
     </div>
+    @if ($p->enableMod && $form = $p->formMod)
+    <section class="f-moderate">
+      <h2>{!! __('Moderate') !!}</h2>
+      <div class="f-fdivm">
+    @include ('layouts/form')
+      </div>
+    </section>
+@endif
 @if ($p->online)
     @include ('layouts/stats')
 @endif
@@ -181,14 +189,6 @@
     <section class="f-post-form">
       <h2>{!! __('Quick post') !!}</h2>
       <div class="f-fdiv">
-    @include ('layouts/form')
-      </div>
-    </section>
-@endif
-@if ($p->enableMod && $form = $p->formMod)
-    <section class="f-moderate">
-      <h2>{!! __('Moderate') !!}</h2>
-      <div class="f-fdivm">
     @include ('layouts/form')
       </div>
     </section>
