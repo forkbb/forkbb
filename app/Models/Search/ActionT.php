@@ -60,7 +60,7 @@ class ActionT extends Method
                     FROM ::topics AS t
                     INNER JOIN ::posts AS p ON t.first_post_id=p.id
                     WHERE t.forum_id IN (?ai:forums) AND t.moved_to=0 AND p.poster_id=?i:uid
-                    ORDER BY t.last_post DESC';
+                    ORDER BY t.first_post_id DESC'; // t.last_post
                 break;
             case 'new':
                 $query = 'SELECT t.id
