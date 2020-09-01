@@ -119,7 +119,7 @@ class Delete extends Action
 
         $this->c->posts->delete(...$args);
 
-        //???? подписки, опросы, предупреждения
+        //???? опросы, предупреждения
 
         // удаление тем-ссылок на удаляемые темы
 
@@ -170,6 +170,8 @@ class Delete extends Action
             $this->c->DB->exec($query, $vars);
         }
         if ($topics) {
+            $this->c->subscriptions->unsubscribe(...$topics);
+
             $vars  = [
                 ':topics' => \array_keys($topics),
             ];

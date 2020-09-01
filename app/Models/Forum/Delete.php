@@ -63,7 +63,7 @@ class Delete extends Action
 
         $this->c->topics->delete(...$args);
 
-        //???? подписки, опросы, предупреждения
+        //???? опросы, предупреждения
 
         if ($users) {
             $vars  = [
@@ -78,6 +78,8 @@ class Delete extends Action
             //???? удаление модераторов из разделов
         }
         if ($forums) {
+            $this->c->subscriptions->unsubscribe(...$forums);
+
             foreach ($forums as $forum) {
                 $this->c->groups->Perm->reset($forum);
             }

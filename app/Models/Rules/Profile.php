@@ -149,4 +149,16 @@ class Profile extends Rules
     {
         return $this->my || $this->admin;
     }
+
+    protected function getviewSubscription(): bool
+    {
+        return (
+                $this->my
+                || $this->admin
+            )
+            && (
+                '1' == $this->c->config->o_forum_subscriptions
+                || '1' == $this->c->config->o_topic_subscriptions
+            );
+    }
 }

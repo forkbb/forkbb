@@ -7,8 +7,8 @@ use ForkBB\Models\DataModel;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Topic\Model as Topic;
 use ForkBB\Models\User\Model as User;
+use PDO;
 use InvalidArgumentException;
-use PDOException;
 
 class Model extends ParentModel
 {
@@ -23,23 +23,40 @@ class Model extends ParentModel
     protected $topics;
 
     /**
+     * @var array
+     */
+    protected $users;
+
+    /**
      * Проверяет список моделей на форумы/темы
      * Заполняет $forums и $topics
      */
-    protected function check(array $models): void
+    protected function check(array $models, bool $mayBeUsers = false): void
     {
         $this->forums = [];
         $this->topics = [];
+        $this->users  = [];
 
         if (empty($models)) {
-            throw new InvalidArgumentException('Expected at least one Forum or Topic');
+            if ($mayBeUsers) {
+                throw new InvalidArgumentException('Expected at least one Forum, Topic or User');
+            } else {
+                throw new InvalidArgumentException('Expected at least one Forum or Topic');
+            }
         }
 
         foreach ($models as $model) {
-            if ($model instanceof Forum) {
+            if (
+                $mayBeUsers
+                && $model instanceof User
+            ) {
+                $this->users[$model->id] = $model->id;
+            } elseif ($model instanceof Forum) {
                 $this->forums[$model->id] = $model->id;
+                $mayBeUsers               = false;
             } elseif ($model instanceof Topic) {
                 $this->topics[$model->id] = $model->id;
+                $mayBeUsers               = false;
             } else {
                 throw new InvalidArgumentException('Expected only Forum or Topic');
             }
@@ -104,63 +121,119 @@ class Model extends ParentModel
     }
 
     /**
-     * Отписывает юзера/всех юзеров от форума(ов)/тем(ы)
+     * Отписывает юзеров от форумов/топиков
+     * Убирает подписки с удаляемых форумов/топиков
+     * Убирает подписки с удаляемых юзеров
      */
-    public function unsubscribe(?User $user, DataModel ...$models): bool
+    public function unsubscribe(DataModel ...$models): bool
     {
-        if ($user instanceof User) {
-            if (
-                $user->isGuest
-                || $user->isUnverified
-            ) {
-                return false;
-            }
+        $where = [];
+        $vars  = [];
 
-            $vars = [
-                ':uid' => $user->id,
-            ];
-        } else {
-            $vars = [];
-        }
+        $this->check($models, true);
 
-        $this->check($models);
-
-        if (! empty($this->forums)) {
-            if (isset($vars[':uid'])) {
-                $query = 'DELETE
-                    FROM ::forum_subscriptions
-                    WHERE user_id=?i:uid AND forum_id=?i:id';
+        if (! empty($this->users)) {
+            if (1 === \count($this->users)) {
+                $where[':uid'] = 'user_id=?i:uid';
+                $vars[':uid']  = \reset($this->users);
             } else {
-                $query = 'DELETE
-                    FROM ::forum_subscriptions
-                    WHERE forum_id=?i:id';
-            }
-
-            foreach ($this->forums as $id) {
-                $vars[':id'] = $id;
-
-                $this->c->DB->exec($query, $vars);
+                $where[':uid'] = 'user_id IN(?ai:uid)';
+                $vars[':uid']  = $this->users;
             }
         }
 
-        if (! empty($this->topics)) {
-            if (isset($vars[':uid'])) {
-                $query = 'DELETE
-                    FROM ::topic_subscriptions
-                    WHERE user_id=?i:uid AND topic_id=?i:id';
-            } else {
-                $query = 'DELETE
-                    FROM ::topic_subscriptions
-                    WHERE topic_id=?i:id';
+        $all = empty($this->forums) && empty($this->topics);
+
+        if ($all || ! empty($this->forums)) {
+            if (! empty($this->forums)) {
+                if (1 === \count($this->forums)) {
+                    $where[':id'] = 'forum_id=?i:id';
+                    $vars[':id']  = \reset($this->forums);
+                } else {
+                    $where[':id'] = 'forum_id IN(?ai:id)';
+                    $vars[':id']  = $this->forums;
+                }
             }
 
-            foreach ($this->topics as $id) {
-                $vars[':id'] = $id;
+            $query = 'DELETE
+                FROM ::forum_subscriptions
+                WHERE ' . \implode(' AND ', $where);
 
-                $this->c->DB->exec($query, $vars);
+            $this->c->DB->exec($query, $vars);
+        }
+
+        unset($where[':id'], $vars[':id']);
+
+        if ($all || ! empty($this->topics)) {
+            if (! empty($this->topics)) {
+                if (1 === \count($this->topics)) {
+                    $where[':id'] = 'topic_id=?i:id';
+                    $vars[':id']  = \reset($this->topics);
+                } else {
+                    $where[':id'] = 'topic_id IN(?ai:id)';
+                    $vars[':id']  = $this->topics;
+                }
             }
+
+            $query = 'DELETE
+                FROM ::topic_subscriptions
+                WHERE ' . \implode(' AND ', $where);
+
+            $this->c->DB->exec($query, $vars);
         }
 
         return true;
+    }
+
+    const FORUMS_DATA = 1;
+    const TOPICS_DATA = 2;
+    const ALL_DATA    = 3;
+
+    /**
+     * Возвращает информацию по подпискам
+     */
+    public function info(DataModel $model, int $type = self::ALL_DATA): array
+    {
+        $result = [];
+
+        if ($model instanceof User) {
+            $vars = [
+                ':uid' => $model->id,
+            ];
+
+            if (self::FORUMS_DATA & $type) {
+                if (
+                    '1' != $this->c->config->o_forum_subscriptions
+                    || $model->isGuest
+                ) {
+                    $result[self::FORUMS_DATA] = null;
+                } else {
+                    $query = 'SELECT forum_id
+                        FROM ::forum_subscriptions
+                        WHERE user_id=?i:uid';
+
+                    $result[self::FORUMS_DATA] = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
+                }
+            }
+
+            if (self::TOPICS_DATA & $type) {
+                if (
+                    '1' != $this->c->config->o_topic_subscriptions
+                    || $model->isGuest
+                ) {
+                    $result[self::TOPICS_DATA] = null;
+                } else {
+                    $query = 'SELECT topic_id
+                        FROM ::topic_subscriptions
+                        WHERE user_id=?i:uid';
+
+                    $result[self::TOPICS_DATA] = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
+                }
+            }
+        } else {
+            throw new InvalidArgumentException('Expected only User');
+        }
+
+        return $result;
     }
 }

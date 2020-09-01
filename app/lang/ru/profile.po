@@ -533,3 +533,15 @@ msgstr "Строгая"
 
 msgid "IP check info"
 msgstr "<b>Строгая</b> - при каждой смене вашего ip адреса, вы будите разлогинены;<br><b>Не строгая</b> - форум помнит 10-20 ваших последних ip адресов и если ваш текущий ip адрес не попадает в этот список, вы будите разлогинены;<br><b>Отключена</b> - смена вашего ip адеса ни на что не влияет."
+
+msgid "Total topics subscriptions"
+msgstr "Всего подписок на темы"
+
+msgid "Total forums subscriptions"
+msgstr "Всего подписок на разделы"
+
+msgid "Show topics subscriptions"
+msgstr "Показать подписки пользователя на темы"
+
+msgid "Show forums subscriptions"
+msgstr "Показать подписки пользователя на разделы"

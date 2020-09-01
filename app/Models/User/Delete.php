@@ -57,8 +57,9 @@ class Delete extends Action
         }
 
         $this->c->forums->delete(...$users);
+        $this->c->subscriptions->unsubscribe(...$users);
 
-        //???? подписки, опросы, предупреждения
+        //???? опросы, предупреждения
 
         foreach ($users as $user) {
             $this->c->Online->delete($user);

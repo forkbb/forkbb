@@ -274,6 +274,43 @@ class View extends Profile
                 ];
             }
         }
+        if ($this->rules->viewSubscription) {
+            $subscr     = $this->c->subscriptions;
+            $subscrInfo = $subscr->info($this->curUser);
+            $isLink     = '1' == $this->user->g_search;
+            if (! empty($subscrInfo[$subscr::FORUMS_DATA])) {
+                $fields['forums_subscr'] = [
+                    'class'   => 'pline',
+                    'type'    => $isLink ? 'link' : 'str',
+                    'caption' => __('Total forums subscriptions'),
+                    'value'   => \ForkBB\num(\count($subscrInfo[$subscr::FORUMS_DATA])),
+                    'href'    => $this->c->Router->link(
+                        'SearchAction',
+                        [
+                            'action' => 'forums_subscriptions',
+                            'uid'    => $this->curUser->id,
+                        ]
+                    ),
+                    'title'   => __('Show forums subscriptions'),
+                ];
+            }
+            if (! empty($subscrInfo[$subscr::TOPICS_DATA])) {
+                $fields['topics_subscr'] = [
+                    'class'   => 'pline',
+                    'type'    => $isLink ? 'link' : 'str',
+                    'caption' => __('Total topics subscriptions'),
+                    'value'   => \ForkBB\num(\count($subscrInfo[$subscr::TOPICS_DATA])),
+                    'href'    => $this->c->Router->link(
+                        'SearchAction',
+                        [
+                            'action' => 'topics_subscriptions',
+                            'uid'    => $this->curUser->id,
+                        ]
+                    ),
+                    'title'   => __('Show topics subscriptions'),
+                ];
+            }
+        }
         $form['sets']['activity'] = [
             'class'  => 'data',
             'legend' => __('User activity'),
