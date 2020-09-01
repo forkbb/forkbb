@@ -162,12 +162,19 @@
       </div>
     </section>
     <div class="f-nav-links">
-    @if ($p->model->canCreateTopic || $p->model->pagination || $p->model->canMarkRead)
+    @if ($p->model->canCreateTopic || $p->model->pagination || $p->model->canMarkRead || $p->model->canSubscription)
       <div class="f-nlinks-a">
-        @if ($p->model->canCreateTopic || $p->model->canMarkRead)
+        @if ($p->model->canCreateTopic || $p->model->canMarkRead || $p->model->canSubscription)
         <div class="f-actions-links">
             @if ($p->model->canMarkRead)
           <a class="f-btn f-btn-markread f-opacity" title="{!! __('Mark forum read') !!}" href="{!! $p->model->linkMarkRead !!}"><span>{!! __('All is read') !!}</span></a>
+            @endif
+            @if ($p->model->canSubscription)
+              @if ($p->model->is_subscribed)
+          <a class="f-btn f-btn-unsubscribe f-opacity" title="{!! __('Unsubscribe forum') !!}" href="{!! $p->model->linkUnsubscribe !!}"><span>{!! __('Unsubscribe') !!}</span></a>
+              @else
+          <a class="f-btn f-btn-subscribe f-opacity" title="{!! __('Subscribe forum') !!}" href="{!! $p->model->linkSubscribe !!}"><span>{!! __('Subscribe') !!}</span></a>
+              @endif
             @endif
             @if ($p->model->canCreateTopic)
           <a class="f-btn f-btn-create-topic" title="{!! __('Post topic') !!}" href="{!! $p->model->linkCreateTopic !!}"><span>{!! __('Post topic') !!}</span></a>

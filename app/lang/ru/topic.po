@@ -69,15 +69,6 @@ msgstr "Изменить"
 msgid "Quote"
 msgstr "Цитировать"
 
-msgid "Is subscribed"
-msgstr "Вы подписаны на эту тему"
-
-msgid "Unsubscribe"
-msgstr "Отказаться от подписки"
-
-msgid "Subscribe"
-msgstr "Подписаться на тему"
-
 msgid "Quick post"
 msgstr "Быстрый ответ"
 
@@ -119,3 +110,9 @@ msgstr "Сообщение №%s не найдено в базе данных"
 
 msgid "Admin note"
 msgstr "Примечание администрации"
+
+msgid "Subscribe topic"
+msgstr "Получать уведомления о новых сообщениях по электронной почте"
+
+msgid "Unsubscribe topic"
+msgstr "Отказаться от получения уведомлений о новых сообщениях"

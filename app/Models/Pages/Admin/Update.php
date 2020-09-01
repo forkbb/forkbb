@@ -600,4 +600,21 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.10 to rev.11
+     */
+    protected function stageNumber10(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+
+        $coreConfig->add(
+            'shared=>subscriptions',
+            '\\ForkBB\\Models\\Subscription\\Model::class',
+            'search'
+        );
+        $coreConfig->save();
+
+        return null;
+    }
 }

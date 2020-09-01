@@ -78,6 +78,17 @@ class Model extends DataModel
     }
 
     /**
+     * Статус возможности использования подписок
+     */
+    protected function getcanSubscription(): bool
+    {
+        return '1' == $this->c->config->o_topic_subscriptions
+            && $this->id > 0
+            && ! $this->c->user->isGuest
+            && ! $this->c->user->isUnverified;
+    }
+
+    /**
      * Ссылка на тему
      *
      * @return string
@@ -151,6 +162,48 @@ class Model extends DataModel
             'TopicViewUnread',
             [
                 'id' => $this->id,
+            ]
+        );
+    }
+
+    /**
+     * Ссылка на подписку
+     */
+    protected function getlinkSubscribe(): ?string
+    {
+        return $this->c->Router->link(
+            'TopicSubscription',
+            [
+                'tid'   => $this->id,
+                'type'  => 'subscribe',
+                'token' => $this->c->Csrf->create(
+                    'TopicSubscription',
+                    [
+                        'tid'  => $this->id,
+                        'type' => 'subscribe',
+                    ]
+                ),
+            ]
+        );
+    }
+
+    /**
+     * Ссылка на отписку
+     */
+    protected function getlinkUnsubscribe(): ?string
+    {
+        return $this->c->Router->link(
+            'TopicSubscription',
+            [
+                'tid'   => $this->id,
+                'type'  => 'unsubscribe',
+                'token' => $this->c->Csrf->create(
+                    'TopicSubscription',
+                    [
+                        'tid'  => $this->id,
+                        'type' => 'unsubscribe',
+                    ]
+                ),
             ]
         );
     }

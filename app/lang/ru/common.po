@@ -540,3 +540,9 @@ msgstr "Выделить тему"
 
 msgid "User %s"
 msgstr "%s"
+
+msgid "Unsubscribe"
+msgstr "Отписаться"
+
+msgid "Subscribe"
+msgstr "Подписаться"

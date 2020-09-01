@@ -4,6 +4,7 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
 use ForkBB\Models\Forum\Model as Forum;
+use ForkBB\Models\Topic\Model as Topic;
 
 class Misc extends Page
 {
@@ -32,5 +33,63 @@ class Misc extends Page
         $message = $forum->id ? 'Mark forum read redirect' : 'Mark read redirect';
 
         return $this->c->Redirect->url($forum->link)->message($message);
+    }
+
+    /**
+     * Подписка на форум и отписка от него
+     */
+    public function forumSubscription(array $args): Page
+    {
+        if (! $this->c->Csrf->verify($args['token'], 'ForumSubscription', $args)) {
+            return $this->c->Message->message('Bad token');
+        }
+
+        $forum = $this->c->forums->get((int) $args['fid']);
+        if (! $forum instanceof Forum) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $this->c->Lang->load('misc');
+
+        if ('subscribe' === $args['type']) {
+            $this->c->subscriptions->subscribe($this->user, $forum);
+
+            $message = 'Subscribe redirect';
+        } else {
+            $this->c->subscriptions->unsubscribe($this->user, $forum);
+
+            $message = 'Unsubscribe redirect';
+        }
+
+        return $this->c->Redirect->url($forum->link)->message($message);
+    }
+
+    /**
+     * Подписка на топик и отписка от него
+     */
+    public function topicSubscription(array $args): Page
+    {
+        if (! $this->c->Csrf->verify($args['token'], 'TopicSubscription', $args)) {
+            return $this->c->Message->message('Bad token');
+        }
+
+        $topic = $this->c->topics->load((int) $args['tid']);
+        if (! $topic instanceof Topic) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $this->c->Lang->load('misc');
+
+        if ('subscribe' === $args['type']) {
+            $this->c->subscriptions->subscribe($this->user, $topic);
+
+            $message = 'Subscribe redirect';
+        } else {
+            $this->c->subscriptions->unsubscribe($this->user, $topic);
+
+            $message = 'Unsubscribe redirect';
+        }
+
+        return $this->c->Redirect->url($topic->link)->message($message);
     }
 }

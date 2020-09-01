@@ -538,3 +538,9 @@ msgstr "Stick topic"
 
 msgid "User %s"
 msgstr "%s"
+
+msgid "Unsubscribe"
+msgstr "Unsubscribe"
+
+msgid "Subscribe"
+msgstr "Subscribe"

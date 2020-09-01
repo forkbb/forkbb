@@ -369,6 +369,24 @@ class Routing
                 'Feed:view',
                 'Feed'
             );
+            // подписки
+            if (
+                ! $user->isGuest
+                && ! $user->isUnverified
+            ) {
+                $r->add(
+                    $r::GET,
+                    '/forum/{fid:[1-9]\d*}/{type:subscribe|unsubscribe}/{token}',
+                    'Misc:forumSubscription',
+                    'ForumSubscription'
+                );
+                $r->add(
+                    $r::GET,
+                    '/topic/{tid:[1-9]\d*}/{type:subscribe|unsubscribe}/{token}',
+                    'Misc:topicSubscription',
+                    'TopicSubscription'
+                );
+            }
 
         }
         // админ и модератор

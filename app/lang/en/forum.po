@@ -36,17 +36,14 @@ msgstr "Forum is empty."
 msgid "Mod controls"
 msgstr "Moderator controls"
 
-msgid "Is subscribed"
-msgstr "You are currently subscribed to this forum"
-
-msgid "Unsubscribe"
-msgstr "Unsubscribe"
-
-msgid "Subscribe"
-msgstr "Subscribe to this forum"
-
 msgid "Topic %s was not found in the database"
 msgstr "Topic №%s was not found in the database"
 
 msgid "Last post <a href=\"%1$s\">%2$s</a>"
 msgstr "<small>Last post </small><a href=\"%1$s\">%2$s</a>"
+
+msgid "Subscribe forum"
+msgstr "Receive email notification of new topics"
+
+msgid "Unsubscribe forum"
+msgstr "Unsubscribe from email notifications of new topics"

@@ -36,17 +36,14 @@ msgstr "Раздел пуст."
 msgid "Mod controls"
 msgstr "Инструменты модерирования"
 
-msgid "Is subscribed"
-msgstr "Вы подписаны на этот раздел"
-
-msgid "Unsubscribe"
-msgstr "Отказаться от подписки"
-
-msgid "Subscribe"
-msgstr "Подписаться на этот раздел"
-
 msgid "Topic %s was not found in the database"
 msgstr "Тема №%s не найдена в базе данных"
 
 msgid "Last post <a href=\"%1$s\">%2$s</a>"
 msgstr "<small>Последнее сообщение </small><a href=\"%1$s\">%2$s</a>"
+
+msgid "Subscribe forum"
+msgstr "Получать уведомления о новых темах по электронной почте"
+
+msgid "Unsubscribe forum"
+msgstr "Отказаться от получения уведомлений о новых темах"

@@ -11,18 +11,6 @@
     @endforeach
       </ul>
 @endsection
-@section ('linkpost')
-    @if ($p->model->canReply || $p->model->closed)
-        <div class="f-actions-links">
-        @if ($p->model->closed)
-          <a class="f-btn f-btn-topic-closed" title="{!! __('Topic closed') !!}"><span>{!! __('Topic closed') !!}</span></a>
-        @endif
-        @if ($p->model->canReply)
-          <a class="f-btn f-btn-post-reply" title="{!! __('Post reply') !!}" href="{!! $p->model->linkReply !!}"><span>{!! __('Post reply') !!}</span></a>
-        @endif
-        </div>
-    @endif
-@endsection
 @section ('pagination')
     @if ($p->model->pagination)
         <nav class="f-pages">
@@ -50,7 +38,16 @@
 @if ($p->model->canReply || $p->model->closed || $p->model->pagination)
       <div class="f-nlinks-b">
     @yield ('pagination')
-    @yield ('linkpost')
+    @if ($p->model->canReply || $p->model->closed)
+        <div class="f-actions-links">
+        @if ($p->model->closed)
+          <a class="f-btn f-btn-topic-closed" title="{!! __('Topic closed') !!}"><span>{!! __('Topic closed') !!}</span></a>
+        @endif
+        @if ($p->model->canReply)
+          <a class="f-btn f-btn-post-reply" title="{!! __('Post reply') !!}" href="{!! $p->model->linkReply !!}"><span>{!! __('Post reply') !!}</span></a>
+        @endif
+        </div>
+    @endif
       </div>
 @endif
     </div>
@@ -156,9 +153,22 @@
 @endforeach
     </section>
     <div class="f-nav-links">
-@if ($p->model->canReply || $p->model->closed || $p->model->pagination)
+@if ($p->model->canReply || $p->model->pagination || $p->model->canSubscription)
       <div class="f-nlinks-a">
-    @yield ('linkpost')
+    @if ($p->model->canReply || $p->model->canSubscription)
+        <div class="f-actions-links">
+        @if ($p->model->canSubscription)
+            @if ($p->model->is_subscribed)
+          <a class="f-btn f-btn-unsubscribe f-opacity" title="{!! __('Unsubscribe topic') !!}" href="{!! $p->model->linkUnsubscribe !!}"><span>{!! __('Unsubscribe') !!}</span></a>
+            @else
+          <a class="f-btn f-btn-subscribe f-opacity" title="{!! __('Subscribe topic') !!}" href="{!! $p->model->linkSubscribe !!}"><span>{!! __('Subscribe') !!}</span></a>
+            @endif
+        @endif
+        @if ($p->model->canReply)
+          <a class="f-btn f-btn-post-reply" title="{!! __('Post reply') !!}" href="{!! $p->model->linkReply !!}"><span>{!! __('Post reply') !!}</span></a>
+        @endif
+        </div>
+    @endif
     @yield ('pagination')
       </div>
 @endif

@@ -68,15 +68,6 @@ msgstr "Edit"
 msgid "Quote"
 msgstr "Quote"
 
-msgid "Is subscribed"
-msgstr "You are currently subscribed to this topic"
-
-msgid "Unsubscribe"
-msgstr "Unsubscribe"
-
-msgid "Subscribe"
-msgstr "Subscribe to this topic"
-
 msgid "Quick post"
 msgstr "Quick reply"
 
@@ -118,3 +109,9 @@ msgstr "Message №%s was not found in the database"
 
 msgid "Admin note"
 msgstr "Admin note"
+
+msgid "Subscribe topic"
+msgstr "Receive email notification of new posts"
+
+msgid "Unsubscribe topic"
+msgstr "Unsubscribe from email notifications of new posts"

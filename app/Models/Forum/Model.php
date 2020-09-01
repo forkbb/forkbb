@@ -59,6 +59,17 @@ class Model extends DataModel
     }
 
     /**
+     * Статус возможности использования подписок
+     */
+    protected function getcanSubscription(): bool
+    {
+        return '1' == $this->c->config->o_forum_subscriptions
+            && $this->id > 0
+            && ! $this->c->user->isGuest
+            && ! $this->c->user->isUnverified;
+    }
+
+    /**
      * Получение массива подразделов
      *
      * @return array
@@ -193,6 +204,56 @@ class Model extends DataModel
                 ),
             ]
         );
+    }
+
+    /**
+     * Ссылка на подписку
+     */
+    protected function getlinkSubscribe(): ?string
+    {
+        if ($this->id < 1) {
+            return null;
+        } else {
+            return $this->c->Router->link(
+                'ForumSubscription',
+                [
+                    'fid'   => $this->id,
+                    'type'  => 'subscribe',
+                    'token' => $this->c->Csrf->create(
+                        'ForumSubscription',
+                        [
+                            'fid'  => $this->id,
+                            'type' => 'subscribe',
+                        ]
+                    ),
+                ]
+            );
+        }
+    }
+
+    /**
+     * Ссылка на отписку
+     */
+    protected function getlinkUnsubscribe(): ?string
+    {
+        if ($this->id < 1) {
+            return null;
+        } else {
+            return $this->c->Router->link(
+                'ForumSubscription',
+                [
+                    'fid'   => $this->id,
+                    'type'  => 'unsubscribe',
+                    'token' => $this->c->Csrf->create(
+                        'ForumSubscription',
+                        [
+                            'fid'  => $this->id,
+                            'type' => 'unsubscribe',
+                        ]
+                    ),
+                ]
+            );
+        }
     }
 
     /**
