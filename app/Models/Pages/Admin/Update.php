@@ -617,4 +617,21 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.11 to rev.12
+     */
+    protected function stageNumber11(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+
+        $coreConfig->add(
+            'multiple=>SearchModelActionF',
+            '\\ForkBB\\Models\\Search\\ActionF::class',
+            'SearchModelActionT'
+        );
+        $coreConfig->save();
+
+        return null;
+    }
 }

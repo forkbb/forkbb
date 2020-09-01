@@ -284,6 +284,7 @@ return [
 
         'SearchModelActionP' => \ForkBB\Models\Search\ActionP::class,
         'SearchModelActionT' => \ForkBB\Models\Search\ActionT::class,
+        'SearchModelActionF' => \ForkBB\Models\Search\ActionF::class,
         'SearchModelDelete'  => \ForkBB\Models\Search\Delete::class,
         'SearchModelIndex'   => \ForkBB\Models\Search\Index::class,
         'SearchModelTruncateIndex'   => \ForkBB\Models\Search\TruncateIndex::class,

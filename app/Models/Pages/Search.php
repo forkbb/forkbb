@@ -502,20 +502,24 @@ class Search extends Page
             case 'posts':
                 $asTopicsList      = false;
             case 'topics':
+            case 'topics_subscriptions':
+            case 'forums_subscriptions':
                 if (! isset($uid)) {
                     break;
                 }
-                $user              = $this->c->users->load($uid);
+                $user = $this->c->users->load($uid);
                 if (
                     ! $user instanceof User
                     || $user->isGuest
                 ) {
                     break;
                 }
-                if ($asTopicsList) {
-                    $list          = $model->actionT($action, $forum, $user->id);
+                if ('forums_subscriptions' == $action) {
+                    $list = $model->actionF($action, $forum, $user->id);
+                } elseif ($asTopicsList) {
+                    $list = $model->actionT($action, $forum, $user->id);
                 } else {
-                    $list          = $model->actionP($action, $forum, $user->id);
+                    $list = $model->actionP($action, $forum, $user->id);
                 }
                 $model->name       = __('Quick search user ' . $action, $user->username);
                 $model->linkMarker = 'SearchAction';
@@ -541,13 +545,20 @@ class Search extends Page
         if ($asTopicsList) {
             $this->c->Lang->load('forum');
 
-            $this->nameTpl   = 'forum';
-            $this->topics    = $list;
+            $this->nameTpl = 'forum';
+
+            if ('forums_subscriptions' == $action) {
+                $this->c->Lang->load('subforums');
+
+                $model->subforums = $list;
+            } else {
+                $this->topics = $list;
+            }
         } else {
             $this->c->Lang->load('topic');
 
-            $this->nameTpl   = 'topic_in_search';
-            $this->posts     = $list;
+            $this->nameTpl = 'topic_in_search';
+            $this->posts   = $list;
         }
 
         $this->fIndex        = 'search';

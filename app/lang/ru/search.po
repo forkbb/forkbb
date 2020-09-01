@@ -117,8 +117,11 @@ msgstr "Темы от %s"
 msgid "Quick search user posts"
 msgstr "Сообщения от %s"
 
-msgid "Quick search show_subscriptions"
-msgstr "Подписки пользователя %s"
+msgid "Quick search user topics_subscriptions"
+msgstr "Темы с подпиской от %s"
+
+msgid "Quick search user forums_subscriptions"
+msgstr "Разделы с подпиской от %s"
 
 msgid "Quick search show_user_warn"
 msgstr "Предупреждения для %s"

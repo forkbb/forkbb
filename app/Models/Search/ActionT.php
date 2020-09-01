@@ -74,6 +74,23 @@ class ActionT extends Method
                         AND (mof.mf_mark_all_read IS NULL OR t.last_post>mof.mf_mark_all_read)
                     ORDER BY t.last_post DESC';
                 break;
+            case 'topics_subscriptions':
+                if (0 !== $root->id) {
+                    return false;
+                }
+
+                $user = $this->c->users->load($uid);
+
+                if (! $this->c->ProfileRules->setUser($user)->viewSubscription) {
+                    return false;
+                }
+
+                $subscr     = $this->c->subscriptions;
+                $subscrInfo = $subscr->info($user, $subscr::TOPICS_DATA);
+                $list       = $subscrInfo[$subscr::TOPICS_DATA] ?? [];
+
+                \arsort($list, \SORT_NUMERIC); // ???? или по последнему сообщению делать?
+                break;
             default:
                 throw new InvalidArgumentException('Unknown action: ' . $action);
         }
