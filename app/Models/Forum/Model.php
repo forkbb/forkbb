@@ -31,6 +31,14 @@ class Model extends DataModel
     }
 
     /**
+     * Возвращает название раздела
+     */
+    protected function getname(): ?string
+    {
+        return $this->forum_name;
+    }
+
+    /**
      * Статус возможности создания новой темы
      *
      * @return bool

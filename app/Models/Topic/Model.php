@@ -50,6 +50,14 @@ class Model extends DataModel
     }
 
     /**
+     * Возвращает отцензурированное название темы
+     */
+    protected function getname(): ?string
+    {
+        return $this->censorSubject;
+    }
+
+    /**
      * Статус возможности ответа в теме
      *
      * @return bool

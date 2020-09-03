@@ -826,6 +826,14 @@ body,
   content: "/ ";
 }
 
+#fork .f-subscribed > a:after {
+  font-family: "FontAwesomeFree";
+  font-weight: 900;
+  content: "\f06e";
+  /* font-size: 0.875rem; */
+  padding-left: 0.3125rem;
+}
+
 #fork .f-crumb a:not(.active) {
   border-bottom: 0.0625rem solid;
 }

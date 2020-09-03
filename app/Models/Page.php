@@ -460,25 +460,12 @@ abstract class Page extends Model
             // модель
             if ($crumb instanceof Model) {
                 do {
-                    // для поиска
-                    if (isset($crumb->name)) {
-                        $name = $crumb->name;
-                    // для раздела
-                    } elseif (isset($crumb->forum_name)) {
-                        $name = $crumb->forum_name;
-                    // для темы
-                    } elseif (isset($crumb->subject)) {
-                        $name = $crumb->censorSubject;
-                    // все остальное
-                    } else {
-                        $name = 'no name';
-                    }
-
-                    $result[] = [$crumb->link, $name, $active];
+                    $name     = $crumb->name ?? '<no name>';
+                    $result[] = [$crumb, $name, $active];
                     $active   = null;
 
                     if ($crumb->page > 1) {
-                        $name .= ' ' . __('Page %s', $crumb->page);
+                        $name .= __(' Page %s', $crumb->page);
                     }
 
                     $this->titles = $name;
@@ -489,7 +476,7 @@ abstract class Page extends Model
                 \is_array($crumb)
                 && isset($crumb[0], $crumb[1])
             ) {
-                $result[]     = [$crumb[0], $crumb[1], $active];
+                $result[]     = [$crumb[0], (string) $crumb[1], $active];
                 $this->titles = $crumb[1];
             // строка
             } else {
