@@ -828,9 +828,9 @@ body,
 
 #fork .f-subscribed > a:after {
   font-family: "FontAwesomeFree";
-  font-weight: 900;
-  content: "\f06e";
-  /* font-size: 0.875rem; */
+  font-weight: 400;
+  content: "\f0f3"; /* f06e */
+  font-size: 0.875rem;
   padding-left: 0.3125rem;
 }
 
@@ -1388,33 +1388,9 @@ body,
   font-family: "FontAwesomeFree";
   font-weight: 900;
   font-size: 0.875rem;
-  content: "\f070";
+  content: "\f06e"; /* f070 */
   padding: 0 0.25rem;
 }
-
-/*
-.icon-document:before {
-  content: "\e900";
-}
-.icon-document-text:before {
-  content: "\e901";
-}
-.icon-document-upload:before {
-  content: "\e902";
-}
-.icon-document-upload2:before {
-  content: "\e903";
-}
-.icon-document-locked:before {
-  content: "\e904";
-}
-.icon-document-locked2:before {
-  content: "\e905";
-}
-.icon-tag-cord:before {
-  content: "\e906";
-}
-*/
 
 @media screen and (min-width: 50rem) {
   #fork .f-ftlist .f-row {
