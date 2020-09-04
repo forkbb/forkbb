@@ -4,6 +4,7 @@ namespace ForkBB\Core;
 
 use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Core\Exceptions\SmtpException;
+use function \ForkBB\e;
 
 class Mail
 {
@@ -61,6 +62,14 @@ class Mail
      * var int
      */
     protected $maxRecipients = 1;
+
+    /**
+     * @var array
+     */
+    protected $tplHeaders = [
+        'Subject'      => true,
+        'Content-Type' => true,
+    ];
 
     public function __construct($host, $user, $pass, $ssl, $eol)
     {
@@ -180,7 +189,12 @@ class Mail
     public function reset(): Mail
     {
         $this->to      = [];
-        $this->headers = [];
+        $this->headers = [
+            'MIME-Version'              => '1.0',
+            'Content-Transfer-Encoding' => '8bit',
+            'Content-Type'              => 'text/plain; charset=UTF-8',
+            'X-Mailer'                  => 'ForkBB Mailer',
+        ];
         $this->message = null;
 
         return $this;
@@ -330,18 +344,36 @@ class Mail
         $tpl = \trim(\file_get_contents($file));
 
         foreach ($data as $key => $val) {
-            $tpl = \str_replace('<' . $key . '>', (string) $val, $tpl);
+            $tpl = \str_replace('{!' . $key . '!}', (string) $val, $tpl);
         }
 
-        list($subject, $tpl) = \explode("\n", $tpl, 2);
-
-        if (! isset($tpl)) {
-            throw new MailException("The template is empty ({$file}).");
+        if (false !== \strpos($tpl, '{{')) {
+            foreach ($data as $key => $val) {
+                $tpl = \str_replace('{{' . $key . '}}', e((string) $val), $tpl);
+            }
         }
 
-        $this->setSubject(\substr($subject, 8));
+        if (! \preg_match('%^(.+?)(?:\r\n\r\n|\n\n|\r\r)(.+)$%s', $tpl, $matches)) {
+            throw new MailException("Unknown format template ({$file}).");
+        }
 
-        return $this->setMessage($tpl);
+        foreach (\preg_split('%\r\n|\n|\r%', $matches[1]) as $line) {
+            list($type, $value)  = \array_map('\\trim', \explode(':', $line, 2));
+
+            if (! isset($this->tplHeaders[$type])) {
+                throw new MailException("Unknown template header: {$type}.");
+            } elseif ('' == $value) {
+                throw new MailException("Empty template header: {$type}.");
+            }
+
+            if ('Subject' === $type) {
+                $this->setSubject($value);
+            } else {
+                $this->headers[$type] = \preg_replace('%[\x00-\x1F]%', '', $value);
+            }
+        }
+
+        return $this->setMessage($matches[2]);
     }
 
     /**
@@ -377,13 +409,7 @@ class Mail
             throw new MailException('The body of the email is empty.');
         }
 
-        $this->headers = \array_replace($this->headers, [
-            'Date'                      => \gmdate('r'),
-            'MIME-Version'              => '1.0',
-            'Content-transfer-encoding' => '8bit',
-            'Content-type'              => 'text/plain; charset=utf-8',
-            'X-Mailer'                  => 'ForkBB Mailer',
-        ]);
+        $this->headers['Date'] = \gmdate('r');
 
         if (\is_array($this->smtp)) {
             return $this->smtp();

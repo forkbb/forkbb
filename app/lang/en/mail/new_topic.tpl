@@ -1,11 +1,11 @@
-Subject: New topic in forum: '<forum_name>'
+Subject: New topic in forum: {!forumName!}
 
-<poster> has posted a new topic '<topic_subject>' in the forum '<forum_name>', to which you are subscribed.
+'{!poster!}' has posted a new topic '{!topicSubject!}' in the forum '{!forumName!}', to which you are subscribed.
 
-The topic is located at <topic_url>
+The topic is located at {!topicLink!}
 
-You can unsubscribe by going to <unsubscribe_url> and clicking the Unsubscribe link at the bottom of the page.
+You can unsubscribe by going to {!unsubscribeLink!} and clicking the {!button!} button at the bottom of the page.
 
 --
-<board_mailer> Mailer
+{!fMailer!} Mailer
 (Do not reply to this message)

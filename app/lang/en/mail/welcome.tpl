@@ -1,12 +1,11 @@
-Subject: Welcome to <fTitle>!
+Subject: Welcome to {!fTitle!}!
 
-Thank you for registering in the forums at <fRootLink>.
+Thank you for registering in the forums at {!fRootLink!}.
 
-Your username: <username>
+Your username: {!username!}
 
-Go link to activate your account:
-<link>
+Go link to activate your account: {!link!}
 
 --
-<fMailer> Mailer
+{!fMailer!} Mailer
 (Do not reply to this message)

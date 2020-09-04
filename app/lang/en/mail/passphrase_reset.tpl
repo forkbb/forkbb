@@ -1,12 +1,11 @@
 Subject: New passphrase requested
 
-Hello <username>,
+Hello {!username!},
 
-You have requested to have a new passphrase assigned to your account in the discussion forum at <fRootLink>
+You have requested to have a new passphrase assigned to your account in the discussion forum at {!fRootLink!}
 
-To change your passphrase, please visit the following page:
-<link>
+To change your passphrase, please visit the following page: {!link!}
 
 --
-<fMailer> Mailer
+{!fMailer!} Mailer
 (Do not reply to this message)

@@ -234,7 +234,7 @@ class Auth extends Page
                         ->setFolder($this->c->DIR_LANG)
                         ->setLanguage($tmpUser->language)
                         ->setTo($tmpUser->email, $tmpUser->username)
-                        ->setFrom($this->c->config->o_webmaster_email, __('Mailer', $this->c->config->o_board_title))
+                        ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
                         ->setTpl('passphrase_reset.tpl', $tplData)
                         ->send();
                 } catch (MailException $e) {

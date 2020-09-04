@@ -187,7 +187,7 @@ class Email extends Page
             ->setFolder($this->c->DIR_LANG)
             ->setLanguage($this->curUser->language)
             ->setTo($this->curUser->email)
-            ->setFrom($this->c->config->o_webmaster_email, __('Mailer', $this->c->config->o_board_title))
+            ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
             ->setReplyTo($this->user->email, $this->user->username)
             ->setTpl('form_email.tpl', $tplData)
             ->send();

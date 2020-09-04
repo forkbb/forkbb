@@ -634,4 +634,29 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.12 to rev.13
+     */
+    protected function stageNumber12(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+
+        $coreConfig->add(
+            'shared=>SubscriptionModelSend',
+            '\\ForkBB\\Models\\Subscription\\Send::class'
+        );
+
+        $result = $coreConfig->delete(
+            'multiple=>BanListModelIsBanned',
+        );
+        $coreConfig->add(
+            'shared=>BanListModelIsBanned',
+            '\\ForkBB\\Models\\BanList\\IsBanned::class'
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }

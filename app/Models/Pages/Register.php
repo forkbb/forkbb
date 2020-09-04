@@ -191,7 +191,7 @@ class Register extends Page
                     ->setFolder($this->c->DIR_LANG)
                     ->setLanguage($this->c->config->o_default_lang)
                     ->setTo($this->c->config->o_mailing_list)
-                    ->setFrom($this->c->config->o_webmaster_email, __('Mailer', $this->c->config->o_board_title))
+                    ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
                     ->setTpl('new_user.tpl', $tplData)
                     ->send();
             } catch (MailException $e) {
@@ -228,7 +228,7 @@ class Register extends Page
                     ->setFolder($this->c->DIR_LANG)
                     ->setLanguage($this->user->language)
                     ->setTo($v->email)
-                    ->setFrom($this->c->config->o_webmaster_email, __('Mailer', $this->c->config->o_board_title))
+                    ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
                     ->setTpl('welcome.tpl', $tplData)
                     ->send();
             } catch (MailException $e) {

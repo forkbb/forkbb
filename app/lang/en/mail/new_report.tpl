@@ -1,9 +1,9 @@
-Subject: Report(<forumId>) - '<topicSubject>'
+Subject: Report ({!forumId!}) - '{!topicSubject!}'
 
-User '<username>' has reported the following message: <postLink>
+User '{!username!}' has reported the following message: {!postLink!}
 
-Reason: <reason>
+Reason: {!reason!}
 
 --
-<fMailer> Mailer
+{!fMailer!} Mailer
 (Do not reply to this message)

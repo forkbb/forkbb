@@ -35,6 +35,8 @@ class Post extends Page
 
         $this->c->Lang->load('post');
 
+        $this->onlinePos = 'forum-' . $forum->id;
+
         if ('POST' === $method) {
             $v = $this->messageValidator($forum, 'NewTopic', $args, false, true);
 
@@ -59,7 +61,6 @@ class Post extends Page
         }
 
         $this->nameTpl   = 'post';
-        $this->onlinePos = 'forum-' . $forum->id;
         $this->canonical = $this->c->Router->link(
             'NewTopic',
             [
@@ -96,6 +97,8 @@ class Post extends Page
 
         $this->c->Lang->load('post');
 
+        $this->onlinePos = 'topic-' . $topic->id;
+
         if ('POST' === $method) {
             $v = $this->messageValidator($topic, 'NewReply', $args);
 
@@ -129,7 +132,6 @@ class Post extends Page
         }
 
         $this->nameTpl    = 'post';
-        $this->onlinePos  = 'topic-' . $topic->id;
         $this->canonical  = $this->c->Router->link(
             'NewReply',
             [
@@ -156,6 +158,8 @@ class Post extends Page
      */
     protected function endPost(Model $model, Validator $v): Page
     {
+        $this->c->Online->calc($this); // для подписок
+
         $now       = \time();
         $username  = $this->user->isGuest ? $v->username : $this->user->username;
         $merge     = false;
@@ -278,6 +282,16 @@ class Post extends Page
             $this->c->search->index($lastPost, 'merge');
         } else {
             $this->c->search->index($post);
+
+            if ($createTopic) {
+                if ('1' == $this->c->config->o_forum_subscriptions) { // ????
+                    $this->c->subscriptions->send($post, $topic);
+                }
+            } else {
+                if ('1' == $this->c->config->o_topic_subscriptions) { // ????
+                    $this->c->subscriptions->send($post);
+                }
+            }
         }
 
         return $this->c->Redirect->page('ViewPost', ['id' => $merge ? $lastPost->id : $post->id])->message('Post redirect');

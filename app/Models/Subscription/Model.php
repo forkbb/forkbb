@@ -29,7 +29,7 @@ class Model extends ParentModel
 
     /**
      * Проверяет список моделей на форумы/темы
-     * Заполняет $forums и $topics
+     * Заполняет forums, topics и users
      */
     protected function check(array $models, bool $mayBeUsers = false): void
     {

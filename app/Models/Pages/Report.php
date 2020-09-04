@@ -186,7 +186,7 @@ class Report extends Page
             ->setFolder($this->c->DIR_LANG)
             ->setLanguage($this->c->config->o_default_lang) // ????
             ->setTo($this->c->config->o_mailing_list)
-            ->setFrom($this->c->config->o_webmaster_email, __('Mailer', $this->c->config->o_board_title))
+            ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
             ->setTpl('new_report.tpl', $tplData)
             ->send();
     }

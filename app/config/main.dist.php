@@ -136,6 +136,10 @@ return [
 
         'ProfileRules' => \ForkBB\Models\Rules\Profile::class,
         'UsersRules'   => \ForkBB\Models\Rules\Users::class,
+
+        'SubscriptionModelSend' => \ForkBB\Models\Subscription\Send::class,
+
+        'BanListModelIsBanned' => \ForkBB\Models\BanList\IsBanned::class,
     ],
     'multiple'  => [
         'CtrlPrimary' => \ForkBB\Controllers\Primary::class,
@@ -200,7 +204,6 @@ return [
         'BanListModelLoad'     => \ForkBB\Models\BanList\Load::class,
         'BanListModelCheck'    => \ForkBB\Models\BanList\Check::class,
         'BanListModelDelete'   => \ForkBB\Models\BanList\Delete::class,
-        'BanListModelIsBanned' => \ForkBB\Models\BanList\IsBanned::class,
         'BanListModelFilter'   => \ForkBB\Models\BanList\Filter::class,
         'BanListModelGetList'  => \ForkBB\Models\BanList\GetList::class,
         'BanListModelInsert'   => \ForkBB\Models\BanList\Insert::class,

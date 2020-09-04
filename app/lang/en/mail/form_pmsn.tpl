@@ -1,10 +1,10 @@
-Subject: New personal message: <mail_subject>
+Subject: New personal message: {!mail_subject!}
 
-Hello, <user>!
+Hello, {!user!}!
 
-<sender> from <board_title> has sent you a personal message.
-The message is located at <message_url>
+'{!sender!}' from '{!board_title!}' has sent you a personal message.
+The message is located at {!message_url!}
 
--- 
-<board_mailer> Mailer
+--
+{!board_mailer!} Mailer
 (Do not reply to this message)

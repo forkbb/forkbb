@@ -118,7 +118,7 @@ class Email extends Profile
                             ->setFolder($this->c->DIR_LANG)
                             ->setLanguage($this->curUser->language)
                             ->setTo($v->new_email, $this->curUser->username)
-                            ->setFrom($this->c->config->o_webmaster_email, __('Mailer', $this->c->config->o_board_title))
+                            ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
                             ->setTpl('activate_email.tpl', $tplData)
                             ->send();
                     } catch (MailException $e) {
