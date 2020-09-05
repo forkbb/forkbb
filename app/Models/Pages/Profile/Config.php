@@ -73,6 +73,17 @@ class Config extends Profile
                 ])->addMessages([
                 ]);
 
+            if ($this->rules->viewSubscription) { // ???? модераторы?
+                $v = $this->c->Validator
+                    ->addRules([
+                        'notify_with_post' => 'required|integer|in:0,1',
+                        'auto_notify'      => 'required|integer|in:0,1',
+                    ])->addAliases([
+                        'notify_with_post' => 'Notify label',
+                        'auto_notify'      => 'Auto notify label',
+                    ]);
+            }
+
             if ($v->validation($_POST)) {
                 $data  = $v->getData();
                 unset($data['token']);
@@ -341,6 +352,29 @@ class Config extends Profile
                 ],
             ],
         ];
+
+        if ($this->rules->viewSubscription) { // ???? модераторы?
+            $form['sets']['subscriptions'] = [
+                'legend' => __('Subscription options'),
+                'class'  => 'data-edit',
+                'fields' => [
+                    'notify_with_post' => [
+                        'type'    => 'radio',
+                        'value'   => $this->curUser->notify_with_post,
+                        'values'  => $yn,
+                        'caption' => __('Notify label'),
+                        'info'    => __('Notify info'),
+                    ],
+                    'auto_notify' => [
+                        'type'    => 'radio',
+                        'value'   => $this->curUser->auto_notify,
+                        'values'  => $yn,
+                        'caption' => __('Auto notify label'),
+                        'info'    => __('Auto notify info'),
+                    ],
+                ],
+            ];
+            }
 
         return $form;
     }

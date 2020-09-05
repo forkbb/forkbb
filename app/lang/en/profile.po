@@ -267,13 +267,19 @@ msgstr "Posts"
 msgid "Leave blank"
 msgstr "Leave blank to use forum default."
 
-msgid "Subscription legend"
-msgstr "Set your subscription options"
+msgid "Subscription options"
+msgstr "Subscription options"
 
-msgid "Notify full"
-msgstr "Include a plain text version of new posts in subscription notification emails."
+msgid "Notify label"
+msgstr "Notification with post text"
 
-msgid "Auto notify full"
+msgid "Notify info"
+msgstr "Include a text of new posts in subscription notification emails."
+
+msgid "Auto notify label"
+msgstr "Automatically subscribe to topics"
+
+msgid "Auto notify info"
 msgstr "Automatically subscribe to every topic you post in."
 
 msgid "Smilies label"

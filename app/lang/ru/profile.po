@@ -267,13 +267,19 @@ msgstr "Сообщений"
 msgid "Leave blank"
 msgstr "Оставьте поле пустым, для использования настроек по умолчанию."
 
-msgid "Subscription legend"
-msgstr "Настройка опций вашей подписки"
+msgid "Subscription options"
+msgstr "Опции подписки"
 
-msgid "Notify full"
+msgid "Notify label"
+msgstr "Уведомление с текстом сообщения"
+
+msgid "Notify info"
 msgstr "Включать в письмо-уведомление текстовую часть новых сообщений."
 
-msgid "Auto notify full"
+msgid "Auto notify label"
+msgstr "Авто. подписка на темы"
+
+msgid "Auto notify info"
 msgstr "Автоматически подписываться на темы, в которых публикуете сообщения."
 
 msgid "Smilies label"
