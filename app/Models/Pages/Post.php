@@ -285,6 +285,15 @@ class Post extends Page
 
             if ($createTopic) {
                 if ('1' == $this->c->config->o_forum_subscriptions) { // ????
+                    // автоподписка на свою тему
+                    if (
+                        '1' == $this->c->config->o_topic_subscriptions
+                        && $this->user->auto_notify
+                        && $this->user->email_confirmed
+                    ) {
+                        $this->c->subscriptions->subscribe($this->user, $topic);
+                    }
+
                     $this->c->subscriptions->send($post, $topic);
                 }
             } else {
