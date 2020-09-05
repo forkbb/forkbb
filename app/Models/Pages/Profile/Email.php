@@ -36,9 +36,13 @@ class Email extends Profile
         $this->user->email_confirmed = 1;
         $this->user->activate_string = '';
 
+        $change = $this->user->isModified('email');
+
         $this->c->users->update($this->user);
 
-        return $this->c->Redirect->url($this->user->link)->message('Email changed redirect');
+        return $this->c->Redirect
+            ->url($this->user->link)
+            ->message($change ? 'Email changed redirect' : 'Email confirmed redirect');
     }
 
     /**
@@ -78,20 +82,24 @@ class Email extends Profile
                 ]);
 
             if ($v->validation($_POST)) {
-                if ($v->new_email === $this->curUser->email) {
-                    return $this->c->Redirect->page('EditUserProfile', ['id' => $this->curUser->id])->message('Email is old redirect');
+                if (
+                    $v->new_email === $this->curUser->email
+                    && ! $this->rules->confirmEmail
+                ) {
+                    return $this->c->Redirect
+                        ->page('EditUserProfile', ['id' => $this->curUser->id])
+                        ->message('Email is old redirect');
                 }
 
-                if (
-                    $this->user->isAdmin
-                    || '1' != $this->c->config->o_regs_verify
-                ) {
+                if (! $this->rules->my) { // админ сменил чужой адрес O_o
                     $this->curUser->email           = $v->new_email;
                     $this->curUser->email_confirmed = 0;
 
                     $this->c->users->update($this->curUser);
 
-                    return $this->c->Redirect->page('EditUserProfile', ['id' => $this->curUser->id])->message('Email changed redirect');
+                    return $this->c->Redirect
+                        ->page('EditUserProfile', ['id' => $this->curUser->id])
+                        ->message('Email changed redirect');
                 } else {
                     $key  = $this->c->Secury->randomPass(33);
                     $hash = $this->c->Secury->hash($this->curUser->id . $v->new_email . $key);
@@ -131,9 +139,11 @@ class Email extends Profile
 
                         $this->c->users->update($this->curUser);
 
-                        return $this->c->Message->message(__('Activate email sent', $this->c->config->o_admin_email), false, 200);
+                        return $this->c->Message
+                            ->message(__('Activate email sent', $this->c->config->o_admin_email), false, 200);
                     } else {
-                        return $this->c->Message->message(__('Error mail', $this->c->config->o_admin_email), true, 200);
+                        return $this->c->Message
+                            ->message(__('Error mail', $this->c->config->o_admin_email), true, 200);
                     }
                 }
             } else {
@@ -199,11 +209,11 @@ class Email extends Profile
                         'new_email' => [
                             'type'      => 'text',
                             'maxlength' => 80,
-                            'caption'   => __('New email'),
+                            'caption'   => __($this->rules->confirmEmail ? 'New or old email' : 'New email'),
                             'required'  => true,
                             'pattern'   => '.+@.+',
                             'value'     => $this->curUser->email,
-                            'info'      => ! $this->user->isAdmin && '1' == $this->c->config->o_regs_verify ? __('Email instructions') : null,
+                            'info'      => $this->rules->my ? __('Email instructions') : null,
                         ],
                         'password' => [
                             'type'      => 'password',

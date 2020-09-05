@@ -406,7 +406,7 @@ class Edit extends Profile
         if ($this->rules->editEmail) {
             $fields['change_email'] = [
                 'type'  => 'link',
-                'value' => __('To change email'),
+                'value' => __($this->rules->confirmEmail ? 'To confirm/change email' : 'To change email'),
                 'href'  => $this->c->Router->link(
                     'EditUserEmail',
                     [

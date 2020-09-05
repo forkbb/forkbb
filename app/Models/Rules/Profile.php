@@ -74,6 +74,11 @@ class Profile extends Rules
         return $this->my || $this->admin;
     }
 
+    protected function getconfirmEmail(): bool
+    {
+        return $this->my && ! $this->curUser->email_confirmed;
+    }
+
     protected function getsendEmail(): ?bool // ???? проверка на подтвержденный email?
     {
         if ($this->viewEmail) {

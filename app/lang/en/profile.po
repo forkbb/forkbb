@@ -79,19 +79,22 @@ msgid "Email updated"
 msgstr "Your email address has been updated."
 
 msgid "Activate email sent"
-msgstr "An email has been sent to the specified address with instructions on how to activate the new email address. If it does not arrive you can contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."
+msgstr "An email has been sent to the specified address with instructions on how to activate the email address. If it does not arrive you can contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."
 
 msgid "Email legend"
 msgstr "Enter your new email address"
 
 msgid "Email instructions"
-msgstr "An email will be sent to your new address with an activation link. You must click the link in the email you receive to activate the new address."
+msgstr "An email with an activation link will be sent to this email address. You must click the link in the email you receive to activate this address."
 
 msgid "Change email"
 msgstr "Change email address"
 
 msgid "New email"
-msgstr "New email"
+msgstr "New email address"
+
+msgid "New or old email"
+msgstr "New or old (for confirmation) email address"
 
 msgid "Avatars disabled"
 msgstr "The administrator has disabled avatar support."
@@ -438,11 +441,17 @@ msgstr "Signature has only capital letters"
 msgid "To change email"
 msgstr "Change email address"
 
+msgid "To confirm/change email"
+msgstr "Confirm/change email address"
+
 msgid "Email is old redirect"
 msgstr "Email address is not changed. Redirecting …"
 
 msgid "Email changed redirect"
 msgstr "Email address changed. Redirecting …"
+
+msgid "Email confirmed redirect"
+msgstr "Email address confirmed. Redirecting …"
 
 msgid "Pass not match"
 msgstr "Passphrases do not match."
