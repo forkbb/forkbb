@@ -311,3 +311,6 @@ msgstr "Moderate forum"
 
 msgid "When sending email there was an error"
 msgstr "When sending email there was an error. Please try again later."
+
+msgid "Confirm your email address"
+msgstr "First, please <a href=\"%s\">confirm</a> your email address."

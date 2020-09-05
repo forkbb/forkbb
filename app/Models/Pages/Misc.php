@@ -5,6 +5,7 @@ namespace ForkBB\Models\Pages;
 use ForkBB\Models\Page;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Topic\Model as Topic;
+use function \ForkBB\__;
 
 class Misc extends Page
 {
@@ -52,6 +53,10 @@ class Misc extends Page
         $this->c->Lang->load('misc');
 
         if ('subscribe' === $args['type']) {
+            if (! $this->user->email_confirmed) {
+                return $this->confirmMessage();
+            }
+
             $this->c->subscriptions->subscribe($this->user, $forum);
 
             $message = 'Subscribe redirect';
@@ -81,6 +86,10 @@ class Misc extends Page
         $this->c->Lang->load('misc');
 
         if ('subscribe' === $args['type']) {
+            if (! $this->user->email_confirmed) {
+                return $this->confirmMessage();
+            }
+
             $this->c->subscriptions->subscribe($this->user, $topic);
 
             $message = 'Subscribe redirect';
@@ -91,5 +100,17 @@ class Misc extends Page
         }
 
         return $this->c->Redirect->url($topic->link)->message($message);
+    }
+
+    protected function confirmMessage(): Page
+    {
+        $link = $this->c->Router->link(
+            'EditUserEmail',
+            [
+                'id' => $this->user->id,
+            ]
+        );
+
+        return $this->c->Message->message(__('Confirm your email address', $link), true, 100);
     }
 }

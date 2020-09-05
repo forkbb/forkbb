@@ -311,3 +311,6 @@ msgstr "Модерирование раздела"
 
 msgid "When sending email there was an error"
 msgstr "При отправке письма возникла ошибка. Попробуйте повторить попытку позже."
+
+msgid "Confirm your email address"
+msgstr "Вначале, пожалуйста, <a href=\"%s\">подтвердите</a> свой электронный адрес."
