@@ -118,11 +118,11 @@
                 @endforeach
                   </span>
             @endif
-            @if (false !== $topic->hasNew)
-                  <span class="f-tnew"><a href="{!! $topic->linkNew !!}" title="{!! __('New posts info') !!}"><span class="f-newtxt">{!! __('New posts') !!}</span></a></span>
-            @endif
             @if (false !== $topic->hasUnread)
-                  <span class="f-tunread"><a href="{!! $topic->linkUnread !!}" title="{!! __('Unread posts info') !!}"><span class="f-unreadtxt">{!! __('Unread posts') !!}</span></a></span>
+                  <small class="f-tunread"><a href="{!! $topic->linkUnread !!}" title="{!! __('Unread posts info') !!}"><span class="f-unreadtxt">{!! __('Unread posts') !!}</span></a></small>
+            @endif
+            @if (false !== $topic->hasNew)
+                  <small class="f-tnew"><a href="{!! $topic->linkNew !!}" title="{!! __('New posts info') !!}"><span class="f-newtxt">{!! __('New posts') !!}</span></a></small>
             @endif
                 </h3>
                 <p><!-- inline -->

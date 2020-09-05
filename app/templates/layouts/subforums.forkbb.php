@@ -19,7 +19,7 @@
                   <h3>
                     <a class="f-ftname" href="{!! $cur->link !!}">{{ $cur->forum_name }}</a>
         @if ($cur->tree->newMessages)
-                    <span class="f-fnew"><a href="{!! $cur->linkNew !!}" title="{!! __('New posts') !!}"><span class="f-newtxt">{!! __('New posts') !!}</span></a></span>
+                    <small class="f-fnew"><a href="{!! $cur->linkNew !!}" title="{!! __('New posts') !!}"><span class="f-newtxt">{!! __('New posts') !!}</span></a></small>
         @endif
                   </h3>
         @if ($cur->subforums)

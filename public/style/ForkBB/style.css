@@ -1360,6 +1360,7 @@ body,
   white-space: nowrap;
 }
 
+/*
 #fork .f-tnew:before,
 #fork .f-tunread:before {
   content: "[ ";
@@ -1369,6 +1370,7 @@ body,
 #fork .f-tunread:after {
   content: " ]";
 }
+*/
 
 #fork .f-newtxt,
 #fork .f-unreadtxt {
@@ -1438,7 +1440,7 @@ body,
 }
 
 #fork .f-ftlist .f-hcell,
-#fork .f-ftlist small {
+#fork .f-ftlist .f-clast small {
   display: none;
 }
 
@@ -2380,8 +2382,8 @@ body,
     vertical-align: middle;
   }
 
-  #fork .f-ulist .f-cell > small,
-  #fork .f-ulist .f-hcell > small {
+  #fork .f-ulist small,
+  #fork .f-ulist small {
     display: none;
   }
 
