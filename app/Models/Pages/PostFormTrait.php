@@ -134,6 +134,7 @@ trait PostFormTrait
                     'checked' => isset($vars['merge_post']) ? (bool) $vars['merge_post'] : true,
                 ];
             }
+
             if (
                 $editPost
                 && ! $model->user->isGuest
@@ -147,6 +148,33 @@ trait PostFormTrait
                 ];
             }
         }
+
+        if (
+            ! $editPost
+            && '1' == $this->c->config->o_topic_subscriptions
+            && $this->user->email_confirmed
+        ) {
+            $subscribed = ! $editSubject && $model->is_subscribed;
+
+            if ($quickReply) {
+                if (
+                    $subscribed
+                    || $this->user->auto_notify
+                ) {
+                    $form['hidden']['subscribe'] = '1';
+                }
+            } else {
+                $fieldset['subscribe'] = [
+                    'type'    => 'checkbox',
+                    'label'   => $subscribed ? __('Stay subscribed') : __('New subscribe'),
+                    'value'   => '1',
+                    'checked' => isset($vars['subscribe'])
+                        ? (bool) $vars['subscribe']
+                        : ($subscribed || $this->user->auto_notify),
+                ];
+            }
+        }
+
         if (
             ! $quickReply
             && '1' == $this->c->config->o_smilies
@@ -158,6 +186,7 @@ trait PostFormTrait
                 'checked' => isset($vars['hide_smilies']) ? (bool) $vars['hide_smilies'] : false,
             ];
         }
+
         if ($fieldset) {
             $form['sets']['sett'] = [
                 'legend' => __('Options'),

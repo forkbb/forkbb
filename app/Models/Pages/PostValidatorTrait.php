@@ -156,6 +156,16 @@ trait PostValidatorTrait
             $ruleSubject = 'absent';
         }
 
+        if (
+            ! $editPost
+            && '1' == $this->c->config->o_topic_subscriptions
+            && $this->user->email_confirmed
+        ) {
+            $ruleSubscribe = 'checkbox';
+        } else {
+            $ruleSubscribe = 'absent';
+        }
+
         if ('1' == $this->c->config->o_smilies) {
             $ruleHideSmilies = 'checkbox';
         } else {
@@ -177,6 +187,7 @@ trait PostValidatorTrait
                 'merge_post'   => $ruleMergePost,
                 'hide_smilies' => $ruleHideSmilies,
                 'edit_post'    => $ruleEditPost,
+                'subscribe'    => $ruleSubscribe,
                 'preview'      => 'string',
                 'submit'       => 'string|check_timeout',
                 'message'      => 'required|string:trim|max:' . $this->c->MAX_POST_SIZE . '|check_message',

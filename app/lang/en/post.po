@@ -66,7 +66,7 @@ msgstr "Post new topic"
 msgid "Hide smilies"
 msgstr "Never show smilies as icons for this post"
 
-msgid "Subscribe"
+msgid "New subscribe"
 msgstr "Subscribe to this topic"
 
 msgid "Stay subscribed"

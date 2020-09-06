@@ -278,6 +278,14 @@ class Post extends Page
         $this->user->last_post = $now;
         $this->c->users->update($this->user);
 
+        if ('1' == $this->c->config->o_topic_subscriptions) { // ????
+            if ($v->subscribe && ! $topic->is_subscribed) {
+                $this->c->subscriptions->subscribe($this->user, $topic);
+            } elseif (! $v->subscribe && $topic->is_subscribed) {
+                $this->c->subscriptions->unsubscribe($this->user, $topic);
+            }
+        }
+
         if ($merge) {
             $this->c->search->index($lastPost, 'merge');
         } else {
@@ -285,15 +293,6 @@ class Post extends Page
 
             if ($createTopic) {
                 if ('1' == $this->c->config->o_forum_subscriptions) { // ????
-                    // автоподписка на свою тему
-                    if (
-                        '1' == $this->c->config->o_topic_subscriptions
-                        && $this->user->auto_notify
-                        && $this->user->email_confirmed
-                    ) {
-                        $this->c->subscriptions->subscribe($this->user, $topic);
-                    }
-
                     $this->c->subscriptions->send($post, $topic);
                 }
             } else {

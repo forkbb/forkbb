@@ -66,7 +66,7 @@ msgstr "Публикация новой темы"
 msgid "Hide smilies"
 msgstr "Никогда не показывать смайлы в виде картинок в этом сообщении"
 
-msgid "Subscribe"
+msgid "New subscribe"
 msgstr "Подписаться на эту тему"
 
 msgid "Stay subscribed"
