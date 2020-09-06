@@ -117,24 +117,6 @@ msgstr "Счетчик сообщений"
 msgid "Post count help"
 msgstr "Показывать количество сообщений, отправленных пользователями (в темах, профиле и списке пользователей). Не влияет на администраторов и модераторов."
 
-msgid "Smilies label"
-msgstr "Смайлы в сообщениях"
-
-msgid "Smilies help"
-msgstr "Преобразовывать смайлы в графические иконки."
-
-msgid "Smilies sigs label"
-msgstr "Смайлы в подписи"
-
-msgid "Smilies sigs help"
-msgstr "Преобразовывать смайлы в подписях."
-
-msgid "Clickable links label"
-msgstr "Распознавать ссылки"
-
-msgid "Clickable links help"
-msgstr "Если включено, ForkBB будет автоматически распознавать URL-ы в сообщениях и делать их кликабельными гиперссылками."
-
 msgid "Topic review label"
 msgstr "Просмотр темы"
 
@@ -152,12 +134,6 @@ msgstr "Пользователей на страницу"
 
 msgid "Users per page help"
 msgstr "Число пользователей отображаемых на одной странице списка."
-
-msgid "Quote depth label"
-msgstr "Максимальная глубина [quote]"
-
-msgid "Quote depth help"
-msgstr "Сколько раз тег [quote] может вкладываться в другие [quote], все теги свыше указанного порога будут игнорироваться."
 
 msgid "Features subhead"
 msgstr "Тонкости"
@@ -410,3 +386,27 @@ msgstr "Макс. получателей"
 
 msgid "Email max recipients help"
 msgstr "Максимальное количество получателей в одном письме. Зависит от вашего почтового сервера."
+
+msgid "All caps message label"
+msgstr "Сообщение заглавными"
+
+msgid "All caps message help"
+msgstr "Разрешить сообщения, состоящие из одних заглавных букв."
+
+msgid "All caps subject label"
+msgstr "Тема заглавными"
+
+msgid "All caps subject help"
+msgstr "Разрешить заголовки тем, состоящие из одних заглавных букв."
+
+msgid "Require e-mail label"
+msgstr "Обязательный email гостя"
+
+msgid "Require e-mail help"
+msgstr "Если гостям разрешено отправлять комментарии, требовать от них указать email."
+
+msgid "All caps sigs label"
+msgstr "Подпись заглавными"
+
+msgid "All caps sigs help"
+msgstr "Разрешить подписи, состоящие из одних заглавных букв."

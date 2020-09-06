@@ -117,24 +117,6 @@ msgstr "User post count"
 msgid "Post count help"
 msgstr "Show the number of posts a user has made (affects topic view, profile and user list). Does not affect administrators and moderators."
 
-msgid "Smilies label"
-msgstr "Smilies in posts"
-
-msgid "Smilies help"
-msgstr "Convert smilies to small graphic icons."
-
-msgid "Smilies sigs label"
-msgstr "Smilies in signatures"
-
-msgid "Smilies sigs help"
-msgstr "Convert smilies to small graphic icons in user signatures."
-
-msgid "Clickable links label"
-msgstr "Make clickable links"
-
-msgid "Clickable links help"
-msgstr "When enabled, ForkBB will automatically detect any URLs in posts and make them clickable hyperlinks."
-
 msgid "Topic review label"
 msgstr "Topic review"
 
@@ -152,12 +134,6 @@ msgstr "Users per page"
 
 msgid "Users per page help"
 msgstr "The number of users displayed on one page of the list."
-
-msgid "Quote depth label"
-msgstr "Maximum [quote] depth"
-
-msgid "Quote depth help"
-msgstr "The maximum times a [quote] tag can go inside other [quote] tags, any tags deeper than this will be discarded."
 
 msgid "Features subhead"
 msgstr "Features"
@@ -410,3 +386,27 @@ msgstr "Max recipients"
 
 msgid "Email max recipients help"
 msgstr "The maximum number of recipients for one email. Depends on your mail server."
+
+msgid "All caps message label"
+msgstr "All caps message"
+
+msgid "All caps message help"
+msgstr "Allow a message to contain only capital letters."
+
+msgid "All caps subject label"
+msgstr "All caps subject"
+
+msgid "All caps subject help"
+msgstr "Allow a subject to contain only capital letters."
+
+msgid "Require e-mail label"
+msgstr "Require guest email"
+
+msgid "Require e-mail help"
+msgstr "Require guests to supply an email address when posting."
+
+msgid "All caps sigs label"
+msgstr "All caps signature"
+
+msgid "All caps sigs help"
+msgstr "Allow a signature to contain only capital letters."

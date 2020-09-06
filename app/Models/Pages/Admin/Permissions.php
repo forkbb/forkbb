@@ -32,12 +32,12 @@ class Permissions extends Admin
                     'token'               => 'token:AdminPermissions',
                     'p_message_bbcode'    => 'required|integer|in:0,1',
                     'p_message_img_tag'   => 'required|integer|in:0,1',
-                    'p_message_all_caps'  => 'required|integer|in:0,1',
-                    'p_subject_all_caps'  => 'required|integer|in:0,1',
-                    'p_force_guest_email' => 'required|integer|in:0,1',
                     'p_sig_bbcode'        => 'required|integer|in:0,1',
                     'p_sig_img_tag'       => 'required|integer|in:0,1',
-                    'p_sig_all_caps'      => 'required|integer|in:0,1',
+                    'o_smilies'               => 'required|integer|in:0,1',
+                    'o_smilies_sig'           => 'required|integer|in:0,1',
+                    'o_make_links'            => 'required|integer|in:0,1',
+                    'o_quote_depth'           => 'required|integer|min:0|max:9',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -113,26 +113,27 @@ class Permissions extends Admin
                     'caption' => __('Image tag label'),
                     'info'    => __('Image tag help'),
                 ],
-                'p_message_all_caps' => [
+                'o_smilies' => [
                     'type'    => 'radio',
-                    'value'   => $config->p_message_all_caps,
+                    'value'   => $config->o_smilies,
                     'values'  => $yn,
-                    'caption' => __('All caps message label'),
-                    'info'    => __('All caps message help'),
+                    'caption' => __('Smilies label'),
+                    'info'    => __('Smilies help'),
                 ],
-                'p_subject_all_caps' => [
+                'o_make_links' => [
                     'type'    => 'radio',
-                    'value'   => $config->p_subject_all_caps,
+                    'value'   => $config->o_make_links,
                     'values'  => $yn,
-                    'caption' => __('All caps subject label'),
-                    'info'    => __('All caps subject help'),
+                    'caption' => __('Clickable links label'),
+                    'info'    => __('Clickable links help'),
                 ],
-                'p_force_guest_email' => [
-                    'type'    => 'radio',
-                    'value'   => $config->p_force_guest_email,
-                    'values'  => $yn,
-                    'caption' => __('Require e-mail label'),
-                    'info'    => __('Require e-mail help'),
+                'o_quote_depth' => [
+                    'type'    => 'number',
+                    'min'     => 0,
+                    'max'     => 9,
+                    'value'   => $config->o_quote_depth,
+                    'caption' => __('Quote depth label'),
+                    'info'    => __('Quote depth help'),
                 ],
             ],
         ];
@@ -154,12 +155,12 @@ class Permissions extends Admin
                     'caption' => __('Image tag sigs label'),
                     'info'    => __('Image tag sigs help'),
                 ],
-                'p_sig_all_caps' => [
+                'o_smilies_sig' => [
                     'type'    => 'radio',
-                    'value'   => $config->p_sig_all_caps,
+                    'value'   => $config->o_smilies_sig,
                     'values'  => $yn,
-                    'caption' => __('All caps sigs label'),
-                    'info'    => __('All caps sigs help'),
+                    'caption' => __('Smilies sigs label'),
+                    'info'    => __('Smilies sigs help'),
                 ],
 
             ],

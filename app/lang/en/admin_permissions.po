@@ -33,24 +33,6 @@ msgstr "Image tag"
 msgid "Image tag help"
 msgstr "Allow the BBCode [img][/img] tag in posts."
 
-msgid "All caps message label"
-msgstr "All caps message"
-
-msgid "All caps message help"
-msgstr "Allow a message to contain only capital letters."
-
-msgid "All caps subject label"
-msgstr "All caps subject"
-
-msgid "All caps subject help"
-msgstr "Allow a subject to contain only capital letters."
-
-msgid "Require e-mail label"
-msgstr "Require guest email"
-
-msgid "Require e-mail help"
-msgstr "Require guests to supply an email address when posting."
-
 msgid "Signatures subhead"
 msgstr "Signatures"
 
@@ -66,8 +48,26 @@ msgstr "Image tag in signatures"
 msgid "Image tag sigs help"
 msgstr "Allow the BBCode [img][/img] tag in user signatures (not recommended)."
 
-msgid "All caps sigs label"
-msgstr "All caps signature"
+msgid "Smilies label"
+msgstr "Smilies in posts"
 
-msgid "All caps sigs help"
-msgstr "Allow a signature to contain only capital letters."
+msgid "Smilies help"
+msgstr "Convert smilies to small graphic icons."
+
+msgid "Smilies sigs label"
+msgstr "Smilies in signatures"
+
+msgid "Smilies sigs help"
+msgstr "Convert smilies to small graphic icons in user signatures."
+
+msgid "Clickable links label"
+msgstr "Make clickable links"
+
+msgid "Clickable links help"
+msgstr "When enabled, ForkBB will automatically detect any URLs in posts and make them clickable hyperlinks."
+
+msgid "Quote depth label"
+msgstr "Maximum [quote] depth"
+
+msgid "Quote depth help"
+msgstr "The maximum times a [quote] tag can go inside other [quote] tags, any tags deeper than this will be discarded."

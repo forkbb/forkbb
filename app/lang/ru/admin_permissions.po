@@ -22,52 +22,52 @@ msgid "Posting subhead"
 msgstr "Сообщения"
 
 msgid "BBCode label"
-msgstr "BBCode"
+msgstr "BBcode в сообщениях"
 
 msgid "BBCode help"
-msgstr "Разрешить BBCode в сообщениях (рекомендуется)."
+msgstr "Разрешить BB-коды в сообщениях (рекомендуется)."
 
 msgid "Image tag label"
-msgstr "Тег IMG"
+msgstr "Тег IMG в сообщениях"
 
 msgid "Image tag help"
 msgstr "Разрешить тег [img][/img] в сообщениях."
-
-msgid "All caps message label"
-msgstr "Сообщение заглавными"
-
-msgid "All caps message help"
-msgstr "Разрешить сообщения, состоящие из одних заглавных букв."
-
-msgid "All caps subject label"
-msgstr "Тема заглавными"
-
-msgid "All caps subject help"
-msgstr "Разрешить заголовки тем, состоящие из одних заглавных букв."
-
-msgid "Require e-mail label"
-msgstr "Обязательный email гостя"
-
-msgid "Require e-mail help"
-msgstr "Если гостям разрешено отправлять комментарии, требовать от них указать email."
 
 msgid "Signatures subhead"
 msgstr "Подписи"
 
 msgid "BBCode sigs label"
-msgstr "BBCodes в подписи"
+msgstr "BBcode в подписях"
 
 msgid "BBCode sigs help"
-msgstr "Разрешить BBCodes в подписи пользователя."
+msgstr "Разрешить BB-коды в подписях пользователей."
 
 msgid "Image tag sigs label"
-msgstr "Тег IMG в подписи"
+msgstr "Тег IMG в подписях"
 
 msgid "Image tag sigs help"
-msgstr "Разрешить тег [img][/img] в подписи пользователя (не рекомендуется)."
+msgstr "Разрешить тег [img][/img] в подписях пользователей (не рекомендуется)."
 
-msgid "All caps sigs label"
-msgstr "Подпись заглавными"
+msgid "Smilies label"
+msgstr "Смайлы в сообщениях"
 
-msgid "All caps sigs help"
-msgstr "Разрешить подписи, состоящие из одних заглавных букв."
+msgid "Smilies help"
+msgstr "Преобразовывать смайлы из сообщений в графические иконки."
+
+msgid "Smilies sigs label"
+msgstr "Смайлы в подписях"
+
+msgid "Smilies sigs help"
+msgstr "Преобразовывать смайлы из подписей пользователей в графические иконки."
+
+msgid "Clickable links label"
+msgstr "Распознавать ссылки"
+
+msgid "Clickable links help"
+msgstr "Если включено, ForkBB будет автоматически распознавать URL-ы в сообщениях и делать их кликабельными гиперссылками."
+
+msgid "Quote depth label"
+msgstr "Максимальная глубина [quote]"
+
+msgid "Quote depth help"
+msgstr "Сколько раз тег [quote] может вкладываться в другие [quote], все теги свыше указанного порога будут игнорироваться."
