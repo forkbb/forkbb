@@ -280,7 +280,7 @@ msgid "Auto notify label"
 msgstr "Automatically subscribe to topics"
 
 msgid "Auto notify info"
-msgstr "Automatically subscribe to every topic you post in."
+msgstr "Automatically subscribe to every topics you post in."
 
 msgid "Smilies label"
 msgstr "Smilies"
