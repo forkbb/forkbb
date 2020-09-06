@@ -364,7 +364,7 @@ msgid "Verify label"
 msgstr "Verify registrations"
 
 msgid "Verify help"
-msgstr "When enabled, after registration, users receive an email with an activation link to their email. This feature also requires users to verify new email addresses if they choose to change from the one they registered with. This is an effective way of avoiding registration abuse and making sure that all users have "correct" email addresses in their profiles."
+msgstr "When enabled, after registration, users receive an email with an activation link to their email. This is an effective way of avoiding registration abuse and making sure that all users have "correct" email addresses in their profiles."
 
 msgid "Report new label"
 msgstr "Report new registrations"
