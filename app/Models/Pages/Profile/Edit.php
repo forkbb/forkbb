@@ -165,26 +165,38 @@ class Edit extends Profile
     public function vCheckSignature(Validator $v, $signature)
     {
         if ('' != $signature) {
+            $prepare = null;
+
             // после цензуры текст сообщения пустой
             if ('' == $this->c->censorship->censor($signature)) {
                 $v->addError('No signature after censoring');
             // количество строк
             } elseif (\substr_count($signature, "\n") >= $this->curUser->g_sig_lines) {
                 $v->addError('Signature has too many lines');
-            // текст сообщения только заглавными буквами
-            } elseif (
-                ! $this->user->isAdmin
-                && '0' == $this->c->config->p_sig_all_caps
-                && \preg_match('%\p{Lu}%u', $signature)
-                && ! \preg_match('%\p{Ll}%u', $signature)
-            ) {
-                $v->addError('All caps signature');
             // проверка парсером
             } else {
+                $prepare   = true;
                 $signature = $this->c->Parser->prepare($signature, true); //????
 
                 foreach($this->c->Parser->getErrors() as $error) {
+                    $prepare = false;
                     $v->addError($error);
+                }
+            }
+
+            // текст сообщения только заглавными буквами
+            if (
+                true === $prepare
+                && ! $this->user->isAdmin
+                && '0' == $this->c->config->p_sig_all_caps
+            ) {
+                $text = $this->c->Parser->getText();
+
+                if (
+                    \preg_match('%\p{Lu}%u', $text)
+                    && ! \preg_match('%\p{Ll}%u', $text)
+                ) {
+                    $v->addError('All caps signature');
                 }
             }
         }

@@ -44,23 +44,35 @@ trait PostValidatorTrait
      */
     public function vCheckMessage(Validator $v, $message, $attr, $executive)
     {
+        $prepare = null;
+
         // после цензуры текст сообщения пустой
         if ('' == $this->c->censorship->censor($message)) {
             $v->addError('No message after censoring');
-        // текст сообщения только заглавными буквами
-        } elseif (
-            ! $executive
-            && '0' == $this->c->config->p_message_all_caps
-            && \preg_match('%\p{Lu}%u', $message)
-            && ! \preg_match('%\p{Ll}%u', $message)
-        ) {
-            $v->addError('All caps message');
         // проверка парсером
         } else {
+            $prepare = true;
             $message = $this->c->Parser->prepare($message); //????
 
             foreach($this->c->Parser->getErrors() as $error) {
+                $prepare = false;
                 $v->addError($error);
+            }
+        }
+
+        // текст сообщения только заглавными буквами
+        if (
+            true === $prepare
+            && ! $executive
+            && '0' == $this->c->config->p_message_all_caps
+        ) {
+            $text = $this->c->Parser->getText();
+
+            if (
+                \preg_match('%\p{Lu}%u', $text)
+                && ! \preg_match('%\p{Ll}%u', $text)
+            ) {
+                $v->addError('All caps message');
             }
         }
 
