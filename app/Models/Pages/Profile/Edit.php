@@ -173,7 +173,7 @@ class Edit extends Profile
                 $v->addError('Signature has too many lines');
             // текст сообщения только заглавными буквами
             } elseif (
-                ! $this->c->user->isAdmin
+                ! $this->user->isAdmin
                 && '0' == $this->c->config->p_sig_all_caps
                 && \preg_match('%\p{Lu}%u', $signature)
                 && ! \preg_match('%\p{Ll}%u', $signature)

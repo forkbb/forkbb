@@ -517,7 +517,7 @@ class Bans extends Admin
             ];
             $fields["l{$number}-creator"] = [
                 'class'   => ['result', 'creator'],
-                'type'    => '1' == $this->c->user->g_view_users && $ban['id_creator'] > 1 ? 'link' : 'str',
+                'type'    => '1' == $this->user->g_view_users && $ban['id_creator'] > 1 ? 'link' : 'str',
                 'caption' => __('Results banned by head'),
                 'value'   => $ban['name_creator'],
                 'href'    => $this->c->Router->link(
