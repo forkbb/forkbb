@@ -55,7 +55,7 @@ msgid "Guest name"
 msgstr "Name"
 
 msgid "Post redirect"
-msgstr "Post entered. Redirecting …"
+msgstr "Post entered."
 
 msgid "Post a reply"
 msgstr "Post a reply"
@@ -103,4 +103,4 @@ msgid "Merge posts"
 msgstr "Merge with previous if it yours"
 
 msgid "Edit redirect"
-msgstr "Post updated. Redirecting …"
+msgstr "Post updated."

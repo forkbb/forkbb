@@ -52,13 +52,13 @@ msgid "Invalid date reasons"
 msgstr "The format should be YYYY-MM-DD and the date must be at least one day in the future."
 
 msgid "Ban added redirect"
-msgstr "Ban added. Redirecting …"
+msgstr "Ban added."
 
 msgid "Ban edited redirect"
-msgstr "Ban edited. Redirecting …"
+msgstr "Ban edited."
 
 msgid "Ban removed redirect"
-msgstr "Ban removed. Redirecting …"
+msgstr "Ban removed."
 
 msgid "New ban head"
 msgstr "New ban"

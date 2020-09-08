@@ -133,10 +133,10 @@ msgid "Unknown failure"
 msgstr "An unknown error occurred. Please try again."
 
 msgid "Avatar upload redirect"
-msgstr "Avatar uploaded. Redirecting …"
+msgstr "Avatar uploaded."
 
 msgid "Avatar deleted redirect"
-msgstr "Avatar deleted. Redirecting …"
+msgstr "Avatar deleted."
 
 msgid "Avatar desc"
 msgstr "An avatar is a small image that will be displayed under your username in your posts. It must not be any bigger than"
@@ -160,7 +160,7 @@ msgid "Forbidden title"
 msgstr "The title you entered contains a forbidden word. You must choose a different title."
 
 msgid "Profile redirect"
-msgstr "Profile updated. Redirecting …"
+msgstr "Profile updated."
 
 msgid "%s's profile"
 msgstr "%s's profile"
@@ -376,13 +376,13 @@ msgid "Delete"
 msgstr "Delete"
 
 msgid "User delete redirect"
-msgstr "User deleted. Redirecting …"
+msgstr "User deleted."
 
 msgid "Group membership redirect"
-msgstr "Group membership saved. Redirecting …"
+msgstr "Group membership saved."
 
 msgid "Update rights redirect"
-msgstr "Forum moderator rights updated. Redirecting …"
+msgstr "Forum moderator rights updated."
 
 msgid "Ban redirect"
 msgstr "Redirecting …"
@@ -451,13 +451,13 @@ msgid "To confirm/change email"
 msgstr "Confirm/change email address"
 
 msgid "Email is old redirect"
-msgstr "Email address is not changed. Redirecting …"
+msgstr "Email address is not changed."
 
 msgid "Email changed redirect"
-msgstr "Email address changed. Redirecting …"
+msgstr "Email address changed."
 
 msgid "Email confirmed redirect"
-msgstr "Email address confirmed. Redirecting …"
+msgstr "Email address confirmed."
 
 msgid "Pass not match"
 msgstr "Passphrases do not match."
@@ -478,7 +478,7 @@ msgid "Pass updated"
 msgstr "Your passphrase has been updated. You can now login with your new passphrase."
 
 msgid "Pass updated redirect"
-msgstr "Passphrase updated. Redirecting …"
+msgstr "Passphrase updated."
 
 msgid "Language"
 msgstr "Language"
@@ -508,7 +508,7 @@ msgid "Pagination"
 msgstr "Pagination"
 
 msgid "Board configuration redirect"
-msgstr "Board configuration updated. Redirecting …"
+msgstr "Board configuration updated."
 
 msgid "Group"
 msgstr "Group"

@@ -52,7 +52,7 @@ msgid "Rebuilding index info"
 msgstr "Перестройка индекса. Подходящее время чтобы попить кофе :-)"
 
 msgid "Rebuilding index end"
-msgstr "Перестройка индекса закончена. Переадресация &hellip;"
+msgstr "Перестройка индекса закончена."
 
 msgid "Processed posts"
 msgstr "Обработаны сообщения с <b>%1$s</b> по <b>%2$s</b> …"
@@ -73,7 +73,7 @@ msgid "No old topics message"
 msgstr "Нет тем старше %s дней. Пожалуйста, уменьшите значение "Дней" и попробуйте снова."
 
 msgid "Posts pruned redirect"
-msgstr "Сообщения очищены. Переадресация..."
+msgstr "Сообщения очищены."
 
 msgid "Prune head"
 msgstr "Очистка"

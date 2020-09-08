@@ -133,10 +133,10 @@ msgid "Unknown failure"
 msgstr "Произошла неизвестная ошибка. Пожалуйста, повторите попытку."
 
 msgid "Avatar upload redirect"
-msgstr "Аватара загружена. Переадресация &hellip;"
+msgstr "Аватара загружена."
 
 msgid "Avatar deleted redirect"
-msgstr "Аватара удалена. Переадресация &hellip;"
+msgstr "Аватара удалена."
 
 msgid "Avatar desc"
 msgstr "Аватара это маленькая картинка, которая будет выводиться возле каждого вашего сообщения. Она должна быть не больше чем"
@@ -160,7 +160,7 @@ msgid "Forbidden title"
 msgstr "В вашем титуле содержится запрещенное слово. Вы должны внести изменение."
 
 msgid "Profile redirect"
-msgstr "Профиль обновлен. Переадресация &hellip;"
+msgstr "Профиль обновлен."
 
 msgid "%s's profile"
 msgstr "Профиль пользователя %s"
@@ -376,13 +376,13 @@ msgid "Delete"
 msgstr "Удалить"
 
 msgid "User delete redirect"
-msgstr "Пользователь удален. Переадресация &hellip;"
+msgstr "Пользователь удален."
 
 msgid "Group membership redirect"
-msgstr "Группа пользователя изменена. Переадресация &hellip;"
+msgstr "Группа пользователя изменена."
 
 msgid "Update rights redirect"
-msgstr "Права модератора обновлены. Переадресация &hellip;"
+msgstr "Права модератора обновлены."
 
 msgid "Ban redirect"
 msgstr "Переадресация &hellip;"
@@ -451,13 +451,13 @@ msgid "To confirm/change email"
 msgstr "Подтвердить/изменить адрес электронной почты"
 
 msgid "Email is old redirect"
-msgstr "Адрес электронной почты оставлен без изменений. Переадресация &hellip;"
+msgstr "Адрес электронной почты оставлен без изменений."
 
 msgid "Email changed redirect"
-msgstr "Адрес электронной почты изменен. Переадресация &hellip;"
+msgstr "Адрес электронной почты изменен."
 
 msgid "Email confirmed redirect"
-msgstr "Адрес электронной почты подтвержден. Переадресация &hellip;"
+msgstr "Адрес электронной почты подтвержден."
 
 msgid "Pass not match"
 msgstr "Кодовые фразы не совпадают."
@@ -478,7 +478,7 @@ msgid "Pass updated"
 msgstr "Ваша кодовая фраза изменена. Вы можете войти на форум с ее помощью."
 
 msgid "Pass updated redirect"
-msgstr "Кодовая фраза изменена. Переадресация &hellip;"
+msgstr "Кодовая фраза изменена."
 
 msgid "Language"
 msgstr "Язык"
@@ -508,7 +508,7 @@ msgid "Pagination"
 msgstr "Постраничный вывод"
 
 msgid "Board configuration redirect"
-msgstr "Настройки форума обновлены. Переадресация &hellip;"
+msgstr "Настройки форума обновлены."
 
 msgid "Group"
 msgstr "Группа"

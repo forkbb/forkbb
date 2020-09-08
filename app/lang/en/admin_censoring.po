@@ -16,10 +16,10 @@ msgid "Must enter word message"
 msgstr "You must enter a word to censor."
 
 msgid "Word added redirect"
-msgstr "Censor word added. Redirecting …"
+msgstr "Censor word added."
 
 msgid "Word removed redirect"
-msgstr "Censor word removed. Redirecting …"
+msgstr "Censor word removed."
 
 msgid "Censoring head"
 msgstr "Censoring"

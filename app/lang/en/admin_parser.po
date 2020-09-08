@@ -13,7 +13,7 @@ msgstr ""
 "Language: en\n"
 
 msgid "Parser settings updated redirect"
-msgstr "arser settings updated. Redirecting …"
+msgstr "Parser settings updated."
 
 msgid "Parser settings head"
 msgstr "Parser settings"

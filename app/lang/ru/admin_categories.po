@@ -16,7 +16,7 @@ msgid "Must enter name message"
 msgstr "Необходимо ввести имя категории"
 
 msgid "Category deleted redirect"
-msgstr "Категория удалена. Переадресация …"
+msgstr "Категория удалена."
 
 msgid "Confirm delete"
 msgstr "Удалить категорию?"
@@ -28,7 +28,7 @@ msgid "Delete category warn"
 msgstr "<b>ВНИМАНИЕ!</b> При удалении категории будут удалены все разделы, темы и сообщения находящиеся в ней!"
 
 msgid "Categories updated redirect"
-msgstr "Категории изменены. Переадресация …"
+msgstr "Категории изменены."
 
 msgid "Add category label"
 msgstr "Имя новой категории"

@@ -31,7 +31,7 @@ msgid "Timeout error message"
 msgstr "Значение \"Таймаут online\" должно быть меньше чем \"Таймаут визита\"."
 
 msgid "Options updated redirect"
-msgstr "Опции сохранены. Переадресация …"
+msgstr "Опции сохранены."
 
 msgid "Options head"
 msgstr "Опции"

@@ -13,7 +13,7 @@ msgstr ""
 "Language: ru\n"
 
 msgid "Report zapped redirect"
-msgstr "Сигнал рассмотрен. Переадресация …"
+msgstr "Сигнал рассмотрен."
 
 msgid "New reports "
 msgstr "Новые сигналы"

@@ -13,10 +13,10 @@ msgstr ""
 "Language: en\n"
 
 msgid "Mark read redirect"
-msgstr "All topics and forums have been marked as read. Redirecting …"
+msgstr "All topics and forums have been marked as read."
 
 msgid "Mark forum read redirect"
-msgstr "All topics in the specified forum have been marked as read. Redirecting …"
+msgstr "All topics in the specified forum have been marked as read."
 
 msgid "Form email disabled"
 msgstr "The user you are trying to send an email to has disabled form email."
@@ -34,7 +34,7 @@ msgid "Email flood"
 msgstr "At least %1$s seconds have to pass between sent emails. Please wait %2$s seconds and try sending again."
 
 msgid "Email sent redirect"
-msgstr "Email sent. Redirecting …"
+msgstr "Email sent."
 
 msgid "Send email to %s"
 msgstr "Send email to %s"
@@ -61,7 +61,7 @@ msgid "Report flood"
 msgstr "At least %1$s seconds have to pass between reports. Please wait %2$s seconds and try sending again."
 
 msgid "Report redirect"
-msgstr "Post reported. Redirecting …"
+msgstr "Post reported."
 
 msgid "Report post"
 msgstr "Report post"
@@ -79,7 +79,7 @@ msgid "Already subscribed forum"
 msgstr "You are already subscribed to this forum."
 
 msgid "Subscribe redirect"
-msgstr "Your subscription has been added. Redirecting …"
+msgstr "Your subscription has been added."
 
 msgid "Not subscribed topic"
 msgstr "You are not subscribed to this topic."
@@ -88,7 +88,7 @@ msgid "Not subscribed forum"
 msgstr "You are not subscribed to this forum."
 
 msgid "Unsubscribe redirect"
-msgstr "Your subscription has been removed. Redirecting …"
+msgstr "Your subscription has been removed."
 
 msgid "Moderate"
 msgstr "Moderate"
@@ -109,7 +109,7 @@ msgid "Merge"
 msgstr "Merge"
 
 msgid "Lang changed"
-msgstr "Language is changed. Redirecting &hellip;"
+msgstr "Language is changed."
 
 msgid "Open"
 msgstr "Open"
@@ -136,10 +136,10 @@ msgid "Leave redirect"
 msgstr "Leave redirect topic(s)"
 
 msgid "Move topic redirect"
-msgstr "Topic moved. Redirecting …"
+msgstr "Topic moved."
 
 msgid "Move topics redirect"
-msgstr "Topics moved. Redirecting …"
+msgstr "Topics moved."
 
 msgid "Confirm delete legend"
 msgstr "Please confirm deletion"
@@ -151,40 +151,40 @@ msgid "Delete topics comply"
 msgstr "Delete the selected topics (<b>All posts from these topics will be deleted</b>)"
 
 msgid "Delete topics redirect"
-msgstr "Topics deleted. Redirecting …"
+msgstr "Topics deleted."
 
 msgid "Open topic redirect"
-msgstr "Topic opened. Redirecting …"
+msgstr "Topic opened."
 
 msgid "Open topics redirect"
-msgstr "Topics opened. Redirecting …"
+msgstr "Topics opened."
 
 msgid "Close topic redirect"
-msgstr "Topic closed. Redirecting …"
+msgstr "Topic closed."
 
 msgid "Close topics redirect"
-msgstr "Topics closed. Redirecting …"
+msgstr "Topics closed."
 
 msgid "Not enough topics selected"
 msgstr "You must select at least two topics for merge."
 
 msgid "Stick topic redirect"
-msgstr "Topic sticked. Redirecting …"
+msgstr "Topic sticked."
 
 msgid "Stick topics redirect"
-msgstr "Topics sticked. Redirecting …"
+msgstr "Topics sticked."
 
 msgid "Unstick topic redirect"
-msgstr "Topic unsticked. Redirecting …"
+msgstr "Topic unsticked."
 
 msgid "Unstick topics redirect"
-msgstr "Topics unsticked. Redirecting …"
+msgstr "Topics unsticked."
 
 msgid "Merge topics"
 msgstr "Merge topics"
 
 msgid "Merge topics redirect"
-msgstr "Topics merged. Redirecting …"
+msgstr "Topics merged."
 
 msgid "Confirm merge legend"
 msgstr "Please confirm merge"
@@ -205,7 +205,7 @@ msgid "Split posts comply"
 msgstr "Are you sure you want to split the selected posts?"
 
 msgid "Split posts redirect"
-msgstr "Posts have been split. Redirecting …"
+msgstr "Posts have been split."
 
 msgid "Delete posts"
 msgstr "Delete posts"
@@ -217,7 +217,7 @@ msgid "Delete posts comply"
 msgstr "Delete the selected posts"
 
 msgid "Delete posts redirect"
-msgstr "Posts deleted. Redirecting …"
+msgstr "Posts deleted."
 
 msgid "No posts selected"
 msgstr "You must select at least one post for split/delete."
@@ -235,7 +235,7 @@ msgid "Move posts"
 msgstr "Move posts"
 
 msgid "Move posts redirect"
-msgstr "Posts moved. Redirecting …"
+msgstr "Posts moved."
 
 msgid "Post from topic"
 msgstr "This post is moved from topic"

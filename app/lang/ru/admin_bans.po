@@ -52,13 +52,13 @@ msgid "Invalid date reasons"
 msgstr "Дата должна быть в формате YYYY-MM-DD и должна быть не ранее, чем завтрашнее число."
 
 msgid "Ban added redirect"
-msgstr "Бан добавлен. Переадресация …"
+msgstr "Бан добавлен."
 
 msgid "Ban edited redirect"
-msgstr "Бан изменен. Переадресация …"
+msgstr "Бан изменен."
 
 msgid "Ban removed redirect"
-msgstr "Бан удален. Переадресация …"
+msgstr "Бан удален."
 
 msgid "New ban head"
 msgstr "Новый бан"

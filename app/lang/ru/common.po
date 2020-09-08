@@ -136,6 +136,9 @@ msgstr "Обслуживание"
 msgid "Redirecting"
 msgstr "Перенаправление"
 
+msgid "Redirecting..."
+msgstr "Переадресация …"
+
 msgid "Click redirect"
 msgstr "Кликните здесь, если вы не желаете ждать (или ваш браузер не поддерживает перенаправление)."
 

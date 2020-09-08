@@ -64,7 +64,7 @@ msgid "Invalid group message"
 msgstr "Invalid group ID."
 
 msgid "Users move redirect"
-msgstr "User group changed. Redirecting …"
+msgstr "User group changed."
 
 msgid "Deleting users"
 msgstr "Delete users"
@@ -85,7 +85,7 @@ msgid "Delete warning"
 msgstr "<b>Warning!</b> Deleted users and/or posts cannot be restored. If you choose not to delete the posts made by these users, the posts can only be deleted manually at a later time."
 
 msgid "Users delete redirect"
-msgstr "Users deleted. Redirecting …"
+msgstr "Users deleted."
 
 msgid "Ban users"
 msgstr "Ban users"
@@ -118,7 +118,7 @@ msgid "Invalid date reasons"
 msgstr "The format should be YYYY-MM-DD and the date must be at least one day in the future."
 
 msgid "Users banned redirect"
-msgstr "Users banned. Redirecting …"
+msgstr "Users banned."
 
 msgid "User search head"
 msgstr "User search"
@@ -349,7 +349,7 @@ msgid "No users found"
 msgstr "No users were found matching your criteria."
 
 msgid "User promote redirect"
-msgstr "User promoted. Redirecting …"
+msgstr "User promoted."
 
 msgid "You are trying to change your own group"
 msgstr "You are trying to change your own group."
@@ -370,10 +370,10 @@ msgid "Add user legend"
 msgstr "Add user"
 
 msgid "New user added redirect"
-msgstr "New user added. Redirecting …"
+msgstr "New user added."
 
 msgid "Updated the number of users posts redirect"
-msgstr "Updated the number of users posts. Redirecting …"
+msgstr "Updated the number of users posts."
 
 msgid "Recalculate"
 msgstr "Recalculate"

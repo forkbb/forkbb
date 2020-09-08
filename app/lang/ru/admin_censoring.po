@@ -16,10 +16,10 @@ msgid "Must enter word message"
 msgstr "Необходимо ввести слово, которое подлежит цензуре."
 
 msgid "Word added redirect"
-msgstr "Слово добавлено. Переадресация …"
+msgstr "Слово добавлено."
 
 msgid "Word removed redirect"
-msgstr "Слово удалено. Переадресация …"
+msgstr "Слово удалено."
 
 msgid "Censoring head"
 msgstr "Цензура"

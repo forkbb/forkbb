@@ -55,7 +55,7 @@ msgid "Guest name"
 msgstr "Имя"
 
 msgid "Post redirect"
-msgstr "Сообщение сохранено. Переадресация &hellip;"
+msgstr "Сообщение опубликовано."
 
 msgid "Post a reply"
 msgstr "Публикация ответа"
@@ -103,4 +103,4 @@ msgid "Merge posts"
 msgstr "Соединить с предыдущим сообщением, если оно ваше"
 
 msgid "Edit redirect"
-msgstr "Сообщение обновлено. Переадресация &hellip;"
+msgstr "Сообщение обновлено."

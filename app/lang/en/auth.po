@@ -25,10 +25,10 @@ msgid "<a href=\"%s\">Forgotten?</a>"
 msgstr "<a href=\"%s\">Forgotten?</a>"
 
 msgid "Login redirect"
-msgstr "Logged in successfully. Redirecting …"
+msgstr "Logged in successfully."
 
 msgid "Logout redirect"
-msgstr "Logged out. Redirecting …"
+msgstr "Logged out."
 
 msgid "Passphrase reset"
 msgstr "Passphrase reset"

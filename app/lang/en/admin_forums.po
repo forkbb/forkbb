@@ -13,19 +13,19 @@ msgstr ""
 "Language: en\n"
 
 msgid "Forum added redirect"
-msgstr "Forum added. Redirecting …"
+msgstr "Forum added."
 
 msgid "Forum deleted redirect"
-msgstr "Forum deleted. Redirecting …"
+msgstr "Forum deleted."
 
 msgid "Forums updated redirect"
-msgstr "Forums updated. Redirecting …"
+msgstr "Forums updated."
 
 msgid "Forum updated redirect"
-msgstr "Forum updated. Redirecting …"
+msgstr "Forum updated."
 
 msgid "Perms reverted redirect"
-msgstr "Permissions reverted to defaults. Redirecting …"
+msgstr "Permissions reverted to defaults."
 
 msgid "Must enter name message"
 msgstr "You must enter a forum name."

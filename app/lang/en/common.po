@@ -136,6 +136,9 @@ msgstr "Maintenance"
 msgid "Redirecting"
 msgstr "Redirecting"
 
+msgid "Redirecting..."
+msgstr "Redirecting …"
+
 msgid "Click redirect"
 msgstr "Click here if you do not want to wait any longer (or if your browser does not automatically forward you)"
 

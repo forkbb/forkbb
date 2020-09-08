@@ -49,7 +49,7 @@ msgid "Delete"
 msgstr "Delete"
 
 msgid "Post del redirect"
-msgstr "Post deleted. Redirecting …"
+msgstr "Post deleted."
 
 msgid "Topic del redirect"
-msgstr "Topic deleted. Redirecting …"
+msgstr "Topic deleted."

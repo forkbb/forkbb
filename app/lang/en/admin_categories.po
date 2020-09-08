@@ -16,7 +16,7 @@ msgid "Must enter name message"
 msgstr "You must enter a name for the category"
 
 msgid "Category deleted redirect"
-msgstr "Category deleted. Redirecting …"
+msgstr "Category deleted."
 
 msgid "Confirm delete"
 msgstr "Delete category?"
@@ -28,7 +28,7 @@ msgid "Delete category warn"
 msgstr "<b>WARNING!</b> Deleting a category will delete all forums, topics and posts (if any) in this category!"
 
 msgid "Categories updated redirect"
-msgstr "Categories updated. Redirecting …"
+msgstr "Categories updated."
 
 msgid "Add category label"
 msgstr "Name of the new category"

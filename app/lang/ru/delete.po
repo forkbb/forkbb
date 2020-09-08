@@ -49,7 +49,7 @@ msgid "Delete"
 msgstr "Удалить"
 
 msgid "Post del redirect"
-msgstr "Сообщение удалено. Переадресация &hellip;"
+msgstr "Сообщение удалено."
 
 msgid "Topic del redirect"
-msgstr "Тема удалена. Переадресация &hellip;"
+msgstr "Тема удалена."

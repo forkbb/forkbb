@@ -13,19 +13,19 @@ msgstr ""
 "Language: ru\n"
 
 msgid "Forum added redirect"
-msgstr "Раздел добавлен. Переадресация …"
+msgstr "Раздел добавлен."
 
 msgid "Forum deleted redirect"
-msgstr "Раздел удален. Переадресация …"
+msgstr "Раздел удален."
 
 msgid "Forums updated redirect"
-msgstr "Разделы изменены. Переадресация …"
+msgstr "Разделы изменены."
 
 msgid "Forum updated redirect"
-msgstr "Раздел изменен. Переадресация …"
+msgstr "Раздел изменен."
 
 msgid "Perms reverted redirect"
-msgstr "Права сброшены в значения по умолчанию. Переадресация …"
+msgstr "Права сброшены в значения по умолчанию."
 
 msgid "Must enter name message"
 msgstr "Необходимо ввести имя раздела."

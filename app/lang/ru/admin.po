@@ -97,7 +97,7 @@ msgid "Plugin failed message"
 msgstr "Загрузить плагин <b>%s</b> не удалось."
 
 msgid "Data updated redirect"
-msgstr "Данные изменены. Переадресация …"
+msgstr "Данные изменены."
 
 msgid "\"%s\""
 msgstr "\"%s\""

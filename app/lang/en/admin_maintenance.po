@@ -52,7 +52,7 @@ msgid "Rebuilding index info"
 msgstr "Rebuilding index. This might be a good time to put on some coffee :-)"
 
 msgid "Rebuilding index end"
-msgstr "Rebuilding index is over. Redirecting …"
+msgstr "Rebuilding index is over."
 
 msgid "Processed posts"
 msgstr "Processed messages from <b>%1$s</b> to <b>%2$s</b> …"
@@ -73,7 +73,7 @@ msgid "No old topics message"
 msgstr "There are no topics that are %s days old. Please decrease the value of "Days old" and try again."
 
 msgid "Posts pruned redirect"
-msgstr "Posts pruned. Redirecting …"
+msgstr "Posts pruned."
 
 msgid "Prune head"
 msgstr "Prune"

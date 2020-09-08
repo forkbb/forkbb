@@ -31,7 +31,7 @@ msgid "Timeout error message"
 msgstr "The value of \"Timeout online\" must be smaller than the value of \"Timeout visit\"."
 
 msgid "Options updated redirect"
-msgstr "Options updated. Redirecting …"
+msgstr "Options updated."
 
 msgid "Options head"
 msgstr "Options"

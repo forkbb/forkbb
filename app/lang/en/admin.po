@@ -97,7 +97,7 @@ msgid "Plugin failed message"
 msgstr "Loading of the plugin - <b>%s</b> - failed."
 
 msgid "Data updated redirect"
-msgstr "Data updated. Redirecting …"
+msgstr "Data updated."
 
 msgid "\"%s\""
 msgstr "\"%s\""

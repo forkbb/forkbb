@@ -19,16 +19,16 @@ msgid "Title already exists"
 msgstr "There is already a group with this title."
 
 msgid "Default group redirect"
-msgstr "Default group set. Redirecting …"
+msgstr "Default group set."
 
 msgid "Group removed redirect"
-msgstr "Group removed. Redirecting …"
+msgstr "Group removed."
 
 msgid "Group added redirect"
-msgstr "Group added. Redirecting …"
+msgstr "Group added."
 
 msgid "Group edited redirect"
-msgstr "Group edited. Redirecting …"
+msgstr "Group edited."
 
 msgid "Add group subhead"
 msgstr "Add new group"

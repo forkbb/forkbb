@@ -13,7 +13,7 @@ msgstr ""
 "Language: ru\n"
 
 msgid "Parser settings updated redirect"
-msgstr "Настройки парсера изменены. Переадресация …"
+msgstr "Настройки парсера изменены."
 
 msgid "Parser settings head"
 msgstr "Настройки парсера"

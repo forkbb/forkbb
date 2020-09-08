@@ -64,7 +64,7 @@ msgid "Invalid group message"
 msgstr "Неверная группа."
 
 msgid "Users move redirect"
-msgstr "Пользователям изменена группа. Переадресация..."
+msgstr "Пользователям изменена группа."
 
 msgid "Deleting users"
 msgstr "Удаление пользователей"
@@ -85,7 +85,7 @@ msgid "Delete warning"
 msgstr "<b>Предупреждение!</b> Удалённых пользователей (и сообщения) невозможно восстановить. Если вы выберете "не удалять сообщения", их можно будет удалить вручную в любое время."
 
 msgid "Users delete redirect"
-msgstr "Пользователи удалены. Переадресация..."
+msgstr "Пользователи удалены."
 
 msgid "Ban users"
 msgstr "Бан пользователей"
@@ -118,7 +118,7 @@ msgid "Invalid date reasons"
 msgstr "Вы ввели неправильную дату окончания. Дата должна быть в формате YYYY-MM-DD и должна быть не ранее, чем завтрашнее число."
 
 msgid "Users banned redirect"
-msgstr "Пользователи забанены. Переадресация..."
+msgstr "Пользователи забанены."
 
 msgid "User search head"
 msgstr "Поиск пользователей"
@@ -349,7 +349,7 @@ msgid "No users found"
 msgstr "По вашему запросу ничего не найдено."
 
 msgid "User promote redirect"
-msgstr "Пользователь продвинут. Переадресация &hellip;"
+msgstr "Пользователь продвинут."
 
 msgid "You are trying to change your own group"
 msgstr "Вы пытаетесь изменить свою собственную группу."
@@ -370,10 +370,10 @@ msgid "Add user legend"
 msgstr "Добавление пользователя"
 
 msgid "New user added redirect"
-msgstr "Новый пользователь добавлен. Переадресация …"
+msgstr "Новый пользователь добавлен."
 
 msgid "Updated the number of users posts redirect"
-msgstr "Сообщения пользователей пересчитаны. Переадресация …"
+msgstr "Сообщения пользователей пересчитаны."
 
 msgid "Recalculate"
 msgstr "Пересчитать"

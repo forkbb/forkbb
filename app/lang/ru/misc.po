@@ -13,10 +13,10 @@ msgstr ""
 "Language: ru\n"
 
 msgid "Mark read redirect"
-msgstr "Все темы и разделы помечены прочитанными. Переадресация &hellip;"
+msgstr "Все темы и разделы помечены прочитанными."
 
 msgid "Mark forum read redirect"
-msgstr "Все темы выбранного раздела помечены прочитанными. Переадресация &hellip;"
+msgstr "Все темы выбранного раздела помечены прочитанными."
 
 msgid "Form email disabled"
 msgstr "Пользователь, которому вы пытаетесь отправить письмо, отключил такую возможность."
@@ -34,7 +34,7 @@ msgid "Email flood"
 msgstr "По крайней мере %1$s секунд должно пройти между отправками писем. Пожалуйста, подождите %2$s секунд и попробуйте снова."
 
 msgid "Email sent redirect"
-msgstr "Письмо отправлено. Переадресация &hellip;"
+msgstr "Письмо отправлено."
 
 msgid "Send email to %s"
 msgstr "Отправить сообщение для %s"
@@ -61,7 +61,7 @@ msgid "Report flood"
 msgstr "По крайней мере %1$s секунд должно пройти между сигналами. Пожалуйста, подождите %2$s секунд и попробуйте снова."
 
 msgid "Report redirect"
-msgstr "Сигнал отправлен. Переадресация &hellip;"
+msgstr "Сигнал отправлен."
 
 msgid "Report post"
 msgstr "Сигнал модератору"
@@ -79,7 +79,7 @@ msgid "Already subscribed forum"
 msgstr "Вы уже подписаны на этот раздел."
 
 msgid "Subscribe redirect"
-msgstr "Подписка добавлена. Переадресация &hellip;"
+msgstr "Подписка добавлена."
 
 msgid "Not subscribed topic"
 msgstr "Вы не подписаны на эту тему."
@@ -88,7 +88,7 @@ msgid "Not subscribed forum"
 msgstr "Вы не подписаны на этот раздел."
 
 msgid "Unsubscribe redirect"
-msgstr "Подписка удалена. Переадресация &hellip;"
+msgstr "Подписка удалена."
 
 msgid "Moderate"
 msgstr "Модерирование"
@@ -109,7 +109,7 @@ msgid "Merge"
 msgstr "Объединить"
 
 msgid "Lang changed"
-msgstr "Язык изменен. Переадресация &hellip;"
+msgstr "Язык изменен."
 
 msgid "Open"
 msgstr "Открыть"
@@ -136,10 +136,10 @@ msgid "Leave redirect"
 msgstr "Оставить тему(ы) переадресации"
 
 msgid "Move topic redirect"
-msgstr "Тема перенесена. Переадресация &hellip;"
+msgstr "Тема перенесена."
 
 msgid "Move topics redirect"
-msgstr "Темы перенесены. Переадресация &hellip;"
+msgstr "Темы перенесены."
 
 msgid "Confirm delete legend"
 msgstr "Пожалуйста, подтвердите удаление"
@@ -151,40 +151,40 @@ msgid "Delete topics comply"
 msgstr "Удалить выбранные темы (<b>Все сообщения из этих тем будут удалены</b>)"
 
 msgid "Delete topics redirect"
-msgstr "Темы удалены. Переадресация &hellip;"
+msgstr "Темы удалены."
 
 msgid "Open topic redirect"
-msgstr "Тема открыта. Переадресация &hellip;"
+msgstr "Тема открыта."
 
 msgid "Open topics redirect"
-msgstr "Темы открыты. Переадресация &hellip;"
+msgstr "Темы открыты."
 
 msgid "Close topic redirect"
-msgstr "Тема закрыта. Переадресация &hellip;"
+msgstr "Тема закрыта."
 
 msgid "Close topics redirect"
-msgstr "Темы закрыты. Переадресация &hellip;"
+msgstr "Темы закрыты."
 
 msgid "Not enough topics selected"
 msgstr "Вы должны выбрать хотя бы две темы для объединения."
 
 msgid "Stick topic redirect"
-msgstr "Тема выделена. Переадресация &hellip;"
+msgstr "Тема выделена."
 
 msgid "Stick topics redirect"
-msgstr "Темы выделены. Переадресация &hellip;"
+msgstr "Темы выделены."
 
 msgid "Unstick topic redirect"
-msgstr "Выделение темы снято. Переадресация &hellip;"
+msgstr "Выделение темы снято."
 
 msgid "Unstick topics redirect"
-msgstr "Выделение тем снято. Переадресация &hellip;"
+msgstr "Выделение тем снято."
 
 msgid "Merge topics"
 msgstr "Объединение тем"
 
 msgid "Merge topics redirect"
-msgstr "Темы объединены. Переадресация &hellip;"
+msgstr "Темы объединены."
 
 msgid "Confirm merge legend"
 msgstr "Пожалуйста, подтвердите объединение"
@@ -205,7 +205,7 @@ msgid "Split posts comply"
 msgstr "Вы уверены, что хотите разделить выбранные сообщения?"
 
 msgid "Split posts redirect"
-msgstr "Сообщения разделены. Переадресация &hellip;"
+msgstr "Сообщения разделены."
 
 msgid "Delete posts"
 msgstr "Удаление сообщений"
@@ -217,7 +217,7 @@ msgid "Delete posts comply"
 msgstr "Удалить выбранные сообщения"
 
 msgid "Delete posts redirect"
-msgstr "Сообщения удалены. Переадресация &hellip;"
+msgstr "Сообщения удалены."
 
 msgid "No posts selected"
 msgstr "Вы должны выбрать хотя бы одно сообщение для данного действия."
@@ -235,7 +235,7 @@ msgid "Move posts"
 msgstr "Перенос сообщений"
 
 msgid "Move posts redirect"
-msgstr "Сообщения перенесены. Переадресация &hellip;"
+msgstr "Сообщения перенесены."
 
 msgid "Post from topic"
 msgstr "Это сообщение перенесено из темы"

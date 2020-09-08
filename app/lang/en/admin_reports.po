@@ -13,7 +13,7 @@ msgstr ""
 "Language: en\n"
 
 msgid "Report zapped redirect"
-msgstr "Report marked as read. Redirecting …"
+msgstr "Report marked as read."
 
 msgid "New reports "
 msgstr "New reports"
