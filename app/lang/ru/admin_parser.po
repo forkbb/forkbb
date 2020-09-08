@@ -12,14 +12,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
 
-msgid "Perms updated redirect"
-msgstr "Права изменены. Переадресация …"
+msgid "Parser settings updated redirect"
+msgstr "Настройки парсера изменены. Переадресация …"
 
-msgid "Permissions head"
-msgstr "Права"
+msgid "Parser settings head"
+msgstr "Настройки парсера"
 
-msgid "Posting subhead"
-msgstr "Сообщения"
+msgid "BBCode subhead"
+msgstr "BBCode"
 
 msgid "BBCode label"
 msgstr "BBcode в сообщениях"
@@ -33,9 +33,6 @@ msgstr "Тег IMG в сообщениях"
 msgid "Image tag help"
 msgstr "Разрешить тег [img][/img] в сообщениях."
 
-msgid "Signatures subhead"
-msgstr "Подписи"
-
 msgid "BBCode sigs label"
 msgstr "BBcode в подписях"
 
@@ -47,6 +44,9 @@ msgstr "Тег IMG в подписях"
 
 msgid "Image tag sigs help"
 msgstr "Разрешить тег [img][/img] в подписях пользователей (не рекомендуется)."
+
+msgid "Smilies subhead"
+msgstr "Смайлы"
 
 msgid "Smilies label"
 msgstr "Смайлы в сообщениях"

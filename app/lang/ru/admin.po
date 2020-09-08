@@ -39,8 +39,8 @@ msgstr "Группы"
 msgid "Admin options"
 msgstr "Опции"
 
-msgid "Permissions"
-msgstr "Права"
+msgid "Parser settings"
+msgstr "Парсер"
 
 msgid "Censoring"
 msgstr "Цензура"

@@ -12,14 +12,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "Perms updated redirect"
-msgstr "Permissions updated. Redirecting …"
+msgid "Parser settings updated redirect"
+msgstr "arser settings updated. Redirecting …"
 
-msgid "Permissions head"
-msgstr "Permissions"
+msgid "Parser settings head"
+msgstr "Parser settings"
 
-msgid "Posting subhead"
-msgstr "Posting"
+msgid "BBCode subhead"
+msgstr "BBCode"
 
 msgid "BBCode label"
 msgstr "BBCode"
@@ -33,9 +33,6 @@ msgstr "Image tag"
 msgid "Image tag help"
 msgstr "Allow the BBCode [img][/img] tag in posts."
 
-msgid "Signatures subhead"
-msgstr "Signatures"
-
 msgid "BBCode sigs label"
 msgstr "BBCodes in signatures"
 
@@ -47,6 +44,9 @@ msgstr "Image tag in signatures"
 
 msgid "Image tag sigs help"
 msgstr "Allow the BBCode [img][/img] tag in user signatures (not recommended)."
+
+msgid "Smilies subhead"
+msgstr "Smilies"
 
 msgid "Smilies label"
 msgstr "Smilies in posts"

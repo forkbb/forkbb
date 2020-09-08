@@ -536,9 +536,9 @@ class Routing
             );
             $r->add(
                 $r::DUO,
-                '/admin/permissions',
-                'AdminPermissions:edit',
-                'AdminPermissions'
+                '/admin/parser',
+                'AdminParser:edit',
+                'AdminParser'
             );
             $r->add(
                 $r::DUO,

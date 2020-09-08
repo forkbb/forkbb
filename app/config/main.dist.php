@@ -178,7 +178,6 @@ return [
         'AdminIndex'      => \ForkBB\Models\Pages\Admin\Index::class,
         'AdminStatistics' => \ForkBB\Models\Pages\Admin\Statistics::class,
         'AdminOptions'    => \ForkBB\Models\Pages\Admin\Options::class,
-        'AdminPermissions' => \ForkBB\Models\Pages\Admin\Permissions::class,
         'AdminCategories' => \ForkBB\Models\Pages\Admin\Categories::class,
         'AdminForums'     => \ForkBB\Models\Pages\Admin\Forums::class,
         'AdminGroups'     => \ForkBB\Models\Pages\Admin\Groups::class,
@@ -193,6 +192,9 @@ return [
         'AdminHost'       => \ForkBB\Models\Pages\Admin\Host::class,
         'AdminBans'       => \ForkBB\Models\Pages\Admin\Bans::class,
         'AdminReports'    => \ForkBB\Models\Pages\Admin\Reports::class,
+        'AdminParser'     => \ForkBB\Models\Pages\Admin\Parser\Edit::class,
+        'AdminParserSmilies' => \ForkBB\Models\Pages\Admin\Parser\Smilies::class,
+        'AdminParserBBCode' => \ForkBB\Models\Pages\Admin\Parser\BBCode::class,
 
         'ConfigModel'     => \ForkBB\Models\Config\Model::class,
         'ConfigModelLoad' => \ForkBB\Models\Config\Load::class,

@@ -659,4 +659,38 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.13 to rev.14
+     */
+    protected function stageNumber13(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+
+        $result = $coreConfig->delete(
+            'multiple=>AdminPermissions',
+        );
+
+        $coreConfig->add(
+            'multiple=>AdminParser',
+            '\\ForkBB\\Models\\Pages\\Admin\\Parser\\Edit::class',
+            'AdminReports'
+        );
+
+        $coreConfig->add(
+            'multiple=>AdminParserSmilies',
+            '\\ForkBB\\Models\\Pages\\Admin\\Parser\\Smilies::class',
+            'AdminParser'
+        );
+
+        $coreConfig->add(
+            'multiple=>AdminParserBBCode',
+            '\\ForkBB\\Models\\Pages\\Admin\\Parser\\BBCode::class',
+            'AdminParserSmilies'
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }

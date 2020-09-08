@@ -68,7 +68,7 @@ class Admin extends Page
         if ($this->user->isAdmin) {
             $nav += [
                 'options'     => [$r->link('AdminOptions'), __('Admin options')],
-                'permissions' => [$r->link('AdminPermissions'), __('Permissions')],
+                'parser'      => [$r->link('AdminParser'), __('Parser settings')],
                 'categories'  => [$r->link('AdminCategories'), __('Categories')],
                 'forums'      => [$r->link('AdminForums'), __('Forums')],
                 'groups'      => [$r->link('AdminGroups'), __('User groups')],
