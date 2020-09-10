@@ -46,12 +46,11 @@ class Parser extends Parserus
                 || '1' == $this->c->config->o_smilies
             )
         ) {
-            $smilies = $this->c->smilies->list; //????
+            $smilies = [];
 
-            foreach ($smilies as &$cur) {
-                $cur = $this->c->PUBLIC_URL . '/img/sm/' . $cur;
+            foreach ($this->c->smilies->list as $cur) {
+                $smilies[$cur['text']] = $this->c->PUBLIC_URL . '/img/sm/' . $cur['image'];
             }
-            unset($cur);
 
             $info = $this->c->BBCODE_INFO;
 
