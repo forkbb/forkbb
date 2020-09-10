@@ -13,6 +13,12 @@ use function \ForkBB\__;
 class Edit extends Profile
 {
     /**
+     * Паттерн для доступных к загрузке типов файлов
+     * @var string
+     */
+    protected $accept = 'image/*';
+
+    /**
      * Подготавливает данные для шаблона редактирования профиля
      *
      * @param array $args
@@ -349,6 +355,7 @@ class Edit extends Profile
                     \ForkBB\num($this->c->config->o_avatars_size),
                     \ForkBB\size($this->c->config->o_avatars_size)
                 ),
+                'accept'  => $this->accept,
             ];
         }
         $form['sets']['header'] = [

@@ -105,7 +105,7 @@
                 @elseif ('yield' === $cur['type'])
                 {!! $this->block($cur['value']) !!}
                 @elseif ('file' === $cur['type'])
-                <input @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="file">
+                <input @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="file" @if ($cur['accept']) accept="{{ $cur['accept'] }}" @endif>
                 @endif
                 @if ($cur['info'])
                 <p class="f-child4">{!! $cur['info'] !!}</p>
