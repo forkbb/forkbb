@@ -86,7 +86,7 @@ class Save extends Action
             VALUES ({$set2})";
 
         $this->c->DB->exec($query, $vars);
-        $group->g_id = $this->c->DB->lastInsertId();
+        $group->g_id = (int) $this->c->DB->lastInsertId();
         $group->resModified();
 
         return $group->g_id;

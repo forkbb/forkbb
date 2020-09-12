@@ -89,7 +89,7 @@ class Save extends Action
             VALUES ({$set2})";
 
         $this->c->DB->exec($query, $vars);
-        $report->id = $this->c->DB->lastInsertId();
+        $report->id = (int) $this->c->DB->lastInsertId();
         $report->resModified();
 
         $this->c->Cache->set('report', $report->id);

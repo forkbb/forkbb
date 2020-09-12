@@ -95,7 +95,7 @@ class Manager extends ManagerModel
             VALUES (?s:name, ?i:position)';
 
         $this->c->DB->exec($query, $vars);
-        $cid = $this->c->DB->lastInsertId();
+        $cid = (int) $this->c->DB->lastInsertId();
         parent::set($cid, ['cat_name' => $name, 'disp_position' => $pos]);
 
         return $cid;

@@ -113,7 +113,7 @@ class Save extends Action
             VALUES ({$set2})";
 
         $this->c->DB->exec($query, $vars);
-        $user->id = $this->c->DB->lastInsertId();
+        $user->id = (int) $this->c->DB->lastInsertId();
         $user->resModified();
 
         if ($user->isAdmin) {
