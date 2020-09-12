@@ -6,8 +6,6 @@ use ForkBB\Core\Container;
 
 /**
  * Инициализирует другие функции (передача контейнера)
- *
- * @param Container $c
  */
 function _init(Container $c): void
 {
@@ -18,10 +16,7 @@ function _init(Container $c): void
 /**
  * Транслирует строку с подстановкой аргументов
  *
- * @param string $arg
  * @param mixed ...$args
- *
- * @return string
  */
 function __(?string $arg, ...$args): string
 {
@@ -62,10 +57,6 @@ function __(?string $arg, ...$args): string
 
 /**
  * Экранирует спецсимволов HTML-сущностями
- *
- * @param  string $arg
- *
- * @return string
  */
 function e(string $arg): string
 {
@@ -76,9 +67,6 @@ function e(string $arg): string
  * Возвращает число в формате текущего пользователя
  *
  * @param mixed $number
- * @param int $decimals
- *
- * @return string
  */
 function num($number, int $decimals = 0): string
 {
@@ -89,16 +77,6 @@ function num($number, int $decimals = 0): string
 
 /**
  * Возвращает дату/время в формате текущего пользователя
- *
- * @param int $arg
- * @param bool $dateOnly
- * @param string $dateFormat
- * @param string $timeFormat
- * @param bool $timeOnly
- * @param bool $noText
- * @param Container $container
- *
- * @return string
  */
 function dt(int $arg, bool $dateOnly = false, string $dateFormat = null, string $timeFormat = null, bool $timeOnly = false, bool $noText = false, Container $container = null): string
 {
@@ -145,23 +123,7 @@ function dt(int $arg, bool $dateOnly = false, string $dateFormat = null, string 
 }
 
 /**
- * Преобразует timestamp в YYYY-MM-DDTHH:mm:ss.sssZ
- *
- * @param int $timestamp
- *
- * @return string
- */
-function utc(int $timestamp): string
-{
-    return \gmdate('c', $timestamp); // Y-m-d\TH:i:s\Z
-}
-
-/**
  * Возвращает размер в байтах, Кбайтах, ...
- *
- * @param int $size
- *
- * @return string
  */
 function size(int $size): string
 {

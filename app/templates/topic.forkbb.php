@@ -52,9 +52,9 @@
         <header class="f-post-header">
           <h3>@if ($post->postNumber > 1) {!! __('Re') !!} @endif {{ $p->model->censorSubject }}</h3>
         @if ($p->enableMod && $post->postNumber > 1)
-          <label class="f-post-posted" for="checkbox-{!! $post->id !!}" title="{{ __('Select for moderation') }}"><time datetime="{{ utc($post->posted) }}">{{ dt($post->posted) }}</time></label>
+          <label class="f-post-posted" for="checkbox-{!! $post->id !!}" title="{{ __('Select for moderation') }}"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></label>
         @else
-          <span class="f-post-posted"><time datetime="{{ utc($post->posted) }}">{{ dt($post->posted) }}</time></span>
+          <span class="f-post-posted"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></span>
         @endif
         @if ($post->edited)
           <span class="f-post-edited" title="{!! __('Last edit', $post->edited_by, dt($post->edited)) !!}">{!! __('Edited') !!}</span>
