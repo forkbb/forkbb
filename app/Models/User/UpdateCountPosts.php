@@ -10,12 +10,8 @@ class UpdateCountPosts extends Action
 {
     /**
      * Обновляет число сообщений пользователя(ей)
-     *
-     * @param mixed ...$args
-     *
-     * @throws InvalidArgumentException
      */
-    public function updateCountPosts(...$args): void
+    public function updateCountPosts(/* mixed */ ...$args): void
     {
         $ids = [];
         foreach ($args as $arg) {

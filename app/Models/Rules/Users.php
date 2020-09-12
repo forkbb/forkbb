@@ -11,8 +11,6 @@ class Users extends Rules
 {
     /**
      * Инициализирует
-     *
-     * @return Rules\Users
      */
     public function init(): Users
     {

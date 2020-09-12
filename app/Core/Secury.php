@@ -14,14 +14,6 @@ class Secury
      */
     protected $hmac;
 
-    /**
-     * Конструктор
-     *
-     * @param array $hmac
-     *
-     * @throws InvalidArgumentException
-     * @throws UnexpectedValueException
-     */
     public function __construct(array $hmac)
     {
         if (
@@ -38,10 +30,6 @@ class Secury
 
     /**
      * Обертка для hash_hmac
-     *
-     * @param string $data
-     *
-     * @return string
      */
     public function hash(string $data): string
     {
@@ -50,13 +38,6 @@ class Secury
 
     /**
      * Обертка для hash_hmac
-     *
-     * @param string $data
-     * @param string $key
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return string
      */
     public function hmac(string $data, string $key): string
     {
@@ -69,10 +50,6 @@ class Secury
 
     /**
      * Возвращает случайную строку заданной длины состоящую из символов 0-9 и a-f
-     *
-     * @param int $len
-     *
-     * @return string
      */
     public function randomHash(int $len): string
     {
@@ -82,10 +59,6 @@ class Secury
     /**
      * Возвращает случайную строку заданной длины состоящую из цифр, латиницы,
      * знака минус и символа подчеркивания
-     *
-     * @param int $len
-     *
-     * @return string
      */
     public function randomPass(int $len): string
     {
@@ -101,12 +74,8 @@ class Secury
 
     /**
      * Replacing invalid UTF-8 characters and remove control characters
-     *
-     * @param mixed $data
-     *
-     * @return mixed
      */
-    public function replInvalidChars($data)
+    public function replInvalidChars(/* mixed */ $data) /* : mixed */
     {
         if (\is_array($data)) {
             return \array_map([$this, 'replInvalidChars'], $data);

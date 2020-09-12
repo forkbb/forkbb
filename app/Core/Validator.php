@@ -88,11 +88,6 @@ class Validator
      */
     protected $error;
 
-    /**
-     * Конструктор
-     *
-     * @param Container $container
-     */
     public function __construct(Container $container)
     {
         $this->c = $container;
@@ -101,8 +96,6 @@ class Validator
 
     /**
      * Сбрасывает настройки к начальным состояниям
-     *
-     * @return Validator
      */
     public function reset(): Validator
     {
@@ -142,10 +135,6 @@ class Validator
 
     /**
      * Добавляет валидаторы
-     *
-     * @param array $validators
-     *
-     * @return Validator
      */
     public function addValidators(array $validators): Validator
     {
@@ -156,12 +145,6 @@ class Validator
 
     /**
      * Добавляет правила
-     *
-     * @param array $list
-     *
-     * @throws RuntimeException
-     *
-     * @return Validator
      */
     public function addRules(array $list): Validator
     {
@@ -208,10 +191,6 @@ class Validator
 
     /**
      * Добавляет дополнительные аргументы для конкретных "имя поля"."имя правила".
-     *
-     * @param array $arguments
-     *
-     * @return Validator
      */
     public function addArguments(array $arguments): Validator
     {
@@ -222,10 +201,6 @@ class Validator
 
     /**
      * Добавляет сообщения для конкретных "имя поля"."имя правила".
-     *
-     * @param array $messages
-     *
-     * @return Validator
      */
     public function addMessages(array $messages): Validator
     {
@@ -236,10 +211,6 @@ class Validator
 
     /**
      * Добавляет псевдонимы имен полей для сообщений об ошибках
-     *
-     * @param array $aliases
-     *
-     * @return Validator
      */
     public function addAliases(array $aliases): Validator
     {
@@ -250,12 +221,6 @@ class Validator
 
     /**
      * Проверяет данные
-     *
-     * @param array $raw
-     *
-     * @throws RuntimeException
-     *
-     * @return bool
      */
     public function validation(array $raw): bool
     {
@@ -276,10 +241,6 @@ class Validator
 
     /**
      * Проверяет наличие поля
-     *
-     * @param string $field
-     *
-     * @return bool
      */
     public function __isset(string $field): bool
     {
@@ -289,14 +250,8 @@ class Validator
     /**
      * Проверяет поле согласно заданным правилам
      * Возвращает значение запрашиваемого поля
-     *
-     * @param string
-     *
-     * @throws RuntimeException
-     *
-     * @return mixed
      */
-    public function __get(string $field)
+    public function __get(string $field) /* : mixed */
     {
         if (isset($this->status[$field])) {
             return $this->result[$field];
@@ -340,14 +295,8 @@ class Validator
 
     /**
      * Проверяет значение списком правил
-     *
-     * @param mixed $value
-     * @param array $rules
-     * @param string $field
-     *
-     * @return mixed
      */
-    protected function checkValue($value, array $rules, string $field)
+    protected function checkValue(/* mixed */ $value, array $rules, string $field) /* : mixed */
     {
         foreach ($rules as $validator => $attr) {
             // данные для обработчика ошибок
@@ -372,13 +321,8 @@ class Validator
 
     /**
      * Добавляет ошибку
-     *
-     * @param string|bool $error
-     * @param string $type
-     *
-     * @throws RuntimeException
      */
-    public function addError($error, string $type = 'v'): void
+    public function addError(/* bool|string */ $error, string $type = 'v'): void
     {
         if (empty($vars = \end($this->curData))) {
             throw new RuntimeException('The array of variables is empty');
@@ -412,13 +356,8 @@ class Validator
 
     /**
      * Возвращает дополнительные аргументы
-     *
-     * @param string $field
-     * @param string $rule
-     *
-     * @return mixed
      */
-    protected function getArguments(string $field, string $rule)
+    protected function getArguments(string $field, string $rule) /* : mixed */
     {
         if (isset($this->arguments[$field . '.' . $rule])) {
             return $this->arguments[$field . '.' . $rule];
@@ -431,10 +370,6 @@ class Validator
 
     /**
      * Возвращает статус проверки поля
-     *
-     * @param string $field
-     *
-     * @return bool
      */
     public function getStatus(string $field): bool
     {
@@ -448,12 +383,6 @@ class Validator
     /**
      * Возвращает проверенные данные
      * Поля с ошибками содержат значения по умолчанию или значения с ошибками
-     *
-     * @param bool $all
-     *
-     * @throws RuntimeException
-     *
-     * @return array
      */
     public function getData(bool $all = false): array
     {
@@ -472,8 +401,6 @@ class Validator
 
     /**
      * Возращает массив ошибок
-     *
-     * @return array
      */
     public function getErrors(): array
     {

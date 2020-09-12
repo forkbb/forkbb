@@ -12,11 +12,6 @@ class Report extends Page
 {
     /**
      * Создание нового сигнала (репорта)
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function report(array $args, string $method): Page
     {
@@ -108,11 +103,6 @@ class Report extends Page
 
     /**
      * Создает массив для формирование формы
-     *
-     * @param array $args
-     * @param array $data
-     *
-     * @return array
      */
     protected function formReport(array $args, array $data): array
     {
@@ -159,10 +149,6 @@ class Report extends Page
 
     /**
      * Рассылает email с сигналом (репортом)
-     *
-     * @param ReportModel $report
-     *
-     * @return bool
      */
     protected function sendReport(ReportModel $report): bool
     {

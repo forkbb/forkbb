@@ -8,8 +8,6 @@ class Model extends ParentModel
 {
     /**
      * Загружает список цензуры из кеша/БД
-     *
-     * @return Censorship\Model
      */
     public function init(): Model
     {
@@ -28,10 +26,6 @@ class Model extends ParentModel
 
     /**
      * Выполняет цензуру при необходимости
-     *
-     * @param string $str
-     *
-     * @return string
      */
     public function censor(string $str): string
     {

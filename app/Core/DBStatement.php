@@ -33,21 +33,13 @@ class DBStatement extends PDOStatement
         'ai' => PDO::PARAM_INT,
     ];
 
-    /**
-     * Конструктор
-     *
-     * @param PDO $db
-     */
     protected function __construct(PDO $db)
     {
         $this->db = $db;
     }
 
-
     /**
      * Метод задает карту преобразования перменных
-     *
-     * @param array $map
      */
     public function setMap(array $map): void
     {
@@ -56,10 +48,6 @@ class DBStatement extends PDOStatement
 
     /**
      * Метод привязывает параметры к значениям на основе карты
-     *
-     * @param array $params
-     *
-     * @throws PDOException
      */
     public function bindValueList(array $params): void
     {
@@ -85,12 +73,8 @@ class DBStatement extends PDOStatement
 
     /**
      * Метод расширяет PDOStatement::execute()
-     *
-     * @param array|null $params
-     *
-     * @return bool
      */
-    public function execute($params = null): bool
+    public function execute(/* array */ $params = null): bool
     {
         if (
             \is_array($params)

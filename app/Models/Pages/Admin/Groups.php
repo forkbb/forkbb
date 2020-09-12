@@ -10,11 +10,6 @@ use function \ForkBB\__;
 
 class Groups extends Admin
 {
-    /**
-     * Конструктор
-     *
-     * @param Container $container
-     */
     public function __construct(Container $container)
     {
         parent::__construct($container);
@@ -50,8 +45,6 @@ class Groups extends Admin
 
     /**
      * Подготавливает данные для шаблона
-     *
-     * @return Page
      */
     public function view(): Page
     {
@@ -64,8 +57,6 @@ class Groups extends Admin
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @return array
      */
     protected function formNew(): array
     {
@@ -101,8 +92,6 @@ class Groups extends Admin
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @return array
      */
     protected function formDefault(): array
     {
@@ -137,8 +126,6 @@ class Groups extends Admin
 
     /**
      * Устанавливает группу по умолчанию
-     *
-     * @return Page
      */
     public function defaultSet(): Page
     {
@@ -165,11 +152,6 @@ class Groups extends Admin
     /**
      * Редактирование группы
      * Создание новой группы
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function edit(array $args, string $method): Page
     {
@@ -320,12 +302,6 @@ class Groups extends Admin
 
     /**
      * Запись данных по новой/измененной группе
-     *
-     * @param Group $group
-     * @param Group $baseGroup
-     * @param array $args
-     *
-     * @return Page
      */
     public function save(Group $group, Group $baseGroup, array $data): Page
     {
@@ -373,12 +349,6 @@ class Groups extends Admin
 
     /**
      * Формирует данные для формы редактирования группы
-     *
-     * @param array $args
-     * @param Group $group
-     * @param string $marker
-     *
-     * @return array
      */
     protected function formEdit(array $args, Group $group, string $marker): array
     {
@@ -702,11 +672,6 @@ class Groups extends Admin
 
     /**
      * Удаление группы
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function delete(array $args, string $method): Page
     {
@@ -784,13 +749,6 @@ class Groups extends Admin
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @param array $args
-     * @param Group $group
-     * @param int $count
-     * @param array $groups
-     *
-     * @return array
      */
     protected function formDelete(array $args, Group $group, int $count, array $groups): array
     {

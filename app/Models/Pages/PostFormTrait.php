@@ -9,15 +9,6 @@ trait PostFormTrait
 {
     /**
      * Возвращает данные для построения формы создания темы/сообщения
-     *
-     * @param array $args
-     * @param Model $model
-     * @param string $marker
-     * @param bool $editPost
-     * @param bool $editSubject
-     * @param bool $quickReply
-     *
-     * @return array
      */
     protected function messageForm(array $args, Model $model, string $marker, bool $editPost = false, bool $editSubject = false, bool $quickReply = false): array
     {

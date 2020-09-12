@@ -18,11 +18,6 @@ class Model extends DataModel
      */
     protected $avatarTypes = ['jpg', 'gif', 'png'];
 
-    /**
-     * Конструктор
-     *
-     * @param Container $container
-     */
     public function __construct(Container $container)
     {
         parent::__construct($container);
@@ -39,8 +34,6 @@ class Model extends DataModel
 
     /**
      * Статус неподтвержденного
-     *
-     * @return bool
      */
     protected function getisUnverified(): bool
     {
@@ -49,8 +42,6 @@ class Model extends DataModel
 
     /**
      * Статус гостя
-     *
-     * @return bool
      */
     protected function getisGuest(): bool
     {
@@ -61,8 +52,6 @@ class Model extends DataModel
 
     /**
      * Статус админа
-     *
-     * @return bool
      */
     protected function getisAdmin(): bool
     {
@@ -71,8 +60,6 @@ class Model extends DataModel
 
     /**
      * Статус админа/модератора
-     *
-     * @return bool
      */
     protected function getisAdmMod(): bool
     {
@@ -82,12 +69,6 @@ class Model extends DataModel
 
     /**
      * Статус модератора для указанной модели
-     *
-     * @param BaseModel $model
-     *
-     * @throws RuntimeException
-     *
-     * @return bool
      */
     public function isModerator(BaseModel $model): bool
     {
@@ -106,9 +87,7 @@ class Model extends DataModel
     }
 
     /**
-     * Время последнего визита
-     *
-     * @return int
+     * Время последнего (или текущего) визита
      */
     protected function getcurrentVisit(): int
     {
@@ -117,8 +96,6 @@ class Model extends DataModel
 
     /**
      * Текущий язык пользователя
-     *
-     * @return string
      */
     protected function getlanguage(): string
     {
@@ -141,8 +118,6 @@ class Model extends DataModel
 
     /**
      * Текущий стиль отображения
-     *
-     * @return string
      */
     protected function getstyle(): string
     {
@@ -166,8 +141,6 @@ class Model extends DataModel
 
     /**
      * Ссылка на профиль пользователя
-     *
-     * @return null|string
      */
     protected function getlink(): ?string
     {
@@ -186,8 +159,6 @@ class Model extends DataModel
 
     /**
      * Ссылка на аватару пользователя
-     *
-     * @return null|string
      */
     protected function getavatar(): ?string
     {
@@ -221,8 +192,6 @@ class Model extends DataModel
 
     /**
      * Титул пользователя
-     *
-     * @return string
      */
     public function title(): string
     {
@@ -243,8 +212,6 @@ class Model extends DataModel
 
     /**
      * Статус online
-     *
-     * @return bool
      */
     protected function getonline(): bool
     {
@@ -253,8 +220,6 @@ class Model extends DataModel
 
     /**
      * Статус наличия подписи
-     *
-     * @return bool
      */
     protected function getisSignature(): bool
     {
@@ -265,8 +230,6 @@ class Model extends DataModel
 
     /**
      * HTML код подписи
-     *
-     * @return string
      */
     protected function gethtmlSign(): string
     {
@@ -277,8 +240,6 @@ class Model extends DataModel
 
     /**
      * Статус видимости профилей пользователей
-     *
-     * @return bool
      */
     protected function getviewUsers(): bool
     {
@@ -287,8 +248,6 @@ class Model extends DataModel
 
     /**
      * Статус поиска пользователей
-     *
-     * @return bool
      */
     protected function getsearchUsers(): bool
     {
@@ -297,8 +256,6 @@ class Model extends DataModel
 
     /**
      * Статус показа аватаров
-     *
-     * @return bool
      */
     protected function getshowAvatar(): bool
     {
@@ -307,8 +264,6 @@ class Model extends DataModel
 
     /**
      * Статус показа информации пользователя
-     *
-     * @return bool
      */
     protected function getshowUserInfo(): bool
     {
@@ -317,8 +272,6 @@ class Model extends DataModel
 
     /**
      * Статус показа подписи
-     *
-     * @return bool
      */
     protected function getshowSignature(): bool
     {
@@ -327,8 +280,6 @@ class Model extends DataModel
 
     /**
      * Статус показа количества сообщений
-     *
-     * @return bool
      */
     protected function getshowPostCount(): bool
     {
@@ -337,8 +288,6 @@ class Model extends DataModel
 
     /**
      * Число тем на одну страницу
-     *
-     * @return int
      */
     protected function getdisp_topics(): int
     {
@@ -353,8 +302,6 @@ class Model extends DataModel
 
     /**
      * Число сообщений на одну страницу
-     *
-     * @return int
      */
     protected function getdisp_posts(): int
     {
@@ -369,10 +316,6 @@ class Model extends DataModel
 
     /**
      * Ссылка для продвижения пользователя из указанного сообщения
-     *
-     * @param Post $post
-     *
-     * @return null|string
      */
     public function linkPromote(Post $post): ?string
     {
@@ -408,8 +351,6 @@ class Model extends DataModel
 
     /**
      * Установка email и вычисление нормализованного email
-     *
-     * @param string $email
      */
     protected function setemail(string $email): void
     {

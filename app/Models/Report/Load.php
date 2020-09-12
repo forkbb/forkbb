@@ -10,12 +10,6 @@ class Load extends Action
 {
     /**
      * Загружает сигнал из БД
-     *
-     * @param int $id
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return null|Report
      */
     public function load(int $id): ?Report
     {
@@ -43,10 +37,6 @@ class Load extends Action
 
     /**
      * Загрузка сигналов из БД
-     *
-     * @param bool $noZapped
-     *
-     * @return array
      */
     public function loadList(bool $noZapped): array
     {

@@ -12,13 +12,6 @@ class NewUser extends Users
 {
     /**
      * Подготавливает данные для шаблона добавление пользователя
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @throws RuntimeException
-     *
-     * @return Page
      */
     public function view(array $args, string $method): Page
     {
@@ -83,10 +76,6 @@ class NewUser extends Users
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @param array $data
-     *
-     * @return array
      */
     protected function formNew(array $data): array
     {

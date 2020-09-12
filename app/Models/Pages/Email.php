@@ -17,11 +17,6 @@ class Email extends Page
 
     /**
      * Подготовка данных для шаблона
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function email(array $args, string $method): Page
     {
@@ -102,11 +97,6 @@ class Email extends Page
 
     /**
      * Создает массив для формирование формы
-     *
-     * @param array $args
-     * @param array $data
-     *
-     * @return array
      */
     protected function formEmail(array $args, array $data): array
     {

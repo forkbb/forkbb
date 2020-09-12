@@ -11,11 +11,17 @@ class Model extends ParentModel
     protected $visits = [];
     protected $online = [];
 
+    /**
+     * Время последнего визита в текущем сеансе ?
+     */
     public function currentVisit(User $user): ?int
     {
         return $this->visits[$user->id] ?? null;
     }
 
+    /**
+     * Статус пользователя
+     */
     public function isOnline(User $user): bool
     {
         return isset($this->online[$user->id]);
@@ -25,10 +31,6 @@ class Model extends ParentModel
      * Обработка данных пользователей онлайн
      * Обновление данных текущего пользователя
      * Возврат данных по пользователям онлайн
-     *
-     * @param Page $page
-     *
-     * @return Online\Model
      */
     public function calc(Page $page): Model
     {
@@ -153,8 +155,6 @@ class Model extends ParentModel
 
     /**
      * Обновление данных текущего посетителя
-     *
-     * @param string $position
      */
     protected function updateUser(string $position): void
     {
@@ -214,9 +214,7 @@ class Model extends ParentModel
     }
 
     /**
-     * Удаление юзера из таблицы online
-     *
-     * @param User $user
+     * Удаление пользователя из таблицы online
      */
     public function delete(User $user): void
     {

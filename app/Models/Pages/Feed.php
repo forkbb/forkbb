@@ -31,11 +31,6 @@ class Feed extends Page
 
     /**
      * Подготовка данных для шаблона
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function view(array $args, string $method): Page
     {

@@ -71,7 +71,7 @@ class Mail
         'Content-Type' => true,
     ];
 
-    public function __construct($host, $user, $pass, $ssl, $eol)
+    public function __construct(/* string */ $host, /* string */ $user, /* string */ $pass, /* bool */ $ssl, /* string */ $eol)
     {
         if (
             \is_string($host)
@@ -101,10 +101,8 @@ class Mail
 
     /**
      * Валидация email
-     *
-     * @return false|string
      */
-    public function valid($email, bool $strict = false, bool $idna = false)
+    public function valid(/* mixed */ $email, bool $strict = false, bool $idna = false) /* : string|false */
     {
         if (
             ! \is_string($email)
@@ -212,10 +210,8 @@ class Mail
 
     /**
      * Добавляет заголовок To
-     *
-     * @param string|array $email
      */
-    public function addTo($email, string $name = null): Mail
+    public function addTo(/* array|string */ $email, string $name = null): Mail
     {
         if (! \is_array($email)) {
             $email = \preg_split('%[,\n\r]%', (string) $email, -1, \PREG_SPLIT_NO_EMPTY);
@@ -234,10 +230,8 @@ class Mail
 
     /**
      * Задает заголовок To
-     *
-     * @param string|array $email
      */
-    public function setTo($email, string $name = null): Mail
+    public function setTo(/* array|string */ $email, string $name = null): Mail
     {
         $this->to = [];
 
@@ -580,7 +574,7 @@ class Mail
      * Проверяет ответ
      * Возвращает код ответа
      */
-    protected function smtpData(?string $data, $code): string
+    protected function smtpData(?string $data, /* array|string */ $code): string
     {
         if (\is_resource($this->connect) && null !== $data) {
             if (false === @\fwrite($this->connect, $data . $this->EOL)) {

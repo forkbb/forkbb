@@ -13,10 +13,6 @@ class Model extends DataModel
 {
     /**
      * Получение родительского раздела
-     *
-     * @throws RuntimeException
-     *
-     * @return Forum\Model
      */
     protected function getparent(): ?Forum
     {
@@ -40,8 +36,6 @@ class Model extends DataModel
 
     /**
      * Статус возможности создания новой темы
-     *
-     * @return bool
      */
     protected function getcanCreateTopic(): bool
     {
@@ -58,8 +52,6 @@ class Model extends DataModel
 
     /**
      * Статус возможности пометки всех тем прочтенными
-     *
-     * @return bool
      */
     protected function getcanMarkRead(): bool
     {
@@ -79,8 +71,6 @@ class Model extends DataModel
 
     /**
      * Получение массива подразделов
-     *
-     * @return array
      */
     protected function getsubforums(): array
     {
@@ -98,8 +88,6 @@ class Model extends DataModel
 
     /**
      * Получение массива всех дочерних разделов
-     *
-     * @return array
      */
     protected function getdescendants(): array
     {
@@ -117,8 +105,6 @@ class Model extends DataModel
 
     /**
      * Ссылка на раздел
-     *
-     * @return string
      */
     protected function getlink(): string
     {
@@ -137,8 +123,6 @@ class Model extends DataModel
 
     /**
      * Ссылка на поиск новых сообщений
-     *
-     * @return string
      */
     protected function getlinkNew(): string
     {
@@ -162,8 +146,6 @@ class Model extends DataModel
 
     /**
      * Ссылка на последнее сообщение в разделе
-     *
-     * @return null|string
      */
     protected function getlinkLast(): ?string
     {
@@ -181,8 +163,6 @@ class Model extends DataModel
 
     /**
      * Ссылка на создание новой темы
-     *
-     * @return string
      */
     protected function getlinkCreateTopic(): string
     {
@@ -196,8 +176,6 @@ class Model extends DataModel
 
     /**
      * Ссылка на пометку всех тем прочтенными
-     *
-     * @return string
      */
     protected function getlinkMarkRead(): string
     {
@@ -266,8 +244,6 @@ class Model extends DataModel
 
     /**
      * Получение массива модераторов
-     *
-     * @return array
      */
     protected function getmoderators(): array
     {
@@ -300,10 +276,6 @@ class Model extends DataModel
 
     /**
      * Добавляет указанных пользователей в список модераторов
-     *
-     * @param User ...$users
-     *
-     * @throws InvalidArgumentException
      */
     public function modAdd(User ...$users): void
     {
@@ -327,10 +299,6 @@ class Model extends DataModel
 
     /**
      * Удаляет указанных пользователей из списка модераторов
-     *
-     * @param User ...$users
-     *
-     * @throws InvalidArgumentException
      */
     public function modDelete(User ...$users): void
     {
@@ -354,8 +322,6 @@ class Model extends DataModel
 
     /**
      * Возвращает общую статистику по дереву разделов с корнем в текущем разделе
-     *
-     * @return Forum\Model
      */
     protected function gettree(): Forum
     {
@@ -398,10 +364,6 @@ class Model extends DataModel
 
     /**
      * Количество страниц в разделе
-     *
-     * @throws RuntimeException
-     *
-     * @return int
      */
     protected function getnumPages(): int
     {
@@ -414,8 +376,6 @@ class Model extends DataModel
 
     /**
      * Массив страниц раздела
-     *
-     * @return array
      */
     protected function getpagination(): array
     {
@@ -432,8 +392,6 @@ class Model extends DataModel
 
     /**
      * Статус наличия установленной страницы в разделе
-     *
-     * @return bool
      */
     public function hasPage(): bool
     {
@@ -442,10 +400,6 @@ class Model extends DataModel
 
     /**
      * Возвращает массив тем с установленной страницы
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return array
      */
     public function pageData(): array
     {
@@ -487,8 +441,6 @@ class Model extends DataModel
 
     /**
      * Возвращает значения свойств в массиве
-     *
-     * @return array
      */
     public function getAttrs(): array
     {

@@ -14,10 +14,6 @@ class Profile extends Rules
 
     /**
      * Задает профиль пользователя для применения правил
-     *
-     * @param User $curUser
-     *
-     * @return Rules\Profile
      */
     public function setUser(User $curUser): Profile
     {

@@ -9,10 +9,6 @@ class IsBanned extends Method
 {
     /**
      * Проверяет наличие бана на основании имени пользователя и(или) email
-     *
-     * @param User $user
-     *
-     * @return int
      */
     public function isBanned(User $user): int
     {

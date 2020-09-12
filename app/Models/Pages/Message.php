@@ -9,13 +9,6 @@ class Message extends Page
 {
     /**
      * Подготавливает данные для шаблона
-     *
-     * @param string $message
-     * @param bool $back
-     * @param int $status
-     * @param array $headers
-     *
-     * @return Page
      */
     public function message(string $message, bool $back = true, int $status = 404, array $headers = []): Page
     {

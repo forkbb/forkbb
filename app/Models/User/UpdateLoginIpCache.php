@@ -11,9 +11,6 @@ class UpdateLoginIpCache extends Action
 {
     /**
      * Обновляет поле login_ip_cache пользователя
-     *
-     * @throws InvalidArgumentException
-     * @throws RuntimeException
      */
     public function updateLoginIpCache(User $user, bool $isLogin = false): void
     {

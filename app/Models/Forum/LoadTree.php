@@ -9,10 +9,6 @@ class LoadTree extends Action
 {
     /**
      * Загружает данные в модели для указанного раздела и всех его потомков
-     *
-     * @param int $rootId
-     *
-     * @return null|Forum
      */
     public function loadTree(int $rootId): ?Forum
     {
@@ -42,8 +38,6 @@ class LoadTree extends Action
 
     /**
      * Загружает данные из БД по списку разделов
-     *
-     * @param array $list
      */
     protected function loadData(array $list): void
     {
@@ -86,8 +80,6 @@ class LoadTree extends Action
 
     /**
      * Проверяет наличие новых сообщений в разделах по их списку
-     *
-     * @param array $list
      */
     protected function checkForNew(array $list): void
     {

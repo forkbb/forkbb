@@ -45,17 +45,6 @@ class DB extends PDO
      */
     protected $delta = 0;
 
-    /**
-     * Конструктор
-     *
-     * @param string $dsn
-     * @param string $username
-     * @param string $password
-     * @param array $options
-     * @param string $prefix
-     *
-     * @throws PDOException
-     */
     public function __construct(string $dsn, string $username = null, string $password = null, array $options = [], string $prefix = '')
     {
         $type = \strstr($dsn, ':', true);
@@ -83,13 +72,8 @@ class DB extends PDO
 
     /**
      * Передает вызовы методов в драйвер текущей базы
-     *
-     * @param string $name
-     * @param array $args
-     *
-     * @return mixed
      */
-    public function __call(string $name, array $args)
+    public function __call(string $name, array $args) /* : mixed */
     {
         if (empty($this->dbDrv)) {
             $drv = 'ForkBB\\Core\\DB\\' . \ucfirst($this->dbType);
@@ -101,10 +85,6 @@ class DB extends PDO
 
     /**
      * Метод определяет массив ли опций подан на вход
-     *
-     * @param array $options
-     *
-     * @return bool
      */
     protected function isOptions(array $options): bool
     {
@@ -124,13 +104,6 @@ class DB extends PDO
 
     /**
      * Метод приводит запрос с типизированными плейсхолдерами к понятному для PDO виду
-     *
-     * @param string &$query
-     * @param array $params
-     *
-     * @throws PDOException
-     *
-     * @return array
      */
     protected function parse(string &$query, array $params): array
     {
@@ -191,15 +164,8 @@ class DB extends PDO
 
     /**
      * Метод возвращает значение из массива параметров по ключу или исключение
-     *
-     * @param mixed $key
-     * @param array $params
-     *
-     * @throws PDOException
-     *
-     * @return mixed
      */
-    public function getValue($key, array $params)
+    public function getValue(/* mixed */ $key, array $params) /* : mixed */
     {
         if (
             \is_string($key)
@@ -221,8 +187,6 @@ class DB extends PDO
 
     /**
      * Метод для получения количества выполненных запросов
-     *
-     * @return int
      */
     public function getCount(): int
     {
@@ -231,8 +195,6 @@ class DB extends PDO
 
     /**
      * Метод для получения статистики выполненных запросов
-     *
-     * @return array
      */
     public function getQueries(): array
     {
@@ -241,10 +203,6 @@ class DB extends PDO
 
     /**
      * Метод для сохранения статистики по выполненному запросу
-     *
-     * @param string $query
-     * @param float $time
-     * @param bool $add
      */
     public function saveQuery(string $query, float $time, bool $add = true): void
     {
@@ -257,13 +215,8 @@ class DB extends PDO
 
     /**
      * Метод расширяет PDO::exec()
-     *
-     * @param string $query
-     * @param array $params
-     *
-     * @return int|false
      */
-    public function exec($query, array $params = [])
+    public function exec(/* string */ $query, array $params = []) /* : int|false */
     {
         $map = $this->parse($query, $params);
 
@@ -290,14 +243,8 @@ class DB extends PDO
 
     /**
      * Метод расширяет PDO::prepare()
-     *
-     * @param string $query
-     * @param array $arg1
-     * @param array $arg2
-     *
-     * @return PDOStatement
      */
-    public function prepare($query, $arg1 = null, $arg2 = null): PDOStatement
+    public function prepare(/* string */ $query, /* array */ $arg1 = null, /* array */ $arg2 = null): PDOStatement
     {
         if (
             empty($arg1) === empty($arg2)
@@ -328,13 +275,8 @@ class DB extends PDO
 
     /**
      * Метод расширяет PDO::query()
-     *
-     * @param string $query
-     * @param mixed ...$args
-     *
-     * @return PDOStatement|false
      */
-    public function query(string $query, ...$args)
+    public function query(string $query, /* mixed */ ...$args) /* : PDOStatement|false */
     {
         if (
             isset($args[0])
@@ -373,7 +315,7 @@ class DB extends PDO
     }
 
     /**
-     * @return bool
+     * Инициализирует транзакцию
      */
     public function beginTransaction(): bool
     {
@@ -385,7 +327,7 @@ class DB extends PDO
     }
 
     /**
-     * @return bool
+     * Фиксирует транзакцию
      */
     public function commit(): bool
     {
@@ -397,7 +339,7 @@ class DB extends PDO
     }
 
     /**
-     * @return bool
+     * Откатывает транзакцию
      */
     public function rollback(): bool
     {

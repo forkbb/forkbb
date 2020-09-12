@@ -12,11 +12,6 @@ use function \ForkBB\__;
 
 class Bans extends Admin
 {
-    /**
-     * Конструктор
-     *
-     * @param Container $container
-     */
     public function __construct(Container $container)
     {
         parent::__construct($container);
@@ -29,10 +24,6 @@ class Bans extends Admin
 
     /**
      * Кодирует данные фильтра для url
-     *
-     * @param array $data
-     *
-     * @return string
      */
     protected function encodeData(array $data): string
     {
@@ -45,12 +36,8 @@ class Bans extends Admin
 
     /**
      * Декодирует данные фильтра из url
-     *
-     * @param string $data
-     *
-     * @return mixed
      */
-    protected function decodeData(string $data)
+    protected function decodeData(string $data) /* : mixed */
     {
         $data = \explode(':', $data);
 
@@ -70,12 +57,6 @@ class Bans extends Admin
 
     /**
      * Подготавливает данные для шаблона
-     *
-     * @param array $args
-     * @param string $method
-     * @param array $data
-     *
-     * @return Page
      */
     public function view(array $args, string $method, array $data = []): Page
     {
@@ -128,10 +109,6 @@ class Bans extends Admin
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @param array $data
-     *
-     * @return array
      */
     protected function formSearch(array $data = []): array
     {
@@ -247,11 +224,6 @@ class Bans extends Admin
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @param array $data
-     * @param array $args
-     *
-     * @return array
      */
     protected function formBan(array $data = [], array $args = []): array
     {
@@ -340,10 +312,6 @@ class Bans extends Admin
 
     /**
      * Возвращает список id банов по фильтру
-     *
-     * @param array $data
-     *
-     * @return array
      */
     protected function forFilter(array $data): array
     {
@@ -385,11 +353,6 @@ class Bans extends Admin
 
     /**
      * Подготавливает данные для шаблона найденных банов
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function result(array $args, string $method): Page
     {
@@ -444,12 +407,6 @@ class Bans extends Admin
 
     /**
      * Создает массив данных для формы найденных по фильтру банов
-     *
-     * @param array $bans
-     * @param int $number
-     * @param array $args
-     *
-     * @return array
      */
     protected function form(array $bans, int $number, array $args): array
     {
@@ -585,11 +542,6 @@ class Bans extends Admin
 
     /**
      * Создает новый бан
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function add(array $args, string $method): Page
     {
@@ -647,11 +599,6 @@ class Bans extends Admin
 
     /**
      * Радактирует бан
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function edit(array $args, string $method): Page
     {
@@ -680,14 +627,6 @@ class Bans extends Admin
 
     /**
      * Обрабатывает новый/редактируемый бан
-     *
-     * @param bool $isNew
-     * @param array $args
-     * @param string $method
-     * @param array $userList
-     * @param array $data
-     *
-     * @return Page
      */
     protected function ban(bool $isNew, array $args, string $method, array $userList, array $data = []): Page
     {
@@ -799,11 +738,6 @@ class Bans extends Admin
 
     /**
      * Проверяет имя пользователя для бана
-     *
-     * @param Validator $v
-     * @param null|string $username
-     *
-     * @return null|string
      */
     public function vUserBan(Validator $v, $username)
     {
@@ -833,11 +767,6 @@ class Bans extends Admin
 
     /**
      * Проверяет ip для бана
-     *
-     * @param Validator $v
-     * @param null|string $ips
-     *
-     * @return null|string
      */
     public function vIpBan(Validator $v, $ips)
     {
@@ -871,11 +800,6 @@ class Bans extends Admin
 
     /**
      * Проверяет email для бана
-     *
-     * @param Validator $v
-     * @param null|string $email
-     *
-     * @return null|string
      */
     public function vEmailBan(Validator $v, $email)
     {
@@ -906,11 +830,6 @@ class Bans extends Admin
 
     /**
      * Проверяет дату окончания для бана
-     *
-     * @param Validator $v
-     * @param null|string $expire
-     *
-     * @return null|string
      */
     public function vExpireBan(Validator $v, $expire)
     {
@@ -925,11 +844,6 @@ class Bans extends Admin
 
     /**
      * Проверяет, что форма не пуста
-     *
-     * @param Validator $v
-     * @param null|string $value
-     *
-     * @return null|string
      */
     public function vSubmitBan(Validator $v, $value)
     {
@@ -947,13 +861,6 @@ class Bans extends Admin
 
     /**
      * Удаляет бан
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @throws RuntimeException
-     *
-     * @return Page
      */
     public function delete(array $args, string $method): Page
     {

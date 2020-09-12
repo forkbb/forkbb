@@ -43,11 +43,6 @@ class Search extends Page
 
     /**
      * Расширенный поиск
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function viewAdvanced(array $args, string $method): Page
     {
@@ -56,12 +51,6 @@ class Search extends Page
 
     /**
      * Поиск
-     *
-     * @param array $args
-     * @param string $method
-     * @param bool $advanced
-     *
-     * @return Page
      */
     public function view(array $args, string $method, bool $advanced = false): Page
     {
@@ -149,10 +138,6 @@ class Search extends Page
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @param Validator $v
-     *
-     * @return array
      */
     protected function formSearch(Validator $v = null): array
     {
@@ -193,10 +178,6 @@ class Search extends Page
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @param Validator $v
-     *
-     * @return array
      */
     protected function formSearchAdvanced(Validator $v = null): array
     {
@@ -324,12 +305,6 @@ class Search extends Page
 
     /**
      * Дополнительная проверка строки запроса
-     *
-     * @param Validator $v
-     * @param string $query
-     * @param string $method
-     *
-     * @return string
      */
     public function vCheckQuery(Validator $v, $query, $method)
     {
@@ -374,11 +349,6 @@ class Search extends Page
 
     /**
      * Дополнительная проверка разделов
-     *
-     * @param Validator $v
-     * @param string|array $forums
-     *
-     * @return string
      */
     public function vCheckForums(Validator $v, $forums)
     {
@@ -409,11 +379,6 @@ class Search extends Page
 
     /**
      * Дополнительная проверка автора
-     *
-     * @param Validator $v
-     * @param string|array $forums
-     *
-     * @return string
      */
     public function vCheckAuthor(Validator $v, $name)
     {
@@ -431,14 +396,6 @@ class Search extends Page
 
     /**
      * Типовые действия
-     *
-     * @param array $args
-     * @param string $method
-     * @param bool $advanced
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return Page
      */
     public function action(array $args, string $method, bool $advanced = false): Page
     {
@@ -574,12 +531,8 @@ class Search extends Page
     /**
      * Возвращает массив хлебных крошек
      * Заполняет массив титула страницы
-     *
-     * @param mixed $crumbs
-     *
-     * @return array
      */
-    protected function crumbs(...$crumbs): array
+    protected function crumbs(/* mixed */ ...$crumbs): array
     {
         $crumbs[] = [$this->c->Router->link('Search'), __('Search')];
 

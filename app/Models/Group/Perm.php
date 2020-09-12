@@ -17,12 +17,6 @@ class Perm extends Action
 
     /**
      * Получение таблицы разрешений для раздела
-     *
-     * @param Forum $forum
-     *
-     * @throws RuntimeException
-     *
-     * @return array
      */
     public function get(Forum $forum): array
     {
@@ -61,11 +55,6 @@ class Perm extends Action
 
     /**
      * Обновление разрешений для раздела
-     *
-     * @param Forum $forum
-     * @param array $perms
-     *
-     * @throws RuntimeException
      */
     public function update(Forum $forum, array $perms): void
     {
@@ -128,10 +117,6 @@ class Perm extends Action
 
     /**
      * Сброс разрешений для раздела
-     *
-     * @param Forum $forum
-     *
-     * @throws RuntimeException
      */
     public function reset(Forum $forum): void
     {
@@ -151,10 +136,6 @@ class Perm extends Action
 
     /**
      * Удаление разрешений для группы
-     *
-     * @param Group $group
-     *
-     * @throws RuntimeException
      */
     public function delete(Group $group): void
     {
@@ -174,11 +155,6 @@ class Perm extends Action
 
     /**
      * Копирование разрешений первой группы во вторую
-     *
-     * @param Group $from
-     * @param Group $to
-     *
-     * @throws RuntimeException
      */
     public function copy(Group $from, Group $to): void
     {

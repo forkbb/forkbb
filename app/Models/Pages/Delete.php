@@ -10,11 +10,6 @@ class Delete extends Page
 {
     /**
      * Удаление сообщения/темы
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function delete(array $args, string $method): Page
     {
@@ -77,12 +72,6 @@ class Delete extends Page
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @param array $args
-     * @param Post $post
-     * @param bool $deleteTopic
-     *
-     * @return array
      */
     protected function formDelete(array $args, Post $post, bool $deleteTopic): array
     {

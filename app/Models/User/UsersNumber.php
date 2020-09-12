@@ -9,10 +9,6 @@ class UsersNumber extends Action
 {
     /**
      * Подсчет количества пользователей в группе
-     *
-     * @param Group $group
-     *
-     * @return int
      */
     public function usersNumber(Group $group): int
     {

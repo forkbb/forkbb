@@ -10,10 +10,6 @@ class Ban extends Page
 {
     /**
      * Подготавливает данные для шаблона
-     *
-     * @param User $user
-     *
-     * @return Page
      */
     public function ban(User $user): Page
     {

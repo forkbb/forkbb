@@ -16,11 +16,6 @@ class Container
     protected $shared = [];
     protected $multiple = [];
 
-    /**
-     * Конструктор
-     *
-     * @param array config
-     */
     public function __construct(array $config = null)
     {
         if (empty($config)) {
@@ -38,8 +33,6 @@ class Container
 
     /**
      * Adding config
-     *
-     * @param array config
      */
     public function config(array $config): void
     {
@@ -57,14 +50,8 @@ class Container
 
     /**
      * Gets a service or parameter.
-     *
-     * @param string $id
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return mixed
      */
-    public function __get(string $id)
+    public function __get(string $id) /* : mixed */
     {
         if (\array_key_exists($id, $this->instances)) { //???? isset($this->instances[$id]) ||
             return $this->instances[$id];
@@ -118,11 +105,8 @@ class Container
     /**
      * Sets a service or parameter.
      * Provides a fluent interface.
-     *
-     * @param string $id
-     * @param mixed $service
      */
-    public function __set(string $id, $service): void
+    public function __set(string $id, /* mixed */ $service): void
     {
         if (false !== \strpos($id, '.')) {
             //????
@@ -133,13 +117,8 @@ class Container
 
     /**
      * Gets data from array.
-     *
-     * @param array $array
-     * @param array $tree
-     *
-     * @return mixed
      */
-    public function fromArray(array $array, array $tree)
+    public function fromArray(array $array, array $tree) /* : mixed */
     {
         $ptr = &$array;
         foreach ($tree as $s) {
@@ -156,15 +135,8 @@ class Container
     /**
      * Sets a parameter.
      * Provides a fluent interface.
-     *
-     * @param string $name  The parameter name
-     * @param mixed  $value The parameter value
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return Container
      */
-    public function setParameter(string $name, $value): Container
+    public function setParameter(string $name, /* mixed */ $value): Container
     {
         $segments = \explode('.', $name);
         $n        = \count($segments);
@@ -185,7 +157,7 @@ class Container
         return $this;
     }
 
-    protected function resolve($value)
+    protected function resolve(/* mixed */ $value) /* : mixed */
     {
         if (\is_string($value)) {
             if (false !== \strpos($value, '%')) {
@@ -219,9 +191,7 @@ class Container
     }
 
     /**
-     * @param string $name
-     *
-     * @return bool
+     * Проверяет на наличие инициализированного экземпляра объекта
      */
     public function isInit(string $name): bool
     {

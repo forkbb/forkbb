@@ -14,11 +14,6 @@ class Edit extends Page
 
     /**
      * Редактирование сообщения
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function edit(array $args, string $method): Page
     {
@@ -81,11 +76,6 @@ class Edit extends Page
 
     /**
      * Сохранение сообщения
-     *
-     * @param Post $post
-     * @param Validator $v
-     *
-     * @return Page
      */
     protected function endEdit(Post $post, Validator $v): Page
     {

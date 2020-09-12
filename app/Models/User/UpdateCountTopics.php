@@ -10,12 +10,8 @@ class UpdateCountTopics extends Action
 {
     /**
      * Обновляет число тем пользователя(ей)
-     *
-     * @param mixed ...$args
-     *
-     * @throws InvalidArgumentException
      */
-    public function updateCountTopics(...$args): void
+    public function updateCountTopics(/* mixed */ ...$args): void
     {
         $ids = [];
         foreach ($args as $arg) {

@@ -12,11 +12,6 @@ class Options extends Admin
 {
     /**
      * Редактирование натроек форума
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function edit(array $args, string $method): Page
     {
@@ -127,11 +122,6 @@ class Options extends Admin
 
     /**
      * Дополнительная проверка времени online
-     *
-     * @param Validator $v
-     * @param int $timeout
-     *
-     * @return int
      */
     public function vCheckTimeout(Validator $v, $timeout)
     {
@@ -144,11 +134,6 @@ class Options extends Admin
 
     /**
      * Дополнительная проверка каталога аватарок
-     *
-     * @param Validator $v
-     * @param string $dir
-     *
-     * @return string
      */
     public function vCheckDir(Validator $v, $dir)
     {
@@ -159,12 +144,6 @@ class Options extends Admin
 
     /**
      * Дополнительная проверка на пустоту другого поля
-     *
-     * @param Validator $v
-     * @param int $value
-     * @param string $attr
-     *
-     * @return int
      */
     public function vCheckEmpty(Validator $v, $value, $attr)
     {
@@ -180,10 +159,6 @@ class Options extends Admin
 
     /**
      * Формирует данные для формы
-     *
-     * @param Config $config
-     *
-     * @return array
      */
     protected function formEdit(Config $config): array
     {

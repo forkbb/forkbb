@@ -8,11 +8,6 @@ use function \ForkBB\__;
 
 class Maintenance extends Page
 {
-    /**
-     * Конструктор
-     *
-     * @param Container $container
-     */
     public function __construct(Container $container)
     {
         $container->Lang->load('common', $container->config->o_default_lang);

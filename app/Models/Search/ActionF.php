@@ -11,16 +11,8 @@ class ActionF extends Method
 {
     /**
      * Поисковые действия по разделам (подписка на разделы)
-     *
-     * @param string $action
-     * @param Forum $root
-     * @param int $uid
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return false|array
      */
-    public function actionF(string $action, Forum $root, int $uid = null)
+    public function actionF(string $action, Forum $root, int $uid = null) /* : array|false */
     {
         $forums = \array_keys($root->descendants);
         if ($root->id) {

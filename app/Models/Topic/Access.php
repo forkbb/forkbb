@@ -9,9 +9,6 @@ class Access extends Action
 {
     /**
      * Устанавливает/снимает флаг закрытия тем(ы)
-     *
-     * @param bool $open
-     * @param Topic ...$topics
      */
     public function access(bool $open, Topic ...$topics): void
     {

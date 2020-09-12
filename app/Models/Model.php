@@ -30,11 +30,6 @@ class Model
      */
     protected $zDepend = [];
 
-    /**
-     * Конструктор
-     *
-     * @param Container $container
-     */
     public function __construct(Container $container)
     {
         $this->c = $container;
@@ -42,12 +37,8 @@ class Model
 
     /**
      * Проверяет наличие свойства
-     *
-     * @param mixed $name
-     *
-     * @return bool
      */
-    public function __isset($name): bool
+    public function __isset(/* mixed */ $name): bool
     {
         return \array_key_exists($name, $this->zAttrs)
             || \array_key_exists($name, $this->zAttrsCalc)
@@ -56,10 +47,8 @@ class Model
 
     /**
      * Удаляет свойство
-     *
-     * @param mixed $name
      */
-    public function __unset($name): void
+    public function __unset(/* mixed */ $name): void
     {
         unset($this->zAttrs[$name]);
         $this->unsetCalc($name);
@@ -67,10 +56,8 @@ class Model
 
     /**
      * Удаляет вычисленные зависимые свойства
-     *
-     * @param mixed $name
      */
-    protected function unsetCalc($name): void
+    protected function unsetCalc(/* mixed */ $name): void
     {
         unset($this->zAttrsCalc[$name]);
         unset($this->zAttrsCalc['censor' . \ucfirst($name)]);
@@ -82,11 +69,8 @@ class Model
 
     /**
      * Устанавливает значение для свойства
-     *
-     * @param string $name
-     * @param mixed $value
      */
-    public function __set(string $name, $value): void
+    public function __set(string $name, /* mixed */ $value): void
     {
         $this->unsetCalc($name);
 
@@ -100,13 +84,8 @@ class Model
     /**
      * Устанавливает значение для свойства
      * Без вычислений, но со сбросом зависимых свойст и вычисленного значения
-     *
-     * @param string $name
-     * @param mixed $value
-     *
-     * @return Model
      */
-    public function setAttr(string $name, $value): Model
+    public function setAttr(string $name, /* mixed */ $value): Model
     {
         $this->unsetCalc($name);
         $this->zAttrs[$name] = $value;
@@ -117,10 +96,6 @@ class Model
     /**
      * Устанавливает значения для свойств
      * Сбрасывает вычисленные свойства
-     *
-     * @param array $attrs
-     *
-     * @return Model
      */
     public function setAttrs(array $attrs): Model
     {
@@ -132,12 +107,8 @@ class Model
 
     /**
      * Возвращает значение свойства
-     *
-     * @param string $name
-     *
-     * @return mixed
      */
-    public function __get(string $name)
+    public function __get(string $name) /* : mixed */
     {
         if (\array_key_exists($name, $this->zAttrsCalc)) {
             return $this->zAttrsCalc[$name];
@@ -158,26 +129,16 @@ class Model
     /**
      * Возвращает значение свойства
      * Без вычислений
-     *
-     * @param string $name
-     * @param mixed $default
-     *
-     * @return mixed
      */
-    public function getAttr(string $name, $default = null)
+    public function getAttr(string $name, /* mixed */ $default = null) /* : mixed */
     {
         return \array_key_exists($name, $this->zAttrs) ? $this->zAttrs[$name] : $default;
     }
 
     /**
      * Выполняет подгружаемый метод при его наличии
-     *
-     * @param string $name
-     * @param array $args
-     *
-     * @return mixed
      */
-    public function __call(string $name, array $args)
+    public function __call(string $name, array $args) /* : mixed */
     {
         $key = \str_replace(['ForkBB\\Models\\', 'ForkBB\\', '\\'], '', \get_class($this));
 

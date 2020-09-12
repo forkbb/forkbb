@@ -13,13 +13,7 @@ class Parser extends Parserus
      */
     protected $c;
 
-    /**
-     * Конструктор
-     *
-     * @param int $flag
-     * @param Container $container
-     */
-    public function __construct($flag, Container $container)
+    public function __construct(int $flag, Container $container)
     {
         $this->c = $container;
         parent::__construct($flag);
@@ -64,10 +58,6 @@ class Parser extends Parserus
 
     /**
      * Метод добавляет один bb-код
-     *
-     * @param array $bb
-     *
-     * @return Parserus
      */
     public function addBBCode(array $bb): Parserus
     {
@@ -82,11 +72,6 @@ class Parser extends Parserus
      * Проверяет разметку сообщения с бб-кодами
      * Пытается исправить неточности разметки
      * Генерирует ошибки разметки
-     *
-     * @param string $text
-     * @param bool $isSignature
-     *
-     * @return string
      */
     public function prepare(string $text, bool $isSignature = false): string
     {
@@ -113,11 +98,6 @@ class Parser extends Parserus
 
     /**
      * Преобразует бб-коды в html в сообщениях
-     *
-     * @param null|string $text
-     * @param bool $hideSmilies
-     *
-     * @return string
      */
     public function parseMessage(string $text = null, bool $hideSmilies = false): string
     {
@@ -144,10 +124,6 @@ class Parser extends Parserus
 
     /**
      * Преобразует бб-коды в html в подписях пользователей
-     *
-     * @param null|string $text
-     *
-     * @return string
      */
     public function parseSignature(string $text = null): string
     {

@@ -33,11 +33,6 @@ class Moderate extends Page
         'split'   => self::INTOPIC,
     ];
 
-    /**
-     * Конструктор
-     *
-     * @param Container $container
-     */
     public function __construct(Container $container)
     {
         parent::__construct($container);
@@ -89,11 +84,6 @@ class Moderate extends Page
 
     /**
      * Определяет действие
-     *
-     * @param Validator $v
-     * @param null|string $action
-     *
-     * @return string
      */
     public function vActionProcess(Validator $v, $action)
     {
@@ -156,10 +146,6 @@ class Moderate extends Page
 
     /**
      * Обрабатывает модерирование разделов
-     *
-     * @param array $args
-     *
-     * @return Page
      */
     public function action(array $args): Page
     {
@@ -532,11 +518,6 @@ class Moderate extends Page
 
     /**
      * Подготавливает массив данных для формы подтверждения
-     *
-     * @param array $objects
-     * @param Validator $v
-     *
-     * @return array
      */
     protected function formConfirm(array $objects, Validator $v): array
     {

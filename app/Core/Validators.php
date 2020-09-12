@@ -13,11 +13,6 @@ abstract class Validators
      */
     protected $c;
 
-    /**
-     * Конструктор
-     *
-     * @param Container $container
-     */
     public function __construct(Container $container)
     {
         $this->c = $container;
@@ -25,11 +20,6 @@ abstract class Validators
 
     /**
      * Выбрасывает исключение при отсутствии метода
-     *
-     * @param string $name
-     * @param array $args
-     *
-     * @throws RuntimeException
      */
     public function __call(string $name, array $args)
     {

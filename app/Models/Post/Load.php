@@ -27,13 +27,6 @@ class Load extends Action
      * Загружает сообщение из БД
      * Загружает тему этого сообщения в репозиторий topics
      * Проверка доступности
-     *
-     * @param int $id
-     * @param int $tid
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return null|Post
      */
     public function load(int $id, ?int $tid): ?Post
     {
@@ -77,9 +70,6 @@ class Load extends Action
 
     /**
      * Загружает список сообщений из БД
-     *
-     * @throws InvalidArgumentException
-     * @throws RuntimeException
      */
     public function loadByIds(array $ids, bool $withTopics): array
     {

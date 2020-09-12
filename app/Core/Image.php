@@ -27,15 +27,7 @@ class Image extends File
      */
     protected $pattern = '%^(?!.*?\.\.)([\w.\x5C/:-]*[\x5C/])?(\*|[\w.-]+)\.(\*|[a-z\d]+|\([a-z\d]+(?:\|[a-z\d]+)*\))$%i';
 
-    /**
-     * Конструктор
-     *
-     * @param string $path
-     * @param array $options
-     *
-     * @throws FileException
-     */
-    public function __construct($path, $options)
+    public function __construct(string $path, array $options)
     {
         parent::__construct($path, $options);
 
@@ -59,13 +51,6 @@ class Image extends File
 
     /**
      * Изменяет размер изображения при необходимости
-     *
-     * @param int $maxW
-     * @param int $maxH
-     *
-     * @throws FileException
-     *
-     * @return Image
      */
     public function resize(int $maxW, int $maxH): Image
     {
@@ -111,10 +96,6 @@ class Image extends File
 
     /**
      * Возвращает информацию о пути к сохраняемой картинке с учетом подстановок
-     *
-     * @param string $path
-     *
-     * @return null|array
      */
     protected function pathinfo(string $path): ?array
     {
@@ -137,10 +118,6 @@ class Image extends File
 
     /**
      * Создает/устанавливает права на картинку
-     *
-     * @param string $path
-     *
-     * @return bool
      */
     protected function fileProc(string $path): bool
     {

@@ -8,10 +8,6 @@ class Prepare extends Method
 {
     /**
      * Проверка и подготовка поискового запроса
-     *
-     * @param string $query
-     *
-     * @return bool
      */
     public function prepare(string $query): bool
     {
@@ -174,10 +170,6 @@ class Prepare extends Method
 
     /**
      * Восстановление текста запроса по массиву слов
-     *
-     * @param array $words
-     *
-     * @return string
      */
     protected function queryText(array $words): string
     {

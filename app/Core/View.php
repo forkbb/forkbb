@@ -24,12 +24,8 @@ class View extends Dirk
 
     /**
      * Compile Statements that start with "@"
-     *
-     * @param  string  $value
-     *
-     * @return mixed
      */
-    protected function compileStatements($value)
+    protected function compileStatements(/* string */ $value) /* : mixed */
     {
         return \preg_replace_callback(
             '/[ \t]*+\B@(\w+)(?: [ \t]*( \( ( (?>[^()]+) | (?2) )* \) ) )?/x',
@@ -46,12 +42,8 @@ class View extends Dirk
 
     /**
      * Трансформация скомпилированного шаблона
-     *
-     * @param string $value
-     *
-     * @return string
      */
-    protected function compileTransformations($value)
+    protected function compileTransformations(/* string */ $value) /* string */
     {
         if ('<?xml ' === \substr($value, 0, 6)) {
             $value = \str_replace(' \\ENT_HTML5 | \\ENT_QUOTES | \\ENT_SUBSTITUTE,', ' \\ENT_XML1,', $value);
@@ -60,7 +52,7 @@ class View extends Dirk
         $perfix = <<<'EOD'
 <?php
 
-use function \ForkBB\{__, num, dt, utc, size};
+use function \ForkBB\{__, num, dt, size};
 
 ?>
 EOD;
@@ -80,10 +72,6 @@ EOD;
 
     /**
      * Return result of templating
-     *
-     * @param Page $p
-     *
-     * @return null|string
      */
     public function rendering(Page $p): ?string
     {
@@ -118,11 +106,8 @@ EOD;
 
     /**
      * Compile the if statements
-     *
-     * @param  string  $expression
-     * @return string
      */
-    protected function compileIf($expression)
+    protected function compileIf(/* string */ $expression) /* : string */
     {
         if (\preg_match('%^\(\s*(\!\s*)?(\$[\w>-]+\[(?:[\'"]\w+[\'"]|\d+)\])\s*\)$%', $expression, $matches)) {
             if (empty($matches[1])) {

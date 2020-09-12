@@ -12,10 +12,6 @@ class Action extends Users
 {
     /**
      * Возвращает список имен пользователей
-     *
-     * @param array $users
-     *
-     * @return array
      */
     protected function nameList(array $users): array
     {
@@ -30,13 +26,6 @@ class Action extends Users
 
     /**
      * Подготавливает данные для шаблона(ов) действия
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @throws RuntimeException
-     *
-     * @return Page
      */
     public function view(array $args, string $method): Page
     {
@@ -109,11 +98,6 @@ class Action extends Users
 
     /**
      * Удаляет пользователей
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     protected function delete(array $args, string $method): Page
     {
@@ -166,10 +150,6 @@ class Action extends Users
 
     /**
      * Создает массив данных для формы удаления пользователей
-     *
-     * @param array $args
-     *
-     * @return array
      */
     protected function formDelete(array $args): array
     {
@@ -233,10 +213,6 @@ class Action extends Users
 
     /**
      * Возвращает список групп доступных для замены
-     *
-     * @param bool $profile
-     *
-     * @return array
      */
     protected function groupListForChange(bool $profile): array
     {
@@ -256,12 +232,6 @@ class Action extends Users
 
     /**
      * Изменяет группу пользователей
-     *
-     * @param array $args
-     * @param string $method
-     * @param bool $profile
-     *
-     * @return Page
      */
     protected function change(array $args, string $method, bool $profile): Page
     {
@@ -346,11 +316,6 @@ class Action extends Users
 
     /**
      * Проверяет пароль на совпадение с текущим пользователем
-     *
-     * @param Validator $v
-     * @param string $password
-     *
-     * @return string
      */
     public function vCheckPassword(Validator $v, $password)
     {
@@ -363,13 +328,6 @@ class Action extends Users
 
     /**
      * Создает массив данных для формы изменения группы пользователей
-     *
-     * @param array $args
-     * @param bool $profile
-     * @param string $linkCancel
-     * @param bool $checkPass
-     *
-     * @return array
      */
     protected function formChange(array $args, bool $profile, string $linkCancel, bool $checkPass): array
     {

@@ -13,11 +13,6 @@ abstract class Users extends Admin
     const ACTION_DEL = 'delete';
     const ACTION_CHG = 'change_group';
 
-    /**
-     * Конструктор
-     *
-     * @param Container $container
-     */
     public function __construct(Container $container)
     {
         parent::__construct($container);
@@ -30,12 +25,8 @@ abstract class Users extends Admin
 
     /**
      * Кодирует данные фильтра для url
-     *
-     * @param string|array $data
-     *
-     * @return string
      */
-    protected function encodeData($data): string
+    protected function encodeData(/* array|string */ $data): string
     {
         if (\is_array($data)) {
             unset($data['token']);
@@ -50,12 +41,8 @@ abstract class Users extends Admin
 
     /**
      * Декодирует данные фильтра из url
-     *
-     * @param string $data
-     *
-     * @return mixed
      */
-    protected function decodeData(string $data)
+    protected function decodeData(string $data) /* : mixed */
     {
         $data = \explode(':', $data);
 
@@ -81,14 +68,8 @@ abstract class Users extends Admin
 
     /**
      * Проверяет доступность действий над выбранными пользователями
-     *
-     * @param array $selected
-     * @param string $action
-     * @param bool $profile
-     *
-     * @return false|array
      */
-    protected function checkSelected(array $selected, string $action, bool $profile = false)
+    protected function checkSelected(array $selected, string $action, bool $profile = false) /* : array|false */
     {
         $selected = \array_map(function ($value) { // ????
             return (int) $value;

@@ -9,8 +9,6 @@ class Redirect extends Page
 {
     /**
      * Перенаправление на главную страницу форума
-     *
-     * @return Page
      */
     public function toIndex(): Page
     {
@@ -19,11 +17,6 @@ class Redirect extends Page
 
     /**
      * Задает адрес перехода
-     *
-     * @param string $marker
-     * @param array $args
-     *
-     * @return Page
      */
     public function page(string $marker, array $args = []): Page
     {
@@ -37,10 +30,6 @@ class Redirect extends Page
 
     /**
      * Задает ссылку для перехода
-     *
-     * @param string $url
-     *
-     * @return Page
      */
     public function url(string $url): Page
     {
@@ -51,10 +40,6 @@ class Redirect extends Page
 
     /**
      * Задает сообщение
-     *
-     * @param string $message
-     *
-     * @return Page
      */
     public function message(string $message): Page
     {
@@ -75,8 +60,6 @@ class Redirect extends Page
     /**
      * Возвращает HTTP заголовки страницы
      * $this->httpHeaders
-     *
-     * @return array
      */
     protected function getHttpHeaders(): array
     {

@@ -9,10 +9,6 @@ class IsUniqueName extends Action
 {
     /**
      * Проверка на уникальность имени пользователя
-     *
-     * @param User $user
-     *
-     * @return bool
      */
     public function isUniqueName(User $user): bool
     {

@@ -19,11 +19,6 @@ class Action
      */
     protected $manager;
 
-    /**
-     * Конструктор
-     *
-     * @param Container $container
-     */
     public function __construct(Container $container)
     {
         $this->c = $container;
@@ -31,10 +26,6 @@ class Action
 
     /**
      * Объявление менеджера
-     *
-     * @param ManagerModel $manager
-     *
-     * @return Action
      */
     public function setManager(ManagerModel $manager): Action
     {

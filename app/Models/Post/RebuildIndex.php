@@ -9,12 +9,6 @@ class RebuildIndex extends Action
 {
     /**
      * Перестройка поискового индекса
-     *
-     * @param int $start
-     * @param int $limit
-     * @param string $mode
-     *
-     * @return int
      */
     public function rebuildIndex(int $start, int $limit, string $mode): int
     {

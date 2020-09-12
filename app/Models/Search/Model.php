@@ -32,8 +32,6 @@ class Model extends ParentModel
 
     /**
      * Ссылка на результат поиска
-     *
-     * @return string
      */
     protected function getlink(): string
     {
@@ -45,8 +43,6 @@ class Model extends ParentModel
 
     /**
      * Массив страниц результата поиска
-     *
-     * @return array
      */
     protected function getpagination(): array
     {
@@ -55,8 +51,6 @@ class Model extends ParentModel
 
     /**
      * Статус наличия установленной страницы в результате поиска
-     *
-     * @return bool
      */
     public function hasPage(): bool
     {
@@ -65,11 +59,6 @@ class Model extends ParentModel
 
     /**
      * Очистка текста для дальнейшего разделения на слова
-     *
-     * @param string $text
-     * @param bool $indexing
-     *
-     * @return string
      */
     public function cleanText(string $text, bool $indexing = false): string
     {
@@ -99,11 +88,6 @@ class Model extends ParentModel
      *  стоп-слово
      *  слово из языков CJK
      *  длину
-     *
-     * @param string $word
-     * @param bool $indexing
-     *
-     * @return null|string
      */
     public function word(string $word, bool $indexing = false): ?string
     {
@@ -130,10 +114,6 @@ class Model extends ParentModel
 
     /**
      * Проверка слова на язык CJK
-     *
-     * @param string $word
-     *
-     * @return bool
      */
     public function isCJKWord(string $word): bool
     {

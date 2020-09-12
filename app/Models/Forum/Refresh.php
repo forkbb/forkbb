@@ -15,10 +15,6 @@ class Refresh extends Action
     /**
      * Возвращает список доступных разделов для группы
      * Обновляет кеш
-     *
-     * @param Group $group
-     *
-     * @return array
      */
     public function refresh(Group $group = null): array
     {
@@ -64,10 +60,6 @@ class Refresh extends Action
 
     /**
      * Преобразует строку со списком модераторов в массив
-     *
-     * @param string $str
-     *
-     * @return null|array
      */
     protected function formatModers(string $str): ?array
     {
@@ -78,11 +70,6 @@ class Refresh extends Action
 
     /**
      * Формирует список доступных разделов
-     *
-     * @param array $list
-     * @param int $parent
-     *
-     * @return array
      */
     protected function createList(array $list, int $parent = 0): array
     {

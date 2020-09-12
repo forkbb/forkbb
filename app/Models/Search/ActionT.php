@@ -11,16 +11,8 @@ class ActionT extends Method
 {
     /**
      * Поисковые действия по темам
-     *
-     * @param string $action
-     * @param Forum $root
-     * @param int $uid
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return false|array
      */
-    public function actionT(string $action, Forum $root, int $uid = null)
+    public function actionT(string $action, Forum $root, int $uid = null) /* : array|false */
     {
         $forums = \array_keys($root->descendants);
         if ($root->id) {

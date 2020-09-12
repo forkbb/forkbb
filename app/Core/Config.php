@@ -45,6 +45,7 @@ class Config
 
     /**
      * Строка массива конфига в файле конфигурации
+     * @var string
      */
     protected $configStr;
 
@@ -99,7 +100,7 @@ class Config
     /**
      * Очищает ключ от кавычек
      */
-    protected function clearKey($key)
+    protected function clearKey(/* mixed */ $key)
     {
         if (! \is_string($key)) {
             throw new ForkException('Config array cannot be parsed');
@@ -125,7 +126,7 @@ class Config
     /**
      * Создает массив конфига из токенов (массива подстрок)
      */
-    protected function parse($type): array
+    protected function parse(string $type): array
     {
         $result       = [];
         $value        = null;
@@ -281,7 +282,7 @@ class Config
         }
     }
 
-    protected function isFormat($data): bool
+    protected function isFormat(/* mixed */ $data): bool
     {
         return \is_array($data)
         && \array_key_exists('value', $data)
@@ -294,7 +295,7 @@ class Config
     /**
      * Добавляет/заменяет элемент в конфиг(е)
      */
-    public function add(string $path, $value, string $after = null): bool
+    public function add(string $path, /* mixed */ $value, string $after = null): bool
     {
         if (empty($this->configArray)) {
             $this->configArray = $this->getArray();

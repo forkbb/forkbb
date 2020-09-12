@@ -8,8 +8,6 @@ class Stats extends Action
 {
     /**
      * Возвращает данные по статистике пользователей
-     *
-     * @return array
      */
     public function stats(): array
     {

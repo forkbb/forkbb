@@ -10,10 +10,6 @@ class CalcStat extends Method
 {
     /**
      * Пересчитывает статистику темы
-     *
-     * @throws RuntimeException
-     *
-     * @return Topic
      */
     public function calcStat(): Topic
     {

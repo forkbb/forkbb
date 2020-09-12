@@ -10,12 +10,6 @@ class Save extends Action
 {
     /**
      * Обновляет тему в БД
-     *
-     * @param Topic $topic
-     *
-     * @throws RuntimeException
-     *
-     * @return Topic
      */
     public function update(Topic $topic): Topic
     {
@@ -54,12 +48,6 @@ class Save extends Action
 
     /**
      * Добавляет новую тему в БД
-     *
-     * @param Topic $topic
-     *
-     * @throws RuntimeException
-     *
-     * @return int
      */
     public function insert(Topic $topic): int
     {

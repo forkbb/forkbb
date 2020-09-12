@@ -22,14 +22,6 @@ class Execute extends Method
      * Поиск тем/сообщений в соответствии с поисковым запросом
      * Получение данных из таблицы кеша
      * Сохранение результатов в таблицу кеша
-     *
-     * @param Validator $v
-     * @param array $forumIdxs
-     * @param bool $flood
-     *
-     * @throws RuntimeException
-     *
-     * @return bool
      */
     public function execute(Validator $v, array $forumIdxs, bool $flood): bool
     {
@@ -107,11 +99,6 @@ class Execute extends Method
 
     /**
      * Поиск по словам рекурсивного списка
-     *
-     * @param array $words
-     * @param array $vars
-     *
-     * @return array
      */
     protected function exec(array $words, array $vars): array
     {
@@ -202,11 +189,6 @@ class Execute extends Method
 
     /**
      * Создание sql запросов к поисковому индексу и к сообщениям/темам
-     *
-     * @param Validator $v
-     * @param array $forumIdxs
-     *
-     * @return array
      */
     protected function buildSelect(Validator $v, array $forumIdxs): array
     {

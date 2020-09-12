@@ -9,8 +9,6 @@ class Load extends Method
 {
     /**
      * Загружает весь список нецензурных слов
-     *
-     * @return array
      */
     public function load(): array
     {

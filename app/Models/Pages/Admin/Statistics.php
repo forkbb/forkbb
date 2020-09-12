@@ -10,8 +10,6 @@ class Statistics extends Admin
 {
     /**
      * phpinfo
-     *
-     * @return Page
      */
     public function info(): Page
     {
@@ -66,8 +64,6 @@ class Statistics extends Admin
 
     /**
      * Подготавливает данные для шаблона
-     *
-     * @return Page
      */
     public function statistics(): Page
     {

@@ -13,11 +13,6 @@ class Admin extends Page
      */
     protected $aCrumbs = [];
 
-    /**
-     * Конструктор
-     *
-     * @param Container $container
-     */
     public function __construct(Container $container)
     {
         parent::__construct($container);
@@ -43,8 +38,6 @@ class Admin extends Page
 
     /**
      * Возвращает массив ссылок с описанием для построения навигации админки
-     *
-     * @return array
      */
     protected function aNavigation(): array
     {
@@ -83,12 +76,8 @@ class Admin extends Page
     /**
      * Возвращает массив хлебных крошек
      * Заполняет массив титула страницы
-     *
-     * @param mixed $crumbs
-     *
-     * @return array
      */
-    protected function crumbs(...$crumbs): array
+    protected function crumbs(/* mixed */ ...$crumbs): array
     {
         if ('index' !== $this->aIndex) {
             if (isset($this->aNavigation[$this->aIndex])) {

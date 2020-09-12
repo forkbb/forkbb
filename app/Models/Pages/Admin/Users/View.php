@@ -11,10 +11,6 @@ class View extends Users
 {
     /**
      * Генерирует список доступных групп пользователей
-     *
-     * @param bool $onlyKeys
-     *
-     * @return array
      */
     protected function groups(bool $onlyKeys = false): array
     {
@@ -34,12 +30,6 @@ class View extends Users
 
     /**
      * Подготавливает данные для шаблона поиска пользователей
-     *
-     * @param array $args
-     * @param string $method
-     * @param array $data
-     *
-     * @return Page
      */
     public function view(array $args, string $method, array $data = []): Page
     {
@@ -135,8 +125,6 @@ class View extends Users
 
     /**
      * Создает массив данных для кнопки добавления пользователя
-     *
-     * @return array
      */
     protected function formNew(): array
     {
@@ -164,10 +152,6 @@ class View extends Users
 
     /**
      * Создает массив данных для формы поиска
-     *
-     * @param array $data
-     *
-     * @return array
      */
     protected function form(array $data): array
     {
@@ -390,10 +374,6 @@ class View extends Users
 
     /**
      * Создает массив данных для формы поиска по IP
-     *
-     * @param array $data
-     *
-     * @return array
      */
     protected function formIP(array $data): array
     {
@@ -429,11 +409,6 @@ class View extends Users
 
     /**
      * Пересчитывает количество сообщений пользователей
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function recalculate(array $args, string $method): Page
     {
@@ -457,8 +432,6 @@ class View extends Users
 
     /**
      * Создает массив данных для формы пересчета количества сообщений
-     *
-     * @return array
      */
     protected function formRecalculate(): array
     {

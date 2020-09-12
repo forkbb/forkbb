@@ -11,11 +11,6 @@ class Config extends Profile
 {
     /**
      * Подготавливает данные для шаблона настройки форума
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function config(array $args, string $method): Page
     {
@@ -121,11 +116,6 @@ class Config extends Profile
 
     /**
      * Преобразовывает число меньше 10 в 0
-     *
-     * @param Validator $v
-     * @param int $value
-     *
-     * @return int
      */
     public function vToZero(Validator $v, $value)
     {
@@ -134,8 +124,6 @@ class Config extends Profile
 
     /**
      * Создает массив данных для формы
-     *
-     * @return array
      */
     protected function form(): array
     {

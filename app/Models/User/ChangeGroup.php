@@ -12,12 +12,6 @@ class ChangeGroup extends Action
 {
     /**
      * Обновляет группу указанных пользователей
-     *
-     * @param int $newGroupId
-     * @param User ...$users
-     *
-     * @throws InvalidArgumentException
-     * @throws RuntimeException
      */
     public function changeGroup(int $newGroupId, User ...$users): void
     {

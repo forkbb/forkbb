@@ -15,8 +15,6 @@ class Reports extends Admin
 
     /**
      * Выделяет данные из списка сигналов
-     *
-     * @param array $reports
      */
     protected function dataFromReports(array $reports): void
     {
@@ -31,8 +29,6 @@ class Reports extends Admin
 
     /**
      * Подготавливает данные для шаблона
-     *
-     * @return Page
      */
     public function view(): Page
     {
@@ -63,11 +59,6 @@ class Reports extends Admin
 
     /**
      * Формирует данные для формы
-     *
-     * @param bool $noZapped
-     * @param array $reports
-     *
-     * @return array
      */
     protected function form(bool $noZapped, array $reports): array
     {
@@ -141,11 +132,6 @@ class Reports extends Admin
 
     /**
      * Помечает сигнал обработанным
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function zap(array $args, string $method): Page
     {

@@ -73,12 +73,7 @@ class Router
         '(_backslash_)',
     ];
 
-    /**
-     * Конструктор
-     *
-     * @param string $base
-     */
-    public function __construct($base)
+    public function __construct(string $base)
     {
         $this->baseUrl = $base;
         $this->host    = \parse_url($base, PHP_URL_HOST);
@@ -88,14 +83,8 @@ class Router
 
     /**
      * Проверка url на принадлежность форуму
-     *
-     * @param mixed $url
-     * @param string $defMarker
-     * @param array $defArgs
-     *
-     * @return string
      */
-    public function validate($url, string $defMarker, array $defArgs = []): string
+    public function validate(/* mixed */ $url, string $defMarker, array $defArgs = []): string
     {
         if (
             \is_string($url)
@@ -115,11 +104,6 @@ class Router
 
     /**
      * Возвращает ссылку на основании маркера
-     *
-     * @param string $marker
-     * @param array $args
-     *
-     * @return string
      */
     public function link(string $marker = null, array $args = []): string
     {
@@ -173,11 +157,6 @@ class Router
 
     /**
      * Метод определяет маршрут
-     *
-     * @param string $method
-     * @param string $uri
-     *
-     * @return array
      */
     public function route(string $method, string $uri): array
     {
@@ -286,13 +265,8 @@ class Router
 
     /**
      * Метод добавляет маршрут
-     *
-     * @param string|array $method
-     * @param string $route
-     * @param string $handler
-     * @param string $marker
      */
-    public function add($method, string $route, string $handler, string $marker = null): void
+    public function add(/* array|string */ $method, string $route, string $handler, string $marker = null): void
     {
         if (\is_array($method)) {
             foreach ($method as $m) {
@@ -343,10 +317,6 @@ class Router
 
     /**
      * Метод разбирает динамический маршрут
-     *
-     * @param string $route
-     *
-     * @return array|null
      */
     protected function parse(string $route): ?array
     {

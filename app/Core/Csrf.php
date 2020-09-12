@@ -16,12 +16,6 @@ class Csrf
      */
     protected $key;
 
-    /**
-     * Конструктор
-     *
-     * @param Secury $secury
-     * @param string $key
-     */
     public function __construct(Secury $secury, string $key)
     {
         $this->secury = $secury;
@@ -30,14 +24,8 @@ class Csrf
 
     /**
      * Возвращает csrf токен
-     *
-     * @param string $marker
-     * @param array $args
-     * @param string|int $time
-     *
-     * @return string
      */
-    public function create(string $marker, array $args = [], $time = null): string
+    public function create(string $marker, array $args = [], /* string|int */ $time = null): string
     {
          unset($args['token'], $args['#']);
          \ksort($args);
@@ -52,12 +40,6 @@ class Csrf
 
     /**
      * Проверка токена
-     *
-     * @param mixed $token
-     * @param string $marker
-     * @param array $args
-     *
-     * @return bool
      */
     public function verify($token, string $marker, array $args = []): bool
     {

@@ -26,10 +26,6 @@ class Model extends DataModel
 
     /**
      * Получение родительского раздела
-     *
-     * @throws RuntimeException
-     *
-     * @return Forum|null
      */
     protected function getparent(): ?Forum
     {
@@ -59,8 +55,6 @@ class Model extends DataModel
 
     /**
      * Статус возможности ответа в теме
-     *
-     * @return bool
      */
     protected function getcanReply(): bool
     {
@@ -98,8 +92,6 @@ class Model extends DataModel
 
     /**
      * Ссылка на тему
-     *
-     * @return string
      */
     protected function getlink(): string
     {
@@ -114,8 +106,6 @@ class Model extends DataModel
 
     /**
      * Ссылка для ответа в теме
-     *
-     * @return string
      */
     protected function getlinkReply(): string
     {
@@ -129,8 +119,6 @@ class Model extends DataModel
 
     /**
      * Ссылка для перехода на последнее сообщение темы
-     *
-     * @return null|string
      */
     protected function getlinkLast(): ?string
     {
@@ -148,8 +136,6 @@ class Model extends DataModel
 
     /**
      * Ссылка для перехода на первое новое сообщение в теме
-     *
-     * @return string
      */
     protected function getlinkNew(): string
     {
@@ -218,10 +204,8 @@ class Model extends DataModel
 
     /**
      * Статус наличия новых сообщений в теме
-     *
-     * @return false|int
      */
-    protected function gethasNew()
+    protected function gethasNew() /* : int|false */
     {
         if (
             $this->c->user->isGuest
@@ -242,10 +226,8 @@ class Model extends DataModel
 
     /**
      * Статус наличия непрочитанных сообщений в теме
-     *
-     * @return false|int
      */
-    protected function gethasUnread()
+    protected function gethasUnread() /* int|false */
     {
         if (
             $this->c->user->isGuest
@@ -265,8 +247,6 @@ class Model extends DataModel
 
     /**
      * Номер первого нового сообщения в теме
-     *
-     * @return int
      */
     protected function getfirstNew(): int
     {
@@ -289,8 +269,6 @@ class Model extends DataModel
 
     /**
      * Номер первого не прочитанного сообщения в теме
-     *
-     * @return int
      */
     protected function getfirstUnread(): int
     {
@@ -313,10 +291,6 @@ class Model extends DataModel
 
     /**
      * Количество страниц в теме
-     *
-     * @throws RuntimeException
-     *
-     * @return int
      */
     protected function getnumPages(): int
     {
@@ -329,8 +303,6 @@ class Model extends DataModel
 
     /**
      * Массив страниц темы
-     *
-     * @return array
      */
     protected function getpagination(): array
     {
@@ -357,8 +329,6 @@ class Model extends DataModel
 
     /**
      * Статус наличия установленной страницы в теме
-     *
-     * @return bool
      */
     public function hasPage(): bool
     {
@@ -367,10 +337,6 @@ class Model extends DataModel
 
     /**
      * Возвращает массив сообщений с установленной страницы
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return array
      */
     public function pageData(): array
     {
@@ -409,8 +375,6 @@ class Model extends DataModel
 
     /**
      * Возвращает массив сообщений обзора темы
-     *
-     * @return array
      */
     public function review(): array
     {
@@ -437,8 +401,6 @@ class Model extends DataModel
 
     /**
      * Вычисляет страницу темы на которой находится данное сообщение
-     *
-     * @param int $pid
      */
     public function calcPage(int $pid): void
     {
@@ -458,8 +420,6 @@ class Model extends DataModel
 
     /**
      * Статус показа/подсчета просмотров темы
-     *
-     * @return bool
      */
     protected function getshowViews(): bool
     {

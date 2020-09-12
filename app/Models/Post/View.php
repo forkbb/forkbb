@@ -14,16 +14,8 @@ class View extends Action
 {
     /**
      * Возвращает список сообщений
-     *
-     * @param mixed $arg
-     * @param bool $review
-     *
-     * @throws InvalidArgumentException
-     * @throws RuntimeException
-     *
-     * @return array
      */
-    public function view($arg, bool $review = false): array
+    public function view(/* mixed */ $arg, bool $review = false): array
     {
         if (
             ! $arg instanceof Topic

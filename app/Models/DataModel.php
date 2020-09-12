@@ -22,10 +22,6 @@ class DataModel extends Model
      * Устанавливает значения для свойств
      * Сбрасывает вычисленные свойства
      * Флаги модификации свойст сброшены
-     *
-     * @param array $attrs
-     *
-     * @return Model
      */
     public function setAttrs(array $attrs): Model
     {
@@ -38,11 +34,6 @@ class DataModel extends Model
     /**
      * Перезаписывает свойства модели
      * Флаги модификации свойств сбрасываются/устанавливаются в зависимости от второго параметра
-     *
-     * @param array $attrs
-     * @param bool $setFlags
-     *
-     * @return DataModel
      */
     public function replAttrs(array $attrs, bool $setFlags = false): DataModel
     {
@@ -59,8 +50,6 @@ class DataModel extends Model
 
     /**
      * Возвращает значения свойств в массиве
-     *
-     * @return array
      */
     public function getAttrs(): array
     {
@@ -69,8 +58,6 @@ class DataModel extends Model
 
     /**
      * Возвращает массив имен измененных свойств модели
-     *
-     * @return array
      */
     public function getModified(): array
     {
@@ -96,11 +83,8 @@ class DataModel extends Model
 
     /**
      * Устанавливает значение для свойства
-     *
-     * @param string $name
-     * @param mixed $value
      */
-    public function __set(string $name, $value): void
+    public function __set(string $name, /* mixed */ $value): void
     {
         // без отслеживания
         if (0 === \strpos($name, '__')) {
@@ -149,12 +133,8 @@ class DataModel extends Model
 
     /**
      * Возвращает значение свойства
-     *
-     * @param string $name
-     *
-     * @return mixed
      */
-    public function __get(string $name)
+    public function __get(string $name) /* : mixed */
     {
         // без вычисления
         if (0 === \strpos($name, '__')) {
@@ -167,10 +147,8 @@ class DataModel extends Model
 
     /**
      * Удаляет свойство ????
-     *
-     * @param mixed $name
      */
-    public function __unset($name): void
+    public function __unset(/* mixed */ $name): void
     {
         $this->zModFlags[$name] = false;
 

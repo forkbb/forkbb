@@ -13,11 +13,6 @@ class Email extends Profile
 {
     /**
      * Изменяет почтовый адрес пользователя по ссылке активации
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function setEmail(array $args, string $method): Page
     {
@@ -47,11 +42,6 @@ class Email extends Profile
 
     /**
      * Подготавливает данные для шаблона смены почтового адреса
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function email(array $args, string $method): Page
     {
@@ -182,8 +172,6 @@ class Email extends Profile
 
     /**
      * Создает массив данных для формы
-     *
-     * @return array
      */
     protected function form(): array
     {

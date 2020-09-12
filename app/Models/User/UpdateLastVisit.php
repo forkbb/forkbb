@@ -10,10 +10,6 @@ class UpdateLastVisit extends Action
 {
     /**
      * Обновляет время последнего визита пользователя
-     *
-     * @param User $user
-     *
-     * @throws RuntimeException
      */
     public function updateLastVisit(User $user): void
     {

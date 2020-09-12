@@ -8,8 +8,6 @@ class Model extends ParentModel
 {
     /**
      * Загружает список смайлов из кеша/БД
-     *
-     * @return SmileyList\Model
      */
     public function init(): Model
     {

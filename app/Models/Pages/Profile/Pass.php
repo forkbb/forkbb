@@ -14,11 +14,6 @@ class Pass extends Profile
 {
     /**
      * Подготавливает данные для шаблона смены пароля
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function pass(array $args, string $method): Page
     {
@@ -96,8 +91,6 @@ class Pass extends Profile
 
     /**
      * Создает массив данных для формы
-     *
-     * @return array
      */
     protected function form(): array
     {

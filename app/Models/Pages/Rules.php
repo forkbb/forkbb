@@ -9,8 +9,6 @@ class Rules extends Page
 {
     /**
      * Подготавливает данные для шаблона
-     *
-     * @return Page
      */
     public function view(): Page
     {
@@ -32,8 +30,6 @@ class Rules extends Page
 
     /**
      * Подготавливает данные для шаблона
-     *
-     * @return Page
      */
     public function confirmation(): Page
     {
@@ -59,8 +55,6 @@ class Rules extends Page
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @return array
      */
     protected function formAgree(): array
     {

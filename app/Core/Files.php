@@ -58,14 +58,7 @@ class Files
      */
     protected $units = 'BKMGTPEZY';
 
-    /**
-     * Конструктор
-     *
-     * @param string|int $maxFileSize
-     * @param string|int $maxImgSize
-     *
-     */
-    public function __construct($maxFileSize, $maxImgSize)
+    public function __construct(/* string|int */ $maxFileSize, /* string|int */ $maxImgSize)
     {
         $init = \min(
             $this->size(\ini_get('upload_max_filesize')),
@@ -83,10 +76,6 @@ class Files
 
     /**
      * Возвращает максимальный размер картинки для загрузки
-     *
-     * @param string $unit
-     *
-     * @return int
      */
     public function maxImgSize(string $unit = null): int
     {
@@ -95,10 +84,6 @@ class Files
 
     /**
      * Возвращает максимальный размер файла для загрузки
-     *
-     * @param string $unit
-     *
-     * @return int
      */
     public function maxFileSize(string $unit = null): int
     {
@@ -108,15 +93,8 @@ class Files
     /**
      * Переводит объем информации из одних единиц в другие
      * кило = 1024, а не 1000
-     *
-     * @param int|float|string $value
-     * @param string $to
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return int|float
      */
-    public function size($value, string $to = null)
+    public function size(/* int|float|string */ $value, string $to = null) /* : int|float */
     {
         if (\is_string($value)) {
             if (! \preg_match('%^([^a-z]+)([a-z]+)?$%i', \trim($value), $matches)) {
@@ -157,8 +135,6 @@ class Files
 
     /**
      * Возвращает текст ошибки
-     *
-     * @return null|string
      */
     public function error(): ?string
     {
@@ -167,12 +143,8 @@ class Files
 
     /**
      * Определяет по содержимому файла расширение картинки????
-     *
-     * @param mixed $file
-     *
-     * @return string|null
      */
-    public function isImage($file): ?string
+    public function isImage(/* mixed */ $file): ?string
     {
         if (\is_string($file)) {
             if (\function_exists('\\exif_imagetype')) {
@@ -196,12 +168,8 @@ class Files
 
     /**
      * Получает файл(ы) из формы
-     *
-     * @param array $file
-     *
-     * @return mixed
      */
-    public function upload(array $file)
+    public function upload(array $file) /* : mixed */
     {
         $this->error = null;
 
@@ -245,12 +213,8 @@ class Files
 
     /**
      * Получает один файл из формы
-     *
-     * @param array $file
-     *
-     * @return mixed
      */
-    protected function uploadOneFile(array $file)
+    protected function uploadOneFile(array $file) /* : mixed */
     {
         if (\UPLOAD_ERR_OK !== $file['error']) {
             switch ($file['error']) {

@@ -29,8 +29,6 @@ class Install extends Admin
 
     /**
      * Возращает доступные типы БД
-     *
-     * @return array
      */
     protected function DBTypes(): array
     {
@@ -60,11 +58,6 @@ class Install extends Admin
 
     /**
      * Подготовка данных для страницы установки форума
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function install(array $args, string $method): Page
     {
@@ -388,11 +381,6 @@ class Install extends Admin
 
     /**
      * Обработка base URL
-     *
-     * @param Validator $v
-     * @param string $url
-     *
-     * @return string
      */
     public function vRtrimURL(Validator $v, $url)
     {
@@ -401,11 +389,6 @@ class Install extends Admin
 
     /**
      * Дополнительная проверка префикса
-     *
-     * @param Validator $v
-     * @param string $prefix
-     *
-     * @return string
      */
     public function vCheckPrefix(Validator $v, $prefix)
     {
@@ -425,11 +408,6 @@ class Install extends Admin
 
     /**
      * Полная проверка подключения к БД
-     *
-     * @param Validator $v
-     * @param string $dbhost
-     *
-     * @return string
      */
     public function vCheckHost(Validator $v, $dbhost)
     {
@@ -500,10 +478,6 @@ class Install extends Admin
 
     /**
      * Завершение установки форума
-     *
-     * @param Validator $v
-     *
-     * @return Page
      */
     protected function installEnd(Validator $v): Page
     {

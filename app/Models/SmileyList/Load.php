@@ -11,8 +11,6 @@ class Load extends Method
     /**
      * Заполняет модель данными из БД
      * Создает кеш
-     *
-     * @return SmileyList\Model
      */
     public function load(): SmileyList
     {

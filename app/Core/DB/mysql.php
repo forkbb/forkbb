@@ -47,12 +47,6 @@ class Mysql
         'double'    => 'i',
     ];
 
-    /**
-     * Конструктор
-     *
-     * @param DB $db
-     * @param string $prefix
-     */
     public function __construct(DB $db, string $prefix)
     {
         $this->db = $db;
@@ -64,11 +58,6 @@ class Mysql
 
     /**
      * Перехват неизвестных методов
-     *
-     * @param string $name
-     * @param array $args
-     *
-     * @throws PDOException
      */
     public function __call(string $name, array $args)
     {
@@ -77,10 +66,6 @@ class Mysql
 
     /**
      * Проверяет строку на допустимые символы
-     *
-     * @param string $str
-     *
-     * @throws PDOException
      */
     protected function testStr(string $str): void
     {
@@ -91,10 +76,6 @@ class Mysql
 
     /**
      * Операции над полями индексов: проверка, замена
-     *
-     * @param array $arr
-     *
-     * @return string
      */
     protected function replIdxs(array $arr): string
     {
@@ -116,10 +97,6 @@ class Mysql
 
     /**
      * Замена типа поля в соответствии с dbTypeRepl
-     *
-     * @param string $type
-     *
-     * @return string
      */
     protected function replType(string $type): string
     {
@@ -128,14 +105,8 @@ class Mysql
 
     /**
      * Конвертирует данные в строку для DEFAULT
-     *
-     * @param mixed $data
-     *
-     * @throws PDOException
-     *
-     * @return string
      */
-    protected function convToStr($data): string
+    protected function convToStr(/* mixed */ $data): string
     {
         if (\is_string($data)) {
             return $this->db->quote($data);
@@ -150,11 +121,6 @@ class Mysql
 
     /**
      * Проверяет наличие таблицы в базе
-     *
-     * @param string $table
-     * @param bool $noPrefix
-     *
-     * @return bool
      */
     public function tableExists(string $table, bool $noPrefix = false): bool
     {
@@ -180,12 +146,6 @@ class Mysql
 
     /**
      * Проверяет наличие поля в таблице
-     *
-     * @param string $table
-     * @param string $field
-     * @param bool $noPrefix
-     *
-     * @return bool
      */
     public function fieldExists(string $table, string $field, bool $noPrefix = false): bool
     {
@@ -212,12 +172,6 @@ class Mysql
 
     /**
      * Проверяет наличие индекса в таблице
-     *
-     * @param string $table
-     * @param string $index
-     * @param bool $noPrefix
-     *
-     * @return bool
      */
     public function indexExists(string $table, string $index, bool $noPrefix = false): bool
     {
@@ -245,12 +199,6 @@ class Mysql
 
     /**
      * Создает таблицу
-     *
-     * @param string $table
-     * @param array $schema
-     * @param bool $noPrefix
-     *
-     * @return bool
      */
     public function createTable(string $table, array $schema, bool $noPrefix = false): bool
     {
@@ -335,11 +283,6 @@ class Mysql
 
     /**
      * Удаляет таблицу
-     *
-     * @param string $table
-     * @param bool $noPrefix
-     *
-     * @return bool
      */
     public function dropTable(string $table, bool $noPrefix = false): bool
     {
@@ -352,12 +295,6 @@ class Mysql
 
     /**
      * Переименовывает таблицу
-     *
-     * @param string $old
-     * @param string $new
-     * @param bool $noPrefix
-     *
-     * @return bool
      */
     public function renameTable(string $old, string $new, bool $noPrefix = false): bool
     {
@@ -379,18 +316,8 @@ class Mysql
 
     /**
      * Добавляет поле в таблицу
-     *
-     * @param string $table
-     * @param string $field
-     * @param string $type
-     * @param bool $allowNull
-     * @param mixed $default
-     * @param string $after
-     * @param bool $noPrefix
-     *
-     * @return bool
      */
-    public function addField(string $table, string $field, string $type, bool $allowNull, $default = null, string $after = null, bool $noPrefix = false): bool
+    public function addField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $after = null, bool $noPrefix = false): bool
     {
         $this->testStr($table);
         $this->testStr($field);
@@ -419,18 +346,8 @@ class Mysql
 
     /**
      * Модифицирует поле в таблице
-     *
-     * @param string $table
-     * @param string $field
-     * @param string $type
-     * @param bool $allowNull
-     * @param mixed $default
-     * @param string $after
-     * @param bool $noPrefix
-     *
-     * @return bool
      */
-    public function alterField(string $table, string $field, string $type, bool $allowNull, $default = null, string $after = null, bool $noPrefix = false): bool
+    public function alterField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $after = null, bool $noPrefix = false): bool
     {
         $this->testStr($table);
         $this->testStr($field);
@@ -455,12 +372,6 @@ class Mysql
 
     /**
      * Удаляет поле из таблицы
-     *
-     * @param string $table
-     * @param string $field
-     * @param bool $noPrefix
-     *
-     * @return bool
      */
     public function dropField(string $table, string $field, bool $noPrefix = false): bool
     {
@@ -527,14 +438,6 @@ class Mysql
 
     /**
      * Добавляет индекс в таблицу
-     *
-     * @param string $table
-     * @param string $index
-     * @param array $fields
-     * @param bool $unique
-     * @param bool $noPrefix
-     *
-     * @return bool
      */
     public function addIndex(string $table, string $index, array $fields, bool $unique = false, bool $noPrefix = false): bool
     {
@@ -567,12 +470,6 @@ class Mysql
 
     /**
      * Удаляет индекс из таблицы
-     *
-     * @param string $table
-     * @param string $index
-     * @param bool $noPrefix
-     *
-     * @return bool
      */
     public function dropIndex(string $table, string $index, bool $noPrefix = false): bool
     {
@@ -600,11 +497,6 @@ class Mysql
 
     /**
      * Очищает таблицу
-     *
-     * @param string $table
-     * @param bool $noPrefix
-     *
-     * @return bool
      */
     public function truncateTable(string $table, bool $noPrefix = false): bool
     {
@@ -616,9 +508,7 @@ class Mysql
     }
 
     /**
-     * Статистика
-     *
-     * @return array
+     * Возвращает статистику
      */
     public function statistics(): array
     {
@@ -662,8 +552,6 @@ class Mysql
 
     /**
      * Формирует карту базы данных
-     *
-     * @return array
      */
     public function getMap(): array
     {

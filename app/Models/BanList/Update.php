@@ -10,10 +10,6 @@ class Update extends Method
 {
     /**
      * Обновляет бан
-     *
-     * @param array $ban
-     *
-     * @return BanList\Model
      */
     public function update(array $ban): BanList
     {

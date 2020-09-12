@@ -9,10 +9,6 @@ class UserInfoFromIP extends Action
 {
     /**
      * Возвращает массив данных с id пользователей (именами гостей)
-     *
-     * @param string $ip
-     *
-     * @return array
      */
     public function userInfoFromIP(string $ip): array
     {

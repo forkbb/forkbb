@@ -9,10 +9,6 @@ class Manager extends ManagerModel
 {
     /**
      * Создает новую модель сообщения
-     *
-     * @param array $attrs
-     *
-     * @return Post
      */
     public function create(array $attrs = []): Post
     {
@@ -22,11 +18,6 @@ class Manager extends ManagerModel
     /**
      * Получает сообщение по id
      * Получает сообщение по id и tid темы (с проверкой вхождения)
-     *
-     * @param int $id
-     * @param int $tid
-     *
-     * @return null|Post
      */
     public function load(int $id, int $tid = null): ?Post
     {
@@ -82,10 +73,6 @@ class Manager extends ManagerModel
 
     /**
      * Обновляет сообщение в БД
-     *
-     * @param Post $post
-     *
-     * @return Post
      */
     public function update(Post $post): Post
     {
@@ -94,10 +81,6 @@ class Manager extends ManagerModel
 
     /**
      * Добавляет новое сообщение в БД
-     *
-     * @param Post $post
-     *
-     * @return int
      */
     public function insert(Post $post): int
     {

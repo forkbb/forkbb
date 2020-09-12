@@ -11,10 +11,6 @@ class Misc extends Page
 {
     /**
      * Пометка раздела прочитанным
-     *
-     * @param array $args
-     *
-     * @return Page
      */
     public function markread(array $args): Page
     {

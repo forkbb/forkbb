@@ -12,8 +12,6 @@ class Forums extends Admin
 {
     /**
      * Составление списка категорий/разделов для выбора родителя
-     *
-     * @param Forum $forum
      */
     protected function calcList(Forum $forum): void
     {
@@ -57,10 +55,6 @@ class Forums extends Admin
 
     /**
      * Вычисление позиции для (нового) раздела
-     *
-     * @param Forum $forum
-     *
-     * @return int
      */
     protected function forumPos(Forum $forum): int
     {
@@ -86,11 +80,6 @@ class Forums extends Admin
 
     /**
      * Просмотр, редактирвоание и добавление разделов
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function view(array $args, string $method): Page
     {
@@ -133,8 +122,6 @@ class Forums extends Admin
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @return array
      */
     protected function formView(): array
     {
@@ -228,11 +215,6 @@ class Forums extends Admin
 
     /**
      * Удаление раздела
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function delete(array $args, string $method): Page
     {
@@ -293,11 +275,6 @@ class Forums extends Admin
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @param array $args
-     * @param Forum $forum
-     *
-     * @return array
      */
     protected function formDelete(array $args, Forum $forum): array
     {
@@ -353,11 +330,6 @@ class Forums extends Admin
     /**
      * Редактирование раздела
      * Создание нового раздела
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function edit(array $args, string $method): Page
     {
@@ -461,12 +433,6 @@ class Forums extends Admin
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @param array $args
-     * @param Forum $forum
-     * @param string $marker
-     *
-     * @return array
      */
     protected function formEdit(array $args, Forum $forum, string $marker): array
     {

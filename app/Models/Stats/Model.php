@@ -9,8 +9,6 @@ class Model extends ParentModel
 {
     /**
      * Загружает статистику из кеша/БД
-     *
-     * @return Models\Stats
      */
     public function init(): Model
     {
@@ -33,8 +31,6 @@ class Model extends ParentModel
 
     /**
      * Сбрасывает кеш статистики
-     *
-     * @return Models\Stats
      */
     public function reset(): Model
     {

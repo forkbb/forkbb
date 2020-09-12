@@ -11,10 +11,6 @@ class Manager extends ManagerModel
 {
     /**
      * Создает новую модель сигнала
-     *
-     * @param array $attrs
-     *
-     * @return Report
      */
     public function create(array $attrs = []): Report
     {
@@ -23,10 +19,6 @@ class Manager extends ManagerModel
 
     /**
      * Загружает сигнал из БД
-     *
-     * @param int $id
-     *
-     * @return null|Report
      */
     public function load(int $id): ?Report
     {
@@ -42,10 +34,6 @@ class Manager extends ManagerModel
 
     /**
      * Загрузка сигналов из БД
-     *
-     * @param bool $noZapped
-     *
-     * @return array
      */
     public function loadList(bool $noZapped = true): array
     {
@@ -64,10 +52,6 @@ class Manager extends ManagerModel
 
     /**
      * Обновляет сигнал в БД
-     *
-     * @param Report $report
-     *
-     * @return Report
      */
     public function update(Report $report): Report
     {
@@ -76,10 +60,6 @@ class Manager extends ManagerModel
 
     /**
      * Добавляет новый сигнал в БД
-     *
-     * @param Report $report
-     *
-     * @return int
      */
     public function insert(Report $report): int
     {
@@ -91,8 +71,6 @@ class Manager extends ManagerModel
 
     /**
      * Id последнего репорта
-     *
-     * @return int
      */
     public function lastId(): int
     {

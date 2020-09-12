@@ -16,15 +16,7 @@ class FileCache implements ProviderCacheInterface
      */
     protected $cacheDir;
 
-    /**
-     * Конструктор
-     *
-     * @param string $dir
-     *
-     * @throws InvalidArgumentException
-     * @throws RuntimeException
-     */
-    public function __construct($dir)
+    public function __construct(string $dir)
     {
         if (
             empty($dir)
@@ -41,13 +33,8 @@ class FileCache implements ProviderCacheInterface
 
     /**
      * Получение данных из кэша по ключу
-     *
-     * @param string $key
-     * @param mixed $default
-     *
-     * @return mixed
      */
-    public function get(string $key, $default = null)
+    public function get(string $key, /* mixed */ $default = null) /* : mixed */
     {
         $file = $this->file($key);
         if (\is_file($file)) {
@@ -69,16 +56,8 @@ class FileCache implements ProviderCacheInterface
 
     /**
      * Установка данных в кэш по ключу
-     *
-     * @param string $key
-     * @param mixed $value
-     * @param int $ttl
-     *
-     * @throws RuntimeException
-     *
-     * @return bool
      */
-    public function set(string $key, $value, int $ttl = null): bool
+    public function set(string $key, /* mixed */ $value, int $ttl = null): bool
     {
         $file    = $this->file($key);
         $expire  = null === $ttl || $ttl < 1 ? 0 : \time() + $ttl;
@@ -94,12 +73,6 @@ class FileCache implements ProviderCacheInterface
 
     /**
      * Удаление данных по ключу
-     *
-     * @param string $key
-     *
-     * @throws RuntimeException
-     *
-     * @return bool
      */
     public function delete(string $key): bool
     {
@@ -119,8 +92,6 @@ class FileCache implements ProviderCacheInterface
 
     /**
      * Очистка кэша
-     *
-     * @return bool
      */
     public function clear(): bool
     {
@@ -138,10 +109,6 @@ class FileCache implements ProviderCacheInterface
 
     /**
      * Проверка наличия ключа
-     *
-     * @param string $key
-     *
-     * @return bool
      */
     public function has(string $key): bool
     {
@@ -150,12 +117,6 @@ class FileCache implements ProviderCacheInterface
 
     /**
      * Генерация имени файла по ключу
-     *
-     * @param string $key
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return string
      */
     protected function file(string $key): string
     {
@@ -170,8 +131,6 @@ class FileCache implements ProviderCacheInterface
 
     /**
      * Очистка opcache и apc от закэшированного файла
-     *
-     * @param string $file
      */
     protected function invalidate(string $file): void
     {

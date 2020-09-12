@@ -10,10 +10,6 @@ class UserStat extends Action
 {
     /**
      * Возвращает массив данных использования ip для данного пользователя
-     *
-     * @param int $id
-     *
-     * @return array
      */
     public function userStat(int $id): array
     {

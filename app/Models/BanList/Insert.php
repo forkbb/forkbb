@@ -10,10 +10,6 @@ class Insert extends Method
 {
     /**
      * Добавляет новый бан
-     *
-     * @param array $ban
-     *
-     * @return BanList\Model
      */
     public function insert(array $ban): BanList
     {

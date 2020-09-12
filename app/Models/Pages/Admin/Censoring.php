@@ -10,11 +10,6 @@ class Censoring extends Admin
 {
     /**
      * Просмотр, редактирвоание и добавление запрещенных слов
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function edit(array $args, string $method): Page
     {
@@ -56,8 +51,6 @@ class Censoring extends Admin
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @return array
      */
     protected function formEdit(): array
     {

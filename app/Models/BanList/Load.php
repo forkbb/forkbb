@@ -10,8 +10,6 @@ class Load extends Method
     /**
      * Загружает список банов из БД
      * Создает кеш
-     *
-     * @return BanList\Model
      */
     public function load(): BanList
     {

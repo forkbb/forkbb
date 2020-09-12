@@ -12,11 +12,6 @@ class Result extends Users
 {
     /**
      * Подготавливает данные для шаблона найденных пользователей
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function view(array $args, string $method): Page
     {
@@ -157,10 +152,6 @@ class Result extends Users
 
     /**
      * Возвращает список id пользователей по ip
-     *
-     * @param string $ip
-     *
-     * @return array
      */
     protected function forIP(string $ip): array
     {
@@ -183,10 +174,6 @@ class Result extends Users
 
     /**
      * Возвращает список id пользователей по фильтру
-     *
-     * @param array $data
-     *
-     * @return array
      */
     protected function forFilter(array $data): array
     {
@@ -232,12 +219,6 @@ class Result extends Users
 
     /**
      * Создает массив данных для формы найденных по фильтру пользователей
-     *
-     * @param array $users
-     * @param int $number
-     * @param array $args
-     *
-     * @return array
      */
     protected function form(array $users, int $number, array $args): array
     {

@@ -13,11 +13,6 @@ class Delete extends Action
 {
     /**
      * Удаляет пользователя(ей)
-     *
-     * @param User ...$users
-     *
-     * @throws InvalidArgumentException
-     * @throws RuntimeException
      */
     public function delete(User ...$users): void
     {

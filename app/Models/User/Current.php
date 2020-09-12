@@ -11,8 +11,6 @@ class Current extends Action
     /**
      * Получение юзера на основе куки авторизации
      * Обновление куки аутентификации
-     *
-     * @return User
      */
     public function current(): User
     {
@@ -56,12 +54,6 @@ class Current extends Action
 
     /**
      * Загрузка данных в модель пользователя из базы
-     *
-     * @param int $id
-     *
-     * @throws RuntimeException
-     *
-     * @return User;
      */
     protected function load(int $id): User
     {
@@ -104,8 +96,6 @@ class Current extends Action
 
     /**
      * Возврат ip пользователя
-     *
-     * @return string
      */
     protected function getIp(): string
     {
@@ -114,8 +104,6 @@ class Current extends Action
 
     /**
      * Возврат юзер агента браузера пользователя
-     *
-     * @return string
      */
     protected function getUserAgent(): string
     {
@@ -126,10 +114,8 @@ class Current extends Action
     /**
      * Проверка на робота
      * Если робот, то возврат имени
-     *
-     * @return false|string
      */
-    protected function isBot()
+    protected function isBot() /* string|false */
     {
         $agent = $this->getUserAgent();
         if ('' == $agent) {
@@ -169,11 +155,6 @@ class Current extends Action
 
     /**
      * Выделяет имя робота из юзерагента
-     *
-     * @param string $agent
-     * @param string $agentL
-     *
-     * @return string
      */
     protected function nameBot(string $agent, string $agentL): string
     {
@@ -267,8 +248,6 @@ class Current extends Action
     /**
      * Возвращает имеющийся в наличии язык из HTTP_ACCEPT_LANGUAGE
      * или язык по умолчанию
-     *
-     * @return string
      */
     protected function getLangFromHTTP(): string
     {

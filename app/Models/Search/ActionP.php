@@ -11,16 +11,8 @@ class ActionP extends Method
 {
     /**
      * Поисковые действия по сообщениям
-     *
-     * @param string $action
-     * @param Forum $root
-     * @param int $uid
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return false|array
      */
-    public function actionP(string $action, Forum $root, int $uid = null)
+    public function actionP(string $action, Forum $root, int $uid = null) /* : array|false */
     {
         $forums = \array_keys($root->descendants);
         if ($root->id) {

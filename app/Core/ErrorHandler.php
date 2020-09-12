@@ -53,9 +53,6 @@ class ErrorHandler
         \E_USER_DEPRECATED   => 'E_USER_DEPRECATED',
     ];
 
-    /**
-     * Конструктор
-     */
     public function __construct()
     {
         $this->hidePath = \realpath(__DIR__ . '/../../');
@@ -68,9 +65,6 @@ class ErrorHandler
         $this->obLevel = \ob_get_level();
     }
 
-    /**
-     * Деструктор
-     */
     public function __destruct()
     {
         \restore_error_handler();
@@ -81,13 +75,6 @@ class ErrorHandler
 
     /**
      * Обрабатыет перехватываемые ошибки
-     *
-     * @param int    $type
-     * @param string $message
-     * @param string $file
-     * @param string $line
-     *
-     * @return bool
      */
     public function errorHandler(int $type, string $message, string $file, string $line): bool
     {
@@ -112,8 +99,6 @@ class ErrorHandler
 
     /**
      * Обрабатывает не перехваченные исключения
-     *
-     * @param Exception|Throwable $e
      */
     public function exceptionHandler(Throwable $e): void
     {
@@ -174,8 +159,6 @@ class ErrorHandler
 
     /**
      * Отправляет сообщение в лог
-     *
-     * @param array $error
      */
     protected function log(array $error): void
     {
@@ -282,10 +265,6 @@ EOT;
 
     /**
      * Формирует сообщение
-     *
-     * @param array $error
-     *
-     * @return string
      */
     protected function message(array $error): string
     {
@@ -297,10 +276,6 @@ EOT;
 
     /**
      * Экранирует спецсимволов HTML-сущностями
-     *
-     * @param  string $arg
-     *
-     * @return string
      */
     protected function e(string $arg): string
     {

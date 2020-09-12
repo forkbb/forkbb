@@ -11,11 +11,6 @@ class Stat extends Users
 {
     /**
      * Подготавливает данные для шаблона ip статистики для пользователя
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function view(array $args, string $method): Page
     {
@@ -64,11 +59,6 @@ class Stat extends Users
 
     /**
      * Создает массив данных для формы статистики пользователя по ip
-     *
-     * @param array $stat
-     * @param int $number
-     *
-     * @return array
      */
     protected function form(array $stat, int $number): array
     {

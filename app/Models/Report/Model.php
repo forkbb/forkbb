@@ -11,10 +11,6 @@ class Model extends DataModel
 {
     /**
      * Устанавливает автора
-     *
-     * @param User $user
-     *
-     * @throws RuntimeException
      */
     protected function setauthor(User $user): void
     {
@@ -27,10 +23,6 @@ class Model extends DataModel
 
     /**
      * Автор сигнала
-     *
-     * @throws RuntimeException
-     *
-     * @return User
      */
     protected function getauthor(): User
     {
@@ -55,10 +47,6 @@ class Model extends DataModel
 
     /**
      * Устанавливает расмотревшего
-     *
-     * @param User $user
-     *
-     * @throws RuntimeException
      */
     protected function setmarker(User $user): void
     {
@@ -74,10 +62,6 @@ class Model extends DataModel
 
     /**
      * Рвассмотревший
-     *
-     * @throws RuntimeException
-     *
-     * @return User
      */
     protected function getmarker(): User
     {
@@ -102,10 +86,6 @@ class Model extends DataModel
 
     /**
      * Устанавливает пост
-     *
-     * @param Post $post
-     *
-     * @throws RuntimeException
      */
     protected function setpost(Post $post): void
     {
@@ -118,10 +98,6 @@ class Model extends DataModel
 
     /**
      * Пост
-     *
-     * @throws RuntimeException
-     *
-     * @return null|Post
      */
     protected function getpost(): ?Post
     {

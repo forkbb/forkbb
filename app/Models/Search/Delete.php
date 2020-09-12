@@ -16,11 +16,6 @@ class Delete extends Method
 {
     /**
      * Удаление индекса
-     *
-     * @param DataModel ...$args
-     *
-     * @throws InvalidArgumentException
-     * @throws RuntimeException
      */
     public function delete(DataModel ...$args): void
     {

@@ -8,11 +8,6 @@ use function \ForkBB\__;
 
 abstract class Parser extends Admin
 {
-    /**
-     * Конструктор
-     *
-     * @param Container $container
-     */
     public function __construct(Container $container)
     {
         parent::__construct($container);

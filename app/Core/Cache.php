@@ -12,11 +12,6 @@ class Cache
      */
     protected $provider;
 
-    /**
-     * Конструктор
-     *
-     * @param ProviderInterfaces $provider
-     */
     public function __construct(ProviderCacheInterface $provider)
     {
         $this->provider = $provider;
@@ -24,37 +19,22 @@ class Cache
 
     /**
      * Получение данных из кэша по ключу
-     *
-     * @param string $key
-     * @param mixed $default
-     *
-     * @return mixed
      */
-    public function get(string $key, $default = null)
+    public function get(string $key, $default = null) /* : mixed */
     {
         return $this->provider->get($key, $default);
     }
 
     /**
      * Установка данных в кэш по ключу
-     *
-     * @param string $key
-     * @param mixed $value
-     * @param int $ttl
-     *
-     * @return bool
      */
-    public function set(string $key, $value, int $ttl = null): bool
+    public function set(string $key, /* mixed */ $value, int $ttl = null): bool
     {
         return $this->provider->set($key, $value, $ttl);
     }
 
     /**
      * Удаление данных по ключу
-     *
-     * @param string $key
-     *
-     * @return bool
      */
     public function delete(string $key): bool
     {
@@ -63,8 +43,6 @@ class Cache
 
     /**
      * Очистка кэша
-     *
-     * @return bool
      */
     public function clear(): bool
     {
@@ -73,10 +51,6 @@ class Cache
 
     /**
      * Проверка наличия ключа
-     *
-     * @param string $key
-     *
-     * @return bool
      */
     public function has(string $key): bool
     {

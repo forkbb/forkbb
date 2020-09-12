@@ -14,8 +14,6 @@ class Feed extends Action
 {
     /**
      * Загружает данные для feed
-     *
-     * @throws InvalidArgumentException
      */
     public function Feed(DataModel $model): array
     {

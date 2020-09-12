@@ -15,10 +15,8 @@ function _init(Container $c): void
 
 /**
  * Транслирует строку с подстановкой аргументов
- *
- * @param mixed ...$args
  */
-function __(?string $arg, ...$args): string
+function __(?string $arg, /* mixed */ ...$args): string
 {
     static $c;
 
@@ -65,10 +63,8 @@ function e(string $arg): string
 
 /**
  * Возвращает число в формате текущего пользователя
- *
- * @param mixed $number
  */
-function num($number, int $decimals = 0): string
+function num(/* mixed */ $number, int $decimals = 0): string
 {
     return \is_numeric($number)
         ? \number_format($number, $decimals, __('lang_decimal_point'), __('lang_thousands_sep'))

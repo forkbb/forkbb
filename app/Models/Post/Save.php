@@ -10,12 +10,6 @@ class Save extends Action
 {
     /**
      * Обновляет сообщение в БД
-     *
-     * @param Post $post
-     *
-     * @throws RuntimeException
-     *
-     * @return Post
      */
     public function update(Post $post): Post
     {
@@ -54,12 +48,6 @@ class Save extends Action
 
     /**
      * Добавляет новое сообщение в БД
-     *
-     * @param Post $post
-     *
-     * @throws RuntimeException
-     *
-     * @return int
      */
     public function insert(Post $post): int
     {

@@ -24,8 +24,6 @@ class Load extends Action
 
     /**
      * Загружает пользователя из БД
-     *
-     * @throws InvalidArgumentException
      */
     public function load(int $id): ?User
     {
@@ -43,8 +41,6 @@ class Load extends Action
 
     /**
      * Загружает список пользователей из БД
-     *
-     * @throws InvalidArgumentException
      */
     public function loadByIds(array $ids): array
     {
@@ -72,8 +68,6 @@ class Load extends Action
 
     /**
      * Возвращает результат
-     *
-     * @throws ForkException
      */
     protected function returnUser(string $query, array $vars): ?User
     {

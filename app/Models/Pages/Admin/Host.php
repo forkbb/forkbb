@@ -10,11 +10,6 @@ class Host extends Admin
 {
     /**
      * Подготавливает данные для шаблона
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function view(array $args, string $method): Page
     {

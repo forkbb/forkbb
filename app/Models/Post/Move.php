@@ -10,10 +10,6 @@ class Move extends Action
 {
     /**
      * Перенос сообщений
-     *
-     * @param bool $useFrom
-     * @param Topic $toTopic
-     * @param Post ...$posts
      */
     public function move(bool $useFrom, Topic $toTopic, Post ...$posts): void
     {

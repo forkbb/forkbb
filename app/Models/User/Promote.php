@@ -10,12 +10,6 @@ class Promote extends Action
 {
     /**
      * Обновляет данные пользователя
-     *
-     * @param mixed ...$args
-     *
-     * @throws RuntimeException
-     *
-     * @return int
      */
     public function promote(Group ...$args): int
     {

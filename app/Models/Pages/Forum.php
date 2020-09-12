@@ -10,10 +10,6 @@ class Forum extends Page
 {
     /**
      * Подготовка данных для шаблона
-     *
-     * @param array $args
-     *
-     * @return Page
      */
     public function view(array $args): Page
     {
@@ -76,10 +72,6 @@ class Forum extends Page
 
     /**
      * Создает массив данных для формы модерации
-     *
-     * @param ForumModel $forum
-     *
-     * @return array
      */
     protected function formMod(ForumModel $forum): array
     {

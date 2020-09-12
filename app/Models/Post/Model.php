@@ -11,11 +11,7 @@ use RuntimeException;
 class Model extends DataModel
 {
     /**
-     * Получение родительского раздела
-     *
-     * @throws RuntimeException
-     *
-     * @return Topic|null
+     * Получение родительской темы
      */
     protected function getparent(): ?Topic
     {
@@ -38,8 +34,6 @@ class Model extends DataModel
 
     /**
      * Ссылка на сообщение
-     *
-     * @return string
      */
     protected function getlink(): string
     {
@@ -53,12 +47,8 @@ class Model extends DataModel
 
     /**
      * Автор сообщения
-     *
-     * @throws RuntimeException
-     *
-     * @return User\Model
      */
-    protected function getuser(): User //????
+    protected function getuser(): User
     {
         $user = $this->c->users->load($this->poster_id);
 
@@ -76,11 +66,17 @@ class Model extends DataModel
         return $user;
     }
 
+    /**
+     * Статус возможности сигналить на сообщение
+     */
     protected function getcanReport(): bool
     {
         return ! $this->c->user->isAdmin && ! $this->c->user->isGuest;
     }
 
+    /**
+     * Ссылка на страницу отправки сигнала
+     */
     protected function getlinkReport(): string
     {
         return $this->c->Router->link(
@@ -91,6 +87,9 @@ class Model extends DataModel
         );
     }
 
+    /**
+     * Статус возможности удаления
+     */
     protected function getcanDelete(): bool
     {
         if ($this->c->user->isGuest) {
@@ -125,6 +124,9 @@ class Model extends DataModel
             );
     }
 
+    /**
+     * Ссылка на страницу удаления
+     */
     protected function getlinkDelete(): string
     {
         return $this->c->Router->link(
@@ -135,6 +137,9 @@ class Model extends DataModel
         );
     }
 
+    /**
+     * Статус возможности редактирования
+     */
     protected function getcanEdit(): bool
     {
         if ($this->c->user->isGuest) {
@@ -160,6 +165,9 @@ class Model extends DataModel
             );
     }
 
+    /**
+     * Ссылка на страницу редактирования
+     */
     protected function getlinkEdit(): string
     {
         return $this->c->Router->link(
@@ -170,11 +178,17 @@ class Model extends DataModel
         );
     }
 
+    /**
+     * Статус возможности ответа с цитированием
+     */
     protected function getcanQuote(): bool
     {
         return $this->parent->canReply;
     }
 
+    /**
+     * Ссылка на страницу ответа с цитированием
+     */
     protected function getlinkQuote(): string
     {
         return $this->c->Router->link(
@@ -188,8 +202,6 @@ class Model extends DataModel
 
     /**
      * HTML код сообщения
-     *
-     * @return string
      */
     public function html(): string
     {

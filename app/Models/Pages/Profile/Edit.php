@@ -20,11 +20,6 @@ class Edit extends Profile
 
     /**
      * Подготавливает данные для шаблона редактирования профиля
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function edit(array $args, string $method): Page
     {
@@ -162,11 +157,6 @@ class Edit extends Profile
 
     /**
      * Дополнительная проверка signature
-     *
-     * @param Validator $v
-     * @param string $signature
-     *
-     * @return string
      */
     public function vCheckSignature(Validator $v, $signature)
     {
@@ -212,8 +202,6 @@ class Edit extends Profile
 
     /**
      * Создает массив данных для формы
-     *
-     * @return array
      */
     protected function form(): array
     {

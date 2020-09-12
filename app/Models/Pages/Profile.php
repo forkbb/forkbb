@@ -11,12 +11,8 @@ abstract class Profile extends Page
 {
     /**
      * Инициализирует профиль
-     *
-     * @param string|int $id
-     *
-     * @return bool
      */
-    protected function initProfile($id): bool
+    protected function initProfile(/* string|int */ $id): bool
     {
         $this->curUser = $this->c->users->load((int) $id);
 
@@ -45,11 +41,6 @@ abstract class Profile extends Page
 
     /**
      * Проверяет пароль на совпадение с текущим пользователем
-     *
-     * @param Validator $v
-     * @param string $password
-     *
-     * @return string
      */
     public function vCheckPassword(Validator $v, $password)
     {
@@ -63,12 +54,8 @@ abstract class Profile extends Page
     /**
      * Возвращает массив хлебных крошек
      * Заполняет массив титула страницы
-     *
-     * @param mixed $crumbs
-     *
-     * @return array
      */
-    protected function crumbs(...$crumbs): array
+    protected function crumbs(/* mixed */ ...$crumbs): array
     {
         $crumbs[] = [$this->curUser->link, __('User %s', $this->curUser->username)];
         $crumbs[] = [$this->c->Router->link('Userlist'), __('User list')];
@@ -78,10 +65,6 @@ abstract class Profile extends Page
 
     /**
      * Формирует массив кнопок
-     *
-     * @param string $type
-     *
-     * @return array
      */
     protected function btns(string $type): array
     {
@@ -180,8 +163,6 @@ abstract class Profile extends Page
 
     /**
      * Формирует ссылку на изменение группы пользователя
-     *
-     * @return string
      */
     protected function linkChangeGroup(): string
     {

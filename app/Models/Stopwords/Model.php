@@ -8,8 +8,6 @@ class Model extends ParentModel
 {
     /**
      * Загружает список игнорируемых при индексации слов из кеша/БД
-     *
-     * @return Stopwords\Model
      */
     public function init(): Model
     {
@@ -28,8 +26,6 @@ class Model extends ParentModel
 
     /**
      * Генерирует id кэша на основе найденных файлов stopwords.txt
-     *
-     * @return string
      */
     protected function generateId(): string
     {
@@ -55,8 +51,6 @@ class Model extends ParentModel
 
     /**
      * Регенерация кэша массива слов с возвращением результата
-     *
-     * @return Stopwords\Model
      */
     protected function load(): Model
     {

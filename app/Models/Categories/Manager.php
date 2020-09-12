@@ -17,8 +17,6 @@ class Manager extends ManagerModel
 
     /**
      * Загрузка категорий из БД
-     *
-     * @return Manager
      */
     public function init(): Manager
     {

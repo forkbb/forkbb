@@ -10,12 +10,6 @@ class Save extends Action
 {
     /**
      * Обновляет данные пользователя
-     *
-     * @param User $user
-     *
-     * @throws RuntimeException
-     *
-     * @return User
      */
     public function update(User $user): User
     {
@@ -81,12 +75,6 @@ class Save extends Action
 
     /**
      * Добавляет новую запись в таблицу пользователей
-     *
-     * @param User $user
-     *
-     * @throws RuntimeException
-     *
-     * @return int
      */
     public function insert(User $user): int
     {

@@ -60,15 +60,7 @@ class File
      */
     protected $pattern = '%^(?!.*?\.\.)([\w.\x5C/:-]*[\x5C/])?(\*|[\w.-]+)\.(\*|[a-z\d]+)$%i';
 
-    /**
-     * Конструктор
-     *
-     * @param string $path
-     * @param array $options
-     *
-     * @throws FileException
-     */
-    public function __construct($path, $options)
+    public function __construct(string $path, array $options)
     {
         if (! \is_file($path)) {
             throw new FileException('File not found');
@@ -102,8 +94,6 @@ class File
 
     /**
      * Возвращает текст ошибки
-     *
-     * @return null|string
      */
     public function error(): ?string
     {
@@ -112,10 +102,6 @@ class File
 
     /**
      * Фильрует и переводит в латиницу(?) имя файла
-     *
-     * @param string $name
-     *
-     * @return string
      */
     protected function filterName(string $name): string
     {
@@ -137,10 +123,6 @@ class File
 
     /**
      * Возвращает информацию о пути к сохраняемому файлу с учетом подстановок
-     *
-     * @param string $path
-     *
-     * @return null|array
      */
     protected function pathinfo(string $path): ?array
     {
@@ -176,10 +158,6 @@ class File
 
     /**
      * Устанавливает флаг автопереименования файла
-     *
-     * @param bool $rename
-     *
-     * @return File
      */
     public function rename(bool $rename): File
     {
@@ -190,10 +168,6 @@ class File
 
     /**
      * Устанавливает флаг перезаписи файла
-     *
-     * @param bool $rewrite
-     *
-     * @return File
      */
     public function rewrite(bool $rewrite): File
     {
@@ -204,10 +178,6 @@ class File
 
     /**
      * Создает/проверяет на запись директорию
-     *
-     * @param string $dirname
-     *
-     * @return bool
      */
     protected function dirProc(string $dirname): bool
     {
@@ -229,10 +199,6 @@ class File
 
     /**
      * Создает/устанавливает права на файл
-     *
-     * @param string $path
-     *
-     * @return bool
      */
     protected function fileProc(string $path): bool
     {
@@ -256,10 +222,6 @@ class File
 
     /**
      * Сохраняет файл по указанному шаблону пути
-     *
-     * @param string $path
-     *
-     * @return bool
      */
     public function toFile(string $path): bool
     {

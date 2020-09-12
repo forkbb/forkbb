@@ -10,10 +10,6 @@ class Delete extends Method
     /**
      * Удаляет из банов записи по списку номеров
      * Обновляет кеш
-     *
-     * @param int ...$ids
-     *
-     * @return BanList\Model
      */
     public function delete(int ...$ids): BanList
     {

@@ -6,6 +6,9 @@ use ForkBB\Models\DataModel;
 
 class Model extends DataModel
 {
+    /**
+     * Ссылка на страницу редактирования
+     */
     protected function getlinkEdit(): string
     {
         return $this->c->Router->link(
@@ -16,6 +19,9 @@ class Model extends DataModel
         );
     }
 
+    /**
+     * Статус возможности удаления
+     */
     protected function getcanDelete(): bool
     {
         $notDeleted = [
@@ -28,6 +34,9 @@ class Model extends DataModel
         return ! \in_array($this->g_id, $notDeleted) && $this->g_id != $this->c->config->o_default_user_group;
     }
 
+    /**
+     * Ссылка на страницу удаления
+     */
     protected function getlinkDelete(): ?string
     {
         return $this->canDelete
@@ -40,16 +49,25 @@ class Model extends DataModel
             : null;
     }
 
+    /**
+     * Группа гостей
+     */
     protected function getgroupGuest(): bool
     {
         return $this->g_id === $this->c->GROUP_GUEST;
     }
 
+    /**
+     * Группа пользователей
+     */
     protected function getgroupMember(): bool
     {
         return $this->g_id === $this->c->GROUP_MEMBER;
     }
 
+    /**
+     * Группа админов
+     */
     protected function getgroupAdmin(): bool
     {
         return $this->g_id === $this->c->GROUP_ADMIN;

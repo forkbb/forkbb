@@ -19,7 +19,7 @@ class Email extends Validators
      * @param string $attrs
      * @param mixed $originalUser
      *
-     * @return string
+     * @return null|string
      */
     public function email(Validator $v, $email, $attrs, $originalUser): ?string
     {

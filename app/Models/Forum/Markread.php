@@ -11,12 +11,6 @@ class Markread extends Action
 {
     /**
      * Пометка всех тем/разделов прочитанными
-     *
-     * @param Forum $forum
-     *
-     * @throws RuntimeException
-     *
-     * @return Forum
      */
     public function markread(Forum $forum, User $user): Forum
     {

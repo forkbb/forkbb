@@ -12,8 +12,6 @@ class Userlist extends Page
 {
     /**
      * Возвращает список доступных групп
-     *
-     * @return array
      */
     protected function getgroupList(): array
     {
@@ -32,11 +30,6 @@ class Userlist extends Page
 
     /**
      * Список пользователей
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function view(array $args, string $method): Page
     {
@@ -161,10 +154,6 @@ class Userlist extends Page
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @param Validator $v
-     *
-     * @return array
      */
     protected function formUserlist(Validator $v): array
     {

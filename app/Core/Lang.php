@@ -31,11 +31,6 @@ class Lang
      */
     protected $langOrder = [];
 
-    /**
-     * Конструктор
-     *
-     * @param Container $container
-     */
     public function __construct(Container $container)
     {
         $this->c = $container;
@@ -43,13 +38,8 @@ class Lang
 
     /**
      * Ищет сообщение в загруженных переводах
-     *
-     * @param string $message
-     * @param string $lang
-     *
-     * @return string|array
      */
-    public function get(string $message, string $lang = null)
+    public function get(string $message, string $lang = null) /* : string|array */
     {
         if (
             null !== $lang
@@ -69,10 +59,6 @@ class Lang
 
     /**
      * Загружает языковой файл
-     *
-     * @param string $name
-     * @param string $lang
-     * @param string $path
      */
     public function load(string $name, string $lang = null, string $path = null): void
     {
@@ -118,12 +104,6 @@ class Lang
 
     /**
      * Получает массив перевода из строки (.po файла)
-     *
-     * @param string $str
-     *
-     * @throws RuntimeException
-     *
-     * @return array
      */
     protected function arrayFromStr(string $str): array
     {
@@ -271,10 +251,6 @@ class Lang
     /**
      * Получает оригинальную строку с удалением кавычек
      * и преобразованием спецсимволов
-     *
-     * @param string $line
-     *
-     * @return string
      */
     protected function originalLine(string $line): string
     {

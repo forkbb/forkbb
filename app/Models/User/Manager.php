@@ -9,10 +9,6 @@ class Manager extends ManagerModel
 {
     /**
      * Создает новую модель пользователя
-     *
-     * @param array $attrs
-     *
-     * @return User
      */
     public function create(array $attrs = []): User
     {
@@ -103,10 +99,6 @@ class Manager extends ManagerModel
 
     /**
      * Обновляет данные пользователя
-     *
-     * @param User $user
-     *
-     * @return User
      */
     public function update(User $user): User
     {
@@ -115,10 +107,6 @@ class Manager extends ManagerModel
 
     /**
      * Добавляет новую запись в таблицу пользователей
-     *
-     * @param User $user
-     *
-     * @return int
      */
     public function insert(User $user): int
     {

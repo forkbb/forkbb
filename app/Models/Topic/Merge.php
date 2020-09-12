@@ -12,12 +12,6 @@ class Merge extends Action
 {
     /**
      * Объединяет темы
-     *
-     * @param bool $redirect
-     * @param Topic ...$topics
-     *
-     * @throws InvalidArgumentException
-     * @throws RuntimeException
      */
     public function merge(bool $redirect, Topic ...$topics): void
     {

@@ -10,10 +10,6 @@ class Check extends Method
     /**
      * Проверяет наличие бана (для текущего пользователя) на основании имени пользователя/ip
      * Удаляет просроченные баны
-     *
-     * @param User $user
-     *
-     * @return bool
      */
     public function check(User $user): bool
     {

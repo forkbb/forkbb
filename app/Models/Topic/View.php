@@ -14,15 +14,8 @@ class View extends Action
 {
     /**
      * Возвращает список тем
-     *
-     * @param mixed $arg
-     *
-     * @throws InvalidArgumentException
-     * @throws RuntimeException
-     *
-     * @return array
      */
-    public function view($arg): array
+    public function view(/* mixed */ $arg): array
     {
         if ($arg instanceof Forum) {
             $full = false;

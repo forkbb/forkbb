@@ -9,9 +9,6 @@ class Delete extends Action
 {
     /**
      * Удаляет группу
-     *
-     * @param Group $group
-     * @param Group $new
      */
     public function delete(Group $group, Group $new = null): void
     {

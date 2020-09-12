@@ -10,11 +10,6 @@ trait PostValidatorTrait
 {
     /**
      * Дополнительная проверка subject
-     *
-     * @param Validator $v
-     * @param string $subject
-     *
-     * @return string
      */
     public function vCheckSubject(Validator $v, $subject, $attr, $executive)
     {
@@ -36,11 +31,6 @@ trait PostValidatorTrait
 
     /**
      * Дополнительная проверка message
-     *
-     * @param Validator $v
-     * @param string $message
-     *
-     * @return string
      */
     public function vCheckMessage(Validator $v, $message, $attr, $executive)
     {
@@ -81,11 +71,6 @@ trait PostValidatorTrait
 
     /**
      * Проверка времени ограничения флуда
-     *
-     * @param Validator $v
-     * @param null|string $submit
-     *
-     * @return null|string
      */
     public function vCheckTimeout(Validator $v, $submit)
     {
@@ -104,14 +89,6 @@ trait PostValidatorTrait
 
     /**
      * Подготовка валидатора к проверке данных из формы создания темы/сообщения
-     *
-     * @param Model $model
-     * @param string $marker
-     * @param array $args
-     * @param bool $editPost
-     * @param bool $editSubject
-     *
-     * @return Validator
      */
     protected function messageValidator(Model $model, string $marker, array $args, bool $editPost = false, bool $editSubject = false): Validator
     {

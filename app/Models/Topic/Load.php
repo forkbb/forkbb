@@ -37,12 +37,6 @@ class Load extends Action
 
     /**
      * Загружает тему из БД
-     *
-     * @param int $id
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return null|Topic
      */
     public function load(int $id): ?Topic
     {
@@ -79,8 +73,6 @@ class Load extends Action
 
     /**
      * Загружает список тем из БД
-     *
-     * @throws InvalidArgumentException
      */
     public function loadByIds(array $ids, bool $full): array
     {

@@ -24,11 +24,6 @@ class Update extends Admin
 
     const CONFIG_FILE = 'main.php';
 
-    /**
-     * Конструктор
-     *
-     * @param Container $container
-     */
     public function __construct(Container $container)
     {
         parent::__construct($container);
@@ -57,8 +52,6 @@ class Update extends Admin
 
     /**
      * Возвращает массив ссылок с описанием для построения навигации админки
-     *
-     * @return array
      */
     protected function aNavigation(): array
     {
@@ -120,11 +113,6 @@ class Update extends Admin
 
     /**
      * Подготавливает данные для страницы обновления форума
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function view(array $args, string $method): Page
     {
@@ -263,11 +251,6 @@ class Update extends Admin
 
     /**
      * Проверяет пароль базы
-     *
-     * @param Validator $v
-     * @param string $dbpass
-     *
-     * @return string
      */
     public function vCheckPass(Validator $v, $dbpass)
     {
@@ -345,11 +328,6 @@ class Update extends Admin
 
     /**
      * Обновляет форум
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function stage(array $args, string $method): Page
     {

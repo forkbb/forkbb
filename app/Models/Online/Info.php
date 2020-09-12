@@ -9,8 +9,6 @@ class Info extends Method
 {
     /**
      * Получение информации об онлайн посетителях
-     *
-     * @return null|Online\Model
      */
     public function info(): ?Online
     {

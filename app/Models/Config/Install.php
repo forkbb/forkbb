@@ -9,8 +9,6 @@ class Install extends Method
 {
     /**
      * Заполняет модель данными
-     *
-     * @return Config
      */
     public function install(): Config
     {

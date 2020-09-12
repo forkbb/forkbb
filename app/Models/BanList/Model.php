@@ -8,8 +8,6 @@ class Model extends ParentModel
 {
     /**
      * Загружает список банов из кеша/БД
-     *
-     * @return BanList\Model
      */
     public function init(): Model
     {
@@ -33,13 +31,8 @@ class Model extends ParentModel
 
     /**
      * Фильтрует значение
-     *
-     * @param mixed $val
-     * @param bool $toLower
-     *
-     * @return null|string
      */
-    public function trimToNull($val, bool $toLower = false): ?string
+    public function trimToNull(/* mixed */ $val, bool $toLower = false): ?string
     {
         $val = \trim($val);
         if ('' == $val) {
@@ -53,10 +46,6 @@ class Model extends ParentModel
 
     /**
      * Переводит ip/ip-подсеть в hex представление
-     *
-     * @param string $ip
-     *
-     * @return string
      */
     public function ip2hex(string $ip): string
     {

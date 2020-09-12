@@ -10,11 +10,6 @@ class View extends Profile
 {
     /**
      * Подготавливает данные для шаблона просмотра профиля
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function view(array $args, string $method): Page
     {
@@ -36,8 +31,6 @@ class View extends Profile
 
     /**
      * Создает массив данных для формы
-     *
-     * @return array
      */
     protected function form(): array
     {

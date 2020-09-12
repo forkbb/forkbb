@@ -13,11 +13,6 @@ class Update
      */
     protected $c;
 
-    /**
-     * Конструктор
-     *
-     * @param Container $container
-     */
     public function __construct(Container $container)
     {
         $this->c = $container;
@@ -25,8 +20,6 @@ class Update
 
     /**
      * Маршрутиризация
-     *
-     * @return Page
      */
     public function routing(): Page
     {

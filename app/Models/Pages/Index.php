@@ -9,8 +9,6 @@ class Index extends Page
 {
     /**
      * Подготовка данных для шаблона
-     *
-     * @return Page
      */
     public function view(): Page
     {

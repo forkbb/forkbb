@@ -12,10 +12,6 @@ class Auth extends Page
 {
     /**
      * Выход пользователя
-     *
-     * @param array $args
-     *
-     * @return Page
      */
     public function logout(array $args): Page
     {
@@ -34,11 +30,6 @@ class Auth extends Page
 
     /**
      * Вход на форум
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function login(array $args, string $method): Page
     {
@@ -87,14 +78,8 @@ class Auth extends Page
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @param string $username
-     * @param mixed $save
-     * @param string $redirect
-     *
-     * @return array
      */
-    protected function formLogin(string $username, $save, string $redirect): array
+    protected function formLogin(string $username, /* mixed */ $save, string $redirect): array
     {
         return [
             'action' => $this->c->Router->link('Login'),
@@ -141,11 +126,6 @@ class Auth extends Page
 
     /**
      * Проверка по базе и вход
-     *
-     * @param Validator $v
-     * @param string $password
-     *
-     * @return string
      */
     public function vLoginProcess(Validator $v, $password)
     {
@@ -181,11 +161,6 @@ class Auth extends Page
 
     /**
      * Запрос на смену кодовой фразы
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function forget(array $args, string $method): Page
     {
@@ -270,10 +245,6 @@ class Auth extends Page
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @param string $email
-     *
-     * @return array
      */
     protected function formForget(string $email): array
     {
@@ -310,11 +281,6 @@ class Auth extends Page
 
     /**
      * Смена кодовой фразы
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function changePass(array $args, string $method): Page
     {
@@ -384,10 +350,6 @@ class Auth extends Page
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @param array $args
-     *
-     * @return array
      */
     protected function formChange(array $args): array
     {

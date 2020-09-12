@@ -10,12 +10,6 @@ class Save extends Action
 {
     /**
      * Обновляет репорт в БД
-     *
-     * @param Report $report
-     *
-     * @throws RuntimeException
-     *
-     * @return Report
      */
     public function update(Report $report): Report
     {
@@ -54,12 +48,6 @@ class Save extends Action
 
     /**
      * Добавляет новый репорт в БД
-     *
-     * @param Report $report
-     *
-     * @throws RuntimeException
-     *
-     * @return int
      */
     public function insert(Report $report): int
     {

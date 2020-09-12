@@ -12,11 +12,6 @@ class Categories extends Admin
 {
     /**
      * Просмотр, редактирвоание и добавление категорий
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function view(array $args, string $method): Page
     {
@@ -64,8 +59,6 @@ class Categories extends Admin
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @return array
      */
     protected function formEdit(): array
     {
@@ -139,11 +132,6 @@ class Categories extends Admin
 
     /**
      * Удаление категорий
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function delete(array $args, string $method): Page
     {
@@ -201,11 +189,6 @@ class Categories extends Admin
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @param array $args
-     * @param array $category
-     *
-     * @return array
      */
     protected function formDelete(array $args, array $category): array
     {

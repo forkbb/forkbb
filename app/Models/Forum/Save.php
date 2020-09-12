@@ -10,12 +10,6 @@ class Save extends Action
 {
     /**
      * Обновляет раздел в БД
-     *
-     * @param Forum $forum
-     *
-     * @throws RuntimeException
-     *
-     * @return Forum
      */
     public function update(Forum $forum): Forum
     {
@@ -71,12 +65,6 @@ class Save extends Action
 
     /**
      * Добавляет новый раздел в БД
-     *
-     * @param Forum $forum
-     *
-     * @throws RuntimeException
-     *
-     * @return int
      */
     public function insert(Forum $forum): int
     {

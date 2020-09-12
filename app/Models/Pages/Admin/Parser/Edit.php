@@ -12,11 +12,6 @@ class Edit extends Parser
 {
     /**
      * Редактирование натроек парсера
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function edit(array $args, string $method): Page
     {
@@ -68,10 +63,6 @@ class Edit extends Parser
 
     /**
      * Формирует данные для формы
-     *
-     * @param Config $config
-     *
-     * @return array
      */
     protected function formEdit(Config $config): array
     {

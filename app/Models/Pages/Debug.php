@@ -8,8 +8,6 @@ class Debug extends Page
 {
     /**
      * Подготавливает данные для шаблона
-     *
-     * @return Page
      */
     public function debug(): Page
     {
@@ -48,8 +46,6 @@ class Debug extends Page
     /**
      * Возвращает HTTP заголовки страницы
      * $this->httpHeaders
-     *
-     * @return array
      */
     protected function getHttpHeaders(): array
     {

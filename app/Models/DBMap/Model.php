@@ -8,8 +8,6 @@ class Model extends ParentModel
 {
     /**
      * Загружает карту БД из кеша/БД
-     *
-     * @return DBMap\Model
      */
     public function init(): Model
     {
@@ -26,8 +24,6 @@ class Model extends ParentModel
 
     /**
      * Сбрасывает кеш карты БД
-     *
-     * @return DBMap\Model
      */
     public function reset(): Model
     {

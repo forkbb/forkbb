@@ -19,11 +19,6 @@ class Method
      */
     protected $model;
 
-    /**
-     * Конструктор
-     *
-     * @param Container $container
-     */
     public function __construct(Container $container)
     {
         $this->c = $container;
@@ -31,10 +26,6 @@ class Method
 
     /**
      * Объявление модели
-     *
-     * @param Model $model
-     *
-     * @return Method
      */
     public function setModel(Model $model): Method
     {

@@ -12,10 +12,6 @@ class Topic extends Page
 
     /**
      * Переход к первому новому сообщению темы (или в конец)
-     *
-     * @param array $args
-     *
-     * @return Page
      */
     public function viewNew(array $args): Page
     {
@@ -24,10 +20,6 @@ class Topic extends Page
 
     /**
      * Переход к первому непрочитанному сообщению (или в конец)
-     *
-     * @param array $args
-     *
-     * @return Page
      */
     public function viewUnread(array $args): Page
     {
@@ -36,10 +28,6 @@ class Topic extends Page
 
     /**
      * Переход к последнему сообщению темы
-     *
-     * @param array $args
-     *
-     * @return Page
      */
     public function viewLast(array $args): Page
     {
@@ -49,10 +37,6 @@ class Topic extends Page
 
     /**
      * Просмотр темы по номеру сообщения
-     *
-     * @param array $args
-     *
-     * @return Page
      */
     public function viewPost(array $args): Page
     {
@@ -61,10 +45,6 @@ class Topic extends Page
 
     /**
      * Просмотр темы по ее номеру
-     *
-     * @param array $args
-     *
-     * @return Page
      */
     public function viewTopic(array $args): Page
     {
@@ -72,10 +52,7 @@ class Topic extends Page
     }
 
     /**
-     * @param string $type
-     * @param TopicModel $topic
-     *
-     * @param Page
+     * Просмотр
      */
     protected function go(string $type, TopicModel $topic): Page
     {
@@ -98,11 +75,6 @@ class Topic extends Page
 
     /**
      * Подготовка данных для шаблона
-     *
-     * @param string $type
-     * @param array $args
-     *
-     * @return Page
      */
     protected function view(string $type, array $args): Page
     {
@@ -198,10 +170,6 @@ class Topic extends Page
 
     /**
      * Создает массив данных для формы модерации
-     *
-     * @param TopicModel $topic
-     *
-     * @return array
      */
     protected function formMod(TopicModel $topic): array
     {

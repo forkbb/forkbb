@@ -16,12 +16,8 @@ class Rules extends Model
 
     /**
      * Возвращает значение свойства
-     *
-     * @param string $name
-     *
-     * @return mixed
      */
-    public function __get(string $name)
+    public function __get(string $name) /* : mixed */
     {
         if (true === $this->ready) {
             return parent::__get($name);

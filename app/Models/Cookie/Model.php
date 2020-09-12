@@ -17,12 +17,6 @@ class Model extends ParentModel
      */
     protected $noSet = false;
 
-    /**
-     * Конструктор
-     *
-     * @param array $options
-     * @param Container $container
-     */
     public function __construct(array $options, Container $container)
     {
         parent::__construct($container);
@@ -43,26 +37,15 @@ class Model extends ParentModel
 
     /**
      * Устанавливает куку
-     *
-     * @param string $name
-     * @param string $value
-     * @param int $expire
-     * @param string $path
-     * @param string $domain
-     * @param bool $secure
-     * @param bool $httponly
-     * @param string $samesite
-     *
-     * @return bool
      */
     public function set(
         string $name,
         string $value,
-        int $expire = 0,
-        string $path = null,
-        string $domain = null,
-        bool $secure = false,
-        bool $httponly = true,
+        int    $expire   = 0,
+        string $path     = null,
+        string $domain   = null,
+        bool   $secure   = false,
+        bool   $httponly = true,
         string $samesite = null
     ): bool {
         $name   = $this->prefix . $name;
@@ -88,13 +71,8 @@ class Model extends ParentModel
 
     /**
      * Получает значение куки
-     *
-     * @param string $name
-     * @param mixed $default
-     *
-     * @return mixed
      */
-    public function get(string $name, $default = null)
+    public function get(string $name, /* mixed */ $default = null) /* : mixed */
     {
         $name = $this->prefix . $name;
 
@@ -105,12 +83,6 @@ class Model extends ParentModel
 
     /**
      * Удаляет куку
-     *
-     * @param string $name
-     * @param string $path
-     * @param string $domain
-     *
-     * @return bool
      */
     public function delete(string $name, string $path = null, string $domain = null): bool
     {
@@ -155,10 +127,6 @@ class Model extends ParentModel
 
     /**
      * Проверяет хэш пароля пользователя
-     *
-     * @param User $user
-     *
-     * @return bool
      */
     public function verifyUser(User $user): bool
     {
@@ -171,11 +139,6 @@ class Model extends ParentModel
 
     /**
      * Устанавливает куку аутентификации пользователя
-     *
-     * @param User $user
-     * @param bool $remember
-     *
-     * @return bool
      */
     public function setUser(User $user, bool $remember = null): bool
     {
@@ -211,8 +174,6 @@ class Model extends ParentModel
 
     /**
      * Удаляет куку аутентификации пользователя
-     *
-     * @return bool
      */
     public function deleteUser(): bool
     {
@@ -225,13 +186,8 @@ class Model extends ParentModel
 
     /**
      * Устанавливает значение для свойства модели
-     *
-     * @param string $name
-     * @param mixed $val
-     *
-     * @throws RuntimeException
      */
-    public function __set(string $name, $val): void
+    public function __set(string $name, /* mixed */ $val): void
     {
         if ($this->noSet) {
             throw new RuntimeException('Model attributes in read-only mode');

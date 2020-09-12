@@ -10,9 +10,6 @@ class Index extends Method
 {
     /**
      * Индексация сообщения/темы
-     *
-     * @param Post $post
-     * @param string $mode
      */
     public function index(Post $post, string $mode = 'add'): void
     {
@@ -132,10 +129,6 @@ class Index extends Method
 
     /**
      * Получение слов из текста для построения поискового индекса
-     *
-     * @param string $text
-     *
-     * @return array
      */
     protected function words(string $text): array
     {

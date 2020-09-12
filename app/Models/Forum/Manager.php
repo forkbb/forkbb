@@ -17,10 +17,6 @@ class Manager extends ManagerModel
 
     /**
      * Создает новую модель раздела
-     *
-     * @param array $attrs
-     *
-     * @return Forum
      */
     public function create(array $attrs = []): Forum
     {
@@ -29,10 +25,6 @@ class Manager extends ManagerModel
 
     /**
      * Инициализация списка разделов
-     *
-     * @param Group $group
-     *
-     * @return Manager
      */
     public function init(Group $group = null): Manager
     {
@@ -65,10 +57,6 @@ class Manager extends ManagerModel
 
     /**
      * Получение модели раздела
-     *
-     * @param int $id
-     *
-     * @return null|Forum
      */
     public function get($id): ?Forum
     {
@@ -87,10 +75,6 @@ class Manager extends ManagerModel
 
     /**
      * Обновляет раздел в БД
-     *
-     * @param Forum $forum
-     *
-     * @return Forum
      */
     public function update(Forum $forum): Forum
     {
@@ -99,10 +83,6 @@ class Manager extends ManagerModel
 
     /**
      * Добавляет новый раздел в БД
-     *
-     * @param Forum $forum
-     *
-     * @return int
      */
     public function insert(Forum $forum): int
     {
@@ -114,12 +94,6 @@ class Manager extends ManagerModel
 
     /**
      * Получение списка разделов и подразделов с указанием глубины вложения
-     *
-     * @param Forum $forum
-     * @param int $depth
-     * @param array $list
-     *
-     * @return array
      */
     public function depthList(Forum $forum, int $depth, array $list = []): array
     {

@@ -13,11 +13,6 @@ class Primary
      */
     protected $c;
 
-    /**
-     * Конструктор
-     *
-     * @param Container $container
-     */
     public function __construct(Container $container)
     {
         $this->c = $container;
@@ -27,8 +22,6 @@ class Primary
      * Проверка на обслуживание
      * Проверка на обновление
      * Проверка на бан
-     *
-     * @return Page|null
      */
     public function check(): ?Page
     {

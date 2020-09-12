@@ -10,10 +10,6 @@ class Save extends Method
 {
     /**
      * Сохраняет список нецензурных слов в базу
-     *
-     * @param array $list
-     *
-     * @return Censorship
      */
     public function save(array $list): Censorship
     {

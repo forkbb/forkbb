@@ -8,10 +8,6 @@ class GetList extends Method
 {
     /**
      * Загружает список банов по массиву id
-     *
-     * @param array $ids
-     *
-     * @return array
      */
     public function getList(array $ids): array
     {

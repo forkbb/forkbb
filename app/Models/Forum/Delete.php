@@ -13,11 +13,6 @@ class Delete extends Action
 {
     /**
      * Удаляет раздел(ы)
-     *
-     * @param DataModel ...$args
-     *
-     * @throws InvalidArgumentException
-     * @throws RuntimeException
      */
     public function delete(DataModel ...$args): void
     {

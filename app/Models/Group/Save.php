@@ -10,12 +10,6 @@ class Save extends Action
 {
     /**
      * Обновляет группу в БД
-     *
-     * @param Group $group
-     *
-     * @throws RuntimeException
-     *
-     * @return Group
      */
     public function update(Group $group): Group
     {
@@ -54,12 +48,6 @@ class Save extends Action
 
     /**
      * Добавляет новую группу в БД
-     *
-     * @param Group $group
-     *
-     * @throws RuntimeException
-     *
-     * @return int
      */
     public function insert(Group $group): int
     {

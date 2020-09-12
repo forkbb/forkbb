@@ -15,11 +15,6 @@ class Mod extends Profile
 {
     /**
      * Подготавливает данные для шаблона конфигурации прав модератора
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function moderation(array $args, string $method): Page
     {
@@ -93,8 +88,6 @@ class Mod extends Profile
 
     /**
      * Возвращает список доступных разделов для пользователя текущего профиля
-     *
-     * @return array
      */
     protected function getcurForums(): array
     {
@@ -107,8 +100,6 @@ class Mod extends Profile
 
     /**
      * Создает массив данных для формы
-     *
-     * @return array
      */
     protected function form(): array
     {

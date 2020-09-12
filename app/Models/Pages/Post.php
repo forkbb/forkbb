@@ -15,11 +15,6 @@ class Post extends Page
 
     /**
      * Создание новой темы
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function newTopic(array $args, string $method): Page
     {
@@ -77,11 +72,6 @@ class Post extends Page
 
     /**
      * Подготовка данных для шаблона создания сообщения
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function newReply(array $args, string $method): Page
     {
@@ -150,11 +140,6 @@ class Post extends Page
 
     /**
      * Создание темы/сообщения
-     *
-     * @param Model $model
-     * @param Validator $v
-     *
-     * @return Page
      */
     protected function endPost(Model $model, Validator $v): Page
     {

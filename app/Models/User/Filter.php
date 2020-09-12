@@ -10,13 +10,6 @@ class Filter extends Action
 {
     /**
      * Получение списка id пользователей по условиям
-     *
-     * @param array $filters
-     * @param array $order
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return array
      */
     public function filter(array $filters, array $order = []): array
     {

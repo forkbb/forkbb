@@ -9,11 +9,6 @@ class Promote extends Users
 {
     /**
      * Продвигает пользователя
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function promote(array $args, string $method): Page
     {

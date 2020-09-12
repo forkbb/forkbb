@@ -10,8 +10,6 @@ class Save extends Method
     /**
      * Сохраняет изменения модели в БД
      * Удаляет кеш
-     *
-     * @return Config
      */
     public function save(): Config
     {

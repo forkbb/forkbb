@@ -10,13 +10,6 @@ class Filter extends Method
 {
     /**
      * Получение списка id банов по условиям
-     *
-     * @param array $filters
-     * @param array $order
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return array
      */
     public function filter(array $filters, array $order = []): array
     {

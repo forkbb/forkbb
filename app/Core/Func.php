@@ -31,11 +31,6 @@ class Func
      */
     protected $nameLangs;
 
-    /**
-     * Конструктор
-     *
-     * @param Container $container
-     */
     public function __construct(Container $container)
     {
         $this->c = $container;
@@ -43,8 +38,6 @@ class Func
 
     /**
      * Список доступных стилей
-     *
-     * @return array
      */
     public function getStyles(): array
     {
@@ -57,8 +50,6 @@ class Func
 
     /**
      * Список доступных языков
-     *
-     * @return array
      */
     public function getLangs(): array
     {
@@ -71,8 +62,6 @@ class Func
 
     /**
      * Список имен доступных языков
-     *
-     * @return array
      */
     public function getNameLangs(): array
     {
@@ -90,11 +79,6 @@ class Func
 
     /**
      * Список папок в данной директории содержащих заданный файл
-     *
-     * @param string $dir
-     * @param string $file
-     *
-     * @return array
      */
     public function getFoldersWithFile(string $dir, string $file): array
     {
@@ -122,14 +106,6 @@ class Func
 
     /**
      * Пагинация
-     *
-     * @param int $all
-     * @param int $cur
-     * @param string $marker
-     * @param array $args
-     * @param string $info
-     *
-     * @return array
      */
     public function paginate(int $all, int $cur, string $marker, array $args = [], string $info = 'Page %1$s of %2$s'): array
     {
@@ -210,10 +186,6 @@ class Func
 
     /**
      * Разбор HTTP_ACCEPT_LANGUAGE
-     *
-     * @param string $str
-     *
-     * @return array
      */
     public function langParse(string $str): array
     {

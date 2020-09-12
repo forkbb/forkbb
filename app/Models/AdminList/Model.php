@@ -8,8 +8,6 @@ class Model extends ParentModel
 {
     /**
      * Загружает список id админов из кеша/БД
-     *
-     * @return AdminList\Model
      */
     public function init(): Model
     {
@@ -25,8 +23,6 @@ class Model extends ParentModel
 
     /**
      * Сбрасывает кеш списка id админов
-     *
-     * @return AdminList\Model
      */
     public function reset(): Model
     {

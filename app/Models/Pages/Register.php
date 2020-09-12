@@ -12,8 +12,6 @@ class Register extends Page
 {
     /**
      * Регистрация
-     *
-     * @return Page
      */
     public function reg(): Page
     {
@@ -67,10 +65,6 @@ class Register extends Page
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @param Validator $v
-     *
-     * @return array
      */
     protected function formReg(Validator $v): array
     {
@@ -128,10 +122,6 @@ class Register extends Page
 
     /**
      * Завершение регистрации
-     *
-     * @param Validator $v
-     *
-     * @return Page
      */
     protected function regEnd(Validator $v): Page
     {
@@ -256,10 +246,6 @@ class Register extends Page
 
     /**
      * Активация аккаунта
-     *
-     * @param array $args
-     *
-     * @return Page
      */
     public function activate(array $args): Page
     {

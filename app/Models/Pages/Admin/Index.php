@@ -9,8 +9,6 @@ class Index extends Admin
 {
     /**
      * Подготавливает данные для шаблона
-     *
-     * @return Page
      */
     public function index(): Page
     {

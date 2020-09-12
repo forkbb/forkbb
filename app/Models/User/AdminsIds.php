@@ -9,8 +9,6 @@ class AdminsIds extends Action
 {
     /**
      * Загружает список id админов из БД
-     *
-     * @return array
      */
     public function adminsIds(): array
     {

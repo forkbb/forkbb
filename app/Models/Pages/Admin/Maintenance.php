@@ -12,11 +12,6 @@ class Maintenance extends Admin
 {
     /**
      * Обслуживание
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function view(array $args, string $method): Page
     {
@@ -59,10 +54,6 @@ class Maintenance extends Admin
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @param Config $config
-     *
-     * @return array
      */
     protected function formMaintenance(Config $config): array
     {
@@ -103,8 +94,6 @@ class Maintenance extends Admin
 
     /**
      * Подготавливает массив данных для формы
-     *
-     * @return array
      */
     protected function formRebuild(): array
     {
@@ -174,11 +163,6 @@ class Maintenance extends Admin
 
     /**
      * Подстановка значения по умолчанию
-     *
-     * @param Validator $v
-     * @param string $value
-     *
-     * @return string
      */
     public function vCheckMessage(Validator $v, $value)
     {
@@ -194,11 +178,6 @@ class Maintenance extends Admin
 
     /**
      * Пересоздание поискового индекса
-     *
-     * @param array $args
-     * @param string $method
-     *
-     * @return Page
      */
     public function rebuild(array $args, string $method): Page
     {

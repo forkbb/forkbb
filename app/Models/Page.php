@@ -21,11 +21,6 @@ abstract class Page extends Model
      */
     protected $httpHeaders = [];
 
-    /**
-     * Конструктор
-     *
-     * @param Container $container
-     */
     public function __construct(Container $container)
     {
         parent::__construct($container);
@@ -279,10 +274,6 @@ abstract class Page extends Model
     /**
      * Возвращает title страницы
      * $this->pageTitle
-     *
-     * @param array $titles
-     *
-     * @return string
      */
     protected function getpageTitle(array $titles = []): string
     {
@@ -296,10 +287,8 @@ abstract class Page extends Model
 
     /**
      * Задает/получает заголовок страницы
-     *
-     * @return mixed
      */
-    public function pageHeader(string $name, string $type, array $values = null)
+    public function pageHeader(string $name, string $type, array $values = null) /* : mixed */
     {
         if (null === $values) {
             return $this->pageHeaders["{$name}_{$type}"] ?? null;
@@ -316,8 +305,6 @@ abstract class Page extends Model
     /**
      * Возвращает массива заголовков страницы
      * $this->pageHeaders
-     *
-     * @return array
      */
     protected function getpageHeaders(): array
     {
@@ -374,8 +361,6 @@ abstract class Page extends Model
     /**
      * Возвращает HTTP заголовки страницы
      * $this->httpHeaders
-     *
-     * @return array
      */
     protected function gethttpHeaders(): array
     {
@@ -386,8 +371,6 @@ abstract class Page extends Model
 
     /**
      * Устанавливает HTTP статус страницы
-     *
-     * @return Page
      */
     protected function httpStatus(): Page
     {
@@ -410,8 +393,6 @@ abstract class Page extends Model
     /**
      * Дописывает в массив титула страницы новый элемент
      * $this->titles = ...
-     *
-     * @param string $value
      */
     public function settitles(string $value): void
     {
@@ -423,8 +404,6 @@ abstract class Page extends Model
     /**
      * Добавление новой ошибки
      * $this->fIswev = ...
-     *
-     * @param array $value
      */
     public function setfIswev(array $value): void
     {
@@ -446,12 +425,8 @@ abstract class Page extends Model
     /**
      * Возвращает массив хлебных крошек
      * Заполняет массив титула страницы
-     *
-     * @param mixed $crumbs
-     *
-     * @return array
      */
-    protected function crumbs(...$crumbs): array
+    protected function crumbs(/* mixed */ ...$crumbs): array
     {
         $result = [];
         $active = true;
