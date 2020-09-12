@@ -49,7 +49,7 @@ class Parser extends Parserus
             $smilies = [];
 
             foreach ($this->c->smilies->list as $cur) {
-                $smilies[$cur['text']] = $this->c->PUBLIC_URL . '/img/sm/' . $cur['image'];
+                $smilies[$cur['sm_code']] = $this->c->PUBLIC_URL . '/img/sm/' . $cur['sm_image'];
             }
 
             $info = $this->c->BBCODE_INFO;

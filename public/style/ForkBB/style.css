@@ -2079,7 +2079,6 @@ body,
 #fork .f-fs-forum {
   display: flex;
   align-items: stretch;
-  /*min-width: 0;*/
 }
 
 #fork .f-fs-forum > legend {
@@ -2920,5 +2919,133 @@ body,
   #fork .f-wrap-btns-result .f-btn {
     padding-top: 0;
     padding-bottom: 0;
+  }
+}
+
+/****************************************/
+/* Админка/Парсер                       */
+/****************************************/
+#fork .f-smilies-form .f-fs-new-smile,
+#fork .f-images-list .f-fdiv {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#fork .f-images-list .f-fs-image {
+  display: flex;
+  align-items: center;
+  border: 0.0625rem dotted #AA7939;
+  margin: 0.3125rem;
+}
+
+#fork #id-fs-image-legend {
+  width: 100%;
+}
+
+#fork .f-images-list .f-field-image {
+  border: 0;
+  margin: 0;
+}
+
+#fork .f-smilies-form .f-fs-smile > legend,
+#fork .f-smilies-form .f-fs-new-smile > legend {
+  border-top: 0.0625rem dotted #AA7939;
+}
+
+#fork .f-images-list .f-fs-image > legend,
+#fork .f-images-list .f-field-image > dt {
+  display: none;
+}
+
+#fork .f-images-list .f-field-image > dd {
+  width: 100%;
+}
+
+#fork .f-field-pic img {
+  max-width: 100%;
+  min-width: 1rem;
+  height: auto;
+}
+
+#fork .f-images-list .f-field-name {
+  max-width: 80%;
+}
+
+#fork .f-smilies-form .f-field-new-smile {
+  display: flex;
+  flex-direction: column;
+  width: 33.33%;
+}
+
+#fork .f-smilies-form .f-field-new-smile .f-child1 {
+  font-weight: normal;
+}
+
+#fork .f-smilies-form .f-field-new-smile > dt {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#fork .f-smilies-form .f-field-new-smile > dd {
+  width: 100%;
+}
+
+@media screen and (min-width: 35rem) {
+  #fork .f-smilies-form .f-fs-smile {
+    display: flex;
+  }
+
+  #fork .f-smilies-form .f-field-smile {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+  }
+
+  #fork .f-smilies-form .f-fs-smile > legend,
+  #fork .f-smilies-form .f-field-smile > dt {
+    display: none;
+  }
+
+  #fork .f-fs-smilies-legend + .f-fs-smile .f-field-smile > dt {
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  #fork .f-smilies-form .f-field-smile .f-child1 {
+    font-weight: normal;
+  }
+
+
+  #fork .f-smilies-form .f-field-smile > dd {
+    width: 100%;
+    flex-grow: 1;
+  }
+
+  #fork .f-field-smile.f-field-code {
+    width: 10rem;
+  }
+
+  #fork .f-field-smile.f-field-position {
+    width: 5rem;
+  }
+
+  #fork .f-field-smile.f-field-image {
+    width: 12rem;
+  }
+
+  #fork .f-field-smile.f-field-pic {
+    width: calc(100% - 30rem);
+    text-align: center;
+  }
+
+  #fork .f-field-smile.f-field-delete {
+    width: 3rem;
+  }
+
+  #fork .f-smilies-form .f-fs-new-smile > legend {
+    border-top: 0;
   }
 }

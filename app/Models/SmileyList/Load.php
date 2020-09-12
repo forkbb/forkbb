@@ -16,9 +16,9 @@ class Load extends Method
      */
     public function load(): SmileyList
     {
-        $query = 'SELECT sm.id, sm.text, sm.image, sm.disp_position
-            FROM ::smilies AS sm
-            ORDER BY sm.disp_position';
+        $query = 'SELECT id, sm_code, sm_image, sm_position
+            FROM ::smilies
+            ORDER BY sm_position';
 
         $list = $this->c->DB->query($query)->fetchAll(PDO::FETCH_UNIQUE);
 

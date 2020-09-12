@@ -17,7 +17,7 @@ class Update extends Admin
 {
     const PHP_MIN = '7.3.0';
 
-    const LATEST_REV_WITH_DB_CHANGES = 9;
+    const LATEST_REV_WITH_DB_CHANGES = 15;
 
     const LOCK_NAME = 'lock_update';
     const LOCk_TTL  = 1800;
@@ -690,6 +690,47 @@ class Update extends Admin
         );
 
         $coreConfig->save();
+
+        return null;
+    }
+
+    /**
+     * rev.14 to rev.15
+     */
+    protected function stageNumber14(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+
+        $result = $coreConfig->delete(
+            'multiple=>SmileyListModelLoad',
+        );
+        $coreConfig->add(
+            'shared=>SmileyListModelLoad',
+            '\\ForkBB\\Models\\SmileyList\\Load::class'
+        );
+
+        $coreConfig->add(
+            'shared=>SmileyListModelUpdate',
+            '\\ForkBB\\Models\\SmileyList\\Update::class'
+        );
+
+        $coreConfig->add(
+            'shared=>SmileyListModelInsert',
+            '\\ForkBB\\Models\\SmileyList\\Insert::class'
+        );
+
+        $coreConfig->add(
+            'shared=>SmileyListModelDelete',
+            '\\ForkBB\\Models\\SmileyList\\Delete::class'
+        );
+
+        $coreConfig->save();
+
+        $this->c->DB->renameField('smilies', 'image', 'sm_image');
+        $this->c->DB->renameField('smilies', 'text', 'sm_code');
+        $this->c->DB->renameField('smilies', 'disp_position', 'sm_position');
+
+        $this->c->DB->alterField('smilies', 'sm_position', 'INT(10) UNSIGNED', false, 0);
 
         return null;
     }

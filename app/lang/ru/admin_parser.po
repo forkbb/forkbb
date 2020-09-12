@@ -48,10 +48,10 @@ msgstr "Разрешить тег [img][/img] в подписях пользов
 msgid "Smilies subhead"
 msgstr "Смайлы"
 
-msgid "Smilies label"
+msgid "Smilies mess label"
 msgstr "Смайлы в сообщениях"
 
-msgid "Smilies help"
+msgid "Smilies mess help"
 msgstr "Преобразовывать смайлы из сообщений в графические иконки."
 
 msgid "Smilies sigs label"
@@ -71,3 +71,72 @@ msgstr "Максимальная глубина [quote]"
 
 msgid "Quote depth help"
 msgstr "Сколько раз тег [quote] может вкладываться в другие [quote], все теги свыше указанного порога будут игнорироваться."
+
+msgid "BBCode management"
+msgstr "Управление BB-кодами"
+
+msgid "Smilies management"
+msgstr "Управление смайлами"
+
+msgid "Smilies head"
+msgstr "Смайлы"
+
+msgid "Available images head"
+msgstr "Доступные изображения"
+
+msgid "Available images subhead"
+msgstr "Доступные изображения"
+
+msgid "Upload image head"
+msgstr "Загрузка изображения"
+
+msgid "Upload image subhead"
+msgstr "Загрузка"
+
+msgid "Picture label"
+msgstr "Изображение"
+
+msgid "<img src=\"%1$s\" alt=\"%2$s\">"
+msgstr "<img src=\"%1$s\" alt=\"%2$s\">"
+
+msgid "Name label"
+msgstr "Имя файла"
+
+msgid "File %s deleted redirect"
+msgstr "Файл '%s' удален."
+
+msgid "File %s not deleted redirect"
+msgstr "Файл '%s' не получилось удалить."
+
+msgid "Upload"
+msgstr "Загрузить"
+
+msgid "Upload image label"
+msgstr "Новое изображение"
+
+msgid "Upload image info"
+msgstr "Выберите файл изображения для загрузки."
+
+msgid "Image uploaded redirect"
+msgstr "Изображение загружено."
+
+msgid "Smilies list subhead"
+msgstr "Список смайлов"
+
+msgid "Smiley number %s"
+msgstr "Смайл #%s"
+
+msgid "Smiley code label"
+msgstr "Код"
+
+msgid "Position label"
+msgstr "Позиция"
+
+msgid "New smile subhead"
+msgstr "Новый смайл"
+
+msgid "Smilies updated redirect"
+msgstr "Смайлы обновлены."
+
+msgid "Smile deleted redirect"
+msgstr "Смайл удален."

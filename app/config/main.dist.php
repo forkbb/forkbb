@@ -140,6 +140,11 @@ return [
         'SubscriptionModelSend' => \ForkBB\Models\Subscription\Send::class,
 
         'BanListModelIsBanned' => \ForkBB\Models\BanList\IsBanned::class,
+
+        'SmileyListModelLoad'   => \ForkBB\Models\SmileyList\Load::class,
+        'SmileyListModelUpdate' => \ForkBB\Models\SmileyList\Update::class,
+        'SmileyListModelInsert' => \ForkBB\Models\SmileyList\Insert::class,
+        'SmileyListModelDelete' => \ForkBB\Models\SmileyList\Delete::class,
     ],
     'multiple'  => [
         'CtrlPrimary' => \ForkBB\Controllers\Primary::class,
@@ -221,7 +226,6 @@ return [
         'AdminListModel' => \ForkBB\Models\AdminList\Model::class,
 
         'SmileyListModel'     => \ForkBB\Models\SmileyList\Model::class,
-        'SmileyListModelLoad' => \ForkBB\Models\SmileyList\Load::class,
 
         'DBMapModel'          => \ForkBB\Models\DBMap\Model::class,
 

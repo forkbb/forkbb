@@ -48,10 +48,10 @@ msgstr "Allow the BBCode [img][/img] tag in user signatures (not recommended)."
 msgid "Smilies subhead"
 msgstr "Smilies"
 
-msgid "Smilies label"
+msgid "Smilies mess label"
 msgstr "Smilies in posts"
 
-msgid "Smilies help"
+msgid "Smilies mess help"
 msgstr "Convert smilies to small graphic icons."
 
 msgid "Smilies sigs label"
@@ -71,3 +71,72 @@ msgstr "Maximum [quote] depth"
 
 msgid "Quote depth help"
 msgstr "The maximum times a [quote] tag can go inside other [quote] tags, any tags deeper than this will be discarded."
+
+msgid "BBCode management"
+msgstr "BBCode management"
+
+msgid "Smilies management"
+msgstr "Smilies management"
+
+msgid "Smilies head"
+msgstr "Smilies"
+
+msgid "Available images head"
+msgstr "Available images"
+
+msgid "Available images subhead"
+msgstr "Available images"
+
+msgid "Upload image head"
+msgstr "Upload image"
+
+msgid "Upload image subhead"
+msgstr "Upload"
+
+msgid "Picture label"
+msgstr "Picture"
+
+msgid "<img src=\"%1$s\" alt=\"%2$s\">"
+msgstr "<img src=\"%1$s\" alt=\"%2$s\">"
+
+msgid "Name label"
+msgstr "File name"
+
+msgid "File %s deleted redirect"
+msgstr "File '%s' deleted."
+
+msgid "File %s not deleted redirect"
+msgstr "File '%s' not deleted."
+
+msgid "Upload"
+msgstr "Upload"
+
+msgid "Upload image label"
+msgstr "New image"
+
+msgid "Upload image info"
+msgstr "Select an image file to upload."
+
+msgid "Image uploaded redirect"
+msgstr "Image uploaded."
+
+msgid "Smilies list subhead"
+msgstr "Smilies list"
+
+msgid "Smiley number %s"
+msgstr "Smile #%s"
+
+msgid "Smiley code label"
+msgstr "Code"
+
+msgid "Position label"
+msgstr "Position"
+
+msgid "New smile subhead"
+msgstr "New smile"
+
+msgid "Smilies updated redirect"
+msgstr "Smilies updated."
+
+msgid "Smile deleted redirect"
+msgstr "Smile deleted."

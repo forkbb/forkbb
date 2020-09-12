@@ -61,7 +61,7 @@ class Edit extends Parser
         $this->nameTpl   = 'admin/form';
         $this->form      = $this->formEdit($config);
         $this->titleForm = __('Parser settings head');
-        $this->classForm = 'editparsersettings';
+        $this->classForm = 'parser-settings';
 
         return $this;
     }
@@ -138,6 +138,13 @@ class Edit extends Parser
                     'caption' => __('Quote depth label'),
                     'info'    => __('Quote depth help'),
                 ],
+                'bbcode_management' => [
+                    'type'    => 'btn',
+                    'caption' => null,
+                    'value'   => __('BBCode management'),
+                    'title'   => __('BBCode management'),
+                    'link'    => $this->c->Router->link('AdminBBCode'),
+                ],
             ],
         ];
 
@@ -148,8 +155,8 @@ class Edit extends Parser
                     'type'    => 'radio',
                     'value'   => $config->o_smilies,
                     'values'  => $yn,
-                    'caption' => __('Smilies label'),
-                    'info'    => __('Smilies help'),
+                    'caption' => __('Smilies mess label'),
+                    'info'    => __('Smilies mess help'),
                 ],
                 'o_smilies_sig' => [
                     'type'    => 'radio',
@@ -157,6 +164,13 @@ class Edit extends Parser
                     'values'  => $yn,
                     'caption' => __('Smilies sigs label'),
                     'info'    => __('Smilies sigs help'),
+                ],
+                'smilies_management' => [
+                    'type'    => 'btn',
+                    'caption' => null,
+                    'value'   => __('Smilies management'),
+                    'title'   => __('Smilies management'),
+                    'link'    => $this->c->Router->link('AdminSmilies'),
                 ],
 
             ],

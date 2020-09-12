@@ -959,10 +959,10 @@ class Install extends Admin
         // smilies
         $schema = [
             'FIELDS' => [
-                'id'            => ['SERIAL', false],
-                'image'         => ['VARCHAR(40)', false, ''],
-                'text'          => ['VARCHAR(20)', false, ''],
-                'disp_position' => ['TINYINT(4) UNSIGNED', false, 0],
+                'id'          => ['SERIAL', false],
+                'sm_image'    => ['VARCHAR(40)', false, ''],
+                'sm_code'     => ['VARCHAR(20)', false, ''],
+                'sm_position' => ['INT(10) UNSIGNED', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
             'ENGINE' => $this->DBEngine,

@@ -542,6 +542,30 @@ class Routing
             );
             $r->add(
                 $r::DUO,
+                '/admin/parser/bbcode',
+                'AdminParserBBCode:view',
+                'AdminBBCode'
+            );
+            $r->add(
+                $r::DUO,
+                '/admin/parser/smilies',
+                'AdminParserSmilies:view',
+                'AdminSmilies'
+            );
+            $r->add(
+                $r::GET,
+                '/admin/parser/smilies/delete/{name}/{token}',
+                'AdminParserSmilies:delete',
+                'AdminSmiliesDelete'
+            );
+            $r->add(
+                $r::PST,
+                '/admin/parser/smilies/upload',
+                'AdminParserSmilies:upload',
+                'AdminSmiliesUpload'
+            );
+            $r->add(
+                $r::DUO,
                 '/admin/categories',
                 'AdminCategories:view',
                 'AdminCategories'
