@@ -52,7 +52,7 @@ class Mod extends Profile
                     $this->c->forums->update($forum);
                 }
 
-                $this->c->Cache->delete('forums_mark');
+                $this->c->forums->reset();
 
                 return $this->c->Redirect->page('EditUserModeration', ['id' => $this->curUser->id])->message('Update rights redirect');
             }

@@ -342,7 +342,7 @@ class Groups extends Admin
             }
         }
 
-        $this->c->Cache->delete('forums_mark');
+        $this->c->forums->reset();
 
         return $this->c->Redirect->page('AdminGroupsEdit', ['id' => $group->g_id])->message($message);
     }

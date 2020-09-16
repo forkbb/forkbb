@@ -107,4 +107,14 @@ class Manager extends ManagerModel
 
         return $list;
     }
+
+    /**
+     * Сбрасывает кеш
+     */
+    public function reset(): Manager
+    {
+        $this->c->Cache->delete('forums_mark');
+
+        return $this;
+    }
 }

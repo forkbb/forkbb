@@ -40,7 +40,7 @@ class Categories extends Admin
                     $this->c->categories->insert($v->new); //????
                 }
 
-                $this->c->Cache->delete('forums_mark'); //????
+                $this->c->forums->reset();
 
                 return $this->c->Redirect->page('AdminCategories')->message('Categories updated redirect');
             }
@@ -163,7 +163,7 @@ class Categories extends Admin
 
             $this->c->categories->delete((int) $args['id']);
 
-            $this->c->Cache->delete('forums_mark'); //????
+            $this->c->forums->reset();
 
             return $this->c->Redirect->page('AdminCategories')->message('Category deleted redirect');
         }

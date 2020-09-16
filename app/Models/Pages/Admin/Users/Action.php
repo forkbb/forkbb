@@ -128,7 +128,7 @@ class Action extends Users
 
             $this->c->users->delete(...$this->userList);
 
-            $this->c->Cache->delete('forums_mark'); //???? с авто обновлением кеша
+            $this->c->forums->reset();
 
             return $this->c->Redirect->page('AdminUsers')->message('Users delete redirect');
         }
@@ -280,7 +280,7 @@ class Action extends Users
 
                 $this->c->users->changeGroup($v->new_group, ...$this->userList);
 
-                $this->c->Cache->delete('forums_mark'); //???? с авто обновлением кеша
+                $this->c->forums->reset();
 
                 if ($profile) {
                     if ($this->c->ProfileRules->setUser($user)->editProfile) {

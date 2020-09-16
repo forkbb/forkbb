@@ -103,7 +103,7 @@ class Forums extends Admin
                     $this->c->forums->update($forum);
                 }
 
-                $this->c->Cache->delete('forums_mark'); //????
+                $this->c->forums->reset();
 
                 return $this->c->Redirect->page('AdminForums')->message('Forums updated redirect');
             }
@@ -249,7 +249,7 @@ class Forums extends Admin
 
             $this->c->forums->delete($forum);
 
-            $this->c->Cache->delete('forums_mark'); //????
+            $this->c->forums->reset();
 
             return $this->c->Redirect->page('AdminForums')->message('Forum deleted redirect');
         }
@@ -416,7 +416,7 @@ class Forums extends Admin
                     $this->c->groups->Perm->update($forum, $v->perms);
                 }
 
-                $this->c->Cache->delete('forums_mark');
+                $this->c->forums->reset();
 
                 return $this->c->Redirect->page('AdminForumsEdit', ['id' => $forum->id])->message($message);
             }
