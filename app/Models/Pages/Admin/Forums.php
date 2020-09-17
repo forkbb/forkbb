@@ -192,6 +192,7 @@ class Forums extends Admin
                     'type'     => 'btn',
                     'value'    => '❌',
                     'caption'  => __('Delete'),
+                    'title'    => __('Delete'),
                     'link'     => $disabled
                         ? '#'
                         : $this->c->Router->link(

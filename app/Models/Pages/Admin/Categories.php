@@ -100,6 +100,7 @@ class Categories extends Admin
                 'type'    => 'btn',
                 'value'   => '❌',
                 'caption' => __('Delete'),
+                'title'   => __('Delete'),
                 'link'    => $this->c->Router->link(
                     'AdminCategoriesDelete',
                     [
