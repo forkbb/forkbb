@@ -1703,9 +1703,9 @@ body,
 
 
 /*********************/
-#fork .f-bb-u {
+/*#fork .f-bb-u {
   text-decoration: underline;
-}
+}*/
 
 #fork .f-bb-header {
   font-weight: bold;
@@ -1756,6 +1756,15 @@ body,
   list-style-type: lower-alpha;
   list-style-position: outside;
   padding-left: 1.5rem;
+}
+
+#fork .f-bb-spoiler > summary {
+  cursor: pointer;
+}
+
+#fork .f-bb-s-body {
+  padding: 0.625rem;
+  border-left: 0.1875rem solid #AA7939;
 }
 
 #fork .f-post-body p,
