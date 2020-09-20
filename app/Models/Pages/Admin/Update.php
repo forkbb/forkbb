@@ -718,6 +718,31 @@ class Update extends Admin
      */
     protected function stageNumber15(array $args): ?int
     {
+        // bbcode
+        $schema = [
+            'FIELDS' => [
+                'bb_tag'       => ['VARCHAR(11)', false, ''],
+                'bb_edit'      => ['TINYINT(1)', false, 1],
+                'bb_delete'    => ['TINYINT(1)', false, 1],
+                'bb_structure' => ['MEDIUMTEXT', false],
+            ],
+            'PRIMARY KEY' => ['bb_tag'],
+            'ENGINE' => $this->DBEngine,
+        ];
+        $this->c->DB->createTable('bbcode', $schema);
+
+        $query = 'INSERT INTO ::bbcode (bb_tag, bb_edit, bb_delete, bb_structure)
+            VALUES(?s:tag, 1, 0, ?s:structure)';
+
+        $bbcodes = include $this->c->DIR_CONFIG . '/defaultBBCode.php';
+        foreach ($bbcodes as $bbcode) {
+            $vars = [
+                ':tag'       => $bbcode['tag'],
+                ':structure' => \json_encode($bbcode, \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR),
+            ];
+            $this->c->DB->exec($query, $vars);
+        }
+
         unset($this->c->config->o_quote_depth);
 
         $this->c->config->save();

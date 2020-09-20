@@ -6,22 +6,22 @@ return [
     [
         'tag' => 'ROOT',
         'type' => 'block',
-        'handler' => function($body) {
-            // Replace any breaks next to paragraphs so our replace below catches them
-            $body = \preg_replace('%(</?p>)(?:\s*?<br>){1,2}%', '$1', '<p>' . $body . '</p>');
-            $body = \preg_replace('%(?:<br>\s*?){1,2}(</?p>)%', '$1', $body);
+        'handler' => <<<'HANDLER'
+// Replace any breaks next to paragraphs so our replace below catches them
+$body = \preg_replace('%(</?p>)(?:\s*?<br>){1,2}%', '$1', '<p>' . $body . '</p>');
+$body = \preg_replace('%(?:<br>\s*?){1,2}(</?p>)%', '$1', $body);
 
-            // Remove any empty paragraph tags (inserted via quotes/lists/code/etc) which should be stripped
-            $body = \str_replace('<p></p>', '', $body);
+// Remove any empty paragraph tags (inserted via quotes/lists/code/etc) which should be stripped
+$body = \str_replace('<p></p>', '', $body);
 
-            $body = \preg_replace('%<br>\s*?<br>%', '</p><p>', $body);
+$body = \preg_replace('%<br>\s*?<br>%', '</p><p>', $body);
 
-            $body = \str_replace('<p><br>', '<br><p>', $body);
-            $body = \str_replace('<br></p>', '</p><br>', $body);
-            $body = \str_replace('<p></p>', '<br><br>', $body);
+$body = \str_replace('<p><br>', '<br><p>', $body);
+$body = \str_replace('<br></p>', '</p><br>', $body);
+$body = \str_replace('<p></p>', '<br><br>', $body);
 
-            return $body;
-        },
+return $body;
+HANDLER,
     ],
     [
         'tag' => 'code',
@@ -33,65 +33,65 @@ return [
             'Def' => true,
             'no attr' => true,
         ],
-        'handler' => function($body, $attrs) {
-            return '</p><pre class="f-bb-code">' . \trim($body, "\n\r") . '</pre><p>';
-        },
+        'handler' => <<<'HANDLER'
+return '</p><pre class="f-bb-code">' . \trim($body, "\n\r") . '</pre><p>';
+HANDLER,
     ],
     [   'tag' => 'b',
-        'handler' => function($body) {
-            return "<b>{$body}</b>";
-        },
+        'handler' => <<<'HANDLER'
+return "<b>{$body}</b>";
+HANDLER,
     ],
     [
         'tag' => 'i',
-        'handler' => function($body) {
-            return "<i>{$body}</i>";
-        },
+        'handler' => <<<'HANDLER'
+return "<i>{$body}</i>";
+HANDLER,
     ],
     [
         'tag' => 'em',
-        'handler' => function($body) {
-            return "<em>{$body}</em>";
-        },
+        'handler' => <<<'HANDLER'
+return "<em>{$body}</em>";
+HANDLER,
     ],
     [
         'tag' => 'u',
-        'handler' => function($body) {
-            return "<u>{$body}</u>";
-        },
+        'handler' => <<<'HANDLER'
+return "<u>{$body}</u>";
+HANDLER,
     ],
     [
         'tag' => 's',
-        'handler' => function($body) {
-            return "<s>{$body}</s>";
-        },
+        'handler' => <<<'HANDLER'
+return "<s>{$body}</s>";
+HANDLER,
     ],
     [
         'tag' => 'del',
-        'handler' => function($body) {
-            return "<del>{$body}</del>";
-        },
+        'handler' => <<<'HANDLER'
+return "<del>{$body}</del>";
+HANDLER,
     ],
     [
         'tag' => 'ins',
-        'handler' => function($body) {
-            return "<ins>{$body}</ins>";
-        },
+        'handler' => <<<'HANDLER'
+return "<ins>{$body}</ins>";
+HANDLER,
     ],
     [
         'tag' => 'h',
         'type' => 'h',
-        'handler' => function($body) {
-            return "</p><p class=\"f-bb-header\">{$body}</p><p>";
-        },
+        'handler' => <<<'HANDLER'
+return "</p><p class=\"f-bb-header\">{$body}</p><p>";
+HANDLER,
     ],
     [
         'tag' => 'hr',
         'type' => 'block',
         'single' => true,
-        'handler' => function() {
-            return  '</p><hr><p>';
-        },
+        'handler' => <<<'HANDLER'
+return  '</p><hr><p>';
+HANDLER,
     ],
     [
         'tag' => 'color',
@@ -101,9 +101,9 @@ return [
                 'format' => '%^(?:\#(?:[\dA-Fa-f]{3}){1,2}|(?:aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|orange|purple|red|silver|teal|yellow|white))$%',
             ],
         ],
-        'handler' => function($body, $attrs) {
-            return "<span style=\"color:{$attrs['Def']};\">{$body}</span>";
-        },
+        'handler' => <<<'HANDLER'
+return "<span style=\"color:{$attrs['Def']};\">{$body}</span>";
+HANDLER,
     ],
     [
         'tag' => 'colour',
@@ -113,9 +113,9 @@ return [
                 'format' => '%^(?:\#(?:[\dA-Fa-f]{3}){1,2}|(?:aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|orange|purple|red|silver|teal|yellow|white))$%',
             ],
         ],
-        'handler' => function($body, $attrs) {
-            return "<span style=\"color:{$attrs['Def']};\">{$body}</span>";
-        },
+        'handler' => <<<'HANDLER'
+return "<span style=\"color:{$attrs['Def']};\">{$body}</span>";
+HANDLER,
     ],
     [
         'tag' => 'background',
@@ -125,9 +125,9 @@ return [
                 'format' => '%^(?:\#(?:[\dA-Fa-f]{3}){1,2}|(?:aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|orange|purple|red|silver|teal|yellow|white))$%',
             ],
         ],
-        'handler' => function($body, $attrs) {
-            return "<span style=\"background-color:{$attrs['Def']};\">{$body}</span>";
-        },
+        'handler' => <<<'HANDLER'
+return "<span style=\"background-color:{$attrs['Def']};\">{$body}</span>";
+HANDLER,
     ],
     [
         'tag' => 'size',
@@ -137,40 +137,40 @@ return [
                 'format' => '%^[1-9]\d*(?:em|ex|pt|px|\%)?$%',
             ],
         ],
-        'handler' => function($body, $attrs) {
-            if (\is_numeric($attrs['Def'])) {
-                $attrs['Def'] .= 'px';
-            }
+        'handler' => <<<'HANDLER'
+if (\is_numeric($attrs['Def'])) {
+    $attrs['Def'] .= 'px';
+}
 
-            return "<span style=\"font-size:{$attrs['Def']};\">{$body}</span>";
-        },
+return "<span style=\"font-size:{$attrs['Def']};\">{$body}</span>";
+HANDLER,
     ],
     [
         'tag' => 'right',
         'type' => 'block',
-        'handler' => function($body) {
-            return "</p><p style=\"text-align: right;\">{$body}</p><p>";
-        },
+        'handler' => <<<'HANDLER'
+return "</p><p style=\"text-align: right;\">{$body}</p><p>";
+HANDLER,
     ],
     [
         'tag' => 'center',
         'type' => 'block',
-        'handler' => function($body) {
-            return "</p><p style=\"text-align: center;\">{$body}</p><p>";
-        },
+        'handler' => <<<'HANDLER'
+return "</p><p style=\"text-align: center;\">{$body}</p><p>";
+HANDLER,
     ],
     [
         'tag' => 'justify',
         'type' => 'block',
-        'handler' => function($body) {
-            return "</p><p style=\"text-align: justify;\">{$body}</p><p>";
-        },
+        'handler' => <<<'HANDLER'
+return "</p><p style=\"text-align: justify;\">{$body}</p><p>";
+HANDLER,
     ],
     [
         'tag' => 'mono',
-        'handler' => function($body) {
-            return "<code>{$body}</code>";
-        },
+        'handler' => <<<'HANDLER'
+return "<code>{$body}</code>";
+HANDLER,
     ],
     [
         'tag' => 'font',
@@ -180,9 +180,9 @@ return [
                 'format' => '%^[a-z\d, -]+$%i',
             ],
         ],
-        'handler' => function($body, $attrs) {
-            return "<span style=\"font-family:{$attrs['Def']};\">{$body}</span>";
-        },
+        'handler' => <<<'HANDLER'
+return "<span style=\"font-family:{$attrs['Def']};\">{$body}</span>";
+HANDLER,
     ],
     [
         'tag' => 'email',
@@ -196,13 +196,13 @@ return [
                 'text only' => true,
             ],
         ],
-        'handler' => function($body, $attrs) {
-            if (empty($attrs['Def'])) {
-                $attrs['Def'] = $body;
-            }
+        'handler' => <<<'HANDLER'
+if (empty($attrs['Def'])) {
+    $attrs['Def'] = $body;
+}
 
-            return "<a href=\"mailto:{$attrs['Def']}\">{$body}</a>";
-        },
+return "<a href=\"mailto:{$attrs['Def']}\">{$body}</a>";
+HANDLER,
     ],
     [
         'tag' => '*',
@@ -210,9 +210,9 @@ return [
         'self nesting' => 5,
         'parents' => ['list'],
         'auto' => true,
-        'handler' => function($body) {
-            return "<li><p>{$body}</p></li>";
-        },
+        'handler' => <<<'HANDLER'
+return "<li><p>{$body}</p></li>";
+HANDLER,
     ],
     [
         'tag' => 'list',
@@ -223,20 +223,20 @@ return [
             'Def' => true,
             'no attr' => true,
         ],
-        'handler' => function($body, $attrs) {
-            if (! isset($attrs['Def'])) {
-                $attrs['Def'] = '*';
-            }
+        'handler' => <<<'HANDLER'
+if (! isset($attrs['Def'])) {
+    $attrs['Def'] = '*';
+}
 
-            switch ($attrs['Def'][0]) {
-                case 'a':
-                    return "</p><ol class=\"f-bb-l-lat\">{$body}</ol><p>";
-                case '1':
-                    return "</p><ol class=\"f-bb-l-dec\">{$body}</ol><p>";
-                default:
-                    return "</p><ul class=\"f-bb-l-disc\">{$body}</ul><p>";
-            }
-        },
+switch ($attrs['Def'][0]) {
+    case 'a':
+        return "</p><ol class=\"f-bb-l-lat\">{$body}</ol><p>";
+    case '1':
+        return "</p><ol class=\"f-bb-l-dec\">{$body}</ol><p>";
+    default:
+        return "</p><ul class=\"f-bb-l-disc\">{$body}</ul><p>";
+}
+HANDLER,
     ],
     [
         'tag' => 'after',
@@ -247,29 +247,29 @@ return [
                 'format' => '%^\d+$%',
             ],
         ],
-        'handler' => function($body, $attrs) {
-            $arr = [];
-            $sec = $attrs['Def'] % 60;
-            $min = ($attrs['Def'] / 60) % 60;
-            $hours = ($attrs['Def'] / 3600) % 24;
-            $days = (int) ($attrs['Def'] / 86400);
-            if ($days > 0) {
-                $arr[] = $days . __('After time d');
-            }
-            if ($hours > 0) {
-                $arr[] = $hours . __('After time H');
-            }
-            if ($min > 0) {
-                $arr[] = ($min < 10 ? '0' . $min : $min) . __('After time i');
-            }
-            if ($sec > 0) {
-                $arr[] = ($sec < 10 ? '0' . $sec : $sec) . __('After time s');
-            }
+        'handler' => <<<'HANDLER'
+$arr = [];
+$sec = $attrs['Def'] % 60;
+$min = ($attrs['Def'] / 60) % 60;
+$hours = ($attrs['Def'] / 3600) % 24;
+$days = (int) ($attrs['Def'] / 86400);
+if ($days > 0) {
+    $arr[] = $days . __('After time d');
+}
+if ($hours > 0) {
+    $arr[] = $hours . __('After time H');
+}
+if ($min > 0) {
+    $arr[] = ($min < 10 ? '0' . $min : $min) . __('After time i');
+}
+if ($sec > 0) {
+    $arr[] = ($sec < 10 ? '0' . $sec : $sec) . __('After time s');
+}
 
-            $attr = __('After time') . ' ' . \implode(' ', $arr);
+$attr = __('After time') . ' ' . \implode(' ', $arr);
 
-            return '</p><p class="f-bb-after">' . $attr . ':</p><p>';
-        },
+return '</p><p class="f-bb-after">' . $attr . ':</p><p>';
+HANDLER,
     ],
     [
         'tag' => 'quote',
@@ -279,10 +279,10 @@ return [
             'Def' => true,
             'no attr' => true,
         ],
-        'handler' => function($body, $attrs) {
-            $header = isset($attrs['Def']) ? '<div class="f-bb-q-header">' . $attrs['Def'] .  ' ' . __('wrote') . '</div>' : '';
-            return "</p><blockquote class=\"f-bb-quote\">{$header}<div class=\"f-bb-q-body\"><p>{$body}</p></div></blockquote><p>";
-        },
+        'handler' => <<<'HANDLER'
+$header = isset($attrs['Def']) ? '<div class="f-bb-q-header">' . $attrs['Def'] .  ' ' . __('wrote') . '</div>' : '';
+return "</p><blockquote class=\"f-bb-quote\">{$header}<div class=\"f-bb-q-body\"><p>{$body}</p></div></blockquote><p>";
+HANDLER,
     ],
     [
         'tag' => 'spoiler',
@@ -292,13 +292,13 @@ return [
             'Def' => true,
             'no attr' => true,
         ],
-        'handler' => function($body, $attrs) {
-            if (! isset($attrs['Def'])) {
-                $attrs['Def'] = __('Hidden text');
-            }
+        'handler' => <<<'HANDLER'
+if (! isset($attrs['Def'])) {
+    $attrs['Def'] = __('Hidden text');
+}
 
-            return "</p><details class=\"f-bb-spoiler\"><summary>{$attrs['Def']}</summary><div class=\"f-bb-s-body\"><p>{$body}</p></div></details><p>";
-        },
+return "</p><details class=\"f-bb-spoiler\"><summary>{$attrs['Def']}</summary><div class=\"f-bb-s-body\"><p>{$body}</p></div></details><p>";
+HANDLER,
     ],
     [
         'tag' => 'img',
@@ -313,25 +313,25 @@ return [
                 'body format' => '%^(?:(?:ht|f)tps?://[^\x00-\x1f\s<"]+|data:image/[a-z]+;base64,(?:[a-zA-Z\d/\+\=]+))$%D'
             ],
         ],
-        'handler' => function($body, $attrs, $parser) {
-            if (! isset($attrs['Def'])) {
-                $attrs['Def'] = (\substr($body, 0, 11) === 'data:image/') ? 'base64' : \basename($body);
-            }
+        'handler' => <<<'HANDLER'
+if (! isset($attrs['Def'])) {
+    $attrs['Def'] = (\substr($body, 0, 11) === 'data:image/') ? 'base64' : \basename($body);
+}
 
-            // тег в подписи
-            if ($parser->attr('isSign')) {
-                if ($parser->attr('showImgSign')) {
-                    return '<img src="' . $body . '" alt="' . $attrs['Def'] . '" loading="lazy" class="sigimage" />';
-                }
-            } else {
-            // тег в теле сообщения
-                if ($parser->attr('showImg')) {
-                    return '<span class="postimg"><img src="' . $body . '" alt="' . $attrs['Def'] . '" loading="lazy" /></span>';
-                }
-            }
+// тег в подписи
+if ($parser->attr('isSign')) {
+    if ($parser->attr('showImgSign')) {
+        return '<img src="' . $body . '" alt="' . $attrs['Def'] . '" loading="lazy" class="sigimage" />';
+    }
+} else {
+    // тег в теле сообщения
+    if ($parser->attr('showImg')) {
+        return '<span class="postimg"><img src="' . $body . '" alt="' . $attrs['Def'] . '" loading="lazy" /></span>';
+    }
+}
 
-            return '<a href="' . $body . '" rel="nofollow">&lt;' . __('Image link') . ' - ' . $attrs['Def'] . '&gt;</a>';
-        },
+return '<a href="' . $body . '" rel="nofollow">&lt;' . __('Image link') . ' - ' . $attrs['Def'] . '&gt;</a>';
+HANDLER,
     ],
     [
         'tag' => 'url',
@@ -345,41 +345,41 @@ return [
                 'body format' => '%^[^\x00-\x1f]+$%D',
             ],
         ],
-        'handler' => function($body, $attrs, $parser) {
-            if (isset($attrs['Def'])) {
-                $url = $attrs['Def'];
-            } else {
-                $url = $body;
-                // возможно внутри была картинка, которая отображается как ссылка
-                if (\preg_match('%^<a href=".++(?<=</a>)$%D', $url)) {
-                    return $url;
-                }
-                // возможно внутри картинка
-                if (\preg_match('%<img src="([^"]+)"%', $url, $match)) {
-                    $url = $match[1];
-                }
-            }
+        'handler' => <<<'HANDLER'
+if (isset($attrs['Def'])) {
+    $url = $attrs['Def'];
+} else {
+    $url = $body;
+    // возможно внутри была картинка, которая отображается как ссылка
+    if (\preg_match('%^<a href=".++(?<=</a>)$%D', $url)) {
+        return $url;
+    }
+    // возможно внутри картинка
+    if (\preg_match('%<img src="([^"]+)"%', $url, $match)) {
+        $url = $match[1];
+    }
+}
 
-            $fUrl = \str_replace([' ', '\'', '`', '"'], ['%20', '', '', ''], $url);
+$fUrl = \str_replace([' ', '\'', '`', '"'], ['%20', '', '', ''], $url);
 
-            if (\strpos($url, 'www.') === 0) {
-                $fUrl = 'http://'.$fUrl;
-            } else if (\strpos($url, 'ftp.') === 0) {
-                $fUrl = 'ftp://'.$fUrl;
-            } else if (\strpos($url, '/') === 0) {
-                $fUrl = $parser->attr('baseUrl') . $fUrl;
-            } else if (! \preg_match('%^([a-z0-9]{3,6})://%', $url)) {
-                $fUrl = 'http://'.$fUrl;
-            }
+if (\strpos($url, 'www.') === 0) {
+    $fUrl = 'http://'.$fUrl;
+} else if (\strpos($url, 'ftp.') === 0) {
+    $fUrl = 'ftp://'.$fUrl;
+} else if (\strpos($url, '/') === 0) {
+    $fUrl = $parser->attr('baseUrl') . $fUrl;
+} else if (! \preg_match('%^([a-z0-9]{3,6})://%', $url)) {
+    $fUrl = 'http://'.$fUrl;
+}
 
-            if ($url === $body) {
-                $url = \htmlspecialchars_decode($url, \ENT_QUOTES | \ENT_HTML5);
-                $url = \mb_strlen($url, 'UTF-8') > 55 ? \mb_substr($url, 0, 39, 'UTF-8') . ' … ' . \mb_substr($url, -10, null, 'UTF-8') : $url;
-                $body = $parser->e($url);
-            }
+if ($url === $body) {
+    $url = \htmlspecialchars_decode($url, \ENT_QUOTES | \ENT_HTML5);
+    $url = \mb_strlen($url, 'UTF-8') > 55 ? \mb_substr($url, 0, 39, 'UTF-8') . ' … ' . \mb_substr($url, -10, null, 'UTF-8') : $url;
+    $body = $parser->e($url);
+}
 
-            return "<a href=\"{$fUrl}\" rel=\"nofollow\">{$body}</a>";
-        },
+return "<a href=\"{$fUrl}\" rel=\"nofollow\">{$body}</a>";
+HANDLER,
     ],
     [
         'tag' => 'table',
@@ -390,14 +390,14 @@ return [
             'no attr' => true,
             'style' => true,
         ],
-        'handler' => function($body, $attrs) {
-            $attr = '';
-            foreach ($attrs as $key => $val) {
-                $attr .= " {$key}=\"{$val}\"";
-            }
+        'handler' => <<<'HANDLER'
+$attr = '';
+foreach ($attrs as $key => $val) {
+    $attr .= " {$key}=\"{$val}\"";
+}
 
-            return "</p><table{$attr}>{$body}</table><p>";
-        },
+return "</p><table{$attr}>{$body}</table><p>";
+HANDLER,
     ],
     [
         'tag' => 'caption',
@@ -408,14 +408,14 @@ return [
             'no attr' => true,
             'style' => true,
         ],
-        'handler' => function($body, $attrs) {
-            $attr = '';
-            foreach ($attrs as $key => $val) {
-                $attr .= " {$key}=\"{$val}\"";
-            }
+        'handler' => <<<'HANDLER'
+$attr = '';
+foreach ($attrs as $key => $val) {
+    $attr .= " {$key}=\"{$val}\"";
+}
 
-            return "<caption{$attr}><p>{$body}</p></caption>";
-        },
+return "<caption{$attr}><p>{$body}</p></caption>";
+HANDLER,
     ],
     [
         'tag' => 'thead',
@@ -427,14 +427,14 @@ return [
             'no attr' => true,
             'style' => true,
         ],
-        'handler' => function($body, $attrs) {
-            $attr = '';
-            foreach ($attrs as $key => $val) {
-                $attr .= " {$key}=\"{$val}\"";
-            }
+        'handler' => <<<'HANDLER'
+$attr = '';
+foreach ($attrs as $key => $val) {
+    $attr .= " {$key}=\"{$val}\"";
+}
 
-            return "<thead{$attr}>{$body}</thead>";
-        },
+return "<thead{$attr}>{$body}</thead>";
+HANDLER,
     ],
     [
         'tag' => 'tbody',
@@ -446,14 +446,14 @@ return [
             'no attr' => true,
             'style' => true,
         ],
-        'handler' => function($body, $attrs) {
-            $attr = '';
-            foreach ($attrs as $key => $val) {
-                $attr .= " {$key}=\"{$val}\"";
-            }
+        'handler' => <<<'HANDLER'
+$attr = '';
+foreach ($attrs as $key => $val) {
+    $attr .= " {$key}=\"{$val}\"";
+}
 
-            return "<tbody{$attr}>{$body}</tbody>";
-        },
+return "<tbody{$attr}>{$body}</tbody>";
+HANDLER,
     ],
     [
         'tag' => 'tfoot',
@@ -465,14 +465,14 @@ return [
             'no attr' => true,
             'style' => true,
         ],
-        'handler' => function($body, $attrs) {
-            $attr = '';
-            foreach ($attrs as $key => $val) {
-                $attr .= " {$key}=\"{$val}\"";
-            }
+        'handler' => <<<'HANDLER'
+$attr = '';
+foreach ($attrs as $key => $val) {
+    $attr .= " {$key}=\"{$val}\"";
+}
 
-            return "<tfoot{$attr}>{$body}</tfoot>";
-        },
+return "<tfoot{$attr}>{$body}</tfoot>";
+HANDLER,
     ],
     [
         'tag' => 'tr',
@@ -484,14 +484,14 @@ return [
             'no attr' => true,
             'style' => true,
         ],
-        'handler' => function($body, $attrs) {
-            $attr = '';
-            foreach ($attrs as $key => $val) {
-                $attr .= " {$key}=\"{$val}\"";
-            }
+        'handler' => <<<'HANDLER'
+$attr = '';
+foreach ($attrs as $key => $val) {
+    $attr .= " {$key}=\"{$val}\"";
+}
 
-            return "<tr{$attr}>{$body}</tr>";
-        },
+return "<tr{$attr}>{$body}</tr>";
+HANDLER,
     ],
     [
         'tag' => 'th',
@@ -504,14 +504,14 @@ return [
             'colspan' => true,
             'rowspan' => true,
         ],
-        'handler' => function($body, $attrs) {
-            $attr = '';
-            foreach ($attrs as $key => $val) {
-                $attr .= " {$key}=\"{$val}\"";
-            }
+        'handler' => <<<'HANDLER'
+$attr = '';
+foreach ($attrs as $key => $val) {
+    $attr .= " {$key}=\"{$val}\"";
+}
 
-            return "<th{$attr}><p>{$body}</p></th>";
-        },
+return "<th{$attr}><p>{$body}</p></th>";
+HANDLER,
     ],
     [
         'tag' => 'td',
@@ -524,13 +524,13 @@ return [
             'colspan' => true,
             'rowspan' => true,
         ],
-        'handler' => function($body, $attrs) {
-            $attr = '';
-            foreach ($attrs as $key => $val) {
-                $attr .= " {$key}=\"{$val}\"";
-            }
+        'handler' => <<<'HANDLER'
+$attr = '';
+foreach ($attrs as $key => $val) {
+    $attr .= " {$key}=\"{$val}\"";
+}
 
-            return "<td{$attr}><p>{$body}</p></td>";
-        },
+return "<td{$attr}><p>{$body}</p></td>";
+HANDLER,
     ],
 ];
