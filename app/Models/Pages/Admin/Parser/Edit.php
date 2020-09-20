@@ -29,7 +29,6 @@ class Edit extends Parser
                     'o_smilies'           => 'required|integer|in:0,1',
                     'o_smilies_sig'       => 'required|integer|in:0,1',
                     'o_make_links'        => 'required|integer|in:0,1',
-                    'o_quote_depth'       => 'required|integer|min:0|max:9',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -120,14 +119,6 @@ class Edit extends Parser
                     'values'  => $yn,
                     'caption' => __('Clickable links label'),
                     'info'    => __('Clickable links help'),
-                ],
-                'o_quote_depth' => [
-                    'type'    => 'number',
-                    'min'     => 0,
-                    'max'     => 9,
-                    'value'   => $config->o_quote_depth,
-                    'caption' => __('Quote depth label'),
-                    'info'    => __('Quote depth help'),
                 ],
                 'bbcode_management' => [
                     'type'    => 'btn',

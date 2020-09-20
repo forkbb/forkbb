@@ -57,18 +57,6 @@ class Parser extends Parserus
     }
 
     /**
-     * Метод добавляет один bb-код
-     */
-    public function addBBCode(array $bb): Parserus
-    {
-        if ('quote' == $bb['tag']) {
-            $bb['self nesting'] = (int) $this->c->config->o_quote_depth;
-        }
-
-        return parent::addBBCode($bb);
-    }
-
-    /**
      * Проверяет разметку сообщения с бб-кодами
      * Пытается исправить неточности разметки
      * Генерирует ошибки разметки

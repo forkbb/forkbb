@@ -17,7 +17,7 @@ class Update extends Admin
 {
     const PHP_MIN = '7.3.0';
 
-    const LATEST_REV_WITH_DB_CHANGES = 15;
+    const LATEST_REV_WITH_DB_CHANGES = 16;
 
     const LOCK_NAME = 'lock_update';
     const LOCk_TTL  = 1800;
@@ -711,5 +711,15 @@ class Update extends Admin
         $this->c->DB->alterField('smilies', 'sm_position', 'INT(10) UNSIGNED', false, 0);
 
         return null;
+    }
+
+    /**
+     * rev.15 to rev.16
+     */
+    protected function stageNumber15(array $args): ?int
+    {
+        unset($this->c->config->o_quote_depth);
+
+        $this->c->config->save();
     }
 }

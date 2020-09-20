@@ -66,12 +66,6 @@ msgstr "Make clickable links"
 msgid "Clickable links help"
 msgstr "When enabled, ForkBB will automatically detect any URLs in posts and make them clickable hyperlinks."
 
-msgid "Quote depth label"
-msgstr "Maximum [quote] depth"
-
-msgid "Quote depth help"
-msgstr "The maximum times a [quote] tag can go inside other [quote] tags, any tags deeper than this will be discarded."
-
 msgid "BBCode management"
 msgstr "BBCode management"
 

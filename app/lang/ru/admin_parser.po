@@ -66,12 +66,6 @@ msgstr "Распознавать ссылки"
 msgid "Clickable links help"
 msgstr "Если включено, ForkBB будет автоматически распознавать URL-ы в сообщениях и делать их кликабельными гиперссылками."
 
-msgid "Quote depth label"
-msgstr "Максимальная глубина [quote]"
-
-msgid "Quote depth help"
-msgstr "Сколько раз тег [quote] может вкладываться в другие [quote], все теги свыше указанного порога будут игнорироваться."
-
 msgid "BBCode management"
 msgstr "Управление BB-кодами"
 
