@@ -14,10 +14,27 @@ class Load extends Method
      */
     public function load(): Config
     {
-        $query = 'SELECT cf.conf_name, cf.conf_value
+        $config = [];
+        $query  = 'SELECT cf.conf_name, cf.conf_value
             FROM ::config AS cf';
 
-        $config = $this->c->DB->query($query)->fetchAll(PDO::FETCH_KEY_PAIR);
+        $stmt = $this->c->DB->query($query);
+        while ($row = $stmt->fetch()) {
+            switch ($row['conf_name'][0]) {
+                case 'a':
+                    $value = \json_decode($row['conf_value'], true, 512, \JSON_THROW_ON_ERROR);
+                    break;
+                case 'i':
+                    $value = (int) $row['conf_value'];
+                    break;
+                default:
+                    $value = $row['conf_value'];
+                    break;
+            }
+
+            $config[$row['conf_name']] = $value;
+        }
+
         $this->model->setAttrs($config);
         $this->c->Cache->set('config', $config);
 
