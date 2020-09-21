@@ -25,8 +25,10 @@ class Load extends Method
                     $value = \json_decode($row['conf_value'], true, 512, \JSON_THROW_ON_ERROR);
                     break;
                 case 'i':
-                    $value = (int) $row['conf_value'];
-                    break;
+                    if (null !== $row['conf_value']) {
+                        $value = (int) $row['conf_value'];
+                        break;
+                    }
                 default:
                     $value = $row['conf_value'];
                     break;
