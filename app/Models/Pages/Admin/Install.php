@@ -14,6 +14,8 @@ class Install extends Admin
 {
     const PHP_MIN = '7.3.0';
 
+    const JSON_OPTIONS = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
+
     /**
      * Для MySQL
      * @var string
@@ -1110,12 +1112,10 @@ class Install extends Admin
             'o_feed_type'             => 2,
             'o_feed_ttl'              => 0,
             'p_message_bbcode'        => 1,
-            'p_message_img_tag'       => 1,
             'p_message_all_caps'      => 1,
             'p_subject_all_caps'      => 1,
             'p_sig_all_caps'          => 1,
             'p_sig_bbcode'            => 1,
-            'p_sig_img_tag'           => 0,
             'p_force_guest_email'     => 1,
             'o_pms_enabled'           => 1,                    // New PMS - Visman
             'o_pms_min_kolvo'         => 0,
@@ -1138,6 +1138,10 @@ class Install extends Admin
             'o_enable_acaptcha'       => 1, // математическая каптча
             'st_max_users'            => 1,    // статистика по максимуму юзеров - Visman
             'st_max_users_time'       => \time(),
+            'a_bb_white_mes'          => \json_encode([], self::JSON_OPTIONS),
+            'a_bb_white_sig'          => \json_encode(['b', 'i', 'u', 'color', 'colour', 'email', 'url'], self::JSON_OPTIONS),
+            'a_bb_black_mes'          => \json_encode([], self::JSON_OPTIONS),
+            'a_bb_black_sig'          => \json_encode([], self::JSON_OPTIONS),
         ];
         foreach ($pun_config as $conf_name => $conf_value) {
             $this->c->DB->exec('INSERT INTO ::config (conf_name, conf_value) VALUES (?s, ?s)', [$conf_name, $conf_value]);
@@ -1180,7 +1184,7 @@ class Install extends Admin
         foreach ($bbcodes as $bbcode) {
             $vars = [
                 ':tag'       => $bbcode['tag'],
-                ':structure' => \json_encode($bbcode, \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR),
+                ':structure' => \json_encode($bbcode, self::JSON_OPTIONS),
             ];
             $this->c->DB->exec($query, $vars);
         }

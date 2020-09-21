@@ -35,7 +35,6 @@ return [
     'GROUP_GUEST'      => 3,
     'GROUP_MEMBER'     => 4,
     'BBCODE_INFO'      => [
-        'forSign'  => ['b', 'i', 'u', 'color', 'colour', 'email', 'img', 'url'],
         'smTpl'    => '<img src="{url}" alt="{alt}">',
         'smTplTag' => 'img',
         'smTplBl'  => ['url'],

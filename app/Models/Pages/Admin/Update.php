@@ -24,6 +24,8 @@ class Update extends Admin
 
     const CONFIG_FILE = 'main.php';
 
+    const JSON_OPTIONS = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
+
     public function __construct(Container $container)
     {
         parent::__construct($container);
@@ -738,13 +740,28 @@ class Update extends Admin
         foreach ($bbcodes as $bbcode) {
             $vars = [
                 ':tag'       => $bbcode['tag'],
-                ':structure' => \json_encode($bbcode, \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR),
+                ':structure' => \json_encode($bbcode, self::JSON_OPTIONS),
             ];
             $this->c->DB->exec($query, $vars);
         }
 
+        $this->c->config->a_bb_white_mes = [];
+        $this->c->config->a_bb_white_sig = ['b', 'i', 'u', 'color', 'colour', 'email', 'url'];
+        $this->c->config->a_bb_black_mes = [];
+        $this->c->config->a_bb_black_sig = [];
+
         unset($this->c->config->o_quote_depth);
+        unset($this->c->config->p_sig_img_tag);
+        unset($this->c->config->p_message_img_tag);
 
         $this->c->config->save();
+
+        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+
+        $result = $coreConfig->delete(
+            'BBCODE_INFO=>forSign',
+        );
+
+        $coreConfig->save();
     }
 }

@@ -64,11 +64,21 @@ class Parser extends Parserus
     public function prepare(string $text, bool $isSignature = false): string
     {
         if ($isSignature) {
-            $whiteList = '1' == $this->c->config->p_sig_bbcode ? $this->c->BBCODE_INFO['forSign'] : [];
-            $blackList = '1' == $this->c->config->p_sig_img_tag ? [] : ['img'];
+            $whiteList = '1' == $this->c->config->p_sig_bbcode
+                ? (empty($this->c->config->a_bb_white_sig) && empty($this->c->config->a_bb_black_sig)
+                    ? null
+                    : $this->c->config->a_bb_white_sig
+                )
+                : [];
+            $blackList = null;
         } else {
-            $whiteList = '1' == $this->c->config->p_message_bbcode ? null : [];
-            $blackList = '1' == $this->c->config->p_message_img_tag ? [] : ['img'];
+            $whiteList = '1' == $this->c->config->p_message_bbcode
+                ? (empty($this->c->config->a_bb_white_mes) && empty($this->c->config->a_bb_black_mes)
+                    ? null
+                    : $this->c->config->a_bb_white_mes
+                )
+                : [];
+            $blackList = null;
         }
 
         $this->setAttr('isSign', $isSignature)
@@ -92,7 +102,7 @@ class Parser extends Parserus
         // при null предполагается брать данные после prepare()
         if (null !== $text) {
             $whiteList = '1' == $this->c->config->p_message_bbcode ? null : [];
-            $blackList = '1' == $this->c->config->p_message_img_tag ? [] : ['img'];
+            $blackList = $this->c->config->a_bb_black_mes;
 
             $this->setAttr('isSign', false)
                  ->setWhiteList($whiteList)
@@ -117,8 +127,8 @@ class Parser extends Parserus
     {
         // при null предполагается брать данные после prepare()
         if (null !== $text) {
-            $whiteList = '1' == $this->c->config->p_sig_bbcode ? $this->c->BBCODE_INFO['forSign'] : [];
-            $blackList = '1' == $this->c->config->p_sig_img_tag ? [] : ['img'];
+            $whiteList = '1' == $this->c->config->p_sig_bbcode ? null : [];
+            $blackList = $this->c->config->a_bb_black_sig;
 
             $this->setAttr('isSign', true)
                  ->setWhiteList($whiteList)

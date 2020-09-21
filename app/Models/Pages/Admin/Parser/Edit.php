@@ -23,9 +23,7 @@ class Edit extends Parser
                 ])->addRules([
                     'token'               => 'token:AdminParser',
                     'p_message_bbcode'    => 'required|integer|in:0,1',
-                    'p_message_img_tag'   => 'required|integer|in:0,1',
                     'p_sig_bbcode'        => 'required|integer|in:0,1',
-                    'p_sig_img_tag'       => 'required|integer|in:0,1',
                     'o_smilies'           => 'required|integer|in:0,1',
                     'o_smilies_sig'       => 'required|integer|in:0,1',
                     'o_make_links'        => 'required|integer|in:0,1',
@@ -82,7 +80,7 @@ class Edit extends Parser
 
         $yn = [1 => __('Yes'), 0 => __('No')];
 
-        $form['sets']['posting'] = [
+        $form['sets']['bbcode'] = [
             'legend' => __('BBCode subhead'),
             'fields' => [
                 'p_message_bbcode' => [
@@ -98,20 +96,6 @@ class Edit extends Parser
                     'values'  => $yn,
                     'caption' => __('BBCode sigs label'),
                     'info'    => __('BBCode sigs help'),
-                ],
-                'p_message_img_tag' => [
-                    'type'    => 'radio',
-                    'value'   => $config->p_message_img_tag,
-                    'values'  => $yn,
-                    'caption' => __('Image tag label'),
-                    'info'    => __('Image tag help'),
-                ],
-                'p_sig_img_tag' => [
-                    'type'    => 'radio',
-                    'value'   => $config->p_sig_img_tag,
-                    'values'  => $yn,
-                    'caption' => __('Image tag sigs label'),
-                    'info'    => __('Image tag sigs help'),
                 ],
                 'o_make_links' => [
                     'type'    => 'radio',
@@ -130,7 +114,7 @@ class Edit extends Parser
             ],
         ];
 
-        $form['sets']['signatures'] = [
+        $form['sets']['smilies'] = [
             'legend' => __('Smilies subhead'),
             'fields' => [
                 'o_smilies' => [

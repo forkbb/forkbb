@@ -27,23 +27,11 @@ msgstr "BBCode"
 msgid "BBCode help"
 msgstr "Allow BBCode in posts (recommended)."
 
-msgid "Image tag label"
-msgstr "Image tag"
-
-msgid "Image tag help"
-msgstr "Allow the BBCode [img][/img] tag in posts."
-
 msgid "BBCode sigs label"
 msgstr "BBCodes in signatures"
 
 msgid "BBCode sigs help"
 msgstr "Allow BBCodes in user signatures."
-
-msgid "Image tag sigs label"
-msgstr "Image tag in signatures"
-
-msgid "Image tag sigs help"
-msgstr "Allow the BBCode [img][/img] tag in user signatures (not recommended)."
 
 msgid "Smilies subhead"
 msgstr "Smilies"

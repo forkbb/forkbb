@@ -27,23 +27,11 @@ msgstr "BBcode в сообщениях"
 msgid "BBCode help"
 msgstr "Разрешить BB-коды в сообщениях (рекомендуется)."
 
-msgid "Image tag label"
-msgstr "Тег IMG в сообщениях"
-
-msgid "Image tag help"
-msgstr "Разрешить тег [img][/img] в сообщениях."
-
 msgid "BBCode sigs label"
 msgstr "BBcode в подписях"
 
 msgid "BBCode sigs help"
 msgstr "Разрешить BB-коды в подписях пользователей."
-
-msgid "Image tag sigs label"
-msgstr "Тег IMG в подписях"
-
-msgid "Image tag sigs help"
-msgstr "Разрешить тег [img][/img] в подписях пользователей (не рекомендуется)."
 
 msgid "Smilies subhead"
 msgstr "Смайлы"
