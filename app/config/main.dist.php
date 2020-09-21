@@ -107,6 +107,7 @@ return [
         'categories'    => '@CategoriesManager:init',
         'search'        => \ForkBB\Models\Search\Model::class,
         'subscriptions' => \ForkBB\Models\Subscription\Model::class,
+        'bbcode'        => '@BBCodeListModel:init',
 
         'Csrf' => [
             'class'  => \ForkBB\Core\Csrf::class,
@@ -144,6 +145,16 @@ return [
         'SmileyListModelUpdate' => \ForkBB\Models\SmileyList\Update::class,
         'SmileyListModelInsert' => \ForkBB\Models\SmileyList\Insert::class,
         'SmileyListModelDelete' => \ForkBB\Models\SmileyList\Delete::class,
+
+        'BBCodeListModel'         => [
+            'class' => \ForkBB\Models\BBCodeList\Model::class,
+            'file'  => 'defaultBBCode.php',
+        ],
+        'BBCodeListModelGenerate' => \ForkBB\Models\BBCodeList\Generate::class,
+        'BBCodeListModelLoad'     => \ForkBB\Models\BBCodeList\Load::class,
+        'BBCodeListModelUpdate'   => \ForkBB\Models\BBCodeList\Update::class,
+        'BBCodeListModelInsert'   => \ForkBB\Models\BBCodeList\Insert::class,
+        'BBCodeListModelDelete'   => \ForkBB\Models\BBCodeList\Delete::class,
     ],
     'multiple'  => [
         'CtrlPrimary' => \ForkBB\Controllers\Primary::class,

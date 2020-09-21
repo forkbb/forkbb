@@ -29,8 +29,7 @@ class Parser extends Parserus
             '1' == $this->c->config->p_message_bbcode
             || '1' == $this->c->config->p_sig_bbcode
         ) {
-            $bbcodes = include $this->c->DIR_CONFIG . '/defaultBBCode.php';
-            $this->setBBCodes($bbcodes);
+            $this->setBBCodes($this->c->bbcode->list);
         }
 
         if (

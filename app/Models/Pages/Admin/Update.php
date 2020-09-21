@@ -723,13 +723,16 @@ class Update extends Admin
         // bbcode
         $schema = [
             'FIELDS' => [
+                'id'           => ['SERIAL', false],
                 'bb_tag'       => ['VARCHAR(11)', false, ''],
                 'bb_edit'      => ['TINYINT(1)', false, 1],
                 'bb_delete'    => ['TINYINT(1)', false, 1],
                 'bb_structure' => ['MEDIUMTEXT', false],
             ],
-            'PRIMARY KEY' => ['bb_tag'],
-            'ENGINE' => $this->DBEngine,
+            'PRIMARY KEY' => ['id'],
+            'UNIQUE KEYS' => [
+                'bb_tag_idx' => ['bb_tag'],
+            ],
         ];
         $this->c->DB->createTable('bbcode', $schema);
 
@@ -762,6 +765,47 @@ class Update extends Admin
             'BBCODE_INFO=>forSign',
         );
 
+        $coreConfig->add(
+            'shared=>bbcode',
+            '\'@BBCodeListModel:init\'',
+            'subscriptions'
+        );
+
+        $coreConfig->add(
+            'shared=>BBCodeListModel',
+            [
+                'class' => '\\ForkBB\\Models\\BBCodeList\\Model::class',
+                'file'  => '\'defaultBBCode.php\'',
+            ]
+        );
+
+        $coreConfig->add(
+            'shared=>BBCodeListModelGenerate',
+            '\\ForkBB\\Models\\BBCodeList\\Generate::class'
+        );
+
+        $coreConfig->add(
+            'shared=>BBCodeListModelLoad',
+            '\\ForkBB\\Models\\BBCodeList\\Load::class'
+        );
+
+        $coreConfig->add(
+            'shared=>BBCodeListModelUpdate',
+            '\\ForkBB\\Models\\BBCodeList\\Update::class'
+        );
+
+        $coreConfig->add(
+            'shared=>BBCodeListModelInsert',
+            '\\ForkBB\\Models\\BBCodeList\\Insert::class'
+        );
+
+        $coreConfig->add(
+            'shared=>BBCodeListModelDelete',
+            '\\ForkBB\\Models\\BBCodeList\\Delete::class'
+        );
+
         $coreConfig->save();
+
+        return null;
     }
 }

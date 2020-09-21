@@ -508,12 +508,16 @@ class Install extends Admin
         // bbcode
         $schema = [
             'FIELDS' => [
+                'id'           => ['SERIAL', false],
                 'bb_tag'       => ['VARCHAR(11)', false, ''],
                 'bb_edit'      => ['TINYINT(1)', false, 1],
                 'bb_delete'    => ['TINYINT(1)', false, 1],
                 'bb_structure' => ['MEDIUMTEXT', false],
             ],
-            'PRIMARY KEY' => ['bb_tag'],
+            'PRIMARY KEY' => ['id'],
+            'UNIQUE KEYS' => [
+                'bb_tag_idx' => ['bb_tag'],
+            ],
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('bbcode', $schema);
