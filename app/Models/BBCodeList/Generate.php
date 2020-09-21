@@ -9,12 +9,6 @@ use RuntimeException;
 class Generate extends Method
 {
     /**
-     * Содержимое генерируемого файла
-     * @var string
-     */
-    protected $file;
-
-    /**
      * Создает файл с массивом сгенерированных bbcode
      */
     public function generate(): BBCodeList
@@ -22,18 +16,18 @@ class Generate extends Method
         $query = 'SELECT bb_structure
             FROM ::bbcode';
 
-        $this->file = "<?php\n\nuse function \\ForkBB\\__;\n\nreturn [\n";
+        $content = "<?php\n\nuse function \\ForkBB\\__;\n\nreturn [\n";
 
         $stmt = $this->c->DB->query($query);
         while ($row = $stmt->fetch()) {
-            $this->file .= "    [\n"
+            $content .= "    [\n"
                 . $this->addArray(\json_decode($row['bb_structure'], true, 512, \JSON_THROW_ON_ERROR))
                 . "    ],\n";
         }
 
-        $this->file .= "];\n";
+        $content .= "];\n";
 
-        if (false === \file_put_contents($this->model->fileCache, $this->file, \LOCK_EX)) {
+        if (false === \file_put_contents($this->model->fileCache, $content, \LOCK_EX)) {
             throw new RuntimeException('The generated bbcode file cannot be created');
         } else {
             return $this->model->invalidate();
