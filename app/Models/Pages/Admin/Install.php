@@ -232,7 +232,6 @@ class Install extends Admin
                             'value'    => $v ? $v->dbtype : 'mysql_innodb',
                             'caption'  => __('Database type'),
                             'info'     => __('Info 2'),
-                            'required' => true,
                         ],
                         'dbhost' => [
                             'type'     => 'text',
@@ -353,14 +352,12 @@ class Install extends Admin
                             'options'   => $langs,
                             'value'     => $v ? $v->defaultlang : $this->user->language,
                             'caption'   => __('Default language'),
-                            'required'  => true,
                         ],
                         'defaultstyle' => [
                             'type'      => 'select',
                             'options'   => $styles,
                             'value'     => $v ? $v->defaultstyle : $this->user->style,
                             'caption'   => __('Default style'),
-                            'required'  => true,
                         ],
 
                     ],

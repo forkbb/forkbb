@@ -180,7 +180,6 @@ class Smilies extends Parser
                 'options'  => $imageList,
                 'value'    => $data['smilies'][$id]['sm_image'] ?? $cur['sm_image'],
                 'caption'  => __('Name label'),
-                'required' => true,
             ];
             $fields["smile{$id}-pic"] = [
                 'class'     => ['pic', 'smile'],

@@ -585,7 +585,6 @@ class Moderate extends Page
                 'options'   => $this->listForOptions,
                 'value'     => null,
                 'caption'   => __('Move to'),
-                'required'  => true,
                 'autofocus' => $autofocus,
             ];
             $autofocus = null;
