@@ -23,6 +23,21 @@ class Update
      */
     public function routing(): Page
     {
+        // fix for Router
+        if ($this->c->config->i_fork_revision < 17) {
+            $confChange = [
+                'shared' => [
+                    'Router' => [
+                        'class'    => \ForkBB\Core\Router::class,
+                        'base_url' => '%BASE_URL%',
+                        'csrf'     => '@Csrf'
+                    ],
+                ],
+            ];
+        }
+
+        $this->c->config($confChange);
+
         $uri = $_SERVER['REQUEST_URI'];
         if (false !== ($pos = \strpos($uri, '?'))) {
             $uri = \substr($uri, 0, $pos);
