@@ -540,6 +540,24 @@ class Routing
                 'AdminBBCode'
             );
             $r->add(
+                $r::GET,
+                '/admin/parser/bbcode/delete/{id:[1-9]\d*}/{token}',
+                'AdminParserBBCode:delete',
+                'AdminBBCodeDelete'
+            );
+            $r->add(
+                $r::DUO,
+                '/admin/parser/bbcode/edit/{id:[1-9]\d*}',
+                'AdminParserBBCode:edit',
+                'AdminBBCodeEdit'
+            );
+            $r->add(
+                $r::DUO,
+                '/admin/parser/bbcode/new',
+                'AdminParserBBCode:edit',
+                'AdminBBCodeNew'
+            );
+            $r->add(
                 $r::DUO,
                 '/admin/parser/smilies',
                 'AdminParserSmilies:view',

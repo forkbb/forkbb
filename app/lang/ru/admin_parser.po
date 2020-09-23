@@ -122,3 +122,33 @@ msgstr "Смайлы обновлены."
 
 msgid "Smile deleted redirect"
 msgstr "Смайл удален."
+
+msgid "BBCode head"
+msgstr "BBCode"
+
+msgid "BBCode list subhead"
+msgstr "Список BB-кодов"
+
+msgid "BBCode tag label"
+msgstr "Тег"
+
+msgid "BBCode tag title"
+msgstr "Редактировать BB-код"
+
+msgid "BBCode %s"
+msgstr "BB-код '%s'"
+
+msgid "BBCode allowed"
+msgstr "Разрешен"
+
+msgid "BBCode display only"
+msgstr "Только отображение"
+
+msgid "BBCode not allowed"
+msgstr "Запрещен"
+
+msgid "BBCode mes label"
+msgstr "В сообщениях"
+
+msgid "BBCode sig label"
+msgstr "В подписях"

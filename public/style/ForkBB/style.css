@@ -2956,11 +2956,13 @@ body,
   margin: 0;
 }
 
+#fork .f-bbcode-form .f-field-tag,
 #fork .f-smilies-form .f-fs-smile > legend,
 #fork .f-smilies-form .f-fs-new-smile > legend {
   border-top: 0.0625rem dotted #AA7939;
 }
 
+#fork .f-fs-bbcode > legend,
 #fork .f-images-list .f-fs-image > legend,
 #fork .f-images-list .f-field-image > dt {
   display: none;
@@ -2998,6 +3000,56 @@ body,
 
 #fork .f-smilies-form .f-field-new-smile > dd {
   width: 100%;
+}
+
+#fork .f-bbcode-form .f-link {
+  display: block;
+}
+
+@media screen and (min-width: 25rem) {
+  #fork .f-bbcode-form .f-fs-bbcode {
+    display: flex;
+  }
+
+  #fork .f-bbcode-form .f-field-bbcode {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+  }
+
+  #fork .f-bbcode-form .f-field-tag {
+    border-top: 0;
+  }
+
+  #fork .f-bbcode-form .f-field-bbcode > dt {
+    display: none;
+  }
+
+  #fork .f-fs-bbcode-legend + .f-fs-bbcode .f-field-bbcode > dt {
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  #fork .f-bbcode-form .f-field-bbcode .f-child1 {
+    font-weight: normal;
+  }
+
+  #fork .f-bbcode-form .f-field-bbcode > dd {
+    width: 100%;
+    flex-grow: 1;
+  }
+
+  #fork .f-field-bbcode.f-field-tag,
+  #fork .f-field-bbcode.f-field-in_mes,
+  #fork .f-field-bbcode.f-field-in_sig {
+    width: calc((100% - 3rem) / 3);
+  }
+
+  #fork .f-field-bbcode.f-field-delete {
+    width: 3rem;
+  }
 }
 
 @media screen and (min-width: 35rem) {

@@ -28,10 +28,10 @@ msgid "BBCode help"
 msgstr "Allow BBCode in posts (recommended)."
 
 msgid "BBCode sigs label"
-msgstr "BBCodes in signatures"
+msgstr "BBCode in signatures"
 
 msgid "BBCode sigs help"
-msgstr "Allow BBCodes in user signatures."
+msgstr "Allow BBCode in user signatures."
 
 msgid "Smilies subhead"
 msgstr "Smilies"
@@ -122,3 +122,33 @@ msgstr "Smilies updated."
 
 msgid "Smile deleted redirect"
 msgstr "Smile deleted."
+
+msgid "BBCode head"
+msgstr "BBCode"
+
+msgid "BBCode list subhead"
+msgstr "BBCode list"
+
+msgid "BBCode tag label"
+msgstr "Tag"
+
+msgid "BBCode tag title"
+msgstr "Edit BBCode"
+
+msgid "BBCode %s"
+msgstr "BBCode '%s'"
+
+msgid "BBCode allowed"
+msgstr "Allowed"
+
+msgid "BBCode display only"
+msgstr "Display only"
+
+msgid "BBCode not allowed"
+msgstr "Not allowed"
+
+msgid "BBCode mes label"
+msgstr "In messages"
+
+msgid "BBCode sig label"
+msgstr "In signatures"
