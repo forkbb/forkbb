@@ -44,7 +44,7 @@ class Container
         }
         unset($config['shared'], $config['multiple']);
         if (! empty($config)) {
-            $this->config = \array_replace_recursive($this->config, $config);
+            $this->instances = \array_replace_recursive($this->instances, $config);
         }
     }
 
