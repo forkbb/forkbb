@@ -16,7 +16,7 @@ class RebuildIndex extends Action
             ':start' => $start,
             ':limit' => $limit,
         ];
-        $query = 'SELECT p.id, p.message, t.id as topic_id, t.subject, t.first_post_id
+        $query = 'SELECT p.id, p.message, t.id as topic_id, t.subject, t.first_post_id, t.forum_id
             FROM ::posts AS p
             INNER JOIN ::topics AS t ON t.id=p.topic_id
             WHERE p.id>=?i:start
@@ -40,6 +40,7 @@ class RebuildIndex extends Action
                     'id'            => $row['topic_id'],
                     'subject'       => $row['subject'],
                     'first_post_id' => $row['first_post_id'],
+                    'forum_id'      => $row['forum_id'],
                 ]);
                 $this->c->topics->set($topic->id, $topic);
             }
