@@ -171,12 +171,7 @@ class BBCode extends Parser
                     'AdminBBCodeDelete',
                     [
                         'id'    => $id,
-                        'token' => $this->c->Csrf->create(
-                            'AdminBBCodeDelete',
-                            [
-                                'id' => $id,
-                            ]
-                        ),
+                        'token' => null,
                     ]
                 ),
                 'disabled'  => 1 !== $tagData['bb_delete'],

@@ -118,12 +118,7 @@ class Model extends DataModel
                 'AdminReportsZap',
                 [
                     'id'    => $this->id,
-                    'token' => $this->c->Csrf->create(
-                        'AdminReportsZap',
-                        [
-                            'id' => $this->id,
-                        ]
-                    ),
+                    'token' => null,
                 ]
             );
         } else {

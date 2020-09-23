@@ -170,13 +170,7 @@ class Model extends DataModel
             [
                 'tid'   => $this->id,
                 'type'  => 'subscribe',
-                'token' => $this->c->Csrf->create(
-                    'TopicSubscription',
-                    [
-                        'tid'  => $this->id,
-                        'type' => 'subscribe',
-                    ]
-                ),
+                'token' => null,
             ]
         );
     }
@@ -191,13 +185,7 @@ class Model extends DataModel
             [
                 'tid'   => $this->id,
                 'type'  => 'unsubscribe',
-                'token' => $this->c->Csrf->create(
-                    'TopicSubscription',
-                    [
-                        'tid'  => $this->id,
-                        'type' => 'unsubscribe',
-                    ]
-                ),
+                'token' => null,
             ]
         );
     }

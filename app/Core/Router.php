@@ -2,6 +2,7 @@
 
 namespace ForkBB\Core;
 
+use ForkBB\Core\Csrf;
 use InvalidArgumentException;
 
 class Router
@@ -73,9 +74,15 @@ class Router
         '(_backslash_)',
     ];
 
-    public function __construct(string $base)
+    /**
+     * @var Csrf
+     */
+    protected $csrf;
+
+    public function __construct(string $base, Csrf $csrf)
     {
         $this->baseUrl = $base;
+        $this->csrf    = $csrf;
         $this->host    = \parse_url($base, PHP_URL_HOST);
         $this->prefix  = \parse_url($base, PHP_URL_PATH);
         $this->length  = \strlen($this->prefix);
@@ -119,6 +126,14 @@ class Router
         // ссылка статична
         } elseif (\is_string($data = $this->links[$marker])) {
             return $result . $data . $anchor;
+        }
+
+        // автоматическое вычисление токена
+        if (
+            \array_key_exists('token', $args)
+            && ! isset($args['token'])
+        ) {
+            $args['token'] = $this->csrf->create($marker, $args);
         }
 
         list($link, $names, $request) = $data;

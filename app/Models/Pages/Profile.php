@@ -87,13 +87,7 @@ abstract class Profile extends Page
                         [
                             'id'    => $id,
                             'uid'   => $this->curUser->id,
-                            'token' => $this->c->Csrf->create(
-                                'AdminBansDelete',
-                                [
-                                    'id'  => $id,
-                                    'uid' => $this->curUser->id,
-                                ]
-                            ),
+                            'token' => null,
                         ]
                     ),
                     __('Unban user'),
@@ -171,13 +165,7 @@ abstract class Profile extends Page
             [
                 'action' => 'change_group',
                 'ids'    => $this->curUser->id,
-                'token'  => $this->c->Csrf->create(
-                    'AdminUsersAction',
-                    [
-                        'action' => 'change_group',
-                        'ids'    => $this->curUser->id,
-                    ]
-                ),
+                'token'  => null,
             ]
         );
     }

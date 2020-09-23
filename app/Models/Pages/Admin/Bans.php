@@ -517,10 +517,7 @@ class Bans extends Admin
                     'AdminBansDelete',
                     [
                         'id'    => $ban['id'],
-                        'token' => $this->c->Csrf->create(
-                            'AdminBansDelete',
-                            $arr
-                        ),
+                        'token' => null,
                     ]
                 ),
             ];

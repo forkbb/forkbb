@@ -46,6 +46,21 @@ class Primary
                     'AdminUpdate' => \ForkBB\Models\Pages\Admin\Update::class,
                 ],
             ];
+
+            // fix for Router
+            if ($this->c->config->i_fork_revision < 17) {
+                $confChange += [
+                    'shared' => [
+                        'Router' => [
+                            'class'    => \ForkBB\Core\Router::class,
+                            'base_url' => '%BASE_URL%',
+                            'csrf'     => '@Csrf'
+                        ],
+
+                    ],
+                ];
+            }
+
             $this->c->config($confChange);
 
             return null;

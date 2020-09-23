@@ -225,15 +225,11 @@ class Maintenance extends Admin
 
         if ($last) {
             $args = [
-                'token' => '',
+                'token' => null,
                 'limit' => $v->limit,
                 'start' => $last + 1,
                 'clear' => $v->clear ? '1' : '0',
             ];
-            $args['token'] = $this->c->Csrf->create(
-                'AdminRebuildIndex',
-                $args
-            );
 
             return $this->c->Redirect->page('AdminRebuildIndex', $args)->message(__('Processed posts', $v->start, $last));
         } else {

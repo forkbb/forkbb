@@ -198,12 +198,7 @@ class Smilies extends Parser
                     'AdminSmiliesDelete',
                     [
                         'name'  => $id,
-                        'token' => $this->c->Csrf->create(
-                            'AdminSmiliesDelete',
-                            [
-                                'name'  => $id,
-                            ]
-                        ),
+                        'token' => null,
                     ]
                 ),
             ];
@@ -290,12 +285,7 @@ class Smilies extends Parser
                     'AdminSmiliesDelete',
                     [
                         'name'  => $name,
-                        'token' => $this->c->Csrf->create(
-                            'AdminSmiliesDelete',
-                            [
-                                'name'  => $name,
-                            ]
-                        ),
+                        'token' => null,
                     ]
                 ),
             ];

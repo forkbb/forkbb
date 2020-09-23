@@ -335,13 +335,7 @@ class Model extends DataModel
                 [
                     'uid'   => $post->user->id,
                     'pid'   => $post->id,
-                    'token' => $this->c->Csrf->create(
-                        'AdminUserPromote',
-                        [
-                            'uid' => $post->user->id,
-                            'pid' => $post->id,
-                        ]
-                    ),
+                    'token' => null,
                 ]
             );
         } else {

@@ -182,12 +182,7 @@ class Model extends DataModel
         return $this->c->Router->link(
             'MarkRead', [
                 'id'    => $this->id,
-                'token' => $this->c->Csrf->create(
-                    'MarkRead',
-                    [
-                        'id' => $this->id,
-                    ]
-                ),
+                'token' => null,
             ]
         );
     }
@@ -205,13 +200,7 @@ class Model extends DataModel
                 [
                     'fid'   => $this->id,
                     'type'  => 'subscribe',
-                    'token' => $this->c->Csrf->create(
-                        'ForumSubscription',
-                        [
-                            'fid'  => $this->id,
-                            'type' => 'subscribe',
-                        ]
-                    ),
+                    'token' => null,
                 ]
             );
         }
@@ -230,13 +219,7 @@ class Model extends DataModel
                 [
                     'fid'   => $this->id,
                     'type'  => 'unsubscribe',
-                    'token' => $this->c->Csrf->create(
-                        'ForumSubscription',
-                        [
-                            'fid'  => $this->id,
-                            'type' => 'unsubscribe',
-                        ]
-                    ),
+                    'token' => null,
                 ]
             );
         }

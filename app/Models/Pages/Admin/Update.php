@@ -808,4 +808,21 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.16 to rev.17
+     */
+    protected function stageNumber16(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+
+        $coreConfig->add(
+            'shared=>Router=>csrf',
+            '\'@Csrf\''
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }

@@ -54,12 +54,7 @@ class Index extends Page
                 'MarkRead',
                 [
                     'id'    => 0,
-                    'token' => $this->c->Csrf->create(
-                        'MarkRead',
-                        [
-                            'id' => 0,
-                        ]
-                    ),
+                    'token' => null,
                 ]
             );
         }

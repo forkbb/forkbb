@@ -215,7 +215,7 @@ abstract class Page extends Model
                 $r->link(
                     'Logout',
                     [
-                        'token' => $this->c->Csrf->create('Logout'),
+                        'token' => null,
                     ]
                 ),
                 'Logout',
