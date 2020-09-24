@@ -71,6 +71,11 @@ class Mail
         'Content-Type' => true,
     ];
 
+    /**
+     * @var string
+     */
+    protected $response;
+
     public function __construct(/* string */ $host, /* string */ $user, /* string */ $pass, /* bool */ $ssl, /* string */ $eol)
     {
         if (
@@ -482,7 +487,7 @@ class Mail
             }
             \stream_set_timeout($connect, 5);
             $this->connect = $connect;
-            $this->smtpData(null, '220');
+            $this->smtpData(null, ['220']);
         }
 
         $message = $this->EOL
@@ -499,18 +504,18 @@ class Mail
             $this->smtpHello();
 
             foreach ($this->to as $email => $name) {
-                $this->smtpData("MAIL FROM:<{$this->from}>", '250');
+                $this->smtpData("MAIL FROM:<{$this->from}>", ['250']);
                 $this->smtpData("RCPT TO:<{$email}>", ['250', '251']);
-                $this->smtpData('DATA', '354');
+                $this->smtpData('DATA', ['354']);
                 $this->smtpData(
                     'To: '
                     . $this->formatAddress($email, $name)
                     . $this->EOL
                     . $headers
                     . $message,
-                    '250'
+                    ['250']
                 );
-                $this->smtpData('NOOP', '250');
+                $this->smtpData('NOOP', ['250']);
             }
         } else {
             $arrRecipients = \array_chunk($this->to, $this->maxRecipients, true);
@@ -518,19 +523,19 @@ class Mail
             $this->smtpHello();
 
             foreach ($arrRecipients as $recipients) {
-                $this->smtpData("MAIL FROM:<{$this->from}>", '250');
+                $this->smtpData("MAIL FROM:<{$this->from}>", ['250']);
 
                 foreach ($recipients as $email => $name) {
                     $this->smtpData("RCPT TO:<{$email}>", ['250', '251']);
                 }
 
-                $this->smtpData('DATA', '354');
+                $this->smtpData('DATA', ['354']);
                 $this->smtpData(
                     $headers
                     . $message,
-                    '250'
+                    ['250']
                 );
-                $this->smtpData('NOOP', '250');
+                $this->smtpData('NOOP', ['250']);
             }
         }
 
@@ -544,7 +549,7 @@ class Mail
     {
         switch ($this->auth) {
             case 1:
-                $this->smtpData('EHLO ' . $this->hostname(), '250');
+                $this->smtpData('EHLO ' . $this->hostname(), ['250']);
 
                 return;
             case 0:
@@ -554,18 +559,49 @@ class Mail
                 ) {
                    $code = $this->smtpData('EHLO ' . $this->hostname(), ['250', '500', '501', '502', '550']);
 
-                   if ('250' === $code) {
-                       $this->smtpData('AUTH LOGIN', '334');
-                       $this->smtpData(\base64_encode($this->smtp['user']), '334');
-                       $this->smtpData(\base64_encode($this->smtp['pass']), '235');
-                       $this->auth = 1;
+                   if (
+                       '250' === $code
+                       && \preg_match('%250[- ]AUTH[ =](.+)%', $this->response, $matches)
+                    ) {
+                        $methods = \array_flip(
+                            \array_map(
+                                '\\trim',
+                                \explode(' ', $matches[1])
+                            )
+                        );
 
-                       return;
-                   }
+                        if (isset($methods['CRAM-MD5'])) {
+                            $this->smtpData('AUTH CRAM-MD5', ['334']);
+                            $challenge = \base64_decode(
+                                \trim(
+                                    \substr($this->response, 4)
+                                )
+                            );
+                            $digest    = \hash_hmac('md5', $challenge, $this->smtp['pass']);
+                            $cramMd5   = \base64_encode("{$this->smtp['user']} {$digest}");
+                            $this->smtpData($cramMd5, ['235']);
+                            $this->auth = 1;
+
+                            return;
+                        } elseif (isset($methods['LOGIN'])) {
+                            $this->smtpData('AUTH LOGIN', ['334']);
+                            $this->smtpData(\base64_encode($this->smtp['user']), ['334']);
+                            $this->smtpData(\base64_encode($this->smtp['pass']), ['235']);
+                            $this->auth = 1;
+
+                            return;
+                        } elseif (isset($methods['PLAIN'])) {
+                            $plain = \base64_encode("\0{$this->smtp['user']}\0{$this->smtp['pass']}");
+                            $this->smtpData("AUTH PLAIN {$plain}", ['235']);
+                            $this->auth = 1;
+
+                            return;
+                        }
+                    }
                 }
             default:
                 $this->auth = -1;
-                $this->smtpData('HELO ' . $this->hostname(), '250');
+                $this->smtpData('HELO ' . $this->hostname(), ['250']);
         }
     }
 
@@ -574,7 +610,7 @@ class Mail
      * Проверяет ответ
      * Возвращает код ответа
      */
-    protected function smtpData(?string $data, /* array|string */ $code): string
+    protected function smtpData(?string $data, ?array $code): string
     {
         if (\is_resource($this->connect) && null !== $data) {
             if (false === @\fwrite($this->connect, $data . $this->EOL)) {
@@ -582,13 +618,13 @@ class Mail
             }
         }
 
-        $response = '';
+        $this->response = '';
         while (\is_resource($this->connect) && ! \feof($this->connect)) {
             if (false === ($get = @\fgets($this->connect, 512))) {
                 throw new SmtpException('Couldn\'t get mail server response codes.');
             }
 
-            $response .= $get;
+            $this->response .= $get;
 
             if (
                 isset($get[3])
@@ -601,9 +637,9 @@ class Mail
 
         if (
             null !== $code
-            && ! \in_array($return, (array) $code)
+            && ! \in_array($return, $code)
         ) {
-            throw new SmtpException("Unable to send email. Response of mail server: \"{$response}\"");
+            throw new SmtpException("Unable to send email. Response of mail server: \"{$this->response}\"");
         }
 
         return $return;
