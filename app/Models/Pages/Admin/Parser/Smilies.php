@@ -101,7 +101,7 @@ class Smilies extends Parser
                     ]);
                 }
 
-                $this->c->Cache->delete('smilies');
+                $this->c->smilies->reset();
 
                 return $this->c->Redirect->page('AdminSmilies')->message('Smilies updated redirect');
             }

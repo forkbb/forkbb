@@ -19,4 +19,14 @@ class Model extends ParentModel
 
         return $this;
     }
+
+    /**
+     * Сбрасывает кеш смайлов
+     */
+    public function reset(): Model
+    {
+        $this->c->Cache->delete('smilies');
+
+        return $this;
+    }
 }
