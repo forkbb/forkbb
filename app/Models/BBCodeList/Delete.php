@@ -22,8 +22,6 @@ class Delete extends Method
 
         $this->c->DB->exec($query, $vars);
 
-        $this->model->reset();
-
-        return $this->model;
+        return $this->model->reset();
     }
 }
