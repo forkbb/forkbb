@@ -152,3 +152,6 @@ msgstr "В сообщениях"
 
 msgid "BBCode sig label"
 msgstr "В подписях"
+
+msgid "BBCode deleted redirect"
+msgstr "BB-код удален."

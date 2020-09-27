@@ -204,4 +204,18 @@ class BBCode extends Parser
             return 1;
         }
     }
+
+    /**
+     * Удаляет bbcode
+     */
+    public function delete(array $args, string $method): Page
+    {
+        if (! $this->c->Csrf->verify($args['token'], 'AdminBBCodeDelete', $args)) {
+            return $this->c->Message->message('Bad token');
+        }
+
+        $this->c->bbcode->delete((int) $args['id']);
+
+        return $this->c->Redirect->page('AdminBBCode')->message('BBCode deleted redirect');
+    }
 }

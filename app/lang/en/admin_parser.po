@@ -152,3 +152,6 @@ msgstr "In messages"
 
 msgid "BBCode sig label"
 msgstr "In signatures"
+
+msgid "BBCode deleted redirect"
+msgstr "BBCode deleted."
