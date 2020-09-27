@@ -1010,7 +1010,7 @@ body,
 
   #fork .f-main-admin {
     display: flex;
-    flex-wrap: wrap;
+    /*flex-wrap: wrap;*/
   }
 
   #fork .f-main-admin .f-admin-menu {
