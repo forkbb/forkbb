@@ -34,9 +34,9 @@ class Update
                     ],
                 ],
             ];
-        }
 
-        $this->c->config($confChange);
+            $this->c->config($confChange);
+        }
 
         $uri = $_SERVER['REQUEST_URI'];
         if (false !== ($pos = \strpos($uri, '?'))) {
