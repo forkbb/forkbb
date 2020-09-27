@@ -825,4 +825,21 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.17 to rev.18
+     */
+    protected function stageNumber17(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+
+        $coreConfig->add(
+            'multiple=>BBStructure',
+            '\\ForkBB\\Models\\BBCodeList\\Structure::class'
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }

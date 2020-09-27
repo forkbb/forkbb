@@ -310,5 +310,7 @@ return [
         'SearchModelTruncateIndex'   => \ForkBB\Models\Search\TruncateIndex::class,
         'SearchModelPrepare' => \ForkBB\Models\Search\Prepare::class,
         'SearchModelExecute' => \ForkBB\Models\Search\Execute::class,
+
+        'BBStructure' => \ForkBB\Models\BBCodeList\Structure::class,
     ],
 ];

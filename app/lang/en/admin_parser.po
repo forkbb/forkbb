@@ -155,3 +155,117 @@ msgstr "In signatures"
 
 msgid "BBCode deleted redirect"
 msgstr "BBCode deleted."
+
+msgid "Add bbcode head"
+msgstr "Add BBCode"
+
+msgid "Edit bbcode head"
+msgstr "Edit BBCode"
+
+msgid "Tag label"
+msgstr "Tag"
+
+msgid "Tag info"
+msgstr "BB-code name. Name format: <code>^[a-z\*][a-z\d-]{0,10}$</code>"
+
+msgid "Type label"
+msgstr "Type"
+
+msgid "Type info"
+msgstr "BBCode type ..."
+
+msgid "New type info"
+msgstr "... or new type. Format: <code>^[a-z][a-z\d-]{0,19}$</code>"
+
+msgid "Parents label"
+msgstr "Parents type"
+
+msgid "Parents info"
+msgstr "Types of parent BBCode. You can specify multiple types."
+
+msgid "Handler label"
+msgstr "Handler"
+
+msgid "Handler info"
+msgstr "PHP code for converting BBCode to HTML."
+
+msgid "Text handler label"
+msgstr "Text handler"
+
+msgid "Text handler info"
+msgstr "PHP code for converting BBCode to plain text."
+
+msgid "Recursive label"
+msgstr "Recursive"
+
+msgid "Recursive info"
+msgstr "This is the recursive BBCode. Until the end of the recursion, the parser does not respond to other BBCode."
+
+msgid "Text only label"
+msgstr "Text only"
+
+msgid "Text only info"
+msgstr "This BBCode contains text only."
+
+msgid "Tags only label"
+msgstr "Tags only"
+
+msgid "Tags only info"
+msgstr "This BBCode contains other BBCode only."
+
+msgid "Pre label"
+msgstr "Pre"
+
+msgid "Pre info"
+msgstr "In this BBCode, line feeds, tabs and adjacent spaces will not be changed."
+
+msgid "Single label"
+msgstr "Single"
+
+msgid "Single info"
+msgstr "Single tag. This BBCode has no body and no end tag."
+
+msgid "Auto label"
+msgstr "Auto"
+
+msgid "Auto info"
+msgstr "Autoclosing of this tag with other BBCode."
+
+msgid "Self nesting label"
+msgstr "Self nesting"
+
+msgid "Self nesting info"
+msgstr "How many times can this BBCode be embedded in the same one."
+
+msgid "No attr subhead"
+msgstr "Settings for BBCode type [%s]..."
+
+msgid "Allowed label"
+msgstr "Allowed"
+
+msgid "Allowed no_attr info"
+msgstr "Allow use of this BBCode without attributes."
+
+msgid "Body format label"
+msgstr "Body format"
+
+msgid "Body format info"
+msgstr "The regular expression, sets the rule for body of this BBCode."
+
+msgid "Def attr subhead"
+msgstr "Settings for BBCode type [%s=<i>value</i>]..."
+
+msgid "Allowed def_attr info"
+msgstr "Allow use of this BBCode with primary attribute."
+
+msgid "Required label"
+msgstr "Required"
+
+msgid "Required info"
+msgstr "Required attribute."
+
+msgid "Format label"
+msgstr "Format"
+
+msgid "Format info"
+msgstr "The regular expression, sets the rule for this attribute."

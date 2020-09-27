@@ -3006,6 +3006,15 @@ body,
   display: block;
 }
 
+#fork .f-field-handler textarea {
+  font-family: "DejaVu Sans Mono", Consolas, "Droid Sans Mono", Monospace, Monaco, "Courier New", Courier;
+  height: 15rem;
+}
+
+#fork .f-field-format input {
+  font-family: "DejaVu Sans Mono", Consolas, "Droid Sans Mono", Monospace, Monaco, "Courier New", Courier;
+}
+
 @media screen and (min-width: 25rem) {
   #fork .f-bbcode-form .f-fs-bbcode {
     display: flex;
