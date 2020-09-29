@@ -155,22 +155,24 @@ class Validator
                 list($field, $suffix) = \explode('.', $field, 2);
             }
             $rules = [];
+            $raw   = \str_replace('\|', "\0", $raw);
             // перебор правил для текущего поля
-            foreach (\explode('|', $raw) as $rule) { //???? нужно экранирование для разделителей
-                 $vs = \explode(':', $rule, 2);
-                 if (empty($this->validators[$vs[0]])) {
-                     try {
+            foreach (\explode('|', $raw) as $rule) {
+                $rule = \str_replace("\0", '|', $rule);
+                $vs   = \explode(':', $rule, 2);
+                if (empty($this->validators[$vs[0]])) {
+                    try {
                         $validator = $this->c->{'VL' . $vs[0]};
-                     } catch (Exception $e) {
+                    } catch (Exception $e) {
                         $validator = null;
-                     }
-                     if ($validator instanceof Validators) {
+                    }
+                    if ($validator instanceof Validators) {
                         $this->validators[$vs[0]] = [$validator, $vs[0]];
-                     } else {
+                    } else {
                         throw new RuntimeException($vs[0] . ' validator not found');
-                     }
-                 }
-                 $rules[$vs[0]] = $vs[1] ?? '';
+                    }
+                }
+                $rules[$vs[0]] = $vs[1] ?? '';
             }
             if (isset($suffix)) {
                 if (
