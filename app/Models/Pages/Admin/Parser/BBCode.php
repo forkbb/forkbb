@@ -246,19 +246,79 @@ class BBCode extends Parser
         }
         $this->bbTypes = $bbTypes;
 
-        if ('POST' === $method) {
-        }
-
-
         if ($id > 0) {
             $title            = __('Edit bbcode head');
-            $this->formAction = $this->c->Router->link('AdminBBCodeEdit', ['id' => $id]);
-            $this->formToken  = $this->c->Csrf->create('AdminBBCodeEdit', ['id' => $id]);
+            $page             = 'AdminBBCodeEdit';
+            $pageArgs         = ['id' => $id];
         } else {
             $title            = __('Add bbcode head');
-            $this->formAction = $this->c->Router->link('AdminBBCodeNew');
-            $this->formToken  = $this->c->Csrf->create('AdminBBCodeNew');
+            $page             = 'AdminBBCodeNew';
+            $pageArgs         = [];
         }
+        $this->formAction = $this->c->Router->link($page, $pageArgs);
+        $this->formToken  = $this->c->Csrf->create($page, $pageArgs);
+
+        if ('POST' === $method) {
+            $v = $this->c->Validator->reset()
+                ->addValidators([
+                    'check_all'                 => [$this, 'vCheckAll'],
+                ])->addRules([
+                    'token'                     => 'token:' . $page,
+                    'tag'                       => $id > 0 ? 'absent' : 'required|string:trim|regex:%^[a-z\*][a-z\d-]{0,10}$%',
+                    'type'                      => 'required|string|in:' . \implode(',', $bbTypes),
+                    'type_new'                  => 'string:trim|regex:%^[a-z][a-z\d-]{0,19}$%',
+                    'parents.*'                 => 'required|string|in:' . \implode(',', $bbTypes),
+                    'handler'                   => 'string:trim|max:65535',
+                    'text_handler'              => 'string:trim|max:65535',
+                    'recursive'                 => 'required|integer|in:0,1',
+                    'text_only'                 => 'required|integer|in:0,1',
+                    'tags_only'                 => 'required|integer|in:0,1',
+                    'pre'                       => 'required|integer|in:0,1',
+                    'single'                    => 'required|integer|in:0,1',
+                    'auto'                      => 'required|integer|in:0,1',
+                    'self_nesting'              => 'required|integer|min:0|max:10',
+                    'no_attr.allowed'           => 'required|integer|in:0,1',
+                    'no_attr.body_format'       => 'string:trim|max:1024',
+                    'no_attr.text_only'         => 'required|integer|in:0,1',
+                    'def_attr.allowed'          => 'required|integer|in:0,1',
+                    'def_attr.required'         => 'required|integer|in:0,1',
+                    'def_attr.format'           => 'string:trim|max:1024',
+                    'def_attr.body_format'      => 'string:trim|max:1024',
+                    'def_attr.text_only'        => 'required|integer|in:0,1',
+                    'other_attrs.*.allowed'     => 'required|integer|in:0,1',
+                    'other_attrs.*.required'    => 'required|integer|in:0,1',
+                    'other_attrs.*.format'      => 'string:trim|max:1024',
+                    'other_attrs.*.body_format' => 'string:trim|max:1024',
+                    'other_attrs.*.text_only'   => 'required|integer|in:0,1',
+                    'new_attr.name'             => 'string:trim|regex:%^(?:\|[a-z-]{2,15})$%',
+                    'new_attr.allowed'          => 'required|integer|in:0,1',
+                    'new_attr.required'         => 'required|integer|in:0,1',
+                    'new_attr.format'           => 'string:trim|max:1024',
+                    'new_attr.body_format'      => 'string:trim|max:1024',
+                    'new_attr.text_only'        => 'required|integer|in:0,1',
+                    'save'                      => 'check_all',
+                ])->addAliases([
+                ])->addArguments([
+                    'token'                    => $pageArgs,
+                    'save'                     => $structure,
+                ])->addMessages([
+                ]);
+
+                if ($v->validation($_POST)) {
+                    if ($id > 0) {
+                        $this->c->bbcode->update($id, $structure);
+                        $message = 'BBCode updated redirect';
+                    } else {
+                        $id = $this->c->bbcode->insert($structure);
+                        $message = 'BBCode added redirect';
+                    }
+
+                    return $this->c->Redirect->page('AdminBBCodeEdit', ['id' => $id])->message($message);
+                }
+
+                $this->fIswev = $v->getErrors();
+        }
+
         $this->aCrumbs[] = [
             $this->formAction,
             $title,
@@ -277,6 +337,38 @@ class BBCode extends Parser
 
         return $this;
     }
+
+    /**
+     * Проверяет данные bb-кода
+     */
+    public function vCheckAll(Validator $v, string $txt, $attrs, Structure $structure): string
+    {
+        if (! empty($v->getErrors())) {
+            return $txt;
+        }
+
+        $data = $v->getData();
+        unset($data['token'], $data['save']);
+
+        foreach ($data as $key => $value) {
+            if ('type_new' === $key) {
+                if (isset($value[0])) {
+                    $structure->type = $value;
+                }
+            } else {
+                $structure->{$key} = $value;
+            }
+        }
+
+        $error = $structure->getError();
+
+        if (\is_array($error)) {
+            $v->addError(__(...$error));
+        }
+
+        return $txt;
+    }
+
 
     /**
      * Формирует данные для формы
@@ -298,9 +390,9 @@ class BBCode extends Parser
             ],
         ];
 
-        $yn     = [1 => __('Yes'), 0 => __('No')];
+        $yn = [1 => __('Yes'), 0 => __('No')];
 
-        $form['sets']["structure"] = [
+        $form['sets']['structure'] = [
             'class'  => 'structure',
 //            'legend' => ,
             'fields' => [
@@ -406,78 +498,106 @@ class BBCode extends Parser
 
         $tagStr = $id > 0 ? $structure->tag : 'TAG';
 
-        $form['sets']["no_attr"] = [
-            'class'  => ['attr', 'no_attr'],
-            'legend' => __('No attr subhead', $tagStr),
-            'fields' => [
-                'no_attr[allowed]' => [
-                    'type'    => 'radio',
-                    'value'   => null === $structure->no_attr ? 0 : 1,
-                    'values'  => $yn,
-                    'caption' => __('Allowed label'),
-                    'info'    => __('Allowed no_attr info'),
-                ],
-                'no_attr[body_format]' => [
-                    'class'     => 'format',
-                    'type'      => 'text',
-                    'value'     => $structure->no_attr['body_format'] ?? '',
-                    'caption'   => __('Body format label'),
-                    'info'      => __('Body format info'),
-                ],
-                'no_attr[text_only]' => [
-                    'type'    => 'radio',
-                    'value'   => empty($structure->no_attr['text_only']) ? 0 : 1,
-                    'values'  => $yn,
-                    'caption' => __('Text only label'),
-                    'info'    => __('Text only info'),
-                ],
-            ],
-        ];
+        $form['sets']['no_attr'] = $this->formEditSub(
+            $structure->no_attr,
+            'no_attr',
+            'no_attr',
+            __('No attr subhead', $tagStr),
+            __('Allowed no_attr info')
+        );
 
-        $form['sets']["def_attr"] = [
-            'class'  => ['attr', 'def_attr'],
-            'legend' => __('Def attr subhead', $tagStr),
-            'fields' => [
-                'def_attr[allowed]' => [
-                    'type'    => 'radio',
-                    'value'   => null === $structure->def_attr ? 0 : 1,
-                    'values'  => $yn,
-                    'caption' => __('Allowed label'),
-                    'info'    => __('Allowed def_attr info'),
-                ],
-                'def_attr[required]' => [
-                    'type'    => 'radio',
-                    'value'   => empty($structure->def_attr['required']) ? 0 : 1,
-                    'values'  => $yn,
-                    'caption' => __('Required label'),
-                    'info'    => __('Required info'),
-                ],
-                'def_attr[format]' => [
-                    'class'     => 'format',
-                    'type'      => 'text',
-                    'value'     => $structure->def_attr['format'] ?? '',
-                    'caption'   => __('Format label'),
-                    'info'      => __('Format info'),
-                ],
-                'def_attr[body_format]' => [
-                    'class'     => 'format',
-                    'type'      => 'text',
-                    'value'     => $structure->def_attr['body_format'] ?? '',
-                    'caption'   => __('Body format label'),
-                    'info'      => __('Body format info'),
-                ],
-                'def_attr[text_only]' => [
-                    'type'    => 'radio',
-                    'value'   => empty($structure->def_attr['text_only']) ? 0 : 1,
-                    'values'  => $yn,
-                    'caption' => __('Text only label'),
-                    'info'    => __('Text only info'),
-                ],
-            ],
-        ];
+        $form['sets']['def_attr'] = $this->formEditSub(
+            $structure->def_attr,
+            'def_attr',
+            'def_attr',
+            __('Def attr subhead', $tagStr),
+            __('Allowed def_attr info')
+        );
 
-        $fields = [];
+        foreach ($structure->other_attrs as $name => $attr) {
+            $form['sets']["{$name}_attr"] = $this->formEditSub(
+                $attr,
+                $name,
+                "{$name}_attr",
+                __('Other attr subhead', $tagStr, $name),
+                __('Allowed %s attr info', $name)
+            );
+        }
+
+        $form['sets']['new_attr'] = $this->formEditSub(
+            $structure->new_attr,
+            'new_attr',
+            'new_attr',
+            __('New attr subhead'),
+            __('Allowed new_attr info')
+        );
 
         return $form;
+    }
+
+    /**
+     * Формирует данные для формы
+     */
+    protected function formEditSub(/* mixed */ $data, string $name, string $class, string $legend, string $info): array
+    {
+        $yn     = [1 => __('Yes'), 0 => __('No')];
+        $fields = [];
+        $other  = '_attr' !== \substr($name, -5);
+        $key    = $other ? "other_attrs[{$name}]" : $name;
+
+        if ('new_attr' === $name) {
+            $fields["{$key}[name]"] = [
+                'type'      => 'text',
+                'value'     => $data['name'] ?? '',
+                'caption'   => __('Attribute name label'),
+                'info'      => __('Attribute name info'),
+                'maxlength' => 15,
+                'pattern'   => '^[a-z-]{2,15}$',
+            ];
+        }
+
+        $fields["{$key}[allowed]"] = [
+            'type'    => 'radio',
+            'value'   => null === $data ? 0 : 1,
+            'values'  => $yn,
+            'caption' => __('Allowed label'),
+            'info'    => $info,
+        ];
+        if ('no_attr' !== $name) {
+            $fields["{$key}[required]"] = [
+                'type'    => 'radio',
+                'value'   => empty($data['required']) ? 0 : 1,
+                'values'  => $yn,
+                'caption' => __('Required label'),
+                'info'    => __('Required info'),
+            ];
+            $fields["{$key}[format]"] = [
+                'class'     => 'format',
+                'type'      => 'text',
+                'value'     => $data['format'] ?? '',
+                'caption'   => __('Format label'),
+                'info'      => __('Format info'),
+            ];
+        }
+        $fields["{$key}[body_format]"] = [
+            'class'     => 'format',
+            'type'      => 'text',
+            'value'     => $data['body_format'] ?? '',
+            'caption'   => __('Body format label'),
+            'info'      => __('Body format info'),
+        ];
+        $fields["{$key}[text_only]"] = [
+            'type'    => 'radio',
+            'value'   => empty($data['text_only']) ? 0 : 1,
+            'values'  => $yn,
+            'caption' => __('Text only label'),
+            'info'    => __('Text only info'),
+        ];
+
+        return [
+            'class'  => ['attr', $class],
+            'legend' => $legend,
+            'fields' => $fields,
+        ];
     }
 }

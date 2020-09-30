@@ -269,3 +269,51 @@ msgstr "Format"
 
 msgid "Format info"
 msgstr "The regular expression, sets the rule for this attribute."
+
+msgid "Other attr subhead"
+msgstr "Settings for BBCode type [%1$s %2$s=<i>value</i>]..."
+
+msgid "Allowed %s attr info"
+msgstr "Allow use of this BBCode with <b><code>%s</code></b> attribute. No - this attribute will be deleted."
+
+msgid "New attr subhead"
+msgstr "New attribute"
+
+msgid "Allowed new_attr info"
+msgstr "Add new attribute"
+
+msgid "Attribute name label"
+msgstr "New attribute name"
+
+msgid "Attribute name info"
+msgstr "Format: <code>^[a-z-]{2,15}$</code>"
+
+msgid "Tag name not specified"
+msgstr "Tag name not specified."
+
+msgid "PHP code error in Handler: %s"
+msgstr "PHP code error in Handler: %s"
+
+msgid "PHP code error in Text handler: %s"
+msgstr "PHP code error in Text handler: %s"
+
+msgid "Recursive and Tags only are enabled at the same time"
+msgstr "Recursive and Tags only are enabled at the same time."
+
+msgid "Recursive and Single are enabled at the same time"
+msgstr "Recursive and Single are enabled at the same time."
+
+msgid "Text only and Tags only are enabled at the same time"
+msgstr "Text only and Tags only are enabled at the same time."
+
+msgid "Attribute %1$s, %2$s - regular expression error"
+msgstr "Attribute %1$s, field %2$s - regular expression error."
+
+msgid "Attribute name %s is not valid"
+msgstr "Attribute name %s is not valid."
+
+msgid "BBCode updated redirect"
+msgstr "BBCode updated."
+
+msgid "BBCode added redirect"
+msgstr "BBCode added."

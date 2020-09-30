@@ -269,3 +269,51 @@ msgstr "Format"
 
 msgid "Format info"
 msgstr "Регулярное выражение, задает правило для атрибута."
+
+msgid "Other attr subhead"
+msgstr "Настройки для BB-кода вида [%1$s %2$s=<i>значение</i>]..."
+
+msgid "Allowed %s attr info"
+msgstr "Разрешить использовать этот BB-код с атрибутом <b><code>%s</code></b>. Нет - атрибут буден удален."
+
+msgid "New attr subhead"
+msgstr "Новый атрибут"
+
+msgid "Allowed new_attr info"
+msgstr "Добавить новый атрибут"
+
+msgid "Attribute name label"
+msgstr "Имя нового атрибута"
+
+msgid "Attribute name info"
+msgstr "Формат: <code>^[a-z-]{2,15}$</code>"
+
+msgid "Tag name not specified"
+msgstr "Имя тега не указано."
+
+msgid "PHP code error in Handler: %s"
+msgstr "Ошибка PHP кода в Handler: %s"
+
+msgid "PHP code error in Text handler: %s"
+msgstr "Ошибка PHP кода в Text handler: %s"
+
+msgid "Recursive and Tags only are enabled at the same time"
+msgstr "Одновременно включены Recursive и Tags only."
+
+msgid "Recursive and Single are enabled at the same time"
+msgstr "Одновременно включены Recursive и Single."
+
+msgid "Text only and Tags only are enabled at the same time"
+msgstr "Одновременно включены Text only и Tags only."
+
+msgid "Attribute %1$s, %2$s - regular expression error"
+msgstr "Атрибут %1$s, поле %2$s - ошибка в регулярном выражении."
+
+msgid "Attribute name %s is not valid"
+msgstr "Имя %s для атрибута недопустимо."
+
+msgid "BBCode updated redirect"
+msgstr "BB-код обновлен."
+
+msgid "BBCode added redirect"
+msgstr "BB-код добавлен."
