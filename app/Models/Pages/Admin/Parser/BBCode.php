@@ -117,6 +117,12 @@ class BBCode extends Parser
                 ],
             ],
             'btns'   => [
+                'new' => [
+                    'type'      => 'btn',
+                    'value'     => __('New BBCode'),
+                    'link'      => $this->c->Router->link('AdminBBCodeNew'),
+//                    'accesskey' => 'n',
+                ],
                 'save' => [
                     'type'      => 'submit',
                     'value'     => __('Save changes'),
@@ -240,9 +246,11 @@ class BBCode extends Parser
         }
 
         $bbTypes = [];
+        $bbNames = [];
         foreach ($this->c->bbcode->bbcodeTable as $cur) {
             $type = $this->c->BBStructure->fromString($cur['bb_structure'])->type;
             $bbTypes[$type] = $type;
+            $bbNames[$cur['bb_tag']] = $cur['bb_tag'];
         }
         $this->bbTypes = $bbTypes;
 
@@ -264,7 +272,7 @@ class BBCode extends Parser
                     'check_all'                 => [$this, 'vCheckAll'],
                 ])->addRules([
                     'token'                     => 'token:' . $page,
-                    'tag'                       => $id > 0 ? 'absent' : 'required|string:trim|regex:%^[a-z\*][a-z\d-]{0,10}$%',
+                    'tag'                       => $id > 0 ? 'absent' : 'required|string:trim|regex:%^[a-z\*][a-z\d-]{0,10}$%|not_in:' . \implode(',', $bbNames),
                     'type'                      => 'required|string|in:' . \implode(',', $bbTypes),
                     'type_new'                  => 'string:trim|regex:%^[a-z][a-z\d-]{0,19}$%',
                     'parents.*'                 => 'required|string|in:' . \implode(',', $bbTypes),
@@ -382,6 +390,18 @@ class BBCode extends Parser
             ],
             'sets' => [],
             'btns'   => [
+                'reset' => [
+                    'type'      => 'btn',
+                    'value'     => __('Default structure'),
+                    'link'      => $this->c->Router->link(
+                        'AdminBBCodeDefault',
+                        [
+                            'id'    => $id,
+                            'token' => null,
+                        ]
+                    ),
+//                    'accesskey' => 'r',
+                ],
                 'save' => [
                     'type'      => 'submit',
                     'value'     => __('Save'),
@@ -389,6 +409,10 @@ class BBCode extends Parser
                 ],
             ],
         ];
+
+        if (! $structure->isInDefault()) {
+            unset($form['btns']['reset']);
+        }
 
         $yn = [1 => __('Yes'), 0 => __('No')];
 
@@ -599,5 +623,25 @@ class BBCode extends Parser
             'legend' => $legend,
             'fields' => $fields,
         ];
+    }
+
+    /**
+     * Устанавливает структуру bb-кода по умолчанию
+     */
+    public function default(array $args, string $method): Page
+    {
+        if (! $this->c->Csrf->verify($args['token'], 'AdminBBCodeDefault', $args)) {
+            return $this->c->Message->message('Bad token');
+        }
+
+        $id = (int) $args['id'];
+
+        $structure = $this->c->BBStructure
+            ->fromString($this->c->bbcode->load()->bbcodeTable[$id]['bb_structure'])
+            ->setDefault();
+
+        $this->c->bbcode->update($id, $structure);
+
+        return $this->c->Redirect->page('AdminBBCodeEdit', ['id' => $id])->message('BBCode updated redirect');
     }
 }

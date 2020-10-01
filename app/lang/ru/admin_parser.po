@@ -317,3 +317,9 @@ msgstr "BB-код обновлен."
 
 msgid "BBCode added redirect"
 msgstr "BB-код добавлен."
+
+msgid "New BBCode"
+msgstr "Новый BB-код"
+
+msgid "Default structure"
+msgstr "По умолчанию"

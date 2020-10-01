@@ -317,3 +317,9 @@ msgstr "BBCode updated."
 
 msgid "BBCode added redirect"
 msgstr "BBCode added."
+
+msgid "New BBCode"
+msgstr "New BBCode"
+
+msgid "Default structure"
+msgstr "Default"

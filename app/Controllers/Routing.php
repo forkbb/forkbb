@@ -558,6 +558,12 @@ class Routing
                 'AdminBBCodeNew'
             );
             $r->add(
+                $r::GET,
+                '/admin/parser/bbcode/default/{id:[1-9]\d*}/{token}',
+                'AdminParserBBCode:default',
+                'AdminBBCodeDefault'
+            );
+            $r->add(
                 $r::DUO,
                 '/admin/parser/smilies',
                 'AdminParserSmilies:view',

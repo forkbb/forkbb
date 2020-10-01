@@ -3015,6 +3015,19 @@ body,
   font-family: "DejaVu Sans Mono", Consolas, "Droid Sans Mono", Monospace, Monaco, "Courier New", Courier;
 }
 
+#fork .f-bbcode-form .f-btns,
+#fork .f-editbbcode-form .f-btns {
+  display: flex;
+  flex-direction: column;
+}
+
+#fork .f-bbcode-form .f-btn[data-name=new],
+#fork .f-editbbcode-form  .f-btn[data-name=reset]{
+  width: auto;
+  margin-bottom: 0.625rem;
+  margin-left: auto;
+}
+
 @media screen and (min-width: 25rem) {
   #fork .f-bbcode-form .f-fs-bbcode {
     display: flex;

@@ -27,6 +27,38 @@ class Structure extends ParentModel
         ];
     }
 
+    public function isInDefault(): bool
+    {
+        if (empty($this->tag)) {
+            return false;
+        }
+
+        $bbcode = include $this->c->bbcode->fileDefault;
+
+        foreach ($bbcode as $cur) {
+            if ($this->tag === $cur['tag']) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function setDefault(): Structure
+    {
+        if (! $this->isInDefault()) {
+            throw new RuntimeException("There is no default for the '{$this->tag}' tag");
+        }
+
+        $bbcode = include $this->c->bbcode->fileDefault;
+
+        foreach ($bbcode as $cur) {
+            if ($this->tag === $cur['tag']) {
+                return $this->setAttrs($cur);
+            }
+        }
+    }
+
     public function fromString(string $data): Structure
     {
         return $this->setAttrs(\json_decode($data, true, 512, \JSON_THROW_ON_ERROR));
@@ -513,7 +545,7 @@ class Structure extends ParentModel
             $result = @eval($testCode);
 
             if (true !== $result) {
-                $error = error_get_last();
+                $error = \error_get_last();
                 $message = $error['message'] ?? 'Unknown error';
                 $line    = $error['line'] ?? '';
 
