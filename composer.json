@@ -27,6 +27,7 @@
         "php": ">=7.3.0",
         "ext-gd": "*",
         "ext-mbstring": "*",
+        "ext-fileinfo": "*",
         "artoodetoo/dirk": "dev-visman",
         "miovisman/parserus": "dev-master",
         "miovisman/normemail": "dev-master"
