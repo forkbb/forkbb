@@ -37,6 +37,8 @@ class Files
         'image/png'  => 'png',
         'image/bmp'  => 'bmp',
         'image/webp' => 'webp',
+# non-standard mime types
+        'image/x-ms-bmp' => 'bmp',
     ];
 
     /**
@@ -818,6 +820,8 @@ class Files
         'video/x-sgi-movie' => 'movie',
         'video/x-smv' => 'smv',
         'x-conference/x-cooltalk' => 'ice',
+# non-standard mime types
+        'image/x-ms-bmp' => 'bmp',
     ];
 
     public function __construct(/* string|int */ $maxFileSize, /* string|int */ $maxImgSize)
