@@ -119,11 +119,17 @@ class Edit extends Profile
                 }
 
                 if ($v->upload_avatar instanceof Image) {
-                    $v->upload_avatar
-                        ->rename(false)
-                        ->rewrite(true)
+                    $name   = $this->c->Secury->randomPass(8);
+                    $path   = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$name}.(jpg|png|gif)";
+                    $result = $v->upload_avatar
+                        ->rename(true)
+                        ->rewrite(false)
                         ->resize((int) $this->c->config->o_avatars_width, (int) $this->c->config->o_avatars_height)
-                        ->toFile($this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$this->curUser->id}.(jpg|png|gif)");
+                        ->toFile($path);
+
+                    if (true === $result) {
+                        $this->curUser->avatar = $v->upload_avatar->name() . '.' . $v->upload_avatar->ext();
+                    }
                 }
 
                 $this->curUser->replAttrs($data, true);

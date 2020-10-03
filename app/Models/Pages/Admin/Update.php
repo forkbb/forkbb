@@ -17,7 +17,7 @@ class Update extends Admin
 {
     const PHP_MIN = '7.3.0';
 
-    const LATEST_REV_WITH_DB_CHANGES = 16;
+    const LATEST_REV_WITH_DB_CHANGES = 19;
 
     const LOCK_NAME = 'lock_update';
     const LOCk_TTL  = 1800;
@@ -839,6 +839,47 @@ class Update extends Admin
         );
 
         $coreConfig->save();
+
+        return null;
+    }
+
+    /**
+     * rev.18 to rev.19
+     */
+    protected function stageNumber18(array $args): ?int
+    {
+        $this->c->DB->addField('users', 'avatar', 'VARCHAR(30)', false, '', 'title');
+
+        $dir     = $this->c->DIR_PUBLIC . $this->c->config->o_avatars_dir . '/';
+        $avatars = [];
+
+        if (
+            \is_dir($dir)
+            && false !== ($dh = \opendir($dir))
+        ) {
+            while (false !== ($entry = \readdir($dh))) {
+                if (
+                    \preg_match('%^([1-9]\d*)\.(jpg|gif|png)$%D', $entry, $matches)
+                    && \is_file($dir . $entry)
+                ) {
+                    $avatars[$matches[2]][] = (int) $matches[1];
+                }
+            }
+            \closedir($dh);
+        }
+
+        $query = 'UPDATE ::users
+            SET avatar=CONCAT(id, \'.\', ?s:ext)
+            WHERE id IN (?ai:ids)';
+
+        foreach ($avatars as $ext => $ids) {
+            $vars = [
+                ':ext' => $ext,
+                ':ids' => $ids,
+            ];
+
+            $this->c->DB->exec($query, $vars);
+        }
 
         return null;
     }

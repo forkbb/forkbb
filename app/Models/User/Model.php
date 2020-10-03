@@ -24,7 +24,7 @@ class Model extends DataModel
 
         $this->zDepend = [
             'group_id'     => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'link', 'viewUsers', 'showPostCount', 'searchUsers'],
-            'id'           => ['isGuest', 'link', 'avatar', 'online'],
+            'id'           => ['isGuest', 'link', 'online'],
             'last_visit'   => ['currentVisit'],
             'show_sig'     => ['showSignature'],
             'show_avatars' => ['showAvatar'],
@@ -162,14 +162,13 @@ class Model extends DataModel
      */
     protected function getavatar(): ?string
     {
-        foreach ($this->avatarTypes as $type) {
-            $path = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$this->id}.{$type}";
+        $file = $this->getAttr('avatar');
 
-            if (
-                \is_file($path)
-                && \getimagesize($path)
-            ) {
-                return $this->c->PUBLIC_URL . "{$this->c->config->o_avatars_dir}/{$this->id}.{$type}";
+        if (! empty($file)) {
+            $path = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$file}";
+
+            if (\is_file($path)) {
+                return $this->c->PUBLIC_URL . "{$this->c->config->o_avatars_dir}/{$file}";
             }
         }
 
@@ -181,13 +180,14 @@ class Model extends DataModel
      */
     public function deleteAvatar(): void
     {
-        foreach ($this->avatarTypes as $type) {
-            $path = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$this->id}.{$type}";
+        $file = $this->getAttr('avatar');
+        $path = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$file}";
 
-            if (\is_file($path)) {
-                @\unlink($path);
-            }
+        if (\is_file($path)) {
+            @\unlink($path);
         }
+
+        $this->avatar = '';
     }
 
     /**

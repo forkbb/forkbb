@@ -884,6 +884,7 @@ class Install extends Admin
                 'email_normal'     => ['VARCHAR(190)', false, ''],
                 'email_confirmed'  => ['TINYINT(1)', false, 0],
                 'title'            => ['VARCHAR(50)', false, ''],
+                'avatar'           => ['VARCHAR(30)', false, ''],
                 'realname'         => ['VARCHAR(40)', false, ''],
                 'url'              => ['VARCHAR(100)', false, ''],
                 'jabber'           => ['VARCHAR(80)', false, ''],
