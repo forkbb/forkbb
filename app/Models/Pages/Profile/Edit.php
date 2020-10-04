@@ -120,7 +120,7 @@ class Edit extends Profile
 
                 if ($v->upload_avatar instanceof Image) {
                     $name   = $this->c->Secury->randomPass(8);
-                    $path   = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$name}.(jpg|png|gif)";
+                    $path   = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$name}.(jpg|png|gif|webp)";
                     $result = $v->upload_avatar
                         ->rename(true)
                         ->rewrite(false)

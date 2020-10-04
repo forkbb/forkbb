@@ -941,7 +941,6 @@ class Files
         if (\is_array($file['tmp_name'])) {
             $result = [];
             foreach ($file['tmp_name'] as $key => $value) {
-                // изображение не было отправлено
                 if (
                     '' === $file['name'][$key]
                     && empty($file['size'][$key])

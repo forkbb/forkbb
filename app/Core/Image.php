@@ -132,6 +132,9 @@ class Image extends File
             case 'gif':
                 $result = @\imagegif($this->image, $path);
                 break;
+            case 'webp':
+                $result = @\imagewebp($this->image, $path, $this->quality);
+                break;
             default:
                 $this->error = 'File type not supported';
 
