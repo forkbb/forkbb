@@ -885,4 +885,25 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.19 to rev.20
+     */
+    protected function stageNumber19(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+
+        $result = $coreConfig->delete(
+            'shared=>FileCache',
+        );
+
+        $coreConfig->add(
+            'shared=>Cache',
+            $result
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }

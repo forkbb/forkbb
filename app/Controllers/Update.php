@@ -37,6 +37,18 @@ class Update
 
             $this->c->config($confChange);
         }
+        if ($this->c->config->i_fork_revision < 20) {
+            $confChange = [
+                'shared' => [
+                    'Cache' => [
+                        'class'     => \ForkBB\Core\Cache\FileCache::class,
+                        'cache_dir' => '%DIR_CACHE%',
+                    ],
+                ],
+            ];
+
+            $this->c->config($confChange);
+        }
 
         $uri = $_SERVER['REQUEST_URI'];
         if (false !== ($pos = \strpos($uri, '?'))) {

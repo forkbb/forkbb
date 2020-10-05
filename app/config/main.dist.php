@@ -58,13 +58,9 @@ return [
             'class' => \ForkBB\Core\Secury::class,
             'hmac'  => '%HMAC%',
         ],
-        'FileCache' => [
+        'Cache' => [
             'class'     => \ForkBB\Core\Cache\FileCache::class,
             'cache_dir' => '%DIR_CACHE%',
-        ],
-        'Cache' => [
-            'class'    => \ForkBB\Core\Cache::class,
-            'provider' => '@FileCache',
         ],
         'Validator' => \ForkBB\Core\Validator::class,
         'View' => [

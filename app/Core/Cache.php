@@ -4,6 +4,10 @@ namespace ForkBB\Core;
 
 use Psr\SimpleCache\CacheInterface;
 
+/**
+ * Класс не используется с rev.20
+ * Оставлен для возможности обновления с предыдущих ревизий
+ */
 class Cache
 {
     /**
