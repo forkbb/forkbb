@@ -80,7 +80,9 @@ class Save extends Action
         $report->id = (int) $this->c->DB->lastInsertId();
         $report->resModified();
 
-        $this->c->Cache->set('report', $report->id);
+        if (true !== $this->c->Cache->set('report', $report->id)) {
+            throw new RuntimeException('Unable to write value to cache - report');
+        }
 
         return $report->id;
     }

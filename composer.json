@@ -30,6 +30,7 @@
         "ext-fileinfo": "*",
         "artoodetoo/dirk": "dev-visman",
         "miovisman/parserus": "dev-master",
-        "miovisman/normemail": "dev-master"
+        "miovisman/normemail": "dev-master",
+        "psr/simple-cache": "*"
     }
 }

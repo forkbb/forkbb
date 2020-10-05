@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dd233d78a2c422cc3c940a860acb6b41",
+    "content-hash": "8798521335e67d2195e6b1793d67a21c",
     "packages": [
         {
             "name": "artoodetoo/dirk",
@@ -146,6 +146,54 @@
                 "parser"
             ],
             "time": "2019-10-11T12:06:27+00:00"
+        },
+        {
+            "name": "psr/simple-cache",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/simple-cache.git",
+                "reference": "5a7b96b1dda5d957e01bc1bfe77dcca09c5a7474"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/5a7b96b1dda5d957e01bc1bfe77dcca09c5a7474",
+                "reference": "5a7b96b1dda5d957e01bc1bfe77dcca09c5a7474",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\SimpleCache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interfaces for simple caching",
+            "keywords": [
+                "cache",
+                "caching",
+                "psr",
+                "psr-16",
+                "simple-cache"
+            ],
+            "time": "2020-04-21T06:43:17+00:00"
         }
     ],
     "packages-dev": [],
@@ -159,9 +207,10 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.6.12",
+        "php": ">=7.3.0",
         "ext-gd": "*",
-        "ext-mbstring": "*"
+        "ext-mbstring": "*",
+        "ext-fileinfo": "*"
     },
     "platform-dev": []
 }

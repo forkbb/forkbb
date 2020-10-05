@@ -74,9 +74,9 @@ class Manager extends ManagerModel
      */
     public function lastId(): int
     {
-        if ($this->c->Cache->has('report')) {
-            $last = $this->list = $this->c->Cache->get('report');
-        } else {
+        $last = $this->list = $this->c->Cache->get('report');
+
+        if (null === $last) {
             $query = 'SELECT r.id
                 FROM ::reports AS r
                 ORDER BY r.id DESC
@@ -84,7 +84,9 @@ class Manager extends ManagerModel
 
             $last = (int) $this->c->DB->query($query)->fetchColumn();
 
-            $this->c->Cache->set('report', $last);
+            if (true !== $this->c->Cache->set('report', $last)) {
+                throw new RuntimeException('Unable to write value to cache - report');
+            }
         }
 
         return $last;

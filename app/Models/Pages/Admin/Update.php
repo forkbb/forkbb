@@ -363,7 +363,9 @@ class Update extends Admin
 
             $this->c->config->save();
 
-            $this->c->Cache->clear();
+            if (true !== $this->c->Cache->clear()) {
+                throw new RuntimeException('Unable to clear cache');
+            }
 
             return $this->c->Redirect->page('Index')->message('Successfully updated');
         } catch (ForkException $excp) {

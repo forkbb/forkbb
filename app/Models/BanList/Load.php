@@ -4,6 +4,7 @@ namespace ForkBB\Models\BanList;
 
 use ForkBB\Models\Method;
 use ForkBB\Models\BanList\Model as BanList;
+use RuntimeException;
 
 class Load extends Method
 {
@@ -77,12 +78,16 @@ class Load extends Method
         $this->model->userList  = $userList;
         $this->model->emailList = $emailList;
         $this->model->ipList    = $ipList;
-        $this->c->Cache->set('banlist', [
+        $result = $this->c->Cache->set('banlist', [
             'banList'   => $banList,
             'userList'  => $userList,
             'emailList' => $emailList,
             'ipList'    => $ipList,
         ]);
+
+        if (true !== $result) {
+            throw new RuntimeException('Unable to write value to cache - banlist');
+        }
 
         return $this->model;
     }

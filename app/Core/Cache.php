@@ -2,7 +2,7 @@
 
 namespace ForkBB\Core;
 
-use ForkBB\Core\Cache\ProviderCacheInterface;
+use Psr\SimpleCache\CacheInterface;
 
 class Cache
 {
@@ -12,7 +12,7 @@ class Cache
      */
     protected $provider;
 
-    public function __construct(ProviderCacheInterface $provider)
+    public function __construct(CacheInterface $provider)
     {
         $this->provider = $provider;
     }

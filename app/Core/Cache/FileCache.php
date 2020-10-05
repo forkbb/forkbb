@@ -2,13 +2,17 @@
 
 namespace ForkBB\Core\Cache;
 
+use Psr\SimpleCache\CacheInterface;
+use Psr\SimpleCache\CacheException;
+use Psr\SimpleCache\InvalidArgumentException;
+use DateInterval;
+use DateTime;
+use DateTimeZone;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RegexIterator;
-use RuntimeException;
-use InvalidArgumentException;
 
-class FileCache implements ProviderCacheInterface
+class FileCache implements CacheInterface
 {
     /**
      * Директория кэша
@@ -18,25 +22,26 @@ class FileCache implements ProviderCacheInterface
 
     public function __construct(string $dir)
     {
-        if (
-            empty($dir)
-            || ! \is_string($dir)
-        ) {
-            throw new InvalidArgumentException('Cache directory must be set to a string');
+        $dir = \rtrim($dir, '/');
+
+        if (empty($dir)) {
+            throw new CacheException('Cache directory unset');
         } elseif (! \is_dir($dir)) {
-            throw new RuntimeException("`$dir`: Not a directory");
+            throw new CacheException("Not a directory: {$dir}");
         } elseif (! \is_writable($dir)) {
-            throw new RuntimeException("No write access to `$dir` directory");
+            throw new CacheException("No write access to directory: {$dir}");
         }
+
         $this->cacheDir = $dir;
     }
 
     /**
-     * Получение данных из кэша по ключу
+     * Получает данные из кэша по ключу
      */
-    public function get(string $key, /* mixed */ $default = null) /* : mixed */
+    public function get($key, $default = null)
     {
-        $file = $this->file($key);
+        $file = $this->path($key);
+
         if (\is_file($file)) {
             require $file;
 
@@ -55,15 +60,23 @@ class FileCache implements ProviderCacheInterface
     }
 
     /**
-     * Установка данных в кэш по ключу
+     * Устанавливает данные в кэш по ключу
      */
-    public function set(string $key, /* mixed */ $value, int $ttl = null): bool
+    public function set($key, $value, $ttl = null)
     {
-        $file    = $this->file($key);
-        $expire  = null === $ttl || $ttl < 1 ? 0 : \time() + $ttl;
-        $content = "<?php\n\n" . '$expire = ' . $expire . ";\n\n" . '$data = ' . \var_export($value, true) . ";\n";
+        $file = $this->path($key);
+
+        if ($ttl instanceof DateInterval) {
+            $expire = (new DateTime('now', new DateTimeZone('UTC')))->add($value)->getTimestamp();
+        } else {
+            $expire  = null === $ttl || $ttl < 1 ? 0 : \time() + $ttl; //????
+        }
+
+        $value   = \var_export($value, true);
+        $content = "<?php\n\n\$expire = {$expire};\n\n\$data = {$value};\n";
+
         if (false === \file_put_contents($file, $content, \LOCK_EX)) {
-            throw new RuntimeException("The key '$key' can not be saved");
+            return false;
         } else {
             $this->invalidate($file);
 
@@ -72,28 +85,28 @@ class FileCache implements ProviderCacheInterface
     }
 
     /**
-     * Удаление данных по ключу
+     * Удаляет данные по ключу
      */
-    public function delete(string $key): bool
+    public function delete($key)
     {
-        $file = $this->file($key);
-        if (\is_file($file)) {
-            if (\unlink($file)) {
-                $this->invalidate($file);
+        $file = $this->path($key);
 
-                return true;
-            } else {
-                throw new RuntimeException("The key `$key` could not be removed");
-            }
-        } else {
-            return true;
+        if (
+            \is_file($file)
+            && ! \unlink($file)
+        ) {
+            return false;
         }
+
+        $this->invalidate($file);
+
+        return true;
     }
 
     /**
-     * Очистка кэша
+     * Очищает папку кэша от php файлов (рекурсивно)
      */
-    public function clear(): bool
+    public function clear()
     {
         $dir      = new RecursiveDirectoryIterator($this->cacheDir, RecursiveDirectoryIterator::SKIP_DOTS);
         $iterator = new RecursiveIteratorIterator($dir);
@@ -108,29 +121,92 @@ class FileCache implements ProviderCacheInterface
     }
 
     /**
-     * Проверка наличия ключа
+     * Получает данные по списку ключей
      */
-    public function has(string $key): bool
+    public function getMultiple($keys, $default = null)
     {
-        return null !== $this->get($key);
-    }
+        $this->validateIterable($keys);
 
-    /**
-     * Генерация имени файла по ключу
-     */
-    protected function file(string $key): string
-    {
-        if (
-            \is_string($key)
-            && \preg_match('%^[a-z0-9_-]+$%Di', $key)
-        ) {
-            return $this->cacheDir . '/cache_' . $key . '.php';
+        $result = [];
+        foreach ($keys as $key) {
+            $result[$key] = $this->get($key, $default);
         }
-        throw new InvalidArgumentException("Key '$key' contains invalid characters.");
+
+        return $result;
     }
 
     /**
-     * Очистка opcache и apc от закэшированного файла
+     * Устанавливает данные в кэш по списку ключ => значение
+     */
+    public function setMultiple($values, $ttl = null)
+    {
+        $this->validateIterable($keys);
+
+        $result = true;
+        foreach ($values as $key => $value) {
+            $result = $this->set($key, $value, $ttl) && $result;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Удаляет данные по списку ключей
+     */
+    public function deleteMultiple($keys)
+    {
+        $this->validateIterable($keys);
+
+        $result = true;
+        foreach ($keys as $key) {
+            $result = $this->delete($key) && $result;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Проверяет кеш на наличие ключа
+     */
+    public function has($key)
+    {
+        $file = $this->path($key);
+
+        if (\is_file($file)) {
+            require $file;
+
+            if (
+                isset($expire, $data)
+                && (
+                    $expire < 1
+                    || $expire > \time()
+                )
+            ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Проверяет ключ
+     * Генерирует путь до файла
+     */
+    protected function path($key): string
+    {
+        if (! \is_string($key)) {
+            throw new InvalidArgumentException('Expects a string, got: ' . \gettype($key));
+        }
+        if (! \preg_match('%^[a-z0-9_\.]+$%Di', $key)) {
+            throw new InvalidArgumentException('Key is not a legal value');
+        }
+
+        return $this->cacheDir . "/cache_{$key}.php";
+    }
+
+    /**
+     * Очищает opcache и apc от закэшированного файла
      */
     protected function invalidate(string $file): void
     {
@@ -138,6 +214,16 @@ class FileCache implements ProviderCacheInterface
             \opcache_invalidate($file, true);
         } elseif (\function_exists('\\apc_delete_file')) {
             \apc_delete_file($file);
+        }
+    }
+
+    /**
+     * Проверяет, является ли переменная итерируемой
+     */
+    protected function validateIterable($iterable): void
+    {
+        if (! \is_iterable($iterable)) {
+            throw new InvalidArgumentException('Expects a iterable, got: ' . \gettype($iterable));
         }
     }
 }

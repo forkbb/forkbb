@@ -11,8 +11,10 @@ class Model extends DataModel
      */
     public function init(): Model
     {
-        if ($this->c->Cache->has('config')) {
-            $this->setAttrs($this->c->Cache->get('config'));
+        $config = $this->c->Cache->get('config');
+
+        if (\is_array($config)) {
+            $this->setAttrs($config);
         } else {
             $this->load();
         }

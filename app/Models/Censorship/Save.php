@@ -5,6 +5,7 @@ namespace ForkBB\Models\Censorship;
 use ForkBB\Models\Method;
 use ForkBB\Models\Censorship\Model as Censorship;
 use PDO;
+use RuntimeException;
 
 class Save extends Method
 {
@@ -61,7 +62,9 @@ class Save extends Method
             $this->c->DB->exec($query, $vars);
         }
 
-        $this->c->Cache->delete('censorship');
+        if (true !== $this->c->Cache->delete('censorship')) {
+            throw new RuntimeException('Unable to remove key from cache - censorship');
+        }
 
         return $this->model;
     }

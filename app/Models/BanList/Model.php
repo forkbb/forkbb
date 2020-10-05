@@ -11,11 +11,7 @@ class Model extends ParentModel
      */
     public function init(): Model
     {
-        if ($this->c->Cache->has('banlist')) {
-            $list = $this->c->Cache->get('banlist');
-        } else {
-            $list = null;
-        }
+        $list = $this->c->Cache->get('banlist');
 
         if (isset($list['banList'], $list['userList'], $list['emailList'], $list['ipList'])) {
             $this->banList   = $list['banList'];

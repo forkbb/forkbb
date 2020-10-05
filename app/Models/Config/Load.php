@@ -5,6 +5,7 @@ namespace ForkBB\Models\Config;
 use ForkBB\Models\Method;
 use ForkBB\Models\Config\Model as Config;
 use PDO;
+use RuntimeException;
 
 class Load extends Method
 {
@@ -38,7 +39,10 @@ class Load extends Method
         }
 
         $this->model->setAttrs($config);
-        $this->c->Cache->set('config', $config);
+
+        if (true !== $this->c->Cache->set('config', $config)) {
+            throw new RuntimeException('Unable to write value to cache - config');
+        }
 
         return $this->model;
     }

@@ -3,6 +3,7 @@
 namespace ForkBB\Models\DBMap;
 
 use ForkBB\Models\Model as ParentModel;
+use RuntimeException;
 
 class Model extends ParentModel
 {
@@ -11,13 +12,17 @@ class Model extends ParentModel
      */
     public function init(): Model
     {
-        if ($this->c->Cache->has('db_map')) {
-            $this->setAttrs($this->c->Cache->get('db_map'));
-        } else {
+        $map = $this->c->Cache->get('db_map');
+
+        if (! \is_array($map)) {
             $map = $this->c->DB->getMap();
-            $this->c->Cache->set('db_map', $map);
-            $this->setAttrs($map);
+
+            if (true !== $this->c->Cache->set('db_map', $map)) {
+                throw new RuntimeException('Unable to write value to cache - db_map');
+            }
         }
+
+        $this->setAttrs($map);
 
         return $this;
     }
@@ -27,7 +32,9 @@ class Model extends ParentModel
      */
     public function reset(): Model
     {
-        $this->c->Cache->delete('db_map');
+        if (true !== $this->c->Cache->delete('db_map')) {
+            throw new RuntimeException('Unable to remove key from cache - db_map');
+        }
 
         return $this;
     }

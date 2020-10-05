@@ -481,7 +481,10 @@ class Install extends Admin
     protected function installEnd(Validator $v): Page
     {
         @\set_time_limit(0);
-        $this->c->Cache->clear();
+
+        if (true !== $this->c->Cache->clear()) {
+            throw new RuntimeException('Unable to clear cache');
+        }
 
         // bans
         $schema = [

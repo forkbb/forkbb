@@ -4,6 +4,7 @@ namespace ForkBB\Models\Censorship;
 
 use ForkBB\Models\Method;
 use ForkBB\Models\Censorship\Model as Censorship;
+use RuntimeException;
 
 class Refresh extends Method
 {
@@ -27,10 +28,14 @@ class Refresh extends Method
         }
         $this->model->searchList  = $search;
         $this->model->replaceList = $replace;
-        $this->c->Cache->set('censorship', [
+        $result = $this->c->Cache->set('censorship', [
             'searchList'  => $search,
             'replaceList' => $replace,
         ]);
+
+        if (true !== $result) {
+            throw new RuntimeException('Unable to write value to cache - censorship');
+        }
 
         return $this->model;
     }

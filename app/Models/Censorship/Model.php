@@ -12,8 +12,9 @@ class Model extends ParentModel
     public function init(): Model
     {
         if ('1' == $this->c->config->o_censoring) {
-            if ($this->c->Cache->has('censorship')) {
-                $list              = $this->c->Cache->get('censorship');
+            $list = $this->c->Cache->get('censorship');
+
+            if (isset($list['searchList'], $list['replaceList'])) {
                 $this->searchList  = $list['searchList'];
                 $this->replaceList = $list['replaceList'];
             } else {

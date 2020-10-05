@@ -3,6 +3,7 @@
 namespace ForkBB\Models\Stopwords;
 
 use ForkBB\Models\Model as ParentModel;
+use RuntimeException;
 
 class Model extends ParentModel
 {
@@ -72,7 +73,10 @@ class Model extends ParentModel
         $stopwords = \array_filter($stopwords);
         $stopwords = \array_flip($stopwords);
 
-        $this->c->Cache->set('stopwords', ['id' => $id, 'stopwords' => $stopwords]);
+        if (true !== $this->c->Cache->set('stopwords', ['id' => $id, 'stopwords' => $stopwords])) {
+            throw new RuntimeException('Unable to write value to cache - stopwords');
+        }
+
         $this->list = $stopwords;
 
         return $this;

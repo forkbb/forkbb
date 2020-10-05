@@ -145,5 +145,55 @@
             "bbcode",
             "parser"
         ]
+    },
+    {
+        "name": "psr/simple-cache",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/php-fig/simple-cache.git",
+            "reference": "5a7b96b1dda5d957e01bc1bfe77dcca09c5a7474"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/5a7b96b1dda5d957e01bc1bfe77dcca09c5a7474",
+            "reference": "5a7b96b1dda5d957e01bc1bfe77dcca09c5a7474",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2020-04-21T06:43:17+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Psr\\SimpleCache\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "PHP-FIG",
+                "homepage": "http://www.php-fig.org/"
+            }
+        ],
+        "description": "Common interfaces for simple caching",
+        "keywords": [
+            "cache",
+            "caching",
+            "psr",
+            "psr-16",
+            "simple-cache"
+        ]
     }
 ]

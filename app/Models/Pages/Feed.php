@@ -6,6 +6,7 @@ use ForkBB\Models\Page;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Topic\Model as Topic;
 use ForkBB\Models\User\Model as User;
+use RuntimeException;
 use function \ForkBB\__;
 
 class Feed extends Page
@@ -130,7 +131,9 @@ class Feed extends Page
 
 
                 if (null !== $cacheId) {
-                    $this->c->Cache->set($cacheId, $feed, 60 * $this->c->config->o_feed_ttl);
+                    if (true !== $this->c->Cache->set($cacheId, $feed, 60 * $this->c->config->o_feed_ttl)) {
+                        throw new RuntimeException('Unable to write value to cache - feed');
+                    }
                 }
             }
         }

@@ -3,6 +3,7 @@
 namespace ForkBB\Models\SmileyList;
 
 use ForkBB\Models\Model as ParentModel;
+use RuntimeException;
 
 class Model extends ParentModel
 {
@@ -11,9 +12,9 @@ class Model extends ParentModel
      */
     public function init(): Model
     {
-        if ($this->c->Cache->has('smilies')) {
-            $this->list = $this->c->Cache->get('smilies');
-        } else {
+        $this->list = $this->c->Cache->get('smilies');
+
+        if (! \is_array($this->list)) {
             $this->load();
         }
 
@@ -25,7 +26,9 @@ class Model extends ParentModel
      */
     public function reset(): Model
     {
-        $this->c->Cache->delete('smilies');
+        if (true !== $this->c->Cache->delete('smilies')) {
+            throw new RuntimeException('Unable to remove key from cache - smilies');
+        }
 
         return $this;
     }

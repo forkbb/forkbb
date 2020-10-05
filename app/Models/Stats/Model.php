@@ -4,6 +4,7 @@ namespace ForkBB\Models\Stats;
 
 use ForkBB\Models\Model as ParentModel;
 use PDO;
+use RuntimeException;
 
 class Model extends ParentModel
 {
@@ -12,12 +13,16 @@ class Model extends ParentModel
      */
     public function init(): Model
     {
-        if ($this->c->Cache->has('stats')) {
-            $list = $this->c->Cache->get('stats');
-        } else {
+        $list = $this->c->Cache->get('stats');
+
+        if (! \is_array($list)) {
             $list = $this->c->users->stats();
-            $this->c->Cache->set('stats', $list);
+
+            if (true !== $this->c->Cache->set('stats', $list)) {
+                throw new RuntimeException('Unable to write value to cache - stats');
+            }
         }
+
         $this->userTotal = $list['total'];
         $this->userLast  = $list['last'];
 
@@ -34,7 +39,9 @@ class Model extends ParentModel
      */
     public function reset(): Model
     {
-        $this->c->Cache->delete('stats');
+        if (true !== $this->c->Cache->delete('stats')) {
+            throw new RuntimeException('Unable to remove key from cache - stats');
+        }
 
         return $this;
     }

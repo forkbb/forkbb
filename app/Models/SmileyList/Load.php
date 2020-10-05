@@ -5,6 +5,7 @@ namespace ForkBB\Models\SmileyList;
 use ForkBB\Models\Method;
 use ForkBB\Models\SmileyList\Model as SmileyList;
 use PDO;
+use RuntimeException;
 
 class Load extends Method
 {
@@ -22,7 +23,9 @@ class Load extends Method
 
         $this->model->list = $list;
 
-        $this->c->Cache->set('smilies', $list);
+        if (true !== $this->c->Cache->set('smilies', $list)) {
+            throw new RuntimeException('Unable to write value to cache - smilies');
+        }
 
         return $this->model;
     }

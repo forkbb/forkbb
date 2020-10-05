@@ -36,7 +36,10 @@ class Manager extends ManagerModel
 
         $mark = $this->c->Cache->get('forums_mark');
         if (empty($mark)) {
-            $this->c->Cache->set('forums_mark', \time());
+            if (true !== $this->c->Cache->set('forums_mark', \time())) {
+                throw new RuntimeException('Unable to write value to cache - forums_mark');
+            }
+
             $list = $this->refresh($group);
         } else {
             $result = $this->c->Cache->get('forums_' . $gid);
@@ -113,7 +116,9 @@ class Manager extends ManagerModel
      */
     public function reset(): Manager
     {
-        $this->c->Cache->delete('forums_mark');
+        if (true !== $this->c->Cache->delete('forums_mark')) {
+            throw new RuntimeException('Unable to remove key from cache - forums_mark');
+        }
 
         return $this;
     }
