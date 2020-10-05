@@ -335,7 +335,10 @@ class Config
         ) {
             $config[] = $value;
         } elseif (isset($config[$key])) {
-            if ($this->isFormat($config[$key])) {
+            if (
+                $this->isFormat($config[$key])
+                && ! $this->isFormat($value)
+            ) {
                 $config[$key]['value'] = $value;
             } else {
                 $config[$key] = $value;
