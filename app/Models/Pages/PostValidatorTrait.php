@@ -74,7 +74,7 @@ trait PostValidatorTrait
      */
     public function vCheckTimeout(Validator $v, $submit)
     {
-        if (null === $submit) {
+        if ($v->noValue($submit)) {
             return null;
         }
 

@@ -24,7 +24,7 @@ class Email extends Validators
     public function email(Validator $v, $email, $attrs, $originalUser): ?string
     {
         // поле отсутствует
-        if (null === $email) {
+        if ($v->noValue($email)) {
             return null;
         // проверка длины email
         } elseif (\mb_strlen($email, 'UTF-8') > $this->c->MAX_EMAIL_LENGTH) {
