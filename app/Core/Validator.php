@@ -149,17 +149,20 @@ class Validator
     public function addRules(array $list): Validator
     {
         foreach ($list as $field => $raw) {
+            $rules  = [];
             $suffix = null;
+
             // правило для элементов массива
             if (\strpos($field, '.') > 0) {
                 list($field, $suffix) = \explode('.', $field, 2);
             }
 
-            $rules = [];
-            $raw   = \str_replace('\|', "\0", $raw);
+            if (! \is_array($raw)) {
+                $raw = \explode('|', $raw);
+            }
+
             // перебор правил для текущего поля
-            foreach (\explode('|', $raw) as $rule) {
-                $rule = \str_replace("\0", '|', $rule);
+            foreach ($raw as $rule) {
                 $vs   = \explode(':', $rule, 2);
 
                 if (empty($this->validators[$vs[0]])) {

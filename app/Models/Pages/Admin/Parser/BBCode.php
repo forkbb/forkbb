@@ -298,7 +298,7 @@ class BBCode extends Parser
                     'other_attrs.*.format'      => 'string:trim|max:1024',
                     'other_attrs.*.body_format' => 'string:trim|max:1024',
                     'other_attrs.*.text_only'   => 'required|integer|in:0,1',
-                    'new_attr.name'             => 'string:trim|regex:%^(?:\|[a-z-]{2,15})$%',
+                    'new_attr.name'             => ['string:trim', 'regex:%^(?:|[a-z-]{2,15})$%'],
                     'new_attr.allowed'          => 'required|integer|in:0,1',
                     'new_attr.required'         => 'required|integer|in:0,1',
                     'new_attr.format'           => 'string:trim|max:1024',
