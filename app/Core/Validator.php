@@ -4,7 +4,7 @@ namespace ForkBB\Core;
 
 use ForkBB\Core\Container;
 use ForkBB\Core\File;
-use ForkBB\Core\Validators;
+use ForkBB\Core\RulesValidator;
 use RuntimeException;
 use function \ForkBB\__;
 
@@ -169,7 +169,7 @@ class Validator
                         $validator = null;
                     }
 
-                    if ($validator instanceof Validators) {
+                    if ($validator instanceof RulesValidator) {
                         $this->validators[$vs[0]] = [$validator, $vs[0]];
                     } else {
                         throw new RuntimeException($vs[0] . ' validator not found');

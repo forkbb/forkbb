@@ -2,10 +2,10 @@
 
 namespace ForkBB\Models\Validators;
 
+use ForkBB\Core\RulesValidator;
 use ForkBB\Core\Validator;
-use ForkBB\Core\Validators;
 
-class NoURL extends Validators
+class NoURL extends RulesValidator
 {
     /**
      * Проверяет значение на отсутствие ссылки, если пользователю запрещено использовать ссылки или включен флаг принудительной проверки

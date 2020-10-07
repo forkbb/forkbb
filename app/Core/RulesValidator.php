@@ -5,7 +5,7 @@ namespace ForkBB\Core;
 use ForkBB\Core\Container;
 use RuntimeException;
 
-abstract class Validators
+abstract class RulesValidator
 {
     /**
      * Контейнер
