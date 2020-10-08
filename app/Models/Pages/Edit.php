@@ -37,6 +37,7 @@ class Edit extends Page
             if (
                 $v->validation($_POST)
                 && null === $v->preview
+                && null !== $v->submit
             ) {
                 return $this->endEdit($post, $v);
             }

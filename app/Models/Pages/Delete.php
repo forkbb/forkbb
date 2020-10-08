@@ -33,7 +33,7 @@ class Delete extends Page
                 ->addRules([
                     'token'   => 'token:DeletePost',
                     'confirm' => 'integer', // ????
-                    'delete'  => 'string',
+                    'delete'  => 'required|string',
                 ])->addAliases([
                 ])->addArguments([
                     'token' => $args,

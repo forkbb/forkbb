@@ -62,6 +62,7 @@ class Email extends Profile
                     'token'     => 'token:EditUserEmail',
                     'password'  => 'required|string:trim|check_password',
                     'new_email' => 'required|string:trim|email:noban,unique,flood',
+                    'submit'    => 'required|string',
                 ])->addAliases([
                     'new_email' => 'New email',
                     'password'  => 'Your passphrase',

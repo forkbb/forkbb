@@ -55,6 +55,7 @@ class Email extends Page
                 'redirect'    => 'required|referer:Index',
                 'subject'     => 'required|string:trim|max:70',
                 'message'     => 'required|string:trim,linebreaks|max:65000 bytes',
+                'send'        => 'required|string',
             ])->addAliases([
                 'subject'     => 'Email subject',
                 'message'     => 'Email message',

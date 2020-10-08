@@ -33,6 +33,7 @@ class Mod extends Profile
                 ])->addRules([
                     'token'       => 'token:EditUserModeration',
                     'moderator.*' => 'integer|in:' . \implode(',', \array_keys($this->curForums)),
+                    'save'        => 'required|string',
                 ])->addAliases([
                 ])->addArguments([
                     'token'       => ['id' => $this->curUser->id],

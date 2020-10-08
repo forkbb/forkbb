@@ -38,6 +38,7 @@ class Post extends Page
             if (
                 $v->validation($_POST)
                 && null === $v->preview
+                && null !== $v->submit
             ) {
                 return $this->endPost($forum, $v);
             }

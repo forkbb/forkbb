@@ -48,6 +48,7 @@ class Config extends Profile
                         ? '0,1,2'
                         : (int) $this->curUser->ip_check_type
                     ),
+                    'save'          => 'required|string',
                 ])->addAliases([
                     'language'      => 'Language',
                     'style'         => 'Style',

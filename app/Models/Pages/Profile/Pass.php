@@ -34,6 +34,7 @@ class Pass extends Profile
                     'token'     => 'token:EditUserPass',
                     'password'  => 'required|string:trim|check_password',
                     'new_pass'  => 'required|string:trim|password',
+                    'submit'    => 'required|string',
                 ])->addAliases([
                     'new_pass'  => 'New pass',
                     'password'  => 'Your passphrase',
@@ -115,7 +116,6 @@ class Pass extends Profile
                     'fields' => [
                         'new_pass' => [
                             'type'      => 'password',
-                            'maxlength' => 25,
                             'caption'   => __('New pass'),
                             'required'  => true,
                             'pattern'   => '^.{16,}$',

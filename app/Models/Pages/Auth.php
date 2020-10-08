@@ -47,6 +47,7 @@ class Auth extends Page
                     'username' => 'required|string',
                     'password' => 'required|string|login_process',
                     'save'     => 'checkbox',
+                    'login'    => 'required|string',
                 ])->addAliases([
                     'username' => 'Username',
                     'password' => 'Passphrase',
@@ -175,8 +176,9 @@ class Auth extends Page
             $v = $this->c->Validator->reset()
                 ->addValidators([
                 ])->addRules([
-                    'token' => 'token:Forget',
-                    'email' => 'required|string:trim|email:noban,exists,flood',
+                    'token'  => 'token:Forget',
+                    'email'  => 'required|string:trim|email:noban,exists,flood',
+                    'submit' => 'required|string',
                 ])->addAliases([
                 ])->addMessages([
                     'email.email' => 'Invalid email',
@@ -304,6 +306,7 @@ class Auth extends Page
                     'token'     => 'token:ChangePassword',
                     'password'  => 'required|string|min:16|password',
                     'password2' => 'required|same:password',
+                    'submit'    => 'required|string',
                 ])->addAliases([
                     'password'  => 'New pass',
                     'password2' => 'Confirm new pass',

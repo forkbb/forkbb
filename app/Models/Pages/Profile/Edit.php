@@ -88,6 +88,7 @@ class Edit extends Profile
                     'email_setting' => 'required|integer|in:0,1,2',
                     'url'           => $ruleWebsite,
                     'signature'     => $ruleSignature,
+                    'save'          => 'required|string',
                 ])->addAliases([
                     'username'      => 'Username',
                     'title'         => 'Title',

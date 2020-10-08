@@ -40,6 +40,7 @@ class Report extends Page
             ])->addRules([
                 'token'       => 'token:ReportPost',
                 'reason'      => 'required|string:trim,linebreaks|max:65000 bytes',
+                'submit'      => 'required|string',
             ])->addAliases([
                 'reason'      => 'Reason',
             ])->addArguments([
