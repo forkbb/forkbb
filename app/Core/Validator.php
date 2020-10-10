@@ -708,7 +708,7 @@ class Validator
             ! \is_string($value)
             || ! $this->c->Csrf->verify($value, $attr, $args)
         ) {
-            $this->addError('Bad token', 'e');
+            $this->addError($this->c->Csrf->getError(), 'e');
 
             return null;
         } else {

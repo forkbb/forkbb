@@ -862,7 +862,7 @@ class Bans extends Admin
     public function delete(array $args, string $method): Page
     {
         if (! $this->c->Csrf->verify($args['token'], 'AdminBansDelete', $args)) {
-            return $this->c->Message->message('Bad token');
+            return $this->c->Message->message($this->c->Csrf->getError());
         }
 
         $ids = [

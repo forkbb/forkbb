@@ -217,7 +217,7 @@ class BBCode extends Parser
     public function delete(array $args, string $method): Page
     {
         if (! $this->c->Csrf->verify($args['token'], 'AdminBBCodeDelete', $args)) {
-            return $this->c->Message->message('Bad token');
+            return $this->c->Message->message($this->c->Csrf->getError());
         }
 
         $this->c->bbcode->delete((int) $args['id']);
@@ -631,7 +631,7 @@ class BBCode extends Parser
     public function default(array $args, string $method): Page
     {
         if (! $this->c->Csrf->verify($args['token'], 'AdminBBCodeDefault', $args)) {
-            return $this->c->Message->message('Bad token');
+            return $this->c->Message->message($this->c->Csrf->getError());
         }
 
         $id = (int) $args['id'];

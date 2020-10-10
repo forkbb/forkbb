@@ -31,7 +31,7 @@ class Action extends Users
     {
         if (isset($args['token'])) {
             if (! $this->c->Csrf->verify($args['token'], 'AdminUsersAction', $args)) {
-                return $this->c->Message->message('Bad token');
+                return $this->c->Message->message($this->c->Csrf->getError());
             }
             $profile = true;
         } else {

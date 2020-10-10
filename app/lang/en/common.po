@@ -61,6 +61,9 @@ msgstr "When sending email there was an error. Please try again later or contact
 msgid "Bad token"
 msgstr "Bad token."
 
+msgid "Expired token"
+msgstr "Expired token."
+
 msgid "Bad request"
 msgstr "Bad request. The link you followed is incorrect or outdated."
 

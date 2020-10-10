@@ -20,7 +20,7 @@ class Misc extends Page
         }
 
         if (! $this->c->Csrf->verify($args['token'], 'MarkRead', $args)) {
-            return $this->c->Redirect->url($forum->link)->message('Bad token');
+            return $this->c->Redirect->url($forum->link)->message($this->c->Csrf->getError());
         }
 
         $this->c->forums->markread($forum, $this->user); // ???? флуд интервал?
@@ -38,7 +38,7 @@ class Misc extends Page
     public function forumSubscription(array $args): Page
     {
         if (! $this->c->Csrf->verify($args['token'], 'ForumSubscription', $args)) {
-            return $this->c->Message->message('Bad token');
+            return $this->c->Message->message($this->c->Csrf->getError());
         }
 
         $forum = $this->c->forums->get((int) $args['fid']);
@@ -71,7 +71,7 @@ class Misc extends Page
     public function topicSubscription(array $args): Page
     {
         if (! $this->c->Csrf->verify($args['token'], 'TopicSubscription', $args)) {
-            return $this->c->Message->message('Bad token');
+            return $this->c->Message->message($this->c->Csrf->getError());
         }
 
         $topic = $this->c->topics->load((int) $args['tid']);

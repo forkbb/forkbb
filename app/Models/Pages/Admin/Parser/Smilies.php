@@ -345,7 +345,7 @@ class Smilies extends Parser
     public function delete(array $args, string $method): Page
     {
         if (! $this->c->Csrf->verify($args['token'], 'AdminSmiliesDelete', $args)) {
-            return $this->c->Message->message('Bad token');
+            return $this->c->Message->message($this->c->Csrf->getError());
         }
 
         if (

@@ -16,6 +16,11 @@ class Csrf
      */
     protected $key;
 
+    /**
+     * @var ?string
+     */
+    protected $error;
+
     public function __construct(Secury $secury, string $key)
     {
         $this->secury = $secury;
@@ -27,6 +32,8 @@ class Csrf
      */
     public function create(string $marker, array $args = [], /* string|int */ $time = null): string
     {
+        $this->error = null;
+
          unset($args['token'], $args['#']);
          \ksort($args);
          $marker .= '|';
@@ -43,10 +50,35 @@ class Csrf
      */
     public function verify($token, string $marker, array $args = []): bool
     {
-        return \is_string($token)
+        $this->error = null;
+        $now         = \time();
+        $matches     = null;
+
+        $result = \is_string($token)
             && \preg_match('%f(\d+)$%D', $token, $matches)
-            && $matches[1] < \time()
-            && $matches[1] + 1800 > \time()
+            && $matches[1] + 0 < $now
+            && $matches[1] + 1800 >= $now
             && \hash_equals($this->create($marker, $args, $matches[1]), $token);
+
+        if (! $result) {
+            if (
+                isset($matches[1])
+                && $matches[1] + 1800 < $now
+            ) {
+                $this->error = 'Expired token';
+            } else {
+                $this->error = 'Bad token';
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Возвращает ошибку из метода verify
+     */
+    public function getError(): ?string
+    {
+        return $this->error;
     }
 }

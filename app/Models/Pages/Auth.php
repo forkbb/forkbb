@@ -16,7 +16,7 @@ class Auth extends Page
     public function logout(array $args): Page
     {
         if (! $this->c->Csrf->verify($args['token'], 'Logout', $args)) {
-            return $this->c->Redirect->page('Index')->message('Bad token');
+            return $this->c->Redirect->page('Index')->message($this->c->Csrf->getError());
         }
 
         $this->c->Cookie->deleteUser();

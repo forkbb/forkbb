@@ -422,7 +422,7 @@ class View extends Users
         ]);
 
         if (! $v->validation($_POST)) {
-            return $this->c->Message->message('Bad token');
+            return $this->c->Message->message($this->c->Csrf->getError() ?? 'Bad token');
         }
 
         $this->c->users->updateCountPosts();

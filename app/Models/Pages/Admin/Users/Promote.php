@@ -13,7 +13,7 @@ class Promote extends Users
     public function promote(array $args, string $method): Page
     {
         if (! $this->c->Csrf->verify($args['token'], 'AdminUserPromote', $args)) {
-            return $this->c->Message->message('Bad token');
+            return $this->c->Message->message($this->c->Csrf->getError());
         }
 
         $user = $this->c->users->load((int) $args['uid']);
