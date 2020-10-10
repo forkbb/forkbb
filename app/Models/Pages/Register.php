@@ -41,7 +41,7 @@ class Register extends Page
 
         // завершение регистрации
         if (
-            $v->validation($_POST)
+            $v->validation($_POST, true)
             && 1 === $v->on
         ) {
             return $this->regEnd($v);

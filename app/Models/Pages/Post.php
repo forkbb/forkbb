@@ -36,7 +36,7 @@ class Post extends Page
             $v = $this->messageValidator($forum, 'NewTopic', $args, false, true);
 
             if (
-                $v->validation($_POST)
+                $v->validation($_POST, $this->user->isGuest) //????
                 && null === $v->preview
                 && null !== $v->submit
             ) {
@@ -94,8 +94,9 @@ class Post extends Page
             $v = $this->messageValidator($topic, 'NewReply', $args);
 
             if (
-                $v->validation($_POST)
+                $v->validation($_POST, $this->user->isGuest) //????
                 && null === $v->preview
+                && null !== $v->submit
             ) {
                 return $this->endPost($topic, $v);
             }

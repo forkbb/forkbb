@@ -234,7 +234,7 @@ class Validator
     /**
      * Проверяет данные
      */
-    public function validation(array $raw): bool
+    public function validation(array $raw, bool $strict = false): bool
     {
         if (empty($this->rules)) {
             throw new RuntimeException('Rules not found');
@@ -249,7 +249,15 @@ class Validator
             $this->__get($field);
         }
 
-        $this->raw     = null;
+        if (
+            $strict
+            && empty($this->errors)
+            && ! empty(\array_diff_key($this->raw, $this->fields))
+        ) {
+            $this->addError('Too much data');
+        }
+
+        $this->raw = null;
 
         return empty($this->errors);
     }
@@ -848,7 +856,7 @@ class Validator
         return $value;
     }
 
-    public function vDate(Validator $v, $value)
+    protected function vDate(Validator $v, $value)
     {
         if ($this->noValue($value)) {
             return null;

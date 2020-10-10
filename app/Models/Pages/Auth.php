@@ -53,7 +53,7 @@ class Auth extends Page
                     'password' => 'Passphrase',
                 ]);
 
-            if ($v->validation($_POST)) {
+            if ($v->validation($_POST, true)) {
                 return $this->c->Redirect->url($v->redirect)->message('Login redirect');
             }
 
@@ -186,7 +186,7 @@ class Auth extends Page
                     'email.email' => $tmpUser, // сюда идет возрат данных по найденному пользователю
                 ]);
 
-            if ($v->validation($_POST)) {
+            if ($v->validation($_POST, true)) {
                 $key  = $this->c->Secury->randomPass(32);
                 $hash = $this->c->Secury->hash($tmpUser->id . $key);
                 $link = $this->c->Router->link(
@@ -317,7 +317,7 @@ class Auth extends Page
                     'password2.same'     => 'Pass not match',
                 ]);
 
-            if ($v->validation($_POST)) {
+            if ($v->validation($_POST, true)) {
                 $user->password        = \password_hash($v->password, \PASSWORD_DEFAULT);
                 $user->email_confirmed = 1;
                 $user->activate_string = '';
