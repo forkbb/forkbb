@@ -827,6 +827,7 @@ class Files
     public function __construct(/* string|int */ $maxFileSize, /* string|int */ $maxImgSize)
     {
         $init = \min(
+            \PHP_INT_MAX,
             $this->size(\ini_get('upload_max_filesize')),
             $this->size(\ini_get('post_max_size'))
         );
