@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ForkBB\Models\Pages\Profile;
 
 use ForkBB\Core\Image;
@@ -348,7 +350,7 @@ class Edit extends Profile
                     \ForkBB\num($this->c->config->o_avatars_width),
                     \ForkBB\num($this->c->config->o_avatars_height),
                     \ForkBB\num($this->c->config->o_avatars_size),
-                    \ForkBB\size($this->c->config->o_avatars_size)
+                    \ForkBB\size((int) $this->c->config->o_avatars_size)
                 ),
                 'accept'  => $this->accept,
             ];

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ForkBB\Models\Pages\Admin\Users;
 
 use ForkBB\Core\Validator;
@@ -313,7 +315,7 @@ class Result extends Users
                 'title'   => __('Results show posts link'),
             ];
             $fields["l{$number}-note"] = [
-                'class'   => '' === \trim($user->admin_note) ? ['result', 'note', 'no-data'] : ['result', 'note'],
+                'class'   => '' === \trim($user->admin_note ?? '') ? ['result', 'note', 'no-data'] : ['result', 'note'],
                 'type'    => 'str',
                 'caption' => __('Примечание админа'),
                 'value'   => $user->admin_note,

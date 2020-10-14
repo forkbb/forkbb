@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ForkBB\Models\Pages\Profile;
 
 use ForkBB\Core\Image;
