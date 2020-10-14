@@ -1181,7 +1181,7 @@ class Install extends Admin
         ];
         $i = 0;
         foreach ($smilies as $text => $img) {
-            $this->c->DB->exec('INSERT INTO ::smilies (image, text, disp_position) VALUES(?s, ?s, ?i)', [$img, $text, $i++]); //????
+            $this->c->DB->exec('INSERT INTO ::smilies (sm_image, sm_code, sm_position) VALUES(?s, ?s, ?i)', [$img, $text, $i++]); //????
         }
 
         $query = 'INSERT INTO ::bbcode (bb_tag, bb_edit, bb_delete, bb_structure)
