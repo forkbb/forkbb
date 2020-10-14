@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ForkBB\Models\Forum;
 
 use ForkBB\Models\DataModel;

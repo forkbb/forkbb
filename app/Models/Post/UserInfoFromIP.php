@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ForkBB\Models\Post;
 
 use ForkBB\Models\Action;

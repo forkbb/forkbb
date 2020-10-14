@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ForkBB\Models\Subscription;
 
 use ForkBB\Models\Method;

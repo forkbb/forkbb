@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ForkBB\Models\Stats;
 
 use ForkBB\Models\Model as ParentModel;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ForkBB\Models\Censorship;
 
 use ForkBB\Models\Model as ParentModel;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ForkBB\Models\AdminList;
 
 use ForkBB\Models\Model as ParentModel;
