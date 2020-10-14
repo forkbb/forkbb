@@ -44,3 +44,9 @@ msgstr "Someone else is already registered with that email address. Please choos
 
 msgid "Account email flood"
 msgstr "This account has already requested a passphrase reset recently. Please wait %s minutes before trying again."
+
+msgid "Old browser"
+msgstr "Please update your browser."
+
+msgid "Bad browser"
+msgstr "Please update your browser."

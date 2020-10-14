@@ -83,6 +83,7 @@ return [
             'eol'   => '%EOL%',
         ],
         'Func' => \ForkBB\Core\Func::class,
+        'Test' => \ForkBB\Core\Test::class,
         'NormEmail' => \MioVisman\NormEmail\NormEmail::class,
 
         'config'        => '@ConfigModel:init',
