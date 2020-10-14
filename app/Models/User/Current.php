@@ -9,30 +9,34 @@ use RuntimeException;
 class Current extends Action
 {
     /**
-     * Получение юзера на основе куки авторизации
-     * Обновление куки аутентификации
+     * Получает пользователя на основе куки авторизации
+     * Обновляет куку аутентификации
      */
     public function current(): User
     {
+        $ip     = $this->getIp();
         $cookie = $this->c->Cookie;
-        $user   = $this->load((int) $cookie->uId);
+        $user   = $this->load((int) $cookie->uId, $ip);
 
         if (! $user->isGuest) {
             if (! $cookie->verifyUser($user)) {
-                $user = $this->load(1);
+                $user = $this->load(1, $ip);
             } elseif ($user->ip_check_type > 0) {
-                $hexIp = \bin2hex(\inet_pton($user->ip)); // ???? проверка на пустоту?
+                $hexIp = \bin2hex(\inet_pton($ip));
 
                 if (false === \strpos("|{$user->login_ip_cache}|", "|{$hexIp}|")) {
-                    $user = $this->load(1);
+                    $user = $this->load(1, $ip);
                 }
             }
         }
 
+        $user->__ip        = $ip;
+        $user->__userAgent = $this->getUserAgent();
+
         $cookie->setUser($user);
 
         if ($user->isGuest) {
-            $user->__isBot    = $this->isBot();
+            $user->__isBot    = $this->isBot($user->userAgent);
             $user->__timezone = $this->c->config->o_default_timezone;
             $user->__dst      = $this->c->config->o_default_dst;
             $user->__language = $this->getLangFromHTTP();
@@ -53,12 +57,12 @@ class Current extends Action
     }
 
     /**
-     * Загрузка данных в модель пользователя из базы
+     * Загружает данные из базы в модель пользователя
      */
-    protected function load(int $id): User
+    protected function load(int $id, string $ip): User
     {
         $data = null;
-        $ip   = $this->getIp();
+
         if ($id > 1) {
             $vars = [
                 ':id' => $id,
@@ -71,6 +75,7 @@ class Current extends Action
 
             $data = $this->c->DB->query($query, $vars)->fetch();
         }
+
         if (empty($data['id'])) {
             $vars = [
                 ':ip' => $ip,
@@ -82,16 +87,13 @@ class Current extends Action
                 WHERE u.id=1';
 
             $data = $this->c->DB->query($query, $vars)->fetch();
+
             if (empty($data['id'])) {
                 throw new RuntimeException('Unable to fetch guest information. Your database must contain both a guest user and a guest user group');
             }
         }
 
-        $user              = $this->manager->create($data);
-        $user->__ip        = $ip;
-        $user->__userAgent = $this->getUserAgent();
-
-        return $user;
+        return $this->manager->create($data);
     }
 
     /**
@@ -99,7 +101,13 @@ class Current extends Action
      */
     protected function getIp(): string
     {
-       return \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: 'unknow';
+        $ip = \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP);
+
+        if (empty($ip)) {
+            throw new RuntimeException('Bad IP');
+        }
+
+        return $ip;
     }
 
     /**
@@ -107,17 +115,15 @@ class Current extends Action
      */
     protected function getUserAgent(): string
     {
-        $ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
-        return \is_string($ua) ? \trim($ua) : '';
+        return \trim($_SERVER['HTTP_USER_AGENT'] ?? '');
     }
 
     /**
      * Проверка на робота
      * Если робот, то возврат имени
      */
-    protected function isBot() /* string|false */
+    protected function isBot(string $agent) /* string|false */
     {
-        $agent = $this->getUserAgent();
         if ('' == $agent) {
             return false;
         }
