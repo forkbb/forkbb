@@ -34,7 +34,7 @@ class Test
     public function vTestCheck(Validator $v, /* mixed */ $value) /* : mixed */
     {
         if (null !== $value) {
-            $this->addError('The :alias contains an invalid value');
+            $v->addError('The :alias contains an invalid value');
 
             return $value;
         }
@@ -43,8 +43,8 @@ class Test
 
         if (empty($_SERVER['HTTP_USER_AGENT'])) {
             $index += 1;
-        } elseif (\preg_match('%\bmsie\b%', $_SERVER['HTTP_USER_AGENT'])) {
-            $this->addError('Old browser', 'w');
+        } elseif (\preg_match('%\bmsie\b%i', $_SERVER['HTTP_USER_AGENT'])) {
+            $v->addError('Old browser', 'w');
 
             return $value;
         }
@@ -85,7 +85,7 @@ class Test
             $index += 3;
         }
         if ($index > 3)  {
-            $this->addError('Bad browser', 'e');
+            $v->addError('Bad browser', 'e');
         }
 
         return $value;
