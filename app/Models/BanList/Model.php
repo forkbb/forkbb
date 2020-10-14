@@ -30,9 +30,10 @@ class Model extends ParentModel
     /**
      * Фильтрует значение
      */
-    public function trimToNull(/* mixed */ $val, bool $toLower = false): ?string
+    public function trimToNull(?string $val, bool $toLower = false): ?string
     {
-        $val = \trim($val);
+        $val = \trim($val ?? '');
+
         if ('' == $val) {
             return null;
         } elseif ($toLower) {
