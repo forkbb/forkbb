@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ForkBB\Core;
 
 use ForkBB\Core\Files;
@@ -59,8 +61,8 @@ class Image extends File
         $wr     = ($maxW < 1) ? 1 : $maxW / $oldW;
         $hr     = ($maxH < 1) ? 1 : $maxH / $oldH;
         $r      = \min($wr, $hr, 1);
-        $width  = \round($oldW * $r);
-        $height = \round($oldH * $r);
+        $width  = (int) \round($oldW * $r);
+        $height = (int) \round($oldH * $r);
 
         if (false === ($image = \imagecreatetruecolor($width, $height))) {
             throw new FileException('Failed to create new truecolor image');
@@ -126,7 +128,7 @@ class Image extends File
                 $result = @\imagejpeg($this->image, $path, $this->quality);
                 break;
             case 'png':
-                $quality = \floor((100 - $this->quality) / 11);
+                $quality = (int) \floor((100 - $this->quality) / 11);
                 $result  = @\imagepng($this->image, $path, $quality);
                 break;
             case 'gif':

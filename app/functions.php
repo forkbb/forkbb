@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ForkBB;
 
 use ForkBB\Core\Container;
@@ -67,7 +69,7 @@ function e(string $arg): string
 function num(/* mixed */ $number, int $decimals = 0): string
 {
     return \is_numeric($number)
-        ? \number_format($number, $decimals, __('lang_decimal_point'), __('lang_thousands_sep'))
+        ? \number_format((float) $number, $decimals, __('lang_decimal_point'), __('lang_thousands_sep'))
         : '-';
 }
 
@@ -87,7 +89,7 @@ function dt(int $arg, bool $dateOnly = false, string $dateFormat = null, string 
         return __('Never');
     }
 
-    $diff = ($c->user->timezone + $c->user->dst) * 3600;
+    $diff = (int) (($c->user->timezone + $c->user->dst) * 3600);
     $arg += $diff;
 
     if (null === $dateFormat) {

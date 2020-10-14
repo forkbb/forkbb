@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ForkBB;
 
 use ForkBB\Core\Container;
@@ -8,8 +10,8 @@ use ForkBB\Models\Page;
 use RuntimeException;
 
 \error_reporting(\E_ALL ^ \E_NOTICE);
-\ini_set('display_errors', 0);
-\ini_set('log_errors', 1);
+\ini_set('display_errors', '0');
+\ini_set('log_errors', '1');
 
 \setlocale(\LC_ALL, 'C');
 \mb_language('uni');

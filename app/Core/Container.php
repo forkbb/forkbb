@@ -1,8 +1,12 @@
 <?php
+
 /**
  * based on Container https://github.com/artoodetoo/container
  * by artoodetoo
  */
+
+declare(strict_types=1);
+
 namespace ForkBB\Core;
 
 use InvalidArgumentException;

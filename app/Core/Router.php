@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ForkBB\Core;
 
 use ForkBB\Core\Csrf;
@@ -84,7 +86,7 @@ class Router
         $this->baseUrl = $base;
         $this->csrf    = $csrf;
         $this->host    = \parse_url($base, \PHP_URL_HOST);
-        $this->prefix  = \parse_url($base, \PHP_URL_PATH);
+        $this->prefix  = \parse_url($base, \PHP_URL_PATH) ?? '';
         $this->length  = \strlen($this->prefix);
     }
 

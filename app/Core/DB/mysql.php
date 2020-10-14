@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ForkBB\Core\DB;
 
 use ForkBB\Core\DB;
