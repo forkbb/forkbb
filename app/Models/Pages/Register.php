@@ -39,6 +39,8 @@ class Register extends Page
                 'username.login'    => 'Login format',
             ]);
 
+        $v = $this->c->Test->beforeValidation($v);
+
         // завершение регистрации
         if (
             $v->validation($_POST, true)

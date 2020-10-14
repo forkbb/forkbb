@@ -35,6 +35,10 @@ class Post extends Page
         if ('POST' === $method) {
             $v = $this->messageValidator($forum, 'NewTopic', $args, false, true);
 
+            if ($this->user->isGuest) {
+                $v = $this->c->Test->beforeValidation($v);
+            }
+
             if (
                 $v->validation($_POST, $this->user->isGuest) //????
                 && null === $v->preview
@@ -92,6 +96,10 @@ class Post extends Page
 
         if ('POST' === $method) {
             $v = $this->messageValidator($topic, 'NewReply', $args);
+
+            if ($this->user->isGuest) {
+                $v = $this->c->Test->beforeValidation($v);
+            }
 
             if (
                 $v->validation($_POST, $this->user->isGuest) //????

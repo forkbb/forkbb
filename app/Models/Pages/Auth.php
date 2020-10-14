@@ -53,6 +53,8 @@ class Auth extends Page
                     'password' => 'Passphrase',
                 ]);
 
+            $v = $this->c->Test->beforeValidation($v);
+
             if ($v->validation($_POST, true)) {
                 return $this->c->Redirect->url($v->redirect)->message('Login redirect');
             }
@@ -186,6 +188,8 @@ class Auth extends Page
                     'email.email' => $tmpUser, // сюда идет возрат данных по найденному пользователю
                 ]);
 
+            $v = $this->c->Test->beforeValidation($v);
+
             if ($v->validation($_POST, true)) {
                 $key  = $this->c->Secury->randomPass(32);
                 $hash = $this->c->Secury->hash($tmpUser->id . $key);
@@ -316,6 +320,8 @@ class Auth extends Page
                     'password.password'  => 'Pass format',
                     'password2.same'     => 'Pass not match',
                 ]);
+
+            $v = $this->c->Test->beforeValidation($v);
 
             if ($v->validation($_POST, true)) {
                 $user->password        = \password_hash($v->password, \PASSWORD_DEFAULT);
