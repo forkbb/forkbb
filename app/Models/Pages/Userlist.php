@@ -178,7 +178,7 @@ class Userlist extends Page
             $fields['name'] = [
                 'class'     => 'w0',
                 'type'      => 'text',
-                'maxlength' => 25,
+                'maxlength' => '25',
                 'value'     => $v->name ?: '*',
                 'caption'   => __('Username'),
                 'info'      => __('User search info'),

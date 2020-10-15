@@ -119,17 +119,17 @@ class Maintenance extends Admin
                     'fields' => [
                         'limit' => [
                             'type'    => 'number',
-                            'min'     => 1,
-                            'max'     => 9999,
-                            'value'   => 100,
+                            'min'     => '1',
+                            'max'     => '9999',
+                            'value'   => '100',
                             'caption' => __('Posts per cycle label'),
                             'info'    => __('Posts per cycle help'),
                         ],
                         'start' => [
                             'type'    => 'number',
-                            'min'     => 1,
-                            'max'     => 9999999999,
-                            'value'   => 1,
+                            'min'     => '1',
+                            'max'     => '9999999999',
+                            'value'   => '1',
                             'caption' => __('Starting post label'),
                             'info'    => __('Starting post help'),
                         ],

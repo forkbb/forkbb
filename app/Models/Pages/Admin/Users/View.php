@@ -182,25 +182,25 @@ class View extends Users
         $fields = [];
         $fields['username'] = [
             'type'      => 'text',
-            'maxlength' => 25,
+            'maxlength' => '25',
             'caption'   => __('Username label'),
             'value'     => $data['username'] ?? null,
         ];
         $fields['email'] = [
             'type'      => 'text',
-            'maxlength' => 80,
+            'maxlength' => '80',
             'caption'   => __('E-mail address label'),
             'value'     => $data['email'] ?? null,
         ];
         $fields['title'] = [
             'type'      => 'text',
-            'maxlength' => 50,
+            'maxlength' => '50',
             'caption'   => __('Title label'),
             'value'     => $data['title'] ?? null,
         ];
         $fields['realname'] = [
             'type'      => 'text',
-            'maxlength' => 40,
+            'maxlength' => '40',
             'caption'   => __('Real name label'),
             'value'     => $data['realname'] ?? null,
         ];
@@ -219,25 +219,25 @@ class View extends Users
         $fields['url'] = [
             'id'        => 'website',
             'type'      => 'text',
-            'maxlength' => 100,
+            'maxlength' => '100',
             'caption'   => __('Website label'),
             'value'     => $data['url'] ?? null,
         ];
         $fields['location'] = [
             'type'      => 'text',
-            'maxlength' => 30,
+            'maxlength' => '30',
             'caption'   => __('Location label'),
             'value'     => $data['location'] ?? null,
         ];
         $fields['signature'] = [
             'type'      => 'text',
-            'maxlength' => 512,
+            'maxlength' => '512',
             'caption'   => __('Signature label'),
             'value'     => $data['signature'] ?? null,
         ];
         $fields['admin_note'] = [
             'type'      => 'text',
-            'maxlength' => 30,
+            'maxlength' => '30',
             'caption'   => __('Admin note label'),
             'value'     => $data['admin_note'] ?? null,
         ];
@@ -248,16 +248,16 @@ class View extends Users
         $fields['num_posts_1'] = [
             'type'    => 'number',
             'class'   => 'bstart',
-            'min'     => 0,
-            'max'     => 9999999999,
+            'min'     => '0',
+            'max'     => '9999999999',
             'value'   => $data['num_posts_1'] ?? null,
             'caption' => __('Posts label'),
         ];
         $fields['num_posts_2'] = [
             'type'    => 'number',
             'class'   => 'bend',
-            'min'     => 0,
-            'max'     => 9999999999,
+            'min'     => '0',
+            'max'     => '9999999999',
             'value'   => $data['num_posts_2'] ?? null,
         ];
         $fields[] = [
@@ -270,14 +270,14 @@ class View extends Users
         $fields['last_post_1'] = [
             'class'     => 'bstart',
             'type'      => 'text',
-            'maxlength' => 100,
+            'maxlength' => '100',
             'value'     => $data['last_post_1'] ?? null,
             'caption'   => __('Last post label'),
         ];
         $fields['last_post_2'] = [
             'class'     => 'bend',
             'type'      => 'text',
-            'maxlength' => 100,
+            'maxlength' => '100',
             'value'     => $data['last_post_2'] ?? null,
         ];
         $fields[] = [
@@ -290,14 +290,14 @@ class View extends Users
         $fields['last_visit_1'] = [
             'class'     => 'bstart',
             'type'      => 'text',
-            'maxlength' => 100,
+            'maxlength' => '100',
             'value'     => $data['last_visit_1'] ?? null,
             'caption'   => __('Last visit label'),
         ];
         $fields['last_visit_2'] = [
             'class'     => 'bend',
             'type'      => 'text',
-            'maxlength' => 100,
+            'maxlength' => '100',
             'value'     => $data['last_visit_2'] ?? null,
         ];
         $fields[] = [
@@ -310,14 +310,14 @@ class View extends Users
         $fields['registered_1'] = [
             'class'     => 'bstart',
             'type'      => 'text',
-            'maxlength' => 100,
+            'maxlength' => '100',
             'value'     => $data['registered_1'] ?? null,
             'caption'   => __('Registered label'),
         ];
         $fields['registered_2'] = [
             'class'     => 'bend',
             'type'      => 'text',
-            'maxlength' => 100,
+            'maxlength' => '100',
             'value'     => $data['registered_2'] ?? null,
         ];
         $fields[] = [
@@ -396,7 +396,7 @@ class View extends Users
         $fields = [];
         $fields['ip'] = [
             'type'      => 'text',
-            'maxlength' => 49,
+            'maxlength' => '49',
             'caption'   => __('IP address label'),
             'value'     => $data['ip'] ?? null,
             'required'  => true,

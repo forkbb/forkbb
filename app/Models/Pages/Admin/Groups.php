@@ -389,7 +389,7 @@ class Groups extends Admin
         $fieldset = [];
         $fieldset['g_title'] = [
             'type'      => 'text',
-            'maxlength' => 50,
+            'maxlength' => '50',
             'value'     => $group->g_title,
             'caption'   => __('Group title label'),
             'required'  => true,
@@ -397,7 +397,7 @@ class Groups extends Admin
         ];
         $fieldset['g_user_title'] = [
             'type'      => 'text',
-            'maxlength' => 50,
+            'maxlength' => '50',
             'value'     => $group->g_user_title,
             'caption'   => __('User title label'),
             'info'      => __('User title help', $group->groupGuest ? __('Guest') : __('Member')),
@@ -433,8 +433,8 @@ class Groups extends Admin
             ];
             $fieldset['g_promote_min_posts'] = [
                 'type'    => 'number',
-                'min'     => 0,
-                'max'     => 9999999999,
+                'min'     => '0',
+                'max'     => '9999999999',
                 'value'   => $group->g_promote_min_posts,
                 'caption' => __('Number for promotion label'),
                 'info'    => __('Number for promotion help'),
@@ -545,8 +545,8 @@ class Groups extends Admin
             ];
             $fieldset['g_deledit_interval'] = [
                 'type'    => 'number',
-                'min'     => 0,
-                'max'     => 999999,
+                'min'     => '0',
+                'max'     => '999999',
                 'value'   => $group->g_deledit_interval,
                 'caption' => __('Delete-edit interval label'),
                 'info'    => __('Delete-edit interval help'),
@@ -594,16 +594,16 @@ class Groups extends Admin
 
         $fieldset['g_post_flood'] = [
             'type'    => 'number',
-            'min'     => 0,
-            'max'     => 999999,
+            'min'     => '0',
+            'max'     => '999999',
             'value'   => $group->g_post_flood,
             'caption' => __('Post flood label'),
             'info'    => __('Post flood help'),
         ];
         $fieldset['g_search_flood'] = [
             'type'    => 'number',
-            'min'     => 0,
-            'max'     => 999999,
+            'min'     => '0',
+            'max'     => '999999',
             'value'   => $group->g_search_flood,
             'caption' => __('Search flood label'),
             'info'    => __('Search flood help'),
@@ -612,16 +612,16 @@ class Groups extends Admin
         if (! $group->groupGuest) {
             $fieldset['g_email_flood'] = [
                 'type'    => 'number',
-                'min'     => 0,
-                'max'     => 999999,
+                'min'     => '0',
+                'max'     => '999999',
                 'value'   => $group->g_email_flood,
                 'caption' => __('E-mail flood label'),
                 'info'    => __('E-mail flood help'),
             ];
             $fieldset['g_report_flood'] = [
                 'type'    => 'number',
-                'min'     => 0,
-                'max'     => 999999,
+                'min'     => '0',
+                'max'     => '999999',
                 'value'   => $group->g_report_flood,
                 'caption' => __('Report flood label'),
                 'info'    => __('Report flood help'),
@@ -648,16 +648,16 @@ class Groups extends Admin
         if (! $group->groupGuest) {
             $fieldset['g_sig_length'] = [
                 'type'    => 'number',
-                'min'     => 0,
-                'max'     => 16000,
+                'min'     => '0',
+                'max'     => '16000',
                 'value'   => $group->g_sig_length,
                 'caption' => __('Max sig length label'),
                 'info'    => __('Max sig length help'),
             ];
             $fieldset['g_sig_lines'] = [
                 'type'    => 'number',
-                'min'     => 0,
-                'max'     => 100,
+                'min'     => '0',
+                'max'     => '100',
                 'value'   => $group->g_sig_lines,
                 'caption' => __('Max sig lines label'),
                 'info'    => __('Max sig lines help'),

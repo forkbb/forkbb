@@ -262,7 +262,7 @@ class Install extends Admin
                         ],
                         'dbprefix' => [
                             'type'      => 'text',
-                            'maxlength' => 40,
+                            'maxlength' => '40',
                             'value'     => $v ? $v->dbprefix : '',
                             'caption'   => __('Table prefix'),
                             'info'      => __('Info 6'),
@@ -287,7 +287,7 @@ class Install extends Admin
                     'fields' => [
                         'username' => [
                             'type'      => 'text',
-                            'maxlength' => 25,
+                            'maxlength' => '25',
                             'pattern'   => '^.{2,25}$',
                             'value'     => $v ? $v->username : '',
                             'caption'   => __('Administrator username'),
@@ -304,7 +304,7 @@ class Install extends Admin
                         ],
                         'email' => [
                             'type'      => 'text',
-                            'maxlength' => 80,
+                            'maxlength' => '80',
                             'pattern'   => '.+@.+',
                             'value'     => $v ? $v->email : '',
                             'caption'   => __('Administrator email'),
@@ -331,20 +331,20 @@ class Install extends Admin
                     'fields' => [
                         'title' => [
                             'type'      => 'text',
-                            'maxlength' => 255,
+                            'maxlength' => '255',
                             'value'     => $v ? $v->title : __('My ForkBB Forum'),
                             'caption'   => __('Board title'),
                             'required'  => true,
                         ],
                         'descr' => [
                             'type'      => 'text',
-                            'maxlength' => 16000,
+                            'maxlength' => '16000',
                             'value'     => $v ? $v->descr : __('Description'),
                             'caption'   => __('Board description'),
                         ],
                         'baseurl' => [
                             'type'      => 'text',
-                            'maxlength' => 1024,
+                            'maxlength' => '1024',
                             'value'     => $v ? $v->baseurl : $this->c->BASE_URL,
                             'caption'   => __('Base URL'),
                             'required'  => true,

@@ -121,7 +121,7 @@ class Email extends Page
                     'fields' => [
                         'subject' => [
                             'type'      => 'text',
-                            'maxlength' => 70,
+                            'maxlength' => '70',
                             'caption'   => __('Email subject'),
                             'required'  => true,
                             'value'     => $vars['subject'] ?? null,

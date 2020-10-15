@@ -87,7 +87,7 @@ class Register extends Page
                             'autofocus' => true,
                             'class'     => 'hint',
                             'type'      => 'text',
-                            'maxlength' => 80,
+                            'maxlength' => '80',
                             'value'     => $v->email,
                             'caption'   => __('Email'),
                             'info'      => __('Email info'),
@@ -97,7 +97,7 @@ class Register extends Page
                         'username' => [
                             'class'     => 'hint',
                             'type'      => 'text',
-                            'maxlength' => 25,
+                            'maxlength' => '25',
                             'value'     => $v->username,
                             'caption'   => __('Username'),
                             'info'      => __('Login format'),

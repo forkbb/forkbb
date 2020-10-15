@@ -309,16 +309,16 @@ class Config extends Profile
             'fields' => [
                 'disp_topics' => [
                     'type'    => 'number',
-                    'min'     => 0,
-                    'max'     => 50,
+                    'min'     => '0',
+                    'max'     => '50',
                     'value'   => $this->curUser->__disp_topics,
                     'caption' => __('Topics per page label'),
                     'info'    => __('For default'),
                 ],
                 'disp_posts' => [
                     'type'    => 'number',
-                    'min'     => 0,
-                    'max'     => 50,
+                    'min'     => '0',
+                    'max'     => '50',
                     'value'   => $this->curUser->__disp_posts,
                     'caption' => __('Posts per page label'),
                     'info'    => __('For default'),

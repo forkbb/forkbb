@@ -199,7 +199,7 @@ class Email extends Profile
                     'fields' => [
                         'new_email' => [
                             'type'      => 'text',
-                            'maxlength' => 80,
+                            'maxlength' => '80',
                             'caption'   => __($this->rules->confirmEmail ? 'New or old email' : 'New email'),
                             'required'  => true,
                             'pattern'   => '.+@.+',

@@ -244,7 +244,7 @@ class Edit extends Profile
         if ($this->rules->rename) {
             $fields['username'] = [
                 'type'      => 'text',
-                'maxlength' => 25,
+                'maxlength' => '25',
                 'caption'   => __('Username'),
                 'required'  => true,
                 'pattern'   => '^.{2,25}$',
@@ -290,7 +290,7 @@ class Edit extends Profile
         if ($this->rules->setTitle) {
             $fields['title'] = [
                 'type'      => 'text',
-                'maxlength' => 50,
+                'maxlength' => '50',
                 'caption'   => __('Title'),
                 'value'     => $this->curUser->title,
                 'info'      => __('Leave blank'),
@@ -369,7 +369,7 @@ class Edit extends Profile
                 'fields' => [
                     'admin_note' => [
                         'type'      => 'text',
-                        'maxlength' => 30,
+                        'maxlength' => '30',
                         'caption'   => __('Admin note'),
                         'value'     => $this->curUser->admin_note,
                     ],
@@ -381,7 +381,7 @@ class Edit extends Profile
         $fields = [];
         $fields['realname'] = [
             'type'      => 'text',
-            'maxlength' => 40,
+            'maxlength' => '40',
             'caption'   => __('Realname'),
             'value'     => $this->curUser->realname,
         ];
@@ -447,7 +447,7 @@ class Edit extends Profile
             $fields['url'] = [
                 'id'        => 'website',
                 'type'      => 'text',
-                'maxlength' => 100,
+                'maxlength' => '100',
                 'caption'   => __('Website'),
                 'value'     => $this->curUser->url,
             ];

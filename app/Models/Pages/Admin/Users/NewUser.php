@@ -93,7 +93,7 @@ class NewUser extends Users
                         'username' => [
                             'autofocus' => true,
                             'type'      => 'text',
-                            'maxlength' => 25,
+                            'maxlength' => '25',
                             'value'     => $data['username'] ?? null,
                             'caption'   => __('Username'),
                             'info'      => __('Login format'),
@@ -102,7 +102,7 @@ class NewUser extends Users
                         ],
                         'email' => [
                             'type'      => 'text',
-                            'maxlength' => 80,
+                            'maxlength' => '80',
                             'value'     => $data['email'] ?? null,
                             'caption'   => __('Email'),
                             'info'      => __('Email info'),

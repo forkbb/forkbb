@@ -97,14 +97,14 @@ class Censoring extends Admin
             $fieldset["form[{$id}][search_for]"] = [
                 'class'     => ['censor'],
                 'type'      => 'text',
-                'maxlength' => 60,
+                'maxlength' => '60',
                 'value'     => $row['search_for'],
                 'caption'   => __('Censored word label'),
             ];
             $fieldset["form[{$id}][replace_with]"] = [
                 'class'     => ['censor'],
                 'type'      => 'text',
-                'maxlength' => 60,
+                'maxlength' => '60',
                 'value'     => $row['replace_with'],
                 'caption'   => __('Replacement label'),
             ];
@@ -112,14 +112,14 @@ class Censoring extends Admin
         $fieldset["form[0][search_for]"] = [
             'class'     => ['censor'],
             'type'      => 'text',
-            'maxlength' => 60,
+            'maxlength' => '60',
             'value'     => '',
             'caption'   => __('Censored word label'),
         ];
         $fieldset["form[0][replace_with]"] = [
             'class'     => ['censor'],
             'type'      => 'text',
-            'maxlength' => 60,
+            'maxlength' => '60',
             'value'     => '',
             'caption'   => __('Replacement label'),
         ];

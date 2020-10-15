@@ -159,7 +159,7 @@ class Search extends Page
                         'keywords' => [
                             'class'     => 'w0',
                             'type'      => 'text',
-                            'maxlength' => 100,
+                            'maxlength' => '100',
                             'caption'   => __('Keyword search'),
                             'value'     => $v ? $v->keywords : '',
                             'required'  => true,
@@ -199,7 +199,7 @@ class Search extends Page
                         'keywords' => [
                             'class'     => 'w2',
                             'type'      => 'text',
-                            'maxlength' => 100,
+                            'maxlength' => '100',
                             'caption'   => __('Keyword search'),
                             'value'     => $v ? $v->keywords : '',
                             'required'  => true,
@@ -208,7 +208,7 @@ class Search extends Page
                         'author' => [
                             'class'     => 'w1',
                             'type'      => 'text',
-                            'maxlength' => 25,
+                            'maxlength' => '25',
                             'caption'   => __('Author search'),
                             'value'     => $v ? $v->author : '*',
                             'required'  => true,

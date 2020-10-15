@@ -162,7 +162,7 @@ class Smilies extends Parser
             $fields["smilies[{$id}][sm_code]"] = [
                 'class'     => ['code', 'smile'],
                 'type'      => 'text',
-                'maxlength' => 20,
+                'maxlength' => '20',
                 'value'     => $data['smilies'][$id]['sm_code'] ?? $cur['sm_code'],
                 'caption'   => __('Smiley code label'),
                 'required'  => true,
@@ -170,8 +170,8 @@ class Smilies extends Parser
             $fields["smilies[{$id}][sm_position]"] = [
                 'class'     => ['position', 'smile'],
                 'type'      => 'number',
-                'min'       => 0,
-                'max'       => 255,
+                'min'       => '0',
+                'max'       => '255',
                 'value'     => $data['smilies'][$id]['sm_position'] ?? $cur['sm_position'],
                 'caption'   => __('Position label'),
                 'required'  => true,
@@ -221,15 +221,15 @@ class Smilies extends Parser
                 'new_sm_code' => [
                     'class'     => ['code', 'new-smile'],
                     'type'      => 'text',
-                    'maxlength' => 20,
+                    'maxlength' => '20',
                     'value'     => $data['new_sm_code'] ?? '',
                     'caption'   => __('Smiley code label'),
                 ],
                 'new_sm_position' => [
                     'class'     => ['position', 'new-smile'],
                     'type'      => 'number',
-                    'min'       => 0,
-                    'max'       => 255,
+                    'min'       => '0',
+                    'max'       => '255',
                     'value'     => $data['new_sm_position'] ?? $max + 1,
                     'caption'   => __('Position label'),
                 ],

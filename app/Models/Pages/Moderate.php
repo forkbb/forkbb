@@ -572,7 +572,7 @@ class Moderate extends Page
         if ($this->needSubject) {
             $fields['subject'] = [
                 'type'      => 'text',
-                'maxlength' => 70,
+                'maxlength' => '70',
                 'caption'   => __('New subject'),
                 'required'  => true,
                 'value'     => '' == $v->subject ? $this->curTopic->subject : $v->subject,

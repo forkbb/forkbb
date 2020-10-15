@@ -50,7 +50,7 @@ trait PostFormTrait
             $fieldset['username'] = [
                 'class'     => 'w1',
                 'type'      => 'text',
-                'maxlength' => 25,
+                'maxlength' => '25',
                 'caption'   => __('Username'),
                 'required'  => true,
                 'pattern'   => '^.{2,25}$',
@@ -60,7 +60,7 @@ trait PostFormTrait
             $fieldset['email'] = [
                 'class'     => 'w2',
                 'type'      => 'text',
-                'maxlength' => 80,
+                'maxlength' => '80',
                 'caption'   => __('Email'),
                 'required'  => '1' == $this->c->config->p_force_guest_email,
                 'pattern'   => '.+@.+',
@@ -73,7 +73,7 @@ trait PostFormTrait
             $fieldset['subject'] = [
                 'class'     => 'w0',
                 'type'      => 'text',
-                'maxlength' => 70,
+                'maxlength' => '70',
                 'caption'   => __('Subject'),
                 'required'  => true,
                 'value'     => $vars['subject'] ?? null,

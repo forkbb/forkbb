@@ -183,8 +183,8 @@ class Forums extends Admin
                 $fields["form[{$forum->id}][disp_position]"] = [
                     'class'   => ['position', 'forum'],
                     'type'    => 'number',
-                    'min'     => 0,
-                    'max'     => 9999999999,
+                    'min'     => '0',
+                    'max'     => '9999999999',
                     'value'   => $forum->disp_position,
                     'caption' => __('Position label'),
                 ];
@@ -473,7 +473,7 @@ class Forums extends Admin
             'fields' => [
                 'forum_name' => [
                     'type'      => 'text',
-                    'maxlength' => 80,
+                    'maxlength' => '80',
                     'value'     => $forum->forum_name,
                     'caption'   => __('Forum name label'),
                     'required'  => true,
@@ -503,7 +503,7 @@ class Forums extends Admin
                 ],
                 'redirect_url' => [
                     'type'      => 'text',
-                    'maxlength' => 255,
+                    'maxlength' => '255',
                     'value'     => $forum->redirect_url,
                     'caption'   => __('Redirect label'),
                     'info'      => __('Redirect help'),

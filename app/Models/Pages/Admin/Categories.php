@@ -84,7 +84,7 @@ class Categories extends Admin
             $fields["form[{$key}][cat_name]"] = [
                 'class'     => ['name', 'category'],
                 'type'      => 'text',
-                'maxlength' => 80,
+                'maxlength' => '80',
                 'value'     => $row['cat_name'],
                 'caption'   => __('Category name label'),
                 'required'  => true,
@@ -92,8 +92,8 @@ class Categories extends Admin
             $fields["form[{$key}][disp_position]"] = [
                 'class'   => ['position', 'category'],
                 'type'    => 'number',
-                'min'     => 0,
-                'max'     => 9999999999,
+                'min'     => '0',
+                'max'     => '9999999999',
                 'value'   => $row['disp_position'],
                 'caption' => __('Category position label'),
             ];
@@ -122,7 +122,7 @@ class Categories extends Admin
                 'new' => [
                     'class'     => 'new',
                     'type'      => 'text',
-                    'maxlength' => 80,
+                    'maxlength' => '80',
                     'caption'   => __('Add category label'),
                     'info'      => __('Add category help', $this->c->Router->link('AdminForums'), __('Forums')),
                 ],

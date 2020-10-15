@@ -427,7 +427,7 @@ class BBCode extends Parser
                     'value'     => $structure->tag,
                     'caption'   => __('Tag label'),
                     'info'      => __('Tag info'),
-                    'maxlength' => 11,
+                    'maxlength' => '11',
                     'pattern'   => '^[a-z\*][a-z\d-]{0,10}$',
                     'required'  => true,
                 ],
@@ -443,7 +443,7 @@ class BBCode extends Parser
                     'value'     => isset($this->bbTypes[$structure->type]) ? '' : $structure->type,
                     'caption'   => __('Type label'),
                     'info'      => __('New type info'),
-                    'maxlength' => 20,
+                    'maxlength' => '20',
                     'pattern'   => '^[a-z][a-z\d-]{0,19}$',
                 ],
                 'parents' => [
@@ -514,8 +514,8 @@ class BBCode extends Parser
                 'self_nesting' => [
                     'type'    => 'number',
                     'value'   => $structure->self_nesting > 0 ? $structure->self_nesting : 0,
-                    'min'     => 0,
-                    'max'     => 10,
+                    'min'     => '0',
+                    'max'     => '10',
                     'caption' => __('Self nesting label'),
                     'info'    => __('Self nesting info'),
                 ],
@@ -577,7 +577,7 @@ class BBCode extends Parser
                 'value'     => $data['name'] ?? '',
                 'caption'   => __('Attribute name label'),
                 'info'      => __('Attribute name info'),
-                'maxlength' => 15,
+                'maxlength' => '15',
                 'pattern'   => '^[a-z-]{2,15}$',
             ];
         }

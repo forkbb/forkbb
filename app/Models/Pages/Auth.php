@@ -267,7 +267,7 @@ class Auth extends Page
                         'email' => [
                             'autofocus' => true,
                             'type'      => 'text',
-                            'maxlength' => 80,
+                            'maxlength' => '80',
                             'value'     => $email,
                             'caption'   => __('Email'),
                             'info'      => __('Passphrase reset info'),

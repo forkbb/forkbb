@@ -41,7 +41,7 @@ class Pass extends Profile
                     'new_pass'  => 'New pass',
                     'password'  => 'Your passphrase',
                 ])->addArguments([
-                    'token'           => ['id' => $this->curUser->id],
+                    'token'     => ['id' => $this->curUser->id],
                 ])->addMessages([
                 ]);
 

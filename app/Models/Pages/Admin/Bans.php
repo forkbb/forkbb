@@ -139,25 +139,25 @@ class Bans extends Admin
         $fields = [];
         $fields['username'] = [
             'type'      => 'text',
-            'maxlength' => 25,
+            'maxlength' => '25',
             'caption'   => __('Username label'),
             'value'     => $data['username'] ?? null,
         ];
         $fields['ip'] = [
             'type'      => 'text',
-            'maxlength' => 40,
+            'maxlength' => '40',
             'caption'   => __('IP label'),
             'value'     => $data['ip'] ?? null,
         ];
         $fields['email'] = [
             'type'      => 'text',
-            'maxlength' => 80,
+            'maxlength' => '80',
             'caption'   => __('E-mail label'),
             'value'     => $data['email'] ?? null,
         ];
         $fields['message'] = [
             'type'      => 'text',
-            'maxlength' => 255,
+            'maxlength' => '255',
             'caption'   => __('Message label'),
             'value'     => $data['message'] ?? null,
         ];
@@ -168,14 +168,14 @@ class Bans extends Admin
         $fields['expire_1'] = [
             'class'     => 'bstart',
             'type'      => 'text',
-            'maxlength' => 100,
+            'maxlength' => '100',
             'value'     => $data['expire_1'] ?? null,
             'caption'   => __('Expire date label'),
         ];
         $fields['expire_2'] = [
             'class'     => 'bend',
             'type'      => 'text',
-            'maxlength' => 100,
+            'maxlength' => '100',
             'value'     => $data['expire_2'] ?? null,
         ];
         $fields[] = [
@@ -254,21 +254,21 @@ class Bans extends Admin
             $fields = [];
             $fields['username'] = [
                 'type'      => $this->banCount < 1 ? 'text' : 'str',
-                'maxlength' => 25,
+                'maxlength' => '25',
                 'caption'   => __('Username label'),
                 'info'      => $this->banCount < 1 ? __('Username help') : null,
                 'value'     => $data['username'] ?? null,
             ];
             $fields['ip'] = [
                 'type'      => 'text',
-                'maxlength' => 255,
+                'maxlength' => '255',
                 'caption'   => __('IP label'),
                 'info'      => __('IP help'),
                 'value'     => $data['ip'] ?? null,
             ];
             $fields['email'] = [
                 'type'      => 'text',
-                'maxlength' => 80,
+                'maxlength' => '80',
                 'caption'   => __('E-mail label'),
                 'info'      => __('E-mail help'),
                 'value'     => $data['email'] ?? null,
@@ -282,14 +282,14 @@ class Bans extends Admin
         $fields = [];
         $fields['message'] = [
             'type'      => 'text',
-            'maxlength' => 255,
+            'maxlength' => '255',
             'caption'   => __('Ban message label'),
             'info'      => __('Ban message help'),
             'value'     => $data['message'] ?? null,
         ];
         $fields['expire'] = [
             'type'      => 'text',
-            'maxlength' => 100,
+            'maxlength' => '100',
             'caption'   => __('Expire date label'),
             'info'      => __('Expire date help'),
             'value'     => $data['expire'] ?? null,
