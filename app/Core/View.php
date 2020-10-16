@@ -10,13 +10,13 @@ use RuntimeException;
 
 class View extends Dirk
 {
-    public function __construct ($cache, $views)
+    public function __construct (string $cache, string $views)
     {
         $config = [
             'views'     => $views,
             'cache'     => $cache,
             'ext'       => '.forkbb.php',
-            'echo'      => '\\htmlspecialchars((string) (%s), \\ENT_HTML5 | \\ENT_QUOTES | \\ENT_SUBSTITUTE, \'UTF-8\')',
+            'echo'      => '\\htmlspecialchars((string) %s, \\ENT_HTML5 | \\ENT_QUOTES | \\ENT_SUBSTITUTE, \'UTF-8\')',
             'separator' => '/',
         ];
         $this->compilers[] = 'Transformations';
@@ -25,27 +25,9 @@ class View extends Dirk
     }
 
     /**
-     * Compile Statements that start with "@"
-     */
-    protected function compileStatements(/* string */ $value) /* : mixed */
-    {
-        return \preg_replace_callback(
-            '/[ \t]*+\B@(\w+)(?: [ \t]*( \( ( (?>[^()]+) | (?2) )* \) ) )?/x',
-            function($match) {
-                if (\method_exists($this, $method = 'compile' . \ucfirst($match[1]))) {
-                    return isset($match[2]) ? $this->$method($match[2]) : $this->$method('');
-                } else {
-                    return $match[0];
-                }
-            },
-            $value
-        );
-    }
-
-    /**
      * Трансформация скомпилированного шаблона
      */
-    protected function compileTransformations(/* string */ $value) /* string */
+    protected function compileTransformations(string $value): string
     {
         if ('<?xml ' === \substr($value, 0, 6)) {
             $value = \str_replace(' \\ENT_HTML5 | \\ENT_QUOTES | \\ENT_SUBSTITUTE,', ' \\ENT_XML1,', $value);
@@ -106,21 +88,5 @@ EOD;
         }
 
         return $this->block('content');
-    }
-
-    /**
-     * Compile the if statements
-     */
-    protected function compileIf(/* string */ $expression) /* : string */
-    {
-        if (\preg_match('%^\(\s*(\!\s*)?(\$[\w>-]+\[(?:[\'"]\w+[\'"]|\d+)\])\s*\)$%', $expression, $matches)) {
-            if (empty($matches[1])) {
-                return "<?php if(! empty{$expression}): ?>";
-            } else {
-                return "<?php if(empty({$matches[2]})): ?>";
-            }
-        } else {
-            return parent::compileIf($expression);
-        }
     }
 }
