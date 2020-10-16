@@ -12,16 +12,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/MioVisman/dirk.git",
-                "reference": "05cbba461274158699668c9e8075fb2d8fab5967"
+                "reference": "82c1ba51883c32c62e7eda121efcab5109acbbcc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MioVisman/dirk/zipball/05cbba461274158699668c9e8075fb2d8fab5967",
-                "reference": "05cbba461274158699668c9e8075fb2d8fab5967",
+                "url": "https://api.github.com/repos/MioVisman/dirk/zipball/82c1ba51883c32c62e7eda121efcab5109acbbcc",
+                "reference": "82c1ba51883c32c62e7eda121efcab5109acbbcc",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4.0"
+                "php": ">=7.3.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "4.0.*"
@@ -57,7 +57,7 @@
             "support": {
                 "source": "https://github.com/MioVisman/dirk/tree/visman"
             },
-            "time": "2019-11-28T13:14:33+00:00"
+            "time": "2020-10-16T13:32:17+00:00"
         },
         {
             "name": "miovisman/normemail",
