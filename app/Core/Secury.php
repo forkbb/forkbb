@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ForkBB\Core;
 
+use Normalizer;
 use RuntimeException;
 use UnexpectedValueException;
 use InvalidArgumentException;
@@ -89,6 +90,8 @@ class Secury
         //$data = mb_convert_encoding((string) $data, 'UTF-8', 'UTF-8');
         // fast, large memory
         $data = \htmlspecialchars_decode(\htmlspecialchars((string) $data, \ENT_SUBSTITUTE, 'UTF-8'));
+        // Canonical Decomposition followed by Canonical Composition
+        $data = Normalizer::normalize($data, Normalizer::FORM_C);
         // Remove control characters
         return \preg_replace('%[\x00-\x08\x0B-\x0C\x0E-\x1F]%', '', $data);
     }

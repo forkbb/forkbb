@@ -28,6 +28,7 @@
         "ext-gd": "*",
         "ext-mbstring": "*",
         "ext-fileinfo": "*",
+        "ext-intl" : "*",
         "artoodetoo/dirk": "dev-visman",
         "miovisman/parserus": "dev-master",
         "miovisman/normemail": "dev-master",
