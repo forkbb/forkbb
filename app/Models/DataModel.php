@@ -130,6 +130,12 @@ class DataModel extends Model
             )
         ) {
             $this->zModFlags[$name] = true;
+
+            if (isset($this->zDepend[$name])) {
+                foreach ($this->zDepend[$name] as $dependent) {
+                    $this->zModFlags[$dependent] = true; //???? может только физические свойства менять?
+                }
+            }
         }
     }
 
