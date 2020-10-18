@@ -38,6 +38,9 @@ class Username extends RulesValidator
             // 2-25 символов, буквы, цифры, пробел, подчеркивание, точка и тире
             if (! \preg_match('%^(?=.{2,25}$)\p{L}[\p{L}\p{N}\x20\._-]+$%uD', $username)) {
                 $v->addError('Login format');
+            // идущие подряд пробелы
+            } elseif (\preg_match('%\s{2,}%u', $username)) {
+                $v->addError('Username contains consecutive spaces');
             // цензура
             } elseif ($this->c->censorship->censor($username) !== $username) {
                 $v->addError('Username censor');

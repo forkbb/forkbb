@@ -50,3 +50,6 @@ msgstr "Please update your browser."
 
 msgid "Bad browser"
 msgstr "Please update your browser."
+
+msgid "Username contains consecutive spaces"
+msgstr "Username contains consecutive spaces."

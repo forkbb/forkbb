@@ -50,3 +50,6 @@ msgstr "Обновите свой браузер."
 
 msgid "Bad browser"
 msgstr "Обновите свой браузер."
+
+msgid "Username contains consecutive spaces"
+msgstr "В имени пользователя есть идущие подряд пробелы."

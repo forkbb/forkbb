@@ -37,7 +37,7 @@ class Edit extends Profile
 
         if ('POST' === $method) {
             if ($this->rules->rename) {
-                $ruleUsername = 'required|string:trim,spaces|username';
+                $ruleUsername = 'required|string:trim|username';
             } else {
                 $ruleUsername = 'absent';
             }
