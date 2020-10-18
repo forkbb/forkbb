@@ -14,12 +14,6 @@ use function \ForkBB\__;
 
 class Model extends DataModel
 {
-    /**
-     * Типы аватарок
-     * @var array
-     */
-    protected $avatarTypes = ['jpg', 'gif', 'png'];
-
     public function __construct(Container $container)
     {
         parent::__construct($container);
@@ -31,6 +25,7 @@ class Model extends DataModel
             'show_sig'     => ['showSignature'],
             'show_avatars' => ['showAvatar'],
             'signature'    => ['isSignature'],
+            'email'        => ['email_normal'],
         ];
     }
 
@@ -346,25 +341,22 @@ class Model extends DataModel
     }
 
     /**
-     * Установка email и вычисление нормализованного email
+     * Вычисление нормализованного email
      */
-    protected function setemail(string $email): void
+    protected function getemail_normal(): string
     {
-        $this->setAttr('email', $email);
+        return $this->c->NormEmail->normalize($this->email);
+    }
 
-        if (
-            empty($email)
-            || false === $this->getAttr('email_normal')
-        ) {
-            return;
+    /**
+     * Возвращает значения свойств в массиве
+     */
+    public function getAttrs(): array
+    {
+        if (isset($this->zModFlags['email_normal'])) {
+            $this->setAttr('email_normal', $this->email_normal);
         }
 
-        $nEmail = $this->c->NormEmail->normalize($email);
-
-        if (isset($this->zTrackFlags['email'])) {
-            $this->email_normal = $nEmail;
-        } else {
-            $this->__email_normal = $nEmail; // ???? $this->setAttr('email_normal', $nEmail);
-        }
+        return parent::getAttrs();
     }
 }

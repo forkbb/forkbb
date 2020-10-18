@@ -59,8 +59,6 @@ class Model extends DataModel
         } elseif (1 === $this->poster_id) {
             $user = clone $user;
 
-            $user->setAttr('email_normal', false); // заблокировать вычисление в модели User
-
             $user->__email        = $this->poster_email;
             $user->__username     = $this->poster;
         }
