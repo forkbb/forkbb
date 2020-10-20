@@ -98,8 +98,16 @@ class Router
         if (
             \is_string($url)
             && \parse_url($url, \PHP_URL_HOST) === $this->host
-            && ($route = $this->route('GET', \rawurldecode(\parse_url($url, \PHP_URL_PATH))))
-            && self::OK === $route[0]
+            && ($uri = \rawurldecode(\parse_url($url, \PHP_URL_PATH)))
+            && ($route = $this->route(self::GET, $uri))
+            && (
+                self::OK === $route[0]
+                || (
+                    self::METHOD_NOT_ALLOWED === $route[0]
+                    && ($route = $this->route(self::PST, $uri))
+                    && self::OK === $route[0]
+                )
+            )
         ) {
             if (isset($route[3])) {
                 return $this->link($route[3], $route[2]);
