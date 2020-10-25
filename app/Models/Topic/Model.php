@@ -13,20 +13,6 @@ use RuntimeException;
 class Model extends DataModel
 {
     /**
-     * Конструктор
-     *
-     * @param Container $container
-     */
-#    public function __construct(Container $container)
-#    {
-#        parent::__construct($container);
-#
-#        $this->zDepend = [
-#            'subject' => ['censSubject'],
-#       ];
-#    }
-
-    /**
      * Получение родительского раздела
      */
     protected function getparent(): ?Forum
