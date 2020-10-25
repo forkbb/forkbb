@@ -926,4 +926,22 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.21 to rev.22
+     */
+    protected function stageNumber21(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+
+        $coreConfig->add(
+            'USERNAME_PATTERN',
+            '\'%^(?=.{2,25}$)\\p{L}[\\p{L}\\p{N}\\x20\\._-]+$%uD\'',
+            'FLOOD_INTERVAL'
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }

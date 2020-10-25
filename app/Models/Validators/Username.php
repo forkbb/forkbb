@@ -16,12 +16,12 @@ class Username extends RulesValidator
      *
      * @param Validator $v
      * @param null|string $username
-     * @param string $z
+     * @param string $attrs
      * @param mixed $originalUser
      *
      * @return null|string
      */
-    public function username(Validator $v, $username, $z, $originalUser): ?string
+    public function username(Validator $v, $username, $attrs, $originalUser): ?string
     {
         if ($originalUser instanceof User) {
             $id   = $originalUser->id;
@@ -36,7 +36,7 @@ class Username extends RulesValidator
             $user = $this->c->users->create(['id' => $id, 'username' => $username]);
 
             // 2-25 символов, буквы, цифры, пробел, подчеркивание, точка и тире
-            if (! \preg_match('%^(?=.{2,25}$)\p{L}[\p{L}\p{N}\x20\._-]+$%uD', $username)) {
+            if (! \preg_match($this->c->USERNAME_PATTERN, $username)) {
                 $v->addError('Login format');
             // идущие подряд пробелы
             } elseif (\preg_match('%\s{2,}%u', $username)) {
@@ -50,7 +50,7 @@ class Username extends RulesValidator
             // есть пользователь с похожим именем
             } elseif (
                 empty($v->getErrors())
-                && ! $this->c->users->isUniqueName($user) // ???? как вычислить похожее?
+                && ! $this->c->users->isUniqueName($user)
             ) {
                 $v->addError('Username not unique');
             }

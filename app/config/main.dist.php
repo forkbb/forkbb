@@ -46,6 +46,7 @@ return [
     'MAX_FILE_SIZE'    => '2M',
     'MAX_EMAIL_LENGTH' => 80,
     'FLOOD_INTERVAL'   => 3600,
+    'USERNAME_PATTERN' => '%^(?=.{2,25}$)\p{L}[\p{L}\p{N}\x20\._-]+$%uD',
 
     'shared' => [
         'DB' => [
