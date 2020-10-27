@@ -83,7 +83,7 @@ class Secury
         if (\is_array($data)) {
             return \array_map([$this, 'replInvalidChars'], $data);
         } elseif (\is_int($data)) {
-            return (int) $data;
+            return $data;
         }
         // Replacing invalid UTF-8 characters
         // slow, small memory
@@ -93,6 +93,6 @@ class Secury
         // Canonical Decomposition followed by Canonical Composition
         $data = Normalizer::normalize($data, Normalizer::FORM_C);
         // Remove control characters
-        return \preg_replace('%[\x00-\x08\x0B-\x0C\x0E-\x1F]%', '', $data);
+        return \preg_replace('%(?:[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]|\xC2[\x80-\x9F])%', '', $data);
     }
 }
