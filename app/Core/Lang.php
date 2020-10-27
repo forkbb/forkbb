@@ -16,6 +16,11 @@ class Lang
     protected $c;
 
     /**
+     * @var Psr\SimpleCache\CacheInterface
+     */
+    protected $cache;
+
+    /**
      * Массив переводов
      * @var array
      */
@@ -35,7 +40,8 @@ class Lang
 
     public function __construct(Container $container)
     {
-        $this->c = $container;
+        $this->c     = $container;
+        $this->cache = $container->Cache;
     }
 
     /**
@@ -83,12 +89,31 @@ class Lang
             $fullPath = "{$path}/{$lang}/{$name}.po";
 
             if (\is_file($fullPath)) {
-                $file = \file_get_contents($fullPath);
+                $time  = \filemtime($fullPath);
+                $key   = 'l_' . \sha1($fullPath);
+                $cache = $this->cache->get($key);
+
+                if (
+                    isset($cache['time'], $cache['data'])
+                    && $cache['time'] === $time
+                ) {
+                    $data = $cache['data'];
+                } else {
+                    $data = $this->arrayFromStr(\file_get_contents($fullPath));
+
+                    $this->cache->set(
+                        $key,
+                        [
+                            'time' => $time,
+                            'data' => $data,
+                        ]
+                    );
+                }
 
                 if (isset($this->tr[$lang])) {
-                    $this->tr[$lang] += $this->arrayFromStr($file);
+                    $this->tr[$lang] += $data;
                 } else {
-                    $this->tr[$lang]  = $this->arrayFromStr($file);
+                    $this->tr[$lang]  = $data;
                 }
 
                 $this->loaded[$name][$lang] = true;
