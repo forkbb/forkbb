@@ -107,7 +107,7 @@ class Result extends Users
         }
 
         $startNum = ($page - 1) * $this->c->config->o_disp_users;
-        $idsN     = \array_slice($idsN, $startNum, $this->c->config->o_disp_users);
+        $idsN     = \array_slice($idsN, $startNum, (int) $this->c->config->o_disp_users);
         $ids      = [];
         $userList = [];
 

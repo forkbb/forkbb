@@ -380,7 +380,7 @@ class Bans extends Admin
         }
 
         $startNum = ($page - 1) * $this->c->config->o_disp_users;
-        $idsN     = \array_slice($idsN, $startNum, $this->c->config->o_disp_users);
+        $idsN     = \array_slice($idsN, $startNum, (int) $this->c->config->o_disp_users);
         $banList  = $this->c->bans->getList($idsN);
 
         $this->nameTpl    = 'admin/bans_result';
@@ -742,6 +742,7 @@ class Bans extends Admin
     {
         if (
             empty($v->getErrors())
+            && null !== $username
             && '' != \trim($username)
         ) {
             $user = $this->c->users->loadByName($username, true);
@@ -769,7 +770,10 @@ class Bans extends Admin
      */
     public function vIpBan(Validator $v, $ips)
     {
-        if ('' != \trim($ips)) {
+        if (
+            null !== $ips
+            && '' != \trim($ips)
+        ) {
             $ending6   = ['', '::'];
             $ending4   = ['', '.255', '.255.255', '.255.255.255'];
             $addresses = \explode(' ', $ips);
@@ -802,7 +806,10 @@ class Bans extends Admin
      */
     public function vEmailBan(Validator $v, $email)
     {
-        if ('' != \trim($email)) {
+        if (
+            null !== $email
+            && '' != \trim($email)
+        ) {
             $error = true;
 
             if (
@@ -832,7 +839,10 @@ class Bans extends Admin
      */
     public function vExpireBan(Validator $v, $expire)
     {
-        if ('' != \trim($expire)) {
+        if (
+            null !== $expire
+            && '' != \trim($expire)
+        ) {
             if (\strtotime($expire . ' UTC') - \time() < 86400) {
                 $v->addError('Invalid date message');
             }

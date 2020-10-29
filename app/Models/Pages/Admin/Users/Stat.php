@@ -27,7 +27,7 @@ class Stat extends Users
         }
 
         $startNum = ($page - 1) * $this->c->config->o_disp_users;
-        $stat     = \array_slice($stat, $startNum, $this->c->config->o_disp_users);
+        $stat     = \array_slice($stat, $startNum, (int) $this->c->config->o_disp_users);
 
         $user = $this->c->users->load((int) $args['id']);
 

@@ -112,7 +112,7 @@ class ActionT extends Method
         $this->model->idsList = \array_slice(
             $list,
             ($this->model->page - 1) * $this->c->user->disp_topics,
-            $this->c->user->disp_topics
+            (int) $this->c->user->disp_topics
         );
 
         return $this->c->topics->view($this->model);

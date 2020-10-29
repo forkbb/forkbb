@@ -157,7 +157,7 @@ class Router
                     'page' !== $name
                     || 1 !== $args[$name]
                 ) {
-                    $data['{' . $name . '}'] = \rawurlencode(\str_replace($this->subSearch, $this->subRepl, $args[$name]));
+                    $data['{' . $name . '}'] = \rawurlencode(\str_replace($this->subSearch, $this->subRepl, (string) $args[$name]));
                     continue;
                 }
             }

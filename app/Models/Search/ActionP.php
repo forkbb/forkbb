@@ -62,7 +62,7 @@ class ActionP extends Method
         $this->model->idsList = \array_slice(
             $list,
             ($this->model->page - 1) * $this->c->user->disp_posts,
-            $this->c->user->disp_posts
+            (int) $this->c->user->disp_posts
         );
 
         return $this->c->posts->view($this->model);
