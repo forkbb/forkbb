@@ -27,6 +27,7 @@ class Manager extends ManagerModel
 
     /**
      * Инициализация списка разделов
+     * Обновляет кеш разделов
      */
     public function init(Group $group = null): Manager
     {
@@ -37,25 +38,34 @@ class Manager extends ManagerModel
         }
 
         $mark = $this->c->Cache->get('forums_mark');
+
         if (empty($mark)) {
-            if (true !== $this->c->Cache->set('forums_mark', \time())) {
+            $mark = \time();
+
+            if (true !== $this->c->Cache->set('forums_mark', $mark)) {
                 throw new RuntimeException('Unable to write value to cache - forums_mark');
             }
 
-            $list = $this->refresh($group);
+            $result = [];
         } else {
-            $result = $this->c->Cache->get('forums_' . $gid);
-            if (
-                empty($result['time'])
-                || $result['time'] < $mark
-            ) {
-                $list = $this->refresh($group);
-            } else {
-                $list = $result['list'];
+            $result = $this->c->Cache->get("forums_{$gid}");
+        }
+
+        if (
+            ! isset($result['time'], $result['list'])
+            || $result['time'] < $mark
+        ) {
+            $result = [
+                'time' => $mark,
+                'list' => $this->refresh($group),
+            ];
+
+            if (true !== $this->c->Cache->set("forums_{$gid}", $result)) {
+                throw new RuntimeException('Unable to write value to cache - forums_' . $gid);
             }
         }
 
-        $this->forumList = $list;
+        $this->forumList = $result['list'];
 
         return $this;
     }

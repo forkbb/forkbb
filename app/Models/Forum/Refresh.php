@@ -6,7 +6,6 @@ namespace ForkBB\Models\Forum;
 
 use ForkBB\Models\Action;
 use ForkBB\Models\Group\Model as Group;
-use RuntimeException;
 
 class Refresh extends Action
 {
@@ -17,7 +16,6 @@ class Refresh extends Action
 
     /**
      * Возвращает список доступных разделов для группы
-     * Обновляет кеш
      */
     public function refresh(Group $group = null): array
     {
@@ -28,6 +26,8 @@ class Refresh extends Action
             $gid  = $group->g_id;
             $read = $group->g_read_board;
         }
+
+        $this->list = [];
 
         if ('1' == $read) {
             $list  = [];
@@ -51,15 +51,6 @@ class Refresh extends Action
             if (! empty($list)) {
                 $this->createList($list);
             }
-        }
-
-        $result = $this->c->Cache->set('forums_' . $gid, [
-            'time' => \time(),
-            'list' => $this->list,
-        ]);
-
-        if (true !== $result) {
-            throw new RuntimeException('Unable to write value to cache - forums_' . $gid);
         }
 
         return $this->list;
