@@ -11,14 +11,21 @@ class Model extends ParentModel
 {
     /**
      * Загружает список смайлов из кеша/БД
+     * Создает кеш
      */
     public function init(): Model
     {
-        $this->list = $this->c->Cache->get('smilies');
+        $list = $this->c->Cache->get('smilies');
 
-        if (! \is_array($this->list)) {
-            $this->load();
+        if (! \is_array($list)) {
+            $list = $this->load();
+
+            if (true !== $this->c->Cache->set('smilies', $list)) {
+                throw new RuntimeException('Unable to write value to cache - smilies');
+            }
         }
+
+        $this->list = $list;
 
         return $this;
     }
