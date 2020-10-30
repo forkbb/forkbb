@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Censorship;
 
 use ForkBB\Models\Model as ParentModel;
+use RuntimeException;
 
 class Model extends ParentModel
 {
@@ -16,12 +17,16 @@ class Model extends ParentModel
         if ('1' == $this->c->config->o_censoring) {
             $list = $this->c->Cache->get('censorship');
 
-            if (isset($list['searchList'], $list['replaceList'])) {
-                $this->searchList  = $list['searchList'];
-                $this->replaceList = $list['replaceList'];
-            } else {
-                $this->refresh();
+            if (! isset($list['searchList'], $list['replaceList'])) {
+                $list = $this->refresh();
+
+                if (true !== $this->c->Cache->set('censorship', $list)) {
+                    throw new RuntimeException('Unable to write value to cache - censorship');
+                }
             }
+
+            $this->searchList  = $list['searchList'];
+            $this->replaceList = $list['replaceList'];
         }
 
         return $this;
@@ -37,5 +42,17 @@ class Model extends ParentModel
         } else {
             return $str;
         }
+    }
+
+    /**
+     * Сбрасывает кеш цензуры
+     */
+    public function reset(): Model
+    {
+        if (true !== $this->c->Cache->delete('censorship')) {
+            throw new RuntimeException('Unable to remove key from cache - censorship');
+        }
+
+        return $this;
     }
 }
