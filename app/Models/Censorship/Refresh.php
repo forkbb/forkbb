@@ -9,8 +9,7 @@ use ForkBB\Models\Method;
 class Refresh extends Method
 {
     /**
-     * Заполняет модель данными из БД
-     * Создает кеш
+     * Загружает данные из БД для модели и кеша
      */
     public function refresh(): array
     {
@@ -20,6 +19,7 @@ class Refresh extends Method
         $stmt    = $this->c->DB->query($query);
         $search  = [];
         $replace = [];
+
         while ($row = $stmt->fetch()) {
             $search[$row['id']]  = '%(?<![\p{L}\p{N}])('
                 . \str_replace('\*', '[\p{L}\p{N}]*?', \preg_quote($row['search_for'], '%'))

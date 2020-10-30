@@ -73,6 +73,7 @@ class Manager extends ManagerModel
 
     /**
      * Id последнего репорта
+     * Создает кеш
      */
     public function lastId(): int
     {

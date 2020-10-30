@@ -11,6 +11,7 @@ class Model extends DataModel
 {
     /**
      * Заполняет модель данными из кеша/БД
+     * Создает кеш
      */
     public function init(): Model
     {

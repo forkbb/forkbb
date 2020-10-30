@@ -10,7 +10,7 @@ use PDO;
 class Load extends Method
 {
     /**
-     * Загружает данные из БД
+     * Загружает данные из БД для модели и кеша
      */
     public function load(): array
     {

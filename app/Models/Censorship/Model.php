@@ -11,6 +11,7 @@ class Model extends ParentModel
 {
     /**
      * Загружает список цензуры из кеша/БД
+     * Создает кеш
      */
     public function init(): Model
     {

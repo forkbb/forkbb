@@ -12,8 +12,7 @@ use RuntimeException;
 class Load extends Method
 {
     /**
-     * Заполняет модель данными из БД
-     * Создает кеш
+     * Загружает данные из БД для модели и кеша
      */
     public function load(): array
     {
