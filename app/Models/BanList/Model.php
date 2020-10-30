@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\BanList;
 
 use ForkBB\Models\Model as ParentModel;
+use RuntimeException;
 
 class Model extends ParentModel
 {
@@ -15,14 +16,18 @@ class Model extends ParentModel
     {
         $list = $this->c->Cache->get('banlist');
 
-        if (isset($list['banList'], $list['userList'], $list['emailList'], $list['ipList'])) {
-            $this->banList   = $list['banList'];
-            $this->userList  = $list['userList'];
-            $this->emailList = $list['emailList'];
-            $this->ipList    = $list['ipList'];
-        } else {
-            $this->load();
+        if (! isset($list['banList'], $list['userList'], $list['emailList'], $list['ipList'])) {
+            $list = $this->load();
+
+            if (true !== $this->c->Cache->set('banlist', $list)) {
+                throw new RuntimeException('Unable to write value to cache - banlist');
+            }
         }
+
+        $this->banList   = $list['banList'];
+        $this->userList  = $list['userList'];
+        $this->emailList = $list['emailList'];
+        $this->ipList    = $list['ipList'];
 
         return $this;
     }

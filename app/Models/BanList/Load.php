@@ -14,7 +14,7 @@ class Load extends Method
      * Загружает список банов из БД
      * Создает кеш
      */
-    public function load(): BanList
+    public function load(): array
     {
         $userList  = [];
         $emailList = [];
@@ -76,21 +76,12 @@ class Load extends Method
                 'expire'   => $expire,
             ];
         }
-        $this->model->banList   = $banList;
-        $this->model->userList  = $userList;
-        $this->model->emailList = $emailList;
-        $this->model->ipList    = $ipList;
-        $result = $this->c->Cache->set('banlist', [
+
+        return [
             'banList'   => $banList,
             'userList'  => $userList,
             'emailList' => $emailList,
             'ipList'    => $ipList,
-        ]);
-
-        if (true !== $result) {
-            throw new RuntimeException('Unable to write value to cache - banlist');
-        }
-
-        return $this->model;
+        ];
     }
 }
