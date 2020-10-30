@@ -677,7 +677,7 @@ class Bans extends Admin
                     ]);
                 }
 
-                $this->c->bans->load();
+                $this->c->bans->reset();
 
                 $redirect = $this->c->Redirect;
 

@@ -76,4 +76,16 @@ class Model extends ParentModel
             return (isset($bin[4]) ? '' : '-') . \bin2hex($bin);
         }
     }
+
+    /**
+     * Сбрасывает кеш банов
+     */
+    public function reset(): Model
+    {
+        if (true !== $this->c->Cache->delete('banlist')) {
+            throw new RuntimeException('Unable to remove key from cache - banlist');
+        }
+
+        return $this;
+    }
 }

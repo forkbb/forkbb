@@ -24,7 +24,7 @@ class Delete extends Method
                 WHERE id IN (?ai:ids)';
 
             $this->c->DB->exec($query, $vars);
-            $this->model->load();
+            $this->model->reset();
         }
 
         return $this->model;
