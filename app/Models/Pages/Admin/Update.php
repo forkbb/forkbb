@@ -944,4 +944,57 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.22 to rev.23
+     */
+    protected function stageNumber22(array $args): ?int
+    {
+        $this->c->config->i_topic_review          = $this->c->config->o_topic_review          ?? 15;
+        $this->c->config->i_disp_topics_default   = $this->c->config->o_disp_topics_default   ?? 30;
+        $this->c->config->i_disp_posts_default    = $this->c->config->o_disp_posts_default    ?? 25;
+        $this->c->config->i_disp_users            = $this->c->config->o_disp_users            ?? 50;
+        $this->c->config->i_default_email_setting = $this->c->config->o_default_email_setting ?? 2;
+        $this->c->config->i_avatars_width         = $this->c->config->o_avatars_width         ?? 60;
+        $this->c->config->i_avatars_height        = $this->c->config->o_avatars_height        ?? 60;
+        $this->c->config->i_avatars_size          = $this->c->config->o_avatars_size          ?? 10240;
+        $this->c->config->i_feed_type             = $this->c->config->o_feed_type             ?? 2;
+        $this->c->config->i_feed_ttl              = $this->c->config->o_feed_ttl              ?? 0;
+        $this->c->config->i_report_method         = $this->c->config->o_report_method         ?? 0;
+        $this->c->config->i_default_user_group    = $this->c->config->o_default_user_group    ?? $this->c->GROUP_MEMBER;
+        $this->c->config->a_max_users = [
+            'number' => (int) $this->c->config->st_max_users ?? 1,
+            'time'   => (int) $this->c->config->st_max_users_time ?? \time(),
+        ];
+
+        unset($this->c->config->o_enable_acaptcha);
+        unset($this->c->config->o_crypto_salt);
+        unset($this->c->config->o_crypto_pas);
+        unset($this->c->config->o_crypto_enable);
+        unset($this->c->config->o_check_ip);
+        unset($this->c->config->o_coding_forms);
+        unset($this->c->config->o_fbox_files);
+        unset($this->c->config->o_fbox_guest);
+        unset($this->c->config->o_show_version);
+        unset($this->c->config->o_topic_review);
+        unset($this->c->config->o_disp_topics_default);
+        unset($this->c->config->o_disp_posts_default);
+        unset($this->c->config->o_disp_users);
+        unset($this->c->config->o_default_email_setting);
+        unset($this->c->config->o_avatars_width);
+        unset($this->c->config->o_avatars_height);
+        unset($this->c->config->o_avatars_size);
+        unset($this->c->config->o_feed_type);
+        unset($this->c->config->o_feed_ttl);
+        unset($this->c->config->o_report_method);
+        unset($this->c->config->o_board_redirect);
+        unset($this->c->config->o_board_redirectg);
+        unset($this->c->config->o_default_user_group);
+        unset($this->c->config->st_max_users);
+        unset($this->c->config->st_max_users_time);
+
+        $this->c->config->save();
+
+        return null;
+    }
 }

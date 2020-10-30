@@ -18,8 +18,8 @@ class Info extends Method
             return null;
         }
 
-        $this->model->maxNum  = (int) $this->c->config->st_max_users;
-        $this->model->maxTime = (int) $this->c->config->st_max_users_time;
+        $this->model->maxNum  = $this->c->config->a_max_users['number'];
+        $this->model->maxTime = $this->c->config->a_max_users['time'];
 
         $info = [];
         if ('1' == $this->c->user->g_view_users) {

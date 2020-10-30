@@ -74,7 +74,7 @@ class Groups extends Admin
                         'basegroup' => [
                             'type'      => 'select',
                             'options'   => $this->groupsNew,
-                            'value'     => $this->c->config->o_default_user_group,
+                            'value'     => $this->c->config->i_default_user_group,
                             'caption'   => __('New group label'),
                             'info'      => __('New group help'),
 #                           'autofocus' => true,
@@ -109,7 +109,7 @@ class Groups extends Admin
                         'defaultgroup' => [
                             'type'    => 'select',
                             'options' => $this->groupsDefault,
-                            'value'   => $this->c->config->o_default_user_group,
+                            'value'   => $this->c->config->i_default_user_group,
                             'caption' => __('Default group label'),
                             'info'    => __('Default group help'),
                         ],
@@ -145,7 +145,7 @@ class Groups extends Admin
 
             return $this->view();
         }
-        $this->c->config->o_default_user_group = $v->defaultgroup;
+        $this->c->config->i_default_user_group = $v->defaultgroup;
         $this->c->config->save();
 
         return $this->c->Redirect->page('AdminGroups')->message('Default group redirect');
@@ -268,7 +268,7 @@ class Groups extends Admin
                 if (
                     ! $group->groupGuest
                     && ! $group->groupMember
-                    && $group->g_id != $this->c->config->o_default_user_group
+                    && $group->g_id !== $this->c->config->i_default_user_group
                 ) {
                     $v->addRules([
                         'g_moderator'            => 'integer|in:0,1',
@@ -446,7 +446,7 @@ class Groups extends Admin
         if (
             ! $group->groupGuest
             && ! $group->groupMember
-            && $group->g_id != $this->c->config->o_default_user_group
+            && $group->g_id !== $this->c->config->i_default_user_group
         ) {
             $fieldset['g_moderator'] = [
                 'type'    => 'radio',
@@ -786,7 +786,7 @@ class Groups extends Admin
                     'movegroup' => [
                         'type'    => 'select',
                         'options' => $groups,
-                        'value'   => $this->c->config->o_default_user_group,
+                        'value'   => $this->c->config->i_default_user_group,
                         'caption' => __('Move users label'),
                         'info'    => __('Move users info', $group->g_title, $count),
                     ],

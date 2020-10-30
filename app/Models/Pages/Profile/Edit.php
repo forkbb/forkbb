@@ -127,7 +127,7 @@ class Edit extends Profile
                     $result = $v->upload_avatar
                         ->rename(true)
                         ->rewrite(false)
-                        ->resize((int) $this->c->config->o_avatars_width, (int) $this->c->config->o_avatars_height)
+                        ->resize($this->c->config->i_avatars_width, $this->c->config->i_avatars_height)
                         ->toFile($path);
 
                     if (true === $result) {
@@ -347,10 +347,10 @@ class Edit extends Profile
                 'type'      => 'file',
                 'caption'   => __('New avatar'),
                 'info'      => __('New avatar info',
-                    \ForkBB\num($this->c->config->o_avatars_width),
-                    \ForkBB\num($this->c->config->o_avatars_height),
-                    \ForkBB\num($this->c->config->o_avatars_size),
-                    \ForkBB\size((int) $this->c->config->o_avatars_size)
+                    \ForkBB\num($this->c->config->i_avatars_width),
+                    \ForkBB\num($this->c->config->i_avatars_height),
+                    \ForkBB\num($this->c->config->i_avatars_size),
+                    \ForkBB\size($this->c->config->i_avatars_size)
                 ),
                 'accept'  => $this->accept,
             ];

@@ -42,10 +42,10 @@ class Options extends Admin
                     'o_redirect_delay'        => 'required|integer|min:0|max:99999',
                     'o_show_user_info'        => 'required|integer|in:0,1',
                     'o_show_post_count'       => 'required|integer|in:0,1',
-                    'o_topic_review'          => 'required|integer|min:0|max:50',
-                    'o_disp_topics_default'   => 'required|integer|min:10|max:50',
-                    'o_disp_posts_default'    => 'required|integer|min:10|max:50',
-                    'o_disp_users'            => 'required|integer|min:10|max:50',
+                    'i_topic_review'          => 'required|integer|min:0|max:50',
+                    'i_disp_topics_default'   => 'required|integer|min:10|max:50',
+                    'i_disp_posts_default'    => 'required|integer|min:10|max:50',
+                    'i_disp_users'            => 'required|integer|min:10|max:50',
                     'o_quickpost'             => 'required|integer|in:0,1',
                     'o_users_online'          => 'required|integer|in:0,1',
                     'o_show_dot'              => 'required|integer|in:0,1',
@@ -53,15 +53,15 @@ class Options extends Admin
                     'o_quickjump'             => 'required|integer|in:0,1',
                     'o_search_all_forums'     => 'required|integer|in:0,1',
                     'o_additional_navlinks'   => 'string:trim|max:65000 bytes',
-                    'o_feed_type'             => 'required|integer|in:0,1,2',
-                    'o_feed_ttl'              => 'required|integer|in:0,5,15,30,60',
-                    'o_report_method'         => 'required|integer|in:0,1,2',
+                    'i_feed_type'             => 'required|integer|in:0,1,2',
+                    'i_feed_ttl'              => 'required|integer|in:0,5,15,30,60',
+                    'i_report_method'         => 'required|integer|in:0,1,2',
                     'o_mailing_list'          => 'string:trim|max:65000 bytes', // ???? проверка списка email
                     'o_avatars'               => 'required|integer|in:0,1',
                     'o_avatars_dir'           => 'required|string:trim|max:255|check_dir',
-                    'o_avatars_width'         => 'required|integer|min:50|max:999',
-                    'o_avatars_height'        => 'required|integer|min:50|max:999',
-                    'o_avatars_size'          => 'required|integer|min:0|max:9999999',
+                    'i_avatars_width'         => 'required|integer|min:50|max:999',
+                    'i_avatars_height'        => 'required|integer|min:50|max:999',
+                    'i_avatars_size'          => 'required|integer|min:0|max:9999999',
                     'o_admin_email'           => 'required|string:trim|email',
                     'o_webmaster_email'       => 'required|string:trim|email',
                     'o_forum_subscriptions'   => 'required|integer|in:0,1',
@@ -77,7 +77,7 @@ class Options extends Admin
                     'o_regs_report'           => 'required|integer|in:0,1',
                     'o_rules'                 => 'required|integer|in:0,1|check_empty:o_rules_message',
                     'o_rules_message'         => 'string:trim|max:65000 bytes',
-                    'o_default_email_setting' => 'required|integer|in:0,1,2',
+                    'i_default_email_setting' => 'required|integer|in:0,1,2',
                     'o_announcement'          => 'required|integer|in:0,1|check_empty:o_announcement_message',
                     'o_announcement_message'  => 'string:trim|max:65000 bytes',
                     'p_message_all_caps'  => 'required|integer|in:0,1',
@@ -322,35 +322,35 @@ class Options extends Admin
                     'caption' => __('Post count label'),
                     'info'    => __('Post count help'),
                 ],
-                'o_disp_topics_default' => [
+                'i_disp_topics_default' => [
                     'type'    => 'number',
                     'min'     => '10',
                     'max'     => '50',
-                    'value'   => $config->o_disp_topics_default,
+                    'value'   => $config->i_disp_topics_default,
                     'caption' => __('Topics per page label'),
                     'info'    => __('Topics per page help'),
                 ],
-                'o_disp_posts_default' => [
+                'i_disp_posts_default' => [
                     'type'    => 'number',
                     'min'     => '10',
                     'max'     => '50',
-                    'value'   => $config->o_disp_posts_default,
+                    'value'   => $config->i_disp_posts_default,
                     'caption' => __('Posts per page label'),
                     'info'    => __('Posts per page help'),
                 ],
-                'o_disp_users' => [
+                'i_disp_users' => [
                     'type'    => 'number',
                     'min'     => '10',
                     'max'     => '50',
-                    'value'   => $config->o_disp_users,
+                    'value'   => $config->i_disp_users,
                     'caption' => __('Users per page label'),
                     'info'    => __('Users per page help'),
                 ],
-                'o_topic_review' => [
+                'i_topic_review' => [
                     'type'    => 'number',
                     'min'     => '0',
                     'max'     => '50',
-                    'value'   => $config->o_topic_review,
+                    'value'   => $config->i_topic_review,
                     'caption' => __('Topic review label'),
                     'info'    => __('Topic review help'),
                 ],
@@ -443,9 +443,9 @@ class Options extends Admin
         $form['sets']['feed'] = [
             'legend' => __('Feed subhead'),
             'fields' => [
-                'o_feed_type' => [
+                'i_feed_type' => [
                     'type'    => 'radio',
-                    'value'   => $config->o_feed_type,
+                    'value'   => $config->i_feed_type,
                     'values'  => [
                         0 => __('No feeds'),
                         1 => __('RSS'),
@@ -454,7 +454,7 @@ class Options extends Admin
                     'caption' => __('Default feed label'),
                     'info'    => __('Default feed help'),
                 ],
-                'o_feed_ttl' => [
+                'i_feed_ttl' => [
                     'type'    => 'select',
                     'options' => [
                         0  => __('No cache'),
@@ -463,7 +463,7 @@ class Options extends Admin
                         30 => __('%d Minutes', 30),
                         60 => __('%d Minutes', 60),
                     ],
-                    'value'   => $config->o_feed_ttl,
+                    'value'   => $config->i_feed_ttl,
                     'caption' => __('Feed TTL label'),
                     'info'    => __('Feed TTL help'),
                 ],
@@ -474,9 +474,9 @@ class Options extends Admin
         $form['sets']['reports'] = [
             'legend' => __('Reports subhead'),
             'fields' => [
-                'o_report_method' => [
+                'i_report_method' => [
                     'type'    => 'radio',
-                    'value'   => $config->o_report_method,
+                    'value'   => $config->i_report_method,
                     'values'  => [
                         0 => __('Internal'),
                         1 => __('By e-mail'),
@@ -512,27 +512,27 @@ class Options extends Admin
                     'info'      => __('Upload directory help'),
                     'required'  => true,
                 ],
-                'o_avatars_width' => [
+                'i_avatars_width' => [
                     'type'    => 'number',
                     'min'     => '50',
                     'max'     => '999',
-                    'value'   => $config->o_avatars_width,
+                    'value'   => $config->i_avatars_width,
                     'caption' => __('Max width label'),
                     'info'    => __('Max width help'),
                 ],
-                'o_avatars_height' => [
+                'i_avatars_height' => [
                     'type'    => 'number',
                     'min'     => '50',
                     'max'     => '999',
-                    'value'   => $config->o_avatars_height,
+                    'value'   => $config->i_avatars_height,
                     'caption' => __('Max height label'),
                     'info'    => __('Max height help'),
                 ],
-                'o_avatars_size' => [
+                'i_avatars_size' => [
                     'type'    => 'number',
                     'min'     => '0',
                     'max'     => '9999999',
-                    'value'   => $config->o_avatars_size,
+                    'value'   => $config->i_avatars_size,
                     'caption' => __('Max size label'),
                     'info'    => __('Max size help'),
                 ],
@@ -656,10 +656,10 @@ class Options extends Admin
                     'caption' => __('Rules label'),
                     'info'    => __('Rules help'),
                 ],
-                'o_default_email_setting' => [
+                'i_default_email_setting' => [
                     'class'   => 'block',
                     'type'    => 'radio',
-                    'value'   => $config->o_default_email_setting,
+                    'value'   => $config->i_default_email_setting,
                     'values'  => [
                         0 => __('Display e-mail label'),
                         1 => __('Hide allow form label'),

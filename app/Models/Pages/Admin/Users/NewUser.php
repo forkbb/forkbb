@@ -43,12 +43,12 @@ class NewUser extends Users
 
                     $user->username        = $v->username;
                     $user->password        = \password_hash($v->password, PASSWORD_DEFAULT);
-                    $user->group_id        = $this->c->config->o_default_user_group;
+                    $user->group_id        = $this->c->config->i_default_user_group;
                     $user->email           = $v->email;
                     $user->email_confirmed = 0;
                     $user->activate_string = '';
                     $user->u_mark_all_read = \time();
-                    $user->email_setting   = $this->c->config->o_default_email_setting;
+                    $user->email_setting   = $this->c->config->i_default_email_setting;
                     $user->timezone        = $this->c->config->o_default_timezone;
                     $user->dst             = $this->c->config->o_default_dst;
                     $user->language        = $this->c->config->o_default_lang;

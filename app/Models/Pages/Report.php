@@ -62,10 +62,10 @@ class Report extends Page
 
                 $result = true;
 
-                switch ($this->c->config->o_report_method) {
-                    case '2':
+                switch ($this->c->config->i_report_method) {
+                    case 2:
                         $this->c->reports->insert($report);
-                    case '1':
+                    case 1:
                         try {
                             $result = $this->sendReport($report);
                         } catch (MailException $e) {
@@ -82,7 +82,7 @@ class Report extends Page
                     $this->c->users->update($this->user);
                 }
 
-                if (false === $result && '1' == $this->c->config->o_report_method) {
+                if (false === $result && 1 === $this->c->config->i_report_method) {
                     $this->fIswev = ['e', __('Error mail', $this->c->config->o_admin_email)];
                 } else {
                     return $this->c->Redirect->page('ViewPost', ['id' => $post->id])->message('Report redirect');

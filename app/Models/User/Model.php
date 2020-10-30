@@ -290,11 +290,11 @@ class Model extends DataModel
     {
         $attr = $this->getAttr('disp_topics');
 
-        if (empty($attr)) {
-            $attr = $this->c->config->o_disp_topics_default;
+        if ($attr < 10) {
+            $attr = $this->c->config->i_disp_topics_default;
         }
 
-        return (int) $attr;
+        return $attr;
     }
 
     /**
@@ -304,11 +304,11 @@ class Model extends DataModel
     {
         $attr = $this->getAttr('disp_topics');
 
-        if (empty($attr)) {
-            $attr = $this->c->config->o_disp_posts_default;
+        if ($attr < 10) {
+            $attr = $this->c->config->i_disp_posts_default;
         }
 
-        return (int) $attr;
+        return $attr;
     }
 
     /**

@@ -39,7 +39,7 @@ class Feed extends Page
     {
         $this->c->DEBUG = 0;
 
-        if ('0' == $this->c->config->o_feed_type) {
+        if ($this->c->config->i_feed_type < 1) {
             return $this->exit('Bad request');
         }
 
@@ -83,7 +83,7 @@ class Feed extends Page
                 }
             }
         } else {
-            if ($this->c->config->o_feed_ttl > 0) {
+            if ($this->c->config->i_feed_ttl > 0) {
                 $cacheId = 'feed' . \sha1("{$this->user->group_id}|{$this->user->language}|{$fid}");
             } else {
                 $cacheId = null;
@@ -133,7 +133,7 @@ class Feed extends Page
 
 
                 if (null !== $cacheId) {
-                    if (true !== $this->c->Cache->set($cacheId, $feed, 60 * $this->c->config->o_feed_ttl)) {
+                    if (true !== $this->c->Cache->set($cacheId, $feed, 60 * $this->c->config->i_feed_ttl)) {
                         throw new RuntimeException('Unable to write value to cache - feed');
                     }
                 }

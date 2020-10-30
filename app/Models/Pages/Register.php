@@ -134,7 +134,7 @@ class Register extends Page
             $groupId = 0;
             $key     = $this->c->Secury->randomPass(31);
         } else {
-            $groupId = $this->c->config->o_default_user_group;
+            $groupId = $this->c->config->i_default_user_group;
             $key     = '';
         }
 
@@ -147,7 +147,7 @@ class Register extends Page
         $user->email_confirmed = 0;
         $user->activate_string = $key;
         $user->u_mark_all_read = \time();
-        $user->email_setting   = $this->c->config->o_default_email_setting;
+        $user->email_setting   = $this->c->config->i_default_email_setting;
         $user->timezone        = $this->c->config->o_default_timezone;
         $user->dst             = $this->c->config->o_default_dst;
         $user->language        = $this->user->language;
@@ -264,7 +264,7 @@ class Register extends Page
             return $this->c->Message->message('Bad request', false);
         }
 
-        $user->group_id        = $this->c->config->o_default_user_group;
+        $user->group_id        = $this->c->config->i_default_user_group;
         $user->email_confirmed = 1;
         $user->activate_string = '';
 

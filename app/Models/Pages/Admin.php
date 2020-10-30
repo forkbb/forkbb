@@ -54,8 +54,8 @@ class Admin extends Page
         }
         if (
             $this->user->isAdmin
-            || '0' == $this->c->config->o_report_method
-            || '2' == $this->c->config->o_report_method
+            || 0 === $this->c->config->i_report_method
+            || 2 === $this->c->config->i_report_method
         ) {
             $nav['reports'] = [$r->link('AdminReports'), __('Reports')];
         }

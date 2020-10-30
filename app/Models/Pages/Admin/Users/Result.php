@@ -43,7 +43,7 @@ class Result extends Users
         }
 
         $page  = isset($args['page']) ? (int) $args['page'] : 1;
-        $pages = (int) \ceil(($number ?: 1) / $this->c->config->o_disp_users);
+        $pages = (int) \ceil(($number ?: 1) / $this->c->config->i_disp_users);
 
         if ($page > $pages) {
             return $this->c->Message->message('Bad request');
@@ -106,8 +106,8 @@ class Result extends Users
             $this->fIswev = $v->getErrors();
         }
 
-        $startNum = ($page - 1) * $this->c->config->o_disp_users;
-        $idsN     = \array_slice($idsN, $startNum, (int) $this->c->config->o_disp_users);
+        $startNum = ($page - 1) * $this->c->config->i_disp_users;
+        $idsN     = \array_slice($idsN, $startNum, $this->c->config->i_disp_users);
         $ids      = [];
         $userList = [];
 

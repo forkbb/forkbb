@@ -158,8 +158,8 @@ class Topic extends Page
         }
         $topic->updateVisits();
 
-        if ($this->c->config->o_feed_type > 0) {
-            $feedType = '2' == $this->c->config->o_feed_type ? 'atom' : 'rss';
+        if ($this->c->config->i_feed_type > 0) {
+            $feedType = 2 === $this->c->config->i_feed_type ? 'atom' : 'rss';
             $this->pageHeader('feed', 'link', [
                 'rel'  => 'alternate',
                 'type' => "application/{$feedType}+xml",

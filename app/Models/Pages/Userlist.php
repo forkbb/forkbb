@@ -83,15 +83,15 @@ class Userlist extends Page
         $ids    = $this->c->users->filter($filters, $order);
         $number = \count($ids);
         $page   = isset($args['page']) ? (int) $args['page'] : 1;
-        $pages  = (int) \ceil(($number ?: 1) / $this->c->config->o_disp_users);
+        $pages  = (int) \ceil(($number ?: 1) / $this->c->config->i_disp_users);
 
         if ($page > $pages) {
             return $this->c->Message->message('Bad request');
         }
 
         if ($number) {
-            $this->startNum = ($page - 1) * $this->c->config->o_disp_users;
-            $ids            = \array_slice($ids, $this->startNum, (int) $this->c->config->o_disp_users);
+            $this->startNum = ($page - 1) * $this->c->config->i_disp_users;
+            $ids            = \array_slice($ids, $this->startNum, $this->c->config->i_disp_users);
             $this->userList = $this->c->users->loadByIds($ids);
 
             $links = [];

@@ -135,9 +135,11 @@ class Model extends ParentModel
         }
 
         // обновление максимального значение посетителей онлайн
-        if ($this->c->config->st_max_users < $all) {
-            $this->c->config->st_max_users      = $all;
-            $this->c->config->st_max_users_time = $now;
+        if ($this->c->config->a_max_users['number'] < $all) {
+            $this->c->config->a_max_users = [
+                'number' => $all,
+                'time'   => $now,
+            ];
             $this->c->config->save();
         }
 

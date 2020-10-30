@@ -354,7 +354,7 @@ class Model extends DataModel
      */
     public function review(): array
     {
-        if ($this->c->config->o_topic_review < 1) {
+        if ($this->c->config->i_topic_review < 1) {
             return [];
         }
 
@@ -362,7 +362,7 @@ class Model extends DataModel
 
         $vars  = [
             ':tid'  => $this->id,
-            ':rows' => $this->c->config->o_topic_review,
+            ':rows' => $this->c->config->i_topic_review,
         ];
         $query = 'SELECT p.id
             FROM ::posts AS p

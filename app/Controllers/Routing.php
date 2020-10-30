@@ -490,8 +490,8 @@ class Routing
 
             if (
                 $user->isAdmin
-                || '0' == $config->o_report_method
-                || '2' == $config->o_report_method
+                || 0 === $config->i_report_method
+                || 2 === $config->i_report_method
             ) {
                 $r->add(
                     $r::GET,
