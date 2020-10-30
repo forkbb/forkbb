@@ -6,7 +6,6 @@ namespace ForkBB\Models\Config;
 
 use ForkBB\Models\Method;
 use ForkBB\Models\Config\Model as Config;
-use RuntimeException;
 
 class Save extends Method
 {
@@ -76,10 +75,7 @@ class Save extends Method
                 $this->c->DB->exec($query, $vars);
             }
         }
-        if (true !== $this->c->Cache->delete('config')) {
-            throw new RuntimeException('Unable to remove key from cache - config');
-        }
 
-        return $this->model;
+        return $this->model->reset();
     }
 }

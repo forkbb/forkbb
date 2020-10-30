@@ -15,7 +15,7 @@ class Load extends Method
      * Заполняет модель данными из БД
      * Создает кеш
      */
-    public function load(): Config
+    public function load(): array
     {
         $config = [];
         $query  = 'SELECT cf.conf_name, cf.conf_value
@@ -40,12 +40,6 @@ class Load extends Method
             $config[$row['conf_name']] = $value;
         }
 
-        $this->model->setAttrs($config);
-
-        if (true !== $this->c->Cache->set('config', $config)) {
-            throw new RuntimeException('Unable to write value to cache - config');
-        }
-
-        return $this->model;
+        return $config;
     }
 }
