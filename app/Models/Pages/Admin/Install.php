@@ -1127,7 +1127,6 @@ class Install extends Admin
             'p_force_guest_email'     => 1,
             'o_pms_enabled'           => 1,                    // New PMS - Visman
             'o_pms_min_kolvo'         => 0,
-            'o_merge_timeout'         => 86400, // ???? сейчас нет настройки в админке
             'o_poll_enabled'          => 0,    // опросы - Visman
             'o_poll_max_ques'         => 3,
             'o_poll_max_field'        => 20,

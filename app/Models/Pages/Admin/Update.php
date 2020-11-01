@@ -1024,6 +1024,10 @@ class Update extends Admin
             )';
         $this->c->DB->exec($query);
 
+        unset($this->c->config->o_merge_timeout);
+
+        $this->c->config->save();
+
         return null;
     }
 }
