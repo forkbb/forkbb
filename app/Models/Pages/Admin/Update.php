@@ -1006,22 +1006,22 @@ class Update extends Admin
         $this->c->DB->addField('forums', 'last_poster_id', 'INT(10) UNSIGNED', false, 0, 'last_poster');
 
         $query = 'UPDATE ::forums AS f
-            SET f.last_poster_id=(
+            SET f.last_poster_id=COALESCE((
                 SELECT u.id
                 FROM ::users AS u
-                WHERE u.username=f.last_poster AND u.id > 1
-            )';
+                WHERE u.username=f.last_poster AND u.id>1
+            ), 0)';
         $this->c->DB->exec($query);
 
         $this->c->DB->renameField('posts', 'edited_by', 'editor');
         $this->c->DB->addField('posts', 'editor_id', 'INT(10) UNSIGNED', false, 0, 'editor');
 
         $query = 'UPDATE ::posts AS p
-            SET p.editor_id=(
+            SET p.editor_id=COALESCE((
                 SELECT u.id
                 FROM ::users AS u
-                WHERE u.username=p.editor AND u.id > 1
-            )';
+                WHERE u.username=p.editor AND u.id>1
+            ), 0)';
         $this->c->DB->exec($query);
 
         unset($this->c->config->o_merge_timeout);
