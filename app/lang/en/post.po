@@ -75,9 +75,6 @@ msgstr "Stay subscribed to this topic"
 msgid "Topic review"
 msgstr "Topic review (newest first)"
 
-msgid "Flood start"
-msgstr "At least %1$s seconds have to pass between posts. Please wait %2$s seconds and try posting again."
-
 msgid "Preview"
 msgstr "Preview"
 

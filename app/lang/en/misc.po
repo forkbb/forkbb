@@ -30,9 +30,6 @@ msgstr "You must enter a message."
 msgid "Too long email message"
 msgstr "Messages cannot be longer than 65535 characters (64 KB)."
 
-msgid "Email flood"
-msgstr "At least %1$s seconds have to pass between sent emails. Please wait %2$s seconds and try sending again."
-
 msgid "Email sent redirect"
 msgstr "Email sent."
 
@@ -56,9 +53,6 @@ msgstr "You must enter a reason."
 
 msgid "Reason too long"
 msgstr "Your message must be under 65535 bytes (~64kb)."
-
-msgid "Report flood"
-msgstr "At least %1$s seconds have to pass between reports. Please wait %2$s seconds and try sending again."
 
 msgid "Report redirect"
 msgstr "Post reported."

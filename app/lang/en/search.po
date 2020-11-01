@@ -18,9 +18,6 @@ msgstr "User search"
 msgid "No search permission"
 msgstr "You do not have permission to use the search feature."
 
-msgid "Search flood"
-msgstr "At least %s seconds have to pass between searches. Please wait %s seconds and try searching again."
-
 msgid "Search criteria legend"
 msgstr "Enter your search criteria"
 

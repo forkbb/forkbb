@@ -31,7 +31,7 @@ class Report extends Page
         $floodSize = \time() - (int) $this->user->last_report_sent;
         $floodSize = $floodSize < $this->user->g_report_flood ? $this->user->g_report_flood - $floodSize : 0;
         if ($floodSize > 0) {
-            $this->fIswev = ['e', __('Report flood', $this->user->g_report_flood, $floodSize)];
+            $this->fIswev = ['e', __('Flood message', $floodSize)];
         }
 
         $data = [];

@@ -53,3 +53,6 @@ msgstr "Обновите свой браузер."
 
 msgid "Username contains consecutive spaces"
 msgstr "В имени пользователя есть идущие подряд пробелы."
+
+msgid "Flood message"
+msgstr "Пожалуйста, подождите %s секунд и попробуйте снова."

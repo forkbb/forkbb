@@ -342,7 +342,7 @@ class Search extends Page
             }
 
             if ($flood) {
-                $v->addError(__('Search flood', $this->user->g_search_flood, $this->user->g_search_flood - \time() + $this->user->last_search));
+                $v->addError(__('Flood message', $this->user->g_search_flood - \time() + $this->user->last_search));
             }
         }
 

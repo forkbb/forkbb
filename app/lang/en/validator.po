@@ -53,3 +53,6 @@ msgstr "Please update your browser."
 
 msgid "Username contains consecutive spaces"
 msgstr "Username contains consecutive spaces."
+
+msgid "Flood message"
+msgstr "Please wait %s seconds and try sending again."
