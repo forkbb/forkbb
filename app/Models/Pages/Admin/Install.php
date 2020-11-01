@@ -675,7 +675,7 @@ class Install extends Admin
                 'edit_post'    => ['TINYINT(1)', false, 0],
                 'posted'       => ['INT(10) UNSIGNED', false, 0],
                 'edited'       => ['INT(10) UNSIGNED', false, 0],
-                'edited_by'    => ['VARCHAR(190)', false, ''],
+                'editor'       => ['VARCHAR(190)', false, ''],
                 'user_agent'   => ['VARCHAR(255)', false, ''],
                 'topic_id'     => ['INT(10) UNSIGNED', false, 0],
             ],

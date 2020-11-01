@@ -57,7 +57,7 @@
           <span class="f-post-posted"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></span>
         @endif
         @if ($post->edited)
-          <span class="f-post-edited" title="{!! __('Last edit', $post->edited_by, dt($post->edited)) !!}">{!! __('Edited') !!}</span>
+          <span class="f-post-edited" title="{!! __('Last edit', $post->editor, dt($post->edited)) !!}">{!! __('Edited') !!}</span>
         @endif
           <span class="f-post-number"><a href="{!! $post->link !!}" rel="bookmark">#{!! $post->postNumber !!}</a></span>
         </header>

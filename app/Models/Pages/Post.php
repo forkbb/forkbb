@@ -211,7 +211,7 @@ class Post extends Page
             if ($newLength < $this->c->MAX_POST_SIZE - 100) {
                 $lastPost->message   = $lastPost->message . "\n[after=" . ($now - $topic->last_post) . "]\n" . $v->message; //????
                 $lastPost->edited    = $now;
-                $lastPost->edited_by = $username;
+                $lastPost->editor    = $username;
 
                 $this->c->posts->update($lastPost);
             } else {
@@ -232,7 +232,7 @@ class Post extends Page
 #           $post->edit_post    =
             $post->posted       = $now;
 #           $post->edited       =
-#           $post->edited_by    =
+#           $post->editor       =
             $post->user_agent   = $this->user->userAgent;
             $post->topic_id     = $topic->id;
 

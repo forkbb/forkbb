@@ -1013,6 +1013,8 @@ class Update extends Admin
             )';
         $this->c->DB->exec($query);
 
+        $this->c->DB->renameField('posts', 'edited_by', 'editor');
+
         return null;
     }
 }

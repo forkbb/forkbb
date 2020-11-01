@@ -94,7 +94,7 @@ class Edit extends Page
         if ($post->message !== $v->message) {
             $post->message       = $v->message;
             $post->edited        = $now;
-            $post->edited_by     = $this->user->username;
+            $post->editor        = $this->user->username;
             $calcPost            = true;
             if ($post->id === $topic->last_post_id) {
                 $calcTopic       = true;
@@ -121,7 +121,7 @@ class Edit extends Page
             if ($topic->subject !== $v->subject) {
                 $topic->subject  = $v->subject;
                 $post->edited    = $now;
-                $post->edited_by = $this->user->username;
+                $post->editor    = $this->user->username;
                 $calcForum       = true;
             }
             // выделение темы
