@@ -178,13 +178,16 @@ class Model extends DataModel
     public function deleteAvatar(): void
     {
         $file = $this->getAttr('avatar');
-        $path = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$file}";
 
-        if (\is_file($path)) {
-            @\unlink($path);
+        if (! empty($file)) {
+            $path = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$file}";
+
+            if (\is_file($path)) {
+                @\unlink($path);
+            }
+
+            $this->avatar = '';
         }
-
-        $this->avatar = '';
     }
 
     /**
