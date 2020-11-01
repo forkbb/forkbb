@@ -95,6 +95,7 @@ class Edit extends Page
             $post->message       = $v->message;
             $post->edited        = $now;
             $post->editor        = $this->user->username;
+            $post->editor_id     = $this->user->id;
             $calcPost            = true;
             if ($post->id === $topic->last_post_id) {
                 $calcTopic       = true;
@@ -122,6 +123,7 @@ class Edit extends Page
                 $topic->subject  = $v->subject;
                 $post->edited    = $now;
                 $post->editor    = $this->user->username;
+                $post->editor_id = $this->user->id;
                 $calcForum       = true;
             }
             // выделение темы

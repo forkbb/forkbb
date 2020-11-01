@@ -1009,11 +1009,20 @@ class Update extends Admin
             SET f.last_poster_id=(
                 SELECT u.id
                 FROM ::users AS u
-                WHERE u.username=f.last_poster
+                WHERE u.username=f.last_poster AND u.id > 1
             )';
         $this->c->DB->exec($query);
 
         $this->c->DB->renameField('posts', 'edited_by', 'editor');
+        $this->c->DB->addField('posts', 'editor_id', 'INT(10) UNSIGNED', false, 0, 'editor');
+
+        $query = 'UPDATE ::posts AS p
+            SET p.editor_id=(
+                SELECT u.id
+                FROM ::users AS u
+                WHERE u.username=p.editor AND u.id > 1
+            )';
+        $this->c->DB->exec($query);
 
         return null;
     }
