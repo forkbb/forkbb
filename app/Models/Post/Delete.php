@@ -17,7 +17,7 @@ use RuntimeException;
 class Delete extends Action
 {
     /**
-     * Удаляет тему(ы)
+     * Удаляет сообщение(я)
      */
     public function delete(DataModel ...$args): void
     {
