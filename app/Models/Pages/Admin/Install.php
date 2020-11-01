@@ -586,6 +586,7 @@ class Install extends Admin
                 'last_post'       => ['INT(10) UNSIGNED', false, 0],
                 'last_post_id'    => ['INT(10) UNSIGNED', false, 0],
                 'last_poster'     => ['VARCHAR(190)', false, ''],
+                'last_poster_id'  => ['INT(10) UNSIGNED', false, 0],
                 'last_topic'      => ['VARCHAR(255)', false, ''],
                 'sort_by'         => ['TINYINT(1)', false, 0],
                 'disp_position'   => ['INT(10)', false, 0],
@@ -1143,7 +1144,7 @@ class Install extends Admin
         }
 
         $this->c->DB->exec('INSERT INTO ::categories (cat_name, disp_position) VALUES (?s, ?i)', [__('Test category'), 1]);
-        $this->c->DB->exec('INSERT INTO ::forums (forum_name, forum_desc, num_topics, num_posts, last_post, last_post_id, last_poster, last_topic, disp_position, cat_id, moderators) VALUES (?s, ?s, ?i, ?i, ?i, ?i, ?s, ?s, ?i, ?i, \'\')', [__('Test forum'), __('This is just a test forum'), 1, 1, $now, 1, $v->username, __('Test post'), 1, 1]);
+        $this->c->DB->exec('INSERT INTO ::forums (forum_name, forum_desc, num_topics, num_posts, last_post, last_post_id, last_poster, last_poster_id, last_topic, disp_position, cat_id, moderators) VALUES (?s, ?s, ?i, ?i, ?i, ?i, ?s, ?i, ?s, ?i, ?i, \'\')', [__('Test forum'), __('This is just a test forum'), 1, 1, $now, 1, $v->username, 2, __('Test post'), 1, 1]);
         $this->c->DB->exec('INSERT INTO ::topics (poster, subject, posted, first_post_id, last_post, last_post_id, last_poster, forum_id) VALUES(?s, ?s, ?i, ?i, ?i, ?i, ?s, ?i)', [$v->username, __('Test post'), $now, 1, $now, 1, $v->username, 1]);
         $this->c->DB->exec('INSERT INTO ::posts (poster, poster_id, poster_ip, message, posted, topic_id) VALUES(?s, ?i, ?s, ?s, ?i, ?i)', [$v->username, 2, $ip, __('Test message'), $now, 1]);
 

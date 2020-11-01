@@ -19,7 +19,7 @@ class Update extends Admin
 {
     const PHP_MIN = '7.3.0';
 
-    const LATEST_REV_WITH_DB_CHANGES = 19;
+    const LATEST_REV_WITH_DB_CHANGES = 24;
 
     const LOCK_NAME = 'lock_update';
     const LOCk_TTL  = 1800;
@@ -994,6 +994,24 @@ class Update extends Admin
         unset($this->c->config->st_max_users_time);
 
         $this->c->config->save();
+
+        return null;
+    }
+
+    /**
+     * rev.23 to rev.24
+     */
+    protected function stageNumber23(array $args): ?int
+    {
+        $this->c->DB->addField('forums', 'last_poster_id', 'INT(10) UNSIGNED', false, 0, 'last_poster');
+
+        $query = 'UPDATE ::forums AS f
+            SET f.last_poster_id=(
+                SELECT u.id
+                FROM ::users AS u
+                WHERE u.username=f.last_poster
+            )';
+        $this->c->DB->exec($query);
 
         return null;
     }
