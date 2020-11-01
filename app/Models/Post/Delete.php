@@ -93,11 +93,23 @@ class Delete extends Action
                 WHERE poster_id IN (?ai:users)';
 
             $this->c->DB->exec($query, $vars);
+
+            $query = 'UPDATE ::posts
+                SET editor_id=1
+                WHERE editor_id IN (?ai:users)';
+
+            $this->c->DB->exec($query, $vars);
         }
         if ($usersDel) {
             $vars  = [
                 ':users' => $usersDel,
             ];
+            $query = 'UPDATE ::posts
+                SET editor_id=1
+                WHERE editor_id IN (?ai:users)';
+
+            $this->c->DB->exec($query, $vars);
+
             $query = 'SELECT p.topic_id
                 FROM ::posts as p
                 WHERE p.poster_id IN (?ai:users)
