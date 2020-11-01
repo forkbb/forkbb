@@ -177,12 +177,7 @@ class Post extends Page
                         $merge = true;
                     }
                 } else {
-                    if (
-                        $this->c->config->o_merge_timeout > 0 // ???? стоит завязать на время редактирование сообщений?
-                        && $now - $topic->last_post < $this->c->config->o_merge_timeout
-                    ) {
-                        $merge = true;
-                    }
+                    $merge = true;
                 }
             }
         // создание темы
