@@ -19,7 +19,7 @@ class Model extends DataModel
         parent::__construct($container);
 
         $this->zDepend = [
-            'group_id'     => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'link', 'viewUsers', 'showPostCount', 'searchUsers'],
+            'group_id'     => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'isBanByName', 'link', 'viewUsers', 'showPostCount', 'searchUsers'],
             'id'           => ['isGuest', 'link', 'online'],
             'last_visit'   => ['currentVisit'],
             'show_sig'     => ['showSignature'],
@@ -62,6 +62,15 @@ class Model extends DataModel
     {
         return $this->group_id === $this->c->GROUP_ADMIN
             || 1 == $this->g_moderator;
+    }
+
+    /**
+     * Статус бана по имени пользователя
+     */
+    protected function getisBanByName(): bool
+    {
+        return ! $this->isAdmin
+            && $this->c->bans->banFromName($this->username) > 0;
     }
 
     /**
@@ -195,7 +204,7 @@ class Model extends DataModel
      */
     public function title(): string
     {
-        if (isset($this->c->bans->userList[\mb_strtolower($this->username)])) { //????
+        if ($this->isBanByName) {
             return __('Banned');
         } elseif ('' != $this->title) {
             return $this->censorTitle;

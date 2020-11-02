@@ -570,7 +570,7 @@ class Bans extends Admin
             }
 
             foreach ($userList as $user) {
-                if ($this->c->bans->isBanned($user)) {
+                if ($this->c->bans->banFromName($user->username) > 0) {
                     return $this->c->Message->message(__('User is ban', $user->username));
                 }
 
@@ -749,7 +749,7 @@ class Bans extends Admin
 
             if (! $user instanceof User) { // ???? может ли вернутся несколько юзеров?
                 $v->addError('No user message');
-            } elseif ($this->c->bans->isBanned($user)) {
+            } elseif ($this->c->bans->banFromName($user->username) > 0) {
                 $v->addError(__('User is ban', $user->username));
             } elseif (! $this->c->userRules->canBanUser($user)) {
                 if ($user->isGuest) { // ???? O_o

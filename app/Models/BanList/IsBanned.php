@@ -14,13 +14,13 @@ class IsBanned extends Method
      */
     public function isBanned(User $user): int
     {
-        $name  = $this->model->trimToNull($user->username, true);
+        $name = $this->model->trimToNull($user->username, true);
         if (
             null !== $name
             && isset($this->model->userList[$name])
         ) {
             return $this->model->userList[$name];
-        }
+        } // ???? дублирование функционала
 
         if (
             $user->isGuest

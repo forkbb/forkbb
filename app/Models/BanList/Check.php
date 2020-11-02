@@ -34,11 +34,6 @@ class Check extends Method
             }
         }
 
-        // админ
-        if ($user->isAdmin) {
-            return false;
-        }
-
         // проверка гостя
         if ($user->isGuest) {
             if (! empty($this->model->ipList)) {
@@ -66,8 +61,8 @@ class Check extends Method
                 }
             }
         // проверка пользователя
-        } else {
-            $id = $this->model->isBanned($user);
+        } elseif (! $user->isAdmin) {
+            $id = $this->model->banFromName($user->username);
 
             if ($id > 0) {
                 if (isset($this->model->banList[$id])) {

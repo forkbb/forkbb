@@ -89,4 +89,21 @@ class Model extends ParentModel
 
         return $this;
     }
+
+    /**
+     * Выдает номер бана по имени или 0
+     */
+    public function banFromName(?string $name): int
+    {
+        $name = $this->trimToNull($name, true);
+
+        if (
+            null !== $name
+            && isset($this->userList[$name])
+        ) {
+            return $this->userList[$name];
+        } else {
+            return 0;
+        }
+    }
 }

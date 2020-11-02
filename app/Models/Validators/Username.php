@@ -45,7 +45,7 @@ class Username extends RulesValidator
             } elseif ($this->c->censorship->censor($username) !== $username) {
                 $v->addError('Username censor');
             // username забанен
-            } elseif ($this->c->bans->isBanned($user) > 0) {
+            } elseif ($this->c->bans->banFromName($username) > 0) {
                 $v->addError('Banned username');
             // есть пользователь с похожим именем
             } elseif (

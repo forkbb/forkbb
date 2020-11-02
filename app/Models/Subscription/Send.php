@@ -64,7 +64,7 @@ class Send extends Method
 
                 if (
                     1 !== $user->email_confirmed
-                    || $this->c->bans->isBanned($user) > 0
+                    || $this->c->bans->banFromName($user->username) > 0
                     || $this->c->Online->isOnline($user)
                 ) {
                     continue;

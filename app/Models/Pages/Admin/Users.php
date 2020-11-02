@@ -95,7 +95,7 @@ abstract class Users extends Admin
 
             switch ($action) {
                 case self::ACTION_BAN:
-                    if ($this->c->bans->isBanned($user)) {
+                    if ($this->c->bans->banFromName($user->username) > 0) {
                         $this->fIswev = ['i', __('User is ban', $user->username)];
 
                         return false;

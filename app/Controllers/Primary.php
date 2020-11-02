@@ -27,7 +27,10 @@ class Primary
      */
     public function check(): ?Page
     {
-        if ($this->c->config->o_maintenance && ! $this->c->MAINTENANCE_OFF) {
+        if (
+            $this->c->config->o_maintenance
+            && ! $this->c->MAINTENANCE_OFF
+        ) {
             if (
                 ! isset($this->c->admins->list[$this->c->Cookie->uId])
                 || ! isset($this->c->admins->list[$this->c->user->id])
