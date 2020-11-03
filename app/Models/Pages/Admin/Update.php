@@ -1030,4 +1030,22 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.24 to rev.25
+     */
+    protected function stageNumber24(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+
+        $coreConfig->add(
+            'multiple=>ForumManagerUpdateUsername',
+            '\\ForkBB\\Models\\Forum\\UpdateUsername::class',
+            'ForumManagerMarkread'
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }

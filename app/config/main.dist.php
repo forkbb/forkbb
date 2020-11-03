@@ -267,6 +267,7 @@ return [
         'ForumManagerSave'     => \ForkBB\Models\Forum\Save::class,
         'ForumManagerDelete'   => \ForkBB\Models\Forum\Delete::class,
         'ForumManagerMarkread' => \ForkBB\Models\Forum\Markread::class,
+        'ForumManagerUpdateUsername' => \ForkBB\Models\Forum\UpdateUsername::class,
 
         'TopicModel'         => \ForkBB\Models\Topic\Model::class,
         'TopicModelCalcStat' => \ForkBB\Models\Topic\CalcStat::class,
