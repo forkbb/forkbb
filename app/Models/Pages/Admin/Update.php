@@ -1044,6 +1044,12 @@ class Update extends Admin
             'ForumManagerMarkread'
         );
 
+        $coreConfig->add(
+            'multiple=>PostManagerUpdateUsername',
+            '\\ForkBB\\Models\\Post\\UpdateUsername::class',
+            'PostManagerFeed'
+        );
+
         $coreConfig->save();
 
         return null;

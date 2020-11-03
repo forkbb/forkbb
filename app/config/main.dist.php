@@ -290,6 +290,7 @@ return [
         'PostManagerUserStat'     => \ForkBB\Models\Post\UserStat::class,
         'PostManagerMove'         => \ForkBB\Models\Post\Move::class,
         'PostManagerFeed'         => \ForkBB\Models\Post\Feed::class,
+        'PostManagerUpdateUsername' => \ForkBB\Models\Post\UpdateUsername::class,
 
         'ReportModel'             => \ForkBB\Models\Report\Model::class,
         'ReportManagerSave'       => \ForkBB\Models\Report\Save::class,
