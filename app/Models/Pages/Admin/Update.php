@@ -1050,6 +1050,12 @@ class Update extends Admin
             'PostManagerFeed'
         );
 
+        $coreConfig->add(
+            'multiple=>TopicManagerUpdateUsername',
+            '\\ForkBB\\Models\\Topic\\UpdateUsername::class',
+            'TopicManagerMove'
+        );
+
         $coreConfig->save();
 
         return null;

@@ -278,6 +278,7 @@ return [
         'TopicManagerAccess' => \ForkBB\Models\Topic\Access::class,
         'TopicManagerMerge'  => \ForkBB\Models\Topic\Merge::class,
         'TopicManagerMove'   => \ForkBB\Models\Topic\Move::class,
+        'TopicManagerUpdateUsername' => \ForkBB\Models\Topic\UpdateUsername::class,
 
         'PostModel'               => \ForkBB\Models\Post\Model::class,
         'PostManagerLoad'         => \ForkBB\Models\Post\Load::class,
