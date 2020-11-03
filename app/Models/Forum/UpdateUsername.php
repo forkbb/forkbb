@@ -30,7 +30,7 @@ class UpdateUsername extends Action
 
         $this->c->DB->exec($query, $vars);
 
-        $forums = $this->c->ForumManager->init($this->c->GROUP_ADMIN)->get(0)->descendants;
+        $forums = $this->c->ForumManager->init($this->c->groups->get($this->c->GROUP_ADMIN))->get(0)->descendants;
 
         foreach ($forums as $forum) {
             if ($user->isModerator($forum)) {
