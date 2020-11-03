@@ -12,7 +12,7 @@ use RuntimeException;
 class UpdateUsername extends Action
 {
     /**
-     * Обновляет имя пользователя в списке разделов и модераторах
+     * Обновляет имя пользователя в таблице разделов
      */
     public function updateUsername(User $user): void
     {

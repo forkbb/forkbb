@@ -11,7 +11,7 @@ use RuntimeException;
 class UpdateUsername extends Action
 {
     /**
-     * Обновляет имя пользователя в сообщениях
+     * Обновляет имя пользователя в таблице тем
      */
     public function updateUsername(User $user): void
     {

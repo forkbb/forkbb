@@ -18,10 +18,12 @@ class Save extends Action
         if ($user->id < 1) {
             throw new RuntimeException('The model does not have ID');
         }
+
         $modified = $user->getModified();
         if (empty($modified)) {
             return $user;
         }
+
         $values = $user->getAttrs();
 
         if (
@@ -36,21 +38,30 @@ class Save extends Action
             $table  = 'users';
             $where  = 'id=?i';
         }
+
         $set = $vars = [];
-        $grChange = false;
+        $grChange   = false;
+        $nameChange = false;
+
         foreach ($modified as $name) {
             if (! isset($fileds[$name])) {
                 continue;
             }
+
             $vars[] = $values[$name];
             $set[]  = $name . '=?' . $fileds[$name];
-            if ('group_id' === $name) {
+
+            if ('username' === $name) {
+                $nameChange = true;
+            } elseif ('group_id' === $name) {
                 $grChange = true;
             }
         }
+
         if (empty($set)) {
             return $user;
         }
+
         if (
             $user->isGuest
             && ! $user->isUnverified
@@ -59,6 +70,7 @@ class Save extends Action
         } else {
             $vars[] = $user->id;
         }
+
         $set   = \implode(', ', $set);
         $query = "UPDATE ::{$table}
             SET {$set}
@@ -66,6 +78,13 @@ class Save extends Action
 
         $this->c->DB->exec($query, $vars);
         $user->resModified();
+
+        if (
+            $nameChange
+            && ! $user->isGuest
+        ) {
+            $this->updateUsernameInOtherTables($user);
+        }
 
         if ($grChange) {
             $this->c->admins->reset();
@@ -83,20 +102,25 @@ class Save extends Action
         if (null !== $user->id) {
             throw new RuntimeException('The model has ID');
         }
+
         $attrs  = $user->getAttrs();
         $fileds = $this->c->dbMap->users;
         $set = $set2 = $vars = [];
+
         foreach ($attrs as $key => $value) {
             if (! isset($fileds[$key])) {
                 continue;
             }
+
             $vars[] = $value;
             $set[]  = $key;
             $set2[] = '?' . $fileds[$key];
         }
+
         if (empty($set)) {
             throw new RuntimeException('The model is empty');
         }
+
         $set   = \implode(', ', $set);
         $set2  = \implode(', ', $set2);
         $query = "INSERT INTO ::users ({$set})
@@ -114,5 +138,18 @@ class Save extends Action
         }
 
         return $user->id;
+    }
+
+    /**
+     * Обновляет username по всей(?) DB
+     */
+    protected function updateUsernameInOtherTables(User $user): void
+    {
+        $this->c->posts->updateUsername($user);
+        $this->c->topics->updateUsername($user);
+        $this->c->forums->updateUsername($user);
+        $this->c->Online->updateUsername($user);
+
+        // ???? и т.д.
     }
 }
