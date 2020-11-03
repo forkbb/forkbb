@@ -31,13 +31,19 @@ class UpdateUsername extends Action
         $this->c->DB->exec($query, $vars);
 
         $forums = $this->c->ForumManager->init($this->c->groups->get($this->c->GROUP_ADMIN))->get(0)->descendants;
+        $isMod  = false;
 
         foreach ($forums as $forum) {
             if ($user->isModerator($forum)) {
+                $isMod = true;
                 $forum->modAdd($user); // переименование модератора
 
                 $this->c->forums->update($forum);
             }
+        }
+
+        if ($isMod) {
+            $this->manager->reset();
         }
     }
 }
