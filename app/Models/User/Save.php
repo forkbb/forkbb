@@ -79,10 +79,7 @@ class Save extends Action
         $this->c->DB->exec($query, $vars);
         $user->resModified();
 
-        if (
-            $nameChange
-            && ! $user->isGuest
-        ) {
+        if ($nameChange) {
             $this->updateUsernameInOtherTables($user);
         }
 
@@ -145,6 +142,10 @@ class Save extends Action
      */
     protected function updateUsernameInOtherTables(User $user): void
     {
+        if ($user->isGuest) {
+            return;
+        }
+
         $this->c->posts->updateUsername($user);
         $this->c->topics->updateUsername($user);
         $this->c->forums->updateUsername($user);
