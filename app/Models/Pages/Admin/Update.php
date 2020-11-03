@@ -1056,6 +1056,12 @@ class Update extends Admin
             'TopicManagerMove'
         );
 
+        $coreConfig->add(
+            'multiple=>OnlineModelUpdateUsername',
+            '\\ForkBB\\Models\\Online\\UpdateUsername::class',
+            'OnlineModelInfo'
+        );
+
         $coreConfig->save();
 
         return null;

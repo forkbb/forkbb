@@ -217,6 +217,7 @@ return [
         'ConfigModelSave' => \ForkBB\Models\Config\Save::class,
 
         'OnlineModelInfo' => \ForkBB\Models\Online\Info::class,
+        'OnlineModelUpdateUsername' => \ForkBB\Models\Online\UpdateUsername::class,
 
         'BanListModel'         => \ForkBB\Models\BanList\Model::class,
         'BanListModelLoad'     => \ForkBB\Models\BanList\Load::class,
