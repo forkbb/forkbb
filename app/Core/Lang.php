@@ -284,7 +284,7 @@ class Lang
         if (
             isset($line[1])
             && '"' == $line[0]
-            && '"' == $line[\strlen($line) - 1]
+            && '"' == $line[-1]
         ) {
             $line = \substr($line, 1, -1);
         }

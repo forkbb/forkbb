@@ -140,7 +140,7 @@ class File
             $matches[3] = $this->ext;
         } elseif (
             '(' === $matches[3][0]
-            && ')' === $matches[3][\strlen($matches[3]) - 1]
+            && ')' === $matches[3][-1]
         ) {
             $matches[3] = \explode('|', \substr($matches[3], 1, -1));
 
