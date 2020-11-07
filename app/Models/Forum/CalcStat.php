@@ -47,7 +47,7 @@ class CalcStat extends Method
             $this->model->last_post      = 0;
             $this->model->last_post_id   = 0;
             $this->model->last_poster    = 0;
-            $this->model->last_poster_id = 0
+            $this->model->last_poster_id = 0;
             $this->model->last_topic     = 0;
         } else {
             $this->model->last_post      = $result['last_post'];
