@@ -19,6 +19,7 @@ class Load extends Method
         $emailList = [];
         $ipList    = [];
         $banList   = [];
+        $first     = 0;
 
         $query = 'SELECT b.id, b.username, b.ip, b.email, b.message, b.expire
             FROM ::bans AS b';
@@ -74,13 +75,22 @@ class Load extends Method
                 'message'  => $message,
                 'expire'   => $expire,
             ];
+
+            if (
+                null !== $expire
+                && $expire > 0
+                && $expire < $first
+            ) {
+                $first = $expire;
+            }
         }
 
         return [
-            'banList'   => $banList,
-            'userList'  => $userList,
-            'emailList' => $emailList,
-            'ipList'    => $ipList,
+            'banList'     => $banList,
+            'userList'    => $userList,
+            'emailList'   => $emailList,
+            'ipList'      => $ipList,
+            'firstExpire' => $first,
         ];
     }
 }

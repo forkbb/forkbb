@@ -17,7 +17,7 @@ class Model extends ParentModel
     {
         $list = $this->c->Cache->get('banlist');
 
-        if (! isset($list['banList'], $list['userList'], $list['emailList'], $list['ipList'])) {
+        if (! isset($list['banList'], $list['userList'], $list['emailList'], $list['ipList'], $list['firstExpire'])) {
             $list = $this->load();
 
             if (true !== $this->c->Cache->set('banlist', $list)) {
@@ -25,10 +25,11 @@ class Model extends ParentModel
             }
         }
 
-        $this->banList   = $list['banList'];
-        $this->userList  = $list['userList'];
-        $this->emailList = $list['emailList'];
-        $this->ipList    = $list['ipList'];
+        $this->banList     = $list['banList'];
+        $this->userList    = $list['userList'];
+        $this->emailList   = $list['emailList'];
+        $this->ipList      = $list['ipList'];
+        $this->firstExpire = $list['firstExpire'];
 
         return $this;
     }

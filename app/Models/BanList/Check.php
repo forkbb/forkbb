@@ -15,10 +15,14 @@ class Check extends Method
      */
     public function check(User $user): bool
     {
+        $now = \time();
+
         // удаление просроченных банов
-        if (! empty($this->model->banList)) { // ???? зачем при каждом запуске проверять просроченность?
+        if (
+            $this->model->firstExpire > 0
+            && $this->model->firstExpire < $now
+        ) {
             $ids = [];
-            $now = \time();
 
             foreach ($this->model->banList as $id => $row) {
                 if (
