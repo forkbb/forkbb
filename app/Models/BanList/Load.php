@@ -79,7 +79,10 @@ class Load extends Method
             if (
                 null !== $expire
                 && $expire > 0
-                && $expire < $first
+                && (
+                    0 === $first
+                    || $expire < $first
+                )
             ) {
                 $first = $expire;
             }
