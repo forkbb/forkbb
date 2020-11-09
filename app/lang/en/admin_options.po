@@ -410,3 +410,39 @@ msgstr "All caps signature"
 
 msgid "All caps sigs help"
 msgstr "Allow a signature to contain only capital letters."
+
+msgid "Polls subhead"
+msgstr "Polls"
+
+msgid "Allow polls label"
+msgstr "Allow polls"
+
+msgid "Max questions label"
+msgstr "Max. questions"
+
+msgid "Max questions help"
+msgstr "The maximum number of questions in one poll. <b>It is recommended to set it once and do not change it again!</b>"
+
+msgid "Max options label"
+msgstr "Max. options"
+
+msgid "Max options help"
+msgstr "The maximum number of possible answers to a question. <b>It is recommended to set it once and do not change it again!</b>"
+
+msgid "Poll edit time label"
+msgstr "Edit time"
+
+msgid "Poll edit time help"
+msgstr "Poll editing time (in minutes). <b>0 removes restrictions.</b>"
+
+msgid "Hidden voices label"
+msgstr "Hidden voices"
+
+msgid "Hidden voices help"
+msgstr "The number of votes before which you can hide the poll results. <b>Set in the poll.</b>"
+
+msgid "Result for guest label"
+msgstr "Result for guest"
+
+msgid "Result for guest help"
+msgstr "The guests see the voting results."

@@ -410,3 +410,39 @@ msgstr "Подпись заглавными"
 
 msgid "All caps sigs help"
 msgstr "Разрешить подписи, состоящие из одних заглавных букв."
+
+msgid "Polls subhead"
+msgstr "Опросы"
+
+msgid "Allow polls label"
+msgstr "Разрешить опросы"
+
+msgid "Max questions label"
+msgstr "Макс. вопросов"
+
+msgid "Max questions help"
+msgstr "Максимальное количество вопросов в одном опросе. <b>Рекомендуется задать один раз и больше не изменять!</b>"
+
+msgid "Max options label"
+msgstr "Макс. вариантов"
+
+msgid "Max options help"
+msgstr "Максимальное количество вариантов ответа на вопрос. <b>Рекомендуется задать один раз и больше не изменять!</b>"
+
+msgid "Poll edit time label"
+msgstr "Время редактирования"
+
+msgid "Poll edit time help"
+msgstr "Время редактирования опроса (в минутах). <b>0 снимает ограничения.</b>"
+
+msgid "Hidden voices label"
+msgstr "Скрытые голоса"
+
+msgid "Hidden voices help"
+msgstr "Число голосов, до набора которых можно скрыть результаты опроса. <b>Включается в опросе.</b>"
+
+msgid "Result for guest label"
+msgstr "Результат для гостя"
+
+msgid "Result for guest help"
+msgstr "Гости видят результаты голосования."

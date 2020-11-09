@@ -69,7 +69,7 @@ class Options extends Admin
                     'i_email_max_recipients'  => 'required|integer|min:1|max:99999',
                     'o_smtp_host'             => 'string:trim|max:255',
                     'o_smtp_user'             => 'string:trim|max:255',
-                    'o_smtp_pass'             => 'string:trim|max:255', //??????
+                    'o_smtp_pass'             => 'string:trim|max:255',
                     'changeSmtpPassword'      => 'checkbox',
                     'o_smtp_ssl'              => 'required|integer|in:0,1',
                     'o_regs_allow'            => 'required|integer|in:0,1',
@@ -80,10 +80,16 @@ class Options extends Admin
                     'i_default_email_setting' => 'required|integer|in:0,1,2',
                     'o_announcement'          => 'required|integer|in:0,1|check_empty:o_announcement_message',
                     'o_announcement_message'  => 'string:trim|max:65000 bytes',
-                    'p_message_all_caps'  => 'required|integer|in:0,1',
-                    'p_subject_all_caps'  => 'required|integer|in:0,1',
-                    'p_force_guest_email' => 'required|integer|in:0,1',
-                    'p_sig_all_caps'      => 'required|integer|in:0,1',
+                    'p_message_all_caps'      => 'required|integer|in:0,1',
+                    'p_subject_all_caps'      => 'required|integer|in:0,1',
+                    'p_force_guest_email'     => 'required|integer|in:0,1',
+                    'p_sig_all_caps'          => 'required|integer|in:0,1',
+                    'b_poll_enabled'          => 'required|integer|in:0,1',
+                    'i_poll_max_questions'    => 'required|integer|min:1|max:99',
+                    'i_poll_max_fields'       => 'required|integer|min:2|max:99',
+                    'i_poll_time'             => 'required|integer|min:0|max:999999',
+                    'i_poll_term'             => 'required|integer|min:0|max:99',
+                    'b_poll_guest'            => 'required|integer|in:0,1',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -688,6 +694,57 @@ class Options extends Admin
                     'info'    => __('Announcement message help'),
                 ],
 
+            ],
+        ];
+
+        $form['sets']['polls'] = [
+            'legend' => __('Polls subhead'),
+            'fields' => [
+                'b_poll_enabled' => [
+                    'type'    => 'radio',
+                    'value'   => $config->b_poll_enabled,
+                    'values'  => $yn,
+                    'caption' => __('Allow polls label'),
+                ],
+                'i_poll_max_questions' => [
+                    'type'    => 'number',
+                    'min'     => '1',
+                    'max'     => '99',
+                    'value'   => $config->i_poll_max_questions,
+                    'caption' => __('Max questions label'),
+                    'info'    => __('Max questions help'),
+                ],
+                'i_poll_max_fields' => [
+                    'type'    => 'number',
+                    'min'     => '2',
+                    'max'     => '99',
+                    'value'   => $config->i_poll_max_fields,
+                    'caption' => __('Max options label'),
+                    'info'    => __('Max options help'),
+                ],
+                'i_poll_time' => [
+                    'type'    => 'number',
+                    'min'     => '0',
+                    'max'     => '999999',
+                    'value'   => $config->i_poll_time,
+                    'caption' => __('Poll edit time label'),
+                    'info'    => __('Poll edit time help'),
+                ],
+                'i_poll_term' => [
+                    'type'    => 'number',
+                    'min'     => '0',
+                    'max'     => '99',
+                    'value'   => $config->i_poll_term,
+                    'caption' => __('Hidden voices label'),
+                    'info'    => __('Hidden voices help'),
+                ],
+                'b_poll_guest' => [
+                    'type'    => 'radio',
+                    'value'   => $config->b_poll_guest,
+                    'values'  => $yn,
+                    'caption' => __('Result for guest label'),
+                    'info'    => __('Result for guest help'),
+                ],
             ],
         ];
 
