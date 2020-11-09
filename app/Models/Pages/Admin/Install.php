@@ -800,10 +800,10 @@ class Install extends Admin
                 'stick_fp'       => ['TINYINT(1)', false, 0],
                 'moved_to'       => ['INT(10) UNSIGNED', false, 0],
                 'forum_id'       => ['INT(10) UNSIGNED', false, 0],
-                'poll_type'      => ['TINYINT(4)', false, 0],
+                'poll_type'      => ['TINYINT', false, 0],
                 'poll_time'      => ['INT(10) UNSIGNED', false, 0],
-                'poll_term'      => ['TINYINT(4)', false, 0],
-                'poll_kol'       => ['INT(10) UNSIGNED', false, 0],
+                'poll_term'      => ['TINYINT', false, 0],
+                'poll_votes'     => ['INT(10) UNSIGNED', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
             'INDEXES' => [
@@ -984,13 +984,13 @@ class Install extends Admin
         // poll
         $schema = [
             'FIELDS' => [
-                'tid'      => ['INT(10) UNSIGNED', false, 0],
-                'question' => ['TINYINT(4)', false, 0],
-                'field'    => ['TINYINT(4)', false, 0],
-                'choice'   => ['VARCHAR(255)', false, ''],
-                'votes'    => ['INT(10) UNSIGNED', false, 0],
+                'tid'         => ['INT(10) UNSIGNED', false, 0],
+                'question_id' => ['TINYINT', false, 0],
+                'field_id'    => ['TINYINT', false, 0],
+                'qna_text'    => ['VARCHAR(255)', false, ''],
+                'votes'       => ['INT(10) UNSIGNED', false, 0],
             ],
-            'PRIMARY KEY' => ['tid', 'question', 'field'],
+            'PRIMARY KEY' => ['tid', 'question_id', 'field_id'],
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('poll', $schema);
@@ -1127,12 +1127,12 @@ class Install extends Admin
             'p_force_guest_email'     => 1,
             'o_pms_enabled'           => 1,                    // New PMS - Visman
             'o_pms_min_kolvo'         => 0,
-            'o_poll_enabled'          => 0,    // опросы - Visman
-            'o_poll_max_ques'         => 3,
-            'o_poll_max_field'        => 20,
-            'o_poll_time'             => 60,
-            'o_poll_term'             => 3,
-            'o_poll_guest'            => 0,
+            'b_poll_enabled'          => 0,    // опросы - Visman
+            'i_poll_max_questions'    => 3,
+            'i_poll_max_fields'       => 20,
+            'i_poll_time'             => 60,
+            'i_poll_term'             => 3,
+            'b_poll_guest'            => 0,
             'a_max_users'             => \json_encode(['number' => 1, 'time' => \time()], self::JSON_OPTIONS),
             'a_bb_white_mes'          => \json_encode([], self::JSON_OPTIONS),
             'a_bb_white_sig'          => \json_encode(['b', 'i', 'u', 'color', 'colour', 'email', 'url'], self::JSON_OPTIONS),

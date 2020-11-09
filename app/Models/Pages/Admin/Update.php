@@ -19,7 +19,7 @@ class Update extends Admin
 {
     const PHP_MIN = '7.3.0';
 
-    const LATEST_REV_WITH_DB_CHANGES = 24;
+    const LATEST_REV_WITH_DB_CHANGES = 25;
 
     const LOCK_NAME = 'lock_update';
     const LOCk_TTL  = 1800;
@@ -1063,6 +1063,35 @@ class Update extends Admin
         );
 
         $coreConfig->save();
+
+        return null;
+    }
+
+    /**
+     * rev.25 to rev.26
+     */
+    protected function stageNumber25(array $args): ?int
+    {
+        $this->c->DB->renameField('topics', 'poll_kol', 'poll_votes');
+        $this->c->DB->renameField('poll', 'question', 'question_id');
+        $this->c->DB->renameField('poll', 'field', 'field_id');
+        $this->c->DB->renameField('poll', 'choice', 'qna_text');
+
+        $this->c->config->b_poll_enabled       = $this->c->config->o_poll_enabled ?? 0;
+        $this->c->config->i_poll_max_questions = $this->c->config->o_poll_max_ques ?? 3;
+        $this->c->config->i_poll_max_fields    = $this->c->config->o_poll_max_field ?? 20;
+        $this->c->config->i_poll_time          = $this->c->config->o_poll_time ?? 60;
+        $this->c->config->i_poll_term          = $this->c->config->o_poll_term ?? 3;
+        $this->c->config->b_poll_guest         = $this->c->config->o_poll_guest ?? 0;
+
+        unset($this->c->config->o_poll_enabled);
+        unset($this->c->config->o_poll_max_ques);
+        unset($this->c->config->o_poll_max_field);
+        unset($this->c->config->o_poll_time);
+        unset($this->c->config->o_poll_term);
+        unset($this->c->config->o_poll_guest);
+
+        $this->c->config->save();
 
         return null;
     }
