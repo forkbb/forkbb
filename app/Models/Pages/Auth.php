@@ -64,7 +64,7 @@ class Auth extends Page
             $this->fIswev = $v->getErrors();
         }
 
-        $ref = $_SERVER['HTTP_REFERER'] ?? '';
+        $ref = $this->c->Secury->replInvalidChars($_SERVER['HTTP_REFERER'] ?? '');
 
         $this->fIndex     = 'login';
         $this->nameTpl    = 'login';

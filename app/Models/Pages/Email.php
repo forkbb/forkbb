@@ -46,7 +46,10 @@ class Email extends Page
         }
 
         $data = [
-            'redirect' => $this->c->Router->validate($_SERVER['HTTP_REFERER'] ?? '', 'Index'),
+            'redirect' => $this->c->Router->validate(
+                $this->c->Secury->replInvalidChars($_SERVER['HTTP_REFERER'] ?? ''),
+                'Index'
+            ),
         ];
 
         if ('POST' === $method) {

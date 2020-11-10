@@ -117,7 +117,7 @@ class Current extends Action
      */
     protected function getUserAgent(): string
     {
-        return \trim($_SERVER['HTTP_USER_AGENT'] ?? '');
+        return \trim($this->c->Secury->replInvalidChars($_SERVER['HTTP_USER_AGENT'] ?? ''));
     }
 
     /**
