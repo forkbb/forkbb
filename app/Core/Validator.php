@@ -587,31 +587,32 @@ class Validator
 
     protected function recArray(&$value, &$result, $name, $rules, $field)
     {
-        $idxs = \explode('.', $name);
-        $key  = \array_shift($idxs);
-        $name = \implode('.', $idxs);
-
-        if ('*' === $key) {
-            if (! \is_array($value)) {
-                return; //????
+        if ('' === $name) {
+            $result = $this->checkValue($value, $rules, $field);
+        } else {
+            if (! \preg_match('%^([^.]+)(?:\.(.+))?$%', $name, $matches)) {
+                throw new RuntimeException("Bad path '{$name}'");
             }
 
-            foreach ($value as $i => $cur) {
-                if ('' === $name) {
-                    $result[$i] = $this->checkValue($cur, $rules, $field);
-                } else {
+            $key  = $matches[1];
+            $name = $matches[2] ?? '';
+
+            if (
+                '*' === $key
+                && \is_array($value)
+            ) {
+                foreach ($value as $i => $cur) {
                     $this->recArray($value[$i], $result[$i], $name, $rules, $field);
                 }
-            }
-        } else {
-            if (! \array_key_exists($key, $value)) {
-                return; //????
-            }
-
-            if ('' === $name) {
-                $result[$key] = $this->checkValue($value[$key], $rules, $field);
-            } else {
+            } elseif (
+                '*' !== $key
+                && \array_key_exists($key, $value)
+            ) {
                 $this->recArray($value[$key], $result[$key], $name, $rules, $field);
+            } elseif (isset($rules['required'])) {
+                $tmp1 = null;
+                $tmp2 = null;
+                $this->recArray($tmp1, $tmp2, $name, $rules, $field);
             }
         }
     }
