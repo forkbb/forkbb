@@ -963,8 +963,8 @@ class Update extends Admin
         $this->c->config->i_report_method         = $this->c->config->o_report_method         ?? 0;
         $this->c->config->i_default_user_group    = $this->c->config->o_default_user_group    ?? $this->c->GROUP_MEMBER;
         $this->c->config->a_max_users = [
-            'number' => (int) $this->c->config->st_max_users ?? 1,
-            'time'   => (int) $this->c->config->st_max_users_time ?? \time(),
+            'number' => (int) ($this->c->config->st_max_users ?? 1),
+            'time'   => (int) ($this->c->config->st_max_users_time ?? \time()),
         ];
 
         unset($this->c->config->o_enable_acaptcha);
