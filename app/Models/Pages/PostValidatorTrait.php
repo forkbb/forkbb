@@ -195,6 +195,46 @@ trait PostValidatorTrait
                 'username.login' => 'Login format',
             ]);
 
+        if (
+            $editSubject
+            && '1' == $this->c->config->b_poll_enabled
+        ) {
+            $v->addValidators([
+                'check_poll'  => [$this, 'vCheckPoll'],
+            ])->addRules([
+                'poll_enable'      => 'checkbox|check_poll',
+                'poll.hide_result' => 'checkbox',
+                'poll.question.*'  => 'string:trim|max:255',
+                'poll.type.*'      => 'integer|min:1|max:' . $this->c->config->i_poll_max_fields,
+                'poll.answer.*.*'  => 'string:trim|max:255',
+            ]);
+        }
+
         return $v;
+    }
+
+    /**
+     * Дополнительная проверка опроса
+     */
+    public function vCheckPoll(Validator $v, $enable, $attr)
+    {
+        if (
+            false !== $enable
+            && empty($v->getErrors())
+        ) {
+            $poll = $this->c->polls->create([
+                'question' => $v->poll['question'],
+                'answer'   => $v->poll['answer'],
+                'type'     => $v->poll['type'],
+            ]);
+
+            $result = $this->c->polls->revision($poll);
+
+            if (true !== $result) {
+                $v->addError($result);
+            }
+        }
+
+        return $enable;
     }
 }

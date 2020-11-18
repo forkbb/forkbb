@@ -183,10 +183,68 @@ trait PostFormTrait
         }
 
         if ($fieldset) {
-            $form['sets']['sett'] = [
+            $form['sets']['uesm-options'] = [
                 'legend' => __('Options'),
                 'fields' => $fieldset,
             ];
+        }
+
+        if (
+            $editSubject
+            && '1' == $this->c->config->b_poll_enabled
+        ) {
+            $fieldset = [];
+
+            $fieldset['poll_enable'] = [
+                'type'    => 'checkbox',
+                'label'   => __('Include poll'),
+                'value'   => '1',
+                'checked' => (bool) ($vars['poll_enable'] ?? false),
+            ];
+            $fieldset['poll[hide_result]'] = [
+                'type'    => 'checkbox',
+                'label'   => __('Hide poll results up to %s voters', $this->c->config->i_poll_term), // ???? при редактировании взять данные из топика?
+                'value'   => '1',
+                'checked' => (bool) ($vars['poll']['hide_result'] ?? false),
+            ];
+
+            $form['sets']['uesm-poll'] = [
+                'legend' => __('Poll legend'),
+                'fields' => $fieldset,
+            ];
+
+            for ($qid = 1; $qid <= $this->c->config->i_poll_max_questions; $qid++) {
+                $fieldset = [];
+
+                $fieldset["poll[question][{$qid}]"] = [
+                    'type'      => 'text',
+                    'maxlength' => '255',
+                    'caption'   => __('Question text label'),
+                    'value'     => $vars['poll']['question'][$qid] ?? null,
+                ];
+                $fieldset["poll[type][{$qid}]"] = [
+                    'type'    => 'number',
+                    'min'     => '1',
+                    'max'     => (string) $this->c->config->i_poll_max_fields,
+                    'value'   => $vars['poll']['type'][$qid] ?? 1,
+                    'caption' => __('Answer type label'),
+                    'info'    => __('Answer type help'),
+                ];
+
+                for ($fid = 1; $fid <= $this->c->config->i_poll_max_fields; $fid++) {
+                    $fieldset["poll[answer][{$qid}][{$fid}]"] = [
+                        'type'      => 'text',
+                        'maxlength' => '255',
+                        'caption'   => __('Answer %s label', $fid),
+                        'value'     => $vars['poll']['answer'][$qid][$fid] ?? null,
+                    ];
+                }
+
+                $form['sets']["uesm-q-{$qid}"] = [
+                    'legend' => __('Question %s legend', $qid),
+                    'fields' => $fieldset,
+                ];
+            }
         }
 
         return $form;
