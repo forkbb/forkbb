@@ -1095,4 +1095,52 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.26 to rev.27
+     */
+    protected function stageNumber26(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+
+        $coreConfig->add(
+            'shared=>polls',
+            '\\ForkBB\\Models\\Poll\\Manager::class',
+            'posts'
+        );
+
+        $coreConfig->add(
+            'shared=>PollManagerLoad',
+            '\\ForkBB\\Models\\Poll\\Load::class',
+            'UsersRules'
+        );
+
+        $coreConfig->add(
+            'shared=>PollManagerSave',
+            '\\ForkBB\\Models\\Poll\\Save::class',
+            'PollManagerLoad'
+        );
+
+        $coreConfig->add(
+            'shared=>PollManagerDelete',
+            '\\ForkBB\\Models\\Poll\\Delete::class',
+            'PollManagerSave'
+        );
+
+        $coreConfig->add(
+            'shared=>PollManagerRevision',
+            '\\ForkBB\\Models\\Poll\\Revision::class',
+            'PollManagerDelete'
+        );
+
+        $coreConfig->add(
+            'multiple=>PollModel',
+            '\\ForkBB\\Models\\Poll\\Model::class',
+            'PostManagerUpdateUsername'
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }
