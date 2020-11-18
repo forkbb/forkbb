@@ -113,20 +113,20 @@ trait PostFormTrait
                     'type'    => 'checkbox',
                     'label'   => __('Stick topic'),
                     'value'   => '1',
-                    'checked' => isset($vars['stick_topic']) ? (bool) $vars['stick_topic'] : false,
+                    'checked' => (bool) ($vars['stick_topic'] ?? false),
                 ];
                 $fieldset['stick_fp'] = [
                     'type'    => 'checkbox',
                     'label'   => __('Stick first post'),
                     'value'   => '1',
-                    'checked' => isset($vars['stick_fp']) ? (bool) $vars['stick_fp'] : false,
+                    'checked' => (bool) ($vars['stick_fp'] ?? false),
                 ];
             } elseif (! $editPost) {
                 $fieldset['merge_post'] = [
                     'type'    => 'checkbox',
                     'label'   => __('Merge posts'),
                     'value'   => '1',
-                    'checked' => isset($vars['merge_post']) ? (bool) $vars['merge_post'] : true,
+                    'checked' => (bool) ($vars['merge_post'] ?? true),
                 ];
             }
 
@@ -139,7 +139,7 @@ trait PostFormTrait
                     'type'    => 'checkbox',
                     'label'   => __('EditPost edit'),
                     'value'   => '1',
-                    'checked' => isset($vars['edit_post']) ? (bool) $vars['edit_post'] : false,
+                    'checked' => (bool) ($vars['edit_post'] ?? false),
                 ];
             }
         }
@@ -163,9 +163,7 @@ trait PostFormTrait
                     'type'    => 'checkbox',
                     'label'   => $subscribed ? __('Stay subscribed') : __('New subscribe'),
                     'value'   => '1',
-                    'checked' => isset($vars['subscribe'])
-                        ? (bool) $vars['subscribe']
-                        : ($subscribed || $this->user->auto_notify),
+                    'checked' => (bool) ($vars['subscribe'] ?? ($subscribed || $this->user->auto_notify)),
                 ];
             }
         }
@@ -178,7 +176,7 @@ trait PostFormTrait
                 'type'    => 'checkbox',
                 'label'   => __('Hide smilies'),
                 'value'   => '1',
-                'checked' => isset($vars['hide_smilies']) ? (bool) $vars['hide_smilies'] : false,
+                'checked' => (bool) ($vars['hide_smilies'] ?? false),
             ];
         }
 
