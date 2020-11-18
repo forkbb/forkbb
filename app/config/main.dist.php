@@ -100,6 +100,7 @@ return [
         'forums'        => '@ForumManager:init',
         'topics'        => \ForkBB\Models\Topic\Manager::class,
         'posts'         => \ForkBB\Models\Post\Manager::class,
+        'polls'         => \ForkBB\Models\Poll\Manager::class,
         'reports'       => \ForkBB\Models\Report\Manager::class,
         'user'          => '@users:current',
         'userRules'     => '@UsersRules:init',
@@ -137,6 +138,11 @@ return [
 
         'ProfileRules' => \ForkBB\Models\Rules\Profile::class,
         'UsersRules'   => \ForkBB\Models\Rules\Users::class,
+
+        'PollManagerLoad'     => \ForkBB\Models\Poll\Load::class,
+        'PollManagerSave'     => \ForkBB\Models\Poll\Save::class,
+        'PollManagerDelete'   => \ForkBB\Models\Poll\Delete::class,
+        'PollManagerRevision' => \ForkBB\Models\Poll\Revision::class,
 
         'SubscriptionModelSend' => \ForkBB\Models\Subscription\Send::class,
 
@@ -293,6 +299,9 @@ return [
         'PostManagerMove'         => \ForkBB\Models\Post\Move::class,
         'PostManagerFeed'         => \ForkBB\Models\Post\Feed::class,
         'PostManagerUpdateUsername' => \ForkBB\Models\Post\UpdateUsername::class,
+
+        'PollModel' => \ForkBB\Models\Poll\Model::class,
+
 
         'ReportModel'             => \ForkBB\Models\Report\Model::class,
         'ReportManagerSave'       => \ForkBB\Models\Report\Save::class,
