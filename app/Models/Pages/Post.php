@@ -195,10 +195,6 @@ class Post extends Page
             $topic->last_post      = $now;
             $topic->sticky         = $v->stick_topic ? 1 : 0;
             $topic->stick_fp       = $v->stick_fp ? 1 : 0;
-#           $topic->poll_type   = ;
-#           $topic->poll_time   = ;
-#           $topic->poll_term   = ;
-#           $topic->poll_kol    = ;
 
             $this->c->topics->insert($topic);
         }
@@ -244,6 +240,25 @@ class Post extends Page
         if ($createTopic) {
             $topic->forum_id      = $forum->id;
             $topic->first_post_id = $post->id;
+
+            if (
+                '1' == $this->c->config->b_poll_enabled
+                && $v->poll_enable
+            ) {
+                $topic->poll_type  = 1;
+                $topic->poll_time  = $now;
+                $topic->poll_term  = $v->poll['hide_result'] ? $this->c->config->i_poll_term : 0;
+#                $topic->poll_votes = ;
+
+                $poll = $this->c->polls->create([
+                    'tid'      => $topic->id,
+                    'question' => $v->poll['question'],
+                    'answer'   => $v->poll['answer'],
+                    'type'     => $v->poll['type'],
+                ]);
+
+                $this->c->polls->insert($poll);
+            }
         }
 
         // обновление данных в теме и разделе

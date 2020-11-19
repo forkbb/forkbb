@@ -13,7 +13,7 @@ use RuntimeException;
 class Model extends DataModel
 {
     /**
-     * Получение родительской темы
+     * Возвращает родительскую тему
      */
     protected function getparent(): Topic
     {
@@ -29,4 +29,24 @@ class Model extends DataModel
 
         return $topic;
     }
+
+    /**
+     * Устанавливает родительскую тему
+     */
+    protected function setparent(Topic $topic): void
+    {
+        if ($topic->id < 1) {
+            throw new RuntimeException('Parent has a bad id');
+        }
+
+        if (
+            $this->tid > 0
+            && $this->tid !== $topic->id
+        ) {
+            throw new RuntimeException('Alien parent');
+        }
+
+        $this->tid = $topic->id;
+    }
+
 }
