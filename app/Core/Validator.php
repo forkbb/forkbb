@@ -613,6 +613,11 @@ class Validator
                 $tmp1 = null;
                 $tmp2 = null;
                 $this->recArray($tmp1, $tmp2, $name, $rules, $field);
+            } elseif ('*' === $key) {
+                $result = []; // ???? а может там не отсутствие элемента, а не array?
+            } else {
+                $value[$key] = null;
+                $this->recArray($value[$key], $result[$key], $name, $rules, $field);
             }
         }
     }
