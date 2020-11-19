@@ -31,7 +31,7 @@ class Load extends Action
 
         $i    = 0;
         $data = [
-            'id'       => $id,
+            'tid'      => $id,
             'question' => [],
             'answer'   => [],
             'vote'     => [],

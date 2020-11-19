@@ -53,7 +53,7 @@ class Manager extends ManagerModel
         $poll = $this->Save->update($poll);
 
         if (true === $poll->itWasModified) {
-            $this->reset($poll->id);
+            $this->reset($poll->tid);
         }
 
         return $poll;

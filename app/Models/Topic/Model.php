@@ -7,6 +7,7 @@ namespace ForkBB\Models\Topic;
 use ForkBB\Core\Container;
 use ForkBB\Models\DataModel;
 use ForkBB\Models\Forum\Model as Forum;
+use ForkBB\Models\Poll\Model as Poll;
 use PDO;
 use RuntimeException;
 
@@ -469,5 +470,13 @@ class Model extends DataModel
 
             $this->c->DB->exec($query, $vars);
         }
+    }
+
+    /**
+     * Возвращает опрос при его наличии
+     */
+    protected function getpoll(): ?Poll
+    {
+        return $this->poll_type > 0 ? $this->c->polls->load($this->id) : null;
     }
 }

@@ -191,6 +191,10 @@ trait PostFormTrait
             $editSubject
             && '1' == $this->c->config->b_poll_enabled
         ) {
+            $term = $editPost && $model->parent->poll_term
+                ? $model->parent->poll_term
+                : $this->c->config->i_poll_term;
+
             $fieldset = [];
 
             $fieldset['poll_enable'] = [
@@ -201,7 +205,7 @@ trait PostFormTrait
             ];
             $fieldset['poll[hide_result]'] = [
                 'type'    => 'checkbox',
-                'label'   => __('Hide poll results up to %s voters', $this->c->config->i_poll_term), // ???? при редактировании взять данные из топика?
+                'label'   => __('Hide poll results up to %s voters', $term),
                 'value'   => '1',
                 'checked' => (bool) ($vars['poll']['hide_result'] ?? false),
             ];

@@ -7,6 +7,7 @@ namespace ForkBB\Models\Pages;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Post\Model as Post;
+use ForkBB\Models\Topic\Model as Topic;
 use function \ForkBB\__;
 
 class Edit extends Page
@@ -64,6 +65,23 @@ class Edit extends Page
                 'stick_fp'     => $topic->stick_fp,
                 'edit_post'    => $post->edit_post,
             ];
+
+            if (
+                $editSubject
+                && '1' == $this->c->config->b_poll_enabled
+            ) {
+                $poll = $topic->poll;
+
+                $args['_vars'] += [
+                    'poll_enable' => $topic->poll_type > 0,
+                    'poll' => [
+                        'hide_result' => $topic->poll_term > 0,
+                        'question'    => $poll->question,
+                        'type'        => $poll->type,
+                        'answer'      => $poll->answer,
+                    ],
+                ];
+            }
         }
 
         $this->nameTpl   = 'post';
@@ -140,6 +158,10 @@ class Edit extends Page
             ) {
                 $topic->stick_fp = $v->stick_fp ? 1 : 0;
             }
+            // опрос
+            if ('1' == $this->c->config->b_poll_enabled) {
+                $this->changePoll($topic, $v);
+            }
         }
 
         // обновление сообщения
@@ -169,5 +191,54 @@ class Edit extends Page
         $this->c->search->index($post, 'edit');
 
         return $this->c->Redirect->page('ViewPost', ['id' => $post->id])->message('Edit redirect');
+    }
+
+    /**
+     * Изменяет(удаляет/добавляет) данные опроса
+     */
+    protected function changePoll(Topic $topic, Validator $v)
+    {
+        if ($topic->poll_type > 0 ) {
+            $poll = $topic->poll;
+
+            // редактирование
+            if ($v->poll_enable) {
+#                $topic->poll_type  = 0;
+#                $topic->poll_time  = 0;
+                $topic->poll_term  = $v->poll['hide_result']
+                    ? ($topic->poll_term ?: $this->c->config->i_poll_term)
+                    : 0;
+#                $topic->poll_votes = 0;
+
+                $poll->__question = $v->poll['question'];
+                $poll->__answer   = $v->poll['answer'];
+                $poll->__type     = $v->poll['type'];
+
+                $this->c->polls->update($poll);
+            // удаление
+            } else {
+                $topic->poll_type  = 0;
+                $topic->poll_time  = 0;
+                $topic->poll_term  = 0;
+                $topic->poll_votes = 0;
+
+                $this->c->polls->delete($poll);
+            }
+        // добавление
+        } elseif ($v->poll_enable) {
+            $topic->poll_type  = 1;
+            $topic->poll_time  = \time();
+            $topic->poll_term  = $v->poll['hide_result'] ? $this->c->config->i_poll_term : 0;
+            $topic->poll_votes = 0;
+
+            $poll = $this->c->polls->create([
+                'tid'      => $topic->id,
+                'question' => $v->poll['question'],
+                'answer'   => $v->poll['answer'],
+                'type'     => $v->poll['type'],
+            ]);
+
+            $this->c->polls->insert($poll);
+        }
     }
 }
