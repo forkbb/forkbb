@@ -22,14 +22,14 @@ class Save extends Action
             throw new RuntimeException('The poll model has errors');
         }
 
-        $old = $this->manager->Load->load($poll->id);
+        $old = $this->manager->Load->load($poll->tid);
 
         if (! $old instanceof Poll) {
             throw new RuntimeException('No such poll found');
         }
 
         $vars = [
-            ':tid' => $poll->id,
+            ':tid' => $poll->tid,
         ];
         $queryIn = 'INSERT INTO ::poll (tid, question_id, field_id, qna_text, votes)
             VALUES (?i:tid, ?i:qid, ?i:fid, ?s:qna, ?i:votes)';
@@ -119,12 +119,12 @@ class Save extends Action
             throw new RuntimeException('The poll model has errors');
         }
 
-        if (null !== $this->manager->Load->load($poll->id)) {
+        if (null !== $this->manager->Load->load($poll->tid)) {
             throw new RuntimeException('Such the poll already exists');
         }
 
         $vars = [
-            ':tid' => $poll->id,
+            ':tid' => $poll->tid,
         ];
         $query = 'INSERT INTO ::poll (tid, question_id, field_id, qna_text, votes)
             VALUES (?i:tid, ?i:qid, ?i:fid, ?s:qna, ?i:votes)';
@@ -149,6 +149,6 @@ class Save extends Action
 
         $poll->resModified();
 
-        return $poll->id;
+        return $poll->tid;
     }
 }
