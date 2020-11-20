@@ -47,7 +47,7 @@ class Edit extends Page
             }
 
             $this->fIswev  = $v->getErrors();
-            $args['_vars'] = $v->getData(); //????
+            $args['_vars'] = $v->getData();
 
             if (
                 null !== $v->preview
@@ -67,7 +67,7 @@ class Edit extends Page
                 }
             }
         } else {
-            $args['_vars'] = [ //????
+            $args['_vars'] = [
                 'message'      => $post->message,
                 'subject'      => $topic->subject,
                 'hide_smilies' => $post->hide_smilies,
@@ -75,21 +75,37 @@ class Edit extends Page
                 'stick_fp'     => $topic->stick_fp,
                 'edit_post'    => $post->edit_post,
             ];
+        }
 
+        if (
+            $editSubject
+            && $this->user->usePoll
+        ) {
             if (
-                $editSubject
-                && $this->user->usePoll
-                && ($poll = $topic->poll) instanceof Poll
+                ($poll = $topic->poll) instanceof Poll
+                && (
+                    ! $poll->canEdit
+                    || 'POST' !== $method
+                )
             ) {
-                $args['_vars'] += [
-                    'poll_enable' => $topic->poll_type > 0,
-                    'poll' => [
+                $args['_vars'] = \array_merge($args['_vars'], [
+                    'pollNoEdit'   => ! $poll->canEdit,
+                    'poll_enable'  => $topic->poll_type > 0,
+                    'poll'         => [
                         'hide_result' => $topic->poll_term > 0,
                         'question'    => $poll->question,
                         'type'        => $poll->type,
                         'answer'      => $poll->answer,
                     ],
-                ];
+                ]);
+            }
+
+            if (
+                null !== $this->previewHtml
+                && $args['_vars']['poll_enable']
+            ) {
+                $this->poll = $this->c->polls->create($args['_vars']['poll']);
+                $this->c->polls->revision($this->poll, true);
             }
         }
 
@@ -205,10 +221,14 @@ class Edit extends Page
     /**
      * Изменяет(удаляет/добавляет) данные опроса
      */
-    protected function changePoll(Topic $topic, Validator $v)
+    protected function changePoll(Topic $topic, Validator $v): void
     {
         if ($topic->poll_type > 0 ) {
             $poll = $topic->poll;
+
+            if (! $poll->canEdit) {
+                return;
+            }
 
             // редактирование
             if ($v->poll_enable) {

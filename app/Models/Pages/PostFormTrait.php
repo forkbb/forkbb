@@ -198,16 +198,18 @@ trait PostFormTrait
             $fieldset = [];
 
             $fieldset['poll_enable'] = [
-                'type'    => 'checkbox',
-                'label'   => __('Include poll'),
-                'value'   => '1',
-                'checked' => (bool) ($vars['poll_enable'] ?? false),
+                'type'     => 'checkbox',
+                'label'    => __('Include poll'),
+                'value'    => '1',
+                'checked'  => (bool) ($vars['poll_enable'] ?? false),
+                'disabled' => $vars['pollNoEdit'] ?? null,
             ];
             $fieldset['poll[hide_result]'] = [
-                'type'    => 'checkbox',
-                'label'   => __('Hide poll results up to %s voters', $term),
-                'value'   => '1',
-                'checked' => (bool) ($vars['poll']['hide_result'] ?? false),
+                'type'     => 'checkbox',
+                'label'    => __('Hide poll results up to %s voters', $term),
+                'value'    => '1',
+                'checked'  => (bool) ($vars['poll']['hide_result'] ?? false),
+                'disabled' => $vars['pollNoEdit'] ?? null,
             ];
 
             $form['sets']['uesm-poll'] = [
@@ -223,14 +225,16 @@ trait PostFormTrait
                     'maxlength' => '255',
                     'caption'   => __('Question text label'),
                     'value'     => $vars['poll']['question'][$qid] ?? null,
+                    'disabled'  => $vars['pollNoEdit'] ?? null,
                 ];
                 $fieldset["poll[type][{$qid}]"] = [
-                    'type'    => 'number',
-                    'min'     => '1',
-                    'max'     => (string) $this->c->config->i_poll_max_fields,
-                    'value'   => $vars['poll']['type'][$qid] ?? 1,
-                    'caption' => __('Answer type label'),
-                    'info'    => __('Answer type help'),
+                    'type'     => 'number',
+                    'min'      => '1',
+                    'max'      => (string) $this->c->config->i_poll_max_fields,
+                    'value'    => $vars['poll']['type'][$qid] ?? 1,
+                    'caption'  => __('Answer type label'),
+                    'info'     => __('Answer type help'),
+                    'disabled' => $vars['pollNoEdit'] ?? null,
                 ];
 
                 for ($fid = 1; $fid <= $this->c->config->i_poll_max_fields; $fid++) {
@@ -239,6 +243,7 @@ trait PostFormTrait
                         'maxlength' => '255',
                         'caption'   => __('Answer %s label', $fid),
                         'value'     => $vars['poll']['answer'][$qid][$fid] ?? null,
+                        'disabled'  => $vars['pollNoEdit'] ?? null,
                     ];
                 }
 

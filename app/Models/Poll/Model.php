@@ -58,7 +58,7 @@ class Model extends DataModel
             return true;
         }
 
-        if (! $this->tid) {
+        if ($this->tid < 1) {
             return false;
         }
 
@@ -80,6 +80,7 @@ class Model extends DataModel
     {
         return $this->tid > 0
             && $this->c->user->usePoll
+            && 0 === $this->parent->closed
             && 1 === $this->parent->poll_type // ???? добавить ограничение по времени?
             && ! $this->userVoted;
     }
@@ -93,4 +94,21 @@ class Model extends DataModel
             && (0 === $this->parent->poll_term || $this->parent->poll_term < $this->parent->poll_votes);
     }
 
+    /**
+     * Статус возможности редактировать опрос
+     */
+    protected function getcanEdit(): bool
+    {
+        return $this->c->user->usePoll
+            && (
+                0 === $this->c->config->i_poll_time
+                || $this->tid < 1
+                || $this->c->user->isAdmin
+                || (
+                    $this->c->user->isAdmMod
+                    && $this->c->user->isModerator($this)
+                )
+                || 60 * $this->c->config->i_poll_time > \time() - $this->parent->poll_time
+            );
+    }
 }
