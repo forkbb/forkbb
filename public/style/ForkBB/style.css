@@ -1939,6 +1939,57 @@ body,
   }
 }
 
+/*********/
+/* Опрос */
+/*********/
+
+#fork .f-post-poll {
+  margin: 0.625rem;
+  padding: 0.625rem 0.625rem 0 0.625rem;
+  background-color: #F8F4E3;
+  border: 0.0625rem solid #AA7939;
+}
+
+#fork .f-poll-q {
+  margin-bottom: 0.625rem;
+}
+
+#fork .f-poll-q + .f-poll-q {
+  border-top: 0.0625rem solid #AA7939;
+  padding-top: 0.625rem;
+}
+
+#fork .f-poll-ql {
+  display: none;
+}
+
+#fork .f-poll-qt {
+  margin-bottom: 0.625rem;
+  font-weight: bold;
+}
+
+#fork .f-poll-a {
+  margin-bottom: 0.625rem;
+}
+
+#fork .f-poll-al {
+  cursor: pointer;
+}
+
+#fork .f-poll-ai {
+  margin-right: 0.625rem;
+}
+
+#fork .f-poll-mult,
+#fork .f-poll-total {
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+#fork .f-poll-mult {
+  text-decoration: underline;
+}
+
 /**********/
 /* Репорт */
 /**********/
