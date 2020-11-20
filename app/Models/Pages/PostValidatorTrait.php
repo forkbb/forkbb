@@ -197,7 +197,7 @@ trait PostValidatorTrait
 
         if (
             $editSubject
-            && '1' == $this->c->config->b_poll_enabled
+            && $this->user->usePoll
         ) {
             $v->addValidators([
                 'check_poll'  => [$this, 'vCheckPoll'],

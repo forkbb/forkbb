@@ -338,7 +338,10 @@ class Model extends DataModel
             ! empty($list)
             && (
                 $this->stick_fp
-                || $this->poll_type
+                || (
+                    $this->poll_type > 0
+                    && '1' == $this->c->config->b_poll_enabled
+                )
             )
             && ! \in_array($this->first_post_id, $list)
         ) {

@@ -189,7 +189,7 @@ trait PostFormTrait
 
         if (
             $editSubject
-            && '1' == $this->c->config->b_poll_enabled
+            && $this->user->usePoll
         ) {
             $term = $editPost && $model->parent->poll_term
                 ? $model->parent->poll_term

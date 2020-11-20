@@ -6,6 +6,7 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
+use ForkBB\Models\Poll\Model as Poll;
 use ForkBB\Models\Post\Model as Post;
 use ForkBB\Models\Topic\Model as Topic;
 use function \ForkBB\__;
@@ -55,6 +56,15 @@ class Edit extends Page
                 $this->previewHtml = $this->c->censorship->censor(
                     $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies)
                 );
+
+                if (
+                    $editSubject
+                    && $this->user->usePoll
+                    && $v->poll_enable
+                ) {
+                    $this->poll = $this->c->polls->create($v->poll);
+                    $this->c->polls->revision($this->poll, true);
+                }
             }
         } else {
             $args['_vars'] = [ //????
@@ -68,10 +78,9 @@ class Edit extends Page
 
             if (
                 $editSubject
-                && '1' == $this->c->config->b_poll_enabled
+                && $this->user->usePoll
+                && ($poll = $topic->poll) instanceof Poll
             ) {
-                $poll = $topic->poll;
-
                 $args['_vars'] += [
                     'poll_enable' => $topic->poll_type > 0,
                     'poll' => [
@@ -159,7 +168,7 @@ class Edit extends Page
                 $topic->stick_fp = $v->stick_fp ? 1 : 0;
             }
             // опрос
-            if ('1' == $this->c->config->b_poll_enabled) {
+            if ($this->user->usePoll) {
                 $this->changePoll($topic, $v);
             }
         }

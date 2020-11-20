@@ -19,7 +19,7 @@ class Model extends DataModel
         parent::__construct($container);
 
         $this->zDepend = [
-            'group_id'     => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'isBanByName', 'link', 'viewUsers', 'showPostCount', 'searchUsers'],
+            'group_id'     => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'isBanByName', 'link', 'viewUsers', 'showPostCount', 'searchUsers', 'usePoll'],
             'id'           => ['isGuest', 'link', 'online'],
             'last_visit'   => ['currentVisit'],
             'show_sig'     => ['showSignature'],
@@ -370,5 +370,13 @@ class Model extends DataModel
         }
 
         return parent::getAttrs();
+    }
+
+    /**
+     * Статус возможности использования опросов
+     */
+    protected function getusePoll(): bool
+    {
+        return '1' == $this->c->config->b_poll_enabled && ! $this->isGuest;
     }
 }

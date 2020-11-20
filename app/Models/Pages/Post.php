@@ -59,6 +59,14 @@ class Post extends Page
                 $this->previewHtml = $this->c->censorship->censor(
                     $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies)
                 );
+
+                if (
+                    $this->user->usePoll
+                    && $v->poll_enable
+                ) {
+                    $this->poll = $this->c->polls->create($v->poll);
+                    $this->c->polls->revision($this->poll, true);
+                }
             }
         }
 
@@ -242,7 +250,7 @@ class Post extends Page
             $topic->first_post_id = $post->id;
 
             if (
-                '1' == $this->c->config->b_poll_enabled
+                $this->user->usePoll
                 && $v->poll_enable
             ) {
                 $topic->poll_type  = 1;

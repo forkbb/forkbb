@@ -49,4 +49,48 @@ class Model extends DataModel
         $this->tid = $topic->id;
     }
 
+    /**
+     * Статус голосования для текущего пользователя
+     */
+    protected function getuserVoted(): bool
+    {
+        if ($this->c->user->isGuest) {
+            return true;
+        }
+
+        if (! $this->tid) {
+            return false;
+        }
+
+        $vars = [
+            ':tid' => $this->tid,
+            ':uid' => $this->c->user->id,
+        ];
+        $query = 'SELECT 1
+            FROM ::poll_voted
+            WHERE tid=?i:tid AND uid=?i:uid';
+
+        return ! empty($this->c->DB->query($query, $vars)->fetch());
+    }
+
+    /**
+     * Статус возможности голосовать
+     */
+    protected function getcanVote(): bool
+    {
+        return $this->tid > 0
+            && $this->c->user->usePoll
+            && 1 === $this->parent->poll_type // ???? добавить ограничение по времени?
+            && ! $this->userVoted;
+    }
+
+    /**
+     * Статус возможности видеть результат
+     */
+    protected function getcanSeeResult(): bool
+    {
+        return ($this->c->user->usePoll || '1' == $this->c->config->b_poll_guest)
+            && (0 === $this->parent->poll_term || $this->parent->poll_term < $this->parent->poll_votes);
+    }
+
 }

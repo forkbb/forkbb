@@ -167,6 +167,13 @@ class Topic extends Page
             ]);
         }
 
+        if (
+            $topic->poll_type > 0
+            && '1' == $this->c->config->b_poll_enabled
+        ) {
+            $this->poll = $topic->poll;
+        }
+
         return $this;
     }
 
