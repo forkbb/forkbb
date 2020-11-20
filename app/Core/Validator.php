@@ -606,6 +606,7 @@ class Validator
                 }
             } elseif (
                 '*' !== $key
+                && \is_array($value)
                 && \array_key_exists($key, $value)
             ) {
                 $this->recArray($value[$key], $result[$key], $name, $rules, $field);
