@@ -104,6 +104,9 @@
           <div class="f-post-main">
             {!! $post->html() !!}
           </div>
+        @if (1 === $post->postNumber && ($poll = $p->poll))
+            @include ('layouts/poll')
+        @endif
         @if ($p->user->showSignature && $post->user->isSignature)
           <div class="f-post-signature">
             <hr>

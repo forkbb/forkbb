@@ -10,6 +10,9 @@
         <div class="f-post-main">
           {!! $p->previewHtml !!}
         </div>
+    @if ($poll = $p->poll)
+        @include ('layouts/poll')
+    @endif
       </div>
     </section>
 @endif

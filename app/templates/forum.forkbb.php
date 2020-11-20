@@ -103,7 +103,7 @@
             @if ($topic->closed)
                   <span class="f-tclosed" title="{!! __('Closed') !!}"><span class="f-closedtxt">{!! __('Closed') !!}</span></span>
             @endif
-            @if ($topic->poll_type)
+            @if ($topic->poll_type > 0)
                   <span class="f-tpoll" title="{!! __('Poll') !!}"><span class="f-polltxt">{!! __('Poll') !!}</span></span>
             @endif
                   <a class="f-ftname" href="{!! $topic->link !!}">{{ $topic->censorSubject }}</a>
