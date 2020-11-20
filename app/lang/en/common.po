@@ -550,3 +550,12 @@ msgstr "Unsubscribe"
 
 msgid "Subscribe"
 msgstr "Subscribe"
+
+msgid "Question %s legend"
+msgstr "Question %s"
+
+msgid "You can choose up to %s answers"
+msgstr "You can choose up to %s answers."
+
+msgid "In total voted: %s"
+msgstr "In total voted: %s"

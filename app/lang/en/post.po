@@ -111,9 +111,6 @@ msgstr "Include poll"
 msgid "Hide poll results up to %s voters"
 msgstr "Hide poll results up to %s voters"
 
-msgid "Question %s legend"
-msgstr "Question %s"
-
 msgid "Question text label"
 msgstr "Текст вопроса"
 

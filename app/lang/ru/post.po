@@ -111,9 +111,6 @@ msgstr "Включить опрос"
 msgid "Hide poll results up to %s voters"
 msgstr "Скрывать результаты опроса до %s проголосовавших"
 
-msgid "Question %s legend"
-msgstr "Вопрос %s"
-
 msgid "Question text label"
 msgstr "Текст вопроса"
 
