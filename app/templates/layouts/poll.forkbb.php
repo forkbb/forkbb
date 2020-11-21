@@ -6,7 +6,7 @@
             <fieldset id="id-question-{!! $q !!}" class="f-poll-q">
               <legend class="f-poll-ql">{!! __('Question %s legend', $q) !!}</legend>
               <h3 class="f-poll-qt">{{ $question }}</h3>
-    @if ($poll->type[$q] > 1)
+    @if (($poll->canVote || ! $poll->tid) && $poll->type[$q] > 1)
               <p class="f-poll-mult">{!! __('You can choose up to %s answers', $poll->type[$q]) !!}</p>
     @endif
               <ol class="f-poll-as">
@@ -23,8 +23,8 @@
                   </label>
         @elseif ($poll->canSeeResult)
                   <span class="f-poll-at">{{ $answer }}</span>
-                  <span class="f-poll-ap">(votes 1 [100%])</span>
-                  <p class="f-poll-ab"><span style="width: 100%;"><span>100%</span></span></p>
+                  <span class="f-poll-ap">{!! __('(%1$s [%2$s%%])', $poll->vote[$q][$a], $poll->percVote[$q][$a]) !!}</span>
+                  <p class="f-poll-ab"><span class="f-poll-ab-s1" style="width:{{ $poll->widthVote[$q][$a] }}%;"><span class="f-poll-ab-s2">{{ $poll->widthVote[$q][$a] }}%</span></span></p>
         @else
                   <label class="f-poll-al">
                     <span class="f-poll-at">{{ $answer }}</span>
@@ -33,10 +33,14 @@
                 </li>
     @endforeach
               </ol>
-              <p class="f-poll-total">{!! __('In total voted: %s', $poll->total[$q]) !!}</p>
+              <p class="f-poll-total">{!! __('In total voted: %s', $poll->total[$q] ?? 0) !!}</p>
             </fieldset>
 @endforeach
 @if ($poll->canVote)
           </form>
+@else
+    @if (null !== $poll->status)
+          <p class="f-poll-status"><span>{!! $poll->status !!}</span></p>
+    @endif
 @endif
         </div>

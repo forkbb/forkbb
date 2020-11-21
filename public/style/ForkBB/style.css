@@ -1959,7 +1959,8 @@ body,
   padding-top: 0.625rem;
 }
 
-#fork .f-poll-ql {
+#fork .f-poll-ql,
+#fork .f-poll-ab-s2 {
   display: none;
 }
 
@@ -1981,13 +1982,36 @@ body,
 }
 
 #fork .f-poll-mult,
-#fork .f-poll-total {
+#fork .f-poll-total,
+#fork .f-poll-ap {
   font-size: 0.8rem;
   font-style: italic;
 }
 
 #fork .f-poll-mult {
   text-decoration: underline;
+}
+
+#fork .f-poll-ab {
+  border: 0.0625rem solid #AA7939;
+  width: 60%;
+  height: 1rem;
+}
+
+#fork .f-poll-ab-s1 {
+  background-color: #AA7939;
+  height: 1rem;
+  display: block;
+  font-size: 0;
+  overflow: hidden;
+}
+
+#fork .f-poll-status {
+  font-size: 0.8rem;
+  font-style: italic;
+  text-align: center;
+  border-top: 0.0625rem solid #AA7939;
+  padding-top: 0.625rem;
 }
 
 /**********/

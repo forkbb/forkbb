@@ -68,3 +68,21 @@ msgstr "Duration"
 
 msgid "Poll duration help"
 msgstr "Duration of the poll (in days). Set to 0 to disable."
+
+msgid "(%1$s [%2$s%%])"
+msgstr "(%1$s [%2$s%%])"
+
+msgid "Poll results are hidden from the guests"
+msgstr "Poll results are hidden from the guests"
+
+msgid "This poll is closed"
+msgstr "This poll is closed"
+
+msgid "Poll results are hidden up to %s voters"
+msgstr "Poll results are hidden up to %s voters"
+
+msgid "You voted"
+msgstr "You voted"
+
+msgid "Poll status is undefined"
+msgstr "Статус опроса неопределен"

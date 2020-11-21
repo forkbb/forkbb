@@ -9,6 +9,7 @@ use ForkBB\Models\DataModel;
 use ForkBB\Models\Topic\Model as Topic;
 use PDO;
 use RuntimeException;
+use function \ForkBB\__;
 
 class Model extends DataModel
 {
@@ -135,5 +136,87 @@ class Model extends DataModel
                 )
                 || 60 * $this->c->config->i_poll_time > \time() - $this->parent->poll_time
             );
+    }
+
+    /**
+     * Возвращает максимум голосов за один ответ по каждому вопросу
+     */
+    protected function getmaxVote(): array
+    {
+        $result = [];
+
+        foreach (\array_keys($this->question) as $q) {
+            $result[$q] = \min(\max($this->vote[$q]), $this->total[$q]);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Возвращает процент голосов по каждому ответу кажого вопроса
+     */
+    protected function getpercVote(): array
+    {
+        $result = [];
+
+        foreach (\array_keys($this->question) as $q) {
+            if ($this->total[$q] > 0) {
+                $total = $this->total[$q] / 100;
+
+                foreach (\array_keys($this->answer[$q]) as $a) {
+                    $result[$q][$a] = \min(100, \round($this->vote[$q][$a] / $total, 2));
+                }
+            } else {
+                foreach (\array_keys($this->answer[$q]) as $a) {
+                    $result[$q][$a] = 0;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Возвращает ширину ответа в процентах
+     */
+    protected function getwidthVote(): array
+    {
+        $result = [];
+
+        foreach (\array_keys($this->question) as $q) {
+            if ($this->maxVote[$q] > 0) {
+                $max = $this->maxVote[$q] / 100;
+
+                foreach (\array_keys($this->answer[$q]) as $a) {
+                    $result[$q][$a] = \min(100, \round($this->vote[$q][$a] / $max));
+                }
+            } else {
+                foreach (\array_keys($this->answer[$q]) as $a) {
+                    $result[$q][$a] = 0;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    protected function getstatus(): ?string
+    {
+        if ($this->tid < 1) {
+            return null;
+        } elseif (
+            $this->c->user->isGuest
+            && '1' != $this->c->config->b_poll_guest
+        ) {
+            return __('Poll results are hidden from the guests');
+        } elseif (! $this->isOpen) {
+            return __('This poll is closed');
+        } elseif (! $this->canSeeResult) {
+            return __('Poll results are hidden up to %s voters', $this->parent->poll_term);
+        } elseif ($this->userVoted) {
+            return __('You voted');
+        } else {
+            return __('Poll status is undefined');
+        }
     }
 }

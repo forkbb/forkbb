@@ -58,7 +58,7 @@ msgid "Question %s legend"
 msgstr "Вопрос %s"
 
 msgid "You can choose up to %s answers"
-msgstr "Можете выбрать до %s ответов."
+msgstr "Можно выбрать до %s ответов."
 
 msgid "In total voted: %s"
 msgstr "Проголосовало: %s"
@@ -68,3 +68,21 @@ msgstr "Длительность"
 
 msgid "Poll duration help"
 msgstr "Продолжительность опроса (в днях). 0 снимает ограничения."
+
+msgid "(%1$s [%2$s%%])"
+msgstr "(%1$s [%2$s%%])"
+
+msgid "Poll results are hidden from the guests"
+msgstr "Результаты опроса скрыты от гостей"
+
+msgid "This poll is closed"
+msgstr "Опрос закрыт"
+
+msgid "Poll results are hidden up to %s voters"
+msgstr "Результаты опроса скрыты до %s проголосовавших"
+
+msgid "You voted"
+msgstr "Вы проголосовали"
+
+msgid "Poll status is undefined"
+msgstr "Статус опроса неопределен"
