@@ -552,12 +552,3 @@ msgstr "Отписаться"
 
 msgid "Subscribe"
 msgstr "Подписаться"
-
-msgid "Question %s legend"
-msgstr "Вопрос %s"
-
-msgid "You can choose up to %s answers"
-msgstr "Можете выбрать до %s ответов."
-
-msgid "In total voted: %s"
-msgstr "Проголосовало: %s"

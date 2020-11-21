@@ -171,6 +171,8 @@ class Topic extends Page
             $topic->poll_type > 0
             && '1' == $this->c->config->b_poll_enabled
         ) {
+            $this->c->Lang->load('poll');
+
             $this->poll = $topic->poll;
         }
 
