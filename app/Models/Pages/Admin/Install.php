@@ -800,7 +800,7 @@ class Install extends Admin
                 'stick_fp'       => ['TINYINT(1)', false, 0],
                 'moved_to'       => ['INT(10) UNSIGNED', false, 0],
                 'forum_id'       => ['INT(10) UNSIGNED', false, 0],
-                'poll_type'      => ['TINYINT', false, 0],
+                'poll_type'      => ['SMALLINT UNSIGNED', false, 0],
                 'poll_time'      => ['INT(10) UNSIGNED', false, 0],
                 'poll_term'      => ['TINYINT', false, 0],
                 'poll_votes'     => ['INT(10) UNSIGNED', false, 0],

@@ -19,7 +19,7 @@ class Update extends Admin
 {
     const PHP_MIN = '7.3.0';
 
-    const LATEST_REV_WITH_DB_CHANGES = 25;
+    const LATEST_REV_WITH_DB_CHANGES = 28;
 
     const LOCK_NAME = 'lock_update';
     const LOCk_TTL  = 1800;
@@ -1140,6 +1140,16 @@ class Update extends Admin
         );
 
         $coreConfig->save();
+
+        return null;
+    }
+
+    /**
+     * rev.27 to rev.28
+     */
+    protected function stageNumber27(array $args): ?int
+    {
+        $this->c->DB->alterField('topics', 'poll_type', 'SMALLINT UNSIGNED', false, 0);
 
         return null;
     }
