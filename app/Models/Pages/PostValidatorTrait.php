@@ -205,9 +205,9 @@ trait PostValidatorTrait
                 'poll_enable'      => 'checkbox|check_poll',
                 'poll.duration'    => 'integer|min:0|max:366',
                 'poll.hide_result' => 'checkbox',
-                'poll.question.*'  => 'string:trim|max:255',
+                'poll.question.*'  => 'string:trim|max:240',
                 'poll.type.*'      => 'integer|min:1|max:' . $this->c->config->i_poll_max_fields,
-                'poll.answer.*.*'  => 'string:trim|max:255',
+                'poll.answer.*.*'  => 'string:trim|max:240',
             ]);
         }
 

@@ -242,7 +242,6 @@ class Edit extends Page
                 $topic->poll_term  = $v->poll['hide_result']
                     ? ($topic->poll_term ?: $this->c->config->i_poll_term)
                     : 0;
-#                $topic->poll_votes = 0;
 
                 $poll->__question = $v->poll['question'];
                 $poll->__answer   = $v->poll['answer'];
@@ -254,7 +253,6 @@ class Edit extends Page
                 $topic->poll_type  = 0;
                 $topic->poll_time  = 0;
                 $topic->poll_term  = 0;
-                $topic->poll_votes = 0;
 
                 $this->c->polls->delete($poll);
             }
@@ -263,7 +261,6 @@ class Edit extends Page
             $topic->poll_type  = $v->poll['duration'] > 0 ? 1000 + $v->poll['duration'] : 1; // ???? перенести в модель poll?
             $topic->poll_time  = \time();
             $topic->poll_term  = $v->poll['hide_result'] ? $this->c->config->i_poll_term : 0;
-            $topic->poll_votes = 0;
 
             $poll = $this->c->polls->create([
                 'tid'      => $topic->id,

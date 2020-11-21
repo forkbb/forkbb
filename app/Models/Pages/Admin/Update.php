@@ -19,7 +19,7 @@ class Update extends Admin
 {
     const PHP_MIN = '7.3.0';
 
-    const LATEST_REV_WITH_DB_CHANGES = 28;
+    const LATEST_REV_WITH_DB_CHANGES = 29;
 
     const LOCK_NAME = 'lock_update';
     const LOCk_TTL  = 1800;
@@ -1150,6 +1150,28 @@ class Update extends Admin
     protected function stageNumber27(array $args): ?int
     {
         $this->c->DB->alterField('topics', 'poll_type', 'SMALLINT UNSIGNED', false, 0);
+
+        return null;
+    }
+
+    /**
+     * rev.28 to rev.29
+     */
+    protected function stageNumber28(array $args): ?int
+    {
+        $query = 'UPDATE ::poll AS pl
+            SET pl.qna_text=CONCAT(pl.votes, \'|\', pl.qna_text)
+            WHERE pl.field_id=0';
+
+        $this->c->DB->query($query);
+
+        $query = 'UPDATE ::poll AS pl, ::topics AS t
+            SET pl.votes=t.poll_votes
+            WHERE pl.field_id=0 AND pl.tid=t.id';
+
+        $this->c->DB->query($query);
+
+        $this->c->DB->dropField('topics', 'poll_votes');
 
         return null;
     }

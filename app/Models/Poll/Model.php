@@ -114,7 +114,7 @@ class Model extends DataModel
             )
             && (
                 0 === $this->parent->poll_term
-                || $this->parent->poll_term < $this->parent->poll_votes
+                || $this->parent->poll_term < \max($this->total)
                 || ! $this->isOpen
             );
     }

@@ -36,6 +36,7 @@ class Load extends Action
             'answer'   => [],
             'vote'     => [],
             'type'     => [],
+            'total'    => [],
         ];
 
         while ($row = $stmt->fetch()) {
@@ -43,8 +44,10 @@ class Load extends Action
             $fid = $row['field_id'];
 
             if (0 === $fid) {
-                $data['question'][$qid]     = $row['qna_text'];
-                $data['type'][$qid]         = $row['votes'];
+                list($type, $question)      = \explode('|', $row['qna_text'], 2);
+                $data['question'][$qid]     = $question;
+                $data['type'][$qid]         = (int) $type;
+                $data['total'][$qid]        = $row['votes'];
             } else {
                 $data['answer'][$qid][$fid] = $row['qna_text'];
                 $data['vote'][$qid][$fid]   = $row['votes'];

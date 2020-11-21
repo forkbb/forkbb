@@ -803,7 +803,6 @@ class Install extends Admin
                 'poll_type'      => ['SMALLINT UNSIGNED', false, 0],
                 'poll_time'      => ['INT(10) UNSIGNED', false, 0],
                 'poll_term'      => ['TINYINT', false, 0],
-                'poll_votes'     => ['INT(10) UNSIGNED', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
             'INDEXES' => [

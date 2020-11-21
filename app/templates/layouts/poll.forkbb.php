@@ -33,7 +33,7 @@
                 </li>
     @endforeach
               </ol>
-              <p class="f-poll-total">{!! __('In total voted: %s', 0) !!}</p>
+              <p class="f-poll-total">{!! __('In total voted: %s', $poll->total[$q]) !!}</p>
             </fieldset>
 @endforeach
 @if ($poll->canVote)

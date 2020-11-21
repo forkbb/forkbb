@@ -31,17 +31,14 @@ class Save extends Action
         $vars = [
             ':tid' => $poll->tid,
         ];
-        $queryIn = 'INSERT INTO ::poll (tid, question_id, field_id, qna_text, votes)
-            VALUES (?i:tid, ?i:qid, ?i:fid, ?s:qna, ?i:votes)';
-        $queryU1 = 'UPDATE :poll
-            SET qna_text=?s:qna, votes=?i:votes
-            WHERE tid=?i:tid AND question_id=?i:qid AND field_id=?i:fid';
-        $queryU1 = 'UPDATE :poll
+        $queryIn = 'INSERT INTO ::poll (tid, question_id, field_id, qna_text)
+            VALUES (?i:tid, ?i:qid, ?i:fid, ?s:qna)';
+        $queryU1 = 'UPDATE ::poll
             SET qna_text=?s:qna
             WHERE tid=?i:tid AND question_id=?i:qid AND field_id=?i:fid';
-        $queryD1 = 'DELETE FROM :poll
+        $queryD1 = 'DELETE FROM ::poll
             WHERE tid=?i:tid AND question_id IN(?ai:qids)';
-        $queryD2 = 'DELETE FROM :poll
+        $queryD2 = 'DELETE FROM ::poll
             WHERE tid=?i:tid AND question_id=?i:qid AND field_id IN(?ai:fid)';
 
         $modified    = false;
@@ -49,10 +46,9 @@ class Save extends Action
         $oldType     = $old->type;
 
         foreach ($poll->question as $qid => $qna) {
-            $vars[':qid']   = $qid;
-            $vars[':fid']   = 0;
-            $vars[':qna']   = $qna;
-            $vars[':votes'] = $poll->type[$qid];
+            $vars[':qid'] = $qid;
+            $vars[':fid'] = 0;
+            $vars[':qna'] = $poll->type[$qid] . '|' . $qna;
 
             if (! isset($oldQuestion[$qid])) {
                 $modified = true;
@@ -67,12 +63,11 @@ class Save extends Action
                 $this->c->DB->exec($queryU1, $vars);
             }
 
-            $vars[':votes'] = 0;
-            $oldAnswer      = $old->answer[$qid] ?? [];
+            $oldAnswer = $old->answer[$qid] ?? [];
 
             foreach ($poll->answer[$qid] as $fid => $qna) {
-                $vars[':fid']   = $fid;
-                $vars[':qna']   = $qna;
+                $vars[':fid'] = $fid;
+                $vars[':qna'] = $qna;
 
                 if (! isset($oldAnswer[$fid])) {
                     $modified = true;
@@ -81,7 +76,7 @@ class Save extends Action
                 } elseif ($qna !== $oldAnswer[$fid]) {
                     $modified = true;
 
-                    $this->c->DB->exec($queryU2, $vars);
+                    $this->c->DB->exec($queryU1, $vars);
                 }
 
                 unset($oldAnswer[$fid]);
@@ -126,22 +121,19 @@ class Save extends Action
         $vars = [
             ':tid' => $poll->tid,
         ];
-        $query = 'INSERT INTO ::poll (tid, question_id, field_id, qna_text, votes)
-            VALUES (?i:tid, ?i:qid, ?i:fid, ?s:qna, ?i:votes)';
+        $query = 'INSERT INTO ::poll (tid, question_id, field_id, qna_text)
+            VALUES (?i:tid, ?i:qid, ?i:fid, ?s:qna)';
 
         foreach ($poll->question as $qid => $qna) {
-            $vars[':qid']   = $qid;
-            $vars[':fid']   = 0;
-            $vars[':qna']   = $qna;
-            $vars[':votes'] = $poll->type[$qid];
+            $vars[':qid'] = $poll->type[$qid] . '|' . $qid;
+            $vars[':fid'] = 0;
+            $vars[':qna'] = $qna;
 
             $this->c->DB->exec($query, $vars);
 
-            $vars[':votes'] = 0;
-
             foreach ($poll->answer[$qid] as $fid => $qna) {
-                $vars[':fid']   = $fid;
-                $vars[':qna']   = $qna;
+                $vars[':fid'] = $fid;
+                $vars[':qna'] = $qna;
 
                 $this->c->DB->exec($query, $vars);
             }

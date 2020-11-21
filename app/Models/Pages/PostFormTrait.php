@@ -231,7 +231,7 @@ trait PostFormTrait
 
                 $fieldset["poll[question][{$qid}]"] = [
                     'type'      => 'text',
-                    'maxlength' => '255',
+                    'maxlength' => '240',
                     'caption'   => __('Question text label'),
                     'value'     => $vars['poll']['question'][$qid] ?? null,
                     'disabled'  => $vars['pollNoEdit'] ?? null,
@@ -249,7 +249,7 @@ trait PostFormTrait
                 for ($fid = 1; $fid <= $this->c->config->i_poll_max_fields; $fid++) {
                     $fieldset["poll[answer][{$qid}][{$fid}]"] = [
                         'type'      => 'text',
-                        'maxlength' => '255',
+                        'maxlength' => '240',
                         'caption'   => __('Answer %s label', $fid),
                         'value'     => $vars['poll']['answer'][$qid][$fid] ?? null,
                         'disabled'  => $vars['pollNoEdit'] ?? null,
