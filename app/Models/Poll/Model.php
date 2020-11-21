@@ -74,14 +74,32 @@ class Model extends DataModel
     }
 
     /**
+     * Статус открытости
+     */
+    protected function getisOpen(): bool
+    {
+        return $this->tid < 1
+            || (
+                0 === $this->parent->closed
+                && ($type = $this->parent->poll_type) > 0
+                && (
+                    1 === $type
+                    || (
+                        $type > 1000
+                        && ($type - 1000) * 86400 > \time() - $this->parent->poll_time
+                    )
+                )
+            );
+    }
+
+    /**
      * Статус возможности голосовать
      */
     protected function getcanVote(): bool
     {
         return $this->tid > 0
             && $this->c->user->usePoll
-            && 0 === $this->parent->closed
-            && 1 === $this->parent->poll_type // ???? добавить ограничение по времени?
+            && $this->isOpen
             && ! $this->userVoted;
     }
 
@@ -90,8 +108,15 @@ class Model extends DataModel
      */
     protected function getcanSeeResult(): bool
     {
-        return ($this->c->user->usePoll || '1' == $this->c->config->b_poll_guest)
-            && (0 === $this->parent->poll_term || $this->parent->poll_term < $this->parent->poll_votes);
+        return (
+                $this->c->user->usePoll
+                || '1' == $this->c->config->b_poll_guest
+            )
+            && (
+                0 === $this->parent->poll_term
+                || $this->parent->poll_term < $this->parent->poll_votes
+                || ! $this->isOpen
+            );
     }
 
     /**

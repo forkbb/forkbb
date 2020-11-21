@@ -433,13 +433,13 @@ msgid "Poll edit time label"
 msgstr "Edit time"
 
 msgid "Poll edit time help"
-msgstr "Poll editing time (in minutes). <b>0 removes restrictions.</b>"
+msgstr "Poll editing time (in minutes). Set to 0 to disable."
 
 msgid "Hidden voices label"
 msgstr "Hidden voices"
 
 msgid "Hidden voices help"
-msgstr "The number of votes before which you can hide the poll results. <b>Set in the poll.</b>"
+msgstr "The number of votes before which you can hide the poll results. Set in the poll."
 
 msgid "Result for guest label"
 msgstr "Result for guest"

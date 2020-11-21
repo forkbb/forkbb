@@ -62,3 +62,9 @@ msgstr "You can choose up to %s answers."
 
 msgid "In total voted: %s"
 msgstr "In total voted: %s"
+
+msgid "Poll duration label"
+msgstr "Duration"
+
+msgid "Poll duration help"
+msgstr "Duration of the poll (in days). Set to 0 to disable."

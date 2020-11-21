@@ -62,3 +62,9 @@ msgstr "Можете выбрать до %s ответов."
 
 msgid "In total voted: %s"
 msgstr "Проголосовало: %s"
+
+msgid "Poll duration label"
+msgstr "Длительность"
+
+msgid "Poll duration help"
+msgstr "Продолжительность опроса (в днях). 0 снимает ограничения."

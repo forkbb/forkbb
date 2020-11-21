@@ -204,6 +204,15 @@ trait PostFormTrait
                 'checked'  => (bool) ($vars['poll_enable'] ?? false),
                 'disabled' => $vars['pollNoEdit'] ?? null,
             ];
+            $fieldset["poll[duration]"] = [
+                'type'     => 'number',
+                'min'      => '0',
+                'max'      => '366',
+                'value'    => $vars['poll']['duration'] ?? 0,
+                'caption'  => __('Poll duration label'),
+                'info'     => __('Poll duration help'),
+                'disabled' => $vars['pollNoEdit'] ?? null,
+            ];
             $fieldset['poll[hide_result]'] = [
                 'type'     => 'checkbox',
                 'label'    => __('Hide poll results up to %s voters', $term),

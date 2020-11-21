@@ -96,6 +96,7 @@ class Edit extends Page
                     'pollNoEdit'   => ! $poll->canEdit,
                     'poll_enable'  => $topic->poll_type > 0,
                     'poll'         => [
+                        'duration'    => $topic->poll_type > 1000 ? $topic->poll_type - 1000 : 0, // ???? перенести в модель poll?
                         'hide_result' => $topic->poll_term > 0,
                         'question'    => $poll->question,
                         'type'        => $poll->type,
@@ -236,7 +237,7 @@ class Edit extends Page
 
             // редактирование
             if ($v->poll_enable) {
-#                $topic->poll_type  = 0;
+                $topic->poll_type  = $v->poll['duration'] > 0 ? 1000 + $v->poll['duration'] : 1; // ???? перенести в модель poll?
 #                $topic->poll_time  = 0;
                 $topic->poll_term  = $v->poll['hide_result']
                     ? ($topic->poll_term ?: $this->c->config->i_poll_term)
@@ -259,7 +260,7 @@ class Edit extends Page
             }
         // добавление
         } elseif ($v->poll_enable) {
-            $topic->poll_type  = 1;
+            $topic->poll_type  = $v->poll['duration'] > 0 ? 1000 + $v->poll['duration'] : 1; // ???? перенести в модель poll?
             $topic->poll_time  = \time();
             $topic->poll_term  = $v->poll['hide_result'] ? $this->c->config->i_poll_term : 0;
             $topic->poll_votes = 0;

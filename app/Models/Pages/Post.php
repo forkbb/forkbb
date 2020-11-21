@@ -54,7 +54,7 @@ class Post extends Page
             }
 
             $this->fIswev  = $v->getErrors();
-            $args['_vars'] = $v->getData(); //????
+            $args['_vars'] = $v->getData();
 
             if (
                 null !== $v->preview
@@ -257,7 +257,7 @@ class Post extends Page
                 $this->user->usePoll
                 && $v->poll_enable
             ) {
-                $topic->poll_type  = 1;
+                $topic->poll_type  = $v->poll['duration'] > 0 ? 1000 + $v->poll['duration'] : 1; // ???? перенести в модель poll?
                 $topic->poll_time  = $now;
                 $topic->poll_term  = $v->poll['hide_result'] ? $this->c->config->i_poll_term : 0;
 #                $topic->poll_votes = ;
