@@ -1,6 +1,7 @@
         <div class="f-post-poll">
 @if ($poll->canVote)
-          <form>
+          <form class="f-form" method="post" action="{!! $poll->link !!}">
+            <input type="hidden" name="token" value="{{ $poll->token }}">
 @endif
 @foreach ($poll->question as $q => $question)
             <fieldset id="id-question-{!! $q !!}" class="f-poll-q">
@@ -37,6 +38,9 @@
             </fieldset>
 @endforeach
 @if ($poll->canVote)
+            <p class="f-poll-btns">
+              <button class="f-btn" name="vote" value="{!! __('Vote') !!}" title="{!! __('Vote') !!}"><span>{!! __('Vote') !!}</span></button>
+            </p>
           </form>
 @else
     @if (null !== $poll->status)

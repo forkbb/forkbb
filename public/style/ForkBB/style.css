@@ -2014,6 +2014,12 @@ body,
   padding-top: 0.625rem;
 }
 
+#fork .f-poll-btns {
+  text-align: center;
+  border-top: 0.0625rem solid #AA7939;
+  padding-top: 0.625rem;
+}
+
 /**********/
 /* Репорт */
 /**********/

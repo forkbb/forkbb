@@ -13,6 +13,8 @@ use function \ForkBB\__;
 
 class Model extends DataModel
 {
+    const JSON_OPTIONS = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
+
     /**
      * Возвращает родительскую тему
      */
@@ -48,6 +50,30 @@ class Model extends DataModel
         }
 
         $this->tid = $topic->id;
+    }
+
+    /**
+     * Ссылка на обработчик опроса
+     */
+    protected function getlink(): ?string
+    {
+        if ($this->tid > 0) {
+            return $this->c->Router->link('Poll', ['tid' => $this->tid]);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Значение токена для формы голосования
+     */
+    protected function gettoken(): ?string
+    {
+        if ($this->tid > 0) {
+            return $this->c->Csrf->create('Poll', ['tid' => $this->tid]);
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -200,6 +226,9 @@ class Model extends DataModel
         return $result;
     }
 
+    /**
+     * Возвращает статус опроса для текущего пользователя или null
+     */
     protected function getstatus(): ?string
     {
         if ($this->tid < 1) {
@@ -218,5 +247,72 @@ class Model extends DataModel
         } else {
             return __('Poll status is undefined');
         }
+    }
+
+    /**
+     * Голосование
+     * Возвращает текст ошибки или null
+     */
+    public function vote(array $vote): ?string
+    {
+        if (! $this->canVote) {
+            return __('You cannot vote on this poll');
+        }
+
+        $data = [];
+
+        foreach (\array_keys($this->question) as $q) {
+            if ($this->type[$q] > 1) {
+                $count = \count($vote[$q]);
+                if (0 == $count) {
+                    return __('No vote on question %s', $q);
+                } elseif ($count > $this->type[$q]) {
+                    return __('Too many answers selected in question %s', $q);
+                }
+
+                foreach (\array_keys($vote[$q]) as $a) {
+                    if (! isset($this->answer[$q][$a])) {
+                        return __('The selected answer is not present in question %s', $q);
+                    }
+
+                    $data[] = [$q, $a];
+                }
+            } else {
+                if (! isset($vote[$q][0])) {
+                    return __('No vote on question %s', $q);
+                } elseif (! isset($this->answer[$q][$vote[$q][0]])) {
+                    return __('The selected answer is not present in question %s', $q);
+                }
+
+                $data[] = [$q, $vote[$q][0]];
+            }
+
+            $data[] = [$q, 0];
+        }
+
+        $vars = [
+            ':tid' => $this->tid,
+            ':uid' => $this->c->user->id,
+            ':rez' => \json_encode($data, self::JSON_OPTIONS),
+        ];
+        $query = 'INSERT INTO ::poll_voted (tid, uid, rez)
+            VALUES (?i:tid, ?i:uid, ?s:rez)';
+
+        $this->c->DB->exec($query, $vars);
+
+        $vars = [
+            ':tid' => $this->tid,
+        ];
+        $query = 'UPDATE ::poll
+            SET votes=votes+1
+            WHERE tid=?i:tid AND question_id=?i:qid AND field_id=?i:fid';
+
+        foreach ($data as list($vars[':qid'], $vars[':fid'])) {
+            $this->c->DB->exec($query, $vars);
+        }
+
+        $this->c->polls->reset($this->tid);
+
+        return null;
     }
 }

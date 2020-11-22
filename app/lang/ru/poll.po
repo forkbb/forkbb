@@ -73,16 +73,31 @@ msgid "(%1$s [%2$s%%])"
 msgstr "(%1$s [%2$s%%])"
 
 msgid "Poll results are hidden from the guests"
-msgstr "Результаты опроса скрыты от гостей"
+msgstr "Результаты опроса скрыты от гостей."
 
 msgid "This poll is closed"
-msgstr "Опрос закрыт"
+msgstr "Опрос закрыт."
 
 msgid "Poll results are hidden up to %s voters"
-msgstr "Результаты опроса скрыты до %s проголосовавших"
+msgstr "Результаты опроса скрыты до %s проголосовавших."
 
 msgid "You voted"
-msgstr "Вы проголосовали"
+msgstr "Вы проголосовали."
 
 msgid "Poll status is undefined"
-msgstr "Статус опроса неопределен"
+msgstr "Статус опроса неопределен."
+
+msgid "Vote"
+msgstr "Голосовать"
+
+msgid "You cannot vote on this poll"
+msgstr "Вы не можете проголосовать в этом опросе."
+
+msgid "No vote on question %s"
+msgstr "Отсутствует голос по %s вопросу."
+
+msgid "The selected answer is not present in question %s"
+msgstr "Выбранный вариант ответа отсутствует в вопросе номер %s."
+
+msgid "Too many answers selected in question %s"
+msgstr "В вопросе номер %s выбрано много ответов."

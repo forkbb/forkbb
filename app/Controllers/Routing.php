@@ -384,6 +384,15 @@ class Routing
             }
 
         }
+        // опросы
+        if ($user->usePoll) {
+            $r->add(
+                $r::PST,
+                '/poll/{tid:[1-9]\d*}',
+                'Poll:vote',
+                'Poll'
+            );
+        }
         // админ и модератор
         if ($user->isAdmMod) {
             $r->add(
