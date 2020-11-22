@@ -191,6 +191,7 @@ return [
         'Report'          => \ForkBB\Models\Pages\Report::class,
         'Email'           => \ForkBB\Models\Pages\Email::class,
         'Feed'            => \ForkBB\Models\Pages\Feed::class,
+        'Poll'            => \ForkBB\Models\Pages\Poll::class,
         'ProfileView'     => \ForkBB\Models\Pages\Profile\View::class,
         'ProfileEdit'     => \ForkBB\Models\Pages\Profile\Edit::class,
         'ProfileConfig'   => \ForkBB\Models\Pages\Profile\Config::class,

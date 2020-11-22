@@ -1175,4 +1175,22 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.29 to rev.30
+     */
+    protected function stageNumber29(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+
+        $coreConfig->add(
+            'multiple=>Poll',
+            '\\ForkBB\\Models\\Pages\\Poll::class',
+            'Feed'
+        );
+
+        $coreConfig->save();
+
+        return null;
+   }
 }
