@@ -34,7 +34,17 @@ class Message extends Page
         } else {
             $type = 'e';
         }
-        $this->fIswev = [$type, __($message)];
+
+        if (
+            '' == $message
+            && empty($this->fIswev)
+        ) {
+            $message = 'Empty message';
+        }
+
+        if ('' != $message) {
+            $this->fIswev = [$type, __($message)];
+        }
 
         return $this;
     }
