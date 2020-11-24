@@ -22,7 +22,7 @@ class Delete extends Action
             throw new InvalidArgumentException('No arguments, expected User(s) or Forum(s)');
         }
 
-        $users   = [];
+        $uids    = [];
         $forums  = [];
         $all     = [];
         $isUser  = 0;
@@ -33,18 +33,21 @@ class Delete extends Action
                 if ($arg->isGuest) {
                     throw new RuntimeException('Guest can not be deleted');
                 }
-                $users[] = $arg->id;
-                $isUser  = 1;
+
+                $uids[$arg->id] = $arg->id;
+                $isUser            = 1;
             } elseif ($arg instanceof Forum) {
                 if (! $this->c->forums->get($arg->id) instanceof Forum) {
                     throw new RuntimeException('Forum unavailable');
                 }
+
                 $forums[$arg->id] = $arg;
                 $all[$arg->id]    = true;
+                $isForum          = 1;
+
                 foreach (\array_keys($arg->descendants) as $id) { //???? а если не админ?
                     $all[$id] = true;
                 }
-                $isForum = 1;
             } else {
                 throw new InvalidArgumentException('Expected User(s) or Forum(s)');
             }
@@ -60,11 +63,9 @@ class Delete extends Action
 
         $this->c->topics->delete(...$args);
 
-        //???? опросы, предупреждения
-
-        if ($users) {
-            $vars  = [
-                ':users' => $users,
+        if ($uids) {
+            $vars = [
+                ':users' => $uids,
             ];
             $query = 'DELETE
                 FROM ::mark_of_forum
@@ -72,8 +73,13 @@ class Delete extends Action
 
             $this->c->DB->exec($query, $vars);
 
-            //???? удаление модераторов из разделов
+            $query = 'UPDATE ::forums
+                SET last_poster_id=1
+                WHERE last_poster_id IN (?ai:users)';
+
+            $this->c->DB->exec($query, $vars);
         }
+
         if ($forums) {
             $this->c->subscriptions->unsubscribe(...$forums);
 
@@ -81,7 +87,7 @@ class Delete extends Action
                 $this->c->groups->Perm->reset($forum);
             }
 
-            $vars  = [
+            $vars = [
                 ':forums' => \array_keys($forums),
             ];
             $query = 'DELETE

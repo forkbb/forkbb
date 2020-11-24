@@ -7,7 +7,6 @@ namespace ForkBB\Models\User;
 use ForkBB\Models\Action;
 use ForkBB\Models\User\Model as User;
 use ForkBB\Models\Forum\Model as Forum;
-use ForkBB\Models\Forum\Manager as ForumManager;
 use InvalidArgumentException;
 use RuntimeException;
 
@@ -22,28 +21,27 @@ class Delete extends Action
             throw new InvalidArgumentException('No arguments, expected User(s)');
         }
 
-        $ids          = [];
-        $moderators   = [];
-        $adminPresent = false;
+        $ids        = [];
+        $moderators = [];
+        $resetAdmin = false;
+
         foreach ($users as $user) {
             if ($user->isGuest) {
                 throw new RuntimeException('Guest can not be deleted');
             }
-
-            $ids[] = $user->id;
-
             if ($user->isAdmMod) {
                 $moderators[$user->id] = $user;
             }
             if ($user->isAdmin) {
-                $adminPresent = true;
+                $resetAdmin = true;
             }
+
+            $ids[] = $user->id;
         }
 
-        if (! empty($moderators)) {
-            $forums = new ForumManager($this->c);
-            $forums->init($this->c->groups->get($this->c->GROUP_ADMIN));
-            $root = $forums->get(0);
+        if ($moderators) {
+            $forums = $this->c->ForumManager->init($this->c->groups->get($this->c->GROUP_ADMIN));
+            $root   = $forums->get(0);
 
             if ($root instanceof Forum) {
                 foreach ($root->descendants as $forum) {
@@ -53,10 +51,10 @@ class Delete extends Action
             }
         }
 
-        $this->c->forums->delete(...$users);
         $this->c->subscriptions->unsubscribe(...$users);
+        $this->c->forums->delete(...$users);
 
-        //???? опросы, предупреждения
+        //???? предупреждения
 
         foreach ($users as $user) {
             $this->c->Online->delete($user);
@@ -64,7 +62,7 @@ class Delete extends Action
             $user->deleteAvatar();
         }
 
-        $vars  = [
+        $vars = [
             ':users' => $ids,
         ];
         $query = 'DELETE
@@ -73,7 +71,7 @@ class Delete extends Action
 
         $this->c->DB->exec($query, $vars);
 
-        if ($adminPresent) {
+        if ($resetAdmin) {
             $this->c->admins->reset();
         }
         $this->c->stats->reset();
