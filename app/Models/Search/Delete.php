@@ -10,7 +10,6 @@ use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Post\Model as Post;
 use ForkBB\Models\Topic\Model as Topic;
 use ForkBB\Models\User\Model as User;
-use PDO;
 use InvalidArgumentException;
 use RuntimeException;
 
@@ -25,7 +24,7 @@ class Delete extends Method
             throw new InvalidArgumentException('No arguments, expected User(s), Forum(s), Topic(s) or Post(s)');
         }
 
-        $users   = [];
+        $uids    = [];
         $forums  = [];
         $topics  = [];
         $posts   = [];
@@ -39,20 +38,24 @@ class Delete extends Method
                 if ($arg->isGuest) {
                     throw new RuntimeException('Guest can not be deleted');
                 }
+
                 if (true === $arg->deleteAllPost) {
-                    $users[] = $arg->id;
+                    $uids[$arg->id] = $arg->id;
                 }
+
                 $isUser = 1;
             } elseif ($arg instanceof Forum) {
                 if (! $this->c->forums->get($arg->id) instanceof Forum) {
                     throw new RuntimeException('Forum unavailable');
                 }
+
                 $forums[$arg->id] = $arg;
                 $isForum          = 1;
             } elseif ($arg instanceof Topic) {
                 if (! $arg->parent instanceof Forum) {
                     throw new RuntimeException('Parent unavailable');
                 }
+
                 $topics[$arg->id] = $arg;
                 $isTopic          = 1;
             } elseif ($arg instanceof Post) {
@@ -62,6 +65,7 @@ class Delete extends Method
                 ) {
                     throw new RuntimeException('Parents unavailable');
                 }
+
                 $posts[$arg->id] = $arg;
                 $isPost          = 1;
             } else {
@@ -73,11 +77,9 @@ class Delete extends Method
             throw new InvalidArgumentException('Expected only User(s), Forum(s), Topic(s) or Post(s)');
         }
 
-        $query = null;
-
-        if ($users) {
+        if ($uids) {
             $vars = [
-                ':users' => $users,
+                ':users' => $uids,
             ];
             $query = 'DELETE
                 FROM ::search_matches
@@ -87,6 +89,7 @@ class Delete extends Method
                     WHERE p.poster_id IN (?ai:users)
                 )';
         }
+
         if ($forums) {
             $vars = [
                 ':forums' => \array_keys($forums),
@@ -100,6 +103,7 @@ class Delete extends Method
                     WHERE t.forum_id IN (?ai:forums)
                 )';
         }
+
         if ($topics) {
             $vars = [
                 ':topics' => \array_keys($topics),
@@ -112,6 +116,7 @@ class Delete extends Method
                     WHERE p.topic_id IN (?ai:topics)
                 )';
         }
+
         if ($posts) {
             $vars = [
                 ':posts' => \array_keys($posts),
@@ -120,8 +125,7 @@ class Delete extends Method
                 FROM ::search_matches
                 WHERE post_id IN (?ai:posts)';
         }
-        if ($query) {
-            $this->c->DB->exec($query, $vars);
-        }
+
+        $this->c->DB->exec($query, $vars);
     }
 }

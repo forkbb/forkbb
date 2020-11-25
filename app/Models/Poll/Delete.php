@@ -9,7 +9,6 @@ use ForkBB\Models\DataModel;
 use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Poll\Model as Poll;
 use ForkBB\Models\Topic\Model as Topic;
-use PDO;
 use InvalidArgumentException;
 use RuntimeException;
 
