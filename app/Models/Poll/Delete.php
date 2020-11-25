@@ -6,6 +6,7 @@ namespace ForkBB\Models\Poll;
 
 use ForkBB\Models\Action;
 use ForkBB\Models\DataModel;
+use ForkBB\Models\Forum\Model as Forum;
 use ForkBB\Models\Poll\Model as Poll;
 use ForkBB\Models\Topic\Model as Topic;
 use PDO;
@@ -23,8 +24,7 @@ class Delete extends Action
             throw new InvalidArgumentException('No arguments, expected Poll(s) or Topic(s)');
         }
 
-        $polls   = [];
-        $topics  = [];
+        $tids    = [];
         $isPoll  = 0;
         $isTopic = 0;
 
@@ -32,15 +32,15 @@ class Delete extends Action
             if ($arg instanceof Poll) {
                 $arg->parent; // проверка доступности опроса
 
-                $polls[$arg->tid] = $arg;
-                $isPoll           = 1;
+                $tids[$arg->tid] = $arg->tid;
+                $isPoll          = 1;
             } elseif ($arg instanceof Topic) {
                 if (! $arg->parent instanceof Forum) {
                     throw new RuntimeException('Parent unavailable');
                 }
 
-                $topics[$arg->id] = $arg;
-                $isTopic          = 1;
+                $tids[$arg->id] = $arg->id;
+                $isTopic        = 1;
             } else {
                 throw new InvalidArgumentException('Expected Poll(s) or Topic(s)');
             }
@@ -51,7 +51,7 @@ class Delete extends Action
         }
 
         $vars  = [
-            ':tids' => \array_keys($polls ?: $topics),
+            ':tids' => $tids,
         ];
         $query = 'DELETE
             FROM ::poll
@@ -64,5 +64,9 @@ class Delete extends Action
             WHERE tid IN (?ai:tids)';
 
         $this->c->DB->exec($query, $vars);
+
+        foreach ($tids as $tid) {
+            $this->manager->reset($tid);
+        }
     }
 }
