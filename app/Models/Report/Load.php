@@ -19,7 +19,7 @@ class Load extends Action
             throw new InvalidArgumentException('Expected a positive report id');
         }
 
-        $vars  = [
+        $vars = [
             ':id' => $id,
         ];
         $query = 'SELECT r.*

@@ -231,7 +231,7 @@ class Model extends DataModel
             return 0;
         }
 
-        $vars  = [
+        $vars = [
             ':tid'   => $this->id,
             ':visit' => $this->hasNew,
         ];
@@ -253,7 +253,7 @@ class Model extends DataModel
             return 0;
         }
 
-        $vars  = [
+        $vars = [
             ':tid'   => $this->id,
             ':visit' => $this->hasUnread,
         ];
@@ -321,7 +321,7 @@ class Model extends DataModel
             throw new InvalidArgumentException('Bad number of displayed page');
         }
 
-        $vars  = [
+        $vars = [
             ':tid'    => $this->id,
             ':offset' => ($this->page - 1) * $this->c->user->disp_posts,
             ':rows'   => $this->c->user->disp_posts,
@@ -364,7 +364,7 @@ class Model extends DataModel
 
         $this->page = 1;
 
-        $vars  = [
+        $vars = [
             ':tid'  => $this->id,
             ':rows' => $this->c->config->i_topic_review,
         ];
@@ -384,7 +384,7 @@ class Model extends DataModel
      */
     public function calcPage(int $pid): void
     {
-        $vars  = [
+        $vars = [
             ':tid' => $this->id,
             ':pid' => $pid,
         ];
@@ -411,7 +411,7 @@ class Model extends DataModel
      */
     public function incViews(): void
     {
-        $vars  = [
+        $vars = [
             ':tid' => $this->id,
         ];
         $query = 'UPDATE ::topics

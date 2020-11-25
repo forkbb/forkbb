@@ -16,7 +16,7 @@ class Delete extends Method
     public function delete(int ...$ids): BanList
     {
         if (! empty($ids)) {
-            $vars  = [
+            $vars = [
                 ':ids' => $ids,
             ];
             $query = 'DELETE

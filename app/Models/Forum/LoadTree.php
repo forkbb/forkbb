@@ -107,7 +107,7 @@ class LoadTree extends Action
         }
 
         // проверка по темам
-        $vars  = [
+        $vars = [
             ':uid'    => $this->c->user->id,
             ':forums' => \array_keys($time),
             ':max'    => $max,

@@ -14,7 +14,7 @@ class IsUniqueName extends Action
      */
     public function isUniqueName(User $user): bool
     {
-        $vars  = [
+        $vars = [
             ':id'    => (int) $user->id,
             ':name'  => $user->username,
         ];

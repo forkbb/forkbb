@@ -21,7 +21,7 @@ class Access extends Action
         }
 
         if (! empty($ids)) {
-            $vars  = [
+            $vars = [
                 ':ids'    => $ids,
                 ':closed' => $open ? 0 : 1,
             ];

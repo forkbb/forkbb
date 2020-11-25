@@ -34,7 +34,7 @@ class View extends Action
         }
 
         if (! $review) {
-            $vars  = [
+            $vars = [
                 ':ids' => $arg->idsList,
             ];
             $query = 'SELECT w.id, w.message, w.poster, w.posted

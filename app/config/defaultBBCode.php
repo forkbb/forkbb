@@ -364,11 +364,11 @@ $fUrl = \str_replace([' ', '\'', '`', '"'], ['%20', '', '', ''], $url);
 
 if (\strpos($url, 'www.') === 0) {
     $fUrl = 'http://'.$fUrl;
-} else if (\strpos($url, 'ftp.') === 0) {
+} elseif (\strpos($url, 'ftp.') === 0) {
     $fUrl = 'ftp://'.$fUrl;
-} else if (\strpos($url, '/') === 0) {
+} elseif (\strpos($url, '/') === 0) {
     $fUrl = $parser->attr('baseUrl') . $fUrl;
-} else if (! \preg_match('%^([a-z0-9]{3,6})://%', $url)) {
+} elseif (! \preg_match('%^([a-z0-9]{3,6})://%', $url)) {
     $fUrl = 'http://'.$fUrl;
 }
 

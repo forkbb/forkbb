@@ -129,7 +129,7 @@ class Mysql
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
 
         try {
-            $vars  = [
+            $vars = [
                 ':table' => $table,
             ];
             $query = 'SELECT 1
@@ -154,7 +154,7 @@ class Mysql
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
 
         try {
-            $vars  = [
+            $vars = [
                 ':table' => $table,
                 ':field' => $field,
             ];
@@ -181,7 +181,7 @@ class Mysql
         $index = 'PRIMARY' == $index ? $index : $table . '_' . $index;
 
         try {
-            $vars  = [
+            $vars = [
                 ':table' => $table,
                 ':index' => $index,
             ];
@@ -408,7 +408,7 @@ class Mysql
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
 
         try {
-            $vars  = [
+            $vars = [
                 ':table' => $table,
                 ':field' => $old,
             ];
@@ -557,7 +557,7 @@ class Mysql
      */
     public function getMap(): array
     {
-        $vars  = [
+        $vars = [
             "{$this->dbPrefix}%",
         ];
         $query = 'SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE

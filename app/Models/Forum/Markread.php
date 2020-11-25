@@ -25,7 +25,7 @@ class Markread extends Action
 
             $this->c->users->update($user);
 
-            $vars  = [
+            $vars = [
                 ':uid' => $user->id,
             ];
             $query = 'DELETE
@@ -40,7 +40,7 @@ class Markread extends Action
 
             $this->c->DB->exec($query, $vars);
         } elseif ($forum->id > 0) {
-            $vars  = [
+            $vars = [
                 ':uid'  => $user->id,
                 ':fid'  => $forum->id,
                 ':mark' => \time(),

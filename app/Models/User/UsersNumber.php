@@ -21,7 +21,7 @@ class UsersNumber extends Action
             return 0;
         }
 
-        $vars  = [
+        $vars = [
             ':gid' => $group->g_id,
         ];
         $query = 'SELECT COUNT(u.id)

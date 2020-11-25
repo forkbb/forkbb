@@ -15,7 +15,7 @@ class UserStat extends Action
      */
     public function userStat(int $id): array
     {
-        $vars  = [
+        $vars = [
             ':id' => $id,
         ];
         $query = 'SELECT p.poster_ip, MAX(p.posted) AS last_used, COUNT(p.id) AS used_times

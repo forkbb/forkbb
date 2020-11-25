@@ -46,7 +46,7 @@ class Load extends Action
             throw new InvalidArgumentException('Expected a positive topic id');
         }
 
-        $vars  = [
+        $vars = [
             ':tid' => $id,
             ':uid' => $this->c->user->id,
         ];
@@ -87,7 +87,7 @@ class Load extends Action
             }
         }
 
-        $vars  = [
+        $vars = [
             ':ids' => $ids,
             ':uid' => $this->c->user->id,
         ];

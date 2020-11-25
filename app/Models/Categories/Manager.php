@@ -61,7 +61,7 @@ class Manager extends ManagerModel
     {
         foreach ($this->modified as $key => $value) {
             $cat   = $this->get($key);
-            $vars  = [
+            $vars = [
                 ':name'     => $cat['cat_name'],
                 ':position' => $cat['disp_position'],
                 ':cid'      => $key,
@@ -87,7 +87,7 @@ class Manager extends ManagerModel
         }
         ++$pos;
 
-        $vars  = [
+        $vars = [
             ':name'     => $name,
             ':position' => $pos,
         ];
@@ -116,7 +116,7 @@ class Manager extends ManagerModel
             $this->c->forums->delete(...$del);
         }
 
-        $vars  = [
+        $vars = [
             ':cid' => $cid,
         ];
         $query = 'DELETE

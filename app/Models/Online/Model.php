@@ -223,14 +223,14 @@ class Model extends ParentModel
     public function delete(User $user): void
     {
         if ($user->isGuest) {
-            $vars  = [
+            $vars = [
                 ':ip' => $user->ip,
             ];
             $query = 'DELETE
                 FROM ::online
                 WHERE user_id=1 AND ident=?s:ip';
         } else {
-            $vars  = [
+            $vars = [
                 ':id' => $user->id,
             ];
             $query = 'DELETE

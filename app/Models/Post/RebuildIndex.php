@@ -14,7 +14,7 @@ class RebuildIndex extends Action
      */
     public function rebuildIndex(int $start, int $limit, string $mode): int
     {
-        $vars  = [
+        $vars = [
             ':start' => $start,
             ':limit' => $limit,
         ];

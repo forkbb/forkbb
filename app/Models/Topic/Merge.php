@@ -48,7 +48,7 @@ class Merge extends Action
         }
 
         //???? перенести обработку в посты?
-        $vars  = [
+        $vars = [
             'start'  => "[from]",
             'end'    => "[/from]\n",
             'topics' => $ids,
@@ -59,7 +59,7 @@ class Merge extends Action
 
         $this->c->DB->exec($query, $vars);
 
-        $vars  = [
+        $vars = [
             'id'     => $firstTopic->id,
             'topics' => $ids,
         ];
@@ -77,7 +77,7 @@ class Merge extends Action
                 $this->c->topics->update($topic->calcStat());
             }
 
-            $vars  = [
+            $vars = [
                 'topics' => $ids,
             ];
             $query = 'SELECT t.id

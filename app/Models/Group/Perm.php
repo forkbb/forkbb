@@ -22,7 +22,7 @@ class Perm extends Action
      */
     public function get(Forum $forum): array
     {
-        $vars  = [
+        $vars = [
             ':fid' => $forum->id > 0 ? $forum->id : 0,
             ':adm' => $this->c->GROUP_ADMIN,
         ];
@@ -87,7 +87,7 @@ class Perm extends Action
                 $modDef
                 || $modPerm
             ) {
-                $vars  = [
+                $vars = [
                     ':gid' => $id,
                     ':fid' => $forum->id,
                 ];
@@ -126,7 +126,7 @@ class Perm extends Action
             throw new RuntimeException('The forum does not have ID');
         }
 
-        $vars  = [
+        $vars = [
             ':fid' => $forum->id,
         ];
         $query = 'DELETE
@@ -145,7 +145,7 @@ class Perm extends Action
             throw new RuntimeException('The group does not have ID');
         }
 
-        $vars  = [
+        $vars = [
             ':gid' => $group->g_id,
         ];
         $query = 'DELETE
@@ -169,7 +169,7 @@ class Perm extends Action
 
         $this->delete($to);
 
-        $vars  = [
+        $vars = [
             ':old' => $from->g_id,
             ':new' => $to->g_id,
         ];

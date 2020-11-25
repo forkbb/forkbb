@@ -19,7 +19,7 @@ class Load extends Action
             throw new InvalidArgumentException('Expected a positive poll id');
         }
 
-        $vars  = [
+        $vars = [
             ':tid' => $id,
         ];
         $query = 'SELECT question_id, field_id, qna_text, votes

@@ -31,7 +31,7 @@ class Save extends Method
                     $list[$id]['search_for'] !== $words[$id]['search_for']
                     || $list[$id]['replace_with'] !== $words[$id]['replace_with']
                 ) {
-                    $vars  = [
+                    $vars = [
                         ':id'      => $id,
                         ':search'  => $list[$id]['search_for'],
                         ':replace' => $list[$id]['replace_with'],
@@ -43,7 +43,7 @@ class Save extends Method
                     $this->c->DB->exec($query, $vars);
                 }
             } elseif (0 === $id) {
-                $vars  = [
+                $vars = [
                     ':search'  => $list[$id]['search_for'],
                     ':replace' => $list[$id]['replace_with'],
                 ];
@@ -54,7 +54,7 @@ class Save extends Method
             }
         }
         if ($forDel) {
-            $vars  = [
+            $vars = [
                 ':del' => $forDel
             ];
             $query = 'DELETE

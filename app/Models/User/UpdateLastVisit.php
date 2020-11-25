@@ -19,7 +19,7 @@ class UpdateLastVisit extends Action
             throw new RuntimeException('Expected user');
         }
         if ($user->logged > 0) {
-            $vars  = [
+            $vars = [
                 ':loggid' => $user->logged,
                 ':id'     => $user->id,
             ];

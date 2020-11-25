@@ -42,7 +42,7 @@ class Load extends Action
             throw new InvalidArgumentException('Expected a positive topic id');
         }
 
-        $vars  = [
+        $vars = [
             ':pid' => $id,
             ':tid' => $tid,
         ];
@@ -84,7 +84,7 @@ class Load extends Action
             }
         }
 
-        $vars  = [
+        $vars = [
             ':ids' => $ids,
         ];
         $query = $this->getSql('p.id IN (?ai:ids)');

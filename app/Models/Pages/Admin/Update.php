@@ -504,7 +504,7 @@ class Update extends Admin
         $this->c->DB->addField('groups', 'g_sig_length', 'SMALLINT UNSIGNED', false, 400);
         $this->c->DB->addField('groups', 'g_sig_lines', 'TINYINT UNSIGNED', false, 4);
 
-        $vars  = [
+        $vars = [
             ':sig_use'    => '1' == $this->c->config->o_signatures ? 1 : 0,
             ':sig_length' => $this->c->config->p_sig_length > 10000 ? 10000 : (int) $this->c->config->p_sig_length,
             ':sig_lines'  => $this->c->config->p_sig_lines> 255 ? 255 : (int) $this->c->config->p_sig_lines,
@@ -514,7 +514,7 @@ class Update extends Admin
 
         $this->c->DB->query($query, $vars);
 
-        $vars  = [
+        $vars = [
             ':grp' => $this->c->GROUP_ADMIN,
         ];
         $query = 'UPDATE ::groups
@@ -523,7 +523,7 @@ class Update extends Admin
 
         $this->c->DB->query($query, $vars);
 
-        $vars  = [
+        $vars = [
             ':grp' => $this->c->GROUP_GUEST,
         ];
         $query = 'UPDATE ::groups

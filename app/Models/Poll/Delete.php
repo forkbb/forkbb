@@ -50,7 +50,7 @@ class Delete extends Action
             throw new InvalidArgumentException('Expected only Poll(s) or Topic(s)');
         }
 
-        $vars  = [
+        $vars = [
             ':tids' => $tids,
         ];
         $query = 'DELETE

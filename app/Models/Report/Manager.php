@@ -109,7 +109,7 @@ class Manager extends ManagerModel
         $time = (int) $this->c->DB->query($query)->fetchColumn();
 
         if ($time > 0) {
-            $vars  = [
+            $vars = [
                 ':time' => $time,
             ];
             $query = 'DELETE

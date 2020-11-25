@@ -24,7 +24,7 @@ class Feed extends Action
                 return [];
             }
 
-            $vars  = [
+            $vars = [
                 ':id' => $model->id,
             ];
             $query = 'SELECT p.id as pid, p.poster as username, p.poster_id as uid, p.message as content,
@@ -34,7 +34,7 @@ class Feed extends Action
                 ORDER BY p.id DESC
                 LIMIT 50';
 
-        } else if ($model instanceof Forum) {
+        } elseif ($model instanceof Forum) {
             $ids = \array_keys($model->descendants);
             if ($model->id) {
                 $ids[] = $model->id;
@@ -44,7 +44,7 @@ class Feed extends Action
                 return [];
             }
 
-            $vars  = [
+            $vars = [
                 ':forums' => $ids,
             ];
             $query = 'SELECT p.id as pid, p.poster as username, p.poster_id as uid, p.message as content,

@@ -61,7 +61,7 @@ class ChangeGroup extends Action
             }
         }
 
-        $vars  = [
+        $vars = [
             ':new' => $newGroupId,
             ':ids' => $ids,
         ];

@@ -14,7 +14,7 @@ class UserInfoFromIP extends Action
      */
     public function userInfoFromIP(string $ip): array
     {
-        $vars  = [
+        $vars = [
             ':ip' => $ip,
         ];
         $query = 'SELECT p.poster_id, p.poster

@@ -48,7 +48,7 @@ class Execute extends Method
                $v->author . '-' .
                $v->forums;
 
-        $vars  = [
+        $vars = [
             ':key' => $key,
         ];
         $query = 'SELECT sc.search_time, sc.search_data
@@ -83,7 +83,7 @@ class Execute extends Method
         $data  = [
             \implode(',', $ids),
         ];
-        $vars  = [
+        $vars = [
             ':data' => \implode("\n", $data),
             ':key'  => $key,
             ':time' => \time(),

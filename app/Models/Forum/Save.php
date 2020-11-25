@@ -49,7 +49,7 @@ class Save extends Action
             foreach ($forum->descendants as $f) {
                 $f->__cat_id = $values['cat_id'];
             }
-            $vars  = [
+            $vars = [
                 ':ids'      => \array_keys($forum->descendants),
                 ':category' => $values['cat_id'],
             ];

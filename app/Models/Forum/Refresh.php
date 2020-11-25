@@ -30,8 +30,8 @@ class Refresh extends Action
         $this->list = [];
 
         if ('1' == $read) {
-            $list  = [];
-            $vars  = [
+            $list = [];
+            $vars = [
                 ':gid' => $gid,
             ];
             $query = 'SELECT f.cat_id, c.cat_name, f.id, f.forum_name, f.redirect_url, f.parent_forum_id,

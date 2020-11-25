@@ -22,7 +22,7 @@ class Index extends Method
             : [];
 
         if ('add' !== $mode) {
-            $vars  = [
+            $vars = [
                 ':pid' => $post->id,
             ];
             $query = 'SELECT sw.id, sw.word, sm.subject_match
@@ -67,7 +67,7 @@ class Index extends Method
             $allWords = \array_unique(\array_merge($words['add']['p'], $words['add']['s']));
         }
         if (! empty($allWords)) {
-            $vars  = [
+            $vars = [
                 ':words' => $allWords,
             ];
             $query = 'SELECT sw.word
@@ -97,7 +97,7 @@ class Index extends Method
                 continue;
             }
 
-            $vars  = [
+            $vars = [
                 ':pid'  => $post->id,
                 ':subj' => 's' === $key ? 1 : 0,
                 ':ids'  => $list,
@@ -115,7 +115,7 @@ class Index extends Method
                 continue;
             }
 
-            $vars  = [
+            $vars = [
                 ':pid'   => $post->id,
                 ':subj'  => 's' === $key ? 1 : 0,
                 ':words' => $list,

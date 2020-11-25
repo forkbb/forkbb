@@ -76,7 +76,7 @@ class Delete extends Method
         $query = null;
 
         if ($users) {
-            $vars  = [
+            $vars = [
                 ':users' => $users,
             ];
             $query = 'DELETE
@@ -88,7 +88,7 @@ class Delete extends Method
                 )';
         }
         if ($forums) {
-            $vars  = [
+            $vars = [
                 ':forums' => \array_keys($forums),
             ];
             $query = 'DELETE
@@ -101,7 +101,7 @@ class Delete extends Method
                 )';
         }
         if ($topics) {
-            $vars  = [
+            $vars = [
                 ':topics' => \array_keys($topics),
             ];
             $query = 'DELETE
@@ -113,7 +113,7 @@ class Delete extends Method
                 )';
         }
         if ($posts) {
-            $vars  = [
+            $vars = [
                 ':posts' => \array_keys($posts),
             ];
             $query = 'DELETE

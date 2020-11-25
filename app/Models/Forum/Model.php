@@ -408,7 +408,7 @@ class Model extends DataModel
                 break;
         }
 
-        $vars  = [
+        $vars = [
             ':fid'    => $this->id,
             ':offset' => ($this->page - 1) * $this->c->user->disp_topics,
             ':rows'   => $this->c->user->disp_topics,

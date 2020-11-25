@@ -20,7 +20,7 @@ class Delete extends Action
 
         $this->manager->Perm->delete($group);
 
-        $vars  = [
+        $vars = [
             ':gid' => $group->g_id,
         ];
         $query = 'DELETE

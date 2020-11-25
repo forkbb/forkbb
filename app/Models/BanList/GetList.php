@@ -13,7 +13,7 @@ class GetList extends Method
      */
     public function getList(array $ids): array
     {
-        $vars  = [
+        $vars = [
             ':ids' => $ids,
         ];
         $query = 'SELECT b.id, b.username, b.ip, b.email, b.message, b.expire, u.id AS id_creator, u.username AS name_creator

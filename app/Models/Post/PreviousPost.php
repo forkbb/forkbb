@@ -14,7 +14,7 @@ class PreviousPost extends Action
      */
     public function previousPost(Post $post, bool $returnId = true): ?int
     {
-        $vars  = [
+        $vars = [
             ':pid' => $post->id,
             ':tid' => $post->topic_id,
         ];

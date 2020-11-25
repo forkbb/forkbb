@@ -40,7 +40,7 @@ class View extends Action
             ! $this->c->user->isGuest
             && '1' == $this->c->config->o_show_dot
         ) {
-            $vars  = [
+            $vars = [
                 ':uid' => $this->c->user->id,
                 ':ids' => $arg->idsList,
             ];

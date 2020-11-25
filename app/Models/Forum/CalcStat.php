@@ -19,7 +19,9 @@ class CalcStat extends Method
             throw new RuntimeException('The model does not have ID');
         }
 
-        $vars  = [':fid' => $this->model->id];
+        $vars = [
+            ':fid' => $this->model->id,
+        ];
         $query = 'SELECT COUNT(t.id)
             FROM ::topics AS t
             WHERE t.forum_id=?i:fid AND t.moved_to!=0';

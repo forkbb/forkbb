@@ -33,7 +33,9 @@ class Load extends Action
             throw new InvalidArgumentException('Expected a positive user id');
         }
 
-        $vars  = [':id' => $id];
+        $vars = [
+            ':id' => $id,
+        ];
         $query = $this->getSql('u.id=?i:id');
 
         $data = $this->c->DB->query($query, $vars)->fetch();
@@ -55,7 +57,9 @@ class Load extends Action
             }
         }
 
-        $vars  = [':ids' => $ids];
+        $vars = [
+            ':ids' => $ids,
+        ];
         $query = $this->getSql('u.id IN (?ai:ids)');
 
         $data = $this->c->DB->query($query, $vars)->fetchAll();
@@ -89,8 +93,10 @@ class Load extends Action
      */
     public function loadByName(string $name, bool $caseInsencytive = false): ?User
     {
+        $vars = [
+            ':name' => $name,
+        ];
         $where = $caseInsencytive ? 'LOWER(u.username)=LOWER(?s:name)' : 'u.username=?s:name';
-        $vars  = [':name' => $name];
         $query = $this->getSql($where);
 
         return $this->returnUser($query, $vars);
@@ -101,7 +107,9 @@ class Load extends Action
      */
     public function loadByEmail(string $email): ?User
     {
-        $vars  = [':email' => $this->c->NormEmail->normalize($email)];
+        $vars = [
+            ':email' => $this->c->NormEmail->normalize($email),
+        ];
         $query = $this->getSql('u.email_normal=?s:email');
 
         return $this->returnUser($query, $vars);
