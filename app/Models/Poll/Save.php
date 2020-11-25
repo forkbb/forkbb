@@ -125,9 +125,9 @@ class Save extends Action
             VALUES (?i:tid, ?i:qid, ?i:fid, ?s:qna)';
 
         foreach ($poll->question as $qid => $qna) {
-            $vars[':qid'] = $poll->type[$qid] . '|' . $qid;
+            $vars[':qid'] = $qid;
             $vars[':fid'] = 0;
-            $vars[':qna'] = $qna;
+            $vars[':qna'] = $poll->type[$qid] . '|' . $qna;
 
             $this->c->DB->exec($query, $vars);
 
