@@ -203,8 +203,11 @@ class FileCache implements CacheInterface
         if (! \preg_match('%^[a-z0-9_\.]+$%Di', $key)) {
             throw new InvalidArgumentException('Key is not a legal value');
         }
-
-        return $this->cacheDir . "/cache_{$key}.php";
+        if ('poll' == \substr($key, 0, 4)) {
+            return $this->cacheDir . "/polls/cache_{$key}.php";
+        } else {
+            return $this->cacheDir . "/cache_{$key}.php";
+        }
     }
 
     /**
