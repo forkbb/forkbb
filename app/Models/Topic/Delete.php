@@ -108,8 +108,6 @@ class Delete extends Action
 
         $this->c->posts->delete(...$args);
 
-        //???? опросы, предупреждения
-
         if ($uids) {
             $vars = [
                 ':users' => $uids,
@@ -144,6 +142,7 @@ class Delete extends Action
             }
 
             $this->c->subscriptions->unsubscribe(...$topics);
+            $this->c->polls->delete(...$topics);
 
             $vars = [
                 ':topics' => \array_keys($topics),
