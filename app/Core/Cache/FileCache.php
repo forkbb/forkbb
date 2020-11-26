@@ -204,7 +204,7 @@ class FileCache implements CacheInterface
             throw new InvalidArgumentException('Key is not a legal value');
         }
         if ('poll' == \substr($key, 0, 4)) {
-            return $this->cacheDir . "/polls/cache_{$key}.php";
+            return $this->cacheDir . "/polls/{$key}.php";
         } else {
             return $this->cacheDir . "/cache_{$key}.php";
         }
