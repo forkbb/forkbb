@@ -47,7 +47,7 @@ class Email extends RulesValidator
         $attrs = \array_flip(\explode(',', $attrs));
         $ok    = true;
         $user  = $this->c->users->create();
-        $user->__email = $email; // + вычисление email_normal
+        $user->__email = $email;
 
         // провеерка бана email
         if (
@@ -63,7 +63,7 @@ class Email extends RulesValidator
             $ok
             && isset($attrs['exists'])
         ) {
-            $user = $this->c->users->loadByEmail($email); // ???? перехват исключения?
+            $user = $this->c->users->loadByEmail($email);
 
             if (! $user instanceof User) {
                 $v->addError('Invalid email');
@@ -80,7 +80,7 @@ class Email extends RulesValidator
             )
         ) {
             if ($user->isGuest) {
-                $user = $this->c->users->loadByEmail($email); // ???? перехват исключения?
+                $user = $this->c->users->loadByEmail($email);
             }
 
             if (
