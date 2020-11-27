@@ -131,7 +131,6 @@ class Bans extends Admin
         $form['sets']['search-info'] = [
             'info' => [
                 'info1' => [
-                    'type'  => '', //????
                     'value' => __('Ban search info'),
                 ],
             ],
@@ -294,16 +293,6 @@ class Bans extends Admin
             'info'      => __('Expire date help'),
             'value'     => $data['expire'] ?? null,
         ];
-/*
-        $yn     = [1 => __('Yes'), 0 => __('No')];
-        $fields['o_default_dst'] = [
-            'type'      => 'radio',
-            'value'     => $config->o_default_dst,
-            'values'    => $yn,
-            'caption'   => __('DST label'),
-            'info'      => __('DST help'),
-        ];
-*/
         $form['sets']['ban-exp'] = [
             'legend' => __('Message expiry subhead'),
             'fields' => $fields,

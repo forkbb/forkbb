@@ -122,7 +122,6 @@ class Reports extends Admin
             $form['sets'][] = [
                 'info' => [
                     'info1' => [
-                        'type'  => '', //????
                         'value' => $noZapped ? __('No new reports') : __('No zapped reports'),
                     ],
                 ],

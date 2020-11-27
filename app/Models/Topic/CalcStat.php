@@ -60,7 +60,6 @@ class CalcStat extends Method
                 : $result['posted'];
         }
 
-        //????
         $this->model->num_replies = $numReplies;
 
         return $this->model;

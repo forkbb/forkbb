@@ -76,7 +76,6 @@ class Censoring extends Admin
                 'onoff-info' => [
                     'info' => [
                         'info1' => [
-                            'type'  => '', //????
                             'value' => __('Censoring info'),
                             'html'  => true,
                         ],

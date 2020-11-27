@@ -379,7 +379,6 @@ class Groups extends Admin
             $form['sets']['def-info'] = [
                 'info' => [
                     'info1' => [
-                        'type'  => '', //????
                         'value' => __('Group settings info'),
                     ],
                 ],
@@ -637,7 +636,6 @@ class Groups extends Admin
             $form['sets']['mod-info'] = [
                 'info' => [
                     'info1' => [
-                        'type'  => '', //????
                         'value' => __('Moderator info'),
                     ],
                 ],
@@ -808,7 +806,6 @@ class Groups extends Admin
         $form['sets']['conf-info'] = [
             'info' => [
                 'info1' => [
-                    'type'  => '', //????
                     'value' => __('Confirm delete warn'),
                     'html'  => true,
                 ],

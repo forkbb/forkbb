@@ -159,7 +159,6 @@ class Forums extends Admin
                     $form['sets']["category{$forum->cat_id}-info"] = [
                         'info' => [
                             'info1' => [
-                                'type'  => '', //????
                                 'value' => $forum->cat_name,
                             ],
                         ],
@@ -307,7 +306,6 @@ class Forums extends Admin
                 [
                     'info' => [
                         'info1' => [
-                            'type'  => '', //????
                             'value' => __('Delete forum warn'),
                             'html'  => true,
                         ],
@@ -522,7 +520,6 @@ class Forums extends Admin
         $form['sets']['forum-info'] = [
             'info' => [
                 'info1' => [
-                    'type'  => '', //????
                     'value' => __('Group permissions info', $this->c->Router->link('AdminGroups'), __('User groups')),
                     'html'  => true,
                 ],

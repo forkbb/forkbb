@@ -57,7 +57,7 @@ class Container
      */
     public function __get(string $id) /* : mixed */
     {
-        if (\array_key_exists($id, $this->instances)) { //???? isset($this->instances[$id]) ||
+        if (\array_key_exists($id, $this->instances)) {
             return $this->instances[$id];
         } elseif (false !== \strpos($id, '.')) {
             $tree    = \explode('.', $id);

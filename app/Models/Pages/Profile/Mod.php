@@ -139,7 +139,6 @@ class Mod extends Profile
                     $form['sets']["category{$forum->cat_id}-info"] = [
                         'info' => [
                             'info1' => [
-                                'type'  => '', //????
                                 'value' => $forum->cat_name,
                             ],
                         ],

@@ -108,7 +108,6 @@ class Maintenance extends Admin
                 'indx-info' => [
                     'info' => [
                         'info1' => [
-                            'type'  => '', //????
                             'value' => __('Rebuild index info'),
                             'html'  => true,
                         ],
@@ -145,7 +144,6 @@ class Maintenance extends Admin
                 'indx-info2' => [
                     'info' => [
                         'info1' => [
-                            'type'  => '', //????
                             'value' => __('Rebuild completed info'),
                             'html'  => true,
                         ],

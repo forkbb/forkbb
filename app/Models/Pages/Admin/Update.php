@@ -285,9 +285,7 @@ class Update extends Admin
                 'update-info' => [
                     'info' => [
                         'info1' => [
-                            'type'  => '', //????
                             'value' => __('Update message'),
-#                            'html'  => true,
                         ],
                     ],
                 ],
@@ -313,9 +311,7 @@ class Update extends Admin
                 'member-info' => [
                     'info' => [
                         'info1' => [
-                            'type'  => '', //????
                             'value' => __('Members message'),
-//                            'html'  => true,
                         ],
                     ],
                 ],

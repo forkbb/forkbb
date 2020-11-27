@@ -174,7 +174,6 @@ class View extends Users
         $form['sets']['search-info'] = [
             'info' => [
                 'info1' => [
-                    'type'  => '', //????
                     'value' => __('User search info'),
                 ],
             ],

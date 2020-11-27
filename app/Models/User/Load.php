@@ -81,7 +81,7 @@ class Load extends Action
 
         if (empty($data)) {
             return null;
-        } elseif (\count($data) > 1) { // ???? невыполнимое условие?!
+        } elseif (\count($data) > 1) {
             throw new ForkException('Multiple users found');
         } else {
             return $this->manager->create($data[0]);

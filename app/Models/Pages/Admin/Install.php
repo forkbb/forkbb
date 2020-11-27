@@ -216,12 +216,10 @@ class Install extends Admin
                 'db-info' => [
                     'info' => [
                         'info1' => [
-                            'type'  => '', //????
                             'value' => __('Database setup'),
                             'html'  => true,
                         ],
                         'info2' => [
-                            'type'  => '', //????
                             'value' => __('Info 1'),
                         ],
                     ],
@@ -273,12 +271,10 @@ class Install extends Admin
                 'adm-info' => [
                     'info' => [
                         'info1' => [
-                            'type'  => '', //????
                             'value' => __('Administration setup'),
                             'html'  => true,
                         ],
                         'info2' => [
-                            'type'  => '', //????
                             'value' => __('Info 7'),
                         ],
                     ],
@@ -317,12 +313,10 @@ class Install extends Admin
                 'board-info' => [
                     'info' => [
                         'info1' => [
-                            'type'  => '', //????
                             'value' => __('Board setup'),
                             'html'  => true,
                         ],
                         'info2' => [
-                            'type'  => '', //????
                             'value' => __('Info 11'),
                         ],
                     ],
