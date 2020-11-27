@@ -34,7 +34,7 @@ class Delete extends Page
             $v = $this->c->Validator->reset()
                 ->addRules([
                     'token'   => 'token:DeletePost',
-                    'confirm' => 'integer', // ????
+                    'confirm' => 'checkbox',
                     'delete'  => 'required|string',
                 ])->addAliases([
                 ])->addArguments([
@@ -43,7 +43,7 @@ class Delete extends Page
 
             if (
                 ! $v->validation($_POST)
-                || 1 !== $v->confirm
+                || '1' !== $v->confirm
             ) {
                 return $this->c->Redirect->page('ViewPost', $args)->message('No confirm redirect');
             }
