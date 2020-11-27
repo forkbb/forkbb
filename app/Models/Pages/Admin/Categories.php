@@ -150,7 +150,7 @@ class Categories extends Admin
             $v = $this->c->Validator->reset()
                 ->addRules([
                     'token'     => 'token:AdminCategoriesDelete',
-                    'confirm'   => 'integer', // ????
+                    'confirm'   => 'checkbox',
                     'delete'    => 'string',
                 ])->addAliases([
                 ])->addArguments([
@@ -159,7 +159,7 @@ class Categories extends Admin
 
             if (
                 ! $v->validation($_POST)
-                || 1 !== $v->confirm
+                || '1' !== $v->confirm
             ) {
                 return $this->c->Redirect->page('AdminCategories')->message('No confirm redirect');
             }
