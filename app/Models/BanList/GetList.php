@@ -25,6 +25,11 @@ class GetList extends Method
         $list = \array_fill_keys($ids, false);
 
         while ($row = $stmt->fetch()) {
+            if (null === $row['name_creator']) {
+                $row['name_creator'] = 'User #' . $row['id_creator'];
+                $row['id_creator']   = 1;
+            }
+
             $list[$row['id']] = $row;
         }
 

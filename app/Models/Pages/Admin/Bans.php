@@ -474,7 +474,7 @@ class Bans extends Admin
                         'id'   => $ban['id_creator'],
                         'name' => $ban['name_creator'],
                     ]
-                ), // ????
+                ),
             ];
             $fields[] = [
                 'type' => 'endwrap',
