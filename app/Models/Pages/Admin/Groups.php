@@ -707,7 +707,7 @@ class Groups extends Admin
                 ->addRules([
                     'token'     => 'token:AdminGroupsDelete',
                     'movegroup' => $move,
-                    'confirm'   => 'integer', // ????
+                    'confirm'   => 'checkbox',
                     'delete'    => 'string',
                 ])->addAliases([
                 ])->addArguments([
@@ -716,7 +716,7 @@ class Groups extends Admin
 
             if (
                 ! $v->validation($_POST)
-                || 1 !== $v->confirm
+                || '1' !== $v->confirm
             ) {
                 return $this->c->Redirect->page('AdminGroups')->message('No confirm redirect');
             }
