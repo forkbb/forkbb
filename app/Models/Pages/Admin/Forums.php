@@ -235,7 +235,7 @@ class Forums extends Admin
             $v = $this->c->Validator->reset()
                 ->addRules([
                     'token'     => 'token:AdminForumsDelete',
-                    'confirm'   => 'integer', // ????
+                    'confirm'   => 'checkbox',
                     'delete'    => 'string',
                 ])->addAliases([
                 ])->addArguments([
@@ -244,7 +244,7 @@ class Forums extends Admin
 
             if (
                 ! $v->validation($_POST)
-                || 1 !== $v->confirm
+                || '1' !== $v->confirm
             ) {
                 return $this->c->Redirect->page('AdminForums')->message('No confirm redirect');
             }
