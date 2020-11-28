@@ -16,4 +16,19 @@ AddDefaultCharset UTF-8
   RewriteRule . index.php [L]
 
   RewriteRule \.dist\. index.php [L]
+
+  RewriteCond %{REQUEST_URI} \.v\.[0-9]
+  RewriteRule ^(.+)\.v\.[0-9]+\.([^.\\/]++)$ $1.$2 [L]
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive on
+
+  ExpiresByType text/css A31536000
+  ExpiresByType application/javascript A31536000
+
+  ExpiresByType image/gif A31536000
+  ExpiresByType image/png A31536000
+  ExpiresByType image/jpg A31536000
+  ExpiresByType image/jpeg A31536000
 </IfModule>

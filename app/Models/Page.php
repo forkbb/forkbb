@@ -61,7 +61,7 @@ abstract class Page extends Model
         $this->pageHeader('mainStyle', 'link', [
             'rel'  => 'stylesheet',
             'type' => 'text/css',
-            'href' => $this->c->PUBLIC_URL . '/style/' . $this->user->style . '/style.css',
+            'href' => $this->publicLink("/style/{$this->user->style}/style.css"),
         ]);
 
         $now = \gmdate('D, d M Y H:i:s') . ' GMT';
@@ -467,5 +467,24 @@ abstract class Page extends Model
         $result[] = [$this->c->Router->link('Index'), __('Index'), $active];
 
         return \array_reverse($result);
+    }
+
+    /**
+     * Возвращает url для $path заданного в каталоге public
+     * Ведущий слеш обязателен O_o
+     */
+    public function publicLink(string $path): string
+    {
+        $fullPath = $this->c->DIR_PUBLIC . $path;
+
+        if (\is_file($fullPath)) {
+            $time = \filemtime($fullPath) ?: '0';
+
+            if (\preg_match('%^(.+)\.([^.\\/]++)$%D', $path, $matches)) {
+                return $this->c->PUBLIC_URL . "{$matches[1]}.v.{$time}.{$matches[2]}";
+            }
+        }
+
+        return $this->c->PUBLIC_URL . $path;
     }
 }
