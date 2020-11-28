@@ -31,4 +31,5 @@ AddDefaultCharset UTF-8
   ExpiresByType image/png A31536000
   ExpiresByType image/jpg A31536000
   ExpiresByType image/jpeg A31536000
+  ExpiresByType image/webp A31536000
 </IfModule>
