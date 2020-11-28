@@ -1023,12 +1023,12 @@ class Files
             return null;
         }
 
-        if (false === ($pos = \strrpos($file['name'], '.'))) {
+        if (\preg_match('%^(.+)\.([^.\\/]++)$%D', $file['name'], $matches)) {
+            $name = $matches[1];
+            $ext  = $matches[2];
+        } else {
             $name = $file['name'];
             $ext  = null;
-        } else {
-            $name = \substr($file['name'], 0, $pos);
-            $ext  = \strtolower(\substr($file['name'], $pos + 1));
         }
 
         $imageExt = $this->isImage($file['tmp_name']);
