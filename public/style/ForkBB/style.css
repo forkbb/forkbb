@@ -286,28 +286,33 @@ body,
 
 #fork .f-menu-items {
   overflow: hidden;
-  /*max-height: 0;*/
-  /*transition-duration: 0.5s;*/
   display: none;
   flex-direction: column;
 }
 
+#fork .f-menu-item {
+  white-space: nowrap;
+}
+
 #fork .f-menu-checkbox:checked ~ .f-menu-items {
-  /*max-height: 100rem;*/
   display: flex;
 }
 
 #fork .f-menu-a {
-  display: block;
+  display: flex;
+  justify-content: center;
+  text-transform: uppercase;
   padding: 0.625rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 #fork .f-menu-a:before {
   font-family: "FontAwesomeFree";
   font-weight: 900;
+}
+
+#fork .f-menu-span {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /*********/
@@ -318,6 +323,10 @@ body,
   background-color: #AA7939;
   border-bottom: 0.0625rem solid #AA7939;
   position: relative;
+}
+
+#fork .f-menu-checkbox {
+  display: none;
 }
 
 #fork-header #id-fhth1 {
@@ -351,11 +360,6 @@ body,
   flex-direction: column;
 }
 
-#fork-nav #id-mn-checkbox {
-  position: absolute;
-  opacity: 0;
-}
-
 #fork-nav #id-mn-label {
   color: #D3B58D;
   border-color: #D3B58D;
@@ -367,12 +371,6 @@ body,
 #fork-nav .f-menu-items {
   background-color: #F8F4E3;
   border-bottom: 0.0625rem solid #AA7939;
-}
-
-#fork-nav .f-menu-a {
-  color: #583200;
-  text-transform: uppercase;
-  text-align: center;
 }
 
 #fork-nav .f-submenu-items {
@@ -399,7 +397,8 @@ body,
   background-color: #F8F4E3;
   display: flex;
   justify-content: flex-end;
-  flex-wrap: wrap;
+  flex-grow: 0.5;
+  /*flex-wrap: wrap;*/
 }
 
 #fork-nav .f-menu-user-items .f-menu-item {
@@ -408,61 +407,67 @@ body,
 
 #fork-nav .f-menu-user-items .f-menu-a {
   text-transform: none;
-/*  white-space: normal;
-  font-size: 0.1px; */
 }
-
-/* #fork-nav .f-menu-user-items span {
-  white-space: nowrap;
-} */
 
 #fork #id-nav-profile .f-menu-a:before {
-  content: "\f007\20";
+  content: "\f007";
+  padding-right: 0.3125rem;
 }
-
-#fork #id-nav-pmsnew .f-menu-a:before {
-  font-weight: 400;
-  content: "\f0e0\20";
-}
-
-#fork #id-nav-admin .f-menu-a:before {
-  content: "\f7d9\20";
-}
-
-#fork #id-nav-logout .f-menu-a:before {
-  content: "\f2f5\20";
-}
-
-#fork #id-nav-register .f-menu-a:before {
-  content: "\f234\20";
-}
-
-#fork #id-nav-login .f-menu-a:before {
-  content: "\f2f6\20";
-}
-
-/* #fork-nav .f-menu-user-items .f-menu-a::first-line {
-  font-size: 1rem;
-} */
 
 #fork-nav #id-nav-profile span {
   font-weight: bold;
 }
 
+#fork #id-nav-pmsnew .f-menu-a:before {
+  font-weight: 400;
+  content: "\f0e0";
+  padding-right: 0.3125rem;
+}
+
+#fork #id-nav-admin .f-menu-a:before {
+  content: "\f7d9";
+  padding-right: 0.3125rem;
+}
+
+#fork #id-nav-logout .f-menu-a:before {
+  content: "\f2f5";
+  padding-right: 0.3125rem;
+}
+
+#fork #id-nav-register .f-menu-a:before {
+  content: "\f234";
+  padding-right: 0.3125rem;
+}
+
+#fork #id-nav-login .f-menu-a:before {
+  content: "\f2f6";
+  padding-right: 0.3125rem;
+}
+
 #fork #id-nav-index .f-menu-a:before {
-  content: "\f015\20";
+  content: "\f015";
+  padding-right: 0.3125rem;
 }
 
 #fork #id-nav-userlist .f-menu-a:before {
-  content: "\f0c0\20";
+  content: "\f0c0";
+  padding-right: 0.3125rem;
 }
 
 #fork #id-nav-rules .f-menu-a:before {
-  content: "\f05a\20";
+  content: "\f05a";
+  padding-right: 0.3125rem;
 }
 
 #fork #id-nav-search > .f-menu-a:before {
-  content: "\f002\20";
+  content: "\f002";
+  padding-right: 0.3125rem;
+}
+
+@media screen and (max-width: 34rem) {
+  #fork #id-nav-profile ~ .f-menu-item .f-menu-span {
+    display: none;
+  }
 }
 
 @media screen and (min-width: 50rem) {
@@ -471,21 +476,22 @@ body,
     white-space: normal;
   }
 
-  #fork-nav #id-mn-checkbox,
   #fork-nav #id-mn-label {
     display: none;
   }
 
   #fork-header #fork-nav {
     flex-direction: row;
+    flex-wrap: wrap;
   }
 
   #fork-nav .f-menu-items {
     display: flex;
-    flex-wrap: wrap;
-    /*max-height: 100rem;*/
     flex-direction: row;
-    margin-right: auto;
+    flex-grow: 0.5;
+    margin-left: auto;
+    /*margin-right: auto;*/
+    /*flex-wrap: wrap;*/
     border-bottom: 0;
   }
 
@@ -517,8 +523,8 @@ body,
 
   #fork #id-nav-profile .f-menu-a:before {
     content: "";
-  }
-
+    padding: 0;
+}
 } /* @media screen and (min-width: 50rem) */
 
 /*********/
@@ -983,11 +989,6 @@ body,
   color: #F8F4E3;
 }
 
-#fork #id-an-checkbox {
-  position: absolute;
-  opacity: 0;
-}
-
 #fork #id-an-label {
   position: absolute;
   top: -2.875rem;
@@ -1022,7 +1023,6 @@ body,
     width: calc(100% - 14rem);
   }
 
-  #fork .f-main-admin #id-an-checkbox,
   #fork .f-main-admin #id-an-label {
     display: none;
   }

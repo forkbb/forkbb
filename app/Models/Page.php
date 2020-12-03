@@ -237,11 +237,11 @@ abstract class Page extends Model
                        $matches[4][$i] = 'extra' . $i;
                    }
                    if (isset($navGen[$matches[4][$i]])) {
-                       $navGen[$matches[4][$i]] = [$matches[3][$i], $matches[2][$i]];
+                       $navGen[$matches[4][$i]] = [$matches[3][$i], $matches[2][$i], $matches[2][$i]];
                    } else {
                        $navGen = \array_merge(
                            \array_slice($navGen, 0, (int) $matches[1][$i]),
-                           [$matches[4][$i] => [$matches[3][$i], $matches[2][$i]]],
+                           [$matches[4][$i] => [$matches[3][$i], $matches[2][$i], $matches[2][$i]]],
                            \array_slice($navGen, (int) $matches[1][$i])
                        );
                    }
