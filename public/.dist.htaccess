@@ -11,6 +11,7 @@ AddDefaultCharset UTF-8
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_URI} !^/style/
   RewriteCond %{REQUEST_URI} !^/img/
+  RewriteCond %{REQUEST_URI} !^/js/
   RewriteCond %{REQUEST_URI} !^/favicon\.ico$
   RewriteCond %{REQUEST_URI} !^/robots\.txt$
   RewriteRule . index.php [L]

@@ -2020,6 +2020,10 @@ body,
   padding-top: 0.625rem;
 }
 
+#fork .f-hide-poll {
+  display: none;
+}
+
 /**********/
 /* Репорт */
 /**********/

@@ -261,6 +261,11 @@ trait PostFormTrait
                     'fields' => $fieldset,
                 ];
             }
+
+            $this->pageHeader('pollJS', 'script', [
+                'src' => $this->publicLink('/js/poll.js'),
+            ]);
+
         }
 
         return $form;

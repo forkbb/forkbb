@@ -7,7 +7,7 @@
 @foreach ($p->pageHeaders as $pageHeader)
     @if ('style' === $pageHeader['type'])
   <style>{!! $pageHeader['values'][0] !!}</style>
-    @else
+    @elseif ('script' !== $pageHeader['type'])
   <{!! $pageHeader['type'] !!} @foreach ($pageHeader['values'] as $key => $val) {!! $key !!}="{{ $val }}" @endforeach>
     @endif
 @endforeach
@@ -95,5 +95,14 @@
     </footer>
 <!-- debuginfo -->
   </div>
+@foreach ($p->pageHeaders as $pageHeader)
+    @if ('script' === $pageHeader['type'])
+        @if (empty($pageHeader['values']['inline']))
+  <script @foreach ($pageHeader['values'] as $key => $val) {!! $key !!}="{{ $val }}" @endforeach></script>
+        @else
+  <script>{{ $pageHeader['values']['inline'] }}</script>
+        @endif
+    @endif
+@endforeach
 </body>
 </html>
