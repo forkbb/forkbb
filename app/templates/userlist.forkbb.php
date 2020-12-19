@@ -4,17 +4,17 @@
         <nav class="f-pages">
         @foreach ($p->pagination as $cur)
             @if ($cur[2])
-          <a class="f-page active" href="{!! $cur[0] !!}">{{ $cur[1] }}</a>
+          <a class="f-page active" href="{{ $cur[0] }}">{{ $cur[1] }}</a>
             @elseif ('info' === $cur[1])
           <span class="f-pinfo">{!! $cur[0] !!}</span>
             @elseif ('space' === $cur[1])
           <span class="f-page f-pspacer">{!! __('Spacer') !!}</span>
             @elseif ('prev' === $cur[1])
-          <a rel="prev" class="f-page f-pprev" href="{!! $cur[0] !!}">{!! __('Previous') !!}</a>
+          <a rel="prev" class="f-page f-pprev" href="{{ $cur[0] }}">{!! __('Previous') !!}</a>
             @elseif ('next' === $cur[1])
-          <a rel="next" class="f-page f-pnext" href="{!! $cur[0] !!}">{!! __('Next') !!}</a>
+          <a rel="next" class="f-page f-pnext" href="{{ $cur[0] }}">{!! __('Next') !!}</a>
             @else
-          <a class="f-page" href="{!! $cur[0] !!}">{{ $cur[1] }}</a>
+          <a class="f-page" href="{{ $cur[0] }}">{{ $cur[1] }}</a>
             @endif
         @endforeach
         </nav>
@@ -45,9 +45,9 @@
           <li class="f-row f-thead" value="{{ $p->startNum }}">
             <span class="f-hcell f-cusername">
               <span class="f-hc-table">
-                <span class="f-hc-tasc"><a @if (0 === $p->activeLink) class="active" @endif href="{!! $p->links[0] !!}">▲</a></span>
+                <span class="f-hc-tasc"><a @if (0 === $p->activeLink) class="active" @endif href="{{ $p->links[0] }}">▲</a></span>
                 <span class="f-hc-tname">{!! __('Username') !!}</span>
-                <span class="f-hc-tdesc"><a @if (1 === $p->activeLink) class="active" @endif href="{!! $p->links[1] !!}">▼</a></span>
+                <span class="f-hc-tdesc"><a @if (1 === $p->activeLink) class="active" @endif href="{{ $p->links[1] }}">▼</a></span>
               </span>
             </span>
             <span class="f-hcell f-ctitle">
@@ -58,25 +58,25 @@
     @if ($p->user->showPostCount)
             <span class="f-hcell f-cnumposts">
               <span class="f-hc-table">
-                <span class="f-hc-tasc"><a @if (2 === $p->activeLink) class="active" @endif href="{!! $p->links[2] !!}">▲</a></span>
+                <span class="f-hc-tasc"><a @if (2 === $p->activeLink) class="active" @endif href="{{ $p->links[2] }}">▲</a></span>
                 <span class="f-hc-tname">{!! __('Posts') !!}</span>
-                <span class="f-hc-tdesc"><a @if (3 === $p->activeLink) class="active" @endif href="{!! $p->links[3] !!}">▼</a></span>
+                <span class="f-hc-tdesc"><a @if (3 === $p->activeLink) class="active" @endif href="{{ $p->links[3] }}">▼</a></span>
               </span>
               <small>,</small>
             </span>
     @endif
             <span class="f-hcell f-cdatereg">
               <span class="f-hc-table">
-                <span class="f-hc-tasc"><a @if (4 === $p->activeLink) class="active" @endif href="{!! $p->links[4] !!}">▲</a></span>
+                <span class="f-hc-tasc"><a @if (4 === $p->activeLink) class="active" @endif href="{{ $p->links[4] }}">▲</a></span>
                 <span class="f-hc-tname">{!! __('Registered') !!}</span>
-                <span class="f-hc-tdesc"><a @if (5 === $p->activeLink) class="active" @endif href="{!! $p->links[5] !!}">▼</a></span>
+                <span class="f-hc-tdesc"><a @if (5 === $p->activeLink) class="active" @endif href="{{ $p->links[5] }}">▼</a></span>
               </span>
             </span>
           </li>
     @foreach ($p->userList as $user)
           <li class="f-row">
         @if ($p->user->viewUsers && $user->link)
-            <span class="f-cell f-cusername"><a href="{!! $user->link !!}">{{ $user->username }}</a></span>
+            <span class="f-cell f-cusername"><a href="{{ $user->link }}">{{ $user->username }}</a></span>
         @else
             <span class="f-cell f-cusername">{{ $user->username }}</span>
         @endif

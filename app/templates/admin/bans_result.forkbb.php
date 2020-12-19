@@ -3,17 +3,17 @@
         <nav class="f-pages">
         @foreach ($p->pagination as $cur)
             @if ($cur[2])
-          <a class="f-page active" href="{!! $cur[0] !!}">{{ $cur[1] }}</a>
+          <a class="f-page active" href="{{ $cur[0] }}">{{ $cur[1] }}</a>
             @elseif ('info' === $cur[1])
           <span class="f-pinfo">{!! $cur[0] !!}</span>
             @elseif ('space' === $cur[1])
           <span class="f-page f-pspacer">{!! __('Spacer') !!}</span>
             @elseif ('prev' === $cur[1])
-          <a rel="prev" class="f-page f-pprev" href="{!! $cur[0] !!}">{!! __('Previous') !!}</a>
+          <a rel="prev" class="f-page f-pprev" href="{{ $cur[0] }}">{!! __('Previous') !!}</a>
             @elseif ('next' === $cur[1])
-          <a rel="next" class="f-page f-pnext" href="{!! $cur[0] !!}">{!! __('Next') !!}</a>
+          <a rel="next" class="f-page f-pnext" href="{{ $cur[0] }}">{!! __('Next') !!}</a>
             @else
-          <a class="f-page" href="{!! $cur[0] !!}">{{ $cur[1] }}</a>
+          <a class="f-page" href="{{ $cur[0] }}">{{ $cur[1] }}</a>
             @endif
         @endforeach
         </nav>

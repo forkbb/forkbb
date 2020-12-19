@@ -32,7 +32,7 @@
       <article id="p{!! $post->id !!}" class="f-post">
         <header class="f-post-header">
           <span class="f-post-posted"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></span>
-          <span class="f-post-number"><a href="{!! $post->link !!}" rel="bookmark">#{!! $post->postNumber !!}</a></span>
+          <span class="f-post-number"><a href="{{ $post->link }}" rel="bookmark">#{!! $post->postNumber !!}</a></span>
         </header>
         <address class="f-post-user">
           <ul class="f-user-info-first">

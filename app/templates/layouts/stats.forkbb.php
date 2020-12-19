@@ -14,7 +14,7 @@
     @if (\is_string($p->stats->userLast))
         <dd>{!! __('Newest user')  !!} {{ $p->stats->userLast }}</dd>
     @else
-        <dd>{!! __('Newest user')  !!} <a href="{!! $p->stats->userLast[0] !!}">{{ $p->stats->userLast[1] }}</a></dd>
+        <dd>{!! __('Newest user')  !!} <a href="{{ $p->stats->userLast[0] }}">{{ $p->stats->userLast[1] }}</a></dd>
     @endif
 @endif
 @if ($p->online)
@@ -31,7 +31,7 @@
         @if (\is_string($cur))
         <dd>{{ $cur }}</dd>
         @else
-        <dd><a href="{!! $cur[0] !!}">{{ $cur[1] }}</a></dd>
+        <dd><a href="{{ $cur[0] }}">{{ $cur[1] }}</a></dd>
         @endif
     @endforeach
       </dl><!-- endinline -->

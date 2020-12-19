@@ -4,17 +4,17 @@
         <nav class="f-pages">
         @foreach ($p->model->pagination as $cur)
             @if ($cur[2])
-          <a class="f-page active" href="{!! $cur[0] !!}">{{ $cur[1] }}</a>
+          <a class="f-page active" href="{{ $cur[0] }}">{{ $cur[1] }}</a>
             @elseif ('info' === $cur[1])
           <span class="f-pinfo">{!! $cur[0] !!}</span>
             @elseif ('space' === $cur[1])
           <span class="f-page f-pspacer">{!! __('Spacer') !!}</span>
             @elseif ('prev' === $cur[1])
-          <a rel="prev" class="f-page f-pprev" href="{!! $cur[0] !!}">{!! __('Previous') !!}</a>
+          <a rel="prev" class="f-page f-pprev" href="{{ $cur[0] }}">{!! __('Previous') !!}</a>
             @elseif ('next' === $cur[1])
-          <a rel="next" class="f-page f-pnext" href="{!! $cur[0] !!}">{!! __('Next') !!}</a>
+          <a rel="next" class="f-page f-pnext" href="{{ $cur[0] }}">{!! __('Next') !!}</a>
             @else
-          <a class="f-page" href="{!! $cur[0] !!}">{{ $cur[1] }}</a>
+          <a class="f-page" href="{{ $cur[0] }}">{{ $cur[1] }}</a>
             @endif
         @endforeach
         </nav>
@@ -38,31 +38,31 @@
       <article id="p{!! $post->id !!}" class="f-post f-post-search @if (1 == $post->user->gender) f-user-male @elseif (2 == $post->user->gender) f-user-female @endif @if ($post->user->online) f-user-online @endif">
         <header class="f-post-header">
           <h3>
-            <span class="f-psh-forum"><a href="{!! $post->parent->parent->link !!}" title="{!! __('Go to forum') !!}">{{ $post->parent->parent->forum_name }}</a></span>
-            <span class="f-psh-topic"><a href="{!! $post->parent->link !!}" title="{!! __('Go to topic') !!}">@if ($post->id !== $post->parent->first_post_id) {!! __('Re') !!} @endif {{ $post->parent->censorSubject }}</a></span>
-            <span class="f-post-posted"><a href="{!! $post->link !!}" title="{!! __('Go to post') !!}" rel="bookmark"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></a></span>
+            <span class="f-psh-forum"><a href="{{ $post->parent->parent->link }}" title="{!! __('Go to forum') !!}">{{ $post->parent->parent->forum_name }}</a></span>
+            <span class="f-psh-topic"><a href="{{ $post->parent->link }}" title="{!! __('Go to topic') !!}">@if ($post->id !== $post->parent->first_post_id) {!! __('Re') !!} @endif {{ $post->parent->censorSubject }}</a></span>
+            <span class="f-post-posted"><a href="{{ $post->link }}" title="{!! __('Go to post') !!}" rel="bookmark"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></a></span>
           </h3>
           <span class="f-post-number">#{!! $post->postNumber !!}</span>
         </header>
         <address class="f-post-user">
           <ul class="f-user-info-first">
         @if ($p->user->viewUsers && $post->user->link)
-            <li class="f-username"><a href="{!! $post->user->link !!}">{{ $post->user->username }}</a></li>
+            <li class="f-username"><a href="{{ $post->user->link }}">{{ $post->user->username }}</a></li>
         @else
             <li class="f-username">{{ $post->user->username }}</li>
         @endif
           </ul>
           <ul class="f-user-info">
         @if ($p->user->viewUsers && $post->user->link)
-            <li class="f-username"><a href="{!! $post->user->link !!}">{{ $post->user->username }}</a></li>
+            <li class="f-username"><a href="{{ $post->user->link }}">{{ $post->user->username }}</a></li>
         @else
             <li class="f-username">{{ $post->user->username }}</li>
         @endif
             <li class="f-usertitle">{{ $post->user->title() }}</li>
           </ul>
           <ul class="f-post-search-info">
-            <li class="f-psi-forum">{!! __('Forum') !!}: <a href="{!! $post->parent->parent->link !!}">{{ $post->parent->parent->forum_name }}</a></li>
-            <li class="f-psi-topic">{!! __('Topic') !!}: <a href="{!! $post->parent->link !!}">{{ $post->parent->censorSubject }}</a></li>
+            <li class="f-psi-forum">{!! __('Forum') !!}: <a href="{{ $post->parent->parent->link }}">{{ $post->parent->parent->forum_name }}</a></li>
+            <li class="f-psi-topic">{!! __('Topic') !!}: <a href="{{ $post->parent->link }}">{{ $post->parent->censorSubject }}</a></li>
             <li class="f-psi-reply">{!! __('%s Reply', $post->parent->num_replies, num($post->parent->num_replies)) !!}</li>
         @if ($post->parent->showViews)
             <li class="f-psi-view">{!! __('%s View', $post->parent->num_views, num($post->parent->num_views)) !!}</li>
@@ -80,8 +80,8 @@
           </div>
           <div class="f-post-btns">
             <ul>
-              <li class="f-posttotopic"><a class="f-btn" href="{!! $post->parent->link !!}">{!! __('Go to topic') !!}</a></li>
-              <li class="f-posttopost"><a class="f-btn" href="{!! $post->link !!}">{!! __('Go to post') !!}</a></li>
+              <li class="f-posttotopic"><a class="f-btn" href="{{ $post->parent->link }}">{!! __('Go to topic') !!}</a></li>
+              <li class="f-posttopost"><a class="f-btn" href="{{ $post->link }}">{!! __('Go to post') !!}</a></li>
             </ul>
           </div>
         </footer>

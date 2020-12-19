@@ -8,7 +8,7 @@
       </div>
 @if ($p->regLink)
       <div class="f-fdiv f-lrdiv">
-        <p class="f-child3"><a href="{!! $p->regLink !!}" tabindex="6">{!! __('Not registered') !!}</a></p>
+        <p class="f-child3"><a href="{{ $p->regLink }}" tabindex="6">{!! __('Not registered') !!}</a></p>
       </div>
 @endif
     </section>

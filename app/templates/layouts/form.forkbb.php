@@ -40,7 +40,7 @@
                     @if ($cur['bb'])
                 <ul class="f-child5">
                         @foreach ($cur['bb'] as $val)
-                  <li><span><a href="{!! $val[0] !!}">{!! $val[1] !!}</a> {!! $val[2] !!}</span></li>
+                  <li><span><a href="{{ $val[0] }}">{!! $val[1] !!}</a> {!! $val[2] !!}</span></li>
                         @endforeach
                 </ul>
                     @endif
@@ -97,7 +97,7 @@
                 @elseif ('password' === $cur['type'])
                 <input @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="password" @if ($cur['maxlength']) maxlength="{{ $cur['maxlength'] }}" @endif @if ($cur['pattern']) pattern="{{ $cur['pattern'] }}" @endif @if (isset($cur['value'])) value="{{ $cur['value'] }}" @endif>
                 @elseif ('btn' === $cur['type'])
-                <a class="f-btn @if ($cur['disabled']) f-disabled @endif" href="{!! $cur['link'] !!}" title="{{ $cur['title'] or '' }}" @if ($cur['disabled']) tabindex="-1" @endif>{{ $cur['value'] }}</a>
+                <a class="f-btn @if ($cur['disabled']) f-disabled @endif" href="{{ $cur['link'] }}" title="{{ $cur['title'] or '' }}" @if ($cur['disabled']) tabindex="-1" @endif>{{ $cur['value'] }}</a>
                 @elseif ('str' === $cur['type'])
                 <p class="f-str" id="id-{{ $key }}"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
                 @elseif ('link' === $cur['type'])
@@ -123,7 +123,7 @@
         @if ('submit' === $cur['type'])
             <button class="f-btn @if($cur['class']) {{ $cur['class'] }} @endif" name="{{ $key }}" value="{{ $cur['value'] }}" @if (isset($cur['accesskey'])) accesskey="{{ $cur['accesskey'] }}" @endif title="{{ $cur['value'] }}"><span>{{ $cur['value'] }}</span></button>
         @elseif ('btn'=== $cur['type'])
-            <a class="f-btn @if($cur['class']) {{ $cur['class'] }} @endif" data-name="{{ $key }}" href="{!! $cur['link'] !!}" @if (isset($cur['accesskey'])) accesskey="{{ $cur['accesskey'] }}" @endif title="{{ $cur['value'] }}"><span>{{ $cur['value'] }}</span></a>
+            <a class="f-btn @if($cur['class']) {{ $cur['class'] }} @endif" data-name="{{ $key }}" href="{{ $cur['link'] }}" @if (isset($cur['accesskey'])) accesskey="{{ $cur['accesskey'] }}" @endif title="{{ $cur['value'] }}"><span>{{ $cur['value'] }}</span></a>
         @endif
     @endforeach
           </p>

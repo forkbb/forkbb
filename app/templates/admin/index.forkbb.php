@@ -28,7 +28,7 @@
             </dl>
             <dl>
               <dt>{!! __('Server statistics label') !!}</dt>
-              <dd><a href="{!! $p->linkStat !!}">{!! __('View server statistics') !!}</a></dd>
+              <dd><a href="{{ $p->linkStat }}">{!! __('View server statistics') !!}</a></dd>
             </dl>
             <dl>
               <dt>{!! __('Support label') !!}</dt>

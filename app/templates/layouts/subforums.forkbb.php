@@ -4,7 +4,7 @@
               <div class="f-cell f-cmain">
                 <div class="f-ficon"></div>
                 <div class="f-finfo">
-                  <h3><span class="f-fredirtext">{!! __('Link to') !!}</span> <a class="f-ftname" href="{!! $cur->redirect_url !!}">{{ $cur->forum_name }}</a></h3>
+                  <h3><span class="f-fredirtext">{!! __('Link to') !!}</span> <a class="f-ftname" href="{{ $cur->redirect_url }}">{{ $cur->forum_name }}</a></h3>
         @if ('' != $cur->forum_desc)
                   <p class="f-fdesc">{!! $cur->forum_desc !!}</p>
         @endif
@@ -17,16 +17,16 @@
                 <div class="f-ficon"></div>
                 <div class="f-finfo">
                   <h3>
-                    <a class="f-ftname" href="{!! $cur->link !!}">{{ $cur->forum_name }}</a>
+                    <a class="f-ftname" href="{{ $cur->link }}">{{ $cur->forum_name }}</a>
         @if ($cur->tree->newMessages)
-                    <small class="f-fnew"><a href="{!! $cur->linkNew !!}" title="{!! __('New posts') !!}"><span class="f-newtxt">{!! __('New posts') !!}</span></a></small>
+                    <small class="f-fnew"><a href="{{ $cur->linkNew }}" title="{!! __('New posts') !!}"><span class="f-newtxt">{!! __('New posts') !!}</span></a></small>
         @endif
                   </h3>
         @if ($cur->subforums)
                   <dl class="f-inline f-fsub"><!-- inline -->
                     <dt>{!! __('Sub forum', \count($cur->subforums)) !!}</dt>
             @foreach ($cur->subforums as $sub)
-                    <dd><a href="{!! $sub->link !!}">{{ $sub->forum_name }}</a></dd>
+                    <dd><a href="{{ $sub->link }}">{{ $sub->forum_name }}</a></dd>
             @endforeach
                   </dl><!-- endinline -->
         @endif
@@ -40,7 +40,7 @@
                 @if (\is_string($mod))
                     <dd>{{ $mod }}</dd>
                 @else
-                    <dd><a href="{!! $mod[0] !!}">{{ $mod[1] }}</a></dd>
+                    <dd><a href="{{ $mod[0] }}">{{ $mod[1] }}</a></dd>
                 @endif
             @endforeach
                   </dl><!-- endinline -->

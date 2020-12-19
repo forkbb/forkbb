@@ -4,17 +4,17 @@
         <nav class="f-pages">
         @foreach ($p->model->pagination as $cur)
             @if ($cur[2])
-          <a class="f-page active" href="{!! $cur[0] !!}">{{ $cur[1] }}</a>
+          <a class="f-page active" href="{{ $cur[0] }}">{{ $cur[1] }}</a>
             @elseif ('info' === $cur[1])
           <span class="f-pinfo">{!! $cur[0] !!}</span>
             @elseif ('space' === $cur[1])
           <span class="f-page f-pspacer">{!! __('Spacer') !!}</span>
             @elseif ('prev' === $cur[1])
-          <a rel="prev" class="f-page f-pprev" href="{!! $cur[0] !!}">{!! __('Previous') !!}</a>
+          <a rel="prev" class="f-page f-pprev" href="{{ $cur[0] }}">{!! __('Previous') !!}</a>
             @elseif ('next' === $cur[1])
-          <a rel="next" class="f-page f-pnext" href="{!! $cur[0] !!}">{!! __('Next') !!}</a>
+          <a rel="next" class="f-page f-pnext" href="{{ $cur[0] }}">{!! __('Next') !!}</a>
             @else
-          <a class="f-page" href="{!! $cur[0] !!}">{{ $cur[1] }}</a>
+          <a class="f-page" href="{{ $cur[0] }}">{{ $cur[1] }}</a>
             @endif
         @endforeach
         </nav>
@@ -32,7 +32,7 @@
           <a class="f-btn f-btn-topic-closed" title="{!! __('Topic closed') !!}"><span>{!! __('Topic closed') !!}</span></a>
         @endif
         @if ($p->model->canReply)
-          <a class="f-btn f-btn-post-reply" title="{!! __('Post reply') !!}" href="{!! $p->model->linkReply !!}"><span>{!! __('Post reply') !!}</span></a>
+          <a class="f-btn f-btn-post-reply" title="{!! __('Post reply') !!}" href="{{ $p->model->linkReply }}"><span>{!! __('Post reply') !!}</span></a>
         @endif
         </div>
     @endif
@@ -59,24 +59,24 @@
         @if ($post->edited)
           <span class="f-post-edited" title="{!! __('Last edit', $post->editor, dt($post->edited)) !!}">{!! __('Edited') !!}</span>
         @endif
-          <span class="f-post-number"><a href="{!! $post->link !!}" rel="bookmark">#{!! $post->postNumber !!}</a></span>
+          <span class="f-post-number"><a href="{{ $post->link }}" rel="bookmark">#{!! $post->postNumber !!}</a></span>
         </header>
         <address class="f-post-user">
           <ul class="f-user-info-first">
         @if ($p->user->viewUsers && $post->user->link)
-            <li class="f-username"><a href="{!! $post->user->link !!}">{{ $post->user->username }}</a></li>
+            <li class="f-username"><a href="{{ $post->user->link }}">{{ $post->user->username }}</a></li>
         @else
             <li class="f-username">{{ $post->user->username }}</li>
         @endif
           </ul>
         @if ($p->user->showAvatar && $post->user->avatar)
           <p class="f-avatar">
-            <img alt="{{ $post->user->username }}" src="{!! $post->user->avatar !!}" loading="lazy">
+            <img alt="{{ $post->user->username }}" src="{{ $post->user->avatar }}" loading="lazy">
           </p>
         @endif
           <ul class="f-user-info">
         @if ($p->user->viewUsers && $post->user->link)
-            <li class="f-username"><a href="{!! $post->user->link !!}">{{ $post->user->username }}</a></li>
+            <li class="f-username"><a href="{{ $post->user->link }}">{{ $post->user->username }}</a></li>
         @else
             <li class="f-username">{{ $post->user->username }}</li>
         @endif
@@ -85,7 +85,7 @@
             <li class="f-postcount">{!! __('%s post', $post->user->num_posts, num($post->user->num_posts)) !!}</li>
         @endif
         @if ($linkPromote = $p->user->linkPromote($post))
-            <li class="f-promoteuser"><a href="{!! $linkPromote !!}">{!! __('Promote user') !!}</a></li>
+            <li class="f-promoteuser"><a href="{{ $linkPromote }}">{!! __('Promote user') !!}</a></li>
         @endif
           </ul>
         @if (! $post->user->isGuest && $p->user->showUserInfo)
@@ -124,16 +124,16 @@
           <div class="f-post-btns">
             <ul>
             @if ($post->canReport)
-              <li class="f-postreport"><a class="f-btn f-minor" title="{!! __('Report') !!}" href="{!! $post->linkReport !!}"><span>{!! __('Report') !!}</span></a></li>
+              <li class="f-postreport"><a class="f-btn f-minor" title="{!! __('Report') !!}" href="{{ $post->linkReport }}"><span>{!! __('Report') !!}</span></a></li>
             @endif
             @if ($post->canDelete)
-              <li class="f-postdelete"><a class="f-btn" title="{!! __('Delete') !!}" href="{!! $post->linkDelete !!}"><span>{!! __('Delete') !!}</span></a></li>
+              <li class="f-postdelete"><a class="f-btn" title="{!! __('Delete') !!}" href="{{ $post->linkDelete }}"><span>{!! __('Delete') !!}</span></a></li>
             @endif
             @if ($post->canEdit)
-              <li class="f-postedit"><a class="f-btn" title="{!! __('Edit') !!}" href="{!! $post->linkEdit !!}"><span>{!! __('Edit') !!}</span></a></li>
+              <li class="f-postedit"><a class="f-btn" title="{!! __('Edit') !!}" href="{{ $post->linkEdit }}"><span>{!! __('Edit') !!}</span></a></li>
             @endif
             @if ($post->canQuote)
-              <li class="f-postquote"><a class="f-btn" title="{!! __('Quote') !!}" href="{!! $post->linkQuote !!}"><span>{!! __('Quote') !!}</span></a></li>
+              <li class="f-postquote"><a class="f-btn" title="{!! __('Quote') !!}" href="{{ $post->linkQuote }}"><span>{!! __('Quote') !!}</span></a></li>
             @endif
             </ul>
           </div>
@@ -150,13 +150,13 @@
         <div class="f-actions-links">
         @if ($p->model->canSubscription)
             @if ($p->model->is_subscribed)
-          <a class="f-btn f-btn-unsubscribe f-opacity" title="{!! __('Unsubscribe topic') !!}" href="{!! $p->model->linkUnsubscribe !!}"><span>{!! __('Unsubscribe') !!}</span></a>
+          <a class="f-btn f-btn-unsubscribe f-opacity" title="{!! __('Unsubscribe topic') !!}" href="{{ $p->model->linkUnsubscribe }}"><span>{!! __('Unsubscribe') !!}</span></a>
             @else
-          <a class="f-btn f-btn-subscribe f-opacity" title="{!! __('Subscribe topic') !!}" href="{!! $p->model->linkSubscribe !!}"><span>{!! __('Subscribe') !!}</span></a>
+          <a class="f-btn f-btn-subscribe f-opacity" title="{!! __('Subscribe topic') !!}" href="{{ $p->model->linkSubscribe }}"><span>{!! __('Subscribe') !!}</span></a>
             @endif
         @endif
         @if ($p->model->canReply)
-          <a class="f-btn f-btn-post-reply" title="{!! __('Post reply') !!}" href="{!! $p->model->linkReply !!}"><span>{!! __('Post reply') !!}</span></a>
+          <a class="f-btn f-btn-post-reply" title="{!! __('Post reply') !!}" href="{{ $p->model->linkReply }}"><span>{!! __('Post reply') !!}</span></a>
         @endif
         </div>
     @endif

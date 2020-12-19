@@ -16,7 +16,7 @@
   <div id="fork">
     <header id="fork-header">
       <div id="id-fhtitle">
-        <h1 id="id-fhth1"><a id="id-fhtha" href="{!! $p->fRootLink !!}">{{ $p->fTitle }}</a></h1>
+        <h1 id="id-fhth1"><a id="id-fhtha" href="{{ $p->fRootLink }}">{{ $p->fTitle }}</a></h1>
 @if ('' != $p->fDescription)
         <p id="id-fhtdesc">{!! $p->fDescription !!}</p>
 @endif

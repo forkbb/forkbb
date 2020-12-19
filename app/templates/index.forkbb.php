@@ -21,7 +21,7 @@
     <div class="f-nav-links">
       <div class="f-nlinks">
         <div class="f-actions-links">
-          <a class="f-btn f-btn-markread f-opacity" title="{!! __('Mark all as read') !!}" href="{!! $p->linkMarkRead !!}"><span>{!! __('All is read') !!}</span></a>
+          <a class="f-btn f-btn-markread f-opacity" title="{!! __('Mark all as read') !!}" href="{{ $p->linkMarkRead }}"><span>{!! __('All is read') !!}</span></a>
         </div>
       </div>
     </div>
