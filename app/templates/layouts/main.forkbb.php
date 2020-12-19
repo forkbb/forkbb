@@ -28,7 +28,7 @@
         <ul class="f-menu-items">
     @foreach ($p->fNavigation as $key => $val)
           <li id="id-nav-{!! $key !!}" class="f-menu-item"><!-- inline -->
-            <a class="f-menu-a @if ($key == $p->fIndex) active @endif" href="{!! __($val[0]) !!}" @if ($val[2]) title="{!! __($val[2]) !!}" @endif>
+            <a class="f-menu-a @if ($key == $p->fIndex) active @endif" href="{{ $val[0] }}" @if ($val[2]) title="{!! __($val[2]) !!}" @endif>
               <span class="f-menu-span">{!! __($val[1]) !!}</span>
             </a>
         @if ($val[3])
@@ -36,7 +36,7 @@
             @foreach ($val[3] as $key => $val)
               <li id="id-nav-{!! $key !!}" class="f-menu-item">
                 @if ($val[0])
-                <a class="f-menu-a @if ($key == $p->fSubIndex) active @endif" href="{!! __($val[0]) !!}" @if ($val[2]) title="{!! __($val[2]) !!}" @endif>
+                <a class="f-menu-a @if ($key == $p->fSubIndex) active @endif" href="{{ $val[0] }}" @if ($val[2]) title="{!! __($val[2]) !!}" @endif>
                   <span class="f-menu-span">{!! __($val[1]) !!}</span>
                 </a>
                 @else
@@ -53,7 +53,7 @@
         <ul class="f-menu-user-items">
         @foreach ($p->fNavigationUser as $key => $val)
           <li id="id-nav-{!! $key !!}" class="f-menu-item"><!-- inline -->
-            <a class="f-menu-a @if ($key == $p->fIndex) active @endif" href="{!! __($val[0]) !!}" @if ($val[2]) title="{!! __($val[2]) !!}" @endif>
+            <a class="f-menu-a @if ($key == $p->fIndex) active @endif" href="{{ $val[0] }}" @if ($val[2]) title="{!! __($val[2]) !!}" @endif>
               <span class="f-menu-span">{!! __($val[1]) !!}</span>
             </a>
             @if ($val[3])
@@ -61,7 +61,7 @@
                 @foreach ($val[3] as $key => $val)
               <li id="id-nav-{!! $key !!}" class="f-menu-item">
                     @if ($val[0])
-                <a class="f-menu-a @if ($key == $p->fSubIndex) active @endif" href="{!! __($val[0]) !!}" @if ($val[2]) title="{!! __($val[2]) !!}" @endif>
+                <a class="f-menu-a @if ($key == $p->fSubIndex) active @endif" href="{{ $val[0] }}" @if ($val[2]) title="{!! __($val[2]) !!}" @endif>
                   <span class="f-menu-span">{!! __($val[1]) !!}</span>
                 </a>
                     @else
