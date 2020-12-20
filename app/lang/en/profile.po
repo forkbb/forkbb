@@ -427,7 +427,7 @@ msgid "New avatar"
 msgstr "New avatar"
 
 msgid "New avatar info"
-msgstr "The avatar will be automatically resize to <b>%1$s</b>x<b>%2$s</b> pixel / <b>%3$s</b> bytes (<i>%4$s</i>) if exceeds these parameters."
+msgstr "The avatar will be automatically resize to <b>%1$s</b>x<b>%2$s</b> pixel. The avatar will be removed if its size exceeds <b>%3$s</b> bytes (<i>%4$s</i>) after compression."
 
 msgid "IP"
 msgstr "IP"
