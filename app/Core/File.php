@@ -223,7 +223,7 @@ class File
     /**
      * Сохраняет файл по указанному шаблону пути
      */
-    public function toFile(string $path): bool
+    public function toFile(string $path, int $maxSize = null): bool
     {
         $info = $this->pathinfo($path);
 
@@ -253,10 +253,22 @@ class File
         $path = $info['dirname'] . $info['filename'] . '.' . $info['extension'];
 
         if ($this->fileProc($path)) {
+            $this->size = \filesize($path);
+
+            if (
+                null !== $maxSize
+                && $this->size > $maxSize
+            ) {
+                $this->error = 'File is larger than the allowed size';
+
+                @\unlink($path);
+
+                return false;
+            }
+
             $this->path = $path;
             $this->name = $info['filename'];
             $this->ext  = $info['extension'];
-            $this->size = \filesize($path);
 
             return true;
         } else {
