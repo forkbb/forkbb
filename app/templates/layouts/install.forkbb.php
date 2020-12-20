@@ -7,7 +7,7 @@
 @foreach ($p->pageHeaders as $pageHeader)
     @if ('style' === $pageHeader['type'])
   <style>{!! $pageHeader['values'][0] !!}</style>
-    @else
+    @elseif ('script' !== $pageHeader['type'])
   <{!! $pageHeader['type'] !!} @foreach ($pageHeader['values'] as $key => $val) {!! $key !!}="{{ $val }}" @endforeach>
     @endif
 @endforeach
