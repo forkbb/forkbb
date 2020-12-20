@@ -147,9 +147,9 @@ class Options extends Admin
     {
         $dir = '/' . \trim(\str_replace(['\\', '.', '//', ':'], ['/', '', '', ''], $dir), '/');
 
-        if (! \is_dir($dir)) {
+        if (! \is_dir($this->c->DIR_PUBLIC . $dir)) {
             $v->addError('The folder for uploading avatars is incorrectly');
-        } elseif (! \is_writable($dir)) {
+        } elseif (! \is_writable($this->c->DIR_PUBLIC . $dir)) {
             $v->addError('For PHP, it is forbidden to write in the folder for uploading avatars');
         }
 
