@@ -145,7 +145,13 @@ class Options extends Admin
      */
     public function vCheckDir(Validator $v, $dir)
     {
-        $dir = '/' . \trim(\str_replace(['\\', '.', '//', ':'], ['/', '', '', ''], $dir), '/'); //?????
+        $dir = '/' . \trim(\str_replace(['\\', '.', '//', ':'], ['/', '', '', ''], $dir), '/');
+
+        if (! \is_dir($dir)) {
+            $v->addError('The folder for uploading avatars is incorrectly');
+        } elseif (! \is_writable($dir)) {
+            $v->addError('For PHP, it is forbidden to write in the folder for uploading avatars');
+        }
 
         return $dir;
     }
@@ -515,7 +521,7 @@ class Options extends Admin
                     'maxlength' => '255',
                     'value'     => $config->o_avatars_dir,
                     'caption'   => __('Upload directory label'),
-                    'info'      => __('Upload directory help'),
+                    'info'      => __('Upload directory help', $this->c->PUBLIC_URL),
                     'required'  => true,
                 ],
                 'i_avatars_width' => [

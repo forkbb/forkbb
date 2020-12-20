@@ -253,7 +253,7 @@ msgid "Upload directory label"
 msgstr "Папка для загрузки"
 
 msgid "Upload directory help"
-msgstr "Папка загрузки аватар (относительно корня форума). Необходимо дать PHP права на запись в эту папку."
+msgstr "Папка загрузки аватар (относительно %s). Необходимо дать PHP права на запись в эту папку."
 
 msgid "Max width label"
 msgstr "Макс. ширина"
@@ -446,3 +446,9 @@ msgstr "Результат для гостя"
 
 msgid "Result for guest help"
 msgstr "Гости видят результаты голосования."
+
+msgid "The folder for uploading avatars is incorrectly"
+msgstr "Неправильно указана папка для аватарок."
+
+msgid "For PHP, it is forbidden to write in the folder for uploading avatars"
+msgstr "Для PHP установлен запрет на запись в папку аватарок."

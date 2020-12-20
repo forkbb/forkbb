@@ -253,7 +253,7 @@ msgid "Upload directory label"
 msgstr "Upload directory"
 
 msgid "Upload directory help"
-msgstr "The upload directory for avatars (relative to the ForkBB root directory). PHP must have write permissions to this directory."
+msgstr "The upload directory for avatars (relative to %s). PHP must have write permissions to this directory."
 
 msgid "Max width label"
 msgstr "Max width"
@@ -446,3 +446,9 @@ msgstr "Result for guest"
 
 msgid "Result for guest help"
 msgstr "The guests see the voting results."
+
+msgid "The folder for uploading avatars is incorrectly"
+msgstr "The folder for uploading avatars is incorrectly."
+
+msgid "For PHP, it is forbidden to write in the folder for uploading avatars"
+msgstr "For PHP, it is forbidden to write in the folder for uploading avatars."
