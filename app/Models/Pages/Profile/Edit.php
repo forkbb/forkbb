@@ -128,7 +128,7 @@ class Edit extends Profile
                         ->rename(true)
                         ->rewrite(false)
                         ->resize($this->c->config->i_avatars_width, $this->c->config->i_avatars_height)
-                        ->toFile($path);
+                        ->toFile($path, $this->c->config->i_avatars_size);
 
                     if (true === $result) {
                         $this->curUser->avatar = $v->upload_avatar->name() . '.' . $v->upload_avatar->ext();

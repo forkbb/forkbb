@@ -1090,7 +1090,7 @@ class Install extends Admin
             'o_avatars_dir'           => '/img/avatars',
             'i_avatars_width'         => 60,
             'i_avatars_height'        => 60,
-            'i_avatars_size'          => 10240, // ???? сейчас не используется
+            'i_avatars_size'          => 10240,
             'o_search_all_forums'     => 1,
             'o_admin_email'           => $v->email,
             'o_webmaster_email'       => $v->email,
