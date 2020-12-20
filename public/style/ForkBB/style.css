@@ -397,8 +397,9 @@ body,
   background-color: #F8F4E3;
   display: flex;
   justify-content: flex-end;
-  flex-grow: 0.5;
+  /*flex-grow: 0.5;*/
   /*flex-wrap: wrap;*/
+  margin-left: auto;
 }
 
 #fork-nav .f-menu-user-items .f-menu-item {
@@ -488,8 +489,8 @@ body,
   #fork-nav .f-menu-items {
     display: flex;
     flex-direction: row;
-    flex-grow: 0.5;
-    margin-left: auto;
+    /*flex-grow: 0.5;*/
+    /*margin-left: auto;*/
     /*margin-right: auto;*/
     /*flex-wrap: wrap;*/
     border-bottom: 0;
@@ -524,7 +525,7 @@ body,
   #fork #id-nav-profile .f-menu-a:before {
     content: "";
     padding: 0;
-}
+  }
 } /* @media screen and (min-width: 50rem) */
 
 /*********/
