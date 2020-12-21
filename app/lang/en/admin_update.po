@@ -193,7 +193,7 @@ msgid "Username IP format error"
 msgstr "Usernames may not be in the form of an IP address. Please choose another username."
 
 msgid "Username bad characters error"
-msgstr "Usernames may not contain all the characters ', \" and [ or ] at once. Please choose another username."
+msgstr "Usernames may not contain all the characters ', &quot; and [ or ] at once. Please choose another username."
 
 msgid "Username BBCode error"
 msgstr "Usernames may not contain any of the text formatting tags (BBCode) that the forum uses. Please choose another username."

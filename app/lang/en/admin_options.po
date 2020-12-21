@@ -28,7 +28,7 @@ msgid "Enter rules here"
 msgstr "Enter your rules here."
 
 msgid "Timeout error message"
-msgstr "The value of \"Timeout online\" must be smaller than the value of \"Timeout visit\"."
+msgstr "The value of &quot;Timeout online&quot; must be smaller than the value of &quot;Timeout visit&quot;."
 
 msgid "Options updated redirect"
 msgstr "Options updated."
@@ -71,18 +71,6 @@ msgstr "The default style for guests and users attempting to register for the bo
 
 msgid "Timeouts subhead"
 msgstr "Time and timeouts"
-
-msgid "Time format label"
-msgstr "Time format"
-
-msgid "Time format help"
-msgstr "[Current format: %s]. See <a href=\"https://secure.php.net/manual/en/function.date.php\">PHP manual</a> for formatting options."
-
-msgid "Date format label"
-msgstr "Date format"
-
-msgid "Date format help"
-msgstr "[Current format: %s]. See <a href=\"https://secure.php.net/manual/en/function.date.php\">PHP manual</a> for formatting options."
 
 msgid "Visit timeout label"
 msgstr "Visit timeout"

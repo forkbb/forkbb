@@ -28,7 +28,7 @@ msgid "Enter rules here"
 msgstr "Введите сюда правила форума."
 
 msgid "Timeout error message"
-msgstr "Значение \"Таймаут online\" должно быть меньше чем \"Таймаут визита\"."
+msgstr "Значение &quot;Таймаут online&quot; должно быть меньше чем &quot;Таймаут визита&quot;."
 
 msgid "Options updated redirect"
 msgstr "Опции сохранены."
@@ -71,18 +71,6 @@ msgstr "Стиль по умолчанию для гостей и новых п�
 
 msgid "Timeouts subhead"
 msgstr "Время и таймауты"
-
-msgid "Time format label"
-msgstr "Формат времени"
-
-msgid "Time format help"
-msgstr "[Текущий формат: %s]. Загляните в <a href=\"https://secure.php.net/manual/ru/function.date.php\">Руководство по PHP</a> за подробностями."
-
-msgid "Date format label"
-msgstr "Формат даты"
-
-msgid "Date format help"
-msgstr "[Текущий формат: %s]. Загляните в <a href=\"https://secure.php.net/manual/ru/function.date.php\">Руководство по PHP</a> за подробностями."
 
 msgid "Visit timeout label"
 msgstr "Таймаут визита"

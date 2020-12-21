@@ -100,7 +100,7 @@ msgid "Avatars disabled"
 msgstr "The administrator has disabled avatar support."
 
 msgid "Too large ini"
-msgstr "The selected file was too large to upload. The server didn\"t allow the upload."
+msgstr "The selected file was too large to upload. The server didn't allow the upload."
 
 msgid "Partial upload"
 msgstr "The selected file was only partially uploaded. Please try again."
@@ -247,7 +247,7 @@ msgid "Signature legend"
 msgstr "Compose your signature"
 
 msgid "Signature info"
-msgstr "A signature is a small piece of text that is attached to your posts. In it, you can enter just about anything you like. Perhaps you would like to enter your favourite quote or your star sign. It\"s up to you! In your signature you can use BBCode if it is allowed in this particular forum. You can see the features that are allowed/enabled listed below whenever you edit your signature."
+msgstr "A signature is a small piece of text that is attached to your posts. In it, you can enter just about anything you like. Perhaps you would like to enter your favourite quote or your star sign. It's up to you! In your signature you can use BBCode if it is allowed in this particular forum. You can see the features that are allowed/enabled listed below whenever you edit your signature."
 
 msgid "Sig preview"
 msgstr "Current signature preview:"

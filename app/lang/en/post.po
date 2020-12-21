@@ -87,9 +87,6 @@ msgstr "To stick the first post on all pages of topic"
 msgid "Edit post legend"
 msgstr "Edit the post and submit changes"
 
-msgid "Silent edit"
-msgstr "Silent edit (don't display \"Edited by ...\" in topic view)"
-
 msgid "Edit post"
 msgstr "Edit post"
 

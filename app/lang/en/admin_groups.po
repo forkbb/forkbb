@@ -91,7 +91,7 @@ msgid "Promote users label"
 msgstr "Promote users"
 
 msgid "Promote users help"
-msgstr "You can promote users to a new group automatically if they reach a certain number of posts. Select \"%s\" to disable. For security reasons, you are not allowed to select an administrator group here. Also note that group changes for users affected by this setting will take effect <b>immediately</b>."
+msgstr "You can promote users to a new group automatically if they reach a certain number of posts. Select &quot;%s&quot; to disable. For security reasons, you are not allowed to select an administrator group here. Also note that group changes for users affected by this setting will take effect <b>immediately</b>."
 
 msgid "Number for promotion label"
 msgstr "Number of messages for promotion"
@@ -142,7 +142,7 @@ msgid "Read board label"
 msgstr "Read board"
 
 msgid "Read board help"
-msgstr "Allow users in this group to view the board. This setting applies to every aspect of the board and can therefore not be overridden by forum specific settings. If this is set to \"No\", users in this group will only be able to login/logout and register."
+msgstr "Allow users in this group to view the board. This setting applies to every aspect of the board and can therefore not be overridden by forum specific settings. If this is set to &quot;No&quot;, users in this group will only be able to login/logout and register."
 
 msgid "View user info label"
 msgstr "View user information"

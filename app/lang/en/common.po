@@ -76,15 +76,6 @@ msgstr "You do not have permission to access this page."
 msgid "No cookie"
 msgstr "You appear to have logged in successfully, however a cookie has not been set. Please check your settings and if applicable, enable cookies for this website."
 
-msgid "Pun include extension"
-msgstr "Unable to process user include %s from template %s. &quot;%s&quot; files are not allowed"
-
-msgid "Pun include directory"
-msgstr "Unable to process user include %s from template %s. Directory traversal is not allowed"
-
-msgid "Pun include error"
-msgstr "Unable to process user include %s from template %s. There is no such file in neither the template directory nor in the user include directory"
-
 msgid "Hidden text"
 msgstr "Hidden text"
 
