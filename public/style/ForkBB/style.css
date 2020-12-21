@@ -1080,6 +1080,7 @@ body,
 
 #fork .f-admin legend {
   margin-bottom: 0.3125rem;
+  border-top: 0.0625rem dashed #AA7939;
 }
 
 #fork .f-admin .f-fdiv .f-child2 {
