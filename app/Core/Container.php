@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * This file is part of the ForkBB <https://github.com/forkbb>.
+ */
 /**
  * based on Container https://github.com/artoodetoo/container
  * by artoodetoo
