@@ -974,6 +974,11 @@ body,
 /******************/
 /* Админка - меню */
 /******************/
+#fork .f-admin-nav {
+  position: sticky;
+  top: 1rem;
+}
+
 #fork .f-admin-menu .f-menu-a {
   text-align: center;
   text-transform: uppercase;
