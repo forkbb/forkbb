@@ -217,11 +217,9 @@ class Func
             }
 
             $l = \trim($dsr[0]);
-            if (! \preg_match('%^[[:alpha:]]{1,8}(?:-[[:alnum:]]{1,8})?$%', $l)) {
-                continue;
+            if (\preg_match('%^[[:alpha:]]{1,8}(?:-[[:alnum:]]{1,8})?$%', $l)) {
+                $result[$l] = $q;
             }
-
-            $result[$l] = $q;
         }
         \arsort($result, \SORT_NUMERIC);
 

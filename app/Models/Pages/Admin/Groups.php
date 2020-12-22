@@ -421,12 +421,11 @@ class Groups extends Admin
 
             foreach ($this->groupsNew as $key => $title) {
                 if (
-                    $key === $group->g_id
-                    || $key === $this->c->GROUP_GUEST
+                    $key !== $group->g_id
+                    && $key !== $this->c->GROUP_GUEST
                 ) {
-                    continue;
+                    $options[$key] = $title;
                 }
-                $options[$key] = $title;
             }
 
             $fieldset['g_promote_next_group'] = [

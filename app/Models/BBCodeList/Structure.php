@@ -350,11 +350,9 @@ class Structure extends ParentModel
         foreach ($attrs as $name => $attr) {
             $value = $this->getBBAttr($name, ['required', 'format', 'body format', 'text only']);
 
-            if (null === $value) {
-                continue;
+            if (null !== $value) {
+                $result[$name] = $value;
             }
-
-            $result[$name] = $value;
         }
 
         return $result;
