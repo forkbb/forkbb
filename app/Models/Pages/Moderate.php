@@ -35,7 +35,7 @@ class Moderate extends Page
         'delete'  => self::INFORUM + self::INTOPIC + self::IFTOTPC,
         'move'    => self::INFORUM + self::INTOPIC + self::IFTOTPC,
         'merge'   => self::INFORUM,
-        'cancel'  => self::INFORUM + self::INTOPIC,
+        'cancel'  => self::INFORUM + self::INTOPIC + self::TOTOPIC + self::IFTOTPC,
         'unstick' => self::INTOPIC + self::TOTOPIC,
         'stick'   => self::INTOPIC + self::TOTOPIC,
         'split'   => self::INTOPIC,
@@ -189,10 +189,10 @@ class Moderate extends Page
             ]);
 
         if (! $v->validation($_POST)) {
-            $message         = $this->c->Message->message('Bad request');
+            $message         = $this->c->Message;
             $message->fIswev = $v->getErrors();
 
-            return $message;
+            return $message->message('');
         }
 
         $this->curForum = $this->c->forums->loadTree($v->forum);
