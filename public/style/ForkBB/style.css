@@ -1080,7 +1080,6 @@ body,
 
 #fork .f-admin legend {
   margin-bottom: 0.3125rem;
-  border-top: 0.0625rem dashed #AA7939;
 }
 
 #fork .f-admin .f-fdiv .f-child2 {
@@ -3223,4 +3222,11 @@ body,
   #fork .f-smilies-form .f-fs-new-smile > legend {
     border-top: 0;
   }
+}
+
+/****************************************/
+/* Админка/Сигналы                      */
+/****************************************/
+#fork .f-reports legend {
+  border-top: 0.0625rem dashed #AA7939;
 }
