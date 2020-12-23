@@ -157,6 +157,10 @@ body,
   resize: vertical;
 }
 
+#fork summary {
+  cursor: pointer;
+}
+
 #fork select {
   background-color: #D3B58D;
 }
@@ -1762,10 +1766,6 @@ body,
   list-style-type: lower-alpha;
   list-style-position: outside;
   padding-left: 1.5rem;
-}
-
-#fork .f-bb-spoiler > summary {
-  cursor: pointer;
 }
 
 #fork .f-bb-s-body {

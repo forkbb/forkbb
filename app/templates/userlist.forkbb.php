@@ -32,9 +32,12 @@
 @if ($form = $p->form)
     <section class="f-main f-userlist-form">
       <h2>{!! __($p->user->searchUsers ? 'User search head' : 'User sort head') !!}</h2>
-      <div class="f-fdiv">
+      <details>
+        <summary>{!! __($p->user->searchUsers ? 'User search head' : 'User sort head') !!}</summary>
+        <div class="f-fdiv">
     @include ('layouts/form')
-      </div>
+        </div>
+      </details>
     </section>
 @endif
 @if ($p->userList)
