@@ -35,12 +35,14 @@
           <span class="f-post-number"><a href="{{ $post->link }}" rel="bookmark">#{!! $post->postNumber !!}</a></span>
         </header>
         <address class="f-post-user">
-          <ul class="f-user-info-first">
-            <li class="f-username">{{ $post->poster }}</li>
-          </ul>
-          <ul class="f-user-info">
-            <li class="f-username">{{ $post->poster }}</li>
-          </ul>
+          <div class="f-post-usticky">
+            <ul class="f-user-info-first">
+              <li class="f-username">{{ $post->poster }}</li>
+            </ul>
+            <ul class="f-user-info">
+              <li class="f-username">{{ $post->poster }}</li>
+            </ul>
+          <div>
         </address>
         <div class="f-post-body">
           <div class="f-post-main">

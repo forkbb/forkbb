@@ -1569,7 +1569,7 @@ body,
   margin-bottom: 0.625rem;
   position: relative;
   background-color: #FFFFFF;
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 
 #fork .f-post-header {
@@ -1596,12 +1596,15 @@ body,
 }
 
 #fork .f-post-user {
-  display: flex;
-  flex-wrap: wrap;
   padding: 0.625rem;
   background-color: #F8F4E3;
   border-bottom: 0.0625rem solid #AA7939;
   font-size: 0.875rem;
+}
+
+#fork .f-post-usticky {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 #fork .f-user-info-first {
@@ -1794,10 +1797,15 @@ body,
   }
 
   #fork .f-post-user {
-    flex-direction: column;
     width: 13rem;
     border-right: 0.0625rem solid #AA7939;
     border-bottom: 0;
+  }
+
+  #fork .f-post-usticky {
+    flex-direction: column;
+    position: sticky;
+    top: 0;
   }
 
   #fork .f-user-info-first {

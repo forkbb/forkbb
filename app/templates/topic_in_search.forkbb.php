@@ -45,29 +45,31 @@
           <span class="f-post-number">#{!! $post->postNumber !!}</span>
         </header>
         <address class="f-post-user">
-          <ul class="f-user-info-first">
+          <div class="f-post-usticky">
+            <ul class="f-user-info-first">
         @if ($p->user->viewUsers && $post->user->link)
-            <li class="f-username"><a href="{{ $post->user->link }}">{{ $post->user->username }}</a></li>
+              <li class="f-username"><a href="{{ $post->user->link }}">{{ $post->user->username }}</a></li>
         @else
-            <li class="f-username">{{ $post->user->username }}</li>
+              <li class="f-username">{{ $post->user->username }}</li>
         @endif
-          </ul>
-          <ul class="f-user-info">
+            </ul>
+            <ul class="f-user-info">
         @if ($p->user->viewUsers && $post->user->link)
-            <li class="f-username"><a href="{{ $post->user->link }}">{{ $post->user->username }}</a></li>
+              <li class="f-username"><a href="{{ $post->user->link }}">{{ $post->user->username }}</a></li>
         @else
-            <li class="f-username">{{ $post->user->username }}</li>
+              <li class="f-username">{{ $post->user->username }}</li>
         @endif
-            <li class="f-usertitle">{{ $post->user->title() }}</li>
-          </ul>
-          <ul class="f-post-search-info">
-            <li class="f-psi-forum">{!! __('Forum') !!}: <a href="{{ $post->parent->parent->link }}">{{ $post->parent->parent->forum_name }}</a></li>
-            <li class="f-psi-topic">{!! __('Topic') !!}: <a href="{{ $post->parent->link }}">{{ $post->parent->censorSubject }}</a></li>
-            <li class="f-psi-reply">{!! __('%s Reply', $post->parent->num_replies, num($post->parent->num_replies)) !!}</li>
+              <li class="f-usertitle">{{ $post->user->title() }}</li>
+            </ul>
+            <ul class="f-post-search-info">
+              <li class="f-psi-forum">{!! __('Forum') !!}: <a href="{{ $post->parent->parent->link }}">{{ $post->parent->parent->forum_name }}</a></li>
+              <li class="f-psi-topic">{!! __('Topic') !!}: <a href="{{ $post->parent->link }}">{{ $post->parent->censorSubject }}</a></li>
+              <li class="f-psi-reply">{!! __('%s Reply', $post->parent->num_replies, num($post->parent->num_replies)) !!}</li>
         @if ($post->parent->showViews)
-            <li class="f-psi-view">{!! __('%s View', $post->parent->num_views, num($post->parent->num_views)) !!}</li>
+              <li class="f-psi-view">{!! __('%s View', $post->parent->num_views, num($post->parent->num_views)) !!}</li>
         @endif
-          </ul>
+            </ul>
+          </div>
         </address>
         <div class="f-post-body">
           <div class="f-post-main">

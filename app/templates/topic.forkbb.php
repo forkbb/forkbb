@@ -62,43 +62,45 @@
           <span class="f-post-number"><a href="{{ $post->link }}" rel="bookmark">#{!! $post->postNumber !!}</a></span>
         </header>
         <address class="f-post-user">
-          <ul class="f-user-info-first">
+          <div class="f-post-usticky">
+            <ul class="f-user-info-first">
         @if ($p->user->viewUsers && $post->user->link)
-            <li class="f-username"><a href="{{ $post->user->link }}">{{ $post->user->username }}</a></li>
+              <li class="f-username"><a href="{{ $post->user->link }}">{{ $post->user->username }}</a></li>
         @else
-            <li class="f-username">{{ $post->user->username }}</li>
+              <li class="f-username">{{ $post->user->username }}</li>
         @endif
-          </ul>
+            </ul>
         @if ($p->user->showAvatar && $post->user->avatar)
-          <p class="f-avatar">
-            <img alt="{{ $post->user->username }}" src="{{ $post->user->avatar }}" loading="lazy">
-          </p>
+            <p class="f-avatar">
+              <img alt="{{ $post->user->username }}" src="{{ $post->user->avatar }}" loading="lazy">
+            </p>
         @endif
-          <ul class="f-user-info">
+            <ul class="f-user-info">
         @if ($p->user->viewUsers && $post->user->link)
-            <li class="f-username"><a href="{{ $post->user->link }}">{{ $post->user->username }}</a></li>
+              <li class="f-username"><a href="{{ $post->user->link }}">{{ $post->user->username }}</a></li>
         @else
-            <li class="f-username">{{ $post->user->username }}</li>
+              <li class="f-username">{{ $post->user->username }}</li>
         @endif
-            <li class="f-usertitle">{{ $post->user->title() }}</li>
+              <li class="f-usertitle">{{ $post->user->title() }}</li>
         @if ($p->user->showUserInfo && $p->user->showPostCount && $post->user->num_posts)
-            <li class="f-postcount">{!! __('%s post', $post->user->num_posts, num($post->user->num_posts)) !!}</li>
+              <li class="f-postcount">{!! __('%s post', $post->user->num_posts, num($post->user->num_posts)) !!}</li>
         @endif
         @if ($linkPromote = $p->user->linkPromote($post))
-            <li class="f-promoteuser"><a href="{{ $linkPromote }}">{!! __('Promote user') !!}</a></li>
+              <li class="f-promoteuser"><a href="{{ $linkPromote }}">{!! __('Promote user') !!}</a></li>
         @endif
-          </ul>
+            </ul>
         @if (! $post->user->isGuest && $p->user->showUserInfo)
-          <ul class="f-user-info-add">
+            <ul class="f-user-info-add">
             @if ($p->user->isAdmMod && '' != $post->user->admin_note)
-            <li class="f-admin-note" title="{!! __('Admin note') !!}">{{ $post->user->admin_note }}</li>
+              <li class="f-admin-note" title="{!! __('Admin note') !!}">{{ $post->user->admin_note }}</li>
             @endif
-            <li>{!! __('Registered: %s', dt($post->user->registered, true)) !!}</li>
+              <li>{!! __('Registered: %s', dt($post->user->registered, true)) !!}</li>
             @if ($post->user->location)
-            <li>{!! __('From') !!} {{ $post->user->censorLocation }}</li>
+              <li>{!! __('From') !!} {{ $post->user->censorLocation }}</li>
             @endif
-          </ul>
+            </ul>
         @endif
+          </div>
         </address>
         <div class="f-post-body">
           <div class="f-post-main">
