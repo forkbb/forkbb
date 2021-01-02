@@ -48,7 +48,7 @@ class Report extends Page
             ])->addRules([
                 'token'       => 'token:ReportPost',
                 'reason'      => 'required|string:trim,linebreaks|max:65000 bytes',
-                'submit'      => 'required|string',
+                'report'      => 'required|string',
             ])->addAliases([
                 'reason'      => 'Reason',
             ])->addArguments([
@@ -141,7 +141,7 @@ class Report extends Page
                 ],
             ],
             'btns'   => [
-                'submit' => [
+                'report' => [
                     'type'      => 'submit',
                     'value'     => __('Submit'),
 //                    'accesskey' => 's',

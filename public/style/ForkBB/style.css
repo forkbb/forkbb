@@ -617,7 +617,8 @@ body,
   width: 100%;
 }
 
-#fork .f-fdiv .f-btn[name=delete] {
+#fork .f-fdiv .f-btn[name="delete"],
+#fork .f-fdiv .f-btn[name="report"] {
   color: red;
 }
 
