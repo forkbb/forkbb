@@ -1,4 +1,4 @@
-    <section id="fork-debug">
+    <aside id="fork-debug">
       <h2>{!! __('Debug table') !!}</h2>
       <p id="id-fdebugtime">[ {!! __('Querytime', num($p->time, 3), $p->numQueries) !!} - {!! __('Memory usage', size($p->memory)) !!} {!! __('Peak usage', size($p->peak)) !!} ]</p>
 @if ($p->queries)
@@ -23,4 +23,4 @@
         </tbody>
       </table>
 @endif
-    </section>
+    </aside>

@@ -15,11 +15,13 @@
 </head>
 <body>
   <div id="fork">
-    <section class="f-main f-redirect">
-      <h2>{!! __('Redirecting') !!}</h2>
-      <p>{!! $p->message !!}</p>
-      <p><a href="{{ $p->link }}">{!! __('Click redirect') !!}</a></p>
-    </section>
+    <main>
+      <section class="f-main f-redirect">
+        <h2>{!! __('Redirecting') !!}</h2>
+        <p>{!! $p->message !!}</p>
+        <p><a href="{{ $p->link }}">{!! __('Click redirect') !!}</a></p>
+      </section>
+    </main>
 <!-- debuginfo -->
   </div>
 </body>

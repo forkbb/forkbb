@@ -20,6 +20,7 @@
         <p id="id-fhtdesc">{!! __('Welcome') !!}</p>
       </div>
     </header>
+    <main>
 @if ($iswev = $p->fIswev)
     @include ('layouts/iswev')
 @endif
@@ -41,6 +42,7 @@
     </section>
     @endif
 @endif
+    </main>
 <!-- debuginfo -->
   </div>
 </body>

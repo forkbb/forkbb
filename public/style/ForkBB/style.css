@@ -74,6 +74,7 @@ body,
 #fork label,
 #fork legend,
 #fork li,
+#fork main,
 #fork mark,
 #fork menu,
 #fork nav,
@@ -134,6 +135,10 @@ body,
   position: relative;
 }
 
+#fork main {
+  display: block;
+}
+
 #fork code,
 #fork pre {
   font-family: "DejaVu Sans Mono", Consolas, "Droid Sans Mono", Monospace, Monaco, "Courier New", Courier;
@@ -165,7 +170,8 @@ body,
   background-color: #D3B58D;
 }
 
-#fork section > h2 {
+#fork section > h2,
+#fork aside > h2 {
   display: none;
 }
 

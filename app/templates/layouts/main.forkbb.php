@@ -78,16 +78,18 @@
       </nav>
 @endif
     </header>
+    <main>
 @if ($p->fAnnounce)
-    <section id="fork-announce">
-      <h2>{!! __('Announcement') !!}</h2>
-      <p id="id-facontent">{!! $p->fAnnounce !!}</p>
-    </section>
+      <aside id="fork-announce">
+        <h2>{!! __('Announcement') !!}</h2>
+        <p id="id-facontent">{!! $p->fAnnounce !!}</p>
+      </aside>
 @endif
 @if ($iswev = $p->fIswev)
     @include ('layouts/iswev')
 @endif
 @yield ('content')
+    </main>
     <footer id="fork-footer">
       <h2>{!! __('Board footer') !!}</h2>
       <div></div>

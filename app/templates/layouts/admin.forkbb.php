@@ -4,7 +4,7 @@
 @yield ('crumbs')
     </div>
     <div class="f-main f-main-admin{!! $p->mainSuffix or '' !!}">
-      <aside class="f-admin-menu">
+      <div class="f-admin-menu">
 @if ($p->aNavigation)
         <nav class="f-admin-nav f-menu">
           <input id="id-an-checkbox" class="f-menu-checkbox" type="checkbox">
@@ -16,7 +16,7 @@
           </ul>
         </nav>
 @endif
-      </aside>
+      </div>
       <div class="f-admin-wrap">
 @yield ('content')
       </div>
