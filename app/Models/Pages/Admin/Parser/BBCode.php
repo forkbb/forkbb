@@ -301,23 +301,31 @@ class BBCode extends Parser
                     'def_attr.format'           => 'string:trim|max:1024',
                     'def_attr.body_format'      => 'string:trim|max:1024',
                     'def_attr.text_only'        => 'required|integer|in:0,1',
-                    'other_attrs.*.allowed'     => 'required|integer|in:0,1',
-                    'other_attrs.*.required'    => 'required|integer|in:0,1',
-                    'other_attrs.*.format'      => 'string:trim|max:1024',
-                    'other_attrs.*.body_format' => 'string:trim|max:1024',
-                    'other_attrs.*.text_only'   => 'required|integer|in:0,1',
                     'new_attr.name'             => ['string:trim', 'regex:%^(?:|[a-z-]{2,15})$%'],
                     'new_attr.allowed'          => 'required|integer|in:0,1',
                     'new_attr.required'         => 'required|integer|in:0,1',
                     'new_attr.format'           => 'string:trim|max:1024',
                     'new_attr.body_format'      => 'string:trim|max:1024',
                     'new_attr.text_only'        => 'required|integer|in:0,1',
-                    'save'                      => 'check_all',
                 ])->addAliases([
                 ])->addArguments([
                     'token'                    => $pageArgs,
                     'save'                     => $structure,
                 ])->addMessages([
+                ]);
+
+                if ($structure->other_attrs) {
+                    $v->addRules([
+                        'other_attrs.*.allowed'     => 'required|integer|in:0,1',
+                        'other_attrs.*.required'    => 'required|integer|in:0,1',
+                        'other_attrs.*.format'      => 'string:trim|max:1024',
+                        'other_attrs.*.body_format' => 'string:trim|max:1024',
+                        'other_attrs.*.text_only'   => 'required|integer|in:0,1',
+                    ]);
+                }
+
+                $v->addRules([
+                    'save' => 'check_all',
                 ]);
 
                 if ($v->validation($_POST)) {
