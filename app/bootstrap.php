@@ -76,7 +76,10 @@ if (null !== $page->onlinePos) {
 
 $tpl = $c->View->rendering($page);
 
-if ($c->isInit('DB')) {
+if (
+    $c->isInit('DB')
+    && $c->DB->inTransaction()
+) {
     $c->DB->commit();
 }
 
