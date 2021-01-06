@@ -177,6 +177,7 @@ class View extends Profile
                 'caption' => __('Website'),
                 'value'   => $this->curUser->censorUrl,
                 'href'    => $this->curUser->censorUrl,
+                'rel'     => 'ugc',
             ];
         }
         if (! empty($fields)) {

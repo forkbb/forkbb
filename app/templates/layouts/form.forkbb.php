@@ -101,7 +101,7 @@
                 @elseif ('str' === $cur['type'])
                 <p class="f-str" id="id-{{ $key }}"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
                 @elseif ('link' === $cur['type'])
-                <a class="f-link" id="id-{{ $key }}" href="{{ $cur['href'] or '' }}" title="{{ $cur['title'] or '' }}">{{ $cur['value'] or '' }}</a>
+                <a class="f-link" id="id-{{ $key }}" href="{{ $cur['href'] or '' }}" @if (isset($cur['rel'])) rel="{{ $cur['rel'] }}" @endif title="{{ $cur['title'] or '' }}">{{ $cur['value'] or '' }}</a>
                 @elseif ('yield' === $cur['type'])
                 {!! $this->block($cur['value']) !!}
                 @elseif ('file' === $cur['type'])

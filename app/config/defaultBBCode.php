@@ -336,7 +336,7 @@ if ($parser->attr('isSign')) {
     }
 }
 
-return '<a href="' . $body . '" rel="nofollow">&lt;' . __('Image link') . ' - ' . $attrs['Def'] . '&gt;</a>';
+return '<a href="' . $body . '" rel="ugc">&lt;' . __('Image link') . ' - ' . $attrs['Def'] . '&gt;</a>';
 HANDLER,
     ],
     [
@@ -384,7 +384,7 @@ if ($url === $body) {
     $body = $parser->e($url);
 }
 
-return "<a href=\"{$fUrl}\" rel=\"nofollow\">{$body}</a>";
+return "<a href=\"{$fUrl}\" rel=\"ugc\">{$body}</a>";
 HANDLER,
     ],
     [
