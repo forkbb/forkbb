@@ -71,7 +71,7 @@ class Generate extends Method
                         0 === $level
                         && (
                              'handler' === $key
-                             || 'text handler' === $key
+                             || 'text_handler' === $key
                         )
                     ) {
                         $value = "function(\$body, \$attrs, \$parser) {\n{$value}\n{$space}}";

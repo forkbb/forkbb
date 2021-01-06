@@ -33,11 +33,11 @@ HANDLER,
         'tag' => 'code',
         'type' => 'block',
         'recursive' => true,
-        'text only' => true,
+        'text_only' => true,
         'pre' => true,
         'attrs' => [
             'Def' => true,
-            'no attr' => true,
+            'No_attr' => true,
         ],
         'handler' => <<<'HANDLER'
 return '</p><pre class="f-bb-code">' . \trim($body, "\n\r") . '</pre><p>';
@@ -101,7 +101,7 @@ HANDLER,
     ],
     [
         'tag' => 'color',
-        'self nesting' => 5,
+        'self_nesting' => 5,
         'attrs' => [
             'Def' => [
                 'format' => '%^(?:\#(?:[\dA-Fa-f]{3}){1,2}|(?:aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|orange|purple|red|silver|teal|yellow|white))$%',
@@ -113,7 +113,7 @@ HANDLER,
     ],
     [
         'tag' => 'colour',
-        'self nesting' => 5,
+        'self_nesting' => 5,
         'attrs' => [
             'Def' => [
                 'format' => '%^(?:\#(?:[\dA-Fa-f]{3}){1,2}|(?:aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|orange|purple|red|silver|teal|yellow|white))$%',
@@ -125,7 +125,7 @@ HANDLER,
     ],
     [
         'tag' => 'background',
-        'self nesting' => 5,
+        'self_nesting' => 5,
         'attrs' => [
             'Def' => [
                 'format' => '%^(?:\#(?:[\dA-Fa-f]{3}){1,2}|(?:aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|orange|purple|red|silver|teal|yellow|white))$%',
@@ -137,7 +137,7 @@ HANDLER,
     ],
     [
         'tag' => 'size',
-        'self nesting' => 5,
+        'self_nesting' => 5,
         'attrs' => [
             'Def' => [
                 'format' => '%^[1-9]\d*(?:em|ex|pt|px|\%)?$%',
@@ -180,7 +180,7 @@ HANDLER,
     ],
     [
         'tag' => 'font',
-        'self nesting' => 5,
+        'self_nesting' => 5,
         'attrs' => [
             'Def' => [
                 'format' => '%^[a-z\d, -]+$%i',
@@ -197,9 +197,9 @@ HANDLER,
             'Def' => [
                 'format' => '%^[^\x00-\x1f\s]+?@[^\x00-\x1f\s]+$%',
             ],
-            'no attr' => [
-                'body format' => '%^[^\x00-\x1f\s]+?@[^\x00-\x1f\s]+$%D',
-                'text only' => true,
+            'No_attr' => [
+                'body_format' => '%^[^\x00-\x1f\s]+?@[^\x00-\x1f\s]+$%D',
+                'text_only' => true,
             ],
         ],
         'handler' => <<<'HANDLER'
@@ -213,7 +213,7 @@ HANDLER,
     [
         'tag' => '*',
         'type' => 'block',
-        'self nesting' => 5,
+        'self_nesting' => 5,
         'parents' => ['list'],
         'auto' => true,
         'handler' => <<<'HANDLER'
@@ -223,11 +223,11 @@ HANDLER,
     [
         'tag' => 'list',
         'type' => 'list',
-        'self nesting' => 5,
-        'tags only' => true,
+        'self_nesting' => 5,
+        'tags_only' => true,
         'attrs' => [
             'Def' => true,
-            'no attr' => true,
+            'No_attr' => true,
         ],
         'handler' => <<<'HANDLER'
 if (! isset($attrs['Def'])) {
@@ -280,10 +280,10 @@ HANDLER,
     [
         'tag' => 'quote',
         'type' => 'block',
-        'self nesting' => 5,
+        'self_nesting' => 5,
         'attrs' => [
             'Def' => true,
-            'no attr' => true,
+            'No_attr' => true,
         ],
         'handler' => <<<'HANDLER'
 $header = isset($attrs['Def']) ? '<div class="f-bb-q-header">' . $attrs['Def'] .  ' ' . __('wrote') . '</div>' : '';
@@ -293,10 +293,10 @@ HANDLER,
     [
         'tag' => 'spoiler',
         'type' => 'block',
-        'self nesting' => 5,
+        'self_nesting' => 5,
         'attrs' => [
             'Def' => true,
-            'no attr' => true,
+            'No_attr' => true,
         ],
         'handler' => <<<'HANDLER'
 if (! isset($attrs['Def'])) {
@@ -310,13 +310,13 @@ HANDLER,
         'tag' => 'img',
         'type' => 'img',
         'parents' => ['inline', 'block', 'url'],
-        'text only' => true,
+        'text_only' => true,
         'attrs' => [
             'Def' => [
-                'body format' => '%^(?:(?:ht|f)tps?://[^\x00-\x1f\s<"]+|data:image/[a-z]+;base64,(?:[a-zA-Z\d/\+\=]+))$%D'
+                'body_format' => '%^(?:(?:ht|f)tps?://[^\x00-\x1f\s<"]+|data:image/[a-z]+;base64,(?:[a-zA-Z\d/\+\=]+))$%D'
             ],
-            'no attr' => [
-                'body format' => '%^(?:(?:ht|f)tps?://[^\x00-\x1f\s<"]+|data:image/[a-z]+;base64,(?:[a-zA-Z\d/\+\=]+))$%D'
+            'No_attr' => [
+                'body_format' => '%^(?:(?:ht|f)tps?://[^\x00-\x1f\s<"]+|data:image/[a-z]+;base64,(?:[a-zA-Z\d/\+\=]+))$%D'
             ],
         ],
         'handler' => <<<'HANDLER'
@@ -347,8 +347,8 @@ HANDLER,
             'Def' => [
                 'format' => '%^[^\x00-\x1f]+$%',
             ],
-            'no attr' => [
-                'body format' => '%^[^\x00-\x1f]+$%D',
+            'No_attr' => [
+                'body_format' => '%^[^\x00-\x1f]+$%D',
             ],
         ],
         'handler' => <<<'HANDLER'
@@ -390,10 +390,10 @@ HANDLER,
     [
         'tag' => 'table',
         'type' => 'table',
-        'tags only' => true,
-        'self nesting' => 5,
+        'tags_only' => true,
+        'self_nesting' => 5,
         'attrs' => [
-            'no attr' => true,
+            'No_attr' => true,
             'style' => true,
         ],
         'handler' => <<<'HANDLER'
@@ -409,9 +409,9 @@ HANDLER,
         'tag' => 'caption',
         'type' => 'block',
         'parents' => ['table'],
-        'self nesting' => 5,
+        'self_nesting' => 5,
         'attrs' => [
-            'no attr' => true,
+            'No_attr' => true,
             'style' => true,
         ],
         'handler' => <<<'HANDLER'
@@ -427,10 +427,10 @@ HANDLER,
         'tag' => 'thead',
         'type' => 't',
         'parents' => ['table'],
-        'tags only' => true,
-        'self nesting' => 5,
+        'tags_only' => true,
+        'self_nesting' => 5,
         'attrs' => [
-            'no attr' => true,
+            'No_attr' => true,
             'style' => true,
         ],
         'handler' => <<<'HANDLER'
@@ -446,10 +446,10 @@ HANDLER,
         'tag' => 'tbody',
         'type' => 't',
         'parents' => ['table'],
-        'tags only' => true,
-        'self nesting' => 5,
+        'tags_only' => true,
+        'self_nesting' => 5,
         'attrs' => [
-            'no attr' => true,
+            'No_attr' => true,
             'style' => true,
         ],
         'handler' => <<<'HANDLER'
@@ -465,10 +465,10 @@ HANDLER,
         'tag' => 'tfoot',
         'type' => 't',
         'parents' => ['table'],
-        'tags only' => true,
-        'self nesting' => 5,
+        'tags_only' => true,
+        'self_nesting' => 5,
         'attrs' => [
-            'no attr' => true,
+            'No_attr' => true,
             'style' => true,
         ],
         'handler' => <<<'HANDLER'
@@ -484,10 +484,10 @@ HANDLER,
         'tag' => 'tr',
         'type' => 'tr',
         'parents' => ['table', 't'],
-        'tags only' => true,
-        'self nesting' => 5,
+        'tags_only' => true,
+        'self_nesting' => 5,
         'attrs' => [
-            'no attr' => true,
+            'No_attr' => true,
             'style' => true,
         ],
         'handler' => <<<'HANDLER'
@@ -503,9 +503,9 @@ HANDLER,
         'tag' => 'th',
         'type' => 'block',
         'parents' => ['tr'],
-        'self nesting' => 5,
+        'self_nesting' => 5,
         'attrs' => [
-            'no attr' => true,
+            'No_attr' => true,
             'style' => true,
             'colspan' => true,
             'rowspan' => true,
@@ -523,9 +523,9 @@ HANDLER,
         'tag' => 'td',
         'type' => 'block',
         'parents' => ['tr'],
-        'self nesting' => 5,
+        'self_nesting' => 5,
         'attrs' => [
-            'no attr' => true,
+            'No_attr' => true,
             'style' => true,
             'colspan' => true,
             'rowspan' => true,

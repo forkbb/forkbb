@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN = '7.3.0';
 
-    const LATEST_REV_WITH_DB_CHANGES = 29;
+    const LATEST_REV_WITH_DB_CHANGES = 31;
 
     const LOCK_NAME = 'lock_update';
     const LOCk_TTL  = 1800;
@@ -1192,6 +1192,27 @@ class Update extends Admin
         );
 
         $coreConfig->save();
+
+        return null;
+   }
+
+    /**
+     * rev.30 to rev.31
+     */
+    protected function stageNumber30(array $args): ?int
+    {
+        $queries = [
+            'UPDATE ::bbcode SET bb_structure = REPLACE(bb_structure, \'"text only"\', \'"text_only"\')',
+            'UPDATE ::bbcode SET bb_structure = REPLACE(bb_structure, \'"no attr"\', \'"No_attr"\')',
+            'UPDATE ::bbcode SET bb_structure = REPLACE(bb_structure, \'"self nesting"\', \'"self_nesting"\')',
+            'UPDATE ::bbcode SET bb_structure = REPLACE(bb_structure, \'"body format"\', \'"body_format"\')',
+            'UPDATE ::bbcode SET bb_structure = REPLACE(bb_structure, \'"tags only"\', \'"tags_only"\')',
+            'UPDATE ::bbcode SET bb_structure = REPLACE(bb_structure, \'"text handler"\', \'"text_handler"\')',
+        ];
+
+        foreach ($queries as $query) {
+            $this->c->DB->exec($query);
+        }
 
         return null;
    }
