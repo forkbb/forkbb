@@ -1,4 +1,4 @@
-    <section class="f-stats">
+    <aside class="f-stats">
       <h2>{!! __('Stats info') !!}</h2>
 @if ($p->stats)
       <dl class="f-stboard">
@@ -36,4 +36,4 @@
     @endforeach
       </dl><!-- endinline -->
 @endif
-    </section>
+    </aside>

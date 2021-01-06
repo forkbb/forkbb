@@ -65,7 +65,7 @@
           <div class="f-post-usticky">
             <ul class="f-user-info-first">
         @if ($p->user->viewUsers && $post->user->link)
-              <li class="f-username"><a href="{{ $post->user->link }}">{{ $post->user->username }}</a></li>
+              <li class="f-username"><a href="{{ $post->user->link }}" rel="author">{{ $post->user->username }}</a></li>
         @else
               <li class="f-username">{{ $post->user->username }}</li>
         @endif
@@ -77,7 +77,7 @@
         @endif
             <ul class="f-user-info">
         @if ($p->user->viewUsers && $post->user->link)
-              <li class="f-username"><a href="{{ $post->user->link }}">{{ $post->user->username }}</a></li>
+              <li class="f-username"><a href="{{ $post->user->link }}" rel="author">{{ $post->user->username }}</a></li>
         @else
               <li class="f-username">{{ $post->user->username }}</li>
         @endif
@@ -110,10 +110,10 @@
             @include ('layouts/poll')
         @endif
         @if ($p->user->showSignature && $post->user->isSignature)
-          <div class="f-post-signature">
+          <aside class="f-post-signature">
             <hr>
             {!! $post->user->htmlSign !!}
-          </div>
+          </aside>
         @endif
         </div>
         <footer class="f-post-footer">
