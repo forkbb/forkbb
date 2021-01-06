@@ -27,10 +27,6 @@ class Structure extends ParentModel
         parent::__construct($container);
 
         $this->zDepend = [
-            'text handler' => ['text_handler'],
-            'text only'    => ['text_only'],
-            'tags only'    => ['tags_only'],
-            'self nesting' => ['self_nesting'],
             'attrs'        => ['no_attr', 'def_attr', 'other_attrs'],
         ];
     }
@@ -80,20 +76,12 @@ class Structure extends ParentModel
             'parents' => $this->parents,
         ];
 
-        if (! empty($this->handler) && \is_string($this->handler)) {
-            $a['handler'] = $this->handler;
-        }
-
-        if (! empty($this->text_handler) && \is_string($this->text_handler)) {
-            $a['text handler'] = $this->text_handler;
-        }
-
         if (null !== $this->auto) {
             $a['auto'] = (bool) $this->auto;
         }
 
         if (null !== $this->self_nesting) {
-            $a['self nesting'] = (int) $this->self_nesting > 0 ? (int) $this->self_nesting : false;
+            $a['self_nesting'] = (int) $this->self_nesting > 0 ? (int) $this->self_nesting : false;
         }
 
         if (null !== $this->recursive) {
@@ -101,11 +89,11 @@ class Structure extends ParentModel
         }
 
         if (null !== $this->text_only) {
-            $a['text only'] = true;
+            $a['text_only'] = true;
         }
 
         if (null !== $this->tags_only) {
-            $a['tags only'] = true;
+            $a['tags_only'] = true;
         }
 
         if (null !== $this->single) {
@@ -121,13 +109,13 @@ class Structure extends ParentModel
             && ! empty($this->new_attr['allowed'])
             && ! empty($this->new_attr['name'])
         ) {
-            $this->setBBAttr($this->new_attr['name'], $this->new_attr, ['required', 'format', 'body format', 'text only']);
+            $this->setBBAttr($this->new_attr['name'], $this->new_attr, ['required', 'format', 'body_format', 'text_only']);
         }
 
         $a['attrs'] = $this->other_attrs;
 
         if (null !== $this->no_attr) {
-            $a['attrs']['no attr'] = $this->no_attr;
+            $a['attrs']['No_attr'] = $this->no_attr;
         }
 
         if (null !== $this->def_attr) {
@@ -136,6 +124,14 @@ class Structure extends ParentModel
 
         if (empty($a['attrs'])) {
             unset($a['attrs']);
+        }
+
+        if (! empty($this->handler) && \is_string($this->handler)) {
+            $a['handler'] = $this->handler;
+        }
+
+        if (! empty($this->text_handler) && \is_string($this->text_handler)) {
+            $a['text_handler'] = $this->text_handler;
         }
 
         return \json_encode($a, self::JSON_OPTIONS);
@@ -161,42 +157,22 @@ class Structure extends ParentModel
         }
     }
 
-    protected function gettext_handler(): ?string
-    {
-        return $this->getAttr('text handler');
-    }
-
-    protected function settext_handler(?string $value): void
-    {
-        $this->setAttr('text handler', $value);
-    }
-
     protected function setrecursive($value): void
     {
         $value = empty($value) ? null : true;
         $this->setAttr('recursive', $value);
     }
 
-    protected function gettext_only(): ?bool
-    {
-        return $this->getAttr('text only');
-    }
-
     protected function settext_only($value): void
     {
         $value = empty($value) ? null : true;
-        $this->setAttr('text only', $value);
-    }
-
-    protected function gettags_only(): ?bool
-    {
-        return $this->getAttr('tags only');
+        $this->setAttr('text_only', $value);
     }
 
     protected function settags_only($value): void
     {
         $value = empty($value) ? null : true;
-        $this->setAttr('tags only', $value);
+        $this->setAttr('tags_only', $value);
     }
 
     protected function setpre($value): void
@@ -230,15 +206,10 @@ class Structure extends ParentModel
         $this->setAttr('auto', $value);
     }
 
-    protected function getself_nesting() /* : mixed */
-    {
-        return $this->getAttr('self nesting');
-    }
-
     protected function setself_nesting($value): void
     {
-        $value = $value < 1 ? false : (int) $value;
-        $this->setAttr('self nesting', $value);
+        $value = (int) $value < 1 ? false : (int) $value;
+        $this->setAttr('self_nesting', $value);
     }
 
     protected function getBBAttr(string $name, array $fields) /* : mixed */
@@ -259,19 +230,18 @@ class Structure extends ParentModel
             foreach ($fields as $field) {
                 switch ($field) {
                     case 'format':
-                    case 'body format':
+                    case 'body_format':
                         $value = isset($data[$field]) && \is_string($data[$field]) ? $data[$field] : null;
                         break;
                     case 'required':
-                    case 'text only':
+                    case 'text_only':
                         $value = isset($data[$field]) ? true : null;
                         break;
                     default:
                         throw new RuntimeException('Unknown attribute property');
                 }
 
-                $key          = \str_replace(' ', '_', $field);
-                $result[$key] = $value;
+                $result[$field] = $value;
             }
 
             return $result;
@@ -290,16 +260,14 @@ class Structure extends ParentModel
         } else {
             $result = [];
             foreach ($fields as $field) {
-                $key = \str_replace(' ', '_', $field);
-
                 switch ($field) {
                     case 'format':
-                    case 'body format':
-                        $value = ! empty($data[$key]) && \is_string($data[$key]) ? $data[$key] : null;
+                    case 'body_format':
+                        $value = ! empty($data[$field]) && \is_string($data[$field]) ? $data[$field] : null;
                         break;
                     case 'required':
-                    case 'text only':
-                        $value = ! empty($data[$key]) ? true : null;
+                    case 'text_only':
+                        $value = ! empty($data[$field]) ? true : null;
                         break;
                     default:
                         throw new RuntimeException('Unknown attribute property');
@@ -318,22 +286,22 @@ class Structure extends ParentModel
 
     protected function getno_attr() /* : mixed */
     {
-        return $this->getBBAttr('no attr', ['body format', 'text only']);
+        return $this->getBBAttr('No_attr', ['body_format', 'text_only']);
     }
 
     protected function setno_attr(array $value): void
     {
-        $this->setBBAttr('no attr', $value, ['body format', 'text only']);
+        $this->setBBAttr('No_attr', $value, ['body_format', 'text_only']);
     }
 
     protected function getdef_attr() /* : mixed */
     {
-        return $this->getBBAttr('Def', ['required', 'format', 'body format', 'text only']);
+        return $this->getBBAttr('Def', ['required', 'format', 'body_format', 'text_only']);
     }
 
     protected function setdef_attr(array $value): void
     {
-        $this->setBBAttr('Def', $value, ['required', 'format', 'body format', 'text only']);
+        $this->setBBAttr('Def', $value, ['required', 'format', 'body_format', 'text_only']);
     }
 
     protected function getother_attrs(): array
@@ -344,11 +312,11 @@ class Structure extends ParentModel
             return [];
         }
 
-        unset($attrs['no attr'], $attrs['Def'], $attrs['New']);
+        unset($attrs['No_attr'], $attrs['Def'], $attrs['New']);
 
         $result = [];
         foreach ($attrs as $name => $attr) {
-            $value = $this->getBBAttr($name, ['required', 'format', 'body format', 'text only']);
+            $value = $this->getBBAttr($name, ['required', 'format', 'body_format', 'text_only']);
 
             if (null !== $value) {
                 $result[$name] = $value;
@@ -360,10 +328,10 @@ class Structure extends ParentModel
 
     protected function setother_attrs(array $attrs): void
     {
-        unset($attrs['no attr'], $attrs['Def']);
+        unset($attrs['No_attr'], $attrs['Def']);
 
         foreach ($attrs as $name => $attr) {
-            $this->setBBAttr($name, $attr, ['required', 'format', 'body format', 'text only']);
+            $this->setBBAttr($name, $attr, ['required', 'format', 'body_format', 'text_only']);
         }
     }
 
@@ -413,7 +381,7 @@ class Structure extends ParentModel
         if (\is_array($this->attrs)) {
             foreach ($this->attrs as $name => $attr) {
                 if (
-                    'no attr' !== $name
+                    'No_attr' !== $name
                     && 'Def' !== $name
                     && ! preg_match(self::ATTR_PATTERN, $name)
                 ) {
@@ -429,10 +397,10 @@ class Structure extends ParentModel
                     }
                 }
 
-                if (isset($attr['body format'])) {
+                if (isset($attr['body_format'])) {
                     if (
-                        ! \is_string($attr['body format'])
-                        || false === @\preg_match($attr['body format'], 'abcdef')
+                        ! \is_string($attr['body_format'])
+                        || false === @\preg_match($attr['body_format'], 'abcdef')
                     ) {
                         return ['Attribute %1$s, %2$s - regular expression error', $name, 'Body format'];
                     }
@@ -448,7 +416,7 @@ class Structure extends ParentModel
             $name = $this->new_attr['name'];
 
             if (
-                'no attr' === $name
+                'No_attr' === $name
                 || 'Def' === $name
                 || isset($this->attrs[$name])
                 || ! preg_match(self::ATTR_PATTERN, $name)
@@ -465,10 +433,10 @@ class Structure extends ParentModel
                 }
             }
 
-            if (isset($this->new_attr['body format'])) {
+            if (isset($this->new_attr['body_format'])) {
                 if (
-                    ! \is_string($this->new_attr['body format'])
-                    || false === @\preg_match($this->new_attr['body format'], 'abcdef')
+                    ! \is_string($this->new_attr['body_format'])
+                    || false === @\preg_match($this->new_attr['body_format'], 'abcdef')
                 ) {
                     return ['Attribute %1$s, %2$s - regular expression error', $name, 'Body format'];
                 }
