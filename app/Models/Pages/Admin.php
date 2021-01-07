@@ -51,30 +51,30 @@ class Admin extends Page
     {
         $r   = $this->c->Router;
         $nav = [
-            'index' => [$r->link('Admin'), __('Admin index')],
-            'users' => [$r->link('AdminUsers'), __('Users')],
+            'index' => [$r->link('Admin'), 'Admin index'],
+            'users' => [$r->link('AdminUsers'), 'Users'],
         ];
 
         if ($this->c->userRules->banUsers) {
-            $nav['bans'] = [$r->link('AdminBans'), __('Bans')];
+            $nav['bans'] = [$r->link('AdminBans'), 'Bans'];
         }
         if (
             $this->user->isAdmin
             || 0 === $this->c->config->i_report_method
             || 2 === $this->c->config->i_report_method
         ) {
-            $nav['reports'] = [$r->link('AdminReports'), __('Reports')];
+            $nav['reports'] = [$r->link('AdminReports'), 'Reports'];
         }
 
         if ($this->user->isAdmin) {
             $nav += [
-                'options'     => [$r->link('AdminOptions'), __('Admin options')],
-                'parser'      => [$r->link('AdminParser'), __('Parser settings')],
-                'categories'  => [$r->link('AdminCategories'), __('Categories')],
-                'forums'      => [$r->link('AdminForums'), __('Forums')],
-                'groups'      => [$r->link('AdminGroups'), __('User groups')],
-                'censoring'   => [$r->link('AdminCensoring'), __('Censoring')],
-                'maintenance' => [$r->link('AdminMaintenance'), __('Maintenance')]
+                'options'     => [$r->link('AdminOptions'), 'Admin options'],
+                'parser'      => [$r->link('AdminParser'), 'Parser settings'],
+                'categories'  => [$r->link('AdminCategories'), 'Categories'],
+                'forums'      => [$r->link('AdminForums'), 'Forums'],
+                'groups'      => [$r->link('AdminGroups'), 'User groups'],
+                'censoring'   => [$r->link('AdminCensoring'), 'Censoring'],
+                'maintenance' => [$r->link('AdminMaintenance'), 'Maintenance'],
             ];
         }
 
@@ -89,7 +89,10 @@ class Admin extends Page
     {
         if ('index' !== $this->aIndex) {
             if (isset($this->aNavigation[$this->aIndex])) {
-                $crumbs[] = $this->aNavigation[$this->aIndex];
+                $crumbs[] = [
+                    $this->aNavigation[$this->aIndex][0],
+                    __($this->aNavigation[$this->aIndex][1]),
+                ];
             } else {
                 $crumbs[] = 'unknown';
             }

@@ -11,7 +11,7 @@
           <label id="id-an-label" class="f-menu-toggle" for="id-an-checkbox"></label>
           <ul class="f-menu-items">
     @foreach ($p->aNavigation as $key => $val)
-            <li id="id-anav-{{ $key }}" class="f-menu-item"><a class="f-menu-a @if ($key == $p->aIndex) active @endif" href="{{ $val[0] }}"><span class="f-menu-span">{!! $val[1] !!}</span></a></li>
+            <li id="id-anav-{{ $key }}" class="f-menu-item"><a class="f-menu-a @if ($key == $p->aIndex) active @endif" href="{{ $val[0] }}"><span class="f-menu-span">{!! __($val[1]) !!}</span></a></li>
     @endforeach
           </ul>
         </nav>

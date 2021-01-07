@@ -27,14 +27,14 @@
         <label id="id-mn-label" class="f-menu-toggle" for="id-mn-checkbox"></label>
         <ul class="f-menu-items">
     @foreach ($p->fNavigation as $key => $val)
-          <li id="id-nav-{!! $key !!}" class="f-menu-item"><!-- inline -->
+          <li id="id-nav-{{ $key }}" class="f-menu-item"><!-- inline -->
             <a class="f-menu-a @if ($key == $p->fIndex) active @endif" href="{{ $val[0] }}" @if ($val[2]) title="{!! __($val[2]) !!}" @endif>
               <span class="f-menu-span">{!! __($val[1]) !!}</span>
             </a>
         @if ($val[3])
             <ul class="f-submenu-items">
             @foreach ($val[3] as $key => $val)
-              <li id="id-nav-{!! $key !!}" class="f-menu-item">
+              <li id="id-nav-{{ $key }}" class="f-menu-item">
                 @if ($val[0])
                 <a class="f-menu-a @if ($key == $p->fSubIndex) active @endif" href="{{ $val[0] }}" @if ($val[2]) title="{!! __($val[2]) !!}" @endif>
                   <span class="f-menu-span">{!! __($val[1]) !!}</span>
@@ -52,14 +52,14 @@
     @if ($p->fNavigationUser)
         <ul class="f-menu-user-items">
         @foreach ($p->fNavigationUser as $key => $val)
-          <li id="id-nav-{!! $key !!}" class="f-menu-item"><!-- inline -->
+          <li id="id-nav-{{ $key }}" class="f-menu-item"><!-- inline -->
             <a class="f-menu-a @if ($key == $p->fIndex) active @endif" href="{{ $val[0] }}" @if ($val[2]) title="{!! __($val[2]) !!}" @endif>
               <span class="f-menu-span">{!! __($val[1]) !!}</span>
             </a>
             @if ($val[3])
             <ul class="f-submenu-items">
                 @foreach ($val[3] as $key => $val)
-              <li id="id-nav-{!! $key !!}" class="f-menu-item">
+              <li id="id-nav-{{ $key }}" class="f-menu-item">
                     @if ($val[0])
                 <a class="f-menu-a @if ($key == $p->fSubIndex) active @endif" href="{{ $val[0] }}" @if ($val[2]) title="{!! __($val[2]) !!}" @endif>
                   <span class="f-menu-span">{!! __($val[1]) !!}</span>
@@ -100,7 +100,7 @@
 @foreach ($p->pageHeaders as $pageHeader)
     @if ('script' === $pageHeader['type'])
         @if (empty($pageHeader['values']['inline']))
-  <script @foreach ($pageHeader['values'] as $key => $val) {!! $key !!}="{{ $val }}" @endforeach></script>
+  <script @foreach ($pageHeader['values'] as $key => $val) {{ $key }}="{{ $val }}" @endforeach></script>
         @else
   <script>{{ $pageHeader['values']['inline'] }}</script>
         @endif
