@@ -14,15 +14,9 @@
 </head>
 <body>
   <div id="fork">
-    <header id="fork-header">
-      <div id="id-fhtitle">
-        <h1 id="id-fhth1"><a id="id-fhtha" href="{{ $p->fRootLink }}">{{ $p->fTitle }}</a></h1>
-@if ('' != $p->fDescription)
-        <p id="id-fhtdesc">{!! $p->fDescription !!}</p>
-@endif
-      </div>
 @if ($p->fNavigation)
-      <nav id="fork-nav" class="f-menu @if ($p->fNavigation['search']) f-main-nav-search @endif">
+    <nav id="fork-nav" class="f-menu @if ($p->fNavigation['search']) f-main-nav-search @endif">
+      <div id="fork-navdir">
         <input id="id-mn-checkbox" class="f-menu-checkbox" type="checkbox">
         <label id="id-mn-label" class="f-menu-toggle" for="id-mn-checkbox"></label>
         <ul class="f-menu-items">
@@ -75,7 +69,13 @@
         @endforeach
         </ul>
     @endif
-      </nav>
+      </div>
+    </nav>
+@endif
+    <header id="fork-header">
+      <h1 id="id-fhth1"><a id="id-fhtha" href="{{ $p->fRootLink }}">{{ $p->fTitle }}</a></h1>
+@if ('' != $p->fDescription)
+      <p id="id-fhtdesc">{!! $p->fDescription !!}</p>
 @endif
     </header>
     <main>

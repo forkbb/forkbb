@@ -125,6 +125,8 @@ body,
 }
 
 #fork {
+  display: flex;
+  flex-direction: column;
   padding: 0 0.3125rem;
   max-width: 64rem;
   margin: 0 auto;
@@ -267,8 +269,9 @@ body,
   color: red;
 }
 
+/********/
 /* Меню */
-
+/********/
 #fork .f-menu-toggle:after {
   display: block;
   font-size: 1.25rem;
@@ -325,45 +328,18 @@ body,
   text-overflow: ellipsis;
 }
 
-/*********/
-/* Шапка */
-/*********/
-
-#fork #fork-header {
-  background-color: #AA7939;
-  border-bottom: 0.0625rem solid #AA7939;
-  position: relative;
-}
-
 #fork .f-menu-checkbox {
   display: none;
 }
 
-#fork-header #id-fhth1 {
-  width: calc(100% - 4rem);
-  padding: 0.625rem 0 0.625rem 0.625rem;
-  font-size: 2rem;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+/****************/
+/* Главное меню */
+/****************/
+#fork #fork-nav {
+  border-bottom: 0.0625rem solid #AA7939;
 }
 
-#fork-header #id-fhtdesc {
-  border-top: 0.0625rem dotted #D3B58D;
-  padding: 0.625rem;
-  color: #F8F4E3;
-}
-
-#fork-header #id-fhtha {
-  color: #D3B58D;
-}
-
-#fork-header #id-fhtha:hover,
-#fork-header #id-fhtha:focus {
-  background-color: #AA7939;
-}
-
-#fork-header #fork-nav {
+#fork #fork-navdir {
   width: 100%;
   background-color: #F8F4E3;
   display: flex;
@@ -375,7 +351,7 @@ body,
   border-color: #D3B58D;
   position: absolute;
   top: 0.625rem;
-  right: 0.625rem;
+  right: 0.9325rem;
 }
 
 #fork-nav .f-menu-items {
@@ -482,18 +458,14 @@ body,
 }
 
 @media screen and (min-width: 50rem) {
-  #fork-header #id-fhth1 {
-    overflow: auto;
-    white-space: normal;
+  #fork #fork-navdir {
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-bottom: 0.0625rem solid #AA7939;
   }
 
   #fork-nav #id-mn-label {
     display: none;
-  }
-
-  #fork-header #fork-nav {
-    flex-direction: row;
-    flex-wrap: wrap;
   }
 
   #fork-nav .f-menu-items {
@@ -515,7 +487,8 @@ body,
   }
 
   #fork-nav.f-main-nav-search {
-    margin-bottom: 2rem;
+    position: relative;
+    padding-bottom: 1.9375rem;
   }
 
   #fork-nav #id-nav-search .f-submenu-items {
@@ -537,6 +510,47 @@ body,
     padding: 0;
   }
 } /* @media screen and (min-width: 50rem) */
+
+/*********/
+/* Шапка */
+/*********/
+#fork #fork-header {
+  order: -1;
+  background-color: #AA7939;
+}
+
+#fork-header #id-fhth1 {
+  width: calc(100% - 4rem);
+  padding: 0.625rem 0 0.625rem 0.625rem;
+  font-size: 2rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#fork-header #id-fhtdesc {
+  border-top: 0.0625rem dotted #D3B58D;
+  padding: 0.625rem;
+  color: #F8F4E3;
+}
+
+#fork-header #id-fhtha {
+  color: #D3B58D;
+}
+
+#fork-header #id-fhtha:hover,
+#fork-header #id-fhtha:focus {
+  background-color: #AA7939;
+}
+
+@media screen and (min-width: 50rem) {
+  #fork-header #id-fhth1 {
+    width: 100%;
+    padding: 0.625rem;
+    overflow: auto;
+    white-space: normal;
+  }
+}
 
 /*********/
 /* iswev */
@@ -751,7 +765,6 @@ body,
 /**************/
 /* Объявление */
 /**************/
-
 #fork #fork-announce {
   border-bottom: 0.0625rem solid #AA7939;
   padding: 0.625rem;
@@ -761,7 +774,6 @@ body,
 /**********/
 /* Подвал */
 /**********/
-
 #fork #fork-footer {
   border-bottom: 0.0625rem solid #AA7939;
   border-top: 0.0625rem solid #AA7939;
@@ -818,7 +830,6 @@ body,
 /******************/
 /* Хлебные крошки */
 /******************/
-
 #fork .f-nav-links {
   margin: 1rem 0;
 }
@@ -927,7 +938,6 @@ body,
 /********/
 /* Тело */
 /********/
-
 #fork .f-main {
   margin: 1rem 0;
   position: relative;
@@ -936,7 +946,6 @@ body,
 /****************/
 /* Обслуживание */
 /****************/
-
 #fork .f-maintenance > h2 {
   display: block;
   padding: 0.625rem;
@@ -949,7 +958,6 @@ body,
 /*************/
 /* Сообщение */
 /*************/
-
 #fork .f-backlink > p {
   padding: 0.625rem;
 }
@@ -957,7 +965,6 @@ body,
 /***********/
 /* Правила */
 /***********/
-
 #fork #id-rules {
   padding: 0.625rem;
   border: 0.0625rem solid #AA7939;
@@ -1559,7 +1566,6 @@ body,
 /*****************/
 /* Страница темы */
 /*****************/
-
 #fork .f-btn-topic-closed {
   pointer-events: none;
   cursor: default;
@@ -1569,7 +1575,6 @@ body,
 /********************/
 /* Сообщение в теме */
 /********************/
-
 #fork .f-post {
   border-top: 0.0625rem solid #AA7939;
   border-bottom: 0.0625rem solid #AA7939;
@@ -1963,7 +1968,6 @@ body,
 /*********/
 /* Опрос */
 /*********/
-
 #fork .f-post-poll {
   margin: 0.625rem;
   padding: 0.625rem 0.625rem 0 0.625rem;
@@ -2059,7 +2063,6 @@ body,
 /*********/
 /* Email */
 /*********/
-
 #id-fs-send-email > legend {
   display: none;
 }
@@ -2457,7 +2460,6 @@ body,
 /************************/
 /* Список пользователей */
 /************************/
-
 #fork .f-ulist .f-row {
   border-bottom: 0.0625rem solid #AA7939;
 }
@@ -2730,7 +2732,6 @@ body,
 /****************************/
 /* Профиль - редактирование */
 /****************************/
-
 #fork .f-fs-header-edit dl,
 #fork .f-fs-data-edit:not(#id-fs-activity) dl,
 #fork #id-fs-activity.f-fs-data-edit {
