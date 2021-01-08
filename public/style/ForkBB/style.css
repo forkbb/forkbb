@@ -137,6 +137,12 @@ body,
   position: relative;
 }
 
+@media screen and (min-width: 64rem) {
+  #fork {
+    max-width: calc(80% + 12.8rem); /*  (100% - 64rem) * 0.8 + 64rem */
+  }
+}
+
 #fork main {
   display: block;
 }
@@ -515,7 +521,6 @@ body,
 /* Шапка */
 /*********/
 #fork #fork-header {
-  order: -1;
   background-color: #AA7939;
 }
 
@@ -3245,4 +3250,84 @@ body,
 /****************************************/
 #fork .f-reports legend {
   border-top: 0.0625rem dashed #AA7939;
+}
+
+/****************************************/
+@media screen and (min-width: 81rem) {
+  #fork.f-with-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  #fork.f-with-nav #fork-header {
+    order: 0;
+    width: 100%;
+  }
+
+  #fork.f-with-nav main {
+    order: 1;
+    width: calc(100% - 17rem);
+  }
+
+  #fork.f-with-nav #fork-nav {
+    order: 2;
+    width: 16rem;
+    border-bottom: 0;
+    border-left: 0.0625rem solid #AA7939;
+    padding: 0;
+    background-color: #F8F4E3;
+  }
+
+  #fork.f-with-nav #fork-footer {
+    order: 3;
+    width: 100%;
+  }
+
+  #fork.f-with-nav #fork-debug {
+    order: 4;
+    width: 100%;
+  }
+
+  #fork.f-with-nav #fork-navdir {
+    position: sticky;
+    top: 0;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    border: 0
+  }
+
+  #fork.f-with-nav #fork-nav .f-menu-items {
+    display: block;
+    padding: 2rem 0;
+  }
+
+  #fork.f-with-nav #fork-nav .f-menu-user-items {
+    order: -1;
+    display: block;
+    margin: 0;
+    padding: 2rem 0;
+  }
+
+  #fork.f-with-nav #fork-nav .f-menu-a {
+    justify-content: left;
+  }
+
+  #fork.f-with-nav #fork-nav .f-submenu-items .f-menu-a {
+    justify-content: right;
+  }
+
+  #fork.f-with-nav #fork-nav .f-menu-items .f-menu-a {
+    border-top: 0.0625rem dotted;
+  }
+
+  #fork.f-with-nav #fork-nav .f-menu-user-items .f-menu-a {
+    border-bottom: 0.0625rem dotted;
+  }
+
+  #fork.f-with-nav #fork-nav .f-submenu-items {
+    display: block;
+    position: static;
+    background-color: #FFEBCD;
+  }
 }

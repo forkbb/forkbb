@@ -13,8 +13,14 @@
 @endforeach
 </head>
 <body>
-  <div id="fork">
-@if ($p->fNavigation)
+  <div id="fork" @if ($p->fNavigation) class="f-with-nav" @endif>
+    <header id="fork-header">
+      <h1 id="id-fhth1"><a id="id-fhtha" href="{{ $p->fRootLink }}">{{ $p->fTitle }}</a></h1>
+@if ('' != $p->fDescription)
+      <p id="id-fhtdesc">{!! $p->fDescription !!}</p>
+@endif
+    </header>
+ @if ($p->fNavigation)
     <nav id="fork-nav" class="f-menu @if ($p->fNavigation['search']) f-main-nav-search @endif">
       <div id="fork-navdir">
         <input id="id-mn-checkbox" class="f-menu-checkbox" type="checkbox">
@@ -72,12 +78,6 @@
       </div>
     </nav>
 @endif
-    <header id="fork-header">
-      <h1 id="id-fhth1"><a id="id-fhtha" href="{{ $p->fRootLink }}">{{ $p->fTitle }}</a></h1>
-@if ('' != $p->fDescription)
-      <p id="id-fhtdesc">{!! $p->fDescription !!}</p>
-@endif
-    </header>
     <main>
 @if ($p->fAnnounce)
       <aside id="fork-announce">
