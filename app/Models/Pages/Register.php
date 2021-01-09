@@ -64,6 +64,7 @@ class Register extends Page
             return $this->c->Message->message('Reg cancel', true, 403);
         }
 
+        $this->hhsLevel   = 'secure';
         $this->fIndex     = 'register';
         $this->nameTpl    = 'register';
         $this->onlinePos  = 'register';

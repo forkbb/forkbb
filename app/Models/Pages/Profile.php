@@ -37,6 +37,7 @@ abstract class Profile extends Page
 
         $this->c->Lang->load('profile');
 
+        $this->hhsLevel  = 'secure';
         $this->rules     = $this->c->ProfileRules->setUser($this->curUser);
         $this->robots    = 'noindex';
         $this->fIndex    = $this->rules->my ? 'profile' : 'userlist';

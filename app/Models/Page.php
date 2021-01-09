@@ -45,16 +45,17 @@ abstract class Page extends Model
         $formats[1]              = __($formats[1]);
         $container->TIME_FORMATS = $formats;
 
-        $this->fIndex       = 'index'; # string      Указатель на активный пункт навигации
-        $this->httpStatus   = 200;     # int         HTTP статус ответа для данной страницы
-#       $this->nameTpl      = null;    # null|string Имя шаблона
-#       $this->titles       = [];      # array       Массив титула страницы | setTitles()
-        $this->fIswev       = [];      # array       Массив info, success, warning, error, validation информации
-#       $this->onlinePos    = '';      # null|string Позиция для таблицы онлайн текущего пользователя
-        $this->onlineDetail = false;   # bool        Формировать данные по посетителям online или нет
-        $this->onlineFilter = true;    # bool        Посетители только по текущей странице или по всем
-#       $this->robots       = '';      # string      Переменная для meta name="robots"
-#       $this->canonical    = '';      # string      Переменная для link rel="canonical"
+        $this->fIndex       = 'index';  # string      Указатель на активный пункт навигации
+        $this->httpStatus   = 200;      # int         HTTP статус ответа для данной страницы
+#       $this->nameTpl      = null;     # null|string Имя шаблона
+#       $this->titles       = [];       # array       Массив титула страницы | setTitles()
+        $this->fIswev       = [];       # array       Массив info, success, warning, error, validation информации
+#       $this->onlinePos    = '';       # null|string Позиция для таблицы онлайн текущего пользователя
+        $this->onlineDetail = false;    # bool        Формировать данные по посетителям online или нет
+        $this->onlineFilter = true;     # bool        Посетители только по текущей странице или по всем
+#       $this->robots       = '';       # string      Переменная для meta name="robots"
+#       $this->canonical    = '';       # string      Переменная для link rel="canonical"
+        $this->hhsLevel     = 'common'; # string      Ключ для $c->HTTP_HEADERS (для вывода заголовков HTTP из конфига)
 
         $this->fTitle       = $container->config->o_board_title;
         $this->fDescription = $container->config->o_board_desc;
@@ -355,7 +356,10 @@ abstract class Page extends Model
 
         if (null === $value) {
             unset($this->httpHeaders[$key]);
-        } elseif (true === $replace || empty($this->httpHeaders[$key])) {
+        } elseif (
+            true === $replace
+            || empty($this->httpHeaders[$key])
+        ) {
             $this->httpHeaders[$key] = [
                 ["{$header} {$value}", $replace],
             ];
@@ -372,6 +376,10 @@ abstract class Page extends Model
      */
     protected function gethttpHeaders(): array
     {
+        foreach ($this->c->HTTP_HEADERS[$this->hhsLevel] as $header => $value) {
+            $this->header($header, $value);
+        }
+
         $this->httpStatus();
 
         return $this->httpHeaders;

@@ -25,6 +25,7 @@ class View extends Profile
             return $this->c->Message->message('Bad request');
         }
 
+        $this->hhsLevel   = 'common'; // для остальных страниц профиля уровень задан в initProfile()
         $this->canonical  = $this->curUser->link;
         $this->robots     = null;
         $this->crumbs     = $this->crumbs();

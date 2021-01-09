@@ -72,6 +72,7 @@ class Auth extends Page
 
         $ref = $this->c->Secury->replInvalidChars($_SERVER['HTTP_REFERER'] ?? '');
 
+        $this->hhsLevel   = 'secure';
         $this->fIndex     = 'login';
         $this->nameTpl    = 'login';
         $this->onlinePos  = 'login';
@@ -245,6 +246,7 @@ class Auth extends Page
             $this->fIswev = $v->getErrors();
         }
 
+        $this->hhsLevel   = 'secure';
         $this->fIndex     = 'login';
         $this->nameTpl    = 'passphrase_reset';
         $this->onlinePos  = 'passphrase_reset';
@@ -355,6 +357,7 @@ class Auth extends Page
             $this->fIswev = ['i', __('Account activated')];
         }
 
+        $this->hhsLevel   = 'secure';
         $this->fIndex     = 'login';
         $this->nameTpl    = 'change_passphrase';
         $this->onlinePos  = 'change_passphrase';

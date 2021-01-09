@@ -29,6 +29,7 @@ class Admin extends Page
         $this->fIndex    = 'admin';
         $this->onlinePos = 'admin';
         $this->robots    = 'noindex, nofollow';
+        $this->hhsLevel  = 'secure';
 
         $container->Lang->load('admin');
     }
