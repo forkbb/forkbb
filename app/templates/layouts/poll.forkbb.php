@@ -25,7 +25,7 @@
         @elseif ($poll->canSeeResult)
                   <span class="f-poll-at">{{ $answer }}</span>
                   <span class="f-poll-ap">{!! __('(%1$s [%2$s%%])', $poll->vote[$q][$a], $poll->percVote[$q][$a]) !!}</span>
-                  <p class="f-poll-ab"><span class="f-poll-ab-s1" style="width:{{ $poll->widthVote[$q][$a] }}%;"><span class="f-poll-ab-s2">{{ $poll->widthVote[$q][$a] }}%</span></span></p>
+                  <p class="f-poll-ab"><span class="f-poll-ab-s1 width{{ $poll->widthVote[$q][$a] }}"><span class="f-poll-ab-s2">{{ $poll->widthVote[$q][$a] }}%</span></span></p>
         @else
                   <label class="f-poll-al">
                     <span class="f-poll-at">{{ $answer }}</span>
