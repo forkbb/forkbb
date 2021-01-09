@@ -53,6 +53,24 @@ return [
     'MAX_EMAIL_LENGTH' => 80,
     'FLOOD_INTERVAL'   => 3600,
     'USERNAME_PATTERN' => '%^(?=.{2,25}$)\p{L}[\p{L}\p{N}\x20\._-]+$%uD',
+    'HTTP_HEADERS'     => [
+        'common' => [
+            'X-Content-Type-Options'  => 'nosniff',
+            'X-Frame-Options'         => 'DENY',
+            'X-XSS-Protection'        => '1; mode=block',
+            'Referrer-Policy'         => 'origin-when-cross-origin',
+            'Content-Security-Policy' => 'default-src \self\';img-src *;object-src \'none\';frame-ancestors \'none\'',
+            'Feature-Policy'          => 'accelerometer \'none\';ambient-light-sensor \'none\';autoplay \'none\';battery \'none\';camera \'none\';document-domain \'self\';fullscreen \'self\';geolocation \'none\';gyroscope \'none\';magnetometer \'none\';microphone \'none\';midi \'none\';payment \'none\';picture-in-picture \'none\';sync-xhr \'self\';usb \'none\'',
+        ],
+        'secure' => [
+            'X-Content-Type-Options'  => 'nosniff',
+            'X-Frame-Options'         => 'DENY',
+            'X-XSS-Protection'        => '1; mode=block',
+            'Referrer-Policy'         => 'origin-when-cross-origin',
+            'Content-Security-Policy' => 'default-src \self\';object-src \'none\';frame-ancestors \'none\'',
+            'Feature-Policy'          => 'accelerometer \'none\';ambient-light-sensor \'none\';autoplay \'none\';battery \'none\';camera \'none\';document-domain \'self\';fullscreen \'self\';geolocation \'none\';gyroscope \'none\';magnetometer \'none\';microphone \'none\';midi \'none\';payment \'none\';picture-in-picture \'none\';sync-xhr \'self\';usb \'none\'',
+        ],
+    ],
 
     'shared' => [
         'DB' => [

@@ -1216,4 +1216,39 @@ class Update extends Admin
 
         return null;
    }
+
+    /**
+     * rev.31 to rev.32
+     */
+    protected function stageNumber31(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+
+        $coreConfig->add(
+            'HTTP_HEADERS',
+            [
+                'common' => [
+                    'X-Content-Type-Options'  => '\'nosniff\'',
+                    'X-Frame-Options'         => '\'DENY\'',
+                    'X-XSS-Protection'        => '\'1; mode=block\'',
+                    'Referrer-Policy'         => '\'origin-when-cross-origin\'',
+                    'Content-Security-Policy' => '\'default-src \\\'self\\\';img-src *;object-src \\\'none\\\';frame-ancestors \\\'none\\\'\'',
+                    'Feature-Policy'          => '\'accelerometer \\\'none\\\';ambient-light-sensor \\\'none\\\';autoplay \\\'none\\\';battery \\\'none\\\';camera \\\'none\\\';document-domain \\\'self\\\';fullscreen \\\'self\\\';geolocation \\\'none\\\';gyroscope \\\'none\\\';magnetometer \\\'none\\\';microphone \\\'none\\\';midi \\\'none\\\';payment \\\'none\\\';picture-in-picture \\\'none\\\';sync-xhr \\\'self\\\';usb \\\'none\\\'\'',
+                ],
+                'secure' => [
+                    'X-Content-Type-Options'  => '\'nosniff\'',
+                    'X-Frame-Options'         => '\'DENY\'',
+                    'X-XSS-Protection'        => '\'1; mode=block\'',
+                    'Referrer-Policy'         => '\'origin-when-cross-origin\'',
+                    'Content-Security-Policy' => '\'default-src \\\'self\\\';object-src \\\'none\\\';frame-ancestors \\\'none\\\'\'',
+                    'Feature-Policy'          => '\'accelerometer \\\'none\\\';ambient-light-sensor \\\'none\\\';autoplay \\\'none\\\';battery \\\'none\\\';camera \\\'none\\\';document-domain \\\'self\\\';fullscreen \\\'self\\\';geolocation \\\'none\\\';gyroscope \\\'none\\\';magnetometer \\\'none\\\';microphone \\\'none\\\';midi \\\'none\\\';payment \\\'none\\\';picture-in-picture \\\'none\\\';sync-xhr \\\'self\\\';usb \\\'none\\\'\'',
+                ],
+            ],
+            'USERNAME_PATTERN'
+        );
+
+        $coreConfig->save();
+
+        return null;
+   }
 }
