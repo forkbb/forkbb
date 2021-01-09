@@ -149,8 +149,8 @@ class Report extends Page
                 'back' => [
                     'type'      => 'btn',
                     'value'     => __('Go back'),
-                    'link'      => 'javascript:history.go(-1)',
-                    'class'     => 'f-opacity',
+                    'link'      => $this->c->Router->link('ViewPost', ['id' => (int) $args['id']]),
+                    'class'     => 'f-opacity f-go-back',
                 ],
             ],
         ];

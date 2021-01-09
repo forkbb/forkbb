@@ -86,6 +86,10 @@ abstract class Page extends Model
      */
     public function prepare(): void
     {
+        $this->pageHeader('commonJS', 'script', [
+            'src' => $this->publicLink('/js/common.js'),
+        ]);
+
         $this->boardNavigation();
         $this->iswevMessages();
     }

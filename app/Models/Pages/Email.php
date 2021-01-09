@@ -161,8 +161,8 @@ class Email extends Page
                 'back' => [
                     'type'      => 'btn',
                     'value'     => __('Go back'),
-                    'link'      => $data['redirect'], // 'javascript:history.go(-1)',
-                    'class'     => 'f-opacity',
+                    'link'      => $data['redirect'],
+                    'class'     => 'f-opacity f-go-back',
                 ],
             ],
         ];
