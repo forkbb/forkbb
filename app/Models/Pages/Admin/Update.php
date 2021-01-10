@@ -1232,7 +1232,7 @@ class Update extends Admin
                     'X-Frame-Options'         => '\'DENY\'',
                     'X-XSS-Protection'        => '\'1; mode=block\'',
                     'Referrer-Policy'         => '\'origin-when-cross-origin\'',
-                    'Content-Security-Policy' => '\'default-src \\\'self\\\';img-src *;object-src \\\'none\\\';frame-ancestors \\\'none\\\'\'',
+                    'Content-Security-Policy' => '\'default-src \\\'self\\\';img-src *;object-src \\\'none\\\';frame-ancestors \\\'none\\\'\';base-uri \\\'self\\\';form-action \\\'self\\\'',
                     'Feature-Policy'          => '\'accelerometer \\\'none\\\';ambient-light-sensor \\\'none\\\';autoplay \\\'none\\\';battery \\\'none\\\';camera \\\'none\\\';document-domain \\\'self\\\';fullscreen \\\'self\\\';geolocation \\\'none\\\';gyroscope \\\'none\\\';magnetometer \\\'none\\\';microphone \\\'none\\\';midi \\\'none\\\';payment \\\'none\\\';picture-in-picture \\\'none\\\';sync-xhr \\\'self\\\';usb \\\'none\\\'\'',
                 ],
                 'secure' => [
@@ -1240,7 +1240,7 @@ class Update extends Admin
                     'X-Frame-Options'         => '\'DENY\'',
                     'X-XSS-Protection'        => '\'1; mode=block\'',
                     'Referrer-Policy'         => '\'origin-when-cross-origin\'',
-                    'Content-Security-Policy' => '\'default-src \\\'self\\\';object-src \\\'none\\\';frame-ancestors \\\'none\\\'\'',
+                    'Content-Security-Policy' => '\'default-src \\\'self\\\';object-src \\\'none\\\';frame-ancestors \\\'none\\\'\';base-uri \\\'self\\\';form-action \\\'self\\\'',
                     'Feature-Policy'          => '\'accelerometer \\\'none\\\';ambient-light-sensor \\\'none\\\';autoplay \\\'none\\\';battery \\\'none\\\';camera \\\'none\\\';document-domain \\\'self\\\';fullscreen \\\'self\\\';geolocation \\\'none\\\';gyroscope \\\'none\\\';magnetometer \\\'none\\\';microphone \\\'none\\\';midi \\\'none\\\';payment \\\'none\\\';picture-in-picture \\\'none\\\';sync-xhr \\\'self\\\';usb \\\'none\\\'\'',
                 ],
             ],
