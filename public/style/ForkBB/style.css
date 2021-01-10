@@ -2155,6 +2155,10 @@ body,
 #fork .width98 {width: 98%;}
 #fork .width99 {width: 99%;}
 #fork .width100 {width: 100%;}
+#fork .text-align-left {text-align: left;}
+#fork .text-align-right {text-align: right;}
+#fork .text-align-center {text-align: center;}
+#fork .text-align-justify {text-align: justify;}
 
 /**********/
 /* Репорт */

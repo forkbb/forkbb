@@ -155,21 +155,21 @@ HANDLER,
         'tag' => 'right',
         'type' => 'block',
         'handler' => <<<'HANDLER'
-return "</p><p style=\"text-align: right;\">{$body}</p><p>";
+return "</p><p class=\"text-align-right\">{$body}</p><p>";
 HANDLER,
     ],
     [
         'tag' => 'center',
         'type' => 'block',
         'handler' => <<<'HANDLER'
-return "</p><p style=\"text-align: center;\">{$body}</p><p>";
+return "</p><p class=\"text-align-center\">{$body}</p><p>";
 HANDLER,
     ],
     [
         'tag' => 'justify',
         'type' => 'block',
         'handler' => <<<'HANDLER'
-return "</p><p style=\"text-align: justify;\">{$body}</p><p>";
+return "</p><p class=\"text-align-justify\">{$body}</p><p>";
 HANDLER,
     ],
     [
