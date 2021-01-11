@@ -49,6 +49,7 @@ class Moderate extends Page
         $this->nameTpl   = 'moderate';
         $this->onlinePos = 'moderate';
         $this->robots    = 'noindex, nofollow';
+        $this->hhsLevel  = 'secure';
 
         $container->Lang->load('validator');
         $container->Lang->load('misc');
