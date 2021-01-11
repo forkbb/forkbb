@@ -49,7 +49,12 @@ class Statistics extends Admin
                     },
                     $matches[1]
                 );
-                $this->pageHeader('phpinfo', 'style', [$style]);
+                $this->c->Cache->set('phpinfoCSS', $style);
+                $this->pageHeader('phpinfoStyle', 'link', [
+                    'rel'  => 'stylesheet',
+                    'type' => 'text/css',
+                    'href' => $this->c->Router->link('AdminInfoCSS', ['time' => \time()] ),
+                ]);
             }
         } else {
             $phpinfo = '- - -';
@@ -66,6 +71,24 @@ class Statistics extends Admin
             __('Server statistics'),
         ];
         $this->phpinfo    = $phpinfo;
+
+        return $this;
+    }
+
+    /**
+     * Возврат css из phpinfo() как файл
+     */
+    public function infoCSS(): Page
+    {
+        $this->c->DEBUG  = 0;
+
+        $this->nameTpl      = 'layouts/plain';
+        $this->plainText    = $this->c->Cache->get('phpinfoCSS', '');
+#        $this->onlinePos    = null;
+        $this->onlineDetail = false;
+        $this->onlineFilter = false;
+
+        $this->header('Content-type', 'text/css; charset=utf-8');
 
         return $this;
     }

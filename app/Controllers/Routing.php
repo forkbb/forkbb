@@ -539,6 +539,12 @@ class Routing
                 'AdminInfo'
             );
             $r->add(
+                $r::GET,
+                '/admin/statistics/info/{time:\d+}',
+                'AdminStatistics:infoCSS',
+                'AdminInfoCSS'
+            );
+            $r->add(
                 $r::DUO,
                 '/admin/options',
                 'AdminOptions:edit',
