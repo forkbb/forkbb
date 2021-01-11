@@ -184,6 +184,7 @@ class ErrorHandler
     protected function show(array $error): void
     {
         \header('HTTP/1.1 500 Internal Server Error');
+        \header('Content-Type: text/html; charset=utf-8');
 
         echo <<<'EOT'
 <!DOCTYPE html>
