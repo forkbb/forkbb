@@ -17,12 +17,20 @@ No: private messages, plugins/extensions system.
 
 ## Install
 
+### For Apache:
+
 * Document Root == **public** folder (recommended):
   1. Rename public/**.dist.htaccess** to public/**.htaccess**,
   2. Rename public/**index.dist.php** to public/**index.php**;
 * Document Root != **public** folder:
   1. Rename **.dist.htaccess** to **.htaccess**,
   2. Rename **index.dist.php** to **index.php**.
+
+### For NGINX:
+
+* [Example](https://github.com/forkbb/forkbb/blob/master/nginx.dist.conf) nginx configuration.
+* Note: Root must point to the **public/** directory.
+* Note: The **index.dist.php** file does not need to be renamed.
 
 ## Links
 
