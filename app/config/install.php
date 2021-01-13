@@ -14,9 +14,10 @@ declare(strict_types=1);
 
 function forkGetBaseURL()
 {
+    $file    = \str_replace(\realpath($_SERVER['DOCUMENT_ROOT']), '', \realpath($_SERVER['SCRIPT_FILENAME']));
     $baseURL = 'http://'
         . \preg_replace('%:(80|443)$%', '', $_SERVER['HTTP_HOST'])
-        . \str_replace('\\', '/', \dirname($_SERVER['SCRIPT_NAME']));
+        . \str_replace('\\', '/', \dirname($file)); // $_SERVER['REQUEST_URI']
 
     return \rtrim($baseURL, '/');
 }
@@ -32,7 +33,10 @@ return [
     'EOL'              => PHP_EOL,
     'MAX_EMAIL_LENGTH' => 80,
     'FLOOD_INTERVAL'   => 3600,
-
+    'HTTP_HEADERS'     => [
+        'common' => [],
+        'secure' => [],
+    ],
 
     'HMAC' => [
         'algo' => 'sha1',
