@@ -29,7 +29,7 @@ No: private messages, plugins/extensions system.
 ### For NGINX:
 
 * [Example](https://github.com/forkbb/forkbb/blob/master/nginx.dist.conf) nginx configuration.
-* Note: Root must point to the **public/** directory.
+* Note: Root must point to the [**public/**](https://github.com/forkbb/forkbb/tree/master/public) directory.
 * Note: The **index.dist.php** file does not need to be renamed.
 
 ## Links
