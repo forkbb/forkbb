@@ -4,9 +4,13 @@
 
 BBCode parser.
 
+## Note
+
+Version 1.x is incompatible with version 0.9.x.
+
 ## Requirements
 
-* PHP 5.4.0
+* PHP 7.3.0+
 
 ## Installation
 

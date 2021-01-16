@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0e8e26cbd16c3af7c71606c9b4b5841b",
+    "content-hash": "b612a4d27e51006ea2d160f511b1a78f",
     "packages": [
         {
             "name": "artoodetoo/dirk",
@@ -26,6 +26,7 @@
             "require-dev": {
                 "phpunit/phpunit": "4.0.*"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -78,6 +79,7 @@
                 "ext-mbstring": "*",
                 "php": ">=5.6.0"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -103,6 +105,10 @@
                 "email",
                 "normalization"
             ],
+            "support": {
+                "issues": "https://github.com/MioVisman/NormEmail/issues",
+                "source": "https://github.com/MioVisman/NormEmail/tree/1.0.0"
+            },
             "time": "2020-01-11T04:21:13+00:00"
         },
         {
@@ -111,17 +117,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/MioVisman/Parserus.git",
-                "reference": "8734e26dfc53a83aecf3747a5fc995ab5e5044cd"
+                "reference": "78bd7626abce40938910aae45e3ed0e6bfb91502"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MioVisman/Parserus/zipball/8734e26dfc53a83aecf3747a5fc995ab5e5044cd",
-                "reference": "8734e26dfc53a83aecf3747a5fc995ab5e5044cd",
+                "url": "https://api.github.com/repos/MioVisman/Parserus/zipball/78bd7626abce40938910aae45e3ed0e6bfb91502",
+                "reference": "78bd7626abce40938910aae45e3ed0e6bfb91502",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.3.0"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -145,7 +152,62 @@
                 "bbcode",
                 "parser"
             ],
-            "time": "2021-01-06T10:44:42+00:00"
+            "support": {
+                "issues": "https://github.com/MioVisman/Parserus/issues",
+                "source": "https://github.com/MioVisman/Parserus/tree/master"
+            },
+            "time": "2021-01-06T13:36:08+00:00"
+        },
+        {
+            "name": "psr/log",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "dd738d0b4491f32725492cf345f6b501f5922fec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/dd738d0b4491f32725492cf345f6b501f5922fec",
+                "reference": "dd738d0b4491f32725492cf345f6b501f5922fec",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Log\\": "Psr/Log/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for logging libraries",
+            "homepage": "https://github.com/php-fig/log",
+            "keywords": [
+                "log",
+                "psr",
+                "psr-3"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/log/tree/master"
+            },
+            "time": "2020-09-18T06:44:51+00:00"
         },
         {
             "name": "psr/simple-cache",
@@ -164,6 +226,7 @@
             "require": {
                 "php": ">=5.3.0"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -193,6 +256,9 @@
                 "psr-16",
                 "simple-cache"
             ],
+            "support": {
+                "source": "https://github.com/php-fig/simple-cache/tree/master"
+            },
             "time": "2020-04-21T06:43:17+00:00"
         }
     ],
@@ -214,5 +280,6 @@
         "ext-intl": "*",
         "ext-json": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
 }

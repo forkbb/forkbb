@@ -1,199 +1,266 @@
-[
-    {
-        "name": "artoodetoo/dirk",
-        "version": "dev-visman",
-        "version_normalized": "dev-visman",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/MioVisman/dirk.git",
-            "reference": "82c1ba51883c32c62e7eda121efcab5109acbbcc"
+{
+    "packages": [
+        {
+            "name": "artoodetoo/dirk",
+            "version": "dev-visman",
+            "version_normalized": "dev-visman",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MioVisman/dirk.git",
+                "reference": "82c1ba51883c32c62e7eda121efcab5109acbbcc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MioVisman/dirk/zipball/82c1ba51883c32c62e7eda121efcab5109acbbcc",
+                "reference": "82c1ba51883c32c62e7eda121efcab5109acbbcc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.0.*"
+            },
+            "time": "2020-10-16T13:32:17+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "R2\\Templating\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "R2\\Templating\\Tests": "tests"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "artoodetoo",
+                    "email": "i.am@artoodetoo.org"
+                }
+            ],
+            "description": "PHP template system",
+            "keywords": [
+                "dirk",
+                "package",
+                "templates",
+                "templating",
+                "views"
+            ],
+            "support": {
+                "source": "https://github.com/MioVisman/dirk/tree/visman"
+            },
+            "install-path": "../artoodetoo/dirk"
         },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/MioVisman/dirk/zipball/82c1ba51883c32c62e7eda121efcab5109acbbcc",
-            "reference": "82c1ba51883c32c62e7eda121efcab5109acbbcc",
-            "shasum": ""
+        {
+            "name": "miovisman/normemail",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MioVisman/NormEmail.git",
+                "reference": "2e657463266b1249e97d15c6795dd14248097cb3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MioVisman/NormEmail/zipball/2e657463266b1249e97d15c6795dd14248097cb3",
+                "reference": "2e657463266b1249e97d15c6795dd14248097cb3",
+                "shasum": ""
+            },
+            "require": {
+                "ext-intl": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.6.0"
+            },
+            "time": "2020-01-11T04:21:13+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "MioVisman\\NormEmail\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Visman",
+                    "email": "mio.visman@yandex.ru",
+                    "homepage": "https://github.com/MioVisman"
+                }
+            ],
+            "description": "Normalization of email for bans, for request cache to SFS or for checking the uniqueness of new users.",
+            "homepage": "https://github.com/MioVisman/NormEmail",
+            "keywords": [
+                "ban",
+                "canonical email",
+                "email",
+                "normalization"
+            ],
+            "install-path": "../miovisman/normemail"
         },
-        "require": {
-            "php": ">=7.3.0"
+        {
+            "name": "miovisman/parserus",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MioVisman/Parserus.git",
+                "reference": "78bd7626abce40938910aae45e3ed0e6bfb91502"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MioVisman/Parserus/zipball/78bd7626abce40938910aae45e3ed0e6bfb91502",
+                "reference": "78bd7626abce40938910aae45e3ed0e6bfb91502",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3.0"
+            },
+            "time": "2021-01-06T13:36:08+00:00",
+            "default-branch": true,
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "Parserus": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Visman",
+                    "email": "mio.visman@yandex.ru",
+                    "homepage": "https://github.com/MioVisman"
+                }
+            ],
+            "description": "BBCode parser.",
+            "homepage": "https://github.com/MioVisman/Parserus",
+            "keywords": [
+                "bbcode",
+                "parser"
+            ],
+            "support": {
+                "issues": "https://github.com/MioVisman/Parserus/issues",
+                "source": "https://github.com/MioVisman/Parserus/tree/master"
+            },
+            "install-path": "../miovisman/parserus"
         },
-        "require-dev": {
-            "phpunit/phpunit": "4.0.*"
+        {
+            "name": "psr/log",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "dd738d0b4491f32725492cf345f6b501f5922fec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/dd738d0b4491f32725492cf345f6b501f5922fec",
+                "reference": "dd738d0b4491f32725492cf345f6b501f5922fec",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "time": "2020-09-18T06:44:51+00:00",
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Log\\": "Psr/Log/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for logging libraries",
+            "homepage": "https://github.com/php-fig/log",
+            "keywords": [
+                "log",
+                "psr",
+                "psr-3"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/log/tree/master"
+            },
+            "install-path": "../psr/log"
         },
-        "time": "2020-10-16T13:32:17+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "R2\\Templating\\": "src"
-            }
-        },
-        "autoload-dev": {
-            "psr-4": {
-                "R2\\Templating\\Tests": "tests"
-            }
-        },
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "artoodetoo",
-                "email": "i.am@artoodetoo.org"
-            }
-        ],
-        "description": "PHP template system",
-        "keywords": [
-            "dirk",
-            "package",
-            "templates",
-            "templating",
-            "views"
-        ],
-        "support": {
-            "source": "https://github.com/MioVisman/dirk/tree/visman"
+        {
+            "name": "psr/simple-cache",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/simple-cache.git",
+                "reference": "5a7b96b1dda5d957e01bc1bfe77dcca09c5a7474"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/5a7b96b1dda5d957e01bc1bfe77dcca09c5a7474",
+                "reference": "5a7b96b1dda5d957e01bc1bfe77dcca09c5a7474",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "time": "2020-04-21T06:43:17+00:00",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Psr\\SimpleCache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interfaces for simple caching",
+            "keywords": [
+                "cache",
+                "caching",
+                "psr",
+                "psr-16",
+                "simple-cache"
+            ],
+            "install-path": "../psr/simple-cache"
         }
-    },
-    {
-        "name": "miovisman/normemail",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/MioVisman/NormEmail.git",
-            "reference": "2e657463266b1249e97d15c6795dd14248097cb3"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/MioVisman/NormEmail/zipball/2e657463266b1249e97d15c6795dd14248097cb3",
-            "reference": "2e657463266b1249e97d15c6795dd14248097cb3",
-            "shasum": ""
-        },
-        "require": {
-            "ext-intl": "*",
-            "ext-mbstring": "*",
-            "php": ">=5.6.0"
-        },
-        "time": "2020-01-11T04:21:13+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "MioVisman\\NormEmail\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Visman",
-                "email": "mio.visman@yandex.ru",
-                "homepage": "https://github.com/MioVisman"
-            }
-        ],
-        "description": "Normalization of email for bans, for request cache to SFS or for checking the uniqueness of new users.",
-        "homepage": "https://github.com/MioVisman/NormEmail",
-        "keywords": [
-            "ban",
-            "canonical email",
-            "email",
-            "normalization"
-        ]
-    },
-    {
-        "name": "miovisman/parserus",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/MioVisman/Parserus.git",
-            "reference": "8734e26dfc53a83aecf3747a5fc995ab5e5044cd"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/MioVisman/Parserus/zipball/8734e26dfc53a83aecf3747a5fc995ab5e5044cd",
-            "reference": "8734e26dfc53a83aecf3747a5fc995ab5e5044cd",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=7.3.0"
-        },
-        "time": "2021-01-06T10:44:42+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Parserus": ""
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Visman",
-                "email": "mio.visman@yandex.ru",
-                "homepage": "https://github.com/MioVisman"
-            }
-        ],
-        "description": "BBCode parser.",
-        "homepage": "https://github.com/MioVisman/Parserus",
-        "keywords": [
-            "bbcode",
-            "parser"
-        ]
-    },
-    {
-        "name": "psr/simple-cache",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/php-fig/simple-cache.git",
-            "reference": "5a7b96b1dda5d957e01bc1bfe77dcca09c5a7474"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/5a7b96b1dda5d957e01bc1bfe77dcca09c5a7474",
-            "reference": "5a7b96b1dda5d957e01bc1bfe77dcca09c5a7474",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "time": "2020-04-21T06:43:17+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Psr\\SimpleCache\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "PHP-FIG",
-                "homepage": "http://www.php-fig.org/"
-            }
-        ],
-        "description": "Common interfaces for simple caching",
-        "keywords": [
-            "cache",
-            "caching",
-            "psr",
-            "psr-16",
-            "simple-cache"
-        ]
-    }
-]
+    ],
+    "dev": true,
+    "dev-package-names": []
+}
