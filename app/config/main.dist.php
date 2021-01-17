@@ -109,9 +109,17 @@ return [
             'ssl'   => '%config.o_smtp_ssl%',
             'eol'   => '%EOL%',
         ],
-        'Func' => \ForkBB\Core\Func::class,
-        'Test' => \ForkBB\Core\Test::class,
+        'Func'      => \ForkBB\Core\Func::class,
+        'Test'      => \ForkBB\Core\Test::class,
         'NormEmail' => \MioVisman\NormEmail\NormEmail::class,
+        'Log'       => [
+            'class'  => \ForkBB\Core\Log::class,
+            'config' => [
+                'path'       => '%DIR_LOG%/{Y-m-d}.log',
+                'lineFormat' => "\\%datetime\\% [\\%level_name\\%] \\%message\\%\t\\%context\\%\n",
+                'timeFormat' => 'Y-m-d H:i:s',
+            ],
+        ],
 
         'config'        => '@ConfigModel:init',
         'bans'          => '@BanListModel:init',

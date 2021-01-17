@@ -1251,4 +1251,29 @@ class Update extends Admin
 
         return null;
    }
+
+    /**
+     * rev.32 to rev.33
+     */
+    protected function stageNumber32(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+
+        $coreConfig->add(
+            'shared=>Log',
+            [
+                'class'  => '\ForkBB\Core\Log::class',
+                'config' => [
+                    'path'       => '\'%DIR_LOG%/{Y-m-d}.log\'',
+                    'lineFormat' => '"\\\\%datetime\\\\% [\\\\%level_name\\\\%] \\\\%message\\\\%\\t\\\\%context\\\\%\\n"',
+                    'timeFormat' => '\'Y-m-d H:i:s\'',
+                ],
+            ],
+            'NormEmail'
+        );
+
+        $coreConfig->save();
+
+        return null;
+   }
 }
