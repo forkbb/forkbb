@@ -173,9 +173,9 @@ class Container
                 } else {
                     // partial string substitution casts value to string
                     $value = \preg_replace_callback(
-                        '~%([a-z0-9_]+(?:\.[a-z0-9_]+)*)%~i',
+                        '~\\\%|%([a-z0-9_]+(?:\.[a-z0-9_]+)*)%~i',
                         function ($matches) {
-                            return $this->__get($matches[1]);
+                            return '\\%' == $matches[0] ? '%' : $this->__get($matches[1]);
                         },
                         $value
                     );
