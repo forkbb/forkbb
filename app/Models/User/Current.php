@@ -109,13 +109,7 @@ class Current extends Action
      */
     protected function getIp(): string
     {
-        $ip = \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP);
-
-        if (empty($ip)) {
-            throw new RuntimeException('Bad IP');
-        }
-
-        return $ip;
+        return \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: '0.0.0.0';
     }
 
     /**
