@@ -405,16 +405,22 @@ class Validator
      * Возвращает проверенные данные
      * Поля с ошибками содержат значения по умолчанию или значения с ошибками
      */
-    public function getData(bool $all = false): array
+    public function getData(bool $all = false, array $doNotUse = null): array
     {
         if (empty($this->status)) {
             throw new RuntimeException('Data not found');
         }
 
-        if ($all) {
-            return $this->result;
+        if (null === $doNotUse) {
+            $result = $this->result;
         } else {
-            return \array_filter($this->result, function ($value) {
+            $result = \array_diff_key($this->result, \array_flip($doNotUse));
+        }
+
+        if ($all) {
+            return $result;
+        } else {
+            return \array_filter($result, function ($value) {
                 return null !== $value;
             });
         }
