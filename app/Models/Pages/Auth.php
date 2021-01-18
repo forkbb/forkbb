@@ -24,12 +24,20 @@ class Auth extends Page
     public function logout(array $args): Page
     {
         if (! $this->c->Csrf->verify($args['token'], 'Logout', $args)) {
+            $this->c->Log->warning('Logout failed', [
+                'user' => $this->user->fLog(),
+            ]);
+
             return $this->c->Redirect->page('Index')->message($this->c->Csrf->getError());
         }
 
         $this->c->Cookie->deleteUser();
         $this->c->Online->delete($this->user);
         $this->c->users->updateLastVisit($this->user);
+
+        $this->c->Log->info('Logout', [
+            'user' => $this->user->fLog(),
+        ]);
 
         $this->c->Lang->load('auth');
 
@@ -66,10 +74,18 @@ class Auth extends Page
             if ($v->validation($_POST, true)) {
                 $this->loginEnd($v);
 
+                $this->c->Log->info('Login', [
+                    'user' => $this->userAfterLogin->fLog(),
+                ]);
+
                 return $this->c->Redirect->url($v->redirect)->message('Login redirect');
             }
 
             $this->fIswev = $v->getErrors();
+
+            $this->c->Log->warning('Login failed', [
+                'user' => $this->user->fLog(),
+            ]);
         }
 
         $ref = $this->c->Secury->replInvalidChars($_SERVER['HTTP_REFERER'] ?? '');
@@ -95,17 +111,17 @@ class Auth extends Page
      */
     protected function loginEnd(Validator $v): void
     {
-        $this->c->users->updateLoginIpCache($this->c->userAfterLogin, true); // ????
+        $this->c->users->updateLoginIpCache($this->userAfterLogin, true); // ????
 
         // сбросить запрос на смену кодовой фразы
-        if (32 === \strlen($this->c->userAfterLogin->activate_string)) {
-            $this->c->userAfterLogin->activate_string = '';
+        if (32 === \strlen($this->userAfterLogin->activate_string)) {
+            $this->userAfterLogin->activate_string = '';
         }
         // изменения юзера в базе
-        $this->c->users->update($this->c->userAfterLogin);
+        $this->c->users->update($this->userAfterLogin);
 
         $this->c->Online->delete($this->user);
-        $this->c->Cookie->setUser($this->c->userAfterLogin, (bool) $v->save);
+        $this->c->Cookie->setUser($this->userAfterLogin, (bool) $v->save);
     }
 
     /**
@@ -162,22 +178,22 @@ class Auth extends Page
     public function vLoginCheck(Validator $v, $password)
     {
         if (empty($v->getErrors())) {
-            $this->c->userAfterLogin = $this->c->users->loadByName($v->username);
+            $this->userAfterLogin = $this->c->users->loadByName($v->username);
 
             if (
-                ! $this->c->userAfterLogin instanceof User
-                || $this->c->userAfterLogin->isGuest
+                ! $this->userAfterLogin instanceof User
+                || $this->userAfterLogin->isGuest
             ) {
                 $v->addError('Wrong user/pass');
-            } elseif ($this->c->userAfterLogin->isUnverified) {
+            } elseif ($this->userAfterLogin->isUnverified) {
                 $v->addError('Account is not activated', 'w');
-            } elseif (! \password_verify($password, $this->c->userAfterLogin->password)) {
+            } elseif (! \password_verify($password, $this->userAfterLogin->password)) {
                 $v->addError('Wrong user/pass');
             }
         }
 
         if (! empty($v->getErrors())) {
-            $this->c->userAfterLogin = null;
+            $this->userAfterLogin = null;
         }
 
         return $password;
@@ -241,6 +257,11 @@ class Auth extends Page
                         ->send();
                 } catch (MailException $e) {
                     $isSent = false;
+
+                    $this->c->Log->error('Passphrase reset form MailException', [
+                        'user'      => $this->user->fLog(), // ???? Guest only?
+                        'exception' => $e,
+                    ]);
                 }
 
                 if ($isSent) {
@@ -249,6 +270,10 @@ class Auth extends Page
 
                     $this->c->users->update($tmpUser);
 
+                    $this->c->Log->info('Passphrase reset form ok', [
+                        'user' => $this->user->fLog(), // ???? Guest only?
+                    ]);
+
                     return $this->c->Message->message(__('Forget mail', $this->c->config->o_admin_email), false, 200);
                 } else {
                     return $this->c->Message->message(__('Error mail', $this->c->config->o_admin_email), true, 424);
@@ -256,6 +281,10 @@ class Auth extends Page
             }
 
             $this->fIswev = $v->getErrors();
+
+            $this->c->Log->warning('Passphrase reset form failed', [
+                'user' => $this->user->fLog(), // ???? Guest only?
+            ]);
         }
 
         $this->hhsLevel   = 'secure';
@@ -319,6 +348,11 @@ class Auth extends Page
             || empty($user->activate_string)
             || ! \hash_equals($user->activate_string, $args['key'])
         ) {
+            $this->c->Log->warning('Passphrase reset confirmation failed', [
+                'user' => $user instanceof User ? $user->fLog() : $this->user->fLog(),
+                'args' => $args,
+            ]);
+
             // что-то пошло не так
             return $this->c->Message->message('Bad request', false);
         }
@@ -354,10 +388,18 @@ class Auth extends Page
 
                 $this->fIswev = ['s', __('Pass updated')];
 
+                $this->c->Log->info('Passphrase updated', [
+                    'user' => $user->fLog(),
+                ]);
+
                 return $this->login([], 'GET');
             }
 
             $this->fIswev = $v->getErrors();
+
+            $this->c->Log->warning('Passphrase change form failed', [
+                'user' => $user->fLog(),
+            ]);
         }
         // активация аккаунта (письмо активации не дошло, заказали восстановление)
         if ($user->isUnverified) {
@@ -367,6 +409,10 @@ class Auth extends Page
             $this->c->users->update($user);
 
             $this->fIswev = ['i', __('Account activated')];
+
+            $this->c->Log->info('Account activated', [
+                'user' => $user->fLog(),
+            ]);
         }
 
         $this->hhsLevel   = 'secure';
