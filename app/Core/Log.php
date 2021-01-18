@@ -103,6 +103,7 @@ class Log implements LoggerInterface
                     if (
                         'HTTP_' === \substr($key, 0, 5)
                         && 'HTTP_USER_AGENT' !== $key
+                        && 'HTTP_COOKIE' !== $key
                     ) {
                         $add[$key] = $value;
                     }
