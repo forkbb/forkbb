@@ -74,7 +74,8 @@ class Log implements LoggerInterface
                 throw new InvalidArgumentException('Invalid level value');
         }
 
-        $line = $this->generateLine($level, $message, $context);
+        $context = $this->contextExp($level, $context);
+        $line    = $this->generateLine($level, $message, $context);
 
         if (! \is_resource($this->resource)) {
             $this->initResource();
@@ -83,6 +84,33 @@ class Log implements LoggerInterface
         \flock($this->resource, \LOCK_EX);
         \fwrite($this->resource, $line);
         \flock($this->resource, \LOCK_UN);
+    }
+
+    protected function contextExp(string $level, array $context): array
+    {
+        $add = [
+            'REMOTE_ADDR'     => $_SERVER['REMOTE_ADDR'] ?? null,
+            'HTTP_USER_AGENT' => $_SERVER['HTTP_USER_AGENT'] ?? null,
+        ];
+
+        switch ($level) {
+            case LogLevel::EMERGENCY:
+            case LogLevel::ALERT:
+            case LogLevel::CRITICAL:
+            case LogLevel::ERROR:
+            case LogLevel::WARNING:
+                foreach ($_SERVER as $key => $value) {
+                    if (
+                        'HTTP_' === \substr($key, 0, 5)
+                        && 'HTTP_USER_AGENT' !== $key
+                    ) {
+                        $add[$key] = $value;
+                    }
+                }
+                break;
+        }
+
+        return $context + $add;
     }
 
     protected function initResource(): void
@@ -147,7 +175,7 @@ class Log implements LoggerInterface
         $result = [
             '%datetime%'   => $dt->format($this->timeFormat),
             '%level_name%' => $level,
-            '%message%'    => $message,
+            '%message%'    => \addcslashes($message, "\0..\37\\"),
             '%context%'    => \json_encode($context, self::JSON_OPTIONS),
         ];
 
