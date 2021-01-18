@@ -385,4 +385,9 @@ class Model extends DataModel
     {
         return '1' == $this->c->config->b_poll_enabled && ! $this->isGuest;
     }
+
+    public function fLog(): string
+    {
+        return "id:{$this->id} gid:{$this->group_id} name:{$this->username}";
+    }
 }
