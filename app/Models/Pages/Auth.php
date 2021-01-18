@@ -48,12 +48,12 @@ class Auth extends Page
         if ('POST' === $method) {
             $v = $this->c->Validator->reset()
                 ->addValidators([
-                    'login_process' => [$this, 'vLoginProcess'],
+                    'login_check' => [$this, 'vLoginCheck'],
                 ])->addRules([
                     'token'    => 'token:Login',
                     'redirect' => 'required|referer:Index',
                     'username' => 'required|string',
-                    'password' => 'required|string|login_process',
+                    'password' => 'required|string|login_check',
                     'save'     => 'checkbox',
                     'login'    => 'required|string',
                 ])->addAliases([
@@ -64,6 +64,8 @@ class Auth extends Page
             $v = $this->c->Test->beforeValidation($v);
 
             if ($v->validation($_POST, true)) {
+                $this->loginEnd($v);
+
                 return $this->c->Redirect->url($v->redirect)->message('Login redirect');
             }
 
@@ -86,6 +88,24 @@ class Auth extends Page
         $this->form       = $this->formLogin($username, $save, $redirect);
 
         return $this;
+    }
+
+    /**
+     * Обрабатывает вход пользователя
+     */
+    protected function loginEnd(Validator $v): void
+    {
+        $this->c->users->updateLoginIpCache($this->c->userAfterLogin, true); // ????
+
+        // сбросить запрос на смену кодовой фразы
+        if (32 === \strlen($this->c->userAfterLogin->activate_string)) {
+            $this->c->userAfterLogin->activate_string = '';
+        }
+        // изменения юзера в базе
+        $this->c->users->update($this->c->userAfterLogin);
+
+        $this->c->Online->delete($this->user);
+        $this->c->Cookie->setUser($this->c->userAfterLogin, (bool) $v->save);
     }
 
     /**
@@ -137,35 +157,27 @@ class Auth extends Page
     }
 
     /**
-     * Проверка по базе и вход
+     * Проверка пользователя по базе
      */
-    public function vLoginProcess(Validator $v, $password)
+    public function vLoginCheck(Validator $v, $password)
     {
-        if (! empty($v->getErrors())) {
-        } elseif (
-            ! ($user = $this->c->users->loadByName($v->username)) instanceof User
-            || $user->isGuest
-        ) {
-            $v->addError('Wrong user/pass');
-        } elseif ($user->isUnverified) {
-            $v->addError('Account is not activated', 'w');
-        } else {
-            // ошибка в пароле
-            if (! \password_verify($password, $user->password)) {
+        if (empty($v->getErrors())) {
+            $this->c->userAfterLogin = $this->c->users->loadByName($v->username);
+
+            if (
+                ! $this->c->userAfterLogin instanceof User
+                || $this->c->userAfterLogin->isGuest
+            ) {
                 $v->addError('Wrong user/pass');
-            } else {
-                $this->c->users->updateLoginIpCache($user, true); // ????
-
-                // сбросить запрос на смену кодовой фразы
-                if (32 === \strlen($user->activate_string)) {
-                    $user->activate_string = '';
-                }
-                // изменения юзера в базе
-                $this->c->users->update($user);
-
-                $this->c->Online->delete($this->user);
-                $this->c->Cookie->setUser($user, (bool) $v->save);
+            } elseif ($this->c->userAfterLogin->isUnverified) {
+                $v->addError('Account is not activated', 'w');
+            } elseif (! \password_verify($password, $this->c->userAfterLogin->password)) {
+                $v->addError('Wrong user/pass');
             }
+        }
+
+        if (! empty($v->getErrors())) {
+            $this->c->userAfterLogin = null;
         }
 
         return $password;
