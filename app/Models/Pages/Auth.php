@@ -85,6 +85,7 @@ class Auth extends Page
 
             $this->c->Log->warning('Login failed', [
                 'user' => $this->user->fLog(),
+                'form' => $v->getData(false, ['token', 'password']),
             ]);
         }
 
@@ -225,9 +226,14 @@ class Auth extends Page
                     'email.email' => $tmpUser, // сюда идет возрат данных по найденному пользователю
                 ]);
 
-            $v = $this->c->Test->beforeValidation($v);
+            $v       = $this->c->Test->beforeValidation($v);
+            $isValid = $v->validation($_POST, true);
+            $context = [
+                'user' => $this->user->fLog(), // ???? Guest only?
+                'form' => $v->getData(false, ['token']),
+            ];
 
-            if ($v->validation($_POST, true)) {
+            if ($isValid) {
                 $key  = $this->c->Secury->randomPass(32);
                 $hash = $this->c->Secury->hash($tmpUser->id . $key);
                 $link = $this->c->Router->link(
@@ -258,8 +264,7 @@ class Auth extends Page
                 } catch (MailException $e) {
                     $isSent = false;
 
-                    $this->c->Log->error('Passphrase reset form MailException', [
-                        'user'      => $this->user->fLog(), // ???? Guest only?
+                    $this->c->Log->error('Passphrase reset form MailException', $context + [
                         'exception' => $e,
                     ]);
                 }
@@ -270,9 +275,7 @@ class Auth extends Page
 
                     $this->c->users->update($tmpUser);
 
-                    $this->c->Log->info('Passphrase reset form ok', [
-                        'user' => $this->user->fLog(), // ???? Guest only?
-                    ]);
+                    $this->c->Log->info('Passphrase reset form ok', $context);
 
                     return $this->c->Message->message(__('Forget mail', $this->c->config->o_admin_email), false, 200);
                 } else {
@@ -282,9 +285,7 @@ class Auth extends Page
 
             $this->fIswev = $v->getErrors();
 
-            $this->c->Log->warning('Passphrase reset form failed', [
-                'user' => $this->user->fLog(), // ???? Guest only?
-            ]);
+            $this->c->Log->warning('Passphrase reset form failed', $context);
         }
 
         $this->hhsLevel   = 'secure';
@@ -399,6 +400,7 @@ class Auth extends Page
 
             $this->c->Log->warning('Passphrase change form failed', [
                 'user' => $user->fLog(),
+                'form' => $v->getData(false, ['token', 'password', 'password2']),
             ]);
         }
         // активация аккаунта (письмо активации не дошло, заказали восстановление)
