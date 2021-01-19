@@ -54,6 +54,13 @@ class Log implements LoggerInterface
      */
     public function log($level, $message, array $context = [])
     {
+        if (
+            \is_object($message)
+            && \method_exists($message, '__toString')
+        ) {
+            $message = (string) $message;
+        }
+
         if (! \is_string($message)) {
             throw new InvalidArgumentException('Expected string in message');
         }
@@ -88,30 +95,39 @@ class Log implements LoggerInterface
 
     protected function contextExp(string $level, array $context): array
     {
-        $add = [
+        $ext     = $context['headers'] ?? null;
+        $headers = [
             'REMOTE_ADDR'     => $_SERVER['REMOTE_ADDR'] ?? null,
             'HTTP_USER_AGENT' => $_SERVER['HTTP_USER_AGENT'] ?? null,
         ];
 
-        switch ($level) {
-            case LogLevel::EMERGENCY:
-            case LogLevel::ALERT:
-            case LogLevel::CRITICAL:
-            case LogLevel::ERROR:
-            case LogLevel::WARNING:
-                foreach ($_SERVER as $key => $value) {
-                    if (
-                        'HTTP_' === \substr($key, 0, 5)
-                        && 'HTTP_USER_AGENT' !== $key
-                        && 'HTTP_COOKIE' !== $key
-                    ) {
-                        $add[$key] = $value;
-                    }
-                }
-                break;
+        if (null === $ext) {
+            switch ($level) {
+                case LogLevel::EMERGENCY:
+                case LogLevel::ALERT:
+                case LogLevel::CRITICAL:
+                case LogLevel::ERROR:
+                case LogLevel::WARNING:
+                    $ext = true;
+                    break;
+            }
         }
 
-        return $context + $add;
+        if (true === $ext) {
+            foreach ($_SERVER as $key => $value) {
+                if (
+                    'HTTP_' === \substr($key, 0, 5)
+                    && 'HTTP_USER_AGENT' !== $key
+                    && 'HTTP_COOKIE' !== $key
+                ) {
+                    $headers[$key] = $value;
+                }
+            }
+        }
+
+        $context['headers'] = $headers;
+
+        return $context;
     }
 
     protected function initResource(): void
