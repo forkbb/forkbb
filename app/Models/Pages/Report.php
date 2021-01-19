@@ -76,6 +76,12 @@ class Report extends Page
                             $result = $this->sendReport($report);
                         } catch (MailException $e) {
                             $result = false;
+
+                            $this->c->Log->error('Report send MailException', [
+                                'user'      => $this->user->fLog(),
+                                'exception' => $e,
+                                'headers'   => false,
+                            ]);
                         }
                         break;
                     default:
