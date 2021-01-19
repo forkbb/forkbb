@@ -59,6 +59,11 @@ class Register extends Page
 
         $this->fIswev = $v->getErrors();
 
+        $this->c->Log->warning('Registration failed', [
+            'user' => $this->user->fLog(),
+            'form' => $v->getData(false, ['token', 'password']),
+        ]);
+
         // нет согласия с правилами
         if (isset($this->fIswev['cancel'])) {
             return $this->c->Message->message('Reg cancel', true, 403);
@@ -165,6 +170,12 @@ class Register extends Page
 
         $newUserId = $this->c->users->insert($user);
 
+        $this->c->Log->info('Registriaton', [
+            'user'    => $user->fLog(),
+            'form'    => $v->getData(false, ['token', 'password']),
+            'headers' => true,
+        ]);
+
         // уведомление о регистрации
         if (
             '1' == $this->c->config->o_regs_report
@@ -197,7 +208,11 @@ class Register extends Page
                     ->setTpl('new_user.tpl', $tplData)
                     ->send();
             } catch (MailException $e) {
-            //????
+                $this->c->Log->error('Registration notification to admins MailException', [
+                    'user'      => $user->fLog(),
+                    'exception' => $e,
+                    'headers'   => false,
+                ]);
             }
         }
 
@@ -234,7 +249,11 @@ class Register extends Page
                     ->setTpl('welcome.tpl', $tplData)
                     ->send();
             } catch (MailException $e) {
-                $isSent = false;
+                $this->c->Log->error('Registration activation email MailException', [
+                    'user'      => $user->fLog(),
+                    'exception' => $e,
+                    'headers'   => false,
+                ]);
             }
 
             // письмо активации аккаунта отправлено
@@ -268,6 +287,11 @@ class Register extends Page
             || empty($user->activate_string)
             || ! \hash_equals($user->activate_string, $args['key'])
         ) {
+            $this->c->Log->warning('Account activation failed', [
+                'user' => $user instanceof User ? $user->fLog() : $this->user->fLog(),
+                'args' => $args,
+            ]);
+
             return $this->c->Message->message('Bad request', false);
         }
 
@@ -276,6 +300,10 @@ class Register extends Page
         $user->activate_string = '';
 
         $this->c->users->update($user);
+
+        $this->c->Log->info('Account activated', [
+            'user' => $user->fLog(),
+        ]);
 
         $this->c->Lang->load('register');
 

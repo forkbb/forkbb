@@ -30,13 +30,19 @@ class Email extends Page
     {
         $this->curUser = $this->c->users->load((int) $args['id']);
 
-        if (! $this->curUser instanceof User || $this->curUser->isGuest) {
+        if (
+            ! $this->curUser instanceof User
+            || $this->curUser->isGuest
+        ) {
             return $this->c->Message->message('Bad request');
         }
 
         $rules = $this->c->ProfileRules->setUser($this->curUser);
 
-        if (! $rules->viewEmail || ! $rules->sendEmail) {
+        if (
+            ! $rules->viewEmail
+            || ! $rules->sendEmail
+        ) {
             $message = null === $rules->sendEmail ? 'Form email disabled' : 'Bad request';
 
             return $this->c->Message->message($message);
@@ -86,9 +92,19 @@ class Email extends Page
                             $this->c->users->update($this->user);
                         }
 
+                        $this->c->Log->info('Email sent', [
+                            'user'      => $this->user->fLog(),
+                            'recipient' => $this->curUser->fLog(),
+                        ]);
+
                         return $this->c->Redirect->url($v->redirect)->message('Email sent redirect');
                     }
                 } catch (MailException $e) {
+                    $this->c->Log->error('Email send MailException', [
+                        'user'      => $this->user->fLog(),
+                        'exception' => $e,
+                        'headers'   => false,
+                    ]);
                 }
 
                 return $this->c->Message->message('When sending email there was an error');
@@ -96,6 +112,11 @@ class Email extends Page
 
             $this->fIswev = $v->getErrors();
             $data         = $v->getData();
+
+            $this->c->Log->warning('Email send form failed', [
+                'user'      => $this->user->fLog(),
+                'recipient' => $this->curUser->fLog(),
+            ]);
         }
 
         $this->nameTpl   = 'email';

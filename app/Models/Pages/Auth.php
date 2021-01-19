@@ -74,10 +74,6 @@ class Auth extends Page
             if ($v->validation($_POST, true)) {
                 $this->loginEnd($v);
 
-                $this->c->Log->info('Login', [
-                    'user' => $this->userAfterLogin->fLog(),
-                ]);
-
                 return $this->c->Redirect->url($v->redirect)->message('Login redirect');
             }
 
@@ -123,6 +119,12 @@ class Auth extends Page
 
         $this->c->Online->delete($this->user);
         $this->c->Cookie->setUser($this->userAfterLogin, (bool) $v->save);
+
+        $this->c->Log->info('Login', [
+            'user'    => $this->userAfterLogin->fLog(),
+            'form'    => $v->getData(false, ['token', 'password']),
+            'headers' => true,
+        ]);
     }
 
     /**
@@ -229,8 +231,9 @@ class Auth extends Page
             $v       = $this->c->Test->beforeValidation($v);
             $isValid = $v->validation($_POST, true);
             $context = [
-                'user' => $this->user->fLog(), // ???? Guest only?
-                'form' => $v->getData(false, ['token']),
+                'user'    => $this->user->fLog(), // ???? Guest only?
+                'form'    => $v->getData(false, ['token']),
+                'headers' => true,
             ];
 
             if ($isValid) {
