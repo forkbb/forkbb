@@ -181,8 +181,16 @@ body,
   opacity: 0.6;
 }
 
+html[lang="ru"] #fork summary::after {
+  content: "(открыть)";
+}
+
 #fork details[open] > summary::after {
   content: "(click to close)";
+}
+
+html[lang="ru"] #fork details[open] > summary::after {
+  content: "(закрыть)";
 }
 
 #fork select {
