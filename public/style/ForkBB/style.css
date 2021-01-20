@@ -172,6 +172,7 @@ body,
 
 #fork summary {
   cursor: pointer;
+  margin-bottom: 0.625rem;
 }
 
 #fork summary::after {
