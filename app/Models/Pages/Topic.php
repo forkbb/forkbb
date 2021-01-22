@@ -93,15 +93,16 @@ class Topic extends Page
             $topic = $this->c->topics->load((int) $args['id']);
         }
 
-        if (
-            ! $topic instanceof TopicModel
-            || ! $topic->last_post_id
-        ) {
+        if (! $topic instanceof TopicModel) {
             return $this->c->Message->message('Bad request');
         }
 
         if ($topic->moved_to) {
-            return $this->c->Redirect->page('Topic', ['id' => $topic->moved_to]);
+            return $this->c->Redirect->url($topic->link);
+        }
+
+        if (! $topic->last_post_id) {
+            return $this->c->Message->message('Bad request');
         }
 
         switch ($type) {

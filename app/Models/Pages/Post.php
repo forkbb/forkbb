@@ -103,8 +103,7 @@ class Post extends Page
         $topic = $this->c->topics->load((int) $args['id']);
 
         if (
-            empty($topic)
-            || $topic->moved_to
+            ! $topic instanceof Topic
             || ! $topic->canReply
         ) {
             return $this->c->Message->message('Bad request');

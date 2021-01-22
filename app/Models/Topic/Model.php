@@ -53,7 +53,9 @@ class Model extends DataModel
      */
     protected function getcanReply(): bool
     {
-        if ($this->c->user->isAdmin) {
+        if ($this->moved_to) {
+            return false;
+        } elseif ($this->c->user->isAdmin) {
             return true;
         } elseif (
             $this->closed
@@ -117,7 +119,10 @@ class Model extends DataModel
      */
     protected function getlinkLast(): ?string
     {
-        if ($this->moved_to) {
+        if (
+            $this->moved_to
+            || $this->last_post_id < 1
+        ) {
             return null;
         } else {
             return $this->c->Router->link(
