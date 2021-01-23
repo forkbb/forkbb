@@ -1564,7 +1564,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   font-family: "FontAwesomeFree";
   font-weight: 900;
   font-size: 0.875rem;
-  content: "\f30c";
+  content: "\f35b";
   color: #D8000C;
 }
 
@@ -1586,6 +1586,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   font-weight: 900;
   font-size: 0.875rem;
   content: "\f681";
+  color: #9F6000;
 }
 
 /*****************/
@@ -1594,6 +1595,7 @@ html[lang="ru"] #fork details[open] > summary::after {
 #fork .f-btn-topic-closed {
   pointer-events: none;
   cursor: default;
+  color: #D8000C;
   background-color: #FFBABA;
 }
 
