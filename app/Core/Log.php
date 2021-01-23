@@ -26,12 +26,14 @@ class Log implements LoggerInterface
     protected $lineFormat;
     protected $timeFormat;
     protected $resource;
+    protected $hidePath;
 
     public function __construct(array $config)
     {
         $this->path       = $config['path']       ?? __DIR__ . '/../log/{Y-m-d}.log';
         $this->lineFormat = $config['lineFormat'] ?? "%datetime% [%level_name%] %message%\t%context%\n";
         $this->timeFormat = $config['timeFormat'] ?? 'Y-m-d H:i:s';
+        $this->hidePath   = \realpath(__DIR__ . '/../../');
     }
 
     public function __destruct()
@@ -185,7 +187,7 @@ class Log implements LoggerInterface
             isset($context['exception'])
             && $context['exception'] instanceof Throwable
         ) {
-            $context['exception'] = (string) $context['exception']; // ????
+            $context['exception'] = \str_replace($this->hidePath, '...', (string) $context['exception']);
         }
 
         $dt     = new DateTime('now', new DateTimeZone('UTC'));
@@ -214,7 +216,7 @@ class Log implements LoggerInterface
                     || \method_exists($val, '__toString')
                 )
             ) {
-                $replace['{' . $key . '}'] = (string) $val;
+                $replace['{' . $key . '}'] = \str_replace($this->hidePath, '...', (string) $val);
             }
         }
 
