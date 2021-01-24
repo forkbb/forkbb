@@ -43,14 +43,14 @@ class Container
     public function config(array $config): void
     {
         if (isset($config['shared'])) {
-            $this->shared = \array_replace_recursive($this->shared, $config['shared']);
+            $this->shared = \array_replace($this->shared, $config['shared']);
         }
         if (isset($config['multiple'])) {
-            $this->multiple = \array_replace_recursive($this->multiple, $config['multiple']);
+            $this->multiple = \array_replace($this->multiple, $config['multiple']);
         }
         unset($config['shared'], $config['multiple']);
         if (! empty($config)) {
-            $this->instances = \array_replace_recursive($this->instances, $config);
+            $this->instances = \array_replace($this->instances, $config);
         }
     }
 
