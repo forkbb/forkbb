@@ -23,14 +23,12 @@ use function \ForkBB\__;
 
 class Update extends Admin
 {
-    const PHP_MIN = '7.3.0';
-
+    const PHP_MIN                    = '7.3.0';
     const LATEST_REV_WITH_DB_CHANGES = 31;
-
-    const LOCK_NAME = 'lock_update';
-    const LOCk_TTL  = 1800;
-
-    const JSON_OPTIONS = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
+    const LOCK_NAME                  = 'lock_update';
+    const LOCk_TTL                   = 1800;
+    const JSON_OPTIONS               = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
+    const CONFIG_FILE                = 'main.php';
 
     protected $configFile;
 
@@ -47,7 +45,7 @@ class Update extends Admin
         $this->nameTpl    = 'admin/form';
         $this->titleForm  = __('Update ForkBB');
         $this->classForm  = 'updateforkbb';
-        $this->configFile = $container->DIR_APP . '/config/main.php';
+        $this->configFile = $container->DIR_APP . '/config/' . self::CONFIG_FILE;
 
         $this->header('Retry-After', '3600');
     }
