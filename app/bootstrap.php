@@ -54,7 +54,6 @@ $c->FORK_REVISION = 33;
 $c->START         = $forkStart;
 $c->DIR_APP       = __DIR__;
 $c->DIR_PUBLIC    = $forkPublic;
-$c->DIR_CONFIG    = __DIR__ . '/config';
 $c->DIR_CACHE     = __DIR__ . '/cache';
 $c->DIR_VIEWS     = __DIR__ . '/templates';
 $c->DIR_LANG      = __DIR__ . '/lang';

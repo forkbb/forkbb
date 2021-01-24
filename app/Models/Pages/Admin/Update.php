@@ -30,9 +30,9 @@ class Update extends Admin
     const LOCK_NAME = 'lock_update';
     const LOCk_TTL  = 1800;
 
-    const CONFIG_FILE = 'main.php';
-
     const JSON_OPTIONS = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
+
+    protected $configFile;
 
     public function __construct(Container $container)
     {
@@ -47,6 +47,7 @@ class Update extends Admin
         $this->nameTpl    = 'admin/form';
         $this->titleForm  = __('Update ForkBB');
         $this->classForm  = 'updateforkbb';
+        $this->configFile = $container->DIR_APP . '/config/main.php';
 
         $this->header('Retry-After', '3600');
     }
@@ -169,7 +170,7 @@ class Update extends Admin
                     // загрузка и проверка конфига
                     if (null === $e) {
                         try {
-                            $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+                            $coreConfig = new CoreConfig($this->configFile);
                         } catch (ForkException $excp) {
                             $e = $excp->getMessage();
                         }
@@ -385,7 +386,7 @@ class Update extends Admin
 #     */
 #    protected function stageNumber1(array $args): ?int
 #    {
-#        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+#        $coreConfig = new CoreConfig($this->configFile);
 #
 #        $coreConfig->add(
 #            'multiple=>AdminUsersRecalculate',
@@ -418,7 +419,7 @@ class Update extends Admin
      */
     protected function stageNumber2(array $args): ?int
     {
-        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+        $coreConfig = new CoreConfig($this->configFile);
 
         $coreConfig->add(
             'multiple=>AdminUsersRecalculate',
@@ -439,7 +440,7 @@ class Update extends Admin
      */
     protected function stageNumber3(array $args): ?int
     {
-        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+        $coreConfig = new CoreConfig($this->configFile);
 
         $result = $coreConfig->delete(
             'multiple=>AdminUsersRecalculate',
@@ -485,7 +486,7 @@ class Update extends Admin
      */
     protected function stageNumber5(array $args): ?int
     {
-        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+        $coreConfig = new CoreConfig($this->configFile);
 
         $coreConfig->add(
             'multiple=>Email',
@@ -558,7 +559,7 @@ class Update extends Admin
      */
     protected function stageNumber8(array $args): ?int
     {
-        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+        $coreConfig = new CoreConfig($this->configFile);
 
         $coreConfig->add(
             'multiple=>Feed',
@@ -592,7 +593,7 @@ class Update extends Admin
      */
     protected function stageNumber10(array $args): ?int
     {
-        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+        $coreConfig = new CoreConfig($this->configFile);
 
         $coreConfig->add(
             'shared=>subscriptions',
@@ -609,7 +610,7 @@ class Update extends Admin
      */
     protected function stageNumber11(array $args): ?int
     {
-        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+        $coreConfig = new CoreConfig($this->configFile);
 
         $coreConfig->add(
             'multiple=>SearchModelActionF',
@@ -626,7 +627,7 @@ class Update extends Admin
      */
     protected function stageNumber12(array $args): ?int
     {
-        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+        $coreConfig = new CoreConfig($this->configFile);
 
         $coreConfig->add(
             'shared=>SubscriptionModelSend',
@@ -651,7 +652,7 @@ class Update extends Admin
      */
     protected function stageNumber13(array $args): ?int
     {
-        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+        $coreConfig = new CoreConfig($this->configFile);
 
         $result = $coreConfig->delete(
             'multiple=>AdminPermissions',
@@ -685,7 +686,7 @@ class Update extends Admin
      */
     protected function stageNumber14(array $args): ?int
     {
-        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+        $coreConfig = new CoreConfig($this->configFile);
 
         $result = $coreConfig->delete(
             'multiple=>SmileyListModelLoad',
@@ -745,7 +746,7 @@ class Update extends Admin
         $query = 'INSERT INTO ::bbcode (bb_tag, bb_edit, bb_delete, bb_structure)
             VALUES(?s:tag, 1, 0, ?s:structure)';
 
-        $bbcodes = include $this->c->DIR_CONFIG . '/defaultBBCode.php';
+        $bbcodes = include $this->c->DIR_APP . '/config/defaultBBCode.php';
         foreach ($bbcodes as $bbcode) {
             $vars = [
                 ':tag'       => $bbcode['tag'],
@@ -765,7 +766,7 @@ class Update extends Admin
 
         $this->c->config->save();
 
-        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+        $coreConfig = new CoreConfig($this->configFile);
 
         $result = $coreConfig->delete(
             'BBCODE_INFO=>forSign',
@@ -820,7 +821,7 @@ class Update extends Admin
      */
     protected function stageNumber16(array $args): ?int
     {
-        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+        $coreConfig = new CoreConfig($this->configFile);
 
         $coreConfig->add(
             'shared=>Router=>csrf',
@@ -837,7 +838,7 @@ class Update extends Admin
      */
     protected function stageNumber17(array $args): ?int
     {
-        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+        $coreConfig = new CoreConfig($this->configFile);
 
         $coreConfig->add(
             'multiple=>BBStructure',
@@ -895,7 +896,7 @@ class Update extends Admin
      */
     protected function stageNumber19(array $args): ?int
     {
-        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+        $coreConfig = new CoreConfig($this->configFile);
 
         $result = $coreConfig->delete(
             'shared=>FileCache',
@@ -916,7 +917,7 @@ class Update extends Admin
      */
     protected function stageNumber20(array $args): ?int
     {
-        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+        $coreConfig = new CoreConfig($this->configFile);
 
         $coreConfig->add(
             'shared=>Test',
@@ -934,7 +935,7 @@ class Update extends Admin
      */
     protected function stageNumber21(array $args): ?int
     {
-        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+        $coreConfig = new CoreConfig($this->configFile);
 
         $coreConfig->add(
             'USERNAME_PATTERN',
@@ -1038,7 +1039,7 @@ class Update extends Admin
      */
     protected function stageNumber24(array $args): ?int
     {
-        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+        $coreConfig = new CoreConfig($this->configFile);
 
         $coreConfig->add(
             'multiple=>ForumManagerUpdateUsername',
@@ -1103,7 +1104,7 @@ class Update extends Admin
      */
     protected function stageNumber26(array $args): ?int
     {
-        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+        $coreConfig = new CoreConfig($this->configFile);
 
         $coreConfig->add(
             'shared=>polls',
@@ -1183,7 +1184,7 @@ class Update extends Admin
      */
     protected function stageNumber29(array $args): ?int
     {
-        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+        $coreConfig = new CoreConfig($this->configFile);
 
         $coreConfig->add(
             'multiple=>Poll',
@@ -1222,7 +1223,7 @@ class Update extends Admin
      */
     protected function stageNumber31(array $args): ?int
     {
-        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+        $coreConfig = new CoreConfig($this->configFile);
 
         $coreConfig->add(
             'HTTP_HEADERS',
@@ -1257,7 +1258,7 @@ class Update extends Admin
      */
     protected function stageNumber32(array $args): ?int
     {
-        $coreConfig = new CoreConfig($this->c->DIR_CONFIG . '/' . self::CONFIG_FILE);
+        $coreConfig = new CoreConfig($this->configFile);
 
         $coreConfig->add(
             'shared=>Log',

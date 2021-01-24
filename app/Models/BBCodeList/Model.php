@@ -20,7 +20,7 @@ class Model extends ParentModel
     {
         parent::__construct($container);
 
-        $this->fileDefault = "{$container->DIR_CONFIG}/{$file}";
+        $this->fileDefault = "{$container->DIR_APP}/config/{$file}";
         $this->fileCache   = "{$container->DIR_CACHE}/generated_bbcode.php";
     }
 

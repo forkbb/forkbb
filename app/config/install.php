@@ -30,7 +30,7 @@ return [
     'GROUP_GUEST'      => 3,
     'GROUP_MEMBER'     => 4,
     'GROUP_NEW_MEMBER' => 5,
-    'EOL'              => PHP_EOL,
+    'EOL'              => \PHP_EOL,
     'MAX_EMAIL_LENGTH' => 80,
     'FLOOD_INTERVAL'   => 3600,
     'HTTP_HEADERS'     => [
