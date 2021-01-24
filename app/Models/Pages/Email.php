@@ -92,7 +92,7 @@ class Email extends Page
                             $this->c->users->update($this->user);
                         }
 
-                        $this->c->Log->info('Email sent', [
+                        $this->c->Log->info('Email send: ok', [
                             'user'      => $this->user->fLog(),
                             'recipient' => $this->curUser->fLog(),
                         ]);
@@ -100,7 +100,7 @@ class Email extends Page
                         return $this->c->Redirect->url($v->redirect)->message('Email sent redirect');
                     }
                 } catch (MailException $e) {
-                    $this->c->Log->error('Email send MailException', [
+                    $this->c->Log->error('Email send: MailException', [
                         'user'      => $this->user->fLog(),
                         'exception' => $e,
                         'headers'   => false,
@@ -113,7 +113,7 @@ class Email extends Page
             $this->fIswev = $v->getErrors();
             $data         = $v->getData();
 
-            $this->c->Log->warning('Email send form failed', [
+            $this->c->Log->warning('Email send: form, fail', [
                 'user'      => $this->user->fLog(),
                 'recipient' => $this->curUser->fLog(),
             ]);

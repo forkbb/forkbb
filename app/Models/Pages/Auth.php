@@ -24,7 +24,7 @@ class Auth extends Page
     public function logout(array $args): Page
     {
         if (! $this->c->Csrf->verify($args['token'], 'Logout', $args)) {
-            $this->c->Log->warning('Logout failed', [
+            $this->c->Log->warning('Logout: fail', [
                 'user' => $this->user->fLog(),
             ]);
 
@@ -35,7 +35,7 @@ class Auth extends Page
         $this->c->Online->delete($this->user);
         $this->c->users->updateLastVisit($this->user);
 
-        $this->c->Log->info('Logout', [
+        $this->c->Log->info('Logout: ok', [
             'user' => $this->user->fLog(),
         ]);
 
@@ -79,7 +79,7 @@ class Auth extends Page
 
             $this->fIswev = $v->getErrors();
 
-            $this->c->Log->warning('Login failed', [
+            $this->c->Log->warning('Login: fail', [
                 'user' => $this->user->fLog(),
                 'form' => $v->getData(false, ['token', 'password']),
             ]);
@@ -120,7 +120,7 @@ class Auth extends Page
         $this->c->Online->delete($this->user);
         $this->c->Cookie->setUser($this->userAfterLogin, (bool) $v->save);
 
-        $this->c->Log->info('Login', [
+        $this->c->Log->info('Login: ok', [
             'user'    => $this->userAfterLogin->fLog(),
             'form'    => $v->getData(false, ['token', 'password']),
             'headers' => true,
@@ -267,8 +267,9 @@ class Auth extends Page
                 } catch (MailException $e) {
                     $isSent = false;
 
-                    $this->c->Log->error('Passphrase reset form MailException', $context + [
+                    $this->c->Log->error('Passphrase reset: form, MailException', [
                         'exception' => $e,
+                        'headers'   => false,
                     ]);
                 }
 
@@ -278,7 +279,7 @@ class Auth extends Page
 
                     $this->c->users->update($tmpUser);
 
-                    $this->c->Log->info('Passphrase reset form ok', $context);
+                    $this->c->Log->info('Passphrase reset: form, ok', $context);
 
                     return $this->c->Message->message(__('Forget mail', $this->c->config->o_admin_email), false, 200);
                 } else {
@@ -288,7 +289,7 @@ class Auth extends Page
 
             $this->fIswev = $v->getErrors();
 
-            $this->c->Log->warning('Passphrase reset form failed', $context);
+            $this->c->Log->warning('Passphrase reset: form, fail', $context);
         }
 
         $this->hhsLevel   = 'secure';
@@ -352,7 +353,7 @@ class Auth extends Page
             || empty($user->activate_string)
             || ! \hash_equals($user->activate_string, $args['key'])
         ) {
-            $this->c->Log->warning('Passphrase reset confirmation failed', [
+            $this->c->Log->warning('Passphrase reset: confirmation, fail', [
                 'user' => $user instanceof User ? $user->fLog() : $this->user->fLog(),
                 'args' => $args,
             ]);
@@ -392,7 +393,7 @@ class Auth extends Page
 
                 $this->fIswev = ['s', __('Pass updated')];
 
-                $this->c->Log->info('Passphrase updated', [
+                $this->c->Log->info('Passphrase reset: ok', [
                     'user' => $user->fLog(),
                 ]);
 
@@ -401,7 +402,7 @@ class Auth extends Page
 
             $this->fIswev = $v->getErrors();
 
-            $this->c->Log->warning('Passphrase change form failed', [
+            $this->c->Log->warning('Passphrase reset: change form, fail', [
                 'user' => $user->fLog(),
                 'form' => $v->getData(false, ['token', 'password', 'password2']),
             ]);
@@ -415,7 +416,7 @@ class Auth extends Page
 
             $this->fIswev = ['i', __('Account activated')];
 
-            $this->c->Log->info('Account activated', [
+            $this->c->Log->info('Account activation: ok', [
                 'user' => $user->fLog(),
             ]);
         }

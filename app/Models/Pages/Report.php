@@ -77,7 +77,7 @@ class Report extends Page
                         } catch (MailException $e) {
                             $result = false;
 
-                            $this->c->Log->error('Report send MailException', [
+                            $this->c->Log->error('Report: MailException', [
                                 'user'      => $this->user->fLog(),
                                 'exception' => $e,
                                 'headers'   => false,

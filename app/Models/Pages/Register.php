@@ -59,7 +59,7 @@ class Register extends Page
 
         $this->fIswev = $v->getErrors();
 
-        $this->c->Log->warning('Registration failed', [
+        $this->c->Log->warning('Registration: fail', [
             'user' => $this->user->fLog(),
             'form' => $v->getData(false, ['token', 'password']),
         ]);
@@ -170,7 +170,7 @@ class Register extends Page
 
         $newUserId = $this->c->users->insert($user);
 
-        $this->c->Log->info('Registriaton', [
+        $this->c->Log->info('Registriaton: ok', [
             'user'    => $user->fLog(),
             'form'    => $v->getData(false, ['token', 'password']),
             'headers' => true,
@@ -208,8 +208,7 @@ class Register extends Page
                     ->setTpl('new_user.tpl', $tplData)
                     ->send();
             } catch (MailException $e) {
-                $this->c->Log->error('Registration notification to admins MailException', [
-                    'user'      => $user->fLog(),
+                $this->c->Log->error('Registration: notification to admins, MailException', [
                     'exception' => $e,
                     'headers'   => false,
                 ]);
@@ -249,7 +248,7 @@ class Register extends Page
                     ->setTpl('welcome.tpl', $tplData)
                     ->send();
             } catch (MailException $e) {
-                $this->c->Log->error('Registration activation email MailException', [
+                $this->c->Log->error('Registration: MailException', [
                     'user'      => $user->fLog(),
                     'exception' => $e,
                     'headers'   => false,
@@ -287,7 +286,7 @@ class Register extends Page
             || empty($user->activate_string)
             || ! \hash_equals($user->activate_string, $args['key'])
         ) {
-            $this->c->Log->warning('Account activation failed', [
+            $this->c->Log->warning('Account activation: fail', [
                 'user' => $user instanceof User ? $user->fLog() : $this->user->fLog(),
                 'args' => $args,
             ]);
@@ -301,7 +300,7 @@ class Register extends Page
 
         $this->c->users->update($user);
 
-        $this->c->Log->info('Account activated', [
+        $this->c->Log->info('Account activation: ok', [
             'user' => $user->fLog(),
         ]);
 

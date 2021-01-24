@@ -130,6 +130,11 @@ class Email extends Profile
                             ->send();
                     } catch (MailException $e) {
                         $isSent = false;
+
+                        $this->c->Log->error('Email activation: MailException', [
+                            'exception' => $e,
+                            'headers'   => false,
+                        ]);
                     }
 
                     if ($isSent) {
