@@ -189,7 +189,7 @@ EOT;
                 foreach ($error['trace'] as $cur) {
                     if (
                         isset($cur['file'], $cur['line'], $error['file'], $error['line'])
-                        && $error['line'] === $cur['line']
+                        && (int) $error['line'] === (int) $cur['line']
                         && $error['file'] === $cur['file']
                     ) {
                         continue;
