@@ -27,12 +27,6 @@ class ErrorHandler
     protected $error;
 
     /**
-     * Флаг отправки сообщения в лог
-     * @var bool
-     */
-    protected $logged = false;
-
-    /**
      * Скрываемая часть пути до файла
      * @var string
      */
@@ -65,7 +59,7 @@ class ErrorHandler
     {
         $this->hidePath = \realpath(__DIR__ . '/../../');
 
-        \set_error_handler([$this, 'errorHandler']);
+        \set_error_handler([$this, 'errorHandler'], \E_ALL);
         \set_exception_handler([$this, 'exceptionHandler']);
         \register_shutdown_function([$this, 'shutdownHandler']);
 
@@ -86,21 +80,19 @@ class ErrorHandler
      */
     public function errorHandler(int $type, string $message, string $file, string $line): bool
     {
-        $error = [
-            'type'    => $type,
-            'message' => $message,
-            'file'    => $file,
-            'line'    => $line,
-            'trace'   => \debug_backtrace(0),
-        ];
-        $this->log($error);
-
         if ($type & \error_reporting()) {
-            $this->error = $error;
+            $this->error = [
+                'type'    => $type,
+                'message' => $message,
+                'file'    => $file,
+                'line'    => $line,
+                'trace'   => \debug_backtrace(0),
+            ];
+
+            $this->log($this->error);
+
             exit(1);
         }
-
-        $this->logged = false;
 
         return true;
     }
@@ -111,12 +103,15 @@ class ErrorHandler
     public function exceptionHandler(Throwable $e): void
     {
         $this->error = [
-            'type'    => 0, //????
-            'message' => $e->getMessage(),
-            'file'    => $e->getFile(),
-            'line'    => $e->getLine(),
-            'trace'   => $e->getTrace(),
+            'type'      => 0,
+            'message'   => $e->getMessage(),
+            'file'      => $e->getFile(),
+            'line'      => $e->getLine(),
+            'trace'     => $e->getTrace(),
+            'exception' => $e,
         ];
+
+        $this->log($this->error);
     }
 
     /**
@@ -124,36 +119,23 @@ class ErrorHandler
      */
     public function shutdownHandler(): void
     {
+        $show = false;
+
         if (isset($this->error['type'])) {
             $show = true;
-        } else {
-            $show = false;
-            $this->error = \error_get_last();
-
-            if (isset($this->error['type'])) {
-                switch ($this->error['type']) {
-                    case \E_ERROR:
-                    case \E_PARSE:
-                    case \E_CORE_ERROR:
-                    case \E_CORE_WARNING:
-                    case \E_COMPILE_ERROR:
-                    case \E_COMPILE_WARNING:
-                        $show = true;
-                        break;
-                }
-            }
-        }
-
-        if (
-            isset($this->error['type'])
-            && ! $this->logged
+        } elseif (
+            \is_array($this->error = \error_get_last())
+            && $this->error['type'] & \error_reporting()
         ) {
+            $show = true;
+
             $this->log($this->error);
         }
 
         while (\ob_get_level() > $this->obLevel) {
             \ob_end_clean();
         }
+
         if (\ob_get_level() === $this->obLevel) {
             if ($show) {
                 \ob_end_clean();
@@ -170,10 +152,7 @@ class ErrorHandler
      */
     protected function log(array $error): void
     {
-        $this->logged = true;
-        $message = \preg_replace('%[\x00-\x1F]%', ' ', $this->message($error));
-
-        \error_log($message);
+        \error_log($this->message($error, true));
     }
 
     /**
@@ -260,7 +239,7 @@ EOT;
                 echo '</ol></div>';
             }
         } else {
-            echo '<p>Oops</p>';
+            echo '<p>Server is tired :(</p>';
         }
 
         echo <<<'EOT'
@@ -275,12 +254,21 @@ EOT;
     /**
      * Формирует сообщение
      */
-    protected function message(array $error): string
+    protected function message(array $error, bool $useException = false): string
     {
         $type = $this->type[$error['type']] ?? $this->type[0];
-        $file = \str_replace($this->hidePath, '...', $error['file']);
 
-        return "PHP {$type}: \"{$error['message']}\" in {$file}:[{$error['line']}]";
+        if (
+            $useException
+            && isset($error['exception'])
+            && $error['exception'] instanceof Throwable
+        ) {
+            $result = "PHP {$type}: {$error['exception']}";
+        } else {
+            $result = "PHP {$type}: {$error['message']} in {$error['file']}:[{$error['line']}]";
+        }
+
+        return \preg_replace('%[\x00-\x1F]%', ' ', \str_replace($this->hidePath, '...', $result));
     }
 
     /**
