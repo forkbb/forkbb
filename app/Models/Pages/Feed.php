@@ -164,7 +164,12 @@ class Feed extends Page
     {
         if (\mb_strlen($text, 'UTF-8') > self::MAX_LEN_CONT) {
             $result = \mb_substr($text, 0, self::MAX_LEN_CONT, 'UTF-8');
-            $result = \substr($result, 0, \strrpos($result, ' '));
+            $length = \strrpos($result, ' ');
+
+            if (\is_int($length)) {
+                $result = \substr($result, 0, $length);
+            }
+
             $result = \rtrim($result, "!,.-\n\t ");
 
             if (isset($result[0])) {
