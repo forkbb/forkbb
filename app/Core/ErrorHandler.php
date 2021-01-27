@@ -208,7 +208,7 @@ EOT;
                     ) {
                         $comma = '';
 
-                        foreach($cur['args'] as $arg) {
+                        foreach ($cur['args'] as $arg) {
                             $type = \gettype($arg);
 
                             switch ($type) {

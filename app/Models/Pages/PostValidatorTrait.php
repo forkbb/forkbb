@@ -52,7 +52,7 @@ trait PostValidatorTrait
             $prepare = true;
             $message = $this->c->Parser->prepare($message); //????
 
-            foreach($this->c->Parser->getErrors() as $error) {
+            foreach ($this->c->Parser->getErrors() as $error) {
                 $prepare = false;
                 $v->addError($error);
             }

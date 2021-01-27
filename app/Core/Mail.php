@@ -227,7 +227,7 @@ class Mail
             $email = \preg_split('%[,\n\r]%', (string) $email, -1, \PREG_SPLIT_NO_EMPTY);
         }
 
-        foreach($email as $cur) {
+        foreach ($email as $cur) {
             $cur = $this->valid(\trim((string) $cur), false, true);
 
             if (false !== $cur) {

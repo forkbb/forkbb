@@ -7,7 +7,7 @@
     <description>{{ $p->feed['description'] }}</description>
     <pubDate>{{ \gmdate('r', $p->feed['updated']) }}</pubDate>
     <generator>ForkBB</generator>
-@foreach($p->feed['items'] as $item)
+@foreach ($p->feed['items'] as $item)
     <item>
       <title>{{ $item['title'] }}</title>
       <link>{{ $item['link'] }}</link>

@@ -247,7 +247,7 @@ class Model extends DataModel
         }
 
         if ('1' == $this->c->user->g_view_users) {
-            foreach($attr as $id => &$cur) {
+            foreach ($attr as $id => &$cur) {
                 $cur = [
                     $this->c->Router->link(
                         'User',

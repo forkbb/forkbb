@@ -518,7 +518,7 @@ class Validator
                 return null;                                  // а не null
             }
         } elseif (\is_string($value)) {
-            foreach(\explode(',', $attr) as $action) {
+            foreach (\explode(',', $attr) as $action) {
                 switch ($action) {
                     case 'trim':
                         $value = $this->trim($value);

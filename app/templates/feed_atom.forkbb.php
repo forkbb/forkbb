@@ -6,7 +6,7 @@
   <updated>{{ \gmdate('c', $p->feed['updated']) }}</updated>
   <generator>ForkBB</generator>
   <id>{{ $p->feed['id'] }}</id>
-@foreach($p->feed['items'] as $item)
+@foreach ($p->feed['items'] as $item)
   <entry>
     <title>{{ $item['title'] }}</title>
     <link rel="alternate" type="text/html" href="{{ $item['link'] }}" />
