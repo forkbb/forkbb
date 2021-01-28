@@ -36,6 +36,8 @@ if (\is_file(__DIR__ . '/config/main.php')) {
     throw new RuntimeException('Application is not configured');
 }
 
+$errorHandler->setContainer($c);
+
 require __DIR__ . '/functions.php';
 \ForkBB\_init($c);
 

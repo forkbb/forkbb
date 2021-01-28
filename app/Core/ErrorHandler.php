@@ -10,10 +10,18 @@ declare(strict_types=1);
 
 namespace ForkBB\Core;
 
+use ForkBB\Core\Container;
+use Psr\Log\NullLogger;
 use Throwable;
 
 class ErrorHandler
 {
+    /**
+     * Контейнер
+     * @var Container
+     */
+    protected $c;
+
     /**
      * Уровень буфера вывода на котором работает обработчик
      * @var int
@@ -37,22 +45,22 @@ class ErrorHandler
      * @var array
      */
     protected $type = [
-        0                    => 'OTHER_ERROR',
-        \E_ERROR             => 'E_ERROR',
-        \E_WARNING           => 'E_WARNING',
-        \E_PARSE             => 'E_PARSE',
-        \E_NOTICE            => 'E_NOTICE',
-        \E_CORE_ERROR        => 'E_CORE_ERROR',
-        \E_CORE_WARNING      => 'E_CORE_WARNING',
-        \E_COMPILE_ERROR     => 'E_COMPILE_ERROR',
-        \E_COMPILE_WARNING   => 'E_COMPILE_WARNING',
-        \E_USER_ERROR        => 'E_USER_ERROR',
-        \E_USER_WARNING      => 'E_USER_WARNING',
-        \E_USER_NOTICE       => 'E_USER_NOTICE',
-        \E_STRICT            => 'E_STRICT',
-        \E_RECOVERABLE_ERROR => 'E_RECOVERABLE_ERROR',
-        \E_DEPRECATED        => 'E_DEPRECATED',
-        \E_USER_DEPRECATED   => 'E_USER_DEPRECATED',
+        0                    => ['OTHER_ERROR',         'error'],
+        \E_ERROR             => ['E_ERROR',             'error'],
+        \E_WARNING           => ['E_WARNING',           'warning'],
+        \E_PARSE             => ['E_PARSE',             'critical'],
+        \E_NOTICE            => ['E_NOTICE',            'notice'],
+        \E_CORE_ERROR        => ['E_CORE_ERROR',        'error'],
+        \E_CORE_WARNING      => ['E_CORE_WARNING',      'warning'],
+        \E_COMPILE_ERROR     => ['E_COMPILE_ERROR',     'error'],
+        \E_COMPILE_WARNING   => ['E_COMPILE_WARNING',   'warning'],
+        \E_USER_ERROR        => ['E_USER_ERROR',        'error'],
+        \E_USER_WARNING      => ['E_USER_WARNING',      'warning'],
+        \E_USER_NOTICE       => ['E_USER_NOTICE',       'notice'],
+        \E_STRICT            => ['E_STRICT',            'error'],
+        \E_RECOVERABLE_ERROR => ['E_RECOVERABLE_ERROR', 'error'],
+        \E_DEPRECATED        => ['E_DEPRECATED',        'warning'],
+        \E_USER_DEPRECATED   => ['E_USER_DEPRECATED',   'warning'],
     ];
 
     public function __construct()
@@ -73,6 +81,11 @@ class ErrorHandler
         \restore_exception_handler();
 
         //????
+    }
+
+    public function setContainer(Container $c): void
+    {
+        $this->c = $c;
     }
 
     /**
@@ -152,7 +165,36 @@ class ErrorHandler
      */
     protected function log(array $error): void
     {
-        \error_log($this->message($error, true));
+        $useErrLog = true;
+
+        try {
+            if (! $this->c->Log instanceof NullLogger) {
+                $context = [];
+                $method  = $this->type[$error['type']][1] ?? $this->type[0][1];
+
+                if (isset($error['exception'])) {
+                    $context['exception'] = $error['exception'];
+                }
+                $context['headers'] = false;
+
+                $this->c->Log->{$method}($this->message($error), $context);
+
+                $useErrLog = false;
+            }
+        } catch (Throwable $e) {
+            \error_log($this->message([
+                'type'      => 0,
+                'message'   => $e->getMessage(),
+                'file'      => $e->getFile(),
+                'line'      => $e->getLine(),
+                'trace'     => $e->getTrace(),
+                'exception' => $e,
+            ], true));
+        }
+
+        if ($useErrLog) {
+            \error_log($this->message($error, true));
+        }
     }
 
     /**
@@ -256,7 +298,7 @@ EOT;
      */
     protected function message(array $error, bool $useException = false): string
     {
-        $type = $this->type[$error['type']] ?? $this->type[0];
+        $type = $this->type[$error['type']][0] ?? $this->type[0][0];
 
         if (
             $useException
