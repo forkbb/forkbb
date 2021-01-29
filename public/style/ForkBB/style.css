@@ -1,9 +1,10 @@
-/* Palette URL: http://paletton.com/#uid=10I0u0kllll++b4w0gdaFqt00vB */
-.color-primary-0 { color: #AA7939 }	/* Main Primary color */
+/* Palette URL: http://paletton.com/#uid=10I0u0kllll++b4w0gdaFqt00vB
+.color-primary-0 { color: #AA7939 }	Main Primary color
 .color-primary-1 { color: #583200 }
 .color-primary-2 { color: #814A00 }
 .color-primary-3 { color: #D3B58D }
-.color-primary-4 { color: #FCFCFC } /* #FEFCF2  #F8F4E3 #FFEBCD */
+.color-primary-4 { color: #FCFCFC } #FEFCF2  #F8F4E3 #FFEBCD
+*/
 
 /*******************/
 /* Общие настройки */
@@ -234,7 +235,6 @@ html[lang="ru"] #fork details[open] > summary::after {
 #fork a,
 #fork .f-btn {
   color: #583200;
-  border-color: #583200;
   cursor: pointer;
   text-decoration: none;
 }
@@ -256,7 +256,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   text-align: center;
 }
 
-#fork .f-btn.f-opacity {
+#fork .f-btn.f-opacity:not(:hover):not(:focus) {
   opacity: 0.5;
 }
 
@@ -270,11 +270,6 @@ html[lang="ru"] #fork details[open] > summary::after {
 #fork a:active,
 #fork .f-btn:active {
   background-color: #814A00;
-}
-
-#fork .f-btn.f-opacity:hover,
-#fork .f-btn.f-opacity:focus {
-  opacity: 1;
 }
 
 #fork .f-inline > dt,
@@ -320,7 +315,6 @@ html[lang="ru"] #fork details[open] > summary::after {
 #fork .f-menu-checkbox:focus + .f-menu-toggle:after {
   color: #D3B58D;
   background-color: #583200;
-  border-color: #D3B58D;
 }
 
 #fork .f-menu-items {
@@ -374,7 +368,6 @@ html[lang="ru"] #fork details[open] > summary::after {
 
 #fork-nav #id-mn-label {
   color: #D3B58D;
-  border-color: #D3B58D;
   position: absolute;
   top: 0.625rem;
   right: 0.9325rem;
@@ -532,7 +525,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   }
 
   #fork #id-nav-profile .f-menu-a:before {
-    content: "";
+    content: none;
     padding: 0;
   }
 } /* @media screen and (min-width: 50rem) */
@@ -544,7 +537,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   background-color: #AA7939;
 }
 
-#fork-header #id-fhth1 {
+#fork #id-fhth1 {
   width: calc(100% - 4rem);
   padding: 0.625rem 0 0.625rem 0.625rem;
   font-size: 2rem;
@@ -553,23 +546,23 @@ html[lang="ru"] #fork details[open] > summary::after {
   text-overflow: ellipsis;
 }
 
-#fork-header #id-fhtdesc {
+#fork #id-fhtdesc {
   border-top: 0.0625rem dotted #D3B58D;
   padding: 0.625rem;
   color: #F8F4E3;
 }
 
-#fork-header #id-fhtha {
+#fork #id-fhtha {
   color: #D3B58D;
 }
 
-#fork-header #id-fhtha:hover,
-#fork-header #id-fhtha:focus {
+#fork #id-fhtha:hover,
+#fork #id-fhtha:focus {
   background-color: #AA7939;
 }
 
 @media screen and (min-width: 50rem) {
-  #fork-header #id-fhth1 {
+  #fork #id-fhth1 {
     width: 100%;
     padding: 0.625rem;
     overflow: auto;
@@ -587,31 +580,31 @@ html[lang="ru"] #fork details[open] > summary::after {
 }
 
 #fork .f-info,
-#fork .f-info .f-wcontent > a  {
+#fork .f-icontent > a  {
   color: #00529B;
   background-color: #BDE5F8;
 }
 
 #fork .f-success,
-#fork .f-success .f-wcontent > a {
+#fork .f-scontent > a {
   color: #4F8A10;
   background-color: #DFF2BF;
 }
 
 #fork .f-warning,
-#fork .f-warning .f-wcontent > a {
+#fork .f-wcontent > a {
   color: #9F6000;
   background-color: #FEEFB3;
 }
 
 #fork .f-error,
-#fork .f-error .f-wcontent > a {
+#fork .f-econtent > a {
   color: #D8000C;
   background-color: #FFBABA;
 }
 
 #fork .f-validation,
-#fork .f-validation .f-wcontent > a {
+#fork .f-vcontent > a {
   color: #D63301;
   background-color: #FFCCBA;
 }
@@ -1537,16 +1530,9 @@ html[lang="ru"] #fork details[open] > summary::after {
     padding: 0;
 }
 
-#fork .f-tpages .f-page,
-#fork .f-cmforum > a {
+#fork .f-tpages:not(:hover) .f-page:not(:focus),
+#fork .f-cmforum > a:not(:focus):not(:hover) {
   opacity: 0.4;
-}
-
-#fork .f-tpages:hover .f-page,
-#fork .f-tpages .f-page:focus,
-#fork .f-cmforum > a:focus,
-#fork .f-cmforum > a:hover {
-  opacity: 1;
 }
 
 #fork .f-tmoved,
@@ -1725,13 +1711,8 @@ html[lang="ru"] #fork details[open] > summary::after {
   padding-bottom: 0.625rem;
 }
 
-#fork .f-post-btns .f-btn {
+#fork .f-post-btns:not(:hover) .f-btn:not(:focus) {
   opacity: 0.4;
-}
-
-#fork .f-post-btns:hover .f-btn,
-#fork .f-post-btns .f-btn:focus {
-  opacity: 1;
 }
 
 #fork .f-post-footer-add {
@@ -2217,13 +2198,11 @@ html[lang="ru"] #fork details[open] > summary::after {
 }
 
 #fork .f-moderate .f-btn {
-  opacity: 0.4;
   margin: 0.3125rem 0;
 }
 
-#fork .f-moderate .f-btns:hover .f-btn,
-#fork .f-moderate .f-btn:focus {
-  opacity: 1;
+#fork .f-moderate .f-btns:not(:hover) .f-btn:not(:focus) {
+  opacity: 0.4;
 }
 
 #fork .f-moderate-form .f-btn {
@@ -2825,7 +2804,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   }
 
   #fork .f-field-pline .f-child1:after {
-    content: "";
+    content: none;
   }
 }
 
@@ -3020,7 +2999,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   }
 
   #fork .f-fs-result .f-field-result .f-child1:after {
-    content: "";
+    content: none;
   }
 }
 
