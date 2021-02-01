@@ -1,21 +1,10 @@
 @if ($form['action'])
-        <form @if ($form['id']) id="{!! $form['id'] !!}" @endif class="f-form" method="post" action="{!! $form['action'] !!}" @if ($form['enctype']) enctype="{{ $form['enctype'] }}" @endif>
-    @if ($form['hidden'])
-        @foreach ($form['hidden'] as $key => $val)
-            @if (\is_array($val))
-                @foreach ($val as $k => $v)
-          <input type="hidden" name="{{ $key }}[{{ $k }}]" value="{{ $v }}">
-                @endforeach
-            @else
-          <input type="hidden" name="{{ $key }}" value="{{ $val }}">
-            @endif
-        @endforeach
-    @endif
+        <form @if ($form['id']) id="{{ $form['id'] }}" @endif class="f-form" method="post" action="{{ $form['action'] }}" @if ($form['enctype']) enctype="{{ $form['enctype'] }}" @endif>
 @endif
 @foreach ($form['sets'] as $setKey => $setVal)
     @if ($setVal['info'])
         @foreach ($setVal['info'] as $key => $cur)
-          <p class="f-finfo"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
+          <p class="f-finform"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
         @endforeach
     @elseif (isset($setVal['fields']))
           <fieldset id="id-fs-{{ $setKey }}" @if ($setVal['class']) class="f-fs-{!! \implode(' f-fs-', (array) $setVal['class']) !!}" @endif>
@@ -24,14 +13,14 @@
         @endif
         @foreach ($setVal['fields'] as $key => $cur)
             @if ('info' === $cur['type'])
-            <p id="id-{{ $cur['id'] or $key }}" class="f-child6"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
+            <p id="id-{{ $cur['id'] or $key }}" class="f-yinfo"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
             @elseif ('wrap' === $cur['type'])
             <div id="id-{{ $cur['id'] or $key }}" @if ($cur['class']) class="f-wrap-{!! \implode(' f-wrap-', (array) $cur['class']) !!}" @endif>
             @elseif ('endwrap' === $cur['type'])
             </div>
             @else
             <dl id="id-dl-{{ $cur['id'] or $key }}" @if ($cur['class']) class="f-field-{!! \implode(' f-field-', (array) $cur['class']) !!}" @endif>
-              <dt> @if ($cur['caption'])<label class="f-child1 @if ($cur['required']) f-req @endif" @if (false === \strpos('.radio.yield.str.btn.link.', ".{$cur['type']}.")) for="id-{{ $key }}" @endif>{!! $cur['caption'] !!}</label> @endif</dt>
+              <dt> @if ($cur['caption'])<label class="f-ycaption @if ($cur['required']) f-req @endif" @if (false === \strpos('.radio.yield.str.btn.link.', ".{$cur['type']}.")) for="id-{{ $key }}" @endif>{!! $cur['caption'] !!}</label> @endif</dt>
               <dd>
                 @if ('text' === $cur['type'])
                 <input @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="text" @if ($cur['maxlength']) maxlength="{{ $cur['maxlength'] }}" @endif @if ($cur['pattern']) pattern="{{ $cur['pattern'] }}" @endif @if (isset($cur['value'])) value="{{ $cur['value'] }}" @endif>
@@ -108,7 +97,7 @@
                 <input @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="file" @if ($cur['accept']) accept="{{ $cur['accept'] }}" @endif>
                 @endif
                 @if ($cur['info'])
-                <p class="f-child4">{!! $cur['info'] !!}</p>
+                <p class="f-yhint">{!! $cur['info'] !!}</p>
                 @endif
               </dd>
             </dl>
@@ -118,6 +107,17 @@
     @endif
 @endforeach
 @if ($form['action'])
+    @if ($form['hidden'])
+        @foreach ($form['hidden'] as $key => $val)
+            @if (\is_array($val))
+                @foreach ($val as $k => $v)
+          <input type="hidden" name="{{ $key }}[{{ $k }}]" value="{{ $v }}">
+                @endforeach
+            @else
+          <input type="hidden" name="{{ $key }}" value="{{ $val }}">
+            @endif
+        @endforeach
+    @endif
           <p class="f-btns">
     @foreach ($form['btns'] as $key => $cur)
         @if ('submit' === $cur['type'])

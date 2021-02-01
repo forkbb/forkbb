@@ -407,6 +407,7 @@ class BBCode extends Parser
             'sets' => [],
             'btns'   => [
                 'reset' => [
+                    'class'     => 'f-opacity',
                     'type'      => 'btn',
                     'value'     => __('Default structure'),
                     'link'      => $this->c->Router->link(

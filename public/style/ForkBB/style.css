@@ -682,18 +682,18 @@ html[lang="ru"] #fork details[open] > summary::after {
   margin-left: 0;
 }
 
-#fork .f-fdiv .f-child1,
+#fork .f-ycaption,
 #fork .f-fdiv .f-child2,
 #fork .f-fdiv .f-child3,
-#fork .f-fdiv .f-child4,
+#fork .f-yhint,
 #fork .f-fdiv .f-child5,
-#fork .f-fdiv .f-child6 {
+#fork .f-yinfo {
   display: block;
   width: 100%;
   word-wrap: break-word;
 }
 
-#fork .f-fdiv .f-child1 {
+#fork .f-ycaption {
   font-weight: bold;
 }
 
@@ -712,7 +712,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   font-size: 0.875rem;
 }
 
-#fork .f-fdiv .f-child4 {
+#fork .f-yhint {
   font-size: 0.8125rem;
   margin-top: 0.3125rem;
   text-align: justify;
@@ -722,17 +722,17 @@ html[lang="ru"] #fork details[open] > summary::after {
   padding-top: 0.3125rem;
 }
 
-#fork .f-fdiv .f-child6 {
+#fork .f-yinfo {
   padding: 0.3125rem;
   text-align: justify;
   font-size: 0.8125rem;
 }
 
-#fork .f-fdiv .f-child6 + .f-child6 {
+#fork .f-fdiv .f-yinfo + .f-yinfo {
   margin-top: -0.3125rem;
 }
 
-#fork .f-fdiv .f-finfo {
+#fork .f-finform {
   background-color: #AA7939;
   padding: 0.625rem;
   color: #F8F4E3;
@@ -741,20 +741,12 @@ html[lang="ru"] #fork details[open] > summary::after {
   overflow: hidden;
 }
 
-#fork .f-fdiv .f-finfo:first-child {
+#fork .f-finform:first-child {
   margin-top: -0.3125rem;
 }
 
-#fork .f-fdiv .f-finfo + .f-finfo {
+#fork .f-finform + .f-finform {
   margin-top: -0.625rem;
-}
-
-#fork .f-fdiv fieldset + .f-finfo {
-/*  margin-top: 0.625rem; */
-}
-
-#fork .f-fdiv .f-finfo + fieldset {
-/*  padding-top: 0; */
 }
 
 #fork .f-ctrl {
@@ -765,7 +757,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   box-shadow: inset 0 0 0.5rem 0 rgba(170,121,57,0.75), 0 0 0.5rem 0 rgba(170,121,57,0.75);
 }
 
-#fork .f-field-hint .f-child4 {
+#fork .f-field-hint .f-yhint {
   overflow: hidden;
   max-height: 0;
   -webkit-transition: max-height 0.5s, margin 0.5s;
@@ -775,8 +767,8 @@ html[lang="ru"] #fork details[open] > summary::after {
 
 }
 
-#fork .f-field-hint .f-ctrl:focus + .f-child4,
-#fork .f-field-hint .f-ctrl:active + .f-child4 {
+#fork .f-field-hint .f-ctrl:focus + .f-yhint,
+#fork .f-field-hint .f-ctrl:active + .f-yhint {
   max-height: 10rem;
 }
 
@@ -953,24 +945,13 @@ html[lang="ru"] #fork details[open] > summary::after {
     display: inline;
   }
 }
+
 /********/
 /* Тело */
 /********/
 #fork .f-main {
   margin: 1rem 0;
   position: relative;
-}
-
-/****************/
-/* Обслуживание */
-/****************/
-#fork .f-maintenance > h2 {
-  display: block;
-  padding: 0.625rem;
-}
-
-#fork .f-maintenance > p {
-  padding: 0.625rem;
 }
 
 /*************/
@@ -1155,7 +1136,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   width: 50%;
 }
 
-#fork .f-admin .f-field-bstart .f-child1 {
+#fork .f-admin .f-field-bstart .f-ycaption {
   white-space: nowrap;
 }
 
@@ -1173,7 +1154,7 @@ html[lang="ru"] #fork details[open] > summary::after {
     width: calc(100% - 14.625rem);
   }
 
-  #fork .f-admin .f-fdiv .f-child1 {
+  #fork .f-admin .f-fdiv .f-ycaption {
     font-weight: normal;
   }
 
@@ -1278,7 +1259,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   position: relative;
 }
 
-#fork #id-dl-passinlogin .f-child4 {
+#fork #id-dl-passinlogin .f-yhint {
   position: absolute;
   top: 0.5rem;
   right: 0.3125rem;
@@ -1690,9 +1671,10 @@ html[lang="ru"] #fork details[open] > summary::after {
 #fork .f-user-online .f-username::before {
   font-family: "FontAwesomeFree";
   font-weight: 900;
-  content: "\f00c\20";
-  color: #4F8A10;
-  font-size: 1rem;
+  content: "\f111\20";
+  color: #7fba00;
+  font-size: 0.625rem;
+  vertical-align: text-top;
 }
 
 #fork .f-user-online .f-userstatus {
@@ -1731,9 +1713,7 @@ html[lang="ru"] #fork details[open] > summary::after {
 
 #fork .f-admin-note {
   color: #D8000C;
-/**  background-color: #FFBABA; */
 }
-
 
 /*********************/
 /*#fork .f-bb-u {
@@ -1932,7 +1912,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   background-color: #F8F4E3;
 }
 
-#fork .f-post-form .f-child1 {
+#fork .f-post-form .f-ycaption {
   font-size: 0.875rem;
 }
 
@@ -2166,10 +2146,6 @@ html[lang="ru"] #fork details[open] > summary::after {
 /**********/
 /* Репорт */
 /**********/
-#fork .f-reports > h2 {
-/*  display: block; */
-}
-
 #id-fs-report > legend {
   display: none;
 }
@@ -2259,7 +2235,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   display: none;
 }
 
-#fork .f-fs-category .f-child1 {
+#fork .f-fs-category .f-ycaption {
   font-weight: normal;
 }
 
@@ -2315,7 +2291,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   display: none;
 }
 
-#fork .f-fs-forum .f-child1 {
+#fork .f-fs-forum .f-ycaption {
   font-weight: normal;
 }
 
@@ -2332,7 +2308,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   width: 100%;
 }
 
-#fork .f-finfo + .f-fs-forum .f-field-forum > dt {
+#fork .f-finform + .f-fs-forum .f-field-forum > dt {
   display: block;
   width: 100%;
   margin: 0;
@@ -2391,7 +2367,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   margin: 0;
 }
 
-#fork .f-fs-permission .f-child1 {
+#fork .f-fs-permission .f-ycaption {
   font-weight: normal;
 }
 
@@ -2475,7 +2451,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   /*min-width: 0;*/
 }
 
-#fork .f-fs-censor .f-child1 {
+#fork .f-fs-censor .f-ycaption {
   font-weight: normal;
 }
 
@@ -2513,7 +2489,7 @@ html[lang="ru"] #fork details[open] > summary::after {
 /*********/
 /* Поиск */
 /*********/
-#fork .f-search-form .f-child6:first-child {
+#fork .f-search-form .f-yinfo:first-child {
   text-align: right;
   padding: 0 0.3125rem;
   margin-bottom: -0.3125rem;
@@ -2692,7 +2668,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   align-items: center;
 }
 
-#fork .f-field-pline .f-child1,
+#fork .f-field-pline .f-ycaption,
 #fork .f-field-pline .f-str,
 #fork .f-field-pline dt,
 #fork .f-field-pline dd {
@@ -2702,7 +2678,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   margin: 0;
 }
 
-#fork .f-field-pline .f-child1:after {
+#fork .f-field-pline .f-ycaption:after {
   content: ": ";
 }
 
@@ -2743,7 +2719,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   display: block;
 }
 
-#fork .f-fs-header .f-child1,
+#fork .f-fs-header .f-ycaption,
 #fork .f-fs-header legend,
 #fork .f-fs-data legend {
   display: none;
@@ -2803,7 +2779,7 @@ html[lang="ru"] #fork details[open] > summary::after {
     width: 67%
   }
 
-  #fork .f-field-pline .f-child1:after {
+  #fork .f-field-pline .f-ycaption:after {
     content: none;
   }
 }
@@ -2827,7 +2803,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   margin: 0;
 }
 
-#fork .f-fs-modforum .f-child1 {
+#fork .f-fs-modforum .f-ycaption {
   font-weight: normal;
 }
 
@@ -2952,12 +2928,12 @@ html[lang="ru"] #fork details[open] > summary::after {
   display: inline;
 }
 
-#fork .f-fs-result .f-field-result .f-child1 {
+#fork .f-fs-result .f-field-result .f-ycaption {
   display: inline;
   font-weight: bold;
 }
 
-#fork .f-fs-result .f-field-result .f-child1:after {
+#fork .f-fs-result .f-field-result .f-ycaption:after {
   content: ": ";
 }
 
@@ -2993,12 +2969,12 @@ html[lang="ru"] #fork details[open] > summary::after {
     display: block;
   }
 
-  #fork .f-fs-result .f-field-result .f-child1 {
+  #fork .f-fs-result .f-field-result .f-ycaption {
     display: block;
     font-weight: normal;
   }
 
-  #fork .f-fs-result .f-field-result .f-child1:after {
+  #fork .f-fs-result .f-field-result .f-ycaption:after {
     content: none;
   }
 }
@@ -3041,8 +3017,8 @@ html[lang="ru"] #fork details[open] > summary::after {
     display: none;
   }
 
-  #fork .f-fs-result .f-field-result .f-child1,
-  #fork .f-fs-result .f-field-check .f-child1 {
+  #fork .f-fs-result .f-field-result .f-ycaption,
+  #fork .f-fs-result .f-field-check .f-ycaption {
     font-weight: bold;
   }
 
@@ -3207,7 +3183,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   width: 33.33%;
 }
 
-#fork .f-smilies-form .f-field-new-smile .f-child1 {
+#fork .f-smilies-form .f-field-new-smile .f-ycaption {
   font-weight: normal;
 }
 
@@ -3273,7 +3249,7 @@ html[lang="ru"] #fork details[open] > summary::after {
     overflow: hidden;
   }
 
-  #fork .f-bbcode-form .f-field-bbcode .f-child1 {
+  #fork .f-bbcode-form .f-field-bbcode .f-ycaption {
     font-weight: normal;
   }
 
@@ -3316,7 +3292,7 @@ html[lang="ru"] #fork details[open] > summary::after {
     overflow: hidden;
   }
 
-  #fork .f-smilies-form .f-field-smile .f-child1 {
+  #fork .f-smilies-form .f-field-smile .f-ycaption {
     font-weight: normal;
   }
 
