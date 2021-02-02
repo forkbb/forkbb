@@ -4,9 +4,9 @@
 @yield ('crumbs')
     </div>
     <div class="f-main f-main-admin{!! $p->mainSuffix or '' !!}">
-      <div class="f-admin-menu">
+      <div id="fork-a-menu">
 @if ($p->aNavigation)
-        <nav class="f-admin-nav f-menu">
+        <nav id="fork-a-nav" class="f-menu">
           <input id="id-an-checkbox" class="f-menu-checkbox" type="checkbox">
           <label id="id-an-label" class="f-menu-toggle" for="id-an-checkbox"></label>
           <ul class="f-menu-items">
@@ -17,7 +17,7 @@
         </nav>
 @endif
       </div>
-      <div class="f-admin-wrap">
+      <div id="forka">
 @yield ('content')
       </div>
     </div>

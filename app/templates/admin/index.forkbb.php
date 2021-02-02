@@ -1,5 +1,5 @@
 @extends ('layouts/admin')
-      <section class="f-admin f-welcome">
+      <section id="fork-welcome" class="f-admin">
         <h2>{!! __('Forum admin head') !!}</h2>
         <div>
           <fieldset>
@@ -18,7 +18,7 @@
           </fieldset>
         </div>
       </section>
-      <section class="f-admin">
+      <section id="fork-about" class="f-admin">
         <h2>{!! __('About head') !!}</h2>
         <div class="f-fdiv">
           <fieldset>

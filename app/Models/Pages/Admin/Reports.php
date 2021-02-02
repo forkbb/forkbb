@@ -109,6 +109,7 @@ class Reports extends Admin
                 ];
             }
             $cur['fields']['reason' . $report->id] = [
+                'class'   => 'reason',
                 'type'    => 'str',
                 'value'   => $report->message,
                 'caption' => __('Reason'),

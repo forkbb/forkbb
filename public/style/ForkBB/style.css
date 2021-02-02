@@ -630,24 +630,20 @@ html[lang="ru"] #fork details[open] > summary::after {
   padding: 0.3125rem;
 }
 
-#fork .f-fdiv .f-btns {
+#fork .f-btns {
   padding: 0.3125rem;
 }
 
-#fork .f-fdiv .f-btns .f-btn {
-  margin: 0.3125rem 0;
-  min-width: 7rem;
-}
-
-#fork .f-fdiv legend {
+#fork .f-fleg {
   width: 100%;
   padding: 0.3125rem;
   border-bottom: 0.0625rem dotted #AA7939;
   font-weight: bold;
 }
 
-#fork .f-fdiv .f-ctrl,
-#fork .f-fdiv .f-btn {
+#fork .f-ctrl,
+#fork .f-ybtn,
+#fork .f-fbtn:not(.origin) {
   line-height: 1.25rem;
   padding: 0.5rem;
   font-size: 1rem;
@@ -655,38 +651,46 @@ html[lang="ru"] #fork details[open] > summary::after {
   width: 100%;
 }
 
-#fork .f-fdiv .f-btn[name="delete"],
-#fork .f-fdiv .f-btn[name="report"] {
+#fork .f-fbtn {
+  margin: 0.3125rem 0;
+}
+
+#fork .f-fbtn:not(.origin) {
+  min-width: 7rem;
+}
+
+#fork .f-fbtn[name="delete"]:not(.origin),
+#fork .f-fbtn[name="report"]:not(.origin) {
   color: red;
 }
 
-#fork .f-fdiv .f-label {
+#fork .f-flblr {
   font-size: 1rem;
   display: inline-block;
 }
 
-#fork .f-field-block .f-label {
+#fork .f-field-block .f-flblr {
   display: block;
 }
 
-#fork .f-fdiv .f-label > input {
+#fork .f-yradio {
   margin-left: 0;
   margin-right: 0.3125rem;
 }
 
-#fork .f-fdiv .f-label + .f-label {
+#fork .f-flblr + .f-flblr {
   margin-left: 0.625rem;
 }
 
-#fork .f-field-block .f-label + .f-label {
+#fork .f-field-block .f-flblr + .f-flblr {
   margin-left: 0;
+  margin-top: 0.3125rem;
 }
 
 #fork .f-ycaption,
-#fork .f-fdiv .f-child2,
-#fork .f-fdiv .f-child3,
+#fork .f-flblch,
 #fork .f-yhint,
-#fork .f-fdiv .f-child5,
+#fork .f-fbbul,
 #fork .f-yinfo {
   display: block;
   width: 100%;
@@ -697,19 +701,13 @@ html[lang="ru"] #fork details[open] > summary::after {
   font-weight: bold;
 }
 
-#fork .f-fdiv .f-child2,
-#fork .f-fdiv .f-child5 {
+#fork .f-flblch,
+#fork .f-fbbul {
   font-size: 0.875rem;
 }
 
-#fork .f-fdiv .f-child2 > input {
+#fork .f-ychk {
   margin-right: 0.625rem;
-}
-
-#fork .f-fdiv .f-child3 {
-  padding: 0.625rem;
-  text-align: center;
-  font-size: 0.875rem;
 }
 
 #fork .f-yhint {
@@ -718,7 +716,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   text-align: justify;
 }
 
-#fork .f-fdiv .f-child5 {
+#fork .f-fbbul {
   padding-top: 0.3125rem;
 }
 
@@ -991,28 +989,28 @@ html[lang="ru"] #fork details[open] > summary::after {
 /******************/
 /* Админка - меню */
 /******************/
-#fork .f-admin-nav {
+#fork #fork-a-nav {
   position: sticky;
   top: 1rem;
 }
 
-#fork .f-admin-menu .f-menu-a {
+#fork-a-menu .f-menu-a {
   text-align: center;
   text-transform: uppercase;
 }
 
-#fork .f-admin-menu .f-menu-a.active {
+#fork-a-menu .f-menu-a.active {
   background-color: #814A00;
   color: #F8F4E3;
 }
 
-#fork .f-admin-menu .f-menu-a:hover,
-#fork .f-admin-menu .f-menu-a:focus {
+#fork-a-menu .f-menu-a:hover,
+#fork-a-menu .f-menu-a:focus {
   background-color: #583200;
   color: #F8F4E3;
 }
 
-#fork #id-an-label {
+#fork-a-menu #id-an-label {
   position: absolute;
   top: -2.875rem;
   right: 0.625rem;
@@ -1023,7 +1021,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   margin-right: 3.75rem;
 }
 
-#fork .f-admin-menu .f-menu-item:first-child .f-menu-a {
+#fork-a-menu .f-menu-item:first-child .f-menu-a {
   border-top: 0.0625rem dotted;
 }
 
@@ -1037,25 +1035,25 @@ html[lang="ru"] #fork details[open] > summary::after {
     /*flex-wrap: wrap;*/
   }
 
-  #fork .f-main-admin .f-admin-menu {
+  .f-main-admin #fork-a-menu {
     width: 13rem;
     margin-right: 1rem;
   }
 
-  #fork .f-main-admin .f-admin-wrap {
+  .f-main-admin #forka {
     width: calc(100% - 14rem);
   }
 
-  #fork .f-main-admin #id-an-label {
+  .f-main-admin #fork-a-menu #id-an-label {
     display: none;
   }
 
-  #fork .f-main-admin .f-admin-menu .f-menu-items {
+  .f-main-admin #fork-a-menu .f-menu-items {
     /*max-height: 100rem;*/
     display: flex;
   }
 
-  #fork .f-main-admin .f-admin-menu .f-menu-a {
+  .f-main-admin #fork-a-menu .f-menu-a {
     text-align: left;
     text-transform: none;
     border-bottom: 0.0625rem dotted;
@@ -1065,120 +1063,114 @@ html[lang="ru"] #fork details[open] > summary::after {
 /***********/
 /* Админка */
 /***********/
-#fork .f-admin:not(:last-child) {
+#forka .f-admin:not(:last-child) {
   margin-bottom: 1rem;
 }
 
-#fork .f-admin > div {
+#forka .f-admin > div {
   background-color: #F8F4E3;
   border: 0.0625rem solid #AA7939;
 }
 
-#fork .f-welcome p,
-#fork .f-grlist p {
+#fork-welcome p,
+#fork-grlist p {
   padding: 0.625rem;
   text-align: justify;
 }
 
-#fork .f-welcome ul {
+#fork-welcome ul {
   padding: 0 0.625rem 0.625rem 0.625rem;
   list-style-type: circle;
   list-style-position: inside;
 }
 
-#fork .f-grlist ol {
+#fork-grlist ol {
   padding: 0 0.625rem 0.625rem 0.625rem;
 }
 
-#fork .f-admin dl {
+#forka dl {
   border-bottom: 0.0625rem dotted #AA7939;
   margin-bottom: 0.3125rem;
 }
 
-#fork .f-admin legend {
+#forka .f-fleg {
   margin-bottom: 0.3125rem;
 }
 
-#fork .f-admin .f-fdiv .f-child2 {
+#forka .f-flblch {
   font-size: 1rem;
 }
 
-#fork .f-grlist li {
+#fork-grlist li {
   padding: 0.625rem 0;
   border-bottom: 0.0625rem dotted #AA7939;
 }
 
-#fork .f-grlist li:first-child {
+#fork-grlist li:first-child {
   border-top: 0.0625rem dotted #AA7939;
 }
 
-#fork .f-grldelete {
-  font-size: 0.875rem;
-  white-space: nowrap;
-
-}
-
-#fork .f-phpinfo {
+#forka #fork-phpinfo {
   word-break: break-all;
 }
 
-#fork #id-phpinfo-div {
+#forka #id-phpinfo-div {
   overflow-x: auto;
 }
 
-#fork .f-admin .f-wrap-between {
+#forka .f-wrap-between {
   display: flex;
   align-items: flex-end;
 }
 
-#fork .f-admin .f-field-bstart,
-#fork .f-admin .f-field-bend {
+#forka .f-field-bstart,
+#forka .f-field-bend {
   width: 50%;
 }
 
-#fork .f-admin .f-field-bstart .f-ycaption {
+#forka .f-field-bstart .f-ycaption {
   white-space: nowrap;
 }
 
 @media screen and (min-width: 36rem) {
-  #fork .f-admin dl {
+  #forka dl {
     display: flex;
   }
 
-  #fork .f-admin dt {
+  #forka dt {
     width: 14rem;
     margin-right: 0.625rem;
   }
 
-  #fork .f-admin dd {
+  #forka dd {
     width: calc(100% - 14.625rem);
   }
 
-  #fork .f-admin .f-fdiv .f-ycaption {
+  #forka .f-ycaption {
     font-weight: normal;
   }
 
-  #fork .f-field-full dt {
+  #forka .f-field-full dt {
     display: none;
   }
 
-  #fork .f-field-full dd {
+  #forka .f-field-full dd {
     padding-left: 0;
   }
 
-  #fork .f-admin .f-field-bstart {
+  #forka .f-field-bstart {
     width: calc((100% - 14.625rem) / 2 + 14.625rem);
   }
 
-  #fork .f-admin .f-field-bend {
+  #forka .f-field-bend {
     width: calc((100% - 14.625rem) / 2);
   }
 
-  #fork .f-admin .f-field-bend > dt {
+  #forka .f-field-bend > dt {
     display: none;
   }
 
-  #fork .f-admin .f-field-bend > dd {
+  #forka .f-field-bend > dd {
     width: 100%;
   }
 }
@@ -1916,15 +1908,11 @@ html[lang="ru"] #fork details[open] > summary::after {
   font-size: 0.875rem;
 }
 
-#fork .f-post-form .f-child5 > li {
+#fork .f-post-form .f-fbbul > li {
   display: inline;
 }
 
-#fork .f-post-form .f-child5 a {
-/*  border: 0; */
-}
-
-#fork .f-post-form .f-btn {
+#fork .f-post-form .f-fbtn {
   width: auto;
   display: inline-block;
 }
@@ -2146,42 +2134,34 @@ html[lang="ru"] #fork details[open] > summary::after {
 /**********/
 /* Репорт */
 /**********/
-#id-fs-report > legend {
+#id-fs-report .f-fleg {
   display: none;
 }
 
 /*********/
 /* Email */
 /*********/
-#id-fs-send-email > legend {
+#id-fs-send-email .f-fleg {
   display: none;
 }
 
 /*****************/
 /* Модерирование */
 /*****************/
-#fork .f-moderate {
+#fork #fork-mod {
   border-top: 0.0625rem solid #AA7939;
   position: relative;
 }
 
-#fork .f-moderate .f-fdivm {
+#fork-mod .f-fdivm {
   padding: 0.3125rem;
 }
 
-#fork .f-moderate .f-btns {
-  padding: 0.3125rem;
-}
-
-#fork .f-moderate .f-btn {
-  margin: 0.3125rem 0;
-}
-
-#fork .f-moderate .f-btns:not(:hover) .f-btn:not(:focus) {
+#fork-mod .f-btns:not(:hover) .f-fbtn:not(:focus) {
   opacity: 0.4;
 }
 
-#fork .f-moderate-form .f-btn {
+#fork-modform .f-btns .f-fbtn {
   width: auto;
   display: inline-block;
 }
@@ -2220,39 +2200,39 @@ html[lang="ru"] #fork details[open] > summary::after {
 /*********************/
 /* Админка/Категории */
 /*********************/
-#fork .f-deletecategory-form .f-btn {
+#forka .f-deletecategory-form .f-fbtn {
   width: auto;
   display: inline-block;
 }
 
-#fork .f-fs-category {
+#forka .f-fs-category {
   display: flex;
   align-items: stretch;
   /*min-width: 0;*/
 }
 
-#fork .f-fs-category > legend {
+#forka .f-fs-category .f-fleg {
   display: none;
 }
 
-#fork .f-fs-category .f-ycaption {
+#forka .f-fs-category .f-ycaption {
   font-weight: normal;
 }
 
-#fork .f-field-category {
+#forka .f-field-category {
   flex-direction: column;
   justify-content: space-between;
 }
 
-#fork .f-field-category > dt {
+#forka .f-field-category > dt {
   display: none;
 }
 
-#fork .f-field-category > dd {
+#forka .f-field-category > dd {
   width: 100%;
 }
 
-#fork .f-fs-category:first-of-type .f-field-category > dt {
+#forka .f-fs-category:first-of-type .f-field-category > dt {
   display: block;
   width: 100%;
   margin: 0;
@@ -2260,15 +2240,15 @@ html[lang="ru"] #fork details[open] > summary::after {
   overflow: hidden;
 }
 
-#fork .f-field-category.f-field-name {
+#forka .f-field-category.f-field-name {
   width: calc(100% - 8rem);
 }
 
-#fork .f-field-category.f-field-position {
+#forka .f-field-category.f-field-position {
   width: 5rem;
 }
 
-#fork .f-field-category.f-field-delete {
+#forka .f-field-category.f-field-delete {
   width: 3rem;
   overflow: hidden;
   text-align: center;
@@ -2277,38 +2257,38 @@ html[lang="ru"] #fork details[open] > summary::after {
 /*********************/
 /* Админка/Разделы   */
 /*********************/
-#fork .f-deleteforum-form .f-btn {
+#forka .f-deleteforum-form .f-fbtn {
   width: auto;
   display: inline-block;
 }
 
-#fork .f-fs-forum {
+#forka .f-fs-forum {
   display: flex;
   align-items: stretch;
 }
 
-#fork .f-fs-forum > legend {
+#forka .f-fs-forum .f-fleg {
   display: none;
 }
 
-#fork .f-fs-forum .f-ycaption {
+#forka .f-fs-forum .f-ycaption {
   font-weight: normal;
 }
 
-#fork .f-field-forum {
+#forka .f-field-forum {
   flex-direction: column;
   justify-content: space-between;
 }
 
-#fork .f-field-forum > dt {
+#forka .f-field-forum > dt {
   display: none;
 }
 
-#fork .f-field-forum > dd {
+#forka .f-field-forum > dd {
   width: 100%;
 }
 
-#fork .f-finform + .f-fs-forum .f-field-forum > dt {
+#forka .f-finform + .f-fs-forum .f-field-forum > dt {
   display: block;
   width: 100%;
   margin: 0;
@@ -2316,21 +2296,21 @@ html[lang="ru"] #fork details[open] > summary::after {
   overflow: hidden;
 }
 
-#fork .f-field-forum.f-field-name {
+#forka .f-field-forum.f-field-name {
   width: calc(100% - 8rem);
 }
 
-#fork .f-field-forum.f-field-position {
+#forka .f-field-forum.f-field-position {
   width: 5rem;
 }
 
-#fork .f-field-forum.f-field-delete {
+#forka .f-field-forum.f-field-delete {
   width: 3rem;
   overflow: hidden;
   text-align: center;
 }
 
-#fork .f-field-forum.f-field-name .f-btn {
+#forka .f-field-forum.f-field-name .f-ybtn {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2356,22 +2336,22 @@ html[lang="ru"] #fork details[open] > summary::after {
   padding-left: 3.125rem;
 }
 
-#fork .f-fs-permission {
+#forka .f-fs-permission {
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
   /*min-width: 0;*/
 }
 
-#fork .f-fs-permission > legend {
+#forka .f-fs-permission .f-fleg {
   margin: 0;
 }
 
-#fork .f-fs-permission .f-ycaption {
+#forka .f-fs-permission .f-ycaption {
   font-weight: normal;
 }
 
-#fork .f-fs-permission .f-field-cando {
+#forka .f-fs-permission .f-field-cando {
   width: 33.333%;
   text-align: center;
   position: relative;
@@ -2380,13 +2360,13 @@ html[lang="ru"] #fork details[open] > summary::after {
   justify-content: space-between;
 }
 
-#fork .f-fs-permission .f-field-cando > dt,
-#fork .f-fs-permission .f-field-cando > dd {
+#forka .f-fs-permission .f-field-cando > dt,
+#forka .f-fs-permission .f-field-cando > dd {
   width: 100%;
   margin: 0;
 }
 
-#fork .f-field-on input:not(:checked) + span {
+#forka .f-field-on input:not(:checked) + span {
   opacity: 0.2;
   position: absolute;
   top: 0;
@@ -2396,7 +2376,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   background: red;
 }
 
-#fork .f-field-off input:checked + span {
+#forka .f-field-off input:checked + span {
   opacity: 0.2;
   position: absolute;
   top: 0;
@@ -2406,7 +2386,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   background: red;
 }
 
-#fork .f-field-cando input:disabled + span {
+#forka .f-field-cando input:disabled + span {
   opacity: 0.2;
   position: absolute;
   top: 0;
@@ -2416,19 +2396,19 @@ html[lang="ru"] #fork details[open] > summary::after {
   background: gray;
 }
 
-#fork .f-editforums-form .f-btns {
+#forka .f-editforums-form .f-btns {
   display: flex;
   flex-direction: column;
 }
 
-#fork .f-editforums-form .f-btn[data-name=new],
-#fork .f-editforum-form .f-btn[name=reset] {
+#forka .f-editforums-form .f-fbtn[data-name=new],
+#forka .f-editforum-form .f-fbtn[name=reset] {
   width: auto;
   margin-bottom: 0.625rem;
   margin-left: auto;
 }
 
-#fork .f-btn.f-disabled {
+#forka .f-btn.f-disabled {
   pointer-events: none;
   cursor: default;
   opacity: 0.5;
@@ -2436,7 +2416,7 @@ html[lang="ru"] #fork details[open] > summary::after {
 /******************/
 /* Админка/Группы */
 /******************/
-#fork .f-deletegroup-form .f-btn {
+#forka .f-deletegroup-form .f-fbtn {
   width: auto;
   display: inline-block;
 }
@@ -2444,33 +2424,33 @@ html[lang="ru"] #fork details[open] > summary::after {
 /*********************/
 /* Админка/Цензура   */
 /*********************/
-#fork .f-fs-censor {
+#forka .f-fs-censor {
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
   /*min-width: 0;*/
 }
 
-#fork .f-fs-censor .f-ycaption {
+#forka .f-fs-censor .f-ycaption {
   font-weight: normal;
 }
 
-#fork .f-fs-censor .f-field-censor  {
+#forka .f-fs-censor .f-field-censor  {
   width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-#fork .f-fs-censor .f-field-censor > dt {
+#forka .f-fs-censor .f-field-censor > dt {
   display: none;
 }
 
-#fork .f-fs-censor .f-field-censor > dd {
+#forka .f-fs-censor .f-field-censor > dd {
   width: 100%;
 }
 
-#fork .f-field-censor:nth-child(-n+2) > dt {
+#forka .f-field-censor:nth-child(-n+2) > dt {
   display: block;
   width: 100%;
 }
@@ -2532,8 +2512,8 @@ html[lang="ru"] #fork details[open] > summary::after {
     width: 33.33%;
   }
 
-  #fork .f-search-form .f-label,
-  #fork .f-userlist-form .f-label {
+  #fork .f-search-form .f-flblr,
+  #fork .f-userlist-form .f-flblr {
     padding: 0.5rem 0;
   }
 
@@ -2720,8 +2700,8 @@ html[lang="ru"] #fork details[open] > summary::after {
 }
 
 #fork .f-fs-header .f-ycaption,
-#fork .f-fs-header legend,
-#fork .f-fs-data legend {
+#fork .f-fs-header .f-fleg,
+#fork .f-fs-data .f-fleg {
   display: none;
 }
 
@@ -2794,12 +2774,12 @@ html[lang="ru"] #fork details[open] > summary::after {
   margin-bottom: 0.3125rem;
 }
 
-#fork .f-fs-modforum > legend,
+#fork .f-fs-modforum .f-fleg,
 #fork .f-field-modforum > dt {
   display: none;
 }
 
-#fork .f-fs-modforum .f-child2 > input {
+#fork .f-fs-modforum .f-ychk {
   margin: 0;
 }
 
@@ -2838,7 +2818,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   height: auto;
 }
 
-#fork .f-fs-data-edit legend {
+#fork .f-fs-data-edit .f-fleg {
   display: none;
 }
 
@@ -2850,7 +2830,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   background-color: #FFBABA;
 }
 
-#fork #id-dl-delete_avatar .f-child2 {
+#fork #id-dl-delete_avatar .f-flblch {
   font-size: 1rem;
 }
 
@@ -2876,18 +2856,18 @@ html[lang="ru"] #fork details[open] > summary::after {
 /************************/
 /* Админка/Пользователи */
 /************************/
-#fork .f-search-result-form .f-btns {
+#fork-ausersrch-rs .f-btns {
   text-align: right;
 }
 
-#fork .f-search-result-form .f-btns .f-btn,
-#fork .f-delete-users-form .f-btns .f-btn,
-#fork .f-change-group-form .f-btns .f-btn {
+#fork #fork-ausersrch-rs .f-fbtn,
+#fork .f-delete-users-form .f-fbtn,
+#fork .f-change-group-form .f-fbtn {
   display: inline-block;
   width: auto;
 }
 
-#fork .f-fs-result {
+#forka .f-fs-result {
   display: flex;
   align-items: stretch;
   /*min-width: 0;*/
@@ -2896,48 +2876,48 @@ html[lang="ru"] #fork details[open] > summary::after {
   padding-bottom: 0.3125rem;
 }
 
-#fork .f-fs-stat {
+#forka .f-fs-stat {
   display: block;
 }
 
-#fork .f-fs-result:first-of-type,
-#fork .f-fs-result .f-field-no-data {
+#forka .f-fs-result:first-of-type,
+#forka .f-fs-result .f-field-no-data {
   display: none;
 }
 
-#fork .f-fs-result > legend {
+#forka .f-fs-result .f-fleg {
   display: none;
 }
 
-#fork .f-fs-result .f-child2 > input {
+#forka .f-fs-result .f-ychk {
   margin: 0;
 }
 
-#fork .f-fs-result .f-field-result {
+#forka .f-fs-result .f-field-result {
   border: 0;
   margin: 0;
 }
 
-#fork .f-wrap-main-result {
+#forka .f-wrap-main-result {
   width: calc(100% - 3rem);
 }
 
-#fork .f-fs-result .f-field-result > dt,
-#fork .f-fs-result .f-field-result > dd,
-#fork .f-fs-result .f-field-result .f-str {
+#forka .f-fs-result .f-field-result > dt,
+#forka .f-fs-result .f-field-result > dd,
+#forka .f-fs-result .f-field-result .f-str {
   display: inline;
 }
 
-#fork .f-fs-result .f-field-result .f-ycaption {
+#forka .f-fs-result .f-field-result .f-ycaption {
   display: inline;
   font-weight: bold;
 }
 
-#fork .f-fs-result .f-field-result .f-ycaption:after {
+#forka .f-fs-result .f-field-result .f-ycaption:after {
   content: ": ";
 }
 
-#fork .f-fs-result .f-field-check {
+#forka .f-fs-result .f-field-check {
   border: 0;
   margin: 0;
   width: 3rem;
@@ -2948,133 +2928,133 @@ html[lang="ru"] #fork details[open] > summary::after {
   flex-direction: column;
 }
 
-#fork .f-fs-result .f-field-check > dt {
+#forka .f-fs-result .f-field-check > dt {
   display: none;
 }
 
-#fork .f-fs-result .f-field-check > dd {
+#forka .f-fs-result .f-field-check > dd {
   display: flex;
   align-items: center;
   height: 100%;
   width: 100%
 }
 
-#fork .f-fs-result .f-field-note > dd {
+#forka .f-fs-result .f-field-note > dd {
   color: #D8000C;
 }
 
 @media screen and (min-width: 36rem) {
-  #fork .f-fs-result .f-field-result > dt,
-  #fork .f-fs-result .f-field-result > dd {
+  #forka .f-fs-result .f-field-result > dt,
+  #forka .f-fs-result .f-field-result > dd {
     display: block;
   }
 
-  #fork .f-fs-result .f-field-result .f-ycaption {
+  #forka .f-fs-result .f-field-result .f-ycaption {
     display: block;
     font-weight: normal;
   }
 
-  #fork .f-fs-result .f-field-result .f-ycaption:after {
+  #forka .f-fs-result .f-field-result .f-ycaption:after {
     content: none;
   }
 }
 
 @media screen and (min-width: 50rem) {
-  #fork .f-fs-stat {
+  #forka .f-fs-stat {
     display: flex;
   }
 
-  #fork .f-wrap-main-result {
+  #forka .f-wrap-main-result {
     display: flex;
   }
 
-  #fork .f-fs-result .f-field-result,
-  #fork .f-fs-result .f-wrap-user-result {
+  #forka .f-fs-result .f-field-result,
+  #forka .f-fs-result .f-wrap-user-result {
     display: flex;
     flex-direction: column;
     justify-content: space-around /**center*/;
   }
 
-  #fork .f-fs-result .f-field-result > dt,
-  #fork .f-fs-result:first-of-type .f-field-check > dt {
+  #forka .f-fs-result .f-field-result > dt,
+  #forka .f-fs-result:first-of-type .f-field-check > dt {
     display: block;
     margin: 0;
     width: 100%;
   }
 
-  #fork .f-fs-result .f-field-result > dd {
+  #forka .f-fs-result .f-field-result > dd {
     margin: 0;
     width: 100%;
   }
 
-  #fork .f-fs-result:first-of-type {
+  #forka .f-fs-result:first-of-type {
     display: flex;
     text-align: center;
   }
 
-  #fork .f-fs-result:not(:first-of-type) .f-field-result > dt,
-  #fork .f-fs-result:first-of-type .f-field-result > dd {
+  #forka .f-fs-result:not(:first-of-type) .f-field-result > dt,
+  #forka .f-fs-result:first-of-type .f-field-result > dd {
     display: none;
   }
 
-  #fork .f-fs-result .f-field-result .f-ycaption,
-  #fork .f-fs-result .f-field-check .f-ycaption {
+  #forka .f-fs-result .f-field-result .f-ycaption,
+  #forka .f-fs-result .f-field-check .f-ycaption {
     font-weight: bold;
   }
 
-  #fork .f-fs-result .f-wrap-user-result {
+  #forka .f-fs-result .f-wrap-user-result {
     width: 33%;
   }
 
-  #fork .f-fs-result .f-field-username {
+  #forka .f-fs-result .f-field-username {
     width: 100%;
   }
 
-  #fork .f-fs-result .f-field-email {
+  #forka .f-fs-result .f-field-email {
     width: 100%;
   }
 
-  #fork .f-fs-result .f-field-title {
+  #forka .f-fs-result .f-field-title {
     width: 16%;
     border-left: 0.0625rem dotted #AA7939;
   }
 
-  #fork .f-fs-result .f-field-posts {
+  #forka .f-fs-result .f-field-posts {
     width: 15%;
     border-left: 0.0625rem dotted #AA7939;
   }
 
-  #fork .f-fs-result .f-field-posts > dd {
+  #forka .f-fs-result .f-field-posts > dd {
     text-align: right;
   }
 
-  #fork .f-fs-result .f-field-note {
+  #forka .f-fs-result .f-field-note {
     width: 20%;
     border-left: 0.0625rem dotted #AA7939;
   }
 
-  #fork .f-fs-result .f-field-view-ip {
+  #forka .f-fs-result .f-field-view-ip {
     width: 16%;
     border-left: 0.0625rem dotted #AA7939;
   }
 
-  #fork .f-fs-result .f-field-ip {
+  #forka .f-fs-result .f-field-ip {
     width: 25%;
   }
 
-  #fork .f-fs-result .f-field-last-used {
+  #forka .f-fs-result .f-field-last-used {
     width: 25%;
     border-left: 0.0625rem dotted #AA7939;
     text-align: center;
   }
 
-  #fork .f-fs-result .f-field-used-times {
+  #forka .f-fs-result .f-field-used-times {
     width: 20%;
     border-left: 0.0625rem dotted #AA7939;
     text-align: center;
   }
 
-  #fork .f-fs-result .f-field-action {
+  #forka .f-fs-result .f-field-action {
     width: 30%;
     border-left: 0.0625rem dotted #AA7939;
   }
@@ -3083,7 +3063,7 @@ html[lang="ru"] #fork details[open] > summary::after {
 /****************************************/
 /* Админка/Баны от Админка/Пользователи */
 /****************************************/
-#fork .f-wrap-btns-result {
+#forka .f-wrap-btns-result {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -3091,36 +3071,36 @@ html[lang="ru"] #fork details[open] > summary::after {
   border-left: 0.0625rem dotted #AA7939;
 }
 
-#fork .f-fs-result .f-wrap-btns-result dt {
+#forka .f-fs-result .f-wrap-btns-result dt {
   display: none;
 }
 
-#fork .f-fs-result .f-wrap-btns-result dd {
+#forka .f-fs-result .f-wrap-btns-result dd {
   width: 100%;
 }
 
 @media screen and (min-width: 50rem) {
-  #fork .f-fs-result .f-field-ips {
+  #forka .f-fs-result .f-field-ips {
     width: 19%;
     border-left: 0.0625rem dotted #AA7939;
   }
 
-  #fork .f-fs-result .f-field-expire {
+  #forka .f-fs-result .f-field-expire {
     width: 16%;
     border-left: 0.0625rem dotted #AA7939;
   }
 
-  #fork .f-fs-result .f-field-message {
+  #forka .f-fs-result .f-field-message {
     width: 16%;
     border-left: 0.0625rem dotted #AA7939;
   }
 
-  #fork .f-fs-result .f-field-creator {
+  #forka .f-fs-result .f-field-creator {
     width: 16%;
     border-left: 0.0625rem dotted #AA7939;
   }
 
-  #fork .f-wrap-btns-result .f-btn {
+  #forka .f-wrap-btns-result .f-ybtn {
     padding-top: 0;
     padding-bottom: 0;
   }
@@ -3129,184 +3109,183 @@ html[lang="ru"] #fork details[open] > summary::after {
 /****************************************/
 /* Админка/Парсер                       */
 /****************************************/
-#fork .f-smilies-form .f-fs-new-smile,
-#fork .f-images-list .f-fdiv {
+#fork-smls .f-fs-new-smile,
+#fork-imgsm .f-fdiv {
   display: flex;
   flex-wrap: wrap;
 }
 
-#fork .f-images-list .f-fs-image {
+#fork-imgsm .f-fs-image {
   display: flex;
   align-items: center;
   border: 0.0625rem dotted #AA7939;
   margin: 0.3125rem;
 }
 
-#fork #id-fs-image-legend {
+#forka #id-fs-image-legend {
   width: 100%;
 }
 
-#fork .f-images-list .f-field-image {
+#fork-imgsm .f-field-image {
   border: 0;
   margin: 0;
 }
 
-#fork .f-bbcode-form .f-field-tag,
-#fork .f-smilies-form .f-fs-smile > legend,
-#fork .f-smilies-form .f-fs-new-smile > legend {
+#forka .f-bbcode-form .f-field-tag,
+#fork-smls .f-fs-smile .f-fleg,
+#fork-smls .f-fs-new-smile .f-fleg {
   border-top: 0.0625rem dotted #AA7939;
 }
 
-#fork .f-fs-bbcode > legend,
-#fork .f-images-list .f-fs-image > legend,
-#fork .f-images-list .f-field-image > dt {
+#forka .f-fs-bbcode .f-fleg,
+#fork-imgsm .f-fs-image .f-fleg,
+#fork-imgsm .f-field-image > dt {
   display: none;
 }
 
-#fork .f-images-list .f-field-image > dd {
+#fork-imgsm .f-field-image > dd {
   width: 100%;
 }
 
-#fork .f-field-pic img {
+#forka .f-field-pic img {
   max-width: 100%;
   min-width: 1rem;
   height: auto;
 }
 
-#fork .f-images-list .f-field-name {
+#fork-imgsm .f-field-name {
   max-width: 80%;
 }
 
-#fork .f-smilies-form .f-field-new-smile {
+#fork-smls .f-field-new-smile {
   display: flex;
   flex-direction: column;
   width: 33.33%;
 }
 
-#fork .f-smilies-form .f-field-new-smile .f-ycaption {
+#fork-smls .f-field-new-smile .f-ycaption {
   font-weight: normal;
 }
 
-#fork .f-smilies-form .f-field-new-smile > dt {
+#fork-smls .f-field-new-smile > dt {
   width: 100%;
   white-space: nowrap;
   overflow: hidden;
 }
 
-#fork .f-smilies-form .f-field-new-smile > dd {
+#fork-smls .f-field-new-smile > dd {
   width: 100%;
 }
 
-#fork .f-bbcode-form .f-link {
+#forka .f-bbcode-form .f-link {
   display: block;
 }
 
-#fork .f-field-handler textarea {
+#forka .f-field-handler textarea {
   font-family: "DejaVu Sans Mono", Consolas, "Droid Sans Mono", Monospace, Monaco, "Courier New", Courier;
   height: 15rem;
 }
 
-#fork .f-field-format input {
+#forka .f-field-format input {
   font-family: "DejaVu Sans Mono", Consolas, "Droid Sans Mono", Monospace, Monaco, "Courier New", Courier;
 }
 
-#fork .f-bbcode-form .f-btns,
-#fork .f-editbbcode-form .f-btns {
+#forka .f-bbcode-form .f-btns,
+#forka .f-editbbcode-form .f-btns {
   display: flex;
   flex-direction: column;
 }
 
-#fork .f-bbcode-form .f-btn[data-name=new],
-#fork .f-editbbcode-form  .f-btn[data-name=reset]{
+#forka .f-bbcode-form .f-fbtn[data-name="new"],
+#forka .f-editbbcode-form .f-fbtn[data-name="reset"]{
   width: auto;
-  margin-bottom: 0.625rem;
   margin-left: auto;
 }
 
 @media screen and (min-width: 25rem) {
-  #fork .f-bbcode-form .f-fs-bbcode {
+  #forka .f-bbcode-form .f-fs-bbcode {
     display: flex;
   }
 
-  #fork .f-bbcode-form .f-field-bbcode {
+  #forka .f-bbcode-form .f-field-bbcode {
     display: flex;
     flex-direction: column;
     /* justify-content: space-between; */
   }
 
-  #fork .f-bbcode-form .f-field-tag {
+  #forka .f-bbcode-form .f-field-tag {
     border-top: 0;
   }
 
-  #fork .f-bbcode-form .f-field-bbcode > dt {
+  #forka .f-bbcode-form .f-field-bbcode > dt {
     display: none;
   }
 
-  #fork .f-fs-bbcode-legend + .f-fs-bbcode .f-field-bbcode > dt {
+  #forka .f-fs-bbcode-legend + .f-fs-bbcode .f-field-bbcode > dt {
     display: block;
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
   }
 
-  #fork .f-bbcode-form .f-field-bbcode .f-ycaption {
+  #forka .f-bbcode-form .f-field-bbcode .f-ycaption {
     font-weight: normal;
   }
 
-  #fork .f-bbcode-form .f-field-bbcode > dd {
+  #forka .f-bbcode-form .f-field-bbcode > dd {
     width: 100%;
     flex-grow: 1;
   }
 
-  #fork .f-field-bbcode.f-field-tag,
-  #fork .f-field-bbcode.f-field-in_mes,
-  #fork .f-field-bbcode.f-field-in_sig {
+  #forka .f-field-bbcode.f-field-tag,
+  #forka .f-field-bbcode.f-field-in_mes,
+  #forka .f-field-bbcode.f-field-in_sig {
     width: calc((100% - 3rem) / 3);
   }
 
-  #fork .f-field-bbcode.f-field-delete {
+  #forka .f-field-bbcode.f-field-delete {
     width: 3rem;
   }
 }
 
 @media screen and (min-width: 35rem) {
-  #fork .f-smilies-form .f-fs-smile {
+  #fork-smls .f-fs-smile {
     display: flex;
   }
 
-  #fork .f-smilies-form .f-field-smile {
+  #fork-smls .f-field-smile {
     display: flex;
     flex-direction: column;
     /* justify-content: space-between; */
   }
 
-  #fork .f-smilies-form .f-fs-smile > legend,
-  #fork .f-smilies-form .f-field-smile > dt {
+  #fork-smls .f-fs-smile .f-fleg,
+  #fork-smls .f-field-smile > dt {
     display: none;
   }
 
-  #fork .f-fs-smilies-legend + .f-fs-smile .f-field-smile > dt {
+  #forka .f-fs-smilies-legend + .f-fs-smile .f-field-smile > dt {
     display: block;
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
   }
 
-  #fork .f-smilies-form .f-field-smile .f-ycaption {
+  #fork-smls .f-field-smile .f-ycaption {
     font-weight: normal;
   }
 
 
-  #fork .f-smilies-form .f-field-smile > dd {
+  #fork-smls .f-field-smile > dd {
     width: 100%;
     flex-grow: 1;
   }
 
-  #fork .f-field-smile.f-field-code {
+  #forka .f-field-smile.f-field-code {
     width: 10rem;
   }
 
-  #fork .f-field-smile.f-field-position {
+  #forka .f-field-smile.f-field-position {
     width: 5rem;
   }
 
@@ -3314,16 +3293,16 @@ html[lang="ru"] #fork details[open] > summary::after {
     width: 12rem;
   }
 
-  #fork .f-field-smile.f-field-pic {
+  #forka .f-field-smile.f-field-pic {
     width: calc(100% - 30rem);
     text-align: center;
   }
 
-  #fork .f-field-smile.f-field-delete {
+  #forka .f-field-smile.f-field-delete {
     width: 3rem;
   }
 
-  #fork .f-smilies-form .f-fs-new-smile > legend {
+  #fork-smls .f-fs-new-smile .f-fleg {
     border-top: 0;
   }
 }
@@ -3331,8 +3310,16 @@ html[lang="ru"] #fork details[open] > summary::after {
 /****************************************/
 /* Админка/Сигналы                      */
 /****************************************/
-#fork .f-reports legend {
+#forka .f-reports .f-fleg {
   border-top: 0.0625rem dashed #AA7939;
+}
+
+#fork-rprt-new .f-field-reason {
+  background-color: #FFBABA;
+}
+
+#fork-rprt-old .f-field-reason {
+  background-color:  #FEEFB3; /*#FFCCBA;*/
 }
 
 /****************************************/

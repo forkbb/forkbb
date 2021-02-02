@@ -27,7 +27,7 @@
         </div>
       </div>
 @endif
-      <section class="f-admin f-search-result-form">
+      <section id="fork-ausersrch-rs" class="f-admin">
         <h2>{!! __('Results head') !!}</h2>
         <div class="f-fdiv">
 @if ($form = $p->formResult)

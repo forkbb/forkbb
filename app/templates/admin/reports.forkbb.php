@@ -1,6 +1,6 @@
 @extends ('layouts/admin')
 @if ($form = $p->formNew)
-      <section class="f-admin f-reports f-reports-new">
+      <section id="fork-rprt-new" class="f-admin f-reports">
         <h2>{!! __('New reports ') !!}</h2>
         <div class="f-fdiv">
     @include ('layouts/form')
@@ -8,7 +8,7 @@
       </section>
 @endif
 @if ($form = $p->formOld)
-      <section class="f-admin f-reports f-reports-old">
+      <section id="fork-rprt-old" class="f-admin f-reports">
         <h2>{!! __('10 last read reports') !!}</h2>
         <div class="f-fdiv">
     @include ('layouts/form')

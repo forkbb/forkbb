@@ -1,5 +1,5 @@
 @extends ('layouts/admin')
-      <section class="f-admin">
+      <section id="fork-serverst" class="f-admin">
         <h2>{!! __('Server statistics head') !!}</h2>
         <div class="f-fdiv">
           <fieldset>

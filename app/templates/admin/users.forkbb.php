@@ -1,6 +1,6 @@
 @extends ('layouts/admin')
 @if ($form = $p->formSearch)
-      <section class="f-admin f-search-user-form">
+      <section id="fork-ausersrch" class="f-admin">
         <h2>{!! __('User search head') !!}</h2>
         <div class="f-fdiv">
     @include ('layouts/form')
@@ -8,7 +8,7 @@
       </section>
 @endif
 @if ($form = $p->formIP)
-      <section class="f-admin f-search-ip-form">
+      <section id="fork-ipsrch" class="f-admin">
         <h2>{!! __('IP search head') !!}</h2>
         <div class="f-fdiv">
     @include ('layouts/form')
@@ -16,7 +16,7 @@
       </section>
 @endif
 @if ($form = $p->formNew)
-      <section class="f-admin f-new-user-form">
+      <section id="fork-newuser" class="f-admin">
         <h2>{!! __('New user head') !!}</h2>
         <div class="f-fdiv">
     @include ('layouts/form')
@@ -24,7 +24,7 @@
       </section>
 @endif
 @if ($form = $p->formRecalculate)
-      <section class="f-admin f-recalculate-form">
+      <section id="fork-recalc" class="f-admin">
         <h2>{!! __('Recalculate head') !!}</h2>
         <div class="f-fdiv">
     @include ('layouts/form')

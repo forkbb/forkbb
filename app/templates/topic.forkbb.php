@@ -168,7 +168,7 @@
 @yield ('crumbs')
     </div>
     @if ($p->enableMod && $form = $p->formMod)
-    <section class="f-moderate">
+    <section id="fork-mod" class="f-moderate">
       <h2>{!! __('Moderate') !!}</h2>
       <div class="f-fdivm">
     @include ('layouts/form')
