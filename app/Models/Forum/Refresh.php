@@ -100,7 +100,7 @@ class Refresh extends Action
         $list[$parent]['subforums']   = $sub ?: null;
         $list[$parent]['descendants'] = $all ?: null;
 
-        $this->list[$parent] = \array_filter($list[$parent], function($val) {
+        $this->list[$parent] = \array_filter($list[$parent], function ($val) {
             return null !== $val;
         });
 

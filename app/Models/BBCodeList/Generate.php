@@ -74,7 +74,7 @@ class Generate extends Method
                              || 'text_handler' === $key
                         )
                     ) {
-                        $value = "function(\$body, \$attrs, \$parser) {\n{$value}\n{$space}}";
+                        $value = "function (\$body, \$attrs, \$parser) {\n{$value}\n{$space}}";
                     } else {
                         $value = '\'' . \addslashes($value) . '\'';
                     }

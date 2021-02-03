@@ -120,7 +120,7 @@ class DB extends PDO
         $map    = [];
         $query  = \preg_replace_callback(
             '%(?=[?:])(?<![\w?:])(?:::(\w+)|\?(?![?:])(?:(\w+)(?::(\w+))?)?|:(\w+))%',
-            function($matches) use ($params, &$idxIn, &$idxOut, &$map) {
+            function ($matches) use ($params, &$idxIn, &$idxOut, &$map) {
                 if (! empty($matches[1])) {
                     return $this->dbPrefix . $matches[1];
                 }

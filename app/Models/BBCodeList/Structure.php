@@ -513,7 +513,7 @@ class Structure extends ParentModel
         }
 
         // тест на выполнение DANGER! DANGER! DANGER! O_o
-        $testCode = "\$testVar = function(\$body, \$attrs, \$parser) { {$code} };\nreturn true;";
+        $testCode = "\$testVar = function (\$body, \$attrs, \$parser) { {$code} };\nreturn true;";
 
         try {
             $result = @eval($testCode);

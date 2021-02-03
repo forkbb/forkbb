@@ -35,9 +35,9 @@ class Statistics extends Admin
             if (\preg_match('%<style[^>]*>(.*?)</style[^>]*>%is', $page, $matches)) {
                 $style = \preg_replace_callback(
                     '%(\S[^{]*)({[^}]+})%',
-                    function($match) {
+                    function ($match) {
                         $result = \array_map(
-                            function($val) {
+                            function ($val) {
                                 $val = \str_replace('body', '#id-phpinfo-div', $val, $count);
 
                                 return $count ? $val : '#id-phpinfo-div ' . $val;
