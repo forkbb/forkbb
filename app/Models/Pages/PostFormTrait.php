@@ -268,7 +268,7 @@ trait PostFormTrait
                 ];
             }
 
-            $this->pageHeader('pollJS', 'script', [
+            $this->pageHeader('pollJS', 'script', 9000, [
                 'src' => $this->publicLink('/js/poll.js'),
             ]);
 

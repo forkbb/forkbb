@@ -50,7 +50,7 @@ class Statistics extends Admin
                     $matches[1]
                 );
                 $this->c->Cache->set('phpinfoCSS', $style);
-                $this->pageHeader('phpinfoStyle', 'link', [
+                $this->pageHeader('phpinfoStyle', 'link', 0, [
                     'rel'  => 'stylesheet',
                     'type' => 'text/css',
                     'href' => $this->c->Router->link('AdminInfoCSS', ['time' => \time()] ),

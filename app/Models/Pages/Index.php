@@ -69,7 +69,7 @@ class Index extends Page
 
         if ($this->c->config->i_feed_type > 0) {
             $feedType = 2 === $this->c->config->i_feed_type ? 'atom' : 'rss';
-            $this->pageHeader('feed', 'link', [
+            $this->pageHeader('feed', 'link', 0, [
                 'rel'  => 'alternate',
                 'type' => "application/{$feedType}+xml",
                 'href' => $this->c->Router->link('Feed', ['type' => $feedType]),

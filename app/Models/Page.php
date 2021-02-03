@@ -65,7 +65,7 @@ abstract class Page extends Model
         }
         $this->user         = $this->c->user; // передача текущего юзера в шаблон
 
-        $this->pageHeader('mainStyle', 'link', [
+        $this->pageHeader('mainStyle', 'link', 10000, [
             'rel'  => 'stylesheet',
             'type' => 'text/css',
             'href' => $this->publicLink("/style/{$this->user->style}/style.css"),
@@ -86,7 +86,7 @@ abstract class Page extends Model
      */
     public function prepare(): void
     {
-        $this->pageHeader('commonJS', 'script', [
+        $this->pageHeader('commonJS', 'script', 10000, [
             'src' => $this->publicLink('/js/common.js'),
         ]);
 
@@ -301,12 +301,13 @@ abstract class Page extends Model
     /**
      * Задает/получает заголовок страницы
      */
-    public function pageHeader(string $name, string $type, array $values = null) /* : mixed */
+    public function pageHeader(string $name, string $type, int $weight = 0, array $values = null) /* : mixed */
     {
         if (null === $values) {
             return $this->pageHeaders["{$name}_{$type}"] ?? null;
         } else {
             $this->pageHeaders["{$name}_{$type}"] = [
+                'weight' => $weight,
                 'type'   => $type,
                 'values' => $values
             ];
@@ -322,17 +323,25 @@ abstract class Page extends Model
     protected function getpageHeaders(): array
     {
         if ($this->canonical) {
-            $this->pageHeader('canonical', 'link', [
+            $this->pageHeader('canonical', 'link', 0, [
                 'rel'  => 'canonical',
                 'href' => $this->canonical,
             ]);
         }
         if ($this->robots) {
-            $this->pageHeader('robots', 'meta', [
+            $this->pageHeader('robots', 'meta', 11000, [
                 'name'    => 'robots',
                 'content' => $this->robots,
             ]);
         }
+
+        \uasort($this->pageHeaders, function (array $a, array $b) {
+            if ($a['weight'] === $b['weight']) {
+                return 0;
+            } else {
+                return $a['weight'] > $b['weight'] ? -1 : 1;
+            }
+        });
 
         return $this->pageHeaders;
     }
