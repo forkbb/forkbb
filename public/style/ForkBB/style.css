@@ -13,7 +13,6 @@
   font-family: "FontAwesomeFree";
   font-style: normal;
   font-weight: 400;
-  /* font-display: block; */
   src: url("font/fa/fa-regular-400.woff2") format("woff2"), url("font/fa/fa-regular-400.woff") format("woff");
 }
 
@@ -21,7 +20,6 @@
   font-family: "FontAwesomeFree";
   font-style: normal;
   font-weight: 900;
-  /* font-display: block; */
   src: url("font/fa/fa-solid-900.woff2") format("woff2"), url("font/fa/fa-solid-900.woff") format("woff");
 }
 
@@ -295,7 +293,6 @@ html[lang="ru"] #fork details[open] > summary::after {
 /********/
 #fork .f-menu-toggle:after {
   display: block;
-  font-size: 1.25rem;
   line-height: 1.25;
   border: 0.0625rem solid;
   border-radius: 0.25rem;
@@ -303,8 +300,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   text-align: center;
   padding: 0.25rem 0.125rem;
   cursor: pointer;
-  font-family: "FontAwesomeFree";
-  font-weight: 900;
+  font: 900 1.25rem "FontAwesomeFree";
   content: "\f0c9";
 }
 
@@ -864,10 +860,8 @@ html[lang="ru"] #fork details[open] > summary::after {
 }
 
 #fork .f-subscribed > a:after {
-  font-family: "FontAwesomeFree";
-  font-weight: 400;
+  font: 400 0.875rem "FontAwesomeFree";
   content: "\f0f3"; /* f06e */
-  font-size: 0.875rem;
   padding-left: 0.3125rem;
 }
 
@@ -1346,10 +1340,8 @@ html[lang="ru"] #fork details[open] > summary::after {
 }
 
 #fork .f-ficon:before {
-  font-family: "FontAwesomeFree";
-  font-weight: 400;
+  font: 400 1.5rem "FontAwesomeFree";
   content: "\f15b"; /* "\f086"; */
-  font-size: 1.5rem;
   color: #814A00;
 }
 
@@ -1359,7 +1351,6 @@ html[lang="ru"] #fork details[open] > summary::after {
 }
 
 #fork .f-fredir .f-ficon:before {
-  font-weight: 400;
   content: "\f1d8"; /* "\f0c6"; */
 }
 
@@ -1369,9 +1360,7 @@ html[lang="ru"] #fork details[open] > summary::after {
 
 #fork .f-tnew,
 #fork .f-tunread {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.875rem;
-  font-weight: normal;
+  font: normal 0.875rem Arial, Helvetica, sans-serif;
   white-space: nowrap;
 }
 
@@ -1394,17 +1383,13 @@ html[lang="ru"] #fork details[open] > summary::after {
 
 #fork .f-fnew > a:before,
 #fork .f-tnew > a:before {
-  font-family: "FontAwesomeFree";
-  font-weight: 900;
-  font-size: 0.875rem;
+  font: 900 0.875rem "FontAwesomeFree";
   content: "\f086";
   padding: 0 0.25rem;
 }
 
 #fork .f-tunread > a:before {
-  font-family: "FontAwesomeFree";
-  font-weight: 900;
-  font-size: 0.875rem;
+  font: 900 0.875rem "FontAwesomeFree";
   content: "\f06e"; /* f070 */
   padding: 0 0.25rem;
 }
@@ -1520,9 +1505,7 @@ html[lang="ru"] #fork details[open] > summary::after {
 }
 
 #fork .f-tsticky:before {
-  font-family: "FontAwesomeFree";
-  font-weight: 900;
-  font-size: 0.875rem;
+  font: 900 0.875rem "FontAwesomeFree";
   content: "\f35b";
   color: #D8000C;
 }
@@ -1532,18 +1515,14 @@ html[lang="ru"] #fork details[open] > summary::after {
 }
 
 #fork .f-tclosed:before {
-  font-family: "FontAwesomeFree";
-  font-weight: 900;
-  font-size: 0.875rem;
+  font: 900 0.875rem "FontAwesomeFree";
   content: "\f023";
   color: #C8CCD1;
 }
 
 
 #fork .f-tpoll:before {
-  font-family: "FontAwesomeFree";
-  font-weight: 900;
-  font-size: 0.875rem;
+  font: 900 0.875rem "FontAwesomeFree";
   content: "\f681";
   color: #9F6000;
 }
@@ -1661,11 +1640,9 @@ html[lang="ru"] #fork details[open] > summary::after {
 }
 
 #fork .f-user-online .f-username::before {
-  font-family: "FontAwesomeFree";
-  font-weight: 900;
+  font: 900 0.625rem "FontAwesomeFree";
   content: "\f111\20";
   color: #7fba00;
-  font-size: 0.625rem;
   vertical-align: text-top;
 }
 
@@ -1868,7 +1845,6 @@ html[lang="ru"] #fork details[open] > summary::after {
 
 #fork .f-preview > h2 {
   display: block;
-/**  font-family: Arial, Helvetica, sans-serif; */
   font-size: 1rem;
   line-height: 1.5;
   padding: 1rem 0.625rem 0.3125rem 0.625rem
@@ -1893,7 +1869,6 @@ html[lang="ru"] #fork details[open] > summary::after {
 
 #fork .f-post-form > h2,
 #fork .f-view-posts > h2 {
-/**  font-family: Arial, Helvetica, sans-serif; */
   display: block;
   font-size: 1rem;
   padding-right: 0.625rem;
@@ -2186,15 +2161,12 @@ html[lang="ru"] #fork details[open] > summary::after {
 
 #fork .f-ftlist .f-fch:checked + .f-ficon:after,
 #fork .f-post-checkbox:checked + .f-post-header:before {
-  font-family: "FontAwesomeFree";
-  font-weight: 900;
+  font: 900 1rem "FontAwesomeFree";
   content: "\f00c";
   color: red;
   position: absolute;
   bottom: 0;
   left: 0;
-  font-size: 1rem;
-  font-weight: bold;
 }
 
 /*********************/
@@ -3180,13 +3152,13 @@ html[lang="ru"] #fork details[open] > summary::after {
   display: block;
 }
 
-#forka .f-field-handler textarea {
+#forka .f-field-handler .f-ytxtarea,
+#forka .f-field-format .f-ytxt {
   font-family: "DejaVu Sans Mono", Consolas, "Droid Sans Mono", Monospace, Monaco, "Courier New", Courier;
-  height: 15rem;
 }
 
-#forka .f-field-format input {
-  font-family: "DejaVu Sans Mono", Consolas, "Droid Sans Mono", Monospace, Monaco, "Courier New", Courier;
+#forka .f-field-handler .f-ytxtarea {
+  height: 15rem;
 }
 
 #forka .f-bbcode-form .f-btns,
