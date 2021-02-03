@@ -415,63 +415,63 @@ html[lang="ru"] #fork details[open] > summary::after {
   text-transform: none;
 }
 
-#fork #id-nav-profile .f-menu-a:before {
+#fork-nav-profile .f-menu-a:before {
   content: "\f007";
   padding-right: 0.3125rem;
 }
 
-#fork-nav #id-nav-profile span {
+#fork-nav-profile .f-menu-span {
   font-weight: bold;
 }
 
-#fork #id-nav-pmsnew .f-menu-a:before {
+#fork-nav-pmsnew .f-menu-a:before {
   font-weight: 400;
   content: "\f0e0";
   padding-right: 0.3125rem;
 }
 
-#fork #id-nav-admin .f-menu-a:before {
+#fork-nav-admin .f-menu-a:before {
   content: "\f7d9";
   padding-right: 0.3125rem;
 }
 
-#fork #id-nav-logout .f-menu-a:before {
+#fork-nav-logout .f-menu-a:before {
   content: "\f2f5";
   padding-right: 0.3125rem;
 }
 
-#fork #id-nav-register .f-menu-a:before {
+#fork-nav-register .f-menu-a:before {
   content: "\f234";
   padding-right: 0.3125rem;
 }
 
-#fork #id-nav-login .f-menu-a:before {
+#fork-nav-login .f-menu-a:before {
   content: "\f2f6";
   padding-right: 0.3125rem;
 }
 
-#fork #id-nav-index .f-menu-a:before {
+#fork-nav-index .f-menu-a:before {
   content: "\f015";
   padding-right: 0.3125rem;
 }
 
-#fork #id-nav-userlist .f-menu-a:before {
+#fork-nav-userlist .f-menu-a:before {
   content: "\f0c0";
   padding-right: 0.3125rem;
 }
 
-#fork #id-nav-rules .f-menu-a:before {
+#fork-nav-rules .f-menu-a:before {
   content: "\f05a";
   padding-right: 0.3125rem;
 }
 
-#fork #id-nav-search > .f-menu-a:before {
+#fork-nav-search > .f-menu-a:before {
   content: "\f002";
   padding-right: 0.3125rem;
 }
 
 @media screen and (max-width: 34rem) {
-  #fork #id-nav-profile ~ .f-menu-item .f-menu-span {
+  #fork-nav-profile ~ .f-menu-item .f-menu-span {
     display: none;
   }
 }
@@ -510,7 +510,7 @@ html[lang="ru"] #fork details[open] > summary::after {
     padding-bottom: 1.9375rem;
   }
 
-  #fork-nav #id-nav-search .f-submenu-items {
+  #fork-nav-search .f-submenu-items {
     position: absolute;
     left: 0;
     right: 0;
@@ -520,11 +520,11 @@ html[lang="ru"] #fork details[open] > summary::after {
     font-size: 0.875rem;
   }
 
-  #fork #id-nav-profile.f-menu-item {
+  #fork-nav-profile.f-menu-item {
     min-width: 4rem;
   }
 
-  #fork #id-nav-profile .f-menu-a:before {
+  #fork-nav-profile .f-menu-a:before {
     content: none;
     padding: 0;
   }
@@ -726,7 +726,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   font-size: 0.8125rem;
 }
 
-#fork .f-fdiv .f-yinfo + .f-yinfo {
+#fork .f-yinfo + .f-yinfo {
   margin-top: -0.3125rem;
 }
 
@@ -955,7 +955,7 @@ html[lang="ru"] #fork details[open] > summary::after {
 /*************/
 /* Сообщение */
 /*************/
-#fork .f-backlink > p {
+#fork-bcklnk > p {
   padding: 0.625rem;
 }
 
@@ -971,18 +971,18 @@ html[lang="ru"] #fork details[open] > summary::after {
 /************/
 /* Редирект */
 /************/
-#fork .f-redirect {
+#fork #fork-rdrct {
   border: 0.0625rem solid #AA7939;
 }
 
-#fork .f-redirect > h2 {
+#fork-rdrct > h2 {
   display: block;
   padding: 0.625rem;
   background-color: #F8F4E3;
   border-bottom: 0.0625rem solid #AA7939;
 }
 
-#fork .f-redirect > p {
+#fork-rdrct > p {
   padding: 0.625rem;
 }
 
@@ -1616,7 +1616,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   margin-bottom: 0.3125rem;
 }
 
-#fork .f-avatar img {
+#fork .f-avatar > img {
   max-width: 4.6875rem;
   height: auto;
 }
@@ -1854,7 +1854,7 @@ html[lang="ru"] #fork details[open] > summary::after {
     font-size: 0.875rem;
   }
 
-  #fork .f-avatar img {
+  #fork .f-avatar > img {
     max-width: 100%;
   }
 } /* @media screen and (min-width: 50rem) */
@@ -2366,7 +2366,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   margin: 0;
 }
 
-#forka .f-field-on input:not(:checked) + span {
+#forka .f-field-on .f-ychk:not(:checked) + span {
   opacity: 0.2;
   position: absolute;
   top: 0;
@@ -2376,7 +2376,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   background: red;
 }
 
-#forka .f-field-off input:checked + span {
+#forka .f-field-off .f-ychk:checked + span {
   opacity: 0.2;
   position: absolute;
   top: 0;
@@ -2386,7 +2386,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   background: red;
 }
 
-#forka .f-field-cando input:disabled + span {
+#forka .f-field-cando .f-ychk:disabled + span {
   opacity: 0.2;
   position: absolute;
   top: 0;
@@ -2424,33 +2424,33 @@ html[lang="ru"] #fork details[open] > summary::after {
 /*********************/
 /* Админка/Цензура   */
 /*********************/
-#forka .f-fs-censor {
+#id-fs-censtable.f-fs-censor {
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
   /*min-width: 0;*/
 }
 
-#forka .f-fs-censor .f-ycaption {
+#id-fs-censtable .f-ycaption {
   font-weight: normal;
 }
 
-#forka .f-fs-censor .f-field-censor  {
+#id-fs-censtable .f-field-censor  {
   width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-#forka .f-fs-censor .f-field-censor > dt {
+#id-fs-censtable .f-field-censor > dt {
   display: none;
 }
 
-#forka .f-fs-censor .f-field-censor > dd {
+#id-fs-censtable .f-field-censor > dd {
   width: 100%;
 }
 
-#forka .f-field-censor:nth-child(-n+2) > dt {
+#id-fs-censtable .f-field-censor:nth-child(-n+2) > dt {
   display: block;
   width: 100%;
 }
@@ -2462,7 +2462,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   margin: 1rem 0;
 }
 
-#fork .f-install > h2{
+#fork .f-install > h2 {
   padding: 0 0.625rem;
 }
 
@@ -2513,7 +2513,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   }
 
   #fork .f-search-form .f-flblr,
-  #fork .f-userlist-form .f-flblr {
+  #fork-usrlstform .f-flblr {
     padding: 0.5rem 0;
   }
 
@@ -2528,112 +2528,111 @@ html[lang="ru"] #fork details[open] > summary::after {
 /************************/
 /* Список пользователей */
 /************************/
-#fork .f-ulist .f-row {
+#fork-usrlst .f-row {
   border-bottom: 0.0625rem solid #AA7939;
 }
 
-#fork .f-ulist .f-row {
+#fork-usrlst .f-row {
   padding: 0.625rem;
   overflow: hidden;
 }
 
-#fork .f-ulist .f-thead {
+#fork-usrlst .f-thead {
   display: none;
 }
 
-#fork .f-ulist .f-thead + .f-row {
+#fork-usrlst .f-thead + .f-row {
   border-top: 0.125rem solid #AA7939;
 }
 
 @media screen and (min-width: 50rem) {
-  #fork .f-ulist .f-row {
+  #fork-usrlst .f-row {
     padding: 0;
   }
 
-  #fork .f-ulist .f-thead {
+  #fork-usrlst .f-thead {
     border-top: 0.125rem solid #AA7939;
     border-bottom: 0.125rem solid #AA7939;
     display: block;
   }
 
-  #fork .f-ulist .f-thead + .f-row {
+  #fork-usrlst .f-thead + .f-row {
     border-top: 0;
   }
 
-  #fork .f-ulist .f-hcell,
-  #fork .f-ulist .f-cell {
+  #fork-usrlst .f-hcell,
+  #fork-usrlst .f-cell {
     display: table-cell;
     vertical-align: middle;
   }
 
-  #fork .f-ulist small,
-  #fork .f-ulist small {
+  #fork-usrlst small {
     display: none;
   }
 
-  #fork .f-ulist .f-hcell .f-hc-table {
+  #fork-usrlst .f-hcell .f-hc-table {
     display: table;
     line-height: 1;
   }
 
-  #fork .f-hc-table .f-hc-tasc,
-  #fork .f-hc-table .f-hc-tdesc {
+  #fork-usrlst .f-hc-table .f-hc-tasc,
+  #fork-usrlst .f-hc-table .f-hc-tdesc {
     font-size: 0.75rem;
     display: block;
     text-align: center;
   }
 
-  #fork .f-hc-table .f-hc-tname {
+  #fork-usrlst .f-hc-table .f-hc-tname {
     padding: 0.125rem 0;
     display: block;
   }
 
-  #fork .f-hc-tasc > a,
-  #fork .f-hc-tdesc > a {
+  #fork-usrlst .f-hc-tasc > a,
+  #fork-usrlst .f-hc-tdesc > a {
     padding: 0 0.25rem;
 /*    border: 0; */
   }
 
-  #fork .f-hc-tasc > a.active,
-  #fork .f-hc-tdesc > a.active {
+  #fork-usrlst .f-hc-tasc > a.active,
+  #fork-usrlst .f-hc-tdesc > a.active {
     border: 0.0625rem solid #814A00;
   }
 
-  #fork .f-ulist .f-cell > b,
-  #fork .f-ulist .f-cell > i {
+  #fork-usrlst .f-cell > b,
+  #fork-usrlst .f-cell > i {
     font-style: normal;
     font-weight: normal;
   }
 
-  #fork .f-ulist .f-cusername {
+  #fork-usrlst .f-cusername {
     padding: 0.625rem 0 0.625rem 0.625rem;
     width: 50%;
   }
 
-  #fork .f-ulist .f-ctitle {
+  #fork-usrlst .f-ctitle {
     padding: 0.625rem 0 0.625rem 0.625rem;
     width: 50%;
     text-align: right;
   }
 
-  #fork .f-ulist .f-cnumposts {
+  #fork-usrlst .f-cnumposts {
     padding: 0.625rem 0 0.625rem 0.625rem;
     width: 8rem;
     min-width: 8rem;
     text-align: center;
   }
 
-  #fork .f-ulist .f-cnumposts .f-hc-table {
+  #fork-usrlst .f-cnumposts .f-hc-table {
     margin: 0 auto;
   }
 
-  #fork .f-ulist .f-cdatereg {
+  #fork-usrlst .f-cdatereg {
     padding: 0.625rem;
     width: 11rem;
     min-width: 11rem;
   }
 
-  #fork .f-ulist .f-hcell {
+  #fork-usrlst .f-hcell {
     padding-top: 0.3125rem;
     padding-bottom: 0.3125rem;
   }
@@ -2650,8 +2649,8 @@ html[lang="ru"] #fork details[open] > summary::after {
 
 #fork .f-field-pline .f-ycaption,
 #fork .f-field-pline .f-str,
-#fork .f-field-pline dt,
-#fork .f-field-pline dd {
+#fork .f-field-pline > dt,
+#fork .f-field-pline > dd {
   display: inline;
   border: 0;
   padding: 0;
@@ -2800,8 +2799,8 @@ html[lang="ru"] #fork details[open] > summary::after {
 /****************************/
 /* Профиль - редактирование */
 /****************************/
-#fork .f-fs-header-edit dl,
-#fork .f-fs-data-edit:not(#id-fs-activity) dl,
+#fork .f-fs-header-edit > dl,
+#fork .f-fs-data-edit:not(#id-fs-activity) > dl,
 #fork #id-fs-activity.f-fs-data-edit {
   border-bottom: 0.0625rem dotted #AA7939;
 }
@@ -2835,8 +2834,8 @@ html[lang="ru"] #fork details[open] > summary::after {
 }
 
 @media screen and (min-width: 40rem) {
-  #fork .f-fs-header-edit dl,
-  #fork .f-fs-data-edit dl {
+  #fork .f-fs-header-edit > dl,
+  #fork .f-fs-data-edit > dl {
     display: flex;
   }
 
@@ -2860,7 +2859,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   text-align: right;
 }
 
-#fork #fork-ausersrch-rs .f-fbtn,
+#fork-ausersrch-rs .f-btns .f-fbtn,
 #fork .f-delete-users-form .f-fbtn,
 #fork .f-change-group-form .f-fbtn {
   display: inline-block;

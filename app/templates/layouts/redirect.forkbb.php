@@ -16,7 +16,7 @@
 <body>
   <div id="fork">
     <main>
-      <section class="f-main f-redirect">
+      <section id="fork-rdrct" class="f-main">
         <h2>{!! __('Redirecting') !!}</h2>
         <p>{!! $p->message !!}</p>
         <p><a href="{{ $p->link }}">{!! __('Click redirect') !!}</a></p>

@@ -30,7 +30,7 @@
 @endif
     </div>
 @if ($form = $p->form)
-    <section class="f-main f-userlist-form">
+    <section id="fork-usrlstform"  class="f-main">
       <h2>{!! __($p->user->searchUsers ? 'User search head' : 'User sort head') !!}</h2>
       <details>
         <summary>{!! __($p->user->searchUsers ? 'User search head' : 'User sort head') !!}</summary>
@@ -41,7 +41,7 @@
     </section>
 @endif
 @if ($p->userList)
-    <section class="f-main f-userlist">
+    <section id="fork-usrlst" class="f-main">
       <h2>{!! __('User_list') !!}</h2>
       <div class="f-ulist">
         <ol class="f-table">

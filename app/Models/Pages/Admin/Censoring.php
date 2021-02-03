@@ -129,7 +129,7 @@ class Censoring extends Admin
             'caption'   => __('Replacement label'),
         ];
 
-        $form['sets']['cens'] = [
+        $form['sets']['censtable'] = [
             'class'  => 'censor',
             'fields' => $fieldset,
         ];
