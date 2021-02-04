@@ -22,32 +22,24 @@ AddDefaultCharset UTF-8
   RewriteRule \.dist\. index.php [L]
 </IfModule>
 
-# Set Cache-Control and Expires headers for caching statics
-<IfModule mod_expires.c>
-  ExpiresActive on
-
-  ExpiresByType text/css A31536000
-  ExpiresByType application/javascript A31536000
-
-  ExpiresByType image/gif A31536000
-  ExpiresByType image/png A31536000
-  ExpiresByType image/jpg A31536000
-  ExpiresByType image/jpeg A31536000
-  ExpiresByType image/webp A31536000
-</IfModule>
-
-# Set Cache-Control header for caching statics if no mod_expires.c
-<IfModule !mod_expires.c>
-  <ifModule mod_headers.c>
-    <FilesMatch "\.(css|js|gif|png|jpg|jpeg|webp)$">
-      Header set Cache-Control "max-age=31536000, public"
-    </FilesMatch>
-  </ifModule>
-</IfModule>
+# Set Cache-Control header for caching statics
+<ifModule mod_headers.c>
+  <FilesMatch "\.(css|js|gif|png|jpg|jpeg|webp|woff|woff2)$">
+    Header set Cache-Control "public,max-age=31536000,immutable"
+    Header unset ETag
+  </FilesMatch>
+  <FilesMatch "\.(ico)$">
+    Header set Cache-Control "public,max-age=604800"
+    Header unset ETag
+  </FilesMatch>
+</ifModule>
 
 <ifModule mod_headers.c>
   # Set security headers if missing.
   # ForkBB generates these headers, but only for php pages.
+  #
+  ### Only works in Apache 2.4.10+ (Reason, condition  -> "expr = -z% {resp: ...}") ###
+  #
   Header always set Content-Security-Policy "default-src 'self';object-src 'none';frame-ancestors 'none';base-uri 'none';form-action 'self'" "expr=-z %{resp:Content-Security-Policy}"
   Header always set Feature-Policy "accelerometer 'none';ambient-light-sensor 'none';autoplay 'none';battery 'none';camera 'none';document-domain 'self';fullscreen 'self';geolocation 'none';gyroscope 'none';magnetometer 'none';microphone 'none';midi 'none';payment 'none';picture-in-picture 'none';sync-xhr 'self';usb 'none'" "expr=-z %{resp:Feature-Policy}"
   Header always set Referrer-Policy "origin-when-cross-origin" "expr=-z %{resp:Referrer-Policy}"
