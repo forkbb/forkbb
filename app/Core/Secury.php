@@ -62,7 +62,7 @@ class Secury
      */
     public function randomHash(int $len): string
     {
-        return \substr(\bin2hex(\random_bytes($len)), 0, $len);
+        return \substr(\bin2hex(\random_bytes(\intdiv($len, 2) + 1)), 0, $len);
     }
 
     /**
