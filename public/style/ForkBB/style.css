@@ -288,6 +288,26 @@ html[lang="ru"] #fork details[open] > summary::after {
   color: red;
 }
 
+#fork .f-field-depth1 > dd {
+  padding-left: 0.625rem;
+}
+
+#fork .f-field-depth2 > dd {
+  padding-left: 1.25rem;
+}
+
+#fork .f-field-depth3 > dd {
+  padding-left: 1.875rem;
+}
+
+#fork .f-field-depth4 > dd {
+  padding-left: 2.5rem;
+}
+
+#fork .f-field-depth5 > dd {
+  padding-left: 3.125rem;
+}
+
 /********/
 /* Меню */
 /********/
@@ -2286,26 +2306,6 @@ html[lang="ru"] #fork details[open] > summary::after {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-#fork .f-field-depth1 > dd {
-  padding-left: 0.625rem;
-}
-
-#fork .f-field-depth2 > dd {
-  padding-left: 1.25rem;
-}
-
-#fork .f-field-depth3 > dd {
-  padding-left: 1.875rem;
-}
-
-#fork .f-field-depth4 > dd {
-  padding-left: 2.5rem;
-}
-
-#fork .f-field-depth5 > dd {
-  padding-left: 3.125rem;
 }
 
 #forka .f-fs-permission {
