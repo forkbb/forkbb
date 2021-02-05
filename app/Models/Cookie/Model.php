@@ -110,8 +110,8 @@ class Model extends ParentModel
         $ckUser = $this->get(self::NAME);
 
         if (
-            null === $ckUser
-            || ! \preg_match('%^(\-)?(\d{1,10})_(\d{10})_([a-f\d]{32,})_([a-f\d]{32,})$%Di', $ckUser, $ms)
+            ! \is_string($ckUser)
+            || ! \preg_match('%^(\-)?(\d{1,10})_(\d{10})_([a-f\d]{32,128})_([a-f\d]{32,128})$%Di', $ckUser, $ms)
         ) {
             return;
         }
