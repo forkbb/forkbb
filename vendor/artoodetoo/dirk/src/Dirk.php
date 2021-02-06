@@ -42,7 +42,7 @@ class Dirk extends PhpEngine
     {
         $name = \str_replace('.', '/', $name);
         $tpl  = $this->views . '/' . $name . $this->ext;
-        $php  = $this->cache . '/' . \md5($name) . '.php';
+        $php  = $this->cache . '/' . \sha1($name) . '.php';
         if (
             ! \file_exists($php)
             || \filemtime($tpl) > \filemtime($php)
