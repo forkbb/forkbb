@@ -166,12 +166,12 @@ class Dirk extends PhpEngine
     {
         if (\preg_match('%^\(\s*(\!\s*)?(\$[\w>-]+\[(?:[\'"]\w+[\'"]|\d+)\])\s*\)$%', $expression, $matches)) {
             if (empty($matches[1])) {
-                return "<?php if(! empty{$expression}): ?>";
+                return "<?php if (! empty{$expression}): ?>";
             } else {
-                return "<?php if(empty({$matches[2]})): ?>";
+                return "<?php if (empty({$matches[2]})): ?>";
             }
         } else {
-            return "<?php if{$expression}: ?>";
+            return "<?php if {$expression}: ?>";
         }
     }
 
@@ -183,7 +183,7 @@ class Dirk extends PhpEngine
      */
     protected function compileElseif(string $expression): string
     {
-        return "<?php elseif{$expression}: ?>";
+        return "<?php elseif {$expression}: ?>";
     }
 
     /**
@@ -207,6 +207,37 @@ class Dirk extends PhpEngine
     }
 
     /**
+     * Compile the isset statements
+     *
+     * @param  string  $expression
+     * @return string
+     */
+    protected function compileIsset(string $expression): string
+    {
+        return "<?php if (isset{$expression}): ?>";
+    }
+
+    /**
+     * Compile the end-isset statements
+     *
+     * @return string
+     */
+    protected function compileEndisset(): string
+    {
+        return "<?php endif; ?>";
+    }
+
+    /**
+     * Compile the end-empty statements
+     *
+     * @return string
+     */
+    protected function compileEndempty(): string
+    {
+        return "<?php endif; ?>";
+    }
+
+    /**
      * Compile the unless statements
      *
      * @param  string  $expression
@@ -214,7 +245,7 @@ class Dirk extends PhpEngine
      */
     protected function compileUnless(string $expression): string
     {
-        return "<?php if(! $expression): ?>";
+        return "<?php if (! $expression): ?>";
     }
 
     /**
@@ -235,7 +266,7 @@ class Dirk extends PhpEngine
      */
     protected function compileFor(string $expression): string
     {
-        return "<?php for{$expression}: ?>";
+        return "<?php for {$expression}: ?>";
     }
 
     /**
@@ -256,7 +287,7 @@ class Dirk extends PhpEngine
      */
     protected function compileForeach(string $expression): string
     {
-        return "<?php foreach{$expression}: ?>";
+        return "<?php foreach {$expression}: ?>";
     }
 
     /**
@@ -281,21 +312,30 @@ class Dirk extends PhpEngine
         $this->emptyCounter++;
 
         return "<?php \$__empty_{$this->emptyCounter} = true; "
-              . "foreach{$expression}: "
+              . "foreach {$expression}: "
               . "\$__empty_{$this->emptyCounter} = false;?>";
     }
 
     /**
      * Compile the end-forelse statements
+     * Compile the empty statements
      *
+     * @param  string  $expression
      * @return string
      */
-    protected function compileEmpty(): string
+    protected function compileEmpty(string $expression): string
     {
-        $s = "<?php endforeach; if (\$__empty_{$this->emptyCounter}): ?>";
-        $this->emptyCounter--;
+        if (
+            isset($expression[0])
+            && '(' == $expression[0]
+        ) {
+            return "<?php if (empty{$expression}): ?>";
+        } else {
+            $s = "<?php endforeach; if (\$__empty_{$this->emptyCounter}): ?>";
+            $this->emptyCounter--;
 
-        return $s;
+            return $s;
+        }
     }
 
     /**
@@ -316,7 +356,7 @@ class Dirk extends PhpEngine
      */
     protected function compileWhile(string $expression): string
     {
-        return "<?php while{$expression}: ?>";
+        return "<?php while {$expression}: ?>";
     }
 
     /**

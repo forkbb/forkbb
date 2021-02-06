@@ -89,6 +89,11 @@ Conditionals
   * *@endif*
   * *@unless(condition)* - Starts an unless block
   * *@endunless*
+  * *@isset(condition)* - Starts an isset block
+  * *@endisset*
+  * *@empty(condition)* - Starts an empty block
+  * *@endempty*
+
 
 Loops
   * *@foreach($list as $key => $val)* - Starts a foreach block
