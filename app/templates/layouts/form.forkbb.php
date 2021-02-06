@@ -7,7 +7,7 @@
           <p class="f-finform"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
         @endforeach
     @elseif (isset($setVal['fields']))
-          <fieldset id="id-fs-{{ $setKey }}" @if ($setVal['class']) class="f-fs-{!! \implode(' f-fs-', (array) $setVal['class']) !!}" @endif>
+          <fieldset id="id-fs-{{ $setKey }}" @if ($setVal['class']) class="f-fs-{{ \implode(' f-fs-', (array) $setVal['class']) }}" @endif>
         @if ($setVal['legend'])
             <legend class="f-fleg">{!! $setVal['legend'] !!}</legend>
         @endif
@@ -15,15 +15,15 @@
             @if ('info' === $cur['type'])
             <p id="id-{{ $cur['id'] or $key }}" class="f-yinfo"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
             @elseif ('wrap' === $cur['type'])
-            <div id="id-{{ $cur['id'] or $key }}" @if ($cur['class']) class="f-wrap-{!! \implode(' f-wrap-', (array) $cur['class']) !!}" @endif>
+            <div id="id-{{ $cur['id'] or $key }}" @if ($cur['class']) class="f-wrap-{{ \implode(' f-wrap-', (array) $cur['class']) }}" @endif>
             @elseif ('endwrap' === $cur['type'])
             </div>
             @else
-            <dl id="id-dl-{{ $cur['id'] or $key }}" @if ($cur['class']) class="f-field-{!! \implode(' f-field-', (array) $cur['class']) !!}" @endif>
+            <dl id="id-dl-{{ $cur['id'] or $key }}" @if ($cur['class']) class="f-field-{{ \implode(' f-field-', (array) $cur['class']) }}" @endif>
               <dt> @if ($cur['caption'])<label class="f-ycaption @if ($cur['required']) f-req @endif" @if (false === \strpos('.radio.yield.str.btn.link.', ".{$cur['type']}.")) for="id-{{ $key }}" @endif>{!! $cur['caption'] !!}</label> @endif</dt>
               <dd>
                 @if ('text' === $cur['type'])
-                <input @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl f-ytxt" id="id-{{ $key }}" name="{{ $key }}" type="text" @if ($cur['maxlength']) maxlength="{{ $cur['maxlength'] }}" @endif @if ($cur['pattern']) pattern="{{ $cur['pattern'] }}" @endif @if (isset($cur['value'])) value="{{ $cur['value'] }}" @endif>
+                <input @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl f-ytxt" id="id-{{ $key }}" name="{{ $key }}" type="text" @if ($cur['maxlength']) maxlength="{{ $cur['maxlength'] }}" @endif @if ($cur['pattern']) pattern="{{ $cur['pattern'] }}" @endif @isset ($cur['value']) value="{{ $cur['value'] }}" @endisset>
                 @elseif ('textarea' === $cur['type'])
                 <textarea @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl f-ytxtarea" id="id-{{ $key }}" name="{{ $key }}">{{ $cur['value'] or '' }}</textarea>
                     @if ($cur['bb'])
@@ -76,7 +76,7 @@
                     @endif
                 </select>
                 @elseif ('number' === $cur['type'])
-                <input @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="number" min="{{ $cur['min'] }}" max="{{ $cur['max'] }}" @if (isset($cur['value'])) value="{{ $cur['value'] }}" @endif>
+                <input @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="number" min="{{ $cur['min'] }}" max="{{ $cur['max'] }}" @isset ($cur['value']) value="{{ $cur['value'] }}" @endisset>
                 @elseif ('checkbox' === $cur['type'])
                 <label class="f-flblch"><input @if ($cur['autofocus']) autofocus @endif @if ($cur['disabled']) disabled @endif type="checkbox" class="f-ychk" id="id-{{ $key }}" name="{{ $key }}" value="{{ $cur['value'] or '1' }}" @if ($cur['checked']) checked @endif>{!! $cur['label'] or '' !!}</label>
                 @elseif ('radio' === $cur['type'])
@@ -84,13 +84,13 @@
                 <label class="f-flblr"><input @if ($cur['autofocus']) autofocus @endif @if ($cur['disabled']) disabled @endif type="radio" class="f-yradio" id="id-{{ $key }}-{{ $v }}" name="{{ $key }}" value="{{ $v }}" @if ($v == $cur['value']) checked @endif>{{ $n }}</label>
                     @endforeach
                 @elseif ('password' === $cur['type'])
-                <input @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="password" @if ($cur['maxlength']) maxlength="{{ $cur['maxlength'] }}" @endif @if ($cur['pattern']) pattern="{{ $cur['pattern'] }}" @endif @if (isset($cur['value'])) value="{{ $cur['value'] }}" @endif>
+                <input @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="password" @if ($cur['maxlength']) maxlength="{{ $cur['maxlength'] }}" @endif @if ($cur['pattern']) pattern="{{ $cur['pattern'] }}" @endif @isset ($cur['value']) value="{{ $cur['value'] }}" @endisset>
                 @elseif ('btn' === $cur['type'])
                 <a class="f-btn f-ybtn @if ($cur['disabled']) f-disabled @endif" href="{{ $cur['link'] }}" title="{{ $cur['title'] or '' }}" @if ($cur['disabled']) tabindex="-1" @endif>{{ $cur['value'] }}</a>
                 @elseif ('str' === $cur['type'])
                 <p class="f-str" id="id-{{ $key }}"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
                 @elseif ('link' === $cur['type'])
-                <a class="f-link" id="id-{{ $key }}" href="{{ $cur['href'] or '' }}" @if (isset($cur['rel'])) rel="{{ $cur['rel'] }}" @endif title="{{ $cur['title'] or '' }}">{{ $cur['value'] or '' }}</a>
+                <a class="f-link" id="id-{{ $key }}" href="{{ $cur['href'] or '' }}" @isset ($cur['rel']) rel="{{ $cur['rel'] }}" @endisset title="{{ $cur['title'] or '' }}">{{ $cur['value'] or '' }}</a>
                 @elseif ('yield' === $cur['type'])
                 {!! $this->block($cur['value']) !!}
                 @elseif ('file' === $cur['type'])
@@ -121,9 +121,9 @@
           <p class="f-btns">
     @foreach ($form['btns'] as $key => $cur)
         @if ('submit' === $cur['type'])
-            <button class="f-btn f-fbtn @if($cur['class']) {{ $cur['class'] }} @endif" name="{{ $key }}" value="{{ $cur['value'] }}" @if (isset($cur['accesskey'])) accesskey="{{ $cur['accesskey'] }}" @endif title="{{ $cur['value'] }}"><span>{{ $cur['value'] }}</span></button>
+            <button class="f-btn f-fbtn @if($cur['class']) {{ $cur['class'] }} @endif" name="{{ $key }}" value="{{ $cur['value'] }}" @isset ($cur['accesskey']) accesskey="{{ $cur['accesskey'] }}" @endisset title="{{ $cur['value'] }}"><span>{{ $cur['value'] }}</span></button>
         @elseif ('btn'=== $cur['type'])
-            <a class="f-btn f-fbtn @if($cur['class']) {{ $cur['class'] }} @endif" data-name="{{ $key }}" href="{{ $cur['link'] }}" @if (isset($cur['accesskey'])) accesskey="{{ $cur['accesskey'] }}" @endif title="{{ $cur['value'] }}"><span>{{ $cur['value'] }}</span></a>
+            <a class="f-btn f-fbtn @if($cur['class']) {{ $cur['class'] }} @endif" data-name="{{ $key }}" href="{{ $cur['link'] }}" @isset ($cur['accesskey']) accesskey="{{ $cur['accesskey'] }}" @endisset title="{{ $cur['value'] }}"><span>{{ $cur['value'] }}</span></a>
         @endif
     @endforeach
           </p>

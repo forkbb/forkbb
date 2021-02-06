@@ -99,11 +99,11 @@
   </div>
 @foreach ($p->pageHeaders as $pageHeader)
     @if ('script' === $pageHeader['type'])
-        @if (empty($pageHeader['values']['inline']))
+        @empty ($pageHeader['values']['inline'])
   <script @foreach ($pageHeader['values'] as $key => $val) {{ $key }}="{{ $val }}" @endforeach></script>
         @else
   <script>{{ $pageHeader['values']['inline'] }}</script>
-        @endif
+        @endempty
     @endif
 @endforeach
 </body>
