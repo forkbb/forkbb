@@ -70,7 +70,7 @@ class Bans extends Admin
     {
         $this->nameTpl        = 'admin/bans';
         $this->formBanPage    = 'AdminBansNew';
-        $this->formBanHead    = __('New ban head');
+        $this->formBanHead    = 'New ban head';
         $this->formBanSubHead = __('Add ban subhead');
 
         if ('POST' === $method) {
@@ -585,7 +585,7 @@ class Bans extends Admin
 
         $this->nameTpl        = 'admin/bans';
         $this->formBanPage    = 'AdminBansNew';
-        $this->formBanHead    = __('New ban head');
+        $this->formBanHead    = 'New ban head';
         $this->formBanSubHead = __('Add ban subhead');
 
         return $this->ban(true, $args, $method, $userList);
@@ -613,7 +613,7 @@ class Bans extends Admin
 
         $this->nameTpl        = 'admin/bans';
         $this->formBanPage    = 'AdminBansEdit';
-        $this->formBanHead    = __('Edit ban head');
+        $this->formBanHead    = 'Edit ban head';
         $this->formBanSubHead = __('Edit ban subhead');
 
         return $this->ban(false, $args, $method, $userList, $ban);

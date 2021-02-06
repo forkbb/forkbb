@@ -123,7 +123,7 @@ class Forums extends Admin
         $this->aIndex    = 'forums';
         $this->form      = $this->formView();
         $this->classForm = ['editforums', 'inline'];
-        $this->titleForm = __('Forums');
+        $this->titleForm = 'Forums';
 
         return $this;
     }
@@ -276,7 +276,7 @@ class Forums extends Admin
         $this->aCrumbs[] = __('"%s"', $forum->forum_name);
         $this->form      = $this->formDelete($args, $forum);
         $this->classForm = 'deleteforum';
-        $this->titleForm = __('Delete forum head');
+        $this->titleForm = 'Delete forum head';
 
         return $this;
     }
@@ -350,7 +350,7 @@ class Forums extends Admin
                 $this->c->Router->link($marker),
                 __('Add forum head'),
             ];
-            $this->titleForm = __('Add forum head');
+            $this->titleForm = 'Add forum head';
             $this->classForm = 'createforum';
         } else {
             $forum           = $this->c->forums->loadTree((int) $args['id']); //?????
@@ -360,7 +360,7 @@ class Forums extends Admin
                 __('Edit forum head'),
             ];
             $this->aCrumbs[] = __('"%s"', $forum->forum_name);
-            $this->titleForm = __('Edit forum head');
+            $this->titleForm = 'Edit forum head';
             $this->classForm = 'editforum';
         }
 

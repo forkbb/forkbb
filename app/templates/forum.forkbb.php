@@ -27,7 +27,7 @@
     </div>
     <section class="f-subforums">
       <ol class="f-ftlist">
-        <li id="id-subforums{!! $p->model->id !!}" class="f-category">
+        <li id="id-subforums{{ $p->model->id }}" class="f-category">
           <h2 class="f-ftch2">{{ __('Sub forum', 2) }}</h2>
           <ol class="f-table">
             <li class="f-row f-thead" value="0">
@@ -66,15 +66,15 @@
           </li>
     @foreach ($p->topics as $id => $topic)
         @if (empty($topic->id) && $iswev = ['e' => [__('Topic %s was not found in the database', $id)]])
-          <li id="topic-{!! $id !!}" class="f-row">
+          <li id="topic-{{ $id }}" class="f-row">
             @include ('layouts/iswev')
           </li>
         @elseif ($topic->moved_to)
-          <li id="topic-{!! $topic->id !!}" class="f-row f-fredir">
+          <li id="topic-{{ $topic->id }}" class="f-row f-fredir">
             <div class="f-cell f-cmain">
             @if ($p->enableMod)
-              <input id="checkbox-{!! $topic->id !!}" class="f-fch" type="checkbox" name="ids[{!! $topic->id !!}]" value="{!! $topic->id !!}" form="id-form-mod">
-              <label class="f-ficon" for="checkbox-{!! $topic->id !!}" title="{{ __('Select for moderation') }}"></label>
+              <input id="checkbox-{{ $topic->id }}" class="f-fch" type="checkbox" name="ids[{{ $topic->id }}]" value="{{ $topic->id }}" form="id-form-mod">
+              <label class="f-ficon" for="checkbox-{{ $topic->id }}" title="{{ __('Select for moderation') }}"></label>
             @else
               <div class="f-ficon"></div>
             @endif
@@ -84,11 +84,11 @@
             </div>
           </li>
         @else
-          <li id="topic-{!! $topic->id !!}" class="f-row @if (false !== $topic->hasNew) f-fnew @endif @if (false !== $topic->hasUnread) f-funread @endif @if ($topic->sticky) f-fsticky @endif @if ($topic->closed) f-fclosed @endif @if ($topic->poll_type) f-fpoll @endif @if ($topic->dot) f-fposted @endif">
+          <li id="topic-{{ $topic->id }}" class="f-row @if (false !== $topic->hasNew) f-fnew @endif @if (false !== $topic->hasUnread) f-funread @endif @if ($topic->sticky) f-fsticky @endif @if ($topic->closed) f-fclosed @endif @if ($topic->poll_type) f-fpoll @endif @if ($topic->dot) f-fposted @endif">
             <div class="f-cell f-cmain">
             @if ($p->enableMod)
-              <input id="checkbox-{!! $topic->id !!}" class="f-fch" type="checkbox" name="ids[{!! $topic->id !!}]" value="{!! $topic->id !!}" form="id-form-mod">
-              <label class="f-ficon" for="checkbox-{!! $topic->id !!}" title="{{ __('Select for moderation') }}"></label>
+              <input id="checkbox-{{ $topic->id }}" class="f-fch" type="checkbox" name="ids[{{ $topic->id }}]" value="{{ $topic->id }}" form="id-form-mod">
+              <label class="f-ficon" for="checkbox-{{ $topic->id }}" title="{{ __('Select for moderation') }}"></label>
             @else
               <div class="f-ficon"></div>
             @endif

@@ -1,9 +1,9 @@
 @include ('layouts/crumbs')
 @extends ('layouts/main')
-    <div class="f-nav-links f-nav-admin{!! $p->mainSuffix or '' !!}-links">
+    <div class="f-nav-links f-nav-admin{{ $p->mainSuffix or '' }}-links">
 @yield ('crumbs')
     </div>
-    <div class="f-main f-main-admin{!! $p->mainSuffix or '' !!}">
+    <div class="f-main f-main-admin{{ $p->mainSuffix or '' }}">
       <div id="fork-a-menu">
 @if ($p->aNavigation)
         <nav id="fork-a-nav" class="f-menu">

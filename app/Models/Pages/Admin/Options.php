@@ -128,7 +128,7 @@ class Options extends Admin
         $this->aIndex    = 'options';
         $this->nameTpl   = 'admin/form';
         $this->form      = $this->formEdit($config);
-        $this->titleForm = __('Options head');
+        $this->titleForm = 'Options head';
         $this->classForm = 'editoptions';
 
         return $this;

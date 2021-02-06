@@ -52,7 +52,7 @@ class Censoring extends Admin
         $this->aIndex    = 'censoring';
         $this->form      = $this->formEdit();
         $this->classForm = 'editcensorship';
-        $this->titleForm = __('Censoring');
+        $this->titleForm = 'Censoring';
 
         return $this;
     }

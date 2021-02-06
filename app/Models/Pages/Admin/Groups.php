@@ -212,7 +212,7 @@ class Groups extends Admin
                 __('Edit group'),
             ];
             $this->aCrumbs[] = __('"%s"', $group->g_title);
-            $this->titleForm = __('Edit group');
+            $this->titleForm = 'Edit group';
             $this->classForm = 'editgroup';
         } else {
             $marker          = 'AdminGroupsNew';
@@ -220,7 +220,7 @@ class Groups extends Admin
             $group->g_title  = '';
             $group->g_id     = null;
             $this->aCrumbs[] = __('Create new group');
-            $this->titleForm = __('Create new group');
+            $this->titleForm = 'Create new group';
             $this->classForm = 'creategroup';
         }
 
@@ -746,7 +746,7 @@ class Groups extends Admin
         ];
         $this->aCrumbs[] = __('"%s"', $group->g_title);
         $this->form      = $this->formDelete($args, $group, $count, $groups);
-        $this->titleForm = __('Group delete');
+        $this->titleForm = 'Group delete';
         $this->classForm = 'deletegroup';
 
         return $this;

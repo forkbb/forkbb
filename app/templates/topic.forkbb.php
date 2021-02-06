@@ -45,21 +45,21 @@
     @if (empty($post->id) && $iswev = ['e' => [__('Message %s was not found in the database', $id)]])
         @include ('layouts/iswev')
     @else
-      <article id="p{!! $post->id !!}" class="f-post @if (1 == $post->user->gender) f-user-male @elseif (2 == $post->user->gender) f-user-female @endif @if ($post->user->online) f-user-online @endif @if (1 === $post->postNumber) f-post-first @endif">
+      <article id="p{{ $post->id }}" class="f-post @if (1 == $post->user->gender) f-user-male @elseif (2 == $post->user->gender) f-user-female @endif @if ($post->user->online) f-user-online @endif @if (1 === $post->postNumber) f-post-first @endif">
         @if ($p->enableMod && $post->postNumber > 1)
-        <input id="checkbox-{!! $post->id !!}" class="f-post-checkbox" type="checkbox" name="ids[{!! $post->id !!}]" value="{!! $post->id !!}" form="id-form-mod">
+        <input id="checkbox-{{ $post->id }}" class="f-post-checkbox" type="checkbox" name="ids[{{ $post->id }}]" value="{{ $post->id }}" form="id-form-mod">
         @endif
         <header class="f-post-header">
           <h3>@if ($post->postNumber > 1) {!! __('Re') !!} @endif {{ $p->model->censorSubject }}</h3>
         @if ($p->enableMod && $post->postNumber > 1)
-          <label class="f-post-posted" for="checkbox-{!! $post->id !!}" title="{{ __('Select for moderation') }}"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></label>
+          <label class="f-post-posted" for="checkbox-{{ $post->id }}" title="{{ __('Select for moderation') }}"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></label>
         @else
           <span class="f-post-posted"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></span>
         @endif
         @if ($post->edited)
           <span class="f-post-edited" title="{!! __('Last edit', $post->editor, dt($post->edited)) !!}">{!! __('Edited') !!}</span>
         @endif
-          <span class="f-post-number"><a href="{{ $post->link }}" rel="bookmark">#{!! $post->postNumber !!}</a></span>
+          <span class="f-post-number"><a href="{{ $post->link }}" rel="bookmark">#{{ $post->postNumber }}</a></span>
         </header>
         <address class="f-post-user">
           <div class="f-post-usticky">

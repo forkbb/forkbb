@@ -43,7 +43,7 @@ class Update extends Admin
         $this->httpStatus = 503;
         $this->onlinePos  = null;
         $this->nameTpl    = 'admin/form';
-        $this->titleForm  = __('Update ForkBB');
+        $this->titleForm  = 'Update ForkBB';
         $this->classForm  = 'updateforkbb';
         $this->configFile = $container->DIR_APP . '/config/' . self::CONFIG_FILE;
 

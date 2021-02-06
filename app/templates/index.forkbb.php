@@ -3,7 +3,7 @@
     <section class="f-main">
       <ol class="f-ftlist">
     @foreach ($p->categoryes as $id => $forums)
-        <li id="cat-{!! $id !!}" class="f-category">
+        <li id="cat-{{ $id }}" class="f-category">
           <h2 class="f-ftch2">{{ current($forums)->cat_name }}</h2>
           <ol class="f-table">
             <li class="f-row f-thead" value="0">

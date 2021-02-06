@@ -101,7 +101,7 @@ class BBCode extends Parser
             __('BBCode management'),
         ];
         $this->form      = $this->formView();
-        $this->titleForm = __('BBCode head');
+        $this->titleForm = 'BBCode head';
         $this->classForm = 'bbcode';
 
         return $this;
@@ -263,11 +263,11 @@ class BBCode extends Parser
         $this->bbTypes = $bbTypes;
 
         if ($id > 0) {
-            $title            = __('Edit bbcode head');
+            $title            = 'Edit bbcode head';
             $page             = 'AdminBBCodeEdit';
             $pageArgs         = ['id' => $id];
         } else {
-            $title            = __('Add bbcode head');
+            $title            = 'Add bbcode head';
             $page             = 'AdminBBCodeNew';
             $pageArgs         = [];
         }
@@ -345,7 +345,7 @@ class BBCode extends Parser
 
         $this->aCrumbs[] = [
             $this->formAction,
-            $title,
+            __($title),
         ];
         if ($id > 0) {
             $this->aCrumbs[] = __('"%s"', $this->c->bbcode->bbcodeTable[$id]['bb_tag']);

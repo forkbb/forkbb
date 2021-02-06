@@ -1,10 +1,10 @@
         <div class="f-post-poll">
 @if ($poll->canVote)
-          <form class="f-form" method="post" action="{!! $poll->link !!}">
+          <form class="f-form" method="post" action="{{ $poll->link }}">
             <input type="hidden" name="token" value="{{ $poll->token }}">
 @endif
 @foreach ($poll->question as $q => $question)
-            <fieldset id="id-question-{!! $q !!}" class="f-poll-q">
+            <fieldset id="id-question-{{ $q }}" class="f-poll-q">
               <legend class="f-poll-ql">{!! __('Question %s legend', $q) !!}</legend>
               <h3 class="f-poll-qt">{{ $question }}</h3>
     @if (($poll->canVote || ! $poll->tid) && $poll->type[$q] > 1)
@@ -12,13 +12,13 @@
     @endif
               <ol class="f-poll-as">
     @foreach ($poll->answer[$q] as $a => $answer)
-                <li id="id-answer-{!! $q . '-' . $a !!}" class="f-poll-a">
+                <li id="id-answer-{{ $q . '-' . $a }}" class="f-poll-a">
         @if ($poll->canVote || ! $poll->tid)
                  <label class="f-poll-al">
             @if ($poll->type[$q] > 1)
-                    <input class="f-poll-ai" type="checkbox" name="poll_vote[{!! $q !!}][{!! $a !!}]" value="1" />
+                    <input class="f-poll-ai" type="checkbox" name="poll_vote[{{ $q }}][{{ $a }}]" value="1" />
             @else
-                    <input class="f-poll-ai" type="radio" name="poll_vote[{!! $q !!}][0]" value="{!! $a !!}" />
+                    <input class="f-poll-ai" type="radio" name="poll_vote[{{ $q }}][0]" value="{{ $a }}" />
             @endif
                     <span class="f-poll-at">{{ $answer }}</span>
                   </label>

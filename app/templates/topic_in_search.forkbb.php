@@ -35,14 +35,14 @@
     @if (empty($post->id) && $iswev = ['e' => [__('Message %s was not found in the database', $id)]])
         @include ('layouts/iswev')
     @else
-      <article id="p{!! $post->id !!}" class="f-post f-post-search @if (1 == $post->user->gender) f-user-male @elseif (2 == $post->user->gender) f-user-female @endif @if ($post->user->online) f-user-online @endif">
+      <article id="p{{ $post->id }}" class="f-post f-post-search @if (1 == $post->user->gender) f-user-male @elseif (2 == $post->user->gender) f-user-female @endif @if ($post->user->online) f-user-online @endif">
         <header class="f-post-header">
           <h3>
             <span class="f-psh-forum"><a href="{{ $post->parent->parent->link }}" title="{!! __('Go to forum') !!}">{{ $post->parent->parent->forum_name }}</a></span>
             <span class="f-psh-topic"><a href="{{ $post->parent->link }}" title="{!! __('Go to topic') !!}">@if ($post->id !== $post->parent->first_post_id) {!! __('Re') !!} @endif {{ $post->parent->censorSubject }}</a></span>
             <span class="f-post-posted"><a href="{{ $post->link }}" title="{!! __('Go to post') !!}" rel="bookmark"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></a></span>
           </h3>
-          <span class="f-post-number">#{!! $post->postNumber !!}</span>
+          <span class="f-post-number">#{{ $post->postNumber }}</span>
         </header>
         <address class="f-post-user">
           <div class="f-post-usticky">
