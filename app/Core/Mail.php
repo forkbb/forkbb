@@ -438,8 +438,8 @@ class Mail
             || $this->maxRecipients <= 1
         ) {
             foreach ($this->to as $to => $name) {
-                $headers['To'] = $this->formatAddress($to, $name);
-                $result        = @\mail($to, $subject, $this->message, $headers);
+                $to     = $this->formatAddress($to, $name);
+                $result = \mail($to, $subject, $this->message, $headers);
 
                 if (true !== $result) {
                     return false;
@@ -456,7 +456,7 @@ class Mail
                 unset($name);
 
                 $headers['Bcc'] = \implode(', ', $arrBcc);
-                $result         = @\mail($to, $subject, $this->message, $headers);
+                $result         = \mail($to, $subject, $this->message, $headers);
 
                 if (true !== $result) {
                     return false;
