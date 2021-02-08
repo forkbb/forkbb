@@ -478,7 +478,7 @@ class Auth extends Page
                 ],
             ],
             'btns'   => [
-                'login' => [
+                'submit' => [
                     'type'      => 'submit',
                     'value'     => __('Change passphrase'),
 //                    'accesskey' => 's',
