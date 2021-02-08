@@ -213,19 +213,16 @@ class Auth extends Page
         $v = null;
 
         if ('POST' === $method) {
-            $tmpUser = $this->c->users->create();
-
             $v = $this->c->Validator->reset()
                 ->addValidators([
                 ])->addRules([
                     'token'  => 'token:Forget',
-                    'email'  => 'required|string:trim|email:noban,exists,flood',
+                    'email'  => 'required|string:trim|email',
                     'submit' => 'required|string',
                 ])->addAliases([
                 ])->addMessages([
                     'email.email' => 'Invalid email',
                 ])->addArguments([
-                    'email.email' => $tmpUser, // сюда идет возрат данных по найденному пользователю
                 ]);
 
             $v       = $this->c->Test->beforeValidation($v);
@@ -237,59 +234,70 @@ class Auth extends Page
             ];
 
             if ($isValid) {
-                $key  = $this->c->Secury->randomPass(32);
-                $hash = $this->c->Secury->hash($tmpUser->id . $key);
-                $link = $this->c->Router->link(
-                    'ChangePassword',
-                    [
-                        'id'   => $tmpUser->id,
-                        'key'  => $key,
-                        'hash' => $hash,
-                    ]
-                );
-                $tplData = [
-                    'fRootLink' => $this->c->Router->link('Index'),
-                    'fMailer'   => __('Mailer', $this->c->config->o_board_title),
-                    'username'  => $tmpUser->username,
-                    'link'      => $link,
-                ];
+                $tmpUser = $this->c->users->create();
 
-                try {
-                    $isSent = $this->c->Mail
-                        ->reset()
-                        ->setMaxRecipients(1)
-                        ->setFolder($this->c->DIR_LANG)
-                        ->setLanguage($tmpUser->language)
-                        ->setTo($tmpUser->email, $tmpUser->username)
-                        ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
-                        ->setTpl('passphrase_reset.tpl', $tplData)
-                        ->send();
-                } catch (MailException $e) {
-                    $isSent = false;
-
-                    $this->c->Log->error('Passphrase reset: form, MailException', [
-                        'exception' => $e,
-                        'headers'   => false,
+                $v = $this->c->Validator->reset()
+                    ->addRules([
+                        'email' => 'required|string:trim|email:noban,exists,flood',
+                    ])->addArguments([
+                        'email.email' => $tmpUser, // сюда идет возрат данных по найденному пользователю
                     ]);
-                }
 
-                if ($isSent) {
-                    $tmpUser->activate_string = $key;
-                    $tmpUser->last_email_sent = \time();
+                if ($v->validation($_POST)) {
+                    $key  = $this->c->Secury->randomPass(32);
+                    $hash = $this->c->Secury->hash($tmpUser->id . $key);
+                    $link = $this->c->Router->link(
+                        'ChangePassword',
+                        [
+                            'id'   => $tmpUser->id,
+                            'key'  => $key,
+                            'hash' => $hash,
+                        ]
+                    );
+                    $tplData = [
+                        'fRootLink' => $this->c->Router->link('Index'),
+                        'fMailer'   => __('Mailer', $this->c->config->o_board_title),
+                        'username'  => $tmpUser->username,
+                        'link'      => $link,
+                    ];
 
-                    $this->c->users->update($tmpUser);
+                    try {
+                        $isSent = $this->c->Mail
+                            ->reset()
+                            ->setMaxRecipients(1)
+                            ->setFolder($this->c->DIR_LANG)
+                            ->setLanguage($tmpUser->language)
+                            ->setTo($tmpUser->email, $tmpUser->username)
+                            ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
+                            ->setTpl('passphrase_reset.tpl', $tplData)
+                            ->send();
+                    } catch (MailException $e) {
+                        $isSent = false;
 
-                    $this->c->Log->info('Passphrase reset: form, ok', $context);
+                        $this->c->Log->error('Passphrase reset: email form, MailException', [
+                            'exception' => $e,
+                            'headers'   => false,
+                        ]);
+                    }
 
-                    return $this->c->Message->message(__('Forget mail', $this->c->config->o_admin_email), false, 200);
+                    if ($isSent) {
+                        $tmpUser->activate_string = $key;
+                        $tmpUser->last_email_sent = \time();
+
+                        $this->c->users->update($tmpUser);
+
+                        $this->c->Log->info('Passphrase reset: email form, ok', $context);
+                    }
                 } else {
-                    return $this->c->Message->message(__('Error mail', $this->c->config->o_admin_email), true, 424);
+                    $this->c->Log->warning('Passphrase reset: email form, fail', $context);
                 }
+
+                return $this->c->Message->message(__('Forget mail', $this->c->config->o_admin_email), false, 200);
             }
 
             $this->fIswev = $v->getErrors();
 
-            $this->c->Log->warning('Passphrase reset: form, fail', $context);
+            $this->c->Log->warning('Passphrase reset: email form, fail', $context);
         }
 
         $this->hhsLevel   = 'secure';
