@@ -102,10 +102,22 @@ class Load extends Action
         $vars = [
             ':name' => $name,
         ];
-        $where = $caseInsencytive ? 'LOWER(u.username)=LOWER(?s:name)' : 'u.username=?s:name';
+        $where = 'u.username=?s:name';
         $query = $this->getSql($where);
 
-        return $this->returnUser($query, $vars);
+        $user = $this->returnUser($query, $vars);
+
+        if (
+            ! $user instanceof User
+            || (
+                false === $caseInsencytive
+                && $name !== $user->username
+            )
+        ) {
+            return null;
+        } else {
+            return $user;
+        }
     }
 
     /**
