@@ -19,7 +19,7 @@ msgid "Account is not activated"
 msgstr "Account is not activated."
 
 msgid "Wrong user/pass"
-msgstr "Wrong username and/or passphrase."
+msgstr "Wrong username and/or passphrase. The username and passphrase are case sensitive!"
 
 msgid "<a href=\"%s\">Forgotten?</a>"
 msgstr "<a href=\"%s\">Forgotten?</a>"
