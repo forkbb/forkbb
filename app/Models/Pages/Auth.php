@@ -238,7 +238,7 @@ class Auth extends Page
                 $tmpUser = $this->c->users->create();
                 $isSent  = false;
 
-                $v = $this->c->Validator->reset()
+                $v = $v->reset()
                     ->addRules([
                         'email' => 'required|string:trim|email:noban,exists,flood',
                     ])->addArguments([
@@ -361,8 +361,6 @@ class Auth extends Page
         if (
             ! \hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['key']))
             || ! ($user = $this->c->users->load((int) $args['id'])) instanceof User
-            || $user->isGuest
-            || empty($user->activate_string)
             || ! \hash_equals($user->activate_string, $args['key'])
         ) {
             $this->c->Log->warning('Passphrase reset: confirmation, fail', [
@@ -471,7 +469,6 @@ class Auth extends Page
                             'pattern'   => '^.{16,}$',
                         ],
                         'password2' => [
-                            'autofocus' => true,
                             'type'      => 'password',
                             'caption'   => __('Confirm new pass'),
                             'info'      => __('Pass format') . ' ' . __('Pass info'),
