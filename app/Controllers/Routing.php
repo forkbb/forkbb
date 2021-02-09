@@ -54,7 +54,7 @@ class Routing
             // смена кодовой фразы
             $r->add(
                 $r::DUO,
-                '/login/{id:\d+}/{key}/{hash}',
+                '/login/{id:[2-9]|[1-9]\d+}/{key}/{hash}',
                 'Auth:changePass',
                 'ChangePassword'
             );
@@ -75,7 +75,7 @@ class Routing
                 );
                 $r->add(
                     $r::GET,
-                    '/registration/activate/{id:\d+}/{key}/{hash}',
+                    '/registration/activate/{id:[2-9]|[1-9]\d+}/{key}/{hash}',
                     'Register:activate',
                     'RegActivate'
                 );
