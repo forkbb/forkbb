@@ -229,12 +229,14 @@ class Auth extends Page
             $isValid = $v->validation($_POST, true);
             $context = [
                 'user'    => $this->user->fLog(), // ???? Guest only?
+                'errors'  => $v->getErrors(true),
                 'form'    => $v->getData(false, ['token']),
                 'headers' => true,
             ];
 
             if ($isValid) {
                 $tmpUser = $this->c->users->create();
+                $isSent  = false;
 
                 $v = $this->c->Validator->reset()
                     ->addRules([
@@ -272,8 +274,6 @@ class Auth extends Page
                             ->setTpl('passphrase_reset.tpl', $tplData)
                             ->send();
                     } catch (MailException $e) {
-                        $isSent = false;
-
                         $this->c->Log->error('Passphrase reset: email form, MailException', [
                             'exception' => $e,
                             'headers'   => false,
@@ -288,7 +288,11 @@ class Auth extends Page
 
                         $this->c->Log->info('Passphrase reset: email form, ok', $context);
                     }
-                } else {
+                }
+
+                if (! $isSent) {
+                    $context['errors'] = $v->getErrors(true);
+
                     $this->c->Log->warning('Passphrase reset: email form, fail', $context);
                 }
 
