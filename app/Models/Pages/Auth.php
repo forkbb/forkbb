@@ -80,9 +80,12 @@ class Auth extends Page
             $this->fIswev = $v->getErrors();
 
             $this->c->Log->warning('Login: fail', [
-                'user' => $this->user->fLog(),
-                'form' => $v->getData(false, ['token', 'password']),
+                'user'   => $this->user->fLog(),
+                'errors' => $v->getErrorsWithoutType(),
+                'form'   => $v->getData(false, ['token', 'password']),
             ]);
+
+            $this->httpStatus = 400;
         }
 
         $ref = $this->c->Secury->replInvalidChars($_SERVER['HTTP_REFERER'] ?? '');
@@ -296,12 +299,14 @@ class Auth extends Page
                     $this->c->Log->warning('Passphrase reset: email form, fail', $context);
                 }
 
-                return $this->c->Message->message(__('Forget mail', $this->c->config->o_admin_email), false, 200);
+                return $this->c->Message->message(__('Forget mail', $this->c->config->o_admin_email), false, 0);
             }
 
             $this->fIswev = $v->getErrors();
 
             $this->c->Log->warning('Passphrase reset: email form, fail', $context);
+
+            $this->httpStatus = 400;
         }
 
         $this->hhsLevel   = 'secure';
@@ -413,9 +418,12 @@ class Auth extends Page
             $this->fIswev = $v->getErrors();
 
             $this->c->Log->warning('Passphrase reset: change form, fail', [
-                'user' => $user->fLog(),
-                'form' => $v->getData(false, ['token', 'password', 'password2']),
+                'user'   => $user->fLog(),
+                'errors' => $v->getErrorsWithoutType(),
+                'form'   => $v->getData(false, ['token', 'password', 'password2']),
             ]);
+
+            $this->httpStatus = 400;
         }
         // активация аккаунта (письмо активации не дошло, заказали восстановление)
         if ($user->isUnverified) {
