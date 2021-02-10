@@ -65,7 +65,7 @@ msgid "Expired token"
 msgstr "Expired token."
 
 msgid "Bad request"
-msgstr "Bad request. The link you followed is incorrect or outdated."
+msgstr "Bad request. The request currently contains incorrect data."
 
 msgid "Not Found"
 msgstr "Not Found. The link is incorrect or outdated."
