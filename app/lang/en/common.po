@@ -67,6 +67,9 @@ msgstr "Expired token."
 msgid "Bad request"
 msgstr "Bad request. The link you followed is incorrect or outdated."
 
+msgid "Not Found"
+msgstr "Not Found. The link is incorrect or outdated."
+
 msgid "No view"
 msgstr "You do not have permission to view these forums."
 

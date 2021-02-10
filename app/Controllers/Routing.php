@@ -720,7 +720,7 @@ class Routing
                 ) {
                     $page = $this->c->Redirect->page('Login');
                 } else {
-                    $page = $this->c->Message->message('Bad request');
+                    $page = $this->c->Message->message('Not Found', true, 404);
                 }
                 break;
             case $r::METHOD_NOT_ALLOWED:
