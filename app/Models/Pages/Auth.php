@@ -229,7 +229,7 @@ class Auth extends Page
             $isValid = $v->validation($_POST, true);
             $context = [
                 'user'    => $this->user->fLog(), // ???? Guest only?
-                'errors'  => $v->getErrors(true),
+                'errors'  => $v->getErrorsWithoutType(),
                 'form'    => $v->getData(false, ['token']),
                 'headers' => true,
             ];
@@ -291,7 +291,7 @@ class Auth extends Page
                 }
 
                 if (! $isSent) {
-                    $context['errors'] = $v->getErrors(true);
+                    $context['errors'] = $v->getErrorsWithoutType();
 
                     $this->c->Log->warning('Passphrase reset: email form, fail', $context);
                 }

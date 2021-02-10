@@ -429,18 +429,22 @@ class Validator
     /**
      * Возращает массив ошибок
      */
-    public function getErrors(bool $withoutType = false): array
+    public function getErrors(): array
     {
-        if ($withoutType) {
-            $result = [];
-            \array_walk_recursive($this->errors, function ($item) use (&$result) {
-                $result[] = $item;
-            });
+        return $this->errors;
+    }
 
-            return $result;
-        } else {
-            return $this->errors;
-        }
+    /**
+     * Возращает массив ошибок без разделения на типы
+     */
+    public function getErrorsWithoutType(): array
+    {
+        $result = [];
+        \array_walk_recursive($this->errors, function ($item) use (&$result) {
+            $result[] = $item;
+        });
+
+        return $result;
     }
 
     /**
