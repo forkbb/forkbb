@@ -49,24 +49,26 @@ class Register extends Page
 
         $v = $this->c->Test->beforeValidation($v);
 
-        // завершение регистрации
-        if (
-            $v->validation($_POST, true)
-            && 1 === $v->on
-        ) {
-            return $this->regEnd($v);
-        }
+        if ($v->validation($_POST, true)) {
+            // завершение регистрации
+            if (1 === $v->on) {
+                return $this->regEnd($v);
+            }
+        } else {
+            $this->fIswev = $v->getErrors();
 
-        $this->fIswev = $v->getErrors();
+            $this->c->Log->warning('Registration: fail', [
+                'user'   => $this->user->fLog(),
+                'errors' => $v->getErrorsWithoutType(),
+                'form'   => $v->getData(false, ['token', 'agree', 'password']),
+            ]);
 
-        $this->c->Log->warning('Registration: fail', [
-            'user' => $this->user->fLog(),
-            'form' => $v->getData(false, ['token', 'password']),
-        ]);
+            // нет согласия с правилами
+            if (isset($this->fIswev['cancel'])) {
+                return $this->c->Message->message('Reg cancel', true, 403);
+            }
 
-        // нет согласия с правилами
-        if (isset($this->fIswev['cancel'])) {
-            return $this->c->Message->message('Reg cancel', true, 403);
+            $this->httpStatus = 400;
         }
 
         $this->hhsLevel   = 'secure';
