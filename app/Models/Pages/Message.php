@@ -18,7 +18,7 @@ class Message extends Page
     /**
      * Подготавливает данные для шаблона
      */
-    public function message(string $message, bool $back = true, int $status = 404, array $headers = []): Page
+    public function message(string $message, bool $back = true, int $status = 400, array $headers = []): Page
     {
         $this->nameTpl    = 'message';
         $this->httpStatus = \max(200, $status);

@@ -51,9 +51,9 @@ class Poll extends Page
             $message = $this->c->Message;
             $message->fIswev = $v->getErrors();
 
-            return $message->message('', true, 400);
+            return $message->message('');
         } elseif (null !== ($result = $topic->poll->vote($v->poll_vote))) {
-            return $this->c->Message->message($result, true, 400);
+            return $this->c->Message->message($result);
         } else {
             return $this->c->Redirect->url($topic->link)->message('You voted');
         }
