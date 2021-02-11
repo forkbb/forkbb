@@ -208,7 +208,7 @@ class Auth extends Page
     /**
      * Запрос на смену кодовой фразы
      */
-    public function forget(array $args, string $method): Page
+    public function forget(array $args, string $method, string $email = ''): Page
     {
         $this->c->Lang->load('validator');
         $this->c->Lang->load('auth');
@@ -315,9 +315,7 @@ class Auth extends Page
         $this->onlinePos  = 'passphrase_reset';
         $this->robots     = 'noindex';
         $this->titles     = __('Passphrase reset');
-
-        $email            = $v ? $v->email : ($args['_email'] ?? '');
-        $this->form       = $this->formForget($email);
+        $this->form       = $this->formForget($v ? $v->email : $email);
 
         return $this;
     }

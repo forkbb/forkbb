@@ -265,7 +265,7 @@ class Register extends Page
                 $auth         = $this->c->Auth;
                 $auth->fIswev = ['w', __('Error welcom mail', $this->c->config->o_admin_email)];
 
-                return $auth->forget(['_email' => $v->email], 'GET');
+                return $auth->forget([], 'GET', $v->email);
             }
         // форма логина
         } else {
