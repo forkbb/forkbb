@@ -153,7 +153,6 @@ class Auth extends Page
                         ],
                         'password' => [
                             'id'        => 'passinlogin',
-                            'autofocus' => true,
                             'type'      => 'password',
                             'caption'   => __('Passphrase'),
                             'info'      => __('<a href="%s">Forgotten?</a>', $this->c->Router->link('Forget')),

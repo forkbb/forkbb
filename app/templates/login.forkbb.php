@@ -9,7 +9,7 @@
 @if ($p->regLink)
       <div id="fork-lgrglnk" class="f-fdiv f-lrdiv">
         <div class="f-btns">
-          <a class="f-btn f-fbtn" href="{{ $p->regLink }}" tabindex="6">{!! __('Not registered') !!}</a>
+          <a class="f-btn f-fbtn" href="{{ $p->regLink }}">{!! __('Not registered') !!}</a>
         </div>
       </div>
 @endif
