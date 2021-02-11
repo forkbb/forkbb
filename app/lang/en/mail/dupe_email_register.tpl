@@ -1,9 +1,9 @@
 Subject: Alert - Duplicate email detected
 
-User {!username!} registered with an email address that also belongs to: {!dupe_list!}
+User '{!username!}' [{!ip!}] tries to register with an email address that belongs to user '{!userInDB!}'.
 
-User profile: {!profile_url!}
+Forums at {!fRootLink!}
 
 --
-{!board_mailer!} Mailer
+{!fMailer!} Mailer
 (Do not reply to this message)

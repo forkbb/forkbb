@@ -32,7 +32,7 @@ class Register extends Page
                 'token'    => 'token:RegisterForm',
                 'agree'    => 'required|token:Register',
                 'on'       => 'integer',
-                'email'    => 'required_with:on|string:trim|email:noban,unique',
+                'email'    => 'required_with:on|string:trim|email:noban', // ???? noban
                 'username' => 'required_with:on|string:trim|username',
                 'password' => 'required_with:on|string|min:16|password',
                 'register' => 'required|string',
@@ -52,7 +52,13 @@ class Register extends Page
         if ($v->validation($_POST, true)) {
             // завершение регистрации
             if (1 === $v->on) {
-                return $this->regEnd($v);
+                $userInDB =  $this->c->users->loadByEmail($v->email);
+
+                if ($userInDB instanceof User) {
+                    return $this->regDupe($v, $userInDB);
+                } else {
+                    return $this->regEnd($v);
+                }
             }
         } else {
             $this->fIswev = $v->getErrors();
@@ -186,7 +192,6 @@ class Register extends Page
             $this->c->Lang->load('common', $this->c->config->o_default_lang);
 
             $tplData = [
-                'fTitle'    => $this->c->config->o_board_title,
                 'fRootLink' => $this->c->Router->link('Index'),
                 'fMailer'   => __('Mailer', $this->c->config->o_board_title),
                 'username'  => $v->username,
@@ -256,6 +261,76 @@ class Register extends Page
                     'headers'   => false,
                 ]);
             }
+
+            // письмо активации аккаунта отправлено
+            if ($isSent) {
+                return $this->c->Message->message(__('Reg email', $this->c->config->o_admin_email), false, 200);
+            // форма сброса пароля
+            } else {
+                $auth         = $this->c->Auth;
+                $auth->fIswev = ['w', __('Error welcom mail', $this->c->config->o_admin_email)];
+
+                return $auth->forget([], 'GET', $v->email);
+            }
+        // форма логина
+        } else {
+            $auth         = $this->c->Auth;
+            $auth->fIswev = ['s', __('Reg complete')];
+
+            return $auth->login([], 'GET', $v->username);
+        }
+    }
+
+    /**
+     * Делает вид, что пользователь зарегистрирован (для предотвращения утечки email)
+     */
+    protected function regDupe(Validator $v, User $userInDB): Page
+    {
+        $this->c->Log->warning('Registriaton: dupe', [
+            'user'     => $this->user->fLog(), // ????
+            'attacked' => $userInDB->fLog(),
+            'form'     => $v->getData(false, ['token', 'password']),
+        ]);
+
+        // уведомление о дубликате email
+        if (
+            '1' == $this->c->config->o_regs_report
+            && '' != $this->c->config->o_mailing_list
+        ) {
+            $this->c->Lang->load('common', $this->c->config->o_default_lang);
+
+            $tplData = [
+                'fRootLink' => $this->c->Router->link('Index'),
+                'fMailer'   => __('Mailer', $this->c->config->o_board_title),
+                'username'  => $v->username,
+                'ip'        => $this->user->ip,
+                'userInDB'  => $userInDB->username,
+            ];
+
+            try {
+                $this->c->Mail
+                    ->reset()
+                    ->setMaxRecipients((int) $this->c->config->i_email_max_recipients)
+                    ->setFolder($this->c->DIR_LANG)
+                    ->setLanguage($this->c->config->o_default_lang)
+                    ->setTo($this->c->config->o_mailing_list)
+                    ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
+                    ->setTpl('dupe_email_register.tpl', $tplData)
+                    ->send();
+            } catch (MailException $e) {
+                $this->c->Log->error('Registration: notification to admins, MailException', [
+                    'exception' => $e,
+                    'headers'   => false,
+                ]);
+            }
+        }
+
+        $this->c->Lang->load('common', $this->user->language);
+        $this->c->Lang->load('register');
+
+        // фейк отправки письма активации аккаунта
+        if ('1' == $this->c->config->o_regs_verify) {
+            $isSent = true;
 
             // письмо активации аккаунта отправлено
             if ($isSent) {
