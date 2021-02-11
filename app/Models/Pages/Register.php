@@ -180,7 +180,7 @@ class Register extends Page
 
         $this->c->Log->info('Registriaton: ok', [
             'user'    => $user->fLog(),
-            'form'    => $v->getData(false, ['token', 'password']),
+            'form'    => $v->getData(false, ['token', 'agree', 'password']),
             'headers' => true,
         ]);
 
@@ -289,7 +289,7 @@ class Register extends Page
         $this->c->Log->warning('Registriaton: dupe', [
             'user'     => $this->user->fLog(), // ????
             'attacked' => $userInDB->fLog(),
-            'form'     => $v->getData(false, ['token', 'password']),
+            'form'     => $v->getData(false, ['token', 'agree', 'password']),
         ]);
 
         // уведомление о дубликате email
