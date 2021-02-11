@@ -62,7 +62,7 @@ class Pass extends Profile
                 if ($this->rules->my) {
 #                    $auth = $this->c->Auth;
 #                    $auth->fIswev = ['s' => [__('Pass updated')]];
-#                    return $auth->login(['_username' => $this->curUser->username], 'GET');
+#                    return $auth->login([], 'GET', $this->curUser->username);
                     return $this->c->Redirect->page('Login')->message('Pass updated'); // ???? нужна передача данных между скриптами не привязанная к пользователю
                 } else {
                     return $this->c->Redirect->page('EditUserProfile', ['id' => $this->curUser->id])->message('Pass updated redirect');
