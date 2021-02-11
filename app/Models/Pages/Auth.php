@@ -47,7 +47,7 @@ class Auth extends Page
     /**
      * Вход на форум
      */
-    public function login(array $args, string $method): Page
+    public function login(array $args, string $method, string $username = ''): Page
     {
         $this->c->Lang->load('validator');
         $this->c->Lang->load('auth');
@@ -98,7 +98,7 @@ class Auth extends Page
         $this->titles     = __('Login');
         $this->regLink    = '1' == $this->c->config->o_regs_allow ? $this->c->Router->link('Register') : null;
 
-        $username         = $v ? $v->username : ($args['_username'] ?? '');
+        $username         = $v ? $v->username : $username;
         $save             = $v ? $v->save : 1;
         $redirect         = $v ? $v->redirect : $this->c->Router->validate($ref, 'Index');
         $this->form       = $this->formLogin($username, $save, $redirect);

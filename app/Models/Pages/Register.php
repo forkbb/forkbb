@@ -272,7 +272,7 @@ class Register extends Page
             $auth         = $this->c->Auth;
             $auth->fIswev = ['s', __('Reg complete')];
 
-            return $auth->login(['_username' => $v->username], 'GET');
+            return $auth->login([], 'GET', $v->username);
         }
     }
 
@@ -309,6 +309,6 @@ class Register extends Page
         $auth         = $this->c->Auth;
         $auth->fIswev = ['s', __('Reg complete')];
 
-        return $auth->login(['_username' => $user->username], 'GET');
+        return $auth->login([], 'GET', $user->username);
     }
 }
