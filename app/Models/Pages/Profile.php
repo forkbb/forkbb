@@ -20,9 +20,9 @@ abstract class Profile extends Page
     /**
      * Инициализирует профиль
      */
-    protected function initProfile(/* string|int */ $id): bool
+    protected function initProfile(int $id): bool
     {
-        $this->curUser = $this->c->users->load((int) $id);
+        $this->curUser = $this->c->users->load($id);
 
         if (
             ! $this->curUser instanceof User

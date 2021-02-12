@@ -185,37 +185,37 @@ class Routing
                 // юзеры
                 $r->add(
                     $r::GET,
-                    '/user/{id:[2-9]|[1-9]\d+}/{name}',
+                    '/user/{id|i:[2-9]|[1-9]\d+}/{name}',
                     'ProfileView:view',
                     'User'
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id:[2-9]|[1-9]\d+}/edit/profile',
+                    '/user/{id|i:[2-9]|[1-9]\d+}/edit/profile',
                     'ProfileEdit:edit',
                     'EditUserProfile'
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id:[2-9]|[1-9]\d+}/edit/config',
+                    '/user/{id|i:[2-9]|[1-9]\d+}/edit/config',
                     'ProfileConfig:config',
                     'EditUserBoardConfig'
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id:[2-9]|[1-9]\d+}/edit/email',
+                    '/user/{id|i:[2-9]|[1-9]\d+}/edit/email',
                     'ProfileEmail:email',
                     'EditUserEmail'
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id:[2-9]|[1-9]\d+}/edit/passphrase',
+                    '/user/{id|i:[2-9]|[1-9]\d+}/edit/passphrase',
                     'ProfilePass:pass',
                     'EditUserPass'
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id:[2-9]|[1-9]\d+}/edit/moderation',
+                    '/user/{id|i:[2-9]|[1-9]\d+}/edit/moderation',
                     'ProfileMod:moderation',
                     'EditUserModeration'
                 );
@@ -223,31 +223,31 @@ class Routing
                 // только свой профиль
                 $r->add(
                     $r::GET,
-                    '/user/{id:' . $user->id . '}/{name}',
+                    '/user/{id|i:' . $user->id . '}/{name}',
                     'ProfileView:view',
                     'User'
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id:' . $user->id . '}/edit/profile',
+                    '/user/{id|i:' . $user->id . '}/edit/profile',
                     'ProfileEdit:edit',
                     'EditUserProfile'
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id:' . $user->id . '}/edit/config',
+                    '/user/{id|i:' . $user->id . '}/edit/config',
                     'ProfileConfig:config',
                     'EditUserBoardConfig'
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id:' . $user->id . '}/edit/email',
+                    '/user/{id|i:' . $user->id . '}/edit/email',
                     'ProfileEmail:email',
                     'EditUserEmail'
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id:' . $user->id . '}/edit/passphrase',
+                    '/user/{id|i:' . $user->id . '}/edit/passphrase',
                     'ProfilePass:pass',
                     'EditUserPass'
                 );
@@ -256,7 +256,7 @@ class Routing
             if (! $user->isGuest) {
                 $r->add(
                     $r::GET,
-                    '/user/{id:' . $user->id . '}/{email}/{key}/{hash}',
+                    '/user/{id|i:' . $user->id . '}/{email}/{key}/{hash}',
                     'ProfileEmail:setEmail',
                     'SetNewEmail'
                 );
