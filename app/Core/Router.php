@@ -155,7 +155,7 @@ class Router
         list($link, $names, $request) = $data;
         $data = [];
         // перечисление имен переменных для построения ссылки
-        foreach ($names as $name) {
+        foreach ($names as $name => $type) {
             // значение есть
             if (isset($args[$name])) {
                 // кроме page = 1
@@ -266,11 +266,17 @@ class Router
                 }
 
                 $args = [];
-                foreach ($keys as $key) {
-                    if (isset($matches[$key])) { // ???? может isset($matches[$key][0]) тут поставить?
-                        $args[$key] = isset($matches[$key][0])
-                            ? \str_replace($this->subRepl, $this->subSearch, $matches[$key])
-                            : null;
+                foreach ($keys as $key => $type) {
+                    if (isset($matches[$key][0])) {
+                        $args[$key] = \str_replace($this->subRepl, $this->subSearch, $matches[$key]);
+
+                        switch ($type) {
+                            case 'i':
+                                $args[$key] = (int) $args[$key]; // ???? добавить проверку типа?
+                                break;
+                        }
+                    } else {
+                        $args[$key] = null;
                     }
                 }
 
@@ -383,23 +389,15 @@ class Router
                     case '{':
                         return null;
                     case '}':
-                        $data = \explode(':', $buffer, 2);
-                        if (! isset($data[1])) {
-                            $data[1] = '[^/\x00-\x1f]+';
-                        }
-                        if (
-                            '' === $data[0]
-                            || '' === $data[1]
-                            || \is_numeric($data[0][0])
-                        ) {
+                        if (! \preg_match('%^([a-zA-Z][^:|]*+)(?:\|([a-z]))?(?::(.+))?$%D', $buffer, $data)) {
                             return null;
                         }
-                        $pattern .= '(?P<' . $data[0] . '>' . $data[1] . ')';
-                        $args[]   = $data[0];
-                        $temp    .= '{' . $data[0] . '}';
-                        $var      = false;
-                        $buffer   = '';
-                        $argsReq[$data[0]] = $req;
+                        $pattern          .= '(?P<' . $data[1] . '>' . ($data[3] ?? '[^/\x00-\x1f]+') . ')';
+                        $args[$data[1]]    = empty($data[2]) ? 's' : $data[2];
+                        $temp             .= '{' . $data[1] . '}';
+                        $var               = false;
+                        $buffer            = '';
+                        $argsReq[$data[1]] = $req;
                         break;
                     default:
                         $buffer .= $part;
