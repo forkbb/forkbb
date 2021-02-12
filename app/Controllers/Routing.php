@@ -54,7 +54,7 @@ class Routing
             // смена кодовой фразы
             $r->add(
                 $r::DUO,
-                '/login/{id:[2-9]|[1-9]\d+}/{key}/{hash}',
+                '/login/{id|i:[2-9]|[1-9]\d+}/{key}/{hash}',
                 'Auth:changePass',
                 'ChangePassword'
             );
@@ -75,7 +75,7 @@ class Routing
                 );
                 $r->add(
                     $r::GET,
-                    '/registration/activate/{id:[2-9]|[1-9]\d+}/{key}/{hash}',
+                    '/registration/activate/{id|i:[2-9]|[1-9]\d+}/{key}/{hash}',
                     'Register:activate',
                     'RegActivate'
                 );
@@ -139,7 +139,7 @@ class Routing
             if ('1' == $user->g_search) {
                 $r->add(
                     $r::GET,
-                    '/search[/simple/{keywords}[/{page:[1-9]\d*}]]',
+                    '/search[/simple/{keywords}[/{page|i:[1-9]\d*}]]',
                     'Search:view',
                     'Search'
                 );
@@ -151,7 +151,7 @@ class Routing
 
                 $r->add(
                     $r::GET,
-                    '/search/advanced[/{keywords}/{author}/{forums}/{serch_in:\d}/{sort_by:\d}/{sort_dir:\d}/{show_as:\d}[/{page:[1-9]\d*}]]',
+                    '/search/advanced[/{keywords}/{author}/{forums}/{serch_in:\d}/{sort_by:\d}/{sort_dir:\d}/{show_as:\d}[/{page|i:[1-9]\d*}]]',
                     'Search:viewAdvanced',
                     'SearchAdvanced'
                 );
@@ -163,7 +163,7 @@ class Routing
 
                 $r->add(
                     $r::GET,
-                    '/search[/user/{uid:[2-9]|[1-9]\d+}]/{action:(?!search)[a-z_]+}[/in_forum/{forum:[1-9]\d*}][/{page:[1-9]\d*}]',
+                    '/search[/user/{uid|i:[2-9]|[1-9]\d+}]/{action:(?!search)[a-z_]+}[/in_forum/{forum:[1-9]\d*}][/{page|i:[1-9]\d*}]',
                     'Search:action',
                     'SearchAction'
                 );
@@ -173,7 +173,7 @@ class Routing
                 // список пользователей
                 $r->add(
                     $r::GET,
-                    '/userlist[/{group:all|[1-9]\d*}/{sort:username|registered|num_posts}/{dir:ASC|DESC}/{name}][/{page:[1-9]\d*}]',
+                    '/userlist[/{group:all|[1-9]\d*}/{sort:username|registered|num_posts}/{dir:ASC|DESC}/{name}][/{page|i:[1-9]\d*}]',
                     'Userlist:view',
                     'Userlist'
                 );
@@ -265,7 +265,7 @@ class Routing
             if (! $user->isGuest) {
                 $r->add(
                     $r::GET,
-                    '/forum/{id:\d+}/markread/{token}',
+                    '/forum/{id|i:\d+}/markread/{token}',
                     'Misc:markread',
                     'MarkRead'
                 );
@@ -274,68 +274,68 @@ class Routing
             // разделы
             $r->add(
                 $r::GET,
-                '/forum/{id:[1-9]\d*}/{name}[/{page:[1-9]\d*}]',
+                '/forum/{id|i:[1-9]\d*}/{name}[/{page|i:[1-9]\d*}]',
                 'Forum:view',
                 'Forum'
             );
             $r->add(
                 $r::DUO,
-                '/forum/{id:[1-9]\d*}/new/topic',
+                '/forum/{id|i:[1-9]\d*}/new/topic',
                 'Post:newTopic',
                 'NewTopic'
             );
             // темы
             $r->add(
                 $r::GET,
-                '/topic/{id:[1-9]\d*}/{name}[/{page:[1-9]\d*}]',
+                '/topic/{id|i:[1-9]\d*}/{name}[/{page|i:[1-9]\d*}]',
                 'Topic:viewTopic',
                 'Topic'
             );
             $r->add(
                 $r::GET,
-                '/topic/{id:[1-9]\d*}/view/new',
+                '/topic/{id|i:[1-9]\d*}/view/new',
                 'Topic:viewNew',
                 'TopicViewNew'
             );
             $r->add(
                 $r::GET,
-                '/topic/{id:[1-9]\d*}/view/unread',
+                '/topic/{id|i:[1-9]\d*}/view/unread',
                 'Topic:viewUnread',
                 'TopicViewUnread'
             );
             $r->add(
                 $r::GET,
-                '/topic/{id:[1-9]\d*}/view/last',
+                '/topic/{id|i:[1-9]\d*}/view/last',
                 'Topic:viewLast',
                 'TopicViewLast'
             );
             $r->add(
                 $r::GET,
-                '/topic/{id:[1-9]\d*}/new/reply[/{quote:[1-9]\d*}]',
+                '/topic/{id|i:[1-9]\d*}/new/reply[/{quote|i:[1-9]\d*}]',
                 'Post:newReply',
                 'NewReply'
             );
             $r->add(
                 $r::PST,
-                '/topic/{id:[1-9]\d*}/new/reply',
+                '/topic/{id|i:[1-9]\d*}/new/reply',
                 'Post:newReply'
             );
             // сообщения
             $r->add(
                 $r::GET,
-                '/post/{id:[1-9]\d*}#p{id}',
+                '/post/{id|i:[1-9]\d*}#p{id}',
                 'Topic:viewPost',
                 'ViewPost'
             );
             $r->add(
                 $r::DUO,
-                '/post/{id:[1-9]\d*}/edit',
+                '/post/{id|i:[1-9]\d*}/edit',
                 'Edit:edit',
                 'EditPost'
             );
             $r->add(
                 $r::DUO,
-                '/post/{id:[1-9]\d*}/delete',
+                '/post/{id|i:[1-9]\d*}/delete',
                 'Delete:delete',
                 'DeletePost'
             );
@@ -346,7 +346,7 @@ class Routing
             ) { // ????
                 $r->add(
                     $r::DUO,
-                    '/post/{id:[1-9]\d*}/report',
+                    '/post/{id|i:[1-9]\d*}/report',
                     'Report:report',
                     'ReportPost'
                 );
@@ -358,7 +358,7 @@ class Routing
             ) {
                 $r->add(
                     $r::DUO,
-                    '/send_email/{id:[2-9]|[1-9]\d+}',
+                    '/send_email/{id|i:[2-9]|[1-9]\d+}',
                     'Email:email',
                     'SendEmail'
                 );
@@ -366,7 +366,7 @@ class Routing
             // feed
             $r->add(
                 $r::GET,
-                '/feed/{type:atom|rss}[/forum/{fid:[1-9]\d*}][/topic/{tid:[1-9]\d*}]',
+                '/feed/{type:atom|rss}[/forum/{fid|i:[1-9]\d*}][/topic/{tid|i:[1-9]\d*}]',
                 'Feed:view',
                 'Feed'
             );
@@ -377,13 +377,13 @@ class Routing
             ) {
                 $r->add(
                     $r::GET,
-                    '/forum/{fid:[1-9]\d*}/{type:subscribe|unsubscribe}/{token}',
+                    '/forum/{fid|i:[1-9]\d*}/{type:subscribe|unsubscribe}/{token}',
                     'Misc:forumSubscription',
                     'ForumSubscription'
                 );
                 $r->add(
                     $r::GET,
-                    '/topic/{tid:[1-9]\d*}/{type:subscribe|unsubscribe}/{token}',
+                    '/topic/{tid|i:[1-9]\d*}/{type:subscribe|unsubscribe}/{token}',
                     'Misc:topicSubscription',
                     'TopicSubscription'
                 );
@@ -394,7 +394,7 @@ class Routing
         if ($user->usePoll) {
             $r->add(
                 $r::PST,
-                '/poll/{tid:[1-9]\d*}',
+                '/poll/{tid|i:[1-9]\d*}',
                 'Poll:vote',
                 'Poll'
             );
@@ -423,7 +423,7 @@ class Routing
                 );
                 $r->add(
                     $r::GET,
-                    '/admin/users/user/{id:[2-9]|[1-9]\d+}[/{page:[1-9]\d*}]',
+                    '/admin/users/user/{id|i:[2-9]|[1-9]\d+}[/{page|i:[1-9]\d*}]',
                     'AdminUsersStat:view',
                     'AdminUserStat'
                 );
@@ -437,7 +437,7 @@ class Routing
             );
             $r->add(
                 $r::DUO,
-                '/admin/users/result/{data}[/{page:[1-9]\d*}]',
+                '/admin/users/result/{data}[/{page|i:[1-9]\d*}]',
                 'AdminUsersResult:view',
                 'AdminUsersResult'
             );
@@ -450,7 +450,7 @@ class Routing
 
             $r->add(
                 $r::GET,
-                '/admin/users/promote/{uid:[2-9]|[1-9]\d+}/{pid:[1-9]\d*}/{token}',
+                '/admin/users/promote/{uid|i:[2-9]|[1-9]\d+}/{pid|i:[1-9]\d*}/{token}',
                 'AdminUsersPromote:promote',
                 'AdminUserPromote'
             );
@@ -479,25 +479,25 @@ class Routing
                 );
                 $r->add(
                     $r::DUO,
-                    '/admin/bans/new[/{ids:\d+(?:-\d+)*}[/{uid:[2-9]|[1-9]\d+}]]',
+                    '/admin/bans/new[/{ids:\d+(?:-\d+)*}[/{uid|i:[2-9]|[1-9]\d+}]]',
                     'AdminBans:add',
                     'AdminBansNew'
                 );
                 $r->add(
                     $r::DUO,
-                    '/admin/bans/edit/{id:[1-9]\d*}',
+                    '/admin/bans/edit/{id|i:[1-9]\d*}',
                     'AdminBans:edit',
                     'AdminBansEdit'
                 );
                 $r->add(
                     $r::GET,
-                    '/admin/bans/result/{data}[/{page:[1-9]\d*}]',
+                    '/admin/bans/result/{data}[/{page|i:[1-9]\d*}]',
                     'AdminBans:result',
                     'AdminBansResult'
                 );
                 $r->add(
                     $r::GET,
-                    '/admin/bans/delete/{id:[1-9]\d*}/{token}[/{uid:[2-9]|[1-9]\d+}]',
+                    '/admin/bans/delete/{id|i:[1-9]\d*}/{token}[/{uid|i:[2-9]|[1-9]\d+}]',
                     'AdminBans:delete',
                     'AdminBansDelete'
                 );
@@ -516,7 +516,7 @@ class Routing
                 );
                 $r->add(
                     $r::GET,
-                    '/admin/reports/zap/{id:[1-9]\d*}/{token}',
+                    '/admin/reports/zap/{id|i:[1-9]\d*}/{token}',
                     'AdminReports:zap',
                     'AdminReportsZap'
                 );
@@ -540,7 +540,7 @@ class Routing
             );
             $r->add(
                 $r::GET,
-                '/admin/statistics/info/{time:\d+}',
+                '/admin/statistics/info/{time|i:\d+}',
                 'AdminStatistics:infoCSS',
                 'AdminInfoCSS'
             );
@@ -564,13 +564,13 @@ class Routing
             );
             $r->add(
                 $r::GET,
-                '/admin/parser/bbcode/delete/{id:[1-9]\d*}/{token}',
+                '/admin/parser/bbcode/delete/{id|i:[1-9]\d*}/{token}',
                 'AdminParserBBCode:delete',
                 'AdminBBCodeDelete'
             );
             $r->add(
                 $r::DUO,
-                '/admin/parser/bbcode/edit/{id:[1-9]\d*}',
+                '/admin/parser/bbcode/edit/{id|i:[1-9]\d*}',
                 'AdminParserBBCode:edit',
                 'AdminBBCodeEdit'
             );
@@ -582,7 +582,7 @@ class Routing
             );
             $r->add(
                 $r::GET,
-                '/admin/parser/bbcode/default/{id:[1-9]\d*}/{token}',
+                '/admin/parser/bbcode/default/{id|i:[1-9]\d*}/{token}',
                 'AdminParserBBCode:default',
                 'AdminBBCodeDefault'
             );
@@ -612,7 +612,7 @@ class Routing
             );
             $r->add(
                 $r::DUO,
-                '/admin/categories/{id:[1-9]\d*}/delete',
+                '/admin/categories/{id|i:[1-9]\d*}/delete',
                 'AdminCategories:delete',
                 'AdminCategoriesDelete'
             );
@@ -630,13 +630,13 @@ class Routing
             );
             $r->add(
                 $r::DUO,
-                '/admin/forums/{id:[1-9]\d*}/edit',
+                '/admin/forums/{id|i:[1-9]\d*}/edit',
                 'AdminForums:edit',
                 'AdminForumsEdit'
             );
             $r->add(
                 $r::DUO,
-                '/admin/forums/{id:[1-9]\d*}/delete',
+                '/admin/forums/{id|i:[1-9]\d*}/delete',
                 'AdminForums:delete',
                 'AdminForumsDelete'
             );
@@ -654,19 +654,19 @@ class Routing
             );
             $r->add(
                 $r::PST,
-                '/admin/groups/new[/{base:[1-9]\d*}]',
+                '/admin/groups/new[/{base|i:[1-9]\d*}]',
                 'AdminGroups:edit',
                 'AdminGroupsNew'
             );
             $r->add(
                 $r::DUO,
-                '/admin/groups/{id:[1-9]\d*}/edit',
+                '/admin/groups/{id|i:[1-9]\d*}/edit',
                 'AdminGroups:edit',
                 'AdminGroupsEdit'
             );
             $r->add(
                 $r::DUO,
-                '/admin/groups/{id:[1-9]\d*}/delete',
+                '/admin/groups/{id|i:[1-9]\d*}/delete',
                 'AdminGroups:delete',
                 'AdminGroupsDelete'
             );
@@ -690,7 +690,7 @@ class Routing
             );
             $r->add(
                 $r::GET,
-                '/admin/maintenance/rebuild/{token}/{clear:[01]}/{limit:[1-9]\d*}/{start:[1-9]\d*}',
+                '/admin/maintenance/rebuild/{token}/{clear:[01]}/{limit|i:[1-9]\d*}/{start|i:[1-9]\d*}',
                 'AdminMaintenance:rebuild',
                 'AdminRebuildIndex'
             );
