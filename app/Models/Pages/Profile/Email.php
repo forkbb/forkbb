@@ -75,7 +75,7 @@ class Email extends Profile
                     'new_email' => 'New email',
                     'password'  => 'Your passphrase',
                 ])->addArguments([
-                    'token'           => ['id' => $this->curUser->id],
+                    'token'           => $args,
                     'new_email.email' => $this->curUser,
                 ])->addMessages([
                 ]);
@@ -86,7 +86,7 @@ class Email extends Profile
                     && ! $this->rules->confirmEmail
                 ) {
                     return $this->c->Redirect
-                        ->page('EditUserProfile', ['id' => $this->curUser->id])
+                        ->page('EditUserProfile', $args)
                         ->message('Email is old redirect');
                 }
 
@@ -97,7 +97,7 @@ class Email extends Profile
                     $this->c->users->update($this->curUser);
 
                     return $this->c->Redirect
-                        ->page('EditUserProfile', ['id' => $this->curUser->id])
+                        ->page('EditUserProfile', $args)
                         ->message('Email changed redirect');
                 } else {
                     $key  = $this->c->Secury->randomPass(33);
@@ -160,25 +160,15 @@ class Email extends Profile
 
         $this->crumbs     = $this->crumbs(
             [
-                $this->c->Router->link(
-                    'EditUserEmail',
-                    [
-                        'id' => $this->curUser->id,
-                    ]
-                ),
+                $this->c->Router->link('EditUserEmail', $args),
                 __('Change email'),
             ],
             [
-                $this->c->Router->link(
-                    'EditUserProfile',
-                    [
-                        'id' => $this->curUser->id,
-                    ]
-                ),
+                $this->c->Router->link('EditUserProfile', $args),
                 __('Editing profile'),
             ]
         );
-        $this->form       = $this->form();
+        $this->form       = $this->form($args);
         $this->actionBtns = $this->btns('edit');
 
         return $this;
@@ -187,22 +177,12 @@ class Email extends Profile
     /**
      * Создает массив данных для формы
      */
-    protected function form(): array
+    protected function form(array $args): array
     {
         $form = [
-            'action' => $this->c->Router->link(
-                'EditUserEmail',
-                [
-                    'id' => $this->curUser->id,
-                ]
-            ),
+            'action' => $this->c->Router->link('EditUserEmail', $args),
             'hidden' => [
-                'token' => $this->c->Csrf->create(
-                    'EditUserEmail',
-                    [
-                        'id' => $this->curUser->id,
-                    ]
-                ),
+                'token' => $this->c->Csrf->create('EditUserEmail', $args),
             ],
             'sets'   => [
                 'new-email' => [

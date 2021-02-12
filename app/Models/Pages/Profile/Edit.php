@@ -110,7 +110,7 @@ class Edit extends Profile
                     'url'           => 'Website',
                     'signature'     => 'Signature',
                 ])->addArguments([
-                    'token'             => ['id' => $this->curUser->id],
+                    'token'             => $args,
                     'username.username' => $this->curUser,
                 ])->addMessages([
                 ]);
@@ -145,7 +145,7 @@ class Edit extends Profile
 
                 $this->c->users->update($this->curUser);
 
-                return $this->c->Redirect->page('EditUserProfile', ['id' => $this->curUser->id])->message('Profile redirect');
+                return $this->c->Redirect->page('EditUserProfile', $args)->message('Profile redirect');
             } else {
                 $this->fIswev = $v->getErrors();
 
@@ -155,16 +155,11 @@ class Edit extends Profile
 
         $this->crumbs     = $this->crumbs(
             [
-                $this->c->Router->link(
-                    'EditUserProfile',
-                    [
-                        'id' => $this->curUser->id,
-                    ]
-                ),
+                $this->c->Router->link('EditUserProfile', $args),
                 __('Editing profile'),
             ]
         );
-        $this->form       = $this->form();
+        $this->form       = $this->form($args);
         $this->actionBtns = $this->btns('edit');
 
         return $this;
@@ -218,22 +213,12 @@ class Edit extends Profile
     /**
      * Создает массив данных для формы
      */
-    protected function form(): array
+    protected function form(array $args): array
     {
         $form = [
-            'action' => $this->c->Router->link(
-                'EditUserProfile',
-                [
-                    'id' => $this->curUser->id,
-                ]
-            ),
+            'action' => $this->c->Router->link('EditUserProfile', $args),
             'hidden' => [
-                'token' => $this->c->Csrf->create(
-                    'EditUserProfile',
-                    [
-                        'id' => $this->curUser->id,
-                    ]
-                ),
+                'token' => $this->c->Csrf->create('EditUserProfile', $args),
             ],
             'sets'   => [],
             'btns'   => [
@@ -285,12 +270,7 @@ class Edit extends Profile
                 'type'    => 'link',
                 'value'   => __('Configure moderator rights'),
                 'title'   => __('Configure moderator rights'),
-                'href'    => $this->c->Router->link(
-                    'EditUserModeration',
-                    [
-                        'id' => $this->curUser->id,
-                    ]
-                ),
+                'href'    => $this->c->Router->link('EditUserModeration', $args),
             ];
         }
         if ($this->rules->setTitle) {
@@ -313,12 +293,7 @@ class Edit extends Profile
             $fields['change_pass'] = [
                 'type'  => 'link',
                 'value' => __('Change passphrase'),
-                'href'  => $this->c->Router->link(
-                    'EditUserPass',
-                    [
-                        'id' => $this->curUser->id,
-                    ]
-                ),
+                'href'  => $this->c->Router->link('EditUserPass', $args),
             ];
         }
         if ($this->rules->useAvatar) {
@@ -429,12 +404,7 @@ class Edit extends Profile
             $fields['change_email'] = [
                 'type'  => 'link',
                 'value' => __($this->rules->confirmEmail ? 'To confirm/change email' : 'To change email'),
-                'href'  => $this->c->Router->link(
-                    'EditUserEmail',
-                    [
-                        'id' => $this->curUser->id,
-                    ]
-                ),
+                'href'  => $this->c->Router->link('EditUserEmail', $args),
             ];
         }
         $fields['email_setting'] = [

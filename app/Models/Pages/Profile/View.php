@@ -158,12 +158,7 @@ class View extends Profile
                     'type'    => 'link',
                     'caption' => __('Email info'),
                     'value'   => __('Send email'),
-                    'href'    => $this->c->Router->link(
-                        'SendEmail',
-                        [
-                            'id' => $this->curUser->id,
-                        ]
-                    ),
+                    'href'    => $this->c->Router->link('SendEmail', $args),
                 ];
             }
         }

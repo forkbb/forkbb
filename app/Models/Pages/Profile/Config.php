@@ -73,7 +73,7 @@ class Config extends Profile
                     'disp_posts'    => 'Posts per page label',
                     'ip_check_type' => 'IP check',
                 ])->addArguments([
-                    'token' => ['id' => $this->curUser->id],
+                    'token' => $args,
                 ])->addMessages([
                 ]);
 
@@ -100,7 +100,7 @@ class Config extends Profile
 
                 $this->c->users->update($this->curUser);
 
-                return $this->c->Redirect->page('EditUserBoardConfig', ['id' => $this->curUser->id])->message('Board configuration redirect');
+                return $this->c->Redirect->page('EditUserBoardConfig', $args)->message('Board configuration redirect');
             }
 
             $this->fIswev = $v->getErrors();
@@ -108,16 +108,11 @@ class Config extends Profile
 
         $this->crumbs     = $this->crumbs(
             [
-                $this->c->Router->link(
-                    'EditUserBoardConfig',
-                    [
-                        'id' => $this->curUser->id,
-                    ]
-                ),
+                $this->c->Router->link('EditUserBoardConfig', $args),
                 __('Board configuration'),
             ]
         );
-        $this->form       = $this->form();
+        $this->form       = $this->form($args);
         $this->actionBtns = $this->btns('config');
 
         return $this;
@@ -134,22 +129,12 @@ class Config extends Profile
     /**
      * Создает массив данных для формы
      */
-    protected function form(): array
+    protected function form(array $args): array
     {
         $form = [
-            'action' => $this->c->Router->link(
-                'EditUserBoardConfig',
-                [
-                    'id' => $this->curUser->id,
-                ]
-            ),
+            'action' => $this->c->Router->link('EditUserBoardConfig', $args),
             'hidden' => [
-                'token' => $this->c->Csrf->create(
-                    'EditUserBoardConfig',
-                    [
-                        'id' => $this->curUser->id,
-                    ]
-                ),
+                'token' => $this->c->Csrf->create('EditUserBoardConfig', $args),
             ],
             'sets'   => [],
             'btns'   => [

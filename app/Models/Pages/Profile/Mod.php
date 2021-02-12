@@ -43,7 +43,7 @@ class Mod extends Profile
                     'save'        => 'required|string',
                 ])->addAliases([
                 ])->addArguments([
-                    'token'       => ['id' => $this->curUser->id],
+                    'token'       => $args,
                 ])->addMessages([
                 ]);
 
@@ -62,7 +62,7 @@ class Mod extends Profile
 
                 $this->c->forums->reset();
 
-                return $this->c->Redirect->page('EditUserModeration', ['id' => $this->curUser->id])->message('Update rights redirect');
+                return $this->c->Redirect->page('EditUserModeration', $args)->message('Update rights redirect');
             }
 
             $this->fIswev = $v->getErrors();
@@ -70,25 +70,15 @@ class Mod extends Profile
 
         $this->crumbs     = $this->crumbs(
             [
-                $this->c->Router->link(
-                    'EditUserModeration',
-                    [
-                        'id' => $this->curUser->id,
-                    ]
-                ),
+                $this->c->Router->link('EditUserModeration', $args),
                 __('Moderator rights'),
             ],
             [
-                $this->c->Router->link(
-                    'EditUserProfile',
-                    [
-                        'id' => $this->curUser->id,
-                    ]
-                ),
+                $this->c->Router->link('EditUserProfile', $args),
                 __('Editing profile'),
             ]
         );
-        $this->form       = $this->form();
+        $this->form       = $this->form($args);
         $this->actionBtns = $this->btns('edit');
 
         return $this;
@@ -107,22 +97,12 @@ class Mod extends Profile
     /**
      * Создает массив данных для формы
      */
-    protected function form(): array
+    protected function form(array $args): array
     {
         $form = [
-            'action' => $this->c->Router->link(
-                'EditUserModeration',
-                [
-                    'id' => $this->curUser->id,
-                ]
-            ),
+            'action' => $this->c->Router->link('EditUserModeration', $args),
             'hidden' => [
-                'token' => $this->c->Csrf->create(
-                    'EditUserModeration',
-                    [
-                        'id' => $this->curUser->id,
-                    ]
-                ),
+                'token' => $this->c->Csrf->create('EditUserModeration', $args),
             ],
             'sets'   => [],
             'btns'   => [

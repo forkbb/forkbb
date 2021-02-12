@@ -47,13 +47,13 @@ class Pass extends Profile
                     'new_pass'  => 'New pass',
                     'password'  => 'Your passphrase',
                 ])->addArguments([
-                    'token'     => ['id' => $this->curUser->id],
+                    'token'     => $args,
                 ])->addMessages([
                 ]);
 
             if ($v->validation($_POST)) {
 //                if (\password_verify($v->new_pass, $this->curUser->password)) {
-//                    return $this->c->Redirect->page('EditUserProfile', ['id' => $this->curUser->id])->message('Email is old redirect');
+//                    return $this->c->Redirect->page('EditUserProfile', $args)->message('Email is old redirect');
 //                }
 
                 $this->curUser->password = \password_hash($v->new_pass, \PASSWORD_DEFAULT);
@@ -65,7 +65,7 @@ class Pass extends Profile
 #                    return $auth->login([], 'GET', $this->curUser->username);
                     return $this->c->Redirect->page('Login')->message('Pass updated'); // ???? нужна передача данных между скриптами не привязанная к пользователю
                 } else {
-                    return $this->c->Redirect->page('EditUserProfile', ['id' => $this->curUser->id])->message('Pass updated redirect');
+                    return $this->c->Redirect->page('EditUserProfile', $args)->message('Pass updated redirect');
                 }
             }
 
@@ -74,25 +74,15 @@ class Pass extends Profile
 
         $this->crumbs     = $this->crumbs(
             [
-                $this->c->Router->link(
-                    'EditUserPass',
-                    [
-                        'id' => $this->curUser->id,
-                    ]
-                ),
+                $this->c->Router->link('EditUserPass', $args),
                 __('Change pass'),
             ],
             [
-                $this->c->Router->link(
-                    'EditUserProfile',
-                    [
-                        'id' => $this->curUser->id,
-                    ]
-                ),
+                $this->c->Router->link('EditUserProfile', $args),
                 __('Editing profile'),
             ]
         );
-        $this->form       = $this->form();
+        $this->form       = $this->form($args);
         $this->actionBtns = $this->btns('edit');
 
         return $this;
@@ -101,22 +91,12 @@ class Pass extends Profile
     /**
      * Создает массив данных для формы
      */
-    protected function form(): array
+    protected function form(array $args): array
     {
         $form = [
-            'action' => $this->c->Router->link(
-                'EditUserPass',
-                [
-                    'id' => $this->curUser->id,
-                ]
-            ),
+            'action' => $this->c->Router->link('EditUserPass', $args),
             'hidden' => [
-                'token' => $this->c->Csrf->create(
-                    'EditUserPass',
-                    [
-                        'id' => $this->curUser->id,
-                    ]
-                ),
+                'token' => $this->c->Csrf->create('EditUserPass', $args),
             ],
             'sets'   => [
                 'new-pass' => [
