@@ -187,7 +187,7 @@ class Groups extends Admin
             $next = false;
         // продолжение редактирования/создания
         } else {
-            $gid  = (int) ($args['id'] ?? $args['base']);
+            $gid  = $args['id'] ?? $args['base'];
             $next = true;
         }
 
@@ -361,15 +361,9 @@ class Groups extends Admin
     protected function formEdit(array $args, Group $group, string $marker): array
     {
         $form = [
-            'action' => $this->c->Router->link(
-                $marker,
-                $args
-            ),
+            'action' => $this->c->Router->link($marker, $args),
             'hidden' => [
-                'token' => $this->c->Csrf->create(
-                    $marker,
-                    $args
-                ),
+                'token' => $this->c->Csrf->create($marker, $args),
             ],
             'sets'   => [],
             'btns'   => [
@@ -680,7 +674,7 @@ class Groups extends Admin
      */
     public function delete(array $args, string $method): Page
     {
-        $group = $this->c->groups->get((int) $args['id']);
+        $group = $this->c->groups->get($args['id']);
 
         if (
             null === $group
@@ -738,10 +732,7 @@ class Groups extends Admin
 
         $this->nameTpl   = 'admin/form';
         $this->aCrumbs[] = [
-            $this->c->Router->link(
-                'AdminGroupsDelete',
-                $args
-            ),
+            $this->c->Router->link('AdminGroupsDelete', $args),
             __('Group delete'),
         ];
         $this->aCrumbs[] = __('"%s"', $group->g_title);
@@ -758,15 +749,9 @@ class Groups extends Admin
     protected function formDelete(array $args, Group $group, int $count, array $groups): array
     {
         $form = [
-            'action' => $this->c->Router->link(
-                'AdminGroupsDelete',
-                $args
-            ),
+            'action' => $this->c->Router->link('AdminGroupsDelete', $args),
             'hidden' => [
-                'token' => $this->c->Csrf->create(
-                    'AdminGroupsDelete',
-                    $args
-                ),
+                'token' => $this->c->Csrf->create('AdminGroupsDelete', $args),
             ],
             'sets'   => [],
             'btns'   => [
