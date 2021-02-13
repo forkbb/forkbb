@@ -25,15 +25,9 @@ trait PostFormTrait
 
         $autofocus = $quickReply ? null : true;
         $form = [
-            'action' => $this->c->Router->link(
-                $marker,
-                $args
-            ),
+            'action' => $this->c->Router->link($marker, $args),
             'hidden' => [
-                'token' => $this->c->Csrf->create(
-                    $marker,
-                    $args
-                ),
+                'token' => $this->c->Csrf->create($marker, $args),
             ],
             'sets'   => [],
             'btns'   => [
