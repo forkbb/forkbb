@@ -28,7 +28,7 @@ class Email extends Page
      */
     public function email(array $args, string $method): Page
     {
-        $this->curUser = $this->c->users->load((int) $args['id']);
+        $this->curUser = $this->c->users->load($args['id']);
 
         if (
             ! $this->curUser instanceof User
@@ -134,15 +134,9 @@ class Email extends Page
     protected function formEmail(array $args, array $data): array
     {
         return [
-            'action' => $this->c->Router->link(
-                'SendEmail',
-                $args
-            ),
+            'action' => $this->c->Router->link('SendEmail', $args),
             'hidden' => [
-                'token' => $this->c->Csrf->create(
-                    'SendEmail',
-                    $args
-                ),
+                'token'    => $this->c->Csrf->create('SendEmail', $args),
                 'redirect' => $data['redirect'] ?? '',
             ],
             'sets'   => [
