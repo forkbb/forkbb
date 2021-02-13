@@ -235,15 +235,9 @@ class Bans extends Admin
     protected function formBan(array $data = [], array $args = []): array
     {
         $form = [
-            'action' => $this->c->Router->link(
-                $this->formBanPage,
-                $args
-            ),
+            'action' => $this->c->Router->link($this->formBanPage, $args),
             'hidden' => [
-                'token' => $this->c->Csrf->create(
-                    $this->formBanPage,
-                    $args
-                ),
+                'token' => $this->c->Csrf->create($this->formBanPage, $args),
             ],
             'sets'   => [],
             'btns'   => [
@@ -367,7 +361,7 @@ class Bans extends Admin
             return $this->view([], 'GET', $data);
         }
 
-        $page  = isset($args['page']) ? (int) $args['page'] : 1;
+        $page  = $args['page'] ?? 1;
         $pages = (int) \ceil(($number ?: 1) / $this->c->config->i_disp_users);
 
         if ($page > $pages) {
@@ -598,7 +592,7 @@ class Bans extends Admin
     {
         $this->banCount = 1;
 
-        $id     = (int) $args['id'];
+        $id   = $args['id'];
         $data = $this->c->bans->getList([$id]);
 
         if (! \is_array($data[$id])) {
@@ -653,7 +647,7 @@ class Bans extends Admin
 
             if ($v->validation($_POST)) {
                 $action  = $isNew ? 'insert' : 'update';
-                $id      = $isNew ? null : (int) $args['id'];
+                $id      = $isNew ? null : $args['id'];
                 $message = (string) $v->message;
                 $expire  = empty($v->expire) ? 0 : \strtotime($v->expire . ' UTC');
 
@@ -719,10 +713,7 @@ class Bans extends Admin
         }
 
         $this->aCrumbs[] = [
-            $this->c->Router->link(
-                $this->formBanPage,
-                $args
-            ),
+            $this->c->Router->link($this->formBanPage, $args),
             $this->formBanSubHead,
         ];
         $this->formBan   = $this->formBan($data, $args);
@@ -872,17 +863,14 @@ class Bans extends Admin
             return $this->c->Message->message($this->c->Csrf->getError());
         }
 
-        $ids = [
-            (int) $args['id'],
-        ];
-        $this->c->bans->delete(...$ids);
+        $this->c->bans->delete($args['id']);
 
         $redirect = $this->c->Redirect;
 
         if (empty($args['uid'])) {
             $redirect->page('AdminBans');
         } else {
-            $user = $this->c->users->load((int) $args['uid']);
+            $user = $this->c->users->load($args['uid']);
 
             if (! $user instanceof User) {
                 throw new RuntimeException('User profile not found');
