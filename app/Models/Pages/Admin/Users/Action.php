@@ -145,10 +145,7 @@ class Action extends Users
         $this->classForm  = 'delete-users';
         $this->titleForm  = 'Deleting users';
         $this->aCrumbs[]  = [
-            $this->c->Router->link(
-                'AdminUsersAction',
-                $args
-            ),
+            $this->c->Router->link('AdminUsersAction', $args),
             __('Deleting users'),
         ];
         $this->form       = $this->formDelete($args);
@@ -164,15 +161,9 @@ class Action extends Users
         $yn    = [1 => __('Yes'), 0 => __('No')];
         $names = \implode(', ', $this->nameList($this->userList));
         $form  = [
-            'action' => $this->c->Router->link(
-                'AdminUsersAction',
-                $args
-            ),
+            'action' => $this->c->Router->link('AdminUsersAction', $args),
             'hidden' => [
-                'token' => $this->c->Csrf->create(
-                    'AdminUsersAction',
-                    $args
-                ),
+                'token' => $this->c->Csrf->create('AdminUsersAction', $args),
             ],
             'sets'   => [
                 'options' => [
@@ -310,10 +301,7 @@ class Action extends Users
         $this->classForm  = 'change-group';
         $this->titleForm  = 'Change user group';
         $this->aCrumbs[]  = [
-            $this->c->Router->link(
-                'AdminUsersAction',
-                $args
-            ),
+            $this->c->Router->link('AdminUsersAction', $args),
             __('Change user group'),
         ];
         $this->form       = $this->formChange($args, $profile, $link, 'absent' !== $rulePass);
@@ -341,15 +329,9 @@ class Action extends Users
         $yn    = [1 => __('Yes'), 0 => __('No')];
         $names = \implode(', ', $this->nameList($this->userList));
         $form  = [
-            'action' => $this->c->Router->link(
-                'AdminUsersAction',
-                $args
-            ),
+            'action' => $this->c->Router->link('AdminUsersAction', $args),
             'hidden' => [
-                'token' => $this->c->Csrf->create(
-                    'AdminUsersAction',
-                    $args
-                ),
+                'token' => $this->c->Csrf->create('AdminUsersAction', $args),
             ],
             'sets'   => [
                 'options' => [

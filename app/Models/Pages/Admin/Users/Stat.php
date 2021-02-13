@@ -22,10 +22,10 @@ class Stat extends Users
      */
     public function view(array $args, string $method): Page
     {
-        $stat   = $this->c->posts->userStat((int) $args['id']);
+        $stat   = $this->c->posts->userStat($args['id']);
         $number = \count($stat);
 
-        $page  = isset($args['page']) ? (int) $args['page'] : 1;
+        $page  = $args['page'] ?? 1;
         $pages = (int) \ceil(($number ?: 1) / $this->c->config->i_disp_users);
 
         if ($page > $pages) {
@@ -35,7 +35,7 @@ class Stat extends Users
         $startNum = ($page - 1) * $this->c->config->i_disp_users;
         $stat     = \array_slice($stat, $startNum, $this->c->config->i_disp_users);
 
-        $user = $this->c->users->load((int) $args['id']);
+        $user = $this->c->users->load($args['id']);
 
         if (0 == $number) {
             $this->fIswev = ['i', __('Results no posts found')];

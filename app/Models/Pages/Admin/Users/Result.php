@@ -48,7 +48,7 @@ class Result extends Users
             return $view->view([], 'GET', $data);
         }
 
-        $page  = isset($args['page']) ? (int) $args['page'] : 1;
+        $page  = $args['page'] ?? 1;
         $pages = (int) \ceil(($number ?: 1) / $this->c->config->i_disp_users);
 
         if ($page > $pages) {
@@ -231,15 +231,9 @@ class Result extends Users
     protected function form(array $users, int $number, array $args): array
     {
         $form = [
-            'action' => $this->c->Router->link(
-                'AdminUsersResult',
-                $args
-            ),
+            'action' => $this->c->Router->link('AdminUsersResult', $args),
             'hidden' => [
-                'token' => $this->c->Csrf->create(
-                    'AdminUsersResult',
-                    $args
-                ),
+                'token' => $this->c->Csrf->create('AdminUsersResult', $args),
             ],
             'sets'   => [],
             'btns'   => [],

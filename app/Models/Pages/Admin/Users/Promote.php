@@ -24,7 +24,7 @@ class Promote extends Users
             return $this->c->Message->message($this->c->Csrf->getError());
         }
 
-        $user = $this->c->users->load((int) $args['uid']);
+        $user = $this->c->users->load($args['uid']);
         if (0 < $user->g_promote_next_group * $user->g_promote_min_posts) {
             $user->group_id = $user->g_promote_next_group;
             $this->c->users->update($user);
