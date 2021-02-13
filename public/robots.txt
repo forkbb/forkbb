@@ -5,3 +5,5 @@ Disallow: /mod
 Disallow: /reg
 Disallow: /search
 Disallow: /userlist
+Disallow: /moder
+Disallow: /post
