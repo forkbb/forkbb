@@ -149,7 +149,7 @@ class Reports extends Admin
 
         $this->c->Lang->load('admin_reports');
 
-        $report = $this->c->reports->load((int) $args['id']);
+        $report = $this->c->reports->load($args['id']);
 
         if ($report instanceof Report) {
             $report->marker = $this->user;
