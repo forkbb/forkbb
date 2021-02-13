@@ -32,7 +32,7 @@ class View extends Profile
 
         $this->c->Online->calc($this); // для $this->curUser->lastVisit
 
-        $this->form       = $this->form();
+        $this->form       = $this->form($args);
         $this->actionBtns = $this->btns('view');
 
         return $this;
@@ -41,7 +41,7 @@ class View extends Profile
     /**
      * Создает массив данных для формы
      */
-    protected function form(): array
+    protected function form(array $args): array
     {
         $form = [
             'sets' => []
