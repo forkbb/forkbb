@@ -152,10 +152,10 @@ class Router
             $args['token'] = $this->csrf->create($marker, $args);
         }
 
-        list($link, $names, $request) = $data;
+        list($link, $names) = $data;
         $data = [];
         // перечисление имен переменных для построения ссылки
-        foreach ($names as $name => $type) {
+        foreach ($names as $name => $need) {
             // значение есть
             if (isset($args[$name])) {
                 // кроме page = 1
@@ -169,7 +169,7 @@ class Router
             }
 
             // значения нет, но оно обязательно
-            if ($request[$name]) {
+            if ($need) {
                 return $result . '/';
             // значение не обязательно
             } else {
@@ -345,7 +345,7 @@ class Router
 
         if ($marker) {
             if ($data) {
-                $this->links[$marker] = [$data[3] . $anchor, $data[2], $data[4]];
+                $this->links[$marker] = [$data[3] . $anchor, $data[4]];
             } else {
                 $this->links[$marker] = $link;
             }
