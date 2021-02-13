@@ -125,8 +125,7 @@ class Model extends DataModel
             return $this->c->Router->link(
                 'AdminReportsZap',
                 [
-                    'id'    => $this->id,
-                    'token' => null,
+                    'id' => $this->id,
                 ]
             );
         } else {

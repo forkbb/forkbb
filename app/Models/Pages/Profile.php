@@ -94,9 +94,8 @@ abstract class Profile extends Page
                     $this->c->Router->link(
                         'AdminBansDelete',
                         [
-                            'id'    => $id,
-                            'uid'   => $this->curUser->id,
-                            'token' => null,
+                            'id'  => $id,
+                            'uid' => $this->curUser->id,
                         ]
                     ),
                     __('Unban user'),
@@ -174,7 +173,6 @@ abstract class Profile extends Page
             [
                 'action' => 'change_group',
                 'ids'    => $this->curUser->id,
-                'token'  => null,
             ]
         );
     }

@@ -146,7 +146,7 @@ class Model extends DataModel
                 'SearchAction',
                 [
                     'action' => 'new',
-                    'forum' => $this->id,
+                    'forum'  => $this->id,
                 ]
             );
         }
@@ -188,9 +188,9 @@ class Model extends DataModel
     protected function getlinkMarkRead(): string
     {
         return $this->c->Router->link(
-            'MarkRead', [
-                'id'    => $this->id,
-                'token' => null,
+            'MarkRead',
+            [
+                'id' => $this->id,
             ]
         );
     }
@@ -206,9 +206,8 @@ class Model extends DataModel
             return $this->c->Router->link(
                 'ForumSubscription',
                 [
-                    'fid'   => $this->id,
-                    'type'  => 'subscribe',
-                    'token' => null,
+                    'fid'  => $this->id,
+                    'type' => 'subscribe',
                 ]
             );
         }
@@ -225,9 +224,8 @@ class Model extends DataModel
             return $this->c->Router->link(
                 'ForumSubscription',
                 [
-                    'fid'   => $this->id,
-                    'type'  => 'unsubscribe',
-                    'token' => null,
+                    'fid'  => $this->id,
+                    'type' => 'unsubscribe',
                 ]
             );
         }

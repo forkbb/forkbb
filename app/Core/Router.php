@@ -144,15 +144,15 @@ class Router
             return $result . $data . $anchor;
         }
 
+        list($link, $names) = $data;
         // автоматическое вычисление токена
         if (
-            \array_key_exists('token', $args)
+            isset($names['token'])
             && ! isset($args['token'])
         ) {
             $args['token'] = $this->csrf->create($marker, $args);
         }
 
-        list($link, $names) = $data;
         $data = [];
         // перечисление имен переменных для построения ссылки
         foreach ($names as $name => $need) {

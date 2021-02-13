@@ -61,8 +61,7 @@ class Index extends Page
             $this->linkMarkRead = $this->c->Router->link(
                 'MarkRead',
                 [
-                    'id'    => 0,
-                    'token' => null,
+                    'id' => 0,
                 ]
             );
         }

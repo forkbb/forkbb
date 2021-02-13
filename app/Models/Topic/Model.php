@@ -168,9 +168,8 @@ class Model extends DataModel
         return $this->c->Router->link(
             'TopicSubscription',
             [
-                'tid'   => $this->id,
-                'type'  => 'subscribe',
-                'token' => null,
+                'tid'  => $this->id,
+                'type' => 'subscribe',
             ]
         );
     }
@@ -183,9 +182,8 @@ class Model extends DataModel
         return $this->c->Router->link(
             'TopicSubscription',
             [
-                'tid'   => $this->id,
-                'type'  => 'unsubscribe',
-                'token' => null,
+                'tid'  => $this->id,
+                'type' => 'unsubscribe',
             ]
         );
     }

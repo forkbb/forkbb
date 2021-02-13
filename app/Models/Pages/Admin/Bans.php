@@ -505,8 +505,7 @@ class Bans extends Admin
                 'link'    => $this->c->Router->link(
                     'AdminBansDelete',
                     [
-                        'id'    => $ban['id'],
-                        'token' => null,
+                        'id' => $ban['id'],
                     ]
                 ),
             ];

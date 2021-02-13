@@ -204,8 +204,7 @@ class Smilies extends Parser
                 'link'      => $this->c->Router->link(
                     'AdminSmiliesDelete',
                     [
-                        'name'  => $id,
-                        'token' => null,
+                        'name' => $id,
                     ]
                 ),
             ];
@@ -291,8 +290,7 @@ class Smilies extends Parser
                 'href'    => $this->c->Router->link(
                     'AdminSmiliesDelete',
                     [
-                        'name'  => $name,
-                        'token' => null,
+                        'name' => $name,
                     ]
                 ),
             ];

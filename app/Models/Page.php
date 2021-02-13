@@ -225,12 +225,7 @@ abstract class Page extends Model
             }
 
             $navUser['logout'] = [
-                $r->link(
-                    'Logout',
-                    [
-                        'token' => null,
-                    ]
-                ),
+                $r->link('Logout'),
                 'Logout',
                 'Logout',
             ];

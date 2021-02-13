@@ -348,9 +348,8 @@ class Model extends DataModel
             return $this->c->Router->link(
                 'AdminUserPromote',
                 [
-                    'uid'   => $post->user->id,
-                    'pid'   => $post->id,
-                    'token' => null,
+                    'uid' => $post->user->id,
+                    'pid' => $post->id,
                 ]
             );
         } else {
