@@ -226,7 +226,7 @@ class Forums extends Admin
      */
     public function delete(array $args, string $method): Page
     {
-        $forum = $this->c->forums->get((int) $args['id']);
+        $forum = $this->c->forums->get($args['id']);
         if (
             ! $forum instanceof Forum
             || $forum->subforums
@@ -287,15 +287,9 @@ class Forums extends Admin
     protected function formDelete(array $args, Forum $forum): array
     {
         return [
-            'action' => $this->c->Router->link(
-                'AdminForumsDelete',
-                $args
-            ),
+            'action' => $this->c->Router->link('AdminForumsDelete', $args),
             'hidden' => [
-                'token' => $this->c->Csrf->create(
-                    'AdminForumsDelete',
-                    $args
-                ),
+                'token' => $this->c->Csrf->create('AdminForumsDelete', $args),
             ],
             'sets'   => [
                 'confirm' => [
@@ -353,7 +347,7 @@ class Forums extends Admin
             $this->titleForm = 'Add forum head';
             $this->classForm = 'createforum';
         } else {
-            $forum           = $this->c->forums->loadTree((int) $args['id']); //?????
+            $forum           = $this->c->forums->loadTree($args['id']); //?????
             $marker          = 'AdminForumsEdit';
             $this->aCrumbs[] = [
                 $this->c->Router->link($marker, $args),
@@ -444,15 +438,9 @@ class Forums extends Admin
     protected function formEdit(array $args, Forum $forum, string $marker): array
     {
         $form = [
-            'action' => $this->c->Router->link(
-                $marker,
-                $args
-            ),
+            'action' => $this->c->Router->link($marker, $args),
             'hidden' => [
-                'token' => $this->c->Csrf->create(
-                    $marker,
-                    $args
-                ),
+                'token' => $this->c->Csrf->create($marker, $args),
             ],
             'sets'   => [],
             'btns'   => [],
