@@ -22,7 +22,7 @@ class Misc extends Page
      */
     public function markread(array $args): Page
     {
-        $forum = $this->c->forums->loadTree((int) $args['id']);
+        $forum = $this->c->forums->loadTree($args['id']);
         if (! $forum instanceof Forum) {
             return $this->c->Message->message('Bad request');
         }
@@ -49,7 +49,7 @@ class Misc extends Page
             return $this->c->Message->message($this->c->Csrf->getError());
         }
 
-        $forum = $this->c->forums->get((int) $args['fid']);
+        $forum = $this->c->forums->get($args['fid']);
         if (! $forum instanceof Forum) {
             return $this->c->Message->message('Bad request');
         }
@@ -82,7 +82,7 @@ class Misc extends Page
             return $this->c->Message->message($this->c->Csrf->getError());
         }
 
-        $topic = $this->c->topics->load((int) $args['tid']);
+        $topic = $this->c->topics->load($args['tid']);
         if (! $topic instanceof Topic) {
             return $this->c->Message->message('Bad request');
         }
