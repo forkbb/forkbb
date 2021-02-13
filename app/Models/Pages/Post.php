@@ -26,7 +26,7 @@ class Post extends Page
      */
     public function newTopic(array $args, string $method): Page
     {
-        $forum = $this->c->forums->get((int) $args['id']);
+        $forum = $this->c->forums->get($args['id']);
 
         if (
             empty($forum)
@@ -100,7 +100,7 @@ class Post extends Page
      */
     public function newReply(array $args, string $method): Page
     {
-        $topic = $this->c->topics->load((int) $args['id']);
+        $topic = $this->c->topics->load($args['id']);
 
         if (
             ! $topic instanceof Topic
@@ -138,7 +138,7 @@ class Post extends Page
                 $this->previewHtml = $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies);
             }
         } elseif (isset($args['quote'])) {
-            $post = $this->c->posts->load((int) $args['quote'], $topic->id);
+            $post = $this->c->posts->load($args['quote'], $topic->id);
 
             if (empty($post)) {
                 return $this->c->Message->message('Bad request');
