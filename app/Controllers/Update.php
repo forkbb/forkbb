@@ -70,7 +70,7 @@ class Update
         $r = $this->c->Router;
         $r->add(
             $r::GET,
-            '/admin/update/{uid}/{stage:\d+}[/{start:\d+}]',
+            '/admin/update/{uid}/{stage|i:\d+}[/{start|i:\d+}]',
             'AdminUpdate:stage',
             'AdminUpdateStage'
         );

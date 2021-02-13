@@ -343,7 +343,7 @@ class Update extends Admin
                 return $this->returnMaintenance();
             }
 
-            $stage = \max((int) $args['stage'], (int) $this->c->config->i_fork_revision);
+            $stage = \max($args['stage'], $this->c->config->i_fork_revision);
 
             do {
                 if (\method_exists($this, 'stageNumber' . $stage)) {
