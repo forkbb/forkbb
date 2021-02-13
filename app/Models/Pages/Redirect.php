@@ -28,10 +28,7 @@ class Redirect extends Page
      */
     public function page(string $marker, array $args = []): Page
     {
-        $this->link = $this->c->Router->link(
-            $marker,
-            $args
-        );
+        $this->link = $this->c->Router->link($marker, $args);
 
         return $this;
     }
