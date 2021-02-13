@@ -163,7 +163,7 @@ class Routing
 
                 $r->add(
                     $r::GET,
-                    '/search[/user/{uid|i:[2-9]|[1-9]\d+}]/{action:(?!search)[a-z_]+}[/in_forum/{forum:[1-9]\d*}][/{page|i:[1-9]\d*}]',
+                    '/search[/user/{uid|i:[2-9]|[1-9]\d+}]/{action:(?!search)[a-z_]+}[/in_forum/{forum|i:[1-9]\d*}][/{page|i:[1-9]\d*}]',
                     'Search:action',
                     'SearchAction'
                 );

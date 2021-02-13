@@ -409,18 +409,18 @@ class Search extends Page
     {
         $this->c->Lang->load('search');
 
-        $forum = isset($args['forum']) ? (int) $args['forum'] : 0;
+        $forum = $args['forum'] ?? 0;
         $forum = $this->c->forums->get($forum);
         if (! $forum instanceof Forum) {
             return $this->c->Message->message('Bad request');
         }
 
         $model        = $this->c->search;
-        $model->page  = isset($args['page']) ? (int) $args['page'] : 1;
+        $model->page  = $args['page'] ?? 1;
         $action       = $args['action'];
         $asTopicsList = true;
         $list         = false;
-        $uid          = isset($args['uid']) ? (int) $args['uid'] : null;
+        $uid          = $args['uid'] ?? null;
         $subIndex = [
             'topics_with_your_posts' => 'with-your-posts',
             'latest_active_topics'   => 'latest',
