@@ -23,7 +23,7 @@ class Report extends Page
      */
     public function report(array $args, string $method): Page
     {
-        $post = $this->c->posts->load((int) $args['id']);
+        $post = $this->c->posts->load($args['id']);
 
         if (! $post instanceof Post) {
             return $this->c->Message->message('Bad request');
@@ -122,15 +122,9 @@ class Report extends Page
     protected function formReport(array $args, array $data): array
     {
         return [
-            'action' => $this->c->Router->link(
-                'ReportPost',
-                $args
-            ),
+            'action' => $this->c->Router->link('ReportPost', $args),
             'hidden' => [
-                'token' => $this->c->Csrf->create(
-                    'ReportPost',
-                    $args
-                ),
+                'token' => $this->c->Csrf->create('ReportPost', $args),
             ],
             'sets'   => [
                 'report' => [
@@ -155,7 +149,7 @@ class Report extends Page
                 'back' => [
                     'type'      => 'btn',
                     'value'     => __('Go back'),
-                    'link'      => $this->c->Router->link('ViewPost', ['id' => (int) $args['id']]),
+                    'link'      => $this->c->Router->link('ViewPost', ['id' => $args['id']]),
                     'class'     => 'f-opacity f-go-back',
                 ],
             ],
