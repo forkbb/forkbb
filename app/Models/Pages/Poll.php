@@ -22,7 +22,7 @@ class Poll extends Page
      */
     public function vote(array $args, string $method): Page
     {
-        $tid   = (int) $args['tid'];
+        $tid   = $args['tid'];
         $topic = $this->c->topics->load($tid);
 
         if (
