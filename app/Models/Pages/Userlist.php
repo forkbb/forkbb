@@ -88,7 +88,7 @@ class Userlist extends Page
 
         $ids    = $this->c->users->filter($filters, $order);
         $number = \count($ids);
-        $page   = isset($args['page']) ? (int) $args['page'] : 1;
+        $page   = $args['page'] ?? 1;
         $pages  = (int) \ceil(($number ?: 1) / $this->c->config->i_disp_users);
 
         if ($page > $pages) {
@@ -143,10 +143,7 @@ class Userlist extends Page
         $this->fIndex       = 'userlist';
         $this->nameTpl      = 'userlist';
         $this->onlinePos    = 'userlist';
-        $this->canonical    = $this->c->Router->link(
-            'Userlist',
-            $args
-        );
+        $this->canonical    = $this->c->Router->link('Userlist', $args);
         $this->robots       = 'noindex';
         $this->crumbs       = $this->crumbs(
             [
