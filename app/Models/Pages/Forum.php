@@ -24,7 +24,7 @@ class Forum extends Page
         $this->c->Lang->load('forum');
         $this->c->Lang->load('subforums');
 
-        $forum = $this->c->forums->loadTree((int) $args['id']);
+        $forum = $this->c->forums->loadTree($args['id']);
         if (! $forum instanceof ForumModel) {
             return $this->c->Message->message('Bad request');
         }
@@ -34,7 +34,7 @@ class Forum extends Page
             return $this->c->Redirect->url($forum->redirect_url);
         }
 
-        $forum->page = isset($args['page']) ? (int) $args['page'] : 1;
+        $forum->page = $args['page'] ?? 1;
         if (! $forum->hasPage()) {
             return $this->c->Message->message('Bad request');
         }
