@@ -228,7 +228,7 @@ class BBCode extends Parser
             return $this->c->Message->message($this->c->Csrf->getError());
         }
 
-        $this->c->bbcode->delete((int) $args['id']);
+        $this->c->bbcode->delete($args['id']);
 
         return $this->c->Redirect->page('AdminBBCode')->message('BBCode deleted redirect');
     }
@@ -241,7 +241,7 @@ class BBCode extends Parser
         $this->c->bbcode->load();
 
         $structure = $this->c->BBStructure;
-        $id        = isset($args['id']) ? (int) $args['id'] : 0;
+        $id        = $args['id'] ?? 0;
         if ($id > 0) {
             if (
                 empty($this->c->bbcode->bbcodeTable[$id])
@@ -651,7 +651,7 @@ class BBCode extends Parser
             return $this->c->Message->message($this->c->Csrf->getError());
         }
 
-        $id = (int) $args['id'];
+        $id = $args['id'];
 
         $structure = $this->c->BBStructure
             ->fromString($this->c->bbcode->load()->bbcodeTable[$id]['bb_structure'])
