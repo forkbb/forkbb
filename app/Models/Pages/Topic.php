@@ -87,10 +87,10 @@ class Topic extends Page
     protected function view(string $type, array $args): Page
     {
         if ('post' === $type) {
-            $post  = $this->c->posts->load((int) $args['id']);
+            $post  = $this->c->posts->load($args['id']);
             $topic = null === $post ? null : $post->parent;
         } else {
-            $topic = $this->c->topics->load((int) $args['id']);
+            $topic = $this->c->topics->load($args['id']);
         }
 
         if (! $topic instanceof TopicModel) {
@@ -107,10 +107,10 @@ class Topic extends Page
 
         switch ($type) {
             case 'topic':
-                $topic->page = isset($args['page']) ? (int) $args['page'] : 1;
+                $topic->page = $args['page'] ?? 1;
                 break;
             case 'post':
-                $topic->calcPage((int) $args['id']);
+                $topic->calcPage($args['id']);
                 break;
             default:
                 return $this->go($type, $topic);
