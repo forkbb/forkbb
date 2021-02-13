@@ -42,15 +42,17 @@ class Csrf
     {
         $this->error = null;
 
-         unset($args['token'], $args['#']);
-         \ksort($args);
-         $marker .= '|';
-         foreach ($args as $key => $value) {
-             $marker .= $key . '|' . (string) $value . '|';
-         }
-         $time = $time ?: \time();
+        unset($args['token'], $args['#']);
+        \ksort($args);
+        $marker .= '|';
+        foreach ($args as $key => $value) {
+            if (null !== $value) {
+                $marker .= $key . '|' . (string) $value . '|';
+            }
+        }
+        $time = $time ?: \time();
 
-         return $this->secury->hmac($marker, $time . $this->key) . 'f' . $time;
+        return $this->secury->hmac($marker, $time . $this->key) . 'f' . $time;
     }
 
     /**
