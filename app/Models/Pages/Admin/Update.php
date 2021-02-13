@@ -323,9 +323,8 @@ class Update extends Admin
             ],
             'btns'   => [
                 'start' => [
-                    'type'      => 'submit',
-                    'value'     => __('Start update'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Start update'),
                 ],
             ],
         ];

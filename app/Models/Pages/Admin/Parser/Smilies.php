@@ -150,9 +150,8 @@ class Smilies extends Parser
             ],
             'btns'   => [
                 'save' => [
-                    'type'      => 'submit',
-                    'value'     => __('Save changes'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Save changes'),
                 ],
             ],
         ];
@@ -337,9 +336,8 @@ class Smilies extends Parser
             ],
             'btns'    => [
                 'upload' => [
-                    'type'      => 'submit',
-                    'value'     => __('Upload'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Upload'),
                 ],
             ],
         ];

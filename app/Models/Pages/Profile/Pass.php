@@ -119,9 +119,8 @@ class Pass extends Profile
             ],
             'btns'   => [
                 'submit' => [
-                    'type'      => 'submit',
-                    'value'     => __('Submit'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Submit'),
                 ],
             ],
         ];

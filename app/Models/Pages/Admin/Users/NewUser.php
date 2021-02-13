@@ -127,9 +127,8 @@ class NewUser extends Users
             ],
             'btns'   => [
                 'add' => [
-                    'type'      => 'submit',
-                    'value'     => __('Add'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Add'),
                 ],
             ],
         ];

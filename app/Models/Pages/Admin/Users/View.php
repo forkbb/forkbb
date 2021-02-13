@@ -147,10 +147,9 @@ class View extends Users
             ],
             'btns'   => [
                 'new' => [
-                    'type'      => 'btn',
-                    'value'     => __('Add'),
-                    'link'      => $this->c->Router->link('AdminUsersNew'),
-//                    'accesskey' => 'n',
+                    'type'  => 'btn',
+                    'value' => __('Add'),
+                    'link'  => $this->c->Router->link('AdminUsersNew'),
                 ],
             ],
         ];
@@ -171,9 +170,8 @@ class View extends Users
             'sets'   => [],
             'btns'   => [
                 'search' => [
-                    'type'      => 'submit',
-                    'value'     => __('Submit search'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Submit search'),
                 ],
             ],
         ];
@@ -392,9 +390,8 @@ class View extends Users
             'sets'   => [],
             'btns'   => [
                 'find' => [
-                    'type'      => 'submit',
-                    'value'     => __('Find IP address'),
-//                    'accesskey' => 'f',
+                    'type'  => 'submit',
+                    'value' => __('Find IP address'),
                 ],
             ],
         ];
@@ -455,9 +452,8 @@ class View extends Users
             ],
             'btns'   => [
                 'recalculate' => [
-                    'type'      => 'submit',
-                    'value'     => __('Recalculate'),
-//                    'accesskey' => 'r',
+                    'type'  => 'submit',
+                    'value' => __('Recalculate'),
                 ],
             ],
         ];

@@ -126,15 +126,13 @@ class BBCode extends Parser
             ],
             'btns'   => [
                 'new' => [
-                    'type'      => 'btn',
-                    'value'     => __('New BBCode'),
-                    'link'      => $this->c->Router->link('AdminBBCodeNew'),
-//                    'accesskey' => 'n',
+                    'type'  => 'btn',
+                    'value' => __('New BBCode'),
+                    'link'  => $this->c->Router->link('AdminBBCodeNew'),
                 ],
                 'save' => [
-                    'type'      => 'submit',
-                    'value'     => __('Save changes'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Save changes'),
                 ],
             ],
         ];
@@ -407,22 +405,20 @@ class BBCode extends Parser
             'sets' => [],
             'btns'   => [
                 'reset' => [
-                    'class'     => 'f-opacity',
-                    'type'      => 'btn',
-                    'value'     => __('Default structure'),
-                    'link'      => $this->c->Router->link(
+                    'class' => 'f-opacity',
+                    'type'  => 'btn',
+                    'value' => __('Default structure'),
+                    'link'  => $this->c->Router->link(
                         'AdminBBCodeDefault',
                         [
                             'id'    => $id,
                             'token' => null,
                         ]
                     ),
-//                    'accesskey' => 'r',
                 ],
                 'save' => [
-                    'type'      => 'submit',
-                    'value'     => __('Save'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Save'),
                 ],
             ],
         ];

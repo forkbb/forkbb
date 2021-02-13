@@ -190,9 +190,8 @@ class Options extends Admin
             'sets'   => [],
             'btns'   => [
                 'save'  => [
-                    'type'      => 'submit',
-                    'value'     => __('Save changes'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Save changes'),
                 ],
             ],
         ];

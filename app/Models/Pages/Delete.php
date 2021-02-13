@@ -123,14 +123,13 @@ class Delete extends Page
             ],
             'btns'   => [
                 'delete'  => [
-                    'type'      => 'submit',
-                    'value'     => __($deleteTopic ? 'Delete  topic' : 'Delete  post'),
-//                    'accesskey' => 'd',
+                    'type'  => 'submit',
+                    'value' => __($deleteTopic ? 'Delete  topic' : 'Delete  post'),
                 ],
                 'cancel'  => [
-                    'type'      => 'btn',
-                    'value'     => __('Cancel'),
-                    'link'      => $this->c->Router->link('ViewPost', $args),
+                    'type'  => 'btn',
+                    'value' => __('Cancel'),
+                    'link'  => $this->c->Router->link('ViewPost', $args),
                 ],
             ],
         ];

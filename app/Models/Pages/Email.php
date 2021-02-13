@@ -169,15 +169,14 @@ class Email extends Page
             ],
             'btns'   => [
                 'send' => [
-                    'type'      => 'submit',
-                    'value'     => __('Send email'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Send email'),
                 ],
                 'back' => [
-                    'type'      => 'btn',
-                    'value'     => __('Go back'),
-                    'link'      => $data['redirect'],
-                    'class'     => 'f-opacity f-go-back',
+                    'type'  => 'btn',
+                    'value' => __('Go back'),
+                    'link'  => $data['redirect'],
+                    'class' => 'f-opacity f-go-back',
                 ],
             ],
         ];

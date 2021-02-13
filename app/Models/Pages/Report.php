@@ -142,15 +142,14 @@ class Report extends Page
             ],
             'btns'   => [
                 'report' => [
-                    'type'      => 'submit',
-                    'value'     => __('Submit'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Submit'),
                 ],
                 'back' => [
-                    'type'      => 'btn',
-                    'value'     => __('Go back'),
-                    'link'      => $this->c->Router->link('ViewPost', ['id' => $args['id']]),
-                    'class'     => 'f-opacity f-go-back',
+                    'type'  => 'btn',
+                    'value' => __('Go back'),
+                    'link'  => $this->c->Router->link('ViewPost', ['id' => $args['id']]),
+                    'class' => 'f-opacity f-go-back',
                 ],
             ],
         ];

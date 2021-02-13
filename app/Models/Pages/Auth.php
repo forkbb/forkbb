@@ -169,9 +169,8 @@ class Auth extends Page
             ],
             'btns'   => [
                 'login' => [
-                    'type'      => 'submit',
-                    'value'     => __('Sign in'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Sign in'),
                 ],
             ],
         ];
@@ -347,9 +346,8 @@ class Auth extends Page
             ],
             'btns'   => [
                 'submit' => [
-                    'type'      => 'submit',
-                    'value'     => __('Send email'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Send email'),
                 ],
             ],
         ];
@@ -479,9 +477,8 @@ class Auth extends Page
             ],
             'btns'   => [
                 'submit' => [
-                    'type'      => 'submit',
-                    'value'     => __('Change passphrase'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Change passphrase'),
                 ],
             ],
         ];

@@ -84,9 +84,8 @@ class Rules extends Page
             ],
             'btns'   => [
                 'register' => [
-                    'type'      => 'submit',
-                    'value'     => __('Register'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Register'),
                 ],
             ],
         ];

@@ -118,10 +118,7 @@ class Userlist extends Page
 
                 foreach (['ASC', 'DESC'] as $j => $dir) {
                     $vars['dir']        = $dir;
-                    $links[$i * 2 + $j] = $this->c->Router->link(
-                        'Userlist',
-                        $vars
-                    );
+                    $links[$i * 2 + $j] = $this->c->Router->link('Userlist', $vars);
 
                     if (
                         $v->sort === $sort
@@ -168,9 +165,8 @@ class Userlist extends Page
             'sets'   => [],
             'btns'   => [
                 'submit' => [
-                    'type'      => 'submit',
-                    'value'     => __($this->user->searchUsers ? 'Search btn' : 'Submit'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __($this->user->searchUsers ? 'Search btn' : 'Submit'),
                 ],
             ],
         ];

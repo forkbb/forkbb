@@ -141,15 +141,13 @@ class Forums extends Admin
             'sets'   => [],
             'btns'   => [
                 'new' => [
-                    'type'      => 'btn',
-                    'value'     => __('New forum'),
-                    'link'      => $this->c->Router->link('AdminForumsNew'),
-//                    'accesskey' => 'n',
+                    'type'  => 'btn',
+                    'value' => __('New forum'),
+                    'link'  => $this->c->Router->link('AdminForumsNew'),
                 ],
                 'update' => [
-                    'type'      => 'submit',
-                    'value'     => __('Update positions'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Update positions'),
                 ],
             ],
         ];
@@ -315,14 +313,13 @@ class Forums extends Admin
             ],
             'btns'   => [
                 'delete' => [
-                    'type'      => 'submit',
-                    'value'     => __('Delete forum'),
-//                    'accesskey' => 'd',
+                    'type'  => 'submit',
+                    'value' => __('Delete forum'),
                 ],
                 'cancel' => [
-                    'type'      => 'btn',
-                    'value'     => __('Cancel'),
-                    'link'      => $this->c->Router->link('AdminForums'),
+                    'type'  => 'btn',
+                    'value' => __('Cancel'),
+                    'link'  => $this->c->Router->link('AdminForums'),
                 ],
             ],
         ];
@@ -448,17 +445,15 @@ class Forums extends Admin
 
         if ($forum->id > 0) {
             $form['btns']['reset'] = [
-                'type'      => 'submit',
-                'value'     => __('Revert to default'),
-//                'accesskey' => 'r',
-                'class'     => 'f-opacity',
+                'type'  => 'submit',
+                'value' => __('Revert to default'),
+                'class' => 'f-opacity',
             ];
         }
 
         $form['btns']['submit'] = [
-            'type'      => 'submit',
-            'value'     => empty($forum->id) ? __('Add') : __('Update'),
-//            'accesskey' => 's',
+            'type'  => 'submit',
+            'value' => empty($forum->id) ? __('Add') : __('Update'),
         ];
 
         $form['sets']['forum'] = [

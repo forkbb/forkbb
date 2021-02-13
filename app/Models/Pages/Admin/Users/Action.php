@@ -194,14 +194,13 @@ class Action extends Users
             ],
             'btns'   => [
                 'delete'  => [
-                    'type'      => 'submit',
-                    'value'     => __('Delete users'),
-//                    'accesskey' => 'd',
+                    'type'  => 'submit',
+                    'value' => __('Delete users'),
                 ],
                 'cancel'  => [
-                    'type'      => 'btn',
-                    'value'     => __('Cancel'),
-                    'link'      => $this->c->Router->link('AdminUsers'),
+                    'type'  => 'btn',
+                    'value' => __('Cancel'),
+                    'link'  => $this->c->Router->link('AdminUsers'),
                 ],
             ],
         ];
@@ -354,14 +353,13 @@ class Action extends Users
             ],
             'btns'   => [
                 'move'  => [
-                    'type'      => 'submit',
-                    'value'     => __('Move users'),
-//                    'accesskey' => 'm',
+                    'type'  => 'submit',
+                    'value' => __('Move users'),
                 ],
                 'cancel'  => [
-                    'type'      => 'btn',
-                    'value'     => __('Cancel'),
-                    'link'      => $linkCancel,
+                    'type'  => 'btn',
+                    'value' => __('Cancel'),
+                    'link'  => $linkCancel,
                 ],
             ],
         ];

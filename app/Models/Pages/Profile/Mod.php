@@ -107,9 +107,8 @@ class Mod extends Profile
             'sets'   => [],
             'btns'   => [
                 'save' => [
-                    'type'      => 'submit',
-                    'value'     => __('Save'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Save'),
                 ],
             ],
         ];

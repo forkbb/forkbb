@@ -32,15 +32,13 @@ trait PostFormTrait
             'sets'   => [],
             'btns'   => [
                 'submit' => [
-                    'type'      => 'submit',
-                    'value'     => __('Submit'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Submit'),
                 ],
                 'preview' => [
-                    'type'      => 'submit',
-                    'value'     => __('Preview'),
-//                    'accesskey' => 'p',
-                    'class'     => 'f-opacity',
+                    'type'  => 'submit',
+                    'value' => __('Preview'),
+                    'class' => 'f-opacity',
                 ],
             ],
         ];

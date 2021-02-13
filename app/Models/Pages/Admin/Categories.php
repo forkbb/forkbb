@@ -78,9 +78,8 @@ class Categories extends Admin
             'sets'   => [],
             'btns'   => [
                 'submit' => [
-                    'type'      => 'submit',
-                    'value'     => __('Save changes'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Save changes'),
                 ],
             ],
         ];
@@ -224,14 +223,13 @@ class Categories extends Admin
             ],
             'btns'   => [
                 'delete' => [
-                    'type'      => 'submit',
-                    'value'     => __('Delete category'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Delete category'),
                 ],
                 'cancel' => [
-                    'type'      => 'btn',
-                    'value'     => __('Cancel'),
-                    'link'      => $this->c->Router->link('AdminCategories'),
+                    'type'  => 'btn',
+                    'value' => __('Cancel'),
+                    'link'  => $this->c->Router->link('AdminCategories'),
                 ],
             ],
         ];

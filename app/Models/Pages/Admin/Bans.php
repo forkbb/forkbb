@@ -128,9 +128,8 @@ class Bans extends Admin
             'sets'   => [],
             'btns'   => [
                 'search' => [
-                    'type'      => 'submit',
-                    'value'     => __('Submit search'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Submit search'),
                 ],
             ],
         ];
@@ -242,9 +241,8 @@ class Bans extends Admin
             'sets'   => [],
             'btns'   => [
                 'submit' => [
-                    'type'      => 'submit',
-                    'value'     => __('AdminBansNew' === $this->formBanPage ? 'Add' : 'Update'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('AdminBansNew' === $this->formBanPage ? 'Add' : 'Update'),
                 ],
             ],
         ];

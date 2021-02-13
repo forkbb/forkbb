@@ -90,9 +90,8 @@ class Groups extends Admin
             ],
             'btns'   => [
                 'submit' => [
-                    'type'      => 'submit',
-                    'value'     => __('Add'),
-//                    'accesskey' => 'n',
+                    'type'  => 'submit',
+                    'value' => __('Add'),
                 ],
             ],
         ];
@@ -124,9 +123,8 @@ class Groups extends Admin
             ],
             'btns'   => [
                 'submit'  => [
-                    'type'      => 'submit',
-                    'value'     => __('Update'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Update'),
                 ],
             ],
         ];
@@ -205,10 +203,7 @@ class Groups extends Admin
             $vars            = ['id' => $group->g_id];
             $notNext        .= ',' . $group->g_id;
             $this->aCrumbs[] = [
-                $this->c->Router->link(
-                    $marker,
-                    $vars
-                ),
+                $this->c->Router->link($marker, $vars),
                 __('Edit group'),
             ];
             $this->aCrumbs[] = __('"%s"', $group->g_title);
@@ -368,9 +363,8 @@ class Groups extends Admin
             'sets'   => [],
             'btns'   => [
                 'submit'  => [
-                    'type'      => 'submit',
-                    'value'     => null === $group->g_id ? __('Add') : __('Update'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => null === $group->g_id ? __('Add') : __('Update'),
                 ],
             ],
         ];
@@ -756,14 +750,13 @@ class Groups extends Admin
             'sets'   => [],
             'btns'   => [
                 'delete' => [
-                    'type'      => 'submit',
-                    'value'     => __('Delete group'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Delete group'),
                 ],
                 'cancel' => [
-                    'type'      => 'btn',
-                    'value'     => __('Cancel'),
-                    'link'      => $this->c->Router->link('AdminGroups'),
+                    'type'  => 'btn',
+                    'value' => __('Cancel'),
+                    'link'  => $this->c->Router->link('AdminGroups'),
                 ],
             ],
         ];

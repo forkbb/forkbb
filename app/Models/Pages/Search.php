@@ -176,9 +176,8 @@ class Search extends Page
             ],
             'btns'   => [
                 'search' => [
-                    'type'      => 'submit',
-                    'value'     => __('Search btn'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Search btn'),
                 ],
             ],
         ];
@@ -303,9 +302,8 @@ class Search extends Page
             ],
             'btns'   => [
                 'search' => [
-                    'type'      => 'submit',
-                    'value'     => __('Search btn'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Search btn'),
                 ],
             ],
         ];

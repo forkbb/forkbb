@@ -613,13 +613,12 @@ class Moderate extends Page
         ];
         $form['sets']['moderate']['fields'] = $fields;
         $form['btns'][$v->action] = [
-            'type'      => 'submit',
-            'value'     => $this->buttonValue,
-//            'accesskey' => 's',
+            'type'  => 'submit',
+            'value' => $this->buttonValue,
         ];
         $form['btns']['cancel'] = [
-            'type'      => 'submit',
-            'value'     => __('Cancel'),
+            'type'  => 'submit',
+            'value' => __('Cancel'),
         ];
 
         return $form;

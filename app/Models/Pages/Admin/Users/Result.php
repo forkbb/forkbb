@@ -241,23 +241,20 @@ class Result extends Users
 
         if ($this->c->userRules->banUsers) {
             $form['btns']['ban'] = [
-                'type'      => 'submit',
-                'value'     => __('Ban'),
-//                'accesskey' => null,
+                'type'  => 'submit',
+                'value' => __('Ban'),
             ];
         }
         if ($this->c->userRules->deleteUsers) {
             $form['btns']['delete'] = [
-                'type'      => 'submit',
-                'value'     => __('Delete'),
-//                'accesskey' => null,
+                'type'  => 'submit',
+                'value' => __('Delete'),
             ];
         }
         if ($this->c->userRules->changeGroup) {
             $form['btns']['change_group'] = [
-                'type'      => 'submit',
-                'value'     => __('Change group'),
-//                'accesskey' => null,
+                'type'  => 'submit',
+                'value' => __('Change group'),
             ];
         }
 

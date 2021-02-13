@@ -139,9 +139,8 @@ class Config extends Profile
             'sets'   => [],
             'btns'   => [
                 'save' => [
-                    'type'      => 'submit',
-                    'value'     => __('Save changes'),
-//                    'accesskey' => 's',
+                    'type'  => 'submit',
+                    'value' => __('Save changes'),
                 ],
             ],
         ];
