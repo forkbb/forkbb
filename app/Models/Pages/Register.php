@@ -358,7 +358,7 @@ class Register extends Page
     {
         if (
             ! \hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['key']))
-            || ! ($user = $this->c->users->load((int) $args['id'])) instanceof User
+            || ! ($user = $this->c->users->load($args['id'])) instanceof User
             || ! \hash_equals($user->activate_string, $args['key'])
         ) {
             $this->c->Log->warning('Account activation: fail', [
