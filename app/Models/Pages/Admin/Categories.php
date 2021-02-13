@@ -144,7 +144,7 @@ class Categories extends Admin
      */
     public function delete(array $args, string $method): Page
     {
-        $category = $this->c->categories->get((int) $args['id']);
+        $category = $this->c->categories->get($args['id']);
         if (! $category) {
             return $this->c->Message->message('Bad request');
         }
@@ -170,7 +170,7 @@ class Categories extends Admin
                 return $this->c->Redirect->page('AdminCategories')->message('No confirm redirect');
             }
 
-            $this->c->categories->delete((int) $args['id']);
+            $this->c->categories->delete($args['id']);
 
             $this->c->forums->reset();
 
@@ -180,12 +180,7 @@ class Categories extends Admin
         $this->nameTpl   = 'admin/form';
         $this->aIndex    = 'categories';
         $this->aCrumbs[] = [
-            $this->c->Router->link(
-                'AdminCategoriesDelete',
-                [
-                    'id' => $args['id'],
-                ]
-            ),
+            $this->c->Router->link('AdminCategoriesDelete', $args),
             __('Delete category head'),
         ];
         $this->aCrumbs[] = __('"%s"', $category['cat_name']);
@@ -202,15 +197,9 @@ class Categories extends Admin
     protected function formDelete(array $args, array $category): array
     {
         return [
-            'action' => $this->c->Router->link(
-                'AdminCategoriesDelete',
-                $args
-            ),
+            'action' => $this->c->Router->link('AdminCategoriesDelete', $args),
             'hidden' => [
-                'token' => $this->c->Csrf->create(
-                    'AdminCategoriesDelete',
-                    $args
-                ),
+                'token' => $this->c->Csrf->create('AdminCategoriesDelete', $args),
             ],
             'sets'   => [
                 'del' => [
