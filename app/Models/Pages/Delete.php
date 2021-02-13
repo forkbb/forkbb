@@ -21,7 +21,7 @@ class Delete extends Page
      */
     public function delete(array $args, string $method): Page
     {
-        $post = $this->c->posts->load((int) $args['id']);
+        $post = $this->c->posts->load($args['id']);
 
         if (
             empty($post)
@@ -130,10 +130,7 @@ class Delete extends Page
                 'cancel'  => [
                     'type'      => 'btn',
                     'value'     => __('Cancel'),
-                    'link'      => $this->c->Router->link(
-                        'ViewPost',
-                        $args
-                    ),
+                    'link'      => $this->c->Router->link('ViewPost', $args),
                 ],
             ],
         ];
