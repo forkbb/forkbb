@@ -49,8 +49,8 @@ class Feed extends Page
             return $this->exit('Bad request');
         }
 
-        $fid = (int) ($args['fid'] ?? 0);
-        $tid = (int) ($args['tid'] ?? 0);
+        $fid = $args['fid'] ?? 0;
+        $tid = $args['tid'] ?? 0;
 
         if ($fid > 0 && $tid > 0) {
             return $this->exit('Bad request');
