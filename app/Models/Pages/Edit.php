@@ -27,7 +27,7 @@ class Edit extends Page
      */
     public function edit(array $args, string $method): Page
     {
-        $post = $this->c->posts->load((int) $args['id']);
+        $post = $this->c->posts->load($args['id']);
 
         if (
             empty($post)
