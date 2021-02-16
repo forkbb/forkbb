@@ -16,18 +16,10 @@ use ForkBB\Models\User\Model as User;
 class IsBanned extends Method
 {
     /**
-     * Проверяет наличие бана на основании имени пользователя и(или) email
+     * Проверяет наличие бана пользователя на основании email
      */
     public function isBanned(User $user): int
     {
-        $name = $this->model->trimToNull($user->username, true);
-        if (
-            null !== $name
-            && isset($this->model->userList[$name])
-        ) {
-            return $this->model->userList[$name];
-        } // ???? дублирование функционала
-
         if (
             $user->isGuest
             && ! empty($this->model->emailList)
