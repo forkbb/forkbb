@@ -58,11 +58,26 @@ class Email extends RulesValidator
         // провеерка бана email
         if (
             $ok
-            && isset($attrs['noban'])
-            && $this->c->bans->isBanned($user) > 0
+            && (
+                isset($attrs['noban'])
+                || isset($attrs['nosoloban'])
+            )
         ) {
-            $v->addError('Banned email');
-            $ok = false;
+            $banType = $this->c->bans->isBanned($user);
+
+            if (
+                $banType > 0
+                && (
+                    isset($attrs['noban'])
+                    || (
+                        1 === $banType
+                        && isset($attrs['nosoloban'])
+                    )
+                )
+            ) {
+                $v->addError('Banned email');
+                $ok = false;
+            }
         }
         // проверка наличия 1 пользователя с этим email
         if (

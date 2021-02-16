@@ -241,7 +241,7 @@ class Auth extends Page
 
                 $v = $v->reset()
                     ->addRules([
-                        'email' => 'required|string:trim|email:noban,exists,flood',
+                        'email' => 'required|string:trim|email:nosoloban,exists,flood',
                     ])->addArguments([
                         'email.email' => $tmpUser, // сюда идет возрат данных по найденному пользователю
                     ]);

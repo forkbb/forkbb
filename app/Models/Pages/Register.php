@@ -32,7 +32,7 @@ class Register extends Page
                 'token'    => 'token:RegisterForm',
                 'agree'    => 'required|token:Register',
                 'on'       => 'integer',
-                'email'    => 'required_with:on|string:trim|email:noban', // ???? noban
+                'email'    => 'required_with:on|string:trim|email:noban',
                 'username' => 'required_with:on|string:trim|username',
                 'password' => 'required_with:on|string|min:16|password',
                 'register' => 'required|string',
