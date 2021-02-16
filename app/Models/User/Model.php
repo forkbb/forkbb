@@ -344,6 +344,7 @@ class Model extends DataModel
             )
             && $this->id !== $post->user->id //????
             && 0 < $post->user->g_promote_min_posts * $post->user->g_promote_next_group
+            && ! $post->user->isBanByName
         ) {
             return $this->c->Router->link(
                 'AdminUserPromote',
