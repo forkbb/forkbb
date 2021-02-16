@@ -25,9 +25,8 @@ class Email extends Profile
     public function setEmail(array $args, string $method): Page
     {
         if (
-            $this->user->id !== (int) $args['id']
+            $this->user->id !== $args['id']
             || ! \hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['email'] . $args['key']))
-            || empty($this->user->activate_string)
             || ! \hash_equals($this->user->activate_string, $args['key'])
         ) {
             return $this->c->Message->message('Bad request', false);
@@ -189,6 +188,7 @@ class Email extends Profile
                     'class'  => 'data-edit',
                     'fields' => [
                         'new_email' => [
+                            'autofocus' => true,
                             'type'      => 'text',
                             'maxlength' => '80',
                             'caption'   => __($this->rules->confirmEmail ? 'New or old email' : 'New email'),

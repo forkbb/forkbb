@@ -103,6 +103,7 @@ class Pass extends Profile
                     'class'  => 'data-edit',
                     'fields' => [
                         'new_pass' => [
+                            'autofocus' => true,
                             'type'      => 'password',
                             'caption'   => __('New pass'),
                             'required'  => true,
