@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\BanList;
 
 use ForkBB\Models\Model as ParentModel;
+use InvalidArgumentException;
 use RuntimeException;
 
 class Model extends ParentModel
@@ -104,13 +105,10 @@ class Model extends ParentModel
     {
         $name = $this->trimToNull($name, true);
 
-        if (
-            null !== $name
-            && isset($this->userList[$name])
-        ) {
-            return $this->userList[$name];
-        } else {
-            return 0;
+        if (null === $name) {
+            throw new InvalidArgumentException('Expected username, not empty string');
         }
+
+        return $this->userList[$name] ?? 0;
     }
 }
