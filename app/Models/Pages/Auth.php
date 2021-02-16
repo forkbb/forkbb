@@ -246,7 +246,10 @@ class Auth extends Page
                         'email.email' => $tmpUser, // сюда идет возрат данных по найденному пользователю
                     ]);
 
-                if ($v->validation($_POST)) {
+                if (
+                    $v->validation($_POST)
+                    && 0 === $this->c->bans->banFromName($tmpUser->username)
+                ) {
                     $key  = $this->c->Secury->randomPass(32);
                     $hash = $this->c->Secury->hash($tmpUser->id . $key);
                     $link = $this->c->Router->link(
