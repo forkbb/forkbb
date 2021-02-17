@@ -4,8 +4,8 @@
 /app/config/_*
 /app/cache/**/*.php
 /app/cache/**/*.lock
-/app/log/**/*.log
+/app/log/*
 /public/img/avatars/*
-!/public/img/avatars/index.html
 /public/.htaccess
 /public/index.php
+!.gitkeep
