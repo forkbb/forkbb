@@ -19,8 +19,6 @@ class Email extends RulesValidator
 {
     /**
      * Проверяет email
-     * WARNING!!!
-     * Если 4-ым параметром передан гость, то проверка уникальности email не проводится
      *
      * @param Validator $v
      * @param string $email
@@ -52,8 +50,6 @@ class Email extends RulesValidator
         $email = $result;
         $attrs = \array_flip(\explode(',', $attrs));
         $ok    = true;
-        $user  = $this->c->users->create();
-        $user->__email = $email;
 
         // провеерка бана email
         if (
@@ -63,7 +59,9 @@ class Email extends RulesValidator
                 || isset($attrs['nosoloban'])
             )
         ) {
-            $banType = $this->c->bans->isBanned($user);
+            $banType = $this->c->bans->isBanned(
+                $this->c->users->create(['email' => $email])
+            );
 
             if (
                 $banType > 0
@@ -95,25 +93,19 @@ class Email extends RulesValidator
         if (
             $ok
             && isset($attrs['unique'])
-            && (
-                ! $originalUser instanceof User
-                || ! $originalUser->isGuest
-            )
         ) {
-            if ($user->isGuest) {
-                $user = $this->c->users->loadByEmail($email);
-            }
+            $user = $this->c->users->loadByEmail($email); // ???? exists и unique вместе же не должны встречаться!? O_o
 
             if (
                 $user instanceof User
-                && $originalUser instanceof User
-                && $user->id !== $originalUser->id
+                && (
+                    ! $originalUser instanceof User
+                    || $originalUser->isGuest
+                    || $user->id !== $originalUser->id
+                )
             ) {
-                $ok = false;
-            }
-
-            if (false === $ok) {
                 $v->addError('Dupe email');
+                $ok = false;
             }
         }
         // проверка на флуд интервал
@@ -134,6 +126,7 @@ class Email extends RulesValidator
             } else {
                 $flood = $this->c->FLOOD_INTERVAL;
             }
+
             if ($flood < $this->c->FLOOD_INTERVAL) {
                 $v->addError(__('Account email flood', (int) (($this->c->FLOOD_INTERVAL - $flood) / 60)), 'e');
                 $ok = false;
