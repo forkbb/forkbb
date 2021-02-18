@@ -71,14 +71,13 @@ class Email extends Profile
                 ])->addRules([
                     'token'     => 'token:EditUserEmail',
                     'password'  => 'required|string:trim|check_password',
-                    'new_email' => 'required|string:trim|email:flood',
+                    'new_email' => 'required|string:trim|email',
                     'submit'    => 'required|string',
                 ])->addAliases([
                     'new_email' => 'New email',
                     'password'  => 'Your passphrase',
                 ])->addArguments([
                     'token'           => $args,
-                    'new_email.email' => $this->curUser,
                 ])->addMessages([
                 ]);
 
@@ -96,9 +95,11 @@ class Email extends Profile
 
                 $v = $v->reset()
                     ->addRules([
-                        'new_email' => 'required|string:trim|email:noban',
+                        'new_email' => 'required|string:trim|email:noban,flood',
                     ])->addAliases([
                         'new_email' => 'New email',
+                    ])->addArguments([
+                        'new_email.email' => $this->curUser,
                     ]);
 
                 $isValid = $v->validation($_POST);
