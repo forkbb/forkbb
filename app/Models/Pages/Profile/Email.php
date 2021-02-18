@@ -62,13 +62,16 @@ class Email extends Profile
         $this->c->Lang->load('validator');
 
         if ('POST' === $method) {
+            $isSent = null;
+            $key    = null;
+
             $v = $this->c->Validator->reset()
                 ->addValidators([
                     'check_password' => [$this, 'vCheckPassword'],
                 ])->addRules([
                     'token'     => 'token:EditUserEmail',
                     'password'  => 'required|string:trim|check_password',
-                    'new_email' => 'required|string:trim|email:noban,unique,flood',
+                    'new_email' => 'required|string:trim|email:flood',
                     'submit'    => 'required|string',
                 ])->addAliases([
                     'new_email' => 'New email',
@@ -79,7 +82,9 @@ class Email extends Profile
                 ])->addMessages([
                 ]);
 
-            if ($v->validation($_POST)) {
+            $isValid = $v->validation($_POST);
+
+            if ($isValid) {
                 if (
                     $v->new_email === $this->curUser->email
                     && ! $this->rules->confirmEmail
@@ -89,55 +94,90 @@ class Email extends Profile
                         ->message('Email is old redirect');
                 }
 
-                if (! $this->rules->my) { // админ сменил чужой адрес O_o
-                    $this->curUser->email           = $v->new_email;
-                    $this->curUser->email_confirmed = 0;
+                $v = $v->reset()
+                    ->addRules([
+                        'new_email' => 'required|string:trim|email:noban',
+                    ])->addAliases([
+                        'new_email' => 'New email',
+                    ]);
 
-                    $this->c->users->update($this->curUser);
+                $isValid = $v->validation($_POST);
+            }
 
-                    return $this->c->Redirect
-                        ->page('EditUserProfile', $args)
-                        ->message('Email changed redirect');
-                } else {
-                    $key  = $this->c->Secury->randomPass(33);
-                    $hash = $this->c->Secury->hash($this->curUser->id . $v->new_email . $key);
-                    $link = $this->c->Router->link(
-                        'SetNewEmail',
-                        [
-                            'id'    => $this->curUser->id,
-                            'email' => $v->new_email,
-                            'key'   => $key,
-                            'hash'  => $hash,
-                        ]
-                    );
-                    $tplData = [
-                        'fRootLink' => $this->c->Router->link('Index'),
-                        'fMailer'   => __('Mailer', $this->c->config->o_board_title),
-                        'username'  => $this->curUser->username,
-                        'link'      => $link,
-                    ];
+            if ($isValid) {
+                $v = $this->c->Validator->reset()
+                    ->addRules([
+                        'new_email' => 'required|string:trim|email:unique',
+                    ])->addAliases([
+                        'new_email' => 'New email',
+                    ])->addArguments([
+                        'new_email.email' => $this->curUser,
+                    ]);
 
-                    try {
-                        $isSent = $this->c->Mail
-                            ->reset()
-                            ->setMaxRecipients(1)
-                            ->setFolder($this->c->DIR_LANG)
-                            ->setLanguage($this->curUser->language)
-                            ->setTo($v->new_email, $this->curUser->username)
-                            ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
-                            ->setTpl('activate_email.tpl', $tplData)
-                            ->send();
-                    } catch (MailException $e) {
-                        $isSent = false;
+                $isValid = $v->validation($_POST);
 
-                        $this->c->Log->error('Email activation: MailException', [
-                            'exception' => $e,
-                            'headers'   => false,
-                        ]);
+                if ($isValid) {
+                    if (
+                        ! $this->rules->my
+                        && $this->rules->admin
+                    ) {
+                        $this->curUser->email           = $v->new_email;
+                        $this->curUser->email_confirmed = 0;
+
+                        $this->c->users->update($this->curUser);
+
+                        return $this->c->Redirect
+                            ->page('EditUserProfile', $args)
+                            ->message('Email changed redirect');
+                    } else {
+                        $key  = $this->c->Secury->randomPass(33);
+                        $hash = $this->c->Secury->hash($this->curUser->id . $v->new_email . $key);
+                        $link = $this->c->Router->link(
+                            'SetNewEmail',
+                            [
+                                'id'    => $this->curUser->id,
+                                'email' => $v->new_email,
+                                'key'   => $key,
+                                'hash'  => $hash,
+                            ]
+                        );
+                        $tplData = [
+                            'fRootLink' => $this->c->Router->link('Index'),
+                            'fMailer'   => __('Mailer', $this->c->config->o_board_title),
+                            'username'  => $this->curUser->username,
+                            'link'      => $link,
+                        ];
+
+                        try {
+                            $isSent = $this->c->Mail
+                                ->reset()
+                                ->setMaxRecipients(1)
+                                ->setFolder($this->c->DIR_LANG)
+                                ->setLanguage($this->curUser->language)
+                                ->setTo($v->new_email, $this->curUser->username)
+                                ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
+                                ->setTpl('activate_email.tpl', $tplData)
+                                ->send();
+                        } catch (MailException $e) {
+                            $isSent = false;
+
+                            $this->c->Log->error('Email activation: MailException', [
+                                'exception' => $e,
+                                'headers'   => false,
+                            ]);
+                        }
                     }
+                } elseif (! $this->user->isAdmin) {
+                    // обманка
+                    $isSent = true;
+                }
 
+                if (null !== $isSent) {
                     if ($isSent) {
-                        $this->curUser->activate_string = $key;
+                        if (\is_string($key)) {
+                            $this->curUser->activate_string = $key;
+                        }
+
                         $this->curUser->last_email_sent = \time();
 
                         $this->c->users->update($this->curUser);
@@ -149,13 +189,11 @@ class Email extends Profile
                             ->message(__('Error mail', $this->c->config->o_admin_email), true, 200);
                     }
                 }
-            } else {
-                $this->curUser->__email = $v->new_email;
             }
 
-            $this->fIswev = $v->getErrors();
+            $this->curUser->__email = $v->new_email;
+            $this->fIswev           = $v->getErrors();
         }
-
 
         $this->crumbs     = $this->crumbs(
             [
