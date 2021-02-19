@@ -119,52 +119,40 @@ class Mail
     {
         if (
             ! \is_string($email)
-            || \mb_strlen($email, 'UTF-8') > 80 //???? for DB
-            || ! \preg_match(
-                '%^(?!\.)((?:(?:^|\.)(?>"(?!\s)(?:\x5C[^\x00-\x1F]|[^\x00-\x1F\x5C"])++(?<!\s)"|[a-zA-Z0-9!#$\%&\'*+/=?^_`{|}~-]+))+)@([^\x00-\x1F\s@]++)$%Du',
-                    $email,
-                    $matches
-                )
-            || \mb_strlen($matches[1], 'UTF-8') > 64
+            || \mb_strlen($email, 'UTF-8') > 80 // for DB
+            || ! \preg_match('%^([^\x00-\x1F]+)@([^\x00-\x1F\s@]++)$%Du', $email, $matches)
         ) {
             return false;
         }
-        $local  = $matches[1];
-        $domain = $matches[2];
+
+        $local                 = $matches[1];
+        $domain = $domainASCII = $matches[2];
 
         if (
             '[' === $domain[0]
-            && ']' === \substr($domain, -1)
+            && ']' === $domain[-1]
         ) {
             if (1 === \strpos($domain, 'IPv6:')) {
-                $prefix = 'IPv6:';
-                $ip     = \substr($domain, 6, -1);
+                $ip = \substr($domain, 6, -1);
             } else {
-                $prefix = '';
-                $ip     = \substr($domain, 1, -1);
+                $ip = \substr($domain, 1, -1);
             }
-            $ip = \strtoupper($ip);
 
             if (false === \filter_var($ip, \FILTER_VALIDATE_IP)) {
                 return false;
             }
-
-            $domainASCII = $domain = "[{$prefix}{$ip}]";
         } else {
-            $ip          = null;
-            $domainASCII = $domain = \mb_strtolower($domain, 'UTF-8');
+            $ip = null;
 
             if (\preg_match('%[\x80-\xFF]%', $domain)) {
                 $domainASCII = \idn_to_ascii($domain, 0, \INTL_IDNA_VARIANT_UTS46);
             }
-
-            if (
-                'localhost' == $domain
-                || ! \preg_match('%^(?:(?:xn\-\-)?[a-z0-9]+(?:\-[a-z0-9]+)*(?:$|\.(?!$)))+$%', $domainASCII)
-            ) {
-                return false;
-            }
         }
+
+        if (false === \filter_var("{$local}@{$domainASCII}", \FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+
 
         if ($strict) {
             if ($ip) {
