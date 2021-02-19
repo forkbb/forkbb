@@ -117,7 +117,7 @@ class Topic extends Page
         }
 
         if (! $topic->hasPage()) {
-            return $this->c->Message->message('Bad request');
+            return $this->c->Message->message('Not Found', true, 404);
         }
 
         if (! $posts = $topic->pageData()) {

@@ -36,7 +36,7 @@ class Forum extends Page
 
         $forum->page = $args['page'] ?? 1;
         if (! $forum->hasPage()) {
-            return $this->c->Message->message('Bad request');
+            return $this->c->Message->message('Not Found', true, 404);
         }
 
         $this->fIndex     = 'index';

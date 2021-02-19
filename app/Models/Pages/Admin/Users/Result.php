@@ -52,7 +52,7 @@ class Result extends Users
         $pages = (int) \ceil(($number ?: 1) / $this->c->config->i_disp_users);
 
         if ($page > $pages) {
-            return $this->c->Message->message('Bad request');
+            return $this->c->Message->message('Not Found', true, 404);
         }
 
         if ('POST' === $method) {
