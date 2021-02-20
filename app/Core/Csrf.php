@@ -66,7 +66,7 @@ class Csrf
 
         $result = \is_string($token)
             && \preg_match('%f(\d+)$%D', $token, $matches)
-            && $matches[1] + 0 < $now
+            && $matches[1] + 0 <= $now
             && $matches[1] + 1800 >= $now
             && \hash_equals($this->create($marker, $args, $matches[1]), $token);
 
