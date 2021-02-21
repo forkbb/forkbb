@@ -1029,7 +1029,7 @@ class Files
             return null;
         }
 
-        if (\preg_match('%^(.+)\.([^.\\/]++)$%D', $file['name'], $matches)) {
+        if (\preg_match('%^(.+)\.([^.\\\/]++)$%D', $file['name'], $matches)) {
             $name = $matches[1];
             $ext  = $matches[2];
         } else {
