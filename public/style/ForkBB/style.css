@@ -3295,6 +3295,86 @@ html[lang="ru"] #fork details[open] > summary::after {
 }
 
 /****************************************/
+/* Админка/Логи                         */
+/****************************************/
+#forka .f-lgli {
+  padding: 0.3125rem;
+  border-bottom: 0.0625rem dotted #AA7939;
+  display: flex;
+}
+
+#forka .f-llvem {
+  color: #B71C1C;
+}
+
+#forka .f-llval {
+  color: #D32F2F;
+}
+
+#forka .f-llvcr {
+  color: #F44336;
+}
+
+#forka .f-llver {
+  color: #FF5722;
+}
+
+#forka .f-llvwa {
+  color: #FF9100;
+}
+
+#forka .f-llvno {
+  color: #4CAF50;
+}
+
+#forka .f-llvin {
+  color: #1976D2;
+}
+
+#forka .f-llvde {
+  color: #90CAF9;
+}
+
+#forka .f-lgname {
+  width: 8rem;
+}
+
+#forka .f-logbt {
+  width: 5rem;
+  text-align: right;
+}
+
+#forka .f-llv {
+  width: calc( (100% - 13rem) / 8 );
+  text-align: center;
+}
+
+#forka .f-lga {
+  padding: 0.125rem 0.1875rem;
+}
+
+#forka .f-lga:before {
+  font-family: "FontAwesomeFree";
+  font-weight: 900;
+}
+
+#forka .f-lgaview:before {
+  content: "\f002";
+}
+
+#forka .f-lgadown:before {
+  content: "\f019";
+}
+
+#forka .f-lgadel:before {
+  content: "\f2ed";
+}
+
+#forka .f-lgs {
+  display: none;
+}
+
+/****************************************/
 @media screen and (min-width: 81rem) {
   #fork.f-with-nav {
     flex-direction: row;

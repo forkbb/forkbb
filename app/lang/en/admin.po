@@ -101,3 +101,6 @@ msgstr "Data updated."
 
 msgid "\"%s\""
 msgstr "\"%s\""
+
+msgid "Logs"
+msgstr "Logs"

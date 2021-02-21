@@ -694,7 +694,12 @@ class Routing
                 'AdminMaintenance:rebuild',
                 'AdminRebuildIndex'
             );
-
+            $r->add(
+                $r::GET,
+                '/admin/logs',
+                'AdminLogs:info',
+                'AdminLogs'
+            );
         }
 
         $uri = $_SERVER['REQUEST_URI'];
