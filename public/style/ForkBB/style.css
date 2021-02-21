@@ -1081,7 +1081,8 @@ html[lang="ru"] #fork details[open] > summary::after {
   margin-bottom: 1rem;
 }
 
-#forka .f-admin > div {
+#forka .f-admin .f-adiv,
+#forka .f-admin .f-fdiv {
   background-color: #F8F4E3;
   border: 0.0625rem solid #AA7939;
 }

@@ -1,7 +1,7 @@
 @extends ('layouts/admin')
       <section id="fork-grlist" class="f-admin">
         <h2>{!! __('User groups') !!}</h2>
-        <div>
+        <div class="f-adiv">
           <fieldset>
             <p>{!! __('Edit groups info') !!}</p>
             <ol>
