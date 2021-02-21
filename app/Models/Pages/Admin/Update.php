@@ -1260,7 +1260,7 @@ class Update extends Admin
         $coreConfig->add(
             'shared=>Log',
             [
-                'class'  => '\ForkBB\Core\Log::class',
+                'class'  => '\\ForkBB\\Core\\Log::class',
                 'config' => [
                     'path'       => '\'%DIR_LOG%/{Y-m-d}.log\'',
                     'lineFormat' => '"\\\\%datetime\\\\% [\\\\%level_name\\\\%] \\\\%message\\\\%\\t\\\\%context\\\\%\\n"',
@@ -1268,6 +1268,38 @@ class Update extends Admin
                 ],
             ],
             'NormEmail'
+        );
+
+        $coreConfig->save();
+
+        return null;
+   }
+
+    /**
+     * rev.33 to rev.34
+     */
+    protected function stageNumber33(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>LogViewer',
+            [
+                'class'  => '\\ForkBB\\Core\\LogViewer::class',
+                'config' => [
+                    'dir'        => '\'%DIR_LOG%\'',
+                    'pattern'    => '\'*.log\'',
+                    'lineFormat' => '"\\\\%datetime\\\\% [\\\\%level_name\\\\%] \\\\%message\\\\%\\t\\\\%context\\\\%\\n"',
+                ],
+                'cache' => '\'%Cache%\'',
+            ],
+            'Log'
+        );
+
+        $coreConfig->add(
+            'multiple=>AdminLogs',
+            '\\ForkBB\\Models\\Pages\\Admin\\Logs::class',
+            'AdminParserBBCode'
         );
 
         $coreConfig->save();

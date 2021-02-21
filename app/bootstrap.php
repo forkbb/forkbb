@@ -52,7 +52,7 @@ if (
 }
 $c->PUBLIC_URL = $c->BASE_URL . $forkPublicPrefix;
 
-$c->FORK_REVISION = 33;
+$c->FORK_REVISION = 34;
 $c->START         = $forkStart;
 $c->DIR_APP       = __DIR__;
 $c->DIR_PUBLIC    = \realpath(__DIR__ . '/../public');

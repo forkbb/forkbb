@@ -120,6 +120,15 @@ return [
                 'timeFormat' => 'Y-m-d H:i:s',
             ],
         ],
+        'LogViewer' => [
+            'class'  => \ForkBB\Core\LogViewer::class,
+            'config' => [
+                'dir'        => '%DIR_LOG%',
+                'pattern'    => '*.log',
+                'lineFormat' => "\\%datetime\\% [\\%level_name\\%] \\%message\\%\t\\%context\\%\n",
+            ],
+            'cache' => '%Cache%',
+        ],
 
         'config'        => '@ConfigModel:init',
         'bans'          => '@BanListModel:init',
@@ -250,6 +259,7 @@ return [
         'AdminParser'     => \ForkBB\Models\Pages\Admin\Parser\Edit::class,
         'AdminParserSmilies' => \ForkBB\Models\Pages\Admin\Parser\Smilies::class,
         'AdminParserBBCode' => \ForkBB\Models\Pages\Admin\Parser\BBCode::class,
+        'AdminLogs'       => \ForkBB\Models\Pages\Admin\Logs::class,
 
         'ConfigModel'     => \ForkBB\Models\Config\Model::class,
         'ConfigModelLoad' => \ForkBB\Models\Config\Load::class,
