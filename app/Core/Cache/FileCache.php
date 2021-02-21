@@ -30,7 +30,7 @@ class FileCache implements CacheInterface
 
     public function __construct(string $dir)
     {
-        $dir = \rtrim($dir, '/');
+        $dir = \rtrim($dir, '\\/');
 
         if (empty($dir)) {
             throw new CacheException('Cache directory unset');
@@ -119,8 +119,8 @@ class FileCache implements CacheInterface
         $dir      = new RecursiveDirectoryIterator($this->cacheDir, RecursiveDirectoryIterator::SKIP_DOTS);
         $iterator = new RecursiveIteratorIterator($dir);
         $files    = new RegexIterator($iterator, '%\.php$%i', RegexIterator::MATCH);
+        $result   = true;
 
-        $result = true;
         foreach ($files as $file) {
             $result = \unlink($file->getPathname()) && $result;
         }
