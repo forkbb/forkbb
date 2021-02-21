@@ -27,6 +27,7 @@ class LogViewer
     protected $typePattern;
     protected $resource;
     protected $fileList;
+    protected $hashList;
     protected $replName = [
         '.' => '\\.',
         '*' => '.*',
@@ -57,7 +58,7 @@ class LogViewer
         $pos = \strpos($format, '%level_name%');
 
         if (false === $pos) {
-            throw new RuntimeException('Missing log level in log format ');
+            throw new RuntimeException('Missing log level in log format');
         }
 
         $pos = $pos + 12;
@@ -88,15 +89,25 @@ class LogViewer
         }
 
         \arsort($result, \SORT_NUMERIC);
+        $this->setHashList($result);
 
         return $result;
+    }
+
+    protected function setHashList(array $fileList): void
+    {
+        $this->hashList = [];
+
+        foreach ($fileList as $name => $time) {
+            $this->hashList[\sha1($name)] = $name;
+        }
     }
 
     /**
      * Возвращает список логов в виде:
      * 'реальный путь до файла' => 'время последнего изменения', ...
      */
-    public function list(): array
+    public function files(): array
     {
         return $this->fileList;
     }
@@ -123,24 +134,17 @@ class LogViewer
                 isset($cache[$hash])
                 && $cache[$hash]['time'] === $this->fileList[$key]
             ) {
-                $result[$key] = $cache[$hash]['data'];
+                $result[$hash] = $cache[$hash]['data'];
             } else {
-                $result[$key] = $this->generateInfo($key);
-                $cache[$hash] = [
+                $result[$hash] = $this->generateInfo($key);
+                $cache[$hash]  = [
                     'time' => $this->fileList[$key],
-                    'data' => $result[$key],
+                    'data' => $result[$hash],
                 ];
             }
         }
 
-        $files = [];
-
-        foreach ($this->fileList as $key => $val) {
-            $hash         = \sha1($key);
-            $files[$hash] = $val;
-        }
-
-        $cache = \array_intersect_key($cache, $files);
+        $cache = \array_intersect_key($cache, $this->hashList);
 
         $this->cache->set(self::CACHE_KEY, $cache);
 
@@ -149,7 +153,12 @@ class LogViewer
 
     protected function generateInfo(string $file): array
     {
+        if (! \preg_match('%[\\\/]([^\\\/]++)$%D', $file, $matches)) {
+            throw new RuntimeException("Can't extract filename from path '{$file}'");
+        }
+
         $result = [
+            'log_name'  => $matches[1],
             'emergency' => 0,
             'alert'     => 0,
             'critical'  => 0,
