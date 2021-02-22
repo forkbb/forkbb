@@ -3303,36 +3303,53 @@ html[lang="ru"] #fork details[open] > summary::after {
   display: flex;
 }
 
-#forka .f-llvem {
-  color: #B71C1C;
+#forka .f-lgp {
+  border-top: 0.0625rem dotted #AA7939;
 }
 
-#forka .f-llval {
-  color: #D32F2F;
+#forka .f-llv > span {
+  margin: 0.125rem 0.1875rem;
+  display: block;
 }
 
-#forka .f-llvcr {
-  color: #F44336;
+#forka .f-llvem > span {
+  color: #F8F4E3;
+  background-color: #B71C1C;
 }
 
-#forka .f-llver {
-  color: #FF5722;
+#forka .f-llval > span {
+  color: #F8F4E3;
+  background-color: #D32F2F;
 }
 
-#forka .f-llvwa {
-  color: #FF9100;
+#forka .f-llvcr > span {
+  color: #F8F4E3;
+  background-color: #F44336;
 }
 
-#forka .f-llvno {
-  color: #4CAF50;
+#forka .f-llver > span {
+  color: #F8F4E3;
+  background-color: #FF5722;
 }
 
-#forka .f-llvin {
-  color: #1976D2;
+#forka .f-llvwa > span {
+  color: #F8F4E3;
+  background-color: #FF9100;
 }
 
-#forka .f-llvde {
-  color: #90CAF9;
+#forka .f-llvno > span {
+  color: #F8F4E3;
+  background-color: #4CAF50;
+}
+
+#forka .f-llvin > span {
+  color: #F8F4E3;
+  background-color: #1976D2;
+}
+
+#forka .f-llvde > span {
+  color: #F8F4E3;
+  background-color: #90CAF9;
 }
 
 #forka .f-lgname {
@@ -3340,12 +3357,12 @@ html[lang="ru"] #fork details[open] > summary::after {
 }
 
 #forka .f-logbt {
-  width: 5rem;
+  width: 3.25rem;
   text-align: right;
 }
 
 #forka .f-llv {
-  width: calc( (100% - 13rem) / 8 );
+  width: calc( (100% - 11.25rem) / 8 );
   text-align: center;
 }
 
@@ -3358,10 +3375,6 @@ html[lang="ru"] #fork details[open] > summary::after {
   font-weight: 900;
 }
 
-#forka .f-lgaview:before {
-  content: "\f002";
-}
-
 #forka .f-lgadown:before {
   content: "\f019";
 }
@@ -3372,6 +3385,11 @@ html[lang="ru"] #fork details[open] > summary::after {
 
 #forka .f-lgs {
   display: none;
+}
+
+#forka .f-logdel-form .f-fbtn {
+  display: inline-block;
+  width: auto;
 }
 
 /****************************************/

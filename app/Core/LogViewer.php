@@ -113,6 +113,26 @@ class LogViewer
     }
 
     /**
+     * Возвращает путь к логу по его хэшу
+     */
+    public function getPath(string $hash): ?string
+    {
+        return $this->hashList[$hash] ?? null;
+    }
+
+    /**
+     * Возвращает имя лога
+     */
+    public function getName(string $path): string
+    {
+        if (! \preg_match('%[\\\/]([^\\\/]++)$%D', $path, $matches)) {
+            throw new RuntimeException("Can't extract filename from path '{$path}'");
+        }
+
+        return $matches[1];
+    }
+
+    /**
      * Возвращает общую информацию по логам
      * и генерирует кеш
      */
@@ -153,12 +173,8 @@ class LogViewer
 
     protected function generateInfo(string $file): array
     {
-        if (! \preg_match('%[\\\/]([^\\\/]++)$%D', $file, $matches)) {
-            throw new RuntimeException("Can't extract filename from path '{$file}'");
-        }
-
         $result = [
-            'log_name'  => $matches[1],
+            'log_name'  => $this->getName($file),
             'emergency' => 0,
             'alert'     => 0,
             'critical'  => 0,

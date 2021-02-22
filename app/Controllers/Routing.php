@@ -700,6 +700,12 @@ class Routing
                 'AdminLogs:info',
                 'AdminLogs'
             );
+            $r->add(
+                $r::DUO,
+                '/admin/logs/{action:\w+}/{hash}/{token}',
+                'AdminLogs:action',
+                'AdminLogsAction'
+            );
         }
 
         $uri = $_SERVER['REQUEST_URI'];

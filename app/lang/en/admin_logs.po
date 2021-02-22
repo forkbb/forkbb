@@ -39,11 +39,23 @@ msgstr "Info"
 msgid "Level debug"
 msgstr "Debug"
 
-msgid "View log"
-msgstr "View"
+msgid "View log %s"
+msgstr "View %s"
 
 msgid "Download log"
 msgstr "Download"
 
 msgid "Delete log"
 msgstr "Delete"
+
+msgid "Delete log head"
+msgstr "Delete log"
+
+msgid "Delete log %s"
+msgstr "Delete log %s"
+
+msgid "Log deleted redirect"
+msgstr "Log deleted."
+
+msgid "Failed to delete log redirect"
+msgstr "Failed to delete log."
