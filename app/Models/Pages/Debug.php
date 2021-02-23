@@ -22,7 +22,10 @@ class Debug extends Page
         if ($this->c->isInit('DB')) {
             $this->numQueries = $this->c->DB->getCount();
 
-            if ($this->c->DEBUG > 1 ) {
+            if (
+                $this->c->DEBUG > 1
+                && $this->user->isAdmin
+            ) {
                 $total   = 0;
                 $queries = $this->c->DB->getQueries();
                 foreach ($queries as $cur) {
