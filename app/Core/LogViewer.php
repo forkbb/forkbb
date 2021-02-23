@@ -209,4 +209,68 @@ class LogViewer
 
         return $result;
     }
+
+    public function parse(string $file): array
+    {
+        $result = [];
+        $handle = \fopen($file, 'rb');
+
+        if ($handle) {
+            $contents = '';
+            $current  = '';
+            $matches1 = [];
+
+            while (! \feof($handle)) {
+                $contents .= \fread($handle, 8192);
+                $contents = \str_replace("\r\n", "\n", $contents);
+                $contents = \str_replace("\r", "\n", $contents);
+
+                while (false !== ($pos = \strpos($contents, "\n"))) {
+                    $line     = \substr($contents, 0, $pos + 1);
+                    $contents = \substr($contents,  $pos + 1);
+
+                    if (\preg_match($this->typePattern, $line, $matches)) {
+                        if ('' !== $current) {
+                            $result[] = $this->toResult($current, $matches1);
+                        }
+
+                        $current  = $line;
+                        $matches1 = $matches;
+                    } else {
+                        $current .= $line;
+                    }
+                }
+            }
+
+            \fclose($handle);
+        }
+
+        if ('' !== $current) {
+            $result[] = $this->toResult($current, $matches1);
+        }
+
+        return $result;
+    }
+
+    protected function toResult(string $current, array $matches1): array
+    {
+        if (\preg_match($this->linePattern, $current, $matches2)) {
+            $result            = $this->clearMatches($matches2);
+            $result['context'] = \json_decode($result['context'], true, 512, \JSON_THROW_ON_ERROR);
+
+            return $result;
+        } else {
+            return $this->clearMatches($matches1) + [
+                'message' => 'LOG PARSER ERROR',
+                'context' => null,
+            ];
+        }
+    }
+
+    protected function clearMatches(array $matches): array
+    {
+        return \array_filter($matches, function($key) {
+            return \is_string($key);
+        }, \ARRAY_FILTER_USE_KEY);
+    }
 }

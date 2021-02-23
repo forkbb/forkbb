@@ -2374,8 +2374,8 @@ html[lang="ru"] #fork details[open] > summary::after {
   flex-direction: column;
 }
 
-#forka .f-editforums-form .f-fbtn[data-name=new],
-#forka .f-editforum-form .f-fbtn[name=reset] {
+#forka .f-editforums-form .f-fbtn[data-name="new"],
+#forka .f-editforum-form .f-fbtn[name="reset"] {
   width: auto;
   margin-bottom: 0.625rem;
   margin-left: auto;
@@ -3390,6 +3390,55 @@ html[lang="ru"] #fork details[open] > summary::after {
 #forka .f-logdel-form .f-fbtn {
   display: inline-block;
   width: auto;
+}
+
+#fork-logview .f-lgli {
+  font-size: 0.875rem;
+}
+
+#fork-logview .f-lgsu {
+  display: flex;
+}
+
+#fork-logview .f-lgdt {
+  width: 9.5rem;
+  flex-shrink: 0;
+}
+
+#fork-logview .f-lgdts {
+  color: #F8F4E3;
+  background-color: #AA7939;
+  margin: 0.125rem 0.1875rem;
+  display: block;
+  text-align: center;
+}
+
+#fork-logview .f-lglv {
+  width: 5rem;
+  flex-shrink: 0;
+}
+
+#fork-logview .f-lglvs {
+  margin: 0.125rem 0.1875rem;
+  display: block;
+  text-align: center;
+}
+
+#fork #fork-logview summary.f-lgsu {
+  margin: 0;
+}
+
+#fork #fork-logview summary.f-lgsu::after {
+  content: none;
+}
+
+#fork-logview .f-lgdtl {
+  width: 100%;
+}
+
+#fork-logview .f-lgpre {
+  margin-top: 0.625rem;
+  overflow: auto;
 }
 
 /****************************************/

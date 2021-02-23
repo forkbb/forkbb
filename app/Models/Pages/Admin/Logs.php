@@ -68,7 +68,7 @@ class Logs extends Admin
         $path = $this->c->LogViewer->getPath($args['hash']);
 
         if (
-            null === $path
+            ! \is_string($path)
             || ! \is_file($path)
         ) {
             return $this->c->Message->message('Not Found', true, 404);
@@ -76,7 +76,7 @@ class Logs extends Admin
 
         $this->c->Lang->load('admin_logs');
 
-        $this->aIndex   = 'logs';
+        $this->aIndex = 'logs';
 
         switch ($args['action']) {
             case 'view':
@@ -162,5 +162,25 @@ class Logs extends Admin
         ];
 
         return $form;
+    }
+
+    protected function view(string $path, array $args, string $method): Page
+    {
+        $data = $this->c->LogViewer->parse($path);
+
+        foreach ($data as &$cur) {
+            $cur['context'] = \print_r($cur['context'], true);
+        }
+        unset($cur);
+
+        $this->nameTpl    = 'admin/logs';
+        $this->logData    = $data;
+        $this->logName    = $this->c->LogViewer->getName($path);
+        $this->aCrumbs[]  = [
+            $this->c->Router->link('AdminLogsAction', $args),
+            __('Log %s', $this->logName),
+        ];
+
+        return $this;
     }
 }

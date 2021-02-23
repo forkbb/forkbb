@@ -41,3 +41,32 @@
         </div>
       </section>
 @endisset
+@isset ($p->logData)
+      <section id="fork-logview" class="f-admin">
+        <h2>{!! __('Log %s', $p->logName) !!}</h2>
+        <div>
+          <fieldset>
+            <ul>
+    @foreach ($p->logData as $cur)
+              <li class="f-lgli">
+        @if ($cur['context'])
+                <details class="f-lgdtl">
+                  <summary class="f-lgsu">
+        @endif
+                    <span class="f-lgdt"><span class="f-lgdts">{{ $cur['datetime'] }}</span></span>
+                    <span class="f-lglv @if ('emergency' === $cur['level_name']) f-llvem @elseif ('alert' === $cur['level_name']) f-llval @elseif ('critical' === $cur['level_name']) f-llvcr @elseif ('error' === $cur['level_name']) f-llver @elseif ('warning' === $cur['level_name']) f-llvwa @elseif ('notice' === $cur['level_name']) f-llvno @elseif ('info' === $cur['level_name']) f-llvin @elseif ('debug' === $cur['level_name']) f-llvde @endif"><span class="f-lglvs">{{ $cur['level_name'] }}</span></span>
+                    <span class="f-lgmes"><span class="f-lgmess">{{ $cur['message'] }}</span></span>
+        @if ($cur['context'])
+                  </summary>
+                  <pre class="f-lgpre">
+{{ $cur['context'] }}
+                  </pre>
+                </details>
+        @endif
+              </li>
+    @endforeach
+            </ul>
+          </fieldset>
+        </div>
+      </section>
+@endisset

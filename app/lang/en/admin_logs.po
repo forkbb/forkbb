@@ -59,3 +59,6 @@ msgstr "Log deleted."
 
 msgid "Failed to delete log redirect"
 msgstr "Failed to delete log."
+
+msgid "Log %s"
+msgstr "Log %s"
