@@ -3441,6 +3441,10 @@ html[lang="ru"] #fork details[open] > summary::after {
   overflow: auto;
 }
 
+#fork-logview .f-lgmes {
+  min-width: 0;
+}
+
 /****************************************/
 @media screen and (min-width: 81rem) {
   #fork.f-with-nav {
