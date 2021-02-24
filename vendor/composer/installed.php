@@ -42,13 +42,12 @@
     ),
     'miovisman/parserus' => 
     array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
+      'pretty_version' => '1.1.0',
+      'version' => '1.1.0.0',
       'aliases' => 
       array (
-        0 => '9999999-dev',
       ),
-      'reference' => '78bd7626abce40938910aae45e3ed0e6bfb91502',
+      'reference' => 'fa93c5e26dd500bf2489bb4fe46a6d3046546c31',
     ),
     'psr/log' => 
     array (

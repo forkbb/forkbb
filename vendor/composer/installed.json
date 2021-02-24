@@ -107,24 +107,23 @@
         },
         {
             "name": "miovisman/parserus",
-            "version": "dev-master",
-            "version_normalized": "dev-master",
+            "version": "1.1.0",
+            "version_normalized": "1.1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MioVisman/Parserus.git",
-                "reference": "78bd7626abce40938910aae45e3ed0e6bfb91502"
+                "reference": "fa93c5e26dd500bf2489bb4fe46a6d3046546c31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MioVisman/Parserus/zipball/78bd7626abce40938910aae45e3ed0e6bfb91502",
-                "reference": "78bd7626abce40938910aae45e3ed0e6bfb91502",
+                "url": "https://api.github.com/repos/MioVisman/Parserus/zipball/fa93c5e26dd500bf2489bb4fe46a6d3046546c31",
+                "reference": "fa93c5e26dd500bf2489bb4fe46a6d3046546c31",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.3.0"
             },
-            "time": "2021-01-06T13:36:08+00:00",
-            "default-branch": true,
+            "time": "2021-02-24T11:22:35+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -151,7 +150,7 @@
             ],
             "support": {
                 "issues": "https://github.com/MioVisman/Parserus/issues",
-                "source": "https://github.com/MioVisman/Parserus/tree/master"
+                "source": "https://github.com/MioVisman/Parserus/tree/1.1.0"
             },
             "install-path": "../miovisman/parserus"
         },
