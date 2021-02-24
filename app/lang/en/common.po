@@ -58,26 +58,20 @@ msgstr "Redirecting to Index page."
 msgid "Error mail"
 msgstr "When sending email there was an error. Please try again later or contact the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."
 
-msgid "Bad token"
-msgstr "Bad token."
-
-msgid "Expired token"
-msgstr "Expired token."
-
 msgid "Bad request"
 msgstr "Bad request. The request currently contains incorrect data."
 
 msgid "Not Found"
 msgstr "Not Found. The link is incorrect or outdated."
 
-msgid "No view"
-msgstr "You do not have permission to view these forums."
-
 msgid "No permission"
 msgstr "You do not have permission to access this page."
 
-msgid "No cookie"
-msgstr "You appear to have logged in successfully, however a cookie has not been set. Please check your settings and if applicable, enable cookies for this website."
+msgid "Bad token"
+msgstr "Bad token."
+
+msgid "Expired token"
+msgstr "Expired token."
 
 msgid "Hidden text"
 msgstr "Hidden text"
@@ -144,12 +138,6 @@ msgstr "on"
 
 msgid "off"
 msgstr "off"
-
-msgid "Required"
-msgstr "(Required)"
-
-msgid "required field"
-msgstr "is a required field in this form."
 
 msgid "Last post"
 msgstr "Last post"
@@ -248,12 +236,6 @@ msgstr "wrote:"
 msgid "Mailer"
 msgstr "%s"
 
-msgid "Important information"
-msgstr "Important information"
-
-msgid "Write message legend"
-msgstr "Write your message and submit"
-
 msgid "Previous"
 msgstr "Previous"
 
@@ -283,30 +265,6 @@ msgstr "Guest"
 
 msgid "Unverified"
 msgstr "Непроверенный"
-
-msgid "BBCode error no opening tag"
-msgstr "[/%1$s] was found without a matching [%1$s]"
-
-msgid "BBCode error invalid nesting"
-msgstr "[%1$s] was opened within [%2$s], this is not allowed"
-
-msgid "BBCode error invalid self-nesting"
-msgstr "[%s] was opened within itself, this is not allowed"
-
-msgid "BBCode error no closing tag"
-msgstr "[%1$s] was found without a matching [/%1$s]"
-
-msgid "BBCode error empty attribute"
-msgstr "[%s] tag had an empty attribute section"
-
-msgid "BBCode error tag not allowed"
-msgstr "You are not allowed to use [%s] tags"
-
-msgid "BBCode error tag url not allowed"
-msgstr "You are not allowed to post links"
-
-msgid "BBCode list size error"
-msgstr "Your list was too long to parse, please make it smaller!"
 
 msgid "Index"
 msgstr "Index"
@@ -338,9 +296,6 @@ msgstr "Register"
 msgid "Login"
 msgstr "Login"
 
-msgid "Not logged in"
-msgstr "You are not logged in."
-
 msgid "Profile"
 msgstr "Profile"
 
@@ -349,9 +304,6 @@ msgstr "Your profile"
 
 msgid "Logout"
 msgstr "Logout"
-
-msgid "Logged in as"
-msgstr "Logged in as"
 
 msgid "Admin"
 msgstr "Administration"
@@ -380,20 +332,8 @@ msgstr "New private message"
 msgid "PMmess"
 msgstr "You have new private messages (%s msgs.)."
 
-msgid "Warn"
-msgstr "Warning"
-
-msgid "WarnMess"
-msgstr "You have a new warning!"
-
 msgid "Board footer"
 msgstr "Board footer"
-
-msgid "Jump to"
-msgstr "Jump to"
-
-msgid "Go"
-msgstr " Go "
 
 msgid "Powered by"
 msgstr "Powered by <a href=\"https://github.com/forkbb\">ForkBB</a>"
