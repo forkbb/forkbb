@@ -13,5 +13,5 @@
       <p>{!! __('Ban message 3') !!}</p>
       <p><b>{{ $p->ban['message'] }}</b></p>
 @endif
-      <p>{!! __('Ban message 4', $p->adminEmail, $p->adminEmail) !!}</p>
+      <p>{!! __('Ban message 4', $p->adminEmail) !!}</p>
     </section>
