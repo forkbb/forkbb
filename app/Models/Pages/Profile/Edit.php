@@ -184,9 +184,9 @@ class Edit extends Profile
                 $prepare   = true;
                 $signature = $this->c->Parser->prepare($signature, true); //????
 
-                foreach ($this->c->Parser->getErrors() as $error) {
+                foreach ($this->c->Parser->getErrors([], [], true) as $error) {
                     $prepare = false;
-                    $v->addError($error);
+                    $v->addError(__(...$error));
                 }
             }
 
