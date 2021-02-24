@@ -12,15 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "Admin menu"
-msgstr "Admin menu"
-
-msgid "Plugins menu"
-msgstr "Plugins menu"
-
-msgid "Moderator menu"
-msgstr "Moderator menu"
-
 msgid "Admin index"
 msgstr "Index"
 
@@ -48,9 +39,6 @@ msgstr "Censoring"
 msgid "Bans"
 msgstr "Bans"
 
-msgid "Prune"
-msgstr "Prune"
-
 msgid "Maintenance"
 msgstr "Maintenance"
 
@@ -62,9 +50,6 @@ msgstr "Server statistics"
 
 msgid "Admin title"
 msgstr "Administration"
-
-msgid "Go back"
-msgstr "Go back"
 
 msgid "Delete"
 msgstr "Delete"
@@ -78,23 +63,8 @@ msgstr "Add"
 msgid "Edit"
 msgstr "Edit"
 
-msgid "Remove"
-msgstr "Remove"
-
-msgid "here"
-msgstr "here"
-
 msgid "Action"
 msgstr "Action"
-
-msgid "None"
-msgstr "None"
-
-msgid "No plugin message"
-msgstr "There is no plugin called %s in the plugin directory."
-
-msgid "Plugin failed message"
-msgstr "Loading of the plugin - <b>%s</b> - failed."
 
 msgid "Data updated redirect"
 msgstr "Data updated."

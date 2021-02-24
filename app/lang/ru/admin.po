@@ -12,15 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
 
-msgid "Admin menu"
-msgstr "Админка"
-
-msgid "Plugins menu"
-msgstr "Плагины"
-
-msgid "Moderator menu"
-msgstr "Модерирование"
-
 msgid "Admin index"
 msgstr "Главная"
 
@@ -48,9 +39,6 @@ msgstr "Цензура"
 msgid "Bans"
 msgstr "Баны"
 
-msgid "Prune"
-msgstr "Очистка"
-
 msgid "Maintenance"
 msgstr "Обслуживание"
 
@@ -62,9 +50,6 @@ msgstr "Статистика сервера"
 
 msgid "Admin title"
 msgstr "Администрирование"
-
-msgid "Go back"
-msgstr "Назад"
 
 msgid "Delete"
 msgstr "Удалить"
@@ -78,23 +63,8 @@ msgstr "Добавить"
 msgid "Edit"
 msgstr "Править"
 
-msgid "Remove"
-msgstr "Убрать"
-
-msgid "here"
-msgstr "здесь"
-
 msgid "Action"
 msgstr "Действие"
-
-msgid "None"
-msgstr "Пусто"
-
-msgid "No plugin message"
-msgstr "Нет плагина с именем %s в директории плагинов."
-
-msgid "Plugin failed message"
-msgstr "Загрузить плагин <b>%s</b> не удалось."
 
 msgid "Data updated redirect"
 msgstr "Данные изменены."
