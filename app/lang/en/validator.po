@@ -56,3 +56,51 @@ msgstr "Username contains consecutive spaces."
 
 msgid "Flood message"
 msgstr "Please wait %s seconds and try sending again."
+
+msgid "[%1$s] tag in blacklist"
+msgstr "[%1$s] tag in blacklist."
+
+msgid "[%1$s] tag not in whitelist"
+msgstr "[%1$s] tag not in whitelist."
+
+msgid "[%1$s] tag can't be opened in [%2$s] tag"
+msgstr "[%1$s] tag can't be opened in [%2$s] tag."
+
+msgid "No start tag found for [/%1$s] tag"
+msgstr "No start tag found for [/%1$s] tag."
+
+msgid "Found [/%1$s] tag for single [%1$s] tag"
+msgstr "Found [/%1$s] tag for single [%1$s] tag."
+
+msgid "No attributes in [%1$s] tag"
+msgstr "No attributes in [%1$s] tag."
+
+msgid "Primary attribute is forbidden in [%1$s] tag"
+msgstr "Primary attribute is forbidden in [%1$s] tag."
+
+msgid "Secondary attribute is forbidden in [%1$s] tag"
+msgstr "Secondary attribute is forbidden in [%1$s] tag."
+
+msgid "Attribute '%2$s' does not match pattern in [%1$s] tag"
+msgstr "Attribute '%2$s' does not match pattern in [%1$s] tag."
+
+msgid "[%1$s] tag contains unknown secondary attribute '%2$s'"
+msgstr "[%1$s] tag contains unknown secondary attribute '%2$s'."
+
+msgid "Body of [%1$s] tag does not match pattern"
+msgstr "Body of [%1$s] tag does not match pattern."
+
+msgid "[%1$s] tag was opened within itself, this is not allowed"
+msgstr "[%1$s] tag was opened within itself, this is not allowed."
+
+msgid "Missing attribute '%2$s' in [%1$s] tag"
+msgstr "Missing attribute '%2$s' in [%1$s] tag."
+
+msgid "All tags are empty"
+msgstr "All tags are empty."
+
+msgid "The depth of the tag tree is greater than %1$s"
+msgstr "The depth of the tag tree is greater than %1$s."
+
+msgid "[%1$s] tag is enclosed in itself more than %2$s times"
+msgstr "[%1$s] tag is enclosed in itself more than %2$s times."

@@ -56,3 +56,51 @@ msgstr "В имени пользователя есть идущие подря�
 
 msgid "Flood message"
 msgstr "Пожалуйста, подождите %s секунд и попробуйте снова."
+
+msgid "[%1$s] tag in blacklist"
+msgstr "Тег [%1$s] находится в черном списке."
+
+msgid "[%1$s] tag not in whitelist"
+msgstr "Тег [%1$s] отсутствует в белом списке."
+
+msgid "[%1$s] tag can't be opened in [%2$s] tag"
+msgstr "Тег [%1$s] нельзя открыть внутри тега [%2$s]."
+
+msgid "No start tag found for [/%1$s] tag"
+msgstr "Не найден начальный тег для парного тега [/%1$s]."
+
+msgid "Found [/%1$s] tag for single [%1$s] tag"
+msgstr "Найден парный тег [/%1$s] для одиночного тега [%1$s]."
+
+msgid "No attributes in [%1$s] tag"
+msgstr "В теге [%1$s] отсутствуют атрибуты."
+
+msgid "Primary attribute is forbidden in [%1$s] tag"
+msgstr "Тег [%1$s] не может содержать первичный атрибут."
+
+msgid "Secondary attribute is forbidden in [%1$s] tag"
+msgstr "Тег [%1$s] не может содержать вторичные атрибуты."
+
+msgid "Attribute '%2$s' does not match pattern in [%1$s] tag"
+msgstr "Атрибут '%2$s' тега [%1$s] не соответствует шаблону."
+
+msgid "[%1$s] tag contains unknown secondary attribute '%2$s'"
+msgstr "Тег [%1$s] содержит неизвестный вторичный атрибут '%2$s'."
+
+msgid "Body of [%1$s] tag does not match pattern"
+msgstr "Тело тега [%1$s] не соответствует шаблону."
+
+msgid "[%1$s] tag was opened within itself, this is not allowed"
+msgstr "Тег [%1$s] нельзя открыть внутри аналогичного тега."
+
+msgid "Missing attribute '%2$s' in [%1$s] tag"
+msgstr "В теге [%1$s] отсутствует обязательный атрибут '%2$s'."
+
+msgid "All tags are empty"
+msgstr "Все теги пустые."
+
+msgid "The depth of the tag tree is greater than %1$s"
+msgstr "Глубина дерева тегов больше %1$s."
+
+msgid "[%1$s] tag is enclosed in itself more than %2$s times"
+msgstr "Тег [%1$s] вложен в себя больше %2$s раз."
