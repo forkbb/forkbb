@@ -1,0 +1,1048 @@
+/******************/
+/* Админка - меню */
+/******************/
+#fork #fork-a-nav {
+  position: sticky;
+  top: 1rem;
+}
+
+#fork-a-menu .f-menu-a {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#fork-a-menu .f-menu-a.active {
+  background-color: #814A00;
+  color: #F8F4E3;
+}
+
+#fork-a-menu .f-menu-a:hover,
+#fork-a-menu .f-menu-a:focus {
+  background-color: #583200;
+  color: #F8F4E3;
+}
+
+#fork-a-menu #id-an-label {
+  position: absolute;
+  top: -2.875rem;
+  right: 0.625rem;
+}
+
+#fork .f-nav-admin-links,
+#fork .f-nav-admin-one-column-links {
+  margin-right: 3.75rem;
+}
+
+#fork-a-menu .f-menu-item:first-child .f-menu-a {
+  border-top: 0.0625rem dotted;
+}
+
+@media screen and (min-width: 50rem) {
+  #fork .f-nav-admin-links {
+    margin-right: 0;
+  }
+
+  #fork .f-main-admin {
+    display: flex;
+    /*flex-wrap: wrap;*/
+  }
+
+  .f-main-admin #fork-a-menu {
+    width: 13rem;
+    margin-right: 1rem;
+  }
+
+  .f-main-admin #forka {
+    width: calc(100% - 14rem);
+  }
+
+  .f-main-admin #fork-a-menu #id-an-label {
+    display: none;
+  }
+
+  .f-main-admin #fork-a-menu .f-menu-items {
+    /*max-height: 100rem;*/
+    display: flex;
+  }
+
+  .f-main-admin #fork-a-menu .f-menu-a {
+    text-align: left;
+    text-transform: none;
+    border-bottom: 0.0625rem dotted;
+  }
+}
+
+/***********/
+/* Админка */
+/***********/
+#forka .f-admin:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+#forka .f-admin .f-adiv,
+#forka .f-admin .f-fdiv {
+  background-color: #F8F4E3;
+  border: 0.0625rem solid #AA7939;
+}
+
+#fork-welcome p,
+#fork-grlist p {
+  padding: 0.625rem;
+  text-align: justify;
+}
+
+#fork-welcome ul {
+  padding: 0 0.625rem 0.625rem 0.625rem;
+  list-style-type: circle;
+  list-style-position: inside;
+}
+
+#fork-grlist ol {
+  padding: 0 0.625rem 0.625rem 0.625rem;
+}
+
+#forka dl {
+  border-bottom: 0.0625rem dotted #AA7939;
+  margin-bottom: 0.3125rem;
+}
+
+#forka .f-fleg {
+  margin-bottom: 0.3125rem;
+}
+
+#forka .f-flblch {
+  font-size: 1rem;
+}
+
+#fork-grlist li {
+  padding: 0.625rem 0;
+  border-bottom: 0.0625rem dotted #AA7939;
+}
+
+#fork-grlist li:first-child {
+  border-top: 0.0625rem dotted #AA7939;
+}
+
+#forka #fork-phpinfo {
+  word-break: break-all;
+}
+
+#forka #id-phpinfo-div {
+  overflow-x: auto;
+}
+
+#forka .f-wrap-between {
+  display: flex;
+  align-items: flex-end;
+}
+
+#forka .f-field-bstart,
+#forka .f-field-bend {
+  width: 50%;
+}
+
+#forka .f-field-bstart .f-ycaption {
+  white-space: nowrap;
+}
+
+@media screen and (min-width: 36rem) {
+  #forka dl {
+    display: flex;
+  }
+
+  #forka dt {
+    width: 14rem;
+    margin-right: 0.625rem;
+  }
+
+  #forka dd {
+    width: calc(100% - 14.625rem);
+  }
+
+  #forka .f-ycaption {
+    font-weight: normal;
+  }
+
+  #forka .f-field-full dt {
+    display: none;
+  }
+
+  #forka .f-field-full dd {
+    padding-left: 0;
+  }
+
+  #forka .f-field-bstart {
+    width: calc((100% - 14.625rem) / 2 + 14.625rem);
+  }
+
+  #forka .f-field-bend {
+    width: calc((100% - 14.625rem) / 2);
+  }
+
+  #forka .f-field-bend > dt {
+    display: none;
+  }
+
+  #forka .f-field-bend > dd {
+    width: 100%;
+  }
+}
+
+/*********************/
+/* Админка/Категории */
+/*********************/
+#forka .f-deletecategory-form .f-fbtn {
+  width: auto;
+  display: inline-block;
+}
+
+#forka .f-fs-category {
+  display: flex;
+  align-items: stretch;
+  /*min-width: 0;*/
+}
+
+#forka .f-fs-category .f-fleg {
+  display: none;
+}
+
+#forka .f-fs-category .f-ycaption {
+  font-weight: normal;
+}
+
+#forka .f-field-category {
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#forka .f-field-category > dt {
+  display: none;
+}
+
+#forka .f-field-category > dd {
+  width: 100%;
+}
+
+#forka .f-fs-category:first-of-type .f-field-category > dt {
+  display: block;
+  width: 100%;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#forka .f-field-category.f-field-name {
+  width: calc(100% - 8rem);
+}
+
+#forka .f-field-category.f-field-position {
+  width: 5rem;
+}
+
+#forka .f-field-category.f-field-delete {
+  width: 3rem;
+  overflow: hidden;
+  text-align: center;
+}
+
+/*********************/
+/* Админка/Разделы   */
+/*********************/
+#forka .f-deleteforum-form .f-fbtn {
+  width: auto;
+  display: inline-block;
+}
+
+#forka .f-fs-forum {
+  display: flex;
+  align-items: stretch;
+}
+
+#forka .f-fs-forum .f-fleg {
+  display: none;
+}
+
+#forka .f-fs-forum .f-ycaption {
+  font-weight: normal;
+}
+
+#forka .f-field-forum {
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#forka .f-field-forum > dt {
+  display: none;
+}
+
+#forka .f-field-forum > dd {
+  width: 100%;
+}
+
+#forka .f-finform + .f-fs-forum .f-field-forum > dt {
+  display: block;
+  width: 100%;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#forka .f-field-forum.f-field-name {
+  width: calc(100% - 8rem);
+}
+
+#forka .f-field-forum.f-field-position {
+  width: 5rem;
+}
+
+#forka .f-field-forum.f-field-delete {
+  width: 3rem;
+  overflow: hidden;
+  text-align: center;
+}
+
+#forka .f-field-forum.f-field-name .f-ybtn {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#forka .f-fs-permission {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  /*min-width: 0;*/
+}
+
+#forka .f-fs-permission .f-fleg {
+  margin: 0;
+}
+
+#forka .f-fs-permission .f-ycaption {
+  font-weight: normal;
+}
+
+#forka .f-fs-permission .f-field-cando {
+  width: 33.333%;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#forka .f-fs-permission .f-field-cando > dt,
+#forka .f-fs-permission .f-field-cando > dd {
+  width: 100%;
+  margin: 0;
+}
+
+#forka .f-field-on .f-ychk:not(:checked) + span {
+  opacity: 0.2;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: red;
+}
+
+#forka .f-field-off .f-ychk:checked + span {
+  opacity: 0.2;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: red;
+}
+
+#forka .f-field-cando .f-ychk:disabled + span {
+  opacity: 0.2;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: gray;
+}
+
+#forka .f-editforums-form .f-btns {
+  display: flex;
+  flex-direction: column;
+}
+
+#forka .f-editforums-form .f-fbtn[data-name="new"],
+#forka .f-editforum-form .f-fbtn[name="reset"] {
+  width: auto;
+  margin-bottom: 0.625rem;
+  margin-left: auto;
+}
+
+#forka .f-btn.f-disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.5;
+}
+
+/******************/
+/* Админка/Группы */
+/******************/
+#forka .f-deletegroup-form .f-fbtn {
+  width: auto;
+  display: inline-block;
+}
+
+/*********************/
+/* Админка/Цензура   */
+/*********************/
+#id-fs-censtable.f-fs-censor {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  /*min-width: 0;*/
+}
+
+#id-fs-censtable .f-ycaption {
+  font-weight: normal;
+}
+
+#id-fs-censtable .f-field-censor  {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#id-fs-censtable .f-field-censor > dt {
+  display: none;
+}
+
+#id-fs-censtable .f-field-censor > dd {
+  width: 100%;
+}
+
+#id-fs-censtable .f-field-censor:nth-child(-n+2) > dt {
+  display: block;
+  width: 100%;
+}
+
+/************************/
+/* Админка/Пользователи */
+/************************/
+#fork-ausersrch-rs .f-btns {
+  text-align: right;
+}
+
+#fork-ausersrch-rs .f-btns .f-fbtn,
+#fork .f-delete-users-form .f-fbtn,
+#fork .f-change-group-form .f-fbtn {
+  display: inline-block;
+  width: auto;
+}
+
+#forka .f-fs-result {
+  display: flex;
+  align-items: stretch;
+  /*min-width: 0;*/
+  border-bottom: 0.0625rem dotted #AA7939;
+  margin-bottom: 0.3125rem;
+  padding-bottom: 0.3125rem;
+}
+
+#forka .f-fs-stat {
+  display: block;
+}
+
+#forka .f-fs-result:first-of-type,
+#forka .f-fs-result .f-field-no-data {
+  display: none;
+}
+
+#forka .f-fs-result .f-fleg {
+  display: none;
+}
+
+#forka .f-fs-result .f-ychk {
+  margin: 0;
+}
+
+#forka .f-fs-result .f-field-result {
+  border: 0;
+  margin: 0;
+}
+
+#forka .f-wrap-main-result {
+  width: calc(100% - 3rem);
+}
+
+#forka .f-fs-result .f-field-result > dt,
+#forka .f-fs-result .f-field-result > dd,
+#forka .f-fs-result .f-field-result .f-str {
+  display: inline;
+}
+
+#forka .f-fs-result .f-field-result .f-ycaption {
+  display: inline;
+  font-weight: bold;
+}
+
+#forka .f-fs-result .f-field-result .f-ycaption:after {
+  content: ": ";
+}
+
+#forka .f-fs-result .f-field-check {
+  border: 0;
+  margin: 0;
+  width: 3rem;
+  overflow: hidden;
+  text-align: center;
+  border-left: 0.0625rem dotted #AA7939;
+  display: flex;
+  flex-direction: column;
+}
+
+#forka .f-fs-result .f-field-check > dt {
+  display: none;
+}
+
+#forka .f-fs-result .f-field-check > dd {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%
+}
+
+#forka .f-fs-result .f-field-note > dd {
+  color: #D8000C;
+}
+
+@media screen and (min-width: 36rem) {
+  #forka .f-fs-result .f-field-result > dt,
+  #forka .f-fs-result .f-field-result > dd {
+    display: block;
+  }
+
+  #forka .f-fs-result .f-field-result .f-ycaption {
+    display: block;
+    font-weight: normal;
+  }
+
+  #forka .f-fs-result .f-field-result .f-ycaption:after {
+    content: none;
+  }
+}
+
+@media screen and (min-width: 50rem) {
+  #forka .f-fs-stat {
+    display: flex;
+  }
+
+  #forka .f-wrap-main-result {
+    display: flex;
+  }
+
+  #forka .f-fs-result .f-field-result,
+  #forka .f-fs-result .f-wrap-user-result {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around /**center*/;
+  }
+
+  #forka .f-fs-result .f-field-result > dt,
+  #forka .f-fs-result:first-of-type .f-field-check > dt {
+    display: block;
+    margin: 0;
+    width: 100%;
+  }
+
+  #forka .f-fs-result .f-field-result > dd {
+    margin: 0;
+    width: 100%;
+  }
+
+  #forka .f-fs-result:first-of-type {
+    display: flex;
+    text-align: center;
+  }
+
+  #forka .f-fs-result:not(:first-of-type) .f-field-result > dt,
+  #forka .f-fs-result:first-of-type .f-field-result > dd {
+    display: none;
+  }
+
+  #forka .f-fs-result .f-field-result .f-ycaption,
+  #forka .f-fs-result .f-field-check .f-ycaption {
+    font-weight: bold;
+  }
+
+  #forka .f-fs-result .f-wrap-user-result {
+    width: 33%;
+  }
+
+  #forka .f-fs-result .f-field-username {
+    width: 100%;
+  }
+
+  #forka .f-fs-result .f-field-email {
+    width: 100%;
+  }
+
+  #forka .f-fs-result .f-field-title {
+    width: 16%;
+    border-left: 0.0625rem dotted #AA7939;
+  }
+
+  #forka .f-fs-result .f-field-posts {
+    width: 15%;
+    border-left: 0.0625rem dotted #AA7939;
+  }
+
+  #forka .f-fs-result .f-field-posts > dd {
+    text-align: right;
+  }
+
+  #forka .f-fs-result .f-field-note {
+    width: 20%;
+    border-left: 0.0625rem dotted #AA7939;
+  }
+
+  #forka .f-fs-result .f-field-view-ip {
+    width: 16%;
+    border-left: 0.0625rem dotted #AA7939;
+  }
+
+  #forka .f-fs-result .f-field-ip {
+    width: 25%;
+  }
+
+  #forka .f-fs-result .f-field-last-used {
+    width: 25%;
+    border-left: 0.0625rem dotted #AA7939;
+    text-align: center;
+  }
+
+  #forka .f-fs-result .f-field-used-times {
+    width: 20%;
+    border-left: 0.0625rem dotted #AA7939;
+    text-align: center;
+  }
+
+  #forka .f-fs-result .f-field-action {
+    width: 30%;
+    border-left: 0.0625rem dotted #AA7939;
+  }
+}
+
+/****************************************/
+/* Админка/Баны от Админка/Пользователи */
+/****************************************/
+#forka .f-wrap-btns-result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 3rem;
+  border-left: 0.0625rem dotted #AA7939;
+}
+
+#forka .f-fs-result .f-wrap-btns-result dt {
+  display: none;
+}
+
+#forka .f-fs-result .f-wrap-btns-result dd {
+  width: 100%;
+}
+
+@media screen and (min-width: 50rem) {
+  #forka .f-fs-result .f-field-ips {
+    width: 19%;
+    border-left: 0.0625rem dotted #AA7939;
+  }
+
+  #forka .f-fs-result .f-field-expire {
+    width: 16%;
+    border-left: 0.0625rem dotted #AA7939;
+  }
+
+  #forka .f-fs-result .f-field-message {
+    width: 16%;
+    border-left: 0.0625rem dotted #AA7939;
+  }
+
+  #forka .f-fs-result .f-field-creator {
+    width: 16%;
+    border-left: 0.0625rem dotted #AA7939;
+  }
+
+  #forka .f-wrap-btns-result .f-ybtn {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+/****************************************/
+/* Админка/Парсер                       */
+/****************************************/
+#fork-smls .f-fs-new-smile,
+#fork-imgsm .f-fdiv {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#fork-imgsm .f-fs-image {
+  display: flex;
+  align-items: center;
+  border: 0.0625rem dotted #AA7939;
+  margin: 0.3125rem;
+}
+
+#forka #id-fs-image-legend {
+  width: 100%;
+}
+
+#fork-imgsm .f-field-image {
+  border: 0;
+  margin: 0;
+}
+
+#forka .f-bbcode-form .f-field-tag,
+#fork-smls .f-fs-smile .f-fleg,
+#fork-smls .f-fs-new-smile .f-fleg {
+  border-top: 0.0625rem dotted #AA7939;
+}
+
+#forka .f-fs-bbcode .f-fleg,
+#fork-imgsm .f-fs-image .f-fleg,
+#fork-imgsm .f-field-image > dt {
+  display: none;
+}
+
+#fork-imgsm .f-field-image > dd {
+  width: 100%;
+}
+
+#forka .f-field-pic img {
+  max-width: 100%;
+  min-width: 1rem;
+  height: auto;
+}
+
+#fork-imgsm .f-field-name {
+  max-width: 80%;
+}
+
+#fork-smls .f-field-new-smile {
+  display: flex;
+  flex-direction: column;
+  width: 33.33%;
+}
+
+#fork-smls .f-field-new-smile .f-ycaption {
+  font-weight: normal;
+}
+
+#fork-smls .f-field-new-smile > dt {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#fork-smls .f-field-new-smile > dd {
+  width: 100%;
+}
+
+#forka .f-bbcode-form .f-link {
+  display: block;
+}
+
+#forka .f-field-handler .f-ytxtarea,
+#forka .f-field-format .f-ytxt {
+  font-family: "DejaVu Sans Mono", Consolas, "Droid Sans Mono", Monospace, Monaco, "Courier New", Courier;
+}
+
+#forka .f-field-handler .f-ytxtarea {
+  height: 15rem;
+}
+
+#forka .f-bbcode-form .f-btns,
+#forka .f-editbbcode-form .f-btns {
+  display: flex;
+  flex-direction: column;
+}
+
+#forka .f-bbcode-form .f-fbtn[data-name="new"],
+#forka .f-editbbcode-form .f-fbtn[data-name="reset"]{
+  width: auto;
+  margin-left: auto;
+}
+
+@media screen and (min-width: 25rem) {
+  #forka .f-bbcode-form .f-fs-bbcode {
+    display: flex;
+  }
+
+  #forka .f-bbcode-form .f-field-bbcode {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+  }
+
+  #forka .f-bbcode-form .f-field-tag {
+    border-top: 0;
+  }
+
+  #forka .f-bbcode-form .f-field-bbcode > dt {
+    display: none;
+  }
+
+  #forka .f-fs-bbcode-legend + .f-fs-bbcode .f-field-bbcode > dt {
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  #forka .f-bbcode-form .f-field-bbcode .f-ycaption {
+    font-weight: normal;
+  }
+
+  #forka .f-bbcode-form .f-field-bbcode > dd {
+    width: 100%;
+    flex-grow: 1;
+  }
+
+  #forka .f-field-bbcode.f-field-tag,
+  #forka .f-field-bbcode.f-field-in_mes,
+  #forka .f-field-bbcode.f-field-in_sig {
+    width: calc((100% - 3rem) / 3);
+  }
+
+  #forka .f-field-bbcode.f-field-delete {
+    width: 3rem;
+  }
+}
+
+@media screen and (min-width: 35rem) {
+  #fork-smls .f-fs-smile {
+    display: flex;
+  }
+
+  #fork-smls .f-field-smile {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+  }
+
+  #fork-smls .f-fs-smile .f-fleg,
+  #fork-smls .f-field-smile > dt {
+    display: none;
+  }
+
+  #forka .f-fs-smilies-legend + .f-fs-smile .f-field-smile > dt {
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  #fork-smls .f-field-smile .f-ycaption {
+    font-weight: normal;
+  }
+
+
+  #fork-smls .f-field-smile > dd {
+    width: 100%;
+    flex-grow: 1;
+  }
+
+  #forka .f-field-smile.f-field-code {
+    width: 10rem;
+  }
+
+  #forka .f-field-smile.f-field-position {
+    width: 5rem;
+  }
+
+  #fork .f-field-smile.f-field-image {
+    width: 12rem;
+  }
+
+  #forka .f-field-smile.f-field-pic {
+    width: calc(100% - 30rem);
+    text-align: center;
+  }
+
+  #forka .f-field-smile.f-field-delete {
+    width: 3rem;
+  }
+
+  #fork-smls .f-fs-new-smile .f-fleg {
+    border-top: 0;
+  }
+}
+
+/****************************************/
+/* Админка/Сигналы                      */
+/****************************************/
+#forka .f-reports .f-fleg {
+  border-top: 0.0625rem dashed #AA7939;
+}
+
+#fork-rprt-new .f-field-reason {
+  background-color: #FFBABA;
+}
+
+#fork-rprt-old .f-field-reason {
+  background-color:  #FEEFB3; /*#FFCCBA;*/
+}
+
+/****************************************/
+/* Админка/Логи                         */
+/****************************************/
+#forka .f-lgli {
+  padding: 0.3125rem;
+  border-bottom: 0.0625rem dotted #AA7939;
+  display: flex;
+}
+
+#forka .f-lgp {
+  border-top: 0.0625rem dotted #AA7939;
+}
+
+#forka .f-llv > span {
+  margin: 0.125rem 0.1875rem;
+  display: block;
+}
+
+#forka .f-llvem > span {
+  color: #F8F4E3;
+  background-color: #B71C1C;
+}
+
+#forka .f-llval > span {
+  color: #F8F4E3;
+  background-color: #D32F2F;
+}
+
+#forka .f-llvcr > span {
+  color: #F8F4E3;
+  background-color: #F44336;
+}
+
+#forka .f-llver > span {
+  color: #F8F4E3;
+  background-color: #FF5722;
+}
+
+#forka .f-llvwa > span {
+  color: #F8F4E3;
+  background-color: #FF9100;
+}
+
+#forka .f-llvno > span {
+  color: #F8F4E3;
+  background-color: #4CAF50;
+}
+
+#forka .f-llvin > span {
+  color: #F8F4E3;
+  background-color: #1976D2;
+}
+
+#forka .f-llvde > span {
+  color: #F8F4E3;
+  background-color: #90CAF9;
+}
+
+#forka .f-lgname {
+  width: 8rem;
+}
+
+#forka .f-logbt {
+  width: 3.25rem;
+  text-align: right;
+}
+
+#forka .f-llv {
+  width: calc( (100% - 11.25rem) / 8 );
+  text-align: center;
+}
+
+#forka .f-lga {
+  padding: 0.125rem 0.1875rem;
+}
+
+#forka .f-lga:before {
+  font-family: "FontAwesomeFree";
+  font-weight: 900;
+}
+
+#forka .f-lgadown:before {
+  content: "\f019";
+}
+
+#forka .f-lgadel:before {
+  content: "\f2ed";
+}
+
+#forka .f-lgs {
+  display: none;
+}
+
+#forka .f-logdel-form .f-fbtn {
+  display: inline-block;
+  width: auto;
+}
+
+#fork-logview .f-lgli {
+  font-size: 0.875rem;
+}
+
+#fork-logview .f-lgsu {
+  display: flex;
+}
+
+#fork-logview .f-lgdt {
+  width: 9.5rem;
+  flex-shrink: 0;
+}
+
+#fork-logview .f-lgdts {
+  color: #F8F4E3;
+  background-color: #AA7939;
+  margin: 0.125rem 0.1875rem;
+  display: block;
+  text-align: center;
+}
+
+#fork-logview .f-lglv {
+  width: 5rem;
+  flex-shrink: 0;
+}
+
+#fork-logview .f-lglvs {
+  margin: 0.125rem 0.1875rem;
+  display: block;
+  text-align: center;
+}
+
+#fork #fork-logview summary.f-lgsu {
+  margin: 0;
+}
+
+#fork #fork-logview summary.f-lgsu::after {
+  content: none;
+}
+
+#fork-logview .f-lgdtl {
+  width: 100%;
+}
+
+#fork-logview .f-lgpre {
+  margin-top: 0.625rem;
+  overflow: auto;
+}
+
+#fork-logview .f-lgmes {
+  min-width: 0;
+}

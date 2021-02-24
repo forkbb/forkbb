@@ -32,6 +32,12 @@ class Admin extends Page
         $this->hhsLevel  = 'secure';
 
         $container->Lang->load('admin');
+
+        $this->pageHeader('adminStyle', 'link', 9000, [
+            'rel'  => 'stylesheet',
+            'type' => 'text/css',
+            'href' => $this->publicLink("/style/{$this->user->style}/admin.css"),
+        ]);
     }
 
     /**
