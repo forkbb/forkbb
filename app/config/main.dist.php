@@ -23,11 +23,11 @@ return [
     'DB_PREFIX'   => '_DB_PREFIX_',
     'COOKIE' => [
         'prefix'   => '_COOKIE_PREFIX_',
-        'domain'   => '',
-        'path'     => '/',
-        'secure'   => false,
+        'domain'   => '_COOKIE_DOMAIN_',
+        'path'     => '_COOKIE_PATH_',
+        'secure'   => _COOKIE_SECURE_,
         'samesite' => 'Lax', // Strict, Lax or None
-        'time'     => 31536000,
+        'time'     => 1209600,
         'key1'     => '_COOKIE_KEY1_',
         'key2'     => '_COOKIE_KEY2_',
     ],

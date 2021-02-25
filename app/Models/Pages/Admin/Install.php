@@ -42,8 +42,9 @@ class Install extends Admin
      */
     protected function DBTypes(): array
     {
-        $dbTypes = [];
+        $dbTypes    = [];
         $pdoDrivers = PDO::getAvailableDrivers();
+
         foreach ($pdoDrivers as $type) {
             if (\is_file($this->c->DIR_APP . '/Core/DB/' . \ucfirst($type) . '.php')) {
                 switch ($type) {
@@ -59,6 +60,7 @@ class Install extends Admin
                         break;
                     default:
                         $dbTypes[$type]          = \ucfirst($type) . ' (PDO)';
+                        break;
                 }
             }
         }
@@ -72,6 +74,7 @@ class Install extends Admin
     public function install(array $args, string $method): Page
     {
         $changeLang = false;
+
         if ('POST' === $method) {
             $v = $this->c->Validator->reset()
                 ->addRules([
@@ -85,6 +88,7 @@ class Install extends Admin
                 $changeLang           = (bool) $v->changelang;
             }
         }
+
         $v = null;
 
         $this->c->Lang->load('validator');
@@ -97,6 +101,7 @@ class Install extends Admin
 
         // типы БД
         $this->dbTypes = $this->DBTypes();
+
         if (empty($this->dbTypes)) {
             $this->fIswev = ['e', __('No DB extensions')];
         }
@@ -107,33 +112,39 @@ class Install extends Admin
             $this->c->DIR_CACHE,
             $this->c->DIR_PUBLIC . '/img/avatars',
         ];
+
         foreach ($folders as $folder) {
             if (! \is_writable($folder)) {
-                $folder = \str_replace(\dirname($this->c->DIR_APP), '', $folder);
+                $folder       = \str_replace(\dirname($this->c->DIR_APP), '', $folder);
                 $this->fIswev = ['e', __('Alert folder', $folder)];
             }
         }
 
         // доступность шаблона конфигурации
         $config = @\file_get_contents($this->c->DIR_APP . '/config/main.dist.php');
+
         if (false === $config) {
             $this->fIswev = ['e', __('No access to main.dist.php')];
         }
+
         unset($config);
 
         // языки
         $langs = $this->c->Func->getNameLangs();
+
         if (empty($langs)) {
             $this->fIswev = ['e', __('No language packs')];
         }
 
         // стили
         $styles = $this->c->Func->getStyles();
+
         if (empty($styles)) {
             $this->fIswev = ['e', __('No styles')];
         }
 
         $fIswev = $this->getAttr('fIswev'); // ????
+
         if (
             'POST' === $method
             && ! $changeLang
@@ -141,38 +152,44 @@ class Install extends Admin
         ) { //????
             $v = $this->c->Validator->reset()
                 ->addValidators([
-                    'check_prefix' => [$this, 'vCheckPrefix'],
-                    'check_host'   => [$this, 'vCheckHost'],
-                    'rtrim_url'    => [$this, 'vRtrimURL']
+                    'check_prefix'  => [$this, 'vCheckPrefix'],
+                    'check_host'    => [$this, 'vCheckHost'],
+                    'rtrim_url'     => [$this, 'vRtrimURL']
                 ])->addRules([
-                    'dbtype'       => 'required|string:trim|in:' . \implode(',', \array_keys($this->dbTypes)),
-                    'dbhost'       => 'required|string:trim|check_host',
-                    'dbname'       => 'required|string:trim',
-                    'dbuser'       => 'string:trim',
-                    'dbpass'       => 'string:trim',
-                    'dbprefix'     => 'required|string:trim|max:40|check_prefix',
-                    'username'     => 'required|string:trim|min:2|max:25',
-                    'password'     => 'required|string|min:16|password',
-                    'email'        => 'required|string:trim|email',
-                    'title'        => 'required|string:trim|max:255',
-                    'descr'        => 'string:trim|max:65000 bytes',
-                    'baseurl'      => 'required|string:trim|rtrim_url',
-                    'defaultlang'  => 'required|string:trim|in:' . \implode(',', $this->c->Func->getLangs()),
-                    'defaultstyle' => 'required|string:trim|in:' . \implode(',', $this->c->Func->getStyles()),
+                    'dbtype'        => 'required|string:trim|in:' . \implode(',', \array_keys($this->dbTypes)),
+                    'dbhost'        => 'required|string:trim|check_host',
+                    'dbname'        => 'required|string:trim',
+                    'dbuser'        => 'string:trim',
+                    'dbpass'        => 'string:trim',
+                    'dbprefix'      => 'required|string:trim|max:40|check_prefix',
+                    'username'      => 'required|string:trim|min:2|max:25',
+                    'password'      => 'required|string|min:16|password',
+                    'email'         => 'required|string:trim|email',
+                    'title'         => 'required|string:trim|max:255',
+                    'descr'         => 'string:trim|max:65000 bytes',
+                    'baseurl'       => 'required|string:trim|rtrim_url|max:128',
+                    'defaultlang'   => 'required|string:trim|in:' . \implode(',', $this->c->Func->getLangs()),
+                    'defaultstyle'  => 'required|string:trim|in:' . \implode(',', $this->c->Func->getStyles()),
+                    'cookie_domain' => 'string:trim|max:128',
+                    'cookie_path'   => 'required|string:trim|max:1024',
+                    'cookie_secure' => 'required|integer|in:0,1',
                 ])->addAliases([
-                    'dbtype'       => 'Database type',
-                    'dbhost'       => 'Database server hostname',
-                    'dbname'       => 'Database name',
-                    'dbuser'       => 'Database username',
-                    'dbpass'       => 'Database password',
-                    'dbprefix'     => 'Table prefix',
-                    'username'     => 'Administrator username',
-                    'password'     => 'Administrator passphrase',
-                    'title'        => 'Board title',
-                    'descr'        => 'Board description',
-                    'baseurl'      => 'Base URL',
-                    'defaultlang'  => 'Default language',
-                    'defaultstyle' => 'Default style',
+                    'dbtype'        => 'Database type',
+                    'dbhost'        => 'Database server hostname',
+                    'dbname'        => 'Database name',
+                    'dbuser'        => 'Database username',
+                    'dbpass'        => 'Database password',
+                    'dbprefix'      => 'Table prefix',
+                    'username'      => 'Administrator username',
+                    'password'      => 'Administrator passphrase',
+                    'title'         => 'Board title',
+                    'descr'         => 'Board description',
+                    'baseurl'       => 'Base URL',
+                    'defaultlang'   => 'Default language',
+                    'defaultstyle'  => 'Default style',
+                    'cookie_domain' => 'Cookie Domain',
+                    'cookie_path'   => 'Cookie Path',
+                    'cookie_secure' => 'Cookie Secure',
                 ])->addMessages([
                     'email'        => 'Wrong email',
                 ]);
@@ -344,7 +361,7 @@ class Install extends Admin
                         ],
                         'baseurl' => [
                             'type'      => 'text',
-                            'maxlength' => '1024',
+                            'maxlength' => '128',
                             'value'     => $v ? $v->baseurl : $this->c->BASE_URL,
                             'caption'   => __('Base URL'),
                             'required'  => true,
@@ -360,6 +377,51 @@ class Install extends Admin
                             'options'   => $styles,
                             'value'     => $v ? $v->defaultstyle : $this->user->style,
                             'caption'   => __('Default style'),
+                        ],
+                    ],
+                ],
+                'cookie-info' => [
+                    'info' => [
+                        'info1' => [
+                            'value' => __('Cookie setup'),
+                            'html'  => true,
+                        ],
+                        'info2' => [
+                            'value' => __('Info 12'),
+                        ],
+                    ],
+                ],
+                'cookie' => [
+                    'fields' => [
+                        'cookie_domain' => [
+                            'type'      => 'text',
+                            'maxlength' => '128',
+                            'value'     => $v ? $v->cookie_domain : '',
+                            'caption'   => __('Cookie Domain'),
+                            'info'      => __('Cookie Domain info'),
+                        ],
+                        'cookie_path' => [
+                            'type'      => 'text',
+                            'maxlength' => '1024',
+                            'value'     => $v
+                                ? $v->cookie_path
+                                : \rtrim((string) \parse_url($this->c->BASE_URL, \PHP_URL_PATH), '/') . '/',
+                            'caption'   => __('Cookie Path'),
+                            'info'      => __('Cookie Path info'),
+                            'required'  => true,
+                        ],
+                        'cookie_secure' => [
+                            'type'    => 'radio',
+                            'value'   => $v
+                                ? $v->cookie_secure
+                                : (
+                                    \preg_match('%^https%i', $this->c->BASE_URL)
+                                    ? 1
+                                    : 0
+                                ),
+                            'values'  => [1 => __('Yes '), 0 => __('No ')],
+                            'caption' => __('Cookie Secure'),
+                            'info'    => __('Cookie Secure info'),
                         ],
 
                     ],
@@ -425,16 +487,19 @@ class Install extends Admin
 
         // настройки подключения БД
         $DBEngine = 'MyISAM';
+
         switch ($dbtype) {
             case 'mysql_innodb':
                 $DBEngine = 'InnoDB';
             case 'mysql':
                 $this->DBEngine = $DBEngine;
+
                 if (\preg_match('%^([^:]+):(\d+)$%', $dbhost, $matches)) {
                     $this->c->DB_DSN = "mysql:host={$matches[1]};port={$matches[2]};dbname={$dbname};charset=utf8mb4";
                 } else {
                     $this->c->DB_DSN = "mysql:host={$dbhost};dbname={$dbname};charset=utf8mb4";
                 }
+
                 break;
             case 'sqlite':
                 break;
@@ -442,7 +507,9 @@ class Install extends Admin
                 break;
             default:
                 //????
+                break;
         }
+
         $this->c->DB_OPTIONS  = [];
 
         // подключение к БД
@@ -457,6 +524,7 @@ class Install extends Admin
         // проверка наличия таблицы пользователей в БД
         try {
             $stmt = $this->c->DB->query('SELECT 1 FROM ::users LIMIT 1');
+
             if (! empty($stmt->fetch())) {
                 $v->addError(__('Existing table error', $v->dbprefix, $v->dbname));
 
@@ -1042,8 +1110,7 @@ class Install extends Admin
         ];
         $this->c->DB->createTable('mark_of_topic', $schema);
 
-        $now = \time();
-
+        $now    = \time();
         $groups = [
             // g_id,                     g_title,              g_user_title,        g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_post_links, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood, g_promote_min_posts, g_promote_next_group, g_sig_length, g_sig_lines
             [$this->c->GROUP_ADMIN,      __('Administrators'), __('Administrator '), 0,          0,                0,                  0,                      0,               1,                   1,            1,            1,              1,             1,            1,              1,               1,            1,           1,        1,              1,            0,            0,              0,             0,              0,                   0,                    10000,        255],
@@ -1052,9 +1119,11 @@ class Install extends Admin
             [$this->c->GROUP_MEMBER,     __('Members'),        '',                   0,          0,                0,                  0,                      0,               0,                   1,            1,            1,              1,             1,            1,              1,               1,            0,           1,        1,              1,            30,           30,             60,            60,             0,                   0,                    400,          4],
             [$this->c->GROUP_NEW_MEMBER, __('New members'),    __('New member'),     0,          0,                0,                  0,                      0,               0,                   1,            1,            1,              1,             1,            1,              1,               0,            0,           1,        1,              1,            60,           30,             120,           60,             5,                   $this->c->GROUP_MEMBER, 400,        4],
         ];
+
         foreach ($groups as $group) { //???? $db_type != 'pgsql'
             $this->c->DB->exec('INSERT INTO ::groups (g_id, g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_post_links, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood, g_promote_min_posts, g_promote_next_group, g_sig_length, g_sig_lines) VALUES (?i, ?s, ?s, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i)', $group) ;
         }
+
         $this->c->DB->exec('UPDATE ::groups SET g_pm_limit=0 WHERE g_id=?i', [$this->c->GROUP_ADMIN]);
 
         $ip = \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: '0.0.0.0';
@@ -1138,6 +1207,7 @@ class Install extends Admin
             'a_bb_black_mes'          => \json_encode([], self::JSON_OPTIONS),
             'a_bb_black_sig'          => \json_encode([], self::JSON_OPTIONS),
         ];
+
         foreach ($pun_config as $conf_name => $conf_value) {
             $this->c->DB->exec('INSERT INTO ::config (conf_name, conf_value) VALUES (?s, ?s)', [$conf_name, $conf_value]);
         }
@@ -1168,23 +1238,26 @@ class Install extends Admin
             ':cool:'     => 'cool.png',
         ];
         $i = 0;
+
         foreach ($smilies as $text => $img) {
             $this->c->DB->exec('INSERT INTO ::smilies (sm_image, sm_code, sm_position) VALUES(?s, ?s, ?i)', [$img, $text, $i++]); //????
         }
 
-        $query = 'INSERT INTO ::bbcode (bb_tag, bb_edit, bb_delete, bb_structure)
+        $query   = 'INSERT INTO ::bbcode (bb_tag, bb_edit, bb_delete, bb_structure)
             VALUES(?s:tag, 1, 0, ?s:structure)';
-
         $bbcodes = include $this->c->DIR_APP . '/config/defaultBBCode.php';
+
         foreach ($bbcodes as $bbcode) {
             $vars = [
                 ':tag'       => $bbcode['tag'],
                 ':structure' => \json_encode($bbcode, self::JSON_OPTIONS),
             ];
+
             $this->c->DB->exec($query, $vars);
         }
 
         $config = @\file_get_contents($this->c->DIR_APP . '/config/main.dist.php');
+
         if (false === $config) {
             throw new RuntimeException('No access to main.dist.php.');
         }
@@ -1197,13 +1270,19 @@ class Install extends Admin
             '_DB_PREFIX_'     => $this->c->DB_PREFIX,
             '_SALT_FOR_HMAC_' => $this->c->Secury->randomPass(\mt_rand(20,30)),
             '_COOKIE_PREFIX_' => 'fork' . $this->c->Secury->randomHash(7) . '_',
+            '_COOKIE_DOMAIN_' => $v->cookie_domain,
+            '_COOKIE_PATH_'   => $v->cookie_path,
+            '_COOKIE_SECURE_' => 1 === $v->cookie_secure ? 'true' : 'false',
             '_COOKIE_KEY1_'   => $this->c->Secury->randomPass(\mt_rand(20,30)),
             '_COOKIE_KEY2_'   => $this->c->Secury->randomPass(\mt_rand(20,30)),
         ];
+
         foreach ($repl as $key => $val) {
             $config = \str_replace($key, \addslashes($val), $config);
         }
+
         $result = \file_put_contents($this->c->DIR_APP . '/config/main.php', $config);
+
         if (false === $result) {
             throw new RuntimeException('No write to main.php');
         }

@@ -129,6 +129,9 @@ msgstr "Для правильного функционирования ForkBB д
 msgid "No language packs"
 msgstr "Нет языковых пакетов."
 
+msgid "No styles"
+msgstr "Нет стилей."
+
 msgid "No DB extensions"
 msgstr "Ваш PHP не поддерживает ни одного типа БД поддерживаемого ForkBB. PDO должен быть включен."
 
@@ -213,23 +216,35 @@ msgstr "<b>Папка для аватар заблокирована для за
 msgid "Alert upload"
 msgstr "<b>Загрузка файлов, кажется, выключена на этом сервере!</b> Если вы хотите, чтобы пользователи форума использовали аватары, вы должны разрешить file_uploads в настройках вашего PHP. После разрешения загрузки файлов на сервер, вы можете разрешить использования аватар для пользователей форума (смотрите Админка/Опции)."
 
-msgid "ForkBB has been installed"
-msgstr "ForkBB установлен. Для завершения следуйте ниже приведенной инструкции."
-
-msgid "Final instructions"
-msgstr "Заключительная инструкция"
-
-msgid "Info 17"
-msgstr "Чтобы завершить установку форума, нажмите кнопку ниже для скачивания файла main.php. После этого запишите этот файл в директорию /app/config (рядом с файлом main.dist.php) вашего форума."
-
-msgid "Info 18"
-msgstr "Как только вы загрузите main.php на форум, ForkBB будет полностью установлен! После этого <a href="index.php">перейти на главную страницу форума</a>."
-
-msgid "Download main.php file"
-msgstr "Скачать файл main.php"
-
-msgid "ForkBB fully installed"
-msgstr "ForkBB полностью установлен! Теперь вы можете <a href="index.php">перейти на главную страницу форума</a>."
-
 msgid "Bad database charset"
 msgstr "База данных должна быть создана с указанием кодировки символов <b>utf8mb4</b> (сравнение <b>utf8mb4_unicode_ci</b>)."
+
+msgid "Cookie setup"
+msgstr "<b>Настройки cookie</b>"
+
+msgid "Info 12"
+msgstr "Cookies - это механизм хранения данных браузером пользователя, который используется для его идетификации."
+
+msgid "Cookie Domain"
+msgstr "Cookie Domain"
+
+msgid "Cookie Domain info"
+msgstr "Если укажете (под)домен, то устанавливаемые форумом cookie будут доступны на нем и <b>всех его поддоменах</b>! www.example.com и example.com - <b>это не один домен</b>. www.example.com является поддоменом example.com. <b>Оставьте это поле пустым</b>, если cookie должны устанавливаться только для домена форума."
+
+msgid "Cookie Path"
+msgstr "Cookie Path"
+
+msgid "Cookie Path info"
+msgstr "Путь к директории на сервере, из которой будут доступны cookie. Если задать <b>/</b>, cookie будут доступны во всем домене domain. Если задать <b>/foo/</b>, cookie будут доступны только из директории <b>/foo/</b> и всех её поддиректорий (например, <b>/foo/bar/</b>) домена domain."
+
+msgid "Yes "
+msgstr "Да"
+
+msgid "No "
+msgstr "Нет"
+
+msgid "Cookie Secure"
+msgstr "Cookie Secure"
+
+msgid "Cookie Secure info"
+msgstr "Указывает на то, что значение cookie должно передаваться от клиента по защищённому соединению <b>HTTPS</b>. Если задано <b>ДА</b>, cookie от клиента будет передано на сервер, только если установлено защищённое соединение."

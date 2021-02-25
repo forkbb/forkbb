@@ -216,23 +216,35 @@ msgstr "<b>The avatar directory is currently not writable!</b> If you want users
 msgid "Alert upload"
 msgstr "<b>File uploads appear to be disallowed on this server!</b> If you want users to be able to upload their own avatar images you must enable the file_uploads configuration setting in PHP. Once file uploads have been enabled, avatar uploads can be enabled in Administration/Options/Features."
 
-msgid "ForkBB has been installed"
-msgstr "ForkBB has been installed. To finalize the installation please follow the instructions below."
-
-msgid "Final instructions"
-msgstr "Final instructions"
-
-msgid "Info 17"
-msgstr "To finalize the installation, you need to click on the button below to download a file called main.php. You then need to upload this file to directory /app/config (near the main.dist.php file) of your ForkBB installation."
-
-msgid "Info 18"
-msgstr "Once you have uploaded main.php, ForkBB will be fully installed! At that point, you may <a href=\"index.php\">go to the forum index</a>."
-
-msgid "Download main.php file"
-msgstr "Download main.php file"
-
-msgid "ForkBB fully installed"
-msgstr "ForkBB has been fully installed! You may now <a href=\"index.php\">go to the forum index</a>."
-
 msgid "Bad database charset"
 msgstr "The database must be created with the character encoding <b>utf8mb4</b> (compare <b>utf8mb4_unicode_ci</b>)."
+
+msgid "Cookie setup"
+msgstr "<b>Cookie setup</b>"
+
+msgid "Info 12"
+msgstr "Cookies are a mechanism for storing data by the user's browser, which is used for its identification."
+
+msgid "Cookie Domain"
+msgstr "Cookie Domain"
+
+msgid "Cookie Domain info"
+msgstr "If you specify a (sub)domain, then the cookies set by the board will be available on it and <b>all its subdomains</b>! www.example.com and example.com <b>are not the same domain</b>. www.example.com is a subdomain of example.com. <b>Leave this field blank</b> if the cookie should only be set for the board domain."
+
+msgid "Cookie Path"
+msgstr "Cookie Path"
+
+msgid "Cookie Path info"
+msgstr "The path on the server in which the cookie will be available on. If set to <b>/</b>, the cookie will be available within the entire domain. If set to <b>/foo/</b>, the cookie will only be available within the <b>/foo/</b> directory and all sub-directories such as <b>/foo/bar/</b> of domain."
+
+msgid "Yes "
+msgstr "Yes"
+
+msgid "No "
+msgstr "No"
+
+msgid "Cookie Secure"
+msgstr "Cookie Secure"
+
+msgid "Cookie Secure info"
+msgstr "Indicates that the cookie should only be transmitted over a secure <b>HTTPS</b> connection from the client. When set to <b>YES</b>, the cookie will only be set if a secure connection exists."
