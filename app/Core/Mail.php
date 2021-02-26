@@ -643,9 +643,22 @@ class Mail
      */
     protected function hostname(): string
     {
-        return empty($_SERVER['SERVER_NAME'])
-            ? (isset($_SERVER['SERVER_ADDR']) ? '[' . $_SERVER['SERVER_ADDR'] . ']' : '[127.0.0.1]')
-            : $_SERVER['SERVER_NAME'];
+        $name = $_SERVER['SERVER_NAME'] ?? null;
+        $ip   = $_SERVER['SERVER_ADDR'] ?? '';
+
+        if ($name) {
+            $name = \preg_replace('%[\x00-\x1F]%', '', \trim($name)); // ????
+        } else {
+            $name = '[127.0.0.1]';
+
+            if (\filter_var($ip, \FILTER_VALIDATE_IP, \FILTER_FLAG_IPV4)) {
+                $name = "[{$ip}]";
+            } elseif (\filter_var($ip, \FILTER_VALIDATE_IP, \FILTER_FLAG_IPV6)) {
+                $name = "[IPv6:{$ip}]";
+            }
+        }
+
+        return $name;
     }
 
     /**
