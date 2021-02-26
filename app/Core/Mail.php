@@ -646,8 +646,10 @@ class Mail
         $name = $_SERVER['SERVER_NAME'] ?? null;
         $ip   = $_SERVER['SERVER_ADDR'] ?? '';
 
-        if ($name) {
-            $name = \preg_replace('%[\x00-\x1F]%', '', \trim($name)); // ????
+        if (
+            $name
+            && '' != ($name = \preg_replace('%[\x00-\x1F]%', '', \trim($name)))
+        ) {
         } else {
             $name = '[127.0.0.1]';
 
