@@ -102,10 +102,7 @@ class Model extends DataModel
             return false;
         } elseif (
             $this->c->user->isAdmin
-            || (
-                $this->c->user->isModerator($this)
-                && ! $this->user->isAdmin
-            )
+            || $this->c->user->isModerator($this)
         ) {
             return true;
         } elseif ('1' == $this->parent->closed) {
@@ -152,10 +149,7 @@ class Model extends DataModel
             return false;
         } elseif (
             $this->c->user->isAdmin
-            || (
-                $this->c->user->isModerator($this)
-                && ! $this->user->isAdmin
-            )
+            || $this->c->user->isModerator($this)
         ) {
             return true;
         } elseif ('1' == $this->parent->closed) {

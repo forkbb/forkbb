@@ -162,10 +162,7 @@ class Model extends DataModel
                 0 === $this->c->config->i_poll_time
                 || $this->tid < 1
                 || $this->c->user->isAdmin
-                || (
-                    $this->c->user->isAdmMod
-                    && $this->c->user->isModerator($this)
-                )
+                || $this->c->user->isModerator($this)
                 || 60 * $this->c->config->i_poll_time > \time() - $this->parent->poll_time
             );
     }
