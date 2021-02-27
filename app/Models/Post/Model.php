@@ -162,6 +162,10 @@ class Model extends DataModel
                 '0' == $this->c->user->g_deledit_interval
                 || '1' == $this->edit_post
                 || \time() - $this->posted < $this->c->user->g_deledit_interval
+                || (
+                    $this->user->id === $this->editor_id
+                    && \time() - $this->edited < $this->c->user->g_deledit_interval
+                )
             );
     }
 
