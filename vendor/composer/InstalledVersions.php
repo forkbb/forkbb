@@ -53,6 +53,15 @@ private static $installed = array (
       ),
       'reference' => NULL,
     ),
+    'miovisman/jevix' => 
+    array (
+      'pretty_version' => '2.2.0',
+      'version' => '2.2.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'f92970c3fa19dbecd73652aca378aaf0703443bf',
+    ),
     'miovisman/normemail' => 
     array (
       'pretty_version' => 'dev-master',

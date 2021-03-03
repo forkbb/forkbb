@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "23fbddba7eeaeb83366d5468a344e816",
+    "content-hash": "4adcde13cbe258b0c3a57a127576d8fe",
     "packages": [
         {
             "name": "artoodetoo/dirk",
@@ -59,6 +59,64 @@
                 "source": "https://github.com/MioVisman/dirk/tree/visman"
             },
             "time": "2020-10-16T13:32:17+00:00"
+        },
+        {
+            "name": "miovisman/jevix",
+            "version": "2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MioVisman/Jevix.git",
+                "reference": "f92970c3fa19dbecd73652aca378aaf0703443bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MioVisman/Jevix/zipball/f92970c3fa19dbecd73652aca378aaf0703443bf",
+                "reference": "f92970c3fa19dbecd73652aca378aaf0703443bf",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=7.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MioVisman\\Jevix\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ur001"
+                },
+                {
+                    "name": "livestreet framework"
+                },
+                {
+                    "name": "Bezumkin"
+                },
+                {
+                    "name": "Roman Shamritskiy",
+                    "email": "roman@litgroup.ru"
+                },
+                {
+                    "name": "Evgeniy Borisov",
+                    "email": "agel-nash@mail.ru"
+                },
+                {
+                    "name": "Visman",
+                    "email": "mio.visman@yandex.ru",
+                    "homepage": "https://github.com/MioVisman"
+                }
+            ],
+            "description": "Library for html filtering",
+            "support": {
+                "source": "https://github.com/MioVisman/Jevix/tree/2.2.0"
+            },
+            "time": "2021-03-03T11:11:48+00:00"
         },
         {
             "name": "miovisman/normemail",

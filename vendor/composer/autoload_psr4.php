@@ -10,5 +10,6 @@ return array(
     'Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'MioVisman\\NormEmail\\' => array($vendorDir . '/miovisman/normemail/src'),
+    'MioVisman\\Jevix\\' => array($vendorDir . '/miovisman/jevix/src'),
     'ForkBB\\' => array($baseDir . '/app'),
 );

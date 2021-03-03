@@ -19,6 +19,7 @@ class ComposerStaticInit90ad93c7251d4f60daa9e545879c49e7
         'M' => 
         array (
             'MioVisman\\NormEmail\\' => 20,
+            'MioVisman\\Jevix\\' => 16,
         ),
         'F' => 
         array (
@@ -42,6 +43,10 @@ class ComposerStaticInit90ad93c7251d4f60daa9e545879c49e7
         'MioVisman\\NormEmail\\' => 
         array (
             0 => __DIR__ . '/..' . '/miovisman/normemail/src',
+        ),
+        'MioVisman\\Jevix\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/miovisman/jevix/src',
         ),
         'ForkBB\\' => 
         array (
