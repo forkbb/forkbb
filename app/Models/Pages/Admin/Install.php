@@ -166,7 +166,7 @@ class Install extends Admin
                     'password'      => 'required|string|min:16|password',
                     'email'         => 'required|string:trim|email',
                     'title'         => 'required|string:trim|max:255',
-                    'descr'         => 'string:trim|max:65000 bytes',
+                    'descr'         => 'string:trim|max:65000 bytes|html',
                     'baseurl'       => 'required|string:trim|rtrim_url|max:128',
                     'defaultlang'   => 'required|string:trim|in:' . \implode(',', $this->c->Func->getLangs()),
                     'defaultstyle'  => 'required|string:trim|in:' . \implode(',', $this->c->Func->getStyles()),

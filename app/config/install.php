@@ -102,11 +102,16 @@ return [
             'Secury' => '@Secury',
             'key'    => '%user.password%%user.ip%%user.id%%BASE_URL%',
         ],
+        'HTMLCleaner' => [
+            'calss'  => \ForkBB\Core\HTMLCleaner::class,
+            'config' => '%DIR_APP%/config/jevix.default.php',
+        ],
 
         'config'     => '@ConfigModel:install',
         'users'      => \ForkBB\Models\User\Manager::class,
 
         'VLemail'    => \ForkBB\Models\Validators\Email::class,
+        'VLhtml'     => \ForkBB\Models\Validators\Html::class,
     ],
     'multiple'  => [
         'PrimaryController' => \ForkBB\Controllers\Install::class,
@@ -120,6 +125,5 @@ return [
 
         'ConfigModel'        => \ForkBB\Models\Config\Model::class,
         'ConfigModelInstall' => \ForkBB\Models\Config\Install::class,
-
     ],
 ];
