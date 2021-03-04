@@ -13,7 +13,7 @@ namespace ForkBB\Core;
 use MioVisman\Jevix\Jevix;
 use RuntimeException;
 
-class HTMLCleaner extends Jevix;
+class HTMLCleaner extends Jevix
 {
     protected $hConfigFile;
     protected $hConfigName;
@@ -64,7 +64,7 @@ class HTMLCleaner extends Jevix;
                 foreach ($args as $key => $value) {
                     if (
                         \is_string($key)
-                        || ! \is_array($VALUE)
+                        || ! \is_array($value)
                     ) {
                         $this->{$method}($value);
                     } else {
