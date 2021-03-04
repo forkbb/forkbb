@@ -9,17 +9,17 @@
 declare(strict_types=1);
 
 return [
-    // конфигурация
+    // Конфигурация / Configuration
     'default' => [
-        // перевод строки
+        // Символы перевода строки / Newline
         'cfgSetNL' => "\n",
         // XHTML
         'cfgSetXHTMLMode' => false,
-        // Автозамена перевода строки на тег <br>
+        // Автозамена перевода строки на тег <br> / Autocorrect line feed to <br> tag
         'cfgSetAutoBrMode' => true,
-        // Автоматически распознавать ссылки
+        // Автоматически распознавать ссылки / Automatically detect links
         'cfgSetAutoLinkMode' => true,
-        // Разрешенные теги
+        // Разрешенные теги / Allowed tags
         'cfgAllowTags' => [
             'a1' => [
                 'a', 'abbr', 'address', 'article', 'aside', 'b', 'bdi', 'bdo', 'blockquote', 'br', 'code',
@@ -28,19 +28,19 @@ return [
                 's', 'samp', 'section', 'small', 'span', 'strong', 'sub', 'summary', 'sup', 'u', 'ul', 'var',
             ],
         ],
-        // Короткие теги
+        // Короткие теги / Short tags
         'cfgSetTagShort' => [
             'a1' => ['br', 'hr', 'img'],
         ],
-        // Преформатированные теги
+        // Преформатированные теги / Preformatted tags
         'cfgSetTagPreformatted' => [
             'a1' => ['pre'],
         ],
-        // Теги, которые полностью будут удалены
+        // Теги, которые полностью будут удалены / Tags that will be completely removed
         'cfgSetTagCutWithContent' => [
             'a1' => ['canvas', 'frameset', 'iframe', 'object', 'script', 'style'],
         ],
-        // Разрешенные параметры тегов
+        // Разрешенные атрибуты тегов / Allowed tag attributes
         'cfgAllowTagParams' => [
             ['a', ['class', 'title', 'href']],
             ['abbr', ['class']],
@@ -88,17 +88,17 @@ return [
             ['ul', ['class']],
             ['var', ['class']],
         ],
-        // Обязательные параметры
+        // Обязательные атрибуты / Required attributes
         'cfgSetTagParamsRequired' => [
             ['a', ['href']],
             ['img', ['src']],
         ],
-        // Теги-родители/потомки
+        // Теги-родители/потомки / Tags-parents/childs
         // [
-        //   контейнер,
-        //   потомки,
-        //   контейнер содержит только теги (без текста),
-        //   потомки могут существовать только в этом родителе
+        //   родитель / parent,
+        //   потомки / childs,
+        //   родитель содержит только теги (без текста) / parent only contains tags (no text),
+        //   потомки могут существовать только в этом родителе / childs can only exist in this parent
         // ]
         'cfgSetTagChilds' => [
             ['details', ['summary'], false, true],
@@ -106,26 +106,27 @@ return [
             ['ol', 'li', true, false],
             ['ul', 'li', true, false],
         ],
-        // Автоматически добавляемые атрибуты
+        // Автоматически добавляемые атрибуты / Auto-added attributes
         // [тег, атрибут, значение, перезапись существующего атрибута]
+        // [tag, attribute, value, overwrite existing attribute]
         'cfgSetTagParamDefault' => [
             ['a', 'rel', 'ugc', true],
             ['img', 'alt', 'image', false],
             ['img', 'loading', 'lazy', true],
         ],
-        // Автозамена
+        // Автозамена / AutoCorrect
         'cfgSetAutoReplace' => [
             [['+/-', '(c)', '(r)'], ['±', '©', '®']],
         ],
-        // Теги в которых отключено типографирование
+        // Теги в которых отключено типографирование / Tags with disabled typography
         'cfgSetTagNoTypography' => [
             'a1' => ['code', 'pre'],
         ],
-        // Теги без авторасстановки <br>
+        // Теги без авторасстановки <br> / Tags without auto-placement <br>
         'cfgSetTagNoAutoBr' => [
             'a1' => ['dl', 'ol', 'ul'],
         ],
-        // Теги после которых не устанавливается <br>
+        // Теги после которых не устанавливается <br> / Tags after which the <br> is not installed
         'cfgSetTagBlockType' => [
             'a1' => [
                 'address', 'article', 'aside', 'blockquote', 'dd', 'div', 'dl', 'dt',
@@ -133,18 +134,17 @@ return [
                 'noscript', 'ol', 'p', 'pre', 'section', 'ul',
             ],
         ],
-        // Автозамена через regexp
+        // Автозамена через regexp / Autocorrect via regexp
         // 'cfgSetAutoPregReplace' => [],
-        // Замена содержимого тега через функцию
+        // Замена содержимого тега через функцию / Replacing tag content via function
         // 'cfgSetTagCallback' => [],
-        // Замена тега через функцию
+        // Замена тега через функцию/ Replacing tag via function
         // 'cfgSetTagCallbackFull' => [],
-        // Разрешенные комбинации значений атрибутов для тега
+        // Разрешенные комбинации значений атрибутов для тега / Allowed attribute value combinations for tag
         // 'cfgSetTagParamCombination' => [],
-        // Список разрешенных протоколов
+        // Список разрешенных протоколов / List of allowed protocols
         // 'cfgSetAllowedProtocols' => [],
-        // Теги, кторые не удаляются, если содержимое пустое
+        // Теги, кторые не удаляются, если содержимое пустое / Tags that are not removed when empty content
         // 'cfgSetTagIsEmpty' => [],
-
     ],
 ];
