@@ -104,3 +104,27 @@ msgstr "Глубина дерева тегов больше %1$s."
 
 msgid "[%1$s] tag is enclosed in itself more than %2$s times"
 msgstr "Тег [%1$s] вложен в себя больше %2$s раз."
+
+msgid "Invalid closing %1$s tag. Expected closing %2$s tag"
+msgstr "Неверный закрывающийся тег &lt;/ %1$s &gt;. Ожидалось закрытие &lt;/ %2$s &gt;."
+
+msgid "%2$s attribute is not allowed in %1$s tag"
+msgstr "Атрибут '%2$s' запрещен в теге &lt; %1$s &gt;."
+
+msgid "Attempting to insert JavaScript into %2$s attribute of %1$s tag"
+msgstr "Попытка вставить JavaScript в атрибут '%2$s' тега &lt; %1$s &gt;."
+
+msgid "Invalid value for %2$s attribute [=%3$s] of %1$s tag"
+msgstr "Недопустимое значение атрибута '%2$s' [=%3$s] тега &lt; %1$s &gt;."
+
+msgid "Missing required %2$s attribute in %1$s tag"
+msgstr "Отсутствует обязательный атрибут '%2$s' в теге &lt; %1$s &gt;."
+
+msgid "Invalid value for %2$s attribute of %1$s tag (combination)"
+msgstr "Недопустимое значение атрибута '%2$s' тега &lt; %1$s &gt; (комбинирование)."
+
+msgid "Missing required %2$s attribute in %1$s tag (combination)"
+msgstr "Отсутствует обязательный атрибут '%2$s' в теге &lt; %1$s &gt; (комбинирование)."
+
+msgid "Not expected to close %1$s tag"
+msgstr "Не ожидалось закрывающегося тега &lt;/ %1$s &gt;."

@@ -104,3 +104,27 @@ msgstr "The depth of the tag tree is greater than %1$s."
 
 msgid "[%1$s] tag is enclosed in itself more than %2$s times"
 msgstr "[%1$s] tag is enclosed in itself more than %2$s times."
+
+msgid "Invalid closing %1$s tag. Expected closing %2$s tag"
+msgstr "Invalid closing &lt;/ %1$s &gt; tag. Expected closing &lt;/ %2$s &gt; tag."
+
+msgid "%2$s attribute is not allowed in %1$s tag"
+msgstr "The '%2$s' attribute is not allowed in the &lt; %1$s &gt; tag."
+
+msgid "Attempting to insert JavaScript into %2$s attribute of %1$s tag"
+msgstr "Attempting to insert JavaScript into '%2$s' attribute of the &lt; %1$s &gt; tag."
+
+msgid "Invalid value for %2$s attribute [=%3$s] of %1$s tag"
+msgstr "Invalid value for the '%2$s' attribute [=%3$s] of the &lt; %1$s &gt; tag."
+
+msgid "Missing required %2$s attribute in %1$s tag"
+msgstr "Missing required the '%2$s' attribute in the &lt; %1$s &gt; tag."
+
+msgid "Invalid value for %2$s attribute of %1$s tag (combination)"
+msgstr "Invalid value for the '%2$s' attribute of the &lt; %1$s &gt; tag (combination)."
+
+msgid "Missing required %2$s attribute in %1$s tag (combination)"
+msgstr "Missing required the '%2$s' attribute in the &lt; %1$s &gt; tag (combination)."
+
+msgid "Not expected to close %1$s tag"
+msgstr "Not expected to close &lt;/ %1$s &gt; tag."
