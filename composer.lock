@@ -62,16 +62,16 @@
         },
         {
             "name": "miovisman/jevix",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MioVisman/Jevix.git",
-                "reference": "f92970c3fa19dbecd73652aca378aaf0703443bf"
+                "reference": "bd9807b8e3ea26567e775ee1d372b417440b1198"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MioVisman/Jevix/zipball/f92970c3fa19dbecd73652aca378aaf0703443bf",
-                "reference": "f92970c3fa19dbecd73652aca378aaf0703443bf",
+                "url": "https://api.github.com/repos/MioVisman/Jevix/zipball/bd9807b8e3ea26567e775ee1d372b417440b1198",
+                "reference": "bd9807b8e3ea26567e775ee1d372b417440b1198",
                 "shasum": ""
             },
             "require": {
@@ -114,9 +114,9 @@
             ],
             "description": "Library for html filtering",
             "support": {
-                "source": "https://github.com/MioVisman/Jevix/tree/2.2.0"
+                "source": "https://github.com/MioVisman/Jevix/tree/2.2.1"
             },
-            "time": "2021-03-03T11:11:48+00:00"
+            "time": "2021-03-04T06:07:15+00:00"
         },
         {
             "name": "miovisman/normemail",

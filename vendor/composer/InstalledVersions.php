@@ -55,12 +55,12 @@ private static $installed = array (
     ),
     'miovisman/jevix' => 
     array (
-      'pretty_version' => '2.2.0',
-      'version' => '2.2.0.0',
+      'pretty_version' => '2.2.1',
+      'version' => '2.2.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'f92970c3fa19dbecd73652aca378aaf0703443bf',
+      'reference' => 'bd9807b8e3ea26567e775ee1d372b417440b1198',
     ),
     'miovisman/normemail' => 
     array (

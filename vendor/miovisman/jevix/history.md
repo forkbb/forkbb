@@ -1,3 +1,6 @@
+2.2.1
++ Fix text of error messages
+
 2.2.0
 -------
 + Simplify conditions

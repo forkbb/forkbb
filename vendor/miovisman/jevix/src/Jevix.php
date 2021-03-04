@@ -12,7 +12,7 @@
  * @author     https://github.com/altocms/Jevix
  * @author     Agel_Nash <agel-nash@mail.ru>
  * @author     Visman <mio.visman@yandex.ru>
- * @version    2.2.0
+ * @version    2.2.1
  * @link       https://github.com/MioVisman/Jevix
  * @license    https://opensource.org/licenses/MIT The MIT License (MIT)
  */
@@ -1633,6 +1633,8 @@ class Jevix
             $paramAllowedValues = $tagRules[self::TR_PARAM_ALLOWED][$param] ?? false;
 
             if (empty($paramAllowedValues)) {
+                $this->errors[] = ['%2$s attribute is not allowed in %1$s tag', $tag, $param];
+
                 continue;
             }
 
@@ -1648,7 +1650,7 @@ class Jevix
             );
 
             if (\preg_match('%javascript:%i', $valueDecode)) {
-                $this->errors[] = ['Attempting to insert JavaScript into %1$s attribute of %2$s tag', $param, $tag];
+                $this->errors[] = ['Attempting to insert JavaScript into %2$s attribute of %1$s tag', $tag, $param];
 
                 continue;
             }
@@ -2041,7 +2043,7 @@ class Jevix
                         return false;
 
                     } else {
-                        $this->errors[] = ['Не ожидалось закрывающегося тега %1$s', $name];
+                        $this->errors[] = ['Not expected to close %1$s tag', $name];
                     }
 
                 } else {
