@@ -57,6 +57,19 @@ class Update
 
             $this->c->config($confChange);
         }
+        if ($this->c->config->i_fork_revision < 35) {
+            $confChange = [
+                'shared' => [
+                    'HTMLCleaner' => [
+                        'calss'  => \ForkBB\Core\HTMLCleaner::class,
+                        'config' => '%DIR_APP%/config/jevix.default.php',
+                    ],
+                    'VLhtml' => \ForkBB\Models\Validators\Html::class,
+                ],
+            ];
+
+            $this->c->config($confChange);
+        }
 
         $uri = $_SERVER['REQUEST_URI'];
         if (false !== ($pos = \strpos($uri, '?'))) {

@@ -139,7 +139,7 @@ class Update extends Admin
                 ])->addRules([
                     'token'                 => 'token:AdminUpdate',
                     'dbpass'                => 'required|string:trim|check_pass',
-                    'o_maintenance_message' => 'required|string:trim|max:65000 bytes',
+                    'o_maintenance_message' => 'required|string:trim|max:65000 bytes|html',
                 ])->addAliases([
                     'dbpass'                => 'Database password',
                     'o_maintenance_message' => 'Maintenance message',
@@ -1306,4 +1306,31 @@ class Update extends Admin
 
         return null;
    }
+
+    /**
+     * rev.34 to rev.35
+     */
+    protected function stageNumber34(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>HTMLCleaner',
+            [
+                'class'  => '\\ForkBB\\Core\\HTMLCleaner::class',
+                'config' => '\'%DIR_APP%/config/jevix.default.php\'',
+            ],
+            'LogViewer'
+        );
+
+        $coreConfig->add(
+            'shared=>VLhtml',
+            '\\ForkBB\\Models\\Validators\\Html::class',
+            'VLemail'
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }

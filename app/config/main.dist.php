@@ -129,6 +129,10 @@ return [
             ],
             'cache' => '%Cache%',
         ],
+        'HTMLCleaner' => [
+            'calss'  => \ForkBB\Core\HTMLCleaner::class,
+            'config' => '%DIR_APP%/config/jevix.default.php',
+        ],
 
         'config'        => '@ConfigModel:init',
         'bans'          => '@BanListModel:init',
@@ -176,6 +180,7 @@ return [
         'VLnoURL'    => \ForkBB\Models\Validators\NoURL::class,
         'VLusername' => \ForkBB\Models\Validators\Username::class,
         'VLemail'    => \ForkBB\Models\Validators\Email::class,
+        'VLhtml'     => \ForkBB\Models\Validators\Html::class,
 
         'ProfileRules' => \ForkBB\Models\Rules\Profile::class,
         'UsersRules'   => \ForkBB\Models\Rules\Users::class,
