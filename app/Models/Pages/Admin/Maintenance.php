@@ -35,7 +35,7 @@ class Maintenance extends Admin
                 ])->addRules([
                     'token'                 => 'token:AdminMaintenance',
                     'o_maintenance'         => 'required|integer|in:0,1',
-                    'o_maintenance_message' => 'string:trim|max:65000 bytes|check_message',
+                    'o_maintenance_message' => 'string:trim|max:65000 bytes|check_message|html',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
