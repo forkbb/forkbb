@@ -154,21 +154,18 @@ class Func
                 if ($i - $k > 1) {
                     $pages[] = [null, 'space', null];
                 }
-                if ($i === $cur) {
-                    $pages[] = [null, $i, true];
-                } else {
-                    $pages[] = [
-                        $this->c->Router->link(
-                            $marker,
-                            [
-                                'page' => $i,
-                            ]
-                            + $args
-                        ),
-                        $i,
-                        null,
-                    ];
-                }
+
+                $pages[] = [
+                    $this->c->Router->link(
+                        $marker,
+                        [
+                            'page' => $i,
+                        ]
+                        + $args
+                    ),
+                    $i,
+                    $i === $cur ? true : null,
+                ];
                 $k = $i;
             }
             if (
