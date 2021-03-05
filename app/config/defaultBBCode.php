@@ -371,7 +371,11 @@ $fUrl = \str_replace([' ', '\'', '`', '"'], ['%20', '', '', ''], $url);
 if (0 === \strpos($url, 'ftp.')) {
     $fUrl = 'ftp://' . $fUrl;
 } elseif (! \preg_match('%^(?:\.?\.?/|#|[a-z](?:[a-z]|[a-z0-9]{1,6}):)%', $fUrl)) {
-    $fUrl = '//' . $fUrl;
+    if (\preg_match('%^[^/]+@[^/]+$%', $fUrl)) {
+        $fUrl = 'mailto:' . $fUrl;
+    } else {
+        $fUrl = '//' . $fUrl;
+    }
 }
 
 if ($url === $body) {
