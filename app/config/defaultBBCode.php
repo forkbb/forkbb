@@ -368,14 +368,10 @@ if (isset($attrs['Def'])) {
 
 $fUrl = \str_replace([' ', '\'', '`', '"'], ['%20', '', '', ''], $url);
 
-if (\strpos($url, 'www.') === 0) {
-    $fUrl = 'http://'.$fUrl;
-} elseif (\strpos($url, 'ftp.') === 0) {
-    $fUrl = 'ftp://'.$fUrl;
-} elseif (\strpos($url, '/') === 0) {
-    $fUrl = $parser->attr('baseUrl') . $fUrl;
-} elseif (! \preg_match('%^([a-z0-9]{3,6})://%', $url)) {
-    $fUrl = 'http://'.$fUrl;
+if (0 === \strpos($url, 'ftp.')) {
+    $fUrl = 'ftp://' . $fUrl;
+} elseif (! \preg_match('%^(?:\.?\.?/|#|[a-z](?:[a-z]|[a-z0-9]{1,6}):)%', $fUrl)) {
+    $fUrl = '//' . $fUrl;
 }
 
 if ($url === $body) {
