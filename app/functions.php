@@ -26,17 +26,22 @@ function _init(Container $c): void
  */
 function __(?string $arg, /* mixed */ ...$args): string
 {
-    static $c;
+    static $c, $lang;
 
-    if (
-        null === $arg
-        && $args[0] instanceof Container
-    ) {
-        $c = $args[0];
-        return '';
+    if (null === $lang) {
+        if (
+            null === $arg
+            && $args[0] instanceof Container
+        ) {
+            $c = $args[0];
+
+            return '';
+        } else {
+            $lang = $c->Lang;
+        }
     }
 
-    $tr = $c->Lang->get($arg);
+    $tr = $lang->get($arg);
 
     if (\is_array($tr)) {
         if (
