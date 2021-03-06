@@ -39,17 +39,14 @@ class Image extends File
     {
         parent::__construct($path, $options);
 
-        if (
-            ! \extension_loaded('gd')
-            || ! \function_exists('\\imagecreatetruecolor')
-        ) {
-            throw new FileException('GD library not connected');
+        if (! \extension_loaded('gd')) {
+            throw new FileException('GD library not enabled');
         }
 
         if (\is_string($this->data)) {
-            $this->image = @\imagecreatefromstring($this->data);
+            $this->image = \imagecreatefromstring($this->data);
         } else {
-            $this->image = @\imagecreatefromstring(\file_get_contents($this->path));
+            $this->image = \imagecreatefromstring(\file_get_contents($this->path));
         }
 
         if (false === $this->image) {
@@ -79,8 +76,10 @@ class Image extends File
         if (false === \imagefill($image, 0, 0, $color)) {
             throw new FileException('Failed to fill image with color');
         }
+
         \imagecolortransparent($image, $color);
         $palette = \imagecolorstotal($this->image);
+
         if (
             $palette > 0
             && ! \imagetruecolortopalette($image, true, $palette)
@@ -131,17 +130,17 @@ class Image extends File
     {
         switch (\pathinfo($path, \PATHINFO_EXTENSION)) {
             case 'jpg':
-                $result = @\imagejpeg($this->image, $path, $this->quality);
+                $result = \imagejpeg($this->image, $path, $this->quality);
                 break;
             case 'png':
                 $quality = (int) \floor((100 - $this->quality) / 11);
-                $result  = @\imagepng($this->image, $path, $quality);
+                $result  = \imagepng($this->image, $path, $quality);
                 break;
             case 'gif':
-                $result = @\imagegif($this->image, $path);
+                $result = \imagegif($this->image, $path);
                 break;
             case 'webp':
-                $result = @\imagewebp($this->image, $path, $this->quality);
+                $result = \imagewebp($this->image, $path, $this->quality);
                 break;
             default:
                 $this->error = 'File type not supported';
@@ -154,7 +153,8 @@ class Image extends File
 
             return false;
         }
-        @\chmod($path, 0644);
+
+        \chmod($path, 0644);
 
         return true;
     }
