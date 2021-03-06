@@ -221,7 +221,8 @@ class File
                 return false;
             }
         }
-        @\chmod($path, 0644);
+
+        \chmod($path, 0644);
 
         return true;
     }
