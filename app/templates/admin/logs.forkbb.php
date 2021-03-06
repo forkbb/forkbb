@@ -46,7 +46,7 @@
         <h2>{!! __('Log %s', $p->logName) !!}</h2>
         <div>
           <fieldset>
-            <ul>
+            <ul id="id-lgdtlt">
     @foreach ($p->logData as $cur)
               <li class="f-lgli">
         @if ($cur['context'])

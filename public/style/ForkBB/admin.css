@@ -916,7 +916,8 @@
   display: flex;
 }
 
-#forka .f-lgp {
+#forka .f-lgp,
+#id-lgdtlt .f-lgli:first-child {
   border-top: 0.0625rem dotted #AA7939;
 }
 
