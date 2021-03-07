@@ -14,6 +14,8 @@ use ForkBB\Core\Secury;
 
 class Csrf
 {
+    const TOKEN_LIFETIME = 1800;
+
     /**
      * @var Secury
      */
@@ -29,10 +31,23 @@ class Csrf
      */
     protected $error;
 
+    /**
+     * @var int
+     */
+    protected $hashExpiration = 3600;
+
     public function __construct(Secury $secury, string $key)
     {
         $this->secury = $secury;
-        $this->key = \sha1($key);
+        $this->key    = \sha1($key);
+    }
+
+    /**
+     * Устанавливает срок жизни хэша
+     */
+    public function setHashExpiration(int $exp): void
+    {
+        $this->hashExpiration = $exp > 0 ? $exp : 3600;
     }
 
     /**
@@ -41,43 +56,83 @@ class Csrf
     public function create(string $marker, array $args = [], /* string|int */ $time = null): string
     {
         $this->error = null;
+        $marker      = $this->argsToStr($marker, $args);
+        $time        = $time ?: \time();
 
-        unset($args['token'], $args['#']);
-        \ksort($args);
-        $marker .= '|';
-        foreach ($args as $key => $value) {
-            if (null !== $value) {
-                $marker .= $key . '|' . (string) $value . '|';
-            }
-        }
-        $time = $time ?: \time();
-
-        return $this->secury->hmac($marker, $time . $this->key) . 'f' . $time;
+        return $this->secury->hmac($marker, $time . $this->key) . 's' . $time;
     }
 
     /**
-     * Проверка токена
+     * Возвращает хэш
+     */
+    public function createHash(string $marker, array $args = [], /* string|int */ $time = null): string
+    {
+        $this->error = null;
+        $marker      = $this->argsToStr($marker, $args, ['hash']);
+        $time        = $time ?: \time() + $this->hashExpiration;
+
+        return $this->secury->hash($marker . $time) . 'e' . $time;
+    }
+
+    protected function argsToStr(string $marker, array $args, array $forDel = []): string
+    {
+        $marker .= '|';
+
+        if (! empty($forDel)) {
+            $args = \array_diff_key($args, \array_flip($forDel));
+        }
+
+        unset($args['token'], $args['#']);
+        \ksort($args);
+
+        foreach ($args as $key => $value) {
+            if (null !== $value) {
+                $marker .= "{$key}|{$value}|";
+            }
+        }
+
+        return $marker;
+    }
+
+    /**
+     * Проверка токена/хэша
      */
     public function verify($token, string $marker, array $args = []): bool
     {
-        $this->error = null;
+        $this->error = 'Bad token';
         $now         = \time();
-        $matches     = null;
+        $result      = false;
 
-        $result = \is_string($token)
-            && \preg_match('%f(\d+)$%D', $token, $matches)
-            && $matches[1] + 0 <= $now
-            && $matches[1] + 1800 >= $now
-            && \hash_equals($this->create($marker, $args, $matches[1]), $token);
+        if (
+            is_string($token)
+            && \preg_match('%(e|s)(\d+)$%D', $token, $matches)
+        ) {
+            switch ($matches[1]) {
+                // токен
+                case 's':
+                    if ($matches[2] + self::TOKEN_LIFETIME < $now) {
+                        // просрочен
+                        $this->error = 'Expired token';
+                    } elseif (
+                        $matches[2] + 0 <= $now
+                        && \hash_equals($this->create($marker, $args, $matches[2]), $token)
+                    ) {
+                        $this->error = null;
+                        $result      = true;
+                    }
 
-        if (! $result) {
-            if (
-                isset($matches[1])
-                && $matches[1] + 1800 < $now
-            ) {
-                $this->error = 'Expired token';
-            } else {
-                $this->error = 'Bad token';
+                    break;
+                // хэш
+                case 'e':
+                    if ($matches[2] < $now) {
+                        // просрочен
+                        $this->error = 'Expired token';
+                    } elseif (\hash_equals($this->createHash($marker, $args, $matches[2]), $token)) {
+                        $this->error = null;
+                        $result      = true;
+                    }
+
+                    break;
             }
         }
 
