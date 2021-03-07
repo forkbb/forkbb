@@ -226,13 +226,13 @@ class Register extends Page
 
         // отправка письма активации аккаунта
         if ('1' == $this->c->config->o_regs_verify) {
-            $hash = $this->c->Secury->hash($newUserId . $key);
+            $this->c->Csrf->setHashExpiration(259200); // ???? хэш действует 72 часа
+
             $link = $this->c->Router->link(
                 'RegActivate',
                 [
                     'id'   => $newUserId,
                     'key'  => $key,
-                    'hash' => $hash,
                 ]
             );
             $tplData = [
@@ -356,7 +356,7 @@ class Register extends Page
     public function activate(array $args): Page
     {
         if (
-            ! \hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['key']))
+            ! $this->c->Csrf->verify($args['hash'], 'RegActivate', $args)
             || ! ($user = $this->c->users->load($args['id'])) instanceof User
             || ! \hash_equals($user->activate_string, $args['key'])
         ) {
