@@ -26,7 +26,7 @@ class Email extends Profile
     {
         if (
             $this->user->id !== $args['id']
-            || ! \hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['email'] . $args['key']))
+            || ! $this->c->Csrf->verify($args['hash'], 'SetNewEmail', $args)
             || ! \hash_equals($this->user->activate_string, $args['key'])
         ) {
             return $this->c->Message->message('Bad request', false);
@@ -131,15 +131,15 @@ class Email extends Profile
                             ->page('EditUserProfile', $args)
                             ->message('Email changed redirect');
                     } else {
+                        $this->c->Csrf->setHashExpiration(259200); // ???? хэш действует 72 часа
+
                         $key  = $this->c->Secury->randomPass(33);
-                        $hash = $this->c->Secury->hash($this->curUser->id . $v->new_email . $key);
                         $link = $this->c->Router->link(
                             'SetNewEmail',
                             [
                                 'id'    => $this->curUser->id,
                                 'email' => $v->new_email,
                                 'key'   => $key,
-                                'hash'  => $hash,
                             ]
                         );
                         $tplData = [
