@@ -153,12 +153,14 @@ class View extends Profile
                     'href'    => 'mailto:' . $this->curUser->censorEmail,
                 ];
             } elseif ($this->rules->sendEmail) {
+                $this->c->Csrf->setHashExpiration(3600);
+
                 $fields['email'] = [
                     'class'   => 'pline',
                     'type'    => 'link',
                     'caption' => __('Email info'),
                     'value'   => __('Send email'),
-                    'href'    => $this->c->Router->link('SendEmail', $args),
+                    'href'    => $this->c->Router->link('SendEmail', ['id' => $this->curUser->id]),
                 ];
             }
         }

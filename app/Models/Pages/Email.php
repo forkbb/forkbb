@@ -28,6 +28,10 @@ class Email extends Page
      */
     public function email(array $args, string $method): Page
     {
+        if (! $this->c->Csrf->verify($args['hash'], 'SendEmail', $args)) {
+            return $this->c->Message->message($this->c->Csrf->getError());
+        }
+
         $this->curUser = $this->c->users->load($args['id']);
 
         if (

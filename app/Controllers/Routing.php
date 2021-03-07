@@ -358,7 +358,7 @@ class Routing
             ) {
                 $r->add(
                     $r::DUO,
-                    '/send_email/{id|i:[2-9]|[1-9]\d+}',
+                    '/send_email/{id|i:[2-9]|[1-9]\d+}/{hash}',
                     'Email:email',
                     'SendEmail'
                 );
