@@ -250,14 +250,14 @@ class Auth extends Page
                     $v->validation($_POST)
                     && 0 === $this->c->bans->banFromName($tmpUser->username)
                 ) {
+                    $this->c->Csrf->setHashExpiration(259200); // ???? хэш действует 72 часа
+
                     $key  = $this->c->Secury->randomPass(32);
-                    $hash = $this->c->Secury->hash($tmpUser->id . $key);
                     $link = $this->c->Router->link(
                         'ChangePassword',
                         [
                             'id'   => $tmpUser->id,
                             'key'  => $key,
-                            'hash' => $hash,
                         ]
                     );
                     $tplData = [
@@ -362,7 +362,7 @@ class Auth extends Page
     public function changePass(array $args, string $method): Page
     {
         if (
-            ! \hash_equals($args['hash'], $this->c->Secury->hash($args['id'] . $args['key']))
+            ! $this->c->Csrf->verify($args['hash'], 'ChangePassword', $args)
             || ! ($user = $this->c->users->load($args['id'])) instanceof User
             || ! \hash_equals($user->activate_string, $args['key'])
         ) {
