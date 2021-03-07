@@ -215,16 +215,6 @@ class View extends Profile
             'value'   => \ForkBB\dt($this->curUser->registered, true),
             'caption' => __('Registered info'),
         ];
-        if ($this->rules->viewLastVisit) {
-            $fields['lastvisit'] = [
-                'class'   => 'pline',
-                'type'    => 'str',
-                'value'   => $this->rules->my
-                    ? \ForkBB\dt($this->curUser->last_visit)
-                    : \ForkBB\dt($this->curUser->currentVisit, true),
-                'caption' => __('Last visit info'),
-            ];
-        }
         $fields['lastpost'] = [
             'class'   => 'pline',
             'type'    => 'str',
@@ -321,6 +311,16 @@ class View extends Profile
 
         // приватная информация
         $fields = [];
+        if ($this->rules->viewLastVisit) {
+            $fields['lastvisit'] = [
+                'class'   => 'pline',
+                'type'    => 'str',
+                'value'   => $this->rules->my
+                    ? \ForkBB\dt($this->curUser->last_visit)
+                    : \ForkBB\dt($this->curUser->currentVisit, true),
+                'caption' => __('Last visit info'),
+            ];
+        }
         if ($this->rules->viewOEmail) {
             $fields['open-email'] = [
                 'class'   => 'pline',
