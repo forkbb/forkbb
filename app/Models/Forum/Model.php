@@ -244,7 +244,7 @@ class Model extends DataModel
             return [];
         }
 
-        if ('1' == $this->c->user->viewUsers) {
+        if ($this->c->user->viewUsers) {
             foreach ($attr as $id => &$cur) {
                 $cur = [
                     'name' => $cur,
