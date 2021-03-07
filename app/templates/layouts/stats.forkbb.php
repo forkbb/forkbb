@@ -11,10 +11,10 @@
       <dl class="f-stusers">
         <dt>{!! __('User info') !!}</dt>
 @if ($p->stats)
-    @if (\is_string($p->stats->userLast))
-        <dd>{!! __('Newest user')  !!} {{ $p->stats->userLast }}</dd>
+    @if ($p->stats->userLast['link'])
+        <dd>{!! __('Newest user')  !!} <a href="{{ $p->stats->userLast['link'] }}">{{ $p->stats->userLast['name'] }}</a></dd>
     @else
-        <dd>{!! __('Newest user')  !!} <a href="{{ $p->stats->userLast[0] }}">{{ $p->stats->userLast[1] }}</a></dd>
+        <dd>{!! __('Newest user')  !!} {{ $p->stats->userLast['name'] }}</dd>
     @endif
 @endif
 @if ($p->online)
@@ -28,10 +28,10 @@
       <dl class="f-inline f-onlinelist"><!-- inline -->
         <dt>{!! __('Online users') !!}</dt>
     @foreach ($p->online->info as $cur)
-        @if (\is_string($cur))
-        <dd>{{ $cur }}</dd>
+        @if ($cur['link'])
+        <dd><a href="{{ $cur['link'] }}">{{ $cur['name'] }}</a></dd>
         @else
-        <dd><a href="{{ $cur[0] }}">{{ $cur[1] }}</a></dd>
+        <dd>{{ $cur['name'] }}</dd>
         @endif
     @endforeach
       </dl><!-- endinline -->

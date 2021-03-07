@@ -37,10 +37,10 @@
                   <dl class="f-inline f-modlist"><!-- inline -->
                     <dt>{!! __('Moderated by', \count($cur->moderators)) !!}</dt>
             @foreach ($cur->moderators as $mod)
-                @if (\is_string($mod))
-                    <dd>{{ $mod }}</dd>
+                @if ($mod['link'])
+                    <dd><a href="{{ $mod['link'] }}">{{ $mod['name'] }}</a></dd>
                 @else
-                    <dd><a href="{{ $mod[0] }}">{{ $mod[1] }}</a></dd>
+                    <dd>{{ $mod['name'] }}</dd>
                 @endif
             @endforeach
                   </dl><!-- endinline -->

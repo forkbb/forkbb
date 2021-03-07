@@ -24,40 +24,38 @@ class Info extends Method
             return null;
         }
 
+        $viewUsers            = $this->c->user->viewUsers;
         $this->model->maxNum  = $this->c->config->a_max_users['number'];
         $this->model->maxTime = $this->c->config->a_max_users['time'];
+        $info                 = [];
 
-        $info = [];
-        if ('1' == $this->c->user->g_view_users) {
-            foreach ($this->model->users as $id => $name) {
-                $info[] = [
-                    $this->c->Router->link(
+        foreach ($this->model->users as $id => $name) {
+            $info[] = [
+                'name' => $name,
+                'link' => $viewUsers
+                    ? $this->c->Router->link(
                         'User',
                         [
                             'id'   => $id,
                             'name' => $name,
                         ]
-                    ),
-                    $name,
-                ];
-            }
-        } else {
-            foreach ($this->model->users as $name) {
-                $info[] = $name;
-            }
+                    )
+                    : null,
+            ];
         }
-        $this->model->numUsers = \count($info);
 
-        $s = 0;
+        $this->model->numUsers = \count($info);
+        $s                     = 0;
+
         foreach ($this->model->bots as $bot => $arr) {
-            $count = \count($arr);
-            $s    += $count;
-            if ($count > 1) {
-                $info[] = '[Bot] ' . $bot . ' (' . $count . ')';
-            } else {
-                $info[] = '[Bot] ' . $bot;
-            }
+            $count  = \count($arr);
+            $s     += $count;
+            $info[] = [
+                'name' => "[Bot] {$bot}" . ($count > 1 ? " ({$count})" : ''),
+                'link' => null,
+            ];
         }
+
         $this->model->numGuests = $s + \count($this->model->guests);
         $this->model->info      = $info;
 

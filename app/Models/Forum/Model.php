@@ -244,21 +244,29 @@ class Model extends DataModel
             return [];
         }
 
-        if ('1' == $this->c->user->g_view_users) {
+        if ('1' == $this->c->user->viewUsers) {
             foreach ($attr as $id => &$cur) {
                 $cur = [
-                    $this->c->Router->link(
+                    'name' => $cur,
+                    'link' => $this->c->Router->link(
                         'User',
                         [
                             'id'   => $id,
                             'name' => $cur,
                         ]
                     ),
-                    $cur,
                 ];
             }
-            unset($cur);
+        } else {
+            foreach ($attr as $id => &$cur) {
+                $cur = [
+                    'name' => $cur,
+                    'link' => null,
+                ];
+            }
         }
+
+        unset($cur);
 
         return $attr;
     }

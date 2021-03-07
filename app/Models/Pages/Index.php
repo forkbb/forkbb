@@ -24,22 +24,24 @@ class Index extends Page
         $this->c->Lang->load('subforums');
 
         // крайний пользователь // ???? может в stats переместить?
-        $this->c->stats->userLast = $this->user->viewUsers
-            ? [
-                $this->c->Router->link(
-                    'User', [
+        $this->c->stats->userLast = [
+            'name' => $this->c->stats->userLast['username'],
+            'link' => $this->user->viewUsers
+                ? $this->c->Router->link(
+                    'User',
+                    [
                         'id'   => $this->c->stats->userLast['id'],
                         'name' => $this->c->stats->userLast['username'],
                     ]
-                ),
-                $this->c->stats->userLast['username'],
-            ]
-            : $this->c->stats->userLast['username'];
+                )
+                : null,
+        ];
 
         // для таблицы разделов
         $root   = $this->c->forums->loadTree(0);
         $forums = empty($root) ? [] : $root->subforums;
         $ctgs   = [];
+
         if (empty($forums)) {
             $this->fIswev = ['i', __('Empty board')];
         } else {
