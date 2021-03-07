@@ -145,7 +145,13 @@ class Router
         }
 
         list($link, $names) = $data;
-        // автоматическое вычисление токена
+        // автоматическое вычисление токена/хэша
+        if (
+            isset($names['hash'])
+            && ! isset($args['hash'])
+        ) {
+            $args['hash'] = $this->csrf->createHash($marker, $args);
+        }
         if (
             isset($names['token'])
             && ! isset($args['token'])
