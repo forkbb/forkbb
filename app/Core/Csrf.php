@@ -55,7 +55,6 @@ class Csrf
      */
     public function create(string $marker, array $args = [], /* string|int */ $time = null): string
     {
-        $this->error = null;
         $marker      = $this->argsToStr($marker, $args);
         $time        = $time ?: \time();
 
@@ -67,7 +66,6 @@ class Csrf
      */
     public function createHash(string $marker, array $args = [], /* string|int */ $time = null): string
     {
-        $this->error = null;
         $marker      = $this->argsToStr($marker, $args, ['hash']);
         $time        = $time ?: \time() + $this->hashExpiration;
 
@@ -124,7 +122,7 @@ class Csrf
                     break;
                 // хэш
                 case 'e':
-                    if ($matches[2] < $now) {
+                    if ($matches[2] + 0 < $now) {
                         // просрочен
                         $this->error = 'Expired token';
                     } elseif (\hash_equals($this->createHash($marker, $args, $matches[2]), $token)) {
