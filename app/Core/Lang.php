@@ -418,7 +418,7 @@ class Lang
                     }
                 }
 
-                throw new RuntimeException('Пропущена открывающая скобка');
+                throw new RuntimeException('Missing open parenthesis');
 
             // числа, переменные, функции
             } else {
@@ -441,7 +441,7 @@ class Lang
 
         while ($peek = \array_pop($stack)) {
             if ('(' === $peek) {
-                throw new RuntimeException('Пропущена закрывающая скобка');
+                throw new RuntimeException('Missing close parenthesis');
             }
 
             $postfix[] = $peek;
@@ -463,18 +463,18 @@ class Lang
                             $v2 = \array_pop($stack);
 
                             if (null === $v2) {
-                                throw new RuntimeException('Неожиданный конец стека операндов');
+                                throw new RuntimeException('Unexpected end of operand stack');
                             }
                         case 1:
                             $v1 = \array_pop($stack);
 
                             if (null === $v2) {
-                                throw new RuntimeException('Неожиданный конец стека операндов');
+                                throw new RuntimeException('Unexpected end of operand stack');
                             }
 
                             break;
                         default:
-                            throw new RuntimeException('Ожидалось действие с 2 или 1 операндом: ' . $token);
+                            throw new RuntimeException('Action expected with 1 or 2 operands: ' . $token);
                     }
                 }
 
@@ -526,7 +526,7 @@ class Lang
                             break;
                         }
 
-                        throw new RuntimeException('Неожиданная операция: ' . $token);
+                        throw new RuntimeException('Unexpected operation: ' . $token);
                 }
             } else {
                 $stack[] = $token;
@@ -534,7 +534,7 @@ class Lang
         }
 
         if (1 !== \count($stack)) {
-            throw new RuntimeException('В стеке должен остаться 1 операнд-результа, осталось: ' . \count($stack));
+            throw new RuntimeException('1 operand-result should remain on the stack, there are: ' . \count($stack));
         }
 
         return \array_pop($stack);
