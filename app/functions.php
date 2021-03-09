@@ -44,13 +44,9 @@ function __(?string $arg, /* mixed */ ...$args): string
     $tr = $lang->get($arg);
 
     if (\is_array($tr)) {
-        if (
-            isset($args[0])
-            && \is_int($args[0])
-        ) {
-            $n = \array_shift($args);
-            eval('$n = (int) ' . $tr['plural']);
-            $tr = $tr[$n];
+        if (\is_int(\reset($args))) {
+            $tr   = $lang->getForm($tr, \reset($args));
+            $args = \array_slice($args, 1);
         } else {
             $tr = $tr[0];
         }
@@ -58,8 +54,8 @@ function __(?string $arg, /* mixed */ ...$args): string
 
     if (empty($args)) {
         return $tr;
-    } elseif (\is_array($args[0])) {
-        return \strtr($tr, \array_map('\ForkBB\e', $args[0]));
+    } elseif (\is_array(\reset($args))) {
+        return \strtr($tr, \array_map('\ForkBB\e', \reset($args)));
     } else {
         $args = \array_map('\ForkBB\e', $args);
         return \sprintf($tr, ...$args);
