@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Core;
 
 use ForkBB\Core\Container;
+use InvalidArgumentException;
 use RuntimeException;
 
 class Lang
@@ -43,6 +44,48 @@ class Lang
      * @var array
      */
     protected $langOrder = [];
+
+    /**
+     * Список операторов для вычисления Plural Forms
+     * @var array
+     */
+    protected $oprtrs = [
+        '**'  => [23, true , 2], // возведение в степень
+        '!'   => [20, false, 1],
+        '*'   => [19, false, 2],
+        '/'   => [19, false, 2],
+        '%'   => [19, false, 2],
+        '+'   => [18, false, 2],
+        '-'   => [18, false, 2],
+        '.'   => [18, false, 2],
+        '<'   => [16, null , 2],
+        '<='  => [16, null , 2],
+        '>'   => [16, null , 2],
+        '>='  => [16, null , 2],
+        '=='  => [15, null , 2],
+        '!='  => [15, null , 2],
+        '===' => [15, null , 2],
+        '!==' => [15, null , 2],
+        '<>'  => [15, null , 2],
+        '<=>' => [15, null , 2],
+        '&'   => [14, false, 2],
+        '^'   => [13, false, 2], // а это не возведение в степень!
+        '|'   => [12, false, 2],
+        '&&'  => [11, false, 2],
+        '||'  => [10, false, 2],
+        '??'  => [ 9, true , 2],
+        '?'   => [ 8, true , 2], // отличие от php
+        ':'   => [ 8, true , 2], // отличие от php
+        'and' => [ 3, false, 2],
+        'xor' => [ 2, false, 2],
+        'or'  => [ 1, false, 2],
+        ','   => [ 0, false, 2], // отличие от алгоритма сортировочной станции
+    ];
+
+    /**
+     * @var array
+     */
+    protected $pluralCashe = [];
 
     public function __construct(Container $container)
     {
@@ -147,7 +190,7 @@ class Lang
         $curComm  = null;
         $curVal   = '';
         $nplurals = 2;
-        $plural   = '($n != 1);';
+        $plural   = '(n != 1);';
 
         for ($i = 0; $i < $count; ++$i) {
             $line = \trim($lines[$i]);
@@ -166,11 +209,9 @@ class Lang
 
                 // заголовки
                 if (! isset($cur['msgid'][0])) {
-                    if (\preg_match('%Plural\-Forms:\s+nplurals=(\d+);\s*plural=([^;\n\r]+;)%i', $cur[0], $v)) {
+                    if (\preg_match('%Plural\-Forms:\s+nplurals=(\d+);\s*plural=([^;\n\r]+)%i', $cur[0], $v)) {
                         $nplurals = (int) $v[1];
-                        $plural   = \str_replace('n', '$n', \trim($v[2]));
-                        $plural   = \str_replace(':', ': (', $plural, $curVal);
-                        $plural   = \str_replace(';', \str_repeat(')', $curVal). ';', $plural);
+                        $plural   = \trim($v[2]);
                     }
 
                 // перевод
@@ -300,5 +341,222 @@ class Lang
             ["\n",  "\t",  '"',  '\\'],
             $line
         );
+    }
+
+    /**
+     * Разбивает мат./лог. выражение на токены
+     */
+    protected function getTokenList(string $expression): array
+    {
+        \preg_match_all('%[(),]|\b[\w.]+\b|[^\s\w(),.]+%', $expression, $matches);
+
+        return $matches[0];
+    }
+
+    /**
+     * Преобразовывает токены из infix порядка в postfix
+     * Есть отличия от алгоритма сортировочной станции
+     */
+    protected function infixToPostfix(array $infixList): array
+    {
+        $postfix = [];
+        $stack   = [];
+        $any     = null;
+
+        foreach ($infixList as $token) {
+            if (isset($any)) {
+                if ('(' === $token) {
+                    // функция
+                    $stack[] = "$any()";
+                } else {
+                    // переменная
+                    $postfix[] = $any;
+                }
+
+                $any = null;
+            }
+
+            // оператор
+            if (isset($this->oprtrs[$token])) {
+                while (
+                    false !== ($peek = \end($stack))
+                    && isset($this->oprtrs[$peek])
+                    && (
+                        $this->oprtrs[$peek][0] > $this->oprtrs[$token][0]
+                        || (
+                            false === $this->oprtrs[$token][1]
+                            && $this->oprtrs[$peek][0] == $this->oprtrs[$token][0]
+                        )
+                    )
+                ) {
+                    $postfix[] = \array_pop($stack);
+                }
+
+                $stack[] = $token;
+
+            // открывающая скобка
+            } elseif ('(' === $token) {
+                $stack[] = $token;
+
+            // закрывающая скобка
+            } elseif (')' === $token) {
+                while ($peek = \array_pop($stack)) {
+                    // стек до ( переложить в postfix
+                    if ('(' !== $peek) {
+                        $postfix[] = $peek;
+                    } else {
+                        // переложить функцию в postfix
+                        if (
+                            \is_string($peek = \end($stack))
+                            && isset($peek[2])
+                            && ')' === $peek[-1]
+                        ) {
+                            $postfix[] = \array_pop($stack);
+                        }
+
+                        continue 2;
+                    }
+                }
+
+                throw new RuntimeException('Пропущена открывающая скобка');
+
+            // числа, переменные, функции
+            } else {
+                $trim = \trim($token, '1234567890');
+
+                if ('' === $trim) {
+                    $postfix[] = (int) $token;
+                } elseif ('.' === $trim) {
+                    $postfix[] = (float) $token;
+                } else {
+                    // то ли функция, то ли переменная
+                    $any = $token;
+                }
+            }
+        }
+
+        if (isset($any)) {
+            $postfix[] = $any;
+        }
+
+        while ($peek = \array_pop($stack)) {
+            if ('(' === $peek) {
+                throw new RuntimeException('Пропущена закрывающая скобка');
+            }
+
+            $postfix[] = $peek;
+        }
+
+        return $postfix;
+    }
+
+    /**
+     * Вычисляет выражение представленное токенами в postfix записи и переменными
+     */
+    protected function calcPostfix(array $postfixList, array $vars = []) /* : mixed */
+    {
+        foreach ($postfixList as $token) {
+            if (\is_string($token)) {
+                if (isset($this->oprtrs[$token])) {
+                    switch ($this->oprtrs[$token][2]) {
+                        case 2:
+                            $v2 = \array_pop($stack);
+
+                            if (null === $v2) {
+                                throw new RuntimeException('Неожиданный конец стека операндов');
+                            }
+                        case 1:
+                            $v1 = \array_pop($stack);
+
+                            if (null === $v2) {
+                                throw new RuntimeException('Неожиданный конец стека операндов');
+                            }
+
+                            break;
+                        default:
+                            throw new RuntimeException('Ожидалось действие с 2 или 1 операндом: ' . $token);
+                    }
+                }
+
+                switch ($token) {
+                    case '+'   : $stack[] = $v1 + $v2; break;
+                    case '-'   : $stack[] = $v1 - $v2; break;
+                    case '*'   : $stack[] = $v1 * $v2; break;
+                    case '/'   : $stack[] = $v1 / $v2; break;
+                    case '%'   : $stack[] = $v1 % $v2; break;
+                    case '.'   : $stack[] = $v1 . $v2; break;
+                    case '**'  : $stack[] = $v1 ** $v2; break;
+                    case '!'   : $stack[] = ! $v1; break;
+                    case '<'   : $stack[] = $v1 < $v2; break;
+                    case '<='  : $stack[] = $v1 <= $v2; break;
+                    case '>'   : $stack[] = $v1 > $v2; break;
+                    case '>='  : $stack[] = $v1 >= $v2; break;
+                    case '=='  : $stack[] = $v1 == $v2; break;
+                    case '!='  : $stack[] = $v1 != $v2; break;
+                    case '===' : $stack[] = $v1 === $v2; break;
+                    case '!==' : $stack[] = $v1 !== $v2; break;
+                    case '<>'  : $stack[] = $v1 <> $v2; break;
+                    case '<=>' : $stack[] = $v1 <=> $v2; break;
+                    case '&'   : $stack[] = $v1 & $v2; break;
+                    case '^'   : $stack[] = $v1 ^ $v2; break;
+                    case '|'   : $stack[] = $v1 | $v2; break;
+                    case '&&'  : $stack[] = $v1 && $v2; break;
+                    case '||'  : $stack[] = $v1 || $v2; break;
+                    case 'and' : $stack[] = $v1 and $v2; break;
+                    case 'xor' : $stack[] = $v1 xor $v2; break;
+                    case 'or'  : $stack[] = $v1 or $v2; break;
+                    case '??'  : $stack[] = $v1 ?? $v2; break;
+                    case '?'   : $stack[] = $v2[$v1 ? 'T' : 'F']; break;
+                    case ':'   : $stack[] = ['T' => $v1, 'F' => $v2]; break;
+                    case ','   :
+                        // собрать аргументы функции в массив
+                        if (\is_array($v1)) {
+                            $v1[]    = $v2;
+                            $stack[] = $v1;
+                        } else {
+                            $stack[] = [$v1, $v2];
+                        }
+
+                        break;
+                    default:
+                        // подстановка переменной
+                        if (isset($vars[$token])) {
+                            $stack[] = $vars[$token];
+
+                            break;
+                        }
+
+                        throw new RuntimeException('Неожиданная операция: ' . $token);
+                }
+            } else {
+                $stack[] = $token;
+            }
+        }
+
+        if (1 !== \count($stack)) {
+            throw new RuntimeException('В стеке должен остаться 1 операнд-результа, осталось: ' . \count($stack));
+        }
+
+        return \array_pop($stack);
+    }
+
+    /**
+     * Возвращает вариант перевода
+     */
+    public function getForm(array $pluralForms, int $number): string
+    {
+        if (! isset($pluralForms['plural'])) {
+            throw new InvalidArgumentException('Plural Forms missing \'plural\' element');
+        }
+
+        $plural = \str_replace('$n', 'n', \trim($pluralForms['plural'], "; \n\r\t\v\0")); // fix старого формата от eval()
+
+        if (! isset($this->pluralCashe[$plural])) {
+            $this->pluralCashe[$plural] = $this->infixToPostfix($this->getTokenList($plural));
+        }
+
+        $option = $this->calcPostfix($this->pluralCashe[$plural], ['n' => $number]);
+
+        return $pluralForms[$option];
     }
 }
