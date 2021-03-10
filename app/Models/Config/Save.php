@@ -33,6 +33,9 @@ class Save extends Method
                     case 'a':
                         $value = \json_encode($values[$name], \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR);
                         break;
+                    case 'b':
+                        $value = $values[$name] ? '1' : '0';
+                        break;
                     case 'i':
                         if (null !== $values[$name]) {
                             $value = (string) $values[$name];
