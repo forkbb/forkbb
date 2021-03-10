@@ -25,7 +25,7 @@ class Model extends DataModel
         parent::__construct($container);
 
         $this->zDepend = [
-            'group_id'     => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'isBanByName', 'link', 'viewUsers', 'showPostCount', 'searchUsers', 'usePoll'],
+            'group_id'     => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'isBanByName', 'link', 'viewUsers', 'showPostCount', 'searchUsers', 'usePoll', 'usePM'],
             'id'           => ['isGuest', 'link', 'online'],
             'last_visit'   => ['currentVisit'],
             'show_sig'     => ['showSignature'],
@@ -389,5 +389,17 @@ class Model extends DataModel
     public function fLog(): string
     {
         return "id:{$this->id} gid:{$this->group_id} name:{$this->username}";
+    }
+
+    /**
+     * Статус возможности использования приватных сообщений
+     */
+    protected function getusePM(): bool
+    {
+        return '1' == $this->c->config->b_pm
+            && (
+                $this->isAdmin
+                || 1 == $this->g_pm
+            );
     }
 }
