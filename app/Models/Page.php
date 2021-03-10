@@ -200,21 +200,13 @@ abstract class Page extends Model
                 'Your profile',
             ];
 
-            // New PMS
-            if (
-                '1' == $this->c->config->o_pms_enabled
-                && (
-                    $this->user->isAdmin
-                    || $this->user->messages_new > 0
-                )
-            ) { //????
+            if ($this->user->usePM) {
                 $navUser['pmsnew'] = [
-                    'pmsnew.php',
+                    'pmsnew.php', // ????
                     'PM',
                     'Private messages',
-                ]; //'<li id="nav"'.((PUN_ACTIVE_PAGE == 'pms_new' || $user['messages_new'] > 0) ? ' class="isactive"' : '').'><a href="pmsnew.php">'.__('PM').(($user['messages_new'] > 0) ? ' (<span'.((empty($this->c->config->o_pms_flasher) || PUN_ACTIVE_PAGE == 'pms_new') ? '' : ' class="remflasher"' ).'>'.$user['messages_new'].'</span>)' : '').'</a></li>';
+                ]; // ???? '<li id="nav"'.((PUN_ACTIVE_PAGE == 'pms_new' || $user['messages_new'] > 0) ? ' class="isactive"' : '').'><a href="pmsnew.php">'.__('PM').(($user['messages_new'] > 0) ? ' (<span'.((empty($this->c->config->o_pms_flasher) || PUN_ACTIVE_PAGE == 'pms_new') ? '' : ' class="remflasher"' ).'>'.$user['messages_new'].'</span>)' : '').'</a></li>';
             }
-            // New PMS
 
             if ($this->user->isAdmMod) {
                 $navUser['admin'] = [
