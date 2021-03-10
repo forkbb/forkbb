@@ -143,7 +143,7 @@ class Model extends DataModel
     {
         return (
                 $this->c->user->usePoll
-                || '1' == $this->c->config->b_poll_guest
+                || 1 === $this->c->config->b_poll_guest
             )
             && (
                 0 === $this->parent->poll_term
@@ -238,7 +238,7 @@ class Model extends DataModel
             return null;
         } elseif (
             $this->c->user->isGuest
-            && '1' != $this->c->config->b_poll_guest
+            && 1 !== $this->c->config->b_poll_guest
         ) {
             return __('Poll results are hidden from the guests');
         } elseif (! $this->isOpen) {

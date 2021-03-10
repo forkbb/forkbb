@@ -383,7 +383,7 @@ class Model extends DataModel
      */
     protected function getusePoll(): bool
     {
-        return '1' == $this->c->config->b_poll_enabled && ! $this->isGuest;
+        return 1 === $this->c->config->b_poll_enabled && ! $this->isGuest;
     }
 
     public function fLog(): string
@@ -396,7 +396,7 @@ class Model extends DataModel
      */
     protected function getusePM(): bool
     {
-        return '1' == $this->c->config->b_pm
+        return 1 === $this->c->config->b_pm
             && (
                 $this->isAdmin
                 || 1 == $this->g_pm

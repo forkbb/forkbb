@@ -38,7 +38,7 @@ class Post extends Page
 
         $this->c->Lang->load('post');
 
-        if ('1' == $this->c->config->b_poll_enabled) {
+        if (1 === $this->c->config->b_poll_enabled) {
             $this->c->Lang->load('poll');
         }
 
