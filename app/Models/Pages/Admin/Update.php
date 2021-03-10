@@ -1333,4 +1333,89 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.35 to rev.36
+     */
+    protected function stageNumber35(array $args): ?int
+    {
+        unset($this->c->config->o_pms_enabled);
+        unset($this->c->config->o_pms_min_kolvo);
+
+        $this->c->config->b_pm = 0;
+
+        $this->c->config->save();
+
+        $this->c->DB->dropTable('pms_new_block');
+        $this->c->DB->dropTable('pms_new_posts');
+        $this->c->DB->dropTable('pms_new_topics');
+
+        // pm_block
+        $schema = [
+            'FIELDS' => [
+                'bl_first_id'  => ['INT(10) UNSIGNED', false, 0],
+                'bl_second_id' => ['INT(10) UNSIGNED', false, 0],
+            ],
+            'INDEXES' => [
+                'bl_first_id_idx'  => ['bl_first_id'],
+                'bl_second_id_idx' => ['bl_second_id'],
+            ],
+        ];
+        $this->c->DB->createTable('pm_block', $schema);
+
+        // pm_posts
+        $schema = [
+            'FIELDS' => [
+                'id'            => ['SERIAL', false],
+                'poster_number' => ['TINYINT UNSIGNED', false, 0],
+                'poster_ip'     => ['VARCHAR(45)', false, ''],
+                'message'       => ['TEXT', false],
+                'hide_smilies'  => ['TINYINT(1)', false, 0],
+                'posted'        => ['INT(10) UNSIGNED', false, 0],
+                'edited'        => ['INT(10) UNSIGNED', false, 0],
+                'topic_id'      => ['INT(10) UNSIGNED', false, 0],
+            ],
+            'PRIMARY KEY' => ['id'],
+            'INDEXES' => [
+                'topic_id_idx' => ['topic_id'],
+            ],
+        ];
+        $this->c->DB->createTable('pm_posts', $schema);
+
+        // pm_rnd
+        $schema = [
+            'FIELDS' => [
+                'user_id'     => ['INT(10) UNSIGNED', false, 0],
+                'topic_id'    => ['INT(10) UNSIGNED', false, 0],
+                'user_number' => ['TINYINT UNSIGNED', false, 0],
+                'username'    => ['VARCHAR(190)', false, ''],
+                'pt_status'   => ['TINYINT UNSIGNED', false, 0],
+                'last_visit'  => ['INT(10) UNSIGNED', false, 0],
+            ],
+            'PRIMARY KEY' => ['user_id', 'topic_id', 'user_number'],
+            'INDEXES' => [
+                'topic_id_idx'   => ['topic_id'],
+                'pt_status_idx'  => ['pt_status'],
+            ],
+        ];
+        $this->c->DB->createTable('pm_rnd', $schema);
+
+        // pm_topics
+        $schema = [
+            'FIELDS' => [
+                'id'          => ['SERIAL', false],
+                'subject'     => ['VARCHAR(255)', false, ''],
+                'num_replies' => ['INT(10) UNSIGNED', false, 0],
+                'last_post'   => ['INT(10) UNSIGNED', false, 0],
+                'last_number' => ['TINYINT UNSIGNED', false, 0],
+            ],
+            'PRIMARY KEY' => ['id'],
+            'INDEXES' => [
+                'last_post_idx' => ['last_post'],
+            ],
+        ];
+        $this->c->DB->createTable('pm_topics', $schema);
+
+        return null;
+    }
 }
