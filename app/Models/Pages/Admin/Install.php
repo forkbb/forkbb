@@ -883,69 +883,75 @@ class Install extends Admin
         ];
         $this->c->DB->createTable('topics', $schema);
 
-        // pms_new_block
+        // pm_block
         $schema = [
             'FIELDS' => [
-                'bl_id'      => ['INT(10) UNSIGNED', false, 0],
-                'bl_user_id' => ['INT(10) UNSIGNED', false, 0],
+                'bl_first_id'  => ['INT(10) UNSIGNED', false, 0],
+                'bl_second_id' => ['INT(10) UNSIGNED', false, 0],
             ],
             'INDEXES' => [
-                'bl_id_idx'      => ['bl_id'],
-                'bl_user_id_idx' => ['bl_user_id']
+                'bl_first_id_idx'  => ['bl_first_id'],
+                'bl_second_id_idx' => ['bl_second_id'],
             ],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('pms_new_block', $schema);
+        $this->c->DB->createTable('pm_block', $schema);
 
-        // pms_new_posts
+        // pm_posts
         $schema = [
             'FIELDS' => [
-                'id'           => ['SERIAL', false],
-                'poster'       => ['VARCHAR(190)', false, ''],
-                'poster_id'    => ['INT(10) UNSIGNED', false, 1],
-                'poster_ip'    => ['VARCHAR(45)', false, ''],
-                'message'      => ['TEXT', false],
-                'hide_smilies' => ['TINYINT(1)', false, 0],
-                'posted'       => ['INT(10) UNSIGNED', false, 0],
-                'edited'       => ['INT(10) UNSIGNED', false, 0],
-                'edited_by'    => ['VARCHAR(190)', false, ''],
-                'post_new'     => ['TINYINT(1)', false, 1],
-                'topic_id'     => ['INT(10) UNSIGNED', false, 0],
+                'id'            => ['SERIAL', false],
+                'poster_number' => ['TINYINT UNSIGNED', false, 0],
+                'poster_ip'     => ['VARCHAR(45)', false, ''],
+                'message'       => ['TEXT', false],
+                'hide_smilies'  => ['TINYINT(1)', false, 0],
+                'posted'        => ['INT(10) UNSIGNED', false, 0],
+                'edited'        => ['INT(10) UNSIGNED', false, 0],
+                'topic_id'      => ['INT(10) UNSIGNED', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
             'INDEXES' => [
                 'topic_id_idx' => ['topic_id'],
-                'multi_idx'    => ['poster_id', 'topic_id'],
             ],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('pms_new_posts', $schema);
+        $this->c->DB->createTable('pm_posts', $schema);
 
-        // pms_new_topics
+        // pm_rnd
+        $schema = [
+            'FIELDS' => [
+                'user_id'     => ['INT(10) UNSIGNED', false, 0],
+                'topic_id'    => ['INT(10) UNSIGNED', false, 0],
+                'user_number' => ['TINYINT UNSIGNED', false, 0],
+                'username'    => ['VARCHAR(190)', false, ''],
+                'pt_status'   => ['TINYINT UNSIGNED', false, 0],
+                'last_visit'  => ['INT(10) UNSIGNED', false, 0],
+            ],
+            'PRIMARY KEY' => ['user_id', 'topic_id', 'user_number'],
+            'INDEXES' => [
+                'topic_id_idx'   => ['topic_id'],
+                'pt_status_idx'  => ['pt_status'],
+            ],
+            'ENGINE' => $this->DBEngine,
+        ];
+        $this->c->DB->createTable('pm_rnd', $schema);
+
+        // pm_topics
         $schema = [
             'FIELDS' => [
                 'id'          => ['SERIAL', false],
-                'topic'       => ['VARCHAR(255)', false, ''],
-                'starter'     => ['VARCHAR(190)', false, ''],
-                'starter_id'  => ['INT(10) UNSIGNED', false, 0],
-                'to_user'     => ['VARCHAR(190)', false, ''],
-                'to_id'       => ['INT(10) UNSIGNED', false, 0],
-                'replies'     => ['MEDIUMINT(8) UNSIGNED', false, 0],
-                'last_posted' => ['INT(10) UNSIGNED', false, 0],
-                'last_poster' => ['TINYINT(1)', false, 0],
-                'see_st'      => ['INT(10) UNSIGNED', false, 0],
-                'see_to'      => ['INT(10) UNSIGNED', false, 0],
-                'topic_st'    => ['TINYINT(4)', false, 0],
-                'topic_to'    => ['TINYINT(4)', false, 0],
+                'subject'     => ['VARCHAR(255)', false, ''],
+                'num_replies' => ['INT(10) UNSIGNED', false, 0],
+                'last_post'   => ['INT(10) UNSIGNED', false, 0],
+                'last_number' => ['TINYINT UNSIGNED', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
             'INDEXES' => [
-                'multi_idx_st' => ['starter_id', 'topic_st'],
-                'multi_idx_to' => ['to_id', 'topic_to'],
+                'last_post_idx' => ['last_post'],
             ],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('pms_new_topics', $schema);
+        $this->c->DB->createTable('pm_topics', $schema);
 
         // users
         $schema = [
@@ -1193,9 +1199,8 @@ class Install extends Admin
             'p_sig_all_caps'          => 1,
             'p_sig_bbcode'            => 1,
             'p_force_guest_email'     => 1,
-            'o_pms_enabled'           => 1,                    // New PMS - Visman
-            'o_pms_min_kolvo'         => 0,
-            'b_poll_enabled'          => 0,    // опросы - Visman
+            'b_pm'                    => 0,
+            'b_poll_enabled'          => 0,
             'i_poll_max_questions'    => 3,
             'i_poll_max_fields'       => 20,
             'i_poll_time'             => 60,
