@@ -39,7 +39,7 @@
 @endforeach
 @if ($poll->canVote)
             <p class="f-poll-btns">
-              <button class="f-btn" name="vote" value="{!! __('Vote') !!}" title="{!! __('Vote') !!}"><span>{!! __('Vote') !!}</span></button>
+              <button class="f-btn" name="vote" value="{{ __('Vote') }}" title="{{ __('Vote') }}"><span>{!! __('Vote') !!}</span></button>
             </p>
           </form>
 @else

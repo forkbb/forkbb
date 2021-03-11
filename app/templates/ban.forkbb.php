@@ -1,6 +1,6 @@
 @extends ('layouts/main')
     <section class="f-main f-message">
-      <h2>{{ __('Info') }}</h2>
+      <h2>{!! __('Info') !!}</h2>
 @if ($p->bannedIp)
       <p>{!! __('Ban message 1') !!}</p>
 @else

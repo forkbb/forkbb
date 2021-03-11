@@ -29,10 +29,10 @@
     @if ($p->model->canReply || $p->model->closed)
         <div class="f-actions-links">
         @if ($p->model->closed)
-          <a class="f-btn f-btn-topic-closed" title="{!! __('Topic closed') !!}"><span>{!! __('Topic closed') !!}</span></a>
+          <a class="f-btn f-btn-topic-closed" title="{{ __('Topic closed') }}"><span>{!! __('Topic closed') !!}</span></a>
         @endif
         @if ($p->model->canReply)
-          <a class="f-btn f-btn-post-reply" title="{!! __('Post reply') !!}" href="{{ $p->model->linkReply }}"><span>{!! __('Post reply') !!}</span></a>
+          <a class="f-btn f-btn-post-reply" title="{{ __('Post reply') }}" href="{{ $p->model->linkReply }}"><span>{!! __('Post reply') !!}</span></a>
         @endif
         </div>
     @endif
@@ -57,7 +57,7 @@
           <span class="f-post-posted"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></span>
         @endif
         @if ($post->edited)
-          <span class="f-post-edited" title="{!! __('Last edit', $post->editor, dt($post->edited)) !!}">{!! __('Edited') !!}</span>
+          <span class="f-post-edited" title="{{ __('Last edit', $post->editor, dt($post->edited)) }}">{!! __('Edited') !!}</span>
         @endif
           <span class="f-post-number"><a href="{{ $post->link }}" rel="bookmark">#{{ $post->postNumber }}</a></span>
         </header>
@@ -92,7 +92,7 @@
         @if (! $post->user->isGuest && $p->user->showUserInfo)
             <ul class="f-user-info-add">
             @if ($p->user->isAdmMod && '' != $post->user->admin_note)
-              <li class="f-admin-note" title="{!! __('Admin note') !!}">{{ $post->user->admin_note }}</li>
+              <li class="f-admin-note" title="{{ __('Admin note') }}">{{ $post->user->admin_note }}</li>
             @endif
               <li>{!! __('Registered: %s', dt($post->user->registered, true)) !!}</li>
             @if ($post->user->location)
@@ -126,16 +126,16 @@
           <div class="f-post-btns">
             <ul>
             @if ($post->canReport)
-              <li class="f-postreport"><a class="f-btn f-minor" title="{!! __('Report') !!}" href="{{ $post->linkReport }}"><span>{!! __('Report') !!}</span></a></li>
+              <li class="f-postreport"><a class="f-btn f-minor" title="{{ __('Report') }}" href="{{ $post->linkReport }}"><span>{!! __('Report') !!}</span></a></li>
             @endif
             @if ($post->canDelete)
-              <li class="f-postdelete"><a class="f-btn" title="{!! __('Delete') !!}" href="{{ $post->linkDelete }}"><span>{!! __('Delete') !!}</span></a></li>
+              <li class="f-postdelete"><a class="f-btn" title="{{ __('Delete') }}" href="{{ $post->linkDelete }}"><span>{!! __('Delete') !!}</span></a></li>
             @endif
             @if ($post->canEdit)
-              <li class="f-postedit"><a class="f-btn" title="{!! __('Edit') !!}" href="{{ $post->linkEdit }}"><span>{!! __('Edit') !!}</span></a></li>
+              <li class="f-postedit"><a class="f-btn" title="{{ __('Edit') }}" href="{{ $post->linkEdit }}"><span>{!! __('Edit') !!}</span></a></li>
             @endif
             @if ($post->canQuote)
-              <li class="f-postquote"><a class="f-btn" title="{!! __('Quote') !!}" href="{{ $post->linkQuote }}"><span>{!! __('Quote') !!}</span></a></li>
+              <li class="f-postquote"><a class="f-btn" title="{{ __('Quote') }}" href="{{ $post->linkQuote }}"><span>{!! __('Quote') !!}</span></a></li>
             @endif
             </ul>
           </div>
@@ -152,13 +152,13 @@
         <div class="f-actions-links">
         @if ($p->model->canSubscription)
             @if ($p->model->is_subscribed)
-          <a class="f-btn f-btn-unsubscribe f-opacity" title="{!! __('Unsubscribe topic') !!}" href="{{ $p->model->linkUnsubscribe }}"><span>{!! __('Unsubscribe') !!}</span></a>
+          <a class="f-btn f-btn-unsubscribe f-opacity" title="{{ __('Unsubscribe topic') }}" href="{{ $p->model->linkUnsubscribe }}"><span>{!! __('Unsubscribe') !!}</span></a>
             @else
-          <a class="f-btn f-btn-subscribe f-opacity" title="{!! __('Subscribe topic') !!}" href="{{ $p->model->linkSubscribe }}"><span>{!! __('Subscribe') !!}</span></a>
+          <a class="f-btn f-btn-subscribe f-opacity" title="{{ __('Subscribe topic') }}" href="{{ $p->model->linkSubscribe }}"><span>{!! __('Subscribe') !!}</span></a>
             @endif
         @endif
         @if ($p->model->canReply)
-          <a class="f-btn f-btn-post-reply" title="{!! __('Post reply') !!}" href="{{ $p->model->linkReply }}"><span>{!! __('Post reply') !!}</span></a>
+          <a class="f-btn f-btn-post-reply" title="{{ __('Post reply') }}" href="{{ $p->model->linkReply }}"><span>{!! __('Post reply') !!}</span></a>
         @endif
         </div>
     @endif

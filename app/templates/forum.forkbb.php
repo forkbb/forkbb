@@ -48,7 +48,7 @@
     @yield ('pagination')
     @if ($p->model->canCreateTopic)
         <div class="f-actions-links">
-          <a class="f-btn f-btn-create-topic" title="{!! __('Post topic') !!}" href="{{ $p->model->linkCreateTopic }}"><span>{!! __('Post topic') !!}</span></a>
+          <a class="f-btn f-btn-create-topic" title="{{ __('Post topic') }}" href="{{ $p->model->linkCreateTopic }}"><span>{!! __('Post topic') !!}</span></a>
         </div>
     @endif
       </div>
@@ -79,7 +79,7 @@
               <div class="f-ficon"></div>
             @endif
               <div class="f-finfo">
-                <h3><span class="f-tmoved" title="{!! __('Moved') !!}"><span class="f-movedtxt">{!! __('Moved') !!}</span></span> <a class="f-ftname" href="{{ $topic->link }}">{{ $topic->censorSubject }}</a></h3>
+                <h3><span class="f-tmoved" title="{{ __('Moved') }}"><span class="f-movedtxt">{!! __('Moved') !!}</span></span> <a class="f-ftname" href="{{ $topic->link }}">{{ $topic->censorSubject }}</a></h3>
               </div>
             </div>
           </li>
@@ -98,13 +98,13 @@
                   <span class="f-tdot"><span class="f-dottxt">·</span></span>
             @endif
             @if ($topic->sticky)
-                  <span class="f-tsticky" title="{!! __('Sticky') !!}"><span class="f-stickytxt">{!! __('Sticky') !!}</span></span>
+                  <span class="f-tsticky" title="{{ __('Sticky') }}"><span class="f-stickytxt">{!! __('Sticky') !!}</span></span>
             @endif
             @if ($topic->closed)
-                  <span class="f-tclosed" title="{!! __('Closed') !!}"><span class="f-closedtxt">{!! __('Closed') !!}</span></span>
+                  <span class="f-tclosed" title="{{ __('Closed') }}"><span class="f-closedtxt">{!! __('Closed') !!}</span></span>
             @endif
             @if ($topic->poll_type > 0)
-                  <span class="f-tpoll" title="{!! __('Poll') !!}"><span class="f-polltxt">{!! __('Poll') !!}</span></span>
+                  <span class="f-tpoll" title="{{ __('Poll') }}"><span class="f-polltxt">{!! __('Poll') !!}</span></span>
             @endif
                   <a class="f-ftname" href="{{ $topic->link }}">{{ $topic->censorSubject }}</a>
             @if ($topic->pagination)
@@ -119,10 +119,10 @@
                   </span>
             @endif
             @if (false !== $topic->hasUnread)
-                  <small class="f-tunread"><a href="{{ $topic->linkUnread }}" title="{!! __('Unread posts info') !!}"><span class="f-unreadtxt">{!! __('Unread posts') !!}</span></a></small>
+                  <small class="f-tunread"><a href="{{ $topic->linkUnread }}" title="{{ __('Unread posts info') }}"><span class="f-unreadtxt">{!! __('Unread posts') !!}</span></a></small>
             @endif
             @if (false !== $topic->hasNew)
-                  <small class="f-tnew"><a href="{{ $topic->linkNew }}" title="{!! __('New posts info') !!}"><span class="f-newtxt">{!! __('New posts') !!}</span></a></small>
+                  <small class="f-tnew"><a href="{{ $topic->linkNew }}" title="{{ __('New posts info') }}"><span class="f-newtxt">{!! __('New posts') !!}</span></a></small>
             @endif
                 </h3>
                 <p><!-- inline -->
@@ -155,17 +155,17 @@
         @if ($p->model->canCreateTopic || $p->model->canMarkRead || $p->model->canSubscription)
         <div class="f-actions-links">
             @if ($p->model->canMarkRead)
-          <a class="f-btn f-btn-markread f-opacity" title="{!! __('Mark forum read') !!}" href="{{ $p->model->linkMarkRead }}"><span>{!! __('All is read') !!}</span></a>
+          <a class="f-btn f-btn-markread f-opacity" title="{{ __('Mark forum read') }}" href="{{ $p->model->linkMarkRead }}"><span>{!! __('All is read') !!}</span></a>
             @endif
             @if ($p->model->canSubscription)
                 @if ($p->model->is_subscribed)
-          <a class="f-btn f-btn-unsubscribe f-opacity" title="{!! __('Unsubscribe forum') !!}" href="{{ $p->model->linkUnsubscribe }}"><span>{!! __('Unsubscribe') !!}</span></a>
+          <a class="f-btn f-btn-unsubscribe f-opacity" title="{{ __('Unsubscribe forum') }}" href="{{ $p->model->linkUnsubscribe }}"><span>{!! __('Unsubscribe') !!}</span></a>
                 @else
-          <a class="f-btn f-btn-subscribe f-opacity" title="{!! __('Subscribe forum') !!}" href="{{ $p->model->linkSubscribe }}"><span>{!! __('Subscribe') !!}</span></a>
+          <a class="f-btn f-btn-subscribe f-opacity" title="{{ __('Subscribe forum') }}" href="{{ $p->model->linkSubscribe }}"><span>{!! __('Subscribe') !!}</span></a>
                 @endif
             @endif
             @if ($p->model->canCreateTopic)
-          <a class="f-btn f-btn-create-topic" title="{!! __('Post topic') !!}" href="{{ $p->model->linkCreateTopic }}"><span>{!! __('Post topic') !!}</span></a>
+          <a class="f-btn f-btn-create-topic" title="{{ __('Post topic') }}" href="{{ $p->model->linkCreateTopic }}"><span>{!! __('Post topic') !!}</span></a>
             @endif
         </div>
         @endif

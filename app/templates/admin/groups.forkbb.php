@@ -9,7 +9,7 @@
               <li>
                 <a href="{{ $cur[1] }}">{{ $cur[0] }}</a>
     @if ($cur[2])
-                <a class="f-btn" href="{{ $cur[2] }}" title="{!! __('Delete link') !!}">{!! __('Delete link') !!}</a>
+                <a class="f-btn" href="{{ $cur[2] }}" title="{{ __('Delete link') }}">{!! __('Delete link') !!}</a>
     @endif
               </li>
 @endforeach

@@ -20,19 +20,19 @@
     @foreach ($p->logsInfo as $hash => $cur)
               <li class="f-lgli">
                 <span class="f-lgname f-lgsname">
-                  <a class="f-lganame" href="{{ $cur['linkView'] }}" title="{!! __('View log %s', $cur['log_name']) !!}">{{ $cur['log_name'] }}</a>
+                  <a class="f-lganame" href="{{ $cur['linkView'] }}" title="{{ __('View log %s', $cur['log_name']) }}">{{ $cur['log_name'] }}</a>
                 </span>
-                <span class="f-llv @if ($cur['emergency']) f-llvem @endif" title="{!! __('Level emergency') !!}"><span>{{ num($cur['emergency']) }}</span></span>
-                <span class="f-llv @if ($cur['alert']) f-llval @endif" title="{!! __('Level alert') !!}"><span>{{ num($cur['alert']) }}</span></span>
-                <span class="f-llv @if ($cur['critical']) f-llvcr @endif" title="{!! __('Level critical') !!}"><span>{{ num($cur['critical']) }}</span></span>
-                <span class="f-llv @if ($cur['error']) f-llver @endif" title="{!! __('Level error') !!}"><span>{{ num($cur['error']) }}</span></span>
-                <span class="f-llv @if ($cur['warning']) f-llvwa @endif" title="{!! __('Level warning') !!}"><span>{{ num($cur['warning']) }}</span></span>
-                <span class="f-llv @if ($cur['notice']) f-llvno @endif" title="{!! __('Level notice') !!}"><span>{{ num($cur['notice']) }}</span></span>
-                <span class="f-llv @if ($cur['info']) f-llvin @endif" title="{!! __('Level info') !!}"><span>{{ num($cur['info']) }}</span></span>
-                <span class="f-llv @if ($cur['debug']) f-llvde @endif" title="{!! __('Level debug') !!}"><span>{{ num($cur['debug']) }}</span></span>
+                <span class="f-llv @if ($cur['emergency']) f-llvem @endif" title="{{ __('Level emergency') }}"><span>{{ num($cur['emergency']) }}</span></span>
+                <span class="f-llv @if ($cur['alert']) f-llval @endif" title="{{ __('Level alert') }}"><span>{{ num($cur['alert']) }}</span></span>
+                <span class="f-llv @if ($cur['critical']) f-llvcr @endif" title="{{ __('Level critical') }}"><span>{{ num($cur['critical']) }}</span></span>
+                <span class="f-llv @if ($cur['error']) f-llver @endif" title="{{ __('Level error') }}"><span>{{ num($cur['error']) }}</span></span>
+                <span class="f-llv @if ($cur['warning']) f-llvwa @endif" title="{{ __('Level warning') }}"><span>{{ num($cur['warning']) }}</span></span>
+                <span class="f-llv @if ($cur['notice']) f-llvno @endif" title="{{ __('Level notice') }}"><span>{{ num($cur['notice']) }}</span></span>
+                <span class="f-llv @if ($cur['info']) f-llvin @endif" title="{{ __('Level info') }}"><span>{{ num($cur['info']) }}</span></span>
+                <span class="f-llv @if ($cur['debug']) f-llvde @endif" title="{{ __('Level debug') }}"><span>{{ num($cur['debug']) }}</span></span>
                 <span class="f-logbt">
-                  <a class="f-btn f-lga f-lgadown" href="{{ $cur['linkDownload'] }}" title="{!! __('Download log') !!}"><span class="f-lgs">{!! __('Download log') !!}</span></a>
-                  <a class="f-btn f-lga f-lgadel" href="{{ $cur['linkDelete'] }}" title="{!! __('Delete log') !!}"><span class="f-lgs">{!! __('Delete log') !!}</span></a>
+                  <a class="f-btn f-lga f-lgadown" href="{{ $cur['linkDownload'] }}" title="{{ __('Download log') }}"><span class="f-lgs">{!! __('Download log') !!}</span></a>
+                  <a class="f-btn f-lga f-lgadel" href="{{ $cur['linkDelete'] }}" title="{{ __('Delete log') }}"><span class="f-lgs">{!! __('Delete log') !!}</span></a>
                 </span>
               </li>
     @endforeach
