@@ -255,8 +255,8 @@ msgstr "Недопустимая группа по умолчанию."
 msgid "Invalid group to create on base"
 msgstr "Недопустимая группа для создания на основании."
 
-msgid "Signatures"
-msgstr "Подписи"
+msgid "Signature subhead"
+msgstr "Подпись"
 
 msgid "Max sig length label"
 msgstr "Макс. длина подписи"
@@ -269,3 +269,18 @@ msgstr "Макс. строк в подписи"
 
 msgid "Max sig lines help"
 msgstr "Максимальное количество строк в подписи пользователя. 0 - отключает подписи."
+
+msgid "Titles subhead"
+msgstr "Заголовки"
+
+msgid "Promotion subhead"
+msgstr "Продвижение"
+
+msgid "Moderation subhead"
+msgstr "Модерирование"
+
+msgid "Permissions subhead"
+msgstr "Разрешения"
+
+msgid "Intervals subhead"
+msgstr "Интервалы"

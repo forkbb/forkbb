@@ -255,8 +255,8 @@ msgstr "Invalid default group."
 msgid "Invalid group to create on base"
 msgstr "Invalid group to create on base."
 
-msgid "Signatures"
-msgstr "Signatures"
+msgid "Signature subhead"
+msgstr "Signature"
 
 msgid "Max sig length label"
 msgstr "Maximum signature length"
@@ -269,3 +269,18 @@ msgstr "Maximum signature lines"
 
 msgid "Max sig lines help"
 msgstr "The maximum number of lines a user signature may contain. 0 - disables signatures."
+
+msgid "Titles subhead"
+msgstr "Titles"
+
+msgid "Promotion subhead"
+msgstr "Promotion"
+
+msgid "Moderation subhead"
+msgstr "Moderation"
+
+msgid "Permissions subhead"
+msgstr "Permissions"
+
+msgid "Intervals subhead"
+msgstr "Intervals"

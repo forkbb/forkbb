@@ -369,16 +369,6 @@ class Groups extends Admin
             ],
         ];
 
-        if (! $group->groupAdmin) {
-            $form['sets']['def-info'] = [
-                'info' => [
-                    'info1' => [
-                        'value' => __('Group settings info'),
-                    ],
-                ],
-            ];
-        }
-
         $fieldset = [];
         $fieldset['g_title'] = [
             'type'      => 'text',
@@ -395,17 +385,18 @@ class Groups extends Admin
             'caption'   => __('User title label'),
             'info'      => __('User title help', $group->groupGuest ? __('Guest') : __('Member')),
         ];
+        $form['sets']['group-titles'] = [
+            'legend' => __('Titles subhead'),
+            'fields' => $fieldset,
+        ];
 
         if ($group->groupAdmin) {
-            $form['sets']['group-data'] = [
-                'fields' => $fieldset,
-            ];
-
             return $form;
         }
 
         if (! $group->groupGuest) {
-            $options = [0 => __('Disable promotion')];
+            $fieldset = [];
+            $options  = [0 => __('Disable promotion')];
 
             foreach ($this->groupsNew as $key => $title) {
                 if (
@@ -431,7 +422,12 @@ class Groups extends Admin
                 'caption' => __('Number for promotion label'),
                 'info'    => __('Number for promotion help'),
             ];
+            $form['sets']['group-promote'] = [
+                'legend' => __('Promotion subhead'),
+                'fields' => $fieldset,
+            ];
         }
+
 
         $yn = [1 => __('Yes'), 0 => __('No')];
 
@@ -440,6 +436,7 @@ class Groups extends Admin
             && ! $group->groupMember
             && $group->g_id !== $this->c->config->i_default_user_group
         ) {
+            $fieldset = [];
             $fieldset['g_moderator'] = [
                 'type'    => 'radio',
                 'value'   => $group->g_moderator,
@@ -482,8 +479,20 @@ class Groups extends Admin
                 'caption' => __('Ban users label'),
                 'info'    => __('Ban users help'),
             ];
+            $form['sets']['group-mod'] = [
+                'legend' => __('Moderation subhead'),
+                'fields' => $fieldset,
+            ];
+            $form['sets']['mod-info'] = [
+                'info' => [
+                    'info1' => [
+                        'value' => __('Moderator info'),
+                    ],
+                ],
+            ];
         }
 
+        $fieldset = [];
         $fieldset['g_read_board'] = [
             'type'    => 'radio',
             'value'   => $group->g_read_board,
@@ -535,14 +544,6 @@ class Groups extends Admin
                 'caption' => __('Delete topics label'),
                 'info'    => __('Delete topics help'),
             ];
-            $fieldset['g_deledit_interval'] = [
-                'type'    => 'number',
-                'min'     => '0',
-                'max'     => '999999',
-                'value'   => $group->g_deledit_interval,
-                'caption' => __('Delete-edit interval label'),
-                'info'    => __('Delete-edit interval help'),
-            ];
             $fieldset['g_set_title'] = [
                 'type'    => 'radio',
                 'value'   => $group->g_set_title,
@@ -584,6 +585,12 @@ class Groups extends Admin
             ];
         }
 
+        $form['sets']['group-permissions'] = [
+            'legend' => __('Permissions subhead'),
+            'fields' => $fieldset,
+        ];
+
+        $fieldset = [];
         $fieldset['g_post_flood'] = [
             'type'    => 'number',
             'min'     => '0',
@@ -602,6 +609,14 @@ class Groups extends Admin
         ];
 
         if (! $group->groupGuest) {
+            $fieldset['g_deledit_interval'] = [
+                'type'    => 'number',
+                'min'     => '0',
+                'max'     => '999999',
+                'value'   => $group->g_deledit_interval,
+                'caption' => __('Delete-edit interval label'),
+                'info'    => __('Delete-edit interval help'),
+            ];
             $fieldset['g_email_flood'] = [
                 'type'    => 'number',
                 'min'     => '0',
@@ -621,22 +636,13 @@ class Groups extends Admin
 
         }
 
-        $form['sets']['group-data'] = [
+        $form['sets']['group-intervals'] = [
+            'legend' => __('Intervals subhead'),
             'fields' => $fieldset,
         ];
 
-        if (! empty($group->g_moderator)) {
-            $form['sets']['mod-info'] = [
-                'info' => [
-                    'info1' => [
-                        'value' => __('Moderator info'),
-                    ],
-                ],
-            ];
-        }
-
-        $fieldset = [];
         if (! $group->groupGuest) {
+            $fieldset = [];
             $fieldset['g_sig_length'] = [
                 'type'    => 'number',
                 'min'     => '0',
@@ -653,12 +659,19 @@ class Groups extends Admin
                 'caption' => __('Max sig lines label'),
                 'info'    => __('Max sig lines help'),
             ];
-
-            $form['sets']['group-data-signature'] = [
-                'legend' => __('Signatures'),
+            $form['sets']['group-signature'] = [
+                'legend' => __('Signature subhead'),
                 'fields' => $fieldset,
             ];
         }
+
+        $form['sets']['def-info'] = [
+            'info' => [
+                'info1' => [
+                    'value' => __('Group settings info'),
+                ],
+            ],
+        ];
 
         return $form;
     }
