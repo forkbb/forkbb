@@ -371,7 +371,7 @@ class Validator
             list($type, $error) = $error;
         }
 
-        $this->errors[$type][] = __([$error, [':alias' => __($alias), ':attr' => $attr]]);
+        $this->errors[$type][] = [$error, [':alias' => __($alias), ':attr' => $attr]];
         $this->error           = true;
     }
 
@@ -440,9 +440,10 @@ class Validator
     public function getErrorsWithoutType(): array
     {
         $result = [];
-        \array_walk_recursive($this->errors, function ($item) use (&$result) {
-            $result[] = $item;
-        });
+
+        foreach ($this->errors as $errors) {
+            \array_push($result, ...$errors);
+        }
 
         return $result;
     }
