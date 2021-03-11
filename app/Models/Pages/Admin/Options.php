@@ -96,6 +96,7 @@ class Options extends Admin
                     'i_poll_time'             => 'required|integer|min:0|max:999999',
                     'i_poll_term'             => 'required|integer|min:0|max:99',
                     'b_poll_guest'            => 'required|integer|in:0,1',
+                    'b_pm'                    => 'required|integer|in:0,1',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -755,6 +756,19 @@ class Options extends Admin
                     'values'  => $yn,
                     'caption' => __('Result for guest label'),
                     'info'    => __('Result for guest help'),
+                ],
+            ],
+        ];
+
+        $form['sets']['pm'] = [
+            'legend' => __('PM subhead'),
+            'fields' => [
+                'b_pm' => [
+                    'type'    => 'radio',
+                    'value'   => $config->b_pm,
+                    'values'  => $yn,
+                    'caption' => __('Allow PM label'),
+                    'info'    => __('Allow PM help', __('User groups'), $this->c->Router->link('AdminGroups')),
                 ],
             ],
         ];

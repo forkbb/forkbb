@@ -440,3 +440,12 @@ msgstr "The folder for uploading avatars is incorrectly."
 
 msgid "For PHP, it is forbidden to write in the folder for uploading avatars"
 msgstr "For PHP, it is forbidden to write in the folder for uploading avatars."
+
+msgid "PM subhead"
+msgstr "Private messages"
+
+msgid "Allow PM label"
+msgstr "Allow private messages"
+
+msgid "Allow PM help"
+msgstr "Settings for individual groups are available in <a href="%2$s">%1$s</a>."

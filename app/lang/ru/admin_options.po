@@ -440,3 +440,12 @@ msgstr "Неправильно указана папка для аватарок
 
 msgid "For PHP, it is forbidden to write in the folder for uploading avatars"
 msgstr "Для PHP установлен запрет на запись в папку аватарок."
+
+msgid "PM subhead"
+msgstr "Личные сообщения"
+
+msgid "Allow PM label"
+msgstr "Разрешить личные сообщения"
+
+msgid "Allow PM help"
+msgstr "Настройки для отдельных группы доступны в <a href="%2$s">%1$s</a>."
