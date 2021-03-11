@@ -96,7 +96,7 @@ class Install extends Admin
 
         // версия PHP
         if (\version_compare(\PHP_VERSION, self::PHP_MIN, '<')) {
-            $this->fIswev = ['e', __('You are running error', 'PHP', \PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN)];
+            $this->fIswev = ['e', __(['You are running error', 'PHP', \PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN])];
         }
 
         // типы БД
@@ -116,7 +116,7 @@ class Install extends Admin
         foreach ($folders as $folder) {
             if (! \is_writable($folder)) {
                 $folder       = \str_replace(\dirname($this->c->DIR_APP), '', $folder);
-                $this->fIswev = ['e', __('Alert folder', $folder)];
+                $this->fIswev = ['e', __(['Alert folder', $folder])];
             }
         }
 
@@ -526,7 +526,7 @@ class Install extends Admin
             $stmt = $this->c->DB->query('SELECT 1 FROM ::users LIMIT 1');
 
             if (! empty($stmt->fetch())) {
-                $v->addError(__('Existing table error', $v->dbprefix, $v->dbname));
+                $v->addError(__(['Existing table error', $v->dbprefix, $v->dbname]));
 
                 return $dbhost;
             }

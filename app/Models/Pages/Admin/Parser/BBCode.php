@@ -190,7 +190,7 @@ class BBCode extends Parser
 
             $form['sets']["bbcode{$id}"] = [
                 'class'  => 'bbcode',
-                'legend' => __('BBCode %s', $tag),
+                'legend' => __(['BBCode %s', $tag]),
                 'fields' => $fields,
             ];
         }
@@ -345,7 +345,7 @@ class BBCode extends Parser
             __($title),
         ];
         if ($id > 0) {
-            $this->aCrumbs[] = __('"%s"', $this->c->bbcode->bbcodeTable[$id]['bb_tag']);
+            $this->aCrumbs[] = __(['"%s"', $this->c->bbcode->bbcodeTable[$id]['bb_tag']]);
         }
         $this->aCrumbs[] = [
             $this->c->Router->link('AdminBBCode'),
@@ -537,7 +537,7 @@ class BBCode extends Parser
             $structure->no_attr,
             'no_attr',
             'no_attr',
-            __('No attr subhead', $tagStr),
+            __(['No attr subhead', $tagStr]),
             __('Allowed no_attr info')
         );
 
@@ -545,7 +545,7 @@ class BBCode extends Parser
             $structure->def_attr,
             'def_attr',
             'def_attr',
-            __('Def attr subhead', $tagStr),
+            __(['Def attr subhead', $tagStr]),
             __('Allowed def_attr info')
         );
 
@@ -554,8 +554,8 @@ class BBCode extends Parser
                 $attr,
                 $name,
                 "{$name}_attr",
-                __('Other attr subhead', $tagStr, $name),
-                __('Allowed %s attr info', $name)
+                __(['Other attr subhead', $tagStr, $name]),
+                __(['Allowed %s attr info', $name])
             );
         }
 

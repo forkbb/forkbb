@@ -20,7 +20,7 @@
     @foreach ($p->logsInfo as $hash => $cur)
               <li class="f-lgli">
                 <span class="f-lgname f-lgsname">
-                  <a class="f-lganame" href="{{ $cur['linkView'] }}" title="{{ __('View log %s', $cur['log_name']) }}">{{ $cur['log_name'] }}</a>
+                  <a class="f-lganame" href="{{ $cur['linkView'] }}" title="{{ __(['View log %s', $cur['log_name']]) }}">{{ $cur['log_name'] }}</a>
                 </span>
                 <span class="f-llv @if ($cur['emergency']) f-llvem @endif" title="{{ __('Level emergency') }}"><span>{{ num($cur['emergency']) }}</span></span>
                 <span class="f-llv @if ($cur['alert']) f-llval @endif" title="{{ __('Level alert') }}"><span>{{ num($cur['alert']) }}</span></span>
@@ -43,7 +43,7 @@
 @endisset
 @isset ($p->logData)
       <section id="fork-logview" class="f-admin">
-        <h2>{!! __('Log %s', $p->logName) !!}</h2>
+        <h2>{!! __(['Log %s', $p->logName]) !!}</h2>
         <div>
           <fieldset>
             <ul id="id-lgdtlt">

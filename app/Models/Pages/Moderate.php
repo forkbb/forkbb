@@ -550,9 +550,9 @@ class Moderate extends Page
         $headers = [];
         foreach ($objects as $object) {
             if ($object instanceof Topic) {
-                $headers[] = __('Topic «%s»', $object->censorSubject);
+                $headers[] = __(['Topic «%s»', $object->censorSubject]);
             } else {
-                $headers[] = __('Post «%1$s by %2$s»', \ForkBB\dt($object->posted), $object->poster);
+                $headers[] = __(['Post «%1$s by %2$s»', \ForkBB\dt($object->posted), $object->poster]);
             }
         }
 
@@ -567,7 +567,7 @@ class Moderate extends Page
 
         if ($this->firstTopic instanceof Topic) {
             $form['sets']['info']['info']['info2'] = [
-                'value' => __('All posts will be posted in the «%s» topic', $this->firstTopic->censorSubject),
+                'value' => __(['All posts will be posted in the «%s» topic', $this->firstTopic->censorSubject]),
             ];
         }
 

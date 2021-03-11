@@ -244,7 +244,7 @@ class Model extends DataModel
         } elseif (! $this->isOpen) {
             return __('This poll is closed');
         } elseif (! $this->canSeeResult) {
-            return __('Poll results are hidden up to %s voters', $this->parent->poll_term);
+            return __(['Poll results are hidden up to %s voters', $this->parent->poll_term]);
         } elseif ($this->userVoted) {
             return __('You voted');
         } else {
@@ -268,23 +268,23 @@ class Model extends DataModel
             if ($this->type[$q] > 1) {
                 $count = \count($vote[$q]);
                 if (0 == $count) {
-                    return __('No vote on question %s', $q);
+                    return __(['No vote on question %s', $q]);
                 } elseif ($count > $this->type[$q]) {
-                    return __('Too many answers selected in question %s', $q);
+                    return __(['Too many answers selected in question %s', $q]);
                 }
 
                 foreach (\array_keys($vote[$q]) as $a) {
                     if (! isset($this->answer[$q][$a])) {
-                        return __('The selected answer is not present in question %s', $q);
+                        return __(['The selected answer is not present in question %s', $q]);
                     }
 
                     $data[] = [$q, $a];
                 }
             } else {
                 if (! isset($vote[$q][0])) {
-                    return __('No vote on question %s', $q);
+                    return __(['No vote on question %s', $q]);
                 } elseif (! isset($this->answer[$q][$vote[$q][0]])) {
-                    return __('The selected answer is not present in question %s', $q);
+                    return __(['The selected answer is not present in question %s', $q]);
                 }
 
                 $data[] = [$q, $vote[$q][0]];

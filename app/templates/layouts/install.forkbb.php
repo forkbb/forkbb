@@ -33,7 +33,7 @@
 @if (! $p->fIswev['e'])
     @if ($form = $p->form2)
     <section class="f-install">
-      <h2>{!! __('Install', $p->rev) !!}</h2>
+      <h2>{!! __(['Install', $p->rev]) !!}</h2>
       <div class="f-fdiv">
         @include ('layouts/form')
       </div>

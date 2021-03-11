@@ -213,7 +213,7 @@ trait PostFormTrait
             ];
             $fieldset['poll[hide_result]'] = [
                 'type'     => 'checkbox',
-                'label'    => __('Hide poll results up to %s voters', $term),
+                'label'    => __(['Hide poll results up to %s voters', $term]),
                 'value'    => '1',
                 'checked'  => (bool) ($vars['poll']['hide_result'] ?? false),
                 'disabled' => $vars['pollNoEdit'] ?? null,
@@ -248,14 +248,14 @@ trait PostFormTrait
                     $fieldset["poll[answer][{$qid}][{$fid}]"] = [
                         'type'      => 'text',
                         'maxlength' => '240',
-                        'caption'   => __('Answer %s label', $fid),
+                        'caption'   => __(['Answer %s label', $fid]),
                         'value'     => $vars['poll']['answer'][$qid][$fid] ?? null,
                         'disabled'  => $vars['pollNoEdit'] ?? null,
                     ];
                 }
 
                 $form['sets']["uesm-q-{$qid}"] = [
-                    'legend' => __('Question %s legend', $qid),
+                    'legend' => __(['Question %s legend', $qid]),
                     'fields' => $fieldset,
                 ];
             }

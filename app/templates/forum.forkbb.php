@@ -28,10 +28,10 @@
     <section class="f-subforums">
       <ol class="f-ftlist">
         <li id="id-subforums{{ $p->model->id }}" class="f-category">
-          <h2 class="f-ftch2">{{ __('Sub forum', 2) }}</h2>
+          <h2 class="f-ftch2">{{ __(['Sub forum', 2]) }}</h2>
           <ol class="f-table">
             <li class="f-row f-thead" value="0">
-              <div class="f-hcell f-cmain">{!! __('Sub forum', 1) !!}</div>
+              <div class="f-hcell f-cmain">{!! __(['Sub forum', 1]) !!}</div>
               <div class="f-hcell f-cstats">{!! __('Stats') !!}</div>
               <div class="f-hcell f-clast">{!! __('Last post') !!}</div>
             </li>
@@ -60,12 +60,12 @@
       <div class="f-ftlist">
         <ol class="f-table">
           <li class="f-row f-thead" value="0">
-            <div class="f-hcell f-cmain">{!! __('Topic', 1) !!}</div>
+            <div class="f-hcell f-cmain">{!! __(['Topic', 1]) !!}</div>
             <div class="f-hcell f-cstats">{!! __('Stats') !!}</div>
             <div class="f-hcell f-clast">{!! __('Last post') !!}</div>
           </li>
     @foreach ($p->topics as $id => $topic)
-        @if (empty($topic->id) && $iswev = ['e' => [__('Topic %s was not found in the database', $id)]])
+        @if (empty($topic->id) && $iswev = ['e' => [__(['Topic %s was not found in the database', $id])]])
           <li id="topic-{{ $id }}" class="f-row">
             @include ('layouts/iswev')
           </li>
@@ -126,7 +126,7 @@
             @endif
                 </h3>
                 <p><!-- inline -->
-                  <span class="f-cmposter">{!! __('by %s', $topic->poster) !!}</span>
+                  <span class="f-cmposter">{!! __(['by %s', $topic->poster]) !!}</span>
             @if ($p->searchMode)
                   <span class="f-cmforum"><a href="{{ $topic->parent->link }}">{{ $topic->parent->forum_name }}</a></span>
             @endif
@@ -134,14 +134,14 @@
               </div>
             </div>
             <div class="f-cell f-cstats">
-              <span>{!! __('%s Reply', $topic->num_replies, num($topic->num_replies)) !!}</span>
+              <span>{!! __(['%s Reply', $topic->num_replies, num($topic->num_replies)]) !!}</span>
             @if ($topic->showViews)
-              <span>{!! __('%s View', $topic->num_views, num($topic->num_views)) !!}</span>
+              <span>{!! __(['%s View', $topic->num_views, num($topic->num_views)]) !!}</span>
             @endif
             </div>
             <div class="f-cell f-clast">
-              <span class="f-cltopic">{!! __('Last post <a href="%1$s">%2$s</a>', $topic->linkLast, dt($topic->last_post)) !!}</span>
-              <span class="f-clposter">{!! __('by %s', $topic->last_poster) !!}</span>
+              <span class="f-cltopic">{!! __(['Last post <a href="%1$s">%2$s</a>', $topic->linkLast, dt($topic->last_post)]) !!}</span>
+              <span class="f-clposter">{!! __(['by %s', $topic->last_poster]) !!}</span>
             </div>
           </li>
         @endif

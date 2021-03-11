@@ -18,9 +18,9 @@
     @endif
 @endif
 @if ($p->online)
-        <dd>{!! __('Visitors online', num($p->online->numUsers), num($p->online->numGuests)) !!}</dd>
+        <dd>{!! __(['Visitors online', num($p->online->numUsers), num($p->online->numGuests)]) !!}</dd>
     @if ($p->stats)
-        <dd>{!! __('Most online', num($p->online->maxNum), dt($p->online->maxTime)) !!}</dd>
+        <dd>{!! __(['Most online', num($p->online->maxNum), dt($p->online->maxTime)]) !!}</dd>
     @endif
 @endif
       </dl>

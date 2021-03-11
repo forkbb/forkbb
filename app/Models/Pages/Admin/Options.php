@@ -476,10 +476,10 @@ class Options extends Admin
                     'type'    => 'select',
                     'options' => [
                         0  => __('No cache'),
-                        5  => __('%d Minutes', 5),
-                        15 => __('%d Minutes', 15),
-                        30 => __('%d Minutes', 30),
-                        60 => __('%d Minutes', 60),
+                        5  => __(['%d Minutes', 5]),
+                        15 => __(['%d Minutes', 15]),
+                        30 => __(['%d Minutes', 30]),
+                        60 => __(['%d Minutes', 60]),
                     ],
                     'value'   => $config->i_feed_ttl,
                     'caption' => __('Feed TTL label'),
@@ -527,7 +527,7 @@ class Options extends Admin
                     'maxlength' => '255',
                     'value'     => $config->o_avatars_dir,
                     'caption'   => __('Upload directory label'),
-                    'info'      => __('Upload directory help', $this->c->PUBLIC_URL),
+                    'info'      => __(['Upload directory help', $this->c->PUBLIC_URL]),
                     'required'  => true,
                 ],
                 'i_avatars_width' => [
@@ -768,7 +768,7 @@ class Options extends Admin
                     'value'   => $config->b_pm,
                     'values'  => $yn,
                     'caption' => __('Allow PM label'),
-                    'info'    => __('Allow PM help', __('User groups'), $this->c->Router->link('AdminGroups')),
+                    'info'    => __(['Allow PM help', __('User groups'), $this->c->Router->link('AdminGroups')]),
                 ],
             ],
         ];

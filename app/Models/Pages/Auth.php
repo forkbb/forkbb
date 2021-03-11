@@ -155,7 +155,7 @@ class Auth extends Page
                             'id'        => 'passinlogin',
                             'type'      => 'password',
                             'caption'   => __('Passphrase'),
-                            'info'      => __('<a href="%s">Forgotten?</a>', $this->c->Router->link('Forget')),
+                            'info'      => __(['<a href="%s">Forgotten?</a>', $this->c->Router->link('Forget')]),
                             'required'  => true,
                         ],
                         'save' => [
@@ -262,7 +262,7 @@ class Auth extends Page
                     );
                     $tplData = [
                         'fRootLink' => $this->c->Router->link('Index'),
-                        'fMailer'   => __('Mailer', $this->c->config->o_board_title),
+                        'fMailer'   => __(['Mailer', $this->c->config->o_board_title]),
                         'username'  => $tmpUser->username,
                         'link'      => $link,
                     ];
@@ -300,7 +300,7 @@ class Auth extends Page
                     $this->c->Log->warning('Passphrase reset: email form, fail', $context);
                 }
 
-                return $this->c->Message->message(__('Forget mail', $this->c->config->o_admin_email), false, 0);
+                return $this->c->Message->message(['Forget mail', $this->c->config->o_admin_email], false, 0);
             }
 
             $this->fIswev = $v->getErrors();

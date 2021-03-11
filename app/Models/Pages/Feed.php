@@ -67,7 +67,7 @@ class Feed extends Page
                 'id'            => $this->c->Router->link('Feed', $args),
                 'title'         => $this->c->config->o_board_title . __('Title separator') . $topic->subject,
                 'link'          => $topic->link,
-                'description'   => __('The most recent posts in %s topic', $topic->subject),
+                'description'   => __(['The most recent posts in %s topic', $topic->subject]),
                 'updated'       => $topic->last_post,
                 'items'         => [],
             ];
@@ -113,9 +113,9 @@ class Feed extends Page
                 ];
 
                 if (0 === $fid) {
-                    $feed['description'] = __('The most recent posts at %s board', $this->c->config->o_board_title);
+                    $feed['description'] = __(['The most recent posts at %s board', $this->c->config->o_board_title]);
                 } else {
-                    $feed['description'] = __('The most recent posts in %s forum', $forum->forum_name);
+                    $feed['description'] = __(['The most recent posts in %s forum', $forum->forum_name]);
                     $feed['title']      .= __('Title separator') . $forum->forum_name;
                 }
 

@@ -77,11 +77,11 @@ class Reports extends Admin
         foreach ($reports as $report) {
             if ($noZapped) {
                 $cur = [
-                    'legend' => __('Reported %s', \ForkBB\dt($report->created)),
+                    'legend' => __(['Reported %s', \ForkBB\dt($report->created)]),
                 ];
             } else {
                 $cur = [
-                    'legend' => __('Marked as read %1$s by %2$s', \ForkBB\dt($report->zapped), $report->marker->username),
+                    'legend' => __(['Marked as read %1$s by %2$s', \ForkBB\dt($report->zapped), $report->marker->username]),
                 ];
             }
             $cur['fields'] = [];
@@ -99,13 +99,13 @@ class Reports extends Admin
                 $forum = $topic->parent;
                 $cur['fields']['post' . $report->id] = [
                     'type'    => 'str',
-                    'value'   => __('Post #%s ', $post->id, $post->link, $topic->censorSubject, $topic->link, $forum->forum_name, $forum->link),
+                    'value'   => __(['Post #%s ', $post->id, $post->link, $topic->censorSubject, $topic->link, $forum->forum_name, $forum->link]),
                     'html'    => true,
                 ];
             } else {
                 $cur['fields']['post' . $report->id] = [
                     'type'    => 'str',
-                    'value'   => __('Post #%s', $report->post_id),
+                    'value'   => __(['Post #%s', $report->post_id]),
                 ];
             }
             $cur['fields']['reason' . $report->id] = [

@@ -115,6 +115,6 @@ class Misc extends Page
             ]
         );
 
-        return $this->c->Message->message(__('Confirm your email address', $link), true, 100);
+        return $this->c->Message->message(['Confirm your email address', $link], true, 100);
     }
 }

@@ -43,7 +43,7 @@ abstract class Profile extends Page
         $this->fIndex    = $this->rules->my ? 'profile' : 'userlist';
         $this->nameTpl   = 'profile';
         $this->onlinePos = 'profile-' . $this->curUser->id; // ????
-        $this->title     = __('%s\'s profile', $this->curUser->username);
+        $this->title     = __(['%s\'s profile', $this->curUser->username]);
 
         return true;
     }
@@ -66,7 +66,7 @@ abstract class Profile extends Page
      */
     protected function crumbs(/* mixed */ ...$crumbs): array
     {
-        $crumbs[] = [$this->curUser->link, __('User %s', $this->curUser->username)];
+        $crumbs[] = [$this->curUser->link, __(['User %s', $this->curUser->username])];
         $crumbs[] = [$this->c->Router->link('Userlist'), __('User list')];
 
         return parent::crumbs(...$crumbs);

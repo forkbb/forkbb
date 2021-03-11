@@ -7,11 +7,11 @@
       <p>{!! __('Ban message') !!}</p>
 @endif
 @if ($p->ban['expire'])
-      <p>{!! __('Ban message 2', dt($p->ban['expire'], true)) !!}</p>
+      <p>{!! __(['Ban message 2', dt($p->ban['expire'], true)]) !!}</p>
 @endif
 @if ($p->ban['message'])
       <p>{!! __('Ban message 3') !!}</p>
       <p><b>{{ $p->ban['message'] }}</b></p>
 @endif
-      <p>{!! __('Ban message 4', $p->adminEmail) !!}</p>
+      <p>{!! __(['Ban message 4', $p->adminEmail]) !!}</p>
     </section>

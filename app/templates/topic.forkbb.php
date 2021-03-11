@@ -42,7 +42,7 @@
     <section class="f-main f-topic">
       <h2>{{ $p->model->censorSubject }}</h2>
 @foreach ($p->posts as $id => $post)
-    @if (empty($post->id) && $iswev = ['e' => [__('Message %s was not found in the database', $id)]])
+    @if (empty($post->id) && $iswev = ['e' => [__(['Message %s was not found in the database', $id])]])
         @include ('layouts/iswev')
     @else
       <article id="p{{ $post->id }}" class="f-post @if (1 == $post->user->gender) f-user-male @elseif (2 == $post->user->gender) f-user-female @endif @if ($post->user->online) f-user-online @endif @if (1 === $post->postNumber) f-post-first @endif">
@@ -57,7 +57,7 @@
           <span class="f-post-posted"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></span>
         @endif
         @if ($post->edited)
-          <span class="f-post-edited" title="{{ __('Last edit', $post->editor, dt($post->edited)) }}">{!! __('Edited') !!}</span>
+          <span class="f-post-edited" title="{{ __(['Last edit', $post->editor, dt($post->edited)]) }}">{!! __('Edited') !!}</span>
         @endif
           <span class="f-post-number"><a href="{{ $post->link }}" rel="bookmark">#{{ $post->postNumber }}</a></span>
         </header>
@@ -83,7 +83,7 @@
         @endif
               <li class="f-usertitle">{{ $post->user->title() }}</li>
         @if ($p->user->showUserInfo && $p->user->showPostCount && $post->user->num_posts)
-              <li class="f-postcount">{!! __('%s post', $post->user->num_posts, num($post->user->num_posts)) !!}</li>
+              <li class="f-postcount">{!! __(['%s post', $post->user->num_posts, num($post->user->num_posts)]) !!}</li>
         @endif
         @if ($linkPromote = $p->user->linkPromote($post))
               <li class="f-promoteuser"><a href="{{ $linkPromote }}">{!! __('Promote user') !!}</a></li>
@@ -94,7 +94,7 @@
             @if ($p->user->isAdmMod && '' != $post->user->admin_note)
               <li class="f-admin-note" title="{{ __('Admin note') }}">{{ $post->user->admin_note }}</li>
             @endif
-              <li>{!! __('Registered: %s', dt($post->user->registered, true)) !!}</li>
+              <li>{!! __(['Registered: %s', dt($post->user->registered, true)]) !!}</li>
             @if ($post->user->location)
               <li>{!! __('From') !!} {{ $post->user->censorLocation }}</li>
             @endif

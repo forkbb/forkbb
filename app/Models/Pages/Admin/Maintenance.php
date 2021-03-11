@@ -235,7 +235,7 @@ class Maintenance extends Admin
                 'clear' => $v->clear ? '1' : '0',
             ];
 
-            return $this->c->Redirect->page('AdminRebuildIndex', $args)->message(__('Processed posts', $v->start, $last));
+            return $this->c->Redirect->page('AdminRebuildIndex', $args)->message(['Processed posts', $v->start, $last]);
         } else {
             return $this->c->Redirect->page('AdminMaintenance')->message('Rebuilding index end');
         }

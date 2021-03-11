@@ -144,7 +144,7 @@ class Email extends Profile
                         );
                         $tplData = [
                             'fRootLink' => $this->c->Router->link('Index'),
-                            'fMailer'   => __('Mailer', $this->c->config->o_board_title),
+                            'fMailer'   => __(['Mailer', $this->c->config->o_board_title]),
                             'username'  => $this->curUser->username,
                             'link'      => $link,
                         ];
@@ -184,10 +184,10 @@ class Email extends Profile
                         $this->c->users->update($this->curUser);
 
                         return $this->c->Message
-                            ->message(__('Activate email sent', $this->c->config->o_admin_email), false, 200);
+                            ->message(['Activate email sent', $this->c->config->o_admin_email], false, 200);
                     } else {
                         return $this->c->Message
-                            ->message(__('Error mail', $this->c->config->o_admin_email), true, 200);
+                            ->message(['Error mail', $this->c->config->o_admin_email], true, 200);
                     }
                 }
             }

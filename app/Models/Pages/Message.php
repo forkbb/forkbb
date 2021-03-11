@@ -18,7 +18,7 @@ class Message extends Page
     /**
      * Подготавливает данные для шаблона
      */
-    public function message(string $message, bool $back = true, int $status = 400, array $headers = []): Page
+    public function message(/* string|array */ $message, bool $back = true, int $status = 400, array $headers = []): Page
     {
         $this->nameTpl    = 'message';
         $this->httpStatus = \max(200, $status);
@@ -42,13 +42,13 @@ class Message extends Page
         }
 
         if (
-            '' == $message
+            '' === $message
             && empty($this->fIswev)
         ) {
             $message = 'Empty message';
         }
 
-        if ('' != $message) {
+        if ('' !== $message) {
             $this->fIswev = [$type, __($message)];
         }
 

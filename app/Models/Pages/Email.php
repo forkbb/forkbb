@@ -58,7 +58,7 @@ class Email extends Page
         $floodSize = \time() - (int) $this->user->last_email_sent;
         $floodSize = $floodSize < $this->user->g_email_flood ? $this->user->g_email_flood - $floodSize : 0;
         if ($floodSize > 0) {
-            $this->fIswev = ['e', __('Flood message', $floodSize)];
+            $this->fIswev = ['e', __(['Flood message', $floodSize])];
         }
 
         $data = [
@@ -125,7 +125,7 @@ class Email extends Page
 
         $this->nameTpl   = 'email';
         $this->robots    = 'noindex';
-        $this->crumbs    = $this->crumbs(__('Send email to %s', $this->curUser->username));
+        $this->crumbs    = $this->crumbs(__(['Send email to %s', $this->curUser->username]));
         $this->formTitle = __('Send email');
         $this->form      = $this->formEmail($args, $data);
 
@@ -145,7 +145,7 @@ class Email extends Page
             ],
             'sets'   => [
                 'send-email' => [
-                    'legend' => __('Send email to %s', $this->curUser->username),
+                    'legend' => __(['Send email to %s', $this->curUser->username]),
                     'fields' => [
                         'subject' => [
                             'type'      => 'text',
@@ -193,7 +193,7 @@ class Email extends Page
     {
         $tplData = [
             'fTitle'      => $this->c->config->o_board_title,
-            'fMailer'     => __('Mailer', $this->c->config->o_board_title),
+            'fMailer'     => __(['Mailer', $this->c->config->o_board_title]),
             'username'    => $this->curUser->username,
             'sender'      => $this->user->username,
             'mailSubject' => $data['subject'],

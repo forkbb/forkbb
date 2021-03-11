@@ -74,7 +74,7 @@ class Revision extends Action
 
                 continue;
             } elseif ($emptyQ) {
-                $this->error = __('Question number %s is preceded by an empty question', $qid);
+                $this->error = __(['Question number %s is preceded by an empty question', $qid]);
 
                 return;
             }
@@ -83,7 +83,7 @@ class Revision extends Action
                 empty($answers[$qid])
                 || ! \is_array($answers[$qid])
             ) {
-                $this->error = __('For question number %s, the structure of answers is broken', $qid);
+                $this->error = __(['For question number %s, the structure of answers is broken', $qid]);
 
                 return;
             }
@@ -114,7 +114,7 @@ class Revision extends Action
             }
 
             if (! empty($answers[$qid])) {
-                $this->error = __('For question number %s, the structure of answers is broken', $qid);
+                $this->error = __(['For question number %s, the structure of answers is broken', $qid]);
 
                 return;
             } elseif ($countA < 2) {
@@ -122,11 +122,11 @@ class Revision extends Action
 
                 return;
             } elseif (! isset($types[$qid])) {
-                $this->error = __('For question number %s, there is no value for the maximum number of answers for voting', $qid);
+                $this->error = __(['For question number %s, there is no value for the maximum number of answers for voting', $qid]);
 
                 return;
             } elseif ($types[$qid] > $countA) {
-                $this->error = __('For question number %s, the maximum number of answers for voting more answers', $qid);
+                $this->error = __(['For question number %s, the maximum number of answers for voting more answers', $qid]);
 
                 return;
             }

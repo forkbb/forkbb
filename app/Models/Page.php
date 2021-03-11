@@ -196,7 +196,7 @@ abstract class Page extends Model
         } else {
             $navUser['profile'] = [
                 $this->user->link,
-                __('User %s', $this->user->username),
+                ['User %s', $this->user->username],
                 'Your profile',
             ];
 
@@ -263,14 +263,14 @@ abstract class Page extends Model
             '1' == $this->c->config->o_maintenance
             && $this->user->isAdmin
         ) {
-            $this->fIswev = ['w', __('Maintenance mode enabled', $this->c->Router->link('AdminMaintenance'))];
+            $this->fIswev = ['w', __(['Maintenance mode enabled', $this->c->Router->link('AdminMaintenance')])];
         }
 
         if (
             $this->user->isAdmMod
             && $this->user->last_report_id < $this->c->reports->lastId()
         ) {
-            $this->fIswev = ['i', __('New reports', $this->c->Router->link('AdminReports'))];
+            $this->fIswev = ['i', __(['New reports', $this->c->Router->link('AdminReports')])];
         }
     }
 
@@ -460,7 +460,7 @@ abstract class Page extends Model
                     $active   = null;
 
                     if ($crumb->page > 1) {
-                        $name .= __(' Page %s', $crumb->page);
+                        $name .= __([' Page %s', $crumb->page]);
                     }
 
                     $this->titles = $name;

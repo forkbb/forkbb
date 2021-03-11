@@ -102,12 +102,12 @@ abstract class Users extends Admin
             switch ($action) {
                 case self::ACTION_BAN:
                     if ($this->c->bans->banFromName($user->username) > 0) {
-                        $this->fIswev = ['i', __('User is ban', $user->username)];
+                        $this->fIswev = ['i', __(['User is ban', $user->username])];
 
                         return false;
                     }
                     if (! $this->c->userRules->canBanUser($user)) {
-                        $this->fIswev = ['v', __('You are not allowed to ban the %s', $user->username)];
+                        $this->fIswev = ['v', __(['You are not allowed to ban the %s', $user->username])];
                         if ($user->isAdmMod) {
                             $this->fIswev = ['i', __('No ban admins message')];
                         }
@@ -117,7 +117,7 @@ abstract class Users extends Admin
                     break;
                 case self::ACTION_DEL:
                     if (! $this->c->userRules->canDeleteUser($user)) {
-                        $this->fIswev = ['v', __('You are not allowed to delete the %s', $user->username)];
+                        $this->fIswev = ['v', __(['You are not allowed to delete the %s', $user->username])];
                         if ($user->isAdmMod) {
                             $this->fIswev = ['i', __('No delete admins message')];
                         }
@@ -127,7 +127,7 @@ abstract class Users extends Admin
                     break;
                 case self::ACTION_CHG:
                     if (! $this->c->userRules->canChangeGroup($user, $profile)) {
-                        $this->fIswev = ['v', __('You are not allowed to change group for %s', $user->username)];
+                        $this->fIswev = ['v', __(['You are not allowed to change group for %s', $user->username])];
                         if ($user->isAdmin) {
                             $this->fIswev = ['i', __('No move admins message')];
                         }

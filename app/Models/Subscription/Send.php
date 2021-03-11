@@ -107,7 +107,7 @@ class Send extends Method
                         'topicLink'       => $topic->link,
                         'unsubscribeLink' => $forum->link,
                         'button'          => __('Unsubscribe'),
-                        'fMailer'         => __('Mailer', $this->c->config->o_board_title),
+                        'fMailer'         => __(['Mailer', $this->c->config->o_board_title]),
                     ];
                 } else {
                     $tplData = [
@@ -117,7 +117,7 @@ class Send extends Method
                         'postLink'        => $post->link,
                         'unsubscribeLink' => $topic->link,
                         'button'          => __('Unsubscribe'),
-                        'fMailer'         => __('Mailer', $this->c->config->o_board_title),
+                        'fMailer'         => __(['Mailer', $this->c->config->o_board_title]),
                     ];
                 }
 

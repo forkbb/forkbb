@@ -154,7 +154,7 @@ class Update extends Admin
                         null === $e
                         && \version_compare(\PHP_VERSION, self::PHP_MIN, '<')
                     ) {
-                        $e = __('You are running error', 'PHP', \PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN);
+                        $e = __(['You are running error', 'PHP', \PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN]);
                     }
 
                     // база не от ForkBB ????
@@ -185,7 +185,7 @@ class Update extends Admin
                             null === $e
                             && true === $this->c->DB->tableExists($test_table)
                         ) {
-                            $e = __('The %s table already exists. Delete it.', $test_table);
+                            $e = __(['The %s table already exists. Delete it.', $test_table]);
                         }
 
                         $schema = [
@@ -198,14 +198,14 @@ class Update extends Admin
                             null === $e
                             && false === $this->c->DB->createTable($test_table, $schema)
                         ) {
-                            $e = __('Unable to create %s table', $test_table);
+                            $e = __(['Unable to create %s table', $test_table]);
                         }
 
                         if (
                             null === $e
                             && false === $this->c->DB->addField($test_table, 'test_field', 'VARCHAR(80)', false, '')
                         ) {
-                            $e = __('Unable to add test_field field to %s table', $test_table);
+                            $e = __(['Unable to add test_field field to %s table', $test_table]);
                         }
 
                         $sql = "INSERT INTO ::{$test_table} (test_field) VALUES ('TEST_VALUE')";
@@ -213,21 +213,21 @@ class Update extends Admin
                             null === $e
                             && false === $this->c->DB->exec($sql)
                         ) {
-                            $e = __('Unable to insert line to %s table', $test_table);
+                            $e = __(['Unable to insert line to %s table', $test_table]);
                         }
 
                         if (
                             null === $e
                             && false === $this->c->DB->dropField($test_table, 'test_field')
                         ) {
-                            $e = __('Unable to drop test_field field from %s table', $test_table);
+                            $e = __(['Unable to drop test_field field from %s table', $test_table]);
                         }
 
                         if (
                             null === $e
                             && false === $this->c->DB->dropTable($test_table)
                         ) {
-                            $e = __('Unable to drop %s table', $test_table);
+                            $e = __(['Unable to drop %s table', $test_table]);
                         }
                     }
 
@@ -265,11 +265,11 @@ class Update extends Admin
     {
         if (\substr($this->c->DB_DSN, 0, 6) === 'sqlite') {
             if (! \hash_equals($this->c->DB_DSN, "sqlite:{$dbpass}")) {  // ????
-                $v->addError(__('Invalid file error', self::CONFIG_FILE));
+                $v->addError(__(['Invalid file error', self::CONFIG_FILE]));
             }
         } else {
             if (! \hash_equals($this->c->DB_PASSWORD, $dbpass)) {
-                $v->addError(__('Invalid password error', self::CONFIG_FILE));
+                $v->addError(__(['Invalid password error', self::CONFIG_FILE]));
             }
         }
 

@@ -151,7 +151,7 @@ class Logs extends Admin
             'btns'   => [
                 'delete'  => [
                     'type'  => 'submit',
-                    'value' => __('Delete log %s', $this->c->LogViewer->getName($path)),
+                    'value' => __(['Delete log %s', $this->c->LogViewer->getName($path)]),
                 ],
                 'cancel'  => [
                     'type'  => 'btn',
@@ -178,7 +178,7 @@ class Logs extends Admin
         $this->logName    = $this->c->LogViewer->getName($path);
         $this->aCrumbs[]  = [
             $this->c->Router->link('AdminLogsAction', $args),
-            __('Log %s', $this->logName),
+            __(['Log %s', $this->logName]),
         ];
 
         return $this;

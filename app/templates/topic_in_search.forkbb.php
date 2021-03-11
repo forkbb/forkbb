@@ -32,7 +32,7 @@
     <section class="f-main f-topic">
       <h2>{{ $p->model->name }}</h2>
 @foreach ($p->posts as $id => $post)
-    @if (empty($post->id) && $iswev = ['e' => [__('Message %s was not found in the database', $id)]])
+    @if (empty($post->id) && $iswev = ['e' => [__(['Message %s was not found in the database', $id])]])
         @include ('layouts/iswev')
     @else
       <article id="p{{ $post->id }}" class="f-post f-post-search @if (1 == $post->user->gender) f-user-male @elseif (2 == $post->user->gender) f-user-female @endif @if ($post->user->online) f-user-online @endif">
@@ -64,9 +64,9 @@
             <ul class="f-post-search-info">
               <li class="f-psi-forum">{!! __('Forum') !!}: <a href="{{ $post->parent->parent->link }}">{{ $post->parent->parent->forum_name }}</a></li>
               <li class="f-psi-topic">{!! __('Topic') !!}: <a href="{{ $post->parent->link }}">{{ $post->parent->censorSubject }}</a></li>
-              <li class="f-psi-reply">{!! __('%s Reply', $post->parent->num_replies, num($post->parent->num_replies)) !!}</li>
+              <li class="f-psi-reply">{!! __(['%s Reply', $post->parent->num_replies, num($post->parent->num_replies)]) !!}</li>
         @if ($post->parent->showViews)
-              <li class="f-psi-view">{!! __('%s View', $post->parent->num_views, num($post->parent->num_views)) !!}</li>
+              <li class="f-psi-view">{!! __(['%s View', $post->parent->num_views, num($post->parent->num_views)]) !!}</li>
         @endif
             </ul>
           </div>

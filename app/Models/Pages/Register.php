@@ -42,7 +42,7 @@ class Register extends Page
                 'password' => 'Passphrase',
             ])->addMessages([
                 'agree.required'    => ['cancel', 'cancel'],
-                'agree.token'       => ['w', __('Bad agree', $this->c->Router->link('Register'))],
+                'agree.token'       => ['w', __(['Bad agree', $this->c->Router->link('Register')])],
                 'password.password' => 'Pass format',
                 'username.login'    => 'Login format',
             ]);
@@ -192,7 +192,7 @@ class Register extends Page
 
             $tplData = [
                 'fRootLink' => $this->c->Router->link('Index'),
-                'fMailer'   => __('Mailer', $this->c->config->o_board_title),
+                'fMailer'   => __(['Mailer', $this->c->config->o_board_title]),
                 'username'  => $v->username,
                 'userLink'  => $this->c->Router->link(
                     'User',
@@ -238,7 +238,7 @@ class Register extends Page
             $tplData = [
                 'fTitle'    => $this->c->config->o_board_title,
                 'fRootLink' => $this->c->Router->link('Index'),
-                'fMailer'   => __('Mailer', $this->c->config->o_board_title),
+                'fMailer'   => __(['Mailer', $this->c->config->o_board_title]),
                 'username'  => $v->username,
                 'link'      => $link,
             ];
@@ -263,11 +263,11 @@ class Register extends Page
 
             // письмо активации аккаунта отправлено
             if ($isSent) {
-                return $this->c->Message->message(__('Reg email', $this->c->config->o_admin_email), false, 200);
+                return $this->c->Message->message(['Reg email', $this->c->config->o_admin_email], false, 200);
             // форма сброса пароля
             } else {
                 $auth         = $this->c->Auth;
-                $auth->fIswev = ['w', __('Error welcom mail', $this->c->config->o_admin_email)];
+                $auth->fIswev = ['w', __(['Error welcom mail', $this->c->config->o_admin_email])];
 
                 return $auth->forget([], 'GET', $v->email);
             }
@@ -300,7 +300,7 @@ class Register extends Page
 
             $tplData = [
                 'fRootLink' => $this->c->Router->link('Index'),
-                'fMailer'   => __('Mailer', $this->c->config->o_board_title),
+                'fMailer'   => __(['Mailer', $this->c->config->o_board_title]),
                 'username'  => $v->username,
                 'ip'        => $this->user->ip,
                 'userInDB'  => $userInDB->username,
@@ -333,11 +333,11 @@ class Register extends Page
 
             // письмо активации аккаунта отправлено
             if ($isSent) {
-                return $this->c->Message->message(__('Reg email', $this->c->config->o_admin_email), false, 200);
+                return $this->c->Message->message(['Reg email', $this->c->config->o_admin_email], false, 200);
             // форма сброса пароля
             } else {
                 $auth         = $this->c->Auth;
-                $auth->fIswev = ['w', __('Error welcom mail', $this->c->config->o_admin_email)];
+                $auth->fIswev = ['w', __(['Error welcom mail', $this->c->config->o_admin_email])];
 
                 return $auth->forget([], 'GET', $v->email);
             }

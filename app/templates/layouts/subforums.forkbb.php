@@ -24,7 +24,7 @@
                   </h3>
         @if ($cur->subforums)
                   <dl class="f-inline f-fsub"><!-- inline -->
-                    <dt>{!! __('Sub forum', \count($cur->subforums)) !!}</dt>
+                    <dt>{!! __(['Sub forum', \count($cur->subforums)]) !!}</dt>
             @foreach ($cur->subforums as $sub)
                     <dd><a href="{{ $sub->link }}">{{ $sub->forum_name }}</a></dd>
             @endforeach
@@ -35,7 +35,7 @@
         @endif
         @if ($cur->moderators)
                   <dl class="f-inline f-modlist"><!-- inline -->
-                    <dt>{!! __('Moderated by', \count($cur->moderators)) !!}</dt>
+                    <dt>{!! __(['Moderated by', \count($cur->moderators)]) !!}</dt>
             @foreach ($cur->moderators as $mod)
                 @if ($mod['link'])
                     <dd><a href="{{ $mod['link'] }}">{{ $mod['name'] }}</a></dd>
@@ -48,13 +48,13 @@
                 </div>
               </div>
               <div class="f-cell f-cstats">
-                <span>{!! __('%s Topic', $cur->tree->num_topics, num($cur->tree->num_topics)) !!}</span>
-                <span>{!! __('%s Post', $cur->tree->num_posts, num($cur->tree->num_posts)) !!}</span>
+                <span>{!! __(['%s Topic', $cur->tree->num_topics, num($cur->tree->num_topics)]) !!}</span>
+                <span>{!! __(['%s Post', $cur->tree->num_posts, num($cur->tree->num_posts)]) !!}</span>
               </div>
               <div class="f-cell f-clast">
         @if ($cur->tree->last_post_id)
-                <span class="f-cltopic">{!! __('Last post in the topic "<a href="%1$s">%2$s</a>"', $cur->tree->linkLast, $cur->tree->censorLast_topic) !!}</span>
-                <span class="f-clposter">{!! __('by %s', $cur->tree->last_poster) !!}</span>
+                <span class="f-cltopic">{!! __(['Last post in the topic "<a href="%1$s">%2$s</a>"', $cur->tree->linkLast, $cur->tree->censorLast_topic]) !!}</span>
+                <span class="f-clposter">{!! __(['by %s', $cur->tree->last_poster]) !!}</span>
                 <span class="f-cltime">{{ dt($cur->tree->last_post) }}</span>
         @else
                 <span class="f-cltopic">{!! __('Never') !!}</span>

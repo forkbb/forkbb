@@ -326,12 +326,12 @@ class Edit extends Profile
             $fields['upload_avatar'] = [
                 'type'      => 'file',
                 'caption'   => __('New avatar'),
-                'info'      => __('New avatar info',
+                'info'      => __(['New avatar info',
                     \ForkBB\num($this->c->config->i_avatars_width),
                     \ForkBB\num($this->c->config->i_avatars_height),
                     \ForkBB\num($this->c->config->i_avatars_size),
                     \ForkBB\size($this->c->config->i_avatars_size)
-                ),
+                ]),
                 'accept'  => $this->accept,
             ];
         }
@@ -452,7 +452,7 @@ class Edit extends Profile
                 'type'    => 'textarea',
                 'value'   => $this->curUser->signature,
                 'caption' => __('Signature'),
-                'info'    => __('Sig max size', \ForkBB\num($this->curUser->g_sig_length), \ForkBB\num($this->curUser->g_sig_lines)),
+                'info'    => __(['Sig max size', \ForkBB\num($this->curUser->g_sig_length), \ForkBB\num($this->curUser->g_sig_lines)]),
             ];
             $form['sets']['signature'] = [
                 'class'  => 'data-edit',

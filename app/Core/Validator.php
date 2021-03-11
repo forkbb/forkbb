@@ -371,7 +371,7 @@ class Validator
             list($type, $error) = $error;
         }
 
-        $this->errors[$type][] = __($error, [':alias' => __($alias), ':attr' => $attr]);
+        $this->errors[$type][] = __([$error, [':alias' => __($alias), ':attr' => $attr]]);
         $this->error           = true;
     }
 

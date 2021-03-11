@@ -271,7 +271,7 @@ class Forums extends Admin
             ),
             __('Delete forum head'),
         ];
-        $this->aCrumbs[] = __('"%s"', $forum->forum_name);
+        $this->aCrumbs[] = __(['"%s"', $forum->forum_name]);
         $this->form      = $this->formDelete($args, $forum);
         $this->classForm = 'deleteforum';
         $this->titleForm = 'Delete forum head';
@@ -295,7 +295,7 @@ class Forums extends Admin
                         'confirm' => [
                             'caption' => __('Confirm delete'),
                             'type'    => 'checkbox',
-                            'label'   => __('I want to delete forum %s', $forum->forum_name),
+                            'label'   => __(['I want to delete forum %s', $forum->forum_name]),
                             'value'   => '1',
                             'checked' => false,
                         ],
@@ -350,7 +350,7 @@ class Forums extends Admin
                 $this->c->Router->link($marker, $args),
                 __('Edit forum head'),
             ];
-            $this->aCrumbs[] = __('"%s"', $forum->forum_name);
+            $this->aCrumbs[] = __(['"%s"', $forum->forum_name]);
             $this->titleForm = 'Edit forum head';
             $this->classForm = 'editforum';
         }
@@ -501,7 +501,7 @@ class Forums extends Admin
                     'value'   => $forum->no_sum_mess,
                     'values'  => [0 => __('Yes'), 1 => __('No')],
                     'caption' => __('Count messages label'),
-                    'info'    => __('Count messages help', $this->c->Router->link('AdminUsers'), __('Users')),
+                    'info'    => __(['Count messages help', $this->c->Router->link('AdminUsers'), __('Users')]),
                 ],
             ],
         ];
@@ -509,7 +509,7 @@ class Forums extends Admin
         $form['sets']['forum-info'] = [
             'info' => [
                 'info1' => [
-                    'value' => __('Group permissions info', $this->c->Router->link('AdminGroups'), __('User groups')),
+                    'value' => __(['Group permissions info', $this->c->Router->link('AdminGroups'), __('User groups')]),
                     'html'  => true,
                 ],
             ],

@@ -191,7 +191,7 @@ class Smilies extends Parser
             $fields["smile{$id}-pic"] = [
                 'class'     => ['pic', 'smile'],
                 'type'      => 'str',
-                'value'     => __('<img src="%1$s" alt="%2$s">', $this->c->PUBLIC_URL . '/img/sm/' . $cur['sm_image'], $cur['sm_image']),
+                'value'     => __(['<img src="%1$s" alt="%2$s">', $this->c->PUBLIC_URL . '/img/sm/' . $cur['sm_image'], $cur['sm_image']]),
                 'caption'   => __('Picture label'),
                 'html'      => true,
             ];
@@ -211,7 +211,7 @@ class Smilies extends Parser
 
             $form['sets']["smile{$id}"] = [
                 'class'  => 'smile',
-                'legend' => __('Smiley number %s', $i),
+                'legend' => __(['Smiley number %s', $i]),
                 'fields' => $fields,
             ];
 
@@ -271,7 +271,7 @@ class Smilies extends Parser
             $fields["image{$key}-pic"] = [
                 'class'     => ['pic', 'image'],
                 'type'      => 'str',
-                'value'     => __('<img src="%1$s" alt="%2$s">', $this->c->PUBLIC_URL . '/img/sm/' . $name, $name),
+                'value'     => __(['<img src="%1$s" alt="%2$s">', $this->c->PUBLIC_URL . '/img/sm/' . $name, $name]),
                 'caption'   => __('Picture label'),
                 'html'      => true,
             ];
@@ -366,9 +366,9 @@ class Smilies extends Parser
                 \is_file($file)
                 && @\unlink($file)
             ) {
-                $message = __('File %s deleted redirect', $args['name']);
+                $message = ['File %s deleted redirect', $args['name']];
             } else {
-                $message = __('File %s not deleted redirect', $args['name']);
+                $message = ['File %s not deleted redirect', $args['name']];
             }
         } else {
             return $this->c->Message->message('Bad request');

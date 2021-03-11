@@ -557,7 +557,7 @@ class Bans extends Admin
 
             foreach ($userList as $user) {
                 if ($this->c->bans->banFromName($user->username) > 0) {
-                    return $this->c->Message->message(__('User is ban', $user->username));
+                    return $this->c->Message->message(['User is ban', $user->username]);
                 }
 
                 if ($this->c->userRules->canBanUser($user)) {
@@ -565,9 +565,9 @@ class Bans extends Admin
                 }
 
                 if ($user->isAdmin) {
-                    return $this->c->Message->message(__('User is admin message', $user->username));
+                    return $this->c->Message->message(['User is admin message', $user->username]);
                 } elseif ($user->isAdmMod) {
-                    return $this->c->Message->message(__('User is mod message', $user->username));
+                    return $this->c->Message->message(['User is mod message', $user->username]);
                 } elseif ($user->isGuest) { // ???? O_o
                     return $this->c->Message->message('Cannot ban guest message');
                 }
@@ -733,14 +733,14 @@ class Bans extends Admin
             if (! $user instanceof User) { // ???? может ли вернутся несколько юзеров?
                 $v->addError('No user message');
             } elseif ($this->c->bans->banFromName($user->username) > 0) {
-                $v->addError(__('User is ban', $user->username));
+                $v->addError(__(['User is ban', $user->username]));
             } elseif (! $this->c->userRules->canBanUser($user)) {
                 if ($user->isGuest) { // ???? O_o
                     $v->addError('Cannot ban guest message');
                 } elseif ($user->isAdmin) {
-                    $v->addError(__('User is admin message', $user->username));
+                    $v->addError(__(['User is admin message', $user->username]));
                 } elseif ($user->isAdmMod) {
-                    $v->addError(__('User is mod message', $user->username));
+                    $v->addError(__(['User is mod message', $user->username]));
                 }
             }
         }

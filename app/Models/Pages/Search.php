@@ -159,7 +159,7 @@ class Search extends Page
                     'fields' => [
                         [
                             'type'  => 'info',
-                            'value' => __('<a href="%s">Advanced search</a>', $this->c->Router->link('SearchAdvanced')),
+                            'value' => __(['<a href="%s">Advanced search</a>', $this->c->Router->link('SearchAdvanced')]),
                             'html'  => true,
                         ],
                         'keywords' => [
@@ -198,7 +198,7 @@ class Search extends Page
                     'fields' => [
                         [
                             'type'  => 'info',
-                            'value' => __('<a href="%s">Simple search</a>', $this->c->Router->link('Search')),
+                            'value' => __(['<a href="%s">Simple search</a>', $this->c->Router->link('Search')]),
                             'html'  => true,
                         ],
                         'keywords' => [
@@ -324,7 +324,7 @@ class Search extends Page
                 $search = $this->c->search;
 
                 if (! $search->prepare($query)) {
-                    $v->addError(__($search->queryError, $search->queryText));
+                    $v->addError(__([$search->queryError, $search->queryText]));
                 } else {
 
                     if ($this->c->search->execute($v, $this->listOfIndexes, $flood)) {
@@ -346,7 +346,7 @@ class Search extends Page
             }
 
             if ($flood) {
-                $v->addError(__('Flood message', $this->user->g_search_flood - \time() + $this->user->last_search));
+                $v->addError(__(['Flood message', $this->user->g_search_flood - \time() + $this->user->last_search]));
             }
         }
 
@@ -434,9 +434,9 @@ class Search extends Page
                     $asTopicsList  = false;
                 }
                 if ('*' === $args['author']) {
-                    $model->name   = __('Search query: %s', $args['keywords']);
+                    $model->name   = __(['Search query: %s', $args['keywords']]);
                 } else {
-                    $model->name   = __('Search query: %1$s and Author: %2$s', $args['keywords'], $args['author']);
+                    $model->name   = __(['Search query: %1$s and Author: %2$s', $args['keywords'], $args['author']]);
                 }
                 $model->linkMarker = $advanced ? 'SearchAdvanced' : 'Search';
                 $model->linkArgs   = $args;
@@ -484,7 +484,7 @@ class Search extends Page
                 } else {
                     $list = $model->actionP($action, $forum, $user->id);
                 }
-                $model->name       = __('Quick search user ' . $action, $user->username);
+                $model->name       = __(['Quick search user ' . $action, $user->username]);
                 $model->linkMarker = 'SearchAction';
                 if ($forum->id) {
                     $model->linkArgs = ['action' => $action, 'uid' => $user->id, 'forum' => $forum->id];

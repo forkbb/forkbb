@@ -85,9 +85,9 @@
         @endif
             <span class="f-cell f-ctitle"><small>(</small><i>{{ $user->title() }}</i><small>),</small></span>
         @if ($p->user->showPostCount)
-            <span class="f-cell f-cnumposts">{!! __('<b>%s</b><small> post,</small>', $user->num_posts, num($user->num_posts)) !!}</span>
+            <span class="f-cell f-cnumposts">{!! __(['<b>%s</b><small> post,</small>', $user->num_posts, num($user->num_posts)]) !!}</span>
         @endif
-            <span class="f-cell f-cdatereg">{!! __('<small>registered: </small><b>%s</b>', dt($user->registered, true)) !!}</span>
+            <span class="f-cell f-cdatereg">{!! __(['<small>registered: </small><b>%s</b>', dt($user->registered, true)]) !!}</span>
           </li>
     @endforeach
         </ol>

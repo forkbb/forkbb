@@ -129,7 +129,7 @@ class Categories extends Admin
                     'type'      => 'text',
                     'maxlength' => '80',
                     'caption'   => __('Add category label'),
-                    'info'      => __('Add category help', $this->c->Router->link('AdminForums'), __('Forums')),
+                    'info'      => __(['Add category help', $this->c->Router->link('AdminForums'), __('Forums')]),
                 ],
             ],
         ];
@@ -182,7 +182,7 @@ class Categories extends Admin
             $this->c->Router->link('AdminCategoriesDelete', $args),
             __('Delete category head'),
         ];
-        $this->aCrumbs[] = __('"%s"', $category['cat_name']);
+        $this->aCrumbs[] = __(['"%s"', $category['cat_name']]);
         $this->form      = $this->formDelete($args, $category);
         $this->classForm = 'deletecategory';
         $this->titleForm = 'Delete category head';
@@ -206,7 +206,7 @@ class Categories extends Admin
                         'confirm' => [
                             'caption' => __('Confirm delete'),
                             'type'    => 'checkbox',
-                            'label'   => __('I want to delete the category %s', $category['cat_name']),
+                            'label'   => __(['I want to delete the category %s', $category['cat_name']]),
                             'value'   => '1',
                             'checked' => false,
                         ],

@@ -206,7 +206,7 @@ class Groups extends Admin
                 $this->c->Router->link($marker, $vars),
                 __('Edit group'),
             ];
-            $this->aCrumbs[] = __('"%s"', $group->g_title);
+            $this->aCrumbs[] = __(['"%s"', $group->g_title]);
             $this->titleForm = 'Edit group';
             $this->classForm = 'editgroup';
         } else {
@@ -385,7 +385,7 @@ class Groups extends Admin
             'maxlength' => '50',
             'value'     => $group->g_user_title,
             'caption'   => __('User title label'),
-            'info'      => __('User title help', $group->groupGuest ? __('Guest') : __('Member')),
+            'info'      => __(['User title help', $group->groupGuest ? __('Guest') : __('Member')]),
         ];
         $form['sets']['group-titles'] = [
             'legend' => __('Titles subhead'),
@@ -414,7 +414,7 @@ class Groups extends Admin
                 'options' => $options,
                 'value'   => $group->g_promote_next_group,
                 'caption' => __('Promote users label'),
-                'info'    => __('Promote users help', __('Disable promotion')),
+                'info'    => __(['Promote users help', __('Disable promotion')]),
             ];
             $fieldset['g_promote_min_posts'] = [
                 'type'    => 'number',
@@ -764,7 +764,7 @@ class Groups extends Admin
             $this->c->Router->link('AdminGroupsDelete', $args),
             __('Group delete'),
         ];
-        $this->aCrumbs[] = __('"%s"', $group->g_title);
+        $this->aCrumbs[] = __(['"%s"', $group->g_title]);
         $this->form      = $this->formDelete($args, $group, $count, $groups);
         $this->titleForm = 'Group delete';
         $this->classForm = 'deletegroup';
@@ -804,7 +804,7 @@ class Groups extends Admin
                         'options' => $groups,
                         'value'   => $this->c->config->i_default_user_group,
                         'caption' => __('Move users label'),
-                        'info'    => __('Move users info', $group->g_title, $count),
+                        'info'    => __(['Move users info', $group->g_title, $count]),
                     ],
                 ],
             ];
@@ -815,7 +815,7 @@ class Groups extends Admin
                 'confirm' => [
                     'caption' => __('Confirm delete'),
                     'type'    => 'checkbox',
-                    'label'   => __('I want to delete this group', $group->g_title),
+                    'label'   => __(['I want to delete this group', $group->g_title]),
                     'value'   => '1',
                     'checked' => false,
                 ],
