@@ -11,29 +11,32 @@ declare(strict_types=1);
 namespace ForkBB;
 
 use ForkBB\Core\Container;
+use InvalidArgumentException;
 
 /**
  * Инициализирует другие функции (передача контейнера)
  */
 function _init(Container $c): void
 {
-    __(null, $c);
+    __([$c]);
     dt(0, true, '', '', true, true, $c);
 }
 
 /**
  * Транслирует строку с подстановкой аргументов
+ * Защита от дурака отсутствует, ловим ошибки/исключения
  */
-function __(?string $arg, /* mixed */ ...$args): string
+function __(/* string|arrray */ $arg): string
 {
     static $c, $lang;
 
     if (null === $lang) {
-        if (
-            null === $arg
-            && $args[0] instanceof Container
-        ) {
-            $c = $args[0];
+        if (null === $c) {
+            $c = \reset($arg);
+
+            if (! $c instanceof Container) {
+                throw new InvalidArgumentException('Container expected ');
+            }
 
             return '';
         } else {
@@ -41,24 +44,25 @@ function __(?string $arg, /* mixed */ ...$args): string
         }
     }
 
-    $tr = $lang->get($arg);
+    if (\is_array($arg)) {
+        $tr   = $lang->get(\reset($arg));
+        $args = \array_slice($arg, 1);
 
-    if (\is_array($tr)) {
-        if (\is_int(\reset($args))) {
+        if (\is_array($tr)) {
             $tr   = $lang->getForm($tr, \reset($args));
             $args = \array_slice($args, 1);
-        } else {
-            $tr = $tr[0];
         }
-    }
 
-    if (empty($args)) {
-        return $tr;
-    } elseif (\is_array(\reset($args))) {
-        return \strtr($tr, \array_map('\\ForkBB\\e', \reset($args)));
+        if (empty($args)) {
+            return $tr;
+        } elseif (\is_array(\reset($args))) {
+            return \strtr($tr, \array_map('\\ForkBB\\e', \reset($args)));
+        } else {
+            $args = \array_map('\\ForkBB\\e', $args);
+            return \sprintf($tr, ...$args);
+        }
     } else {
-        $args = \array_map('\\ForkBB\\e', $args);
-        return \sprintf($tr, ...$args);
+        return $lang->get($arg);
     }
 }
 
@@ -140,5 +144,5 @@ function size(int $size): string
 
     $decimals = $size - (int) $size < 0.005 ? 0 : 2;
 
-    return __('%s ' . $units[$i], num($size, $decimals));
+    return __(['%s ' . $units[$i], num($size, $decimals)]);
 }
