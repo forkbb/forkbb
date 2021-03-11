@@ -285,6 +285,8 @@ class Groups extends Admin
                     $v->addRules([
                         'g_sig_length'           => 'required|integer|min:0|max:10000',
                         'g_sig_lines'            => 'required|integer|min:0|max:255',
+                        'g_pm'                   => 'integer|in:0,1',
+                        'g_pm_limit'             => 'required|integer|min:0|max:999999',
                     ]);
                 }
             }
@@ -589,6 +591,13 @@ class Groups extends Admin
             'legend' => __('Permissions subhead'),
             'fields' => $fieldset,
         ];
+        $form['sets']['def-info'] = [
+            'info' => [
+                'info1' => [
+                    'value' => __('Group settings info'),
+                ],
+            ],
+        ];
 
         $fieldset = [];
         $fieldset['g_post_flood'] = [
@@ -663,15 +672,28 @@ class Groups extends Admin
                 'legend' => __('Signature subhead'),
                 'fields' => $fieldset,
             ];
-        }
 
-        $form['sets']['def-info'] = [
-            'info' => [
-                'info1' => [
-                    'value' => __('Group settings info'),
-                ],
-            ],
-        ];
+
+            $fieldset = [];
+            $fieldset['g_pm'] = [
+                'type'    => 'radio',
+                'value'   => $group->g_pm,
+                'values'  => $yn,
+                'caption' => __('Allow PM label'),
+            ];
+            $fieldset['g_pm_limit'] = [
+                'type'    => 'number',
+                'min'     => '0',
+                'max'     => '999999',
+                'value'   => $group->g_pm_limit,
+                'caption' => __('PM limit label'),
+                'info'    => __('PM limit help'),
+            ];
+            $form['sets']['group-pm'] = [
+                'legend' => __('PM subhead'),
+                'fields' => $fieldset,
+            ];
+        }
 
         return $form;
     }

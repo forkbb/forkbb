@@ -284,3 +284,15 @@ msgstr "Разрешения"
 
 msgid "Intervals subhead"
 msgstr "Интервалы"
+
+msgid "PM subhead"
+msgstr "Личные сообщения"
+
+msgid "Allow PM label"
+msgstr "Разрешить личные сообщения"
+
+msgid "PM limit label"
+msgstr "Лимит"
+
+msgid "PM limit help"
+msgstr "Максимальное количество диалогов для пользователя этой группы. Поставьте 0, чтобы выключить ограничение."

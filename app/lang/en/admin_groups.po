@@ -284,3 +284,15 @@ msgstr "Permissions"
 
 msgid "Intervals subhead"
 msgstr "Intervals"
+
+msgid "PM subhead"
+msgstr "Private messages"
+
+msgid "Allow PM label"
+msgstr "Allow private messages"
+
+msgid "PM limit label"
+msgstr "Limit"
+
+msgid "PM limit help"
+msgstr "The maximum number of dialogs for a user in this group. Set to 0 to disable."
