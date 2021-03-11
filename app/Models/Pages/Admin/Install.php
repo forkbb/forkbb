@@ -1001,12 +1001,12 @@ class Install extends Admin
                 'last_visit'       => ['INT(10) UNSIGNED', false, 0],
                 'admin_note'       => ['VARCHAR(30)', false, ''],
                 'activate_string'  => ['VARCHAR(80)', false, ''],
-                'messages_enable'  => ['TINYINT(1)', false, 1],
-                'messages_email'   => ['TINYINT(1)', false, 0],
-                'messages_flag'    => ['TINYINT(1)', false, 0],
-                'messages_new'     => ['INT(10) UNSIGNED', false, 0],
-                'messages_all'     => ['INT(10) UNSIGNED', false, 0],
-                'pmsn_last_post'   => ['INT(10) UNSIGNED', false, 0],
+                'u_pm'             => ['TINYINT(1)', false, 1],
+                'u_pm_notify'      => ['TINYINT(1)', false, 0],
+                'u_pm_flash'       => ['TINYINT(1)', false, 0],
+                'u_pm_num_new'     => ['INT(10) UNSIGNED', false, 0],
+                'u_pm_num_all'     => ['INT(10) UNSIGNED', false, 0],
+                'u_pm_last_post'   => ['INT(10) UNSIGNED', false, 0],
                 'warning_flag'     => ['TINYINT(1)', false, 0],
                 'warning_all'      => ['INT(10) UNSIGNED', false, 0],
                 'gender'           => ['TINYINT UNSIGNED', false, 0],
@@ -1134,7 +1134,7 @@ class Install extends Admin
         $this->c->DB->exec('UPDATE ::groups SET g_pm=0, g_sig_length=0, g_sig_lines=0 WHERE g_id=?i', [$this->c->GROUP_GUEST]);
 
         $ip = \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: '0.0.0.0';
-        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, signature) VALUES (?i, ?s, ?s, \'\')', [$this->c->GROUP_GUEST, __('Guest '), __('Guest ')]);
+        $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, signature, u_pm) VALUES (?i, ?s, ?s, \'\', ?i)', [$this->c->GROUP_GUEST, __('Guest '), __('Guest '), 0]);
         $this->c->DB->exec('INSERT INTO ::users (group_id, username, password, email, email_normal, language, style, num_posts, last_post, registered, registration_ip, last_visit, signature, num_topics) VALUES (?i, ?s, ?s, ?s, ?s, ?s, ?s, 1, ?i, ?i, ?s, ?i, \'\', 1)', [$this->c->GROUP_ADMIN, $v->username, password_hash($v->password, \PASSWORD_DEFAULT), $v->email, $this->c->NormEmail->normalize($v->email), $v->defaultlang, $v->defaultstyle, $now, $now, $ip, $now]);
 
         $pun_config = [

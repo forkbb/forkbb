@@ -1418,4 +1418,21 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.36 to rev.37
+     */
+    protected function stageNumber36(array $args): ?int
+    {
+        $this->c->DB->exec('UPDATE ::groups SET g_pm=0, g_sig_length=0, g_sig_lines=0 WHERE g_id=?i', [$this->c->GROUP_GUEST]);
+
+        $this->c->DB->renameField('users', 'messages_enable', 'u_pm');
+        $this->c->DB->renameField('users', 'messages_email',  'u_pm_notify');
+        $this->c->DB->renameField('users', 'messages_flag',   'u_pm_flash');
+        $this->c->DB->renameField('users', 'messages_new',    'u_pm_num_new');
+        $this->c->DB->renameField('users', 'messages_all',    'u_pm_num_all');
+        $this->c->DB->renameField('users', 'pmsn_last_post',  'u_pm_last_post');
+
+        return null;
+    }
 }
