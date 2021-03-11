@@ -448,4 +448,4 @@ msgid "Allow PM label"
 msgstr "Разрешить личные сообщения"
 
 msgid "Allow PM help"
-msgstr "Настройки для отдельных группы доступны в <a href="%2$s">%1$s</a>."
+msgstr "Настройки для отдельных групп доступны в <a href="%2$s">%1$s</a>."
