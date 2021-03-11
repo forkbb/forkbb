@@ -55,9 +55,9 @@ function __(?string $arg, /* mixed */ ...$args): string
     if (empty($args)) {
         return $tr;
     } elseif (\is_array(\reset($args))) {
-        return \strtr($tr, \array_map('\ForkBB\e', \reset($args)));
+        return \strtr($tr, \array_map('\\ForkBB\\e', \reset($args)));
     } else {
-        $args = \array_map('\ForkBB\e', $args);
+        $args = \array_map('\\ForkBB\\e', $args);
         return \sprintf($tr, ...$args);
     }
 }
