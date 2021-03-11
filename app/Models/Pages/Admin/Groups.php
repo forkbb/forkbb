@@ -245,25 +245,15 @@ class Groups extends Admin
 
             if (! $group->groupAdmin) {
                 $v->addRules([
-                    'g_promote_next_group'   => 'integer|min:0|not_in:' . $notNext,
-                    'g_promote_min_posts'    => 'integer|min:0|max:9999999999',
-                    'g_read_board'           => 'integer|in:0,1',
-                    'g_view_users'           => 'integer|in:0,1',
-                    'g_post_replies'         => 'integer|in:0,1',
-                    'g_post_topics'          => 'integer|in:0,1',
-                    'g_edit_posts'           => 'integer|in:0,1',
-                    'g_delete_posts'         => 'integer|in:0,1',
-                    'g_delete_topics'        => 'integer|in:0,1',
-                    'g_deledit_interval'     => 'integer|min:0|max:999999',
-                    'g_set_title'            => 'integer|in:0,1',
-                    'g_post_links'           => 'integer|in:0,1',
-                    'g_search'               => 'integer|in:0,1',
-                    'g_search_users'         => 'integer|in:0,1',
-                    'g_send_email'           => 'integer|in:0,1',
-                    'g_post_flood'           => 'integer|min:0|max:999999',
-                    'g_search_flood'         => 'integer|min:0|max:999999',
-                    'g_email_flood'          => 'integer|min:0|max:999999',
-                    'g_report_flood'         => 'integer|min:0|max:999999',
+                    'g_read_board'           => 'required|integer|in:0,1',
+                    'g_view_users'           => 'required|integer|in:0,1',
+                    'g_post_replies'         => 'required|integer|in:0,1',
+                    'g_post_topics'          => 'required|integer|in:0,1',
+                    'g_post_links'           => 'required|integer|in:0,1',
+                    'g_search'               => 'required|integer|in:0,1',
+                    'g_search_users'         => 'required|integer|in:0,1',
+                    'g_post_flood'           => 'required|integer|min:0|max:999999',
+                    'g_search_flood'         => 'required|integer|min:0|max:999999',
                 ]);
 
                 if (
@@ -272,20 +262,30 @@ class Groups extends Admin
                     && $group->g_id !== $this->c->config->i_default_user_group
                 ) {
                     $v->addRules([
-                        'g_moderator'            => 'integer|in:0,1',
-                        'g_mod_edit_users'       => 'integer|in:0,1',
-                        'g_mod_rename_users'     => 'integer|in:0,1',
-                        'g_mod_change_passwords' => 'integer|in:0,1',
-                        'g_mod_promote_users'    => 'integer|in:0,1',
-                        'g_mod_ban_users'        => 'integer|in:0,1',
+                        'g_moderator'            => 'required|integer|in:0,1',
+                        'g_mod_edit_users'       => 'required|integer|in:0,1',
+                        'g_mod_rename_users'     => 'required|integer|in:0,1',
+                        'g_mod_change_passwords' => 'required|integer|in:0,1',
+                        'g_mod_promote_users'    => 'required|integer|in:0,1',
+                        'g_mod_ban_users'        => 'required|integer|in:0,1',
                     ]);
                 }
 
                 if (! $group->groupGuest) {
                     $v->addRules([
+                        'g_promote_next_group'   => 'required|integer|min:0|not_in:' . $notNext,
+                        'g_promote_min_posts'    => 'required|integer|min:0|max:9999999999',
+                        'g_edit_posts'           => 'required|integer|in:0,1',
+                        'g_delete_posts'         => 'required|integer|in:0,1',
+                        'g_delete_topics'        => 'required|integer|in:0,1',
+                        'g_deledit_interval'     => 'required|integer|min:0|max:999999',
+                        'g_set_title'            => 'required|integer|in:0,1',
+                        'g_send_email'           => 'required|integer|in:0,1',
+                        'g_email_flood'          => 'required|integer|min:0|max:999999',
+                        'g_report_flood'         => 'required|integer|min:0|max:999999',
                         'g_sig_length'           => 'required|integer|min:0|max:10000',
                         'g_sig_lines'            => 'required|integer|min:0|max:255',
-                        'g_pm'                   => 'integer|in:0,1',
+                        'g_pm'                   => 'required|integer|in:0,1',
                         'g_pm_limit'             => 'required|integer|min:0|max:999999',
                     ]);
                 }
