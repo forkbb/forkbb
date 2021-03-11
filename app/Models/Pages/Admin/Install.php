@@ -143,12 +143,10 @@ class Install extends Admin
             $this->fIswev = ['e', 'No styles'];
         }
 
-        $fIswev = $this->getAttr('fIswev');
-
         if (
             'POST' === $method
             && ! $changeLang
-            && empty($fIswev['e'])
+            && empty($this->fIswev['e'])
         ) { //????
             $v = $this->c->Validator->reset()
                 ->addValidators([
