@@ -4,7 +4,7 @@
           <h2>Info message</h2>
           <ul>
     @foreach ($iswev['i'] as $cur)
-            <li class="f-icontent">{!! $cur !!}</li>
+            <li class="f-icontent">{!! __($cur) !!}</li>
     @endforeach
           </ul>
         </section>
@@ -14,7 +14,7 @@
           <h2>Successful operation message</h2>
           <ul>
     @foreach ($iswev['s'] as $cur)
-            <li class="f-scontent">{!! $cur !!}</li>
+            <li class="f-scontent">{!! __($cur) !!}</li>
     @endforeach
           </ul>
         </section>
@@ -24,7 +24,7 @@
           <h2>Warning message</h2>
           <ul>
     @foreach ($iswev['w'] as $cur)
-            <li class="f-wcontent">{!! $cur !!}</li>
+            <li class="f-wcontent">{!! __($cur) !!}</li>
     @endforeach
           </ul>
         </section>
@@ -34,7 +34,7 @@
           <h2>Error message</h2>
           <ul>
     @foreach ($iswev['e'] as $cur)
-            <li class="f-econtent">{!! $cur !!}</li>
+            <li class="f-econtent">{!! __($cur) !!}</li>
     @endforeach
           </ul>
         </section>
@@ -44,7 +44,7 @@
           <h2>Validation message</h2>
           <ul>
     @foreach ($iswev['v'] as $cur)
-            <li class="f-vcontent">{!! $cur !!}</li>
+            <li class="f-vcontent">{!! __($cur) !!}</li>
     @endforeach
           </ul>
         </section>
