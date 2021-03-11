@@ -185,7 +185,7 @@ class Update extends Admin
                             null === $e
                             && true === $this->c->DB->tableExists($test_table)
                         ) {
-                            $e = __(['The %s table already exists. Delete it.', $test_table]);
+                            $e = ['The %s table already exists. Delete it.', $test_table];
                         }
 
                         $schema = [
@@ -198,14 +198,14 @@ class Update extends Admin
                             null === $e
                             && false === $this->c->DB->createTable($test_table, $schema)
                         ) {
-                            $e = __(['Unable to create %s table', $test_table]);
+                            $e = ['Unable to create %s table', $test_table];
                         }
 
                         if (
                             null === $e
                             && false === $this->c->DB->addField($test_table, 'test_field', 'VARCHAR(80)', false, '')
                         ) {
-                            $e = __(['Unable to add test_field field to %s table', $test_table]);
+                            $e = ['Unable to add test_field field to %s table', $test_table];
                         }
 
                         $sql = "INSERT INTO ::{$test_table} (test_field) VALUES ('TEST_VALUE')";
@@ -213,25 +213,25 @@ class Update extends Admin
                             null === $e
                             && false === $this->c->DB->exec($sql)
                         ) {
-                            $e = __(['Unable to insert line to %s table', $test_table]);
+                            $e = ['Unable to insert line to %s table', $test_table];
                         }
 
                         if (
                             null === $e
                             && false === $this->c->DB->dropField($test_table, 'test_field')
                         ) {
-                            $e = __(['Unable to drop test_field field from %s table', $test_table]);
+                            $e = ['Unable to drop test_field field from %s table', $test_table];
                         }
 
                         if (
                             null === $e
                             && false === $this->c->DB->dropTable($test_table)
                         ) {
-                            $e = __(['Unable to drop %s table', $test_table]);
+                            $e = ['Unable to drop %s table', $test_table];
                         }
                     }
 
-                    if (\is_string($e)) {
+                    if (null !== $e) {
                         return $this->c->Message->message($e, true, 503);
                     }
 
@@ -355,7 +355,7 @@ class Update extends Admin
                     return $this->c->Redirect->page(
                         'AdminUpdateStage',
                         ['uid' => $uid, 'stage' => $stage, 'start' => $start]
-                    )->message(__('Stage %1$s (%2$s)', $stage, (int) $start));
+                    )->message(['Stage %1$s (%2$s)', $stage, (int) $start]);
                 }
 
                 ++$stage;

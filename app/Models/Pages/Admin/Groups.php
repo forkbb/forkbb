@@ -334,12 +334,12 @@ class Groups extends Admin
         }
 
         if (null === $group->g_id) {
-            $message = __('Group added redirect');
+            $message = 'Group added redirect';
             $this->c->groups->insert($group);
 
             $this->c->groups->Perm->copy($baseGroup, $group);
         } else {
-            $message = __('Group edited redirect');
+            $message = 'Group edited redirect';
             $this->c->groups->update($group);
 
             if ($group->g_promote_min_posts) {
