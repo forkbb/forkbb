@@ -320,6 +320,9 @@ msgstr " - "
 msgid "PM"
 msgstr "PM"
 
+msgid "PM %s"
+msgstr "PM <b>(%s)</b>"
+
 msgid "Private messages"
 msgstr "Private messages"
 

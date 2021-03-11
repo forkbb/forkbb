@@ -201,11 +201,14 @@ abstract class Page extends Model
             ];
 
             if ($this->user->usePM) {
-                $navUser['pmsnew'] = [
-                    'pmsnew.php', // ????
-                    'PM',
+                $navUser['pm'] = [
+                    '#', // ????
+                    $this->user->u_pm_num_new > 0
+                        ? ['PM %s', $this->user->u_pm_num_new]
+                        : 'PM'
+                    ,
                     'Private messages',
-                ]; // ???? '<li id="nav"'.((PUN_ACTIVE_PAGE == 'pms_new' || $user['messages_new'] > 0) ? ' class="isactive"' : '').'><a href="pmsnew.php">'.__('PM').(($user['messages_new'] > 0) ? ' (<span'.((empty($this->c->config->o_pms_flasher) || PUN_ACTIVE_PAGE == 'pms_new') ? '' : ' class="remflasher"' ).'>'.$user['messages_new'].'</span>)' : '').'</a></li>';
+                ];
             }
 
             if ($this->user->isAdmMod) {

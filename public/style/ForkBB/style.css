@@ -440,7 +440,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   font-weight: bold;
 }
 
-#fork-nav-pmsnew .f-menu-a:before {
+#fork-nav-pm .f-menu-a:before {
   font-weight: 400;
   content: "\f0e0";
   padding-right: 0.3125rem;

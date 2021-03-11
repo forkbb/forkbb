@@ -322,6 +322,9 @@ msgstr " - "
 msgid "PM"
 msgstr "ЛС"
 
+msgid "PM %s"
+msgstr "ЛС <b>(%s)</b>"
+
 msgid "Private messages"
 msgstr "Личные сообщения"
 

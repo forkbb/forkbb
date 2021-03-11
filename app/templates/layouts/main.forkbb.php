@@ -54,7 +54,11 @@
         @foreach ($p->fNavigationUser as $key => $val)
           <li id="fork-nav-{{ $key }}" class="f-menu-item"><!-- inline -->
             <a class="f-menu-a @if ($key == $p->fIndex) active @endif" href="{{ $val[0] }}" @if ($val[2]) title="{!! __($val[2]) !!}" @endif>
+            @if (\is_array($val[1]))
+              <span class="f-menu-span">{!! __(...$val[1]) !!}</span>
+            @else
               <span class="f-menu-span">{!! __($val[1]) !!}</span>
+            @endif
             </a>
             @if ($val[3])
             <ul class="f-submenu-items">
