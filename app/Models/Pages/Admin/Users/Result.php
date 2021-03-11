@@ -43,7 +43,7 @@ class Result extends Users
         $number = \count($idsN);
         if (0 == $number) {
             $view = $this->c->AdminUsers;
-            $view->fIswev = ['i', __('No users found')];
+            $view->fIswev = ['i', 'No users found'];
 
             return $view->view([], 'GET', $data);
         }
@@ -94,7 +94,7 @@ class Result extends Users
                 ) {
                     $action = self::ACTION_CHG;
                 } else {
-                    $this->fIswev = ['v', __('Action not available')];
+                    $this->fIswev = ['v', 'Action not available'];
                 }
 
                 if (empty($this->fIswev)) {

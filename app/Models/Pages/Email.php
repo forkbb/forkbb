@@ -58,7 +58,7 @@ class Email extends Page
         $floodSize = \time() - (int) $this->user->last_email_sent;
         $floodSize = $floodSize < $this->user->g_email_flood ? $this->user->g_email_flood - $floodSize : 0;
         if ($floodSize > 0) {
-            $this->fIswev = ['e', __(['Flood message', $floodSize])];
+            $this->fIswev = ['e', ['Flood message', $floodSize]];
         }
 
         $data = [

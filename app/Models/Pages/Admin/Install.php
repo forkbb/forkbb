@@ -96,14 +96,14 @@ class Install extends Admin
 
         // версия PHP
         if (\version_compare(\PHP_VERSION, self::PHP_MIN, '<')) {
-            $this->fIswev = ['e', __(['You are running error', 'PHP', \PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN])];
+            $this->fIswev = ['e', ['You are running error', 'PHP', \PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN]];
         }
 
         // типы БД
         $this->dbTypes = $this->DBTypes();
 
         if (empty($this->dbTypes)) {
-            $this->fIswev = ['e', __('No DB extensions')];
+            $this->fIswev = ['e', 'No DB extensions'];
         }
 
         // доступность папок на запись
@@ -116,7 +116,7 @@ class Install extends Admin
         foreach ($folders as $folder) {
             if (! \is_writable($folder)) {
                 $folder       = \str_replace(\dirname($this->c->DIR_APP), '', $folder);
-                $this->fIswev = ['e', __(['Alert folder', $folder])];
+                $this->fIswev = ['e', ['Alert folder', $folder]];
             }
         }
 
@@ -124,7 +124,7 @@ class Install extends Admin
         $config = @\file_get_contents($this->c->DIR_APP . '/config/main.dist.php');
 
         if (false === $config) {
-            $this->fIswev = ['e', __('No access to main.dist.php')];
+            $this->fIswev = ['e', 'No access to main.dist.php'];
         }
 
         unset($config);
@@ -133,17 +133,17 @@ class Install extends Admin
         $langs = $this->c->Func->getNameLangs();
 
         if (empty($langs)) {
-            $this->fIswev = ['e', __('No language packs')];
+            $this->fIswev = ['e', 'No language packs'];
         }
 
         // стили
         $styles = $this->c->Func->getStyles();
 
         if (empty($styles)) {
-            $this->fIswev = ['e', __('No styles')];
+            $this->fIswev = ['e', 'No styles'];
         }
 
-        $fIswev = $this->getAttr('fIswev'); // ????
+        $fIswev = $this->getAttr('fIswev');
 
         if (
             'POST' === $method

@@ -38,7 +38,7 @@ class Stat extends Users
         $user = $this->c->users->load($args['id']);
 
         if (0 == $number) {
-            $this->fIswev = ['i', __('Results no posts found')];
+            $this->fIswev = ['i', 'Results no posts found'];
         }
 
         $this->nameTpl    = 'admin/users_result';

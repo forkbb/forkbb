@@ -354,7 +354,7 @@ class Bans extends Admin
 
         $number = \count($idsN);
         if (0 == $number) {
-            $this->fIswev = ['i', __('No bans found')];
+            $this->fIswev = ['i', 'No bans found'];
 
             return $this->view([], 'GET', $data);
         }

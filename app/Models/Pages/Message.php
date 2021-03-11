@@ -49,7 +49,7 @@ class Message extends Page
         }
 
         if ('' !== $message) {
-            $this->fIswev = [$type, __($message)];
+            $this->fIswev = [$type, $message];
         }
 
         return $this;

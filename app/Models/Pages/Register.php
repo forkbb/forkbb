@@ -267,14 +267,14 @@ class Register extends Page
             // форма сброса пароля
             } else {
                 $auth         = $this->c->Auth;
-                $auth->fIswev = ['w', __(['Error welcom mail', $this->c->config->o_admin_email])];
+                $auth->fIswev = ['w', ['Error welcom mail', $this->c->config->o_admin_email]];
 
                 return $auth->forget([], 'GET', $v->email);
             }
         // форма логина
         } else {
             $auth         = $this->c->Auth;
-            $auth->fIswev = ['s', __('Reg complete')];
+            $auth->fIswev = ['s', 'Reg complete'];
 
             return $auth->login([], 'GET', $v->username);
         }
@@ -337,14 +337,14 @@ class Register extends Page
             // форма сброса пароля
             } else {
                 $auth         = $this->c->Auth;
-                $auth->fIswev = ['w', __(['Error welcom mail', $this->c->config->o_admin_email])];
+                $auth->fIswev = ['w', ['Error welcom mail', $this->c->config->o_admin_email]];
 
                 return $auth->forget([], 'GET', $v->email);
             }
         // форма логина
         } else {
             $auth         = $this->c->Auth;
-            $auth->fIswev = ['s', __('Reg complete')];
+            $auth->fIswev = ['s', 'Reg complete'];
 
             return $auth->login([], 'GET', $v->username);
         }
@@ -381,7 +381,7 @@ class Register extends Page
         $this->c->Lang->load('register');
 
         $auth         = $this->c->Auth;
-        $auth->fIswev = ['s', __('Reg complete')];
+        $auth->fIswev = ['s', 'Reg complete'];
 
         return $auth->login([], 'GET', $user->username);
     }

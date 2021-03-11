@@ -263,14 +263,14 @@ abstract class Page extends Model
             '1' == $this->c->config->o_maintenance
             && $this->user->isAdmin
         ) {
-            $this->fIswev = ['w', __(['Maintenance mode enabled', $this->c->Router->link('AdminMaintenance')])];
+            $this->fIswev = ['w', ['Maintenance mode enabled', $this->c->Router->link('AdminMaintenance')]];
         }
 
         if (
             $this->user->isAdmMod
             && $this->user->last_report_id < $this->c->reports->lastId()
         ) {
-            $this->fIswev = ['i', __(['New reports', $this->c->Router->link('AdminReports')])];
+            $this->fIswev = ['i', ['New reports', $this->c->Router->link('AdminReports')]];
         }
     }
 
@@ -432,7 +432,7 @@ abstract class Page extends Model
         if (
             isset($value[0], $value[1])
             && \is_string($value[0])
-            && \is_string($value[1])
+            && 2 === \count($value)
         ) {
             $attr[$value[0]][] = $value[1];
         } else {

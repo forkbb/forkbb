@@ -500,7 +500,7 @@ class Search extends Page
         if (false === $list) {
             return $this->c->Message->message('Bad request');
         } elseif (empty($list)) {
-            $this->fIswev = ['i', __('No hits')];
+            $this->fIswev = ['i', 'No hits'];
 
             return $this->view([], 'GET', true);
         }

@@ -404,7 +404,7 @@ class Auth extends Page
 
                 $this->c->users->update($user);
 
-                $this->fIswev = ['s', __('Pass updated')];
+                $this->fIswev = ['s', 'Pass updated'];
 
                 $this->c->Log->info('Passphrase reset: ok', [
                     'user' => $user->fLog(),
@@ -430,7 +430,7 @@ class Auth extends Page
 
             $this->c->users->update($user);
 
-            $this->fIswev = ['i', __('Account activated')];
+            $this->fIswev = ['i', 'Account activated'];
 
             $this->c->Log->info('Account activation: ok', [
                 'user' => $user->fLog(),

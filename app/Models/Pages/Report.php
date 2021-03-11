@@ -37,7 +37,7 @@ class Report extends Page
         $floodSize = \time() - (int) $this->user->last_report_sent;
         $floodSize = $floodSize < $this->user->g_report_flood ? $this->user->g_report_flood - $floodSize : 0;
         if ($floodSize > 0) {
-            $this->fIswev = ['e', __(['Flood message', $floodSize])];
+            $this->fIswev = ['e', ['Flood message', $floodSize]];
         }
 
         $data = [];
@@ -95,7 +95,7 @@ class Report extends Page
                 }
 
                 if (false === $result && 1 === $this->c->config->i_report_method) {
-                    $this->fIswev = ['e', __(['Error mail', $this->c->config->o_admin_email])];
+                    $this->fIswev = ['e', ['Error mail', $this->c->config->o_admin_email]];
                 } else {
                     return $this->c->Redirect->page('ViewPost', ['id' => $post->id])->message('Report redirect');
                 }

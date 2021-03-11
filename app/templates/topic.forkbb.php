@@ -42,7 +42,7 @@
     <section class="f-main f-topic">
       <h2>{{ $p->model->censorSubject }}</h2>
 @foreach ($p->posts as $id => $post)
-    @if (empty($post->id) && $iswev = ['e' => [__(['Message %s was not found in the database', $id])]])
+    @if (empty($post->id) && $iswev = ['e' => [['Message %s was not found in the database', $id]]])
         @include ('layouts/iswev')
     @else
       <article id="p{{ $post->id }}" class="f-post @if (1 == $post->user->gender) f-user-male @elseif (2 == $post->user->gender) f-user-female @endif @if ($post->user->online) f-user-online @endif @if (1 === $post->postNumber) f-post-first @endif">

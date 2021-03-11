@@ -134,7 +134,7 @@ class Userlist extends Page
             $this->startNum = 0;
             $this->userList = null;
             $this->links    = [null, null, null, null, null, null];
-            $this->fIswev   = ['i', __('No users found')];
+            $this->fIswev   = ['i', 'No users found'];
         }
 
         $this->fIndex       = 'userlist';
