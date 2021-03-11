@@ -412,7 +412,7 @@ msgid "Edit "
 msgstr "Edit"
 
 msgid "Editing profile"
-msgstr "Editing profile"
+msgstr "Edit profile"
 
 msgid "Configure "
 msgstr "Configure"
