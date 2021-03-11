@@ -384,7 +384,7 @@ class BBCode extends Parser
         $error = $structure->getError();
 
         if (\is_array($error)) {
-            $v->addError(__(...$error));
+            $v->addError(__($error));
         }
 
         return $txt;

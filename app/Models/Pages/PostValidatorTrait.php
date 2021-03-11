@@ -54,7 +54,7 @@ trait PostValidatorTrait
 
             foreach ($this->c->Parser->getErrors([], [], true) as $error) {
                 $prepare = false;
-                $v->addError(__(...$error));
+                $v->addError(__($error));
             }
         }
 

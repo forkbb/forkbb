@@ -33,7 +33,7 @@ class Html extends RulesValidator
             return $result;
         } else {
             foreach ($errors as $args) {
-                $v->addError(__(...$args));
+                $v->addError(__($args));
             }
 
             return $value;
