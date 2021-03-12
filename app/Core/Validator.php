@@ -13,6 +13,7 @@ namespace ForkBB\Core;
 use ForkBB\Core\Container;
 use ForkBB\Core\File;
 use ForkBB\Core\RulesValidator;
+use InvalidArgumentException;
 use RuntimeException;
 use function \ForkBB\__;
 
@@ -342,7 +343,7 @@ class Validator
     /**
      * Добавляет ошибку
      */
-    public function addError(?string $error, string $type = 'v'): void
+    public function addError(/* string|array|null */ $error, string $type = 'v'): void
     {
         if (empty($vars = \end($this->curData))) {
             throw new RuntimeException('The array of variables is empty');
@@ -357,22 +358,24 @@ class Validator
 
         \extract($vars);
 
-        // псевдоним имени поля
-        $alias = $this->aliases[$field] ?? $field;
+        $alias   = $this->aliases[$field] ?? $field;
+        $message = $this->messages["{$field}.{$rule}"]
+            ?? $this->messages[$field]
+                ?? (\is_string($error) ? $error : null);
 
-        // текст ошибки
-        if (isset($this->messages[$field . '.' . $rule])) {
-            $error = $this->messages[$field . '.' . $rule];
-        } elseif (isset($this->messages[$field])) {
-            $error = $this->messages[$field];
+        if (isset($message)) {
+            if (\is_array($message)) {
+                list($type, $message) = $message;
+            }
+
+            $this->errors[$type][] = [$message, [':alias' => __($alias), ':attr' => $attr]];
+        } elseif (\is_array($error)) {
+            $this->errors[$type][] = $error;
+        } else {
+            throw new InvalidArgumentException('Expected string or array');
         }
 
-        if (\is_array($error)) {
-            list($type, $error) = $error;
-        }
-
-        $this->errors[$type][] = [$error, [':alias' => __($alias), ':attr' => $attr]];
-        $this->error           = true;
+        $this->error = true;
     }
 
     /**
@@ -380,13 +383,7 @@ class Validator
      */
     protected function getArguments(string $field, string $rule) /* : mixed */
     {
-        if (isset($this->arguments[$field . '.' . $rule])) {
-            return $this->arguments[$field . '.' . $rule];
-        } elseif (isset($this->arguments[$field])) {
-            return $this->arguments[$field];
-        } else {
-            return null;
-        }
+        return $this->arguments["{$field}.{$rule}"] ?? $this->arguments[$field] ?? null;
     }
 
     /**
