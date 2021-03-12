@@ -90,7 +90,7 @@ class Reports extends Admin
                 'type'    => $author->isGuest ? 'str' : 'link',
                 'value'   => $author->username,
                 'title'   => $author->username,
-                'caption' => __('Reported by'),
+                'caption' => 'Reported by',
                 'href'    => $author->link,
             ];
             $post = $report->post;
@@ -112,7 +112,7 @@ class Reports extends Admin
                 'class'   => 'reason',
                 'type'    => 'str',
                 'value'   => $report->message,
-                'caption' => __('Reason'),
+                'caption' => 'Reason',
             ];
             if ($noZapped) {
                 $cur['fields']['zap' . $report->id] = [

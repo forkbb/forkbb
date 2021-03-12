@@ -49,7 +49,7 @@ trait PostFormTrait
                 'class'     => 'w1',
                 'type'      => 'text',
                 'maxlength' => '25',
-                'caption'   => __('Username'),
+                'caption'   => 'Username',
                 'required'  => true,
                 'pattern'   => '^.{2,25}$',
                 'value'     => $vars['username'] ?? null,
@@ -59,7 +59,7 @@ trait PostFormTrait
                 'class'     => 'w2',
                 'type'      => 'text',
                 'maxlength' => '80',
-                'caption'   => __('Email'),
+                'caption'   => 'Email',
                 'required'  => '1' == $this->c->config->p_force_guest_email,
                 'pattern'   => '.+@.+',
                 'value'     => $vars['email'] ?? null,
@@ -72,7 +72,7 @@ trait PostFormTrait
                 'class'     => 'w0',
                 'type'      => 'text',
                 'maxlength' => '70',
-                'caption'   => __('Subject'),
+                'caption'   => 'Subject',
                 'required'  => true,
                 'value'     => $vars['subject'] ?? null,
                 'autofocus' => $autofocus,
@@ -83,7 +83,7 @@ trait PostFormTrait
         $fieldset['message'] = [
             'class'    => 'w0',
             'type'     => 'textarea',
-            'caption'  => __('Message'),
+            'caption'  => 'Message',
             'required' => true,
             'value'    => $vars['message'] ?? null,
 /* ????
@@ -207,7 +207,7 @@ trait PostFormTrait
                 'min'      => '0',
                 'max'      => '366',
                 'value'    => $vars['poll']['duration'] ?? 0,
-                'caption'  => __('Poll duration label'),
+                'caption'  => 'Poll duration label',
                 'help'     => 'Poll duration help',
                 'disabled' => $vars['pollNoEdit'] ?? null,
             ];
@@ -230,7 +230,7 @@ trait PostFormTrait
                 $fieldset["poll[question][{$qid}]"] = [
                     'type'      => 'text',
                     'maxlength' => '240',
-                    'caption'   => __('Question text label'),
+                    'caption'   => 'Question text label',
                     'value'     => $vars['poll']['question'][$qid] ?? null,
                     'disabled'  => $vars['pollNoEdit'] ?? null,
                 ];
@@ -239,7 +239,7 @@ trait PostFormTrait
                     'min'      => '1',
                     'max'      => (string) $this->c->config->i_poll_max_fields,
                     'value'    => $vars['poll']['type'][$qid] ?? 1,
-                    'caption'  => __('Answer type label'),
+                    'caption'  => 'Answer type label',
                     'help'     => 'Answer type help',
                     'disabled' => $vars['pollNoEdit'] ?? null,
                 ];
@@ -248,7 +248,7 @@ trait PostFormTrait
                     $fieldset["poll[answer][{$qid}][{$fid}]"] = [
                         'type'      => 'text',
                         'maxlength' => '240',
-                        'caption'   => __(['Answer %s label', $fid]),
+                        'caption'   => ['Answer %s label', $fid],
                         'value'     => $vars['poll']['answer'][$qid][$fid] ?? null,
                         'disabled'  => $vars['pollNoEdit'] ?? null,
                     ];

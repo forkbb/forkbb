@@ -577,7 +577,7 @@ class Moderate extends Page
             $fields['subject'] = [
                 'type'      => 'text',
                 'maxlength' => '70',
-                'caption'   => __('New subject'),
+                'caption'   => 'New subject',
                 'required'  => true,
                 'value'     => '' == $v->subject ? $this->curTopic->subject : $v->subject,
                 'autofocus' => $autofocus,
@@ -590,7 +590,7 @@ class Moderate extends Page
                 'type'      => 'select',
                 'options'   => $this->listForOptions,
                 'value'     => null,
-                'caption'   => __('Move to'),
+                'caption'   => 'Move to',
                 'autofocus' => $autofocus,
             ];
             $autofocus = null;

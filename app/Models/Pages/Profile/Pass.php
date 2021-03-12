@@ -105,14 +105,14 @@ class Pass extends Profile
                         'new_pass' => [
                             'autofocus' => true,
                             'type'      => 'password',
-                            'caption'   => __('New pass'),
+                            'caption'   => 'New pass',
                             'required'  => true,
                             'pattern'   => '^.{16,}$',
                             'help'      => 'Passphrase help',
                         ],
                         'password' => [
                             'type'      => 'password',
-                            'caption'   => __('Your passphrase'),
+                            'caption'   => 'Your passphrase',
                             'required'  => true,
                         ],
                     ],

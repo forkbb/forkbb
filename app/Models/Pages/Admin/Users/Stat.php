@@ -86,7 +86,7 @@ class Stat extends Users
             $fields["l{$number}-ip"] = [
                 'class'   => ['result', 'ip'],
                 'type'    => $flag ? 'link' : 'str',
-                'caption' => __('Results IP address head'),
+                'caption' => 'Results IP address head',
                 'value'   => $flag ? $ip : null,
                 'href'    => $flag
                     ? $this->c->Router->link(
@@ -100,19 +100,19 @@ class Stat extends Users
             $fields["l{$number}-last-used"] = [
                 'class'   => ['result', 'last-used'],
                 'type'    => 'str',
-                'caption' => __('Results last used head'),
+                'caption' => 'Results last used head',
                 'value'   => $flag ? \ForkBB\dt($data['last_used']) : null,
             ];
             $fields["l{$number}-used-times"] = [
                 'class'   => ['result', 'used-times'],
                 'type'    => 'str',
-                'caption' => __('Results times found head'),
+                'caption' => 'Results times found head',
                 'value'   => $flag ? \ForkBB\num($data['used_times']) : null,
             ];
             $fields["l{$number}-action"] = [
                 'class'   => ['result', 'action'],
                 'type'    => $flag ? 'link' : 'str',
-                'caption' => __('Results action head'),
+                'caption' => 'Results action head',
                 'value'   => $flag ? __('Results find more link') : null,
                 'href'    => $flag
                     ? $this->c->Router->link(

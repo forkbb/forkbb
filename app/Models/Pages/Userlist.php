@@ -179,7 +179,7 @@ class Userlist extends Page
                 'type'      => 'text',
                 'maxlength' => '25',
                 'value'     => $v->name ?: '*',
-                'caption'   => __('Username'),
+                'caption'   => 'Username',
                 'help'      => 'User search info',
                 'required'  => true,
 #               'autofocus' => true,
@@ -192,7 +192,7 @@ class Userlist extends Page
             'type'    => 'select',
             'options' => $this->groupList,
             'value'   => $v->group,
-            'caption' => __('User group'),
+            'caption' => 'User group',
         ];
         $fields['sort'] = [
             'class'   => 'w4',
@@ -203,7 +203,7 @@ class Userlist extends Page
                 ['registered', __('Sort by date')],
             ],
             'value'   => $v->sort,
-            'caption' => __('Sort users by'),
+            'caption' => 'Sort users by',
         ];
         $fields['dir'] = [
             'class'   => 'w4',
@@ -213,7 +213,7 @@ class Userlist extends Page
                 'ASC'  => __('Ascending'),
                 'DESC' => __('Descending'),
             ],
-            'caption' => __('User sort order'),
+            'caption' => 'User sort order',
         ];
         $form['sets']['users'] = ['fields' => $fields];
 

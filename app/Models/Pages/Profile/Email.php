@@ -230,7 +230,7 @@ class Email extends Profile
                             'autofocus' => true,
                             'type'      => 'text',
                             'maxlength' => '80',
-                            'caption'   => __($this->rules->confirmEmail ? 'New or old email' : 'New email'),
+                            'caption'   => $this->rules->confirmEmail ? 'New or old email' : 'New email',
                             'required'  => true,
                             'pattern'   => '.+@.+',
                             'value'     => $this->curUser->email,
@@ -238,7 +238,7 @@ class Email extends Profile
                         ],
                         'password' => [
                             'type'      => 'password',
-                            'caption'   => __('Your passphrase'),
+                            'caption'   => 'Your passphrase',
                             'required'  => true,
                         ],
                     ],

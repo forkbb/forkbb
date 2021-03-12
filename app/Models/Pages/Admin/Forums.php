@@ -175,7 +175,7 @@ class Forums extends Admin
                     'class'   => ['name', 'forum', 'depth' . $forum->depth],
                     'type'    => 'btn',
                     'value'   => $forum->forum_name,
-                    'caption' => __('Forum label'),
+                    'caption' => 'Forum label',
                     'link'    => $this->c->Router->link(
                         'AdminForumsEdit',
                         [
@@ -189,14 +189,14 @@ class Forums extends Admin
                     'min'     => '0',
                     'max'     => '9999999999',
                     'value'   => $forum->disp_position,
-                    'caption' => __('Position label'),
+                    'caption' => 'Position label',
                 ];
                 $disabled = (bool) $forum->subforums;
                 $fields["delete-btn{$forum->id}"] = [
                     'class'    => ['delete', 'forum'],
                     'type'     => 'btn',
                     'value'    => '❌',
-                    'caption'  => __('Delete'),
+                    'caption'  => 'Delete',
                     'title'    => __('Delete'),
                     'link'     => $disabled
                         ? '#'
@@ -293,7 +293,7 @@ class Forums extends Admin
                 'confirm' => [
                     'fields' => [
                         'confirm' => [
-                            'caption' => __('Confirm delete'),
+                            'caption' => 'Confirm delete',
                             'type'    => 'checkbox',
                             'label'   => __(['I want to delete forum %s', $forum->forum_name]),
                             'value'   => '1',
@@ -462,19 +462,19 @@ class Forums extends Admin
                     'type'      => 'text',
                     'maxlength' => '80',
                     'value'     => $forum->forum_name,
-                    'caption'   => __('Forum name label'),
+                    'caption'   => 'Forum name label',
                     'required'  => true,
                 ],
                 'forum_desc' => [
                     'type'    => 'textarea',
                     'value'   => $forum->forum_desc,
-                    'caption' => __('Forum description label'),
+                    'caption' => 'Forum description label',
                 ],
                 'parent' => [
                     'type'     => 'select',
                     'options'  => $this->listForOptions,
                     'value'    => $forum->parent_forum_id ? $forum->parent_forum_id : -$forum->cat_id,
-                    'caption'  => __('Parent label'),
+                    'caption'  => 'Parent label',
                     'help'     => 'Parent help',
                     'required' => true,
                 ],
@@ -486,13 +486,13 @@ class Forums extends Admin
                         2 => __('Subject option'),
                     ],
                     'value'   => $forum->sort_by,
-                    'caption' => __('Sort by label'),
+                    'caption' => 'Sort by label',
                 ],
                 'redirect_url' => [
                     'type'      => 'text',
                     'maxlength' => '255',
                     'value'     => $forum->redirect_url,
-                    'caption'   => __('Redirect label'),
+                    'caption'   => 'Redirect label',
                     'help'      => 'Redirect help',
                     'disabled'  => $forum->num_topics || $forum->subforums ? true : null,
                 ],
@@ -500,7 +500,7 @@ class Forums extends Admin
                     'type'    => 'radio',
                     'value'   => $forum->no_sum_mess,
                     'values'  => [0 => __('Yes'), 1 => __('No')],
-                    'caption' => __('Count messages label'),
+                    'caption' => 'Count messages label',
                     'help'    => ['Count messages help', $this->c->Router->link('AdminUsers'), __('Users')],
                 ],
             ],
@@ -523,7 +523,7 @@ class Forums extends Admin
                 'class'    => $group->def_read_forum ? $aOn : $aOff,
                 'type'     => 'checkbox',
                 'value'    => '1',
-                'caption'  => __('Read forum label'),
+                'caption'  => 'Read forum label',
                 'label'    => __('<span></span>'),
                 'checked'  => $group->set_read_forum,
                 'disabled' => $group->dis_read_forum,
@@ -532,7 +532,7 @@ class Forums extends Admin
                 'class'    => $group->def_post_replies ? $aOn : $aOff,
                 'type'     => 'checkbox',
                 'value'    => '1',
-                'caption'  => __('Post replies label'),
+                'caption'  => 'Post replies label',
                 'label'    => __('<span></span>'),
                 'checked'  => $group->set_post_replies,
                 'disabled' => $group->dis_post_replies,
@@ -541,7 +541,7 @@ class Forums extends Admin
                 'class'    => $group->def_post_topics ? $aOn : $aOff,
                 'type'     => 'checkbox',
                 'value'    => '1',
-                'caption'  => __('Post topics label'),
+                'caption'  => 'Post topics label',
                 'label'    => __('<span></span>'),
                 'checked'  => $group->set_post_topics,
                 'disabled' => $group->dis_post_topics,

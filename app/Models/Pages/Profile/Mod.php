@@ -136,7 +136,7 @@ class Mod extends Profile
                     'class'   => ['modforum', 'name', 'depth' . $forum->depth],
                     'type'    => 'str',
                     'value'   => $forum->forum_name,
-                    'caption' => __('Forum label'),
+                    'caption' => 'Forum label',
                 ];
                 $fields["moderator[{$forum->id}]"] = [
                     'class'    => ['modforum', 'moderator'],
@@ -144,7 +144,7 @@ class Mod extends Profile
                     'value'    => $forum->id,
                     'checked'  => isset($this->curForums[$forum->id]) && $this->curUser->isModerator($forum),
                     'disabled' => ! isset($this->curForums[$forum->id]) || '' != $this->curForums[$forum->id]->redirect_url,
-                    'caption'  => __('Moderator label'),
+                    'caption'  => 'Moderator label',
                 ];
                 $form['sets']["forum{$forum->id}"] = [
                     'class'  => 'modforum',

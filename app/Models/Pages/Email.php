@@ -150,14 +150,14 @@ class Email extends Page
                         'subject' => [
                             'type'      => 'text',
                             'maxlength' => '70',
-                            'caption'   => __('Email subject'),
+                            'caption'   => 'Email subject',
                             'required'  => true,
                             'value'     => $vars['subject'] ?? null,
                             'autofocus' => true,
                         ],
                         'message' => [
                             'type'      => 'textarea',
-                            'caption'   => __('Email message'),
+                            'caption'   => 'Email message',
                             'required'  => true,
                             'value'     => $data['message'] ?? null,
                         ],

@@ -56,13 +56,13 @@ class View extends Profile
         $fields['username'] = [
             'class'   => 'pline',
             'type'    => 'str',
-            'caption' => __('Username'),
+            'caption' => 'Username',
             'value'   => $this->curUser->username,
         ];
         $fields['title'] = [
             'class'   => 'pline',
             'type'    => 'str',
-            'caption' => __('Title'),
+            'caption' => 'Title',
             'value'   => $this->curUser->title(),
         ];
         $fields[] = [
@@ -74,7 +74,7 @@ class View extends Profile
         ) {
             $fields['avatar'] = [
                 'type'    => 'yield',
-                'caption' => __('Avatar'),
+                'caption' => 'Avatar',
                 'value'   => 'avatar',
             ];
         }
@@ -96,7 +96,7 @@ class View extends Profile
                     'admin_note' => [
                         'class'     => 'pline',
                         'type'      => 'str',
-                        'caption'   => __('Admin note'),
+                        'caption'   => 'Admin note',
                         'value'     => $this->curUser->admin_note,
                     ],
                 ],
@@ -109,7 +109,7 @@ class View extends Profile
             $fields['realname'] = [
                 'class'   => 'pline',
                 'type'    => 'str',
-                'caption' => __('Realname'),
+                'caption' => 'Realname',
                 'value'   => $this->curUser->censorRealname,
             ];
         }
@@ -122,14 +122,14 @@ class View extends Profile
                 'class'   => 'pline',
                 'type'    => 'str',
                 'value'   => $genders[$this->curUser->gender],
-                'caption' => __('Gender'),
+                'caption' => 'Gender',
             ];
         }
         if ('' != $this->curUser->location) {
             $fields['location'] = [
                 'class'   => 'pline',
                 'type'    => 'str',
-                'caption' => __('Location'),
+                'caption' => 'Location',
                 'value'   => $this->curUser->censorLocation,
             ];
         }
@@ -148,7 +148,7 @@ class View extends Profile
                 $fields['email'] = [
                     'class'   => 'pline',
                     'type'    => 'link',
-                    'caption' => __('Email info'),
+                    'caption' => 'Email info',
                     'value'   => $this->curUser->censorEmail,
                     'href'    => 'mailto:' . $this->curUser->censorEmail,
                 ];
@@ -158,7 +158,7 @@ class View extends Profile
                 $fields['email'] = [
                     'class'   => 'pline',
                     'type'    => 'link',
-                    'caption' => __('Email info'),
+                    'caption' => 'Email info',
                     'value'   => __('Send email'),
                     'href'    => $this->c->Router->link('SendEmail', ['id' => $this->curUser->id]),
                 ];
@@ -172,7 +172,7 @@ class View extends Profile
                 'id'      => 'website',
                 'class'   => 'pline',
                 'type'    => 'link',
-                'caption' => __('Website'),
+                'caption' => 'Website',
                 'value'   => $this->curUser->censorUrl,
                 'href'    => $this->curUser->censorUrl,
                 'rel'     => 'ugc',
@@ -192,7 +192,7 @@ class View extends Profile
             if ($this->curUser->isSignature) {
                 $fields['signature'] = [
                     'type'    => 'yield',
-                    'caption' => __('Signature'),
+                    'caption' => 'Signature',
                     'value'   => 'signature',
                 ];
 
@@ -213,20 +213,20 @@ class View extends Profile
             'class'   => 'pline',
             'type'    => 'str',
             'value'   => \ForkBB\dt($this->curUser->registered, true),
-            'caption' => __('Registered info'),
+            'caption' => 'Registered info',
         ];
         $fields['lastpost'] = [
             'class'   => 'pline',
             'type'    => 'str',
             'value'   => \ForkBB\dt($this->curUser->last_post, true),
-            'caption' => __('Last post info'),
+            'caption' => 'Last post info',
         ];
         if ($this->curUser->last_post > 0) {
             if ('1' == $this->user->g_search) {
                 $fields['posts'] = [
                     'class'   => 'pline',
                     'type'    => 'link',
-                    'caption' => __('Posts info'),
+                    'caption' => 'Posts info',
                     'value'   => $this->user->showPostCount ? \ForkBB\num($this->curUser->num_posts) : __('Show posts'),
                     'href'    => $this->c->Router->link(
                         'SearchAction',
@@ -240,7 +240,7 @@ class View extends Profile
                 $fields['topics'] = [
                     'class'   => 'pline',
                     'type'    => 'link',
-                    'caption' => __('Topics info'),
+                    'caption' => 'Topics info',
                     'value'   => $this->user->showPostCount ? \ForkBB\num($this->curUser->num_topics) : __('Show topics'),
                     'href'    => $this->c->Router->link(
                         'SearchAction',
@@ -255,13 +255,13 @@ class View extends Profile
                 $fields['posts'] = [
                     'class'   => 'pline',
                     'type'    => 'str',
-                    'caption' => __('Posts info'),
+                    'caption' => 'Posts info',
                     'value'   => \ForkBB\num($this->curUser->num_posts),
                 ];
                 $fields['topics'] = [
                     'class'   => 'pline',
                     'type'    => 'str',
-                    'caption' => __('Topics info'),
+                    'caption' => 'Topics info',
                     'value'   => \ForkBB\num($this->curUser->num_topics),
                 ];
             }
@@ -274,7 +274,7 @@ class View extends Profile
                 $fields['forums_subscr'] = [
                     'class'   => 'pline',
                     'type'    => $isLink ? 'link' : 'str',
-                    'caption' => __('Total forums subscriptions'),
+                    'caption' => 'Total forums subscriptions',
                     'value'   => \ForkBB\num(\count($subscrInfo[$subscr::FORUMS_DATA])),
                     'href'    => $this->c->Router->link(
                         'SearchAction',
@@ -290,7 +290,7 @@ class View extends Profile
                 $fields['topics_subscr'] = [
                     'class'   => 'pline',
                     'type'    => $isLink ? 'link' : 'str',
-                    'caption' => __('Total topics subscriptions'),
+                    'caption' => 'Total topics subscriptions',
                     'value'   => \ForkBB\num(\count($subscrInfo[$subscr::TOPICS_DATA])),
                     'href'    => $this->c->Router->link(
                         'SearchAction',
@@ -318,14 +318,14 @@ class View extends Profile
                 'value'   => $this->rules->my
                     ? \ForkBB\dt($this->curUser->last_visit)
                     : \ForkBB\dt($this->curUser->currentVisit, true),
-                'caption' => __('Last visit info'),
+                'caption' => 'Last visit info',
             ];
         }
         if ($this->rules->viewOEmail) {
             $fields['open-email'] = [
                 'class'   => 'pline',
                 'type'    => 2 === $this->curUser->email_setting ? 'str' : 'link',
-                'caption' => __('Email info'),
+                'caption' => 'Email info',
                 'value'   => $this->curUser->censorEmail,
                 'href'    => 'mailto:' . $this->curUser->censorEmail,
             ];
@@ -337,7 +337,7 @@ class View extends Profile
             $fields['ip'] = [
                 'class'   => 'pline',
                 'type'    => 'link',
-                'caption' => __('IP'),
+                'caption' => 'IP',
                 'value'   => $this->curUser->registration_ip,
                 'href'    => $this->c->Router->link(
                     'AdminHost',

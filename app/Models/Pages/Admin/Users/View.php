@@ -186,25 +186,25 @@ class View extends Users
         $fields['username'] = [
             'type'      => 'text',
             'maxlength' => '25',
-            'caption'   => __('Username label'),
+            'caption'   => 'Username label',
             'value'     => $data['username'] ?? null,
         ];
         $fields['email'] = [
             'type'      => 'text',
             'maxlength' => '80',
-            'caption'   => __('E-mail address label'),
+            'caption'   => 'E-mail address label',
             'value'     => $data['email'] ?? null,
         ];
         $fields['title'] = [
             'type'      => 'text',
             'maxlength' => '50',
-            'caption'   => __('Title label'),
+            'caption'   => 'Title label',
             'value'     => $data['title'] ?? null,
         ];
         $fields['realname'] = [
             'type'      => 'text',
             'maxlength' => '40',
-            'caption'   => __('Real name label'),
+            'caption'   => 'Real name label',
             'value'     => $data['realname'] ?? null,
         ];
         $genders = [
@@ -217,31 +217,31 @@ class View extends Users
             'type'    => 'radio',
             'value'   => $data['gender'] ?? -1,
             'values'  => $genders,
-            'caption' => __('Gender label'),
+            'caption' => 'Gender label',
         ];
         $fields['url'] = [
             'id'        => 'website',
             'type'      => 'text',
             'maxlength' => '100',
-            'caption'   => __('Website label'),
+            'caption'   => 'Website label',
             'value'     => $data['url'] ?? null,
         ];
         $fields['location'] = [
             'type'      => 'text',
             'maxlength' => '30',
-            'caption'   => __('Location label'),
+            'caption'   => 'Location label',
             'value'     => $data['location'] ?? null,
         ];
         $fields['signature'] = [
             'type'      => 'text',
             'maxlength' => '512',
-            'caption'   => __('Signature label'),
+            'caption'   => 'Signature label',
             'value'     => $data['signature'] ?? null,
         ];
         $fields['admin_note'] = [
             'type'      => 'text',
             'maxlength' => '30',
-            'caption'   => __('Admin note label'),
+            'caption'   => 'Admin note label',
             'value'     => $data['admin_note'] ?? null,
         ];
         $fields['between1'] = [
@@ -254,7 +254,7 @@ class View extends Users
             'min'     => '0',
             'max'     => '9999999999',
             'value'   => $data['num_posts_1'] ?? null,
-            'caption' => __('Posts label'),
+            'caption' => 'Posts label',
         ];
         $fields['num_posts_2'] = [
             'type'    => 'number',
@@ -275,7 +275,7 @@ class View extends Users
             'type'      => 'text',
             'maxlength' => '100',
             'value'     => $data['last_post_1'] ?? null,
-            'caption'   => __('Last post label'),
+            'caption'   => 'Last post label',
         ];
         $fields['last_post_2'] = [
             'class'     => 'bend',
@@ -295,7 +295,7 @@ class View extends Users
             'type'      => 'text',
             'maxlength' => '100',
             'value'     => $data['last_visit_1'] ?? null,
-            'caption'   => __('Last visit label'),
+            'caption'   => 'Last visit label',
         ];
         $fields['last_visit_2'] = [
             'class'     => 'bend',
@@ -315,7 +315,7 @@ class View extends Users
             'type'      => 'text',
             'maxlength' => '100',
             'value'     => $data['registered_1'] ?? null,
-            'caption'   => __('Registered label'),
+            'caption'   => 'Registered label',
         ];
         $fields['registered_2'] = [
             'class'     => 'bend',
@@ -348,7 +348,7 @@ class View extends Users
                 'registered' => __('Order by registered'),
             ],
             'value'   => $data['order_by'] ?? 'registered',
-            'caption' => __('Order by label'),
+            'caption' => 'Order by label',
         ];
         $fields['direction'] = [
             'class'   => 'bend',
@@ -366,7 +366,7 @@ class View extends Users
             'type'    => 'select',
             'options' => $this->groups(),
             'value'   => $data['user_group'] ?? -1,
-            'caption' => __('User group label'),
+            'caption' => 'User group label',
         ];
 
         $form['sets']['sorting'] = [
@@ -399,7 +399,7 @@ class View extends Users
         $fields['ip'] = [
             'type'      => 'text',
             'maxlength' => '49',
-            'caption'   => __('IP address label'),
+            'caption'   => 'IP address label',
             'value'     => $data['ip'] ?? null,
             'required'  => true,
         ];

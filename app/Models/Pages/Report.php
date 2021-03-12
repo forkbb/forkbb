@@ -132,7 +132,7 @@ class Report extends Page
                     'fields' => [
                         'reason' => [
                             'type'      => 'textarea',
-                            'caption'   => __('Reason'),
+                            'caption'   => 'Reason',
                             'required'  => true,
                             'value'     => $data['reason'] ?? null,
                             'autofocus' => true,

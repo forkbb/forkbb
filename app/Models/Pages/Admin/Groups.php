@@ -81,7 +81,7 @@ class Groups extends Admin
                             'type'      => 'select',
                             'options'   => $this->groupsNew,
                             'value'     => $this->c->config->i_default_user_group,
-                            'caption'   => __('New group label'),
+                            'caption'   => 'New group label',
                             'help'      => 'New group help',
 #                           'autofocus' => true,
                         ],
@@ -115,7 +115,7 @@ class Groups extends Admin
                             'type'    => 'select',
                             'options' => $this->groupsDefault,
                             'value'   => $this->c->config->i_default_user_group,
-                            'caption' => __('Default group label'),
+                            'caption' => 'Default group label',
                             'help'    => 'Default group help',
                         ],
                     ],
@@ -376,7 +376,7 @@ class Groups extends Admin
             'type'      => 'text',
             'maxlength' => '50',
             'value'     => $group->g_title,
-            'caption'   => __('Group title label'),
+            'caption'   => 'Group title label',
             'required'  => true,
 #           'autofocus' => true,
         ];
@@ -384,7 +384,7 @@ class Groups extends Admin
             'type'      => 'text',
             'maxlength' => '50',
             'value'     => $group->g_user_title,
-            'caption'   => __('User title label'),
+            'caption'   => 'User title label',
             'help'      => ['User title help', $group->groupGuest ? __('Guest') : __('Member')],
         ];
         $form['sets']['group-titles'] = [
@@ -413,7 +413,7 @@ class Groups extends Admin
                 'type'    => 'select',
                 'options' => $options,
                 'value'   => $group->g_promote_next_group,
-                'caption' => __('Promote users label'),
+                'caption' => 'Promote users label',
                 'help'    => ['Promote users help', __('Disable promotion')],
             ];
             $fieldset['g_promote_min_posts'] = [
@@ -421,7 +421,7 @@ class Groups extends Admin
                 'min'     => '0',
                 'max'     => '9999999999',
                 'value'   => $group->g_promote_min_posts,
-                'caption' => __('Number for promotion label'),
+                'caption' => 'Number for promotion label',
                 'help'    => 'Number for promotion help',
             ];
             $form['sets']['group-promote'] = [
@@ -443,42 +443,42 @@ class Groups extends Admin
                 'type'    => 'radio',
                 'value'   => $group->g_moderator,
                 'values'  => $yn,
-                'caption' => __('Mod privileges label'),
+                'caption' => 'Mod privileges label',
                 'help'    => 'Mod privileges help',
             ];
             $fieldset['g_mod_edit_users'] = [
                 'type'    => 'radio',
                 'value'   => $group->g_mod_edit_users,
                 'values'  => $yn,
-                'caption' => __('Edit profile label'),
+                'caption' => 'Edit profile label',
                 'help'    => 'Edit profile help',
             ];
             $fieldset['g_mod_rename_users'] = [
                 'type'    => 'radio',
                 'value'   => $group->g_mod_rename_users,
                 'values'  => $yn,
-                'caption' => __('Rename users label'),
+                'caption' => 'Rename users label',
                 'help'    => 'Rename users help',
             ];
             $fieldset['g_mod_change_passwords'] = [
                 'type'    => 'radio',
                 'value'   => $group->g_mod_change_passwords,
                 'values'  => $yn,
-                'caption' => __('Change passwords label'),
+                'caption' => 'Change passwords label',
                 'help'    => 'Change passwords help',
             ];
             $fieldset['g_mod_promote_users'] = [
                 'type'    => 'radio',
                 'value'   => $group->g_mod_promote_users,
                 'values'  => $yn,
-                'caption' => __('Mod promote users label'),
+                'caption' => 'Mod promote users label',
                 'help'    => 'Mod promote users help',
             ];
             $fieldset['g_mod_ban_users'] = [
                 'type'    => 'radio',
                 'value'   => $group->g_mod_ban_users,
                 'values'  => $yn,
-                'caption' => __('Ban users label'),
+                'caption' => 'Ban users label',
                 'help'    => 'Ban users help',
             ];
             $form['sets']['group-mod'] = [
@@ -499,28 +499,28 @@ class Groups extends Admin
             'type'    => 'radio',
             'value'   => $group->g_read_board,
             'values'  => $yn,
-            'caption' => __('Read board label'),
+            'caption' => 'Read board label',
             'help'    => 'Read board help',
         ];
         $fieldset['g_view_users'] = [
             'type'    => 'radio',
             'value'   => $group->g_view_users,
             'values'  => $yn,
-            'caption' => __('View user info label'),
+            'caption' => 'View user info label',
             'help'    => 'View user info help',
         ];
         $fieldset['g_post_replies'] = [
             'type'    => 'radio',
             'value'   => $group->g_post_replies,
             'values'  => $yn,
-            'caption' => __('Post replies label'),
+            'caption' => 'Post replies label',
             'help'    => 'Post replies help',
         ];
         $fieldset['g_post_topics'] = [
             'type'    => 'radio',
             'value'   => $group->g_post_topics,
             'values'  => $yn,
-            'caption' => __('Post topics label'),
+            'caption' => 'Post topics label',
             'help'    => 'Post topics help',
         ];
 
@@ -529,28 +529,28 @@ class Groups extends Admin
                 'type'    => 'radio',
                 'value'   => $group->g_edit_posts,
                 'values'  => $yn,
-                'caption' => __('Edit posts label'),
+                'caption' => 'Edit posts label',
                 'help'    => 'Edit posts help',
             ];
             $fieldset['g_delete_posts'] = [
                 'type'    => 'radio',
                 'value'   => $group->g_delete_posts,
                 'values'  => $yn,
-                'caption' => __('Delete posts label'),
+                'caption' => 'Delete posts label',
                 'help'    => 'Delete posts help',
             ];
             $fieldset['g_delete_topics'] = [
                 'type'    => 'radio',
                 'value'   => $group->g_delete_topics,
                 'values'  => $yn,
-                'caption' => __('Delete topics label'),
+                'caption' => 'Delete topics label',
                 'help'    => 'Delete topics help',
             ];
             $fieldset['g_set_title'] = [
                 'type'    => 'radio',
                 'value'   => $group->g_set_title,
                 'values'  => $yn,
-                'caption' => __('Set own title label'),
+                'caption' => 'Set own title label',
                 'help'    => 'Set own title help',
             ];
         }
@@ -559,21 +559,21 @@ class Groups extends Admin
             'type'    => 'radio',
             'value'   => $group->g_post_links,
             'values'  => $yn,
-            'caption' => __('Post links label'),
+            'caption' => 'Post links label',
             'help'    => 'Post links help',
         ];
         $fieldset['g_search'] = [
             'type'    => 'radio',
             'value'   => $group->g_search,
             'values'  => $yn,
-            'caption' => __('User search label'),
+            'caption' => 'User search label',
             'help'    => 'User search help',
         ];
         $fieldset['g_search_users'] = [
             'type'    => 'radio',
             'value'   => $group->g_search_users,
             'values'  => $yn,
-            'caption' => __('User list search label'),
+            'caption' => 'User list search label',
             'help'    => 'User list search help',
         ];
 
@@ -582,7 +582,7 @@ class Groups extends Admin
                 'type'    => 'radio',
                 'value'   => $group->g_send_email,
                 'values'  => $yn,
-                'caption' => __('Send e-mails label'),
+                'caption' => 'Send e-mails label',
                 'help'    => 'Send e-mails help',
             ];
         }
@@ -605,7 +605,7 @@ class Groups extends Admin
             'min'     => '0',
             'max'     => '999999',
             'value'   => $group->g_post_flood,
-            'caption' => __('Post flood label'),
+            'caption' => 'Post flood label',
             'help'    => 'Post flood help',
         ];
         $fieldset['g_search_flood'] = [
@@ -613,7 +613,7 @@ class Groups extends Admin
             'min'     => '0',
             'max'     => '999999',
             'value'   => $group->g_search_flood,
-            'caption' => __('Search flood label'),
+            'caption' => 'Search flood label',
             'help'    => 'Search flood help',
         ];
 
@@ -623,7 +623,7 @@ class Groups extends Admin
                 'min'     => '0',
                 'max'     => '999999',
                 'value'   => $group->g_deledit_interval,
-                'caption' => __('Delete-edit interval label'),
+                'caption' => 'Delete-edit interval label',
                 'help'    => 'Delete-edit interval help',
             ];
             $fieldset['g_email_flood'] = [
@@ -631,7 +631,7 @@ class Groups extends Admin
                 'min'     => '0',
                 'max'     => '999999',
                 'value'   => $group->g_email_flood,
-                'caption' => __('E-mail flood label'),
+                'caption' => 'E-mail flood label',
                 'help'    => 'E-mail flood help',
             ];
             $fieldset['g_report_flood'] = [
@@ -639,7 +639,7 @@ class Groups extends Admin
                 'min'     => '0',
                 'max'     => '999999',
                 'value'   => $group->g_report_flood,
-                'caption' => __('Report flood label'),
+                'caption' => 'Report flood label',
                 'help'    => 'Report flood help',
             ];
 
@@ -657,7 +657,7 @@ class Groups extends Admin
                 'min'     => '0',
                 'max'     => '16000',
                 'value'   => $group->g_sig_length,
-                'caption' => __('Max sig length label'),
+                'caption' => 'Max sig length label',
                 'help'    => 'Max sig length help',
             ];
             $fieldset['g_sig_lines'] = [
@@ -665,7 +665,7 @@ class Groups extends Admin
                 'min'     => '0',
                 'max'     => '100',
                 'value'   => $group->g_sig_lines,
-                'caption' => __('Max sig lines label'),
+                'caption' => 'Max sig lines label',
                 'help'    => 'Max sig lines help',
             ];
             $form['sets']['group-signature'] = [
@@ -679,14 +679,14 @@ class Groups extends Admin
                 'type'    => 'radio',
                 'value'   => $group->g_pm,
                 'values'  => $yn,
-                'caption' => __('Allow PM label'),
+                'caption' => 'Allow PM label',
             ];
             $fieldset['g_pm_limit'] = [
                 'type'    => 'number',
                 'min'     => '0',
                 'max'     => '999999',
                 'value'   => $group->g_pm_limit,
-                'caption' => __('PM limit label'),
+                'caption' => 'PM limit label',
                 'help'    => 'PM limit help',
             ];
             $form['sets']['group-pm'] = [
@@ -803,7 +803,7 @@ class Groups extends Admin
                         'type'    => 'select',
                         'options' => $groups,
                         'value'   => $this->c->config->i_default_user_group,
-                        'caption' => __('Move users label'),
+                        'caption' => 'Move users label',
                         'help'    => ['Move users info', $group->g_title, $count],
                     ],
                 ],
@@ -813,7 +813,7 @@ class Groups extends Admin
         $form['sets']['conf'] = [
             'fields' => [
                 'confirm' => [
-                    'caption' => __('Confirm delete'),
+                    'caption' => 'Confirm delete',
                     'type'    => 'checkbox',
                     'label'   => __(['I want to delete this group', $group->g_title]),
                     'value'   => '1',

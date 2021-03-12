@@ -300,14 +300,14 @@ class Update extends Admin
                         'dbpass' => [
                             'type'     => 'password',
                             'value'    => '',
-                            'caption'  => __('Database password'),
+                            'caption'  => 'Database password',
                             'help'     => 'Database password note',
                             'required' => true,
                         ],
                         'o_maintenance_message' => [
                             'type'     => 'textarea',
                             'value'    => $v ? $v->o_maintenance_message : $this->c->config->o_maintenance_message,
-                            'caption'  => __('Maintenance message'),
+                            'caption'  => 'Maintenance message',
                             'help'     => 'Maintenance message info',
                             'required' => true,
                         ],

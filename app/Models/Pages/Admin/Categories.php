@@ -91,7 +91,7 @@ class Categories extends Admin
                 'type'      => 'text',
                 'maxlength' => '80',
                 'value'     => $row['cat_name'],
-                'caption'   => __('Category name label'),
+                'caption'   => 'Category name label',
                 'required'  => true,
             ];
             $fields["form[{$key}][disp_position]"] = [
@@ -100,13 +100,13 @@ class Categories extends Admin
                 'min'     => '0',
                 'max'     => '9999999999',
                 'value'   => $row['disp_position'],
-                'caption' => __('Category position label'),
+                'caption' => 'Category position label',
             ];
             $fields["delete-btn{$key}"] = [
                 'class'   => ['delete', 'category'],
                 'type'    => 'btn',
                 'value'   => '❌',
-                'caption' => __('Delete'),
+                'caption' => 'Delete',
                 'title'   => __('Delete'),
                 'link'    => $this->c->Router->link(
                     'AdminCategoriesDelete',
@@ -128,7 +128,7 @@ class Categories extends Admin
                     'class'     => 'new',
                     'type'      => 'text',
                     'maxlength' => '80',
-                    'caption'   => __('Add category label'),
+                    'caption'   => 'Add category label',
                     'help'      => ['Add category help', $this->c->Router->link('AdminForums'), __('Forums')],
                 ],
             ],
@@ -204,7 +204,7 @@ class Categories extends Admin
                 'del' => [
                     'fields' => [
                         'confirm' => [
-                            'caption' => __('Confirm delete'),
+                            'caption' => 'Confirm delete',
                             'type'    => 'checkbox',
                             'label'   => __(['I want to delete the category %s', $category['cat_name']]),
                             'value'   => '1',

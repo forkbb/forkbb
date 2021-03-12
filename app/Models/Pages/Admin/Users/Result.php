@@ -277,14 +277,14 @@ class Result extends Users
             $fields["l{$number}-username"] = [
                 'class'   => ['result', 'username'],
                 'type'    => $user->isGuest ? 'str' : 'link',
-                'caption' => __('Results username head'),
+                'caption' => 'Results username head',
                 'value'   => $user->username,
                 'href'    => $user->link,
             ];
             $fields["l{$number}-email"] = [
                 'class'   => $user->isGuest ? ['result', 'email', 'no-data'] : ['result', 'email'],
                 'type'    => $user->isGuest ? 'str' : 'link',
-                'caption' => __('Results e-mail head'),
+                'caption' => 'Results e-mail head',
                 'value'   => $user->isGuest ? '' : $user->email,
                 'href'    => $user->isGuest ? '' : 'mailto:' . $user->email,
             ];
@@ -294,13 +294,13 @@ class Result extends Users
             $fields["l{$number}-title"] = [
                 'class'   => ['result', 'title'],
                 'type'    => 'str',
-                'caption' => __('Results title head'),
+                'caption' => 'Results title head',
                 'value'   => -1 === $user->id ? null : $user->title(),
             ];
             $fields["l{$number}-posts"] = [
                 'class'   => $user->isGuest ? ['result', 'posts', 'no-data'] : ['result', 'posts'],
                 'type'    => $user->num_posts ? 'link' : 'str',
-                'caption' => __('Results posts head'),
+                'caption' => 'Results posts head',
                 'value'   => $user->num_posts ? \ForkBB\num($user->num_posts) : null,
                 'href'    => $this->c->Router->link(
                     'SearchAction',
@@ -314,7 +314,7 @@ class Result extends Users
             $fields["l{$number}-note"] = [
                 'class'   => '' === \trim($user->admin_note ?? '') ? ['result', 'note', 'no-data'] : ['result', 'note'],
                 'type'    => 'str',
-                'caption' => __('Примечание админа'),
+                'caption' => 'Примечание админа',
                 'value'   => $user->admin_note,
             ];
 
@@ -322,7 +322,7 @@ class Result extends Users
                 $fields["l{$number}-view-ip"] = [
                     'class'   => $user->isGuest ? ['result', 'view-ip', 'no-data'] : ['result', 'view-ip'],
                     'type'    => $user->isGuest || ! $user->num_posts ? 'str' : 'link',
-                    'caption' => __('Results action head'),
+                    'caption' => 'Results action head',
                     'value'   => $user->isGuest ? null : __('Results view IP link'),
                     'href'    => $this->c->Router->link(
                         'AdminUserStat',
@@ -339,7 +339,7 @@ class Result extends Users
             $key = $user->isGuest ? "guest{$number}" : "users[{$user->id}]";
             $fields[$key] = [
                 'class'   => ['check'],
-                'caption' => __('Select'),
+                'caption' => 'Select',
                 'type'    => $user->isGuest ? 'str' : 'checkbox',
                 'value'   => $user->isGuest ? null : $user->id,
                 'checked' => false,

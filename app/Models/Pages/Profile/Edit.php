@@ -235,7 +235,7 @@ class Edit extends Profile
             $fields['username'] = [
                 'type'      => 'text',
                 'maxlength' => '25',
-                'caption'   => __('Username'),
+                'caption'   => 'Username',
                 'required'  => true,
                 'pattern'   => '^.{2,25}$',
                 'value'     => $this->curUser->username,
@@ -244,14 +244,14 @@ class Edit extends Profile
             $fields['username'] = [
                 'class'   => 'pline',
                 'type'    => 'str',
-                'caption' => __('Username'),
+                'caption' => 'Username',
                 'value'   => $this->curUser->username,
             ];
         }
         if ($this->rules->changeGroup) {
             $fields['group'] = [
                 'type'    => 'link',
-                'caption' => __('Group'),
+                'caption' => 'Group',
                 'value'   => $this->curUser->group_id ? $this->curUser->g_title : __('Change user group'),
                 'title'   => __('Change user group'),
                 'href'    => $this->linkChangeGroup(),
@@ -260,7 +260,7 @@ class Edit extends Profile
             $fields['group'] = [
                 'class'   => 'pline',
                 'type'    => 'str',
-                'caption' => __('Group'),
+                'caption' => 'Group',
                 'value'   => $this->curUser->group_id ? $this->curUser->g_title : '-',
             ];
         }
@@ -276,7 +276,7 @@ class Edit extends Profile
             $fields['title'] = [
                 'type'      => 'text',
                 'maxlength' => '50',
-                'caption'   => __('Title'),
+                'caption'   => 'Title',
                 'value'     => $this->curUser->title,
                 'help'      => 'Leave blank',
             ];
@@ -284,7 +284,7 @@ class Edit extends Profile
             $fields['title'] = [
                 'class'   => 'pline',
                 'type'    => 'str',
-                'caption' => __('Title'),
+                'caption' => 'Title',
                 'value'   => $this->curUser->title(),
             ];
         }
@@ -300,13 +300,13 @@ class Edit extends Profile
                 $fields['avatar'] = [
                     'class'   => 'pline',
                     'type'    => 'str',
-                    'caption' => __('Avatar'),
+                    'caption' => 'Avatar',
                     'value'   => __('Not uploaded'),
                 ];
             } elseif ($this->curUser->avatar) {
                 $fields['avatar'] = [
                     'type'    => 'yield',
-                    'caption' => __('Avatar'),
+                    'caption' => 'Avatar',
                     'value'   => 'avatar',
                 ];
             }
@@ -325,7 +325,7 @@ class Edit extends Profile
 
             $fields['upload_avatar'] = [
                 'type'    => 'file',
-                'caption' => __('New avatar'),
+                'caption' => 'New avatar',
                 'help'    => ['New avatar info',
                     \ForkBB\num($this->c->config->i_avatars_width),
                     \ForkBB\num($this->c->config->i_avatars_height),
@@ -350,7 +350,7 @@ class Edit extends Profile
                     'admin_note' => [
                         'type'      => 'text',
                         'maxlength' => '30',
-                        'caption'   => __('Admin note'),
+                        'caption'   => 'Admin note',
                         'value'     => $this->curUser->admin_note,
                     ],
                 ],
@@ -362,7 +362,7 @@ class Edit extends Profile
         $fields['realname'] = [
             'type'      => 'text',
             'maxlength' => '40',
-            'caption'   => __('Realname'),
+            'caption'   => 'Realname',
             'value'     => $this->curUser->realname,
         ];
         $genders = [
@@ -375,12 +375,12 @@ class Edit extends Profile
             'type'    => 'radio',
             'value'   => $this->curUser->gender,
             'values'  => $genders,
-            'caption' => __('Gender'),
+            'caption' => 'Gender',
         ];
         $fields['location'] = [
             'type'      => 'text',
             'maxlength' => 30,
-            'caption'   => __('Location'),
+            'caption'   => 'Location',
             'value'     => $this->curUser->location,
         ];
         $form['sets']['personal'] = [
@@ -395,7 +395,7 @@ class Edit extends Profile
             $fields['open-email'] = [
                 'class'   => 'pline',
                 'type'    => 'str',
-                'caption' => __('Email info'),
+                'caption' => 'Email info',
                 'value'   => $this->curUser->censorEmail,
             ];
         }
@@ -415,7 +415,7 @@ class Edit extends Profile
                 1 => __('Hide allow form label'),
                 2 => __('Hide both label'),
             ],
-            'caption' => __('Email settings label'),
+            'caption' => 'Email settings label',
         ];
 
         if ($this->rules->editWebsite) {
@@ -423,7 +423,7 @@ class Edit extends Profile
                 'id'        => 'website',
                 'type'      => 'text',
                 'maxlength' => '100',
-                'caption'   => __('Website'),
+                'caption'   => 'Website',
                 'value'     => $this->curUser->url,
             ];
         } elseif (
@@ -434,7 +434,7 @@ class Edit extends Profile
                 'id'      => 'website',
                 'class'   => 'pline',
                 'type'    => 'link',
-                'caption' => __('Website'),
+                'caption' => 'Website',
                 'value'   => $this->curUser->censorUrl,
                 'href'    => $this->curUser->censorUrl,
             ];
@@ -451,7 +451,7 @@ class Edit extends Profile
             $fields['signature'] = [
                 'type'    => 'textarea',
                 'value'   => $this->curUser->signature,
-                'caption' => __('Signature'),
+                'caption' => 'Signature',
                 'help'    => ['Sig max size', \ForkBB\num($this->curUser->g_sig_length), \ForkBB\num($this->curUser->g_sig_lines)],
             ];
             $form['sets']['signature'] = [

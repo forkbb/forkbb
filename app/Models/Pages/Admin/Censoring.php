@@ -74,7 +74,7 @@ class Censoring extends Admin
                             'type'    => 'radio',
                             'value'   => $this->c->config->o_censoring,
                             'values'  => [1 => __('Yes'), 0 => __('No')],
-                            'caption' => __('Censor words label'),
+                            'caption' => 'Censor words label',
                             'help'    => 'Censor words help',
                         ],
                     ],
@@ -103,14 +103,14 @@ class Censoring extends Admin
                 'type'      => 'text',
                 'maxlength' => '60',
                 'value'     => $row['search_for'],
-                'caption'   => __('Censored word label'),
+                'caption'   => 'Censored word label',
             ];
             $fieldset["form[{$id}][replace_with]"] = [
                 'class'     => ['censor'],
                 'type'      => 'text',
                 'maxlength' => '60',
                 'value'     => $row['replace_with'],
-                'caption'   => __('Replacement label'),
+                'caption'   => 'Replacement label',
             ];
         }
         $fieldset["form[0][search_for]"] = [
@@ -118,14 +118,14 @@ class Censoring extends Admin
             'type'      => 'text',
             'maxlength' => '60',
             'value'     => '',
-            'caption'   => __('Censored word label'),
+            'caption'   => 'Censored word label',
         ];
         $fieldset["form[0][replace_with]"] = [
             'class'     => ['censor'],
             'type'      => 'text',
             'maxlength' => '60',
             'value'     => '',
-            'caption'   => __('Replacement label'),
+            'caption'   => 'Replacement label',
         ];
 
         $form['sets']['censtable'] = [

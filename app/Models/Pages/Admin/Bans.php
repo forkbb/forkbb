@@ -144,25 +144,25 @@ class Bans extends Admin
         $fields['username'] = [
             'type'      => 'text',
             'maxlength' => '25',
-            'caption'   => __('Username label'),
+            'caption'   => 'Username label',
             'value'     => $data['username'] ?? null,
         ];
         $fields['ip'] = [
             'type'      => 'text',
             'maxlength' => '40',
-            'caption'   => __('IP label'),
+            'caption'   => 'IP label',
             'value'     => $data['ip'] ?? null,
         ];
         $fields['email'] = [
             'type'      => 'text',
             'maxlength' => '80',
-            'caption'   => __('E-mail label'),
+            'caption'   => 'E-mail label',
             'value'     => $data['email'] ?? null,
         ];
         $fields['message'] = [
             'type'      => 'text',
             'maxlength' => '255',
-            'caption'   => __('Message label'),
+            'caption'   => 'Message label',
             'value'     => $data['message'] ?? null,
         ];
         $fields['between1'] = [
@@ -174,7 +174,7 @@ class Bans extends Admin
             'type'      => 'text',
             'maxlength' => '100',
             'value'     => $data['expire_1'] ?? null,
-            'caption'   => __('Expire date label'),
+            'caption'   => 'Expire date label',
         ];
         $fields['expire_2'] = [
             'class'     => 'bend',
@@ -206,7 +206,7 @@ class Bans extends Admin
                 'expire'   => __('Order by expire'),
             ],
             'value'   => $data['order_by'] ?? 'id',
-            'caption' => __('Order by label'),
+            'caption' => 'Order by label',
         ];
         $fields['direction'] = [
             'class'   => 'bend',
@@ -252,21 +252,21 @@ class Bans extends Admin
             $fields['username'] = [
                 'type'      => $this->banCount < 1 ? 'text' : 'str',
                 'maxlength' => '25',
-                'caption'   => __('Username label'),
+                'caption'   => 'Username label',
                 'help'      => $this->banCount < 1 ? 'Username help' : null,
                 'value'     => $data['username'] ?? null,
             ];
             $fields['ip'] = [
                 'type'      => 'text',
                 'maxlength' => '255',
-                'caption'   => __('IP label'),
+                'caption'   => 'IP label',
                 'help'      => 'IP help',
                 'value'     => $data['ip'] ?? null,
             ];
             $fields['email'] = [
                 'type'      => 'text',
                 'maxlength' => '80',
-                'caption'   => __('E-mail label'),
+                'caption'   => 'E-mail label',
                 'help'      => 'E-mail help',
                 'value'     => $data['email'] ?? null,
             ];
@@ -280,14 +280,14 @@ class Bans extends Admin
         $fields['message'] = [
             'type'      => 'text',
             'maxlength' => '255',
-            'caption'   => __('Ban message label'),
+            'caption'   => 'Ban message label',
             'help'      => 'Ban message help',
             'value'     => $data['message'] ?? null,
         ];
         $fields['expire'] = [
             'type'      => 'text',
             'maxlength' => '100',
-            'caption'   => __('Expire date label'),
+            'caption'   => 'Expire date label',
             'help'      => 'Expire date help',
             'value'     => $data['expire'] ?? null,
         ];
@@ -431,13 +431,13 @@ class Bans extends Admin
             $fields["l{$number}-username"] = [
                 'class'   => '' == $ban['username'] ? ['result', 'username', 'no-data'] : ['result', 'username'],
                 'type'    => 'str',
-                'caption' => __('Results username head'),
+                'caption' => 'Results username head',
                 'value'   => $ban['username'],
             ];
             $fields["l{$number}-email"] = [
                 'class'   => '' == $ban['email'] ? ['result', 'email', 'no-data'] : ['result', 'email'],
                 'type'    => 'str',
-                'caption' => __('Results e-mail head'),
+                'caption' => 'Results e-mail head',
                 'value'   => $ban['email'],
             ];
             $fields[] = [
@@ -446,25 +446,25 @@ class Bans extends Admin
             $fields["l{$number}-ips"] = [
                 'class'   => '' == $ban['ip'] ? ['result', 'ips', 'no-data'] : ['result', 'ips'],
                 'type'    => 'str',
-                'caption' => __('Results IP address head'),
+                'caption' => 'Results IP address head',
                 'value'   => $ban['ip'],
             ];
             $fields["l{$number}-expire"] = [
                 'class'   => empty($ban['expire']) ? ['result', 'expire', 'no-data'] : ['result', 'expire'],
                 'type'    => 'str',
-                'caption' => __('Results expire head'),
+                'caption' => 'Results expire head',
                 'value'   => empty($ban['expire']) ? '' : \ForkBB\dt($ban['expire'], true),
             ];
             $fields["l{$number}-message"] = [
                 'class'   => '' == $ban['message'] ? ['result', 'message', 'no-data'] : ['result', 'message'],
                 'type'    => 'str',
-                'caption' => __('Results message head'),
+                'caption' => 'Results message head',
                 'value'   => $ban['message'],
             ];
             $fields["l{$number}-creator"] = [
                 'class'   => ['result', 'creator'],
                 'type'    => '1' == $this->user->g_view_users && $ban['id_creator'] > 1 ? 'link' : 'str',
-                'caption' => __('Results banned by head'),
+                'caption' => 'Results banned by head',
                 'value'   => $ban['name_creator'],
                 'href'    => $this->c->Router->link(
                     'User',
@@ -489,7 +489,7 @@ class Bans extends Admin
                 'class'   => ['result', 'btn-edit'],
                 'type'    => $ban['id'] > 0 ? 'btn' : 'str',
                 'value'   => '✎',
-                'caption' => __('Results actions head'),
+                'caption' => 'Results actions head',
                 'title'   => __('Edit'),
                 'link'    => $this->c->Router->link(
                     'AdminBansEdit',
@@ -500,7 +500,7 @@ class Bans extends Admin
                 'class'   => ['result', 'btn-delete'],
                 'type'    => $ban['id'] > 0 ? 'btn' : 'str',
                 'value'   => '❌',
-                'caption' => __('Results actions head'),
+                'caption' => 'Results actions head',
                 'title'   => __('Delete'),
                 'link'    => $this->c->Router->link(
                     'AdminBansDelete',

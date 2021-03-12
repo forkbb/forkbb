@@ -169,7 +169,7 @@ class Smilies extends Parser
                 'type'      => 'text',
                 'maxlength' => '20',
                 'value'     => $data['smilies'][$id]['sm_code'] ?? $cur['sm_code'],
-                'caption'   => __('Smiley code label'),
+                'caption'   => 'Smiley code label',
                 'required'  => true,
             ];
             $fields["smilies[{$id}][sm_position]"] = [
@@ -178,7 +178,7 @@ class Smilies extends Parser
                 'min'       => '0',
                 'max'       => '9999',
                 'value'     => $data['smilies'][$id]['sm_position'] ?? $cur['sm_position'],
-                'caption'   => __('Position label'),
+                'caption'   => 'Position label',
                 'required'  => true,
             ];
             $fields["smilies[{$id}][sm_image]"] = [
@@ -186,20 +186,20 @@ class Smilies extends Parser
                 'type'     => 'select',
                 'options'  => $imageList,
                 'value'    => $data['smilies'][$id]['sm_image'] ?? $cur['sm_image'],
-                'caption'  => __('Name label'),
+                'caption'  => 'Name label',
             ];
             $fields["smile{$id}-pic"] = [
                 'class'     => ['pic', 'smile'],
                 'type'      => 'str',
                 'value'     => __(['<img src="%1$s" alt="%2$s">', $this->c->PUBLIC_URL . '/img/sm/' . $cur['sm_image'], $cur['sm_image']]),
-                'caption'   => __('Picture label'),
+                'caption'   => 'Picture label',
                 'html'      => true,
             ];
             $fields["smile{$id}-del"] = [
                 'class'     => ['delete', 'smile'],
                 'type'      => 'btn',
                 'value'     => '❌',
-                'caption'   => __('Delete'),
+                'caption'   => 'Delete',
                 'title'     => __('Delete'),
                 'link'      => $this->c->Router->link(
                     'AdminSmiliesDelete',
@@ -227,7 +227,7 @@ class Smilies extends Parser
                     'type'      => 'text',
                     'maxlength' => '20',
                     'value'     => $data['new_sm_code'] ?? '',
-                    'caption'   => __('Smiley code label'),
+                    'caption'   => 'Smiley code label',
                 ],
                 'new_sm_position' => [
                     'class'     => ['position', 'new-smile'],
@@ -235,14 +235,14 @@ class Smilies extends Parser
                     'min'       => '0',
                     'max'       => '9999',
                     'value'     => $data['new_sm_position'] ?? $max + 1,
-                    'caption'   => __('Position label'),
+                    'caption'   => 'Position label',
                 ],
                 'new_sm_image' => [
                     'class'     => ['image', 'new-smile'],
                     'type'     => 'select',
                     'options'  => $imageList,
                     'value'    => $data['new_image'] ?? null,
-                    'caption'  => __('Name label'),
+                    'caption'  => 'Name label',
                 ],
             ],
         ];
@@ -272,20 +272,20 @@ class Smilies extends Parser
                 'class'     => ['pic', 'image'],
                 'type'      => 'str',
                 'value'     => __(['<img src="%1$s" alt="%2$s">', $this->c->PUBLIC_URL . '/img/sm/' . $name, $name]),
-                'caption'   => __('Picture label'),
+                'caption'   => 'Picture label',
                 'html'      => true,
             ];
             $fields["image{$key}-name"] = [
                 'class'   => ['name', 'image'],
                 'type'    => 'str',
                 'value'   => $name,
-                'caption' => __('Name label'),
+                'caption' => 'Name label',
             ];
             $fields["image{$key}-del"] = [
                 'class'   => ['delete', 'image'],
                 'type'    => 'link',
                 'value'   => '❌',
-                'caption' => __('Delete'),
+                'caption' => 'Delete',
                 'title'   => __('Delete'),
                 'href'    => $this->c->Router->link(
                     'AdminSmiliesDelete',
@@ -324,7 +324,7 @@ class Smilies extends Parser
                     'fields' => [
                         'upload_image' => [
                             'type'    => 'file',
-                            'caption' => __('Upload image label'),
+                            'caption' => 'Upload image label',
                             'help'    => 'Upload image info',
                             'accept'  => $this->accept,
                         ],

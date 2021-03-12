@@ -172,14 +172,14 @@ class Action extends Users
                             'type'    => 'radio',
                             'value'   => 0,
                             'values'  => $yn,
-                            'caption' => __('Delete users'),
+                            'caption' => 'Delete users',
                             'help'    => ['Confirm delete info', $names],
                         ],
                         'delete_posts' => [
                             'type'    => 'radio',
                             'value'   => 0,
                             'values'  => $yn,
-                            'caption' => __('Delete posts'),
+                            'caption' => 'Delete posts',
                         ],
                     ],
                 ],
@@ -339,14 +339,14 @@ class Action extends Users
                             'type'      => 'select',
                             'options'   => $this->groupListForChange($profile),
                             'value'     => $this->c->config->i_default_user_group,
-                            'caption'   => __('New group label'),
+                            'caption'   => 'New group label',
                             'help'      => ['New group help', $names],
                         ],
                         'confirm' => [
                             'type'    => 'radio',
                             'value'   => 0,
                             'values'  => $yn,
-                            'caption' => __('Move users'),
+                            'caption' => 'Move users',
                         ],
                     ],
                 ],
@@ -367,7 +367,7 @@ class Action extends Users
         if ($checkPass) {
             $form['sets']['options']['fields']['password'] = [
                 'type'      => 'password',
-                'caption'   => __('Your passphrase'),
+                'caption'   => 'Your passphrase',
                 'required'  => true,
             ];
         }
