@@ -176,7 +176,7 @@ class Validator
 
                 if (empty($this->validators[$vs[0]])) {
                     try {
-                        $validator = $this->c->{'VL' . $vs[0]};
+                        $validator = $this->c->{"VL{$vs[0]}"};
                     } catch (Exception $e) {
                         $validator = null;
                     }
@@ -184,7 +184,7 @@ class Validator
                     if ($validator instanceof RulesValidator) {
                         $this->validators[$vs[0]] = [$validator, $vs[0]];
                     } else {
-                        throw new RuntimeException($vs[0] . ' validator not found');
+                        throw new RuntimeException("{$vs[0]} validator not found");
                     }
                 }
 
@@ -602,7 +602,7 @@ class Validator
 
         $result = [];
         foreach ($attr as $name => $rules) {
-            $this->recArray($value, $result, $name, $rules, $vars['field'] . '.' . $name);
+            $this->recArray($value, $result, $name, $rules, "{$vars['field']}.{$name}");
         }
 
         return $result;
@@ -894,7 +894,7 @@ class Validator
             return null;
         } elseif (
             ! \is_string($value)
-            || false === \strtotime($value . ' UTC')
+            || false === \strtotime("{$value} UTC")
         ) {
             $v->addError('The :alias does not contain a date');
 

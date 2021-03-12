@@ -35,7 +35,7 @@ function __(/* string|arrray */ $arg): string
             $c = \reset($arg);
 
             if (! $c instanceof Container) {
-                throw new InvalidArgumentException('Container expected ');
+                throw new InvalidArgumentException('Container expected');
             }
 
             return '';
