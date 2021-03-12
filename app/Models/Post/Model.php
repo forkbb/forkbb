@@ -98,12 +98,14 @@ class Model extends DataModel
      */
     protected function getcanDelete(): bool
     {
-        if ($this->c->user->isGuest) {
-            return false;
+        if ($this->c->user->isAdmin) {
+            return true;
         } elseif (
-            $this->c->user->isAdmin
-            || $this->c->user->isModerator($this)
+            $this->c->user->isGuest
+            || isset($this->c->admins->list[$this->poster_id]) // ???? или юзера проверять?
         ) {
+            return false;
+        } elseif ($this->c->user->isModerator($this)) {
             return true;
         } elseif ('1' == $this->parent->closed) {
             return false;
@@ -145,12 +147,14 @@ class Model extends DataModel
      */
     protected function getcanEdit(): bool
     {
-        if ($this->c->user->isGuest) {
-            return false;
+        if ($this->c->user->isAdmin) {
+            return true;
         } elseif (
-            $this->c->user->isAdmin
-            || $this->c->user->isModerator($this)
+            $this->c->user->isGuest
+            || isset($this->c->admins->list[$this->poster_id]) // ???? или юзера проверять?
         ) {
+            return false;
+        } elseif ($this->c->user->isModerator($this)) {
             return true;
         } elseif ('1' == $this->parent->closed) {
             return false;
