@@ -324,7 +324,7 @@ class Search extends Page
                 $search = $this->c->search;
 
                 if (! $search->prepare($query)) {
-                    $v->addError(__([$search->queryError, $search->queryText]));
+                    $v->addError([$search->queryError, $search->queryText]);
                 } else {
 
                     if ($this->c->search->execute($v, $this->listOfIndexes, $flood)) {
@@ -346,7 +346,7 @@ class Search extends Page
             }
 
             if ($flood) {
-                $v->addError(__(['Flood message', $this->user->g_search_flood - \time() + $this->user->last_search]));
+                $v->addError(['Flood message', $this->user->g_search_flood - \time() + $this->user->last_search]);
             }
         }
 

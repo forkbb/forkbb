@@ -733,14 +733,14 @@ class Bans extends Admin
             if (! $user instanceof User) { // ???? может ли вернутся несколько юзеров?
                 $v->addError('No user message');
             } elseif ($this->c->bans->banFromName($user->username) > 0) {
-                $v->addError(__(['User is ban', $user->username]));
+                $v->addError(['User is ban', $user->username]);
             } elseif (! $this->c->userRules->canBanUser($user)) {
                 if ($user->isGuest) { // ???? O_o
                     $v->addError('Cannot ban guest message');
                 } elseif ($user->isAdmin) {
-                    $v->addError(__(['User is admin message', $user->username]));
+                    $v->addError(['User is admin message', $user->username]);
                 } elseif ($user->isAdmMod) {
-                    $v->addError(__(['User is mod message', $user->username]));
+                    $v->addError(['User is mod message', $user->username]);
                 }
             }
         }
@@ -776,7 +776,7 @@ class Bans extends Admin
                     }
                 }
 
-                $v->addError(__('Invalid IP message (%s)', $address));
+                $v->addError(['Invalid IP message (%s)', $address]);
                 break;
             }
         }

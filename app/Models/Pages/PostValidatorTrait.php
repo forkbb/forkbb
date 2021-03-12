@@ -54,7 +54,7 @@ trait PostValidatorTrait
 
             foreach ($this->c->Parser->getErrors([], [], true) as $error) {
                 $prepare = false;
-                $v->addError(__($error));
+                $v->addError($error);
             }
         }
 
@@ -89,7 +89,7 @@ trait PostValidatorTrait
         $time = \time() - (int) $this->user->last_post;
 
         if ($time < $this->user->g_post_flood) {
-            $v->addError(__(['Flood message', $this->user->g_post_flood - $time]), 'e');
+            $v->addError(['Flood message', $this->user->g_post_flood - $time], 'e');
         }
 
         return $submit;

@@ -186,7 +186,7 @@ class Edit extends Profile
 
                 foreach ($this->c->Parser->getErrors([], [], true) as $error) {
                     $prepare = false;
-                    $v->addError(__($error));
+                    $v->addError($error);
                 }
             }
 

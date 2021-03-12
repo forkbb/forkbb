@@ -265,11 +265,11 @@ class Update extends Admin
     {
         if (\substr($this->c->DB_DSN, 0, 6) === 'sqlite') {
             if (! \hash_equals($this->c->DB_DSN, "sqlite:{$dbpass}")) {  // ????
-                $v->addError(__(['Invalid file error', self::CONFIG_FILE]));
+                $v->addError(['Invalid file error', self::CONFIG_FILE]);
             }
         } else {
             if (! \hash_equals($this->c->DB_PASSWORD, $dbpass)) {
-                $v->addError(__(['Invalid password error', self::CONFIG_FILE]));
+                $v->addError(['Invalid password error', self::CONFIG_FILE]);
             }
         }
 

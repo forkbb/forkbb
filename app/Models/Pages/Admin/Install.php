@@ -524,7 +524,7 @@ class Install extends Admin
             $stmt = $this->c->DB->query('SELECT 1 FROM ::users LIMIT 1');
 
             if (! empty($stmt->fetch())) {
-                $v->addError(__(['Existing table error', $v->dbprefix, $v->dbname]));
+                $v->addError(['Existing table error', $v->dbprefix, $v->dbname]);
 
                 return $dbhost;
             }
