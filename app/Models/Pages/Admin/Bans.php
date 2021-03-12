@@ -135,7 +135,7 @@ class Bans extends Admin
         ];
         $form['sets']['search-info'] = [
             'info' => [
-                'info1' => [
+                [
                     'value' => __('Ban search info'),
                 ],
             ],
@@ -253,21 +253,21 @@ class Bans extends Admin
                 'type'      => $this->banCount < 1 ? 'text' : 'str',
                 'maxlength' => '25',
                 'caption'   => __('Username label'),
-                'info'      => $this->banCount < 1 ? __('Username help') : null,
+                'help'      => $this->banCount < 1 ? 'Username help' : null,
                 'value'     => $data['username'] ?? null,
             ];
             $fields['ip'] = [
                 'type'      => 'text',
                 'maxlength' => '255',
                 'caption'   => __('IP label'),
-                'info'      => __('IP help'),
+                'help'      => 'IP help',
                 'value'     => $data['ip'] ?? null,
             ];
             $fields['email'] = [
                 'type'      => 'text',
                 'maxlength' => '80',
                 'caption'   => __('E-mail label'),
-                'info'      => __('E-mail help'),
+                'help'      => 'E-mail help',
                 'value'     => $data['email'] ?? null,
             ];
             $form['sets']['ban-attrs'] = [
@@ -281,14 +281,14 @@ class Bans extends Admin
             'type'      => 'text',
             'maxlength' => '255',
             'caption'   => __('Ban message label'),
-            'info'      => __('Ban message help'),
+            'help'      => 'Ban message help',
             'value'     => $data['message'] ?? null,
         ];
         $fields['expire'] = [
             'type'      => 'text',
             'maxlength' => '100',
             'caption'   => __('Expire date label'),
-            'info'      => __('Expire date help'),
+            'help'      => 'Expire date help',
             'value'     => $data['expire'] ?? null,
         ];
         $form['sets']['ban-exp'] = [

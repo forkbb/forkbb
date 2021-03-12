@@ -123,7 +123,7 @@ class Mod extends Profile
                 if ($cid !== $forum->cat_id) {
                     $form['sets']["category{$forum->cat_id}-info"] = [
                         'info' => [
-                            'info1' => [
+                            [
                                 'value' => $forum->cat_name,
                             ],
                         ],

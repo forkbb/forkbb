@@ -208,7 +208,7 @@ trait PostFormTrait
                 'max'      => '366',
                 'value'    => $vars['poll']['duration'] ?? 0,
                 'caption'  => __('Poll duration label'),
-                'info'     => __('Poll duration help'),
+                'help'     => 'Poll duration help',
                 'disabled' => $vars['pollNoEdit'] ?? null,
             ];
             $fieldset['poll[hide_result]'] = [
@@ -240,7 +240,7 @@ trait PostFormTrait
                     'max'      => (string) $this->c->config->i_poll_max_fields,
                     'value'    => $vars['poll']['type'][$qid] ?? 1,
                     'caption'  => __('Answer type label'),
-                    'info'     => __('Answer type help'),
+                    'help'     => 'Answer type help',
                     'disabled' => $vars['pollNoEdit'] ?? null,
                 ];
 

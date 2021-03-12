@@ -162,7 +162,7 @@ class Forums extends Admin
                 if ($cid !== $forum->cat_id) {
                     $form['sets']["category{$forum->cat_id}-info"] = [
                         'info' => [
-                            'info1' => [
+                            [
                                 'value' => $forum->cat_name,
                             ],
                         ],
@@ -303,7 +303,7 @@ class Forums extends Admin
                 ],
                 [
                     'info' => [
-                        'info1' => [
+                        [
                             'value' => __('Delete forum warn'),
                             'html'  => true,
                         ],
@@ -475,7 +475,7 @@ class Forums extends Admin
                     'options'  => $this->listForOptions,
                     'value'    => $forum->parent_forum_id ? $forum->parent_forum_id : -$forum->cat_id,
                     'caption'  => __('Parent label'),
-                    'info'     => __('Parent help'),
+                    'help'     => 'Parent help',
                     'required' => true,
                 ],
                 'sort_by' => [
@@ -493,7 +493,7 @@ class Forums extends Admin
                     'maxlength' => '255',
                     'value'     => $forum->redirect_url,
                     'caption'   => __('Redirect label'),
-                    'info'      => __('Redirect help'),
+                    'help'      => 'Redirect help',
                     'disabled'  => $forum->num_topics || $forum->subforums ? true : null,
                 ],
                 'no_sum_mess' => [
@@ -501,14 +501,14 @@ class Forums extends Admin
                     'value'   => $forum->no_sum_mess,
                     'values'  => [0 => __('Yes'), 1 => __('No')],
                     'caption' => __('Count messages label'),
-                    'info'    => __(['Count messages help', $this->c->Router->link('AdminUsers'), __('Users')]),
+                    'help'    => ['Count messages help', $this->c->Router->link('AdminUsers'), __('Users')],
                 ],
             ],
         ];
 
         $form['sets']['forum-info'] = [
             'info' => [
-                'info1' => [
+                [
                     'value' => __(['Group permissions info', $this->c->Router->link('AdminGroups'), __('User groups')]),
                     'html'  => true,
                 ],

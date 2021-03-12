@@ -234,7 +234,7 @@ class Email extends Profile
                             'required'  => true,
                             'pattern'   => '.+@.+',
                             'value'     => $this->curUser->email,
-                            'info'      => $this->rules->my ? __('Email instructions') : null,
+                            'help'      => $this->rules->my ? 'Email instructions' : null,
                         ],
                         'password' => [
                             'type'      => 'password',

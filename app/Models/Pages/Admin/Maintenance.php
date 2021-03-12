@@ -79,13 +79,13 @@ class Maintenance extends Admin
                             'value'   => $config->o_maintenance,
                             'values'  => [1 => __('Yes'), 0 => __('No')],
                             'caption' => __('Maintenance mode label'),
-                            'info'    => __('Maintenance mode help'),
+                            'help'    => 'Maintenance mode help',
                         ],
                         'o_maintenance_message' => [
                             'type'    => 'textarea',
                             'value'   => $config->o_maintenance_message,
                             'caption' => __('Maintenance message label'),
-                            'info'    => __('Maintenance message help'),
+                            'help'    => 'Maintenance message help',
                         ],
                     ],
                 ],
@@ -112,7 +112,7 @@ class Maintenance extends Admin
             'sets'   => [
                 'indx-info' => [
                     'info' => [
-                        'info1' => [
+                        [
                             'value' => __('Rebuild index info'),
                             'html'  => true,
                         ],
@@ -127,7 +127,7 @@ class Maintenance extends Admin
                             'max'     => '9999',
                             'value'   => '100',
                             'caption' => __('Posts per cycle label'),
-                            'info'    => __('Posts per cycle help'),
+                            'help'    => 'Posts per cycle help',
                         ],
                         'start' => [
                             'type'    => 'number',
@@ -135,7 +135,7 @@ class Maintenance extends Admin
                             'max'     => '9999999999',
                             'value'   => '1',
                             'caption' => __('Starting post label'),
-                            'info'    => __('Starting post help'),
+                            'help'    => 'Starting post help',
                         ],
                         'clear' => [
                             'type'    => 'checkbox',
@@ -148,7 +148,7 @@ class Maintenance extends Admin
                 ],
                 'indx-info2' => [
                     'info' => [
-                        'info1' => [
+                        [
                             'value' => __('Rebuild completed info'),
                             'html'  => true,
                         ],

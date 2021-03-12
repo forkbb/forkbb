@@ -213,7 +213,7 @@ class Install extends Admin
                                 'options' => $langs,
                                 'value'   => $this->user->language,
                                 'caption' => __('Install language'),
-                                'info'    => __('Choose install language info'),
+                                'help'    => 'Choose install language info',
                             ],
                         ],
                     ],
@@ -236,11 +236,11 @@ class Install extends Admin
             'sets'   => [
                 'db-info' => [
                     'info' => [
-                        'info1' => [
+                        [
                             'value' => __('Database setup'),
                             'html'  => true,
                         ],
-                        'info2' => [
+                        [
                             'value' => __('Info 1'),
                         ],
                     ],
@@ -252,20 +252,20 @@ class Install extends Admin
                             'options'  => $this->dbTypes,
                             'value'    => $v ? $v->dbtype : 'mysql_innodb',
                             'caption'  => __('Database type'),
-                            'info'     => __('Info 2'),
+                            'help'     => 'Info 2',
                         ],
                         'dbhost' => [
                             'type'     => 'text',
                             'value'    => $v ? $v->dbhost : 'localhost',
                             'caption'  => __('Database server hostname'),
-                            'info'     => __('Info 3'),
+                            'help'     => 'Info 3',
                             'required' => true,
                         ],
                         'dbname' => [
                             'type'     => 'text',
                             'value'    => $v ? $v->dbname : '',
                             'caption'  => __('Database name'),
-                            'info'     => __('Info 4'),
+                            'help'     => 'Info 4',
                             'required' => true,
                         ],
                         'dbuser' => [
@@ -277,25 +277,25 @@ class Install extends Admin
                             'type'    => 'password',
                             'value'   => '',
                             'caption' => __('Database password'),
-                            'info'    => __('Info 5'),
+                            'help'    => 'Info 5',
                         ],
                         'dbprefix' => [
                             'type'      => 'text',
                             'maxlength' => '40',
                             'value'     => $v ? $v->dbprefix : '',
                             'caption'   => __('Table prefix'),
-                            'info'      => __('Info 6'),
+                            'help'      => 'Info 6',
                             'required' => true,
                         ],
                     ],
                 ],
                 'adm-info' => [
                     'info' => [
-                        'info1' => [
+                        [
                             'value' => __('Administration setup'),
                             'html'  => true,
                         ],
-                        'info2' => [
+                        [
                             'value' => __('Info 7'),
                         ],
                     ],
@@ -308,7 +308,7 @@ class Install extends Admin
                             'pattern'   => '^.{2,25}$',
                             'value'     => $v ? $v->username : '',
                             'caption'   => __('Administrator username'),
-                            'info'      => __('Info 8'),
+                            'help'      => 'Info 8',
                             'required'  => true,
                         ],
                         'password' => [
@@ -316,7 +316,7 @@ class Install extends Admin
                             'pattern'  => '^.{16,}$',
                             'value'    => '',
                             'caption'  => __('Administrator passphrase'),
-                            'info'     => __('Info 9'),
+                            'help'     => 'Info 9',
                             'required' => true,
                         ],
                         'email' => [
@@ -325,7 +325,7 @@ class Install extends Admin
                             'pattern'   => '.+@.+',
                             'value'     => $v ? $v->email : '',
                             'caption'   => __('Administrator email'),
-                            'info'      => __('Info 10'),
+                            'help'      => 'Info 10',
                             'required'  => true,
                         ],
 
@@ -333,11 +333,11 @@ class Install extends Admin
                 ],
                 'board-info' => [
                     'info' => [
-                        'info1' => [
+                        [
                             'value' => __('Board setup'),
                             'html'  => true,
                         ],
-                        'info2' => [
+                        [
                             'value' => __('Info 11'),
                         ],
                     ],
@@ -380,11 +380,11 @@ class Install extends Admin
                 ],
                 'cookie-info' => [
                     'info' => [
-                        'info1' => [
+                        [
                             'value' => __('Cookie setup'),
                             'html'  => true,
                         ],
-                        'info2' => [
+                        [
                             'value' => __('Info 12'),
                         ],
                     ],
@@ -396,7 +396,7 @@ class Install extends Admin
                             'maxlength' => '128',
                             'value'     => $v ? $v->cookie_domain : '',
                             'caption'   => __('Cookie Domain'),
-                            'info'      => __('Cookie Domain info'),
+                            'help'      => 'Cookie Domain info',
                         ],
                         'cookie_path' => [
                             'type'      => 'text',
@@ -405,7 +405,7 @@ class Install extends Admin
                                 ? $v->cookie_path
                                 : \rtrim((string) \parse_url($this->c->BASE_URL, \PHP_URL_PATH), '/') . '/',
                             'caption'   => __('Cookie Path'),
-                            'info'      => __('Cookie Path info'),
+                            'help'      => 'Cookie Path info',
                             'required'  => true,
                         ],
                         'cookie_secure' => [
@@ -419,7 +419,7 @@ class Install extends Admin
                                 ),
                             'values'  => [1 => __('Yes '), 0 => __('No ')],
                             'caption' => __('Cookie Secure'),
-                            'info'    => __('Cookie Secure info'),
+                            'help'    => 'Cookie Secure info',
                         ],
 
                     ],

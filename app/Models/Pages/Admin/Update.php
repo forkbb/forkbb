@@ -289,7 +289,7 @@ class Update extends Admin
             'sets'   => [
                 'update-info' => [
                     'info' => [
-                        'info1' => [
+                        [
                             'value' => __('Update message'),
                         ],
                     ],
@@ -301,21 +301,21 @@ class Update extends Admin
                             'type'     => 'password',
                             'value'    => '',
                             'caption'  => __('Database password'),
-                            'info'     => __('Database password note'),
+                            'help'     => 'Database password note',
                             'required' => true,
                         ],
                         'o_maintenance_message' => [
                             'type'     => 'textarea',
                             'value'    => $v ? $v->o_maintenance_message : $this->c->config->o_maintenance_message,
                             'caption'  => __('Maintenance message'),
-                            'info'     => __('Maintenance message info'),
+                            'help'     => 'Maintenance message info',
                             'required' => true,
                         ],
                     ],
                 ],
                 'member-info' => [
                     'info' => [
-                        'info1' => [
+                        [
                             'value' => __('Members message'),
                         ],
                     ],

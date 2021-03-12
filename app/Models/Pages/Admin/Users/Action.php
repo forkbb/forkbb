@@ -173,7 +173,7 @@ class Action extends Users
                             'value'   => 0,
                             'values'  => $yn,
                             'caption' => __('Delete users'),
-                            'info'    => __(['Confirm delete info', $names]),
+                            'help'    => ['Confirm delete info', $names],
                         ],
                         'delete_posts' => [
                             'type'    => 'radio',
@@ -185,7 +185,7 @@ class Action extends Users
                 ],
                 'info2' => [
                     'info' => [
-                        'info2' => [
+                        [
                             'value'   => __('Delete warning'),
                             'html'    => true,
                         ],
@@ -340,7 +340,7 @@ class Action extends Users
                             'options'   => $this->groupListForChange($profile),
                             'value'     => $this->c->config->i_default_user_group,
                             'caption'   => __('New group label'),
-                            'info'      => __(['New group help', $names]),
+                            'help'      => ['New group help', $names],
                         ],
                         'confirm' => [
                             'type'    => 'radio',

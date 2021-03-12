@@ -165,7 +165,7 @@ class Email extends Page
                 ],
                 'email-info' => [
                     'info' => [
-                        'info1' => [
+                        [
                             'value' => __('Email disclosure note'),
                         ],
                     ],

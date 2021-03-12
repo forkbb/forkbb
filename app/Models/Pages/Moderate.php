@@ -558,7 +558,7 @@ class Moderate extends Page
 
         $form['sets']['info'] = [
             'info' => [
-                'info1' => [
+                [
                     'value' => \implode('<br>', $headers),
                     'html'  => true,
                 ],
@@ -566,7 +566,7 @@ class Moderate extends Page
         ];
 
         if ($this->firstTopic instanceof Topic) {
-            $form['sets']['info']['info']['info2'] = [
+            $form['sets']['info']['info'][] = [
                 'value' => __(['All posts will be posted in the «%s» topic', $this->firstTopic->censorSubject]),
             ];
         }

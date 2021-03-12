@@ -325,7 +325,7 @@ class Smilies extends Parser
                         'upload_image' => [
                             'type'    => 'file',
                             'caption' => __('Upload image label'),
-                            'info'    => __('Upload image info'),
+                            'help'    => 'Upload image info',
                             'accept'  => $this->accept,
                         ],
                     ],

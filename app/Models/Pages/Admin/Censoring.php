@@ -75,13 +75,13 @@ class Censoring extends Admin
                             'value'   => $this->c->config->o_censoring,
                             'values'  => [1 => __('Yes'), 0 => __('No')],
                             'caption' => __('Censor words label'),
-                            'info'    => __('Censor words help'),
+                            'help'    => 'Censor words help',
                         ],
                     ],
                 ],
                 'onoff-info' => [
                     'info' => [
-                        'info1' => [
+                        [
                             'value' => __('Censoring info'),
                             'html'  => true,
                         ],

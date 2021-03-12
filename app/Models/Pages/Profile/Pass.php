@@ -108,7 +108,7 @@ class Pass extends Profile
                             'caption'   => __('New pass'),
                             'required'  => true,
                             'pattern'   => '^.{16,}$',
-                            'info'      => __('Pass format') . ' ' . __('Pass info'),
+                            'help'      => __('Pass format') . ' ' . __('Pass info'), // ????
                         ],
                         'password' => [
                             'type'      => 'password',

@@ -180,7 +180,7 @@ class Userlist extends Page
                 'maxlength' => '25',
                 'value'     => $v->name ?: '*',
                 'caption'   => __('Username'),
-                'info'      => __('User search info'),
+                'help'      => 'User search info',
                 'required'  => true,
 #               'autofocus' => true,
             ];

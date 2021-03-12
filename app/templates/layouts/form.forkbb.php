@@ -96,8 +96,8 @@
                 @elseif ('file' === $cur['type'])
                 <input @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}" type="file" @if ($cur['accept']) accept="{{ $cur['accept'] }}" @endif>
                 @endif
-                @if ($cur['info'])
-                <p class="f-yhint">{!! $cur['info'] !!}</p>
+                @if ($cur['help'])
+                <p class="f-yhint">{!! __($cur['help']) !!}</p>
                 @endif
               </dd>
             </dl>

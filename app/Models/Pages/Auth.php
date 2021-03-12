@@ -155,7 +155,7 @@ class Auth extends Page
                             'id'        => 'passinlogin',
                             'type'      => 'password',
                             'caption'   => __('Passphrase'),
-                            'info'      => __(['<a href="%s">Forgotten?</a>', $this->c->Router->link('Forget')]),
+                            'help'      => ['<a href="%s">Forgotten?</a>', $this->c->Router->link('Forget')],
                             'required'  => true,
                         ],
                         'save' => [
@@ -340,7 +340,7 @@ class Auth extends Page
                             'maxlength' => '80',
                             'value'     => $email,
                             'caption'   => __('Email'),
-                            'info'      => __('Passphrase reset info'),
+                            'help'      => 'Passphrase reset info',
                             'required'  => true,
                             'pattern'   => '.+@.+',
                         ],
@@ -471,7 +471,7 @@ class Auth extends Page
                         'password2' => [
                             'type'      => 'password',
                             'caption'   => __('Confirm new pass'),
-                            'info'      => __('Pass format') . ' ' . __('Pass info'),
+                            'help'      => __('Pass format') . ' ' . __('Pass info'), // ????
                             'required'  => true,
                             'pattern'   => '^.{16,}$',
                         ],

@@ -129,7 +129,7 @@ class Categories extends Admin
                     'type'      => 'text',
                     'maxlength' => '80',
                     'caption'   => __('Add category label'),
-                    'info'      => __(['Add category help', $this->c->Router->link('AdminForums'), __('Forums')]),
+                    'help'      => ['Add category help', $this->c->Router->link('AdminForums'), __('Forums')],
                 ],
             ],
         ];
@@ -214,7 +214,7 @@ class Categories extends Admin
                 ],
                 'del-info' => [
                     'info' => [
-                        'info1' => [
+                        [
                             'value' => __('Delete category warn'),
                             'html'  => true,
                         ],

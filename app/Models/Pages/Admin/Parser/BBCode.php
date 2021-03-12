@@ -439,7 +439,7 @@ class BBCode extends Parser
                     'type'      => $id > 0 ? 'str' : 'text',
                     'value'     => $structure->tag,
                     'caption'   => __('Tag label'),
-                    'info'      => __('Tag info'),
+                    'help'      => 'Tag info',
                     'maxlength' => '11',
                     'pattern'   => '^[a-z\*][a-z\d-]{0,10}$',
                     'required'  => true,
@@ -449,13 +449,13 @@ class BBCode extends Parser
                     'options'   => $this->bbTypes,
                     'value'     => $structure->type,
                     'caption'   => __('Type label'),
-                    'info'      => __('Type info'),
+                    'help'      => 'Type info',
                 ],
                 'type_new' => [
                     'type'      => 'text',
                     'value'     => isset($this->bbTypes[$structure->type]) ? '' : $structure->type,
                     'caption'   => __('Type label'),
-                    'info'      => __('New type info'),
+                    'help'      => 'New type info',
                     'maxlength' => '20',
                     'pattern'   => '^[a-z][a-z\d-]{0,19}$',
                 ],
@@ -464,7 +464,7 @@ class BBCode extends Parser
                     'options'   => $this->bbTypes,
                     'value'     => $structure->parents,
                     'caption'   => __('Parents label'),
-                    'info'      => __('Parents info'),
+                    'help'      => 'Parents info',
                     'size'      => \min(15, \count($this->bbTypes)),
                     'required'  => true,
                 ],
@@ -473,56 +473,56 @@ class BBCode extends Parser
                     'type'      => 'textarea',
                     'value'     => $structure->handler,
                     'caption'   => __('Handler label'),
-                    'info'      => __('Handler info'),
+                    'help'      => 'Handler info',
                 ],
                 'text_handler' => [
                     'class'     => 'handler',
                     'type'      => 'textarea',
                     'value'     => $structure->text_handler,
                     'caption'   => __('Text handler label'),
-                    'info'      => __('Text handler info'),
+                    'help'      => 'Text handler info',
                 ],
                 'recursive' => [
                     'type'    => 'radio',
                     'value'   => true === $structure->recursive ? 1 : 0,
                     'values'  => $yn,
                     'caption' => __('Recursive label'),
-                    'info'    => __('Recursive info'),
+                    'help'    => 'Recursive info',
                 ],
                 'text_only' => [
                     'type'    => 'radio',
                     'value'   => true === $structure->text_only ? 1 : 0,
                     'values'  => $yn,
                     'caption' => __('Text only label'),
-                    'info'    => __('Text only info'),
+                    'help'    => 'Text only info',
                 ],
                 'tags_only' => [
                     'type'    => 'radio',
                     'value'   => true === $structure->tags_only ? 1 : 0,
                     'values'  => $yn,
                     'caption' => __('Tags only label'),
-                    'info'    => __('Tags only info'),
+                    'help'    => 'Tags only info',
                 ],
                 'pre' => [
                     'type'    => 'radio',
                     'value'   => true === $structure->pre ? 1 : 0,
                     'values'  => $yn,
                     'caption' => __('Pre label'),
-                    'info'    => __('Pre info'),
+                    'help'    => 'Pre info',
                 ],
                 'single' => [
                     'type'    => 'radio',
                     'value'   => true === $structure->single ? 1 : 0,
                     'values'  => $yn,
                     'caption' => __('Single label'),
-                    'info'    => __('Single info'),
+                    'help'    => 'Single info',
                 ],
                 'auto' => [
                     'type'    => 'radio',
                     'value'   => true === $structure->auto ? 1 : 0,
                     'values'  => $yn,
                     'caption' => __('Auto label'),
-                    'info'    => __('Auto info'),
+                    'help'    => 'Auto info',
                 ],
                 'self_nesting' => [
                     'type'    => 'number',
@@ -530,7 +530,7 @@ class BBCode extends Parser
                     'min'     => '0',
                     'max'     => '10',
                     'caption' => __('Self nesting label'),
-                    'info'    => __('Self nesting info'),
+                    'help'    => 'Self nesting info',
                 ],
             ],
         ];
@@ -550,7 +550,7 @@ class BBCode extends Parser
             'def_attr',
             'def_attr',
             __(['Def attr subhead', $tagStr]),
-            __('Allowed def_attr info')
+            'Allowed def_attr info'
         );
 
         foreach ($structure->other_attrs as $name => $attr) {
@@ -559,7 +559,7 @@ class BBCode extends Parser
                 $name,
                 "{$name}_attr",
                 __(['Other attr subhead', $tagStr, $name]),
-                __(['Allowed %s attr info', $name])
+                ['Allowed %s attr info', $name]
             );
         }
 
@@ -568,7 +568,7 @@ class BBCode extends Parser
             'new_attr',
             'new_attr',
             __('New attr subhead'),
-            __('Allowed new_attr info')
+            'Allowed new_attr info'
         );
 
         return $form;
@@ -589,7 +589,7 @@ class BBCode extends Parser
                 'type'      => 'text',
                 'value'     => $data['name'] ?? '',
                 'caption'   => __('Attribute name label'),
-                'info'      => __('Attribute name info'),
+                'help'      => 'Attribute name info',
                 'maxlength' => '15',
                 'pattern'   => '^[a-z-]{2,15}$',
             ];
@@ -600,7 +600,7 @@ class BBCode extends Parser
             'value'   => null === $data ? 0 : 1,
             'values'  => $yn,
             'caption' => __('Allowed label'),
-            'info'    => $info,
+            'help'    => $info,
         ];
         if ('no_attr' !== $name) {
             $fields["{$key}[required]"] = [
@@ -608,14 +608,14 @@ class BBCode extends Parser
                 'value'   => empty($data['required']) ? 0 : 1,
                 'values'  => $yn,
                 'caption' => __('Required label'),
-                'info'    => __('Required info'),
+                'help'    => 'Required info',
             ];
             $fields["{$key}[format]"] = [
                 'class'     => 'format',
                 'type'      => 'text',
                 'value'     => $data['format'] ?? '',
                 'caption'   => __('Format label'),
-                'info'      => __('Format info'),
+                'help'      => 'Format info',
             ];
         }
         $fields["{$key}[body_format]"] = [
@@ -623,14 +623,14 @@ class BBCode extends Parser
             'type'      => 'text',
             'value'     => $data['body_format'] ?? '',
             'caption'   => __('Body format label'),
-            'info'      => __('Body format info'),
+            'help'      => 'Body format info',
         ];
         $fields["{$key}[text_only]"] = [
             'type'    => 'radio',
             'value'   => empty($data['text_only']) ? 0 : 1,
             'values'  => $yn,
             'caption' => __('Text only label'),
-            'info'    => __('Text only info'),
+            'help'    => 'Text only info',
         ];
 
         return [
