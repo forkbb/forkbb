@@ -18,11 +18,11 @@ msgstr "The email address you entered is invalid."
 msgid "Long email"
 msgstr "The email address you entered is too long."
 
-msgid "Pass format"
-msgstr "Passphrase must contain a few words."
+msgid "Passphrase help"
+msgstr "Passphrase must contain a few words. Passphrase must be at least 16 characters long. Passphrase are case sensitive."
 
-msgid "Pass info"
-msgstr "Passphrase must be at least 16 characters long. Passphrase are case sensitive."
+msgid "Pass format"
+msgstr "Passphrase must contain a few words. Passphrase must be at least 16 characters long."
 
 msgid "Login format"
 msgstr "The username must begin with a letter. May contain letters, numbers, spaces, dots, dashes and underscores."

@@ -471,7 +471,7 @@ class Auth extends Page
                         'password2' => [
                             'type'      => 'password',
                             'caption'   => __('Confirm new pass'),
-                            'help'      => __('Pass format') . ' ' . __('Pass info'), // ????
+                            'help'      => 'Passphrase help',
                             'required'  => true,
                             'pattern'   => '^.{16,}$',
                         ],

@@ -128,7 +128,7 @@ class Register extends Page
                             'class'     => 'hint',
                             'type'      => 'password',
                             'caption'   => __('Passphrase'),
-                            'help'      => __('Pass format') . ' ' . __('Pass info'), // ????
+                            'help'      => 'Passphrase help',
                             'required'  => true,
                             'pattern'   => '^.{16,}$',
                         ],
