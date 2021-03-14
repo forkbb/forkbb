@@ -1189,6 +1189,13 @@ html[lang="ru"] #fork details[open] > summary::after {
   font-size: 1.2rem;
 }
 
+#fork .f-frdrsub:before {
+  font: 400 0.875rem "FontAwesomeFree";
+  content: "\f1d8 ";
+  color: #814A00;
+  margin-right: 0.3125rem;
+}
+
 #fork .f-tnew,
 #fork .f-tunread {
   font: normal 0.875rem Arial, Helvetica, sans-serif;

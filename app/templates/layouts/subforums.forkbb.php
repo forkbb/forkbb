@@ -33,7 +33,15 @@
                   <dl class="f-inline f-fsub"><!-- inline -->
                     <dt>{!! __(['Sub forum', \count($cur->subforums)]) !!}</dt>
             @foreach ($cur->subforums as $sub)
+                @if ($sub->redirect_url)
+                    <dd>
+                      <span class="f-frdrsub">
+                        <a href="{{ $sub->redirect_url }}">{{ $sub->forum_name }}</a>
+                      </span>
+                    </dd>
+                @else
                     <dd><a href="{{ $sub->link }}">{{ $sub->forum_name }}</a></dd>
+                @endif
             @endforeach
                   </dl><!-- endinline -->
         @endif
