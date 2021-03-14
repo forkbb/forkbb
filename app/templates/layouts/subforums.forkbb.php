@@ -4,7 +4,12 @@
               <div class="f-cell f-cmain">
                 <div class="f-ficon"></div>
                 <div class="f-finfo">
-                  <h3><span class="f-fredirtext">{!! __('Link to') !!}</span> <a class="f-ftname" href="{{ $cur->redirect_url }}">{{ $cur->forum_name }}</a></h3>
+                  <h3>
+                    <span class="f-frsname">
+                      <span class="f-fredirtext">{!! __('Link to') !!}</span>
+                      <a class="f-ftname" href="{{ $cur->redirect_url }}">{{ $cur->forum_name }}</a>
+                    </span>
+                  </h3>
         @if ('' != $cur->forum_desc)
                   <p class="f-fdesc">{!! $cur->forum_desc !!}</p>
         @endif
@@ -17,7 +22,9 @@
                 <div class="f-ficon"></div>
                 <div class="f-finfo">
                   <h3>
-                    <a class="f-ftname" href="{{ $cur->link }}">{{ $cur->forum_name }}</a>
+                    <span class="f-frsname">
+                      <a class="f-ftname" href="{{ $cur->link }}">{{ $cur->forum_name }}</a>
+                    </span>
         @if ($cur->tree->newMessages)
                     <small class="f-fnew"><a href="{{ $cur->linkNew }}" title="{{ __('New posts') }}"><span class="f-newtxt">{!! __('New posts') !!}</span></a></small>
         @endif

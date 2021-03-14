@@ -1150,7 +1150,7 @@ html[lang="ru"] #fork details[open] > summary::after {
   margin-left: 0.875rem;
 }
 
-#fork .f-subforums .f-ftname:before {
+#fork .f-subforums .f-frsname:before {
   content: "└ ";
 }
 
