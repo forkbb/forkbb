@@ -146,7 +146,7 @@ msgid "by %s"
 msgstr "от %s"
 
 msgid "New posts"
-msgstr "Новые&nbsp;сообщения"
+msgstr "Новые сообщения"
 
 msgid "New posts info"
 msgstr "Перейти к первому новому сообщению в теме"
