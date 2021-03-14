@@ -15,9 +15,6 @@ msgstr ""
 msgid "Topics"
 msgstr "Тем"
 
-msgid "Link to"
-msgstr "Ссылка:"
-
 msgid "Empty board"
 msgstr "Форум пуст."
 

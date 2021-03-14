@@ -15,9 +15,6 @@ msgstr ""
 msgid "Topics"
 msgstr "Topics"
 
-msgid "Link to"
-msgstr "Link to:"
-
 msgid "Empty board"
 msgstr "Board is empty."
 

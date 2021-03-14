@@ -12,6 +12,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
 
+msgid "Link to"
+msgstr "Ссылка:"
+
 msgid "Sub forum"
 msgid_plural "Sub forums"
 msgstr[0] "Подраздел"
