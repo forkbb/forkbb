@@ -46,6 +46,11 @@ class Lang
     protected $langOrder = [];
 
     /**
+     * @var string
+     */
+    protected $cur;
+
+    /**
      * Список операторов для вычисления Plural Forms
      * @var array
      */
@@ -134,8 +139,9 @@ class Lang
         $path = $path ?: $this->c->DIR_LANG;
 
         do {
-            $flag     = true;
-            $fullPath = "{$path}/{$lang}/{$name}.po";
+            $flag      = true;
+            $this->cur = "{$lang}/{$name}.po";
+            $fullPath  = "{$path}/{$this->cur}";
 
             if (\is_file($fullPath)) {
                 $time  = \filemtime($fullPath);
@@ -204,7 +210,7 @@ class Lang
 
                 // ошибка формата
                 if (! isset($cur['msgid'])) {
-                    throw new RuntimeException('File format error');
+                    throw new RuntimeException("File ({$this->cur}) format error");
                 }
 
                 // заголовки
@@ -315,7 +321,7 @@ class Lang
                     break;
 
                 default:
-                    throw new RuntimeException('File format error');
+                    throw new RuntimeException("File ({$this->cur}) format error");
             }
         }
 
