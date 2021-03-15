@@ -10,21 +10,32 @@ declare(strict_types=1);
 
 namespace ForkBB\Models;
 
-use ForkBB\Models\Model;
+use ForkBB\Core\Container;
 
-class ManagerModel extends Model
+class ManagerModel
 {
+    /**
+     * Контейнер
+     * @var Container
+     */
+    protected $c;
+
     /**
      * @var array
      */
     protected $repository = [];
+
+    public function __construct(Container $container)
+    {
+        $this->c = $container;
+    }
 
     public function get($key)
     {
         return $this->repository[$key] ?? null;
     }
 
-    public function set($key, /* mixed */ $value): ManagerModel
+    public function set($key, /* mixed */ $value): self
     {
         $this->repository[$key] = $value;
 
