@@ -115,6 +115,7 @@ class Model
 
     /**
      * Возвращает значение свойства
+     * Или возвращает внешний метод Models\Method
      */
     public function __get(string $name) /* : mixed */
     {
