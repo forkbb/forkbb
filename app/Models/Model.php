@@ -129,8 +129,16 @@ class Model
             && isset($this->zAttrs[$root = \lcfirst(\substr($name, 6))])
         ) {
             return $this->zAttrsCalc[$name] = $this->c->censorship->censor($this->zAttrs[$root]);
-        } else {
+        }
+
+        $x = \ord($name);
+
+        if ($x > 90 || $x < 65) {
             return null;
+        } else {
+            $key = \str_replace(['ForkBB\\Models\\', 'ForkBB\\', '\\'], '', \get_class($this));
+
+            return $this->c->{$key . $name}->setModel($this);
         }
     }
 
