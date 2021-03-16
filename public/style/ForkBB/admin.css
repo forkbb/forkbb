@@ -6,11 +6,6 @@
   top: 1rem;
 }
 
-#fork-a-menu .f-menu-a {
-  text-align: center;
-  text-transform: uppercase;
-}
-
 #fork-a-menu .f-menu-a.active {
   background-color: #814A00;
   color: #F8F4E3;
@@ -66,7 +61,6 @@
   }
 
   .f-main-admin #fork-a-menu .f-menu-a {
-    text-align: left;
     text-transform: none;
     border-bottom: 0.0625rem dotted;
   }
