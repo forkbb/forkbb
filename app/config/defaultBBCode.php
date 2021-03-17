@@ -203,11 +203,16 @@ HANDLER,
             ],
         ],
         'handler' => <<<'HANDLER'
-if (empty($attrs['Def'])) {
-    $attrs['Def'] = $body;
-}
+$def = $attrs['Def'] ?? $body;
+$def = \implode('@',
+    \array_map('\\rawurlencode',
+        \array_map('\\rawurldecode',
+            \explode('@', $def)
+        )
+    )
+);
 
-return "<a href=\"mailto:{$attrs['Def']}\">{$body}</a>";
+return "<a href=\"mailto:{$def}\">{$body}</a>";
 HANDLER,
     ],
     [
