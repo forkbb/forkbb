@@ -20,7 +20,7 @@ class Rules extends Page
      */
     public function view(): Page
     {
-        $this->fIndex     = 'rules';
+        $this->fIndex     = self::FI_RULES;
         $this->nameTpl    = 'rules';
         $this->onlinePos  = 'rules';
         $this->canonical  = $this->c->Router->link('Rules');
@@ -43,7 +43,7 @@ class Rules extends Page
     {
         $this->c->Lang->load('register');
 
-        $this->fIndex     = 'register';
+        $this->fIndex     = self::FI_REG;
         $this->nameTpl    = 'rules';
         $this->onlinePos  = 'rules';
         $this->robots     = 'noindex';

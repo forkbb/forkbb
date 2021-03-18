@@ -78,7 +78,7 @@ class Register extends Page
         }
 
         $this->hhsLevel   = 'secure';
-        $this->fIndex     = 'register';
+        $this->fIndex     = self::FI_REG;
         $this->nameTpl    = 'register';
         $this->onlinePos  = 'register';
         $this->titles     = __('Register');

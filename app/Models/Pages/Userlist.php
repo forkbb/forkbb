@@ -137,7 +137,7 @@ class Userlist extends Page
             $this->fIswev   = ['i', 'No users found'];
         }
 
-        $this->fIndex       = 'userlist';
+        $this->fIndex       = self::FI_USERS;
         $this->nameTpl      = 'userlist';
         $this->onlinePos    = 'userlist';
         $this->canonical    = $this->c->Router->link('Userlist', $args);

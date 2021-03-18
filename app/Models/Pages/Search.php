@@ -524,7 +524,7 @@ class Search extends Page
             $this->posts   = $list;
         }
 
-        $this->fIndex        = 'search';
+        $this->fIndex        = self::FI_SRCH;
         $this->onlinePos     = 'search';
         $this->robots        = 'noindex';
         $this->model         = $model;

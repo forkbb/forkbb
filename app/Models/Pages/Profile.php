@@ -40,7 +40,7 @@ abstract class Profile extends Page
         $this->hhsLevel  = 'secure';
         $this->rules     = $this->c->ProfileRules->setUser($this->curUser);
         $this->robots    = 'noindex';
-        $this->fIndex    = $this->rules->my ? 'profile' : 'userlist';
+        $this->fIndex    = $this->rules->my ? self::FI_PROFL : self::FI_USERS;
         $this->nameTpl   = 'profile';
         $this->onlinePos = 'profile-' . $this->curUser->id; // ????
         $this->title     = __(['%s\'s profile', $this->curUser->username]);

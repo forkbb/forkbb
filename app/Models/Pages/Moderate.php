@@ -45,7 +45,6 @@ class Moderate extends Page
     {
         parent::__construct($container);
 
-        $this->fIndex    = 'index';
         $this->nameTpl   = 'moderate';
         $this->onlinePos = 'moderate';
         $this->robots    = 'noindex, nofollow';

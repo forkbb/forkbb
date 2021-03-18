@@ -14,7 +14,7 @@ use ForkBB\Core\Container;
 use ForkBB\Models\Page;
 use function \ForkBB\__;
 
-class Admin extends Page
+abstract class Admin extends Page
 {
     /**
      * @var array
@@ -26,7 +26,7 @@ class Admin extends Page
         parent::__construct($container);
 
         $this->aIndex    = 'index'; # string Указатель на активный пункт навигации в меню админки
-        $this->fIndex    = 'admin';
+        $this->fIndex    = self::FI_ADMIN;
         $this->onlinePos = 'admin';
         $this->robots    = 'noindex, nofollow';
         $this->hhsLevel  = 'secure';

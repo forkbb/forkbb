@@ -39,7 +39,6 @@ class Forum extends Page
             return $this->c->Message->message('Not Found', true, 404);
         }
 
-        $this->fIndex     = 'index';
         $this->nameTpl    = 'forum';
         $this->onlinePos  = 'forum-' . $args['id'];
         $this->canonical  = $this->c->Router->link(

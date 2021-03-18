@@ -17,6 +17,17 @@ use function \ForkBB\__;
 
 abstract class Page extends Model
 {
+    const FI_INDEX = 'index';
+    const FI_USERS = 'userlist';
+    const FI_RULES = 'rules';
+    const FI_SRCH  = 'search';
+    const FI_REG   = 'register';
+    const FI_LOGIN = 'login';
+    const FI_PROFL = 'profile';
+    const FI_PM    = 'pm';
+    const FI_ADMIN = 'admin';
+    const FI_LGOUT = 'logout';
+
     /**
      * Заголовки страницы
      * @var array
@@ -45,17 +56,17 @@ abstract class Page extends Model
         $formats[1]              = __($formats[1]);
         $container->TIME_FORMATS = $formats;
 
-        $this->fIndex       = 'index';  # string      Указатель на активный пункт навигации
-        $this->httpStatus   = 200;      # int         HTTP статус ответа для данной страницы
-#       $this->nameTpl      = null;     # null|string Имя шаблона
-#       $this->titles       = [];       # array       Массив титула страницы | setTitles()
-        $this->fIswev       = [];       # array       Массив info, success, warning, error, validation информации
-#       $this->onlinePos    = '';       # null|string Позиция для таблицы онлайн текущего пользователя
-        $this->onlineDetail = false;    # bool        Формировать данные по посетителям online или нет
-        $this->onlineFilter = true;     # bool        Посетители только по текущей странице или по всем
-#       $this->robots       = '';       # string      Переменная для meta name="robots"
-#       $this->canonical    = '';       # string      Переменная для link rel="canonical"
-        $this->hhsLevel     = 'common'; # string      Ключ для $c->HTTP_HEADERS (для вывода заголовков HTTP из конфига)
+        $this->fIndex       = self::FI_INDEX; # string      Указатель на активный пункт навигации
+        $this->httpStatus   = 200;            # int         HTTP статус ответа для данной страницы
+#       $this->nameTpl      = null;           # null|string Имя шаблона
+#       $this->titles       = [];             # array       Массив титула страницы | setTitles()
+        $this->fIswev       = [];             # array       Массив info, success, warning, error, validation информации
+#       $this->onlinePos    = '';             # null|string Позиция для таблицы онлайн текущего пользователя
+        $this->onlineDetail = false;          # bool        Формировать данные по посетителям online или нет
+        $this->onlineFilter = true;           # bool        Посетители только по текущей странице или по всем
+#       $this->robots       = '';             # string      Переменная для meta name="robots"
+#       $this->canonical    = '';             # string      Переменная для link rel="canonical"
+        $this->hhsLevel     = 'common';       # string      Ключ для $c->HTTP_HEADERS (для вывода заголовков HTTP из конфига)
 
         $this->fTitle       = $container->config->o_board_title;
         $this->fDescription = $container->config->o_board_desc;
@@ -103,7 +114,7 @@ abstract class Page extends Model
 
         $navUser = [];
         $navGen  = [
-            'index' => [
+            self::FI_INDEX => [
                 $r->link('Index'),
                 'Index',
                 'Home page',
@@ -114,7 +125,7 @@ abstract class Page extends Model
             '1' == $this->user->g_read_board
             && $this->user->viewUsers
         ) {
-            $navGen['userlist'] = [
+            $navGen[self::FI_USERS] = [
                 $r->link('Userlist'),
                 'User list',
                 'List of users',
@@ -129,7 +140,7 @@ abstract class Page extends Model
                 || '1' == $this->c->config->o_regs_allow
             )
         ) {
-            $navGen['rules'] = [
+            $navGen[self::FI_RULES] = [
                 $r->link('Rules'),
                 'Rules',
                 'Board rules',
@@ -174,7 +185,7 @@ abstract class Page extends Model
                 'Find unanswered topics',
             ];
 
-            $navGen['search'] = [
+            $navGen[self::FI_SRCH] = [
                 $r->link('Search'),
                 'Search',
                 'Search topics and posts',
@@ -183,26 +194,26 @@ abstract class Page extends Model
         }
 
         if ($this->user->isGuest) {
-            $navUser['register'] = [
+            $navUser[self::FI_REG] = [
                 $r->link('Register'),
                 'Register',
                 'Register',
             ];
-            $navUser['login'] = [
+            $navUser[self::FI_LOGIN] = [
                 $r->link('Login'),
                 'Login',
                 'Login',
             ];
         } else {
-            $navUser['profile'] = [
+            $navUser[self::FI_PROFL] = [
                 $this->user->link,
                 ['User %s', $this->user->username],
                 'Your profile',
             ];
 
             if ($this->user->usePM) {
-                $navUser['pm'] = [
-                    '#', // ????
+                $navUser[self::FI_PM] = [
+                    $r->link('PM'),
                     $this->user->u_pm_num_new > 0
                         ? ['PM %s', $this->user->u_pm_num_new]
                         : 'PM'
@@ -212,14 +223,14 @@ abstract class Page extends Model
             }
 
             if ($this->user->isAdmMod) {
-                $navUser['admin'] = [
+                $navUser[self::FI_ADMIN] = [
                     $r->link('Admin'),
                     'Admin',
                     'Administration functions',
                 ];
             }
 
-            $navUser['logout'] = [
+            $navUser[self::FI_LGOUT] = [
                 $r->link('Logout'),
                 'Logout',
                 'Logout',

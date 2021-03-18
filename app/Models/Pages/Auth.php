@@ -91,7 +91,7 @@ class Auth extends Page
         $ref = $this->c->Secury->replInvalidChars($_SERVER['HTTP_REFERER'] ?? '');
 
         $this->hhsLevel   = 'secure';
-        $this->fIndex     = 'login';
+        $this->fIndex     = self::FI_LOGIN;
         $this->nameTpl    = 'login';
         $this->onlinePos  = 'login';
         $this->robots     = 'noindex';
@@ -311,7 +311,7 @@ class Auth extends Page
         }
 
         $this->hhsLevel   = 'secure';
-        $this->fIndex     = 'login';
+        $this->fIndex     = self::FI_LOGIN;
         $this->nameTpl    = 'passphrase_reset';
         $this->onlinePos  = 'passphrase_reset';
         $this->robots     = 'noindex';
@@ -438,7 +438,7 @@ class Auth extends Page
         }
 
         $this->hhsLevel   = 'secure';
-        $this->fIndex     = 'login';
+        $this->fIndex     = self::FI_LOGIN;
         $this->nameTpl    = 'change_passphrase';
         $this->onlinePos  = 'change_passphrase';
         $this->robots     = 'noindex';
