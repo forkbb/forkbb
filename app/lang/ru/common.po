@@ -328,7 +328,7 @@ msgstr "ЛС <b>(%s)</b>"
 msgid "Private messages"
 msgstr "Личные сообщения"
 
-msgid "PMsend"
+msgid "Send PM"
 msgstr "Отправить личное сообщение"
 
 msgid "PMnew"

@@ -326,7 +326,7 @@ msgstr "PM <b>(%s)</b>"
 msgid "Private messages"
 msgstr "Private messages"
 
-msgid "PMsend"
+msgid "Send PM"
 msgstr "Send private message"
 
 msgid "PMnew"
