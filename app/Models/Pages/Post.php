@@ -90,7 +90,7 @@ class Post extends Page
         $this->robots    = 'noindex';
         $this->crumbs    = $this->crumbs(__('Post new topic'), $forum);
         $this->formTitle = __('Post new topic');
-        $this->form      = $this->messageForm($args, $forum, 'NewTopic', false, true);
+        $this->form      = $this->messageForm($forum, 'NewTopic', $args, false, true, false);
 
         return $this;
     }
@@ -114,7 +114,7 @@ class Post extends Page
         $this->onlinePos = 'topic-' . $topic->id;
 
         if ('POST' === $method) {
-            $v = $this->messageValidator($topic, 'NewReply', $args);
+            $v = $this->messageValidator($topic, 'NewReply', $args, false, false);
 
             if ($this->user->isGuest) {
                 $v = $this->c->Test->beforeValidation($v);
@@ -160,7 +160,7 @@ class Post extends Page
         $this->robots     = 'noindex';
         $this->crumbs     = $this->crumbs(__('Post a reply'), $topic);
         $this->formTitle  = __('Post a reply');
-        $this->form       = $this->messageForm($args, $topic, 'NewReply');
+        $this->form       = $this->messageForm($topic, 'NewReply', $args, false, false, false);
         $this->postsTitle = __('Topic review');
         $this->posts      = $topic->review();
 

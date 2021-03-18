@@ -98,9 +98,11 @@ trait PostValidatorTrait
     /**
      * Подготовка валидатора к проверке данных из формы создания темы/сообщения
      */
-    protected function messageValidator(Model $model, string $marker, array $args, bool $editPost = false, bool $editSubject = false): Validator
+    protected function messageValidator(Model $model, string $marker, array $args, bool $edit, bool $first): Validator
     {
         $this->c->Lang->load('validator');
+
+        $notPM = $this->fIndex !== self::FI_PM;
 
         if ($this->user->isGuest) {
             $ruleEmail    = ('1' == $this->c->config->p_force_guest_email ? 'required|' : '') . 'string:trim|email:noban';
@@ -111,10 +113,13 @@ trait PostValidatorTrait
         }
 
         if (
-            $this->user->isAdmin
-            || $this->user->isModerator($model)
+            $notPM
+            && (
+                $this->user->isAdmin
+                || $this->user->isModerator($model)
+            )
         ) {
-            if ($editSubject) {
+            if ($first) {
                 $ruleStickTopic = 'checkbox';
                 $ruleStickFP    = 'checkbox';
             } else {
@@ -122,15 +127,15 @@ trait PostValidatorTrait
                 $ruleStickFP    = 'absent';
             }
             if (
-                ! $editSubject
-                && ! $editPost
+                ! $first
+                && ! $edit
             ) {
                 $ruleMergePost  = 'checkbox';
             } else {
                 $ruleMergePost  = 'absent';
             }
             if (
-                $editPost
+                $edit
                 && ! $model->user->isGuest
                 && ! $model->user->isAdmin
             ) {
@@ -147,14 +152,15 @@ trait PostValidatorTrait
             $executive          = false;
         }
 
-        if ($editSubject) {
+        if ($first) {
             $ruleSubject = 'required|string:trim,spaces|min:1|max:70|' . ($executive ? '' : 'noURL|') . 'check_subject';
         } else {
             $ruleSubject = 'absent';
         }
 
         if (
-            ! $editPost
+            ! $edit
+            && $notPM
             && '1' == $this->c->config->o_topic_subscriptions
             && $this->user->email_confirmed
         ) {
@@ -202,7 +208,8 @@ trait PostValidatorTrait
             ]);
 
         if (
-            $editSubject
+            $first
+            && $notPM
             && $this->user->usePoll
         ) {
             $v->addValidators([

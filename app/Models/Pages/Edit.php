@@ -36,8 +36,8 @@ class Edit extends Page
             return $this->c->Message->message('Bad request');
         }
 
-        $topic       = $post->parent;
-        $editSubject = $post->id === $topic->first_post_id;
+        $topic     = $post->parent;
+        $firstPost = $post->id === $topic->first_post_id;
 
         $this->c->Lang->load('post');
 
@@ -46,7 +46,7 @@ class Edit extends Page
         }
 
         if ('POST' === $method) {
-            $v = $this->messageValidator($post, 'EditPost', $args, true, $editSubject);
+            $v = $this->messageValidator($post, 'EditPost', $args, true, $firstPost);
 
             if (
                 $v->validation($_POST)
@@ -68,7 +68,7 @@ class Edit extends Page
                 );
 
                 if (
-                    $editSubject
+                    $firstPost
                     && $this->user->usePoll
                     && $v->poll_enable
                 ) {
@@ -88,7 +88,7 @@ class Edit extends Page
         }
 
         if (
-            $editSubject
+            $firstPost
             && $this->user->usePoll
         ) {
             if (
@@ -124,9 +124,9 @@ class Edit extends Page
         $this->onlinePos = 'topic-' . $topic->id;
         $this->canonical = $post->linkEdit;
         $this->robots    = 'noindex';
-        $this->formTitle = $editSubject ? __('Edit topic') : __('Edit post');
+        $this->formTitle = $firstPost ? __('Edit topic') : __('Edit post');
         $this->crumbs    = $this->crumbs($this->formTitle, $topic);
-        $this->form      = $this->messageForm($args, $post, 'EditPost', true, $editSubject);
+        $this->form      = $this->messageForm($post, 'EditPost', $args, true, $firstPost, false);
 
         return $this;
     }
@@ -136,13 +136,13 @@ class Edit extends Page
      */
     protected function endEdit(Post $post, Validator $v): Page
     {
-        $now         = \time();
-        $executive   = $this->user->isAdmin || $this->user->isModerator($post);
-        $topic       = $post->parent;
-        $editSubject = $post->id === $topic->first_post_id;
-        $calcPost    = false;
-        $calcTopic   = false;
-        $calcForum   = false;
+        $now       = \time();
+        $executive = $this->user->isAdmin || $this->user->isModerator($post);
+        $topic     = $post->parent;
+        $firstPost = $post->id === $topic->first_post_id;
+        $calcPost  = false;
+        $calcTopic = false;
+        $calcForum = false;
 
         // текст сообщения
         if ($post->message !== $v->message) {
@@ -171,7 +171,7 @@ class Edit extends Page
             $post->edit_post     = $v->edit_post ? 1 : 0;
         }
 
-        if ($editSubject) {
+        if ($firstPost) {
             // заголовок темы
             if ($topic->subject !== $v->subject) {
                 $topic->subject  = $v->subject;

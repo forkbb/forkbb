@@ -18,13 +18,15 @@ trait PostFormTrait
     /**
      * Возвращает данные для построения формы создания темы/сообщения
      */
-    protected function messageForm(array $args, Model $model, string $marker, bool $editPost = false, bool $editSubject = false, bool $quickReply = false): array
+    protected function messageForm(Model $model, string $marker, array $args, bool $edit, bool $first, bool $quick): array
     {
         $vars = $args['_vars'] ?? null;
+
         unset($args['_vars']);
 
-        $autofocus = $quickReply ? null : true;
-        $form = [
+        $notPM     = $this->fIndex !== self::FI_PM;
+        $autofocus = $quick ? null : true;
+        $form      = [
             'action' => $this->c->Router->link($marker, $args),
             'hidden' => [
                 'token' => $this->c->Csrf->create($marker, $args),
@@ -44,6 +46,7 @@ trait PostFormTrait
         ];
 
         $fieldset = [];
+
         if ($this->user->isGuest) {
             $fieldset['username'] = [
                 'class'     => 'w1',
@@ -67,7 +70,7 @@ trait PostFormTrait
             $autofocus = null;
         }
 
-        if ($editSubject) {
+        if ($first) {
             $fieldset['subject'] = [
                 'class'     => 'w0',
                 'type'      => 'text',
@@ -99,75 +102,78 @@ trait PostFormTrait
         $form['sets']['uesm'] = [
             'fields' => $fieldset,
         ];
-        $autofocus = null;
 
-        $fieldset = [];
-        if (
-            $this->user->isAdmin
-            || $this->user->isModerator($model)
-        ) {
-            if ($editSubject) {
-                $fieldset['stick_topic'] = [
-                    'type'    => 'checkbox',
-                    'label'   => __('Stick topic'),
-                    'value'   => '1',
-                    'checked' => (bool) ($vars['stick_topic'] ?? false),
-                ];
-                $fieldset['stick_fp'] = [
-                    'type'    => 'checkbox',
-                    'label'   => __('Stick first post'),
-                    'value'   => '1',
-                    'checked' => (bool) ($vars['stick_fp'] ?? false),
-                ];
-            } elseif (! $editPost) {
-                $fieldset['merge_post'] = [
-                    'type'    => 'checkbox',
-                    'label'   => __('Merge posts'),
-                    'value'   => '1',
-                    'checked' => (bool) ($vars['merge_post'] ?? true),
-                ];
+        $autofocus = null;
+        $fieldset  = [];
+
+        if ($notPM) {
+            if (
+                $this->user->isAdmin
+                || $this->user->isModerator($model)
+            ) {
+                if ($first) {
+                    $fieldset['stick_topic'] = [
+                        'type'    => 'checkbox',
+                        'label'   => __('Stick topic'),
+                        'value'   => '1',
+                        'checked' => (bool) ($vars['stick_topic'] ?? false),
+                    ];
+                    $fieldset['stick_fp'] = [
+                        'type'    => 'checkbox',
+                        'label'   => __('Stick first post'),
+                        'value'   => '1',
+                        'checked' => (bool) ($vars['stick_fp'] ?? false),
+                    ];
+                } elseif (! $edit) {
+                    $fieldset['merge_post'] = [
+                        'type'    => 'checkbox',
+                        'label'   => __('Merge posts'),
+                        'value'   => '1',
+                        'checked' => (bool) ($vars['merge_post'] ?? true),
+                    ];
+                }
+
+                if (
+                    $edit
+                    && ! $model->user->isGuest
+                    && ! $model->user->isAdmin
+                ) {
+                    $fieldset['edit_post'] = [
+                        'type'    => 'checkbox',
+                        'label'   => __('EditPost edit'),
+                        'value'   => '1',
+                        'checked' => (bool) ($vars['edit_post'] ?? false),
+                    ];
+                }
             }
 
             if (
-                $editPost
-                && ! $model->user->isGuest
-                && ! $model->user->isAdmin
+                ! $edit
+                && '1' == $this->c->config->o_topic_subscriptions
+                && $this->user->email_confirmed
             ) {
-                $fieldset['edit_post'] = [
-                    'type'    => 'checkbox',
-                    'label'   => __('EditPost edit'),
-                    'value'   => '1',
-                    'checked' => (bool) ($vars['edit_post'] ?? false),
-                ];
-            }
-        }
+                $subscribed = ! $first && $model->is_subscribed;
 
-        if (
-            ! $editPost
-            && '1' == $this->c->config->o_topic_subscriptions
-            && $this->user->email_confirmed
-        ) {
-            $subscribed = ! $editSubject && $model->is_subscribed;
-
-            if ($quickReply) {
-                if (
-                    $subscribed
-                    || $this->user->auto_notify
-                ) {
-                    $form['hidden']['subscribe'] = '1';
+                if ($quick) {
+                    if (
+                        $subscribed
+                        || $this->user->auto_notify
+                    ) {
+                        $form['hidden']['subscribe'] = '1';
+                    }
+                } else {
+                    $fieldset['subscribe'] = [
+                        'type'    => 'checkbox',
+                        'label'   => $subscribed ? __('Stay subscribed') : __('New subscribe'),
+                        'value'   => '1',
+                        'checked' => (bool) ($vars['subscribe'] ?? ($subscribed || $this->user->auto_notify)),
+                    ];
                 }
-            } else {
-                $fieldset['subscribe'] = [
-                    'type'    => 'checkbox',
-                    'label'   => $subscribed ? __('Stay subscribed') : __('New subscribe'),
-                    'value'   => '1',
-                    'checked' => (bool) ($vars['subscribe'] ?? ($subscribed || $this->user->auto_notify)),
-                ];
             }
         }
 
         if (
-            ! $quickReply
+            ! $quick
             && '1' == $this->c->config->o_smilies
         ) {
             $fieldset['hide_smilies'] = [
@@ -186,10 +192,11 @@ trait PostFormTrait
         }
 
         if (
-            $editSubject
+            $first
+            && $notPM
             && $this->user->usePoll
         ) {
-            $term = $editPost && $model->parent->poll_term
+            $term = $edit && $model->parent->poll_term
                 ? $model->parent->poll_term
                 : $this->c->config->i_poll_term;
 
@@ -263,7 +270,6 @@ trait PostFormTrait
             $this->pageHeader('pollJS', 'script', 9000, [
                 'src' => $this->publicLink('/js/poll.js'),
             ]);
-
         }
 
         return $form;
