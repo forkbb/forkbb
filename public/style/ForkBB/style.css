@@ -588,11 +588,18 @@ html[lang="ru"] #fork details[open] > summary::after {
 
 /*********/
 /* iswev */
-/********/
+/*********/
+#fork main > .f-iswev-wrap {
+  margin: 1rem 0;
+}
+
 #fork .f-iswev {
   border: 0.0625rem solid;
-  margin: 1rem 0;
   padding: 0.625rem;
+}
+
+#fork .f-iswev + .f-iswev {
+  margin-top: 1rem;
 }
 
 #fork .f-info,
@@ -1679,6 +1686,7 @@ html[lang="ru"] #fork details[open] > summary::after {
 /****************/
 #fork .f-preview {
   border-top: 0.0625rem solid #AA7939;
+  margin-bottom: 1rem;
 }
 
 #fork .f-preview > h2 {

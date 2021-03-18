@@ -1,4 +1,4 @@
-      <aside>
+      <aside class="f-iswev-wrap">
 @if ($iswev['i'])
         <section class="f-iswev f-info">
           <h2>Info message</h2>

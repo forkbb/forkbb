@@ -76,7 +76,7 @@ class Delete extends Page
         $this->formTitle  = __($deleteTopic ? 'Delete topic' : 'Delete post');
         $this->crumbs     = $this->crumbs($this->formTitle, $topic);
         $this->posts      = [$post];
-        $this->postsTitle = __('Delete info');
+        $this->postsTitle = 'Delete info';
         $this->form       = $this->formDelete($args, $post, $deleteTopic);
 
         return $this;

@@ -161,7 +161,7 @@ class Post extends Page
         $this->crumbs     = $this->crumbs(__('Post a reply'), $topic);
         $this->formTitle  = __('Post a reply');
         $this->form       = $this->messageForm($topic, 'NewReply', $args, false, false, false);
-        $this->postsTitle = __('Topic review');
+        $this->postsTitle = 'Topic review';
         $this->posts      = $topic->review();
 
         return $this;

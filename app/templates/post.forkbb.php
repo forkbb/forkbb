@@ -4,7 +4,7 @@
 @yield ('crumbs')
     </div>
 @if ($p->previewHtml)
-    <section class="f-main f-preview">
+    <section class="f-preview">
       <h2>{!! __('Post preview') !!}</h2>
       <div class="f-post-body">
         <div class="f-post-main">
@@ -26,7 +26,7 @@
 @endif
 @if ($p->posts)
     <section class="f-view-posts">
-      <h2>{!! $p->postsTitle !!}</h2>
+      <h2>{!! __($p->postsTitle) !!}</h2>
     @foreach ($p->posts as $post)
         @if ($post->id)
       <article id="p{{ $post->id }}" class="f-post">
