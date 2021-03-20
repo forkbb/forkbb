@@ -79,7 +79,7 @@ class Container
             $toShare = false;
             $config  = (array) $this->multiple[$id];
         } else {
-            throw new InvalidArgumentException('Wrong property name: ' . $id);
+            throw new InvalidArgumentException("Wrong property name: {$id}");
         }
         // N.B. "class" is just the first element, regardless of its key
         $class = \array_shift($config);
