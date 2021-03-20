@@ -98,7 +98,7 @@ trait PostValidatorTrait
     /**
      * Подготовка валидатора к проверке данных из формы создания темы/сообщения
      */
-    protected function messageValidator(Model $model, string $marker, array $args, bool $edit, bool $first): Validator
+    protected function messageValidator(?Model $model, string $marker, array $args, bool $edit, bool $first): Validator
     {
         $this->c->Lang->load('validator');
 
