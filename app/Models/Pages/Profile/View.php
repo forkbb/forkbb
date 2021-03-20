@@ -12,6 +12,7 @@ namespace ForkBB\Models\Pages\Profile;
 
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
+use ForkBB\Models\PM\Cnst;
 use function \ForkBB\__;
 
 class View extends Profile
@@ -143,6 +144,25 @@ class View extends Profile
 
         // контактная информация
         $fields = [];
+        if ($this->rules->sendPM) {
+            $this->c->Csrf->setHashExpiration(3600);
+
+            $pmArgs = [
+                'action' => Cnst::ACTION_SEND,
+                'more1'  => $this->curUser->id,
+            ];
+
+            $fields['pm'] = [
+                'class'   => 'pline',
+                'type'    => 'link',
+                'caption' => 'PM',
+                'value'   => __('Send PM'),
+                'href'    => $this->c->Router->link(
+                    'PMAction',
+                    $pmArgs + ['more2' => $this->c->Csrf->createHash('PMAction', $pmArgs)]
+                ),
+            ];
+        }
         if ($this->rules->viewEmail) {
             if (0 === $this->curUser->email_setting) {
                 $fields['email'] = [
