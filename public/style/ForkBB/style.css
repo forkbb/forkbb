@@ -2401,6 +2401,87 @@ html[lang="ru"] #fork details[open] > summary::after {
   }
 }
 
+/***********************/
+/* Приватные сообщения */
+/***********************/
+#fork .f-nav-pm-links {
+  margin-right: 3.75rem;
+}
+
+#fork #fork-pm-nav {
+  position: sticky;
+  top: 1rem;
+}
+
+#fork-pm-menu a.f-menu-a.active {
+  background-color: #814A00;
+  color: #F8F4E3;
+}
+
+#fork-pm-menu a.f-menu-a:hover,
+#fork-pm-menu a.f-menu-a:focus {
+  background-color: #583200;
+  color: #F8F4E3;
+}
+
+#fork-pm-menu #id-pmn-label {
+  position: absolute;
+  top: -2.875rem;
+  right: 0.625rem;
+}
+
+#fork-pm-menu .f-menu-item:first-child .f-menu-a {
+  border-top: 0.0625rem dotted;
+}
+
+@media screen and (min-width: 50rem) {
+  #fork .f-nav-pm-links {
+    margin-right: 0;
+  }
+
+  #fork .f-main-pm {
+    display: flex;
+    /*flex-wrap: wrap;*/
+  }
+
+  #fork #fork-pm-menu {
+    width: 13rem;
+    margin-right: 1rem;
+  }
+
+  #fork #forkpm {
+    width: calc(100% - 14rem);
+  }
+
+  #fork-pm-menu #id-pmn-label {
+    display: none;
+  }
+
+  #fork-pm-menu .f-menu-items {
+    /*max-height: 100rem;*/
+    display: flex;
+  }
+
+  #fork-pm-menu .f-menu-a {
+    text-transform: none;
+    border-bottom: 0.0625rem dotted;
+  }
+
+  #fork-pm-menu a.f-menu-a,
+  #fork-pm-menu span.f-menu-a {
+    justify-content: flex-start;
+  }
+
+  #forkpm .f-preview,
+  #forkpm .f-post-form {
+    border-top-style: dotted;
+  }
+
+  #forkpm .f-post-form:last-child {
+    margin-bottom: 0;
+  }
+}
+
 /****************************************/
 @media screen and (min-width: 81rem) {
   #fork.f-with-nav {
