@@ -60,9 +60,16 @@ class Model extends DataModel
     {
         $user = $this->c->users->load($this->poster_id);
 
+        if (
+            ! $user instanceof User
+            && 1 !== $this->poster_id // ???? может сменить id гостя?
+        ) {
+            $user = $this->c->users->load(1);
+        }
+
         if (! $user instanceof User) {
-            throw new RuntimeException('No user data in post number ' . $this->id);
-        } elseif (1 === $this->poster_id) {
+            throw new RuntimeException("No user data in post number {$this->id}");
+        } elseif ($user->isGuest) {
             $user = clone $user;
 
             $user->__email        = $this->poster_email;
