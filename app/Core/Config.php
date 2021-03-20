@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace ForkBB\Core;
 
 use ForkBB\Core\Exceptions\ForkException;
-use InvalidArgumentException;
 
 class Config
 {
