@@ -102,6 +102,16 @@ class Profile extends Rules
         return false;
     }
 
+    protected function getsendPM(): bool
+    {
+        return $this->user->usePM
+            && ! $this->my
+            && (
+                $this->user->isAdmin
+                || $this->curUser->usePM
+            );
+    }
+
     protected function getviewLastVisit(): bool
     {
         return $this->my || $this->user->isAdmMod;
