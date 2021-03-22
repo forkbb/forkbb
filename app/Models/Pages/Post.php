@@ -327,6 +327,6 @@ class Post extends Page
             }
         }
 
-        return $this->c->Redirect->page('ViewPost', ['id' => $merge ? $lastPost->id : $post->id])->message('Post redirect');
+        return $this->c->Redirect->url($merge ? $lastPost->link : $post->link)->message('Post redirect');
     }
 }
