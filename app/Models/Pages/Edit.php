@@ -226,7 +226,7 @@ class Edit extends Page
 
         $this->c->search->index($post, 'edit');
 
-        return $this->c->Redirect->page('ViewPost', ['id' => $post->id])->message('Edit redirect');
+        return $this->c->Redirect->url($post->link)->message('Edit redirect');
     }
 
     /**
