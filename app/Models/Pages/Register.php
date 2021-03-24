@@ -34,7 +34,7 @@ class Register extends Page
                 'on'       => 'integer',
                 'email'    => 'required_with:on|string:trim|email:noban',
                 'username' => 'required_with:on|string:trim|username',
-                'password' => 'required_with:on|string|min:16|password',
+                'password' => 'required_with:on|string|min:16|max:100000|password',
                 'register' => 'required|string',
             ])->addAliases([
                 'email'    => 'Email',

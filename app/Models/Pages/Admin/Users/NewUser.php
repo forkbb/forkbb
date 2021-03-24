@@ -34,7 +34,7 @@ class NewUser extends Users
                     'token'    => 'token:AdminUsersNew',
                     'email'    => 'required|string:trim|email:noban,unique',
                     'username' => 'required|string:trim|username',
-                    'password' => 'required|string|min:16|password',
+                    'password' => 'required|string|min:16|max:100000|password',
                 ])->addAliases([
                     'email'    => 'Email',
                     'username' => 'Username',

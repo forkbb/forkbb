@@ -247,7 +247,7 @@ class Action extends Users
                 $user->isAdmin
                 || $user->id === $this->user->id
             ) {
-                $rulePass = 'required|string:trim|check_password';
+                $rulePass = 'required|string:trim|max:100000|check_password';
             }
         } else {
             $link = $this->c->Router->link('AdminUsers');
