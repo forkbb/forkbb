@@ -155,10 +155,10 @@ class Model extends DataModel
     /**
      * Ссылка на последнее сообщение в разделе
      */
-    protected function getlinkLast(): ?string
+    protected function getlinkLast(): string
     {
         if ($this->last_post_id < 1) {
-            return null;
+            return '';
         } else {
             return $this->c->Router->link(
                 'ViewPost',
@@ -198,10 +198,10 @@ class Model extends DataModel
     /**
      * Ссылка на подписку
      */
-    protected function getlinkSubscribe(): ?string
+    protected function getlinkSubscribe(): string
     {
         if ($this->id < 1) {
-            return null;
+            return '';
         } else {
             return $this->c->Router->link(
                 'ForumSubscription',
@@ -216,10 +216,10 @@ class Model extends DataModel
     /**
      * Ссылка на отписку
      */
-    protected function getlinkUnsubscribe(): ?string
+    protected function getlinkUnsubscribe(): string
     {
         if ($this->id < 1) {
-            return null;
+            return '';
         } else {
             return $this->c->Router->link(
                 'ForumSubscription',
