@@ -397,6 +397,21 @@ class Model extends DataModel
             ':tid' => $this->id,
             ':pid' => $pid,
         ];
+        $query = 'SELECT COUNT(p.id) AS pnum, MAX(p.id) as pmax
+            FROM ::posts AS p
+            WHERE p.topic_id=?i:tid AND p.id<=?i:pid';
+
+        $result = $this->c->DB->query($query, $vars)->fetch();
+
+        if (
+            empty($result['pmax'])
+            || $result['pmax'] !== $pid
+        ) {
+            $this->page = null;
+        } else {
+            $this->page = (int) \ceil($result['pnum'] / $this->c->user->disp_posts);
+        }
+/*
         $query = 'SELECT COUNT(p.id) AS num
             FROM ::posts AS p
             INNER JOIN ::posts AS j ON (j.topic_id=?i:tid AND j.id=?i:pid)
@@ -405,6 +420,7 @@ class Model extends DataModel
         $result = $this->c->DB->query($query, $vars)->fetch();
 
         $this->page = empty($result) ? null : (int) \ceil(($result['num'] + 1) / $this->c->user->disp_posts);
+*/
     }
 
     /**
