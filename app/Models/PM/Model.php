@@ -442,7 +442,8 @@ class Model extends ParentModel
         $ids = \array_slice(
             $this->idsList(),
             ($this->page - 1) * $this->c->user->disp_topics,
-            $this->c->user->disp_topics
+            $this->c->user->disp_topics,
+            true
         );
 
         return $this->loadByIds(Cnst::PTOPIC, \array_keys($ids));
