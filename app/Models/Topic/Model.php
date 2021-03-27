@@ -117,13 +117,13 @@ class Model extends DataModel
     /**
      * Ссылка для перехода на последнее сообщение темы
      */
-    protected function getlinkLast(): ?string
+    protected function getlinkLast(): string
     {
         if (
             $this->moved_to
             || $this->last_post_id < 1
         ) {
-            return null;
+            return '';
         } else {
             return $this->c->Router->link(
                 'ViewPost',
@@ -163,7 +163,7 @@ class Model extends DataModel
     /**
      * Ссылка на подписку
      */
-    protected function getlinkSubscribe(): ?string
+    protected function getlinkSubscribe(): string
     {
         return $this->c->Router->link(
             'TopicSubscription',
@@ -177,7 +177,7 @@ class Model extends DataModel
     /**
      * Ссылка на отписку
      */
-    protected function getlinkUnsubscribe(): ?string
+    protected function getlinkUnsubscribe(): string
     {
         return $this->c->Router->link(
             'TopicSubscription',
