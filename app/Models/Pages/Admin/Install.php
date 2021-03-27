@@ -161,7 +161,7 @@ class Install extends Admin
                     'dbpass'        => 'string:trim',
                     'dbprefix'      => 'required|string:trim|max:40|check_prefix',
                     'username'      => 'required|string:trim|min:2|max:25',
-                    'password'      => 'required|string|min:16|password',
+                    'password'      => 'required|string|min:16|max:100000|password',
                     'email'         => 'required|string:trim|email',
                     'title'         => 'required|string:trim|max:255',
                     'descr'         => 'string:trim|max:65000 bytes|html',
@@ -898,14 +898,15 @@ class Install extends Admin
         // pm_posts
         $schema = [
             'FIELDS' => [
-                'id'            => ['SERIAL', false],
-                'poster_number' => ['TINYINT UNSIGNED', false, 0],
-                'poster_ip'     => ['VARCHAR(45)', false, ''],
-                'message'       => ['TEXT', false],
-                'hide_smilies'  => ['TINYINT(1)', false, 0],
-                'posted'        => ['INT(10) UNSIGNED', false, 0],
-                'edited'        => ['INT(10) UNSIGNED', false, 0],
-                'topic_id'      => ['INT(10) UNSIGNED', false, 0],
+                'id'           => ['SERIAL', false],
+                'poster'       => ['VARCHAR(190)', false, ''],
+                'poster_id'    => ['INT(10) UNSIGNED', false, 0],
+                'poster_ip'    => ['VARCHAR(45)', false, ''],
+                'message'      => ['TEXT', false],
+                'hide_smilies' => ['TINYINT(1)', false, 0],
+                'posted'       => ['INT(10) UNSIGNED', false, 0],
+                'edited'       => ['INT(10) UNSIGNED', false, 0],
+                'topic_id'     => ['INT(10) UNSIGNED', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
             'INDEXES' => [
@@ -915,37 +916,29 @@ class Install extends Admin
         ];
         $this->c->DB->createTable('pm_posts', $schema);
 
-        // pm_rnd
-        $schema = [
-            'FIELDS' => [
-                'user_id'     => ['INT(10) UNSIGNED', false, 0],
-                'topic_id'    => ['INT(10) UNSIGNED', false, 0],
-                'user_number' => ['TINYINT UNSIGNED', false, 0],
-                'username'    => ['VARCHAR(190)', false, ''],
-                'pt_status'   => ['TINYINT UNSIGNED', false, 0],
-                'last_visit'  => ['INT(10) UNSIGNED', false, 0],
-            ],
-            'PRIMARY KEY' => ['user_id', 'topic_id', 'user_number'],
-            'INDEXES' => [
-                'topic_id_idx'   => ['topic_id'],
-                'pt_status_idx'  => ['pt_status'],
-            ],
-            'ENGINE' => $this->DBEngine,
-        ];
-        $this->c->DB->createTable('pm_rnd', $schema);
-
         // pm_topics
         $schema = [
             'FIELDS' => [
-                'id'          => ['SERIAL', false],
-                'subject'     => ['VARCHAR(255)', false, ''],
-                'num_replies' => ['INT(10) UNSIGNED', false, 0],
-                'last_post'   => ['INT(10) UNSIGNED', false, 0],
-                'last_number' => ['TINYINT UNSIGNED', false, 0],
+                'id'            => ['SERIAL', false],
+                'subject'       => ['VARCHAR(255)', false, ''],
+                'poster'        => ['VARCHAR(190)', false, ''],
+                'poster_id'     => ['INT(10) UNSIGNED', false, 0],
+                'poster_status' => ['TINYINT UNSIGNED', false, 0],
+                'poster_visit'  => ['INT(10) UNSIGNED', false, 0],
+                'target'        => ['VARCHAR(190)', false, ''],
+                'target_id'     => ['INT(10) UNSIGNED', false, 0],
+                'target_status' => ['TINYINT UNSIGNED', false, 0],
+                'target_visit'  => ['INT(10) UNSIGNED', false, 0],
+                'num_replies'   => ['INT(10) UNSIGNED', false, 0],
+                'last_post'     => ['INT(10) UNSIGNED', false, 0],
+                'last_post_id'  => ['INT(10) UNSIGNED', false, 0],
+                'last_number'   => ['TINYINT UNSIGNED', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
             'INDEXES' => [
-                'last_post_idx' => ['last_post'],
+                'last_post_idx'        => ['last_post'],
+                'poster_id_status_idx' => ['poster_id', 'poster_status'],
+                'target_id_status_idx' => ['target_id', 'target_status'],
             ],
             'ENGINE' => $this->DBEngine,
         ];
