@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\PM;
 
 use ForkBB\Models\Method;
-use ForkBB\Models\Model as ParentModel;
+use ForkBB\Models\DataModel;
 use ForkBB\Models\PM\Cnst;
 use ForkBB\Models\PM\PPost;
 use ForkBB\Models\PM\PTopic;
@@ -21,21 +21,12 @@ use RuntimeException;
 class Load extends Method
 {
     /**
-     * @var array
-     */
-    protected $userIds;
-
-    /**
      * Создает текст запрос
      */
     protected function getSql(int $type, bool $solo = true): string
     {
 
         switch ($type) {
-            case Cnst::PRND:
-                $where = $solo ? 'pr.topic_id=?i:tid' : 'pr.topic_id IN (?ai:ids)';
-
-                return "SELECT * FROM pm_rnd AS pr WHERE {$where}";
             case Cnst::PTOPIC:
                 $where = $solo ? 'pt.id=?i:tid' : 'pt.id IN (?ai:ids)';
 
@@ -45,38 +36,11 @@ class Load extends Method
 
                 return "SELECT * FROM pm_posts AS pp WHERE  {$where}";
             default:
-                throw new RuntimeException('Unknown request type');
+                throw new InvalidArgumentException("Unknown request type: {$type}");
         }
     }
 
-    /**
-     * Группирует данные пользователей по приватным тема (можно было и в PDO получить, но...)
-     * и выбирает все id пользователей
-     */
-    protected function calc(array $data): array
-    {
-        $this->userIds = [];
-        $result        = [];
-
-        foreach ($data as $row) {
-            $uid = $row['user_id'];
-            $tid = $row['topic_id'];
-
-            unset($row['topic_id']);
-
-            $this->userIds[$uid] = $uid;
-
-            if (empty($result[$tid])) {
-                $result[$tid] = [];
-            }
-
-            $result[$tid][$row['user_number']] = $row;
-        }
-
-        return $result;
-    }
-
-    public function load(int $type, int $id): ?ParentModel
+    public function load(int $type, int $id): ?DataModel
     {
         switch ($type) {
             case Cnst::PTOPIC:
@@ -120,14 +84,9 @@ class Load extends Method
             return null;
         }
 
-        $topic      = $this->model->create(Cnst::PTOPIC, $data);
-        $query      = $this->getSql(Cnst::PRND);
-        $dataU      = $this->calc($this->c->DB->query($query, $vars)->fetchAll());
-        $rnd        = $this->model->create(Cnst::PRND);
-        $rnd->list  = $dataU[$id];
-        $topic->rnd = $rnd;
+        $topic = $this->model->create(Cnst::PTOPIC, $data);
 
-        $this->c->users->loadByIds($this->userIds);
+        $this->c->users->loadByIds([$topic->poster_id, $topic->target_id]);
 
         return $topic;
     }
@@ -171,22 +130,19 @@ class Load extends Method
         $vars = [
             ':ids' => $ids,
         ];
-        $query = $this->getSql(Cnst::PRND, false);
-        $dataU = $this->calc($this->c->DB->query($query, $vars)->fetchAll());
-
-        $this->c->users->loadByIds($this->userIds);
-
-        $query  = $this->getSql(Cnst::PTOPIC, false);
-        $stmt   = $this->c->DB->query($query, $vars);
-        $result = [];
+        $query   = $this->getSql(Cnst::PTOPIC, false);
+        $stmt    = $this->c->DB->query($query, $vars);
+        $result  = [];
+        $userIds = [];
 
         while ($row = $stmt->fetch()) {
-            $topic      = $this->model->create(Cnst::PTOPIC, $row);
-            $rnd        = $this->model->create(Cnst::PRND);
-            $rnd->list  = $dataU[$row['id']];
-            $topic->rnd = $rnd;
-            $result[]   = $topic;
+            $result[] = $this->model->create(Cnst::PTOPIC, $row);
+
+            $userIds[$row['poster_id']] = $row['poster_id'];
+            $userIds[$row['target_id']] = $row['target_id'];
         }
+
+        $this->c->users->loadByIds($userIds);
 
         return $result;
     }
