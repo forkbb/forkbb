@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\PM;
 
 use ForkBB\Core\Container;
+use ForkBB\Models\DataModel;
 use ForkBB\Models\Model as ParentModel;
 use ForkBB\Models\PM\Cnst;
 use ForkBB\Models\PM\PPost;
@@ -39,18 +40,33 @@ class Model extends ParentModel
         ];
     }
 
-    protected function checkType(int $type): void
+    protected function checkType(int $type, DataModel $model = null): void
     {
         switch ($type) {
             case Cnst::PTOPIC:
-            case Cnst::PPOST:
+                if (
+                    null === $model
+                    || $model instanceof PTopic
+                ) {
+                    return;
+                }
+
                 break;
-            default:
-                throw new InvalidArgumentException("Wrong type: {$type}");
+            case Cnst::PPOST:
+                if (
+                    null === $model
+                    || $model instanceof PPost
+                ) {
+                    return;
+                }
+
+                break;
         }
+
+        throw new InvalidArgumentException("Wrong type: {$type}");
     }
 
-    public function get(int $type, int $key): ?ParentModel
+    public function get(int $type, int $key): ?DataModel
     {
         $this->checkType($type);
 
@@ -73,15 +89,13 @@ class Model extends ParentModel
         return \array_key_exists($key, $this->repository[$type]);
     }
 
-    public function create(int $type, array $attrs = []): ParentModel
+    public function create(int $type, array $attrs = []): DataModel
     {
         switch ($type) {
             case Cnst::PTOPIC:
                 return $this->c->PTopicModel->setAttrs($attrs);
             case Cnst::PPOST:
                 return $this->c->PPostModel->setAttrs($attrs);
-            case Cnst::PRND:
-                return $this->c->PRndModel->setAttrs($attrs);
             default:
                 throw new InvalidArgumentException("Wrong type: {$type}");
         }
@@ -92,7 +106,7 @@ class Model extends ParentModel
         return isset($this->idsCurrent[$id]) || isset($this->numArchive[$id]);
     }
 
-    public function load(int $type, int $id): ?ParentModel
+    public function load(int $type, int $id): ?DataModel
     {
         $this->checkType($type);
 
@@ -174,18 +188,18 @@ class Model extends ParentModel
         return $result;
     }
 
-    public function update(int $type, ParentModel $model): ParentModel
+    public function update(int $type, DataModel $model): DataModel
     {
-        $this->checkType($type);
+        $this->checkType($type, $model);
 
-        return $this->Save->update($type, $model);
+        return $this->Save->update($model);
     }
 
-    public function insert(int $type, ParentModel $model): int
+    public function insert(int $type, DataModel $model): int
     {
-        $this->checkType($type);
+        $this->checkType($type, $model);
 
-        $id = $this->Save->insert($type, $model);
+        $id = $this->Save->insert($model);
 
         $this->set($type, $id, $model);
 
@@ -203,6 +217,7 @@ class Model extends ParentModel
             $this->idsNew,
             $this->idsCurrent,
             $this->idsArchive,
+            $this->totalNew,
             $this->totalCurrent,
             $this->totalArchive
         ) = $this->infoForUser($this->c->user, $second);
@@ -220,85 +235,117 @@ class Model extends ParentModel
      */
     public function infoForUser(User $user, /* null|int|string */ $second = null): array
     {
+        // deleted      // pt_status = PT_DELETED
+        // unsent       // pt_status = PT_NOTSENT
+        $idsNew   = []; // pt_status = PT_NORMAL and last_post > ..._visit
+        $idsCur   = []; // pt_status = PT_NORMAL or last_post > ..._visit
+        $idsArc   = []; // pt_status = PT_ARCHIVE
+        $totalNew = 0;
+        $totalCur = 0;
+        $totalArc = 0;
+
         if (
             $user->isGuest
             || $user->isUnverified
         ) {
-            throw new RuntimeException('Unexpected Guest or Unverified');
+            return [$idsNew, $idsCur, $idsArc, $totalNew, $totalCur, $totalArc];
         }
 
         $vars = [
-            ':id'  => $user->id,
-            ':var' => $second,
+            ':id'   => $user->id,
+            ':norm' => Cnst::PT_NORMAL,
+            ':arch' => Cnst::PT_ARCHIVE,
         ];
-        $query = 'SELECT pr.topic_id, pt.last_post, pr.pt_visit, pr.pt_status %repl1%
-            FROM ::pm_rnd AS pr
-            INNER JOIN ::pm_topics AS pt ON pt.id=pr.topic_id %repl2%
-            WHERE pr.user_id=?i:id AND pr.pt_status>1
-            ORDER BY pt.last_post DESC';
+        $query = 'SELECT pt.poster, pt.poster_id, pt.poster_status, pt.poster_visit,
+                         pt.target, pt.target_id, pt.target_status, pt.target_visit,
+                         pt.id, pt.last_post
+                   FROM ::pm_topics AS pt
+                  WHERE (pt.poster_id=?i:id AND pt.poster_status=?i:norm)
+                     OR (pt.poster_id=?i:id AND pt.poster_status=?i:arch)
+                     OR (pt.target_id=?i:id AND pt.poster_status=?i:norm)
+                     OR (pt.target_id=?i:id AND pt.poster_status=?i:arch)
+               ORDER BY pt.last_post DESC';
 
-        if (null === $second) {
-            $repl1 = '';
-            $repl2 = '';
-        } elseif (
-            \is_int($second)
-            && $second > 0
-        ) {
-            $repl1 = ', prs.user_id AS pmsecond';
-            $repl2 = 'LEFT JOIN ::pm_rnd AS prs ON prs.user_id=?i:var AND prs.topic_id=pr.topic_id';
-        } elseif (
-            \is_string($second)
-            && '' !== $second
-        ) {
-            $repl1 = ', prs.username AS pmsecond';
-            $repl2 = 'LEFT JOIN ::pm_rnd AS prs ON prs.topic_id=pr.topic_id AND prs.username=?s:var'; // на имени нет индекса
-        } else {
-            throw new InvalidArgumentException('Wrong second user');
-        }
-
-        $query = \str_replace(['%repl1%', '%repl2%'], [$repl1, $repl2], $query);
-
-        // deleted      // pt_status = 0
-        // unsent       // pt_status = 1
-        $idsNew   = []; // pt_status = 2 and last_post > last_visit
-        $idsCur   = []; // pt_status = 2 or last_post > last_visit
-        $idsArc   = []; // pt_status = 3
-        $totalCur = 0;
-        $totalArc = 0;
-        $stmt     = $this->c->DB->query($query, $vars);
+        $stmt = $this->c->DB->query($query, $vars);
 
         while ($row = $stmt->fetch()) {
-            switch ($row['pt_status']) {
-                case Cnst::PT_ARCHIVE:
-                    ++$totalArc;
+            $id = $row['id'];
+            $lp = $row['last_post'];
 
-                    if (
-                        null === $second
-                        || $row['pmsecond'] == $second
-                    ) {
-                        $idsArc[$row['topic_id']] = $row['last_post'];
-                    }
-
-                    break;
-                case Cnst::PT_NORMAL:
-                    ++$totalCur;
-
-                    if (
-                        null === $second
-                        || $row['pmsecond'] == $second
-                    ) {
-                        if ($row['last_post'] > $row['pt_visit']) {
-                            $idsNew[$row['topic_id']] = $row['last_post'];
+            if ($row['poster_id'] === $user->id) {
+                switch ($row['poster_status']) {
+                    case Cnst::PT_ARCHIVE:
+                        if (
+                            null === $second
+                            || $row['target_id'] === $second
+                            || $row['target'] === $second
+                        ) {
+                            $idsArc[$id] = $lp;
                         }
 
-                        $idsCur[$row['topic_id']] = $row['last_post'];
-                    }
+                        ++$totalArc;
 
-                    break;
+                        break;
+                    case Cnst::PT_NORMAL:
+                        if (
+                            null === $second
+                            || $row['target_id'] === $second
+                            || $row['target'] === $second
+                        ) {
+                            if ($lp > $row['poster_visit']) {
+                                $idsNew[$id] = $lp;
+                            }
+
+                            $idsCur[$id] = $lp;
+                        }
+
+                        if ($lp > $row['poster_visit']) {
+                            ++$totalNew;
+                        }
+
+                        ++$totalCur;
+
+                        break;
+                }
+            } elseif ($row['target_id'] === $user->id) {
+                switch ($row['target_status']) {
+                    case Cnst::PT_ARCHIVE:
+                        if (
+                            null === $second
+                            || $row['poster_id'] === $second
+                            || $row['poster'] === $second
+                        ) {
+                            $idsArc[$id] = $lp;
+                        }
+
+                        ++$totalArc;
+
+                        break;
+                    case Cnst::PT_NORMAL:
+                        if (
+                            null === $second
+                            || $row['poster_id'] === $second
+                            || $row['poster'] === $second
+                        ) {
+                            if ($lp > $row['target_visit']) {
+                                $idsNew[$id] = $lp;
+                            }
+
+                            $idsCur[$id] = $lp;
+                        }
+
+                        if ($lp > $row['target_visit']) {
+                            ++$totalNew;
+                        }
+
+                        ++$totalCur;
+
+                        break;
+                }
             }
         }
 
-        return [$idsNew, $idsCur, $idsArc, $totalCur, $totalArc];
+        return [$idsNew, $idsCur, $idsArc, $totalNew, $totalCur, $totalArc];
     }
 
     /**
