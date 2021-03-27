@@ -29,7 +29,7 @@ class CalcStat extends Method
             $numReplies = 0;
         } else {
             $vars = [
-                ':tid' => $this->model->id
+                ':tid' => $this->model->id,
             ];
             $query = 'SELECT COUNT(p.id) - 1
                 FROM ::posts AS p
