@@ -30,11 +30,11 @@ class Load extends Method
             case Cnst::PTOPIC:
                 $where = $solo ? 'pt.id=?i:tid' : 'pt.id IN (?ai:ids)';
 
-                return "SELECT * FROM pm_topics AS pt WHERE {$where}";
+                return "SELECT * FROM ::pm_topics AS pt WHERE {$where}";
             case Cnst::PPOST:
                 $where = $solo ? 'pp.id=?i:pid' : 'pp.id IN (?ai:ids)';
 
-                return "SELECT * FROM pm_posts AS pp WHERE  {$where}";
+                return "SELECT * FROM ::pm_posts AS pp WHERE  {$where}";
             default:
                 throw new InvalidArgumentException("Unknown request type: {$type}");
         }
