@@ -72,8 +72,8 @@ class Model extends DataModel
         } elseif ($user->isGuest) {
             $user = clone $user;
 
-            $user->__email        = $this->poster_email;
-            $user->__username     = $this->poster;
+            $user->__email    = $this->poster_email;
+            $user->__username = $this->poster;
         }
 
         return $user;
