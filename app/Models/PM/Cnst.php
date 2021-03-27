@@ -23,7 +23,6 @@ class Cnst
     const ACTION_CONFIG  = 'config';
     const ACTION_POST    = 'post';
 
-    const PT_START   = -1;
     const PT_DELETED = 0;
     const PT_NOTSENT = 1;
     const PT_NORMAL  = 2;
@@ -31,5 +30,4 @@ class Cnst
 
     const PTOPIC = 0;
     const PPOST  = 1;
-    const PRND   = 2;
 }
