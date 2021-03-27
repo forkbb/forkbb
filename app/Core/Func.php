@@ -118,72 +118,96 @@ class Func
     public function paginate(int $all, int $cur, string $marker, array $args = [], string $info = 'Page %1$s of %2$s'): array
     {
         $pages = [];
-        if ($all < 2) {
-//            $pages[] = [null, 1, true];
-        } else {
-            if ($cur > 0) {
-                $pages[] = [__([$info, $cur, $all]), 'info', null];
-                $cur     = \min(\max(1, $cur), $all);
-                if ($cur > 1) {
-                    $pages[] = [
-                        $this->c->Router->link(
-                            $marker,
-                            [
-                                'page' => $cur - 1,
-                            ]
-                            + $args
-                        ),
-                        'prev',
-                        null,
-                    ];
-                }
-                $tpl   = [1 => 1];
-                $start = $cur < 6 ? 2 : $cur - 2;
-                $end   = $all - $cur < 5 ? $all : $cur + 3;
-                for ($i = $start; $i < $end; ++$i) {
-                    $tpl[$i] = $i;
-                }
-                $tpl[$all] = $all;
-            } else {
-                $tpl = $all < 7
-                    ? \array_slice([2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6], 0, $all - 1)
-                    : [2 => 2, 3 => 3, 4 => 4, $all => $all];
-            }
-            $k = 1;
-            foreach ($tpl as $i) {
-                if ($i - $k > 1) {
-                    $pages[] = [null, 'space', null];
-                }
 
-                $pages[] = [
-                    $this->c->Router->link(
-                        $marker,
-                        [
-                            'page' => $i,
-                        ]
-                        + $args
-                    ),
-                    $i,
-                    $i === $cur ? true : null,
-                ];
-                $k = $i;
+        if ($all < 2) {
+            return $pages;
+        }
+
+        // нестандарная переменная для page
+        if (isset($args['page'])) {
+            if (\is_string($args['page'])) {
+                $pn = $args['page'];
+
+                unset($args[$pn]);
+            } else {
+                $pn = 'page';
             }
-            if (
-                $cur > 0
-                && $cur < $all
-            ) {
+
+            unset($args['page']);
+        } else {
+            $pn = 'page';
+        }
+
+        if ($cur > 0) {
+            $pages[] = [__([$info, $cur, $all]), 'info', null];
+            $cur     = \min(\max(1, $cur), $all);
+
+            if ($cur > 1) {
+                $i       = $cur - 1;
                 $pages[] = [
                     $this->c->Router->link(
                         $marker,
                         [
-                            'page' => $cur + 1,
+                            $pn => $i > 1 ? $i : null,
                         ]
                         + $args
                     ),
-                    'next',
+                    'prev',
                     null,
                 ];
             }
+
+            $tpl   = [1 => 1];
+            $start = $cur < 6 ? 2 : $cur - 2;
+            $end   = $all - $cur < 5 ? $all : $cur + 3;
+
+            for ($i = $start; $i < $end; ++$i) {
+                $tpl[$i] = $i;
+            }
+
+            $tpl[$all] = $all;
+        } else {
+            $tpl = $all < 7
+                ? \array_slice([2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6], 0, $all - 1)
+                : [2 => 2, 3 => 3, 4 => 4, $all => $all];
+        }
+
+        $k = 1;
+
+        foreach ($tpl as $i) {
+            if ($i - $k > 1) {
+                $pages[] = [null, 'space', null];
+            }
+
+            $pages[] = [
+                $this->c->Router->link(
+                    $marker,
+                    [
+                        $pn => $i > 1 ? $i : null,
+                    ]
+                    + $args
+                ),
+                $i,
+                $i === $cur ? true : null,
+            ];
+            $k = $i;
+        }
+
+        if (
+            $cur > 0
+            && $cur < $all
+        ) {
+            $pages[] = [
+                $this->c->Router->link(
+                    $marker,
+                    [
+                        $pn => $cur + 1,
+                    ]
+                    + $args
+                ),
+                'next',
+                null,
+            ];
         }
 
         return $pages;
