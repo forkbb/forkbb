@@ -33,6 +33,7 @@ class Model extends ParentModel
 
         $this->zDepend = [
             'area' => ['numPages', 'pagination'],
+            'page' => ['pagination'],
         ];
         $this->repository = [
             Cnst::PTOPIC => [],
@@ -103,7 +104,20 @@ class Model extends ParentModel
 
     public function accessTopic(int $id): bool
     {
-        return isset($this->idsCurrent[$id]) || isset($this->numArchive[$id]);
+        return isset($this->idsCurrent[$id]) || isset($this->idsArchive[$id]);
+    }
+
+    public function inArea(PTopic $topic): ?string
+    {
+        if (isset($this->idsArchive[$topic->id])) {
+            return Cnst::ACTION_ARCHIVE;
+        } elseif (isset($this->idsNew[$topic->id])) {
+            return Cnst::ACTION_NEW;
+        } elseif (isset($this->idsCurrent[$topic->id])) {
+            return Cnst::ACTION_CURRENT;
+        } else {
+            return null;
+        }
     }
 
     public function load(int $type, int $id): ?DataModel
@@ -259,12 +273,12 @@ class Model extends ParentModel
         $query = 'SELECT pt.poster, pt.poster_id, pt.poster_status, pt.poster_visit,
                          pt.target, pt.target_id, pt.target_status, pt.target_visit,
                          pt.id, pt.last_post
-                   FROM ::pm_topics AS pt
-                  WHERE (pt.poster_id=?i:id AND pt.poster_status=?i:norm)
-                     OR (pt.poster_id=?i:id AND pt.poster_status=?i:arch)
-                     OR (pt.target_id=?i:id AND pt.poster_status=?i:norm)
-                     OR (pt.target_id=?i:id AND pt.poster_status=?i:arch)
-               ORDER BY pt.last_post DESC';
+                    FROM ::pm_topics AS pt
+                   WHERE (pt.poster_id=?i:id AND pt.poster_status=?i:norm)
+                      OR (pt.poster_id=?i:id AND pt.poster_status=?i:arch)
+                      OR (pt.target_id=?i:id AND pt.poster_status=?i:norm)
+                      OR (pt.target_id=?i:id AND pt.poster_status=?i:arch)
+                ORDER BY pt.last_post DESC';
 
         $stmt = $this->c->DB->query($query, $vars);
 
