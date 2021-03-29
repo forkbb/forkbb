@@ -412,22 +412,16 @@ class Model extends ParentModel
      */
     protected function getpagination(): array
     {
-        if (
-            $this->page < 1
-            && 1 === $this->numPages
-        ) {
-            return [];
-        } else {
-            return $this->c->Func->paginate(
-                $this->numPages,
-                $this->page,
-                'PMAction',
-                [
-                    'second' => $this->second,
-                    'action' => $this->area,
-                ]
-            );
-        }
+        return $this->c->Func->paginate(
+            $this->numPages,
+            $this->page,
+            'PMAction',
+            [
+                'second' => $this->second,
+                'action' => $this->area,
+                'page'   => 'more1', // нестандарная переменная для page
+            ]
+        );
     }
 
     /**
