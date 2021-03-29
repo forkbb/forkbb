@@ -930,6 +930,7 @@ class Install extends Admin
                 'target_status' => ['TINYINT UNSIGNED', false, 0],
                 'target_visit'  => ['INT(10) UNSIGNED', false, 0],
                 'num_replies'   => ['INT(10) UNSIGNED', false, 0],
+                'first_post_id' => ['INT(10) UNSIGNED', false, 0],
                 'last_post'     => ['INT(10) UNSIGNED', false, 0],
                 'last_post_id'  => ['INT(10) UNSIGNED', false, 0],
                 'last_number'   => ['TINYINT UNSIGNED', false, 0],
