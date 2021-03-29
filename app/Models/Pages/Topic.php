@@ -120,7 +120,9 @@ class Topic extends Page
             return $this->c->Message->message('Not Found', true, 404);
         }
 
-        if (empty($posts = $topic->pageData())) {
+        $this->posts        = $topic->pageData();
+
+        if (empty($this->posts)) {             // ???? зацикливание?
             return $this->go('last', $topic);
         }
 
@@ -138,7 +140,6 @@ class Topic extends Page
             ]
         );
         $this->model        = $topic;
-        $this->posts        = $posts;
         $this->crumbs       = $this->crumbs($topic);
         $this->online       = $this->c->Online->calc($this)->info();
         $this->stats        = null;
