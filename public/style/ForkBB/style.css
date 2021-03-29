@@ -2472,13 +2472,18 @@ html[lang="ru"] #fork details[open] > summary::after {
     justify-content: flex-start;
   }
 
-  #forkpm .f-preview,
-  #forkpm .f-post-form {
+  #forkpm > .f-preview,
+  #forkpm > .f-post-form:first-child {
     border-top-style: dotted;
   }
 
-  #forkpm .f-post-form:last-child {
+  #forkpm > .f-post-form:last-child {
     margin-bottom: 0;
+  }
+
+  #forkpm > :first-child,
+  #forkpm .f-nlbpm {
+    margin-top: 0;
   }
 }
 
