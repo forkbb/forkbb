@@ -319,11 +319,17 @@ class Router
             $this->methods[$method] = 1;
         }
 
-        $link   = $route;
-        $anchor = '';
-        if (false !== \strpos($route, '#')) {
-            list($route, $anchor) = \explode('#', $route, 2);
-            $anchor = '#' . $anchor;
+        $link = $route;
+        $pos  = \strpos($route, '#');
+
+        if (
+            false !== $pos
+            && false === \strpos($route, ']', $pos)
+        ) {
+            $anchor = \substr($route, $pos);
+            $route  = \substr($route, 0, $pos);
+        } else {
+            $anchor = '';
         }
 
         if (false === \strpbrk($route, '{}[]')) {
@@ -337,8 +343,8 @@ class Router
             }
         } else {
             $data = $this->parse($route);
-            if (false === $data) {
-                throw new InvalidArgumentException('Route is incorrect');
+            if (null === $data) {
+                throw new InvalidArgumentException("Wrong route: {$route}");
             }
             if (\is_array($method)) {
                 foreach ($method as $m) {
@@ -363,7 +369,7 @@ class Router
      */
     protected function parse(string $route): ?array
     {
-        $parts = \preg_split('%([\[\]{}/])%', $route, -1, \PREG_SPLIT_NO_EMPTY | \PREG_SPLIT_DELIM_CAPTURE);
+        $parts = \preg_split('%([\[\]{}/#])%', $route, -1, \PREG_SPLIT_NO_EMPTY | \PREG_SPLIT_DELIM_CAPTURE);
 
         $s = 1;
         $base = $parts[0];
@@ -411,6 +417,7 @@ class Router
             } elseif ($first) {
                 switch ($part) {
                     case '/':
+                    case '#':
                         $first    = false;
                         $pattern .= \preg_quote($part, '%');
                         $temp    .= $part;
