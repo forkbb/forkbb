@@ -144,9 +144,10 @@ class Post extends Page
                 return $this->c->Message->message('Bad request');
             }
 
-            $message = '[quote="' . $post->poster . '"]' . $post->message . '[/quote]';
+            $args['_vars'] = [
+                'message' => "[quote=\"{$post->poster}\"]{$post->message}[/quote]",
+            ];
 
-            $args['_vars'] = ['message' => $message]; //????
             unset($args['quote']);
         }
 
