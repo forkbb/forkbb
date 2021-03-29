@@ -79,7 +79,7 @@
               <div class="f-ficon"></div>
             @endif
               <div class="f-finfo">
-                <h3><span class="f-tmoved" title="{{ __('Moved') }}"><span class="f-movedtxt">{!! __('Moved') !!}</span></span> <a class="f-ftname" href="{{ $topic->link }}">{{ $topic->censorSubject }}</a></h3>
+                <h3><span class="f-tmoved" title="{{ __('Moved') }}"><span class="f-movedtxt">{!! __('Moved') !!}</span></span> <a class="f-ftname" href="{{ $topic->link }}">{{ $topic->name }}</a></h3>
               </div>
             </div>
           </li>
@@ -106,7 +106,7 @@
             @if ($topic->poll_type > 0)
                   <span class="f-tpoll" title="{{ __('Poll') }}"><span class="f-polltxt">{!! __('Poll') !!}</span></span>
             @endif
-                  <a class="f-ftname" href="{{ $topic->link }}">{{ $topic->censorSubject }}</a>
+                  <a class="f-ftname" href="{{ $topic->link }}">{{ $topic->name }}</a>
             @if ($topic->pagination)
                   <span class="f-tpages">
                 @foreach ($topic->pagination as $cur)
