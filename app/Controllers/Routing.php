@@ -398,7 +398,7 @@ class Routing
                 );
                 $r->add(
                     $r::DUO,
-                    '/pm[/user/{second}][/{action}[/{more1|i:[1-9]\d*}[/{more2}]]]',
+                    '/pm[/user/{second}][/{action}[/{more1|i:[1-9]\d*}[/{more2}]]][#p{numPost}]',
                     'PM:action',
                     'PMAction'
                 );
