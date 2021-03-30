@@ -151,16 +151,16 @@ class View extends Profile
                 'action' => Cnst::ACTION_SEND,
                 'more1'  => $this->curUser->id,
             ];
+            $pmArgs += [
+                'more2' => $this->c->Csrf->createHash('PMAction', $pmArgs),
+            ];
 
             $fields['pm'] = [
                 'class'   => 'pline',
                 'type'    => 'link',
                 'caption' => 'PM',
                 'value'   => __('Send PM'),
-                'href'    => $this->c->Router->link(
-                    'PMAction',
-                    $pmArgs + ['more2' => $this->c->Csrf->createHash('PMAction', $pmArgs)]
-                ),
+                'href'    => $this->c->Router->link('PMAction', $pmArgs),
             ];
         }
         if ($this->rules->viewEmail) {
