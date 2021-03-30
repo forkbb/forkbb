@@ -105,10 +105,14 @@ class Profile extends Rules
     protected function getsendPM(): bool
     {
         return $this->user->usePM
+            && 1 === $this->user->u_pm
             && ! $this->my
             && (
                 $this->user->isAdmin
-                || $this->curUser->usePM
+                || (
+                    $this->curUser->usePM
+                    && 1 === $this->curUser->u_pm
+                )
             );
     }
 
