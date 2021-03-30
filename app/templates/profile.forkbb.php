@@ -8,7 +8,7 @@
       <div class="f-nlinks-b">
         <div class="f-actions-links">
     @foreach ($p->actionBtns as $key => $cur)
-          <a class="f-btn f-btn-{{ $key }}" href="{{ $cur[0] }}" title="{{ $cur[1] }}"><span>{{ $cur[1] }}</span></a>
+          <span class="f-act-span"><a class="f-btn f-btn-{{ $key }}" href="{{ $cur[0] }}" title="{{ $cur[1] }}"><span>{{ $cur[1] }}</span></a></span>
     @endforeach
         </div>
       </div>

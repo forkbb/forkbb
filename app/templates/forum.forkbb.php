@@ -48,7 +48,7 @@
     @yield ('pagination')
     @if ($p->model->canCreateTopic)
         <div class="f-actions-links">
-          <a class="f-btn f-btn-create-topic" title="{{ __('Post topic') }}" href="{{ $p->model->linkCreateTopic }}"><span>{!! __('Post topic') !!}</span></a>
+          <span class="f-act-span"><a class="f-btn f-btn-create-topic" title="{{ __('Post topic') }}" href="{{ $p->model->linkCreateTopic }}"><span>{!! __('Post topic') !!}</span></a></span>
         </div>
     @endif
       </div>
@@ -155,17 +155,17 @@
         @if ($p->model->canCreateTopic || $p->model->canMarkRead || $p->model->canSubscription)
         <div class="f-actions-links">
             @if ($p->model->canMarkRead)
-          <a class="f-btn f-btn-markread f-opacity" title="{{ __('Mark forum read') }}" href="{{ $p->model->linkMarkRead }}"><span>{!! __('All is read') !!}</span></a>
+          <span class="f-act-span"><a class="f-btn f-btn-markread f-opacity" title="{{ __('Mark forum read') }}" href="{{ $p->model->linkMarkRead }}"><span>{!! __('All is read') !!}</span></a></span>
             @endif
             @if ($p->model->canSubscription)
                 @if ($p->model->is_subscribed)
-          <a class="f-btn f-btn-unsubscribe f-opacity" title="{{ __('Unsubscribe forum') }}" href="{{ $p->model->linkUnsubscribe }}"><span>{!! __('Unsubscribe') !!}</span></a>
+          <span class="f-act-span"><a class="f-btn f-btn-unsubscribe f-opacity" title="{{ __('Unsubscribe forum') }}" href="{{ $p->model->linkUnsubscribe }}"><span>{!! __('Unsubscribe') !!}</span></a></span>
                 @else
-          <a class="f-btn f-btn-subscribe f-opacity" title="{{ __('Subscribe forum') }}" href="{{ $p->model->linkSubscribe }}"><span>{!! __('Subscribe') !!}</span></a>
+          <span class="f-act-span"><a class="f-btn f-btn-subscribe f-opacity" title="{{ __('Subscribe forum') }}" href="{{ $p->model->linkSubscribe }}"><span>{!! __('Subscribe') !!}</span></a></span>
                 @endif
             @endif
             @if ($p->model->canCreateTopic)
-          <a class="f-btn f-btn-create-topic" title="{{ __('Post topic') }}" href="{{ $p->model->linkCreateTopic }}"><span>{!! __('Post topic') !!}</span></a>
+          <span class="f-act-span"><a class="f-btn f-btn-create-topic" title="{{ __('Post topic') }}" href="{{ $p->model->linkCreateTopic }}"><span>{!! __('Post topic') !!}</span></a></span>
             @endif
         </div>
         @endif
