@@ -456,4 +456,34 @@ class Model extends ParentModel
 
         return $this->loadByIds(Cnst::PTOPIC, \array_keys($ids));
     }
+
+    /**
+     * Обновляет данные в разных таблицах базы ????
+     */
+    public function updateFromPTopics(bool $add, PTopic ...$topics): void
+    {
+        $users = [];
+
+        foreach ($topics as $topic) {
+            if (! $topic->zpUser->isGuest) {
+                $users[$topic->zpUser->id] = $topic->zpUser;
+            }
+            if (! $topic->ztUser->isGuest) {
+                $users[$topic->ztUser->id] = $topic->ztUser;
+            }
+        }
+
+        foreach ($users as $user) {
+            list($idsNew, $idsCurrent, $idsArchive, $new, $current, $archive) = $this->infoForUser($user);
+
+            $user->u_pm_num_new = $new;
+            $user->u_pm_num_all = $current;
+
+            if ($user !== $this->c->user) {
+                //$user->u_pm_flash = ????
+            }
+
+            $this->c->users->update($user);
+        }
+    }
 }
