@@ -20,8 +20,8 @@
     @endif
 @endsection
 @extends ('layouts/pm')
-    <div class="f-nav-links">
 @if ($p->model->canReply || $p->model->closed || $p->model->pagination)
+    <div class="f-nav-links">
       <div class="f-nlinks-b f-nlbpm">
     @yield ('pagination')
     @if ($p->model->canReply || $p->model->closed)
@@ -35,8 +35,8 @@
         </div>
     @endif
       </div>
-@endif
     </div>
+@endif
     <section class="f-topic">
       <h2>{{ $p->model->name }}</h2>
 @foreach ($p->posts as $id => $post)
@@ -130,22 +130,15 @@
     @endif
 @endforeach
     </section>
+@if ($p->model->canReply || $p->model->pagination)
     <div class="f-nav-links">
-@if ($p->model->canReply || $p->model->pagination || $p->model->canSubscription)
     @if ($p->form)
       <div class="f-nlinks">
     @else
       <div class="f-nlinks-a f-nlbpm">
     @endif
-    @if ($p->model->canReply || $p->model->canSubscription)
+    @if ($p->model->canReply)
         <div class="f-actions-links">
-        @if ($p->model->canSubscription)
-            @if ($p->model->is_subscribed)
-          <span class="f-act-span"><a class="f-btn f-btn-unsubscribe f-opacity" title="{{ __('Unsubscribe topic') }}" href="{{ $p->model->linkUnsubscribe }}"><span>{!! __('Unsubscribe') !!}</span></a></span>
-            @else
-          <span class="f-act-span"><a class="f-btn f-btn-subscribe f-opacity" title="{{ __('Subscribe topic') }}" href="{{ $p->model->linkSubscribe }}"><span>{!! __('Subscribe') !!}</span></a></span>
-            @endif
-        @endif
         @if ($p->model->canReply)
           <span class="f-act-span"><a class="f-btn f-btn-post-reply" title="{{ __('Post reply') }}" href="{{ $p->model->linkReply }}"><span>{!! __('Post reply') !!}</span></a></span>
         @endif
@@ -153,8 +146,8 @@
     @endif
     @yield ('pagination')
       </div>
-@endif
     </div>
+@endif
 @if ($form = $p->form)
     <section class="f-post-form">
       <h2>{!! __('Quick post') !!}</h2>
