@@ -32,6 +32,7 @@ class Model extends DataModel
             'show_avatars' => ['showAvatar'],
             'signature'    => ['isSignature'],
             'email'        => ['email_normal'],
+            'g_pm'         => ['usePM'],
         ];
     }
 
@@ -398,8 +399,8 @@ class Model extends DataModel
     {
         return 1 === $this->c->config->b_pm
             && (
-                $this->isAdmin
-                || 1 == $this->g_pm
+                1 == $this->g_pm
+                || $this->isAdmin
             );
     }
 }
