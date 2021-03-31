@@ -97,7 +97,7 @@ class PPost extends DataModel
      */
     protected function getcanDelete(): bool
     {
-        return ! $this->parent->closed
+        return $this->parent->actionsAllowed
             && $this->poster_id === $this->c->user->id
             && $this->id !== $this->parent->first_post_id
             && $this->posted > $this->parent->{"{$this->parent->zt}_visit"};
@@ -124,7 +124,7 @@ class PPost extends DataModel
      */
     protected function getcanEdit(): bool
     {
-        return ! $this->parent->closed
+        return $this->parent->actionsAllowed
             && $this->poster_id === $this->c->user->id
             && $this->posted > $this->parent->{"{$this->parent->zt}_visit"};
     }
