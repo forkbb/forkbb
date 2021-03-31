@@ -128,6 +128,22 @@ class PTopic extends DataModel
     }
 
     /**
+     * Ссылка на уделение темы
+     */
+    protected function getlinkDelete(): string
+    {
+        return $this->c->Router->link(
+            'PMAction',
+            [
+                'second' => $this->c->pms->second,
+                'action' => Cnst::ACTION_DELETE,
+                'more1'  => $this->id,
+                'more2'  => Cnst::ACTION_TOPIC,
+            ]
+        );
+    }
+
+    /**
      * Номер первого нового сообщения в теме
      */
     protected function getfirstNew(): int

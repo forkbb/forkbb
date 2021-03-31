@@ -20,23 +20,20 @@
     @endif
 @endsection
 @extends ('layouts/pm')
-@if ($p->model->canReply || $p->model->closed || $p->model->pagination)
     <div class="f-nav-links">
       <div class="f-nlinks-b f-nlbpm">
     @yield ('pagination')
-    @if ($p->model->canReply || $p->model->closed)
         <div class="f-actions-links">
         @if ($p->model->closed)
           <span class="f-act-span"><a class="f-btn f-btn-topic-closed" title="{{ __('Topic closed') }}"><span>{!! __('Topic closed') !!}</span></a></span>
         @endif
+          <span class="f-act-span"><a class="f-btn f-btn-delete-dialog" title="{{ __('Delete dialogue') }}" href="{{ $p->model->linkDelete }}"><span>{!! __('Delete dialogue') !!}</span></a></span>
         @if ($p->model->canReply)
           <span class="f-act-span"><a class="f-btn f-btn-post-reply" title="{{ __('Post reply') }}" href="{{ $p->model->linkReply }}"><span>{!! __('Post reply') !!}</span></a></span>
         @endif
         </div>
-    @endif
       </div>
     </div>
-@endif
     <section class="f-topic">
       <h2>{{ $p->model->name }}</h2>
 @foreach ($p->posts as $id => $post)
@@ -130,24 +127,21 @@
     @endif
 @endforeach
     </section>
-@if ($p->model->canReply || $p->model->pagination)
     <div class="f-nav-links">
     @if ($p->form)
       <div class="f-nlinks">
     @else
       <div class="f-nlinks-a f-nlbpm">
     @endif
-    @if ($p->model->canReply)
         <div class="f-actions-links">
+          <span class="f-act-span"><a class="f-btn f-btn-delete-dialog" title="{{ __('Delete dialogue') }}" href="{{ $p->model->linkDelete }}"><span>{!! __('Delete dialogue') !!}</span></a></span>
         @if ($p->model->canReply)
           <span class="f-act-span"><a class="f-btn f-btn-post-reply" title="{{ __('Post reply') }}" href="{{ $p->model->linkReply }}"><span>{!! __('Post reply') !!}</span></a></span>
         @endif
         </div>
-    @endif
     @yield ('pagination')
       </div>
     </div>
-@endif
 @if ($form = $p->form)
     <section class="f-post-form">
       <h2>{!! __('Quick post') !!}</h2>
