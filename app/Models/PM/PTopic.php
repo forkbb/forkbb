@@ -29,13 +29,13 @@ class PTopic extends DataModel
             'last_post_id'  => ['linkLast'],
             'num_replies'   => ['numPages', 'pagination'],
             'poster'        => ['last_poster', 'byOrFor', 'zpUser', 'ztUser'],
-            'poster_id'     => ['closed', 'firstNew', 'zp', 'zt', 'zpUser', 'ztUser'],
-            'poster_status' => ['closed'],
+            'poster_id'     => ['closed', 'firstNew', 'zp', 'zt', 'zpUser', 'ztUser', 'actionsAllowed', 'canReply'],
+            'poster_status' => ['closed', 'actionsAllowed', 'canReply'],
             'poster_visit'  => ['firstNew'],
             'subject'       => ['name'],
             'target'        => ['last_poster', 'byOrFor', 'zpUser', 'ztUser'],
-            'target_id'     => ['closed', 'firstNew', 'zp', 'zt', 'zpUser', 'ztUser'],
-            'target_status' => ['closed'],
+            'target_id'     => ['closed', 'firstNew', 'zp', 'zt', 'zpUser', 'ztUser', 'actionsAllowed', 'canReply'],
+            'target_status' => ['closed', 'actionsAllowed', 'canReply'],
             'target_visit'  => ['firstNew'],
         ];
     }
@@ -239,22 +239,6 @@ class PTopic extends DataModel
         return isset($this->c->pms->idsNew[$this->id]);
     }
 
-    /**
-     * Статус закрытия темы
-     */
-    protected function getclosed(): bool
-    {
-        $p = $this->{"{$this->zp}_status"};
-        $t = $this->{"{$this->zt}_status"};
-
-        return Cnst::PT_DELETED === $t
-            || Cnst::PT_ARCHIVE === $t
-            || (
-                Cnst::PT_ARCHIVE === $p
-                && Cnst::PT_NOTSENT !== $t
-            );
-    }
-
     protected function getbyOrFor(): array
     {
         if ('poster' === $this->zp) {
@@ -425,15 +409,6 @@ class PTopic extends DataModel
     }
 
     /**
-     * Статус возможности ответа в теме
-     */
-    protected function getcanReply(): bool
-    {
-        return ! $this->closed;
-        // + куча условий!!!!!!!!!!
-    }
-
-    /**
      * Аргументы для ссылки для ответа в теме
      */
     protected function getdataReply(): array
@@ -451,5 +426,51 @@ class PTopic extends DataModel
     protected function getlinkReply(): string
     {
         return $this->c->Router->link('PMAction', $this->dataReply);
+    }
+
+    /**
+     * Статус закрытия темы
+     */
+    protected function getclosed(): bool
+    {
+        $p = $this->{"{$this->zp}_status"};
+        $t = $this->{"{$this->zt}_status"};
+
+        return Cnst::PT_DELETED === $t
+            || Cnst::PT_ARCHIVE === $t
+            || (
+                Cnst::PT_ARCHIVE === $p
+                && Cnst::PT_NOTSENT !== $t
+            );
+    }
+
+    /**
+     * Статус возможности действий
+     */
+    protected function getactionsAllowed(): bool
+    {
+        return ! $this->closed
+            && $this->zpUser->usePM
+            && $this->ztUser->usePM;
+    }
+
+    /**
+     * Статус возможности ответа в теме
+     */
+    protected function getcanReply(): bool
+    {
+        return $this->actionsAllowed
+            && (
+                (
+                    1 === $this->zpUser->u_pm
+                    && 1 === $this->ztUser->u_pm
+                )
+                || (
+                    Cnst::PT_ARCHIVE === $this->{"{$this->zp}_status"}
+                    && Cnst::PT_NOTSENT === $this->{"{$this->zt}_status"}
+                )
+                || $this->zpUser->isAdmin
+                || $this->ztUser->isAdmin
+            );
     }
 }
