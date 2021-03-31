@@ -214,10 +214,7 @@ abstract class Page extends Model
             if ($this->user->usePM) {
                 $navUser[self::FI_PM] = [
                     $r->link('PM'),
-                    $this->user->u_pm_num_new > 0
-                        ? ['PM %s', $this->user->u_pm_num_new]
-                        : 'PM'
-                    ,
+                    $this->user->u_pm_num_new > 0 ? ['PM %s', $this->user->u_pm_num_new] : 'PM',
                     'Private messages',
                 ];
             }
