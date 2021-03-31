@@ -55,6 +55,10 @@ class PMPost extends AbstractPM
                 $this->c->Router->link('PMAction', $args),
                 __('New dialogue'),
             ];
+
+            if (! $this->targetUser->usePM) {
+                $this->fIswev = ['e', 'Off messages'];
+            }
         } elseif ($this->pms->accessTopic($args['more1'])) {
             $topic = $this->pms->load(Cnst::PTOPIC, $args['more1']);
 
@@ -71,6 +75,14 @@ class PMPost extends AbstractPM
                 __('New message'),
             ];
             $this->pmCrumbs[] = $topic;
+
+            if ($topic->closed) {
+                $this->fIswev = ['e', 'Dialogue is closed'];
+            } elseif (! $topic->actionsAllowed) {
+                $this->fIswev = ['e', 'Dialogue is locked'];
+            } elseif (! $topic->canReply) {
+                $this->fIswev = ['e', 'Off messages'];
+            }
         } else {
             return $this->c->Message->message('Not Found', true, 404);
         }
@@ -78,10 +90,46 @@ class PMPost extends AbstractPM
         $this->c->Lang->load('post');
 
         if ('POST' === $method) {
-            $v = $this->messageValidatorPM(null, 'PMAction', $args, false, $this->newTopic);
+            $v       = $this->messageValidatorPM(null, 'PMAction', $args, false, $this->newTopic);
+            $isValid = $v->validation($_POST);
 
             if (
-                $v->validation($_POST)
+                $this->newTopic
+                && ! $this->user->isAdmin
+            ) {
+                if (null !== $v->submit) {
+                    if (
+                        $this->targetUser->usePM
+                        && 1 !== $this->targetUser->u_pm
+                    ) {
+                        $this->fIswev = ['e', 'Off messages'];
+                    } elseif (
+                        $this->targetUser->g_pm_limit > 0
+                        && $this->targetUser->u_pm_num_all >= $this->targetUser->g_pm_limit
+                    ) {
+                        $this->fIswev = ['e', 'Target is full'];
+                    } elseif (
+                        $this->user->g_pm_limit > 0
+                        && $this->user->u_pm_num_all >= $this->user->g_pm_limit
+                    ) {
+                        $this->fIswev = ['e', 'Active is full'];
+                    }
+                } elseif (null !== $v->archive) {
+                    if (
+                        $this->user->g_pm_limit > 0
+                        && $this->pms->totalArchive >= $this->user->g_pm_limit
+                    ) {
+                        $this->fIswev = ['e', 'Archive is full'];
+                    }
+                }
+            }
+
+            $this->fIswev  = $v->getErrors();
+            $args['_vars'] = $v->getData();
+
+            if (
+                empty($this->fIswev['e'])
+                && $isValid
                 && null === $v->preview
                 && (
                     null !== $v->submit
@@ -91,12 +139,9 @@ class PMPost extends AbstractPM
                 return $this->endPost($topic, $v);
             }
 
-            $this->fIswev  = $v->getErrors();
-            $args['_vars'] = $v->getData();
-
             if (
                 null !== $v->preview
-                && empty($this->fIswev)
+                && $isValid
             ) {
                 $this->previewHtml = $this->c->censorship->censor(
                     $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies)
