@@ -57,7 +57,7 @@ class PMPost extends AbstractPM
             ];
 
             if (! $this->targetUser->usePM) {
-                $this->fIswev = ['e', 'Off messages'];
+                $this->fIswev = ['e', 'Target group pm off'];
             }
         } elseif ($this->pms->accessTopic($args['more1'])) {
             $topic = $this->pms->load(Cnst::PTOPIC, $args['more1']);
@@ -81,7 +81,7 @@ class PMPost extends AbstractPM
             } elseif (! $topic->actionsAllowed) {
                 $this->fIswev = ['e', 'Dialogue is locked'];
             } elseif (! $topic->canReply) {
-                $this->fIswev = ['e', 'Off messages'];
+                $this->fIswev = ['e', 'Target pm off'];
             }
         } else {
             return $this->c->Message->message('Not Found', true, 404);
@@ -102,7 +102,7 @@ class PMPost extends AbstractPM
                         $this->targetUser->usePM
                         && 1 !== $this->targetUser->u_pm
                     ) {
-                        $this->fIswev = ['e', 'Off messages'];
+                        $this->fIswev = ['e', 'Target pm off'];
                     } elseif (
                         $this->targetUser->g_pm_limit > 0
                         && $this->targetUser->u_pm_num_all >= $this->targetUser->g_pm_limit
