@@ -69,7 +69,7 @@ class PMPost extends AbstractPM
             $this->targetUser = $topic->ztUser;
             $this->pms->area  = $this->pms->inArea($topic);
             $this->newTopic   = false;
-            $this->formTitle  = 'New PM title';
+            $this->formTitle  = Cnst::ACTION_ARCHIVE === $this->pms->area ? 'New PM title archive' : 'New PM title';
             $this->pmCrumbs[] = [
                 $this->c->Router->link('PMAction', $args),
                 __('New message'),
