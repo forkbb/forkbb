@@ -26,7 +26,9 @@ class PPost extends DataModel
 
         $this->zDepend = [
             'id'            => ['link', 'user', 'canDelete', 'linkDelete', 'linkEdit', 'linkQuote'],
+            'edited'        => ['editor'],
             'posted'        => ['canDelete', 'canEdit'],
+            'poster'        => ['editor'],
             'poster_id'     => ['canDelete', 'canEdit'],
             'topic_id'      => ['parent', 'linkQuote'],
         ];
@@ -74,6 +76,11 @@ class PPost extends DataModel
         }
 
         return $user;
+    }
+
+    protected function geteditor(): string
+    {
+        return $this->edited > 0 ? $this->poster : '';
     }
 
     /**
