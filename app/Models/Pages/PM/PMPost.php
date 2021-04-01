@@ -182,7 +182,7 @@ class PMPost extends AbstractPM
                 'type'  => 'submit',
                 'value' => __('Archive Send later'),
             ];
-        } elseif (Cnst::ACTION_ARCHIVE === $this->pmIndex) {
+        } elseif (Cnst::ACTION_ARCHIVE === $this->pms->area) {
             $form['btns']['submit']['value'] = __('Save');
         }
 
