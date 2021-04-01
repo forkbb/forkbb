@@ -12,6 +12,8 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
+use ForkBB\Models\Pages\PostFormTrait;
+use ForkBB\Models\Pages\PostValidatorTrait;
 use ForkBB\Models\Poll\Model as Poll;
 use ForkBB\Models\Post\Model as Post;
 use ForkBB\Models\Topic\Model as Topic;
@@ -30,7 +32,7 @@ class Edit extends Page
         $post = $this->c->posts->load($args['id']);
 
         if (
-            empty($post)
+            ! $post instanceof Post
             || ! $post->canEdit
         ) {
             return $this->c->Message->message('Bad request');
@@ -91,8 +93,10 @@ class Edit extends Page
             $firstPost
             && $this->user->usePoll
         ) {
+            $poll = $topic->poll;
+
             if (
-                ($poll = $topic->poll) instanceof Poll
+                $poll instanceof Poll
                 && (
                     ! $poll->canEdit
                     || 'POST' !== $method
