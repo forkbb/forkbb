@@ -156,6 +156,7 @@ class Save extends Action
         $this->c->topics->updateUsername($user);
         $this->c->forums->updateUsername($user);
         $this->c->Online->updateUsername($user);
+        $this->c->pms->updateUsername($user);
 
         // ???? и т.д.
     }
