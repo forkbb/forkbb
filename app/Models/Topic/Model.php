@@ -96,7 +96,7 @@ class Model extends DataModel
             'Topic',
             [
                 'id'   => $this->moved_to ?: $this->id,
-                'name' => $this->censorSubject,
+                'name' => $this->name,
             ]
         );
     }
@@ -307,7 +307,7 @@ class Model extends DataModel
                 'Topic',
                 [
                     'id'   => $this->id,
-                    'name' => $this->censorSubject,
+                    'name' => $this->name,
                 ]
             );
         }

@@ -171,7 +171,7 @@ class Report extends Page
             ),
             'reason'       => $report->message,
             'forumId'      => $report->post->parent->parent->id,
-            'topicSubject' => $report->post->parent->censorSubject,
+            'topicSubject' => $report->post->parent->name,
         ];
 
         return $this->c->Mail
