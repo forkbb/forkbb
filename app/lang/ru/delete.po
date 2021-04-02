@@ -53,3 +53,6 @@ msgstr "Сообщение удалено."
 
 msgid "Topic del redirect"
 msgstr "Тема удалена."
+
+msgid "Topic %s"
+msgstr "Тема «%s»"

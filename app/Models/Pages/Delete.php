@@ -106,7 +106,7 @@ class Delete extends Page
                 'info' => [
                     'info' => [
                         [
-                            'value'   => __('Topic') . ' «' . $post->parent->censorSubject . '»',
+                            'value'   => __(['Topic %s', $post->parent->censorSubject]),
                         ],
                         [
                             'value'   => __([$deleteTopic ? 'Topic by' : 'Reply by', $post->poster, \ForkBB\dt($post->posted)]),

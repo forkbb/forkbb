@@ -53,3 +53,6 @@ msgstr "Post deleted."
 
 msgid "Topic del redirect"
 msgstr "Topic deleted."
+
+msgid "Topic %s"
+msgstr "Topic «%s»"
