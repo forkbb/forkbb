@@ -80,13 +80,14 @@ trait PostValidatorTrait
     /**
      * Проверка времени ограничения флуда
      */
-    public function vCheckTimeout(Validator $v, $submit)
+    public function vCheckTimeout(Validator $v, $submit, $attr, ?int $last)
     {
         if ($v->noValue($submit)) {
             return null;
         }
 
-        $time = \time() - (int) $this->user->last_post;
+        $last = $last > 0 ? $last : $this->user->last_post;
+        $time = \time() - $last;
 
         if ($time < $this->user->g_post_flood) {
             $v->addError(['Flood message', $this->user->g_post_flood - $time], 'e');
