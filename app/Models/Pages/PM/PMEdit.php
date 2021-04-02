@@ -50,7 +50,7 @@ class PMEdit extends AbstractPM
         $this->c->Lang->load('post');
 
         if ('POST' === $method) {
-            $v = $this->messageValidator(null, 'PMAction', $args, true, $firstPost);
+            $v = $this->messageValidatorPM(null, 'PMAction', $args, true, $firstPost);
 
             if (
                 $v->validation($_POST)
@@ -110,6 +110,8 @@ class PMEdit extends AbstractPM
         $v = $this->messageValidator($model, $marker, $args, $edit, $first)
             ->addRules([
                 'message' => 'required|string:trim|max:65535 bytes|check_message',
+            ])->addArguments([
+                'submit.check_timeout' => $this->user->u_pm_last_post,
             ]);
 
         return $v;

@@ -195,6 +195,8 @@ class PMPost extends AbstractPM
             ->addRules([
                 'archive' => $this->newTopic ? 'string' : 'absent',
                 'message' => 'required|string:trim|max:65535 bytes|check_message',
+            ])->addArguments([
+                'submit.check_timeout' => $this->user->u_pm_last_post,
             ]);
 
         return $v;
