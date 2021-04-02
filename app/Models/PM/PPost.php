@@ -25,12 +25,12 @@ class PPost extends DataModel
         parent::__construct($container);
 
         $this->zDepend = [
-            'id'            => ['link', 'user', 'canDelete', 'linkDelete', 'linkEdit', 'linkQuote'],
+            'id'            => ['link', 'user', 'canDelete', 'linkDelete', 'linkEdit', 'linkQuote', 'previousId', 'linkPrevious'],
             'edited'        => ['editor'],
             'posted'        => ['canDelete', 'canEdit'],
             'poster'        => ['editor'],
             'poster_id'     => ['canDelete', 'canEdit'],
-            'topic_id'      => ['parent', 'linkQuote'],
+            'topic_id'      => ['parent', 'linkQuote', 'previousId', 'linkPrevious'],
         ];
     }
 
@@ -95,6 +95,22 @@ class PPost extends DataModel
                 'action'  => Cnst::ACTION_POST,
                 'more1'   => $this->id,
                 'numPost' => $this->id,
+            ]
+        );
+    }
+
+    /**
+     * Ссылка на предыдущий пост
+     */
+    protected function getlinkPrevious(): string
+    {
+        return $this->c->Router->link(
+            'PMAction',
+            [
+                'second'  => $this->c->pms->second,
+                'action'  => Cnst::ACTION_POST,
+                'more1'   => $this->previousId,
+                'numPost' => $this->previousId,
             ]
         );
     }
@@ -181,5 +197,25 @@ class PPost extends DataModel
     public function html(): string
     {
         return $this->c->censorship->censor($this->c->Parser->parseMessage($this->message, (bool) $this->hide_smilies));
+    }
+
+    /**
+     * Вычисляет номер сообщения перед данным
+     */
+    public function getpreviousId(): ?int
+    {
+        $vars = [
+            ':pid' => $this->id,
+            ':tid' => $this->topic_id,
+        ];
+        $query = "SELECT pp.id
+            FROM ::pm_posts AS pp
+            WHERE pp.id < ?i:pid AND pp.topic_id=?i:tid
+            ORDER BY pp.id DESC
+            LIMIT 1";
+
+        $id = $this->c->DB->query($query, $vars)->fetchColumn();
+
+        return empty($id) ? null : $id;
     }
 }
