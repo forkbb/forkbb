@@ -40,10 +40,10 @@ class CalcStat extends Method
         $this->model->last_post_id = $result['id'];
 
         if ($result['poster_id'] === $this->model->poster_id) {
-            $this->model->last_number = 0;
+            $this->model->last_number  = 0;
             $this->model->poster_visit = $this->model->last_post;
         } elseif ($result['poster_id'] === $this->model->target_id) {
-            $this->model->last_number = 1;
+            $this->model->last_number  = 1;
             $this->model->target_visit = $this->model->last_post;
         } else {
             throw new RuntimeException("Bad user ID in ppost number {$result['id']}");
