@@ -30,12 +30,12 @@ class PTopic extends DataModel
             'num_replies'   => ['numPages', 'pagination'],
             'poster'        => ['last_poster', 'byOrFor', 'zpUser', 'ztUser'],
             'poster_id'     => ['closed', 'firstNew', 'zp', 'zt', 'zpUser', 'ztUser', 'actionsAllowed', 'canReply'],
-            'poster_status' => ['closed', 'actionsAllowed', 'canReply'],
+            'poster_status' => ['closed', 'actionsAllowed', 'canReply', 'isFullDeleted'],
             'poster_visit'  => ['firstNew'],
             'subject'       => ['name'],
             'target'        => ['last_poster', 'byOrFor', 'zpUser', 'ztUser'],
             'target_id'     => ['closed', 'firstNew', 'zp', 'zt', 'zpUser', 'ztUser', 'actionsAllowed', 'canReply'],
-            'target_status' => ['closed', 'actionsAllowed', 'canReply'],
+            'target_status' => ['closed', 'actionsAllowed', 'canReply', 'isFullDeleted'],
             'target_visit'  => ['firstNew'],
         ];
     }
@@ -387,7 +387,7 @@ class PTopic extends DataModel
         $this->{"{$this->zp}_visit"} = $this->last_post;
 
         $this->c->pms->update(Cnst::PTOPIC, $this);
-        $this->c->pms->updateFromPTopics(false, $this);
+        $this->c->pms->recalculate($this->zpUser);
     }
 
     /**
@@ -487,6 +487,21 @@ class PTopic extends DataModel
                 )
                 || $this->zpUser->isAdmin
                 || $this->ztUser->isAdmin
+            );
+    }
+
+    /**
+     * Статус удаления диалога у обоих собеседников
+     */
+    protected function getisFullDeleted(): bool
+    {
+        return (
+                Cnst::PT_DELETED === $this->poster_status
+                || Cnst::PT_NOTSENT === $this->poster_status
+            )
+            && (
+                Cnst::PT_DELETED === $this->target_status
+                || Cnst::PT_NOTSENT === $this->target_status
             );
     }
 }
