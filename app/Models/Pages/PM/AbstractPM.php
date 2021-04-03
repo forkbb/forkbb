@@ -118,12 +118,13 @@ abstract class AbstractPM extends Page
             case Cnst::ACTION_SEND:
             case Cnst::ACTION_TOPIC:
             case Cnst::ACTION_POST:
+            case Cnst::ACTION_EDIT:
+            case Cnst::ACTION_DELETE:
                 $viewArea = true;
                 break;
-            case Cnst::ACTION_DELETE:
-            case Cnst::ACTION_EDIT:
             case Cnst::ACTION_BLOCK:
             case Cnst::ACTION_CONFIG:
+                break;
             default:
                 $crumbs[] = 'unknown';
         }
