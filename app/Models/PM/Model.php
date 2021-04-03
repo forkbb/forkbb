@@ -486,4 +486,21 @@ class Model extends ParentModel
             $this->c->users->update($user);
         }
     }
+
+    /**
+     * Перечитывает данные приватных сообщений пользователя
+     */
+    public function recalculate(User $user): void
+    {
+        if ($user->isGuest) {
+            return;
+        }
+
+        list($idsNew, $idsCurrent, $idsArchive, $new, $current, $archive) = $this->infoForUser($user);
+
+        $user->u_pm_num_new = $new;
+        $user->u_pm_num_all = $current;
+
+        $this->c->users->update($user);
+    }
 }
