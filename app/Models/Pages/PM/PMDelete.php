@@ -92,17 +92,15 @@ class PMDelete extends AbstractPM
                     ->message('Dialogue del redirect');
 
                 $topic->status = Cnst::PT_DELETED;
+
+                $this->pms->delete($topic);
             } else {
                 $redirect = $this->c->Redirect
                     ->url($post->linkPrevious)
                     ->message('Message del redirect');
 
                 $this->pms->delete($post);
-                $topic->calcStat();
             }
-
-            $this->pms->update(Cnst::PTOPIC, $topic);
-            $this->pms->updateFromPTopics(false, $topic);
 
             return $redirect;
         }
