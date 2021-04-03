@@ -233,18 +233,34 @@ class PMPost extends AbstractPM
             $topic->first_post_id = $post->id;
         }
 
-        $this->user->u_pm_last_post = $now;
-
         $this->pms->update(Cnst::PTOPIC, $topic->calcStat());
-        $this->pms->updateFromPTopics(true, $topic);
 
-        if (null !== $v->archive) {
+        // новый диалог в архив
+        if (
+            $this->newTopic
+            && Cnst::PT_ARCHIVE === $topic->poster_status
+        ) {
             $message = 'PM to archive Redirect';
+        // новый диалог в активные
         } elseif ($this->newTopic) {
             $message = 'PM created Redirect';
+
+            $this->user->u_pm_num_all += 1;
+
+            $this->pms->recalculate($this->targetUser);
+        // сообщение в архивный диалог
+        } elseif (Cnst::PT_ARCHIVE === $topic->poster_status) {
+            $message = 'PM to archive Redirect';
+        // сообщение в активный диалог
         } else {
             $message = 'PM sent Redirect';
+
+            $this->pms->recalculate($this->targetUser);
         }
+
+        $this->user->u_pm_last_post = $now;
+
+        $this->c->users->update($this->user);
 
         return $this->c->Redirect->url($post->link)->message($message);
     }
