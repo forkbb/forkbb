@@ -125,14 +125,14 @@ class PMEdit extends AbstractPM
         $now       = \time();
         $topic     = $post->parent;
         $firstPost = $post->id === $topic->first_post_id;
-        $calcPost  = false;
+        $calcUser  = false;
         $calcTopic = false;
 
         // текст сообщения
         if ($post->message !== $v->message) {
             $post->message       = $v->message;
             $post->edited        = $now;
-            $calcPost            = true;
+            $calcUser            = true;
 
             if ($post->id === $topic->last_post_id) {
                 $calcTopic       = true;
@@ -154,10 +154,9 @@ class PMEdit extends AbstractPM
             }
         }
 
-        // обновление сообщения
         $this->pms->update(Cnst::PPOST, $post);
 
-        // обновление темы
+        // пересчет темы
         if ($calcTopic) {
             $topic->calcStat();
         }
@@ -165,7 +164,7 @@ class PMEdit extends AbstractPM
         $this->pms->update(Cnst::PTOPIC, $topic);
 
         // антифлуд
-        if ($calcPost) {
+        if ($calcUser) {
             $this->user->u_pm_last_post = $now;
 
             $this->c->users->update($this->user);
