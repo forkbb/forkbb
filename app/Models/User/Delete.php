@@ -57,6 +57,7 @@ class Delete extends Action
             }
         }
 
+        $this->c->pms->delete(...$users);
         $this->c->subscriptions->unsubscribe(...$users);
         $this->c->forums->delete(...$users);
 
