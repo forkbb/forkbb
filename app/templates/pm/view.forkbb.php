@@ -47,7 +47,7 @@
         @else
             <li id="ptopic-{{ $topic->id }}" class="f-row @if ($topic->hasNew) f-fnew @endif @if ($topic->closed) f-fclosed @endif">
               <div class="f-cell f-cmain">
-                <input id="checkbox-{{ $topic->id }}" class="f-fch" type="checkbox" name="ids[{{ $topic->id }}]" value="{{ $topic->id }}">
+                <input id="checkbox-{{ $topic->id }}" class="f-fch" type="checkbox" name="ids[{{ $topic->id }}]" value="{{ $topic->id }}" form="id-form-pmview">
                 <label class="f-ficon" for="checkbox-{{ $topic->id }}" title="{{ __('Select') }}"></label>
                 <div class="f-finfo">
                   <h3>
@@ -89,9 +89,14 @@
         </div>
 @endif
       </section>
-@if ($p->pagination)
+@if ($p->pagination || $p->form)
       <div class="f-nav-links">
         <div class="f-nlinks-a f-nlbpm">
+    @if ($form = $p->form)
+          <div class="f-actions-links">
+        @include ('layouts/form')
+          </div>
+    @endif
     @yield ('pagination')
         </div>
       </div>
