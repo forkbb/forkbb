@@ -487,8 +487,13 @@ html[lang="ru"] #fork details[open] > summary::after {
 }
 
 @media screen and (max-width: 34rem) {
-  #fork-nav-profile ~ .f-menu-item .f-menu-span {
+  #fork .f-spantxtpm,
+  #fork-nav-profile ~ .f-menu-item:not(.f-mi-newpm) .f-menu-span {
     display: none;
+  }
+
+  #fork-nav-profile ~ .f-menu-item:not(.f-mi-newpm) .f-menu-a:before {
+    padding: 0;
   }
 }
 

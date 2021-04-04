@@ -323,7 +323,7 @@ msgid "PM"
 msgstr "ЛС"
 
 msgid "PM %s"
-msgstr "ЛС <b>(%s)</b>"
+msgstr "<span class="f-spantxtpm">ЛС </span><b>(%s)</b>"
 
 msgid "Private messages"
 msgstr "Личные сообщения"

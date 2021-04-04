@@ -321,7 +321,7 @@ msgid "PM"
 msgstr "PM"
 
 msgid "PM %s"
-msgstr "PM <b>(%s)</b>"
+msgstr "<span class="f-spantxtpm">PM </span><b>(%s)</b>"
 
 msgid "Private messages"
 msgstr "Private messages"

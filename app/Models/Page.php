@@ -216,6 +216,8 @@ abstract class Page extends Model
                     $r->link('PM'),
                     $this->user->u_pm_num_new > 0 ? ['PM %s', $this->user->u_pm_num_new] : 'PM',
                     'Private messages',
+                    null,
+                    $this->user->u_pm_num_new > 0 ? 'newpm' : null,
                 ];
             }
 
