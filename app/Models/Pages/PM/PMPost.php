@@ -245,7 +245,7 @@ class PMPost extends AbstractPM
         } elseif ($this->newTopic) {
             $message = 'PM created Redirect';
 
-            $this->user->u_pm_num_all += 1;
+            $this->user->u_pm_num_all += 1; // ???? может recalculate() ниже u_pm_last_post = $now?
 
             $this->pms->recalculate($this->targetUser);
         // сообщение в архивный диалог
