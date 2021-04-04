@@ -21,9 +21,26 @@ use RuntimeException;
 
 class Delete extends Method
 {
-    /**
-     * Удаляет тему(ы)
-     */
+    protected function deletePTopics(array $ids): void
+    {
+        if ($ids) {
+            $vars = [
+                ':ids' => $ids,
+            ];
+            $query = 'DELETE
+                FROM ::pm_topics
+                WHERE id IN (?ai:ids)';
+
+            $this->c->DB->exec($query, $vars);
+
+            $query = 'DELETE
+                FROM ::pm_posts
+                WHERE topic_id IN (?ai:ids)';
+
+            $this->c->DB->exec($query, $vars);
+        }
+    }
+
     public function delete(DataModel ...$args): void
     {
         if (empty($args)) {
@@ -82,22 +99,7 @@ class Delete extends Method
                 }
             }
 
-            if ($ids) {
-                $vars = [
-                    ':ids' => $ids,
-                ];
-                $query = 'DELETE
-                    FROM ::pm_topics
-                    WHERE id IN (?ai:ids)';
-
-                $this->c->DB->exec($query, $vars);
-
-                $query = 'DELETE
-                    FROM ::pm_posts
-                    WHERE topic_id IN (?ai:ids)';
-
-                $this->c->DB->exec($query, $vars);
-            }
+            $this->deletePTopics($ids);
         }
 
         if ($posts) {
@@ -127,7 +129,70 @@ class Delete extends Method
         }
 
         if ($users) {
+            $vars = [
+                ':ids'    => \array_keys($users),
+                ':status' => Cnst::PT_DELETED,
+            ];
+            $query = 'DELETE
+                FROM ::pm_block
+                WHERE bl_first_id IN (?ai:ids)';
 
+            $this->c->DB->exec($query, $vars);
+
+            $query = 'DELETE
+                FROM ::pm_block
+                WHERE bl_second_id IN (?ai:ids)';
+
+            $this->c->DB->exec($query, $vars);
+
+            $query = 'UPDATE ::pm_topics
+                SET poster_id=1, poster_status=?i:status
+                WHERE poster_id IN (?ai:ids)';
+
+            $this->c->DB->exec($query, $vars);
+
+            $query = 'UPDATE ::pm_topics
+                SET target_id=1, target_status=?i:status
+                WHERE target_id IN (?ai:ids)';
+
+            $this->c->DB->exec($query, $vars);
+
+            $query = 'UPDATE ::pm_posts
+                SET poster_id=1
+                WHERE poster_id IN (?ai:ids)';
+
+            $this->c->DB->exec($query, $vars);
+
+            $vars = [
+                ':st1' => Cnst::PT_DELETED,
+                ':st2' => Cnst::PT_NOTSENT,
+            ];
+            $query = 'SELECT id, poster_id, target_id
+                FROM ::pm_topics
+                WHERE (poster_status=?i:st1 AND target_status=?i:st1)
+                   OR (poster_status=?i:st1 AND target_status=?i:st2)
+                   OR (poster_status=?i:st2 AND target_status=?i:st1)
+                   OR (poster_status=?i:st2 AND target_status=?i:st2)';
+
+            $stmt = $this->c->DB->query($query, $vars);
+            $ids  = [];
+            $uids = [];
+
+            while ($row = $stmt->fetch()) {
+                $ids[$row['id']]         = $row['id'];
+                $uids[$row['poster_id']] = $row['poster_id'];
+                $uids[$row['target_id']] = $row['target_id'];
+            }
+
+            $this->deletePTopics($ids);
+
+            unset($uids[1]);
+
+            foreach ($this->c->users->loadByIds($uids) as $user) {
+                if ($user instanceof User) {
+                    $calcUsers[$user->id] = $user;
+                }
+            }
         }
 
         foreach ($calcUsers as $user) {
