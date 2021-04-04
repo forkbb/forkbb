@@ -276,8 +276,8 @@ class Model extends ParentModel
                     FROM ::pm_topics AS pt
                    WHERE (pt.poster_id=?i:id AND pt.poster_status=?i:norm)
                       OR (pt.poster_id=?i:id AND pt.poster_status=?i:arch)
-                      OR (pt.target_id=?i:id AND pt.poster_status=?i:norm)
-                      OR (pt.target_id=?i:id AND pt.poster_status=?i:arch)
+                      OR (pt.target_id=?i:id AND pt.target_status=?i:norm)
+                      OR (pt.target_id=?i:id AND pt.target_status=?i:arch)
                 ORDER BY pt.last_post DESC';
 
         $stmt = $this->c->DB->query($query, $vars);
