@@ -25,7 +25,7 @@
     @yield ('pagination')
         <div class="f-actions-links">
         @if ($p->model->closed)
-          <span class="f-act-span"><a class="f-btn f-btn-topic-closed" title="{{ __('Topic closed') }}"><span>{!! __('Topic closed') !!}</span></a></span>
+          <span class="f-act-span"><a class="f-btn f-btn-topic-closed" title="{{ __('Closed') }}"><span>{!! __('Closed') !!}</span></a></span>
         @endif
           <span class="f-act-span"><a class="f-btn f-btn-delete-dialog" title="{{ __('Delete dialogue') }}" href="{{ $p->model->linkDelete }}"><span>{!! __('Delete dialogue') !!}</span></a></span>
         @if ($p->model->canReply)
