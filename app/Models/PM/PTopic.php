@@ -25,8 +25,10 @@ class PTopic extends DataModel
 
         $this->zDepend = [
             'id'            => ['link', 'hasNew', 'linkNew', 'firstNew', 'pagination', 'dataReply', 'linkReply'],
+            'first_post_id' => ['firstNew'],
             'last_number'   => ['last_poster'],
-            'last_post_id'  => ['linkLast'],
+            'last_post'     => ['firstNew'],
+            'last_post_id'  => ['linkLast', 'firstNew'],
             'num_replies'   => ['numPages', 'pagination'],
             'poster'        => ['last_poster', 'byOrFor', 'zpUser', 'ztUser'],
             'poster_id'     => ['closed', 'firstNew', 'zp', 'zt', 'zpUser', 'ztUser', 'actionsAllowed', 'canReply'],
@@ -152,9 +154,17 @@ class PTopic extends DataModel
             return 0;
         }
 
+        $visit = $this->{"{$this->zp}_visit"};
+
+        if ($visit < 1) {
+            return $this->first_post_id;
+        } elseif ($visit >= $this->last_post) {
+            return $this->last_post_id;
+        }
+
         $vars = [
             ':tid'   => $this->id,
-            ':visit' => $this->{"{$this->zp}_visit"},
+            ':visit' => $visit,
         ];
         $query = 'SELECT MIN(pp.id)
             FROM ::pm_posts AS pp
