@@ -2455,11 +2455,6 @@ html[lang="ru"] #fork details[open] > summary::after {
   margin: 0 0 0.625rem 0;
 }
 
-#id-pmcnfrm-form.f-pmform .f-fbtn {
-  width: auto;
-  display: inline-block;
-}
-
 @media screen and (min-width: 50rem) {
   #fork .f-nav-pm-links {
     margin-right: 0;
