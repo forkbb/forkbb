@@ -2498,12 +2498,12 @@ html[lang="ru"] #fork details[open] > summary::after {
     border-top-style: dotted;
   }
 
-  #forkpm > :last-child,
+  #forkpm > .f-pm:last-child,
   #forkpm .f-nlbpm {
     margin-bottom: 0;
   }
 
-  #forkpm > :first-child,
+  #forkpm > .f-pm:first-child,
   #forkpm .f-nlbpm {
     margin-top: 0;
   }

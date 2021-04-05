@@ -1,6 +1,6 @@
 @extends ('layouts/pm')
 @if ($p->previewHtml)
-    <section class="f-preview">
+    <section class="f-pm f-preview">
       <h2>{!! __('Post preview') !!}</h2>
       <div class="f-post-body">
         <div class="f-post-main">
@@ -10,7 +10,7 @@
     </section>
 @endif
 @if ($form = $p->form)
-    <section class="f-post-form">
+    <section class="f-pm f-post-form">
       <h2>{!! __($p->formTitle) !!}</h2>
       <div class="f-fdiv">
     @include ('layouts/form')
@@ -18,7 +18,7 @@
     </section>
 @endif
 @if ($p->posts)
-    <section class="f-view-posts">
+    <section class="f-pm f-view-posts">
       <h2>{!! __($p->postsTitle) !!}</h2>
     @foreach ($p->posts as $post)
         @if ($post->id)

@@ -20,7 +20,7 @@
     @endif
 @endsection
 @extends ('layouts/pm')
-    <div class="f-nav-links">
+    <div class="f-pm f-nav-links">
       <div class="f-nlinks-b f-nlbpm">
     @yield ('pagination')
         <div class="f-actions-links">
@@ -34,7 +34,7 @@
         </div>
       </div>
     </div>
-    <section class="f-topic">
+    <section class="f-pm f-topic">
       <h2>{{ $p->model->name }}</h2>
 @foreach ($p->posts as $id => $post)
     @if (empty($post->id) && $iswev = ['e' => [['Message %s was not found in the database', $id]]])
@@ -127,7 +127,7 @@
     @endif
 @endforeach
     </section>
-    <div class="f-nav-links">
+    <div class="f-pm f-nav-links">
     @if ($p->form)
       <div class="f-nlinks">
     @else
@@ -143,7 +143,7 @@
       </div>
     </div>
 @if ($form = $p->form)
-    <section class="f-post-form">
+    <section class="f-pm f-post-form">
       <h2>{!! __('Quick post') !!}</h2>
       <div class="f-fdiv">
     @include ('layouts/form')

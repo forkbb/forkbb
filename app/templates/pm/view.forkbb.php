@@ -21,7 +21,7 @@
 @endsection
 @extends ('layouts/pm')
 @if ($p->pagination)
-      <div class="f-nav-links">
+      <div class="f-pm f-nav-links">
         <div class="f-nlinks-b f-nlbpm">
     @yield ('pagination')
         </div>
@@ -90,7 +90,7 @@
 @endif
       </section>
 @if ($p->pagination || $p->form)
-      <div class="f-nav-links">
+      <div class="f-pm f-nav-links">
         <div class="f-nlinks-a f-nlbpm">
     @if ($form = $p->form)
           <div class="f-actions-links">
