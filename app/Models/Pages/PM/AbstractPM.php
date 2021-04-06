@@ -77,26 +77,38 @@ abstract class AbstractPM extends Page
             'pm-sp1' => [null, null],
         ];
 
+        if ($this->user->g_pm_limit > 0) {
+            $nav += [
+                'pm-storage' => [true, 'PM Storage'],
+                'pm-active' => [
+                    false,
+                    [
+                        'Active: %s',
+                        $this->user->g_pm_limit < 1 ? 0 : (int) (100 * $this->pms->totalCurrent / $this->user->g_pm_limit),
+                    ],
+                ],
+                'pm-archive' => [
+                    false,
+                    [
+                        'Archive: %s',
+                        $this->user->g_pm_limit < 1 ? 0 : (int) (100 * $this->pms->totalArchive / $this->user->g_pm_limit),
+                    ],
+                ],
+                'pm-sp2' => [null, null],
+            ];
+        }
+
         $nav += [
-            'pm-storage' => [true, 'PM Storage'],
-            'pm-active' => [
-                false,
-                [
-                    'Active: %s',
-                    $this->user->g_pm_limit < 1 ? 0 : (int) (100 * $this->pms->totalCurrent / $this->user->g_pm_limit),
-                ],
+            'pm-options' => [true, 'PM Options'],
+            Cnst::ACTION_CONFIG => [
+                $r->link('PMAction', ['action' => Cnst::ACTION_CONFIG]),
+                'PM Config',
             ],
-            'pm-archive' => [
-                false,
-                [
-                    'Archive: %s',
-                    $this->user->g_pm_limit < 1 ? 0 : (int) (100 * $this->pms->totalArchive / $this->user->g_pm_limit),
-                ],
+            Cnst::ACTION_BLOCK => [
+                $r->link('PMAction', ['action' => Cnst::ACTION_BLOCK]),
+                'Blocked users',
             ],
-            'pm-sp2' => [null, null],
         ];
-
-
 
         return $nav;
     }
