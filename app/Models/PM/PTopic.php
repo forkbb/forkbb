@@ -31,13 +31,13 @@ class PTopic extends DataModel
             'last_post_id'  => ['linkLast', 'firstNew'],
             'num_replies'   => ['numPages', 'pagination'],
             'poster'        => ['last_poster', 'byOrFor', 'zpUser', 'ztUser'],
-            'poster_id'     => ['closed', 'firstNew', 'zp', 'zt', 'zpUser', 'ztUser', 'actionsAllowed', 'canReply'],
-            'poster_status' => ['closed', 'actionsAllowed', 'canReply', 'isFullDeleted'],
+            'poster_id'     => ['closed', 'firstNew', 'zp', 'zt', 'zpUser', 'ztUser', 'actionsAllowed', 'canReply', 'canSend'],
+            'poster_status' => ['closed', 'actionsAllowed', 'canReply', 'isFullDeleted', 'canSend'],
             'poster_visit'  => ['firstNew'],
             'subject'       => ['name'],
             'target'        => ['last_poster', 'byOrFor', 'zpUser', 'ztUser'],
-            'target_id'     => ['closed', 'firstNew', 'zp', 'zt', 'zpUser', 'ztUser', 'actionsAllowed', 'canReply'],
-            'target_status' => ['closed', 'actionsAllowed', 'canReply', 'isFullDeleted'],
+            'target_id'     => ['closed', 'firstNew', 'zp', 'zt', 'zpUser', 'ztUser', 'actionsAllowed', 'canReply', 'canSend'],
+            'target_status' => ['closed', 'actionsAllowed', 'canReply', 'isFullDeleted', 'canSend'],
             'target_visit'  => ['firstNew'],
         ];
     }
@@ -124,7 +124,7 @@ class PTopic extends DataModel
                 'second' => $this->c->pms->second,
                 'action' => Cnst::ACTION_TOPIC,
                 'more1'  => $this->id,
-                'more2'  => 'new',
+                'more2'  => Cnst::ACTION_NEW,
             ]
         );
     }
@@ -498,6 +498,38 @@ class PTopic extends DataModel
                 || $this->zpUser->isAdmin
                 || $this->ztUser->isAdmin
             );
+    }
+
+    /**
+     * Статус возможности отправить архивный диалог получателю
+     */
+    protected function getcanSend(): bool
+    {
+        return Cnst::PT_ARCHIVE === $this->poster_status
+            && $this->actionsAllowed
+            && (
+                (
+                    1 === $this->zpUser->u_pm
+                    && 1 === $this->ztUser->u_pm
+                )
+                || $this->zpUser->isAdmin
+            );
+    }
+
+    /**
+     * Ссылка для отправки архивного диалога
+     */
+    protected function getlinkSend(): string
+    {
+        return $this->c->Router->link(
+            'PMAction',
+            [
+                'second' => $this->c->pms->second,
+                'action' => Cnst::ACTION_TOPIC,
+                'more1'  => $this->id,
+                'more2'  => Cnst::ACTION_SEND,
+            ]
+        );
     }
 
     /**
