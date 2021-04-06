@@ -134,6 +134,9 @@
       <div class="f-nlinks-a f-nlbpm">
     @endif
         <div class="f-actions-links">
+        @if ($p->model->canSend)
+          <span class="f-act-span"><a class="f-btn f-btn-send-dialog" title="{{ __(['Send dialogue to %s', $p->model->target]) }}" href="{{ $p->model->linkSend }}"><span>{!! __('Send dialogue') !!}</span></a></span>
+        @endif
           <span class="f-act-span"><a class="f-btn f-btn-delete-dialog" title="{{ __('Delete dialogue') }}" href="{{ $p->model->linkDelete }}"><span>{!! __('Delete dialogue') !!}</span></a></span>
         @if ($p->model->canReply)
           <span class="f-act-span"><a class="f-btn f-btn-post-reply" title="{{ __('Post reply') }}" href="{{ $p->model->linkReply }}"><span>{!! __('Post reply') !!}</span></a></span>
