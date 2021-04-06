@@ -238,6 +238,8 @@ class Model extends DataModel
     {
         if (false === $this->hasNew) {
             return 0;
+        } elseif ($this->posted > $this->hasNew) {
+            return $this->first_post_id;
         }
 
         $vars = [
@@ -260,6 +262,8 @@ class Model extends DataModel
     {
         if (false === $this->hasUnread) {
             return 0;
+        } elseif ($this->posted > $this->hasUnread) {
+            return $this->first_post_id;
         }
 
         $vars = [
