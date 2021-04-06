@@ -64,7 +64,7 @@ class PMTopic extends AbstractPM
 
         if (! isset($args['more2'])) {
             $this->model->page = 1;
-        } elseif ('new' === $args['more2']) {
+        } elseif (Cnst::ACTION_NEW === $args['more2']) {
             $new = $this->model->firstNew;
 
             if ($new > 0) {
