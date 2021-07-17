@@ -14,6 +14,7 @@ use ForkBB\Core\DBStatement;
 use PDO;
 use PDOStatement;
 use PDOException;
+use ReturnTypeWillChange;
 
 class DB extends PDO
 {
@@ -224,6 +225,7 @@ class DB extends PDO
     /**
      * Метод расширяет PDO::exec()
      */
+    #[ReturnTypeWillChange]
     public function exec(/* string */ $query, array $params = []) /* : int|false */
     {
         $map = $this->parse($query, $params);
@@ -252,6 +254,7 @@ class DB extends PDO
     /**
      * Метод расширяет PDO::prepare()
      */
+    #[ReturnTypeWillChange]
     public function prepare(/* string */ $query, /* array */ $arg1 = null, /* array */ $arg2 = null): PDOStatement
     {
         if (
@@ -284,6 +287,7 @@ class DB extends PDO
     /**
      * Метод расширяет PDO::query()
      */
+    #[ReturnTypeWillChange]
     public function query(string $query, /* mixed */ ...$args) /* : PDOStatement|false */
     {
         if (
