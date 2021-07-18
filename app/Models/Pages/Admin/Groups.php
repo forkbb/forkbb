@@ -34,11 +34,11 @@ class Groups extends Admin
         foreach ($this->c->groups->getList() as $key => $group) {
             $groupsList[$key] = [$group->g_title, $group->linkEdit, $group->linkDelete];
 
-            if (! \in_array($group->g_id, $notForNew)) {
+            if (! \in_array($group->g_id, $notForNew, true)) {
                 $groupsNew[$key] = $group->g_title;
             }
             if (
-                ! \in_array($group->g_id, $notForDefault)
+                ! \in_array($group->g_id, $notForDefault, true)
                 && 0 == $group->g_moderator
             ) {
                 $groupsDefault[$key] = $group->g_title;

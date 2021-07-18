@@ -136,7 +136,7 @@ class Moderate extends Page
                     $v->addError('Nowhere to move');
                 } elseif (
                     1 === $v->confirm
-                    && ! \in_array($v->destination, $this->listOfIndexes)
+                    && ! \in_array($v->destination, $this->listOfIndexes, true)
                 ) {
                     $v->addError('Invalid destination');
                 } elseif (

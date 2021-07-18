@@ -113,7 +113,7 @@ class Image extends File
         }
 
         if (\is_array($info['extension'])) {
-            if (\in_array($this->ext, $info['extension'])) {
+            if (\in_array($this->ext, $info['extension'], true)) {
                 $info['extension'] = $this->ext;
             } else {
                 $info['extension'] = \reset($info['extension']); // ???? выбор расширения?

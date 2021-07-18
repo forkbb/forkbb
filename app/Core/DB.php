@@ -59,7 +59,7 @@ class DB extends PDO
         $type = \strstr($dsn, ':', true);
         if (
             ! $type
-            || ! \in_array($type, PDO::getAvailableDrivers())
+            || ! \in_array($type, PDO::getAvailableDrivers(), true)
             || ! \is_file(__DIR__ . '/DB/' . \ucfirst($type) . '.php')
         ) {
             throw new PDOException("Driver isn't found for '$type'");
@@ -102,7 +102,7 @@ class DB extends PDO
         foreach ($options as $key => $value) {
            if (
                ! isset($verify[$key])
-               || ! \in_array($value, $verify[$key])
+               || ! \in_array($value, $verify[$key], true)
             ) {
                return false;
            }

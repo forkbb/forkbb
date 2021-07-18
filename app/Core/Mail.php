@@ -108,7 +108,7 @@ class Mail
             ];
             $this->EOL = "\r\n";
         } else {
-            $this->EOL = \in_array($eol, ["\r\n", "\n", "\r"]) ? $eol : \PHP_EOL;
+            $this->EOL = \in_array($eol, ["\r\n", "\n", "\r"], true) ? $eol : \PHP_EOL;
         }
     }
 
@@ -630,7 +630,7 @@ class Mail
 
         if (
             null !== $code
-            && ! \in_array($return, $code)
+            && ! \in_array($return, $code, true)
         ) {
             throw new SmtpException("Unable to send email. Response of mail server: \"{$this->response}\"");
         }
