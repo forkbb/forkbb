@@ -1113,14 +1113,16 @@ html[lang="ru"] #fork details[open] > summary::after {
 
 #fork .f-ftlist .f-row {
   border-bottom: 0.0625rem solid #AA7939;
+  padding: 0.3125rem;
 }
 
 #fork .f-ftlist .f-thead {
   border-bottom: 0.125rem solid #AA7939;
+  padding: 0;
 }
 
 #fork .f-ftlist .f-cell {
-  padding: 0.625rem;
+  padding: 0.3125rem;
   overflow: hidden;
 }
 
@@ -1138,7 +1140,7 @@ html[lang="ru"] #fork details[open] > summary::after {
 }
 
 #fork .f-ftlist .f-cstats {
-  padding-top: 0;
+  /*padding-top: 0;*/
   text-align: right;
   font-size: 0.75rem;
 }
@@ -1264,8 +1266,8 @@ html[lang="ru"] #fork details[open] > summary::after {
     justify-content: center;
     flex-direction: column;
     min-width: 8rem;
-    padding-top: 0.625rem;
-    padding-left: 0;
+    /*padding-top: 0.625rem;*/
+    /*padding-left: 0;*/
     white-space: nowrap;
   }
 
@@ -1275,7 +1277,7 @@ html[lang="ru"] #fork details[open] > summary::after {
     flex-direction: column;
     width: 15rem;
     min-width: 15rem;
-    padding-left: 0;
+    /*padding-left: 0;*/
     font-size: 0.875rem;
     text-align: right;
   }
