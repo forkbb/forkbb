@@ -40,11 +40,12 @@
   #fork .f-main-admin {
     display: flex;
     /*flex-wrap: wrap;*/
+    justify-content: space-between;
   }
 
   .f-main-admin #fork-a-menu {
     width: 13rem;
-    margin-right: 1rem;
+    /*margin-right: 1rem;*/
   }
 
   .f-main-admin #forka {
@@ -142,11 +143,12 @@
 @media screen and (min-width: 36rem) {
   #forka dl {
     display: flex;
+    justify-content: space-between;
   }
 
   #forka dt {
     width: 14rem;
-    margin-right: 0.625rem;
+    /*margin-right: 0.625rem;*/
   }
 
   #forka dd {

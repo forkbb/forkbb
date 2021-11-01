@@ -177,11 +177,11 @@ body,
 #fork summary::after {
   content: "(click to open)";
   font-size: 0.875rem;
-  margin-left: 0.3125rem;
+  margin: 0 0.3125rem;
   opacity: 0.6;
 }
 
-html[lang="ru"] #fork summary::after {
+[lang="ru"] #fork summary::after {
   content: "(открыть)";
 }
 
@@ -189,7 +189,7 @@ html[lang="ru"] #fork summary::after {
   content: "(click to close)";
 }
 
-html[lang="ru"] #fork details[open] > summary::after {
+[lang="ru"] #fork details[open] > summary::after {
   content: "(закрыть)";
 }
 
@@ -357,6 +357,7 @@ html[lang="ru"] #fork details[open] > summary::after {
 #fork .f-menu-a:before {
   font-family: "FontAwesomeFree";
   font-weight: 900;
+  padding-right: 0.3125rem;
 }
 
 #fork .f-menu-span {
@@ -417,7 +418,7 @@ html[lang="ru"] #fork details[open] > summary::after {
 #fork-nav .f-menu-user-items {
   background-color: #F8F4E3;
   display: flex;
-  justify-content: flex-end;
+  /*justify-content: flex-end;*/
   /*flex-grow: 0.5;*/
   /*flex-wrap: wrap;*/
   margin-left: auto;
@@ -433,7 +434,7 @@ html[lang="ru"] #fork details[open] > summary::after {
 
 #fork-nav-profile .f-menu-a:before {
   content: "\f007";
-  padding-right: 0.3125rem;
+  /*padding-right: 0.3125rem;*/
 }
 
 #fork-nav-profile .f-menu-span {
@@ -443,47 +444,47 @@ html[lang="ru"] #fork details[open] > summary::after {
 #fork-nav-pm .f-menu-a:before {
   font-weight: 400;
   content: "\f0e0";
-  padding-right: 0.3125rem;
+  /*padding-right: 0.3125rem;*/
 }
 
 #fork-nav-admin .f-menu-a:before {
   content: "\f7d9";
-  padding-right: 0.3125rem;
+  /*padding-right: 0.3125rem;*/
 }
 
 #fork-nav-logout .f-menu-a:before {
   content: "\f2f5";
-  padding-right: 0.3125rem;
+  /*padding-right: 0.3125rem;*/
 }
 
 #fork-nav-register .f-menu-a:before {
   content: "\f234";
-  padding-right: 0.3125rem;
+  /*padding-right: 0.3125rem;*/
 }
 
 #fork-nav-login .f-menu-a:before {
   content: "\f2f6";
-  padding-right: 0.3125rem;
+  /*padding-right: 0.3125rem;*/
 }
 
 #fork-nav-index .f-menu-a:before {
   content: "\f015";
-  padding-right: 0.3125rem;
+  /*padding-right: 0.3125rem;*/
 }
 
 #fork-nav-userlist .f-menu-a:before {
   content: "\f0c0";
-  padding-right: 0.3125rem;
+  /*padding-right: 0.3125rem;*/
 }
 
 #fork-nav-rules .f-menu-a:before {
   content: "\f05a";
-  padding-right: 0.3125rem;
+  /*padding-right: 0.3125rem;*/
 }
 
 #fork-nav-search > .f-menu-a:before {
   content: "\f002";
-  padding-right: 0.3125rem;
+  /*padding-right: 0.3125rem;*/
 }
 
 @media screen and (max-width: 34rem) {
@@ -560,7 +561,7 @@ html[lang="ru"] #fork details[open] > summary::after {
 
 #fork #id-fhth1 {
   width: calc(100% - 4rem);
-  padding: 0.625rem 0 0.625rem 0.625rem;
+  padding: 0.625rem;
   font-size: 2rem;
   overflow: hidden;
   white-space: nowrap;
@@ -702,7 +703,6 @@ html[lang="ru"] #fork details[open] > summary::after {
 }
 
 #fork .f-yradio {
-  margin-left: 0;
   margin-right: 0.3125rem;
 }
 
@@ -711,8 +711,7 @@ html[lang="ru"] #fork details[open] > summary::after {
 }
 
 #fork .f-field-block .f-flblr + .f-flblr {
-  margin-left: 0;
-  margin-top: 0.3125rem;
+  margin: 0.3125rem 0 0;
 }
 
 #fork .f-ycaption,
@@ -833,15 +832,14 @@ html[lang="ru"] #fork details[open] > summary::after {
 /*************************/
 #fork #fork-debug {
   font-size: 0.75rem;
-  text-align: center;
 }
 
 #fork-debug #id-fdebugtime {
   padding: 0.3125rem 0.625rem;
+  text-align: center;
 }
 
 #fork-debug > table {
-  text-align: left;
   width: 100%;
   border: 0.0625rem solid #AA7939;
   border-collapse: collapse;
@@ -1065,9 +1063,12 @@ html[lang="ru"] #fork details[open] > summary::after {
   }
 
   #fork .f-stboard {
-    display: block;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    /*display: block;*/
     border: 0;
-    text-align: right;
+    /*text-align: right;*/
   }
 
   #fork .f-stusers {
@@ -1257,14 +1258,15 @@ html[lang="ru"] #fork details[open] > summary::after {
   }
 
   #fork .f-ftlist .f-cmain {
-    margin-right: auto;
-
+    /*margin-right: auto;*/
+    flex-grow: 1;
   }
 
   #fork .f-ftlist .f-cstats {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    align-items: flex-end;
     min-width: 8rem;
     /*padding-top: 0.625rem;*/
     /*padding-left: 0;*/
@@ -1275,11 +1277,12 @@ html[lang="ru"] #fork details[open] > summary::after {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    align-items: flex-end;
     width: 15rem;
     min-width: 15rem;
     /*padding-left: 0;*/
     font-size: 0.875rem;
-    text-align: right;
+    /*text-align: right;*/
   }
 
   #fork .f-ftlist .f-cltopic,
@@ -2465,11 +2468,12 @@ html[lang="ru"] #fork details[open] > summary::after {
   #fork .f-main-pm {
     display: flex;
     /*flex-wrap: wrap;*/
+    justify-content: space-between;
   }
 
   #fork #fork-pm-menu {
     width: 13rem;
-    margin-right: 1rem;
+    /*margin-right: 1rem;*/
   }
 
   #fork #forkpm {
