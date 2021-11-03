@@ -87,13 +87,13 @@
 }
 
 #fork-welcome ul {
-  padding: 0 0.625rem 0.625rem 0.625rem;
+  padding: 0 0.625rem 0.625rem;
   list-style-type: circle;
   list-style-position: inside;
 }
 
 #fork-grlist ol {
-  padding: 0 0.625rem 0.625rem 0.625rem;
+  padding: 0 0.625rem 0.625rem;
 }
 
 #forka dl {

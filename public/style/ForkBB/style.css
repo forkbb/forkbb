@@ -138,7 +138,7 @@ body,
 
 @media screen and (min-width: 64rem) {
   #fork {
-    max-width: calc(80% + 12.8rem); /*  (100% - 64rem) * 0.8 + 64rem */
+    max-width: calc(80% + 12.8rem); /* (100% - 64rem) * 0.8 + 64rem */
   }
 }
 
@@ -244,12 +244,12 @@ body,
   border-radius: 0.1875rem;
   padding: 0.125rem 0.5rem;
   background-color: #F8F4E3;
-  -ms-touch-action: manipulation;
-      touch-action: manipulation;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  /*-ms-touch-action: manipulation;*/
+  touch-action: manipulation;
+  /*-webkit-user-select: none;*/
+     /*-moz-user-select: none;*/
+      /*-ms-user-select: none;*/
+  user-select: none;
   white-space: nowrap;
   text-align: center;
 }
@@ -421,7 +421,9 @@ body,
   /*justify-content: flex-end;*/
   /*flex-grow: 0.5;*/
   /*flex-wrap: wrap;*/
-  margin-left: auto;
+  /*margin-left: auto;*/
+  flex-grow: 1;
+  justify-content: flex-end;
 }
 
 #fork-nav .f-menu-user-items .f-menu-item {
@@ -762,7 +764,7 @@ body,
   padding: 0.625rem;
   color: #F8F4E3;
   text-align: justify;
-  margin: 0 -0.3125rem 0.3125rem -0.3125rem;
+  margin: 0 -0.3125rem 0.3125rem;
   overflow: hidden;
 }
 
@@ -785,8 +787,8 @@ body,
 #fork .f-field-hint .f-yhint {
   overflow: hidden;
   max-height: 0;
-  -webkit-transition: max-height 0.5s, margin 0.5s;
-  -webkit-transition-delay: 0.2s;
+  /*-webkit-transition: max-height 0.5s, margin 0.5s;*/
+  /*-webkit-transition-delay: 0.2s;*/
   transition: max-height 0.5s, margin 0.5s;
   transition-delay: 0.2s;
 
@@ -876,7 +878,7 @@ body,
 
 #fork .f-crumb {
   display: inline;
-  max-width: 100%;
+  /*max-width: 100%;*/
 }
 
 #fork .f-crumb:last-child {
@@ -901,6 +903,10 @@ body,
 
 #fork .f-nav-links .f-actions-links,
 #fork .f-nav-links .f-pages {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3125rem;
   padding: 0 0.625rem;
 }
 
@@ -916,7 +922,7 @@ body,
   border-top: 0.0625rem dotted #AA7939;
 }
 
-#fork .f-nlinks-b .f-act-span,
+#fork .f-nlinks-b .f-actions-links,
 #fork .f-nlinks-b .f-pages {
   padding-top: 0.625rem;
 }
@@ -927,19 +933,21 @@ body,
   flex-wrap: wrap-reverse;
 }
 
-#fork .f-nlinks-a .f-act-span,
+#fork .f-nlinks-a .f-actions-links,
 #fork .f-nlinks-a .f-pages {
   padding-bottom: 0.625rem;
 }
 
 #fork .f-nav-links .f-actions-links {
-  margin-left: auto;
+  flex-grow: 1;
+  /*margin-left: auto;*/
   order: 1;
-  text-align: right;
+  /*text-align: right;*/
+  justify-content: flex-end;
 }
 
 #fork .f-act-span {
-  display: inline-block;
+  /*display: inline-block;*/
 }
 
 #fork .f-nav-links .f-page {
@@ -1109,7 +1117,7 @@ body,
 }
 
 #fork .f-ftch2 {
-  padding: 0.625rem 0.625rem 0.3125rem 0.625rem;
+  padding: 0.625rem 0.625rem 0.3125rem;
 }
 
 #fork .f-ftlist .f-row {
@@ -1141,8 +1149,12 @@ body,
 }
 
 #fork .f-ftlist .f-cstats {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.3125rem;
+  flex-wrap: wrap;
   /*padding-top: 0;*/
-  text-align: right;
+  /*text-align: right;*/
   font-size: 0.75rem;
 }
 
@@ -1263,7 +1275,6 @@ body,
   }
 
   #fork .f-ftlist .f-cstats {
-    display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: flex-end;
@@ -1512,35 +1523,36 @@ body,
   font-weight: bold;
 }
 
-#fork .f-post-main,
-#fork .f-post-btns,
-#fork .f-post-signature {
-  padding: 0.625rem 0.625rem 0 0.625rem;
+#fork .f-post-main {
+  padding: 0.625rem 0.625rem 0;
 }
 
 #fork .f-post-btns {
-  text-align: right;
-  padding-top: 0;
+  /*text-align: right;*/
+  /*padding-top: 0;*/
   /*padding-bottom: 0.625rem;*/
+  padding: 0 0.625rem 0.625rem;
 }
 
 #fork .f-post-btns:not(:hover) .f-btn:not(:focus) {
   opacity: 0.4;
 }
 
-#fork .f-post-footer-add {
-  display: none;
+#fork .f-post-btns ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.3125rem;
 }
 
-#fork .f-post-footer li {
-  display: inline-block;
-  padding-bottom: 0.625rem;
+#fork .f-post-footer-add {
+  display: none;
 }
 
 #fork .f-post-signature {
   font-size: 0.875rem;
   opacity: 0.5;
-  padding-top: 0;
+  padding: 0 0.625rem;
 }
 
 #fork .f-admin-note {
@@ -1685,7 +1697,7 @@ body,
   #fork .f-post-footer-add {
     display: block;
     width: 13rem;
-    padding: 0 0.625rem 0.625rem 0.625rem;
+    padding: 0 0.625rem 0.625rem;
     background-color: #F8F4E3;
     border-right: 0.0625rem solid #AA7939;
   }
@@ -1711,7 +1723,7 @@ body,
   display: block;
   font-size: 1rem;
   line-height: 1.5;
-  padding: 1rem 0.625rem 0.3125rem 0.625rem
+  padding: 1rem 0.625rem 0.3125rem;
 }
 
 #fork .f-preview .f-post-body {
@@ -1736,7 +1748,7 @@ body,
   display: block;
   font-size: 1rem;
   padding-right: 0.625rem;
-  padding: 1rem 0.625rem 0.3125rem 0.625rem
+  padding: 1rem 0.625rem 0.3125rem;
 }
 
 #fork .f-post-form > .f-fdiv {
@@ -1785,7 +1797,7 @@ body,
 /*********/
 #fork .f-post-poll {
   margin: 0.625rem;
-  padding: 0.625rem 0.625rem 0 0.625rem;
+  padding: 0.625rem 0.625rem 0;
   background-color: #F8F4E3;
   border: 0.0625rem solid #AA7939;
 }
@@ -1993,7 +2005,17 @@ body,
 }
 
 #fork-mod .f-fdivm {
-  padding: 0.3125rem;
+  padding: 0.6875rem 0.3125rem;
+}
+
+#fork-mod .f-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3125rem;
+}
+
+#fork-mod .f-btn {
+  margin: 0;
 }
 
 #fork-mod .f-btns:not(:hover) .f-fbtn:not(:focus) {
@@ -2114,13 +2136,14 @@ body,
 
 @media screen and (min-width: 50rem) {
   #fork-usrlst .f-row {
-    padding: 0;
+    padding: 0.3125rem;
   }
 
   #fork-usrlst .f-thead {
     border-top: 0.125rem solid #AA7939;
     border-bottom: 0.125rem solid #AA7939;
     display: block;
+    padding: 0 0.3125rem;
   }
 
   #fork-usrlst .f-thead + .f-row {
@@ -2131,6 +2154,7 @@ body,
   #fork-usrlst .f-cell {
     display: table-cell;
     vertical-align: middle;
+    padding: 0.3125rem;
   }
 
   #fork-usrlst small {
@@ -2172,18 +2196,18 @@ body,
   }
 
   #fork-usrlst .f-cusername {
-    padding: 0.625rem 0 0.625rem 0.625rem;
+    /*padding: 0.625rem 0 0.625rem 0.625rem;*/
     width: 50%;
   }
 
   #fork-usrlst .f-ctitle {
-    padding: 0.625rem 0 0.625rem 0.625rem;
+    /*padding: 0.625rem 0 0.625rem 0.625rem;*/
     width: 50%;
     text-align: right;
   }
 
   #fork-usrlst .f-cnumposts {
-    padding: 0.625rem 0 0.625rem 0.625rem;
+    /*padding: 0.625rem 0 0.625rem 0.625rem;*/
     width: 8rem;
     min-width: 8rem;
     text-align: center;
@@ -2194,14 +2218,14 @@ body,
   }
 
   #fork-usrlst .f-cdatereg {
-    padding: 0.625rem;
+    /*padding: 0.625rem;*/
     width: 11rem;
     min-width: 11rem;
   }
 
   #fork-usrlst .f-hcell {
-    padding-top: 0.3125rem;
-    padding-bottom: 0.3125rem;
+    /*padding-top: 0.3125rem;*/
+    /*padding-bottom: 0.3125rem;*/
   }
 }
 
@@ -2457,7 +2481,7 @@ body,
 }
 
 #id-form-pmview .f-fbtn {
-  margin: 0 0 0.625rem 0;
+  margin: 0 0 0.625rem;
 }
 
 @media screen and (min-width: 50rem) {
@@ -2584,7 +2608,7 @@ body,
   #fork.f-with-nav #fork-nav .f-menu-user-items {
     order: -1;
     display: block;
-    margin: 0;
+    /*margin: 0;*/
     padding: 2rem 0;
   }
 
