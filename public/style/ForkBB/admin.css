@@ -368,16 +368,14 @@
   background: gray;
 }
 
-#forka .f-editforums-form .f-btns {
-  display: flex;
-  flex-direction: column;
+#forka .f-editforums-form .f-btns,
+#forka .f-editforum-form .f-btns{
+  justify-content: flex-end;
 }
 
 #forka .f-editforums-form .f-fbtn[data-name="new"],
 #forka .f-editforum-form .f-fbtn[name="reset"] {
   width: auto;
-  margin-bottom: 0.625rem;
-  margin-left: auto;
 }
 
 #forka .f-btn.f-disabled {
@@ -765,14 +763,12 @@
 
 #forka .f-bbcode-form .f-btns,
 #forka .f-editbbcode-form .f-btns {
-  display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
 }
 
 #forka .f-bbcode-form .f-fbtn[data-name="new"],
 #forka .f-editbbcode-form .f-fbtn[data-name="reset"]{
   width: auto;
-  margin-left: auto;
 }
 
 @media screen and (min-width: 25rem) {

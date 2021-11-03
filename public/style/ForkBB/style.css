@@ -635,7 +635,10 @@ body,
 }
 
 #fork .f-btns {
-  padding: 0.3125rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3125rem;
+  padding: 0.625rem 0.3125rem;
 }
 
 #fork .f-fleg {
@@ -656,7 +659,6 @@ body,
 }
 
 #fork .f-fbtn {
-  margin: 0.3125rem 0;
 }
 
 #fork .f-fbtn:not(.origin) {
@@ -1713,7 +1715,6 @@ body,
 
 #fork .f-post-form .f-fbtn {
   width: auto;
-  display: inline-block;
 }
 
 #fork textarea#id-message,
@@ -1953,17 +1954,7 @@ body,
 }
 
 #fork-mod .f-fdivm {
-  padding: 0.6875rem 0.3125rem;
-}
-
-#fork-mod .f-btns {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3125rem;
-}
-
-#fork-mod .f-btn {
-  margin: 0;
+  padding: 0.3125rem;
 }
 
 #fork-mod .f-btns:not(:hover) .f-fbtn:not(:focus) {
@@ -2203,10 +2194,6 @@ body,
   height: auto;
 }
 
-#fork .f-fs-header #id-dl-avatar {
-  padding: 0.3125rem 0.3125rem 0.3125rem 0.625rem;
-}
-
 #fork .f-fs-header #id-dl-username {
   border-bottom: 0.0625rem solid #AA7939;
 }
@@ -2264,19 +2251,19 @@ body,
   }
 
   #fork .f-fs-header #id-dl-avatar {
-    width: 33%;
+    width: calc(33% - 0.625rem);
     text-align: right;
-    padding: 0.3125rem 0.625rem 0.3125rem 0.3125rem;
+    padding: 0;
   }
 
   #fork .f-fs-data dl {
     display: flex;
+    justify-content: space-between;
   }
 
   #fork .f-fs-data dt {
-    width: 33%;
+    width: calc(33% - 0.625rem);
     text-align: right;
-    padding-right: 0.625rem;
   }
 
   #fork .f-fs-data dd {
@@ -2413,10 +2400,6 @@ body,
   padding: 0;
 }
 
-#id-form-pmview .f-fbtn {
-  margin: 0 0 0.625rem;
-}
-
 @media screen and (min-width: 50rem) {
   #fork .f-nav-pm-links {
     margin-right: 0;
@@ -2466,22 +2449,6 @@ body,
   #forkpm > .f-pm:first-child,
   #forkpm .f-nlbpm {
     margin-top: 0;
-  }
-
-  #forkpm .f-nlinks-b.f-nlbpm > .f-pages {
-    padding-top: 1rem;
-  }
-
-  #forkpm .f-nlinks-b.f-nlbpm > .f-actions-links {
-    padding-top: 0.375rem;
-  }
-
-  #forkpm .f-nlinks-a.f-nlbpm > .f-pages {
-    padding-bottom: 1rem;
-  }
-
-  #forkpm .f-nlinks-a.f-nlbpm > .f-actions-links {
-    padding-bottom: 0.375rem;
   }
 }
 
