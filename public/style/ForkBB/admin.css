@@ -39,13 +39,11 @@
 
   #fork .f-main-admin {
     display: flex;
-    /*flex-wrap: wrap;*/
     justify-content: space-between;
   }
 
   .f-main-admin #fork-a-menu {
     width: 13rem;
-    /*margin-right: 1rem;*/
   }
 
   .f-main-admin #forka {
@@ -57,7 +55,6 @@
   }
 
   .f-main-admin #fork-a-menu .f-menu-items {
-    /*max-height: 100rem;*/
     display: flex;
   }
 
@@ -148,7 +145,6 @@
 
   #forka dt {
     width: 14rem;
-    /*margin-right: 0.625rem;*/
   }
 
   #forka dd {
@@ -206,7 +202,6 @@
 #forka .f-fs-category {
   display: flex;
   align-items: stretch;
-  /*min-width: 0;*/
 }
 
 #forka .f-fs-category .f-fleg {
@@ -318,7 +313,6 @@
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
-  /*min-width: 0;*/
 }
 
 #forka .f-fs-permission .f-fleg {
@@ -407,7 +401,6 @@
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
-  /*min-width: 0;*/
 }
 
 #id-fs-censtable .f-ycaption {
@@ -451,7 +444,6 @@
 #forka .f-fs-result {
   display: flex;
   align-items: stretch;
-  /*min-width: 0;*/
   border-bottom: 0.0625rem dotted #AA7939;
   margin-bottom: 0.3125rem;
   padding-bottom: 0.3125rem;
@@ -553,7 +545,7 @@
   #forka .f-fs-result .f-wrap-user-result {
     display: flex;
     flex-direction: column;
-    justify-content: space-around /**center*/;
+    justify-content: space-around;
   }
 
   #forka .f-fs-result .f-field-result > dt,
@@ -791,7 +783,6 @@
   #forka .f-bbcode-form .f-field-bbcode {
     display: flex;
     flex-direction: column;
-    /* justify-content: space-between; */
   }
 
   #forka .f-bbcode-form .f-field-tag {
@@ -837,7 +828,6 @@
   #fork-smls .f-field-smile {
     display: flex;
     flex-direction: column;
-    /* justify-content: space-between; */
   }
 
   #fork-smls .f-fs-smile .f-fleg,

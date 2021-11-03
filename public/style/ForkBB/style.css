@@ -114,7 +114,6 @@ body,
 	font: inherit;
   box-sizing: border-box;
   word-wrap: break-word;
-  /*vertical-align: baseline;*/
 }
 
 body,
@@ -159,10 +158,6 @@ body,
 #fork ul,
 #fork ol {
   list-style: none;
-}
-
-#fork dl {
-/*  width: 100%; */
 }
 
 #fork textarea {
@@ -244,11 +239,7 @@ body,
   border-radius: 0.1875rem;
   padding: 0.125rem 0.5rem;
   background-color: #F8F4E3;
-  /*-ms-touch-action: manipulation;*/
   touch-action: manipulation;
-  /*-webkit-user-select: none;*/
-     /*-moz-user-select: none;*/
-      /*-ms-user-select: none;*/
   user-select: none;
   white-space: nowrap;
   text-align: center;
@@ -418,10 +409,6 @@ body,
 #fork-nav .f-menu-user-items {
   background-color: #F8F4E3;
   display: flex;
-  /*justify-content: flex-end;*/
-  /*flex-grow: 0.5;*/
-  /*flex-wrap: wrap;*/
-  /*margin-left: auto;*/
   flex-grow: 1;
   justify-content: flex-end;
 }
@@ -436,7 +423,6 @@ body,
 
 #fork-nav-profile .f-menu-a:before {
   content: "\f007";
-  /*padding-right: 0.3125rem;*/
 }
 
 #fork-nav-profile .f-menu-span {
@@ -446,47 +432,38 @@ body,
 #fork-nav-pm .f-menu-a:before {
   font-weight: 400;
   content: "\f0e0";
-  /*padding-right: 0.3125rem;*/
 }
 
 #fork-nav-admin .f-menu-a:before {
   content: "\f7d9";
-  /*padding-right: 0.3125rem;*/
 }
 
 #fork-nav-logout .f-menu-a:before {
   content: "\f2f5";
-  /*padding-right: 0.3125rem;*/
 }
 
 #fork-nav-register .f-menu-a:before {
   content: "\f234";
-  /*padding-right: 0.3125rem;*/
 }
 
 #fork-nav-login .f-menu-a:before {
   content: "\f2f6";
-  /*padding-right: 0.3125rem;*/
 }
 
 #fork-nav-index .f-menu-a:before {
   content: "\f015";
-  /*padding-right: 0.3125rem;*/
 }
 
 #fork-nav-userlist .f-menu-a:before {
   content: "\f0c0";
-  /*padding-right: 0.3125rem;*/
 }
 
 #fork-nav-rules .f-menu-a:before {
   content: "\f05a";
-  /*padding-right: 0.3125rem;*/
 }
 
 #fork-nav-search > .f-menu-a:before {
   content: "\f002";
-  /*padding-right: 0.3125rem;*/
 }
 
 @media screen and (max-width: 34rem) {
@@ -514,10 +491,6 @@ body,
   #fork-nav .f-menu-items {
     display: flex;
     flex-direction: row;
-    /*flex-grow: 0.5;*/
-    /*margin-left: auto;*/
-    /*margin-right: auto;*/
-    /*flex-wrap: wrap;*/
     border-bottom: 0;
   }
 
@@ -787,11 +760,8 @@ body,
 #fork .f-field-hint .f-yhint {
   overflow: hidden;
   max-height: 0;
-  /*-webkit-transition: max-height 0.5s, margin 0.5s;*/
-  /*-webkit-transition-delay: 0.2s;*/
   transition: max-height 0.5s, margin 0.5s;
   transition-delay: 0.2s;
-
 }
 
 #fork .f-field-hint .f-ctrl:focus + .f-yhint,
@@ -845,7 +815,6 @@ body,
   width: 100%;
   border: 0.0625rem solid #AA7939;
   border-collapse: collapse;
-/*  word-break: break-all; */
   table-layout: fixed;
 }
 
@@ -878,7 +847,6 @@ body,
 
 #fork .f-crumb {
   display: inline;
-  /*max-width: 100%;*/
 }
 
 #fork .f-crumb:last-child {
@@ -940,14 +908,8 @@ body,
 
 #fork .f-nav-links .f-actions-links {
   flex-grow: 1;
-  /*margin-left: auto;*/
   order: 1;
-  /*text-align: right;*/
   justify-content: flex-end;
-}
-
-#fork .f-act-span {
-  /*display: inline-block;*/
 }
 
 #fork .f-nav-links .f-page {
@@ -1074,9 +1036,7 @@ body,
     flex-direction: column;
     flex-wrap: nowrap;
     align-items: flex-end;
-    /*display: block;*/
     border: 0;
-    /*text-align: right;*/
   }
 
   #fork .f-stusers {
@@ -1153,8 +1113,6 @@ body,
   justify-content: flex-end;
   gap: 0.3125rem;
   flex-wrap: wrap;
-  /*padding-top: 0;*/
-  /*text-align: right;*/
   font-size: 0.75rem;
 }
 
@@ -1270,7 +1228,6 @@ body,
   }
 
   #fork .f-ftlist .f-cmain {
-    /*margin-right: auto;*/
     flex-grow: 1;
   }
 
@@ -1279,8 +1236,6 @@ body,
     flex-direction: column;
     align-items: flex-end;
     min-width: 8rem;
-    /*padding-top: 0.625rem;*/
-    /*padding-left: 0;*/
     white-space: nowrap;
   }
 
@@ -1291,9 +1246,7 @@ body,
     align-items: flex-end;
     width: 15rem;
     min-width: 15rem;
-    /*padding-left: 0;*/
     font-size: 0.875rem;
-    /*text-align: right;*/
   }
 
   #fork .f-ftlist .f-cltopic,
@@ -1415,7 +1368,6 @@ body,
   border-bottom: 0.0625rem solid #AA7939;
   position: relative;
   background-color: #FFFFFF;
-  /*overflow: hidden;*/
 }
 
 #fork .f-post + .f-post {
@@ -1528,9 +1480,6 @@ body,
 }
 
 #fork .f-post-btns {
-  /*text-align: right;*/
-  /*padding-top: 0;*/
-  /*padding-bottom: 0.625rem;*/
   padding: 0 0.625rem 0.625rem;
 }
 
@@ -1627,7 +1576,6 @@ body,
 #fork .f-post-body ol,
 #fork .f-post-body ul {
   margin-bottom: 0.625rem;
-/*  word-wrap: break-word; */
 }
 
 @media screen and (min-width: 50rem) {
@@ -2110,7 +2058,6 @@ body,
     display: block;
     font-size: 0.875rem;
     padding-top: 0.625rem;
-  /*  word-break: break-all; */
   }
 }
 
@@ -2181,7 +2128,6 @@ body,
   #fork-usrlst .f-hc-tasc > a,
   #fork-usrlst .f-hc-tdesc > a {
     padding: 0 0.25rem;
-/*    border: 0; */
   }
 
   #fork-usrlst .f-hc-tasc > a.active,
@@ -2196,18 +2142,15 @@ body,
   }
 
   #fork-usrlst .f-cusername {
-    /*padding: 0.625rem 0 0.625rem 0.625rem;*/
     width: 50%;
   }
 
   #fork-usrlst .f-ctitle {
-    /*padding: 0.625rem 0 0.625rem 0.625rem;*/
     width: 50%;
     text-align: right;
   }
 
   #fork-usrlst .f-cnumposts {
-    /*padding: 0.625rem 0 0.625rem 0.625rem;*/
     width: 8rem;
     min-width: 8rem;
     text-align: center;
@@ -2218,14 +2161,8 @@ body,
   }
 
   #fork-usrlst .f-cdatereg {
-    /*padding: 0.625rem;*/
     width: 11rem;
     min-width: 11rem;
-  }
-
-  #fork-usrlst .f-hcell {
-    /*padding-top: 0.3125rem;*/
-    /*padding-bottom: 0.3125rem;*/
   }
 }
 
@@ -2234,7 +2171,6 @@ body,
 /***********/
 #fork .f-fs-header {
   display: flex;
-  /*min-width: 0;*/
   align-items: center;
 }
 
@@ -2256,7 +2192,6 @@ body,
 #fork .f-fs-data {
   display: flex;
   flex-direction: column;
-  /*min-width: 0;*/
 }
 
 #fork .f-fs-header .f-wrap-usertitle {
@@ -2301,7 +2236,6 @@ body,
 }
 
 #fork #id-fs-note.f-fs-data {
-/*   color: #D8000C; */
   background-color: #FFBABA;
 }
 
@@ -2398,7 +2332,6 @@ body,
 
 #fork .f-fs-header-edit,
 #fork .f-fs-data-edit {
-/*  border-bottom: 0.0625rem solid #AA7939; */
   padding: 0.3125rem 0;
   margin-bottom: 0.3125rem;
 }
@@ -2491,13 +2424,11 @@ body,
 
   #fork .f-main-pm {
     display: flex;
-    /*flex-wrap: wrap;*/
     justify-content: space-between;
   }
 
   #fork #fork-pm-menu {
     width: 13rem;
-    /*margin-right: 1rem;*/
   }
 
   #fork #forkpm {
@@ -2509,7 +2440,6 @@ body,
   }
 
   #fork-pm-menu .f-menu-items {
-    /*max-height: 100rem;*/
     display: flex;
   }
 
@@ -2608,7 +2538,6 @@ body,
   #fork.f-with-nav #fork-nav .f-menu-user-items {
     order: -1;
     display: block;
-    /*margin: 0;*/
     padding: 2rem 0;
   }
 
