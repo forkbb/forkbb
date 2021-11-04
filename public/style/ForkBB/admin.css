@@ -20,12 +20,12 @@
 #fork-a-menu #id-an-label {
   position: absolute;
   top: -2.875rem;
-  right: 0.625rem;
+  inset-inline-end: 0.625rem;
 }
 
 #fork .f-nav-admin-links,
 #fork .f-nav-admin-one-column-links {
-  margin-right: 3.75rem;
+  margin-inline-end: 3.75rem;
 }
 
 #fork-a-menu .f-menu-item:first-child .f-menu-a {
@@ -34,7 +34,7 @@
 
 @media screen and (min-width: 50rem) {
   #fork .f-nav-admin-links {
-    margin-right: 0;
+    margin-inline-end: 0;
   }
 
   #fork .f-main-admin {
@@ -160,7 +160,7 @@
   }
 
   #forka .f-field-full dd {
-    padding-left: 0;
+    padding-inline-start: 0;
   }
 
   #forka .f-field-bstart {
@@ -429,7 +429,7 @@
 /* Админка/Пользователи */
 /************************/
 #fork-ausersrch-rs .f-btns {
-  text-align: right;
+  text-align: end;
 }
 
 #fork-ausersrch-rs .f-btns .f-fbtn,
@@ -494,7 +494,7 @@
   width: 3rem;
   overflow: hidden;
   text-align: center;
-  border-left: 0.0625rem dotted #AA7939;
+  border-inline-start: 0.0625rem dotted #AA7939;
   display: flex;
   flex-direction: column;
 }
@@ -587,26 +587,26 @@
 
   #forka .f-fs-result .f-field-title {
     width: 16%;
-    border-left: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted #AA7939;
   }
 
   #forka .f-fs-result .f-field-posts {
     width: 15%;
-    border-left: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted #AA7939;
   }
 
   #forka .f-fs-result .f-field-posts > dd {
-    text-align: right;
+    text-align: end;
   }
 
   #forka .f-fs-result .f-field-note {
     width: 20%;
-    border-left: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted #AA7939;
   }
 
   #forka .f-fs-result .f-field-view-ip {
     width: 16%;
-    border-left: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted #AA7939;
   }
 
   #forka .f-fs-result .f-field-ip {
@@ -615,19 +615,19 @@
 
   #forka .f-fs-result .f-field-last-used {
     width: 25%;
-    border-left: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted #AA7939;
     text-align: center;
   }
 
   #forka .f-fs-result .f-field-used-times {
     width: 20%;
-    border-left: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted #AA7939;
     text-align: center;
   }
 
   #forka .f-fs-result .f-field-action {
     width: 30%;
-    border-left: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted #AA7939;
   }
 }
 
@@ -639,7 +639,7 @@
   flex-direction: column;
   justify-content: center;
   width: 3rem;
-  border-left: 0.0625rem dotted #AA7939;
+  border-inline-start: 0.0625rem dotted #AA7939;
 }
 
 #forka .f-fs-result .f-wrap-btns-result dt {
@@ -653,22 +653,22 @@
 @media screen and (min-width: 50rem) {
   #forka .f-fs-result .f-field-ips {
     width: 19%;
-    border-left: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted #AA7939;
   }
 
   #forka .f-fs-result .f-field-expire {
     width: 16%;
-    border-left: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted #AA7939;
   }
 
   #forka .f-fs-result .f-field-message {
     width: 16%;
-    border-left: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted #AA7939;
   }
 
   #forka .f-fs-result .f-field-creator {
     width: 16%;
-    border-left: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted #AA7939;
   }
 
   #forka .f-wrap-btns-result .f-ybtn {
@@ -954,7 +954,7 @@
 
 #forka .f-logbt {
   width: 3.25rem;
-  text-align: right;
+  text-align: end;
 }
 
 #forka .f-llv {

@@ -284,23 +284,23 @@ body,
 }
 
 #fork .f-field-depth1 > dd {
-  padding-left: 0.625rem;
+  padding-inline-start: 0.625rem;
 }
 
 #fork .f-field-depth2 > dd {
-  padding-left: 1.25rem;
+  padding-inline-start: 1.25rem;
 }
 
 #fork .f-field-depth3 > dd {
-  padding-left: 1.875rem;
+  padding-inline-start: 1.875rem;
 }
 
 #fork .f-field-depth4 > dd {
-  padding-left: 2.5rem;
+  padding-inline-start: 2.5rem;
 }
 
 #fork .f-field-depth5 > dd {
-  padding-left: 3.125rem;
+  padding-inline-start: 3.125rem;
 }
 
 /********/
@@ -352,7 +352,7 @@ body,
 #fork .f-menu-a:before {
   font-family: "FontAwesomeFree";
   font-weight: 900;
-  padding-right: 0.3125rem;
+  padding-inline-end: 0.3125rem;
 }
 
 #fork .f-menu-span {
@@ -382,7 +382,7 @@ body,
   color: #D3B58D;
   position: absolute;
   top: 0.625rem;
-  right: 0.9325rem;
+  inset-inline-end: 0.9325rem;
 }
 
 #fork-nav .f-menu-items {
@@ -662,9 +662,6 @@ body,
   width: 100%;
 }
 
-#fork .f-fbtn {
-}
-
 #fork .f-fbtn:not(.origin) {
   min-width: 7rem;
 }
@@ -677,6 +674,7 @@ body,
 #fork .f-flblr {
   font-size: 1rem;
   display: inline-block;
+  cursor: pointer;
 }
 
 #fork .f-field-block .f-flblr {
@@ -684,15 +682,19 @@ body,
 }
 
 #fork .f-yradio {
-  margin-right: 0.3125rem;
+  margin-inline-end: 0.3125rem;
 }
 
 #fork .f-flblr + .f-flblr {
-  margin-left: 0.625rem;
+  margin-inline-start: 0.625rem;
 }
 
 #fork .f-field-block .f-flblr + .f-flblr {
   margin: 0.3125rem 0 0;
+}
+
+#fork .f-flblch {
+  cursor: pointer;
 }
 
 #fork .f-ycaption,
@@ -715,7 +717,7 @@ body,
 }
 
 #fork .f-ychk {
-  margin-right: 0.625rem;
+  margin-inline-end: 0.625rem;
 }
 
 #fork .f-yhint {
@@ -869,7 +871,7 @@ body,
 #fork .f-subscribed > a:after {
   font: 400 0.875rem "FontAwesomeFree";
   content: "\f0f3"; /* f06e */
-  padding-left: 0.3125rem;
+  padding-inline-start: 0.3125rem;
 }
 
 #fork .f-crumb a:not(.active) {
@@ -1071,7 +1073,7 @@ body,
 #fork #id-dl-passinlogin .f-yhint {
   position: absolute;
   top: 0.5rem;
-  right: 0.3125rem;
+  inset-inline-end: 0.3125rem;
   width: auto;
   margin: 0;
 }
@@ -1136,18 +1138,18 @@ body,
 }
 
 #fork .f-fsub {
-  margin-left: 0.875rem;
+  margin-inline-start: 0.875rem;
   font-size: 0.875rem;
 }
 
 #fork .f-fsub:before {
   font-size: 0.875rem;
   content: "└";
-  margin-left: -0.875rem;
+  margin-inline-start: -0.875rem;
 }
 
 #fork .f-subforums .f-fsub:before {
-  margin-left: 0.875rem;
+  margin-inline-start: 0.875rem;
 }
 
 #fork .f-subforums .f-frsname:before {
@@ -1193,7 +1195,7 @@ body,
   font: 400 0.875rem "FontAwesomeFree";
   content: "\f1d8";
   color: #814A00;
-  margin-right: 0.3125rem;
+  margin-inline-end: 0.3125rem;
 }
 
 #fork .f-tnew,
@@ -1298,7 +1300,7 @@ body,
 #fork .f-tdot {
   font-weight: bold;
   position: absolute;
-  margin-left: -0.5rem;
+  margin-inline-start: -0.5rem;
 }
 
 #fork .f-tpages .f-page {
@@ -1309,8 +1311,8 @@ body,
 }
 
 #fork .f-tpages .f-pspacer {
-    border: 0;
-    padding: 0;
+  border: 0;
+  padding: 0;
 }
 
 #fork .f-tpages:not(:hover) .f-page:not(:focus),
@@ -1391,12 +1393,12 @@ body,
 
 #fork .f-post-edited {
   font-style: italic;
-  margin-left: 0.625rem;
+  margin-inline-start: 0.625rem;
   opacity: 0.5;
 }
 
 #fork .f-post-number {
-  margin-left: auto;
+  margin-inline-start: auto;
 }
 
 #fork .f-post-user {
@@ -1418,7 +1420,7 @@ body,
 #fork .f-avatar {
   order: 1;
   flex-grow: 0.5;
-  text-align: right;
+  text-align: end;
   margin-bottom: 0.3125rem;
 }
 
@@ -1445,7 +1447,7 @@ body,
 #fork .f-user-info > li:not(.f-username):before,
 #fork .f-user-info-add > li:before {
   content: "\2022";
-  padding-right: 0.3125rem;
+  padding-inline-end: 0.3125rem;
 }
 
 #fork .f-avatar + .f-user-info > li:not(.f-username) {
@@ -1471,7 +1473,7 @@ body,
   content: "\f111";
   color: #7fba00;
   vertical-align: text-top;
-  margin-right: 0.125rem;
+  margin-inline-end: 0.125rem;
 }
 
 #fork .f-user-online .f-userstatus {
@@ -1528,7 +1530,7 @@ body,
 }
 
 #fork .f-bb-quote {
-  border-left: 0.1875rem solid #AA7939;
+  border-inline-start: 0.1875rem solid #AA7939;
   border-top: 0.0625rem solid #AA7939;
 }
 
@@ -1552,24 +1554,24 @@ body,
 #fork .f-bb-l-disc {
   list-style-type: disc;
   list-style-position: outside;
-  padding-left: 1.5rem;
+  padding-inline-start: 1.5rem;
 }
 
 #fork .f-bb-l-dec {
   list-style-type: decimal;
   list-style-position: outside;
-  padding-left: 1.5rem;
+  padding-inline-start: 1.5rem;
 }
 
 #fork .f-bb-l-lat {
   list-style-type: lower-alpha;
   list-style-position: outside;
-  padding-left: 1.5rem;
+  padding-inline-start: 1.5rem;
 }
 
 #fork .f-bb-s-body {
   padding: 0.625rem;
-  border-left: 0.1875rem solid #AA7939;
+  border-inline-start: 0.1875rem solid #AA7939;
 }
 
 #fork .f-post-body p,
@@ -1593,7 +1595,7 @@ body,
 
   #fork .f-post-user {
     width: 13rem;
-    border-right: 0.0625rem solid #AA7939;
+    border-inline-end: 0.0625rem solid #AA7939;
     border-bottom: 0;
   }
 
@@ -1650,7 +1652,7 @@ body,
     width: 13rem;
     padding: 0 0.625rem 0.625rem;
     background-color: #F8F4E3;
-    border-right: 0.0625rem solid #AA7939;
+    border-inline-end: 0.0625rem solid #AA7939;
   }
 
   #fork .f-userstatus {
@@ -1679,7 +1681,7 @@ body,
 
 #fork .f-preview .f-post-body {
   border-top: 0.125rem solid #AA7939;
-  border-left: 0.125rem solid #AA7939;
+  border-inline-start: 0.125rem solid #AA7939;
   width: 100%;
 }
 
@@ -1698,7 +1700,6 @@ body,
 #fork .f-view-posts > h2 {
   display: block;
   font-size: 1rem;
-  padding-right: 0.625rem;
   padding: 1rem 0.625rem 0.3125rem;
 }
 
@@ -1780,7 +1781,7 @@ body,
 }
 
 #fork .f-poll-ai {
-  margin-right: 0.625rem;
+  margin-inline-end: 0.625rem;
 }
 
 #fork .f-poll-mult,
@@ -1992,14 +1993,14 @@ body,
   color: red;
   position: absolute;
   bottom: 0;
-  left: 0;
+  inset-inline-start: 0;
 }
 
 /*********/
 /* Поиск */
 /*********/
 #fork .f-search-form .f-yinfo:first-child {
-  text-align: right;
+  text-align: end;
   padding: 0 0.3125rem;
   margin-bottom: -0.3125rem;
 }
@@ -2020,8 +2021,8 @@ body,
   font-family: "FontAwesomeFree";
   font-weight: 900;
   content: "\f105";
-  padding-left: 0.3125rem;
-  padding-right: 0.3125rem;
+  padding-inline-start: 0.3125rem;
+  padding-inline-end: 0.3125rem;
 }
 
 @media screen and (min-width: 50rem) {
@@ -2139,7 +2140,7 @@ body,
 
   #fork-usrlst .f-ctitle {
     width: 50%;
-    text-align: right;
+    text-align: end;
   }
 
   #fork-usrlst .f-cnumposts {
@@ -2231,20 +2232,20 @@ body,
   #fork .f-fs-header .f-wrap-usertitle {
     order: 1;
     width: 67%;
-    margin-left: auto;
+    margin-inline-start: auto;
   }
 
   #fork .f-fs-header #id-username {
-    text-align: left;
+    text-align: start;
   }
 
   #fork .f-fs-header #id-title {
-    text-align: left;
+    text-align: start;
   }
 
   #fork .f-fs-header #id-dl-username,
   #fork .f-fs-header #id-dl-title {
-    padding-left: 0;
+    padding-inline-start: 0;
   }
 
   #fork .f-fs-header .f-avatar-img {
@@ -2253,7 +2254,7 @@ body,
 
   #fork .f-fs-header #id-dl-avatar {
     width: calc(33% - 0.625rem);
-    text-align: right;
+    text-align: end;
     padding: 0;
   }
 
@@ -2264,7 +2265,7 @@ body,
 
   #fork .f-fs-data dt {
     width: calc(33% - 0.625rem);
-    text-align: right;
+    text-align: end;
   }
 
   #fork .f-fs-data dd {
@@ -2354,8 +2355,8 @@ body,
   #fork .f-fs-header-edit dt,
   #fork .f-fs-data-edit dt {
     width: 33%;
-    text-align: right;
-    padding-right: 0.625rem;
+    text-align: end;
+    padding-inline-end: 0.625rem;
   }
 
   #fork .f-fs-header-edit dd,
@@ -2368,7 +2369,7 @@ body,
 /* Приватные сообщения */
 /***********************/
 #fork .f-nav-pm-links {
-  margin-right: 3.75rem;
+  margin-inline-end: 3.75rem;
 }
 
 #fork #fork-pm-nav {
@@ -2390,7 +2391,7 @@ body,
 #fork-pm-menu #id-pmn-label {
   position: absolute;
   top: -2.875rem;
-  right: 0.625rem;
+  inset-inline-end: 0.625rem;
 }
 
 #fork-pm-menu .f-menu-item:first-child .f-menu-a {
@@ -2403,7 +2404,7 @@ body,
 
 @media screen and (min-width: 50rem) {
   #fork .f-nav-pm-links {
-    margin-right: 0;
+    margin-inline-end: 0;
   }
 
   #fork .f-main-pm {
@@ -2475,7 +2476,7 @@ body,
     order: 2;
     width: 16rem;
     border-bottom: 0;
-    border-left: 0.0625rem solid #AA7939;
+    border-inline-start: 0.0625rem solid #AA7939;
     padding: 0;
     background-color: #F8F4E3;
   }
