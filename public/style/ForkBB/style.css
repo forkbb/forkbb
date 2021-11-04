@@ -222,6 +222,10 @@ body,
 }
 
 #fork .f-category h3 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3125rem;
+  align-items: center;
   font-size: 1.25rem;
 }
 
@@ -842,13 +846,14 @@ body,
 }
 
 #fork .f-crumbs {
+  display: flex;
+  flex-wrap: wrap;
   padding: 0 0.625rem;
-  display: block;
   overflow: hidden;
 }
 
 #fork .f-crumb {
-  display: inline;
+  max-width: 100%;
 }
 
 #fork .f-crumb:last-child {
@@ -856,9 +861,9 @@ body,
 }
 
 #fork .f-crumb + .f-crumb:before {
-  display: inline;
   color: #583200;
-  content: "/ ";
+  content: "/";
+  margin: 0 0.3125rem;
 }
 
 #fork .f-subscribed > a:after {
@@ -1110,6 +1115,10 @@ body,
   width: calc(100% - 2rem);
 }
 
+#fork .f-ftlist .f-ftname {
+  max-width: 100%;
+}
+
 #fork .f-ftlist .f-cstats {
   display: flex;
   justify-content: flex-end;
@@ -1142,7 +1151,7 @@ body,
 }
 
 #fork .f-subforums .f-frsname:before {
-  content: "└ ";
+  content: "└";
 }
 
 #fork .f-fsub > dt {
@@ -1182,7 +1191,7 @@ body,
 
 #fork .f-frdrsub:before {
   font: 400 0.875rem "FontAwesomeFree";
-  content: "\f1d8 ";
+  content: "\f1d8";
   color: #814A00;
   margin-right: 0.3125rem;
 }
@@ -1192,18 +1201,6 @@ body,
   font: normal 0.875rem Arial, Helvetica, sans-serif;
   white-space: nowrap;
 }
-
-/*
-#fork .f-tnew:before,
-#fork .f-tunread:before {
-  content: "[ ";
-}
-
-#fork .f-tnew:after,
-#fork .f-tunread:after {
-  content: " ]";
-}
-*/
 
 #fork .f-newtxt,
 #fork .f-unreadtxt {
@@ -1281,7 +1278,10 @@ body,
 }
 
 #fork .f-forum h3 {
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3125rem;
+  align-items: center;
   font-weight: normal;
   position: relative;
 }
@@ -1468,9 +1468,10 @@ body,
 
 #fork .f-user-online .f-username::before {
   font: 900 0.625rem "FontAwesomeFree";
-  content: "\f111\20";
+  content: "\f111";
   color: #7fba00;
   vertical-align: text-top;
+  margin-right: 0.125rem;
 }
 
 #fork .f-user-online .f-userstatus {
@@ -2509,11 +2510,11 @@ body,
   }
 
   #fork.f-with-nav #fork-nav .f-menu-a {
-    justify-content: left;
+    justify-content: flex-start;
   }
 
   #fork.f-with-nav #fork-nav .f-submenu-items .f-menu-a {
-    justify-content: right;
+    justify-content: flex-end;
   }
 
   #fork.f-with-nav #fork-nav .f-menu-items .f-menu-a {
