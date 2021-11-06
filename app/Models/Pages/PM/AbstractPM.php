@@ -48,6 +48,10 @@ abstract class AbstractPM extends Page
         $this->pmNavigation = $this->pmNavigation();
         $this->crumbs       = $this->crumbs(...$this->pmCrumbs);
 
+        if (1 !== $this->user->u_pm) {
+            $this->fIswev = ['w', 'PM off'];
+        }
+
         parent::prepare();
     }
 
