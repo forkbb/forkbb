@@ -472,11 +472,11 @@ body,
 
 @media screen and (max-width: 34rem) {
   #fork .f-spantxtpm,
-  #fork-nav-profile ~ .f-menu-item:not(.f-mi-newpm) .f-menu-span {
+  #fork-nav-profile ~ .f-menu-item:not(.f-mi-pmnew) .f-menu-span {
     display: none;
   }
 
-  #fork-nav-profile ~ .f-menu-item:not(.f-mi-newpm) .f-menu-a:before {
+  #fork-nav-profile ~ .f-menu-item:not(.f-mi-pmnew) .f-menu-a:before {
     padding: 0;
   }
 }
@@ -2368,6 +2368,10 @@ body,
 /***********************/
 /* Приватные сообщения */
 /***********************/
+#fork .f-mi-pmoff {
+  opacity: 0.4;
+}
+
 #fork .f-nav-pm-links {
   margin-inline-end: 3.75rem;
 }
@@ -2400,6 +2404,28 @@ body,
 
 #id-form-pmview .f-btns {
   padding: 0;
+}
+
+@media screen and (min-width: 36rem) {
+  #forkpm > .f-pmconfig-form dl {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 0.0625rem dotted #AA7939;
+    margin-bottom: 0.3125rem;
+    padding: 0.3125rem;
+  }
+
+  #forkpm > .f-pmconfig-form dt {
+    width: 14rem;
+  }
+
+  #forkpm > .f-pmconfig-form dd {
+    width: calc(100% - 14.625rem);
+  }
+
+  #forkpm > .f-pmconfig-form .f-ycaption {
+    font-weight: normal;
+  }
 }
 
 @media screen and (min-width: 50rem) {
