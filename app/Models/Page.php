@@ -212,12 +212,21 @@ abstract class Page extends Model
             ];
 
             if ($this->user->usePM) {
+                $tmpPM = [];
+
+                if (1 !== $this->user->u_pm) {
+                    $tmpPM[] = 'pmoff';
+                }
+                if ($this->user->u_pm_num_new > 0) {
+                    $tmpPM[] = 'pmnew';
+                }
+
                 $navUser[self::FI_PM] = [
                     $r->link('PM'),
                     $this->user->u_pm_num_new > 0 ? ['PM %s', $this->user->u_pm_num_new] : 'PM',
                     'Private messages',
                     null,
-                    $this->user->u_pm_num_new > 0 ? 'newpm' : null,
+                    $tmpPM ?: null,
                 ];
             }
 
