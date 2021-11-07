@@ -61,7 +61,7 @@ class Edit extends Parser
         $this->nameTpl   = 'admin/form';
         $this->form      = $this->formEdit($config);
         $this->titleForm = 'Parser settings head';
-        $this->classForm = 'parser-settings';
+        $this->classForm = ['parser-settings'];
 
         return $this;
     }

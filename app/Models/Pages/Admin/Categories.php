@@ -59,7 +59,7 @@ class Categories extends Admin
         $this->nameTpl   = 'admin/form';
         $this->aIndex    = 'categories';
         $this->form      = $this->formEdit();
-        $this->classForm = 'editcategories';
+        $this->classForm = ['editcategories'];
         $this->titleForm = 'Categories';
 
         return $this;
@@ -184,7 +184,7 @@ class Categories extends Admin
         ];
         $this->aCrumbs[] = __(['"%s"', $category['cat_name']]);
         $this->form      = $this->formDelete($args, $category);
-        $this->classForm = 'deletecategory';
+        $this->classForm = ['deletecategory'];
         $this->titleForm = 'Delete category head';
 
         return $this;

@@ -102,7 +102,7 @@ class BBCode extends Parser
         ];
         $this->form      = $this->formView();
         $this->titleForm = 'BBCode head';
-        $this->classForm = 'bbcode';
+        $this->classForm = ['bbcode'];
 
         return $this;
     }
@@ -353,7 +353,7 @@ class BBCode extends Parser
         ];
         $this->form      = $this->formEdit($id, $structure);
         $this->titleForm = $title;
-        $this->classForm = 'editbbcode';
+        $this->classForm = ['editbbcode'];
         $this->nameTpl   = 'admin/form';
 
         return $this;

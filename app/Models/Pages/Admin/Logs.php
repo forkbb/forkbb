@@ -132,7 +132,7 @@ class Logs extends Admin
 
         $this->nameTpl    = 'admin/form';
         $this->titleForm  = 'Delete log head';
-        $this->classForm  = 'logdel';
+        $this->classForm  = ['logdel'];
         $this->form       = $this->formDelete($path, $args);
         $this->aCrumbs[]  = [
             $this->c->Router->link('AdminLogsAction', $args),

@@ -273,7 +273,7 @@ class Forums extends Admin
         ];
         $this->aCrumbs[] = __(['"%s"', $forum->forum_name]);
         $this->form      = $this->formDelete($args, $forum);
-        $this->classForm = 'deleteforum';
+        $this->classForm = ['deleteforum'];
         $this->titleForm = 'Delete forum head';
 
         return $this;
@@ -342,7 +342,7 @@ class Forums extends Admin
                 __('Add forum head'),
             ];
             $this->titleForm = 'Add forum head';
-            $this->classForm = 'createforum';
+            $this->classForm = ['createforum'];
         } else {
             $forum           = $this->c->forums->loadTree($args['id']); //?????
             $marker          = 'AdminForumsEdit';
@@ -352,7 +352,7 @@ class Forums extends Admin
             ];
             $this->aCrumbs[] = __(['"%s"', $forum->forum_name]);
             $this->titleForm = 'Edit forum head';
-            $this->classForm = 'editforum';
+            $this->classForm = ['editforum'];
         }
 
         if (! $forum instanceof Forum) {

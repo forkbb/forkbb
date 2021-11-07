@@ -51,7 +51,7 @@ class Censoring extends Admin
         $this->nameTpl   = 'admin/form';
         $this->aIndex    = 'censoring';
         $this->form      = $this->formEdit();
-        $this->classForm = 'editcensorship';
+        $this->classForm = ['editcensorship'];
         $this->titleForm = 'Censoring';
 
         return $this;

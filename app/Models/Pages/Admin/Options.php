@@ -130,7 +130,7 @@ class Options extends Admin
         $this->nameTpl   = 'admin/form';
         $this->form      = $this->formEdit($config);
         $this->titleForm = 'Options head';
-        $this->classForm = 'editoptions';
+        $this->classForm = ['editoptions'];
 
         return $this;
     }

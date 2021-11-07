@@ -142,7 +142,7 @@ class Action extends Users
         }
 
         $this->nameTpl    = 'admin/form';
-        $this->classForm  = 'delete-users';
+        $this->classForm  = ['delete-users'];
         $this->titleForm  = 'Deleting users';
         $this->aCrumbs[]  = [
             $this->c->Router->link('AdminUsersAction', $args),
@@ -297,7 +297,7 @@ class Action extends Users
         }
 
         $this->nameTpl    = 'admin/form';
-        $this->classForm  = 'change-group';
+        $this->classForm  = ['change-group'];
         $this->titleForm  = 'Change user group';
         $this->aCrumbs[]  = [
             $this->c->Router->link('AdminUsersAction', $args),
