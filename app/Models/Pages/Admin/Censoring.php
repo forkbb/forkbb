@@ -129,7 +129,7 @@ class Censoring extends Admin
         ];
 
         $form['sets']['censtable'] = [
-            'class'  => 'censor',
+            'class'  => ['censor'],
             'fields' => $fieldset,
         ];
 

@@ -213,7 +213,7 @@ class View extends Users
             2 => __('Female'),
         ];
         $fields['gender'] = [
-#            'class'   => 'block',
+#            'class'   => ['block'],
             'type'    => 'radio',
             'value'   => $data['gender'] ?? -1,
             'values'  => $genders,
@@ -245,12 +245,12 @@ class View extends Users
             'value'     => $data['admin_note'] ?? null,
         ];
         $fields['between1'] = [
-            'class' => 'between',
+            'class' => ['between'],
             'type'  => 'wrap',
         ];
         $fields['num_posts_1'] = [
             'type'    => 'number',
-            'class'   => 'bstart',
+            'class'   => ['bstart'],
             'min'     => '0',
             'max'     => '9999999999',
             'value'   => $data['num_posts_1'] ?? null,
@@ -258,7 +258,7 @@ class View extends Users
         ];
         $fields['num_posts_2'] = [
             'type'    => 'number',
-            'class'   => 'bend',
+            'class'   => ['bend'],
             'min'     => '0',
             'max'     => '9999999999',
             'value'   => $data['num_posts_2'] ?? null,
@@ -267,18 +267,18 @@ class View extends Users
             'type' => 'endwrap',
         ];
         $fields['between2'] = [
-            'class' => 'between',
+            'class' => ['between'],
             'type'  => 'wrap',
         ];
         $fields['last_post_1'] = [
-            'class'     => 'bstart',
+            'class'     => ['bstart'],
             'type'      => 'text',
             'maxlength' => '100',
             'value'     => $data['last_post_1'] ?? null,
             'caption'   => 'Last post label',
         ];
         $fields['last_post_2'] = [
-            'class'     => 'bend',
+            'class'     => ['bend'],
             'type'      => 'text',
             'maxlength' => '100',
             'value'     => $data['last_post_2'] ?? null,
@@ -287,18 +287,18 @@ class View extends Users
             'type' => 'endwrap',
         ];
         $fields['between3'] = [
-            'class' => 'between',
+            'class' => ['between'],
             'type'  => 'wrap',
         ];
         $fields['last_visit_1'] = [
-            'class'     => 'bstart',
+            'class'     => ['bstart'],
             'type'      => 'text',
             'maxlength' => '100',
             'value'     => $data['last_visit_1'] ?? null,
             'caption'   => 'Last visit label',
         ];
         $fields['last_visit_2'] = [
-            'class'     => 'bend',
+            'class'     => ['bend'],
             'type'      => 'text',
             'maxlength' => '100',
             'value'     => $data['last_visit_2'] ?? null,
@@ -307,18 +307,18 @@ class View extends Users
             'type' => 'endwrap',
         ];
         $fields['between4'] = [
-            'class' => 'between',
+            'class' => ['between'],
             'type'  => 'wrap',
         ];
         $fields['registered_1'] = [
-            'class'     => 'bstart',
+            'class'     => ['bstart'],
             'type'      => 'text',
             'maxlength' => '100',
             'value'     => $data['registered_1'] ?? null,
             'caption'   => 'Registered label',
         ];
         $fields['registered_2'] = [
-            'class'     => 'bend',
+            'class'     => ['bend'],
             'type'      => 'text',
             'maxlength' => '100',
             'value'     => $data['registered_2'] ?? null,
@@ -333,11 +333,11 @@ class View extends Users
 
         $fields = [];
         $fields['between5'] = [
-            'class' => 'between',
+            'class' => ['between'],
             'type'  => 'wrap',
         ];
         $fields['order_by'] = [
-            'class'   => 'bstart',
+            'class'   => ['bstart'],
             'type'    => 'select',
             'options' => [
                 'username'   => __('Order by username'),
@@ -351,7 +351,7 @@ class View extends Users
             'caption' => 'Order by label',
         ];
         $fields['direction'] = [
-            'class'   => 'bend',
+            'class'   => ['bend'],
             'type'    => 'select',
             'options' => [
                 'ASC'  => __('Ascending'),

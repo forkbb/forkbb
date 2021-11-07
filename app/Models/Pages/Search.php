@@ -163,7 +163,7 @@ class Search extends Page
                             'html'  => true,
                         ],
                         'keywords' => [
-                            'class'     => 'w0',
+                            'class'     => ['w0'],
                             'type'      => 'text',
                             'maxlength' => '100',
                             'caption'   => 'Keyword search',
@@ -202,7 +202,7 @@ class Search extends Page
                             'html'  => true,
                         ],
                         'keywords' => [
-                            'class'     => 'w2',
+                            'class'     => ['w2'],
                             'type'      => 'text',
                             'maxlength' => '100',
                             'caption'   => 'Keyword search',
@@ -211,7 +211,7 @@ class Search extends Page
                             'autofocus' => true,
                         ],
                         'author' => [
-                            'class'     => 'w1',
+                            'class'     => ['w1'],
                             'type'      => 'text',
                             'maxlength' => '25',
                             'caption'   => 'Author search',
@@ -228,7 +228,7 @@ class Search extends Page
                     'legend' => __('Search in legend'),
                     'fields' => [
                         'forums' => [
-                            'class'   => 'w3',
+                            'class'   => ['w3'],
                             'type'    => 'multiselect',
                             'options' => $this->listForOptions,
                             'value'   => $v ? \explode('.', $v->forums) : null,
@@ -236,7 +236,7 @@ class Search extends Page
                             'size'    => \min(\count($this->listForOptions), 10),
                         ],
                         'serch_in' => [
-                            'class'   => 'w3',
+                            'class'   => ['w3'],
                             'type'    => 'select',
                             'options' => [
                                 0 => __('Message and subject'),
@@ -261,7 +261,7 @@ class Search extends Page
                     'legend' => __('Search results legend'),
                     'fields' => [
                         'sort_by' => [
-                            'class'   => 'w4',
+                            'class'   => ['w4'],
                             'type'    => 'select',
                             'options' => [
                                 0 => __('Sort by post time'),
@@ -273,7 +273,7 @@ class Search extends Page
                             'caption' => 'Sort by',
                         ],
                         'sort_dir' => [
-                            'class'   => 'w4',
+                            'class'   => ['w4'],
                             'type'    => 'radio',
                             'values'  => [
                                 0 => __('Descending'),
@@ -283,7 +283,7 @@ class Search extends Page
                             'caption' => 'Sort order',
                         ],
                         'show_as' => [
-                            'class'   => 'w4',
+                            'class'   => ['w4'],
                             'type'    => 'radio',
                             'values'  => [
                                 0 => __('Show as posts'),

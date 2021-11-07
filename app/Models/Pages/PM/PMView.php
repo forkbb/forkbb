@@ -226,14 +226,14 @@ class PMView extends AbstractPM
 
         if (Cnst::ACTION_ARCHIVE !== $this->pms->area) {
             $form['btns'][Cnst::ACTION_ARCHIVE] = [
-                'class' => 'origin',
+                'class' => ['origin'],
                 'type'  => 'submit',
                 'value' => __('To archive'),
             ];
         }
 
         $form['btns'][Cnst::ACTION_DELETE] = [
-            'class' => 'origin',
+            'class' => ['origin'],
             'type'  => 'submit',
             'value' => __('Delete'),
         ];

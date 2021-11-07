@@ -119,7 +119,7 @@ class BBCode extends Parser
             ],
             'sets' => [
                 'bbcode-legend' => [
-                    'class'  => 'bbcode-legend',
+                    'class'  => ['bbcode-legend'],
                     'legend' => __('BBCode list subhead'),
                     'fields' => [],
                 ],
@@ -189,7 +189,7 @@ class BBCode extends Parser
             ];
 
             $form['sets']["bbcode{$id}"] = [
-                'class'  => 'bbcode',
+                'class'  => ['bbcode'],
                 'legend' => __(['BBCode %s', $tag]),
                 'fields' => $fields,
             ];
@@ -408,7 +408,7 @@ class BBCode extends Parser
             'sets' => [],
             'btns'   => [
                 'reset' => [
-                    'class' => 'f-opacity',
+                    'class' => ['f-opacity'],
                     'type'  => 'btn',
                     'value' => __('Default structure'),
                     'link'  => $this->c->Router->link(
@@ -432,7 +432,7 @@ class BBCode extends Parser
         $yn = [1 => __('Yes'), 0 => __('No')];
 
         $form['sets']['structure'] = [
-            'class'  => 'structure',
+            'class'  => ['structure'],
 //            'legend' => ,
             'fields' => [
                 'tag' => [
@@ -469,14 +469,14 @@ class BBCode extends Parser
                     'required'  => true,
                 ],
                 'handler' => [
-                    'class'     => 'handler',
+                    'class'     => ['handler'],
                     'type'      => 'textarea',
                     'value'     => $structure->handler,
                     'caption'   => 'Handler label',
                     'help'      => 'Handler info',
                 ],
                 'text_handler' => [
-                    'class'     => 'handler',
+                    'class'     => ['handler'],
                     'type'      => 'textarea',
                     'value'     => $structure->text_handler,
                     'caption'   => 'Text handler label',
@@ -542,7 +542,7 @@ class BBCode extends Parser
             'no_attr',
             'no_attr',
             __(['No attr subhead', $tagStr]),
-            __('Allowed no_attr info')
+            'Allowed no_attr info'
         );
 
         $form['sets']['def_attr'] = $this->formEditSub(
@@ -559,7 +559,7 @@ class BBCode extends Parser
                 $name,
                 "{$name}_attr",
                 __(['Other attr subhead', $tagStr, $name]),
-                ['Allowed %s attr info', $name]
+                __(['Allowed %s attr info', $name])
             );
         }
 
@@ -611,7 +611,7 @@ class BBCode extends Parser
                 'help'    => 'Required info',
             ];
             $fields["{$key}[format]"] = [
-                'class'     => 'format',
+                'class'     => ['format'],
                 'type'      => 'text',
                 'value'     => $data['format'] ?? '',
                 'caption'   => 'Format label',
@@ -619,7 +619,7 @@ class BBCode extends Parser
             ];
         }
         $fields["{$key}[body_format]"] = [
-            'class'     => 'format',
+            'class'     => ['format'],
             'type'      => 'text',
             'value'     => $data['body_format'] ?? '',
             'caption'   => 'Body format label',

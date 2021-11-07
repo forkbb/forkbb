@@ -175,7 +175,7 @@ class Userlist extends Page
 
         if ($this->user->searchUsers) {
             $fields['name'] = [
-                'class'     => 'w0',
+                'class'     => ['w0'],
                 'type'      => 'text',
                 'maxlength' => '25',
                 'value'     => $v->name ?: '*',
@@ -188,14 +188,14 @@ class Userlist extends Page
             $form['hidden']['name'] = '*';
         }
         $fields['group'] = [
-            'class'   => 'w4',
+            'class'   => ['w4'],
             'type'    => 'select',
             'options' => $this->groupList,
             'value'   => $v->group,
             'caption' => 'User group',
         ];
         $fields['sort'] = [
-            'class'   => 'w4',
+            'class'   => ['w4'],
             'type'    => 'select',
             'options' => [
                 ['username', __('Sort by name')],
@@ -206,7 +206,7 @@ class Userlist extends Page
             'caption' => 'Sort users by',
         ];
         $fields['dir'] = [
-            'class'   => 'w4',
+            'class'   => ['w4'],
             'type'    => 'radio',
             'value'   => $v->dir ?: 'ASC',
             'values'  => [

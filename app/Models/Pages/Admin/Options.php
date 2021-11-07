@@ -675,7 +675,7 @@ class Options extends Admin
                     'help'    => 'Rules help',
                 ],
                 'i_default_email_setting' => [
-                    'class'   => 'block',
+                    'class'   => ['block'],
                     'type'    => 'radio',
                     'value'   => $config->i_default_email_setting,
                     'values'  => [

@@ -209,13 +209,13 @@ class Topic extends Page
 
         if ($topic->closed) {
             $form['btns']['open'] = [
-                'class'     => 'origin',
+                'class'     => ['origin'],
                 'type'      => 'submit',
                 'value'     => __('Open topic'),
             ];
         } else {
             $form['btns']['close'] = [
-                'class'     => 'origin',
+                'class'     => ['origin'],
                 'type'      => 'submit',
                 'value'     => __('Close topic'),
             ];
@@ -223,13 +223,13 @@ class Topic extends Page
 
         if ($topic->sticky) {
             $form['btns']['unstick'] = [
-                'class'     => 'origin',
+                'class'     => ['origin'],
                 'type'      => 'submit',
                 'value'     => __('Unstick topic'),
             ];
         } else {
             $form['btns']['stick'] = [
-                'class'     => 'origin',
+                'class'     => ['origin'],
                 'type'      => 'submit',
                 'value'     => __('Stick topic'),
             ];
@@ -237,17 +237,17 @@ class Topic extends Page
 
         $form['btns'] += [
             'move' => [
-                'class'     => 'origin',
+                'class'     => ['origin'],
                 'type'      => 'submit',
                 'value'     => __('Move topic'),
             ],
             'delete' => [
-                'class'     => 'origin',
+                'class'     => ['origin'],
                 'type'      => 'submit',
                 'value'     => __('Delete'),
             ],
             'split' => [
-                'class'     => 'origin',
+                'class'     => ['origin'],
                 'type'      => 'submit',
                 'value'     => __('Split'),
             ],

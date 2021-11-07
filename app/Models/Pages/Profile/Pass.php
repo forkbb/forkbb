@@ -100,7 +100,7 @@ class Pass extends Profile
             ],
             'sets'   => [
                 'new-pass' => [
-                    'class'  => 'data-edit',
+                    'class'  => ['data-edit'],
                     'fields' => [
                         'new_pass' => [
                             'autofocus' => true,

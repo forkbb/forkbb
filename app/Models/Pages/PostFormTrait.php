@@ -40,7 +40,7 @@ trait PostFormTrait
                 'preview' => [
                     'type'  => 'submit',
                     'value' => __('Preview'),
-                    'class' => 'f-opacity',
+                    'class' => ['f-opacity'],
                 ],
             ],
         ];
@@ -49,7 +49,7 @@ trait PostFormTrait
 
         if ($this->user->isGuest) {
             $fieldset['username'] = [
-                'class'     => 'w1',
+                'class'     => ['w1'],
                 'type'      => 'text',
                 'maxlength' => '25',
                 'caption'   => 'Username',
@@ -59,7 +59,7 @@ trait PostFormTrait
                 'autofocus' => $autofocus,
             ];
             $fieldset['email'] = [
-                'class'     => 'w2',
+                'class'     => ['w2'],
                 'type'      => 'text',
                 'maxlength' => '80',
                 'caption'   => 'Email',
@@ -72,7 +72,7 @@ trait PostFormTrait
 
         if ($first) {
             $fieldset['subject'] = [
-                'class'     => 'w0',
+                'class'     => ['w0'],
                 'type'      => 'text',
                 'maxlength' => '70',
                 'caption'   => 'Subject',
@@ -84,7 +84,7 @@ trait PostFormTrait
         }
 
         $fieldset['message'] = [
-            'class'    => 'w0',
+            'class'    => ['w0'],
             'type'     => 'textarea',
             'caption'  => 'Message',
             'required' => true,

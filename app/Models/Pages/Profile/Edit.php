@@ -242,7 +242,7 @@ class Edit extends Profile
             ];
         } else {
             $fields['username'] = [
-                'class'   => 'pline',
+                'class'   => ['pline'],
                 'type'    => 'str',
                 'caption' => 'Username',
                 'value'   => $this->curUser->username,
@@ -258,7 +258,7 @@ class Edit extends Profile
             ];
         } else {
             $fields['group'] = [
-                'class'   => 'pline',
+                'class'   => ['pline'],
                 'type'    => 'str',
                 'caption' => 'Group',
                 'value'   => $this->curUser->group_id ? $this->curUser->g_title : '-',
@@ -282,7 +282,7 @@ class Edit extends Profile
             ];
         } else {
             $fields['title'] = [
-                'class'   => 'pline',
+                'class'   => ['pline'],
                 'type'    => 'str',
                 'caption' => 'Title',
                 'value'   => $this->curUser->title(),
@@ -298,7 +298,7 @@ class Edit extends Profile
         if ($this->rules->useAvatar) {
             if (! $this->curUser->avatar) {
                 $fields['avatar'] = [
-                    'class'   => 'pline',
+                    'class'   => ['pline'],
                     'type'    => 'str',
                     'caption' => 'Avatar',
                     'value'   => __('Not uploaded'),
@@ -336,7 +336,7 @@ class Edit extends Profile
             ];
         }
         $form['sets']['header'] = [
-            'class'  => 'header-edit',
+            'class'  => ['header-edit'],
 #            'legend' => __('Options'),
             'fields' => $fields,
         ];
@@ -344,7 +344,7 @@ class Edit extends Profile
         // примечание администрации
         if ($this->user->isAdmMod) {
             $form['sets']['note'] = [
-                'class'  => 'data-edit',
+                'class'  => ['data-edit'],
                 'legend' => __('Admin note'),
                 'fields' => [
                     'admin_note' => [
@@ -371,7 +371,7 @@ class Edit extends Profile
             2 => __('Female'),
         ];
         $fields['gender'] = [
-            'class'   => 'block',
+            'class'   => ['block'],
             'type'    => 'radio',
             'value'   => $this->curUser->gender,
             'values'  => $genders,
@@ -384,7 +384,7 @@ class Edit extends Profile
             'value'     => $this->curUser->location,
         ];
         $form['sets']['personal'] = [
-            'class'  => 'data-edit',
+            'class'  => ['data-edit'],
             'legend' => __('Personal information'),
             'fields' => $fields,
         ];
@@ -393,7 +393,7 @@ class Edit extends Profile
         $fields = [];
         if ($this->rules->viewOEmail) {
             $fields['open-email'] = [
-                'class'   => 'pline',
+                'class'   => ['pline'],
                 'type'    => 'str',
                 'caption' => 'Email info',
                 'value'   => $this->curUser->censorEmail,
@@ -407,7 +407,7 @@ class Edit extends Profile
             ];
         }
         $fields['email_setting'] = [
-            'class'   => 'block',
+            'class'   => ['block'],
             'type'    => 'radio',
             'value'   => $this->curUser->email_setting,
             'values'  => [
@@ -432,7 +432,7 @@ class Edit extends Profile
         ) {
             $fields['url'] = [
                 'id'      => 'website',
-                'class'   => 'pline',
+                'class'   => ['pline'],
                 'type'    => 'link',
                 'caption' => 'Website',
                 'value'   => $this->curUser->censorUrl,
@@ -440,7 +440,7 @@ class Edit extends Profile
             ];
         }
         $form['sets']['contacts'] = [
-            'class'  => 'data-edit',
+            'class'  => ['data-edit'],
             'legend' => __('Contact details'),
             'fields' => $fields,
         ];
@@ -455,7 +455,7 @@ class Edit extends Profile
                 'help'    => ['Sig max size', \ForkBB\num($this->curUser->g_sig_length), \ForkBB\num($this->curUser->g_sig_lines)],
             ];
             $form['sets']['signature'] = [
-                'class'  => 'data-edit',
+                'class'  => ['data-edit'],
                 'legend' => __('Signature'),
                 'fields' => $fields,
             ];

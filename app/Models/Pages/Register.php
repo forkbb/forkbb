@@ -105,7 +105,7 @@ class Register extends Page
                     'fields' => [
                         'email' => [
                             'autofocus' => true,
-                            'class'     => 'hint',
+                            'class'     => ['hint'],
                             'type'      => 'text',
                             'maxlength' => '80',
                             'value'     => $v->email,
@@ -115,7 +115,7 @@ class Register extends Page
                             'pattern'   => '.+@.+',
                         ],
                         'username' => [
-                            'class'     => 'hint',
+                            'class'     => ['hint'],
                             'type'      => 'text',
                             'maxlength' => '25',
                             'value'     => $v->username,
@@ -125,7 +125,7 @@ class Register extends Page
                             'pattern'   => '^.{2,25}$',
                         ],
                         'password' => [
-                            'class'     => 'hint',
+                            'class'     => ['hint'],
                             'type'      => 'password',
                             'caption'   => 'Passphrase',
                             'help'      => 'Passphrase help',

@@ -116,7 +116,7 @@ class Categories extends Admin
                 ),
             ];
             $form['sets']["category{$key}"] = [
-                'class'  => 'category',
+                'class'  => ['category'],
                 'legend' => $row['cat_name'],
                 'fields' => $fields,
             ];
@@ -125,7 +125,7 @@ class Categories extends Admin
         $form['sets']['new-cat'] = [
             'fields' => [
                 'new' => [
-                    'class'     => 'new',
+                    'class'     => ['new'],
                     'type'      => 'text',
                     'maxlength' => '80',
                     'caption'   => 'Add category label',

@@ -147,7 +147,7 @@ class Mod extends Profile
                     'caption'  => 'Moderator label',
                 ];
                 $form['sets']["forum{$forum->id}"] = [
-                    'class'  => 'modforum',
+                    'class'  => ['modforum'],
                     'legend' => $forum->cat_name . ' / ' . $forum->forum_name,
                     'fields' => $fields,
                 ];

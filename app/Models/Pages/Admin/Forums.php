@@ -209,7 +209,7 @@ class Forums extends Admin
                     'disabled' => $disabled,
                 ];
                 $form['sets']["forum{$forum->id}"] = [
-                    'class'  => 'forum',
+                    'class'  => ['forum'],
                     'legend' => $forum->cat_name . ' / ' . $forum->forum_name,
                     'fields' => $fields,
                 ];
@@ -447,7 +447,7 @@ class Forums extends Admin
             $form['btns']['reset'] = [
                 'type'  => 'submit',
                 'value' => __('Revert to default'),
-                'class' => 'f-opacity',
+                'class' => ['f-opacity'],
             ];
         }
 
@@ -548,7 +548,7 @@ class Forums extends Admin
             ];
 
             $form['sets']["perms{$id}"] = [
-                'class'  => 'permission',
+                'class'  => ['permission'],
                 'legend' => \ForkBB\e($group->g_title),
                 'fields' => $fields,
             ];

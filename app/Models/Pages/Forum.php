@@ -94,27 +94,27 @@ class Forum extends Page
             'sets'   => [],
             'btns'   => [
                 'open' => [
-                    'class'     => 'origin',
+                    'class'     => ['origin'],
                     'type'      => 'submit',
                     'value'     => __('Open'),
                 ],
                 'close' => [
-                    'class'     => 'origin',
+                    'class'     => ['origin'],
                     'type'      => 'submit',
                     'value'     => __('Close'),
                 ],
                 'delete' => [
-                    'class'     => 'origin',
+                    'class'     => ['origin'],
                     'type'      => 'submit',
                     'value'     => __('Delete'),
                 ],
                 'move' => [
-                    'class'     => 'origin',
+                    'class'     => ['origin'],
                     'type'      => 'submit',
                     'value'     => __('Move'),
                 ],
                 'merge' => [
-                    'class'     => 'origin',
+                    'class'     => ['origin'],
                     'type'      => 'submit',
                     'value'     => __('Merge'),
                 ],

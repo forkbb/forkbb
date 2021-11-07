@@ -166,18 +166,18 @@ class Bans extends Admin
             'value'     => $data['message'] ?? null,
         ];
         $fields['between1'] = [
-            'class' => 'between',
+            'class' => ['between'],
             'type'  => 'wrap',
         ];
         $fields['expire_1'] = [
-            'class'     => 'bstart',
+            'class'     => ['bstart'],
             'type'      => 'text',
             'maxlength' => '100',
             'value'     => $data['expire_1'] ?? null,
             'caption'   => 'Expire date label',
         ];
         $fields['expire_2'] = [
-            'class'     => 'bend',
+            'class'     => ['bend'],
             'type'      => 'text',
             'maxlength' => '100',
             'value'     => $data['expire_2'] ?? null,
@@ -192,11 +192,11 @@ class Bans extends Admin
 
         $fields = [];
         $fields['between5'] = [
-            'class' => 'between',
+            'class' => ['between'],
             'type'  => 'wrap',
         ];
         $fields['order_by'] = [
-            'class'   => 'bstart',
+            'class'   => ['bstart'],
             'type'    => 'select',
             'options' => [
                 'id'       => __('Order by id'),
@@ -209,7 +209,7 @@ class Bans extends Admin
             'caption' => 'Order by label',
         ];
         $fields['direction'] = [
-            'class'   => 'bend',
+            'class'   => ['bend'],
             'type'    => 'select',
             'options' => [
                 'ASC'  => __('Ascending'),
@@ -421,11 +421,11 @@ class Bans extends Admin
 
             $fields = [];
             $fields["l{$number}-wrap1"] = [
-                'class' => 'main-result',
+                'class' => ['main-result'],
                 'type'  => 'wrap',
             ];
             $fields["l{$number}-wrap2"] = [
-                'class' => 'user-result',
+                'class' => ['user-result'],
                 'type'  => 'wrap',
             ];
             $fields["l{$number}-username"] = [
@@ -478,7 +478,7 @@ class Bans extends Admin
                 'type' => 'endwrap',
             ];
             $fields["l{$number}-wrap3"] = [
-                'class' => 'btns-result',
+                'class' => ['btns-result'],
                 'type'  => 'wrap',
             ];
 
@@ -514,7 +514,7 @@ class Bans extends Admin
             ];
 
             $form['sets']["l{$number}"] = [
-                'class'  => 'result',
+                'class'  => ['result'],
                 'legend' => $number,
                 'fields' => $fields,
             ];

@@ -224,7 +224,7 @@ class Email extends Profile
             ],
             'sets'   => [
                 'new-email' => [
-                    'class'  => 'data-edit',
+                    'class'  => ['data-edit'],
                     'fields' => [
                         'new_email' => [
                             'autofocus' => true,

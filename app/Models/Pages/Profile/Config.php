@@ -169,7 +169,7 @@ class Config extends Profile
 
         $form['sets']['essentials'] = [
             'legend' => __('Essentials'),
-            'class'  => 'data-edit',
+            'class'  => ['data-edit'],
             'fields' => [
                 'language' => [
                     'type'    => 'select',
@@ -254,7 +254,7 @@ class Config extends Profile
         ];
         $form['sets']['viewing-posts'] = [
             'legend' => __('Viewing posts'),
-            'class'  => 'data-edit',
+            'class'  => ['data-edit'],
             'fields' => [
                 'show_smilies' => [
                     'type'    => 'radio',
@@ -295,7 +295,7 @@ class Config extends Profile
         ];
         $form['sets']['pagination'] = [
             'legend' => __('Pagination'),
-            'class'  => 'data-edit',
+            'class'  => ['data-edit'],
             'fields' => [
                 'disp_topics' => [
                     'type'    => 'number',
@@ -317,7 +317,7 @@ class Config extends Profile
         ];
         $form['sets']['security'] = [
             'legend' => __('Security'),
-            'class'  => 'data-edit',
+            'class'  => ['data-edit'],
             'fields' => [
                 'ip_check_type' => [
                     'type'     => 'select',
@@ -337,7 +337,7 @@ class Config extends Profile
         if ($this->rules->viewSubscription) { // ???? модераторы?
             $form['sets']['subscriptions'] = [
                 'legend' => __('Subscription options'),
-                'class'  => 'data-edit',
+                'class'  => ['data-edit'],
                 'fields' => [
                     'notify_with_post' => [
                         'type'    => 'radio',

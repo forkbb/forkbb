@@ -267,11 +267,11 @@ class Result extends Users
 
             $fields = [];
             $fields["l{$number}-wrap1"] = [
-                'class' => 'main-result',
+                'class' => ['main-result'],
                 'type'  => 'wrap',
             ];
             $fields["l{$number}-wrap2"] = [
-                'class' => 'user-result',
+                'class' => ['user-result'],
                 'type'  => 'wrap',
             ];
             $fields["l{$number}-username"] = [
@@ -345,7 +345,7 @@ class Result extends Users
                 'checked' => false,
             ];
             $form['sets']["l{$number}"] = [
-                'class'  => 'result',
+                'class'  => ['result'],
                 'legend' => -1 === $user->id ? null : $number,
                 'fields' => $fields,
             ];

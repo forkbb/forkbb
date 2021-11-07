@@ -51,17 +51,17 @@ class View extends Profile
         // имя, титул и аватара
         $fields = [];
         $fields['usertitle'] = [
-            'class' => 'usertitle',
+            'class' => ['usertitle'],
             'type'  => 'wrap',
         ];
         $fields['username'] = [
-            'class'   => 'pline',
+            'class'   => ['pline'],
             'type'    => 'str',
             'caption' => 'Username',
             'value'   => $this->curUser->username,
         ];
         $fields['title'] = [
-            'class'   => 'pline',
+            'class'   => ['pline'],
             'type'    => 'str',
             'caption' => 'Title',
             'value'   => $this->curUser->title(),
@@ -80,7 +80,7 @@ class View extends Profile
             ];
         }
         $form['sets']['header'] = [
-            'class'  => 'header',
+            'class'  => ['header'],
 #            'legend' => __('Options'),
             'fields' => $fields,
         ];
@@ -91,11 +91,11 @@ class View extends Profile
             && '' != $this->curUser->admin_note
         ) {
             $form['sets']['note'] = [
-                'class'  => 'data',
+                'class'  => ['data'],
                 'legend' => __('Admin note'),
                 'fields' => [
                     'admin_note' => [
-                        'class'     => 'pline',
+                        'class'     => ['pline'],
                         'type'      => 'str',
                         'caption'   => 'Admin note',
                         'value'     => $this->curUser->admin_note,
@@ -108,7 +108,7 @@ class View extends Profile
         $fields = [];
         if ('' != $this->curUser->realname) {
             $fields['realname'] = [
-                'class'   => 'pline',
+                'class'   => ['pline'],
                 'type'    => 'str',
                 'caption' => 'Realname',
                 'value'   => $this->curUser->censorRealname,
@@ -120,7 +120,7 @@ class View extends Profile
         ];
         if (isset($genders[$this->curUser->gender])) {
             $fields['gender'] = [
-                'class'   => 'pline',
+                'class'   => ['pline'],
                 'type'    => 'str',
                 'value'   => $genders[$this->curUser->gender],
                 'caption' => 'Gender',
@@ -128,7 +128,7 @@ class View extends Profile
         }
         if ('' != $this->curUser->location) {
             $fields['location'] = [
-                'class'   => 'pline',
+                'class'   => ['pline'],
                 'type'    => 'str',
                 'caption' => 'Location',
                 'value'   => $this->curUser->censorLocation,
@@ -136,7 +136,7 @@ class View extends Profile
         }
         if (! empty($fields)) {
             $form['sets']['personal'] = [
-                'class'  => 'data',
+                'class'  => ['data'],
                 'legend' => __('Personal information'),
                 'fields' => $fields,
             ];
@@ -156,7 +156,7 @@ class View extends Profile
             ];
 
             $fields['pm'] = [
-                'class'   => 'pline',
+                'class'   => ['pline'],
                 'type'    => 'link',
                 'caption' => 'PM',
                 'value'   => __('Send PM'),
@@ -166,7 +166,7 @@ class View extends Profile
         if ($this->rules->viewEmail) {
             if (0 === $this->curUser->email_setting) {
                 $fields['email'] = [
-                    'class'   => 'pline',
+                    'class'   => ['pline'],
                     'type'    => 'link',
                     'caption' => 'Email info',
                     'value'   => $this->curUser->censorEmail,
@@ -176,7 +176,7 @@ class View extends Profile
                 $this->c->Csrf->setHashExpiration(3600);
 
                 $fields['email'] = [
-                    'class'   => 'pline',
+                    'class'   => ['pline'],
                     'type'    => 'link',
                     'caption' => 'Email info',
                     'value'   => __('Send email'),
@@ -190,7 +190,7 @@ class View extends Profile
         ) {
             $fields['url'] = [
                 'id'      => 'website',
-                'class'   => 'pline',
+                'class'   => ['pline'],
                 'type'    => 'link',
                 'caption' => 'Website',
                 'value'   => $this->curUser->censorUrl,
@@ -200,7 +200,7 @@ class View extends Profile
         }
         if (! empty($fields)) {
             $form['sets']['contacts'] = [
-                'class'  => 'data',
+                'class'  => ['data'],
                 'legend' => __('Contact details'),
                 'fields' => $fields,
             ];
@@ -220,7 +220,7 @@ class View extends Profile
             }
             if (! empty($fields)) {
                 $form['sets']['signature'] = [
-                    'class'  => 'data',
+                    'class'  => ['data'],
                     'legend' => __('Signature'),
                     'fields' => $fields,
                 ];
@@ -230,13 +230,13 @@ class View extends Profile
         // активность
         $fields = [];
         $fields['registered'] = [
-            'class'   => 'pline',
+            'class'   => ['pline'],
             'type'    => 'str',
             'value'   => \ForkBB\dt($this->curUser->registered, true),
             'caption' => 'Registered info',
         ];
         $fields['lastpost'] = [
-            'class'   => 'pline',
+            'class'   => ['pline'],
             'type'    => 'str',
             'value'   => \ForkBB\dt($this->curUser->last_post, true),
             'caption' => 'Last post info',
@@ -244,7 +244,7 @@ class View extends Profile
         if ($this->curUser->last_post > 0) {
             if ('1' == $this->user->g_search) {
                 $fields['posts'] = [
-                    'class'   => 'pline',
+                    'class'   => ['pline'],
                     'type'    => 'link',
                     'caption' => 'Posts info',
                     'value'   => $this->user->showPostCount ? \ForkBB\num($this->curUser->num_posts) : __('Show posts'),
@@ -258,7 +258,7 @@ class View extends Profile
                     'title'   => __('Show posts'),
                 ];
                 $fields['topics'] = [
-                    'class'   => 'pline',
+                    'class'   => ['pline'],
                     'type'    => 'link',
                     'caption' => 'Topics info',
                     'value'   => $this->user->showPostCount ? \ForkBB\num($this->curUser->num_topics) : __('Show topics'),
@@ -273,13 +273,13 @@ class View extends Profile
                 ];
             } elseif ($this->user->showPostCount) {
                 $fields['posts'] = [
-                    'class'   => 'pline',
+                    'class'   => ['pline'],
                     'type'    => 'str',
                     'caption' => 'Posts info',
                     'value'   => \ForkBB\num($this->curUser->num_posts),
                 ];
                 $fields['topics'] = [
-                    'class'   => 'pline',
+                    'class'   => ['pline'],
                     'type'    => 'str',
                     'caption' => 'Topics info',
                     'value'   => \ForkBB\num($this->curUser->num_topics),
@@ -292,7 +292,7 @@ class View extends Profile
             $isLink     = '1' == $this->user->g_search;
             if (! empty($subscrInfo[$subscr::FORUMS_DATA])) {
                 $fields['forums_subscr'] = [
-                    'class'   => 'pline',
+                    'class'   => ['pline'],
                     'type'    => $isLink ? 'link' : 'str',
                     'caption' => 'Total forums subscriptions',
                     'value'   => \ForkBB\num(\count($subscrInfo[$subscr::FORUMS_DATA])),
@@ -308,7 +308,7 @@ class View extends Profile
             }
             if (! empty($subscrInfo[$subscr::TOPICS_DATA])) {
                 $fields['topics_subscr'] = [
-                    'class'   => 'pline',
+                    'class'   => ['pline'],
                     'type'    => $isLink ? 'link' : 'str',
                     'caption' => 'Total topics subscriptions',
                     'value'   => \ForkBB\num(\count($subscrInfo[$subscr::TOPICS_DATA])),
@@ -324,7 +324,7 @@ class View extends Profile
             }
         }
         $form['sets']['activity'] = [
-            'class'  => 'data',
+            'class'  => ['data'],
             'legend' => __('User activity'),
             'fields' => $fields,
         ];
@@ -333,7 +333,7 @@ class View extends Profile
         $fields = [];
         if ($this->rules->viewLastVisit) {
             $fields['lastvisit'] = [
-                'class'   => 'pline',
+                'class'   => ['pline'],
                 'type'    => 'str',
                 'value'   => $this->rules->my
                     ? \ForkBB\dt($this->curUser->last_visit)
@@ -343,7 +343,7 @@ class View extends Profile
         }
         if ($this->rules->viewOEmail) {
             $fields['open-email'] = [
-                'class'   => 'pline',
+                'class'   => ['pline'],
                 'type'    => 2 === $this->curUser->email_setting ? 'str' : 'link',
                 'caption' => 'Email info',
                 'value'   => $this->curUser->censorEmail,
@@ -355,7 +355,7 @@ class View extends Profile
             && false !== \filter_var($this->curUser->registration_ip, \FILTER_VALIDATE_IP)
         ) {
             $fields['ip'] = [
-                'class'   => 'pline',
+                'class'   => ['pline'],
                 'type'    => 'link',
                 'caption' => 'IP',
                 'value'   => $this->curUser->registration_ip,
@@ -369,7 +369,7 @@ class View extends Profile
             ];
         }
         $form['sets']['private'] = [
-            'class'  => 'data',
+            'class'  => ['data'],
             'legend' => __('Private information'),
             'fields' => $fields,
         ];
