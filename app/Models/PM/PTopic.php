@@ -482,8 +482,8 @@ class PTopic extends DataModel
 
     /**
      * Статус блокировки между пользователями
-     * 2 - вы заблокирвоали собеседника
-     * 1 - собеседник заблокировал вас
+     * 2 - отправитель заблокирвоали получателя
+     * 1 - получатель заблокировал отправителя
      * 0 - блокировки нет
      */
     protected function getblockStatus(): int
@@ -526,11 +526,9 @@ class PTopic extends DataModel
         return Cnst::PT_ARCHIVE === $this->poster_status
             && $this->actionsAllowed
             && 0 === $this->blockStatus
+            && 1 === $this->zpUser->u_pm
             && (
-                (
-                    1 === $this->zpUser->u_pm
-                    && 1 === $this->ztUser->u_pm
-                )
+                1 === $this->ztUser->u_pm
                 || $this->zpUser->isAdmin
             );
     }
