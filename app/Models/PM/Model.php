@@ -14,6 +14,7 @@ use ForkBB\Core\Container;
 use ForkBB\Models\DataModel;
 use ForkBB\Models\Model as ParentModel;
 use ForkBB\Models\PM\Cnst;
+use ForkBB\Models\PM\PBlock;
 use ForkBB\Models\PM\PPost;
 use ForkBB\Models\PM\PTopic;
 use ForkBB\Models\User\Model as User;
@@ -472,5 +473,15 @@ class Model extends ParentModel
         $user->u_pm_num_all = $current;
 
         $this->c->users->update($user);
+    }
+
+    protected function getblock(): PBlock
+    {
+        return $this->c->PBlockModel;
+    }
+
+    protected function setblock(): void
+    {
+        throw new RuntimeException('Read-only block property');
     }
 }
