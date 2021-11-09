@@ -30,13 +30,13 @@ class PTopic extends DataModel
             'last_post'     => ['firstNew'],
             'last_post_id'  => ['linkLast', 'firstNew'],
             'num_replies'   => ['numPages', 'pagination'],
-            'poster'        => ['last_poster', 'byOrFor', 'zpUser', 'ztUser'],
-            'poster_id'     => ['closed', 'firstNew', 'zp', 'zt', 'zpUser', 'ztUser', 'actionsAllowed', 'canReply', 'canSend'],
+            'poster'        => ['last_poster', 'byOrFor', 'zpUser', 'ztUser', 'canBlock'],
+            'poster_id'     => ['closed', 'firstNew', 'zp', 'zt', 'zpUser', 'ztUser', 'actionsAllowed', 'canReply', 'canSend', 'canBlock'],
             'poster_status' => ['closed', 'actionsAllowed', 'canReply', 'isFullDeleted', 'canSend'],
             'poster_visit'  => ['firstNew'],
             'subject'       => ['name'],
-            'target'        => ['last_poster', 'byOrFor', 'zpUser', 'ztUser'],
-            'target_id'     => ['closed', 'firstNew', 'zp', 'zt', 'zpUser', 'ztUser', 'actionsAllowed', 'canReply', 'canSend'],
+            'target'        => ['last_poster', 'byOrFor', 'zpUser', 'ztUser', 'canBlock'],
+            'target_id'     => ['closed', 'firstNew', 'zp', 'zt', 'zpUser', 'ztUser', 'actionsAllowed', 'canReply', 'canSend', 'canBlock'],
             'target_status' => ['closed', 'actionsAllowed', 'canReply', 'isFullDeleted', 'canSend'],
             'target_visit'  => ['firstNew'],
         ];
@@ -481,11 +481,29 @@ class PTopic extends DataModel
     }
 
     /**
+     * Статус блокировки между пользователями
+     * 2 - вы заблокирвоали собеседника
+     * 1 - собеседник заблокировал вас
+     * 0 - блокировки нет
+     */
+    protected function getcanBlock(): int
+    {
+        if ($this->c->pms->block->isBlock($this->ztUser) && ! $this->ztUser->isAdmin) {
+            return 2;
+        } elseif ($this->c->pms->block->inBlock($this->ztUser) && ! $this->zpUser->isAdmin) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    /**
      * Статус возможности ответа в теме
      */
     protected function getcanReply(): bool
     {
         return $this->actionsAllowed
+            && 0 === $this->canBlock
             && (
                 (
                     1 === $this->zpUser->u_pm
@@ -507,6 +525,7 @@ class PTopic extends DataModel
     {
         return Cnst::PT_ARCHIVE === $this->poster_status
             && $this->actionsAllowed
+            && 0 === $this->canBlock
             && (
                 (
                     1 === $this->zpUser->u_pm
