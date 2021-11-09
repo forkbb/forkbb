@@ -25,11 +25,11 @@ class PPost extends DataModel
         parent::__construct($container);
 
         $this->zDepend = [
-            'id'            => ['link', 'user', 'canDelete', 'linkDelete', 'linkEdit', 'linkQuote', 'previousId', 'linkPrevious'],
+            'id'            => ['link', 'user', 'canDelete', 'linkDelete', 'linkEdit', 'linkQuote', 'previousId', 'linkPrevious', 'linkBlock'],
             'edited'        => ['editor'],
-            'posted'        => ['canDelete', 'canEdit'],
+            'posted'        => ['canDelete', 'canEdit', 'canBlock'],
             'poster'        => ['editor'],
-            'poster_id'     => ['canDelete', 'canEdit'],
+            'poster_id'     => ['canDelete', 'canEdit', 'canBlock', 'linkBlock'],
             'topic_id'      => ['parent', 'linkQuote', 'previousId', 'linkPrevious'],
         ];
     }
@@ -186,6 +186,32 @@ class PPost extends DataModel
                 'second' => $this->c->pms->second,
                 'action' => Cnst::ACTION_SEND,
                 'more1'  => $this->topic_id,
+                'more2'  => $this->id,
+            ]
+        );
+    }
+
+    /**
+     * Статус возможности (раз)блокировки
+     */
+    protected function getcanBlock(): bool
+    {
+        return $this->poster_id !== $this->c->user->id
+            && ! $this->user->isAdmin
+            && ! $this->user->isGuest;
+    }
+
+    /**
+     * Ссылка на (раз)блокировку пользователя
+     */
+    protected function getlinkBlock(): string
+    {
+        return $this->c->Router->link(
+            'PMAction',
+            [
+                'second' => $this->c->pms->second,
+                'action' => Cnst::ACTION_BLOCK,
+                'more1'  => $this->poster_id,
                 'more2'  => $this->id,
             ]
         );
