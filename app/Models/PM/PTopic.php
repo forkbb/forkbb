@@ -30,13 +30,13 @@ class PTopic extends DataModel
             'last_post'     => ['firstNew'],
             'last_post_id'  => ['linkLast', 'firstNew'],
             'num_replies'   => ['numPages', 'pagination'],
-            'poster'        => ['last_poster', 'byOrFor', 'zpUser', 'ztUser', 'canBlock'],
-            'poster_id'     => ['closed', 'firstNew', 'zp', 'zt', 'zpUser', 'ztUser', 'actionsAllowed', 'canReply', 'canSend', 'canBlock'],
+            'poster'        => ['last_poster', 'byOrFor', 'zpUser', 'ztUser', 'blockStatus'],
+            'poster_id'     => ['closed', 'firstNew', 'zp', 'zt', 'zpUser', 'ztUser', 'actionsAllowed', 'canReply', 'canSend', 'blockStatus'],
             'poster_status' => ['closed', 'actionsAllowed', 'canReply', 'isFullDeleted', 'canSend'],
             'poster_visit'  => ['firstNew'],
             'subject'       => ['name'],
-            'target'        => ['last_poster', 'byOrFor', 'zpUser', 'ztUser', 'canBlock'],
-            'target_id'     => ['closed', 'firstNew', 'zp', 'zt', 'zpUser', 'ztUser', 'actionsAllowed', 'canReply', 'canSend', 'canBlock'],
+            'target'        => ['last_poster', 'byOrFor', 'zpUser', 'ztUser', 'blockStatus'],
+            'target_id'     => ['closed', 'firstNew', 'zp', 'zt', 'zpUser', 'ztUser', 'actionsAllowed', 'canReply', 'canSend', 'blockStatus'],
             'target_status' => ['closed', 'actionsAllowed', 'canReply', 'isFullDeleted', 'canSend'],
             'target_visit'  => ['firstNew'],
         ];
@@ -486,7 +486,7 @@ class PTopic extends DataModel
      * 1 - собеседник заблокировал вас
      * 0 - блокировки нет
      */
-    protected function getcanBlock(): int
+    protected function getblockStatus(): int
     {
         if ($this->c->pms->block->isBlock($this->ztUser) && ! $this->ztUser->isAdmin) {
             return 2;
@@ -503,7 +503,7 @@ class PTopic extends DataModel
     protected function getcanReply(): bool
     {
         return $this->actionsAllowed
-            && 0 === $this->canBlock
+            && 0 === $this->blockStatus
             && (
                 (
                     1 === $this->zpUser->u_pm
@@ -525,7 +525,7 @@ class PTopic extends DataModel
     {
         return Cnst::PT_ARCHIVE === $this->poster_status
             && $this->actionsAllowed
-            && 0 === $this->canBlock
+            && 0 === $this->blockStatus
             && (
                 (
                     1 === $this->zpUser->u_pm
