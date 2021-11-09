@@ -38,13 +38,14 @@ class PMPost extends AbstractPM
             isset($args['more2'])
             && '' !== \trim($args['more2'], '1234567890')
         ) {
-            $topic = null;
             $hash  = $args['more2'];
             $temp  = $args;
 
             unset($temp['more2']);
 
-            if (! $this->c->Csrf->verify($hash, 'PMAction', $temp)) {
+            if (1 !== $this->user->u_pm) {
+                return $this->c->Message->message('PM off', true, 403);
+            } elseif (! $this->c->Csrf->verify($hash, 'PMAction', $temp)) {
                 return $this->c->Message->message($this->c->Csrf->getError());
             }
 
@@ -55,10 +56,10 @@ class PMPost extends AbstractPM
                 $this->c->Router->link('PMAction', $args),
                 __('New dialogue'),
             ];
+            $topic            = $this->pms->create(Cnst::PTOPIC);
+            $topic->sender    = $this->user;
+            $topic->recipient = $this->targetUser;
 
-            if (! $this->targetUser->usePM) {
-                $this->fIswev = ['e', 'Target group pm off'];
-            }
         } elseif ($this->pms->accessTopic($args['more1'])) {
             $topic = $this->pms->load(Cnst::PTOPIC, $args['more1']);
 
@@ -75,16 +76,20 @@ class PMPost extends AbstractPM
                 __('New message'),
             ];
             $this->pmCrumbs[] = $topic;
-
-            if ($topic->closed) {
-                $this->fIswev = ['e', 'Dialogue is closed'];
-            } elseif (! $topic->actionsAllowed) {
-                $this->fIswev = ['e', 'Dialogue is locked'];
-            } elseif (! $topic->canReply) {
-                $this->fIswev = ['e', 'Target pm off'];
-            }
         } else {
             return $this->c->Message->message('Not Found', true, 404);
+        }
+
+        if ($topic->closed) {
+            $this->fIswev = ['e', 'Dialogue is closed'];
+        } elseif (2 === $topic->blockStatus) {
+            $this->fIswev = ['e', 'You block addr'];
+        } elseif (1 === $topic->blockStatus) {
+            $this->fIswev = ['e', 'Addr block you'];
+        } elseif (! $topic->actionsAllowed) {
+            $this->fIswev = ['e', 'Target group pm off'];
+        } elseif (! $topic->canReply) {
+            $this->fIswev = ['e', 'Target pm off'];
         }
 
         $this->c->Lang->load('post');
@@ -99,11 +104,6 @@ class PMPost extends AbstractPM
             ) {
                 if (null !== $v->submit) {
                     if (
-                        $this->targetUser->usePM
-                        && 1 !== $this->targetUser->u_pm
-                    ) {
-                        $this->fIswev = ['e', 'Target pm off'];
-                    } elseif (
                         $this->targetUser->g_pm_limit > 0
                         && $this->targetUser->u_pm_num_all >= $this->targetUser->g_pm_limit
                     ) {
@@ -205,16 +205,13 @@ class PMPost extends AbstractPM
     /**
      * Создание приватной темы/сообщения
      */
-    protected function endPost(?PTopic $topic, Validator $v): Page
+    protected function endPost(PTopic $topic, Validator $v): Page
     {
         $now = \time();
 
-        if (! $topic instanceof PTopic) {
-            $topic            = $this->pms->create(Cnst::PTOPIC);
-            $topic->subject   = $v->subject;
-            $topic->sender    = $this->user;
-            $topic->recipient = $this->targetUser;
-            $topic->status    = null !== $v->archive ? Cnst::PT_ARCHIVE : Cnst::PT_NORMAL;
+        if ($this->newTopic) {
+            $topic->subject = $v->subject;
+            $topic->status  = null !== $v->archive ? Cnst::PT_ARCHIVE : Cnst::PT_NORMAL;
 
             $this->pms->insert(Cnst::PTOPIC, $topic);
         }
