@@ -107,9 +107,16 @@
             <span class="f-userstatus">{!! __($post->user->online ? 'Online' : 'Offline') !!}</span>
         @endif
           </div>
-        @if ($post->canDelete || $post->canEdit || $post->canQuote)
+        @if ($post->canDelete || $post->canEdit || $post->canQuote || $post->canBlock)
           <div class="f-post-btns">
             <ul>
+            @if ($post->canBlock)
+                @if (2 === $p->model->blockStatus)
+              <li class="f-postunblock"><a class="f-btn" title="{{ __('Unblock') }}" href="{{ $post->linkBlock }}"><span>{!! __('Unblock') !!}</span></a></li>
+                @else
+              <li class="f-postblock"><a class="f-btn" title="{{ __('Block') }}" href="{{ $post->linkBlock }}"><span>{!! __('Block') !!}</span></a></li>
+                @endif
+            @endif
             @if ($post->canDelete)
               <li class="f-postdelete"><a class="f-btn" title="{{ __('Delete') }}" href="{{ $post->linkDelete }}"><span>{!! __('Delete') !!}</span></a></li>
             @endif
