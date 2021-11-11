@@ -71,11 +71,9 @@ class PMTopic extends AbstractPM
                 $new = $this->pms->load(Cnst::PPOST, $new);
             }
 
-            if ($new instanceof PPost) {
-                return $this->c->Redirect->url($new->link);
-            } else {
-                return $this->c->Redirect->url($this->model->linkLast);
-            }
+            return $this->c->Redirect->url($new instanceof PPost ? $new->link : $this->model->linkLast);
+        } elseif (Cnst::ACTION_SEND === $args['more2']) {
+            return $this->send($args, $method);
         } elseif ('' === \trim($args['more2'], '1234567890')) {
             $this->model->page = (int) $args['more2'];
         } else {
@@ -85,6 +83,107 @@ class PMTopic extends AbstractPM
         return $this->view($args, $method);
     }
 
+    /**
+     * Подготовка формы и отправка диалога
+     */
+    protected function send(array $args, string $method): Page
+    {
+        if (! $this->model->canSend) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $this->args       = $args;
+        $this->targetUser = $this->model->ztUser;
+
+        if ('POST' === $method) {
+            $v = $this->c->Validator->reset()
+                ->addRules([
+                    'token'   => 'token:PMAction',
+                    'confirm' => 'checkbox',
+                    'send'    => 'required|string',
+                ])->addAliases([
+                ])->addArguments([
+                    'token' => $args,
+                ]);
+
+            if (
+                ! $v->validation($_POST)
+                || '1' !== $v->confirm
+            ) {
+                return $this->c->Redirect->url($this->model->link)->message('No confirm redirect');
+            }
+
+            $this->model->poster_status = Cnst::PT_NORMAL; //????
+            $this->model->target_status = Cnst::PT_NORMAL; //????
+
+            $this->pms->update(Cnst::PTOPIC, $this->model);
+            $this->pms->recalculate($this->targetUser);
+            $this->pms->recalculate($this->user);
+
+            return $this->c->Redirect->url($this->model->link)->message('Send dialogue redirect');
+        }
+
+        $this->pms->area  = $this->pms->inArea($this->model);
+        $this->pmIndex    = $this->pms->area;
+        $this->nameTpl    = 'pm/post';
+        $this->formTitle  = 'Send PT title';
+        $this->form       = $this->formSend($args);
+        $this->postsTitle = 'Send info';
+        $this->posts      = [$this->pms->load(Cnst::PPOST, $this->model->first_post_id)];
+        $this->pmCrumbs[] = [
+            $this->c->Router->link('PMAction', $args),
+            __('Send  dialogue'),
+        ];
+        $this->pmCrumbs[] = $this->model;
+
+        return $this;
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     */
+    protected function formSend(array $args): array
+    {
+        return [
+            'action' => $this->c->Router->link('PMAction', $args),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('PMAction', $args),
+            ],
+            'sets'   => [
+                'info' => [
+                    'info' => [
+                        [
+                            'value'   => __(['Dialogue %s', $this->model->name]),
+                        ],
+                        [
+                            'value'   => __(['Recipient: %s', $this->targetUser->username]),
+                        ],
+                    ],
+                ],
+                'confirm' => [
+                    'fields' => [
+                        'confirm' => [
+                            'type'    => 'checkbox',
+                            'label'   => __('Confirm send dialogue'),
+                            'value'   => '1',
+                            'checked' => false,
+                        ],
+                    ],
+                ],
+            ],
+            'btns'   => [
+                'send'  => [
+                    'type'  => 'submit',
+                    'value' => __('Send dialogue'),
+                ],
+                'cancel'  => [
+                    'type'  => 'btn',
+                    'value' => __('Cancel'),
+                    'link'  => $this->model->link,
+                ],
+            ],
+        ];
+    }
 
     /**
      * Подготовка данных для шаблона
