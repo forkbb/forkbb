@@ -138,26 +138,25 @@ msgstr "Topics moved."
 msgid "Confirm delete legend"
 msgstr "Please confirm deletion"
 
-msgid "Delete topics"
-msgstr "Delete topics"
-
-msgid "Delete topics comply"
-msgstr "Delete the selected topics (<b>All posts from these topics will be deleted</b>)"
+msgid "Delete topic title"
+msgid_plural "Delete topics title"
+msgstr[0] "Delete topic"
+msgstr[1] "Delete topics"
 
 msgid "Delete topics redirect"
-msgstr "Topics deleted."
+msgid_plural "Delete topics redirect"
+msgstr[0] "Topic deleted."
+msgstr[1] "Topics deleted."
 
 msgid "Open topic redirect"
-msgstr "Topic opened."
-
-msgid "Open topics redirect"
-msgstr "Topics opened."
+msgid_plural "Open topics redirect"
+msgstr[0] "Topic opened."
+msgstr[1] "Topics opened."
 
 msgid "Close topic redirect"
-msgstr "Topic closed."
-
-msgid "Close topics redirect"
-msgstr "Topics closed."
+msgid_plural "Close topics redirect"
+msgstr[0] "Topic closed."
+msgstr[1] "Topics closed."
 
 msgid "Not enough topics selected"
 msgstr "You must select at least two topics for merge."
@@ -201,17 +200,18 @@ msgstr "Are you sure you want to split the selected posts?"
 msgid "Split posts redirect"
 msgstr "Posts have been split."
 
-msgid "Delete posts"
-msgstr "Delete posts"
+msgid "Delete post title"
+msgid_plural "Delete posts title"
+msgstr[0] "Delete post"
+msgstr[1] "Delete posts"
 
 msgid "Cannot select first"
 msgstr "First post cannot be selected for split/delete."
 
-msgid "Delete posts comply"
-msgstr "Delete the selected posts"
-
-msgid "Delete posts redirect"
-msgstr "Posts deleted."
+msgid "Delete post redirect"
+msgid_plural "Delete posts redirect"
+msgstr[0] "Post deleted."
+msgstr[1] "Posts deleted."
 
 msgid "No posts selected"
 msgstr "You must select at least one post for split/delete."
@@ -249,17 +249,15 @@ msgstr "Action not available."
 msgid "No object selected"
 msgstr "You must select at least one object for the action."
 
-msgid "Open topics title"
-msgstr "Open topics"
-
 msgid "Open topic title"
-msgstr "Open topic"
-
-msgid "Close topics title"
-msgstr "Close topics"
+msgid_plural "Open topics title"
+msgstr[0] "Open topic"
+msgstr[1] "Open topics"
 
 msgid "Close topic title"
-msgstr "Close topic"
+msgid_plural "Close topics title"
+msgstr[0] "Close topic"
+msgstr[1] "Close topics"
 
 msgid "Topic links cannot be merged"
 msgstr "Topic links cannot be merged."
@@ -279,20 +277,28 @@ msgstr "Moderate topic"
 msgid "All"
 msgstr "All"
 
+msgid "Delete topic btn"
+msgid_plural "Delete topics btn"
+msgstr[0] "Delete topic"
+msgstr[1] "Delete topics"
+
+msgid "Delete post btn"
+msgid_plural "Delete posts btn"
+msgstr[0] "Delete post"
+msgstr[1] "Delete posts"
+
 msgid "Move topic"
 msgstr "Move topic"
 
 msgid "Open topic btn"
-msgstr "Open topic"
-
-msgid "Open topics btn"
-msgstr "Open topics"
+msgid_plural "Open topics btn"
+msgstr[0] "Open topic"
+msgstr[1] "Open topics"
 
 msgid "Close topic btn"
-msgstr "Close topic"
-
-msgid "Close topics btn"
-msgstr "Close topics"
+msgid_plural "Close topics btn"
+msgstr[0] "Close topic"
+msgstr[1] "Close topics"
 
 msgid "Unstick topic"
 msgstr "Unstick topic"

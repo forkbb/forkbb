@@ -272,7 +272,8 @@ class Moderate extends Page
             );
         }
 
-        $this->single = 1 === \count($objects);
+        $this->numObj = \count($objects);
+        $this->single = 1 === $this->numObj;
 
         return $this->{'action' . \ucfirst($v->action)}($objects, $v);
     }
@@ -286,8 +287,8 @@ class Moderate extends Page
     {
         switch ($v->step) {
             case 1:
-                $this->formTitle   = __($this->single ? 'Open topic title' : 'Open topics title');
-                $this->buttonValue = __($this->single ? 'Open topic btn' : 'Open topics btn');
+                $this->formTitle   = __(['Open topic title', $this->numObj]);
+                $this->buttonValue = ['Open topic btn', $this->numObj];
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->form        = $this->formConfirm($topics, $v);
 
@@ -296,9 +297,7 @@ class Moderate extends Page
                 if (1 === $v->confirm) {
                     $this->c->topics->access(true, ...$topics);
 
-                    $message = $this->single ? 'Open topic redirect' : 'Open topics redirect';
-
-                    return $this->c->Redirect->url($this->backLink)->message($message);
+                    return $this->c->Redirect->url($this->backLink)->message(['Open topic redirect', $this->numObj]);
                 } else {
                     return $this->actionCancel($topics, $v);
                 }
@@ -311,8 +310,8 @@ class Moderate extends Page
     {
         switch ($v->step) {
             case 1:
-                $this->formTitle   = __($this->single ? 'Close topic title' : 'Close topics title');
-                $this->buttonValue = __($this->single ? 'Close topic btn' : 'Close topics btn');
+                $this->formTitle   = __(['Close topic title', $this->numObj]);
+                $this->buttonValue = ['Close topic btn', $this->numObj];
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->form        = $this->formConfirm($topics, $v);
 
@@ -321,9 +320,7 @@ class Moderate extends Page
                 if (1 === $v->confirm) {
                     $this->c->topics->access(false, ...$topics);
 
-                    $message = $this->single ? 'Close topic redirect' : 'Close topics redirect';
-
-                    return $this->c->Redirect->url($this->backLink)->message($message);
+                    return $this->c->Redirect->url($this->backLink)->message(['Close topic redirect', $this->numObj]);
                 } else {
                     return $this->actionCancel($topics, $v);
                 }
@@ -353,8 +350,18 @@ class Moderate extends Page
 
         switch ($v->step) {
             case 1:
-                $this->formTitle   = __(true === $this->processAsPosts ? 'Delete posts' : 'Delete topics');
-                $this->buttonValue = __('Delete');
+                $this->formTitle   = __([
+                    true === $this->processAsPosts
+                        ? 'Delete post title'
+                        : 'Delete topic title',
+                    $this->numObj,
+                ]);
+                $this->buttonValue = [
+                    true === $this->processAsPosts
+                        ? 'Delete post btn'
+                        : 'Delete topic btn',
+                    $this->numObj,
+                ];
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->form        = $this->formConfirm($objects, $v);
 
@@ -363,13 +370,13 @@ class Moderate extends Page
                 if (1 === $v->confirm) {
                     if (true === $this->processAsPosts) {
                         $this->c->posts->delete(...$objects);
-                        $message = 'Delete posts redirect';
+                        $message = 'Delete post redirect';
                     } else {
                         $this->c->topics->delete(...$objects);
-                        $message = 'Delete topics redirect';
+                        $message = 'Delete topic redirect';
                     }
 
-                    return $this->c->Redirect->url($this->curForum->link)->message($message);
+                    return $this->c->Redirect->url($this->curForum->link)->message([$message, $this->numObj]);
                 } else {
                     return $this->actionCancel($objects, $v);
                 }
@@ -383,7 +390,7 @@ class Moderate extends Page
         switch ($v->step) {
             case 1:
                 $this->formTitle   = __('Move topics');
-                $this->buttonValue = __('Move');
+                $this->buttonValue = 'Move';
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->chkRedirect = true;
                 $this->form        = $this->formConfirm($topics, $v);
@@ -422,7 +429,7 @@ class Moderate extends Page
         switch ($v->step) {
             case 1:
                 $this->formTitle   = __('Merge topics');
-                $this->buttonValue = __('Merge');
+                $this->buttonValue = 'Merge';
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $this->curForum);
                 $this->chkRedirect = true;
                 $this->form        = $this->formConfirm($topics, $v);
@@ -446,7 +453,7 @@ class Moderate extends Page
         switch ($v->step) {
             case 1:
                 $this->formTitle   = __('Unstick topics');
-                $this->buttonValue = __('Unstick');
+                $this->buttonValue = 'Unstick';
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->form        = $this->formConfirm($topics, $v);
 
@@ -474,7 +481,7 @@ class Moderate extends Page
         switch ($v->step) {
             case 1:
                 $this->formTitle   = __('Stick topics');
-                $this->buttonValue = __('Stick');
+                $this->buttonValue = 'Stick';
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->form        = $this->formConfirm($topics, $v);
 
@@ -502,7 +509,7 @@ class Moderate extends Page
         switch ($v->step) {
             case 1:
                 $this->formTitle   = __('Split posts');
-                $this->buttonValue = __('Split');
+                $this->buttonValue = 'Split';
                 $this->needSubject = true;
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $this->curTopic);
                 $this->form        = $this->formConfirm($posts, $v);
@@ -615,7 +622,7 @@ class Moderate extends Page
         $form['sets']['moderate']['fields'] = $fields;
         $form['btns'][$v->action] = [
             'type'  => 'submit',
-            'value' => $this->buttonValue,
+            'value' => __($this->buttonValue),
         ];
         $form['btns']['cancel'] = [
             'type'  => 'submit',

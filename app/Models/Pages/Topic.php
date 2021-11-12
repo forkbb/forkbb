@@ -211,13 +211,13 @@ class Topic extends Page
             $form['btns']['open'] = [
                 'class'     => ['origin'],
                 'type'      => 'submit',
-                'value'     => __('Open topic btn'),
+                'value'     => __(['Open topic btn', 1]),
             ];
         } else {
             $form['btns']['close'] = [
                 'class'     => ['origin'],
                 'type'      => 'submit',
-                'value'     => __('Close topic btn'),
+                'value'     => __(['Close topic btn', 1]),
             ];
         }
 
