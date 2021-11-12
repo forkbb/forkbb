@@ -111,11 +111,10 @@ msgstr "Open"
 msgid "Close"
 msgstr "Close"
 
-msgid "Move topic"
-msgstr "Move topic"
-
-msgid "Move topics"
-msgstr "Move topics"
+msgid "Move topic title"
+msgid_plural "Move topics title"
+msgstr[0] "Move topic"
+msgstr[1] "Move topics"
 
 msgid "Invalid destination"
 msgstr "Invalid destination."
@@ -130,13 +129,9 @@ msgid "Leave redirect"
 msgstr "Leave redirect topic(s)"
 
 msgid "Move topic redirect"
-msgstr "Topic moved."
-
-msgid "Move topics redirect"
-msgstr "Topics moved."
-
-msgid "Confirm delete legend"
-msgstr "Please confirm deletion"
+msgid_plural "Move topics redirect"
+msgstr[0] "Topic moved."
+msgstr[1] "Topics moved."
 
 msgid "Delete topic title"
 msgid_plural "Delete topics title"
@@ -161,26 +156,31 @@ msgstr[1] "Topics closed."
 msgid "Not enough topics selected"
 msgstr "You must select at least two topics for merge."
 
-msgid "Stick topic redirect"
-msgstr "Topic sticked."
+msgid "Stick topic title"
+msgid_plural "Stick topics title"
+msgstr[0] "Stick topic"
+msgstr[1] "Stick topics"
 
-msgid "Stick topics redirect"
-msgstr "Topics sticked."
+msgid "Stick topic redirect"
+msgid_plural "Stick topics redirect"
+msgstr[0] "Topic sticked."
+msgstr[1] "Topics sticked."
+
+msgid "Unstick topic title"
+msgid_plural "Unstick topics title"
+msgstr[0] "Unstick topic"
+msgstr[1] "Unstick topics"
 
 msgid "Unstick topic redirect"
-msgstr "Topic unsticked."
+msgid_plural "Unstick topics redirect"
+msgstr[0] "Topic unsticked."
+msgstr[1] "Topics unsticked."
 
-msgid "Unstick topics redirect"
-msgstr "Topics unsticked."
-
-msgid "Merge topics"
+msgid "Merge topics title"
 msgstr "Merge topics"
 
 msgid "Merge topics redirect"
 msgstr "Topics merged."
-
-msgid "Confirm merge legend"
-msgstr "Please confirm merge"
 
 msgid "New subject"
 msgstr "New subject"
@@ -188,17 +188,11 @@ msgstr "New subject"
 msgid "No subject"
 msgstr "No subject for new topic."
 
-msgid "Confirm split legend"
-msgstr "Please confirm split of selected posts and select destination of move."
-
-msgid "Split posts"
-msgstr "Split posts"
-
-msgid "Split posts comply"
-msgstr "Are you sure you want to split the selected posts?"
+msgid "Split posts title"
+msgstr "Split topic"
 
 msgid "Split posts redirect"
-msgstr "Posts have been split."
+msgstr "Topic is split."
 
 msgid "Delete post title"
 msgid_plural "Delete posts title"
@@ -287,8 +281,11 @@ msgid_plural "Delete posts btn"
 msgstr[0] "Delete post"
 msgstr[1] "Delete posts"
 
-msgid "Move topic"
-msgstr "Move topic"
+msgid "Move topic btn"
+msgid_plural "Move topics btn"
+msgstr[0] "Move topic"
+msgstr[1] "Move topics"
+msgstr[2] "Move topics"
 
 msgid "Open topic btn"
 msgid_plural "Open topics btn"
@@ -300,20 +297,21 @@ msgid_plural "Close topics btn"
 msgstr[0] "Close topic"
 msgstr[1] "Close topics"
 
-msgid "Unstick topic"
-msgstr "Unstick topic"
+msgid "Merge btn"
+msgstr "Merge topics"
 
-msgid "Unstick topics"
-msgstr "Unstick topics"
+msgid "Unstick btn"
+msgid_plural "Unstick btn"
+msgstr[0] "Unstick topic"
+msgstr[1] "Unstick topics"
 
-msgid "Unstick"
-msgstr "Unstick"
+msgid "Stick btn"
+msgid_plural "Stick btn"
+msgstr[0] "Stick topic"
+msgstr[1] "Stick topics"
 
-msgid "Stick topics"
-msgstr "Stick topics"
-
-msgid "Stick"
-msgstr "Stick"
+msgid "Split btn"
+msgstr "Split topic"
 
 msgid "Moderate forum"
 msgstr "Moderate forum"

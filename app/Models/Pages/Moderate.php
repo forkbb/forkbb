@@ -389,8 +389,8 @@ class Moderate extends Page
     {
         switch ($v->step) {
             case 1:
-                $this->formTitle   = __('Move topics');
-                $this->buttonValue = 'Move';
+                $this->formTitle   = __(['Move topic title', $this->numObj]);
+                $this->buttonValue = ['Move topic btn', $this->numObj];
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->chkRedirect = true;
                 $this->form        = $this->formConfirm($topics, $v);
@@ -401,9 +401,7 @@ class Moderate extends Page
                     $forum = $this->c->forums->get($v->destination);
                     $this->c->topics->move(1 === $v->redirect, $forum, ...$topics);
 
-                    $message = $this->single ? 'Move topic redirect' : 'Move topics redirect';
-
-                    return $this->c->Redirect->url($this->curForum->link)->message($message);
+                    return $this->c->Redirect->url($this->curForum->link)->message(['Move topic redirect', $this->numObj]);
                 } else {
                     return $this->actionCancel($topics, $v);
                 }
@@ -428,8 +426,8 @@ class Moderate extends Page
 
         switch ($v->step) {
             case 1:
-                $this->formTitle   = __('Merge topics');
-                $this->buttonValue = 'Merge';
+                $this->formTitle   = __('Merge topics title');
+                $this->buttonValue = 'Merge btn';
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $this->curForum);
                 $this->chkRedirect = true;
                 $this->form        = $this->formConfirm($topics, $v);
@@ -452,8 +450,8 @@ class Moderate extends Page
     {
         switch ($v->step) {
             case 1:
-                $this->formTitle   = __('Unstick topics');
-                $this->buttonValue = 'Unstick';
+                $this->formTitle   = __(['Unstick topic title', $this->numObj]);
+                $this->buttonValue = ['Unstick btn', $this->numObj];
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->form        = $this->formConfirm($topics, $v);
 
@@ -465,9 +463,7 @@ class Moderate extends Page
                         $this->c->topics->update($topic);
                     }
 
-                    $message = $this->single ? 'Unstick topic redirect' : 'Unstick topics redirect';
-
-                    return $this->c->Redirect->url($this->backLink)->message($message);
+                    return $this->c->Redirect->url($this->backLink)->message(['Unstick topic redirect', $this->numObj]);
                 } else {
                     return $this->actionCancel($topics, $v);
                 }
@@ -480,8 +476,8 @@ class Moderate extends Page
     {
         switch ($v->step) {
             case 1:
-                $this->formTitle   = __('Stick topics');
-                $this->buttonValue = 'Stick';
+                $this->formTitle   = __(['Stick topic title', $this->numObj]);
+                $this->buttonValue = ['Stick btn', $this->numObj];
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->form        = $this->formConfirm($topics, $v);
 
@@ -493,9 +489,7 @@ class Moderate extends Page
                         $this->c->topics->update($topic);
                     }
 
-                    $message = $this->single ? 'Stick topic redirect' : 'Stick topics redirect';
-
-                    return $this->c->Redirect->url($this->backLink)->message($message);
+                    return $this->c->Redirect->url($this->backLink)->message(['Stick topic redirect', $this->numObj]);
                 } else {
                     return $this->actionCancel($topics, $v);
                 }
@@ -508,8 +502,8 @@ class Moderate extends Page
     {
         switch ($v->step) {
             case 1:
-                $this->formTitle   = __('Split posts');
-                $this->buttonValue = 'Split';
+                $this->formTitle   = __('Split posts title');
+                $this->buttonValue = 'Split btn';
                 $this->needSubject = true;
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $this->curTopic);
                 $this->form        = $this->formConfirm($posts, $v);

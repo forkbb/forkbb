@@ -225,13 +225,13 @@ class Topic extends Page
             $form['btns']['unstick'] = [
                 'class'     => ['origin'],
                 'type'      => 'submit',
-                'value'     => __('Unstick topic'),
+                'value'     => __(['Unstick btn', 1]),
             ];
         } else {
             $form['btns']['stick'] = [
                 'class'     => ['origin'],
                 'type'      => 'submit',
-                'value'     => __('Stick topic'),
+                'value'     => __(['Stick btn', 1]),
             ];
         }
 
@@ -239,7 +239,7 @@ class Topic extends Page
             'move' => [
                 'class'     => ['origin'],
                 'type'      => 'submit',
-                'value'     => __('Move topic'),
+                'value'     => __(['Move topic btn', 1]),
             ],
             'delete' => [
                 'class'     => ['origin'],
