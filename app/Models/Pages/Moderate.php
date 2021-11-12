@@ -273,7 +273,6 @@ class Moderate extends Page
         }
 
         $this->numObj = \count($objects);
-        $this->single = 1 === $this->numObj;
 
         return $this->{'action' . \ucfirst($v->action)}($objects, $v);
     }
