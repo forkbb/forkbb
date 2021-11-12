@@ -49,6 +49,9 @@ msgstr "Операция отменена."
 msgid "No confirm redirect"
 msgstr "Подтверждение не получено. Операция отменена."
 
+msgid "Confirm action"
+msgstr "Подтверждаю действие"
+
 msgid "Forum rules"
 msgstr "Правила форума"
 

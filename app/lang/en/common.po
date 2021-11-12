@@ -49,6 +49,9 @@ msgstr "Operation cancelled."
 msgid "No confirm redirect"
 msgstr "No confirmation provided. Operation cancelled."
 
+msgid "Confirm action"
+msgstr "Confirm action"
+
 msgid "Forum rules"
 msgstr "Forum rules"
 

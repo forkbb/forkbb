@@ -272,6 +272,8 @@ class Moderate extends Page
             );
         }
 
+        $this->single = 1 === \count($objects);
+
         return $this->{'action' . \ucfirst($v->action)}($objects, $v);
     }
 
@@ -284,8 +286,8 @@ class Moderate extends Page
     {
         switch ($v->step) {
             case 1:
-                $this->formTitle   = __('Open topics');
-                $this->buttonValue = __('Open');
+                $this->formTitle   = __($this->single ? 'Open topic title' : 'Open topics title');
+                $this->buttonValue = __($this->single ? 'Open topic btn' : 'Open topics btn');
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->form        = $this->formConfirm($topics, $v);
 
@@ -294,7 +296,7 @@ class Moderate extends Page
                 if (1 === $v->confirm) {
                     $this->c->topics->access(true, ...$topics);
 
-                    $message = 1 === \count($topics) ? 'Open topic redirect' : 'Open topics redirect';
+                    $message = $this->single ? 'Open topic redirect' : 'Open topics redirect';
 
                     return $this->c->Redirect->url($this->backLink)->message($message);
                 } else {
@@ -309,8 +311,8 @@ class Moderate extends Page
     {
         switch ($v->step) {
             case 1:
-                $this->formTitle   = __('Close topics');
-                $this->buttonValue = __('Close');
+                $this->formTitle   = __($this->single ? 'Close topic title' : 'Close topics title');
+                $this->buttonValue = __($this->single ? 'Close topic btn' : 'Close topics btn');
                 $this->crumbs      = $this->crumbs($this->formTitle, __('Moderate'), $v->topic ? $this->curTopic : $this->curForum);
                 $this->form        = $this->formConfirm($topics, $v);
 
@@ -319,7 +321,7 @@ class Moderate extends Page
                 if (1 === $v->confirm) {
                     $this->c->topics->access(false, ...$topics);
 
-                    $message = 1 === \count($topics) ? 'Close topic redirect' : 'Close topics redirect';
+                    $message = $this->single ? 'Close topic redirect' : 'Close topics redirect';
 
                     return $this->c->Redirect->url($this->backLink)->message($message);
                 } else {
@@ -392,7 +394,7 @@ class Moderate extends Page
                     $forum = $this->c->forums->get($v->destination);
                     $this->c->topics->move(1 === $v->redirect, $forum, ...$topics);
 
-                    $message = 1 === \count($topics) ? 'Move topic redirect' : 'Move topics redirect';
+                    $message = $this->single ? 'Move topic redirect' : 'Move topics redirect';
 
                     return $this->c->Redirect->url($this->curForum->link)->message($message);
                 } else {
@@ -456,7 +458,7 @@ class Moderate extends Page
                         $this->c->topics->update($topic);
                     }
 
-                    $message = 1 === \count($topics) ? 'Unstick topic redirect' : 'Unstick topics redirect';
+                    $message = $this->single ? 'Unstick topic redirect' : 'Unstick topics redirect';
 
                     return $this->c->Redirect->url($this->backLink)->message($message);
                 } else {
@@ -484,7 +486,7 @@ class Moderate extends Page
                         $this->c->topics->update($topic);
                     }
 
-                    $message = 1 === \count($topics) ? 'Stick topic redirect' : 'Stick topics redirect';
+                    $message = $this->single ? 'Stick topic redirect' : 'Stick topics redirect';
 
                     return $this->c->Redirect->url($this->backLink)->message($message);
                 } else {

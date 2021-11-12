@@ -249,14 +249,17 @@ msgstr "Action not available."
 msgid "No object selected"
 msgstr "You must select at least one object for the action."
 
-msgid "Open topics"
+msgid "Open topics title"
 msgstr "Open topics"
 
-msgid "Close topics"
+msgid "Open topic title"
+msgstr "Open topic"
+
+msgid "Close topics title"
 msgstr "Close topics"
 
-msgid "Confirm action"
-msgstr "Confirm action"
+msgid "Close topic title"
+msgstr "Close topic"
 
 msgid "Topic links cannot be merged"
 msgstr "Topic links cannot be merged."
@@ -279,11 +282,17 @@ msgstr "All"
 msgid "Move topic"
 msgstr "Move topic"
 
-msgid "Open topic"
+msgid "Open topic btn"
 msgstr "Open topic"
 
-msgid "Close topic"
+msgid "Open topics btn"
+msgstr "Open topics"
+
+msgid "Close topic btn"
 msgstr "Close topic"
+
+msgid "Close topics btn"
+msgstr "Close topics"
 
 msgid "Unstick topic"
 msgstr "Unstick topic"

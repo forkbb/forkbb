@@ -249,14 +249,17 @@ msgstr "Действие недоступно."
 msgid "No object selected"
 msgstr "Вы должны выбрать хотя бы один объект для действия."
 
-msgid "Open topics"
+msgid "Open topics title"
 msgstr "Открытие тем"
 
-msgid "Close topics"
+msgid "Open topic title"
+msgstr "Открытие темы"
+
+msgid "Close topics title"
 msgstr "Закрытие тем"
 
-msgid "Confirm action"
-msgstr "Подтверждаю действие"
+msgid "Close topic title"
+msgstr "Закрытие темы"
 
 msgid "Topic links cannot be merged"
 msgstr "Ссылки на темы не могут быть объединены."
@@ -279,11 +282,17 @@ msgstr "All"
 msgid "Move topic"
 msgstr "Перенести тему"
 
-msgid "Open topic"
+msgid "Open topic btn"
 msgstr "Открыть тему"
 
-msgid "Close topic"
+msgid "Open topics btn"
+msgstr "Открыть темы"
+
+msgid "Close topic btn"
 msgstr "Закрыть тему"
+
+msgid "Close topics btn"
+msgstr "Закрыть темы"
 
 msgid "Unstick topic"
 msgstr "Снять выделение темы"
