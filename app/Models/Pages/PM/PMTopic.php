@@ -164,7 +164,7 @@ class PMTopic extends AbstractPM
                     'fields' => [
                         'confirm' => [
                             'type'    => 'checkbox',
-                            'label'   => __('Confirm send dialogue'),
+                            'label'   => __('Confirm action'),
                             'value'   => '1',
                             'checked' => false,
                         ],

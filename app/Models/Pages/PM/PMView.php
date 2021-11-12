@@ -186,7 +186,7 @@ class PMView extends AbstractPM
                     'fields' => [
                         'confirm' => [
                             'type'    => 'checkbox',
-                            'label'   => __(Cnst::PT_ARCHIVE === $this->vStatus ? 'InfoSaveQm' : 'InfoDeleteQm'),
+                            'label'   => __('Confirm action'),
                             'value'   => '1',
                             'checked' => false,
                         ],

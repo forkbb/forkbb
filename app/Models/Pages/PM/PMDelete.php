@@ -151,7 +151,7 @@ class PMDelete extends AbstractPM
                     'fields' => [
                         'confirm' => [
                             'type'    => 'checkbox',
-                            'label'   => __($deleteTopic ? 'Confirm delete dialogue' : 'Confirm delete message'),
+                            'label'   => __('Confirm action'),
                             'value'   => '1',
                             'checked' => false,
                         ],
