@@ -176,7 +176,7 @@ msgid "Registered"
 msgstr "Дата регистрации"
 
 msgid "Subject"
-msgstr "Заголовок темы"
+msgstr "Заголовок"
 
 msgid "Message"
 msgstr "Сообщение"
