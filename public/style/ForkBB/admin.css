@@ -484,7 +484,7 @@
   font-weight: bold;
 }
 
-#forka .f-fs-result .f-field-result .f-ycaption:after {
+#forka .f-fs-result .f-field-result .f-ycaption::after {
   content: ": ";
 }
 
@@ -525,7 +525,7 @@
     font-weight: normal;
   }
 
-  #forka .f-fs-result .f-field-result .f-ycaption:after {
+  #forka .f-fs-result .f-field-result .f-ycaption::after {
     content: none;
   }
 }
@@ -966,16 +966,17 @@
   padding: 0.125rem 0.1875rem;
 }
 
-#forka .f-lga:before {
+#forka .f-lga::before {
+  display: inline-block;
   font-family: "FontAwesomeFree";
   font-weight: 900;
 }
 
-#forka .f-lgadown:before {
+#forka .f-lgadown::before {
   content: "\f019";
 }
 
-#forka .f-lgadel:before {
+#forka .f-lgadel::before {
   content: "\f2ed";
 }
 

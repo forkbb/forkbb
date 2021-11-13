@@ -170,6 +170,7 @@ body,
 }
 
 #fork summary::after {
+  display: inline-block;
   content: "(click to open)";
   font-size: 0.875rem;
   margin: 0 0.3125rem;
@@ -270,15 +271,15 @@ body,
   display: inline;
 }
 
-#fork .f-inline > dt + dd:before {
+#fork .f-inline > dt + dd::before {
   content: " ";
 }
 
-#fork .f-inline > dd + dd:before {
+#fork .f-inline > dd + dd::before {
   content: ", ";
 }
 
-#fork .f-req:after {
+#fork .f-req::after {
   content: " *";
   color: red;
 }
@@ -306,7 +307,7 @@ body,
 /********/
 /* Меню */
 /********/
-#fork .f-menu-toggle:after {
+#fork .f-menu-toggle::after {
   display: block;
   line-height: 1.25;
   border: 0.0625rem solid;
@@ -319,11 +320,11 @@ body,
   content: "\f0c9";
 }
 
-#fork .f-menu-checkbox:checked + .f-menu-toggle:after {
+#fork .f-menu-checkbox:checked + .f-menu-toggle::after {
   content: "\f00d";
 }
 
-#fork .f-menu-checkbox:focus + .f-menu-toggle:after {
+#fork .f-menu-checkbox:focus + .f-menu-toggle::after {
   color: #D3B58D;
   background-color: #583200;
 }
@@ -349,7 +350,8 @@ body,
   padding: 0.625rem;
 }
 
-#fork .f-menu-a:before {
+#fork .f-menu-a::before {
+  display: inline-block;
   font-family: "FontAwesomeFree";
   font-weight: 900;
   padding-inline-end: 0.3125rem;
@@ -425,7 +427,7 @@ body,
   text-transform: none;
 }
 
-#fork-nav-profile .f-menu-a:before {
+#fork-nav-profile .f-menu-a::before {
   content: "\f007";
 }
 
@@ -433,40 +435,40 @@ body,
   font-weight: bold;
 }
 
-#fork-nav-pm .f-menu-a:before {
+#fork-nav-pm .f-menu-a::before {
   font-weight: 400;
   content: "\f0e0";
 }
 
-#fork-nav-admin .f-menu-a:before {
+#fork-nav-admin .f-menu-a::before {
   content: "\f7d9";
 }
 
-#fork-nav-logout .f-menu-a:before {
+#fork-nav-logout .f-menu-a::before {
   content: "\f2f5";
 }
 
-#fork-nav-register .f-menu-a:before {
+#fork-nav-register .f-menu-a::before {
   content: "\f234";
 }
 
-#fork-nav-login .f-menu-a:before {
+#fork-nav-login .f-menu-a::before {
   content: "\f2f6";
 }
 
-#fork-nav-index .f-menu-a:before {
+#fork-nav-index .f-menu-a::before {
   content: "\f015";
 }
 
-#fork-nav-userlist .f-menu-a:before {
+#fork-nav-userlist .f-menu-a::before {
   content: "\f0c0";
 }
 
-#fork-nav-rules .f-menu-a:before {
+#fork-nav-rules .f-menu-a::before {
   content: "\f05a";
 }
 
-#fork-nav-search > .f-menu-a:before {
+#fork-nav-search > .f-menu-a::before {
   content: "\f002";
 }
 
@@ -476,7 +478,7 @@ body,
     display: none;
   }
 
-  #fork-nav-profile ~ .f-menu-item:not(.f-mi-pmnew) .f-menu-a:before {
+  #fork-nav-profile ~ .f-menu-item:not(.f-mi-pmnew) .f-menu-a::before {
     padding: 0;
   }
 }
@@ -525,7 +527,7 @@ body,
     min-width: 4rem;
   }
 
-  #fork-nav-profile .f-menu-a:before {
+  #fork-nav-profile .f-menu-a::before {
     content: none;
     padding: 0;
   }
@@ -862,13 +864,15 @@ body,
   font-weight: bold;
 }
 
-#fork .f-crumb + .f-crumb:before {
+#fork .f-crumb + .f-crumb::before {
+  display: inline-block;
   color: #583200;
   content: "/";
   margin: 0 0.3125rem;
 }
 
-#fork .f-subscribed > a:after {
+#fork .f-subscribed > a::after {
+  display: inline-block;
   font: 400 0.875rem "FontAwesomeFree";
   content: "\f0f3"; /* f06e */
   padding-inline-start: 0.3125rem;
@@ -1142,17 +1146,19 @@ body,
   font-size: 0.875rem;
 }
 
-#fork .f-fsub:before {
+#fork .f-fsub::before {
+  display: inline-block;
   font-size: 0.875rem;
   content: "└";
   margin-inline-start: -0.875rem;
 }
 
-#fork .f-subforums .f-fsub:before {
+#fork .f-subforums .f-fsub::before {
   margin-inline-start: 0.875rem;
 }
 
-#fork .f-subforums .f-frsname:before {
+#fork .f-subforums .f-frsname::before {
+  display: inline-block;
   content: "└";
 }
 
@@ -1164,34 +1170,34 @@ body,
   font-size: 0.875rem;
 }
 
-#fork .f-modlist > dt:before {
+#fork .f-modlist > dt::before {
   content: "(";
 }
 
-#fork .f-modlist:last-child:after {
+#fork .f-modlist:last-child::after {
   content: ")";
 }
 
-#fork .f-ficon:before {
+#fork .f-ficon::before {
   font: 400 1.5rem "FontAwesomeFree";
   content: "\f15b"; /* "\f086"; */
   color: #814A00;
 }
 
-#fork .f-fnew .f-ficon:before {
+#fork .f-fnew .f-ficon::before {
   font-weight: 900;
   content: "\f15b"; /* "\f086"; */
 }
 
-#fork .f-fredir .f-ficon:before {
+#fork .f-fredir .f-ficon::before {
   content: "\f1d8"; /* "\f0c6"; */
 }
 
-#fork .f-forum .f-ficon:before {
+#fork .f-forum .f-ficon::before {
   font-size: 1.2rem;
 }
 
-#fork .f-frdrsub:before {
+#fork .f-frdrsub::before {
   font: 400 0.875rem "FontAwesomeFree";
   content: "\f1d8";
   color: #814A00;
@@ -1209,14 +1215,14 @@ body,
   display: none;
 }
 
-#fork .f-fnew > a:before,
-#fork .f-tnew > a:before {
+#fork .f-fnew > a::before,
+#fork .f-tnew > a::before {
   font: 900 0.875rem "FontAwesomeFree";
   content: "\f086";
   padding: 0 0.25rem;
 }
 
-#fork .f-tunread > a:before {
+#fork .f-tunread > a::before {
   font: 900 0.875rem "FontAwesomeFree";
   content: "\f06e"; /* f070 */
   padding: 0 0.25rem;
@@ -1293,7 +1299,7 @@ body,
   font-size: 0.875rem;
 }
 
-#fork .f-cmforum:before {
+#fork .f-cmforum::before {
   content: ", ";
 }
 
@@ -1327,28 +1333,28 @@ body,
   display: none;
 }
 
-#fork .f-fsticky .f-ficon:before {
+#fork .f-fsticky .f-ficon::before {
   color: #D8000C;
 }
 
-#fork .f-tsticky:before {
+#fork .f-tsticky::before {
   font: 900 0.875rem "FontAwesomeFree";
   content: "\f35b";
   color: #D8000C;
 }
 
-#fork .f-fclosed .f-ficon:before {
+#fork .f-fclosed .f-ficon::before {
   color: #C8CCD1;
 }
 
-#fork .f-tclosed:before {
+#fork .f-tclosed::before {
   font: 900 0.875rem "FontAwesomeFree";
   content: "\f023";
   color: #C8CCD1;
 }
 
 
-#fork .f-tpoll:before {
+#fork .f-tpoll::before {
   font: 900 0.875rem "FontAwesomeFree";
   content: "\f681";
   color: #9F6000;
@@ -1444,8 +1450,9 @@ body,
   display: inline-block;
 }
 
-#fork .f-user-info > li:not(.f-username):before,
-#fork .f-user-info-add > li:before {
+#fork .f-user-info > li:not(.f-username)::before,
+#fork .f-user-info-add > li::before {
+  display: inline-block;
   content: "\2022";
   padding-inline-end: 0.3125rem;
 }
@@ -1454,7 +1461,7 @@ body,
   display: block;
 }
 
-#fork .f-avatar + .f-user-info > li:not(.f-username):before {
+#fork .f-avatar + .f-user-info > li:not(.f-username)::before {
   display: none;
 }
 
@@ -1469,6 +1476,7 @@ body,
 }
 
 #fork .f-user-online .f-username::before {
+  display: inline-block;
   font: 900 0.625rem "FontAwesomeFree";
   content: "\f111";
   color: #7fba00;
@@ -1629,8 +1637,8 @@ body,
     display: block;
   }
 
-  #fork .f-user-info > li:not(.f-username):before,
-  #fork .f-user-info-add > li:before {
+  #fork .f-user-info > li:not(.f-username)::before,
+  #fork .f-user-info-add > li::before {
     display: none;
   }
 
@@ -1986,8 +1994,8 @@ body,
   cursor: pointer;
 }
 
-#fork .f-ftlist .f-fch:checked + .f-ficon:after,
-#fork .f-post-checkbox:checked + .f-post-header:before {
+#fork .f-ftlist .f-fch:checked + .f-ficon::after,
+#fork .f-post-checkbox:checked + .f-post-header::before {
   font: 900 1rem "FontAwesomeFree";
   content: "\f00c";
   color: red;
@@ -2012,17 +2020,18 @@ body,
 #fork .f-post-search .f-post-header > h3 {
   font-size: 0.875rem;
   font-weight: normal;
-  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
   word-break: break-all;
 }
 
-#fork .f-psh-topic:before,
-#fork .f-post-search .f-post-posted:before {
+#fork .f-psh-topic::before,
+#fork .f-post-search .f-post-posted::before {
+  display: inline-block;
   font-family: "FontAwesomeFree";
   font-weight: 900;
   content: "\f105";
-  padding-inline-start: 0.3125rem;
-  padding-inline-end: 0.3125rem;
+  padding: 0 0.3125rem;
 }
 
 @media screen and (min-width: 50rem) {
@@ -2177,7 +2186,7 @@ body,
   margin: 0;
 }
 
-#fork .f-field-pline .f-ycaption:after {
+#fork .f-field-pline .f-ycaption::after {
   content: ": ";
 }
 
@@ -2272,7 +2281,7 @@ body,
     width: 67%
   }
 
-  #fork .f-field-pline .f-ycaption:after {
+  #fork .f-field-pline .f-ycaption::after {
     content: none;
   }
 }
