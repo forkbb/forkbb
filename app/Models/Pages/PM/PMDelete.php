@@ -110,7 +110,7 @@ class PMDelete extends AbstractPM
         $this->nameTpl    = 'pm/post';
         $this->formTitle  = $deleteTopic ? 'Delete PT title' : 'Delete PM title';
         $this->form       = $this->formDelete($args, $post, $deleteTopic);
-        $this->postsTitle = 'Delete info';
+        $this->postsTitle = $deleteTopic ? 'Delete dialogue info' : 'Delete info';
         $this->posts      = [$post];
         $this->pmCrumbs[] = [
             $this->c->Router->link('PMAction', $args),
