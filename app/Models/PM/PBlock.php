@@ -39,6 +39,8 @@ class PBlock extends Model
 
     public function init(User $user): void
     {
+        $this->setAttrs([]);
+
         $this->repository = [];
         $this->user       = $user;
 
@@ -102,5 +104,25 @@ class PBlock extends Model
         $query = 'DELETE FROM ::pm_block WHERE bl_first_id=:first_id AND bl_second_id=:second_id';
 
         return false !== $this->c->DB->exec($query, $vars);
+    }
+
+    /**
+     * Возвращает массив заблокированных пользователей
+     */
+    protected function getlist(): array
+    {
+        return isset($this->repository[$this->user->id])
+            ? $this->c->users->loadByIds($this->repository[$this->user->id])
+            : [];
+    }
+
+    /**
+     * Возращает статус возможности блокировки пользователя
+     */
+    public function canBlock(User $user): bool
+    {
+        return $this->user->id !== $user->id
+            && ! $user->isAdmin
+            && ! $user->isGuest;
     }
 }
