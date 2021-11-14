@@ -30,14 +30,11 @@ msgstr "Confirm delete post"
 msgid "Confirm delete topic"
 msgstr "Confirm delete topic (<b>All posts will be deleted from this topic</b>)"
 
-msgid "Warning"
-msgstr "You are about to permanently delete this post."
-
-msgid "Topic warning"
-msgstr "Warning! This is the first post in the topic, the whole topic will be permanently deleted."
-
 msgid "Delete info"
-msgstr "The post you have chosen to delete is set out below for you to review before proceeding"
+msgstr "The post you have chosen to delete"
+
+msgid "Delete topic info"
+msgstr "The first message from the topic you have chosen to delete"
 
 msgid "Reply by"
 msgstr "Reply by %1$s<br>Posted %2$s"
