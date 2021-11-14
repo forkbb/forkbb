@@ -196,9 +196,7 @@ class PPost extends DataModel
      */
     protected function getcanBlock(): bool
     {
-        return $this->poster_id !== $this->c->user->id
-            && ! $this->user->isAdmin
-            && ! $this->user->isGuest;
+        return $this->c->pms->block->canBlock($this->user);
     }
 
     /**
