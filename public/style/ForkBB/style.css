@@ -2420,6 +2420,23 @@ body,
   width: auto;
 }
 
+#forkpm #fork-pm-bl-ol {
+  padding-top: 0.3125rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3125rem;
+}
+
+#forkpm .f-pm-bl-li {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0.3125rem 0.625rem 0.625rem;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1 1 25rem;
+  border-bottom: 0.0625rem dotted;
+}
+
 @media screen and (min-width: 36rem) {
   #forkpm > .f-pmconfig-form dl {
     display: flex;

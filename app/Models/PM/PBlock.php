@@ -111,9 +111,26 @@ class PBlock extends Model
      */
     protected function getlist(): array
     {
-        return isset($this->repository[$this->user->id])
-            ? $this->c->users->loadByIds($this->repository[$this->user->id])
-            : [];
+        if (empty($this->repository[$this->user->id])) {
+            return [];
+        }
+
+        $list = $this->c->users->loadByIds($this->repository[$this->user->id]);
+
+        foreach ($list as &$user) {
+            if ($user instanceof User) {
+                $user->linkPMUnblock = $this->c->Router->link(
+                    'PMAction',
+                    [
+                        'action' => Cnst::ACTION_BLOCK,
+                        'more1'  => $user->id,
+                    ]
+                );
+            }
+        }
+        unset($user);
+
+        return $list;
     }
 
     /**
