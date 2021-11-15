@@ -1,0 +1,319 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+
+msgid "PM Folders"
+msgstr "Папки"
+
+msgid "New messages"
+msgstr "Новые сообщения"
+
+msgid "New messages %s"
+msgstr "Новые сообщения (%s)"
+
+msgid "New messages with %s"
+msgstr "Новые сообщения с %s"
+
+msgid "My talks"
+msgstr "Моя переписка"
+
+msgid "My talks %s"
+msgstr "Моя переписка (%s)"
+
+msgid "My talks with %s"
+msgstr "Моя переписка с %s"
+
+msgid "Archive messages"
+msgstr "Архивные сообщения"
+
+msgid "Archive messages %s"
+msgstr "Архивные сообщения (%s)"
+
+msgid "Archive messages with %s"
+msgstr "Архивные сообщения с %s"
+
+msgid "PM Storage"
+msgstr "Занято"
+
+msgid "Active: %s"
+msgstr "Активные: %s%%"
+
+msgid "Archive: %s"
+msgstr "Архив: %s%%"
+
+msgid "New PT title"
+msgstr "Создание приватного диалога"
+
+msgid "New dialogue"
+msgstr "Новый диалог"
+
+msgid "New PM title"
+msgstr "Публикация ответа"
+
+msgid "New PM title archive"
+msgstr "Сохранение сообщения"
+
+msgid "New message"
+msgstr "Новое сообщение"
+
+msgid "Edit PT title"
+msgstr "Редактирование диалога"
+
+msgid "Edit dialogue"
+msgstr "Редактирование диалога"
+
+msgid "Edit PM title"
+msgstr "Редактирование сообщения"
+
+msgid "Edit message"
+msgstr "Редактирование сообщения"
+
+msgid "\"%s\""
+msgstr "\"%s\""
+
+msgid "Topic review"
+msgstr "Обзор диалога (новое вверху)"
+
+msgid "Archive Send later"
+msgstr "В Архив (Отправить позже)"
+
+msgid "Info zero"
+msgstr "В данной папке нет сообщений."
+
+msgid "PM to archive Redirect"
+msgstr "Приватное сообщение сохранено в архив."
+
+msgid "PM created Redirect"
+msgstr "Создан новый диалог."
+
+msgid "PM sent Redirect"
+msgstr "Приватное сообщение отправлено."
+
+msgid "Dialogue"
+msgstr "Диалог"
+
+msgid "Dialogue %s was not found in the database"
+msgstr "Диалог %s не найден в базе данных."
+
+msgid "Select"
+msgstr "Выбрать"
+
+msgid "Closed"
+msgstr "Закрыт"
+
+msgid "for %s"
+msgstr "для %s"
+
+msgid "Last post <a href=\"%1$s\">%2$s</a>"
+msgstr "<small>Последнее сообщение </small><a href=\"%1$s\">%2$s</a>"
+
+msgid "Delete dialogue"
+msgstr "Удалить диалог"
+
+msgid "Delete message"
+msgstr "Удалить сообщение"
+
+msgid "Dialogue is closed"
+msgstr "Текущий диалог закрыт."
+
+msgid "Dialogue is locked"
+msgstr "Действия над этим диалогом запрещены."
+
+msgid "Target pm off"
+msgstr "Получатель выключил приватные сообщения."
+
+msgid "Target group pm off"
+msgstr "Группа получателя отключена от приватных сообщений."
+
+msgid "Target is full"
+msgstr "Папка приватных сообщений получателя переполнена."
+
+msgid "Active is full"
+msgstr "Ваша папка текущих приватных сообщений переполнена."
+
+msgid "Archive is full"
+msgstr "Ваша папка архивных приватных сообщений переполнена."
+
+msgid "Delete PT title"
+msgstr "Удаление диалога"
+
+msgid "Delete  dialogue"
+msgstr "Удаление диалога"
+
+msgid "Delete PM title"
+msgstr "Удаление сообщения"
+
+msgid "Delete  message"
+msgstr "Удаление сообщения"
+
+msgid "Delete info"
+msgstr "Удаляемое сообщение"
+
+msgid "Delete dialogue info"
+msgstr "Первое сообщение удаляемого диалога"
+
+msgid "Dialogue %s"
+msgstr "Диалог «%s»"
+
+msgid "Dialogue by %1$s (%2$s)"
+msgstr "Автор диалога: %1$s<br>Создан: %2$s"
+
+msgid "Message by %1$s (%2$s)"
+msgstr "Автор сообщения: %1$s<br>Создано: %2$s"
+
+msgid "Confirm delete dialogue"
+msgstr "Подтверждаю удаление диалога"
+
+msgid "Confirm delete message"
+msgstr "Подтверждаю удаление сообщения"
+
+msgid "Dialogue del redirect"
+msgstr "Диалог удален."
+
+msgid "Message del redirect"
+msgstr "Сообщение удалено."
+
+msgid "PM Options"
+msgstr "Настройки"
+
+msgid "PM Config"
+msgstr "Конфигурация"
+
+msgid "Blocked users"
+msgstr "Блокированные"
+
+msgid "To archive"
+msgstr "В Архив"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "No dialogs"
+msgstr "Вы не выбрали ни одного диалога для обработки."
+
+msgid "Unknown action selected"
+msgstr "Выбрано неизвестное действие."
+
+msgid "Dialogue %s is not yours"
+msgstr "Диалог %s не ваш."
+
+msgid "InfoDeleteQ"
+msgstr "Подтверждение удаления"
+
+msgid "InfoSaveQ"
+msgstr "Подтверждение переноса"
+
+msgid "InfoDeleteQt"
+msgstr "Удаление диалогов"
+
+msgid "InfoSaveQt"
+msgstr "Перенос диалогов"
+
+msgid "Dialogues deleted redirect"
+msgstr "Диалоги удалены."
+
+msgid "Dialogues moved to archive redirect"
+msgstr "Диалоги перемещены в Архив."
+
+msgid "Cannot be moved"
+msgstr "Столько диалогов нельзя переместить в Архив."
+
+msgid "Send dialogue"
+msgstr "Отправить диалог"
+
+msgid "Send dialogue to %s"
+msgstr "Отправить диалог %s"
+
+msgid "PM Config title"
+msgstr "Конфигурация личных сообщений"
+
+msgid "Use PM label"
+msgstr "Использовать ЛС"
+
+msgid "Use PM help"
+msgstr "Использовать личные сообщения."
+
+msgid "Email notification label"
+msgstr "Уведомления на email"
+
+msgid "Email notification help"
+msgstr "Получать электронные письма-уведомления о новых личных сообщениях."
+
+msgid "PM Config redirect"
+msgstr "Конфигурация личных сообщений изменена."
+
+msgid "PM Config legend"
+msgstr "Настройки"
+
+msgid "PM off"
+msgstr "Вы выключили службу личных сообщений."
+
+msgid "Block"
+msgstr "Блокировать"
+
+msgid "Unblock"
+msgstr "Разблокировать"
+
+msgid "You block addr"
+msgstr "Нельзя отправить сообщение. Вы заблокировали получателя."
+
+msgid "Addr block you"
+msgstr "Нельзя отправить сообщение. Получатель заблокировал вас."
+
+msgid "Send  dialogue"
+msgstr "Отправка диалога"
+
+msgid "Send PT title"
+msgstr "Отправка диалога"
+
+msgid "Recipient: %s"
+msgstr "Получатель: %s"
+
+msgid "Send info"
+msgstr "Первое сообщение"
+
+msgid "Send dialogue redirect"
+msgstr "Диалог отправлен."
+
+msgid "Blocked users title"
+msgstr "Заблокированные пользователи"
+
+msgid "No blocked users"
+msgstr "Нет заблокированных пользователей"
+
+msgid "Block user title"
+msgstr "Блокировка пользователя"
+
+msgid "Unblock user title"
+msgstr "Разблокировка пользователя"
+
+msgid "Block user %s crumb"
+msgstr "Блокировка пользователя %s"
+
+msgid "Unblock user %s crumb"
+msgstr "Разблокировка пользователя %s"
+
+msgid "Block user %s"
+msgstr "Заблокировать пользователя %s"
+
+msgid "Unblock user %s"
+msgstr "Снять блокировку с пользователя %s"
+
+msgid "Invalid action"
+msgstr "Неверное действие."
+
+msgid "User is blocked redirect"
+msgstr "Пользователь заблокирован."
+
+msgid "User is unblocked redirect"
+msgstr "Пользователь разблокирован."

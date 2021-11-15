@@ -1,0 +1,319 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "PM Folders"
+msgstr "Folders"
+
+msgid "New messages"
+msgstr "New messages"
+
+msgid "New messages %s"
+msgstr "New messages (%s)"
+
+msgid "New messages with %s"
+msgstr "New messages with %s
+
+msgid "My talks"
+msgstr "My talks"
+
+msgid "My talks %s"
+msgstr "My talks (%s)"
+
+msgid "My talks with %s"
+msgstr "My talks with %s"
+
+msgid "Archive messages"
+msgstr "Archive messages"
+
+msgid "Archive messages %s"
+msgstr "Archive messages (%s)"
+
+msgid "Archive messages with %s"
+msgstr "Archive messages with %s"
+
+msgid "PM Storage"
+msgstr "Storage"
+
+msgid "Active: %s"
+msgstr "Active: %s%%"
+
+msgid "Archive: %s"
+msgstr "Archive: %s%%"
+
+msgid "New PT title"
+msgstr "Create a private dialogue"
+
+msgid "New dialogue"
+msgstr "New dialogue"
+
+msgid "New PM title"
+msgstr "Post a reply"
+
+msgid "New PM title archive"
+msgstr "Save message"
+
+msgid "New message"
+msgstr "New message"
+
+msgid "Edit PT title"
+msgstr "Edit dialogue"
+
+msgid "Edit dialogue"
+msgstr "Edit dialogue"
+
+msgid "Edit PM title"
+msgstr "Edit message"
+
+msgid "Edit message"
+msgstr "Edit message"
+
+msgid "\"%s\""
+msgstr "\"%s\""
+
+msgid "Topic review"
+msgstr "Topic review (newest first)"
+
+msgid "Archive Send later"
+msgstr "Archive (Send later)"
+
+msgid "Info zero"
+msgstr "There are no dialogues in this folder."
+
+msgid "PM to archive Redirect"
+msgstr "Private message saved to archive."
+
+msgid "PM created Redirect"
+msgstr "A new dialogue has been created."
+
+msgid "PM sent Redirect"
+msgstr "Private message sent."
+
+msgid "Dialogue"
+msgstr "Dialogue"
+
+msgid "Dialogue %s was not found in the database"
+msgstr "Dialogue %s was not found in the database."
+
+msgid "Select"
+msgstr "Выбрать"
+
+msgid "Closed"
+msgstr "Closed"
+
+msgid "for %s"
+msgstr "for %s"
+
+msgid "Last post <a href=\"%1$s\">%2$s</a>"
+msgstr "<small>Last post </small><a href=\"%1$s\">%2$s</a>"
+
+msgid "Delete dialogue"
+msgstr "Delete dialogue"
+
+msgid "Delete message"
+msgstr "Delete message"
+
+msgid "Dialogue is closed"
+msgstr "The current dialogue is closed."
+
+msgid "Dialogue is locked"
+msgstr "Actions over this dialogue is locked."
+
+msgid "Target pm off"
+msgstr "The recipient has turned off private messages."
+
+msgid "Target group pm off"
+msgstr "The recipient group is disconnected from private messages."
+
+msgid "Target is full"
+msgstr "The recipient's private messages are full."
+
+msgid "Active is full"
+msgstr "Your private messages are full."
+
+msgid "Archive is full"
+msgstr "Your archive of private messages is full."
+
+msgid "Delete PT title"
+msgstr "Delete dialogue"
+
+msgid "Delete  dialogue"
+msgstr "Delete dialogue"
+
+msgid "Delete PM title"
+msgstr "Delete message"
+
+msgid "Delete  message"
+msgstr "Delete message"
+
+msgid "Delete info"
+msgstr "The post you have chosen to delete"
+
+msgid "Delete dialogue info"
+msgstr "The first message from the dialogue you have chosen to delete"
+
+msgid "Dialogue %s"
+msgstr "Dialogue «%s»"
+
+msgid "Dialogue by %1$s (%2$s)"
+msgstr "Dialogue started by %1$s<br>Created %2$s"
+
+msgid "Message by %1$s (%2$s)"
+msgstr "Message by %1$s<br>Posted %2$s"
+
+msgid "Confirm delete dialogue"
+msgstr "Confirm delete dialogue"
+
+msgid "Confirm delete message"
+msgstr "Confirm delete message"
+
+msgid "Dialogue del redirect"
+msgstr "Dialogue deleted."
+
+msgid "Message del redirect"
+msgstr "Message deleted."
+
+msgid "PM Options"
+msgstr "Options"
+
+msgid "PM Config"
+msgstr "Config"
+
+msgid "Blocked users"
+msgstr "Blocked users"
+
+msgid "To archive"
+msgstr "To archive"
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "No dialogs"
+msgstr "You have not selected any dialogue for processing."
+
+msgid "Unknown action selected"
+msgstr "Unknown action selected."
+
+msgid "Dialogue %s is not yours"
+msgstr "Dialogue %s is not yours."
+
+msgid "InfoDeleteQ"
+msgstr "Confirm deleting"
+
+msgid "InfoSaveQ"
+msgstr "Confirm saving"
+
+msgid "InfoDeleteQt"
+msgstr "Delete dialogues"
+
+msgid "InfoSaveQt"
+msgstr "Move dialogues"
+
+msgid "Dialogues deleted redirect"
+msgstr "Dialogues deleted."
+
+msgid "Dialogues moved to archive redirect"
+msgstr "Dialogues moved to Archive."
+
+msgid "Cannot be moved"
+msgstr "So many dialogues cannot be moved to the Archive."
+
+msgid "Send dialogue"
+msgstr "Send dialogue"
+
+msgid "Send dialogue to %s"
+msgstr "Send this dialogue to the %s"
+
+msgid "PM Config title"
+msgstr "Configuring private messages "
+
+msgid "Use PM label"
+msgstr "Use PM"
+
+msgid "Use PM help"
+msgstr "Use private messages."
+
+msgid "Email notification label"
+msgstr "Email notifications"
+
+msgid "Email notification help"
+msgstr "Receive email notifications about new private messages."
+
+msgid "PM Config redirect"
+msgstr "Private messaging configuration changed."
+
+msgid "PM Config legend"
+msgstr "Settings"
+
+msgid "PM off"
+msgstr "You have turned off private messaging."
+
+msgid "Block"
+msgstr "Block"
+
+msgid "Unblock"
+msgstr "Unblock"
+
+msgid "You block addr"
+msgstr "It is not possible to send the private message. You have blocked the user."
+
+msgid "Addr block you"
+msgstr "It is not possible to send the private message. The user has blocked you."
+
+msgid "Send  dialogue"
+msgstr "Send dialogue"
+
+msgid "Send PT title"
+msgstr "Send dialogue"
+
+msgid "Recipient: %s"
+msgstr "Recipient: %s"
+
+msgid "Send info"
+msgstr "The first message"
+
+msgid "Send dialogue redirect"
+msgstr "Dialogue has been sent."
+
+msgid "Blocked users title"
+msgstr "Blocked users"
+
+msgid "No blocked users"
+msgstr "Нет заблокированных пользователей"
+
+msgid "Block user title"
+msgstr "Block user"
+
+msgid "Unblock user title"
+msgstr "Unblock user"
+
+msgid "Block user %s crumb"
+msgstr "Block user %s"
+
+msgid "Unblock user %s crumb"
+msgstr "Unblock user %s"
+
+msgid "Block user %s"
+msgstr "Block user %s"
+
+msgid "Unblock user %s"
+msgstr "Unblock user %s"
+
+msgid "Invalid action"
+msgstr "Invalid action."
+
+msgid "User is blocked redirect"
+msgstr "User is blocked."
+
+msgid "User is unblocked redirect"
+msgstr "User is unblocked."
