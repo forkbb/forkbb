@@ -24,7 +24,7 @@ use function \ForkBB\__;
 class Update extends Admin
 {
     const PHP_MIN                    = '7.3.0';
-    const LATEST_REV_WITH_DB_CHANGES = 31;
+    const LATEST_REV_WITH_DB_CHANGES = 37;
     const LOCK_NAME                  = 'lock_update';
     const LOCk_TTL                   = 1800;
     const JSON_OPTIONS               = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
@@ -44,7 +44,7 @@ class Update extends Admin
         $this->onlinePos  = null;
         $this->nameTpl    = 'admin/form';
         $this->titleForm  = 'Update ForkBB';
-        $this->classForm  = 'updateforkbb';
+        $this->classForm  = ['updateforkbb'];
         $this->configFile = $container->DIR_APP . '/config/' . self::CONFIG_FILE;
 
         $this->header('Retry-After', '3600');
@@ -1432,6 +1432,164 @@ class Update extends Admin
         $this->c->DB->renameField('users', 'messages_new',    'u_pm_num_new');
         $this->c->DB->renameField('users', 'messages_all',    'u_pm_num_all');
         $this->c->DB->renameField('users', 'pmsn_last_post',  'u_pm_last_post');
+
+        return null;
+    }
+
+    /**
+     * rev.37 to rev.38
+     */
+    protected function stageNumber37(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>pms',
+            '\\ForkBB\\Models\\PM\\Model::class',
+            'bbcode'
+        );
+
+        $coreConfig->add(
+            'multiple=>PM',
+            '\\ForkBB\\Models\\Pages\\PM::class',
+            'Poll'
+        );
+
+        $coreConfig->add(
+            'multiple=>PMConfig',
+            '\\ForkBB\\Models\\Pages\\PM\\PMConfig::class',
+            'PM'
+        );
+
+        $coreConfig->add(
+            'multiple=>PMBlock',
+            '\\ForkBB\\Models\\Pages\\PM\\PMBlock::class',
+            'PM'
+        );
+
+        $coreConfig->add(
+            'multiple=>PMEdit',
+            '\\ForkBB\\Models\\Pages\\PM\\PMEdit::class',
+            'PM'
+        );
+
+        $coreConfig->add(
+            'multiple=>PMDelete',
+            '\\ForkBB\\Models\\Pages\\PM\\PMDelete::class',
+            'PM'
+        );
+
+        $coreConfig->add(
+            'multiple=>PMTopic',
+            '\\ForkBB\\Models\\Pages\\PM\\PMTopic::class',
+            'PM'
+        );
+
+        $coreConfig->add(
+            'multiple=>PMPost',
+            '\\ForkBB\\Models\\Pages\\PM\\PMPost::class',
+            'PM'
+        );
+
+        $coreConfig->add(
+            'multiple=>PMView',
+            '\\ForkBB\\Models\\Pages\\PM\\PMView::class',
+            'PM'
+        );
+
+        $coreConfig->add(
+            'multiple=>PTopicModel',
+            '\\ForkBB\\Models\\PM\\PTopic::class'
+        );
+
+        $coreConfig->add(
+            'multiple=>PPostModel',
+            '\\ForkBB\\Models\\PM\\PPost::class'
+        );
+
+        $coreConfig->add(
+            'shared=>PBlockModel',
+            '\\ForkBB\\Models\\PM\\PBlock::class'
+        );
+
+        $coreConfig->add(
+            'shared=>PMPTopicCalcStat',
+            '\\ForkBB\\Models\\PM\\CalcStat::class'
+        );
+
+        $coreConfig->add(
+            'shared=>PMModelLoad',
+            '\\ForkBB\\Models\\PM\\Load::class'
+        );
+
+        $coreConfig->add(
+            'shared=>PMModelSave',
+            '\\ForkBB\\Models\\PM\\Save::class'
+        );
+
+        $coreConfig->add(
+            'shared=>PMModelDelete',
+            '\\ForkBB\\Models\\PM\\Delete::class'
+        );
+
+        $coreConfig->add(
+            'shared=>PMModelUpdateUsername',
+            '\\ForkBB\\Models\\PM\\UpdateUsername::class'
+        );
+
+        $coreConfig->save();
+
+        $this->c->DB->dropTable('pm_rnd');
+        $this->c->DB->dropTable('pm_posts');
+        $this->c->DB->dropTable('pm_topics');
+
+        // pm_posts
+        $schema = [
+            'FIELDS' => [
+                'id'           => ['SERIAL', false],
+                'poster'       => ['VARCHAR(190)', false, ''],
+                'poster_id'    => ['INT(10) UNSIGNED', false, 0],
+                'poster_ip'    => ['VARCHAR(45)', false, ''],
+                'message'      => ['TEXT', false],
+                'hide_smilies' => ['TINYINT(1)', false, 0],
+                'posted'       => ['INT(10) UNSIGNED', false, 0],
+                'edited'       => ['INT(10) UNSIGNED', false, 0],
+                'topic_id'     => ['INT(10) UNSIGNED', false, 0],
+            ],
+            'PRIMARY KEY' => ['id'],
+            'INDEXES' => [
+                'topic_id_idx' => ['topic_id'],
+            ],
+        ];
+        $this->c->DB->createTable('pm_posts', $schema);
+
+        // pm_topics
+        $schema = [
+            'FIELDS' => [
+                'id'            => ['SERIAL', false],
+                'subject'       => ['VARCHAR(255)', false, ''],
+                'poster'        => ['VARCHAR(190)', false, ''],
+                'poster_id'     => ['INT(10) UNSIGNED', false, 0],
+                'poster_status' => ['TINYINT UNSIGNED', false, 0],
+                'poster_visit'  => ['INT(10) UNSIGNED', false, 0],
+                'target'        => ['VARCHAR(190)', false, ''],
+                'target_id'     => ['INT(10) UNSIGNED', false, 0],
+                'target_status' => ['TINYINT UNSIGNED', false, 0],
+                'target_visit'  => ['INT(10) UNSIGNED', false, 0],
+                'num_replies'   => ['INT(10) UNSIGNED', false, 0],
+                'first_post_id' => ['INT(10) UNSIGNED', false, 0],
+                'last_post'     => ['INT(10) UNSIGNED', false, 0],
+                'last_post_id'  => ['INT(10) UNSIGNED', false, 0],
+                'last_number'   => ['TINYINT UNSIGNED', false, 0],
+            ],
+            'PRIMARY KEY' => ['id'],
+            'INDEXES' => [
+                'last_post_idx'        => ['last_post'],
+                'poster_id_status_idx' => ['poster_id', 'poster_status'],
+                'target_id_status_idx' => ['target_id', 'target_status'],
+            ],
+        ];
+        $this->c->DB->createTable('pm_topics', $schema);
 
         return null;
     }

@@ -130,7 +130,7 @@ return [
             'cache' => '%Cache%',
         ],
         'HTMLCleaner' => [
-            'calss'  => \ForkBB\Core\HTMLCleaner::class,
+            'class'  => \ForkBB\Core\HTMLCleaner::class,
             'config' => '%DIR_APP%/config/jevix.default.php',
         ],
 
@@ -155,6 +155,7 @@ return [
         'search'        => \ForkBB\Models\Search\Model::class,
         'subscriptions' => \ForkBB\Models\Subscription\Model::class,
         'bbcode'        => '@BBCodeListModel:init',
+        'pms'           => \ForkBB\Models\PM\Model::class,
 
         'Csrf' => [
             'class'  => \ForkBB\Core\Csrf::class,
@@ -208,6 +209,13 @@ return [
         'BBCodeListModelUpdate'   => \ForkBB\Models\BBCodeList\Update::class,
         'BBCodeListModelInsert'   => \ForkBB\Models\BBCodeList\Insert::class,
         'BBCodeListModelDelete'   => \ForkBB\Models\BBCodeList\Delete::class,
+
+        'PBlockModel'           => \ForkBB\Models\PM\PBlock::class,
+        'PMPTopicCalcStat'      => \ForkBB\Models\PM\CalcStat::class,
+        'PMModelLoad'           => \ForkBB\Models\PM\Load::class,
+        'PMModelSave'           => \ForkBB\Models\PM\Save::class,
+        'PMModelDelete'         => \ForkBB\Models\PM\Delete::class,
+        'PMModelUpdateUsername' => \ForkBB\Models\PM\UpdateUsername::class,
     ],
     'multiple'  => [
         'CtrlPrimary' => \ForkBB\Controllers\Primary::class,
@@ -238,6 +246,14 @@ return [
         'Email'           => \ForkBB\Models\Pages\Email::class,
         'Feed'            => \ForkBB\Models\Pages\Feed::class,
         'Poll'            => \ForkBB\Models\Pages\Poll::class,
+        'PM'              => \ForkBB\Models\Pages\PM::class,
+        'PMView'          => \ForkBB\Models\Pages\PM\PMView::class,
+        'PMPost'          => \ForkBB\Models\Pages\PM\PMPost::class,
+        'PMTopic'         => \ForkBB\Models\Pages\PM\PMTopic::class,
+        'PMDelete'        => \ForkBB\Models\Pages\PM\PMDelete::class,
+        'PMEdit'          => \ForkBB\Models\Pages\PM\PMEdit::class,
+        'PMBlock'         => \ForkBB\Models\Pages\PM\PMBlock::class,
+        'PMConfig'        => \ForkBB\Models\Pages\PM\PMConfig::class,
         'ProfileView'     => \ForkBB\Models\Pages\Profile\View::class,
         'ProfileEdit'     => \ForkBB\Models\Pages\Profile\Edit::class,
         'ProfileConfig'   => \ForkBB\Models\Pages\Profile\Config::class,
@@ -350,7 +366,6 @@ return [
 
         'PollModel' => \ForkBB\Models\Poll\Model::class,
 
-
         'ReportModel'             => \ForkBB\Models\Report\Model::class,
         'ReportManagerSave'       => \ForkBB\Models\Report\Save::class,
         'ReportManagerLoad'       => \ForkBB\Models\Report\Load::class,
@@ -373,5 +388,8 @@ return [
         'SearchModelExecute' => \ForkBB\Models\Search\Execute::class,
 
         'BBStructure' => \ForkBB\Models\BBCodeList\Structure::class,
+
+        'PTopicModel' => \ForkBB\Models\PM\PTopic::class,
+        'PPostModel'  => \ForkBB\Models\PM\PPost::class,
     ],
 ];
