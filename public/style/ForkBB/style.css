@@ -2416,6 +2416,10 @@ body,
   padding: 0;
 }
 
+#fork .f-block-form .f-fbtn {
+  width: auto;
+}
+
 @media screen and (min-width: 36rem) {
   #forkpm > .f-pmconfig-form dl {
     display: flex;
