@@ -72,7 +72,7 @@ class PPost extends DataModel
         } elseif ($user->isGuest) {
             $user = clone $user;
 
-            $user->__username = $data['username'];
+            $user->__username = $this->poster;
         }
 
         return $user;
