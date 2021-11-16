@@ -34,8 +34,8 @@ class PM extends Page
                 }
             } elseif (
                 \strlen($second) < 3
-                && '"' !== $second[0]
-                && '"' !== $second[-1]
+                || '"' !== $second[0]
+                || '"' !== $second[-1]
             ) {
                 return $this->c->Message->message('Bad request');
             }
