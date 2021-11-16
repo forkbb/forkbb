@@ -224,7 +224,7 @@ class Model extends ParentModel
     /**
      * Инициализирует массивы индексов приватных тем текущего пользователя
      * Инициализирует число приватных тем без фильтра
-     * Может использовать фильтр по второму пользователю: id или username
+     * Может использовать фильтр по второму пользователю: id или "username" (именно в кавычках)
      */
     public function init(/* null|int|string */ $second = null): self
     {
@@ -293,7 +293,7 @@ class Model extends ParentModel
                         if (
                             null === $second
                             || $row['target_id'] === $second
-                            || $row['target'] === $second
+                            || '"' . $row['target'] . '"' === $second
                         ) {
                             $idsArc[$id] = $lp;
                         }
@@ -305,7 +305,7 @@ class Model extends ParentModel
                         if (
                             null === $second
                             || $row['target_id'] === $second
-                            || $row['target'] === $second
+                            || '"' . $row['target'] . '"' === $second
                         ) {
                             if ($lp > $row['poster_visit']) {
                                 $idsNew[$id] = $lp;
@@ -328,7 +328,7 @@ class Model extends ParentModel
                         if (
                             null === $second
                             || $row['poster_id'] === $second
-                            || $row['poster'] === $second
+                            || '"' . $row['poster'] . '"' === $second
                         ) {
                             $idsArc[$id] = $lp;
                         }
@@ -340,7 +340,7 @@ class Model extends ParentModel
                         if (
                             null === $second
                             || $row['poster_id'] === $second
-                            || $row['poster'] === $second
+                            || '"' . $row['poster'] . '"' === $second
                         ) {
                             if ($lp > $row['target_visit']) {
                                 $idsNew[$id] = $lp;

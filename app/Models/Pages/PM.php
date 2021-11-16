@@ -24,10 +24,20 @@ class PM extends Page
         $second = null;
 
         if (isset($args['second'])) {
-            if ('' === \trim($args['second'], '1234567890')) {
-                $second = (int) $args['second'];
-            } else {
-                $second = $args['second'];
+            $second = $args['second'];
+
+            if ('' === \trim($second, '1234567890')) {
+                $second = (int) $second;
+
+                if ($second < 2) { // ???? вынести все в роутер?
+                    return $this->c->Message->message('Bad request');
+                }
+            } elseif (
+                \strlen($second) < 3
+                && '"' !== $second[0]
+                && '"' !== $second[-1]
+            ) {
+                return $this->c->Message->message('Bad request');
             }
         }
 

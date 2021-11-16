@@ -147,14 +147,17 @@ abstract class AbstractPM extends Page
 
         if ($viewArea) {
             if (null !== $pms->second) {
-                if (
-                    \is_int($pms->second)
-                    && ($user = $this->c->users->load($pms->second)) instanceof User
-                    && ! $user->isGuest
-                ) {
-                    $name = $user->username;
+                if (\is_int($pms->second)) {
+                    if (
+                        ($user = $this->c->users->load($pms->second)) instanceof User
+                        && ! $user->isGuest
+                    ) {
+                        $name = $user->username;
+                    } else {
+                        $name = 'unknown'; // ????
+                    }
                 } else {
-                    $name = $pms->second;
+                    $name = \substr($pms->second, 1, -1);
                 }
 
                 switch ($pms->area) {
@@ -168,7 +171,9 @@ abstract class AbstractPM extends Page
                         $this->c->Router->link(
                             'PMAction',
                             [
-                                'second' => $this->targetUser->id,
+                                'second' => $this->targetUser->isGuest
+                                    ? '"' . $this->targetUser->username . '"'
+                                    : $this->targetUser->id,
                                 'action' => $pms->area,
                             ]
                         ),
