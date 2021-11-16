@@ -132,6 +132,8 @@ class Delete extends Method
                 WHERE post_id IN (?ai:posts)';
         }
 
-        $this->c->DB->exec($query, $vars);
+        if (isset($query, $vars)) {
+            $this->c->DB->exec($query, $vars);
+        }
     }
 }
