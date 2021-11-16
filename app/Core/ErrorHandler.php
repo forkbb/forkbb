@@ -91,7 +91,7 @@ class ErrorHandler
     /**
      * Обрабатыет перехватываемые ошибки
      */
-    public function errorHandler(int $type, string $message, string $file, string $line): bool
+    public function errorHandler(int $type, string $message, string $file, int $line): bool
     {
         if ($type & \error_reporting()) {
             $this->error = [
