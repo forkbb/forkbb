@@ -187,7 +187,6 @@ class PMView extends AbstractPM
                         'confirm' => [
                             'type'    => 'checkbox',
                             'label'   => 'Confirm action',
-                            'value'   => '1',
                             'checked' => false,
                         ],
                     ],

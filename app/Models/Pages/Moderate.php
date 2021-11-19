@@ -601,7 +601,6 @@ class Moderate extends Page
             $fields['redirect'] = [
                 'type'    => 'checkbox',
                 'label'   => 'Leave redirect',
-                'value'   => '1',
                 'checked' => true,
             ];
         }
@@ -609,7 +608,6 @@ class Moderate extends Page
         $fields['confirm'] = [
             'type'    => 'checkbox',
             'label'   => 'Confirm action',
-            'value'   => '1',
             'checked' => false,
         ];
         $form['sets']['moderate']['fields'] = $fields;

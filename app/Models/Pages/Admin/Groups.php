@@ -816,7 +816,6 @@ class Groups extends Admin
                     'caption' => 'Confirm delete',
                     'type'    => 'checkbox',
                     'label'   => ['I want to delete this group', $group->g_title],
-                    'value'   => '1',
                     'checked' => false,
                 ],
             ],

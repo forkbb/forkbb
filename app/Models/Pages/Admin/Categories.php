@@ -207,7 +207,6 @@ class Categories extends Admin
                             'caption' => 'Confirm delete',
                             'type'    => 'checkbox',
                             'label'   => ['I want to delete the category %s', $category['cat_name']],
-                            'value'   => '1',
                             'checked' => false,
                         ],
                     ],

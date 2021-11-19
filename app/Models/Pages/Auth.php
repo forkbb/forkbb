@@ -161,7 +161,6 @@ class Auth extends Page
                         'save' => [
                             'type'    => 'checkbox',
                             'label'   => 'Remember me',
-                            'value'   => '1',
                             'checked' => $save,
                         ],
                     ],

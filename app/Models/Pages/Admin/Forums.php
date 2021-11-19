@@ -296,7 +296,6 @@ class Forums extends Admin
                             'caption' => 'Confirm delete',
                             'type'    => 'checkbox',
                             'label'   => __(['I want to delete forum %s', $forum->forum_name]),
-                            'value'   => '1',
                             'checked' => false,
                         ],
                     ],
@@ -522,7 +521,6 @@ class Forums extends Admin
             $fields["perms[{$id}][read_forum]"] = [
                 'class'    => $group->def_read_forum ? $aOn : $aOff,
                 'type'     => 'checkbox',
-                'value'    => '1',
                 'caption'  => 'Read forum label',
                 'label'    => '<span></span>',
                 'checked'  => $group->set_read_forum,
@@ -531,7 +529,6 @@ class Forums extends Admin
             $fields["perms[{$id}][post_replies]"] = [
                 'class'    => $group->def_post_replies ? $aOn : $aOff,
                 'type'     => 'checkbox',
-                'value'    => '1',
                 'caption'  => 'Post replies label',
                 'label'    => '<span></span>',
                 'checked'  => $group->set_post_replies,
@@ -540,7 +537,6 @@ class Forums extends Admin
             $fields["perms[{$id}][post_topics]"] = [
                 'class'    => $group->def_post_topics ? $aOn : $aOff,
                 'type'     => 'checkbox',
-                'value'    => '1',
                 'caption'  => 'Post topics label',
                 'label'    => '<span></span>',
                 'checked'  => $group->set_post_topics,

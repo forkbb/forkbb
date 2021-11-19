@@ -623,7 +623,6 @@ class Options extends Admin
                 ],
                 'changeSmtpPassword' => [
                     'type'    => 'checkbox',
-                    'value'   => '1',
                     'caption' => '',
                     'label'   => 'SMTP change password help',
                 ],

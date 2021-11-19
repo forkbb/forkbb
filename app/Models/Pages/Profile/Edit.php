@@ -318,7 +318,6 @@ class Edit extends Profile
                 $fields['delete_avatar'] = [
                     'type'    => 'checkbox',
                     'label'   => 'Delete avatar',
-                    'value'   => '1',
                     'checked' => false,
                 ];
             }

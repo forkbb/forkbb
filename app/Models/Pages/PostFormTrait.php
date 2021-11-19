@@ -115,20 +115,17 @@ trait PostFormTrait
                     $fieldset['stick_topic'] = [
                         'type'    => 'checkbox',
                         'label'   => 'Stick topic',
-                        'value'   => '1',
                         'checked' => (bool) ($vars['stick_topic'] ?? false),
                     ];
                     $fieldset['stick_fp'] = [
                         'type'    => 'checkbox',
                         'label'   => 'Stick first post',
-                        'value'   => '1',
                         'checked' => (bool) ($vars['stick_fp'] ?? false),
                     ];
                 } elseif (! $edit) {
                     $fieldset['merge_post'] = [
                         'type'    => 'checkbox',
                         'label'   => 'Merge posts',
-                        'value'   => '1',
                         'checked' => (bool) ($vars['merge_post'] ?? true),
                     ];
                 }
@@ -141,7 +138,6 @@ trait PostFormTrait
                     $fieldset['edit_post'] = [
                         'type'    => 'checkbox',
                         'label'   => 'EditPost edit',
-                        'value'   => '1',
                         'checked' => (bool) ($vars['edit_post'] ?? false),
                     ];
                 }
@@ -165,7 +161,6 @@ trait PostFormTrait
                     $fieldset['subscribe'] = [
                         'type'    => 'checkbox',
                         'label'   => $subscribed ? 'Stay subscribed' : 'New subscribe',
-                        'value'   => '1',
                         'checked' => (bool) ($vars['subscribe'] ?? ($subscribed || $this->user->auto_notify)),
                     ];
                 }
@@ -179,7 +174,6 @@ trait PostFormTrait
             $fieldset['hide_smilies'] = [
                 'type'    => 'checkbox',
                 'label'   => 'Hide smilies',
-                'value'   => '1',
                 'checked' => (bool) ($vars['hide_smilies'] ?? false),
             ];
         }
@@ -205,7 +199,6 @@ trait PostFormTrait
             $fieldset['poll_enable'] = [
                 'type'     => 'checkbox',
                 'label'    => 'Include poll',
-                'value'    => '1',
                 'checked'  => (bool) ($vars['poll_enable'] ?? false),
                 'disabled' => $vars['pollNoEdit'] ?? null,
             ];
@@ -221,7 +214,6 @@ trait PostFormTrait
             $fieldset['poll[hide_result]'] = [
                 'type'     => 'checkbox',
                 'label'    => ['Hide poll results up to %s voters', $term],
-                'value'    => '1',
                 'checked'  => (bool) ($vars['poll']['hide_result'] ?? false),
                 'disabled' => $vars['pollNoEdit'] ?? null,
             ];

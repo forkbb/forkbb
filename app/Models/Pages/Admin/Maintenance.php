@@ -139,7 +139,6 @@ class Maintenance extends Admin
                         ],
                         'clear' => [
                             'type'    => 'checkbox',
-                            'value'   => '1',
                             'checked' => true,
                             'caption' => 'Empty index label',
                             'label'   => 'Empty index help',
