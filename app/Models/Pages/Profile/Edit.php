@@ -317,7 +317,7 @@ class Edit extends Profile
             if ($this->curUser->avatar) {
                 $fields['delete_avatar'] = [
                     'type'    => 'checkbox',
-                    'label'   => __('Delete avatar'),
+                    'label'   => 'Delete avatar',
                     'value'   => '1',
                     'checked' => false,
                 ];

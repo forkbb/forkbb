@@ -76,7 +76,7 @@ class Rules extends Page
                     'fields' => [
                         'agree' => [
                             'type'    => 'checkbox',
-                            'label'   => __('Agree'),
+                            'label'   => 'Agree',
                             'value'   => $this->c->Csrf->create('Register'),
                         ],
                     ],

@@ -625,7 +625,7 @@ class Options extends Admin
                     'type'    => 'checkbox',
                     'value'   => '1',
                     'caption' => '',
-                    'label'   => __('SMTP change password help'),
+                    'label'   => 'SMTP change password help',
                 ],
                 'o_smtp_ssl' => [
                     'type'    => 'radio',

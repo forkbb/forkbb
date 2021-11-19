@@ -118,7 +118,7 @@ class Delete extends Page
                     'fields' => [
                         'confirm' => [
                             'type'    => 'checkbox',
-                            'label'   => __($deleteTopic ? 'Confirm delete topic' : 'Confirm delete post'),
+                            'label'   => $deleteTopic ? 'Confirm delete topic' : 'Confirm delete post',
                             'value'   => '1',
                             'checked' => false,
                         ],

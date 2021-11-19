@@ -524,7 +524,7 @@ class Forums extends Admin
                 'type'     => 'checkbox',
                 'value'    => '1',
                 'caption'  => 'Read forum label',
-                'label'    => __('<span></span>'),
+                'label'    => '<span></span>',
                 'checked'  => $group->set_read_forum,
                 'disabled' => $group->dis_read_forum,
             ];
@@ -533,7 +533,7 @@ class Forums extends Admin
                 'type'     => 'checkbox',
                 'value'    => '1',
                 'caption'  => 'Post replies label',
-                'label'    => __('<span></span>'),
+                'label'    => '<span></span>',
                 'checked'  => $group->set_post_replies,
                 'disabled' => $group->dis_post_replies,
             ];
@@ -542,7 +542,7 @@ class Forums extends Admin
                 'type'     => 'checkbox',
                 'value'    => '1',
                 'caption'  => 'Post topics label',
-                'label'    => __('<span></span>'),
+                'label'    => '<span></span>',
                 'checked'  => $group->set_post_topics,
                 'disabled' => $group->dis_post_topics,
             ];

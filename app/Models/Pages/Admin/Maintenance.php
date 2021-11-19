@@ -142,7 +142,7 @@ class Maintenance extends Admin
                             'value'   => '1',
                             'checked' => true,
                             'caption' => 'Empty index label',
-                            'label'   => __('Empty index help'),
+                            'label'   => 'Empty index help',
                         ],
                     ],
                 ],

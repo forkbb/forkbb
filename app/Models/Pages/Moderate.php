@@ -600,7 +600,7 @@ class Moderate extends Page
         if (true === $this->chkRedirect) {
             $fields['redirect'] = [
                 'type'    => 'checkbox',
-                'label'   => __('Leave redirect'),
+                'label'   => 'Leave redirect',
                 'value'   => '1',
                 'checked' => true,
             ];
@@ -608,7 +608,7 @@ class Moderate extends Page
 
         $fields['confirm'] = [
             'type'    => 'checkbox',
-            'label'   => __('Confirm action'),
+            'label'   => 'Confirm action',
             'value'   => '1',
             'checked' => false,
         ];
