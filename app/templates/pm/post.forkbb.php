@@ -35,7 +35,7 @@
             <ul class="f-user-info">
               <li class="f-username">{{ $post->poster }}</li>
             </ul>
-          <div>
+          </div>
         </address>
         <div class="f-post-body">
           <div class="f-post-main">
