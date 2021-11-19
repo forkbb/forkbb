@@ -84,19 +84,11 @@ trait PostFormTrait
         }
 
         $fieldset['message'] = [
-            'class'    => ['w0'],
-            'type'     => 'textarea',
-            'caption'  => 'Message',
-            'required' => true,
-            'value'    => $vars['message'] ?? null,
-/* ????
-            'bb'       => [
-                ['link', __('BBCode'), __('1' == $this->c->config->p_message_bbcode ? 'on' : 'off')],
-                ['link', __('url tag'), __('1' == $this->c->config->p_message_bbcode && '1' == $this->user->g_post_links ? 'on' : 'off')],
-                ['link', __('img tag'), __('1' == $this->c->config->p_message_bbcode && '1' == $this->c->config->p_message_img_tag ? 'on' : 'off')],
-                ['link', __('Smilies'), __('1' == $this->c->config->o_smilies ? 'on' : 'off')],
-            ],
-*/
+            'class'     => ['w0'],
+            'type'      => 'textarea',
+            'caption'   => 'Message',
+            'required'  => true,
+            'value'     => $vars['message'] ?? null,
             'autofocus' => $autofocus,
         ];
         $form['sets']['uesm'] = [

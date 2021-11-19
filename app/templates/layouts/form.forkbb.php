@@ -26,13 +26,6 @@
                 <input @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl f-ytxt" id="id-{{ $key }}" name="{{ $key }}" type="text" @if ($cur['maxlength']) maxlength="{{ $cur['maxlength'] }}" @endif @if ($cur['pattern']) pattern="{{ $cur['pattern'] }}" @endif @isset ($cur['value']) value="{{ $cur['value'] }}" @endisset>
                 @elseif ('textarea' === $cur['type'])
                 <textarea @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl f-ytxtarea" id="id-{{ $key }}" name="{{ $key }}">{{ $cur['value'] or '' }}</textarea>
-                    @if ($cur['bb'])
-                <ul class="f-fbbul">
-                        @foreach ($cur['bb'] as $val)
-                  <li><span><a href="{{ $val[0] }}">{!! $val[1] !!}</a> {!! $val[2] !!}</span></li>
-                        @endforeach
-                </ul>
-                    @endif
                 @elseif ('select' === $cur['type'])
                 <select @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}">
                     @if (null === ($count = null) && \is_array(\reset($cur['options'])) && 1 === \count(\reset($cur['options'])) && $count = 0) @endif
