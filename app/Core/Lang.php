@@ -101,7 +101,7 @@ class Lang
     /**
      * Ищет сообщение в загруженных переводах
      */
-    public function get(string $message, string $lang = null) /* : string|array */
+    public function get(string $message, string $lang = null) /* : null|string|array */
     {
         if (
             null !== $lang
@@ -116,7 +116,7 @@ class Lang
             }
         }
 
-        return $message;
+        return null; //$message;
     }
 
     /**

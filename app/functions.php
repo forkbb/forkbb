@@ -48,7 +48,9 @@ function __(/* string|arrray */ $arg): string
         $tr   = $lang->get(\reset($arg));
         $args = \array_slice($arg, 1);
 
-        if (\is_array($tr)) {
+        if (null === $tr) {
+            $tr = e($tr);
+        } elseif (\is_array($tr)) {
             $tr   = $lang->getForm($tr, \reset($args));
             $args = \array_slice($args, 1);
         }
@@ -62,7 +64,7 @@ function __(/* string|arrray */ $arg): string
             return \sprintf($tr, ...$args);
         }
     } else {
-        return $lang->get($arg);
+        return $lang->get($arg) ?? e($arg);
     }
 }
 
