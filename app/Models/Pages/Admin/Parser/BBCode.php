@@ -559,7 +559,7 @@ class BBCode extends Parser
                 $name,
                 "{$name}_attr",
                 ['Other attr subhead', $tagStr, $name],
-                __(['Allowed %s attr info', $name])
+                ['Allowed %s attr info', $name]
             );
         }
 
@@ -577,8 +577,13 @@ class BBCode extends Parser
     /**
      * Формирует данные для формы
      */
-    protected function formEditSub(/* mixed */ $data, string $name, string $class, /* string|array */ $legend, string $info): array
-    {
+    protected function formEditSub(
+        /* mixed */        $data,
+        string             $name,
+        string             $class,
+        /* string|array */ $legend,
+        /* string|array */ $info
+    ): array {
         $yn     = [1 => __('Yes'), 0 => __('No')];
         $fields = [];
         $other  = '_attr' !== \substr($name, -5);
