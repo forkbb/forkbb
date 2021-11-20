@@ -71,7 +71,7 @@ class Bans extends Admin
         $this->nameTpl        = 'admin/bans';
         $this->formBanPage    = 'AdminBansNew';
         $this->formBanHead    = 'New ban head';
-        $this->formBanSubHead = __('Add ban subhead');
+        $this->formBanSubHead = 'Add ban subhead';
 
         if ('POST' === $method) {
             $v = $this->c->Validator->reset()
@@ -515,7 +515,7 @@ class Bans extends Admin
 
             $form['sets']["l{$number}"] = [
                 'class'  => ['result'],
-                'legend' => $number,
+                'legend' => (string) $number,
                 'fields' => $fields,
             ];
 
@@ -577,7 +577,7 @@ class Bans extends Admin
         $this->nameTpl        = 'admin/bans';
         $this->formBanPage    = 'AdminBansNew';
         $this->formBanHead    = 'New ban head';
-        $this->formBanSubHead = __('Add ban subhead');
+        $this->formBanSubHead = 'Add ban subhead';
 
         return $this->ban(true, $args, $method, $userList);
     }
@@ -605,7 +605,7 @@ class Bans extends Admin
         $this->nameTpl        = 'admin/bans';
         $this->formBanPage    = 'AdminBansEdit';
         $this->formBanHead    = 'Edit ban head';
-        $this->formBanSubHead = __('Edit ban subhead');
+        $this->formBanSubHead = 'Edit ban subhead';
 
         return $this->ban(false, $args, $method, $userList, $ban);
     }
@@ -711,7 +711,7 @@ class Bans extends Admin
 
         $this->aCrumbs[] = [
             $this->c->Router->link($this->formBanPage, $args),
-            $this->formBanSubHead,
+            __($this->formBanSubHead),
         ];
         $this->formBan   = $this->formBan($data, $args);
 

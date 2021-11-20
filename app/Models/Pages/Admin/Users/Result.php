@@ -346,7 +346,7 @@ class Result extends Users
             ];
             $form['sets']["l{$number}"] = [
                 'class'  => ['result'],
-                'legend' => -1 === $user->id ? null : $number,
+                'legend' => -1 === $user->id ? null : (string) $number,
                 'fields' => $fields,
             ];
 

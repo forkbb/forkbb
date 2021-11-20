@@ -126,7 +126,7 @@ class Stat extends Users
 
             $form['sets']["l{$number}"] = [
                 'class'  => ['result', 'stat'],
-                'legend' => $flag ? $number : null,
+                'legend' => $flag ? (string) $number : null,
                 'fields' => $fields,
             ];
 
