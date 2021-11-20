@@ -144,7 +144,7 @@ class Smilies extends Parser
             'sets' => [
                 'smilies-legend' => [
                     'class'  => ['smilies-legend'],
-                    'legend' => __('Smilies list subhead'),
+                    'legend' => 'Smilies list subhead',
                     'fields' => [],
                 ],
             ],
@@ -211,7 +211,7 @@ class Smilies extends Parser
 
             $form['sets']["smile{$id}"] = [
                 'class'  => ['smile'],
-                'legend' => __(['Smiley number %s', $i]),
+                'legend' => ['Smiley number %s', $i],
                 'fields' => $fields,
             ];
 
@@ -220,7 +220,7 @@ class Smilies extends Parser
 
         $form['sets']['new-smile'] = [
             'class'  => ['new-smile'],
-            'legend' => __('New smile subhead'),
+            'legend' => 'New smile subhead',
             'fields' => [
                 'new_sm_code' => [
                     'class'     => ['code', 'new-smile'],
@@ -260,7 +260,7 @@ class Smilies extends Parser
             'sets' => [
                 'image-legend' => [
                     'class'  => ['image-legend'],
-                    'legend' => __('Available images subhead'),
+                    'legend' => 'Available images subhead',
                     'fields' => [],
                 ],
             ],
@@ -320,7 +320,7 @@ class Smilies extends Parser
             'sets'    => [
                 'upload' => [
                     'class'  => ['upload_smile'],
-                    'legend' => __('Upload image subhead'),
+                    'legend' => 'Upload image subhead',
                     'fields' => [
                         'upload_image' => [
                             'type'    => 'file',

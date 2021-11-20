@@ -145,7 +145,7 @@ class Email extends Page
             ],
             'sets'   => [
                 'send-email' => [
-                    'legend' => __(['Send email to %s', $this->curUser->username]),
+                    'legend' => ['Send email to %s', $this->curUser->username],
                     'fields' => [
                         'subject' => [
                             'type'      => 'text',

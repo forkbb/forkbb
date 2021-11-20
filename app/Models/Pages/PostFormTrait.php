@@ -172,7 +172,7 @@ trait PostFormTrait
 
         if ($fieldset) {
             $form['sets']['uesm-options'] = [
-                'legend' => __('Options'),
+                'legend' => 'Options',
                 'fields' => $fieldset,
             ];
         }
@@ -211,7 +211,7 @@ trait PostFormTrait
             ];
 
             $form['sets']['uesm-poll'] = [
-                'legend' => __('Poll legend'),
+                'legend' => 'Poll legend',
                 'fields' => $fieldset,
             ];
 
@@ -246,7 +246,7 @@ trait PostFormTrait
                 }
 
                 $form['sets']["uesm-q-{$qid}"] = [
-                    'legend' => __(['Question %s legend', $qid]),
+                    'legend' => ['Question %s legend', $qid],
                     'fields' => $fieldset,
                 ];
             }

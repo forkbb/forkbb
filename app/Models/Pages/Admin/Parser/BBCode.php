@@ -120,7 +120,7 @@ class BBCode extends Parser
             'sets' => [
                 'bbcode-legend' => [
                     'class'  => ['bbcode-legend'],
-                    'legend' => __('BBCode list subhead'),
+                    'legend' => 'BBCode list subhead',
                     'fields' => [],
                 ],
             ],
@@ -190,7 +190,7 @@ class BBCode extends Parser
 
             $form['sets']["bbcode{$id}"] = [
                 'class'  => ['bbcode'],
-                'legend' => __(['BBCode %s', $tag]),
+                'legend' => ['BBCode %s', $tag],
                 'fields' => $fields,
             ];
         }
@@ -541,7 +541,7 @@ class BBCode extends Parser
             $structure->no_attr,
             'no_attr',
             'no_attr',
-            __(['No attr subhead', $tagStr]),
+            ['No attr subhead', $tagStr],
             'Allowed no_attr info'
         );
 
@@ -549,7 +549,7 @@ class BBCode extends Parser
             $structure->def_attr,
             'def_attr',
             'def_attr',
-            __(['Def attr subhead', $tagStr]),
+            ['Def attr subhead', $tagStr],
             'Allowed def_attr info'
         );
 
@@ -558,7 +558,7 @@ class BBCode extends Parser
                 $attr,
                 $name,
                 "{$name}_attr",
-                __(['Other attr subhead', $tagStr, $name]),
+                ['Other attr subhead', $tagStr, $name],
                 __(['Allowed %s attr info', $name])
             );
         }
@@ -567,7 +567,7 @@ class BBCode extends Parser
             $structure->new_attr,
             'new_attr',
             'new_attr',
-            __('New attr subhead'),
+            'New attr subhead',
             'Allowed new_attr info'
         );
 
@@ -577,7 +577,7 @@ class BBCode extends Parser
     /**
      * Формирует данные для формы
      */
-    protected function formEditSub(/* mixed */ $data, string $name, string $class, string $legend, string $info): array
+    protected function formEditSub(/* mixed */ $data, string $name, string $class, /* string|array */ $legend, string $info): array
     {
         $yn     = [1 => __('Yes'), 0 => __('No')];
         $fields = [];

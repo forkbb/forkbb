@@ -128,7 +128,7 @@ class Report extends Page
             ],
             'sets'   => [
                 'report' => [
-                    'legend' => __('Reason desc'),
+                    'legend' => 'Reason desc',
                     'fields' => [
                         'reason' => [
                             'type'      => 'textarea',

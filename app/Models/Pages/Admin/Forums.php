@@ -545,7 +545,7 @@ class Forums extends Admin
 
             $form['sets']["perms{$id}"] = [
                 'class'  => ['permission'],
-                'legend' => \ForkBB\e($group->g_title),
+                'legend' => $group->g_title,
                 'fields' => $fields,
             ];
         }

@@ -72,7 +72,7 @@ class Maintenance extends Admin
             ],
             'sets'   => [
                 'maint' => [
-                    'legend' => __('Maintenance head'),
+                    'legend' => 'Maintenance head',
                     'fields' => [
                         'o_maintenance' => [
                             'type'    => 'radio',
@@ -119,7 +119,7 @@ class Maintenance extends Admin
                     ],
                 ],
                 'indx' => [
-                    'legend' => __('Rebuild index head'),
+                    'legend' => 'Rebuild index head',
                     'fields' => [
                         'limit' => [
                             'type'    => 'number',

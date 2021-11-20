@@ -81,7 +81,7 @@ class View extends Profile
         }
         $form['sets']['header'] = [
             'class'  => ['header'],
-#            'legend' => __('Options'),
+#            'legend' => 'Options',
             'fields' => $fields,
         ];
 
@@ -92,7 +92,7 @@ class View extends Profile
         ) {
             $form['sets']['note'] = [
                 'class'  => ['data'],
-                'legend' => __('Admin note'),
+                'legend' => 'Admin note',
                 'fields' => [
                     'admin_note' => [
                         'class'     => ['pline'],
@@ -137,7 +137,7 @@ class View extends Profile
         if (! empty($fields)) {
             $form['sets']['personal'] = [
                 'class'  => ['data'],
-                'legend' => __('Personal information'),
+                'legend' => 'Personal information',
                 'fields' => $fields,
             ];
         }
@@ -201,7 +201,7 @@ class View extends Profile
         if (! empty($fields)) {
             $form['sets']['contacts'] = [
                 'class'  => ['data'],
-                'legend' => __('Contact details'),
+                'legend' => 'Contact details',
                 'fields' => $fields,
             ];
         }
@@ -221,7 +221,7 @@ class View extends Profile
             if (! empty($fields)) {
                 $form['sets']['signature'] = [
                     'class'  => ['data'],
-                    'legend' => __('Signature'),
+                    'legend' => 'Signature',
                     'fields' => $fields,
                 ];
             }
@@ -325,7 +325,7 @@ class View extends Profile
         }
         $form['sets']['activity'] = [
             'class'  => ['data'],
-            'legend' => __('User activity'),
+            'legend' => 'User activity',
             'fields' => $fields,
         ];
 
@@ -370,7 +370,7 @@ class View extends Profile
         }
         $form['sets']['private'] = [
             'class'  => ['data'],
-            'legend' => __('Private information'),
+            'legend' => 'Private information',
             'fields' => $fields,
         ];
 

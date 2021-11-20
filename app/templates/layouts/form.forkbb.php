@@ -9,7 +9,7 @@
     @elseif (isset($setVal['fields']))
           <fieldset id="id-fs-{{ $setKey }}" @if ($setVal['class']) class="f-fs-{{ \implode(' f-fs-', $setVal['class']) }}" @endif>
         @if ($setVal['legend'])
-            <legend class="f-fleg">{{ $setVal['legend'] }}</legend>
+            <legend class="f-fleg">{!! __($setVal['legend']) !!}</legend>
         @endif
         @foreach ($setVal['fields'] as $key => $cur)
             @if ('info' === $cur['type'])

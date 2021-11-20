@@ -168,7 +168,7 @@ class Config extends Profile
         }
 
         $form['sets']['essentials'] = [
-            'legend' => __('Essentials'),
+            'legend' => 'Essentials',
             'class'  => ['data-edit'],
             'fields' => [
                 'language' => [
@@ -253,7 +253,7 @@ class Config extends Profile
             ],
         ];
         $form['sets']['viewing-posts'] = [
-            'legend' => __('Viewing posts'),
+            'legend' => 'Viewing posts',
             'class'  => ['data-edit'],
             'fields' => [
                 'show_smilies' => [
@@ -294,7 +294,7 @@ class Config extends Profile
             ],
         ];
         $form['sets']['pagination'] = [
-            'legend' => __('Pagination'),
+            'legend' => 'Pagination',
             'class'  => ['data-edit'],
             'fields' => [
                 'disp_topics' => [
@@ -316,7 +316,7 @@ class Config extends Profile
             ],
         ];
         $form['sets']['security'] = [
-            'legend' => __('Security'),
+            'legend' => 'Security',
             'class'  => ['data-edit'],
             'fields' => [
                 'ip_check_type' => [
@@ -336,7 +336,7 @@ class Config extends Profile
 
         if ($this->rules->viewSubscription) { // ???? модераторы?
             $form['sets']['subscriptions'] = [
-                'legend' => __('Subscription options'),
+                'legend' => 'Subscription options',
                 'class'  => ['data-edit'],
                 'fields' => [
                     'notify_with_post' => [

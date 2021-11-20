@@ -95,7 +95,7 @@ class NewUser extends Users
             ],
             'sets'   => [
                 'reg' => [
-                    'legend' => __('Add user legend'),
+                    'legend' => 'Add user legend',
                     'fields' => [
                         'username' => [
                             'autofocus' => true,

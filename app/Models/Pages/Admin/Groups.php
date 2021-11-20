@@ -75,7 +75,7 @@ class Groups extends Admin
             ],
             'sets'   => [
                 'base' => [
-                    'legend' => __('Add group subhead'),
+                    'legend' => 'Add group subhead',
                     'fields' => [
                         'basegroup' => [
                             'type'      => 'select',
@@ -109,7 +109,7 @@ class Groups extends Admin
             ],
             'sets'   => [
                 'del' => [
-                    'legend' => __('Default group subhead'),
+                    'legend' => 'Default group subhead',
                     'fields' => [
                         'defaultgroup' => [
                             'type'    => 'select',
@@ -388,7 +388,7 @@ class Groups extends Admin
             'help'      => ['User title help', $group->groupGuest ? __('Guest') : __('Member')],
         ];
         $form['sets']['group-titles'] = [
-            'legend' => __('Titles subhead'),
+            'legend' => 'Titles subhead',
             'fields' => $fieldset,
         ];
 
@@ -425,7 +425,7 @@ class Groups extends Admin
                 'help'    => 'Number for promotion help',
             ];
             $form['sets']['group-promote'] = [
-                'legend' => __('Promotion subhead'),
+                'legend' => 'Promotion subhead',
                 'fields' => $fieldset,
             ];
         }
@@ -482,7 +482,7 @@ class Groups extends Admin
                 'help'    => 'Ban users help',
             ];
             $form['sets']['group-mod'] = [
-                'legend' => __('Moderation subhead'),
+                'legend' => 'Moderation subhead',
                 'fields' => $fieldset,
             ];
             $form['sets']['mod-info'] = [
@@ -588,7 +588,7 @@ class Groups extends Admin
         }
 
         $form['sets']['group-permissions'] = [
-            'legend' => __('Permissions subhead'),
+            'legend' => 'Permissions subhead',
             'fields' => $fieldset,
         ];
         $form['sets']['def-info'] = [
@@ -646,7 +646,7 @@ class Groups extends Admin
         }
 
         $form['sets']['group-intervals'] = [
-            'legend' => __('Intervals subhead'),
+            'legend' => 'Intervals subhead',
             'fields' => $fieldset,
         ];
 
@@ -669,7 +669,7 @@ class Groups extends Admin
                 'help'    => 'Max sig lines help',
             ];
             $form['sets']['group-signature'] = [
-                'legend' => __('Signature subhead'),
+                'legend' => 'Signature subhead',
                 'fields' => $fieldset,
             ];
 
@@ -690,7 +690,7 @@ class Groups extends Admin
                 'help'    => 'PM limit help',
             ];
             $form['sets']['group-pm'] = [
-                'legend' => __('PM subhead'),
+                'legend' => 'PM subhead',
                 'fields' => $fieldset,
             ];
         }

@@ -186,7 +186,7 @@ class Bans extends Admin
             'type' => 'endwrap',
         ];
         $form['sets']['filters'] = [
-            'legend' => __('Ban search subhead'),
+            'legend' => 'Ban search subhead',
             'fields' => $fields,
         ];
 
@@ -221,7 +221,7 @@ class Bans extends Admin
             'type' => 'endwrap',
         ];
         $form['sets']['sorting'] = [
-            'legend' => __('Search results legend'),
+            'legend' => 'Search results legend',
             'fields' => $fields,
         ];
 
@@ -292,7 +292,7 @@ class Bans extends Admin
             'value'     => $data['expire'] ?? null,
         ];
         $form['sets']['ban-exp'] = [
-            'legend' => __('Message expiry subhead'),
+            'legend' => 'Message expiry subhead',
             'fields' => $fields,
         ];
 

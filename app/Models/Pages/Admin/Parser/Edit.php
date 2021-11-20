@@ -88,7 +88,7 @@ class Edit extends Parser
         $yn = [1 => __('Yes'), 0 => __('No')];
 
         $form['sets']['bbcode'] = [
-            'legend' => __('BBCode subhead'),
+            'legend' => 'BBCode subhead',
             'fields' => [
                 'p_message_bbcode' => [
                     'type'    => 'radio',
@@ -122,7 +122,7 @@ class Edit extends Parser
         ];
 
         $form['sets']['smilies'] = [
-            'legend' => __('Smilies subhead'),
+            'legend' => 'Smilies subhead',
             'fields' => [
                 'o_smilies' => [
                     'type'    => 'radio',

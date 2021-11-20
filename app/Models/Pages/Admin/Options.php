@@ -202,7 +202,7 @@ class Options extends Admin
         $styles = $this->c->Func->getStyles();
 
         $form['sets']['essentials'] = [
-            'legend' => __('Essentials subhead'),
+            'legend' => 'Essentials subhead',
             'fields' => [
                 'o_board_title' => [
                     'type'      => 'text',
@@ -294,7 +294,7 @@ class Options extends Admin
         $timestamp = \time() + ($this->user->timezone + $this->user->dst) * 3600;
 
         $form['sets']['timeouts'] = [
-            'legend' => __('Timeouts subhead'),
+            'legend' => 'Timeouts subhead',
             'fields' => [
                 'o_timeout_visit' => [
                     'type'    => 'number',
@@ -324,7 +324,7 @@ class Options extends Admin
         ];
 
         $form['sets']['display'] = [
-            'legend' => __('Display subhead'),
+            'legend' => 'Display subhead',
             'fields' => [
                 'o_show_user_info' => [
                     'type'    => 'radio',
@@ -404,7 +404,7 @@ class Options extends Admin
         ];
 
         $form['sets']['features'] = [
-            'legend' => __('Features subhead'),
+            'legend' => 'Features subhead',
             'fields' => [
                 'o_quickpost' => [
                     'type'    => 'radio',
@@ -459,7 +459,7 @@ class Options extends Admin
         ];
 
         $form['sets']['feed'] = [
-            'legend' => __('Feed subhead'),
+            'legend' => 'Feed subhead',
             'fields' => [
                 'i_feed_type' => [
                     'type'    => 'radio',
@@ -490,7 +490,7 @@ class Options extends Admin
         ];
 
         $form['sets']['reports'] = [
-            'legend' => __('Reports subhead'),
+            'legend' => 'Reports subhead',
             'fields' => [
                 'i_report_method' => [
                     'type'    => 'radio',
@@ -513,7 +513,7 @@ class Options extends Admin
         ];
 
         $form['sets']['avatars'] = [
-            'legend' => __('Avatars subhead'),
+            'legend' => 'Avatars subhead',
             'fields' => [
                 'o_avatars' => [
                     'type'    => 'radio',
@@ -558,7 +558,7 @@ class Options extends Admin
         ];
 
         $form['sets']['email'] = [
-            'legend' => __('E-mail subhead'),
+            'legend' => 'E-mail subhead',
             'fields' => [
                 'o_admin_email' => [
                     'type'      => 'text',
@@ -637,7 +637,7 @@ class Options extends Admin
         ];
 
         $form['sets']['registration'] = [
-            'legend' => __('Registration subhead'),
+            'legend' => 'Registration subhead',
             'fields' => [
                 'o_regs_allow' => [
                     'type'    => 'radio',
@@ -689,7 +689,7 @@ class Options extends Admin
         ];
 
         $form['sets']['announcement'] = [
-            'legend' => __('Announcement subhead'),
+            'legend' => 'Announcement subhead',
             'fields' => [
                 'o_announcement' => [
                     'type'    => 'radio',
@@ -709,7 +709,7 @@ class Options extends Admin
         ];
 
         $form['sets']['polls'] = [
-            'legend' => __('Polls subhead'),
+            'legend' => 'Polls subhead',
             'fields' => [
                 'b_poll_enabled' => [
                     'type'    => 'radio',
@@ -760,7 +760,7 @@ class Options extends Admin
         ];
 
         $form['sets']['pm'] = [
-            'legend' => __('PM subhead'),
+            'legend' => 'PM subhead',
             'fields' => [
                 'b_pm' => [
                     'type'    => 'radio',

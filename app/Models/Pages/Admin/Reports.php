@@ -77,11 +77,11 @@ class Reports extends Admin
         foreach ($reports as $report) {
             if ($noZapped) {
                 $cur = [
-                    'legend' => __(['Reported %s', \ForkBB\dt($report->created)]),
+                    'legend' => ['Reported %s', \ForkBB\dt($report->created)],
                 ];
             } else {
                 $cur = [
-                    'legend' => __(['Marked as read %1$s by %2$s', \ForkBB\dt($report->zapped), $report->marker->username]),
+                    'legend' => ['Marked as read %1$s by %2$s', \ForkBB\dt($report->zapped), $report->marker->username],
                 ];
             }
             $cur['fields'] = [];

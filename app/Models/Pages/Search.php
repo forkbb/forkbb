@@ -225,7 +225,7 @@ class Search extends Page
                     ],
                 ],
                 'where' => [
-                    'legend' => __('Search in legend'),
+                    'legend' => 'Search in legend',
                     'fields' => [
                         'forums' => [
                             'class'   => ['w3'],
@@ -258,7 +258,7 @@ class Search extends Page
                     ],
                 ],
                 'how' => [
-                    'legend' => __('Search results legend'),
+                    'legend' => 'Search results legend',
                     'fields' => [
                         'sort_by' => [
                             'class'   => ['w4'],

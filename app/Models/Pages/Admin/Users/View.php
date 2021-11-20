@@ -141,7 +141,7 @@ class View extends Users
             'hidden' => [],
             'sets'   => [
                 'new' => [
-                    'legend' => __('New user'),
+                    'legend' => 'New user',
                     'fields' => [],
                 ]
             ],
@@ -327,7 +327,7 @@ class View extends Users
             'type' => 'endwrap',
         ];
         $form['sets']['filters'] = [
-            'legend' => __('User search subhead'),
+            'legend' => 'User search subhead',
             'fields' => $fields,
         ];
 
@@ -370,7 +370,7 @@ class View extends Users
         ];
 
         $form['sets']['sorting'] = [
-            'legend' => __('Search results legend'),
+            'legend' => 'Search results legend',
             'fields' => $fields,
         ];
 
@@ -404,7 +404,7 @@ class View extends Users
             'required'  => true,
         ];
         $form['sets']['ip'] = [
-            'legend' => __('IP search subhead'),
+            'legend' => 'IP search subhead',
             'fields' => $fields,
         ];
 
@@ -446,7 +446,7 @@ class View extends Users
             ],
             'sets'   => [
                 'recalculate' => [
-                    'legend' => __('Number of users posts'),
+                    'legend' => 'Number of users posts',
                     'fields' => [],
                 ]
             ],

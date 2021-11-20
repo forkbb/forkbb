@@ -295,7 +295,7 @@ class Update extends Admin
                     ],
                 ],
                 'update' => [
-                    'legend' => __('Update ForkBB'),
+                    'legend' => 'Update ForkBB',
                     'fields' => [
                         'dbpass' => [
                             'type'     => 'password',

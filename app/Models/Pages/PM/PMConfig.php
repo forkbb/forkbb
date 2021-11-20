@@ -85,7 +85,7 @@ class PMConfig extends AbstractPM
             ],
             'sets'   => [
                 'config' => [
-                    'legend' => __('PM Config legend'),
+                    'legend' => 'PM Config legend',
                     'fields' => [
                         'u_pm' => [
                             'type'    => 'radio',

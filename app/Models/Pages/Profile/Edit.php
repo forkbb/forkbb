@@ -336,7 +336,7 @@ class Edit extends Profile
         }
         $form['sets']['header'] = [
             'class'  => ['header-edit'],
-#            'legend' => __('Options'),
+#            'legend' => 'Options',
             'fields' => $fields,
         ];
 
@@ -344,7 +344,7 @@ class Edit extends Profile
         if ($this->user->isAdmMod) {
             $form['sets']['note'] = [
                 'class'  => ['data-edit'],
-                'legend' => __('Admin note'),
+                'legend' => 'Admin note',
                 'fields' => [
                     'admin_note' => [
                         'type'      => 'text',
@@ -384,7 +384,7 @@ class Edit extends Profile
         ];
         $form['sets']['personal'] = [
             'class'  => ['data-edit'],
-            'legend' => __('Personal information'),
+            'legend' => 'Personal information',
             'fields' => $fields,
         ];
 
@@ -440,7 +440,7 @@ class Edit extends Profile
         }
         $form['sets']['contacts'] = [
             'class'  => ['data-edit'],
-            'legend' => __('Contact details'),
+            'legend' => 'Contact details',
             'fields' => $fields,
         ];
 
@@ -455,7 +455,7 @@ class Edit extends Profile
             ];
             $form['sets']['signature'] = [
                 'class'  => ['data-edit'],
-                'legend' => __('Signature'),
+                'legend' => 'Signature',
                 'fields' => $fields,
             ];
         }
