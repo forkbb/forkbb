@@ -156,12 +156,6 @@ msgstr "Quick jump"
 msgid "Quick jump help"
 msgstr "Enable the quick jump (jump to forum) drop list."
 
-msgid "GZip label"
-msgstr "GZip output"
-
-msgid "GZip help"
-msgstr "If enabled, ForkBB will gzip the output sent to browsers. This will reduce bandwidth usage, but use a little more CPU. This feature requires that PHP is configured with zlib (--with-zlib). Note: If you already have one of the Apache modules mod_gzip or mod_deflate set up to compress PHP scripts, you should disable this feature."
-
 msgid "Search all label"
 msgstr "Search all forums"
 
@@ -199,7 +193,7 @@ msgid "Feed TTL help"
 msgstr "Feeds can be cached to lower the resource usage of feeds."
 
 msgid "No cache"
-msgstr "Don\'t cache"
+msgstr "Don't cache"
 
 msgid "%d Minutes"
 msgstr "%d minutes"
@@ -292,7 +286,7 @@ msgid "SMTP address label"
 msgstr "SMTP server address"
 
 msgid "SMTP address help"
-msgstr "The address of an external SMTP server to send emails with. You can specify a custom port number if the SMTP server doesn\'t run on the default port 25 (example: mail.myhost.com:3580). Leave blank to use the local mail program."
+msgstr "The address of an external SMTP server to send emails with. You can specify a custom port number if the SMTP server doesn't run on the default port 25 (example: smtp.gmail.com:465). Leave blank to use the local mail program."
 
 msgid "SMTP username label"
 msgstr "SMTP username"
