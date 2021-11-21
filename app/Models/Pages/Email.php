@@ -126,7 +126,7 @@ class Email extends Page
         $this->nameTpl   = 'email';
         $this->robots    = 'noindex';
         $this->crumbs    = $this->crumbs(__(['Send email to %s', $this->curUser->username]));
-        $this->formTitle = __('Send email');
+        $this->formTitle = 'Send email';
         $this->form      = $this->formEmail($args, $data);
 
         return $this;
