@@ -128,8 +128,8 @@ class Edit extends Page
         $this->onlinePos = 'topic-' . $topic->id;
         $this->canonical = $post->linkEdit;
         $this->robots    = 'noindex';
-        $this->formTitle = $firstPost ? __('Edit topic') : __('Edit post');
-        $this->crumbs    = $this->crumbs($this->formTitle, $topic);
+        $this->formTitle = $firstPost ? 'Edit topic' : 'Edit post';
+        $this->crumbs    = $this->crumbs(__($this->formTitle), $topic);
         $this->form      = $this->messageForm($post, 'EditPost', $args, true, $firstPost, false);
 
         return $this;

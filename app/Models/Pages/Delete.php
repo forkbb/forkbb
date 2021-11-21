@@ -73,8 +73,8 @@ class Delete extends Page
         $this->onlinePos  = 'topic-' . $topic->id;
         $this->canonical  = $post->linkDelete;
         $this->robots     = 'noindex';
-        $this->formTitle  = __($deleteTopic ? 'Delete topic' : 'Delete post');
-        $this->crumbs     = $this->crumbs($this->formTitle, $topic);
+        $this->formTitle  = $deleteTopic ? 'Delete topic' : 'Delete post';
+        $this->crumbs     = $this->crumbs(__($this->formTitle), $topic);
         $this->posts      = [$post];
         $this->postsTitle = $deleteTopic ? 'Delete topic info' : 'Delete info';
         $this->form       = $this->formDelete($args, $post, $deleteTopic);
