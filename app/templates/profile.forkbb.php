@@ -16,7 +16,7 @@
     </div>
 @if ($form = $p->form)
     <section class="f-main f-profile">
-      <h2>{!! $p->title !!}</h2>
+      <h2>{!! __(['%s\'s profile', $p->curUser->username]) !!}</h2>
       <div class="f-fdiv">
     @include ('layouts/form')
       </div>
