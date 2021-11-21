@@ -24,7 +24,6 @@ class Rules extends Page
         $this->nameTpl    = 'rules';
         $this->onlinePos  = 'rules';
         $this->canonical  = $this->c->Router->link('Rules');
-        $this->title      = __('Forum rules');
         $this->crumbs     = $this->crumbs(
             [
                 $this->c->Router->link('Rules'),
@@ -47,7 +46,6 @@ class Rules extends Page
         $this->nameTpl    = 'rules';
         $this->onlinePos  = 'rules';
         $this->robots     = 'noindex';
-        $this->title      = __('Forum rules');
         $this->crumbs     = $this->crumbs(
             __('Forum rules'),
             [
