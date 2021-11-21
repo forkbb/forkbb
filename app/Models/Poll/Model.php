@@ -232,7 +232,7 @@ class Model extends DataModel
     /**
      * Возвращает статус опроса для текущего пользователя или null
      */
-    protected function getstatus(): ?string
+    protected function getstatus() /* : null|string|array */
     {
         if ($this->tid < 1) {
             return null;
@@ -240,15 +240,15 @@ class Model extends DataModel
             $this->c->user->isGuest
             && 1 !== $this->c->config->b_poll_guest
         ) {
-            return __('Poll results are hidden from the guests');
+            return 'Poll results are hidden from the guests';
         } elseif (! $this->isOpen) {
-            return __('This poll is closed');
+            return 'This poll is closed';
         } elseif (! $this->canSeeResult) {
-            return __(['Poll results are hidden up to %s voters', $this->parent->poll_term]);
+            return ['Poll results are hidden up to %s voters', $this->parent->poll_term];
         } elseif ($this->userVoted) {
-            return __('You voted');
+            return 'You voted';
         } else {
-            return __('Poll status is undefined');
+            return 'Poll status is undefined';
         }
     }
 

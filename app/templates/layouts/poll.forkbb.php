@@ -44,7 +44,7 @@
           </form>
 @else
     @if (null !== $poll->status)
-          <p class="f-poll-status"><span>{!! $poll->status !!}</span></p>
+          <p class="f-poll-status"><span>{!! __($poll->status) !!}</span></p>
     @endif
 @endif
         </div>
