@@ -139,7 +139,7 @@ class Func
         }
 
         if ($cur > 0) {
-            $pages[] = [__([$info, $cur, $all]), 'info', null];
+            $pages[] = [[$info, $cur, $all], 'info', null];
             $cur     = \min(\max(1, $cur), $all);
 
             if ($cur > 1) {

@@ -6,7 +6,7 @@
             @if ($cur[2])
           <a class="f-page active" href="{{ $cur[0] }}">{{ $cur[1] }}</a>
             @elseif ('info' === $cur[1])
-          <span class="f-pinfo">{!! $cur[0] !!}</span>
+          <span class="f-pinfo">{!! __($cur[0]) !!}</span>
             @elseif ('space' === $cur[1])
           <span class="f-page f-pspacer">{!! __('Spacer') !!}</span>
             @elseif ('prev' === $cur[1])
