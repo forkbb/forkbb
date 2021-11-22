@@ -767,8 +767,13 @@
 }
 
 #forka .f-bbcode-form .f-fbtn[data-name="new"],
-#forka .f-editbbcode-form .f-fbtn[data-name="reset"]{
+#forka .f-editbbcode-form .f-fbtn[data-name="reset"],
+#forka .f-deletebbcode-form .f-fbtn {
   width: auto;
+}
+
+#forka .f-deletebbcode-form #id-dl-confirm {
+  display: block;
 }
 
 @media screen and (min-width: 25rem) {

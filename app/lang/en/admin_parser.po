@@ -162,6 +162,12 @@ msgstr "Add BBCode"
 msgid "Edit bbcode head"
 msgstr "Edit BBCode"
 
+msgid "Delete bbcode head"
+msgstr "Delete BBCode"
+
+msgid "Delete bbcode btn"
+msgstr "Delete BBCode"
+
 msgid "Tag label"
 msgstr "Tag"
 

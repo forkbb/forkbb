@@ -577,8 +577,8 @@ class Routing
                 'AdminBBCode'
             );
             $r->add(
-                $r::GET,
-                '/admin/parser/bbcode/delete/{id|i:[1-9]\d*}/{token}',
+                $r::DUO,
+                '/admin/parser/bbcode/delete/{id|i:[1-9]\d*}',
                 'AdminParserBBCode:delete',
                 'AdminBBCodeDelete'
             );

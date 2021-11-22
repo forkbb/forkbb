@@ -162,6 +162,12 @@ msgstr "Добавление BB-кода"
 msgid "Edit bbcode head"
 msgstr "Редактирование BB-кода"
 
+msgid "Delete bbcode head"
+msgstr "Удаление BB-кода"
+
+msgid "Delete bbcode btn"
+msgstr "Удалить BB-код"
+
 msgid "Tag label"
 msgstr "Tag"
 

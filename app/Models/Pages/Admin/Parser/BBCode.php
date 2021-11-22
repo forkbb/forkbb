@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Pages\Admin\Parser;
 
+use ForkBB\Core\Container;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\BBCodeList\Structure;
@@ -18,6 +19,13 @@ use function \ForkBB\__;
 
 class BBCode extends Parser
 {
+    public function __construct(Container $container)
+    {
+        parent::__construct($container);
+
+        $this->AdminBBCodeUrl = $this->c->Router->link('AdminBBCode');
+    }
+
     /**
      * Редактирование натроек bbcode
      */
@@ -89,17 +97,14 @@ class BBCode extends Parser
 
                 $this->c->config->save();
 
-                return $this->c->Redirect->page('AdminBBCode')->message('Parser settings updated redirect');
+                return $this->c->Redirect->url($this->AdminBBCodeUrl)->message('Parser settings updated redirect');
             }
 
             $this->fIswev  = $v->getErrors();
         }
 
         $this->nameTpl   = 'admin/form';
-        $this->aCrumbs[] = [
-            $this->c->Router->link('AdminBBCode'),
-            __('BBCode management'),
-        ];
+        $this->aCrumbs[] = [$this->AdminBBCodeUrl, __('BBCode management')];
         $this->form      = $this->formView();
         $this->titleForm = 'BBCode head';
         $this->classForm = ['bbcode'];
@@ -113,7 +118,7 @@ class BBCode extends Parser
     protected function formView(): array
     {
         $form = [
-            'action' => $this->c->Router->link('AdminBBCode'),
+            'action' => $this->AdminBBCodeUrl,
             'hidden' => [
                 'token' => $this->c->Csrf->create('AdminBBCode'),
             ],
@@ -221,13 +226,94 @@ class BBCode extends Parser
      */
     public function delete(array $args, string $method): Page
     {
-        if (! $this->c->Csrf->verify($args['token'], 'AdminBBCodeDelete', $args)) {
-            return $this->c->Message->message($this->c->Csrf->getError());
+        $this->c->bbcode->load();
+
+        $tagData = $this->c->bbcode->bbcodeTable[$args['id']] ?? null;
+
+        if (
+            empty($tagData['bb_delete'])
+            || 1 !== $tagData['bb_delete']
+        ) {
+            return $this->c->Message->message('Bad request');
         }
 
-        $this->c->bbcode->delete($args['id']);
+        if ('POST' === $method) {
+            $v = $this->c->Validator->reset()
+                ->addRules([
+                    'token'   => 'token:AdminBBCodeDelete',
+                    'confirm' => 'checkbox',
+                    'delete'  => 'required|string',
+                ])->addAliases([
+                ])->addArguments([
+                    'token' => $args,
+                ]);
 
-        return $this->c->Redirect->page('AdminBBCode')->message('BBCode deleted redirect');
+            if (
+                ! $v->validation($_POST)
+                || '1' !== $v->confirm
+            ) {
+                return $this->c->Redirect->url($this->AdminBBCodeUrl)->message('No confirm redirect');
+            }
+
+            $this->c->bbcode->delete($args['id']);
+
+            return $this->c->Redirect->url($this->AdminBBCodeUrl)->message('BBCode deleted redirect');
+        }
+
+        $formAction      = $this->c->Router->link('AdminBBCodeDelete', $args);
+
+        $this->nameTpl   = 'admin/form';
+        $this->classForm = ['deletebbcode'];
+        $this->titleForm = 'Delete bbcode head';
+        $this->form      = $this->formDelete($args, $formAction, $tagData['bb_tag']);
+
+        $this->aCrumbs[] = [$formAction, __($this->titleForm)];
+        $this->aCrumbs[] = __(['"%s"', $tagData['bb_tag']]);
+        $this->aCrumbs[] = [$this->AdminBBCodeUrl, __('BBCode management')];
+
+        return $this;
+    }
+
+    /**
+     * Формирует данные для формы
+     */
+    protected function formDelete(array $args, string $formAction, string $name): array
+    {
+        return [
+            'action' => $formAction,
+            'hidden' => [
+                'token' => $this->c->Csrf->create('AdminBBCodeDelete', $args),
+            ],
+            'sets'   => [
+                'info' => [
+                    'info' => [
+                        [
+                            'value' => __(['BBCode %s', $name]),
+                        ],
+                    ],
+                ],
+                'confirm' => [
+                    'fields' => [
+                        'confirm' => [
+                            'type'    => 'checkbox',
+                            'label'   => 'Confirm action',
+                            'checked' => false,
+                        ],
+                    ],
+                ],
+            ],
+            'btns'   => [
+                'delete'  => [
+                    'type'  => 'submit',
+                    'value' => __('Delete bbcode btn'),
+                ],
+                'cancel'  => [
+                    'type'  => 'btn',
+                    'value' => __('Cancel'),
+                    'link'  => $this->AdminBBCodeUrl,
+                ],
+            ],
+        ];
     }
 
     /**
@@ -340,17 +426,11 @@ class BBCode extends Parser
                 $this->fIswev = $v->getErrors();
         }
 
-        $this->aCrumbs[] = [
-            $this->formAction,
-            __($title),
-        ];
+        $this->aCrumbs[] = [$this->formAction, __($title)];
         if ($id > 0) {
             $this->aCrumbs[] = __(['"%s"', $this->c->bbcode->bbcodeTable[$id]['bb_tag']]);
         }
-        $this->aCrumbs[] = [
-            $this->c->Router->link('AdminBBCode'),
-            __('BBCode management'),
-        ];
+        $this->aCrumbs[] = [$this->AdminBBCodeUrl, __('BBCode management')];
         $this->form      = $this->formEdit($id, $structure);
         $this->titleForm = $title;
         $this->classForm = ['editbbcode'];
