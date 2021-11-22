@@ -184,12 +184,9 @@ class BBCode extends Parser
                 'value'     => '❌',
                 'caption'   => 'Delete',
                 'title'     => __('Delete'),
-                'link'      => $this->c->Router->link(
-                    'AdminBBCodeDelete',
-                    [
-                        'id' => $id,
-                    ]
-                ),
+                'link'      => 1 === $tagData['bb_delete']
+                    ? $this->c->Router->link('AdminBBCodeDelete', ['id' => $id])
+                    : null,
                 'disabled'  => 1 !== $tagData['bb_delete'],
             ];
 
