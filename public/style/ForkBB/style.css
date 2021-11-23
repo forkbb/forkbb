@@ -872,14 +872,14 @@ body,
   margin: 0 0.3125rem;
 }
 
-#fork .f-subscribed > a::after {
+#fork .f-subscribed > .f-crumb-a::after {
   display: inline-block;
   font: 400 0.875rem "FontAwesomeFree";
   content: "\f0f3"; /* f06e */
   padding-inline-start: 0.3125rem;
 }
 
-#fork .f-crumb a:not(.active) {
+#fork .f-crumb-a:not(.active) {
   border-bottom: 0.0625rem solid;
 }
 
