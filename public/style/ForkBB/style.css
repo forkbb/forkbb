@@ -822,24 +822,24 @@ body,
   text-align: center;
 }
 
-#fork-debug > table {
+#fork-debug #fork-dgtable {
   width: 100%;
   border: 0.0625rem solid #AA7939;
   border-collapse: collapse;
   table-layout: fixed;
 }
 
-#fork-debug thead {
+#fork-dgtable #fork-dgthead {
   background-color: #F8F4E3;
 }
 
-#fork-debug td,
-#fork-debug th {
+#fork-dgtable .f-tcl,
+#fork-dgtable .f-tcr {
   padding: 0.3125rem 0.625rem;
   border-bottom: 0.0625rem solid #AA7939;
 }
 
-#fork-debug .tcl {
+#fork-dgtable .f-tcl {
   width: 5rem;
 }
 
