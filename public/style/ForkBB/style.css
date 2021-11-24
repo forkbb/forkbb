@@ -967,7 +967,7 @@ body,
 /*************/
 /* Сообщение */
 /*************/
-#fork-bcklnk > p {
+#fork #fork-bcklnk-p {
   padding: 0.625rem;
 }
 
