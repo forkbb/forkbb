@@ -4,7 +4,7 @@
               <div class="f-cell f-cmain">
                 <div class="f-ficon"></div>
                 <div class="f-finfo">
-                  <h3>
+                  <h3 class="f-finfo-h3">
                     <span class="f-frsname">
                       <span class="f-fredirtext">{!! __('Link to') !!}</span>
                       <a class="f-ftname" href="{{ $cur->redirect_url }}">{{ $cur->forum_name }}</a>
@@ -21,7 +21,7 @@
               <div class="f-cell f-cmain">
                 <div class="f-ficon"></div>
                 <div class="f-finfo">
-                  <h3>
+                  <h3 class="f-finfo-h3">
                     <span class="f-frsname">
                       <a class="f-ftname" href="{{ $cur->link }}">{{ $cur->forum_name }}</a>
                     </span>

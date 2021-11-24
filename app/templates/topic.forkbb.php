@@ -39,7 +39,7 @@
       </div>
 @endif
     </div>
-    <section id="fork-topic" class="f-main f-topic">
+    <section id="fork-topic" class="f-main">
       <h2>{{ $p->model->name }}</h2>
 @foreach ($p->posts as $id => $post)
     @if (empty($post->id) && $iswev = ['e' => [['Message %s was not found in the database', $id]]])

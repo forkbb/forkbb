@@ -25,7 +25,7 @@
     <div class="f-nav-links">
     @yield ('crumbs')
     </div>
-    <section class="f-subforums">
+    <section id="fork-subforums">
       <ol class="f-ftlist">
         <li id="id-subforums{{ $p->model->id }}" class="f-category">
           <h2 class="f-ftch2">{{ __(['Sub forum', 2]) }}</h2>
@@ -55,7 +55,7 @@
 @endif
     </div>
 @if ($p->topics)
-    <section class="f-main f-forum">
+    <section id="fork-forum" class="f-main">
       <h2>{{ $p->model->forum_name or $p->model->name }}</h2>
       <div class="f-ftlist">
         <ol class="f-table">
@@ -79,7 +79,7 @@
               <div class="f-ficon"></div>
             @endif
               <div class="f-finfo">
-                <h3><span class="f-tmoved" title="{{ __('Moved') }}"><span class="f-movedtxt">{!! __('Moved') !!}</span></span> <a class="f-ftname" href="{{ $topic->link }}">{{ $topic->name }}</a></h3>
+                <h3 class="f-finfo-h3"><span class="f-tmoved" title="{{ __('Moved') }}"><span class="f-movedtxt">{!! __('Moved') !!}</span></span> <a class="f-ftname" href="{{ $topic->link }}">{{ $topic->name }}</a></h3>
               </div>
             </div>
           </li>
@@ -93,7 +93,7 @@
               <div class="f-ficon"></div>
             @endif
               <div class="f-finfo">
-                <h3>
+                <h3 class="f-finfo-h3">
             @if ($topic->dot)
                   <span class="f-tdot"><span class="f-dottxt">·</span></span>
             @endif

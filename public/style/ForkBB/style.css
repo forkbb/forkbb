@@ -213,16 +213,16 @@ body,
 }
 
 #fork #id-fhth1,
-#fork .f-category h2,
-#fork .f-category h3 {
+#fork .f-category .f-ftch2,
+#fork .f-category .f-finfo-h3 {
   font-family: "Segoe Print", Arial, Helvetica, sans-serif;
 }
 
-#fork .f-category h2 {
+#fork .f-category .f-ftch2 {
   font-size: 1.5rem
 }
 
-#fork .f-category h3 {
+#fork .f-category .f-finfo-h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 0.3125rem;
@@ -1072,7 +1072,7 @@ body,
   border-radius: 0.1875rem;
 }
 
-#fork .f-lrdiv h2 {
+#fork .f-lrdiv > h2 {
   text-align: center;
 }
 
@@ -1159,11 +1159,11 @@ body,
   margin-inline-start: -0.875rem;
 }
 
-#fork .f-subforums .f-fsub::before {
+#fork-subforums .f-fsub::before {
   margin-inline-start: 0.875rem;
 }
 
-#fork .f-subforums .f-frsname::before {
+#fork-subforums .f-frsname::before {
   display: inline-block;
   content: "└";
 }
@@ -1199,7 +1199,7 @@ body,
   content: "\f1d8"; /* "\f0c6"; */
 }
 
-#fork .f-forum .f-ficon::before {
+#fork-forum .f-ficon::before {
   font-size: 1.2rem;
 }
 
@@ -1283,15 +1283,15 @@ body,
 /********************/
 /* Страница раздела */
 /********************/
-#fork .f-subforums {
+#fork #fork-subforums {
   margin: 1rem 0;
 }
 
-#fork .f-subforums .f-ftch2 {
+#fork-subforums .f-ftch2 {
   display: none;
 }
 
-#fork .f-forum h3 {
+#fork-forum .f-finfo-h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 0.3125rem;

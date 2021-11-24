@@ -34,7 +34,7 @@
         </div>
       </div>
     </div>
-    <section class="f-pm f-topic">
+    <section id="fork-topic"  class="f-pm f-pmtopic">
       <h2>{{ $p->model->name }}</h2>
 @foreach ($p->posts as $id => $post)
     @if (empty($post->id) && $iswev = ['e' => [['Message %s was not found in the database', $id]]])
@@ -45,7 +45,7 @@
         <input id="checkbox-{{ $post->id }}" class="f-post-checkbox" type="checkbox" name="ids[{{ $post->id }}]" value="{{ $post->id }}" form="id-form-mod">
         @endif
         <header class="f-post-header">
-          <h3>@if ($post->postNumber > 1) {!! __('Re') !!} @endif {{ $p->model->name }}</h3>
+          <h3 class="f-phead-h3">@if ($post->postNumber > 1) {!! __('Re') !!} @endif {{ $p->model->name }}</h3>
           <span class="f-post-posted"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></span>
         @if ($post->edited)
           <span class="f-post-edited" title="{{ __(['Last edit', $post->editor, dt($post->edited)]) }}">{!! __('Edited') !!}</span>

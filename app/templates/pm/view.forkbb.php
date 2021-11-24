@@ -27,7 +27,7 @@
         </div>
       </div>
 @endif
-      <section id="fork-pm-list-view" class="f-pm f-forum @empty ($p->pmList) f-pm-empty @endempty">
+      <section id="fork-forum" class="f-pm f-pmview @empty ($p->pmList) f-pm-empty @endempty">
         <h2>{!! __($p->title) !!}</h2>
 @if (empty($p->pmList) && $iswev = ['i' => ['Info zero']])
         @include ('layouts/iswev')
@@ -50,7 +50,7 @@
                 <input id="checkbox-{{ $topic->id }}" class="f-fch" type="checkbox" name="ids[{{ $topic->id }}]" value="{{ $topic->id }}" form="id-form-pmview">
                 <label class="f-ficon" for="checkbox-{{ $topic->id }}" title="{{ __('Select') }}"></label>
                 <div class="f-finfo">
-                  <h3>
+                  <h3 class="f-finfo-h3">
             @if ($topic->closed)
                     <span class="f-tclosed" title="{{ __('Closed') }}"><span class="f-closedtxt">{!! __('Closed') !!}</span></span>
             @endif
