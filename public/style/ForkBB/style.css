@@ -1399,7 +1399,7 @@ body,
   font-size: 0.875rem;
 }
 
-#fork .f-post-header > h3 {
+#fork-topic .f-phead-h3 {
   display: none;
 }
 
@@ -2013,17 +2013,17 @@ body,
 /*********/
 /* Поиск */
 /*********/
-#fork .f-search-form .f-yinfo:first-child {
+#fork-search .f-yinfo:first-child {
   text-align: end;
   padding: 0 0.3125rem;
   margin-bottom: -0.3125rem;
 }
 
-#fork .f-post-search-info {
+#fork-topic-ins .f-post-search-info {
   display: none;
 }
 
-#fork .f-post-search .f-post-header > h3 {
+#fork-topic-ins .f-phead-h3 {
   font-size: 0.875rem;
   font-weight: normal;
   display: flex;
@@ -2031,8 +2031,8 @@ body,
   word-break: break-all;
 }
 
-#fork .f-psh-topic::before,
-#fork .f-post-search .f-post-posted::before {
+#fork-topic-ins .f-psh-topic::before,
+#fork-topic-ins .f-post-posted::before {
   display: inline-block;
   font-family: "FontAwesomeFree";
   font-weight: 900;
@@ -2057,12 +2057,12 @@ body,
     width: 33.33%;
   }
 
-  #fork .f-search-form .f-flblr,
+  #fork-search .f-flblr,
   #fork-usrlstform .f-flblr {
     padding: 0.5rem 0;
   }
 
-  #fork .f-post-search-info {
+  #fork-topic-ins .f-post-search-info {
     display: block;
     font-size: 0.875rem;
     padding-top: 0.625rem;
