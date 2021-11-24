@@ -1001,59 +1001,57 @@ body,
 /*********************/
 /* Статистика форума */
 /*********************/
-#fork .f-stats {
+#fork #fork-stats {
   border-top: 0.0625rem solid #AA7939;
   font-size: 0.875rem;
   padding: 0.3125rem 0;
 }
 
-#fork .f-stats dt {
+#fork-stats .f-stats-dt {
   display: none;
 }
 
-#fork .f-stboard,
-#fork .f-stusers {
+#fork-stats #fork-stboard,
+#fork-stats #fork-stusers {
   padding: 0.3125rem;
 }
 
-#fork .f-stboard {
+#fork-stats #fork-stboard {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   border-bottom: 0.0625rem dotted #AA7939;
 }
 
-#fork .f-stboard > dd,
-#fork .f-stusers > dd {
+#fork-stats .f-stats-dd {
   padding: 0 0.3125rem;
 }
 
-#fork .f-onlinelist {
+#fork-stats #fork-onlinelist {
   border-top: 0.0625rem dotted #AA7939;
   padding: 0.3125rem 0.625rem;
   width: 100%
 }
 
-#fork .f-onlinelist > dt {
-  display: inline;
+#fork-onlinelist #id-onlst-dt {
   font-weight: bold;
 }
 
 @media screen and (min-width: 45rem) {
-  #fork .f-stats {
+  #fork #fork-stats {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between
   }
 
-  #fork .f-stboard {
+  #fork-stats #fork-stboard {
     flex-direction: column;
     flex-wrap: nowrap;
     align-items: flex-end;
     border: 0;
   }
 
-  #fork .f-stusers {
+  #fork-stats #fork-stusers {
     order: -1;
   }
 }

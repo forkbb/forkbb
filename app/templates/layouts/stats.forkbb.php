@@ -1,32 +1,32 @@
-    <aside class="f-stats">
+    <aside id="fork-stats">
       <h2>{!! __('Stats info') !!}</h2>
 @if ($p->stats)
-      <dl class="f-stboard">
-        <dt>{!! __('Board stats') !!}</dt>
-        <dd>{!! __('No of users') !!} <b>{!! num($p->stats->userTotal) !!}</b></dd>
-        <dd>{!! __('No of topics') !!} <b>{!! num($p->stats->topicTotal) !!}</b></dd>
-        <dd>{!! __('No of posts') !!} <b>{!! num($p->stats->postTotal) !!}</b></dd>
+      <dl id="fork-stboard">
+        <dt class="f-stats-dt">{!! __('Board stats') !!}</dt>
+        <dd class="f-stats-dd">{!! __('No of users') !!} <b>{!! num($p->stats->userTotal) !!}</b></dd>
+        <dd class="f-stats-dd">{!! __('No of topics') !!} <b>{!! num($p->stats->topicTotal) !!}</b></dd>
+        <dd class="f-stats-dd">{!! __('No of posts') !!} <b>{!! num($p->stats->postTotal) !!}</b></dd>
       </dl>
 @endif
-      <dl class="f-stusers">
-        <dt>{!! __('User info') !!}</dt>
+      <dl id="fork-stusers">
+        <dt class="f-stats-dt">{!! __('User info') !!}</dt>
 @if ($p->stats)
     @if ($p->stats->userLast['link'])
-        <dd>{!! __('Newest user')  !!} <a href="{{ $p->stats->userLast['link'] }}">{{ $p->stats->userLast['name'] }}</a></dd>
+        <dd class="f-stats-dd">{!! __('Newest user')  !!} <a href="{{ $p->stats->userLast['link'] }}">{{ $p->stats->userLast['name'] }}</a></dd>
     @else
-        <dd>{!! __('Newest user')  !!} {{ $p->stats->userLast['name'] }}</dd>
+        <dd class="f-stats-dd">{!! __('Newest user')  !!} {{ $p->stats->userLast['name'] }}</dd>
     @endif
 @endif
 @if ($p->online)
-        <dd>{!! __(['Visitors online', num($p->online->numUsers), num($p->online->numGuests)]) !!}</dd>
+        <dd class="f-stats-dd">{!! __(['Visitors online', num($p->online->numUsers), num($p->online->numGuests)]) !!}</dd>
     @if ($p->stats)
-        <dd>{!! __(['Most online', num($p->online->maxNum), dt($p->online->maxTime)]) !!}</dd>
+        <dd class="f-stats-dd">{!! __(['Most online', num($p->online->maxNum), dt($p->online->maxTime)]) !!}</dd>
     @endif
 @endif
       </dl>
 @if ($p->online && $p->online->info)
-      <dl class="f-inline f-onlinelist"><!-- inline -->
-        <dt>{!! __('Online users') !!}</dt>
+      <dl id="fork-onlinelist" class="f-inline"><!-- inline -->
+        <dt id="id-onlst-dt">{!! __('Online users') !!}</dt>
     @foreach ($p->online->info as $cur)
         @if ($cur['link'])
         <dd><a href="{{ $cur['link'] }}">{{ $cur['name'] }}</a></dd>
