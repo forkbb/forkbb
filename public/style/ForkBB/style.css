@@ -974,7 +974,7 @@ body,
 /***********/
 /* Правила */
 /***********/
-#fork #id-rules {
+#fork-rules #id-rules {
   padding: 0.625rem;
   border: 0.0625rem solid #AA7939;
   background-color: #F8F4E3;

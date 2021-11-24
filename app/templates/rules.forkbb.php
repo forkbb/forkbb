@@ -3,7 +3,7 @@
     <div class="f-nav-links">
 @yield ('crumbs')
     </div>
-    <section class="f-main f-rules">
+    <section id="fork-rules" class="f-main">
       <h2>{!! __('Forum rules') !!}</h2>
       <div id="id-rules">{!! $p->rules !!}</div>
 @if ($form = $p->form)
