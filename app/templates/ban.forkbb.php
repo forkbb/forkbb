@@ -1,5 +1,5 @@
 @extends ('layouts/main')
-    <section class="f-main f-message">
+    <section id="fork-ban" class="f-main">
       <h2>{!! __('Info') !!}</h2>
 @if ($p->bannedIp)
       <p>{!! __('Ban message 1') !!}</p>
