@@ -18,6 +18,7 @@ use ForkBB\Models\Pages\PostValidatorTrait;
 use ForkBB\Models\PM\Cnst;
 use ForkBB\Models\PM\PPost;
 use ForkBB\Models\PM\PTopic;
+use ForkBB\Core\Exceptions\MailException;
 use InvalidArgumentException;
 use function \ForkBB\__;
 
@@ -258,6 +259,48 @@ class PMPost extends AbstractPM
         $this->user->u_pm_last_post = $now;
 
         $this->c->users->update($this->user);
+
+        // отправка уведомления
+        $this->c->Online->calc($this);
+
+        if ( // ????
+            Cnst::PT_NORMAL === $topic->poster_status
+            && 1 === $this->targetUser->u_pm_notify
+            && 1 === $this->targetUser->email_confirmed
+            && 0 === $this->c->bans->banFromName($this->targetUser->username)
+            && ! $this->c->Online->isOnline($this->targetUser)
+        ) {
+            try {
+                $this->c->Lang->load('common', $this->targetUser->language);
+
+                $tplData = [
+                    'fTitle'     => $this->c->config->o_board_title,
+                    'fMailer'    => __(['Mailer', $this->c->config->o_board_title]),
+                    'pmSubject'  => $topic->subject,
+                    'username'   => $this->targetUser->username,
+                    'sender'     => $this->user->username,
+                    'messageUrl' => $this->newTopic ? $topic->link : $post->link,
+                ];
+
+                $this->c->Mail
+                    ->reset()
+                    ->setMaxRecipients(1)
+                    ->setFolder($this->c->DIR_LANG)
+                    ->setLanguage($this->targetUser->language)
+                    ->setTo($this->targetUser->email, $this->targetUser->username)
+                    ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
+                    ->setTpl('new_pm.tpl', $tplData)
+                    ->send();
+
+                $this->c->Lang->load('common', $this->user->language); // ???? вынести?
+            } catch (MailException $e) {
+                $this->c->Log->error('PM: MailException', [
+                    'exception' => $e,
+                    'headers'   => false,
+                ]);
+            }
+        }
+        // отправка уведомления
 
         return $this->c->Redirect->url($post->link)->message($message);
     }
