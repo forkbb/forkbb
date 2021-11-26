@@ -49,7 +49,7 @@ function __(/* string|arrray */ $arg): string
         $args = \array_slice($arg, 1);
 
         if (null === $tr) {
-            $tr = e($tr);
+            $tr = e(\reset($arg));
         } elseif (\is_array($tr)) {
             $tr   = $lang->getForm($tr, \reset($args));
             $args = \array_slice($args, 1);
