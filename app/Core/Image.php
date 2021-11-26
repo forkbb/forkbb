@@ -142,6 +142,9 @@ class Image extends File
             case 'webp':
                 $result = \imagewebp($this->image, $path, $this->quality);
                 break;
+            case 'avif':
+                $result = \imageavif($this->image, $path, $this->quality);
+                break;
             default:
                 $this->error = 'File type not supported';
 

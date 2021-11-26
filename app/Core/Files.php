@@ -47,6 +47,7 @@ class Files
         'image/webp' => 'webp',
 # non-standard mime types
         'image/x-ms-bmp' => 'bmp',
+        'image/avif' => 'avif',
     ];
 
     /**
@@ -830,6 +831,7 @@ class Files
         'x-conference/x-cooltalk' => 'ice',
 # non-standard mime types
         'image/x-ms-bmp' => 'bmp',
+        'image/avif' => 'avif',
     ];
 
     public function __construct(/* string|int */ $maxFileSize, /* string|int */ $maxImgSize)
