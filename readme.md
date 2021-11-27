@@ -1,4 +1,4 @@
-# ForkBB rev.38 Pre-Alpha Readme
+# ForkBB rev.39 Pre-Alpha Readme
 
 ## About
 
@@ -13,7 +13,8 @@ No: plugins/extensions system, ...
 ## Requirements
 
 * PHP 7.3+
-* PHP extensions: pdo, intl, json, mbstring, gd, fileinfo
+* PHP extensions: pdo, intl, json, mbstring, fileinfo
+* PHP extensions (desirable): gd or imagick (for upload avatars and other images)
 * A database such as MySQL 5.5.3 or later (_Drivers for other databases are not realized now_)
 
 ## Install
