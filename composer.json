@@ -30,6 +30,7 @@
         "ext-fileinfo": "*",
         "ext-intl" : "*",
         "ext-json": "*",
+        "ext-pdo": "*",
         "artoodetoo/dirk": "dev-visman",
         "miovisman/parserus": "^1.1.0",
         "miovisman/normemail": "dev-master",
