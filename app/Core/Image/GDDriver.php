@@ -27,7 +27,7 @@ class GDDriver extends DefaultDriver
 
     public function readFromStr(string $data) /* : mixed|false */
     {
-        return $this->ready ? \imagecreatefromstring($data) : false;
+        return $this->tuning($this->ready ? \imagecreatefromstring($data) : false);
     }
 
     public function readFromPath(string $path) /* : mixed|false */
@@ -38,7 +38,22 @@ class GDDriver extends DefaultDriver
         ) {
             return false;
         } else {
-            return \imagecreatefromstring(\file_get_contents($path));
+            return $this->tuning(\imagecreatefromstring(\file_get_contents($path)));
+        }
+    }
+
+    protected function tuning(/* mixed */ $image) /* : mixed */
+    {
+        if (
+            false !== $image
+            && (
+                false === \imagealphablending($image, false)
+                || false === \imagesavealpha($image, true)
+            )
+        ) {
+            throw new FileException('Failed to adjust image');
+        } else {
+            return $image;
         }
     }
 
@@ -80,9 +95,14 @@ class GDDriver extends DefaultDriver
 
         $oldW   = \imagesx($image);
         $oldH   = \imagesy($image);
-        $wr     = ($maxW < 1) ? 1 : $maxW / $oldW;
-        $hr     = ($maxH < 1) ? 1 : $maxH / $oldH;
+        $wr     = $maxW < 16 ? 1 : $maxW / $oldW;
+        $hr     = $maxH < 16 ? 1 : $maxH / $oldH;
         $r      = \min($wr, $hr, 1);
+
+        if (1 == $r) {
+            return $image;
+        }
+
         $width  = (int) \round($oldW * $r);
         $height = (int) \round($oldH * $r);
 
@@ -105,12 +125,9 @@ class GDDriver extends DefaultDriver
         ) {
             throw new FileException('Failed to convert image to palette');
         }
-        if (
-            false === \imagealphablending($result, false)
-            || false === \imagesavealpha($result, true)
-        ) {
-            throw new FileException('Failed to adjust image');
-        }
+
+        $result = $this->tuning($result);
+
         if (false === \imagecopyresampled($result, $image, 0, 0, 0, 0, $width, $height, $oldW, $oldH)) {
             throw new FileException('Failed to resize image');
         }
