@@ -25,7 +25,6 @@
     ],
     "require": {
         "php": ">=7.3.0",
-        "ext-gd": "*",
         "ext-mbstring": "*",
         "ext-fileinfo": "*",
         "ext-intl" : "*",
