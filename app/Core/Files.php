@@ -926,13 +926,31 @@ class Files
         if ($file instanceof Image) {
             return $file->ext();
         } elseif (\is_string($file)) {
-            // ???? проверка на наличие файла?
-
-            $mimeType = \mime_content_type($file);
-
-            return $this->imageType[$mimeType] ?? null;
+            return $this->imageType[$this->mimeType($file)] ?? null;
         } else {
             return null;
+        }
+    }
+
+    /**
+     * Определяет mime тип файла
+     */
+    public function mimeType(string $path): string
+    {
+        $default = 'unknown/unknown';
+
+        if (
+            $this->isBadPath($path)
+            || ! \is_file($path)
+            || ! \is_readable($path)
+        ) {
+            return $default;
+        }
+
+        if (\function_exists('\\mime_content_type')) {
+            return \mime_content_type($path) ?: $default;
+        } else {
+            return $default;
         }
     }
 
@@ -986,7 +1004,7 @@ class Files
 
         $cur = $this->uploadOneFile($file);
 
-        return ! $cur instanceof File ? false : $cur;
+        return $cur instanceof File ? $cur : false;
     }
 
     /**
@@ -1025,6 +1043,12 @@ class Files
             return null;
         }
 
+        if ($this->isBadPath($file['tmp_name'])) {
+            $this->error = 'Bad path to tmp file';
+
+            return null;
+        }
+
         if (! \is_uploaded_file($file['tmp_name'])) {
             $this->error = 'The specified file was not uploaded';
 
@@ -1057,7 +1081,7 @@ class Files
             }
         }
 
-        $mimeType = \mime_content_type($file['tmp_name']);
+        $mimeType = $this->mimeType($file['tmp_name']);
 
         if (! isset($this->mimeToExt[$mimeType])) {
             $this->error = "Unknown mime type of the file: {$mimeType}";
@@ -1092,5 +1116,10 @@ class Files
 
             return null;
         }
+    }
+
+    public function isBadPath(string $path): bool
+    {
+        return false !== \strpos($path, '//') || \preg_match('%\bphar\b%i', $path);
     }
 }
