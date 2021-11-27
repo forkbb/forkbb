@@ -1593,4 +1593,25 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.38 to rev.39
+     */
+    protected function stageNumber38(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>Files=>drivers',
+            [
+                '\\ForkBB\\Core\\Image\\ImagickDriver::class',
+                '\\ForkBB\\Core\\Image\\GDDriver::class',
+                '\\ForkBB\\Core\\Image\\DefaultDriver::class',
+            ]
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }

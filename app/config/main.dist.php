@@ -173,9 +173,14 @@ return [
             'flag'  => \ENT_HTML5,
         ],
         'Files' => [
-            'class' => \ForkBB\Core\Files::class,
-            'file'  => '%MAX_FILE_SIZE%',
-            'img'   => '%MAX_IMG_SIZE%',
+            'class'   => \ForkBB\Core\Files::class,
+            'file'    => '%MAX_FILE_SIZE%',
+            'img'     => '%MAX_IMG_SIZE%',
+            'drivers' => [
+                \ForkBB\Core\Image\ImagickDriver::class,
+                \ForkBB\Core\Image\GDDriver::class,
+                \ForkBB\Core\Image\DefaultDriver::class,
+            ],
         ],
 
         'VLnoURL'    => \ForkBB\Models\Validators\NoURL::class,

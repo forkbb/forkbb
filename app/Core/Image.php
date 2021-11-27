@@ -12,6 +12,7 @@ namespace ForkBB\Core;
 
 use ForkBB\Core\Files;
 use ForkBB\Core\File;
+use ForkBB\Core\Image\DefaultDriver;
 use ForkBB\Core\Exceptions\FileException;
 use InvalidArgumentException;
 
@@ -19,9 +20,15 @@ class Image extends File
 {
     /**
      * Изображение
-     * @var false|resource
+     * @var mixed
      */
     protected $image;
+
+    /**
+     * Класс обработки изображений
+     * @var DefaultDriver
+     */
+    protected $imgDriver;
 
     /**
      * Качество изображения
@@ -35,18 +42,20 @@ class Image extends File
      */
     protected $pattern = '%^(?!.*?\.\.)([\w.\x5C/:-]*[\x5C/])?(\*|[\w.-]+)\.(\*|[a-z\d]+|\([a-z\d]+(?:\|[a-z\d]+)*\))$%i';
 
-    public function __construct(string $path, array $options)
+    public function __construct(string $path, array $options, DefaultDriver $imgDriver)
     {
         parent::__construct($path, $options);
 
-        if (! \extension_loaded('gd')) {
-            throw new FileException('GD library not enabled');
+        if ($imgDriver::DEFAULT) {
+            throw new FileException('No library for work with images');
         }
 
+        $this->imgDriver = $imgDriver;
+
         if (\is_string($this->data)) {
-            $this->image = \imagecreatefromstring($this->data);
+            $this->image = $imgDriver->readFromStr($this->data);
         } else {
-            $this->image = \imagecreatefromstring(\file_get_contents($this->path));
+            $this->image = $imgDriver->readFromPath($this->path);
         }
 
         if (false === $this->image) {
@@ -59,44 +68,7 @@ class Image extends File
      */
     public function resize(int $maxW, int $maxH): Image
     {
-        $oldW   = \imagesx($this->image);
-        $oldH   = \imagesy($this->image);
-        $wr     = ($maxW < 1) ? 1 : $maxW / $oldW;
-        $hr     = ($maxH < 1) ? 1 : $maxH / $oldH;
-        $r      = \min($wr, $hr, 1);
-        $width  = (int) \round($oldW * $r);
-        $height = (int) \round($oldH * $r);
-
-        if (false === ($image = \imagecreatetruecolor($width, $height))) {
-            throw new FileException('Failed to create new truecolor image');
-        }
-        if (false === ($color = \imagecolorallocatealpha($image, 255, 255, 255, 127))) {
-            throw new FileException('Failed to create color for image');
-        }
-        if (false === \imagefill($image, 0, 0, $color)) {
-            throw new FileException('Failed to fill image with color');
-        }
-
-        \imagecolortransparent($image, $color);
-        $palette = \imagecolorstotal($this->image);
-
-        if (
-            $palette > 0
-            && ! \imagetruecolortopalette($image, true, $palette)
-        ) {
-            throw new FileException('Failed to convert image to palette');
-        }
-        if (
-            false === \imagealphablending($image, false)
-            || false === \imagesavealpha($image, true)
-        ) {
-            throw new FileException('Failed to adjust image');
-        }
-        if (false === \imagecopyresampled($image, $this->image, 0, 0, 0, 0, $width, $height, $oldW, $oldH)) {
-            throw new FileException('Failed to resize image');
-        }
-
-        $this->image = $image;
+        $this->image = $this->imgDriver->resize($this->image, $maxW, $maxH);
 
         return $this;
     }
@@ -128,43 +100,22 @@ class Image extends File
      */
     protected function fileProc(string $path): bool
     {
-        switch (\pathinfo($path, \PATHINFO_EXTENSION)) {
-            case 'jpg':
-                $result = \imagejpeg($this->image, $path, $this->quality);
-                break;
-            case 'png':
-                $quality = (int) \floor((100 - $this->quality) / 11);
-                $result  = \imagepng($this->image, $path, $quality);
-                break;
-            case 'gif':
-                $result = \imagegif($this->image, $path);
-                break;
-            case 'webp':
-                $result = \imagewebp($this->image, $path, $this->quality);
-                break;
-            case 'avif':
-                $result = \imageavif($this->image, $path, $this->quality);
-                break;
-            default:
-                $this->error = 'File type not supported';
+        $result = $this->imgDriver->writeToPath($this->image, $path, $this->quality);
 
-                return false;
-        }
-
-        if (! $result) {
+        if (null === $result) {
+            $result      = false;
+            $this->error = 'File type not supported';
+        } elseif (! $result) {
             $this->error = 'Error writing file';
-
-            return false;
+        } else {
+            \chmod($path, 0644);
         }
 
-        \chmod($path, 0644);
-
-        return true;
+        return $result;
     }
 
-    public function __destruct() {
-        if (\is_resource($this->image)) {
-            \imagedestroy($this->image);
-        }
+    public function __destruct()
+    {
+        $this->imgDriver->destroy($this->image);
     }
 }

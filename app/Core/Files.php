@@ -12,8 +12,10 @@ namespace ForkBB\Core;
 
 use ForkBB\Core\File;
 use ForkBB\Core\Image;
+use ForkBB\Core\Image\DefaultDriver;
 use ForkBB\Core\Exceptions\FileException;
 use InvalidArgumentException;
+use RuntimeException;
 
 class Files
 {
@@ -34,6 +36,12 @@ class Files
      * @var null|string
      */
     protected $error;
+
+    /**
+     * Класс обработки изображений
+     * @var DefaultDriver
+     */
+    protected $imgDriver;
 
     /**
      * Список mime типов считающихся картинками
@@ -834,7 +842,7 @@ class Files
         'image/avif' => 'avif',
     ];
 
-    public function __construct(/* string|int */ $maxFileSize, /* string|int */ $maxImgSize)
+    public function __construct(/* string|int */ $maxFileSize, /* string|int */ $maxImgSize, array $imgDrivers)
     {
         $init = \min(
             \PHP_INT_MAX,
@@ -849,6 +857,23 @@ class Files
             $this->size($maxFileSize),
             $init
         );
+        $this->imgDriver = $this->imgDriver($imgDrivers);
+    }
+
+    /**
+     * Возращает драйвер для работы с изображениями
+     */
+    protected function imgDriver(array $arr): DefaultDriver
+    {
+        foreach ($arr as $class) {
+            $driver = new $class($this);
+
+            if (true === $driver->ready()) {
+                return $driver;
+            }
+        }
+
+        throw new RuntimeException('No driver for work with images');
     }
 
     /**
@@ -1107,7 +1132,7 @@ class Files
 
         try {
             if (null !== $imageExt) {
-                return new Image($file['tmp_name'], $options);
+                return new Image($file['tmp_name'], $options, $this->imgDriver);
             } else {
                 return new File($file['tmp_name'], $options);
             }
