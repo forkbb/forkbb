@@ -15,9 +15,6 @@ msgstr ""
 msgid "Post topic"
 msgstr "Post new topic"
 
-msgid "Views"
-msgstr "Views"
-
 msgid "Moved"
 msgstr "Moved"
 
@@ -32,9 +29,6 @@ msgstr "Poll"
 
 msgid "Empty forum"
 msgstr "Forum is empty."
-
-msgid "Mod controls"
-msgstr "Moderator controls"
 
 msgid "Topic %s was not found in the database"
 msgstr "Topic №%s was not found in the database"

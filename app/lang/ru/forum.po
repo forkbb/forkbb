@@ -15,9 +15,6 @@ msgstr ""
 msgid "Post topic"
 msgstr "Создать тему"
 
-msgid "Views"
-msgstr "Просмотров"
-
 msgid "Moved"
 msgstr "Перенесено"
 
@@ -32,9 +29,6 @@ msgstr "Опрос"
 
 msgid "Empty forum"
 msgstr "Раздел пуст."
-
-msgid "Mod controls"
-msgstr "Инструменты модерирования"
 
 msgid "Topic %s was not found in the database"
 msgstr "Тема №%s не найдена в базе данных"
