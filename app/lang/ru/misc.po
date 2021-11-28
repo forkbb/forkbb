@@ -27,9 +27,6 @@ msgstr "Вы должны ввести заголовок."
 msgid "No email message"
 msgstr "Вы должны ввести текст письма."
 
-msgid "Too long email message"
-msgstr "Сообщение должно быть не длиннее 65535 символов (64 KB)."
-
 msgid "Email sent redirect"
 msgstr "Письмо отправлено."
 
@@ -45,15 +42,6 @@ msgstr "Сообщение"
 msgid "Email disclosure note"
 msgstr "Имейте в виду, что ваш почтовый адрес будет виден получателю письма."
 
-msgid "Write email"
-msgstr "Форма для составления и отправки письма"
-
-msgid "No reason"
-msgstr "Пожалуйста, введите причину."
-
-msgid "Reason too long"
-msgstr "Ваше сообщение не должно превышать 65535 байт (~64Кб)."
-
 msgid "Report redirect"
 msgstr "Сигнал отправлен."
 
@@ -66,20 +54,8 @@ msgstr "Причина обращения"
 msgid "Reason desc"
 msgstr "Пожалуйста, кратко опишите причину создания этого сигнала (жалобы)"
 
-msgid "Already subscribed topic"
-msgstr "Вы уже подписаны на эту тему."
-
-msgid "Already subscribed forum"
-msgstr "Вы уже подписаны на этот раздел."
-
 msgid "Subscribe redirect"
 msgstr "Подписка добавлена."
-
-msgid "Not subscribed topic"
-msgstr "Вы не подписаны на эту тему."
-
-msgid "Not subscribed forum"
-msgstr "Вы не подписаны на этот раздел."
 
 msgid "Unsubscribe redirect"
 msgstr "Подписка удалена."

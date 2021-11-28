@@ -27,9 +27,6 @@ msgstr "You must enter a subject."
 msgid "No email message"
 msgstr "You must enter a message."
 
-msgid "Too long email message"
-msgstr "Messages cannot be longer than 65535 characters (64 KB)."
-
 msgid "Email sent redirect"
 msgstr "Email sent."
 
@@ -45,15 +42,6 @@ msgstr "Message"
 msgid "Email disclosure note"
 msgstr "Please note that by using this form, your email address will be disclosed to the recipient."
 
-msgid "Write email"
-msgstr "Write and submit your email message"
-
-msgid "No reason"
-msgstr "You must enter a reason."
-
-msgid "Reason too long"
-msgstr "Your message must be under 65535 bytes (~64kb)."
-
 msgid "Report redirect"
 msgstr "Post reported."
 
@@ -66,20 +54,8 @@ msgstr "Reason"
 msgid "Reason desc"
 msgstr "Please enter a short reason why you are reporting this post"
 
-msgid "Already subscribed topic"
-msgstr "You are already subscribed to this topic."
-
-msgid "Already subscribed forum"
-msgstr "You are already subscribed to this forum."
-
 msgid "Subscribe redirect"
 msgstr "Your subscription has been added."
-
-msgid "Not subscribed topic"
-msgstr "You are not subscribed to this topic."
-
-msgid "Not subscribed forum"
-msgstr "You are not subscribed to this forum."
 
 msgid "Unsubscribe redirect"
 msgstr "Your subscription has been removed."
