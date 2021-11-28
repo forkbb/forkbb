@@ -12,9 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
 
-msgid "Topics"
-msgstr "Тем"
-
 msgid "Empty board"
 msgstr "Форум пуст."
 

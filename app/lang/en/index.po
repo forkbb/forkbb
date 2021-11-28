@@ -12,9 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "Topics"
-msgstr "Topics"
-
 msgid "Empty board"
 msgstr "Board is empty."
 
