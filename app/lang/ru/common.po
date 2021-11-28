@@ -79,12 +79,6 @@ msgstr "Токен просрочен."
 msgid "Hidden text"
 msgstr "Скрытый текст"
 
-msgid "Show"
-msgstr "Показать"
-
-msgid "Hide"
-msgstr "Скрыть"
-
 msgid "Announcement"
 msgstr "Объявление"
 
@@ -134,7 +128,7 @@ msgid "Redirecting..."
 msgstr "Переадресация …"
 
 msgid "Click redirect"
-msgstr "Кликните здесь, если вы не желаете ждать (или ваш браузер не поддерживает перенаправление)."
+msgstr "Кликните здесь, если не желаете ждать (или ваш браузер не поддерживает перенаправление)."
 
 msgid "on"
 msgstr "вкл."
@@ -155,7 +149,7 @@ msgid "New posts info"
 msgstr "Перейти к первому новому сообщению в теме"
 
 msgid "Unread posts"
-msgstr "Непрочитанные&nbsp;сообщения"
+msgstr "Непрочитанные сообщения"
 
 msgid "Unread posts info"
 msgstr "Перейти к первому непрочитанному сообщению в теме"
@@ -216,21 +210,6 @@ msgstr " (Страница %s)"
 
 msgid "Page %1$s of %2$s"
 msgstr "Страница %1$s из %2$s ·"
-
-msgid "BBCode"
-msgstr "BB-коды:"
-
-msgid "url tag"
-msgstr "Тег [url]:"
-
-msgid "img tag"
-msgstr "Тег [img]:"
-
-msgid "Smilies"
-msgstr "Смайлы:"
-
-msgid "and"
-msgstr "и"
 
 msgid "Image link"
 msgstr "картинка"
@@ -316,9 +295,6 @@ msgstr "Админка"
 msgid "Administration functions"
 msgstr "Функции администрирования"
 
-msgid "Last visit"
-msgstr "Последний визит: %s"
-
 msgid "Title separator"
 msgstr " - "
 
@@ -333,12 +309,6 @@ msgstr "Личные сообщения"
 
 msgid "Send PM"
 msgstr "Отправить личное сообщение"
-
-msgid "PMnew"
-msgstr "Новое личное сообщение"
-
-msgid "PMmess"
-msgstr "У вас есть новые личные сообщения (%s шт.)."
 
 msgid "Board footer"
 msgstr "Подвал форума"
@@ -363,9 +333,6 @@ msgstr "Время (s)"
 
 msgid "Query"
 msgstr "Запрос"
-
-msgid "Total query time"
-msgstr "Итого: %s"
 
 msgid "The most recent posts at %s board"
 msgstr "Самые свежие сообщения на форуме \"%s\"."
@@ -480,9 +447,6 @@ msgstr "Ваша кодовая фраза"
 
 msgid "Invalid passphrase"
 msgstr "Неверная кодовая фраза"
-
-msgid "Stick topic"
-msgstr "Выделить тему"
 
 msgid "User %s"
 msgstr "%s"

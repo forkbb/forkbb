@@ -79,12 +79,6 @@ msgstr "Expired token."
 msgid "Hidden text"
 msgstr "Hidden text"
 
-msgid "Show"
-msgstr "Show"
-
-msgid "Hide"
-msgstr "Hide"
-
 msgid "Announcement"
 msgstr "Announcement"
 
@@ -215,21 +209,6 @@ msgstr " (Page %s)"
 msgid "Page %1$s of %2$s"
 msgstr "Page %1$s of %2$s ·"
 
-msgid "BBCode"
-msgstr "BBCode:"
-
-msgid "url tag"
-msgstr "[url] tag:"
-
-msgid "img tag"
-msgstr "[img] tag:"
-
-msgid "Smilies"
-msgstr "Smilies:"
-
-msgid "and"
-msgstr "and"
-
 msgid "Image link"
 msgstr "image"
 
@@ -246,7 +225,7 @@ msgid "Next"
 msgstr "Next"
 
 msgid "Spacer"
-msgstr "…"
+msgstr "&hellip;"
 
 msgid "Title"
 msgstr "Title"
@@ -314,9 +293,6 @@ msgstr "Administration"
 msgid "Administration functions"
 msgstr "Administration functions"
 
-msgid "Last visit"
-msgstr "Last visit: %s"
-
 msgid "Title separator"
 msgstr " - "
 
@@ -331,12 +307,6 @@ msgstr "Private messages"
 
 msgid "Send PM"
 msgstr "Send private message"
-
-msgid "PMnew"
-msgstr "New private message"
-
-msgid "PMmess"
-msgstr "You have new private messages (%s msgs.)."
 
 msgid "Board footer"
 msgstr "Board footer"
@@ -361,9 +331,6 @@ msgstr "Time (s)"
 
 msgid "Query"
 msgstr "Query"
-
-msgid "Total query time"
-msgstr "Total query time: %s"
 
 msgid "The most recent posts at %s board"
 msgstr "The most recent posts at \"%s\" board."
@@ -478,9 +445,6 @@ msgstr "Your passphrase"
 
 msgid "Invalid passphrase"
 msgstr "Invalid passphrase"
-
-msgid "Stick topic"
-msgstr "Stick topic"
 
 msgid "User %s"
 msgstr "%s"
