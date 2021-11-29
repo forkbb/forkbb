@@ -33,6 +33,9 @@ msgstr "Email sent."
 msgid "Send email to %s"
 msgstr "Send email to %s"
 
+msgid "Send email title"
+msgstr "Send email"
+
 msgid "Email subject"
 msgstr "Subject"
 

@@ -33,6 +33,9 @@ msgstr "Письмо отправлено."
 msgid "Send email to %s"
 msgstr "Отправить сообщение для %s"
 
+msgid "Send email title"
+msgstr "Отправка письма"
+
 msgid "Email subject"
 msgstr "Заголовок"
 

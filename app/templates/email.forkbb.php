@@ -5,7 +5,7 @@
     </div>
 @if ($form = $p->form)
     <section id="fork-sendemail" class="f-post-form">
-      <h2>{!! __($p->formTitle) !!}</h2>
+      <h2>{!! __('Send email title') !!}</h2>
       <div class="f-fdiv">
     @include ('layouts/form')
       </div>
