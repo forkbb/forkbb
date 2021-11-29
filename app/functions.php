@@ -45,23 +45,23 @@ function __(/* string|arrray */ $arg): string
     }
 
     if (\is_array($arg)) {
-        $tr   = $lang->get(\reset($arg));
-        $args = \array_slice($arg, 1);
+        $str = \array_shift($arg);
+        $tr  = $lang->get($str);
 
         if (null === $tr) {
-            $tr = e(\reset($arg));
+            $tr = e($str);
         } elseif (\is_array($tr)) {
-            $tr   = $lang->getForm($tr, \reset($args));
-            $args = \array_slice($args, 1);
+            $num = \array_shift($arg);
+            $tr  = $lang->getForm($tr, $num);
         }
 
-        if (empty($args)) {
+        if (empty($arg)) {
             return $tr;
-        } elseif (\is_array(\reset($args))) {
-            return \strtr($tr, \array_map('\\ForkBB\\e', \reset($args)));
+        } elseif (\is_array(\reset($arg))) {
+            return \strtr($tr, \array_map('\\ForkBB\\e', \reset($arg)));
         } else {
-            $args = \array_map('\\ForkBB\\e', $args);
-            return \sprintf($tr, ...$args);
+            $arg = \array_map('\\ForkBB\\e', $arg);
+            return \sprintf($tr, ...$arg);
         }
     } else {
         return $lang->get($arg) ?? e($arg);
