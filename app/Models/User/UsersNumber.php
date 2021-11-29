@@ -22,7 +22,7 @@ class UsersNumber extends Action
     {
         if (
             empty($group->g_id)
-            || $group->g_id === $this->c->GROUP_GUEST
+            || $group->g_id === FORK_GROUP_GUEST
         ) {
             return 0;
         }

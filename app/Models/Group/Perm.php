@@ -30,7 +30,7 @@ class Perm extends Action
     {
         $vars = [
             ':fid' => $forum->id > 0 ? $forum->id : 0,
-            ':adm' => $this->c->GROUP_ADMIN,
+            ':adm' => FORK_GROUP_ADMIN,
         ];
         $query = 'SELECT g.g_id, fp.read_forum, fp.post_replies, fp.post_topics
             FROM ::groups AS g

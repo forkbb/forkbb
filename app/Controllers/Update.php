@@ -77,7 +77,7 @@ class Update
         }
         $uri = \rawurldecode($uri);
 
-        $this->c->user = $this->c->users->create(['id' => 2, 'group_id' => $this->c->GROUP_ADMIN]); //???? id?
+        $this->c->user = $this->c->users->create(['id' => 2, 'group_id' => FORK_GROUP_ADMIN]); //???? id?
         $this->c->Lang->load('common');
 
         $r = $this->c->Router;

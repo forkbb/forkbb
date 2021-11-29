@@ -427,6 +427,7 @@ class Update extends Admin
             'EOL',
             '\\PHP_EOL'
         );
+
         $coreConfig->save();
 
         return null;
@@ -439,15 +440,14 @@ class Update extends Admin
     {
         $coreConfig = new CoreConfig($this->configFile);
 
-        $result = $coreConfig->delete(
-            'multiple=>AdminUsersRecalculate',
-        );
+        $result = $coreConfig->delete('multiple=>AdminUsersRecalculate');
 
         $coreConfig->add(
             'multiple=>UserManagerUpdateLoginIpCache',
             '\\ForkBB\\Models\\User\\UpdateLoginIpCache::class',
             'UserManagerUpdateCountTopics'
         );
+
         $coreConfig->save();
 
         return null;
@@ -490,6 +490,7 @@ class Update extends Admin
             '\\ForkBB\\Models\\Pages\\Email::class',
             'Report'
         );
+
         $coreConfig->save();
 
         return null;
@@ -515,7 +516,7 @@ class Update extends Admin
         $this->c->DB->query($query, $vars);
 
         $vars = [
-            ':grp' => $this->c->GROUP_ADMIN,
+            ':grp' => FORK_GROUP_ADMIN,
         ];
         $query = 'UPDATE ::groups
             SET g_sig_use=1, g_sig_length=10000, g_sig_lines=255
@@ -524,7 +525,7 @@ class Update extends Admin
         $this->c->DB->query($query, $vars);
 
         $vars = [
-            ':grp' => $this->c->GROUP_GUEST,
+            ':grp' => FORK_GROUP_GUEST,
         ];
         $query = 'UPDATE ::groups
             SET g_sig_use=0, g_sig_length=0, g_sig_lines=0
@@ -568,6 +569,7 @@ class Update extends Admin
             '\\ForkBB\\Models\\Post\\Feed::class',
             'PostManagerMove'
         );
+
         $coreConfig->save();
 
         return null;
@@ -597,6 +599,7 @@ class Update extends Admin
             '\\ForkBB\\Models\\Subscription\\Model::class',
             'search'
         );
+
         $coreConfig->save();
 
         return null;
@@ -614,6 +617,7 @@ class Update extends Admin
             '\\ForkBB\\Models\\Search\\ActionF::class',
             'SearchModelActionT'
         );
+
         $coreConfig->save();
 
         return null;
@@ -631,9 +635,8 @@ class Update extends Admin
             '\\ForkBB\\Models\\Subscription\\Send::class'
         );
 
-        $result = $coreConfig->delete(
-            'multiple=>BanListModelIsBanned',
-        );
+        $result = $coreConfig->delete('multiple=>BanListModelIsBanned');
+
         $coreConfig->add(
             'shared=>BanListModelIsBanned',
             '\\ForkBB\\Models\\BanList\\IsBanned::class'
@@ -651,9 +654,7 @@ class Update extends Admin
     {
         $coreConfig = new CoreConfig($this->configFile);
 
-        $result = $coreConfig->delete(
-            'multiple=>AdminPermissions',
-        );
+        $result = $coreConfig->delete('multiple=>AdminPermissions');
 
         $coreConfig->add(
             'multiple=>AdminParser',
@@ -685,9 +686,8 @@ class Update extends Admin
     {
         $coreConfig = new CoreConfig($this->configFile);
 
-        $result = $coreConfig->delete(
-            'multiple=>SmileyListModelLoad',
-        );
+        $result = $coreConfig->delete('multiple=>SmileyListModelLoad');
+
         $coreConfig->add(
             'shared=>SmileyListModelLoad',
             '\\ForkBB\\Models\\SmileyList\\Load::class'
@@ -765,9 +765,7 @@ class Update extends Admin
 
         $coreConfig = new CoreConfig($this->configFile);
 
-        $result = $coreConfig->delete(
-            'BBCODE_INFO=>forSign',
-        );
+        $result = $coreConfig->delete('BBCODE_INFO=>forSign');
 
         $coreConfig->add(
             'shared=>bbcode',
@@ -895,9 +893,7 @@ class Update extends Admin
     {
         $coreConfig = new CoreConfig($this->configFile);
 
-        $result = $coreConfig->delete(
-            'shared=>FileCache',
-        );
+        $result = $coreConfig->delete('shared=>FileCache');
 
         $coreConfig->add(
             'shared=>Cache',
@@ -961,7 +957,7 @@ class Update extends Admin
         $this->c->config->i_feed_type             = $this->c->config->o_feed_type             ?? 2;
         $this->c->config->i_feed_ttl              = $this->c->config->o_feed_ttl              ?? 0;
         $this->c->config->i_report_method         = $this->c->config->o_report_method         ?? 0;
-        $this->c->config->i_default_user_group    = $this->c->config->o_default_user_group    ?? $this->c->GROUP_MEMBER;
+        $this->c->config->i_default_user_group    = $this->c->config->o_default_user_group    ?? FORK_GROUP_MEMBER;
         $this->c->config->a_max_users = [
             'number' => (int) ($this->c->config->st_max_users ?? 1),
             'time'   => (int) ($this->c->config->st_max_users_time ?? \time()),
@@ -1424,7 +1420,7 @@ class Update extends Admin
      */
     protected function stageNumber36(array $args): ?int
     {
-        $this->c->DB->exec('UPDATE ::groups SET g_pm=0, g_sig_length=0, g_sig_lines=0 WHERE g_id=?i', [$this->c->GROUP_GUEST]);
+        $this->c->DB->exec('UPDATE ::groups SET g_pm=0, g_sig_length=0, g_sig_lines=0 WHERE g_id=?i', [FORK_GROUP_GUEST]);
 
         $this->c->DB->renameField('users', 'messages_enable', 'u_pm');
         $this->c->DB->renameField('users', 'messages_email',  'u_pm_notify');
@@ -1609,6 +1605,23 @@ class Update extends Admin
                 '\\ForkBB\\Core\\Image\\DefaultDriver::class',
             ]
         );
+
+        $coreConfig->save();
+
+        return null;
+    }
+
+    /**
+     * rev.39 to rev.40
+     */
+    protected function stageNumber39(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $result = $coreConfig->delete('GROUP_ADMIN');
+        $result = $coreConfig->delete('GROUP_MOD');
+        $result = $coreConfig->delete('GROUP_GUEST');
+        $result = $coreConfig->delete('GROUP_MEMBER');
 
         $coreConfig->save();
 

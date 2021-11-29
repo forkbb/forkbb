@@ -38,10 +38,6 @@ return [
     'JQUERY_LINK'      => '//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js',
     'DEBUG'            => 0,
     'MAINTENANCE_OFF'  => false,
-    'GROUP_ADMIN'      => 1,
-    'GROUP_MOD'        => 2,
-    'GROUP_GUEST'      => 3,
-    'GROUP_MEMBER'     => 4,
     'BBCODE_INFO'      => [
         'smTpl'    => '<img src="{url}" alt="{alt}">',
         'smTplTag' => 'img',

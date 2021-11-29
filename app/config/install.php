@@ -12,6 +12,8 @@ declare(strict_types=1);
 \ini_set('display_errors', '1');
 \ini_set('log_errors', '1');
 
+define('FORK_GROUP_NEW_MEMBER', 5);
+
 function forkGetBaseURL()
 {
     $file    = \str_replace(\realpath($_SERVER['DOCUMENT_ROOT']), '', \realpath($_SERVER['SCRIPT_FILENAME']));
@@ -25,11 +27,6 @@ function forkGetBaseURL()
 return [
     'BASE_URL'         => forkGetBaseURL(),
     'DEBUG'            => 0,
-    'GROUP_ADMIN'      => 1,
-    'GROUP_MOD'        => 2,
-    'GROUP_GUEST'      => 3,
-    'GROUP_MEMBER'     => 4,
-    'GROUP_NEW_MEMBER' => 5,
     'EOL'              => \PHP_EOL,
     'MAX_EMAIL_LENGTH' => 80,
     'FLOOD_INTERVAL'   => 3600,

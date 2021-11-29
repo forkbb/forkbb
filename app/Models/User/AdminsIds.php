@@ -21,7 +21,7 @@ class AdminsIds extends Action
     public function adminsIds(): array
     {
         $vars = [
-            ':gid' => $this->c->GROUP_ADMIN,
+            ':gid' => FORK_GROUP_ADMIN,
         ];
         $query = 'SELECT u.id
             FROM ::users AS u

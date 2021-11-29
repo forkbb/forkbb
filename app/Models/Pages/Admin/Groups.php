@@ -28,8 +28,8 @@ class Groups extends Admin
         $groupsList    = [];
         $groupsNew     = [];
         $groupsDefault = [];
-        $notForNew     = [$this->c->GROUP_ADMIN];
-        $notForDefault = [$this->c->GROUP_ADMIN, $this->c->GROUP_MOD, $this->c->GROUP_GUEST];
+        $notForNew     = [FORK_GROUP_ADMIN];
+        $notForDefault = [FORK_GROUP_ADMIN, FORK_GROUP_MOD, FORK_GROUP_GUEST];
 
         foreach ($this->c->groups->getList() as $key => $group) {
             $groupsList[$key] = [$group->g_title, $group->linkEdit, $group->linkDelete];
@@ -196,7 +196,7 @@ class Groups extends Admin
         }
 
         $group   = clone $baseGroup;
-        $notNext = $this->c->GROUP_ADMIN . ',' . $this->c->GROUP_GUEST;
+        $notNext = FORK_GROUP_ADMIN . ',' . FORK_GROUP_GUEST;
 
         if (isset($args['id'])) {
             $marker          = 'AdminGroupsEdit';
@@ -403,7 +403,7 @@ class Groups extends Admin
             foreach ($this->groupsNew as $key => $title) {
                 if (
                     $key !== $group->g_id
-                    && $key !== $this->c->GROUP_GUEST
+                    && $key !== FORK_GROUP_GUEST
                 ) {
                     $options[$key] = $title;
                 }
@@ -718,7 +718,7 @@ class Groups extends Admin
             $move = 'required|integer|in:';
             foreach ($this->groupsList as $key => $cur) {
                 if (
-                    $key === $this->c->GROUP_GUEST
+                    $key === FORK_GROUP_GUEST
                     || $key === $group->g_id
                 ) {
                     continue;

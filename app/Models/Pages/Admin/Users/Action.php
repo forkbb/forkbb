@@ -217,11 +217,11 @@ class Action extends Users
         foreach ($this->c->groups->getList() as $id => $group) {
                 $list[$id] = $group->g_title;
         }
-        unset($list[$this->c->GROUP_GUEST]);
+        unset($list[FORK_GROUP_GUEST]);
         if (! $profile) {
-            unset($list[$this->c->GROUP_ADMIN]);
+            unset($list[FORK_GROUP_ADMIN]);
         } elseif (! $this->user->isAdmin) {
-            $list = [$this->c->GROUP_MEMBER => $list[$this->c->GROUP_MEMBER]];
+            $list = [FORK_GROUP_MEMBER => $list[FORK_GROUP_MEMBER]];
         }
 
         return $list;

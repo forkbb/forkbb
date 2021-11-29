@@ -49,7 +49,7 @@ class Model extends DataModel
      */
     protected function getisGuest(): bool
     {
-        return $this->group_id === $this->c->GROUP_GUEST
+        return $this->group_id === FORK_GROUP_GUEST
             || $this->id < 2
             || null === $this->group_id;
     }
@@ -59,7 +59,7 @@ class Model extends DataModel
      */
     protected function getisAdmin(): bool
     {
-        return $this->group_id === $this->c->GROUP_ADMIN;
+        return $this->group_id === FORK_GROUP_ADMIN;
     }
 
     /**
@@ -67,7 +67,7 @@ class Model extends DataModel
      */
     protected function getisAdmMod(): bool
     {
-        return $this->group_id === $this->c->GROUP_ADMIN
+        return $this->group_id === FORK_GROUP_ADMIN
             || 1 == $this->g_moderator;
     }
 

@@ -33,10 +33,10 @@ class Model extends DataModel
     protected function getcanDelete(): bool
     {
         $notDeleted = [
-            $this->c->GROUP_ADMIN,
-            $this->c->GROUP_MOD,
-            $this->c->GROUP_GUEST,
-            $this->c->GROUP_MEMBER
+            FORK_GROUP_ADMIN,
+            FORK_GROUP_MOD,
+            FORK_GROUP_GUEST,
+            FORK_GROUP_MEMBER,
         ];
 
         return ! \in_array($this->g_id, $notDeleted, true) && $this->g_id !== $this->c->config->i_default_user_group;
@@ -62,7 +62,7 @@ class Model extends DataModel
      */
     protected function getgroupGuest(): bool
     {
-        return $this->g_id === $this->c->GROUP_GUEST;
+        return $this->g_id === FORK_GROUP_GUEST;
     }
 
     /**
@@ -70,7 +70,7 @@ class Model extends DataModel
      */
     protected function getgroupMember(): bool
     {
-        return $this->g_id === $this->c->GROUP_MEMBER;
+        return $this->g_id === FORK_GROUP_MEMBER;
     }
 
     /**
@@ -78,6 +78,6 @@ class Model extends DataModel
      */
     protected function getgroupAdmin(): bool
     {
-        return $this->g_id === $this->c->GROUP_ADMIN;
+        return $this->g_id === FORK_GROUP_ADMIN;
     }
 }

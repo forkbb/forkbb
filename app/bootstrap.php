@@ -24,6 +24,12 @@ use RuntimeException;
 \mb_internal_encoding('UTF-8');
 \mb_substitute_character(0xFFFD);
 
+define('FORK_GROUP_UNVERIFIED', 0);
+define('FORK_GROUP_ADMIN', 1);
+define('FORK_GROUP_MOD', 2);
+define('FORK_GROUP_GUEST', 3);
+define('FORK_GROUP_MEMBER', 4);
+
 require __DIR__ . '/../vendor/autoload.php';
 
 $errorHandler = new ErrorHandler();
@@ -52,7 +58,7 @@ if (
 }
 $c->PUBLIC_URL = $c->BASE_URL . $forkPublicPrefix;
 
-$c->FORK_REVISION = 39;
+$c->FORK_REVISION = 40;
 $c->START         = $forkStart;
 $c->DIR_APP       = __DIR__;
 $c->DIR_PUBLIC    = \realpath(__DIR__ . '/../public');
