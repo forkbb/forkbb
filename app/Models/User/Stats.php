@@ -19,19 +19,22 @@ class Stats extends Action
      */
     public function stats(): array
     {
+        $vars = [
+            ':gid' => FORK_GROUP_UNVERIFIED,
+        ];
         $query = 'SELECT COUNT(u.id)-1
             FROM ::users AS u
-            WHERE u.group_id!=0';
+            WHERE u.group_id!=?i:gid';
 
-        $total = $this->c->DB->query($query)->fetchColumn();
+        $total = $this->c->DB->query($query, $vars)->fetchColumn();
 
         $query = 'SELECT u.id, u.username
             FROM ::users AS u
-            WHERE u.group_id!=0
+            WHERE u.group_id!=?i:gid
             ORDER BY u.registered DESC
             LIMIT 1';
 
-        $last  = $this->c->DB->query($query)->fetch();
+        $last  = $this->c->DB->query($query, $vars)->fetch();
 
         return [
             'total' => $total,

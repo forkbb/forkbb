@@ -150,7 +150,7 @@ class Register extends Page
     protected function regEnd(Validator $v): Page
     {
         if ('1' == $this->c->config->o_regs_verify) {
-            $groupId = 0;
+            $groupId = FORK_GROUP_UNVERIFIED;
             $key     = $this->c->Secury->randomPass(31);
         } else {
             $groupId = $this->c->config->i_default_user_group;

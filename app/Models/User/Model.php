@@ -41,7 +41,7 @@ class Model extends DataModel
      */
     protected function getisUnverified(): bool
     {
-        return 0 === $this->group_id;
+        return $this->group_id === FORK_GROUP_UNVERIFIED;
     }
 
     /**
