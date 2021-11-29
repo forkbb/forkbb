@@ -15,17 +15,20 @@ msgstr ""
 msgid "Empty board"
 msgstr "Форум пуст."
 
-msgid "Newest user"
-msgstr "Новичок:"
+msgid "Newest user: %s"
+msgstr "Новичок: %s"
 
-msgid "No of users"
-msgstr "Пользователей:"
+msgid "Newest user: <a href="%2$s">%1$s</a>"
+msgstr "Новичок: <a href="%2$s">%1$s</a>"
 
-msgid "No of topics"
-msgstr "Тем:"
+msgid "No of users: %s"
+msgstr "Пользователей: <b>%s</b>"
 
-msgid "No of posts"
-msgstr "Сообщений:"
+msgid "No of topics: %s"
+msgstr "Тем: <b>%s</b>"
+
+msgid "No of posts: %s"
+msgstr "Сообщений: <b>%s</b>"
 
 msgid "Online users"
 msgstr "Активны:"

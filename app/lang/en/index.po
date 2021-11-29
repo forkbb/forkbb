@@ -15,17 +15,20 @@ msgstr ""
 msgid "Empty board"
 msgstr "Board is empty."
 
-msgid "Newest user"
-msgstr "Newest registered user:"
+msgid "Newest user: %s"
+msgstr "Newest registered user: %s"
 
-msgid "No of users"
-msgstr "Users:"
+msgid "Newest user: <a href="%2$s">%1$s</a>"
+msgstr "Newest registered user: <a href="%2$s">%1$s</a>"
 
-msgid "No of topics"
-msgstr "Topics:"
+msgid "No of users: %s"
+msgstr "Users: <b>%s</b>"
 
-msgid "No of posts"
-msgstr "Posts:"
+msgid "No of topics: %s"
+msgstr "Topics: <b>%s</b>"
+
+msgid "No of posts: %s"
+msgstr "Posts: <b>%s</b>"
 
 msgid "Online users"
 msgstr "Online:"

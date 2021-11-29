@@ -3,18 +3,18 @@
 @if ($p->stats)
       <dl id="fork-stboard">
         <dt class="f-stats-dt">{!! __('Board stats') !!}</dt>
-        <dd class="f-stats-dd">{!! __('No of users') !!} <b>{!! num($p->stats->userTotal) !!}</b></dd>
-        <dd class="f-stats-dd">{!! __('No of topics') !!} <b>{!! num($p->stats->topicTotal) !!}</b></dd>
-        <dd class="f-stats-dd">{!! __('No of posts') !!} <b>{!! num($p->stats->postTotal) !!}</b></dd>
+        <dd class="f-stats-dd">{!! __(['No of users: %s', num($p->stats->userTotal)]) !!}</dd>
+        <dd class="f-stats-dd">{!! __(['No of topics: %s', num($p->stats->topicTotal)]) !!}</dd>
+        <dd class="f-stats-dd">{!! __(['No of posts: %s', num($p->stats->postTotal)]) !!}</dd>
       </dl>
 @endif
       <dl id="fork-stusers">
         <dt class="f-stats-dt">{!! __('User info') !!}</dt>
 @if ($p->stats)
     @if ($p->stats->userLast['link'])
-        <dd class="f-stats-dd">{!! __('Newest user')  !!} <a href="{{ $p->stats->userLast['link'] }}">{{ $p->stats->userLast['name'] }}</a></dd>
+        <dd class="f-stats-dd">{!! __(['Newest user: <a href="%2$s">%1$s</a>', $p->stats->userLast['name'], $p->stats->userLast['link']]) !!}</dd>
     @else
-        <dd class="f-stats-dd">{!! __('Newest user')  !!} {{ $p->stats->userLast['name'] }}</dd>
+        <dd class="f-stats-dd">{!! __(['Newest user: %s', $p->stats->userLast['name']]) !!}</dd>
     @endif
 @endif
 @if ($p->online)
