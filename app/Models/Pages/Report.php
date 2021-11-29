@@ -110,7 +110,6 @@ class Report extends Page
 //        $this->canonical = $this->c->Router->link('NewTopic', ['id' => $forum->id]);
         $this->robots    = 'noindex';
         $this->crumbs    = $this->crumbs(__('Report post'), $topic);
-        $this->formTitle = 'Report post';
         $this->form      = $this->formReport($args, $data);
 
         return $this;
