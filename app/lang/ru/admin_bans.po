@@ -39,17 +39,8 @@ msgstr "Вы ввели неверный IP или IP-диапазон (%s)."
 msgid "Invalid e-mail message"
 msgstr "Email (т.е. user@domain.com) или доменная часть (т.е. domain.com или .com) введен(а) неверно."
 
-msgid "Duplicate domain message"
-msgstr "Домен %s уже забанен."
-
-msgid "Duplicate e-mail message"
-msgstr "Email %s уже забанен."
-
 msgid "Invalid date message"
-msgstr "Вы ввели неправильную дату окончания."
-
-msgid "Invalid date reasons"
-msgstr "Дата должна быть в формате YYYY-MM-DD и должна быть не ранее, чем завтрашнее число."
+msgstr "Вы ввели неправильную дату окончания. Бан должен действовать минимум сутки."
 
 msgid "Ban added redirect"
 msgstr "Бан добавлен."
@@ -78,9 +69,6 @@ msgstr "Имя пользователя"
 msgid "Username help"
 msgstr "Регистр не важен."
 
-msgid "Username advanced help"
-msgstr "Имя пользователя (регистр неважен). На следующей странице вы сможете ввести IP и email. Если хотите забанить IP/IP-диапазон или email просто оставьте поле пустым."
-
 msgid "Ban search head"
 msgstr "Поиск бана"
 
@@ -89,9 +77,6 @@ msgstr "Критерии поиска"
 
 msgid "Ban search info"
 msgstr "Поиск бана по базе. Вы можете ввести одно или несколько условий. Возможны маски в виде звездочки (*). Оставьте все поля пустыми, чтобы увидеть все баны."
-
-msgid "Date help"
-msgstr "(yyyy-mm-dd)"
 
 msgid "Message label"
 msgstr "Сообщение"
@@ -141,26 +126,14 @@ msgstr "IP адрес/IP-подсеть"
 msgid "IP help"
 msgstr "IP или IP-подсеть, которую вы будете банить (т.е. 150.11.110.1 или 150.11.110). Можно перечислить несколько адресов через пробел. Если поле IP уже заполнено, то это последний из использованных IP данного пользователя."
 
-msgid "IP help link"
-msgstr "Кликните %s чтобы посмотреть статистику IP этого пользователя."
-
-msgid "Ban advanced head"
-msgstr "Расширенные настройки"
-
-msgid "Ban advanced subhead"
-msgstr "Дополнительно банить IP и email"
-
 msgid "Ban message label"
 msgstr "Сообщение забаненному"
 
 msgid "Ban message help"
-msgstr "Этот текст будет показан забаненному пользователю, когда он/она посетит форум."
+msgstr "Этот текст будет показан забаненному пользователю при посещении форума."
 
 msgid "Message expiry subhead"
 msgstr "Сообщение и срок действия"
-
-msgid "Ban IP range info"
-msgstr "Будьте предельно осторожны с IP-диапазонами, потому что под это правило могут попасть несколько пользователей."
 
 msgid "Expire date label"
 msgstr "Дата окончания"
@@ -191,12 +164,6 @@ msgstr "Кем забанен"
 
 msgid "Results actions head"
 msgstr "Действия"
-
-msgid "No match"
-msgstr "Не найдено"
-
-msgid "Unknown"
-msgstr "Неизвестно"
 
 msgid "Search results legend"
 msgstr "Настройка параметров вывода результатов"
