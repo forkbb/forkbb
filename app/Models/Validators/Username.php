@@ -13,7 +13,6 @@ namespace ForkBB\Models\Validators;
 use ForkBB\Core\RulesValidator;
 use ForkBB\Core\Validator;
 use ForkBB\Models\User\Model as User;
-use function \ForkBB\__;
 
 class Username extends RulesValidator
 {

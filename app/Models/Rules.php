@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace ForkBB\Models;
 
-use ForkBB\Core\Container;
 use ForkBB\Models\Model;
 use RuntimeException;
 

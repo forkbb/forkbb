@@ -12,7 +12,6 @@ namespace ForkBB\Models\Validators;
 
 use ForkBB\Core\RulesValidator;
 use ForkBB\Core\Validator;
-use function \ForkBB\__;
 
 class Html extends RulesValidator
 {
