@@ -59,6 +59,15 @@ class Save extends Action
 
             if ('username' === $name) {
                 $nameChange = true;
+
+                // пересчет username_normal при изменении username
+                $name = 'username_normal';
+
+                if (isset($fileds[$name])) {
+                    $vars[] = $this->manager->normUsername($user->username);
+                    $set[]  = $name . '=?' . $fileds[$name];
+                }
+                // пересчет username_normal при изменении username
             } elseif ('group_id' === $name) {
                 $grChange = true;
             }
@@ -105,6 +114,9 @@ class Save extends Action
         if (null !== $user->id) {
             throw new RuntimeException('The model has ID');
         }
+
+        // вычисление username_normal для нового пользователя
+        $user->username_normal = $this->manager->normUsername($user->username);
 
         $attrs  = $user->getAttrs();
         $fileds = $this->c->dbMap->users;
