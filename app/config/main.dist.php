@@ -217,6 +217,8 @@ return [
         'PMModelSave'           => \ForkBB\Models\PM\Save::class,
         'PMModelDelete'         => \ForkBB\Models\PM\Delete::class,
         'PMModelUpdateUsername' => \ForkBB\Models\PM\UpdateUsername::class,
+
+        'UserManagerNormUsername' => \ForkBB\Models\User\NormUsername::class,
     ],
     'multiple'  => [
         'CtrlPrimary' => \ForkBB\Controllers\Primary::class,

@@ -109,6 +109,8 @@ return [
 
         'VLemail'    => \ForkBB\Models\Validators\Email::class,
         'VLhtml'     => \ForkBB\Models\Validators\Html::class,
+
+        'UserManagerNormUsername' => \ForkBB\Models\User\NormUsername::class,
     ],
     'multiple'  => [
         'PrimaryController' => \ForkBB\Controllers\Install::class,

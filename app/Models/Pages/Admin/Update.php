@@ -1627,4 +1627,47 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.40 to rev.41
+     */
+    protected function stageNumber40(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>UserManagerNormUsername',
+            '\\ForkBB\\Models\\User\\NormUsername::class'
+        );
+
+        $coreConfig->save();
+
+        $this->c->DB->addField('users', 'username_normal', 'VARCHAR(190)', false, '', 'username');
+
+        $confChange = [
+            'shared' => [
+                'UserManagerNormUsername' => \ForkBB\Models\User\NormUsername::class,
+            ],
+        ];
+
+        $this->c->config($confChange);
+
+        $query = 'SELECT id, username FROM ::users';
+        $users = $this->c->DB->query($query)->fetchAll(PDO::FETCH_KEY_PAIR);
+
+        $query = 'UPDATE ::users AS u
+            SET u.username_normal = ?s:norm
+            WHERE u.id=?i:id';
+
+        foreach ($users as $id => $username) {
+            $vars = [
+                ':id'   => $id,
+                ':norm' => $this->c->users->normUsername($username),
+            ];
+
+            $this->c->DB->exec($query, $vars);
+        }
+
+        return null;
+    }
 }
