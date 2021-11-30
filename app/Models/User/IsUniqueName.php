@@ -23,16 +23,22 @@ class IsUniqueName extends Action
         $vars = [
             ':id'    => (int) $user->id,
             ':name'  => $user->username,
+            ':norm'  => $this->manager->normUsername($user->username),
+            ':normL' => $this->manager->normUsername(\mb_strtolower($user->username, 'UTF-8')), // ????
+            ':normU' => $this->manager->normUsername(\mb_strtoupper($user->username, 'UTF-8')), // ????
         ];
-        $query = 'SELECT u.username
+        $query = 'SELECT 1
             FROM ::users AS u
-            WHERE LOWER(u.username)=LOWER(?s:name) AND u.id!=?i:id';
+            WHERE u.id!=?i:id
+                AND (
+                    LOWER(u.username)=LOWER(?s:name)
+                    OR u.username_normal=?s:norm
+                    OR LOWER(u.username_normal)=?s:normL
+                    OR UPPER(u.username_normal)=?s:normU
+                )';
 
         $result = $this->c->DB->query($query, $vars)->fetchAll();
 
         return ! \count($result);
-
-        // ???? нужен нормализованный username для определения уникальности
-        // это https://www.unicode.org/Public/security/latest/confusables.txt преобразование не очень :(
     }
 }
