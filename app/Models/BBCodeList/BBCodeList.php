@@ -11,11 +11,17 @@ declare(strict_types=1);
 namespace ForkBB\Models\BBCodeList;
 
 use ForkBB\Core\Container;
-use ForkBB\Models\Model as ParentModel;
+use ForkBB\Models\Model;
 use RuntimeException;
 
-class Model extends ParentModel
+class BBCodeList extends Model
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'BBCodeList';
+
     public function __construct(string $file, Container $container)
     {
         parent::__construct($container);
@@ -27,7 +33,7 @@ class Model extends ParentModel
     /**
      * Загружает массив сгенерированных bbcode
      */
-    public function init(): Model
+    public function init(): BBCodeList
     {
         if (! \is_file($this->fileCache)) {
             $this->generate();
@@ -41,7 +47,7 @@ class Model extends ParentModel
     /**
      * Очищает кеш сгенерированных bbcode
      */
-    public function reset(): Model
+    public function reset(): BBCodeList
     {
         if (\is_file($this->fileCache)) {
             if (\unlink($this->fileCache)) {
@@ -57,7 +63,7 @@ class Model extends ParentModel
     /**
      * Очищает opcache/apc от закэшированного файла
      */
-    public function invalidate(): Model
+    public function invalidate(): BBCodeList
     {
         if (\function_exists('\\opcache_invalidate')) {
             \opcache_invalidate($this->fileCache, true);

@@ -11,16 +11,22 @@ declare(strict_types=1);
 namespace ForkBB\Models\BBCodeList;
 
 use ForkBB\Core\Container;
-use ForkBB\Models\Model as ParentModel;
+use ForkBB\Models\Model;
 use RuntimeException;
 use Throwable;
 
-class Structure extends ParentModel
+class Structure extends Model
 {
     const TAG_PATTERN  = '%^(?:ROOT|[a-z\*][a-z\d-]{0,10})$%D';
     const ATTR_PATTERN = '%^[a-z-]{2,15}$%D';
 
     const JSON_OPTIONS = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
+
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'BBStructure';
 
     public function __construct(Container $container)
     {

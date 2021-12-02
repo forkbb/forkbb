@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\BBCodeList;
 
 use ForkBB\Models\Method;
-use ForkBB\Models\BBCodeList\Model as BBCodeList;
+use ForkBB\Models\BBCodeList\BBCodeList;
 use RuntimeException;
 
 class Generate extends Method
