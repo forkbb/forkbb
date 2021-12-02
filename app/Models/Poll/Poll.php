@@ -12,14 +12,20 @@ namespace ForkBB\Models\Poll;
 
 use ForkBB\Core\Container;
 use ForkBB\Models\DataModel;
-use ForkBB\Models\Topic\Model as Topic;
+use ForkBB\Models\Topic\Topic;
 use PDO;
 use RuntimeException;
 use function \ForkBB\__;
 
-class Model extends DataModel
+class Poll extends DataModel
 {
     const JSON_OPTIONS = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
+
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'Poll';
 
     /**
      * Возвращает родительскую тему

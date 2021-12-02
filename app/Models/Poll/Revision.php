@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Poll;
 
 use ForkBB\Models\Action;
-use ForkBB\Models\Poll\Model as Poll;
+use ForkBB\Models\Poll\Poll;
 use InvalidArgumentException;
 use function \ForkBB\__;
 

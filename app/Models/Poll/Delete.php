@@ -12,9 +12,9 @@ namespace ForkBB\Models\Poll;
 
 use ForkBB\Models\Action;
 use ForkBB\Models\DataModel;
-use ForkBB\Models\Forum\Model as Forum;
-use ForkBB\Models\Poll\Model as Poll;
-use ForkBB\Models\Topic\Model as Topic;
+use ForkBB\Models\Forum\Forum;
+use ForkBB\Models\Poll\Poll;
+use ForkBB\Models\Topic\Topic;
 use InvalidArgumentException;
 use RuntimeException;
 

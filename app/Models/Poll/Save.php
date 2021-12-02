@@ -11,8 +11,8 @@ declare(strict_types=1);
 namespace ForkBB\Models\Poll;
 
 use ForkBB\Models\Action;
-use ForkBB\Models\Poll\Model as Poll;
-use ForkBB\Models\Topic\Model as Topic;
+use ForkBB\Models\Poll\Poll;
+use ForkBB\Models\Topic\Topic;
 use RuntimeException;
 
 class Save extends Action

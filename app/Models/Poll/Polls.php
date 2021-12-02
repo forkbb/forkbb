@@ -10,12 +10,18 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Poll;
 
-use ForkBB\Models\ManagerModel;
-use ForkBB\Models\Poll\Model as Poll;
+use ForkBB\Models\Manager;
+use ForkBB\Models\Poll\Poll;
 use RuntimeException;
 
-class Manager extends ManagerModel
+class Polls extends Manager
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'Polls';
+
     /**
      * Создает новый опрос
      */
@@ -79,7 +85,7 @@ class Manager extends ManagerModel
     /**
      * Сбрасывает кеш указанного голосования
      */
-    public function reset(int $id): Manager
+    public function reset(int $id): Polls
     {
         if (true !== $this->c->Cache->delete("poll{$id}")) {
             throw new RuntimeException("Unable to remove key from cache - poll{$id}");
