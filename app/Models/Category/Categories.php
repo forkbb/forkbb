@@ -8,15 +8,21 @@
 
 declare(strict_types=1);
 
-namespace ForkBB\Models\Categories;
+namespace ForkBB\Models\Category;
 
-use ForkBB\Models\ManagerModel;
+use ForkBB\Models\Manager;
 use PDO;
 use InvalidArgumentException;
 use RuntimeException;
 
-class Manager extends ManagerModel
+class Categories extends Manager
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'Categories';
+
     /**
      * Массив флагов измененных категорий
      * @var array
@@ -26,7 +32,7 @@ class Manager extends ManagerModel
     /**
      * Загрузка категорий из БД
      */
-    public function init(): Manager
+    public function init(): Categories
     {
         $query = 'SELECT c.id, c.cat_name, c.disp_position
             FROM ::categories AS c
@@ -42,7 +48,7 @@ class Manager extends ManagerModel
         return $this->repository;
     }
 
-    public function set($key, $value): ManagerModel
+    public function set($key, $value): Categories
     {
         if (! isset($value['cat_name'], $value['disp_position'])) {
             throw new InvalidArgumentException('Expected array with cat_name and disp_position elements');
@@ -63,7 +69,7 @@ class Manager extends ManagerModel
         return $this;
     }
 
-    public function update(): Manager
+    public function update(): Categories
     {
         foreach ($this->modified as $key => $value) {
             $cat   = $this->get($key);
@@ -107,7 +113,7 @@ class Manager extends ManagerModel
         return $cid;
     }
 
-    public function delete(int $cid): Manager
+    public function delete(int $cid): Categories
     {
         $root = $this->c->forums->get(0);
         $del  = [];
