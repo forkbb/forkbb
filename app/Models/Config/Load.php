@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Config;
 
 use ForkBB\Models\Method;
-use ForkBB\Models\Config\Model as Config;
+use ForkBB\Models\Config\Config;
 use PDO;
 use RuntimeException;
 

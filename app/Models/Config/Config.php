@@ -13,13 +13,19 @@ namespace ForkBB\Models\Config;
 use ForkBB\Models\DataModel;
 use RuntimeException;
 
-class Model extends DataModel
+class Config extends DataModel
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'Config';
+
     /**
      * Заполняет модель данными из кеша/БД
      * Создает кеш
      */
-    public function init(): Model
+    public function init(): Config
     {
         $config = $this->c->Cache->get('config');
 
@@ -39,7 +45,7 @@ class Model extends DataModel
     /**
      * Сбрасывает кеш конфига
      */
-    public function reset(): Model
+    public function reset(): Config
     {
         if (true !== $this->c->Cache->delete('config')) {
             throw new RuntimeException('Unable to remove key from cache - config');
