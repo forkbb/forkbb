@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Forum;
 
 use ForkBB\Models\Action;
-use ForkBB\Models\Group\Model as Group;
+use ForkBB\Models\Group\Group;
 
 class Refresh extends Action
 {

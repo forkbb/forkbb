@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Forum;
 
 use ForkBB\Models\Method;
-use ForkBB\Models\Forum\Model as Forum;
+use ForkBB\Models\Forum\Forum;
 use RuntimeException;
 
 class CalcStat extends Method

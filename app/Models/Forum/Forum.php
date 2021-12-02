@@ -11,14 +11,19 @@ declare(strict_types=1);
 namespace ForkBB\Models\Forum;
 
 use ForkBB\Models\DataModel;
-use ForkBB\Models\User\Model as User;
-use ForkBB\Models\Forum\Model as Forum;
+use ForkBB\Models\User\User;
 use PDO;
 use RuntimeException;
 use InvalidArgumentException;
 
-class Model extends DataModel
+class Forum extends DataModel
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'Forum';
+
     /**
      * Получение родительского раздела
      */

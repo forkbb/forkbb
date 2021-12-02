@@ -10,13 +10,19 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Forum;
 
-use ForkBB\Models\ManagerModel;
-use ForkBB\Models\Forum\Model as Forum;
-use ForkBB\Models\Group\Model as Group;
+use ForkBB\Models\Manager;
+use ForkBB\Models\Forum\Forum;
+use ForkBB\Models\Group\Group;
 use RuntimeException;
 
-class Manager extends ManagerModel
+class Forums extends Manager
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'Forums';
+
     /**
      * Закешированные данные по разделам
      * @var array
@@ -35,7 +41,7 @@ class Manager extends ManagerModel
      * Инициализация списка разделов
      * Обновляет кеш разделов
      */
-    public function init(Group $group = null): Manager
+    public function init(Group $group = null): Forums
     {
         if (null === $group) {
             $gid = $this->c->user->group_id;
@@ -132,7 +138,7 @@ class Manager extends ManagerModel
     /**
      * Сбрасывает кеш
      */
-    public function reset(): Manager
+    public function reset(): Forums
     {
         if (true !== $this->c->Cache->delete('forums_mark')) {
             throw new RuntimeException('Unable to remove key from cache - forums_mark');

@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Forum;
 
 use ForkBB\Models\Action;
-use ForkBB\Models\Forum\Model as Forum;
+use ForkBB\Models\Forum\Forum;
 
 class LoadTree extends Action
 {
