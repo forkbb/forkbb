@@ -160,7 +160,7 @@ return [
         ],
         'Online' => \ForkBB\Models\Online\Model::class,
         'Cookie' => [
-            'class'   => \ForkBB\Models\Cookie\Model::class,
+            'class'   => \ForkBB\Models\Cookie\Cookie::class,
             'options' => '%COOKIE%',
         ],
 
@@ -194,22 +194,45 @@ return [
 
         'SubscriptionModelSend' => \ForkBB\Models\Subscription\Send::class,
 
-        'BanListModelIsBanned' => \ForkBB\Models\BanList\IsBanned::class,
+        'BanList*check'    => \ForkBB\Models\BanList\Check::class,
+        'BanList*delete'   => \ForkBB\Models\BanList\Delete::class,
+        'BanList*filter'   => \ForkBB\Models\BanList\Filter::class,
+        'BanList*getList'  => \ForkBB\Models\BanList\GetList::class,
+        'BanList*insert'   => \ForkBB\Models\BanList\Insert::class,
+        'BanList*isBanned' => \ForkBB\Models\BanList\IsBanned::class,
+        'BanList*load'     => \ForkBB\Models\BanList\Load::class,
+        'BanList*update'   => \ForkBB\Models\BanList\Update::class,
 
         'SmileyListModelLoad'   => \ForkBB\Models\SmileyList\Load::class,
         'SmileyListModelUpdate' => \ForkBB\Models\SmileyList\Update::class,
         'SmileyListModelInsert' => \ForkBB\Models\SmileyList\Insert::class,
         'SmileyListModelDelete' => \ForkBB\Models\SmileyList\Delete::class,
 
-        'BBCodeListModel'         => [
-            'class' => \ForkBB\Models\BBCodeList\Model::class,
+        'BBCodeListModel'     => [
+            'class' => \ForkBB\Models\BBCodeList\BBCodeList::class,
             'file'  => 'defaultBBCode.php',
         ],
-        'BBCodeListModelGenerate' => \ForkBB\Models\BBCodeList\Generate::class,
-        'BBCodeListModelLoad'     => \ForkBB\Models\BBCodeList\Load::class,
-        'BBCodeListModelUpdate'   => \ForkBB\Models\BBCodeList\Update::class,
-        'BBCodeListModelInsert'   => \ForkBB\Models\BBCodeList\Insert::class,
-        'BBCodeListModelDelete'   => \ForkBB\Models\BBCodeList\Delete::class,
+        'BBCodeList*delete'   => \ForkBB\Models\BBCodeList\Delete::class,
+        'BBCodeList*generate' => \ForkBB\Models\BBCodeList\Generate::class,
+        'BBCodeList*insert'   => \ForkBB\Models\BBCodeList\Insert::class,
+        'BBCodeList*load'     => \ForkBB\Models\BBCodeList\Load::class,
+        'BBCodeList*update'   => \ForkBB\Models\BBCodeList\Update::class,
+
+        'Censorship*load'    => \ForkBB\Models\Censorship\Load::class,
+        'Censorship*refresh' => \ForkBB\Models\Censorship\Refresh::class,
+        'Censorship*save'    => \ForkBB\Models\Censorship\Save::class,
+
+        'Config*load' => \ForkBB\Models\Config\Load::class,
+        'Config*save' => \ForkBB\Models\Config\Save::class,
+
+        'Forum*calcStat' => \ForkBB\Models\Forum\CalcStat::class,
+
+        'Forums&delete'         => \ForkBB\Models\Forum\Delete::class,
+        'Forums&loadTree'       => \ForkBB\Models\Forum\LoadTree::class,
+        'Forums&markread'       => \ForkBB\Models\Forum\Markread::class,
+        'Forums&refresh'        => \ForkBB\Models\Forum\Refresh::class,
+        'Forums&save'           => \ForkBB\Models\Forum\Save::class,
+        'Forums&updateUsername' => \ForkBB\Models\Forum\UpdateUsername::class,
 
         'PBlockModel'           => \ForkBB\Models\PM\PBlock::class,
         'PMPTopicCalcStat'      => \ForkBB\Models\PM\CalcStat::class,
@@ -285,34 +308,22 @@ return [
         'AdminParserBBCode' => \ForkBB\Models\Pages\Admin\Parser\BBCode::class,
         'AdminLogs'       => \ForkBB\Models\Pages\Admin\Logs::class,
 
-        'ConfigModel'     => \ForkBB\Models\Config\Model::class,
-        'ConfigModelLoad' => \ForkBB\Models\Config\Load::class,
-        'ConfigModelSave' => \ForkBB\Models\Config\Save::class,
+        'ConfigModel' => \ForkBB\Models\Config\Config::class,
 
         'OnlineModelInfo' => \ForkBB\Models\Online\Info::class,
         'OnlineModelUpdateUsername' => \ForkBB\Models\Online\UpdateUsername::class,
 
-        'BanListModel'         => \ForkBB\Models\BanList\Model::class,
-        'BanListModelLoad'     => \ForkBB\Models\BanList\Load::class,
-        'BanListModelCheck'    => \ForkBB\Models\BanList\Check::class,
-        'BanListModelDelete'   => \ForkBB\Models\BanList\Delete::class,
-        'BanListModelFilter'   => \ForkBB\Models\BanList\Filter::class,
-        'BanListModelGetList'  => \ForkBB\Models\BanList\GetList::class,
-        'BanListModelInsert'   => \ForkBB\Models\BanList\Insert::class,
-        'BanListModelUpdate'   => \ForkBB\Models\BanList\Update::class,
+        'BanListModel'         => \ForkBB\Models\BanList\BanList::class,
 
-        'CensorshipModel'        => \ForkBB\Models\Censorship\Model::class,
-        'CensorshipModelRefresh' => \ForkBB\Models\Censorship\Refresh::class,
-        'CensorshipModelLoad'    => \ForkBB\Models\Censorship\Load::class,
-        'CensorshipModelSave'    => \ForkBB\Models\Censorship\Save::class,
+        'CensorshipModel'        => \ForkBB\Models\Censorship\Censorship::class,
 
         'StatsModel' => \ForkBB\Models\Stats\Model::class,
 
-        'AdminListModel' => \ForkBB\Models\AdminList\Model::class,
+        'AdminListModel' => \ForkBB\Models\AdminList\AdminList::class,
 
         'SmileyListModel'     => \ForkBB\Models\SmileyList\Model::class,
 
-        'DBMapModel'          => \ForkBB\Models\DBMap\Model::class,
+        'DBMapModel'          => \ForkBB\Models\DBMap\DBMap::class,
 
         'StopwordsModel'      => \ForkBB\Models\Stopwords\Model::class,
 
@@ -333,15 +344,8 @@ return [
         'UserManagerAdminsIds'        => \ForkBB\Models\User\AdminsIds::class,
         'UserManagerStats'            => \ForkBB\Models\User\Stats::class,
 
-        'ForumModel'           => \ForkBB\Models\Forum\Model::class,
-        'ForumModelCalcStat'   => \ForkBB\Models\Forum\CalcStat::class,
-        'ForumManager'         => \ForkBB\Models\Forum\Manager::class,
-        'ForumManagerRefresh'  => \ForkBB\Models\Forum\Refresh::class,
-        'ForumManagerLoadTree' => \ForkBB\Models\Forum\LoadTree::class,
-        'ForumManagerSave'     => \ForkBB\Models\Forum\Save::class,
-        'ForumManagerDelete'   => \ForkBB\Models\Forum\Delete::class,
-        'ForumManagerMarkread' => \ForkBB\Models\Forum\Markread::class,
-        'ForumManagerUpdateUsername' => \ForkBB\Models\Forum\UpdateUsername::class,
+        'ForumModel'   => \ForkBB\Models\Forum\Forum::class,
+        'ForumManager' => \ForkBB\Models\Forum\Forums::class,
 
         'TopicModel'         => \ForkBB\Models\Topic\Model::class,
         'TopicModelCalcStat' => \ForkBB\Models\Topic\CalcStat::class,
@@ -379,7 +383,7 @@ return [
         'GroupManagerDelete' => \ForkBB\Models\Group\Delete::class,
         'GroupManagerPerm'   => \ForkBB\Models\Group\Perm::class,
 
-        'CategoriesManager' => \ForkBB\Models\Categories\Manager::class,
+        'CategoriesManager' => \ForkBB\Models\Category\Categories::class,
 
         'SearchModelActionP' => \ForkBB\Models\Search\ActionP::class,
         'SearchModelActionT' => \ForkBB\Models\Search\ActionT::class,

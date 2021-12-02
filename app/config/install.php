@@ -120,9 +120,9 @@ return [
         'Install'  => \ForkBB\Models\Pages\Admin\Install::class,
         'Redirect' => \ForkBB\Models\Pages\Redirect::class,
 
-        'UserModel' => \ForkBB\Models\User\Model::class,
+        'UserModel' => \ForkBB\Models\User\User::class,
 
-        'ConfigModel'        => \ForkBB\Models\Config\Model::class,
-        'ConfigModelInstall' => \ForkBB\Models\Config\Install::class,
+        'ConfigModel'    => \ForkBB\Models\Config\Config::class,
+        'Config*install' => \ForkBB\Models\Config\Install::class,
     ],
 ];
