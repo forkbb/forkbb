@@ -12,7 +12,6 @@ namespace ForkBB\Core;
 
 use ForkBB\Core\Container;
 use ForkBB\Core\Validator;
-use function \ForkBB\__;
 
 class Test
 {
