@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\BanList;
 
 use ForkBB\Models\Method;
-use ForkBB\Models\BanList\Model as BanList;
+use ForkBB\Models\BanList\BanList;
 
 class Delete extends Method
 {

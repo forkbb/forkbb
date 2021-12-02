@@ -10,17 +10,23 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\BanList;
 
-use ForkBB\Models\Model as ParentModel;
+use ForkBB\Models\Model;
 use InvalidArgumentException;
 use RuntimeException;
 
-class Model extends ParentModel
+class BanList extends Model
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'BanList';
+
     /**
      * Загружает список банов из кеша/БД
      * Создает кеш
      */
-    public function init(): Model
+    public function init(): BanList
     {
         $list = $this->c->Cache->get('banlist');
 
@@ -89,7 +95,7 @@ class Model extends ParentModel
     /**
      * Сбрасывает кеш банов
      */
-    public function reset(): Model
+    public function reset(): BanList
     {
         if (true !== $this->c->Cache->delete('banlist')) {
             throw new RuntimeException('Unable to remove key from cache - banlist');

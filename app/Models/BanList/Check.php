@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\BanList;
 
 use ForkBB\Models\Method;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\User\User;
 
 class Check extends Method
 {
