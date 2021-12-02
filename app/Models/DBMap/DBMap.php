@@ -10,15 +10,21 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\DBMap;
 
-use ForkBB\Models\Model as ParentModel;
+use ForkBB\Models\Model;
 use RuntimeException;
 
-class Model extends ParentModel
+class DBMap extends Model
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'DBMap';
+
     /**
      * Загружает карту БД из кеша/БД
      */
-    public function init(): Model
+    public function init(): DBMap
     {
         $map = $this->c->Cache->get('db_map');
 
@@ -38,7 +44,7 @@ class Model extends ParentModel
     /**
      * Сбрасывает кеш карты БД
      */
-    public function reset(): Model
+    public function reset(): DBMap
     {
         if (true !== $this->c->Cache->delete('db_map')) {
             throw new RuntimeException('Unable to remove key from cache - db_map');
