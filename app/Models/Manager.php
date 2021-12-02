@@ -12,13 +12,19 @@ namespace ForkBB\Models;
 
 use ForkBB\Core\Container;
 
-class ManagerModel
+class Manager
 {
     /**
      * Контейнер
      * @var Container
      */
     protected $c;
+
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'unknown';
 
     /**
      * @var array
@@ -52,9 +58,9 @@ class ManagerModel
      */
     public function __get(string $name) /* : mixed */
     {
-        $key = \str_replace(['ForkBB\\Models\\', 'ForkBB\\', '\\'], '', \get_class($this));
+        $key = $this->cKey . '&' . $name;
 
-        return $this->c->{$key . \ucfirst($name)}->setManager($this);
+        return $this->c->$key->setManager($this);
     }
 
     /**

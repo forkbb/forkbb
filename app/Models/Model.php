@@ -21,6 +21,12 @@ class Model
     protected $c;
 
     /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'unknown';
+
+    /**
      * Данные модели
      * @var array
      */
@@ -157,8 +163,8 @@ class Model
      */
     public function __call(string $name, array $args) /* : mixed */
     {
-        $key = \str_replace(['ForkBB\\Models\\', 'ForkBB\\', '\\'], '', \get_class($this));
+        $key = $this->cKey . '*' . $name;
 
-        return $this->c->{$key . \ucfirst($name)}->setModel($this)->$name(...$args);
+        return $this->c->$key->setModel($this)->$name(...$args);
     }
 }

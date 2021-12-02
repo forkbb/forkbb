@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models;
 
 use ForkBB\Core\Container;
-use ForkBB\Models\ManagerModel;
+use ForkBB\Models\Manager;
 
 class Action
 {
@@ -23,7 +23,7 @@ class Action
 
     /**
      * Модель
-     * @var ManagerModel
+     * @var Manager
      */
     protected $manager;
 
@@ -35,7 +35,7 @@ class Action
     /**
      * Объявление менеджера
      */
-    public function setManager(ManagerModel $manager): Action
+    public function setManager(Manager $manager): Action
     {
         $this->manager = $manager;
 
