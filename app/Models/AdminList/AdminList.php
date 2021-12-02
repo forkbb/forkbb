@@ -10,16 +10,22 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\AdminList;
 
-use ForkBB\Models\Model as ParentModel;
+use ForkBB\Models\Model;
 use RuntimeException;
 
-class Model extends ParentModel
+class AdminList extends Model
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'AdminList';
+
     /**
      * Загружает список id админов из кеша/БД
      * Создает кеш
      */
-    public function init(): Model
+    public function init(): AdminList
     {
         $this->list = $this->c->Cache->get('admins');
 
@@ -37,7 +43,7 @@ class Model extends ParentModel
     /**
      * Сбрасывает кеш списка id админов
      */
-    public function reset(): Model
+    public function reset(): AdminList
     {
         if (true !== $this->c->Cache->delete('admins')) {
             throw new RuntimeException('Unable to remove key from cache - admins');
