@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Online;
 
 use ForkBB\Models\Method;
-use ForkBB\Models\Online\Model as Online;
+use ForkBB\Models\Online\Online;
 
 class Info extends Method
 {

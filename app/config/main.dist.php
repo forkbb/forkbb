@@ -158,7 +158,7 @@ return [
             'Secury' => '@Secury',
             'key'    => '%user.password%%user.ip%%user.id%%BASE_URL%',
         ],
-        'Online' => \ForkBB\Models\Online\Model::class,
+        'Online' => \ForkBB\Models\Online\Online::class,
         'Cookie' => [
             'class'   => \ForkBB\Models\Cookie\Cookie::class,
             'options' => '%COOKIE%',
@@ -238,6 +238,9 @@ return [
         'Group&perm'   => \ForkBB\Models\Group\Perm::class,
         'Group&save'   => \ForkBB\Models\Group\Save::class,
 
+        'Online*info'           => \ForkBB\Models\Online\Info::class,
+        'Online*updateUsername' => \ForkBB\Models\Online\UpdateUsername::class,
+
         'PBlockModel'           => \ForkBB\Models\PM\PBlock::class,
         'PMPTopicCalcStat'      => \ForkBB\Models\PM\CalcStat::class,
         'PMModelLoad'           => \ForkBB\Models\PM\Load::class,
@@ -313,9 +316,6 @@ return [
         'AdminLogs'       => \ForkBB\Models\Pages\Admin\Logs::class,
 
         'ConfigModel' => \ForkBB\Models\Config\Config::class,
-
-        'OnlineModelInfo' => \ForkBB\Models\Online\Info::class,
-        'OnlineModelUpdateUsername' => \ForkBB\Models\Online\UpdateUsername::class,
 
         'BanListModel'         => \ForkBB\Models\BanList\BanList::class,
 

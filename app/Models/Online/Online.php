@@ -10,12 +10,18 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Online;
 
-use ForkBB\Models\Model as ParentModel;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\Model;
+use ForkBB\Models\User\User;
 use ForkBB\Models\Page;
 
-class Model extends ParentModel
+class Online extends Model
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'Online';
+
     protected $visits = [];
     protected $online = [];
 
@@ -40,7 +46,7 @@ class Model extends ParentModel
      * Обновление данных текущего пользователя
      * Возврат данных по пользователям онлайн
      */
-    public function calc(Page $page): Model
+    public function calc(Page $page): Online
     {
         if ($this->done) {
             return $this;
