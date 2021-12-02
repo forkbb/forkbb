@@ -12,8 +12,14 @@ namespace ForkBB\Models\Group;
 
 use ForkBB\Models\DataModel;
 
-class Model extends DataModel
+class Group extends DataModel
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'Group';
+
     /**
      * Ссылка на страницу редактирования
      */

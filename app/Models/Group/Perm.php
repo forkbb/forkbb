@@ -11,8 +11,8 @@ declare(strict_types=1);
 namespace ForkBB\Models\Group;
 
 use ForkBB\Models\Action;
-use ForkBB\Models\Forum\Model as Forum;
-use ForkBB\Models\Group\Model as Group;
+use ForkBB\Models\Forum\Forum;
+use ForkBB\Models\Group\Group;
 use PDO;
 use RuntimeException;
 

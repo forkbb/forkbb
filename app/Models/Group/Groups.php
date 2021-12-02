@@ -10,11 +10,17 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Group;
 
-use ForkBB\Models\ManagerModel;
-use ForkBB\Models\Group\Model as Group;
+use ForkBB\Models\Manager;
+use ForkBB\Models\Group\Group;
 
-class Manager extends ManagerModel
+class Groups extends Manager
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'Groups';
+
     /**
      * Флаг загрузки групп
      * @var bool
@@ -37,7 +43,7 @@ class Manager extends ManagerModel
     /**
      * Загрузка списка групп
      */
-    public function init(): Manager
+    public function init(): Groups
     {
         if (empty($this->flag)) {
             $query = 'SELECT g.*

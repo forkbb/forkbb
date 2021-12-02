@@ -234,6 +234,10 @@ return [
         'Forums&save'           => \ForkBB\Models\Forum\Save::class,
         'Forums&updateUsername' => \ForkBB\Models\Forum\UpdateUsername::class,
 
+        'Group&delete' => \ForkBB\Models\Group\Delete::class,
+        'Group&perm'   => \ForkBB\Models\Group\Perm::class,
+        'Group&save'   => \ForkBB\Models\Group\Save::class,
+
         'PBlockModel'           => \ForkBB\Models\PM\PBlock::class,
         'PMPTopicCalcStat'      => \ForkBB\Models\PM\CalcStat::class,
         'PMModelLoad'           => \ForkBB\Models\PM\Load::class,
@@ -377,11 +381,8 @@ return [
         'ReportManagerSave'       => \ForkBB\Models\Report\Save::class,
         'ReportManagerLoad'       => \ForkBB\Models\Report\Load::class,
 
-        'GroupModel'         => \ForkBB\Models\Group\Model::class,
-        'GroupManager'       => \ForkBB\Models\Group\Manager::class,
-        'GroupManagerSave'   => \ForkBB\Models\Group\Save::class,
-        'GroupManagerDelete' => \ForkBB\Models\Group\Delete::class,
-        'GroupManagerPerm'   => \ForkBB\Models\Group\Perm::class,
+        'GroupModel'   => \ForkBB\Models\Group\Group::class,
+        'GroupManager' => \ForkBB\Models\Group\Groups::class,
 
         'CategoriesManager' => \ForkBB\Models\Category\Categories::class,
 
