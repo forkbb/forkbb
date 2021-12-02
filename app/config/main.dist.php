@@ -151,7 +151,7 @@ return [
         'search'        => \ForkBB\Models\Search\Model::class,
         'subscriptions' => \ForkBB\Models\Subscription\Model::class,
         'bbcode'        => '@BBCodeListModel:init',
-        'pms'           => \ForkBB\Models\PM\Model::class,
+        'pms'           => \ForkBB\Models\PM\PM::class,
 
         'Csrf' => [
             'class'  => \ForkBB\Core\Csrf::class,
@@ -241,12 +241,14 @@ return [
         'Online*info'           => \ForkBB\Models\Online\Info::class,
         'Online*updateUsername' => \ForkBB\Models\Online\UpdateUsername::class,
 
-        'PBlockModel'           => \ForkBB\Models\PM\PBlock::class,
-        'PMPTopicCalcStat'      => \ForkBB\Models\PM\CalcStat::class,
-        'PMModelLoad'           => \ForkBB\Models\PM\Load::class,
-        'PMModelSave'           => \ForkBB\Models\PM\Save::class,
-        'PMModelDelete'         => \ForkBB\Models\PM\Delete::class,
-        'PMModelUpdateUsername' => \ForkBB\Models\PM\UpdateUsername::class,
+        'PBlockModel' => \ForkBB\Models\PM\PBlock::class,
+
+        'PMS*delete'         => \ForkBB\Models\PM\Delete::class,
+        'PMS*load'           => \ForkBB\Models\PM\Load::class,
+        'PMS*save'           => \ForkBB\Models\PM\Save::class,
+        'PMS*updateUsername' => \ForkBB\Models\PM\UpdateUsername::class,
+
+        'PTopic*CalcStat' => \ForkBB\Models\PM\CalcStat::class,
 
         'UserManagerNormUsername' => \ForkBB\Models\User\NormUsername::class,
     ],

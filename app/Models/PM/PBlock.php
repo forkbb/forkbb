@@ -13,12 +13,18 @@ namespace ForkBB\Models\PM;
 use ForkBB\Core\Container;
 use ForkBB\Models\Model;
 use ForkBB\Models\PM\Cnst;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\User\User;
 use InvalidArgumentException;
 use RuntimeException;
 
 class PBlock extends Model
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'PBlock';
+
     /**
      * @var array
      */

@@ -14,12 +14,18 @@ use ForkBB\Core\Container;
 use ForkBB\Models\DataModel;
 use ForkBB\Models\PM\Cnst;
 use ForkBB\Models\PM\PTopic;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\User\User;
 use InvalidArgumentException;
 use RuntimeException;
 
 class PPost extends DataModel
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'PPost';
+
     public function __construct(Container $container)
     {
         parent::__construct($container);
