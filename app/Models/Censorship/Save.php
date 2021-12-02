@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Censorship;
 
 use ForkBB\Models\Method;
-use ForkBB\Models\Censorship\Model as Censorship;
+use ForkBB\Models\Censorship\Censorship;
 use PDO;
 use RuntimeException;
 
