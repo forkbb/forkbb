@@ -11,13 +11,19 @@ declare(strict_types=1);
 namespace ForkBB\Models\Cookie;
 
 use ForkBB\Core\Container;
-use ForkBB\Models\Model as ParentModel;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\Model;
+use ForkBB\Models\User\User;
 use RuntimeException;
 
-class Model extends ParentModel
+class Cookie extends Model
 {
     const NAME = 'user';
+
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'Cookie';
 
     /**
      * Флаг запрета записи свойств
