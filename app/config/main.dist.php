@@ -347,7 +347,7 @@ return [
 
         'CensorshipModel'        => \ForkBB\Models\Censorship\Censorship::class,
 
-        'StatsModel' => \ForkBB\Models\Stats\Model::class,
+        'StatsModel' => \ForkBB\Models\Stats\Stats::class,
 
         'AdminListModel' => \ForkBB\Models\AdminList\AdminList::class,
 

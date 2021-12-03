@@ -10,16 +10,22 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Stats;
 
-use ForkBB\Models\Model as ParentModel;
+use ForkBB\Models\Model;
 use PDO;
 use RuntimeException;
 
-class Model extends ParentModel
+class Stats extends Model
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'Stats';
+
     /**
      * Загружает статистику из кеша/БД
      */
-    public function init(): Model
+    public function init(): Stats
     {
         $list = $this->c->Cache->get('stats');
 
@@ -45,7 +51,7 @@ class Model extends ParentModel
     /**
      * Сбрасывает кеш статистики
      */
-    public function reset(): Model
+    public function reset(): Stats
     {
         if (true !== $this->c->Cache->delete('stats')) {
             throw new RuntimeException('Unable to remove key from cache - stats');
