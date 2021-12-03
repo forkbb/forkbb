@@ -163,7 +163,7 @@ class Model
      */
     public function __call(string $name, array $args) /* : mixed */
     {
-        $key = $this->cKey . '*' . $name;
+        $key = $this->cKey . '/' . $name;
 
         return $this->c->$key->setModel($this)->$name(...$args);
     }

@@ -58,7 +58,7 @@ class Manager
      */
     public function __get(string $name) /* : mixed */
     {
-        $key = $this->cKey . '&' . $name;
+        $key = $this->cKey . '/' . $name;
 
         return $this->c->$key->setManager($this);
     }
