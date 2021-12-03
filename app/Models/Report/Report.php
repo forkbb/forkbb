@@ -11,12 +11,18 @@ declare(strict_types=1);
 namespace ForkBB\Models\Report;
 
 use ForkBB\Models\DataModel;
-use ForkBB\Models\Post\Model as Post;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\Post\Post;
+use ForkBB\Models\User\User;
 use RuntimeException;
 
-class Model extends DataModel
+class Report extends DataModel
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'Report';
+
     /**
      * Устанавливает автора
      */

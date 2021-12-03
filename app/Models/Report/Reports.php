@@ -10,13 +10,19 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Report;
 
-use ForkBB\Models\ManagerModel;
-use ForkBB\Models\Report\Model as Report;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\Manager;
+use ForkBB\Models\Report\Report;
+use ForkBB\Models\User\User;
 use RuntimeException;
 
-class Manager extends ManagerModel
+class Reports extends Manager
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'Reports';
+
     /**
      * Создает новую модель сигнала
      */

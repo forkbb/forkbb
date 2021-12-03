@@ -142,7 +142,7 @@ return [
         'topics'        => \ForkBB\Models\Topic\Manager::class,
         'posts'         => \ForkBB\Models\Post\Posts::class,
         'polls'         => \ForkBB\Models\Poll\Polls::class,
-        'reports'       => \ForkBB\Models\Report\Manager::class,
+        'reports'       => \ForkBB\Models\Report\Reports::class,
         'user'          => '@users:current',
         'userRules'     => '@UsersRules:init',
         'users'         => \ForkBB\Models\User\Manager::class,
@@ -262,6 +262,9 @@ return [
         'Posts/userStat'       => \ForkBB\Models\Post\UserStat::class,
         'Posts/view'           => \ForkBB\Models\Post\View::class,
 
+        'Reports/load' => \ForkBB\Models\Report\Load::class,
+        'Reports/save' => \ForkBB\Models\Report\Save::class,
+
         'UserManagerNormUsername' => \ForkBB\Models\User\NormUsername::class,
     ],
     'multiple'  => [
@@ -380,9 +383,7 @@ return [
 
         'PollModel' => \ForkBB\Models\Poll\Poll::class,
 
-        'ReportModel'             => \ForkBB\Models\Report\Model::class,
-        'ReportManagerSave'       => \ForkBB\Models\Report\Save::class,
-        'ReportManagerLoad'       => \ForkBB\Models\Report\Load::class,
+        'ReportModel'             => \ForkBB\Models\Report\Report::class,
 
         'GroupModel'   => \ForkBB\Models\Group\Group::class,
         'GroupManager' => \ForkBB\Models\Group\Groups::class,

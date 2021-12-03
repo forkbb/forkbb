@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Report;
 
 use ForkBB\Models\Action;
-use ForkBB\Models\Report\Model as Report;
+use ForkBB\Models\Report\Report;
 use InvalidArgumentException;
 
 class Load extends Action
