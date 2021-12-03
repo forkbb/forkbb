@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\User;
 
 use ForkBB\Models\Action;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\User\User;
 use InvalidArgumentException;
 use RuntimeException;
 

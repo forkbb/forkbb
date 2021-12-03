@@ -10,11 +10,17 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\User;
 
-use ForkBB\Models\ManagerModel;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\Manager;
+use ForkBB\Models\User\User;
 
-class Manager extends ManagerModel
+class Users extends Manager
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'Users';
+
     /**
      * Создает новую модель пользователя
      */

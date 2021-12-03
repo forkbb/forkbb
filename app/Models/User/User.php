@@ -12,14 +12,20 @@ namespace ForkBB\Models\User;
 
 use ForkBB\Core\Container;
 use ForkBB\Models\DataModel;
-use ForkBB\Models\Model as BaseModel;
-use ForkBB\Models\Forum\Model as Forum;
-use ForkBB\Models\Post\Model as Post;
+use ForkBB\Models\Model;
+use ForkBB\Models\Forum\Forum;
+use ForkBB\Models\Post\Post;
 use RuntimeException;
 use function \ForkBB\__;
 
-class Model extends DataModel
+class User extends DataModel
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'User';
+
     public function __construct(Container $container)
     {
         parent::__construct($container);
@@ -83,7 +89,7 @@ class Model extends DataModel
     /**
      * Статус модератора для указанной модели
      */
-    public function isModerator(BaseModel $model): bool
+    public function isModerator(Model $model): bool
     {
         if (1 != $this->g_moderator) {
             return false;
@@ -91,7 +97,7 @@ class Model extends DataModel
 
         while (! $model instanceof Forum) {
             $model = $model->parent;
-            if (! $model instanceof BaseModel) {
+            if (! $model instanceof Model) {
                 throw new RuntimeException('Moderator\'s rights can not be found');
             }
         }

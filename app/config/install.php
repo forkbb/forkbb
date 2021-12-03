@@ -105,12 +105,12 @@ return [
         ],
 
         'config'     => '@ConfigModel:install',
-        'users'      => \ForkBB\Models\User\Manager::class,
+        'users'      => \ForkBB\Models\User\Users::class,
 
         'VLemail'    => \ForkBB\Models\Validators\Email::class,
         'VLhtml'     => \ForkBB\Models\Validators\Html::class,
 
-        'UserManagerNormUsername' => \ForkBB\Models\User\NormUsername::class,
+        'Users/normUsername' => \ForkBB\Models\User\NormUsername::class,
     ],
     'multiple'  => [
         'PrimaryController' => \ForkBB\Controllers\Install::class,
@@ -123,6 +123,6 @@ return [
         'UserModel' => \ForkBB\Models\User\User::class,
 
         'ConfigModel'    => \ForkBB\Models\Config\Config::class,
-        'Config*install' => \ForkBB\Models\Config\Install::class,
+        'Config/install' => \ForkBB\Models\Config\Install::class,
     ],
 ];
