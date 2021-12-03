@@ -184,10 +184,11 @@ class User extends DataModel
         $file = $this->getAttr('avatar');
 
         if (! empty($file)) {
-            $path = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$file}";
+            $file = $this->c->config->o_avatars_dir . '/' . $file;
+            $path = $this->c->DIR_PUBLIC . $file;
 
             if (\is_file($path)) {
-                return $this->c->PUBLIC_URL . "{$this->c->config->o_avatars_dir}/{$file}";
+                return $this->c->PUBLIC_URL . $file;
             }
         }
 
