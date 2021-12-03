@@ -157,10 +157,10 @@ class Update extends Admin
                         $e = __(['You are running error', 'PHP', \PHP_VERSION, $this->c->FORK_REVISION, self::PHP_MIN]);
                     }
 
-                    // база не от ForkBB ????
+                    // база не от ForkBB или старая ревизия
                     if (
                         null === $e
-                        && $this->c->config->i_fork_revision < 1
+                        && $this->c->config->i_fork_revision < 41
                     ) {
                         $e = 'Version mismatch error';
                     }
