@@ -31,46 +31,6 @@ class Update
      */
     public function routing(): Page
     {
-        // fix for Router
-        if ($this->c->config->i_fork_revision < 17) {
-            $confChange = [
-                'shared' => [
-                    'Router' => [
-                        'class'    => \ForkBB\Core\Router::class,
-                        'base_url' => '%BASE_URL%',
-                        'csrf'     => '@Csrf'
-                    ],
-                ],
-            ];
-
-            $this->c->config($confChange);
-        }
-        if ($this->c->config->i_fork_revision < 20) {
-            $confChange = [
-                'shared' => [
-                    'Cache' => [
-                        'class'     => \ForkBB\Core\Cache\FileCache::class,
-                        'cache_dir' => '%DIR_CACHE%',
-                    ],
-                ],
-            ];
-
-            $this->c->config($confChange);
-        }
-        if ($this->c->config->i_fork_revision < 35) {
-            $confChange = [
-                'shared' => [
-                    'HTMLCleaner' => [
-                        'calss'  => \ForkBB\Core\HTMLCleaner::class,
-                        'config' => '%DIR_APP%/config/jevix.default.php',
-                    ],
-                    'VLhtml' => \ForkBB\Models\Validators\Html::class,
-                ],
-            ];
-
-            $this->c->config($confChange);
-        }
-
         $uri = $_SERVER['REQUEST_URI'];
         if (false !== ($pos = \strpos($uri, '?'))) {
             $uri = \substr($uri, 0, $pos);
