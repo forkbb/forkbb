@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
-use ForkBB\Models\Post\Model as Post;
+use ForkBB\Models\Post\Post;
 use function \ForkBB\__;
 
 class Delete extends Page

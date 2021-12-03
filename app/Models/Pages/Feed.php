@@ -11,9 +11,9 @@ declare(strict_types=1);
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
-use ForkBB\Models\Forum\Model as Forum;
-use ForkBB\Models\Topic\Model as Topic;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\Forum\Forum;
+use ForkBB\Models\Topic\Topic;
+use ForkBB\Models\User\User;
 use RuntimeException;
 use function \ForkBB\__;
 

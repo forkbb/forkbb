@@ -14,8 +14,8 @@ use ForkBB\Core\Image;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
-use ForkBB\Models\User\Model as User;
-use ForkBB\Models\Forum\Model as Forum;
+use ForkBB\Models\User\User;
+use ForkBB\Models\Forum\Forum;
 use function \ForkBB\__;
 
 class Mod extends Profile

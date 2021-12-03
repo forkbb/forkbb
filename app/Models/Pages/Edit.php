@@ -14,9 +14,9 @@ use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\PostFormTrait;
 use ForkBB\Models\Pages\PostValidatorTrait;
-use ForkBB\Models\Poll\Model as Poll;
-use ForkBB\Models\Post\Model as Post;
-use ForkBB\Models\Topic\Model as Topic;
+use ForkBB\Models\Poll\Poll;
+use ForkBB\Models\Post\Post;
+use ForkBB\Models\Topic\Topic;
 use function \ForkBB\__;
 
 class Edit extends Page

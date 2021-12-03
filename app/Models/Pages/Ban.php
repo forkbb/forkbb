@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\User\User;
 use function \ForkBB\__;
 
 class Ban extends Page

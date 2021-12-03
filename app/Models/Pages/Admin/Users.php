@@ -12,7 +12,7 @@ namespace ForkBB\Models\Pages\Admin;
 
 use ForkBB\Core\Container;
 use ForkBB\Models\Pages\Admin;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\User\User;
 use function \ForkBB\__;
 
 abstract class Users extends Admin

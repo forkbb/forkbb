@@ -12,7 +12,7 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
-use ForkBB\Models\Forum\Model as Forum;
+use ForkBB\Models\Forum\Forum;
 use InvalidArgumentException;
 use function \ForkBB\__;
 

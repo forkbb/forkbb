@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
-use ForkBB\Models\Forum\Model as ForumModel;
+use ForkBB\Models\Forum\Forum as ForumModel;
 use function \ForkBB\__;
 
 class Forum extends Page

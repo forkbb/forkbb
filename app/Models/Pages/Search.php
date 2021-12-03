@@ -12,8 +12,8 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
-use ForkBB\Models\Forum\Model as Forum;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\Forum\Forum;
+use ForkBB\Models\User\User;
 use InvalidArgumentException;
 use function \ForkBB\__;
 

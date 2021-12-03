@@ -13,7 +13,7 @@ namespace ForkBB\Models\Pages\PM;
 use ForkBB\Core\Container;
 use ForkBB\Models\Page;
 use ForkBB\Models\PM\Cnst;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\User\User;
 use function \ForkBB\__;
 
 abstract class AbstractPM extends Page

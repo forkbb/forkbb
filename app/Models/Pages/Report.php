@@ -12,8 +12,8 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\Page;
-use ForkBB\Models\Post\Model as Post;
-use ForkBB\Models\Report\Model as ReportModel;
+use ForkBB\Models\Post\Post;
+use ForkBB\Models\Report\Report as ReportModel;
 use function \ForkBB\__;
 
 class Report extends Page

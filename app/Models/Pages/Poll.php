@@ -11,8 +11,8 @@ declare(strict_types=1);
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
-use ForkBB\Models\Topic\Model as Topic;
-use ForkBB\Models\Poll\Model as PollModel;
+use ForkBB\Models\Topic\Topic;
+use ForkBB\Models\Poll\Poll as PollModel;
 use function \ForkBB\__;
 
 class Poll extends Page

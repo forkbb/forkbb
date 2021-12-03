@@ -13,9 +13,9 @@ namespace ForkBB\Models\Pages;
 use ForkBB\Core\Container;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
-use ForkBB\Models\Forum\Model as Forum;
-use ForkBB\Models\Topic\Model as Topic;
-use ForkBB\Models\Post\Model as Post;
+use ForkBB\Models\Forum\Forum;
+use ForkBB\Models\Topic\Topic;
+use ForkBB\Models\Post\Post;
 use function \ForkBB\__;
 
 class Moderate extends Page

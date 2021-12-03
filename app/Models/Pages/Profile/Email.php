@@ -14,7 +14,7 @@ use ForkBB\Core\Validator;
 use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\User\User;
 use function \ForkBB\__;
 
 class Email extends Profile

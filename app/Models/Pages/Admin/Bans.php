@@ -14,7 +14,7 @@ use ForkBB\Core\Container;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\User\User;
 use RuntimeException;
 use function \ForkBB\__;
 

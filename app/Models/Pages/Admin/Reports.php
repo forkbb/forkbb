@@ -12,8 +12,8 @@ namespace ForkBB\Models\Pages\Admin;
 
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin;
-use ForkBB\Models\Post\Model as Post;
-use ForkBB\Models\Report\Model as Report;
+use ForkBB\Models\Post\Post;
+use ForkBB\Models\Report\Report;
 use function \ForkBB\__;
 
 class Reports extends Admin

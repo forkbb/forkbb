@@ -13,7 +13,7 @@ namespace ForkBB\Models\Pages;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Model;
 use ForkBB\Models\Page;
-use ForkBB\Models\Topic\Model as Topic;
+use ForkBB\Models\Topic\Topic;
 use function \ForkBB\__;
 
 class Post extends Page

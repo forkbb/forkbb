@@ -12,7 +12,7 @@ namespace ForkBB\Models\Rules;
 
 use ForkBB\Models\Model;
 use ForkBB\Models\Rules;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\User\User;
 
 class Profile extends Rules
 {

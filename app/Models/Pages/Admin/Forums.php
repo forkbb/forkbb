@@ -12,7 +12,7 @@ namespace ForkBB\Models\Pages\Admin;
 
 use ForkBB\Core\Container;
 use ForkBB\Models\Page;
-use ForkBB\Models\Forum\Model as Forum;
+use ForkBB\Models\Forum\Forum;
 use ForkBB\Models\Pages\Admin;
 use function \ForkBB\__;
 

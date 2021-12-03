@@ -13,7 +13,7 @@ namespace ForkBB\Models\Pages\Admin\Users;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin\Users;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\User\User;
 use function \ForkBB\__;
 
 class Result extends Users

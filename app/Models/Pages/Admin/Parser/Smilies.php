@@ -14,7 +14,7 @@ use ForkBB\Core\Image;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin\Parser;
-use ForkBB\Models\Config\Model as Config;
+use ForkBB\Models\Config\Config;
 use function \ForkBB\__;
 
 class Smilies extends Parser
