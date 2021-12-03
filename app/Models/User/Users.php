@@ -37,7 +37,7 @@ class Users extends Manager
         if ($this->isset($id)) {
             return $this->get($id);
         } else {
-            $user = $this->load->load($id);
+            $user = $this->Load->load($id);
             $this->set($id, $user);
 
             return $user;
@@ -66,7 +66,7 @@ class Users extends Manager
             return $result;
         }
 
-        foreach ($this->load->loadByIds($data) as $user) {
+        foreach ($this->Load->loadByIds($data) as $user) {
             if ($user instanceof User) {
                 $result[$user->id] = $user;
                 $this->set($user->id, $user);
@@ -100,7 +100,7 @@ class Users extends Manager
      */
     public function loadByName(string $name, bool $caseInsencytive = false): ?User
     {
-        return $this->returnUser($this->load->loadByName($name, $caseInsencytive));
+        return $this->returnUser($this->Load->loadByName($name, $caseInsencytive));
     }
 
     /**
@@ -108,7 +108,7 @@ class Users extends Manager
      */
     public function loadByEmail(string $email): ?User
     {
-        return $this->returnUser($this->load->loadByEmail($email));
+        return $this->returnUser($this->Load->loadByEmail($email));
     }
 
     /**
@@ -116,7 +116,7 @@ class Users extends Manager
      */
     public function update(User $user): User
     {
-        return $this->save->update($user);
+        return $this->Save->update($user);
     }
 
     /**
@@ -124,7 +124,7 @@ class Users extends Manager
      */
     public function insert(User $user): int
     {
-        $id = $this->save->insert($user);
+        $id = $this->Save->insert($user);
         $this->set($id, $user);
 
         return $id;
