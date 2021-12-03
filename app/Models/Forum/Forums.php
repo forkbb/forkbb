@@ -105,7 +105,7 @@ class Forums extends Manager
      */
     public function update(Forum $forum): Forum
     {
-        return $this->Save->update($forum);
+        return $this->save->update($forum);
     }
 
     /**
@@ -113,7 +113,7 @@ class Forums extends Manager
      */
     public function insert(Forum $forum): int
     {
-        $id = $this->Save->insert($forum);
+        $id = $this->save->insert($forum);
         $this->set($id, $forum);
 
         return $id;
