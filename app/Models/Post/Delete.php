@@ -12,10 +12,10 @@ namespace ForkBB\Models\Post;
 
 use ForkBB\Models\Action;
 use ForkBB\Models\DataModel;
-use ForkBB\Models\Forum\Model as Forum;
-use ForkBB\Models\Post\Model as Post;
-use ForkBB\Models\Topic\Model as Topic;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\Forum\Forum;
+use ForkBB\Models\Post\Post;
+use ForkBB\Models\Topic\Topic;
+use ForkBB\Models\User\User;
 use PDO;
 use InvalidArgumentException;
 use RuntimeException;

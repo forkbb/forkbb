@@ -11,9 +11,9 @@ declare(strict_types=1);
 namespace ForkBB\Models\Post;
 
 use ForkBB\Models\Action;
-use ForkBB\Models\Post\Model as Post;
-use ForkBB\Models\Search\Model as Search;
-use ForkBB\Models\Topic\Model as Topic;
+use ForkBB\Models\Post\Post;
+use ForkBB\Models\Search\Search;
+use ForkBB\Models\Topic\Topic;
 use PDO;
 use InvalidArgumentException;
 use RuntimeException;

@@ -11,13 +11,19 @@ declare(strict_types=1);
 namespace ForkBB\Models\Post;
 
 use ForkBB\Models\DataModel;
-use ForkBB\Models\Forum\Model as Forum;
-use ForkBB\Models\Topic\Model as Topic;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\Forum\Forum;
+use ForkBB\Models\Topic\Topic;
+use ForkBB\Models\User\User;
 use RuntimeException;
 
-class Model extends DataModel
+class Post extends DataModel
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'Post';
+
     /**
      * Получение родительской темы
      */

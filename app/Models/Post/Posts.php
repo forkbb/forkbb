@@ -10,11 +10,17 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Post;
 
-use ForkBB\Models\ManagerModel;
-use ForkBB\Models\Post\Model as Post;
+use ForkBB\Models\Manager;
+use ForkBB\Models\Post\Post;
 
-class Manager extends ManagerModel
+class Posts extends Manager
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'Posts';
+
     /**
      * Создает новую модель сообщения
      */

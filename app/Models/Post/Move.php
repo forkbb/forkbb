@@ -11,8 +11,8 @@ declare(strict_types=1);
 namespace ForkBB\Models\Post;
 
 use ForkBB\Models\Action;
-use ForkBB\Models\Topic\Model as Topic;
-use ForkBB\Models\Post\Model as Post;
+use ForkBB\Models\Topic\Topic;
+use ForkBB\Models\Post\Post;
 
 class Move extends Action
 {

@@ -12,8 +12,8 @@ namespace ForkBB\Models\Post;
 
 use ForkBB\Models\Action;
 use ForkBB\Models\DataModel;
-use ForkBB\Models\Topic\Model as Topic;
-use ForkBB\Models\Forum\Model as Forum;
+use ForkBB\Models\Topic\Topic;
+use ForkBB\Models\Forum\Forum;
 
 use InvalidArgumentException;
 use RuntimeException;
