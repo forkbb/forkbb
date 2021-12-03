@@ -8,17 +8,23 @@
 
 declare(strict_types=1);
 
-namespace ForkBB\Models\Stopwords;
+namespace ForkBB\Models\StopwordList;
 
-use ForkBB\Models\Model as ParentModel;
+use ForkBB\Models\Model;
 use RuntimeException;
 
-class Model extends ParentModel
+class StopwordList extends Model
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'StopwordList';
+
     /**
      * Загружает список игнорируемых при индексации слов из кеша/БД
      */
-    public function init(): Model
+    public function init(): StopwordList
     {
         $data = $this->c->Cache->get('stopwords');
         if (
@@ -61,7 +67,7 @@ class Model extends ParentModel
     /**
      * Регенерация кэша массива слов с возвращением результата
      */
-    protected function load(): Model
+    protected function load(): StopwordList
     {
         $id = $this->generateId();
 

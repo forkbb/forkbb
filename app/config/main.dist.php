@@ -137,7 +137,7 @@ return [
         'admins'        => '@AdminListModel:init',
         'smilies'       => '@SmileyListModel:init',
         'dbMap'         => '@DBMapModel:init',
-        'stopwords'     => '@StopwordsModel:init',
+        'stopwords'     => '@StopwordListModel:init',
         'forums'        => '@ForumManager:init',
         'topics'        => \ForkBB\Models\Topic\Manager::class,
         'posts'         => \ForkBB\Models\Post\Posts::class,
@@ -355,7 +355,7 @@ return [
 
         'DBMapModel'          => \ForkBB\Models\DBMap\DBMap::class,
 
-        'StopwordsModel'      => \ForkBB\Models\Stopwords\Model::class,
+        'StopwordListModel'      => \ForkBB\Models\StopwordList\StopwordList::class,
 
         'UserModel'                   => \ForkBB\Models\User\Model::class,
         'UserManagerLoad'             => \ForkBB\Models\User\Load::class,
