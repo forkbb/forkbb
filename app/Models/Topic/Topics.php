@@ -10,11 +10,17 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Topic;
 
-use ForkBB\Models\ManagerModel;
-use ForkBB\Models\Topic\Model as Topic;
+use ForkBB\Models\Manager;
+use ForkBB\Models\Topic\Topic;
 
-class Manager extends ManagerModel
+class Topics extends Manager
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'Topics';
+
     /**
      * Создает новую модель темы
      */

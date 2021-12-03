@@ -12,13 +12,19 @@ namespace ForkBB\Models\Topic;
 
 use ForkBB\Core\Container;
 use ForkBB\Models\DataModel;
-use ForkBB\Models\Forum\Model as Forum;
-use ForkBB\Models\Poll\Model as Poll;
+use ForkBB\Models\Forum\Forum;
+use ForkBB\Models\Poll\Poll;
 use PDO;
 use RuntimeException;
 
-class Model extends DataModel
+class Topic extends DataModel
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'Topic';
+
     /**
      * Получение родительского раздела
      */

@@ -139,7 +139,7 @@ return [
         'dbMap'         => '@DBMapModel:init',
         'stopwords'     => '@StopwordListModel:init',
         'forums'        => '@ForumManager:init',
-        'topics'        => \ForkBB\Models\Topic\Manager::class,
+        'topics'        => \ForkBB\Models\Topic\Topics::class,
         'posts'         => \ForkBB\Models\Post\Posts::class,
         'polls'         => \ForkBB\Models\Poll\Polls::class,
         'reports'       => \ForkBB\Models\Report\Reports::class,
@@ -274,6 +274,17 @@ return [
 
         'Subscription/send' => \ForkBB\Models\Subscription\Send::class,
 
+        'Topic/calcStat' => \ForkBB\Models\Topic\CalcStat::class,
+
+        'Topics/access'         => \ForkBB\Models\Topic\Access::class,
+        'Topics/delete'         => \ForkBB\Models\Topic\Delete::class,
+        'Topics/load'           => \ForkBB\Models\Topic\Load::class,
+        'Topics/save'           => \ForkBB\Models\Topic\Save::class,
+        'Topics/merge'          => \ForkBB\Models\Topic\Merge::class,
+        'Topics/move'           => \ForkBB\Models\Topic\Move::class,
+        'Topics/updateUsername' => \ForkBB\Models\Topic\UpdateUsername::class,
+        'Topics/view'           => \ForkBB\Models\Topic\View::class,
+
         'UserManagerNormUsername' => \ForkBB\Models\User\NormUsername::class,
     ],
     'multiple'  => [
@@ -377,16 +388,7 @@ return [
         'ForumModel'   => \ForkBB\Models\Forum\Forum::class,
         'ForumManager' => \ForkBB\Models\Forum\Forums::class,
 
-        'TopicModel'         => \ForkBB\Models\Topic\Model::class,
-        'TopicModelCalcStat' => \ForkBB\Models\Topic\CalcStat::class,
-        'TopicManagerLoad'   => \ForkBB\Models\Topic\Load::class,
-        'TopicManagerSave'   => \ForkBB\Models\Topic\Save::class,
-        'TopicManagerDelete' => \ForkBB\Models\Topic\Delete::class,
-        'TopicManagerView'   => \ForkBB\Models\Topic\View::class,
-        'TopicManagerAccess' => \ForkBB\Models\Topic\Access::class,
-        'TopicManagerMerge'  => \ForkBB\Models\Topic\Merge::class,
-        'TopicManagerMove'   => \ForkBB\Models\Topic\Move::class,
-        'TopicManagerUpdateUsername' => \ForkBB\Models\Topic\UpdateUsername::class,
+        'TopicModel'         => \ForkBB\Models\Topic\Topic::class,
 
         'PostModel'               => \ForkBB\Models\Post\Post::class,
 
