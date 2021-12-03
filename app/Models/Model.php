@@ -143,9 +143,9 @@ class Model
         if ($x > 90 || $x < 65) {
             return null;
         } else {
-            $key = \str_replace(['ForkBB\\Models\\', 'ForkBB\\', '\\'], '', \get_class($this));
+            $key = $this->cKey . '/' . \lcfirst($name);
 
-            return $this->c->{$key . $name}->setModel($this);
+            return $this->c->$key->setModel($this);
         }
     }
 

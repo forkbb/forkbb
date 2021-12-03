@@ -58,9 +58,15 @@ class Manager
      */
     public function __get(string $name) /* : mixed */
     {
-        $key = $this->cKey . '/' . $name;
+        $x = \ord($name);
 
-        return $this->c->$key->setManager($this);
+        if ($x > 90 || $x < 65) {
+            return null;
+        } else {
+            $key = $this->cKey . '/' . \lcfirst($name);
+
+            return $this->c->$key->setManager($this);
+        }
     }
 
     /**
@@ -68,6 +74,8 @@ class Manager
      */
     public function __call(string $name, array $args) /* : mixed */
     {
-        return $this->__get($name)->$name(...$args);
+        $key = $this->cKey . '/' . $name;
+
+        return $this->c->$key->setManager($this)->$name(...$args);
     }
 }
