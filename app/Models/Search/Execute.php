@@ -12,8 +12,8 @@ namespace ForkBB\Models\Search;
 
 use ForkBB\Core\Validator;
 use ForkBB\Models\Method;
-use ForkBB\Models\Forum\Model as Forum;
-use ForkBB\Models\Post\Model as Post;
+use ForkBB\Models\Forum\Forum;
+use ForkBB\Models\Post\Post;
 use PDO;
 use RuntimeException;
 

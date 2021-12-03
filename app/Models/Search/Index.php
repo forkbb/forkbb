@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Search;
 
 use ForkBB\Models\Method;
-use ForkBB\Models\Post\Model as Post;
+use ForkBB\Models\Post\Post;
 use PDO;
 
 class Index extends Method

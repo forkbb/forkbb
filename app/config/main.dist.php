@@ -148,7 +148,7 @@ return [
         'users'         => \ForkBB\Models\User\Manager::class,
         'groups'        => '@GroupManager:init',
         'categories'    => '@CategoriesManager:init',
-        'search'        => \ForkBB\Models\Search\Model::class,
+        'search'        => \ForkBB\Models\Search\Search::class,
         'subscriptions' => \ForkBB\Models\Subscription\Model::class,
         'bbcode'        => '@BBCodeListModel:init',
         'pms'           => \ForkBB\Models\PM\PM::class,
@@ -264,6 +264,15 @@ return [
 
         'Reports/load' => \ForkBB\Models\Report\Load::class,
         'Reports/save' => \ForkBB\Models\Report\Save::class,
+
+        'Search/actionP'       => \ForkBB\Models\Search\ActionP::class,
+        'Search/actionT'       => \ForkBB\Models\Search\ActionT::class,
+        'Search/actionF'       => \ForkBB\Models\Search\ActionF::class,
+        'Search/delete'        => \ForkBB\Models\Search\Delete::class,
+        'Search/execute'       => \ForkBB\Models\Search\Execute::class,
+        'Search/index'         => \ForkBB\Models\Search\Index::class,
+        'Search/prepare'       => \ForkBB\Models\Search\Prepare::class,
+        'Search/truncateIndex' => \ForkBB\Models\Search\TruncateIndex::class,
 
         'UserManagerNormUsername' => \ForkBB\Models\User\NormUsername::class,
     ],
@@ -389,15 +398,6 @@ return [
         'GroupManager' => \ForkBB\Models\Group\Groups::class,
 
         'CategoriesManager' => \ForkBB\Models\Category\Categories::class,
-
-        'SearchModelActionP' => \ForkBB\Models\Search\ActionP::class,
-        'SearchModelActionT' => \ForkBB\Models\Search\ActionT::class,
-        'SearchModelActionF' => \ForkBB\Models\Search\ActionF::class,
-        'SearchModelDelete'  => \ForkBB\Models\Search\Delete::class,
-        'SearchModelIndex'   => \ForkBB\Models\Search\Index::class,
-        'SearchModelTruncateIndex'   => \ForkBB\Models\Search\TruncateIndex::class,
-        'SearchModelPrepare' => \ForkBB\Models\Search\Prepare::class,
-        'SearchModelExecute' => \ForkBB\Models\Search\Execute::class,
 
         'BBStructure' => \ForkBB\Models\BBCodeList\Structure::class,
 

@@ -10,9 +10,9 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Search;
 
-use ForkBB\Models\Model as ParentModel;
+use ForkBB\Models\Model;
 
-class Model extends ParentModel
+class Search extends Model
 {
     const CJK_REGEX = '['.
         '\x{1100}-\x{11FF}'.  // Hangul Jamo
@@ -37,6 +37,12 @@ class Model extends ParentModel
         '\x{4E00}-\x{9FFF}'.   // CJK Unified Ideographs
         '\x{20000}-\x{2A6DF}'. // CJK Unified Ideographs Extension B
         ']';
+
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'Search';
 
     /**
      * Ссылка на результат поиска
