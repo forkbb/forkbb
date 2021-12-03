@@ -10,16 +10,22 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Subscription;
 
-use ForkBB\Models\Model as ParentModel;
+use ForkBB\Models\Model;
 use ForkBB\Models\DataModel;
-use ForkBB\Models\Forum\Model as Forum;
-use ForkBB\Models\Topic\Model as Topic;
-use ForkBB\Models\User\Model as User;
+use ForkBB\Models\Forum\Forum;
+use ForkBB\Models\Topic\Topic;
+use ForkBB\Models\User\User;
 use PDO;
 use InvalidArgumentException;
 
-class Model extends ParentModel
+class Subscription extends Model
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'Subscription';
+
     /**
      * @var array
      */

@@ -149,7 +149,7 @@ return [
         'groups'        => '@GroupManager:init',
         'categories'    => '@CategoriesManager:init',
         'search'        => \ForkBB\Models\Search\Search::class,
-        'subscriptions' => \ForkBB\Models\Subscription\Model::class,
+        'subscriptions' => \ForkBB\Models\Subscription\Subscription::class,
         'bbcode'        => '@BBCodeListModel:init',
         'pms'           => \ForkBB\Models\PM\PM::class,
 
@@ -186,8 +186,6 @@ return [
 
         'ProfileRules' => \ForkBB\Models\Rules\Profile::class,
         'UsersRules'   => \ForkBB\Models\Rules\Users::class,
-
-        'SubscriptionModelSend' => \ForkBB\Models\Subscription\Send::class,
 
         'BanList/check'    => \ForkBB\Models\BanList\Check::class,
         'BanList/delete'   => \ForkBB\Models\BanList\Delete::class,
@@ -273,6 +271,8 @@ return [
         'SmileyList/insert' => \ForkBB\Models\SmileyList\Insert::class,
         'SmileyList/load'   => \ForkBB\Models\SmileyList\Load::class,
         'SmileyList/update' => \ForkBB\Models\SmileyList\Update::class,
+
+        'Subscription/send' => \ForkBB\Models\Subscription\Send::class,
 
         'UserManagerNormUsername' => \ForkBB\Models\User\NormUsername::class,
     ],

@@ -11,9 +11,9 @@ declare(strict_types=1);
 namespace ForkBB\Models\Subscription;
 
 use ForkBB\Models\Method;
-use ForkBB\Models\Forum\Model as Forum;
-use ForkBB\Models\Post\Model as Post;
-use ForkBB\Models\Topic\Model as Topic;
+use ForkBB\Models\Forum\Forum;
+use ForkBB\Models\Post\Post;
+use ForkBB\Models\Topic\Topic;
 use ForkBB\Core\Exceptions\MailException;
 use function \ForkBB\__;
 
