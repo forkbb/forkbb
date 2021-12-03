@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\SmileyList;
 
 use ForkBB\Models\Method;
-use ForkBB\Models\SmileyList\Model as SmileyList;
+use ForkBB\Models\SmileyList\SmileyList;
 use InvalidArgumentException;
 
 class Update extends Method

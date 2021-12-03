@@ -198,11 +198,6 @@ return [
         'BanList/load'     => \ForkBB\Models\BanList\Load::class,
         'BanList/update'   => \ForkBB\Models\BanList\Update::class,
 
-        'SmileyListModelLoad'   => \ForkBB\Models\SmileyList\Load::class,
-        'SmileyListModelUpdate' => \ForkBB\Models\SmileyList\Update::class,
-        'SmileyListModelInsert' => \ForkBB\Models\SmileyList\Insert::class,
-        'SmileyListModelDelete' => \ForkBB\Models\SmileyList\Delete::class,
-
         'BBCodeListModel'     => [
             'class' => \ForkBB\Models\BBCodeList\BBCodeList::class,
             'file'  => 'defaultBBCode.php',
@@ -273,6 +268,11 @@ return [
         'Search/index'         => \ForkBB\Models\Search\Index::class,
         'Search/prepare'       => \ForkBB\Models\Search\Prepare::class,
         'Search/truncateIndex' => \ForkBB\Models\Search\TruncateIndex::class,
+
+        'SmileyList/delete' => \ForkBB\Models\SmileyList\Delete::class,
+        'SmileyList/insert' => \ForkBB\Models\SmileyList\Insert::class,
+        'SmileyList/load'   => \ForkBB\Models\SmileyList\Load::class,
+        'SmileyList/update' => \ForkBB\Models\SmileyList\Update::class,
 
         'UserManagerNormUsername' => \ForkBB\Models\User\NormUsername::class,
     ],
@@ -351,7 +351,7 @@ return [
 
         'AdminListModel' => \ForkBB\Models\AdminList\AdminList::class,
 
-        'SmileyListModel'     => \ForkBB\Models\SmileyList\Model::class,
+        'SmileyListModel'     => \ForkBB\Models\SmileyList\SmileyList::class,
 
         'DBMapModel'          => \ForkBB\Models\DBMap\DBMap::class,
 

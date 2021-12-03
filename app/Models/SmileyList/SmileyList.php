@@ -10,16 +10,22 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\SmileyList;
 
-use ForkBB\Models\Model as ParentModel;
+use ForkBB\Models\Model;
 use RuntimeException;
 
-class Model extends ParentModel
+class SmileyList extends Model
 {
+    /**
+     * Ключ модели для контейнера
+     * @var string
+     */
+    protected $cKey = 'SmileyList';
+
     /**
      * Загружает список смайлов из кеша/БД
      * Создает кеш
      */
-    public function init(): Model
+    public function init(): SmileyList
     {
         $list = $this->c->Cache->get('smilies');
 
@@ -39,7 +45,7 @@ class Model extends ParentModel
     /**
      * Сбрасывает кеш смайлов
      */
-    public function reset(): Model
+    public function reset(): SmileyList
     {
         if (true !== $this->c->Cache->delete('smilies')) {
             throw new RuntimeException('Unable to remove key from cache - smilies');
