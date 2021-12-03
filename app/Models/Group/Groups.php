@@ -75,7 +75,7 @@ class Groups extends Manager
      */
     public function update(Group $group): Group
     {
-        return $this->Save->update($group);
+        return $this->save->update($group);
     }
 
     /**
@@ -83,7 +83,7 @@ class Groups extends Manager
      */
     public function insert(Group $group): int
     {
-        $id = $this->Save->insert($group);
+        $id = $this->save->insert($group);
         $this->set($id, $group);
 
         return $id;
