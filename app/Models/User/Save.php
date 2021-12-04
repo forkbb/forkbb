@@ -38,7 +38,7 @@ class Save extends Action
         ) {
             $fileds = $this->c->dbMap->online;
             $table  = 'online';
-            $where  = 'user_id=1 AND ident=?s';
+            $where  = 'user_id=0 AND ident=?s';
         } else {
             $fileds = $this->c->dbMap->users;
             $table  = 'users';
