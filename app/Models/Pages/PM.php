@@ -12,7 +12,6 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
 use ForkBB\Models\PM\Cnst;
-use function \ForkBB\__;
 
 class PM extends Page
 {
@@ -29,7 +28,7 @@ class PM extends Page
             if ('' === \trim($second, '1234567890')) {
                 $second = (int) $second;
 
-                if ($second < 2) { // ???? вынести все в роутер?
+                if ($second < 1) { // ???? вынести все в роутер?
                     return $this->c->Message->message('Bad request');
                 }
             } elseif (
