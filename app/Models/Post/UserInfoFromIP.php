@@ -34,7 +34,7 @@ class UserInfoFromIP extends Action
         $ids    = [];
 
         while ($row = $stmt->fetch()) {
-            if (1 === $row['poster_id']) {
+            if ($row['poster_id'] < 1) {
                 $result[] = $row['poster'];
             } elseif (empty($ids[$row['poster_id']])) {
                 $result[]               = $row['poster_id'];

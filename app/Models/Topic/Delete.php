@@ -130,13 +130,13 @@ class Delete extends Action
                 ':users' => $uidsToGuest,
             ];
             $query = 'UPDATE ::topics
-                SET poster_id=1
+                SET poster_id=0
                 WHERE poster_id IN (?ai:users)';
 
             $this->c->DB->exec($query, $vars);
 
             $query = 'UPDATE ::topics
-                SET last_poster_id=1
+                SET last_poster_id=0
                 WHERE last_poster_id IN (?ai:users)';
 
             $this->c->DB->exec($query, $vars);

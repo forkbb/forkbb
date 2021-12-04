@@ -64,21 +64,15 @@ class PPost extends DataModel
 
     protected function getuser(): User
     {
-        $user = $this->c->users->load($this->poster_id);
-
         if (
-            ! $user instanceof User
-            && 1 !== $this->poster_id // ???? может сменить id гостя?
+            $this->poster_id < 1
+            || ! ($user = $this->c->users->load($this->poster_id)) instanceof User
         ) {
-            $user = $this->c->users->load(1);
+            $user = $this->c->users->guest(['username' => $this->poster]);
         }
 
         if (! $user instanceof User) {
             throw new RuntimeException("No user data in ppost number {$this->id}");
-        } elseif ($user->isGuest) {
-            $user = clone $user;
-
-            $user->__username = $this->poster;
         }
 
         return $user;

@@ -223,9 +223,9 @@ return [
         'Forums/save'           => \ForkBB\Models\Forum\Save::class,
         'Forums/updateUsername' => \ForkBB\Models\Forum\UpdateUsername::class,
 
-        'Group/delete' => \ForkBB\Models\Group\Delete::class,
-        'Group/perm'   => \ForkBB\Models\Group\Perm::class,
-        'Group/save'   => \ForkBB\Models\Group\Save::class,
+        'Groups/delete' => \ForkBB\Models\Group\Delete::class,
+        'Groups/perm'   => \ForkBB\Models\Group\Perm::class,
+        'Groups/save'   => \ForkBB\Models\Group\Save::class,
 
         'Online/info'           => \ForkBB\Models\Online\Info::class,
         'Online/updateUsername' => \ForkBB\Models\Online\UpdateUsername::class,

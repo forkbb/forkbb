@@ -100,13 +100,13 @@ class Delete extends Action
                 ':users' => $uidsToGuest,
             ];
             $query = 'UPDATE ::posts
-                SET poster_id=1
+                SET poster_id=0
                 WHERE poster_id IN (?ai:users)';
 
             $this->c->DB->exec($query, $vars);
 
             $query = 'UPDATE ::posts
-                SET editor_id=1
+                SET editor_id=0
                 WHERE editor_id IN (?ai:users)';
 
             $this->c->DB->exec($query, $vars);
@@ -134,7 +134,7 @@ class Delete extends Action
             $parents = $this->c->topics->loadByIds($tids, false);
 
             $query = 'UPDATE ::posts
-                SET editor_id=1
+                SET editor_id=0
                 WHERE editor_id IN (?ai:users)';
 
             $this->c->DB->exec($query, $vars);

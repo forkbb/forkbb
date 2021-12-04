@@ -83,7 +83,7 @@ abstract class Users extends Admin
             return (int) $value;
         }, $selected);
         $bad = \array_filter($selected, function ($value) {
-            return $value < 2;
+            return $value < 1;
         });
 
         if (! empty($bad)) {

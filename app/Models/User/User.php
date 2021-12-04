@@ -47,7 +47,7 @@ class User extends DataModel
      */
     protected function getisUnverified(): bool
     {
-        return $this->group_id === FORK_GROUP_UNVERIFIED;
+        return FORK_GROUP_UNVERIFIED === $this->group_id;
     }
 
     /**
@@ -55,9 +55,9 @@ class User extends DataModel
      */
     protected function getisGuest(): bool
     {
-        return $this->group_id === FORK_GROUP_GUEST
-            || $this->id < 2
-            || null === $this->group_id;
+        return FORK_GROUP_GUEST === $this->group_id
+            || null === $this->group_id
+            || $this->id < 1;
     }
 
     /**
@@ -65,7 +65,7 @@ class User extends DataModel
      */
     protected function getisAdmin(): bool
     {
-        return $this->group_id === FORK_GROUP_ADMIN;
+        return FORK_GROUP_ADMIN === $this->group_id;
     }
 
     /**
@@ -73,8 +73,7 @@ class User extends DataModel
      */
     protected function getisAdmMod(): bool
     {
-        return $this->group_id === FORK_GROUP_ADMIN
-            || 1 == $this->g_moderator;
+        return $this->isAdmin || 1 == $this->g_moderator;
     }
 
     /**
@@ -91,7 +90,7 @@ class User extends DataModel
      */
     public function isModerator(Model $model): bool
     {
-        if (1 != $this->g_moderator) {
+        if (1 !== $this->g_moderator) {
             return false;
         }
 

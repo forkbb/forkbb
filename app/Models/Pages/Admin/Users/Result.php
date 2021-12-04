@@ -61,7 +61,7 @@ class Result extends Users
             ])->addRules([
                 'token'          => 'token:AdminUsersResult',
                 'users'          => 'required|array',
-                'users.*'        => 'required|integer|min:2|max:9999999999',
+                'users.*'        => 'required|integer|min:1|max:9999999999',
                 'ban'            => $this->c->userRules->banUsers ? 'checkbox' : 'absent',
                 'delete'         => $this->c->userRules->deleteUsers ? 'checkbox' : 'absent',
                 'change_group'   => $this->c->userRules->changeGroup ? 'checkbox' : 'absent',

@@ -95,7 +95,7 @@ class Online extends Model
                 if ($cur['logged'] < $tVisit) {
                     $needClean = true;
 
-                    if ($cur['user_id'] > 1) {
+                    if ($cur['user_id'] > 0) {
                         $vars = [
                             ':last' => $cur['logged'],
                             ':id' => $cur['user_id'],
@@ -124,7 +124,7 @@ class Online extends Model
             }
 
             // пользователь
-            if ($cur['user_id'] > 1) {
+            if ($cur['user_id'] > 0) {
                 $users[$cur['user_id']] = $cur['ident'];
             // гость
             } elseif ('' == $cur['o_name']) {
@@ -158,7 +158,7 @@ class Online extends Model
         $this->all    = $all;
         $this->detail = $detail;
 
-        unset($this->online[1]);
+        unset($this->online[0]);
 
         if ($detail) {
             $this->users  = $users;
@@ -186,15 +186,15 @@ class Online extends Model
             if ($this->c->user->logged > 0) {
                 $query = 'UPDATE ::online
                     SET logged=?i:logged, o_position=?s:pos, o_name=?s:name
-                    WHERE user_id=1 AND ident=?s:ip';
+                    WHERE user_id=0 AND ident=?s:ip';
             } else {
                 $query = 'INSERT INTO ::online (user_id, ident, logged, o_position, o_name)
-                    SELECT 1, ?s:ip, ?i:logged, ?s:pos, ?s:name
+                    SELECT 0, ?s:ip, ?i:logged, ?s:pos, ?s:name
                     FROM ::groups
                     WHERE NOT EXISTS (
                         SELECT 1
                         FROM ::online
-                        WHERE user_id=1 AND ident=?s:ip
+                        WHERE user_id=0 AND ident=?s:ip
                     )
                     LIMIT 1';
             }
@@ -240,7 +240,7 @@ class Online extends Model
             ];
             $query = 'DELETE
                 FROM ::online
-                WHERE user_id=1 AND ident=?s:ip';
+                WHERE user_id=0 AND ident=?s:ip';
         } else {
             $vars = [
                 ':id' => $user->id,

@@ -28,12 +28,12 @@ class Current extends Action
 
         if (! $user->isGuest) {
             if (! $cookie->verifyUser($user)) {
-                $user = $this->load(1, $ip);
+                $user = $this->load(0, $ip);
             } elseif ($user->ip_check_type > 0) {
                 $hexIp = \bin2hex(\inet_pton($ip));
 
                 if (false === \strpos("|{$user->login_ip_cache}|", "|{$hexIp}|")) {
-                    $user = $this->load(1, $ip);
+                    $user = $this->load(0, $ip);
                 }
             }
         }
@@ -71,7 +71,7 @@ class Current extends Action
     {
         $data = null;
 
-        if ($id > 1) {
+        if ($id > 0) {
             $vars = [
                 ':id' => $id,
             ];
@@ -88,20 +88,16 @@ class Current extends Action
             $vars = [
                 ':ip' => $ip,
             ];
-            $query = 'SELECT u.*, g.*, o.logged, o.last_post, o.last_search
-                FROM ::users AS u
-                INNER JOIN ::groups AS g ON u.group_id=g.g_id
-                LEFT JOIN ::online AS o ON (o.user_id=1 AND o.ident=?s:ip)
-                WHERE u.id=1';
+            $query = 'SELECT o.logged, o.last_post, o.last_search
+                FROM ::online AS o
+                WHERE o.user_id=0 AND o.ident=?s:ip';
 
             $data = $this->c->DB->query($query, $vars)->fetch();
 
-            if (empty($data['id'])) {
-                throw new RuntimeException('Unable to fetch guest information. Your database must contain both a guest user and a guest user group');
-            }
+            return $this->manager->guest($data ?: []);
+        } else {
+            return $this->manager->create($data);
         }
-
-        return $this->manager->create($data);
     }
 
     /**

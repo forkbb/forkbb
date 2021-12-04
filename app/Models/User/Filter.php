@@ -23,7 +23,7 @@ class Filter extends Action
     {
         $fields  = $this->c->dbMap->users;
         $orderBy = [];
-        $where   = ['u.id>1'];
+        $where   = [];
 
         foreach ($order as $field => $dir) {
             if (! isset($fields[$field])) {
@@ -98,11 +98,17 @@ class Filter extends Action
             }
         }
 
-        $where = \implode(' AND ', $where);
-        $query = "SELECT u.id
-            FROM ::users AS u
-            WHERE {$where}
-            ORDER BY {$orderBy}";
+        if (empty($where)) {
+            $query = "SELECT u.id
+                FROM ::users AS u
+                ORDER BY {$orderBy}";
+        } else {
+            $where = \implode(' AND ', $where);
+            $query = "SELECT u.id
+                FROM ::users AS u
+                WHERE {$where}
+                ORDER BY {$orderBy}";
+        }
 
         return $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
     }

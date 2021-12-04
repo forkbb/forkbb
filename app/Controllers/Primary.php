@@ -42,7 +42,7 @@ class Primary
                 || ! isset($this->c->admins->list[$this->c->user->id])
             ) {
                 if (! $this->c->isInit('user')) {
-                    $this->c->user = $this->c->users->create(['id' => 1, 'group_id' => FORK_GROUP_GUEST]);
+                    $this->c->user = $this->c->users->create(['id' => 0, 'group_id' => FORK_GROUP_GUEST]);
                 }
 
                 return $this->c->Maintenance;

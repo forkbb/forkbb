@@ -40,20 +40,17 @@ class Report extends DataModel
      */
     protected function getauthor(): User
     {
-        if ($this->reported_by < 1) {
-            throw new RuntimeException('No author data');
+        if (
+            $this->reported_by < 1
+            || ! ($user = $this->c->users->load($this->reported_by)) instanceof User
+        ) {
+            $user = $this->c->users->guest([
+                'username' => '{User #' . $this->reported_by .'}',
+            ]);
         }
 
-        $user = $this->c->users->load($this->reported_by);
-
-        if (
-            ! $user instanceof User
-            || $user->isGuest
-        ) {
-            $user = $this->c->users->create();
-
-            $user->__id       = $this->reported_by;
-            $user->__username = '{User #' . $this->reported_by .'}';
+        if (! $user instanceof User) {
+            throw new RuntimeException('No author data');
         }
 
         return $user;
@@ -79,20 +76,17 @@ class Report extends DataModel
      */
     protected function getmarker(): User
     {
-        if ($this->zapped_by < 1) {
-            throw new RuntimeException('No marker data');
+        if (
+            $this->zapped_by < 1
+            || ! ($user = $this->c->users->load($this->zapped_by)) instanceof User
+        ) {
+            $user = $this->c->users->guest([
+                'username' => '{User #' . $this->zapped_by .'}',
+            ]);
         }
 
-        $user = $this->c->users->load($this->zapped_by);
-
-        if (
-            ! $user instanceof User
-            || $user->isGuest
-        ) {
-            $user = $this->c->users->create();
-
-            $user->__id       = $this->zapped_by;
-            $user->__username = '{User #' . $this->zapped_by .'}';
+        if (! $user instanceof User) {
+            throw new RuntimeException('No marker data');
         }
 
         return $user;
