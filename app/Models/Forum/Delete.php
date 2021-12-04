@@ -80,7 +80,7 @@ class Delete extends Action
             $this->c->DB->exec($query, $vars);
 
             $query = 'UPDATE ::forums
-                SET last_poster_id=1
+                SET last_poster_id=0
                 WHERE last_poster_id IN (?ai:users)';
 
             $this->c->DB->exec($query, $vars);
