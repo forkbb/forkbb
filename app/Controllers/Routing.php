@@ -54,7 +54,7 @@ class Routing
             // смена кодовой фразы
             $r->add(
                 $r::DUO,
-                '/login/{id|i:[2-9]|[1-9]\d+}/{key}/{hash}',
+                '/login/{id|i:[1-9]\d*}/{key}/{hash}',
                 'Auth:changePass',
                 'ChangePassword'
             );
@@ -75,7 +75,7 @@ class Routing
                 );
                 $r->add(
                     $r::GET,
-                    '/registration/activate/{id|i:[2-9]|[1-9]\d+}/{key}/{hash}',
+                    '/registration/activate/{id|i:[1-9]\d*}/{key}/{hash}',
                     'Register:activate',
                     'RegActivate'
                 );
@@ -163,7 +163,7 @@ class Routing
 
                 $r->add(
                     $r::GET,
-                    '/search[/user/{uid|i:[2-9]|[1-9]\d+}]/{action:(?!search)[a-z_]+}[/in_forum/{forum|i:[1-9]\d*}][/{page|i:[1-9]\d*}]',
+                    '/search[/user/{uid|i:[1-9]\d*}]/{action:(?!search)[a-z_]+}[/in_forum/{forum|i:[1-9]\d*}][/{page|i:[1-9]\d*}]',
                     'Search:action',
                     'SearchAction'
                 );
@@ -185,37 +185,37 @@ class Routing
                 // юзеры
                 $r->add(
                     $r::GET,
-                    '/user/{id|i:[2-9]|[1-9]\d+}/{name}',
+                    '/user/{id|i:[1-9]\d*}/{name}',
                     'ProfileView:view',
                     'User'
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id|i:[2-9]|[1-9]\d+}/edit/profile',
+                    '/user/{id|i:[1-9]\d*}/edit/profile',
                     'ProfileEdit:edit',
                     'EditUserProfile'
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id|i:[2-9]|[1-9]\d+}/edit/config',
+                    '/user/{id|i:[1-9]\d*}/edit/config',
                     'ProfileConfig:config',
                     'EditUserBoardConfig'
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id|i:[2-9]|[1-9]\d+}/edit/email',
+                    '/user/{id|i:[1-9]\d*}/edit/email',
                     'ProfileEmail:email',
                     'EditUserEmail'
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id|i:[2-9]|[1-9]\d+}/edit/passphrase',
+                    '/user/{id|i:[1-9]\d*}/edit/passphrase',
                     'ProfilePass:pass',
                     'EditUserPass'
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id|i:[2-9]|[1-9]\d+}/edit/moderation',
+                    '/user/{id|i:[1-9]\d*}/edit/moderation',
                     'ProfileMod:moderation',
                     'EditUserModeration'
                 );
@@ -358,7 +358,7 @@ class Routing
             ) {
                 $r->add(
                     $r::DUO,
-                    '/send_email/{id|i:[2-9]|[1-9]\d+}/{hash}',
+                    '/send_email/{id|i:[1-9]\d*}/{hash}',
                     'Email:email',
                     'SendEmail'
                 );
@@ -437,7 +437,7 @@ class Routing
                 );
                 $r->add(
                     $r::GET,
-                    '/admin/users/user/{id|i:[2-9]|[1-9]\d+}[/{page|i:[1-9]\d*}]',
+                    '/admin/users/user/{id|i:[1-9]\d*}[/{page|i:[1-9]\d*}]',
                     'AdminUsersStat:view',
                     'AdminUserStat'
                 );
@@ -464,7 +464,7 @@ class Routing
 
             $r->add(
                 $r::GET,
-                '/admin/users/promote/{uid|i:[2-9]|[1-9]\d+}/{pid|i:[1-9]\d*}/{token}',
+                '/admin/users/promote/{uid|i:[1-9]\d*}/{pid|i:[1-9]\d*}/{token}',
                 'AdminUsersPromote:promote',
                 'AdminUserPromote'
             );
@@ -493,7 +493,7 @@ class Routing
                 );
                 $r->add(
                     $r::DUO,
-                    '/admin/bans/new[/{ids:\d+(?:-\d+)*}[/{uid|i:[2-9]|[1-9]\d+}]]',
+                    '/admin/bans/new[/{ids:\d+(?:-\d+)*}[/{uid|i:[1-9]\d*}]]',
                     'AdminBans:add',
                     'AdminBansNew'
                 );
@@ -511,7 +511,7 @@ class Routing
                 );
                 $r->add(
                     $r::GET,
-                    '/admin/bans/delete/{id|i:[1-9]\d*}/{token}[/{uid|i:[2-9]|[1-9]\d+}]',
+                    '/admin/bans/delete/{id|i:[1-9]\d*}/{token}[/{uid|i:[1-9]\d*}]',
                     'AdminBans:delete',
                     'AdminBansDelete'
                 );
