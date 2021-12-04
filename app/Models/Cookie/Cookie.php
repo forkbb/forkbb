@@ -117,14 +117,13 @@ class Cookie extends Model
 
         if (
             ! \is_string($ckUser)
-            || ! \preg_match('%^(\-)?(\d{1,10})_(\d{10})_([a-f\d]{32,128})_([a-f\d]{32,128})$%Di', $ckUser, $ms)
+            || ! \preg_match('%^(\-)?([1-9]\d{0,9})_(\d{10})_([a-f\d]{32,128})_([a-f\d]{32,128})$%Di', $ckUser, $ms)
         ) {
             return;
         }
 
         if (
-            2 > $ms[2]
-            || \time() > $ms[3]
+            \time() > $ms[3]
             || ! \hash_equals(
                     $this->c->Secury->hmac($ms[1] . $ms[2] . $ms[3] . $ms[4], $this->key1),
                     $ms[5]
