@@ -51,6 +51,11 @@ class Save extends Action
         $this->c->DB->exec($query, $vars);
         $group->resModified();
 
+        // сбросить кеш для гостя
+        if ($group->groupGuest) {
+            $this->c->users->resetGuest();
+        }
+
         return $group;
     }
 
