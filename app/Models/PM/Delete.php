@@ -146,19 +146,19 @@ class Delete extends Method
             $this->c->DB->exec($query, $vars);
 
             $query = 'UPDATE ::pm_topics
-                SET poster_id=1, poster_status=?i:status
+                SET poster_id=0, poster_status=?i:status
                 WHERE poster_id IN (?ai:ids)';
 
             $this->c->DB->exec($query, $vars);
 
             $query = 'UPDATE ::pm_topics
-                SET target_id=1, target_status=?i:status
+                SET target_id=0, target_status=?i:status
                 WHERE target_id IN (?ai:ids)';
 
             $this->c->DB->exec($query, $vars);
 
             $query = 'UPDATE ::pm_posts
-                SET poster_id=1
+                SET poster_id=0
                 WHERE poster_id IN (?ai:ids)';
 
             $this->c->DB->exec($query, $vars);
