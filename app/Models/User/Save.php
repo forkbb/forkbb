@@ -21,21 +21,22 @@ class Save extends Action
      */
     public function update(User $user): User
     {
-        if ($user->id < 1) {
-            throw new RuntimeException('The model does not have ID');
+        if (
+            (! $user->isGuest && $user->id < 1)
+            || ($user->isGuest && 0 !== $user->id)
+        ) {
+            throw new RuntimeException('Bad ID');
         }
 
         $modified = $user->getModified();
+
         if (empty($modified)) {
             return $user;
         }
 
         $values = $user->getAttrs();
 
-        if (
-            $user->isGuest
-            && ! $user->isUnverified
-        ) {
+        if ($user->isGuest) {
             $fileds = $this->c->dbMap->online;
             $table  = 'online';
             $where  = 'user_id=0 AND ident=?s';
@@ -113,6 +114,8 @@ class Save extends Action
     {
         if (null !== $user->id) {
             throw new RuntimeException('The model has ID');
+        } elseif ($user->isGuest) {
+            throw new RuntimeException('Unexpected guest');
         }
 
         // вычисление username_normal для нового пользователя
