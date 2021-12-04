@@ -1127,7 +1127,6 @@ class Install extends Admin
         $this->c->DB->exec('UPDATE ::groups SET g_pm=0, g_sig_length=0, g_sig_lines=0 WHERE g_id=?i', [FORK_GROUP_GUEST]);
 
         $ip = \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: '0.0.0.0';
-        $this->c->DB->exec('INSERT INTO ::users (group_id, username, username_normal, password, signature, u_pm) VALUES (?i, ?s, ?s, ?s, \'\', ?i)', [FORK_GROUP_GUEST, __('Guest '), $this->c->users->normUsername(__('Guest ')), __('Guest '), 0]);
         $this->c->DB->exec('INSERT INTO ::users (group_id, username, username_normal, password, email, email_normal, language, style, num_posts, last_post, registered, registration_ip, last_visit, signature, num_topics) VALUES (?i, ?s, ?s, ?s, ?s, ?s, ?s, ?s, 1, ?i, ?i, ?s, ?i, \'\', 1)', [FORK_GROUP_ADMIN, $v->username, $this->c->users->normUsername($v->username), password_hash($v->password, \PASSWORD_DEFAULT), $v->email, $this->c->NormEmail->normalize($v->email), $v->defaultlang, $v->defaultstyle, $now, $now, $ip, $now]);
 
         $pun_config = [
