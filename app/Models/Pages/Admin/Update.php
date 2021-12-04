@@ -24,7 +24,8 @@ use function \ForkBB\__;
 class Update extends Admin
 {
     const PHP_MIN                    = '7.3.0';
-    const LATEST_REV_WITH_DB_CHANGES = 37;
+    const REV_MIN_FOR_UPDATE         = 42;
+    const LATEST_REV_WITH_DB_CHANGES = 43;
     const LOCK_NAME                  = 'lock_update';
     const LOCk_TTL                   = 1800;
     const JSON_OPTIONS               = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
@@ -160,7 +161,7 @@ class Update extends Admin
                     // база не от ForkBB или старая ревизия
                     if (
                         null === $e
-                        && $this->c->config->i_fork_revision < 41
+                        && $this->c->config->i_fork_revision < self::REV_MIN_FOR_UPDATE
                     ) {
                         $e = 'Version mismatch error';
                     }
@@ -1667,6 +1668,66 @@ class Update extends Admin
 
             $this->c->DB->exec($query, $vars);
         }
+
+        return null;
+    }
+
+    /**
+     * rev.42 to rev.43
+     */
+    protected function stageNumber42(array $args): ?int
+    {
+        $query = 'DELETE FROM ::users WHERE id=1';
+
+        $this->c->DB->exec($query);
+
+        $query = 'UPDATE ::forums SET last_poster_id=0 WHERE last_poster_id=1';
+
+        $this->c->DB->exec($query);
+
+        $query = 'UPDATE ::online SET user_id=0 WHERE user_id=1';
+
+        $this->c->DB->exec($query);
+
+        $query = 'UPDATE ::pm_posts SET poster_id=0 WHERE poster_id=1';
+
+        $this->c->DB->exec($query);
+
+        $query = 'UPDATE ::pm_topics SET poster_id=0 WHERE poster_id=1';
+
+        $this->c->DB->exec($query);
+
+        $query = 'UPDATE ::pm_topics SET target_id=0 WHERE target_id=1';
+
+        $this->c->DB->exec($query);
+
+        $query = 'UPDATE ::posts SET poster_id=0 WHERE poster_id=1';
+
+        $this->c->DB->exec($query);
+
+        $query = 'UPDATE ::posts SET editor_id=0 WHERE editor_id=1';
+
+        $this->c->DB->exec($query);
+
+        $query = 'UPDATE ::reports SET reported_by=0 WHERE reported_by=1';
+
+        $this->c->DB->exec($query);
+
+        $query = 'UPDATE ::reports SET zapped_by=0 WHERE zapped_by=1';
+
+        $this->c->DB->exec($query);
+
+        $query = 'UPDATE ::topics SET poster_id=0 WHERE poster_id=1';
+
+        $this->c->DB->exec($query);
+
+        $query = 'UPDATE ::topics SET last_poster_id=0 WHERE last_poster_id=1';
+
+        $this->c->DB->exec($query);
+
+        $query = 'UPDATE ::warnings SET poster_id=0 WHERE poster_id=1';
+
+        $this->c->DB->exec($query);
 
         return null;
     }
