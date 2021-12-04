@@ -56,8 +56,8 @@ class User extends DataModel
     protected function getisGuest(): bool
     {
         return FORK_GROUP_GUEST === $this->group_id
-            || null === $this->group_id;
-            || $this->id < 1
+            || null === $this->group_id
+            || $this->id < 1;
     }
 
     /**
