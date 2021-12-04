@@ -35,10 +35,10 @@ class UpdateCountTopics extends Action
             }
         }
         // темы гостя не считаем
-        unset($ids[1]);
+        unset($ids[0]); // ????
 
         if (empty($ids)) {
-            $where = 'u.id != 1';
+            $where = 'u.id > 0';
             $vars  = [];
         } else {
             $where = 'u.id IN (?ai:ids)';
