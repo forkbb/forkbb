@@ -454,6 +454,32 @@ class Update extends Admin
 
         $this->c->DB->exec($query);
 
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>Groups/save',
+            '\\ForkBB\\Models\\Group\\Save::class',
+            'Group/save'
+        );
+
+        $coreConfig->add(
+            'shared=>Groups/perm',
+            '\\ForkBB\\Models\\Group\\Perm::class',
+            'Group/save'
+        );
+
+        $coreConfig->add(
+            'shared=>Groups/delete',
+            '\\ForkBB\\Models\\Group\\Delete::class',
+            'Group/save'
+        );
+
+        $result = $coreConfig->delete('shared=>Group/delete');
+        $result = $coreConfig->delete('shared=>Group/perm');
+        $result = $coreConfig->delete('shared=>Group/save');
+
+        $coreConfig->save();
+
         return null;
     }
 }
