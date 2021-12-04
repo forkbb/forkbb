@@ -12,9 +12,12 @@ namespace ForkBB\Models\User;
 
 use ForkBB\Models\Manager;
 use ForkBB\Models\User\User;
+use RuntimeException;
 
 class Users extends Manager
 {
+    const CACHE_NAME = 'guest';
+
     /**
      * Ключ модели для контейнера
      * @var string
@@ -128,5 +131,42 @@ class Users extends Manager
         $this->set($id, $user);
 
         return $id;
+    }
+
+    /**
+     * Создает гостя
+     */
+    public function guest(array $attrs = []): User
+    {
+        $cache = $this->c->Cache->get(CACHE_NAME);
+
+        if (! \is_array($cache)) {
+            $cache = $this->c->groups->get(FORK_GROUP_GUEST)->getAttrs();
+
+            if (true !== $this->c->Cache->set(CACHE_NAME, $cache)) {
+                throw new RuntimeException('Unable to write value to cache - ' . CACHE_NAME);
+            }
+        }
+
+        return $this->create(
+            [
+                'id'       => 0,
+                'group_id' => FORK_GROUP_GUEST,
+            ]
+            + $attrs
+            + $cache
+        );
+    }
+
+    /**
+     * Сбрасывает кеш гостя
+     */
+    public function resetGuest(): Users
+    {
+        if (true !== $this->c->Cache->delete(CACHE_NAME)) {
+            throw new RuntimeException('Unable to remove key from cache - ' . CACHE_NAME);
+        }
+
+        return $this;
     }
 }
