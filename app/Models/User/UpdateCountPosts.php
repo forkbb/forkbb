@@ -35,7 +35,7 @@ class UpdateCountPosts extends Action
             }
         }
         // сообщения гостя не считаем
-        unset($ids[0]);
+        unset($ids[0]); // ????
 
         if (empty($ids)) {
             $where = 'u.id > 0';
