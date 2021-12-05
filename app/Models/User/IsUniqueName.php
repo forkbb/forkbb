@@ -23,7 +23,7 @@ class IsUniqueName extends Action
         $vars = [
             ':id'    => (int) $user->id,
             ':name'  => $user->username,
-            ':norm'  => $this->manager->normUsername($user->username),
+            ':norm'  => $user->username_normal,
             ':normL' => $this->manager->normUsername(\mb_strtolower($user->username, 'UTF-8')), // ????
             ':normU' => $this->manager->normUsername(\mb_strtoupper($user->username, 'UTF-8')), // ????
         ];

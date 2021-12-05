@@ -60,15 +60,6 @@ class Save extends Action
 
             if ('username' === $name) {
                 $nameChange = true;
-
-                // пересчет username_normal при изменении username
-                $name = 'username_normal';
-
-                if (isset($fileds[$name])) {
-                    $vars[] = $this->manager->normUsername($user->username);
-                    $set[]  = $name . '=?' . $fileds[$name];
-                }
-                // пересчет username_normal при изменении username
             } elseif ('group_id' === $name) {
                 $grChange = true;
             }
@@ -114,7 +105,10 @@ class Save extends Action
     {
         if (null !== $user->id) {
             throw new RuntimeException('The model has ID');
-        } elseif ($user->isGuest) {
+        } elseif (
+            null === $user->group_id
+            || FORK_GROUP_GUEST === $user->group_id
+        ) {
             throw new RuntimeException('Unexpected guest');
         }
 

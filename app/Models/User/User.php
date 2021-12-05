@@ -38,6 +38,7 @@ class User extends DataModel
             'show_avatars' => ['showAvatar'],
             'signature'    => ['isSignature'],
             'email'        => ['email_normal'],
+            'username'     => ['username_normal'],
             'g_pm'         => ['usePM'],
         ];
     }
@@ -366,7 +367,7 @@ class User extends DataModel
     }
 
     /**
-     * Вычисление нормализованного email
+     * Вычисляет нормализованный email
      */
     protected function getemail_normal(): string
     {
@@ -374,12 +375,22 @@ class User extends DataModel
     }
 
     /**
+     * Вычисляет нормализованный username
+     */
+    protected function getusername_normal(): string
+    {
+        return $this->c->users->normUsername($this->username);
+    }
+
+    /**
      * Возвращает значения свойств в массиве
      */
     public function getAttrs(): array
     {
-        if (isset($this->zModFlags['email_normal'])) {
-            $this->setAttr('email_normal', $this->email_normal);
+        foreach (['email_normal', 'username_normal'] as $key) {
+            if (isset($this->zModFlags[$key])) {
+                $this->setAttr($key, $this->$key);
+            }
         }
 
         return parent::getAttrs();
