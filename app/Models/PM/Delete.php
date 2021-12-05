@@ -186,8 +186,6 @@ class Delete extends Method
 
             $this->deletePTopics($ids);
 
-            unset($uids[1]);
-
             foreach ($this->c->users->loadByIds($uids) as $user) {
                 if ($user instanceof User) {
                     $calcUsers[$user->id] = $user;
