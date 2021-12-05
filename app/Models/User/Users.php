@@ -56,7 +56,9 @@ class Users extends Manager
         $data   = [];
 
         foreach ($ids as $id) {
-            if ($this->isset($id)) {
+            if (0 === $id) { // это гость, его грузим через guest()
+                continue;
+            } elseif ($this->isset($id)) {
                 $result[$id] = $this->get($id);
             } else {
                 $result[$id] = null;

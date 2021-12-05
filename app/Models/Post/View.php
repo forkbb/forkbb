@@ -62,7 +62,6 @@ class View extends Action
             }
         }
 
-        unset($userIds[0]); // гостя загружать не надо
         $this->c->users->loadByIds($userIds);
 
         $offset    = ($arg->page - 1) * $this->c->user->disp_posts;
