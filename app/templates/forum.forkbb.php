@@ -125,12 +125,13 @@
                   <small class="f-tnew"><a href="{{ $topic->linkNew }}" title="{{ __('New posts info') }}"><span class="f-newtxt">{!! __('New posts') !!}</span></a></small>
             @endif
                 </h3>
-                <p><!-- inline -->
+                <p class="f-finfo-p">
                   <span class="f-cmposter">{!! __(['by %s', $topic->poster]) !!}</span>
+                  <span class="f-cmposted">{{ dt($topic->posted) }}</span>
             @if ($p->searchMode)
                   <span class="f-cmforum"><a href="{{ $topic->parent->link }}">{{ $topic->parent->forum_name }}</a></span>
             @endif
-<!-- endinline --></p>
+                </p>
               </div>
             </div>
             <div class="f-cell f-cstats">

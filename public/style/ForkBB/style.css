@@ -1300,11 +1300,22 @@ body,
   position: relative;
 }
 
+#fork-forum .f-finfo-p {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#fork .f-cmposted {
+  font-size: 0.875rem;
+  opacity: 0.4;
+}
+
 #fork .f-cmposter,
 #fork .f-cmforum {
   font-size: 0.875rem;
 }
 
+#fork .f-cmposted::before,
 #fork .f-cmforum::before {
   content: ", ";
 }
