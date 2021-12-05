@@ -195,14 +195,15 @@ class PTopic extends DataModel
 
     protected function user(string $prx): User
     {
-        $user = $this->c->users->load($this->{"{$prx}_id"});
+        if (
+            $this->{"{$prx}_id"} < 1
+            || ! ($user = $this->c->users->load($this->{"{$prx}_id"})) instanceof User
+        ) {
+            $user = $this->c->users->guest(['username' => $this->{$prx}]);
+        }
 
         if (! $user instanceof User) {
             throw new RuntimeException('User model could not be loaded ');
-        } elseif ($user->isGuest) {
-            $user = clone $user;
-
-            $user->__username = $this->{$prx};
         }
 
         return $user;
