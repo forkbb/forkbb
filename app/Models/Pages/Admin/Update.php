@@ -480,6 +480,16 @@ class Update extends Admin
 
         $coreConfig->save();
 
+        $this->c->config->a_guest_set = [
+            'show_smilies' => 1,
+            'show_sig'     => 1,
+            'show_avatars' => 1,
+            'show_img'     => 1,
+            'show_img_sig' => 1,
+        ];
+
+        $this->c->config->save();
+
         return null;
     }
 }
