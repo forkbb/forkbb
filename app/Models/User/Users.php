@@ -150,16 +150,18 @@ class Users extends Manager
             }
         }
 
-        return $this->create(
-            [
-                'id'          => 0,
-                'group_id'    => FORK_GROUP_GUEST,
-                'time_format' => 0,
-                'date_format' => 0,
-            ]
-            + $attrs
-            + $cache
-        );
+        $set = [
+            'id'          => 0,
+            'group_id'    => FORK_GROUP_GUEST,
+            'time_format' => 0,
+            'date_format' => 0,
+        ] + $attrs;
+
+        if (isset($this->c->config->a_guest_set)) {
+            $set += $this->c->config->a_guest_set;
+        }
+
+        return $this->create($set + $cache);
     }
 
     /**

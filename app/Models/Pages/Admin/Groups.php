@@ -24,6 +24,7 @@ class Groups extends Admin
 
         $this->c->Lang->load('validator');
         $this->c->Lang->load('admin_groups');
+        $this->c->Lang->load('profile');
 
         $groupsList    = [];
         $groupsNew     = [];
@@ -271,7 +272,15 @@ class Groups extends Admin
                     ]);
                 }
 
-                if (! $group->groupGuest) {
+                if ($group->groupGuest) {
+                    $v->addRules([
+                        'a_guest_set.show_smilies' => 'required|integer|in:0,1',
+                        'a_guest_set.show_sig'     => 'required|integer|in:0,1',
+                        'a_guest_set.show_avatars' => 'required|integer|in:0,1',
+                        'a_guest_set.show_img'     => 'required|integer|in:0,1',
+                        'a_guest_set.show_img_sig' => 'required|integer|in:0,1',
+                    ]);
+                } else {
                     $v->addRules([
                         'g_promote_next_group'   => 'required|integer|min:0|not_in:' . $notNext,
                         'g_promote_min_posts'    => 'required|integer|min:0|max:9999999999',
@@ -330,7 +339,13 @@ class Groups extends Admin
         }
 
         foreach ($data as $attr => $value) {
-            $group->$attr = $value;
+            if ('a_guest_set' === $attr) {
+                $this->c->config->a_guest_set = $value;
+
+                $this->c->config->save();
+            } else {
+                $group->$attr = $value;
+            }
         }
 
         if (null === $group->g_id) {
@@ -577,7 +592,43 @@ class Groups extends Admin
             'help'    => 'User list search help',
         ];
 
-        if (! $group->groupGuest) {
+        if ($group->groupGuest) {
+            $fieldset['a_guest_set[show_smilies]'] = [
+                'type'    => 'radio',
+                'value'   => $this->c->config->a_guest_set['show_smilies'] ?? 0,
+                'values'  => $yn,
+                'caption' => 'Smilies label',
+                'help'    => 'Smilies info',
+            ];
+            $fieldset['a_guest_set[show_sig]'] = [
+                'type'    => 'radio',
+                'value'   => $this->c->config->a_guest_set['show_sig'] ?? 0,
+                'values'  => $yn,
+                'caption' => 'Sigs label',
+                'help'    => 'Sigs info',
+            ];
+            $fieldset['a_guest_set[show_avatars]'] = [
+                'type'    => 'radio',
+                'value'   => $this->c->config->a_guest_set['show_avatars'] ?? 0,
+                'values'  => $yn,
+                'caption' => 'Avatars label',
+                'help'    => 'Avatars info',
+            ];
+            $fieldset['a_guest_set[show_img]'] = [
+                'type'    => 'radio',
+                'value'   => $this->c->config->a_guest_set['show_img'] ?? 0,
+                'values'  => $yn,
+                'caption' => 'Images label',
+                'help'    => 'Images info',
+            ];
+            $fieldset['a_guest_set[show_img_sig]'] = [
+                'type'    => 'radio',
+                'value'   => $this->c->config->a_guest_set['show_img_sig'] ?? 0,
+                'values'  => $yn,
+                'caption' => 'Images sigs label',
+                'help'    => 'Images sigs info',
+            ];
+        } else {
             $fieldset['g_send_email'] = [
                 'type'    => 'radio',
                 'value'   => $group->g_send_email,

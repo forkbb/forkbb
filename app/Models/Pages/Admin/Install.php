@@ -1204,6 +1204,15 @@ class Install extends Admin
             'a_bb_white_sig'          => \json_encode(['b', 'i', 'u', 'color', 'colour', 'email', 'url'], self::JSON_OPTIONS),
             'a_bb_black_mes'          => \json_encode([], self::JSON_OPTIONS),
             'a_bb_black_sig'          => \json_encode([], self::JSON_OPTIONS),
+            'a_guest_set'             => \json_encode(
+                [
+                    'show_smilies' => 1,
+                    'show_sig'     => 1,
+                    'show_avatars' => 1,
+                    'show_img'     => 1,
+                    'show_img_sig' => 1,
+                ], self::JSON_OPTIONS
+            ),
         ];
 
         foreach ($pun_config as $conf_name => $conf_value) {
