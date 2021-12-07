@@ -22,7 +22,7 @@ class Stats extends Action
         $vars = [
             ':gid' => FORK_GROUP_UNVERIFIED,
         ];
-        $query = 'SELECT COUNT(u.id)-1
+        $query = 'SELECT COUNT(u.id)
             FROM ::users AS u
             WHERE u.group_id!=?i:gid';
 
