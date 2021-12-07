@@ -116,7 +116,7 @@ class Reports extends Manager
             FROM ::reports as r
             WHERE r.zapped!=0
             ORDER BY r.zapped DESC
-            LIMIT 10,1';
+            LIMIT 1 OFFSET 10';
 
         $time = (int) $this->c->DB->query($query)->fetchColumn();
 

@@ -374,7 +374,7 @@ class PTopic extends DataModel
             FROM ::pm_posts AS pp
             WHERE pp.topic_id=?i:tid
             ORDER BY pp.id
-            LIMIT ?i:offset, ?i:rows';
+            LIMIT ?i:rows OFFSET ?i:offset';
 
         $list  = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
         $posts = $this->c->pms->loadByIds(Cnst::PPOST, $list);
@@ -425,7 +425,7 @@ class PTopic extends DataModel
             FROM ::pm_posts AS pp
             WHERE pp.topic_id=?i:tid
             ORDER BY pp.id DESC
-            LIMIT 0, ?i:rows';
+            LIMIT ?i:rows';
 
         $list  = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
         $posts = $this->c->pms->loadByIds(Cnst::PPOST, $list);

@@ -349,7 +349,7 @@ class Topic extends DataModel
             FROM ::posts AS p
             WHERE p.topic_id=?i:tid
             ORDER BY p.id
-            LIMIT ?i:offset, ?i:rows';
+            LIMIT ?i:rows OFFSET ?i:offset';
 
         $list = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
@@ -391,7 +391,7 @@ class Topic extends DataModel
             FROM ::posts AS p
             WHERE p.topic_id=?i:tid
             ORDER BY p.id DESC
-            LIMIT 0, ?i:rows';
+            LIMIT ?i:rows';
 
         $this->idsList = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
 

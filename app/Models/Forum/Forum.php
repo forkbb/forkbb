@@ -434,7 +434,7 @@ class Forum extends DataModel
             FROM ::topics AS t
             WHERE t.forum_id=?i:fid
             ORDER BY t.sticky DESC, {$sortBy}, t.id DESC
-            LIMIT ?i:offset, ?i:rows";
+            LIMIT ?i:rows OFFSET ?i:offset";
 
         $this->idsList = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
