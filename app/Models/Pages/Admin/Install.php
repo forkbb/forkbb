@@ -1126,9 +1126,6 @@ class Install extends Admin
         $this->c->DB->exec('UPDATE ::groups SET g_pm_limit=0 WHERE g_id=?i', [FORK_GROUP_ADMIN]);
         $this->c->DB->exec('UPDATE ::groups SET g_pm=0, g_sig_length=0, g_sig_lines=0 WHERE g_id=?i', [FORK_GROUP_GUEST]);
 
-        $ip = \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: '0.0.0.0';
-        $this->c->DB->exec('INSERT INTO ::users (group_id, username, username_normal, password, email, email_normal, language, style, num_posts, last_post, registered, registration_ip, last_visit, signature, num_topics) VALUES (?i, ?s, ?s, ?s, ?s, ?s, ?s, ?s, 1, ?i, ?i, ?s, ?i, \'\', 1)', [FORK_GROUP_ADMIN, $v->username, $this->c->users->normUsername($v->username), password_hash($v->password, \PASSWORD_DEFAULT), $v->email, $this->c->NormEmail->normalize($v->email), $v->defaultlang, $v->defaultstyle, $now, $now, $ip, $now]);
-
         $pun_config = [
             'i_fork_revision'         => $this->c->FORK_REVISION,
             'o_board_title'           => $v->title,
@@ -1219,10 +1216,19 @@ class Install extends Admin
             $this->c->DB->exec('INSERT INTO ::config (conf_name, conf_value) VALUES (?s, ?s)', [$conf_name, $conf_value]);
         }
 
-        $this->c->DB->exec('INSERT INTO ::categories (cat_name, disp_position) VALUES (?s, ?i)', [__('Test category'), 1]);
-        $this->c->DB->exec('INSERT INTO ::forums (forum_name, forum_desc, num_topics, num_posts, last_post, last_post_id, last_poster, last_poster_id, last_topic, disp_position, cat_id, moderators) VALUES (?s, ?s, ?i, ?i, ?i, ?i, ?s, ?i, ?s, ?i, ?i, \'\')', [__('Test forum'), __('This is just a test forum'), 1, 1, $now, 1, $v->username, 1, __('Test post'), 1, 1]);
-        $this->c->DB->exec('INSERT INTO ::topics (poster, poster_id, subject, posted, first_post_id, last_post, last_post_id, last_poster, last_poster_id, forum_id) VALUES(?s, ?i, ?s, ?i, ?i, ?i, ?i, ?s, ?i, ?i)', [$v->username, 1, __('Test post'), $now, 1, $now, 1, $v->username, 1, 1]);
-        $this->c->DB->exec('INSERT INTO ::posts (poster, poster_id, poster_ip, message, posted, topic_id) VALUES(?s, ?i, ?s, ?s, ?i, ?i)', [$v->username, 1, $ip, __('Test message'), $now, 1]);
+
+        $ip = \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: '0.0.0.0';
+        $adminId = 1;
+        $catId = 1;
+        $forumId = 1;
+        $topicId = 1;
+        $postId = 1;
+
+        $this->c->DB->exec('INSERT INTO ::users (id, group_id, username, username_normal, password, email, email_normal, language, style, num_posts, last_post, registered, registration_ip, last_visit, signature, num_topics) VALUES (?i, ?i, ?s, ?s, ?s, ?s, ?s, ?s, ?s, 1, ?i, ?i, ?s, ?i, \'\', 1)', [$adminId, FORK_GROUP_ADMIN, $v->username, $this->c->users->normUsername($v->username), password_hash($v->password, \PASSWORD_DEFAULT), $v->email, $this->c->NormEmail->normalize($v->email), $v->defaultlang, $v->defaultstyle, $now, $now, $ip, $now]);
+        $this->c->DB->exec('INSERT INTO ::categories (id, cat_name, disp_position) VALUES (?i, ?s, ?i)', [$catId, __('Test category'), 1]);
+        $this->c->DB->exec('INSERT INTO ::forums (id, forum_name, forum_desc, num_topics, num_posts, last_post, last_post_id, last_poster, last_poster_id, last_topic, disp_position, cat_id, moderators) VALUES (?i, ?s, ?s, ?i, ?i, ?i, ?i, ?s, ?i, ?s, ?i, ?i, \'\')', [$forumId, __('Test forum'), __('This is just a test forum'), 1, 1, $now, $postId, $v->username, $adminId, __('Test post'), 1, $catId]);
+        $this->c->DB->exec('INSERT INTO ::topics (id, poster, poster_id, subject, posted, first_post_id, last_post, last_post_id, last_poster, last_poster_id, forum_id) VALUES(?i, ?s, ?i, ?s, ?i, ?i, ?i, ?i, ?s, ?i, ?i)', [$topicId, $v->username, $adminId, __('Test post'), $now, $postId, $now, $postId, $v->username, $adminId, $forumId]);
+        $this->c->DB->exec('INSERT INTO ::posts (id, poster, poster_id, poster_ip, message, posted, topic_id) VALUES(?i, ?s, ?i, ?s, ?s, ?i, ?i)', [$postId, $v->username, $adminId, $ip, __('Test message'), $now, $topicId]);
 
         $smilies = [
             ':)'         => 'smile.png',
