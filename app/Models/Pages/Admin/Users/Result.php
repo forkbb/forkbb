@@ -299,9 +299,9 @@ class Result extends Users
             ];
             $fields["l{$number}-posts"] = [
                 'class'   => $user->isGuest ? ['result', 'posts', 'no-data'] : ['result', 'posts'],
-                'type'    => $user->num_posts ? 'link' : 'str',
+                'type'    => $user->isGuest || ! $user->last_post ? 'str' : 'link',
                 'caption' => 'Results posts head',
-                'value'   => $user->num_posts ? \ForkBB\num($user->num_posts) : null,
+                'value'   => $user->last_post > 0 ? \ForkBB\num($user->num_posts) : null,
                 'href'    => $this->c->Router->link(
                     'SearchAction',
                     [
@@ -321,7 +321,7 @@ class Result extends Users
             if ($this->user->isAdmin) {
                 $fields["l{$number}-view-ip"] = [
                     'class'   => $user->isGuest ? ['result', 'view-ip', 'no-data'] : ['result', 'view-ip'],
-                    'type'    => $user->isGuest || ! $user->num_posts ? 'str' : 'link',
+                    'type'    => $user->isGuest || ! $user->last_post ? 'str' : 'link',
                     'caption' => 'Results action head',
                     'value'   => $user->isGuest ? null : __('Results view IP link'),
                     'href'    => $this->c->Router->link(
