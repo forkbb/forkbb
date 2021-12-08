@@ -76,7 +76,7 @@ class LoadTree extends Action
                     f.last_post, f.last_post_id, f.last_poster, f.last_topic,
                     mof.mf_mark_all_read
                 FROM ::forums AS f
-                LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:id AND mof.fid=f.id)
+                LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND mof.fid=f.id)
                 WHERE f.id IN (?ai:forums)';
         }
 
