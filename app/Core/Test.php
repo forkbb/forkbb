@@ -72,13 +72,14 @@ class Test
         ) {
             $index += 1;
         }
-        if (
-            empty($_SERVER['HTTP_CACHE_CONTROL'])
-            && false !== \strpos($_SERVER['SERVER_PROTOCOL'], '1.1')
-        ) {
-            $index += 1;
-        } elseif (false !== \strpos($_SERVER['SERVER_PROTOCOL'], '1.0')) {
-            $index += 3;
+        if (empty($_SERVER['HTTP_CACHE_CONTROL'])) {
+            if (false !== \strpos($_SERVER['SERVER_PROTOCOL'], '1.1')) {
+                $index += 1;
+            }
+        } else {
+            if (false !== \strpos($_SERVER['SERVER_PROTOCOL'], '1.0')) {
+                $index += 3;
+            }
         }
         if (empty($_SERVER['HTTP_CONNECTION'])) {
             $index += 1;
