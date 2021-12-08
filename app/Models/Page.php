@@ -194,11 +194,13 @@ abstract class Page extends Model
         }
 
         if ($this->user->isGuest) {
-            $navUser[self::FI_REG] = [
-                $r->link('Register'),
-                'Register',
-                'Register',
-            ];
+            if ('1' == $this->c->config->o_regs_allow) {
+                $navUser[self::FI_REG] = [
+                    $r->link('Register'),
+                    'Register',
+                    'Register',
+                ];
+            }
             $navUser[self::FI_LOGIN] = [
                 $r->link('Login'),
                 'Login',
