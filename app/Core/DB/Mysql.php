@@ -201,8 +201,8 @@ class Mysql
         $this->testStr($table);
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
-
         $query = "CREATE TABLE IF NOT EXISTS `{$table}` (";
+
         foreach ($schema['FIELDS'] as $field => $data) {
             $this->testStr($field);
             // имя и тип
@@ -210,11 +210,13 @@ class Mysql
             // сравнение
             if (\preg_match('%^(?:CHAR|VARCHAR|TINYTEXT|TEXT|MEDIUMTEXT|LONGTEXT|ENUM|SET)%i', $data[0])) {
                 $query .= ' CHARACTER SET utf8mb4 COLLATE utf8mb4_';
+
                 if (
                     isset($data[3])
                     && \is_string($data[3])
                 ) {
                     $this->testStr($data[3]);
+
                     $query .= $data[3];
                 } else {
                     $query .= 'unicode_ci';
@@ -228,11 +230,14 @@ class Mysql
             if (isset($data[2])) {
                 $query .= ' DEFAULT ' . $this->convToStr($data[2]);
             }
+
             $query .= ', ';
         }
+
         if (isset($schema['PRIMARY KEY'])) {
             $query .= 'PRIMARY KEY (' . $this->replIdxs($schema['PRIMARY KEY']) . '), ';
         }
+
         if (isset($schema['UNIQUE KEYS'])) {
             foreach ($schema['UNIQUE KEYS'] as $key => $fields) {
                 $this->testStr($key);
@@ -240,6 +245,7 @@ class Mysql
                 $query .= "UNIQUE `{$table}_{$key}` (" . $this->replIdxs($fields) . '), ';
             }
         }
+
         if (isset($schema['INDEXES'])) {
             foreach ($schema['INDEXES'] as $index => $fields) {
                 $this->testStr($index);
@@ -247,13 +253,15 @@ class Mysql
                 $query .= "INDEX `{$table}_{$index}` (" . $this->replIdxs($fields) . '), ';
             }
         }
+
         if (isset($schema['ENGINE'])) {
             $engine = $schema['ENGINE'];
         } else {
             // при отсутствии типа таблицы он определяется на основании типов других таблиц в базе
             $prefix = \str_replace('_', '\\_', $this->dbPrefix);
-            $stmt = $this->db->query("SHOW TABLE STATUS LIKE '{$prefix}%'");
+            $stmt   = $this->db->query("SHOW TABLE STATUS LIKE '{$prefix}%'");
             $engine = [];
+
             while ($row = $stmt->fetch()) {
                 if (isset($engine[$row['Engine']])) {
                     ++$engine[$row['Engine']];
@@ -271,7 +279,9 @@ class Mysql
                 $engine = \array_shift($engine);
             }
         }
+
         $this->testStr($engine);
+
         $query = \rtrim($query, ', ') . ") ENGINE={$engine} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
 
         return false !== $this->db->exec($query);
@@ -323,14 +333,16 @@ class Mysql
         }
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
-
         $query = "ALTER TABLE `{$table}` ADD `{$field}` " . $this->replType($type);
+
         if (! $allowNull) {
             $query .= ' NOT NULL';
         }
+
         if (null !== $default) {
             $query .= ' DEFAULT ' . $this->convToStr($default);
         }
+
         if (null !== $after) {
             $this->testStr($after);
 
@@ -349,14 +361,16 @@ class Mysql
         $this->testStr($field);
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
-
         $query = "ALTER TABLE `{$table}` MODIFY `{$field}` " . $this->replType($type);
+
         if (! $allowNull) {
             $query .= ' NOT NULL';
         }
+
         if (null !== $default) {
             $query .= ' DEFAULT ' . $this->convToStr($default);
         }
+
         if (null !== $after) {
             $this->testStr($after);
 
@@ -401,30 +415,29 @@ class Mysql
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
 
-        try {
-            $vars = [
-                ':tname' => $table,
-                ':fname' => $old,
-            ];
-            $query = 'SELECT COLUMN_DEFAULT, IS_NULLABLE, COLUMN_TYPE
-                FROM INFORMATION_SCHEMA.COLUMNS
-                WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:tname AND COLUMN_NAME = ?s:fname';
+        $vars = [
+            ':tname' => $table,
+            ':fname' => $old,
+        ];
+        $query = 'SELECT COLUMN_DEFAULT, IS_NULLABLE, COLUMN_TYPE
+            FROM INFORMATION_SCHEMA.COLUMNS
+            WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:tname AND COLUMN_NAME = ?s:fname';
 
-            $stmt   = $this->db->query($query, $vars);
-            $result = $stmt->fetch();
-            $stmt->closeCursor();
+        $stmt   = $this->db->query($query, $vars);
+        $result = $stmt->fetch();
 
-            $type      = $result['COLUMN_TYPE'];
-            $allowNull = 'YES' == $result['IS_NULLABLE'];
-            $default   = $result['COLUMN_DEFAULT'];
-        } catch (PDOException $e) {
-            return false;
-        }
+        $stmt->closeCursor();
+
+        $type      = $result['COLUMN_TYPE'];
+        $allowNull = 'YES' == $result['IS_NULLABLE'];
+        $default   = $result['COLUMN_DEFAULT'];
 
         $query = "ALTER TABLE `{$table}` CHANGE COLUMN `{$old}` `{$new}` " . $this->replType($type);
+
         if (! $allowNull) {
             $query .= ' NOT NULL';
         }
+
         if (null !== $default) {
             $query .= ' DEFAULT ' . $this->convToStr($default);
         }
@@ -444,8 +457,8 @@ class Mysql
         }
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
-
         $query = "ALTER TABLE `{$table}` ADD ";
+
         if ('PRIMARY' == $index) {
             $query .= 'PRIMARY KEY';
         } else {
@@ -459,6 +472,7 @@ class Mysql
                 $query .= "INDEX `{$index}`";
             }
         }
+
         $query .= ' (' . $this->replIdxs($fields) . ')';
 
         return false !== $this->db->exec($query);
@@ -476,8 +490,8 @@ class Mysql
         }
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
-
         $query = "ALTER TABLE `{$table}` ";
+
         if ('PRIMARY' == $index) {
             $query .= "DROP PRIMARY KEY";
         } else {
@@ -539,7 +553,7 @@ class Mysql
         }
 
         return [
-            'db'      => 'MySQL (PDO) ' . $this->db->getAttribute(PDO::ATTR_SERVER_VERSION) . ' : ' . implode(', ', $tmp),
+            'db'      => 'MySQL (PDO) v.' . $this->db->getAttribute(PDO::ATTR_SERVER_VERSION) . ' : ' . implode(', ', $tmp),
             'records' => $records,
             'size'    => $size,
             'server info' => $this->db->getAttribute(PDO::ATTR_SERVER_INFO),
@@ -552,7 +566,7 @@ class Mysql
     public function getMap(): array
     {
         $vars = [
-            "{$this->dbPrefix}%",
+            str_replace('_', '\\_', $this->dbPrefix) . '%',
         ];
         $query = 'SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE
             FROM INFORMATION_SCHEMA.COLUMNS
@@ -561,12 +575,14 @@ class Mysql
         $stmt   = $this->db->query($query, $vars);
         $result = [];
         $table  = null;
+
         while ($row = $stmt->fetch()) {
             if ($table !== $row['TABLE_NAME']) {
-                $table = $row['TABLE_NAME'];
-                $tableNoPref = \substr($table, \strlen($this->dbPrefix));
+                $table                = $row['TABLE_NAME'];
+                $tableNoPref          = \substr($table, \strlen($this->dbPrefix));
                 $result[$tableNoPref] = [];
             }
+
             $type = \strtolower($row['DATA_TYPE']);
             $result[$tableNoPref][$row['COLUMN_NAME']] = $this->types[$type] ?? 's';
         }
