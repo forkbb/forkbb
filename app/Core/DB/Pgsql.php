@@ -491,16 +491,12 @@ class Pgsql
         $size     *= $blockSize ?: 8192;
 
         $other = [];
-#        $stmt  = $this->db->query("SHOW VARIABLES LIKE 'character\\_set\\_%'");
-#
-#        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-#            $other[$row[0]] = $row[1];
-#        }
+        $other['pg_database_size'] = $this->db->query('SELECT pg_size_pretty(pg_database_size(current_database()))')->fetchColumn();
 
         return [
-            'db'      => 'PostgreSQL (PDO) ' . $this->db->getAttribute(PDO::ATTR_SERVER_VERSION) . " : ({$tables})",
-            'records' => $records,
-            'size'    => $size,
+            'db'          => 'PostgreSQL (PDO) v.' . $this->db->getAttribute(PDO::ATTR_SERVER_VERSION) . " : ({$tables})",
+            'records'     => $records,
+            'size'        => $size,
             'server info' => $this->db->getAttribute(PDO::ATTR_SERVER_INFO),
         ] + $other;
     }
@@ -521,12 +517,14 @@ class Pgsql
         $stmt   = $this->db->query($query, $vars);
         $result = [];
         $table  = null;
+
         while ($row = $stmt->fetch()) {
             if ($table !== $row['table_name']) {
-                $table = $row['table_name'];
-                $tableNoPref = \substr($table, \strlen($this->dbPrefix));
+                $table                = $row['table_name'];
+                $tableNoPref          = \substr($table, \strlen($this->dbPrefix));
                 $result[$tableNoPref] = [];
             }
+
             $type = \strtolower($row['data_type']);
             $result[$tableNoPref][$row['column_name']] = $this->types[$type] ?? 's';
         }
