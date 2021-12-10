@@ -393,10 +393,10 @@ class Mysql
         $this->testStr($new);
 
         if (
-            ! $this->fieldExists($table, $old, $noPrefix)
-            || $this->fieldExists($table, $new, $noPrefix)
+            $this->fieldExists($table, $new, $noPrefix)
+            && ! $this->fieldExists($table, $old, $noPrefix)
         ) {
-            return false;
+            return true;
         }
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
