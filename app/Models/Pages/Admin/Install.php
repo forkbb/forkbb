@@ -457,8 +457,8 @@ class Install extends Admin
             if (! \preg_match('%^[a-z][a-z\d_]*$%i', $prefix)) {
                 $v->addError('Table prefix error');
             } elseif (
-                'sqlite' === $v->dbtype
-                && 'sqlite_' === \strtolower($prefix)
+                'sqlite_' === \strtolower($prefix)
+                || 'pg_' === \strtolower($prefix)
             ) {
                 $v->addError('Prefix reserved');
             }
@@ -474,7 +474,7 @@ class Install extends Admin
     {
         $this->c->DB_USERNAME = $v->dbuser;
         $this->c->DB_PASSWORD = $v->dbpass;
-        $this->c->DB_PREFIX   = \is_string($v->dbprefix) ? $v->dbprefix : '';
+        $this->c->DB_PREFIX   = $v->dbprefix;
         $dbtype               = $v->dbtype;
         $dbname               = $v->dbname;
 
@@ -502,6 +502,16 @@ class Install extends Admin
             case 'sqlite':
                 break;
             case 'pgsql':
+                if (\preg_match('%^([^:]+):(\d+)$%', $dbhost, $matches)) {
+                    $host = $matches[1];
+                    $port = $matches[2];
+                } else {
+                    $host = $dbhost;
+                    $port = '5432';
+                }
+
+                $this->c->DB_DSN = "pgsql:host={$host} port={$port} dbname={$dbname} options='--client_encoding=UTF8'";
+
                 break;
             default:
                 //????
@@ -520,16 +530,10 @@ class Install extends Admin
         }
 
         // проверка наличия таблицы пользователей в БД
-        try {
-            $stmt = $this->c->DB->query('SELECT 1 FROM ::users LIMIT 1');
+        if ($this->c->DB->tableExists('users')) {
+            $v->addError(['Existing table error', $v->dbprefix, $v->dbname]);
 
-            if (! empty($stmt->fetch())) {
-                $v->addError(['Existing table error', $v->dbprefix, $v->dbname]);
-
-                return $dbhost;
-            }
-        } catch (PDOException $e) {
-            // все отлично, таблица пользователей не найдена
+            return $dbhost;
         }
 
         // база MySQL, кодировка базы отличается от UTF-8 (4 байта)
