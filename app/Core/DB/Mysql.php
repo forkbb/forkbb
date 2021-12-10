@@ -97,8 +97,9 @@ class Mysql
 
                 $value = "`{$value}`";
             }
-            unset($value);
         }
+
+        unset($value);
 
         return \implode(',', $arr);
     }
@@ -132,22 +133,17 @@ class Mysql
      */
     public function tableExists(string $table, bool $noPrefix = false): bool
     {
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        $vars = [
+            ':tname' => ($noPrefix ? '' : $this->dbPrefix) . $table,
+        ];
+        $query = 'SELECT 1
+            FROM INFORMATION_SCHEMA.TABLES
+            WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:tname';
 
-        try {
-            $vars = [
-                ':table' => $table,
-            ];
-            $query = 'SELECT 1
-                FROM INFORMATION_SCHEMA.TABLES
-                WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:table';
+        $stmt   = $this->db->query($query, $vars);
+        $result = $stmt->fetch();
 
-            $stmt   = $this->db->query($query, $vars);
-            $result = $stmt->fetch();
-            $stmt->closeCursor();
-        } catch (PDOException $e) {
-            return false;
-        }
+        $stmt->closeCursor();
 
         return ! empty($result);
     }
@@ -157,23 +153,18 @@ class Mysql
      */
     public function fieldExists(string $table, string $field, bool $noPrefix = false): bool
     {
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        $vars = [
+            ':tname' => ($noPrefix ? '' : $this->dbPrefix) . $table,
+            ':fname' => $field,
+        ];
+        $query = 'SELECT 1
+            FROM INFORMATION_SCHEMA.COLUMNS
+            WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:tname AND COLUMN_NAME = ?s:fname';
 
-        try {
-            $vars = [
-                ':table' => $table,
-                ':field' => $field,
-            ];
-            $query = 'SELECT 1
-                FROM INFORMATION_SCHEMA.COLUMNS
-                WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:table AND COLUMN_NAME = ?s:field';
+        $stmt   = $this->db->query($query, $vars);
+        $result = $stmt->fetch();
 
-            $stmt   = $this->db->query($query, $vars);
-            $result = $stmt->fetch();
-            $stmt->closeCursor();
-        } catch (PDOException $e) {
-            return false;
-        }
+        $stmt->closeCursor();
 
         return ! empty($result);
     }
@@ -186,21 +177,18 @@ class Mysql
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $index = 'PRIMARY' == $index ? $index : $table . '_' . $index;
 
-        try {
-            $vars = [
-                ':table' => $table,
-                ':index' => $index,
-            ];
-            $query = 'SELECT 1
-                FROM INFORMATION_SCHEMA.STATISTICS
-                WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:table AND INDEX_NAME = ?s:index';
+        $vars = [
+            ':tname' => $table,
+            ':index' => $index,
+        ];
+        $query = 'SELECT 1
+            FROM INFORMATION_SCHEMA.STATISTICS
+            WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:tname AND INDEX_NAME = ?s:index';
 
-            $stmt   = $this->db->query($query, $vars);
-            $result = $stmt->fetch();
-            $stmt->closeCursor();
-        } catch (PDOException $e) {
-            return false;
-        }
+        $stmt   = $this->db->query($query, $vars);
+        $result = $stmt->fetch();
+
+        $stmt->closeCursor();
 
         return ! empty($result);
     }
@@ -415,12 +403,12 @@ class Mysql
 
         try {
             $vars = [
-                ':table' => $table,
-                ':field' => $old,
+                ':tname' => $table,
+                ':fname' => $old,
             ];
             $query = 'SELECT COLUMN_DEFAULT, IS_NULLABLE, COLUMN_TYPE
                 FROM INFORMATION_SCHEMA.COLUMNS
-                WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:table AND COLUMN_NAME = ?s:field';
+                WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:tname AND COLUMN_NAME = ?s:fname';
 
             $stmt   = $this->db->query($query, $vars);
             $result = $stmt->fetch();
