@@ -487,12 +487,22 @@ class Pgsql
             $size += $row['relpages'];
         }
 
-        $blockSize = $this->db->query('SELECT current_setting(\'block_size\')')->fetchColumn();
-        $size     *= $blockSize ?: 8192;
-
         $other = [
             'pg_database_size' => $this->db->query('SELECT pg_size_pretty(pg_database_size(current_database()))')->fetchColumn(),
         ];
+
+        $stmt = $this->db->query('SHOW ALL');
+
+        while ($row = $stmt->fetch()) {
+            if ('block_size' === $row['name']) {
+                $blockSize = (int) $row['setting'];
+            } elseif (\preg_match('%^lc_|_encoding%', $row['name'])) {
+                $other[$row['name']] = $row['setting'];
+            }
+        }
+
+//        $blockSize = $this->db->query('SELECT current_setting(\'block_size\')')->fetchColumn();
+        $size     *= $blockSize ?: 8192;
 
         return [
             'db'          => 'PostgreSQL (PDO) v.' . $this->db->getAttribute(PDO::ATTR_SERVER_VERSION),
