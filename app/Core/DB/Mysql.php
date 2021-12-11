@@ -553,7 +553,8 @@ class Mysql
         }
 
         return [
-            'db'      => 'MySQL (PDO) v.' . $this->db->getAttribute(PDO::ATTR_SERVER_VERSION) . ' : ' . implode(', ', $tmp),
+            'db'      => 'MySQL (PDO) v.' . $this->db->getAttribute(PDO::ATTR_SERVER_VERSION),
+            'tables'  => implode(', ', $tmp),
             'records' => $records,
             'size'    => $size,
             'server info' => $this->db->getAttribute(PDO::ATTR_SERVER_INFO),

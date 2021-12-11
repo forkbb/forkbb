@@ -494,7 +494,8 @@ class Pgsql
         $other['pg_database_size'] = $this->db->query('SELECT pg_size_pretty(pg_database_size(current_database()))')->fetchColumn();
 
         return [
-            'db'          => 'PostgreSQL (PDO) v.' . $this->db->getAttribute(PDO::ATTR_SERVER_VERSION) . " : ({$tables})",
+            'db'          => 'PostgreSQL (PDO) v.' . $this->db->getAttribute(PDO::ATTR_SERVER_VERSION),
+            'tables'      => (string) $tables,
             'records'     => $records,
             'size'        => $size,
             'server info' => $this->db->getAttribute(PDO::ATTR_SERVER_INFO),

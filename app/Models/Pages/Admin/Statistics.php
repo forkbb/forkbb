@@ -155,7 +155,8 @@ class Statistics extends Admin
         $this->dbVersion = $stat['db'];
         $this->tSize     = $stat['size'];
         $this->tRecords  = $stat['records'];
-        unset($stat['db'], $stat['size'], $stat['records']);
+        $this->tTables   = $stat['tables'];
+        unset($stat['db'], $stat['size'], $stat['records'], $stat['tables']);
         $this->tOther    = $stat;
 
         // Check for the existence of various PHP opcode caches/optimizers

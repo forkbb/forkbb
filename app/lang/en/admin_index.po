@@ -99,6 +99,9 @@ msgstr "Accelerator:"
 msgid "Database label"
 msgstr "Database"
 
+msgid "Database data tables"
+msgstr "Tables: %s"
+
 msgid "Database data rows"
 msgstr "Rows: %s"
 
