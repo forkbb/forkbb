@@ -48,7 +48,7 @@ class Categories extends Manager
         return $this->repository;
     }
 
-    public function set($key, $value): Categories
+    public function set($key, $value): Manager
     {
         if (! isset($value['cat_name'], $value['disp_position'])) {
             throw new InvalidArgumentException('Expected array with cat_name and disp_position elements');
