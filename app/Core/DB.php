@@ -74,7 +74,11 @@ class DB extends PDO
             self::ATTR_STATEMENT_CLASS    => [DBStatement::class, [$this]],
         ];
 
+        $start  = \microtime(true);
+
         parent::__construct($dsn, $username, $password, $options);
+
+        $this->saveQuery('PDO::__construct()', \microtime(true) - $start, false);
 
         $this->beginTransaction();
     }

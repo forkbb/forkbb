@@ -253,8 +253,8 @@ class Groups extends Admin
                     'g_post_links'           => 'required|integer|in:0,1',
                     'g_search'               => 'required|integer|in:0,1',
                     'g_search_users'         => 'required|integer|in:0,1',
-                    'g_post_flood'           => 'required|integer|min:0|max:999999',
-                    'g_search_flood'         => 'required|integer|min:0|max:999999',
+                    'g_post_flood'           => 'required|integer|min:0|max:32767',
+                    'g_search_flood'         => 'required|integer|min:0|max:32767',
                 ]);
 
                 if (
@@ -290,9 +290,9 @@ class Groups extends Admin
                         'g_deledit_interval'     => 'required|integer|min:0|max:999999',
                         'g_set_title'            => 'required|integer|in:0,1',
                         'g_send_email'           => 'required|integer|in:0,1',
-                        'g_email_flood'          => 'required|integer|min:0|max:999999',
-                        'g_report_flood'         => 'required|integer|min:0|max:999999',
-                        'g_sig_length'           => 'required|integer|min:0|max:10000',
+                        'g_email_flood'          => 'required|integer|min:0|max:32767',
+                        'g_report_flood'         => 'required|integer|min:0|max:32767',
+                        'g_sig_length'           => 'required|integer|min:0|max:16000',
                         'g_sig_lines'            => 'required|integer|min:0|max:255',
                         'g_pm'                   => 'required|integer|in:0,1',
                         'g_pm_limit'             => 'required|integer|min:0|max:999999',
@@ -654,7 +654,7 @@ class Groups extends Admin
         $fieldset['g_post_flood'] = [
             'type'    => 'number',
             'min'     => '0',
-            'max'     => '999999',
+            'max'     => '32767',
             'value'   => $group->g_post_flood,
             'caption' => 'Post flood label',
             'help'    => 'Post flood help',
@@ -662,7 +662,7 @@ class Groups extends Admin
         $fieldset['g_search_flood'] = [
             'type'    => 'number',
             'min'     => '0',
-            'max'     => '999999',
+            'max'     => '32767',
             'value'   => $group->g_search_flood,
             'caption' => 'Search flood label',
             'help'    => 'Search flood help',
@@ -680,7 +680,7 @@ class Groups extends Admin
             $fieldset['g_email_flood'] = [
                 'type'    => 'number',
                 'min'     => '0',
-                'max'     => '999999',
+                'max'     => '32767',
                 'value'   => $group->g_email_flood,
                 'caption' => 'E-mail flood label',
                 'help'    => 'E-mail flood help',
@@ -688,7 +688,7 @@ class Groups extends Admin
             $fieldset['g_report_flood'] = [
                 'type'    => 'number',
                 'min'     => '0',
-                'max'     => '999999',
+                'max'     => '32767',
                 'value'   => $group->g_report_flood,
                 'caption' => 'Report flood label',
                 'help'    => 'Report flood help',

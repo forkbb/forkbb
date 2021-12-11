@@ -99,6 +99,9 @@ msgstr "Акселератор:"
 msgid "Database label"
 msgstr "База данных"
 
+msgid "Database data tables"
+msgstr "Таблиц: %s"
+
 msgid "Database data rows"
 msgstr "Строк: %s"
 

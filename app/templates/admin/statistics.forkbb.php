@@ -24,10 +24,9 @@
               <dt>{!! __('Database label') !!}</dt>
               <dd>
                 {{ $p->dbVersion }}
-    @if ($p->tRecords && $p->tSize)
+                <br>{!! __(['Database data tables', $p->tTables]) !!}
                 <br>{!! __(['Database data rows', num($p->tRecords)]) !!}
                 <br>{!! __(['Database data size', size($p->tSize)]) !!}
-    @endif
     @if ($p->tOther)
                 <br><br>{!! __('Other')!!}
         @foreach ($p->tOther as $key => $value)

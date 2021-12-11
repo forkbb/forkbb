@@ -151,7 +151,7 @@ msgid "Table prefix error"
 msgstr "The table prefix '%s' does not match the format."
 
 msgid "Prefix reserved"
-msgstr "The table prefix 'sqlite_' is reserved for use by the SQLite engine."
+msgstr "The 'sqlite_' and 'pg_' prefixes are reserved. Please choose a different prefix."
 
 msgid "Existing table error"
 msgstr "A table called '%1$susers' is already present in the database '%2$s'. This could mean that ForkBB is already installed or that another piece of software is installed and is occupying one or more of the table names ForkBB requires. If you want to install multiple copies of ForkBB in the same database, you must choose a different table prefix."
@@ -218,6 +218,15 @@ msgstr "<b>File uploads appear to be disallowed on this server!</b> If you want 
 
 msgid "Bad database charset"
 msgstr "The database must be created with the character encoding <b>utf8mb4</b> (compare <b>utf8mb4_unicode_ci</b>)."
+
+msgid "Bad database encoding"
+msgstr "The database must be created with the character encoding <b>UTF8</b>."
+
+msgid "Bad database collate"
+msgstr "The database must be created with Collation order <b>C</b> (LC_COLLATE)."
+
+msgid "Bad database ctype"
+msgstr "The database must be created with Character classification <b>C</b> (LC_CTYPE)."
 
 msgid "Cookie setup"
 msgstr "<b>Cookie setup</b>"

@@ -457,8 +457,8 @@ class Install extends Admin
             if (! \preg_match('%^[a-z][a-z\d_]*$%i', $prefix)) {
                 $v->addError('Table prefix error');
             } elseif (
-                'sqlite' === $v->dbtype
-                && 'sqlite_' === \strtolower($prefix)
+                'sqlite_' === \strtolower($prefix)
+                || 'pg_' === \strtolower($prefix)
             ) {
                 $v->addError('Prefix reserved');
             }
@@ -474,7 +474,7 @@ class Install extends Admin
     {
         $this->c->DB_USERNAME = $v->dbuser;
         $this->c->DB_PASSWORD = $v->dbpass;
-        $this->c->DB_PREFIX   = \is_string($v->dbprefix) ? $v->dbprefix : '';
+        $this->c->DB_PREFIX   = $v->dbprefix;
         $dbtype               = $v->dbtype;
         $dbname               = $v->dbname;
 
@@ -502,6 +502,16 @@ class Install extends Admin
             case 'sqlite':
                 break;
             case 'pgsql':
+                if (\preg_match('%^([^:]+):(\d+)$%', $dbhost, $matches)) {
+                    $host = $matches[1];
+                    $port = $matches[2];
+                } else {
+                    $host = $dbhost;
+                    $port = '5432';
+                }
+
+                $this->c->DB_DSN = "pgsql:host={$host} port={$port} dbname={$dbname} options='--client_encoding=UTF8'";
+
                 break;
             default:
                 //????
@@ -520,16 +530,10 @@ class Install extends Admin
         }
 
         // проверка наличия таблицы пользователей в БД
-        try {
-            $stmt = $this->c->DB->query('SELECT 1 FROM ::users LIMIT 1');
+        if ($this->c->DB->tableExists('users')) {
+            $v->addError(['Existing table error', $v->dbprefix, $v->dbname]);
 
-            if (! empty($stmt->fetch())) {
-                $v->addError(['Existing table error', $v->dbprefix, $v->dbname]);
-
-                return $dbhost;
-            }
-        } catch (PDOException $e) {
-            // все отлично, таблица пользователей не найдена
+            return $dbhost;
         }
 
         // база MySQL, кодировка базы отличается от UTF-8 (4 байта)
@@ -538,6 +542,30 @@ class Install extends Admin
             && 'utf8mb4' !== $stat['character_set_database']
         ) {
             $v->addError('Bad database charset');
+        }
+
+        // база PostgreSQL, кодировка базы
+        if (
+            isset($stat['server_encoding'])
+            && 'UTF8' !== $stat['server_encoding']
+        ) {
+            $v->addError('Bad database encoding');
+        }
+
+        // база PostgreSQL, порядок сопоставления/сортировки
+        if (
+            isset($stat['lc_collate'])
+            && 'C' !== $stat['lc_collate']
+        ) {
+            $v->addError('Bad database collate');
+        }
+
+        // база PostgreSQL, тип символов
+        if (
+            isset($stat['lc_ctype'])
+            && 'C' !== $stat['lc_ctype']
+        ) {
+            $v->addError('Bad database ctype');
         }
 
         return $dbhost;
@@ -1218,17 +1246,29 @@ class Install extends Admin
 
 
         $ip = \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: '0.0.0.0';
-        $adminId = 1;
-        $catId = 1;
-        $forumId = 1;
         $topicId = 1;
-        $postId = 1;
 
-        $this->c->DB->exec('INSERT INTO ::users (id, group_id, username, username_normal, password, email, email_normal, language, style, num_posts, last_post, registered, registration_ip, last_visit, signature, num_topics) VALUES (?i, ?i, ?s, ?s, ?s, ?s, ?s, ?s, ?s, 1, ?i, ?i, ?s, ?i, \'\', 1)', [$adminId, FORK_GROUP_ADMIN, $v->username, $this->c->users->normUsername($v->username), password_hash($v->password, \PASSWORD_DEFAULT), $v->email, $this->c->NormEmail->normalize($v->email), $v->defaultlang, $v->defaultstyle, $now, $now, $ip, $now]);
-        $this->c->DB->exec('INSERT INTO ::categories (id, cat_name, disp_position) VALUES (?i, ?s, ?i)', [$catId, __('Test category'), 1]);
-        $this->c->DB->exec('INSERT INTO ::forums (id, forum_name, forum_desc, num_topics, num_posts, last_post, last_post_id, last_poster, last_poster_id, last_topic, disp_position, cat_id, moderators) VALUES (?i, ?s, ?s, ?i, ?i, ?i, ?i, ?s, ?i, ?s, ?i, ?i, \'\')', [$forumId, __('Test forum'), __('This is just a test forum'), 1, 1, $now, $postId, $v->username, $adminId, __('Test post'), 1, $catId]);
-        $this->c->DB->exec('INSERT INTO ::topics (id, poster, poster_id, subject, posted, first_post_id, last_post, last_post_id, last_poster, last_poster_id, forum_id) VALUES(?i, ?s, ?i, ?s, ?i, ?i, ?i, ?i, ?s, ?i, ?i)', [$topicId, $v->username, $adminId, __('Test post'), $now, $postId, $now, $postId, $v->username, $adminId, $forumId]);
-        $this->c->DB->exec('INSERT INTO ::posts (id, poster, poster_id, poster_ip, message, posted, topic_id) VALUES(?i, ?s, ?i, ?s, ?s, ?i, ?i)', [$postId, $v->username, $adminId, $ip, __('Test message'), $now, $topicId]);
+        $this->c->DB->exec('INSERT INTO ::users (group_id, username, username_normal, password, email, email_normal, language, style, num_posts, last_post, registered, registration_ip, last_visit, signature, num_topics) VALUES (?i, ?s, ?s, ?s, ?s, ?s, ?s, ?s, 1, ?i, ?i, ?s, ?i, \'\', 1)', [FORK_GROUP_ADMIN, $v->username, $this->c->users->normUsername($v->username), password_hash($v->password, \PASSWORD_DEFAULT), $v->email, $this->c->NormEmail->normalize($v->email), $v->defaultlang, $v->defaultstyle, $now, $now, $ip, $now]);
+
+        $adminId = (int) $this->c->DB->lastInsertId();
+
+        $this->c->DB->exec('INSERT INTO ::categories (cat_name, disp_position) VALUES (?s, ?i)', [__('Test category'), 1]);
+
+        $catId = (int) $this->c->DB->lastInsertId();
+
+        $this->c->DB->exec('INSERT INTO ::posts (poster, poster_id, poster_ip, message, posted, topic_id) VALUES(?s, ?i, ?s, ?s, ?i, ?i)', [$v->username, $adminId, $ip, __('Test message'), $now, $topicId]);
+
+        $postId = (int) $this->c->DB->lastInsertId();
+
+        $this->c->DB->exec('INSERT INTO ::forums (forum_name, forum_desc, num_topics, num_posts, last_post, last_post_id, last_poster, last_poster_id, last_topic, disp_position, cat_id, moderators) VALUES (?s, ?s, ?i, ?i, ?i, ?i, ?s, ?i, ?s, ?i, ?i, \'\')', [__('Test forum'), __('This is just a test forum'), 1, 1, $now, $postId, $v->username, $adminId, __('Test post'), 1, $catId]);
+
+        $forumId = (int) $this->c->DB->lastInsertId();
+
+        $this->c->DB->exec('INSERT INTO ::topics (poster, poster_id, subject, posted, first_post_id, last_post, last_post_id, last_poster, last_poster_id, forum_id) VALUES(?s, ?i, ?s, ?i, ?i, ?i, ?i, ?s, ?i, ?i)', [$v->username, $adminId, __('Test post'), $now, $postId, $now, $postId, $v->username, $adminId, $forumId]);
+
+        $topicId = (int) $this->c->DB->lastInsertId();
+
+        $this->c->DB->exec('UPDATE ::posts SET topic_id=?i WHERE id=?i', [$topicId, $postId]);
 
         $smilies = [
             ':)'         => 'smile.png',
