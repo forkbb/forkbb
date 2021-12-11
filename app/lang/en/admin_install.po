@@ -219,6 +219,15 @@ msgstr "<b>File uploads appear to be disallowed on this server!</b> If you want 
 msgid "Bad database charset"
 msgstr "The database must be created with the character encoding <b>utf8mb4</b> (compare <b>utf8mb4_unicode_ci</b>)."
 
+msgid "Bad database encoding"
+msgstr "The database must be created with the character encoding <b>UTF8</b>."
+
+msgid "Bad database collate"
+msgstr "The database must be created with Collation order <b>C</b> (LC_COLLATE)."
+
+msgid "Bad database ctype"
+msgstr "The database must be created with Character classification <b>C</b> (LC_CTYPE)."
+
 msgid "Cookie setup"
 msgstr "<b>Cookie setup</b>"
 

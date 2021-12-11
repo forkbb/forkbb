@@ -544,6 +544,30 @@ class Install extends Admin
             $v->addError('Bad database charset');
         }
 
+        // база PostgreSQL, кодировка базы
+        if (
+            isset($stat['server_encoding'])
+            && 'UTF8' !== $stat['server_encoding']
+        ) {
+            $v->addError('Bad database encoding');
+        }
+
+        // база PostgreSQL, порядок сопоставления/сортировки
+        if (
+            isset($stat['lc_collate'])
+            && 'C' !== $stat['lc_collate']
+        ) {
+            $v->addError('Bad database collate');
+        }
+
+        // база PostgreSQL, тип символов
+        if (
+            isset($stat['lc_ctype'])
+            && 'C' !== $stat['lc_ctype']
+        ) {
+            $v->addError('Bad database ctype');
+        }
+
         return $dbhost;
     }
 
