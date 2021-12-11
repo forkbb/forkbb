@@ -490,8 +490,9 @@ class Pgsql
         $blockSize = $this->db->query('SELECT current_setting(\'block_size\')')->fetchColumn();
         $size     *= $blockSize ?: 8192;
 
-        $other = [];
-        $other['pg_database_size'] = $this->db->query('SELECT pg_size_pretty(pg_database_size(current_database()))')->fetchColumn();
+        $other = [
+            'pg_database_size' => $this->db->query('SELECT pg_size_pretty(pg_database_size(current_database()))')->fetchColumn(),
+        ];
 
         return [
             'db'          => 'PostgreSQL (PDO) v.' . $this->db->getAttribute(PDO::ATTR_SERVER_VERSION),
