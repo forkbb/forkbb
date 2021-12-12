@@ -38,7 +38,7 @@ class Pgsql
         '%^BIGINT(?:\s*\(\d+\))?(?:\s*UNSIGNED)?$%i'                     => 'BIGINT',
         '%^(?:TINY|MEDIUM|LONG)TEXT$%i'                                  => 'TEXT',
         '%^DOUBLE(?:\s+PRECISION)?(?:\s*\([\d,]+\))?(?:\s*UNSIGNED)?$%i' => 'DOUBLE PRECISION',
-        '%^FLOAT(?:\s*\([\d,]+\))?(?:\s*UNSIGNED)?$%i'                   => 'REAL',
+        '%^(?:FLOAT|REAL)(?:\s*\([\d,]+\))?(?:\s*UNSIGNED)?$%i'          => 'REAL',
     ];
 
     /**
