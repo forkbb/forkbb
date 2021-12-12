@@ -457,7 +457,7 @@ class Pgsql
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
 
-        return false !== $this->db->exec("TRUNCATE TABLE ONLY \"{$table}\"");
+        return false !== $this->db->exec("TRUNCATE TABLE ONLY \"{$table}\" RESTART IDENTITY");
     }
 
     /**
