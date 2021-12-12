@@ -1154,6 +1154,10 @@ class Install extends Admin
         $this->c->DB->exec('UPDATE ::groups SET g_pm_limit=0 WHERE g_id=?i', [FORK_GROUP_ADMIN]);
         $this->c->DB->exec('UPDATE ::groups SET g_pm=0, g_sig_length=0, g_sig_lines=0 WHERE g_id=?i', [FORK_GROUP_GUEST]);
 
+        if ('pgsql' === $v->dbtype) {
+            $this->c->DB->exec('ALTER SEQUENCE ::groups_g_id_seq RESTART WITH ' . (FORK_GROUP_NEW_MEMBER + 1));
+        }
+
         $pun_config = [
             'i_fork_revision'         => $this->c->FORK_REVISION,
             'o_board_title'           => $v->title,
