@@ -109,6 +109,7 @@ class Install extends Admin
         // доступность папок на запись
         $folders = [
             $this->c->DIR_APP . '/config',
+            $this->c->DIR_APP . '/config/db',
             $this->c->DIR_CACHE,
             $this->c->DIR_PUBLIC . '/img/avatars',
         ];
@@ -159,7 +160,7 @@ class Install extends Admin
                     'dbname'        => 'required|string:trim',
                     'dbuser'        => 'string:trim',
                     'dbpass'        => 'string:trim',
-                    'dbprefix'      => 'required|string:trim|max:40|check_prefix',
+                    'dbprefix'      => 'required|string:trim|min:1|max:40|check_prefix',
                     'username'      => 'required|string:trim|min:2|max:25',
                     'password'      => 'required|string|min:16|max:100000|password',
                     'email'         => 'required|string:trim|email',
@@ -500,6 +501,8 @@ class Install extends Admin
 
                 break;
             case 'sqlite':
+                $this->c->DB_DSN = "sqlite:!PATH!{$dbname}";
+
                 break;
             case 'pgsql':
                 if (\preg_match('%^([^:]+):(\d+)$%', $dbhost, $matches)) {
@@ -840,16 +843,12 @@ class Install extends Admin
                 'id'   => ['SERIAL', false],
                 'word' => ['VARCHAR(20)', false, '' , 'bin'],
             ],
-            'PRIMARY KEY' => ['word'],
-            'INDEXES' => [
-                'id_idx' => ['id'],
+            'PRIMARY KEY' => ['id'],
+            'UNIQUE KEYS' => [
+                'word_idx' => ['word']
             ],
             'ENGINE' => $this->DBEngine,
         ];
-        if ('sqlite' === $v->dbtype) { //????
-            $schema['PRIMARY KEY'] = ['id'];
-            $schema['UNIQUE KEYS'] = ['word_idx' => ['word']];
-        }
         $this->c->DB->createTable('search_words', $schema);
 
         // topic_subscriptions
