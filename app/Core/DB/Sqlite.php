@@ -46,9 +46,9 @@ class Sqlite
      * @var array
      */
     protected $types = [
-        'INTEGER' => 'i',
-        'REAL'    => 'i',
-        'NUMERIC' => 'i',
+        'integer' => 'i',
+        'real'    => 'i',
+        'numeric' => 'i',
     ];
 
     public function __construct(DB $db, string $prefix)
