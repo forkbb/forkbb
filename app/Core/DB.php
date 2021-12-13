@@ -57,6 +57,7 @@ class DB extends PDO
     public function __construct(string $dsn, string $username = null, string $password = null, array $options = [], string $prefix = '')
     {
         $type = \strstr($dsn, ':', true);
+
         if (
             ! $type
             || ! \in_array($type, PDO::getAvailableDrivers(), true)
@@ -64,12 +65,18 @@ class DB extends PDO
         ) {
             throw new PDOException("Driver isn't found for '$type'");
         }
-        $this->dbType = $type;
 
+        if ('sqlite' === $type) {
+            $dsn = \str_replace('!PATH!', \realpath(__DIR__ . '/../config/db') . '/', $dsn);
+        }
+
+        $this->dbType   = $type;
         $this->dbPrefix = $prefix;
+
         $options += [
             self::ATTR_DEFAULT_FETCH_MODE => self::FETCH_ASSOC,
             self::ATTR_EMULATE_PREPARES   => false,
+            self::ATTR_STRINGIFY_FETCHES  => false,
             self::ATTR_ERRMODE            => self::ERRMODE_EXCEPTION,
             self::ATTR_STATEMENT_CLASS    => [DBStatement::class, [$this]],
         ];
