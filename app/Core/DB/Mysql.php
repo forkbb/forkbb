@@ -175,11 +175,10 @@ class Mysql
     public function indexExists(string $table, string $index, bool $noPrefix = false): bool
     {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
-        $index = 'PRIMARY' == $index ? $index : $table . '_' . $index;
 
         $vars = [
             ':tname' => $table,
-            ':index' => $index,
+            ':index' => 'PRIMARY' == $index ? $index : $table . '_' . $index,
         ];
         $query = 'SELECT 1
             FROM INFORMATION_SCHEMA.STATISTICS
@@ -567,11 +566,12 @@ class Mysql
     public function getMap(): array
     {
         $vars = [
-            str_replace('_', '\\_', $this->dbPrefix) . '%',
+            ':tname' => str_replace('_', '\\_', $this->dbPrefix) . '%',
         ];
         $query = 'SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE
             FROM INFORMATION_SCHEMA.COLUMNS
-            WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME LIKE ?s';
+            WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME LIKE ?s:tname
+            ORDER BY TABLE_NAME';
 
         $stmt   = $this->db->query($query, $vars);
         $result = [];
