@@ -35,7 +35,7 @@ class CalcStat extends Method
                 FROM ::posts AS p
                 WHERE p.topic_id=?i:tid';
 
-            $numReplies = $this->c->DB->query($query, $vars)->fetchColumn();
+            $numReplies = (int) $this->c->DB->query($query, $vars)->fetchColumn();
 
             $query = 'SELECT p.id, p.poster, p.poster_id, p.posted
                 FROM ::posts AS p

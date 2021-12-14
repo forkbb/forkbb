@@ -53,7 +53,7 @@ class CalcStat extends Method
             FROM ::pm_posts AS pp
             WHERE pp.topic_id=?i:tid';
 
-        $this->model->num_replies = $this->c->DB->query($query, $vars)->fetchColumn();
+        $this->model->num_replies = (int) $this->c->DB->query($query, $vars)->fetchColumn();
 
         return $this->model;
     }

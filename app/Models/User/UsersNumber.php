@@ -34,6 +34,6 @@ class UsersNumber extends Action
             FROM ::users AS u
             WHERE u.group_id=?i:gid';
 
-        return $this->c->DB->query($query, $vars)->fetchColumn();
+        return (int) $this->c->DB->query($query, $vars)->fetchColumn();
     }
 }
