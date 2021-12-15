@@ -223,6 +223,14 @@ class DB extends PDO
     }
 
     /**
+     * Возвращает тип базы данных указанный в DSN
+     */
+    public function getType(): string
+    {
+        return $this->dbType;
+    }
+
+    /**
      * Метод для сохранения статистики по выполненному запросу
      */
     public function saveQuery(string $query, float $time, bool $add = true): void
