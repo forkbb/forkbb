@@ -151,6 +151,7 @@ class DB extends PDO
                     case 'i':
                     case 'b':
                     case 's':
+                    case 'f':
                         $value = [1];
                         break;
                     default:

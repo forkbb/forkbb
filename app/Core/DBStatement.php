@@ -36,6 +36,7 @@ class DBStatement extends PDOStatement
         's'  => PDO::PARAM_STR,
         'i'  => PDO::PARAM_INT,
         'b'  => PDO::PARAM_BOOL,
+        'f'  => PDO::PARAM_STR,
         'a'  => PDO::PARAM_STR,
         'as' => PDO::PARAM_STR,
         'ai' => PDO::PARAM_INT,
