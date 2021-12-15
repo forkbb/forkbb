@@ -45,7 +45,10 @@ abstract class AbstractStatement extends DBStatement
         $types = $this->getColumnsType();
 
         foreach ($data as $key => &$value) {
-            if (isset($types[$key])) {
+            if (
+                isset($types[$key])
+                && \is_scalar($value)
+            ) {
                 switch ($types[$key]) {
                     case self::INTEGER:
                         $value += 0; // If the string is not a number, then Warning/Notice
