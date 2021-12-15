@@ -81,12 +81,6 @@ class SqliteStatement extends AbstractStatement
             }
         }
 
-        ob_start();
-        $this->debugDumpParams();
-        $r = ob_get_contents();
-        ob_end_clean();
-        error_log($r);
-
         return $this->columnsType;
     }
 
