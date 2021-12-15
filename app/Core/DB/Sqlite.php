@@ -479,11 +479,12 @@ class Sqlite
         $stmt   = $this->db->query($query, $vars);
         $result = [];
         $table  = null;
+        $prfLen = \strlen($this->dbPrefix);
 
         while ($row = $stmt->fetch()) {
             if ($table !== $row['table_name']) {
                 $table                = $row['table_name'];
-                $tableNoPref          = \substr($table, \strlen($this->dbPrefix));
+                $tableNoPref          = \substr($table, $prfLen);
                 $result[$tableNoPref] = [];
             }
 

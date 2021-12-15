@@ -576,11 +576,12 @@ class Mysql
         $stmt   = $this->db->query($query, $vars);
         $result = [];
         $table  = null;
+        $prfLen = \strlen($this->dbPrefix);
 
         while ($row = $stmt->fetch()) {
             if ($table !== $row['TABLE_NAME']) {
                 $table                = $row['TABLE_NAME'];
-                $tableNoPref          = \substr($table, \strlen($this->dbPrefix));
+                $tableNoPref          = \substr($table, $prfLen);
                 $result[$tableNoPref] = [];
             }
 
