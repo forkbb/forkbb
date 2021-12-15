@@ -37,7 +37,8 @@ class Sqlite
         '%^.*?(?:CHAR|CLOB|TEXT).*$%i'            => 'TEXT',
         '%^.*?BLOB.*$%i'                          => 'BLOB',
         '%^.*?(?:REAL|FLOA|DOUB).*$%i'            => 'REAL',
-        '%^.*?(?:NUMERIC|DECIMAL|BOOL|DATE).*$%i' => 'NUMERIC',
+        '%^.*?(?:NUMERIC|DECIMAL).*$%i'           => 'NUMERIC',
+        '%^.*?BOOL.*$%i'                          => 'BOOLEAN', // ???? не соответствует SQLite
         '%^SERIAL$%i'                             => 'INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL',
     ];
 
@@ -46,9 +47,10 @@ class Sqlite
      * @var array
      */
     protected $types = [
+        'boolean' => 'b',
         'integer' => 'i',
-        'real'    => 'i',
-        'numeric' => 'i',
+        'real'    => 'f',
+        'numeric' => 'f',
     ];
 
     public function __construct(DB $db, string $prefix)

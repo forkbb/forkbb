@@ -66,8 +66,11 @@ class DB extends PDO
             throw new PDOException("Driver isn't found for '$type'");
         }
 
+        $statement = DBStatement::class;
+
         if ('sqlite' === $type) {
             $dsn = \str_replace('!PATH!', \realpath(__DIR__ . '/../config/db') . '/', $dsn);
+            $statement = 'ForkBB\\Core\\DB\\' . \ucfirst($type) . 'Statement';
         }
 
         $this->dbType   = $type;
@@ -78,7 +81,7 @@ class DB extends PDO
             self::ATTR_EMULATE_PREPARES   => false,
             self::ATTR_STRINGIFY_FETCHES  => false,
             self::ATTR_ERRMODE            => self::ERRMODE_EXCEPTION,
-            self::ATTR_STATEMENT_CLASS    => [DBStatement::class, [$this]],
+            self::ATTR_STATEMENT_CLASS    => [$statement, [$this]],
         ];
 
         $start  = \microtime(true);
