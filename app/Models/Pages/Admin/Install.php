@@ -20,7 +20,9 @@ use function \ForkBB\__;
 
 class Install extends Admin
 {
-    const PHP_MIN = '7.3.0';
+    const PHP_MIN    = '7.3.0';
+    const MYSQL_MIN  = '5.5.3';
+    const SQLITE_MIN = '3.25.0';
 
     const JSON_OPTIONS = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
 
@@ -528,6 +530,28 @@ class Install extends Admin
             $stat = $this->c->DB->statistics();
         } catch (PDOException $e) {
             $v->addError($e->getMessage());
+
+            return $dbhost;
+        }
+
+        $version = $versionNeed = $this->c->DB->getAttribute(PDO::ATTR_SERVER_VERSION);
+
+        switch ($dbtype) {
+            case 'mysql_innodb':
+            case 'mysql':
+                $versionNeed = self::SQLITE_MIN;
+                $progName    = 'MySQL';
+
+                break;
+            case 'sqlite':
+                $versionNeed = self::SQLITE_MIN;
+                $progName    = 'SQLite';
+
+                break;
+        }
+
+        if (\version_compare($version, $versionNeed, '<')) {
+            $v->addError(['You are running error', $progName, $version, $this->c->FORK_REVISION, $versionNeed]);
 
             return $dbhost;
         }
