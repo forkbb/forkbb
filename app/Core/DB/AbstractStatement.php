@@ -14,7 +14,6 @@ use ForkBB\Core\DBStatement;
 use PDO;
 use PDOStatement;
 use PDOException;
-use RuntimeException;
 
 abstract class AbstractStatement extends DBStatement
 {
@@ -101,7 +100,7 @@ abstract class AbstractStatement extends DBStatement
                     case self::STRING:
                         break;
                     default:
-                        throw new RuntimeException("Unknown field type: '{$types[$key]}'");
+                        throw new PDOException("Unknown field type: '{$types[$key]}'");
                 }
             }
         }
