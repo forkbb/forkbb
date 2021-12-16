@@ -18,12 +18,12 @@ use PDO;
  */
 class SqliteStatement extends AbstractSqliteStatement
 {
-    public function fetch(int $mode = PDO::FETCH_DEFAULT, int $orientation = PDO::FETCH_ORI_NEXT, int $offset = 0): mixed
+    public function fetch(int $mode = 0 /* PDO::FETCH_DEFAULT */, int $orientation = PDO::FETCH_ORI_NEXT, int $offset = 0): mixed
     {
         return $this->dbFetch($mode, $orientation, $offset);
     }
 
-    public function fetchAll(int $mode = PDO::FETCH_DEFAULT, ...$args): array
+    public function fetchAll(int $mode = 0 /* PDO::FETCH_DEFAULT */, ...$args): array
     {
         return $this->dbFetchAll($mode, ...$args);
     }
