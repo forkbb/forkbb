@@ -539,7 +539,7 @@ class Install extends Admin
         switch ($dbtype) {
             case 'mysql_innodb':
             case 'mysql':
-                $versionNeed = self::SQLITE_MIN;
+                $versionNeed = self::MYSQL_MIN;
                 $progName    = 'MySQL';
 
                 break;
@@ -576,7 +576,7 @@ class Install extends Admin
             isset($stat['server_encoding'])
             && 'UTF8' !== $stat['server_encoding']
         ) {
-            $v->addError('Bad database encoding');
+            $v->addError(['Bad database encoding', 'UTF8']);
         }
 
         // база PostgreSQL, порядок сопоставления/сортировки
@@ -593,6 +593,14 @@ class Install extends Admin
             && 'C' !== $stat['lc_ctype']
         ) {
             $v->addError('Bad database ctype');
+        }
+
+        // база SQLite, кодировка базы
+        if (
+            isset($stat['encoding'])
+            && 'UTF-8' !== $stat['encoding']
+        ) {
+            $v->addError(['Bad database encoding', 'UTF-8']);
         }
 
         return $dbhost;
