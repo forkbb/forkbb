@@ -29,7 +29,11 @@ abstract class AbstractStatement extends DBStatement
 
     protected function dbFetch(int $mode, int $cursorOrientation, int $cursorOffset) /* : mixed */
     {
-        $data = parent::fetch($mode, $cursorOrientation, $cursorOffset);
+        $data = parent::fetch(
+            PDO::FETCH_COLUMN === $mode ? PDO::FETCH_NUM : $mode,
+            $cursorOrientation,
+            $cursorOffset
+        );
 
         if (! \is_array($data)) {
             return $data;
@@ -60,6 +64,10 @@ abstract class AbstractStatement extends DBStatement
         }
 
         unset($value);
+
+        if (PDO::FETCH_COLUMN === $mode) {
+            $data = $data[0];
+        }
 
         return $data;
     }
