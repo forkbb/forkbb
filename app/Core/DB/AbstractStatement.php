@@ -15,15 +15,9 @@ use PDO;
 use PDOStatement;
 use PDOException;
 use RuntimeException;
-use ReturnTypeWillChange;
 
 abstract class AbstractStatement extends DBStatement
 {
-    const BOOLEAN = 'b';
-    const FLOAT   = 'f';
-    const INTEGER = 'i';
-    const STRING  = 's';
-
     /**
      * Типы столбцов полученные через getColumnMeta()
      * @var array
@@ -33,8 +27,7 @@ abstract class AbstractStatement extends DBStatement
     abstract public function getColumnsType(): array;
     abstract protected function convToBoolean(/* mixed */ $value): bool;
 
-    #[ReturnTypeWillChange]
-    public function fetch(/* int */ $mode = 0 /* PDO::FETCH_DEFAULT */, /* int */ $cursorOrientation = PDO::FETCH_ORI_NEXT, /* int */ $cursorOffset = 0) /* : mixed */
+    protected function dbFetch(int $mode, int $cursorOrientation, int $cursorOffset) /* : mixed */
     {
         $data = parent::fetch($mode, $cursorOrientation, $cursorOffset);
 
@@ -69,5 +62,10 @@ abstract class AbstractStatement extends DBStatement
         unset($value);
 
         return $data;
+    }
+
+    protected function dbFetchAll(int $mode = 0 /* PDO::FETCH_DEFAULT */, /* mixed */ ...$args): array
+    {
+        return parent::fetchAll($mode, ...$args);
     }
 }

@@ -56,21 +56,27 @@ class DB extends PDO
 
     public function __construct(string $dsn, string $username = null, string $password = null, array $options = [], string $prefix = '')
     {
-        $type = \strstr($dsn, ':', true);
+        $type  = \strstr($dsn, ':', true);
+        $typeU = \ucfirst($type);
 
         if (
             ! $type
             || ! \in_array($type, PDO::getAvailableDrivers(), true)
-            || ! \is_file(__DIR__ . '/DB/' . \ucfirst($type) . '.php')
+            || ! \is_file(__DIR__ . "/DB/{$typeU}.php")
         ) {
             throw new PDOException("Driver isn't found for '$type'");
         }
 
-        $statement = DBStatement::class;
+        $statement = $typeU . 'Statement' . (\PHP_MAJOR_VERSION < 8 ? '7' : '');
+
+        if (\is_file(__DIR__ . "/DB/{$typeU}.php")) {
+            $statement = 'ForkBB\\Core\\DB\\' . $statement;
+        } else {
+            $statement = DBStatement::class;
+        }
 
         if ('sqlite' === $type) {
             $dsn = \str_replace('!PATH!', \realpath(__DIR__ . '/../config/db') . '/', $dsn);
-            $statement = 'ForkBB\\Core\\DB\\' . \ucfirst($type) . 'Statement';
         }
 
         $this->dbType   = $type;
