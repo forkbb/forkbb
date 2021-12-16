@@ -27,19 +27,33 @@ class SqliteStatement7 extends AbstractSqliteStatement
         return $this->dbFetch($mode, $orientation, $offset);
     }
 
-    public function fetchAll($mode = null, $fetch_argument = null, $ctor_args = null)
+    public function fetchAll($mode = null, $fetchArg = null, $ctorArgs = null)
     {
         $mode = $mode ?? 0;
+        $args = $this->returnArgs($fetchArg, $ctorArgs);
+
+        return $this->dbFetchAll($mode, ...$args);
+    }
+
+    public function setFetchMode($mode, $fetchArg = null, $ctorArgs = null): bool
+    {
+        $args = $this->returnArgs($fetchArg, $ctorArgs);
+
+        return $this->dbSetFetchMode($mode, ...$args);
+    }
+
+    protected function returnArgs($fetchArg, $ctorArgs): array
+    {
         $args = [];
 
-        if (isset($fetch_argument)) {
-            $args[] = $fetch_argument;
+        if (isset($fetchArg)) {
+            $args[] = $fetchArg;
 
-            if (isset($ctor_args)) {
-                $args[] = $ctor_args;
+            if (isset($ctorArgs)) {
+                $args[] = $ctorArgs;
             }
         }
 
-        return $this->dbFetchAll($mode, ...$args);
+        return $args;
     }
 }
