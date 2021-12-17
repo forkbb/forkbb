@@ -506,9 +506,12 @@ class Install extends Admin
                 break;
             case 'sqlite':
                 $this->c->DB_DSN         = "sqlite:!PATH!{$dbname}";
-                $this->c->DB_OPTS_AS_STR = '\\PDO::ATTR_TIMEOUT => 5,';
+                $this->c->DB_OPTS_AS_STR = '\\PDO::ATTR_TIMEOUT => 5, \'initSQLCommands\' => [\'PRAGMA journal_mode=WAL\',],';
                 $this->c->DB_OPTIONS     = [
                     PDO::ATTR_TIMEOUT => 5,
+                    'initSQLCommands' => [
+                        'PRAGMA journal_mode=WAL',
+                    ],
                 ];
 
                 break;

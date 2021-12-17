@@ -82,6 +82,14 @@ class DB extends PDO
         $this->dbType   = $type;
         $this->dbPrefix = $prefix;
 
+        if (isset($options['initSQLCommands'])) {
+            $initSQLCommands = implode(';', $options['initSQLCommands']);
+
+            unset($options['initSQLCommands']);
+        } else {
+            $initSQLCommands = null;
+        }
+
         $options += [
             self::ATTR_DEFAULT_FETCH_MODE => self::FETCH_ASSOC,
             self::ATTR_EMULATE_PREPARES   => false,
@@ -95,6 +103,10 @@ class DB extends PDO
         parent::__construct($dsn, $username, $password, $options);
 
         $this->saveQuery('PDO::__construct()', \microtime(true) - $start, false);
+
+        if ($initSQLCommands) {
+            $this->exec($initSQLCommands);
+        }
 
         $this->beginTransaction();
     }
