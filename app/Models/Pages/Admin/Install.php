@@ -475,11 +475,13 @@ class Install extends Admin
      */
     public function vCheckHost(Validator $v, $dbhost)
     {
-        $this->c->DB_USERNAME = $v->dbuser;
-        $this->c->DB_PASSWORD = $v->dbpass;
-        $this->c->DB_PREFIX   = $v->dbprefix;
-        $dbtype               = $v->dbtype;
-        $dbname               = $v->dbname;
+        $this->c->DB_USERNAME    = $v->dbuser;
+        $this->c->DB_PASSWORD    = $v->dbpass;
+        $this->c->DB_OPTIONS     = [];
+        $this->c->DB_OPTS_AS_STR = '';
+        $this->c->DB_PREFIX      = $v->dbprefix;
+        $dbtype                  = $v->dbtype;
+        $dbname                  = $v->dbname;
 
         // есть ошибки, ни чего не проверяем
         if (! empty($v->getErrors())) {
@@ -503,7 +505,11 @@ class Install extends Admin
 
                 break;
             case 'sqlite':
-                $this->c->DB_DSN = "sqlite:!PATH!{$dbname}";
+                $this->c->DB_DSN         = "sqlite:!PATH!{$dbname}";
+                $this->c->DB_OPTS_AS_STR = '\\PDO::ATTR_TIMEOUT => 5,';
+                $this->c->DB_OPTIONS     = [
+                    PDO::ATTR_TIMEOUT => 5,
+                ];
 
                 break;
             case 'pgsql':
@@ -522,8 +528,6 @@ class Install extends Admin
                 //????
                 break;
         }
-
-        $this->c->DB_OPTIONS  = [];
 
         // подключение к БД
         try {
@@ -1369,6 +1373,7 @@ class Install extends Admin
             $config = \str_replace($key, \addslashes($val), $config);
         }
 
+        $config = \str_replace('_DB_OPTIONS_', $this->c->DB_OPTS_AS_STR, $config);
         $result = \file_put_contents($this->c->DIR_APP . '/config/main.php', $config);
 
         if (false === $result) {

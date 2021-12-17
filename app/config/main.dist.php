@@ -19,7 +19,7 @@ return [
     'DB_DSN'      => '_DB_DSN_',
     'DB_USERNAME' => '_DB_USERNAME_',
     'DB_PASSWORD' => '_DB_PASSWORD_',
-    'DB_OPTIONS'  => [],
+    'DB_OPTIONS'  => [_DB_OPTIONS_],
     'DB_PREFIX'   => '_DB_PREFIX_',
     'COOKIE' => [
         'prefix'   => '_COOKIE_PREFIX_',
