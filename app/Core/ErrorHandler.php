@@ -168,7 +168,10 @@ class ErrorHandler
         $useErrLog = true;
 
         try {
-            if (! $this->c->Log instanceof NullLogger) {
+            if (
+                $this->c instanceof Container
+                && ! $this->c->Log instanceof NullLogger
+            ) {
                 $context = [];
                 $method  = $this->type[$error['type']][1] ?? $this->type[0][1];
 
