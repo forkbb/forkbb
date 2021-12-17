@@ -461,6 +461,8 @@ class Sqlite
 #            'server info'  => $this->db->getAttribute(PDO::ATTR_SERVER_INFO),
             'encoding'     => $this->db->query('PRAGMA encoding;')->fetchColumn(),
             'journal_mode' => $this->db->query('PRAGMA journal_mode;')->fetchColumn(),
+            'synchronous'  => $this->db->query('PRAGMA synchronous;')->fetchColumn(),
+            'busy_timeout' => $this->db->query('PRAGMA busy_timeout;')->fetchColumn(),
         ];
     }
 
