@@ -54,8 +54,8 @@ class Filter extends Method
                     if (false !== \strpos($rule[1], '*')) {
                         // кроме * есть другие символы
                         if ('' != \trim($rule[1], '*')) {
-                            $where[] = "b.{$field} LIKE ?{$fields[$field]}";
-                            $vars[]  = \str_replace(['%', '*', '_'], ['\\%', '%', '\\_'], $rule[1]);
+                            $where[] = "b.{$field} LIKE ?{$fields[$field]} ESCAPE '#'";
+                            $vars[]  = \str_replace(['#', '%', '_', '*'], ['##', '#%', '#_', '%'], $rule[1]);
                         }
                         break;
                     }

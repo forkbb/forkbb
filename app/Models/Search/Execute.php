@@ -223,8 +223,8 @@ class Execute extends Method
         //???? что делать с подчеркиванием в именах?
         if ('*' !== $v->author) {
             $usePIdx                 = true;
-            $vars[':author']         = \str_replace(['*', '?'], ['%', '_'], $v->author);
-            $whereIdx[]              = 'p.poster LIKE ?s:author';
+            $vars[':author']         = \str_replace(['#', '_', '*', '?'], ['##', '#_', '%', '_'], $v->author);
+            $whereIdx[]              = 'p.poster LIKE ?s:author ESCAPE \'#\'';
         }
 
         $this->model->showAs         = $v->show_as;
