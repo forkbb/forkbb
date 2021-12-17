@@ -345,7 +345,9 @@ class Sqlite
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
 
-        return false !== $this->db->exec("ALTER TABLE \"{$table}\" DROP COLUMN \"{$field}\""); // ???? add 2021-03-12 (3.35.0)
+        if (\version_compare($this->db->getAttribute(PDO::ATTR_SERVER_VERSION), '3.36.0', '>=')) { // 3.35.1 and 3.35.5 have fixes
+            return false !== $this->db->exec("ALTER TABLE \"{$table}\" DROP COLUMN \"{$field}\""); // add 2021-03-12 (3.35.0)
+        }
     }
 
     /**
@@ -366,7 +368,7 @@ class Sqlite
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
 
-        return false !== $this->db->exec("ALTER TABLE \"{$table}\" RENAME COLUMN \"{$old}\" TO \"{$new}\""); // ???? add 2018-09-15 (3.25.0)
+        return false !== $this->db->exec("ALTER TABLE \"{$table}\" RENAME COLUMN \"{$old}\" TO \"{$new}\""); // add 2018-09-15 (3.25.0)
     }
 
     /**
@@ -442,10 +444,10 @@ class Sqlite
     public function statistics(): array
     {
         $vars = [
-            ':tname'  => \str_replace('_', '\\_', $this->dbPrefix) . '%',
+            ':tname'  => \str_replace('_', '#_', $this->dbPrefix) . '%',
             ':ttype'  => 'table',
         ];
-        $query = 'SELECT COUNT(*) FROM sqlite_master WHERE tbl_name LIKE ?s:tname ESCAPE \'\\\' AND type=?s:ttype';
+        $query = 'SELECT COUNT(*) FROM sqlite_master WHERE tbl_name LIKE ?s:tname ESCAPE \'#\' AND type=?s:ttype';
 
         $tables  = $this->db->query($query, $vars)->fetchColumn();
 
@@ -472,12 +474,12 @@ class Sqlite
     public function getMap(): array
     {
         $vars = [
-            ':tname' => \str_replace('_', '\\_', $this->dbPrefix) . '%',
+            ':tname' => \str_replace('_', '#_', $this->dbPrefix) . '%',
         ];
         $query = 'SELECT m.name AS table_name, p.name AS column_name, p.type AS data_type
             FROM sqlite_master AS m
             INNER JOIN pragma_table_info(m.name) AS p
-            WHERE table_name LIKE ?s:tname ESCAPE \'\\\'
+            WHERE table_name LIKE ?s:tname ESCAPE \'#\'
             ORDER BY m.name, p.cid';
 
         $stmt   = $this->db->query($query, $vars);
