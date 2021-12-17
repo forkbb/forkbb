@@ -69,7 +69,7 @@ class DB extends PDO
 
         $statement = $typeU . 'Statement' . (\PHP_MAJOR_VERSION < 8 ? '7' : '');
 
-        if (\is_file(__DIR__ . "/DB/{$typeU}.php")) {
+        if (\is_file(__DIR__ . "/DB/{$statement}.php")) {
             $statement = 'ForkBB\\Core\\DB\\' . $statement;
         } else {
             $statement = DBStatement::class;
