@@ -176,9 +176,7 @@ class PTopic extends DataModel
             FROM ::pm_posts AS pp
             WHERE pp.topic_id=?i:tid AND pp.posted>?i:visit';
 
-        $pid = $this->c->DB->query($query, $vars)->fetchColumn();
-
-        return $pid ?: 0;
+        return (int) $this->c->DB->query($query, $vars)->fetchColumn();
     }
 
     protected function setsender(User $user): void

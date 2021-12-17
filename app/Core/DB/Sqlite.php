@@ -15,7 +15,7 @@ use PDO;
 use PDOStatement;
 use PDOException;
 
-class Mysql
+class Sqlite
 {
     /**
      * @var DB
@@ -33,7 +33,13 @@ class Mysql
      * @var array
      */
     protected $dbTypeRepl = [
-        '%^SERIAL$%i' => 'INT(10) UNSIGNED AUTO_INCREMENT',
+        '%^.*?INT.*$%i'                           => 'INTEGER',
+        '%^.*?(?:CHAR|CLOB|TEXT).*$%i'            => 'TEXT',
+        '%^.*?BLOB.*$%i'                          => 'BLOB',
+        '%^.*?(?:REAL|FLOA|DOUB).*$%i'            => 'REAL',
+        '%^.*?(?:NUMERIC|DECIMAL).*$%i'           => 'NUMERIC',
+        '%^.*?BOOL.*$%i'                          => 'BOOLEAN', // ???? не соответствует SQLite
+        '%^SERIAL$%i'                             => 'INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL',
     ];
 
     /**
@@ -41,18 +47,10 @@ class Mysql
      * @var array
      */
     protected $types = [
-        'bool'      => 'b',
-        'boolean'   => 'b',
-        'tinyint'   => 'i',
-        'smallint'  => 'i',
-        'mediumint' => 'i',
-        'int'       => 'i',
-        'integer'   => 'i',
-        'bigint'    => 'i',
-        'decimal'   => 'i',
-        'dec'       => 'i',
-        'float'     => 'i',
-        'double'    => 'i',
+        'boolean' => 'b',
+        'integer' => 'i',
+        'real'    => 'f',
+        'numeric' => 'f',
     ];
 
     public function __construct(DB $db, string $prefix)
@@ -91,11 +89,11 @@ class Mysql
             if (\preg_match('%^(.*)\s*(\(\d+\))$%', $value, $matches)) {
                 $this->testStr($matches[1]);
 
-                $value = "`{$matches[1]}`{$matches[2]}";
+                $value = "\"{$matches[1]}\""; // {$matches[2]}
             } else {
                 $this->testStr($value);
 
-                $value = "`{$value}`";
+                $value = "\"{$value}\"";
             }
         }
 
@@ -134,11 +132,10 @@ class Mysql
     public function tableExists(string $table, bool $noPrefix = false): bool
     {
         $vars = [
-            ':tname' => ($noPrefix ? '' : $this->dbPrefix) . $table,
+            ':tname'  => ($noPrefix ? '' : $this->dbPrefix) . $table,
+            ':ttype'  => 'table',
         ];
-        $query = 'SELECT 1
-            FROM INFORMATION_SCHEMA.TABLES
-            WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:tname';
+        $query = 'SELECT 1 FROM sqlite_master WHERE tbl_name=?s:tname AND type=?s:ttype';
 
         $stmt   = $this->db->query($query, $vars);
         $result = $stmt->fetch();
@@ -153,20 +150,20 @@ class Mysql
      */
     public function fieldExists(string $table, string $field, bool $noPrefix = false): bool
     {
-        $vars = [
-            ':tname' => ($noPrefix ? '' : $this->dbPrefix) . $table,
-            ':fname' => $field,
-        ];
-        $query = 'SELECT 1
-            FROM INFORMATION_SCHEMA.COLUMNS
-            WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:tname AND COLUMN_NAME = ?s:fname';
+        $this->testStr($table);
 
-        $stmt   = $this->db->query($query, $vars);
-        $result = $stmt->fetch();
+        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        $stmt  = $this->db->query("PRAGMA table_info({$table})");
 
-        $stmt->closeCursor();
+        while ($row = $stmt->fetch()) {
+            if ($field === $row['name']) {
+                $stmt->closeCursor();
 
-        return ! empty($result);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -177,12 +174,11 @@ class Mysql
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
 
         $vars = [
-            ':tname' => $table,
-            ':index' => 'PRIMARY' == $index ? $index : $table . '_' . $index,
+            ':tname'  => $table,
+            ':iname'  => $table . '_' . $index, // ???? PRIMARY KEY искать нужно не в sqlite_master!
+            ':itype'  => 'index',
         ];
-        $query = 'SELECT 1
-            FROM INFORMATION_SCHEMA.STATISTICS
-            WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:tname AND INDEX_NAME = ?s:index';
+        $query = 'SELECT 1 FROM sqlite_master WHERE name=?s:iname AND tbl_name=?s:tname AND type=?s:itype';
 
         $stmt   = $this->db->query($query, $vars);
         $result = $stmt->fetch();
@@ -199,91 +195,66 @@ class Mysql
     {
         $this->testStr($table);
 
+        $prKey = true;
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
-        $query = "CREATE TABLE IF NOT EXISTS `{$table}` (";
+        $query = "CREATE TABLE IF NOT EXISTS \"{$table}\" (";
 
         foreach ($schema['FIELDS'] as $field => $data) {
             $this->testStr($field);
             // имя и тип
-            $query .= "`{$field}` " . $this->replType($data[0]);
-            // сравнение
-            if (\preg_match('%^(?:CHAR|VARCHAR|TINYTEXT|TEXT|MEDIUMTEXT|LONGTEXT|ENUM|SET)%i', $data[0])) {
-                $query .= ' CHARACTER SET utf8mb4 COLLATE utf8mb4_';
+            $query .= "\"{$field}\" " . $this->replType($data[0]);
 
-                if (
-                    isset($data[3])
-                    && \is_string($data[3])
-                ) {
-                    $this->testStr($data[3]);
+            if ('SERIAL' === \strtoupper($data[0])) {
+                $prKey = false;
+            } else {
+                // сравнение
+                if (\preg_match('%^(?:CHAR|VARCHAR|TINYTEXT|TEXT|MEDIUMTEXT|LONGTEXT|ENUM|SET)%i', $data[0])) {
+                    $query .= ' COLLATE ';
 
-                    $query .= $data[3];
-                } else {
-                    $query .= 'unicode_ci';
+                    if (
+                        isset($data[3])
+                        && \is_string($data[3])
+                        && \preg_match('%bin%i', $data[3])
+                    ) {
+                        $query .= 'BINARY';
+                    } else {
+                        $query .= 'NOCASE';
+                    }
                 }
-            }
-            // не NULL
-            if (empty($data[1])) {
-                $query .= ' NOT NULL';
-            }
-            // значение по умолчанию
-            if (isset($data[2])) {
-                $query .= ' DEFAULT ' . $this->convToStr($data[2]);
+                // не NULL
+                if (empty($data[1])) {
+                    $query .= ' NOT NULL';
+                }
+                // значение по умолчанию
+                if (isset($data[2])) {
+                    $query .= ' DEFAULT ' . $this->convToStr($data[2]);
+                }
             }
 
             $query .= ', ';
         }
 
-        if (isset($schema['PRIMARY KEY'])) {
+        if ($prKey && isset($schema['PRIMARY KEY'])) { // если не было поля с типом SERIAL
             $query .= 'PRIMARY KEY (' . $this->replIdxs($schema['PRIMARY KEY']) . '), ';
         }
 
-        if (isset($schema['UNIQUE KEYS'])) {
+        $query  = \rtrim($query, ', ') . ")";
+        $result = false !== $this->db->exec($query);
+
+        // вынесено отдельно для сохранения имен индексов
+        if ($result && isset($schema['UNIQUE KEYS'])) {
             foreach ($schema['UNIQUE KEYS'] as $key => $fields) {
-                $this->testStr($key);
-
-                $query .= "UNIQUE `{$table}_{$key}` (" . $this->replIdxs($fields) . '), ';
+                $result = $result && $this->addIndex($table, $key, $fields, true, true);
             }
         }
 
-        if (isset($schema['INDEXES'])) {
+        if ($result && isset($schema['INDEXES'])) {
             foreach ($schema['INDEXES'] as $index => $fields) {
-                $this->testStr($index);
-
-                $query .= "INDEX `{$table}_{$index}` (" . $this->replIdxs($fields) . '), ';
+                $result = $result && $this->addIndex($table, $index, $fields, false, true);
             }
         }
 
-        if (isset($schema['ENGINE'])) {
-            $engine = $schema['ENGINE'];
-        } else {
-            // при отсутствии типа таблицы он определяется на основании типов других таблиц в базе
-            $prefix = \str_replace('_', '\\_', $this->dbPrefix);
-            $stmt   = $this->db->query("SHOW TABLE STATUS LIKE '{$prefix}%'");
-            $engine = [];
-
-            while ($row = $stmt->fetch()) {
-                if (isset($engine[$row['Engine']])) {
-                    ++$engine[$row['Engine']];
-                } else {
-                    $engine[$row['Engine']] = 1;
-                }
-            }
-            // в базе нет таблиц
-            if (empty($engine)) {
-                $engine = 'MyISAM';
-            } else {
-                \arsort($engine);
-                // берем тип наиболее часто встречаемый у имеющихся таблиц
-                $engine = \array_keys($engine);
-                $engine = \array_shift($engine);
-            }
-        }
-
-        $this->testStr($engine);
-
-        $query = \rtrim($query, ', ') . ") ENGINE={$engine} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
-
-        return false !== $this->db->exec($query);
+        return $result;
     }
 
     /**
@@ -295,7 +266,7 @@ class Mysql
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
 
-        return false !== $this->db->exec("DROP TABLE IF EXISTS `{$table}`");
+        return false !== $this->db->exec("DROP TABLE IF EXISTS \"{$table}\"");
     }
 
     /**
@@ -316,11 +287,11 @@ class Mysql
         $old = ($noPrefix ? '' : $this->dbPrefix) . $old;
         $new = ($noPrefix ? '' : $this->dbPrefix) . $new;
 
-        return false !== $this->db->exec("ALTER TABLE `{$old}` RENAME TO `{$new}`");
+        return false !== $this->db->exec("ALTER TABLE \"{$old}\" RENAME TO \"{$new}\"");
     }
 
     /**
-     * Добавляет поле в таблицу
+     * Добавляет поле в таблицу // ???? нет COLLATE
      */
     public function addField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $after = null, bool $noPrefix = false): bool
     {
@@ -332,20 +303,16 @@ class Mysql
         }
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
-        $query = "ALTER TABLE `{$table}` ADD `{$field}` " . $this->replType($type);
+        $query = "ALTER TABLE \"{$table}\" ADD COLUMN \"{$field}\" " . $this->replType($type);
 
-        if (! $allowNull) {
-            $query .= ' NOT NULL';
-        }
+        if ('SERIAL' !== \strtoupper($type)) {
+            if (! $allowNull) {
+                $query .= ' NOT NULL';
+            }
 
-        if (null !== $default) {
-            $query .= ' DEFAULT ' . $this->convToStr($default);
-        }
-
-        if (null !== $after) {
-            $this->testStr($after);
-
-            $query .= " AFTER `{$after}`";
+            if (null !== $default) {
+                $query .= ' DEFAULT ' . $this->convToStr($default);
+            }
         }
 
         return false !== $this->db->exec($query);
@@ -360,23 +327,8 @@ class Mysql
         $this->testStr($field);
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
-        $query = "ALTER TABLE `{$table}` MODIFY `{$field}` " . $this->replType($type);
 
-        if (! $allowNull) {
-            $query .= ' NOT NULL';
-        }
-
-        if (null !== $default) {
-            $query .= ' DEFAULT ' . $this->convToStr($default);
-        }
-
-        if (null !== $after) {
-            $this->testStr($after);
-
-            $query .= " AFTER `{$after}`";
-        }
-
-        return false !== $this->db->exec($query);
+		return true; // ???????????????????????????????????????
     }
 
     /**
@@ -393,7 +345,7 @@ class Mysql
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
 
-        return false !== $this->db->exec("ALTER TABLE `{$table}` DROP COLUMN `{$field}`");
+        return false !== $this->db->exec("ALTER TABLE \"{$table}\" DROP COLUMN \"{$field}\""); // ???? add 2021-03-12 (3.35.0)
     }
 
     /**
@@ -414,34 +366,7 @@ class Mysql
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
 
-        $vars = [
-            ':tname' => $table,
-            ':fname' => $old,
-        ];
-        $query = 'SELECT COLUMN_DEFAULT, IS_NULLABLE, COLUMN_TYPE
-            FROM INFORMATION_SCHEMA.COLUMNS
-            WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:tname AND COLUMN_NAME = ?s:fname';
-
-        $stmt   = $this->db->query($query, $vars);
-        $result = $stmt->fetch();
-
-        $stmt->closeCursor();
-
-        $type      = $result['COLUMN_TYPE'];
-        $allowNull = 'YES' == $result['IS_NULLABLE'];
-        $default   = $result['COLUMN_DEFAULT'];
-
-        $query = "ALTER TABLE `{$table}` CHANGE COLUMN `{$old}` `{$new}` " . $this->replType($type);
-
-        if (! $allowNull) {
-            $query .= ' NOT NULL';
-        }
-
-        if (null !== $default) {
-            $query .= ' DEFAULT ' . $this->convToStr($default);
-        }
-
-        return false !== $this->db->exec($query);
+        return false !== $this->db->exec("ALTER TABLE \"{$table}\" RENAME COLUMN \"{$old}\" TO \"{$new}\""); // ???? add 2018-09-15 (3.25.0)
     }
 
     /**
@@ -456,23 +381,17 @@ class Mysql
         }
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
-        $query = "ALTER TABLE `{$table}` ADD ";
 
-        if ('PRIMARY' == $index) {
-            $query .= 'PRIMARY KEY';
+        if ('PRIMARY' === $index) {
+            // ?????
         } else {
-            $index = $table . '_' . $index;
+            $index  = $table . '_' . $index;
 
             $this->testStr($index);
 
-            if ($unique) {
-                $query .= "UNIQUE `{$index}`";
-            } else {
-                $query .= "INDEX `{$index}`";
-            }
+            $unique = $unique ? 'UNIQUE' : '';
+            $query  = "CREATE {$unique} INDEX \"{$index}\" ON \"{$table}\" (" . $this->replIdxs($fields) . ')';
         }
-
-        $query .= ' (' . $this->replIdxs($fields) . ')';
 
         return false !== $this->db->exec($query);
     }
@@ -489,19 +408,11 @@ class Mysql
         }
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
-        $query = "ALTER TABLE `{$table}` ";
+        $index = $table . '_' . ('PRIMARY' === $index ? 'pkey' : $index);
 
-        if ('PRIMARY' == $index) {
-            $query .= "DROP PRIMARY KEY";
-        } else {
-            $index = $table . '_' . $index;
+        $this->testStr($index);
 
-            $this->testStr($index);
-
-            $query .= "DROP INDEX `{$index}`";
-        }
-
-        return false !== $this->db->exec($query);
+        return false !== $this->db->exec("DROP INDEX \"{$index}\"");
     }
 
     /**
@@ -513,7 +424,16 @@ class Mysql
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
 
-        return false !== $this->db->exec("TRUNCATE TABLE `{$table}`");
+        if (false !== $this->db->exec("DELETE FROM \"{$table}\"")) {
+            $vars = [
+                ':tname' => $table,
+            ];
+            $query = 'DELETE FROM SQLITE_SEQUENCE WHERE name=?s:tname';
+
+            return false !== $this->db->exec($query, $vars);
+        }
+
+        return false;
     }
 
     /**
@@ -521,43 +441,29 @@ class Mysql
      */
     public function statistics(): array
     {
-        $prefix  = str_replace('_', '\\_', $this->dbPrefix);
-        $stmt    = $this->db->query("SHOW TABLE STATUS LIKE '{$prefix}%'");
-        $records = $size = 0;
-        $engine  = [];
+        $vars = [
+            ':tname'  => \str_replace('_', '\\_', $this->dbPrefix) . '%',
+            ':ttype'  => 'table',
+        ];
+        $query = 'SELECT COUNT(*) FROM sqlite_master WHERE tbl_name LIKE ?s:tname ESCAPE \'\\\' AND type=?s:ttype';
 
-        while ($row = $stmt->fetch()) {
-            $records += $row['Rows'];
-            $size += $row['Data_length'] + $row['Index_length'];
-            if (isset($engine[$row['Engine']])) {
-                ++$engine[$row['Engine']];
-            } else {
-                $engine[$row['Engine']] = 1;
-            }
-        }
+        $tables  = $this->db->query($query, $vars)->fetchColumn();
 
-        \arsort($engine);
-
-        $tmp = [];
-
-        foreach ($engine as $key => $val) {
-            $tmp[] = "{$key}({$val})";
-        }
-
-        $other = [];
-        $stmt  = $this->db->query("SHOW VARIABLES LIKE 'character\\_set\\_%'");
-
-        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $other[$row[0]] = $row[1];
-        }
+        $records = 0;
+        $size    = (int) $this->db->query('PRAGMA page_count;')->fetchColumn();
+        $size   *= (int) $this->db->query('PRAGMA page_size;')->fetchColumn();
 
         return [
-            'db'      => 'MySQL (PDO) v.' . $this->db->getAttribute(PDO::ATTR_SERVER_VERSION),
-            'tables'  => implode(', ', $tmp),
-            'records' => $records,
-            'size'    => $size,
-            'server info' => $this->db->getAttribute(PDO::ATTR_SERVER_INFO),
-        ] + $other;
+            'db'           => 'SQLite (PDO) v.' . $this->db->getAttribute(PDO::ATTR_SERVER_VERSION),
+            'tables'       => (string) $tables,
+            'records'      => $records,
+            'size'         => $size,
+#            'server info'  => $this->db->getAttribute(PDO::ATTR_SERVER_INFO),
+            'encoding'     => $this->db->query('PRAGMA encoding;')->fetchColumn(),
+            'journal_mode' => $this->db->query('PRAGMA journal_mode;')->fetchColumn(),
+            'synchronous'  => $this->db->query('PRAGMA synchronous;')->fetchColumn(),
+            'busy_timeout' => $this->db->query('PRAGMA busy_timeout;')->fetchColumn(),
+        ];
     }
 
     /**
@@ -566,12 +472,13 @@ class Mysql
     public function getMap(): array
     {
         $vars = [
-            ':tname' => str_replace('_', '\\_', $this->dbPrefix) . '%',
+            ':tname' => \str_replace('_', '\\_', $this->dbPrefix) . '%',
         ];
-        $query = 'SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE
-            FROM INFORMATION_SCHEMA.COLUMNS
-            WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME LIKE ?s:tname
-            ORDER BY TABLE_NAME';
+        $query = 'SELECT m.name AS table_name, p.name AS column_name, p.type AS data_type
+            FROM sqlite_master AS m
+            INNER JOIN pragma_table_info(m.name) AS p
+            WHERE table_name LIKE ?s:tname ESCAPE \'\\\'
+            ORDER BY m.name, p.cid';
 
         $stmt   = $this->db->query($query, $vars);
         $result = [];
@@ -579,14 +486,14 @@ class Mysql
         $prfLen = \strlen($this->dbPrefix);
 
         while ($row = $stmt->fetch()) {
-            if ($table !== $row['TABLE_NAME']) {
-                $table                = $row['TABLE_NAME'];
+            if ($table !== $row['table_name']) {
+                $table                = $row['table_name'];
                 $tableNoPref          = \substr($table, $prfLen);
                 $result[$tableNoPref] = [];
             }
 
-            $type = \strtolower($row['DATA_TYPE']);
-            $result[$tableNoPref][$row['COLUMN_NAME']] = $this->types[$type] ?? 's';
+            $type = \strtolower($row['data_type']);
+            $result[$tableNoPref][$row['column_name']] = $this->types[$type] ?? 's';
         }
 
         return $result;

@@ -16,6 +16,11 @@ use PDOException;
 
 class DBStatement extends PDOStatement
 {
+    const BOOLEAN = 'b';
+    const FLOAT   = 'f';
+    const INTEGER = 'i';
+    const STRING  = 's';
+
     /**
      * Префикс для таблиц базы
      * @var PDO
@@ -33,12 +38,13 @@ class DBStatement extends PDOStatement
      * @var array
      */
     protected $types = [
-        's'  => PDO::PARAM_STR,
-        'i'  => PDO::PARAM_INT,
         'b'  => PDO::PARAM_BOOL,
+        'f'  => PDO::PARAM_STR,
+        'i'  => PDO::PARAM_INT,
+        's'  => PDO::PARAM_STR,
         'a'  => PDO::PARAM_STR,
-        'as' => PDO::PARAM_STR,
         'ai' => PDO::PARAM_INT,
+        'as' => PDO::PARAM_STR,
     ];
 
     protected function __construct(PDO $db)

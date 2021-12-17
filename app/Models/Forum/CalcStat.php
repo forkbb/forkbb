@@ -32,7 +32,7 @@ class CalcStat extends Method
             FROM ::topics AS t
             WHERE t.forum_id=?i:fid AND t.moved_to!=0';
 
-        $moved = $this->c->DB->query($query, $vars)->fetchColumn();
+        $moved = (int) $this->c->DB->query($query, $vars)->fetchColumn();
 
         $query = 'SELECT COUNT(t.id) as num_topics, SUM(t.num_replies) as num_replies
             FROM ::topics AS t

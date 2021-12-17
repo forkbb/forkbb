@@ -256,9 +256,7 @@ class Topic extends DataModel
             FROM ::posts AS p
             WHERE p.topic_id=?i:tid AND p.posted>?i:visit';
 
-        $pid = $this->c->DB->query($query, $vars)->fetchColumn();
-
-        return $pid ?: 0;
+        return (int) $this->c->DB->query($query, $vars)->fetchColumn();
     }
 
     /**
@@ -280,9 +278,7 @@ class Topic extends DataModel
             FROM ::posts AS p
             WHERE p.topic_id=?i:tid AND p.posted>?i:visit';
 
-        $pid = $this->c->DB->query($query, $vars)->fetchColumn();
-
-        return $pid ?: 0;
+        return (int) $this->c->DB->query($query, $vars)->fetchColumn();
     }
 
     /**

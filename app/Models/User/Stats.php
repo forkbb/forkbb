@@ -26,7 +26,7 @@ class Stats extends Action
             FROM ::users AS u
             WHERE u.group_id!=?i:gid';
 
-        $total = $this->c->DB->query($query, $vars)->fetchColumn();
+        $total = (int) $this->c->DB->query($query, $vars)->fetchColumn();
 
         $query = 'SELECT u.id, u.username
             FROM ::users AS u

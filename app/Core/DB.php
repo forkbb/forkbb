@@ -56,22 +56,46 @@ class DB extends PDO
 
     public function __construct(string $dsn, string $username = null, string $password = null, array $options = [], string $prefix = '')
     {
-        $type = \strstr($dsn, ':', true);
+        $type  = \strstr($dsn, ':', true);
+        $typeU = \ucfirst($type);
+
         if (
             ! $type
             || ! \in_array($type, PDO::getAvailableDrivers(), true)
-            || ! \is_file(__DIR__ . '/DB/' . \ucfirst($type) . '.php')
+            || ! \is_file(__DIR__ . "/DB/{$typeU}.php")
         ) {
             throw new PDOException("Driver isn't found for '$type'");
         }
-        $this->dbType = $type;
 
+        $statement = $typeU . 'Statement' . (\PHP_MAJOR_VERSION < 8 ? '7' : '');
+
+        if (\is_file(__DIR__ . "/DB/{$typeU}.php")) {
+            $statement = 'ForkBB\\Core\\DB\\' . $statement;
+        } else {
+            $statement = DBStatement::class;
+        }
+
+        if ('sqlite' === $type) {
+            $dsn = \str_replace('!PATH!', \realpath(__DIR__ . '/../config/db') . '/', $dsn);
+        }
+
+        $this->dbType   = $type;
         $this->dbPrefix = $prefix;
+
+        if (isset($options['initSQLCommands'])) {
+            $initSQLCommands = implode(';', $options['initSQLCommands']);
+
+            unset($options['initSQLCommands']);
+        } else {
+            $initSQLCommands = null;
+        }
+
         $options += [
             self::ATTR_DEFAULT_FETCH_MODE => self::FETCH_ASSOC,
             self::ATTR_EMULATE_PREPARES   => false,
+            self::ATTR_STRINGIFY_FETCHES  => false,
             self::ATTR_ERRMODE            => self::ERRMODE_EXCEPTION,
-            self::ATTR_STATEMENT_CLASS    => [DBStatement::class, [$this]],
+            self::ATTR_STATEMENT_CLASS    => [$statement, [$this]],
         ];
 
         $start  = \microtime(true);
@@ -79,6 +103,10 @@ class DB extends PDO
         parent::__construct($dsn, $username, $password, $options);
 
         $this->saveQuery('PDO::__construct()', \microtime(true) - $start, false);
+
+        if ($initSQLCommands) {
+            $this->exec($initSQLCommands);
+        }
 
         $this->beginTransaction();
     }
@@ -144,6 +172,7 @@ class DB extends PDO
                     case 'i':
                     case 'b':
                     case 's':
+                    case 'f':
                         $value = [1];
                         break;
                     default:
@@ -212,6 +241,14 @@ class DB extends PDO
     public function getQueries(): array
     {
         return $this->queries;
+    }
+
+    /**
+     * Возвращает тип базы данных указанный в DSN
+     */
+    public function getType(): string
+    {
+        return $this->dbType;
     }
 
     /**

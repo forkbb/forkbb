@@ -38,7 +38,7 @@ class Pgsql
         '%^BIGINT(?:\s*\(\d+\))?(?:\s*UNSIGNED)?$%i'                     => 'BIGINT',
         '%^(?:TINY|MEDIUM|LONG)TEXT$%i'                                  => 'TEXT',
         '%^DOUBLE(?:\s+PRECISION)?(?:\s*\([\d,]+\))?(?:\s*UNSIGNED)?$%i' => 'DOUBLE PRECISION',
-        '%^FLOAT(?:\s*\([\d,]+\))?(?:\s*UNSIGNED)?$%i'                   => 'REAL',
+        '%^(?:FLOAT|REAL)(?:\s*\([\d,]+\))?(?:\s*UNSIGNED)?$%i'          => 'REAL',
     ];
 
     /**
@@ -189,13 +189,12 @@ class Pgsql
     public function indexExists(string $table, string $index, bool $noPrefix = false): bool
     {
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
-        $index = $table . '_' . ('PRIMARY' === $index ? 'pkey' : $index);
 
         $vars = [
             ':schema' => 'public',
             ':tname'  => $table,
             ':ttype'  => 'r',
-            ':iname'  => $index,
+            ':iname'  => $table . '_' . ('PRIMARY' === $index ? 'pkey' : $index),
             ':itype'  => 'i',
         ];
         $query = 'SELECT 1
@@ -525,16 +524,18 @@ class Pgsql
         ];
         $query = 'SELECT table_name, column_name, data_type
             FROM information_schema.columns
-            WHERE table_catalog = current_database() AND table_schema = ?s:schema AND table_name LIKE ?s:tname';
+            WHERE table_catalog = current_database() AND table_schema = ?s:schema AND table_name LIKE ?s:tname
+            ORDER BY table_name';
 
         $stmt   = $this->db->query($query, $vars);
         $result = [];
         $table  = null;
+        $prfLen = \strlen($this->dbPrefix);
 
         while ($row = $stmt->fetch()) {
             if ($table !== $row['table_name']) {
                 $table                = $row['table_name'];
-                $tableNoPref          = \substr($table, \strlen($this->dbPrefix));
+                $tableNoPref          = \substr($table, $prfLen);
                 $result[$tableNoPref] = [];
             }
 

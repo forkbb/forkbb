@@ -20,7 +20,9 @@ use function \ForkBB\__;
 
 class Install extends Admin
 {
-    const PHP_MIN = '7.3.0';
+    const PHP_MIN    = '7.3.0';
+    const MYSQL_MIN  = '5.5.3';
+    const SQLITE_MIN = '3.25.0';
 
     const JSON_OPTIONS = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
 
@@ -109,6 +111,7 @@ class Install extends Admin
         // доступность папок на запись
         $folders = [
             $this->c->DIR_APP . '/config',
+            $this->c->DIR_APP . '/config/db',
             $this->c->DIR_CACHE,
             $this->c->DIR_PUBLIC . '/img/avatars',
         ];
@@ -159,7 +162,7 @@ class Install extends Admin
                     'dbname'        => 'required|string:trim',
                     'dbuser'        => 'string:trim',
                     'dbpass'        => 'string:trim',
-                    'dbprefix'      => 'required|string:trim|max:40|check_prefix',
+                    'dbprefix'      => 'required|string:trim|min:1|max:40|check_prefix',
                     'username'      => 'required|string:trim|min:2|max:25',
                     'password'      => 'required|string|min:16|max:100000|password',
                     'email'         => 'required|string:trim|email',
@@ -472,11 +475,13 @@ class Install extends Admin
      */
     public function vCheckHost(Validator $v, $dbhost)
     {
-        $this->c->DB_USERNAME = $v->dbuser;
-        $this->c->DB_PASSWORD = $v->dbpass;
-        $this->c->DB_PREFIX   = $v->dbprefix;
-        $dbtype               = $v->dbtype;
-        $dbname               = $v->dbname;
+        $this->c->DB_USERNAME    = $v->dbuser;
+        $this->c->DB_PASSWORD    = $v->dbpass;
+        $this->c->DB_OPTIONS     = [];
+        $this->c->DB_OPTS_AS_STR = '';
+        $this->c->DB_PREFIX      = $v->dbprefix;
+        $dbtype                  = $v->dbtype;
+        $dbname                  = $v->dbname;
 
         // есть ошибки, ни чего не проверяем
         if (! empty($v->getErrors())) {
@@ -500,6 +505,15 @@ class Install extends Admin
 
                 break;
             case 'sqlite':
+                $this->c->DB_DSN         = "sqlite:!PATH!{$dbname}";
+                $this->c->DB_OPTS_AS_STR = '\\PDO::ATTR_TIMEOUT => 5, /* \'initSQLCommands\' => [\'PRAGMA journal_mode=WAL\',], */';
+                $this->c->DB_OPTIONS     = [
+                    PDO::ATTR_TIMEOUT => 5,
+                    'initSQLCommands' => [
+                        'PRAGMA journal_mode=WAL',
+                    ],
+                ];
+
                 break;
             case 'pgsql':
                 if (\preg_match('%^([^:]+):(\d+)$%', $dbhost, $matches)) {
@@ -518,13 +532,33 @@ class Install extends Admin
                 break;
         }
 
-        $this->c->DB_OPTIONS  = [];
-
         // подключение к БД
         try {
             $stat = $this->c->DB->statistics();
         } catch (PDOException $e) {
             $v->addError($e->getMessage());
+
+            return $dbhost;
+        }
+
+        $version = $versionNeed = $this->c->DB->getAttribute(PDO::ATTR_SERVER_VERSION);
+
+        switch ($dbtype) {
+            case 'mysql_innodb':
+            case 'mysql':
+                $versionNeed = self::MYSQL_MIN;
+                $progName    = 'MySQL';
+
+                break;
+            case 'sqlite':
+                $versionNeed = self::SQLITE_MIN;
+                $progName    = 'SQLite';
+
+                break;
+        }
+
+        if (\version_compare($version, $versionNeed, '<')) {
+            $v->addError(['You are running error', $progName, $version, $this->c->FORK_REVISION, $versionNeed]);
 
             return $dbhost;
         }
@@ -549,7 +583,7 @@ class Install extends Admin
             isset($stat['server_encoding'])
             && 'UTF8' !== $stat['server_encoding']
         ) {
-            $v->addError('Bad database encoding');
+            $v->addError(['Bad database encoding', 'UTF8']);
         }
 
         // база PostgreSQL, порядок сопоставления/сортировки
@@ -566,6 +600,14 @@ class Install extends Admin
             && 'C' !== $stat['lc_ctype']
         ) {
             $v->addError('Bad database ctype');
+        }
+
+        // база SQLite, кодировка базы
+        if (
+            isset($stat['encoding'])
+            && 'UTF-8' !== $stat['encoding']
+        ) {
+            $v->addError(['Bad database encoding', 'UTF-8']);
         }
 
         return $dbhost;
@@ -840,16 +882,12 @@ class Install extends Admin
                 'id'   => ['SERIAL', false],
                 'word' => ['VARCHAR(20)', false, '' , 'bin'],
             ],
-            'PRIMARY KEY' => ['word'],
-            'INDEXES' => [
-                'id_idx' => ['id'],
+            'PRIMARY KEY' => ['id'],
+            'UNIQUE KEYS' => [
+                'word_idx' => ['word']
             ],
             'ENGINE' => $this->DBEngine,
         ];
-        if ('sqlite' === $v->dbtype) { //????
-            $schema['PRIMARY KEY'] = ['id'];
-            $schema['UNIQUE KEYS'] = ['word_idx' => ['word']];
-        }
         $this->c->DB->createTable('search_words', $schema);
 
         // topic_subscriptions
@@ -1338,6 +1376,7 @@ class Install extends Admin
             $config = \str_replace($key, \addslashes($val), $config);
         }
 
+        $config = \str_replace('_DB_OPTIONS_', $this->c->DB_OPTS_AS_STR, $config);
         $result = \file_put_contents($this->c->DIR_APP . '/config/main.php', $config);
 
         if (false === $result) {

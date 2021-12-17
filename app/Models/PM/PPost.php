@@ -238,8 +238,8 @@ class PPost extends DataModel
             ORDER BY pp.id DESC
             LIMIT 1";
 
-        $id = $this->c->DB->query($query, $vars)->fetchColumn();
+        $id = (int) $this->c->DB->query($query, $vars)->fetchColumn();
 
-        return empty($id) ? null : $id;
+        return $id ?: null;
     }
 }
