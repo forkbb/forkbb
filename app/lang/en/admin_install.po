@@ -154,7 +154,7 @@ msgid "Prefix reserved"
 msgstr "The 'sqlite_' and 'pg_' prefixes are reserved. Please choose a different prefix."
 
 msgid "Existing table error"
-msgstr "A table called '%1$susers' is already present in the database '%2$s'. This could mean that ForkBB is already installed or that another piece of software is installed and is occupying one or more of the table names ForkBB requires. If you want to install multiple copies of ForkBB in the same database, you must choose a different table prefix."
+msgstr "The database '%2$s' contains tables with the prefix '%1$s': <b>%3$s</b>."
 
 msgid "Administrators"
 msgstr "Administrators"

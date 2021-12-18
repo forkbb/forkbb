@@ -563,9 +563,12 @@ class Install extends Admin
             return $dbhost;
         }
 
-        // проверка наличия таблицы пользователей в БД
-        if ($this->c->DB->tableExists('users')) {
-            $v->addError(['Existing table error', $v->dbprefix, $v->dbname]);
+        // проверка наличия таблиц в БД
+        if (
+            '' != $stat['tables']
+            && '0' != $stat['tables']
+        ) {
+            $v->addError(['Existing table error', $v->dbprefix, $v->dbname, $stat['tables']]);
 
             return $dbhost;
         }
