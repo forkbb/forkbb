@@ -348,6 +348,83 @@ class Sqlite
         if (\version_compare($this->db->getAttribute(PDO::ATTR_SERVER_VERSION), '3.36.0', '>=')) { // 3.35.1 and 3.35.5 have fixes
             return false !== $this->db->exec("ALTER TABLE \"{$table}\" DROP COLUMN \"{$field}\""); // add 2021-03-12 (3.35.0)
         }
+
+        $stmt = $this->db->query("PRAGMA table_info({$table})");
+
+        $fields = [];
+
+        while ($row = $stmt->fetch()) {
+            $fields[$row['name']] = $row['name'];
+        }
+
+        unset($fields[$field]);
+
+        $vars = [
+            ':tname' => $table,
+        ];
+        $query = 'SELECT * FROM sqlite_master WHERE tbl_name=?s:tname';
+
+        $stmt = $this->db->query($query, $vars);
+
+        $createQuery = null;
+        $otherQuery  = [];
+
+        while ($row = $stmt->fetch()) {
+            switch ($row['type']) {
+                case 'table':
+                    $createQuery = $row['sql'];
+
+                    break;
+                default:
+                    if (! empty($row['sql'])) {
+                        $otherQuery[$row['name']] = $row['sql'];
+                    }
+
+                    break;
+            }
+        }
+
+        $tableTmp    = $table . '_tmp' . \time();
+        $createQuery = \preg_replace("%(CREATE\s+TABLE\s+\"?){$table}\b%", '${1}' . $tableTmp, $createQuery, -1, $count);
+
+        $result = 1 === $count;
+
+        $tmp         = \implode('|', $fields);
+        $createQuery = \preg_replace_callback(
+            "%[(,]\s*(?:\"{$field}\"|\b{$field}\b).*?(?:,(?=\s*(?:\"?\b(?:{$tmp})|CONSTRAINT|PRIMARY|CHECK|FOREIGN))|\)(?=\s*(?:$|WITHOUT|STRICT)))%si",
+            function ($matches) {
+                if ('(' === $matches[0][0]) {
+                    return '(';
+                } elseif (')' === $matches[0][-1]) {
+                    return ')';
+                } else {
+                    return ',';
+                }
+            },
+            $createQuery,
+            -1,
+            $count
+        );
+
+        $result = $result && 1 === $count;
+        $result = $result && false !== $this->db->exec($createQuery);
+
+        $tmp   = '"' . \implode('", "', $fields) . '"';
+        $query = "INSERT INTO \"{$tableTmp}\" ({$tmp})
+            SELECT {$tmp}
+            FROM \"{$table}\"";
+
+        $result = $result && false !== $this->db->exec($query);
+        $result = $result && $this->dropTable($table, true);
+        $result = $result && $this->renameTable($tableTmp, $table, true);
+
+        foreach ($otherQuery as $query) {
+            if (! \preg_match("%\([^)]*?\b{$field}\b%", $query)) {
+                $result = $result && false !== $this->db->exec($query);
+            }
+        }
+
+        return $result;
     }
 
     /**
