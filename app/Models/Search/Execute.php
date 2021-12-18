@@ -235,7 +235,7 @@ class Execute extends Method
                 $whereCJK[]          = 'p.message LIKE ?s:word';
                 $usePCJK             = true;
                 if (isset($vars[':author'])) {
-                    $whereCJK[]      = 'p.poster LIKE ?s:author';
+                    $whereCJK[]      = 'p.poster LIKE ?s:author ESCAPE \'#\'';
                 }
                 break;
             case 2:
@@ -243,14 +243,14 @@ class Execute extends Method
                 $whereCJK[]          = 't.subject LIKE ?s:word';
                 $useTCJK             = true;
                 if (isset($vars[':author'])) {
-                    $whereCJK[]      = 't.poster LIKE ?s:author';
+                    $whereCJK[]      = 't.poster LIKE ?s:author ESCAPE \'#\'';
                 }
                 // при поиске в заголовках результат только в виде списка тем
                 $this->model->showAs = 1;
                 break;
             default:
                 if (isset($vars[':author'])) {
-                    $whereCJK[]      = '((p.message LIKE ?s:word AND p.poster LIKE ?s:author) OR (t.subject LIKE ?s:word AND t.poster LIKE ?s:author))';
+                    $whereCJK[]      = '((p.message LIKE ?s:word AND p.poster LIKE ?s:author ESCAPE \'#\') OR (t.subject LIKE ?s:word AND t.poster LIKE ?s:author ESCAPE \'#\'))';
                 } else {
                     $whereCJK[]      = '(p.message LIKE ?s:word OR t.subject LIKE ?s:word)';
                 }
