@@ -1210,7 +1210,7 @@ class Install extends Admin
             'b_show_user_info'        => 1,
             'b_show_post_count'       => 1,
             'o_smilies'               => 1,
-            'o_smilies_sig'           => 1,
+            'b_smilies_sig'           => 1,
             'o_make_links'            => 1,
             'o_default_lang'          => $v->defaultlang,
             'o_default_style'         => $v->defaultstyle,

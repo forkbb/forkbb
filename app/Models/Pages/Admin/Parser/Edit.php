@@ -33,7 +33,7 @@ class Edit extends Parser
                     'p_message_bbcode'    => 'required|integer|in:0,1',
                     'p_sig_bbcode'        => 'required|integer|in:0,1',
                     'o_smilies'           => 'required|integer|in:0,1',
-                    'o_smilies_sig'       => 'required|integer|in:0,1',
+                    'b_smilies_sig'       => 'required|integer|in:0,1',
                     'o_make_links'        => 'required|integer|in:0,1',
                 ])->addAliases([
                 ])->addArguments([
@@ -131,9 +131,9 @@ class Edit extends Parser
                     'caption' => 'Smilies mess label',
                     'help'    => 'Smilies mess help',
                 ],
-                'o_smilies_sig' => [
+                'b_smilies_sig' => [
                     'type'    => 'radio',
-                    'value'   => $config->o_smilies_sig,
+                    'value'   => $config->b_smilies_sig,
                     'values'  => $yn,
                     'caption' => 'Smilies sigs label',
                     'help'    => 'Smilies sigs help',

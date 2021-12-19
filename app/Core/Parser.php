@@ -43,7 +43,7 @@ class Parser extends Parserus
         if (
             '1' == $this->c->user->show_smilies
             && (
-                '1' == $this->c->config->o_smilies_sig
+                1 == $this->c->config->b_smilies_sig
                 || '1' == $this->c->config->o_smilies
             )
         ) {
@@ -143,7 +143,7 @@ class Parser extends Parserus
                  ->parse($text);
         }
 
-        if ('1' == $this->c->config->o_smilies_sig) {
+        if (1 == $this->c->config->b_smilies_sig) {
             $this->detectSmilies();
         }
 
