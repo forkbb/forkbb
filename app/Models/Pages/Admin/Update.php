@@ -499,8 +499,10 @@ class Update extends Admin
     protected function stageNumber43(array $args): ?int
     {
         $this->c->config->i_timeout_visit = $this->c->config->o_timeout_visit ?? 3600;
+        $this->c->config->i_timeout_online = $this->c->config->o_timeout_online ?? 900;
 
         unset($this->c->config->o_timeout_visit);
+        unset($this->c->config->o_timeout_online);
 
         $this->c->config->save();
 
