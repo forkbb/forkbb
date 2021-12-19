@@ -55,7 +55,7 @@ class Options extends Admin
                     'b_quickpost'             => 'required|integer|in:0,1',
                     'b_users_online'          => 'required|integer|in:0,1',
                     'b_show_dot'              => 'required|integer|in:0,1',
-                    'o_topic_views'           => 'required|integer|in:0,1',
+                    'b_topic_views'           => 'required|integer|in:0,1',
                     'o_quickjump'             => 'required|integer|in:0,1',
                     'o_search_all_forums'     => 'required|integer|in:0,1',
                     'o_additional_navlinks'   => 'string:trim|max:65000 bytes',
@@ -427,9 +427,9 @@ class Options extends Admin
                     'caption' => 'User has posted label',
                     'help'    => 'User has posted help',
                 ],
-                'o_topic_views' => [
+                'b_topic_views' => [
                     'type'    => 'radio',
-                    'value'   => $config->o_topic_views,
+                    'value'   => $config->b_topic_views,
                     'values'  => $yn,
                     'caption' => 'Topic views label',
                     'help'    => 'Topic views help',

@@ -434,7 +434,7 @@ class Topic extends DataModel
      */
     protected function getshowViews(): bool
     {
-        return '1' == $this->c->config->o_topic_views;
+        return 1 == $this->c->config->b_topic_views;
     }
 
     /**

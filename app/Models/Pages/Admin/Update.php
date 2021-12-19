@@ -510,7 +510,9 @@ class Update extends Admin
         $this->c->config->b_users_online    = '1' == $this->c->config->o_users_online ? 1 : 0;
         $this->c->config->b_censoring       = '1' == $this->c->config->o_censoring ? 1 : 0;
         $this->c->config->b_show_dot        = '1' == $this->c->config->o_show_dot ? 1 : 0;
+        $this->c->config->b_topic_views     = '1' == $this->c->config->o_topic_views ? 1 : 0;
 
+        unset($this->c->config->o_topic_views);
         unset($this->c->config->o_show_dot);
         unset($this->c->config->o_timeout_visit);
         unset($this->c->config->o_timeout_online);
