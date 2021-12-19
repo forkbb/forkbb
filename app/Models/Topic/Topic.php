@@ -69,7 +69,7 @@ class Topic extends DataModel
         ) {
             return false;
         } elseif (
-            '1' == $this->parent->post_replies
+            1 === $this->parent->post_replies
             || (
                 null === $this->parent->post_replies
                 && 1 === $this->c->user->g_post_replies
