@@ -149,7 +149,7 @@ class Register extends Page
      */
     protected function regEnd(Validator $v): Page
     {
-        if ('1' == $this->c->config->o_regs_verify) {
+        if (1 == $this->c->config->b_regs_verify) {
             $groupId = FORK_GROUP_UNVERIFIED;
             $key     = $this->c->Secury->randomPass(31);
         } else {
@@ -225,7 +225,7 @@ class Register extends Page
         $this->c->Lang->load('register');
 
         // отправка письма активации аккаунта
-        if ('1' == $this->c->config->o_regs_verify) {
+        if (1 == $this->c->config->b_regs_verify) {
             $this->c->Csrf->setHashExpiration(259200); // ???? хэш действует 72 часа
 
             $link = $this->c->Router->link(
@@ -328,7 +328,7 @@ class Register extends Page
         $this->c->Lang->load('register');
 
         // фейк отправки письма активации аккаунта
-        if ('1' == $this->c->config->o_regs_verify) {
+        if (1 == $this->c->config->b_regs_verify) {
             $isSent = true;
 
             // письмо активации аккаунта отправлено

@@ -77,7 +77,7 @@ class Options extends Admin
                     'changeSmtpPassword'      => 'checkbox',
                     'b_smtp_ssl'              => 'required|integer|in:0,1',
                     'b_regs_allow'            => 'required|integer|in:0,1',
-                    'o_regs_verify'           => 'required|integer|in:0,1',
+                    'b_regs_verify'           => 'required|integer|in:0,1',
                     'b_regs_report'           => 'required|integer|in:0,1',
                     'o_rules'                 => 'required|integer|in:0,1|check_empty:o_rules_message',
                     'o_rules_message'         => 'string:trim|max:65000 bytes|html',
@@ -630,9 +630,9 @@ class Options extends Admin
                     'caption' => 'Allow new label',
                     'help'    => 'Allow new help',
                 ],
-                'o_regs_verify' => [
+                'b_regs_verify' => [
                     'type'    => 'radio',
-                    'value'   => $config->o_regs_verify,
+                    'value'   => $config->b_regs_verify,
                     'values'  => $yn,
                     'caption' => 'Verify label',
                     'help'    => 'Verify help',
