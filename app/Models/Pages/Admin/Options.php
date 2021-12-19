@@ -52,7 +52,7 @@ class Options extends Admin
                     'i_disp_topics_default'   => 'required|integer|min:10|max:50',
                     'i_disp_posts_default'    => 'required|integer|min:10|max:50',
                     'i_disp_users'            => 'required|integer|min:10|max:50',
-                    'o_quickpost'             => 'required|integer|in:0,1',
+                    'b_quickpost'             => 'required|integer|in:0,1',
                     'o_users_online'          => 'required|integer|in:0,1',
                     'o_show_dot'              => 'required|integer|in:0,1',
                     'o_topic_views'           => 'required|integer|in:0,1',
@@ -406,9 +406,9 @@ class Options extends Admin
         $form['sets']['features'] = [
             'legend' => 'Features subhead',
             'fields' => [
-                'o_quickpost' => [
+                'b_quickpost' => [
                     'type'    => 'radio',
-                    'value'   => $config->o_quickpost,
+                    'value'   => $config->b_quickpost,
                     'values'  => $yn,
                     'caption' => 'Quick post label',
                     'help'    => 'Quick post help',

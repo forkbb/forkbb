@@ -1219,7 +1219,7 @@ class Install extends Admin
             'i_disp_topics_default'   => 30,
             'i_disp_posts_default'    => 25,
             'i_disp_users'            => 50,
-            'o_quickpost'             => 1,
+            'b_quickpost'             => 1,
             'o_users_online'          => 1,
             'o_censoring'             => 0,
             'o_show_dot'              => 0,
