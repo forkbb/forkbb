@@ -27,7 +27,7 @@ class Censorship extends Model
      */
     public function init(): Censorship
     {
-        if ('1' == $this->c->config->o_censoring) {
+        if (1 == $this->c->config->b_censoring) {
             $list = $this->c->Cache->get('censorship');
 
             if (! isset($list['searchList'], $list['replaceList'])) {
@@ -50,7 +50,7 @@ class Censorship extends Model
      */
     public function censor(string $str): string
     {
-        if ('1' == $this->c->config->o_censoring) {
+        if (1 == $this->c->config->b_censoring) {
             return (string) \preg_replace($this->searchList, $this->replaceList,  $str);
         } else {
             return $str;

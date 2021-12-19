@@ -28,7 +28,7 @@ class Censoring extends Admin
             $v = $this->c->Validator->reset()
                 ->addRules([
                     'token'               => 'token:AdminCensoring',
-                    'o_censoring'         => 'required|integer|in:0,1',
+                    'b_censoring'         => 'required|integer|in:0,1',
                     'form.*.search_for'   => 'string:trim|max:60',
                     'form.*.replace_with' => 'string:trim|max:60',
                 ])->addAliases([
@@ -37,7 +37,7 @@ class Censoring extends Admin
                 ]);
 
             if ($v->validation($_POST)) {
-                $this->c->config->o_censoring = $v->o_censoring;
+                $this->c->config->b_censoring = $v->b_censoring;
                 $this->c->config->save();
 
                 $this->c->censorship->save($v->form);
@@ -70,9 +70,9 @@ class Censoring extends Admin
             'sets'   => [
                 'onoff' => [
                     'fields' => [
-                        'o_censoring' => [
+                        'b_censoring' => [
                             'type'    => 'radio',
-                            'value'   => $this->c->config->o_censoring,
+                            'value'   => $this->c->config->b_censoring,
                             'values'  => [1 => __('Yes'), 0 => __('No')],
                             'caption' => 'Censor words label',
                             'help'    => 'Censor words help',
