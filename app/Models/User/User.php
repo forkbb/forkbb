@@ -282,7 +282,7 @@ class User extends DataModel
      */
     protected function getshowAvatar(): bool
     {
-        return '1' == $this->c->config->o_avatars && 1 == $this->show_avatars;
+        return 1 == $this->c->config->b_avatars && 1 == $this->show_avatars;
     }
 
     /**

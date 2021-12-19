@@ -142,7 +142,7 @@ class Profile extends Rules
 
     protected function getuseAvatar(): bool
     {
-        return '1' == $this->c->config->o_avatars;
+        return 1 == $this->c->config->b_avatars;
     }
 
     protected function getuseSignature(): bool

@@ -62,7 +62,7 @@ class Options extends Admin
                     'i_feed_ttl'              => 'required|integer|in:0,5,15,30,60',
                     'i_report_method'         => 'required|integer|in:0,1,2',
                     'o_mailing_list'          => 'string:trim|max:65000 bytes', // ???? проверка списка email
-                    'o_avatars'               => 'required|integer|in:0,1',
+                    'b_avatars'               => 'required|integer|in:0,1',
                     'o_avatars_dir'           => 'required|string:trim|max:255|check_dir',
                     'i_avatars_width'         => 'required|integer|min:50|max:999',
                     'i_avatars_height'        => 'required|integer|min:50|max:999',
@@ -507,9 +507,9 @@ class Options extends Admin
         $form['sets']['avatars'] = [
             'legend' => 'Avatars subhead',
             'fields' => [
-                'o_avatars' => [
+                'b_avatars' => [
                     'type'    => 'radio',
-                    'value'   => $config->o_avatars,
+                    'value'   => $config->b_avatars,
                     'values'  => $yn,
                     'caption' => 'Use avatars label',
                     'help'    => 'Use avatars help',

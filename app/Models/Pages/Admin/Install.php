@@ -1229,7 +1229,7 @@ class Install extends Admin
             'b_regs_report'           => 0,
             'i_default_email_setting' => 2,
             'o_mailing_list'          => $v->email,
-            'o_avatars'               => \in_array(\strtolower(@\ini_get('file_uploads')), ['on', 'true', '1'], true) ? 1 : 0,
+            'b_avatars'               => \in_array(\strtolower(@\ini_get('file_uploads')), ['on', 'true', '1'], true) ? 1 : 0,
             'o_avatars_dir'           => '/img/avatars',
             'i_avatars_width'         => 60,
             'i_avatars_height'        => 60,
