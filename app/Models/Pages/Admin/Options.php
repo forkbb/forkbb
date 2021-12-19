@@ -87,7 +87,7 @@ class Options extends Admin
                     'b_message_all_caps'      => 'required|integer|in:0,1',
                     'b_subject_all_caps'      => 'required|integer|in:0,1',
                     'p_force_guest_email'     => 'required|integer|in:0,1',
-                    'p_sig_all_caps'          => 'required|integer|in:0,1',
+                    'b_sig_all_caps'          => 'required|integer|in:0,1',
                     'b_poll_enabled'          => 'required|integer|in:0,1',
                     'i_poll_max_questions'    => 'required|integer|min:1|max:99',
                     'i_poll_max_fields'       => 'required|integer|min:2|max:99',
@@ -384,9 +384,9 @@ class Options extends Admin
                     'caption' => 'All caps subject label',
                     'help'    => 'All caps subject help',
                 ],
-                'p_sig_all_caps' => [
+                'b_sig_all_caps' => [
                     'type'    => 'radio',
-                    'value'   => $config->p_sig_all_caps,
+                    'value'   => $config->b_sig_all_caps,
                     'values'  => $yn,
                     'caption' => 'All caps sigs label',
                     'help'    => 'All caps sigs help',
