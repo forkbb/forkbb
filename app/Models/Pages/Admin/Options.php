@@ -75,7 +75,7 @@ class Options extends Admin
                     'o_smtp_user'             => 'string:trim|max:255',
                     'o_smtp_pass'             => 'string:trim|max:255',
                     'changeSmtpPassword'      => 'checkbox',
-                    'o_smtp_ssl'              => 'required|integer|in:0,1',
+                    'b_smtp_ssl'              => 'required|integer|in:0,1',
                     'o_regs_allow'            => 'required|integer|in:0,1',
                     'o_regs_verify'           => 'required|integer|in:0,1',
                     'b_regs_report'           => 'required|integer|in:0,1',
@@ -610,9 +610,9 @@ class Options extends Admin
                     'caption' => '',
                     'label'   => 'SMTP change password help',
                 ],
-                'o_smtp_ssl' => [
+                'b_smtp_ssl' => [
                     'type'    => 'radio',
-                    'value'   => $config->o_smtp_ssl,
+                    'value'   => $config->b_smtp_ssl,
                     'values'  => $yn,
                     'caption' => 'SMTP SSL label',
                     'help'    => 'SMTP SSL help',

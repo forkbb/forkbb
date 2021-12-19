@@ -48,7 +48,7 @@ return [
         'o_smtp_host'      => '',
         'o_smtp_user'      => '',
         'o_smtp_pass'      => '',
-        'o_smtp_ssl'       => '',
+        'b_smtp_ssl'       => 0,
     ],
 
     'shared' => [
