@@ -54,7 +54,7 @@ class Options extends Admin
                     'i_disp_users'            => 'required|integer|min:10|max:50',
                     'b_quickpost'             => 'required|integer|in:0,1',
                     'b_users_online'          => 'required|integer|in:0,1',
-                    'o_show_dot'              => 'required|integer|in:0,1',
+                    'b_show_dot'              => 'required|integer|in:0,1',
                     'o_topic_views'           => 'required|integer|in:0,1',
                     'o_quickjump'             => 'required|integer|in:0,1',
                     'o_search_all_forums'     => 'required|integer|in:0,1',
@@ -420,9 +420,9 @@ class Options extends Admin
                     'caption' => 'Users online label',
                     'help'    => 'Users online help',
                 ],
-                'o_show_dot' => [
+                'b_show_dot' => [
                     'type'    => 'radio',
-                    'value'   => $config->o_show_dot,
+                    'value'   => $config->b_show_dot,
                     'values'  => $yn,
                     'caption' => 'User has posted label',
                     'help'    => 'User has posted help',

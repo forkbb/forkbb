@@ -1222,7 +1222,7 @@ class Install extends Admin
             'b_quickpost'             => 1,
             'b_users_online'          => 1,
             'b_censoring'             => 0,
-            'o_show_dot'              => 0,
+            'b_show_dot'              => 0,
             'o_topic_views'           => 1,
             'o_quickjump'             => 1,
             'o_additional_navlinks'   => '',
