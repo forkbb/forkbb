@@ -108,13 +108,13 @@ function dt(int $arg, bool $dateOnly = false, string $dateFormat = null, string 
     if (null === $dateFormat) {
         $dateFormat = $c->DATE_FORMATS[$c->user->date_format];
     }
-    if(null === $timeFormat) {
+    if (null === $timeFormat) {
         $timeFormat = $c->TIME_FORMATS[$c->user->time_format];
     }
 
     $date = \gmdate($dateFormat, $arg);
 
-    if(! $noText) {
+    if (! $noText) {
         $now = \time() + $diff;
 
         if ($date == \gmdate($dateFormat, $now)) {

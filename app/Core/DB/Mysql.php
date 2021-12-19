@@ -521,7 +521,7 @@ class Mysql
      */
     public function statistics(): array
     {
-        $prefix  = str_replace('_', '\\_', $this->dbPrefix);
+        $prefix  = \str_replace('_', '\\_', $this->dbPrefix);
         $stmt    = $this->db->query("SHOW TABLE STATUS LIKE '{$prefix}%'");
         $records = $size = 0;
         $engine  = [];
@@ -553,7 +553,7 @@ class Mysql
 
         return [
             'db'      => 'MySQL (PDO) v.' . $this->db->getAttribute(PDO::ATTR_SERVER_VERSION),
-            'tables'  => implode(', ', $tmp),
+            'tables'  => \implode(', ', $tmp),
             'records' => $records,
             'size'    => $size,
             'server info' => $this->db->getAttribute(PDO::ATTR_SERVER_INFO),
@@ -566,7 +566,7 @@ class Mysql
     public function getMap(): array
     {
         $vars = [
-            ':tname' => str_replace('_', '\\_', $this->dbPrefix) . '%',
+            ':tname' => \str_replace('_', '\\_', $this->dbPrefix) . '%',
         ];
         $query = 'SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE
             FROM INFORMATION_SCHEMA.COLUMNS

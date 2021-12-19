@@ -468,7 +468,7 @@ class Pgsql
 
         $vars = [
             ':schema' => 'public',
-            ':tname'  => str_replace('_', '\\_', $this->dbPrefix) . '%',
+            ':tname'  => \str_replace('_', '\\_', $this->dbPrefix) . '%',
         ];
         $query = 'SELECT c.relname, c.relpages, c.reltuples, c.relkind
             FROM pg_class AS c
@@ -520,7 +520,7 @@ class Pgsql
     {
         $vars = [
             ':schema' => 'public',
-            ':tname'  => str_replace('_', '\\_', $this->dbPrefix) . '%',
+            ':tname'  => \str_replace('_', '\\_', $this->dbPrefix) . '%',
         ];
         $query = 'SELECT table_name, column_name, data_type
             FROM information_schema.columns

@@ -373,7 +373,7 @@ class Forum extends DataModel
             throw new RuntimeException('The model does not have the required data');
         }
 
-        return (int) ceil(($this->num_topics ?: 1) / $this->c->user->disp_topics);
+        return (int) \ceil(($this->num_topics ?: 1) / $this->c->user->disp_topics);
     }
 
     /**

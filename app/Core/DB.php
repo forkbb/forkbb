@@ -83,7 +83,7 @@ class DB extends PDO
         $this->dbPrefix = $prefix;
 
         if (isset($options['initSQLCommands'])) {
-            $initSQLCommands = implode(';', $options['initSQLCommands']);
+            $initSQLCommands = \implode(';', $options['initSQLCommands']);
 
             unset($options['initSQLCommands']);
         } else {

@@ -389,7 +389,7 @@ class Structure extends Model
                 if (
                     'No_attr' !== $name
                     && 'Def' !== $name
-                    && ! preg_match(self::ATTR_PATTERN, $name)
+                    && ! \preg_match(self::ATTR_PATTERN, $name)
                 ) {
                     return ['Attribute name %s is not valid', $name];
                 }
@@ -425,7 +425,7 @@ class Structure extends Model
                 'No_attr' === $name
                 || 'Def' === $name
                 || isset($this->attrs[$name])
-                || ! preg_match(self::ATTR_PATTERN, $name)
+                || ! \preg_match(self::ATTR_PATTERN, $name)
             ) {
                 return ['Attribute name %s is not valid', $name];
             }

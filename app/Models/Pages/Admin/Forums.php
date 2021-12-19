@@ -366,7 +366,7 @@ class Forums extends Admin
                     'token'                => 'token:' . $marker,
                     'forum_name'           => 'required|string:trim|max:80',
                     'forum_desc'           => 'string:trim|max:65000 bytes|html',
-                    'parent'               => 'required|integer|in:' . implode(',', $this->listOfIndexes),
+                    'parent'               => 'required|integer|in:' . \implode(',', $this->listOfIndexes),
                     'sort_by'              => 'required|integer|in:0,1,2',
                     'redirect_url'         => 'string:trim|max:255', //????
                     'no_sum_mess'          => 'required|integer|in:0,1',

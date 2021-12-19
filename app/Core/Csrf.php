@@ -102,7 +102,7 @@ class Csrf
         $result      = false;
 
         if (
-            is_string($token)
+            \is_string($token)
             && \preg_match('%(e|s)(\d+)$%D', $token, $matches)
         ) {
             switch ($matches[1]) {
