@@ -1258,7 +1258,7 @@ class Install extends Admin
             'b_message_all_caps'      => 0,
             'b_subject_all_caps'      => 0,
             'b_sig_all_caps'          => 0,
-            'p_sig_bbcode'            => 1,
+            'b_sig_bbcode'            => 1,
             'p_force_guest_email'     => 1,
             'b_pm'                    => 0,
             'b_poll_enabled'          => 0,

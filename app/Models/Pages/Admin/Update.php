@@ -527,7 +527,9 @@ class Update extends Admin
         $config->b_message_all_caps    = '1' == $config->p_message_all_caps ? 1 : 0;
         $config->b_subject_all_caps    = '1' == $config->p_subject_all_caps ? 1 : 0;
         $config->b_sig_all_caps        = '1' == $config->p_sig_all_caps ? 1 : 0;
+        $config->b_sig_bbcode          = '1' == $config->p_sig_bbcode ? 1 : 0;
 
+        unset($config->p_sig_bbcode);
         unset($config->p_sig_all_caps);
         unset($config->p_subject_all_caps);
         unset($config->p_message_all_caps);

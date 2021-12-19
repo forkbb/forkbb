@@ -31,7 +31,7 @@ class Edit extends Parser
                 ])->addRules([
                     'token'               => 'token:AdminParser',
                     'b_message_bbcode'    => 'required|integer|in:0,1',
-                    'p_sig_bbcode'        => 'required|integer|in:0,1',
+                    'b_sig_bbcode'        => 'required|integer|in:0,1',
                     'b_smilies'           => 'required|integer|in:0,1',
                     'b_smilies_sig'       => 'required|integer|in:0,1',
                     'b_make_links'        => 'required|integer|in:0,1',
@@ -97,9 +97,9 @@ class Edit extends Parser
                     'caption' => 'BBCode label',
                     'help'    => 'BBCode help',
                 ],
-                'p_sig_bbcode' => [
+                'b_sig_bbcode' => [
                     'type'    => 'radio',
-                    'value'   => $config->p_sig_bbcode,
+                    'value'   => $config->b_sig_bbcode,
                     'values'  => $yn,
                     'caption' => 'BBCode sigs label',
                     'help'    => 'BBCode sigs help',

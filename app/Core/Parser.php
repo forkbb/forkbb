@@ -35,7 +35,7 @@ class Parser extends Parserus
     {
         if (
             1 == $this->c->config->b_message_bbcode
-            || '1' == $this->c->config->p_sig_bbcode
+            || 1 == $this->c->config->b_sig_bbcode
         ) {
             $this->setBBCodes($this->c->bbcode->list);
         }
@@ -71,7 +71,7 @@ class Parser extends Parserus
     public function prepare(string $text, bool $isSignature = false): string
     {
         if ($isSignature) {
-            $whiteList = '1' == $this->c->config->p_sig_bbcode
+            $whiteList = 1 == $this->c->config->b_sig_bbcode
                 ? (empty($this->c->config->a_bb_white_sig) && empty($this->c->config->a_bb_black_sig)
                     ? null
                     : $this->c->config->a_bb_white_sig
@@ -134,7 +134,7 @@ class Parser extends Parserus
     {
         // при null предполагается брать данные после prepare()
         if (null !== $text) {
-            $whiteList = '1' == $this->c->config->p_sig_bbcode ? null : [];
+            $whiteList = 1 == $this->c->config->b_sig_bbcode ? null : [];
             $blackList = $this->c->config->a_bb_black_sig;
 
             $this->setAttr('isSign', true)
