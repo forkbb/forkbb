@@ -71,7 +71,7 @@ abstract class Page extends Model
         $this->fTitle       = $container->config->o_board_title;
         $this->fDescription = $container->config->o_board_desc;
         $this->fRootLink    = $container->Router->link('Index');
-        if ('1' == $container->config->o_announcement) {
+        if (1 == $container->config->b_announcement) {
             $this->fAnnounce = $container->config->o_announcement_message;
         }
         $this->user         = $this->c->user; // передача текущего юзера в шаблон

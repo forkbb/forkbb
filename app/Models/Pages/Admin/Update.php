@@ -519,7 +519,9 @@ class Update extends Admin
         $config->b_topic_subscriptions = '1' == $config->o_topic_subscriptions ? 1 : 0;
         $config->b_smtp_ssl            = '1' == $config->o_smtp_ssl ? 1 : 0;
         $config->b_regs_allow          = '1' == $config->o_regs_allow ? 1 : 0;
+        $config->b_announcement        = '1' == $config->o_announcement ? 1 : 0;
 
+        unset($config->o_announcement);
         unset($config->o_regs_allow);
         unset($config->o_smtp_ssl);
         unset($config->o_topic_subscriptions);

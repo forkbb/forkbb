@@ -1245,7 +1245,7 @@ class Install extends Admin
             'b_smtp_ssl'              => 0,
             'b_regs_allow'            => 1,
             'b_regs_verify'           => 1,
-            'o_announcement'          => 0,
+            'b_announcement'          => 0,
             'o_announcement_message'  => __('Announcement '),
             'o_rules'                 => 0,
             'o_rules_message'         => __('Rules '),

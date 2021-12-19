@@ -82,7 +82,7 @@ class Options extends Admin
                     'o_rules'                 => 'required|integer|in:0,1|check_empty:o_rules_message',
                     'o_rules_message'         => 'string:trim|max:65000 bytes|html',
                     'i_default_email_setting' => 'required|integer|in:0,1,2',
-                    'o_announcement'          => 'required|integer|in:0,1|check_empty:o_announcement_message',
+                    'b_announcement'          => 'required|integer|in:0,1|check_empty:o_announcement_message',
                     'o_announcement_message'  => 'string:trim|max:65000 bytes|html',
                     'p_message_all_caps'      => 'required|integer|in:0,1',
                     'p_subject_all_caps'      => 'required|integer|in:0,1',
@@ -675,9 +675,9 @@ class Options extends Admin
         $form['sets']['announcement'] = [
             'legend' => 'Announcement subhead',
             'fields' => [
-                'o_announcement' => [
+                'b_announcement' => [
                     'type'    => 'radio',
-                    'value'   => $config->o_announcement,
+                    'value'   => $config->b_announcement,
                     'values'  => $yn,
                     'caption' => 'Display announcement label',
                     'help'    => 'Display announcement help',
