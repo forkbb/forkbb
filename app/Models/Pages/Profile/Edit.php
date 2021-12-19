@@ -194,7 +194,7 @@ class Edit extends Profile
             if (
                 true === $prepare
                 && ! $this->user->isAdmin
-                && 1 != $this->c->config->b_sig_all_caps
+                && 1 !== $this->c->config->b_sig_all_caps
             ) {
                 $text = $this->c->Parser->getText();
 

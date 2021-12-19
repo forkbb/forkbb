@@ -740,7 +740,7 @@ class Routing
             case $r::NOT_FOUND:
                 // ... 404 Not Found
                 if (
-                    '1' != $user->g_read_board
+                    1 !== $user->g_read_board
                     && $user->isGuest
                 ) {
                     $page = $this->c->Redirect->page('Login');

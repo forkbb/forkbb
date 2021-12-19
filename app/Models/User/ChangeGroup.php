@@ -41,7 +41,7 @@ class ChangeGroup extends Action
             }
 
             if (
-                1 != $newGroup->g_moderator
+                1 !== $newGroup->g_moderator
                 && $user->isAdmMod
             ) {
                 $moderators[$user->id] = $user;

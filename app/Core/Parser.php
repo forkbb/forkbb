@@ -59,8 +59,8 @@ class Parser extends Parserus
         }
 
         $this->setAttr('baseUrl', $this->c->BASE_URL);
-        $this->setAttr('showImg', '0' != $this->c->user->show_img);
-        $this->setAttr('showImgSign', '0' != $this->c->user->show_img_sig);
+        $this->setAttr('showImg', 1 === $this->c->user->show_img);
+        $this->setAttr('showImgSign', 1 === $this->c->user->show_img_sig);
     }
 
     /**

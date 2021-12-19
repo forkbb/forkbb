@@ -186,7 +186,7 @@ class Config
                             } else {
                                 $result[] = $value;
                             }
-                        } elseif (null != $key) {
+                        } elseif (null !== $key) {
                             throw new ForkException('Config array cannot be parsed');
                         }
 
@@ -267,7 +267,7 @@ class Config
 
                             $value = null;
                             $key   = null;
-                        } elseif (null != $key) {
+                        } elseif (null !== $key) {
                             throw new ForkException('Config array cannot be parsed');
                         }
 

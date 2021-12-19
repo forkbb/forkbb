@@ -27,7 +27,7 @@ trait PostValidatorTrait
         // заголовок темы только заглавными буквами
         } elseif (
             ! $executive
-            && 1 != $this->c->config->b_subject_all_caps
+            && 1 !== $this->c->config->b_subject_all_caps
             && \preg_match('%\p{Lu}%u', $subject)
             && ! \preg_match('%\p{Ll}%u', $subject)
         ) {
@@ -62,7 +62,7 @@ trait PostValidatorTrait
         if (
             true === $prepare
             && ! $executive
-            && 1 != $this->c->config->b_message_all_caps
+            && 1 !== $this->c->config->b_message_all_caps
         ) {
             $text = $this->c->Parser->getText();
 

@@ -29,7 +29,7 @@ class NoURL extends RulesValidator
         if (
             (
                 ! empty($flag)
-                || '1' != $this->c->user->g_post_links
+                || 1 !== $this->c->user->g_post_links
             )
             && \preg_match('%https?://|www\.%i', $value)
         ) {

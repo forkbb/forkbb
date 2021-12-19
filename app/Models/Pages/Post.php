@@ -291,7 +291,7 @@ class Post extends Page
                 $this->user->num_posts = $this->user->num_posts + 1;
 
                 if (
-                    0 != $this->user->g_promote_next_group
+                    $this->user->g_promote_next_group > 0
                     && $this->user->num_posts >= $this->user->g_promote_min_posts
                 ) {
                     $this->user->group_id = $this->user->g_promote_next_group;
