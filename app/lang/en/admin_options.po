@@ -150,12 +150,6 @@ msgstr "Topic views"
 msgid "Topic views help"
 msgstr "Keep track of the number of views a topic has. Disable if you are experiencing high server load in a busy forum."
 
-msgid "Search all label"
-msgstr "Search all forums"
-
-msgid "Search all help"
-msgstr "When disabled, searches will only be allowed in one forum at a time. Disable if server load is high due to excessive searching."
-
 msgid "Menu items label"
 msgstr "Additional menu items"
 

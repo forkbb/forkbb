@@ -532,6 +532,7 @@ class Update extends Admin
         unset($config->o_users_online);
         unset($config->o_censoring);
         unset($config->o_quickjump);
+        unset($config->o_search_all_forums);
 
         $config->save();
 
