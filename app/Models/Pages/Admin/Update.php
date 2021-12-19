@@ -525,7 +525,9 @@ class Update extends Admin
         $config->b_default_dst         = '1' == $config->o_default_dst ? 1 : 0;
         $config->b_message_bbcode      = '1' == $config->p_message_bbcode ? 1 : 0;
         $config->b_message_all_caps    = '1' == $config->p_message_all_caps ? 1 : 0;
+        $config->b_subject_all_caps    = '1' == $config->p_subject_all_caps ? 1 : 0;
 
+        unset($config->p_subject_all_caps);
         unset($config->p_message_all_caps);
         unset($config->p_message_bbcode);
         unset($config->o_default_dst);
