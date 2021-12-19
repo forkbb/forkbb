@@ -415,14 +415,12 @@ class Pgsql
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
 
         if ('PRIMARY' === $index) {
-            // ?????
+            $query = "ALTER TABLE \"{$table}\" ADD PRIMARY KEY (" . $this->replIdxs($fields) . ')';
         } else {
-            $index  = $table . '_' . $index;
-
             $this->testStr($index);
 
             $unique = $unique ? 'UNIQUE' : '';
-            $query  = "CREATE {$unique} INDEX \"{$index}\" ON \"{$table}\" (" . $this->replIdxs($fields) . ')';
+            $query  = "CREATE {$unique} INDEX \"{$table}_{$index}\" ON \"{$table}\" (" . $this->replIdxs($fields) . ')';
         }
 
         return false !== $this->db->exec($query);
@@ -440,11 +438,16 @@ class Pgsql
         }
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
-        $index = $table . '_' . ('PRIMARY' === $index ? 'pkey' : $index);
 
-        $this->testStr($index);
+        if ('PRIMARY' === $index) {
+            $query = "ALTER TABLE \"{$table}\" DROP CONSTRAINT \"{$table}_pkey\"";
+        } else {
+            $this->testStr($index);
 
-        return false !== $this->db->exec("DROP INDEX \"{$index}\"");
+            $query = "DROP INDEX \"{$table}_{$index}\"";
+        }
+
+        return false !== $this->db->exec($query);
     }
 
     /**
