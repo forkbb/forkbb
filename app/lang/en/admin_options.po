@@ -150,12 +150,6 @@ msgstr "Topic views"
 msgid "Topic views help"
 msgstr "Keep track of the number of views a topic has. Disable if you are experiencing high server load in a busy forum."
 
-msgid "Quick jump label"
-msgstr "Quick jump"
-
-msgid "Quick jump help"
-msgstr "Enable the quick jump (jump to forum) drop list."
-
 msgid "Search all label"
 msgstr "Search all forums"
 

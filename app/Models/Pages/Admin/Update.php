@@ -527,6 +527,7 @@ class Update extends Admin
         unset($config->o_quickpost);
         unset($config->o_users_online);
         unset($config->o_censoring);
+        unset($config->o_quickjump);
 
         $config->save();
 

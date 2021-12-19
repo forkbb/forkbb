@@ -56,7 +56,6 @@ class Options extends Admin
                     'b_users_online'          => 'required|integer|in:0,1',
                     'b_show_dot'              => 'required|integer|in:0,1',
                     'b_topic_views'           => 'required|integer|in:0,1',
-                    'o_quickjump'             => 'required|integer|in:0,1',
                     'o_search_all_forums'     => 'required|integer|in:0,1',
                     'o_additional_navlinks'   => 'string:trim|max:65000 bytes',
                     'i_feed_type'             => 'required|integer|in:0,1,2',
@@ -433,13 +432,6 @@ class Options extends Admin
                     'values'  => $yn,
                     'caption' => 'Topic views label',
                     'help'    => 'Topic views help',
-                ],
-                'o_quickjump' => [
-                    'type'    => 'radio',
-                    'value'   => $config->o_quickjump,
-                    'values'  => $yn,
-                    'caption' => 'Quick jump label',
-                    'help'    => 'Quick jump help',
                 ],
                 'o_search_all_forums' => [ //????
                     'type'    => 'radio',

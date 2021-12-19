@@ -150,12 +150,6 @@ msgstr "Счетчик просмотров"
 msgid "Topic views help"
 msgstr "Отслеживать сколько раз тема просматривалась. Выключите, если хотите снизить загрузку сервера."
 
-msgid "Quick jump label"
-msgstr "Быстрый переход"
-
-msgid "Quick jump help"
-msgstr "Разрешить быстрый переход на другой раздел (выпадающий список разделов)."
-
 msgid "Search all label"
 msgstr "Поиск по всем разделам"
 
