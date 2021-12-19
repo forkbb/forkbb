@@ -34,7 +34,7 @@ class Maintenance extends Admin
                     'check_message' => [$this, 'vCheckMessage'],
                 ])->addRules([
                     'token'                 => 'token:AdminMaintenance',
-                    'o_maintenance'         => 'required|integer|in:0,1',
+                    'b_maintenance'         => 'required|integer|in:0,1',
                     'o_maintenance_message' => 'string:trim|max:65000 bytes|check_message|html',
                 ])->addAliases([
                 ])->addArguments([
@@ -42,7 +42,7 @@ class Maintenance extends Admin
                 ]);
 
             if ($v->validation($_POST)) {
-                $this->c->config->o_maintenance         = $v->o_maintenance;
+                $this->c->config->b_maintenance         = $v->b_maintenance;
                 $this->c->config->o_maintenance_message = $v->o_maintenance_message;
                 $this->c->config->save();
 
@@ -74,9 +74,9 @@ class Maintenance extends Admin
                 'maint' => [
                     'legend' => 'Maintenance head',
                     'fields' => [
-                        'o_maintenance' => [
+                        'b_maintenance' => [
                             'type'    => 'radio',
-                            'value'   => $config->o_maintenance,
+                            'value'   => $config->b_maintenance,
                             'values'  => [1 => __('Yes'), 0 => __('No')],
                             'caption' => 'Maintenance mode label',
                             'help'    => 'Maintenance mode help',
@@ -170,7 +170,7 @@ class Maintenance extends Admin
     public function vCheckMessage(Validator $v, $value)
     {
         if (
-            1 === $v->o_maintenance
+            1 === $v->b_maintenance
             && 0 === \strlen($value)
         ) {
             $value = __('Default maintenance message');

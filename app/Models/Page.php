@@ -281,7 +281,7 @@ abstract class Page extends Model
     protected function iswevMessages(): void
     {
         if (
-            '1' == $this->c->config->o_maintenance
+            1 == $this->c->config->b_maintenance
             && $this->user->isAdmin
         ) {
             $this->fIswev = ['w', ['Maintenance mode enabled', $this->c->Router->link('AdminMaintenance')]];

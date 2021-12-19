@@ -34,7 +34,7 @@ class Primary
     public function check(): ?Page
     {
         if (
-            $this->c->config->o_maintenance
+            1 == $this->c->config->b_maintenance
             && ! $this->c->MAINTENANCE_OFF
         ) {
             if (
