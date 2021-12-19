@@ -72,7 +72,7 @@ class Topic extends DataModel
             '1' == $this->parent->post_replies
             || (
                 null === $this->parent->post_replies
-                && '1' == $this->c->user->g_post_replies
+                && 1 === $this->c->user->g_post_replies
             )
             || $this->c->user->isModerator($this)
         ) {
@@ -87,7 +87,7 @@ class Topic extends DataModel
      */
     protected function getcanSubscription(): bool
     {
-        return 1 == $this->c->config->b_topic_subscriptions
+        return 1 === $this->c->config->b_topic_subscriptions
             && $this->id > 0
             && ! $this->c->user->isGuest
             && ! $this->c->user->isUnverified;
@@ -434,7 +434,7 @@ class Topic extends DataModel
      */
     protected function getshowViews(): bool
     {
-        return 1 == $this->c->config->b_topic_views;
+        return 1 === $this->c->config->b_topic_views;
     }
 
     /**

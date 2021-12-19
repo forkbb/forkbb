@@ -60,7 +60,7 @@ class Routing
             );
 
             // регистрация
-            if (1 == $config->b_regs_allow) {
+            if (1 === $config->b_regs_allow) {
                 $r->add(
                     $r::GET,
                     '/registration',
@@ -102,7 +102,7 @@ class Routing
             );
         }
         // просмотр разрешен
-        if ('1' == $user->g_read_board) {
+        if (1 === $user->g_read_board) {
             // главная
             $r->add(
                 $r::GET,
@@ -122,10 +122,10 @@ class Routing
             );
             // правила
             if (
-                1 == $config->b_rules
+                1 === $config->b_rules
                 && (
                     ! $user->isGuest
-                    || 1 == $config->b_regs_allow
+                    || 1 === $config->b_regs_allow
                 )
             ) {
                 $r->add(
@@ -136,7 +136,7 @@ class Routing
                 );
             }
             // поиск
-            if ('1' == $user->g_search) {
+            if (1 === $user->g_search) {
                 $r->add(
                     $r::GET,
                     '/search[/simple/{keywords}[/{page|i:[1-9]\d*}]]',
@@ -354,7 +354,7 @@ class Routing
             // отправка email
             if (
                 ! $user->isGuest
-                && '1' == $user->g_send_email
+                && 1 === $user->g_send_email
             ) {
                 $r->add(
                     $r::DUO,

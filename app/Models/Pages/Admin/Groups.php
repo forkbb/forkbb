@@ -40,7 +40,7 @@ class Groups extends Admin
             }
             if (
                 ! \in_array($group->g_id, $notForDefault, true)
-                && 0 == $group->g_moderator
+                && 0 === $group->g_moderator
             ) {
                 $groupsDefault[$key] = $group->g_title;
             }

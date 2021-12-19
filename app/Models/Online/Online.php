@@ -57,7 +57,7 @@ class Online extends Model
         if (null === $position) {
             return $this;
         }
-        $detail = $page->onlineDetail && 1 == $this->c->config->b_users_online;
+        $detail = $page->onlineDetail && 1 === $this->c->config->b_users_online;
         $filter = $page->onlineFilter;
 
         $this->updateUser($position);

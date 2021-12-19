@@ -213,7 +213,7 @@ class PMTopic extends AbstractPM
 
         if (
             $this->model->canReply
-            && 1 == $this->c->config->b_quickpost
+            && 1 === $this->c->config->b_quickpost
         ) {
             $form = $this->messageForm(null, 'PMAction', $this->model->dataReply, false, false, true);
 

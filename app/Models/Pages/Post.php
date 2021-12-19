@@ -304,7 +304,7 @@ class Post extends Page
         $this->user->last_post = $now;
         $this->c->users->update($this->user);
 
-        if (1 == $this->c->config->b_topic_subscriptions) { // ????
+        if (1 === $this->c->config->b_topic_subscriptions) { // ????
             if (
                 $v->subscribe
                 && ! $topic->is_subscribed
@@ -324,11 +324,11 @@ class Post extends Page
             $this->c->search->index($post);
 
             if ($createTopic) {
-                if (1 == $this->c->config->b_forum_subscriptions) { // ????
+                if (1 === $this->c->config->b_forum_subscriptions) { // ????
                     $this->c->subscriptions->send($post, $topic);
                 }
             } else {
-                if (1 == $this->c->config->b_topic_subscriptions) { // ????
+                if (1 === $this->c->config->b_topic_subscriptions) { // ????
                     $this->c->subscriptions->send($post);
                 }
             }

@@ -106,7 +106,7 @@ trait PostValidatorTrait
         $notPM = $this->fIndex !== self::FI_PM;
 
         if ($this->user->isGuest) {
-            $ruleEmail    = (1 == $this->c->config->b_force_guest_email ? 'required|' : '') . 'string:trim|email:noban';
+            $ruleEmail    = (1 === $this->c->config->b_force_guest_email ? 'required|' : '') . 'string:trim|email:noban';
             $ruleUsername = 'required|string:trim|username';
         } else {
             $ruleEmail    = 'absent';
@@ -162,7 +162,7 @@ trait PostValidatorTrait
         if (
             ! $edit
             && $notPM
-            && 1 == $this->c->config->b_topic_subscriptions
+            && 1 === $this->c->config->b_topic_subscriptions
             && $this->user->email_confirmed
         ) {
             $ruleSubscribe = 'checkbox';
@@ -170,7 +170,7 @@ trait PostValidatorTrait
             $ruleSubscribe = 'absent';
         }
 
-        if (1 == $this->c->config->b_smilies) {
+        if (1 === $this->c->config->b_smilies) {
             $ruleHideSmilies = 'checkbox';
         } else {
             $ruleHideSmilies = 'absent';

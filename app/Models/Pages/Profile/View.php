@@ -242,7 +242,7 @@ class View extends Profile
             'caption' => 'Last post info',
         ];
         if ($this->curUser->last_post > 0) {
-            if ('1' == $this->user->g_search) {
+            if (1 === $this->user->g_search) {
                 $fields['posts'] = [
                     'class'   => ['pline'],
                     'type'    => 'link',
@@ -289,7 +289,7 @@ class View extends Profile
         if ($this->rules->viewSubscription) {
             $subscr     = $this->c->subscriptions;
             $subscrInfo = $subscr->info($this->curUser);
-            $isLink     = '1' == $this->user->g_search;
+            $isLink     = 1 === $this->user->g_search;
             if (! empty($subscrInfo[$subscr::FORUMS_DATA])) {
                 $fields['forums_subscr'] = [
                     'class'   => ['pline'],

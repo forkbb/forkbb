@@ -71,7 +71,7 @@ abstract class Page extends Model
         $this->fTitle       = $container->config->o_board_title;
         $this->fDescription = $container->config->o_board_desc;
         $this->fRootLink    = $container->Router->link('Index');
-        if (1 == $container->config->b_announcement) {
+        if (1 === $container->config->b_announcement) {
             $this->fAnnounce = $container->config->o_announcement_message;
         }
         $this->user         = $this->c->user; // передача текущего юзера в шаблон
@@ -122,7 +122,7 @@ abstract class Page extends Model
         ];
 
         if (
-            '1' == $this->user->g_read_board
+            1 === $this->user->g_read_board
             && $this->user->viewUsers
         ) {
             $navGen[self::FI_USERS] = [
@@ -133,11 +133,11 @@ abstract class Page extends Model
         }
 
         if (
-            1 == $this->c->config->b_rules
-            && '1' == $this->user->g_read_board
+            1 === $this->c->config->b_rules
+            && 1 === $this->user->g_read_board
             && (
                 ! $this->user->isGuest
-                || 1 == $this->c->config->b_regs_allow
+                || 1 === $this->c->config->b_regs_allow
             )
         ) {
             $navGen[self::FI_RULES] = [
@@ -148,8 +148,8 @@ abstract class Page extends Model
         }
 
         if (
-            '1' == $this->user->g_read_board
-            && '1' == $this->user->g_search
+            1 === $this->user->g_read_board
+            && 1 === $this->user->g_search
         ) {
             $sub = [];
             $sub['latest'] = [
@@ -194,7 +194,7 @@ abstract class Page extends Model
         }
 
         if ($this->user->isGuest) {
-            if (1 == $this->c->config->b_regs_allow) {
+            if (1 === $this->c->config->b_regs_allow) {
                 $navUser[self::FI_REG] = [
                     $r->link('Register'),
                     'Register',
@@ -248,7 +248,7 @@ abstract class Page extends Model
         }
 
         if (
-            '1' == $this->user->g_read_board
+            1 === $this->user->g_read_board
             && '' != $this->c->config->o_additional_navlinks
         ) {
             // position|name|link[|id]\n
@@ -281,7 +281,7 @@ abstract class Page extends Model
     protected function iswevMessages(): void
     {
         if (
-            1 == $this->c->config->b_maintenance
+            1 === $this->c->config->b_maintenance
             && $this->user->isAdmin
         ) {
             $this->fIswev = ['w', ['Maintenance mode enabled', $this->c->Router->link('AdminMaintenance')]];

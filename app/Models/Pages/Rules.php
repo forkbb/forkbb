@@ -53,7 +53,7 @@ class Rules extends Page
                 __('Register'),
             ]
         );
-        $this->rules      = 1 == $this->c->config->b_rules ? $this->c->config->o_rules_message : __('If no rules');
+        $this->rules      = 1 === $this->c->config->b_rules ? $this->c->config->o_rules_message : __('If no rules');
         $this->form       = $this->formAgree();
 
         return $this;

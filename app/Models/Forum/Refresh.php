@@ -35,7 +35,7 @@ class Refresh extends Action
 
         $this->list = [];
 
-        if ('1' == $read) {
+        if (1 === $read) {
             $list = [];
             $vars = [
                 ':gid' => $gid,

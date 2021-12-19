@@ -42,7 +42,7 @@ class Users extends Rules
 
     protected function getbanUsers(): bool
     {
-        return $this->user->isAdmin || ($this->user->isAdmMod && '1' == $this->user->g_mod_ban_users);
+        return $this->user->isAdmin || ($this->user->isAdmMod && 1 === $this->user->g_mod_ban_users);
     }
 
     protected function getchangeGroup(): bool

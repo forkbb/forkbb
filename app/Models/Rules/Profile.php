@@ -33,8 +33,8 @@ class Profile extends Rules
         $this->my          = ! $curUser->isGuest && $curUser->id === $this->user->id;
         $this->admin       = $this->user->isAdmin && ($this->my || ! $curUser->isAdmin);
         $this->moderator   = $this->user->isAdmMod && ($this->my || ! $curUser->isAdmMod);
-        $this->editProfile = $this->my || $this->admin || ($this->moderator && '1' == $this->user->g_mod_edit_users);
-        $this->editConfig  = $this->my || $this->admin || ($this->moderator && '1' == $this->user->g_mod_edit_users); // ????
+        $this->editProfile = $this->my || $this->admin || ($this->moderator && 1 === $this->user->g_mod_edit_users);
+        $this->editConfig  = $this->my || $this->admin || ($this->moderator && 1 === $this->user->g_mod_edit_users); // ????
 
         return $this;
     }
@@ -44,18 +44,18 @@ class Profile extends Rules
         return ! $this->curUser->isBanByName
             && (
                 $this->admin
-                || ($this->moderator && '1' == $this->user->g_mod_rename_users)
+                || ($this->moderator && 1 === $this->user->g_mod_rename_users)
             );
     }
 
     protected function geteditPass(): bool
     {
-        return $this->my || $this->admin || ($this->moderator && '1' == $this->user->g_mod_change_passwords);
+        return $this->my || $this->admin || ($this->moderator && 1 === $this->user->g_mod_change_passwords);
     }
 
     protected function getsetTitle(): bool
     {
-        return $this->admin || $this->moderator || '1' == $this->user->g_set_title;
+        return $this->admin || $this->moderator || 1 === $this->user->g_set_title;
     }
 
     protected function getviewOEmail(): bool
@@ -71,7 +71,7 @@ class Profile extends Rules
                 || (
                     ! $this->user->isGuest
                     && ! $this->user->isAdmMod
-                    && '1' == $this->user->g_send_email
+                    && 1 === $this->user->g_send_email
                     && $this->curUser->email_setting < 2
                 )
             );
@@ -122,7 +122,7 @@ class Profile extends Rules
     protected function getbanUser(): bool
     {
         return ! $this->my
-            && ($this->admin || ($this->moderator && '1' == $this->user->g_mod_ban_users))
+            && ($this->admin || ($this->moderator && 1 === $this->user->g_mod_ban_users))
             && ! $this->curUser->isAdmMod
             && ! $this->curUser->isGuest;
     }
@@ -142,7 +142,7 @@ class Profile extends Rules
 
     protected function getuseAvatar(): bool
     {
-        return 1 == $this->c->config->b_avatars;
+        return 1 === $this->c->config->b_avatars;
     }
 
     protected function getuseSignature(): bool
@@ -152,12 +152,12 @@ class Profile extends Rules
 
     protected function getviewWebsite(): bool
     {
-        return $this->user->isAdmMod || '1' == $this->curUser->g_post_links;
+        return $this->user->isAdmMod || 1 === $this->curUser->g_post_links;
     }
 
     protected function geteditWebsite(): bool
     {
-        return $this->admin || (($this->moderator || $this->my) && '1' == $this->user->g_post_links); //????
+        return $this->admin || (($this->moderator || $this->my) && 1 === $this->user->g_post_links); //????
     }
 
     protected function getchangeGroup(): bool
@@ -182,8 +182,8 @@ class Profile extends Rules
                 || $this->admin
             )
             && (
-                1 == $this->c->config->b_forum_subscriptions
-                || 1 == $this->c->config->b_topic_subscriptions
+                1 === $this->c->config->b_forum_subscriptions
+                || 1 === $this->c->config->b_topic_subscriptions
             );
     }
 }

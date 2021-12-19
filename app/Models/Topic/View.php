@@ -44,7 +44,7 @@ class View extends Action
 
         if (
             ! $this->c->user->isGuest
-            && 1 == $this->c->config->b_show_dot
+            && 1 === $this->c->config->b_show_dot
         ) {
             $vars = [
                 ':uid' => $this->c->user->id,

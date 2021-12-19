@@ -124,11 +124,11 @@ class Post extends DataModel
             && (
                 (
                     $this->id == $this->parent->first_post_id
-                    && '1' == $this->c->user->g_delete_topics
+                    && 1 === $this->c->user->g_delete_topics
                 )
                 || (
                     $this->id != $this->parent->first_post_id
-                    && '1' == $this->c->user->g_delete_posts
+                    && 1 === $this->c->user->g_delete_posts
                 )
             )
             && (
@@ -170,7 +170,7 @@ class Post extends DataModel
         }
 
         return $this->user->id === $this->c->user->id
-            && '1' == $this->c->user->g_edit_posts
+            && 1 === $this->c->user->g_edit_posts
             && (
                 '0' == $this->c->user->g_deledit_interval
                 || '1' == $this->edit_post

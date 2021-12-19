@@ -34,17 +34,17 @@ class Parser extends Parserus
     protected function init(): void
     {
         if (
-            1 == $this->c->config->b_message_bbcode
-            || 1 == $this->c->config->b_sig_bbcode
+            1 === $this->c->config->b_message_bbcode
+            || 1 === $this->c->config->b_sig_bbcode
         ) {
             $this->setBBCodes($this->c->bbcode->list);
         }
 
         if (
-            '1' == $this->c->user->show_smilies
+            1 === $this->c->user->show_smilies
             && (
-                1 == $this->c->config->b_smilies_sig
-                || 1 == $this->c->config->b_smilies
+                1 === $this->c->config->b_smilies_sig
+                || 1 === $this->c->config->b_smilies
             )
         ) {
             $smilies = [];
@@ -71,7 +71,7 @@ class Parser extends Parserus
     public function prepare(string $text, bool $isSignature = false): string
     {
         if ($isSignature) {
-            $whiteList = 1 == $this->c->config->b_sig_bbcode
+            $whiteList = 1 === $this->c->config->b_sig_bbcode
                 ? (empty($this->c->config->a_bb_white_sig) && empty($this->c->config->a_bb_black_sig)
                     ? null
                     : $this->c->config->a_bb_white_sig
@@ -79,7 +79,7 @@ class Parser extends Parserus
                 : [];
             $blackList = null;
         } else {
-            $whiteList = 1 == $this->c->config->b_message_bbcode
+            $whiteList = 1 === $this->c->config->b_message_bbcode
                 ? (empty($this->c->config->a_bb_white_mes) && empty($this->c->config->a_bb_black_mes)
                     ? null
                     : $this->c->config->a_bb_white_mes
@@ -94,7 +94,7 @@ class Parser extends Parserus
              ->parse($text, ['strict' => true])
              ->stripEmptyTags(" \n\t\r\v", true);
 
-        if (1 == $this->c->config->b_make_links) {
+        if (1 === $this->c->config->b_make_links) {
             $this->detectUrls();
         }
 
@@ -108,7 +108,7 @@ class Parser extends Parserus
     {
         // при null предполагается брать данные после prepare()
         if (null !== $text) {
-            $whiteList = 1 == $this->c->config->b_message_bbcode ? null : [];
+            $whiteList = 1 === $this->c->config->b_message_bbcode ? null : [];
             $blackList = $this->c->config->a_bb_black_mes;
 
             $this->setAttr('isSign', false)
@@ -119,7 +119,7 @@ class Parser extends Parserus
 
         if (
             ! $hideSmilies
-            && 1 == $this->c->config->b_smilies
+            && 1 === $this->c->config->b_smilies
         ) {
             $this->detectSmilies();
         }
@@ -134,7 +134,7 @@ class Parser extends Parserus
     {
         // при null предполагается брать данные после prepare()
         if (null !== $text) {
-            $whiteList = 1 == $this->c->config->b_sig_bbcode ? null : [];
+            $whiteList = 1 === $this->c->config->b_sig_bbcode ? null : [];
             $blackList = $this->c->config->a_bb_black_sig;
 
             $this->setAttr('isSign', true)
@@ -143,7 +143,7 @@ class Parser extends Parserus
                  ->parse($text);
         }
 
-        if (1 == $this->c->config->b_smilies_sig) {
+        if (1 === $this->c->config->b_smilies_sig) {
             $this->detectSmilies();
         }
 

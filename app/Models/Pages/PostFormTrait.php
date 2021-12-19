@@ -63,7 +63,7 @@ trait PostFormTrait
                 'type'      => 'text',
                 'maxlength' => '80',
                 'caption'   => 'Email',
-                'required'  => 1 == $this->c->config->b_force_guest_email,
+                'required'  => 1 === $this->c->config->b_force_guest_email,
                 'pattern'   => '.+@.+',
                 'value'     => $vars['email'] ?? null,
             ];
@@ -137,7 +137,7 @@ trait PostFormTrait
 
             if (
                 ! $edit
-                && 1 == $this->c->config->b_topic_subscriptions
+                && 1 === $this->c->config->b_topic_subscriptions
                 && $this->user->email_confirmed
             ) {
                 $subscribed = ! $first && $model->is_subscribed;
@@ -161,7 +161,7 @@ trait PostFormTrait
 
         if (
             ! $quick
-            && 1 == $this->c->config->b_smilies
+            && 1 === $this->c->config->b_smilies
         ) {
             $fieldset['hide_smilies'] = [
                 'type'    => 'checkbox',

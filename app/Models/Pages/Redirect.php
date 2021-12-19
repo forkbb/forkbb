@@ -49,7 +49,7 @@ class Redirect extends Page
     public function message(/* string|array */ $message): Page
     {
         // переадресация без вывода сообщения
-        if (0 == $this->c->config->i_redirect_delay) {
+        if ($this->c->config->i_redirect_delay < 1) {
             return $this;
         }
 
@@ -68,7 +68,7 @@ class Redirect extends Page
     protected function getHttpHeaders(): array
     {
         if (
-            0 == $this->c->config->i_redirect_delay
+            $this->c->config->i_redirect_delay < 1
             || null === $this->nameTpl
         ) {
             $this->httpStatus = 302;

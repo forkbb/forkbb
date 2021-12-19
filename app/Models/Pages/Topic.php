@@ -146,7 +146,7 @@ class Topic extends Page
 
         if (
             $topic->canReply
-            && 1 == $this->c->config->b_quickpost
+            && 1 === $this->c->config->b_quickpost
         ) {
             $this->form     = $this->messageForm($topic, 'NewReply', ['id' => $topic->id], false, false, true);
         }

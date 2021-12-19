@@ -74,7 +74,7 @@ class User extends DataModel
      */
     protected function getisAdmMod(): bool
     {
-        return $this->isAdmin || 1 == $this->g_moderator;
+        return $this->isAdmin || 1 === $this->g_moderator;
     }
 
     /**
@@ -266,7 +266,7 @@ class User extends DataModel
      */
     protected function getviewUsers(): bool
     {
-        return 1 == $this->g_view_users || $this->isAdmin;
+        return 1 === $this->g_view_users || $this->isAdmin;
     }
 
     /**
@@ -274,7 +274,7 @@ class User extends DataModel
      */
     protected function getsearchUsers(): bool
     {
-        return 1 == $this->g_search_users || $this->isAdmin;
+        return 1 === $this->g_search_users || $this->isAdmin;
     }
 
     /**
@@ -282,7 +282,7 @@ class User extends DataModel
      */
     protected function getshowAvatar(): bool
     {
-        return 1 == $this->c->config->b_avatars && 1 == $this->show_avatars;
+        return 1 === $this->c->config->b_avatars && 1 === $this->show_avatars;
     }
 
     /**
@@ -290,7 +290,7 @@ class User extends DataModel
      */
     protected function getshowUserInfo(): bool
     {
-        return 1 == $this->c->config->b_show_user_info;
+        return 1 === $this->c->config->b_show_user_info;
     }
 
     /**
@@ -298,7 +298,7 @@ class User extends DataModel
      */
     protected function getshowSignature(): bool
     {
-        return 1 == $this->show_sig;
+        return 1 === $this->show_sig;
     }
 
     /**
@@ -306,7 +306,7 @@ class User extends DataModel
      */
     protected function getshowPostCount(): bool
     {
-        return 1 == $this->c->config->b_show_post_count || $this->isAdmMod;
+        return 1 === $this->c->config->b_show_post_count || $this->isAdmMod;
     }
 
     /**
@@ -347,7 +347,7 @@ class User extends DataModel
                 $this->isAdmin
                 || (
                     $this->isAdmMod
-                    && 1 == $this->g_mod_promote_users
+                    && 1 === $this->g_mod_promote_users
                 )
             )
             && $this->id !== $post->user->id //????
@@ -416,7 +416,7 @@ class User extends DataModel
     {
         return 1 === $this->c->config->b_pm
             && (
-                1 == $this->g_pm
+                1 === $this->g_pm
                 || $this->isAdmin
             );
     }
