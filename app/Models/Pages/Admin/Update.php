@@ -498,35 +498,37 @@ class Update extends Admin
      */
     protected function stageNumber43(array $args): ?int
     {
-        $this->c->config->i_timeout_visit   = $this->c->config->o_timeout_visit ?? 3600;
-        $this->c->config->i_timeout_online  = $this->c->config->o_timeout_online ?? 900;
-        $this->c->config->i_redirect_delay  = $this->c->config->o_redirect_delay ?? 1;
-        $this->c->config->b_show_user_info  = '1' == $this->c->config->o_show_user_info ? 1 : 0;
-        $this->c->config->b_show_post_count = '1' == $this->c->config->o_show_post_count ? 1 : 0;
-        $this->c->config->b_smilies_sig     = '1' == $this->c->config->o_smilies_sig ? 1 : 0;
-        $this->c->config->b_smilies         = '1' == $this->c->config->o_smilies ? 1 : 0;
-        $this->c->config->b_make_links      = '1' == $this->c->config->o_make_links ? 1 : 0;
-        $this->c->config->b_quickpost       = '1' == $this->c->config->o_quickpost ? 1 : 0;
-        $this->c->config->b_users_online    = '1' == $this->c->config->o_users_online ? 1 : 0;
-        $this->c->config->b_censoring       = '1' == $this->c->config->o_censoring ? 1 : 0;
-        $this->c->config->b_show_dot        = '1' == $this->c->config->o_show_dot ? 1 : 0;
-        $this->c->config->b_topic_views     = '1' == $this->c->config->o_topic_views ? 1 : 0;
+        $config = $this->c->config;
 
-        unset($this->c->config->o_topic_views);
-        unset($this->c->config->o_show_dot);
-        unset($this->c->config->o_timeout_visit);
-        unset($this->c->config->o_timeout_online);
-        unset($this->c->config->o_redirect_delay);
-        unset($this->c->config->o_show_user_info);
-        unset($this->c->config->o_show_post_count);
-        unset($this->c->config->o_smilies_sig);
-        unset($this->c->config->o_smilies);
-        unset($this->c->config->o_make_links);
-        unset($this->c->config->o_quickpost);
-        unset($this->c->config->o_users_online);
-        unset($this->c->config->o_censoring);
+        $config->i_timeout_visit   = $config->o_timeout_visit ?? 3600;
+        $config->i_timeout_online  = $config->o_timeout_online ?? 900;
+        $config->i_redirect_delay  = $config->o_redirect_delay ?? 1;
+        $config->b_show_user_info  = '1' == $config->o_show_user_info ? 1 : 0;
+        $config->b_show_post_count = '1' == $config->o_show_post_count ? 1 : 0;
+        $config->b_smilies_sig     = '1' == $config->o_smilies_sig ? 1 : 0;
+        $config->b_smilies         = '1' == $config->o_smilies ? 1 : 0;
+        $config->b_make_links      = '1' == $config->o_make_links ? 1 : 0;
+        $config->b_quickpost       = '1' == $config->o_quickpost ? 1 : 0;
+        $config->b_users_online    = '1' == $config->o_users_online ? 1 : 0;
+        $config->b_censoring       = '1' == $config->o_censoring ? 1 : 0;
+        $config->b_show_dot        = '1' == $config->o_show_dot ? 1 : 0;
+        $config->b_topic_views     = '1' == $config->o_topic_views ? 1 : 0;
 
-        $this->c->config->save();
+        unset($config->o_topic_views);
+        unset($config->o_show_dot);
+        unset($config->o_timeout_visit);
+        unset($config->o_timeout_online);
+        unset($config->o_redirect_delay);
+        unset($config->o_show_user_info);
+        unset($config->o_show_post_count);
+        unset($config->o_smilies_sig);
+        unset($config->o_smilies);
+        unset($config->o_make_links);
+        unset($config->o_quickpost);
+        unset($config->o_users_online);
+        unset($config->o_censoring);
+
+        $config->save();
 
         return null;
     }
