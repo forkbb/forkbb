@@ -217,7 +217,7 @@ class Subscription extends Model
 
             if (self::FORUMS_DATA & $type) {
                 if (
-                    '1' != $this->c->config->o_forum_subscriptions
+                    1 != $this->c->config->b_forum_subscriptions
                     || $model->isGuest
                 ) {
                     $result[self::FORUMS_DATA] = null;

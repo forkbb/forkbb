@@ -68,7 +68,7 @@ class Options extends Admin
                     'i_avatars_size'          => 'required|integer|min:0|max:9999999',
                     'o_admin_email'           => 'required|string:trim|email',
                     'o_webmaster_email'       => 'required|string:trim|email',
-                    'o_forum_subscriptions'   => 'required|integer|in:0,1',
+                    'b_forum_subscriptions'   => 'required|integer|in:0,1',
                     'o_topic_subscriptions'   => 'required|integer|in:0,1',
                     'i_email_max_recipients'  => 'required|integer|min:1|max:99999',
                     'o_smtp_host'             => 'string:trim|max:255',
@@ -562,9 +562,9 @@ class Options extends Admin
                     'required'  => true,
                     'pattern'   => '.+@.+',
                 ],
-                'o_forum_subscriptions' => [
+                'b_forum_subscriptions' => [
                     'type'    => 'radio',
-                    'value'   => $config->o_forum_subscriptions,
+                    'value'   => $config->b_forum_subscriptions,
                     'values'  => $yn,
                     'caption' => 'Forum subscriptions label',
                     'help'    => 'Forum subscriptions help',

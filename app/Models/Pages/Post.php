@@ -318,7 +318,7 @@ class Post extends Page
             $this->c->search->index($post);
 
             if ($createTopic) {
-                if ('1' == $this->c->config->o_forum_subscriptions) { // ????
+                if (1 == $this->c->config->b_forum_subscriptions) { // ????
                     $this->c->subscriptions->send($post, $topic);
                 }
             } else {

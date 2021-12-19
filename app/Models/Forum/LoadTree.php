@@ -63,7 +63,7 @@ class LoadTree extends Action
                     f.last_post, f.last_post_id, f.last_poster, f.last_topic
                 FROM ::forums AS f
                 WHERE id IN (?ai:forums)';
-        } elseif ('1' == $this->c->config->o_forum_subscriptions) {
+        } elseif (1 == $this->c->config->b_forum_subscriptions) {
             $query = 'SELECT f.id, f.forum_desc, f.num_topics, f.sort_by, f.num_posts,
                     f.last_post, f.last_post_id, f.last_poster, f.last_topic,
                     mof.mf_mark_all_read, s.user_id AS is_subscribed

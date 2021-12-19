@@ -500,22 +500,24 @@ class Update extends Admin
     {
         $config = $this->c->config;
 
-        $config->i_timeout_visit   = $config->o_timeout_visit ?? 3600;
-        $config->i_timeout_online  = $config->o_timeout_online ?? 900;
-        $config->i_redirect_delay  = $config->o_redirect_delay ?? 1;
-        $config->b_show_user_info  = '1' == $config->o_show_user_info ? 1 : 0;
-        $config->b_show_post_count = '1' == $config->o_show_post_count ? 1 : 0;
-        $config->b_smilies_sig     = '1' == $config->o_smilies_sig ? 1 : 0;
-        $config->b_smilies         = '1' == $config->o_smilies ? 1 : 0;
-        $config->b_make_links      = '1' == $config->o_make_links ? 1 : 0;
-        $config->b_quickpost       = '1' == $config->o_quickpost ? 1 : 0;
-        $config->b_users_online    = '1' == $config->o_users_online ? 1 : 0;
-        $config->b_censoring       = '1' == $config->o_censoring ? 1 : 0;
-        $config->b_show_dot        = '1' == $config->o_show_dot ? 1 : 0;
-        $config->b_topic_views     = '1' == $config->o_topic_views ? 1 : 0;
-        $config->b_regs_report     = '1' == $config->o_regs_report ? 1 : 0;
-        $config->b_avatars         = '1' == $config->o_avatars ? 1 : 0;
+        $config->i_timeout_visit       = $config->o_timeout_visit ?? 3600;
+        $config->i_timeout_online      = $config->o_timeout_online ?? 900;
+        $config->i_redirect_delay      = $config->o_redirect_delay ?? 1;
+        $config->b_show_user_info      = '1' == $config->o_show_user_info ? 1 : 0;
+        $config->b_show_post_count     = '1' == $config->o_show_post_count ? 1 : 0;
+        $config->b_smilies_sig         = '1' == $config->o_smilies_sig ? 1 : 0;
+        $config->b_smilies             = '1' == $config->o_smilies ? 1 : 0;
+        $config->b_make_links          = '1' == $config->o_make_links ? 1 : 0;
+        $config->b_quickpost           = '1' == $config->o_quickpost ? 1 : 0;
+        $config->b_users_online        = '1' == $config->o_users_online ? 1 : 0;
+        $config->b_censoring           = '1' == $config->o_censoring ? 1 : 0;
+        $config->b_show_dot            = '1' == $config->o_show_dot ? 1 : 0;
+        $config->b_topic_views         = '1' == $config->o_topic_views ? 1 : 0;
+        $config->b_regs_report         = '1' == $config->o_regs_report ? 1 : 0;
+        $config->b_avatars             = '1' == $config->o_avatars ? 1 : 0;
+        $config->b_forum_subscriptions = '1' == $config->o_forum_subscriptions ? 1 : 0;
 
+        unset($config->o_forum_subscriptions);
         unset($config->o_avatars);
         unset($config->o_regs_report);
         unset($config->o_topic_views);

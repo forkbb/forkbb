@@ -1236,7 +1236,7 @@ class Install extends Admin
             'i_avatars_size'          => 10240,
             'o_admin_email'           => $v->email,
             'o_webmaster_email'       => $v->email,
-            'o_forum_subscriptions'   => 1,
+            'b_forum_subscriptions'   => 1,
             'o_topic_subscriptions'   => 1,
             'i_email_max_recipients'  => 1,
             'o_smtp_host'             => NULL,

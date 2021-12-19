@@ -76,7 +76,7 @@ class Forum extends DataModel
      */
     protected function getcanSubscription(): bool
     {
-        return '1' == $this->c->config->o_forum_subscriptions
+        return 1 == $this->c->config->b_forum_subscriptions
             && $this->id > 0
             && ! $this->c->user->isGuest
             && ! $this->c->user->isUnverified;

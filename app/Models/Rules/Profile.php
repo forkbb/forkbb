@@ -182,7 +182,7 @@ class Profile extends Rules
                 || $this->admin
             )
             && (
-                '1' == $this->c->config->o_forum_subscriptions
+                1 == $this->c->config->b_forum_subscriptions
                 || '1' == $this->c->config->o_topic_subscriptions
             );
     }
