@@ -507,6 +507,7 @@ class Update extends Admin
         $this->c->config->b_smilies         = '1' == $this->c->config->o_smilies ? 1 : 0;
         $this->c->config->b_make_links      = '1' == $this->c->config->o_make_links ? 1 : 0;
         $this->c->config->b_quickpost       = '1' == $this->c->config->o_quickpost ? 1 : 0;
+        $this->c->config->b_users_online    = '1' == $this->c->config->o_users_online ? 1 : 0;
 
         unset($this->c->config->o_timeout_visit);
         unset($this->c->config->o_timeout_online);
@@ -517,6 +518,7 @@ class Update extends Admin
         unset($this->c->config->o_smilies);
         unset($this->c->config->o_make_links);
         unset($this->c->config->o_quickpost);
+        unset($this->c->config->o_users_online);
 
         $this->c->config->save();
 

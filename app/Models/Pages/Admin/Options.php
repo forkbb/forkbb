@@ -53,7 +53,7 @@ class Options extends Admin
                     'i_disp_posts_default'    => 'required|integer|min:10|max:50',
                     'i_disp_users'            => 'required|integer|min:10|max:50',
                     'b_quickpost'             => 'required|integer|in:0,1',
-                    'o_users_online'          => 'required|integer|in:0,1',
+                    'b_users_online'          => 'required|integer|in:0,1',
                     'o_show_dot'              => 'required|integer|in:0,1',
                     'o_topic_views'           => 'required|integer|in:0,1',
                     'o_quickjump'             => 'required|integer|in:0,1',
@@ -413,9 +413,9 @@ class Options extends Admin
                     'caption' => 'Quick post label',
                     'help'    => 'Quick post help',
                 ],
-                'o_users_online' => [
+                'b_users_online' => [
                     'type'    => 'radio',
-                    'value'   => $config->o_users_online,
+                    'value'   => $config->b_users_online,
                     'values'  => $yn,
                     'caption' => 'Users online label',
                     'help'    => 'Users online help',
