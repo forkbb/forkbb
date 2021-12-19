@@ -1254,7 +1254,7 @@ class Install extends Admin
             'b_default_dst'           => 0,
             'i_feed_type'             => 2,
             'i_feed_ttl'              => 0,
-            'p_message_bbcode'        => 1,
+            'b_message_bbcode'        => 1,
             'p_message_all_caps'      => 1,
             'p_subject_all_caps'      => 1,
             'p_sig_all_caps'          => 1,

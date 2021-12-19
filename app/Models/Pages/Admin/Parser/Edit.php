@@ -30,7 +30,7 @@ class Edit extends Parser
                 ->addValidators([
                 ])->addRules([
                     'token'               => 'token:AdminParser',
-                    'p_message_bbcode'    => 'required|integer|in:0,1',
+                    'b_message_bbcode'    => 'required|integer|in:0,1',
                     'p_sig_bbcode'        => 'required|integer|in:0,1',
                     'b_smilies'           => 'required|integer|in:0,1',
                     'b_smilies_sig'       => 'required|integer|in:0,1',
@@ -90,9 +90,9 @@ class Edit extends Parser
         $form['sets']['bbcode'] = [
             'legend' => 'BBCode subhead',
             'fields' => [
-                'p_message_bbcode' => [
+                'b_message_bbcode' => [
                     'type'    => 'radio',
-                    'value'   => $config->p_message_bbcode,
+                    'value'   => $config->b_message_bbcode,
                     'values'  => $yn,
                     'caption' => 'BBCode label',
                     'help'    => 'BBCode help',
