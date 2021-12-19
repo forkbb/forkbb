@@ -47,7 +47,7 @@ class Options extends Admin
                     'i_timeout_online'        => 'required|integer|min:0|max:99999|check_timeout',
                     'i_redirect_delay'        => 'required|integer|min:0|max:99999',
                     'b_show_user_info'        => 'required|integer|in:0,1',
-                    'o_show_post_count'       => 'required|integer|in:0,1',
+                    'b_show_post_count'       => 'required|integer|in:0,1',
                     'i_topic_review'          => 'required|integer|min:0|max:50',
                     'i_disp_topics_default'   => 'required|integer|min:10|max:50',
                     'i_disp_posts_default'    => 'required|integer|min:10|max:50',
@@ -333,9 +333,9 @@ class Options extends Admin
                     'caption' => 'Info in posts label',
                     'help'    => 'Info in posts help',
                 ],
-                'o_show_post_count' => [
+                'b_show_post_count' => [
                     'type'    => 'radio',
-                    'value'   => $config->o_show_post_count,
+                    'value'   => $config->b_show_post_count,
                     'values'  => $yn,
                     'caption' => 'Post count label',
                     'help'    => 'Post count help',

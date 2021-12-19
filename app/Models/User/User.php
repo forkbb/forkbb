@@ -306,7 +306,7 @@ class User extends DataModel
      */
     protected function getshowPostCount(): bool
     {
-        return '1' == $this->c->config->o_show_post_count || $this->isAdmMod;
+        return 1 == $this->c->config->b_show_post_count || $this->isAdmMod;
     }
 
     /**
