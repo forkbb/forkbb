@@ -79,7 +79,7 @@ class Options extends Admin
                     'o_smtp_ssl'              => 'required|integer|in:0,1',
                     'o_regs_allow'            => 'required|integer|in:0,1',
                     'o_regs_verify'           => 'required|integer|in:0,1',
-                    'o_regs_report'           => 'required|integer|in:0,1',
+                    'b_regs_report'           => 'required|integer|in:0,1',
                     'o_rules'                 => 'required|integer|in:0,1|check_empty:o_rules_message',
                     'o_rules_message'         => 'string:trim|max:65000 bytes|html',
                     'i_default_email_setting' => 'required|integer|in:0,1,2',
@@ -645,9 +645,9 @@ class Options extends Admin
                     'caption' => 'Verify label',
                     'help'    => 'Verify help',
                 ],
-                'o_regs_report' => [
+                'b_regs_report' => [
                     'type'    => 'radio',
-                    'value'   => $config->o_regs_report,
+                    'value'   => $config->b_regs_report,
                     'values'  => $yn,
                     'caption' => 'Report new label',
                     'help'    => 'Report new help',

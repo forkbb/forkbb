@@ -513,7 +513,9 @@ class Update extends Admin
         $config->b_censoring       = '1' == $config->o_censoring ? 1 : 0;
         $config->b_show_dot        = '1' == $config->o_show_dot ? 1 : 0;
         $config->b_topic_views     = '1' == $config->o_topic_views ? 1 : 0;
+        $config->b_regs_report     = '1' == $config->o_regs_report ? 1 : 0;
 
+        unset($config->o_regs_report);
         unset($config->o_topic_views);
         unset($config->o_show_dot);
         unset($config->o_timeout_visit);

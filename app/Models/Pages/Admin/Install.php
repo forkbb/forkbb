@@ -1226,7 +1226,7 @@ class Install extends Admin
             'b_topic_views'           => 1,
             'o_additional_navlinks'   => '',
             'i_report_method'         => 0,
-            'o_regs_report'           => 0,
+            'b_regs_report'           => 0,
             'i_default_email_setting' => 2,
             'o_mailing_list'          => $v->email,
             'o_avatars'               => \in_array(\strtolower(@\ini_get('file_uploads')), ['on', 'true', '1'], true) ? 1 : 0,
