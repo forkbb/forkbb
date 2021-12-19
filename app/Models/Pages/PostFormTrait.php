@@ -63,7 +63,7 @@ trait PostFormTrait
                 'type'      => 'text',
                 'maxlength' => '80',
                 'caption'   => 'Email',
-                'required'  => '1' == $this->c->config->p_force_guest_email,
+                'required'  => 1 == $this->c->config->b_force_guest_email,
                 'pattern'   => '.+@.+',
                 'value'     => $vars['email'] ?? null,
             ];

@@ -86,7 +86,7 @@ class Options extends Admin
                     'o_announcement_message'  => 'string:trim|max:65000 bytes|html',
                     'b_message_all_caps'      => 'required|integer|in:0,1',
                     'b_subject_all_caps'      => 'required|integer|in:0,1',
-                    'p_force_guest_email'     => 'required|integer|in:0,1',
+                    'b_force_guest_email'     => 'required|integer|in:0,1',
                     'b_sig_all_caps'          => 'required|integer|in:0,1',
                     'b_poll_enabled'          => 'required|integer|in:0,1',
                     'i_poll_max_questions'    => 'required|integer|min:1|max:99',
@@ -391,9 +391,9 @@ class Options extends Admin
                     'caption' => 'All caps sigs label',
                     'help'    => 'All caps sigs help',
                 ],
-                'p_force_guest_email' => [
+                'b_force_guest_email' => [
                     'type'    => 'radio',
-                    'value'   => $config->p_force_guest_email,
+                    'value'   => $config->b_force_guest_email,
                     'values'  => $yn,
                     'caption' => 'Require e-mail label',
                     'help'    => 'Require e-mail help',

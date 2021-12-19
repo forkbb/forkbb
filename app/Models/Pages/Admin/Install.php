@@ -1259,7 +1259,7 @@ class Install extends Admin
             'b_subject_all_caps'      => 0,
             'b_sig_all_caps'          => 0,
             'b_sig_bbcode'            => 1,
-            'p_force_guest_email'     => 1,
+            'b_force_guest_email'     => 1,
             'b_pm'                    => 0,
             'b_poll_enabled'          => 0,
             'i_poll_max_questions'    => 3,
