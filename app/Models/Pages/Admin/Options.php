@@ -43,7 +43,7 @@ class Options extends Admin
                     'o_default_dst'           => 'required|integer|in:0,1',
                     'o_default_lang'          => 'required|string:trim|in:' . \implode(',', $this->c->Func->getLangs()),
                     'o_default_style'         => 'required|string:trim|in:' . \implode(',', $this->c->Func->getStyles()),
-                    'o_timeout_visit'         => 'required|integer|min:0|max:99999',
+                    'i_timeout_visit'         => 'required|integer|min:0|max:99999',
                     'o_timeout_online'        => 'required|integer|min:0|max:99999|check_timeout',
                     'o_redirect_delay'        => 'required|integer|min:0|max:99999',
                     'o_show_user_info'        => 'required|integer|in:0,1',
@@ -140,7 +140,7 @@ class Options extends Admin
      */
     public function vCheckTimeout(Validator $v, $timeout)
     {
-        if ($timeout >= $v->o_timeout_visit) {
+        if ($timeout >= $v->i_timeout_visit) {
             $v->addError('Timeout error message');
         }
 
@@ -296,11 +296,11 @@ class Options extends Admin
         $form['sets']['timeouts'] = [
             'legend' => 'Timeouts subhead',
             'fields' => [
-                'o_timeout_visit' => [
+                'i_timeout_visit' => [
                     'type'    => 'number',
                     'min'     => '0',
                     'max'     => '99999',
-                    'value'   => $config->o_timeout_visit,
+                    'value'   => $config->i_timeout_visit,
                     'caption' => 'Visit timeout label',
                     'help'    => 'Visit timeout help',
                 ],

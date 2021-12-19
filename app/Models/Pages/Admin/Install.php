@@ -1204,7 +1204,7 @@ class Install extends Admin
             'o_board_title'           => $v->title,
             'o_board_desc'            => $v->descr,
             'o_default_timezone'      => 0,
-            'o_timeout_visit'         => 3600,
+            'i_timeout_visit'         => 3600,
             'o_timeout_online'        => 900,
             'o_redirect_delay'        => 1,
             'o_show_user_info'        => 1,

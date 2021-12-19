@@ -171,7 +171,7 @@ class Cookie extends Model
             $expire  = $expTime;
             $pfx     = '';
         } else {
-            $expTime = \time() + $this->c->config->o_timeout_visit;
+            $expTime = \time() + $this->c->config->i_timeout_visit;
             $expire  = 0;
             $pfx     = '-';
         }

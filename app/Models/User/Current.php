@@ -53,7 +53,7 @@ class Current extends Action
             // Special case: We've timed out, but no other user has browsed the forums since we timed out
             if (
                 $user->logged > 0
-                && $user->logged < \time() - $this->c->config->o_timeout_visit
+                && $user->logged < \time() - $this->c->config->i_timeout_visit
             ) {
                 $this->manager->updateLastVisit($user);
             }

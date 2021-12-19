@@ -492,4 +492,18 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.43 to rev.44
+     */
+    protected function stageNumber43(array $args): ?int
+    {
+        $this->c->config->i_timeout_visit = $this->c->config->o_timeout_visit ?? 3600;
+
+        unset($this->c->config->o_timeout_visit);
+
+        $this->c->config->save();
+
+        return null;
+    }
 }

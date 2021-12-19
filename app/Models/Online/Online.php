@@ -65,7 +65,7 @@ class Online extends Model
         $all       = 0;
         $now       = \time();
         $tOnline   = $now - $this->c->config->o_timeout_online;
-        $tVisit    = $now - $this->c->config->o_timeout_visit;
+        $tVisit    = $now - $this->c->config->i_timeout_visit;
         $users     = [];
         $guests    = [];
         $bots      = [];
