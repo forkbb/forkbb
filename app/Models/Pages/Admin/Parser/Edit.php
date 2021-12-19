@@ -32,9 +32,9 @@ class Edit extends Parser
                     'token'               => 'token:AdminParser',
                     'p_message_bbcode'    => 'required|integer|in:0,1',
                     'p_sig_bbcode'        => 'required|integer|in:0,1',
-                    'o_smilies'           => 'required|integer|in:0,1',
+                    'b_smilies'           => 'required|integer|in:0,1',
                     'b_smilies_sig'       => 'required|integer|in:0,1',
-                    'o_make_links'        => 'required|integer|in:0,1',
+                    'b_make_links'        => 'required|integer|in:0,1',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -104,9 +104,9 @@ class Edit extends Parser
                     'caption' => 'BBCode sigs label',
                     'help'    => 'BBCode sigs help',
                 ],
-                'o_make_links' => [
+                'b_make_links' => [
                     'type'    => 'radio',
-                    'value'   => $config->o_make_links,
+                    'value'   => $config->b_make_links,
                     'values'  => $yn,
                     'caption' => 'Clickable links label',
                     'help'    => 'Clickable links help',
@@ -124,9 +124,9 @@ class Edit extends Parser
         $form['sets']['smilies'] = [
             'legend' => 'Smilies subhead',
             'fields' => [
-                'o_smilies' => [
+                'b_smilies' => [
                     'type'    => 'radio',
-                    'value'   => $config->o_smilies,
+                    'value'   => $config->b_smilies,
                     'values'  => $yn,
                     'caption' => 'Smilies mess label',
                     'help'    => 'Smilies mess help',

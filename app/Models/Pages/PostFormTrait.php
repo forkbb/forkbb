@@ -161,7 +161,7 @@ trait PostFormTrait
 
         if (
             ! $quick
-            && '1' == $this->c->config->o_smilies
+            && 1 == $this->c->config->b_smilies
         ) {
             $fieldset['hide_smilies'] = [
                 'type'    => 'checkbox',

@@ -162,7 +162,7 @@ class Edit extends Page
         }
         // показ смайлов
         if (
-            '1' == $this->c->config->o_smilies
+            1 == $this->c->config->b_smilies
             && (bool) $post->hide_smilies !== (bool) $v->hide_smilies
         ) {
             $post->hide_smilies  = $v->hide_smilies ? 1 : 0;

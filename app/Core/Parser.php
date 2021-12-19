@@ -44,7 +44,7 @@ class Parser extends Parserus
             '1' == $this->c->user->show_smilies
             && (
                 1 == $this->c->config->b_smilies_sig
-                || '1' == $this->c->config->o_smilies
+                || 1 == $this->c->config->b_smilies
             )
         ) {
             $smilies = [];
@@ -94,7 +94,7 @@ class Parser extends Parserus
              ->parse($text, ['strict' => true])
              ->stripEmptyTags(" \n\t\r\v", true);
 
-        if ('1' == $this->c->config->o_make_links) {
+        if (1 == $this->c->config->b_make_links) {
             $this->detectUrls();
         }
 
@@ -119,7 +119,7 @@ class Parser extends Parserus
 
         if (
             ! $hideSmilies
-            && '1' == $this->c->config->o_smilies
+            && 1 == $this->c->config->b_smilies
         ) {
             $this->detectSmilies();
         }

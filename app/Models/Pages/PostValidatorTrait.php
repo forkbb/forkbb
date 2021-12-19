@@ -170,7 +170,7 @@ trait PostValidatorTrait
             $ruleSubscribe = 'absent';
         }
 
-        if ('1' == $this->c->config->o_smilies) {
+        if (1 == $this->c->config->b_smilies) {
             $ruleHideSmilies = 'checkbox';
         } else {
             $ruleHideSmilies = 'absent';
