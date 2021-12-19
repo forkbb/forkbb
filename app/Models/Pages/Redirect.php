@@ -49,14 +49,14 @@ class Redirect extends Page
     public function message(/* string|array */ $message): Page
     {
         // переадресация без вывода сообщения
-        if ('0' == $this->c->config->o_redirect_delay) {
+        if (0 == $this->c->config->i_redirect_delay) {
             return $this;
         }
 
         $this->nameTpl = 'layouts/redirect';
         $this->robots  = 'noindex';
         $this->message = $message;
-        $this->timeout = (int) $this->c->config->o_redirect_delay;  //???? перенести в заголовки?
+        $this->timeout = $this->c->config->i_redirect_delay;  //???? перенести в заголовки?
 
         return $this;
     }
@@ -68,7 +68,7 @@ class Redirect extends Page
     protected function getHttpHeaders(): array
     {
         if (
-            '0' == $this->c->config->o_redirect_delay
+            0 == $this->c->config->i_redirect_delay
             || null === $this->nameTpl
         ) {
             $this->httpStatus = 302;

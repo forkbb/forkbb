@@ -45,7 +45,7 @@ class Options extends Admin
                     'o_default_style'         => 'required|string:trim|in:' . \implode(',', $this->c->Func->getStyles()),
                     'i_timeout_visit'         => 'required|integer|min:0|max:99999',
                     'i_timeout_online'        => 'required|integer|min:0|max:99999|check_timeout',
-                    'o_redirect_delay'        => 'required|integer|min:0|max:99999',
+                    'i_redirect_delay'        => 'required|integer|min:0|max:99999',
                     'o_show_user_info'        => 'required|integer|in:0,1',
                     'o_show_post_count'       => 'required|integer|in:0,1',
                     'i_topic_review'          => 'required|integer|min:0|max:50',
@@ -312,11 +312,11 @@ class Options extends Admin
                     'caption' => 'Online timeout label',
                     'help'    => 'Online timeout help',
                 ],
-                'o_redirect_delay' => [
+                'i_redirect_delay' => [
                     'type'    => 'number',
                     'min'     => '0',
                     'max'     => '99999',
-                    'value'   => $config->o_redirect_delay,
+                    'value'   => $config->i_redirect_delay,
                     'caption' => 'Redirect time label',
                     'help'    => 'Redirect time help',
                 ],

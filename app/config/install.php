@@ -43,7 +43,7 @@ return [
     'forConfig' => [
         'o_default_lang'   => 'en',
         'o_default_style'  => 'ForkBB',
-        'o_redirect_delay' => 0,
+        'i_redirect_delay' => 0,
         'o_maintenance'    => 0,
         'o_smtp_host'      => '',
         'o_smtp_user'      => '',

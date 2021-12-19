@@ -500,9 +500,11 @@ class Update extends Admin
     {
         $this->c->config->i_timeout_visit = $this->c->config->o_timeout_visit ?? 3600;
         $this->c->config->i_timeout_online = $this->c->config->o_timeout_online ?? 900;
+        $this->c->config->i_redirect_delay = $this->c->config->o_redirect_delay ?? 1;
 
         unset($this->c->config->o_timeout_visit);
         unset($this->c->config->o_timeout_online);
+        unset($this->c->config->o_redirect_delay);
 
         $this->c->config->save();
 
