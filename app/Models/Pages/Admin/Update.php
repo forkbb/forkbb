@@ -516,7 +516,9 @@ class Update extends Admin
         $config->b_regs_report         = '1' == $config->o_regs_report ? 1 : 0;
         $config->b_avatars             = '1' == $config->o_avatars ? 1 : 0;
         $config->b_forum_subscriptions = '1' == $config->o_forum_subscriptions ? 1 : 0;
+        $config->b_topic_subscriptions = '1' == $config->o_topic_subscriptions ? 1 : 0;
 
+        unset($config->o_topic_subscriptions);
         unset($config->o_forum_subscriptions);
         unset($config->o_avatars);
         unset($config->o_regs_report);

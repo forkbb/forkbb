@@ -183,7 +183,7 @@ class Profile extends Rules
             )
             && (
                 1 == $this->c->config->b_forum_subscriptions
-                || '1' == $this->c->config->o_topic_subscriptions
+                || 1 == $this->c->config->b_topic_subscriptions
             );
     }
 }

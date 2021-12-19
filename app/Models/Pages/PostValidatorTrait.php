@@ -162,7 +162,7 @@ trait PostValidatorTrait
         if (
             ! $edit
             && $notPM
-            && '1' == $this->c->config->o_topic_subscriptions
+            && 1 == $this->c->config->b_topic_subscriptions
             && $this->user->email_confirmed
         ) {
             $ruleSubscribe = 'checkbox';

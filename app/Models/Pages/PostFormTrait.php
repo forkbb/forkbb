@@ -137,7 +137,7 @@ trait PostFormTrait
 
             if (
                 ! $edit
-                && '1' == $this->c->config->o_topic_subscriptions
+                && 1 == $this->c->config->b_topic_subscriptions
                 && $this->user->email_confirmed
             ) {
                 $subscribed = ! $first && $model->is_subscribed;

@@ -87,7 +87,7 @@ class Topic extends DataModel
      */
     protected function getcanSubscription(): bool
     {
-        return '1' == $this->c->config->o_topic_subscriptions
+        return 1 == $this->c->config->b_topic_subscriptions
             && $this->id > 0
             && ! $this->c->user->isGuest
             && ! $this->c->user->isUnverified;
