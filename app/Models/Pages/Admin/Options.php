@@ -84,7 +84,7 @@ class Options extends Admin
                     'i_default_email_setting' => 'required|integer|in:0,1,2',
                     'b_announcement'          => 'required|integer|in:0,1|check_empty:o_announcement_message',
                     'o_announcement_message'  => 'string:trim|max:65000 bytes|html',
-                    'p_message_all_caps'      => 'required|integer|in:0,1',
+                    'b_message_all_caps'      => 'required|integer|in:0,1',
                     'p_subject_all_caps'      => 'required|integer|in:0,1',
                     'p_force_guest_email'     => 'required|integer|in:0,1',
                     'p_sig_all_caps'          => 'required|integer|in:0,1',
@@ -370,9 +370,9 @@ class Options extends Admin
                     'caption' => 'Topic review label',
                     'help'    => 'Topic review help',
                 ],
-                'p_message_all_caps' => [
+                'b_message_all_caps' => [
                     'type'    => 'radio',
-                    'value'   => $config->p_message_all_caps,
+                    'value'   => $config->b_message_all_caps,
                     'values'  => $yn,
                     'caption' => 'All caps message label',
                     'help'    => 'All caps message help',

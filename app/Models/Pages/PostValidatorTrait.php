@@ -62,7 +62,7 @@ trait PostValidatorTrait
         if (
             true === $prepare
             && ! $executive
-            && '0' == $this->c->config->p_message_all_caps
+            && 1 != $this->c->config->b_message_all_caps
         ) {
             $text = $this->c->Parser->getText();
 
