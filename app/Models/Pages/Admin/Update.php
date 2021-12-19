@@ -501,10 +501,12 @@ class Update extends Admin
         $this->c->config->i_timeout_visit = $this->c->config->o_timeout_visit ?? 3600;
         $this->c->config->i_timeout_online = $this->c->config->o_timeout_online ?? 900;
         $this->c->config->i_redirect_delay = $this->c->config->o_redirect_delay ?? 1;
+        $this->c->config->b_show_user_info = '1' == $this->c->config->o_show_user_info ? 1 : 0;
 
         unset($this->c->config->o_timeout_visit);
         unset($this->c->config->o_timeout_online);
         unset($this->c->config->o_redirect_delay);
+        unset($this->c->config->o_show_user_info);
 
         $this->c->config->save();
 

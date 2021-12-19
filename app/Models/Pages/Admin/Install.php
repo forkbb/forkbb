@@ -1207,7 +1207,7 @@ class Install extends Admin
             'i_timeout_visit'         => 3600,
             'i_timeout_online'        => 900,
             'i_redirect_delay'        => 1,
-            'o_show_user_info'        => 1,
+            'b_show_user_info'        => 1,
             'o_show_post_count'       => 1,
             'o_smilies'               => 1,
             'o_smilies_sig'           => 1,
