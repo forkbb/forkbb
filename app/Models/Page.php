@@ -133,7 +133,7 @@ abstract class Page extends Model
         }
 
         if (
-            '1' == $this->c->config->o_rules
+            1 == $this->c->config->b_rules
             && '1' == $this->user->g_read_board
             && (
                 ! $this->user->isGuest

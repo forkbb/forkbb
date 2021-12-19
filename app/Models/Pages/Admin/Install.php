@@ -1247,7 +1247,7 @@ class Install extends Admin
             'b_regs_verify'           => 1,
             'b_announcement'          => 0,
             'o_announcement_message'  => __('Announcement '),
-            'o_rules'                 => 0,
+            'b_rules'                 => 0,
             'o_rules_message'         => __('Rules '),
             'o_maintenance'           => 0,
             'o_maintenance_message'   => __('Maintenance message '),

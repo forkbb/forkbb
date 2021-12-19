@@ -79,7 +79,7 @@ class Options extends Admin
                     'b_regs_allow'            => 'required|integer|in:0,1',
                     'b_regs_verify'           => 'required|integer|in:0,1',
                     'b_regs_report'           => 'required|integer|in:0,1',
-                    'o_rules'                 => 'required|integer|in:0,1|check_empty:o_rules_message',
+                    'b_rules'                 => 'required|integer|in:0,1|check_empty:o_rules_message',
                     'o_rules_message'         => 'string:trim|max:65000 bytes|html',
                     'i_default_email_setting' => 'required|integer|in:0,1,2',
                     'b_announcement'          => 'required|integer|in:0,1|check_empty:o_announcement_message',
@@ -644,9 +644,9 @@ class Options extends Admin
                     'caption' => 'Report new label',
                     'help'    => 'Report new help',
                 ],
-                'o_rules' => [
+                'b_rules' => [
                     'type'    => 'radio',
-                    'value'   => $config->o_rules,
+                    'value'   => $config->b_rules,
                     'values'  => $yn,
                     'caption' => 'Use rules label',
                     'help'    => 'Use rules help',

@@ -122,7 +122,7 @@ class Routing
             );
             // правила
             if (
-                '1' == $config->o_rules
+                1 == $config->b_rules
                 && (
                     ! $user->isGuest
                     || 1 == $config->b_regs_allow
