@@ -40,7 +40,7 @@ class Options extends Admin
                     'o_board_title'           => 'required|string:trim|max:255',
                     'o_board_desc'            => 'string:trim|max:65000 bytes|html',
                     'o_default_timezone'      => 'required|string:trim|in:-12,-11,-10,-9.5,-9,-8.5,-8,-7,-6,-5,-4,-3.5,-3,-2,-1,0,1,2,3,3.5,4,4.5,5,5.5,5.75,6,6.5,7,8,8.75,9,9.5,10,10.5,11,11.5,12,12.75,13,14',
-                    'o_default_dst'           => 'required|integer|in:0,1',
+                    'b_default_dst'           => 'required|integer|in:0,1',
                     'o_default_lang'          => 'required|string:trim|in:' . \implode(',', $this->c->Func->getLangs()),
                     'o_default_style'         => 'required|string:trim|in:' . \implode(',', $this->c->Func->getStyles()),
                     'i_timeout_visit'         => 'required|integer|min:0|max:99999',
@@ -265,9 +265,9 @@ class Options extends Admin
                     'caption' => 'Timezone label',
                     'help'    => 'Timezone help',
                 ],
-                'o_default_dst' => [
+                'b_default_dst' => [
                     'type'    => 'radio',
-                    'value'   => $config->o_default_dst,
+                    'value'   => $config->b_default_dst,
                     'values'  => $yn,
                     'caption' => 'DST label',
                     'help'    => 'DST help',

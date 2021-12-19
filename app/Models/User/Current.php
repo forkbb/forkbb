@@ -46,7 +46,7 @@ class Current extends Action
         if ($user->isGuest) {
             $user->__isBot    = $this->isBot($user->userAgent);
             $user->__timezone = $this->c->config->o_default_timezone;
-            $user->__dst      = $this->c->config->o_default_dst;
+            $user->__dst      = $this->c->config->b_default_dst;
             $user->__language = $this->getLangFromHTTP();
         } else {
             $user->__isBot = false;

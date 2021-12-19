@@ -1251,7 +1251,7 @@ class Install extends Admin
             'o_rules_message'         => __('Rules '),
             'b_maintenance'           => 0,
             'o_maintenance_message'   => __('Maintenance message '),
-            'o_default_dst'           => 0,
+            'b_default_dst'           => 0,
             'i_feed_type'             => 2,
             'i_feed_ttl'              => 0,
             'p_message_bbcode'        => 1,
