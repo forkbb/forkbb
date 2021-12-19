@@ -137,7 +137,7 @@ abstract class Page extends Model
             && '1' == $this->user->g_read_board
             && (
                 ! $this->user->isGuest
-                || '1' == $this->c->config->o_regs_allow
+                || 1 == $this->c->config->b_regs_allow
             )
         ) {
             $navGen[self::FI_RULES] = [
@@ -194,7 +194,7 @@ abstract class Page extends Model
         }
 
         if ($this->user->isGuest) {
-            if ('1' == $this->c->config->o_regs_allow) {
+            if (1 == $this->c->config->b_regs_allow) {
                 $navUser[self::FI_REG] = [
                     $r->link('Register'),
                     'Register',

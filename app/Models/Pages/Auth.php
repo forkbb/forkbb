@@ -96,7 +96,7 @@ class Auth extends Page
         $this->onlinePos  = 'login';
         $this->robots     = 'noindex';
         $this->titles     = __('Login');
-        $this->regLink    = '1' == $this->c->config->o_regs_allow ? $this->c->Router->link('Register') : null;
+        $this->regLink    = 1 == $this->c->config->b_regs_allow ? $this->c->Router->link('Register') : null;
 
         $username         = $v ? $v->username : $username;
         $save             = $v ? $v->save : 1;

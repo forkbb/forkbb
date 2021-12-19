@@ -60,7 +60,7 @@ class Routing
             );
 
             // регистрация
-            if ('1' == $config->o_regs_allow) {
+            if (1 == $config->b_regs_allow) {
                 $r->add(
                     $r::GET,
                     '/registration',
@@ -125,7 +125,7 @@ class Routing
                 '1' == $config->o_rules
                 && (
                     ! $user->isGuest
-                    || '1' == $config->o_regs_allow
+                    || 1 == $config->b_regs_allow
                 )
             ) {
                 $r->add(

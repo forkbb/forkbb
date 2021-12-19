@@ -76,7 +76,7 @@ class Options extends Admin
                     'o_smtp_pass'             => 'string:trim|max:255',
                     'changeSmtpPassword'      => 'checkbox',
                     'b_smtp_ssl'              => 'required|integer|in:0,1',
-                    'o_regs_allow'            => 'required|integer|in:0,1',
+                    'b_regs_allow'            => 'required|integer|in:0,1',
                     'o_regs_verify'           => 'required|integer|in:0,1',
                     'b_regs_report'           => 'required|integer|in:0,1',
                     'o_rules'                 => 'required|integer|in:0,1|check_empty:o_rules_message',
@@ -623,9 +623,9 @@ class Options extends Admin
         $form['sets']['registration'] = [
             'legend' => 'Registration subhead',
             'fields' => [
-                'o_regs_allow' => [
+                'b_regs_allow' => [
                     'type'    => 'radio',
-                    'value'   => $config->o_regs_allow,
+                    'value'   => $config->b_regs_allow,
                     'values'  => $yn,
                     'caption' => 'Allow new label',
                     'help'    => 'Allow new help',
