@@ -66,7 +66,7 @@ class Pgsql
     {
         $this->db = $db;
 
-        $this->testStr($prefix);
+        $this->nameCheck($prefix);
 
         $this->dbPrefix = $prefix;
     }
@@ -80,9 +80,9 @@ class Pgsql
     }
 
     /**
-     * Проверяет строку на допустимые символы
+     * Проверяет имя таблицы/индекса/поля на допустимые символы
      */
-    protected function testStr(string $str): void
+    protected function nameCheck(string $str): void
     {
         if (\preg_match('%[^a-zA-Z0-9_]%', $str)) {
             throw new PDOException("Name '{$str}' have bad characters.");
@@ -96,11 +96,11 @@ class Pgsql
     {
         foreach ($arr as &$value) {
             if (\preg_match('%^(.*)\s*(\(\d+\))$%', $value, $matches)) {
-                $this->testStr($matches[1]);
+                $this->nameCheck($matches[1]);
 
-                $value = "\"{$matches[1]}\""; // {$matches[2]}
+                $value = "\"{$matches[1]}\"";
             } else {
-                $this->testStr($value);
+                $this->nameCheck($value);
 
                 $value = "\"{$value}\"";
             }
@@ -133,6 +133,29 @@ class Pgsql
         } else {
             throw new PDOException('Invalid data type for DEFAULT.');
         }
+    }
+
+    /**
+     * Формирует строку для одного поля таблицы
+     */
+    protected function buildColumn(string $name, array $data): string
+    {
+        $this->nameCheck($name);
+        // имя и тип
+        $query = '"' . $name . '" ' . $this->replType($data[0]);
+
+        if ('SERIAL' !== \strtoupper($data[0])) {
+            // не NULL
+            if (empty($data[1])) {
+                $query .= ' NOT NULL';
+            }
+            // значение по умолчанию
+            if (isset($data[2])) {
+                $query .= ' DEFAULT ' . $this->convToStr($data[2]);
+            }
+        }
+
+        return $query;
     }
 
     /**
@@ -221,28 +244,13 @@ class Pgsql
      */
     public function createTable(string $table, array $schema, bool $noPrefix = false): bool
     {
-        $this->testStr($table);
+        $this->nameCheck($table);
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $query = "CREATE TABLE IF NOT EXISTS \"{$table}\" (";
 
         foreach ($schema['FIELDS'] as $field => $data) {
-            $this->testStr($field);
-            // имя и тип
-            $query .= "\"{$field}\" " . $this->replType($data[0]);
-
-            if ('SERIAL' !== \strtoupper($data[0])) {
-                // не NULL
-                if (empty($data[1])) {
-                    $query .= ' NOT NULL';
-                }
-                // значение по умолчанию
-                if (isset($data[2])) {
-                    $query .= ' DEFAULT ' . $this->convToStr($data[2]);
-                }
-            }
-
-            $query .= ', ';
+            $query .= $this->buildColumn($field, $data) . ', ';
         }
 
         if (isset($schema['PRIMARY KEY'])) {
@@ -273,7 +281,7 @@ class Pgsql
      */
     public function dropTable(string $table, bool $noPrefix = false): bool
     {
-        $this->testStr($table);
+        $this->nameCheck($table);
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
 
@@ -285,8 +293,8 @@ class Pgsql
      */
     public function renameTable(string $old, string $new, bool $noPrefix = false): bool
     {
-        $this->testStr($old);
-        $this->testStr($new);
+        $this->nameCheck($old);
+        $this->nameCheck($new);
 
         if (
             $this->tableExists($new, $noPrefix)
@@ -306,25 +314,15 @@ class Pgsql
      */
     public function addField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $after = null, bool $noPrefix = false): bool
     {
-        $this->testStr($table);
-        $this->testStr($field);
+        $this->nameCheck($table);
+        $this->nameCheck($field);
 
         if ($this->fieldExists($table, $field, $noPrefix)) {
             return true;
         }
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
-        $query = "ALTER TABLE \"{$table}\" ADD \"{$field}\" " . $this->replType($type);
-
-        if ('SERIAL' !== \strtoupper($type)) {
-            if (! $allowNull) {
-                $query .= ' NOT NULL';
-            }
-
-            if (null !== $default) {
-                $query .= ' DEFAULT ' . $this->convToStr($default);
-            }
-        }
+        $query = "ALTER TABLE \"{$table}\" ADD " . $this->buildColumn($field, [$type, $allowNull, $default]);
 
         return false !== $this->db->exec($query);
     }
@@ -334,8 +332,8 @@ class Pgsql
      */
     public function alterField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $after = null, bool $noPrefix = false): bool
     {
-        $this->testStr($table);
-        $this->testStr($field);
+        $this->nameCheck($table);
+        $this->nameCheck($field);
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $query = "ALTER TABLE \"{$table}\"";
@@ -368,8 +366,8 @@ class Pgsql
      */
     public function dropField(string $table, string $field, bool $noPrefix = false): bool
     {
-        $this->testStr($table);
-        $this->testStr($field);
+        $this->nameCheck($table);
+        $this->nameCheck($field);
 
         if (! $this->fieldExists($table, $field, $noPrefix)) {
             return true;
@@ -385,9 +383,9 @@ class Pgsql
      */
     public function renameField(string $table, string $old, string $new, bool $noPrefix = false): bool
     {
-        $this->testStr($table);
-        $this->testStr($old);
-        $this->testStr($new);
+        $this->nameCheck($table);
+        $this->nameCheck($old);
+        $this->nameCheck($new);
 
         if (
             $this->fieldExists($table, $new, $noPrefix)
@@ -406,7 +404,7 @@ class Pgsql
      */
     public function addIndex(string $table, string $index, array $fields, bool $unique = false, bool $noPrefix = false): bool
     {
-        $this->testStr($table);
+        $this->nameCheck($table);
 
         if ($this->indexExists($table, $index, $noPrefix)) {
             return true;
@@ -417,7 +415,7 @@ class Pgsql
         if ('PRIMARY' === $index) {
             $query = "ALTER TABLE \"{$table}\" ADD PRIMARY KEY (" . $this->replIdxs($fields) . ')';
         } else {
-            $this->testStr($index);
+            $this->nameCheck($index);
 
             $unique = $unique ? 'UNIQUE' : '';
             $query  = "CREATE {$unique} INDEX \"{$table}_{$index}\" ON \"{$table}\" (" . $this->replIdxs($fields) . ')';
@@ -431,7 +429,7 @@ class Pgsql
      */
     public function dropIndex(string $table, string $index, bool $noPrefix = false): bool
     {
-        $this->testStr($table);
+        $this->nameCheck($table);
 
         if (! $this->indexExists($table, $index, $noPrefix)) {
             return true;
@@ -442,7 +440,7 @@ class Pgsql
         if ('PRIMARY' === $index) {
             $query = "ALTER TABLE \"{$table}\" DROP CONSTRAINT \"{$table}_pkey\"";
         } else {
-            $this->testStr($index);
+            $this->nameCheck($index);
 
             $query = "DROP INDEX \"{$table}_{$index}\"";
         }
@@ -455,7 +453,7 @@ class Pgsql
      */
     public function truncateTable(string $table, bool $noPrefix = false): bool
     {
-        $this->testStr($table);
+        $this->nameCheck($table);
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
 
