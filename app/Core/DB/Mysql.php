@@ -333,7 +333,6 @@ class Mysql
     public function addField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $after = null, bool $noPrefix = false): bool
     {
         $this->nameCheck($table);
-        $this->nameCheck($field);
 
         if ($this->fieldExists($table, $field, $noPrefix)) {
             return true;
@@ -357,7 +356,6 @@ class Mysql
     public function alterField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $after = null, bool $noPrefix = false): bool
     {
         $this->nameCheck($table);
-        $this->nameCheck($field);
 
         $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $query = "ALTER TABLE `{$table}` MODIFY " . $this->buildColumn($field, [$type, $allowNull, $default]);
@@ -395,7 +393,6 @@ class Mysql
     {
         $this->nameCheck($table);
         $this->nameCheck($old);
-        $this->nameCheck($new);
 
         if (
             $this->fieldExists($table, $new, $noPrefix)

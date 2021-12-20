@@ -315,7 +315,6 @@ class Pgsql
     public function addField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $after = null, bool $noPrefix = false): bool
     {
         $this->nameCheck($table);
-        $this->nameCheck($field);
 
         if ($this->fieldExists($table, $field, $noPrefix)) {
             return true;

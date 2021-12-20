@@ -145,7 +145,7 @@ class Sqlite
                 $query .= ' DEFAULT ' . $this->convToStr($data[2]);
             }
             // сравнение
-            if (\preg_match('%^(?:CHAR|VARCHAR|TINYTEXT|TEXT|MEDIUMTEXT|LONGTEXT|ENUM|SET)%i', $data[0])) {
+            if (\preg_match('%^(?:CHAR|VARCHAR|TINYTEXT|TEXT|MEDIUMTEXT|LONGTEXT|ENUM|SET)\b%i', $data[0])) {
                 $query .= ' COLLATE ';
 
                 if (
@@ -304,7 +304,6 @@ class Sqlite
     public function addField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $after = null, bool $noPrefix = false): bool
     {
         $this->nameCheck($table);
-        $this->nameCheck($field);
 
         if ($this->fieldExists($table, $field, $noPrefix)) {
             return true;
