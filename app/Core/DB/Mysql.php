@@ -136,14 +136,6 @@ class Mysql
         $this->nameCheck($name);
         // имя и тип
         $query = '`' . $name . '` ' . $this->replType($data[0]);
-        // не NULL
-        if (empty($data[1])) {
-            $query .= ' NOT NULL';
-        }
-        // значение по умолчанию
-        if (isset($data[2])) {
-            $query .= ' DEFAULT ' . $this->convToStr($data[2]);
-        }
         // сравнение
         if (\preg_match('%^(?:CHAR|VARCHAR|TINYTEXT|TEXT|MEDIUMTEXT|LONGTEXT|ENUM|SET)\b%i', $data[0])) {
             $query .= ' CHARACTER SET utf8mb4 COLLATE utf8mb4_';
@@ -158,6 +150,14 @@ class Mysql
             } else {
                 $query .= 'unicode_ci';
             }
+        }
+        // не NULL
+        if (empty($data[1])) {
+            $query .= ' NOT NULL';
+        }
+        // значение по умолчанию
+        if (isset($data[2])) {
+            $query .= ' DEFAULT ' . $this->convToStr($data[2]);
         }
 
         return $query;
