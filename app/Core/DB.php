@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace ForkBB\Core;
 
-use ForkBB\Core\DB\Statement;
+use ForkBB\Core\DB\DBStatement;
 use PDO;
 use PDOStatement;
 use PDOException;
@@ -151,7 +151,7 @@ class DB
         if (\is_file(__DIR__ . "/DB/{$typeU}Statement.php")) {
             $this->statementClass = "ForkBB\\Core\\DB\\{$typeU}Statement}";
         } else {
-            $this->statementClass = Statement::class;
+            $this->statementClass = DBStatement::class;
         }
 
         if ('sqlite' === $type) {
@@ -181,18 +181,18 @@ class DB
         }
 
         $options += [
-            self::ATTR_DEFAULT_FETCH_MODE => self::FETCH_ASSOC,
-            self::ATTR_EMULATE_PREPARES   => false,
-            self::ATTR_STRINGIFY_FETCHES  => false,
-            self::ATTR_ERRMODE            => self::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES   => false,
+            PDO::ATTR_STRINGIFY_FETCHES  => false,
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         ];
 
         return $result;
     }
 
-    protected function dbStatement(PDOStatement $stmt): Statement
+    protected function dbStatement(PDOStatement $stmt): DBStatement
     {
-        return new {$this->statementClass}($this, $stmt);
+        return new $this->statementClass($this, $stmt);
     }
 
     /**
@@ -354,7 +354,7 @@ class DB
     /**
      * Метод расширяет PDO::prepare()
      */
-    public function prepare(string $query, array $params = [], array $options = null): /* : Statement|false */
+    public function prepare(string $query, array $params = [], array $options = null) /* : DBStatement|false */
     {
         $map         = $this->parse($query, $params);
         $start       = \microtime(true);
@@ -376,7 +376,7 @@ class DB
     /**
      * Метод расширяет PDO::query()
      */
-    public function query(string $query, /* mixed */ ...$args) /* : Statement|false */
+    public function query(string $query, /* mixed */ ...$args) /* : DBStatement|false */
     {
         if (
             isset($args[0])
@@ -472,7 +472,7 @@ class DB
         if (isset($this->pdoMethods[$name])) {
             return $this->pdo->$name(...$args);
         } elseif (empty($this->dbDrv)) {
-            $this->dbDrv = new {$this->dbDrvClass}($this, $this->dbPrefix);
+            $this->dbDrv = new $this->dbDrvClass($this, $this->dbPrefix);
 
             // ????? проверка типа
         }
