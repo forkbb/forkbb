@@ -8,13 +8,14 @@
 
 declare(strict_types=1);
 
-namespace ForkBB\Core;
+namespace ForkBB\Core\DB;
 
+use ForkBB\Core\DB;
 use PDO;
 use PDOStatement;
 use PDOException;
 
-class DBStatement extends PDOStatement
+class DBStatement
 {
     const BOOLEAN = 'b';
     const FLOAT   = 'f';
@@ -26,6 +27,11 @@ class DBStatement extends PDOStatement
      * @var PDO
      */
     protected $db;
+
+    /**
+     * @var PDOStatement
+     */
+    protected $stmt;
 
     /**
      * Карта преобразования переменных
@@ -47,9 +53,10 @@ class DBStatement extends PDOStatement
         'as' => PDO::PARAM_STR,
     ];
 
-    protected function __construct(PDO $db)
+    public function __construct(DB $db, PDOStatement $stmt)
     {
-        $this->db = $db;
+        $this->db   = $db;
+        $this->stmt = $stmt;
     }
 
     /**
@@ -74,12 +81,13 @@ class DBStatement extends PDOStatement
                 if (! \is_array($bValue)) {
                     throw new PDOException("Expected array: key='{$key}'");
                 }
+
                 foreach ($data as $bParam) {
-                    parent::bindValue($bParam, \array_shift($bValue), $bType); //????
+                    $this->stmt->bindValue($bParam, \array_shift($bValue), $bType); //????
                 }
             } else {
                 foreach ($data as $bParam) {
-                    parent::bindValue($bParam, $bValue, $bType); //????
+                    $this->stmt->bindValue($bParam, $bValue, $bType); //????
                 }
             }
         }
@@ -88,7 +96,7 @@ class DBStatement extends PDOStatement
     /**
      * Метод расширяет PDOStatement::execute()
      */
-    public function execute(/* array */ $params = null): bool
+    public function execute(array $params = null): bool
     {
         if (
             \is_array($params)
@@ -96,10 +104,20 @@ class DBStatement extends PDOStatement
         ) {
             $this->bindValueList($params);
         }
+
         $start  = \microtime(true);
-        $result = parent::execute();
-        $this->db->saveQuery($this->queryString, \microtime(true) - $start);
+        $result = $this->stmt->execute();
+
+        $this->db->saveQuery($this->stmt->queryString, \microtime(true) - $start);
 
         return $result;
+    }
+
+    /**
+     * Передает вызовы метода в PDOStatement
+     */
+    public function __call(string $name, array $args) /* : mixed */
+    {
+        return $this->stmt->$name(...$args);
     }
 }
