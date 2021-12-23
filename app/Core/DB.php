@@ -354,7 +354,7 @@ class DB
     /**
      * Метод расширяет PDO::prepare()
      */
-    public function prepare(string $query, array $params = [], array $options = null) /* : DBStatement|false */
+    public function prepare(string $query, array $params = [], array $options = []) /* : DBStatement|false */
     {
         $map         = $this->parse($query, $params);
         $start       = \microtime(true);
