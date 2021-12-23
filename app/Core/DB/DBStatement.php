@@ -23,8 +23,7 @@ class DBStatement
     const STRING  = 's';
 
     /**
-     * Префикс для таблиц базы
-     * @var PDO
+     * @var DB
      */
     protected $db;
 
