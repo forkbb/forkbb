@@ -104,7 +104,7 @@ class Merge extends Action
             }
 
             if ($users) {
-                $this->c->users->UpdateCountTopics(...$users);
+                $this->c->users->updateCountTopics(...$users);
             }
         } else {
             $this->c->topics->update($firstTopic->calcStat());
