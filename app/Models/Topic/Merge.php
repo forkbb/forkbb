@@ -54,26 +54,19 @@ class Merge extends Action
         }
 
         //???? перенести обработку в посты?
-        $vars = [
-            'start'  => "[from]",
-            'end'    => "[/from]\n",
-            'topics' => $ids,
-        ];
-        $query = 'UPDATE ::posts AS p, ::topics as t
-            SET p.message=CONCAT(?s:start, t.subject, ?s:end, p.message)
-            WHERE p.topic_id IN (?ai:topics) AND t.id=p.topic_id';
+        $query = 'UPDATE ::posts
+            SET message=CONCAT(?s:prefix, message), topic_id=?i:new
+            WHERE topic_id=?i:id';
 
-        $this->c->DB->exec($query, $vars);
+        foreach ($otherTopics as $topic) {
+            $vars = [
+                ':new'    => $firstTopic->id,
+                ':id'     => $topic->id,
+                ':prefix' => "[from]{$topic->subject}[/from]\n",
+            ];
 
-        $vars = [
-            'id'     => $firstTopic->id,
-            'topics' => $ids,
-        ];
-        $query = 'UPDATE ::posts AS p
-            SET p.topic_id=?i:id
-            WHERE p.topic_id IN (?ai:topics)';
-
-        $this->c->DB->exec($query, $vars);
+            $this->c->DB->exec($query, $vars);
+        }
 
         // добавить перенос подписок на первую тему?
 
