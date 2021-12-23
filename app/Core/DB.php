@@ -10,14 +10,18 @@ declare(strict_types=1);
 
 namespace ForkBB\Core;
 
-use ForkBB\Core\DBStatement;
+use ForkBB\Core\DB\DBStatement;
 use PDO;
 use PDOStatement;
 use PDOException;
-use ReturnTypeWillChange;
 
-class DB extends PDO
+class DB
 {
+    /**
+     * @var PDO
+     */
+    protected $pdo;
+
     /**
      * Префикс для таблиц базы
      * @var string
@@ -31,10 +35,22 @@ class DB extends PDO
     protected $dbType;
 
     /**
+     * Имя класса для драйвера
+     * @var string
+     */
+    protected $dbDrvClass;
+
+    /**
      * Драйвер текущей базы
      * @var //????
      */
     protected $dbDrv;
+
+    /**
+     * Имя класса для PDOStatement
+     * @var string
+     */
+    protected $statementClass;
 
     /**
      * Количество выполненных запросов
@@ -54,93 +70,129 @@ class DB extends PDO
      */
     protected $delta = 0;
 
+    /**
+     * @var array
+     */
+    protected $pdoMethods = [
+        'beginTransaction'      => true,
+        'commit'                => true,
+        'errorCode'             => true,
+        'errorInfo'             => true,
+        'exec'                  => true,
+        'getAttribute'          => true,
+        'getAvailableDrivers'   => true,
+        'inTransaction'         => true,
+        'lastInsertId'          => true,
+        'prepare'               => true,
+        'query'                 => true,
+        'quote'                 => true,
+        'rollBack'              => true,
+        'setAttribute'          => true,
+
+        'pgsqlCopyFromArray'    => true,
+        'pgsqlCopyFromFile'     => true,
+        'pgsqlCopyToArray'      => true,
+        'pgsqlCopyToFile'       => true,
+        'pgsqlGetNotify'        => true,
+        'pgsqlGetPid'           => true,
+        'pgsqlLOBCreate'        => true,
+        'pgsqlLOBOpen'          => true,
+        'pgsqlLOBUnlink'        => true,
+
+        'sqliteCreateAggregate' => true,
+        'sqliteCreateCollation' => true,
+        'sqliteCreateFunction'  => true,
+    ];
+
     public function __construct(string $dsn, string $username = null, string $password = null, array $options = [], string $prefix = '')
     {
-        $type  = \strstr($dsn, ':', true);
-        $typeU = \ucfirst($type);
+        $dsn = $this->initialConfig($dsn);
+
+        $this->dbPrefix = $prefix;
+
+        list($initSQLCommands, $initFunction) = $this->prepareOptions($options);
+
+        $start     = \microtime(true);
+        $this->pdo = new PDO($dsn, $username, $password, $options);
+
+        $this->saveQuery('PDO::__construct()', \microtime(true) - $start, false);
+
+        if (\is_string($initSQLCommands)) {
+            $this->exec($initSQLCommands);
+        }
 
         if (
-            ! $type
-            || ! \in_array($type, PDO::getAvailableDrivers(), true)
-            || ! \is_file(__DIR__ . "/DB/{$typeU}.php")
+            null !== $initFunction
+            && true !== $initFunction($this)
         ) {
+            throw new PDOException("initFunction failure");
+        }
+
+        $this->beginTransaction();
+    }
+
+    protected function initialConfig(string $dsn): string
+    {
+        $type = \strstr($dsn, ':', true);
+
+        if (! \in_array($type, PDO::getAvailableDrivers(), true)) {
+            throw new PDOException("PDO does not have driver for '{$type}'");
+        }
+
+        $typeU = \ucfirst($type);
+
+        if (! \is_file(__DIR__ . "/DB/{$typeU}.php")) {
             throw new PDOException("Driver isn't found for '$type'");
         }
 
-        $statement = $typeU . 'Statement' . (\PHP_MAJOR_VERSION < 8 ? '7' : '');
+        $this->dbType     = $type;
+        $this->dbDrvClass = "ForkBB\\Core\\DB\\{$typeU}";
 
-        if (\is_file(__DIR__ . "/DB/{$statement}.php")) {
-            $statement = 'ForkBB\\Core\\DB\\' . $statement;
+        if (\is_file(__DIR__ . "/DB/{$typeU}Statement.php")) {
+            $this->statementClass = "ForkBB\\Core\\DB\\{$typeU}Statement";
         } else {
-            $statement = DBStatement::class;
+            $this->statementClass = DBStatement::class;
         }
 
         if ('sqlite' === $type) {
             $dsn = \str_replace('!PATH!', \realpath(__DIR__ . '/../config/db') . '/', $dsn);
         }
 
-        $this->dbType   = $type;
-        $this->dbPrefix = $prefix;
+        return $dsn;
+    }
+
+    protected function prepareOptions(array &$options): array
+    {
+        $result = [
+            0 => null,
+            1 => null,
+        ];
 
         if (isset($options['initSQLCommands'])) {
-            $initSQLCommands = \implode(';', $options['initSQLCommands']);
+            $result[0] = \implode(';', $options['initSQLCommands']);
 
             unset($options['initSQLCommands']);
-        } else {
-            $initSQLCommands = null;
+        }
+
+        if (isset($options['initFunction'])) {
+            $result[1] = $options['initFunction'];
+
+            unset($options['initFunction']);
         }
 
         $options += [
-            self::ATTR_DEFAULT_FETCH_MODE => self::FETCH_ASSOC,
-            self::ATTR_EMULATE_PREPARES   => false,
-            self::ATTR_STRINGIFY_FETCHES  => false,
-            self::ATTR_ERRMODE            => self::ERRMODE_EXCEPTION,
-            self::ATTR_STATEMENT_CLASS    => [$statement, [$this]],
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES   => false,
+            PDO::ATTR_STRINGIFY_FETCHES  => false,
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         ];
 
-        $start  = \microtime(true);
-
-        parent::__construct($dsn, $username, $password, $options);
-
-        $this->saveQuery('PDO::__construct()', \microtime(true) - $start, false);
-
-        if ($initSQLCommands) {
-            $this->exec($initSQLCommands);
-        }
-
-        $this->beginTransaction();
+        return $result;
     }
 
-    /**
-     * Передает вызовы методов в драйвер текущей базы
-     */
-    public function __call(string $name, array $args) /* : mixed */
+    protected function dbStatement(PDOStatement $stmt): DBStatement
     {
-        if (empty($this->dbDrv)) {
-            $drv = 'ForkBB\\Core\\DB\\' . \ucfirst($this->dbType);
-            $this->dbDrv = new $drv($this, $this->dbPrefix);
-        }
-
-        return $this->dbDrv->$name(...$args);
-    }
-
-    /**
-     * Метод определяет массив ли опций подан на вход
-     */
-    protected function isOptions(array $options): bool
-    {
-        $verify = [self::ATTR_CURSOR => [self::CURSOR_FWDONLY, self::CURSOR_SCROLL]];
-
-        foreach ($options as $key => $value) {
-           if (
-               ! isset($verify[$key])
-               || ! \in_array($value, $verify[$key], true)
-            ) {
-               return false;
-           }
-        }
-
-        return true;
+        return new $this->statementClass($this, $stmt);
     }
 
     /**
@@ -207,7 +259,7 @@ class DB extends PDO
     /**
      * Метод возвращает значение из массива параметров по ключу или исключение
      */
-    public function getValue(/* mixed */ $key, array $params) /* : mixed */
+    public function getValue(/* int|string */ $key, array $params) /* : mixed */
     {
         if (
             \is_string($key)
@@ -259,6 +311,7 @@ class DB extends PDO
         if ($add) {
             ++$this->qCount;
         }
+
         $this->queries[] = [$query, $time + $this->delta];
         $this->delta     = 0;
     }
@@ -266,22 +319,28 @@ class DB extends PDO
     /**
      * Метод расширяет PDO::exec()
      */
-    #[ReturnTypeWillChange]
-    public function exec(/* string */ $query, array $params = []) /* : int|false */
+    public function exec(string $query, array $params = []) /* : int|false */
     {
         $map = $this->parse($query, $params);
 
         if (empty($params)) {
             $start  = \microtime(true);
-            $result = parent::exec($query);
+            $result = $this->pdo->exec($query);
+
             $this->saveQuery($query, \microtime(true) - $start);
 
             return $result;
         }
 
         $start       = \microtime(true);
-        $stmt        = parent::prepare($query);
+        $stmt        = $this->pdo->prepare($query);
         $this->delta = \microtime(true) - $start;
+
+        if (! $stmt instanceof PDOStatement) {
+            return false;
+        }
+
+        $stmt = $this->dbStatement($stmt);
 
         $stmt->setMap($map);
 
@@ -295,31 +354,20 @@ class DB extends PDO
     /**
      * Метод расширяет PDO::prepare()
      */
-    #[ReturnTypeWillChange]
-    public function prepare(/* string */ $query, /* array */ $arg1 = null, /* array */ $arg2 = null): PDOStatement
+    public function prepare(string $query, array $params = [], array $options = []) /* : DBStatement|false */
     {
-        if (
-            empty($arg1) === empty($arg2)
-            || ! empty($arg2)
-        ) {
-            $params  = $arg1;
-            $options = $arg2;
-        } elseif ($this->isOptions($arg1)) {
-            $params  = [];
-            $options = $arg1;
-        } else {
-            $params  = $arg1;
-            $options = [];
-        }
-
-        $map = $this->parse($query, $params);
-
+        $map         = $this->parse($query, $params);
         $start       = \microtime(true);
-        $stmt        = parent::prepare($query, $options);
+        $stmt        = $this->pdo->prepare($query, $options);
         $this->delta = \microtime(true) - $start;
 
-        $stmt->setMap($map);
+        if (! $stmt instanceof PDOStatement) {
+            return false;
+        }
 
+        $stmt = $this->dbStatement($stmt);
+
+        $stmt->setMap($map);
         $stmt->bindValueList($params);
 
         return $stmt;
@@ -328,8 +376,7 @@ class DB extends PDO
     /**
      * Метод расширяет PDO::query()
      */
-    #[ReturnTypeWillChange]
-    public function query(string $query, /* mixed */ ...$args) /* : PDOStatement|false */
+    public function query(string $query, /* mixed */ ...$args) /* : DBStatement|false */
     {
         if (
             isset($args[0])
@@ -343,16 +390,27 @@ class DB extends PDO
         $map = $this->parse($query, $params);
 
         if (empty($params)) {
-            $start  = \microtime(true);
-            $result = parent::query($query, ...$args);
+            $start = \microtime(true);
+            $stmt  = $this->pdo->query($query, ...$args);
+
             $this->saveQuery($query, \microtime(true) - $start);
 
-            return $result;
+            if (! $stmt instanceof PDOStatement) {
+                return false;
+            }
+
+            return $this->dbStatement($stmt);
         }
 
         $start       = \microtime(true);
-        $stmt        = parent::prepare($query);
+        $stmt        = $this->pdo->prepare($query);
         $this->delta = \microtime(true) - $start;
+
+        if (! $stmt instanceof PDOStatement) {
+            return false;
+        }
+
+        $stmt = $this->dbStatement($stmt);
 
         $stmt->setMap($map);
 
@@ -373,7 +431,8 @@ class DB extends PDO
     public function beginTransaction(): bool
     {
         $start  = \microtime(true);
-        $result = parent::beginTransaction();
+        $result = $this->pdo->beginTransaction();
+
         $this->saveQuery('beginTransaction()', \microtime(true) - $start, false);
 
         return $result;
@@ -385,7 +444,8 @@ class DB extends PDO
     public function commit(): bool
     {
         $start  = \microtime(true);
-        $result = parent::commit();
+        $result = $this->pdo->commit();
+
         $this->saveQuery('commit()', \microtime(true) - $start, false);
 
         return $result;
@@ -397,9 +457,26 @@ class DB extends PDO
     public function rollback(): bool
     {
         $start  = \microtime(true);
-        $result = parent::rollback();
+        $result = $this->pdo->rollback();
+
         $this->saveQuery('rollback()', \microtime(true) - $start, false);
 
         return $result;
+    }
+
+    /**
+     * Передает вызовы метода в PDO или драйвер текущей базы
+     */
+    public function __call(string $name, array $args) /* : mixed */
+    {
+        if (isset($this->pdoMethods[$name])) {
+            return $this->pdo->$name(...$args);
+        } elseif (empty($this->dbDrv)) {
+            $this->dbDrv = new $this->dbDrvClass($this, $this->dbPrefix);
+
+            // ????? проверка типа
+        }
+
+        return $this->dbDrv->$name(...$args);
     }
 }

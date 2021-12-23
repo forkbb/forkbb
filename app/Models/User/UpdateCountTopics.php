@@ -38,21 +38,21 @@ class UpdateCountTopics extends Action
         unset($ids[0]); // ????
 
         if (empty($ids)) {
-            $where = 'u.id > 0';
+            $where = '::users.id > 0';
             $vars  = [];
         } else {
-            $where = 'u.id IN (?ai:ids)';
+            $where = '::users.id IN (?ai:ids)';
             $vars  = [
                 ':ids' => \array_keys($ids),
             ];
         }
 
-        $query = 'UPDATE ::users AS u
-            SET u.num_topics = COALESCE((
+        $query = 'UPDATE ::users
+            SET num_topics = COALESCE((
                 SELECT COUNT(t.id)
                 FROM ::topics AS t
                 INNER JOIN ::posts AS p ON t.first_post_id=p.id
-                WHERE p.poster_id=u.id AND t.moved_to=0
+                WHERE p.poster_id=::users.id AND t.moved_to=0
                 GROUP BY p.poster_id
             ), 0)
             WHERE ' . $where;

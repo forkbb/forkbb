@@ -179,7 +179,7 @@ class Delete extends Action
         }
 
         if ($uidsUpdate) {
-            $this->c->users->UpdateCountTopics(...$uidsUpdate);
+            $this->c->users->updateCountTopics(...$uidsUpdate);
         }
     }
 }
