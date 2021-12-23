@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace ForkBB\Core\DB;
 
-use ForkBB\Core\DBStatement;
+use ForkBB\Core\DB\DBStatement;
 use PDO;
 use PDOStatement;
 use PDOException;
@@ -68,14 +68,14 @@ abstract class AbstractStatement extends DBStatement
         }
     }
 
-    protected function dbSetFetchMode(int $mode, ...$args): bool
+    public function setFetchMode(int $mode, ...$args): bool
     {
         $this->setFetchVars($mode, ...$args);
 
-        return parent::setFetchMode($mode, ...$args);
+        return $this->stmt->setFetchMode($mode, ...$args);
     }
 
-    protected function dbFetch(int $mode = 0, int $orientation = PDO::FETCH_ORI_NEXT, int $offset = 0) /* : mixed */
+    public function fetch(int $mode = 0, int $orientation = PDO::FETCH_ORI_NEXT, int $offset = 0) /* : mixed */
     {
         $this->okFetchColumn = false;
 
@@ -86,7 +86,7 @@ abstract class AbstractStatement extends DBStatement
             $colNum = 0;
         }
 
-        $data = parent::fetch(
+        $data = $this->stmt->fetch(
             PDO::FETCH_COLUMN === $mode ? PDO::FETCH_NUM : $mode,
             $orientation,
             $offset
@@ -130,7 +130,7 @@ abstract class AbstractStatement extends DBStatement
         return $data;
     }
 
-    protected function dbFetchAll(int $mode, ...$args): array
+    public function fetchAll(int $mode = 0, ...$args): array
     {
         if (0 !== $mode) {
             $this->setFetchVars($mode, ...$args);
@@ -144,7 +144,7 @@ abstract class AbstractStatement extends DBStatement
             case PDO::FETCH_NUM:
             case PDO::FETCH_ASSOC:
             case PDO::FETCH_COLUMN:
-                while (false !== ($data = $this->dbFetch()) || $this->okFetchColumn) {
+                while (false !== ($data = $this->fetch()) || $this->okFetchColumn) {
                     $result[] = $data;
                 }
 
@@ -154,7 +154,7 @@ abstract class AbstractStatement extends DBStatement
                     throw new PDOException('General error: PDO::FETCH_KEY_PAIR fetch mode requires the result set to contain exactly 2 columns');
                 }
 
-                while (false !== ($data = $this->dbFetch(PDO::FETCH_NUM))) {
+                while (false !== ($data = $this->fetch(PDO::FETCH_NUM))) {
                     $result[$data[0]] = $data[1];
                 }
 
@@ -165,7 +165,7 @@ abstract class AbstractStatement extends DBStatement
             case PDO::FETCH_UNIQUE | PDO::FETCH_ASSOC:
                 $this->fetchMode ^= PDO::FETCH_UNIQUE;
 
-                while (false !== ($data = $this->dbFetch())) {
+                while (false !== ($data = $this->fetch())) {
                     $key          = \array_shift($data);
                     $result[$key] = $data;
                 }
@@ -177,7 +177,7 @@ abstract class AbstractStatement extends DBStatement
             case PDO::FETCH_GROUP | PDO::FETCH_ASSOC:
                 $this->fetchMode ^= PDO::FETCH_GROUP;
 
-                while (false !== ($data = $this->dbFetch())) {
+                while (false !== ($data = $this->fetch())) {
                     $key = \array_shift($data);
 
                     if (PDO::FETCH_BOTH === $this->fetchMode) {
@@ -195,10 +195,9 @@ abstract class AbstractStatement extends DBStatement
             default:
                 throw new PDOException('AbstractStatement class does not support this type for fetchAll(): ' . $this->fetchMode);
 
-                return parent::fetchAll($mode, ...$args);
+                return $this->stmt->fetchAll($mode, ...$args);
         }
 
         return $result;
-
     }
 }
