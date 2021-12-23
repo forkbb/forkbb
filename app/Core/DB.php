@@ -149,7 +149,7 @@ class DB
         $this->dbDrvClass = "ForkBB\\Core\\DB\\{$typeU}";
 
         if (\is_file(__DIR__ . "/DB/{$typeU}Statement.php")) {
-            $this->statementClass = "ForkBB\\Core\\DB\\{$typeU}Statement}";
+            $this->statementClass = "ForkBB\\Core\\DB\\{$typeU}Statement";
         } else {
             $this->statementClass = DBStatement::class;
         }
