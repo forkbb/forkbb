@@ -566,4 +566,31 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.44 to rev.45
+     */
+    protected function stageNumber44(array $args): ?int
+    {
+        if (! $this->c->DB->query('SELECT id FROM ::bbcode WHERE bb_tag=?s', ['from'])->fetchColumn()) {
+            $bbcodes = include $this->c->DIR_APP . '/config/defaultBBCode.php';
+
+            foreach ($bbcodes as $bbcode) {
+                if ('from' !== $bbcode['tag']) {
+                    continue;
+                }
+
+                $vars = [
+                    ':tag'       => $bbcode['tag'],
+                    ':structure' => \json_encode($bbcode, self::JSON_OPTIONS),
+                ];
+                $query = 'INSERT INTO ::bbcode (bb_tag, bb_edit, bb_delete, bb_structure)
+                    VALUES(?s:tag, 1, 0, ?s:structure)';
+
+                $this->c->DB->exec($query, $vars);
+            }
+        }
+
+        return null;
+    }
 }
