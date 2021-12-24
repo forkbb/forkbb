@@ -54,4 +54,16 @@ class Message extends Page
 
         return $this;
     }
+
+    /**
+     * Задает массивы главной навигации форума
+     */
+    protected function boardNavigation(): void
+    {
+        if ($this->c->config->i_fork_revision < $this->c->FORK_REVISION) {
+            return;
+        }
+
+        parent::boardNavigation();
+    }
 }
