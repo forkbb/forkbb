@@ -1599,6 +1599,11 @@ body,
   border-inline-start: 0.1875rem solid #AA7939;
 }
 
+#fork .f-bb-from {
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
 #fork .f-post-body p,
 #fork .f-post-body blockquote,
 #fork .f-post-body br,

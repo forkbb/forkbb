@@ -454,3 +454,6 @@ msgstr "Unsubscribe"
 
 msgid "Subscribe"
 msgstr "Subscribe"
+
+msgid "Post from topic %s"
+msgstr "This post is moved from the topic &quot;%s&quot;"

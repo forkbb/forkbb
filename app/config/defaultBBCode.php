@@ -544,4 +544,15 @@ foreach ($attrs as $key => $val) {
 return "<td{$attr}><p>{$body}</p></td>";
 HANDLER,
     ],
+    [
+        'tag' => 'from',
+        'type' => 'block',
+        'text_only' => true,
+        'handler' => <<<'HANDLER'
+$body = __(['Post from topic %s', \htmlspecialchars_decode($body, \ENT_QUOTES | \ENT_HTML5)]);
+
+return "</p><p class=\"f-bb-from\">{$body}</p><p>";
+HANDLER,
+    ],
+
 ];

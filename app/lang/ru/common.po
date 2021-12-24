@@ -456,3 +456,6 @@ msgstr "Отписаться"
 
 msgid "Subscribe"
 msgstr "Подписаться"
+
+msgid "Post from topic %s"
+msgstr "Это сообщение перенесено из темы &quot;%s&quot;"
