@@ -14,6 +14,7 @@ use ForkBB\Models\Method;
 use ForkBB\Models\BBCodeList\BBCodeList;
 use ForkBB\Models\BBCodeList\Structure;
 use RuntimeException;
+use function \ForkBB\__;
 
 class Update extends Method
 {
@@ -22,8 +23,8 @@ class Update extends Method
      */
     public function update(int $id, Structure $structure): BBCodeList
     {
-        if (null !== $structure->getError()) {
-            throw new RuntimeException('BBCode structure has error');
+        if (null !== ($error = $structure->getError())) {
+            throw new RuntimeException('BBCode structure has error (' . __($error) . ')');
         }
 
         $vars = [
