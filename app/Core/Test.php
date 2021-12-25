@@ -72,6 +72,7 @@ class Test
         ) {
             $index += 1;
         }
+/*
         if (empty($_SERVER['HTTP_CACHE_CONTROL'])) {
             if (false !== \strpos($_SERVER['SERVER_PROTOCOL'], '1.1')) {
                 $index += 1;
@@ -81,6 +82,7 @@ class Test
                 $index += 3;
             }
         }
+*/
         if (empty($_SERVER['HTTP_CONNECTION'])) {
             $index += 1;
         } elseif (! \preg_match('%^(?:keep-alive|close)$%iD', $_SERVER['HTTP_CONNECTION'])) {
