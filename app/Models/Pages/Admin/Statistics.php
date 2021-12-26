@@ -17,12 +17,20 @@ use function \ForkBB\{__, num};
 class Statistics extends Admin
 {
     /**
+     * Статус функции: вкл. / откл.
+     */
+    protected function isOn(string $name): bool
+    {
+        return 0 === \preg_match('%\b' . \preg_quote($name, '%') . '\b%i', (string) \ini_get('disable_functions'));
+    }
+
+    /**
      * phpinfo
      */
     public function info(): Page
     {
         // Is phpinfo() a disabled function?
-        if (false !== \strpos(\strtolower((string) \ini_get('disable_functions')), 'phpinfo')) {
+        if (! $this->isOn('phpinfo')) {
             $this->c->Message->message('PHPinfo disabled message', true, 200);
         }
 
@@ -32,6 +40,7 @@ class Statistics extends Admin
 
         if (\preg_match('%<body[^>]*>(.*)</body[^>]*>%is', $page, $matches)) {
             $phpinfo = $matches[1];
+
             if (\preg_match('%<style[^>]*>(.*?)</style[^>]*>%is', $page, $matches)) {
                 $style = \preg_replace_callback(
                     '%(\S[^{]*)({[^}]+})%',
@@ -49,6 +58,7 @@ class Statistics extends Admin
                     },
                     $matches[1]
                 );
+
                 $this->c->Cache->set('phpinfoCSS', $style);
                 $this->pageHeader('phpinfoStyle', 'link', 0, [
                     'rel'  => 'stylesheet',
@@ -109,54 +119,57 @@ class Statistics extends Admin
 
         // Get the server load averages (if possible)
         $this->serverLoad = __('Not available');
+
         switch (\PHP_OS_FAMILY) {
             case 'Windows':
-                @\exec('wmic cpu get loadpercentage /all', $output);
-                if (
-                    ! empty($output)
-                    && \preg_match('%(?:^|==)(\d+)(?:$|==)%', \implode('==', $output) , $loadPercentage)
-                ) {
-                    $this->serverLoad = $loadPercentage[1] . ' %';
-                }
-                break;
-            default:
-                if (\function_exists('\\sys_getloadavg')) {
-                    $loadAverages     = \sys_getloadavg();
-                    $this->serverLoad = num($loadAverages[0], 2)
-                        . ' '
-                        . num($loadAverages[1], 2)
-                        . ' '
-                        . num($loadAverages[2], 2);
-                    break;
+                if ($this->isOn('exec')) {
+                    \exec('wmic cpu get loadpercentage /all', $output);
+
+                    if (
+                        \is_array($output)
+                        && \preg_match('%(?:^|==)(\d+)(?:$|==)%', \implode('==', $output), $load)
+                    ) {
+                        $this->serverLoad = $load[1] . ' %';
+                    }
                 }
 
-                @\exec('uptime', $output);
+                break;
+            default:
                 if (
-                    ! empty($output)
-                    && \preg_match(
-                        '%averages?: ([0-9\.]+),?\s+([0-9\.]+),?\s+([0-9\.]+)%i',
-                        \implode(' ', $output) ,
-                        $loadAverages
-                    )
+                    \function_exists('\\sys_getloadavg')
+                    && \is_array($load = \sys_getloadavg())
                 ) {
-                    $this->serverLoad = num($loadAverages[1], 2)
-                        . ' '
-                        . num($loadAverages[2], 2)
-                        . ' '
-                        . num($loadAverages[3], 2);
-                    break;
+                    $this->serverLoad = num($load[0], 2) . ' ' . num($load[1], 2) . ' ' . num($load[2], 2);
+                } elseif ($this->isOn('exec')) {
+                    \exec('uptime', $output);
+
+                    if (
+                        \is_array($output)
+                        && \preg_match(
+                            '%averages?: ([0-9\.]+),?\s+([0-9\.]+),?\s+([0-9\.]+)%i',
+                            \implode(' ', $output),
+                            $load
+                        )
+                    ) {
+                        $this->serverLoad = num($load[1], 2) . ' ' . num($load[2], 2) . ' ' . num($load[3], 2);
+                    }
                 }
+
+                break;
         }
 
         // Get number of current visitors
         $this->numOnline = $this->c->Online->calc($this)->all;
 
         $stat = $this->c->DB->statistics();
+
         $this->dbVersion = $stat['db'];
         $this->tSize     = $stat['size'];
         $this->tRecords  = $stat['records'];
         $this->tTables   = $stat['tables'];
+
         unset($stat['db'], $stat['size'], $stat['records'], $stat['tables']);
+
         $this->tOther    = $stat;
 
         // Check for the existence of various PHP opcode caches/optimizers
