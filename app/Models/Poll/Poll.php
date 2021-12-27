@@ -93,11 +93,10 @@ class Poll extends DataModel
      */
     protected function getuserVoted(): bool
     {
-        if ($this->c->user->isGuest) {
-            return true;
-        }
-
-        if ($this->tid < 1) {
+        if (
+            $this->c->user->isGuest
+            || $this->tid < 1
+        ) {
             return false;
         }
 
@@ -253,6 +252,8 @@ class Poll extends DataModel
             return ['Poll results are hidden up to %s voters', $this->parent->poll_term];
         } elseif ($this->userVoted) {
             return 'You voted';
+        } elseif ($this->c->user->isGuest) {
+            return 'Guest cannot vote';
         } else {
             return 'Poll status is undefined';
         }

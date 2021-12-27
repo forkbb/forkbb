@@ -84,6 +84,9 @@ msgstr "Poll results are hidden up to %s voters."
 msgid "You voted"
 msgstr "You voted."
 
+msgid "Guest cannot vote"
+msgstr "Guest can't vote."
+
 msgid "Poll status is undefined"
 msgstr "Poll status is undefined."
 

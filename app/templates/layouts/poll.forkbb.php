@@ -42,9 +42,7 @@
               <button class="f-btn" name="vote" value="{{ __('Vote') }}" title="{{ __('Vote') }}"><span>{!! __('Vote') !!}</span></button>
             </p>
           </form>
-@else
-    @if (null !== $poll->status)
+@elseif (null !== $poll->status)
           <p class="f-poll-status"><span>{!! __($poll->status) !!}</span></p>
-    @endif
 @endif
         </div>
