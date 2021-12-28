@@ -649,7 +649,7 @@ class Install extends Admin
             ],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('bans', $schema);
+        $this->c->DB->createTable('::bans', $schema);
 
         // bbcode
         $schema = [
@@ -666,7 +666,7 @@ class Install extends Admin
             ],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('bbcode', $schema);
+        $this->c->DB->createTable('::bbcode', $schema);
 
         // categories
         $schema = [
@@ -678,7 +678,7 @@ class Install extends Admin
             'PRIMARY KEY' => ['id'],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('categories', $schema);
+        $this->c->DB->createTable('::categories', $schema);
 
         // censoring
         $schema = [
@@ -690,7 +690,7 @@ class Install extends Admin
             'PRIMARY KEY' => ['id'],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('censoring', $schema);
+        $this->c->DB->createTable('::censoring', $schema);
 
         // config
         $schema = [
@@ -701,7 +701,7 @@ class Install extends Admin
             'PRIMARY KEY' => ['conf_name'],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('config', $schema);
+        $this->c->DB->createTable('::config', $schema);
 
         // forum_perms
         $schema = [
@@ -715,7 +715,7 @@ class Install extends Admin
             'PRIMARY KEY' => ['group_id', 'forum_id'],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('forum_perms', $schema);
+        $this->c->DB->createTable('::forum_perms', $schema);
 
         // forums
         $schema = [
@@ -741,7 +741,7 @@ class Install extends Admin
             'PRIMARY KEY' => ['id'],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('forums', $schema);
+        $this->c->DB->createTable('::forums', $schema);
 
         // groups
         $schema = [
@@ -782,7 +782,7 @@ class Install extends Admin
             'PRIMARY KEY' => ['g_id'],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('groups', $schema);
+        $this->c->DB->createTable('::groups', $schema);
 
         // online
         $schema = [
@@ -804,7 +804,7 @@ class Install extends Admin
             ],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('online', $schema);
+        $this->c->DB->createTable('::online', $schema);
 
         // posts
         $schema = [
@@ -831,7 +831,7 @@ class Install extends Admin
             ],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('posts', $schema);
+        $this->c->DB->createTable('::posts', $schema);
 
         // reports
         $schema = [
@@ -852,7 +852,7 @@ class Install extends Admin
             ],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('reports', $schema);
+        $this->c->DB->createTable('::reports', $schema);
 
         // search_cache
         $schema = [
@@ -867,7 +867,7 @@ class Install extends Admin
             ],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('search_cache', $schema);
+        $this->c->DB->createTable('::search_cache', $schema);
 
         // search_matches
         $schema = [
@@ -882,7 +882,7 @@ class Install extends Admin
             ],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('search_matches', $schema);
+        $this->c->DB->createTable('::search_matches', $schema);
 
         // search_words
         $schema = [
@@ -896,7 +896,7 @@ class Install extends Admin
             ],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('search_words', $schema);
+        $this->c->DB->createTable('::search_words', $schema);
 
         // topic_subscriptions
         $schema = [
@@ -907,7 +907,7 @@ class Install extends Admin
             'PRIMARY KEY' => ['user_id', 'topic_id'],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('topic_subscriptions', $schema);
+        $this->c->DB->createTable('::topic_subscriptions', $schema);
 
         // forum_subscriptions
         $schema = [
@@ -918,7 +918,7 @@ class Install extends Admin
             'PRIMARY KEY' => ['user_id', 'forum_id'],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('forum_subscriptions', $schema);
+        $this->c->DB->createTable('::forum_subscriptions', $schema);
 
         // topics
         $schema = [
@@ -953,7 +953,7 @@ class Install extends Admin
             ],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('topics', $schema);
+        $this->c->DB->createTable('::topics', $schema);
 
         // pm_block
         $schema = [
@@ -967,7 +967,7 @@ class Install extends Admin
             ],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('pm_block', $schema);
+        $this->c->DB->createTable('::pm_block', $schema);
 
         // pm_posts
         $schema = [
@@ -988,7 +988,7 @@ class Install extends Admin
             ],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('pm_posts', $schema);
+        $this->c->DB->createTable('::pm_posts', $schema);
 
         // pm_topics
         $schema = [
@@ -1017,7 +1017,7 @@ class Install extends Admin
             ],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('pm_topics', $schema);
+        $this->c->DB->createTable('::pm_topics', $schema);
 
         // users
         $schema = [
@@ -1092,7 +1092,7 @@ class Install extends Admin
             ],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('users', $schema);
+        $this->c->DB->createTable('::users', $schema);
 
         // smilies
         $schema = [
@@ -1105,7 +1105,7 @@ class Install extends Admin
             'PRIMARY KEY' => ['id'],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('smilies', $schema);
+        $this->c->DB->createTable('::smilies', $schema);
 
         // warnings
         $schema = [
@@ -1119,7 +1119,7 @@ class Install extends Admin
             'PRIMARY KEY' => ['id'],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('warnings', $schema);
+        $this->c->DB->createTable('::warnings', $schema);
 
         // poll
         $schema = [
@@ -1133,7 +1133,7 @@ class Install extends Admin
             'PRIMARY KEY' => ['tid', 'question_id', 'field_id'],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('poll', $schema);
+        $this->c->DB->createTable('::poll', $schema);
 
         // poll_voted
         $schema = [
@@ -1145,7 +1145,7 @@ class Install extends Admin
             'PRIMARY KEY' => ['tid', 'uid'],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('poll_voted', $schema) ;
+        $this->c->DB->createTable('::poll_voted', $schema) ;
 
         // mark_of_forum
         $schema = [
@@ -1162,7 +1162,7 @@ class Install extends Admin
             ],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('mark_of_forum', $schema);
+        $this->c->DB->createTable('::mark_of_forum', $schema);
 
         // mark_of_topic
         $schema = [
@@ -1181,7 +1181,7 @@ class Install extends Admin
             ],
             'ENGINE' => $this->DBEngine,
         ];
-        $this->c->DB->createTable('mark_of_topic', $schema);
+        $this->c->DB->createTable('::mark_of_topic', $schema);
 
         $now    = \time();
         $groups = [
