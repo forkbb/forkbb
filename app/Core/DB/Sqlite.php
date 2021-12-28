@@ -305,7 +305,7 @@ class Sqlite
     /**
      * Добавляет поле в таблицу // ???? нет COLLATE
      */
-    public function addField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $after = null): bool
+    public function addField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $collate = null, string $after = null): bool
     {
         $table = $this->tName($table);
 
@@ -313,7 +313,7 @@ class Sqlite
             return true;
         }
 
-        $query = "ALTER TABLE \"{$table}\" ADD COLUMN " . $this->buildColumn($field, [$type, $allowNull, $default]);
+        $query = "ALTER TABLE \"{$table}\" ADD COLUMN " . $this->buildColumn($field, [$type, $allowNull, $default, $collate]);
 
         return false !== $this->db->exec($query);
     }
@@ -321,7 +321,7 @@ class Sqlite
     /**
      * Модифицирует поле в таблице
      */
-    public function alterField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $after = null): bool
+    public function alterField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $collate = null, string $after = null): bool
     {
         $this->nameCheck($field);
 

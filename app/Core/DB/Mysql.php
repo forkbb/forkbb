@@ -336,7 +336,7 @@ class Mysql
     /**
      * Добавляет поле в таблицу
      */
-    public function addField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $after = null): bool
+    public function addField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $collate = null, string $after = null): bool
     {
         $table = $this->tName($table);
 
@@ -344,7 +344,7 @@ class Mysql
             return true;
         }
 
-        $query = "ALTER TABLE `{$table}` ADD " . $this->buildColumn($field, [$type, $allowNull, $default]);
+        $query = "ALTER TABLE `{$table}` ADD " . $this->buildColumn($field, [$type, $allowNull, $default, $collate]);
 
         if (null !== $after) {
             $this->nameCheck($after);
@@ -358,10 +358,10 @@ class Mysql
     /**
      * Модифицирует поле в таблице
      */
-    public function alterField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $after = null): bool
+    public function alterField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $collate = null, string $after = null): bool
     {
         $table = $this->tName($table);
-        $query = "ALTER TABLE `{$table}` MODIFY " . $this->buildColumn($field, [$type, $allowNull, $default]);
+        $query = "ALTER TABLE `{$table}` MODIFY " . $this->buildColumn($field, [$type, $allowNull, $default, $collate]);
 
         if (null !== $after) {
             $this->nameCheck($after);
@@ -408,7 +408,7 @@ class Mysql
             ':tname' => $table,
             ':fname' => $old,
         ];
-        $query = 'SELECT COLUMN_DEFAULT, IS_NULLABLE, COLUMN_TYPE
+        $query = 'SELECT COLUMN_DEFAULT, IS_NULLABLE, COLUMN_TYPE, COLLATION_NAME
             FROM INFORMATION_SCHEMA.COLUMNS
             WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?s:tname AND COLUMN_NAME = ?s:fname';
 
@@ -420,8 +420,13 @@ class Mysql
         $type      = $result['COLUMN_TYPE'];
         $allowNull = 'YES' == $result['IS_NULLABLE'];
         $default   = $result['COLUMN_DEFAULT'];
+        $collate   = \str_replace('utf8mb4_', '', $result['COLLATION_NAME'], $count);
 
-        $query = "ALTER TABLE `{$table}` CHANGE COLUMN `{$old}` " . $this->buildColumn($new, [$type, $allowNull, $default]);
+        if (1 !== $count) {
+            throw new PDOException("Table - '{$table}', column - '{$old}', collate - '{$result['COLLATION_NAME']}'");
+        }
+
+        $query = "ALTER TABLE `{$table}` CHANGE COLUMN `{$old}` " . $this->buildColumn($new, [$type, $allowNull, $default, $collate]);
 
         return false !== $this->db->exec($query);
     }
@@ -469,16 +474,16 @@ class Mysql
             return true;
         }
 
-        $query = "ALTER TABLE `{$table}` ";
+        $query = "ALTER TABLE `{$table}` DROP ";
 
         if ('PRIMARY' == $index) {
-            $query .= "DROP PRIMARY KEY";
+            $query .= "PRIMARY KEY";
         } else {
             $index = $table . '_' . $index;
 
             $this->nameCheck($index);
 
-            $query .= "DROP INDEX `{$index}`";
+            $query .= "INDEX `{$index}`";
         }
 
         return false !== $this->db->exec($query);
