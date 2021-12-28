@@ -180,13 +180,13 @@ class Update extends Admin
                         null === $e
                         && $this->c->config->i_fork_revision < self::LATEST_REV_WITH_DB_CHANGES
                     ) {
-                        $test_table = 'test_tb_for_update';
+                        $testTable = '::test_tb_for_update';
 
                         if (
                             null === $e
-                            && true === $this->c->DB->tableExists($test_table)
+                            && true === $this->c->DB->tableExists($testTable)
                         ) {
-                            $e = ['The %s table already exists. Delete it.', $test_table];
+                            $e = ['The %s table already exists. Delete it.', $testTable];
                         }
 
                         $schema = [
@@ -197,38 +197,38 @@ class Update extends Admin
                         ];
                         if (
                             null === $e
-                            && false === $this->c->DB->createTable($test_table, $schema)
+                            && false === $this->c->DB->createTable($testTable, $schema)
                         ) {
-                            $e = ['Unable to create %s table', $test_table];
+                            $e = ['Unable to create %s table', $testTable];
                         }
 
                         if (
                             null === $e
-                            && false === $this->c->DB->addField($test_table, 'test_field', 'VARCHAR(80)', false, '')
+                            && false === $this->c->DB->addField($testTable, 'test_field', 'VARCHAR(80)', false, '')
                         ) {
-                            $e = ['Unable to add test_field field to %s table', $test_table];
+                            $e = ['Unable to add test_field field to %s table', $testTable];
                         }
 
-                        $sql = "INSERT INTO ::{$test_table} (test_field) VALUES ('TEST_VALUE')";
+                        $sql = "INSERT INTO {$testTable} (test_field) VALUES ('TEST_VALUE')";
                         if (
                             null === $e
                             && false === $this->c->DB->exec($sql)
                         ) {
-                            $e = ['Unable to insert line to %s table', $test_table];
+                            $e = ['Unable to insert line to %s table', $testTable];
                         }
 
                         if (
                             null === $e
-                            && false === $this->c->DB->dropField($test_table, 'test_field')
+                            && false === $this->c->DB->dropField($testTable, 'test_field')
                         ) {
-                            $e = ['Unable to drop test_field field from %s table', $test_table];
+                            $e = ['Unable to drop test_field field from %s table', $testTable];
                         }
 
                         if (
                             null === $e
-                            && false === $this->c->DB->dropTable($test_table)
+                            && false === $this->c->DB->dropTable($testTable)
                         ) {
-                            $e = ['Unable to drop %s table', $test_table];
+                            $e = ['Unable to drop %s table', $testTable];
                         }
                     }
 
