@@ -201,7 +201,7 @@ class Sqlite
      */
     public function fieldExists(string $table, string $field): bool
     {
-        $table = $this->tName($table),
+        $table = $this->tName($table);
         $stmt  = $this->db->query("PRAGMA table_info({$table})");
 
         while ($row = $stmt->fetch()) {
@@ -303,7 +303,7 @@ class Sqlite
     }
 
     /**
-     * Добавляет поле в таблицу // ???? нет COLLATE
+     * Добавляет поле в таблицу
      */
     public function addField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $collate = null, string $after = null): bool
     {
