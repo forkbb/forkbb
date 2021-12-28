@@ -81,6 +81,20 @@ class Sqlite
     }
 
     /**
+     * Обрабатывает имя таблицы с одновременной проверкой
+     */
+    protected function tName(string $name): string
+    {
+        if ('::' === \substr($name, 0, 2)) {
+            $name = $this->dbPrefix . \substr($name, 2);
+        }
+
+        $this->nameCheck($name);
+
+        return $name;
+    }
+
+    /**
      * Операции над полями индексов: проверка, замена
      */
     protected function replIdxs(array $arr): string
@@ -166,11 +180,11 @@ class Sqlite
     /**
      * Проверяет наличие таблицы в базе
      */
-    public function tableExists(string $table, bool $noPrefix = false): bool
+    public function tableExists(string $table): bool
     {
         $vars = [
-            ':tname'  => ($noPrefix ? '' : $this->dbPrefix) . $table,
-            ':ttype'  => 'table',
+            ':tname' => $this->tName($table),
+            ':ttype' => 'table',
         ];
         $query = 'SELECT 1 FROM sqlite_master WHERE tbl_name=?s:tname AND type=?s:ttype';
 
@@ -185,11 +199,9 @@ class Sqlite
     /**
      * Проверяет наличие поля в таблице
      */
-    public function fieldExists(string $table, string $field, bool $noPrefix = false): bool
+    public function fieldExists(string $table, string $field): bool
     {
-        $this->nameCheck($table);
-
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        $table = $this->tName($table),
         $stmt  = $this->db->query("PRAGMA table_info({$table})");
 
         while ($row = $stmt->fetch()) {
@@ -206,11 +218,10 @@ class Sqlite
     /**
      * Проверяет наличие индекса в таблице
      */
-    public function indexExists(string $table, string $index, bool $noPrefix = false): bool
+    public function indexExists(string $table, string $index): bool
     {
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
-
-        $vars = [
+        $table = $this->tName($table);
+        $vars  = [
             ':tname'  => $table,
             ':iname'  => $table . '_' . $index, // ???? PRIMARY KEY искать нужно не в sqlite_master!
             ':itype'  => 'index',
@@ -228,11 +239,9 @@ class Sqlite
     /**
      * Создает таблицу
      */
-    public function createTable(string $table, array $schema, bool $noPrefix = false): bool
+    public function createTable(string $table, array $schema): bool
     {
-        $this->nameCheck($table);
-
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        $table = $this->tName($table);
         $query = "CREATE TABLE IF NOT EXISTS \"{$table}\" (";
 
         foreach ($schema['FIELDS'] as $field => $data) {
@@ -268,11 +277,9 @@ class Sqlite
     /**
      * Удаляет таблицу
      */
-    public function dropTable(string $table, bool $noPrefix = false): bool
+    public function dropTable(string $table): bool
     {
-        $this->nameCheck($table);
-
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        $table = $this->tName($table);
 
         return false !== $this->db->exec("DROP TABLE IF EXISTS \"{$table}\"");
     }
@@ -280,20 +287,17 @@ class Sqlite
     /**
      * Переименовывает таблицу
      */
-    public function renameTable(string $old, string $new, bool $noPrefix = false): bool
+    public function renameTable(string $old, string $new): bool
     {
-        $this->nameCheck($old);
-        $this->nameCheck($new);
+        $old = $this->tName($old);
+        $new = $this->tName($new);
 
         if (
-            $this->tableExists($new, $noPrefix)
-            && ! $this->tableExists($old, $noPrefix)
+            $this->tableExists($new)
+            && ! $this->tableExists($old)
         ) {
             return true;
         }
-
-        $old = ($noPrefix ? '' : $this->dbPrefix) . $old;
-        $new = ($noPrefix ? '' : $this->dbPrefix) . $new;
 
         return false !== $this->db->exec("ALTER TABLE \"{$old}\" RENAME TO \"{$new}\"");
     }
@@ -301,15 +305,14 @@ class Sqlite
     /**
      * Добавляет поле в таблицу // ???? нет COLLATE
      */
-    public function addField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $after = null, bool $noPrefix = false): bool
+    public function addField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $after = null): bool
     {
-        $this->nameCheck($table);
+        $table = $this->tName($table);
 
-        if ($this->fieldExists($table, $field, $noPrefix)) {
+        if ($this->fieldExists($table, $field)) {
             return true;
         }
 
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $query = "ALTER TABLE \"{$table}\" ADD COLUMN " . $this->buildColumn($field, [$type, $allowNull, $default]);
 
         return false !== $this->db->exec($query);
@@ -318,12 +321,11 @@ class Sqlite
     /**
      * Модифицирует поле в таблице
      */
-    public function alterField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $after = null, bool $noPrefix = false): bool
+    public function alterField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $after = null): bool
     {
-        $this->nameCheck($table);
         $this->nameCheck($field);
 
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        $table = $this->tName($table);
 
 		return true; // ???????????????????????????????????????
     }
@@ -331,16 +333,15 @@ class Sqlite
     /**
      * Удаляет поле из таблицы
      */
-    public function dropField(string $table, string $field, bool $noPrefix = false): bool
+    public function dropField(string $table, string $field): bool
     {
-        $this->nameCheck($table);
+        $table = $this->tName($table);
+
         $this->nameCheck($field);
 
-        if (! $this->fieldExists($table, $field, $noPrefix)) {
+        if (! $this->fieldExists($table, $field)) {
             return true;
         }
-
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
 
         if (\version_compare($this->db->getAttribute(PDO::ATTR_SERVER_VERSION), '3.36.0', '>=')) { // 3.35.1 and 3.35.5 have fixes
             return false !== $this->db->exec("ALTER TABLE \"{$table}\" DROP COLUMN \"{$field}\""); // add 2021-03-12 (3.35.0)
@@ -427,20 +428,19 @@ class Sqlite
     /**
      * Переименование поля в таблице
      */
-    public function renameField(string $table, string $old, string $new, bool $noPrefix = false): bool
+    public function renameField(string $table, string $old, string $new): bool
     {
-        $this->nameCheck($table);
+        $table = $this->tName($table);
+
         $this->nameCheck($old);
         $this->nameCheck($new);
 
         if (
-            $this->fieldExists($table, $new, $noPrefix)
-            && ! $this->fieldExists($table, $old, $noPrefix)
+            $this->fieldExists($table, $new)
+            && ! $this->fieldExists($table, $old)
         ) {
             return true;
         }
-
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
 
         return false !== $this->db->exec("ALTER TABLE \"{$table}\" RENAME COLUMN \"{$old}\" TO \"{$new}\""); // add 2018-09-15 (3.25.0)
     }
@@ -448,15 +448,13 @@ class Sqlite
     /**
      * Добавляет индекс в таблицу
      */
-    public function addIndex(string $table, string $index, array $fields, bool $unique = false, bool $noPrefix = false): bool
+    public function addIndex(string $table, string $index, array $fields, bool $unique = false): bool
     {
-        $this->nameCheck($table);
+        $table = $this->tName($table);
 
-        if ($this->indexExists($table, $index, $noPrefix)) {
+        if ($this->indexExists($table, $index)) {
             return true;
         }
-
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
 
         if ('PRIMARY' === $index) {
             // ?????
@@ -475,15 +473,14 @@ class Sqlite
     /**
      * Удаляет индекс из таблицы
      */
-    public function dropIndex(string $table, string $index, bool $noPrefix = false): bool
+    public function dropIndex(string $table, string $index): bool
     {
-        $this->nameCheck($table);
+        $table = $this->tName($table);
 
-        if (! $this->indexExists($table, $index, $noPrefix)) {
+        if (! $this->indexExists($table, $index)) {
             return true;
         }
 
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $index = $table . '_' . ('PRIMARY' === $index ? 'pkey' : $index);
 
         $this->nameCheck($index);
@@ -494,11 +491,9 @@ class Sqlite
     /**
      * Очищает таблицу
      */
-    public function truncateTable(string $table, bool $noPrefix = false): bool
+    public function truncateTable(string $table): bool
     {
-        $this->nameCheck($table);
-
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        $table = $this->tName($table);
 
         if (false !== $this->db->exec("DELETE FROM \"{$table}\"")) {
             $vars = [

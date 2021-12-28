@@ -83,6 +83,20 @@ class Mysql
     }
 
     /**
+     * Обрабатывает имя таблицы с одновременной проверкой
+     */
+    protected function tName(string $name): string
+    {
+        if ('::' === \substr($name, 0, 2)) {
+            $name = $this->dbPrefix . \substr($name, 2);
+        }
+
+        $this->nameCheck($name);
+
+        return $name;
+    }
+
+    /**
      * Операции над полями индексов: проверка, замена
      */
     protected function replIdxs(array $arr): string
@@ -166,10 +180,10 @@ class Mysql
     /**
      * Проверяет наличие таблицы в базе
      */
-    public function tableExists(string $table, bool $noPrefix = false): bool
+    public function tableExists(string $table): bool
     {
         $vars = [
-            ':tname' => ($noPrefix ? '' : $this->dbPrefix) . $table,
+            ':tname' => $this->tName($table),
         ];
         $query = 'SELECT 1
             FROM INFORMATION_SCHEMA.TABLES
@@ -186,10 +200,10 @@ class Mysql
     /**
      * Проверяет наличие поля в таблице
      */
-    public function fieldExists(string $table, string $field, bool $noPrefix = false): bool
+    public function fieldExists(string $table, string $field): bool
     {
         $vars = [
-            ':tname' => ($noPrefix ? '' : $this->dbPrefix) . $table,
+            ':tname' => $this->tName($table),
             ':fname' => $field,
         ];
         $query = 'SELECT 1
@@ -207,11 +221,10 @@ class Mysql
     /**
      * Проверяет наличие индекса в таблице
      */
-    public function indexExists(string $table, string $index, bool $noPrefix = false): bool
+    public function indexExists(string $table, string $index): bool
     {
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
-
-        $vars = [
+        $table = $this->tName($table);
+        $vars  = [
             ':tname' => $table,
             ':index' => 'PRIMARY' == $index ? $index : $table . '_' . $index,
         ];
@@ -230,11 +243,9 @@ class Mysql
     /**
      * Создает таблицу
      */
-    public function createTable(string $table, array $schema, bool $noPrefix = false): bool
+    public function createTable(string $table, array $schema): bool
     {
-        $this->nameCheck($table);
-
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        $table = $this->tName($table);
         $query = "CREATE TABLE IF NOT EXISTS `{$table}` (";
 
         foreach ($schema['FIELDS'] as $field => $data) {
@@ -297,11 +308,9 @@ class Mysql
     /**
      * Удаляет таблицу
      */
-    public function dropTable(string $table, bool $noPrefix = false): bool
+    public function dropTable(string $table): bool
     {
-        $this->nameCheck($table);
-
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        $table = $this->tName($table);
 
         return false !== $this->db->exec("DROP TABLE IF EXISTS `{$table}`");
     }
@@ -309,20 +318,17 @@ class Mysql
     /**
      * Переименовывает таблицу
      */
-    public function renameTable(string $old, string $new, bool $noPrefix = false): bool
+    public function renameTable(string $old, string $new): bool
     {
-        $this->nameCheck($old);
-        $this->nameCheck($new);
+        $old = $this->tName($old);
+        $new = $this->tName($new);
 
         if (
-            $this->tableExists($new, $noPrefix)
-            && ! $this->tableExists($old, $noPrefix)
+            $this->tableExists($new)
+            && ! $this->tableExists($old)
         ) {
             return true;
         }
-
-        $old = ($noPrefix ? '' : $this->dbPrefix) . $old;
-        $new = ($noPrefix ? '' : $this->dbPrefix) . $new;
 
         return false !== $this->db->exec("ALTER TABLE `{$old}` RENAME TO `{$new}`");
     }
@@ -330,15 +336,14 @@ class Mysql
     /**
      * Добавляет поле в таблицу
      */
-    public function addField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $after = null, bool $noPrefix = false): bool
+    public function addField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $after = null): bool
     {
-        $this->nameCheck($table);
+        $table = $this->tName($table);
 
-        if ($this->fieldExists($table, $field, $noPrefix)) {
+        if ($this->fieldExists($table, $field)) {
             return true;
         }
 
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $query = "ALTER TABLE `{$table}` ADD " . $this->buildColumn($field, [$type, $allowNull, $default]);
 
         if (null !== $after) {
@@ -353,11 +358,9 @@ class Mysql
     /**
      * Модифицирует поле в таблице
      */
-    public function alterField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $after = null, bool $noPrefix = false): bool
+    public function alterField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $after = null): bool
     {
-        $this->nameCheck($table);
-
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        $table = $this->tName($table);
         $query = "ALTER TABLE `{$table}` MODIFY " . $this->buildColumn($field, [$type, $allowNull, $default]);
 
         if (null !== $after) {
@@ -372,16 +375,15 @@ class Mysql
     /**
      * Удаляет поле из таблицы
      */
-    public function dropField(string $table, string $field, bool $noPrefix = false): bool
+    public function dropField(string $table, string $field): bool
     {
-        $this->nameCheck($table);
+        $table = $this->tName($table);
+
         $this->nameCheck($field);
 
-        if (! $this->fieldExists($table, $field, $noPrefix)) {
+        if (! $this->fieldExists($table, $field)) {
             return true;
         }
-
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
 
         return false !== $this->db->exec("ALTER TABLE `{$table}` DROP COLUMN `{$field}`");
     }
@@ -389,19 +391,18 @@ class Mysql
     /**
      * Переименование поля в таблице
      */
-    public function renameField(string $table, string $old, string $new, bool $noPrefix = false): bool
+    public function renameField(string $table, string $old, string $new): bool
     {
-        $this->nameCheck($table);
+        $table = $this->tName($table);
+
         $this->nameCheck($old);
 
         if (
-            $this->fieldExists($table, $new, $noPrefix)
-            && ! $this->fieldExists($table, $old, $noPrefix)
+            $this->fieldExists($table, $new)
+            && ! $this->fieldExists($table, $old)
         ) {
             return true;
         }
-
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
 
         $vars = [
             ':tname' => $table,
@@ -428,15 +429,14 @@ class Mysql
     /**
      * Добавляет индекс в таблицу
      */
-    public function addIndex(string $table, string $index, array $fields, bool $unique = false, bool $noPrefix = false): bool
+    public function addIndex(string $table, string $index, array $fields, bool $unique = false): bool
     {
-        $this->nameCheck($table);
+        $table = $this->tName($table);
 
-        if ($this->indexExists($table, $index, $noPrefix)) {
+        if ($this->indexExists($table, $index)) {
             return true;
         }
 
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $query = "ALTER TABLE `{$table}` ADD ";
 
         if ('PRIMARY' == $index) {
@@ -461,15 +461,14 @@ class Mysql
     /**
      * Удаляет индекс из таблицы
      */
-    public function dropIndex(string $table, string $index, bool $noPrefix = false): bool
+    public function dropIndex(string $table, string $index): bool
     {
-        $this->nameCheck($table);
+        $table = $this->tName($table);
 
-        if (! $this->indexExists($table, $index, $noPrefix)) {
+        if (! $this->indexExists($table, $index)) {
             return true;
         }
 
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
         $query = "ALTER TABLE `{$table}` ";
 
         if ('PRIMARY' == $index) {
@@ -488,11 +487,9 @@ class Mysql
     /**
      * Очищает таблицу
      */
-    public function truncateTable(string $table, bool $noPrefix = false): bool
+    public function truncateTable(string $table): bool
     {
-        $this->nameCheck($table);
-
-        $table = ($noPrefix ? '' : $this->dbPrefix) . $table;
+        $table = $this->tName($table);
 
         return false !== $this->db->exec("TRUNCATE TABLE `{$table}`");
     }
