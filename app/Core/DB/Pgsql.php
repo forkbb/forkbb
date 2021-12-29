@@ -274,13 +274,13 @@ class Pgsql
         // вынесено отдельно для сохранения имен индексов
         if ($result && isset($schema['UNIQUE KEYS'])) {
             foreach ($schema['UNIQUE KEYS'] as $key => $fields) {
-                $result = $result && $this->addIndex($table, $key, $fields, true, true);
+                $result = $result && $this->addIndex($table, $key, $fields, true);
             }
         }
 
         if ($result && isset($schema['INDEXES'])) {
             foreach ($schema['INDEXES'] as $index => $fields) {
-                $result = $result && $this->addIndex($table, $index, $fields, false, true);
+                $result = $result && $this->addIndex($table, $index, $fields, false);
             }
         }
 
