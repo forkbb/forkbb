@@ -527,7 +527,24 @@ class Sqlite
 
         $table = $this->tName($table);
 
-        return true; // ???????????????????????????????????????
+        if (! $this->fieldExists($table, $field)) {
+            return false;
+        }
+
+        $schema                            = $this->tableSchema($table);
+        $schema['TABLE']['FIELDS'][$field] = $this->buildColumn($field, [$type, $allowNull, $default, $collate]);
+        $tmpTable                          = $this->createTmpTable($schema, $table);
+
+        if (! \is_string($tmpTable)) {
+            return false;
+        }
+
+        $tmp   = '"' . \implode('", "', \array_keys($schema['TABLE']['FIELDS'])) . '"';
+        $query = "INSERT INTO \"{$tmpTable}\" ({$tmp})
+            SELECT {$tmp}
+            FROM \"{$table}\"";
+
+        return $this->tmpToTable($schema, $query);
     }
 
     /**
