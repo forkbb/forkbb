@@ -395,7 +395,7 @@ class Sqlite
         } else {
             $vars  = [
                 ':tname'  => $table,
-                ':iname'  => $table . '_' . $index, // ???? PRIMARY KEY искать нужно не в sqlite_master!
+                ':iname'  => $table . '_' . $index,
                 ':itype'  => 'index',
             ];
             $query = 'SELECT 1 FROM sqlite_master WHERE name=?s:iname AND tbl_name=?s:tname AND type=?s:itype';
@@ -579,7 +579,31 @@ class Sqlite
         }
 
         if ('PRIMARY' === $index) {
-            // ?????
+            $schema = $this->tableSchema($table);
+
+            $schema['TABLE']['OTHERS'][] = 'PRIMARY KEY (' . $this->replIdxs($fields) . ')';
+
+            $tmpTable = $this->createTmpTable($schema, $table);
+            $result   = \is_string($tmpTable);
+
+            $tmp   = '"' . \implode('", "', \array_keys($schema['TABLE']['FIELDS'])) . '"';
+            $query = "INSERT INTO \"{$tmpTable}\" ({$tmp})
+                SELECT {$tmp}
+                FROM \"{$table}\"";
+
+            $result = $result && false !== $this->db->exec($query);
+            $result = $result && $this->dropTable($table);
+            $result = $result && $this->renameTable($tmpTable, $table);
+
+            foreach ($schema as $key => $query) {
+                if ('TABLE' === $key) {
+                    continue;
+                }
+
+                $result = $result && false !== $this->db->exec($query);
+            }
+
+            return $result;
         } else {
             $index  = $table . '_' . $index;
 
