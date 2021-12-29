@@ -379,19 +379,34 @@ class Sqlite
     public function indexExists(string $table, string $index): bool
     {
         $table = $this->tName($table);
-        $vars  = [
-            ':tname'  => $table,
-            ':iname'  => $table . '_' . $index, // ???? PRIMARY KEY искать нужно не в sqlite_master!
-            ':itype'  => 'index',
-        ];
-        $query = 'SELECT 1 FROM sqlite_master WHERE name=?s:iname AND tbl_name=?s:tname AND type=?s:itype';
 
-        $stmt   = $this->db->query($query, $vars);
-        $result = $stmt->fetch();
+        if ('PRIMARY' === $index) {
+            $stmt = $this->db->query("PRAGMA table_info('{$table}')");
 
-        $stmt->closeCursor();
+            while ($row = $stmt->fetch()) {
+                if ($row['pk'] > 0) {
+                    $stmt->closeCursor();
 
-        return ! empty($result);
+                    return true;
+                }
+            }
+
+            return false;
+        } else {
+            $vars  = [
+                ':tname'  => $table,
+                ':iname'  => $table . '_' . $index, // ???? PRIMARY KEY искать нужно не в sqlite_master!
+                ':itype'  => 'index',
+            ];
+            $query = 'SELECT 1 FROM sqlite_master WHERE name=?s:iname AND tbl_name=?s:tname AND type=?s:itype';
+
+            $stmt   = $this->db->query($query, $vars);
+            $result = $stmt->fetch();
+
+            $stmt->closeCursor();
+
+            return ! empty($result);
+        }
     }
 
     /**
