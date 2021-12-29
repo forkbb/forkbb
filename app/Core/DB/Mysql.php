@@ -447,15 +447,10 @@ class Mysql
         if ('PRIMARY' == $index) {
             $query .= 'PRIMARY KEY';
         } else {
-            $index = $table . '_' . $index;
-
             $this->nameCheck($index);
 
-            if ($unique) {
-                $query .= "UNIQUE `{$index}`";
-            } else {
-                $query .= "INDEX `{$index}`";
-            }
+            $type   = $unique ? 'UNIQUE' : 'INDEX';
+            $query .= "{$type} `{$table}_{$index}`";
         }
 
         $query .= ' (' . $this->replIdxs($fields) . ')';
@@ -479,11 +474,9 @@ class Mysql
         if ('PRIMARY' == $index) {
             $query .= "PRIMARY KEY";
         } else {
-            $index = $table . '_' . $index;
-
             $this->nameCheck($index);
 
-            $query .= "INDEX `{$index}`";
+            $query .= "INDEX `{$table}_{$index}`";
         }
 
         return false !== $this->db->exec($query);
