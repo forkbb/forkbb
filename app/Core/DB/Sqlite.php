@@ -336,6 +336,33 @@ class Sqlite
     }
 
     /**
+     * Пересоздает таблицу из временной с помощью insert запроса
+     */
+    protected function tmpToTable(array $schema, string $insertQuery): bool
+    {
+        if (! \preg_match('%^INSERT INTO "(.*?)".+FROM "(.*?)"%s', $insertQuery, $matches)) {
+            return false;
+        }
+
+        $tmpTable = $matches[1];
+        $table    = $matches[2];
+
+        $result = false !== $this->db->exec($insertQuery);
+        $result = $result && $this->dropTable($table);
+        $result = $result && $this->renameTable($tmpTable, $table);
+
+        foreach ($schema as $key => $query) {
+            if ('TABLE' === $key) {
+                continue;
+            }
+
+            $result = $result && false !== $this->db->exec($query);
+        }
+
+        return $result;
+    }
+
+    /**
      * Проверяет наличие таблицы в базе
      */
     public function tableExists(string $table): bool
@@ -532,19 +559,7 @@ class Sqlite
             SELECT {$tmp}
             FROM \"{$table}\"";
 
-        $result = $result && false !== $this->db->exec($query);
-        $result = $result && $this->dropTable($table);
-        $result = $result && $this->renameTable($tmpTable, $table);
-
-        foreach ($schema as $key => $query) {
-            if ('TABLE' === $key) {
-                continue;
-            }
-
-            $result = $result && false !== $this->db->exec($query);
-        }
-
-        return $result;
+        return $result && $this->tmpToTable($schema, $query);
     }
 
     /**
@@ -591,19 +606,7 @@ class Sqlite
                 SELECT {$tmp}
                 FROM \"{$table}\"";
 
-            $result = $result && false !== $this->db->exec($query);
-            $result = $result && $this->dropTable($table);
-            $result = $result && $this->renameTable($tmpTable, $table);
-
-            foreach ($schema as $key => $query) {
-                if ('TABLE' === $key) {
-                    continue;
-                }
-
-                $result = $result && false !== $this->db->exec($query);
-            }
-
-            return $result;
+            return $result && $this->tmpToTable($schema, $query);
         } else {
             $index  = $table . '_' . $index;
 
