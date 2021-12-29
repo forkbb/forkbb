@@ -552,14 +552,17 @@ class Sqlite
         unset($schema['TABLE']['FIELDS'][$field]);
 
         $tmpTable = $this->createTmpTable($schema, $table);
-        $result   = \is_string($tmpTable);
+
+        if (! \is_string($tmpTable)) {
+            return false;
+        }
 
         $tmp   = '"' . \implode('", "', \array_keys($schema['TABLE']['FIELDS'])) . '"';
         $query = "INSERT INTO \"{$tmpTable}\" ({$tmp})
             SELECT {$tmp}
             FROM \"{$table}\"";
 
-        return $result && $this->tmpToTable($schema, $query);
+        return $this->tmpToTable($schema, $query);
     }
 
     /**
@@ -594,19 +597,20 @@ class Sqlite
         }
 
         if ('PRIMARY' === $index) {
-            $schema = $this->tableSchema($table);
-
+            $schema                      = $this->tableSchema($table);
             $schema['TABLE']['OTHERS'][] = 'PRIMARY KEY (' . $this->replIdxs($fields) . ')';
+            $tmpTable                    = $this->createTmpTable($schema, $table);
 
-            $tmpTable = $this->createTmpTable($schema, $table);
-            $result   = \is_string($tmpTable);
+            if (! \is_string($tmpTable)) {
+                return false;
+            }
 
             $tmp   = '"' . \implode('", "', \array_keys($schema['TABLE']['FIELDS'])) . '"';
             $query = "INSERT INTO \"{$tmpTable}\" ({$tmp})
                 SELECT {$tmp}
                 FROM \"{$table}\"";
 
-            return $result && $this->tmpToTable($schema, $query);
+            return $this->tmpToTable($schema, $query);
         } else {
             $index  = $table . '_' . $index;
 
@@ -614,9 +618,9 @@ class Sqlite
 
             $unique = $unique ? 'UNIQUE' : '';
             $query  = "CREATE {$unique} INDEX \"{$index}\" ON \"{$table}\" (" . $this->replIdxs($fields) . ')';
-        }
 
-        return false !== $this->db->exec($query);
+            return false !== $this->db->exec($query);
+        }
     }
 
     /**
@@ -630,11 +634,47 @@ class Sqlite
             return true;
         }
 
-        $index = $table . '_' . ('PRIMARY' === $index ? 'pkey' : $index);
+        if ('PRIMARY' === $index) {
+            $schema = $this->tableSchema($table);
 
-        $this->nameCheck($index);
+            foreach ($schema['TABLE']['FIELDS'] as &$value) {
+                $value = \preg_replace(
+                    '%\bPRIMARY\s+KEY\s+(?:(?:ASC|DESC)\s+)?(?:ON\s+CONFLICT\s+(?:ROLLBACK|ABORT|FAIL|IGNORE|REPLACE)\s+)?(?:AUTOINCREMENT\s+)?%si',
+                    '',
+                    $value
+                );
+            }
 
-        return false !== $this->db->exec("DROP INDEX \"{$index}\"");
+            unset($value);
+
+            $tmp = [];
+
+            foreach ($schema['TABLE']['OTHERS'] as $value) {
+                if (\preg_match('%\bPRIMARY\s+KEY\b%si', $value)) {
+                    continue;
+                }
+
+                $tmp[] = $value;
+            }
+
+            $schema['TABLE']['OTHERS'] = $tmp;
+            $tmpTable                  = $this->createTmpTable($schema, $table);
+
+            if (! \is_string($tmpTable)) {
+                return false;
+            }
+
+            $tmp   = '"' . \implode('", "', \array_keys($schema['TABLE']['FIELDS'])) . '"';
+            $query = "INSERT INTO \"{$tmpTable}\" ({$tmp})
+                SELECT {$tmp}
+                FROM \"{$table}\"";
+
+            return $this->tmpToTable($schema, $query);
+        } else {
+            $this->nameCheck($index);
+
+            return false !== $this->db->exec("DROP INDEX \"{$table}_{$index}\"");
+        }
     }
 
     /**
