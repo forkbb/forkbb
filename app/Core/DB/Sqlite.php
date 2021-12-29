@@ -70,6 +70,11 @@ class Sqlite
         throw new PDOException("Method '{$name}' not found in DB driver.");
     }
 
+    protected function vComp(string $version): bool
+    {
+        return \version_compare($this->db->getAttribute(PDO::ATTR_SERVER_VERSION), $version, '>=');
+    }
+
     /**
      * Проверяет имя таблицы/индекса/поля на допустимые символы
      */
@@ -150,14 +155,6 @@ class Sqlite
         $query = '"' . $name . '" ' . $this->replType($data[0]);
 
         if ('SERIAL' !== \strtoupper($data[0])) {
-            // не NULL
-            if (empty($data[1])) {
-                $query .= ' NOT NULL';
-            }
-            // значение по умолчанию
-            if (isset($data[2])) {
-                $query .= ' DEFAULT ' . $this->convToStr($data[2]);
-            }
             // сравнение
             if (\preg_match('%^(?:CHAR|VARCHAR|TINYTEXT|TEXT|MEDIUMTEXT|LONGTEXT|ENUM|SET)\b%i', $data[0])) {
                 $query .= ' COLLATE ';
@@ -172,9 +169,170 @@ class Sqlite
                     $query .= 'NOCASE';
                 }
             }
+            // не NULL
+            if (empty($data[1])) {
+                $query .= ' NOT NULL';
+            }
+            // значение по умолчанию
+            if (isset($data[2])) {
+                $query .= ' DEFAULT ' . $this->convToStr($data[2]);
+            }
         }
 
         return $query;
+    }
+
+    /**
+     * Строит структуру таблицы + запросы на создание индексов
+     */
+    protected function tableSchema(string $table): array
+    {
+        $fields = [];
+        $stmt   = $this->db->query("PRAGMA table_info({$table})");
+
+        while ($row = $stmt->fetch()) {
+            $fields[$row['name']] = $row['name'];
+        }
+
+        if (empty($fields)) {
+            throw new PDOException("No '{$table}' table data");
+        }
+
+        $vars   = [
+            ':tname' => $table,
+        ];
+        $query  = 'SELECT * FROM sqlite_master WHERE tbl_name=?s:tname';
+        $stmt   = $this->db->query($query, $vars);
+        $result = [];
+
+        while ($row = $stmt->fetch()) {
+            switch ($row['type']) {
+                case 'table':
+                    $result['TABLE']['sql'] = $row['sql'];
+
+                    break;
+                default:
+                    if (! empty($row['sql'])) {
+                        $result[$row['name']] = $row['sql'];
+                    }
+
+                    break;
+            }
+        }
+
+        if (empty($result['TABLE']['sql'])) {
+            throw new PDOException("No '{$table}' table sql data");
+        }
+
+        if (! \preg_match("%^CREATE\s+TABLE\s+\"?{$table}\b.*?\((.+)\)[^()]*$%", $result['TABLE']['sql'], $matches)) {
+            throw new PDOException("Bad sql in '{$table}' table");
+        }
+
+        $subSchema                 = $matches[1];
+        $result['TABLE']['CREATE'] = \str_replace($subSchema, '_STRUCTURE_', $result['TABLE']['sql']);
+        $result['TABLE']['FIELDS'] = [];
+        $result['TABLE']['OTHERS'] = [];
+
+        do {
+            $tmp     = $fields ? '"?\b(?:' . \implode('|', $fields) . ')\b\"?|' : '';
+            $pattern = "%^
+                \s*
+                (
+                    (?:
+                        {$tmp}
+                        CONSTRAINT
+                    |
+                        PRIMARY
+                    |
+                        UNIQUE
+                    |
+                        CHECK
+                    |
+                        FOREIGN
+                    )
+                )
+                .*?
+                (?:
+                    ,
+                    (?=
+                        \s*
+                        (?:
+                            {$tmp}
+                            CONSTRAINT
+                        |
+                            PRIMARY
+                        |
+                            UNIQUE
+                        |
+                            CHECK
+                        |
+                            FOREIGN
+                        )
+                    )
+                |
+                    $
+                )%x";
+
+            if (! \preg_match($pattern, $subSchema, $matches)) {
+                throw new PDOException("Bad subSchema in '{$table}' table: {$subSchema}");
+            }
+
+            $subSchema = \substr($subSchema, \strlen($matches[0]));
+            $value     = \trim($matches[0], ' ,');
+            $key       = $matches[1];
+
+            switch ($key) {
+                case 'CONSTRAINT':
+                case 'PRIMARY':
+                case 'UNIQUE':
+                case 'CHECK':
+                case 'FOREIGN':
+                    $result['TABLE']['OTHERS'][] = $value;
+
+                    break;
+                default:
+                    if (
+                        '"' === $key[0]
+                        && '"' === $key[-1]
+                    ) {
+                        $key = \substr($key, 1, -1);
+                    }
+
+                    if (! isset($fields[$key])) {
+                        throw new PDOException("Bad field in '{$table}' table: {$key}");
+                    }
+
+                    $result['TABLE']['FIELDS'][$key] = $value;
+
+                    unset($fields[$key]);
+
+                    break;
+            }
+        } while ('' != \trim($subSchema));
+
+        return $result;
+    }
+
+    /**
+     * Создает временную таблицу
+     */
+    protected function createTmpTable(array $schema, string $table): ?string
+    {
+        $tmpTable    = $table . '_tmp' . \time();
+        $createQuery = \str_replace($table, $tmpTable, $schema['TABLE']['CREATE'], $count);
+
+        if (1 !== $count) {
+            return null;
+        }
+
+        $structure   = \implode(', ', $schema['TABLE']['FIELDS'] + $schema['TABLE']['OTHERS']);
+        $createQuery = \str_replace('_STRUCTURE_', $structure, $createQuery, $count);
+
+        if (1 !== $count) {
+            return null;
+        }
+
+        return false !== $this->db->exec($createQuery) ? $tmpTable : null;
     }
 
     /**
@@ -261,13 +419,13 @@ class Sqlite
         // вынесено отдельно для сохранения имен индексов
         if ($result && isset($schema['UNIQUE KEYS'])) {
             foreach ($schema['UNIQUE KEYS'] as $key => $fields) {
-                $result = $result && $this->addIndex($table, $key, $fields, true, true);
+                $result = $result && $this->addIndex($table, $key, $fields, true);
             }
         }
 
         if ($result && isset($schema['INDEXES'])) {
             foreach ($schema['INDEXES'] as $index => $fields) {
-                $result = $result && $this->addIndex($table, $index, $fields, false, true);
+                $result = $result && $this->addIndex($table, $index, $fields, false);
             }
         }
 
@@ -327,7 +485,7 @@ class Sqlite
 
         $table = $this->tName($table);
 
-		return true; // ???????????????????????????????????????
+        return true; // ???????????????????????????????????????
     }
 
     /**
@@ -342,84 +500,33 @@ class Sqlite
         if (! $this->fieldExists($table, $field)) {
             return true;
         }
-
-        if (\version_compare($this->db->getAttribute(PDO::ATTR_SERVER_VERSION), '3.36.0', '>=')) { // 3.35.1 and 3.35.5 have fixes
+        // 3.35.1 and 3.35.5 have fixes
+        if ($this->vComp('3.36.0')) {
             return false !== $this->db->exec("ALTER TABLE \"{$table}\" DROP COLUMN \"{$field}\""); // add 2021-03-12 (3.35.0)
         }
 
-        $stmt = $this->db->query("PRAGMA table_info({$table})");
+        $schema = $this->tableSchema($table);
 
-        $fields = [];
+        unset($schema['TABLE']['FIELDS'][$field]);
 
-        while ($row = $stmt->fetch()) {
-            $fields[$row['name']] = $row['name'];
-        }
+        $tmpTable = $this->createTmpTable($schema, $table);
+        $result   = \is_string($tmpTable);
 
-        unset($fields[$field]);
-
-        $vars = [
-            ':tname' => $table,
-        ];
-        $query = 'SELECT * FROM sqlite_master WHERE tbl_name=?s:tname';
-
-        $stmt = $this->db->query($query, $vars);
-
-        $createQuery = null;
-        $otherQuery  = [];
-
-        while ($row = $stmt->fetch()) {
-            switch ($row['type']) {
-                case 'table':
-                    $createQuery = $row['sql'];
-
-                    break;
-                default:
-                    if (! empty($row['sql'])) {
-                        $otherQuery[$row['name']] = $row['sql'];
-                    }
-
-                    break;
-            }
-        }
-
-        $tableTmp    = $table . '_tmp' . \time();
-        $createQuery = \preg_replace("%(CREATE\s+TABLE\s+\"?){$table}\b%", '${1}' . $tableTmp, $createQuery, -1, $count);
-
-        $result = 1 === $count;
-
-        $tmp         = \implode('|', $fields);
-        $createQuery = \preg_replace_callback(
-            "%[(,]\s*(?:\"{$field}\"|\b{$field}\b).*?(?:,(?=\s*(?:\"?\b(?:{$tmp})|CONSTRAINT|PRIMARY|CHECK|FOREIGN))|\)(?=\s*(?:$|WITHOUT|STRICT)))%si",
-            function ($matches) {
-                if ('(' === $matches[0][0]) {
-                    return '(';
-                } elseif (')' === $matches[0][-1]) {
-                    return ')';
-                } else {
-                    return ',';
-                }
-            },
-            $createQuery,
-            -1,
-            $count
-        );
-
-        $result = $result && 1 === $count;
-        $result = $result && false !== $this->db->exec($createQuery);
-
-        $tmp   = '"' . \implode('", "', $fields) . '"';
-        $query = "INSERT INTO \"{$tableTmp}\" ({$tmp})
+        $tmp   = '"' . \implode('", "', \array_keys($schema['TABLE']['FIELDS'])) . '"';
+        $query = "INSERT INTO \"{$tmpTable}\" ({$tmp})
             SELECT {$tmp}
             FROM \"{$table}\"";
 
         $result = $result && false !== $this->db->exec($query);
-        $result = $result && $this->dropTable($table, true);
-        $result = $result && $this->renameTable($tableTmp, $table, true);
+        $result = $result && $this->dropTable($table);
+        $result = $result && $this->renameTable($tmpTable, $table);
 
-        foreach ($otherQuery as $query) {
-            if (! \preg_match("%\([^)]*?\b{$field}\b%", $query)) {
-                $result = $result && false !== $this->db->exec($query);
+        foreach ($schema as $key => $query) {
+            if ('TABLE' === $key) {
+                continue;
             }
+
+            $result = $result && false !== $this->db->exec($query);
         }
 
         return $result;
