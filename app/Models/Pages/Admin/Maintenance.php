@@ -215,7 +215,9 @@ class Maintenance extends Admin
             return $this->view([], 'GET');
         }
 
-        @\set_time_limit(0);
+        if (\function_exists('\\set_time_limit')) {
+            \set_time_limit(0);
+        }
 
         if (
             'POST' === $method

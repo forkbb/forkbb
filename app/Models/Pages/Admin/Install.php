@@ -626,7 +626,9 @@ class Install extends Admin
      */
     protected function installEnd(Validator $v): Page
     {
-        @\set_time_limit(0);
+        if (\function_exists('\\set_time_limit')) {
+            \set_time_limit(0);
+        }
 
         if (true !== $this->c->Cache->clear()) {
             throw new RuntimeException('Unable to clear cache');
