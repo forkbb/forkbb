@@ -124,7 +124,7 @@ class Install extends Admin
         }
 
         // доступность шаблона конфигурации
-        $config = @\file_get_contents($this->c->DIR_APP . '/config/main.dist.php');
+        $config = \file_get_contents($this->c->DIR_APP . '/config/main.dist.php');
 
         if (false === $config) {
             $this->fIswev = ['e', 'No access to main.dist.php'];
@@ -1359,7 +1359,7 @@ class Install extends Admin
             $this->c->DB->exec($query, $vars);
         }
 
-        $config = @\file_get_contents($this->c->DIR_APP . '/config/main.dist.php');
+        $config = \file_get_contents($this->c->DIR_APP . '/config/main.dist.php');
 
         if (false === $config) {
             throw new RuntimeException('No access to main.dist.php.');

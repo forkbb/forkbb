@@ -29,7 +29,7 @@ class Host extends Admin
             return $this->c->Message->message('Bad request', false); // ??????
         }
 
-        $host = @\gethostbyaddr($ip);
+        $host = \gethostbyaddr($ip);
 
         $this->nameTpl = 'message';
         $this->titles  = __('Info');

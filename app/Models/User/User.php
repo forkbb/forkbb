@@ -206,7 +206,7 @@ class User extends DataModel
             $path = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$file}";
 
             if (\is_file($path)) {
-                @\unlink($path);
+                \unlink($path);
             }
 
             $this->avatar = '';

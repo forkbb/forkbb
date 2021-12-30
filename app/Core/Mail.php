@@ -156,9 +156,9 @@ class Mail
 
         if ($strict) {
             if ($ip) {
-                $mx = @\checkdnsrr($ip, 'MX'); // ???? ipv6?
+                $mx = \checkdnsrr($ip, 'MX'); // ???? ipv6?
             } else {
-                $mx = @\dns_get_record($domainASCII, \DNS_MX);
+                $mx = \dns_get_record($domainASCII, \DNS_MX);
             }
 
             if (empty($mx)) {
@@ -475,7 +475,7 @@ class Mail
     {
         // подлючение
         if (! \is_resource($this->connect)) {
-            if (false === ($connect = @\fsockopen($this->smtp['host'], $this->smtp['port'], $errno, $errstr, 5))) {
+            if (false === ($connect = \fsockopen($this->smtp['host'], $this->smtp['port'], $errno, $errstr, 5))) {
                 throw new SmtpException("Couldn't connect to smtp host \"{$this->smtp['host']}:{$this->smtp['port']}\" ({$errno}) ({$errstr}).");
             }
             \stream_set_timeout($connect, 5);
@@ -606,14 +606,14 @@ class Mail
     protected function smtpData(?string $data, ?array $code): string
     {
         if (\is_resource($this->connect) && null !== $data) {
-            if (false === @\fwrite($this->connect, $data . $this->EOL)) {
+            if (false === \fwrite($this->connect, $data . $this->EOL)) {
                 throw new SmtpException('Couldn\'t send data to mail server.');
             }
         }
 
         $this->response = '';
         while (\is_resource($this->connect) && ! \feof($this->connect)) {
-            if (false === ($get = @\fgets($this->connect, 512))) {
+            if (false === ($get = \fgets($this->connect, 512))) {
                 throw new SmtpException('Couldn\'t get mail server response codes.');
             }
 
@@ -675,7 +675,7 @@ class Mail
                 //????
             }
 
-            @\fclose($this->connect);
+            \fclose($this->connect);
         }
     }
 }

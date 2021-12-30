@@ -188,7 +188,7 @@ class File
     protected function dirProc(string $dirname): bool
     {
         if (! \is_dir($dirname)) {
-            if (! @\mkdir($dirname, 0755)) {
+            if (! \mkdir($dirname, 0755)) {
                 $this->error = 'Can not create directory';
 
                 return false;
@@ -268,7 +268,7 @@ class File
             ) {
                 $this->error = 'File is larger than the allowed size';
 
-                @\unlink($path);
+                \unlink($path);
 
                 return false;
             }
