@@ -28,7 +28,7 @@ class FileCache implements CacheInterface
      */
     protected $cacheDir;
 
-    public function __construct(string $dir)
+    public function __construct(string $dir, /* string */ $resetMark)
     {
         $dir = \rtrim($dir, '\\/');
 
@@ -41,6 +41,10 @@ class FileCache implements CacheInterface
         }
 
         $this->cacheDir = $dir;
+
+        if (\is_string($resetMark)) {
+            $this->resetIfRequired($resetMark);
+        }
     }
 
     /**
@@ -235,6 +239,23 @@ class FileCache implements CacheInterface
     {
         if (! \is_iterable($iterable)) {
             throw new InvalidArgumentException('Expects a iterable, got: ' . \gettype($iterable));
+        }
+    }
+
+    /**
+     * Сбрасывает кеш при изменении $resetMark
+     */
+    protected function resetIfRequired(string $resetMark): void
+    {
+        if (empty($resetMark)) {
+            return;
+        }
+
+        $hash = \sha1($resetMark);
+
+        if ($this->get('reset_mark_hash') !== $hash) {
+            $this->clear();
+            $this->set('reset_mark_hash', $hash);
         }
     }
 }
