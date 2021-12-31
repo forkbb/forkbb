@@ -470,8 +470,11 @@ class Config
     {
         $space  = \str_repeat('    ', $level);
         $result = '[';
+        $tail   = '';
 
         foreach ($data as $key => $cur) {
+            $tail = '';
+
             if ($this->isFormat($cur)) {
                 if (\is_string($key)) {
                     $result .= "{$cur['key_before']}'{$key}'{$cur['key_after']}=>{$cur['value_before']}";
@@ -486,7 +489,9 @@ class Config
                 }
             } else {
                 if (\is_string($key)) {
-                    $result .=  "\n{$space}'{$key}' => ";
+                    $result  = \rtrim($result, "\n\t ");
+                    $result .= "\n{$space}'{$key}' => ";
+                    $tail    = "\n" . \str_repeat('    ', $level - 1);
                 } else {
                     $result .= ' ';
                 }
@@ -499,6 +504,6 @@ class Config
             }
         }
 
-        return \rtrim($result, ',') . ']';
+        return \rtrim($result . $tail, ',')  . ']';
     }
 }
