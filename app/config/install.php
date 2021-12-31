@@ -65,8 +65,9 @@ return [
             'hmac'  => '%HMAC%',
         ],
         'Cache' => [
-            'class'     => \ForkBB\Core\Cache\FileCache::class,
-            'cache_dir' => '%DIR_CACHE%',
+            'class'      => \ForkBB\Core\Cache\FileCache::class,
+            'cache_dir'  => '%DIR_CACHE%',
+            'reset_mark' => '',
         ],
         'Validator' => \ForkBB\Core\Validator::class,
         'View' => [

@@ -593,4 +593,27 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.45 to rev.46
+     */
+    protected function stageNumber45(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>Cache=>reset_mark',
+            '\'%DB_DSN% %DB_PREFIX%\'',
+            'cache_dir'
+        );
+
+        $coreConfig->save();
+
+        // чтобы кэш не был сброшен до завершения обновления
+        $hash = \sha1($this->c->DB_DSN . ' ' . $this->c->DB_PREFIX);
+
+        $this->c->Cache->set('reset_mark_hash', $hash);
+
+        return null;
+    }
 }
