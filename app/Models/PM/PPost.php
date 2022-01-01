@@ -232,11 +232,9 @@ class PPost extends DataModel
             ':pid' => $this->id,
             ':tid' => $this->topic_id,
         ];
-        $query = "SELECT pp.id
+        $query = "SELECT MAX(pp.id)
             FROM ::pm_posts AS pp
-            WHERE pp.id < ?i:pid AND pp.topic_id=?i:tid
-            ORDER BY pp.id DESC
-            LIMIT 1";
+            WHERE pp.id < ?i:pid AND pp.topic_id=?i:tid";
 
         $id = (int) $this->c->DB->query($query, $vars)->fetchColumn();
 
