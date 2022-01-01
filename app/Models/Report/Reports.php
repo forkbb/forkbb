@@ -92,10 +92,8 @@ class Reports extends Manager
         $last = $this->list = $this->c->Cache->get('report');
 
         if (null === $last) {
-            $query = 'SELECT r.id
-                FROM ::reports AS r
-                ORDER BY r.id DESC
-                LIMIT 1';
+            $query = 'SELECT MAX(r.id)
+                FROM ::reports AS r';
 
             $last = (int) $this->c->DB->query($query)->fetchColumn();
 
