@@ -12,6 +12,7 @@ namespace ForkBB\Models\Topic;
 
 use ForkBB\Models\Method;
 use ForkBB\Models\Topic\Topic;
+use PDO;
 use RuntimeException;
 
 class CalcStat extends Method
@@ -31,39 +32,42 @@ class CalcStat extends Method
             $vars = [
                 ':tid' => $this->model->id,
             ];
-            $query = 'SELECT COUNT(p.id) - 1
+            $query = 'SELECT COUNT(p.id), MIN(p.id), MAX(p.id)
                 FROM ::posts AS p
                 WHERE p.topic_id=?i:tid';
 
-            $numReplies = (int) $this->c->DB->query($query, $vars)->fetchColumn();
+            list($count, $minId, $maxId) = $this->c->DB->query($query, $vars)->fetch(PDO::FETCH_NUM);
 
-            $query = 'SELECT p.id, p.poster, p.poster_id, p.posted
-                FROM ::posts AS p
-                WHERE p.topic_id=?i:tid
-                ORDER BY p.id
-                LIMIT 1';
+            if (
+                empty($count)
+                || empty($minId)
+                || empty($maxId)
+            ) {
+                throw new RuntimeException("Bad topic: {$this->model->id}");
+            }
 
-            $result = $this->c->DB->query($query, $vars)->fetch();
-
-            $this->model->poster        = $result['poster'];
-            $this->model->poster_id     = $result['poster_id'];
-            $this->model->posted        = $result['posted'];
-            $this->model->first_post_id = $result['id'];
+            $numReplies   = $count - 1;
+            $vars[':ids'] = [$minId, $maxId];
 
             $query = 'SELECT p.id, p.poster, p.poster_id, p.posted, p.edited
                 FROM ::posts AS p
-                WHERE p.topic_id=?i:tid
-                ORDER BY p.id DESC
-                LIMIT 1';
+                WHERE p.topic_id=?i:tid AND p.id IN(?ai:ids)';
 
-            $result = $this->c->DB->query($query, $vars)->fetch();
+            $result = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_UNIQUE);
 
-            $this->model->last_post_id   = $result['id'];
-            $this->model->last_poster    = $result['poster'];
-            $this->model->last_poster_id = $result['poster_id'];
-            $this->model->last_post      = $result['edited'] > 0 && $result['edited'] > $result['posted']
-                ? $result['edited']
-                : $result['posted'];
+            $row                        = $result[$minId];
+            $this->model->first_post_id = $minId;
+            $this->model->poster        = $row['poster'];
+            $this->model->poster_id     = $row['poster_id'];
+            $this->model->posted        = $row['posted'];
+
+            $row                         = $result[$maxId];
+            $this->model->last_post_id   = $maxId;
+            $this->model->last_poster    = $row['poster'];
+            $this->model->last_poster_id = $row['poster_id'];
+            $this->model->last_post      = $row['edited'] > 0 && $row['edited'] > $row['posted']
+                ? $row['edited']
+                : $row['posted'];
         }
 
         $this->model->num_replies = $numReplies;
