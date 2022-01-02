@@ -46,12 +46,14 @@ class CalcStat extends Method
                 throw new RuntimeException("Bad topic: {$this->model->id}");
             }
 
-            $numReplies   = $count - 1;
-            $vars[':ids'] = [$minId, $maxId];
+            $numReplies = $count - 1;
 
+            $vars = [
+                ':ids' => [$minId, $maxId],
+            ];
             $query = 'SELECT p.id, p.poster, p.poster_id, p.posted, p.edited
                 FROM ::posts AS p
-                WHERE p.topic_id=?i:tid AND p.id IN(?ai:ids)';
+                WHERE p.id IN(?ai:ids)';
 
             $result = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_UNIQUE);
 
