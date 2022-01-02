@@ -12,6 +12,7 @@ namespace ForkBB\Models\PM;
 
 use ForkBB\Models\Method;
 use ForkBB\Models\PM\PTopic;
+use PDO;
 use RuntimeException;
 
 class CalcStat extends Method
@@ -28,32 +29,42 @@ class CalcStat extends Method
         $vars = [
             ':tid' => $this->model->id,
         ];
-        $query = 'SELECT pp.id, pp.poster_id, pp.posted, pp.edited
-            FROM ::pm_posts AS pp
-            WHERE pp.topic_id=?i:tid
-            ORDER BY pp.id DESC
-            LIMIT 1'; // pp.poster,
-
-        $result = $this->c->DB->query($query, $vars)->fetch();
-
-        $this->model->last_post    = $result['edited'] > $result['posted'] ? $result['edited'] : $result['posted'];
-        $this->model->last_post_id = $result['id'];
-
-        if ($result['poster_id'] === $this->model->poster_id) {
-            $this->model->last_number  = 0;
-            $this->model->poster_visit = $this->model->last_post;
-        } elseif ($result['poster_id'] === $this->model->target_id) {
-            $this->model->last_number  = 1;
-            $this->model->target_visit = $this->model->last_post;
-        } else {
-            throw new RuntimeException("Bad user ID in ppost number {$result['id']}");
-        }
-
-        $query = 'SELECT COUNT(pp.id) - 1
+        $query = 'SELECT COUNT(pp.id), MAX(pp.id)
             FROM ::pm_posts AS pp
             WHERE pp.topic_id=?i:tid';
 
-        $this->model->num_replies = (int) $this->c->DB->query($query, $vars)->fetchColumn();
+        list($count, $maxId) = $this->c->DB->query($query, $vars)->fetch(PDO::FETCH_NUM);
+
+        if (
+            empty($count)
+            || empty($maxId)
+        ) {
+            throw new RuntimeException("Bad ptopic: {$this->model->id}");
+        }
+
+        $this->model->num_replies = $count - 1;
+
+        $vars = [
+            ':id' => $maxId,
+        ];
+        $query = 'SELECT pp.poster_id, pp.posted, pp.edited
+            FROM ::pm_posts AS pp
+            WHERE pp.id=?i:id';
+
+        $row = $this->c->DB->query($query, $vars)->fetch();
+
+        $this->model->last_post_id = $maxId;
+        $this->model->last_post    = $row['edited'] > $row['posted'] ? $row['edited'] : $row['posted'];
+
+        if ($row['poster_id'] === $this->model->poster_id) {
+            $this->model->last_number  = 0;
+            $this->model->poster_visit = $this->model->last_post;
+        } elseif ($row['poster_id'] === $this->model->target_id) {
+            $this->model->last_number  = 1;
+            $this->model->target_visit = $this->model->last_post;
+        } else {
+            throw new RuntimeException("Bad user ID in ppost number {$maxId}");
+        }
 
         return $this->model;
     }
