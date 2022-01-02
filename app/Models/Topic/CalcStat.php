@@ -67,9 +67,7 @@ class CalcStat extends Method
             $this->model->last_post_id   = $maxId;
             $this->model->last_poster    = $row['poster'];
             $this->model->last_poster_id = $row['poster_id'];
-            $this->model->last_post      = $row['edited'] > 0 && $row['edited'] > $row['posted']
-                ? $row['edited']
-                : $row['posted'];
+            $this->model->last_post      = $row['edited'] > $row['posted'] ? $row['edited'] : $row['posted'];
         }
 
         $this->model->num_replies = $numReplies;
