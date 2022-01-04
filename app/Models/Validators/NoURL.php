@@ -31,7 +31,7 @@ class NoURL extends RulesValidator
                 ! empty($flag)
                 || 1 !== $this->c->user->g_post_links
             )
-            && \preg_match('%https?://|www\.%i', $value)
+            && \preg_match('%\b://|\bwww\.%i', $value)
         ) {
             $v->addError('The :alias contains a link');
         }
