@@ -1653,7 +1653,7 @@ body,
   #fork .f-post-usticky {
     flex-direction: column;
     position: sticky;
-    top: 0;
+    top: 0.625rem;
   }
 
   #fork .f-user-info-first {
