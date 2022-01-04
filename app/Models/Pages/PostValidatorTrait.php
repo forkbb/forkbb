@@ -176,6 +176,8 @@ trait PostValidatorTrait
             $ruleHideSmilies = 'absent';
         }
 
+        $ruleMessage = 'required|string:trim|max:' . $this->c->MAX_POST_SIZE . ($executive ? '' : '|noURL') . '|check_message';
+
         $v = $this->c->Validator->reset()
             ->addValidators([
                 'check_subject'  => [$this, 'vCheckSubject'],
@@ -194,7 +196,7 @@ trait PostValidatorTrait
                 'subscribe'    => $ruleSubscribe,
                 'preview'      => 'string',
                 'submit'       => 'string|check_timeout',
-                'message'      => 'required|string:trim|max:' . $this->c->MAX_POST_SIZE . '|check_message',
+                'message'      => $ruleMessage,
             ])->addAliases([
                 'email'        => 'Email',
                 'username'     => 'Username',
