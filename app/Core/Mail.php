@@ -149,7 +149,7 @@ class Mail
             }
         }
 
-        if (false === \filter_var("{$local}@{$domainASCII}", \FILTER_VALIDATE_EMAIL)) {
+        if (false === \filter_var("{$local}@{$domainASCII}", \FILTER_VALIDATE_EMAIL, \FILTER_FLAG_EMAIL_UNICODE)) {
             return false;
         }
 
