@@ -128,3 +128,63 @@ msgstr "Missing required the '%2$s' attribute in the &lt; %1$s &gt; tag (combina
 
 msgid "Not expected to close %1$s tag"
 msgstr "Not expected to close &lt;/ %1$s &gt; tag."
+
+msgid "The :alias should be absent"
+msgstr "The :alias field is superfluous."
+
+msgid "The :alias is required"
+msgstr "The :alias field is required."
+
+msgid "The :alias must be string"
+msgstr "The :alias field must be string."
+
+msgid "The :alias must be numeric"
+msgstr "The :alias field must be numeric."
+
+msgid "The :alias must be integer"
+msgstr "The :alias field must be integer."
+
+msgid "The :alias must be array"
+msgstr "The :alias field must be array."
+
+msgid "The :alias minimum is :attr characters"
+msgstr "The minimum length for the :alias field is :attr characters."
+
+msgid "The :alias minimum is :attr"
+msgstr "The minimum value for the :alias field is :attr."
+
+msgid "The :alias minimum is :attr elements"
+msgstr "The :alias field must contain at least :attr elements."
+
+msgid "The :alias maximum is :attr characters"
+msgstr "The maximum length of the :alias field is :attr characters."
+
+msgid "The :alias maximum is :attr"
+msgstr "The maximum value for the :alias field is :attr."
+
+msgid "The :alias contains too large a file"
+msgstr "The :alias field contains too large a file."
+
+msgid "The :alias maximum is :attr elements"
+msgstr "The :alias field must contain at most :attr elements."
+
+msgid "The :alias contains an invalid value"
+msgstr "The :alias field contains an invalid value."
+
+msgid "The :alias must be same with original"
+msgstr "The value of the :alias field must match the value of the source."
+
+msgid "The :alias is not valid format"
+msgstr "The :alias field does not match the format."
+
+msgid "The :alias not contains file"
+msgstr "No file in the :alias field."
+
+msgid "The :alias contains more than one file"
+msgstr "The :alias field contains more than one file."
+
+msgid "The :alias not contains image"
+msgstr "No image in the :alias field."
+
+msgid "The :alias does not contain a date"
+msgstr "Failed to determine the date in the :alias field."

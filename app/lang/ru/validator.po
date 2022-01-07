@@ -128,3 +128,63 @@ msgstr "Отсутствует обязательный атрибут '%2$s' в
 
 msgid "Not expected to close %1$s tag"
 msgstr "Не ожидалось закрывающегося тега &lt;/ %1$s &gt;."
+
+msgid "The :alias should be absent"
+msgstr "Поле :alias лишнее."
+
+msgid "The :alias is required"
+msgstr "Поле :alias обязательно для заполнения."
+
+msgid "The :alias must be string"
+msgstr "Поле :alias должно содержать строку."
+
+msgid "The :alias must be numeric"
+msgstr "Поле :alias должно содержать число."
+
+msgid "The :alias must be integer"
+msgstr "Поле :alias должно содержать целое число."
+
+msgid "The :alias must be array"
+msgstr "Поле :alias должно содержать массив."
+
+msgid "The :alias minimum is :attr characters"
+msgstr "Минимальная длина поля :alias равна :attr символам."
+
+msgid "The :alias minimum is :attr"
+msgstr "Минимальное значение поля :alias равно :attr."
+
+msgid "The :alias minimum is :attr elements"
+msgstr "Поле :alias должно содержать как минимум :attr элементов."
+
+msgid "The :alias maximum is :attr characters"
+msgstr "Максимальная длина поля :alias равна :attr символам."
+
+msgid "The :alias maximum is :attr"
+msgstr "Максимальное значение поля :alias равно :attr."
+
+msgid "The :alias contains too large a file"
+msgstr "Поле :alias содержит слишком большой файл."
+
+msgid "The :alias maximum is :attr elements"
+msgstr "Поле :alias должно содержать не больше :attr элементов."
+
+msgid "The :alias contains an invalid value"
+msgstr "Поле :alias имеет недопустимое значение."
+
+msgid "The :alias must be same with original"
+msgstr "Значение поля :alias должно совпадать со значение источника."
+
+msgid "The :alias is not valid format"
+msgstr "Поле :alias не соответствует формату."
+
+msgid "The :alias not contains file"
+msgstr "В поле :alias нет файла."
+
+msgid "The :alias contains more than one file"
+msgstr "Поле :alias содержит больше одного файла."
+
+msgid "The :alias not contains image"
+msgstr "В поле :alias нет изображения."
+
+msgid "The :alias does not contain a date"
+msgstr "Не удалось определить дату в поле :alias."
