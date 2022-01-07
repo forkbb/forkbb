@@ -33,7 +33,7 @@ class NewUser extends Users
                 ])->addRules([
                     'token'    => 'token:AdminUsersNew',
                     'email'    => 'required|string:trim|email:noban,unique',
-                    'username' => 'required|string:trim|username',
+                    'username' => 'required|string:trim|username|noURL:1',
                     'password' => 'required|string|min:16|max:100000|password',
                 ])->addAliases([
                     'email'    => 'Email',
