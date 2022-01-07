@@ -69,7 +69,7 @@ class Edit extends Profile
             }
 
             if ($this->rules->editWebsite) {
-                $ruleWebsite = 'string:trim|max:100'; // ???? валидация url?
+                $ruleWebsite = 'string:trim|max:100|regex:%^(?:https?:)?//[^\x00-\x1F\s]+$%iu';
             } else {
                 $ruleWebsite = 'absent';
             }
