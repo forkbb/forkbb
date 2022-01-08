@@ -203,7 +203,7 @@ HANDLER,
             ],
         ],
         'handler' => <<<'HANDLER'
-$def = \htmlspecialchars_decode($attrs['Def'] ?? $body, \ENT_QUOTES | \ENT_HTML5);
+$def = $parser->de($attrs['Def'] ?? $body);
 $def = url("mailto:{$def}");
 
 if ('' == $def) {
@@ -370,7 +370,7 @@ if (isset($attrs['Def'])) {
     }
 }
 
-$fUrl = \htmlspecialchars_decode($url, \ENT_QUOTES | \ENT_HTML5);
+$fUrl = $parser->de($url);
 
 if (0 === \strpos($url, 'ftp.')) {
     $fUrl = 'ftp://' . $fUrl;
@@ -384,7 +384,7 @@ if ('' == $fUrl) {
     $fUrl = $parser->e($fUrl);
 
     if ($url === $body) {
-        $url = \htmlspecialchars_decode($url, \ENT_QUOTES | \ENT_HTML5);
+        $url = $parser->de($url);
         $url = \mb_strlen($url, 'UTF-8') > 55 ? \mb_substr($url, 0, 39, 'UTF-8') . ' … ' . \mb_substr($url, -10, null, 'UTF-8') : $url;
         $body = $parser->e($url);
     }
@@ -550,7 +550,7 @@ HANDLER,
         'type' => 'block',
         'text_only' => true,
         'handler' => <<<'HANDLER'
-$body = __(['Post from topic %s', \htmlspecialchars_decode($body, \ENT_QUOTES | \ENT_HTML5)]);
+$body = __(['Post from topic %s', $parser->de($body)]);
 
 return "</p><p class=\"f-bb-from\">{$body}</p><p>";
 HANDLER,
