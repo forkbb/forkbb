@@ -14,6 +14,7 @@ use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
 use ForkBB\Models\PM\Cnst;
 use function \ForkBB\__;
+use function \ForkBB\url;
 
 class View extends Profile
 {
@@ -194,7 +195,7 @@ class View extends Profile
                 'type'    => 'link',
                 'caption' => 'Website',
                 'value'   => $this->curUser->censorUrl,
-                'href'    => $this->curUser->censorUrl,
+                'href'    => url($this->curUser->censorUrl),
                 'rel'     => 'ugc',
             ];
         }
