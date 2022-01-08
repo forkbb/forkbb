@@ -1625,6 +1625,11 @@ body,
   font-style: italic;
 }
 
+#fork .f-bb-badlink {
+  color: #D8000C;
+  background-color: #FFBABA;
+}
+
 #fork .f-post-body p,
 #fork .f-post-body blockquote,
 #fork .f-post-body br,

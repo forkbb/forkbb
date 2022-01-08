@@ -203,16 +203,15 @@ HANDLER,
             ],
         ],
         'handler' => <<<'HANDLER'
-$def = $attrs['Def'] ?? $body;
-$def = \implode('@',
-    \array_map('\\rawurlencode',
-        \array_map('\\rawurldecode',
-            \explode('@', $def)
-        )
-    )
-);
+$def = \htmlspecialchars_decode($attrs['Def'] ?? $body, \ENT_QUOTES | \ENT_HTML5);
+$def = url("mailto:{$def}");
 
-return "<a href=\"mailto:{$def}\">{$body}</a>";
+if ('' == $def) {
+    return '<span class="f-bb-badlink">BAD EMAIL</span>';
+} else {
+    $def = $parser->e($def);
+    return "<a href=\"{$def}\">{$body}</a>";
+}
 HANDLER,
     ],
     [
@@ -371,25 +370,27 @@ if (isset($attrs['Def'])) {
     }
 }
 
-$fUrl = \str_replace([' ', '\'', '`', '"'], ['%20', '', '', ''], $url);
+$fUrl = \htmlspecialchars_decode($url, \ENT_QUOTES | \ENT_HTML5);
 
 if (0 === \strpos($url, 'ftp.')) {
     $fUrl = 'ftp://' . $fUrl;
-} elseif (! \preg_match('%^(?:\.?\.?/|#|[a-z](?:[a-z]|[a-z0-9]{1,6}):)%', $fUrl)) {
-    if (\preg_match('%^[^/]+@[^/]+$%', $fUrl)) {
-        $fUrl = 'mailto:' . $fUrl;
-    } else {
-        $fUrl = '//' . $fUrl;
+}
+
+$fUrl = url($fUrl);
+
+if ('' == $fUrl) {
+    return '<span class="f-bb-badlink">BAD URL</span>';
+} else {
+    $fUrl = $parser->e($fUrl);
+
+    if ($url === $body) {
+        $url = \htmlspecialchars_decode($url, \ENT_QUOTES | \ENT_HTML5);
+        $url = \mb_strlen($url, 'UTF-8') > 55 ? \mb_substr($url, 0, 39, 'UTF-8') . ' … ' . \mb_substr($url, -10, null, 'UTF-8') : $url;
+        $body = $parser->e($url);
     }
-}
 
-if ($url === $body) {
-    $url = \htmlspecialchars_decode($url, \ENT_QUOTES | \ENT_HTML5);
-    $url = \mb_strlen($url, 'UTF-8') > 55 ? \mb_substr($url, 0, 39, 'UTF-8') . ' … ' . \mb_substr($url, -10, null, 'UTF-8') : $url;
-    $body = $parser->e($url);
+    return "<a href=\"{$fUrl}\" rel=\"ugc\">{$body}</a>";
 }
-
-return "<a href=\"{$fUrl}\" rel=\"ugc\">{$body}</a>";
 HANDLER,
     ],
     [

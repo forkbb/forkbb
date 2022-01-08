@@ -148,3 +148,160 @@ function size(int $size): string
 
     return __(['%s ' . $units[$i], num($size, $decimals)]);
 }
+
+/**
+ * Возвращает нормализованный (частично) url или пустую строку
+ */
+function url(string $url): string
+{
+    if (
+        ! isset($url[1])
+        || \preg_match('%^\s%u', $url)
+    ) {
+        return '';
+    }
+
+    switch ($url[0]) {
+        case '/':
+            if ('/' === $url[1]) {
+                $schemeOn = false;
+                $hostOn   = true;
+                $url      = 'http:' . $url;
+
+                break;
+            }
+        case '?':
+        case '#':
+            $schemeOn = false;
+            $hostOn   = false;
+            $url      = 'http://a.a' . $url;
+
+            break;
+        default:
+            $hostOn = true;
+
+            if (\preg_match('%^([a-z][a-z0-9+.-]*):(\S)?%i', $url, $m)) {
+                if (
+                    ! isset($m[2])
+                    || isset($m[1][10])
+                ) {
+                    return '';
+                }
+
+                $schemeOn = true;
+            } else {
+                $schemeOn = false;
+                $url      = 'http://' . $url;
+            }
+
+            break;
+    }
+
+    $p = \parse_url($url);
+
+    if (! \is_array($p)) {
+        return '';
+    }
+
+    $scheme = \strtolower($p['scheme'] ?? '');
+    $result = $schemeOn && $scheme ? $scheme . ':' : '';
+
+    switch ($scheme) {
+        case 'javascript':
+            return '';
+        case 'mailto':
+            if (
+                isset($p['host'])
+                || ! isset($p['path'])
+                || ! \preg_match('%^([^\x00-\x1F]+)@([^\x00-\x1F\s@]++)$%Du', $p['path'], $m)
+            ) {
+                return '';
+            }
+
+            $result .= \rawurlencode(\rawurldecode($m[1])) . '@' . \rawurlencode(\rawurldecode($m[2]));
+
+            break;
+        case 'tel':
+            if (
+                isset($p['host'])
+                || ! isset($p['path'])
+                || ! \preg_match('%^\+?[0-9.()-]+$%D', $p['path'])
+            ) {
+                return '';
+            }
+
+            $result .= $p['path'];
+
+            break;
+        default:
+            if ($hostOn && isset($p['host'])) {
+                $result .= '//';
+
+                if (isset($p['user'])) {
+                    $result .= \rawurlencode(\rawurldecode($p['user']));
+
+                    if (isset($p['pass'])) {
+                        $result .= ':' . \rawurlencode(\rawurldecode($p['pass']));
+                    }
+
+                    $result .= '@';
+                }
+
+                if (\preg_match('%[\x80-\xFF]%', $p['host'])) {
+                    $p['host'] = \idn_to_ascii($p['host'], 0, \INTL_IDNA_VARIANT_UTS46);
+                }
+
+                $host = \filter_var($p['host'], \FILTER_VALIDATE_DOMAIN, \FILTER_FLAG_HOSTNAME);
+
+                if (false !== $host) {
+                    $result .= $host;
+                } elseif (
+                    '[' === $p['host'][0]
+                    && ']' === $p['host'][-1]
+                    && \filter_var(\substr($p['host'], 1, -1), \FILTER_VALIDATE_IP, \FILTER_FLAG_IPV6)
+                ) {
+                    $result .= $p['host'];
+                } else {
+                    return '';
+                }
+
+                if (isset($p['port'])) {
+                    $result .= ':' . $p['port'];
+                }
+            }
+
+            if (isset($p['path'])) {
+                $result .= \preg_replace_callback(
+                    '%[^/\%\w.~-]|\%(?![0-9a-fA-F]{2})%',
+                    function($m) {
+                        return \rawurlencode($m[0]);
+                    },
+                    $p['path']
+                );
+            }
+
+            break;
+    }
+
+    if (isset($p['query'])) {
+        $result .= '?' . \preg_replace_callback(
+            '%[^=&\%\w.~-]|\%(?![0-9a-fA-F]{2})%',
+            function($m) {
+                return \rawurlencode($m[0]);
+            },
+            $p['query']
+        );
+    }
+
+    if (isset($p['fragment'])) {
+        $result .= '#' . \preg_replace_callback(
+            '%[^\%\w.~-]|\%(?![0-9a-fA-F]{2})%',
+            function($m) {
+                return \rawurlencode($m[0]);
+            },
+            $p['fragment']
+        );
+    }
+
+    return $result;
+}
