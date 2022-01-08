@@ -1,82 +1,81 @@
-<?php return array (
-  'root' => 
-  array (
-    'pretty_version' => '1.0.0+no-version-set',
-    'version' => '1.0.0.0',
-    'aliases' => 
-    array (
+<?php return array(
+    'root' => array(
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'type' => 'project',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'reference' => NULL,
+        'name' => 'forkbb/forkbb',
+        'dev' => true,
     ),
-    'reference' => NULL,
-    'name' => 'forkbb/forkbb',
-  ),
-  'versions' => 
-  array (
-    'artoodetoo/dirk' => 
-    array (
-      'pretty_version' => 'dev-visman',
-      'version' => 'dev-visman',
-      'aliases' => 
-      array (
-        0 => '9999999-dev',
-      ),
-      'reference' => '82c1ba51883c32c62e7eda121efcab5109acbbcc',
+    'versions' => array(
+        'artoodetoo/dirk' => array(
+            'pretty_version' => 'dev-visman',
+            'version' => 'dev-visman',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../artoodetoo/dirk',
+            'aliases' => array(
+                0 => '9999999-dev',
+            ),
+            'reference' => '32ce64305c87344bf6bfc48221643d374f6aa65b',
+            'dev_requirement' => false,
+        ),
+        'forkbb/forkbb' => array(
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'type' => 'project',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'reference' => NULL,
+            'dev_requirement' => false,
+        ),
+        'miovisman/jevix' => array(
+            'pretty_version' => '2.2.1',
+            'version' => '2.2.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../miovisman/jevix',
+            'aliases' => array(),
+            'reference' => 'bd9807b8e3ea26567e775ee1d372b417440b1198',
+            'dev_requirement' => false,
+        ),
+        'miovisman/normemail' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../miovisman/normemail',
+            'aliases' => array(
+                0 => '9999999-dev',
+            ),
+            'reference' => '2e657463266b1249e97d15c6795dd14248097cb3',
+            'dev_requirement' => false,
+        ),
+        'miovisman/parserus' => array(
+            'pretty_version' => '1.2.0',
+            'version' => '1.2.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../miovisman/parserus',
+            'aliases' => array(),
+            'reference' => 'ed0900c73aa1685f0907d9eb0f7dafa7f85f33cc',
+            'dev_requirement' => false,
+        ),
+        'psr/log' => array(
+            'pretty_version' => '1.1.4',
+            'version' => '1.1.4.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../psr/log',
+            'aliases' => array(),
+            'reference' => 'd49695b909c3b7628b6289db5479a1c204601f11',
+            'dev_requirement' => false,
+        ),
+        'psr/simple-cache' => array(
+            'pretty_version' => '1.0.1',
+            'version' => '1.0.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../psr/simple-cache',
+            'aliases' => array(),
+            'reference' => '408d5eafb83c57f6365a3ca330ff23aa4a5fa39b',
+            'dev_requirement' => false,
+        ),
     ),
-    'forkbb/forkbb' => 
-    array (
-      'pretty_version' => '1.0.0+no-version-set',
-      'version' => '1.0.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => NULL,
-    ),
-    'miovisman/jevix' => 
-    array (
-      'pretty_version' => '2.2.1',
-      'version' => '2.2.1.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'bd9807b8e3ea26567e775ee1d372b417440b1198',
-    ),
-    'miovisman/normemail' => 
-    array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
-      'aliases' => 
-      array (
-        0 => '9999999-dev',
-      ),
-      'reference' => '2e657463266b1249e97d15c6795dd14248097cb3',
-    ),
-    'miovisman/parserus' => 
-    array (
-      'pretty_version' => '1.1.0',
-      'version' => '1.1.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'fa93c5e26dd500bf2489bb4fe46a6d3046546c31',
-    ),
-    'psr/log' => 
-    array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
-      'aliases' => 
-      array (
-        0 => '1.1.x-dev',
-      ),
-      'reference' => 'dd738d0b4491f32725492cf345f6b501f5922fec',
-    ),
-    'psr/simple-cache' => 
-    array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
-      'aliases' => 
-      array (
-        0 => '1.0.x-dev',
-      ),
-      'reference' => '5a7b96b1dda5d957e01bc1bfe77dcca09c5a7474',
-    ),
-  ),
 );

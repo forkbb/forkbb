@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @copyright  Copyright (c) 2016-2021 Visman. All rights reserved.
+ * @copyright  Copyright (c) 2016-2022 Visman. All rights reserved.
  * @author     Visman <mio.visman@yandex.ru>
  * @link       https://github.com/MioVisman/Parserus
  * @license    https://opensource.org/licenses/MIT The MIT License (MIT)
@@ -1207,15 +1207,11 @@ class Parserus
     public function detectUrls(): self
     {
         $pattern = '%\b(?<=\s|^)
-            (?>(?:ht|f)tps?://|www\.|ftp\.)
-            (?:[\p{L}\p{N}]+(?:[\p{L}\p{N}\-]*[\p{L}\p{N}])?\.)+
-            \p{L}[\p{L}\p{N}\-]*[\p{L}\p{N}]
-            (?::\d{1,5})?
-            (?:/
-                (?:[\p{L}\p{N};:@&=$_.+!*\'"(),\%/-]+)?
-                (?:\?[\p{L}\p{N};:@&=$_.+!*\'"(),\%-]+)?
-                (?:\#[\p{L}\p{N}-]+)?
-            )?%xu';
+            (?:(?:https?|ftp)://|(?:www|ftp)\.)
+            (?:\b[\p{L}\p{N}\-]++\b\.?){2,}
+            (?<!\.)
+            (?:[/?#][^\s]*(?<!\.))?
+            (?=\.?(?:\s|$))%xu';
 
         return $this->detect('url', $pattern, true);
     }
@@ -1374,7 +1370,7 @@ class Parserus
      *
      * @param  array $lang   Массив строк шаблонов описания ошибок
      * @param  array $errors Массив, который дополняется ошибками
-     * @param  bool  $retTpl Флаг возрата результата в виде массива с шаблоном в первом элементе
+     * @param  bool  $retTpl Флаг возврата результата в виде массива с шаблоном в первом элементе для каждой ошибки
      *
      * @return array
      */
@@ -1412,5 +1408,17 @@ class Parserus
     public function e(string $text): string
     {
         return htmlspecialchars($text, $this->eFlags, 'UTF-8');
+    }
+
+    /**
+     * Метод преобразует специальные HTML-сущности обратно в соответствующие символы
+     *
+     * @param  string $text
+     *
+     * @return string
+     */
+    public function de(string $text): string
+    {
+        return htmlspecialchars_decode($text, $this->eFlags);
     }
 }
