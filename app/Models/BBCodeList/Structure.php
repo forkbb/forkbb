@@ -395,20 +395,32 @@ class Structure extends Model
                 }
 
                 if (isset($attr['format'])) {
-                    if (
-                        ! \is_string($attr['format'])
-                        || false === \preg_match($attr['format'], 'abcdef')
-                    ) {
-                        return ['Attribute %1$s, %2$s - regular expression error', $name, 'Format'];
+                    $result = ['Attribute %1$s, %2$s - regular expression error', $name, 'Format'];
+
+                    try {
+                        if (
+                            ! \is_string($attr['format'])
+                            || false === @\preg_match($attr['format'], 'abcdef')
+                        ) {
+                            return $result;
+                        }
+                    } catch (Throwable $e) {
+                        return $result;
                     }
                 }
 
                 if (isset($attr['body_format'])) {
-                    if (
-                        ! \is_string($attr['body_format'])
-                        || false === \preg_match($attr['body_format'], 'abcdef')
-                    ) {
-                        return ['Attribute %1$s, %2$s - regular expression error', $name, 'Body format'];
+                    $result = ['Attribute %1$s, %2$s - regular expression error', $name, 'Body format'];
+
+                    try {
+                        if (
+                            ! \is_string($attr['body_format'])
+                            || false === @\preg_match($attr['body_format'], 'abcdef')
+                        ) {
+                            return $result;
+                        }
+                    } catch (Throwable $e) {
+                        return $result;
                     }
                 }
             }
@@ -431,20 +443,32 @@ class Structure extends Model
             }
 
             if (isset($this->new_attr['format'])) {
-                if (
-                    ! \is_string($this->new_attr['format'])
-                    || false === \preg_match($this->new_attr['format'], 'abcdef')
-                ) {
-                    return ['Attribute %1$s, %2$s - regular expression error', $name, 'Format'];
+                $result = ['Attribute %1$s, %2$s - regular expression error', $name, 'Format'];
+
+                try {
+                    if (
+                        ! \is_string($this->new_attr['format'])
+                        || false === @\preg_match($this->new_attr['format'], 'abcdef')
+                    ) {
+                        return $result;
+                    }
+                } catch (Throwable $e) {
+                    return $result;
                 }
             }
 
             if (isset($this->new_attr['body_format'])) {
-                if (
-                    ! \is_string($this->new_attr['body_format'])
-                    || false === \preg_match($this->new_attr['body_format'], 'abcdef')
-                ) {
-                    return ['Attribute %1$s, %2$s - regular expression error', $name, 'Body format'];
+                $result = ['Attribute %1$s, %2$s - regular expression error', $name, 'Body format'];
+
+                try {
+                    if (
+                        ! \is_string($this->new_attr['body_format'])
+                        || false === @\preg_match($this->new_attr['body_format'], 'abcdef')
+                    ) {
+                        return $result;
+                    }
+                } catch (Throwable $e) {
+                    return $result;
                 }
             }
         }
