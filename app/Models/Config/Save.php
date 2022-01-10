@@ -50,29 +50,39 @@ class Save extends Method
                     ':value' => $value,
                     ':name'  => $name
                 ];
-                //????
-                //????
-                $query = 'UPDATE ::config
-                    SET conf_value=?s:value
-                    WHERE conf_name=?s:name';
 
-                $count = $this->c->DB->exec($query, $vars);
-                //????
-                //????
-                if (0 === $count) {
-                    //????
-                    //????
-                    $query = 'INSERT INTO ::config (conf_name, conf_value)
-                        SELECT ?s:name, ?s:value
-                        FROM ::groups
-                        WHERE NOT EXISTS (
-                            SELECT 1
-                            FROM ::config
-                            WHERE conf_name=?s:name
-                        )
-                        LIMIT 1';
+                switch ($this->c->DB->getType()) {
+                    case 'mysql':
+                        $query = 'INSERT INTO ::config (conf_name, conf_value)
+                            VALUES (?s:name, ?s:value)
+                            ON DUPLICATE KEY UPDATE conf_value=?s:value';
 
-                    $this->c->DB->exec($query, $vars);
+                        break;
+                    case 'sqlite':
+                    case 'pgsql':
+                        $query = 'INSERT INTO ::config (conf_name, conf_value)
+                            VALUES (?s:name, ?s:value)
+                            ON CONFLICT(conf_name) DO UPDATE SET conf_value=?s:value';
+
+                        break;
+                    default:
+                        $query = 'UPDATE ::config
+                            SET conf_value=?s:value
+                            WHERE conf_name=?s:name';
+
+                        $this->c->DB->exec($query, $vars);
+
+                        $query = 'INSERT INTO ::config (conf_name, conf_value)
+                            SELECT ?s:name, ?s:value
+                            FROM ::groups
+                            WHERE NOT EXISTS (
+                                SELECT 1
+                                FROM ::config
+                                WHERE conf_name=?s:name
+                            )
+                            LIMIT 1';
+
+                        break;
                 }
             } else {
                 $vars = [
@@ -80,9 +90,9 @@ class Save extends Method
                 ];
                 $query = 'DELETE FROM ::config
                     WHERE conf_name=?s:name';
-
-                $this->c->DB->exec($query, $vars);
             }
+
+            $this->c->DB->exec($query, $vars);
         }
 
         return $this->model->reset();
