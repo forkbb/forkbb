@@ -79,10 +79,8 @@ abstract class Users extends Admin
      */
     protected function checkSelected(array $selected, string $action, bool $profile = false) /* : array|false */
     {
-        $selected = \array_map(function ($value) { // ????
-            return (int) $value;
-        }, $selected);
-        $bad = \array_filter($selected, function ($value) {
+        $selected = \array_map('\\intval', $selected);
+        $bad      = \array_filter($selected, function ($value) {
             return $value < 1;
         });
 
