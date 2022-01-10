@@ -722,7 +722,7 @@ class Validator
                 return null;
             }
         } elseif (null !== $value) {
-            $this->addError('The :alias maximum is :attr'); //????
+            $this->addError('The :alias maximum is :attr');
 
             return null;
         }

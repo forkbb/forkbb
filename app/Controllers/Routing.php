@@ -343,7 +343,7 @@ class Routing
             if (
                 ! $user->isAdmin
                 && ! $user->isGuest
-            ) { // ????
+            ) {
                 $r->add(
                     $r::DUO,
                     '/post/{id|i:[1-9]\d*}/report',
