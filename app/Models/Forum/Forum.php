@@ -68,7 +68,8 @@ class Forum extends DataModel
      */
     protected function getcanMarkRead(): bool
     {
-        return ! $this->c->user->isGuest; // ????
+        return ! $this->c->user->isGuest
+            && ! $this->c->user->isUnverified;
     }
 
     /**
