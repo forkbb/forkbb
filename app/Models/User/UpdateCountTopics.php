@@ -23,7 +23,10 @@ class UpdateCountTopics extends Action
     {
         $ids = [];
         foreach ($args as $arg) {
-            if ($arg instanceof User) {
+            if (
+                $arg instanceof User
+                && ! $arg->isGuest
+            ) {
                 $ids[$arg->id] = true;
             } elseif (
                 \is_int($arg)
@@ -34,8 +37,6 @@ class UpdateCountTopics extends Action
                 throw new InvalidArgumentException('Expected user or positive integer id');
             }
         }
-        // темы гостя не считаем
-        unset($ids[0]); // ????
 
         if (empty($ids)) {
             $where = '::users.id > 0';
