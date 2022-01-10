@@ -56,7 +56,7 @@ class Redirect extends Page
         $this->nameTpl = 'layouts/redirect';
         $this->robots  = 'noindex';
         $this->message = $message;
-        $this->timeout = $this->c->config->i_redirect_delay;  //???? перенести в заголовки?
+        $this->timeout = $this->c->config->i_redirect_delay;
 
         return $this;
     }

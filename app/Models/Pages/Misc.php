@@ -31,7 +31,7 @@ class Misc extends Page
             return $this->c->Redirect->url($forum->link)->message($this->c->Csrf->getError());
         }
 
-        $this->c->forums->markread($forum, $this->user); // ???? флуд интервал?
+        $this->c->forums->markread($forum, $this->user);
 
         $this->c->Lang->load('misc');
 

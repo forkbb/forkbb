@@ -63,7 +63,7 @@ class Save extends Action
             throw new RuntimeException('The model has ID');
         }
 
-        $report->created = \time(); //????
+        $report->created = \time();
 
         $attrs  = $report->getAttrs();
         $fileds = $this->c->dbMap->reports;

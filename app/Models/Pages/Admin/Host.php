@@ -26,7 +26,7 @@ class Host extends Admin
         $ip = \filter_var($args['ip'], \FILTER_VALIDATE_IP);
 
         if (false === $ip) {
-            return $this->c->Message->message('Bad request', false); // ??????
+            return $this->c->Message->message('Bad request', false);
         }
 
         $host = \gethostbyaddr($ip);

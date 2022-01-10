@@ -45,7 +45,7 @@ class Categories extends Admin
                 $this->c->categories->update();
 
                 if (\strlen($v->new) > 0) {
-                    $this->c->categories->insert($v->new); //????
+                    $this->c->categories->insert($v->new);
                 }
 
                 $this->c->forums->reset();

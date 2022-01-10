@@ -277,7 +277,7 @@ class Update extends Admin
         $this->okPass = true;
 
         if (\substr($this->c->DB_DSN, 0, 6) === 'sqlite') {
-            if (! \hash_equals($this->c->DB_DSN, "sqlite:{$dbpass}")) {  // ????
+            if (! \hash_equals($this->c->DB_DSN, "sqlite:{$dbpass}")) {
                 $this->okPass = false;
 
                 $v->addError(['Invalid file error', self::CONFIG_FILE]);

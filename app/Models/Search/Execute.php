@@ -220,7 +220,6 @@ class Execute extends Method
         }
 
         //???? нужен индекс по авторам сообщений/тем?
-        //???? что делать с подчеркиванием в именах?
         if ('*' !== $v->author) {
             $usePIdx                 = true;
             $vars[':author']         = \str_replace(['#', '_', '*', '?'], ['##', '#_', '%', '_'], $v->author);

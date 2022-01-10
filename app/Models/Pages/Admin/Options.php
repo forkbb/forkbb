@@ -506,7 +506,7 @@ class Options extends Admin
                     'caption' => 'Use avatars label',
                     'help'    => 'Use avatars help',
                 ],
-                'o_avatars_dir' => [ //????
+                'o_avatars_dir' => [
                     'type'      => 'text',
                     'maxlength' => '255',
                     'value'     => $config->o_avatars_dir,

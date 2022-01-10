@@ -120,7 +120,7 @@ class Logs extends Admin
                 ) {
                     return $this->c->Redirect->page('AdminLogs')->message('Log deleted redirect');
                 }
-            } catch (Throwable $e) { // ???? будет работать или нет?
+            } catch (Throwable $e) {
                 $this->c->Log->error('Delete log: failed', [
                     'exception' => $e,
                     'headers'   => false,

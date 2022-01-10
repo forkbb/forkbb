@@ -84,7 +84,7 @@ class Action extends Users
         $ids = $this->checkSelected(\explode('-', $args['ids']), $args['action'], $profile);
         if (false === $ids) {
             $message = $this->c->Message->message('Action not available');
-            $message->fIswev = $this->fIswev; //????
+            $message->fIswev = $this->fIswev; // тут идет дополнение, а не замена
 
             return $message;
         }

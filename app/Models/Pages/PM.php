@@ -28,7 +28,7 @@ class PM extends Page
             if ('' === \trim($second, '1234567890')) {
                 $second = (int) $second;
 
-                if ($second < 1) { // ???? вынести все в роутер?
+                if ($second < 1) {
                     return $this->c->Message->message('Bad request');
                 }
             } elseif (
