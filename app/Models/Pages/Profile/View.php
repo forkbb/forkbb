@@ -14,6 +14,8 @@ use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
 use ForkBB\Models\PM\Cnst;
 use function \ForkBB\__;
+use function \ForkBB\dt;
+use function \ForkBB\num;
 use function \ForkBB\url;
 
 class View extends Profile
@@ -233,13 +235,13 @@ class View extends Profile
         $fields['registered'] = [
             'class'   => ['pline'],
             'type'    => 'str',
-            'value'   => \ForkBB\dt($this->curUser->registered, true),
+            'value'   => dt($this->curUser->registered, true),
             'caption' => 'Registered info',
         ];
         $fields['lastpost'] = [
             'class'   => ['pline'],
             'type'    => 'str',
-            'value'   => \ForkBB\dt($this->curUser->last_post, true),
+            'value'   => dt($this->curUser->last_post, true),
             'caption' => 'Last post info',
         ];
         if ($this->curUser->last_post > 0) {
@@ -248,7 +250,7 @@ class View extends Profile
                     'class'   => ['pline'],
                     'type'    => 'link',
                     'caption' => 'Posts info',
-                    'value'   => $this->user->showPostCount ? \ForkBB\num($this->curUser->num_posts) : __('Show posts'),
+                    'value'   => $this->user->showPostCount ? num($this->curUser->num_posts) : __('Show posts'),
                     'href'    => $this->c->Router->link(
                         'SearchAction',
                         [
@@ -262,7 +264,7 @@ class View extends Profile
                     'class'   => ['pline'],
                     'type'    => 'link',
                     'caption' => 'Topics info',
-                    'value'   => $this->user->showPostCount ? \ForkBB\num($this->curUser->num_topics) : __('Show topics'),
+                    'value'   => $this->user->showPostCount ? num($this->curUser->num_topics) : __('Show topics'),
                     'href'    => $this->c->Router->link(
                         'SearchAction',
                         [
@@ -277,13 +279,13 @@ class View extends Profile
                     'class'   => ['pline'],
                     'type'    => 'str',
                     'caption' => 'Posts info',
-                    'value'   => \ForkBB\num($this->curUser->num_posts),
+                    'value'   => num($this->curUser->num_posts),
                 ];
                 $fields['topics'] = [
                     'class'   => ['pline'],
                     'type'    => 'str',
                     'caption' => 'Topics info',
-                    'value'   => \ForkBB\num($this->curUser->num_topics),
+                    'value'   => num($this->curUser->num_topics),
                 ];
             }
         }
@@ -296,7 +298,7 @@ class View extends Profile
                     'class'   => ['pline'],
                     'type'    => $isLink ? 'link' : 'str',
                     'caption' => 'Total forums subscriptions',
-                    'value'   => \ForkBB\num(\count($subscrInfo[$subscr::FORUMS_DATA])),
+                    'value'   => num(\count($subscrInfo[$subscr::FORUMS_DATA])),
                     'href'    => $this->c->Router->link(
                         'SearchAction',
                         [
@@ -312,7 +314,7 @@ class View extends Profile
                     'class'   => ['pline'],
                     'type'    => $isLink ? 'link' : 'str',
                     'caption' => 'Total topics subscriptions',
-                    'value'   => \ForkBB\num(\count($subscrInfo[$subscr::TOPICS_DATA])),
+                    'value'   => num(\count($subscrInfo[$subscr::TOPICS_DATA])),
                     'href'    => $this->c->Router->link(
                         'SearchAction',
                         [
@@ -337,8 +339,8 @@ class View extends Profile
                 'class'   => ['pline'],
                 'type'    => 'str',
                 'value'   => $this->rules->my
-                    ? \ForkBB\dt($this->curUser->last_visit)
-                    : \ForkBB\dt($this->curUser->currentVisit, true),
+                    ? dt($this->curUser->last_visit)
+                    : dt($this->curUser->currentVisit, true),
                 'caption' => 'Last visit info',
             ];
         }

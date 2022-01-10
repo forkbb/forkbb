@@ -20,6 +20,7 @@ use ForkBB\Models\PM\PPost;
 use ForkBB\Models\PM\PTopic;
 use InvalidArgumentException;
 use function \ForkBB\__;
+use function \ForkBB\dt;
 
 class PMDelete extends AbstractPM
 {
@@ -141,7 +142,7 @@ class PMDelete extends AbstractPM
                             'value'   => __([
                                 $deleteTopic ? 'Dialogue by %1$s (%2$s)' : 'Message by %1$s (%2$s)',
                                 $post->poster,
-                                \ForkBB\dt($post->posted)
+                                dt($post->posted)
                             ]),
                             'html'    => true,
                         ],

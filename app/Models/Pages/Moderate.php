@@ -17,6 +17,7 @@ use ForkBB\Models\Forum\Forum;
 use ForkBB\Models\Topic\Topic;
 use ForkBB\Models\Post\Post;
 use function \ForkBB\__;
+use function \ForkBB\dt;
 
 class Moderate extends Page
 {
@@ -577,7 +578,7 @@ class Moderate extends Page
             if ($object instanceof Topic) {
                 $headers[] = __(['Topic «%s»', $object->name]);
             } else {
-                $headers[] = __(['Post «%1$s by %2$s»', \ForkBB\dt($object->posted), $object->poster]);
+                $headers[] = __(['Post «%1$s by %2$s»', dt($object->posted), $object->poster]);
             }
         }
 

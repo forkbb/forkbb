@@ -15,6 +15,7 @@ use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin\Users;
 use ForkBB\Models\User\User;
 use function \ForkBB\__;
+use function \ForkBB\num;
 
 class Result extends Users
 {
@@ -301,7 +302,7 @@ class Result extends Users
                 'class'   => $user->isGuest ? ['result', 'posts', 'no-data'] : ['result', 'posts'],
                 'type'    => $user->isGuest || ! $user->last_post ? 'str' : 'link',
                 'caption' => 'Results posts head',
-                'value'   => $user->last_post > 0 ? \ForkBB\num($user->num_posts) : null,
+                'value'   => $user->last_post > 0 ? num($user->num_posts) : null,
                 'href'    => $this->c->Router->link(
                     'SearchAction',
                     [

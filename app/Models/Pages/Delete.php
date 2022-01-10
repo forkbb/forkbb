@@ -13,6 +13,7 @@ namespace ForkBB\Models\Pages;
 use ForkBB\Models\Page;
 use ForkBB\Models\Post\Post;
 use function \ForkBB\__;
+use function \ForkBB\dt;
 
 class Delete extends Page
 {
@@ -109,7 +110,7 @@ class Delete extends Page
                             'value'   => __(['Topic %s', $post->parent->name]),
                         ],
                         [
-                            'value'   => __([$deleteTopic ? 'Topic by' : 'Reply by', $post->poster, \ForkBB\dt($post->posted)]),
+                            'value'   => __([$deleteTopic ? 'Topic by' : 'Reply by', $post->poster, dt($post->posted)]),
                             'html'    => true,
                         ],
                     ],

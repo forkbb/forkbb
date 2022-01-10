@@ -15,6 +15,7 @@ use ForkBB\Models\Pages\Admin;
 use ForkBB\Models\Post\Post;
 use ForkBB\Models\Report\Report;
 use function \ForkBB\__;
+use function \ForkBB\dt;
 
 class Reports extends Admin
 {
@@ -77,11 +78,11 @@ class Reports extends Admin
         foreach ($reports as $report) {
             if ($noZapped) {
                 $cur = [
-                    'legend' => ['Reported %s', \ForkBB\dt($report->created)],
+                    'legend' => ['Reported %s', dt($report->created)],
                 ];
             } else {
                 $cur = [
-                    'legend' => ['Marked as read %1$s by %2$s', \ForkBB\dt($report->zapped), $report->marker->username],
+                    'legend' => ['Marked as read %1$s by %2$s', dt($report->zapped), $report->marker->username],
                 ];
             }
             $cur['fields'] = [];

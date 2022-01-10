@@ -14,6 +14,8 @@ use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin\Users;
 use function \ForkBB\__;
+use function \ForkBB\dt;
+use function \ForkBB\num;
 
 class Stat extends Users
 {
@@ -101,13 +103,13 @@ class Stat extends Users
                 'class'   => ['result', 'last-used'],
                 'type'    => 'str',
                 'caption' => 'Results last used head',
-                'value'   => $flag ? \ForkBB\dt($data['last_used']) : null,
+                'value'   => $flag ? dt($data['last_used']) : null,
             ];
             $fields["l{$number}-used-times"] = [
                 'class'   => ['result', 'used-times'],
                 'type'    => 'str',
                 'caption' => 'Results times found head',
-                'value'   => $flag ? \ForkBB\num($data['used_times']) : null,
+                'value'   => $flag ? num($data['used_times']) : null,
             ];
             $fields["l{$number}-action"] = [
                 'class'   => ['result', 'action'],

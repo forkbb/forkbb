@@ -14,6 +14,7 @@ use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
 use function \ForkBB\__;
+use function \ForkBB\dt;
 
 class Config extends Profile
 {
@@ -150,7 +151,7 @@ class Config extends Profile
         $styles = $this->c->Func->getStyles();
         $timeFormat = [];
         foreach ($this->c->TIME_FORMATS as $key => $value) {
-            $timeFormat[$key] = \ForkBB\dt(\time(), false, null, $value, true, true)
+            $timeFormat[$key] = dt(\time(), false, null, $value, true, true)
                 . (
                     $key > 1
                     ? ''
@@ -159,7 +160,7 @@ class Config extends Profile
         }
         $dateFormat = [];
         foreach ($this->c->DATE_FORMATS as $key => $value) {
-            $dateFormat[$key] = \ForkBB\dt(\time(), true, $value, null, false, true)
+            $dateFormat[$key] = dt(\time(), true, $value, null, false, true)
                 . (
                     $key > 1
                     ? ''

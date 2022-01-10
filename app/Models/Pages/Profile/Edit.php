@@ -17,6 +17,8 @@ use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
 use ForkBB\Models\User\User;
 use function \ForkBB\__;
+use function \ForkBB\num;
+use function \ForkBB\size;
 
 class Edit extends Profile
 {
@@ -326,10 +328,10 @@ class Edit extends Profile
                 'type'    => 'file',
                 'caption' => 'New avatar',
                 'help'    => ['New avatar info',
-                    \ForkBB\num($this->c->config->i_avatars_width),
-                    \ForkBB\num($this->c->config->i_avatars_height),
-                    \ForkBB\num($this->c->config->i_avatars_size),
-                    \ForkBB\size($this->c->config->i_avatars_size)
+                    num($this->c->config->i_avatars_width),
+                    num($this->c->config->i_avatars_height),
+                    num($this->c->config->i_avatars_size),
+                    size($this->c->config->i_avatars_size)
                 ],
                 'accept' => $this->accept,
             ];
@@ -451,7 +453,7 @@ class Edit extends Profile
                 'type'    => 'textarea',
                 'value'   => $this->curUser->signature,
                 'caption' => 'Signature',
-                'help'    => ['Sig max size', \ForkBB\num($this->curUser->g_sig_length), \ForkBB\num($this->curUser->g_sig_lines)],
+                'help'    => ['Sig max size', num($this->curUser->g_sig_length), num($this->curUser->g_sig_lines)],
             ];
             $form['sets']['signature'] = [
                 'class'  => ['data-edit'],
