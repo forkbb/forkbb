@@ -33,6 +33,12 @@ class Update extends Admin
 
     protected $configFile;
 
+    /**
+     * Флаг проверки пароля
+     * @var bool
+     */
+    protected $okPass;
+
     public function __construct(Container $container)
     {
         parent::__construct($container);
@@ -139,7 +145,7 @@ class Update extends Admin
                     'check_pass' => [$this, 'vCheckPass'],
                 ])->addRules([
                     'token'                 => 'token:AdminUpdate',
-                    'dbpass'                => 'required|string:trim|check_pass',
+                    'dbpass'                => 'string|check_pass',
                     'o_maintenance_message' => 'required|string:trim|max:65000 bytes|html',
                 ])->addAliases([
                     'dbpass'                => 'Database password',
@@ -147,7 +153,10 @@ class Update extends Admin
                 ])->addMessages([
                 ]);
 
-                if ($v->validation($_POST)) {
+                if (
+                    $v->validation($_POST)
+                    && $this->okPass
+                ) {
                     $e = null;
 
                     // версия PHP
@@ -264,12 +273,19 @@ class Update extends Admin
      */
     public function vCheckPass(Validator $v, $dbpass)
     {
+        $dbpass       = $dbpass ?? '';
+        $this->okPass = true;
+
         if (\substr($this->c->DB_DSN, 0, 6) === 'sqlite') {
             if (! \hash_equals($this->c->DB_DSN, "sqlite:{$dbpass}")) {  // ????
+                $this->okPass = false;
+
                 $v->addError(['Invalid file error', self::CONFIG_FILE]);
             }
         } else {
             if (! \hash_equals($this->c->DB_PASSWORD, $dbpass)) {
+                $this->okPass = false;
+
                 $v->addError(['Invalid password error', self::CONFIG_FILE]);
             }
         }
@@ -303,7 +319,6 @@ class Update extends Admin
                             'value'    => '',
                             'caption'  => 'Database password',
                             'help'     => 'Database password note',
-                            'required' => true,
                         ],
                         'o_maintenance_message' => [
                             'type'     => 'textarea',
