@@ -17,6 +17,7 @@ use ForkBB\Models\Pages\Admin;
 use ForkBB\Models\User\User;
 use RuntimeException;
 use function \ForkBB\__;
+use function \ForkBB\dt;
 
 class Bans extends Admin
 {
@@ -453,7 +454,7 @@ class Bans extends Admin
                 'class'   => empty($ban['expire']) ? ['result', 'expire', 'no-data'] : ['result', 'expire'],
                 'type'    => 'str',
                 'caption' => 'Results expire head',
-                'value'   => empty($ban['expire']) ? '' : \ForkBB\dt($ban['expire'], true),
+                'value'   => empty($ban['expire']) ? '' : dt($ban['expire'], true),
             ];
             $fields["l{$number}-message"] = [
                 'class'   => '' == $ban['message'] ? ['result', 'message', 'no-data'] : ['result', 'message'],
@@ -568,7 +569,7 @@ class Bans extends Admin
                     return $this->c->Message->message(['User is admin message', $user->username]);
                 } elseif ($user->isAdmMod) {
                     return $this->c->Message->message(['User is mod message', $user->username]);
-                } elseif ($user->isGuest) { // ???? O_o
+                } elseif ($user->isGuest) {
                     return $this->c->Message->message('Cannot ban guest message');
                 }
             }
@@ -735,7 +736,7 @@ class Bans extends Admin
             } elseif ($this->c->bans->banFromName($user->username) > 0) {
                 $v->addError(['User is ban', $user->username]);
             } elseif (! $this->c->userRules->canBanUser($user)) {
-                if ($user->isGuest) { // ???? O_o
+                if ($user->isGuest) {
                     $v->addError('Cannot ban guest message');
                 } elseif ($user->isAdmin) {
                     $v->addError(['User is admin message', $user->username]);
