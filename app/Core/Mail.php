@@ -156,9 +156,9 @@ class Mail
 
         if ($strict) {
             if ($ip) {
-                $mx = \checkdnsrr($ip, 'MX'); // ???? ipv6?
+                $mx = @\checkdnsrr($ip, 'MX'); // ???? ipv6?
             } else {
-                $mx = \dns_get_record($domainASCII, \DNS_MX);
+                $mx = @\dns_get_record($domainASCII, \DNS_MX);
             }
 
             if (empty($mx)) {
