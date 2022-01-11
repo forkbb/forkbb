@@ -291,19 +291,19 @@ class Validator
             throw new RuntimeException("No rules for '{$field}' field");
         }
 
-        $value = null;
+        if (isset($this->raw[$field])) {
+            $value = $this->c->Secury->replInvalidChars($this->raw[$field]);
+        } else {
+            $value = null;
+        }
 
         if (
-            ! isset($this->raw[$field])
+            null === $value
             && isset($this->rules[$field]['required'])
         ) {
             $rules = ['required' => ''];
         } else {
             $rules = $this->rules[$field];
-
-            if (isset($this->raw[$field])) {
-                $value = $this->c->Secury->replInvalidChars($this->raw[$field]);
-            }
         }
 
         $value = $this->checkValue($value, $rules, $field);
@@ -479,7 +479,7 @@ class Validator
      *
      * @return mixed
      */
-    protected function vAbsent(Validator $v, $value, string $attr) /* : mixed */
+    protected function vAbsent(Validator $v, /* mixed */ $value, string $attr) /* : mixed */
     {
         if (null === $value) {
             if (isset($attr[0])) {
@@ -492,7 +492,7 @@ class Validator
         return $value;
     }
 
-    protected function vRequired(Validator $v, $value) /* : mixed */
+    protected function vRequired(Validator $v, /* mixed */ $value) /* : mixed */
     {
         if ($this->noValue($value, true)) {
             $this->addError('The :alias is required');
@@ -503,7 +503,7 @@ class Validator
         return $value;
     }
 
-    protected function vRequiredWith(Validator $v, $value, string $attr) /* : mixed */
+    protected function vRequiredWith(Validator $v, /* mixed */ $value, string $attr) /* : mixed */
     {
         foreach (\explode(',', $attr) as $field) {
             if (null !== $this->__get($field)) {     // если есть хотя бы одно поле,
@@ -518,18 +518,12 @@ class Validator
         return $value;
     }
 
-    protected function vString(Validator $v, $value, string $attr): ?string
+    protected function vString(Validator $v, /* mixed */ $value, string $attr): ?string
     {
-        if ($this->noValue($value)) {
-            if (\preg_match('%(?:^|,)trim(?:,|$)%', $attr)) { // для пустого поля с trim
-                $this->addError(null);                        // прервать проверку
+        $actions = \explode(',', $attr);
 
-                return '';                                    // и вернуть '',
-            } else {
-                return null;                                  // а не null
-            }
-        } elseif (\is_string($value)) {
-            foreach (\explode(',', $attr) as $action) {
+        if (\is_string($value)) {
+            foreach ($actions as $action) {
                 switch ($action) {
                     case 'trim':
                         $value = $this->trim($value);
@@ -545,42 +539,52 @@ class Validator
                         break;
                 }
             }
-
-            return $value;
+        } elseif (null === $value) {
+            if (\in_array('trim', $actions, true)) {
+                $value = ''; // string:trim -> отсутвующее поле становится пустым
+            } else {
+                $this->addError(null);
+            }
         } else {
             $this->addError('The :alias must be string');
 
-            return \is_scalar($value) ? (string) $value : null;
+            $value = \is_scalar($value) ? (string) $value : null;
         }
+
+        return $value;
     }
 
-    protected function vNumeric(Validator $v, $value) /* : mixed */
+    protected function vNumeric(Validator $v, /* mixed */ $value) /* : mixed */
     {
-        if ($this->noValue($value)) {
-            return null;
-        } elseif (\is_numeric($value)) {
-            return 0.0 + $value;
+        if (\is_numeric($value)) {
+            $value += 0;
+        } elseif (null === $value) {
+            $this->addError(null);
         } else {
             $this->addError('The :alias must be numeric');
 
-            return \is_scalar($value) ? (string) $value : null;
+            $value = \is_scalar($value) ? (string) $value : null;
         }
+
+        return $value;
     }
 
-    protected function vInteger(Validator $v, $value) /* : mixed */
+    protected function vInteger(Validator $v, /* mixed */ $value) /* : mixed */
     {
-        if ($this->noValue($value)) {
-            return null;
-        } elseif (
+        if (
             \is_numeric($value)
             && \is_int(0 + $value)
         ) {
-            return (int) $value;
+            $value += 0;
+        } elseif (null === $value) {
+            $this->addError(null);
         } else {
             $this->addError('The :alias must be integer');
 
-            return \is_scalar($value) ? (string) $value : null;
+            $value = \is_scalar($value) ? (string) $value : null;
         }
+
+        return $value;
     }
 
     protected function vArray(Validator $v, $value, array $attr): ?array
@@ -601,6 +605,7 @@ class Validator
         }
 
         $result = [];
+
         foreach ($attr as $name => $rules) {
             $this->recArray($value, $result, $name, $rules, "{$vars['field']}.{$name}");
         }
@@ -646,91 +651,101 @@ class Validator
         }
     }
 
-    protected function vMin(Validator $v, $value, string $attr) /* : mixed */
+    protected function vMin(Validator $v, /* mixed */ $value, string $attr) /* : mixed */
     {
-        if (\is_string($value)) {
-            $isBytes = \strpos($attr, 'bytes');
+        if (! \preg_match('%^(-?\d+)(\s*bytes)?$%i', $attr, $matches)) {
+            throw new InvalidArgumentException('Expected number in attribute');
+        }
 
+        $min     = (int) $matches[1];
+        $inBytes = ! empty($matches[2]);
+
+        if (\is_string($value)) {
             if (
                 (
-                    $isBytes
-                    && \strlen($value) < (int) $attr
+                    $inBytes
+                    && \strlen($value) < $min
                 )
                 || (
-                    ! $isBytes
-                    && \mb_strlen($value, 'UTF-8') < $attr
+                    ! $inBytes
+                    && \mb_strlen($value, 'UTF-8') < $min
                 )
             ) {
                 $this->addError('The :alias minimum is :attr characters');
             }
         } elseif (\is_numeric($value)) {
-            if (0 + $value < $attr) {
+            if (0 + $value < $min) {
                 $this->addError('The :alias minimum is :attr');
             }
         } elseif (\is_array($value)) {
-            if (\count($value) < $attr) {
+            if (\count($value) < $min) {
                 $this->addError('The :alias minimum is :attr elements');
             }
-        } elseif (null !== $value) {
+        } else {
             $this->addError('The :alias minimum is :attr');
 
-            return null;
+            $value = null;
         }
 
         return $value;
     }
 
-    protected function vMax(Validator $v, $value, string $attr) /* : mixed */
+    protected function vMax(Validator $v, /* mixed */ $value, string $attr) /* : mixed */
     {
-        if (\is_string($value)) {
-            $isBytes = \strpos($attr, 'bytes');
+        if (! \preg_match('%^(-?\d+)(\s*bytes)?$%i', $attr, $matches)) {
+            throw new InvalidArgumentException('Expected number in attribute');
+        }
 
+        $max     = (int) $matches[1];
+        $inBytes = ! empty($matches[2]);
+
+        if (\is_string($value)) {
             if (
                 (
-                    $isBytes
-                    && \strlen($value) > (int) $attr
+                    $inBytes
+                    && \strlen($value) > $max
                 )
                 || (
-                    ! $isBytes
-                    && \mb_strlen($value, 'UTF-8') > $attr
+                    ! $inBytes
+                    && \mb_strlen($value, 'UTF-8') > $max
                 )
             ) {
                 $this->addError('The :alias maximum is :attr characters');
             }
         } elseif (\is_numeric($value)) {
-            if (0 + $value > $attr) {
+            if (0 + $value > $max) {
                 $this->addError('The :alias maximum is :attr');
             }
         } elseif (\is_array($value)) {
             if (\reset($value) instanceof File) {
-                $attr *= 1024;
-
                 foreach ($value as $file) {
-                    if ($file->size() > $attr) {
+                    if ($file->size() > $max * 1024) {
                         $this->addError('The :alias contains too large a file');
 
-                        return null;
+                        $value = null;
+
+                        break;
                     }
                 }
-            } elseif (\count($value) > $attr) {
+            } elseif (\count($value) > $max) {
                 $this->addError('The :alias maximum is :attr elements');
             }
         } elseif ($value instanceof File) {
-            if ($value->size() > $attr * 1024) {
+            if ($value->size() > $max * 1024) {
                 $this->addError('The :alias contains too large a file');
 
-                return null;
+                $value = null;
             }
-        } elseif (null !== $value) {
+        } else {
             $this->addError('The :alias maximum is :attr');
 
-            return null;
+            $value = null;
         }
 
         return $value;
     }
 
-    protected function vToken(Validator $v, $value, string $attr, $args): ?string
+    protected function vToken(Validator $v, /* mixed */ $value, string $attr, /* mixed */ $args): ?string
     {
         if (! \is_array($args)) {
             $args = [];
@@ -742,26 +757,30 @@ class Validator
         ) {
             $this->addError($this->c->Csrf->getError() ?? 'Bad token', 'e');
 
-            return null;
-        } else {
-            return $value;
+            $value = null;
         }
+
+        return $value;
     }
 
-    protected function vCheckbox(Validator $v, $value) /* : mixed */
+    protected function vCheckbox(Validator $v, /* mixed */ $value) /* : mixed */
     {
-        if ($this->noValue($value)) {
-            return false;
+        if (null === $value) {
+            $this->addError(null);
+
+            $value = false;
         } elseif (\is_scalar($value)) {
-            return (string) $value;
+            $value = (string) $value;
         } else {
             $this->addError('The :alias contains an invalid value');
 
-            return null;
+            $value = null;
         }
+
+        return $value;
     }
 
-    protected function vReferer(Validator $v, $value, string $attr, $args): string
+    protected function vReferer(Validator $v, /* mixed */ $value, string $attr, /* mixed */ $args): string
     {
         if (! \is_array($args)) {
             $args = [];
@@ -770,47 +789,43 @@ class Validator
         return $this->c->Router->validate($value, $attr, $args);
     }
 
-    protected function vSame(Validator $v, $value, string $attr) /* : mixed */
+    protected function vSame(Validator $v, /* mixed */ $value, string $attr) /* : mixed */
     {
         if (
-            ! $this->getStatus($attr)
-            || $value === $this->__get($attr)
+            $this->getStatus($attr)
+            && $value !== $this->__get($attr)
         ) {
-            return $value;
-        } else {
             $this->addError('The :alias must be same with original');
 
-            return null;
+            $value = null;
         }
+
+        return $value;
     }
 
-    protected function vRegex(Validator $v, $value, string $attr): ?string
+    protected function vRegex(Validator $v, string $value, string $attr): string
     {
-        if (
-            ! $this->noValue($value)
-            && (
-                ! \is_string($value)
-                || ! \preg_match($attr, $value)
-            )
-        ) {
+        if (! \preg_match($attr, $value)) {
             $this->addError('The :alias is not valid format');
-
-            return \is_scalar($value) ? (string) $value : null;
-        } else {
-            return $value;
         }
+
+        return $value;
     }
 
-    protected function vPassword(Validator $v, $value): ?string
+    protected function vPassword(Validator $v, string $value): string
     {
         return $this->vRegex($v, $value, '%[^\x20][\x20][^\x20]%');
     }
 
-    protected function vIn(Validator $v, $value, string $attr) /* : mixed */
+    protected function vIn(Validator $v, /* mixed */ $value, string $attr) /* : mixed */
     {
+        if (! \is_scalar($value)) {
+            $value = null;
+        }
+
         if (
-            ! $this->noValue($value)
-            && ! \in_array($value, \explode(',', $attr))
+            null === $value
+            || ! \in_array($value, \explode(',', $attr))
         ) {
             $this->addError('The :alias contains an invalid value');
         }
@@ -818,11 +833,15 @@ class Validator
         return $value;
     }
 
-    protected function vNotIn(Validator $v, $value, string $attr) /* : mixed */
+    protected function vNotIn(Validator $v, /* mixed */ $value, string $attr) /* : mixed */
     {
+        if (! \is_scalar($value)) {
+            $value = null;
+        }
+
         if (
-            ! $this->noValue($value)
-            && \in_array($value, \explode(',', $attr))
+            null === $value
+            || \in_array($value, \explode(',', $attr))
         ) {
             $this->addError('The :alias contains an invalid value');
         }
@@ -831,7 +850,7 @@ class Validator
     }
 
 
-    protected function vFile(Validator $v, $value, string $attr) /* : mixed */
+    protected function vFile(Validator $v, /* mixed */ $value, string $attr) /* : mixed */
     {
         if ($this->noValue($value, true)) {
             return null;
@@ -864,7 +883,7 @@ class Validator
         return $value;
     }
 
-    protected function vImage(Validator $v, $value, string $attr) /* : mixed */
+    protected function vImage(Validator $v, /* mixed */ $value, string $attr) /* : mixed */
     {
         $value = $this->vFile($v, $value, $attr);
 
@@ -888,17 +907,17 @@ class Validator
         return $value;
     }
 
-    protected function vDate(Validator $v, $value)
+    protected function vDate(Validator $v, /* mixed */ $value): ?string
     {
         if ($this->noValue($value)) {
-            return null;
+            $value = null;
         } elseif (
             ! \is_string($value)
             || false === \strtotime("{$value} UTC")
         ) {
             $v->addError('The :alias does not contain a date');
 
-            return \is_scalar($value) ? (string) $value : null;
+            $value = \is_scalar($value) ? (string) $value : null;
         }
 
         return $value;
