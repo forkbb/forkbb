@@ -105,7 +105,11 @@ class Users extends Manager
      */
     public function loadByName(string $name, bool $caseInsencytive = false): ?User
     {
-        return $this->returnUser($this->Load->loadByName($name, $caseInsencytive));
+        if ('' === $name) {
+            return null;
+        } else {
+            return $this->returnUser($this->Load->loadByName($name, $caseInsencytive));
+        }
     }
 
     /**
@@ -113,7 +117,11 @@ class Users extends Manager
      */
     public function loadByEmail(string $email): ?User
     {
-        return $this->returnUser($this->Load->loadByEmail($email));
+        if ('' === $email) {
+            return null;
+        } else {
+            return $this->returnUser($this->Load->loadByEmail($email));
+        }
     }
 
     /**
