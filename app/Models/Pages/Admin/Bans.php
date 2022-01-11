@@ -722,12 +722,11 @@ class Bans extends Admin
     /**
      * Проверяет имя пользователя для бана
      */
-    public function vUserBan(Validator $v, $username)
+    public function vUserBan(Validator $v, string $username): string
     {
         if (
             empty($v->getErrors())
-            && null !== $username
-            && '' != \trim($username)
+            && '' !== \trim($username)
         ) {
             $user = $this->c->users->loadByName($username, true);
 
@@ -752,12 +751,9 @@ class Bans extends Admin
     /**
      * Проверяет ip для бана
      */
-    public function vIpBan(Validator $v, $ips)
+    public function vIpBan(Validator $v, string $ips): string
     {
-        if (
-            null !== $ips
-            && '' != \trim($ips)
-        ) {
+        if ('' !== \trim($ips)) {
             $ending6   = ['', '::'];
             $ending4   = ['', '.255', '.255.255', '.255.255.255'];
             $addresses = \explode(' ', $ips);
@@ -788,12 +784,9 @@ class Bans extends Admin
     /**
      * Проверяет email для бана
      */
-    public function vEmailBan(Validator $v, $email)
+    public function vEmailBan(Validator $v, string $email): string
     {
-        if (
-            null !== $email
-            && '' != \trim($email)
-        ) {
+        if ('' !== \trim($email)) {
             $error = true;
 
             if (
@@ -821,11 +814,11 @@ class Bans extends Admin
     /**
      * Проверяет дату окончания для бана
      */
-    public function vExpireBan(Validator $v, $expire)
+    public function vExpireBan(Validator $v, ?string $expire): ?string
     {
         if (
             null !== $expire
-            && '' != \trim($expire)
+            && '' !== \trim($expire)
         ) {
             if (\strtotime($expire . ' UTC') - \time() < 86400) {
                 $v->addError('Invalid date message');
