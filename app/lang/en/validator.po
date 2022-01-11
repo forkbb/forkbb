@@ -188,3 +188,6 @@ msgstr "No image in the :alias field."
 
 msgid "The :alias does not contain a date"
 msgstr "Failed to determine the date in the :alias field."
+
+msgid "Too much data"
+msgstr "Too much data"

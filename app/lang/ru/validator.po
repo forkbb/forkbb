@@ -188,3 +188,6 @@ msgstr "В поле :alias нет изображения."
 
 msgid "The :alias does not contain a date"
 msgstr "Не удалось определить дату в поле :alias."
+
+msgid "Too much data"
+msgstr "Лишние данные"
