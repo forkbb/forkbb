@@ -115,7 +115,7 @@ class Action extends Users
                     'token'        => 'token:AdminUsersAction',
                     'confirm'      => 'required|integer|in:0,1',
                     'delete_posts' => 'required|integer|in:0,1',
-                    'delete'       => 'string',
+                    'delete'       => 'required|string',
                 ])->addAliases([
                 ])->addArguments([
                     'token' => $args,
@@ -262,7 +262,7 @@ class Action extends Users
                     'new_group' => 'required|integer|in:' . \implode(',', \array_keys($this->groupListForChange($profile))),
                     'confirm'   => 'required|integer|in:0,1',
                     'password'  => $rulePass,
-                    'move'      => 'string',
+                    'move'      => 'required|string',
                 ])->addAliases([
                 ])->addArguments([
                     'token' => $args,
@@ -311,7 +311,7 @@ class Action extends Users
     /**
      * Проверяет пароль на совпадение с текущим пользователем
      */
-    public function vCheckPassword(Validator $v, $password)
+    public function vCheckPassword(Validator $v, string $password): string
     {
         if (! \password_verify($password, $this->user->password)) {
             $v->addError('Invalid passphrase');
