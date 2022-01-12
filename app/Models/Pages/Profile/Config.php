@@ -122,7 +122,7 @@ class Config extends Profile
     /**
      * Преобразовывает число меньше 10 в 0
      */
-    public function vToZero(Validator $v, $value)
+    public function vToZero(Validator $v, int $value): int
     {
         return $value < 10 ? 0 : $value;
     }
