@@ -32,7 +32,7 @@ class Categories extends Admin
                     'token'                => 'token:AdminCategories',
                     'form.*.cat_name'      => 'required|string:trim|max:80',
                     'form.*.disp_position' => 'required|integer|min:0|max:9999999999',
-                    'new'                  => 'string:trim|max:80'
+                    'new'                  => 'exist|string:trim|max:80'
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -156,7 +156,7 @@ class Categories extends Admin
                 ->addRules([
                     'token'     => 'token:AdminCategoriesDelete',
                     'confirm'   => 'checkbox',
-                    'delete'    => 'string',
+                    'delete'    => 'required|string',
                 ])->addAliases([
                 ])->addArguments([
                     'token' => $args,
