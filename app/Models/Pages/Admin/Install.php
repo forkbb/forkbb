@@ -82,7 +82,7 @@ class Install extends Admin
                 ->addRules([
                     'token'       => 'token:Install',
                     'installlang' => 'required|string:trim',
-                    'changelang'  => 'string',
+                    'changelang'  => 'required|string',
                 ]);
 
             if ($v->validation($_POST)) {
@@ -160,18 +160,18 @@ class Install extends Admin
                     'dbtype'        => 'required|string:trim|in:' . \implode(',', \array_keys($this->dbTypes)),
                     'dbhost'        => 'required|string:trim|check_host',
                     'dbname'        => 'required|string:trim',
-                    'dbuser'        => 'string:trim',
-                    'dbpass'        => 'string:trim',
+                    'dbuser'        => 'exist|string:trim',
+                    'dbpass'        => 'exist|string:trim',
                     'dbprefix'      => 'required|string:trim|min:1|max:40|check_prefix',
                     'username'      => 'required|string:trim|min:2|max:25',
                     'password'      => 'required|string|min:16|max:100000|password',
                     'email'         => 'required|string:trim|email',
                     'title'         => 'required|string:trim|max:255',
-                    'descr'         => 'string:trim|max:65000 bytes|html',
+                    'descr'         => 'exist|string:trim,empty|max:65000 bytes|html',
                     'baseurl'       => 'required|string:trim|rtrim_url|max:128',
                     'defaultlang'   => 'required|string:trim|in:' . \implode(',', $this->c->Func->getLangs()),
                     'defaultstyle'  => 'required|string:trim|in:' . \implode(',', $this->c->Func->getStyles()),
-                    'cookie_domain' => 'string:trim|max:128',
+                    'cookie_domain' => 'exist|string:trim|max:128',
                     'cookie_path'   => 'required|string:trim|max:1024',
                     'cookie_secure' => 'required|integer|in:0,1',
                 ])->addAliases([
@@ -446,7 +446,7 @@ class Install extends Admin
     /**
      * Обработка base URL
      */
-    public function vRtrimURL(Validator $v, $url)
+    public function vRtrimURL(Validator $v, string $url): string
     {
         return \rtrim($url, '/');
     }
@@ -454,17 +454,15 @@ class Install extends Admin
     /**
      * Дополнительная проверка префикса
      */
-    public function vCheckPrefix(Validator $v, $prefix)
+    public function vCheckPrefix(Validator $v, string $prefix): string
     {
-        if (isset($prefix[0])) {
-            if (! \preg_match('%^[a-z][a-z\d_]*$%i', $prefix)) {
-                $v->addError('Table prefix error');
-            } elseif (
-                'sqlite_' === \strtolower($prefix)
-                || 'pg_' === \strtolower($prefix)
-            ) {
-                $v->addError('Prefix reserved');
-            }
+        if (! \preg_match('%^[a-z][a-z\d_]*$%i', $prefix)) {
+            $v->addError('Table prefix error');
+        } elseif (
+            'sqlite_' === \strtolower($prefix)
+            || 'pg_' === \strtolower($prefix)
+        ) {
+            $v->addError('Prefix reserved');
         }
 
         return $prefix;
@@ -473,7 +471,7 @@ class Install extends Admin
     /**
      * Полная проверка подключения к БД
      */
-    public function vCheckHost(Validator $v, $dbhost)
+    public function vCheckHost(Validator $v, string $dbhost): string
     {
         $this->c->DB_USERNAME    = $v->dbuser;
         $this->c->DB_PASSWORD    = $v->dbpass;
