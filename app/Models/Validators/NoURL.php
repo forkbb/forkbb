@@ -16,15 +16,10 @@ use ForkBB\Core\Validator;
 class NoURL extends RulesValidator
 {
     /**
-     * Проверяет значение на отсутствие ссылки, если пользователю запрещено использовать ссылки или включен флаг принудительной проверки
-     *
-     * @param Validator $v
-     * @param mixed $value
-     * @param string $flag
-     *
-     * @return mixed
+     * Проверяет значение на отсутствие ссылки,
+     * если пользователю запрещено использовать ссылки или включен флаг принудительной проверки
      */
-    public function noURL(Validator $v, $value, $flag)
+    public function noURL(Validator $v, string $value, string $flag): string
     {
         if (
             (
