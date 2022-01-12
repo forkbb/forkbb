@@ -530,25 +530,38 @@ class Validator
 
     protected function vString(Validator $v, /* mixed */ $value, string $attr): ?string
     {
-        $actions = \explode(',', $attr);
-
         if (\is_string($value)) {
-            foreach ($actions as $action) {
-                switch ($action) {
-                    case 'trim':
-                        $value = $this->trim($value);
-                        break;
-                    case 'lower':
-                        $value = \mb_strtolower($value, 'UTF-8');
-                        break;
-                    case 'spaces':
-                        $value = \preg_replace('%\s+%u', ' ', $value);
-                        break;
-                    case 'linebreaks':
-                        $value = \str_replace(["\r\n", "\r"], "\n", $value);
-                        break;
-                    default:
-                        throw new InvalidArgumentException("Bad action: {$action}");
+            if (isset($attr[0])) {
+                foreach (\explode(',', $attr) as $action) {
+                    switch ($action) {
+                        case 'trim':
+                            $value = $this->trim($value);
+                            break;
+                        case 'lower':
+                            $value = \mb_strtolower($value, 'UTF-8');
+                            break;
+                        case 'spaces':
+                            $value = \preg_replace('%\s+%u', ' ', $value);
+                            break;
+                        case 'linebreaks':
+                            $value = \str_replace(["\r\n", "\r"], "\n", $value);
+                            break;
+                        case 'null':
+                            $value = null;
+                        case 'empty':
+                            if (
+                                '' === $value
+                                || null === $value
+                            ) {
+                                $this->addError(null);
+
+                                break 2;
+                            }
+
+                            break;
+                        default:
+                            throw new InvalidArgumentException("Bad action: {$action}");
+                    }
                 }
             }
         } elseif (null === $value) {
@@ -871,6 +884,8 @@ class Validator
     protected function vFile(Validator $v, /* mixed */ $value, string $attr) /* : mixed */
     {
         if ($this->noValue($value, true)) {
+            $this->addError(null);
+
             return null;
         }
 
@@ -883,6 +898,8 @@ class Validator
         $value = $this->c->Files->upload($value);
 
         if (null === $value) {
+            $this->addError(null);
+
             return null;
         } elseif (false === $value) {
             $this->addError($this->c->Files->error());
