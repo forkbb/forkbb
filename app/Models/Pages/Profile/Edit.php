@@ -51,7 +51,7 @@ class Edit extends Profile
             }
 
             if ($this->rules->setTitle) {
-                $ruleTitle = 'string:trim|max:50|noURL';
+                $ruleTitle = 'exist|string:trim|max:50|noURL';
             } else {
                 $ruleTitle = 'absent';
             }
@@ -65,19 +65,19 @@ class Edit extends Profile
             }
 
             if ($this->user->isAdmMod) {
-                $ruleAdminNote = 'string:trim|max:30';
+                $ruleAdminNote = 'exist|string:trim|max:30';
             } else {
                 $ruleAdminNote = 'absent';
             }
 
             if ($this->rules->editWebsite) {
-                $ruleWebsite = 'string:trim|max:100|regex:%^(?:https?:)?//[^\x00-\x1F\s]+$%iu';
+                $ruleWebsite = 'exist|string:trim,empty|max:100|regex:%^(?:https?:)?//[^\x00-\x1F\s]+$%iu';
             } else {
                 $ruleWebsite = 'absent';
             }
 
             if ($this->rules->useSignature) {
-                $ruleSignature = "string:trim|max:{$this->curUser->g_sig_length}|check_signature";
+                $ruleSignature = "exist|string:trim|max:{$this->curUser->g_sig_length}|check_signature";
             } else {
                 $ruleSignature = 'absent';
             }
@@ -92,9 +92,9 @@ class Edit extends Profile
                     'upload_avatar' => $ruleAvatar,
                     'delete_avatar' => $ruleDelAvatar,
                     'admin_note'    => $ruleAdminNote,
-                    'realname'      => 'string:trim|max:40|noURL:1',
+                    'realname'      => 'exist|string:trim|max:40|noURL:1',
                     'gender'        => 'required|integer|in:0,1,2',
-                    'location'      => 'string:trim|max:30|noURL:1',
+                    'location'      => 'exist|string:trim|max:30|noURL:1',
                     'email_setting' => 'required|integer|in:0,1,2',
                     'url'           => $ruleWebsite,
                     'signature'     => $ruleSignature,
@@ -170,7 +170,7 @@ class Edit extends Profile
     /**
      * Дополнительная проверка signature
      */
-    public function vCheckSignature(Validator $v, $signature)
+    public function vCheckSignature(Validator $v, string $signature): string
     {
         if ('' != $signature) {
             $prepare = null;
