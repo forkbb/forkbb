@@ -108,7 +108,7 @@ class Logs extends Admin
         if ('POST' === $method) {
             $v = $this->c->Validator->reset()
                 ->addRules([
-                    'delete' => 'string',
+                    'delete' => 'required|string',
                 ])->addAliases([
                 ])->addArguments([
                 ]);
