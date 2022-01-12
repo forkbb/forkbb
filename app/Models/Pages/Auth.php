@@ -178,7 +178,7 @@ class Auth extends Page
     /**
      * Проверка пользователя по базе
      */
-    public function vLoginCheck(Validator $v, $password)
+    public function vLoginCheck(Validator $v, string $password): string
     {
         if (empty($v->getErrors())) {
             $this->userAfterLogin = $this->c->users->loadByName($v->username);
