@@ -82,7 +82,7 @@ class Install extends Admin
                 ->addRules([
                     'token'       => 'token:Install',
                     'installlang' => 'required|string:trim',
-                    'changelang'  => 'required|string',
+                    'changelang'  => 'string', // не нужно required
                 ]);
 
             if ($v->validation($_POST)) {
