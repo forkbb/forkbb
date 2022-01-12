@@ -19,7 +19,7 @@ trait PostValidatorTrait
     /**
      * Дополнительная проверка subject
      */
-    public function vCheckSubject(Validator $v, $subject, $attr, $executive)
+    public function vCheckSubject(Validator $v, string $subject, $attr, bool $executive): string
     {
         // после цензуры заголовок темы путой
         if ('' == $this->c->censorship->censor($subject)) {
@@ -40,7 +40,7 @@ trait PostValidatorTrait
     /**
      * Дополнительная проверка message
      */
-    public function vCheckMessage(Validator $v, $message, $attr, $executive)
+    public function vCheckMessage(Validator $v, string $message, $attr, bool $executive): string
     {
         $prepare = null;
 
@@ -106,7 +106,8 @@ trait PostValidatorTrait
         $notPM = $this->fIndex !== self::FI_PM;
 
         if ($this->user->isGuest) {
-            $ruleEmail    = (1 === $this->c->config->b_force_guest_email ? 'required|' : '') . 'string:trim|email:noban';
+            $ruleEmail    = 1 === $this->c->config->b_force_guest_email ? 'required' : 'exist';
+            $ruleEmail   .= '|string:trim,empty|email:noban';
             $ruleUsername = 'required|string:trim|username';
         } else {
             $ruleEmail    = 'absent';
@@ -233,7 +234,7 @@ trait PostValidatorTrait
     /**
      * Дополнительная проверка опроса
      */
-    public function vCheckPoll(Validator $v, $enable, $attr)
+    public function vCheckPoll(Validator $v, /* string|false */ $enable, $attr) /* : string|false */
     {
         if (
             false !== $enable
