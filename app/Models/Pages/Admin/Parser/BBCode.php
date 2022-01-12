@@ -362,10 +362,10 @@ class BBCode extends Parser
                     'token'                     => 'token:' . $page,
                     'tag'                       => $id > 0 ? 'absent' : 'required|string:trim|regex:%^[a-z\*][a-z\d-]{0,10}$%|not_in:' . \implode(',', $bbNames),
                     'type'                      => 'required|string|in:' . \implode(',', $bbTypes),
-                    'type_new'                  => 'string:trim|regex:%^[a-z][a-z\d-]{0,19}$%',
+                    'type_new'                  => 'exist|string:trim,empty|regex:%^[a-z][a-z\d-]{0,19}$%',
                     'parents.*'                 => 'required|string|in:' . \implode(',', $bbTypes),
-                    'handler'                   => 'string:trim|max:65535',
-                    'text_handler'              => 'string:trim|max:65535',
+                    'handler'                   => 'exist|string:trim|max:65535',
+                    'text_handler'              => 'exist|string:trim|max:65535',
                     'recursive'                 => 'required|integer|in:0,1',
                     'text_only'                 => 'required|integer|in:0,1',
                     'tags_only'                 => 'required|integer|in:0,1',
@@ -374,18 +374,18 @@ class BBCode extends Parser
                     'auto'                      => 'required|integer|in:0,1',
                     'self_nesting'              => 'required|integer|min:0|max:10',
                     'no_attr.allowed'           => 'required|integer|in:0,1',
-                    'no_attr.body_format'       => 'string:trim|max:1024',
+                    'no_attr.body_format'       => 'exist|string:trim|max:1024',
                     'no_attr.text_only'         => 'required|integer|in:0,1',
                     'def_attr.allowed'          => 'required|integer|in:0,1',
                     'def_attr.required'         => 'required|integer|in:0,1',
-                    'def_attr.format'           => 'string:trim|max:1024',
-                    'def_attr.body_format'      => 'string:trim|max:1024',
+                    'def_attr.format'           => 'exist|string:trim|max:1024',
+                    'def_attr.body_format'      => 'exist|string:trim|max:1024',
                     'def_attr.text_only'        => 'required|integer|in:0,1',
-                    'new_attr.name'             => ['string:trim', 'regex:%^(?:|[a-z-]{2,15})$%'],
+                    'new_attr.name'             => 'exist|string:trim,empty|regex:%^[a-z-]{2,15}$%',
                     'new_attr.allowed'          => 'required|integer|in:0,1',
                     'new_attr.required'         => 'required|integer|in:0,1',
-                    'new_attr.format'           => 'string:trim|max:1024',
-                    'new_attr.body_format'      => 'string:trim|max:1024',
+                    'new_attr.format'           => 'exist|string:trim|max:1024',
+                    'new_attr.body_format'      => 'exist|string:trim|max:1024',
                     'new_attr.text_only'        => 'required|integer|in:0,1',
                 ])->addAliases([
                 ])->addArguments([
@@ -398,14 +398,14 @@ class BBCode extends Parser
                     $v->addRules([
                         'other_attrs.*.allowed'     => 'required|integer|in:0,1',
                         'other_attrs.*.required'    => 'required|integer|in:0,1',
-                        'other_attrs.*.format'      => 'string:trim|max:1024',
-                        'other_attrs.*.body_format' => 'string:trim|max:1024',
+                        'other_attrs.*.format'      => 'exist|string:trim|max:1024',
+                        'other_attrs.*.body_format' => 'exist|string:trim|max:1024',
                         'other_attrs.*.text_only'   => 'required|integer|in:0,1',
                     ]);
                 }
 
                 $v->addRules([
-                    'save' => 'check_all',
+                    'save' => 'required|check_all',
                 ]);
 
                 if ($v->validation($_POST)) {
