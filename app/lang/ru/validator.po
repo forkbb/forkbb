@@ -191,3 +191,6 @@ msgstr "Не удалось определить дату в поле :alias."
 
 msgid "Too much data"
 msgstr "Лишние данные"
+
+msgid "The :alias not exist"
+msgstr "Поле :alias отсутствует."

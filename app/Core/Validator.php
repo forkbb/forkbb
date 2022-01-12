@@ -113,6 +113,7 @@ class Validator
             'array'         => [$this, 'vArray'],
             'checkbox'      => [$this, 'vCheckbox'],
             'date'          => [$this, 'vDate'],
+            'exist'         => [$this, 'vExist'],
             'file'          => [$this, 'vFile'],
             'image'         => [$this, 'vImage'],
             'in'            => [$this, 'vIn'],
@@ -492,6 +493,15 @@ class Validator
         return $value;
     }
 
+    protected function vExist(Validator $v, /* mixed */ $value) /* : mixed */
+    {
+        if (null === $value) {
+            $this->addError('The :alias not exist');
+        }
+
+        return $value;
+    }
+
     protected function vRequired(Validator $v, /* mixed */ $value) /* : mixed */
     {
         if ($this->noValue($value, true)) {
@@ -537,14 +547,12 @@ class Validator
                     case 'linebreaks':
                         $value = \str_replace(["\r\n", "\r"], "\n", $value);
                         break;
+                    default:
+                        throw new InvalidArgumentException("Bad action: {$action}");
                 }
             }
         } elseif (null === $value) {
-            if (\in_array('trim', $actions, true)) {
-                $value = ''; // string:trim -> отсутвующее поле становится пустым
-            } else {
-                $this->addError(null);
-            }
+            $this->addError(null);
         } else {
             $this->addError('The :alias must be string');
 
@@ -558,8 +566,13 @@ class Validator
     {
         if (\is_numeric($value)) {
             $value += 0;
-        } elseif (null === $value) {
+        } elseif (
+            null === $value
+            || '' === $value
+        ) {
             $this->addError(null);
+
+            $value = null;
         } else {
             $this->addError('The :alias must be numeric');
 
@@ -576,8 +589,13 @@ class Validator
             && \is_int(0 + $value)
         ) {
             $value += 0;
-        } elseif (null === $value) {
+        } elseif (
+            null === $value
+            || '' === $value
+        ) {
             $this->addError(null);
+
+            $value = null;
         } else {
             $this->addError('The :alias must be integer');
 

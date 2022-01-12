@@ -191,3 +191,6 @@ msgstr "Failed to determine the date in the :alias field."
 
 msgid "Too much data"
 msgstr "Too much data"
+
+msgid "The :alias not exist"
+msgstr "The :alias field not exist."
