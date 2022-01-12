@@ -312,7 +312,7 @@ class Search extends Page
     /**
      * Дополнительная проверка строки запроса
      */
-    public function vCheckQuery(Validator $v, $query, $method)
+    public function vCheckQuery(Validator $v, string $query, string $method): string
     {
         if (empty($v->getErrors())) {
             $flood = $this->user->last_search && \time() - $this->user->last_search < $this->user->g_search_flood;
@@ -356,7 +356,7 @@ class Search extends Page
     /**
      * Дополнительная проверка разделов
      */
-    public function vCheckForums(Validator $v, $forums)
+    public function vCheckForums(Validator $v, /* mixed */ $forums) /* : mixed */
     {
         if ('*' !== $forums) {
             if (
@@ -386,7 +386,7 @@ class Search extends Page
     /**
      * Дополнительная проверка автора
      */
-    public function vCheckAuthor(Validator $v, $name)
+    public function vCheckAuthor(Validator $v, string $name): string
     {
         $name = \preg_replace('%\*+%', '*', $name);
 
