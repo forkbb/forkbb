@@ -79,10 +79,10 @@ class Bans extends Admin
             ->addValidators([
             ])->addRules([
                 'token'           => 'token:AdminBans',
-                'username'        => 'string:trim|max:25',
-                'ip'              => 'string:trim|max:40',
-                'email'           => 'string:trim|max:80',
-                'message'         => 'string:trim|max:255',
+                'username'        => 'string:trim,null|max:25',
+                'ip'              => 'string:trim,null|max:40',
+                'email'           => 'string:trim,null|max:80',
+                'message'         => 'string:trim,null|max:255',
                 'expire_1'        => 'date',
                 'expire_2'        => 'date',
                 'order_by'        => 'required|string|in:id,username,ip,email,expire',
