@@ -50,7 +50,7 @@ abstract class Profile extends Page
     /**
      * Проверяет пароль на совпадение с текущим пользователем
      */
-    public function vCheckPassword(Validator $v, $password)
+    public function vCheckPassword(Validator $v, string $password): string
     {
         if (! \password_verify($password, $this->user->password)) {
             $v->addError('Invalid passphrase');
