@@ -94,7 +94,7 @@ class Moderate extends Page
     /**
      * Определяет действие
      */
-    public function vActionProcess(Validator $v, $action)
+    public function vActionProcess(Validator $v, ?string $action): ?string
     {
         if (empty($v->getErrors())) {
             $type = $v->topic ? self::INTOPIC : self::INFORUM;
