@@ -35,7 +35,7 @@ class Maintenance extends Admin
                 ])->addRules([
                     'token'                 => 'token:AdminMaintenance',
                     'b_maintenance'         => 'required|integer|in:0,1',
-                    'o_maintenance_message' => 'string:trim|max:65000 bytes|check_message|html',
+                    'o_maintenance_message' => 'exist|string:trim|max:65000 bytes|check_message|html',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -167,7 +167,7 @@ class Maintenance extends Admin
     /**
      * Подстановка значения по умолчанию
      */
-    public function vCheckMessage(Validator $v, $value)
+    public function vCheckMessage(Validator $v, string $value): string
     {
         if (
             1 === $v->b_maintenance
