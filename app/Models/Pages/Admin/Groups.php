@@ -235,7 +235,7 @@ class Groups extends Admin
                 ->addRules([
                     'token'                  => 'token:' . $marker,
                     'g_title'                => 'required|string:trim|max:50|not_in:' . \implode(',', $reserve),
-                    'g_user_title'           => 'string:trim|max:50',
+                    'g_user_title'           => 'exist|string:trim|max:50',
                 ])->addAliases([
                 ])->addArguments([
                     'token' => $vars,
@@ -787,7 +787,7 @@ class Groups extends Admin
                     'token'     => 'token:AdminGroupsDelete',
                     'movegroup' => $move,
                     'confirm'   => 'checkbox',
-                    'delete'    => 'string',
+                    'delete'    => 'required|string',
                 ])->addAliases([
                 ])->addArguments([
                     'token' => $args,
