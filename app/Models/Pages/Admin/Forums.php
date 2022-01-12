@@ -240,7 +240,7 @@ class Forums extends Admin
                 ->addRules([
                     'token'     => 'token:AdminForumsDelete',
                     'confirm'   => 'checkbox',
-                    'delete'    => 'string',
+                    'delete'    => 'required|string',
                 ])->addAliases([
                 ])->addArguments([
                     'token' => $args,
@@ -295,7 +295,7 @@ class Forums extends Admin
                         'confirm' => [
                             'caption' => 'Confirm delete',
                             'type'    => 'checkbox',
-                            'label'   => __(['I want to delete forum %s', $forum->forum_name]),
+                            'label'   => ['I want to delete forum %s', $forum->forum_name],
                             'checked' => false,
                         ],
                     ],
@@ -365,10 +365,10 @@ class Forums extends Admin
                 ->addRules([
                     'token'                => 'token:' . $marker,
                     'forum_name'           => 'required|string:trim|max:80',
-                    'forum_desc'           => 'string:trim|max:65000 bytes|html',
+                    'forum_desc'           => 'exist|string:trim|max:65000 bytes|html',
                     'parent'               => 'required|integer|in:' . \implode(',', $this->listOfIndexes),
                     'sort_by'              => 'required|integer|in:0,1,2',
-                    'redirect_url'         => 'string:trim|max:255', //????
+                    'redirect_url'         => 'string:trim|max:255', //???? это поле может быть отключено в форме
                     'no_sum_mess'          => 'required|integer|in:0,1',
                     'perms.*.read_forum'   => 'checkbox',
                     'perms.*.post_replies' => 'checkbox',
@@ -385,7 +385,7 @@ class Forums extends Admin
             $forum->forum_name   = $v->forum_name;
             $forum->forum_desc   = $v->forum_desc;
             $forum->sort_by      = $v->sort_by;
-            $forum->redirect_url = $v->redirect_url;
+            $forum->redirect_url = $v->redirect_url ?? '';
             $forum->no_sum_mess  = $v->no_sum_mess;
             if ($v->parent > 0) {
                 $forum->parent_forum_id = $v->parent;
