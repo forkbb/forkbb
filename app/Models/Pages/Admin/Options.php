@@ -38,7 +38,7 @@ class Options extends Admin
                 ])->addRules([
                     'token'                   => 'token:AdminOptions',
                     'o_board_title'           => 'required|string:trim|max:255',
-                    'o_board_desc'            => 'string:trim|max:65000 bytes|html',
+                    'o_board_desc'            => 'exist|string:trim,empty|max:65000 bytes|html',
                     'o_default_timezone'      => 'required|string:trim|in:-12,-11,-10,-9.5,-9,-8.5,-8,-7,-6,-5,-4,-3.5,-3,-2,-1,0,1,2,3,3.5,4,4.5,5,5.5,5.75,6,6.5,7,8,8.75,9,9.5,10,10.5,11,11.5,12,12.75,13,14',
                     'b_default_dst'           => 'required|integer|in:0,1',
                     'o_default_lang'          => 'required|string:trim|in:' . \implode(',', $this->c->Func->getLangs()),
@@ -56,11 +56,11 @@ class Options extends Admin
                     'b_users_online'          => 'required|integer|in:0,1',
                     'b_show_dot'              => 'required|integer|in:0,1',
                     'b_topic_views'           => 'required|integer|in:0,1',
-                    'o_additional_navlinks'   => 'string:trim|max:65000 bytes',
+                    'o_additional_navlinks'   => 'exist|string:trim|max:65000 bytes',
                     'i_feed_type'             => 'required|integer|in:0,1,2',
                     'i_feed_ttl'              => 'required|integer|in:0,5,15,30,60',
                     'i_report_method'         => 'required|integer|in:0,1,2',
-                    'o_mailing_list'          => 'string:trim|max:65000 bytes', // ???? проверка списка email
+                    'o_mailing_list'          => 'exist|string:trim|max:65000 bytes', // ???? проверка списка email
                     'b_avatars'               => 'required|integer|in:0,1',
                     'o_avatars_dir'           => 'required|string:trim|max:255|check_dir',
                     'i_avatars_width'         => 'required|integer|min:50|max:999',
@@ -71,19 +71,19 @@ class Options extends Admin
                     'b_forum_subscriptions'   => 'required|integer|in:0,1',
                     'b_topic_subscriptions'   => 'required|integer|in:0,1',
                     'i_email_max_recipients'  => 'required|integer|min:1|max:99999',
-                    'o_smtp_host'             => 'string:trim|max:255',
-                    'o_smtp_user'             => 'string:trim|max:255',
-                    'o_smtp_pass'             => 'string:trim|max:255',
+                    'o_smtp_host'             => 'exist|string:trim|max:255',
+                    'o_smtp_user'             => 'exist|string:trim|max:255',
+                    'o_smtp_pass'             => 'exist|string:trim|max:255',
                     'changeSmtpPassword'      => 'checkbox',
                     'b_smtp_ssl'              => 'required|integer|in:0,1',
                     'b_regs_allow'            => 'required|integer|in:0,1',
                     'b_regs_verify'           => 'required|integer|in:0,1',
                     'b_regs_report'           => 'required|integer|in:0,1',
                     'b_rules'                 => 'required|integer|in:0,1|check_empty:o_rules_message',
-                    'o_rules_message'         => 'string:trim|max:65000 bytes|html',
+                    'o_rules_message'         => 'exist|string:trim|max:65000 bytes|html',
                     'i_default_email_setting' => 'required|integer|in:0,1,2',
                     'b_announcement'          => 'required|integer|in:0,1|check_empty:o_announcement_message',
-                    'o_announcement_message'  => 'string:trim|max:65000 bytes|html',
+                    'o_announcement_message'  => 'exist|string:trim|max:65000 bytes|html',
                     'b_message_all_caps'      => 'required|integer|in:0,1',
                     'b_subject_all_caps'      => 'required|integer|in:0,1',
                     'b_force_guest_email'     => 'required|integer|in:0,1',
@@ -136,7 +136,7 @@ class Options extends Admin
     /**
      * Дополнительная проверка времени online
      */
-    public function vCheckTimeout(Validator $v, $timeout)
+    public function vCheckTimeout(Validator $v, int $timeout): int
     {
         if ($timeout >= $v->i_timeout_visit) {
             $v->addError('Timeout error message');
@@ -148,7 +148,7 @@ class Options extends Admin
     /**
      * Дополнительная проверка каталога аватарок
      */
-    public function vCheckDir(Validator $v, $dir)
+    public function vCheckDir(Validator $v, string $dir): string
     {
         $dir = '/' . \trim(\str_replace(['\\', '.', '//', ':'], ['/', '', '', ''], $dir), '/');
 
@@ -164,7 +164,7 @@ class Options extends Admin
     /**
      * Дополнительная проверка на пустоту другого поля
      */
-    public function vCheckEmpty(Validator $v, $value, $attr)
+    public function vCheckEmpty(Validator $v, int $value, string $attr): int
     {
         if (
             0 !== $value
