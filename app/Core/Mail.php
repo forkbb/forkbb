@@ -612,6 +612,8 @@ class Mail
         }
 
         $this->response = '';
+        $return         = '';
+
         while (\is_resource($this->connect) && ! \feof($this->connect)) {
             if (false === ($get = \fgets($this->connect, 512))) {
                 throw new SmtpException('Couldn\'t get mail server response codes.');
