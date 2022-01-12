@@ -145,7 +145,7 @@ class Update extends Admin
                     'check_pass' => [$this, 'vCheckPass'],
                 ])->addRules([
                     'token'                 => 'token:AdminUpdate',
-                    'dbpass'                => 'string|check_pass',
+                    'dbpass'                => 'exist|string|check_pass',
                     'o_maintenance_message' => 'required|string:trim|max:65000 bytes|html',
                 ])->addAliases([
                     'dbpass'                => 'Database password',
@@ -271,9 +271,8 @@ class Update extends Admin
     /**
      * Проверяет пароль базы
      */
-    public function vCheckPass(Validator $v, $dbpass)
+    public function vCheckPass(Validator $v, string $dbpass): string
     {
-        $dbpass       = $dbpass ?? '';
         $this->okPass = true;
 
         if (\substr($this->c->DB_DSN, 0, 6) === 'sqlite') {
