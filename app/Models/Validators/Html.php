@@ -17,13 +17,8 @@ class Html extends RulesValidator
 {
     /**
      * Обрабатывает html код в соответствии с заданными правилами
-     *
-     * @param Validator $v
-     * @param string $value
-     *
-     * @return mixed
      */
-    public function html(Validator $v, string $value)
+    public function html(Validator $v, string $value): string
     {
         $errors = [];
         $result = $this->c->HTMLCleaner->setConfig()->parse($value, $errors);
