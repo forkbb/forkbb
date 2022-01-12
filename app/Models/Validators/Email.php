@@ -18,15 +18,8 @@ class Email extends RulesValidator
 {
     /**
      * Проверяет email
-     *
-     * @param Validator $v
-     * @param string $email
-     * @param string $attrs
-     * @param mixed $originalUser
-     *
-     * @return null|string
      */
-    public function email(Validator $v, $email, $attrs, $originalUser): ?string
+    public function email(Validator $v, string $email, string $attrs, /* mixed */ $originalUser): ?string
     {
         // поле отсутствует
         if ($v->noValue($email)) {
@@ -135,7 +128,8 @@ class Email extends RulesValidator
         if (
             $ok
             && $originalUser instanceof User
-            && $originalUser->id < 1
+            && null === $originalUser->id
+            && null === $originalUser->group_id
             && $user instanceof User
             && ! $user->isGuest
         ) {
