@@ -1,4 +1,4 @@
-# ForkBB rev.46 Alpha Readme
+# ForkBB rev.47 Alpha Readme
 
 ## About
 
