@@ -102,7 +102,7 @@ return [
             'host'  => '%config.o_smtp_host%',
             'user'  => '%config.o_smtp_user%',
             'pass'  => '%config.o_smtp_pass%',
-            'ssl'   => '%config.o_smtp_ssl%',
+            'ssl'   => '%config.b_smtp_ssl%',
             'eol'   => '%EOL%',
         ],
         'Func'      => \ForkBB\Core\Func::class,

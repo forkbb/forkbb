@@ -630,4 +630,21 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.46 to rev.47
+     */
+    protected function stageNumber46(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>Mail=>ssl',
+            '\'%config.b_smtp_ssl%\''
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }
