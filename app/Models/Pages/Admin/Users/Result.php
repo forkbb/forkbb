@@ -189,7 +189,8 @@ class Result extends Users
         $order = [
             $data['order_by'] => $data['direction'],
         ];
-        $filters = [];
+        $filters  = [];
+        $usedLike = false;
 
         if ($data['user_group'] > -1) {
             $filters['group_id'] = ['=', $data['user_group']];
@@ -216,11 +217,19 @@ class Result extends Users
                     $value = \strtotime($value . ' UTC');
                 }
             } elseif (\is_string($value)) {
-                $type  = 'LIKE';
+                $type     = 'LIKE';
+                $usedLike = true;
             }
 
             $filters[$field][0]    = $type;
             $filters[$field][$key] = $value;
+        }
+
+        if (
+            $usedLike
+            && ! $this->c->config->insensitive()
+        ) {
+            $this->fIswev = ['i', 'The search may be case sensitive'];
         }
 
         return $this->c->users->filter($filters, $order);
