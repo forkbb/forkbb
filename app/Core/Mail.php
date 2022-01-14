@@ -476,7 +476,7 @@ class Mail
     {
         // подлючение
         if (! \is_resource($this->connect)) {
-            if (false === ($connect = \fsockopen($this->smtp['host'], $this->smtp['port'], $errno, $errstr, $this->smtp['timeout']))) {
+            if (false === ($connect = @\fsockopen($this->smtp['host'], $this->smtp['port'], $errno, $errstr, $this->smtp['timeout']))) {
                 throw new SmtpException("Couldn't connect to smtp host \"{$this->smtp['host']}:{$this->smtp['port']}\" ({$errno}) ({$errstr}).");
             }
             \stream_set_timeout($connect, $this->smtp['timeout']);
@@ -607,7 +607,7 @@ class Mail
     protected function smtpData(?string $data, ?array $code): string
     {
         if (\is_resource($this->connect) && null !== $data) {
-            if (false === \fwrite($this->connect, $data . $this->EOL)) {
+            if (false === @\fwrite($this->connect, $data . $this->EOL)) {
                 throw new SmtpException('Couldn\'t send data to mail server.');
             }
         }
@@ -616,7 +616,7 @@ class Mail
         $return         = '';
 
         while (\is_resource($this->connect) && ! \feof($this->connect)) {
-            if (false === ($get = \fgets($this->connect, 512))) {
+            if (false === ($get = @\fgets($this->connect, 512))) {
                 throw new SmtpException('Couldn\'t get mail server response codes.');
             }
 
