@@ -402,7 +402,7 @@ class Mail
             throw new MailException('The subject of the email is empty.');
         }
 
-        if ('' == \trim($this->message)) {
+        if ('' === \trim($this->message)) {
             throw new MailException('The body of the email is empty.');
         }
 
@@ -549,6 +549,22 @@ class Mail
     }
 
     /**
+     * Возвращает массив расширений из отвена сервера
+     */
+    protected function smtpExtn(string $response): array
+    {
+        $result = [];
+
+        if (\preg_match_all('%250[- ]([0-9A-Z]+)(?:[ =]([^\n\r]+))?%', $response, $matches, \PREG_SET_ORDER)) {
+            foreach ($matches as $cur) {
+                $result[$cur[1]] = $cur[2] ?? '';
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Hello SMTP server
      */
     protected function smtpHello(): void
@@ -560,54 +576,84 @@ class Mail
                 return;
             case 0:
                 if (
-                    '' != $this->smtp['user']
-                    && '' != $this->smtp['pass']
+                    '' !== $this->smtp['user']
+                    && '' !== $this->smtp['pass']
                 ) {
-                   $code = $this->smtpData('EHLO ' . $this->hostname(), ['250', '500', '501', '502', '550']);
+                    $code = $this->smtpData('EHLO ' . $this->hostname(), ['250', '500', '501', '502', '550']);
 
-                   if (
-                       '250' === $code
-                       && \preg_match('%250[- ]AUTH[ =](.+)%', $this->response, $matches)
-                    ) {
-                        $methods = \array_flip(
-                            \array_map(
-                                '\\trim',
-                                \explode(' ', $matches[1])
-                            )
-                        );
+                    if ('250' === $code) {
+                        $extn = $this->smtpExtn($this->response);
 
-                        if (isset($methods['CRAM-MD5'])) {
-                            $this->smtpData('AUTH CRAM-MD5', ['334']);
+                        if (
+                            isset($extn['STARTTLS'])
+                            && \function_exists('\\stream_socket_enable_crypto')
+                        ) {
+                            $this->smtpData('STARTTLS', ['220']);
 
-                            $challenge = \base64_decode(
-                                \trim(
-                                    \substr($this->response, 4)
-                                )
+                            $crypto = @\stream_socket_enable_crypto(
+                                $this->connect,
+                                true,
+                                \STREAM_CRYPTO_METHOD_TLS_CLIENT
                             );
-                            $digest    = \hash_hmac('md5', $challenge, $this->smtp['pass']);
-                            $cramMd5   = \base64_encode("{$this->smtp['user']} {$digest}");
 
-                            $this->smtpData($cramMd5, ['235']);
+                            if (true !== $crypto) {
+                                throw new SmtpException('Failed to enable encryption on the stream using TLS.');
+                            }
 
-                            $this->auth = 1;
+                            $this->smtpData('EHLO ' . $this->hostname(), ['250']);
 
-                            return;
-                        } elseif (isset($methods['LOGIN'])) {
-                            $this->smtpData('AUTH LOGIN', ['334']);
-                            $this->smtpData(\base64_encode($this->smtp['user']), ['334']);
-                            $this->smtpData(\base64_encode($this->smtp['pass']), ['235']);
+                            $extn = $this->smtpExtn($this->response);
+                        }
 
-                            $this->auth = 1;
+                        if (isset($extn['AUTH'])) {
+                            $methods = \array_flip(\explode(' ', $extn['AUTH']));
 
-                            return;
-                        } elseif (isset($methods['PLAIN'])) {
-                            $plain = \base64_encode("\0{$this->smtp['user']}\0{$this->smtp['pass']}");
+                            if (isset($methods['CRAM-MD5'])) {
+                                $this->smtpData('AUTH CRAM-MD5', ['334']);
 
-                            $this->smtpData("AUTH PLAIN {$plain}", ['235']);
+                                $challenge = \base64_decode(
+                                    \trim(
+                                        \substr($this->response, 4)
+                                    )
+                                );
+                                $digest    = \hash_hmac('md5', $challenge, $this->smtp['pass']);
+                                $cramMd5   = \base64_encode("{$this->smtp['user']} {$digest}");
 
-                            $this->auth = 1;
+                                $this->smtpData($cramMd5, ['235']);
 
-                            return;
+                                $this->auth = 1;
+
+                                return;
+                            } elseif (isset($methods['LOGIN'])) {
+                                $this->smtpData('AUTH LOGIN', ['334']);
+                                $this->smtpData(\base64_encode($this->smtp['user']), ['334']);
+                                $this->smtpData(\base64_encode($this->smtp['pass']), ['235']);
+
+                                $this->auth = 1;
+
+                                return;
+                            } elseif (isset($methods['PLAIN'])) {
+                                $plain = \base64_encode("\0{$this->smtp['user']}\0{$this->smtp['pass']}");
+
+                                $this->smtpData("AUTH PLAIN {$plain}", ['235']);
+
+                                $this->auth = 1;
+
+                                return;
+                            } else {
+                                throw new SmtpException("Unknown AUTH methods: \"{$extn['AUTH']}\".");
+                            }
+                        }
+
+                        if (
+                            isset($extn['STARTTLS'])
+                            && ! isset($extn['AUTH'])
+                        ) {
+                            if (\function_exists('\\stream_socket_enable_crypto')) {
+                                throw new SmtpException("The server \"{$this->smtp['host']}:{$this->smtp['port']}\" requires STARTTLS.");
+                            } else {
+                                throw new SmtpException("The server \"{$this->smtp['host']}:{$this->smtp['port']}\" requires STARTTLS, but \stream_socket_enable_crypto() was not found.");
+                            }
                         }
                     }
                 }
