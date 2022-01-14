@@ -547,12 +547,17 @@ class Validator
                             $value = \str_replace(["\r\n", "\r"], "\n", $value);
                             break;
                         case 'null':
-                            $value = null;
+                            if ('' === $value) {
+                                $value = null;
+
+                                $this->addError(null);
+
+                                break 2;
+                            }
+
+                            break;
                         case 'empty':
-                            if (
-                                '' === $value
-                                || null === $value
-                            ) {
+                            if ('' === $value) {
                                 $this->addError(null);
 
                                 break 2;
