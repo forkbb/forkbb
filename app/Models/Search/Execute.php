@@ -207,6 +207,7 @@ class Execute extends Method
         $usePIdx  = false;
         $useTCJK  = false;
         $usePCJK  = false;
+        $like     = 'pgsql' === $this->c->DB->getType() ? 'ILIKE' : 'LIKE';
 
         if (
             '*' !== $v->forums
@@ -223,7 +224,7 @@ class Execute extends Method
         if ('*' !== $v->author) {
             $usePIdx                 = true;
             $vars[':author']         = \str_replace(['#', '_', '*', '?'], ['##', '#_', '%', '_'], $v->author);
-            $whereIdx[]              = 'p.poster LIKE ?s:author ESCAPE \'#\'';
+            $whereIdx[]              = "p.poster {$like} ?s:author ESCAPE '#'";
         }
 
         $this->model->showAs         = $v->show_as;
@@ -231,27 +232,27 @@ class Execute extends Method
         switch ($v->serch_in) {
             case 1:
                 $whereIdx[]          = 'sm.subject_match=0';
-                $whereCJK[]          = 'p.message LIKE ?s:word';
+                $whereCJK[]          = "p.message {$like} ?s:word";
                 $usePCJK             = true;
                 if (isset($vars[':author'])) {
-                    $whereCJK[]      = 'p.poster LIKE ?s:author ESCAPE \'#\'';
+                    $whereCJK[]      = "p.poster {$like} ?s:author ESCAPE '#'";
                 }
                 break;
             case 2:
                 $whereIdx[]          = 'sm.subject_match=1';
-                $whereCJK[]          = 't.subject LIKE ?s:word';
+                $whereCJK[]          = "t.subject {$like} ?s:word";
                 $useTCJK             = true;
                 if (isset($vars[':author'])) {
-                    $whereCJK[]      = 't.poster LIKE ?s:author ESCAPE \'#\'';
+                    $whereCJK[]      = "t.poster {$like} ?s:author ESCAPE '#'";
                 }
                 // при поиске в заголовках результат только в виде списка тем
                 $this->model->showAs = 1;
                 break;
             default:
                 if (isset($vars[':author'])) {
-                    $whereCJK[]      = '((p.message LIKE ?s:word AND p.poster LIKE ?s:author ESCAPE \'#\') OR (t.subject LIKE ?s:word AND t.poster LIKE ?s:author ESCAPE \'#\'))';
+                    $whereCJK[]      = "((p.message {$like} ?s:word AND p.poster {$like} ?s:author ESCAPE '#') OR (t.subject {$like} ?s:word AND t.poster {$like} ?s:author ESCAPE '#'))";
                 } else {
-                    $whereCJK[]      = '(p.message LIKE ?s:word OR t.subject LIKE ?s:word)';
+                    $whereCJK[]      = "(p.message {$like} ?s:word OR t.subject {$like} ?s:word)";
                 }
                 $usePCJK             = true;
                 $useTCJK             = true;
@@ -321,7 +322,7 @@ class Execute extends Method
                           'INNER JOIN ::search_matches AS sm ON sm.word_id=sw.id ' .
                           $usePIdx .
                           $useTIdx .
-                          'WHERE sw.word LIKE ?s:word' . $whereIdx;
+                          'WHERE sw.word LIKE ?s:word' . $whereIdx; // ILIKE не нужен, слово в ниж.регистре
 
         if ($usePCJK) {
             $this->queryCJK = "SELECT {$selectFCJK}, {$sortCJK} FROM ::posts AS p " .
