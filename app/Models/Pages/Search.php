@@ -67,8 +67,8 @@ class Search extends Page
         $this->calcList();
 
         $marker = $advanced ? 'SearchAdvanced' : 'Search';
+        $v      = null;
 
-        $v = null;
         if (
             'POST' === $method
             || isset($args['keywords'])
@@ -131,6 +131,10 @@ class Search extends Page
             }
 
             $this->fIswev = $v->getErrors();
+        }
+
+        if (! $this->c->config->insensitive()) {
+            $this->fIswev = ['i', 'The search may be case sensitive'];
         }
 
         $this->fIndex    = 'search';
