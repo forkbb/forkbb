@@ -457,3 +457,6 @@ msgstr "Subscribe"
 
 msgid "Post from topic %s"
 msgstr "This post is moved from the topic &quot;%s&quot;"
+
+msgid "The search may be case sensitive"
+msgstr "The search may be case sensitive for non-Basic Latin characters."

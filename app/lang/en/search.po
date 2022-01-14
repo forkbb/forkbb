@@ -203,6 +203,3 @@ msgstr "Logical operator at the beginning of the search (sub)query: '%s'"
 
 msgid "Logical operators follow one after another: '%s'"
 msgstr "Logical operators follow one after another: '%s'"
-
-msgid "The search may be case sensitive"
-msgstr "The search may be case sensitive for non-Basic Latin characters."

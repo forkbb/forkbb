@@ -203,6 +203,3 @@ msgstr "Логический оператор в начале (под)запро
 
 msgid "Logical operators follow one after another: '%s'"
 msgstr "Логические операторы следуют друг за другом: '%s'"
-
-msgid "The search may be case sensitive"
-msgstr "Поиск может быть чувствителен к регистру символов не относящихся к основной латинице."
