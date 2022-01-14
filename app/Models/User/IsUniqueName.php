@@ -82,18 +82,18 @@ class IsUniqueName extends Action
         $like     = 'LIKE';
 
         switch ($this->c->DB->getType()) {
-            case 'mysql':
-                break;
+//            case 'mysql':
+//                break;
             case 'pgsql':
                 $like = 'ILIKE';
-            case 'sqlite':
+//            case 'sqlite':
             default:
                 // UTF-8 не нужен
                 if ($name7bit && $norm7bit) {
                     break;
                 }
                 // бд поддерживает UTF-8 сравнение без учета регистра
-                if ($this->c->DB->query("SELECT ?s {$like} ?s", ['Ы', 'ы'])->fetchColumn()) {
+                if ($this->c->config->insensitive()) {
                     break;
                 }
 
