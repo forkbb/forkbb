@@ -308,7 +308,8 @@ class Bans extends Admin
         $order = [
             $data['order_by'] => $data['direction'],
         ];
-        $filters = [];
+        $filters  = [];
+        $usedLike = false;
 
         foreach ($data as $field => $value) {
             if (
@@ -331,11 +332,19 @@ class Bans extends Admin
                     $value = \strtotime($value . ' UTC');
                 }
             } elseif (\is_string($value)) {
-                $type  = 'LIKE';
+                $type     = 'LIKE';
+                $usedLike = true;
             }
 
             $filters[$field][0]    = $type;
             $filters[$field][$key] = $value;
+        }
+
+        if (
+            $usedLike
+            && ! $this->c->config->insensitive()
+        ) {
+            $this->fIswev = ['i', 'The search may be case sensitive'];
         }
 
         return $this->c->bans->filter($filters, $order);
