@@ -483,7 +483,9 @@ class Mail
     {
         // подлючение
         if (! \is_resource($this->connect)) {
-            if (false === ($connect = @\fsockopen($this->smtp['host'], $this->smtp['port'], $errno, $errstr, $this->smtp['timeout']))) {
+            $connect = @\fsockopen($this->smtp['host'], $this->smtp['port'], $errno, $errstr, $this->smtp['timeout']);
+
+            if (false === $connect) {
                 throw new SmtpException("Couldn't connect to smtp host \"{$this->smtp['host']}:{$this->smtp['port']}\" ({$errno}) ({$errstr}).");
             }
 
@@ -623,17 +625,21 @@ class Mail
      */
     protected function smtpData(?string $data, ?array $code): string
     {
-        if (\is_resource($this->connect) && null !== $data) {
-            if (false === @\fwrite($this->connect, $data . $this->EOL)) {
-                throw new SmtpException('Couldn\'t send data to mail server.');
-            }
+        if (
+            \is_resource($this->connect)
+            && null !== $data
+            && false === @\fwrite($this->connect, $data . $this->EOL)
+        ) {
+            throw new SmtpException('Couldn\'t send data to mail server.');
         }
 
         $this->response = '';
         $return         = '';
 
         while (\is_resource($this->connect) && ! \feof($this->connect)) {
-            if (false === ($get = @\fgets($this->connect, 512))) {
+            $get = @\fgets($this->connect, 512);
+
+            if (false === $get) {
                 throw new SmtpException('Couldn\'t get mail server response codes.');
             }
 
@@ -667,10 +673,9 @@ class Mail
         $ip   = $_SERVER['SERVER_ADDR'] ?? '';
 
         if (
-            $name
-            && '' != ($name = \preg_replace('%[\x00-\x1F]%', '', \trim($name)))
+            ! $name
+            || '' === ($name = \preg_replace('%[\x00-\x1F]%', '', \trim($name)))
         ) {
-        } else {
             $name = '[127.0.0.1]';
 
             if (\filter_var($ip, \FILTER_VALIDATE_IP, \FILTER_FLAG_IPV4)) {
