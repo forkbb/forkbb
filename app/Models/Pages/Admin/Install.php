@@ -1286,6 +1286,7 @@ class Install extends Admin
                     'show_img_sig' => 1,
                 ], self::JSON_OPTIONS
             ),
+            's_РЕГИСТР'               => 'Ok',
         ];
 
         foreach ($pun_config as $conf_name => $conf_value) {

@@ -647,4 +647,28 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.47 to rev.48
+     */
+    protected function stageNumber47(array $args): ?int
+    {
+        $config = $this->c->config;
+
+        $config->s_РЕГИСТР = 'Ok';
+
+        $config->save();
+
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>Config/insensitive',
+            '\\ForkBB\\Models\\Config\\Insensitive::class',
+            'Config/save'
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }

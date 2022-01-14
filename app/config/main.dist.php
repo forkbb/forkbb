@@ -212,8 +212,9 @@ return [
         'Censorship/refresh' => \ForkBB\Models\Censorship\Refresh::class,
         'Censorship/save'    => \ForkBB\Models\Censorship\Save::class,
 
-        'Config/load' => \ForkBB\Models\Config\Load::class,
-        'Config/save' => \ForkBB\Models\Config\Save::class,
+        'Config/insensitive' => \ForkBB\Models\Config\Insensitive::class,
+        'Config/load'        => \ForkBB\Models\Config\Load::class,
+        'Config/save'        => \ForkBB\Models\Config\Save::class,
 
         'Forum/calcStat' => \ForkBB\Models\Forum\CalcStat::class,
 
