@@ -101,10 +101,11 @@ class Mail
             }
 
             $this->smtp = [
-                'host' => ($ssl ? 'ssl://' : '') . $host,
-                'port' => (int) $port,
-                'user' => (string) $user,
-                'pass' => (string) $pass,
+                'host'    => ($ssl ? 'ssl://' : '') . $host,
+                'port'    => (int) $port,
+                'user'    => (string) $user,
+                'pass'    => (string) $pass,
+                'timeout' => 15,
             ];
             $this->EOL = "\r\n";
         } else {
@@ -475,10 +476,10 @@ class Mail
     {
         // подлючение
         if (! \is_resource($this->connect)) {
-            if (false === ($connect = \fsockopen($this->smtp['host'], $this->smtp['port'], $errno, $errstr, 5))) {
+            if (false === ($connect = \fsockopen($this->smtp['host'], $this->smtp['port'], $errno, $errstr, $this->smtp['timeout']))) {
                 throw new SmtpException("Couldn't connect to smtp host \"{$this->smtp['host']}:{$this->smtp['port']}\" ({$errno}) ({$errstr}).");
             }
-            \stream_set_timeout($connect, 5);
+            \stream_set_timeout($connect, $this->smtp['timeout']);
             $this->connect = $connect;
             $this->smtpData(null, ['220']);
         }
