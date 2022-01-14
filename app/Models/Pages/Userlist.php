@@ -82,6 +82,13 @@ class Userlist extends Page
         }
         if (null !== $v->name) {
             $filters['username'] = ['LIKE', $v->name];
+
+            if (
+                \preg_match('%[\x80-\xFF]%', $v->name)
+                && ! $this->c->config->insensitive()
+            ) {
+                $this->fIswev = ['i', 'The search may be case sensitive'];
+            }
         }
 
         $order  = $v->sort ? [$v->sort => $v->dir] : [];
