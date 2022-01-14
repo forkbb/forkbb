@@ -392,12 +392,15 @@ class Mail
         if (empty($this->to)) {
             throw new MailException('No recipient for the email.');
         }
+
         if (empty($this->headers['From'])) {
             throw new MailException('No sender for the email.');
         }
+
         if (! isset($this->headers['Subject'])) {
             throw new MailException('The subject of the email is empty.');
         }
+
         if ('' == \trim($this->message)) {
             throw new MailException('The body of the email is empty.');
         }
@@ -420,6 +423,7 @@ class Mail
     {
         $subject = $this->headers['Subject'];
         $headers = $this->headers;
+
         unset($headers['Subject']);
 
         if (
@@ -442,6 +446,7 @@ class Mail
                 foreach ($arrBcc as $email => &$name) {
                     $name = $this->formatAddress($email, $name);
                 }
+
                 unset($name);
 
                 $headers['Bcc'] = \implode(', ', $arrBcc);
@@ -464,6 +469,7 @@ class Mail
         foreach ($headers as $key => &$value) {
             $value = $key . ': ' . $value;
         }
+
         unset($value);
 
         return \implode($this->EOL, $headers);
@@ -479,8 +485,11 @@ class Mail
             if (false === ($connect = @\fsockopen($this->smtp['host'], $this->smtp['port'], $errno, $errstr, $this->smtp['timeout']))) {
                 throw new SmtpException("Couldn't connect to smtp host \"{$this->smtp['host']}:{$this->smtp['port']}\" ({$errno}) ({$errstr}).");
             }
+
             \stream_set_timeout($connect, $this->smtp['timeout']);
+
             $this->connect = $connect;
+
             $this->smtpData(null, ['220']);
         }
 
@@ -566,6 +575,7 @@ class Mail
 
                         if (isset($methods['CRAM-MD5'])) {
                             $this->smtpData('AUTH CRAM-MD5', ['334']);
+
                             $challenge = \base64_decode(
                                 \trim(
                                     \substr($this->response, 4)
@@ -573,7 +583,9 @@ class Mail
                             );
                             $digest    = \hash_hmac('md5', $challenge, $this->smtp['pass']);
                             $cramMd5   = \base64_encode("{$this->smtp['user']} {$digest}");
+
                             $this->smtpData($cramMd5, ['235']);
+
                             $this->auth = 1;
 
                             return;
@@ -581,12 +593,15 @@ class Mail
                             $this->smtpData('AUTH LOGIN', ['334']);
                             $this->smtpData(\base64_encode($this->smtp['user']), ['334']);
                             $this->smtpData(\base64_encode($this->smtp['pass']), ['235']);
+
                             $this->auth = 1;
 
                             return;
                         } elseif (isset($methods['PLAIN'])) {
                             $plain = \base64_encode("\0{$this->smtp['user']}\0{$this->smtp['pass']}");
+
                             $this->smtpData("AUTH PLAIN {$plain}", ['235']);
+
                             $this->auth = 1;
 
                             return;
@@ -595,6 +610,7 @@ class Mail
                 }
             default:
                 $this->auth = -1;
+
                 $this->smtpData('HELO ' . $this->hostname(), ['250']);
         }
     }
