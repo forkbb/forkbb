@@ -90,19 +90,20 @@ class Mail
             \is_string($host)
             && \strlen(\trim($host)) > 0
         ) {
-            list($host, $port) = \explode(':', $host);
+            $hp = \explode(':', $host, 2);
 
             if (
-                empty($port)
-                || $port < 1
-                || $port > 65535
+                empty($hp[1])
+                || ! \is_int($hp[1] + 0)
+                || $hp[1] < 1
+                || $hp[1] > 65535
             ) {
-                $port = 25;
+                $hp[1] = 25;
             }
 
             $this->smtp = [
-                'host'    => ($ssl ? 'ssl://' : '') . $host,
-                'port'    => (int) $port,
+                'host'    => ($ssl ? 'ssl://' : '') . $hp[0],
+                'port'    => (int) $hp[1],
                 'user'    => (string) $user,
                 'pass'    => (string) $pass,
                 'timeout' => 15,
