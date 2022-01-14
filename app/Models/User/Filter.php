@@ -44,6 +44,7 @@ class Filter extends Action
         }
 
         $vars = [];
+        $like = 'pgsql' === $this->c->DB->getType() ? 'ILIKE' : 'LIKE';
 
         foreach ($filters as $field => $rule) {
             if (! isset($fields[$field])) {
@@ -51,10 +52,13 @@ class Filter extends Action
             }
             switch ($rule[0]) {
                 case 'LIKE':
-                    if (false !== \strpos($rule[1], '*')) {
+                    if (
+                        false !== \strpos($rule[1], '*')
+                        || 'ILIKE' === $like
+                    ) {
                         // кроме * есть другие символы
                         if ('' != \trim($rule[1], '*')) {
-                            $where[] = "u.{$field} LIKE ?{$fields[$field]} ESCAPE '#'";
+                            $where[] = "u.{$field} {$like} ?{$fields[$field]} ESCAPE '#'";
                             $vars[]  = \str_replace(['#', '%', '_', '*'], ['##', '#%', '#_', '%'], $rule[1]);
                         }
                         break;
