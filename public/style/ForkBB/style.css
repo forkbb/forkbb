@@ -1268,6 +1268,7 @@ body,
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    max-width: 100%;
   }
 
   #fork .f-ftlist .f-cltime {
