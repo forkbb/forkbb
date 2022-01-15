@@ -549,7 +549,7 @@ class Mail
     }
 
     /**
-     * Возвращает массив расширений из отвена сервера
+     * Возвращает массив расширений из ответа сервера
      */
     protected function smtpExtn(string $response): array
     {
@@ -655,6 +655,10 @@ class Mail
                                 throw new SmtpException("The server \"{$this->smtp['host']}:{$this->smtp['port']}\" requires STARTTLS, but \stream_socket_enable_crypto() was not found.");
                             }
                         }
+
+                        $this->auth = 1;
+
+                        return;
                     }
                 }
             default:
