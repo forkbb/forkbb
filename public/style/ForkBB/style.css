@@ -620,6 +620,14 @@ body,
   background-color: #FFCCBA;
 }
 
+#fork .f-icontent > a,
+#fork .f-scontent > a,
+#fork .f-wcontent > a,
+#fork .f-econtent > a,
+#fork .f-vcontent > a {
+  text-decoration: underline;
+}
+
 /*********/
 /* Формы */
 /*********/
