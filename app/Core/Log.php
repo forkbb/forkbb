@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace ForkBB\Core;
 
+use ForkBB\Core\Container;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Psr\Log\InvalidArgumentException;
@@ -22,14 +23,21 @@ class Log implements LoggerInterface
 {
     const JSON_OPTIONS = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
 
+    /**
+     * Контейнер
+     * @var Container
+     */
+    protected $c;
+
     protected $path;
     protected $lineFormat;
     protected $timeFormat;
     protected $resource;
     protected $hidePath;
 
-    public function __construct(array $config)
+    public function __construct(array $config, Container $c)
     {
+        $this->c          = $c;
         $this->path       = $config['path']       ?? __DIR__ . '/../log/{Y-m-d}.log';
         $this->lineFormat = $config['lineFormat'] ?? "%datetime% [%level_name%] %message%\t%context%\n";
         $this->timeFormat = $config['timeFormat'] ?? 'Y-m-d H:i:s';
@@ -66,9 +74,13 @@ class Log implements LoggerInterface
         if (! \is_string($message)) {
             throw new InvalidArgumentException('Expected string in message');
         }
+
+        $message = $this->c->Secury->replInvalidChars($message);
+
         if (! \is_string($level)) {
             throw new InvalidArgumentException('Expected string in level');
         }
+
         switch ($level) {
             case LogLevel::EMERGENCY:
             case LogLevel::ALERT:
@@ -83,6 +95,7 @@ class Log implements LoggerInterface
                 throw new InvalidArgumentException('Invalid level value');
         }
 
+        $context = $this->c->Secury->replInvalidChars($context);
         $context = $this->contextExp($level, $context);
         $line    = $this->generateLine($level, $message, $context);
 
