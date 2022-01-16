@@ -369,7 +369,9 @@ class Validator
                 list($type, $message) = $message;
             }
 
-            $this->errors[$type][] = [$message, [':alias' => __($alias), ':attr' => $attr]];
+            $this->errors[$type][] = \is_array($message)
+                ? $message
+                : [$message, [':alias' => __($alias), ':attr' => $attr]];
         } elseif (\is_array($error)) {
             $this->errors[$type][] = $error;
         } else {
