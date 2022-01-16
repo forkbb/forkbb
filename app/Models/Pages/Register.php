@@ -42,7 +42,7 @@ class Register extends Page
                 'password' => 'Passphrase',
             ])->addMessages([
                 'agree.required'    => ['cancel', 'cancel'],
-                'agree.token'       => ['w', __(['Bad agree', $this->c->Router->link('Register')])],
+                'agree.token'       => ['w', ['Bad agree', $this->c->Router->link('Register')]],
                 'password.password' => 'Pass format',
                 'username.login'    => 'Login format',
             ]);
