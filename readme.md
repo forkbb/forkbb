@@ -14,7 +14,7 @@ No: plugins/extensions system, ...
 
 * PHP 7.3+
 * PHP extensions: pdo, intl, json, mbstring, fileinfo
-* PHP extensions (desirable): gd or imagick (for upload avatars and other images)
+* PHP extensions (suggests): imagick or gd (for upload avatars and other images), openssl (for send email via smtp server using SSL/TLS)
 * A database such as MySQL 5.5.3+, SQLite 3.25+, PostgreSQL 10+(?)
 
 ## Install
