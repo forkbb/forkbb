@@ -10,12 +10,19 @@ declare(strict_types=1);
 
 namespace ForkBB\Core;
 
+use ForkBB\Core\Container;
 use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Core\Exceptions\SmtpException;
 use function \ForkBB\e;
 
 class Mail
 {
+    /**
+     * Контейнер
+     * @var Container
+     */
+    protected $c;
+
     /**
      * @var string
      */
@@ -84,8 +91,10 @@ class Mail
      */
     protected $response;
 
-    public function __construct(/* string */ $host, /* string */ $user, /* string */ $pass, /* bool */ $ssl, /* string */ $eol)
+    public function __construct(/* string */ $host, /* string */ $user, /* string */ $pass, /* bool */ $ssl, /* string */ $eol, Container $c)
     {
+        $this->c = $c;
+
         if (
             \is_string($host)
             && \strlen(\trim($host)) > 0
@@ -157,11 +166,15 @@ class Mail
 
 
         if ($strict) {
+            $level = $this->c->ErrorHandler->logOnly(\E_WARNING);
+
             if ($ip) {
-                $mx = @\checkdnsrr($ip, 'MX'); // ???? ipv6?
+                $mx = \checkdnsrr($ip, 'MX'); // ipv6 в пролёте :(
             } else {
-                $mx = @\dns_get_record($domainASCII, \DNS_MX);
+                $mx = \dns_get_record($domainASCII, \DNS_MX);
             }
+
+            $this->c->ErrorHandler->logOnly($level);
 
             if (empty($mx)) {
                 return false;
@@ -483,7 +496,10 @@ class Mail
     {
         // подлючение
         if (! \is_resource($this->connect)) {
-            $connect = @\fsockopen($this->smtp['host'], $this->smtp['port'], $errno, $errstr, $this->smtp['timeout']);
+            $level   = $this->c->ErrorHandler->logOnly(\E_WARNING);
+            $connect = \fsockopen($this->smtp['host'], $this->smtp['port'], $errno, $errstr, $this->smtp['timeout']);
+
+            $this->c->ErrorHandler->logOnly($level);
 
             if (false === $connect) {
                 throw new SmtpException("Couldn't connect to smtp host \"{$this->smtp['host']}:{$this->smtp['port']}\" ({$errno}) ({$errstr}).");
@@ -590,11 +606,14 @@ class Mail
                         ) {
                             $this->smtpData('STARTTLS', ['220']);
 
-                            $crypto = @\stream_socket_enable_crypto(
+                            $level  = $this->c->ErrorHandler->logOnly(\E_WARNING);
+                            $crypto = \stream_socket_enable_crypto(
                                 $this->connect,
                                 true,
                                 \STREAM_CRYPTO_METHOD_TLS_CLIENT
                             );
+
+                            $this->c->ErrorHandler->logOnly($level);
 
                             if (true !== $crypto) {
                                 throw new SmtpException('Failed to enable encryption on the stream using TLS.');
@@ -673,23 +692,32 @@ class Mail
      * Проверяет ответ
      * Возвращает код ответа
      */
-    protected function smtpData(?string $data, ?array $code): string
+    protected function smtpData(?string $data, ?array $responseOptions): string
     {
+        $level = $this->c->ErrorHandler->logOnly(\E_WARNING);
+
         if (
             \is_resource($this->connect)
             && null !== $data
-            && false === @\fwrite($this->connect, $data . $this->EOL)
+            && false === \fwrite($this->connect, $data . $this->EOL)
         ) {
+            $this->c->ErrorHandler->logOnly($level);
+
             throw new SmtpException('Couldn\'t send data to mail server.');
         }
 
         $this->response = '';
-        $return         = '';
+        $responseCode   = '';
 
-        while (\is_resource($this->connect) && ! \feof($this->connect)) {
-            $get = @\fgets($this->connect, 512);
+        while (
+            \is_resource($this->connect)
+            && ! \feof($this->connect)
+        ) {
+            $get = \fgets($this->connect, 512);
 
             if (false === $get) {
+                $this->c->ErrorHandler->logOnly($level);
+
                 throw new SmtpException('Couldn\'t get mail server response codes.');
             }
 
@@ -699,19 +727,21 @@ class Mail
                 isset($get[3])
                 && ' ' === $get[3]
             ) {
-                $return = \substr($get, 0, 3);
+                $responseCode = \substr($get, 0, 3);
                 break;
             }
         }
 
+        $this->c->ErrorHandler->logOnly($level);
+
         if (
-            null !== $code
-            && ! \in_array($return, $code, true)
+            null !== $responseOptions
+            && ! \in_array($responseCode, $responseOptions, true)
         ) {
             throw new SmtpException("Unable to send email. Response of mail server: \"{$this->response}\"");
         }
 
-        return $return;
+        return $responseCode;
     }
 
     /**
