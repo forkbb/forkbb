@@ -571,7 +571,7 @@ class Mail
     {
         $result = [];
 
-        if (\preg_match_all('%250[- ]([0-9A-Z]+)(?:[ =]([^\n\r]+))?%', $response, $matches, \PREG_SET_ORDER)) {
+        if (\preg_match_all('%250[- ]([0-9A-Z_-]+)(?:[ =]([^\n\r]+))?%', $response, $matches, \PREG_SET_ORDER)) {
             foreach ($matches as $cur) {
                 $result[$cur[1]] = $cur[2] ?? '';
             }
