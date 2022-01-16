@@ -63,6 +63,12 @@ class ErrorHandler
         \E_USER_DEPRECATED   => ['E_USER_DEPRECATED',   'warning'],
     ];
 
+    /**
+     * Уровень ошибок только для логирования
+     * @var int
+     */
+    protected $logOnly = 0;
+
     public function __construct()
     {
         $this->hidePath = \realpath(__DIR__ . '/../../');
@@ -85,7 +91,19 @@ class ErrorHandler
 
     public function setContainer(Container $c): void
     {
-        $this->c = $c;
+        $this->c         = $c;
+        $c->ErrorHandler = $this;
+    }
+
+    /**
+     * Устанавливает уровень ошибок, которые логируются без остановки(?) скрипта
+     */
+    public function logOnly(int $level): int
+    {
+        $result        = $this->logOnly;
+        $this->logOnly = $level;
+
+        return $result;
     }
 
     /**
@@ -93,7 +111,12 @@ class ErrorHandler
      */
     public function errorHandler(int $type, string $message, string $file, int $line): bool
     {
-        if ($type & \error_reporting()) {
+        $logOnly = $this->logOnly & $type;
+
+        if (
+            $type & \error_reporting()
+            || $logOnly
+        ) {
             $this->error = [
                 'type'    => $type,
                 'message' => $message,
@@ -104,7 +127,13 @@ class ErrorHandler
 
             $this->log($this->error);
 
-            exit(1);
+            if ($logOnly) {
+                $this->error = [];
+
+                \error_clear_last();
+            } else {
+                exit(1);
+            }
         }
 
         return true;
