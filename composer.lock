@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "da7ccb828a77c43a0cb4be769bea107b",
+    "content-hash": "fb119441777a90db88756c96d2e75e12",
     "packages": [
         {
             "name": "artoodetoo/dirk",
