@@ -308,7 +308,7 @@ class Sqlite
 
                     break;
             }
-        } while ('' !== \trim($subSchema));
+        } while ('' != \trim($subSchema));
 
         return $result;
     }

@@ -23,8 +23,8 @@ class Insert extends Method
         if (
             isset($data['id'])
             || ! isset($data['sm_code'], $data['sm_position'], $data['sm_image'])
-            || '' === $data['sm_code']
-            || '' === $data['sm_image']
+            || '' == $data['sm_code']
+            || '' == $data['sm_image']
         ) {
             throw new InvalidArgumentException('Expected an array with a smile description');
         }

@@ -287,7 +287,7 @@ class Post extends Page
             ! $merge
             && ! $this->user->isGuest
         ) {
-            if (0 === $forum->no_sum_mess) {
+            if (0 == $forum->no_sum_mess) {
                 $this->user->num_posts = $this->user->num_posts + 1;
 
                 if (

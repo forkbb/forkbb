@@ -127,7 +127,7 @@ class Online extends Model
             if ($cur['user_id'] > 0) {
                 $users[$cur['user_id']] = $cur['ident'];
             // гость
-            } elseif ('' === $cur['o_name']) {
+            } elseif ('' == $cur['o_name']) {
                 $guests[] = $cur['ident'];
             // бот
             } else {

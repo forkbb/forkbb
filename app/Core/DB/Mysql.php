@@ -226,7 +226,7 @@ class Mysql
         $table = $this->tName($table);
         $vars  = [
             ':tname' => $table,
-            ':index' => 'PRIMARY' === $index ? $index : $table . '_' . $index,
+            ':index' => 'PRIMARY' == $index ? $index : $table . '_' . $index,
         ];
         $query = 'SELECT 1
             FROM INFORMATION_SCHEMA.STATISTICS
@@ -418,7 +418,7 @@ class Mysql
         $stmt->closeCursor();
 
         $type      = $result['COLUMN_TYPE'];
-        $allowNull = 'YES' === $result['IS_NULLABLE'];
+        $allowNull = 'YES' == $result['IS_NULLABLE'];
         $default   = $result['COLUMN_DEFAULT'];
         $collate   = \str_replace('utf8mb4_', '', $result['COLLATION_NAME'], $count);
 
@@ -444,7 +444,7 @@ class Mysql
 
         $query = "ALTER TABLE `{$table}` ADD ";
 
-        if ('PRIMARY' === $index) {
+        if ('PRIMARY' == $index) {
             $query .= 'PRIMARY KEY';
         } else {
             $this->nameCheck($index);
@@ -471,7 +471,7 @@ class Mysql
 
         $query = "ALTER TABLE `{$table}` DROP ";
 
-        if ('PRIMARY' === $index) {
+        if ('PRIMARY' == $index) {
             $query .= "PRIMARY KEY";
         } else {
             $this->nameCheck($index);

@@ -33,7 +33,7 @@ class Load extends Method
                     $value = \json_decode($row['conf_value'], true, 512, \JSON_THROW_ON_ERROR);
                     break;
                 case 'b':
-                    $value = '1' === $row['conf_value'] ? 1 : 0;
+                    $value = '1' == $row['conf_value'] ? 1 : 0;
                     break;
                 case 'i':
                     if (null !== $row['conf_value']) {

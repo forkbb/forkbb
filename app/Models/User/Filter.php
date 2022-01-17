@@ -57,7 +57,7 @@ class Filter extends Action
                         || 'ILIKE' === $like
                     ) {
                         // кроме * есть другие символы
-                        if ('' !== \trim($rule[1], '*')) {
+                        if ('' != \trim($rule[1], '*')) {
                             $where[] = "u.{$field} {$like} ?{$fields[$field]} ESCAPE '#'";
                             $vars[]  = \str_replace(['#', '%', '_', '*'], ['##', '#%', '#_', '%'], $rule[1]);
                         }

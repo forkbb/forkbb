@@ -175,7 +175,7 @@ class Container
                     $value = \preg_replace_callback(
                         '~\\\%|%([a-z0-9_]+(?:\.[a-z0-9_]+)*)%~i',
                         function ($matches) {
-                            return '\\%' === $matches[0] ? '%' : $this->__get($matches[1]);
+                            return '\\%' == $matches[0] ? '%' : $this->__get($matches[1]);
                         },
                         $value
                     );

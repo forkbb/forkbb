@@ -125,7 +125,7 @@ abstract class Profile extends Page
             ];
         }
         if (
-            'edit' !== $type
+            'edit' != $type
             && $this->rules->editProfile
         ) {
             $btns['edit-profile'] = [
@@ -138,14 +138,14 @@ abstract class Profile extends Page
                 __('Edit '),
             ];
         }
-        if ('view' !== $type) {
+        if ('view' != $type) {
             $btns['view-profile'] = [
                 $this->curUser->link,
                 __('View '),
             ];
         }
         if (
-            'config' !== $type
+            'config' != $type
             && $this->rules->editConfig
         ) {
             $btns['edit-settings'] = [

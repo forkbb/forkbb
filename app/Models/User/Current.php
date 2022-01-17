@@ -122,7 +122,7 @@ class Current extends Action
      */
     protected function isBot(string $agent) /* string|false */
     {
-        if ('' === $agent) {
+        if ('' == $agent) {
             return false;
         }
         $agentL = \strtolower($agent);

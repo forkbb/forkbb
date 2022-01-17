@@ -54,7 +54,7 @@ class BanList extends Model
     {
         $val = \trim($val ?? '');
 
-        if ('' === $val) {
+        if ('' == $val) {
             return null;
         } elseif ($toLower) {
             return \mb_strtolower($val, 'UTF-8');

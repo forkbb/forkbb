@@ -39,7 +39,7 @@ class Stat extends Users
 
         $user = $this->c->users->load($args['id']);
 
-        if (! $number) {
+        if (0 == $number) {
             $this->fIswev = ['i', 'Results no posts found'];
         }
 

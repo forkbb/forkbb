@@ -29,9 +29,9 @@ class Insert extends Method
         }
 
         if (
-            '' === $ban['username']
-            && '' === $ban['ip']
-            && '' === $ban['email']
+            '' == $ban['username']
+            && '' == $ban['ip']
+            && '' == $ban['email']
         ) {
             throw new InvalidArgumentException('Empty ban');
         }

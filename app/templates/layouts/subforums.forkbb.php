@@ -10,7 +10,7 @@
                       <a class="f-ftname" href="{{ $cur->redirect_url }}">{{ $cur->forum_name }}</a>
                     </span>
                   </h3>
-        @if ('' !== $cur->forum_desc)
+        @if ('' != $cur->forum_desc)
                   <p class="f-fdesc">{!! $cur->forum_desc !!}</p>
         @endif
                 </div>
@@ -45,7 +45,7 @@
             @endforeach
                   </dl><!-- endinline -->
         @endif
-        @if ('' !== $cur->forum_desc)
+        @if ('' != $cur->forum_desc)
                   <p class="f-fdesc">{!! $cur->forum_desc !!}</p>
         @endif
         @if ($cur->moderators)

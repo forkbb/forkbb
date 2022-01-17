@@ -261,11 +261,11 @@ class Lang
                 continue;
 
             // комментарий
-            } elseif ('#' === $line[0]) {
+            } elseif ('#' == $line[0]) {
                 continue;
 
             // многострочное содержимое
-            } elseif ('"' === $line[0]) {
+            } elseif ('"' == $line[0]) {
                 if (isset($curComm)) {
                     $curVal .= $this->originalLine($line);
                 }
@@ -336,8 +336,8 @@ class Lang
     {
         if (
             isset($line[1])
-            && '"' === $line[0]
-            && '"' === $line[-1]
+            && '"' == $line[0]
+            && '"' == $line[-1]
         ) {
             $line = \substr($line, 1, -1);
         }

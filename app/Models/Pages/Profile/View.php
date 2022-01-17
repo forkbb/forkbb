@@ -91,7 +91,7 @@ class View extends Profile
         // примечание администрации
         if (
             $this->user->isAdmMod
-            && '' !== $this->curUser->admin_note
+            && '' != $this->curUser->admin_note
         ) {
             $form['sets']['note'] = [
                 'class'  => ['data'],
@@ -109,7 +109,7 @@ class View extends Profile
 
         // личное
         $fields = [];
-        if ('' !== $this->curUser->realname) {
+        if ('' != $this->curUser->realname) {
             $fields['realname'] = [
                 'class'   => ['pline'],
                 'type'    => 'str',
@@ -129,7 +129,7 @@ class View extends Profile
                 'caption' => 'Gender',
             ];
         }
-        if ('' !== $this->curUser->location) {
+        if ('' != $this->curUser->location) {
             $fields['location'] = [
                 'class'   => ['pline'],
                 'type'    => 'str',

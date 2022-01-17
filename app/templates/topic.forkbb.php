@@ -91,7 +91,7 @@
             </ul>
         @if (! $post->user->isGuest && $p->user->showUserInfo)
             <ul class="f-user-info-add">
-            @if ($p->user->isAdmMod && '' !== $post->user->admin_note)
+            @if ($p->user->isAdmMod && '' != $post->user->admin_note)
               <li class="f-admin-note" title="{{ __('Admin note') }}">{{ $post->user->admin_note }}</li>
             @endif
               <li>{!! __(['Registered: %s', dt($post->user->registered, true)]) !!}</li>

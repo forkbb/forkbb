@@ -332,7 +332,7 @@ class Groups extends Admin
         }
         if (
             isset($data['g_promote_next_group'])
-            && 0 === $data['g_promote_next_group'] * $data['g_promote_min_posts']
+            && 0 == $data['g_promote_next_group'] * $data['g_promote_min_posts']
         ) {
             $data['g_promote_next_group'] = 0;
             $data['g_promote_min_posts']  = 0;

@@ -481,7 +481,7 @@ class Search extends Page
                 ) {
                     break;
                 }
-                if ('forums_subscriptions' === $action) {
+                if ('forums_subscriptions' == $action) {
                     $list = $model->actionF($action, $forum, $user->id);
                 } elseif ($asTopicsList) {
                     $list = $model->actionT($action, $forum, $user->id);
@@ -514,7 +514,7 @@ class Search extends Page
 
             $this->nameTpl = 'forum';
 
-            if ('forums_subscriptions' === $action) {
+            if ('forums_subscriptions' == $action) {
                 $this->c->Lang->load('subforums');
 
                 $model->subforums = $list;

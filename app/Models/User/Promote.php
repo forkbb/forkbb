@@ -24,7 +24,7 @@ class Promote extends Action
         $count = \count($args);
 
         // перемещение всех пользователей из группы 0 в группу 1
-        if (2 === $count) {
+        if (2 == $count) {
             $vars = [
                 ':old' => $args[0]->g_id,
                 ':new' => $args[1]->g_id,
@@ -35,7 +35,7 @@ class Promote extends Action
 
             return $this->c->DB->exec($query, $vars);
         // продвижение всех пользователей в группе 0
-        } elseif (1 === $count) {
+        } elseif (1 == $count) {
             $vars = [
                 ':old'   => $args[0]->g_id,
                 ':new'   => $args[0]->g_promote_next_group,

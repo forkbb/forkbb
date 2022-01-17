@@ -249,23 +249,15 @@ abstract class Page extends Model
 
         if (
             1 === $this->user->g_read_board
-            && '' !== $this->c->config->o_additional_navlinks
+            && '' != $this->c->config->o_additional_navlinks
         ) {
             // position|name|link[|id]\n
-            if (
-                \preg_match_all(
-                    '%^(\d+)\|([^\|\n\r]+)\|([^\|\n\r]+)(?:\|([^\|\n\r]+))?%m',
-                    $this->c->config->o_additional_navlinks . "\n",
-                    $matches
-                )
-            ) {
+            if (\preg_match_all('%^(\d+)\|([^\|\n\r]+)\|([^\|\n\r]+)(?:\|([^\|\n\r]+))?%m', $this->c->config->o_additional_navlinks . "\n", $matches)) {
                $k = \count($matches[0]);
-
                for ($i = 0; $i < $k; ++$i) {
                    if (empty($matches[4][$i])) {
                        $matches[4][$i] = 'extra' . $i;
                    }
-
                    if (isset($navGen[$matches[4][$i]])) {
                        $navGen[$matches[4][$i]] = [$matches[3][$i], $matches[2][$i], $matches[2][$i]];
                    } else {
