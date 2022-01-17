@@ -78,7 +78,7 @@ msgid "New icon"
 msgstr "New post"
 
 msgid "Re"
-msgstr "Re:"
+msgstr "Re: "
 
 msgid "Preview"
 msgstr "Preview"
