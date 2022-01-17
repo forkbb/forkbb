@@ -113,7 +113,8 @@ body,
 	border: 0;
 	font: inherit;
   box-sizing: border-box;
-  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 body,
@@ -715,7 +716,7 @@ body,
 #fork .f-yinfo {
   display: block;
   width: 100%;
-  word-wrap: break-word;
+  /* overflow-wrap: break-word; */
 }
 
 #fork .f-ycaption {
@@ -1673,6 +1674,7 @@ body,
   #fork .f-user-info-first {
     display: block;
     margin-bottom: 0.625rem;
+    width: 100%;
   }
 
   #fork .f-user-info .f-username {
@@ -1687,6 +1689,7 @@ body,
 
   #fork .f-user-info {
     flex-grow: 0;
+    width: 100%;
   }
 
   #fork .f-user-info > li:not(.f-username),
@@ -2117,6 +2120,7 @@ body,
     display: block;
     font-size: 0.875rem;
     padding-top: 0.625rem;
+    width: 100%;
   }
 }
 
