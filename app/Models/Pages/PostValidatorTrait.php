@@ -22,7 +22,7 @@ trait PostValidatorTrait
     public function vCheckSubject(Validator $v, string $subject, $attr, bool $executive): string
     {
         // после цензуры заголовок темы путой
-        if ('' == $this->c->censorship->censor($subject)) {
+        if ('' === $this->c->censorship->censor($subject)) {
             $v->addError('No subject after censoring');
         // заголовок темы только заглавными буквами
         } elseif (
@@ -45,7 +45,7 @@ trait PostValidatorTrait
         $prepare = null;
 
         // после цензуры текст сообщения пустой
-        if ('' == $this->c->censorship->censor($message)) {
+        if ('' === $this->c->censorship->censor($message)) {
             $v->addError('No message after censoring');
         // проверка парсером
         } else {

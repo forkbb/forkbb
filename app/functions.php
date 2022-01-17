@@ -117,9 +117,9 @@ function dt(int $arg, bool $dateOnly = false, string $dateFormat = null, string 
     if (! $noText) {
         $now = \time() + $diff;
 
-        if ($date == \gmdate($dateFormat, $now)) {
+        if ($date === \gmdate($dateFormat, $now)) {
             $date = __('Today');
-        } elseif ($date == \gmdate($dateFormat, $now - 86400)) {
+        } elseif ($date === \gmdate($dateFormat, $now - 86400)) {
             $date = __('Yesterday');
         }
     }

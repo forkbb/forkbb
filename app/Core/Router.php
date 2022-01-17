@@ -197,7 +197,7 @@ class Router
      */
     public function route(string $method, string $uri): array
     {
-        $head = 'HEAD' == $method;
+        $head = 'HEAD' === $method;
 
         if (
             empty($this->methods[$method])

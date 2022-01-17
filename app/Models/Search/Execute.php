@@ -70,7 +70,7 @@ class Execute extends Method
             && \time() - $row['search_time'] < 60 * 5
         ) { //????
             $result                    = \explode("\n", $row['search_data']);
-            $this->model->queryIds     = '' == $result[0] ? [] : \array_map('\\intval', \explode(',', $result[0]));
+            $this->model->queryIds     = '' === $result[0] ? [] : \array_map('\\intval', \explode(',', $result[0]));
             $this->model->queryNoCache = false;
 
             return true;

@@ -186,7 +186,7 @@ class Register extends Page
         // уведомление о регистрации
         if (
             1 === $this->c->config->b_regs_report
-            && '' != $this->c->config->o_mailing_list
+            && '' !== $this->c->config->o_mailing_list
         ) {
             $this->c->Lang->load('common', $this->c->config->o_default_lang);
 
@@ -294,7 +294,7 @@ class Register extends Page
         // уведомление о дубликате email
         if (
             1 === $this->c->config->b_regs_report
-            && '' != $this->c->config->o_mailing_list
+            && '' !== $this->c->config->o_mailing_list
         ) {
             $this->c->Lang->load('common', $this->c->config->o_default_lang);
 

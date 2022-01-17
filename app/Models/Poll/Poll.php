@@ -274,7 +274,8 @@ class Poll extends DataModel
         foreach (\array_keys($this->question) as $q) {
             if ($this->type[$q] > 1) {
                 $count = \count($vote[$q]);
-                if (0 == $count) {
+
+                if (! $count) {
                     return __(['No vote on question %s', $q]);
                 } elseif ($count > $this->type[$q]) {
                     return __(['Too many answers selected in question %s', $q]);

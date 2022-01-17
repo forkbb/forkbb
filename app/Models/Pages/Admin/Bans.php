@@ -313,7 +313,8 @@ class Bans extends Admin
 
         foreach ($data as $field => $value) {
             if (
-                '' == $value
+                null === $value
+                || '' === $value
                 || 'order_by' === $field
                 || 'direction' === $field
             ) {
@@ -360,10 +361,10 @@ class Bans extends Admin
             return $this->c->Message->message('Bad request');
         }
 
-        $idsN = $this->forFilter($data);
-
+        $idsN   = $this->forFilter($data);
         $number = \count($idsN);
-        if (0 == $number) {
+
+        if (! $number) {
             $this->fIswev = ['i', 'No bans found'];
 
             return $this->view([], 'GET', $data);
@@ -844,9 +845,9 @@ class Bans extends Admin
     {
         if (
             $this->banCount < 1
-            && '' == $v->username
-            && '' == $v->ip
-            && '' == $v->email
+            && '' === $v->username
+            && '' === $v->ip
+            && '' === $v->email
         ) {
             $v->addError('Must enter message');
         }

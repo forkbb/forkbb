@@ -220,9 +220,9 @@ class User extends DataModel
     {
         if ($this->isBanByName) {
             return __('Banned');
-        } elseif ('' != $this->title) {
+        } elseif ('' !== $this->title) {
             return $this->censorTitle;
-        } elseif ('' != $this->g_user_title) {
+        } elseif ('' !== $this->g_user_title) {
             return $this->censorG_user_title;
         } elseif ($this->isGuest) {
             return __('Guest');
@@ -248,7 +248,7 @@ class User extends DataModel
     {
         return $this->g_sig_length > 0
             && $this->g_sig_lines > 0
-            && '' != $this->signature;
+            && '' !== $this->signature;
     }
 
     /**

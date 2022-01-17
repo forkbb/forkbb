@@ -42,7 +42,8 @@ class Result extends Users
         }
 
         $number = \count($idsN);
-        if (0 == $number) {
+
+        if (! $number) {
             $view = $this->c->AdminUsers;
             $view->fIswev = ['i', 'No users found'];
 

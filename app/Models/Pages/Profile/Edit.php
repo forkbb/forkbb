@@ -172,11 +172,11 @@ class Edit extends Profile
      */
     public function vCheckSignature(Validator $v, string $signature): string
     {
-        if ('' != $signature) {
+        if ('' !== $signature) {
             $prepare = null;
 
             // после цензуры текст сообщения пустой
-            if ('' == $this->c->censorship->censor($signature)) {
+            if ('' === $this->c->censorship->censor($signature)) {
                 $v->addError('No signature after censoring');
             // количество строк
             } elseif (\substr_count($signature, "\n") >= $this->curUser->g_sig_lines) {

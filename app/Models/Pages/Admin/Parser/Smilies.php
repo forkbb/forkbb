@@ -96,12 +96,15 @@ class Smilies extends Parser
                 $new = $v->smilies;
 
                 foreach ($new as $id => $cur) {
-                    if (isset($old[$id]) && $cur != $old[$id]) {
+                    if (
+                        isset($old[$id])
+                        && $cur !== $old[$id]
+                    ) {
                         $this->c->smilies->update($id, $cur);
                     }
                 }
 
-                if ('' != $v->new_sm_code) {
+                if ($v->new_sm_code) {
                     $this->c->smilies->insert([
                         'sm_code'     => $v->new_sm_code,
                         'sm_position' => $v->new_sm_position,
