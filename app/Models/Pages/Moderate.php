@@ -290,8 +290,8 @@ class Moderate extends Page
                 $this->formTitle   = ['Open topic title', $this->numObj];
                 $this->buttonValue = ['Open topic btn', $this->numObj];
                 $this->crumbs      = $this->crumbs(
-                    __($this->formTitle),
-                    __('Moderate'),
+                    [null, $this->formTitle],
+                    'Moderate',
                     $v->topic ? $this->curTopic : $this->curForum
                 );
                 $this->form        = $this->formConfirm($topics, $v);
@@ -317,8 +317,8 @@ class Moderate extends Page
                 $this->formTitle   = ['Close topic title', $this->numObj];
                 $this->buttonValue = ['Close topic btn', $this->numObj];
                 $this->crumbs      = $this->crumbs(
-                    __($this->formTitle),
-                    __('Moderate'),
+                    [null, $this->formTitle],
+                    'Moderate',
                     $v->topic ? $this->curTopic : $this->curForum
                 );
                 $this->form        = $this->formConfirm($topics, $v);
@@ -371,8 +371,8 @@ class Moderate extends Page
                     $this->numObj,
                 ];
                 $this->crumbs      = $this->crumbs(
-                    __($this->formTitle),
-                    __('Moderate'),
+                    [null, $this->formTitle],
+                    'Moderate',
                     $v->topic ? $this->curTopic : $this->curForum
                 );
                 $this->form        = $this->formConfirm($objects, $v);
@@ -404,8 +404,8 @@ class Moderate extends Page
                 $this->formTitle   = ['Move topic title', $this->numObj];
                 $this->buttonValue = ['Move topic btn', $this->numObj];
                 $this->crumbs      = $this->crumbs(
-                    __($this->formTitle),
-                    __('Moderate'),
+                    [null, $this->formTitle],
+                    'Moderate',
                     $v->topic ? $this->curTopic : $this->curForum
                 );
                 $this->chkRedirect = true;
@@ -444,7 +444,7 @@ class Moderate extends Page
             case 1:
                 $this->formTitle   = 'Merge topics title';
                 $this->buttonValue = 'Merge btn';
-                $this->crumbs      = $this->crumbs(__($this->formTitle), __('Moderate'), $this->curForum);
+                $this->crumbs      = $this->crumbs($this->formTitle, 'Moderate', $this->curForum);
                 $this->chkRedirect = true;
                 $this->form        = $this->formConfirm($topics, $v);
 
@@ -469,8 +469,8 @@ class Moderate extends Page
                 $this->formTitle   = ['Unstick topic title', $this->numObj];
                 $this->buttonValue = ['Unstick btn', $this->numObj];
                 $this->crumbs      = $this->crumbs(
-                    __($this->formTitle),
-                    __('Moderate'),
+                    [null, $this->formTitle],
+                    'Moderate',
                     $v->topic ? $this->curTopic : $this->curForum
                 );
                 $this->form        = $this->formConfirm($topics, $v);
@@ -499,8 +499,8 @@ class Moderate extends Page
                 $this->formTitle   = ['Stick topic title', $this->numObj];
                 $this->buttonValue = ['Stick btn', $this->numObj];
                 $this->crumbs      = $this->crumbs(
-                    __($this->formTitle),
-                    __('Moderate'),
+                    [null, $this->formTitle],
+                    'Moderate',
                     $v->topic ? $this->curTopic : $this->curForum
                 );
                 $this->form        = $this->formConfirm($topics, $v);
@@ -529,7 +529,7 @@ class Moderate extends Page
                 $this->formTitle   = 'Split posts title';
                 $this->buttonValue = 'Split btn';
                 $this->needSubject = true;
-                $this->crumbs      = $this->crumbs(__($this->formTitle), __('Moderate'), $this->curTopic);
+                $this->crumbs      = $this->crumbs($this->formTitle, 'Moderate', $this->curTopic);
                 $this->form        = $this->formConfirm($posts, $v);
 
                 return $this;

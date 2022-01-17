@@ -152,7 +152,7 @@ class Userlist extends Page
         $this->crumbs       = $this->crumbs(
             [
                 $this->c->Router->link('Userlist'),
-                __('User list'),
+                'User list',
             ]
         );
         $this->pagination   = $this->c->Func->paginate($pages, $page, 'Userlist', $args);

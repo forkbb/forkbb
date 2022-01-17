@@ -109,7 +109,7 @@ class Report extends Page
 //        $this->onlinePos = 'forum-' . $forum->id;
 //        $this->canonical = $this->c->Router->link('NewTopic', ['id' => $forum->id]);
         $this->robots    = 'noindex';
-        $this->crumbs    = $this->crumbs(__('Report post'), $topic);
+        $this->crumbs    = $this->crumbs('Report post', $topic);
         $this->form      = $this->formReport($args, $data);
 
         return $this;

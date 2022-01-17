@@ -67,7 +67,7 @@ class PMView extends AbstractPM
                     $this->form       = $this->formConfirm($v, $this->args);
                     $this->formClass  = 'post';
                     $this->formTitle  = Cnst::PT_ARCHIVE === $this->vStatus ? 'InfoSaveQt' : 'InfoDeleteQt';
-                    $this->pmCrumbs[] = __(Cnst::PT_ARCHIVE === $this->vStatus ? 'InfoSaveQ' : 'InfoDeleteQ');
+                    $this->pmCrumbs[] = Cnst::PT_ARCHIVE === $this->vStatus ? 'InfoSaveQ' : 'InfoDeleteQ';
 
                     return $this;
                 } elseif (1 !== $v->confirm) {

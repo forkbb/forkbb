@@ -72,14 +72,8 @@ class Statistics extends Admin
 
         $this->nameTpl    = 'admin/phpinfo';
         $this->mainSuffix = '-one-column';
-        $this->aCrumbs[]  = [
-            $this->c->Router->link('AdminInfo'),
-            'phpinfo()',
-        ];
-        $this->aCrumbs[]  = [
-            $this->c->Router->link('AdminStatistics'),
-            __('Server statistics'),
-        ];
+        $this->aCrumbs[]  = [$this->c->Router->link('AdminInfo'), ['%s', 'phpinfo()']];
+        $this->aCrumbs[]  = [$this->c->Router->link('AdminStatistics'), 'Server statistics'];
         $this->phpinfo    = $phpinfo;
 
         return $this;
@@ -111,10 +105,7 @@ class Statistics extends Admin
         $this->c->Lang->load('admin_index');
 
         $this->nameTpl   = 'admin/statistics';
-        $this->aCrumbs[] = [
-            $this->c->Router->link('AdminStatistics'),
-            __('Server statistics'),
-        ];
+        $this->aCrumbs[] = [$this->c->Router->link('AdminStatistics'), 'Server statistics'];
         $this->linkInfo  = $this->c->Router->link('AdminInfo');
 
         // Get the server load averages (if possible)

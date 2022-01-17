@@ -35,10 +35,10 @@ class Result extends Users
             }
 
             $idsN   = $this->forIP($data['ip']);
-            $crName = $data['ip'];
+            $crName = ['%s', $data['ip']];
         } else {
             $idsN   = $this->forFilter($data);
-            $crName = __('Results head');
+            $crName = 'Results head';
         }
 
         $number = \count($idsN);

@@ -53,10 +53,7 @@ class PMPost extends AbstractPM
             $this->targetUser = $this->c->users->load($args['more1']);
             $this->newTopic   = true;
             $this->formTitle  = 'New PT title';
-            $this->pmCrumbs[] = [
-                $this->c->Router->link('PMAction', $args),
-                __('New dialogue'),
-            ];
+            $this->pmCrumbs[] = [$this->c->Router->link('PMAction', $args), 'New dialogue'];
             $topic            = $this->pms->create(Cnst::PTOPIC);
             $topic->sender    = $this->user;
             $topic->recipient = $this->targetUser;
@@ -72,10 +69,7 @@ class PMPost extends AbstractPM
             $this->pms->area  = $this->pms->inArea($topic);
             $this->newTopic   = false;
             $this->formTitle  = Cnst::ACTION_ARCHIVE === $this->pms->area ? 'New PM title archive' : 'New PM title';
-            $this->pmCrumbs[] = [
-                $this->c->Router->link('PMAction', $args),
-                __('New message'),
-            ];
+            $this->pmCrumbs[] = [$this->c->Router->link('PMAction', $args), 'New message'];
             $this->pmCrumbs[] = $topic;
         } else {
             return $this->c->Message->message('Not Found', true, 404);

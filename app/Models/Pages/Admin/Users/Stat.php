@@ -52,7 +52,7 @@ class Stat extends Users
                     'id' => $args['id'],
                 ]
             ),
-            $user->username,
+            ['%s', $user->username],
         ];
         $this->formResult = $this->form($stat, $startNum);
         $this->pagination = $this->c->Func->paginate(

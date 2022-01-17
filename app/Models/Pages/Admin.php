@@ -97,16 +97,13 @@ abstract class Admin extends Page
     {
         if ('index' !== $this->aIndex) {
             if (isset($this->aNavigation[$this->aIndex])) {
-                $crumbs[] = [
-                    $this->aNavigation[$this->aIndex][0],
-                    __($this->aNavigation[$this->aIndex][1]),
-                ];
+                $crumbs[] = $this->aNavigation[$this->aIndex];
             } else {
-                $crumbs[] = 'unknown';
+                $crumbs[] = [null, ['%s', 'unknown']];
             }
         }
 
-        $crumbs[] = [$this->c->Router->link('Admin'), __('Admin title')];
+        $crumbs[] = [$this->c->Router->link('Admin'), 'Admin title'];
 
         return parent::crumbs(...$crumbs);
     }

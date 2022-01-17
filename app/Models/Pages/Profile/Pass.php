@@ -75,11 +75,11 @@ class Pass extends Profile
         $this->crumbs     = $this->crumbs(
             [
                 $this->c->Router->link('EditUserPass', $args),
-                __('Change pass'),
+                'Change pass',
             ],
             [
                 $this->c->Router->link('EditUserProfile', $args),
-                __('Editing profile'),
+                'Editing profile',
             ]
         );
         $this->form       = $this->form($args);

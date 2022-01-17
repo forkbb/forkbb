@@ -71,11 +71,11 @@ class Mod extends Profile
         $this->crumbs     = $this->crumbs(
             [
                 $this->c->Router->link('EditUserModeration', $args),
-                __('Moderator rights'),
+                'Moderator rights',
             ],
             [
                 $this->c->Router->link('EditUserProfile', $args),
-                __('Editing profile'),
+                'Editing profile',
             ]
         );
         $this->form       = $this->form($args);

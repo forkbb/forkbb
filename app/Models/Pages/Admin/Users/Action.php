@@ -141,14 +141,11 @@ class Action extends Users
             return $this->c->Redirect->page('AdminUsers')->message('Users delete redirect');
         }
 
-        $this->nameTpl    = 'admin/form';
-        $this->classForm  = ['delete-users'];
-        $this->titleForm  = 'Deleting users';
-        $this->aCrumbs[]  = [
-            $this->c->Router->link('AdminUsersAction', $args),
-            __('Deleting users'),
-        ];
-        $this->form       = $this->formDelete($args);
+        $this->nameTpl   = 'admin/form';
+        $this->classForm = ['delete-users'];
+        $this->titleForm = 'Deleting users';
+        $this->aCrumbs[] = [$this->c->Router->link('AdminUsersAction', $args), 'Deleting users'];
+        $this->form      = $this->formDelete($args);
 
         return $this;
     }
@@ -296,14 +293,11 @@ class Action extends Users
             $this->fIswev = $v->getErrors();
         }
 
-        $this->nameTpl    = 'admin/form';
-        $this->classForm  = ['change-group'];
-        $this->titleForm  = 'Change user group';
-        $this->aCrumbs[]  = [
-            $this->c->Router->link('AdminUsersAction', $args),
-            __('Change user group'),
-        ];
-        $this->form       = $this->formChange($args, $profile, $link, 'absent' !== $rulePass);
+        $this->nameTpl   = 'admin/form';
+        $this->classForm = ['change-group'];
+        $this->titleForm = 'Change user group';
+        $this->aCrumbs[] = [$this->c->Router->link('AdminUsersAction', $args), 'Change user group'];
+        $this->form      = $this->formChange($args, $profile, $link, 'absent' !== $rulePass);
 
         return $this;
     }

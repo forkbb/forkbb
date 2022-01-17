@@ -142,7 +142,7 @@ abstract class AbstractPM extends Page
             case Cnst::ACTION_CONFIG:
                 break;
             default:
-                $crumbs[] = 'unknown';
+                $crumbs[] = [null, ['%s', 'unknown']];
         }
 
         if ($viewArea) {
@@ -177,7 +177,7 @@ abstract class AbstractPM extends Page
                                 'action' => $pms->area,
                             ]
                         ),
-                        __(['"%s"', $this->targetUser->username]),
+                        ['"%s"', $this->targetUser->username],
                     ];
                 }
 
@@ -196,7 +196,7 @@ abstract class AbstractPM extends Page
                         'action' => $pms->area,
                     ]
                 ),
-                __($m),
+                $m,
             ];
 
             if (null === $this->title) {
@@ -204,7 +204,7 @@ abstract class AbstractPM extends Page
             }
         }
 
-        $crumbs[] = [$this->c->Router->link('PM'), __('PM')];
+        $crumbs[] = [$this->c->Router->link('PM'), 'PM'];
 
         return parent::crumbs(...$crumbs);
     }

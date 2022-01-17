@@ -87,7 +87,7 @@ class PMEdit extends AbstractPM
         $this->form       = $this->messageFormPM(null, 'PMAction', $args, true, $firstPost, false);
         $this->pmCrumbs[] = [
             $this->c->Router->link('PMAction', $args),
-            __($firstPost ? 'Edit dialogue' : 'Edit message'),
+            $firstPost ? 'Edit dialogue' : 'Edit message',
         ];
         $this->pmCrumbs[] = $topic;
 

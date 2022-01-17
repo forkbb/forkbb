@@ -73,12 +73,9 @@ class NewUser extends Users
                 $data         = $v->getData();
         }
 
-        $this->nameTpl    = 'admin/users';
-        $this->formNew    = $this->formNew($data);
-        $this->aCrumbs[]  = [
-            $this->c->Router->link('AdminUsersNew'),
-            __('Add user'),
-        ];
+        $this->nameTpl   = 'admin/users';
+        $this->formNew   = $this->formNew($data);
+        $this->aCrumbs[] = [$this->c->Router->link('AdminUsersNew'), 'Add user'];
 
         return $this;
     }

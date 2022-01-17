@@ -269,9 +269,9 @@ class Forums extends Admin
                     'id' => $forum->id,
                 ]
             ),
-            __('Delete forum head'),
+            'Delete forum head',
         ];
-        $this->aCrumbs[] = __(['"%s"', $forum->forum_name]);
+        $this->aCrumbs[] = [null, ['"%s"', $forum->forum_name]];
         $this->form      = $this->formDelete($args, $forum);
         $this->classForm = ['deleteforum'];
         $this->titleForm = 'Delete forum head';
@@ -336,20 +336,14 @@ class Forums extends Admin
         if (empty($args['id'])) {
             $forum           = $this->c->forums->create();
             $marker          = 'AdminForumsNew';
-            $this->aCrumbs[] = [
-                $this->c->Router->link($marker),
-                __('Add forum head'),
-            ];
+            $this->aCrumbs[] = [$this->c->Router->link($marker), 'Add forum head'];
             $this->titleForm = 'Add forum head';
             $this->classForm = ['createforum'];
         } else {
             $forum           = $this->c->forums->loadTree($args['id']); //?????
             $marker          = 'AdminForumsEdit';
-            $this->aCrumbs[] = [
-                $this->c->Router->link($marker, $args),
-                __('Edit forum head'),
-            ];
-            $this->aCrumbs[] = __(['"%s"', $forum->forum_name]);
+            $this->aCrumbs[] = [$this->c->Router->link($marker, $args), 'Edit forum head'];
+            $this->aCrumbs[] = [null, ['"%s"', $forum->forum_name]];
             $this->titleForm = 'Edit forum head';
             $this->classForm = ['editforum'];
         }

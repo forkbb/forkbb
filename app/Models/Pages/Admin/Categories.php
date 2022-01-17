@@ -178,11 +178,8 @@ class Categories extends Admin
 
         $this->nameTpl   = 'admin/form';
         $this->aIndex    = 'categories';
-        $this->aCrumbs[] = [
-            $this->c->Router->link('AdminCategoriesDelete', $args),
-            __('Delete category head'),
-        ];
-        $this->aCrumbs[] = __(['"%s"', $category['cat_name']]);
+        $this->aCrumbs[] = [$this->c->Router->link('AdminCategoriesDelete', $args), 'Delete category head'];
+        $this->aCrumbs[] = [null, ['"%s"', $category['cat_name']]];
         $this->form      = $this->formDelete($args, $category);
         $this->classForm = ['deletecategory'];
         $this->titleForm = 'Delete category head';

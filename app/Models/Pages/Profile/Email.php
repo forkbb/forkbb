@@ -199,11 +199,11 @@ class Email extends Profile
         $this->crumbs     = $this->crumbs(
             [
                 $this->c->Router->link('EditUserEmail', $args),
-                __('Change email'),
+                'Change email',
             ],
             [
                 $this->c->Router->link('EditUserProfile', $args),
-                __('Editing profile'),
+                'Editing profile',
             ]
         );
         $this->form       = $this->form($args);

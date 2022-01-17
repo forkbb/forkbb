@@ -65,8 +65,8 @@ abstract class Profile extends Page
      */
     protected function crumbs(/* mixed */ ...$crumbs): array
     {
-        $crumbs[] = [$this->curUser->link, __(['User %s', $this->curUser->username])];
-        $crumbs[] = [$this->c->Router->link('Userlist'), __('User list')];
+        $crumbs[] = [$this->curUser->link, ['User %s', $this->curUser->username]];
+        $crumbs[] = [$this->c->Router->link('Userlist'), 'User list'];
 
         return parent::crumbs(...$crumbs);
     }

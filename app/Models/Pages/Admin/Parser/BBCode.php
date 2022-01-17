@@ -104,7 +104,7 @@ class BBCode extends Parser
         }
 
         $this->nameTpl   = 'admin/form';
-        $this->aCrumbs[] = [$this->AdminBBCodeUrl, __('BBCode management')];
+        $this->aCrumbs[] = [$this->AdminBBCodeUrl, 'BBCode management'];
         $this->form      = $this->formView();
         $this->titleForm = 'BBCode head';
         $this->classForm = ['bbcode'];
@@ -264,9 +264,9 @@ class BBCode extends Parser
         $this->titleForm = 'Delete bbcode head';
         $this->form      = $this->formDelete($args, $formAction, $tagData['bb_tag']);
 
-        $this->aCrumbs[] = [$formAction, __($this->titleForm)];
-        $this->aCrumbs[] = __(['"%s"', $tagData['bb_tag']]);
-        $this->aCrumbs[] = [$this->AdminBBCodeUrl, __('BBCode management')];
+        $this->aCrumbs[] = [$formAction, $this->titleForm];
+        $this->aCrumbs[] = [null, ['"%s"', $tagData['bb_tag']]];
+        $this->aCrumbs[] = [$this->AdminBBCodeUrl, 'BBCode management'];
 
         return $this;
     }
@@ -423,11 +423,13 @@ class BBCode extends Parser
                 $this->fIswev = $v->getErrors();
         }
 
-        $this->aCrumbs[] = [$this->formAction, __($title)];
+        $this->aCrumbs[] = [$this->formAction, $title];
+
         if ($id > 0) {
-            $this->aCrumbs[] = __(['"%s"', $this->c->bbcode->bbcodeTable[$id]['bb_tag']]);
+            $this->aCrumbs[] = [null, ['"%s"', $this->c->bbcode->bbcodeTable[$id]['bb_tag']]];
         }
-        $this->aCrumbs[] = [$this->AdminBBCodeUrl, __('BBCode management')];
+
+        $this->aCrumbs[] = [$this->AdminBBCodeUrl, 'BBCode management'];
         $this->form      = $this->formEdit($id, $structure);
         $this->titleForm = $title;
         $this->classForm = ['editbbcode'];

@@ -130,14 +130,11 @@ class Logs extends Admin
             return $this->c->Redirect->page('AdminLogs')->message('Failed to delete log redirect');
         }
 
-        $this->nameTpl    = 'admin/form';
-        $this->titleForm  = 'Delete log head';
-        $this->classForm  = ['logdel'];
-        $this->form       = $this->formDelete($path, $args);
-        $this->aCrumbs[]  = [
-            $this->c->Router->link('AdminLogsAction', $args),
-            __('Delete log head'),
-        ];
+        $this->nameTpl   = 'admin/form';
+        $this->titleForm = 'Delete log head';
+        $this->classForm = ['logdel'];
+        $this->form      = $this->formDelete($path, $args);
+        $this->aCrumbs[] = [$this->c->Router->link('AdminLogsAction', $args), 'Delete log head'];
 
         return $this;
     }
@@ -171,15 +168,13 @@ class Logs extends Admin
         foreach ($data as &$cur) {
             $cur['context'] = \print_r($cur['context'], true);
         }
+
         unset($cur);
 
-        $this->nameTpl    = 'admin/logs';
-        $this->logData    = $data;
-        $this->logName    = $this->c->LogViewer->getName($path);
-        $this->aCrumbs[]  = [
-            $this->c->Router->link('AdminLogsAction', $args),
-            __(['Log %s', $this->logName]),
-        ];
+        $this->nameTpl   = 'admin/logs';
+        $this->logData   = $data;
+        $this->logName   = $this->c->LogViewer->getName($path);
+        $this->aCrumbs[] = [$this->c->Router->link('AdminLogsAction', $args), ['Log %s', $this->logName]];
 
         return $this;
     }

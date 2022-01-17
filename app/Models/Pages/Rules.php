@@ -27,7 +27,7 @@ class Rules extends Page
         $this->crumbs     = $this->crumbs(
             [
                 $this->c->Router->link('Rules'),
-                __('Forum rules'),
+                'Forum rules',
             ]
         );
         $this->rules      = $this->c->config->o_rules_message;
@@ -47,10 +47,10 @@ class Rules extends Page
         $this->onlinePos  = 'rules';
         $this->robots     = 'noindex';
         $this->crumbs     = $this->crumbs(
-            __('Forum rules'),
+            'Forum rules',
             [
                 $this->c->Router->link('Register'),
-                __('Register'),
+                'Register',
             ]
         );
         $this->rules      = 1 === $this->c->config->b_rules ? $this->c->config->o_rules_message : __('If no rules');

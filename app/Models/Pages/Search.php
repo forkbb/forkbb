@@ -438,9 +438,9 @@ class Search extends Page
                     $asTopicsList  = false;
                 }
                 if ('*' === $args['author']) {
-                    $model->name   = __(['Search query: %s', $args['keywords']]);
+                    $model->name   = ['Search query: %s', $args['keywords']];
                 } else {
-                    $model->name   = __(['Search query: %1$s and Author: %2$s', $args['keywords'], $args['author']]);
+                    $model->name   = ['Search query: %1$s and Author: %2$s', $args['keywords'], $args['author']];
                 }
                 $model->linkMarker = $advanced ? 'SearchAdvanced' : 'Search';
                 $model->linkArgs   = $args;
@@ -488,7 +488,7 @@ class Search extends Page
                 } else {
                     $list = $model->actionP($action, $forum, $user->id);
                 }
-                $model->name       = __(['Quick search user ' . $action, $user->username]);
+                $model->name       = ['Quick search user ' . $action, $user->username];
                 $model->linkMarker = 'SearchAction';
                 if ($forum->id) {
                     $model->linkArgs = ['action' => $action, 'uid' => $user->id, 'forum' => $forum->id];
@@ -544,7 +544,7 @@ class Search extends Page
      */
     protected function crumbs(/* mixed */ ...$crumbs): array
     {
-        $crumbs[] = [$this->c->Router->link('Search'), __('Search')];
+        $crumbs[] = [$this->c->Router->link('Search'), 'Search'];
 
         return parent::crumbs(...$crumbs);
     }

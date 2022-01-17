@@ -158,7 +158,7 @@ class Edit extends Profile
         $this->crumbs     = $this->crumbs(
             [
                 $this->c->Router->link('EditUserProfile', $args),
-                __('Editing profile'),
+                'Editing profile',
             ]
         );
         $this->form       = $this->form($args);

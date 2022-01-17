@@ -130,10 +130,7 @@ class PMTopic extends AbstractPM
         $this->form       = $this->formSend($args);
         $this->postsTitle = 'Send info';
         $this->posts      = [$this->pms->load(Cnst::PPOST, $this->model->first_post_id)];
-        $this->pmCrumbs[] = [
-            $this->c->Router->link('PMAction', $args),
-            __('Send  dialogue'),
-        ];
+        $this->pmCrumbs[] = [$this->c->Router->link('PMAction', $args), 'Send  dialogue'];
         $this->pmCrumbs[] = $this->model;
 
         return $this;

@@ -476,9 +476,16 @@ abstract class Page extends Model
             // модель
             if ($crumb instanceof Model) {
                 do {
-                    $name     = $crumb->name ?? '<no name>';
-                    $result[] = [$crumb, $name, $active];
-                    $active   = null;
+                    $name = $crumb->name ?? '<no name>';
+
+                    if (\is_array($name)) {
+                        $result[] = [$crumb, $name, $active];
+                    } else {
+                        $result[] = [$crumb, ['%s', $name], $active];
+                    }
+
+                    $active = null;
+                    $name   = __($name);
 
                     if ($crumb->page > 1) {
                         $name .= __([' Page %s', $crumb->page]);
@@ -486,23 +493,24 @@ abstract class Page extends Model
 
                     $this->titles = $name;
                     $crumb        = $crumb->parent;
-                } while ($crumb instanceof Model && null !== $crumb->parent);
+                } while (
+                    $crumb instanceof Model
+                    && null !== $crumb->parent
+                );
             // ссылка (передана массивом)
-            } elseif (
-                \is_array($crumb)
-                && isset($crumb[0], $crumb[1])
-            ) {
-                $result[]     = [$crumb[0], (string) $crumb[1], $active];
-                $this->titles = $crumb[1];
+            } elseif (\is_array($crumb)) {
+                $result[]     = [$crumb[0], $crumb[1], $active];
+                $this->titles = __($crumb[1]);
             // строка
             } else {
                 $result[]     = [null, (string) $crumb, $active];
-                $this->titles = (string) $crumb;
+                $this->titles = __((string) $crumb);
             }
+
             $active = null;
         }
         // главная страница
-        $result[] = [$this->c->Router->link('Index'), __('Index'), $active];
+        $result[] = [$this->c->Router->link('Index'), 'Index', $active];
 
         return \array_reverse($result);
     }

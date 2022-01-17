@@ -462,3 +462,6 @@ msgstr "Это сообщение перенесено из темы &quot;%s&qu
 
 msgid "The search may be case sensitive"
 msgstr "Поиск может быть чувствителен к регистру символов не относящихся к основной латинице."
+
+msgid "%s"
+msgstr "%s"

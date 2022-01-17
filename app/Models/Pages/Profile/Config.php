@@ -110,7 +110,7 @@ class Config extends Profile
         $this->crumbs     = $this->crumbs(
             [
                 $this->c->Router->link('EditUserBoardConfig', $args),
-                __('Board configuration'),
+                'Board configuration',
             ]
         );
         $this->form       = $this->form($args);

@@ -89,7 +89,7 @@ class Post extends Page
         );
         $this->robots    = 'noindex';
         $this->formTitle = 'Post new topic';
-        $this->crumbs    = $this->crumbs(__($this->formTitle), $forum);
+        $this->crumbs    = $this->crumbs($this->formTitle, $forum);
         $this->form      = $this->messageForm($forum, 'NewTopic', $args, false, true, false);
 
         return $this;
@@ -160,7 +160,7 @@ class Post extends Page
         );
         $this->robots     = 'noindex';
         $this->formTitle  = 'Post a reply';
-        $this->crumbs     = $this->crumbs(__($this->formTitle), $topic);
+        $this->crumbs     = $this->crumbs($this->formTitle, $topic);
         $this->form       = $this->messageForm($topic, 'NewReply', $args, false, false, false);
         $this->postsTitle = 'Topic review';
         $this->posts      = $topic->review();

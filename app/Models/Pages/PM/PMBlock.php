@@ -32,10 +32,7 @@ class PMBlock extends AbstractPM
     {
         $this->nameTpl    = 'pm/block';
         $this->blockList  = $this->c->pms->block->list;
-        $this->pmCrumbs[] = [
-            $this->c->Router->link('PMAction', $args),
-            __('Blocked users'),
-        ];
+        $this->pmCrumbs[] = [$this->c->Router->link('PMAction', $args), 'Blocked users'];
 
         return $this;
     }
@@ -144,12 +141,9 @@ class PMBlock extends AbstractPM
         $this->form       = $this->formBlock($args, $blockStatus, $blockUser);
         $this->pmCrumbs[] = [
             $this->c->Router->link('PMAction', $args),
-            __([$blockStatus ? 'Unblock user %s crumb' : 'Block user %s crumb', $blockUser->username]),
+            [$blockStatus ? 'Unblock user %s crumb' : 'Block user %s crumb', $blockUser->username],
         ];
-        $this->pmCrumbs[] = [
-            $this->linkPMBlk,
-            __('Blocked users'),
-        ];
+        $this->pmCrumbs[] = [$this->linkPMBlk, 'Blocked users'];
 
         return $this;
     }

@@ -63,10 +63,7 @@ class PMConfig extends AbstractPM
         $this->formTitle  = 'PM Config title';
         $this->formClass  = 'pmconfig';
         $this->form       = $this->formConfig($args);
-        $this->pmCrumbs[] = [
-            $this->c->Router->link('PMAction', $args),
-            __('PM Config'),
-        ];
+        $this->pmCrumbs[] = [$this->c->Router->link('PMAction', $args), 'PM Config'];
 
         return $this;
     }

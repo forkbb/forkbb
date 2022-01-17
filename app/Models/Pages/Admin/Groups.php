@@ -203,11 +203,8 @@ class Groups extends Admin
             $marker          = 'AdminGroupsEdit';
             $vars            = ['id' => $group->g_id];
             $notNext        .= ',' . $group->g_id;
-            $this->aCrumbs[] = [
-                $this->c->Router->link($marker, $vars),
-                __('Edit group'),
-            ];
-            $this->aCrumbs[] = __(['"%s"', $group->g_title]);
+            $this->aCrumbs[] = [$this->c->Router->link($marker, $vars), 'Edit group'];
+            $this->aCrumbs[] = [null, ['"%s"', $group->g_title]];
             $this->titleForm = 'Edit group';
             $this->classForm = ['editgroup'];
         } else {
@@ -215,7 +212,7 @@ class Groups extends Admin
             $vars            = ['base' => $group->g_id];
             $group->g_title  = '';
             $group->g_id     = null;
-            $this->aCrumbs[] = __('Create new group');
+            $this->aCrumbs[] = 'Create new group';
             $this->titleForm = 'Create new group';
             $this->classForm = ['creategroup'];
         }
@@ -811,11 +808,8 @@ class Groups extends Admin
 
 
         $this->nameTpl   = 'admin/form';
-        $this->aCrumbs[] = [
-            $this->c->Router->link('AdminGroupsDelete', $args),
-            __('Group delete'),
-        ];
-        $this->aCrumbs[] = __(['"%s"', $group->g_title]);
+        $this->aCrumbs[] = [$this->c->Router->link('AdminGroupsDelete', $args), 'Group delete'];
+        $this->aCrumbs[] = [null, ['"%s"', $group->g_title]];
         $this->form      = $this->formDelete($args, $group, $count, $groups);
         $this->titleForm = 'Group delete';
         $this->classForm = ['deletegroup'];

@@ -56,7 +56,11 @@
     </div>
 @if ($p->topics)
     <section id="fork-forum" class="f-main">
+    @if (\is_array($p->model->name))
+      <h2>{!! __($p->model->name) !!}</h2>
+    @else
       <h2>{{ $p->model->forum_name or $p->model->name }}</h2>
+    @endif
       <div class="f-ftlist">
         <ol class="f-table">
           <li class="f-row f-thead" value="0">

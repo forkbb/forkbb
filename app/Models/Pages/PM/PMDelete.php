@@ -115,7 +115,7 @@ class PMDelete extends AbstractPM
         $this->posts      = [$post];
         $this->pmCrumbs[] = [
             $this->c->Router->link('PMAction', $args),
-            __($deleteTopic ? 'Delete  dialogue' : 'Delete  message'),
+            $deleteTopic ? 'Delete  dialogue' : 'Delete  message',
         ];
         $this->pmCrumbs[] = $topic;
 

@@ -389,7 +389,7 @@ class Bans extends Admin
                     'data' => $args['data'],
                 ]
             ),
-            __('Results head'),
+            'Results head',
         ];
         $this->formResult = $this->form($banList, $startNum, $args);
         $this->pagination = $this->c->Func->paginate(
@@ -719,10 +719,7 @@ class Bans extends Admin
             }
         }
 
-        $this->aCrumbs[] = [
-            $this->c->Router->link($this->formBanPage, $args),
-            __($this->formBanSubHead),
-        ];
+        $this->aCrumbs[] = [$this->c->Router->link($this->formBanPage, $args), $this->formBanSubHead];
         $this->formBan   = $this->formBan($data, $args);
 
         return $this;

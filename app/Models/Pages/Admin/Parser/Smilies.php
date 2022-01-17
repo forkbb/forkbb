@@ -120,10 +120,7 @@ class Smilies extends Parser
         }
 
         $this->nameTpl         = 'admin/smilies';
-        $this->aCrumbs[]       = [
-            $this->c->Router->link('AdminSmilies'),
-            __('Smilies management'),
-        ];
+        $this->aCrumbs[]       = [$this->c->Router->link('AdminSmilies'), 'Smilies management'];
         $this->formSmilies     = $this->formSmilies($data);
         $this->formImages      = $this->formImages();
         $this->formUploadImage = $this->formUploadImage();
