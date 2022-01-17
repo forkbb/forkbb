@@ -95,7 +95,7 @@ class Auth extends Page
         $this->nameTpl    = 'login';
         $this->onlinePos  = 'login';
         $this->robots     = 'noindex';
-        $this->titles     = __('Login');
+        $this->titles     = 'Login';
         $this->regLink    = 1 === $this->c->config->b_regs_allow ? $this->c->Router->link('Register') : null;
 
         $username         = $v ? $v->username : $username;
@@ -314,7 +314,7 @@ class Auth extends Page
         $this->nameTpl    = 'passphrase_reset';
         $this->onlinePos  = 'passphrase_reset';
         $this->robots     = 'noindex';
-        $this->titles     = __('Passphrase reset');
+        $this->titles     = 'Passphrase reset';
         $this->form       = $this->formForget($v ? $v->email : $email);
 
         return $this;
@@ -441,7 +441,7 @@ class Auth extends Page
         $this->nameTpl    = 'change_passphrase';
         $this->onlinePos  = 'change_passphrase';
         $this->robots     = 'noindex';
-        $this->titles     = __('Passphrase reset');
+        $this->titles     = 'Passphrase reset';
         $this->form       = $this->formChange($args);
 
         return $this;

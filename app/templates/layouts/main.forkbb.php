@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ $p->pageTitle }}</title>
+  <title>{!! $p->pageTitle !!}</title>
 @foreach ($p->pageHeaders as $pageHeader)
     @if ('style' === $pageHeader['type'])
   <style>{!! $pageHeader['values'][0] !!}</style>

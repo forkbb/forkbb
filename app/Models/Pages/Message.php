@@ -22,7 +22,7 @@ class Message extends Page
     {
         $this->nameTpl    = 'message';
         $this->httpStatus = \max(200, $status);
-        $this->titles     = __('Info');
+        $this->titles     = 'Info';
         $this->back       = $back;
 
         if (! empty($headers)) {

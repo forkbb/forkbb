@@ -81,7 +81,7 @@ class Register extends Page
         $this->fIndex     = self::FI_REG;
         $this->nameTpl    = 'register';
         $this->onlinePos  = 'register';
-        $this->titles     = __('Register');
+        $this->titles     = 'Register';
         $this->robots     = 'noindex';
         $this->form       = $this->formReg($v);
 

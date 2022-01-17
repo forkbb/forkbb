@@ -304,9 +304,9 @@ abstract class Page extends Model
         if (empty($titles)) {
             $titles = $this->titles;
         }
-        $titles[] = $this->c->config->o_board_title;
+        $titles[] = ['%s', $this->c->config->o_board_title];
 
-        return \implode(__('Title separator'), $titles);
+        return \implode(__('Title separator'), \array_map('\\ForkBB\\__', $titles));
     }
 
     /**
@@ -435,7 +435,7 @@ abstract class Page extends Model
      * Дописывает в массив титула страницы новый элемент
      * $this->titles = ...
      */
-    public function settitles(string $value): void
+    public function settitles(/* string|array */ $value): void
     {
         $attr = $this->getAttr('titles', []);
         $attr[] = $value;
@@ -476,23 +476,21 @@ abstract class Page extends Model
             // модель
             if ($crumb instanceof Model) {
                 do {
-                    $name = $crumb->name ?? '<no name>';
+                    $name = $crumb->name ?? 'NO NAME';
 
-                    if (\is_array($name)) {
-                        $result[] = [$crumb, $name, $active];
-                    } else {
-                        $result[] = [$crumb, ['%s', $name], $active];
+                    if (! \is_array($name)) {
+                        $name = ['%s', $name];
                     }
 
-                    $active = null;
-                    $name   = __($name);
+                    $result[]     = [$crumb, $name, $active];
+                    $active       = null;
+                    $this->titles = $name;
 
                     if ($crumb->page > 1) {
-                        $name .= __([' Page %s', $crumb->page]);
+                        $this->titles = ['Page %s', $crumb->page];
                     }
 
-                    $this->titles = $name;
-                    $crumb        = $crumb->parent;
+                    $crumb = $crumb->parent;
                 } while (
                     $crumb instanceof Model
                     && null !== $crumb->parent
@@ -500,11 +498,11 @@ abstract class Page extends Model
             // ссылка (передана массивом)
             } elseif (\is_array($crumb)) {
                 $result[]     = [$crumb[0], $crumb[1], $active];
-                $this->titles = __($crumb[1]);
+                $this->titles = $crumb[1];
             // строка
             } else {
                 $result[]     = [null, (string) $crumb, $active];
-                $this->titles = __((string) $crumb);
+                $this->titles = (string) $crumb;
             }
 
             $active = null;

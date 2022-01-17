@@ -32,7 +32,7 @@ class Host extends Admin
         $host = \gethostbyaddr($ip);
 
         $this->nameTpl = 'message';
-        $this->titles  = __('Info');
+        $this->titles  = 'Info';
         $this->back    = true;
         $this->fIswev  = [
             'i',

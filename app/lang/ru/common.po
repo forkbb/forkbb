@@ -205,8 +205,8 @@ msgstr[2] "<b>%s</b> Просмотров"
 msgid "Pages"
 msgstr "Страницы"
 
-msgid " Page %s"
-msgstr " (Страница %s)"
+msgid "Page %s"
+msgstr "Страница %s"
 
 msgid "Page %1$s of %2$s"
 msgstr "Страница %1$s из %2$s ·"

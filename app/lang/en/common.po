@@ -203,8 +203,8 @@ msgstr[1] "<b>%s</b> Views"
 msgid "Pages"
 msgstr "Pages:"
 
-msgid " Page %s"
-msgstr " (Page %s)"
+msgid "Page %s"
+msgstr "Page %s"
 
 msgid "Page %1$s of %2$s"
 msgstr "Page %1$s of %2$s ·"
