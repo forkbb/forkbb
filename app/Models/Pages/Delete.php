@@ -108,6 +108,7 @@ class Delete extends Page
                     'info' => [
                         [
                             'value'   => __(['Topic %s', $post->parent->name]),
+                            'html'    => true,
                         ],
                         [
                             'value'   => __([$deleteTopic ? 'Topic by' : 'Reply by', $post->poster, dt($post->posted)]),

@@ -137,6 +137,7 @@ class PMDelete extends AbstractPM
                     'info' => [
                         [
                             'value'   => __(['Dialogue %s', $post->parent->name]),
+                            'html'    => true,
                         ],
                         [
                             'value'   => __([
