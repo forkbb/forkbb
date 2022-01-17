@@ -24,7 +24,7 @@ class Generate extends Method
         $query = 'SELECT bb_structure
             FROM ::bbcode';
 
-        $content = "<?php\n\nuse function \\ForkBB\\__;\nuse function \\ForkBB\\url;\n\nreturn [\n";
+        $content = "<?php\n\nuse function \\ForkBB\\{__, url};\n\nreturn [\n";
 
         $stmt = $this->c->DB->query($query);
         while ($row = $stmt->fetch()) {
