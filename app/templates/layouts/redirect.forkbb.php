@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="refresh" content="{{ $p->timeout }};URL={{ $p->link }}">
-  <title>{!! $p->pageTitle !!}</title>
+  <title>{!! \htmlspecialchars($p->pageTitle, \ENT_HTML5 | \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8', false) !!}</title>
 @foreach ($p->pageHeaders as $pageHeader)
     @if ('style' === $pageHeader['type'])
   <style>{!! $pageHeader['values'][0] !!}</style>
