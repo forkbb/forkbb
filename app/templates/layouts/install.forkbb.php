@@ -15,7 +15,7 @@
 <body>
   <div id="fork">
     <header id="fork-header">
-      <h1 id="id-fhth1">{!! __('ForkBB Installation') !!}</h1>
+      <h1 id="id-fhth1"><span id="id-fhtha">{!! __('ForkBB Installation') !!}</span></h1>
       <p id="id-fhtdesc">{!! __('Welcome') !!}</p>
     </header>
     <main>
