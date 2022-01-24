@@ -53,7 +53,7 @@ return [
 
     'shared' => [
         'DB' => [
-            'class' => \ForkBB\Core\DB::class,
+            'class'    => \ForkBB\Core\DB::class,
             'dsn'      => '%DB_DSN%',
             'username' => '%DB_USERNAME%',
             'password' => '%DB_PASSWORD%',
