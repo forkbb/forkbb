@@ -722,17 +722,42 @@ class Sqlite
             ':tname'  => \str_replace('_', '#_', $this->dbPrefix) . '%',
             ':ttype'  => 'table',
         ];
-        $query = 'SELECT COUNT(tbl_name) FROM sqlite_master WHERE tbl_name LIKE ?s:tname ESCAPE \'#\' AND type=?s:ttype';
+        $query = 'SELECT tbl_name FROM sqlite_master WHERE tbl_name LIKE ?s:tname ESCAPE \'#\' AND type=?s:ttype';
 
-        $tables  = $this->db->query($query, $vars)->fetchColumn();
-
+        $tables  = $this->db->query($query, $vars)->fetchAll(\PDO::FETCH_COLUMN);
         $records = 0;
-        $size    = (int) $this->db->query('PRAGMA page_count;')->fetchColumn();
-        $size   *= (int) $this->db->query('PRAGMA page_size;')->fetchColumn();
+
+        foreach ($tables as $table) {
+            $this->nameCheck($table);
+
+            $count  = null;
+            $fields = $this->db->query("PRAGMA table_info('{$table}')")->fetchAll();
+
+            foreach ($fields as $field) {
+                if (1 !== (int) $field['pk']) {
+                    continue;
+                }
+
+                $this->nameCheck($field['name']);
+
+                $count = $this->db->query("SELECT COUNT({$field['name']}) FROM {$table}")->fetchColumn();
+
+                break;
+            }
+
+            if (null === $count) {
+                $count = $this->db->query("SELECT COUNT(*) FROM {$table}")->fetchColumn();
+            }
+
+            $records += $count;
+        }
+
+        $size  = (int) $this->db->query('PRAGMA page_count;')->fetchColumn();
+        $size *= (int) $this->db->query('PRAGMA page_size;')->fetchColumn();
 
         return [
             'db'           => 'SQLite (PDO) v.' . $this->db->getAttribute(PDO::ATTR_SERVER_VERSION),
-            'tables'       => (string) $tables,
+            'tables'       => (string) \count($tables),
             'records'      => $records,
             'size'         => $size,
 #            'server info'  => $this->db->getAttribute(PDO::ATTR_SERVER_INFO),
