@@ -157,6 +157,7 @@ class Install extends Admin
                     'check_host'    => [$this, 'vCheckHost'],
                     'rtrim_url'     => [$this, 'vRtrimURL']
                 ])->addRules([
+                    'token'         => 'token:Install',
                     'dbtype'        => 'required|string:trim|in:' . \implode(',', \array_keys($this->dbTypes)),
                     'dbhost'        => 'required|string:trim|check_host',
                     'dbname'        => 'required|string:trim',
