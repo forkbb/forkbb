@@ -108,6 +108,10 @@ class DB
     {
         $dsn = $this->initialConfig($dsn);
 
+        if (\preg_match('%[^\w]%', $prefix)) {
+            throw new PDOException("Bad prefix");
+        }
+
         $this->dbPrefix = $prefix;
 
         list($initSQLCommands, $initFunction) = $this->prepareOptions($options);
