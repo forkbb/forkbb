@@ -76,7 +76,7 @@ class Pgsql
      */
     public function __call(string $name, array $args)
     {
-        throw new PDOException("Method '{$name}' not found in DB driver.");
+        throw new PDOException("Method '{$name}' not found in DB driver");
     }
 
     /**
@@ -84,8 +84,8 @@ class Pgsql
      */
     protected function nameCheck(string $str): void
     {
-        if (\preg_match('%[^a-zA-Z0-9_]%', $str)) {
-            throw new PDOException("Name '{$str}' have bad characters.");
+        if (\preg_match('%[^\w]%', $str)) {
+            throw new PDOException("Name '{$str}' have bad characters");
         }
     }
 
@@ -145,7 +145,7 @@ class Pgsql
         } elseif (\is_bool($data)) {
             return $data ? 'true' : 'false';
         } else {
-            throw new PDOException('Invalid data type for DEFAULT.');
+            throw new PDOException('Invalid data type for DEFAULT');
         }
     }
 
