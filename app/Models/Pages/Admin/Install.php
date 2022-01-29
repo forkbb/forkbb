@@ -1205,7 +1205,7 @@ class Install extends Admin
             $this->c->DB->exec('ALTER SEQUENCE ::groups_g_id_seq RESTART WITH ' . (FORK_GROUP_NEW_MEMBER + 1));
         }
 
-        $pun_config = [
+        $forkConfig = [
             'i_fork_revision'         => $this->c->FORK_REVISION,
             'o_board_title'           => $v->title,
             'o_board_desc'            => $v->descr,
@@ -1290,8 +1290,8 @@ class Install extends Admin
             's_РЕГИСТР'               => 'Ok',
         ];
 
-        foreach ($pun_config as $conf_name => $conf_value) {
-            $this->c->DB->exec('INSERT INTO ::config (conf_name, conf_value) VALUES (?s, ?s)', [$conf_name, $conf_value]);
+        foreach ($forkConfig as $name => $value) {
+            $this->c->DB->exec('INSERT INTO ::config (conf_name, conf_value) VALUES (?s, ?s)', [$name, $value]);
         }
 
 
