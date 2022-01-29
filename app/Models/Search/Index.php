@@ -140,16 +140,17 @@ class Index extends Method
      */
     protected function words(string $text): array
     {
-        $text = $this->model->cleanText($text, true);
-
+        $text  = $this->model->cleanText($text, true);
         $words = [];
-        foreach (\array_unique(\explode(' ', $text)) as $word) {
+
+        foreach (\explode(' ', $text) as $word) {
             $word = $this->model->word($word, true);
+
             if (null !== $word) {
-                $words[] = $word;
+                $words[$word] = $word;
             }
         }
 
-        return $words;
+        return \array_values($words);
     }
 }
