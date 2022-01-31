@@ -100,6 +100,14 @@ return [
             'calss'  => \ForkBB\Core\HTMLCleaner::class,
             'config' => '%DIR_APP%/config/jevix.default.php',
         ],
+        'Log'       => [
+            'class'  => \ForkBB\Core\Log::class,
+            'config' => [
+                'path'       => '%DIR_LOG%/{Y-m-d}.log',
+                'lineFormat' => "\\%datetime\\% [\\%level_name\\%] \\%message\\%\t\\%context\\%\n",
+                'timeFormat' => 'Y-m-d H:i:s',
+            ],
+        ],
 
         'config'     => '@ConfigModel:install',
         'users'      => \ForkBB\Models\User\Users::class,
