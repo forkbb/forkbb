@@ -1186,20 +1186,146 @@ class Install extends Admin
 
         $now    = \time();
         $groups = [
-            // g_id,                g_title,              g_user_title,        g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_post_links, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood, g_promote_min_posts, g_promote_next_group
-            [FORK_GROUP_ADMIN,      __('Administrators'), __('Administrator '), 0,          0,                0,                  0,                      0,               1,                   1,            1,            1,              1,             1,            1,              1,               1,            1,           1,        1,              1,            0,            0,              0,             0,              0,                   0,                     ],
-            [FORK_GROUP_MOD,        __('Moderators'),     __('Moderator '),     1,          1,                1,                  1,                      1,               1,                   1,            1,            1,              1,             1,            1,              1,               1,            1,           1,        1,              1,            0,            0,              0,             0,              0,                   0,                     ],
-            [FORK_GROUP_GUEST,      __('Guests'),         '',                   0,          0,                0,                  0,                      0,               0,                   1,            1,            0,              0,             0,            0,              0,               0,            0,           1,        1,              0,            120,          60,             0,             0,              0,                   0,                     ],
-            [FORK_GROUP_MEMBER,     __('Members'),        '',                   0,          0,                0,                  0,                      0,               0,                   1,            1,            1,              1,             1,            1,              1,               1,            0,           1,        1,              1,            30,           30,             60,            60,             0,                   0,                     ],
-            [FORK_GROUP_NEW_MEMBER, __('New members'),    __('New member'),     0,          0,                0,                  0,                      0,               0,                   1,            1,            1,              1,             1,            1,              1,               0,            0,           1,        1,              1,            60,           30,             120,           60,             5,                   FORK_GROUP_MEMBER,     ],
+            [
+                'g_id'                   => FORK_GROUP_ADMIN,
+                'g_title'                => __('Administrators'),
+                'g_user_title'           => __('Administrator '),
+                'g_mod_promote_users'    => 1,
+                'g_read_board'           => 1,
+                'g_view_users'           => 1,
+                'g_post_replies'         => 1,
+                'g_post_topics'          => 1,
+                'g_edit_posts'           => 1,
+                'g_delete_posts'         => 1,
+                'g_delete_topics'        => 1,
+                'g_post_links'           => 1,
+                'g_set_title'            => 1,
+                'g_search'               => 1,
+                'g_search_users'         => 1,
+                'g_send_email'           => 1,
+                'g_post_flood'           => 0,
+                'g_search_flood'         => 0,
+                'g_email_flood'          => 0,
+                'g_report_flood'         => 0,
+                'g_pm_limit'             => 0,
+                'g_sig_length'           => 10000,
+                'g_sig_lines'            => 255,
+            ],
+            [
+                'g_id'                   => FORK_GROUP_MOD,
+                'g_title'                => __('Moderators'),
+                'g_user_title'           => __('Moderator '),
+                'g_moderator'            => 1,
+                'g_mod_edit_users'       => 1,
+                'g_mod_rename_users'     => 1,
+                'g_mod_change_passwords' => 1,
+                'g_mod_ban_users'        => 1,
+                'g_mod_promote_users'    => 1,
+                'g_read_board'           => 1,
+                'g_view_users'           => 1,
+                'g_post_replies'         => 1,
+                'g_post_topics'          => 1,
+                'g_edit_posts'           => 1,
+                'g_delete_posts'         => 1,
+                'g_delete_topics'        => 1,
+                'g_post_links'           => 1,
+                'g_set_title'            => 1,
+                'g_search'               => 1,
+                'g_search_users'         => 1,
+                'g_send_email'           => 1,
+                'g_post_flood'           => 0,
+                'g_search_flood'         => 0,
+                'g_email_flood'          => 0,
+                'g_report_flood'         => 0,
+            ],
+            [
+                'g_id'                   => FORK_GROUP_GUEST,
+                'g_title'                => __('Guests'),
+                'g_user_title'           => '',
+                'g_read_board'           => 1,
+                'g_view_users'           => 1,
+                'g_post_replies'         => 0,
+                'g_post_topics'          => 0,
+                'g_edit_posts'           => 0,
+                'g_delete_posts'         => 0,
+                'g_delete_topics'        => 0,
+                'g_post_links'           => 0,
+                'g_set_title'            => 0,
+                'g_search'               => 1,
+                'g_search_users'         => 1,
+                'g_send_email'           => 0,
+                'g_post_flood'           => 120,
+                'g_search_flood'         => 60,
+                'g_email_flood'          => 0,
+                'g_report_flood'         => 0,
+                'g_pm'                   => 0,
+                'g_sig_length'           => 0,
+                'g_sig_lines'            => 0,
+            ],
+            [
+                'g_id'                   => FORK_GROUP_MEMBER,
+                'g_title'                => __('Members'),
+                'g_user_title'           => '',
+                'g_read_board'           => 1,
+                'g_view_users'           => 1,
+                'g_post_replies'         => 1,
+                'g_post_topics'          => 1,
+                'g_edit_posts'           => 1,
+                'g_delete_posts'         => 1,
+                'g_delete_topics'        => 1,
+                'g_post_links'           => 1,
+                'g_set_title'            => 0,
+                'g_search'               => 1,
+                'g_search_users'         => 1,
+                'g_send_email'           => 1,
+                'g_post_flood'           => 30,
+                'g_search_flood'         => 30,
+                'g_email_flood'          => 60,
+                'g_report_flood'         => 60,
+            ],
+            [
+                'g_id'                   => FORK_GROUP_NEW_MEMBER,
+                'g_title'                => __('New members'),
+                'g_user_title'           => __('New member'),
+                'g_read_board'           => 1,
+                'g_view_users'           => 1,
+                'g_post_replies'         => 1,
+                'g_post_topics'          => 1,
+                'g_edit_posts'           => 1,
+                'g_delete_posts'         => 1,
+                'g_delete_topics'        => 1,
+                'g_post_links'           => 0,
+                'g_set_title'            => 0,
+                'g_search'               => 1,
+                'g_search_users'         => 1,
+                'g_send_email'           => 1,
+                'g_post_flood'           => 60,
+                'g_search_flood'         => 30,
+                'g_email_flood'          => 120,
+                'g_report_flood'         => 60,
+                'g_deledit_interval'     => 600,
+                'g_pm'                   => 0,
+                'g_promote_min_posts'    => 5,
+                'g_promote_next_group'   => FORK_GROUP_MEMBER,
+            ],
         ];
 
         foreach ($groups as $group) {
-            $this->c->DB->exec('INSERT INTO ::groups (g_id, g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_mod_promote_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_post_links, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood, g_report_flood, g_promote_min_posts, g_promote_next_group) VALUES (?i, ?s, ?s, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i, ?i)', $group) ;
-        }
 
-        $this->c->DB->exec('UPDATE ::groups SET g_pm_limit=0 WHERE g_id=?i', [FORK_GROUP_ADMIN]);
-        $this->c->DB->exec('UPDATE ::groups SET g_pm=0, g_sig_length=0, g_sig_lines=0 WHERE g_id=?i', [FORK_GROUP_GUEST]);
+            $fields = [];
+            $values = [];
+
+            foreach ($group as $key => $value) {
+                $fields[] = $key;
+                $values[] = (\is_int($value) ? '?i:' : '?s:') . $key;
+            }
+
+            $fields = \implode(', ', $fields);
+            $values = \implode(', ', $values);
+            $query  = "INSERT INTO ::groups ({$fields}) VALUES ({$values})";
+
+            $this->c->DB->exec($query, $group);
+        }
 
         if ('pgsql' === $v->dbtype) {
             $this->c->DB->exec('ALTER SEQUENCE ::groups_g_id_seq RESTART WITH ' . (FORK_GROUP_NEW_MEMBER + 1));
