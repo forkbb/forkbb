@@ -1521,7 +1521,7 @@ body,
   font: 900 1.25rem "FontAwesomeFree";
   content: "\f222";
   color: #46b4e7;
-  margin-inline-end: 0.125rem;
+  margin-inline-end: 0.25rem;
 }
 
 #fork .f-user-female .f-username::before {
@@ -1529,7 +1529,7 @@ body,
   font: 900 1.25rem "FontAwesomeFree";
   content: "\f221";
   color: #ef64ef;
-  margin-inline-end: 0.125rem;
+  margin-inline-end: 0.25rem;
 }
 
 #fork .f-user-online .f-userstatus {
