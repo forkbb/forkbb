@@ -2298,6 +2298,20 @@ body,
   background-color: #FFBABA;
 }
 
+#fork .f-field-confirmed #id-open-email::after {
+  font: 900 0.875rem "FontAwesomeFree";
+  content: "\f00c";
+  color: green;
+  padding: 0 0.25rem;
+}
+
+#fork .f-field-unconfirmed #id-open-email::after {
+  font: 900 0.875rem "FontAwesomeFree";
+  content: "\f128";
+  color: red;
+  padding: 0 0.25rem;
+}
+
 @media screen and (min-width: 40rem) {
   #fork .f-fs-header .f-wrap-usertitle {
     order: 1;
