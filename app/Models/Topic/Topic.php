@@ -417,16 +417,6 @@ class Topic extends DataModel
         } else {
             $this->page = (int) \ceil($result['pnum'] / $this->c->user->disp_posts);
         }
-/*
-        $query = 'SELECT COUNT(p.id) AS num
-            FROM ::posts AS p
-            INNER JOIN ::posts AS j ON (j.topic_id=?i:tid AND j.id=?i:pid)
-            WHERE p.topic_id=?i:tid AND p.id<?i:pid'; //???? может на два запроса разбить?
-
-        $result = $this->c->DB->query($query, $vars)->fetch();
-
-        $this->page = empty($result) ? null : (int) \ceil(($result['num'] + 1) / $this->c->user->disp_posts);
-*/
     }
 
     /**
@@ -470,15 +460,15 @@ class Topic extends DataModel
         $flag = false;
 
         if (false !== $this->hasNew) {
-            $flag = true;
+            $flag           = true;
             $vars[':visit'] = $this->last_post;
         }
         if (
             false !== $this->hasUnread
             && $this->timeMax > $this->hasUnread
         ) {
-            $flag = true;
-            $vars[':read'] = $this->timeMax;
+            $flag           = true;
+            $vars[':read']  = $this->timeMax;
             $vars[':visit'] = $this->last_post;
         }
 

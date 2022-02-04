@@ -83,7 +83,7 @@ class StopwordList extends Model
         }
 
         // Tidy up and filter the stopwords
-        $stopwords = \array_map('trim', $stopwords);
+        $stopwords = \array_map('\\trim', $stopwords);
         $stopwords = \array_filter($stopwords);
         $stopwords = \array_flip($stopwords);
 
