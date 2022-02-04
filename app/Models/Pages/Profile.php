@@ -77,6 +77,7 @@ abstract class Profile extends Page
     protected function btns(string $type): array
     {
         $btns = [];
+
         if (
             $this->user->isAdmin
             && ! $this->rules->editProfile
@@ -87,8 +88,9 @@ abstract class Profile extends Page
             ];
         }
         if ($this->rules->banUser) {
-            if (isset($this->c->bans->userList[\mb_strtolower($this->curUser->username)])) { //????
-                $id = $this->c->bans->userList[\mb_strtolower($this->curUser->username)];
+            $id = $this->c->bans->banFromName($this->curUser->username);
+
+            if ($id > 0) {
                 $btns['unban-user'] = [
                     $this->c->Router->link(
                         'AdminBansDelete',
