@@ -88,7 +88,7 @@ class Forum extends DataModel
      */
     protected function getsubforums(): array
     {
-        $sub = [];
+        $sub  = [];
         $attr = $this->getAttr('subforums');
 
         if (\is_array($attr)) {
@@ -105,7 +105,7 @@ class Forum extends DataModel
      */
     protected function getdescendants(): array
     {
-        $all = [];
+        $all  = [];
         $attr = $this->getAttr('descendants');
 
         if (\is_array($attr)) {
@@ -243,6 +243,7 @@ class Forum extends DataModel
     protected function getmoderators(): array
     {
         $attr = $this->getAttr('moderators');
+
         if (
             empty($attr)
             || ! \is_array($attr)
@@ -250,26 +251,21 @@ class Forum extends DataModel
             return [];
         }
 
-        if ($this->c->user->viewUsers) {
-            foreach ($attr as $id => &$cur) {
-                $cur = [
-                    'name' => $cur,
-                    'link' => $this->c->Router->link(
+        $viewUsers = $this->c->user->viewUsers;
+
+        foreach ($attr as $id => &$cur) {
+            $cur = [
+                'name' => $cur,
+                'link' => $viewUsers ?
+                    $this->c->Router->link(
                         'User',
                         [
                             'id'   => $id,
                             'name' => $cur,
                         ]
-                    ),
-                ];
-            }
-        } else {
-            foreach ($attr as $id => &$cur) {
-                $cur = [
-                    'name' => $cur,
-                    'link' => null,
-                ];
-            }
+                    )
+                    : null,
+            ];
         }
 
         unset($cur);
@@ -283,6 +279,7 @@ class Forum extends DataModel
     public function modAdd(User ...$users): void
     {
         $attr = $this->getAttr('moderators');
+
         if (
             empty($attr)
             || ! \is_array($attr)
@@ -294,6 +291,7 @@ class Forum extends DataModel
             if (! $user instanceof User) {
                 throw new InvalidArgumentException('Expected User');
             }
+
             $attr[$user->id] = $user->username;
         }
 
@@ -306,6 +304,7 @@ class Forum extends DataModel
     public function modDelete(User ...$users): void
     {
         $attr = $this->getAttr('moderators');
+
         if (
             empty($attr)
             || ! \is_array($attr)
@@ -317,6 +316,7 @@ class Forum extends DataModel
             if (! $user instanceof User) {
                 throw new InvalidArgumentException('Expected User');
             }
+
             unset($attr[$user->id]);
         }
 
@@ -338,10 +338,12 @@ class Forum extends DataModel
             $poster = $this->last_poster;
             $topic  = $this->last_topic;
             $fnew   = $this->newMessages;
+
             foreach ($this->descendants as $chId => $children) {
                 $fnew  = $fnew || $children->newMessages;
                 $numT += $children->num_topics;
                 $numP += $children->num_posts;
+
                 if ($children->last_post > $time) {
                     $time   = $children->last_post;
                     $postId = $children->last_post_id;
@@ -349,14 +351,15 @@ class Forum extends DataModel
                     $topic  = $children->last_topic;
                 }
             }
+
             $attr = $this->c->forums->create([
-                'num_topics'     => $numT,
-                'num_posts'      => $numP,
-                'last_post'      => $time,
-                'last_post_id'   => $postId,
-                'last_poster'    => $poster,
-                'last_topic'     => $topic,
-                'newMessages'    => $fnew,
+                'num_topics'   => $numT,
+                'num_posts'    => $numP,
+                'last_post'    => $time,
+                'last_post_id' => $postId,
+                'last_poster'  => $poster,
+                'last_topic'   => $topic,
+                'newMessages'  => $fnew,
             ]);
 
             $this->setAttr('tree', $attr);
@@ -370,7 +373,7 @@ class Forum extends DataModel
      */
     protected function getnumPages(): int
     {
-        if (null === $this->num_topics) {
+        if (! \is_int($this->num_topics)) {
             throw new RuntimeException('The model does not have the required data');
         }
 
