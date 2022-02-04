@@ -40,7 +40,7 @@ class Prepare extends Method
         foreach (\preg_split('%"%', $query) as $subQuery) {
             // подстрока внутри кавычек
             if ($quotes) {
-                $subQuery = \mb_strtolower(trim($subQuery), 'UTF-8');
+                $subQuery = \mb_strtolower(\trim($subQuery), 'UTF-8');
                 // не стоп-слово и минимальная длина удовлетворяет условию
                 if (null !== $this->model->word($subQuery)) {
                     // подстрока является словом и нет символов CJK языков
