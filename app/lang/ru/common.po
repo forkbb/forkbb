@@ -88,19 +88,19 @@ msgstr "Параметры"
 msgid "Submit"
 msgstr "Отправить"
 
-msgid "Ban message"
+msgid "You are banned"
 msgstr "Ваша учетная запись заблокирована."
 
-msgid "Ban message 1"
+msgid "Your IP is blocked"
 msgstr "Ваш IP заблокирован."
 
-msgid "Ban message 2"
+msgid "The ban expires %s"
 msgstr "Блокировка заканчивается %s"
 
-msgid "Ban message 3"
+msgid "Ban message for you"
 msgstr "Администратор или модератор, установивший блокировку, оставил следующее сообщение:"
 
-msgid "Ban message 4"
+msgid "Ban message contact %s"
 msgstr "Все возникшие вопросы отправляйте администратору форума по адресу <a href=\"mailto:%1$s\">%1$s</a>."
 
 msgid "Never"

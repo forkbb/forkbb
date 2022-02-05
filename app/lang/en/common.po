@@ -88,19 +88,19 @@ msgstr "Options"
 msgid "Submit"
 msgstr "Submit"
 
-msgid "Ban message"
+msgid "You are banned"
 msgstr "You are banned from this forum."
 
-msgid "Ban message 1"
+msgid "Your IP is blocked"
 msgstr "Your IP is blocked from this forum."
 
-msgid "Ban message 2"
+msgid "The ban expires %s"
 msgstr "The ban expires at the end of %s"
 
-msgid "Ban message 3"
+msgid "Ban message for you"
 msgstr "The administrator or moderator that banned you left the following message:"
 
-msgid "Ban message 4"
+msgid "Ban message contact %s"
 msgstr "Please direct any inquiries to the forum administrator at <a href=\"mailto:%1$s\">%1$s</a>."
 
 msgid "Never"
