@@ -17,21 +17,15 @@ use function \ForkBB\{__, num};
 class Statistics extends Admin
 {
     /**
-     * Статус функции: вкл. / откл.
-     */
-    protected function isOn(string $name): bool
-    {
-        return 0 === \preg_match('%\b' . \preg_quote($name, '%') . '\b%i', (string) \ini_get('disable_functions'));
-    }
-
-    /**
      * phpinfo
      */
     public function info(): Page
     {
+        $this->c->Lang->load('admin_index');
+
         // Is phpinfo() a disabled function?
-        if (! $this->isOn('phpinfo')) {
-            $this->c->Message->message('PHPinfo disabled message', true, 200);
+        if (! \function_exists('\\phpinfo')) {
+            return $this->c->Message->message('PHPinfo disabled message', true, 200);
         }
 
         \ob_start();
@@ -113,7 +107,7 @@ class Statistics extends Admin
 
         switch (\PHP_OS_FAMILY) {
             case 'Windows':
-                if ($this->isOn('exec')) {
+                if (\function_exists('\\exec')) {
                     \exec('wmic cpu get loadpercentage /all', $output);
 
                     if (
@@ -131,7 +125,7 @@ class Statistics extends Admin
                     && \is_array($load = \sys_getloadavg())
                 ) {
                     $this->serverLoad = num($load[0], 2) . ' ' . num($load[1], 2) . ' ' . num($load[2], 2);
-                } elseif ($this->isOn('exec')) {
+                } elseif (\function_exists('\\exec')) {
                     \exec('uptime', $output);
 
                     if (
