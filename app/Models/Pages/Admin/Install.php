@@ -633,6 +633,15 @@ class Install extends Admin
             throw new RuntimeException('Unable to clear cache');
         }
 
+        if ('pgsql' === $this->c->DB->getType()) {
+            $query = 'CREATE COLLATION IF NOT EXISTS fork_icu (
+                provider = icu,
+                locale = \'und-u-ks-level2\'
+            )';
+
+            $this->c->DB->exec($query);
+        }
+
         // bans
         $schema = [
             'FIELDS' => [
