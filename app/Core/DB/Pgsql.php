@@ -150,6 +150,31 @@ class Pgsql
     }
 
     /**
+     * Формирует подстроку COLLATE
+     */
+    protected function buildCollate(array $data): string
+    {
+        $query = '';
+
+        // сравнение
+        if (\preg_match('%^(?:CHAR|VARCHAR|TINYTEXT|TEXT|MEDIUMTEXT|LONGTEXT|ENUM|SET)\b%i', $data[0])) {
+            $query .= ' COLLATE ';
+
+            if (
+                isset($data[3])
+                && \is_string($data[3])
+                && \preg_match('%bin%i', $data[3])
+            ) {
+                $query .= '"C"';
+            } else {
+                $query .= '"fork_icu"';
+            }
+        }
+
+        return $query;
+    }
+
+    /**
      * Формирует строку для одного поля таблицы
      */
     protected function buildColumn(string $name, array $data): string
@@ -159,6 +184,8 @@ class Pgsql
         $query = '"' . $name . '" ' . $this->replType($data[0]);
 
         if ('SERIAL' !== \strtoupper($data[0])) {
+            // сравнение
+            $query .= $this->buildCollate($data);
             // не NULL
             if (empty($data[1])) {
                 $query .= ' NOT NULL';
@@ -349,7 +376,10 @@ class Pgsql
             $query .= " ALTER COLUMN \"{$field}\" DROP DEFAULT,";
         }
 
-        $query = " ALTER COLUMN \"{$field}\" TYPE " . $this->replType($type) . ','; // ???? Использовать USING?
+        $query = " ALTER COLUMN \"{$field}\" TYPE "
+            . $this->replType($type)
+            . $this->buildCollate([$type, $allowNull, $default, $collate])
+            . ','; // ???? Использовать USING?
 
         if ('SERIAL' !== \strtoupper($type) && ! $allowNull) {
             $query .= " ALTER COLUMN \"{$field}\" SET NOT NULL,";
