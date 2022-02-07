@@ -23,6 +23,7 @@ class Install extends Admin
     const PHP_MIN    = '7.3.0';
     const MYSQL_MIN  = '5.5.3';
     const SQLITE_MIN = '3.25.0';
+    const PGSQL_MIN  = '10.0';
 
     const JSON_OPTIONS = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
 
@@ -557,6 +558,11 @@ class Install extends Admin
             case 'sqlite':
                 $versionNeed = self::SQLITE_MIN;
                 $progName    = 'SQLite';
+
+                break;
+            case 'pgsql':
+                $versionNeed = self::PGSQL_MIN;
+                $progName    = 'PostgreSQL';
 
                 break;
         }
