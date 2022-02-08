@@ -25,11 +25,12 @@ abstract class Admin extends Page
     {
         parent::__construct($container);
 
-        $this->aIndex    = 'index'; # string Указатель на активный пункт навигации в меню админки
-        $this->fIndex    = self::FI_ADMIN;
-        $this->onlinePos = 'admin';
-        $this->robots    = 'noindex, nofollow';
-        $this->hhsLevel  = 'secure';
+        $this->aIndex       = 'index'; # string Указатель на активный пункт навигации в меню админки
+        $this->fIndex       = self::FI_ADMIN;
+        $this->onlinePos    = 'admin';
+        $this->onlineDetail = null;
+        $this->robots       = 'noindex, nofollow';
+        $this->hhsLevel     = 'secure';
 
         $container->Lang->load('admin');
 

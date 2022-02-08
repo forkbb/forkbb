@@ -65,7 +65,6 @@ class Statistics extends Admin
         }
 
         $this->nameTpl      = 'admin/phpinfo';
-        $this->onlineDetail = null;
         $this->mainSuffix   = '-one-column';
         $this->aCrumbs[]    = [$this->c->Router->link('AdminInfo'), ['%s', 'phpinfo()']];
         $this->aCrumbs[]    = [$this->c->Router->link('AdminStatistics'), 'Server statistics'];
@@ -83,7 +82,6 @@ class Statistics extends Admin
 
         $this->nameTpl      = 'layouts/plain';
         $this->plainText    = $this->c->Cache->get('phpinfoCSS', '');
-        $this->onlineDetail = null;
 
         $this->header('Content-type', 'text/css; charset=utf-8');
 
@@ -143,7 +141,8 @@ class Statistics extends Admin
         }
 
         // Get number of current visitors
-        $this->numOnline = $this->c->Online->calc($this)->all;
+        $this->onlineDetail = false;
+        $this->numOnline    = $this->c->Online->calc($this)->all;
 
         $stat = $this->c->DB->statistics();
 
