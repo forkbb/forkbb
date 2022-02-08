@@ -20,10 +20,12 @@ class Message extends Page
      */
     public function message(/* string|array */ $message, bool $back = true, int $status = 400, array $headers = []): Page
     {
-        $this->nameTpl    = 'message';
-        $this->httpStatus = \max(200, $status);
-        $this->titles     = 'Info';
-        $this->back       = $back;
+        $this->nameTpl      = 'message';
+        $this->onlinePos    = 'info-' . $status;
+        $this->onlineDetail = null;
+        $this->httpStatus   = \max(200, $status);
+        $this->titles       = 'Info';
+        $this->back         = $back;
 
         if (! empty($headers)) {
             foreach ($headers as $header) {
