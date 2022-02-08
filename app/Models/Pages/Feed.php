@@ -30,8 +30,7 @@ class Feed extends Page
         $this->nameTpl      = 'layouts/plain';
         $this->httpStatus   = \max(200, $status);
         $this->onlinePos    = 'feed';
-        $this->onlineDetail = false;
-        $this->onlineFilter = false;
+        $this->onlineDetail = null;
 
         $this->header('Content-type', 'text/plain; charset=utf-8');
 
@@ -148,8 +147,7 @@ class Feed extends Page
 
         $this->nameTpl      = "feed_{$args['type']}";
         $this->onlinePos    = 'feed';
-        $this->onlineDetail = false;
-        $this->onlineFilter = false;
+        $this->onlineDetail = null;
         $this->feed         = $feed;
 
         $this->header('Content-type', "application/{$args['type']}+xml; charset=utf-8");
