@@ -27,13 +27,29 @@ class Online extends Model
     protected $online = [];
 
     /**
+     * Флаг выполнения
+     * @var int
+     */
+    protected $done = 0;
+
+    protected function isReady(): void
+    {
+        switch ($this->done) {
+            case 1:
+                return;
+            case 2:
+                throw new RuntimeException('Online user calculation is disabled on this page');
+            default:
+                throw new RuntimeException('The calc() method was not executed');
+        }
+    }
+
+    /**
      * Время последнего визита в текущем сеансе ?
      */
     public function currentVisit(User $user): ?int
     {
-        if (true !== $this->done) {
-            throw new RuntimeException('The calc() method was not executed');
-        }
+        $this->isReady();
 
         return $this->visits[$user->id] ?? null;
     }
@@ -43,9 +59,7 @@ class Online extends Model
      */
     public function isOnline(User $user): bool
     {
-        if (true !== $this->done) {
-            throw new RuntimeException('The calc() method was not executed');
-        }
+        $this->isReady();
 
         return isset($this->online[$user->id]);
     }
@@ -60,16 +74,24 @@ class Online extends Model
         if ($this->done) {
             return $this;
         }
-        $this->done = true;
 
-        $position = $page->onlinePos;
+        $this->done = 1;
+        $position   = $page->onlinePos;
+
         if (null === $position) {
             return $this;
         }
-        $detail = $page->onlineDetail && 1 === $this->c->config->b_users_online;
-        $filter = $page->onlineFilter;
 
         $this->updateUser($position);
+
+        if (null === $page->onlineDetail) {
+            $this->done = 2;
+
+            return $this;
+        }
+
+        $detail = $page->onlineDetail && 1 === $this->c->config->b_users_online;
+        $filter = $page->onlineFilter;
 
         $all       = 0;
         $now       = \time();
@@ -113,6 +135,7 @@ class Online extends Model
                         $this->c->DB->exec($query, $vars);
                     }
                 }
+
                 continue;
             }
 
@@ -161,6 +184,7 @@ class Online extends Model
                 'number' => $all,
                 'time'   => $now,
             ];
+
             $this->c->config->save();
         }
 
