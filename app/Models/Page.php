@@ -61,7 +61,7 @@ abstract class Page extends Model
 #       $this->titles       = [];             # array       Массив титула страницы | setTitles()
         $this->fIswev       = [];             # array       Массив info, success, warning, error, validation информации
 #       $this->onlinePos    = '';             # null|string Позиция для таблицы онлайн текущего пользователя
-        $this->onlineDetail = false;          # bool        Формировать данные по посетителям online или нет
+        $this->onlineDetail = false;          # null|bool   Формировать данные по посетителям online или нет
         $this->onlineFilter = true;           # bool        Посетители только по текущей странице или по всем
 #       $this->robots       = '';             # string      Переменная для meta name="robots"
 #       $this->canonical    = '';             # string      Переменная для link rel="canonical"
