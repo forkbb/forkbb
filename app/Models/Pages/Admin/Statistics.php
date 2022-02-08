@@ -64,11 +64,12 @@ class Statistics extends Admin
             $phpinfo = '- - -';
         }
 
-        $this->nameTpl    = 'admin/phpinfo';
-        $this->mainSuffix = '-one-column';
-        $this->aCrumbs[]  = [$this->c->Router->link('AdminInfo'), ['%s', 'phpinfo()']];
-        $this->aCrumbs[]  = [$this->c->Router->link('AdminStatistics'), 'Server statistics'];
-        $this->phpinfo    = $phpinfo;
+        $this->nameTpl      = 'admin/phpinfo';
+        $this->onlineDetail = null;
+        $this->mainSuffix   = '-one-column';
+        $this->aCrumbs[]    = [$this->c->Router->link('AdminInfo'), ['%s', 'phpinfo()']];
+        $this->aCrumbs[]    = [$this->c->Router->link('AdminStatistics'), 'Server statistics'];
+        $this->phpinfo      = $phpinfo;
 
         return $this;
     }
@@ -82,9 +83,7 @@ class Statistics extends Admin
 
         $this->nameTpl      = 'layouts/plain';
         $this->plainText    = $this->c->Cache->get('phpinfoCSS', '');
-#        $this->onlinePos    = null;
-        $this->onlineDetail = false;
-        $this->onlineFilter = false;
+        $this->onlineDetail = null;
 
         $this->header('Content-type', 'text/css; charset=utf-8');
 
