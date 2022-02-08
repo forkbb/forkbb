@@ -13,6 +13,7 @@ namespace ForkBB\Models\Online;
 use ForkBB\Models\Model;
 use ForkBB\Models\User\User;
 use ForkBB\Models\Page;
+use RuntimeException;
 
 class Online extends Model
 {
@@ -30,6 +31,10 @@ class Online extends Model
      */
     public function currentVisit(User $user): ?int
     {
+        if (true !== $this->done) {
+            throw new RuntimeException('The calc() method was not executed');
+        }
+
         return $this->visits[$user->id] ?? null;
     }
 
@@ -38,6 +43,10 @@ class Online extends Model
      */
     public function isOnline(User $user): bool
     {
+        if (true !== $this->done) {
+            throw new RuntimeException('The calc() method was not executed');
+        }
+
         return isset($this->online[$user->id]);
     }
 
