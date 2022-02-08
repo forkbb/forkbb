@@ -90,18 +90,19 @@ class Auth extends Page
 
         $ref = $this->c->Secury->replInvalidChars($_SERVER['HTTP_REFERER'] ?? '');
 
-        $this->hhsLevel   = 'secure';
-        $this->fIndex     = self::FI_LOGIN;
-        $this->nameTpl    = 'login';
-        $this->onlinePos  = 'login';
-        $this->robots     = 'noindex';
-        $this->titles     = 'Login';
-        $this->regLink    = 1 === $this->c->config->b_regs_allow ? $this->c->Router->link('Register') : null;
+        $this->hhsLevel     = 'secure';
+        $this->fIndex       = self::FI_LOGIN;
+        $this->nameTpl      = 'login';
+        $this->onlinePos    = 'login';
+        $this->onlineDetail = null;
+        $this->robots       = 'noindex';
+        $this->titles       = 'Login';
+        $this->regLink      = 1 === $this->c->config->b_regs_allow ? $this->c->Router->link('Register') : null;
 
-        $username         = $v ? $v->username : $username;
-        $save             = $v ? $v->save : 1;
-        $redirect         = $v ? $v->redirect : $this->c->Router->validate($ref, 'Index');
-        $this->form       = $this->formLogin($username, $save, $redirect);
+        $username           = $v ? $v->username : $username;
+        $save               = $v ? $v->save : 1;
+        $redirect           = $v ? $v->redirect : $this->c->Router->validate($ref, 'Index');
+        $this->form         = $this->formLogin($username, $save, $redirect);
 
         return $this;
     }
@@ -309,13 +310,14 @@ class Auth extends Page
             $this->httpStatus = 400;
         }
 
-        $this->hhsLevel   = 'secure';
-        $this->fIndex     = self::FI_LOGIN;
-        $this->nameTpl    = 'passphrase_reset';
-        $this->onlinePos  = 'passphrase_reset';
-        $this->robots     = 'noindex';
-        $this->titles     = 'Passphrase reset';
-        $this->form       = $this->formForget($v ? $v->email : $email);
+        $this->hhsLevel     = 'secure';
+        $this->fIndex       = self::FI_LOGIN;
+        $this->nameTpl      = 'passphrase_reset';
+        $this->onlinePos    = 'passphrase_reset';
+        $this->onlineDetail = null;
+        $this->robots       = 'noindex';
+        $this->titles       = 'Passphrase reset';
+        $this->form         = $this->formForget($v ? $v->email : $email);
 
         return $this;
     }
@@ -436,13 +438,14 @@ class Auth extends Page
             ]);
         }
 
-        $this->hhsLevel   = 'secure';
-        $this->fIndex     = self::FI_LOGIN;
-        $this->nameTpl    = 'change_passphrase';
-        $this->onlinePos  = 'change_passphrase';
-        $this->robots     = 'noindex';
-        $this->titles     = 'Passphrase reset';
-        $this->form       = $this->formChange($args);
+        $this->hhsLevel     = 'secure';
+        $this->fIndex       = self::FI_LOGIN;
+        $this->nameTpl      = 'change_passphrase';
+        $this->onlinePos    = 'change_passphrase';
+        $this->onlineDetail = null;
+        $this->robots       = 'noindex';
+        $this->titles       = 'Passphrase reset';
+        $this->form         = $this->formChange($args);
 
         return $this;
     }
