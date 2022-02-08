@@ -77,13 +77,14 @@ class Register extends Page
             $this->httpStatus = 400;
         }
 
-        $this->hhsLevel   = 'secure';
-        $this->fIndex     = self::FI_REG;
-        $this->nameTpl    = 'register';
-        $this->onlinePos  = 'register';
-        $this->titles     = 'Register';
-        $this->robots     = 'noindex';
-        $this->form       = $this->formReg($v);
+        $this->hhsLevel     = 'secure';
+        $this->fIndex       = self::FI_REG;
+        $this->nameTpl      = 'register';
+        $this->onlinePos    = 'register';
+        $this->onlineDetail = null;
+        $this->titles       = 'Register';
+        $this->robots       = 'noindex';
+        $this->form         = $this->formReg($v);
 
         return $this;
     }
