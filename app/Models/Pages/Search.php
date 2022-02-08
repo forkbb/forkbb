@@ -137,13 +137,14 @@ class Search extends Page
             $this->fIswev = ['i', 'The search may be case sensitive'];
         }
 
-        $this->fIndex    = 'search';
-        $this->nameTpl   = 'search';
-        $this->onlinePos = 'search';
-        $this->canonical = $this->c->Router->link('Search');
-        $this->robots    = 'noindex';
-        $this->form      = $advanced ? $this->formSearchAdvanced($v) : $this->formSearch($v);
-        $this->crumbs    = $this->crumbs();
+        $this->fIndex       = 'search';
+        $this->nameTpl      = 'search';
+        $this->onlinePos    = 'search';
+        $this->onlineDetail = null;
+        $this->canonical    = $this->c->Router->link('Search');
+        $this->robots       = 'noindex';
+        $this->form         = $advanced ? $this->formSearchAdvanced($v) : $this->formSearch($v);
+        $this->crumbs       = $this->crumbs();
 
         return $this;
     }
