@@ -671,4 +671,81 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.48 to rev.49
+     */
+    protected function stageNumber48(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'DATE_FORMATS',
+            ['\'Y-m-d\'', '\'d M Y\'', '\'Y-m-d\'', '\'Y-d-m\'', '\'d-m-Y\'', '\'m-d-Y\'', '\'M j Y\'', '\'jS M Y\''],
+            'HTTP_HEADERS'
+        );
+
+        $coreConfig->add(
+            'TIME_FORMATS',
+            ['\'H:i:s\'', '\'H:i\'', '\'H:i:s\'', '\'H:i\'', '\'g:i:s a\'', '\'g:i a\''],
+            'DATE_FORMATS'
+        );
+
+        $coreConfig->add(
+            'shared=>%DIR_VIEWS%',
+            '\'%DIR_APP%/templates\'',
+            'DB'
+        );
+
+        $coreConfig->add(
+            'shared=>%DIR_LOG%',
+            '\'%DIR_APP%/log\'',
+            'DB'
+        );
+
+        $coreConfig->add(
+            'shared=>%DIR_LANG%',
+            '\'%DIR_APP%/lang\'',
+            'DB'
+        );
+
+        $coreConfig->add(
+            'shared=>%DIR_CONFIG%',
+            '\'%DIR_APP%/config\'',
+            'DB'
+        );
+
+        $coreConfig->add(
+            'shared=>%DIR_CACHE%',
+            '\'%DIR_APP%/cache\'',
+            'DB'
+        );
+
+        $coreConfig->add(
+            'shared=>%DIR_APP%',
+            '\'%DIR_ROOT%/app\'',
+            'DB'
+        );
+
+        $coreConfig->add(
+            'shared=>%DIR_PUBLIC%',
+            '\'%DIR_ROOT%/public\'',
+            'DB'
+        );
+
+        $coreConfig->add(
+            'shared=>%DIR_ROOT%',
+            '\\realpath(__DIR__ . \'/../..\')',
+            'DB'
+        );
+
+        $coreConfig->add(
+            'shared=>HTMLCleaner=>config',
+            '\'%DIR_CONFIG%/jevix.default.php\''
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }
