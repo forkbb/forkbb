@@ -19,21 +19,25 @@ use InvalidArgumentException;
 class Container
 {
     protected $instances = [];
-    protected $shared = [];
-    protected $multiple = [];
+    protected $shared    = [];
+    protected $multiple  = [];
 
     public function __construct(array $config = null)
     {
         if (empty($config)) {
             return;
         }
+
         if (isset($config['shared'])) {
             $this->shared = $config['shared'];
         }
+
         if (isset($config['multiple'])) {
             $this->multiple = $config['multiple'];
         }
+
         unset($config['shared'], $config['multiple']);
+
         $this->instances = $config;
     }
 
@@ -45,10 +49,13 @@ class Container
         if (isset($config['shared'])) {
             $this->shared = \array_replace($this->shared, $config['shared']);
         }
+
         if (isset($config['multiple'])) {
             $this->multiple = \array_replace($this->multiple, $config['multiple']);
         }
+
         unset($config['shared'], $config['multiple']);
+
         if (! empty($config)) {
             $this->instances = \array_replace($this->instances, $config);
         }
@@ -57,13 +64,14 @@ class Container
     /**
      * Gets a service or parameter.
      */
-    public function __get(string $id) /* : mixed */
+    public function __get(string $key) /* : mixed */
     {
-        if (\array_key_exists($id, $this->instances)) {
-            return $this->instances[$id];
-        } elseif (false !== \strpos($id, '.')) {
-            $tree    = \explode('.', $id);
+        if (\array_key_exists($key, $this->instances)) {
+            return $this->instances[$key];
+        } elseif (false !== \strpos($key, '.')) {
+            $tree    = \explode('.', $key);
             $service = $this->__get(\array_shift($tree));
+
             if (\is_array($service)) {
                 return $this->fromArray($service, $tree);
             } elseif (\is_object($service)) {
@@ -72,28 +80,39 @@ class Container
                 return null;
             }
         }
-        if (isset($this->shared[$id])) {
+
+        if (isset($this->shared[$key])) {
             $toShare = true;
-            $config  = (array) $this->shared[$id];
-        } elseif (isset($this->multiple[$id])) {
+            $config  = $this->shared[$key];
+        } elseif (isset($this->multiple[$key])) {
             $toShare = false;
-            $config  = (array) $this->multiple[$id];
+            $config  = $this->multiple[$key];
+        } elseif (isset($this->shared["%{$key}%"])) {
+            return $this->instances[$key] = $this->resolve($this->shared["%{$key}%"]);
         } else {
-            throw new InvalidArgumentException("Wrong property name: {$id}");
+            throw new InvalidArgumentException("Wrong property name: {$key}");
         }
-        // N.B. "class" is just the first element, regardless of its key
-        $class = \array_shift($config);
+
         $args  = [];
-        // If you want to susbtitute some values in arguments, use non-numeric keys for them
-        foreach ($config as $k => $v) {
-            $args[] = \is_numeric($k) ? $v : $this->resolve($v);
+
+        if (\is_array($config)) {
+            // N.B. "class" is just the first element, regardless of its key
+            $class = \array_shift($config);
+            // If you want to susbtitute some values in arguments, use non-numeric keys for them
+            foreach ($config as $k => $v) {
+                $args[] = \is_numeric($k) ? $v : $this->resolve($v);
+            }
+        } else {
+            $class = $config;
         }
+
         // Special case: reference to factory method
         if (
             '@' === $class[0]
             && false !== \strpos($class, ':')
         ) {
             list($name, $method) = \explode(':', \substr($class, 1), 2);
+
             $factory = $this->__get($name);
             $service = $factory->$method(...$args);
         } else {
@@ -101,8 +120,9 @@ class Container
             $args[]  = $this;
             $service = new $class(...$args);
         }
+
         if ($toShare) {
-            $this->instances[$id] = $service;
+            $this->instances[$key] = $service;
         }
 
         return $service;
@@ -112,12 +132,12 @@ class Container
      * Sets a service or parameter.
      * Provides a fluent interface.
      */
-    public function __set(string $id, /* mixed */ $service): void
+    public function __set(string $key, /* mixed */ $service): void
     {
-        if (false !== \strpos($id, '.')) {
-            //????
+        if (false !== \strpos($key, '.')) {
+            throw new InvalidArgumentException("Wrong property name: {$key}");
         } else {
-            $this->instances[$id] = $service;
+            $this->instances[$key] = $service;
         }
     }
 
@@ -127,6 +147,7 @@ class Container
     public function fromArray(array $array, array $tree) /* : mixed */
     {
         $ptr = &$array;
+
         foreach ($tree as $s) {
             if (isset($ptr[$s])) {
                 $ptr = &$ptr[$s];
@@ -147,6 +168,7 @@ class Container
         $segments = \explode('.', $name);
         $n        = \count($segments);
         $ptr      = &$this->config;
+
         foreach ($segments as $s) {
             if (--$n) {
                 if (! \array_key_exists($s, $ptr)) {
@@ -154,6 +176,7 @@ class Container
                 } elseif (! \is_array($ptr[$s])) {
                     throw new InvalidArgumentException("Scalar '{$s}' in the path '{$name}'");
                 }
+
                 $ptr = &$ptr[$s];
             } else {
                 $ptr[$s] = $value;
@@ -190,6 +213,7 @@ class Container
             foreach ($value as &$v) {
                 $v = $this->resolve($v);
             }
+
             unset($v);
         }
 
