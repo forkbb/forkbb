@@ -26,7 +26,7 @@ class BBCodeList extends Model
     {
         parent::__construct($container);
 
-        $this->fileDefault = "{$container->DIR_APP}/config/{$file}";
+        $this->fileDefault = "{$container->DIR_CONFIG}/{$file}";
         $this->fileCache   = "{$container->DIR_CACHE}/generated_bbcode.php";
     }
 

@@ -52,7 +52,7 @@ class Update extends Admin
         $this->nameTpl    = 'admin/form';
         $this->titleForm  = 'Update ForkBB';
         $this->classForm  = ['updateforkbb'];
-        $this->configFile = $container->DIR_APP . '/config/' . self::CONFIG_FILE;
+        $this->configFile = $container->DIR_CONFIG . '/' . self::CONFIG_FILE;
 
         $this->header('Retry-After', '3600');
     }
@@ -587,7 +587,7 @@ class Update extends Admin
     protected function stageNumber44(array $args): ?int
     {
         if (! $this->c->DB->query('SELECT id FROM ::bbcode WHERE bb_tag=?s', ['from'])->fetchColumn()) {
-            $bbcodes = include $this->c->DIR_APP . '/config/defaultBBCode.php';
+            $bbcodes = include $this->c->DIR_CONFIG . '/defaultBBCode.php';
 
             foreach ($bbcodes as $bbcode) {
                 if ('from' !== $bbcode['tag']) {
