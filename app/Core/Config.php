@@ -362,7 +362,7 @@ class Config
 
         if (
             \is_numeric($key) //???? O_o
-            || \is_numeric($after)
+            || \is_numeric($after) //???? O_o O_o O_o
         ) {
             $config[] = $value;
         } elseif (isset($config[$key])) {
