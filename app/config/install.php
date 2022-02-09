@@ -34,11 +34,12 @@ return [
         'common' => [],
         'secure' => [],
     ],
-
     'HMAC' => [
         'algo' => 'sha1',
         'salt' => '_SALT_FOR_HMAC_',
     ],
+    'DATE_FORMATS' => ['Y-m-d', 'd M Y', 'Y-m-d', 'Y-d-m', 'd-m-Y', 'm-d-Y', 'M j Y', 'jS M Y'],
+    'TIME_FORMATS' => ['H:i:s', 'H:i', 'H:i:s', 'H:i', 'g:i:s a', 'g:i a'],
 
     'forConfig' => [
         'o_default_lang'   => 'en',
@@ -52,6 +53,15 @@ return [
     ],
 
     'shared' => [
+        '%DIR_ROOT%'   => \realpath(__DIR__ . '/../..'),
+        '%DIR_PUBLIC%' => '%DIR_ROOT%/public',
+        '%DIR_APP%'    => '%DIR_ROOT%/app',
+        '%DIR_CACHE%'  => '%DIR_APP%/cache',
+        '%DIR_CONFIG%' => '%DIR_APP%/config',
+        '%DIR_LANG%'   => '%DIR_APP%/lang',
+        '%DIR_LOG%'    => '%DIR_APP%/log',
+        '%DIR_VIEWS%'  => '%DIR_APP%/templates',
+
         'DB' => [
             'class'    => \ForkBB\Core\DB::class,
             'dsn'      => '%DB_DSN%',
@@ -98,7 +108,7 @@ return [
         ],
         'HTMLCleaner' => [
             'calss'  => \ForkBB\Core\HTMLCleaner::class,
-            'config' => '%DIR_APP%/config/jevix.default.php',
+            'config' => '%DIR_CONFIG%/jevix.default.php',
         ],
         'Log'       => [
             'class'  => \ForkBB\Core\Log::class,
