@@ -32,6 +32,12 @@ class Files
     protected $maxFileSize;
 
     /**
+     * Максимальный число пикселей
+     * @var int
+     */
+    protected $maxPixels;
+
+    /**
      * Текст ошибки
      * @var null|string
      */
@@ -849,9 +855,11 @@ class Files
             $this->size(\ini_get('upload_max_filesize')),
             $this->size(\ini_get('post_max_size'))
         );
+        $this->maxPixels  = (int) ($this->size(\ini_get('memory_limit')) / 10);
         $this->maxImgSize = \min(
             $this->size($maxImgSize),
-            $init
+            $init,
+            $this->maxPixels
         );
         $this->maxFileSize = \min(
             $this->size($maxFileSize),
@@ -896,7 +904,7 @@ class Files
      * Переводит объем информации из одних единиц в другие
      * кило = 1024, а не 1000
      */
-    public function size(/* int|float|string */ $value, string $to = null) /* : int|float */
+    public function size(/* int|float|string */ $value, string $to = null): int
     {
         if (\is_string($value)) {
             if (! \preg_match('%^([^a-z]+)([a-z]+)?$%i', \trim($value), $matches)) {
@@ -929,7 +937,7 @@ class Files
                 throw new InvalidArgumentException('Unknown unit');
             }
 
-            $value /= 1024 ** $expo;
+            $value = (int) ($value / 1024 ** $expo);
         }
 
         return 0 + $value;
