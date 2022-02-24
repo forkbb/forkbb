@@ -32,6 +32,7 @@ class ImagickDriver extends DefaultDriver
         if ($this->ready) {
             try {
                 $imagick = new Imagick();
+
                 $imagick->readImageBlob($data);
 
                 return $imagick;
@@ -77,7 +78,7 @@ class ImagickDriver extends DefaultDriver
             }
 
             return $imagick->writeImages($path, true);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
     }
