@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace ForkBB\Core;
 
+use ForkBB\Core\Container;
 use ForkBB\Core\File;
 use ForkBB\Core\Image;
 use ForkBB\Core\Image\DefaultDriver;
@@ -19,6 +20,12 @@ use RuntimeException;
 
 class Files
 {
+    /**
+     * Контейнер
+     * @var Container
+     */
+    protected $c;
+
     /**
      * Максимальный размер для картинок
      * @var int
@@ -848,15 +855,18 @@ class Files
         'image/avif' => 'avif',
     ];
 
-    public function __construct(/* string|int */ $maxFileSize, /* string|int */ $maxImgSize, array $imgDrivers)
+    public function __construct(/* string|int */ $maxFileSize, /* string|int */ $maxImgSize, array $imgDrivers, Container $c)
     {
+        $this->c = $c;
+
         $init = \min(
             \PHP_INT_MAX,
             $this->size(\ini_get('upload_max_filesize')),
             $this->size(\ini_get('post_max_size'))
         );
-        $this->maxPixels  = (int) ($this->size(\ini_get('memory_limit')) / 10);
-        $this->maxImgSize = \min(
+
+        $this->maxPixels   = (int) ($this->size(\ini_get('memory_limit')) / 10);
+        $this->maxImgSize  = \min(
             $this->size($maxImgSize),
             $init,
             $this->maxPixels
@@ -865,7 +875,7 @@ class Files
             $this->size($maxFileSize),
             $init
         );
-        $this->imgDriver = $this->imgDriver($imgDrivers);
+        $this->imgDriver   = $this->imgDriver($imgDrivers);
     }
 
     /**
@@ -910,6 +920,7 @@ class Files
             if (! \preg_match('%^([^a-z]+)([a-z]+)?$%i', \trim($value), $matches)) {
                 throw new InvalidArgumentException('Expected string indicating the amount of information');
             }
+
             if (! \is_numeric($matches[1])) {
                 throw new InvalidArgumentException('String does not contain number');
             }
@@ -1002,6 +1013,7 @@ class Files
 
         if (\is_array($file['tmp_name'])) {
             $result = [];
+
             foreach ($file['tmp_name'] as $key => $value) {
                 if (
                     '' === $file['name'][$key]
@@ -1138,17 +1150,23 @@ class Files
 //            'size'      => $file['size'],
         ];
 
+        $level = $this->c->ErrorHandler->logOnly(\E_WARNING);
+
         try {
             if (null !== $imageExt) {
-                return new Image($file['tmp_name'], $options, $this->imgDriver);
+                $result = new Image($file['tmp_name'], $options, $this->imgDriver);
             } else {
-                return new File($file['tmp_name'], $options);
+                $result = new File($file['tmp_name'], $options);
             }
         } catch (FileException $e) {
             $this->error = $e->getMessage();
 
-            return null;
+            $result = null;
         }
+
+        $this->c->ErrorHandler->logOnly($level);
+
+        return $result;
     }
 
     public function isBadPath(string $path): bool
