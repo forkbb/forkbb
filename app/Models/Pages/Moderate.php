@@ -594,6 +594,7 @@ class Moderate extends Page
         if ($this->firstTopic instanceof Topic) {
             $form['sets']['info']['info'][] = [
                 'value' => __(['All posts will be posted in the «%s» topic', $this->firstTopic->name]),
+                'html'  => true,
             ];
         }
 
