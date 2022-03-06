@@ -104,12 +104,10 @@ class Online extends Model
 
         if ($detail) {
             $query = 'SELECT o.user_id, o.ident, o.logged, o.o_position, o.o_name
-                FROM ::online AS o
-                ORDER BY o.logged';
+                FROM ::online AS o';
         } else {
             $query = 'SELECT o.user_id, o.ident, o.logged
-                FROM ::online AS o
-                ORDER BY o.logged';
+                FROM ::online AS o';
         }
 
         $stmt = $this->c->DB->query($query);
@@ -129,7 +127,7 @@ class Online extends Model
                     if ($cur['user_id'] > 0) {
                         $vars = [
                             ':last' => $cur['logged'],
-                            ':id' => $cur['user_id'],
+                            ':id'   => $cur['user_id'],
                         ];
 
                         $this->c->DB->exec($query, $vars);
