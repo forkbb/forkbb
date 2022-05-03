@@ -249,7 +249,7 @@ class Post extends Page
 #           $post->edited       =
 #           $post->editor       =
 #           $post->editor_id    =
-            $post->user_agent   = $this->user->userAgent;
+            $post->user_agent   = \mb_substr($this->user->userAgent, 0, 255, 'UTF-8');
             $post->topic_id     = $topic->id;
 
             $this->c->posts->insert($post);
