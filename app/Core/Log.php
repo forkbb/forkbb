@@ -69,13 +69,10 @@ class Log implements LoggerInterface
             && \method_exists($message, '__toString')
         ) {
             $message = (string) $message;
-        }
 
-        if (! \is_string($message)) {
+        } elseif (! \is_string($message)) {
             throw new InvalidArgumentException('Expected string in message');
         }
-
-        $message = $this->c->Secury->replInvalidChars($message);
 
         if (! \is_string($level)) {
             throw new InvalidArgumentException('Expected string in level');
@@ -95,9 +92,12 @@ class Log implements LoggerInterface
                 throw new InvalidArgumentException('Invalid level value');
         }
 
-        $context = $this->c->Secury->replInvalidChars($context);
         $context = $this->contextExp($level, $context);
-        $line    = $this->generateLine($level, $message, $context);
+        $line    = $this->generateLine(
+            $level,
+            $this->c->Secury->replInvalidChars($message),
+            $this->c->Secury->replInvalidChars($context)
+        );
 
         if (! \is_resource($this->resource)) {
             $this->initResource();
