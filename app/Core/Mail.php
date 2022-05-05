@@ -754,7 +754,7 @@ class Mail
 
         if (
             ! $name
-            || '' === ($name = \preg_replace('%[\x00-\x1F]%', '', \trim($name)))
+            || '' === ($name = \preg_replace('%(?:[\x00-\x1F\x7F]|\xC2[\x80-\x9F])%', '', \trim($name)))
         ) {
             $name = '[127.0.0.1]';
 
