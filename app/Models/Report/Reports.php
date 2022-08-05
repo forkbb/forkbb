@@ -89,7 +89,7 @@ class Reports extends Manager
      */
     public function lastId(): int
     {
-        $last = $this->list = $this->c->Cache->get('report');
+        $last = $this->c->Cache->get('report');
 
         if (null === $last) {
             $query = 'SELECT MAX(r.id)
