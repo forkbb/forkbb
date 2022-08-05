@@ -167,9 +167,19 @@ class Func
 
             $tpl[$all] = $all;
         } else {
-            $tpl = $all < 7
-                ? \array_slice([2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6], 0, $all - 1)
-                : [2 => 2, 3 => 3, 4 => 4, $all => $all];
+            $tpl = [];
+
+            if ($all > 999) {
+                $d = 2;
+            } elseif ($all > 99) {
+                $d = 3;
+            } else {
+                $d = \min(4, $all - 2);
+            }
+
+            for ($i = $all - $d; $i <= $all; $i++) {
+                $tpl[$i] = $i;
+            }
         }
 
         $k = 1;
