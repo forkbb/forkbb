@@ -16,6 +16,8 @@ use RuntimeException;
 
 class View extends Dirk
 {
+    protected $templates = [];
+
     public function __construct (string $cache, string $views)
     {
         $config = [
