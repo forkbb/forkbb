@@ -321,7 +321,7 @@ class Update extends Admin
                         ],
                         'o_maintenance_message' => [
                             'type'     => 'textarea',
-                            'value'    => $v ? $v->o_maintenance_message : $this->c->config->o_maintenance_message,
+                            'value'    => $v->o_maintenance_message ?? $this->c->config->o_maintenance_message,
                             'caption'  => 'Maintenance message',
                             'help'     => 'Maintenance message info',
                             'required' => true,

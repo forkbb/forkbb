@@ -99,9 +99,9 @@ class Auth extends Page
         $this->titles       = 'Login';
         $this->regLink      = 1 === $this->c->config->b_regs_allow ? $this->c->Router->link('Register') : null;
 
-        $username           = $v ? $v->username : $username;
-        $save               = $v ? $v->save : 1;
-        $redirect           = $v ? $v->redirect : $this->c->Router->validate($ref, 'Index');
+        $username           = $v->username ?? $username;
+        $save               = $v->save ?? 1;
+        $redirect           = $v->redirect ?? $this->c->Router->validate($ref, 'Index');
         $this->form         = $this->formLogin($username, $save, $redirect);
 
         return $this;
@@ -317,7 +317,7 @@ class Auth extends Page
         $this->onlineDetail = null;
         $this->robots       = 'noindex';
         $this->titles       = 'Passphrase reset';
-        $this->form         = $this->formForget($v ? $v->email : $email);
+        $this->form         = $this->formForget($v->email ?? $email);
 
         return $this;
     }
