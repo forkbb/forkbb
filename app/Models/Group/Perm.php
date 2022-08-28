@@ -56,7 +56,7 @@ class Perm extends Action
 
             $result[$gid] = $group;
         }
-        $this->fileds = \array_keys($perm);
+        $this->fields = \array_keys($perm);
 
         return $result;
     }
@@ -78,7 +78,7 @@ class Perm extends Action
             $row     = [];
             $modDef  = false;
             $modPerm = false;
-            foreach ($this->fileds as $field) {
+            foreach ($this->fields as $field) {
                 if ($group->{'dis_' . $field}) {
                     $row[$field] = $group->{'set_' . $field} ? 1 : 0;
                     $modDef      = $row[$field] !== $group->{'g_' . $field} ? true : $modDef;
