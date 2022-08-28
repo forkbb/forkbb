@@ -26,7 +26,7 @@ function _init(Container $c): void
  * Переводит строку с подстановкой аргументов
  * Защита от дурака отсутствует, ловим ошибки/исключения
  */
-function __(/* string|arrray */ $arg): string
+function __(/* string|array */ $arg): string
 {
     static $c, $lang;
 
