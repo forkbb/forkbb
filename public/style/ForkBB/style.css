@@ -2060,7 +2060,7 @@ body,
   content: "\f00c";
   color: red;
   position: absolute;
-  bottom: 0;
+  top: 50%;
   inset-inline-start: 0;
 }
 
