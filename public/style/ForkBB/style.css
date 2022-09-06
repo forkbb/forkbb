@@ -13,14 +13,14 @@
   font-family: "FontAwesomeFree";
   font-style: normal;
   font-weight: 400;
-  src: url("font/fa/fa-regular-400.v.51502.woff2") format("woff2"), url("font/fa/fa-regular-400.v.51502.woff") format("woff");
+  src: url("../font/fa/fa-regular-400.v.60200.woff2") format("woff2");
 }
 
 @font-face {
   font-family: "FontAwesomeFree";
   font-style: normal;
   font-weight: 900;
-  src: url("font/fa/fa-solid-900.v.51502.woff2") format("woff2"), url("font/fa/fa-solid-900.v.51502.woff") format("woff");
+  src: url("../font/fa/fa-solid-900.v.60200.woff2") format("woff2");
 }
 
 html,
