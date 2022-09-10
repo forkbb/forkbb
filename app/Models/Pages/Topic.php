@@ -236,15 +236,15 @@ class Topic extends Page
         }
 
         $form['btns'] += [
-            'move' => [
-                'class'     => ['origin'],
-                'type'      => 'submit',
-                'value'     => __(['Move topic btn', 1]),
-            ],
             'delete' => [
                 'class'     => ['origin'],
                 'type'      => 'submit',
                 'value'     => __('Delete'),
+            ],
+            'move' => [
+                'class'     => ['origin'],
+                'type'      => 'submit',
+                'value'     => __(['Move topic btn', 1]),
             ],
             'split' => [
                 'class'     => ['origin'],
