@@ -2664,3 +2664,101 @@ body,
     background-color: #FFEBCD;
   }
 }
+
+/***********************/
+/* Кнопки, пиктограммы */
+/***********************/
+#fork .f-btn::before {
+  display: inline-block;
+  font-family: "FontAwesomeFree";
+  font-weight: 900;
+  /* padding-inline-end: 0.3125rem; */
+}
+
+@media screen and (max-width: 44rem) {
+  #fork-mod .f-btn[name="open"] > span,
+  #fork-mod .f-btn[name="close"] > span,
+  #fork-mod .f-btn[name="delete"] > span,
+  #fork-mod .f-btn[name="move"] > span,
+  #fork-mod .f-btn[name="merge"] > span,
+  #fork-mod .f-btn[name="split"] > span,
+  #fork-mod .f-btn[name="stick"] > span,
+  #fork-mod .f-btn[name="unstick"] > span {
+    display: none;
+  }
+
+  #fork-mod .f-btn[name="open"]::before {
+    content: "\f3c1";
+  }
+
+  #fork-mod .f-btn[name="close"]::before {
+    content: "\f023";
+  }
+
+  #fork-mod .f-btn[name="delete"]::before {
+    content: "\f00d";
+  }
+
+  #fork-mod .f-btn[name="move"]::before {
+    content: "\f362";
+  }
+
+  #fork-mod .f-btn[name="merge"]::before {
+    content: "\f387";
+  }
+
+  #fork-mod .f-btn[name="split"]::before {
+    content: "\e13b";
+  }
+
+  #fork-mod .f-btn[name="stick"]::before {
+    content: "\f35b";
+  }
+
+  #fork-mod .f-btn[name="unstick"]::before {
+    content: "\f358";
+  }
+}
+
+@media screen and (max-width: 50rem) {
+  #fork .f-btn-markread > span,
+  #fork .f-btn-subscribe > span,
+  #fork .f-btn-unsubscribe > span {
+    display: none;
+  }
+
+  #fork .f-btn-markread::before {
+    content: "\e4bb";
+  }
+
+  #fork .f-btn-subscribe::before {
+    content: "\f00e";
+  }
+
+  #fork .f-btn-unsubscribe::before {
+    content: "\f010";
+  }
+}
+
+@media screen and (max-width: 63rem) {
+  #fork .f-pprev::before,
+  #fork .f-pnext::before {
+    display: inline-block;
+    font-family: "FontAwesomeFree";
+    font-weight: 900;
+    /* padding-inline-end: 0.3125rem; */
+  }
+
+  #fork .f-pprev > span,
+  #fork .f-pnext > span {
+    display: none;
+  }
+
+  #fork .f-pprev::before {
+    content: "\f104";
+  }
+
+  #fork .f-pnext::before {
+    content: "\f105";
+  }
+}
