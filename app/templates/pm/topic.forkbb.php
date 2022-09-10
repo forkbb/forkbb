@@ -9,9 +9,9 @@
             @elseif ('space' === $cur[1])
           <span class="f-page f-pspacer">{!! __('Spacer') !!}</span>
             @elseif ('prev' === $cur[1])
-          <a rel="prev" class="f-page f-pprev" href="{{ $cur[0] }}">{!! __('Previous') !!}</a>
+          <a rel="prev" class="f-page f-pprev" href="{{ $cur[0] }}" title="{!! __('Previous') !!}"><span>{!! __('Previous') !!}<span></a>
             @elseif ('next' === $cur[1])
-          <a rel="next" class="f-page f-pnext" href="{{ $cur[0] }}">{!! __('Next') !!}</a>
+          <a rel="next" class="f-page f-pnext" href="{{ $cur[0] }}" title="{!! __('Next') !!}"><span>{!! __('Next') !!}</span></a>
             @else
           <a class="f-page" href="{{ $cur[0] }}">{{ $cur[1] }}</a>
             @endif
