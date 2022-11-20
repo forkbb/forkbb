@@ -70,7 +70,7 @@ return [
             ['header', ['class']],
             ['hr', ['class']],
             ['i', ['class']],
-            ['img', ['class', 'src', 'alt', 'title', 'width', 'height']],
+            ['img', ['class', 'src', 'alt', 'title', 'width', 'height', 'loading']],
             ['ins', ['class']],
             ['kbd', ['class']],
             ['li', ['class']],
