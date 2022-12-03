@@ -35,7 +35,7 @@ trait PostFormTrait
             'btns'   => [
                 'submit' => [
                     'type'  => 'submit',
-                    'value' => __('Submit'),
+                    'value' => __('NewTopic' === $marker ? 'Create topic' : 'Submit'),
                 ],
                 'preview' => [
                     'type'  => 'submit',

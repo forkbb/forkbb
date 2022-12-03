@@ -101,3 +101,6 @@ msgstr "Сообщение обновлено."
 
 msgid "Stick topic"
 msgstr "Выделить тему"
+
+msgid "Create topic"
+msgstr "Создать тему"
