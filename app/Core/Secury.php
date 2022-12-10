@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Core;
 
 use Normalizer;
+use SensitiveParameter;
 use RuntimeException;
 use UnexpectedValueException;
 use InvalidArgumentException;
@@ -50,8 +51,11 @@ class Secury
     /**
      * Обертка для hash_hmac
      */
-    public function hmac(string $data, string $key): string
-    {
+    public function hmac(
+        string $data,
+        #[SensitiveParameter]
+        string $key
+    ): string {
         if (empty($key)) {
             throw new InvalidArgumentException('Key can not be empty');
         }

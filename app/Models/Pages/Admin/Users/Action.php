@@ -13,6 +13,7 @@ namespace ForkBB\Models\Pages\Admin\Users;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin\Users;
+use SensitiveParameter;
 use RuntimeException;
 use function \ForkBB\__;
 
@@ -305,8 +306,11 @@ class Action extends Users
     /**
      * Проверяет пароль на совпадение с текущим пользователем
      */
-    public function vCheckPassword(Validator $v, string $password): string
-    {
+    public function vCheckPassword(
+        Validator $v,
+        #[SensitiveParameter]
+        string $password
+    ): string {
         if (! \password_verify($password, $this->user->password)) {
             $v->addError('Invalid passphrase');
         }

@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Core;
 
 use ForkBB\Core\Secury;
+use SensitiveParameter;
 
 class Csrf
 {
@@ -36,8 +37,11 @@ class Csrf
      */
     protected $hashExpiration = 3600;
 
-    public function __construct(Secury $secury, string $key)
-    {
+    public function __construct(
+        Secury $secury,
+        #[SensitiveParameter]
+        string $key
+    ) {
         $this->secury = $secury;
         $this->key    = \sha1($key);
     }

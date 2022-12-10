@@ -13,6 +13,7 @@ namespace ForkBB\Core;
 use ForkBB\Core\Container;
 use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Core\Exceptions\SmtpException;
+use SensitiveParameter;
 use function \ForkBB\e;
 
 class Mail
@@ -91,8 +92,15 @@ class Mail
      */
     protected $response;
 
-    public function __construct(/* string */ $host, /* string */ $user, /* string */ $pass, /* bool */ $ssl, /* string */ $eol, Container $c)
-    {
+    public function __construct(
+        /* string */ $host,
+        /* string */ $user,
+        #[SensitiveParameter]
+        /* string */ $pass,
+        /* bool */ $ssl,
+        /* string */ $eol,
+        Container $c
+    ) {
         $this->c = $c;
 
         if (

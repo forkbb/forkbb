@@ -14,6 +14,7 @@ use ForkBB\Core\Validator;
 use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\Page;
 use ForkBB\Models\User\User;
+use SensitiveParameter;
 use function \ForkBB\__;
 
 class Auth extends Page
@@ -179,8 +180,11 @@ class Auth extends Page
     /**
      * Проверка пользователя по базе
      */
-    public function vLoginCheck(Validator $v, string $password): string
-    {
+    public function vLoginCheck(
+        Validator $v,
+        #[SensitiveParameter]
+        string $password
+    ): string {
         if (empty($v->getErrors())) {
             $this->userAfterLogin = $this->c->users->loadByName($v->username);
 

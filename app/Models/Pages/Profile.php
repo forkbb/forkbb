@@ -13,6 +13,7 @@ namespace ForkBB\Models\Pages;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\User\User;
+use SensitiveParameter;
 use function \ForkBB\__;
 
 abstract class Profile extends Page
@@ -50,8 +51,11 @@ abstract class Profile extends Page
     /**
      * Проверяет пароль на совпадение с текущим пользователем
      */
-    public function vCheckPassword(Validator $v, string $password): string
-    {
+    public function vCheckPassword(
+        Validator $v,
+        #[SensitiveParameter]
+        string $password
+    ): string {
         if (! \password_verify($password, $this->user->password)) {
             $v->addError('Invalid passphrase');
         }

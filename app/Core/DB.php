@@ -14,6 +14,7 @@ use ForkBB\Core\DB\DBStatement;
 use PDO;
 use PDOStatement;
 use PDOException;
+use SensitiveParameter;
 
 class DB
 {
@@ -104,8 +105,14 @@ class DB
         'sqliteCreateFunction'  => true,
     ];
 
-    public function __construct(string $dsn, string $username = null, string $password = null, array $options = [], string $prefix = '')
-    {
+    public function __construct(
+        string $dsn,
+        string $username = null,
+        #[SensitiveParameter]
+        string $password = null,
+        array $options = [],
+        string $prefix = ''
+    ) {
         $dsn = $this->initialConfig($dsn);
 
         if (\preg_match('%[^\w]%', $prefix)) {
