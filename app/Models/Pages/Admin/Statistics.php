@@ -165,12 +165,6 @@ class Statistics extends Admin
         } elseif (\ini_get('wincache.fcenabled')) {
             $this->accelerator = 'Windows Cache for PHP';
             $this->linkAcc     = 'https://www.php.net/wincache/';
-        } elseif (
-            \ini_get('apc.enabled')
-            && \function_exists('\\apc_delete_file')
-        ) {
-            $this->accelerator = 'Alternative PHP Cache (APC)'; //???? частичная эмуляция APCu
-            $this->linkAcc     = 'https://www.php.net/apc/';
         } else {
             $this->accelerator = __('NA');
             $this->linkAcc     = null;
