@@ -870,15 +870,19 @@ body,
   max-width: 100%;
 }
 
-#fork .f-crumb:last-child {
-  font-weight: bold;
-}
-
-#fork .f-crumb + .f-crumb::before {
+#fork .f-crumb:not(:last-child):after {
   display: inline-block;
   color: #583200;
   content: "/";
   margin: 0 0.3125rem;
+}
+
+#fork .f-crumb-a:not(.active) {
+  border-bottom: 0.0625rem solid;
+}
+
+#fork .f-crumb-a.active {
+  font-weight: bold;
 }
 
 #fork .f-subscribed > .f-crumb-a::after {
@@ -886,10 +890,6 @@ body,
   font: 400 0.875rem "FontAwesomeFree";
   content: "\f0f3"; /* f06e */
   padding-inline-start: 0.3125rem;
-}
-
-#fork .f-crumb-a:not(.active) {
-  border-bottom: 0.0625rem solid;
 }
 
 #fork .f-nav-links .f-actions-links,
