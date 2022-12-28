@@ -860,21 +860,23 @@ body,
 }
 
 #fork .f-crumbs {
-  display: flex;
-  flex-wrap: wrap;
+  /*display: flex;*/
+  /*flex-wrap: wrap;*/
   padding: 0 0.625rem;
   overflow: hidden;
 }
 
 #fork .f-crumb {
-  max-width: 100%;
+  /*max-width: 100%;*/
+  display: inline;
 }
 
 #fork .f-crumb:not(:last-child):after {
-  display: inline-block;
+  display: inline;
   color: #583200;
-  content: "/";
-  margin: 0 0.3125rem;
+  content: " /";
+  /*margin: 0 0.3125rem;*/
+  /*padding-inline-start: 0.3125rem;*/
 }
 
 #fork .f-crumb-a:not(.active) {
@@ -886,10 +888,10 @@ body,
 }
 
 #fork .f-subscribed > .f-crumb-a::after {
-  display: inline-block;
+  display: inline;
   font: 400 0.875rem "FontAwesomeFree";
-  content: "\f0f3"; /* f06e */
-  padding-inline-start: 0.3125rem;
+  content: " \f0f3"; /* f06e */
+  /*padding-inline-start: 0.3125rem;*/
 }
 
 #fork .f-nav-links .f-actions-links,
