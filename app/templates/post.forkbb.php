@@ -9,10 +9,10 @@
       <div class="f-post-body">
         <div class="f-post-main">
           {!! $p->previewHtml !!}
-        </div>
     @if ($poll = $p->poll)
         @include ('layouts/poll')
     @endif
+        </div>
       </div>
     </section>
 @endif

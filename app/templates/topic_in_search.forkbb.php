@@ -75,18 +75,13 @@
           <div class="f-post-main">
             {!! $post->html() !!}
           </div>
-        </div>
-        <footer class="f-post-footer">
-          <div class="f-post-footer-add">
-            <span></span>
-          </div>
-          <div class="f-post-btns">
+          <aside class="f-post-btns">
             <ul>
               <li class="f-posttotopic"><a class="f-btn" href="{{ $post->parent->link }}">{!! __('Go to topic') !!}</a></li>
               <li class="f-posttopost"><a class="f-btn" href="{{ $post->link }}">{!! __('Go to post') !!}</a></li>
             </ul>
-          </div>
-        </footer>
+          </aside>
+        </div>
       </article>
     @endif
 @endforeach

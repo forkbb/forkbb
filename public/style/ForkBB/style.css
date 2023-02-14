@@ -1495,11 +1495,6 @@ body,
   display: none;
 }
 
-#fork .f-post-body img {
-  max-width: 100%;
-  height: auto;
-}
-
 #fork .f-username {
   font-size: 1.25rem;
   word-break: break-all;
@@ -1531,12 +1526,21 @@ body,
   display: none !important;
 }
 
+#fork .f-post-body {
+  padding: 0.3125rem;
+}
+
+#fork .f-post-body img {
+  max-width: 100%;
+  height: auto;
+}
+
 #fork .f-post-main {
-  padding: 0.625rem 0.625rem 0;
+  padding: 0.3125rem;
 }
 
 #fork .f-post-btns {
-  padding: 0 0.625rem 0.625rem;
+  padding: 0.3125rem;
 }
 
 #fork .f-post-btns:not(:hover) .f-btn:not(:focus) {
@@ -1550,14 +1554,14 @@ body,
   gap: 0.3125rem;
 }
 
-#fork .f-post-footer-add {
+/* #fork .f-post-footer-add {
   display: none;
-}
+} */
 
 #fork .f-post-signature {
   font-size: 0.875rem;
   opacity: 0.5;
-  padding: 0 0.625rem;
+  padding: 0.3125rem;
 }
 
 #fork .f-admin-note {
@@ -1578,6 +1582,7 @@ body,
   opacity: 0.5;
   font-style: italic;
   font-size: 0.875rem;
+  padding-top: 0.625rem;
 }
 
 #fork .f-bb-quote {
@@ -1641,7 +1646,7 @@ body,
 #fork .f-post-body pre,
 #fork .f-post-body ol,
 #fork .f-post-body ul {
-  margin-bottom: 0.625rem;
+  /* margin-bottom: 0.625rem; */
 }
 
 @media screen and (min-width: 50rem) {
@@ -1698,13 +1703,18 @@ body,
   }
 
 
-  #fork .f-post-body,
-  #fork .f-post-btns {
+  #fork .f-post-body { /* #fork .f-post-btns */
     width: calc(100% - 13rem);
     position: relative;
+    display: flex;
+    flex-direction: column;
   }
 
-  #fork .f-post-footer {
+  #fork .f-post-main {
+    flex-grow: 1;
+  }
+
+/*  #fork .f-post-footer {
     display: flex;
     flex-wrap: nowrap;
     width: 100%;
@@ -1716,7 +1726,7 @@ body,
     padding: 0 0.625rem 0.625rem;
     background-color: #F8F4E3;
     border-inline-end: 0.0625rem solid #AA7939;
-  }
+  } */
 
   #fork .f-avatar > img {
     max-width: 100%;
@@ -1806,7 +1816,7 @@ body,
 /* Опрос */
 /*********/
 #fork .f-post-poll {
-  margin: 0.625rem;
+  margin-top: 0.625rem;
   padding: 0.625rem 0.625rem 0;
   background-color: #F8F4E3;
   border: 0.0625rem solid #AA7939;
@@ -1873,7 +1883,7 @@ body,
   font-style: italic;
   text-align: center;
   border-top: 0.0625rem solid #AA7939;
-  padding-top: 0.625rem;
+  padding: 0.625rem;
 }
 
 #fork .f-poll-btns {

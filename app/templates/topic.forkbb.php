@@ -108,22 +108,18 @@
         <div class="f-post-body">
           <div class="f-post-main">
             {!! $post->html() !!}
-          </div>
         @if (1 === $post->postNumber && ($poll = $p->poll))
             @include ('layouts/poll')
         @endif
+          </div>
         @if ($p->user->showSignature && $post->user->isSignature)
           <aside class="f-post-signature">
             <hr>
             {!! $post->user->htmlSign !!}
           </aside>
         @endif
-        </div>
-        <footer class="f-post-footer">
-          <div class="f-post-footer-add">
-          </div>
         @if ($post->canReport || $post->canDelete || $post->canEdit || $post->canQuote)
-          <div class="f-post-btns">
+          <aside class="f-post-btns">
             <ul>
             @if ($post->canReport)
               <li class="f-postreport"><a class="f-btn f-minor" title="{{ __('Report') }}" href="{{ $post->linkReport }}"><span>{!! __('Report') !!}</span></a></li>
@@ -138,9 +134,9 @@
               <li class="f-postquote"><a class="f-btn" title="{{ __('Quote') }}" href="{{ $post->linkQuote }}"><span>{!! __('Quote') !!}</span></a></li>
             @endif
             </ul>
-          </div>
+          </aside>
         @endif
-        </footer>
+        </div>
       </article>
     @endif
 @endforeach
