@@ -1528,7 +1528,7 @@ body,
 }
 
 #fork .f-userstatus {
-  display: none;
+  display: none !important;
 }
 
 #fork .f-post-main {

@@ -46,10 +46,10 @@ msgid "Website"
 msgstr "Сайт"
 
 msgid "Online"
-msgstr "Активен"
+msgstr "Online"
 
 msgid "Offline"
-msgstr "Вне форума"
+msgstr "Offline"
 
 msgid "Last edit"
 msgstr "Последний раз отредактировано %1$s (%2$s)"
