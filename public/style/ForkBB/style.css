@@ -1522,6 +1522,10 @@ body,
   border-bottom: 0.0625rem solid #43b581;
 }
 
+#fork .f-view-posts .f-username {
+  border-bottom: 0;
+}
+
 #fork .f-userstatus {
   display: none !important;
 }
