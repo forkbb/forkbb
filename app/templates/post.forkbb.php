@@ -29,7 +29,7 @@
       <h2>{!! __($p->postsTitle) !!}</h2>
     @foreach ($p->posts as $post)
         @if ($post->id)
-      <article id="p{{ $post->id }}" class="f-post">
+      <article id="p{{ $post->id }}" class="f-post @if (1 == $post->user->gender) f-user-male @elseif (2 == $post->user->gender) f-user-female @endif">
         <header class="f-post-header">
           <span class="f-post-posted"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></span>
           <span class="f-post-number"><a href="{{ $post->link }}" rel="bookmark">#{{ $post->postNumber }}</a></span>
@@ -37,10 +37,10 @@
         <address class="f-post-user">
           <div class="f-post-usticky">
             <ul class="f-user-info-first">
-              <li class="f-username">{{ $post->poster }}</li>
+              <li class="f-username">{{ $post->user->username }}</li>
             </ul>
             <ul class="f-user-info">
-              <li class="f-username">{{ $post->poster }}</li>
+              <li class="f-username">{{ $post->user->username }}</li>
             </ul>
           </div>
         </address>
