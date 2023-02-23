@@ -194,6 +194,10 @@ body,
   background-color: #D3B58D;
 }
 
+#fork option {
+  background-color: #AA7939;
+}
+
 #fork section > h2,
 #fork aside > h2 {
   display: none;
@@ -2062,7 +2066,7 @@ body,
 #fork .f-ftlist .f-fch:checked + .f-ficon::after,
 #fork .f-post-checkbox:checked + .f-post-header::before {
   font: 900 1rem "FontAwesomeFree";
-  content: "\f00c";
+  content: "\f560"; /* \f00c */
   color: red;
   position: absolute;
   top: 50%;
