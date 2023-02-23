@@ -67,7 +67,9 @@
                     </span>
             @endif
             @if ($topic->hasNew)
-                    <small class="f-tnew"><a href="{{ $topic->linkNew }}" title="{{ __('New posts info') }}"><span class="f-newtxt">{!! __('New posts') !!}</span></a></small>
+                    <small>(</small>
+                    <span class="f-tnew"><a href="{{ $topic->linkNew }}" title="{{ __('New posts info') }}"><small class="f-newtxt">{!! __('New posts') !!}</small></a></span>
+                    <small>)</small>
             @endif
                   </h3>
                   <p><!-- inline -->

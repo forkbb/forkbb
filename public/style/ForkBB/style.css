@@ -87,7 +87,7 @@ body,
 /*#fork s,*/
 #fork samp,
 #fork section,
-#fork small,
+/* #fork small, */
 #fork span,
 #fork strike,
 /*#fork strong,*/
@@ -163,6 +163,10 @@ body,
 
 #fork textarea {
   resize: vertical;
+}
+
+#fork small {
+  display: none;
 }
 
 #fork summary {
@@ -1231,10 +1235,10 @@ body,
   white-space: nowrap;
 }
 
-#fork .f-newtxt,
+/* #fork .f-newtxt,
 #fork .f-unreadtxt {
   display: none;
-}
+} */
 
 #fork .f-fnew > a::before,
 #fork .f-tnew > a::before {
