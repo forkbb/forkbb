@@ -1119,6 +1119,7 @@ body,
 }
 
 #fork .f-ftlist .f-row {
+  display: block;
   border-bottom: 0.0625rem solid #AA7939;
   padding: 0.3125rem;
 }
