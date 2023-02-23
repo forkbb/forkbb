@@ -30,7 +30,7 @@
         <li id="id-subforums{{ $p->model->id }}" class="f-category">
           <h2 class="f-ftch2">{{ __(['Sub forum', 2]) }}</h2>
           <ol class="f-table">
-            <li class="f-row f-thead" value="0">
+            <li hidden class="f-row f-thead" value="0">
               <div class="f-hcell f-cmain">{!! __(['Sub forum', 1]) !!}</div>
               <div class="f-hcell f-cstats">{!! __('Stats') !!}</div>
               <div class="f-hcell f-clast">{!! __('Last post') !!}</div>
@@ -63,7 +63,7 @@
     @endif
       <div class="f-ftlist">
         <ol class="f-table">
-          <li class="f-row f-thead" value="0">
+          <li hidden class="f-row f-thead" value="0">
             <div class="f-hcell f-cmain">{!! __(['Topic', 1]) !!}</div>
             <div class="f-hcell f-cstats">{!! __('Stats') !!}</div>
             <div class="f-hcell f-clast">{!! __('Last post') !!}</div>
@@ -147,6 +147,7 @@
             <div class="f-cell f-cstats">
               <span>{!! __(['%s Reply', $topic->num_replies, num($topic->num_replies)]) !!}</span>
             @if ($topic->showViews)
+              <small>·</small>
               <span>{!! __(['%s View', $topic->num_views, num($topic->num_views)]) !!}</span>
             @endif
             </div>

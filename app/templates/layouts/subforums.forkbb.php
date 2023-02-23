@@ -66,6 +66,7 @@
               </div>
               <div class="f-cell f-cstats">
                 <span>{!! __(['%s Topic', $cur->tree->num_topics, num($cur->tree->num_topics)]) !!}</span>
+                <small>·</small>
                 <span>{!! __(['%s Post', $cur->tree->num_posts, num($cur->tree->num_posts)]) !!}</span>
               </div>
               <div class="f-cell f-clast">

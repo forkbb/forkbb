@@ -6,7 +6,7 @@
         <li id="cat-{{ $id }}" class="f-category">
           <h2 class="f-ftch2">{{ \current($forums)->cat_name }}</h2>
           <ol class="f-table">
-            <li class="f-row f-thead" value="0">
+            <li hidden class="f-row f-thead" value="0">
               <div class="f-hcell f-cmain">{!! __('Forum') !!}</div>
               <div class="f-hcell f-cstats">{!! __('Stats') !!}</div>
               <div class="f-hcell f-clast">{!! __('Last post') !!}</div>

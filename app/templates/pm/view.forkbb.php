@@ -34,7 +34,7 @@
 @else
         <div class="f-ftlist">
           <ol class="f-table">
-            <li class="f-row f-thead" value="0">
+            <li hidden class="f-row f-thead" value="0">
               <div class="f-hcell f-cmain">{!! __('Dialogue') !!}</div>
               <div class="f-hcell f-cstats">{!! __('Stats') !!}</div>
               <div class="f-hcell f-clast">{!! __('Last post') !!}</div>

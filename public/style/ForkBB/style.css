@@ -1295,8 +1295,7 @@ body,
   }
 }
 
-#fork .f-ftlist .f-hcell,
-#fork .f-ftlist .f-clast small {
+#fork .f-ftlist .f-hcell { /* #fork .f-ftlist .f-clast small */
   display: none;
 }
 
