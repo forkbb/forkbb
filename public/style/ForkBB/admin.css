@@ -973,7 +973,7 @@
 
 #forka .f-lga::before {
   display: inline-block;
-  font-family: "FontAwesomeFree";
+  font-family: "fa";
   font-weight: 900;
 }
 

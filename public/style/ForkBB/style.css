@@ -10,14 +10,14 @@
 /* Общие настройки */
 /*******************/
 @font-face {
-  font-family: "FontAwesomeFree";
+  font-family: "fa";
   font-style: normal;
   font-weight: 400;
   src: url("../font/fa/fa-regular-400.v.60200.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: "FontAwesomeFree";
+  font-family: "fa";
   font-style: normal;
   font-weight: 900;
   src: url("../font/fa/fa-solid-900.v.60200.woff2") format("woff2");
@@ -326,7 +326,7 @@ body,
   text-align: center;
   padding: 0.25rem 0.125rem;
   cursor: pointer;
-  font: 900 1.25rem "FontAwesomeFree";
+  font: 900 1.25rem "fa";
   content: "\f0c9";
 }
 
@@ -362,7 +362,7 @@ body,
 
 #fork .f-menu-a::before {
   display: inline-block;
-  font-family: "FontAwesomeFree";
+  font-family: "fa";
   font-weight: 900;
   padding-inline-end: 0.3125rem;
 }
@@ -897,7 +897,7 @@ body,
 
 #fork .f-subscribed > .f-crumb-a::after {
   display: inline;
-  font: 400 0.875rem "FontAwesomeFree";
+  font: 400 0.875rem "fa";
   content: " \f0f3"; /* f06e */
   /*padding-inline-start: 0.3125rem;*/
 }
@@ -1205,7 +1205,7 @@ body,
 }
 
 #fork .f-ficon::before {
-  font: 400 1.5rem "FontAwesomeFree";
+  font: 400 1.5rem "fa";
   content: "\f15b"; /* "\f086"; */
   color: #814A00;
 }
@@ -1224,7 +1224,7 @@ body,
 }
 
 #fork .f-frdrsub::before {
-  font: 400 0.875rem "FontAwesomeFree";
+  font: 400 0.875rem "fa";
   content: "\f1d8";
   color: #814A00;
   margin-inline-end: 0.3125rem;
@@ -1243,13 +1243,13 @@ body,
 
 #fork .f-fnew > a::before,
 #fork .f-tnew > a::before {
-  font: 900 0.875rem "FontAwesomeFree";
+  font: 900 0.875rem "fa";
   content: "\f086";
   padding: 0 0.25rem;
 }
 
 #fork .f-tunread > a::before {
-  font: 900 0.875rem "FontAwesomeFree";
+  font: 900 0.875rem "fa";
   content: "\f06e"; /* f070 */
   padding: 0 0.25rem;
 }
@@ -1375,7 +1375,7 @@ body,
 }
 
 #fork .f-tsticky::before {
-  font: 900 0.875rem "FontAwesomeFree";
+  font: 900 0.875rem "fa";
   content: "\f35b";
   color: #D8000C;
 }
@@ -1385,14 +1385,14 @@ body,
 }
 
 #fork .f-tclosed::before {
-  font: 900 0.875rem "FontAwesomeFree";
+  font: 900 0.875rem "fa";
   content: "\f023";
   color: #C8CCD1;
 }
 
 
 #fork .f-tpoll::before {
-  font: 900 0.875rem "FontAwesomeFree";
+  font: 900 0.875rem "fa";
   content: "\f681";
   color: #9F6000;
 }
@@ -1512,7 +1512,7 @@ body,
 
 #fork .f-user-male .f-username::before {
   display: inline-block;
-  font: 900 1rem "FontAwesomeFree";
+  font: 900 1rem "fa";
   content: "\f222";
   color: #46b4e7;
   margin-inline-end: 0.25rem;
@@ -1520,7 +1520,7 @@ body,
 
 #fork .f-user-female .f-username::before {
   display: inline-block;
-  font: 900 1rem "FontAwesomeFree";
+  font: 900 1rem "fa";
   content: "\f221";
   color: #ef64ef;
   margin-inline-end: 0.25rem;
@@ -2069,7 +2069,7 @@ body,
 
 #fork .f-ftlist .f-fch:checked + .f-ficon::after,
 #fork .f-post-checkbox:checked + .f-post-header::before {
-  font: 900 1rem "FontAwesomeFree";
+  font: 900 1rem "fa";
   content: "\f560"; /* \f00c */
   color: red;
   position: absolute;
@@ -2101,7 +2101,7 @@ body,
 #fork-topic-ins .f-psh-topic::before,
 #fork-topic-ins .f-post-posted::before {
   display: inline-block;
-  font-family: "FontAwesomeFree";
+  font-family: "fa";
   font-weight: 900;
   content: "\f105";
   padding: 0 0.3125rem;
@@ -2312,14 +2312,14 @@ body,
 }
 
 #fork .f-field-confirmed #id-open-email::after {
-  font: 900 0.875rem "FontAwesomeFree";
+  font: 900 0.875rem "fa";
   content: "\f00c";
   color: green;
   padding: 0 0.25rem;
 }
 
 #fork .f-field-unconfirmed #id-open-email::after {
-  font: 900 0.875rem "FontAwesomeFree";
+  font: 900 0.875rem "fa";
   content: "\f128";
   color: red;
   padding: 0 0.25rem;
@@ -2683,7 +2683,7 @@ body,
 /***********************/
 #fork .f-btn::before {
   display: inline-block;
-  font-family: "FontAwesomeFree";
+  font-family: "fa";
   font-weight: 900;
   /* padding-inline-end: 0.3125rem; */
 }
@@ -2757,7 +2757,7 @@ body,
   #fork .f-pprev::before,
   #fork .f-pnext::before {
     display: inline-block;
-    font-family: "FontAwesomeFree";
+    font-family: "fa";
     font-weight: 900;
     /* padding-inline-end: 0.3125rem; */
   }
