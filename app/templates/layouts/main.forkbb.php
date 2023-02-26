@@ -23,7 +23,7 @@
  @if ($p->fNavigation)
     <nav id="fork-nav" class="f-menu @if ($p->fNavigation['search']) f-main-nav-search @endif">
       <div id="fork-navdir">
-        <input id="id-mn-checkbox" class="f-menu-checkbox" type="checkbox">
+        <input hidden id="id-mn-checkbox" class="f-menu-checkbox" type="checkbox">
         <label id="id-mn-label" class="f-menu-toggle" for="id-mn-checkbox"></label>
         <ul class="f-menu-items">
     @foreach ($p->fNavigation as $key => $val)

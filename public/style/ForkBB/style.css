@@ -372,10 +372,6 @@ body,
   text-overflow: ellipsis;
 }
 
-#fork .f-menu-checkbox {
-  display: none;
-}
-
 /****************/
 /* Главное меню */
 /****************/
@@ -2047,11 +2043,6 @@ body,
 #fork-modform .f-btns .f-fbtn {
   width: auto;
   display: inline-block;
-}
-
-#fork .f-ftlist .f-fch,
-#fork .f-post-checkbox {
-  display: none;
 }
 
 #fork .f-ftlist label.f-ficon {
