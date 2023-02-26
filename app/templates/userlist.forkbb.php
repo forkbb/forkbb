@@ -10,7 +10,7 @@
             @elseif ('space' === $cur[1])
           <span class="f-page f-pspacer">{!! __('Spacer') !!}</span>
             @elseif ('prev' === $cur[1])
-          <a rel="prev" class="f-page f-pprev" href="{{ $cur[0] }}" title="{!! __('Previous') !!}"><span>{!! __('Previous') !!}<span></a>
+          <a rel="prev" class="f-page f-pprev" href="{{ $cur[0] }}" title="{!! __('Previous') !!}"><span>{!! __('Previous') !!}</span></a>
             @elseif ('next' === $cur[1])
           <a rel="next" class="f-page f-pnext" href="{{ $cur[0] }}" title="{!! __('Next') !!}"><span>{!! __('Next') !!}</span></a>
             @else
@@ -45,7 +45,7 @@
       <h2>{!! __('User_list') !!}</h2>
       <div class="f-ulist">
         <ol class="f-table">
-          <li class="f-row f-thead" value="{{ $p->startNum }}">
+          <li hidden class="f-row f-thead">
             <span class="f-hcell f-cusername">
               <span class="f-hc-table">
                 <span class="f-hc-tasc"><a @if (0 === $p->activeLink) class="active" @endif href="{{ $p->links[0] }}">▲</a></span>
@@ -77,7 +77,7 @@
             </span>
           </li>
     @foreach ($p->userList as $user)
-          <li class="f-row">
+          <li class="f-row" value="{{ ++$p->startNum }}">
         @if ($p->user->viewUsers && $user->link)
             <span class="f-cell f-cusername"><a href="{{ $user->link }}">{{ $user->username }}</a></span>
         @else
