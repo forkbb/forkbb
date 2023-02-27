@@ -7,7 +7,7 @@
       <div id="fork-pm-menu">
 @if ($p->pmNavigation)
         <nav id="fork-pm-nav" class="f-menu">
-          <input id="id-pmn-checkbox" class="f-menu-checkbox" type="checkbox">
+          <input hidden id="id-pmn-checkbox" class="f-menu-checkbox" type="checkbox">
           <label id="id-pmn-label" class="f-menu-toggle" for="id-pmn-checkbox"></label>
           <ul class="f-menu-items">
     @foreach ($p->pmNavigation as $key => $val)

@@ -47,7 +47,7 @@
         @else
             <li id="ptopic-{{ $topic->id }}" class="f-row @if ($topic->hasNew) f-fnew @endif @if ($topic->closed) f-fclosed @endif">
               <div class="f-cell f-cmain">
-                <input id="checkbox-{{ $topic->id }}" class="f-fch" type="checkbox" name="ids[{{ $topic->id }}]" value="{{ $topic->id }}" form="id-form-pmview">
+                <input hidden id="checkbox-{{ $topic->id }}" class="f-fch" type="checkbox" name="ids[{{ $topic->id }}]" value="{{ $topic->id }}" form="id-form-pmview">
                 <label class="f-ficon" for="checkbox-{{ $topic->id }}" title="{{ __('Select') }}"></label>
                 <div class="f-finfo">
                   <h3 class="f-finfo-h3">
