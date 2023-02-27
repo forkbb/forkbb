@@ -1886,18 +1886,16 @@ body,
   overflow: hidden;
 }
 
+#fork .f-poll-btns,
+#fork .f-poll-status {
+  text-align: center;
+  border-top: 0.0625rem solid #AA7939;
+  padding: 0.625rem 0;
+}
+
 #fork .f-poll-status {
   font-size: 0.8rem;
   font-style: italic;
-  text-align: center;
-  border-top: 0.0625rem solid #AA7939;
-  padding: 0.625rem;
-}
-
-#fork .f-poll-btns {
-  text-align: center;
-  border-top: 0.0625rem solid #AA7939;
-  padding-top: 0.625rem;
 }
 
 #fork .f-hide-poll {
