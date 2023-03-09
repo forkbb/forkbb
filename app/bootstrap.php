@@ -106,7 +106,7 @@ if (
     null !== $tpl
     && $c->DEBUG > 0
 ) {
-    $debug = $c->View->rendering($c->Debug->debug());
+    $debug = \rtrim($c->View->rendering($c->Debug->debug()));
     $tpl   = \str_replace('<!-- debuginfo -->', $debug, $tpl);
 }
 
