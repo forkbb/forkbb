@@ -1226,11 +1226,11 @@ body,
   margin-inline-end: 0.3125rem;
 }
 
-#fork .f-tnew,
+/* #fork .f-tnew,
 #fork .f-tunread {
   font: normal 0.875rem Arial, Helvetica, sans-serif;
   white-space: nowrap;
-}
+} */
 
 /* #fork .f-newtxt,
 #fork .f-unreadtxt {
@@ -1308,10 +1308,10 @@ body,
 }
 
 #fork-forum .f-finfo-h3 {
-  display: flex;
+/*  display: flex;
   flex-wrap: wrap;
   gap: 0.3125rem;
-  align-items: center;
+  align-items: center; */
   font-weight: normal;
   position: relative;
 }
