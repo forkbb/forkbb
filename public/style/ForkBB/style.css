@@ -198,7 +198,7 @@ body,
   background-color: #D3B58D;
 }
 
-#fork option {
+#fork select:not([multiple]) option {
   background-color: #AA7939;
 }
 
@@ -1566,10 +1566,14 @@ body,
   display: none;
 } */
 
-#fork .f-post-signature {
+#fork .f-post-sign {
   font-size: 0.875rem;
   opacity: 0.5;
   padding: 0.3125rem;
+}
+
+#fork .f-sign-brd {
+  margin: 0;
 }
 
 #fork .f-admin-note {
@@ -1648,14 +1652,14 @@ body,
   background-color: #FFBABA;
 }
 
-#fork .f-post-body p,
+/* #fork .f-post-body p,
 #fork .f-post-body blockquote,
 #fork .f-post-body br,
 #fork .f-post-body pre,
 #fork .f-post-body ol,
-#fork .f-post-body ul {
+#fork .f-post-body ul { */
   /* margin-bottom: 0.625rem; */
-}
+/* } */
 
 @media screen and (min-width: 50rem) {
   #fork .f-post {
