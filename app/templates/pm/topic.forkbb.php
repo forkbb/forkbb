@@ -103,15 +103,8 @@
             {!! $post->user->htmlSign !!}
           </aside>
         @endif
-        </div>
-        <footer class="f-post-footer">
-          <div class="f-post-footer-add">
-        @if (! $post->user->isGuest)
-            <span class="f-userstatus">{!! __($post->user->online ? 'Online' : 'Offline') !!}</span>
-        @endif
-          </div>
         @if ($post->canDelete || $post->canEdit || $post->canQuote || $post->canBlock)
-          <div class="f-post-btns">
+          <aside class="f-post-btns">
             <ul>
             @if ($post->canBlock)
                 @if (2 === $p->model->blockStatus)
@@ -130,9 +123,9 @@
               <li class="f-postquote"><a class="f-btn" title="{{ __('Quote') }}" href="{{ $post->linkQuote }}"><span>{!! __('Quote') !!}</span></a></li>
             @endif
             </ul>
-          </div>
+          </aside>
         @endif
-        </footer>
+        </div>
       </article>
     @endif
 @endforeach
