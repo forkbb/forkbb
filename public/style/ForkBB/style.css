@@ -2731,7 +2731,7 @@ body,
   }
 }
 
-@media screen and (max-width: 50rem) {
+@media screen and (max-width: 49.9999rem) {
   #fork .f-btn-markread > span,
   #fork .f-btn-subscribe > span,
   #fork .f-btn-unsubscribe > span {
