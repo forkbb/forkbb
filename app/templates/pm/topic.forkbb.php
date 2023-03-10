@@ -73,6 +73,9 @@
               <li class="f-username">{{ $post->user->username }}</li>
         @endif
               <li class="f-usertitle">{{ $post->user->title() }}</li>
+        @if (! $post->user->isGuest)
+              <li class="f-userstatus">{!! __($post->user->online ? 'Online' : 'Offline') !!}</li>
+        @endif
         @if ($p->user->showUserInfo && $p->user->showPostCount && $post->user->num_posts)
               <li class="f-postcount">{!! __(['%s post', $post->user->num_posts, num($post->user->num_posts)]) !!}</li>
         @endif
