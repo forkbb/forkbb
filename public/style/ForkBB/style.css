@@ -1471,7 +1471,7 @@ body,
 
 #fork .f-user-info {
   flex-grow: 0.5;
-  margin-bottom: 0.3125rem;
+  /* margin-bottom: 0.3125rem; */
 }
 
 #fork .f-user-info-add {
