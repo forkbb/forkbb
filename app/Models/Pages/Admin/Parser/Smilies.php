@@ -341,6 +341,20 @@ class Smilies extends Parser
     }
 
     /**
+     * Проверят используется ли данный файл в смайлах
+     */
+    protected function fileIsBusy(string $name): bool
+    {
+        foreach ($this->c->smilies->list as $cur) {
+            if ($name === $cur['sm_image']) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Удаляет смайл или изображение
      */
     public function delete(array $args, string $method): Page
@@ -360,7 +374,8 @@ class Smilies extends Parser
             $file = $this->c->DIR_PUBLIC . '/img/sm/' . $args['name'];
 
             if (
-                \is_file($file)
+                ! $this->fileIsBusy($args['name'])
+                && \is_file($file)
                 && \unlink($file)
             ) {
                 $message = ['File %s deleted redirect', $args['name']];
