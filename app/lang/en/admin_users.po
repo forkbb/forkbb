@@ -12,15 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "Non numeric message"
-msgstr "You entered a non-numeric value into a numeric only column."
-
-msgid "Invalid date time message"
-msgstr "You entered an invalid date/time."
-
-msgid "Not verified"
-msgstr "Not verified"
-
 msgid "No users selected"
 msgstr "No users selected."
 
@@ -51,17 +42,11 @@ msgstr "Change user group"
 msgid "Move users"
 msgstr "Move users"
 
-msgid "Move users subhead"
-msgstr "Select group"
-
 msgid "New group label"
 msgstr "New group"
 
 msgid "New group help"
 msgstr "Select the group to which these users will be moved: <b>%s</b>."
-
-msgid "Invalid group message"
-msgstr "Invalid group ID."
 
 msgid "Users move redirect"
 msgstr "User group changed."
@@ -71,9 +56,6 @@ msgstr "Delete users"
 
 msgid "Delete users"
 msgstr "Delete users"
-
-msgid "Confirm delete legend"
-msgstr "Important: read before deleting users"
 
 msgid "Confirm delete info"
 msgstr "Please confirm that you want to delete these users: <b>%s</b>."
@@ -86,39 +68,6 @@ msgstr "<b>Warning!</b> Deleted users and/or posts cannot be restored. If you ch
 
 msgid "Users delete redirect"
 msgstr "Users deleted."
-
-msgid "Ban users"
-msgstr "Ban users"
-
-msgid "Message expiry subhead"
-msgstr "Ban message and expiry"
-
-msgid "Ban message label"
-msgstr "Ban message"
-
-msgid "Ban message help"
-msgstr "A message that will be displayed to the banned users when they visit the board."
-
-msgid "Expire date label"
-msgstr "Expire date"
-
-msgid "Expire date help"
-msgstr "The date when these bans should be automatically removed (format: yyyy-mm-dd). Leave blank to remove manually."
-
-msgid "Ban IP label"
-msgstr "Ban IP addresses"
-
-msgid "Ban IP help"
-msgstr "Also ban the IP addresses of the banned users to make registering a new account more difficult for them."
-
-msgid "Invalid date message"
-msgstr "You entered an invalid expire date."
-
-msgid "Invalid date reasons"
-msgstr "The format should be YYYY-MM-DD and the date must be at least one day in the future."
-
-msgid "Users banned redirect"
-msgstr "Users banned."
 
 msgid "User search head"
 msgstr "User search"
@@ -150,21 +99,6 @@ msgstr "Do not display"
 msgid "Website label"
 msgstr "Website"
 
-msgid "Jabber label"
-msgstr "Jabber"
-
-msgid "ICQ label"
-msgstr "ICQ"
-
-msgid "MSN label"
-msgstr "Microsoft Account"
-
-msgid "AOL label"
-msgstr "AOL IM"
-
-msgid "Yahoo label"
-msgstr "Yahoo Messenger"
-
 msgid "Location label"
 msgstr "Location"
 
@@ -177,41 +111,14 @@ msgstr "Admin note"
 msgid "Posts label"
 msgstr "Posts"
 
-msgid "Posts more than label"
-msgstr "Number of posts greater than"
-
-msgid "Posts less than label"
-msgstr "Number of posts less than"
-
 msgid "Last post label"
 msgstr "Last post"
-
-msgid "Last post after label"
-msgstr "Last post is after"
-
-msgid "Date help"
-msgstr "(yyyy-mm-dd hh:mm:ss)"
-
-msgid "Last post before label"
-msgstr "Last post is before"
 
 msgid "Last visit label"
 msgstr "Last visit"
 
-msgid "Last visit after label"
-msgstr "Last visit is after"
-
-msgid "Last visit before label"
-msgstr "Last visit is before"
-
 msgid "Registered label"
 msgstr "Registered"
-
-msgid "Registered after label"
-msgstr "Registered after"
-
-msgid "Registered before label"
-msgstr "Registered before"
 
 msgid "Order by label"
 msgstr "Order by"
@@ -261,9 +168,6 @@ msgstr "IP for search"
 msgid "IP address label"
 msgstr "IP address"
 
-msgid "IP address help"
-msgstr "The IP address to search for in the post database."
-
 msgid "Find IP address"
 msgstr "Find IP address"
 
@@ -284,9 +188,6 @@ msgstr "Posts"
 
 msgid "Results admin note head"
 msgstr "Admin note"
-
-msgid "Results actions head"
-msgstr "Actions"
 
 msgid "Results IP address head"
 msgstr "IP address"
@@ -332,15 +233,6 @@ msgstr "View IP stats"
 
 msgid "Results show posts link"
 msgstr "Show posts"
-
-msgid "Results guest"
-msgstr "Guest"
-
-msgid "Results no IP found"
-msgstr "The supplied IP address could not be found in the database."
-
-msgid "No match"
-msgstr "No match"
 
 msgid "Search results legend"
 msgstr "Select how to view search results"
