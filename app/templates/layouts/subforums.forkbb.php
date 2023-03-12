@@ -6,7 +6,7 @@
                 <div class="f-finfo">
                   <h3 class="f-finfo-h3">
                     <span class="f-frsname">
-                      <span class="f-fredirtext">{!! __('Link to') !!}</span>
+                      <small class="f-fredirtext">{!! __('Link to') !!}</small>
                       <a class="f-ftname" href="{{ $cur->redirect_url }}">{{ $cur->forum_name }}</a>
                     </span>
                   </h3>

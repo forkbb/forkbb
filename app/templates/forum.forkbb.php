@@ -83,7 +83,10 @@
               <div class="f-ficon"></div>
             @endif
               <div class="f-finfo">
-                <h3 class="f-finfo-h3"><span class="f-tmoved" title="{{ __('Moved') }}"><span class="f-movedtxt">{!! __('Moved') !!}</span></span> <a class="f-ftname" href="{{ $topic->link }}">{{ $topic->name }}</a></h3>
+                <h3 class="f-finfo-h3">
+                  <span class="f-tmoved" title="{{ __('Moved') }}"><small class="f-movedtxt">{!! __('Moved') !!}</small></span>
+                  <a class="f-ftname" href="{{ $topic->link }}">{{ $topic->name }}</a>
+                </h3>
               </div>
             </div>
           </li>
@@ -102,13 +105,13 @@
                   <span class="f-tdot"><span class="f-dottxt">·</span></span>
             @endif
             @if ($topic->sticky)
-                  <span class="f-tsticky" title="{{ __('Sticky') }}"><span class="f-stickytxt">{!! __('Sticky') !!}</span></span>
+                  <span class="f-tsticky" title="{{ __('Sticky') }}"><small class="f-stickytxt">{!! __('Sticky') !!}</small></span>
             @endif
             @if ($topic->closed)
-                  <span class="f-tclosed" title="{{ __('Closed') }}"><span class="f-closedtxt">{!! __('Closed') !!}</span></span>
+                  <span class="f-tclosed" title="{{ __('Closed') }}"><small class="f-closedtxt">{!! __('Closed') !!}</small></span>
             @endif
             @if ($topic->poll_type > 0)
-                  <span class="f-tpoll" title="{{ __('Poll') }}"><span class="f-polltxt">{!! __('Poll') !!}</span></span>
+                  <span class="f-tpoll" title="{{ __('Poll') }}"><small class="f-polltxt">{!! __('Poll') !!}</small></span>
             @endif
                   <a class="f-ftname" href="{{ $topic->link }}">{{ $topic->name }}</a>
             @if ($topic->pagination)

@@ -1359,12 +1359,12 @@ body,
   opacity: 0.4;
 }
 
-#fork .f-tmoved,
+/* #fork .f-tmoved,
 #fork .f-stickytxt,
 #fork .f-closedtxt,
 #fork .f-polltxt {
   display: none;
-}
+} */
 
 #fork .f-fsticky .f-ficon::before {
   color: #D8000C;
@@ -1372,7 +1372,7 @@ body,
 
 #fork .f-tsticky::before {
   font: 900 0.875rem "fa";
-  content: "\f35b";
+  content: "\f08d"; /* \f35b */
   color: #D8000C;
 }
 
