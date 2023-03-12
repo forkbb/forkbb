@@ -12,9 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "Must enter name message"
-msgstr "You must enter a name for the category"
-
 msgid "Category deleted redirect"
 msgstr "Category deleted."
 
@@ -32,9 +29,6 @@ msgstr "Categories updated."
 
 msgid "Add category label"
 msgstr "Name of the new category"
-
-msgid "Add new submit"
-msgstr "Add new"
 
 msgid "Add category help"
 msgstr "The name of the new category you want to add. You can edit the name of the category later. Go to <a href="%1$s">%2$s</a> to add forums to your new category."

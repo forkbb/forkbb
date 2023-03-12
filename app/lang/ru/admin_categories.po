@@ -12,9 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
 
-msgid "Must enter name message"
-msgstr "Необходимо ввести имя категории"
-
 msgid "Category deleted redirect"
 msgstr "Категория удалена."
 
@@ -32,9 +29,6 @@ msgstr "Категории изменены."
 
 msgid "Add category label"
 msgstr "Имя новой категории"
-
-msgid "Add new submit"
-msgstr "Добавить"
 
 msgid "Add category help"
 msgstr "Имя для новой категории. Вы сможете изменить имя категории позже. Перейдите в <a href="%1$s">%2$s</a>, чтобы добавить разделы в новую категорию."
