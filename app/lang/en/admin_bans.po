@@ -81,12 +81,6 @@ msgstr "Search for bans in the database. You can enter one or more terms to sear
 msgid "Message label"
 msgstr "Message"
 
-msgid "Expire after label"
-msgstr "Expire after"
-
-msgid "Expire before label"
-msgstr "Expire before"
-
 msgid "Order by label"
 msgstr "Order by"
 

@@ -81,12 +81,6 @@ msgstr "Поиск бана по базе. Вы можете ввести одн
 msgid "Message label"
 msgstr "Сообщение"
 
-msgid "Expire after label"
-msgstr "Устаревает после"
-
-msgid "Expire before label"
-msgstr "Устаревает до"
-
 msgid "Order by label"
 msgstr "Сортировать по"
 
