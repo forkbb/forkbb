@@ -16,13 +16,13 @@ msgid "Post topic"
 msgstr "Создать тему"
 
 msgid "Moved"
-msgstr "Перенесено"
+msgstr "Перенесённая тема"
 
 msgid "Sticky"
-msgstr "Важно"
+msgstr "Прикреплённая тема"
 
 msgid "Closed"
-msgstr "Закрыто"
+msgstr "Закрытая тема"
 
 msgid "Poll"
 msgstr "Опрос"
