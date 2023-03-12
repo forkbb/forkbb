@@ -13,14 +13,14 @@
   font-family: "fa";
   font-style: normal;
   font-weight: 400;
-  src: url("../font/fa/fa-regular-400.v.60200.woff2") format("woff2");
+  src: url("../font/fa/fa-regular-400.v.60300.woff2") format("woff2");
 }
 
 @font-face {
   font-family: "fa";
   font-style: normal;
   font-weight: 900;
-  src: url("../font/fa/fa-solid-900.v.60200.woff2") format("woff2");
+  src: url("../font/fa/fa-solid-900.v.60300.woff2") format("woff2");
 }
 
 html,
@@ -433,9 +433,9 @@ body,
   text-transform: none;
 }
 
-#fork-nav-profile .f-menu-a::before {
+/* #fork-nav-profile .f-menu-a::before {
   content: "\f007";
-}
+} */
 
 #fork-nav-profile .f-menu-span {
   font-weight: bold;
@@ -533,10 +533,10 @@ body,
     min-width: 4rem;
   }
 
-  #fork-nav-profile .f-menu-a::before {
+  /* #fork-nav-profile .f-menu-a::before {
     content: none;
     padding: 0;
-  }
+  } */
 } /* @media screen and (min-width: 50rem) */
 
 /*********/
