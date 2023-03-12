@@ -36,7 +36,7 @@
         </header>
         <address class="f-post-user">
           <div class="f-post-usticky">
-            <ul class="f-user-info-first">
+            <ul hidden class="f-user-info-first">
               <li class="f-username">{{ $post->user->username }}</li>
             </ul>
             <ul class="f-user-info">

@@ -46,7 +46,7 @@
         </header>
         <address class="f-post-user">
           <div class="f-post-usticky">
-            <ul class="f-user-info-first">
+            <ul hidden class="f-user-info-first">
         @if ($p->user->viewUsers && $post->user->link)
               <li class="f-username"><a href="{{ $post->user->link }}">{{ $post->user->username }}</a></li>
         @else

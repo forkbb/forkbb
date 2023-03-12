@@ -1453,9 +1453,9 @@ body,
   flex-wrap: wrap;
 }
 
-#fork .f-user-info-first {
+/* #fork .f-user-info-first {
   display: none;
-}
+} */
 
 #fork .f-avatar {
   order: 1;
