@@ -12,50 +12,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
 
-msgid "Must enter word message"
-msgstr "Необходимо ввести слово, которое подлежит цензуре."
-
-msgid "Word added redirect"
-msgstr "Слово добавлено."
-
-msgid "Word removed redirect"
-msgstr "Слово удалено."
-
-msgid "Censoring head"
-msgstr "Цензура"
-
-msgid "Add word subhead"
-msgstr "Добавление слова"
-
 msgid "Censoring info"
 msgstr "Ниже показан список нецензурных слов и их замена. Допускается указывать звёздочки в качестве маски (слово <b>*род*</b> будет опознано в словах <b>продукт</b> и <b>родители</b>). Нецензурные слова действуют и на имена пользователей. Новые пользователи не смогут зарегистрироваться с этими словами. Поиск нечувствителен к регистру."
-
-msgid "Censoring enabled"
-msgstr "<b>Цензура включена на странице %s.</b>"
-
-msgid "Censoring disabled"
-msgstr "<b>Цензура выключена на странице %s.</b>"
 
 msgid "Censored word label"
 msgstr "Нецензурное слово"
 
 msgid "Replacement label"
 msgstr "Текст для замены"
-
-msgid "Action label"
-msgstr "Действие"
-
-msgid "Edit remove subhead"
-msgstr "Изменить или удалить слова"
-
-msgid "No words in list"
-msgstr "В списке ничего нет."
-
-msgid "Double"
-msgstr "Повтор"
-
-msgid "Double2"
-msgstr "Добавленное/измененное слово имеет дубль в списке."
 
 msgid "Censor words label"
 msgstr "Использовать"
