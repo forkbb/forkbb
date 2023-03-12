@@ -21,12 +21,6 @@ msgstr "The admin email address you entered is invalid."
 msgid "Invalid webmaster e-mail message"
 msgstr "The webmaster email address you entered is invalid."
 
-msgid "Enter announcement here"
-msgstr "Enter your announcement here."
-
-msgid "Enter rules here"
-msgstr "Enter your rules here."
-
 msgid "Timeout error message"
 msgstr "The value of &quot;Timeout online&quot; must be smaller than the value of &quot;Timeout visit&quot;."
 

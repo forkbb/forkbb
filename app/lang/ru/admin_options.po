@@ -21,12 +21,6 @@ msgstr "Email админа введен неверно."
 msgid "Invalid webmaster e-mail message"
 msgstr "Email вебмастера введен неверно."
 
-msgid "Enter announcement here"
-msgstr "Введите сюда своё объявление."
-
-msgid "Enter rules here"
-msgstr "Введите сюда правила форума."
-
 msgid "Timeout error message"
 msgstr "Значение &quot;Таймаут online&quot; должно быть меньше чем &quot;Таймаут визита&quot;."
 
