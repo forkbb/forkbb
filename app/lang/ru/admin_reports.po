@@ -18,12 +18,6 @@ msgstr "Сигнал рассмотрен."
 msgid "New reports "
 msgstr "Новые сигналы"
 
-msgid "Deleted user"
-msgstr "Пользователь удалён"
-
-msgid "Deleted"
-msgstr "Удалено"
-
 msgid "Post #%s"
 msgstr "Сообщение #%s"
 

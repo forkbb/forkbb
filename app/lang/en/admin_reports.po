@@ -18,12 +18,6 @@ msgstr "Report marked as read."
 msgid "New reports "
 msgstr "New reports"
 
-msgid "Deleted user"
-msgstr "Deleted user"
-
-msgid "Deleted"
-msgstr "Deleted"
-
 msgid "Post #%s"
 msgstr "Post #%s"
 
