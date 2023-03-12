@@ -212,8 +212,8 @@ msgstr "Page %1$s of %2$s ·"
 msgid "Image link"
 msgstr "image"
 
-msgid "wrote"
-msgstr "wrote:"
+msgid "%s wrote"
+msgstr "%s wrote:"
 
 msgid "Mailer"
 msgstr "%s"
@@ -288,7 +288,7 @@ msgid "Logout"
 msgstr "Logout"
 
 msgid "Admin"
-msgstr "Administration"
+msgstr "Admin area"
 
 msgid "Administration functions"
 msgstr "Administration functions"

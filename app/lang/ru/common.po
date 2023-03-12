@@ -214,8 +214,8 @@ msgstr "Страница %1$s из %2$s ·"
 msgid "Image link"
 msgstr "картинка"
 
-msgid "wrote"
-msgstr "пишет:"
+msgid "%s wrote"
+msgstr "%s пишет:"
 
 msgid "Mailer"
 msgstr "%s"
