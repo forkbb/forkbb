@@ -12,26 +12,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "You can not post links in subject"
-msgstr "You can not post links in subject."
-
-msgid "No subject"
-msgstr "Topics must contain a subject."
-
 msgid "No subject after censoring"
 msgstr "Topics must contain a subject. After applying censoring filters, your subject was empty."
 
-msgid "Too long subject"
-msgstr "Subjects cannot be longer than 70 characters."
-
-msgid "No message"
-msgstr "You must enter a message."
-
 msgid "No message after censoring"
 msgstr "You must enter a message. After applying censoring filters, your message was empty."
-
-msgid "Too long message"
-msgstr "Posts cannot be longer than %s characters."
 
 msgid "All caps subject"
 msgstr "Subjects cannot contain only capital letters."
@@ -39,20 +24,8 @@ msgstr "Subjects cannot contain only capital letters."
 msgid "All caps message"
 msgstr "Posts cannot contain only capital letters."
 
-msgid "Empty after strip"
-msgstr "It seems your post consisted of empty BBCodes only. It is possible that this happened because e.g. the innermost quote was discarded because of the maximum quote depth level."
-
-msgid "Post errors"
-msgstr "Post errors"
-
-msgid "Post errors info"
-msgstr "The following errors need to be corrected before the message can be posted:"
-
 msgid "Post preview"
 msgstr "Post preview"
-
-msgid "Guest name"
-msgstr "Name"
 
 msgid "Post redirect"
 msgstr "Post entered."
@@ -83,9 +56,6 @@ msgstr "To allow to edit the given message without restrictions"
 
 msgid "Stick first post"
 msgstr "To stick the first post on all pages of topic"
-
-msgid "Edit post legend"
-msgstr "Edit the post and submit changes"
 
 msgid "Edit post"
 msgstr "Edit post"
