@@ -38,9 +38,6 @@ msgstr[1] "%s posts"
 msgid "Registered: %s"
 msgstr "Registered: %s"
 
-msgid "Replies"
-msgstr "Replies:"
-
 msgid "Website"
 msgstr "Website"
 
@@ -70,12 +67,6 @@ msgstr "Quote"
 
 msgid "Quick post"
 msgstr "Quick reply"
-
-msgid "Mod controls"
-msgstr "Moderator controls"
-
-msgid "New icon"
-msgstr "New post"
 
 msgid "Re"
 msgstr "Re: "

@@ -39,9 +39,6 @@ msgstr[2] "%s сообщений"
 msgid "Registered: %s"
 msgstr "Здесь с %s"
 
-msgid "Replies"
-msgstr "Ответов:"
-
 msgid "Website"
 msgstr "Сайт"
 
@@ -71,12 +68,6 @@ msgstr "Цитировать"
 
 msgid "Quick post"
 msgstr "Быстрый ответ"
-
-msgid "Mod controls"
-msgstr "Операции модерирования"
-
-msgid "New icon"
-msgstr "New post"
 
 msgid "Re"
 msgstr "Re: "
