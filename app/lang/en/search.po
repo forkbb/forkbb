@@ -15,12 +15,6 @@ msgstr ""
 msgid "User search"
 msgstr "User search"
 
-msgid "No search permission"
-msgstr "You do not have permission to use the search feature."
-
-msgid "Search criteria legend"
-msgstr "Enter your search criteria"
-
 msgid "Search info"
 msgstr "To search by keyword, enter a term or terms to search for. Separate terms with spaces. Use AND, OR and NOT to refine your search. To search by author enter the username of the author whose posts you wish to search for. Use wildcard character * for partial matches."
 
@@ -132,29 +126,8 @@ msgstr "Search query: «%s»"
 msgid "Search query: %1$s and Author: %2$s"
 msgstr "Search query: «%1$s» - Author: «%2$s»"
 
-msgid "No terms"
-msgstr "You have to enter at least one keyword and/or an author to search for."
-
 msgid "No hits"
 msgstr "Your search returned no hits."
-
-msgid "No user posts"
-msgstr "There are no posts by this user in this forum."
-
-msgid "No user topics"
-msgstr "There are no topics by this user in this forum."
-
-msgid "No subscriptions"
-msgstr "This user is currently not subscribed to any topics."
-
-msgid "No new posts"
-msgstr "There are no topics with new posts since your last visit."
-
-msgid "No recent posts"
-msgstr "No new posts have been made within the last 24 hours."
-
-msgid "No unanswered"
-msgstr "There are no unanswered posts in this forum."
 
 msgid "Go to post"
 msgstr "Go to post"

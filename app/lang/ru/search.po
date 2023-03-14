@@ -15,12 +15,6 @@ msgstr ""
 msgid "User search"
 msgstr "Поиск пользователей"
 
-msgid "No search permission"
-msgstr "У вас нет прав для использования поиска."
-
-msgid "Search criteria legend"
-msgstr "Условия поиска"
-
 msgid "Search info"
 msgstr "Введите одно или несколько слов для поиска. Отделяйте слова пробелами. Используйте AND, OR и NOT для уточнения поиска. Вы можете дополнить условие, указав автора сообщений. Используйте символ звездочки (*) для поиска по части слова."
 
@@ -132,29 +126,8 @@ msgstr "Запрос: «%s»"
 msgid "Search query: %1$s and Author: %2$s"
 msgstr "Запрос: «%1$s» - Автор: «%2$s»"
 
-msgid "No terms"
-msgstr "Необходимо ввести хотя бы одно ключевое слово или автора для проведения поиска."
-
 msgid "No hits"
 msgstr "Ничего не найдено."
-
-msgid "No user posts"
-msgstr "На форуме нет сообщений указанного пользователя."
-
-msgid "No user topics"
-msgstr "На форуме нет тем указанного пользователя."
-
-msgid "No subscriptions"
-msgstr "Данный пользователь не подписан ни на одну тему."
-
-msgid "No new posts"
-msgstr "С вашего последнего визита новых сообщений нет."
-
-msgid "No recent posts"
-msgstr "Нет сообщений за последние сутки."
-
-msgid "No unanswered"
-msgstr "Темы без ответа отсутствуют."
 
 msgid "Go to post"
 msgstr "Перейти к сообщению"
