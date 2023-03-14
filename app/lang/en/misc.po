@@ -21,12 +21,6 @@ msgstr "All topics in the specified forum have been marked as read."
 msgid "Form email disabled"
 msgstr "The user you are trying to send an email to has disabled form email."
 
-msgid "No email subject"
-msgstr "You must enter a subject."
-
-msgid "No email message"
-msgstr "You must enter a message."
-
 msgid "Email sent redirect"
 msgstr "Email sent."
 
@@ -80,9 +74,6 @@ msgstr "Delete"
 
 msgid "Merge"
 msgstr "Merge"
-
-msgid "Lang changed"
-msgstr "Language is changed."
 
 msgid "Open"
 msgstr "Open"
@@ -178,34 +169,10 @@ msgid_plural "Delete posts title"
 msgstr[0] "Delete post"
 msgstr[1] "Delete posts"
 
-msgid "Cannot select first"
-msgstr "First post cannot be selected for split/delete."
-
 msgid "Delete post redirect"
 msgid_plural "Delete posts redirect"
 msgstr[0] "Post deleted."
 msgstr[1] "Posts deleted."
-
-msgid "No posts selected"
-msgstr "You must select at least one post for split/delete."
-
-msgid "Host info 1"
-msgstr "The IP address is: %s"
-
-msgid "Host info 2"
-msgstr "The host name is: %s"
-
-msgid "Show more users"
-msgstr "Show more users for this IP"
-
-msgid "Move posts"
-msgstr "Move posts"
-
-msgid "Move posts redirect"
-msgstr "Posts moved."
-
-msgid "Post from topic"
-msgstr "This post is moved from topic"
 
 msgid "Topic «%s»"
 msgstr "Topic «%s»"
