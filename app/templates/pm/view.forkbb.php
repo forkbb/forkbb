@@ -52,7 +52,7 @@
                 <div class="f-finfo">
                   <h3 class="f-finfo-h3">
             @if ($topic->closed)
-                    <span class="f-tclosed" title="{{ __('Closed') }}"><span class="f-closedtxt">{!! __('Closed') !!}</span></span>
+                    <span class="f-tclosed" title="{{ __('Closed') }}"><small class="f-closedtxt">{!! __('Closed') !!}</small></span>
             @endif
                     <a class="f-ftname" href="{{ $topic->link }}">{{ $topic->name }}</a>
             @if ($topic->pagination)
