@@ -419,14 +419,20 @@ class View extends Users
         $v = $this->c->Validator->reset()
         ->addValidators([
         ])->addRules([
-            'token' => 'token:AdminUsersRecalculate',
+            'confirm' => 'checkbox',
+            'token'   => 'token:AdminUsersRecalculate',
         ])->addAliases([
         ])->addArguments([
         ])->addMessages([
         ]);
 
-        if (! $v->validation($_POST)) {
-            return $this->c->Message->message($this->c->Csrf->getError() ?? 'Bad token');
+        if (
+            ! $v->validation($_POST)
+            || '1' !== $v->confirm
+        ) {
+            return $this->c->Message->message(
+                '1' !== $v->confirm ? 'No confirm redirect' : ($this->c->Csrf->getError() ?? 'Bad token')
+            );
         }
 
         $this->c->users->updateCountPosts();
@@ -447,8 +453,14 @@ class View extends Users
             'sets'   => [
                 'recalculate' => [
                     'legend' => 'Number of users posts',
-                    'fields' => [],
-                ]
+                    'fields' => [
+                        'confirm' => [
+                            'type'    => 'checkbox',
+                            'label'   => 'Confirm action',
+                            'checked' => false,
+                        ],
+                    ],
+                ],
             ],
             'btns'   => [
                 'recalculate' => [

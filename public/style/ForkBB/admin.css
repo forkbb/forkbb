@@ -514,6 +514,10 @@
   color: #D8000C;
 }
 
+#fork-recalc #id-dl-confirm > dt {
+  display: none;
+}
+
 @media screen and (min-width: 36rem) {
   #forka .f-fs-result .f-field-result > dt,
   #forka .f-fs-result .f-field-result > dd {
