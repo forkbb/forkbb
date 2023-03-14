@@ -24,9 +24,6 @@ msgstr "Use the wildcard character * for partial matches."
 msgid "User group"
 msgstr "User group"
 
-msgid "No of posts"
-msgstr "Number of posts"
-
 msgid "All users"
 msgstr "< All >"
 
