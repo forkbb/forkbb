@@ -780,6 +780,12 @@
   display: block;
 }
 
+#forka .f-field-disabled .f-link {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.5;
+}
+
 @media screen and (min-width: 25rem) {
   #forka .f-bbcode-form .f-fs-bbcode {
     display: flex;

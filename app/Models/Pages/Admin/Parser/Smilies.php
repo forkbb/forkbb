@@ -279,7 +279,7 @@ class Smilies extends Parser
                 'caption' => 'Name label',
             ];
             $fields["image{$key}-del"] = [
-                'class'   => ['delete', 'image'],
+                'class'   => $this->fileIsBusy($name) ? ['delete', 'image', 'disabled'] : ['delete', 'image'],
                 'type'    => 'link',
                 'value'   => '❌',
                 'caption' => 'Delete',
