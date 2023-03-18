@@ -383,12 +383,6 @@ if ('' == $fUrl) {
 } else {
     $fUrl = $parser->e($fUrl);
 
-    if ($url === $body) {
-        $url = $parser->de($url);
-        $url = \mb_strlen($url, 'UTF-8') > 55 ? \mb_substr($url, 0, 39, 'UTF-8') . ' … ' . \mb_substr($url, -10, null, 'UTF-8') : $url;
-        $body = $parser->e($url);
-    }
-
     return "<a href=\"{$fUrl}\" rel=\"ugc\">{$body}</a>";
 }
 HANDLER,
