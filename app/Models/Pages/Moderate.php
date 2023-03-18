@@ -440,6 +440,15 @@ class Moderate extends Page
             }
         }
 
+        foreach ($topics as $topic) {
+            if (
+                $this->firstTopic !== $topic
+                && $topic->poll_type > 0
+            ) {
+                return $this->c->Message->message('Poll cannot be attached');
+            }
+        }
+
         switch ($v->step) {
             case 1:
                 $this->formTitle   = 'Merge topics title';

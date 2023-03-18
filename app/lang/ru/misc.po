@@ -287,3 +287,6 @@ msgstr "При отправке письма возникла ошибка. По
 
 msgid "Confirm your email address"
 msgstr "Вначале, пожалуйста, <a href=\"%s\">подтвердите</a> свой электронный адрес."
+
+msgid "Poll cannot be attached"
+msgstr "Тему с опросом нельзя прикрепить к другой теме."
