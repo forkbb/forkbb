@@ -964,7 +964,9 @@
 }
 
 #forka .f-lgname {
-  width: 8rem;
+  width: 7rem;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 #forka .f-logbt {
@@ -973,7 +975,7 @@
 }
 
 #forka .f-llv {
-  width: calc( (100% - 11.25rem) / 8 );
+  width: calc( (100% - 10.25rem) / 8 );
   text-align: center;
 }
 
@@ -981,11 +983,11 @@
   padding: 0.125rem 0.1875rem;
 }
 
-#forka .f-lga::before {
+/* #forka .f-lga::before {
   display: inline-block;
   font-family: "fa";
   font-weight: 900;
-}
+} */
 
 #forka .f-lgadown::before {
   content: "\f019";
