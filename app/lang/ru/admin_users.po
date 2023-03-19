@@ -82,7 +82,7 @@ msgid "Username label"
 msgstr "Имя пользователя"
 
 msgid "E-mail address label"
-msgstr "Email адрес"
+msgstr "Email"
 
 msgid "Title label"
 msgstr "Титул"
