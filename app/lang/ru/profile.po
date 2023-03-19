@@ -67,7 +67,7 @@ msgid "Realname"
 msgstr "Настоящее имя"
 
 msgid "Location"
-msgstr "Откуда"
+msgstr "Локация"
 
 msgid "Website"
 msgstr "Сайт"

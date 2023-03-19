@@ -18,8 +18,8 @@ msgstr "Ответить"
 msgid "Topic closed"
 msgstr "Тема закрыта"
 
-msgid "From"
-msgstr "Откуда:"
+msgid "From %s"
+msgstr "Локация: %s"
 
 msgid "Promote user"
 msgstr "Продвинуть пользователя"

@@ -18,8 +18,8 @@ msgstr "Post reply"
 msgid "Topic closed"
 msgstr "Topic closed"
 
-msgid "From"
-msgstr "From:"
+msgid "From %s"
+msgstr "Location: %s"
 
 msgid "Promote user"
 msgstr "Promote user"

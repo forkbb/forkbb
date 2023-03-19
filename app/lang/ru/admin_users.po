@@ -100,7 +100,7 @@ msgid "Website label"
 msgstr "Вебсайт"
 
 msgid "Location label"
-msgstr "Откуда"
+msgstr "Локация"
 
 msgid "Signature label"
 msgstr "Подпись"

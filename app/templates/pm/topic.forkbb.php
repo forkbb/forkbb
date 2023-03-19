@@ -87,7 +87,7 @@
             @endif
               <li>{!! __(['Registered: %s', dt($post->user->registered, true)]) !!}</li>
             @if ($post->user->location)
-              <li>{!! __('From') !!} {{ $post->user->censorLocation }}</li>
+              <li>{!! __(['From %s', $post->user->censorLocation]) !!}</li>
             @endif
             </ul>
         @endif
