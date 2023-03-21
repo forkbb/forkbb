@@ -1058,3 +1058,9 @@
 #fork-logview .f-lgmes {
   min-width: 0;
 }
+
+@media screen and (max-width: 64rem) {
+  #fork-logview .f-lgsu {
+    flex-wrap: wrap;
+  }
+}
