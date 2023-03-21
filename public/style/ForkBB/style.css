@@ -2686,6 +2686,36 @@ body,
   /* padding-inline-end: 0.3125rem; */
 }
 
+@media screen and (max-width: 30rem) {
+  #fork .f-btn-ban-user > span,
+  #fork .f-btn-delete-user > span,
+  #fork .f-btn-edit-profile > span,
+  #fork .f-btn-edit-settings > span,
+  #fork .f-btn-view-profile > span {
+    display: none;
+  }
+
+  #fork .f-btn-ban-user::before {
+    content: "\f05e";
+  }
+
+  #fork .f-btn-delete-user::before {
+    content: "\f1f8";
+  }
+
+  #fork .f-btn-edit-profile::before {
+    content: "\f304";
+  }
+
+  #fork .f-btn-edit-settings::before {
+    content: "\f013";
+  }
+
+  #fork .f-btn-view-profile::before {
+    content: "\f06e";
+  }
+}
+
 @media screen and (max-width: 44rem) {
   #fork-mod .f-btn[name="open"] > span,
   #fork-mod .f-btn[name="close"] > span,
