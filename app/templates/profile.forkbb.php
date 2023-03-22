@@ -7,7 +7,9 @@
 @if ($p->actionBtns)
       <div class="f-nlinks-b">
         <div class="f-actions-links">
+          <small>{!! __('ACTIONS') !!}</small>
     @foreach ($p->actionBtns as $key => $cur)
+          <small>|</small>
           <span class="f-act-span"><a class="f-btn f-btn-{{ $key }}" href="{{ $cur[0] }}" title="{{ $cur[1] }}"><span>{{ $cur[1] }}</span></a></span>
     @endforeach
         </div>

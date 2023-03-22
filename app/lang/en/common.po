@@ -463,3 +463,6 @@ msgstr "The search may be case sensitive for non-Basic Latin characters."
 
 msgid "%s"
 msgstr "%s"
+
+msgid "ACTIONS"
+msgstr "ACTIONS"

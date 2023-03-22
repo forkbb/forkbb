@@ -28,10 +28,13 @@
     @yield ('pagination')
     @if ($p->model->canReply || $p->model->closed)
         <div class="f-actions-links">
+          <small>{!! __('ACTIONS') !!}</small>
         @if ($p->model->closed)
+          <small>|</small>
           <span class="f-act-span"><a class="f-btn f-btn-topic-closed" title="{{ __('Topic closed') }}"><span>{!! __('Topic closed') !!}</span></a></span>
         @endif
         @if ($p->model->canReply)
+          <small>|</small>
           <span class="f-act-span"><a class="f-btn f-btn-post-reply" title="{{ __('Post reply') }}" href="{{ $p->model->linkReply }}"><span>{!! __('Post reply') !!}</span></a></span>
         @endif
         </div>
@@ -146,7 +149,9 @@
       <div class="f-nlinks-a">
     @if ($p->model->canReply || $p->model->canSubscription)
         <div class="f-actions-links">
+          <small>{!! __('ACTIONS') !!}</small>
         @if ($p->model->canSubscription)
+          <small>|</small>
             @if ($p->model->is_subscribed)
           <span class="f-act-span"><a class="f-btn f-btn-unsubscribe f-opacity" title="{{ __('Unsubscribe topic') }}" href="{{ $p->model->linkUnsubscribe }}"><span>{!! __('Unsubscribe') !!}</span></a></span>
             @else
@@ -154,6 +159,7 @@
             @endif
         @endif
         @if ($p->model->canReply)
+          <small>|</small>
           <span class="f-act-span"><a class="f-btn f-btn-post-reply" title="{{ __('Post reply') }}" href="{{ $p->model->linkReply }}"><span>{!! __('Post reply') !!}</span></a></span>
         @endif
         </div>

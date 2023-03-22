@@ -24,11 +24,15 @@
       <div class="f-nlinks-b f-nlbpm">
     @yield ('pagination')
         <div class="f-actions-links">
+          <small>{!! __('ACTIONS') !!}</small>
         @if ($p->model->closed)
+          <small>|</small>
           <span class="f-act-span"><a class="f-btn f-btn-topic-closed" title="{{ __('Closed') }}"><span>{!! __('Closed') !!}</span></a></span>
         @endif
+          <small>|</small>
           <span class="f-act-span"><a class="f-btn f-btn-delete-dialog" title="{{ __('Delete dialogue') }}" href="{{ $p->model->linkDelete }}"><span>{!! __('Delete dialogue') !!}</span></a></span>
         @if ($p->model->canReply)
+          <small>|</small>
           <span class="f-act-span"><a class="f-btn f-btn-post-reply" title="{{ __('Post reply') }}" href="{{ $p->model->linkReply }}"><span>{!! __('Post reply') !!}</span></a></span>
         @endif
         </div>
@@ -137,11 +141,15 @@
       <div class="f-nlinks-a f-nlbpm">
     @endif
         <div class="f-actions-links">
+          <small>{!! __('ACTIONS') !!}</small>
         @if ($p->model->canSend)
+          <small>|</small>
           <span class="f-act-span"><a class="f-btn f-btn-send-dialog" title="{{ __(['Send dialogue to %s', $p->model->target]) }}" href="{{ $p->model->linkSend }}"><span>{!! __('Send dialogue') !!}</span></a></span>
         @endif
+          <small>|</small>
           <span class="f-act-span"><a class="f-btn f-btn-delete-dialog" title="{{ __('Delete dialogue') }}" href="{{ $p->model->linkDelete }}"><span>{!! __('Delete dialogue') !!}</span></a></span>
         @if ($p->model->canReply)
+          <small>|</small>
           <span class="f-act-span"><a class="f-btn f-btn-post-reply" title="{{ __('Post reply') }}" href="{{ $p->model->linkReply }}"><span>{!! __('Post reply') !!}</span></a></span>
         @endif
         </div>

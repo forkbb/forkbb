@@ -48,6 +48,8 @@
     @yield ('pagination')
     @if ($p->model->canCreateTopic)
         <div class="f-actions-links">
+          <small>{!! __('ACTIONS') !!}</small>
+          <small>|</small>
           <span class="f-act-span"><a class="f-btn f-btn-create-topic" title="{{ __('Post topic') }}" href="{{ $p->model->linkCreateTopic }}"><span>{!! __('Post topic') !!}</span></a></span>
         </div>
     @endif
@@ -169,10 +171,13 @@
       <div class="f-nlinks-a">
         @if ($p->model->canCreateTopic || $p->model->canMarkRead || $p->model->canSubscription)
         <div class="f-actions-links">
+          <small>{!! __('ACTIONS') !!}</small>
             @if ($p->model->canMarkRead)
+          <small>|</small>
           <span class="f-act-span"><a class="f-btn f-btn-markread f-opacity" title="{{ __('Mark forum read') }}" href="{{ $p->model->linkMarkRead }}"><span>{!! __('All is read') !!}</span></a></span>
             @endif
             @if ($p->model->canSubscription)
+          <small>|</small>
                 @if ($p->model->is_subscribed)
           <span class="f-act-span"><a class="f-btn f-btn-unsubscribe f-opacity" title="{{ __('Unsubscribe forum') }}" href="{{ $p->model->linkUnsubscribe }}"><span>{!! __('Unsubscribe') !!}</span></a></span>
                 @else
@@ -180,6 +185,7 @@
                 @endif
             @endif
             @if ($p->model->canCreateTopic)
+          <small>|</small>
           <span class="f-act-span"><a class="f-btn f-btn-create-topic" title="{{ __('Post topic') }}" href="{{ $p->model->linkCreateTopic }}"><span>{!! __('Post topic') !!}</span></a></span>
             @endif
         </div>
