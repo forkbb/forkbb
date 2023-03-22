@@ -39,7 +39,9 @@
         <header class="f-post-header">
           <h3 class="f-phead-h3">
             <span class="f-psh-forum"><a href="{{ $post->parent->parent->link }}" title="{{ __('Go to forum') }}">{{ $post->parent->parent->forum_name }}</a></span>
+            <span class="f-sep"><small>»</small></span>
             <span class="f-psh-topic"><a href="{{ $post->parent->link }}" title="{{ __('Go to topic') }}">@if ($post->id !== $post->parent->first_post_id){!! __('Re') !!} @endif{{ $post->parent->name }}</a></span>
+            <span class="f-sep"><small>»</small></span>
             <span class="f-post-posted"><a href="{{ $post->link }}" title="{{ __('Go to post') }}" rel="bookmark"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></a></span>
           </h3>
           <span class="f-post-number">#{{ $post->postNumber }}</span>

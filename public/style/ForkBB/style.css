@@ -1430,14 +1430,18 @@ body,
   display: none;
 }
 
-#fork .f-post-edited {
+#fork-topic .f-post-posted {
+  margin-inline-end: 0.625rem;
+}
+
+#fork-topic .f-post-edited {
   font-style: italic;
-  margin-inline-start: 0.625rem;
   opacity: 0.5;
 }
 
 #fork .f-post-number {
   margin-inline-start: auto;
+  word-break: normal;
 }
 
 #fork .f-post-user {
@@ -2085,21 +2089,23 @@ body,
   display: none;
 }
 
+#fork-topic-ins .f-post-header {
+  flex-wrap: nowrap;
+}
+
 #fork-topic-ins .f-phead-h3 {
   font-size: 0.875rem;
   font-weight: normal;
-  display: flex;
+  /* display: flex;
   flex-wrap: wrap;
-  word-break: break-all;
+  word-break: break-all; */
 }
 
-#fork-topic-ins .f-psh-topic::before,
-#fork-topic-ins .f-post-posted::before {
+#fork-topic-ins .f-sep::before {
   display: inline-block;
   font-family: "fa";
   font-weight: 900;
   content: "\f105";
-  padding: 0 0.3125rem;
 }
 
 @media screen and (min-width: 50rem) {
@@ -2737,7 +2743,7 @@ body,
   }
 
   #fork-mod .f-btn[name="delete"]::before {
-    content: "\f00d";
+    content: "\f1f8";
   }
 
   #fork-mod .f-btn[name="move"]::before {
@@ -2753,7 +2759,7 @@ body,
   }
 
   #fork-mod .f-btn[name="stick"]::before {
-    content: "\f35b";
+    content: "\f08d";
   }
 
   #fork-mod .f-btn[name="unstick"]::before {
