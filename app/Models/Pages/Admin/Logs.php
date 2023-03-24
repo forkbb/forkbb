@@ -26,8 +26,11 @@ class Logs extends Admin
 
         $logsFiles = $this->c->LogViewer->files();
         $info      = $this->c->LogViewer->info($logsFiles);
+        $i         = 0;
 
         foreach ($info as $hash => &$cur) {
+            ++$i;
+
             $cur['linkView']     = $this->c->Router->link(
                 'AdminLogsAction',
                 [
@@ -42,6 +45,11 @@ class Logs extends Admin
                     'hash'   => $hash,
                 ]
             );
+
+            if ($i < 15) {
+                continue;
+            }
+
             $cur['linkDelete']   = $this->c->Router->link(
                 'AdminLogsAction',
                 [

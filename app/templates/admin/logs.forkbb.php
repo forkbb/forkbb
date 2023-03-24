@@ -32,7 +32,9 @@
                 <span class="f-llv @if ($cur['debug']) f-llvde @endif" title="{{ __('Level debug') }}"><span>{{ num($cur['debug']) }}</span></span>
                 <span class="f-logbt">
                   <a class="f-btn f-lga f-lgadown" href="{{ $cur['linkDownload'] }}" title="{{ __('Download log') }}"><span class="f-lgs">{!! __('Download log') !!}</span></a>
+        @if ($cur['linkDelete'])
                   <a class="f-btn f-lga f-lgadel" href="{{ $cur['linkDelete'] }}" title="{{ __('Delete log') }}"><span class="f-lgs">{!! __('Delete log') !!}</span></a>
+        @endif
                 </span>
               </li>
     @endforeach
