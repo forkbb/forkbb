@@ -1532,18 +1532,15 @@ body,
 }
 
 #fork .f-post-btns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.3125rem;
   padding: 0.3125rem;
 }
 
 #fork .f-post-btns:not(:hover) .f-btn:not(:focus) {
   opacity: 0.4;
-}
-
-#fork .f-post-btns ul {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 0.3125rem;
 }
 
 /* #fork .f-post-footer-add {

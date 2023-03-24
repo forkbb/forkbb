@@ -78,10 +78,11 @@
             {!! $post->html() !!}
           </div>
           <aside class="f-post-btns">
-            <ul>
-              <li class="f-posttotopic"><a class="f-btn" href="{{ $post->parent->link }}">{!! __('Go to topic') !!}</a></li>
-              <li class="f-posttopost"><a class="f-btn" href="{{ $post->link }}">{!! __('Go to post') !!}</a></li>
-            </ul>
+            <small>{!! __('ACTIONS') !!}</small>
+            <small>-</small>
+            <a class="f-btn f-posttotopic" href="{{ $post->parent->link }}">{!! __('Go to topic') !!}</a>
+            <small>-</small>
+            <a class="f-btn f-posttopost" href="{{ $post->link }}">{!! __('Go to post') !!}</a>
           </aside>
         </div>
       </article>

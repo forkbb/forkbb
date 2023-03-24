@@ -111,24 +111,27 @@
         @endif
         @if ($post->canDelete || $post->canEdit || $post->canQuote || $post->canBlock)
           <aside class="f-post-btns">
-            <ul>
+            <small>{!! __('ACTIONS') !!}</small>
             @if ($post->canBlock)
+            <small>-</small>
                 @if (2 === $p->model->blockStatus)
-              <li class="f-postunblock"><a class="f-btn" title="{{ __('Unblock') }}" href="{{ $post->linkBlock }}"><span>{!! __('Unblock') !!}</span></a></li>
+            <a class="f-btn f-postunblock" title="{{ __('Unblock') }}" href="{{ $post->linkBlock }}"><span>{!! __('Unblock') !!}</span></a>
                 @else
-              <li class="f-postblock"><a class="f-btn" title="{{ __('Block') }}" href="{{ $post->linkBlock }}"><span>{!! __('Block') !!}</span></a></li>
+            <a class="f-btn f-postblock" title="{{ __('Block') }}" href="{{ $post->linkBlock }}"><span>{!! __('Block') !!}</span></a>
                 @endif
             @endif
             @if ($post->canDelete)
-              <li class="f-postdelete"><a class="f-btn" title="{{ __('Delete') }}" href="{{ $post->linkDelete }}"><span>{!! __('Delete') !!}</span></a></li>
+            <small>-</small>
+            <a class="f-btn f-postdelete" title="{{ __('Delete') }}" href="{{ $post->linkDelete }}"><span>{!! __('Delete') !!}</span></a>
             @endif
             @if ($post->canEdit)
-              <li class="f-postedit"><a class="f-btn" title="{{ __('Edit') }}" href="{{ $post->linkEdit }}"><span>{!! __('Edit') !!}</span></a></li>
+            <small>-</small>
+            <a class="f-btn f-postedit" title="{{ __('Edit') }}" href="{{ $post->linkEdit }}"><span>{!! __('Edit') !!}</span></a>
             @endif
             @if ($post->canQuote)
-              <li class="f-postquote"><a class="f-btn" title="{{ __('Quote') }}" href="{{ $post->linkQuote }}"><span>{!! __('Quote') !!}</span></a></li>
+            <small>-</small>
+            <a class="f-btn f-postquote" title="{{ __('Quote') }}" href="{{ $post->linkQuote }}"><span>{!! __('Quote') !!}</span></a>
             @endif
-            </ul>
           </aside>
         @endif
         </div>

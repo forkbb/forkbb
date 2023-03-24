@@ -125,20 +125,23 @@
         @endif
         @if ($post->canReport || $post->canDelete || $post->canEdit || $post->canQuote)
           <aside class="f-post-btns">
-            <ul>
+            <small>{!! __('ACTIONS') !!}</small>
             @if ($post->canReport)
-              <li class="f-postreport"><a class="f-btn f-minor" title="{{ __('Report') }}" href="{{ $post->linkReport }}"><span>{!! __('Report') !!}</span></a></li>
+            <small>-</small>
+            <a class="f-btn f-minor f-postreport" title="{{ __('Report') }}" href="{{ $post->linkReport }}"><span>{!! __('Report') !!}</span></a>
             @endif
             @if ($post->canDelete)
-              <li class="f-postdelete"><a class="f-btn" title="{{ __('Delete') }}" href="{{ $post->linkDelete }}"><span>{!! __('Delete') !!}</span></a></li>
+            <small>-</small>
+            <a class="f-btn f-postdelete" title="{{ __('Delete') }}" href="{{ $post->linkDelete }}"><span>{!! __('Delete') !!}</span></a>
             @endif
             @if ($post->canEdit)
-              <li class="f-postedit"><a class="f-btn" title="{{ __('Edit') }}" href="{{ $post->linkEdit }}"><span>{!! __('Edit') !!}</span></a></li>
+            <small>-</small>
+            <a class="f-btn f-postedit" title="{{ __('Edit') }}" href="{{ $post->linkEdit }}"><span>{!! __('Edit') !!}</span></a>
             @endif
             @if ($post->canQuote)
-              <li class="f-postquote"><a class="f-btn" title="{{ __('Quote') }}" href="{{ $post->linkQuote }}"><span>{!! __('Quote') !!}</span></a></li>
+            <small>-</small>
+            <a class="f-btn f-postquote" title="{{ __('Quote') }}" href="{{ $post->linkQuote }}"><span>{!! __('Quote') !!}</span></a>
             @endif
-            </ul>
           </aside>
         @endif
         </div>
