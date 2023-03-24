@@ -278,7 +278,7 @@ if ($sec > 0) {
 
 $attr = __('After time') . ' ' . \implode(' ', $arr);
 
-return '</p><p class="f-bb-after">' . $attr . ':</p><p>';
+return '</p><p class="f-bb-after"><em>' . $attr . ':</em></p><p>';
 HANDLER,
     ],
     [
