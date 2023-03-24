@@ -78,7 +78,7 @@ abstract class AbstractPM extends Page
                 $r->link('PMAction', $args + ['action' => Cnst::ACTION_ARCHIVE]),
                 $this->pms->numArchive > 0 ? ['Archive messages %s', $this->pms->numArchive] : 'Archive messages',
             ],
-            'pm-sp1' => [null, null],
+//            'pm-sp1' => [null, null],
         ];
 
         if ($this->user->g_pm_limit > 0) {
@@ -98,7 +98,7 @@ abstract class AbstractPM extends Page
                         $this->user->g_pm_limit < 1 ? 0 : (int) (100 * $this->pms->totalArchive / $this->user->g_pm_limit),
                     ],
                 ],
-                'pm-sp2' => [null, null],
+//                'pm-sp2' => [null, null],
             ];
         }
 
