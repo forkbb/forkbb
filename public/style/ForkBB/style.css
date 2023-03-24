@@ -2696,7 +2696,13 @@ body,
   #fork .f-btn-delete-user > span,
   #fork .f-btn-edit-profile > span,
   #fork .f-btn-edit-settings > span,
-  #fork .f-btn-view-profile > span {
+  #fork .f-btn-view-profile > span,
+  #fork .f-postreport > span,
+  #fork .f-postdelete > span,
+  #fork .f-postedit > span,
+  #fork .f-postquote > span,
+  #fork .f-postblock > span,
+  #fork .f-postunblock > span {
     display: none;
   }
 
@@ -2704,11 +2710,13 @@ body,
     content: "\f05e";
   }
 
-  #fork .f-btn-delete-user::before {
+  #fork .f-btn-delete-user::before,
+  #fork .f-postdelete::before {
     content: "\f1f8";
   }
 
-  #fork .f-btn-edit-profile::before {
+  #fork .f-btn-edit-profile::before,
+  #fork .f-postedit::before {
     content: "\f304";
   }
 
@@ -2718,6 +2726,22 @@ body,
 
   #fork .f-btn-view-profile::before {
     content: "\f06e";
+  }
+
+  #fork .f-postreport::before {
+    content: "\f024";
+  }
+
+  #fork .f-postquote::before {
+    content: "\f10e";
+  }
+
+  #fork .f-postblock::before {
+    content: "\f023";
+  }
+
+  #fork .f-postunblock::before {
+    content: "\f09c";
   }
 }
 
