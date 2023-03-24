@@ -1557,7 +1557,9 @@ body,
 }
 
 #fork .f-sign-brd {
-  margin: 0;
+  width: 50%;
+  border-top-width: 0.0625rem;
+  border-style: dashed;
 }
 
 #fork .f-admin-note {

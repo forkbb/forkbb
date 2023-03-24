@@ -103,7 +103,9 @@
           </div>
         @if ($p->user->showSignature && $post->user->isSignature)
           <aside class="f-post-sign">
-            <hr class="f-sign-brd">
+            <div class="f-sign-brd">
+              <small>- - -</small>
+            </div>
             {!! $post->user->htmlSign !!}
           </aside>
         @endif
