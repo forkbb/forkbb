@@ -92,7 +92,9 @@ class Delete extends Action
 
         if ($topics) {
             foreach ($topics as $topic) {
-                $uidsUpdate[$topic->poster_id] = $topic->poster_id;
+                if ($topic->poster_id > 0) {
+                    $uidsUpdate[$topic->poster_id] = $topic->poster_id;
+                }
             }
         }
 

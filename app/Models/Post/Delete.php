@@ -153,7 +153,7 @@ class Delete extends Action
             $query = 'SELECT p.poster_id
                 FROM ::posts AS p
                 INNER JOIN ::topics AS t ON t.id=p.topic_id
-                WHERE t.forum_id IN (?ai:forums)
+                WHERE t.forum_id IN (?ai:forums) AND p.poster_id>0
                 GROUP BY p.poster_id';
 
             $uidsUpdate = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
@@ -175,7 +175,7 @@ class Delete extends Action
             ];
             $query = 'SELECT p.poster_id
                 FROM ::posts AS p
-                WHERE p.topic_id IN (?ai:topics)
+                WHERE p.topic_id IN (?ai:topics) AND p.poster_id>0
                 GROUP BY p.poster_id';
 
             $uidsUpdate = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
