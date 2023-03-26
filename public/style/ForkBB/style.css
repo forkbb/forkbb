@@ -207,11 +207,11 @@ body,
   display: none;
 }
 
-#fork h1,
+/* #fork h1,
 #fork h2,
 #fork h3 {
   font-weight: bold;
-}
+} */
 
 #fork h2 {
   font-size: 1.25rem;
@@ -223,8 +223,11 @@ body,
 
 #fork #id-fhth1,
 #fork .f-category .f-ftch2,
-#fork .f-category .f-finfo-h3 {
-  font-family: "Segoe Print", Arial, Helvetica, sans-serif;
+#fork .f-category .f-finfo-h3,
+#fork .f-fsub {
+  font-family: Georgia, serif; /* Verdana, Geneva, sans-serif; "Segoe Print", Arial, Helvetica, sans-serif; */
+  font-weight: bold;
+  font-style: italic;
 }
 
 #fork .f-category .f-ftch2 {
