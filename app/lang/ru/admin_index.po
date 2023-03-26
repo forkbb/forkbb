@@ -110,3 +110,6 @@ msgstr "Размер: %s"
 
 msgid "Other"
 msgstr "Дополнительные данные:"
+
+msgid "Community"
+msgstr "Форум"

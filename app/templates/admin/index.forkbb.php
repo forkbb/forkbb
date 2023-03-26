@@ -32,7 +32,7 @@
             </dl>
             <dl>
               <dt>{!! __('Support label') !!}</dt>
-              <dd><a href="https://github.com/forkbb/forkbb">GitHub</a></dd>
+              <dd><a href="https://forkbb.ru">{!! __('Community') !!}</a> - <a href="https://github.com/forkbb/forkbb">GitHub</a></dd>
             </dl>
           </fieldset>
         </div>

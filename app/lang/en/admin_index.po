@@ -110,3 +110,6 @@ msgstr "Size: %s"
 
 msgid "Other"
 msgstr "Other:"
+
+msgid "Community"
+msgstr "Community"

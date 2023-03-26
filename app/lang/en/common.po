@@ -312,7 +312,7 @@ msgid "Board footer"
 msgstr "Board footer"
 
 msgid "Powered by"
-msgstr "Powered by <a href=\"https://github.com/forkbb\">ForkBB</a>"
+msgstr "Powered by <a href=\"https://forkbb.ru\">ForkBB</a>"
 
 msgid "Debug table"
 msgstr "Debug information"
