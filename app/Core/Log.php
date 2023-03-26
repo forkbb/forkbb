@@ -21,7 +21,7 @@ use Throwable;
 
 class Log implements LoggerInterface
 {
-    const JSON_OPTIONS = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
+    const JSON_OPTIONS = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_INVALID_UTF8_SUBSTITUTE | \JSON_THROW_ON_ERROR;
 
     /**
      * Контейнер
@@ -96,7 +96,7 @@ class Log implements LoggerInterface
         $line    = $this->generateLine(
             $level,
             $this->c->Secury->replInvalidChars($message),
-            $this->c->Secury->replInvalidChars($context)
+            $context
         );
 
         if (! \is_resource($this->resource)) {
