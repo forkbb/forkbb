@@ -116,137 +116,87 @@ class Current extends Action
         return \trim($this->c->Secury->replInvalidChars($_SERVER['HTTP_USER_AGENT'] ?? ''));
     }
 
+    protected $defRegex = '%(?:^|[ ()])\b([\w .-]*{}[\w/.!-]*)%i';
+    protected $botSearchList = [
+        'bot'        => ['%(?<!cu)bot(?!tle)%'],
+        'crawl'      => [''],
+        'spider'     => ['%spider(?![\w ]*build/)%'],
+        'google'     => ['%google(?:\w| |;|\-(?!tr))%'],
+        'wordpress'  => ['', '%(wordpress)%i'],
+        'compatible' => ['%compatible(?!;\ msie)%', '%compatible[;) ]+([\w ./!-]+)%i']
+    ];
+
     /**
-     * Проверка на робота
-     * Если робот, то возврат имени
+     * Пытается по юзерагентуопределить робота
+     * Если робот, то возвращает вычисленное имя
      */
-    protected function isBot(string $agent) /* string|false */
+    protected function isBot(string $agent) /* : string|false */
     {
         if ('' == $agent) {
             return false;
         }
+
         $agentL = \strtolower($agent);
+        $status = 0;
 
         if (
-            false !== \strpos($agentL, 'bot')
-            || false !== \strpos($agentL, 'spider')
-            || false !== \strpos($agentL, 'crawler')
-            || false !== \strpos($agentL, 'http')
+            false !== ($pos = \strpos($agentL, 'http:'))
+            || false !== ($pos = \strpos($agentL, 'https:'))
+            || false !== ($pos = \strpos($agentL, 'www.'))
         ) {
-            return $this->nameBot($agent, $agentL);
+            $status = 1;
+            $agent  = \substr($agent, 0, $pos);
+            $agentL = \strtolower($agent);
         }
 
-        if (
-            false !== \strpos($agent, 'Mozilla/')
-            && (
-                false !== \strpos($agent, 'Gecko')
-                || (
-                    false !== \strpos($agent, '(compatible; MSIE ')
-                    && false !== \strpos($agent, 'Windows')
+        foreach ($this->botSearchList as $needle => $regex) {
+            if (
+                false !== \strpos($agentL, $needle)
+                && (
+                    '' == $regex[0]
+                    || \preg_match($regex[0], $agentL)
                 )
-            )
-        ) {
-            return false;
-        } elseif (
-            false !== \strpos($agent, 'Opera/')
-            && false !== \strpos($agent, 'Presto/')
-        ) {
-            return false;
-        }
-
-        return $this->nameBot($agent, $agentL);
-    }
-
-    /**
-     * Выделяет имя робота из юзерагента
-     */
-    protected function nameBot(string $agent, string $agentL): string
-    {
-        if (false !== \strpos($agentL, 'mozilla')) {
-            $agent = \preg_replace('%Mozilla.*?compatible%i', ' ', $agent);
-        }
-        if (false !== \strpos($agentL, 'http') || false !== \strpos($agentL, 'www.')) {
-            $agent = \preg_replace('%(?:https?://|www\.)[^\)]*(\)[^/]+$)?%i', ' ', $agent);
-        }
-        if (false !== \strpos($agent, '@')) {
-            $agent = \preg_replace('%\b[a-z0-9_\.-]+@[^\)]+%i', ' ', $agent);
-        }
-
-        $agentL = \strtolower($agent);
-        if (
-            false !== \strpos($agentL, 'bot')
-            || false !== \strpos($agentL, 'spider')
-            || false !== \strpos($agentL, 'crawler')
-            || false !== \strpos($agentL, 'engine')
-        ) {
-            $f = true;
-            $p = '%(?<=[^a-z\d\.-])(?:robot|bot|spider|crawler)\b.*%i';
-        } else {
-            $f = false;
-            $p = '%^$%';
+                && \preg_match($regex[1] ?? \str_replace('{}', $needle, $this->defRegex), $agent, $match)
+            ) {
+                $status = 2;
+                $agent  = $match[1];
+                break;
+            }
         }
 
         if (
-            $f
-            && \preg_match('%\b(([a-z\d\.! _-]+)?(?:robot|(?<!ro)bot|spider|crawler|engine)(?(2)[a-z\d\.! _-]*|[a-z\d\.! _-]+))%i', $agent, $matches)
+            0 === $status
+            && 0 !== \substr_compare('Mozilla/', $agent, 0, 8)
+            && 0 !== \substr_compare('Opera/', $agent, 0, 6)
         ) {
-            $agent = $matches[1];
-
-            $pat = [
-                $p,
-                '%[^a-z\d\.!-]+%i',
-                '%(?<=^|\s|-)v?\d+\.\d[^\s]*\s*%i',
-                '%(?<=^|\s)\S{1,2}(?:\s|$)%',
-            ];
-            $rep = [
-                '',
-                ' ',
-                '',
-                '',
-            ];
-        } else {
-            $pat = [
-                '%\((?:KHTML|Linux|Mac|Windows|X11)[^\)]*\)?%i',
-                $p,
-                '%\b(?:AppleWebKit|Chrom|compatible|Firefox|Gecko|Mobile(?=[/ ])|Moz|Opera|OPR|Presto|Safari|Version)[^\s]*%i',
-                '%\b(?:InfoP|Intel|Linux|Mac|MRA|MRS|MSIE|SV|Trident|Win|WOW|X11)[^;\)]*%i',
-                '%\.NET[^;\)]*%i',
-                '%/.*%',
-                '%[^a-z\d\.!-]+%i',
-                '%(?<=^|\s|-)v?\d+\.\d[^\s]*\s*%i',
-                '%(?<=^|\s)\S{1,2}(?:\s|$)%',
-            ];
-            $rep = [
-                ' ',
-                '',
-                '',
-                '',
-                '',
-                '',
-                ' ',
-                '',
-                '',
-            ];
+            $status = 1;
         }
-        $agent = \trim(\preg_replace($pat, $rep, $agent), ' -');
 
-        if (empty($agent)) {
+        if (0 === $status) {
+            return false;
+        }
+
+        $reg = [
+            '%[^\w/.-]+%',
+            '%(?:_| |-|\b)bot(?:_| |-|\b)%i',
+            '%(?<=^|\s)[^a-zA-Z\s]{1,2}(?:\s|$)%',
+        ];
+        $rep = [
+            ' ',
+            '',
+            '',
+        ];
+
+        $agent = \trim(\preg_replace($reg, $rep, $agent));
+
+        if (
+            empty($agent)
+            || isset($agent[28])
+        ) {
             return 'Unknown';
+        } else {
+            return $agent;
         }
-
-        $a     = \explode(' ', $agent);
-        $agent = $a[0];
-        if (
-            \strlen($agent) < 20
-            && ! empty($a[1])
-            && \strlen($agent . ' ' . $a[1]) < 26
-        ) {
-            $agent .= ' ' . $a[1];
-        } elseif (\strlen($agent) > 25) {
-            $agent = 'Unknown';
-        }
-
-        return $agent;
     }
 
     /**
