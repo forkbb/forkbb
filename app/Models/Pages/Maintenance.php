@@ -28,11 +28,11 @@ class Maintenance extends Page
 #       $this->robots             = 'noindex';
         $this->titles             = 'Maintenance';
 #       $this->fNavigation        = null; //????
-#       $this->maintenanceMessage = $this->c->config->o_maintenance_message;
+        $this->maintenanceMessage = $this->c->config->o_maintenance_message;
 
         $this->header('Retry-After', '3600');
 
-        $this->fIswev = ['i', $this->c->config->o_maintenance_message];
+#        $this->fIswev = ['i', $this->c->config->o_maintenance_message];
     }
 
     /**
