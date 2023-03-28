@@ -111,6 +111,8 @@ class Config
                 |
                     function\s*\(.+?\)\s*\{.*?\}(?=,)
                 |
+                    (?:\\\\)?[\w-]+\s*\(.+?\)(?=,)
+                |
                     \S+(?<![,\]\)])
                 %sx',
                 \substr($this->fileContents, $this->arrayStartPos),
@@ -118,7 +120,7 @@ class Config
             )
             || empty($matches)
         ) {
-            throw new ForkException('Config array cannot be parsed');
+            throw new ForkException('Config array cannot be parsed (1)');
         }
 
         $this->tokens    = $matches[0];
@@ -134,7 +136,7 @@ class Config
     protected function clearKey(/* mixed */ $key)
     {
         if (! \is_string($key)) {
-            throw new ForkException('Config array cannot be parsed');
+            throw new ForkException('Config array cannot be parsed (2)');
         }
 
         if ((
@@ -187,7 +189,7 @@ class Config
                         $type            = 'VALUE';
                         break;
                     default:
-                        throw new ForkException('Config array cannot be parsed');
+                        throw new ForkException('Config array cannot be parsed (3)');
                 }
 
             // закрытие массива
@@ -211,12 +213,12 @@ class Config
                                 $result[] = $value;
                             }
                         } elseif (null !== $key) {
-                            throw new ForkException('Config array cannot be parsed');
+                            throw new ForkException('Config array cannot be parsed (4)');
                         }
 
                         return $result;
                     default:
-                        throw new ForkException('Config array cannot be parsed');
+                        throw new ForkException('Config array cannot be parsed (5)');
                 }
             // новый элемент
             } elseif (',' === $token) {
@@ -226,7 +228,7 @@ class Config
                         $type = 'NEW';
                         break;
                     default:
-                        throw new ForkException('Config array cannot be parsed');
+                        throw new ForkException('Config array cannot be parsed (6)');
                 }
             // присвоение значения
             } elseif ('=>' === $token) {
@@ -241,7 +243,7 @@ class Config
                         $type         = '=>';
                         break;
                     default:
-                        throw new ForkException('Config array cannot be parsed');
+                        throw new ForkException('Config array cannot be parsed (7)');
                 }
 
             // пробел, комментарий
@@ -259,7 +261,7 @@ class Config
                             $other .= $token;
                         break;
                     default:
-                        throw new ForkException('Config array cannot be parsed');
+                        throw new ForkException('Config array cannot be parsed (8)');
                 }
             // какое-то значение
             } else {
@@ -292,7 +294,7 @@ class Config
                             $value = null;
                             $key   = null;
                         } elseif (null !== $key) {
-                            throw new ForkException('Config array cannot be parsed');
+                            throw new ForkException('Config array cannot be parsed (9)');
                         }
 
                         $type = 'VALUE_OR_KEY';
@@ -301,7 +303,7 @@ class Config
                         $type = 'VALUE';
                         break;
                     default:
-                        throw new ForkException('Config array cannot be parsed');
+                        throw new ForkException('Config array cannot be parsed (10)');
                 }
 
                 $value        = $token;
