@@ -71,6 +71,9 @@ class GDDriver extends DefaultDriver
             case 'jpg':
                 $type = 'jpeg';
             case 'webp':
+                if (defined('\\IMG_WEBP_LOSSLESS')) {
+                    $quality = \IMG_WEBP_LOSSLESS; // кодирование без потери качества
+                }
             case 'avif':
                 $args[] = $quality;
                 break;
