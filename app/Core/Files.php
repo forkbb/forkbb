@@ -54,7 +54,7 @@ class Files
      * Класс обработки изображений
      * @var DefaultDriver
      */
-    protected $imgDriver;
+    protected $imageDriver;
 
     /**
      * Список mime типов считающихся картинками
@@ -855,7 +855,7 @@ class Files
         'image/avif' => 'avif',
     ];
 
-    public function __construct(/* string|int */ $maxFileSize, /* string|int */ $maxImgSize, array $imgDrivers, Container $c)
+    public function __construct(/* string|int */ $maxFileSize, /* string|int */ $maxImgSize, array $imageDrivers, Container $c)
     {
         $this->c = $c;
 
@@ -875,15 +875,15 @@ class Files
             $this->size($maxFileSize),
             $init
         );
-        $this->imgDriver   = $this->imgDriver($imgDrivers);
+        $this->imageDriver = $this->curImageDriver($imageDrivers);
     }
 
     /**
      * Возращает драйвер для работы с изображениями
      */
-    protected function imgDriver(array $arr): DefaultDriver
+    protected function curImageDriver(array $drivers): DefaultDriver
     {
-        foreach ($arr as $class) {
+        foreach ($drivers as $class) {
             $driver = new $class($this);
 
             if (true === $driver->ready()) {
@@ -965,7 +965,7 @@ class Files
     /**
      * Определяет расширение картинки по содержимому файла
      */
-    public function isImage(/* mixed */ $file): ?string
+    public function imageExt(/* mixed */ $file): ?string
     {
         if ($file instanceof Image) {
             return $file->ext();
@@ -1014,48 +1014,48 @@ class Files
         if (\is_array($file['tmp_name'])) {
             $result = [];
 
-            foreach ($file['tmp_name'] as $key => $value) {
+            foreach ($file['tmp_name'] as $key => $tmpName) {
                 if (
-                    '' === $file['name'][$key]
+                    '' == $file['name'][$key]
                     && empty($file['size'][$key])
                 ) {
                     continue;
                 }
 
-                $cur = $this->uploadOneFile([
-                    'tmp_name' => $value,
+                $uploadedFile = $this->uploadFile([
+                    'tmp_name' => $tmpName,
                     'name'     => $file['name'][$key],
                     'type'     => $file['type'][$key],
                     'error'    => $file['error'][$key],
                     'size'     => $file['size'][$key],
                 ]);
 
-                if (! $cur instanceof File) {
+                if (! $uploadedFile instanceof File) {
                     return false;
                 }
 
-                $result[] = $cur;
+                $result[] = $uploadedFile;
             }
 
             return empty($result) ? null : $result;
+        } else {
+            if (
+                '' == $file['name']
+                && empty($file['size'])
+            ) {
+                return null;
+            }
+
+            $uploadedFile = $this->uploadFile($file);
+
+            return $uploadedFile instanceof File ? $uploadedFile : false;
         }
-
-        if (
-            '' === $file['name']
-            && empty($file['size'])
-        ) {
-            return null;
-        }
-
-        $cur = $this->uploadOneFile($file);
-
-        return $cur instanceof File ? $cur : false;
     }
 
     /**
      * Получает один файл из формы
      */
-    protected function uploadOneFile(array $file): ?File
+    protected function uploadFile(array $file): ?File
     {
         if (\UPLOAD_ERR_OK !== $file['error']) {
             switch ($file['error']) {
@@ -1105,12 +1105,12 @@ class Files
             $ext  = $matches[2];
         } else {
             $name = $file['name'];
-            $ext  = null;
+            $ext  = '';
         }
 
-        $imageExt = $this->isImage($file['tmp_name']);
+        $imageExt = $this->imageExt($file['tmp_name']);
 
-        if (null !== $imageExt) {
+        if (\is_string($imageExt)) {
             $ext = $imageExt;
 
             if ($file['size'] > $this->maxImgSize) {
@@ -1154,7 +1154,7 @@ class Files
 
         try {
             if (null !== $imageExt) {
-                $result = new Image($file['tmp_name'], $options, $this->imgDriver);
+                $result = new Image($file['tmp_name'], $options, $this->imageDriver);
             } else {
                 $result = new File($file['tmp_name'], $options);
             }
