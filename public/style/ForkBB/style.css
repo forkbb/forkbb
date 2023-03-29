@@ -138,7 +138,7 @@ body,
 
 @media screen and (min-width: 64rem) {
   #fork {
-    max-width: calc(80% + 12.8rem); /* (100% - 64rem) * 0.8 + 64rem */
+    max-width: calc(80% + 12.8rem);
   }
 }
 
@@ -207,12 +207,6 @@ body,
   display: none;
 }
 
-/* #fork h1,
-#fork h2,
-#fork h3 {
-  font-weight: bold;
-} */
-
 #fork h2 {
   font-size: 1.25rem;
   font-weight: bold;
@@ -226,7 +220,7 @@ body,
 #fork .f-category .f-ftch2,
 #fork .f-category .f-finfo-h3,
 #fork .f-fsub {
-  font-family: Georgia, serif; /* Verdana, Geneva, sans-serif; "Segoe Print", Arial, Helvetica, sans-serif; */
+  font-family: Georgia, serif;
   font-weight: bold;
   font-style: italic;
 }
@@ -437,10 +431,6 @@ body,
   text-transform: none;
 }
 
-/* #fork-nav-profile .f-menu-a::before {
-  content: "\f007";
-} */
-
 #fork-nav-profile .f-menu-span {
   font-weight: bold;
 }
@@ -536,11 +526,6 @@ body,
   #fork-nav-profile.f-menu-item {
     min-width: 4rem;
   }
-
-  /* #fork-nav-profile .f-menu-a::before {
-    content: none;
-    padding: 0;
-  } */
 } /* @media screen and (min-width: 50rem) */
 
 /*********/
@@ -724,7 +709,6 @@ body,
 #fork .f-yinfo {
   display: block;
   width: 100%;
-  /* overflow-wrap: break-word; */
 }
 
 #fork .f-ycaption {
@@ -868,14 +852,11 @@ body,
 }
 
 #fork .f-crumbs {
-  /*display: flex;*/
-  /*flex-wrap: wrap;*/
   padding: 0 0.625rem;
   overflow: hidden;
 }
 
 #fork .f-crumb {
-  /*max-width: 100%;*/
   display: inline;
 }
 
@@ -883,8 +864,6 @@ body,
   display: inline;
   color: #583200;
   content: " /";
-  /*margin: 0 0.3125rem;*/
-  /*padding-inline-start: 0.3125rem;*/
 }
 
 #fork .f-crumb-a:not(.active) {
@@ -899,7 +878,6 @@ body,
   display: inline;
   font: 400 0.875rem "fa";
   content: " \f0f3"; /* f06e */
-  /*padding-inline-start: 0.3125rem;*/
 }
 
 #fork .f-nav-links .f-actions-links,
@@ -1230,17 +1208,6 @@ body,
   margin-inline-end: 0.3125rem;
 }
 
-/* #fork .f-tnew,
-#fork .f-tunread {
-  font: normal 0.875rem Arial, Helvetica, sans-serif;
-  white-space: nowrap;
-} */
-
-/* #fork .f-newtxt,
-#fork .f-unreadtxt {
-  display: none;
-} */
-
 #fork .f-fnew > a::before,
 #fork .f-tnew > a::before {
   font: 900 0.875rem "fa";
@@ -1296,7 +1263,7 @@ body,
   }
 }
 
-#fork .f-ftlist .f-hcell { /* #fork .f-ftlist .f-clast small */
+#fork .f-ftlist .f-hcell {
   display: none;
 }
 
@@ -1312,10 +1279,6 @@ body,
 }
 
 #fork-forum .f-finfo-h3 {
-/*  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3125rem;
-  align-items: center; */
   font-weight: normal;
   position: relative;
 }
@@ -1362,13 +1325,6 @@ body,
 #fork .f-cmforum > a:not(:focus):not(:hover) {
   opacity: 0.4;
 }
-
-/* #fork .f-tmoved,
-#fork .f-stickytxt,
-#fork .f-closedtxt,
-#fork .f-polltxt {
-  display: none;
-} */
 
 #fork .f-fsticky .f-ficon::before {
   color: #D8000C;
@@ -1461,10 +1417,6 @@ body,
   flex-wrap: wrap;
 }
 
-/* #fork .f-user-info-first {
-  display: none;
-} */
-
 #fork .f-avatar {
   order: 1;
   flex-grow: 0.5;
@@ -1479,7 +1431,6 @@ body,
 
 #fork .f-user-info {
   flex-grow: 0.5;
-  /* margin-bottom: 0.3125rem; */
 }
 
 #fork .f-user-info-add {
@@ -1547,10 +1498,6 @@ body,
   opacity: 0.4;
 }
 
-/* #fork .f-post-footer-add {
-  display: none;
-} */
-
 #fork .f-post-sign {
   font-size: 0.875rem;
   opacity: 0.5;
@@ -1568,10 +1515,6 @@ body,
 }
 
 /*********************/
-/*#fork .f-bb-u {
-  text-decoration: underline;
-}*/
-
 #fork .f-bb-header {
   font-weight: bold;
   font-size: 1.25rem;
@@ -1639,15 +1582,6 @@ body,
   background-color: #FFBABA;
 }
 
-/* #fork .f-post-body p,
-#fork .f-post-body blockquote,
-#fork .f-post-body br,
-#fork .f-post-body pre,
-#fork .f-post-body ol,
-#fork .f-post-body ul { */
-  /* margin-bottom: 0.625rem; */
-/* } */
-
 @media screen and (max-width: 49.9999rem) {
   #fork .f-user-info > li:not(.f-username),
   #fork .f-user-info-add > li {
@@ -1660,14 +1594,6 @@ body,
     content: "\2022";
     padding-inline-end: 0.3125rem;
   }
-
-  /* #fork .f-avatar + .f-user-info > li:not(.f-username) {
-    display: block;
-  }
-
-  #fork .f-avatar + .f-user-info > li:not(.f-username)::before {
-    display: none;
-  } */
 }
 
 @media screen and (min-width: 50rem) {
@@ -1713,18 +1639,7 @@ body,
     width: 100%;
   }
 
-/*   #fork .f-user-info > li:not(.f-username),
-  #fork .f-user-info-add > li {
-    display: block;
-  }
-
-  #fork .f-user-info > li:not(.f-username)::before,
-  #fork .f-user-info-add > li::before {
-    display: none;
-  } */
-
-
-  #fork .f-post-body { /* #fork .f-post-btns */
+  #fork .f-post-body {
     width: calc(100% - 13rem);
     position: relative;
     display: flex;
@@ -1734,20 +1649,6 @@ body,
   #fork .f-post-main {
     flex-grow: 1;
   }
-
-/*  #fork .f-post-footer {
-    display: flex;
-    flex-wrap: nowrap;
-    width: 100%;
-  }
-
-  #fork .f-post-footer-add {
-    display: block;
-    width: 13rem;
-    padding: 0 0.625rem 0.625rem;
-    background-color: #F8F4E3;
-    border-inline-end: 0.0625rem solid #AA7939;
-  } */
 
   #fork .f-avatar > img {
     max-width: 100%;
@@ -2099,9 +2000,6 @@ body,
 #fork-topic-ins .f-phead-h3 {
   font-size: 0.875rem;
   font-weight: normal;
-  /* display: flex;
-  flex-wrap: wrap;
-  word-break: break-all; */
 }
 
 #fork-topic-ins .f-sep::before {
@@ -2692,7 +2590,6 @@ body,
   display: inline-block;
   font-family: "fa";
   font-weight: 900;
-  /* padding-inline-end: 0.3125rem; */
 }
 
 @media screen and (max-width: 30rem) {
@@ -2820,7 +2717,6 @@ body,
     display: inline-block;
     font-family: "fa";
     font-weight: 900;
-    /* padding-inline-end: 0.3125rem; */
   }
 
   #fork .f-pprev > span,

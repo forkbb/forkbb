@@ -983,12 +983,6 @@
   padding: 0.125rem 0.1875rem;
 }
 
-/* #forka .f-lga::before {
-  display: inline-block;
-  font-family: "fa";
-  font-weight: 900;
-} */
-
 #forka .f-lgadown::before {
   content: "\f019";
 }
