@@ -1111,19 +1111,22 @@ class Files
         $imageExt = $this->imageExt($file['tmp_name']);
 
         if (\is_string($imageExt)) {
-            $ext = $imageExt;
-
             if ($file['size'] > $this->maxImgSize) {
                 $this->error = 'The image too large';
 
                 return null;
             }
+
+            $ext       = $imageExt;
+            $className = Image::class;
         } else {
             if ($file['size'] > $this->maxFileSize) {
                 $this->error = 'The file too large';
 
                 return null;
             }
+
+            $className = File::class;
         }
 
         $mimeType = $this->mimeType($file['tmp_name']);
@@ -1153,11 +1156,7 @@ class Files
         $level = $this->c->ErrorHandler->logOnly(\E_WARNING);
 
         try {
-            if (null !== $imageExt) {
-                $result = new Image($file['tmp_name'], $options, $this->imageDriver);
-            } else {
-                $result = new File($file['tmp_name'], $options);
-            }
+            $result = new $className($file['tmp_name'], $options, $this->imageDriver);
         } catch (FileException $e) {
             $this->error = $e->getMessage();
 
