@@ -931,7 +931,7 @@ class Validator
 
         if (\is_array($value)) {
             foreach ($value as $file) {
-                if (null === $this->c->Files->isImage($file)) {
+                if (null === $this->c->Files->imageExt($file)) {
                     $this->addError('The :alias not contains image');
 
                     return null;
@@ -939,7 +939,7 @@ class Validator
             }
         } elseif (
             null !== $value
-            && null === $this->c->Files->isImage($value)
+            && null === $this->c->Files->imageExt($value)
         ) {
             $this->addError('The :alias not contains image');
 
