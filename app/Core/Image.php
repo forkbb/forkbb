@@ -74,6 +74,23 @@ class Image extends File
     }
 
     /**
+     * Проверяет и устанавливает качество для сохраняемого изображения
+     */
+    public function setQuality(int $quality): Image
+    {
+        if (
+            $quality < 0
+            || $quality > 100
+        ) {
+            throw new InvalidArgumentException('Invalid image quality value: ' . $quality);
+        }
+
+        $this->quality = $quality;
+
+        return $this;
+    }
+
+    /**
      * Возвращает информацию о пути к сохраняемой картинке с учетом подстановок
      */
     protected function pathinfo(string $path): ?array
