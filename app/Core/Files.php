@@ -57,6 +57,12 @@ class Files
     protected $imageDriver;
 
     /**
+     * Список имён драйверов
+     * @var array
+     */
+    protected $imageDrivers;
+
+    /**
      * Список mime типов считающихся картинками
      * @var array
      */
@@ -857,7 +863,8 @@ class Files
 
     public function __construct(/* string|int */ $maxFileSize, /* string|int */ $maxImgSize, array $imageDrivers, Container $c)
     {
-        $this->c = $c;
+        $this->c            = $c;
+        $this->imageDrivers = $imageDrivers;
 
         $init = \min(
             \PHP_INT_MAX,
@@ -875,19 +882,22 @@ class Files
             $this->size($maxFileSize),
             $init
         );
-        $this->imageDriver = $this->curImageDriver($imageDrivers);
     }
 
     /**
      * Возращает драйвер для работы с изображениями
      */
-    protected function curImageDriver(array $drivers): DefaultDriver
+    public function imageDriver(): DefaultDriver
     {
-        foreach ($drivers as $class) {
-            $driver = new $class($this);
+        if ($this->imageDriver instanceof DefaultDriver) {
+            return $this->imageDriver;
+        }
 
-            if (true === $driver->ready()) {
-                return $driver;
+        foreach ($this->imageDrivers as $class) {
+            $this->imageDriver = new $class($this);
+
+            if (true === $this->imageDriver->ready()) {
+                return $this->imageDriver;
             }
         }
 
@@ -1100,12 +1110,12 @@ class Files
             return null;
         }
 
-        if (\preg_match('%^(.+)\.([^.\\\/]++)$%D', $file['name'], $matches)) {
-            $name = $matches[1];
-            $ext  = $matches[2];
-        } else {
+        if (false === ($pos = \strrpos($file['name'], '.'))) {
             $name = $file['name'];
-            $ext  = '';
+            $exy  = '';
+        } else {
+            $name = \substr($file['name'], 0, $pos);
+            $ext  = \substr($file['name'], $pos + 1);
         }
 
         $imageExt = $this->imageExt($file['tmp_name']);
@@ -1145,18 +1155,10 @@ class Files
             return null;
         }
 
-        $options = [
-            'filename'  => $name,
-            'extension' => $ext,
-            'basename'  => $name . '.' . $ext,
-            'mime'      => $mimeType, //$file['type'],
-//            'size'      => $file['size'],
-        ];
-
         $level = $this->c->ErrorHandler->logOnly(\E_WARNING);
 
         try {
-            $result = new $className($file['tmp_name'], $options, $this->imageDriver);
+            $result = new $className($file['tmp_name'], $name, $ext, $this);
         } catch (FileException $e) {
             $this->error = $e->getMessage();
 

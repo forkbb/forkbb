@@ -40,22 +40,22 @@ class Image extends File
      * Паттерн для pathinfo
      * @var string
      */
-    protected $pattern = '%^(?!.*?\.\.)([\w.\x5C/:-]*[\x5C/])?(\*|[\w.-]+)\.(\*|[a-z\d]+|\([a-z\d]+(?:\|[a-z\d]+)*\))$%i';
+    protected $pattern = '%^(?!.*?\.\.)([\w.\x5C/:-]*[\x5C/])?(\*|[\w.-]+)\.(\*|[a-z\d]+|\([a-z\d]+(?:\|[a-z\d]+)*\))$%iD';
 
-    public function __construct(string $path, array $options, DefaultDriver $imgDriver)
+    public function __construct(string $path, string $name, string $ext, Files $files)
     {
-        parent::__construct($path, $options);
+        parent::__construct($path, $name, $ext, $files);
 
-        if ($imgDriver::DEFAULT) {
+        $this->imgDriver = $files->imageDriver();
+
+        if ($this->imgDriver::DEFAULT) {
             throw new FileException('No library for work with images');
         }
 
-        $this->imgDriver = $imgDriver;
-
         if (\is_string($this->data)) {
-            $this->image = $imgDriver->readFromStr($this->data);
+            $this->image = $this->imgDriver->readFromStr($this->data);
         } else {
-            $this->image = $imgDriver->readFromPath($this->path);
+            $this->image = $this->imgDriver->readFromPath($this->path);
         }
 
         if (false === $this->image) {

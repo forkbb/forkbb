@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace ForkBB\Core;
 
+use ForkBB\Core\Files;
 use ForkBB\Core\Exceptions\FileException;
 use InvalidArgumentException;
 
@@ -54,7 +55,7 @@ class File
      * Флаг автопереименования файла
      * @var bool
      */
-    protected $rename  = false;
+    protected $rename = false;
 
     /**
      * Флаг перезаписи файла
@@ -66,10 +67,18 @@ class File
      * Паттерн для pathinfo
      * @var string
      */
-    protected $pattern = '%^(?!.*?\.\.)([\w.\x5C/:-]*[\x5C/])?(\*|[\w.-]+)\.(\*|[a-z\d]+)$%i';
+    protected $pattern = '%^(?!.*?\.\.)([\w.\x5C/:-]*[\x5C/])?(\*|[\w.-]+)\.(\*|[a-z\d]+)$%iD';
 
-    public function __construct(string $path, array $options)
+    /**
+     * @var Files
+     */
+    protected $files;
+
+    public function __construct(string $path, string $name, string $ext, Files $files)
     {
+        if ($files->isBadPath($path)) {
+            throw new FileException('Bad path to file');
+        }
         if (! \is_file($path)) {
             throw new FileException('File not found');
         }
@@ -77,24 +86,13 @@ class File
             throw new FileException('File can not be read');
         }
 
-        $this->path = $path;
-        $this->data = null;
+        $this->files = $files;
+        $this->path  = $path;
+        $this->name  = $name;
+        $this->ext   = $ext;
+        $this->data  = null;
+        $this->size  = \is_string($this->data) ? \strlen($this->data) : \filesize($path);
 
-        $name = null;
-        $ext  = null;
-        if (isset($options['basename'])) {
-            if (false === ($pos = \strrpos($options['basename'], '.'))) {
-                $name = $options['basename'];
-            } else {
-                $name = \substr($options['basename'], 0, $pos);
-                $ext  = \substr($options['basename'], $pos + 1);
-            }
-        }
-
-        $this->name = isset($options['filename']) && \is_string($options['filename']) ? $options['filename'] : $name;
-        $this->ext  = isset($options['extension']) && \is_string($options['extension']) ? $options['extension'] : $ext;
-
-        $this->size = \is_string($this->data) ? \strlen($this->data) : \filesize($path);
         if (! $this->size) {
             throw new FileException('File size is undefined');
         }
@@ -234,30 +232,47 @@ class File
     {
         $info = $this->pathinfo($path);
 
+        if (empty($info)) {
+            return false;
+        }
+        if ($this->files->isBadPath($info['dirname'])) {
+            $this->error = 'Bad path to file';
+
+            return false;
+        }
         if (
-            null === $info
-            || ! $this->dirProc($info['dirname'])
+            ! $this->dirProc($info['dirname'])
         ) {
             return false;
         }
 
-        if ($this->rename) {
-            $old = $info['filename'];
-            $i   = 1;
-            while (\file_exists($info['dirname'] . $info['filename'] . '.' . $info['extension'])) {
-                ++$i;
-                $info['filename'] = $old . '_' . $i;
+        $name = $info['filename'];
+        $i    = 1;
+
+        while (true) {
+            $path = $info['dirname'] . $info['filename'] . '.' . $info['extension'];
+
+            if ($this->files->isBadPath($path)) {
+                $this->error = 'Bad path to file';
+
+                return false;
             }
-        } elseif (
-            ! $this->rewrite
-            && \file_exists($info['dirname'] . $info['filename'] . '.' . $info['extension'])
-        ) {
-            $this->error = 'Such file already exists';
 
-            return false;
+            if (\file_exists($path)) {
+                if ($this->rename) {
+                    ++$i;
+                    $info['filename'] = $name . '_' . $i;
+
+                    continue;
+                } elseif (! $this->rewrite) {
+                    $this->error = 'Such file already exists';
+
+                    return false;
+                }
+            }
+
+            break;
         }
-
-        $path = $info['dirname'] . $info['filename'] . '.' . $info['extension'];
 
         if ($this->fileProc($path)) {
             $this->size = \filesize($path);
