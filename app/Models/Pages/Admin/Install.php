@@ -623,6 +623,31 @@ class Install extends Admin
             $v->addError(['Bad database encoding', 'UTF-8']);
         }
 
+        // тест типа возвращаемого результата
+        $table  = '::tmp' . time();
+        $schema = [
+            'FIELDS' => [
+                'test_field' => ['INT(10) UNSIGNED', false, 0],
+            ],
+            'ENGINE' => $this->DBEngine,
+        ];
+
+        if (! $this->c->DB->createTable($table, $schema)) {
+            $v->addError('Failed to create table');
+        } else {
+            $this->c->DB->exec("INSERT INTO {$table} (test_field) VALUES (?i)", [123]);
+
+            $value = $this->c->DB->query("SELECT test_field FROM {$table} WHERE test_field=123")->fetchColumn();
+
+            if (123 !== $value) {
+                $v->addError('Wrong data type for numeric fields');
+            }
+
+            if (! $this->c->DB->dropTable($table)) {
+                $v->addError('Failed to drop table');
+            }
+        }
+
         return $dbhost;
     }
 

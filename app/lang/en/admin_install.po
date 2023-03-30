@@ -248,3 +248,12 @@ msgstr "Cookie Secure"
 
 msgid "Cookie Secure info"
 msgstr "Indicates that the cookie should only be transmitted over a secure <b>HTTPS</b> connection from the client. When set to <b>YES</b>, the cookie will only be set if a secure connection exists."
+
+msgid "Failed to create table"
+msgstr "Failed to create table in selected database."
+
+msgid "Wrong data type for numeric fields"
+msgstr "The PDO driver returns the wrong data type for numeric fields, most likely strings. For MySQL, the most likely reason is that the pdo_mysql extension uses the libmysql library and not mysqlnd. Change the php configuration (among the php extensions in the control panel there may be nd_pdo_mysql, select it instead of pdo_mysql)."
+
+msgid "Failed to drop table"
+msgstr "Failed to drop a table in the selected database."
