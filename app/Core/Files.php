@@ -1112,7 +1112,7 @@ class Files
 
         if (false === ($pos = \strrpos($file['name'], '.'))) {
             $name = $file['name'];
-            $exy  = '';
+            $ext  = '';
         } else {
             $name = \substr($file['name'], 0, $pos);
             $ext  = \substr($file['name'], $pos + 1);
