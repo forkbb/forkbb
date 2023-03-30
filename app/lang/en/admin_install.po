@@ -123,8 +123,8 @@ msgstr "Start install"
 msgid "You are running error"
 msgstr "You are running %1$s version %2$s. ForkBB rev.%3$s requires at least %1$s %4$s to run properly. You must upgrade your %1$s installation before you can continue."
 
-msgid "Alert folder"
-msgstr "In order for ForkBB to function properly, the directory <em>%s</em> must be writable by PHP. Use chmod to set the appropriate directory permissions. If in doubt, chmod to 0777."
+msgid "Alert folder %s"
+msgstr "In order for ForkBB to function properly, the directory <em>%s</em> must be writable by PHP. Use chmod to set the appropriate directory permissions."
 
 msgid "No language packs"
 msgstr "No language packs."

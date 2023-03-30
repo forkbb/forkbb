@@ -120,7 +120,7 @@ class Install extends Admin
         foreach ($folders as $folder) {
             if (! \is_writable($folder)) {
                 $folder       = \str_replace(\dirname($this->c->DIR_APP), '', $folder);
-                $this->fIswev = ['e', ['Alert folder', $folder]];
+                $this->fIswev = ['e', ['Alert folder %s', $folder]];
             }
         }
 
