@@ -894,10 +894,10 @@ class Files
         }
 
         foreach ($this->imageDrivers as $class) {
-            $this->imageDriver = new $class($this);
+            $driver = new $class($this);
 
-            if (true === $this->imageDriver->ready()) {
-                return $this->imageDriver;
+            if (true === $driver->ready()) {
+                return $this->imageDriver = $driver;
             }
         }
 
