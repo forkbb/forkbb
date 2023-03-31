@@ -624,7 +624,7 @@ class Install extends Admin
         }
 
         // тест типа возвращаемого результата
-        $table  = '::tmp' . time();
+        $table  = '::tmp_test';
         $schema = [
             'FIELDS' => [
                 'test_field' => ['INT(10) UNSIGNED', false, 0],
@@ -635,6 +635,10 @@ class Install extends Admin
         if (! $this->c->DB->createTable($table, $schema)) {
             $v->addError('Failed to create table');
         } else {
+            if (! $this->c->DB->truncateTable($table)) {
+                $v->addError('Failed to truncate table');
+            }
+
             $this->c->DB->exec("INSERT INTO {$table} (test_field) VALUES (?i)", [123]);
 
             $value = $this->c->DB->query("SELECT test_field FROM {$table} WHERE test_field=123")->fetchColumn();

@@ -257,3 +257,6 @@ msgstr "PDO драйвер возвращает неверный тип данн
 
 msgid "Failed to drop table"
 msgstr "Не удалось удалить таблицу в выбранной БД."
+
+msgid "Failed to truncate table"
+msgstr "Не удалось очистить таблицу в выбранной БД."

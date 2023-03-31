@@ -257,3 +257,6 @@ msgstr "The PDO driver returns the wrong data type for numeric fields, most like
 
 msgid "Failed to drop table"
 msgstr "Failed to drop a table in the selected database."
+
+msgid "Failed to truncate table"
+msgstr "Failed to truncate a table in the selected database."
