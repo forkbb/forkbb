@@ -641,9 +641,9 @@ class Install extends Admin
 
             $this->c->DB->exec("INSERT INTO {$table} (test_field) VALUES (?i)", [123]);
 
-            $value = $this->c->DB->query("SELECT test_field FROM {$table} WHERE test_field=123")->fetchColumn();
+            $data = $this->c->DB->query("SELECT test_field FROM {$table} WHERE test_field=123")->fetch();
 
-            if (123 !== $value) {
+            if (123 !== $data['test_field']) {
                 $v->addError('Wrong data type for numeric fields');
             }
 
