@@ -705,6 +705,10 @@ class Sqlite
         $table = $this->tName($table);
 
         if (false !== $this->db->exec("DELETE FROM \"{$table}\"")) {
+            if (! $this->tableExists('SQLITE_SEQUENCE')) {
+                return true;
+            }
+
             $vars = [
                 ':tname' => $table,
             ];
