@@ -189,6 +189,10 @@ class Post extends Page
             if (
                 ! $this->user->isGuest
                 && $topic->last_poster_id === $this->user->id
+                && (
+                    $topic->first_post_id !== $topic->last_post_id
+                    || 0 === $topic->poll_type
+                )
             ) {
                 if ($executive) {
                     if ($v->merge_post) {
