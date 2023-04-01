@@ -24,6 +24,26 @@ function forkGetBaseURL()
     return \rtrim($baseURL, '/');
 }
 
+$extNotFound = \array_diff(
+    [
+        'date',
+        'filter',
+        'hash',
+        'json',
+        'SPL',
+        'pcre',
+        'PDO',
+        'fileinfo',
+        'intl',
+        'mbstring',
+    ],
+    \get_loaded_extensions()
+);
+
+if (! empty($extNotFound)) {
+    exit('Please enable the following extensions in PHP: ' . implode(', ', $extNotFound));
+}
+
 return [
     'BASE_URL'         => forkGetBaseURL(),
     'DEBUG'            => 0,
