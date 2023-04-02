@@ -361,7 +361,7 @@ class Forums extends Admin
                     'forum_name'           => 'required|string:trim|max:80',
                     'forum_desc'           => 'exist|string:trim|max:65000 bytes|html',
                     'parent'               => 'required|integer|in:' . \implode(',', $this->listOfIndexes),
-                    'sort_by'              => 'required|integer|in:0,1,2',
+                    'sort_by'              => 'required|integer|in:0,1,2,4,5,6',
                     'redirect_url'         => 'string:trim|max:255', //???? это поле может быть отключено в форме
                     'no_sum_mess'          => 'required|integer|in:0,1',
                     'perms.*.read_forum'   => 'checkbox',
@@ -474,9 +474,12 @@ class Forums extends Admin
                 'sort_by' => [
                     'type'    => 'select',
                     'options' => [
-                        0 => __('Last post option'),
-                        1 => __('Topic start option'),
-                        2 => __('Subject option'),
+                        0 => __('Last post option DESC'),
+                        1 => __('Topic start option DESC'),
+                        2 => __('Subject option ASC'),
+                        4 => __('Last post option ASC'),
+                        5 => __('Topic start option ASC'),
+                        6 => __('Subject option DESC'),
                     ],
                     'value'   => $forum->sort_by,
                     'caption' => 'Sort by label',

@@ -69,14 +69,23 @@ msgstr "Описание (HTML)"
 msgid "Sort by label"
 msgstr "Сортировать темы по"
 
-msgid "Last post option"
-msgstr "Последнему сообщению"
+msgid "Last post option DESC"
+msgstr "Последнему сообщению (новые вверху)"
 
-msgid "Topic start option"
-msgstr "Первому сообщению"
+msgid "Last post option ASC"
+msgstr "Последнему сообщению (новые внизу)"
 
-msgid "Subject option"
-msgstr "Заголовку"
+msgid "Topic start option DESC"
+msgstr "Первому сообщению (новые вверху)"
+
+msgid "Topic start option ASC"
+msgstr "Первому сообщению (новые внизу)"
+
+msgid "Subject option ASC"
+msgstr "Заголовку (А...Я)"
+
+msgid "Subject option DESC"
+msgstr "Заголовку (Я...А)"
 
 msgid "Redirect label"
 msgstr "URL переадресации"

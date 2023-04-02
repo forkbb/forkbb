@@ -424,6 +424,15 @@ class Forum extends DataModel
             case 2:
                 $sortBy = 't.subject ASC';
                 break;
+            case 4:
+                $sortBy = 't.last_post ASC';
+                break;
+            case 5:
+                $sortBy = 't.posted ASC';
+                break;
+            case 6:
+                $sortBy = 't.subject DESC';
+                break;
             default:
                 $sortBy = 't.last_post DESC';
                 break;

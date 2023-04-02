@@ -69,14 +69,23 @@ msgstr "Description (HTML)"
 msgid "Sort by label"
 msgstr "Sort topics by"
 
-msgid "Last post option"
-msgstr "Last post"
+msgid "Last post option DESC"
+msgstr "Last post (newest first)"
 
-msgid "Topic start option"
-msgstr "Topic start"
+msgid "Last post option ASC"
+msgstr "Last post (newest last)"
 
-msgid "Subject option"
-msgstr "Subject"
+msgid "Topic start option DESC"
+msgstr "Topic start (newest first)"
+
+msgid "Topic start option ASC"
+msgstr "Topic start (newest last)"
+
+msgid "Subject option ASC"
+msgstr "Subject (A...Z)"
+
+msgid "Subject option DESC"
+msgstr "Subject (Z...A)"
 
 msgid "Redirect label"
 msgstr "Redirect URL"
