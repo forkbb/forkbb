@@ -217,7 +217,6 @@ body,
 }
 
 #fork #id-fhth1,
-#fork .f-category .f-ftch2,
 #fork .f-category .f-finfo-h3,
 #fork .f-fsub {
   font-family: Georgia, serif;
@@ -226,7 +225,9 @@ body,
 }
 
 #fork .f-category .f-ftch2 {
-  font-size: 1.5rem
+  font-family: Georgia, serif;
+  font-size: 1.5rem;
+  font-style: normal;
 }
 
 #fork .f-category .f-finfo-h3 {
@@ -1034,7 +1035,7 @@ body,
 #fork-stats #fork-onlinelist {
   border-top: 0.0625rem dotted #AA7939;
   padding: 0.3125rem 0.625rem;
-  width: 100%
+  width: 100%;
 }
 
 #fork-onlinelist #id-onlst-dt {
@@ -1045,7 +1046,7 @@ body,
   #fork #fork-stats {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between
+    justify-content: space-between;
   }
 
   #fork-stats #fork-stboard {
@@ -2363,7 +2364,7 @@ body,
 
   #fork .f-fs-header-edit dd,
   #fork .f-fs-data-edit dd {
-    width: 67%
+    width: 67%;
   }
 }
 
@@ -2546,7 +2547,7 @@ body,
     top: 0;
     flex-direction: column;
     flex-wrap: nowrap;
-    border: 0
+    border: 0;
   }
 
   #fork.f-with-nav #fork-nav .f-menu-items {

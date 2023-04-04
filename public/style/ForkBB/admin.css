@@ -507,7 +507,7 @@
   display: flex;
   align-items: center;
   height: 100%;
-  width: 100%
+  width: 100%;
 }
 
 #forka .f-fs-result .f-field-note > dd {
@@ -901,7 +901,7 @@
 }
 
 #fork-rprt-old .f-field-reason {
-  background-color:  #FEEFB3; /*#FFCCBA;*/
+  background-color: #FEEFB3; /*#FFCCBA;*/
 }
 
 /****************************************/
