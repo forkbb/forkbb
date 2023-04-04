@@ -39,7 +39,8 @@ class ActionT extends Method
                 $query = 'SELECT t.id
                     FROM ::topics AS t
                     WHERE t.forum_id IN (?ai:forums) AND t.moved_to=0
-                    ORDER BY t.last_post DESC';
+                    ORDER BY t.last_post DESC
+                    LIMIT 1000';
                 break;
             case 'unanswered_topics':
                 $query = 'SELECT t.id
