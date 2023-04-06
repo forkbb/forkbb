@@ -4023,7 +4023,7 @@
 			var range = rangeHelper.cloneSelected();
 			var rangeStart = -1;
 			var rangeStartContainer = range.startContainer;
-			var previousText = prev.nodeValue || '';
+			var previousText = (prev && prev.nodeValue) || '';
 
 			previousText += data(emoticon, 'sceditor-emoticon');
 
@@ -4053,8 +4053,10 @@
 			}
 
 			next.insertData(0, previousText);
-			remove(prev);
 			remove(emoticon);
+			if (prev) {
+				dom.remove(prev);
+			}
 
 			// Need to update the range starting position if it's been modified
 			if (rangeStart > -1) {
