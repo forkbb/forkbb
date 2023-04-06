@@ -4055,7 +4055,7 @@
 			next.insertData(0, previousText);
 			remove(emoticon);
 			if (prev) {
-				dom.remove(prev);
+				remove(prev);
 			}
 
 			// Need to update the range starting position if it's been modified
