@@ -302,6 +302,7 @@ trait PostFormTrait
                             'dropdown' => \array_flip($smilies),
                             'hidden'   => $hidden,
                         ],
+                        'plugins' => 'alternative-lists',
                     ]);
                     $cur['data'] = [
                         'SCEditorConfig' => $scConfig,
@@ -316,6 +317,9 @@ trait PostFormTrait
                     ]);
                     $this->pageHeader('scbbcode', 'script', 9520, [
                         'src' => $this->publicLink('/js/sc/formats/bbcode.js'),
+                    ]);
+                    $this->pageHeader('scalternative-lists', 'script', 9520, [
+                        'src' => $this->publicLink('/js/sc/plugins/alternative-lists.js'),
                     ]);
                     $this->pageHeader('sclanguage', 'script', 9510, [
                         'src' => $this->publicLink('/js/sc/languages/' . __('lang_identifier') . '.js'),
