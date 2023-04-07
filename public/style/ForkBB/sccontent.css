@@ -1,0 +1,166 @@
+/*! SCEditor | (C) 2011-2013, Sam Clarke | sceditor.com/license */
+html,
+body,
+a,
+abbr,
+acronym,
+address,
+applet,
+article,
+aside,
+audio,
+big,
+blockquote,
+canvas,
+caption,
+center,
+cite,
+code,
+dd,
+del,
+details,
+dfn,
+div,
+dl,
+dt,
+em,
+embed,
+fieldset,
+figcaption,
+figure,
+footer,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header,
+hgroup,
+iframe,
+img,
+input,
+ins,
+kbd,
+label,
+legend,
+li,
+main,
+mark,
+menu,
+nav,
+object,
+ol,
+output,
+p,
+pre,
+q,
+ruby,
+samp,
+section,
+span,
+strike,
+sub,
+summary,
+sup,
+table,
+tbody,
+td,
+textarea,
+tfoot,
+th,
+thead,
+time,
+tr,
+tt,
+ul,
+var,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+body {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+html {
+  height: 100%;
+}
+
+.ios {
+  /* Needed for iOS scrolling bug fix */
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ios body {
+  /* Needed for iOS scrolling bug fix */
+  position: relative;
+  overflow: auto;
+}
+
+body {
+  /* Needed to make sure body covers the whole editor and that
+    long lines don't cause horizontal scrolling */
+  min-height: 100%;
+  word-wrap: break-word;
+}
+
+body.placeholder::before {
+  content: attr(placeholder);
+  color: #555;
+  font-style: italic;
+}
+
+ul, ol {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+table, td {
+  border: 1px dotted #000;
+  empty-cells: show;
+}
+
+table td {
+  min-width: 5px;
+}
+
+code {
+  display: block;
+  white-space: pre;
+  margin: 0 0.625rem;
+  padding: 0.625rem;
+  background-color: #f7f7f7;
+  border: 0.0625rem solid #C0C0C0;
+  overflow: auto;
+  max-height: 45rem;
+  min-height: 2rem;
+  font-family: "DejaVu Sans Mono", Consolas, "Droid Sans Mono", Monospace, Monaco, "Courier New", Courier;
+}
+
+blockquote {
+  border-inline-start: 0.1875rem solid #AA7939;
+  border-top: 0.0625rem solid #AA7939;
+  padding: 0.625rem;
+}
+
+blockquote cite {
+  display: block;
+  padding: 0.625rem;
+  background-color: #F8F4E3 /*#D3B58D*/;
+  margin: -0.625rem -0.625rem 0 -0.625rem;
+}

@@ -1618,11 +1618,13 @@ body,
 }
 
 #fork .f-bb-code {
-  border: 0.0625rem solid #AA7939;
+  margin: 0 0.625rem;
   padding: 0.625rem;
-  background-color: #F8F4E3 /*#D3B58D*/;
+  background-color: #f7f7f7;
+  border: 0.0625rem solid #C0C0C0;
   overflow: auto;
   max-height: 45rem;
+  min-height: 2rem;
 }
 
 #fork .f-bb-l-disc {
