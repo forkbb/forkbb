@@ -85,6 +85,18 @@ return "<ins>{$body}</ins>";
 HANDLER,
     ],
     [
+        'tag' => 'sub',
+        'handler' => <<<'HANDLER'
+return "<sub>{$body}</sub>";
+HANDLER,
+    ],
+    [
+        'tag' => 'sup',
+        'handler' => <<<'HANDLER'
+return "<sup>{$body}</sup>";
+HANDLER,
+    ],
+    [
         'tag' => 'h',
         'type' => 'h',
         'handler' => <<<'HANDLER'
@@ -140,36 +152,39 @@ HANDLER,
         'self_nesting' => 5,
         'attrs' => [
             'Def' => [
-                'format' => '%^[1-9]\d*(?:em|ex|pt|px|\%)?$%',
+                'format' => '%^[1-7]$%',
             ],
         ],
         'handler' => <<<'HANDLER'
-if (\is_numeric($attrs['Def'])) {
-    $attrs['Def'] .= 'px';
-}
-
-return "<span style=\"font-size:{$attrs['Def']};\">{$body}</span>";
+return "<span class=\"f-bb-size{$attrs['Def']}\">{$body}</span>";
+HANDLER,
+    ],
+    [
+        'tag' => 'left',
+        'type' => 'block',
+        'handler' => <<<'HANDLER'
+return "</p><p class=\"f-bb-left\">{$body}</p><p>";
 HANDLER,
     ],
     [
         'tag' => 'right',
         'type' => 'block',
         'handler' => <<<'HANDLER'
-return "</p><p class=\"text-align-right\">{$body}</p><p>";
+return "</p><p class=\"f-bb-right\">{$body}</p><p>";
 HANDLER,
     ],
     [
         'tag' => 'center',
         'type' => 'block',
         'handler' => <<<'HANDLER'
-return "</p><p class=\"text-align-center\">{$body}</p><p>";
+return "</p><p class=\"f-bb-center\">{$body}</p><p>";
 HANDLER,
     ],
     [
         'tag' => 'justify',
         'type' => 'block',
         'handler' => <<<'HANDLER'
-return "</p><p class=\"text-align-justify\">{$body}</p><p>";
+return "</p><p class=\"f-bb-justify\">{$body}</p><p>";
 HANDLER,
     ],
     [
@@ -187,7 +202,7 @@ HANDLER,
             ],
         ],
         'handler' => <<<'HANDLER'
-return "<span style=\"font-family:{$attrs['Def']};\">{$body}</span>";
+return "<span class=\"f-bb-font\" data-bb=\"{$attrs['Def']}\">{$body}</span>";
 HANDLER,
     ],
     [
