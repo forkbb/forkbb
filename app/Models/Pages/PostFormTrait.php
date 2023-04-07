@@ -291,16 +291,11 @@ trait PostFormTrait
                     }
 
                     $scConfig = \json_encode([
-//                        'format'           => 'bbcode',
-//                        'icons'            => 'monocons',
-                        'style'            => $this->publicLink('/style/sc/themes/content/default.css'),
-//                        'emoticonsCompat'  => true,
-//                        'emoticonsEnabled' => false,
-//                        'resizeWidth'      => false,
-//                        'width'            => '100%',
-                        'locale'           => __('lang_identifier'),
-                        'emoticonsRoot'    => $this->c->PUBLIC_URL . '/img/sm/',
-                        'emoticons'        => [
+                        'style'         => $this->publicLink("/style/{$this->user->style}/sccontent.css", true)
+                                            ?: $this->publicLink('/style/sc/themes/content/default.css'),
+                        'locale'        => __('lang_identifier'),
+                        'emoticonsRoot' => $this->c->PUBLIC_URL . '/img/sm/',
+                        'emoticons'     => [
                             'dropdown' => \array_flip($smilies),
                             'hidden'   => $hidden,
                         ],
