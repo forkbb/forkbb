@@ -256,7 +256,9 @@ trait PostFormTrait
             ]);
         }
 
-        $form = $this->setSCEditor($form, 'message');
+        if (1 === $this->c->config->b_message_bbcode) {
+            $form = $this->setSCEditor($form, 'message');
+        }
 
         return $form;
     }
