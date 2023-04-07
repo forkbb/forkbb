@@ -293,7 +293,7 @@ trait PostFormTrait
                     $scConfig = \json_encode([
 //                        'format'           => 'bbcode',
 //                        'icons'            => 'monocons',
-                        'style'            => $this->publicLink('/js/sc/themes/content/default.css'),
+                        'style'            => $this->publicLink('/style/sc/themes/content/default.css'),
 //                        'emoticonsCompat'  => true,
 //                        'emoticonsEnabled' => false,
 //                        'resizeWidth'      => false,
@@ -332,7 +332,7 @@ trait PostFormTrait
                     $this->pageHeader('scdefaultstyle', 'link', 9500, [
                         'rel'  => 'stylesheet',
                         'type' => 'text/css',
-                        'href' => $this->publicLink("/js/sc/themes/default.css"),
+                        'href' => $this->publicLink("/style/sc/themes/default.css"),
                     ]);
 
                     unset($cur);
