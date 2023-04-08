@@ -123,11 +123,16 @@ body.placeholder::before {
   font-style: italic;
 }
 
-ul, ol {
-  margin-top: 0;
-  margin-bottom: 0;
-  padding-top: 0;
-  padding-bottom: 0;
+ol {
+  list-style-type: decimal;
+  list-style-position: outside;
+  padding-inline-start: 1.5rem;
+}
+
+ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  padding-inline-start: 1.5rem;
 }
 
 table, td {
@@ -163,4 +168,14 @@ blockquote cite {
   padding: 0.625rem;
   background-color: #F8F4E3 /*#D3B58D*/;
   margin: -0.625rem -0.625rem 0 -0.625rem;
+}
+
+a {
+  color: #583200;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a:hover, a:focus {
+  background-color: #D3B58D;
 }
