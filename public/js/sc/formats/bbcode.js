@@ -1783,6 +1783,9 @@
 							content += '<br />';
 						}
 
+						 // Visman - удалить под одной пустой строке в начале и конце содержимого
+						content = content.replace(/^\x20*<br \/>/, '').replace(/<br \/>\x20*$/, '');
+
 						if (!isFunction(bbcode.html)) {
 							token.attrs['0'] = content;
 							html = formatBBCodeString(
