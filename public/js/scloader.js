@@ -60,10 +60,15 @@ ForkBB.editor = (function (doc, win) {
         sceditor.create(textarea, options);
         instance = sceditor.instance(textarea);
 
+        var forDelete = ['youtube', /*'rtl', 'ltr'*/];
+
         if (!linkEnabled) {
-            sceditor.formats.bbcode.remove('url');
-            sceditor.formats.bbcode.remove('img');
-            sceditor.formats.bbcode.remove('email');
+            forDelete = forDelete.concat('url', /*'img',*/ 'email');
+        }
+
+        for (var bbcodeForDelete of forDelete) {
+            sceditor.command.remove(bbcodeForDelete);
+            sceditor.formats.bbcode.remove(bbcodeForDelete);
         }
 
         if (smiliesEnabled) {
