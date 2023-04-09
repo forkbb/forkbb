@@ -304,6 +304,7 @@ trait PostFormTrait
                     $cur['data'] = [
                         'SCEditorConfig' => $scConfig,
                         'smiliesEnabled' => $smiliesEnabled,
+                        'linkEnabled'    => $this->c->user->g_post_links,
                     ];
 
                     $this->pageHeader('sceditor', 'script', 9540, [

@@ -15,6 +15,7 @@ ForkBB.editor = (function (doc, win) {
     var instance,
         dataName = "data-SCEditorConfig",
         emotName = "data-smiliesEnabled",
+        linkName = "data-linkEnabled",
         selector = "textarea[" + dataName + "]",
         textarea,
         options = {
@@ -34,7 +35,7 @@ ForkBB.editor = (function (doc, win) {
 
     function initEditor()
     {
-        var conf, smiliesEnabled;
+        var conf, smiliesEnabled, linkEnabled;
 
         if (
             !sceditor
@@ -46,13 +47,24 @@ ForkBB.editor = (function (doc, win) {
 
         options = Object.assign(options, conf);
         smiliesEnabled = '1' == textarea.getAttribute(emotName);
+        linkEnabled = '1' == textarea.getAttribute(linkName);
 
         if (!smiliesEnabled) {
-            options.toolbar = options.toolbar.replace(/\bemoticon\b/, '').replace(/[^\w]*\|[^\w]*/g, '|').replace(/,{2,}/g, ',') ;
+            options.toolbar = options.toolbar.replace(/\bemoticon\b/, '');
         }
+        if (!linkEnabled) {
+            options.toolbar = options.toolbar.replace(/\b(image|email|link)\b/g, '');
+        }
+        options.toolbar = options.toolbar.replace(/[^\w]*\|[^\w]*/g, '|').replace(/,{2,}/g, ',');
 
         sceditor.create(textarea, options);
         instance = sceditor.instance(textarea);
+
+        if (!linkEnabled) {
+            sceditor.formats.bbcode.remove('url');
+            sceditor.formats.bbcode.remove('img');
+            sceditor.formats.bbcode.remove('email');
+        }
 
         if (smiliesEnabled) {
             var checkbox = doc.querySelector('input[name="hide_smilies"]');
