@@ -299,7 +299,7 @@ trait PostFormTrait
                             'dropdown' => \array_flip($smilies),
                             'hidden'   => $hidden,
                         ],
-                        'plugins' => 'alternative-lists',
+                        'plugins' => 'forkbb,alternative-lists',
                     ]);
                     $cur['data'] = [
                         'SCEditorConfig' => $scConfig,
