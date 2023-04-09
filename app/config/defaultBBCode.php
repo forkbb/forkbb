@@ -112,7 +112,7 @@ HANDLER,
             ],
         ],
         'handler' => <<<'HANDLER'
-return "<span style=\"color:{$attrs['Def']};\">{$body}</span>";
+return "<span class=\"f-bb-color\" data-bb=\"{$attrs['Def']}\">{$body}</span>";
 HANDLER,
     ],
     [
@@ -124,7 +124,7 @@ HANDLER,
             ],
         ],
         'handler' => <<<'HANDLER'
-return "<span style=\"color:{$attrs['Def']};\">{$body}</span>";
+return "<span class=\"f-bb-color\" data-bb=\"{$attrs['Def']}\">{$body}</span>";
 HANDLER,
     ],
     [

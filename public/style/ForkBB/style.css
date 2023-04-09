@@ -1753,6 +1753,70 @@ body,
   font-family: Verdana;
 }
 
+#fork .f-bb-color[data-bb="#000000"] {
+  color: #000000;
+}
+
+#fork .f-bb-color[data-bb="#808080"] {
+  color: #808080;
+}
+
+#fork .f-bb-color[data-bb="#C0C0C0"] {
+  color: #C0C0C0;
+}
+
+#fork .f-bb-color[data-bb="#FFFFFF"] {
+  color: #FFFFFF;
+}
+
+#fork .f-bb-color[data-bb="#FF00FF"] {
+  color: #FF00FF;
+}
+
+#fork .f-bb-color[data-bb="#800080"] {
+  color: #800080;
+}
+
+#fork .f-bb-color[data-bb="#FF0000"] {
+  color: #FF0000;
+}
+
+#fork .f-bb-color[data-bb="#800000"] {
+  color: #800000;
+}
+
+#fork .f-bb-color[data-bb="#FFFF00"] {
+  color: #FFFF00;
+}
+
+#fork .f-bb-color[data-bb="#808000"] {
+  color: #808000;
+}
+
+#fork .f-bb-color[data-bb="#00FF00"] {
+  color: #00FF00;
+}
+
+#fork .f-bb-color[data-bb="#008000"] {
+  color: #008000;
+}
+
+#fork .f-bb-color[data-bb="#00FFFF"] {
+  color: #00FFFF;
+}
+
+#fork .f-bb-color[data-bb="#008080"] {
+  color: #008080;
+}
+
+#fork .f-bb-color[data-bb="#0000FF"] {
+  color: #0000FF;
+}
+
+#fork .f-bb-color[data-bb="#000080"] {
+  color: #000080;
+}
+
 /****************/
 /* Предпросмотр */
 /****************/

@@ -30,7 +30,8 @@ ForkBB.editor = (function (doc, win) {
                 'left,center,right,justify|font,size,color,removeformat|' +
                 'bulletlist,orderedlist,indent,outdent|' +
                 'table|code,quote|horizontalrule,image,email,link,unlink|' +
-                'emoticon,date,time|maximize,source'
+                'emoticon,date,time|maximize,source',
+            colors: '#000000,#808080,#C0C0C0,#FFFFFF|#FF00FF,#800080,#FF0000,#800000|#FFFF00,#808000,#00FF00,#008000|#00FFFF,#008080,#0000FF,#000080'
         };
 
     function initEditor()

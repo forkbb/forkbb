@@ -528,3 +528,68 @@ body.sceditor-maximize {
   right: auto;
   left: 0;
 }
+
+/* forkbb */
+.sceditor-color-option[data-color="#000000"] {
+  background-color: #000000;
+}
+
+.sceditor-color-option[data-color="#808080"] {
+  background-color: #808080;
+}
+
+.sceditor-color-option[data-color="#C0C0C0"] {
+  background-color: #C0C0C0;
+}
+
+.sceditor-color-option[data-color="#FFFFFF"] {
+  background-color: #FFFFFF;
+}
+
+.sceditor-color-option[data-color="#FF00FF"] {
+  background-color: #FF00FF;
+}
+
+.sceditor-color-option[data-color="#800080"] {
+  background-color: #800080;
+}
+
+.sceditor-color-option[data-color="#FF0000"] {
+  background-color: #FF0000;
+}
+
+.sceditor-color-option[data-color="#800000"] {
+  background-color: #800000;
+}
+
+.sceditor-color-option[data-color="#FFFF00"] {
+  background-color: #FFFF00;
+}
+
+.sceditor-color-option[data-color="#808000"] {
+  background-color: #808000;
+}
+
+.sceditor-color-option[data-color="#00FF00"] {
+  background-color: #00FF00;
+}
+
+.sceditor-color-option[data-color="#008000"] {
+  background-color: #008000;
+}
+
+.sceditor-color-option[data-color="#00FFFF"] {
+  background-color: #00FFFF;
+}
+
+.sceditor-color-option[data-color="#008080"] {
+  background-color: #008080;
+}
+
+.sceditor-color-option[data-color="#0000FF"] {
+  background-color: #0000FF;
+}
+
+.sceditor-color-option[data-color="#000080"] {
+  background-color: #000080;
+}
