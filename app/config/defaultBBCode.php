@@ -13,18 +13,10 @@ return [
         'tag' => 'ROOT',
         'type' => 'block',
         'handler' => <<<'HANDLER'
-// Replace any breaks next to paragraphs so our replace below catches them
-$body = \preg_replace('%(</?p>)(?:\s*?<br>){1,2}%', '$1', '<p>' . $body . '</p>');
-$body = \preg_replace('%(?:<br>\s*?){1,2}(</?p>)%', '$1', $body);
-
-// Remove any empty paragraph tags (inserted via quotes/lists/code/etc) which should be stripped
+$body = '<p>' . $body . '</p>';
+$body = \str_replace('<p><br>', '<p>', $body);
 $body = \str_replace('<p></p>', '', $body);
-
-$body = \preg_replace('%<br>\s*?<br>%', '</p><p>', $body);
-
-$body = \str_replace('<p><br>', '<br><p>', $body);
-$body = \str_replace('<br></p>', '</p><br>', $body);
-$body = \str_replace('<p></p>', '<br><br>', $body);
+$body = \preg_replace('%<br>(?:\s*?<br>){3,}%', '<br><br><br>', $body);
 
 return $body;
 HANDLER,
