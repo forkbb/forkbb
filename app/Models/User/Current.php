@@ -75,7 +75,7 @@ class Current extends Action
             $vars = [
                 ':id' => $id,
             ];
-            $query = 'SELECT u.*, g.*, o.logged
+            $query = 'SELECT u.*, g.*, o.logged, o.o_position
                 FROM ::users AS u
                 INNER JOIN ::groups AS g ON u.group_id=g.g_id
                 LEFT JOIN ::online AS o ON o.user_id=u.id
@@ -88,7 +88,7 @@ class Current extends Action
             $vars = [
                 ':ip' => $ip,
             ];
-            $query = 'SELECT o.logged, o.last_post, o.last_search
+            $query = 'SELECT o.logged, o.last_post, o.last_search, o.o_position
                 FROM ::online AS o
                 WHERE o.user_id=0 AND o.ident=?s:ip';
 

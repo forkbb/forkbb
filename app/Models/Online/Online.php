@@ -205,6 +205,21 @@ class Online extends Model
      */
     protected function updateUser(string $position): void
     {
+        // Может быть делать меньше обновлений?
+        if ($this->c->user->logged > 0) {
+            $diff = \time() - $this->c->user->logged;
+
+            if (
+                $diff < 5
+                || (
+                    $position === $this->c->user->o_position
+                    && $diff < $this->c->config->i_timeout_online / 10
+                )
+            ) {
+                return;
+            }
+        }
+
         // гость
         if ($this->c->user->isGuest) {
             $vars = [
