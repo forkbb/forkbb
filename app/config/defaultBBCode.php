@@ -467,7 +467,7 @@ foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
 
-return "</p><table{$attr}>{$body}</table><p>";
+return "</p><table class=\"f-bb-table\"{$attr}>{$body}</table><p>";
 HANDLER,
     ],
     [
@@ -485,7 +485,7 @@ foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
 
-return "<caption{$attr}><p>{$body}</p></caption>";
+return "<caption class=\"f-bb-caption\"{$attr}><p>{$body}</p></caption>";
 HANDLER,
     ],
     [
@@ -504,7 +504,7 @@ foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
 
-return "<thead{$attr}>{$body}</thead>";
+return "<thead class=\"f-bb-thead\"{$attr}>{$body}</thead>";
 HANDLER,
     ],
     [
@@ -523,7 +523,7 @@ foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
 
-return "<tbody{$attr}>{$body}</tbody>";
+return "<tbody class=\"f-bb-tbody\"{$attr}>{$body}</tbody>";
 HANDLER,
     ],
     [
@@ -542,7 +542,7 @@ foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
 
-return "<tfoot{$attr}>{$body}</tfoot>";
+return "<tfoot class=\"f-bb-tfoot\"{$attr}>{$body}</tfoot>";
 HANDLER,
     ],
     [
@@ -561,7 +561,7 @@ foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
 
-return "<tr{$attr}>{$body}</tr>";
+return "<tr class=\"f-bb-tr\"{$attr}>{$body}</tr>";
 HANDLER,
     ],
     [
@@ -581,7 +581,7 @@ foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
 
-return "<th{$attr}><p>{$body}</p></th>";
+return "<th class=\"f-bb-th\"{$attr}><p>{$body}</p></th>";
 HANDLER,
     ],
     [
@@ -601,7 +601,7 @@ foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
 
-return "<td{$attr}><p>{$body}</p></td>";
+return "<td class=\"f-bb-td\"{$attr}><p>{$body}</p></td>";
 HANDLER,
     ],
     [

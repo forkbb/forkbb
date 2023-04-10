@@ -1680,6 +1680,23 @@ body,
   text-decoration: underline;
 }
 
+#fork .f-bb-table {
+  border-collapse: collapse;
+  border: 0.0625rem solid #333333;
+}
+
+#fork .f-bb-td,
+#fork .f-bb-th {
+  border: 0.0625rem solid #333333;
+  empty-cells: show;
+  padding: 0.3125rem;
+  min-width: 1rem;
+}
+
+#fork .f-bb-th {
+  background-color: #D3B58D;
+}
+
 #fork .f-bb-size1 {
   font-size: xx-small;
 }
