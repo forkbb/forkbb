@@ -112,7 +112,36 @@ HANDLER,
             ],
         ],
         'handler' => <<<'HANDLER'
-return "<span class=\"f-bb-color\" data-bb=\"{$attrs['Def']}\">{$body}</span>";
+$color = $attrs['Def'];
+
+if ('#' === $color[0]) {
+    $color = \strtoupper($color);
+} else {
+    $repl = [
+        'black'   => '#000000',
+        'gray'    => '#808080',
+        'silver'  => '#C0C0C0',
+        'white'   => '#FFFFFF',
+        'fuchsia' => '#FF00FF',
+        'purple'  => '#800080',
+        'red'     => '#FF0000',
+        'maroon'  => '#800000',
+        'yellow'  => '#FFFF00',
+        'olive'   => '#808000',
+        'lime'    => '#00FF00',
+        'green'   => '#008000',
+        'aqua'    => '#00FFFF',
+        'teal'    => '#008080',
+        'blue'    => '#0000FF',
+        'navy'    => '#000080',
+    ];
+
+    if (isset($repl[$color])) {
+        $color = $repl[$color];
+    }
+}
+
+return "<span class=\"f-bb-color\" data-bb=\"{$color}\">{$body}</span>";
 HANDLER,
     ],
     [
@@ -124,7 +153,36 @@ HANDLER,
             ],
         ],
         'handler' => <<<'HANDLER'
-return "<span class=\"f-bb-color\" data-bb=\"{$attrs['Def']}\">{$body}</span>";
+$color = $attrs['Def'];
+
+if ('#' === $color[0]) {
+    $color = \strtoupper($color);
+} else {
+    $repl = [
+        'black'   => '#000000',
+        'gray'    => '#808080',
+        'silver'  => '#C0C0C0',
+        'white'   => '#FFFFFF',
+        'fuchsia' => '#FF00FF',
+        'purple'  => '#800080',
+        'red'     => '#FF0000',
+        'maroon'  => '#800000',
+        'yellow'  => '#FFFF00',
+        'olive'   => '#808000',
+        'lime'    => '#00FF00',
+        'green'   => '#008000',
+        'aqua'    => '#00FFFF',
+        'teal'    => '#008080',
+        'blue'    => '#0000FF',
+        'navy'    => '#000080',
+    ];
+
+    if (isset($repl[$color])) {
+        $color = $repl[$color];
+    }
+}
+
+return "<span class=\"f-bb-color\" data-bb=\"{$color}\">{$body}</span>";
 HANDLER,
     ],
     [
