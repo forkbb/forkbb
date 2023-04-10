@@ -50,27 +50,26 @@ ForkBB.editor = (function (doc, win) {
         smiliesEnabled = '1' == textarea.getAttribute(emotName);
         linkEnabled = '1' == textarea.getAttribute(linkName);
 
+        var forDelete = ['youtube', 'rtl', 'ltr'];
+
         if (!smiliesEnabled) {
-            options.toolbar = options.toolbar.replace(/\bemoticon\b/, '');
+            forDelete = forDelete.concat('emoticon');
         }
         if (!linkEnabled) {
-            options.toolbar = options.toolbar.replace(/\b(image|email|link)\b/g, '');
-        }
-        options.toolbar = options.toolbar.replace(/[^\w]*\|[^\w]*/g, '|').replace(/,{2,}/g, ',');
-
-        sceditor.create(textarea, options);
-        instance = sceditor.instance(textarea);
-
-        var forDelete = ['youtube', /*'rtl', 'ltr'*/];
-
-        if (!linkEnabled) {
-            forDelete = forDelete.concat('url', /*'img',*/ 'email');
+            forDelete = forDelete.concat('url', 'link', 'image', 'img', 'email');
         }
 
         for (var bbcodeForDelete of forDelete) {
             sceditor.command.remove(bbcodeForDelete);
             sceditor.formats.bbcode.remove(bbcodeForDelete);
+
+            options.toolbar = options.toolbar.replace(new RegExp("\\b" + bbcodeForDelete + "\\b", "gi"), '');
         }
+
+        options.toolbar = options.toolbar.replace(/[^\w]*\|[^\w]*/g, '|').replace(/,{2,}/g, ',');
+
+        sceditor.create(textarea, options);
+        instance = sceditor.instance(textarea);
 
         if (smiliesEnabled) {
             var checkbox = doc.querySelector('input[name="hide_smilies"]');
