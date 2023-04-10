@@ -131,7 +131,7 @@ body,
   margin: 0 auto;
   font-style: normal;
   font-weight: normal;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, system-ui, sans-serif;
   line-height: 1.5;
   position: relative;
 }
@@ -148,7 +148,7 @@ body,
 
 #fork code,
 #fork pre {
-  font-family: "DejaVu Sans Mono", Consolas, "Droid Sans Mono", Monospace, Monaco, "Courier New", Courier;
+  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
 }
 
 #fork div,
@@ -219,13 +219,13 @@ body,
 #fork #id-fhth1,
 #fork .f-category .f-finfo-h3,
 #fork .f-fsub {
-  font-family: Georgia, serif;
+  font-family: Avenir, "Avenir Next LT Pro", Montserrat, Corbel, "URW Gothic", source-sans-pro, sans-serif;;
   font-weight: bold;
   font-style: italic;
 }
 
 #fork .f-category .f-ftch2 {
-  font-family: Georgia, serif;
+  font-family: Avenir, "Avenir Next LT Pro", Montserrat, Corbel, "URW Gothic", source-sans-pro, sans-serif;;
   font-size: 1.5rem;
   font-style: normal;
 }
@@ -787,6 +787,7 @@ body,
 /**************/
 #fork #fork-announce {
   border-bottom: 0.0625rem solid #AA7939;
+  background-color: #FEFAEF;
   padding: 0.625rem;
   position: relative;
 }
@@ -1476,6 +1477,7 @@ body,
 
 #fork .f-post-body {
   padding: 0.3125rem;
+  background-color: #FEFAEF;
 }
 
 #fork .f-post-body img {
@@ -1620,7 +1622,7 @@ body,
 #fork .f-bb-code {
   margin: 0 0.625rem;
   padding: 0.625rem;
-  background-color: #f7f7f7;
+  background-color: #FFFFFF;
   border: 0.0625rem solid #C0C0C0;
   overflow: auto;
   max-height: 45rem;
@@ -1731,15 +1733,15 @@ body,
 }
 
 #fork .f-bb-font[data-bb="Arial Black"] {
-  font-family: 'Arial Black';
+  font-family: "Arial Black";
 }
 
 #fork .f-bb-font[data-bb="Comic Sans MS"] {
-  font-family: 'Comic Sans MS';
+  font-family: "Comic Sans MS";
 }
 
 #fork .f-bb-font[data-bb="Courier New"] {
-  font-family: 'Courier New';
+  font-family: "Courier New";
 }
 
 #fork .f-bb-font[data-bb="Georgia"] {
@@ -1759,11 +1761,11 @@ body,
 }
 
 #fork .f-bb-font[data-bb="Times New Roman"] {
-  font-family: 'Times New Roman';
+  font-family: "Times New Roman";
 }
 
 #fork .f-bb-font[data-bb="Trebuchet MS"] {
-  font-family: 'Trebuchet MS';
+  font-family: "Trebuchet MS";
 }
 
 #fork .f-bb-font[data-bb="Verdana"] {

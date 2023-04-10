@@ -87,8 +87,8 @@ video {
 
 body {
   color: #333333;
-  background-color: #FFFFFF;
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #FEFAEF;
+  font-family: -apple-system, system-ui, sans-serif;
   font-size: 1rem;
   line-height: 1.5;
 }
@@ -139,12 +139,12 @@ code {
   white-space: pre;
   margin: 0 0.625rem;
   padding: 0.625rem;
-  background-color: #f7f7f7;
+  background-color: #FFFFFF;
   border: 0.0625rem solid #C0C0C0;
   overflow: auto;
   max-height: 45rem;
   min-height: 2rem;
-  font-family: "DejaVu Sans Mono", Consolas, "Droid Sans Mono", Monospace, Monaco, "Courier New", Courier;
+  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
 }
 
 blockquote {
