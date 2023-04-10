@@ -1,0 +1,595 @@
+/*! SCEditor | (C) 2011-2016, Sam Clarke | sceditor.com/license */
+/**
+ * Default SCEditor
+ * http://www.sceditor.com/
+ *
+ * Copyright (C) 2011-16, Sam Clarke
+ *
+ * SCEditor is licensed under the MIT license:
+ *	http://www.opensource.org/licenses/mit-license.php
+ */
+#fork div.sceditor-grip,
+#fork .sceditor-button div {
+  background-image: url("famfamfam.png");
+  background-repeat: no-repeat;
+  width: 16px;
+  height: 16px;
+}
+#fork .sceditor-button-youtube div {
+  background-position: 0px 0px;
+}
+#fork .sceditor-button-link div {
+  background-position: 0px -16px;
+}
+#fork .sceditor-button-unlink div {
+  background-position: 0px -32px;
+}
+#fork .sceditor-button-underline div {
+  background-position: 0px -48px;
+}
+#fork .sceditor-button-time div {
+  background-position: 0px -64px;
+}
+#fork .sceditor-button-table div {
+  background-position: 0px -80px;
+}
+#fork .sceditor-button-superscript div {
+  background-position: 0px -96px;
+}
+#fork .sceditor-button-subscript div {
+  background-position: 0px -112px;
+}
+#fork .sceditor-button-strike div {
+  background-position: 0px -128px;
+}
+#fork .sceditor-button-source div {
+  background-position: 0px -144px;
+}
+#fork .sceditor-button-size div {
+  background-position: 0px -160px;
+}
+#fork .sceditor-button-rtl div {
+  background-position: 0px -176px;
+}
+#fork .sceditor-button-right div {
+  background-position: 0px -192px;
+}
+#fork .sceditor-button-removeformat div {
+  background-position: 0px -208px;
+}
+#fork .sceditor-button-quote div {
+  background-position: 0px -224px;
+}
+#fork .sceditor-button-print div {
+  background-position: 0px -240px;
+}
+#fork .sceditor-button-pastetext div {
+  background-position: 0px -256px;
+}
+#fork .sceditor-button-paste div {
+  background-position: 0px -272px;
+}
+#fork .sceditor-button-outdent div {
+  background-position: 0px -288px;
+}
+#fork .sceditor-button-orderedlist div {
+  background-position: 0px -304px;
+}
+#fork .sceditor-button-maximize div {
+  background-position: 0px -320px;
+}
+#fork .sceditor-button-ltr div {
+  background-position: 0px -336px;
+}
+#fork .sceditor-button-left div {
+  background-position: 0px -352px;
+}
+#fork .sceditor-button-justify div {
+  background-position: 0px -368px;
+}
+#fork .sceditor-button-italic div {
+  background-position: 0px -384px;
+}
+#fork .sceditor-button-indent div {
+  background-position: 0px -400px;
+}
+#fork .sceditor-button-image div {
+  background-position: 0px -416px;
+}
+#fork .sceditor-button-horizontalrule div {
+  background-position: 0px -432px;
+}
+#fork .sceditor-button-format div {
+  background-position: 0px -448px;
+}
+#fork .sceditor-button-font div {
+  background-position: 0px -464px;
+}
+#fork .sceditor-button-emoticon div {
+  background-position: 0px -480px;
+}
+#fork .sceditor-button-email div {
+  background-position: 0px -496px;
+}
+#fork .sceditor-button-date div {
+  background-position: 0px -512px;
+}
+#fork .sceditor-button-cut div {
+  background-position: 0px -528px;
+}
+#fork .sceditor-button-copy div {
+  background-position: 0px -544px;
+}
+#fork .sceditor-button-color div {
+  background-position: 0px -560px;
+}
+#fork .sceditor-button-code div {
+  background-position: 0px -576px;
+}
+#fork .sceditor-button-center div {
+  background-position: 0px -592px;
+}
+#fork .sceditor-button-bulletlist div {
+  background-position: 0px -608px;
+}
+#fork .sceditor-button-bold div {
+  background-position: 0px -624px;
+}
+#fork div.sceditor-grip {
+  background-position: 0px -640px;
+  width: 10px;
+  height: 10px;
+}
+#fork .rtl div.sceditor-grip {
+  background-position: 0px -650px;
+}
+/**
+ * SCEditor
+ * http://www.sceditor.com/
+ *
+ * Copyright (C) 2017, Sam Clarke (samclarke.com)
+ *
+ * SCEditor is licensed under the MIT license:
+ *	http://www.opensource.org/licenses/mit-license.php
+ */
+/*---------------------------------------------------
+    LESS Elements 0.7
+  ---------------------------------------------------
+    A set of useful LESS mixins
+    More info at: http://lesselements.com
+  ---------------------------------------------------*/
+ #fork .sceditor-container {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  font-size: 13px;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  color: #333;
+  line-height: 1;
+  font-weight: bold;
+  height: 250px;
+  border-radius: 4px;
+  background-clip: padding-box;
+}
+#fork .sceditor-container *,
+#fork .sceditor-container *:before,
+#fork .sceditor-container *:after {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+#fork .sceditor-container,
+#fork .sceditor-container div,
+#fork div.sceditor-dropdown,
+#fork div.sceditor-dropdown div {
+  padding: 0;
+  margin: 0;
+  z-index: 3;
+}
+#fork .sceditor-container iframe,
+#fork .sceditor-container textarea {
+  display: block;
+  -ms-flex: 1 1 0%;
+  flex: 1 1 0%;
+  line-height: 1.25;
+  border: 0;
+  outline: none;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: #111;
+  padding: 0;
+  margin: 5px;
+  resize: none;
+  background: #fff;
+  height: auto !important;
+  width: auto !important;
+  width: calc(100% - 10px) !important;
+  min-height: 1px;
+}
+#fork .sceditor-container textarea {
+  margin: 7px 5px;
+}
+#fork div.sceditor-dnd-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border: 5px dashed #aaa;
+  z-index: 200;
+  font-size: 2em;
+  text-align: center;
+  color: #aaa;
+}
+#fork div.sceditor-dnd-cover p {
+  position: relative;
+  top: 45%;
+  pointer-events: none;
+}
+#fork div.sceditor-resize-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #000;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  opacity: 0.3;
+}
+#fork div.sceditor-grip {
+  overflow: hidden;
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 3;
+  line-height: 0;
+}
+#fork div.sceditor-grip.has-icon {
+  background-image: none;
+}
+#fork .sceditor-maximize {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100% !important;
+  width: 100% !important;
+  border-radius: 0;
+  background-clip: padding-box;
+  z-index: 2000;
+}
+html.sceditor-maximize,
+body.sceditor-maximize {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+#fork .sceditor-maximize div.sceditor-grip {
+  display: none;
+}
+#fork .sceditor-maximize div.sceditor-toolbar {
+  border-radius: 0;
+  background-clip: padding-box;
+}
+/**
+	 * Dropdown styleing
+	 */
+   #fork div.sceditor-dropdown {
+  position: absolute;
+  border: 1px solid #ccc;
+  background: #fff;
+  z-index: 4000;
+  padding: 10px;
+  font-weight: normal;
+  font-size: 15px;
+  border-radius: 2px;
+  background-clip: padding-box;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+}
+#fork div.sceditor-dropdown *,
+#fork div.sceditor-dropdown *:before,
+#fork div.sceditor-dropdown *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#fork div.sceditor-dropdown a,
+#fork div.sceditor-dropdown a:link {
+  color: #333;
+}
+#fork div.sceditor-dropdown form {
+  margin: 0;
+}
+#fork div.sceditor-dropdown label {
+  display: block;
+  font-weight: bold;
+  color: #3c3c3c;
+  padding: 4px 0;
+}
+#fork div.sceditor-dropdown input,
+#fork div.sceditor-dropdown textarea {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  outline: 0;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-top-color: #888;
+  margin: 0 0 0.75em;
+  border-radius: 1px;
+  background-clip: padding-box;
+}
+#fork div.sceditor-dropdown textarea {
+  padding: 6px;
+}
+#fork div.sceditor-dropdown input:focus,
+#fork div.sceditor-dropdown textarea:focus {
+  border-color: #aaa;
+  border-top-color: #666;
+  box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+#fork div.sceditor-dropdown .button {
+  font-weight: bold;
+  color: #444;
+  padding: 6px 12px;
+  background: #ececec;
+  border: solid 1px #ccc;
+  border-radius: 2px;
+  background-clip: padding-box;
+  cursor: pointer;
+  margin: 0.3em 0 0;
+}
+#fork div.sceditor-dropdown .button:hover {
+  background: #f3f3f3;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+}
+#fork div.sceditor-font-picker,
+#fork div.sceditor-fontsize-picker,
+#fork div.sceditor-format {
+  padding: 6px 0;
+}
+#fork div.sceditor-color-picker {
+  padding: 4px;
+}
+#fork div.sceditor-emoticons,
+#fork div.sceditor-more-emoticons {
+  padding: 0;
+}
+#fork .sceditor-pastetext textarea {
+  border: 1px solid #bbb;
+  width: 20em;
+}
+#fork .sceditor-emoticons img,
+#fork .sceditor-more-emoticons img {
+  padding: 0;
+  cursor: pointer;
+  margin: 2px;
+}
+#fork .sceditor-more {
+  border-top: 1px solid #bbb;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 6px 0;
+}
+#fork .sceditor-dropdown a:hover {
+  background: #eee;
+}
+#fork .sceditor-fontsize-option,
+#fork .sceditor-font-option,
+#fork .sceditor-format a {
+  display: block;
+  padding: 7px 10px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #222;
+}
+#fork .sceditor-fontsize-option {
+  padding: 7px 13px;
+}
+#fork .sceditor-color-column {
+  float: left;
+}
+#fork .sceditor-color-option {
+  display: block;
+  border: 2px solid #fff;
+  height: 18px;
+  width: 18px;
+  overflow: hidden;
+}
+#fork .sceditor-color-option:hover {
+  border: 1px solid #aaa;
+}
+/**
+	 * Toolbar styleing
+	 */
+#fork div.sceditor-toolbar {
+  flex-shrink: 0;
+  overflow: hidden;
+  padding: 3px 5px 2px;
+  background: #f7f7f7;
+  border-bottom: 1px solid #c0c0c0;
+  line-height: 0;
+  text-align: left;
+  user-select: none;
+  border-radius: 3px 3px 0 0;
+  background-clip: padding-box;
+}
+#fork div.sceditor-group {
+  display: inline-block;
+  background: #ddd;
+  margin: 1px 5px 1px 0;
+  padding: 1px;
+  border-bottom: 1px solid #aaa;
+  border-radius: 3px;
+  background-clip: padding-box;
+}
+#fork .sceditor-button {
+  float: left;
+  cursor: pointer;
+  padding: 3px 5px;
+  width: 16px;
+  height: 20px;
+  border-radius: 3px;
+  background-clip: padding-box;
+}
+#fork .sceditor-button:hover,
+#fork .sceditor-button:active,
+#fork .sceditor-button.active {
+  background: #fff;
+  box-shadow: inset 1px 1px 0 rgba(0,0,0,0.3), inset -1px 0 rgba(0,0,0,0.3), inset 0 -1px 0 rgba(0,0,0,0.2);
+}
+#fork .sceditor-button:active {
+  background: #fff;
+  box-shadow: inset 1px 1px 0 rgba(0,0,0,0.3), inset -1px 0 rgba(0,0,0,0.3), inset 0 -1px 0 rgba(0,0,0,0.2), inset 0 0 8px rgba(0,0,0,0.3);
+}
+#fork .sceditor-button.disabled:hover {
+  background: inherit;
+  cursor: default;
+  box-shadow: none;
+}
+#fork .sceditor-button,
+#fork .sceditor-button div {
+  display: block;
+}
+#fork .sceditor-button svg {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  margin: 2px 0;
+  fill: #111;
+  text-decoration: none;
+  pointer-events: none;
+  line-height: 1;
+}
+#fork .sceditor-button.disabled svg {
+  fill: #888;
+}
+#fork .sceditor-button div {
+  display: inline-block;
+  margin: 2px 0;
+  padding: 0;
+  overflow: hidden;
+  line-height: 0;
+  font-size: 0;
+  color: transparent;
+}
+#fork .sceditor-button.has-icon div {
+  display: none;
+}
+#fork .sceditor-button.disabled div {
+  opacity: 0.3;
+}
+#fork .text .sceditor-button,
+#fork .text .sceditor-button div,
+#fork .sceditor-button.text,
+#fork .sceditor-button.text div,
+#fork .text-icon .sceditor-button,
+#fork .text-icon .sceditor-button div,
+#fork .sceditor-button.text-icon,
+#fork .sceditor-button.text-icon div {
+  display: inline-block;
+  width: auto;
+  line-height: 16px;
+  font-size: 1em;
+  color: inherit;
+  text-indent: 0;
+}
+#fork .text-icon .sceditor-button.has-icon div,
+#fork .sceditor-button.has-icon div,
+#fork .text .sceditor-button div,
+#fork .sceditor-button.text div {
+  padding: 0 2px;
+  background: none;
+}
+#fork .text .sceditor-button svg,
+#fork .sceditor-button.text svg {
+  display: none;
+}
+#fork .text-icon .sceditor-button div,
+#fork .sceditor-button.text-icon div {
+  padding: 0 2px 0 20px;
+}
+#fork .rtl div.sceditor-toolbar {
+  text-align: right;
+}
+#fork .rtl .sceditor-button {
+  float: right;
+}
+#fork .rtl div.sceditor-grip {
+  right: auto;
+  left: 0;
+}
+
+/* forkbb */
+.sceditor-color-option[data-color="#000000"] {
+  background-color: #000000;
+}
+
+.sceditor-color-option[data-color="#808080"] {
+  background-color: #808080;
+}
+
+.sceditor-color-option[data-color="#C0C0C0"] {
+  background-color: #C0C0C0;
+}
+
+.sceditor-color-option[data-color="#FFFFFF"] {
+  background-color: #FFFFFF;
+}
+
+.sceditor-color-option[data-color="#FF00FF"] {
+  background-color: #FF00FF;
+}
+
+.sceditor-color-option[data-color="#800080"] {
+  background-color: #800080;
+}
+
+.sceditor-color-option[data-color="#FF0000"] {
+  background-color: #FF0000;
+}
+
+.sceditor-color-option[data-color="#800000"] {
+  background-color: #800000;
+}
+
+.sceditor-color-option[data-color="#FFFF00"] {
+  background-color: #FFFF00;
+}
+
+.sceditor-color-option[data-color="#808000"] {
+  background-color: #808000;
+}
+
+.sceditor-color-option[data-color="#00FF00"] {
+  background-color: #00FF00;
+}
+
+.sceditor-color-option[data-color="#008000"] {
+  background-color: #008000;
+}
+
+.sceditor-color-option[data-color="#00FFFF"] {
+  background-color: #00FFFF;
+}
+
+.sceditor-color-option[data-color="#008080"] {
+  background-color: #008080;
+}
+
+.sceditor-color-option[data-color="#0000FF"] {
+  background-color: #0000FF;
+}
+
+.sceditor-color-option[data-color="#000080"] {
+  background-color: #000080;
+}

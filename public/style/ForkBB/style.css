@@ -1515,74 +1515,6 @@ body,
   color: #D8000C;
 }
 
-/*********************/
-#fork .f-bb-header {
-  font-weight: bold;
-  font-size: 1.25rem;
-}
-
-#fork .f-bb-after {
-  opacity: 0.5;
-  font-style: italic;
-  font-size: 0.875rem;
-  padding-top: 0.625rem;
-}
-
-#fork .f-bb-quote {
-  border-inline-start: 0.1875rem solid #AA7939;
-  border-top: 0.0625rem solid #AA7939;
-}
-
-#fork .f-bb-q-header {
-  padding: 0.625rem;
-  background-color: #F8F4E3 /*#D3B58D*/;
-}
-
-#fork .f-bb-q-body {
-  padding: 0.625rem;
-}
-
-#fork .f-bb-code {
-  border: 0.0625rem solid #AA7939;
-  padding: 0.625rem;
-  background-color: #F8F4E3 /*#D3B58D*/;
-  overflow: auto;
-  max-height: 45rem;
-}
-
-#fork .f-bb-l-disc {
-  list-style-type: disc;
-  list-style-position: outside;
-  padding-inline-start: 1.5rem;
-}
-
-#fork .f-bb-l-dec {
-  list-style-type: decimal;
-  list-style-position: outside;
-  padding-inline-start: 1.5rem;
-}
-
-#fork .f-bb-l-lat {
-  list-style-type: lower-alpha;
-  list-style-position: outside;
-  padding-inline-start: 1.5rem;
-}
-
-#fork .f-bb-s-body {
-  padding: 0.625rem;
-  border-inline-start: 0.1875rem solid #AA7939;
-}
-
-#fork .f-bb-from {
-  font-size: 0.8rem;
-  font-style: italic;
-}
-
-#fork .f-bb-badlink {
-  color: #D8000C;
-  background-color: #FFBABA;
-}
-
 @media screen and (max-width: 49.9999rem) {
   #fork .f-user-info > li:not(.f-username),
   #fork .f-user-info-add > li {
@@ -1655,6 +1587,252 @@ body,
     max-width: 100%;
   }
 } /* @media screen and (min-width: 50rem) */
+
+/**********/
+/* bbcode */
+/**********/
+#fork .f-bb-header {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+#fork .f-bb-after {
+  opacity: 0.5;
+  font-style: italic;
+  font-size: 0.875rem;
+  padding-top: 0.625rem;
+}
+
+#fork .f-bb-quote {
+  border-inline-start: 0.1875rem solid #AA7939;
+  border-top: 0.0625rem solid #AA7939;
+}
+
+#fork .f-bb-q-header {
+  padding: 0.625rem;
+  background-color: #F8F4E3 /*#D3B58D*/;
+}
+
+#fork .f-bb-q-body {
+  padding: 0.625rem;
+}
+
+#fork .f-bb-code {
+  margin: 0 0.625rem;
+  padding: 0.625rem;
+  background-color: #f7f7f7;
+  border: 0.0625rem solid #C0C0C0;
+  overflow: auto;
+  max-height: 45rem;
+  min-height: 2rem;
+}
+
+#fork .f-bb-l-disc {
+  list-style-type: disc;
+  list-style-position: outside;
+  padding-inline-start: 1.5rem;
+}
+
+#fork .f-bb-l-dec {
+  list-style-type: decimal;
+  list-style-position: outside;
+  padding-inline-start: 1.5rem;
+}
+
+#fork .f-bb-l-lat {
+  list-style-type: lower-alpha;
+  list-style-position: outside;
+  padding-inline-start: 1.5rem;
+}
+
+#fork .f-bb-s-body {
+  padding: 0.625rem;
+  border-inline-start: 0.1875rem solid #AA7939;
+}
+
+#fork .f-bb-from {
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+#fork .f-bb-badlink {
+  color: #D8000C;
+  background-color: #FFBABA;
+}
+
+#fork .f-bb-left {
+  text-align: left;
+}
+
+#fork .f-bb-right {
+  text-align: right;
+}
+
+#fork .f-bb-center {
+  text-align: center;
+}
+
+#fork .f-bb-justify {
+  text-align: justify;
+}
+
+#fork .f-bb-u {
+  text-decoration: underline;
+}
+
+#fork .f-bb-table {
+  border-collapse: collapse;
+  border: 0.0625rem solid #333333;
+}
+
+#fork .f-bb-td,
+#fork .f-bb-th {
+  border: 0.0625rem solid #333333;
+  empty-cells: show;
+  padding: 0.3125rem;
+  min-width: 1rem;
+}
+
+#fork .f-bb-th {
+  background-color: #D3B58D;
+}
+
+#fork .f-bb-size1 {
+  font-size: xx-small;
+}
+
+#fork .f-bb-size2 {
+  font-size: small;
+}
+
+#fork .f-bb-size3 {
+  font-size: medium;
+}
+
+#fork .f-bb-size4 {
+  font-size: large;
+}
+
+#fork .f-bb-size5 {
+  font-size: x-large;
+}
+
+#fork .f-bb-size6 {
+  font-size: xx-large;
+}
+
+#fork .f-bb-size7 {
+  font-size: 3rem;
+  font-size: xxx-large; /* https://caniuse.com/mdn-css_properties_font-size_xxx-large */
+}
+
+#fork .f-bb-font[data-bb="Arial"] {
+  font-family: Arial;
+}
+
+#fork .f-bb-font[data-bb="Arial Black"] {
+  font-family: 'Arial Black';
+}
+
+#fork .f-bb-font[data-bb="Comic Sans MS"] {
+  font-family: 'Comic Sans MS';
+}
+
+#fork .f-bb-font[data-bb="Courier New"] {
+  font-family: 'Courier New';
+}
+
+#fork .f-bb-font[data-bb="Georgia"] {
+  font-family: Georgia;
+}
+
+#fork .f-bb-font[data-bb="Impact"] {
+  font-family: Impact;
+}
+
+#fork .f-bb-font[data-bb="Sans-serif"] {
+  font-family: Sans-serif;
+}
+
+#fork .f-bb-font[data-bb="Serif"] {
+  font-family: Serif;
+}
+
+#fork .f-bb-font[data-bb="Times New Roman"] {
+  font-family: 'Times New Roman';
+}
+
+#fork .f-bb-font[data-bb="Trebuchet MS"] {
+  font-family: 'Trebuchet MS';
+}
+
+#fork .f-bb-font[data-bb="Verdana"] {
+  font-family: Verdana;
+}
+
+#fork .f-bb-color[data-bb="#000000"] {
+  color: #000000;
+}
+
+#fork .f-bb-color[data-bb="#808080"] {
+  color: #808080;
+}
+
+#fork .f-bb-color[data-bb="#C0C0C0"] {
+  color: #C0C0C0;
+}
+
+#fork .f-bb-color[data-bb="#FFFFFF"] {
+  color: #FFFFFF;
+}
+
+#fork .f-bb-color[data-bb="#FF00FF"] {
+  color: #FF00FF;
+}
+
+#fork .f-bb-color[data-bb="#800080"] {
+  color: #800080;
+}
+
+#fork .f-bb-color[data-bb="#FF0000"] {
+  color: #FF0000;
+}
+
+#fork .f-bb-color[data-bb="#800000"] {
+  color: #800000;
+}
+
+#fork .f-bb-color[data-bb="#FFFF00"] {
+  color: #FFFF00;
+}
+
+#fork .f-bb-color[data-bb="#808000"] {
+  color: #808000;
+}
+
+#fork .f-bb-color[data-bb="#00FF00"] {
+  color: #00FF00;
+}
+
+#fork .f-bb-color[data-bb="#008000"] {
+  color: #008000;
+}
+
+#fork .f-bb-color[data-bb="#00FFFF"] {
+  color: #00FFFF;
+}
+
+#fork .f-bb-color[data-bb="#008080"] {
+  color: #008080;
+}
+
+#fork .f-bb-color[data-bb="#0000FF"] {
+  color: #0000FF;
+}
+
+#fork .f-bb-color[data-bb="#000080"] {
+  color: #000080;
+}
 
 /****************/
 /* Предпросмотр */
@@ -1918,10 +2096,6 @@ body,
 #fork .width98 {width: 98%;}
 #fork .width99 {width: 99%;}
 #fork .width100 {width: 100%;}
-#fork .text-align-left {text-align: left;}
-#fork .text-align-right {text-align: right;}
-#fork .text-align-center {text-align: center;}
-#fork .text-align-justify {text-align: justify;}
 
 /**********/
 /* Репорт */

@@ -256,6 +256,88 @@ trait PostFormTrait
             ]);
         }
 
+        if (1 === $this->c->config->b_message_bbcode) {
+            $form = $this->setSCEditor($form, 'message');
+        }
+
+        return $form;
+    }
+
+    protected function setSCEditor(array $form, string $field)
+    {
+        foreach ($form['sets'] as &$section) {
+            if (empty($section['fields'])) {
+                continue;
+            }
+            foreach ($section['fields'] as $key => &$cur) {
+                if (
+                    $key === $field
+                    && isset($cur['type'])
+                    && 'textarea' === $cur['type']
+                ) {
+                    $smilies = $hidden = [];
+                    $smiliesEnabled    = '0';
+
+                    if (1 === $this->c->config->b_smilies) {
+                        $smiliesEnabled = '1';
+
+                        foreach ($this->c->smilies->list as $sm) {
+                            if (isset($smilies[$sm['sm_image']])) {
+                                $hidden[$sm['sm_code']] = $sm['sm_image'];
+                            } else {
+                                $smilies[$sm['sm_image']] = $sm['sm_code'];
+                            }
+                        }
+                    }
+
+                    $scConfig = \json_encode([
+                        'style'         => $this->publicLink("/style/{$this->user->style}/sccontent.css", true)
+                                            ?: $this->publicLink('/style/sc/themes/content/default.css'),
+                        'locale'        => __('lang_identifier'),
+                        'emoticonsRoot' => $this->c->PUBLIC_URL . '/img/sm/',
+                        'emoticons'     => [
+                            'dropdown' => \array_flip($smilies),
+                            'hidden'   => $hidden,
+                        ],
+                        'plugins' => 'alternative-lists',
+                    ]);
+                    $cur['data'] = [
+                        'SCEditorConfig' => $scConfig,
+                        'smiliesEnabled' => $smiliesEnabled,
+                        'linkEnabled'    => $this->c->user->g_post_links,
+                    ];
+
+                    $this->pageHeader('sceditor', 'script', 9600, [
+                        'src' => $this->publicLink('/js/sc/sceditor.js'),
+                    ]);
+                    $this->pageHeader('scmonocons', 'script', 9550, [
+                        'src' => $this->publicLink('/js/sc/icons/monocons.js'),
+                    ]);
+                    $this->pageHeader('scbbcode', 'script', 9550, [
+                        'src' => $this->publicLink('/js/sc/formats/bbcode.js'),
+                    ]);
+                    $this->pageHeader('scalternative-lists', 'script', 9550, [
+                        'src' => $this->publicLink('/js/sc/plugins/alternative-lists.js'),
+                    ]);
+                    $this->pageHeader('sclanguage', 'script', 9550, [
+                        'src' => $this->publicLink('/js/sc/languages/' . __('lang_identifier') . '.js'),
+                    ]);
+                    $this->pageHeader('scloader', 'script', 9500, [
+                        'src' => $this->publicLink('/js/scloader.js'),
+                    ]);
+                    $this->pageHeader('scdefaultstyle', 'link', 9500, [
+                        'rel'  => 'stylesheet',
+                        'type' => 'text/css',
+                        'href' => $this->publicLink("/style/sc/themes/default.css"),
+                    ]);
+
+                    unset($cur);
+
+                    break 2;
+                }
+            }
+        }
+
         return $form;
     }
 }

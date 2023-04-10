@@ -516,7 +516,7 @@ abstract class Page extends Model
      * Возвращает url для $path заданного в каталоге public
      * Ведущий слеш обязателен O_o
      */
-    public function publicLink(string $path): string
+    public function publicLink(string $path, bool $returnEmpty = false): string
     {
         $fullPath = $this->c->DIR_PUBLIC . $path;
 
@@ -526,6 +526,8 @@ abstract class Page extends Model
             if (\preg_match('%^(.+)\.([^.\\/]++)$%D', $path, $matches)) {
                 return $this->c->PUBLIC_URL . "{$matches[1]}.v.{$time}.{$matches[2]}";
             }
+        } elseif ($returnEmpty) {
+            return '';
         }
 
         return $this->c->PUBLIC_URL . $path;

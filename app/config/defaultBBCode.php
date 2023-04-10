@@ -13,18 +13,10 @@ return [
         'tag' => 'ROOT',
         'type' => 'block',
         'handler' => <<<'HANDLER'
-// Replace any breaks next to paragraphs so our replace below catches them
-$body = \preg_replace('%(</?p>)(?:\s*?<br>){1,2}%', '$1', '<p>' . $body . '</p>');
-$body = \preg_replace('%(?:<br>\s*?){1,2}(</?p>)%', '$1', $body);
-
-// Remove any empty paragraph tags (inserted via quotes/lists/code/etc) which should be stripped
+$body = '<p>' . $body . '</p>';
+$body = \str_replace('<p><br>', '<p>', $body);
 $body = \str_replace('<p></p>', '', $body);
-
-$body = \preg_replace('%<br>\s*?<br>%', '</p><p>', $body);
-
-$body = \str_replace('<p><br>', '<br><p>', $body);
-$body = \str_replace('<br></p>', '</p><br>', $body);
-$body = \str_replace('<p></p>', '<br><br>', $body);
+$body = \preg_replace('%<br>(?:\s*?<br>){3,}%', '<br><br><br>', $body);
 
 return $body;
 HANDLER,
@@ -85,6 +77,18 @@ return "<ins>{$body}</ins>";
 HANDLER,
     ],
     [
+        'tag' => 'sub',
+        'handler' => <<<'HANDLER'
+return "<sub>{$body}</sub>";
+HANDLER,
+    ],
+    [
+        'tag' => 'sup',
+        'handler' => <<<'HANDLER'
+return "<sup>{$body}</sup>";
+HANDLER,
+    ],
+    [
         'tag' => 'h',
         'type' => 'h',
         'handler' => <<<'HANDLER'
@@ -108,7 +112,36 @@ HANDLER,
             ],
         ],
         'handler' => <<<'HANDLER'
-return "<span style=\"color:{$attrs['Def']};\">{$body}</span>";
+$color = $attrs['Def'];
+
+if ('#' === $color[0]) {
+    $color = \strtoupper($color);
+} else {
+    $repl = [
+        'black'   => '#000000',
+        'gray'    => '#808080',
+        'silver'  => '#C0C0C0',
+        'white'   => '#FFFFFF',
+        'fuchsia' => '#FF00FF',
+        'purple'  => '#800080',
+        'red'     => '#FF0000',
+        'maroon'  => '#800000',
+        'yellow'  => '#FFFF00',
+        'olive'   => '#808000',
+        'lime'    => '#00FF00',
+        'green'   => '#008000',
+        'aqua'    => '#00FFFF',
+        'teal'    => '#008080',
+        'blue'    => '#0000FF',
+        'navy'    => '#000080',
+    ];
+
+    if (isset($repl[$color])) {
+        $color = $repl[$color];
+    }
+}
+
+return "<span class=\"f-bb-color\" data-bb=\"{$color}\">{$body}</span>";
 HANDLER,
     ],
     [
@@ -120,7 +153,36 @@ HANDLER,
             ],
         ],
         'handler' => <<<'HANDLER'
-return "<span style=\"color:{$attrs['Def']};\">{$body}</span>";
+$color = $attrs['Def'];
+
+if ('#' === $color[0]) {
+    $color = \strtoupper($color);
+} else {
+    $repl = [
+        'black'   => '#000000',
+        'gray'    => '#808080',
+        'silver'  => '#C0C0C0',
+        'white'   => '#FFFFFF',
+        'fuchsia' => '#FF00FF',
+        'purple'  => '#800080',
+        'red'     => '#FF0000',
+        'maroon'  => '#800000',
+        'yellow'  => '#FFFF00',
+        'olive'   => '#808000',
+        'lime'    => '#00FF00',
+        'green'   => '#008000',
+        'aqua'    => '#00FFFF',
+        'teal'    => '#008080',
+        'blue'    => '#0000FF',
+        'navy'    => '#000080',
+    ];
+
+    if (isset($repl[$color])) {
+        $color = $repl[$color];
+    }
+}
+
+return "<span class=\"f-bb-color\" data-bb=\"{$color}\">{$body}</span>";
 HANDLER,
     ],
     [
@@ -140,36 +202,39 @@ HANDLER,
         'self_nesting' => 5,
         'attrs' => [
             'Def' => [
-                'format' => '%^[1-9]\d*(?:em|ex|pt|px|\%)?$%',
+                'format' => '%^[1-7]$%',
             ],
         ],
         'handler' => <<<'HANDLER'
-if (\is_numeric($attrs['Def'])) {
-    $attrs['Def'] .= 'px';
-}
-
-return "<span style=\"font-size:{$attrs['Def']};\">{$body}</span>";
+return "<span class=\"f-bb-size{$attrs['Def']}\">{$body}</span>";
+HANDLER,
+    ],
+    [
+        'tag' => 'left',
+        'type' => 'block',
+        'handler' => <<<'HANDLER'
+return "</p><p class=\"f-bb-left\">{$body}</p><p>";
 HANDLER,
     ],
     [
         'tag' => 'right',
         'type' => 'block',
         'handler' => <<<'HANDLER'
-return "</p><p class=\"text-align-right\">{$body}</p><p>";
+return "</p><p class=\"f-bb-right\">{$body}</p><p>";
 HANDLER,
     ],
     [
         'tag' => 'center',
         'type' => 'block',
         'handler' => <<<'HANDLER'
-return "</p><p class=\"text-align-center\">{$body}</p><p>";
+return "</p><p class=\"f-bb-center\">{$body}</p><p>";
 HANDLER,
     ],
     [
         'tag' => 'justify',
         'type' => 'block',
         'handler' => <<<'HANDLER'
-return "</p><p class=\"text-align-justify\">{$body}</p><p>";
+return "</p><p class=\"f-bb-justify\">{$body}</p><p>";
 HANDLER,
     ],
     [
@@ -187,7 +252,7 @@ HANDLER,
             ],
         ],
         'handler' => <<<'HANDLER'
-return "<span style=\"font-family:{$attrs['Def']};\">{$body}</span>";
+return "<span class=\"f-bb-font\" data-bb=\"{$attrs['Def']}\">{$body}</span>";
 HANDLER,
     ],
     [
@@ -402,7 +467,7 @@ foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
 
-return "</p><table{$attr}>{$body}</table><p>";
+return "</p><table class=\"f-bb-table\"{$attr}>{$body}</table><p>";
 HANDLER,
     ],
     [
@@ -420,7 +485,7 @@ foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
 
-return "<caption{$attr}><p>{$body}</p></caption>";
+return "<caption class=\"f-bb-caption\"{$attr}><p>{$body}</p></caption>";
 HANDLER,
     ],
     [
@@ -439,7 +504,7 @@ foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
 
-return "<thead{$attr}>{$body}</thead>";
+return "<thead class=\"f-bb-thead\"{$attr}>{$body}</thead>";
 HANDLER,
     ],
     [
@@ -458,7 +523,7 @@ foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
 
-return "<tbody{$attr}>{$body}</tbody>";
+return "<tbody class=\"f-bb-tbody\"{$attr}>{$body}</tbody>";
 HANDLER,
     ],
     [
@@ -477,7 +542,7 @@ foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
 
-return "<tfoot{$attr}>{$body}</tfoot>";
+return "<tfoot class=\"f-bb-tfoot\"{$attr}>{$body}</tfoot>";
 HANDLER,
     ],
     [
@@ -496,7 +561,7 @@ foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
 
-return "<tr{$attr}>{$body}</tr>";
+return "<tr class=\"f-bb-tr\"{$attr}>{$body}</tr>";
 HANDLER,
     ],
     [
@@ -516,7 +581,7 @@ foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
 
-return "<th{$attr}><p>{$body}</p></th>";
+return "<th class=\"f-bb-th\"{$attr}><p>{$body}</p></th>";
 HANDLER,
     ],
     [
@@ -536,7 +601,7 @@ foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
 
-return "<td{$attr}><p>{$body}</p></td>";
+return "<td class=\"f-bb-td\"{$attr}><p>{$body}</p></td>";
 HANDLER,
     ],
     [

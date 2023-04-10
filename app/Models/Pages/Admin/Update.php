@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '7.3.0';
     const REV_MIN_FOR_UPDATE         = 42;
-    const LATEST_REV_WITH_DB_CHANGES = 43;
+    const LATEST_REV_WITH_DB_CHANGES = 51;
     const LOCK_NAME                  = 'lock_update';
     const LOCk_TTL                   = 1800;
     const JSON_OPTIONS               = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
@@ -745,6 +745,32 @@ class Update extends Admin
         );
 
         $coreConfig->save();
+
+        return null;
+    }
+
+    /**
+     * rev.50 to rev.51
+     */
+    protected function stageNumber50(array $args): ?int
+    {
+        $queryI  = 'INSERT INTO ::bbcode (bb_tag, bb_edit, bb_delete, bb_structure)
+            VALUES(?s:tag, 1, 0, ?s:structure)';
+        $queryU  = 'UPDATE ::bbcode
+            SET bb_edit=1, bb_delete=0, bb_structure=?s:structure
+            WHERE bb_tag=?s:tag';
+        $bbcodes = include $this->c->DIR_CONFIG . '/defaultBBCode.php';
+
+        foreach ($bbcodes as $bbcode) {
+            $vars = [
+                ':tag'       => $bbcode['tag'],
+                ':structure' => \json_encode($bbcode, self::JSON_OPTIONS),
+            ];
+            $exist = $this->c->DB->query('SELECT 1 FROM ::bbcode WHERE bb_tag=?s:tag', $vars)->fetchColumn();
+            $query = empty($exist) ? $queryI : $queryU;
+
+            $this->c->DB->exec($query, $vars);
+        }
 
         return null;
     }
