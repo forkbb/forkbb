@@ -307,19 +307,19 @@ trait PostFormTrait
                         'linkEnabled'    => $this->c->user->g_post_links,
                     ];
 
-                    $this->pageHeader('sceditor', 'script', 9540, [
+                    $this->pageHeader('sceditor', 'script', 9600, [
                         'src' => $this->publicLink('/js/sc/sceditor.js'),
                     ]);
-                    $this->pageHeader('scmonocons', 'script', 9320, [
+                    $this->pageHeader('scmonocons', 'script', 9550, [
                         'src' => $this->publicLink('/js/sc/icons/monocons.js'),
                     ]);
-                    $this->pageHeader('scbbcode', 'script', 9520, [
+                    $this->pageHeader('scbbcode', 'script', 9550, [
                         'src' => $this->publicLink('/js/sc/formats/bbcode.js'),
                     ]);
-                    $this->pageHeader('scalternative-lists', 'script', 9520, [
+                    $this->pageHeader('scalternative-lists', 'script', 9550, [
                         'src' => $this->publicLink('/js/sc/plugins/alternative-lists.js'),
                     ]);
-                    $this->pageHeader('sclanguage', 'script', 9510, [
+                    $this->pageHeader('sclanguage', 'script', 9550, [
                         'src' => $this->publicLink('/js/sc/languages/' . __('lang_identifier') . '.js'),
                     ]);
                     $this->pageHeader('scloader', 'script', 9500, [
