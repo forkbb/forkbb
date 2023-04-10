@@ -34,7 +34,7 @@ body,
 #fork article,
 #fork aside,
 #fork audio,
-/*#fork b,*/
+#fork b,
 #fork big,
 #fork blockquote,
 #fork canvas,
@@ -64,7 +64,7 @@ body,
 #fork h6,
 #fork header,
 #fork hgroup,
-/*#fork i,*/
+#fork i,
 #fork iframe,
 #fork img,
 #fork input,
@@ -84,13 +84,13 @@ body,
 #fork pre,
 #fork q,
 #fork ruby,
-/*#fork s,*/
+#fork s,
 #fork samp,
 #fork section,
 /* #fork small, */
 #fork span,
 #fork strike,
-/*#fork strong,*/
+#fork strong,
 #fork sub,
 #fork summary,
 #fork sup,
@@ -104,7 +104,7 @@ body,
 #fork time,
 #fork tr,
 #fork tt,
-/*#fork u,*/
+#fork u,
 #fork ul,
 #fork var,
 #fork video {
@@ -144,6 +144,24 @@ body,
 
 #fork main {
   display: block;
+}
+
+#fork b,
+#fork strong {
+  font-weight: bold;
+}
+
+#fork i,
+#fork em {
+ font-style: italic;
+}
+
+#fork s {
+  text-decoration: line-through;
+}
+
+#fork u {
+  text-decoration: underline;
 }
 
 #fork code,
