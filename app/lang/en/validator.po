@@ -194,3 +194,6 @@ msgstr "Too much data"
 
 msgid "The :alias not exist"
 msgstr "The :alias field not exist."
+
+msgid "The :alias contains a link"
+msgstr "The :alias field contains a link."

@@ -202,6 +202,7 @@ trait PostValidatorTrait
                 'email'        => 'Email',
                 'username'     => 'Username',
                 'subject'      => 'Subject',
+                'message'      => 'Message',
             ])->addArguments([
                 'token'                 => $args,
                 'subject.check_subject' => $executive,

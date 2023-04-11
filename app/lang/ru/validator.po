@@ -194,3 +194,6 @@ msgstr "Лишние данные"
 
 msgid "The :alias not exist"
 msgstr "Поле :alias отсутствует."
+
+msgid "The :alias contains a link"
+msgstr "Поле :alias содержит ссылку."
