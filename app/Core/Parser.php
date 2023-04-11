@@ -77,7 +77,7 @@ class Parser extends Parserus
                     : $this->c->config->a_bb_white_sig
                 )
                 : [];
-            $blackList = null;
+            //$blackList = null;
         } else {
             $whiteList = 1 === $this->c->config->b_message_bbcode
                 ? (empty($this->c->config->a_bb_white_mes) && empty($this->c->config->a_bb_black_mes)
@@ -85,8 +85,10 @@ class Parser extends Parserus
                     : $this->c->config->a_bb_white_mes
                 )
                 : [];
-            $blackList = null;
+            //$blackList = null;
         }
+
+        $blackList = 1 === $this->c->user->g_post_links ? null : ['email', 'url', 'img'];
 
         $this->setAttr('isSign', $isSignature)
              ->setWhiteList($whiteList)
