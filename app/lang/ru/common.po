@@ -80,7 +80,7 @@ msgid "Hidden text"
 msgstr "Скрытый текст"
 
 msgid "Announcement"
-msgstr "Объявление"
+msgstr "Объявление:"
 
 msgid "Options"
 msgstr "Параметры"
@@ -311,13 +311,13 @@ msgid "Send PM"
 msgstr "Отправить личное сообщение"
 
 msgid "Board footer"
-msgstr "Подвал форума"
+msgstr "Подвал форума:"
 
 msgid "Powered by"
 msgstr "Под управлением <a href=\"https://forkbb.ru\">ForkBB</a>"
 
 msgid "Debug table"
-msgstr "Отладочная информация"
+msgstr "Отладочная информация:"
 
 msgid "Querytime"
 msgstr "Сгенерировано за %1$s сек, %2$s запросов выполнено"

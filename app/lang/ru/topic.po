@@ -91,7 +91,7 @@ msgid "Online users"
 msgstr "Активны:"
 
 msgid "Stats info"
-msgstr "Информация о теме"
+msgstr "Информация о теме:"
 
 msgid "Merge posts"
 msgstr "Соединить с предыдущим сообщением, если оно ваше"

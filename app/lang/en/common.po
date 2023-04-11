@@ -80,7 +80,7 @@ msgid "Hidden text"
 msgstr "Hidden text"
 
 msgid "Announcement"
-msgstr "Announcement"
+msgstr "Announcement:"
 
 msgid "Options"
 msgstr "Options"
@@ -309,13 +309,13 @@ msgid "Send PM"
 msgstr "Send private message"
 
 msgid "Board footer"
-msgstr "Board footer"
+msgstr "Board footer:"
 
 msgid "Powered by"
 msgstr "Powered by <a href=\"https://forkbb.ru\">ForkBB</a>"
 
 msgid "Debug table"
-msgstr "Debug information"
+msgstr "Debug information:"
 
 msgid "Querytime"
 msgstr "Generated in %1$s seconds, %2$s queries executed"

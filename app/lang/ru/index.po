@@ -34,7 +34,7 @@ msgid "Online users"
 msgstr "Активны:"
 
 msgid "Stats info"
-msgstr "Информация о форуме"
+msgstr "Информация о форуме:"
 
 msgid "Board stats"
 msgstr "Статистика форума"

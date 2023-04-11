@@ -34,7 +34,7 @@ msgid "Online users"
 msgstr "Online:"
 
 msgid "Stats info"
-msgstr "Board information"
+msgstr "Board information:"
 
 msgid "Board stats"
 msgstr "Board statistics"

@@ -80,10 +80,10 @@
 @endif
     <main>
 @if ($p->fAnnounce)
-      <aside id="fork-announce">
-        <h2>{!! __('Announcement') !!}</h2>
-        <p id="id-facontent">{!! $p->fAnnounce !!}</p>
-      </aside>
+    <aside id="fork-announce">
+      <p class="f-sim-header">{!! __('Announcement') !!}</p>
+      <p id="id-facontent">{!! $p->fAnnounce !!}</p>
+    </aside>
 @endif
 @if ($iswev = $p->fIswev)
     @include ('layouts/iswev')
@@ -91,11 +91,13 @@
 @yield ('content')
     </main>
     <footer id="fork-footer">
-      <h2>{!! __('Board footer') !!}</h2>
-      <div></div>
-      <div><p id="id-fpoweredby">{!! __('Powered by') !!}</p></div>
-    </footer>
+      <p class="f-sim-header">{!! __('Board footer') !!}</p>
+      <div id="fork-footer-in">
+        <div></div>
+        <div><p id="id-fpoweredby">{!! __('Powered by') !!}</p></div>
+      </div>
 <!-- debuginfo -->
+    </footer>
   </div>
 @foreach ($p->pageHeaders as $pageHeader)
     @if ('script' === $pageHeader['type'])

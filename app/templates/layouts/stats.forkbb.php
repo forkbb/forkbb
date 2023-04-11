@@ -1,5 +1,5 @@
     <aside id="fork-stats">
-      <h2>{!! __('Stats info') !!}</h2>
+      <p class="f-sim-header">{!! __('Stats info') !!}</p>
 @if ($p->stats)
       <dl id="fork-stboard">
         <dt class="f-stats-dt">{!! __('Board stats') !!}</dt>

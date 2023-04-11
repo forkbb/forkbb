@@ -183,7 +183,8 @@ body,
   resize: vertical;
 }
 
-#fork small {
+#fork small,
+#fork .f-sim-header {
   display: none;
 }
 
@@ -813,7 +814,7 @@ body,
 /**********/
 /* Подвал */
 /**********/
-#fork #fork-footer {
+#fork #fork-footer-in {
   border-bottom: 0.0625rem solid #AA7939;
   border-top: 0.0625rem solid #AA7939;
   background-color: #F8F4E3;
@@ -823,11 +824,7 @@ body,
   position: relative;
 }
 
-#fork-footer > h2 {
-  display: none;
-}
-
-#fork-footer > div {
+#fork-footer-in > div {
   padding: 0.625rem;
 }
 
@@ -2731,10 +2728,10 @@ body,
     width: 100%;
   }
 
-  #fork.f-with-nav #fork-debug {
+  /* #fork.f-with-nav #fork-debug {
     order: 4;
     width: 100%;
-  }
+  } */
 
   #fork.f-with-nav #fork-navdir {
     position: sticky;
