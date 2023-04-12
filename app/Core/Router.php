@@ -104,7 +104,8 @@ class Router
         if (
             \is_string($url)
             && \parse_url($url, \PHP_URL_HOST) === $this->host
-            && ($uri = \rawurldecode(\parse_url($url, \PHP_URL_PATH)))
+            && \is_string($path = \parse_url($url, \PHP_URL_PATH))
+            && ($uri = \rawurldecode($path))                        // $path всегда начинается с наклонной черты
             && ($route = $this->route(self::GET, $uri))
             && (
                 self::OK === $route[0]
