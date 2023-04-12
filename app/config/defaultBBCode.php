@@ -240,7 +240,7 @@ HANDLER,
     [
         'tag' => 'mono',
         'handler' => <<<'HANDLER'
-return "<code>{$body}</code>";
+return "<code class=\"f-bb-mono\">{$body}</code>";
 HANDLER,
     ],
     [

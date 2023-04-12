@@ -1644,6 +1644,12 @@ body,
   min-height: 2rem;
 }
 
+#fork .f-bb-mono {
+  border: 0.0625rem solid #C0C0C0;
+  background-color: #FFFFFF;
+  padding: 0 0.25rem;
+}
+
 #fork .f-bb-l-disc {
   list-style-type: disc;
   list-style-position: outside;
