@@ -40,9 +40,7 @@ class Debug extends Page
 
         $this->nameTpl    = 'layouts/debug';
         $this->onlinePos  = null;
-        $this->memory     = \memory_get_usage();
-        $this->peak       = \memory_get_peak_usage();
-        $this->time       = \microtime(true) - $this->c->START;
+        $this->start      = $this->c->START;
 
         return $this;
     }

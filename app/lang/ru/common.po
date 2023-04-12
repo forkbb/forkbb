@@ -319,14 +319,11 @@ msgstr "Под управлением <a href=\"https://forkbb.ru\">ForkBB</a>"
 msgid "Debug table"
 msgstr "Отладочная информация:"
 
-msgid "Querytime"
+msgid "Generated in %1$s, %2$s queries"
 msgstr "Сгенерировано за %1$s сек, %2$s запросов выполнено"
 
-msgid "Memory usage"
-msgstr "Использовано памяти: %1$s"
-
-msgid "Peak usage"
-msgstr "(Пик: %1$s)"
+msgid "Memory %1$s, Peak %2$s"
+msgstr "Использовано памяти: %1$s (Пик: %2$s)"
 
 msgid "Query times"
 msgstr "Время (s)"

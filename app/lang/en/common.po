@@ -317,14 +317,11 @@ msgstr "Powered by <a href=\"https://forkbb.ru\">ForkBB</a>"
 msgid "Debug table"
 msgstr "Debug information:"
 
-msgid "Querytime"
+msgid "Generated in %1$s, %2$s queries"
 msgstr "Generated in %1$s seconds, %2$s queries executed"
 
-msgid "Memory usage"
-msgstr "Memory usage: %1$s"
-
-msgid "Peak usage"
-msgstr "(Peak: %1$s)"
+msgid "Memory %1$s, Peak %2$s"
+msgstr "Memory usage: %1$s (Peak: %2$s)"
 
 msgid "Query times"
 msgstr "Time (s)"
