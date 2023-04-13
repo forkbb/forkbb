@@ -235,17 +235,14 @@ class Online extends Model
                     WHERE user_id=0 AND ident=?s:ip';
             } else {
                 $query = 'INSERT INTO ::online (user_id, ident, logged, o_position, o_name)
-                    SELECT 0, ?s:ip, ?i:logged, ?s:pos, ?s:name
-                    FROM ::groups
+                    SELECT tmp.*
+                    FROM (SELECT 0 AS f1, ?s:ip AS f2, ?i:logged AS f3, ?s:pos AS f4, ?s:name AS f5) AS tmp
                     WHERE NOT EXISTS (
                         SELECT 1
                         FROM ::online
                         WHERE user_id=0 AND ident=?s:ip
-                    )
-                    LIMIT 1';
+                    )';
             }
-
-            $this->c->DB->exec($query, $vars);
         } else {
         // пользователь
             $vars = [
@@ -261,18 +258,17 @@ class Online extends Model
                     WHERE user_id=?i:id';
             } else {
                 $query = 'INSERT INTO ::online (user_id, ident, logged, o_position)
-                    SELECT ?i:id, ?s:name, ?i:logged, ?s:pos
-                    FROM ::groups
+                    SELECT tmp.*
+                    FROM (SELECT ?i:id AS f1, ?s:name AS f2, ?i:logged AS f3, ?s:pos AS f4) AS tmp
                     WHERE NOT EXISTS (
                         SELECT 1
                         FROM ::online
                         WHERE user_id=?i:id
-                    )
-                    LIMIT 1';
+                    )';
             }
-
-            $this->c->DB->exec($query, $vars);
         }
+
+        $this->c->DB->exec($query, $vars);
     }
 
     /**
