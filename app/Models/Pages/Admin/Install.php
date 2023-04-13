@@ -832,7 +832,7 @@ class Install extends Admin
         // online
         $schema = [
             'FIELDS' => [
-                'user_id'     => ['INT(10) UNSIGNED', false, 1],
+                'user_id'     => ['INT(10) UNSIGNED', false, 0],
                 'ident'       => ['VARCHAR(190)', false, ''],
                 'logged'      => ['INT(10) UNSIGNED', false, 0],
                 'last_post'   => ['INT(10) UNSIGNED', false, 0],
