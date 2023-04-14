@@ -30,7 +30,7 @@ class UpdateUsername extends Method
             ':name' => $user->username,
         ];
         $query = 'UPDATE ::online
-            SET ident=?s:name
+            SET o_name=?s:name
             WHERE user_id=?i:id';
 
         $this->c->DB->exec($query, $vars);

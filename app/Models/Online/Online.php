@@ -155,7 +155,7 @@ class Online extends Model
 
             // пользователь
             if ($cur['user_id'] > 0) {
-                $users[$cur['user_id']] = $cur['ident'];
+                $users[$cur['user_id']] = $cur['o_name'];
             // гость
             } elseif ('' == $cur['o_name']) {
                 $guests[] = $cur['ident'];
@@ -257,9 +257,9 @@ class Online extends Model
                     SET logged=?i:logged, o_position=?s:pos
                     WHERE user_id=?i:id';
             } else {
-                $query = 'INSERT INTO ::online (user_id, ident, logged, o_position)
+                $query = 'INSERT INTO ::online (user_id, logged, o_position, o_name)
                     SELECT tmp.*
-                    FROM (SELECT ?i:id AS f1, ?s:name AS f2, ?i:logged AS f3, ?s:pos AS f4) AS tmp
+                    FROM (SELECT ?i:id AS f1, ?i:logged AS f2, ?s:pos AS f3, ?s:name AS f4) AS tmp
                     WHERE NOT EXISTS (
                         SELECT 1
                         FROM ::online
