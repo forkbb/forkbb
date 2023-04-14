@@ -833,7 +833,7 @@ class Install extends Admin
         $schema = [
             'FIELDS' => [
                 'user_id'     => ['INT(10) UNSIGNED', false, 0],
-                'ident'       => ['VARCHAR(190)', false, ''],
+                'ident'       => ['VARCHAR(45)', false, ''],
                 'logged'      => ['INT(10) UNSIGNED', false, 0],
                 'last_post'   => ['INT(10) UNSIGNED', false, 0],
                 'last_search' => ['INT(10) UNSIGNED', false, 0],
@@ -841,11 +841,10 @@ class Install extends Admin
                 'o_name'      => ['VARCHAR(190)', false, ''],
             ],
             'UNIQUE KEYS' => [
-                'user_id_ident_idx' => ['user_id', 'ident(45)'],
+                'user_id_ident_idx' => ['user_id', 'ident'],
             ],
             'INDEXES' => [
-                'ident_idx'      => ['ident'],
-                'logged_idx'     => ['logged'],
+                'logged_idx' => ['logged'],
             ],
             'ENGINE' => $this->DBEngine,
         ];

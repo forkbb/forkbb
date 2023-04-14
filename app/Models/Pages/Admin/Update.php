@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '7.3.0';
     const REV_MIN_FOR_UPDATE         = 42;
-    const LATEST_REV_WITH_DB_CHANGES = 51;
+    const LATEST_REV_WITH_DB_CHANGES = 52;
     const LOCK_NAME                  = 'lock_update';
     const LOCk_TTL                   = 1800;
     const JSON_OPTIONS               = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
@@ -771,6 +771,35 @@ class Update extends Admin
 
             $this->c->DB->exec($query, $vars);
         }
+
+        return null;
+    }
+
+    /**
+     * rev.51 to rev.52
+     */
+    protected function stageNumber51(array $args): ?int
+    {
+        $this->c->DB->dropTable('::online');
+
+        $schema = [
+            'FIELDS' => [
+                'user_id'     => ['INT(10) UNSIGNED', false, 0],
+                'ident'       => ['VARCHAR(45)', false, ''],
+                'logged'      => ['INT(10) UNSIGNED', false, 0],
+                'last_post'   => ['INT(10) UNSIGNED', false, 0],
+                'last_search' => ['INT(10) UNSIGNED', false, 0],
+                'o_position'  => ['VARCHAR(100)', false, ''],
+                'o_name'      => ['VARCHAR(190)', false, ''],
+            ],
+            'UNIQUE KEYS' => [
+                'user_id_ident_idx' => ['user_id', 'ident'],
+            ],
+            'INDEXES' => [
+                'logged_idx' => ['logged'],
+            ],
+        ];
+        $this->c->DB->createTable('::online', $schema);
 
         return null;
     }
