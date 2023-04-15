@@ -348,6 +348,7 @@ body,
   cursor: pointer;
   font: 900 1.25rem "fa";
   content: "\f0c9";
+  color: #583200;
 }
 
 #fork .f-menu-checkbox:checked + .f-menu-toggle::after {
@@ -407,7 +408,7 @@ body,
 }
 
 #fork-nav #id-mn-label {
-  color: #F8F4E3;
+  /* color: #F8F4E3; */
   position: absolute;
   top: 0.625rem;
   inset-inline-end: 0.9325rem;
@@ -554,7 +555,8 @@ body,
 /* Шапка */
 /*********/
 #fork #fork-header {
-  background-color: #AA7939;
+  /* background-color: #AA7939; */
+  border-bottom: 0.0625rem solid #AA7939;
 }
 
 #fork #id-fhth1 {
@@ -569,22 +571,22 @@ body,
 #fork #id-fhtdesc {
   border-top: 0.0625rem dotted #D3B58D;
   padding: 0.625rem;
-  color: #F8F4E3;
+  /* color: #F8F4E3; */
 }
 
 #fork #id-fhtha {
-  color: #F8F4E3;
+  color: #583200;
 }
 
 #fork #id-fhtha:hover,
 #fork #id-fhtha:focus {
-  background-color: #AA7939;
+  background-color: #FFFFFF;
 }
 
 @media screen and (min-width: 50rem) {
   #fork #id-fhth1 {
     width: 100%;
-    padding: 0.625rem;
+    /* padding: 0.625rem; */
     overflow: auto;
     white-space: normal;
   }
