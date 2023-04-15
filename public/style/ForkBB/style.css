@@ -2246,6 +2246,10 @@ body,
 /************************/
 /* Список пользователей */
 /************************/
+#fork-usrlst .f-thead {
+  background-color: #F8F4E3;
+}
+
 #fork-usrlst .f-row {
   border-bottom: 0.0625rem solid #AA7939;
 }
