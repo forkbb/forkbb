@@ -351,6 +351,11 @@ body,
   color: #583200;
 }
 
+#fork .f-menu-checkbox {
+  position: fixed;
+  transform: scale(0);
+}
+
 #fork .f-menu-checkbox:checked + .f-menu-toggle::after {
   content: "\f00d";
 }
@@ -391,6 +396,12 @@ body,
 #fork .f-menu-span {
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+@media screen and (min-width: 50rem) {
+  #fork .f-menu-checkbox {
+    display: none;
+  }
 }
 
 /****************/
