@@ -122,7 +122,7 @@ body,
 body,
 #fork {
   color: #333333;
-  background-color: #FFFFFF;
+  background-color: #FBFBFA;
 }
 
 #fork {
@@ -552,7 +552,7 @@ body,
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #FFFFFF;
+    background-color: #FBFBFA;
     display: flex;
     font-size: 0.875rem;
   }
@@ -591,7 +591,7 @@ body,
 
 #fork #id-fhtha:hover,
 #fork #id-fhtha:focus {
-  background-color: #FFFFFF;
+  background-color: #FBFBFA;
 }
 
 @media screen and (min-width: 50rem) {
@@ -1406,7 +1406,7 @@ body,
   border-top: 0.0625rem solid #AA7939;
   border-bottom: 0.0625rem solid #AA7939;
   position: relative;
-  background-color: #FFFFFF;
+  /* background-color: #FFFFFF; */
 }
 
 #fork .f-post + .f-post {
