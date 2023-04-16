@@ -351,7 +351,8 @@ body,
   color: #583200;
 }
 
-#fork .f-menu-checkbox {
+#fork .f-menu-checkbox,
+#fork .f-menu-tsp {
   position: fixed;
   transform: scale(0);
 }

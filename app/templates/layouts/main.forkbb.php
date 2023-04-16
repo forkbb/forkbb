@@ -24,7 +24,7 @@
     <nav id="fork-nav" class="f-menu @if ($p->fNavigation['search']) f-main-nav-search @endif">
       <div id="fork-navdir">
         <input id="id-mn-checkbox" class="f-menu-checkbox" type="checkbox">
-        <label id="id-mn-label" class="f-menu-toggle" for="id-mn-checkbox"></label>
+        <label id="id-mn-label" class="f-menu-toggle" for="id-mn-checkbox"><span class="f-menu-tsp">{!! __('Main menu') !!}</span></label>
         <ul class="f-menu-items">
     @foreach ($p->fNavigation as $key => $val)
           <li id="fork-nav-{{ $key }}" class="f-menu-item"><!-- inline -->

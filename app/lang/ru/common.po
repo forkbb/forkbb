@@ -465,3 +465,6 @@ msgstr "%s"
 
 msgid "ACTIONS"
 msgstr "ДЕЙСТВИЯ"
+
+msgid "Main menu"
+msgstr "Главное меню"

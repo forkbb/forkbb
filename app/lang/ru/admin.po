@@ -74,3 +74,6 @@ msgstr "\"%s\""
 
 msgid "Logs"
 msgstr "Логи"
+
+msgid "Admin menu"
+msgstr "Меню админки"
