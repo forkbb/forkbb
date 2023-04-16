@@ -2737,6 +2737,7 @@ body,
   #fork.f-with-nav #fork-header {
     order: 0;
     width: 100%;
+    border-bottom-width: 0.125rem;
   }
 
   #fork.f-with-nav main {
