@@ -74,3 +74,6 @@ msgstr "Выделить тему"
 
 msgid "Create topic"
 msgstr "Создать тему"
+
+msgid "Re"
+msgstr "Re: "

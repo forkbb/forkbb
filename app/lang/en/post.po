@@ -74,3 +74,6 @@ msgstr "Stick topic"
 
 msgid "Create topic"
 msgstr "Create topic"
+
+msgid "Re"
+msgstr "Re: "
