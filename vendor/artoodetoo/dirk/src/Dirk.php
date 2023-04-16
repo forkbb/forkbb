@@ -33,6 +33,9 @@ class Dirk extends PhpEngine
         'Echos',
     ];
 
+    protected $shortID = '';
+    protected $shortArr = [];
+
     /**
      * Prepare file to include
      * @param  string $name
@@ -42,11 +45,16 @@ class Dirk extends PhpEngine
     {
         $name = \str_replace('.', '/', $name);
         $tpl  = $this->views . '/' . $name . $this->ext;
-        $php  = $this->cache . '/' . \sha1($name) . '.php';
+        $sha1 = \sha1($name);
+        $php  = $this->cache . '/' . $sha1 . '.php';
+
         if (
             ! \file_exists($php)
             || \filemtime($tpl) > \filemtime($php)
         ) {
+            $this->shortArr[] = $this->shortID;
+            $this->shortID    = \substr($sha1, 0, 4);
+
             $text = \file_get_contents($tpl);
 
             foreach ($this->compilers as $type) {
@@ -54,6 +62,8 @@ class Dirk extends PhpEngine
             }
 
             \file_put_contents($php, $text);
+
+            $this->shortID    = \array_pop($this->shortArr);
         }
 
         return $php;
@@ -279,6 +289,8 @@ class Dirk extends PhpEngine
         return "<?php endfor; ?>";
     }
 
+    protected $loopsCounter = 0;
+
     /**
      * Compile the foreach statements
      *
@@ -287,7 +299,11 @@ class Dirk extends PhpEngine
      */
     protected function compileForeach(string $expression): string
     {
-        return "<?php foreach {$expression}: ?>";
+        ++$this->loopsCounter;
+
+        return "<?php \$__iter{$this->shortID}_{$this->loopsCounter} = 0; "
+             . "foreach {$expression}: "
+             . "++\$__iter{$this->shortID}_{$this->loopsCounter} ?>";
     }
 
     /**
@@ -297,10 +313,16 @@ class Dirk extends PhpEngine
      */
     protected function compileEndforeach(): string
     {
+        --$this->loopsCounter;
+
         return "<?php endforeach; ?>";
     }
 
-    protected $emptyCounter = 0;
+    protected function compileIteration(): string
+    {
+        return "((int) \$__iter{$this->shortID}_{$this->loopsCounter})";
+    }
+
     /**
      * Compile the forelse statements
      *
@@ -309,11 +331,11 @@ class Dirk extends PhpEngine
      */
     protected function compileForelse(string $expression): string
     {
-        $this->emptyCounter++;
+        ++$this->loopsCounter;
 
-        return "<?php \$__empty_{$this->emptyCounter} = true; "
-              . "foreach {$expression}: "
-              . "\$__empty_{$this->emptyCounter} = false;?>";
+        return "<?php \$__iter{$this->shortID}_{$this->loopsCounter} = 0; "
+             . "foreach {$expression}: "
+             . "++\$__iter{$this->shortID}_{$this->loopsCounter} ?>";
     }
 
     /**
@@ -331,8 +353,9 @@ class Dirk extends PhpEngine
         ) {
             return "<?php if (empty{$expression}): ?>";
         } else {
-            $s = "<?php endforeach; if (\$__empty_{$this->emptyCounter}): ?>";
-            $this->emptyCounter--;
+            $s = "<?php endforeach; if (0 === \$__iter{$this->shortID}_{$this->loopsCounter}): ?>";
+
+            --$this->loopsCounter;
 
             return $s;
         }

@@ -94,7 +94,6 @@ Conditionals
   * *@empty(condition)* - Starts an empty block
   * *@endempty*
 
-
 Loops
   * *@foreach($list as $key => $val)* - Starts a foreach block
   * *@endforeach*
@@ -105,6 +104,8 @@ Loops
   * *@endfor*
   * *@while(condition)* - Starts a while block
   * *@endwhile*
+  * Loop variables (for *@foreach* and *@forelse*):
+    * *@iteration* = *$loop->iteration*
 
 Inheritance and sections
   * *@include(file)* - Includes another template
