@@ -18,7 +18,7 @@
     </section>
 @endif
 @if ($p->posts)
-    <section id="f-view-posts" class="f-pm">
+    <section id="fork-view-posts" class="f-pm">
       <h2>{!! __($p->postsTitle) !!}</h2>
     @foreach ($p->posts as $post)
         @if ($post->id)

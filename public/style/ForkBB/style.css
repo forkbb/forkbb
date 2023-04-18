@@ -1424,7 +1424,7 @@ body,
 }
 
 #fork-topic .f-phead-h3,
-#f-view-posts .f-phead-h3 {
+#fork-view-posts .f-phead-h3 {
   display: none;
 }
 
@@ -1503,7 +1503,7 @@ body,
   border-bottom: 0.0625rem solid #43b581;
 }
 
-#f-view-posts .f-username {
+#fork-view-posts .f-username {
   border-bottom: 0;
 }
 
@@ -1905,13 +1905,13 @@ body,
   margin-bottom: 1rem;
 }
 
-#fork #f-view-posts {
+#fork #fork-view-posts {
   margin-bottom: 1rem;
   margin-top: -1rem;
 }
 
 #fork .f-post-form > h2,
-#fork #f-view-posts > h2 {
+#fork #fork-view-posts > h2 {
   display: block;
   font-size: 1rem;
   padding: 1rem 0.625rem 0.3125rem;
