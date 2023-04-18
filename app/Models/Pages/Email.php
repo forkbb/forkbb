@@ -125,7 +125,8 @@ class Email extends Page
 
         $this->nameTpl   = 'email';
         $this->robots    = 'noindex';
-        $this->crumbs    = $this->crumbs([null, ['Send email to %s', $this->curUser->username]]);
+        $this->legend    = ['Send email to %s', $this->curUser->username];
+        $this->crumbs    = $this->crumbs([null, $this->legend]);
         $this->form      = $this->formEmail($args, $data);
 
         return $this;
@@ -144,7 +145,7 @@ class Email extends Page
             ],
             'sets'   => [
                 'send-email' => [
-                    'legend' => ['Send email to %s', $this->curUser->username],
+                    'legend' => $this->legend,
                     'fields' => [
                         'subject' => [
                             'type'      => 'text',

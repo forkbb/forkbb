@@ -21,6 +21,16 @@
     @endif
 @endsection
 @extends ('layouts/main')
+    <div class="f-mheader">
+    @if (\is_array($p->model->name))
+      <h1 id="fork-h1">{!! __($p->model->name) !!}</h1>
+    @else
+      <h1 id="fork-h1">{{ $p->model->forum_name or $p->model->name }}</h1>
+    @endif
+    @if ('' != $p->model->forum_desc)
+      <p class="f-fdesc">{!! $p->model->forum_desc !!}</p>
+    @endif
+    </div>
 @if ($forums = $p->model->subforums)
     <div class="f-nav-links">
     @yield ('crumbs')
@@ -58,11 +68,7 @@
     </div>
 @if ($p->topics)
     <section id="fork-forum" class="f-main">
-    @if (\is_array($p->model->name))
-      <h2>{!! __($p->model->name) !!}</h2>
-    @else
-      <h2>{{ $p->model->forum_name or $p->model->name }}</h2>
-    @endif
+      <h2>{!! __('Topic list') !!}</h2>
       <div class="f-ftlist">
         <ol class="f-table">
           <li hidden class="f-row f-thead" value="0">

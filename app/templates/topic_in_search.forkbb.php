@@ -21,6 +21,9 @@
     @endif
 @endsection
 @extends ('layouts/main')
+    <div class="f-mheader">
+      <h1 id="fork-h1">{!! __($p->model->name) !!}</h1>
+    </div>
     <div class="f-nav-links">
 @yield ('crumbs')
 @if ($p->model->pagination)
@@ -30,7 +33,7 @@
 @endif
     </div>
     <section id="fork-topic-ins" class="f-main">
-      <h2>{!! __($p->model->name) !!}</h2>
+      <h2>{!! __('Post list') !!}</h2>
 @foreach ($p->posts as $id => $post)
     @if (empty($post->id) && $iswev = ['e' => [['Message %s was not found in the database', $id]]])
         @include ('layouts/iswev')

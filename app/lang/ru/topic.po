@@ -107,3 +107,6 @@ msgstr "Получать уведомления о новых сообщения
 
 msgid "Unsubscribe topic"
 msgstr "Отказаться от получения уведомлений о новых сообщениях"
+
+msgid "Post list"
+msgstr "Сообщения"

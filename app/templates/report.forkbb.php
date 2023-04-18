@@ -1,13 +1,15 @@
 @include ('layouts/crumbs')
 @extends ('layouts/main')
+    <div class="f-mheader">
+      <h1 id="fork-h1">{!! __('Report post') !!}</h1>
+    </div>
     <div class="f-nav-links">
 @yield ('crumbs')
     </div>
 @if ($form = $p->form)
-    <section id="fork-report" class="f-post-form">
-      <h2>{!! __('Report post') !!}</h2>
+    <div id="fork-report" class="f-post-form">
       <div class="f-fdiv">
     @include ('layouts/form')
       </div>
-    </section>
+    </div>
 @endif

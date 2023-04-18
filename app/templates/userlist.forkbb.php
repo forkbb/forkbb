@@ -21,6 +21,9 @@
     @endif
 @endsection
 @extends ('layouts/main')
+    <div class="f-mheader">
+      <h1 id="fork-h1">{!! __('User list') !!}</h1>
+    </div>
     <div class="f-nav-links">
 @yield ('crumbs')
 @if ($p->pagination)

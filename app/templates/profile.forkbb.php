@@ -2,6 +2,9 @@
 @section ('avatar')<img class="f-avatar-img" src="{{ $p->curUser->avatar }}" alt="{{ $p->curUser->username }}"> @endsection
 @section ('signature') @if ($p->signatureSection){!! $p->curUser->htmlSign !!} @endif @endsection
 @extends ('layouts/main')
+    <div class="f-mheader">
+      <h1 id="fork-h1">{!! __(['%s\'s profile', $p->curUser->username]) !!}</h1>
+    </div>
     <div class="f-nav-links">
 @yield ('crumbs')
 @if ($p->actionBtns)
@@ -17,10 +20,9 @@
 @endif
     </div>
 @if ($form = $p->form)
-    <section id="fork-profile" class="f-main">
-      <h2>{!! __(['%s\'s profile', $p->curUser->username]) !!}</h2>
+    <div id="fork-profile" class="f-main">
       <div class="f-fdiv">
     @include ('layouts/form')
       </div>
-    </section>
+    </div>
 @endif

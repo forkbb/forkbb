@@ -146,7 +146,8 @@ body,
 
 #fork main {
   order: 2;
-  display: block;
+  /*display: flex;
+  flex-direction: column;*/
 }
 
 #fork b,
@@ -224,6 +225,36 @@ body,
   background-color: #AA7939;
 }
 
+#fork #fork-h1,
+#fork #id-fhth1,
+#fork .f-category .f-ftch2,
+#fork .f-category .f-finfo-h3,
+#fork .f-fsub {
+  font-family: Avenir, "Avenir Next LT Pro", Montserrat, Corbel, "URW Gothic", source-sans-pro, sans-serif;
+}
+
+#fork #fork-h1 {
+  font-size: 1.5rem;
+  font-style: italic;
+  line-height: 1.1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#fork .f-mheader {
+  padding: 0.625rem;
+  margin-top: 0.625rem;
+  border: 0.0625rem solid #814A00;
+  background-color: #E0C8B3; /*#DABCA0; #D3B58D;*/
+}
+
+@media screen and (min-width: 34.0625rem) {
+  #fork #fork-h1 {
+    font-size: 1.75rem;
+  }
+}
+
 #fork section > h2,
 #fork aside > h2 {
   display: none;
@@ -241,15 +272,12 @@ body,
 #fork #id-fhth1,
 #fork .f-category .f-finfo-h3,
 #fork .f-fsub {
-  font-family: Avenir, "Avenir Next LT Pro", Montserrat, Corbel, "URW Gothic", source-sans-pro, sans-serif;;
   font-weight: bold;
   font-style: italic;
 }
 
 #fork .f-category .f-ftch2 {
-  font-family: Avenir, "Avenir Next LT Pro", Montserrat, Corbel, "URW Gothic", source-sans-pro, sans-serif;;
   font-size: 1.5rem;
-  font-style: normal;
 }
 
 #fork .f-category .f-finfo-h3 {
@@ -905,13 +933,13 @@ body,
   content: " /";
 }
 
-#fork .f-crumb-a:not(.active) {
+/*#fork .f-crumb-a:not(.active) {
   border-bottom: 0.0625rem solid;
-}
+}*/
 
-#fork .f-crumb-a.active {
+/*#fork .f-crumb-a.active {
   font-weight: bold;
-}
+}*/
 
 #fork .f-subscribed > .f-crumb-a::after {
   display: inline;
@@ -1440,7 +1468,7 @@ body,
 
 #fork-topic .f-post-edited {
   font-style: italic;
-  opacity: 0.5;
+  /*opacity: 0.5;*/
 }
 
 #fork .f-post-number {
@@ -1641,7 +1669,7 @@ body,
 }
 
 #fork .f-bb-after {
-  opacity: 0.5;
+  /*opacity: 0.5;*/
   font-style: italic;
   font-size: 0.875rem;
   padding-top: 0.625rem;
@@ -2150,6 +2178,10 @@ body,
 /**********/
 /* Репорт */
 /**********/
+#fork-report.f-post-form {
+  border-top: 0;
+}
+
 #id-fs-report .f-fleg {
   display: none;
 }

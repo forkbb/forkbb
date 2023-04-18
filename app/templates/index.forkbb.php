@@ -1,6 +1,9 @@
 @extends ('layouts/main')
 @if ($p->categoryes)
-    <section class="f-main">
+    <div class="f-mheader">
+      <h1 id="fork-h1">{!! __('Forum list') !!}</h1>
+    </div>
+    <div class="f-main">
       <ol class="f-ftlist">
     @foreach ($p->categoryes as $id => $forums)
         <li id="cat-{{ $id }}" class="f-category">
@@ -16,7 +19,7 @@
         </li>
     @endforeach
       </ol>
-    </section>
+    </div>
     @if ($p->linkMarkRead)
     <div class="f-nav-links">
       <div class="f-nlinks">

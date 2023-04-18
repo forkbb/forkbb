@@ -41,3 +41,6 @@ msgstr "Получать уведомления о новых темах по э
 
 msgid "Unsubscribe forum"
 msgstr "Отказаться от получения уведомлений о новых темах"
+
+msgid "Topic list"
+msgstr "Список тем"

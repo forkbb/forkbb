@@ -47,3 +47,6 @@ msgstr "Информация о пользователях"
 
 msgid "Visitors online"
 msgstr "Сейчас пользователей: <b>%1$s</b>, гостей: <b>%2$s</b>."
+
+msgid "Forum list"
+msgstr "Список разделов"

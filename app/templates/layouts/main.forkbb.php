@@ -15,7 +15,7 @@
 <body>
   <div id="fork" @if ($p->fNavigation) class="f-with-nav" @endif>
     <header id="fork-header">
-      <h1 id="id-fhth1"><a id="id-fhtha" rel="home" href="{{ $p->fRootLink }}">{{ $p->fTitle }}</a></h1>
+      <p id="id-fhth1"><a id="id-fhtha" rel="home" href="{{ $p->fRootLink }}">{{ $p->fTitle }}</a></p>
 @if ('' != $p->fDescription)
       <p id="id-fhtdesc">{!! $p->fDescription !!}</p>
 @endif

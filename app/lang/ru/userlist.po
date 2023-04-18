@@ -28,7 +28,7 @@ msgid "All users"
 msgstr "< Все >"
 
 msgid "User_list"
-msgstr "Список пользователей"
+msgstr "Отсортированные/найденные пользователи"
 
 msgid "<b>%s</b><small> post,</small>"
 msgid_plural "<b>%s</b><small> posts,</small>"

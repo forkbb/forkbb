@@ -41,3 +41,6 @@ msgstr "Receive email notification of new topics"
 
 msgid "Unsubscribe forum"
 msgstr "Unsubscribe from email notifications of new topics"
+
+msgid "Topic list"
+msgstr "Topic list"
