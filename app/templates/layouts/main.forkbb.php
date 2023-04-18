@@ -20,7 +20,19 @@
       <p id="id-fhtdesc">{!! $p->fDescription !!}</p>
 @endif
     </header>
- @if ($p->fNavigation)
+    <main>
+@if ($p->fAnnounce)
+    <aside id="fork-announce">
+      <p class="f-sim-header">{!! __('Announcement') !!}</p>
+      <p id="id-facontent">{!! $p->fAnnounce !!}</p>
+    </aside>
+@endif
+@if ($iswev = $p->fIswev)
+    @include ('layouts/iswev')
+@endif
+@yield ('content')
+    </main>
+@if ($p->fNavigation)
     <nav id="fork-nav" class="f-menu @if ($p->fNavigation['search']) f-main-nav-search @endif">
       <div id="fork-navdir">
         <input id="id-mn-checkbox" class="f-menu-checkbox" type="checkbox">
@@ -78,18 +90,6 @@
       </div>
     </nav>
 @endif
-    <main>
-@if ($p->fAnnounce)
-    <aside id="fork-announce">
-      <p class="f-sim-header">{!! __('Announcement') !!}</p>
-      <p id="id-facontent">{!! $p->fAnnounce !!}</p>
-    </aside>
-@endif
-@if ($iswev = $p->fIswev)
-    @include ('layouts/iswev')
-@endif
-@yield ('content')
-    </main>
     <footer id="fork-footer">
       <p class="f-sim-header">{!! __('Board footer') !!}</p>
       <div id="fork-footer-in">

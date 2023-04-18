@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="refresh" content="{{ $p->timeout }};URL={{ $p->link }}">
+  <meta http-equiv="refresh" content="{{ $p->timeout }}; URL={{ $p->link }}">
   <title>{!! \htmlspecialchars($p->pageTitle, \ENT_HTML5 | \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8', false) !!}</title>
 @foreach ($p->pageHeaders as $pageHeader)
     @if ('style' === $pageHeader['type'])
@@ -22,7 +22,9 @@
         <p class="f-rdrct-p"><a href="{{ $p->link }}">{!! __('Click redirect') !!}</a></p>
       </section>
     </main>
+    <footer id="fork-footer">
 <!-- debuginfo -->
+    </footer>
   </div>
 </body>
 </html>

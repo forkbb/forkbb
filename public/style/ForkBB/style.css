@@ -145,6 +145,7 @@ body,
 }
 
 #fork main {
+  order: 2;
   display: block;
 }
 
@@ -409,6 +410,7 @@ body,
 /* Главное меню */
 /****************/
 #fork #fork-nav {
+  order: 1;
   border-bottom: 0.0625rem solid #AA7939;
 }
 
@@ -567,7 +569,7 @@ body,
 /* Шапка */
 /*********/
 #fork #fork-header {
-  /* background-color: #AA7939; */
+  order: 0;
   border-bottom: 0.0625rem solid #AA7939;
 }
 
@@ -830,6 +832,10 @@ body,
 /**********/
 /* Подвал */
 /**********/
+#fork #fork-footer {
+  order: 3;
+}
+
 #fork #fork-footer-in {
   border-bottom: 0.0625rem solid #AA7939;
   border-top: 0.0625rem solid #AA7939;
@@ -2736,7 +2742,6 @@ body,
   }
 
   #fork.f-with-nav #fork-header {
-    order: 0;
     width: 100%;
     border-bottom-width: 0.125rem;
   }
@@ -2756,7 +2761,6 @@ body,
   }
 
   #fork.f-with-nav #fork-footer {
-    order: 3;
     width: 100%;
   }
 
