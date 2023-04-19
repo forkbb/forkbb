@@ -916,7 +916,7 @@ body,
 
 #fork .f-crumbs {
   padding: 0 0.625rem;
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 
 #fork .f-crumb {
@@ -1006,6 +1006,14 @@ body,
 
 #fork .f-pinfo {
   display: none;
+}
+
+@media screen and (max-width: 49.9999rem) {
+  .f-nav-links > nav {
+    white-space: nowrap;
+    overflow-x: auto;
+    width: 100%;
+  }
 }
 
 @media screen and (min-width: 50rem) {
