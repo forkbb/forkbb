@@ -1,5 +1,8 @@
 @include ('layouts/crumbs')
 @extends ('layouts/main')
+    <div class="f-mheader">
+      <h1 id="fork-h1">{!! __($p->pmHeader) !!}</h1>
+    </div>
     <div class="f-nav-links f-nav-pm-links">
 @yield ('crumbs')
     </div>

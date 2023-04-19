@@ -205,7 +205,10 @@ abstract class AbstractPM extends Page
         }
 
         $crumbs[] = [$this->c->Router->link('PM'), 'PM'];
+        $result   = parent::crumbs(...$crumbs);
 
-        return parent::crumbs(...$crumbs);
+        $this->pmHeader = \end($result)[1];
+
+        return $result;
     }
 }

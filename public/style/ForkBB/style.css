@@ -234,7 +234,8 @@ body,
 }
 
 #fork #fork-h1 {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
+  font-size: clamp(1.25rem, 5vw, 1.75rem);
   font-style: italic;
   line-height: 1.1;
   overflow: hidden;
@@ -247,12 +248,6 @@ body,
   margin-top: 0.625rem;
   border: 0.0625rem solid #814A00;
   background-color: #E0C8B3; /*#DABCA0; #D3B58D;*/
-}
-
-@media screen and (min-width: 34.0625rem) {
-  #fork #fork-h1 {
-    font-size: 1.75rem;
-  }
 }
 
 #fork section > h2,
@@ -605,6 +600,7 @@ body,
   width: calc(100% - 4rem);
   padding: 0.625rem;
   font-size: 2rem;
+  font-size: clamp(1.5rem, 5vw, 2rem);
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

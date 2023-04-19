@@ -1,5 +1,8 @@
 @include ('layouts/crumbs')
 @extends ('layouts/main')
+    <div class="f-mheader">
+      <h1 id="fork-h1">{!! __($p->adminHeader) !!}</h1>
+    </div>
     <div class="f-nav-links f-nav-admin{{ $p->mainSuffix or '' }}-links">
 @yield ('crumbs')
     </div>
