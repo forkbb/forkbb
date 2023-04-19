@@ -317,3 +317,6 @@ msgstr "Пользователь заблокирован."
 
 msgid "User is unblocked redirect"
 msgstr "Пользователь разблокирован."
+
+msgid "PM menu"
+msgstr "Меню личных сообщений"

@@ -317,3 +317,6 @@ msgstr "User is blocked."
 
 msgid "User is unblocked redirect"
 msgstr "User is unblocked."
+
+msgid "PM menu"
+msgstr "Private messages menu"
