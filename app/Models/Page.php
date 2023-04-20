@@ -514,22 +514,36 @@ abstract class Page extends Model
 
     /**
      * Возвращает url для $path заданного в каталоге public
+     * Если для файла name.ext есть файл name.min.ext, то url возвращается для него
      * Ведущий слеш обязателен O_o
      */
     public function publicLink(string $path, bool $returnEmpty = false): string
     {
-        $fullPath = $this->c->DIR_PUBLIC . $path;
-
-        if (\is_file($fullPath)) {
-            $time = \filemtime($fullPath) ?: '0';
-
-            if (\preg_match('%^(.+)\.([^.\\/]++)$%D', $path, $matches)) {
-                return $this->c->PUBLIC_URL . "{$matches[1]}.v.{$time}.{$matches[2]}";
-            }
-        } elseif ($returnEmpty) {
-            return '';
+        if (\preg_match('%^(.+)(\.[^.\\/]++)$%D', $path, $matches)) {
+            $variants = [
+                $matches[1] . '.min' => $matches[2],
+                $matches[1]          => $matches[2],
+            ];
+        } else {
+            $variants = [
+                $path                => '',
+            ];
         }
 
-        return $this->c->PUBLIC_URL . $path;
+        foreach ($variants as $start => $end) {
+            $fullPath = $this->c->DIR_PUBLIC . $start . $end;
+
+            if (\is_file($fullPath)) {
+                if ('' === $end) {
+                    return $this->c->PUBLIC_URL . $start;
+                } else {
+                    $time = \filemtime($fullPath) ?: '0';
+
+                    return $this->c->PUBLIC_URL . $start . '.v.' . $time . $end;
+                }
+            }
+        }
+
+        return $returnEmpty ? '' : $this->c->PUBLIC_URL . $path;
     }
 }
