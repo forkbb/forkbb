@@ -203,10 +203,10 @@
     </div>
 @endif
 @if ($p->enableMod && $form = $p->formMod)
-    <section id="fork-mod" class="f-moderate">
+    <aside id="fork-mod" class="f-moderate">
       <h2>{!! __('Moderate') !!}</h2>
       <div class="f-fdivm">
     @include ('layouts/form')
       </div>
-    </section>
+    </aside>
 @endif

@@ -20,7 +20,7 @@
       <p id="id-fhtdesc">{!! $p->fDescription !!}</p>
 @endif
     </header>
-    <main>
+    <main id="fork-main">
 @if ($p->fAnnounce)
     <aside id="fork-announce">
       <p class="f-sim-header">{!! __('Announcement') !!}</p>

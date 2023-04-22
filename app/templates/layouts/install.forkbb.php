@@ -18,7 +18,7 @@
       <h1 id="id-fhth1"><span id="id-fhtha">{!! __('ForkBB Installation') !!}</span></h1>
       <p id="id-fhtdesc">{!! __('Welcome') !!}</p>
     </header>
-    <main>
+    <main id="fork-main">
 @if ($iswev = $p->fIswev)
     @include ('layouts/iswev')
 @endif

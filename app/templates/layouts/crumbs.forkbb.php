@@ -1,5 +1,5 @@
 @section ('crumbs')
-      <nav>
+      <nav class="f-nav-crumbs">
         <ol class="f-crumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
     @foreach ($p->crumbs as $cur)
         @if (\is_object($cur[0]))

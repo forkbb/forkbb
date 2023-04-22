@@ -144,12 +144,6 @@ body,
   }
 }
 
-#fork main {
-  order: 2;
-  /*display: flex;
-  flex-direction: column;*/
-}
-
 #fork b,
 #fork strong {
   font-weight: bold;
@@ -245,7 +239,6 @@ body,
 
 #fork .f-mheader {
   padding: 0.625rem;
-  margin-top: 0.625rem;
   border: 0.0625rem solid #814A00;
   background-color: #E0C8B3; /*#DABCA0; #D3B58D;*/
 }
@@ -624,7 +617,6 @@ body,
 @media screen and (min-width: 50rem) {
   #fork #id-fhth1 {
     width: 100%;
-    /* padding: 0.625rem; */
     overflow: auto;
     white-space: normal;
   }
@@ -633,10 +625,6 @@ body,
 /*********/
 /* iswev */
 /*********/
-#fork main > .f-iswev-wrap {
-  margin: 1rem 0;
-}
-
 #fork .f-iswev {
   border: 0.0625rem solid;
   padding: 0.625rem;
@@ -910,13 +898,12 @@ body,
 /******************/
 /* Хлебные крошки */
 /******************/
-#fork .f-nav-links {
-  margin: 1rem 0;
+#fork .f-nav-crumbs {
+  padding: 0 0.625rem;
 }
 
 #fork .f-crumbs {
-  padding: 0 0.625rem;
-  /*overflow: hidden;*/
+  overflow: hidden;
 }
 
 #fork .f-crumb {
@@ -928,14 +915,6 @@ body,
   color: #583200;
   content: " /";
 }
-
-/*#fork .f-crumb-a:not(.active) {
-  border-bottom: 0.0625rem solid;
-}*/
-
-/*#fork .f-crumb-a.active {
-  font-weight: bold;
-}*/
 
 #fork .f-subscribed > .f-crumb-a::after {
   display: inline;
@@ -1009,10 +988,9 @@ body,
 }
 
 @media screen and (max-width: 49.9999rem) {
-  .f-nav-links > nav {
+  #fork .f-crumbs {
     white-space: nowrap;
     overflow-x: auto;
-    width: 100%;
   }
 }
 
@@ -1027,8 +1005,22 @@ body,
 /********/
 /* Тело */
 /********/
+#fork #fork-main {
+  order: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#fork-main > :first-child:not(#fork-announce) {
+  margin-top: 1rem;
+}
+
+#fork-main > :last-child:not(aside) {
+  margin-bottom: 1rem;
+}
+
 #fork .f-main {
-  margin: 1rem 0;
   position: relative;
 }
 
@@ -1080,6 +1072,10 @@ body,
   border-top: 0.0625rem solid #AA7939;
   font-size: 0.875rem;
   padding: 0.3125rem 0;
+}
+
+#fork #fork-stats:not(:last-child) {
+  margin-bottom: -1rem;
 }
 
 #fork-stats .f-stats-dt {
@@ -1135,7 +1131,7 @@ body,
 /* Логин/Регистрация */
 /*********************/
 #fork .f-lrdiv {
-  margin: 1rem auto;
+  margin: 0 auto;
   max-width: 20rem;
   border-radius: 0.1875rem;
 }
@@ -1163,7 +1159,7 @@ body,
   background-color: #F8F4E3;
 }
 
-#fork .f-ftlist .f-category {
+#fork .f-category + .f-category {
   margin-top: 0.625rem;
 }
 
@@ -1345,10 +1341,6 @@ body,
 /********************/
 /* Страница раздела */
 /********************/
-#fork #fork-subforums {
-  margin: 1rem 0;
-}
-
 #fork-subforums .f-ftch2 {
   display: none;
 }
@@ -1445,7 +1437,6 @@ body,
   border-top: 0.0625rem solid #AA7939;
   border-bottom: 0.0625rem solid #AA7939;
   position: relative;
-  /* background-color: #FFFFFF; */
 }
 
 #fork .f-post + .f-post {
@@ -1921,14 +1912,13 @@ body,
 /****************/
 #fork .f-preview {
   border-top: 0.0625rem solid #AA7939;
-  margin-bottom: 1rem;
 }
 
 #fork .f-preview > h2 {
   display: block;
   font-size: 1rem;
   line-height: 1.5;
-  padding: 1rem 0.625rem 0.3125rem;
+  padding: 0.625rem 0.3125rem;
 }
 
 #fork .f-preview .f-post-body {
@@ -1940,11 +1930,9 @@ body,
 /*****************************/
 #fork .f-post-form {
   border-top: 0.0625rem solid #AA7939;
-  margin-bottom: 1rem;
 }
 
 #fork #fork-view-posts {
-  margin-bottom: 1rem;
   margin-top: -1rem;
 }
 
@@ -1952,7 +1940,7 @@ body,
 #fork #fork-view-posts > h2 {
   display: block;
   font-size: 1rem;
-  padding: 1rem 0.625rem 0.3125rem;
+  padding: 0.625rem 0.3125rem;
 }
 
 #fork .f-post-form > .f-fdiv {
@@ -2203,6 +2191,10 @@ body,
 #fork #fork-mod {
   border-top: 0.0625rem solid #AA7939;
   position: relative;
+}
+
+#fork #fork-mod:not(:last-child) {
+  margin-bottom: -1rem;
 }
 
 #fork-mod .f-fdivm {
@@ -2635,6 +2627,12 @@ body,
 /***********************/
 /* Приватные сообщения */
 /***********************/
+#fork #forkpm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 #fork .f-mi-pmoff {
   opacity: 0.4;
 }
@@ -2782,7 +2780,7 @@ body,
     border-bottom-width: 0.125rem;
   }
 
-  #fork.f-with-nav main {
+  #fork.f-with-nav #fork-main {
     order: 1;
     width: calc(100% - 17rem);
   }
@@ -2799,11 +2797,6 @@ body,
   #fork.f-with-nav #fork-footer {
     width: 100%;
   }
-
-  /* #fork.f-with-nav #fork-debug {
-    order: 4;
-    width: 100%;
-  } */
 
   #fork.f-with-nav #fork-navdir {
     position: sticky;
