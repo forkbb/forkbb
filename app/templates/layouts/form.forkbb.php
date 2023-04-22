@@ -28,7 +28,7 @@
                 <textarea @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl f-ytxtarea" id="id-{{ $key }}" name="{{ $key }}" @if ($cur['data']) @foreach ($cur['data'] as $k => $v) data-{{ $k }}="{{ $v }}" @endforeach @endif>{{ $cur['value'] or '' }}</textarea>
                 @elseif ('select' === $cur['type'])
                 <select @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}">
-                    @if (null === ($count = null) && \is_array(\reset($cur['options'])) && 1 === \count(\reset($cur['options'])) && $count = 0) @endif
+                    @if (!($count = null) && \is_array(\reset($cur['options'])) && 1 === \count(\reset($cur['options'])) && ($count = 0)) @endif
                     @foreach ($cur['options'] as $v => $option)
                         @if (\is_array($option))
                             @if (null !== $count && 1 === \count($option))
@@ -49,7 +49,7 @@
                 </select>
                 @elseif ('multiselect' === $cur['type'])
                 <select @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif @if ($cur['size']) size="{{ $cur['size'] }}" @endif multiple class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}[]">
-                    @if (null === ($count = null) && \is_array(\reset($cur['options'])) && 1 === \count(\reset($cur['options'])) && $count = 0) @endif
+                    @if (!($count = null) && \is_array(\reset($cur['options'])) && 1 === \count(\reset($cur['options'])) && ($count = 0)) @endif
                     @foreach ($cur['options'] as $v => $option)
                         @if (\is_array($option))
                             @if (null !== $count && 1 === \count($option))
