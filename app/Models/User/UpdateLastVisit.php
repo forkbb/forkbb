@@ -26,12 +26,12 @@ class UpdateLastVisit extends Action
         }
         if ($user->logged > 0) {
             $vars = [
-                ':loggid' => $user->logged,
+                ':logged' => $user->logged,
                 ':id'     => $user->id,
             ];
             $query = 'UPDATE ::users
-                SET last_visit=?i:loggid
-                WHERE id=?i:id';
+                SET last_visit=?i:logged
+                WHERE id=?i:id AND last_visit<?i:logged';
 
             $this->c->DB->exec($query, $vars);
             $user->__last_visit = $user->logged;
