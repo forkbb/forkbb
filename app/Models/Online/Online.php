@@ -112,10 +112,6 @@ class Online extends Model
 
         $stmt = $this->c->DB->query($query);
 
-        $query = 'UPDATE ::users
-            SET last_visit=?i:last
-            WHERE id=?i:id';
-
         while ($cur = $stmt->fetch()) {
             $this->visits[$cur['user_id']] = $cur['logged'];
 
@@ -125,12 +121,13 @@ class Online extends Model
                     $needClean = true;
 
                     if ($cur['user_id'] > 0) {
-                        $vars = [
-                            ':last' => $cur['logged'],
-                            ':id'   => $cur['user_id'],
-                        ];
-
-                        $this->c->DB->exec($query, $vars);
+                        $this->c->users->updateLastVisit(
+                            $this->c->users->create([
+                                'id'       => $cur['user_id'],
+                                'group_id' => FORK_GROUP_MEMBER,
+                                'logged'   => $cur['logged'],
+                            ])
+                        );
                     }
                 }
 
