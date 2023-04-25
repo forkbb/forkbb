@@ -216,7 +216,7 @@ body,
 }
 
 #fork select:not([multiple]) option {
-  background-color: #AA7939;
+  background-color: #FFEBCD;
 }
 
 #fork #fork-h1,
