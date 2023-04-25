@@ -27,7 +27,7 @@ class Update extends Admin
     const REV_MIN_FOR_UPDATE         = 42;
     const LATEST_REV_WITH_DB_CHANGES = 53;
     const LOCK_NAME                  = 'lock_update';
-    const LOCk_TTL                   = 1800;
+    const LOCK_TTL                   = 1800;
     const JSON_OPTIONS               = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
     const CONFIG_FILE                = 'main.php';
 
@@ -118,7 +118,7 @@ class Update extends Admin
             $uid = $this->c->Secury->randomHash(33);
         }
 
-        $this->c->Cache->set(self::LOCK_NAME, $uid, self::LOCk_TTL);
+        $this->c->Cache->set(self::LOCK_NAME, $uid, self::LOCK_TTL);
 
         if (true === $this->hasLock($uid)) {
             return null;
