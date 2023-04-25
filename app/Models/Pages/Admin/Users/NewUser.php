@@ -56,7 +56,6 @@ class NewUser extends Users
                     $user->u_mark_all_read = \time();
                     $user->email_setting   = $this->c->config->i_default_email_setting;
                     $user->timezone        = $this->c->config->o_default_timezone;
-                    $user->dst             = $this->c->config->b_default_dst;
                     $user->language        = $this->c->config->o_default_lang;
                     $user->style           = $this->c->config->o_default_style;
                     $user->registered      = \time();

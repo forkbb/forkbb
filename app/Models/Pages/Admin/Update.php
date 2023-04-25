@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '7.3.0';
     const REV_MIN_FOR_UPDATE         = 42;
-    const LATEST_REV_WITH_DB_CHANGES = 52;
+    const LATEST_REV_WITH_DB_CHANGES = 53;
     const LOCK_NAME                  = 'lock_update';
     const LOCk_TTL                   = 1800;
     const JSON_OPTIONS               = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
@@ -800,6 +800,25 @@ class Update extends Admin
             ],
         ];
         $this->c->DB->createTable('::online', $schema);
+
+        return null;
+    }
+
+    /**
+     * rev.52 to rev.53
+     */
+    protected function stageNumber52(array $args): ?int
+    {
+        $this->c->DB->dropField('::users', 'dst');
+        $this->c->DB->alterField('::users', 'timezone', 'VARCHAR(255)', false, \date_default_timezone_get());
+
+        $config = $this->c->config;
+
+        $config->o_default_timezone = \date_default_timezone_get();
+
+        unset($config->b_default_dst);
+
+        $config->save();
 
         return null;
     }

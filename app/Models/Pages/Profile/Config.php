@@ -13,11 +13,15 @@ namespace ForkBB\Models\Pages\Profile;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
+use ForkBB\Models\Pages\TimeZoneTrait;
+use DateTimeZone;
 use function \ForkBB\__;
 use function \ForkBB\dt;
 
 class Config extends Profile
 {
+    use TimeZoneTrait;
+
     /**
      * Подготавливает данные для шаблона настройки форума
      */
@@ -41,8 +45,7 @@ class Config extends Profile
                     'token'         => 'token:EditUserBoardConfig',
                     'language'      => 'required|string:trim|in:' . \implode(',', $this->c->Func->getLangs()),
                     'style'         => 'required|string:trim|in:' . \implode(',', $this->c->Func->getStyles()),
-                    'timezone'      => 'required|numeric|in:-12,-11,-10,-9.5,-9,-8.5,-8,-7,-6,-5,-4,-3.5,-3,-2,-1,0,1,2,3,3.5,4,4.5,5,5.5,5.75,6,6.5,7,8,8.75,9,9.5,10,10.5,11,11.5,12,12.75,13,14',
-                    'dst'           => 'required|integer|in:0,1',
+                    'timezone'      => 'required|string|in:' . \implode(',', DateTimeZone::listIdentifiers()),
                     'time_format'   => 'required|integer|in:' . \implode(',', \array_keys($this->c->TIME_FORMATS)),
                     'date_format'   => 'required|integer|in:' . \implode(',', \array_keys($this->c->DATE_FORMATS)),
                     'show_smilies'  => 'required|integer|in:0,1',
@@ -62,7 +65,6 @@ class Config extends Profile
                     'language'      => 'Language',
                     'style'         => 'Style',
                     'timezone'      => 'Time zone',
-                    'dst'           => 'DST label',
                     'time_format'   => 'Time format',
                     'date_format'   => 'Date format',
                     'show_smilies'  => 'Smilies label',
@@ -186,57 +188,9 @@ class Config extends Profile
                 ],
                 'timezone' => [
                     'type'    => 'select',
-                    'options' => [
-                        '-12'   => __('UTC-12:00'),
-                        '-11'   => __('UTC-11:00'),
-                        '-10'   => __('UTC-10:00'),
-                        '-9.5'  => __('UTC-09:30'),
-                        '-9'    => __('UTC-09:00'),
-                        '-8.5'  => __('UTC-08:30'),
-                        '-8'    => __('UTC-08:00'),
-                        '-7'    => __('UTC-07:00'),
-                        '-6'    => __('UTC-06:00'),
-                        '-5'    => __('UTC-05:00'),
-                        '-4'    => __('UTC-04:00'),
-                        '-3.5'  => __('UTC-03:30'),
-                        '-3'    => __('UTC-03:00'),
-                        '-2'    => __('UTC-02:00'),
-                        '-1'    => __('UTC-01:00'),
-                        '0'     => __('UTC'),
-                        '1'     => __('UTC+01:00'),
-                        '2'     => __('UTC+02:00'),
-                        '3'     => __('UTC+03:00'),
-                        '3.5'   => __('UTC+03:30'),
-                        '4'     => __('UTC+04:00'),
-                        '4.5'   => __('UTC+04:30'),
-                        '5'     => __('UTC+05:00'),
-                        '5.5'   => __('UTC+05:30'),
-                        '5.75'  => __('UTC+05:45'),
-                        '6'     => __('UTC+06:00'),
-                        '6.5'   => __('UTC+06:30'),
-                        '7'     => __('UTC+07:00'),
-                        '8'     => __('UTC+08:00'),
-                        '8.75'  => __('UTC+08:45'),
-                        '9'     => __('UTC+09:00'),
-                        '9.5'   => __('UTC+09:30'),
-                        '10'    => __('UTC+10:00'),
-                        '10.5'  => __('UTC+10:30'),
-                        '11'    => __('UTC+11:00'),
-                        '11.5'  => __('UTC+11:30'),
-                        '12'    => __('UTC+12:00'),
-                        '12.75' => __('UTC+12:45'),
-                        '13'    => __('UTC+13:00'),
-                        '14'    => __('UTC+14:00'),
-                    ],
+                    'options' => $this->createTimeZoneOptions(),
                     'value'   => $this->curUser->timezone,
                     'caption' => 'Time zone',
-                ],
-                'dst' => [
-                    'type'    => 'radio',
-                    'value'   => $this->curUser->dst,
-                    'values'  => $yn,
-                    'caption' => 'DST label',
-                    'help'    => 'DST help',
                 ],
                 'time_format' => [
                     'type'    => 'select',

@@ -141,12 +141,6 @@ msgstr "Hide email address but allow form e-mail"
 msgid "Hide both label"
 msgstr "Hide email address and disallow form email"
 
-msgid "DST label"
-msgstr "Adjust for DST"
-
-msgid "DST help"
-msgstr "Check if daylight savings is in effect (advances times by 1 hour)."
-
 msgid "Topics per page label"
 msgstr "Topics per page"
 

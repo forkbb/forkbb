@@ -13,11 +13,15 @@ namespace ForkBB\Models\Pages\Admin;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin;
+use ForkBB\Models\Pages\TimeZoneTrait;
 use ForkBB\Models\Config\Config;
+use DateTimeZone;
 use function \ForkBB\__;
 
 class Options extends Admin
 {
+    use TimeZoneTrait;
+
     /**
      * Редактирование натроек форума
      */
@@ -39,8 +43,7 @@ class Options extends Admin
                     'token'                   => 'token:AdminOptions',
                     'o_board_title'           => 'required|string:trim|max:255',
                     'o_board_desc'            => 'exist|string:trim,empty|max:65000 bytes|html',
-                    'o_default_timezone'      => 'required|string:trim|in:-12,-11,-10,-9.5,-9,-8.5,-8,-7,-6,-5,-4,-3.5,-3,-2,-1,0,1,2,3,3.5,4,4.5,5,5.5,5.75,6,6.5,7,8,8.75,9,9.5,10,10.5,11,11.5,12,12.75,13,14',
-                    'b_default_dst'           => 'required|integer|in:0,1',
+                    'o_default_timezone'      => 'required|string:trim|in:' . \implode(',', DateTimeZone::listIdentifiers()),
                     'o_default_lang'          => 'required|string:trim|in:' . \implode(',', $this->c->Func->getLangs()),
                     'o_default_style'         => 'required|string:trim|in:' . \implode(',', $this->c->Func->getStyles()),
                     'i_timeout_visit'         => 'required|integer|min:0|max:99999',
@@ -219,58 +222,10 @@ class Options extends Admin
                 ],
                 'o_default_timezone' => [
                     'type'    => 'select',
-                    'options' => [
-                        '-12'   => __('UTC-12:00'),
-                        '-11'   => __('UTC-11:00'),
-                        '-10'   => __('UTC-10:00'),
-                        '-9.5'  => __('UTC-09:30'),
-                        '-9'    => __('UTC-09:00'),
-                        '-8.5'  => __('UTC-08:30'),
-                        '-8'    => __('UTC-08:00'),
-                        '-7'    => __('UTC-07:00'),
-                        '-6'    => __('UTC-06:00'),
-                        '-5'    => __('UTC-05:00'),
-                        '-4'    => __('UTC-04:00'),
-                        '-3.5'  => __('UTC-03:30'),
-                        '-3'    => __('UTC-03:00'),
-                        '-2'    => __('UTC-02:00'),
-                        '-1'    => __('UTC-01:00'),
-                        '0'     => __('UTC'),
-                        '1'     => __('UTC+01:00'),
-                        '2'     => __('UTC+02:00'),
-                        '3'     => __('UTC+03:00'),
-                        '3.5'   => __('UTC+03:30'),
-                        '4'     => __('UTC+04:00'),
-                        '4.5'   => __('UTC+04:30'),
-                        '5'     => __('UTC+05:00'),
-                        '5.5'   => __('UTC+05:30'),
-                        '5.75'  => __('UTC+05:45'),
-                        '6'     => __('UTC+06:00'),
-                        '6.5'   => __('UTC+06:30'),
-                        '7'     => __('UTC+07:00'),
-                        '8'     => __('UTC+08:00'),
-                        '8.75'  => __('UTC+08:45'),
-                        '9'     => __('UTC+09:00'),
-                        '9.5'   => __('UTC+09:30'),
-                        '10'    => __('UTC+10:00'),
-                        '10.5'  => __('UTC+10:30'),
-                        '11'    => __('UTC+11:00'),
-                        '11.5'  => __('UTC+11:30'),
-                        '12'    => __('UTC+12:00'),
-                        '12.75' => __('UTC+12:45'),
-                        '13'    => __('UTC+13:00'),
-                        '14'    => __('UTC+14:00'),
-                    ],
+                    'options' => $this->createTimeZoneOptions(),
                     'value'   => $config->o_default_timezone,
                     'caption' => 'Timezone label',
                     'help'    => 'Timezone help',
-                ],
-                'b_default_dst' => [
-                    'type'    => 'radio',
-                    'value'   => $config->b_default_dst,
-                    'values'  => $yn,
-                    'caption' => 'DST label',
-                    'help'    => 'DST help',
                 ],
                 'o_default_lang' => [
                     'type'    => 'select',
@@ -288,8 +243,6 @@ class Options extends Admin
                 ],
             ],
         ];
-
-        $timestamp = \time() + ($this->user->timezone + $this->user->dst) * 3600;
 
         $form['sets']['timeouts'] = [
             'legend' => 'Timeouts subhead',

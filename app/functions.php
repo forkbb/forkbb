@@ -11,6 +11,8 @@ declare(strict_types=1);
 namespace ForkBB;
 
 use ForkBB\Core\Container;
+use DateTime;
+use DateTimeZone;
 use InvalidArgumentException;
 
 /**
@@ -91,7 +93,7 @@ function num(/* mixed */ $number, int $decimals = 0): string
  */
 function dt(int $arg, bool $dateOnly = false, string $dateFormat = null, string $timeFormat = null, bool $timeOnly = false, bool $noText = false, Container $container = null): string
 {
-    static $c;
+    static $c, $offset;
 
     if (null !== $container) {
         $c = $container;
@@ -102,8 +104,17 @@ function dt(int $arg, bool $dateOnly = false, string $dateFormat = null, string 
         return __('Never');
     }
 
-    $diff = (int) (($c->user->timezone + $c->user->dst) * 3600);
-    $arg += $diff;
+    if (null === $offset) {
+        if (\in_array($c->user->timezone, DateTimeZone::listIdentifiers(), true)) {
+            $dateTimeZone = new DateTimeZone($c->user->timezone);
+            $dateTime     = new DateTime('now', $dateTimeZone);
+            $offset       = $dateTime->getOffset();
+        } else {
+            $offset      = 0;
+        }
+    }
+
+    $arg += $offset;
 
     if (null === $dateFormat) {
         $dateFormat = $c->DATE_FORMATS[$c->user->date_format];
@@ -115,7 +126,7 @@ function dt(int $arg, bool $dateOnly = false, string $dateFormat = null, string 
     $date = \gmdate($dateFormat, $arg);
 
     if (! $noText) {
-        $now = \time() + $diff;
+        $now = \time() + $offset;
 
         if ($date == \gmdate($dateFormat, $now)) {
             $date = __('Today');
