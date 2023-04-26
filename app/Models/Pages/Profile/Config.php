@@ -43,9 +43,21 @@ class Config extends Profile
                     'to_zero' => [$this, 'vToZero'],
                 ])->addRules([
                     'token'         => 'token:EditUserBoardConfig',
-                    'language'      => 'required|string:trim|in:' . \implode(',', $this->c->Func->getLangs()),
-                    'style'         => 'required|string:trim|in:' . \implode(',', $this->c->Func->getStyles()),
-                    'timezone'      => 'required|string|in:' . \implode(',', DateTimeZone::listIdentifiers()),
+                    'language'      => [
+                        'required',
+                        'string:trim',
+                        'in' => $this->c->Func->getLangs(),
+                    ],
+                    'style'         => [
+                        'required',
+                        'string:trim',
+                        'in' => $this->c->Func->getStyles(),
+                    ],
+                    'timezone'      => [
+                        'required',
+                        'string:trim',
+                        'in' => DateTimeZone::listIdentifiers(),
+                    ],
                     'time_format'   => 'required|integer|in:' . \implode(',', \array_keys($this->c->TIME_FORMATS)),
                     'date_format'   => 'required|integer|in:' . \implode(',', \array_keys($this->c->DATE_FORMATS)),
                     'show_smilies'  => 'required|integer|in:0,1',
