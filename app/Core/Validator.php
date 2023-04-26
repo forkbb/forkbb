@@ -172,24 +172,26 @@ class Validator
             }
 
             // перебор правил для текущего поля
-            foreach ($raw as $rule) {
-                $vs   = \explode(':', $rule, 2);
+            foreach ($raw as $name => $rule) {
+                if (! \is_string($name)) {
+                    list($name, $rule) = \array_pad(\explode(':', $rule, 2), 2, '');
+                }
 
-                if (empty($this->validators[$vs[0]])) {
+                if (empty($this->validators[$name])) {
                     try {
-                        $validator = $this->c->{"VL{$vs[0]}"};
+                        $validator = $this->c->{"VL{$name}"};
                     } catch (Exception $e) {
                         $validator = null;
                     }
 
                     if ($validator instanceof RulesValidator) {
-                        $this->validators[$vs[0]] = [$validator, $vs[0]];
+                        $this->validators[$name] = [$validator, $name];
                     } else {
-                        throw new RuntimeException("{$vs[0]} validator not found");
+                        throw new RuntimeException("{$name} validator not found");
                     }
                 }
 
-                $rules[$vs[0]] = $vs[1] ?? '';
+                $rules[$name] = $rule ?? '';
             }
 
             if (isset($suffix)) {
@@ -855,7 +857,7 @@ class Validator
         return $this->vRegex($v, $value, '%[^\x20][\x20][^\x20]%');
     }
 
-    protected function vIn(Validator $v, /* mixed */ $value, string $attr) /* : mixed */
+    protected function vIn(Validator $v, /* mixed */ $value, /* string|array */ $attr) /* : mixed */
     {
         if (! \is_scalar($value)) {
             $value = null;
@@ -863,7 +865,14 @@ class Validator
 
         if (
             null === $value
-            || ! \in_array($value, \explode(',', $attr))
+            || (
+                \is_array($attr)
+                && ! \in_array($value, $attr, true)
+            )
+            || (
+                ! \is_array($attr)
+                && ! \in_array($value, \explode(',', $attr))
+            )
         ) {
             $this->addError('The :alias contains an invalid value');
         }
@@ -871,7 +880,7 @@ class Validator
         return $value;
     }
 
-    protected function vNotIn(Validator $v, /* mixed */ $value, string $attr) /* : mixed */
+    protected function vNotIn(Validator $v, /* mixed */ $value, /* string|array */ $attr) /* : mixed */
     {
         if (! \is_scalar($value)) {
             $value = null;
@@ -879,7 +888,14 @@ class Validator
 
         if (
             null === $value
-            || \in_array($value, \explode(',', $attr))
+            || (
+                \is_array($attr)
+                && \in_array($value, $attr, true)
+            )
+            || (
+                ! \is_array($attr)
+                && \in_array($value, \explode(',', $attr))
+            )
         ) {
             $this->addError('The :alias contains an invalid value');
         }
