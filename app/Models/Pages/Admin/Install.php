@@ -171,8 +171,16 @@ class Install extends Admin
                     'title'         => 'required|string:trim|max:255',
                     'descr'         => 'exist|string:trim,empty|max:65000 bytes|html',
                     'baseurl'       => 'required|string:trim|rtrim_url|max:128',
-                    'defaultlang'   => 'required|string:trim|in:' . \implode(',', $this->c->Func->getLangs()),
-                    'defaultstyle'  => 'required|string:trim|in:' . \implode(',', $this->c->Func->getStyles()),
+                    'defaultlang'   => [
+                        'required',
+                        'string:trim',
+                        'in' => $this->c->Func->getLangs(),
+                    ],
+                    'defaultstyle'  => [
+                        'required',
+                        'string:trim',
+                        'in' => $this->c->Func->getStyles(),
+                    ],
                     'cookie_domain' => 'exist|string:trim|max:128',
                     'cookie_path'   => 'required|string:trim|max:1024',
                     'cookie_secure' => 'required|integer|in:0,1',
