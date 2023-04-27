@@ -22,9 +22,8 @@ class PPost extends DataModel
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'PPost';
+    protected string $cKey = 'PPost';
 
     public function __construct(Container $container)
     {

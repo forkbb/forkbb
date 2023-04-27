@@ -18,9 +18,8 @@ class Polls extends Manager
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'Polls';
+    protected string $cKey = 'Polls';
 
     /**
      * Создает новый опрос

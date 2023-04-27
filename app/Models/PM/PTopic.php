@@ -21,9 +21,8 @@ class PTopic extends DataModel
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'PTopic';
+    protected string $cKey = 'PTopic';
 
     public function __construct(Container $container)
     {

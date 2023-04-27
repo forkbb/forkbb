@@ -15,16 +15,17 @@ use ForkBB\Models\Method;
 use ForkBB\Models\Forum\Forum;
 use ForkBB\Models\Post\Post;
 use PDO;
+use PDOStatement;
 use RuntimeException;
 
 class Execute extends Method
 {
-    protected $queryIdx;
-    protected $queryCJK;
-    protected $sortType;
-    protected $words;
-    protected $stmtIdx;
-    protected $stmtCJK;
+    protected string $queryIdx;
+    protected string $queryCJK;
+    protected int $sortType;
+    protected array $words;
+    protected ?PDOStatement $stmtIdx;
+    protected ?PDOStatement $stmtCJK;
 
     /**
      * Поиск тем/сообщений в соответствии с поисковым запросом

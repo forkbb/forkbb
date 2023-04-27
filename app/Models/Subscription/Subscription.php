@@ -20,26 +20,18 @@ use InvalidArgumentException;
 
 class Subscription extends Model
 {
+    const FORUMS_DATA = 1;
+    const TOPICS_DATA = 2;
+    const ALL_DATA    = 3;
+
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'Subscription';
+    protected string $cKey = 'Subscription';
 
-    /**
-     * @var array
-     */
-    protected $forums;
-
-    /**
-     * @var array
-     */
-    protected $topics;
-
-    /**
-     * @var array
-     */
-    protected $users;
+    protected array $forums;
+    protected array $topics;
+    protected array $users;
 
     /**
      * Проверяет список моделей на форумы/темы
@@ -198,10 +190,6 @@ class Subscription extends Model
 
         return true;
     }
-
-    const FORUMS_DATA = 1;
-    const TOPICS_DATA = 2;
-    const ALL_DATA    = 3;
 
     /**
      * Возвращает информацию по подпискам

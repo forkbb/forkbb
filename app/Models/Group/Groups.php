@@ -17,15 +17,13 @@ class Groups extends Manager
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'Groups';
+    protected string $cKey = 'Groups';
 
     /**
      * Флаг загрузки групп
-     * @var bool
      */
-    protected $flag;
+    protected bool $flag = false;
 
     /**
      * Создает новую модель раздела

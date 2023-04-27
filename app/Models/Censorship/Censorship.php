@@ -17,9 +17,8 @@ class Censorship extends Model
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'Censorship';
+    protected string $cKey = 'Censorship';
 
     /**
      * Загружает список цензуры из кеша/БД

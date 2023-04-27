@@ -19,7 +19,7 @@ class Email extends RulesValidator
     /**
      * Проверяет email
      */
-    public function email(Validator $v, string $email, string $attrs, /* mixed */ $originalUser): ?string
+    public function email(Validator $v, string $email, string $attrs, mixed $originalUser): ?string
     {
         // поле отсутствует
         if ($v->noValue($email)) {

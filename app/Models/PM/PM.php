@@ -25,14 +25,10 @@ class PM extends Model
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'PMS';
+    protected string $cKey = 'PMS';
 
-    /**
-     * @var array
-     */
-    protected $repository;
+    protected array $repository;
 
     public function __construct(Container $container)
     {
@@ -232,7 +228,7 @@ class PM extends Model
      * Инициализирует число приватных тем без фильтра
      * Может использовать фильтр по второму пользователю: id или "username" (именно в кавычках)
      */
-    public function init(/* null|int|string */ $second = null): self
+    public function init(int|string|null $second = null): self
     {
         list(
             $this->idsNew,
@@ -254,7 +250,7 @@ class PM extends Model
     /**
      * Возвращает данные по приватным темам (индексы) любого пользователя
      */
-    public function infoForUser(User $user, /* null|int|string */ $second = null): array
+    public function infoForUser(User $user, int|string|null $second = null): array
     {
         // deleted      // pt_status = PT_DELETED
         // unsent       // pt_status = PT_NOTSENT

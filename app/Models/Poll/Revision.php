@@ -17,15 +17,15 @@ use function \ForkBB\__;
 
 class Revision extends Action
 {
-    protected $error;
-    protected $question;
-    protected $answer;
-    protected $type;
+    protected ?string $error;
+    protected array $question;
+    protected array $answer;
+    protected array $type;
 
     /**
      * Проверяет/нормализует опрос
      */
-    public function revision(Poll $poll, bool $normalize = false) /* : true|string */
+    public function revision(Poll $poll, bool $normalize = false): string|true
     {
         $this->error    = null;
         $this->question = [];

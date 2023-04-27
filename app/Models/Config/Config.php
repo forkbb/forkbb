@@ -17,9 +17,8 @@ class Config extends DataModel
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'Config';
+    protected string $cKey = 'Config';
 
     /**
      * Заполняет модель данными из кеша/БД

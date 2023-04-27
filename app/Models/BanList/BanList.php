@@ -18,9 +18,8 @@ class BanList extends Model
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'BanList';
+    protected string $cKey = 'BanList';
 
     /**
      * Загружает список банов из кеша/БД

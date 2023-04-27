@@ -18,9 +18,8 @@ class BBCodeList extends Model
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'BBCodeList';
+    protected string $cKey = 'BBCodeList';
 
     public function __construct(string $file, Container $container)
     {

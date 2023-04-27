@@ -16,9 +16,8 @@ class Group extends DataModel
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'Group';
+    protected string $cKey = 'Group';
 
     /**
      * Ссылка на страницу редактирования

@@ -20,9 +20,8 @@ class Post extends DataModel
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'Post';
+    protected string $cKey = 'Post';
 
     /**
      * Получение родительской темы

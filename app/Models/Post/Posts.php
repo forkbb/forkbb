@@ -17,9 +17,8 @@ class Posts extends Manager
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'Posts';
+    protected string $cKey = 'Posts';
 
     /**
      * Создает новую модель сообщения

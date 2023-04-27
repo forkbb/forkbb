@@ -29,15 +29,13 @@ abstract class Page extends Model
 
     /**
      * Заголовки страницы
-     * @var array
      */
-    protected $pageHeaders = [];
+    protected array $pageHeaders = [];
 
     /**
      * Http заголовки
-     * @var array
      */
-    protected $httpHeaders = [];
+    protected array $httpHeaders = [];
 
     public function __construct(Container $container)
     {
@@ -311,7 +309,7 @@ abstract class Page extends Model
     /**
      * Задает/получает заголовок страницы
      */
-    public function pageHeader(string $name, string $type, int $weight = 0, array $values = null) /* : mixed */
+    public function pageHeader(string $name, string $type, int $weight = 0, array $values = null): mixed
     {
         if (null === $values) {
             return $this->pageHeaders["{$name}_{$type}"] ?? null;
@@ -434,7 +432,7 @@ abstract class Page extends Model
      * Дописывает в массив титула страницы новый элемент
      * $this->titles = ...
      */
-    public function settitles(/* string|array */ $value): void
+    public function settitles(string|array $value): void
     {
         $attr = $this->getAttr('titles', []);
         $attr[] = $value;

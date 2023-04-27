@@ -15,21 +15,10 @@ use ForkBB\Models\Model;
 
 class Method
 {
-    /**
-     * Контейнер
-     * @var Container
-     */
-    protected $c;
+    protected Model $model;
 
-    /**
-     * Модель
-     * @var Model
-     */
-    protected $model;
-
-    public function __construct(Container $container)
+    public function __construct(protected Container $c)
     {
-        $this->c = $container;
     }
 
     /**

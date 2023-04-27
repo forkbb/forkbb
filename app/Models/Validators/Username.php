@@ -19,7 +19,7 @@ class Username extends RulesValidator
     /**
      * Проверяет имя пользователя
      */
-    public function username(Validator $v, string $username, /* mixed */  $attrs, /* mixed */ $originalUser): string
+    public function username(Validator $v, string $username, mixed  $attrs, mixed $originalUser): string
     {
         if ($originalUser instanceof User) {
             $id   = $originalUser->id;

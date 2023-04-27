@@ -17,9 +17,8 @@ class DBMap extends Model
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'DBMap';
+    protected string $cKey = 'DBMap';
 
     /**
      * Загружает карту БД из кеша/БД

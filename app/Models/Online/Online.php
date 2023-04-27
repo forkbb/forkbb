@@ -19,18 +19,16 @@ class Online extends Model
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'Online';
+    protected string $cKey = 'Online';
 
-    protected $visits = [];
-    protected $online = [];
+    protected array $visits = [];
+    protected array $online = [];
 
     /**
      * Флаг выполнения
-     * @var int
      */
-    protected $done = 0;
+    protected int $done = 0;
 
     protected function isReady(): void
     {

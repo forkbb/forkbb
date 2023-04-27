@@ -17,14 +17,13 @@ class Rules extends Model
 {
     /**
      * Флаг готовности
-     * @var bool
      */
-    protected $ready = false;
+    protected bool $ready = false;
 
     /**
      * Возвращает значение свойства
      */
-    public function __get(string $name) /* : mixed */
+    public function __get(string $name): mixed
     {
         if (true === $this->ready) {
             return parent::__get($name);

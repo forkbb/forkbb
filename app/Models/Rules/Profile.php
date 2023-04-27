@@ -16,9 +16,8 @@ use ForkBB\Models\User\User;
 
 class Profile extends Rules
 {
-    protected $curUser;
-
-    protected $user;
+    protected User $curUser;
+    protected User $user;
 
     /**
      * Задает профиль пользователя для применения правил

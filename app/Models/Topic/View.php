@@ -23,7 +23,7 @@ class View extends Action
     /**
      * Возвращает список тем
      */
-    public function view(/* mixed */ $arg): array
+    public function view(mixed $arg): array
     {
         if ($arg instanceof Forum) {
             $full = false;

@@ -20,9 +20,8 @@ class Users extends Manager
 
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'Users';
+    protected string $cKey = 'Users';
 
     /**
      * Создает новую модель пользователя

@@ -20,9 +20,10 @@ class ActionT extends Method
     /**
      * Поисковые действия по темам
      */
-    public function actionT(string $action, Forum $root, int $uid = null) /* : array|false */
+    public function actionT(string $action, Forum $root, int $uid = null): array|false
     {
         $forums = \array_keys($root->descendants);
+
         if ($root->id) {
             $forums[] = $root->id;
         }

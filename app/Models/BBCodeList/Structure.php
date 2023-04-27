@@ -24,9 +24,8 @@ class Structure extends Model
 
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'BBStructure';
+    protected string $cKey = 'BBStructure';
 
     public function __construct(Container $container)
     {
@@ -218,7 +217,7 @@ class Structure extends Model
         $this->setAttr('self_nesting', $value);
     }
 
-    protected function getBBAttr(string $name, array $fields) /* : mixed */
+    protected function getBBAttr(string $name, array $fields): mixed
     {
         if (empty($this->attrs[$name])) {
             return null;
@@ -254,7 +253,7 @@ class Structure extends Model
         }
     }
 
-    protected function setBBAttr(string $name, /* mixed */ $data, array $fields): void
+    protected function setBBAttr(string $name, mixed $data, array $fields): void
     {
         $attrs = $this->getAttr('attrs');
 
@@ -290,7 +289,7 @@ class Structure extends Model
         $this->setAttr('attrs', $attrs);
     }
 
-    protected function getno_attr() /* : mixed */
+    protected function getno_attr(): mixed
     {
         return $this->getBBAttr('No_attr', ['body_format', 'text_only']);
     }
@@ -300,7 +299,7 @@ class Structure extends Model
         $this->setBBAttr('No_attr', $value, ['body_format', 'text_only']);
     }
 
-    protected function getdef_attr() /* : mixed */
+    protected function getdef_attr(): mixed
     {
         return $this->getBBAttr('Def', ['required', 'format', 'body_format', 'text_only']);
     }

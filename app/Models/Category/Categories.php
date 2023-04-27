@@ -19,15 +19,13 @@ class Categories extends Manager
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'Categories';
+    protected string $cKey = 'Categories';
 
     /**
      * Массив флагов измененных категорий
-     * @var array
      */
-    protected $modified = [];
+    protected array $modified = [];
 
     /**
      * Загрузка категорий из БД

@@ -18,10 +18,7 @@ use RuntimeException;
 
 class Perm extends Action
 {
-    /**
-     * @var array
-     */
-    protected $fields;
+    protected array $fields;
 
     /**
      * Получение таблицы разрешений для раздела

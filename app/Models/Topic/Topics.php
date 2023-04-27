@@ -17,9 +17,8 @@ class Topics extends Manager
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'Topics';
+    protected string $cKey = 'Topics';
 
     /**
      * Создает новую модель темы

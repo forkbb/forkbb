@@ -20,9 +20,8 @@ class Forum extends DataModel
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'Forum';
+    protected string $cKey = 'Forum';
 
     /**
      * Получение родительского раздела

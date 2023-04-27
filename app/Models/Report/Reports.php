@@ -19,9 +19,8 @@ class Reports extends Manager
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'Reports';
+    protected string $cKey = 'Reports';
 
     /**
      * Создает новую модель сигнала

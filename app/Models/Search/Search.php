@@ -40,9 +40,8 @@ class Search extends Model
 
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'Search';
+    protected string $cKey = 'Search';
 
     /**
      * Ссылка на результат поиска

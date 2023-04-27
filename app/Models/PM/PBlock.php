@@ -21,20 +21,15 @@ class PBlock extends Model
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'PBlock';
-
-    /**
-     * @var array
-     */
-    protected $repository;
+    protected string $cKey = 'PBlock';
 
     /**
      * Текущий пользователь установленный в методе init()
-     * @var User
      */
-    protected $user;
+    protected User $user;
+
+    protected array $repository;
 
     public function __construct(Container $container)
     {

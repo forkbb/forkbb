@@ -17,9 +17,8 @@ class StopwordList extends Model
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'StopwordList';
+    protected string $cKey = 'StopwordList';
 
     /**
      * Загружает список игнорируемых при индексации слов из кеша/БД

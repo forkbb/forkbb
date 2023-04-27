@@ -23,9 +23,8 @@ class Poll extends DataModel
 
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'Poll';
+    protected string $cKey = 'Poll';
 
     /**
      * Возвращает родительскую тему

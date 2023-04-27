@@ -17,9 +17,8 @@ class SmileyList extends Model
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'SmileyList';
+    protected string $cKey = 'SmileyList';
 
     /**
      * Загружает список смайлов из кеша/БД

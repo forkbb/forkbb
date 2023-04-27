@@ -19,15 +19,13 @@ class Forums extends Manager
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'Forums';
+    protected string $cKey = 'Forums';
 
     /**
      * Закешированные данные по разделам
-     * @var array
      */
-    protected $forumList = [];
+    protected array $forumList = [];
 
     /**
      * Создает новую модель раздела

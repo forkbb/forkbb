@@ -17,9 +17,8 @@ class AdminList extends Model
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'AdminList';
+    protected string $cKey = 'AdminList';
 
     /**
      * Загружает список id админов из кеша/БД

@@ -18,9 +18,8 @@ class Stats extends Model
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'Stats';
+    protected string $cKey = 'Stats';
 
     /**
      * Загружает статистику из кеша/БД

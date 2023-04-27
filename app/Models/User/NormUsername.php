@@ -16,9 +16,8 @@ class NormUsername extends Action
 {
     /**
      * https://www.unicode.org/Public/security/latest/confusables.txt
-     * @var array
      */
-    protected $confusables = [
+    protected array $confusables = [
         "\u{05AD}" => "\u{0596}",
         "\u{05AE}" => "\u{0598}",
         "\u{05A8}" => "\u{0599}",

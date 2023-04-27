@@ -115,8 +115,8 @@ class Current extends Action
         return \trim($this->c->Secury->replInvalidChars($_SERVER['HTTP_USER_AGENT'] ?? ''));
     }
 
-    protected $defRegex = '%(?:^|[ ()])\b([\w .-]*{}[\w/.!-]*)%i';
-    protected $botSearchList = [
+    protected string $defRegex = '%(?:^|[ ()])\b([\w .-]*{}[\w/.!-]*)%i';
+    protected array $botSearchList = [
         'bot'        => ['%(?<!cu)bot(?!tle)%'],
         'crawl'      => [''],
         'spider'     => ['%spider(?![\w ]*build/)%'],
@@ -129,7 +129,7 @@ class Current extends Action
      * Пытается по юзерагентуопределить робота
      * Если робот, то возвращает вычисленное имя
      */
-    protected function isBot(string $agent) /* : string|false */
+    protected function isBot(string $agent): string|false
     {
         if ('' == $agent) {
             return false;

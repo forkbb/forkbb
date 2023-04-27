@@ -22,9 +22,8 @@ class User extends DataModel
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'User';
+    protected string $cKey = 'User';
 
     public function __construct(Container $container)
     {

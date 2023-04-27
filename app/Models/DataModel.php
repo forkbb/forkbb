@@ -16,15 +16,13 @@ class DataModel extends Model
 {
     /**
      * Массив флагов измененных свойств модели
-     * @var array
      */
-    protected $zModFlags = [];
+    protected array $zModFlags = [];
 
     /**
      * Массив состояний отслеживания изменений в свойствах модели
-     * @var array
      */
-    protected $zTrackFlags = [];
+    protected array $zTrackFlags = [];
 
     /**
      * Устанавливает значения для свойств
@@ -92,7 +90,7 @@ class DataModel extends Model
     /**
      * Устанавливает значение для свойства
      */
-    public function __set(string $name, /* mixed */ $value): void
+    public function __set(string $name, mixed $value): void
     {
         // без отслеживания
         if (0 === \strpos($name, '__')) {
@@ -148,7 +146,7 @@ class DataModel extends Model
     /**
      * Возвращает значение свойства
      */
-    public function __get(string $name) /* : mixed */
+    public function __get(string $name): mixed
     {
         // без вычисления
         if (0 === \strpos($name, '__')) {
@@ -162,7 +160,7 @@ class DataModel extends Model
     /**
      * Удаляет свойство ????
      */
-    public function __unset(/* mixed */ $name): void
+    public function __unset(string $name): void
     {
         $this->zModFlags[$name] = false;
 

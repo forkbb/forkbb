@@ -21,15 +21,13 @@ class Cookie extends Model
 
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'Cookie';
+    protected string $cKey = 'Cookie';
 
     /**
      * Флаг запрета записи свойств
-     * @var bool
      */
-    protected $noSet = false;
+    protected bool $noSet = false;
 
     public function __construct(array $options, Container $container)
     {
@@ -86,7 +84,7 @@ class Cookie extends Model
     /**
      * Получает значение куки
      */
-    public function get(string $name, /* mixed */ $default = null) /* : mixed */
+    public function get(string $name, mixed $default = null): mixed
     {
         $name = $this->prefix . $name;
 
@@ -200,7 +198,7 @@ class Cookie extends Model
     /**
      * Устанавливает значение для свойства модели
      */
-    public function __set(string $name, /* mixed */ $val): void
+    public function __set(string $name, mixed $val): void
     {
         if ($this->noSet) {
             throw new RuntimeException('Model attributes in read-only mode');

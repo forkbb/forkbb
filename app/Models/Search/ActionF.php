@@ -20,9 +20,10 @@ class ActionF extends Method
     /**
      * Поисковые действия по разделам (подписка на разделы)
      */
-    public function actionF(string $action, Forum $root, int $uid = null) /* : array|false */
+    public function actionF(string $action, Forum $root, int $uid = null): array|false
     {
         $forums = \array_keys($root->descendants);
+
         if ($root->id) {
             $forums[] = $root->id;
         }

@@ -21,9 +21,8 @@ class Topic extends DataModel
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'Topic';
+    protected string $cKey = 'Topic';
 
     /**
      * Получение родительского раздела
@@ -197,7 +196,7 @@ class Topic extends DataModel
     /**
      * Статус наличия новых сообщений в теме
      */
-    protected function gethasNew() /* : int|false */
+    protected function gethasNew(): int|false
     {
         if (
             $this->c->user->isGuest
@@ -219,7 +218,7 @@ class Topic extends DataModel
     /**
      * Статус наличия непрочитанных сообщений в теме
      */
-    protected function gethasUnread() /* int|false */
+    protected function gethasUnread(): int|false
     {
         if (
             $this->c->user->isGuest

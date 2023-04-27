@@ -15,10 +15,7 @@ use ForkBB\Models\Group\Group;
 
 class Refresh extends Action
 {
-    /**
-     * @var array
-     */
-    protected $list = [];
+    protected array $list = [];
 
     /**
      * Возвращает список доступных разделов для группы

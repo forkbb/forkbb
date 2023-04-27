@@ -19,9 +19,8 @@ class Report extends DataModel
 {
     /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'Report';
+    protected string $cKey = 'Report';
 
     /**
      * Устанавливает автора

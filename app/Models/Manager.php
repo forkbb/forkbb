@@ -15,40 +15,29 @@ use ForkBB\Core\Container;
 class Manager
 {
     /**
-     * Контейнер
-     * @var Container
-     */
-    protected $c;
-
-    /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'unknown';
+    protected string $cKey = 'unknown';
 
-    /**
-     * @var array
-     */
-    protected $repository = [];
+    protected array $repository = [];
 
-    public function __construct(Container $container)
+    public function __construct(protected Container $c)
     {
-        $this->c = $container;
     }
 
-    public function get($key)
+    public function get(int|string $key)
     {
         return $this->repository[$key] ?? null;
     }
 
-    public function set($key, /* mixed */ $value): self
+    public function set(int|string $key, mixed $value): self
     {
         $this->repository[$key] = $value;
 
         return $this;
     }
 
-    public function isset($key): bool
+    public function isset(int|string $key): bool
     {
         return \array_key_exists($key, $this->repository);
     }
@@ -56,7 +45,7 @@ class Manager
     /**
      * Возвращает action по его имени
      */
-    public function __get(string $name) /* : mixed */
+    public function __get(string $name): mixed
     {
         $x = \ord($name);
 
@@ -72,7 +61,7 @@ class Manager
     /**
      * Выполняет подгружаемый метод при его наличии
      */
-    public function __call(string $name, array $args) /* : mixed */
+    public function __call(string $name, array $args): mixed
     {
         $key = $this->cKey . '/' . $name;
 

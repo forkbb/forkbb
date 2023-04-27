@@ -15,44 +15,33 @@ use ForkBB\Core\Container;
 class Model
 {
     /**
-     * Контейнер
-     * @var Container
-     */
-    protected $c;
-
-    /**
      * Ключ модели для контейнера
-     * @var string
      */
-    protected $cKey = 'unknown';
+    protected string $cKey = 'unknown';
 
     /**
      * Данные модели
-     * @var array
      */
-    protected $zAttrs = [];
+    protected array $zAttrs = [];
 
     /**
      * Вычисленные данные модели
-     * @var array
      */
-    protected $zAttrsCalc = [];
+    protected array $zAttrsCalc = [];
 
     /**
      * Зависимости свойств
-     * @var array
      */
-    protected $zDepend = [];
+    protected array $zDepend = [];
 
-    public function __construct(Container $container)
+    public function __construct(protected Container $c)
     {
-        $this->c = $container;
     }
 
     /**
      * Проверяет наличие свойства
      */
-    public function __isset(/* mixed */ $name): bool
+    public function __isset(string $name): bool
     {
         return \array_key_exists($name, $this->zAttrs)
             || \array_key_exists($name, $this->zAttrsCalc)
@@ -62,7 +51,7 @@ class Model
     /**
      * Удаляет свойство
      */
-    public function __unset(/* mixed */ $name): void
+    public function __unset(string $name): void
     {
         unset($this->zAttrs[$name]);
         $this->unsetCalc($name);
@@ -71,7 +60,7 @@ class Model
     /**
      * Удаляет вычисленные зависимые свойства
      */
-    protected function unsetCalc(/* mixed */ $name): void
+    protected function unsetCalc(string $name): void
     {
         unset($this->zAttrsCalc[$name]);
         unset($this->zAttrsCalc['censor' . \ucfirst($name)]);
@@ -84,7 +73,7 @@ class Model
     /**
      * Устанавливает значение для свойства
      */
-    public function __set(string $name, /* mixed */ $value): void
+    public function __set(string $name, mixed $value): void
     {
         $this->unsetCalc($name);
 
@@ -99,7 +88,7 @@ class Model
      * Устанавливает значение для свойства
      * Без вычислений, но со сбросом зависимых свойст и вычисленного значения
      */
-    public function setAttr(string $name, /* mixed */ $value): Model
+    public function setAttr(string $name, mixed $value): Model
     {
         $this->unsetCalc($name);
         $this->zAttrs[$name] = $value;
@@ -123,7 +112,7 @@ class Model
      * Возвращает значение свойства
      * Или возвращает внешний метод Models\Method
      */
-    public function __get(string $name) /* : mixed */
+    public function __get(string $name): mixed
     {
         if (\array_key_exists($name, $this->zAttrsCalc)) {
             return $this->zAttrsCalc[$name];
@@ -153,7 +142,7 @@ class Model
      * Возвращает значение свойства
      * Без вычислений
      */
-    public function getAttr(string $name, /* mixed */ $default = null) /* : mixed */
+    public function getAttr(string $name, mixed $default = null): mixed
     {
         return \array_key_exists($name, $this->zAttrs) ? $this->zAttrs[$name] : $default;
     }
@@ -161,7 +150,7 @@ class Model
     /**
      * Выполняет подгружаемый метод при его наличии
      */
-    public function __call(string $name, array $args) /* : mixed */
+    public function __call(string $name, array $args): mixed
     {
         $key = $this->cKey . '/' . $name;
 

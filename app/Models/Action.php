@@ -15,21 +15,10 @@ use ForkBB\Models\Manager;
 
 class Action
 {
-    /**
-     * Контейнер
-     * @var Container
-     */
-    protected $c;
+    protected Manager $manager;
 
-    /**
-     * Модель
-     * @var Manager
-     */
-    protected $manager;
-
-    public function __construct(Container $container)
+    public function __construct(protected Container $c)
     {
-        $this->c = $container;
     }
 
     /**

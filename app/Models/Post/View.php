@@ -23,7 +23,7 @@ class View extends Action
     /**
      * Возвращает список сообщений
      */
-    public function view(/* mixed */ $arg, bool $review = false): array
+    public function view(mixed $arg, bool $review = false): array
     {
         if (
             ! $arg instanceof Topic
