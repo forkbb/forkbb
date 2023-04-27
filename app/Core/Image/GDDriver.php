@@ -25,12 +25,12 @@ class GDDriver extends DefaultDriver
         $this->ready = \extension_loaded('gd') && \function_exists('\\imagecreatetruecolor');
     }
 
-    public function readFromStr(string $data) /* : mixed|false */
+    public function readFromStr(string $data): mixed
     {
         return $this->tuning($this->ready ? \imagecreatefromstring($data) : false);
     }
 
-    public function readFromPath(string $path) /* : mixed|false */
+    public function readFromPath(string $path): mixed
     {
         if (
             ! $this->ready
@@ -42,7 +42,7 @@ class GDDriver extends DefaultDriver
         }
     }
 
-    protected function tuning(/* mixed */ $image) /* : mixed */
+    protected function tuning(mixed $image): mixed
     {
         if (
             false !== $image
@@ -57,7 +57,7 @@ class GDDriver extends DefaultDriver
         }
     }
 
-    public function writeToPath(/* mixed */ $image, string $path, int $quality): ?bool
+    public function writeToPath(mixed $image, string $path, int $quality): ?bool
     {
         $args = [$image, $path];
         $type = \pathinfo($path, \PATHINFO_EXTENSION);
@@ -92,7 +92,7 @@ class GDDriver extends DefaultDriver
         }
     }
 
-    public function resize(/* mixed */ $image, int $maxW, int $maxH) /* : mixed */
+    public function resize(mixed $image, int $maxW, int $maxH): mixed
     {
         if (! $this->ready) {
             throw new FileException('GD library not enabled');
@@ -140,7 +140,7 @@ class GDDriver extends DefaultDriver
         return $result;
     }
 
-    public function destroy(/* mixed */ $image): void
+    public function destroy(mixed $image): void
     {
         if (\is_resource($image)) {
             \imagedestroy($image);

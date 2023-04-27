@@ -17,33 +17,11 @@ class Csrf
 {
     const TOKEN_LIFETIME = 1800;
 
-    /**
-     * @var Secury
-     */
-    protected $secury;
+    protected ?string $error = null;
+    protected int $hashExpiration = 3600;
 
-    /**
-     * @var string
-     */
-    protected $key;
-
-    /**
-     * @var ?string
-     */
-    protected $error;
-
-    /**
-     * @var int
-     */
-    protected $hashExpiration = 3600;
-
-    public function __construct(
-        Secury $secury,
-        #[SensitiveParameter]
-        string $key
-    ) {
-        $this->secury = $secury;
-        $this->key    = \sha1($key);
+    public function __construct(protected Secury $secury, #[SensitiveParameter] protected string $key)
+    {
     }
 
     /**
@@ -57,7 +35,7 @@ class Csrf
     /**
      * Возвращает csrf токен
      */
-    public function create(string $marker, array $args = [], /* string|int */ $time = null): string
+    public function create(string $marker, array $args = [], int|string $time = null): string
     {
         $marker      = $this->argsToStr($marker, $args);
         $time        = $time ?: \time();
@@ -68,7 +46,7 @@ class Csrf
     /**
      * Возвращает хэш
      */
-    public function createHash(string $marker, array $args = [], /* string|int */ $time = null): string
+    public function createHash(string $marker, array $args = [], int|string $time = null): string
     {
         $marker      = $this->argsToStr($marker, $args, ['hash']);
         $time        = $time ?: \time() + $this->hashExpiration;

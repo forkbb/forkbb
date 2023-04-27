@@ -18,29 +18,16 @@ use PDOException;
 class Mysql
 {
     /**
-     * @var DB
-     */
-    protected $db;
-
-    /**
-     * Префикс для таблиц базы
-     * @var string
-     */
-    protected $dbPrefix;
-
-    /**
      * Массив замены типов полей таблицы
-     * @var array
      */
-    protected $dbTypeRepl = [
+    protected array $dbTypeRepl = [
         '%^SERIAL$%i' => 'INT(10) UNSIGNED AUTO_INCREMENT',
     ];
 
     /**
      * Подстановка типов полей для карты БД
-     * @var array
      */
-    protected $types = [
+    protected array $types = [
         'bool'      => 'b',
         'boolean'   => 'b',
         'tinyint'   => 'i',
@@ -55,13 +42,9 @@ class Mysql
         'double'    => 'i',
     ];
 
-    public function __construct(DB $db, string $prefix)
+    public function __construct(protected DB $db, protected string $dbPrefix)
     {
-        $this->db = $db;
-
-        $this->nameCheck($prefix);
-
-        $this->dbPrefix = $prefix;
+        $this->nameCheck($dbPrefix);
     }
 
     /**
@@ -129,7 +112,7 @@ class Mysql
     /**
      * Конвертирует данные в строку для DEFAULT
      */
-    protected function convToStr(/* mixed */ $data): string
+    protected function convToStr(mixed $data): string
     {
         if (\is_string($data)) {
             return $this->db->quote($data);
@@ -336,7 +319,7 @@ class Mysql
     /**
      * Добавляет поле в таблицу
      */
-    public function addField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $collate = null, string $after = null): bool
+    public function addField(string $table, string $field, string $type, bool $allowNull, mixed $default = null, string $collate = null, string $after = null): bool
     {
         $table = $this->tName($table);
 
@@ -358,7 +341,7 @@ class Mysql
     /**
      * Модифицирует поле в таблице
      */
-    public function alterField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $collate = null, string $after = null): bool
+    public function alterField(string $table, string $field, string $type, bool $allowNull, mixed $default = null, string $collate = null, string $after = null): bool
     {
         $table = $this->tName($table);
         $query = "ALTER TABLE `{$table}` MODIFY " . $this->buildColumn($field, [$type, $allowNull, $default, $collate]);

@@ -15,15 +15,8 @@ use ForkBB\Core\Container;
 
 class Parser extends Parserus
 {
-    /**
-     * Контейнер
-     * @var Container
-     */
-    protected $c;
-
-    public function __construct(int $flag, Container $container)
+    public function __construct(int $flag, protected Container $c)
     {
-        $this->c = $container;
         parent::__construct($flag);
         $this->init();
     }

@@ -23,21 +23,14 @@ class Log implements LoggerInterface
 {
     const JSON_OPTIONS = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_INVALID_UTF8_SUBSTITUTE | \JSON_THROW_ON_ERROR;
 
-    /**
-     * Контейнер
-     * @var Container
-     */
-    protected $c;
-
-    protected $path;
-    protected $lineFormat;
-    protected $timeFormat;
+    protected string $path;
+    protected string $lineFormat;
+    protected string $timeFormat;
     protected $resource;
-    protected $hidePath;
+    protected string $hidePath;
 
-    public function __construct(array $config, Container $c)
+    public function __construct(array $config, protected Container $c)
     {
-        $this->c          = $c;
         $this->path       = $config['path']       ?? __DIR__ . '/../log/{Y-m-d}.log';
         $this->lineFormat = $config['lineFormat'] ?? "%datetime% [%level_name%] %message%\t%context%\n";
         $this->timeFormat = $config['timeFormat'] ?? 'Y-m-d H:i:s';

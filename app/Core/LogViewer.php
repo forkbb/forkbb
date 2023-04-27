@@ -20,21 +20,19 @@ class LogViewer
 {
     const CACHE_KEY = 'logs_info';
 
-    protected $cache;
-    protected $dir;
-    protected $namePattern;
-    protected $linePattern;
-    protected $typePattern;
-    protected $resource;
-    protected $fileList;
-    protected $hashList;
-    protected $replName = [
+    protected string $dir;
+    protected string $namePattern;
+    protected string $linePattern;
+    protected string $typePattern;
+    protected array $fileList;
+    protected array $hashList;
+    protected array $replName = [
         '.' => '\\.',
         '*' => '.*',
         '?' => '.',
         '%' => '\\%',
     ];
-    protected $replLine = [
+    protected array $replLine = [
         '['            => '\\[',
         ']'            => '\\]',
         '%datetime%'   => '(?P<datetime>(?=\S)[a-z0-9,\.:/ -]+)',
@@ -43,9 +41,8 @@ class LogViewer
         '%context%'    => '(?P<context>(?:\[.*?\]|{.*?}))',
     ];
 
-    public function __construct(array $config, CacheInterface $cache)
+    public function __construct(array $config, protected CacheInterface $cache)
     {
-        $this->cache       = $cache;
         $this->dir         = \rtrim(\realpath($config['dir'] ?? __DIR__ . '/../log'), '\\/');
         $this->namePattern = $this->toNamePattern($config['pattern'] ?? '*.log');
         $this->fileList    = $this->getFileList();
@@ -53,7 +50,7 @@ class LogViewer
         $this->setPatterns($config['lineFormat'] ?? "%datetime% [%level_name%] %message%\t%context%\n");
     }
 
-    protected function setPatterns($format): void
+    protected function setPatterns(string $format): void
     {
         $pos = \strpos($format, '%level_name%');
 

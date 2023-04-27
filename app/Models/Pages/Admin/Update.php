@@ -23,8 +23,8 @@ use function \ForkBB\__;
 
 class Update extends Admin
 {
-    const PHP_MIN                    = '7.3.0';
-    const REV_MIN_FOR_UPDATE         = 42;
+    const PHP_MIN                    = '8.0.0';
+    const REV_MIN_FOR_UPDATE         = 53;
     const LATEST_REV_WITH_DB_CHANGES = 53;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;

@@ -17,20 +17,11 @@ class DefaultDriver
 {
     const DEFAULT = true;
 
-    /**
-     * @var bool
-     */
-    protected $ready;
+    protected bool $ready = false;
 
-    /**
-     * @var Files
-     */
-    protected $files;
-
-    public function __construct(Files $files)
+    public function __construct(protected Files $files)
     {
         $this->ready = true;
-        $this->files = $files;
     }
 
     public function ready(): bool
@@ -38,27 +29,27 @@ class DefaultDriver
         return $this->ready;
     }
 
-    public function readFromStr(string $data) /* : mixed|false */
+    public function readFromStr(string $data): mixed
     {
         return false;
     }
 
-    public function readFromPath(string $path) /* : mixed|false */
+    public function readFromPath(string $path): mixed
     {
         return false;
     }
 
-    public function writeToPath(/* mixed */ $image, string $path, int $quality): ?bool
+    public function writeToPath(mixed $image, string $path, int $quality): ?bool
     {
         return null;
     }
 
-    public function resize(/* mixed */ $image, int $maxW, int $maxH) /* : mixed */
+    public function resize(mixed $image, int $maxW, int $maxH): mixed
     {
         return $image;
     }
 
-    public function destroy(/* mixed */ $image): void
+    public function destroy(mixed $image): void
     {
     }
 }

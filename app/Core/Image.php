@@ -20,27 +20,23 @@ class Image extends File
 {
     /**
      * Изображение
-     * @var mixed
      */
-    protected $image;
+    protected mixed $image;
 
     /**
      * Класс обработки изображений
-     * @var DefaultDriver
      */
-    protected $imgDriver;
+    protected DefaultDriver $imgDriver;
 
     /**
      * Качество изображения
-     * @var int
      */
-    protected $quality = 100;
+    protected int $quality = 100;
 
     /**
      * Паттерн для pathinfo
-     * @var string
      */
-    protected $pattern = '%^(?!.*?\.\.)([\w.\x5C/:-]*[\x5C/])?(\*|[\w.-]+)\.(\*|[a-z\d]+|\([a-z\d]+(?:\|[a-z\d]+)*\))$%iD';
+    protected string $pattern = '%^(?!.*?\.\.)([\w.\x5C/:-]*[\x5C/])?(\*|[\w.-]+)\.(\*|[a-z\d]+|\([a-z\d]+(?:\|[a-z\d]+)*\))$%iD';
 
     public function __construct(string $path, string $name, string $ext, Files $files)
     {

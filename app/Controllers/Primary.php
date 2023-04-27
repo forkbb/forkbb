@@ -15,15 +15,8 @@ use ForkBB\Models\Page;
 
 class Primary
 {
-    /**
-     * Контейнер
-     * @var Container
-     */
-    protected $c;
-
-    public function __construct(Container $container)
+    public function __construct(protected Container $c)
     {
-        $this->c = $container;
     }
 
     /**

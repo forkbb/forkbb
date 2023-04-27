@@ -18,63 +18,35 @@ class File
 {
     /**
      * Текст ошибки
-     * @var null|string
      */
-    protected $error;
-
-    /**
-     * Путь до файла
-     * @var null|string
-     */
-    protected $path;
+    protected ?string $error = null;
 
     /**
      * Содержимое файла
-     * @var null|string
      */
-    protected $data;
-
-    /**
-     * Оригинальное имя файла без расширения
-     * @var null|string
-     */
-    protected $name;
-
-    /**
-     * Оригинальное расширение файла
-     * @var null|string
-     */
-    protected $ext;
+    protected ?string $data;
 
     /**
      * Размер оригинального файла
      */
-    protected $size;
+    protected int|false $size;
 
     /**
      * Флаг автопереименования файла
-     * @var bool
      */
-    protected $rename = false;
+    protected bool $rename = false;
 
     /**
      * Флаг перезаписи файла
-     * @var bool
      */
-    protected $rewrite = false;
+    protected bool $rewrite = false;
 
     /**
      * Паттерн для pathinfo
-     * @var string
      */
-    protected $pattern = '%^(?!.*?\.\.)([\w.\x5C/:-]*[\x5C/])?(\*|[\w.-]+)\.(\*|[a-z\d]+)$%iD';
+    protected string $pattern = '%^(?!.*?\.\.)([\w.\x5C/:-]*[\x5C/])?(\*|[\w.-]+)\.(\*|[a-z\d]+)$%iD';
 
-    /**
-     * @var Files
-     */
-    protected $files;
-
-    public function __construct(string $path, string $name, string $ext, Files $files)
+    public function __construct(protected string $path, protected string $name, protected string $ext, protected Files $files)
     {
         if ($files->isBadPath($path)) {
             throw new FileException('Bad path to file');
@@ -86,10 +58,6 @@ class File
             throw new FileException('File can not be read');
         }
 
-        $this->files = $files;
-        $this->path  = $path;
-        $this->name  = $name;
-        $this->ext   = $ext;
         $this->data  = null;
         $this->size  = \is_string($this->data) ? \strlen($this->data) : \filesize($path);
 

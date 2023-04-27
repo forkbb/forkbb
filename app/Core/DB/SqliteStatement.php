@@ -33,10 +33,7 @@ class SqliteStatement extends AbstractStatement
      *   ... (это те типы, которые прописаны в CREATE TABLE и полученные после перекодировки из {driver}::bTypeRepl)
      */
 
-    /**
-     * @var array
-     */
-    protected $nativeTypeRepl = [
+    protected array $nativeTypeRepl = [
         'integer' => self::INTEGER,
         'double'  => self::FLOAT,
     ];
@@ -81,7 +78,7 @@ class SqliteStatement extends AbstractStatement
         return $this->columnsType;
     }
 
-    protected function convToBoolean(/* mixed */ $value): bool
+    protected function convToBoolean(mixed $value): bool
     {
         return (bool) $value;
     }

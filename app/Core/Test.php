@@ -15,15 +15,8 @@ use ForkBB\Core\Validator;
 
 class Test
 {
-    /**
-     * Контейнер
-     * @var Container
-     */
-    protected $c;
-
-    public function __construct(Container $container)
+    public function __construct(protected Container $c)
     {
-        $this->c = $container;
     }
 
     public function beforeValidation(Validator $v): Validator
@@ -38,7 +31,7 @@ class Test
         return $v;
     }
 
-    public function vTestCheck(Validator $v, /* mixed */ $value) /* : mixed */
+    public function vTestCheck(Validator $v, mixed $value): mixed
     {
         if (null !== $value) {
             $v->addError('The :alias contains an invalid value');

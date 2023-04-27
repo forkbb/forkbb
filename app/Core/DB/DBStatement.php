@@ -23,26 +23,14 @@ class DBStatement
     const STRING  = 's';
 
     /**
-     * @var DB
-     */
-    protected $db;
-
-    /**
-     * @var PDOStatement
-     */
-    protected $stmt;
-
-    /**
      * Карта преобразования переменных
-     * @var array
      */
-    protected $map = [];
+    protected array $map = [];
 
     /**
      * Карта типов
-     * @var array
      */
-    protected $types = [
+    protected array $types = [
         'b'  => PDO::PARAM_BOOL,
         'f'  => PDO::PARAM_STR,
         'i'  => PDO::PARAM_INT,
@@ -52,10 +40,8 @@ class DBStatement
         'as' => PDO::PARAM_STR,
     ];
 
-    public function __construct(DB $db, PDOStatement $stmt)
+    public function __construct(protected DB $db, protected PDOStatement $stmt)
     {
-        $this->db   = $db;
-        $this->stmt = $stmt;
     }
 
     /**
@@ -115,7 +101,7 @@ class DBStatement
     /**
      * Передает вызовы метода в PDOStatement
      */
-    public function __call(string $name, array $args) /* : mixed */
+    public function __call(string $name, array $args): mixed
     {
         return $this->stmt->$name(...$args);
     }

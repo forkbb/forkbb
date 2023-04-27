@@ -16,35 +16,27 @@ use Throwable;
 
 class ErrorHandler
 {
-    /**
-     * Контейнер
-     * @var Container
-     */
-    protected $c;
+    protected Container $c;
 
     /**
      * Уровень буфера вывода на котором работает обработчик
-     * @var int
      */
-    protected $obLevel;
+    protected int $obLevel;
 
     /**
      * Описание ошибки
-     * @var array
      */
-    protected $error;
+    protected ?array $error = null;
 
     /**
      * Скрываемая часть пути до файла
-     * @var string
      */
-    protected $hidePath;
+    protected string $hidePath;
 
     /**
      * Список ошибок
-     * @var array
      */
-    protected $type = [
+    protected array $type = [
         0                    => ['OTHER_ERROR',         'error'],
         \E_ERROR             => ['E_ERROR',             'error'],
         \E_WARNING           => ['E_WARNING',           'warning'],
@@ -65,9 +57,8 @@ class ErrorHandler
 
     /**
      * Уровень ошибок только для логирования
-     * @var int
      */
-    protected $logOnly = 0;
+    protected int $logOnly = 0;
 
     public function __construct()
     {

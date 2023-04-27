@@ -18,13 +18,7 @@ use InvalidArgumentException;
 
 class Secury
 {
-    /**
-     * Algorithm and salt for hash_hmac
-     * @var array
-     */
-    protected $hmac;
-
-    public function __construct(array $hmac)
+    public function __construct(protected array $hmac)
     {
         if (
             empty($hmac['salt'])
@@ -36,8 +30,6 @@ class Secury
         if (! \in_array($hmac['algo'], \hash_hmac_algos(), true)) {
             throw new UnexpectedValueException('Algorithm not supported');
         }
-
-        $this->hmac = $hmac;
     }
 
     /**
@@ -51,11 +43,8 @@ class Secury
     /**
      * Обертка для hash_hmac
      */
-    public function hmac(
-        string $data,
-        #[SensitiveParameter]
-        string $key
-    ): string {
+    public function hmac(string $data, #[SensitiveParameter] string $key): string
+    {
         if (empty($key)) {
             throw new InvalidArgumentException('Key can not be empty');
         }
@@ -92,7 +81,7 @@ class Secury
      * For string: Replacing invalid UTF-8 characters and remove control characters
      * For other scalar or null: unchanged
      */
-    public function replInvalidChars(/* mixed */ $data) /* : mixed */
+    public function replInvalidChars(mixed $data): mixed
     {
         if (\is_array($data)) {
             return \array_map([$this, 'replInvalidChars'], $data);

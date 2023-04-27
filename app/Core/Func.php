@@ -16,32 +16,22 @@ use function \ForkBB\__;
 class Func
 {
     /**
-     * Контейнер
-     * @var Container
-     */
-    protected $c;
-
-    /**
      * Список доступных стилей
-     * @var array
      */
-    protected $styles;
+    protected ?array $styles = null;
 
     /**
      * Список доступных языков
-     * @var array
      */
-    protected $langs;
+    protected ?array $langs = null;
 
     /**
      * Список имен доступных языков
-     * @var array
      */
-    protected $nameLangs;
+    protected ?array $nameLangs = null;
 
-    public function __construct(Container $container)
+    public function __construct(protected Container $c)
     {
-        $this->c = $container;
     }
 
     /**
@@ -75,10 +65,13 @@ class Func
     {
         if (! \is_array($this->nameLangs)) {
             $langs = $this->getLangs();
+
             foreach ($langs as &$value) {
                 $value = include "{$this->c->DIR_LANG}/{$value}/name.php";
             }
+
             unset($value);
+
             $this->nameLangs = $langs;
         }
 
@@ -105,6 +98,7 @@ class Func
                     $result[$entry] = $entry;
                 }
             }
+
             \closedir($dh);
             \asort($result, \SORT_NATURAL);
         }
@@ -232,6 +226,7 @@ class Func
 
         foreach (\explode(',', $str) as $step) {
             $dsr = \explode(';', $step, 2);
+
             if (
                 isset($dsr[1])) {
                 $q = \trim(\ltrim(\ltrim($dsr[1], 'q '), '='));
@@ -248,10 +243,12 @@ class Func
             }
 
             $l = \trim($dsr[0]);
+
             if (\preg_match('%^[[:alpha:]]{1,8}(?:-[[:alnum:]]{1,8})?$%', $l)) {
                 $result[$l] = $q;
             }
         }
+
         \arsort($result, \SORT_NUMERIC);
 
         return \array_keys($result);

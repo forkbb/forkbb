@@ -20,7 +20,7 @@ use function \ForkBB\__;
 
 class Install extends Admin
 {
-    const PHP_MIN    = '7.3.0';
+    const PHP_MIN    = '8.0.0';
     const MYSQL_MIN  = '5.5.3';
     const SQLITE_MIN = '3.25.0';
     const PGSQL_MIN  = '10.0';

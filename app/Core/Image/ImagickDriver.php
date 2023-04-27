@@ -27,7 +27,7 @@ class ImagickDriver extends DefaultDriver
         $this->ready = \extension_loaded('imagick') && \class_exists('\\Imagick');
     }
 
-    public function readFromStr(string $data) /* : mixed|false */
+    public function readFromStr(string $data): mixed
     {
         if ($this->ready) {
             try {
@@ -43,7 +43,7 @@ class ImagickDriver extends DefaultDriver
         return false;
     }
 
-    public function readFromPath(string $path) /* : mixed|false */
+    public function readFromPath(string $path): mixed
     {
         if (
             ! $this->ready
@@ -59,7 +59,7 @@ class ImagickDriver extends DefaultDriver
         }
     }
 
-    public function writeToPath(/* mixed */ $imagick, string $path, int $quality): ?bool
+    public function writeToPath(mixed $imagick, string $path, int $quality): ?bool
     {
         if (! $this->ready) {
             return null;
@@ -83,7 +83,7 @@ class ImagickDriver extends DefaultDriver
         }
     }
 
-    public function resize(/* mixed */ $imagick, int $maxW, int $maxH) /* : mixed */
+    public function resize(mixed $imagick, int $maxW, int $maxH): mixed
     {
         if (! $this->ready) {
             throw new FileException('ImageMagick library not enabled');
@@ -124,7 +124,7 @@ class ImagickDriver extends DefaultDriver
         }
     }
 
-    public function destroy(/* mixed */ $imagick): void
+    public function destroy(mixed $imagick): void
     {
     }
 }

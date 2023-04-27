@@ -21,52 +21,34 @@ use RuntimeException;
 class Files
 {
     /**
-     * Контейнер
-     * @var Container
-     */
-    protected $c;
-
-    /**
      * Максимальный размер для картинок
-     * @var int
      */
-    protected $maxImgSize;
+    protected int $maxImgSize;
 
     /**
      * Максимальный размер для файлов
-     * @var int
      */
-    protected $maxFileSize;
+    protected int $maxFileSize;
 
     /**
      * Максимальный число пикселей
-     * @var int
      */
-    protected $maxPixels;
+    protected int $maxPixels;
 
     /**
      * Текст ошибки
-     * @var null|string
      */
-    protected $error;
+    protected ?string $error = null;
 
     /**
      * Класс обработки изображений
-     * @var DefaultDriver
      */
-    protected $imageDriver;
-
-    /**
-     * Список имён драйверов
-     * @var array
-     */
-    protected $imageDrivers;
+    protected ?DefaultDriver $imageDriver = null;
 
     /**
      * Список mime типов считающихся картинками
-     * @var array
      */
-    protected $imageType = [
+    protected array $imageType = [
         'image/gif'  => 'gif',
         'image/jpeg' => 'jpg',
         'image/png'  => 'png',
@@ -79,16 +61,14 @@ class Files
 
     /**
      * Список единиц измерения
-     * @var string
      */
-    protected $units = 'BKMGTPEZY';
+    protected string $units = 'BKMGTPEZY';
 
     /**
      * Допустимые расширения файлов для mime типов
      * http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
-     * @var array
      */
-    protected $mimeToExt = [
+    protected array $mimeToExt = [
         'application/andrew-inset' => 'ez',
         'application/applixware' => 'aw',
         'application/atom+xml' => 'atom',
@@ -861,11 +841,8 @@ class Files
         'image/avif' => 'avif',
     ];
 
-    public function __construct(/* string|int */ $maxFileSize, /* string|int */ $maxImgSize, array $imageDrivers, Container $c)
+    public function __construct(int|string $maxFileSize, int|string $maxImgSize, protected array $imageDrivers, protected Container $c)
     {
-        $this->c            = $c;
-        $this->imageDrivers = $imageDrivers;
-
         $init = \min(
             \PHP_INT_MAX,
             $this->size(\ini_get('upload_max_filesize')),
@@ -924,7 +901,7 @@ class Files
      * Переводит объем информации из одних единиц в другие
      * кило = 1024, а не 1000
      */
-    public function size(/* int|float|string */ $value, string $to = null): int
+    public function size(int|float|string $value, string $to = null): int
     {
         if (\is_string($value)) {
             if (! \preg_match('%^([^a-z]+)([a-z]+)?$%i', \trim($value), $matches)) {
@@ -975,7 +952,7 @@ class Files
     /**
      * Определяет расширение картинки по содержимому файла
      */
-    public function imageExt(/* mixed */ $file): ?string
+    public function imageExt(mixed $file): ?string
     {
         if ($file instanceof Image) {
             return $file->ext();
@@ -1011,7 +988,7 @@ class Files
     /**
      * Получает файл(ы) из формы
      */
-    public function upload(array $file) /* : mixed */
+    public function upload(array $file): mixed
     {
         $this->error = null;
 

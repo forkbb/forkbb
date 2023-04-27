@@ -16,45 +16,38 @@ class Config
 {
     /**
      * Путь до файла конфига
-     * @var string
      */
-    protected $path;
+    protected string $path;
 
     /**
      * Содержимое файла конфига
-     * @var string
      */
-    protected $fileContents;
+    protected string $fileContents;
 
     /**
      * Начальная позиция массива конфига
-     * @var int
      */
-    protected $arrayStartPos;
+    protected int $arrayStartPos;
 
     /**
      * Массив токенов
-     * @var array
      */
-    protected $tokens;
+    protected array $tokens;
 
     /**
      * Текущая позиция в массиве токенов
-     * @var int
      */
-    protected $position;
+    protected int $position;
 
     /**
      * Массив полученый из файла настройки путем его парсинга
-     * @var array
      */
-    protected $configArray;
+    protected array $configArray;
 
     /**
      * Строка массива конфига в файле конфигурации
-     * @var string
      */
-    protected $configStr;
+    protected string $configStr;
 
     public function __construct(string $path)
     {
@@ -133,7 +126,7 @@ class Config
     /**
      * Очищает ключ от кавычек
      */
-    protected function clearKey(/* mixed */ $key)
+    protected function clearKey(mixed $key): string
     {
         if (! \is_string($key)) {
             throw new ForkException('Config array cannot be parsed (2)');
@@ -315,7 +308,7 @@ class Config
         }
     }
 
-    protected function isFormat(/* mixed */ $data): bool
+    protected function isFormat(mixed $data): bool
     {
         return \is_array($data)
         && \array_key_exists('value', $data)
@@ -328,7 +321,7 @@ class Config
     /**
      * Добавляет/заменяет элемент в конфиг(е)
      */
-    public function add(string $path, /* mixed */ $value, string $after = null): bool
+    public function add(string $path, mixed $value, string $after = null): bool
     {
         if (empty($this->configArray)) {
             $this->configArray = $this->getArray();
@@ -405,7 +398,7 @@ class Config
     /**
      * Удаляет элемент из конфига
      */
-    public function delete(string $path)
+    public function delete(string $path): mixed
     {
         if (empty($this->configArray)) {
             $this->configArray = $this->getArray();

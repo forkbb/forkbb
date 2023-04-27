@@ -18,21 +18,9 @@ use PDOException;
 class Pgsql
 {
     /**
-     * @var DB
-     */
-    protected $db;
-
-    /**
-     * Префикс для таблиц базы
-     * @var string
-     */
-    protected $dbPrefix;
-
-    /**
      * Массив замены типов полей таблицы
-     * @var array
      */
-    protected $dbTypeRepl = [
+    protected array $dbTypeRepl = [
         '%^(?:TINY|SMALL)INT(?:\s*\(\d+\))?(?:\s*UNSIGNED)?$%i'          => 'SMALLINT',
         '%^(?:MEDIUM)?INT(?:\s*\(\d+\))?(?:\s*UNSIGNED)?$%i'             => 'INTEGER',
         '%^BIGINT(?:\s*\(\d+\))?(?:\s*UNSIGNED)?$%i'                     => 'BIGINT',
@@ -43,9 +31,8 @@ class Pgsql
 
     /**
      * Подстановка типов полей для карты БД
-     * @var array
      */
-    protected $types = [
+    protected array $types = [
         'bool'      => 'b',
         'boolean'   => 'b',
         'tinyint'   => 'i',
@@ -62,13 +49,9 @@ class Pgsql
         'double precision' => 'i',
     ];
 
-    public function __construct(DB $db, string $prefix)
+    public function __construct(protected DB $db, protected string $dbPrefix)
     {
-        $this->db = $db;
-
-        $this->nameCheck($prefix);
-
-        $this->dbPrefix = $prefix;
+        $this->nameCheck($dbPrefix);
     }
 
     /**
@@ -345,7 +328,7 @@ class Pgsql
     /**
      * Добавляет поле в таблицу
      */
-    public function addField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $collate = null, string $after = null): bool
+    public function addField(string $table, string $field, string $type, bool $allowNull, mixed $default = null, string $collate = null, string $after = null): bool
     {
         $table = $this->tName($table);
 
@@ -361,7 +344,7 @@ class Pgsql
     /**
      * Модифицирует поле в таблице
      */
-    public function alterField(string $table, string $field, string $type, bool $allowNull, /* mixed */ $default = null, string $collate = null, string $after = null): bool
+    public function alterField(string $table, string $field, string $type, bool $allowNull, mixed $default = null, string $collate = null, string $after = null): bool
     {
         $this->nameCheck($field);
 

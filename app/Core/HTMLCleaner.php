@@ -15,8 +15,9 @@ use RuntimeException;
 
 class HTMLCleaner extends Jevix
 {
-    protected $hConfigFile;
-    protected $hConfigName;
+    protected string $hConfigFile;
+
+    protected ?string $hConfigName = null;
 
     public function __construct(string $file)
     {

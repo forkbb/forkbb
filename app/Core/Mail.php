@@ -18,79 +18,22 @@ use function \ForkBB\e;
 
 class Mail
 {
-    /**
-     * Контейнер
-     * @var Container
-     */
-    protected $c;
-
-    /**
-     * @var string
-     */
-    protected $folder;
-
-    /**
-     * @var string
-     */
-    protected $language;
-
-    /**
-     * @var string
-     */
-    protected $from;
-
-    /**
-     * @var array
-     */
-    protected $to = [];
-
-    /**
-     * @var array
-     */
-    protected $headers = [];
-
-    /**
-     * @var string
-     */
-    protected $message;
-
-    /**
-     * @var array
-     */
-    protected $smtp;
-
-    /**
-     * @var string
-     */
-    protected $EOL;
-
-    /**
-     * @var Resource
-     */
+    protected string $folder;
+    protected string $language;
+    protected string $from;
+    protected array $to = [];
+    protected array $headers = [];
+    protected string $message;
+    protected array $smtp;
+    protected string $EOL;
     protected $connect;
-
-    /**
-     * var int
-     */
-    protected $auth = 0;
-
-    /**
-     * var int
-     */
-    protected $maxRecipients = 1;
-
-    /**
-     * @var array
-     */
-    protected $tplHeaders = [
+    protected int $auth = 0;
+    protected int $maxRecipients = 1;
+    protected array $tplHeaders = [
         'Subject'      => true,
         'Content-Type' => true,
     ];
-
-    /**
-     * @var string
-     */
-    protected $response;
+    protected string $response;
 
     public function __construct(
         /* string */ $host,
@@ -99,10 +42,8 @@ class Mail
         /* string */ $pass,
         /* bool */ $ssl,
         /* string */ $eol,
-        Container $c
+        protected Container $c
     ) {
-        $this->c = $c;
-
         if (
             \is_string($host)
             && \strlen(\trim($host)) > 0
@@ -134,7 +75,7 @@ class Mail
     /**
      * Валидация email
      */
-    public function valid(/* mixed */ $email, bool $strict = false, bool $idna = false) /* : string|false */
+    public function valid(mixed $email, bool $strict = false, bool $idna = false): string|false
     {
         if (
             ! \is_string($email)
@@ -252,7 +193,7 @@ class Mail
     /**
      * Задает заголовок To
      */
-    public function setTo(/* array|string */ $email, string $name = null): Mail
+    public function setTo(array|string $email, string $name = null): Mail
     {
         $this->to = [];
 

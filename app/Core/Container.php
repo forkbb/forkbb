@@ -18,9 +18,9 @@ use InvalidArgumentException;
  */
 class Container
 {
-    protected $instances = [];
-    protected $shared    = [];
-    protected $multiple  = [];
+    protected array $instances = [];
+    protected array $shared    = [];
+    protected array $multiple  = [];
 
     public function __construct(array $config = null)
     {
@@ -64,7 +64,7 @@ class Container
     /**
      * Gets a service or parameter.
      */
-    public function __get(string $key) /* : mixed */
+    public function __get(string $key): mixed
     {
         if (\array_key_exists($key, $this->instances)) {
             return $this->instances[$key];
@@ -132,7 +132,7 @@ class Container
      * Sets a service or parameter.
      * Provides a fluent interface.
      */
-    public function __set(string $key, /* mixed */ $service): void
+    public function __set(string $key, mixed $service): void
     {
         if (false !== \strpos($key, '.')) {
             throw new InvalidArgumentException("Wrong property name: {$key}");
@@ -144,7 +144,7 @@ class Container
     /**
      * Gets data from array.
      */
-    public function fromArray(array $array, array $tree) /* : mixed */
+    public function fromArray(array $array, array $tree): mixed
     {
         $ptr = &$array;
 
@@ -163,7 +163,7 @@ class Container
      * Sets a parameter.
      * Provides a fluent interface.
      */
-    public function setParameter(string $name, /* mixed */ $value): Container
+    public function setParameter(string $name, mixed $value): Container
     {
         $segments = \explode('.', $name);
         $n        = \count($segments);
@@ -186,7 +186,7 @@ class Container
         return $this;
     }
 
-    protected function resolve(/* mixed */ $value) /* : mixed */
+    protected function resolve(mixed $value): mixed
     {
         if (\is_string($value)) {
             if (false !== \strpos($value, '%')) {

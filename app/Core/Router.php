@@ -26,80 +26,59 @@ class Router
 
     /**
      * Массив постоянных маршрутов
-     * @var array
      */
-    protected $statical = [];
+    protected array $statical = [];
 
     /**
      * Массив динамических маршрутов
-     * @var array
      */
-    protected $dynamic = [];
+    protected array $dynamic = [];
 
     /**
      * Список методов доступа
-     * @var array
      */
-    protected $methods = [];
+    protected array $methods = [];
 
     /**
      * Массив для построения ссылок
-     * @var array
      */
-    protected $links = [];
-
-    /**
-     * Базовый url сайта
-     * @var string
-     */
-    protected $baseUrl;
+    protected array $links = [];
 
     /**
      * Host сайта
-     * @var string
      */
-    protected $host;
+    protected string $host;
 
     /**
      * Префикс uri
-     * @var string
      */
-    protected $prefix;
+    protected string $prefix;
 
     /**
      * Длина префикса в байтах
-     * @var int
      */
-    protected $length;
+    protected int $length;
 
-    protected $subSearch = [
+    protected array $subSearch = [
         '/',
         '\\',
     ];
-
-    protected $subRepl = [
+    protected array $subRepl = [
         '(_slash_)',
         '(_backslash_)',
     ];
 
-    /**
-     * @var Csrf
-     */
-    protected $csrf;
-
-    public function __construct(string $base, Csrf $csrf)
+    public function __construct(protected string $baseUrl, protected Csrf $csrf)
     {
-        $this->baseUrl = $base;
-        $this->csrf    = $csrf;
-        $this->host    = \parse_url($base, \PHP_URL_HOST);
-        $this->prefix  = \parse_url($base, \PHP_URL_PATH) ?? '';
+        $this->host    = \parse_url($baseUrl, \PHP_URL_HOST);
+        $this->prefix  = \parse_url($baseUrl, \PHP_URL_PATH) ?? '';
         $this->length  = \strlen($this->prefix);
     }
 
     /**
      * Проверка url на принадлежность форуму
      */
-    public function validate(/* mixed */ $url, string $defMarker, array $defArgs = []): string
+    public function validate(mixed $url, string $defMarker, array $defArgs = []): string
     {
         if (
             \is_string($url)
@@ -310,7 +289,7 @@ class Router
     /**
      * Метод добавляет маршрут
      */
-    public function add(/* array|string */ $method, string $route, string $handler, string $marker = null): void
+    public function add(array|string $method, string $route, string $handler, string $marker = null): void
     {
         if (\is_array($method)) {
             foreach ($method as $m) {

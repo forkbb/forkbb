@@ -11,50 +11,38 @@ declare(strict_types=1);
 namespace ForkBB\Core;
 
 use ForkBB\Core\Container;
+use Psr\SimpleCache\CacheInterface;
 use InvalidArgumentException;
 use RuntimeException;
 
 class Lang
 {
-    /**
-     * Контейнер
-     * @var Container
-     */
-    protected $c;
-
-    /**
-     * @var Psr\SimpleCache\CacheInterface
-     */
-    protected $cache;
+    protected CacheInterface $cache;
 
     /**
      * Массив переводов
-     * @var array
      */
-    protected $tr = [];
+    protected array $tr = [];
 
     /**
      * Загруженные переводы
-     * @var array
      */
-    protected $loaded = [];
+    protected array $loaded = [];
 
     /**
      * Порядок перебора языка
-     * @var array
      */
-    protected $langOrder = [];
+    protected array $langOrder = [];
 
     /**
-     * @var string
+     * Имя текущего загружаемого языкового файла в формате lang/name.po
      */
-    protected $cur;
+    protected string $cur;
 
     /**
      * Список операторов для вычисления Plural Forms
-     * @var array
      */
-    protected $oprtrs = [
+    protected array $oprtrs = [
         '**'  => [23, true , 2], // возведение в степень
         '!'   => [20, false, 1],
         '*'   => [19, false, 2],
@@ -88,20 +76,19 @@ class Lang
     ];
 
     /**
-     * @var array
+     * Список преобразованных формул Plural Forms
      */
-    protected $pluralCashe = [];
+    protected array $pluralCashe = [];
 
-    public function __construct(Container $container)
+    public function __construct(protected Container $c)
     {
-        $this->c     = $container;
-        $this->cache = $container->Cache;
+        $this->cache = $c->Cache;
     }
 
     /**
      * Ищет сообщение в загруженных переводах
      */
-    public function get(string $message, string $lang = null) /* : null|string|array */
+    public function get(string $message, string $lang = null): null|string|array
     {
         if (
             null !== $lang
@@ -459,7 +446,7 @@ class Lang
     /**
      * Вычисляет выражение представленное токенами в postfix записи и переменными
      */
-    protected function calcPostfix(array $postfixList, array $vars = []) /* : mixed */
+    protected function calcPostfix(array $postfixList, array $vars = []): mixed
     {
         foreach ($postfixList as $token) {
             if (\is_string($token)) {
