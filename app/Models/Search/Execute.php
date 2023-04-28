@@ -11,11 +11,11 @@ declare(strict_types=1);
 namespace ForkBB\Models\Search;
 
 use ForkBB\Core\Validator;
+use ForkBB\Core\DB\DBStatement;
 use ForkBB\Models\Method;
 use ForkBB\Models\Forum\Forum;
 use ForkBB\Models\Post\Post;
 use PDO;
-use PDOStatement;
 use RuntimeException;
 
 class Execute extends Method
@@ -24,8 +24,8 @@ class Execute extends Method
     protected string $queryCJK;
     protected int $sortType;
     protected array $words;
-    protected ?PDOStatement $stmtIdx;
-    protected ?PDOStatement $stmtCJK;
+    protected ?DBStatement $stmtIdx;
+    protected ?DBStatement $stmtCJK;
 
     /**
      * Поиск тем/сообщений в соответствии с поисковым запросом

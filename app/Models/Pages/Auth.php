@@ -101,9 +101,9 @@ class Auth extends Page
         $this->regLink      = 1 === $this->c->config->b_regs_allow ? $this->c->Router->link('Register') : null;
 
         $username           = $v->username ?? $username;
-        $save               = $v->save ?? 1;
+        $save               = $v->save ?? true;
         $redirect           = $v->redirect ?? $this->c->Router->validate($ref, 'Index');
-        $this->form         = $this->formLogin($username, $save, $redirect);
+        $this->form         = $this->formLogin($username, (bool) $save, $redirect);
 
         return $this;
     }
@@ -135,7 +135,7 @@ class Auth extends Page
     /**
      * Подготавливает массив данных для формы
      */
-    protected function formLogin(string $username, mixed $save, string $redirect): array
+    protected function formLogin(string $username, bool $save, string $redirect): array
     {
         return [
             'action' => $this->c->Router->link('Login'),

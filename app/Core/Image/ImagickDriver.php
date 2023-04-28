@@ -123,8 +123,4 @@ class ImagickDriver extends DefaultDriver
             throw new FileException($e->getMessage());
         }
     }
-
-    public function destroy(mixed $imagick): void
-    {
-    }
 }

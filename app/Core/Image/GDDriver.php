@@ -139,11 +139,4 @@ class GDDriver extends DefaultDriver
 
         return $result;
     }
-
-    public function destroy(mixed $image): void
-    {
-        if (\is_resource($image)) {
-            \imagedestroy($image);
-        }
-    }
 }

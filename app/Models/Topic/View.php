@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Topic;
 
 use ForkBB\Models\Action;
+use ForkBB\Models\Model;
 use ForkBB\Models\Forum\Forum;
 use ForkBB\Models\Search\Search;
 use ForkBB\Models\Topic\Topic;
@@ -23,7 +24,7 @@ class View extends Action
     /**
      * Возвращает список тем
      */
-    public function view(mixed $arg): array
+    public function view(Model $arg): array
     {
         if ($arg instanceof Forum) {
             $full = false;

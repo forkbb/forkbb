@@ -988,7 +988,7 @@ class Files
     /**
      * Получает файл(ы) из формы
      */
-    public function upload(array $file): mixed
+    public function upload(array $file): File|array|false|null
     {
         $this->error = null;
 

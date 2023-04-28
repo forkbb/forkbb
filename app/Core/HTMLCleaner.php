@@ -15,21 +15,17 @@ use RuntimeException;
 
 class HTMLCleaner extends Jevix
 {
-    protected string $hConfigFile;
-
     protected ?string $hConfigName = null;
 
-    public function __construct(string $file)
+    public function __construct(protected string $hConfigFile)
     {
-        if (! \is_file($file)) {
+        if (! \is_file($hConfigFile)) {
             throw new RuntimeException('File not found');
         }
 
-        if (! \is_readable($file)) {
+        if (! \is_readable($hConfigFile)) {
             throw new RuntimeException('File can not be read');
         }
-
-        $this->hConfigFile = $file;
     }
 
     public function setConfig(string $name = 'default'): self

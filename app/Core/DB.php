@@ -264,13 +264,7 @@ class DB
             && \array_key_exists(':' . $key, $params)
         ) {
             return $params[':' . $key];
-        } elseif (
-            (
-                \is_string($key)
-                || \is_int($key)
-            )
-            && \array_key_exists($key, $params)
-        ) {
+        } elseif (\array_key_exists($key, $params)) {
             return $params[$key];
         }
 

@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Post;
 
 use ForkBB\Models\Action;
+use ForkBB\Models\Model;
 use ForkBB\Models\Post\Post;
 use ForkBB\Models\Search\Search;
 use ForkBB\Models\Topic\Topic;
@@ -23,7 +24,7 @@ class View extends Action
     /**
      * Возвращает список сообщений
      */
-    public function view(mixed $arg, bool $review = false): array
+    public function view(Model $arg, bool $review = false): array
     {
         if (
             ! $arg instanceof Topic
