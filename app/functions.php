@@ -28,7 +28,7 @@ function _init(Container $c): void
  * Переводит строку с подстановкой аргументов
  * Защита от дурака отсутствует, ловим ошибки/исключения
  */
-function __(/* string|array */ $arg): string
+function __(string|array $arg): string
 {
     static $c, $lang;
 
@@ -81,7 +81,7 @@ function e(string $arg): string
 /**
  * Возвращает число в формате текущего пользователя
  */
-function num(/* mixed */ $number, int $decimals = 0): string
+function num(mixed $number, int $decimals = 0): string
 {
     return \is_numeric($number)
         ? \number_format((float) $number, $decimals, __('lang_decimal_point'), __('lang_thousands_sep'))

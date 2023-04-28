@@ -46,7 +46,7 @@ class Redirect extends Page
     /**
      * Задает сообщение
      */
-    public function message(/* string|array */ $message): Page
+    public function message(string|array $message): Page
     {
         // переадресация без вывода сообщения
         if ($this->c->config->i_redirect_delay < 1) {

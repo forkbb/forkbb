@@ -236,7 +236,7 @@ class Poll extends DataModel
     /**
      * Возвращает статус опроса для текущего пользователя или null
      */
-    protected function getstatus() /* : null|string|array */
+    protected function getstatus(): string|array|null
     {
         if ($this->tid < 1) {
             return null;

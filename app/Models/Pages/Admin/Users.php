@@ -34,7 +34,7 @@ abstract class Users extends Admin
     /**
      * Кодирует данные фильтра для url
      */
-    protected function encodeData(/* array|string */ $data): string
+    protected function encodeData(string|array $data): string
     {
         if (\is_array($data)) {
             unset($data['token']);
@@ -50,7 +50,7 @@ abstract class Users extends Admin
     /**
      * Декодирует данные фильтра из url
      */
-    protected function decodeData(string $data) /* : mixed */
+    protected function decodeData(string $data): array|false
     {
         $data = \explode(':', $data);
 
@@ -77,7 +77,7 @@ abstract class Users extends Admin
     /**
      * Проверяет доступность действий над выбранными пользователями
      */
-    protected function checkSelected(array $selected, string $action, bool $profile = false) /* : array|false */
+    protected function checkSelected(array $selected, string $action, bool $profile = false): array|false
     {
         $selected = \array_map('\\intval', $selected);
         $bad      = \array_filter($selected, function ($value) {

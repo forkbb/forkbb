@@ -35,19 +35,9 @@ class Mail
     ];
     protected string $response;
 
-    public function __construct(
-        /* string */ $host,
-        /* string */ $user,
-        #[SensitiveParameter]
-        /* string */ $pass,
-        /* bool */ $ssl,
-        /* string */ $eol,
-        protected Container $c
-    ) {
-        if (
-            \is_string($host)
-            && \strlen(\trim($host)) > 0
-        ) {
+    public function __construct(string $host, string $user, #[SensitiveParameter] string $pass, int $ssl, string $eol, protected Container $c)
+    {
+        if ('' != $host) {
             $hp = \explode(':', $host, 2);
 
             if (
@@ -62,8 +52,8 @@ class Mail
             $this->smtp = [
                 'host'    => ($ssl ? 'ssl://' : '') . $hp[0],
                 'port'    => (int) $hp[1],
-                'user'    => (string) $user,
-                'pass'    => (string) $pass,
+                'user'    => $user,
+                'pass'    => $pass,
                 'timeout' => 15,
             ];
             $this->EOL = "\r\n";

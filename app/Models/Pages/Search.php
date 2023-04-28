@@ -361,7 +361,7 @@ class Search extends Page
     /**
      * Дополнительная проверка разделов
      */
-    public function vCheckForums(Validator $v, /* mixed */ $forums) /* : mixed */
+    public function vCheckForums(Validator $v, mixed $forums): mixed
     {
         if ('*' !== $forums) {
             if (
@@ -543,7 +543,7 @@ class Search extends Page
      * Возвращает массив хлебных крошек
      * Заполняет массив титула страницы
      */
-    protected function crumbs(/* mixed */ ...$crumbs): array
+    protected function crumbs(mixed ...$crumbs): array
     {
         $crumbs[] = [$this->c->Router->link('Search'), 'Search'];
 

@@ -19,7 +19,7 @@ class UpdateCountTopics extends Action
     /**
      * Обновляет число тем пользователя(ей)
      */
-    public function updateCountTopics(/* mixed */ ...$args): void
+    public function updateCountTopics(mixed ...$args): void
     {
         $ids = [];
         foreach ($args as $arg) {

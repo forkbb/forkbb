@@ -235,7 +235,7 @@ trait PostValidatorTrait
     /**
      * Дополнительная проверка опроса
      */
-    public function vCheckPoll(Validator $v, /* string|false */ $enable, $attr) /* : string|false */
+    public function vCheckPoll(Validator $v, string|false $enable, $attr): string|false
     {
         if (
             false !== $enable

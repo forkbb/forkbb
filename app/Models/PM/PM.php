@@ -77,7 +77,7 @@ class PM extends Model
         return $this->repository[$type][$key] ?? null;
     }
 
-    public function set(int $type, int $key, /* mixed */ $value): self
+    public function set(int $type, int $key, ?DataModel $value): self
     {
         $this->checkType($type);
 

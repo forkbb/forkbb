@@ -67,7 +67,7 @@ abstract class Profile extends Page
      * Возвращает массив хлебных крошек
      * Заполняет массив титула страницы
      */
-    protected function crumbs(/* mixed */ ...$crumbs): array
+    protected function crumbs(mixed ...$crumbs): array
     {
         $crumbs[] = [$this->curUser->link, ['User %s', $this->curUser->username]];
         $crumbs[] = [$this->c->Router->link('Userlist'), 'User list'];

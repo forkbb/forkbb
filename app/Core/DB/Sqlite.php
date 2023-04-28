@@ -118,7 +118,7 @@ class Sqlite
     /**
      * Конвертирует данные в строку для DEFAULT
      */
-    protected function convToStr(/* mixed */ $data): string
+    protected function convToStr(mixed $data): string
     {
         if (\is_string($data)) {
             return $this->db->quote($data);

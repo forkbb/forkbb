@@ -121,7 +121,7 @@ abstract class AbstractPM extends Page
      * Возвращает массив хлебных крошек
      * Заполняет массив титула страницы
      */
-    protected function crumbs(/* mixed */ ...$crumbs): array
+    protected function crumbs(mixed ...$crumbs): array
     {
         $pms      = $this->pms;
         $action   = $this->args['action'] ?? ($this->user->u_pm_num_new > 0 ? Cnst::ACTION_NEW : Cnst::ACTION_CURRENT);

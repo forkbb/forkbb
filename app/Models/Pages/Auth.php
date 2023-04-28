@@ -135,7 +135,7 @@ class Auth extends Page
     /**
      * Подготавливает массив данных для формы
      */
-    protected function formLogin(string $username, /* mixed */ $save, string $redirect): array
+    protected function formLogin(string $username, mixed $save, string $redirect): array
     {
         return [
             'action' => $this->c->Router->link('Login'),

@@ -19,7 +19,7 @@ class UpdateCountPosts extends Action
     /**
      * Обновляет число сообщений пользователя(ей)
      */
-    public function updateCountPosts(/* mixed */ ...$args): void
+    public function updateCountPosts(mixed ...$args): void
     {
         $ids = [];
         foreach ($args as $arg) {

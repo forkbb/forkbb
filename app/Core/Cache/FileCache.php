@@ -28,7 +28,7 @@ class FileCache implements CacheInterface
      */
     protected $cacheDir;
 
-    public function __construct(string $dir, /* string */ $resetMark)
+    public function __construct(string $dir, string $resetMark)
     {
         $dir = \rtrim($dir, '\\/');
 
@@ -42,9 +42,7 @@ class FileCache implements CacheInterface
 
         $this->cacheDir = $dir;
 
-        if (\is_string($resetMark)) {
-            $this->resetIfRequired($resetMark);
-        }
+        $this->resetIfRequired($resetMark);
     }
 
     /**

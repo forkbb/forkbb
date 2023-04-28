@@ -46,7 +46,7 @@ class Bans extends Admin
     /**
      * Декодирует данные фильтра из url
      */
-    protected function decodeData(string $data) /* : mixed */
+    protected function decodeData(string $data): array|false
     {
         $data = \explode(':', $data);
 

@@ -70,7 +70,7 @@ abstract class AbstractStatement extends DBStatement
         return $this->stmt->setFetchMode($mode, ...$args);
     }
 
-    public function fetch(int $mode = 0, int $orientation = PDO::FETCH_ORI_NEXT, int $offset = 0) /* : mixed */
+    public function fetch(int $mode = 0, int $orientation = PDO::FETCH_ORI_NEXT, int $offset = 0): mixed
     {
         $this->okFetchColumn = false;
 

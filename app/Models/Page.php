@@ -464,7 +464,7 @@ abstract class Page extends Model
      * Возвращает массив хлебных крошек
      * Заполняет массив титула страницы
      */
-    protected function crumbs(/* mixed */ ...$crumbs): array
+    protected function crumbs(mixed ...$crumbs): array
     {
         $result = [];
         $active = true;
