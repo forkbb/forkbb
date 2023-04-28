@@ -28,14 +28,15 @@ class Forum extends DataModel
      */
     protected function getparent(): ?Forum
     {
-        if (
-            null === $this->parent_forum_id
-            && 0 !== $this->id
-        ) {
-            throw new RuntimeException('Parent is not defined');
-        }
+        if (null === $this->parent_forum_id) {
+            if (0 !== $this->id) {
+                throw new RuntimeException('Parent is not defined');
+            }
 
-        return $this->c->forums->get($this->parent_forum_id);
+            return null;
+        } else {
+            return $this->c->forums->get($this->parent_forum_id);
+        }
     }
 
     /**

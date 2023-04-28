@@ -124,7 +124,7 @@ class Log implements LoggerInterface
         if (true === $ext) {
             foreach ($_SERVER as $key => $value) {
                 if (
-                    'HTTP_' === \substr($key, 0, 5)
+                    \str_starts_with($key, 'HTTP_')
                     && 'HTTP_USER_AGENT' !== $key
                     && 'HTTP_COOKIE' !== $key
                 ) {

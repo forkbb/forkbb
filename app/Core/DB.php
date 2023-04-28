@@ -237,11 +237,9 @@ class DB
                     throw new PDOException("Expected array: key='{$key}', type='{$type}'");
                 }
 
-                if (! isset($map[$key])) {
-                    $map[$key] = [$type];
-                }
+                $map[$key] ??= [$type];
+                $res         = [];
 
-                $res = [];
                 foreach ($value as $val) {
                     $name        = ':' . $idxOut++;
                     $res[]       = $name;

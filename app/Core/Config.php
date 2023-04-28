@@ -339,9 +339,7 @@ class Config
                 $config[] = [];
                 $config   = &$config[\array_key_last($config)];
             } else {
-                if (! isset($config[$key])) {
-                    $config[$key] = [];
-                }
+                $config[$key] ??= [];
 
                 if ($this->isFormat($config[$key])) {
                     $config = &$config[$key]['value'];

@@ -83,7 +83,7 @@ class Forums extends Manager
     /**
      * Получение модели раздела
      */
-    public function get($id): ?Forum
+    public function get(int|string $id): ?Forum
     {
         $forum = parent::get($id);
 

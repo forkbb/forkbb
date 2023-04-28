@@ -173,10 +173,10 @@ class Mail
     /**
      * Добавляет заголовок To
      */
-    public function addTo(/* array|string */ $email, string $name = null): Mail
+    public function addTo(string|array $email, string $name = null): Mail
     {
         if (! \is_array($email)) {
-            $email = \preg_split('%[,\n\r]%', (string) $email, -1, \PREG_SPLIT_NO_EMPTY);
+            $email = \preg_split('%[,\n\r]%', $email, -1, \PREG_SPLIT_NO_EMPTY);
         }
 
         foreach ($email as $cur) {

@@ -37,7 +37,7 @@ class View extends Dirk
      */
     protected function compileTransformations(string $value): string
     {
-        if ('<?xml ' === \substr($value, 0, 6)) {
+        if (\str_starts_with($value, '<?xml ')) {
             $value = \str_replace(' \\ENT_HTML5 | \\ENT_QUOTES | \\ENT_SUBSTITUTE,', ' \\ENT_XML1,', $value);
         }
 

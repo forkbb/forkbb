@@ -70,7 +70,7 @@ class Mysql
      */
     protected function tName(string $name): string
     {
-        if ('::' === \substr($name, 0, 2)) {
+        if (\str_starts_with($name, '::')) {
             $name = $this->dbPrefix . \substr($name, 2);
         }
 

@@ -275,7 +275,7 @@ class Update extends Admin
     {
         $this->okPass = true;
 
-        if (\substr($this->c->DB_DSN, 0, 6) === 'sqlite') {
+        if (\str_starts_with($this->c->DB_DSN, 'sqlite')) {
             if (! \hash_equals($this->c->DB_DSN, "sqlite:{$dbpass}")) {
                 $this->okPass = false;
 

@@ -93,7 +93,7 @@ class DataModel extends Model
     public function __set(string $name, mixed $value): void
     {
         // без отслеживания
-        if (0 === \strpos($name, '__')) {
+        if (\str_starts_with($name, '__')) {
             $track = null;
             $name  = \substr($name, 2);
         // с отслеживанием
@@ -149,7 +149,7 @@ class DataModel extends Model
     public function __get(string $name): mixed
     {
         // без вычисления
-        if (0 === \strpos($name, '__')) {
+        if (\str_starts_with($name, '__')) {
             return $this->getAttr(\substr($name, 2));
         // с вычислениями
         } else {

@@ -165,8 +165,8 @@ class Current extends Action
 
         if (
             0 === $status
-            && 0 !== \substr_compare('Mozilla/', $agent, 0, 8)
-            && 0 !== \substr_compare('Opera/', $agent, 0, 6)
+            && ! \str_starts_with($agent, 'Mozilla/')
+            && ! \str_starts_with($agent, 'Opera/')
         ) {
             $status = 1;
         }

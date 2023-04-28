@@ -361,7 +361,7 @@ abstract class Page extends Model
     {
         $key = \strtolower($header);
 
-        if ('http/' === \substr($key, 0, 5)) {
+        if (\str_starts_with($key, 'http/')) {
             $key     = 'http/';
             $replace = true;
 

@@ -121,7 +121,7 @@ class Model
         } elseif (\array_key_exists($name, $this->zAttrs)) {
             return $this->zAttrs[$name];
         } elseif (
-            0 === \strpos($name, 'censor')
+            \str_starts_with($name, 'censor')
             && isset($this->zAttrs[$root = \lcfirst(\substr($name, 6))])
         ) {
             return $this->zAttrsCalc[$name] = $this->c->censorship->censor($this->zAttrs[$root]);

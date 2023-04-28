@@ -179,10 +179,7 @@ abstract class AbstractStatement extends DBStatement
                         \array_shift($data);;
                     }
 
-                    if (! isset($result[$key])) {
-                        $result[$key] = [];
-                    }
-
+                    $result[$key] ??= [];
                     $result[$key][] = $data;
                 }
 
