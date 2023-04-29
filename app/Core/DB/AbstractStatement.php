@@ -25,7 +25,7 @@ abstract class AbstractStatement extends DBStatement
     /**
      * Режим выборки установленный через setFetchMode()/fetchAll()
      */
-    protected int $fetchMode;
+    protected int $fetchMode = 0;
 
     /**
      * colno, class или object из setFetchMode()/fetchAll()
