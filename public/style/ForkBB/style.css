@@ -2043,12 +2043,12 @@ body,
 #fork .f-poll-ab {
   border: 0.0625rem solid #AA7939;
   width: 60%;
-  height: 1rem;
+  height: 0.5rem;
 }
 
 #fork .f-poll-ab-s1 {
   background-color: #AA7939;
-  height: 1rem;
+  height: 0.5rem;
   display: block;
   font-size: 0;
   overflow: hidden;
