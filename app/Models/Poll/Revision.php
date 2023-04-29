@@ -25,7 +25,7 @@ class Revision extends Action
     /**
      * Проверяет/нормализует опрос
      */
-    public function revision(Poll $poll, bool $normalize = false): string|true
+    public function revision(Poll $poll, bool $normalize = false): string|bool
     {
         $this->error    = null;
         $this->question = [];
