@@ -32,7 +32,7 @@ class Structure extends Model
         parent::__construct($container);
 
         $this->zDepend = [
-            'attrs'        => ['no_attr', 'def_attr', 'other_attrs'],
+            'attrs' => ['no_attr', 'def_attr', 'other_attrs'],
         ];
     }
 
@@ -237,10 +237,12 @@ class Structure extends Model
                     case 'format':
                     case 'body_format':
                         $value = isset($data[$field]) && \is_string($data[$field]) ? $data[$field] : null;
+
                         break;
                     case 'required':
                     case 'text_only':
                         $value = isset($data[$field]) ? true : null;
+
                         break;
                     default:
                         throw new RuntimeException('Unknown attribute property');
@@ -264,15 +266,18 @@ class Structure extends Model
             unset($attrs[$name]);
         } else {
             $result = [];
+
             foreach ($fields as $field) {
                 switch ($field) {
                     case 'format':
                     case 'body_format':
                         $value = ! empty($data[$field]) && \is_string($data[$field]) ? $data[$field] : null;
+
                         break;
                     case 'required':
                     case 'text_only':
                         $value = ! empty($data[$field]) ? true : null;
+
                         break;
                     default:
                         throw new RuntimeException('Unknown attribute property');
@@ -320,6 +325,7 @@ class Structure extends Model
         unset($attrs['No_attr'], $attrs['Def'], $attrs['New']);
 
         $result = [];
+
         foreach ($attrs as $name => $attr) {
             $value = $this->getBBAttr($name, ['required', 'format', 'body_format', 'text_only']);
 
@@ -353,11 +359,13 @@ class Structure extends Model
         }
 
         $result = $this->testPHP($this->handler);
+
         if (null !== $result) {
             return ['PHP code error in Handler: %s', $result];
         }
 
         $result = $this->testPHP($this->text_handler);
+
         if (null !== $result ) {
             return ['PHP code error in Text handler: %s', $result];
         }
@@ -486,6 +494,7 @@ class Structure extends Model
 
         // тест на парность скобок
         $testCode = \preg_replace('%//[^\r\n]*+|#[^\r\n]*+|/\*.*?\*/|\'.*?(?<!\\\\)\'|".*?(?<!\\\\)"%s', '', $code);
+
         if (false === \preg_match_all('%[(){}\[\]]%s', $testCode, $matches)) {
             throw new RuntimeException('The preg_match_all() returned an error');
         }
@@ -498,6 +507,7 @@ class Structure extends Model
             switch ($value) {
                 case '(':
                     ++$round;
+
                     break;
                 case ')':
                     --$round;
@@ -505,9 +515,11 @@ class Structure extends Model
                     if ($round < 0) {
                         return '\')\' > \'(\'.';
                     }
+
                     break;
                 case '[':
                     ++$square;
+
                     break;
                 case ']':
                     --$square;
@@ -515,9 +527,11 @@ class Structure extends Model
                     if ($square < 0) {
                         return '\']\' > \'[\'.';
                     }
+
                     break;
                 case '{':
                     ++$curly;
+
                     break;
                 case '}':
                     --$curly;
@@ -525,6 +539,7 @@ class Structure extends Model
                     if ($curly < 0) {
                         return '\'}\' > \'{\'.';
                     }
+
                     break;
                 default:
                     throw new RuntimeException('Unknown bracket type');

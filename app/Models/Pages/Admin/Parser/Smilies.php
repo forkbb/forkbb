@@ -21,15 +21,13 @@ class Smilies extends Parser
 {
     /**
      * Паттерн для имени изображения
-     * @var string
      */
-    protected $pattern = '%^[a-z0-9-_]+\.(?:gif|jpe?g|png|webp)$%isD';
+    protected string $pattern = '%^[a-z0-9-_]+\.(?:gif|jpe?g|png|webp)$%isD';
 
     /**
      * Паттерн для доступных к загрузке типов файлов
-     * @var string
      */
-    protected $accept = 'image/*';
+    protected string $accept = 'image/*';
 
     /**
     * Заполняет список файлов из каталога смайлов
@@ -51,6 +49,7 @@ class Smilies extends Parser
                     $result[] = $entry;
                 }
             }
+
             \closedir($dh);
             \sort($result, \SORT_NATURAL);
         }
@@ -157,6 +156,7 @@ class Smilies extends Parser
 
         $i   = 1;
         $max = 0;
+
         foreach ($this->c->smilies->list as $id => $cur) {
             $fields = [];
             $max    = \max($max, $cur['sm_position']);

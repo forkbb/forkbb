@@ -68,10 +68,11 @@ abstract class Page extends Model
         $this->fTitle       = $container->config->o_board_title;
         $this->fDescription = $container->config->o_board_desc;
         $this->fRootLink    = $container->Router->link('Index');
+
         if (1 === $container->config->b_announcement) {
             $this->fAnnounce = $container->config->o_announcement_message;
         }
-        $this->user         = $this->c->user; // передача текущего юзера в шаблон
+        $this->user = $this->c->user; // передача текущего юзера в шаблон
 
         $this->pageHeader('mainStyle', 'link', 10000, [
             'rel'  => 'stylesheet',
@@ -251,6 +252,7 @@ abstract class Page extends Model
             // position|name|link[|id]\n
             if (\preg_match_all('%^(\d+)\|([^\|\n\r]+)\|([^\|\n\r]+)(?:\|([^\|\n\r]+))?%m', $this->c->config->o_additional_navlinks . "\n", $matches)) {
                $k = \count($matches[0]);
+
                for ($i = 0; $i < $k; ++$i) {
                    if (empty($matches[4][$i])) {
                        $matches[4][$i] = 'extra' . $i;
@@ -301,6 +303,7 @@ abstract class Page extends Model
         if (empty($titles)) {
             $titles = $this->titles;
         }
+
         $titles[] = ['%s', $this->c->config->o_board_title];
 
         return \implode(__('Title separator'), \array_map('\\ForkBB\\__', $titles));
@@ -367,9 +370,9 @@ abstract class Page extends Model
 
             if (
                 ! empty($_SERVER['SERVER_PROTOCOL'])
-                && 'HTTP/' === \strtoupper(\substr($_SERVER['SERVER_PROTOCOL'], 0, 5))
+                && \in_array($_SERVER['SERVER_PROTOCOL'], ['HTTP/1.1', 'HTTP/2', 'HTTP/3'], true)
             ) {
-                $header = 'HTTP/' . \substr($_SERVER['SERVER_PROTOCOL'], 5);
+                $header = $_SERVER['SERVER_PROTOCOL'];
             }
         } else {
             $header .= ':';
@@ -434,8 +437,9 @@ abstract class Page extends Model
      */
     public function settitles(string|array $value): void
     {
-        $attr = $this->getAttr('titles', []);
+        $attr   = $this->getAttr('titles', []);
         $attr[] = $value;
+
         $this->setAttr('titles', $attr);
     }
 

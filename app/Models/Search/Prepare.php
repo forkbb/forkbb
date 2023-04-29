@@ -55,10 +55,13 @@ class Prepare extends Method
                     } else {
                         $words[] = ['type' => 'CJK', 'word' => $subQuery];
                     }
+
                     $keyword = false;
                     ++$count;
                 }
+
                 $quotes  = false;
+
                 continue;
             }
 
@@ -83,6 +86,7 @@ class Prepare extends Method
                     case '-':
                     case '!':
                         $key = $key ?: 'NOT';
+
                         if (! $keyword) {
                             $keyword = true;
                         } elseif (empty($words)) {
@@ -90,13 +94,16 @@ class Prepare extends Method
                         } else {
                             $error = 'Logical operators follow one after another: \'%s\'';
                         }
+
                         $words[] = $key;
+
                         break;
                     case '(':
                         $stack[] = [$words, $keyword, $count];
                         $words   = [];
                         $keyword = true;
                         $count   = 0;
+
                         break;
                     case ')':
                         if (! $count) {
@@ -109,21 +116,26 @@ class Prepare extends Method
                         } else {
                             $temp = $words;
                             list($words, $keyword, $count) = \array_pop($stack);
+
                             if (! $keyword) {
                                 $words[] = 'AND';
                             }
+
                             $words[] = $temp;
                             $keyword = false;
                             ++$count;
                         }
+
                         break;
                     default:
                         $cur    = \mb_strtolower($cur, 'UTF-8');
                         $cur    = $this->model->cleanText($cur); //????
                         $temp   = [];
                         $countT = 0;
+
                         foreach (\explode(' ', $cur) as $word) {
                             $word = $this->model->word($word);
+
                             if (null === $word) {
                                 continue;
                             }
@@ -137,8 +149,10 @@ class Prepare extends Method
                             } else {
                                 $temp[] = $word;
                             }
+
                             ++$countT;
                         }
+
                         if ($countT) {
                             if (! $keyword) {
                                 $words[] = 'AND';
@@ -153,8 +167,10 @@ class Prepare extends Method
                                 $words[] = $temp;
                                 ++$count;
                             }
+
                             $keyword = false;
                         }
+
                         break;
                 }
             }
@@ -183,6 +199,7 @@ class Prepare extends Method
     {
         $space  = '';
         $result = '';
+
         foreach ($words as $word) {
             if (
                 isset($word['type'])
@@ -192,6 +209,7 @@ class Prepare extends Method
             } elseif (\is_array($word)) {
                 $word = '(' . $this->queryText($word) . ')';
             }
+
             $result .= $space . $word;
             $space   = ' ';
         }

@@ -46,6 +46,7 @@ class Refresh extends Action
                 ORDER BY c.disp_position, c.id, f.disp_position';
 
             $stmt = $this->c->DB->query($query, $vars);
+
             while ($row = $stmt->fetch()) {
                 $row['moderators'] = $this->formatModers($row['moderators']);
                 $list[$row['id']]  = $row;
@@ -76,6 +77,7 @@ class Refresh extends Action
     {
         $sub = [];
         $all = [];
+
         foreach ($list as $id => $f) {
             if (
                 $parent === $id
@@ -83,6 +85,7 @@ class Refresh extends Action
             ) {
                 continue;
             }
+
             $sub[] = $id;
             $all   = \array_merge($this->createList($list, $id), $all);
         }
@@ -90,9 +93,11 @@ class Refresh extends Action
             if (empty($sub)) {
                 return [];
             }
+
             $list[0]['id']    = $parent;
             $list[0]['ready'] = true;
         }
+
         $all = \array_merge($sub, $all);
         $list[$parent]['subforums']   = $sub ?: null;
         $list[$parent]['descendants'] = $all ?: null;

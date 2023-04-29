@@ -15,6 +15,8 @@ use RuntimeException;
 
 class Config extends DataModel
 {
+    const CACHE_KEY = 'config';
+
     /**
      * Ключ модели для контейнера
      */
@@ -26,12 +28,12 @@ class Config extends DataModel
      */
     public function init(): Config
     {
-        $config = $this->c->Cache->get('config');
+        $config = $this->c->Cache->get(self::CACHE_KEY);
 
         if (! \is_array($config)) {
             $config = $this->load();
 
-            if (true !== $this->c->Cache->set('config', $config)) {
+            if (true !== $this->c->Cache->set(self::CACHE_KEY, $config)) {
                 throw new RuntimeException('Unable to write value to cache - config');
             }
         }
@@ -46,7 +48,7 @@ class Config extends DataModel
      */
     public function reset(): Config
     {
-        if (true !== $this->c->Cache->delete('config')) {
+        if (true !== $this->c->Cache->delete(self::CACHE_KEY)) {
             throw new RuntimeException('Unable to remove key from cache - config');
         }
 

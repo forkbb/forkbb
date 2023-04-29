@@ -16,6 +16,8 @@ use RuntimeException;
 
 class Stats extends Model
 {
+    const CACHE_KEY = 'stats';
+
     /**
      * Ключ модели для контейнера
      */
@@ -26,12 +28,12 @@ class Stats extends Model
      */
     public function init(): Stats
     {
-        $list = $this->c->Cache->get('stats');
+        $list = $this->c->Cache->get(self::CACHE_KEY);
 
         if (! \is_array($list)) {
             $list = $this->c->users->stats();
 
-            if (true !== $this->c->Cache->set('stats', $list)) {
+            if (true !== $this->c->Cache->set(self::CACHE_KEY, $list)) {
                 throw new RuntimeException('Unable to write value to cache - stats');
             }
         }
@@ -52,7 +54,7 @@ class Stats extends Model
      */
     public function reset(): Stats
     {
-        if (true !== $this->c->Cache->delete('stats')) {
+        if (true !== $this->c->Cache->delete(self::CACHE_KEY)) {
             throw new RuntimeException('Unable to remove key from cache - stats');
         }
 

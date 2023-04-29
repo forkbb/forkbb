@@ -99,6 +99,7 @@ class Cookie extends Model
     public function delete(string $name, string $path = null, string $domain = null): bool
     {
         $result = $this->set($name, '', 1, $path, $domain);
+
         if ($result) {
             unset($_COOKIE[$this->prefix . $name]);
         }
@@ -173,6 +174,7 @@ class Cookie extends Model
             $expire  = 0;
             $pfx     = '-';
         }
+
         $passHash = $this->c->Secury->hmac($user->password . $expTime, $this->key2);
         $ckHash   = $this->c->Secury->hmac($pfx . $user->id . $expTime . $passHash, $this->key1);
 
@@ -203,6 +205,7 @@ class Cookie extends Model
         if ($this->noSet) {
             throw new RuntimeException('Model attributes in read-only mode');
         }
+
         parent::__set($name, $val);
     }
 }

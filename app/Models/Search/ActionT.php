@@ -32,9 +32,11 @@ class ActionT extends Method
         }
 
         $query = null;
+
         switch ($action) {
             case 'search':
                 $list = $this->model->queryIds;
+
                 break;
             case 'latest_active_topics':
                 $query = 'SELECT t.id
@@ -42,12 +44,14 @@ class ActionT extends Method
                     WHERE t.forum_id IN (?ai:forums) AND t.moved_to=0
                     ORDER BY t.last_post DESC
                     LIMIT 1000';
+
                 break;
             case 'unanswered_topics':
                 $query = 'SELECT t.id
                     FROM ::topics AS t
                     WHERE t.forum_id IN (?ai:forums) AND t.moved_to=0 AND t.num_replies=0
                     ORDER BY t.last_post DESC';
+
                 break;
             case 'topics_with_your_posts':
                 $query = 'SELECT t.id
@@ -56,6 +60,7 @@ class ActionT extends Method
                     WHERE t.forum_id IN (?ai:forums) AND t.moved_to=0 AND p.poster_id=?i:uid
                     GROUP BY t.id
                     ORDER BY t.last_post DESC';
+
                 break;
             case 'topics':
                 $query = 'SELECT t.id
@@ -63,6 +68,7 @@ class ActionT extends Method
                     INNER JOIN ::posts AS p ON t.first_post_id=p.id
                     WHERE t.forum_id IN (?ai:forums) AND t.moved_to=0 AND p.poster_id=?i:uid
                     ORDER BY t.first_post_id DESC'; // t.last_post
+
                 break;
             case 'new':
                 $query = 'SELECT t.id
@@ -75,6 +81,7 @@ class ActionT extends Method
                         AND (mot.mt_last_visit IS NULL OR t.last_post>mot.mt_last_visit)
                         AND (mof.mf_mark_all_read IS NULL OR t.last_post>mof.mf_mark_all_read)
                     ORDER BY t.last_post DESC';
+
                 break;
             case 'topics_subscriptions':
                 if (0 !== $root->id) {
@@ -92,6 +99,7 @@ class ActionT extends Method
                 $list       = $subscrInfo[$subscr::TOPICS_DATA] ?? [];
 
                 \arsort($list, \SORT_NUMERIC); // ???? или по последнему сообщению делать?
+
                 break;
             default:
                 throw new InvalidArgumentException('Unknown action: ' . $action);

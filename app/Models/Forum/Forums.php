@@ -17,6 +17,8 @@ use RuntimeException;
 
 class Forums extends Manager
 {
+    const CACHE_KEY = 'forums_mark';
+
     /**
      * Ключ модели для контейнера
      */
@@ -47,12 +49,12 @@ class Forums extends Manager
             $gid = $group->g_id;
         }
 
-        $mark = $this->c->Cache->get('forums_mark');
+        $mark = $this->c->Cache->get(self::CACHE_KEY);
 
         if (empty($mark)) {
             $mark = \time();
 
-            if (true !== $this->c->Cache->set('forums_mark', $mark)) {
+            if (true !== $this->c->Cache->set(self::CACHE_KEY, $mark)) {
                 throw new RuntimeException('Unable to write value to cache - forums_mark');
             }
 
@@ -91,6 +93,7 @@ class Forums extends Manager
             if (empty($this->forumList[$id])) {
                 return null;
             }
+
             $forum = $this->create($this->forumList[$id]);
             $this->set($id, $forum);
         }
@@ -123,6 +126,7 @@ class Forums extends Manager
     public function depthList(Forum $forum, int $depth, array $list = []): array
     {
         ++$depth;
+
         foreach ($forum->subforums as $sub) {
             $sub->__depth = $depth;
             $list[]       = $sub;
@@ -138,7 +142,7 @@ class Forums extends Manager
      */
     public function reset(): Forums
     {
-        if (true !== $this->c->Cache->delete('forums_mark')) {
+        if (true !== $this->c->Cache->delete(self::CACHE_KEY)) {
             throw new RuntimeException('Unable to remove key from cache - forums_mark');
         }
 

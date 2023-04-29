@@ -50,6 +50,7 @@ class Filter extends Method
             if (! isset($fields[$field])) {
                 throw new InvalidArgumentException("The '{$field}' field is not found");
             }
+
             switch ($rule[0]) {
                 case 'LIKE':
                     if (
@@ -61,13 +62,16 @@ class Filter extends Method
                             $where[] = "b.{$field} {$like} ?{$fields[$field]} ESCAPE '#'";
                             $vars[]  = \str_replace(['#', '%', '_', '*'], ['##', '#%', '#_', '%'], $rule[1]);
                         }
+
                         break;
                     }
+
                     $rule[0] = '=';
                 case '=':
                 case '!=':
                     $where[] = "b.{$field}{$rule[0]}?{$fields[$field]}";
                     $vars[]  = $rule[1];
+
                     break;
                 case 'BETWEEN':
                     // если и min, и max
@@ -96,6 +100,7 @@ class Filter extends Method
                         $where[] = "b.{$field}<=?{$fields[$field]}";
                         $vars[]  = $rule[2];
                     }
+
                     break;
                 default:
                     throw new InvalidArgumentException('The condition is not defined');

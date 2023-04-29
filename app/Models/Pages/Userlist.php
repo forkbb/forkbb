@@ -54,6 +54,7 @@ class Userlist extends Page
             ]);
 
         $error = true;
+
         if ($v->validation('POST' === $method ? $_POST : $args)) {
             $count = (int) (null === $v->sort)
                    + (int) (null === $v->dir)
@@ -67,19 +68,23 @@ class Userlist extends Page
                 $error = false;
             }
         }
+
         if ($error) {
             return $this->c->Message->message('Bad request');
         }
+
         if ('POST' === $method) {
             return $this->c->Redirect->page('Userlist', $v->getData());
         }
 
         $filters = [];
+
         if (\is_numeric($v->group)) {
             $filters['group_id'] = ['=', $v->group];
         } else {
             $filters['group_id'] = ['!=', 0];
         }
+
         if (null !== $v->name) {
             $filters['username'] = ['LIKE', $v->name];
 
@@ -108,7 +113,7 @@ class Userlist extends Page
             $this->userList = $this->c->users->loadByIds($ids);
 
             $links = [];
-            $vars = ['page' => $page];
+            $vars  = ['page' => $page];
 
             if (4 === $count) {
                 $vars['group'] = 'all';
@@ -194,6 +199,7 @@ class Userlist extends Page
         } else {
             $form['hidden']['name'] = '*';
         }
+
         $fields['group'] = [
             'class'   => ['w4'],
             'type'    => 'select',

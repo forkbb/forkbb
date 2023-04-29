@@ -22,6 +22,7 @@ class UpdateCountTopics extends Action
     public function updateCountTopics(mixed ...$args): void
     {
         $ids = [];
+
         foreach ($args as $arg) {
             if (
                 $arg instanceof User

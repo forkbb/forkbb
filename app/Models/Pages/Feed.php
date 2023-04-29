@@ -119,6 +119,7 @@ class Feed extends Page
                 }
 
                 $items = $this->c->posts->feed($forum);
+
                 if (! empty($items)) {
                     foreach ($items as $cur) {
                         $fName = $this->c->forums->get($cur['fid'])->forum_name;

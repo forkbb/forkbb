@@ -54,6 +54,7 @@ class Auth extends Page
         $this->c->Lang->load('auth');
 
         $v = null;
+
         if ('POST' === $method) {
             $v = $this->c->Validator->reset()
                 ->addValidators([
@@ -180,11 +181,8 @@ class Auth extends Page
     /**
      * Проверка пользователя по базе
      */
-    public function vLoginCheck(
-        Validator $v,
-        #[SensitiveParameter]
-        string $password
-    ): string {
+    public function vLoginCheck(Validator $v, #[SensitiveParameter] string $password ): string
+    {
         if (empty($v->getErrors())) {
             $this->userAfterLogin = $this->c->users->loadByName($v->username);
 

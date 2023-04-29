@@ -124,6 +124,7 @@ class Options extends Admin
             if (empty($data['changeSmtpPassword'])) {
                 unset($data['o_smtp_pass']);
             }
+
             unset($data['changeSmtpPassword'], $data['token']);
 
             foreach ($data as $attr => $value) {

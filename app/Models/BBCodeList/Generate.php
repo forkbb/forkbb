@@ -27,6 +27,7 @@ class Generate extends Method
         $content = "<?php\n\nuse function \\ForkBB\\{__, url};\n\nreturn [\n";
 
         $stmt = $this->c->DB->query($query);
+
         while ($row = $stmt->fetch()) {
             $content .= "    [\n"
                 . $this->addArray(\json_decode($row['bb_structure'], true, 512, \JSON_THROW_ON_ERROR))
@@ -56,12 +57,15 @@ class Generate extends Method
             switch ($type) {
                 case 'NULL':
                     $value = 'null';
+
                     break;
                 case 'boolean':
                     $value = $value ? 'true' : 'false';
+
                     break;
                 case 'array':
                     $value = "[\n" . $this->addArray($value, $level + 1) . "{$space}]";
+
                     break;
                 case 'double':
                 case 'integer':
@@ -78,10 +82,10 @@ class Generate extends Method
                     } else {
                         $value = '\'' . \addslashes($value) . '\'';
                     }
+
                     break;
                 default:
                     throw new RuntimeException("Invalid data type ({$type})");
-                    break;
             }
 
             if (\is_string($key)) {

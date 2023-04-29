@@ -15,6 +15,8 @@ use RuntimeException;
 
 class DBMap extends Model
 {
+    const CACHE_KEY = 'db_map';
+
     /**
      * Ключ модели для контейнера
      */
@@ -25,12 +27,12 @@ class DBMap extends Model
      */
     public function init(): DBMap
     {
-        $map = $this->c->Cache->get('db_map');
+        $map = $this->c->Cache->get(self::CACHE_KEY);
 
         if (! \is_array($map)) {
             $map = $this->c->DB->getMap();
 
-            if (true !== $this->c->Cache->set('db_map', $map)) {
+            if (true !== $this->c->Cache->set(self::CACHE_KEY, $map)) {
                 throw new RuntimeException('Unable to write value to cache - db_map');
             }
         }
@@ -45,7 +47,7 @@ class DBMap extends Model
      */
     public function reset(): DBMap
     {
-        if (true !== $this->c->Cache->delete('db_map')) {
+        if (true !== $this->c->Cache->delete(self::CACHE_KEY)) {
             throw new RuntimeException('Unable to remove key from cache - db_map');
         }
 

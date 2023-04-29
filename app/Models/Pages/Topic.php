@@ -67,12 +67,15 @@ class Topic extends Page
         switch ($type) {
             case 'new':
                 $pid = $topic->firstNew;
+
                 break;
             case 'unread':
                 $pid = $topic->firstUnread;
+
                 break;
             case 'last':
                 $pid = $topic->last_post_id;
+
                 break;
             default:
                 return $this->c->Message->message('Bad request');
@@ -108,9 +111,11 @@ class Topic extends Page
         switch ($type) {
             case 'topic':
                 $topic->page = $args['page'] ?? 1;
+
                 break;
             case 'post':
                 $topic->calcPage($args['id']);
+
                 break;
             default:
                 return $this->go($type, $topic);

@@ -35,8 +35,10 @@ class Filter extends Action
             ) {
                 throw new InvalidArgumentException('The sort direction is not defined');
             }
+
             $orderBy[] = "u.{$field} {$dir}";
         }
+
         if (empty($orderBy)) {
             $orderBy = 'u.username ASC';
         } else {
@@ -50,6 +52,7 @@ class Filter extends Action
             if (! isset($fields[$field])) {
                 throw new InvalidArgumentException("The '{$field}' field is not found");
             }
+
             switch ($rule[0]) {
                 case 'LIKE':
                     if (
@@ -61,13 +64,16 @@ class Filter extends Action
                             $where[] = "u.{$field} {$like} ?{$fields[$field]} ESCAPE '#'";
                             $vars[]  = \str_replace(['#', '%', '_', '*'], ['##', '#%', '#_', '%'], $rule[1]);
                         }
+
                         break;
                     }
+
                     $rule[0] = '=';
                 case '=':
                 case '!=':
                     $where[] = "u.{$field}{$rule[0]}?{$fields[$field]}";
                     $vars[]  = $rule[1];
+
                     break;
                 case 'BETWEEN':
                     // если и min, и max
@@ -96,6 +102,7 @@ class Filter extends Action
                         $where[] = "u.{$field}<=?{$fields[$field]}";
                         $vars[]  = $rule[2];
                     }
+
                     break;
                 default:
                     throw new InvalidArgumentException('The condition is not defined');

@@ -24,6 +24,7 @@ class ChangeGroup extends Action
     public function changeGroup(int $newGroupId, User ...$users): void
     {
         $newGroup = $this->c->groups->get($newGroupId);
+
         if (
             null === $newGroup
             || $newGroup->groupGuest
@@ -35,6 +36,7 @@ class ChangeGroup extends Action
         $moderators   = [];
         $adminPresent = $newGroup->groupAdmin;
         $unverPresent = false;
+
         foreach ($users as $user) {
             if ($user->isGuest) {
                 throw new RuntimeException('Guest can not change group');
@@ -59,6 +61,7 @@ class ChangeGroup extends Action
 
         if (! empty($moderators)) {
             $root = $this->c->forums->get(0); //???? вызов от группы админов?
+
             if ($root instanceof Forum) {
                 foreach ($this->c->forums->depthList($root, 0) as $forum) {
                     $forum->modDelete(...$moderators);

@@ -19,8 +19,8 @@ use function \ForkBB\dt;
 
 class Reports extends Admin
 {
-    protected $userIds = [];
-    protected $postIds = [];
+    protected array $userIds = [];
+    protected array $postIds = [];
 
     /**
      * Выделяет данные из списка сигналов
@@ -85,6 +85,7 @@ class Reports extends Admin
                     'legend' => ['Marked as read %1$s by %2$s', dt($report->zapped), $report->marker->username],
                 ];
             }
+
             $cur['fields'] = [];
             $author = $report->author;
             $cur['fields']['report_by' . $report->id] = [
@@ -95,6 +96,7 @@ class Reports extends Admin
                 'href'    => $author->link,
             ];
             $post = $report->post;
+
             if ($post instanceof Post) {
                 $topic = $post->parent;
                 $forum = $topic->parent;
@@ -109,12 +111,14 @@ class Reports extends Admin
                     'value'   => __(['Post #%s', $report->post_id]),
                 ];
             }
+
             $cur['fields']['reason' . $report->id] = [
                 'class'   => ['reason'],
                 'type'    => 'str',
                 'value'   => $report->message,
                 'caption' => 'Reason',
             ];
+
             if ($noZapped) {
                 $cur['fields']['zap' . $report->id] = [
                     'type'    => 'btn',
@@ -123,6 +127,7 @@ class Reports extends Admin
                     'link'    => $report->linkZap,
                 ];
             }
+
             $form['sets'][$report->id] = $cur;
         }
 

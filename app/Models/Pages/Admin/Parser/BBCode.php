@@ -64,28 +64,33 @@ class BBCode extends Parser
                     if (! isset($bbcode[$tag]['in_mes'], $bbcode[$tag]['in_sig'])) {
                         $mesClear  = false;
                         $sigClear  = false;
+
                         continue;
                     }
 
                     switch ($bbcode[$tag]['in_mes']) {
                         case 2:
                             $white_mes[] = $tag;
+
                             break;
                         case 0:
                             $black_mes[] = $tag;
                         default:
                             $mesClear  = false;
+
                             break;
                     }
 
                     switch ($bbcode[$tag]['in_sig']) {
                         case 2:
                             $white_sig[] = $tag;
+
                             break;
                         case 0:
                             $black_sig[] = $tag;
                         default:
                             $sigClear  = false;
+
                             break;
                     }
                 }
@@ -322,6 +327,7 @@ class BBCode extends Parser
 
         $structure = $this->c->BBStructure;
         $id        = $args['id'] ?? 0;
+
         if ($id > 0) {
             if (
                 empty($this->c->bbcode->bbcodeTable[$id])
@@ -335,11 +341,13 @@ class BBCode extends Parser
 
         $bbTypes = [];
         $bbNames = [];
+
         foreach ($this->c->bbcode->bbcodeTable as $cur) {
             $type = $this->c->BBStructure->fromString($cur['bb_structure'])->type;
             $bbTypes[$type] = $type;
             $bbNames[$cur['bb_tag']] = $cur['bb_tag'];
         }
+
         $this->bbTypes = $bbTypes;
 
         if ($id > 0) {
@@ -351,6 +359,7 @@ class BBCode extends Parser
             $page             = 'AdminBBCodeNew';
             $pageArgs         = [];
         }
+
         $this->formAction = $this->c->Router->link($page, $pageArgs);
         $this->formToken  = $this->c->Csrf->create($page, $pageArgs);
 
@@ -448,6 +457,7 @@ class BBCode extends Parser
         }
 
         $data = $v->getData();
+
         unset($data['token'], $data['save']);
 
         foreach ($data as $key => $value) {
@@ -681,6 +691,7 @@ class BBCode extends Parser
             'caption' => 'Allowed label',
             'help'    => $info,
         ];
+
         if ('no_attr' !== $name) {
             $fields["{$key}[required]"] = [
                 'type'    => 'radio',

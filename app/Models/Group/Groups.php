@@ -49,9 +49,11 @@ class Groups extends Manager
                 ORDER BY g.g_id';
 
             $stmt = $this->c->DB->query($query);
+
             while ($row = $stmt->fetch()) {
                 $this->set($row['g_id'], $this->create($row));
             }
+
             $this->flag = true;
         }
 

@@ -30,6 +30,7 @@ class Forums extends Admin
         ];
         $idxs       = [];
         $root = $this->c->forums->get(0);
+
         if ($root instanceof Forum) {
             foreach ($this->c->forums->depthList($root, 0) as $f) {
                 if ($cid !== $f->cat_id) {
@@ -53,10 +54,12 @@ class Forums extends Admin
                 }
             }
         }
+
         foreach ($categories as $key => $row) {
             $idxs[]    = -$key;
             $options[] = [-$key, __('Category prefix') . $row['cat_name']];
         }
+
         $this->listOfIndexes  = $idxs;
         $this->listForOptions = $options;
     }
@@ -77,6 +80,7 @@ class Forums extends Admin
         }
 
         $max = 0;
+
         foreach ($root->descendants as $f) {
             if ($f->disp_position > $max) {
                 $max = $f->disp_position;
@@ -225,6 +229,7 @@ class Forums extends Admin
     public function delete(array $args, string $method): Page
     {
         $forum = $this->c->forums->get($args['id']);
+
         if (
             ! $forum instanceof Forum
             || $forum->subforums
@@ -254,7 +259,6 @@ class Forums extends Admin
             }
 
             $this->c->forums->delete($forum);
-
             $this->c->forums->reset();
 
             return $this->c->Redirect->page('AdminForums')->message('Forum deleted redirect');
@@ -381,6 +385,7 @@ class Forums extends Admin
             $forum->sort_by      = $v->sort_by;
             $forum->redirect_url = $v->redirect_url ?? '';
             $forum->no_sum_mess  = $v->no_sum_mess;
+
             if ($v->parent > 0) {
                 $forum->parent_forum_id = $v->parent;
                 $forum->cat_id          = $this->c->forums->get($v->parent)->cat_id;
@@ -513,6 +518,7 @@ class Forums extends Admin
 
         $aOn  = ['cando', 'on'];
         $aOff = ['cando', 'off'];
+
         foreach ($this->c->groups->Perm->get($forum) as $id => $group) {
             $fields = [];
             $fields["perms[{$id}][read_forum]"] = [

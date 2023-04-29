@@ -38,6 +38,7 @@ abstract class Users extends Admin
     {
         if (\is_array($data)) {
             unset($data['token']);
+
             $data = \base64_encode(\json_encode($data));
             $hash = $this->c->Secury->hash($data);
 
@@ -92,6 +93,7 @@ abstract class Users extends Admin
 
         $userList = $this->c->users->loadByIds($selected);
         $result   = [];
+
         foreach ($userList as $user) {
             if (! $user instanceof User) {
                 continue;
@@ -104,34 +106,41 @@ abstract class Users extends Admin
 
                         return false;
                     }
+
                     if (! $this->c->userRules->canBanUser($user)) {
                         $this->fIswev = ['v', ['You are not allowed to ban the %s', $user->username]];
+
                         if ($user->isAdmMod) {
                             $this->fIswev = ['i', 'No ban admins message'];
                         }
 
                         return false;
                     }
+
                     break;
                 case self::ACTION_DEL:
                     if (! $this->c->userRules->canDeleteUser($user)) {
                         $this->fIswev = ['v', ['You are not allowed to delete the %s', $user->username]];
+
                         if ($user->isAdmMod) {
                             $this->fIswev = ['i', 'No delete admins message'];
                         }
 
                         return false;
                     }
+
                     break;
                 case self::ACTION_CHG:
                     if (! $this->c->userRules->canChangeGroup($user, $profile)) {
                         $this->fIswev = ['v', ['You are not allowed to change group for %s', $user->username]];
+
                         if ($user->isAdmin) {
                             $this->fIswev = ['i', 'No move admins message'];
                         }
 
                         return false;
                     }
+
                     break;
                 default:
                     $this->fIswev = ['v', 'Action not available'];
@@ -140,6 +149,7 @@ abstract class Users extends Admin
             }
 
             $result[] = $user->id;
+
             if ($user->id === $this->user->id) {
                 $this->fIswev = ['i', 'You are trying to change your own group'];
             }

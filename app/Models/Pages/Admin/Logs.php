@@ -58,6 +58,7 @@ class Logs extends Admin
                 ]
             );
         }
+
         unset($cur);
 
         $this->nameTpl  = 'admin/logs';

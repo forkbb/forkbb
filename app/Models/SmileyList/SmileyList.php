@@ -15,6 +15,8 @@ use RuntimeException;
 
 class SmileyList extends Model
 {
+    const CACHE_KEY = 'smilies';
+
     /**
      * Ключ модели для контейнера
      */
@@ -26,12 +28,12 @@ class SmileyList extends Model
      */
     public function init(): SmileyList
     {
-        $list = $this->c->Cache->get('smilies');
+        $list = $this->c->Cache->get(self::CACHE_KEY);
 
         if (! \is_array($list)) {
             $list = $this->load();
 
-            if (true !== $this->c->Cache->set('smilies', $list)) {
+            if (true !== $this->c->Cache->set(self::CACHE_KEY, $list)) {
                 throw new RuntimeException('Unable to write value to cache - smilies');
             }
         }
@@ -46,7 +48,7 @@ class SmileyList extends Model
      */
     public function reset(): SmileyList
     {
-        if (true !== $this->c->Cache->delete('smilies')) {
+        if (true !== $this->c->Cache->delete(self::CACHE_KEY)) {
             throw new RuntimeException('Unable to remove key from cache - smilies');
         }
 

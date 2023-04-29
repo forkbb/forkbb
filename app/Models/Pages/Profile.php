@@ -51,11 +51,8 @@ abstract class Profile extends Page
     /**
      * Проверяет пароль на совпадение с текущим пользователем
      */
-    public function vCheckPassword(
-        Validator $v,
-        #[SensitiveParameter]
-        string $password
-    ): string {
+    public function vCheckPassword(Validator $v, #[SensitiveParameter] string $password): string
+    {
         if (! \password_verify($password, $this->user->password)) {
             $v->addError('Invalid passphrase');
         }
@@ -91,6 +88,7 @@ abstract class Profile extends Page
                 __('Change user group'),
             ];
         }
+
         if ($this->rules->banUser) {
             $id = $this->c->bans->banFromName($this->curUser->username);
 
@@ -118,6 +116,7 @@ abstract class Profile extends Page
                 ];
             }
         }
+
         if ($this->rules->deleteUser) {
             $btns['delete-user'] = [
                 $this->c->Router->link(
@@ -130,6 +129,7 @@ abstract class Profile extends Page
                 __('Delete user'),
             ];
         }
+
         if (
             'edit' != $type
             && $this->rules->editProfile
@@ -144,12 +144,14 @@ abstract class Profile extends Page
                 __('Edit '),
             ];
         }
+
         if ('view' != $type) {
             $btns['view-profile'] = [
                 $this->curUser->link,
                 __('View '),
             ];
         }
+
         if (
             'config' != $type
             && $this->rules->editConfig

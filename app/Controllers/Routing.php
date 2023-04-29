@@ -716,19 +716,22 @@ class Routing
         }
 
         $uri = $_SERVER['REQUEST_URI'];
+
         if (false !== ($pos = \strpos($uri, '?'))) {
             $uri = \substr($uri, 0, $pos);
         }
+
         $uri    = \rawurldecode($uri);
         $method = $_SERVER['REQUEST_METHOD'];
+        $route  = $r->route($method, $uri);
+        $page   = null;
 
-        $route = $r->route($method, $uri);
-        $page  = null;
         switch ($route[0]) {
             case $r::OK:
                 // ... 200 OK
                 list($page, $action) = \explode(':', $route[1], 2);
                 $page = $this->c->$page->$action($route[2], $method);
+
                 break;
             case $r::NOT_FOUND:
                 // ... 404 Not Found
@@ -740,6 +743,7 @@ class Routing
                 } else {
                     $page = $this->c->Message->message('Not Found', true, 404);
                 }
+
                 break;
             case $r::METHOD_NOT_ALLOWED:
                 // ... 405 Method Not Allowed
@@ -751,10 +755,12 @@ class Routing
                         ['Allow', \implode(',', $route[1])],
                     ]
                 );
+
                 break;
             case $r::NOT_IMPLEMENTED:
                 // ... 501 Not implemented
                 $page = $this->c->Message->message('Bad request', true, 501);
+
                 break;
         }
 

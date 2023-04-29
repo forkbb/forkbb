@@ -80,11 +80,13 @@ class Execute extends Method
         }
 
         $ids = $this->exec($this->model->queryWords, $queryVars);
+
         if (1 === $v->sort_dir) {
             \asort($ids, $this->sortType);
         } else {
             \arsort($ids, $this->sortType);
         }
+
         $ids = \array_keys($ids);
 
         $data  = [
@@ -123,6 +125,7 @@ class Execute extends Method
                 || 'NOT' === $word
             ) {
                 $type = $word;
+
                 continue;
             }
 
@@ -167,6 +170,7 @@ class Execute extends Method
                         } else {
                             $this->stmtCJK->execute($vars);
                         }
+
                         $this->words[$word] = $list = $this->stmtCJK->fetchAll(PDO::FETCH_KEY_PAIR);
                     } else {
                         if (null === $this->stmtIdx) {
@@ -175,6 +179,7 @@ class Execute extends Method
                         } else {
                             $this->stmtIdx->execute($vars);
                         }
+
                         $this->words[$word] = $list = $this->stmtIdx->fetchAll(PDO::FETCH_KEY_PAIR);
                     }
                 }
@@ -235,19 +240,23 @@ class Execute extends Method
                 $whereIdx[]          = 'sm.subject_match=0';
                 $whereCJK[]          = "p.message {$like} ?s:word";
                 $usePCJK             = true;
+
                 if (isset($vars[':author'])) {
                     $whereCJK[]      = "p.poster {$like} ?s:author ESCAPE '#'";
                 }
+
                 break;
             case 2:
                 $whereIdx[]          = 'sm.subject_match=1';
                 $whereCJK[]          = "t.subject {$like} ?s:word";
                 $useTCJK             = true;
+
                 if (isset($vars[':author'])) {
                     $whereCJK[]      = "t.poster {$like} ?s:author ESCAPE '#'";
                 }
                 // при поиске в заголовках результат только в виде списка тем
                 $this->model->showAs = 1;
+
                 break;
             default:
                 if (isset($vars[':author'])) {
@@ -255,8 +264,10 @@ class Execute extends Method
                 } else {
                     $whereCJK[]      = "(p.message {$like} ?s:word OR t.subject {$like} ?s:word)";
                 }
+
                 $usePCJK             = true;
                 $useTCJK             = true;
+
                 break;
         }
 
@@ -284,7 +295,9 @@ class Execute extends Method
                     $usePIdx         = true;
                     $usePCJK         = true;
                 }
+
                 $this->sortType      = \SORT_STRING;
+
                 break;
             case 2:
                 $sortIdx             = 't.subject';
@@ -292,6 +305,7 @@ class Execute extends Method
                 $useTIdx             = true;
                 $useTCJK             = true;
                 $this->sortType      = \SORT_STRING;
+
                 break;
             case 3:
                 $sortIdx             = 't.forum_id';
@@ -299,6 +313,7 @@ class Execute extends Method
                 $useTIdx             = true;
                 $useTCJK             = true;
                 $this->sortType      = \SORT_NUMERIC;
+
                 break;
             default:
                 if (1 === $this->model->showAs) {
@@ -311,7 +326,9 @@ class Execute extends Method
                     $sortCJK         = 'p.id';
                     $usePCJK         = true;
                 }
+
                 $this->sortType      = \SORT_NUMERIC;
+
                 break;
         }
 

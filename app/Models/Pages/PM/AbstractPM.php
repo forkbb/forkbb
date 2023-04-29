@@ -13,20 +13,14 @@ namespace ForkBB\Models\Pages\PM;
 use ForkBB\Core\Container;
 use ForkBB\Models\Page;
 use ForkBB\Models\PM\Cnst;
+use ForkBB\Models\PM\PM;
 use ForkBB\Models\User\User;
 use function \ForkBB\__;
 
 abstract class AbstractPM extends Page
 {
-    /**
-     * @var array
-     */
-    protected $pmCrumbs = [];
-
-    /**
-     * @var  ForkBB\Models\PM\Manager
-     */
-    protected $pms;
+    protected array $pmCrumbs = [];
+    protected PM $pms;
 
     public function __construct(Container $container)
     {
@@ -137,9 +131,11 @@ abstract class AbstractPM extends Page
             case Cnst::ACTION_EDIT:
             case Cnst::ACTION_DELETE:
                 $viewArea = true;
+
                 break;
             case Cnst::ACTION_BLOCK:
             case Cnst::ACTION_CONFIG:
+
                 break;
             default:
                 $crumbs[] = [null, ['%s', 'unknown']];

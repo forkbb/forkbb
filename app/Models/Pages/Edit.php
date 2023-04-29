@@ -211,12 +211,14 @@ class Edit extends Page
         if ($calcTopic) {
             $topic->calcStat();
         }
+
         $this->c->topics->update($topic);
 
         // обновление раздела
         if ($calcForum) {
             $topic->parent->calcStat();
         }
+
         $this->c->forums->update($topic->parent);
 
         // антифлуд

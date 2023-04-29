@@ -42,6 +42,7 @@ class Categories extends Admin
                 foreach ($v->form as $key => $row) {
                     $this->c->categories->set($key, $row);
                 }
+
                 $this->c->categories->update();
 
                 if (\strlen($v->new) > 0) {
@@ -144,6 +145,7 @@ class Categories extends Admin
     public function delete(array $args, string $method): Page
     {
         $category = $this->c->categories->get($args['id']);
+
         if (! $category) {
             return $this->c->Message->message('Bad request');
         }

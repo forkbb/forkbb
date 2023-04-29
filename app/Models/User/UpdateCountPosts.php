@@ -22,6 +22,7 @@ class UpdateCountPosts extends Action
     public function updateCountPosts(mixed ...$args): void
     {
         $ids = [];
+
         foreach ($args as $arg) {
             if (
                 $arg instanceof User

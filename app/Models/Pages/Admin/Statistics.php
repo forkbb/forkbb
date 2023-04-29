@@ -16,6 +16,8 @@ use function \ForkBB\{__, num};
 
 class Statistics extends Admin
 {
+    const CACHE_KEY = 'phpinfoCSS';
+
     /**
      * phpinfo
      */
@@ -53,7 +55,7 @@ class Statistics extends Admin
                     $matches[1]
                 );
 
-                $this->c->Cache->set('phpinfoCSS', $style);
+                $this->c->Cache->set(self::CACHE_KEY, $style);
                 $this->pageHeader('phpinfoStyle', 'link', 0, [
                     'rel'  => 'stylesheet',
                     'type' => 'text/css',
@@ -81,7 +83,7 @@ class Statistics extends Admin
         $this->c->DEBUG  = 0;
 
         $this->nameTpl      = 'layouts/plain';
-        $this->plainText    = $this->c->Cache->get('phpinfoCSS', '');
+        $this->plainText    = $this->c->Cache->get(self::CACHE_KEY, '');
 
         $this->header('Content-type', 'text/css; charset=utf-8');
 

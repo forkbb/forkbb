@@ -82,6 +82,7 @@ class Categories extends Manager
 
             $this->c->DB->exec($query, $vars);
         }
+
         $this->modified = [];
 
         return $this;
@@ -90,11 +91,13 @@ class Categories extends Manager
     public function insert(string $name): int
     {
         $pos = 0;
+
         foreach ($this->repository as $cat) {
             if ($cat['disp_position'] > $pos) {
                 $pos = $cat['disp_position'];
             }
         }
+
         ++$pos;
 
         $vars = [
@@ -105,7 +108,9 @@ class Categories extends Manager
             VALUES (?s:name, ?i:position)';
 
         $this->c->DB->exec($query, $vars);
+
         $cid = (int) $this->c->DB->lastInsertId();
+
         parent::set($cid, ['cat_name' => $name, 'disp_position' => $pos]);
 
         return $cid;

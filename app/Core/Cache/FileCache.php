@@ -24,9 +24,8 @@ class FileCache implements CacheInterface
 {
     /**
      * Директория кэша
-     * @var string
      */
-    protected $cacheDir;
+    protected string $cacheDir;
 
     public function __construct(string $dir, string $resetMark)
     {

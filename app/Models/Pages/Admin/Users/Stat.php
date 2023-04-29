@@ -80,6 +80,7 @@ class Stat extends Users
         ];
 
         \array_unshift($stat, ['last_used' => null, 'used_times' => null]);
+
         $flag = false;
 
         foreach ($stat as $ip => $data) {
@@ -133,6 +134,7 @@ class Stat extends Users
             ];
 
             ++$number;
+
             $flag = true;
         }
 

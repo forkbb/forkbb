@@ -31,19 +31,23 @@ class Load extends Method
             FROM ::bans AS b';
 
         $stmt = $this->c->DB->query($query);
+
         while ($row = $stmt->fetch()) {
             $name = $this->model->trimToNull($row['username'], true);
+
             if (null !== $name) {
                 $userList[$name] = $row['id'];
             }
 
             $email   = $this->model->trimToNull($row['email']);
+
             if (null !== $email) {
                 $email = $this->c->NormEmail->normalize($email);
                 $emailList[$email] = $row['id']; // ???? TODO если домен забанен, то email не добавлять
             }
 
             $ips = $this->model->trimToNull($row['ip']);
+
             if (null !== $ips) {
                 foreach (\explode(' ', $ips) as $ip) {
                     $list    = &$ipList;

@@ -38,6 +38,7 @@ class Perm extends Action
         $perms = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_UNIQUE);
 
         $result = [];
+
         foreach ($perms as $gid => $perm) {
             $group  = $this->c->groups->get($gid);
 #           $forums = $this->c->ForumManager->init($group);
@@ -53,6 +54,7 @@ class Perm extends Action
 
             $result[$gid] = $group;
         }
+
         $this->fields = \array_keys($perm);
 
         return $result;
@@ -75,6 +77,7 @@ class Perm extends Action
             $row     = [];
             $modDef  = false;
             $modPerm = false;
+
             foreach ($this->fields as $field) {
                 if ($group->{'dis_' . $field}) {
                     $row[$field] = $group->{'set_' . $field} ? 1 : 0;

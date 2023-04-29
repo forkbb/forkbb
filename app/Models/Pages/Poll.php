@@ -35,17 +35,17 @@ class Poll extends Page
         $this->c->Lang->load('poll');
 
         $v = $this->c->Validator->reset()
-        ->addValidators([
-        ])->addRules([
-            'token'         => 'token:Poll',
-            'poll_vote.*.*' => 'required|integer',
-            'vote'          => 'required|string',
-        ])->addAliases([
-        ])->addArguments([
-            'token'       => $args,
-        ])->addMessages([
-            'poll_vote.*.*' => 'The poll structure is broken',
-        ]);
+            ->addValidators([
+            ])->addRules([
+                'token'         => 'token:Poll',
+                'poll_vote.*.*' => 'required|integer',
+                'vote'          => 'required|string',
+            ])->addAliases([
+            ])->addArguments([
+                'token'       => $args,
+            ])->addMessages([
+                'poll_vote.*.*' => 'The poll structure is broken',
+            ]);
 
         if (! $v->validation($_POST)) {
             $message = $this->c->Message;

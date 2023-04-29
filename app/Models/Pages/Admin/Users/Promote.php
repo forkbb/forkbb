@@ -25,8 +25,10 @@ class Promote extends Users
         }
 
         $user = $this->c->users->load($args['uid']);
+
         if (0 < $user->g_promote_next_group * $user->g_promote_min_posts) {
             $user->group_id = $user->g_promote_next_group;
+
             $this->c->users->update($user);
         }
 

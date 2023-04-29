@@ -301,6 +301,7 @@ class Post extends Page
                     $this->user->group_id = $this->user->g_promote_next_group;
                 }
             }
+
             if ($createTopic) {
                 $this->user->num_topics = $this->user->num_topics + 1;
             }

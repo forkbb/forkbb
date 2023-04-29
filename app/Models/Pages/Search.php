@@ -28,6 +28,7 @@ class Search extends Page
         $options = [];
         $idxs    = [];
         $root = $this->c->forums->get(0);
+
         if ($root instanceof Forum) {
             foreach ($this->c->forums->depthList($root, -1) as $f) {
                 if ($cid !== $f->cat_id) {
@@ -45,6 +46,7 @@ class Search extends Page
                 }
             }
         }
+
         $this->listOfIndexes  = $idxs;
         $this->listForOptions = $options;
     }
@@ -414,6 +416,7 @@ class Search extends Page
 
         $forum = $args['forum'] ?? 0;
         $forum = $this->c->forums->get($forum);
+
         if (! $forum instanceof Forum) {
             return $this->c->Message->message('Bad request');
         }
@@ -430,6 +433,7 @@ class Search extends Page
             'unanswered_topics'      => 'unanswered',
             'new'                    => 'new',
         ];
+
         switch ($action) {
             case 'search':
                 if (1 === $model->showAs) {
@@ -438,13 +442,16 @@ class Search extends Page
                     $list          = $model->actionP($action, $forum);
                     $asTopicsList  = false;
                 }
+
                 if ('*' === $args['author']) {
                     $model->name   = ['Search query: %s', $args['keywords']];
                 } else {
                     $model->name   = ['Search query: %1$s and Author: %2$s', $args['keywords'], $args['author']];
                 }
+
                 $model->linkMarker = $advanced ? 'SearchAdvanced' : 'Search';
                 $model->linkArgs   = $args;
+
                 break;
             case 'new':
             case 'topics_with_your_posts':
@@ -456,16 +463,20 @@ class Search extends Page
                 if (isset($uid)) {
                     break;
                 }
+
                 $uid               = $this->user->id;
                 $list              = $model->actionT($action, $forum, $uid);
                 $model->name       = __('Quick search ' . $action);
                 $model->linkMarker = 'SearchAction';
+
                 if ($forum->id) {
                     $model->linkArgs = ['action' => $action, 'forum' => $forum->id];
                 } else {
                     $model->linkArgs = ['action' => $action];
                 }
+
                 $this->fSubIndex   = $subIndex[$action];
+
                 break;
             case 'posts':
                 $asTopicsList      = false;
@@ -475,13 +486,16 @@ class Search extends Page
                 if (! isset($uid)) {
                     break;
                 }
+
                 $user = $this->c->users->load($uid);
+
                 if (
                     ! $user instanceof User
                     || $user->isGuest
                 ) {
                     break;
                 }
+
                 if ('forums_subscriptions' == $action) {
                     $list = $model->actionF($action, $forum, $user->id);
                 } elseif ($asTopicsList) {
@@ -489,8 +503,10 @@ class Search extends Page
                 } else {
                     $list = $model->actionP($action, $forum, $user->id);
                 }
+
                 $model->name       = ['Quick search user ' . $action, $user->username];
                 $model->linkMarker = 'SearchAction';
+
                 if ($forum->id) {
                     $model->linkArgs = ['action' => $action, 'uid' => $user->id, 'forum' => $forum->id];
                 } else {

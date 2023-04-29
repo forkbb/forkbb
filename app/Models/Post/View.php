@@ -59,6 +59,7 @@ class View extends Action
                 if (isset($warnings[$post->id])) {
                     $post->__warnings = $warnings[$post->id];
                 }
+
                 $userIds[$post->poster_id] = $post->poster_id;
             }
         }
@@ -67,6 +68,7 @@ class View extends Action
 
         $offset    = ($arg->page - 1) * $this->c->user->disp_posts;
         $timeMax   = 0;
+
         if ($review) {
             $postCount = $arg->num_replies + 2;
             $sign      = -1;
@@ -89,22 +91,28 @@ class View extends Action
                     if (empty($post->id)) {
                         continue;
                     }
+
                     $post->__postNumber = 1;
                 } else {
                     $postCount += $sign;
+
                     if (empty($post->id)) {
                         continue;
                     }
+
                     $post->__postNumber = $offset + $postCount;
                 }
             }
+
             $arg->timeMax = $timeMax;
         } else {
             foreach ($result as $post) {
                 ++$postCount;
+
                 if (empty($post->id)) {
                     continue;
                 }
+
                 $post->__postNumber = $offset + $postCount; //????
             }
         }

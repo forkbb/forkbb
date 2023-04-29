@@ -21,6 +21,7 @@ class Access extends Action
     public function access(bool $open, Topic ...$topics): void
     {
         $ids = [];
+
         foreach ($topics as $topic) {
             $ids[]           = $topic->id;
             $topic->__closed = $open ? 0 : 1;

@@ -48,13 +48,15 @@ class IsBanned extends Method
 
                     if (false !== $pos) {
                         $email = \substr($email, $pos + 1); // -> example.com
+
                         break;
                     }
 
                     ++$stage;
                 case 1:
                     $email = '.' . $email;                  // -> .example.com
-                    $pos = true;
+                    $pos   = true;
+
                     break;
                 default:
                     $pos = \strpos($email, '.', 1);

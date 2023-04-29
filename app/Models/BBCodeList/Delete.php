@@ -12,7 +12,6 @@ namespace ForkBB\Models\BBCodeList;
 
 use ForkBB\Models\Method;
 use ForkBB\Models\BBCodeList\BBCodeList;
-use PDO;
 
 class Delete extends Method
 {

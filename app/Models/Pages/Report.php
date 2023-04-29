@@ -83,9 +83,11 @@ class Report extends Page
                                 'headers'   => false,
                             ]);
                         }
+
                         break;
                     default:
                         $this->c->reports->insert($report);
+
                         break;
                 }
 

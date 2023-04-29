@@ -25,6 +25,7 @@ class Forum extends Page
         $this->c->Lang->load('subforums');
 
         $forum = $this->c->forums->loadTree($args['id']);
+
         if (! $forum instanceof ForumModel) {
             return $this->c->Message->message('Bad request');
         }
@@ -35,6 +36,7 @@ class Forum extends Page
         }
 
         $forum->page = $args['page'] ?? 1;
+
         if (! $forum->hasPage()) {
             return $this->c->Message->message('Not Found', true, 404);
         }
@@ -67,6 +69,7 @@ class Forum extends Page
 
         if ($this->c->config->i_feed_type > 0) {
             $feedType = 2 === $this->c->config->i_feed_type ? 'atom' : 'rss';
+
             $this->pageHeader('feed', 'link', 0, [
                 'rel'  => 'alternate',
                 'type' => "application/{$feedType}+xml",

@@ -38,6 +38,7 @@ class Groups extends Admin
             if (! \in_array($group->g_id, $notForNew, true)) {
                 $groupsNew[$key] = $group->g_title;
             }
+
             if (
                 ! \in_array($group->g_id, $notForDefault, true)
                 && 0 === $group->g_moderator
@@ -150,6 +151,7 @@ class Groups extends Admin
 
             return $this->view();
         }
+
         $this->c->config->i_default_user_group = $v->defaultgroup;
         $this->c->config->save();
 
@@ -327,6 +329,7 @@ class Groups extends Admin
             $data['g_mod_promote_users']    = 0;
             $data['g_mod_ban_users']        = 0;
         }
+
         if (
             isset($data['g_promote_next_group'])
             && 0 == $data['g_promote_next_group'] * $data['g_promote_min_posts']
@@ -762,8 +765,10 @@ class Groups extends Admin
 
         $count  = $this->c->users->usersNumber($group);
         $groups = [];
+
         if ($count) {
             $move = 'required|integer|in:';
+
             foreach ($this->groupsList as $key => $cur) {
                 if (
                     $key === FORK_GROUP_GUEST
@@ -771,8 +776,10 @@ class Groups extends Admin
                 ) {
                     continue;
                 }
+
                 $groups[$key] = $cur[0];
             }
+
             $move .= \implode(',', \array_keys($groups));
         } else {
             $move = 'absent';

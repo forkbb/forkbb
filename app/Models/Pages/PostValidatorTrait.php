@@ -128,6 +128,7 @@ trait PostValidatorTrait
                 $ruleStickTopic = 'absent';
                 $ruleStickFP    = 'absent';
             }
+
             if (
                 ! $first
                 && ! $edit
@@ -136,6 +137,7 @@ trait PostValidatorTrait
             } else {
                 $ruleMergePost  = 'absent';
             }
+
             if (
                 $edit
                 && ! $model->user->isGuest
@@ -145,6 +147,7 @@ trait PostValidatorTrait
             } else {
                 $ruleEditPost   = 'absent';
             }
+
             $executive          = true;
         } else {
             $ruleStickTopic     = 'absent';

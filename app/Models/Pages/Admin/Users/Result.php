@@ -42,6 +42,7 @@ class Result extends Users
         }
 
         $number = \count($idsN);
+
         if (0 == $number) {
             $view = $this->c->AdminUsers;
             $view->fIswev = ['i', 'No users found'];
@@ -122,6 +123,7 @@ class Result extends Users
             if (\is_int($cur)) {
                 $ids[] = $cur;
             }
+
             $userList[$cur] = $cur;
         }
 

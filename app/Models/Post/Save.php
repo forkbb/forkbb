@@ -24,23 +24,30 @@ class Save extends Action
         if ($post->id < 1) {
             throw new RuntimeException('The model does not have ID');
         }
+
         $modified = $post->getModified();
+
         if (empty($modified)) {
             return $post;
         }
+
         $values = $post->getAttrs();
         $fileds = $this->c->dbMap->posts;
         $set = $vars = [];
+
         foreach ($modified as $name) {
             if (! isset($fileds[$name])) {
                 continue;
             }
+
             $vars[] = $values[$name];
             $set[]  = $name . '=?' . $fileds[$name];
         }
+
         if (empty($set)) {
             return $post;
         }
+
         $vars[] = $post->id;
 
         $set   = \implode(', ', $set);
@@ -62,20 +69,25 @@ class Save extends Action
         if (null !== $post->id) {
             throw new RuntimeException('The model has ID');
         }
+
         $attrs  = $post->getAttrs();
         $fileds = $this->c->dbMap->posts;
         $set = $set2 = $vars = [];
+
         foreach ($attrs as $key => $value) {
             if (! isset($fileds[$key])) {
                 continue;
             }
+
             $vars[] = $value;
             $set[]  = $key;
             $set2[] = '?' . $fileds[$key];
         }
+
         if (empty($set)) {
             throw new RuntimeException('The model is empty');
         }
+
         $set   = \implode(', ', $set);
         $set2  = \implode(', ', $set2);
         $query = "INSERT INTO ::posts ({$set})

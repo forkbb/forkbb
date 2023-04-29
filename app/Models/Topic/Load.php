@@ -102,6 +102,7 @@ class Load extends Action
         $stmt = $this->c->DB->query($query, $vars);
 
         $result = [];
+
         while ($row = $stmt->fetch()) {
             $topic = $this->manager->create($row);
 

@@ -24,9 +24,8 @@ class Edit extends Profile
 {
     /**
      * Паттерн для доступных к загрузке типов файлов
-     * @var string
      */
-    protected $accept = 'image/*';
+    protected string $accept = 'image/*';
 
     /**
      * Подготавливает данные для шаблона редактирования профиля

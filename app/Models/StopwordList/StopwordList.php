@@ -15,6 +15,8 @@ use RuntimeException;
 
 class StopwordList extends Model
 {
+    const CACHE_KEY = 'stopwords';
+
     /**
      * Ключ модели для контейнера
      */
@@ -25,7 +27,8 @@ class StopwordList extends Model
      */
     public function init(): StopwordList
     {
-        $data = $this->c->Cache->get('stopwords');
+        $data = $this->c->Cache->get(self::CACHE_KEY);
+
         if (
             isset($data['id'], $data['stopwords'])
             && $data['id'] === $this->generateId()
@@ -48,6 +51,7 @@ class StopwordList extends Model
         }
 
         $files = \glob($this->c->DIR_LANG . '/*/stopwords.txt');
+
         if (false === $files) {
             return 'cache_id_error';
         }
@@ -77,6 +81,7 @@ class StopwordList extends Model
         }
 
         $stopwords = [];
+
         foreach ($this->files as $file) {
             $stopwords = \array_merge($stopwords, \file($file));
         }
@@ -86,7 +91,7 @@ class StopwordList extends Model
         $stopwords = \array_filter($stopwords);
         $stopwords = \array_flip($stopwords);
 
-        if (true !== $this->c->Cache->set('stopwords', ['id' => $id, 'stopwords' => $stopwords])) {
+        if (true !== $this->c->Cache->set(self::CACHE_KEY, ['id' => $id, 'stopwords' => $stopwords])) {
             throw new RuntimeException('Unable to write value to cache - stopwords');
         }
 

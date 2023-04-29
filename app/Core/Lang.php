@@ -245,6 +245,7 @@ class Lang
                 $curComm = null;
                 $curVal  = '';
                 $cur     = [];
+
                 continue;
 
             // комментарий
@@ -256,6 +257,7 @@ class Lang
                 if (isset($curComm)) {
                     $curVal .= $this->originalLine($line);
                 }
+
                 continue;
 
             // промежуточные данные

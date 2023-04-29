@@ -37,6 +37,7 @@ class Bans extends Admin
     protected function encodeData(array $data): string
     {
         unset($data['token']);
+
         $data = \base64_encode(\json_encode($data));
         $hash = $this->c->Secury->hash($data);
 
@@ -108,6 +109,7 @@ class Bans extends Admin
             $this->formSearch = $this->formSearch($v->getData());
         } else {
             $this->formSearch = $this->formSearch($data);
+
             if (empty($data)) {
                 $this->formBan = $this->formBan();
             }
@@ -356,13 +358,14 @@ class Bans extends Admin
     public function result(array $args, string $method): Page
     {
         $data = $this->decodeData($args['data']);
+
         if (false === $data) {
             return $this->c->Message->message('Bad request');
         }
 
-        $idsN = $this->forFilter($data);
-
+        $idsN   = $this->forFilter($data);
         $number = \count($idsN);
+
         if (0 == $number) {
             $this->fIswev = ['i', 'No bans found'];
 
@@ -545,12 +548,15 @@ class Bans extends Admin
 
         if (! empty($args['ids'])) {
             $ids = \explode('-', $args['ids']);
+
             foreach ($ids as &$id) {
                 if (! \preg_match('%^([2-9]|[1-9]\d+)$%D', $id)) {
                     return $this->c->Message->message('Bad request');
                 }
+
                 $id = (int) $id;
             }
+
             unset($id);
 
             $this->banCount = \count($ids);

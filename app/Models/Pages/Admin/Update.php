@@ -31,13 +31,12 @@ class Update extends Admin
     const JSON_OPTIONS               = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
     const CONFIG_FILE                = 'main.php';
 
-    protected $configFile;
+    protected string $configFile;
 
     /**
      * Флаг проверки пароля
-     * @var bool
      */
-    protected $okPass;
+    protected bool $okPass;
 
     public function __construct(Container $container)
     {
@@ -204,6 +203,7 @@ class Update extends Admin
                             ],
                             'PRIMARY KEY' => ['id'],
                         ];
+
                         if (
                             null === $e
                             && false === $this->c->DB->createTable($testTable, $schema)

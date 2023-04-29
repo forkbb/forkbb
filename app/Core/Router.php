@@ -150,6 +150,7 @@ class Router
                     || 1 !== $args[$name]
                 ) {
                     $data['{' . $name . '}'] = \rawurlencode(\str_replace($this->subSearch, $this->subRepl, (string) $args[$name]));
+
                     continue;
                 }
             }
@@ -248,6 +249,7 @@ class Router
                     list($handler, $keys, $marker) = $data['GET'];
                 } else {
                     $allowed += \array_keys($data);
+
                     continue;
                 }
 

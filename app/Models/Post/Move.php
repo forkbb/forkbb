@@ -31,6 +31,7 @@ class Move extends Action
             if ($useFrom) {
                 $post->message = "[from]{$post->parent->subject}[/from]\n" . $post->message;
             }
+
             $post->topic_id = $toTopic->id;
             $this->c->posts->update($post);
         }
@@ -39,6 +40,7 @@ class Move extends Action
         //???? перерасчет количества тем у пользователей? или нет?
 
         $forums = [];
+
         foreach ($topics as $topic) {
             $forums[$topic->forum_id] = $topic->parent;
 

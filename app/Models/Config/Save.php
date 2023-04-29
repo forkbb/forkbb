@@ -22,27 +22,33 @@ class Save extends Method
     public function save(): Config
     {
         $modified = $this->model->getModified();
+
         if (empty($modified)) {
             return $this->model;
         }
 
         $values = $this->model->getAttrs();
+
         foreach ($modified as $name) {
             if (\array_key_exists($name, $values)) {
                 switch ($name[0]) {
                     case 'a':
                         $value = \json_encode($values[$name], \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR);
+
                         break;
                     case 'b':
                         $value = $values[$name] ? '1' : '0';
+
                         break;
                     case 'i':
                         if (null !== $values[$name]) {
                             $value = (string) $values[$name];
+
                             break;
                         }
                     default:
                         $value = $values[$name];
+
                         break;
                 }
 

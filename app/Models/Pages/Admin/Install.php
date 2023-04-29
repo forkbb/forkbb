@@ -29,9 +29,8 @@ class Install extends Admin
 
     /**
      * Для MySQL
-     * @var string
      */
-    protected $DBEngine = '';
+    protected string $DBEngine = '';
 
     /**
      * Подготовка страницы к отображению
@@ -54,15 +53,19 @@ class Install extends Admin
                     case 'mysql':
                         $dbTypes['mysql_innodb'] = 'MySQL InnoDB (PDO)';
                         $dbTypes[$type]          = 'MySQL (PDO) (no transactions!)';
+
                         break;
                     case 'sqlite':
                         $dbTypes[$type]          = 'SQLite (PDO)';
+
                         break;
                     case 'pgsql':
                         $dbTypes[$type]          = 'PostgreSQL (PDO)';
+
                         break;
                     default:
                         $dbTypes[$type]          = \ucfirst($type) . ' (PDO)';
+
                         break;
                 }
             }

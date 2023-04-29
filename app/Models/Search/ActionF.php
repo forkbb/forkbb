@@ -32,6 +32,7 @@ class ActionF extends Method
         }
 
         $list = [];
+
         switch ($action) {
             case 'forums_subscriptions':
                 if (0 !== $root->id) {

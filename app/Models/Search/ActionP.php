@@ -32,9 +32,11 @@ class ActionP extends Method
         }
 
         $query = null;
+
         switch ($action) {
             case 'search':
                 $list = $this->model->queryIds;
+
                 break;
             case 'posts':
                 $query = 'SELECT p.id
@@ -42,6 +44,7 @@ class ActionP extends Method
                     INNER JOIN ::topics AS t ON t.id=p.topic_id
                     WHERE t.forum_id IN (?ai:forums) AND t.moved_to=0 AND p.poster_id=?i:uid
                     ORDER BY p.posted DESC';
+
                 break;
             default:
                 throw new InvalidArgumentException('Unknown action: ' . $action);

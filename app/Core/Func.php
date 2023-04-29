@@ -227,9 +227,9 @@ class Func
         foreach (\explode(',', $str) as $step) {
             $dsr = \explode(';', $step, 2);
 
-            if (
-                isset($dsr[1])) {
+            if (isset($dsr[1])) {
                 $q = \trim(\ltrim(\ltrim($dsr[1], 'q '), '='));
+
                 if (
                     ! \is_numeric($q)
                     || $q < 0
@@ -237,6 +237,7 @@ class Func
                 ) {
                     continue;
                 }
+
                 $q = (float) $q;
             } else {
                 $q = 1;

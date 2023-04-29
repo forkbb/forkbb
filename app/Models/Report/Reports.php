@@ -17,6 +17,8 @@ use RuntimeException;
 
 class Reports extends Manager
 {
+    const CACHE_KEY = 'report';
+
     /**
      * Ключ модели для контейнера
      */
@@ -51,6 +53,7 @@ class Reports extends Manager
     public function loadList(bool $noZapped = true): array
     {
         $result = [];
+
         foreach ($this->Load->loadList($noZapped) as $report) {
             if ($this->isset($report->id)) {
                 $result[] = $this->get($report->id);
@@ -88,7 +91,7 @@ class Reports extends Manager
      */
     public function lastId(): int
     {
-        $last = $this->c->Cache->get('report');
+        $last = $this->c->Cache->get(self::CACHE_KEY);
 
         if (null === $last) {
             $query = 'SELECT MAX(r.id)
@@ -96,7 +99,7 @@ class Reports extends Manager
 
             $last = (int) $this->c->DB->query($query)->fetchColumn();
 
-            if (true !== $this->c->Cache->set('report', $last)) {
+            if (true !== $this->c->Cache->set(self::CACHE_KEY, $last)) {
                 throw new RuntimeException('Unable to write value to cache - report');
             }
         }

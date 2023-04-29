@@ -21,11 +21,13 @@ class LoadTree extends Action
     public function loadTree(int $rootId): ?Forum
     {
         $root = $this->manager->get($rootId);
+
         if (null === $root) {
             return null;
         }
 
         $list = [];
+
         if (! $root->ready) {
             $list[$rootId] = $root;
         }
@@ -81,6 +83,7 @@ class LoadTree extends Action
         }
 
         $stmt = $this->c->DB->query($query, $vars);
+
         while ($cur = $stmt->fetch()) {
             $list[$cur['id']]->replAttrs($cur)->__ready = true;
         }
@@ -101,6 +104,7 @@ class LoadTree extends Action
         // предварительная проверка разделов
         $time = [];
         $max  = \max((int) $this->c->user->last_visit, (int) $this->c->user->u_mark_all_read);
+
         foreach ($list as $forum) {
             $t = \max($max, (int) $forum->mf_mark_all_read);
             if ($forum->last_post > $t) {
@@ -127,6 +131,7 @@ class LoadTree extends Action
                 AND (mot.mt_last_visit IS NULL OR t.last_post>mot.mt_last_visit)';
 
         $stmt = $this->c->DB->query($query, $vars);
+
         while ($cur = $stmt->fetch()) {
             if ($cur['last_post'] > $time[$cur['forum_id']]) {
                 $list[$cur['forum_id']]->__newMessages = true; //????

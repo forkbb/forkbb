@@ -12,6 +12,8 @@ class PhpEngine
     protected $separator;
     protected $blocks;
     protected $blockStack;
+    protected $templates = [];
+
 
     /**
      * Constructor

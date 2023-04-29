@@ -16,10 +16,7 @@ use function \ForkBB\__;
 
 abstract class Admin extends Page
 {
-    /**
-     * @var array
-     */
-    protected $aCrumbs = [];
+    protected array $aCrumbs = [];
 
     public function __construct(Container $container)
     {

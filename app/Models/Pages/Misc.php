@@ -23,6 +23,7 @@ class Misc extends Page
     public function markread(array $args): Page
     {
         $forum = $this->c->forums->loadTree($args['id']);
+
         if (! $forum instanceof Forum) {
             return $this->c->Message->message('Bad request');
         }
@@ -50,6 +51,7 @@ class Misc extends Page
         }
 
         $forum = $this->c->forums->get($args['fid']);
+
         if (! $forum instanceof Forum) {
             return $this->c->Message->message('Bad request');
         }
@@ -83,6 +85,7 @@ class Misc extends Page
         }
 
         $topic = $this->c->topics->load($args['tid']);
+
         if (! $topic instanceof Topic) {
             return $this->c->Message->message('Bad request');
         }

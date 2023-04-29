@@ -28,9 +28,8 @@ class Moderate extends Page
 
     /**
      * Список действий
-     * @var array
      */
-    protected $actions = [
+    protected array $actions = [
         'open'    => self::INFORUM + self::INTOPIC + self::TOTOPIC,
         'close'   => self::INFORUM + self::INTOPIC + self::TOTOPIC,
         'delete'  => self::INFORUM + self::INTOPIC + self::IFTOTPC,
@@ -63,7 +62,8 @@ class Moderate extends Page
         $cid     = null;
         $options = [];
         $idxs    = [];
-        $root = $this->c->forums->get(0);
+        $root    = $this->c->forums->get(0);
+
         if ($root instanceof Forum) {
             foreach ($this->c->forums->depthList($root, -1) as $f) {
                 if ($cid !== $f->cat_id) {
@@ -87,6 +87,7 @@ class Moderate extends Page
                 }
             }
         }
+
         $this->listOfIndexes  = $idxs;
         $this->listForOptions = $options;
     }
@@ -99,6 +100,7 @@ class Moderate extends Page
         if (empty($v->getErrors())) {
             $type = $v->topic ? self::INTOPIC : self::INFORUM;
             $sum  = 0;
+
             foreach ($this->actions as $key => $val) {
                 if (isset($v->{$key})) {
                     $action = $key;
@@ -197,6 +199,7 @@ class Moderate extends Page
         }
 
         $this->curForum = $this->c->forums->loadTree($v->forum);
+
         if (! $this->curForum instanceof Forum) {
             return $this->c->Message->message('Bad request');
         } elseif (
@@ -210,6 +213,7 @@ class Moderate extends Page
 
         if ($v->topic) {
             $this->curTopic = $this->c->topics->load($v->topic);
+
             if (
                 ! $this->curTopic instanceof Topic
                 || $this->curTopic->parent !== $this->curForum
@@ -221,6 +225,7 @@ class Moderate extends Page
             $curType = $this->actions[$v->action];
             $ids     = $v->ids;
             $firstId = $this->curTopic->first_post_id;
+
             if (self::TOTOPIC & $curType) {
                 $objects = [$this->curTopic];
             } elseif (self::IFTOTPC & $curType) {
@@ -231,8 +236,10 @@ class Moderate extends Page
                     $objects = [$this->curTopic];
                 }
             }
+
             if (null === $objects) {
                 $objects = $this->c->posts->loadByIds(\array_diff($ids, [$firstId]), false);
+
                 foreach ($objects as $post) {
                     if (
                         ! $post instanceof Post
@@ -241,6 +248,7 @@ class Moderate extends Page
                         return $this->c->Message->message('Bad request');
                     }
                 }
+
                 $this->processAsPosts = true;
             }
 
@@ -254,6 +262,7 @@ class Moderate extends Page
             );
         } else {
             $objects = $this->c->topics->loadByIds($v->ids, false);
+
             foreach ($objects as $topic) {
                 if (
                     ! $topic instanceof Topic
@@ -432,6 +441,7 @@ class Moderate extends Page
             if ($topic->moved_to) {
                 return $this->c->Message->message('Topic links cannot be merged');
             }
+
             if (
                 ! $this->firstTopic instanceof Topic
                 || $topic->first_post_id < $this->firstTopic->first_post_id
@@ -583,6 +593,7 @@ class Moderate extends Page
         }
 
         $headers = [];
+
         foreach ($objects as $object) {
             if ($object instanceof Topic) {
                 $headers[] = __(['Topic «%s»', $object->name]);

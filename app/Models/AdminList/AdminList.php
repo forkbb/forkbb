@@ -15,6 +15,8 @@ use RuntimeException;
 
 class AdminList extends Model
 {
+    const CACHE_KEY = 'admins';
+
     /**
      * Ключ модели для контейнера
      */
@@ -26,12 +28,12 @@ class AdminList extends Model
      */
     public function init(): AdminList
     {
-        $this->list = $this->c->Cache->get('admins');
+        $this->list = $this->c->Cache->get(self::CACHE_KEY);
 
         if (! \is_array($this->list)) {
             $this->list = \array_flip($this->c->users->adminsIds());
 
-            if (true !== $this->c->Cache->set('admins', $this->list)) {
+            if (true !== $this->c->Cache->set(self::CACHE_KEY, $this->list)) {
                 throw new RuntimeException('Unable to write value to cache - admins');
             }
         }
@@ -44,7 +46,7 @@ class AdminList extends Model
      */
     public function reset(): AdminList
     {
-        if (true !== $this->c->Cache->delete('admins')) {
+        if (true !== $this->c->Cache->delete(self::CACHE_KEY)) {
             throw new RuntimeException('Unable to remove key from cache - admins');
         }
 

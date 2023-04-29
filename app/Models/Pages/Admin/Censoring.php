@@ -97,6 +97,7 @@ class Censoring extends Admin
         ];
 
         $fieldset = [];
+
         foreach ($this->c->censorship->load() as $id => $row) {
             $fieldset["form[{$id}][search_for]"] = [
                 'class'     => ['censor'],
@@ -113,6 +114,7 @@ class Censoring extends Admin
                 'caption'   => 'Replacement label',
             ];
         }
+
         $fieldset["form[0][search_for]"] = [
             'class'     => ['censor'],
             'type'      => 'text',

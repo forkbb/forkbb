@@ -115,7 +115,7 @@ class Post extends DataModel
             return false;
         } elseif ($this->c->user->isModerator($this)) {
             return true;
-        } elseif ('1' == $this->parent->closed) {
+        } elseif (0 !== $this->parent->closed) {
             return false;
         }
 
@@ -131,8 +131,8 @@ class Post extends DataModel
                 )
             )
             && (
-                '0' == $this->c->user->g_deledit_interval
-                || '1' == $this->edit_post
+                0 === $this->c->user->g_deledit_interval
+                || 1 === $this->edit_post
                 || \time() - $this->posted < $this->c->user->g_deledit_interval
             );
     }
@@ -164,15 +164,15 @@ class Post extends DataModel
             return false;
         } elseif ($this->c->user->isModerator($this)) {
             return true;
-        } elseif ('1' == $this->parent->closed) {
+        } elseif (0 !== $this->parent->closed) {
             return false;
         }
 
         return $this->user->id === $this->c->user->id
             && 1 === $this->c->user->g_edit_posts
             && (
-                '0' == $this->c->user->g_deledit_interval
-                || '1' == $this->edit_post
+                0 === $this->c->user->g_deledit_interval
+                || 1 === $this->edit_post
                 || \time() - $this->posted < $this->c->user->g_deledit_interval
                 || (
                     $this->user->id === $this->editor_id

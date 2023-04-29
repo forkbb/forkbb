@@ -71,6 +71,7 @@ class Load extends Action
         $data = $this->c->DB->query($query, $vars)->fetchAll();
 
         $result = [];
+
         foreach ($data as $row) {
             $result[] = $this->manager->create($row);
         }

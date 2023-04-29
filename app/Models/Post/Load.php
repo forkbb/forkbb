@@ -107,11 +107,13 @@ class Load extends Action
 
         if ($withTopics) {
             $this->c->topics->loadByIds($topicIds, true);
+
             foreach ($result as &$post) {
                 if (! $post->parent instanceof Topic) {
                     $post = null;
                 }
             }
+
             unset($post);
         } else {
             foreach ($topicIds as $id) {

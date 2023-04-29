@@ -40,6 +40,7 @@ class Index extends Method
 
             $mesCurWords = [];
             $subCurWords = [];
+
             while ($row = $stmt->fetch()) {
                 if ($row['subject_match']) {
                     $subCurWords[$row['word']] = $row['id'];
@@ -50,6 +51,7 @@ class Index extends Method
         }
 
         $words = [];
+
         if ('edit' === $mode) {
             $words['add']['p'] = \array_diff($mesWords, \array_keys($mesCurWords));
             $words['add']['s'] = \array_diff($subWords, \array_keys($subCurWords));
@@ -87,6 +89,7 @@ class Index extends Method
                 $query = 'INSERT INTO ::search_words (word)
                     VALUES(?s:word)';
                 $stmt  = null;
+
                 foreach ($newWords as $word) {
                     if (null === $stmt) {
                         $stmt = $this->c->DB->prepare($query, [':word' => $word]);

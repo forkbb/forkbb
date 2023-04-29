@@ -25,9 +25,11 @@ class Action extends Users
     protected function nameList(array $users): array
     {
         $result = [];
+
         foreach ($users as $user) {
             $result[] = $user->username;
         }
+
         \sort($result, \SORT_STRING | \SORT_FLAG_CASE);
 
         return $result;
@@ -42,12 +44,14 @@ class Action extends Users
             if (! $this->c->Csrf->verify($args['token'], 'AdminUsersAction', $args)) {
                 return $this->c->Message->message($this->c->Csrf->getError());
             }
+
             $profile = true;
         } else {
             $profile = false;
         }
 
         $error = false;
+
         switch ($args['action']) {
 /*
             case self::ACTION_BAN:
@@ -60,6 +64,7 @@ class Action extends Users
                 if (! $this->c->userRules->deleteUsers) {
                     $error = true;
                 }
+
                 break;
             case self::ACTION_CHG:
                 if (
@@ -73,6 +78,7 @@ class Action extends Users
                 ) {
                     $error = true;
                 }
+
                 break;
             default:
                 $error = true;
@@ -83,6 +89,7 @@ class Action extends Users
         }
 
         $ids = $this->checkSelected(\explode('-', $args['ids']), $args['action'], $profile);
+
         if (false === $ids) {
             $message = $this->c->Message->message('Action not available');
             $message->fIswev = $this->fIswev; // тут идет дополнение, а не замена
@@ -91,6 +98,7 @@ class Action extends Users
         }
 
         $this->userList = $this->c->users->loadByIds($ids);
+
         switch ($args['action']) {
 /*
             case self::ACTION_BAN:
@@ -212,10 +220,13 @@ class Action extends Users
     protected function groupListForChange(bool $profile): array
     {
         $list = [];
+
         foreach ($this->c->groups->getList() as $id => $group) {
                 $list[$id] = $group->g_title;
         }
+
         unset($list[FORK_GROUP_GUEST]);
+
         if (! $profile) {
             unset($list[FORK_GROUP_ADMIN]);
         } elseif (! $this->user->isAdmin) {
@@ -306,11 +317,8 @@ class Action extends Users
     /**
      * Проверяет пароль на совпадение с текущим пользователем
      */
-    public function vCheckPassword(
-        Validator $v,
-        #[SensitiveParameter]
-        string $password
-    ): string {
+    public function vCheckPassword(Validator $v, #[SensitiveParameter] string $password): string
+    {
         if (! \password_verify($password, $this->user->password)) {
             $v->addError('Invalid passphrase');
         }

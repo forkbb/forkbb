@@ -269,6 +269,7 @@ trait PostFormTrait
             if (empty($section['fields'])) {
                 continue;
             }
+
             foreach ($section['fields'] as $key => &$cur) {
                 if (
                     $key === $field

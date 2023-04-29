@@ -16,6 +16,8 @@ use RuntimeException;
 
 class BanList extends Model
 {
+    const CACHE_KEY = 'banlist';
+
     /**
      * Ключ модели для контейнера
      */
@@ -27,12 +29,12 @@ class BanList extends Model
      */
     public function init(): BanList
     {
-        $list = $this->c->Cache->get('banlist');
+        $list = $this->c->Cache->get(self::CACHE_KEY);
 
         if (! isset($list['banList'], $list['userList'], $list['emailList'], $list['ipList'], $list['firstExpire'])) {
             $list = $this->load();
 
-            if (true !== $this->c->Cache->set('banlist', $list)) {
+            if (true !== $this->c->Cache->set(self::CACHE_KEY, $list)) {
                 throw new RuntimeException('Unable to write value to cache - banlist');
             }
         }
@@ -96,7 +98,7 @@ class BanList extends Model
      */
     public function reset(): BanList
     {
-        if (true !== $this->c->Cache->delete('banlist')) {
+        if (true !== $this->c->Cache->delete(self::CACHE_KEY)) {
             throw new RuntimeException('Unable to remove key from cache - banlist');
         }
 

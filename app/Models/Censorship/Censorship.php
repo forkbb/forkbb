@@ -15,6 +15,8 @@ use RuntimeException;
 
 class Censorship extends Model
 {
+    const CACHE_KEY = 'censorship';
+
     /**
      * Ключ модели для контейнера
      */
@@ -27,12 +29,12 @@ class Censorship extends Model
     public function init(): Censorship
     {
         if (1 === $this->c->config->b_censoring) {
-            $list = $this->c->Cache->get('censorship');
+            $list = $this->c->Cache->get(self::CACHE_KEY);
 
             if (! isset($list['searchList'], $list['replaceList'])) {
                 $list = $this->refresh();
 
-                if (true !== $this->c->Cache->set('censorship', $list)) {
+                if (true !== $this->c->Cache->set(self::CACHE_KEY, $list)) {
                     throw new RuntimeException('Unable to write value to cache - censorship');
                 }
             }
@@ -61,7 +63,7 @@ class Censorship extends Model
      */
     public function reset(): Censorship
     {
-        if (true !== $this->c->Cache->delete('censorship')) {
+        if (true !== $this->c->Cache->delete(self::CACHE_KEY)) {
             throw new RuntimeException('Unable to remove key from cache - censorship');
         }
 

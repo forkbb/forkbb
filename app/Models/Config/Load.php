@@ -12,8 +12,6 @@ namespace ForkBB\Models\Config;
 
 use ForkBB\Models\Method;
 use ForkBB\Models\Config\Config;
-use PDO;
-use RuntimeException;
 
 class Load extends Method
 {
@@ -27,21 +25,26 @@ class Load extends Method
             FROM ::config AS cf';
 
         $stmt = $this->c->DB->query($query);
+
         while ($row = $stmt->fetch()) {
             switch ($row['conf_name'][0]) {
                 case 'a':
                     $value = \json_decode($row['conf_value'], true, 512, \JSON_THROW_ON_ERROR);
+
                     break;
                 case 'b':
                     $value = '1' == $row['conf_value'] ? 1 : 0;
+
                     break;
                 case 'i':
                     if (null !== $row['conf_value']) {
                         $value = (int) $row['conf_value'];
+
                         break;
                     }
                 default:
                     $value = $row['conf_value'];
+
                     break;
             }
 
