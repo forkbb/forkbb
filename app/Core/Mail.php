@@ -24,7 +24,7 @@ class Mail
     protected array $to = [];
     protected array $headers = [];
     protected string $message;
-    protected array $smtp;
+    protected ?array $smtp = null;
     protected string $EOL;
     protected $connect;
     protected int $auth = 0;
@@ -145,7 +145,7 @@ class Mail
             'Content-Type'              => 'text/plain; charset=UTF-8',
             'X-Mailer'                  => 'ForkBB Mailer',
         ];
-        $this->message = null;
+        $this->message = '';
 
         return $this;
     }
