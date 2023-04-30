@@ -405,7 +405,9 @@ class User extends DataModel
 
     public function fLog(): string
     {
-        return "id:{$this->id} gid:{$this->group_id} name:{$this->username}";
+        return $this->isGuest
+            ? "id:{$this->id} gid:{$this->group_id} guest"
+            : "id:{$this->id} gid:{$this->group_id} name:{$this->username}";
     }
 
     /**
