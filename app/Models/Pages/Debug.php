@@ -23,7 +23,7 @@ class Debug extends Page
             $this->numQueries = $this->c->DB->getCount();
 
             if (
-                $this->c->DEBUG > 1
+                2 & $this->c->DEBUG
                 && $this->user->isAdmin
             ) {
                 $total   = 0;

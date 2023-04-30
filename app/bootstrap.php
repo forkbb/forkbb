@@ -87,7 +87,7 @@ if (
 
 if (
     null !== $tpl
-    && $c->DEBUG > 0
+    && 3 & $c->DEBUG
 ) {
     $debug = \rtrim($c->View->rendering($c->Debug->debug()));
     $tpl   = \str_replace('<!-- debuginfo -->', $debug, $tpl);

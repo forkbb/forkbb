@@ -52,6 +52,17 @@ class Message extends Page
 
         if ('' !== $message) {
             $this->fIswev = [$type, $message];
+
+            if (
+                $status > 399
+                && 4 & $this->c->DEBUG
+            ) {
+                $this->c->Log->debug("Status {$status}: {$_SERVER['REQUEST_URI']}", [
+                    'user'    => $this->user->fLog(),
+                    'message' => $message,
+                    'headers' => true,
+                ]);
+            }
         }
 
         return $this;
