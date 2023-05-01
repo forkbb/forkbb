@@ -26,3 +26,84 @@ msgstr "Тем на странице"
 
 msgid "Posts per page label"
 msgstr "Сообщений на странице"
+
+msgid "Europe/Kaliningrad"
+msgstr " Калининград, Россия"
+
+msgid "Europe/Kirov"
+msgstr " Киров, Россия"
+
+msgid "Europe/Moscow"
+msgstr " Москва, Россия"
+
+msgid "Europe/Simferopol"
+msgstr " Симферополь, Россия"
+
+msgid "Europe/Volgograd"
+msgstr " Волгоград, Россия"
+
+msgid "Europe/Astrakhan"
+msgstr " Астрахань, Россия"
+
+msgid "Europe/Samara"
+msgstr " Самара, Россия"
+
+msgid "Europe/Saratov"
+msgstr " Саратов, Россия"
+
+msgid "Europe/Ulyanovsk"
+msgstr " Ульяновск, Россия"
+
+msgid "Asia/Yekaterinburg"
+msgstr " Екатеринбург, Россия"
+
+msgid "Asia/Omsk"
+msgstr " Омск, Россия"
+
+msgid "Asia/Barnaul"
+msgstr " Барнаул, Россия"
+
+msgid "Asia/Krasnoyarsk"
+msgstr " Красноярск, Россия"
+
+msgid "Asia/Novokuznetsk"
+msgstr " Новокузнецк, Россия"
+
+msgid "Asia/Novosibirsk"
+msgstr " Новосибирск, Россия"
+
+msgid "Asia/Tomsk"
+msgstr " Томск, Россия"
+
+msgid "Asia/Irkutsk"
+msgstr " Иркутск, Россия"
+
+msgid "Asia/Chita"
+msgstr " Чита, Россия"
+
+msgid "Asia/Khandyga"
+msgstr " Хандыга, Россия"
+
+msgid "Asia/Yakutsk"
+msgstr " Якутск, Россия"
+
+msgid "Asia/Ust-Nera"
+msgstr " Усть-Нера, Россия"
+
+msgid "Asia/Vladivostok"
+msgstr " Владивосток, Россия"
+
+msgid "Asia/Magadan"
+msgstr " Магадан, Россия"
+
+msgid "Asia/Sakhalin"
+msgstr " Сахалин (остров), Россия"
+
+msgid "Asia/Srednekolymsk"
+msgstr " Среднеколымск, Россия"
+
+msgid "Asia/Anadyr"
+msgstr " Анадырь, Россия"
+
+msgid "Asia/Kamchatka"
+msgstr " Камчатка (полуостров), Россия"
