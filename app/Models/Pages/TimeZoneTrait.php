@@ -25,7 +25,7 @@ trait TimeZoneTrait
             $dateTimeZone          = new DateTimeZone($zone);
             $dateTime              = new DateTime('now', $dateTimeZone);
             $offset                = $dateTime->getOffset();
-            $list[$offset][$zone]  = $zone;
+            $list[$offset][$zone]  = __($zone);
         }
 
         \ksort($list, \SORT_NUMERIC);
@@ -46,7 +46,7 @@ trait TimeZoneTrait
                     $options[] = ['(UTC' . $hm . ') ' . $format->format($now)];
                 }
 
-                $options[] = [$zone, $value];
+                $options[] = [$zone, \trim($value)];
             }
         }
 
