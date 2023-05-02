@@ -58,7 +58,7 @@ if (
     $c->BASE_URL = \str_replace('https://', 'http://', $c->BASE_URL);
 }
 
-$c->FORK_REVISION = 53;
+$c->FORK_REVISION = 54;
 $c->START         = $forkStart;
 $c->PUBLIC_URL    = $c->BASE_URL . $forkPublicPrefix;
 
