@@ -215,51 +215,50 @@ class Online extends Model
             }
         }
 
-        // гость
-        if ($this->c->user->isGuest) {
-            $vars = [
-                ':logged' => \time(),
-                ':pos'    => $position,
-                ':name'   => (string) $this->c->user->isBot,
-                ':ip'     => $this->c->user->ip
-            ];
+        $guest = $this->c->user->isGuest;
+        $vars  = [
+            ':id'     => $this->c->user->id,
+            ':ident'  => $guest ? $this->c->user->ip : '',
+            ':logged' => \time(),
+            ':pos'    => $position,
+            ':name'   => $guest ? (string) $this->c->user->isBot : $this->c->user->username,
+        ];
 
-            if ($this->c->user->logged > 0) {
+        if ($this->c->user->logged > 0) {
+            if ($guest) {
                 $query = 'UPDATE ::online
                     SET logged=?i:logged, o_position=?s:pos, o_name=?s:name
-                    WHERE user_id=0 AND ident=?s:ip';
+                    WHERE user_id=0 AND ident=?s:ident';
             } else {
-                $query = 'INSERT INTO ::online (user_id, ident, logged, o_position, o_name)
-                    SELECT tmp.*
-                    FROM (SELECT 0 AS f1, ?s:ip AS f2, ?i:logged AS f3, ?s:pos AS f4, ?s:name AS f5) AS tmp
-                    WHERE NOT EXISTS (
-                        SELECT 1
-                        FROM ::online
-                        WHERE user_id=0 AND ident=?s:ip
-                    )';
-            }
-        } else {
-        // пользователь
-            $vars = [
-                ':logged' => \time(),
-                ':pos'    => $position,
-                ':id'     => $this->c->user->id,
-                ':name'   => $this->c->user->username,
-            ];
-
-            if ($this->c->user->logged > 0) {
                 $query = 'UPDATE ::online
                     SET logged=?i:logged, o_position=?s:pos
                     WHERE user_id=?i:id';
-            } else {
-                $query = 'INSERT INTO ::online (user_id, logged, o_position, o_name)
-                    SELECT tmp.*
-                    FROM (SELECT ?i:id AS f1, ?i:logged AS f2, ?s:pos AS f3, ?s:name AS f4) AS tmp
-                    WHERE NOT EXISTS (
-                        SELECT 1
-                        FROM ::online
-                        WHERE user_id=?i:id
-                    )';
+            }
+        } else {
+            switch ($this->c->DB->getType()) {
+                case 'mysql':
+                    $query = 'INSERT IGNORE INTO ::online (user_id, ident, logged, o_position, o_name)
+                        VALUES (?i:id, ?s:ident, ?i:logged, ?s:pos, ?s:name)';
+
+                    break;
+                case 'sqlite':
+                case 'pgsql':
+                    $query = 'INSERT INTO ::online (user_id, ident, logged, o_position, o_name)
+                        VALUES (?i:id, ?s:ident, ?i:logged, ?s:pos, ?s:name)
+                        ON CONFLICT(user_id, ident) DO NOTHING';
+
+                    break;
+                default:
+                    $query = 'INSERT INTO ::online (user_id, ident, logged, o_position, o_name)
+                        SELECT tmp.*
+                        FROM (SELECT ?i:id AS f1, ?s:ident AS f2, ?i:logged AS f3, ?s:pos AS f4, ?s:name AS f5) AS tmp
+                        WHERE NOT EXISTS (
+                            SELECT 1
+                            FROM ::online
+                            WHERE user_id=?i:id AND ident=?s:ident
+                        )';
+
+                    break;
             }
         }
 
