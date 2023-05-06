@@ -60,7 +60,7 @@ class Categories extends Admin
         $this->nameTpl   = 'admin/form';
         $this->aIndex    = 'categories';
         $this->form      = $this->formEdit();
-        $this->classForm = ['editcategories'];
+        $this->classForm = ['editcategories', 'inline'];
         $this->titleForm = 'Categories';
 
         return $this;
@@ -117,7 +117,7 @@ class Categories extends Admin
                 ),
             ];
             $form['sets']["category{$key}"] = [
-                'class'  => ['category'],
+                'class'  => ['category', 'inline'],
                 'legend' => $row['cat_name'],
                 'fields' => $fields,
             ];

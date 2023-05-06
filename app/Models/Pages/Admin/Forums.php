@@ -213,7 +213,7 @@ class Forums extends Admin
                     'disabled' => $disabled,
                 ];
                 $form['sets']["forum{$forum->id}"] = [
-                    'class'  => ['forum'],
+                    'class'  => ['forum', 'inline'],
                     'legend' => $forum->cat_name . ' / ' . $forum->forum_name,
                     'fields' => $fields,
                 ];

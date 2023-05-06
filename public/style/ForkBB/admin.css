@@ -191,46 +191,48 @@
   padding: 0 0.625rem;
 }
 
+/****************************************/
+/* Админка/Форма в линию                */
+/****************************************/
+#forka .f-fs-inline {
+  display: flex;
+  align-items: stretch;
+}
+
+#forka .f-fs-inline .f-fleg {
+  display: none;
+}
+
+#forka .f-fs-inline .f-ycaption {
+  font-weight: normal;
+}
+
+#forka .f-fs-inline dl {
+  flex-direction: column;
+}
+
+#forka .f-fs-inline dt {
+  display: block;
+  width: 100%;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#forka .f-fs-inline + .f-fs-inline dt {
+  display: none;
+}
+
+#forka .f-fs-inline dd {
+  width: 100%;
+}
+
 /*********************/
 /* Админка/Категории */
 /*********************/
 #forka .f-deletecategory-form .f-fbtn {
   width: auto;
   display: inline-block;
-}
-
-#forka .f-fs-category {
-  display: flex;
-  align-items: stretch;
-}
-
-#forka .f-fs-category .f-fleg {
-  display: none;
-}
-
-#forka .f-fs-category .f-ycaption {
-  font-weight: normal;
-}
-
-#forka .f-field-category {
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-#forka .f-field-category > dt {
-  display: none;
-}
-
-#forka .f-field-category > dd {
-  width: 100%;
-}
-
-#forka .f-fs-category:first-of-type .f-field-category > dt {
-  display: block;
-  width: 100%;
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
 }
 
 #forka .f-field-category.f-field-name {
@@ -253,40 +255,6 @@
 #forka .f-deleteforum-form .f-fbtn {
   width: auto;
   display: inline-block;
-}
-
-#forka .f-fs-forum {
-  display: flex;
-  align-items: stretch;
-}
-
-#forka .f-fs-forum .f-fleg {
-  display: none;
-}
-
-#forka .f-fs-forum .f-ycaption {
-  font-weight: normal;
-}
-
-#forka .f-field-forum {
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-#forka .f-field-forum > dt {
-  display: none;
-}
-
-#forka .f-field-forum > dd {
-  width: 100%;
-}
-
-#forka .f-finform + .f-fs-forum .f-field-forum > dt {
-  display: block;
-  width: 100%;
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
 }
 
 #forka .f-field-forum.f-field-name {
