@@ -16,6 +16,8 @@ use RuntimeException;
 
 class Save extends Action
 {
+    const CACHE_KEY = 'report';
+
     /**
      * Обновляет репорт в БД
      */
@@ -99,8 +101,8 @@ class Save extends Action
         $report->id = (int) $this->c->DB->lastInsertId();
         $report->resModified();
 
-        if (true !== $this->c->Cache->set('report', $report->id)) {
-            throw new RuntimeException('Unable to write value to cache - report');
+        if (true !== $this->c->Cache->set(self::CACHE_KEY, $report->id)) {
+            throw new RuntimeException('Unable to write value to cache - ' . self::CACHE_KEY);
         }
 
         return $report->id;
