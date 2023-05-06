@@ -32,17 +32,17 @@ class Save extends Action
         }
 
         $values = $group->getAttrs();
-        $fileds = $this->c->dbMap->groups;
+        $fields = $this->c->dbMap->groups;
 
         $set = $vars = [];
 
         foreach ($modified as $name) {
-            if (! isset($fileds[$name])) {
+            if (! isset($fields[$name])) {
                 continue;
             }
 
             $vars[] = $values[$name];
-            $set[]  = $name . '=?' . $fileds[$name];
+            $set[]  = $name . '=?' . $fields[$name];
         }
 
         if (empty($set)) {
@@ -78,13 +78,13 @@ class Save extends Action
         }
 
         $attrs  = $group->getAttrs();
-        $fileds = $this->c->dbMap->groups;
+        $fields = $this->c->dbMap->groups;
 
         $set = $set2 = $vars = [];
 
         foreach ($attrs as $key => $value) {
             if (
-                ! isset($fileds[$key])
+                ! isset($fields[$key])
                 || 'g_id' === $key
             ) {
                 continue;
@@ -92,7 +92,7 @@ class Save extends Action
 
             $vars[] = $value;
             $set[]  = $key;
-            $set2[] = '?' . $fileds[$key];
+            $set2[] = '?' . $fields[$key];
         }
 
         if (empty($set)) {

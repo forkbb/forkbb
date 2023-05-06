@@ -37,11 +37,11 @@ class Save extends Action
         $values = $user->getAttrs();
 
         if ($user->isGuest) {
-            $fileds = $this->c->dbMap->online;
+            $fields = $this->c->dbMap->online;
             $table  = 'online';
             $where  = 'user_id=0 AND ident=?s';
         } else {
-            $fileds = $this->c->dbMap->users;
+            $fields = $this->c->dbMap->users;
             $table  = 'users';
             $where  = 'id=?i';
         }
@@ -51,12 +51,12 @@ class Save extends Action
         $nameChange = false;
 
         foreach ($modified as $name) {
-            if (! isset($fileds[$name])) {
+            if (! isset($fields[$name])) {
                 continue;
             }
 
             $vars[] = $values[$name];
-            $set[]  = $name . '=?' . $fileds[$name];
+            $set[]  = $name . '=?' . $fields[$name];
 
             if ('username' === $name) {
                 $nameChange = true;
@@ -116,17 +116,17 @@ class Save extends Action
         $user->username_normal = $this->manager->normUsername($user->username);
 
         $attrs  = $user->getAttrs();
-        $fileds = $this->c->dbMap->users;
+        $fields = $this->c->dbMap->users;
         $set = $set2 = $vars = [];
 
         foreach ($attrs as $key => $value) {
-            if (! isset($fileds[$key])) {
+            if (! isset($fields[$key])) {
                 continue;
             }
 
             $vars[] = $value;
             $set[]  = $key;
-            $set2[] = '?' . $fileds[$key];
+            $set2[] = '?' . $fields[$key];
         }
 
         if (empty($set)) {

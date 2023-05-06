@@ -34,16 +34,16 @@ class Save extends Action
         }
 
         $values = $report->getAttrs();
-        $fileds = $this->c->dbMap->reports;
+        $fields = $this->c->dbMap->reports;
         $set = $vars = [];
 
         foreach ($modified as $name) {
-            if (! isset($fileds[$name])) {
+            if (! isset($fields[$name])) {
                 continue;
             }
 
             $vars[] = $values[$name];
-            $set[]  = $name . '=?' . $fileds[$name];
+            $set[]  = $name . '=?' . $fields[$name];
         }
 
         if (empty($set)) {
@@ -75,17 +75,17 @@ class Save extends Action
         $report->created = \time();
 
         $attrs  = $report->getAttrs();
-        $fileds = $this->c->dbMap->reports;
+        $fields = $this->c->dbMap->reports;
         $set = $set2 = $vars = [];
 
         foreach ($attrs as $key => $value) {
-            if (! isset($fileds[$key])) {
+            if (! isset($fields[$key])) {
                 continue;
             }
 
             $vars[] = $value;
             $set[]  = $key;
-            $set2[] = '?' . $fileds[$key];
+            $set2[] = '?' . $fields[$key];
         }
 
         if (empty($set)) {
