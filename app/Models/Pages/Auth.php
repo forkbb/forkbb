@@ -13,12 +13,15 @@ namespace ForkBB\Models\Pages;
 use ForkBB\Core\Validator;
 use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\Page;
+use ForkBB\Models\Pages\RegLogTrait;
 use ForkBB\Models\User\User;
 use SensitiveParameter;
 use function \ForkBB\__;
 
 class Auth extends Page
 {
+    use RegLogTrait;
+
     /**
      * Выход пользователя
      */
@@ -105,6 +108,7 @@ class Auth extends Page
         $save               = $v->save ?? true;
         $redirect           = $v->redirect ?? $this->c->Router->validate($ref, 'Index');
         $this->form         = $this->formLogin($username, (bool) $save, $redirect);
+        $this->formOAuth    = $this->reglogForm();
 
         return $this;
     }

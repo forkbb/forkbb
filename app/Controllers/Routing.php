@@ -94,6 +94,24 @@ class Routing
                 'Redirect:toIndex'
             );
         }
+        // OAuth
+        if (
+            $user->isAdmin
+            || 1 === $config->b_oauth_allow
+        ) {
+            $r->add(
+                $r::GET,
+                '/reglog/callback/{name}',
+                'RegLog:callback',
+                'RegLogCallback'
+            );
+            $r->add(
+                $r::PST,
+                '/reglog/redirect',
+                'RegLog:redirect',
+                'RegLogRedirect'
+            );
+        }
         // просмотр разрешен
         if (1 === $user->g_read_board) {
             // главная
@@ -556,6 +574,18 @@ class Routing
                 '/admin/options',
                 'AdminOptions:edit',
                 'AdminOptions'
+            );
+            $r->add(
+                $r::DUO,
+                '/admin/options/providers',
+                'AdminProviders:view',
+                'AdminProviders'
+            );
+            $r->add(
+                $r::DUO,
+                '/admin/options/providers/{name}',
+                'AdminProviders:edit',
+                'AdminProvider'
             );
             $r->add(
                 $r::DUO,

@@ -208,7 +208,9 @@
 }
 
 #forka .f-fs-inline dl {
+  display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 #forka .f-fs-inline dt {
@@ -1025,4 +1027,35 @@
   #fork-logview .f-lgsu {
     flex-wrap: wrap;
   }
+}
+
+/****************************************/
+/* Админка/Провайдеры                   */
+/****************************************/
+#forka .f-field-provider.f-field-name {
+  width: calc(100% - 8rem);
+}
+
+#forka .f-field-provider.f-field-position {
+  width: 5rem;
+}
+
+#forka .f-field-provider.f-field-allow {
+  width: 3rem;
+  overflow: hidden;
+  text-align: center;
+}
+
+#forka .f-field-provider.f-field-name .f-ybtn {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#forka .f-field-provider.f-field-allow .f-ychk {
+  margin: 0;
+}
+
+#forka .f-field-provider.f-field-allow .f-flblch {
+  height: 2rem;
 }

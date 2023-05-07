@@ -13,11 +13,14 @@ namespace ForkBB\Models\Pages;
 use ForkBB\Core\Validator;
 use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\Page;
+use ForkBB\Models\Pages\RegLogTrait;
 use ForkBB\Models\User\User;
 use function \ForkBB\__;
 
 class Register extends Page
 {
+    use RegLogTrait;
+
     /**
      * Регистрация
      */
@@ -85,6 +88,7 @@ class Register extends Page
         $this->titles       = 'Register';
         $this->robots       = 'noindex';
         $this->form         = $this->formReg($v);
+        $this->formOAuth    = $this->reglogForm();
 
         return $this;
     }

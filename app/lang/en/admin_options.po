@@ -425,3 +425,12 @@ msgstr "Allow private messages"
 
 msgid "Allow PM help"
 msgstr "Settings for individual groups are available in <a href="%2$s">%1$s</a>."
+
+msgid "Allow oauth label"
+msgstr "OAuth-authorization"
+
+msgid "Allow oauth help"
+msgstr "Allow users to login/register on this bulletin board using accounts on third-party resources."
+
+msgid "Configure providers"
+msgstr "Configure providers"

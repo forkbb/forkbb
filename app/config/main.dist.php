@@ -163,6 +163,12 @@ return [
         'subscriptions' => \ForkBB\Models\Subscription\Subscription::class,
         'bbcode'        => '@BBCodeListModel:init',
         'pms'           => \ForkBB\Models\PM\PM::class,
+        'providers'     => [
+            'class'   => \ForkBB\Models\Provider\Providers::class,
+            'drivers' => [
+                'github' => \ForkBB\Models\Provider\Driver\GitHub::class,
+            ],
+        ],
 
         'Csrf' => [
             'class'  => \ForkBB\Core\Csrf::class,
@@ -333,6 +339,7 @@ return [
         'Userlist'           => \ForkBB\Models\Pages\Userlist::class,
         'Search'             => \ForkBB\Models\Pages\Search::class,
         'Register'           => \ForkBB\Models\Pages\Register::class,
+        'RegLog'             => \ForkBB\Models\Pages\RegLog::class,
         'Redirect'           => \ForkBB\Models\Pages\Redirect::class,
         'Maintenance'        => \ForkBB\Models\Pages\Maintenance::class,
         'Ban'                => \ForkBB\Models\Pages\Ban::class,
@@ -360,6 +367,7 @@ return [
         'AdminIndex'         => \ForkBB\Models\Pages\Admin\Index::class,
         'AdminStatistics'    => \ForkBB\Models\Pages\Admin\Statistics::class,
         'AdminOptions'       => \ForkBB\Models\Pages\Admin\Options::class,
+        'AdminProviders'     => \ForkBB\Models\Pages\Admin\Providers::class,
         'AdminCategories'    => \ForkBB\Models\Pages\Admin\Categories::class,
         'AdminForums'        => \ForkBB\Models\Pages\Admin\Forums::class,
         'AdminGroups'        => \ForkBB\Models\Pages\Admin\Groups::class,

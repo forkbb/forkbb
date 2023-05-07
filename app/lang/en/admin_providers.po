@@ -1,0 +1,70 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ForkBB <mio.visman@yandex.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "OAuth authorization disabled"
+msgstr "OAuth authorization <a href=\"%s\">disabled</a>."
+
+msgid "Providers"
+msgstr "Providers"
+
+msgid "Provider label"
+msgstr "Provider"
+
+msgid "Position label"
+msgstr "Position"
+
+msgid "Allow label"
+msgstr "Allow"
+
+msgid "Providers updated redirect"
+msgstr "Provider table updated."
+
+msgid "Provider updated redirect"
+msgstr "Provider data updated."
+
+msgid "github"
+msgstr "GitHub"
+
+msgid "Callback label"
+msgstr "Callback URI"
+
+msgid "Callback help"
+msgstr "The URI that the user is returned to after they have granted or denied access to the application (corresponds to the redirect_uri of the OAuth protocol). It must be specified when registering your application on the provider's server."
+
+msgid "ID label"
+msgstr "Client ID"
+
+msgid "ID help"
+msgstr "Identifier that you can get when registering your application on the provider's server."
+
+msgid "Secret label"
+msgstr "Client secret"
+
+msgid "Secret help"
+msgstr "The secret (password) that you can get when registering your application on the provider's server."
+
+msgid "Change data help"
+msgstr "Enable this checkbox if you want to change the data"
+
+msgid "Sign in with %s"
+msgstr "Sign in with %s"
+
+msgid "Provider response: %s"
+msgstr "Provider response: %s."
+
+msgid "State error"
+msgstr "Error in state parameter."
+
+msgid "Error token"
+msgstr "Error request access token"

@@ -280,7 +280,7 @@ msgid "SMTP password label"
 msgstr "SMTP password"
 
 msgid "SMTP change password help"
-msgstr "Установите галку, если хотите поменять или удалить пароль"
+msgstr "Установите флажок, если хотите поменять или удалить пароль"
 
 msgid "SMTP password help"
 msgstr "Пароль для сервера SMTP. Заполняйте только если сервер этого требует."
@@ -425,3 +425,12 @@ msgstr "Разрешить личные сообщения"
 
 msgid "Allow PM help"
 msgstr "Настройки для отдельных групп доступны в <a href="%2$s">%1$s</a>."
+
+msgid "Allow oauth label"
+msgstr "OAuth-авторизация"
+
+msgid "Allow oauth help"
+msgstr "Разрешить пользователям вход/регистрацию на форуме с помощью аккаунтов на сторонних ресурсах."
+
+msgid "Configure providers"
+msgstr "Настроить провайдеров"

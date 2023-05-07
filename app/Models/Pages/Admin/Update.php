@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.0.0';
     const REV_MIN_FOR_UPDATE         = 53;
-    const LATEST_REV_WITH_DB_CHANGES = 53;
+    const LATEST_REV_WITH_DB_CHANGES = 55;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const JSON_OPTIONS               = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
@@ -410,4 +410,98 @@ class Update extends Admin
 #
 #        return null;
 #    }
+
+    /**
+     * rev.54 to rev.55
+     */
+    protected function stageNumber54(array $args): ?int
+    {
+        $config = $this->c->config;
+
+        $config->b_oauth_allow = 0;
+
+        $config->save();
+
+        $schema = [
+            'FIELDS' => [
+                'pr_name'     => ['VARCHAR(25)', false],
+                'pr_allow'    => ['TINYINT(1)', false, 0],
+                'pr_pos'      => ['INT(10) UNSIGNED', false, 0],
+                'pr_cl_id'    => ['VARCHAR(255)', false, ''],
+                'pr_cl_sec'   => ['VARCHAR(255)', false, ''],
+            ],
+            'UNIQUE KEYS' => [
+                'pr_name_idx' => ['pr_name'],
+            ],
+        ];
+        $this->c->DB->createTable('::providers', $schema);
+
+        $schema = [
+            'FIELDS' => [
+                'uid'               => ['INT(10) UNSIGNED', false],
+                'pr_name'           => ['VARCHAR(25)', false],
+                'pu_uid'            => ['VARCHAR(165)', false],
+                'pu_email'          => ['VARCHAR(190)', false, ''],
+                'pu_email_normal'   => ['VARCHAR(190)', false, ''],
+                'pu_email_verified' => ['TINYINT(1)', false, 0],
+            ],
+            'UNIQUE KEYS' => [
+                'pr_name_pu_uid_idx' => ['pr_name', 'pu_uid'],
+            ],
+            'INDEXES' => [
+                'uid_idx'             => ['uid'],
+                'pu_email_normal_idx' => ['pu_email_normal'],
+            ],
+        ];
+        $this->c->DB->createTable('::providers_users', $schema);
+
+        $providers = [
+            'github',
+        ];
+
+        $query = 'INSERT INTO ::providers (pr_name, pr_pos)
+            SELECT tmp.*
+            FROM (SELECT ?s:name AS f1, ?i:pos AS f2) AS tmp
+            WHERE NOT EXISTS (
+                SELECT 1
+                FROM ::providers
+                WHERE pr_name=?s:name
+            )';
+
+        foreach ($providers as $pos => $name) {
+            $vars = [
+                ':name' => $name,
+                ':pos'  => $pos,
+            ];
+
+            $this->c->DB->exec($query, $vars);
+        }
+
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'multiple=>AdminProviders',
+            '\\ForkBB\\Models\\Pages\\Admin\\Providers::class',
+            'AdminOptions'
+        );
+        $coreConfig->add(
+            'shared=>providers',
+            [
+                'class'   => '\\ForkBB\\Models\\Provider\\Providers::class',
+                'drivers' => [
+                    'github' => '\\ForkBB\\Models\\Provider\\Driver\\GitHub::class'
+                ],
+            ],
+            'pms'
+        );
+        $coreConfig->add(
+            'multiple=>RegLog',
+            '\\ForkBB\\Models\\Pages\\RegLog::class',
+            'Register'
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }

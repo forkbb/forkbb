@@ -110,6 +110,7 @@ class Options extends Admin
                     'i_poll_term'             => 'required|integer|min:0|max:99',
                     'b_poll_guest'            => 'required|integer|in:0,1',
                     'b_pm'                    => 'required|integer|in:0,1',
+                    'b_oauth_allow'           => 'required|integer|in:0,1',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -609,6 +610,19 @@ class Options extends Admin
                     'values'  => $yn,
                     'caption' => 'Report new label',
                     'help'    => 'Report new help',
+                ],
+                'b_oauth_allow' => [
+                    'type'    => 'radio',
+                    'value'   => $config->b_oauth_allow,
+                    'values'  => $yn,
+                    'caption' => 'Allow oauth label',
+                    'help'    => 'Allow oauth help',
+                ],
+                'configure_providers' => [
+                    'type'  => 'link',
+                    'value' => __('Configure providers'),
+                    'href'  => $this->c->Router->link('AdminProviders'),
+                    'title' => __('Configure providers'),
                 ],
                 'b_rules' => [
                     'type'    => 'radio',

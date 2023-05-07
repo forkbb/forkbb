@@ -14,3 +14,10 @@
     @endif
     </section>
 @endif
+@if ($form = $p->formOAuth)
+    <div id="fork-oauth" class="f-main">
+      <div class="f-fdiv f-lrdiv">
+    @include ('layouts/form')
+      </div>
+    </div>
+@endif
