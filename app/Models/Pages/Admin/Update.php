@@ -499,6 +499,11 @@ class Update extends Admin
             '\\ForkBB\\Models\\Pages\\RegLog::class',
             'Register'
         );
+        $coreConfig->add(
+            'shared=>providerUser',
+            '\\ForkBB\\Models\\ProviderUser\\ProviderUser::class',
+            'providers'
+        );
 
         $coreConfig->save();
 

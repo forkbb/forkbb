@@ -23,6 +23,11 @@ class Auth extends Page
     use RegLogTrait;
 
     /**
+     * Флаг входа c использованием html формы
+     */
+    protected bool $loginWithForm = true;
+
+    /**
      * Выход пользователя
      */
     public function logout(array $args): Page
@@ -59,6 +64,24 @@ class Auth extends Page
         $v = null;
 
         if ('POST' === $method) {
+            // вход без html формы
+            if (
+                isset($args['user'])
+                && $args['user'] instanceof User
+            ) {
+                $this->userAfterLogin = $args['user'];
+                $this->loginWithForm  = false;
+
+                $_POST = [
+                    'token'    => $this->c->Csrf->create('Login'),
+                    'redirect' => $this->c->Csrf->create('Index'),
+                    'username' => $this->userAfterLogin->username,
+                    'password' => $this->userAfterLogin->password,
+                    'save'     => '1',
+                    'login'    => 'Login User model',
+                ];
+            }
+
             $v = $this->c->Validator->reset()
                 ->addValidators([
                     'login_check' => [$this, 'vLoginCheck'],
@@ -188,7 +211,9 @@ class Auth extends Page
     public function vLoginCheck(Validator $v, #[SensitiveParameter] string $password ): string
     {
         if (empty($v->getErrors())) {
-            $this->userAfterLogin = $this->c->users->loadByName($v->username);
+            if ($this->loginWithForm) {
+                $this->userAfterLogin = $this->c->users->loadByName($v->username);
+            }
 
             if (
                 ! $this->userAfterLogin instanceof User
@@ -197,7 +222,10 @@ class Auth extends Page
                 $v->addError('Wrong user/pass');
             } elseif ($this->userAfterLogin->isUnverified) {
                 $v->addError('Account is not activated', 'w');
-            } elseif (! \password_verify($password, $this->userAfterLogin->password)) {
+            } elseif (
+                $this->loginWithForm
+                && ! \password_verify($password, $this->userAfterLogin->password)
+            ) {
                 $v->addError('Wrong user/pass');
             }
         }

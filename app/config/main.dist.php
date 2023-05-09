@@ -169,6 +169,7 @@ return [
                 'github' => \ForkBB\Models\Provider\Driver\GitHub::class,
             ],
         ],
+        'providerUser'  => \ForkBB\Models\ProviderUser\ProviderUser::class,
 
         'Csrf' => [
             'class'  => \ForkBB\Core\Csrf::class,

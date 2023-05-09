@@ -80,6 +80,28 @@ class RegLog extends Page
             }
         }
 
-        exit(var_dump($provider->userId, $provider->userName, $provider->userEmail));
+        // гость
+        if ($this->user->isGuest) {
+            $uid = $this->c->providerUser->findUser($provider);
+
+            // логин
+            if ($uid > 0) {
+                $args = [
+                    'user' => $this->c->users->load($uid),
+                ];
+
+                return $this->c->Auth->login($args, 'POST');
+
+            // регистрация
+            } else {
+
+            }
+
+        // пользователь
+        } else {
+
+        }
+
+        exit(var_dump($provider->userId, $provider->userName, $provider->userEmail, $this->c->NormEmail->normalize($provider->userEmail)));
     }
 }
