@@ -35,8 +35,8 @@ abstract class Driver extends Model
 
         $this->zDepend = [
             'code'         => ['access_token', 'userInfo', 'userId', 'userName', 'userEmail', 'userEmailVerifed', 'userAvatar', 'userURL', 'userLocation', 'userGender'],
-            'access_token' => ['userInfo', 'userId', 'userName', 'userEmail', 'userEmailVerifed', 'userAvatar', 'userURL', 'userLocation', 'userGender'];
-            'userInfo'     => ['userId', 'userName', 'userEmail', 'userEmailVerifed', 'userAvatar', 'userURL', 'userLocation', 'userGender']
+            'access_token' => ['userInfo', 'userId', 'userName', 'userEmail', 'userEmailVerifed', 'userAvatar', 'userURL', 'userLocation', 'userGender'],
+            'userInfo'     => ['userId', 'userName', 'userEmail', 'userEmailVerifed', 'userAvatar', 'userURL', 'userLocation', 'userGender'],
         ];
     }
 

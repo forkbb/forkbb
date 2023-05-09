@@ -66,17 +66,20 @@ class RegLog extends Page
         $this->c->Lang->load('admin_providers');
 
         $provider = $this->c->providers->init()->get($args['name']);
+        $stages   = [1, 2, 3];
 
-        if (true !== $provider->verifyAuth($_GET)) {
-            return $this->c->Message->message($provider->error);
+        foreach ($stages as $stage) {
+            $result = match ($stage) {
+                1 => $provider->verifyAuth($_GET),
+                2 => $provider->reqAccessToken(),
+                3 => $provider->reqUserInfo(),
+            };
+
+            if (true !== $result) {
+                return $this->c->Message->message($provider->error);
+            }
         }
 
-        if (true !== $provider->reqAccessToken()) {
-            return $this->c->Message->message($provider->error);
-        }
-
-        if (true !== $provider->reqUserInfo()) {
-            return $this->c->Message->message($provider->error);
-        }
+        exit(var_dump($provider->userId, $provider->userName, $provider->userEmail));
     }
 }
