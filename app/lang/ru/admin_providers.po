@@ -60,11 +60,20 @@ msgstr "Установите флажок, если хотите изменит�
 msgid "Sign in with %s"
 msgstr "Войти с помощью %s"
 
-msgid "Provider response: %s"
-msgstr "Ответ провайдера: %s."
+msgid "Provider response error: %s"
+msgstr "Ошибка.<br>Ответ провайдера: %s."
 
 msgid "State error"
 msgstr "Ошибка в параметре state."
 
-msgid "Error token"
-msgstr "Ошибка запроса токена доступа"
+msgid "Token error: %s"
+msgstr "Ошибка запроса токена доступа: %s."
+
+msgid "cURL disabled"
+msgstr "Расширение cURL отключено в PHP."
+
+msgid "cURL error"
+msgstr "Ошибка cURL."
+
+msgid "User error"
+msgstr "Ошибка запроса данных пользователя."

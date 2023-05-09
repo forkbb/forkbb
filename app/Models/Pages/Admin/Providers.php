@@ -23,7 +23,9 @@ class Providers extends Admin
      */
     protected function mDisabled(): void
     {
-        if (1 !== $this->c->config->b_oauth_allow) {
+        if (! \extension_loaded('curl')) {
+            $this->fIswev = ['e', 'cURL disabled'];
+        } elseif (1 !== $this->c->config->b_oauth_allow) {
             $this->fIswev = ['w', ['OAuth authorization disabled', $this->c->Router->link('AdminOptions', ['#' => 'id-fs-registration'])]];
         }
     }
@@ -60,7 +62,7 @@ class Providers extends Admin
 
         $this->nameTpl   = 'admin/form';
         $this->aIndex    = 'options';
-        $this->aCrumbs[] = [$this->c->providers->link(''), 'Providers'];
+        $this->aCrumbs[] = [$this->c->Router->link('AdminProviders'), 'Providers'];
         $this->form      = $this->formView();
         $this->classForm = ['providers', 'inline'];
         $this->titleForm = 'Providers';
@@ -74,7 +76,7 @@ class Providers extends Admin
     protected function formView(): array
     {
         $form = [
-            'action' => $this->c->providers->link(''),
+            'action' => $this->c->Router->link('AdminProviders'),
             'hidden' => [
                 'token' => $this->c->Csrf->create('AdminProviders'),
             ],
@@ -94,7 +96,7 @@ class Providers extends Admin
                 'type'    => 'btn',
                 'value'   => $provider->name,
                 'caption' => 'Provider label',
-                'link'    => $this->c->providers->link($provider->name),
+                'link'    => $this->c->Router->link('AdminProvider', ['name' => $provider->name]),
             ];
             $fields["form[{$provider->name}][pr_pos]"] = [
                 'class'   => ['position', 'provider'],
@@ -171,8 +173,8 @@ class Providers extends Admin
 
         $this->nameTpl   = 'admin/form';
         $this->aIndex    = 'options';
-        $this->aCrumbs[] = [$this->c->providers->link($provider->name), $provider->name];
-        $this->aCrumbs[] = [$this->c->providers->link(''), 'Providers'];
+        $this->aCrumbs[] = [$this->c->Router->link('AdminProvider', ['name' => $provider->name]), $provider->name];
+        $this->aCrumbs[] = [$this->c->Router->link('AdminProviders'), 'Providers'];
         $this->form      = $this->formEdit($provider);
         $this->classForm = ['provider'];
         $this->titleForm = $provider->name;
@@ -186,7 +188,7 @@ class Providers extends Admin
     protected function formEdit(Driver $provider): array
     {
         $form = [
-            'action' => $this->c->providers->link($provider->name),
+            'action' => $this->c->Router->link('AdminProvider', ['name' => $provider->name]),
             'hidden' => [
                 'token' => $this->c->Csrf->create('AdminProvider', ['name' => $provider->name]),
             ],

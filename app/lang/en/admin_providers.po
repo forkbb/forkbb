@@ -60,11 +60,20 @@ msgstr "Enable this checkbox if you want to change the data"
 msgid "Sign in with %s"
 msgstr "Sign in with %s"
 
-msgid "Provider response: %s"
-msgstr "Provider response: %s."
+msgid "Provider response error: %s"
+msgstr "Failed.<br>Provider response: %s."
 
 msgid "State error"
 msgstr "Error in state parameter."
 
-msgid "Error token"
-msgstr "Error request access token"
+msgid "Token error: %s"
+msgstr "Access token request failed: %s."
+
+msgid "cURL disabled"
+msgstr "The cURL extension is disabled in PHP."
+
+msgid "cURL error"
+msgstr "cURL error."
+
+msgid "User error"
+msgstr "User data request failed."

@@ -24,7 +24,14 @@ class Providers extends Manager
      */
     protected string $cKey = 'Providers';
 
+    /**
+     * Кэш таблицы providers
+     */
     protected ?array $cache = null;
+
+    /**
+     * Флаг готовности репозитория моделей
+     */
     protected bool $ready = false;
 
     public function __construct(protected array $drivers, Container $c)
@@ -32,6 +39,9 @@ class Providers extends Manager
         parent::__construct($c);
     }
 
+    /**
+     * Заполняет репозиторий провайдерами
+     */
     public function init(): self
     {
         if (! $this->ready) {
@@ -45,13 +55,9 @@ class Providers extends Manager
         return $this;
     }
 
-    public function link(string $name): string
-    {
-        return '' === $name
-            ? $this->c->Router->link('AdminProviders')
-            : $this->c->Router->link('AdminProvider', ['name' => $name]);
-    }
-
+    /**
+     * Создает провайдера
+     */
     public function create(array $attrs = []): Driver
     {
         if (! isset($attrs['pr_name'])) {
@@ -67,7 +73,7 @@ class Providers extends Manager
         }
 
         $class         = $this->drivers[$attrs['pr_name']];
-        $driver        =  new $class($attrs['pr_cl_id'], $attrs['pr_cl_sec'], $this->c);
+        $driver        = new $class($attrs['pr_cl_id'], $attrs['pr_cl_sec'], $this->c);
         $driver->name  = $attrs['pr_name'];
         $driver->pos   = $attrs['pr_pos'];
         $driver->allow = $attrs['pr_allow'];
@@ -77,13 +83,23 @@ class Providers extends Manager
         return $driver;
     }
 
+    /**
+     * Возращает список созданных провайдеров
+     */
     public function list(): array
     {
         return $this->repository;
     }
 
+    /**
+     * Возращает список имён активных провайдеров
+     */
     public function active(): array
     {
+        if (! \extension_loaded('curl')) {
+            return [];
+        }
+
         $result = [];
 
         foreach ($this->cache() as $cur) {
@@ -99,6 +115,9 @@ class Providers extends Manager
         return $result;
     }
 
+    /**
+     * Возращает/создает кэш таблицы providers
+     */
     protected function cache(): array
     {
         if (! \is_array($this->cache)) {
@@ -124,6 +143,9 @@ class Providers extends Manager
         return $this->cache;
     }
 
+    /**
+     * Проверяет поле на пустоту
+     */
     protected function emptyField(string $key, array $sets, array $cache): bool
     {
         if (isset($sets[$key])) {
@@ -133,6 +155,10 @@ class Providers extends Manager
         }
     }
 
+    /**
+     * Обновляет таблицу providers на основе данных полученных из формы
+     * Удаляет кэш
+     */
     public function update(array $form): self
     {
         $cache  = $this->cache();
@@ -142,8 +168,6 @@ class Providers extends Manager
             if (! isset($this->drivers[$driver], $cache[$driver])) {
                 continue;
             }
-
-            $set = $vars = [];
 
             if (
                 (
@@ -157,6 +181,8 @@ class Providers extends Manager
             ) {
                 $sets['pr_allow'] = 0;
             }
+
+            $set = $vars = [];
 
             foreach ($sets as $name => $value) {
                 if (

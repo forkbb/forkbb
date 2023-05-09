@@ -16,14 +16,14 @@ use RuntimeException;
 
 abstract class Driver extends Model
 {
+    const JSON_OPTIONS  = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
+
     /**
      * Ключ модели для контейнера
      */
     protected string $cKey = 'Provider';
 
-    protected string $code;
-
-    protected string $originalName;
+    protected string $origName;
     protected string $authURL;
     protected string $tokenURL;
     protected string $userURL;
@@ -32,38 +32,59 @@ abstract class Driver extends Model
     public function __construct(protected string $client_id, protected string $client_secret, Container $c)
     {
         parent::__construct($c);
+
+        $this->zDepend = [
+            'code'         => ['access_token', 'userInfo', 'userId', 'userName', 'userEmail', 'userEmailVerifed', 'userAvatar', 'userURL', 'userLocation', 'userGender'],
+            'access_token' => ['userInfo', 'userId', 'userName', 'userEmail', 'userEmailVerifed', 'userAvatar', 'userURL', 'userLocation', 'userGender'];
+            'userInfo'     => ['userId', 'userName', 'userEmail', 'userEmailVerifed', 'userAvatar', 'userURL', 'userLocation', 'userGender']
+        ];
     }
 
+    /**
+     * Проверяет и устанавливает имя провайдера
+     */
     protected function setname(string $name):void
     {
-        if ($this->originalName !== $name) {
+        if ($this->origName !== $name) {
             throw new RuntimeException("Invalid name: {$name}");
         }
 
         $this->setAttr('name', $name);
     }
 
+    /**
+     * Формирует ссылку переадресации
+     */
     protected function getlinkCallback(): string
     {
-        return $this->c->Router->link('RegLogCallback', ['name' => $this->name]);
+        return $this->c->Router->link('RegLogCallback', ['name' => $this->origName]);
     }
 
+    /**
+     * Возвращает client_id
+     */
     protected function getclient_id(): string
     {
         return $this->client_id;
     }
 
+    /**
+     * Возвращает client_secret
+     */
     protected function getclient_secret(): string
     {
         return $this->client_secret;
     }
 
+    /**
+     * Формирует ссылку авторизации на сервере провайдера
+     */
     protected function getlinkAuth(): string
     {
         $params = [
             'response_type' => 'code',
             'scope'         => $this->scope,
-            'state'         => $this->c->Csrf->createHash($this->originalName, ['ip' => $this->c->user->ip]),
+            'state'         => $this->c->Csrf->createHash($this->origName, ['ip' => $this->c->user->ip]),
             'client_id'     => $this->client_id,
             'redirect_uri'  => $this->linkCallback,
         ];
@@ -71,26 +92,41 @@ abstract class Driver extends Model
         return $this->authURL . '?' . \http_build_query($params);
     }
 
+    /**
+     * Проверяет правильность state
+     */
     protected function verifyState(string $state): bool
     {
-        return $this->c->Csrf->verify($state, $this->originalName, ['ip' => $this->c->user->ip]);
+        return $this->c->Csrf->verify($state, $this->origName, ['ip' => $this->c->user->ip]);
     }
 
-    public function verifyAuth(array $data): bool|string|array
+    /**
+     * Проверяет ответ сервера провайдера после авторизации пользователя
+     * Запоминает code
+     */
+    public function verifyAuth(array $data): bool
     {
+        $this->code = '';
+
         if (! \is_string($data['code'] ?? null)) {
-            if (\is_string($data['error'] ?? null)) {
-                return ['Provider response: %s', $data['error']];
-            } else {
-                return ['Provider response: %s', 'undefined'];
+            $error = $data['error_description'] ?? ($data['error'] ?? null);
+
+            if (! \is_string($error)) {
+                $error = 'undefined error';
             }
+
+            $this->error = ['Provider response error: %s', $error];
+
+            return false;
         }
 
         if (
             ! \is_string($data['state'] ?? null)
             || ! $this->verifyState($data['state'])
         ) {
-            return 'State error';
+            $this->error = 'State error';
+
+            return false;
         }
 
         $this->code = $data['code'];
@@ -98,8 +134,15 @@ abstract class Driver extends Model
         return true;
     }
 
+    /**
+     * Запрашивает access token на основе code
+     * Проверяет ответ
+     * Запоминает access token
+     */
     public function reqAccessToken(): bool
     {
+        $this->access_token = '';
+
         $params = [
             'grant_type'    => 'authorization_code',
             'client_id'     => $this->client_id,
@@ -108,7 +151,12 @@ abstract class Driver extends Model
             'redirect_uri'  => $this->linkCallback,
         ];
 
-        $ch = \curl_init($this->tokenURL);
+        if (empty($ch = \curl_init($this->tokenURL))) {
+            $this->error     = 'cURL error';
+            $this->curlError = \curl_error($ch);
+
+            return false;
+        }
 
         \curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Accept: application/json']);
         \curl_setopt($ch, \CURLOPT_POST, true);
@@ -116,47 +164,84 @@ abstract class Driver extends Model
         \curl_setopt($ch, \CURLOPT_RETURNTRANSFER, true);
         \curl_setopt($ch, \CURLOPT_HEADER, false);
 
-        $html = \curl_exec($ch);
-#        $type = \curl_getinfo($ch, \CURLINFO_CONTENT_TYPE);
+        $result = \curl_exec($ch);
 
         \curl_close($ch);
 
-        if (
-            ! isset($html[1])
-            || '{' !== $html[0]
-            || '}' !== $html[-1]
-            || ! \is_array($json = \json_decode($html, true, 20, \JSON_BIGINT_AS_STRING & JSON_UNESCAPED_UNICODE & JSON_INVALID_UTF8_SUBSTITUTE))
-            || ! isset($json['access_token'])
-        ) {
+        if (false === $result) {
+            $this->error     = 'cURL error';
+            $this->curlError = \curl_error($ch);
+
             return false;
         }
 
-        $this->access_token = $json['access_token'];
+        if (
+            ! isset($result[1])
+            || '{' !== $result[0]
+            || '}' !== $result[-1]
+            || ! \is_array($data = \json_decode($result, true, 20, self::JSON_OPTIONS))
+            || ! isset($data['access_token'])
+        ) {
+            $error = $data['error_description'] ?? ($data['error'] ?? null);
+
+            if (! \is_string($error)) {
+                $error = 'undefined error';
+            }
+
+            $this->error = ['Token error: %s', $error];
+
+            return false;
+        }
+
+        $this->access_token = $data['access_token'];
 
         return true;
     }
 
-    public function reqUserInfo(): bool
-    {
-        $headers = [
-            'Accept: application/json',
-            "Authorization: Bearer {$this->access_token}",
-            'User-Agent: ForkBB (Client ID: {$this->client_id})',
-        ];
+    /**
+     * Запрашивает информацию о пользователе
+     * Проверяет ответ
+     * Запоминает данные пользователя
+     */
+    abstract public function reqUserInfo(): bool;
 
-        $ch = \curl_init($this->userURL);
+    /**
+     * Возвращает идентификатор пользователя (от провайдера)
+     */
+    abstract protected function getuserId(): string;
 
-        \curl_setopt($ch, \CURLOPT_HTTPHEADER, $headers);
-        \curl_setopt($ch, \CURLOPT_POST, false);
-        #\curl_setopt($ch, \CURLOPT_POSTFIELDS, \http_build_query($params));
-        \curl_setopt($ch, \CURLOPT_RETURNTRANSFER, true);
-        \curl_setopt($ch, \CURLOPT_HEADER, false);
+    /**
+     * Возвращает имя пользователя (от провайдера)
+     */
+    abstract protected function getuserName(): string;
 
-        $html = \curl_exec($ch);
-#        $type = \curl_getinfo($ch, \CURLINFO_CONTENT_TYPE);
+    /**
+     * Возвращает email пользователя (от провайдера)
+     */
+    abstract protected function getuserEmail(): string;
 
-        \curl_close($ch);
+    /**
+     * Возвращает флаг подлинности email пользователя (от провайдера)
+     */
+    abstract protected function getuserEmailVerifed(): bool;
 
-        exit(var_dump("<pre>".$html));
-    }
+    /**
+     * Возвращает ссылку на аватарку пользователя (от провайдера)
+     */
+    abstract protected function getuserAvatar(): string;
+
+    /**
+     * Возвращает ссылку на профиль пользователя (от провайдера)
+     */
+    abstract protected function getuserURL(): string;
+
+    /**
+     * Возвращает местоположение пользователя (от провайдера)
+     */
+    abstract protected function getuserLocation(): string;
+
+    /**
+     * Возвращает пол пользователя (от провайдера)
+     */
+    abstract protected function getuserGender(): int;
 }

@@ -67,16 +67,16 @@ class RegLog extends Page
 
         $provider = $this->c->providers->init()->get($args['name']);
 
-        if (true !== ($result = $provider->verifyAuth($_GET))) {
-            return $this->c->Message->message($result);
+        if (true !== $provider->verifyAuth($_GET)) {
+            return $this->c->Message->message($provider->error);
         }
 
         if (true !== $provider->reqAccessToken()) {
-            return $this->c->Message->message('Error token');
+            return $this->c->Message->message($provider->error);
         }
 
         if (true !== $provider->reqUserInfo()) {
-
+            return $this->c->Message->message($provider->error);
         }
     }
 }
