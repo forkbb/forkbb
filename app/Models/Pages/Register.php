@@ -165,7 +165,7 @@ class Register extends Page
         $user = $this->c->users->create();
 
         $user->username        = $v->username;
-        $user->password        = \password_hash($v->password, PASSWORD_DEFAULT);
+        $user->password        = \password_hash($v->password, \PASSWORD_DEFAULT);
         $user->group_id        = $groupId;
         $user->email           = $v->email;
         $user->email_confirmed = 0;

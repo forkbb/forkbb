@@ -48,7 +48,7 @@ class NewUser extends Users
                     $user = $this->c->users->create();
 
                     $user->username        = $v->username;
-                    $user->password        = \password_hash($v->password, PASSWORD_DEFAULT);
+                    $user->password        = \password_hash($v->password, \PASSWORD_DEFAULT);
                     $user->group_id        = $this->c->config->i_default_user_group;
                     $user->email           = $v->email;
                     $user->email_confirmed = 0;
