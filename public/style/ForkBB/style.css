@@ -2994,3 +2994,17 @@ body,
     content: "\f105";
   }
 }
+
+/****************/
+/* Кнопки OAuth */
+/****************/
+#fork .f-btn[name="github"] {
+  color: #24292f;
+  background-color: #fff;
+}
+
+#fork .f-btn[name="github"]:focus,
+#fork .f-btn[name="github"]:hover {
+  color: #fff;
+  background-color: #24292f;
+}
