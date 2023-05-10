@@ -13,6 +13,7 @@ namespace ForkBB\Models\ProviderUser;
 use ForkBB\Core\Container;
 use ForkBB\Models\Model;
 use ForkBB\Models\Provider\Driver;
+use ForkBB\Models\User\User;
 use PDO;
 use RuntimeException;
 
@@ -77,5 +78,36 @@ class ProviderUser extends Model
         }
 
         return $count ? \array_pop($result) : 0;
+    }
+
+    /**
+     * Создает новую связь между пользователем и провайдером
+     */
+    public function registration(User $user, Driver $provider): bool
+    {
+        if ($user->isGuest) {
+            throw new RuntimeException('User expected, not guest');
+        }
+
+        if ('' == $provider->userId) {
+            throw new RuntimeException('The user ID is empty');
+        }
+
+        if ('' == $provider->userEmail) {
+            throw new RuntimeException('The user email is empty');
+        }
+
+        $vars = [
+            ':uid'    => $user->id,
+            ':name'   => $provider->name,
+            ':userid' => $provider->userId,
+            ':email'  => $provider->userEmail,
+            ':normal' => $this->c->NormEmail->normalize($provider->userEmail),
+            ':verif'  => $provider->userEmailVerifed ? 1 : 0,
+        ];
+        $query = 'INSERT INTO ::providers_users (uid, pr_name, pu_uid, pu_email, pu_email_normal, pu_email_verified)
+            VALUES (?i:uid, ?s:name, ?s:userid, ?s:email, ?s:normal, ?i:verif)';
+
+        return false !== $this->c->DB->exec($query, $vars);
     }
 }

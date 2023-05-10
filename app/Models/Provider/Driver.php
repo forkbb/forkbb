@@ -211,6 +211,11 @@ abstract class Driver extends Model
     abstract protected function getuserId(): string;
 
     /**
+     * Возвращает логин пользователя (от провайдера)
+     */
+    abstract protected function getuserLogin(): string;
+
+    /**
      * Возвращает имя пользователя (от провайдера)
      */
     abstract protected function getuserName(): string;

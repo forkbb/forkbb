@@ -77,3 +77,9 @@ msgstr "cURL error."
 
 msgid "User error"
 msgstr "User data request failed."
+
+msgid "No new regs"
+msgstr "This board is not accepting new registrations."
+
+msgid "Email message"
+msgstr "This email received from %s belongs to a registered user.<br>Perhaps you used another provider to sign in or username + passphrase?"

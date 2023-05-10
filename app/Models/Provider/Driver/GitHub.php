@@ -71,7 +71,7 @@ class GitHub extends Driver
             return false;
         }
 
-        $this->userInfo = $userInfo;
+        $this->userInfo = $this->c->Secury->replInvalidChars($userInfo);
 
         return true;
     }
@@ -85,11 +85,19 @@ class GitHub extends Driver
     }
 
     /**
+     * Возвращает логин пользователя (от провайдера)
+     */
+    protected function getuserLogin(): string
+    {
+        return (string) ($this->userInfo['login'] ?? '');
+    }
+
+    /**
      * Возвращает имя пользователя (от провайдера)
      */
     protected function getuserName(): string
     {
-        return (string) ($this->userInfo['name'] ?? ($this->userInfo['login'] ?? ''));
+        return (string) ($this->userInfo['name'] ?? '');
     }
 
     /**
@@ -129,7 +137,7 @@ class GitHub extends Driver
      */
     protected function getuserLocation(): string
     {
-        return (string) ($this->userInfo['location'] ?? '');
+        return \mb_substr((string) ($this->userInfo['location'] ?? ''),  0, 30, 'UTF-8');
     }
 
     /**
