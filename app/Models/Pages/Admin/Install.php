@@ -1237,6 +1237,59 @@ class Install extends Admin
         ];
         $this->c->DB->createTable('::mark_of_topic', $schema);
 
+        // providers
+        $schema = [
+            'FIELDS' => [
+                'pr_name'     => ['VARCHAR(25)', false],
+                'pr_allow'    => ['TINYINT(1)', false, 0],
+                'pr_pos'      => ['INT(10) UNSIGNED', false, 0],
+                'pr_cl_id'    => ['VARCHAR(255)', false, ''],
+                'pr_cl_sec'   => ['VARCHAR(255)', false, ''],
+            ],
+            'UNIQUE KEYS' => [
+                'pr_name_idx' => ['pr_name'],
+            ],
+        ];
+        $this->c->DB->createTable('::providers', $schema);
+
+        // providers_users
+        $schema = [
+            'FIELDS' => [
+                'uid'               => ['INT(10) UNSIGNED', false],
+                'pr_name'           => ['VARCHAR(25)', false],
+                'pu_uid'            => ['VARCHAR(165)', false],
+                'pu_email'          => ['VARCHAR(190)', false, ''],
+                'pu_email_normal'   => ['VARCHAR(190)', false, ''],
+                'pu_email_verified' => ['TINYINT(1)', false, 0],
+            ],
+            'UNIQUE KEYS' => [
+                'pr_name_pu_uid_idx' => ['pr_name', 'pu_uid'],
+            ],
+            'INDEXES' => [
+                'uid_idx'             => ['uid'],
+                'pu_email_normal_idx' => ['pu_email_normal'],
+            ],
+        ];
+        $this->c->DB->createTable('::providers_users', $schema);
+
+        // заполнение providers
+        $providers = [
+            'github',
+        ];
+
+        $query = 'INSERT INTO ::providers (pr_name, pr_pos)
+            VALUES (?s:name, ?i:pos)';
+
+        foreach ($providers as $pos => $name) {
+            $vars = [
+                ':name' => $name,
+                ':pos'  => $pos,
+            ];
+
+            $this->c->DB->exec($query, $vars);
+        }
+
+        // заполнение groups
         $now    = \time();
         $groups = [
             [
@@ -1384,6 +1437,7 @@ class Install extends Admin
             $this->c->DB->exec('ALTER SEQUENCE ::groups_g_id_seq RESTART WITH ' . (FORK_GROUP_NEW_MEMBER + 1));
         }
 
+        // заполнение config
         $forkConfig = [
             'i_fork_revision'         => $this->c->FORK_REVISION,
             'o_board_title'           => $v->title,
@@ -1430,6 +1484,7 @@ class Install extends Admin
             'b_smtp_ssl'              => 0,
             'b_regs_allow'            => 1,
             'b_regs_verify'           => 1,
+            'b_oauth_allow'           => 0,
             'b_announcement'          => 0,
             'o_announcement_message'  => __('Announcement '),
             'b_rules'                 => 0,
@@ -1472,7 +1527,7 @@ class Install extends Admin
             $this->c->DB->exec('INSERT INTO ::config (conf_name, conf_value) VALUES (?s, ?s)', [$name, $value]);
         }
 
-
+        // заполнение users, categories, forums, topics, posts
         $ip = \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: '0.0.0.0';
         $topicId = 1;
 
@@ -1498,6 +1553,7 @@ class Install extends Admin
 
         $this->c->DB->exec('UPDATE ::posts SET topic_id=?i WHERE id=?i', [$topicId, $postId]);
 
+        // заполнение smilies
         $smilies = [
             ':)'         => 'smile.png',
             '=)'         => 'smile.png',
@@ -1524,6 +1580,7 @@ class Install extends Admin
             $this->c->DB->exec('INSERT INTO ::smilies (sm_image, sm_code, sm_position) VALUES(?s, ?s, ?i)', [$img, $text, $i++]); //????
         }
 
+        // заполнение bbcodes
         $query   = 'INSERT INTO ::bbcode (bb_tag, bb_edit, bb_delete, bb_structure)
             VALUES(?s:tag, 1, 0, ?s:structure)';
         $bbcodes = include $this->c->DIR_CONFIG . '/defaultBBCode.php';

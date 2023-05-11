@@ -110,4 +110,26 @@ class ProviderUser extends Model
 
         return false !== $this->c->DB->exec($query, $vars);
     }
+
+    /**
+     * Удаляет записи удаляемых пользователей
+     */
+    public function delete(User ...$users): void
+    {
+        $ids = [];
+
+        foreach ($users as $user) {
+            $ids[$user->id] = $user->id;
+        }
+
+        $vars = [
+            ':users' => $ids,
+        ];
+        $query = 'DELETE
+            FROM ::providers_users
+            WHERE uid IN (?ai:users)';
+
+        $this->c->DB->exec($query, $vars);
+
+    }
 }
