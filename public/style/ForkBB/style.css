@@ -117,6 +117,7 @@ body,
   box-sizing: border-box;
   overflow-wrap: break-word;
   word-break: break-word;
+  outline: none;
 }
 
 body,
@@ -607,11 +608,6 @@ body,
 
 #fork #id-fhtha {
   color: #583200;
-}
-
-#fork #id-fhtha:hover,
-#fork #id-fhtha:focus {
-  background-color: #FBFBFA;
 }
 
 @media screen and (min-width: 50rem) {
