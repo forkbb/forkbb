@@ -105,7 +105,7 @@ return [
         'Router' => [
             'class'    => \ForkBB\Core\Router::class,
             'base_url' => '%BASE_URL%',
-            'csrf'     => '@Csrf'
+            'csrf'     => '@Csrf',
         ],
         'Lang' => \ForkBB\Core\Lang::class,
         'Mail' => [
