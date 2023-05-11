@@ -34,9 +34,9 @@ abstract class Driver extends Model
         parent::__construct($c);
 
         $this->zDepend = [
-            'code'         => ['access_token', 'userInfo', 'userId', 'userName', 'userEmail', 'userEmailVerifed', 'userAvatar', 'userURL', 'userLocation', 'userGender'],
-            'access_token' => ['userInfo', 'userId', 'userName', 'userEmail', 'userEmailVerifed', 'userAvatar', 'userURL', 'userLocation', 'userGender'],
-            'userInfo'     => ['userId', 'userName', 'userEmail', 'userEmailVerifed', 'userAvatar', 'userURL', 'userLocation', 'userGender'],
+            'code'         => ['access_token', 'userInfo', 'userId', 'userLogin', 'userName', 'userEmail', 'userEmailVerifed', 'userAvatar', 'userURL', 'userLocation', 'userGender'],
+            'access_token' => ['userInfo', 'userId', 'userLogin', 'userName', 'userEmail', 'userEmailVerifed', 'userAvatar', 'userURL', 'userLocation', 'userGender'],
+            'userInfo'     => ['userId', 'userLogin', 'userName', 'userEmail', 'userEmailVerifed', 'userAvatar', 'userURL', 'userLocation', 'userGender'],
         ];
     }
 
