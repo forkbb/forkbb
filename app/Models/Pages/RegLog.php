@@ -141,10 +141,8 @@ class RegLog extends Page
 
         // пользователь
         } else {
-
+            return $this->c->Message->message('Bad request');
         }
-
-        exit(var_dump($provider->userId, $provider->userName, $provider->userEmail, $this->c->NormEmail->normalize($provider->userEmail)));
     }
 
     /**
