@@ -509,4 +509,22 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.55 to rev.56
+     */
+    protected function stageNumber55(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'multiple=>ProfileOAuth',
+            '\\ForkBB\\Models\\Pages\\Profile\\OAuth::class',
+            'ProfileMod'
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }

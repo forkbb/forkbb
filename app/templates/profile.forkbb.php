@@ -26,3 +26,11 @@
       </div>
     </div>
 @endif
+@if ($form = $p->formOAuth)
+    <div id="fork-oauth" class="f-main">
+      <div class="f-fdiv f-lrdiv">
+        <h2>{!! __('Add account') !!}</h2>
+    @include ('layouts/form')
+      </div>
+    </div>
+@endif

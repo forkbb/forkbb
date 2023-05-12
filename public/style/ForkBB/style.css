@@ -2488,6 +2488,15 @@ body,
   padding: 0 0.25rem;
 }
 
+#fork #id-fs-oauth-accounts {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#fork .f-field-oauth-acc-btn {
+  flex: 1 0 17rem;
+}
+
 @media screen and (min-width: 40rem) {
   #fork .f-fs-header .f-wrap-usertitle {
     order: 1;

@@ -317,3 +317,18 @@ msgstr "Показать подписки пользователя на темы
 
 msgid "Show forums subscriptions"
 msgstr "Показать подписки пользователя на разделы"
+
+msgid "Configure OAuth"
+msgstr "Настроить аккаунты OAuth"
+
+msgid "OAuth accounts"
+msgstr "Аккаунты OAuth"
+
+msgid "No linked accounts"
+msgstr "Нет связанных аккаунтов."
+
+msgid "Linked accounts"
+msgstr "Связанные аккаунты"
+
+msgid "Add account"
+msgstr "Привязать новый аккаунт"

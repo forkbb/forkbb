@@ -130,6 +130,21 @@ class ProviderUser extends Model
             WHERE uid IN (?ai:users)';
 
         $this->c->DB->exec($query, $vars);
+    }
 
+    /**
+     * Вовращает список записей по пользователю
+     */
+    public function loadUserData(User $user): array
+    {
+        $vars = [
+            ':id' => $user->id,
+        ];
+        $query = 'SELECT pu.pr_name AS name, pu.pu_uid AS userId, pu.pu_email AS userEmail, pu.pu_email_verified AS userEmailVerifed
+            FROM ::providers_users AS pu
+            WHERE pu.uid=?i:id
+            ORDER BY pu.pr_name, pu.pu_uid';
+
+        return $this->c->DB->query($query, $vars)->fetchAll();
     }
 }

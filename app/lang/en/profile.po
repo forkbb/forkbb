@@ -317,3 +317,18 @@ msgstr "Show user subscriptions to topics"
 
 msgid "Show forums subscriptions"
 msgstr "Show user subscriptions to forums"
+
+msgid "Configure OAuth"
+msgstr "Configure OAuth accounts"
+
+msgid "OAuth accounts"
+msgstr "OAuth accounts"
+
+msgid "No linked accounts"
+msgstr "No linked accounts."
+
+msgid "Linked accounts"
+msgstr "Linked accounts"
+
+msgid "Add account"
+msgstr "Add new account"

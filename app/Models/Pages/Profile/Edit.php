@@ -296,6 +296,13 @@ class Edit extends Profile
                 'href'  => $this->c->Router->link('EditUserPass', $args),
             ];
         }
+        if ($this->rules->configureOAuth) {
+            $fields['configure_oauth'] = [
+                'type'  => 'link',
+                'value' => __('Configure OAuth'),
+                'href'  => $this->c->Router->link('EditUserOAuth', $args),
+            ];
+        }
         if ($this->rules->useAvatar) {
             if (! $this->curUser->avatar) {
                 $fields['avatar'] = [

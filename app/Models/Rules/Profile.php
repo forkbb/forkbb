@@ -185,4 +185,9 @@ class Profile extends Rules
                 || 1 === $this->c->config->b_topic_subscriptions
             );
     }
+
+    protected function getconfigureOAuth(): bool
+    {
+        return $this->my && 1 === $this->c->config->b_oauth_allow;
+    }
 }

@@ -214,19 +214,19 @@ class Routing
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id|i:[1-9]\d*}/edit/email',
+                    '/user/{id|i:[1-9]\d*}/edit/profile/email',
                     'ProfileEmail:email',
                     'EditUserEmail'
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id|i:[1-9]\d*}/edit/passphrase',
+                    '/user/{id|i:[1-9]\d*}/edit/profile/passphrase',
                     'ProfilePass:pass',
                     'EditUserPass'
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id|i:[1-9]\d*}/edit/moderation',
+                    '/user/{id|i:[1-9]\d*}/edit/profile/moderation',
                     'ProfileMod:moderation',
                     'EditUserModeration'
                 );
@@ -252,15 +252,33 @@ class Routing
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id|i:' . $user->id . '}/edit/email',
+                    '/user/{id|i:' . $user->id . '}/edit/profile/email',
                     'ProfileEmail:email',
                     'EditUserEmail'
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id|i:' . $user->id . '}/edit/passphrase',
+                    '/user/{id|i:' . $user->id . '}/edit/profile/passphrase',
                     'ProfilePass:pass',
                     'EditUserPass'
+                );
+            }
+            // управление аккаунтами OAuth
+            if (
+                ! $user->isGuest
+                && 1 === $config->b_oauth_allow
+            ) {
+                $r->add(
+                    $r::GET,
+                    '/user/{id|i:' . $user->id . '}/edit/profile/oauth',
+                    'ProfileOAuth:list',
+                    'EditUserOAuth'
+                );
+                $r->add(
+                    $r::DUO,
+                    '/user/{id|i:' . $user->id . '}/edit/profile/oauth/{key}',
+                    'ProfileOAuth:action',
+                    'EditUserOAuthAction'
                 );
             }
             // смена своего email
