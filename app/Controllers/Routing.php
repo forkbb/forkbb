@@ -105,6 +105,8 @@ class Routing
                 'RegLog:callback',
                 'RegLogCallback'
             );
+        }
+        if (1 === $config->b_oauth_allow) {
             $r->add(
                 $r::PST,
                 '/reglog/redirect',
@@ -200,36 +202,39 @@ class Routing
                     'ProfileView:view',
                     'User'
                 );
-                $r->add(
-                    $r::DUO,
-                    '/user/{id|i:[1-9]\d*}/edit/profile',
-                    'ProfileEdit:edit',
-                    'EditUserProfile'
-                );
-                $r->add(
-                    $r::DUO,
-                    '/user/{id|i:[1-9]\d*}/edit/config',
-                    'ProfileConfig:config',
-                    'EditUserBoardConfig'
-                );
-                $r->add(
-                    $r::DUO,
-                    '/user/{id|i:[1-9]\d*}/edit/profile/email',
-                    'ProfileEmail:email',
-                    'EditUserEmail'
-                );
-                $r->add(
-                    $r::DUO,
-                    '/user/{id|i:[1-9]\d*}/edit/profile/passphrase',
-                    'ProfilePass:pass',
-                    'EditUserPass'
-                );
-                $r->add(
-                    $r::DUO,
-                    '/user/{id|i:[1-9]\d*}/edit/profile/moderation',
-                    'ProfileMod:moderation',
-                    'EditUserModeration'
-                );
+
+                if (! $user->isGuest) {
+                    $r->add(
+                        $r::DUO,
+                        '/user/{id|i:[1-9]\d*}/edit/profile',
+                        'ProfileEdit:edit',
+                        'EditUserProfile'
+                    );
+                    $r->add(
+                        $r::DUO,
+                        '/user/{id|i:[1-9]\d*}/edit/config',
+                        'ProfileConfig:config',
+                        'EditUserBoardConfig'
+                    );
+                    $r->add(
+                        $r::DUO,
+                        '/user/{id|i:[1-9]\d*}/edit/profile/email',
+                        'ProfileEmail:email',
+                        'EditUserEmail'
+                    );
+                    $r->add(
+                        $r::DUO,
+                        '/user/{id|i:[1-9]\d*}/edit/profile/passphrase',
+                        'ProfilePass:pass',
+                        'EditUserPass'
+                    );
+                    $r->add(
+                        $r::DUO,
+                        '/user/{id|i:[1-9]\d*}/edit/profile/moderation',
+                        'ProfileMod:moderation',
+                        'EditUserModeration'
+                    );
+                }
             } elseif (! $user->isGuest) {
                 // только свой профиль
                 $r->add(
