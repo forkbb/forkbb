@@ -83,3 +83,24 @@ msgstr "Форум закрыт для новых регистраций."
 
 msgid "Email message"
 msgstr "Данный электронный адрес, полученный от %s, принадлежит зарегистрированному пользователю.<br>Возможно, вы использовали другого провайдера для входа или имя + кодовую фразу?"
+
+msgid "Already linked to you"
+msgstr "Данный аккаунт уже привязан к вам."
+
+msgid "Already linked to another"
+msgstr "Данный аккаунт уже привязан к другому пользователю."
+
+msgid "Email registered by another"
+msgstr "Электронный адрес полученный от %s зарегистрирован другим пользователем."
+
+msgid "Account linked"
+msgstr "Аккаунт привязан."
+
+msgid "Identifier label"
+msgstr "Идентификатор"
+
+msgid "Email label"
+msgstr "Электронный адрес"
+
+msgid "Verified label"
+msgstr "Адрес проверен"

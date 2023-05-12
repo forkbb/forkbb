@@ -39,7 +39,7 @@ class OAuth extends Profile
 
         $this->c->Lang->load('admin_providers');
 
-        $this->crumbs     = $this->crumbs(
+        $this->crumbs          = $this->crumbs(
             [
                 $this->c->Router->link('EditUserOAuth', $args),
                 'OAuth accounts',
@@ -49,9 +49,10 @@ class OAuth extends Profile
                 'Editing profile',
             ]
         );
-        $this->form       = $this->formList($args);
-        $this->formOAuth  = $this->reglogForm();
-        $this->actionBtns = $this->btns('edit');
+        $this->form            = $this->formList($args);
+        $this->formOAuth       = $this->reglogForm();
+        $this->actionBtns      = $this->btns('edit');
+        $this->profileIdSuffix = '-oauth';
 
         return $this;
     }
@@ -96,5 +97,131 @@ class OAuth extends Profile
             ],
             'btns'   => null,
         ];
+    }
+
+    /**
+     * Подготавливает данные для шаблона списка аккаунтов
+     */
+    public function action(array $args, string $method): Page
+    {
+        if (
+            false === $this->initProfile($args['id'])
+            || ! $this->rules->configureOAuth
+        ) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        list($name, $userId) = \array_pad(\explode('-', $args['key'], 2), 2, null);
+
+        $data   = $this->c->providerUser->loadUserData($this->curUser);
+        $puInfo = null;
+
+        foreach ($data as $cur) {
+            if (
+                $name === $cur['name']
+                && $userId === $cur['userId']
+            ) {
+                $puInfo = $cur;
+
+                break;
+            }
+        }
+
+        if (empty($puInfo)) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $this->c->Lang->load('admin_providers');
+        $this->c->Lang->load('validator');
+
+        if ('POST' === $method) {
+        }
+
+
+
+
+
+
+        $this->crumbs          = $this->crumbs(
+            [
+                $this->c->Router->link('EditUserOAuthAction', $args),
+                $name,
+            ],
+            [
+                $this->c->Router->link('EditUserOAuth', $args),
+                'OAuth accounts',
+            ],
+            [
+                $this->c->Router->link('EditUserProfile', $args),
+                'Editing profile',
+            ]
+        );
+        $this->form            = $this->formAction($puInfo, $args);
+        $this->actionBtns      = $this->btns('edit');
+        $this->profileIdSuffix = '-oauth-a';
+
+        return $this;
+    }
+
+    /**
+     * Создает массив данных для формы днействия
+     */
+    protected function formAction(array $info, array $args): array
+    {
+        return [
+            'action' => $this->c->Router->link('EditUserOAuthAction', $args),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('EditUserOAuthAction', $args),
+            ],
+            'sets'   => [
+                'oauth-account' => [
+                    'class'  => ['data-edit'],
+                    'fields' => [
+                        'provider' => [
+                            'type'    => 'str',
+                            'class'   => ['pline'],
+                            'caption' => 'Provider label',
+                            'value'   => __($info['name']),
+                        ],
+                        'userId' => [
+                            'type'    => 'str',
+                            'class'   => ['pline'],
+                            'caption' => 'Identifier label',
+                            'value'   => $info['userId'],
+                        ],
+                        'userEmail' => [
+                            'type'    => 'str',
+                            'class'   => ['pline'],
+                            'caption' => 'Email label',
+                            'value'   => $info['userEmail'],
+                        ],
+                        'userEmailVerifed' => [
+                            'type'    => 'str',
+                            'class'   => ['pline'],
+                            'caption' => 'Verified label',
+                            'value'   => __($info['userEmailVerifed'] ? 'Yes' : 'No'),
+                        ],
+                        'confirm'  => [
+                            'type'    => 'checkbox',
+                            'class'   => ['pline'],
+                            'label'   => 'Confirm action',
+                            'checked' => false,
+                        ],
+                    ],
+                ],
+            ],
+            'btns'   => [
+                'delete' => [
+                    'type'  => 'submit',
+                    'value' => __('Delete'),
+                ],
+                'cancel' => [
+                    'type'  => 'btn',
+                    'value' => __('Cancel'),
+                    'link'  => $this->c->Router->link('EditUserOAuth', $args),
+                ],
+            ],
+        ];
+
     }
 }

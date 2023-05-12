@@ -2493,8 +2493,9 @@ body,
   flex-wrap: wrap;
 }
 
-#fork .f-field-oauth-acc-btn {
-  flex: 1 0 17rem;
+#fork .f-field-oauth-acc-btn,
+#fork-profile-oauth-a .f-fbtn {
+  flex: 1 0 7rem;
 }
 
 @media screen and (min-width: 40rem) {

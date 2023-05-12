@@ -83,3 +83,24 @@ msgstr "This board is not accepting new registrations."
 
 msgid "Email message"
 msgstr "This email received from %s belongs to a registered user.<br>Perhaps you used another provider to sign in or username + passphrase?"
+
+msgid "Already linked to you"
+msgstr "This account is already linked to you."
+
+msgid "Already linked to another"
+msgstr "This account is already linked to another user."
+
+msgid "Email registered by another"
+msgstr "The email address received from %s is registered by another user."
+
+msgid "Account linked"
+msgstr "Account linked."
+
+msgid "Identifier label"
+msgstr "Identifier"
+
+msgid "Email label"
+msgstr "Email"
+
+msgid "Verified label"
+msgstr "Email verified"

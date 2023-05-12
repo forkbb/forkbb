@@ -332,3 +332,6 @@ msgstr "Linked accounts"
 
 msgid "Add account"
 msgstr "Add new account"
+
+msgid "Delete"
+msgstr "Delete"

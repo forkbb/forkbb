@@ -332,3 +332,6 @@ msgstr "Связанные аккаунты"
 
 msgid "Add account"
 msgstr "Привязать новый аккаунт"
+
+msgid "Delete"
+msgstr "Удалить"

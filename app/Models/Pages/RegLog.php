@@ -10,8 +10,6 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Pages;
 
-use ForkBB\Core\Validator;
-use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\Page;
 use ForkBB\Models\Provider\Driver;
 use ForkBB\Models\User\User;
@@ -81,14 +79,17 @@ class RegLog extends Page
             }
         }
 
+        $uid = $this->c->providerUser->findUser($provider);
+
         // гость
         if ($this->user->isGuest) {
-            $uid = $this->c->providerUser->findUser($provider);
-
             // регистрация
             if (empty($uid)) {
                 // на форуме есть пользователь с таким email
-                if ($this->c->providerUser->findEmail($provider) > 0) {
+                if (
+                    $this->c->providerUser->findEmail($provider) > 0
+                    || $this->c->users->loadByEmail($provider->userEmail) instanceof User
+                ) {
                     $auth         = $this->c->Auth;
                     $auth->fIswev = ['i', ['Email message', __($provider->name)]];
 
@@ -119,7 +120,7 @@ class RegLog extends Page
                 $user->location        = $provider->userLocation;
                 $user->url             = $provider->userURL;
 
-                $newUserId = $this->c->users->insert($user);
+                $this->c->users->insert($user);
 
                 if (true !== $this->c->providerUser->registration($user, $provider)) {
                     throw new RuntimeException('Failed to insert data'); // ??????????????????????????????????????????
@@ -141,7 +142,42 @@ class RegLog extends Page
 
         // пользователь
         } else {
-            return $this->c->Message->message('Bad request');
+            $redirect = $this->c->Redirect->page('EditUserOAuth', ['id' => $this->user->id]);
+
+            // аккаунт есть и он привязан к текущему пользователю
+            if ($uid === $this->user->id) {
+                return $redirect->message('Already linked to you', 5);
+
+            // аккаунт есть и он привязан к другому пользователю
+            } elseif ($uid > 0) {
+                return $redirect->message('Already linked to another', 5);
+            }
+
+            $uid = $this->c->providerUser->findEmail($provider);
+
+            // email принадлежит другому пользователю
+            if (
+                $uid
+                && $uid !== $this->user->id
+            ) {
+                return $redirect->message(['Email registered by another', __($provider->name)], 5);
+            }
+
+            $user = $this->c->users->loadByEmail($provider->userEmail);
+
+            // email принадлежит другому пользователю
+            if (
+                $user instanceof User
+                && $user !== $this->user
+            ) {
+                return $redirect->message(['Email registered by another', __($provider->name)], 5);
+            }
+
+            if (true !== $this->c->providerUser->registration($this->user, $provider)) {
+                throw new RuntimeException('Failed to insert data'); // ??????????????????????????????????????????
+            }
+
+            return $redirect->message('Account linked');
         }
     }
 
