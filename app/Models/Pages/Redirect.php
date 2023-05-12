@@ -46,17 +46,20 @@ class Redirect extends Page
     /**
      * Задает сообщение
      */
-    public function message(string|array $message): Page
+    public function message(string|array $message, ?int $timeout = 0): Page
     {
         // переадресация без вывода сообщения
-        if ($this->c->config->i_redirect_delay < 1) {
+        if (
+            $timeout < 1
+            && $this->c->config->i_redirect_delay < 1
+        ) {
             return $this;
         }
 
         $this->nameTpl = 'layouts/redirect';
         $this->robots  = 'noindex';
         $this->message = $message;
-        $this->timeout = $this->c->config->i_redirect_delay;
+        $this->timeout = $timeout > 0 ? $timeout : $this->c->config->i_redirect_delay;
 
         return $this;
     }
@@ -68,7 +71,7 @@ class Redirect extends Page
     protected function getHttpHeaders(): array
     {
         if (
-            $this->c->config->i_redirect_delay < 1
+            $this->timeout < 1
             || null === $this->nameTpl
         ) {
             $this->httpStatus = 302;
