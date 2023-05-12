@@ -72,7 +72,7 @@ class Pass extends Profile
             $this->fIswev = $v->getErrors();
         }
 
-        $this->crumbs     = $this->crumbs(
+        $this->crumbs          = $this->crumbs(
             [
                 $this->c->Router->link('EditUserPass', $args),
                 'Change pass',
@@ -82,8 +82,9 @@ class Pass extends Profile
                 'Editing profile',
             ]
         );
-        $this->form       = $this->form($args);
-        $this->actionBtns = $this->btns('edit');
+        $this->form            = $this->form($args);
+        $this->actionBtns      = $this->btns('edit');
+        $this->profileIdSuffix = '-pass';
 
         return $this;
     }

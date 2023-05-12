@@ -32,8 +32,6 @@ class Email extends Profile
             return $this->c->Message->message('Bad request', false);
         }
 
-        $this->c->Lang->load('profile');
-
         $this->user->email           = $args['email'];
         $this->user->email_confirmed = 1;
         $this->user->activate_string = '';
@@ -196,7 +194,7 @@ class Email extends Profile
             $this->fIswev           = $v->getErrors();
         }
 
-        $this->crumbs     = $this->crumbs(
+        $this->crumbs          = $this->crumbs(
             [
                 $this->c->Router->link('EditUserEmail', $args),
                 'Change email',
@@ -206,8 +204,9 @@ class Email extends Profile
                 'Editing profile',
             ]
         );
-        $this->form       = $this->form($args);
-        $this->actionBtns = $this->btns('edit');
+        $this->form            = $this->form($args);
+        $this->actionBtns      = $this->btns('edit');
+        $this->profileIdSuffix = '-email';
 
         return $this;
     }

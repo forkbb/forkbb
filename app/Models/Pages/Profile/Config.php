@@ -121,14 +121,15 @@ class Config extends Profile
             $this->fIswev = $v->getErrors();
         }
 
-        $this->crumbs     = $this->crumbs(
+        $this->crumbs          = $this->crumbs(
             [
                 $this->c->Router->link('EditUserBoardConfig', $args),
                 'Board configuration',
             ]
         );
-        $this->form       = $this->form($args);
-        $this->actionBtns = $this->btns('config');
+        $this->form            = $this->form($args);
+        $this->actionBtns      = $this->btns('config');
+        $this->profileIdSuffix = '-config';
 
         return $this;
     }

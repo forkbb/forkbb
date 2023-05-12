@@ -20,7 +20,7 @@
 @endif
     </div>
 @if ($form = $p->form)
-    <section id="fork-profile" class="f-main">
+    <section id="fork-profile{{ $p->profileIdSuffix or '' }}" class="f-main f-main-profile">
       <h2>@if ($p->profileHeader === $p->curUser->username){{ $p->profileHeader }} @else{!! __($p->profileHeader) !!} @endif</h2>
       <div class="f-fdiv">
     @include ('layouts/form')

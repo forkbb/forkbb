@@ -154,14 +154,15 @@ class Edit extends Profile
             }
         }
 
-        $this->crumbs     = $this->crumbs(
+        $this->crumbs          = $this->crumbs(
             [
                 $this->c->Router->link('EditUserProfile', $args),
                 'Editing profile',
             ]
         );
-        $this->form       = $this->form($args);
-        $this->actionBtns = $this->btns('edit');
+        $this->form            = $this->form($args);
+        $this->actionBtns      = $this->btns('edit');
+        $this->profileIdSuffix = '-edit';
 
         return $this;
     }

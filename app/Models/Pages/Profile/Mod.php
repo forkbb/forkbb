@@ -68,7 +68,7 @@ class Mod extends Profile
             $this->fIswev = $v->getErrors();
         }
 
-        $this->crumbs     = $this->crumbs(
+        $this->crumbs          = $this->crumbs(
             [
                 $this->c->Router->link('EditUserModeration', $args),
                 'Moderator rights',
@@ -78,8 +78,9 @@ class Mod extends Profile
                 'Editing profile',
             ]
         );
-        $this->form       = $this->form($args);
-        $this->actionBtns = $this->btns('edit');
+        $this->form            = $this->form($args);
+        $this->actionBtns      = $this->btns('edit');
+        $this->profileIdSuffix = '-mod';
 
         return $this;
     }
