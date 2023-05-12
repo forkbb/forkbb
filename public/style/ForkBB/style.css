@@ -2599,6 +2599,7 @@ body,
   height: auto;
 }
 
+#fork .f-fs-header-edit .f-fleg,
 #fork .f-fs-data-edit .f-fleg {
   display: none;
 }

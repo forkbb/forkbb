@@ -20,11 +20,12 @@
 @endif
     </div>
 @if ($form = $p->form)
-    <div id="fork-profile" class="f-main">
+    <section id="fork-profile" class="f-main">
+      <h2>@if ($p->profileHeader === $p->curUser->username){{ $p->profileHeader }} @else{!! __($p->profileHeader) !!} @endif</h2>
       <div class="f-fdiv">
     @include ('layouts/form')
       </div>
-    </div>
+    </section>
 @endif
 @if ($form = $p->formOAuth)
     <div id="fork-oauth" class="f-main">

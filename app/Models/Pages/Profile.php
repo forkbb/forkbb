@@ -69,7 +69,11 @@ abstract class Profile extends Page
         $crumbs[] = [$this->curUser->link, ['User %s', $this->curUser->username]];
         $crumbs[] = [$this->c->Router->link('Userlist'), 'User list'];
 
-        return parent::crumbs(...$crumbs);
+        $result = parent::crumbs(...$crumbs);
+
+        $this->profileHeader = \end($result)[1];
+
+        return $result;
     }
 
     /**

@@ -84,7 +84,7 @@ class View extends Profile
         }
         $form['sets']['header'] = [
             'class'  => ['header'],
-#            'legend' => 'Options',
+            'legend' => 'Essentials',
             'fields' => $fields,
         ];
 

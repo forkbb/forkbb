@@ -344,7 +344,7 @@ class Edit extends Profile
         }
         $form['sets']['header'] = [
             'class'  => ['header-edit'],
-#            'legend' => 'Options',
+            'legend' => 'Essentials',
             'fields' => $fields,
         ];
 
