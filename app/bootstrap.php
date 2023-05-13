@@ -31,6 +31,12 @@ define('FORK_GROUP_MOD', 2);
 define('FORK_GROUP_GUEST', 3);
 define('FORK_GROUP_MEMBER', 4);
 
+define('FORK_MESS_INFO', 'i');
+define('FORK_MESS_SUCC', 's');
+define('FORK_MESS_WARN', 'w');
+define('FORK_MESS_ERR',  'e');
+define('FORK_MESS_VLD',  'v');
+
 require __DIR__ . '/../vendor/autoload.php';
 
 $errorHandler = new ErrorHandler();
