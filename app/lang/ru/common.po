@@ -125,10 +125,7 @@ msgid "Redirecting"
 msgstr "Перенаправление"
 
 msgid "Redirecting..."
-msgstr "Переадресация …"
-
-msgid "Click redirect"
-msgstr "Кликните здесь, если не желаете ждать (или ваш браузер не поддерживает перенаправление)."
+msgstr "<a href=\"%s\">Переадресация …</a>"
 
 msgid "on"
 msgstr "вкл."

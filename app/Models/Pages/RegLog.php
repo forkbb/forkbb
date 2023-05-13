@@ -146,11 +146,11 @@ class RegLog extends Page
 
             // аккаунт есть и он привязан к текущему пользователю
             if ($uid === $this->user->id) {
-                return $redirect->message('Already linked to you', 5);
+                return $redirect->message('Already linked to you', FORK_MESS_SUCC, 5);
 
             // аккаунт есть и он привязан к другому пользователю
             } elseif ($uid > 0) {
-                return $redirect->message('Already linked to another', 5);
+                return $redirect->message('Already linked to another', FORK_MESS_WARN, 5);
             }
 
             $uid = $this->c->providerUser->findEmail($provider);
@@ -160,7 +160,7 @@ class RegLog extends Page
                 $uid
                 && $uid !== $this->user->id
             ) {
-                return $redirect->message(['Email registered by another', __($provider->name)], 5);
+                return $redirect->message(['Email registered by another', __($provider->name)], FORK_MESS_WARN, 5);
             }
 
             $user = $this->c->users->loadByEmail($provider->userEmail);
@@ -170,14 +170,14 @@ class RegLog extends Page
                 $user instanceof User
                 && $user !== $this->user
             ) {
-                return $redirect->message(['Email registered by another', __($provider->name)], 5);
+                return $redirect->message(['Email registered by another', __($provider->name)], FORK_MESS_WARN, 5);
             }
 
             if (true !== $this->c->providerUser->registration($this->user, $provider)) {
                 throw new RuntimeException('Failed to insert data'); // ??????????????????????????????????????????
             }
 
-            return $redirect->message('Account linked');
+            return $redirect->message('Account linked', FORK_MESS_SUCC);
         }
     }
 

@@ -18,8 +18,9 @@
     <main id="fork-main">
       <aside id="fork-rdrct" class="f-main">
         <h2 id="id-rdrct-h2">{!! __('Redirecting') !!}</h2>
-        <p class="f-rdrct-p">{!! __($p->message) !!} {!! __('Redirecting...') !!}</p>
-        <p class="f-rdrct-p"><a href="{{ $p->link }}">{!! __('Click redirect') !!}</a></p>
+@if ($iswev = $p->fIswev)
+    @include ('layouts/iswev')
+@endif
       </aside>
     </main>
     <footer id="fork-footer">

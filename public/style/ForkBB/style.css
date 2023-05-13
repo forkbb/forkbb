@@ -1046,19 +1046,10 @@ body,
 /************/
 /* Редирект */
 /************/
-#fork #fork-rdrct {
-  border: 0.0625rem solid #AA7939;
-}
-
 #fork-rdrct #id-rdrct-h2 {
   display: block;
   padding: 0.625rem;
-  background-color: #F8F4E3;
-  border-bottom: 0.0625rem solid #AA7939;
-}
-
-#fork-rdrct .f-rdrct-p {
-  padding: 0.625rem;
+  text-align: center;
 }
 
 /*********************/

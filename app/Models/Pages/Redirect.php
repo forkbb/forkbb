@@ -46,7 +46,7 @@ class Redirect extends Page
     /**
      * Задает сообщение
      */
-    public function message(string|array $message, ?int $timeout = 0): Page
+    public function message(string|array $message, string $status = FORK_MESS_INFO, int $timeout = 0): Page
     {
         // переадресация без вывода сообщения
         if (
@@ -58,7 +58,8 @@ class Redirect extends Page
 
         $this->nameTpl = 'layouts/redirect';
         $this->robots  = 'noindex';
-        $this->message = $message;
+        $this->fIswev  = [$status, $message];
+        $this->fIswev  = [$status, ['Redirecting...', $this->link]];
         $this->timeout = $timeout > 0 ? $timeout : $this->c->config->i_redirect_delay;
 
         return $this;
