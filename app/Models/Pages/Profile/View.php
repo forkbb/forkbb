@@ -118,8 +118,8 @@ class View extends Profile
             ];
         }
         $genders = [
-            1 => __('Male'),
-            2 => __('Female'),
+            FORK_GEN_MAN => __('Male'),
+            FORK_GEN_FEM => __('Female'),
         ];
         if (isset($genders[$this->curUser->gender])) {
             $fields['gender'] = [

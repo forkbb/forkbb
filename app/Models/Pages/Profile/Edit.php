@@ -92,7 +92,7 @@ class Edit extends Profile
                     'delete_avatar' => $ruleDelAvatar,
                     'admin_note'    => $ruleAdminNote,
                     'realname'      => 'exist|string:trim|max:40|noURL:1',
-                    'gender'        => 'required|integer|in:0,1,2',
+                    'gender'        => 'required|integer|in:' . FORK_GEN_NOT . ',' . FORK_GEN_MAN . ',' . FORK_GEN_FEM,
                     'location'      => 'exist|string:trim|max:30|noURL:1',
                     'email_setting' => 'required|integer|in:0,1,2',
                     'url'           => $ruleWebsite,
@@ -374,9 +374,9 @@ class Edit extends Profile
             'value'     => $this->curUser->realname,
         ];
         $genders = [
-            0 => __('Do not display'),
-            1 => __('Male'),
-            2 => __('Female'),
+            FORK_GEN_NOT => __('Do not display'),
+            FORK_GEN_MAN => __('Male'),
+            FORK_GEN_FEM => __('Female'),
         ];
         $fields['gender'] = [
             'class'   => ['block'],

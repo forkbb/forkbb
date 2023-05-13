@@ -38,7 +38,7 @@
     @if (empty($post->id) && $iswev = [FORK_MESS_ERR => [['Message %s was not found in the database', $id]]])
         @include ('layouts/iswev')
     @else
-      <article id="p{{ $post->id }}" class="f-post f-post-search @if (1 == $post->user->gender) f-user-male @elseif (2 == $post->user->gender) f-user-female @endif @if ($post->user->online) f-user-online @endif">
+      <article id="p{{ $post->id }}" class="f-post f-post-search @if (FORK_GEN_MAN == $post->user->gender) f-user-male @elseif (FORK_GEN_FEM == $post->user->gender) f-user-female @endif @if ($post->user->online) f-user-online @endif">
         <header class="f-post-header">
           <h3 class="f-phead-h3">
             <span class="f-psh-forum"><a href="{{ $post->parent->parent->link }}" title="{{ __('Go to forum') }}">{{ $post->parent->parent->forum_name }}</a></span>

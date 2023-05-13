@@ -66,7 +66,7 @@ class View extends Users
                         'email'           => 'string:null|max:80',
                         'title'           => 'string:null|max:50',
                         'realname'        => 'string:null|max:40',
-                        'gender'          => 'integer|in:0,1,2',
+                        'gender'          => 'integer|in:' . FORK_GEN_NOT . ',' . FORK_GEN_MAN . ',' . FORK_GEN_FEM,
                         'url'             => 'string:null|max:100',
                         'location'        => 'string:null|max:30',
                         'signature'       => 'string:null|max:512',
@@ -208,9 +208,9 @@ class View extends Users
             'value'     => $data['realname'] ?? null,
         ];
         $genders = [
-            0 => __('Do not display'),
-            1 => __('Male'),
-            2 => __('Female'),
+            FORK_GEN_NOT => __('Do not display'),
+            FORK_GEN_MAN => __('Male'),
+            FORK_GEN_FEM => __('Female'),
         ];
         $fields['gender'] = [
 #            'class'   => ['block'],

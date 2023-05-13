@@ -145,6 +145,6 @@ class GitHub extends Driver
      */
     protected function getuserGender(): int
     {
-        return 0;
+        return FORK_GEN_NOT;
     }
 }

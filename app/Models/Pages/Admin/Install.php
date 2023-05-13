@@ -1130,7 +1130,7 @@ class Install extends Admin
                 'u_pm_last_post'   => ['INT(10) UNSIGNED', false, 0],
                 'warning_flag'     => ['TINYINT(1)', false, 0],
                 'warning_all'      => ['INT(10) UNSIGNED', false, 0],
-                'gender'           => ['TINYINT UNSIGNED', false, 0],
+                'gender'           => ['TINYINT UNSIGNED', false, FORK_GEN_NOT],
                 'u_mark_all_read'  => ['INT(10) UNSIGNED', false, 0],
                 'last_report_id'   => ['INT(10) UNSIGNED', false, 0],
                 'ip_check_type'    => ['TINYINT UNSIGNED', false, 0],
