@@ -35,7 +35,7 @@ class Host extends Admin
         $this->titles  = 'Info';
         $this->back    = true;
         $this->fIswev  = [
-            'i',
+            FORK_MESS_INFO,
             [
                 'Host info',
                 $ip,

@@ -91,7 +91,7 @@ class RegLog extends Page
                     || $this->c->users->loadByEmail($provider->userEmail) instanceof User
                 ) {
                     $auth         = $this->c->Auth;
-                    $auth->fIswev = ['i', ['Email message', __($provider->name)]];
+                    $auth->fIswev = [FORK_MESS_INFO, ['Email message', __($provider->name)]];
 
                     return $auth->forget([], 'GET', $provider->userEmail);
                 }

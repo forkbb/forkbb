@@ -45,7 +45,7 @@ class Register extends Page
                 'password' => 'Passphrase',
             ])->addMessages([
                 'agree.required'    => ['cancel', 'cancel'],
-                'agree.token'       => ['w', ['Bad agree', $this->c->Router->link('Register')]],
+                'agree.token'       => [FORK_MESS_WARN, ['Bad agree', $this->c->Router->link('Register')]],
                 'password.password' => 'Pass format',
                 'username.login'    => 'Login format',
             ]);
@@ -271,14 +271,14 @@ class Register extends Page
             // форма сброса пароля
             } else {
                 $auth         = $this->c->Auth;
-                $auth->fIswev = ['w', ['Error welcom mail', $this->c->config->o_admin_email]];
+                $auth->fIswev = [FORK_MESS_WARN, ['Error welcom mail', $this->c->config->o_admin_email]];
 
                 return $auth->forget([], 'GET', $v->email);
             }
         // форма логина
         } else {
             $auth         = $this->c->Auth;
-            $auth->fIswev = ['s', 'Reg complete'];
+            $auth->fIswev = [FORK_MESS_SUCC, 'Reg complete'];
 
             return $auth->login([], 'GET', $v->username);
         }
@@ -341,14 +341,14 @@ class Register extends Page
             // форма сброса пароля
             } else {
                 $auth         = $this->c->Auth;
-                $auth->fIswev = ['w', ['Error welcom mail', $this->c->config->o_admin_email]];
+                $auth->fIswev = [FORK_MESS_WARN, ['Error welcom mail', $this->c->config->o_admin_email]];
 
                 return $auth->forget([], 'GET', $v->email);
             }
         // форма логина
         } else {
             $auth         = $this->c->Auth;
-            $auth->fIswev = ['s', 'Reg complete'];
+            $auth->fIswev = [FORK_MESS_SUCC, 'Reg complete'];
 
             return $auth->login([], 'GET', $v->username);
         }
@@ -385,7 +385,7 @@ class Register extends Page
         $this->c->Lang->load('register');
 
         $auth         = $this->c->Auth;
-        $auth->fIswev = ['s', 'Reg complete'];
+        $auth->fIswev = [FORK_MESS_SUCC, 'Reg complete'];
 
         return $auth->login([], 'GET', $user->username);
     }

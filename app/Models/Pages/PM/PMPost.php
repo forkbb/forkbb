@@ -76,15 +76,15 @@ class PMPost extends AbstractPM
         }
 
         if ($topic->closed) {
-            $this->fIswev = ['e', 'Dialogue is closed'];
+            $this->fIswev = [FORK_MESS_ERR, 'Dialogue is closed'];
         } elseif (2 === $topic->blockStatus) {
-            $this->fIswev = ['e', 'You block addr'];
+            $this->fIswev = [FORK_MESS_ERR, 'You block addr'];
         } elseif (1 === $topic->blockStatus) {
-            $this->fIswev = ['e', 'Addr block you'];
+            $this->fIswev = [FORK_MESS_ERR, 'Addr block you'];
         } elseif (! $topic->actionsAllowed) {
-            $this->fIswev = ['e', 'Target group pm off'];
+            $this->fIswev = [FORK_MESS_ERR, 'Target group pm off'];
         } elseif (! $topic->canReply) {
-            $this->fIswev = ['e', 'Target pm off'];
+            $this->fIswev = [FORK_MESS_ERR, 'Target pm off'];
         }
 
         $this->c->Lang->load('post');
@@ -102,19 +102,19 @@ class PMPost extends AbstractPM
                         $this->targetUser->g_pm_limit > 0
                         && $this->targetUser->u_pm_num_all >= $this->targetUser->g_pm_limit
                     ) {
-                        $this->fIswev = ['e', 'Target is full'];
+                        $this->fIswev = [FORK_MESS_ERR, 'Target is full'];
                     } elseif (
                         $this->user->g_pm_limit > 0
                         && $this->user->u_pm_num_all >= $this->user->g_pm_limit
                     ) {
-                        $this->fIswev = ['e', 'Active is full'];
+                        $this->fIswev = [FORK_MESS_ERR, 'Active is full'];
                     }
                 } elseif (null !== $v->archive) {
                     if (
                         $this->user->g_pm_limit > 0
                         && $this->pms->totalArchive >= $this->user->g_pm_limit
                     ) {
-                        $this->fIswev = ['e', 'Archive is full'];
+                        $this->fIswev = [FORK_MESS_ERR, 'Archive is full'];
                     }
                 }
             }
@@ -123,7 +123,7 @@ class PMPost extends AbstractPM
             $args['_vars'] = $v->getData();
 
             if (
-                empty($this->fIswev['e'])
+                empty($this->fIswev[FORK_MESS_ERR])
                 && $isValid
                 && null === $v->preview
                 && (

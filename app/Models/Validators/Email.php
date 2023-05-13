@@ -120,7 +120,7 @@ class Email extends RulesValidator
             }
 
             if ($flood < $this->c->FLOOD_INTERVAL) {
-                $v->addError(['Account email flood', (int) (($this->c->FLOOD_INTERVAL - $flood) / 60)], 'e');
+                $v->addError(['Account email flood', (int) (($this->c->FLOOD_INTERVAL - $flood) / 60)], FORK_MESS_ERR);
                 $ok = false;
             }
         }

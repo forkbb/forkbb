@@ -43,7 +43,7 @@ abstract class AbstractPM extends Page
         $this->crumbs       = $this->crumbs(...$this->pmCrumbs);
 
         if (1 !== $this->user->u_pm) {
-            $this->fIswev = ['w', 'PM off'];
+            $this->fIswev = [FORK_MESS_WARN, 'PM off'];
         }
 
         parent::prepare();

@@ -48,7 +48,7 @@
     <section id="fork-topic" class="f-main">
       <h2>{!! __('Post list') !!}</h2>
 @foreach ($p->posts as $id => $post)
-    @if (empty($post->id) && $iswev = ['e' => [['Message %s was not found in the database', $id]]])
+    @if (empty($post->id) && $iswev = [FORK_MESS_ERR => [['Message %s was not found in the database', $id]]])
         @include ('layouts/iswev')
     @else
       <article id="p{{ $post->id }}" class="f-post @if (1 == $post->user->gender) f-user-male @elseif (2 == $post->user->gender) f-user-female @endif @if ($post->user->online) f-user-online @endif @if (1 === $post->postNumber) f-post-first @endif">

@@ -90,7 +90,7 @@ trait PostValidatorTrait
         $time = \time() - $last;
 
         if ($time < $this->user->g_post_flood) {
-            $v->addError(['Flood message', $this->user->g_post_flood - $time], 'e');
+            $v->addError(['Flood message', $this->user->g_post_flood - $time], FORK_MESS_ERR);
         }
 
         return $submit;

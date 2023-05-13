@@ -77,7 +77,7 @@
             <div class="f-hcell f-clast">{!! __('Last post') !!}</div>
           </li>
     @foreach ($p->topics as $id => $topic)
-        @if (empty($topic->id) && $iswev = ['e' => [['Topic %s was not found in the database', $id]]])
+        @if (empty($topic->id) && $iswev = [FORK_MESS_ERR => [['Topic %s was not found in the database', $id]]])
           <li id="topic-{{ $id }}" class="f-row">
             @include ('layouts/iswev')
           </li>

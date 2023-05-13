@@ -34,13 +34,13 @@ class Message extends Page
         }
 
         if ($status < 200) {
-            $type = 'i';
+            $type = FORK_MESS_INFO;
         } elseif ($status < 300) {
-            $type = 's';
+            $type = FORK_MESS_SUCC;
         } elseif ($status < 400) {
-            $type = 'w';
+            $type = FORK_MESS_WARN;
         } else {
-            $type = 'e';
+            $type = FORK_MESS_ERR;
         }
 
         if (

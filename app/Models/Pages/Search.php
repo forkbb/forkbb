@@ -136,7 +136,7 @@ class Search extends Page
         }
 
         if (! $this->c->config->insensitive()) {
-            $this->fIswev = ['i', 'The search may be case sensitive'];
+            $this->fIswev = [FORK_MESS_INFO, 'The search may be case sensitive'];
         }
 
         $this->fIndex       = 'search';
@@ -338,7 +338,7 @@ class Search extends Page
                         $flood = false;
 
                         if (empty($search->queryIds)) {
-                            $v->addError('No hits', 'i');
+                            $v->addError('No hits', FORK_MESS_INFO);
                         }
 
                         if (
@@ -521,7 +521,7 @@ class Search extends Page
         if (false === $list) {
             return $this->c->Message->message('Bad request');
         } elseif (empty($list)) {
-            $this->fIswev = ['i', 'No hits'];
+            $this->fIswev = [FORK_MESS_INFO, 'No hits'];
 
             return $this->view([], 'GET', true);
         }

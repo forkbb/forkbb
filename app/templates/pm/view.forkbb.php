@@ -29,7 +29,7 @@
 @endif
       <section id="fork-forum" class="f-pm f-pmview @empty ($p->pmList) f-pm-empty @endempty">
         <h2>{!! __($p->title) !!}</h2>
-@if (empty($p->pmList) && $iswev = ['i' => ['Info zero']])
+@if (empty($p->pmList) && $iswev = [FORK_MESS_INFO => ['Info zero']])
         @include ('layouts/iswev')
 @else
         <div class="f-ftlist">
@@ -40,7 +40,7 @@
               <div class="f-hcell f-clast">{!! __('Last post') !!}</div>
             </li>
     @foreach ($p->pmList as $id => $topic)
-        @if (empty($topic->id) && $iswev = ['e' => [['Dialogue %s was not found in the database', $id]]])
+        @if (empty($topic->id) && $iswev = [FORK_MESS_ERR => [['Dialogue %s was not found in the database', $id]]])
             <li id="ptopic-{{ $id }}" class="f-row">
               @include ('layouts/iswev')
             </li>

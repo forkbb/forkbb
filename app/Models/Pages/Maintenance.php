@@ -32,7 +32,7 @@ class Maintenance extends Page
 
         $this->header('Retry-After', '3600');
 
-#        $this->fIswev = ['i', $this->c->config->o_maintenance_message];
+#        $this->fIswev = [FORK_MESS_INFO, $this->c->config->o_maintenance_message];
     }
 
     /**

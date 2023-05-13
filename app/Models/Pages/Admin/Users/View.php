@@ -52,7 +52,7 @@ class View extends Users
                 $ip = \filter_var($v->ip, \FILTER_VALIDATE_IP);
 
                 if (false === $ip) {
-                    $this->fIswev = ['v', 'Bad IP message'];
+                    $this->fIswev = [FORK_MESS_VLD, 'Bad IP message'];
                     $data         = $v->getData();
                 } else {
                     return $this->c->Redirect->page('AdminUsersResult', ['data' => $this->encodeData($ip)]);

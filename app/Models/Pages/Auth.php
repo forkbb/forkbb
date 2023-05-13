@@ -221,7 +221,7 @@ class Auth extends Page
             ) {
                 $v->addError('Wrong user/pass');
             } elseif ($this->userAfterLogin->isUnverified) {
-                $v->addError('Account is not activated', 'w');
+                $v->addError('Account is not activated', FORK_MESS_WARN);
             } elseif (
                 $this->loginWithForm
                 && ! \password_verify($password, $this->userAfterLogin->password)
@@ -439,7 +439,7 @@ class Auth extends Page
 
                 $this->c->users->update($user);
 
-                $this->fIswev = ['s', 'Pass updated'];
+                $this->fIswev = [FORK_MESS_SUCC, 'Pass updated'];
 
                 $this->c->Log->info('Passphrase reset: ok', [
                     'user' => $user->fLog(),
@@ -465,7 +465,7 @@ class Auth extends Page
 
             $this->c->users->update($user);
 
-            $this->fIswev = ['i', 'Account activated'];
+            $this->fIswev = [FORK_MESS_INFO, 'Account activated'];
 
             $this->c->Log->info('Account activation: ok', [
                 'user' => $user->fLog(),

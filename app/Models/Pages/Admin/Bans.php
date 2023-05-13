@@ -346,7 +346,7 @@ class Bans extends Admin
             $usedLike
             && ! $this->c->config->insensitive()
         ) {
-            $this->fIswev = ['i', 'The search may be case sensitive'];
+            $this->fIswev = [FORK_MESS_INFO, 'The search may be case sensitive'];
         }
 
         return $this->c->bans->filter($filters, $order);
@@ -367,7 +367,7 @@ class Bans extends Admin
         $number = \count($idsN);
 
         if (0 == $number) {
-            $this->fIswev = ['i', 'No bans found'];
+            $this->fIswev = [FORK_MESS_INFO, 'No bans found'];
 
             return $this->view([], 'GET', $data);
         }

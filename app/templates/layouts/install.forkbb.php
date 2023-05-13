@@ -30,7 +30,7 @@
       </div>
     </section>
 @endif
-@if (! $p->fIswev['e'])
+@if (! $p->fIswev[FORK_MESS_ERR])
     @if ($form = $p->form2)
     <section class="f-install">
       <h2>{!! __(['Install', $p->rev]) !!}</h2>

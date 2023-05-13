@@ -327,7 +327,7 @@ class Validator
     /**
      * Добавляет ошибку
      */
-    public function addError(string|array|null $error, string $type = 'v'): void
+    public function addError(string|array|null $error, string $type = FORK_MESS_VLD): void
     {
         if (empty($vars = \end($this->curData))) {
             throw new RuntimeException('The array of variables is empty');
@@ -776,7 +776,7 @@ class Validator
             ! \is_string($value)
             || ! $this->c->Csrf->verify($value, $attr, $args)
         ) {
-            $this->addError($this->c->Csrf->getError() ?? 'Bad token', 'e');
+            $this->addError($this->c->Csrf->getError() ?? 'Bad token', FORK_MESS_ERR);
 
             $value = null;
         }

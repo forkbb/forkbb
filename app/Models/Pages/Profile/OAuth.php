@@ -60,7 +60,7 @@ class OAuth extends Profile
         $data = $this->c->providerUser->loadUserData($this->curUser);
 
         if (0 === \count($data)) {
-            $this->fIswev = ['i', 'No linked accounts'];
+            $this->fIswev = [FORK_MESS_INFO, 'No linked accounts'];
 
             return [];
         }

@@ -55,7 +55,7 @@ class Email extends Page
         $floodSize = $floodSize < $this->user->g_email_flood ? $this->user->g_email_flood - $floodSize : 0;
 
         if ($floodSize > 0) {
-            $this->fIswev = ['e', ['Flood message', $floodSize]];
+            $this->fIswev = [FORK_MESS_ERR, ['Flood message', $floodSize]];
         }
 
         $data = [

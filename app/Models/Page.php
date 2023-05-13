@@ -283,14 +283,14 @@ abstract class Page extends Model
             1 === $this->c->config->b_maintenance
             && $this->user->isAdmin
         ) {
-            $this->fIswev = ['w', ['Maintenance mode enabled', $this->c->Router->link('AdminMaintenance')]];
+            $this->fIswev = [FORK_MESS_WARN, ['Maintenance mode enabled', $this->c->Router->link('AdminMaintenance')]];
         }
 
         if (
             $this->user->isAdmMod
             && $this->user->last_report_id < $this->c->reports->lastId()
         ) {
-            $this->fIswev = ['i', ['New reports', $this->c->Router->link('AdminReports')]];
+            $this->fIswev = [FORK_MESS_INFO, ['New reports', $this->c->Router->link('AdminReports')]];
         }
     }
 

@@ -44,7 +44,7 @@ class Test
         if (empty($_SERVER['HTTP_USER_AGENT'])) {
             $index += 1;
         } elseif (\preg_match('%\bmsie\b%i', $_SERVER['HTTP_USER_AGENT'])) {
-            $v->addError('Old browser', 'w');
+            $v->addError('Old browser', FORK_MESS_WARN);
 
             return $value;
         }
@@ -88,7 +88,7 @@ class Test
             $index += 3;
         }
         if ($index > 3)  {
-            $v->addError('Bad browser', 'e');
+            $v->addError('Bad browser', FORK_MESS_ERR);
         }
 
         return $value;

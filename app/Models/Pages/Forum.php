@@ -56,7 +56,7 @@ class Forum extends Page
         $this->crumbs     = $this->crumbs($forum);
 
         if (empty($this->topics)) {
-            $this->fIswev = ['i', 'Empty forum'];
+            $this->fIswev = [FORK_MESS_INFO, 'Empty forum'];
         } elseif (
             $this->user->isAdmin
             || $this->user->isModerator($forum)

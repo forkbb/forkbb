@@ -92,7 +92,7 @@ class Userlist extends Page
                 \preg_match('%[\x80-\xFF]%', $v->name)
                 && ! $this->c->config->insensitive()
             ) {
-                $this->fIswev = ['i', 'The search may be case sensitive'];
+                $this->fIswev = [FORK_MESS_INFO, 'The search may be case sensitive'];
             }
         }
 
@@ -146,7 +146,7 @@ class Userlist extends Page
             $this->startNum = 0;
             $this->userList = null;
             $this->links    = [null, null, null, null, null, null];
-            $this->fIswev   = ['i', 'No users found'];
+            $this->fIswev   = [FORK_MESS_INFO, 'No users found'];
         }
 
         $this->fIndex       = self::FI_USERS;

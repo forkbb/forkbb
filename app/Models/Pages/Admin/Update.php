@@ -84,10 +84,10 @@ class Update extends Admin
     protected function returnMaintenance(bool $isStage = true): Page
     {
         $maintenance = $this->c->Maintenance;
-        $maintenance->fIswev = ['w', 'Update script is running'];
+        $maintenance->fIswev = [FORK_MESS_WARN, 'Update script is running'];
 
         if ($isStage) {
-            $maintenance->fIswev = ['e', 'Script runs error'];
+            $maintenance->fIswev = [FORK_MESS_ERR, 'Script runs error'];
         }
 
         return $maintenance;
@@ -248,7 +248,7 @@ class Update extends Admin
                     $uid = $this->setLock();
 
                     if (null === $uid) {
-                        $this->fIswev = ['e', 'Unable to write update lock'];
+                        $this->fIswev = [FORK_MESS_ERR, 'Unable to write update lock'];
                     } else {
                         $this->c->config->o_maintenance_message = $v->o_maintenance_message;
 

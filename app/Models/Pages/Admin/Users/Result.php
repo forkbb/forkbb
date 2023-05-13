@@ -45,7 +45,7 @@ class Result extends Users
 
         if (0 == $number) {
             $view = $this->c->AdminUsers;
-            $view->fIswev = ['i', 'No users found'];
+            $view->fIswev = [FORK_MESS_INFO, 'No users found'];
 
             return $view->view([], 'GET', $data);
         }
@@ -96,7 +96,7 @@ class Result extends Users
                 ) {
                     $action = self::ACTION_CHG;
                 } else {
-                    $this->fIswev = ['v', 'Action not available'];
+                    $this->fIswev = [FORK_MESS_VLD, 'Action not available'];
                 }
 
                 if (empty($this->fIswev)) {
@@ -231,7 +231,7 @@ class Result extends Users
             $usedLike
             && ! $this->c->config->insensitive()
         ) {
-            $this->fIswev = ['i', 'The search may be case sensitive'];
+            $this->fIswev = [FORK_MESS_INFO, 'The search may be case sensitive'];
         }
 
         return $this->c->users->filter($filters, $order);
