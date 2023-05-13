@@ -104,3 +104,6 @@ msgstr "Email"
 
 msgid "Verified label"
 msgstr "Email verified"
+
+msgid "Account removed"
+msgstr "Account removed."

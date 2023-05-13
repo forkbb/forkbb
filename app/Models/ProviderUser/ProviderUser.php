@@ -112,7 +112,7 @@ class ProviderUser extends Model
     }
 
     /**
-     * Удаляет записи удаляемых пользователей
+     * Удаляет OAuth аккаунты удаляемых пользователей
      */
     public function delete(User ...$users): void
     {
@@ -128,6 +128,27 @@ class ProviderUser extends Model
         $query = 'DELETE
             FROM ::providers_users
             WHERE uid IN (?ai:users)';
+
+        $this->c->DB->exec($query, $vars);
+    }
+
+    /**
+     * Удаляет один OAuth аккаунт данного пользователя (без проверки наличия)
+     */
+    public function deleteAccount(User $user, string $name, string $userId): void
+    {
+        if ($user->isGuest) {
+            throw new RuntimeException('User expected, not guest');
+        }
+
+        $vars = [
+            ':uid'    => $user->id,
+            ':name'   => $name,
+            ':userId' => $userId,
+        ];
+        $query = 'DELETE
+            FROM ::providers_users
+            WHERE uid=?i:uid AND pr_name=?s:name AND pu_uid=?s:userId';
 
         $this->c->DB->exec($query, $vars);
     }

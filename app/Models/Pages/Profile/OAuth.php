@@ -10,16 +10,11 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Pages\Profile;
 
-use ForkBB\Core\Image;
-use ForkBB\Core\Validator;
-use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
 use ForkBB\Models\Pages\RegLogTrait;
 use ForkBB\Models\User\User;
 use function \ForkBB\__;
-use function \ForkBB\num;
-use function \ForkBB\size;
 
 class OAuth extends Profile
 {
@@ -100,7 +95,7 @@ class OAuth extends Profile
     }
 
     /**
-     * Подготавливает данные для шаблона списка аккаунтов
+     * Подготавливает данные для шаблона аккаунта
      */
     public function action(array $args, string $method): Page
     {
@@ -135,12 +130,31 @@ class OAuth extends Profile
         $this->c->Lang->load('validator');
 
         if ('POST' === $method) {
+            $v = $this->c->Validator->reset()
+                ->addValidators([
+                ])->addRules([
+                    'token'     => 'token:EditUserOAuthAction',
+                    'confirm'   => 'checkbox',
+                    'delete'    => 'string',
+                ])->addAliases([
+                ])->addArguments([
+                    'token'           => $args,
+                ])->addMessages([
+                ]);
+
+            if (
+                $v->validation($_POST)
+                && '1' === $v->confirm
+            ) {
+                if (! empty($v->delete)) {
+                    $this->c->providerUser->deleteAccount($this->curUser, $name, $userId);
+
+                    return $this->c->Redirect->page('EditUserOAuth', $args)->message('Account removed');
+                }
+            }
+
+            return $this->c->Redirect->page('EditUserOAuthAction', $args)->message('No confirm redirect');
         }
-
-
-
-
-
 
         $this->crumbs          = $this->crumbs(
             [

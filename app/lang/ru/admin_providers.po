@@ -104,3 +104,6 @@ msgstr "Электронный адрес"
 
 msgid "Verified label"
 msgstr "Адрес проверен"
+
+msgid "Account removed"
+msgstr "Аккаунт удален."
