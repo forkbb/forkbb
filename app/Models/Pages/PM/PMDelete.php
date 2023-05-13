@@ -78,7 +78,7 @@ class PMDelete extends AbstractPM
                 ! $v->validation($_POST)
                 || '1' !== $v->confirm
             ) {
-                return $this->c->Redirect->url($post->link)->message('No confirm redirect');
+                return $this->c->Redirect->url($post->link)->message('No confirm redirect', FORK_MESS_WARN);
             }
 
             if ($deleteTopic) {
@@ -90,7 +90,7 @@ class PMDelete extends AbstractPM
 
                 $redirect = $this->c->Redirect
                     ->page('PMAction', ['second' => $second, 'action' => $this->pms->area])
-                    ->message('Dialogue del redirect');
+                    ->message('Dialogue del redirect', FORK_MESS_SUCC);
 
                 $topic->status = Cnst::PT_DELETED;
 
@@ -98,7 +98,7 @@ class PMDelete extends AbstractPM
             } else {
                 $redirect = $this->c->Redirect
                     ->url($post->linkPrevious)
-                    ->message('Message del redirect');
+                    ->message('Message del redirect', FORK_MESS_SUCC);
 
                 $this->pms->delete($post);
             }

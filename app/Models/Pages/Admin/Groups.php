@@ -155,7 +155,7 @@ class Groups extends Admin
         $this->c->config->i_default_user_group = $v->defaultgroup;
         $this->c->config->save();
 
-        return $this->c->Redirect->page('AdminGroups')->message('Default group redirect');
+        return $this->c->Redirect->page('AdminGroups')->message('Default group redirect', FORK_MESS_SUCC);
     }
 
     /**
@@ -364,7 +364,7 @@ class Groups extends Admin
 
         $this->c->forums->reset();
 
-        return $this->c->Redirect->page('AdminGroupsEdit', ['id' => $group->g_id])->message($message);
+        return $this->c->Redirect->page('AdminGroupsEdit', ['id' => $group->g_id])->message($message, FORK_MESS_SUCC);
     }
 
     /**
@@ -801,7 +801,7 @@ class Groups extends Admin
                 ! $v->validation($_POST)
                 || '1' !== $v->confirm
             ) {
-                return $this->c->Redirect->page('AdminGroups')->message('No confirm redirect');
+                return $this->c->Redirect->page('AdminGroups')->message('No confirm redirect', FORK_MESS_WARN);
             }
 
             if ($v->movegroup) {
@@ -810,7 +810,7 @@ class Groups extends Admin
                 $this->c->groups->delete($group);
             }
 
-            return $this->c->Redirect->page('AdminGroups')->message('Group removed redirect');
+            return $this->c->Redirect->page('AdminGroups')->message('Group removed redirect', FORK_MESS_SUCC);
         }
 
 

@@ -115,7 +115,7 @@ class Config extends Profile
 
                 $this->c->users->update($this->curUser);
 
-                return $this->c->Redirect->page('EditUserBoardConfig', $args)->message('Board configuration redirect');
+                return $this->c->Redirect->page('EditUserBoardConfig', $args)->message('Board configuration redirect', FORK_MESS_SUCC);
             }
 
             $this->fIswev = $v->getErrors();

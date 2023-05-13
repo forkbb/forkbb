@@ -42,7 +42,7 @@ class Censoring extends Admin
 
                 $this->c->censorship->save($v->form);
 
-                return $this->c->Redirect->page('AdminCensoring')->message('Data updated redirect');
+                return $this->c->Redirect->page('AdminCensoring')->message('Data updated redirect', FORK_MESS_SUCC);
             }
 
             $this->fIswev  = $v->getErrors();

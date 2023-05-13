@@ -289,7 +289,7 @@ class Moderate extends Page
 
     protected function actionCancel(array $objects, Validator $v): Page
     {
-        return $this->c->Redirect->url($this->backLink)->message('No confirm redirect');
+        return $this->c->Redirect->url($this->backLink)->message('No confirm redirect', FORK_MESS_WARN);
     }
 
     protected function actionOpen(array $topics, Validator $v): Page
@@ -310,7 +310,7 @@ class Moderate extends Page
                 if (1 === $v->confirm) {
                     $this->c->topics->access(true, ...$topics);
 
-                    return $this->c->Redirect->url($this->backLink)->message(['Open topic redirect', $this->numObj]);
+                    return $this->c->Redirect->url($this->backLink)->message(['Open topic redirect', $this->numObj], FORK_MESS_SUCC);
                 } else {
                     return $this->actionCancel($topics, $v);
                 }
@@ -337,7 +337,7 @@ class Moderate extends Page
                 if (1 === $v->confirm) {
                     $this->c->topics->access(false, ...$topics);
 
-                    return $this->c->Redirect->url($this->backLink)->message(['Close topic redirect', $this->numObj]);
+                    return $this->c->Redirect->url($this->backLink)->message(['Close topic redirect', $this->numObj], FORK_MESS_SUCC);
                 } else {
                     return $this->actionCancel($topics, $v);
                 }
@@ -397,7 +397,7 @@ class Moderate extends Page
                         $message = 'Delete topic redirect';
                     }
 
-                    return $this->c->Redirect->url($this->curForum->link)->message([$message, $this->numObj]);
+                    return $this->c->Redirect->url($this->curForum->link)->message([$message, $this->numObj], FORK_MESS_SUCC);
                 } else {
                     return $this->actionCancel($objects, $v);
                 }
@@ -426,7 +426,7 @@ class Moderate extends Page
                     $forum = $this->c->forums->get($v->destination);
                     $this->c->topics->move(1 === $v->redirect, $forum, ...$topics);
 
-                    return $this->c->Redirect->url($this->curForum->link)->message(['Move topic redirect', $this->numObj]);
+                    return $this->c->Redirect->url($this->curForum->link)->message(['Move topic redirect', $this->numObj], FORK_MESS_SUCC);
                 } else {
                     return $this->actionCancel($topics, $v);
                 }
@@ -472,7 +472,7 @@ class Moderate extends Page
                 if (1 === $v->confirm) {
                     $this->c->topics->merge(1 === $v->redirect, ...$topics);
 
-                    return $this->c->Redirect->url($this->curForum->link)->message('Merge topics redirect');
+                    return $this->c->Redirect->url($this->curForum->link)->message('Merge topics redirect', FORK_MESS_SUCC);
                 } else {
                     return $this->actionCancel($topics, $v);
                 }
@@ -502,7 +502,7 @@ class Moderate extends Page
                         $this->c->topics->update($topic);
                     }
 
-                    return $this->c->Redirect->url($this->backLink)->message(['Unstick topic redirect', $this->numObj]);
+                    return $this->c->Redirect->url($this->backLink)->message(['Unstick topic redirect', $this->numObj], FORK_MESS_SUCC);
                 } else {
                     return $this->actionCancel($topics, $v);
                 }
@@ -532,7 +532,7 @@ class Moderate extends Page
                         $this->c->topics->update($topic);
                     }
 
-                    return $this->c->Redirect->url($this->backLink)->message(['Stick topic redirect', $this->numObj]);
+                    return $this->c->Redirect->url($this->backLink)->message(['Stick topic redirect', $this->numObj], FORK_MESS_SUCC);
                 } else {
                     return $this->actionCancel($topics, $v);
                 }
@@ -561,7 +561,7 @@ class Moderate extends Page
 
                     $this->c->posts->move(false, $newTopic, ...$posts);
 
-                    return $this->c->Redirect->url($this->curForum->link)->message('Split posts redirect');
+                    return $this->c->Redirect->url($this->curForum->link)->message('Split posts redirect', FORK_MESS_SUCC);
                 } else {
                     return $this->actionCancel($posts, $v);
                 }

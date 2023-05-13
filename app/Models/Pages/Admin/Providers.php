@@ -52,7 +52,7 @@ class Providers extends Admin
             if ($v->validation($_POST)) {
                 $this->c->providers->update($v->form);
 
-                return $this->c->Redirect->page('AdminProviders')->message('Providers updated redirect');
+                return $this->c->Redirect->page('AdminProviders')->message('Providers updated redirect', FORK_MESS_SUCC);
             }
 
             $this->fIswev  = $v->getErrors();
@@ -159,11 +159,13 @@ class Providers extends Admin
                     ]);
 
                     $message = 'Provider updated redirect';
+                    $status  = FORK_MESS_SUCC;
                 } else {
                     $message = 'No confirm redirect';
+                    $status  = FORK_MESS_WARN;
                 }
 
-                return $this->c->Redirect->page('AdminProvider', $args)->message($message);
+                return $this->c->Redirect->page('AdminProvider', $args)->message($message, $status);
             }
 
             $this->fIswev  = $v->getErrors();

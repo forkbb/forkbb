@@ -694,7 +694,7 @@ class Bans extends Admin
                     $redirect->page('AdminBans');
                 }
 
-                return $redirect->message($isNew ? 'Ban added redirect' : 'Ban edited redirect');
+                return $redirect->message($isNew ? 'Ban added redirect' : 'Ban edited redirect', FORK_MESS_SUCC);
             }
 
             $data         = $v->getData();
@@ -882,6 +882,6 @@ class Bans extends Admin
             $redirect->url($user->link);
         }
 
-        return $redirect->message('Ban removed redirect');
+        return $redirect->message('Ban removed redirect', FORK_MESS_SUCC);
     }
 }

@@ -98,7 +98,7 @@ class Email extends Page
                             'recipient' => $this->curUser->fLog(),
                         ]);
 
-                        return $this->c->Redirect->url($v->redirect)->message('Email sent redirect');
+                        return $this->c->Redirect->url($v->redirect)->message('Email sent redirect', FORK_MESS_SUCC);
                     }
                 } catch (MailException $e) {
                     $this->c->Log->error('Email send: MailException', [
@@ -108,7 +108,7 @@ class Email extends Page
                     ]);
                 }
 
-                return $this->c->Message->message('When sending email there was an error');
+                return $this->c->Message->message('When sending email there was an error', FORK_MESS_ERR);
             }
 
             $this->fIswev = $v->getErrors();

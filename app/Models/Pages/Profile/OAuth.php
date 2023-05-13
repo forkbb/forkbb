@@ -149,11 +149,11 @@ class OAuth extends Profile
                 if (! empty($v->delete)) {
                     $this->c->providerUser->deleteAccount($this->curUser, $name, $userId);
 
-                    return $this->c->Redirect->page('EditUserOAuth', $args)->message('Account removed');
+                    return $this->c->Redirect->page('EditUserOAuth', $args)->message('Account removed', FORK_MESS_SUCC);
                 }
             }
 
-            return $this->c->Redirect->page('EditUserOAuthAction', $args)->message('No confirm redirect');
+            return $this->c->Redirect->page('EditUserOAuthAction', $args)->message('No confirm redirect', FORK_MESS_WARN);
         }
 
         $this->crumbs          = $this->crumbs(

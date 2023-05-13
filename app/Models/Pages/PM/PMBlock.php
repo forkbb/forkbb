@@ -104,7 +104,7 @@ class PMBlock extends AbstractPM
                 ! $v->validation($_POST)
                 || '1' !== $v->confirm
             ) {
-                return $this->c->Redirect->url($this->linkBack)->message('No confirm redirect');
+                return $this->c->Redirect->url($this->linkBack)->message('No confirm redirect', FORK_MESS_WARN);
             } elseif (
                 (
                     ! $v->{self::BLOCK}
@@ -132,7 +132,7 @@ class PMBlock extends AbstractPM
                 $message = 'User is unblocked redirect';
             }
 
-            return $this->c->Redirect->url($this->linkBack)->message($message);
+            return $this->c->Redirect->url($this->linkBack)->message($message, FORK_MESS_SUCC);
         }
 
         $this->nameTpl    = 'pm/form';

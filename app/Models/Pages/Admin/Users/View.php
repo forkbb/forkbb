@@ -437,7 +437,7 @@ class View extends Users
 
         $this->c->users->updateCountPosts();
 
-        return $this->c->Redirect->page('AdminUsers')->message('Updated the number of users posts redirect');
+        return $this->c->Redirect->page('AdminUsers')->message('Updated the number of users posts redirect', FORK_MESS_SUCC);
     }
 
     /**

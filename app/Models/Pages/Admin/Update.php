@@ -370,7 +370,7 @@ class Update extends Admin
                     return $this->c->Redirect->page(
                         'AdminUpdateStage',
                         ['uid' => $uid, 'stage' => $stage, 'start' => $start]
-                    )->message(['Stage %1$s (%2$s)', $stage, (int) $start]);
+                    )->message(['Stage %1$s (%2$s)', $stage, (int) $start], FORK_MESS_SUCC);
                 }
 
                 ++$stage;
@@ -384,7 +384,7 @@ class Update extends Admin
                 throw new RuntimeException('Unable to clear cache');
             }
 
-            return $this->c->Redirect->page('Index')->message('Successfully updated');
+            return $this->c->Redirect->page('Index')->message('Successfully updated', FORK_MESS_SUCC);
         } catch (ForkException $excp) {
             return $this->c->Message->message($excp->getMessage(), true, 503);
         }

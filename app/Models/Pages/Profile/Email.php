@@ -42,7 +42,7 @@ class Email extends Profile
 
         return $this->c->Redirect
             ->url($this->user->link)
-            ->message($change ? 'Email changed redirect' : 'Email confirmed redirect');
+            ->message($change ? 'Email changed redirect' : 'Email confirmed redirect', FORK_MESS_SUCC);
     }
 
     /**
@@ -88,7 +88,7 @@ class Email extends Profile
                 ) {
                     return $this->c->Redirect
                         ->page('EditUserProfile', $args)
-                        ->message('Email is old redirect');
+                        ->message('Email is old redirect', FORK_MESS_WARN);
                 }
 
                 $v = $v->reset()
@@ -127,7 +127,7 @@ class Email extends Profile
 
                         return $this->c->Redirect
                             ->page('EditUserProfile', $args)
-                            ->message('Email changed redirect');
+                            ->message('Email changed redirect', FORK_MESS_SUCC);
                     } else {
                         $this->c->Csrf->setHashExpiration(259200); // ???? хэш действует 72 часа
 

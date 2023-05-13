@@ -110,7 +110,7 @@ class Smilies extends Parser
 
                 $this->c->smilies->reset();
 
-                return $this->c->Redirect->page('AdminSmilies')->message('Smilies updated redirect');
+                return $this->c->Redirect->page('AdminSmilies')->message('Smilies updated redirect', FORK_MESS_SUCC);
             }
 
             $this->fIswev = $v->getErrors();
@@ -363,6 +363,8 @@ class Smilies extends Parser
             return $this->c->Message->message($this->c->Csrf->getError());
         }
 
+        $status = FORK_MESS_SUCC;
+
         if (
             \is_numeric($args['name'])
             && \is_int(0 + $args['name'])
@@ -381,12 +383,13 @@ class Smilies extends Parser
                 $message = ['File %s deleted redirect', $args['name']];
             } else {
                 $message = ['File %s not deleted redirect', $args['name']];
+                $status  = FORK_MESS_ERR;
             }
         } else {
             return $this->c->Message->message('Bad request');
         }
 
-        return $this->c->Redirect->page('AdminSmilies')->message($message);
+        return $this->c->Redirect->page('AdminSmilies')->message($message, $status);
     }
 
     /**
@@ -415,7 +418,7 @@ class Smilies extends Parser
                     ->rewrite(false)
                     ->toFile($this->c->DIR_PUBLIC . '/img/sm/*.(jpg|png|gif)')
             ) {
-                return $this->c->Redirect->page('AdminSmilies')->message('Image uploaded redirect');
+                return $this->c->Redirect->page('AdminSmilies')->message('Image uploaded redirect', FORK_MESS_SUCC);
             } else {
                 return $this->c->Message->message($v->upload_image->error());
             }

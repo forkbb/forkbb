@@ -339,6 +339,6 @@ class Post extends Page
             }
         }
 
-        return $this->c->Redirect->url($merge ? $lastPost->link : $post->link)->message('Post redirect');
+        return $this->c->Redirect->url($merge ? $lastPost->link : $post->link)->message('Post redirect', FORK_MESS_SUCC);
     }
 }

@@ -62,7 +62,7 @@ class Mod extends Profile
 
                 $this->c->forums->reset();
 
-                return $this->c->Redirect->page('EditUserModeration', $args)->message('Update rights redirect');
+                return $this->c->Redirect->page('EditUserModeration', $args)->message('Update rights redirect', FORK_MESS_SUCC);
             }
 
             $this->fIswev = $v->getErrors();

@@ -32,6 +32,6 @@ class Promote extends Users
             $this->c->users->update($user);
         }
 
-        return $this->c->Redirect->page('ViewPost', ['id' => $args['pid']])->message('User promote redirect');
+        return $this->c->Redirect->page('ViewPost', ['id' => $args['pid']])->message('User promote redirect', FORK_MESS_SUCC);
     }
 }

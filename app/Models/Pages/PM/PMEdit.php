@@ -170,6 +170,6 @@ class PMEdit extends AbstractPM
             $this->c->users->update($this->user);
         }
 
-        return $this->c->Redirect->url($post->link)->message('Edit redirect');
+        return $this->c->Redirect->url($post->link)->message('Edit redirect', FORK_MESS_SUCC);
     }
 }

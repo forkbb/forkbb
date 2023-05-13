@@ -52,18 +52,18 @@ class Delete extends Page
                 ! $v->validation($_POST)
                 || '1' !== $v->confirm
             ) {
-                return $this->c->Redirect->page('ViewPost', $args)->message('No confirm redirect');
+                return $this->c->Redirect->page('ViewPost', $args)->message('No confirm redirect', FORK_MESS_WARN);
             }
 
             if ($deleteTopic) {
                 $redirect = $this->c->Redirect
                     ->page('Forum', ['id' => $topic->forum_id, 'name' => $topic->parent->forum_name])
-                    ->message('Topic del redirect');
+                    ->message('Topic del redirect', FORK_MESS_SUCC);
                 $this->c->topics->delete($topic);
             } else {
                 $redirect = $this->c->Redirect
                     ->page('ViewPost', ['id' => $this->c->posts->previousPost($post)])
-                    ->message('Post del redirect');
+                    ->message('Post del redirect', FORK_MESS_SUCC);
                 $this->c->posts->delete($post);
             }
 

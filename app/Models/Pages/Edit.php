@@ -232,7 +232,7 @@ class Edit extends Page
 
         $this->c->search->index($post, 'edit');
 
-        return $this->c->Redirect->url($post->link)->message('Edit redirect');
+        return $this->c->Redirect->url($post->link)->message('Edit redirect', FORK_MESS_SUCC);
     }
 
     /**

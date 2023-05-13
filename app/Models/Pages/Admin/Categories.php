@@ -51,7 +51,7 @@ class Categories extends Admin
 
                 $this->c->forums->reset();
 
-                return $this->c->Redirect->page('AdminCategories')->message('Categories updated redirect');
+                return $this->c->Redirect->page('AdminCategories')->message('Categories updated redirect', FORK_MESS_SUCC);
             }
 
             $this->fIswev  = $v->getErrors();
@@ -168,14 +168,14 @@ class Categories extends Admin
                 ! $v->validation($_POST)
                 || '1' !== $v->confirm
             ) {
-                return $this->c->Redirect->page('AdminCategories')->message('No confirm redirect');
+                return $this->c->Redirect->page('AdminCategories')->message('No confirm redirect', FORK_MESS_WARN);
             }
 
             $this->c->categories->delete($args['id']);
 
             $this->c->forums->reset();
 
-            return $this->c->Redirect->page('AdminCategories')->message('Category deleted redirect');
+            return $this->c->Redirect->page('AdminCategories')->message('Category deleted redirect', FORK_MESS_SUCC);
         }
 
         $this->nameTpl   = 'admin/form';

@@ -110,7 +110,7 @@ class PMTopic extends AbstractPM
                 ! $v->validation($_POST)
                 || '1' !== $v->confirm
             ) {
-                return $this->c->Redirect->url($this->model->link)->message('No confirm redirect');
+                return $this->c->Redirect->url($this->model->link)->message('No confirm redirect', FORK_MESS_WARN);
             }
 
             $this->model->poster_status = Cnst::PT_NORMAL; //????
@@ -120,7 +120,7 @@ class PMTopic extends AbstractPM
             $this->pms->recalculate($this->targetUser);
             $this->pms->recalculate($this->user);
 
-            return $this->c->Redirect->url($this->model->link)->message('Send dialogue redirect');
+            return $this->c->Redirect->url($this->model->link)->message('Send dialogue redirect', FORK_MESS_SUCC);
         }
 
         $this->pms->area  = $this->pms->inArea($this->model);

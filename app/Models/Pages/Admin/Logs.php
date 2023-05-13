@@ -127,7 +127,7 @@ class Logs extends Admin
                     $v->validation($_POST)
                     && \unlink($path)
                 ) {
-                    return $this->c->Redirect->page('AdminLogs')->message('Log deleted redirect');
+                    return $this->c->Redirect->page('AdminLogs')->message('Log deleted redirect', FORK_MESS_SUCC);
                 }
             } catch (Throwable $e) {
                 $this->c->Log->error('Delete log: failed', [
@@ -136,7 +136,7 @@ class Logs extends Admin
                 ]);
             }
 
-            return $this->c->Redirect->page('AdminLogs')->message('Failed to delete log redirect');
+            return $this->c->Redirect->page('AdminLogs')->message('Failed to delete log redirect', FORK_MESS_ERR);
         }
 
         $this->nameTpl   = 'admin/form';

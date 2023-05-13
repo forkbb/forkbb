@@ -102,7 +102,7 @@ class BBCode extends Parser
 
                 $this->c->config->save();
 
-                return $this->c->Redirect->url($this->AdminBBCodeUrl)->message('Parser settings updated redirect');
+                return $this->c->Redirect->url($this->AdminBBCodeUrl)->message('Parser settings updated redirect', FORK_MESS_SUCC);
             }
 
             $this->fIswev  = $v->getErrors();
@@ -254,12 +254,12 @@ class BBCode extends Parser
                 ! $v->validation($_POST)
                 || '1' !== $v->confirm
             ) {
-                return $this->c->Redirect->url($this->AdminBBCodeUrl)->message('No confirm redirect');
+                return $this->c->Redirect->url($this->AdminBBCodeUrl)->message('No confirm redirect', FORK_MESS_WARN);
             }
 
             $this->c->bbcode->delete($args['id']);
 
-            return $this->c->Redirect->url($this->AdminBBCodeUrl)->message('BBCode deleted redirect');
+            return $this->c->Redirect->url($this->AdminBBCodeUrl)->message('BBCode deleted redirect', FORK_MESS_SUCC);
         }
 
         $formAction      = $this->c->Router->link('AdminBBCodeDelete', $args);
@@ -426,7 +426,7 @@ class BBCode extends Parser
                         $message = 'BBCode added redirect';
                     }
 
-                    return $this->c->Redirect->page('AdminBBCodeEdit', ['id' => $id])->message($message);
+                    return $this->c->Redirect->page('AdminBBCodeEdit', ['id' => $id])->message($message, FORK_MESS_SUCC);
                 }
 
                 $this->fIswev = $v->getErrors();
@@ -747,6 +747,6 @@ class BBCode extends Parser
 
         $this->c->bbcode->update($id, $structure);
 
-        return $this->c->Redirect->page('AdminBBCodeEdit', ['id' => $id])->message('BBCode updated redirect');
+        return $this->c->Redirect->page('AdminBBCodeEdit', ['id' => $id])->message('BBCode updated redirect', FORK_MESS_SUCC);
     }
 }

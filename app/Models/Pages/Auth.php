@@ -37,7 +37,7 @@ class Auth extends Page
                 'user' => $this->user->fLog(),
             ]);
 
-            return $this->c->Redirect->page('Index')->message($this->c->Csrf->getError());
+            return $this->c->Redirect->page('Index')->message($this->c->Csrf->getError(), FORK_MESS_ERR);
         }
 
         $this->c->Cookie->deleteUser();
@@ -50,7 +50,7 @@ class Auth extends Page
 
         $this->c->Lang->load('auth');
 
-        return $this->c->Redirect->page('Index')->message('Logout redirect');
+        return $this->c->Redirect->page('Index')->message('Logout redirect', FORK_MESS_SUCC);
     }
 
     /**
@@ -102,7 +102,7 @@ class Auth extends Page
             if ($v->validation($_POST, true)) {
                 $this->loginEnd($v);
 
-                return $this->c->Redirect->url($v->redirect)->message('Login redirect');
+                return $this->c->Redirect->url($v->redirect)->message('Login redirect', FORK_MESS_SUCC);
             }
 
             $this->fIswev = $v->getErrors();

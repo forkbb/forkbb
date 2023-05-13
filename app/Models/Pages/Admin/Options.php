@@ -135,7 +135,7 @@ class Options extends Admin
             if ($valid) {
                 $config->save();
 
-                return $this->c->Redirect->page('AdminOptions')->message('Options updated redirect');
+                return $this->c->Redirect->page('AdminOptions')->message('Options updated redirect', FORK_MESS_SUCC);
             }
 
             $this->fIswev  = $v->getErrors();

@@ -52,7 +52,7 @@ class Edit extends Parser
             if ($valid) {
                 $config->save();
 
-                return $this->c->Redirect->page('AdminParser')->message('Parser settings updated redirect');
+                return $this->c->Redirect->page('AdminParser')->message('Parser settings updated redirect', FORK_MESS_SUCC);
             }
 
             $this->fIswev  = $v->getErrors();

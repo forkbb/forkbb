@@ -164,6 +164,6 @@ class Reports extends Admin
             $this->c->reports->clear();
         }
 
-        return $this->c->Redirect->page('AdminReports')->message('Report zapped redirect');
+        return $this->c->Redirect->page('AdminReports')->message('Report zapped redirect', FORK_MESS_SUCC);
     }
 }

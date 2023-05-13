@@ -29,7 +29,7 @@ class Misc extends Page
         }
 
         if (! $this->c->Csrf->verify($args['token'], 'MarkRead', $args)) {
-            return $this->c->Redirect->url($forum->link)->message($this->c->Csrf->getError());
+            return $this->c->Redirect->url($forum->link)->message($this->c->Csrf->getError(), FORK_MESS_ERR);
         }
 
         $this->c->forums->markread($forum, $this->user);
@@ -38,7 +38,7 @@ class Misc extends Page
 
         $message = $forum->id ? 'Mark forum read redirect' : 'Mark read redirect';
 
-        return $this->c->Redirect->url($forum->link)->message($message);
+        return $this->c->Redirect->url($forum->link)->message($message, FORK_MESS_SUCC);
     }
 
     /**
@@ -72,7 +72,7 @@ class Misc extends Page
             $message = 'Unsubscribe redirect';
         }
 
-        return $this->c->Redirect->url($forum->link)->message($message);
+        return $this->c->Redirect->url($forum->link)->message($message, FORK_MESS_SUCC);
     }
 
     /**
@@ -106,7 +106,7 @@ class Misc extends Page
             $message = 'Unsubscribe redirect';
         }
 
-        return $this->c->Redirect->url($topic->link)->message($message);
+        return $this->c->Redirect->url($topic->link)->message($message, FORK_MESS_SUCC);
     }
 
     protected function confirmMessage(): Page

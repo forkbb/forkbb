@@ -65,7 +65,7 @@ class NewUser extends Users
                     $this->c->users->insert($user);
 
                     return $this->c->Redirect->page('User', ['id' => $user->id, 'name' => $user->username])
-                        ->message('New user added redirect');
+                        ->message('New user added redirect', FORK_MESS_SUCC);
                 }
 
                 $this->fIswev = $v->getErrors();

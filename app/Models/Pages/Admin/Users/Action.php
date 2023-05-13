@@ -134,7 +134,7 @@ class Action extends Users
                 ! $v->validation($_POST)
                 || 1 !== $v->confirm
             ) {
-                return $this->c->Redirect->page('AdminUsers')->message('No confirm redirect');
+                return $this->c->Redirect->page('AdminUsers')->message('No confirm redirect', FORK_MESS_WARN);
             }
 
             if (1 === $v->delete_posts) {
@@ -147,7 +147,7 @@ class Action extends Users
 
             $this->c->forums->reset();
 
-            return $this->c->Redirect->page('AdminUsers')->message('Users delete redirect');
+            return $this->c->Redirect->page('AdminUsers')->message('Users delete redirect', FORK_MESS_SUCC);
         }
 
         $this->nameTpl   = 'admin/form';
@@ -281,7 +281,7 @@ class Action extends Users
 
             if ($v->validation($_POST)) {
                 if (1 !== $v->confirm) {
-                    return $redirect->url($link)->message('No confirm redirect');
+                    return $redirect->url($link)->message('No confirm redirect', FORK_MESS_WARN);
                 }
 
                 $this->c->users->changeGroup($v->new_group, ...$this->userList);
@@ -298,7 +298,7 @@ class Action extends Users
                     $redirect->page('AdminUsers');
                 }
 
-                return $redirect->message('Users move redirect');
+                return $redirect->message('Users move redirect', FORK_MESS_SUCC);
 
             }
 

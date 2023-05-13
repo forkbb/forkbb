@@ -52,7 +52,7 @@ class PMConfig extends AbstractPM
 
                 $this->c->users->update($this->user);
 
-                return $this->c->Redirect->page('PMAction', $args)->message('PM Config redirect');
+                return $this->c->Redirect->page('PMAction', $args)->message('PM Config redirect', FORK_MESS_SUCC);
             }
 
             $this->fIswev = $v->getErrors();

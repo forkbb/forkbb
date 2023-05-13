@@ -71,7 +71,7 @@ class PMView extends AbstractPM
 
                     return $this;
                 } elseif (1 !== $v->confirm) {
-                    return $this->c->Redirect->page('PMAction', $this->args)->message('No confirm redirect');
+                    return $this->c->Redirect->page('PMAction', $this->args)->message('No confirm redirect', FORK_MESS_WARN);
                 } else {
                     $topics = $this->pms->loadByIds(Cnst::PTOPIC, $v->ids);
 
@@ -94,7 +94,7 @@ class PMView extends AbstractPM
 
                     unset($args['more1']);
 
-                    return $this->c->Redirect->page('PMAction', $args)->message($message);
+                    return $this->c->Redirect->page('PMAction', $args)->message($message, FORK_MESS_SUCC);
                 }
             }
 

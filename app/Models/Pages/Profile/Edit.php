@@ -146,7 +146,7 @@ class Edit extends Profile
 
                 $this->c->users->update($this->curUser);
 
-                return $this->c->Redirect->page('EditUserProfile', $args)->message('Profile redirect');
+                return $this->c->Redirect->page('EditUserProfile', $args)->message('Profile redirect', FORK_MESS_SUCC);
             } else {
                 $this->fIswev = $v->getErrors();
 

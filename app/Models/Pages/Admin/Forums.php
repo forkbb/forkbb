@@ -117,7 +117,7 @@ class Forums extends Admin
 
                 $this->c->forums->reset();
 
-                return $this->c->Redirect->page('AdminForums')->message('Forums updated redirect');
+                return $this->c->Redirect->page('AdminForums')->message('Forums updated redirect', FORK_MESS_SUCC);
             }
 
             $this->fIswev  = $v->getErrors();
@@ -255,13 +255,13 @@ class Forums extends Admin
                 ! $v->validation($_POST)
                 || '1' !== $v->confirm
             ) {
-                return $this->c->Redirect->page('AdminForums')->message('No confirm redirect');
+                return $this->c->Redirect->page('AdminForums')->message('No confirm redirect', FORK_MESS_WARN);
             }
 
             $this->c->forums->delete($forum);
             $this->c->forums->reset();
 
-            return $this->c->Redirect->page('AdminForums')->message('Forum deleted redirect');
+            return $this->c->Redirect->page('AdminForums')->message('Forum deleted redirect', FORK_MESS_SUCC);
         }
 
         $this->nameTpl   = 'admin/form';
@@ -414,7 +414,7 @@ class Forums extends Admin
 
                 $this->c->forums->reset();
 
-                return $this->c->Redirect->page('AdminForumsEdit', ['id' => $forum->id])->message($message);
+                return $this->c->Redirect->page('AdminForumsEdit', ['id' => $forum->id])->message($message, FORK_MESS_SUCC);
             }
 
             $this->fIswev = $v->getErrors();

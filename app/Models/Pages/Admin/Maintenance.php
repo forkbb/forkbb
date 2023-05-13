@@ -46,7 +46,7 @@ class Maintenance extends Admin
                 $this->c->config->o_maintenance_message = $v->o_maintenance_message;
                 $this->c->config->save();
 
-                return $this->c->Redirect->page('AdminMaintenance')->message('Data updated redirect');
+                return $this->c->Redirect->page('AdminMaintenance')->message('Data updated redirect', FORK_MESS_SUCC);
             }
 
             $this->fIswev = $v->getErrors();
@@ -236,9 +236,9 @@ class Maintenance extends Admin
                 'clear' => $v->clear ? '1' : '0',
             ];
 
-            return $this->c->Redirect->page('AdminRebuildIndex', $args)->message(['Processed posts', $v->start, $last]);
+            return $this->c->Redirect->page('AdminRebuildIndex', $args)->message(['Processed posts', $v->start, $last], FORK_MESS_SUCC);
         } else {
-            return $this->c->Redirect->page('AdminMaintenance')->message('Rebuilding index end');
+            return $this->c->Redirect->page('AdminMaintenance')->message('Rebuilding index end', FORK_MESS_SUCC);
         }
     }
 }

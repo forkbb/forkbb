@@ -296,6 +296,6 @@ class PMPost extends AbstractPM
         }
         // отправка уведомления
 
-        return $this->c->Redirect->url($post->link)->message($message);
+        return $this->c->Redirect->url($post->link)->message($message, FORK_MESS_SUCC);
     }
 }
