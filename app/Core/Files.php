@@ -46,6 +46,11 @@ class Files
     protected ?DefaultDriver $imageDriver = null;
 
     /**
+     * Временные файлы
+     */
+    protected array $tmpFiles = [];
+
+    /**
      * Список mime типов считающихся картинками
      */
     protected array $imageType = [
@@ -898,6 +903,14 @@ class Files
     }
 
     /**
+     * Проверяет путь
+     */
+    public function isBadPath(string $path): bool
+    {
+        return false !== \strpos($path, '//') || \preg_match('%\bphar\b%i', $path);
+    }
+
+    /**
      * Переводит объем информации из одних единиц в другие
      * кило = 1024, а не 1000
      */
@@ -1042,7 +1055,7 @@ class Files
     /**
      * Получает один файл из формы
      */
-    protected function uploadFile(array $file): ?File
+    protected function uploadFile(array $file, bool $isUploaded = true): ?File
     {
         if (\UPLOAD_ERR_OK !== $file['error']) {
             switch ($file['error']) {
@@ -1081,7 +1094,10 @@ class Files
             return null;
         }
 
-        if (! \is_uploaded_file($file['tmp_name'])) {
+        if (
+            $isUploaded
+            && ! \is_uploaded_file($file['tmp_name'])
+        ) {
             $this->error = 'The specified file was not uploaded';
 
             return null;
@@ -1147,8 +1163,108 @@ class Files
         return $result;
     }
 
-    public function isBadPath(string $path): bool
+    /**
+     * Получает файл по внешней ссылке
+     */
+    public function uploadFromLink(string $url): ?File
     {
-        return false !== \strpos($path, '//') || \preg_match('%\bphar\b%i', $path);
+        $cmpn = \parse_url($url);
+
+        if (
+            ! isset($cmpn['scheme'], $cmpn['host'], $cmpn['path'])
+            || ! \in_array($cmpn['scheme'], ['https', 'http'], true)
+        ) {
+            $this->error = 'Bad url';
+
+            return null;
+        }
+
+        $tmpName = $this->c->DIR_CACHE . '/' .  $this->c->Secury->randomPass(32) . '.tmp';
+
+        $this->addTmpFile($tmpName);
+
+        $tmpFile = \fopen($tmpName, 'wb');
+
+        if (! $tmpFile) {
+            $this->error = 'Unable to create temporary file for writing';
+
+            return null;
+        }
+
+        if (\extension_loaded('curl')) {
+            $result = $this->curlAction($url, $tmpFile);
+        }
+
+        \fclose($tmpFile);
+
+        if (true === $result) {
+            return $this->uploadFile(
+                [
+                    'tmp_name' => $tmpName,
+                    'name'     => \basename($cmpn['path']) ?: '',
+                    'type'     => '',
+                    'error'    => \UPLOAD_ERR_OK,
+                    'size'     => \filesize($tmpName),
+                ],
+                false
+            );
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Загружает файл с помощью cURL
+     */
+    protected function curlAction(string $url, $tmpFile): bool
+    {
+        $ch = \curl_init($url);
+
+        if (! $ch) {
+            $this->error = "Failed cURL init for {$url}";
+
+            return false;
+        }
+
+        \curl_setopt($ch, \CURLOPT_MAXREDIRS, 10);
+        \curl_setopt($ch, \CURLOPT_TIMEOUT, 15);
+        \curl_setopt($ch, \CURLOPT_FILE, $tmpFile);
+        \curl_setopt($ch, \CURLOPT_HTTPGET, true);
+        \curl_setopt($ch, \CURLOPT_HEADER, false);
+
+        $result = \curl_exec($ch);
+
+        \curl_close($ch);
+
+        if (false === $result) {
+            $this->error = 'cURL error: ' . \curl_error($ch);
+
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Добавляет путь в список временных файлов для последующего удаления
+     */
+    protected function addTmpFile(string $path): void
+    {
+        $this->tmpFiles[] = $path;
+    }
+
+    /**
+     * Удаляет временные файлы
+     */
+    public function __destruct()
+    {
+        foreach ($this->tmpFiles as $path) {
+            if (
+               ! $this->isBadPath($path)
+               && \is_file($path)
+            ) {
+                \unlink($path);
+            }
+        }
     }
 }

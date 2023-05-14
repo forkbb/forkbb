@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Pages;
 
+use ForkBB\Core\Image;
 use ForkBB\Models\Page;
 use ForkBB\Models\Provider\Driver;
 use ForkBB\Models\User\User;
@@ -119,6 +120,24 @@ class RegLog extends Page
                 $user->signature       = '';
                 $user->location        = $provider->userLocation;
                 $user->url             = $provider->userURL;
+
+                if ($provider->userAvatar) {
+                    $image = $this->c->Files->uploadFromLink($provider->userAvatar);
+
+                    if ($image instanceof Image) {
+                        $name   = $this->c->Secury->randomPass(8);
+                        $path   = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$name}.(webp|jpg|png|gif)";
+                        $result = $image
+                            ->rename(true)
+                            ->rewrite(false)
+                            ->resize($this->c->config->i_avatars_width, $this->c->config->i_avatars_height)
+                            ->toFile($path, $this->c->config->i_avatars_size);
+
+                        if (true === $result) {
+                            $user->avatar = $image->name() . '.' . $image->ext();
+                        }
+                    }
+                }
 
                 $this->c->users->insert($user);
 
