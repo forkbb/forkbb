@@ -43,8 +43,11 @@ class GitHub extends Driver
             return false;
         }
 
+        \curl_setopt($ch, \CURLOPT_MAXREDIRS, 10);
+        \curl_setopt($ch, \CURLOPT_TIMEOUT, 10);
         \curl_setopt($ch, \CURLOPT_HTTPHEADER, $headers);
-        \curl_setopt($ch, \CURLOPT_POST, false);
+        \curl_setopt($ch, \CURLOPT_HTTPGET, true);
+//        \curl_setopt($ch, \CURLOPT_POST, false);
         \curl_setopt($ch, \CURLOPT_RETURNTRANSFER, true);
         \curl_setopt($ch, \CURLOPT_HEADER, false);
 
