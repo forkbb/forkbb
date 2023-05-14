@@ -119,7 +119,7 @@ class FileCache implements CacheInterface
     {
         $dir      = new RecursiveDirectoryIterator($this->cacheDir, RecursiveDirectoryIterator::SKIP_DOTS);
         $iterator = new RecursiveIteratorIterator($dir);
-        $files    = new RegexIterator($iterator, '%\.php$%i', RegexIterator::MATCH);
+        $files    = new RegexIterator($iterator, '%\.(?:php|tmp)$%i', RegexIterator::MATCH);
         $result   = true;
 
         foreach ($files as $file) {

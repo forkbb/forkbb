@@ -5,6 +5,7 @@
 /app/config/db/*
 /app/cache/**/*.php
 /app/cache/**/*.lock
+/app/cache/**/*.tmp
 /app/log/*
 /public/img/avatars/*
 /public/.htaccess
