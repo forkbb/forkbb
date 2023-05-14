@@ -37,6 +37,11 @@ define('FORK_MESS_WARN', 'w');
 define('FORK_MESS_ERR',  'e');
 define('FORK_MESS_VLD',  'v');
 
+define('FORK_GEN_NOT', 0);
+define('FORK_GEN_MAN', 1);
+define('FORK_GEN_FEM', 2);
+
+
 require __DIR__ . '/../vendor/autoload.php';
 
 $errorHandler = new ErrorHandler();
