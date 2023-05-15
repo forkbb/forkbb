@@ -242,7 +242,7 @@ class ErrorHandler
 
 EOT;
 
-        if (\filter_var(\ini_get('display_errors'), \FILTER_VALIDATE_BOOLEAN)) {
+        if (\filter_var(\ini_get('display_errors'), \FILTER_VALIDATE_BOOL)) {
             echo '<p>' . $this->e($this->message($error)) . '</p>';
 
             if (

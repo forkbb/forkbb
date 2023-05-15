@@ -1468,7 +1468,7 @@ class Install extends Admin
             'b_regs_report'           => 0,
             'i_default_email_setting' => 2,
             'o_mailing_list'          => $v->email,
-            'b_avatars'               => \filter_var(@\ini_get('file_uploads'), \FILTER_VALIDATE_BOOLEAN) ? 1 : 0,
+            'b_avatars'               => \filter_var(\ini_get('file_uploads'), \FILTER_VALIDATE_BOOL) ? 1 : 0,
             'o_avatars_dir'           => '/img/avatars',
             'i_avatars_width'         => 160,
             'i_avatars_height'        => 160,
