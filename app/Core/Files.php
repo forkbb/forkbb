@@ -1183,7 +1183,7 @@ class Files
 
         $this->addTmpFile($tmpName);
 
-        $tmpFile = \fopen($tmpName, 'wb');
+        $tmpFile = @\fopen($tmpName, 'wb');
 
         if (! $tmpFile) {
             $this->error = 'Unable to create temporary file for writing';
@@ -1191,8 +1191,12 @@ class Files
             return null;
         }
 
+        $result = null;
+
         if (\extension_loaded('curl')) {
             $result = $this->curlAction($url, $tmpFile);
+        } elseif (\filter_var(\ini_get('allow_url_fopen'), \FILTER_VALIDATE_BOOL)) {
+            $result = $this->fopenAction($url, $tmpFile);
         }
 
         \fclose($tmpFile);
@@ -1208,10 +1212,22 @@ class Files
                 ],
                 false
             );
-        } else {
-            return null;
+        } elseif (null === $result) {
+            $this->error = 'No cURL and allow_url_fopen OFF';
         }
+
+        return null;
     }
+
+    /**
+     * Переменные конфига подключения
+     */
+    protected int    $actMaxRedir = 10;
+    protected float  $actTimeout  = 15.0;
+    protected string $actUAgent   = 'ForkBB downloader (%s)';
+    protected array  $actHeader   = [
+        'Accept: */*',
+    ];
 
     /**
      * Загружает файл с помощью cURL
@@ -1226,11 +1242,14 @@ class Files
             return false;
         }
 
-        \curl_setopt($ch, \CURLOPT_MAXREDIRS, 10);
-        \curl_setopt($ch, \CURLOPT_TIMEOUT, 15);
-        \curl_setopt($ch, \CURLOPT_FILE, $tmpFile);
         \curl_setopt($ch, \CURLOPT_HTTPGET, true);
         \curl_setopt($ch, \CURLOPT_HEADER, false);
+        \curl_setopt($ch, \CURLOPT_HTTPHEADER, $this->actHeader);
+        \curl_setopt($ch, \CURLOPT_USERAGENT, \sprintf($this->actUAgent, $this->c->BASE_URL));
+        \curl_setopt($ch, \CURLOPT_MAXREDIRS, $this->actMaxRedir);
+        \curl_setopt($ch, \CURLOPT_TIMEOUT, $this->actTimeout);
+        \curl_setopt($ch, \CURLOPT_FILE, $tmpFile);
+//        \curl_setopt($ch, \CURLOPT_SSL_VERIFYPEER, false);
 
         $result = \curl_exec($ch);
 
@@ -1243,6 +1262,51 @@ class Files
         } else {
             return true;
         }
+    }
+
+    /**
+     * Загружает файл с помощью fread/fwrite
+     */
+    protected function fopenAction(string $url, $tmpFile): bool
+    {
+
+        $context = \stream_context_create(
+            [
+                'http' => [
+                    'method'        => 'GET',
+                    'header'        => $this->actHeader,
+                    'user_agent'    => \sprintf($this->actUAgent, $this->c->BASE_URL),
+                    'max_redirects' => $this->actMaxRedir,
+                    'timeout'       => $this->actTimeout,
+                ],
+            ]
+        );
+
+        $fh = @\fopen($url, 'rb' , false, $context);
+
+        if (! $fh) {
+            $this->error = "Failed fopen() for {$url}";
+
+            return false;
+        }
+
+        while (! \feof($fh)) {
+            if (false === ($buffer = \fread($fh, 4096))) {
+                $this->error = "Failed fread() from {$url}";
+
+                return false;
+            }
+
+            if (false === @\fwrite($tmpFile, $buffer)) {
+                $this->error = "Failed fwrite() to temp file";
+
+                return false;
+            }
+        }
+
+        \fclose($fh);
+
+        return true;
     }
 
     /**
