@@ -135,7 +135,17 @@ class RegLog extends Page
 
                         if (true === $result) {
                             $user->avatar = $image->name() . '.' . $image->ext();
+                        } else {
+                            $this->c->Log->warning('OAuth Failed image processing', [
+                                'user'  => $user->fLog(),
+                                'error' => $image->error(),
+                            ]);
                         }
+                    } else {
+                        $this->c->Log->warning('OAuth Avatar not image', [
+                            'user'  => $user->fLog(),
+                            'error' => $this->c->Files->error(),
+                        ]);
                     }
                 }
 

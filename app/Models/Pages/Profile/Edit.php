@@ -139,6 +139,12 @@ class Edit extends Profile
 
                     if (true === $result) {
                         $this->curUser->avatar = $v->upload_avatar->name() . '.' . $v->upload_avatar->ext();
+                    } else {
+                        $this->c->Log->warning('Profile Failed image processing', [
+                            'user'    => $this->user->fLog(),
+                            'curUser' => $this->curUser->fLog(),
+                            'error'   => $v->upload_avatar->error(),
+                        ]);
                     }
                 }
 
