@@ -336,7 +336,7 @@ class Install extends Admin
                             'required' => true,
                         ],
                         'email' => [
-                            'type'      => 'text',
+                            'type'      => 'email',
                             'maxlength' => '80',
                             'pattern'   => '.+@.+',
                             'value'     => $v->email ?? '',

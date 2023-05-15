@@ -111,7 +111,7 @@ class Register extends Page
                         'email' => [
                             'autofocus' => true,
                             'class'     => ['hint'],
-                            'type'      => 'text',
+                            'type'      => 'email',
                             'maxlength' => '80',
                             'value'     => $v->email,
                             'caption'   => 'Email',

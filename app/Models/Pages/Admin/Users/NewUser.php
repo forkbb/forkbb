@@ -104,7 +104,7 @@ class NewUser extends Users
                             'pattern'   => '^.{2,25}$',
                         ],
                         'email' => [
-                            'type'      => 'text',
+                            'type'      => 'email',
                             'maxlength' => '80',
                             'value'     => $data['email'] ?? null,
                             'caption'   => 'Email',

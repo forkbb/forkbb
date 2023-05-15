@@ -60,7 +60,7 @@ trait PostFormTrait
             ];
             $fieldset['email'] = [
                 'class'     => ['w2'],
-                'type'      => 'text',
+                'type'      => 'email',
                 'maxlength' => '80',
                 'caption'   => 'Email',
                 'required'  => 1 === $this->c->config->b_force_guest_email,

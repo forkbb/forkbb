@@ -512,7 +512,7 @@ class Options extends Admin
             'legend' => 'E-mail subhead',
             'fields' => [
                 'o_admin_email' => [
-                    'type'      => 'text',
+                    'type'      => 'email',
                     'maxlength' => '80',
                     'value'     => $config->o_admin_email,
                     'caption'   => 'Admin e-mail label',
@@ -521,7 +521,7 @@ class Options extends Admin
                     'pattern'   => '.+@.+',
                 ],
                 'o_webmaster_email' => [
-                    'type'      => 'text',
+                    'type'      => 'email',
                     'maxlength' => '80',
                     'value'     => $config->o_webmaster_email,
                     'caption'   => 'Webmaster e-mail label',

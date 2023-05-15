@@ -371,7 +371,7 @@ class Auth extends Page
                     'fields' => [
                         'email' => [
                             'autofocus' => true,
-                            'type'      => 'text',
+                            'type'      => 'email',
                             'maxlength' => '80',
                             'value'     => $email,
                             'caption'   => 'Email',
