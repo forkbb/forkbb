@@ -1196,7 +1196,7 @@ class Files
         if (\extension_loaded('curl')) {
             $result = $this->curlAction($url, $tmpFile);
         } elseif (\filter_var(\ini_get('allow_url_fopen'), \FILTER_VALIDATE_BOOL)) {
-            $result = $this->fopenAction($url, $tmpFile);
+            $result = $this->streamAction($url, $tmpFile);
         }
 
         \fclose($tmpFile);
@@ -1265,7 +1265,7 @@ class Files
     /**
      * Загружает файл с помощью fread/fwrite
      */
-    protected function fopenAction(string $url, $tmpFile): bool
+    protected function streamAction(string $url, $tmpFile): bool
     {
 
         $context = \stream_context_create(
