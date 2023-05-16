@@ -36,6 +36,9 @@ msgstr "Данные провайдера обновлены."
 msgid "github"
 msgstr "GitHub"
 
+msgid "yandex"
+msgstr "Yandex"
+
 msgid "Callback label"
 msgstr "URI перенаправления"
 

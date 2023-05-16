@@ -2998,11 +2998,22 @@ body,
 /****************/
 #fork .f-btn[name="github"] {
   color: #24292f;
-  background-color: #fff;
+  background-color: #ffffff;
 }
 
 #fork .f-btn[name="github"]:focus,
 #fork .f-btn[name="github"]:hover {
-  color: #fff;
+  color: #ffffff;
   background-color: #24292f;
+}
+
+#fork .f-btn[name="yandex"] {
+  color: #fc3f1d;
+  background-color: #ffffff;
+}
+
+#fork .f-btn[name="yandex"]:focus,
+#fork .f-btn[name="yandex"]:hover {
+  color: #ffffff;
+  background-color: #fc3f1d;
 }

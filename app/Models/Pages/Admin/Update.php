@@ -527,4 +527,43 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.56 to rev.57
+     */
+    protected function stageNumber56(array $args): ?int
+    {
+        $providers = [
+            1 => 'yandex',
+        ];
+
+        $query = 'INSERT INTO ::providers (pr_name, pr_pos)
+            SELECT tmp.*
+            FROM (SELECT ?s:name AS f1, ?i:pos AS f2) AS tmp
+            WHERE NOT EXISTS (
+                SELECT 1
+                FROM ::providers
+                WHERE pr_name=?s:name
+            )';
+
+        foreach ($providers as $pos => $name) {
+            $vars = [
+                ':name' => $name,
+                ':pos'  => $pos,
+            ];
+
+            $this->c->DB->exec($query, $vars);
+        }
+
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>providers=>drivers=>yandex',
+            '\\ForkBB\\Models\\Provider\\Driver\\Yandex::class'
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }

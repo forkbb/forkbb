@@ -36,6 +36,9 @@ msgstr "Provider data updated."
 msgid "github"
 msgstr "GitHub"
 
+msgid "yandex"
+msgstr "Yandex"
+
 msgid "Callback label"
 msgstr "Callback URI"
 

@@ -167,6 +167,7 @@ return [
             'class'   => \ForkBB\Models\Provider\Providers::class,
             'drivers' => [
                 'github' => \ForkBB\Models\Provider\Driver\GitHub::class,
+                'yandex' => \ForkBB\Models\Provider\Driver\Yandex::class,
             ],
         ],
         'providerUser'  => \ForkBB\Models\ProviderUser\ProviderUser::class,
