@@ -23,7 +23,10 @@ class Providers extends Admin
      */
     protected function mDisabled(): void
     {
-        if (! \extension_loaded('curl')) {
+        if (
+            ! \extension_loaded('curl')
+            && ! \filter_var(\ini_get('allow_url_fopen'), \FILTER_VALIDATE_BOOL)
+        ) {
             $this->fIswev = [FORK_MESS_ERR, 'cURL disabled'];
         } elseif (1 !== $this->c->config->b_oauth_allow) {
             $this->fIswev = [FORK_MESS_WARN, ['OAuth authorization disabled', $this->c->Router->link('AdminOptions', ['#' => 'id-fs-registration'])]];

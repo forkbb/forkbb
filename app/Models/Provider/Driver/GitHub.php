@@ -30,53 +30,24 @@ class GitHub extends Driver
     {
         $this->userInfo = [];
 
-        $headers = [
-            'Accept: application/json',
-            "Authorization: Bearer {$this->access_token}",
-            "User-Agent: ForkBB (Client ID: {$this->client_id})",
+        $options = [
+            'headers' => [
+                'Accept: application/json',
+                "Authorization: Bearer {$this->access_token}",
+            ],
         ];
 
-        if (empty($ch = \curl_init($this->userURL))) {
-            $this->error     = 'cURL error';
-            $this->curlError = \curl_error($ch);
+        $response = $this->request('GET', $this->userURL, $options);
 
-            return false;
-        }
+        if (! empty($response['id'])) {
+            $this->userInfo = $response;
 
-        \curl_setopt($ch, \CURLOPT_MAXREDIRS, 10);
-        \curl_setopt($ch, \CURLOPT_TIMEOUT, 10);
-        \curl_setopt($ch, \CURLOPT_HTTPHEADER, $headers);
-        \curl_setopt($ch, \CURLOPT_HTTPGET, true);
-//        \curl_setopt($ch, \CURLOPT_POST, false);
-        \curl_setopt($ch, \CURLOPT_RETURNTRANSFER, true);
-        \curl_setopt($ch, \CURLOPT_HEADER, false);
-
-        $result = \curl_exec($ch);
-
-        \curl_close($ch);
-
-        if (false === $result) {
-            $this->error     = 'cURL error';
-            $this->curlError = \curl_error($ch);
-
-            return false;
-        }
-
-        if (
-            ! isset($result[1])
-            || '{' !== $result[0]
-            || '}' !== $result[-1]
-            || ! \is_array($userInfo = \json_decode($result, true, 20, self::JSON_OPTIONS))
-            || empty($userInfo['id'])
-        ) {
+            return true;
+        } elseif (\is_array($response)) {
             $this->error = 'User error';
-
-            return false;
         }
 
-        $this->userInfo = $this->c->Secury->replInvalidChars($userInfo);
-
-        return true;
+        return false;
     }
 
     /**

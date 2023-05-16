@@ -96,7 +96,10 @@ class Providers extends Manager
      */
     public function active(): array
     {
-        if (! \extension_loaded('curl')) {
+        if (
+            ! \extension_loaded('curl')
+            && ! \filter_var(\ini_get('allow_url_fopen'), \FILTER_VALIDATE_BOOL)
+        ) {
             return [];
         }
 

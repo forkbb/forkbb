@@ -70,7 +70,7 @@ msgid "Token error: %s"
 msgstr "Ошибка запроса токена доступа: %s."
 
 msgid "cURL disabled"
-msgstr "Расширение cURL отключено в PHP."
+msgstr "Расширение cURL отключено в PHP и allow_url_fopen = OFF."
 
 msgid "cURL error"
 msgstr "Ошибка cURL."

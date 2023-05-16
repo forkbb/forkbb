@@ -143,61 +143,194 @@ abstract class Driver extends Model
     {
         $this->access_token = '';
 
-        $params = [
-            'grant_type'    => 'authorization_code',
-            'client_id'     => $this->client_id,
-            'client_secret' => $this->client_secret,
-            'code'          => $this->code,
-            'redirect_uri'  => $this->linkCallback,
+        $options = [
+            'headers' => [
+                'Accept: application/json',
+                'Content-type: application/x-www-form-urlencoded',
+            ],
+            'form_params' => [
+                'grant_type'    => 'authorization_code',
+                'client_id'     => $this->client_id,
+                'client_secret' => $this->client_secret,
+                'code'          => $this->code,
+                'redirect_uri'  => $this->linkCallback,
+            ],
         ];
 
-        if (empty($ch = \curl_init($this->tokenURL))) {
-            $this->error     = 'cURL error';
-            $this->curlError = \curl_error($ch);
+        $response = $this->request('POST', $this->tokenURL, $options);
 
-            return false;
-        }
+        if (isset($response['access_token'])) {
+            $this->access_token = $response['access_token'];
 
-        \curl_setopt($ch, \CURLOPT_MAXREDIRS, 10);
-        \curl_setopt($ch, \CURLOPT_TIMEOUT, 10);
-        \curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Accept: application/json']);
-        \curl_setopt($ch, \CURLOPT_POST, true);
-        \curl_setopt($ch, \CURLOPT_POSTFIELDS, \http_build_query($params));
-        \curl_setopt($ch, \CURLOPT_RETURNTRANSFER, true);
-        \curl_setopt($ch, \CURLOPT_HEADER, false);
+            return true;
 
-        $result = \curl_exec($ch);
-
-        \curl_close($ch);
-
-        if (false === $result) {
-            $this->error     = 'cURL error';
-            $this->curlError = \curl_error($ch);
-
-            return false;
-        }
-
-        if (
-            ! isset($result[1])
-            || '{' !== $result[0]
-            || '}' !== $result[-1]
-            || ! \is_array($data = \json_decode($result, true, 20, self::JSON_OPTIONS))
-            || ! isset($data['access_token'])
-        ) {
-            $error = $data['error_description'] ?? ($data['error'] ?? null);
+        } elseif (\is_array($response)) {
+            $error = $response['error_description'] ?? ($response['error'] ?? null);
 
             if (! \is_string($error)) {
                 $error = 'undefined error';
             }
 
             $this->error = ['Token error: %s', $error];
+        }
+
+        return false;
+    }
+
+    /**
+     * Обменивается данными c сервером OAuth
+     * Ответ пытается преобразовать в массив
+     */
+    protected function request(string $method, string $url, array $options): array|false
+    {
+        $result = null;
+
+        //преобразовать массив переменных запроса в строку запроса
+        if (\is_array($options['query'] ?? null)) {
+            $options['query'] = \http_build_query($options['query']);
+        }
+        // дополнить url строкой запроса
+        if (\is_string($options['query'] ?? null)) {
+            $url .= (false === \strpos($url, '?') ? '?' : '&') . $options['query'];
+
+            unset($options['query']);
+        }
+
+        if (\extension_loaded('curl')) {
+            $result = $this->curlRequest($method, $url, $options);
+        } elseif (\filter_var(\ini_get('allow_url_fopen'), \FILTER_VALIDATE_BOOL)) {
+            $result = $this->streamRequest($method, $url, $options);
+        }
+
+        if (null === $result) {
+            $this->error = 'No cURL and allow_url_fopen OFF';
+
+            return false;
+
+        } elseif (\is_string($result)) {
+            if (\str_starts_with($this->respContentType, 'application/json')) {
+                $data = \json_decode($result, true, 20, self::JSON_OPTIONS);
+
+                if (\is_array($data)) {
+                    return $this->c->Secury->replInvalidChars($data);
+                }
+
+                $this->error ??= 'Bad json';
+            }
+
+            $this->error ??= "Bad Content-type: {$this->respContentType}";
+        }
+
+        return false;
+    }
+
+    /**
+     * Отправляет/получает данные через cURL
+     */
+    protected function curlRequest(string $method, string $url, array $options): string|false
+    {
+        $ch = \curl_init($url);
+
+        if (! $ch) {
+            $this->error = "Failed cURL init for {$url}";
 
             return false;
         }
 
-        $this->access_token = $data['access_token'];
+        switch ($method) {
+            case 'POST':
+                \curl_setopt($ch, \CURLOPT_POST, true);
 
-        return true;
+                if (\is_array($options['form_params'] ?? null)) {
+                    \curl_setopt($ch, \CURLOPT_POSTFIELDS, \http_build_query($options['form_params']));
+                }
+
+                break;
+            default:
+                \curl_setopt($ch, \CURLOPT_HTTPGET, true);
+
+                break;
+        }
+
+        \curl_setopt($ch, \CURLOPT_MAXREDIRS, 10);
+        \curl_setopt($ch, \CURLOPT_TIMEOUT, 10);
+        \curl_setopt($ch, \CURLOPT_RETURNTRANSFER, true);
+        \curl_setopt($ch, \CURLOPT_HEADER, false);
+        \curl_setopt($ch, \CURLOPT_USERAGENT, "ForkBB (Client ID: {$this->client_id})");
+
+        if (\is_array($options['headers'] ?? null)) {
+            \curl_setopt($ch, \CURLOPT_HTTPHEADER, $options['headers']);
+        }
+
+        $result = \curl_exec($ch);
+
+        if (false === $result) {
+            $this->error = 'cURL error: ' . \curl_error($ch);
+        } else {
+            $this->respContentType = \curl_getinfo($ch, \CURLINFO_CONTENT_TYPE);
+            $this->respHttpCode    = \curl_getinfo($ch, \CURLINFO_RESPONSE_CODE);
+        }
+
+        \curl_close($ch);
+
+        return $result;
+    }
+
+    /**
+     * Отправляет/получает данные через file_get_contents()
+     */
+    protected function streamRequest(string $method, string $url, array $options): string|false
+    {
+        $http = [
+            'max_redirects' => 10,
+            'timeout'       => 10,
+            'user_agent'    => "ForkBB (Client ID: {$this->client_id})",
+        ];
+
+        switch ($method) {
+            case 'POST':
+                $http['method'] = 'POST';
+
+                if (\is_array($options['form_params'] ?? null)) {
+                    $http['content'] = \http_build_query($options['form_params']);
+                }
+
+                break;
+            default:
+                $http['method'] = 'GET';
+
+                break;
+        }
+
+        if (\is_array($options['headers'] ?? null)) {
+            $http['header'] = $options['headers'];
+        }
+
+        $context = \stream_context_create(['http' => $http]);
+        $result  = @\file_get_contents($url, false, $context);
+
+        if (false === $result) {
+            $this->error = "Failed file_get_contents for {$url}";
+        } else {
+            $this->respContentType = $this->parseHeader($http_response_header, 'Content-Type:\s*(.+)');
+            $this->respHttpCode    = (int) $this->parseHeader($http_response_header, 'HTTP/[0-9.]+\s+([0-9]+)');
+        }
+
+        return $result;
+    }
+
+    /**
+     * Достает по шаблону значение нужного заголовка из списка
+     */
+    protected function parseHeader(array $headers, string $pattern): string
+    {
+        while ($header = \array_pop($headers)) {
+            if (\preg_match('%^' . $pattern . '%i', $header, $matches)) {
+                return \trim($matches[1]);
+            }
+        }
+
+        return '';
     }
 
     /**
