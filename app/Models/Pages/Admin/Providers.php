@@ -91,9 +91,9 @@ class Providers extends Admin
                 ],
             ],
         ];
-        $fields = [];
 
         foreach ($this->c->providers->init()->list() as $provider) {
+            $fields = [];
             $fields["name-{$provider->name}"] = [
                 'class'   => ['name', 'provider'],
                 'type'    => 'btn',
