@@ -1253,15 +1253,13 @@ class Files
 
         $result = \curl_exec($ch);
 
-        \curl_close($ch);
-
         if (false === $result) {
             $this->error = 'cURL error: ' . \curl_error($ch);
-
-            return false;
-        } else {
-            return true;
         }
+
+        \curl_close($ch);
+
+        return false !== $result;
     }
 
     /**
