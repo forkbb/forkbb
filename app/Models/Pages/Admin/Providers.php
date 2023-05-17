@@ -97,7 +97,7 @@ class Providers extends Admin
             $fields["name-{$provider->name}"] = [
                 'class'   => ['name', 'provider'],
                 'type'    => 'btn',
-                'value'   => $provider->name,
+                'value'   => __($provider->name),
                 'caption' => 'Provider label',
                 'link'    => $this->c->Router->link('AdminProvider', ['name' => $provider->name]),
             ];

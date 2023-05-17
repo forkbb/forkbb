@@ -1274,7 +1274,7 @@ class Install extends Admin
 
         // заполнение providers
         $providers = [
-            'github', 'yandex',
+            'github', 'yandex', 'google',
         ];
 
         $query = 'INSERT INTO ::providers (pr_name, pr_pos)

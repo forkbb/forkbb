@@ -3017,3 +3017,14 @@ body,
   color: #ffffff;
   background-color: #fc3f1d;
 }
+
+#fork .f-btn[name="google"] {
+  color: #4285f4;
+  background-color: #ffffff;
+}
+
+#fork .f-btn[name="google"]:focus,
+#fork .f-btn[name="google"]:hover {
+  color: #ffffff;
+  background-color: #4285f4;
+}

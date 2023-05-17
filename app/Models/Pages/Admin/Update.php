@@ -535,6 +535,7 @@ class Update extends Admin
     {
         $providers = [
             1 => 'yandex',
+            2 => 'google',
         ];
 
         $query = 'INSERT INTO ::providers (pr_name, pr_pos)
@@ -560,6 +561,10 @@ class Update extends Admin
         $coreConfig->add(
             'shared=>providers=>drivers=>yandex',
             '\\ForkBB\\Models\\Provider\\Driver\\Yandex::class'
+        );
+        $coreConfig->add(
+            'shared=>providers=>drivers=>google',
+            '\\ForkBB\\Models\\Provider\\Driver\\Google::class'
         );
 
         $coreConfig->save();

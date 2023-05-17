@@ -39,6 +39,9 @@ msgstr "GitHub"
 msgid "yandex"
 msgstr "Yandex"
 
+msgid "google"
+msgstr "Google"
+
 msgid "Callback label"
 msgstr "Callback URI"
 
