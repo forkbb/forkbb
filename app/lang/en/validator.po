@@ -31,16 +31,16 @@ msgid "Banned email"
 msgstr "The email address you entered is banned in this forum."
 
 msgid "Username censor"
-msgstr "The username you entered contains one or more censored words. Please choose another username."
+msgstr "The username you entered contains one or more censored words."
 
 msgid "Banned username"
-msgstr "The username you entered is banned in this forum. Please choose another username."
+msgstr "The username you entered is banned in this forum."
 
 msgid "Username not unique"
-msgstr "The username you entered is not unique. Please choose another username."
+msgstr "The username you entered is not unique."
 
 msgid "Dupe email"
-msgstr "Someone else is already registered with that email address. Please choose another email address."
+msgstr "Someone else is already registered with that email address."
 
 msgid "Account email flood"
 msgstr "This account has already requested a passphrase reset recently. Please wait %s minutes before trying again."
@@ -197,3 +197,6 @@ msgstr "The :alias field not exist."
 
 msgid "The :alias contains a link"
 msgstr "The :alias field contains a link."
+
+msgid "The :alias is not valid email"
+msgstr "The :alias field contains an invalid email address."
