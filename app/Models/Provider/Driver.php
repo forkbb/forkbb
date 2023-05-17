@@ -89,7 +89,7 @@ abstract class Driver extends Model
             'redirect_uri'  => $this->linkCallback,
         ];
 
-        return $this->authURL . '?' . \http_build_query($params);
+        return $this->authURL . '?' . \http_build_query(\array_filter($params));
     }
 
     /**
