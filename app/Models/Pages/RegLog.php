@@ -167,7 +167,7 @@ class RegLog extends Page
             }
 
             // вход
-            return $this->c->Auth->login(['user' => $user], 'POST');
+            return $this->c->Auth->login([], 'POST', '', $user);
 
         // пользователь
         } else {

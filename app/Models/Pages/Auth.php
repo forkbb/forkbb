@@ -56,7 +56,7 @@ class Auth extends Page
     /**
      * Вход на форум
      */
-    public function login(array $args, string $method, string $username = ''): Page
+    public function login(array $args, string $method, string $username = '', User $user = null): Page
     {
         $this->c->Lang->load('validator');
         $this->c->Lang->load('auth');
@@ -65,19 +65,16 @@ class Auth extends Page
 
         if ('POST' === $method) {
             // вход без html формы
-            if (
-                isset($args['user'])
-                && $args['user'] instanceof User
-            ) {
-                $this->userAfterLogin = $args['user'];
+            if (null !== $user) {
+                $this->userAfterLogin = $user;
                 $this->loginWithForm  = false;
 
                 $_POST = [
                     'token'    => $this->c->Csrf->create('Login'),
                     'redirect' => $this->c->Csrf->create('Index'),
-                    'username' => $this->userAfterLogin->username,
-                    'password' => $this->userAfterLogin->password,
-                    'save'     => '1',
+                    'username' => $user->username,
+                    'password' => $user->password,
+                    'save'     => null,
                     'login'    => 'Login User model',
                 ];
             }
