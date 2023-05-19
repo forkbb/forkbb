@@ -42,6 +42,9 @@ msgstr "The username you entered is not unique."
 msgid "Dupe email"
 msgstr "Someone else is already registered with that email address."
 
+msgid "Dupe email (OAuth)"
+msgstr "Someone else is already registered with that email address (OAuth)."
+
 msgid "Account email flood"
 msgstr "This account has already requested a passphrase reset recently. Please wait %s minutes before trying again."
 

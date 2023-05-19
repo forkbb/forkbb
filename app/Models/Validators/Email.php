@@ -98,6 +98,22 @@ class Email extends RulesValidator
             ) {
                 $v->addError('Dupe email');
                 $ok = false;
+
+            // дополнительная проверка по связанным аккаунтам
+            } else {
+                $id = $this->c->providerUser->findByEmail($email);
+
+                if (
+                    $id > 0
+                    && (
+                        ! $originalUser instanceof User
+                        || $originalUser->isGuest
+                        || $id !== $originalUser->id
+                    )
+                ) {
+                    $v->addError('Dupe email (OAuth)');
+                    $ok = false;
+                }
             }
         }
         // проверка на флуд интервал
