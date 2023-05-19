@@ -55,13 +55,23 @@ class Register extends Page
         if ($v->validation($_POST, true)) {
             // завершение регистрации
             if (1 === $v->on) {
-                $userInDB =  $this->c->users->loadByEmail($v->email);
+                $userInDB = $this->c->users->loadByEmail($v->email);
 
                 if ($userInDB instanceof User) {
                     return $this->regDupe($v, $userInDB);
-                } else {
-                    return $this->regEnd($v);
                 }
+
+                $id = $this->c->providerUser->findByEmail($v->email);
+
+                if ($id > 0) {
+                    $userInDB = $this->c->users->load($id);
+
+                    if ($userInDB instanceof User) {
+                        return $this->regDupe($v, $userInDB);
+                    }
+                }
+
+                return $this->regEnd($v);
             }
         } else {
             $this->fIswev = $v->getErrors();
@@ -306,6 +316,7 @@ class Register extends Page
                 'fRootLink' => $this->c->Router->link('Index'),
                 'fMailer'   => __(['Mailer', $this->c->config->o_board_title]),
                 'username'  => $v->username,
+                'email'     => $v->eamil,
                 'ip'        => $this->user->ip,
                 'userInDB'  => $userInDB->username,
             ];
