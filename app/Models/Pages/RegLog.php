@@ -104,7 +104,7 @@ class RegLog extends Page
                 $user = $this->c->users->create();
 
                 $user->username        = $this->nameGenerator($provider);
-                $user->password        = 'oauth';
+                $user->password        = 'oauth_' . $this->c->Secury->randomPass(7);
                 $user->group_id        = $this->c->config->i_default_user_group;
                 $user->email           = $provider->userEmail;
                 $user->email_confirmed = $provider->userEmailVerifed ? 1 : 0;
