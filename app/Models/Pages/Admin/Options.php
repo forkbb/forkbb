@@ -513,7 +513,7 @@ class Options extends Admin
             'fields' => [
                 'o_admin_email' => [
                     'type'      => 'email',
-                    'maxlength' => '80',
+                    'maxlength' => (string) $this->c->MAX_EMAIL_LENGTH,
                     'value'     => $config->o_admin_email,
                     'caption'   => 'Admin e-mail label',
                     'help'      => 'Admin e-mail help',
@@ -522,7 +522,7 @@ class Options extends Admin
                 ],
                 'o_webmaster_email' => [
                     'type'      => 'email',
-                    'maxlength' => '80',
+                    'maxlength' => (string) $this->c->MAX_EMAIL_LENGTH,
                     'value'     => $config->o_webmaster_email,
                     'caption'   => 'Webmaster e-mail label',
                     'help'      => 'Webmaster e-mail help',

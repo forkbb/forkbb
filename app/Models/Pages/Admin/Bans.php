@@ -82,7 +82,7 @@ class Bans extends Admin
                 'token'           => 'token:AdminBans',
                 'username'        => 'string:trim,null|max:25',
                 'ip'              => 'string:trim,null|max:40',
-                'email'           => 'string:trim,null|max:80',
+                'email'           => 'string:trim,null|max:' . $this->c->MAX_EMAIL_LENGTH,
                 'message'         => 'string:trim,null|max:255',
                 'expire_1'        => 'date',
                 'expire_2'        => 'date',
@@ -158,7 +158,7 @@ class Bans extends Admin
         ];
         $fields['email'] = [
             'type'      => 'text',
-            'maxlength' => '80',
+            'maxlength' => (string) $this->c->MAX_EMAIL_LENGTH,
             'caption'   => 'E-mail label',
             'value'     => $data['email'] ?? null,
         ];
@@ -268,7 +268,7 @@ class Bans extends Admin
             ];
             $fields['email'] = [
                 'type'      => 'text',
-                'maxlength' => '80',
+                'maxlength' => (string) $this->c->MAX_EMAIL_LENGTH,
                 'caption'   => 'E-mail label',
                 'help'      => 'E-mail help',
                 'value'     => $data['email'] ?? null,
@@ -643,7 +643,7 @@ class Bans extends Admin
                 'token'           => 'token:' . $this->formBanPage,
                 'username'        => $this->banCount < 1 ? 'string:trim|max:25|user_ban' : 'absent',
                 'ip'              => $this->banCount < 2 ? 'string:trim,spaces|max:255|ip_ban' : 'absent',
-                'email'           => $this->banCount < 2 ? 'string:trim|max:80|email_ban' : 'absent',
+                'email'           => $this->banCount < 2 ? 'string:trim|max:' . $this->c->MAX_EMAIL_LENGTH . '|email_ban' : 'absent',
                 'message'         => 'string:trim|max:255',
                 'expire'          => 'date|expire_ban',
                 'submit'          => 'required|submit_ban',

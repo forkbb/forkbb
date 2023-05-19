@@ -228,7 +228,7 @@ class Email extends Profile
                         'new_email' => [
                             'autofocus' => true,
                             'type'      => 'email',
-                            'maxlength' => '80',
+                            'maxlength' => (string) $this->c->MAX_EMAIL_LENGTH,
                             'caption'   => $this->rules->confirmEmail ? 'New or old email' : 'New email',
                             'required'  => true,
                             'pattern'   => '.+@.+',

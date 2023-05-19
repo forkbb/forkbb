@@ -112,7 +112,7 @@ class Register extends Page
                             'autofocus' => true,
                             'class'     => ['hint'],
                             'type'      => 'email',
-                            'maxlength' => '80',
+                            'maxlength' => (string) $this->c->MAX_EMAIL_LENGTH,
                             'value'     => $v->email,
                             'caption'   => 'Email',
                             'help'      => 'Email info',

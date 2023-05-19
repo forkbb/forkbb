@@ -63,7 +63,7 @@ class View extends Users
                     ])->addRules([
                         'token'           => 'token:AdminUsers',
                         'username'        => 'string:null|max:25',
-                        'email'           => 'string:null|max:80',
+                        'email'           => 'string:null|max:' . $this->c->MAX_EMAIL_LENGTH,
                         'title'           => 'string:null|max:50',
                         'realname'        => 'string:null|max:40',
                         'gender'          => 'integer|in:' . FORK_GEN_NOT . ',' . FORK_GEN_MAN . ',' . FORK_GEN_FEM,
@@ -191,7 +191,7 @@ class View extends Users
         ];
         $fields['email'] = [
             'type'      => 'text',
-            'maxlength' => '80',
+            'maxlength' => (string) $this->c->MAX_EMAIL_LENGTH,
             'caption'   => 'E-mail address label',
             'value'     => $data['email'] ?? null,
         ];

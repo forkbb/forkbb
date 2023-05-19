@@ -74,7 +74,7 @@ class Auth extends Page
                     'redirect' => $this->c->Csrf->create('Index'),
                     'username' => $user->username,
                     'password' => $user->password,
-                    'save'     => null,
+                    'save'     => '1',
                     'login'    => 'Login User model',
                 ];
             }
@@ -369,7 +369,7 @@ class Auth extends Page
                         'email' => [
                             'autofocus' => true,
                             'type'      => 'email',
-                            'maxlength' => '80',
+                            'maxlength' => (string) $this->c->MAX_EMAIL_LENGTH,
                             'value'     => $email,
                             'caption'   => 'Email',
                             'help'      => 'Passphrase reset info',

@@ -69,7 +69,7 @@ class Mail
     {
         if (
             ! \is_string($email)
-            || \mb_strlen($email, 'UTF-8') > 80 // for DB
+            || \mb_strlen($email, 'UTF-8') > $this->c->MAX_EMAIL_LENGTH
             || ! \preg_match('%^([^\x00-\x1F]+)@([^\x00-\x1F\s@]++)$%Du', $email, $matches)
         ) {
             return false;
