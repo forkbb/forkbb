@@ -33,7 +33,6 @@ class Username extends RulesValidator
 
             $user = $this->c->users->create(['id' => $id, 'username' => $username]);
 
-            // 2-25 символов, буквы, цифры, пробел, подчеркивание, точка и тире
             if (! \preg_match($this->c->USERNAME_PATTERN, $username)) {
                 $v->addError('Login format');
             // идущие подряд пробелы
