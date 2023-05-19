@@ -53,17 +53,16 @@ class ProviderUser extends Model
     }
 
     /**
-     * Возращает id локального пользователя по данным провайдера или 0
-     * Поиск идет по email
+     * Возращает id локального пользователя по email или 0
      */
-    public function findEmail(Driver $provider): int
+    public function findByEmail(string $email): int
     {
-        if ('' == $provider->userEmail) {
-            throw new RuntimeException('The user email is empty');
+        if ('' == $email) {
+            throw new RuntimeException('The email is empty');
         }
 
         $vars = [
-            ':email' => $this->c->NormEmail->normalize($provider->userEmail),
+            ':email' => $this->c->NormEmail->normalize($email),
         ];
         $query = 'SELECT pu.uid
             FROM ::providers_users AS pu
@@ -74,7 +73,7 @@ class ProviderUser extends Model
         $count  = \count($result);
 
         if ($count > 1) {
-            throw new RuntimeException("Many entries for '{$provider->userEmail}'");
+            throw new RuntimeException("Many entries for '{$email}'");
         }
 
         return $count ? \array_pop($result) : 0;

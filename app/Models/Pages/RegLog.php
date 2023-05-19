@@ -88,7 +88,7 @@ class RegLog extends Page
             if (empty($uid)) {
                 // на форуме есть пользователь с таким email
                 if (
-                    $this->c->providerUser->findEmail($provider) > 0
+                    $this->c->providerUser->findByEmail($provider->userEmail) > 0
                     || $this->c->users->loadByEmail($provider->userEmail) instanceof User
                 ) {
                     $auth         = $this->c->Auth;
@@ -182,7 +182,7 @@ class RegLog extends Page
                 return $redirect->message('Already linked to another', FORK_MESS_WARN, 5);
             }
 
-            $uid = $this->c->providerUser->findEmail($provider);
+            $uid = $this->c->providerUser->findByEmail($provider->userEmail);
 
             // email принадлежит другому пользователю
             if (
