@@ -13,7 +13,7 @@
         @endif
         @foreach ($setVal['fields'] as $key => $cur)
             @if ('info' === $cur['type'])
-            <p id="id-{{ $cur['id'] or $setKey.$key }}" class="f-yinfo"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
+            <p id="id-{{ $cur['id'] or $setKey.$key }}" class="f-yinfo">{!! __($cur['value']) !!}</p>
             @elseif ('wrap' === $cur['type'])
             <div id="id-{{ $cur['id'] or $setKey.$key }}" @if ($cur['class']) class="f-wrap-{{ \implode(' f-wrap-', $cur['class']) }}" @endif>
             @elseif ('endwrap' === $cur['type'])

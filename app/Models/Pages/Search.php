@@ -166,8 +166,7 @@ class Search extends Page
                     'fields' => [
                         [
                             'type'  => 'info',
-                            'value' => __(['<a href="%s">Advanced search</a>', $this->c->Router->link('SearchAdvanced')]),
-                            'html'  => true,
+                            'value' => ['<a href="%s">Advanced search</a>', $this->c->Router->link('SearchAdvanced')],
                         ],
                         'keywords' => [
                             'class'     => ['w0'],
@@ -205,8 +204,7 @@ class Search extends Page
                     'fields' => [
                         [
                             'type'  => 'info',
-                            'value' => __(['<a href="%s">Simple search</a>', $this->c->Router->link('Search')]),
-                            'html'  => true,
+                            'value' => ['<a href="%s">Simple search</a>', $this->c->Router->link('Search')],
                         ],
                         'keywords' => [
                             'class'     => ['w2'],
@@ -227,7 +225,7 @@ class Search extends Page
                         ],
                         [
                             'type'  => 'info',
-                            'value' => __('Search info'),
+                            'value' => 'Search info',
                         ],
                     ],
                 ],
@@ -255,11 +253,11 @@ class Search extends Page
                         ],
                         [
                             'type'  => 'info',
-                            'value' => __('Search in info'),
+                            'value' => 'Search in info',
                         ],
                         [
                             'type'  => 'info',
-                            'value' => __('Search multiple forums info'),
+                            'value' => 'Search multiple forums info',
                         ],
 
                     ],
@@ -301,7 +299,7 @@ class Search extends Page
                         ],
                         [
                             'type'  => 'info',
-                            'value' => __('Search results info'),
+                            'value' => 'Search results info',
                         ],
                     ],
 
