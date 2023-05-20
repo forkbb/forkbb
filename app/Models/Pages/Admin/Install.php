@@ -251,13 +251,12 @@ class Install extends Admin
             ],
             'sets'   => [
                 'db-info' => [
-                    'info' => [
+                    'inform' => [
                         [
-                            'value' => __('Database setup'),
-                            'html'  => true,
+                            'message' => 'Database setup',
                         ],
                         [
-                            'value' => __('Info 1'),
+                            'message' => 'Info 1',
                         ],
                     ],
                 ],
@@ -306,13 +305,12 @@ class Install extends Admin
                     ],
                 ],
                 'adm-info' => [
-                    'info' => [
+                    'inform' => [
                         [
-                            'value' => __('Administration setup'),
-                            'html'  => true,
+                            'message' => 'Administration setup',
                         ],
                         [
-                            'value' => __('Info 7'),
+                            'message' => 'Info 7',
                         ],
                     ],
                 ],
@@ -348,13 +346,12 @@ class Install extends Admin
                     ],
                 ],
                 'board-info' => [
-                    'info' => [
+                    'inform' => [
                         [
-                            'value' => __('Board setup'),
-                            'html'  => true,
+                            'message' => 'Board setup',
                         ],
                         [
-                            'value' => __('Info 11'),
+                            'message' => 'Info 11',
                         ],
                     ],
                 ],
@@ -395,13 +392,12 @@ class Install extends Admin
                     ],
                 ],
                 'cookie-info' => [
-                    'info' => [
+                    'inform' => [
                         [
-                            'value' => __('Cookie setup'),
-                            'html'  => true,
+                            'message' => 'Cookie setup',
                         ],
                         [
-                            'value' => __('Info 12'),
+                            'message' => 'Info 12',
                         ],
                     ],
                 ],

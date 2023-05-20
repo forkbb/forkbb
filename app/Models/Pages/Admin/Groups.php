@@ -501,9 +501,9 @@ class Groups extends Admin
                 'fields' => $fieldset,
             ];
             $form['sets']['mod-info'] = [
-                'info' => [
+                'inform' => [
                     [
-                        'value' => __('Moderator info'),
+                        'message' => 'Moderator info',
                     ],
                 ],
             ];
@@ -643,9 +643,9 @@ class Groups extends Admin
             'fields' => $fieldset,
         ];
         $form['sets']['def-info'] = [
-            'info' => [
+            'inform' => [
                 [
-                    'value' => __('Group settings info'),
+                    'message' => 'Group settings info',
                 ],
             ],
         ];
@@ -873,10 +873,9 @@ class Groups extends Admin
             ],
         ];
         $form['sets']['conf-info'] = [
-            'info' => [
+            'inform' => [
                 [
-                    'value' => __('Confirm delete warn'),
-                    'html'  => true,
+                    'message' => 'Confirm delete warn',
                 ],
             ],
         ];

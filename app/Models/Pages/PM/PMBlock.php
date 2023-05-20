@@ -162,10 +162,9 @@ class PMBlock extends AbstractPM
             ],
             'sets'   => [
                 'info' => [
-                    'info' => [
+                    'inform' => [
                         [
-                            'value' => __([$status ? 'Unblock user %s' : 'Block user %s', $user->username]),
-                            'html'  => true,
+                            'message' => [$status ? 'Unblock user %s' : 'Block user %s', $user->username],
                         ],
                     ],
                 ],

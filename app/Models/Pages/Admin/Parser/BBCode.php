@@ -288,9 +288,9 @@ class BBCode extends Parser
             ],
             'sets'   => [
                 'info' => [
-                    'info' => [
+                    'inform' => [
                         [
-                            'value' => __(['BBCode %s', $name]),
+                            'message' => ['BBCode %s', $name],
                         ],
                     ],
                 ],

@@ -148,12 +148,12 @@ class PMTopic extends AbstractPM
             ],
             'sets'   => [
                 'info' => [
-                    'info' => [
+                    'inform' => [
                         [
-                            'value'   => __(['Dialogue %s', $this->model->name]),
+                            'message' => ['Dialogue %s', $this->model->name],
                         ],
                         [
-                            'value'   => __(['Recipient: %s', $this->targetUser->username]),
+                            'message' => ['Recipient: %s', $this->targetUser->username],
                         ],
                     ],
                 ],

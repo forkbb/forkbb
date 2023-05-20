@@ -2,9 +2,9 @@
         <form @if ($form['id']) id="{{ $form['id'] }}" @endif class="f-form" method="post" action="{{ $form['action'] }}" @if ($form['enctype']) enctype="{{ $form['enctype'] }}" @endif>
 @endif
 @foreach ($form['sets'] as $setKey => $setVal)
-    @if ($setVal['info'])
-        @foreach ($setVal['info'] as $key => $cur)
-          <p class="f-finform"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
+    @if ($setVal['inform'])
+        @foreach ($setVal['inform'] as $key => $cur)
+          <p class="f-finform">{!! $cur['html'] or __($cur['message']) !!}</p>
         @endforeach
     @elseif (isset($setVal['fields']))
           <fieldset id="id-fs-{{ $setKey }}" @if ($setVal['class']) class="f-fs-{{ \implode(' f-fs-', $setVal['class']) }}" @endif>

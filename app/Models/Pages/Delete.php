@@ -105,14 +105,12 @@ class Delete extends Page
             ],
             'sets'   => [
                 'info' => [
-                    'info' => [
+                    'inform' => [
                         [
-                            'value'   => __(['Topic %s', $post->parent->name]),
-                            'html'    => true,
+                            'message' => ['Topic %s', $post->parent->name],
                         ],
                         [
-                            'value'   => __([$deleteTopic ? 'Topic by' : 'Reply by', $post->poster, dt($post->posted)]),
-                            'html'    => true,
+                            'message' => [$deleteTopic ? 'Topic by' : 'Reply by', $post->poster, dt($post->posted)],
                         ],
                     ],
                 ],

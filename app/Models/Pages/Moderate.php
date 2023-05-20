@@ -603,18 +603,16 @@ class Moderate extends Page
         }
 
         $form['sets']['info'] = [
-            'info' => [
+            'inform' => [
                 [
-                    'value' => \implode('<br>', $headers),
-                    'html'  => true,
+                    'html' => \implode('<br>', $headers),
                 ],
             ],
         ];
 
         if ($this->firstTopic instanceof Topic) {
-            $form['sets']['info']['info'][] = [
-                'value' => __(['All posts will be posted in the «%s» topic', $this->firstTopic->name]),
-                'html'  => true,
+            $form['sets']['info']['inform'][] = [
+                'message' => ['All posts will be posted in the «%s» topic', $this->firstTopic->name],
             ];
         }
 

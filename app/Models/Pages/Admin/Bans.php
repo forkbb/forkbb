@@ -137,9 +137,9 @@ class Bans extends Admin
             ],
         ];
         $form['sets']['search-info'] = [
-            'info' => [
+            'inform' => [
                 [
-                    'value' => __('Ban search info'),
+                    'message' => 'Ban search info',
                 ],
             ],
         ];

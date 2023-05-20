@@ -123,9 +123,9 @@ class Mod extends Profile
             foreach ($list as $forum) {
                 if ($cid !== $forum->cat_id) {
                     $form['sets']["category{$forum->cat_id}-info"] = [
-                        'info' => [
+                        'inform' => [
                             [
-                                'value' => $forum->cat_name,
+                                'message' => $forum->cat_name,
                             ],
                         ],
                     ];

@@ -72,7 +72,7 @@ class Reports extends Admin
     protected function form(bool $noZapped, array $reports): array
     {
         $form = [
-            'sets'   => [],
+            'sets' => [],
         ];
 
         foreach ($reports as $report) {
@@ -133,9 +133,9 @@ class Reports extends Admin
 
         if (empty($form['sets'])) {
             $form['sets'][] = [
-                'info' => [
+                'inform' => [
                     [
-                        'value' => $noZapped ? __('No new reports') : __('No zapped reports'),
+                        'message' => $noZapped ? 'No new reports' : 'No zapped reports',
                     ],
                 ],
             ];

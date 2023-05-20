@@ -134,18 +134,16 @@ class PMDelete extends AbstractPM
             ],
             'sets'   => [
                 'info' => [
-                    'info' => [
+                    'inform' => [
                         [
-                            'value'   => __(['Dialogue %s', $post->parent->name]),
-                            'html'    => true,
+                            'message' => ['Dialogue %s', $post->parent->name],
                         ],
                         [
-                            'value'   => __([
+                            'message' => [
                                 $deleteTopic ? 'Dialogue by %1$s (%2$s)' : 'Message by %1$s (%2$s)',
                                 $post->poster,
                                 dt($post->posted)
-                            ]),
-                            'html'    => true,
+                            ],
                         ],
                     ],
                 ],

@@ -175,10 +175,9 @@ class PMView extends AbstractPM
             ],
             'sets' => [
                 'info' => [
-                    'info' => [
+                    'inform' => [
                         [
-                            'value' => \implode('<br>', $headers),
-                            'html'  => true,
+                            'html' => \implode('<br>', $headers),
                         ],
                     ],
                 ],

@@ -80,10 +80,9 @@ class Censoring extends Admin
                     ],
                 ],
                 'onoff-info' => [
-                    'info' => [
+                    'inform' => [
                         [
-                            'value' => __('Censoring info'),
-                            'html'  => true,
+                            'message' => 'Censoring info',
                         ],
                     ],
                 ],

@@ -190,10 +190,9 @@ class Action extends Users
                     ],
                 ],
                 'info2' => [
-                    'info' => [
+                    'inform' => [
                         [
-                            'value'   => __('Delete warning'),
-                            'html'    => true,
+                            'message' => 'Delete warning',
                         ],
                     ],
                 ],

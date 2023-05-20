@@ -211,10 +211,9 @@ class Categories extends Admin
                     ],
                 ],
                 'del-info' => [
-                    'info' => [
+                    'inform' => [
                         [
-                            'value' => __('Delete category warn'),
-                            'html'  => true,
+                            'message' => 'Delete category warn',
                         ],
                     ],
                 ],

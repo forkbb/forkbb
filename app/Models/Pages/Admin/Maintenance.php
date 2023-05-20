@@ -111,10 +111,9 @@ class Maintenance extends Admin
             ],
             'sets'   => [
                 'indx-info' => [
-                    'info' => [
+                    'inform' => [
                         [
-                            'value' => __('Rebuild index info'),
-                            'html'  => true,
+                            'message' => 'Rebuild index info',
                         ],
                     ],
                 ],
@@ -146,10 +145,9 @@ class Maintenance extends Admin
                     ],
                 ],
                 'indx-info2' => [
-                    'info' => [
+                    'inform' => [
                         [
-                            'value' => __('Rebuild completed info'),
-                            'html'  => true,
+                            'message' => 'Rebuild completed info',
                         ],
                     ],
                 ],

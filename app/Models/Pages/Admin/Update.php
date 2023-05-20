@@ -304,9 +304,9 @@ class Update extends Admin
             ],
             'sets'   => [
                 'update-info' => [
-                    'info' => [
+                    'inform' => [
                         [
-                            'value' => __('Update message'),
+                            'message' => 'Update message',
                         ],
                     ],
                 ],
@@ -329,9 +329,9 @@ class Update extends Admin
                     ],
                 ],
                 'member-info' => [
-                    'info' => [
+                    'inform' => [
                         [
-                            'value' => __('Members message'),
+                            'message' => 'Members message',
                         ],
                     ],
                 ],

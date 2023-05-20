@@ -165,9 +165,9 @@ class Forums extends Admin
             foreach ($list as $forum) {
                 if ($cid !== $forum->cat_id) {
                     $form['sets']["category{$forum->cat_id}-info"] = [
-                        'info' => [
+                        'inform' => [
                             [
-                                'value' => $forum->cat_name,
+                                'message' => $forum->cat_name,
                             ],
                         ],
                     ];
@@ -305,10 +305,9 @@ class Forums extends Admin
                     ],
                 ],
                 [
-                    'info' => [
+                    'inform' => [
                         [
-                            'value' => __('Delete forum warn'),
-                            'html'  => true,
+                            'message' => 'Delete forum warn',
                         ],
                     ],
                 ],
@@ -508,10 +507,9 @@ class Forums extends Admin
         ];
 
         $form['sets']['forum-info'] = [
-            'info' => [
+            'inform' => [
                 [
-                    'value' => __(['Group permissions info', $this->c->Router->link('AdminGroups'), __('User groups')]),
-                    'html'  => true,
+                    'message' => ['Group permissions info', $this->c->Router->link('AdminGroups'), __('User groups')],
                 ],
             ],
         ];
