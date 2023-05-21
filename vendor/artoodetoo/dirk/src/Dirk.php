@@ -144,9 +144,9 @@ class Dirk extends PhpEngine
                 $whitespace = empty($matches[3]) ? '' : $matches[3] . $matches[3];
 
                 return $matches[1]
-                    ? substr($matches[0], 1)
+                    ? \substr($matches[0], 1)
                     : '<?= '
-                        . sprintf($this->echoFormat, $this->compileEchoDefaults($matches[2]))
+                        . \sprintf($this->echoFormat, $this->compileEchoDefaults($matches[2]))
                         . ' ?>' . $whitespace;
             },
             $value
@@ -303,7 +303,7 @@ class Dirk extends PhpEngine
 
         return "<?php \$__iter{$this->shortID}_{$this->loopsCounter} = 0; "
              . "foreach {$expression}: "
-             . "++\$__iter{$this->shortID}_{$this->loopsCounter} ?>";
+             . "++\$__iter{$this->shortID}_{$this->loopsCounter}; ?>";
     }
 
     /**
@@ -335,7 +335,7 @@ class Dirk extends PhpEngine
 
         return "<?php \$__iter{$this->shortID}_{$this->loopsCounter} = 0; "
              . "foreach {$expression}: "
-             . "++\$__iter{$this->shortID}_{$this->loopsCounter} ?>";
+             . "++\$__iter{$this->shortID}_{$this->loopsCounter}; ?>";
     }
 
     /**
@@ -407,7 +407,7 @@ class Dirk extends PhpEngine
             $expression = \substr($expression, 1, -1);
         }
 
-        return "<?php \$this->extend({$expression}) ?>";
+        return "<?php \$this->extend({$expression}); ?>";
     }
 
     /**
@@ -425,7 +425,7 @@ class Dirk extends PhpEngine
             $expression = \substr($expression, 1, -1);
         }
 
-        return "<?php include \$this->prepare({$expression}) ?>";
+        return "<?php include \$this->prepare({$expression}); ?>";
     }
 
     /**
@@ -436,7 +436,7 @@ class Dirk extends PhpEngine
      */
     protected function compileYield(string $expression): string
     {
-        return "<?= \$this->block{$expression} ?>";
+        return "<?= \$this->block{$expression}; ?>";
     }
 
     /**
@@ -447,7 +447,7 @@ class Dirk extends PhpEngine
      */
     protected function compileSection(string $expression): string
     {
-        return "<?php \$this->beginBlock{$expression} ?>";
+        return "<?php \$this->beginBlock{$expression}; ?>";
     }
 
     /**
@@ -457,7 +457,7 @@ class Dirk extends PhpEngine
      */
     protected function compileEndsection(): string
     {
-        return "<?php \$this->endBlock() ?>";
+        return "<?php \$this->endBlock(); ?>";
     }
 
     /**
@@ -467,7 +467,7 @@ class Dirk extends PhpEngine
      */
     protected function compileShow(): string
     {
-        return "<?= \$this->block(\$this->endBlock()) ?>";
+        return "<?= \$this->block(\$this->endBlock()); ?>";
     }
 
     /**
@@ -477,7 +477,7 @@ class Dirk extends PhpEngine
      */
     protected function compileAppend(): string
     {
-        return "<?php \$this->endBlock() ?>";
+        return "<?php \$this->endBlock(); ?>";
     }
 
     /**
@@ -487,7 +487,7 @@ class Dirk extends PhpEngine
      */
     protected function compileStop(): string
     {
-        return "<?php \$this->endBlock() ?>";
+        return "<?php \$this->endBlock(); ?>";
     }
 
     /**
@@ -497,7 +497,7 @@ class Dirk extends PhpEngine
      */
     protected function compileOverwrite(): string
     {
-        return "<?php \$this->endBlock(true) ?>";
+        return "<?php \$this->endBlock(true); ?>";
     }
 
     protected function compileSwitch(string $expression): string
@@ -519,7 +519,7 @@ class Dirk extends PhpEngine
 
     protected function compileEndswitch(): string
     {
-        return "<?php endswitch ?>";
+        return "<?php endswitch; ?>";
     }
 
     protected function compileBreak(): string
