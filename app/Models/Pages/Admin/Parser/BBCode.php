@@ -666,11 +666,11 @@ class BBCode extends Parser
     /**
      * Формирует данные для формы
      */
-    protected function formEditSub(?array $data, string $name, string $class, string|array $legend, string|array $info): array
+    protected function formEditSub(mixed $data, string $name, string $class, string|array $legend, string|array $info): array
     {
         $yn     = [1 => __('Yes'), 0 => __('No')];
         $fields = [];
-        $other  = \str_ends_with($name, '_attr');
+        $other  = ! \str_ends_with($name, '_attr');
         $key    = $other ? "other_attrs[{$name}]" : $name;
 
         if ('new_attr' === $name) {
