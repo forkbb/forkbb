@@ -499,4 +499,31 @@ class Dirk extends PhpEngine
     {
         return "<?php \$this->endBlock(true) ?>";
     }
+
+    protected function compileSwitch(string $expression): string
+    {
+        return "<?php switch {$expression}: ?>";
+    }
+
+    protected function compileCase(string $expression): string
+    {
+        $expression = \substr($expression, 1, -1);
+
+        return "<?php case {$expression}: ?>";
+    }
+
+    protected function compileDefault(): string
+    {
+        return "<?php default: ?>";
+    }
+
+    protected function compileEndswitch(): string
+    {
+        return "<?php endswitch ?>";
+    }
+
+    protected function compileBreak(): string
+    {
+        return "<?php break; ?>";
+    }
 }
