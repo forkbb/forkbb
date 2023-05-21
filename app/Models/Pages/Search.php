@@ -238,7 +238,7 @@ class Search extends Page
                             'options' => $this->listForOptions,
                             'value'   => isset($v->forums) ? \explode('.', $v->forums) : null,
                             'caption' => 'Forum search',
-                            'size'    => \min(\count($this->listForOptions), 10),
+                            'size'    => \min(\count($this->listForOptions), 10), // multiple
                         ],
                         'serch_in' => [
                             'class'   => ['w3'],

@@ -554,7 +554,7 @@ class BBCode extends Parser
                     'value'     => $structure->parents,
                     'caption'   => 'Parents label',
                     'help'      => 'Parents info',
-                    'size'      => \min(15, \count($this->bbTypes)),
+                    'size'      => \min(15, \count($this->bbTypes)), // multiple
                     'required'  => true,
                 ],
                 'handler' => [
