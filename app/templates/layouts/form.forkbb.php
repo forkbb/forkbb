@@ -24,7 +24,11 @@
                     @break
                 @default
             <dl id="id-dl-{{ $cur['id'] or $key }}" @if ($cur['class']) class="f-field-{{ \implode(' f-field-', $cur['class']) }}" @endif>
-              <dt> @if ($cur['caption'])<label class="f-ycaption @if ($cur['required']) f-req @endif" @if (false === \strpos('.radio.yield.str.btn.link.', ".{$cur['type']}.")) for="id-{{ $key }}" @endif>{!! __($cur['caption']) !!}</label> @endif</dt>
+              <dt>
+                    @if ($cur['caption'])
+                <label class="f-ycaption @if ($cur['required']) f-req @endif" @if (false === \strpos('.radio.yield.str.btn.link.', ".{$cur['type']}.")) for="id-{{ $key }}" @endif>{!! __($cur['caption']) !!}</label>
+                    @endif
+              </dt>
               <dd>
                     @switch ($cur['type'])
                         @case ('text')
@@ -35,29 +39,7 @@
                 <textarea @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl f-ytxtarea" id="id-{{ $key }}" name="{{ $key }}" @if ($cur['data']) @foreach ($cur['data'] as $k => $v) data-{{ $k }}="{{ $v }}" @endforeach @endif>{{ $cur['value'] or '' }}</textarea>
                             @break
                         @case ('select')
-                <select @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}">
-                            @if (!($count = null) && \is_array(\reset($cur['options'])) && 1 === \count(\reset($cur['options'])) && ($count = 0)) @endif
-                            @foreach ($cur['options'] as $v => $option)
-                                @if (\is_array($option))
-                                    @if (null !== $count && 1 === \count($option))
-                                        @if (++$count > 1)
-                </optgroup>
-                                        @endif
-                <optgroup label="{{ $option[0] }}">
-                                    @else
-                  <option value="{{ $option[0] }}" @if ($option[0] == $cur['value']) selected @endif @if ($option[2]) disabled @endif>{{ $option[1] }}</option>
-                                    @endif
-                                @else
-                  <option value="{{ $v }}" @if ($v == $cur['value']) selected @endif>{{ $option }}</option>
-                                @endif
-                            @endforeach
-                            @if (null !== $count)
-                </optgroup>
-                            @endif
-                </select>
-                            @break
-                        @case ('multiselect')
-                <select @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif @if ($cur['size']) size="{{ $cur['size'] }}" @endif multiple class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}[]">
+                <select @if ($cur['required']) required @endif @if ($cur['disabled']) disabled @endif @if ($cur['autofocus']) autofocus @endif @if ($cur['size']) size="{{ $cur['size'] }}" multiple @endif class="f-ctrl" id="id-{{ $key }}" name="{{ $key }}[]">
                             @if (!($count = null) && \is_array(\reset($cur['options'])) && 1 === \count(\reset($cur['options'])) && ($count = 0)) @endif
                             @foreach ($cur['options'] as $v => $option)
                                 @if (\is_array($option))

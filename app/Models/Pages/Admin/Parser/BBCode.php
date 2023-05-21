@@ -549,7 +549,7 @@ class BBCode extends Parser
                     'pattern'   => '^[a-z][a-z\d-]{0,19}$',
                 ],
                 'parents' => [
-                    'type'      => 'multiselect',
+                    'type'      => 'select',
                     'options'   => $this->bbTypes,
                     'value'     => $structure->parents,
                     'caption'   => 'Parents label',

@@ -234,7 +234,7 @@ class Search extends Page
                     'fields' => [
                         'forums' => [
                             'class'   => ['w3'],
-                            'type'    => 'multiselect',
+                            'type'    => 'select',
                             'options' => $this->listForOptions,
                             'value'   => isset($v->forums) ? \explode('.', $v->forums) : null,
                             'caption' => 'Forum search',
