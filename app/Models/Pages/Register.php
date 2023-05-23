@@ -273,6 +273,8 @@ class Register extends Page
                     'exception' => $e,
                     'headers'   => false,
                 ]);
+
+                $isSent = false;
             }
 
             // письмо активации аккаунта отправлено
