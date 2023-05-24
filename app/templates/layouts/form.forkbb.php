@@ -72,10 +72,10 @@
                             @endforeach
                             @break
                         @case ('btn')
-                <a id="id-{{ $key }}" class="f-btn f-ybtn @if ($cur['disabled']) f-disabled @endif" href="{{ $cur['link'] or '' }}" title="{{ $cur['title'] or $cur['value'] }}" @if ($cur['disabled']) tabindex="-1" @endif>{{ $cur['value'] }}</a>
+                <a id="id-{{ $key }}" class="f-btn f-ybtn @if ($cur['disabled']) f-disabled @endif" href="{{ $cur['href'] }}" title="{{ $cur['title'] or $cur['value'] }}" @if ($cur['disabled']) tabindex="-1" @endif>{{ $cur['value'] }}</a>
                             @break
                         @case ('link')
-                <a id="id-{{ $key }}" class="f-link" href="{{ $cur['href'] or '' }}" @if ($cur['rel']) rel="{{ $cur['rel'] }}" @endif title="{{ $cur['title'] or $cur['value'] }}">{{ $cur['value'] }}</a>
+                <a id="id-{{ $key }}" class="f-link" href="{{ $cur['href'] }}" @if ($cur['rel']) rel="{{ $cur['rel'] }}" @endif title="{{ $cur['title'] or $cur['value'] }}">{{ $cur['value'] }}</a>
                             @break
                         @case ('str')
                 <p id="id-{{ $key }}" class="f-str"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
