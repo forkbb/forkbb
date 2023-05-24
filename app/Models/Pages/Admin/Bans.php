@@ -79,23 +79,23 @@ class Bans extends Admin
             $v = $this->c->Validator->reset()
             ->addValidators([
             ])->addRules([
-                'token'           => 'token:AdminBans',
-                'username'        => 'string:trim,null|max:25',
-                'ip'              => 'string:trim,null|max:40',
-                'email'           => 'string:trim,null|max:' . $this->c->MAX_EMAIL_LENGTH,
-                'message'         => 'string:trim,null|max:255',
-                'expire_1'        => 'date',
-                'expire_2'        => 'date',
-                'order_by'        => 'required|string|in:id,username,ip,email,expire',
-                'direction'       => 'required|string|in:ASC,DESC',
+                'token'      => 'token:AdminBans',
+                's_username' => 'string:trim,null|max:25',
+                's_ip'       => 'string:trim,null|max:40',
+                's_email'    => 'string:trim,null|max:' . $this->c->MAX_EMAIL_LENGTH,
+                's_message'  => 'string:trim,null|max:255',
+                's_expire_1' => 'date',
+                's_expire_2' => 'date',
+                'order_by'   => 'required|string|in:id,username,ip,email,expire',
+                'direction'  => 'required|string|in:ASC,DESC',
             ])->addAliases([
-                'username'        => 'Username label',
-                'ip'              => 'IP label',
-                'email'           => 'E-mail label',
-                'message'         => 'Message label',
-                'expire_1'        => 'Expire date label',
-                'expire_2'        => 'Expire date label',
-                'order_by'        => 'Order by label',
+                's_username' => 'Username label',
+                's_ip'       => 'IP label',
+                's_email'    => 'E-mail label',
+                's_message'  => 'Message label',
+                's_expire_1' => 'Expire date label',
+                's_expire_2' => 'Expire date label',
+                'order_by'   => 'Order by label',
 #                        'direction'       => ,
             ])->addArguments([
             ])->addMessages([
@@ -144,46 +144,46 @@ class Bans extends Admin
             ],
         ];
         $fields = [];
-        $fields['username'] = [
+        $fields['s_username'] = [
             'type'      => 'text',
             'maxlength' => '25',
             'caption'   => 'Username label',
-            'value'     => $data['username'] ?? null,
+            'value'     => $data['s_username'] ?? null,
         ];
-        $fields['ip'] = [
+        $fields['s_ip'] = [
             'type'      => 'text',
             'maxlength' => '40',
             'caption'   => 'IP label',
-            'value'     => $data['ip'] ?? null,
+            'value'     => $data['s_ip'] ?? null,
         ];
-        $fields['email'] = [
+        $fields['s_email'] = [
             'type'      => 'text',
             'maxlength' => (string) $this->c->MAX_EMAIL_LENGTH,
             'caption'   => 'E-mail label',
-            'value'     => $data['email'] ?? null,
+            'value'     => $data['s_email'] ?? null,
         ];
-        $fields['message'] = [
+        $fields['s_message'] = [
             'type'      => 'text',
             'maxlength' => '255',
             'caption'   => 'Message label',
-            'value'     => $data['message'] ?? null,
+            'value'     => $data['s_message'] ?? null,
         ];
         $fields['between1'] = [
             'class' => ['between'],
             'type'  => 'wrap',
         ];
-        $fields['expire_1'] = [
+        $fields['s_expire_1'] = [
             'class'     => ['bstart'],
             'type'      => 'text',
             'maxlength' => '100',
-            'value'     => $data['expire_1'] ?? null,
+            'value'     => $data['s_expire_1'] ?? null,
             'caption'   => 'Expire date label',
         ];
-        $fields['expire_2'] = [
+        $fields['s_expire_2'] = [
             'class'     => ['bend'],
             'type'      => 'text',
             'maxlength' => '100',
-            'value'     => $data['expire_2'] ?? null,
+            'value'     => $data['s_expire_2'] ?? null,
         ];
         $fields[] = [
             'type' => 'endwrap',
@@ -321,6 +321,8 @@ class Bans extends Admin
             ) {
                 continue;
             }
+
+            $field = \substr($field, 2);
 
             $key  = 1;
             $type = '=';
