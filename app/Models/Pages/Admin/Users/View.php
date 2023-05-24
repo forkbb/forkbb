@@ -149,7 +149,7 @@ class View extends Users
                 'new' => [
                     'type'  => 'btn',
                     'value' => __('Add'),
-                    'link'  => $this->c->Router->link('AdminUsersNew'),
+                    'href'  => $this->c->Router->link('AdminUsersNew'),
                 ],
             ],
         ];

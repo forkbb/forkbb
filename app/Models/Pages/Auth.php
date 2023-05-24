@@ -367,14 +367,15 @@ class Auth extends Page
                 'forget' => [
                     'fields' => [
                         'email' => [
-                            'autofocus' => true,
-                            'type'      => 'email',
-                            'maxlength' => (string) $this->c->MAX_EMAIL_LENGTH,
-                            'value'     => $email,
-                            'caption'   => 'Email',
-                            'help'      => 'Passphrase reset info',
-                            'required'  => true,
-                            'pattern'   => '.+@.+',
+                            'autofocus'      => true,
+                            'type'           => 'text',
+                            'maxlength'      => (string) $this->c->MAX_EMAIL_LENGTH,
+                            'value'          => $email,
+                            'caption'        => 'Email',
+                            'help'           => 'Passphrase reset info',
+                            'required'       => true,
+                            'pattern'        => '.+@.+',
+                            'autocapitalize' => 'off',
                         ],
                     ],
                 ],

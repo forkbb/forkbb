@@ -99,7 +99,7 @@ class Providers extends Admin
                 'type'    => 'btn',
                 'value'   => __($provider->name),
                 'caption' => 'Provider label',
-                'link'    => $this->c->Router->link('AdminProvider', ['name' => $provider->name]),
+                'href'    => $this->c->Router->link('AdminProvider', ['name' => $provider->name]),
             ];
             $fields["form[{$provider->name}][pr_pos]"] = [
                 'class'   => ['position', 'provider'],

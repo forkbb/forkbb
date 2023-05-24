@@ -186,7 +186,7 @@ class PMBlock extends AbstractPM
                 'cancel' => [
                     'type'  => 'btn',
                     'value' => __('Cancel'),
-                    'link'  => $this->linkBack,
+                    'href'  => $this->linkBack,
                 ],
             ],
         ];

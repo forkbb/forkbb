@@ -843,7 +843,7 @@ class Groups extends Admin
                 'cancel' => [
                     'type'  => 'btn',
                     'value' => __('Cancel'),
-                    'link'  => $this->c->Router->link('AdminGroups'),
+                    'href'  => $this->c->Router->link('AdminGroups'),
                 ],
             ],
         ];

@@ -233,12 +233,13 @@ class Search extends Page
                     'legend' => 'Search in legend',
                     'fields' => [
                         'forums' => [
-                            'class'   => ['w3'],
-                            'type'    => 'select',
-                            'options' => $this->listForOptions,
-                            'value'   => isset($v->forums) ? \explode('.', $v->forums) : null,
-                            'caption' => 'Forum search',
-                            'size'    => \min(\count($this->listForOptions), 10), // multiple
+                            'class'    => ['w3'],
+                            'type'     => 'select',
+                            'options'  => $this->listForOptions,
+                            'value'    => isset($v->forums) ? \explode('.', $v->forums) : null,
+                            'caption'  => 'Forum search',
+                            'size'     => \min(\count($this->listForOptions), 10),
+                            'multiple' => true,
                         ],
                         'serch_in' => [
                             'class'   => ['w3'],

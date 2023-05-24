@@ -138,7 +138,7 @@ class BBCode extends Parser
                 'new' => [
                     'type'  => 'btn',
                     'value' => __('New BBCode'),
-                    'link'  => $this->c->Router->link('AdminBBCodeNew'),
+                    'href'  => $this->c->Router->link('AdminBBCodeNew'),
                 ],
                 'save' => [
                     'type'  => 'submit',
@@ -189,7 +189,7 @@ class BBCode extends Parser
                 'value'     => '❌',
                 'caption'   => 'Delete',
                 'title'     => __('Delete'),
-                'link'      => 1 === $tagData['bb_delete']
+                'href'      => 1 === $tagData['bb_delete']
                     ? $this->c->Router->link('AdminBBCodeDelete', ['id' => $id])
                     : null,
                 'disabled'  => 1 !== $tagData['bb_delete'],
@@ -312,7 +312,7 @@ class BBCode extends Parser
                 'cancel'  => [
                     'type'  => 'btn',
                     'value' => __('Cancel'),
-                    'link'  => $this->AdminBBCodeUrl,
+                    'href'  => $this->AdminBBCodeUrl,
                 ],
             ],
         ];
@@ -500,7 +500,7 @@ class BBCode extends Parser
                     'class' => ['f-opacity'],
                     'type'  => 'btn',
                     'value' => __('Default structure'),
-                    'link'  => $this->c->Router->link(
+                    'href'  => $this->c->Router->link(
                         'AdminBBCodeDefault',
                         [
                             'id' => $id,
@@ -554,8 +554,9 @@ class BBCode extends Parser
                     'value'     => $structure->parents,
                     'caption'   => 'Parents label',
                     'help'      => 'Parents info',
-                    'size'      => \min(15, \count($this->bbTypes)), // multiple
+                    'size'      => \min(15, \count($this->bbTypes)),
                     'required'  => true,
+                    'multiple'  => true,
                 ],
                 'handler' => [
                     'class'     => ['handler'],

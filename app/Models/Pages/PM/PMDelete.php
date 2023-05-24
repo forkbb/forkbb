@@ -165,7 +165,7 @@ class PMDelete extends AbstractPM
                 'cancel'  => [
                     'type'  => 'btn',
                     'value' => __('Cancel'),
-                    'link'  => $post->link,
+                    'href'  => $post->link,
                 ],
             ],
         ];

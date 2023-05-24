@@ -116,7 +116,7 @@ class Edit extends Parser
                     'caption' => null,
                     'value'   => __('BBCode management'),
                     'title'   => __('BBCode management'),
-                    'link'    => $this->c->Router->link('AdminBBCode'),
+                    'href'    => $this->c->Router->link('AdminBBCode'),
                 ],
             ],
         ];
@@ -143,7 +143,7 @@ class Edit extends Parser
                     'caption' => null,
                     'value'   => __('Smilies management'),
                     'title'   => __('Smilies management'),
-                    'link'    => $this->c->Router->link('AdminSmilies'),
+                    'href'    => $this->c->Router->link('AdminSmilies'),
                 ],
 
             ],

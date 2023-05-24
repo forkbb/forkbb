@@ -175,7 +175,7 @@ class PMTopic extends AbstractPM
                 'cancel'  => [
                     'type'  => 'btn',
                     'value' => __('Cancel'),
-                    'link'  => $this->model->link,
+                    'href'  => $this->model->link,
                 ],
             ],
         ];

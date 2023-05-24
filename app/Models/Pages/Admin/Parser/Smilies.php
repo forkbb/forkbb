@@ -198,7 +198,7 @@ class Smilies extends Parser
                 'value'     => '❌',
                 'caption'   => 'Delete',
                 'title'     => __('Delete'),
-                'link'      => $this->c->Router->link(
+                'href'      => $this->c->Router->link(
                     'AdminSmiliesDelete',
                     [
                         'name' => $id,

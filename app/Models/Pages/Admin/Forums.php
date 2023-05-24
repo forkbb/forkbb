@@ -147,7 +147,7 @@ class Forums extends Admin
                 'new' => [
                     'type'  => 'btn',
                     'value' => __('New forum'),
-                    'link'  => $this->c->Router->link('AdminForumsNew'),
+                    'href'  => $this->c->Router->link('AdminForumsNew'),
                 ],
                 'update' => [
                     'type'  => 'submit',
@@ -180,7 +180,7 @@ class Forums extends Admin
                     'type'    => 'btn',
                     'value'   => $forum->forum_name,
                     'caption' => 'Forum label',
-                    'link'    => $this->c->Router->link(
+                    'href'    => $this->c->Router->link(
                         'AdminForumsEdit',
                         [
                             'id' => $forum->id,
@@ -202,7 +202,7 @@ class Forums extends Admin
                     'value'    => '❌',
                     'caption'  => 'Delete',
                     'title'    => __('Delete'),
-                    'link'     => $disabled
+                    'href'     => $disabled
                         ? '#'
                         : $this->c->Router->link(
                             'AdminForumsDelete',
@@ -321,7 +321,7 @@ class Forums extends Admin
                 'cancel' => [
                     'type'  => 'btn',
                     'value' => __('Cancel'),
-                    'link'  => $this->c->Router->link('AdminForums'),
+                    'href'  => $this->c->Router->link('AdminForums'),
                 ],
             ],
         ];

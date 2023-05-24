@@ -504,7 +504,7 @@ class Bans extends Admin
                 'value'   => '✎',
                 'caption' => 'Results actions head',
                 'title'   => __('Edit'),
-                'link'    => $this->c->Router->link(
+                'href'    => $this->c->Router->link(
                     'AdminBansEdit',
                     $arr
                 ),
@@ -515,7 +515,7 @@ class Bans extends Admin
                 'value'   => '❌',
                 'caption' => 'Results actions head',
                 'title'   => __('Delete'),
-                'link'    => $this->c->Router->link(
+                'href'    => $this->c->Router->link(
                     'AdminBansDelete',
                     [
                         'id' => $ban['id'],

@@ -124,7 +124,7 @@ class Reports extends Admin
                     'type'    => 'btn',
                     'value'   => __('Zap'),
                     'title'   => __('Zap'),
-                    'link'    => $report->linkZap,
+                    'href'    => $report->linkZap,
                 ];
             }
 

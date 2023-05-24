@@ -132,7 +132,7 @@ class Delete extends Page
                 'cancel'  => [
                     'type'  => 'btn',
                     'value' => __('Cancel'),
-                    'link'  => $this->c->Router->link('ViewPost', $args),
+                    'href'  => $this->c->Router->link('ViewPost', $args),
                 ],
             ],
         ];

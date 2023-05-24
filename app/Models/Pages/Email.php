@@ -176,7 +176,7 @@ class Email extends Page
                 'back' => [
                     'type'  => 'btn',
                     'value' => __('Go back'),
-                    'link'  => $data['redirect'],
+                    'href'  => $data['redirect'],
                     'class' => ['f-opacity', 'f-go-back'],
                 ],
             ],

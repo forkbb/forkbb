@@ -77,7 +77,7 @@ class OAuth extends Profile
                 'class' => ['oauth-acc-btn'],
                 'value' => $value,
                 'title' => $title,
-                'link'  => $this->c->Router->link('EditUserOAuthAction', $args),
+                'href'  => $this->c->Router->link('EditUserOAuthAction', $args),
             ];
         }
 
@@ -232,7 +232,7 @@ class OAuth extends Profile
                 'cancel' => [
                     'type'  => 'btn',
                     'value' => __('Cancel'),
-                    'link'  => $this->c->Router->link('EditUserOAuth', $args),
+                    'href'  => $this->c->Router->link('EditUserOAuth', $args),
                 ],
             ],
         ];

@@ -119,15 +119,16 @@ class Register extends Page
                 'reg' => [
                     'fields' => [
                         'email' => [
-                            'autofocus' => true,
-                            'class'     => ['hint'],
-                            'type'      => 'email',
-                            'maxlength' => (string) $this->c->MAX_EMAIL_LENGTH,
-                            'value'     => $v->email,
-                            'caption'   => 'Email',
-                            'help'      => 'Email info',
-                            'required'  => true,
-                            'pattern'   => '.+@.+',
+                            'autofocus'      => true,
+                            'class'          => ['hint'],
+                            'type'           => 'text',
+                            'maxlength'      => (string) $this->c->MAX_EMAIL_LENGTH,
+                            'value'          => $v->email,
+                            'caption'        => 'Email',
+                            'help'           => 'Email info',
+                            'required'       => true,
+                            'pattern'        => '.+@.+',
+                            'autocapitalize' => 'off',
                         ],
                         'username' => [
                             'class'     => ['hint'],

@@ -59,13 +59,14 @@ trait PostFormTrait
                 'autofocus' => $autofocus,
             ];
             $fieldset['email'] = [
-                'class'     => ['w2'],
-                'type'      => 'email',
-                'maxlength' => (string) $this->c->MAX_EMAIL_LENGTH,
-                'caption'   => 'Email',
-                'required'  => 1 === $this->c->config->b_force_guest_email,
-                'pattern'   => '.+@.+',
-                'value'     => $vars['email'] ?? null,
+                'class'          => ['w2'],
+                'type'           => 'text',
+                'maxlength'      => (string) $this->c->MAX_EMAIL_LENGTH,
+                'caption'        => 'Email',
+                'required'       => 1 === $this->c->config->b_force_guest_email,
+                'pattern'        => '.+@.+',
+                'value'          => $vars['email'] ?? null,
+                'autocapitalize' => 'off',
             ];
             $autofocus = null;
         }

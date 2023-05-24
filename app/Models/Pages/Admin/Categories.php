@@ -109,7 +109,7 @@ class Categories extends Admin
                 'value'   => '❌',
                 'caption' => 'Delete',
                 'title'   => __('Delete'),
-                'link'    => $this->c->Router->link(
+                'href'    => $this->c->Router->link(
                     'AdminCategoriesDelete',
                     [
                         'id' => $key,
@@ -226,7 +226,7 @@ class Categories extends Admin
                 'cancel' => [
                     'type'  => 'btn',
                     'value' => __('Cancel'),
-                    'link'  => $this->c->Router->link('AdminCategories'),
+                    'href'  => $this->c->Router->link('AdminCategories'),
                 ],
             ],
         ];

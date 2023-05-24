@@ -205,7 +205,7 @@ class Install extends Admin
                     'cookie_path'   => 'Cookie Path',
                     'cookie_secure' => 'Cookie Secure',
                 ])->addMessages([
-                    'email'        => 'Wrong email',
+                    'email'         => 'Wrong email',
                 ]);
 
             if ($v->validation($_POST)) {
@@ -334,13 +334,14 @@ class Install extends Admin
                             'required' => true,
                         ],
                         'email' => [
-                            'type'      => 'email',
-                            'maxlength' => '80',
-                            'pattern'   => '.+@.+',
-                            'value'     => $v->email ?? '',
-                            'caption'   => 'Administrator email',
-                            'help'      => 'Info 10',
-                            'required'  => true,
+                            'type'           => 'text',
+                            'maxlength'      => '80',
+                            'pattern'        => '.+@.+',
+                            'value'          => $v->email ?? '',
+                            'caption'        => 'Administrator email',
+                            'help'           => 'Info 10',
+                            'required'       => true,
+                            'autocapitalize' => 'off',
                         ],
 
                     ],

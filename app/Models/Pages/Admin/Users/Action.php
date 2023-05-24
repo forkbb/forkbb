@@ -205,7 +205,7 @@ class Action extends Users
                 'cancel'  => [
                     'type'  => 'btn',
                     'value' => __('Cancel'),
-                    'link'  => $this->c->Router->link('AdminUsers'),
+                    'href'  => $this->c->Router->link('AdminUsers'),
                 ],
             ],
         ];
@@ -364,7 +364,7 @@ class Action extends Users
                 'cancel'  => [
                     'type'  => 'btn',
                     'value' => __('Cancel'),
-                    'link'  => $linkCancel,
+                    'href'  => $linkCancel,
                 ],
             ],
         ];

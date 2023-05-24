@@ -199,7 +199,7 @@ class PMView extends AbstractPM
                 'cancel'  => [
                     'type'  => 'btn',
                     'value' => __('Cancel'),
-                    'link'  => $this->c->Router->link('PMAction', $args),
+                    'href'  => $this->c->Router->link('PMAction', $args),
                 ],
             ],
         ];

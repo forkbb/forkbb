@@ -226,14 +226,15 @@ class Email extends Profile
                     'class'  => ['data-edit'],
                     'fields' => [
                         'new_email' => [
-                            'autofocus' => true,
-                            'type'      => 'email',
-                            'maxlength' => (string) $this->c->MAX_EMAIL_LENGTH,
-                            'caption'   => $this->rules->confirmEmail ? 'New or old email' : 'New email',
-                            'required'  => true,
-                            'pattern'   => '.+@.+',
-                            'value'     => $this->curUser->email,
-                            'help'      => $this->rules->my ? 'Email instructions' : null,
+                            'autofocus'      => true,
+                            'type'           => 'text',
+                            'maxlength'      => (string) $this->c->MAX_EMAIL_LENGTH,
+                            'caption'        => $this->rules->confirmEmail ? 'New or old email' : 'New email',
+                            'required'       => true,
+                            'pattern'        => '.+@.+',
+                            'value'          => $this->curUser->email,
+                            'help'           => $this->rules->my ? 'Email instructions' : null,
+                            'autocapitalize' => 'off',
                         ],
                         'password' => [
                             'type'      => 'password',
