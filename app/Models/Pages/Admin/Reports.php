@@ -123,7 +123,6 @@ class Reports extends Admin
                 $cur['fields']['zap' . $report->id] = [
                     'type'    => 'btn',
                     'value'   => __('Zap'),
-                    'title'   => __('Zap'),
                     'href'    => $report->linkZap,
                 ];
             }

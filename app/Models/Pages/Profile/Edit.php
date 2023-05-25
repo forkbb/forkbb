@@ -276,7 +276,6 @@ class Edit extends Profile
             $fields['configure-moderator'] = [
                 'type'    => 'link',
                 'value'   => __('Configure moderator rights'),
-                'title'   => __('Configure moderator rights'),
                 'href'    => $this->c->Router->link('EditUserModeration', $args),
             ];
         }

@@ -624,7 +624,6 @@ class Options extends Admin
                     'type'  => 'link',
                     'value' => __('Configure providers'),
                     'href'  => $this->c->Router->link('AdminProviders'),
-                    'title' => __('Configure providers'),
                 ],
                 'b_rules' => [
                     'type'    => 'radio',
