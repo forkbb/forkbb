@@ -125,7 +125,7 @@ msgid "Redirecting"
 msgstr "Перенаправление"
 
 msgid "Redirecting..."
-msgstr "<a href=\"%s\">Переадресация …</a>"
+msgstr "<br><a href=\"%s\">Переадресация …</a>"
 
 msgid "on"
 msgstr "вкл."

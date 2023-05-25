@@ -125,7 +125,7 @@ msgid "Redirecting"
 msgstr "Redirecting"
 
 msgid "Redirecting..."
-msgstr "<a href=\"%s\">Redirecting …</a>"
+msgstr "<br><a href=\"%s\">Redirecting …</a>"
 
 msgid "on"
 msgstr "on"
