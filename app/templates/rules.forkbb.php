@@ -8,9 +8,11 @@
     </div>
     <div id="fork-rules" class="f-main">
       <div id="id-rules">{!! $p->rules !!}</div>
+    </div>
 @if ($form = $p->form)
-      <div id="fork-rconf" class="f-fdiv f-lrdiv">
+    <div id="fork-rconf" class="f-main">
+      <div class="f-fdiv f-lrdiv">
     @include ('layouts/form')
       </div>
-@endif
     </div>
+@endif
