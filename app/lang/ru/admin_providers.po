@@ -66,6 +66,12 @@ msgstr "Установите флажок, если хотите изменит�
 msgid "Sign in with %s"
 msgstr "Войти с помощью %s"
 
+msgid "Sign up with %s"
+msgstr "Регистрация через %s"
+
+msgid "From %s"
+msgstr "%s"
+
 msgid "Provider response error: %s"
 msgstr "Ошибка.<br>Ответ провайдера: %s."
 

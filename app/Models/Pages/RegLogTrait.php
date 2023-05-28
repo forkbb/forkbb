@@ -26,12 +26,27 @@ trait RegLogTrait
 
         $this->c->Lang->load('admin_providers');
 
+        switch ($type) {
+            case 'reg':
+                $message = 'Sign up with %s';
+
+                break;
+            case 'add':
+                $message = 'From %s';
+
+                break;
+            default:
+                $message = 'Sign in with %s';
+
+                break;
+        }
+
         $btns = [];
 
         foreach ($list as $name) {
             $btns[$name] = [
                 'type'  => 'submit',
-                'value' => __(['Sign in with %s', __($name)]),
+                'value' => __([$message, __($name)]),
             ];
         }
 

@@ -66,6 +66,12 @@ msgstr "Enable this checkbox if you want to change the data"
 msgid "Sign in with %s"
 msgstr "Sign in with %s"
 
+msgid "Sign up with %s"
+msgstr "Sign up with %s"
+
+msgid "From %s"
+msgstr "%s"
+
 msgid "Provider response error: %s"
 msgstr "Failed.<br>Provider response: %s."
 
