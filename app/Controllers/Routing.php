@@ -109,7 +109,7 @@ class Routing
         if (1 === $config->b_oauth_allow) {
             $r->add(
                 $r::PST,
-                '/reglog/redirect',
+                '/reglog/redirect/{type}',
                 'RegLog:redirect',
                 'RegLogRedirect'
             );

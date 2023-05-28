@@ -98,7 +98,7 @@ class Register extends Page
         $this->titles       = 'Register';
         $this->robots       = 'noindex';
         $this->form         = $this->formReg($v);
-        $this->formOAuth    = $this->reglogForm();
+        $this->formOAuth    = $this->reglogForm('reg');
 
         return $this;
     }

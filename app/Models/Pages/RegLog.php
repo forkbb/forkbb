@@ -21,7 +21,7 @@ class RegLog extends Page
     /**
      * Обрабатывает нажатие одной из кнопок провайдеров
      */
-    public function redirect(): Page
+    public function redirect(array $args): Page
     {
         if (
             1 !== $this->c->config->b_oauth_allow
@@ -38,7 +38,7 @@ class RegLog extends Page
             $rules[$name] = 'string';
         }
 
-        $v = $this->c->Validator->reset()->addRules($rules);
+        $v = $this->c->Validator->reset()->addRules($rules)->addArguments(['token' => $args]);
 
         if (
             ! $v->validation($_POST)
@@ -47,7 +47,7 @@ class RegLog extends Page
             return $this->c->Message->message('Bad request');
         }
 
-        return $this->c->Redirect->url($this->c->providers->init()->get(\array_key_first($form))->linkAuth);
+        return $this->c->Redirect->url($this->c->providers->init()->get(\array_key_first($form))->linkAuth($args['type']));
     }
 
     /**

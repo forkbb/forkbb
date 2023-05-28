@@ -45,7 +45,7 @@ class OAuth extends Profile
             ]
         );
         $this->form            = $this->formList($args);
-        $this->formOAuth       = $this->reglogForm();
+        $this->formOAuth       = $this->reglogForm('add');
         $this->actionBtns      = $this->btns('edit');
         $this->profileIdSuffix = '-oauth';
 

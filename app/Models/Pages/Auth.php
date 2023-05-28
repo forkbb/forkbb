@@ -128,7 +128,7 @@ class Auth extends Page
         $save               = $v->save ?? true;
         $redirect           = $v->redirect ?? $this->c->Router->validate($ref, 'Index');
         $this->form         = $this->formLogin($username, (bool) $save, $redirect);
-        $this->formOAuth    = $this->reglogForm();
+        $this->formOAuth    = $this->reglogForm('auth');
 
         return $this;
     }

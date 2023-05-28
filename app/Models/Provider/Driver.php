@@ -12,6 +12,7 @@ namespace ForkBB\Models\Provider;
 
 use ForkBB\Core\Container;
 use ForkBB\Models\Model;
+use InvalidArgumentException;
 use RuntimeException;
 
 abstract class Driver extends Model
@@ -79,12 +80,18 @@ abstract class Driver extends Model
     /**
      * Формирует ссылку авторизации на сервере провайдера
      */
-    protected function getlinkAuth(): string
+    public function linkAuth(string $type): string
     {
+        if ('' == $type) {
+            throw new InvalidArgumentException('Expected non-empty type');
+        } elseif (0 !== \preg_match('%[^a-zA-Z]%', $type)) {
+            throw new InvalidArgumentException('Invalid characters in type');
+        }
+
         $params = [
             'response_type' => 'code',
             'scope'         => $this->scope,
-            'state'         => $this->c->Csrf->createHash($this->origName, ['ip' => $this->c->user->ip]),
+            'state'         => $type . '_' . $this->c->Csrf->createHash($this->origName, ['ip' => $this->c->user->ip, 'type' => $type]),
             'client_id'     => $this->client_id,
             'redirect_uri'  => $this->linkCallback,
         ];
@@ -94,10 +101,19 @@ abstract class Driver extends Model
 
     /**
      * Проверяет правильность state
+     * Запоминает stateType
      */
     protected function verifyState(string $state): bool
     {
-        return $this->c->Csrf->verify($state, $this->origName, ['ip' => $this->c->user->ip]);
+        $state = \explode('_', $state, 2);
+
+        if (2 !== \count($state)) {
+            return false;
+        }
+
+        $this->stateType = $state[0];
+
+        return $this->c->Csrf->verify($state[1], $this->origName, ['ip' => $this->c->user->ip, 'type' => $state[0]]);
     }
 
     /**

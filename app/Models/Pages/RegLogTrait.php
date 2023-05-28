@@ -15,7 +15,7 @@ use function \ForkBB\__;
 
 trait RegLogTrait
 {
-    protected function reglogForm(): array
+    protected function reglogForm(string $type): array
     {
         if (
             1 !== $this->c->config->b_oauth_allow
@@ -35,10 +35,12 @@ trait RegLogTrait
             ];
         }
 
+        $args = ['type' => $type];
+
         return [
-            'action' => $this->c->Router->link('RegLogRedirect'),
+            'action' => $this->c->Router->link('RegLogRedirect', $args),
             'hidden' => [
-                'token' => $this->c->Csrf->create('RegLogRedirect'),
+                'token' => $this->c->Csrf->create('RegLogRedirect', $args),
             ],
             'sets'   => [],
             'btns'   => $btns,
