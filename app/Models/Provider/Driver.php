@@ -122,6 +122,7 @@ abstract class Driver extends Model
      */
     public function verifyAuth(array $data): bool
     {
+        $data       = $this->c->Secury->replInvalidChars($data);
         $this->code = '';
 
         if (! \is_string($data['code'] ?? null)) {
