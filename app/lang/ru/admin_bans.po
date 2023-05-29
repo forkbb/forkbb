@@ -28,7 +28,7 @@ msgid "User is ban"
 msgstr "Пользователь %s забанен."
 
 msgid "Must enter message"
-msgstr "Вы должны ввести имя пользователя, IP или email (хотя бы что-нибудь одно)."
+msgstr "Вы должны ввести имя пользователя, IP или адрес электронной почты (хотя бы что-нибудь одно)."
 
 msgid "Cannot ban guest message"
 msgstr "Гостя нельзя забанить."
@@ -37,7 +37,7 @@ msgid "Invalid IP message (%s)"
 msgstr "Вы ввели неверный IP или IP-диапазон (%s)."
 
 msgid "Invalid e-mail message"
-msgstr "Email (т.е. user@domain.com) или доменная часть (т.е. domain.com или .com) введен(а) неверно."
+msgstr "Адрес электронной почты (т.е. user@domain.com) или доменная часть (т.е. domain.com или .com) введен(а) неверно."
 
 msgid "Invalid date message"
 msgstr "Вы ввели неправильную дату окончания. Бан должен действовать минимум сутки."
@@ -94,7 +94,7 @@ msgid "Order by ip"
 msgstr "IP"
 
 msgid "Order by e-mail"
-msgstr "Email"
+msgstr "Адресу электронной почты"
 
 msgid "Order by expire"
 msgstr "Дате устаревания"
@@ -109,10 +109,10 @@ msgid "Submit search"
 msgstr "Искать"
 
 msgid "E-mail label"
-msgstr "Email"
+msgstr "Почта"
 
 msgid "E-mail help"
-msgstr "Email или домен, который вы хотите забанить (т.е. someone@somewhere.com, somewhere.com или .com)."
+msgstr "Адрес электронной почты или домен, который вы хотите забанить (т.е. someone@somewhere.com, somewhere.com или .com)."
 
 msgid "IP label"
 msgstr "IP адрес/IP-подсеть"
@@ -142,7 +142,7 @@ msgid "Results username head"
 msgstr "Имя пользователя"
 
 msgid "Results e-mail head"
-msgstr "Email"
+msgstr "Почта"
 
 msgid "Results IP address head"
 msgstr "IP/IP-диапазон"

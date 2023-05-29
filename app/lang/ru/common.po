@@ -158,7 +158,7 @@ msgid "Passphrase"
 msgstr "Кодовая фраза"
 
 msgid "Email"
-msgstr "Email"
+msgstr "Почта"
 
 msgid "Send email"
 msgstr "Отправить письмо"

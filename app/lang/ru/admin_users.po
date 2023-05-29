@@ -82,7 +82,7 @@ msgid "Username label"
 msgstr "Имя пользователя"
 
 msgid "E-mail address label"
-msgstr "Email"
+msgstr "Почта"
 
 msgid "Title label"
 msgstr "Титул"
@@ -127,7 +127,7 @@ msgid "Order by username"
 msgstr "Имени"
 
 msgid "Order by e-mail"
-msgstr "Email"
+msgstr "Адресу электронной почты"
 
 msgid "Order by posts"
 msgstr "Количествуву сообщений"
@@ -178,7 +178,7 @@ msgid "Results username head"
 msgstr "Имя пользователя"
 
 msgid "Results e-mail head"
-msgstr "Email"
+msgstr "Почта"
 
 msgid "Results title head"
 msgstr "Титул/Статус"

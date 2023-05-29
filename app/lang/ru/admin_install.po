@@ -145,7 +145,7 @@ msgid "Description"
 msgstr "Форум работает на движке с открытым исходным кодом - ForkBB."
 
 msgid "Wrong email"
-msgstr "Ошибка в email администратора."
+msgstr "Ошибка в адресе электронной почты администратора."
 
 msgid "Table prefix error"
 msgstr "Префикс '%s' не соответсвует формату."

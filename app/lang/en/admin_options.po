@@ -202,7 +202,7 @@ msgid "Mailing list label"
 msgstr "Mailing list"
 
 msgid "Mailing list help"
-msgstr "A comma separated list of subscribers. The people on this list are the recipients of reports."
+msgstr "List of email addresses separated by commas. Reports will be sent to these addresses."
 
 msgid "Avatars subhead"
 msgstr "Avatars"
@@ -289,7 +289,7 @@ msgid "SMTP SSL label"
 msgstr "Encrypt SMTP using SSL"
 
 msgid "SMTP SSL help"
-msgstr "Encrypts the connection to the SMTP server using SSL. Should only be used if your SMTP server requires it and your version of PHP supports SSL."
+msgstr "Encrypts the connection to the SMTP server using SSL. Should only be used if your SMTP server requires it and your version of PHP supports SSL. TLS must be set to <b>No</b>."
 
 msgid "Registration subhead"
 msgstr "Registration"

@@ -13,13 +13,13 @@ msgstr ""
 "Language: ru\n"
 
 msgid "Display e-mail label"
-msgstr "Показывать email другим пользователя"
+msgstr "Показывать адрес другим пользователя"
 
 msgid "Hide allow form label"
-msgstr "Спрятать email, но разрешить отправку писем через специальную форму"
+msgstr "Спрятать адрес, но разрешить отправку писем через специальную форму"
 
 msgid "Hide both label"
-msgstr "Спрятать email и запретить отправку писем"
+msgstr "Спрятать адрес и запретить отправку писем"
 
 msgid "Topics per page label"
 msgstr "Тем на странице"
