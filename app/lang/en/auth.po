@@ -65,3 +65,6 @@ msgstr "Your passphrase has been updated. You can now login with your new passph
 
 msgid "Account activated"
 msgstr "Account activated."
+
+msgid "Username or email"
+msgstr "Username or email"

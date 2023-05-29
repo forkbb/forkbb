@@ -175,7 +175,7 @@ class Auth extends Page
                             'autofocus' => true,
                             'type'      => 'text',
                             'value'     => $username,
-                            'caption'   => 'Username',
+                            'caption'   => 'Username or email',
                             'required'  => true,
                         ],
                         'password' => [
@@ -209,7 +209,13 @@ class Auth extends Page
     {
         if (empty($v->getErrors())) {
             if ($this->loginWithForm) {
-                $this->userAfterLogin = $this->c->users->loadByName($v->username);
+                if (\strpos($v->username, '@')) {
+                    $this->userAfterLogin = $this->c->users->loadByEmail($v->username);
+                }
+
+                if (! $this->userAfterLogin instanceof User) {
+                    $this->userAfterLogin = $this->c->users->loadByName($v->username);
+                }
             }
 
             if (
