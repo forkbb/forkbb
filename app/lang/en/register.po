@@ -33,7 +33,10 @@ msgstr "Thank you for registering. A letter with a link to activate your account
 msgid "Reg complete"
 msgstr "Registration complete. You can log in the forums."
 
-msgid "Email info"
+msgid "Email help"
+msgstr "Please enter a valid email address."
+
+msgid "Email help2"
 msgstr "Please enter a valid email address. It will be used to activate your account."
 
 msgid "Error welcom mail"

@@ -108,7 +108,7 @@ class NewUser extends Users
                             'maxlength'      => (string) $this->c->MAX_EMAIL_LENGTH,
                             'value'          => $data['email'] ?? null,
                             'caption'        => 'Email',
-                            'help'           => 'Email info',
+                            'help'           => 'Email help',
                             'required'       => true,
                             'pattern'        => '.+@.+',
                             'autocapitalize' => 'off',

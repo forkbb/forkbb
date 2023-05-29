@@ -33,7 +33,10 @@ msgstr "Спасибо за регистрацию. Письмо с ссылко
 msgid "Reg complete"
 msgstr "Регистрация завершена. Вы можете войти на форум."
 
-msgid "Email info"
+msgid "Email help"
+msgstr "Укажите действующий почтовый адрес."
+
+msgid "Email help2"
 msgstr "Укажите действующий почтовый адрес. Он будет использован для активации аккаунта."
 
 msgid "Error welcom mail"

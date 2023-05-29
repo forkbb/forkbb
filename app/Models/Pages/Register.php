@@ -125,7 +125,7 @@ class Register extends Page
                             'maxlength'      => (string) $this->c->MAX_EMAIL_LENGTH,
                             'value'          => $v->email,
                             'caption'        => 'Email',
-                            'help'           => 'Email info',
+                            'help'           => 1 === $this->c->config->b_regs_verify ? 'Email help2' : 'Email help',
                             'required'       => true,
                             'pattern'        => '.+@.+',
                             'autocapitalize' => 'off',
