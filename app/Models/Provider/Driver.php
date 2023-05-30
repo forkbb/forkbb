@@ -120,9 +120,9 @@ abstract class Driver extends Model
      * Проверяет ответ сервера провайдера после авторизации пользователя
      * Запоминает code
      */
-    public function verifyAuth(array $data): bool
+    public function verifyAuth(): bool
     {
-        $data       = $this->c->Secury->replInvalidChars($data);
+        $data       = $this->c->Secury->replInvalidChars($_GET);
         $this->code = '';
 
         if (! \is_string($data['code'] ?? null)) {
