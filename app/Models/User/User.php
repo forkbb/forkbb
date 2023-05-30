@@ -81,8 +81,7 @@ class User extends DataModel
      */
     protected function getisBanByName(): bool
     {
-        return ! $this->isAdmin
-            && $this->c->bans->banFromName($this->username) > 0;
+        return ! $this->isAdmin && $this->c->bans->banFromName($this->username) > 0;
     }
 
     /**
@@ -96,6 +95,7 @@ class User extends DataModel
 
         while (! $model instanceof Forum) {
             $model = $model->parent;
+
             if (! $model instanceof Model) {
                 throw new RuntimeException('Moderator\'s rights can not be found');
             }
@@ -265,7 +265,7 @@ class User extends DataModel
      */
     protected function getviewUsers(): bool
     {
-        return 1 === $this->g_view_users || $this->isAdmin;
+        return $this->isAdmin || 1 === $this->g_view_users;
     }
 
     /**
@@ -273,7 +273,7 @@ class User extends DataModel
      */
     protected function getsearchUsers(): bool
     {
-        return 1 === $this->g_search_users || $this->isAdmin;
+        return $this->isAdmin || 1 === $this->g_search_users;
     }
 
     /**
@@ -400,7 +400,7 @@ class User extends DataModel
      */
     protected function getusePoll(): bool
     {
-        return 1 === $this->c->config->b_poll_enabled && ! $this->isGuest;
+        return ! $this->isGuest && 1 === $this->c->config->b_poll_enabled;
     }
 
     public function fLog(): string
