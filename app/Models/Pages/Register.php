@@ -373,6 +373,8 @@ class Register extends Page
      */
     public function activate(array $args): Page
     {
+        $user = null;
+
         if (
             ! $this->c->Csrf->verify($args['hash'], 'RegActivate', $args)
             || ! ($user = $this->c->users->load($args['id'])) instanceof User
