@@ -148,6 +148,15 @@ class Model
     }
 
     /**
+     * Возвращает значения свойств в массиве
+     * Без вычислений
+     */
+    public function getAttrs(): array
+    {
+        return $this->zAttrs;
+    }
+
+    /**
      * Выполняет подгружаемый метод при его наличии
      */
     public function __call(string $name, array $args): mixed

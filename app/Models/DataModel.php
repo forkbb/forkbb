@@ -55,14 +55,6 @@ class DataModel extends Model
     }
 
     /**
-     * Возвращает значения свойств в массиве
-     */
-    public function getAttrs(): array
-    {
-        return $this->zAttrs; //????
-    }
-
-    /**
      * Возвращает массив имен измененных свойств модели
      */
     public function getModified(): array
