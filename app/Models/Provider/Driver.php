@@ -224,7 +224,7 @@ abstract class Driver extends Model
 
         } elseif (\is_string($result)) {
             if (\str_starts_with($this->respContentType, 'application/json')) {
-                $data = \json_decode($result, true, 20, \JSON_THROW_ON_ERROR);
+                $data = \json_decode($result, true, 20);
 
                 if (\is_array($data)) {
                     return $this->c->Secury->replInvalidChars($data);

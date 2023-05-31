@@ -67,7 +67,7 @@ abstract class Users extends Admin
 
         if (
             ! \hash_equals($data[1], $this->c->Secury->hash($data[0]))
-            || ! \is_array($data = \json_decode(\base64_decode($data[0], true), true, 512, \JSON_THROW_ON_ERROR))
+            || ! \is_array($data = \json_decode(\base64_decode($data[0], true), true))
         ) {
             return false;
         }

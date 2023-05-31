@@ -65,7 +65,7 @@ class Refresh extends Action
      */
     protected function formatModers(string $str): ?array
     {
-        $moderators = \json_decode($str, true, 512, \JSON_THROW_ON_ERROR);
+        $moderators = \json_decode($str, true);
 
         return $moderators ?: null;
     }
