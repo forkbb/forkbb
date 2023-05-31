@@ -17,8 +17,6 @@ use RuntimeException;
 
 abstract class Driver extends Model
 {
-    const JSON_OPTIONS  = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
-
     /**
      * Ключ модели для контейнера
      */
@@ -226,7 +224,7 @@ abstract class Driver extends Model
 
         } elseif (\is_string($result)) {
             if (\str_starts_with($this->respContentType, 'application/json')) {
-                $data = \json_decode($result, true, 20, self::JSON_OPTIONS);
+                $data = \json_decode($result, true, 20, \JSON_THROW_ON_ERROR);
 
                 if (\is_array($data)) {
                     return $this->c->Secury->replInvalidChars($data);

@@ -20,8 +20,6 @@ class Structure extends Model
     const TAG_PATTERN  = '%^(?:ROOT|[a-z\*][a-z\d-]{0,10})$%D';
     const ATTR_PATTERN = '%^[a-z-]{2,15}$%D';
 
-    const JSON_OPTIONS = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
-
     /**
      * Ключ модели для контейнера
      */
@@ -139,7 +137,7 @@ class Structure extends Model
             $a['text_handler'] = $this->text_handler;
         }
 
-        return \json_encode($a, self::JSON_OPTIONS);
+        return \json_encode($a, FORK_JSON_ENCODE);
     }
 
     protected function gettype(): string

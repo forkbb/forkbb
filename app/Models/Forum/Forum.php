@@ -463,7 +463,7 @@ class Forum extends DataModel
 
         $data['moderators'] = empty($data['moderators']) || ! \is_array($data['moderators'])
             ? ''
-            : \json_encode($data['moderators']);
+            : \json_encode($data['moderators'], FORK_JSON_ENCODE);
 
         return $data;
     }

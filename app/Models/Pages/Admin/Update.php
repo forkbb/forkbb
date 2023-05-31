@@ -28,7 +28,6 @@ class Update extends Admin
     const LATEST_REV_WITH_DB_CHANGES = 55;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
-    const JSON_OPTIONS               = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
     const CONFIG_FILE                = 'main.php';
 
     protected string $configFile;

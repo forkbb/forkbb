@@ -19,8 +19,6 @@ use function \ForkBB\__;
 
 class Poll extends DataModel
 {
-    const JSON_OPTIONS = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
-
     /**
      * Ключ модели для контейнера
      */
@@ -303,7 +301,7 @@ class Poll extends DataModel
         $vars = [
             ':tid' => $this->tid,
             ':uid' => $this->c->user->id,
-            ':rez' => \json_encode($data, self::JSON_OPTIONS),
+            ':rez' => \json_encode($data, FORK_JSON_ENCODE),
         ];
         $query = 'INSERT INTO ::poll_voted (tid, uid, rez)
             VALUES (?i:tid, ?i:uid, ?s:rez)';

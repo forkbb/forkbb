@@ -39,7 +39,7 @@ abstract class Users extends Admin
         if (\is_array($data)) {
             unset($data['token']);
 
-            $data = \base64_encode(\json_encode($data));
+            $data = \base64_encode(\json_encode($data, FORK_JSON_ENCODE));
             $hash = $this->c->Secury->hash($data);
 
             return "{$data}:{$hash}";
@@ -67,7 +67,7 @@ abstract class Users extends Admin
 
         if (
             ! \hash_equals($data[1], $this->c->Secury->hash($data[0]))
-            || ! \is_array($data = \json_decode(\base64_decode($data[0], true), true))
+            || ! \is_array($data = \json_decode(\base64_decode($data[0], true), true, 512, \JSON_THROW_ON_ERROR))
         ) {
             return false;
         }

@@ -33,7 +33,7 @@ class Save extends Method
             if (\array_key_exists($name, $values)) {
                 switch ($name[0]) {
                     case 'a':
-                        $value = \json_encode($values[$name], \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR);
+                        $value = \json_encode($values[$name], FORK_JSON_ENCODE);
 
                         break;
                     case 'b':

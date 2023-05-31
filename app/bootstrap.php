@@ -41,6 +41,7 @@ define('FORK_GEN_NOT', 0);
 define('FORK_GEN_MAN', 1);
 define('FORK_GEN_FEM', 2);
 
+define('FORK_JSON_ENCODE', \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR);
 
 require __DIR__ . '/../vendor/autoload.php';
 

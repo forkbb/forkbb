@@ -21,8 +21,6 @@ use Throwable;
 
 class Log implements LoggerInterface
 {
-    const JSON_OPTIONS = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_INVALID_UTF8_SUBSTITUTE | \JSON_THROW_ON_ERROR;
-
     protected string $path;
     protected string $lineFormat;
     protected string $timeFormat;
@@ -201,7 +199,7 @@ class Log implements LoggerInterface
             '%datetime%'   => $dt->format($this->timeFormat),
             '%level_name%' => $level,
             '%message%'    => \addcslashes($message, "\0..\37\\"),
-            '%context%'    => \json_encode($context, self::JSON_OPTIONS),
+            '%context%'    => \json_encode($context, FORK_JSON_ENCODE | \JSON_INVALID_UTF8_SUBSTITUTE),
         ];
 
         return \strtr($this->lineFormat, $result);

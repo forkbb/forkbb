@@ -25,8 +25,6 @@ class Install extends Admin
     const SQLITE_MIN = '3.25.0';
     const PGSQL_MIN  = '10.0';
 
-    const JSON_OPTIONS = \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR;
-
     /**
      * Для MySQL
      */
@@ -1503,11 +1501,11 @@ class Install extends Admin
             'i_poll_time'             => 60,
             'i_poll_term'             => 3,
             'b_poll_guest'            => 0,
-            'a_max_users'             => \json_encode(['number' => 1, 'time' => \time()], self::JSON_OPTIONS),
-            'a_bb_white_mes'          => \json_encode([], self::JSON_OPTIONS),
-            'a_bb_white_sig'          => \json_encode(['b', 'i', 'u', 'color', 'colour', 'email', 'url'], self::JSON_OPTIONS),
-            'a_bb_black_mes'          => \json_encode([], self::JSON_OPTIONS),
-            'a_bb_black_sig'          => \json_encode([], self::JSON_OPTIONS),
+            'a_max_users'             => \json_encode(['number' => 1, 'time' => \time()], FORK_JSON_ENCODE),
+            'a_bb_white_mes'          => \json_encode([], FORK_JSON_ENCODE),
+            'a_bb_white_sig'          => \json_encode(['b', 'i', 'u', 'color', 'colour', 'email', 'url'], FORK_JSON_ENCODE),
+            'a_bb_black_mes'          => \json_encode([], FORK_JSON_ENCODE),
+            'a_bb_black_sig'          => \json_encode([], FORK_JSON_ENCODE),
             'a_guest_set'             => \json_encode(
                 [
                     'show_smilies' => 1,
@@ -1515,7 +1513,7 @@ class Install extends Admin
                     'show_avatars' => 1,
                     'show_img'     => 1,
                     'show_img_sig' => 1,
-                ], self::JSON_OPTIONS
+                ], FORK_JSON_ENCODE
             ),
             's_РЕГИСТР'               => 'Ok',
         ];
@@ -1585,7 +1583,7 @@ class Install extends Admin
         foreach ($bbcodes as $bbcode) {
             $vars = [
                 ':tag'       => $bbcode['tag'],
-                ':structure' => \json_encode($bbcode, self::JSON_OPTIONS),
+                ':structure' => \json_encode($bbcode, FORK_JSON_ENCODE),
             ];
 
             $this->c->DB->exec($query, $vars);
