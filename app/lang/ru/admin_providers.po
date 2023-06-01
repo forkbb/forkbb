@@ -119,3 +119,6 @@ msgstr "Адрес проверен"
 
 msgid "Account removed"
 msgstr "Аккаунт удален."
+
+msgid "First time Register?"
+msgstr "Вы здесь впервые. Зарегистрируетесь?"

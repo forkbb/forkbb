@@ -12,12 +12,15 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Core\Image;
 use ForkBB\Models\Page;
+use ForkBB\Models\Pages\RegLogTrait;
 use ForkBB\Models\Provider\Driver;
 use ForkBB\Models\User\User;
 use function \ForkBB\__;
 
 class RegLog extends Page
 {
+    use RegLogTrait;
+
     const TIMEOUT = 5;
 
     /**
@@ -110,8 +113,8 @@ class RegLog extends Page
     protected function byGuest(Driver $provider, int $uid): Page
     {
         switch ($provider->stateType) {
-            case 'reg':
             case 'auth':
+            case 'reg':
                 return $this->authOrReg($provider, $uid);
             default:
                 return $this->c->Message->message('Bad request');
@@ -166,127 +169,42 @@ class RegLog extends Page
      */
     protected function authOrReg(Driver $provider, int $uid): Page
     {
-        // регистрация
-        if (empty($uid)) {
-            // на форуме есть пользователь с таким email
-            if (
-                $this->c->providerUser->findByEmail($provider->userEmail) > 0
-                || $this->c->users->loadByEmail($provider->userEmail) instanceof User
-            ) {
-                $auth         = $this->c->Auth;
-                $auth->fIswev = [FORK_MESS_INFO, ['Email message', __($provider->name)]];
-
-                return $auth->forget([], 'GET', $provider->userEmail);
-            }
-
-            if (1 !== $this->c->config->b_regs_allow) {
-                return $this->c->Message->message('No new regs');
-            }
-
-            $user = $this->c->users->create();
-
-            $user->username        = $this->nameGenerator($provider);
-            $user->password        = 'oauth_' . $this->c->Secury->randomPass(7);
-            $user->group_id        = $this->c->config->i_default_user_group;
-            $user->email           = $provider->userEmail;
-            $user->email_confirmed = $provider->userEmailVerifed ? 1 : 0;
-            $user->activate_string = '';
-            $user->u_mark_all_read = \time();
-            $user->email_setting   = $this->c->config->i_default_email_setting;
-            $user->timezone        = $this->c->config->o_default_timezone;
-            $user->language        = $this->user->language;
-            $user->style           = $this->user->style;
-            $user->registered      = \time();
-            $user->registration_ip = $this->user->ip;
-            $user->ip_check_type   = 0;
-            $user->signature       = '';
-            $user->location        = $provider->userLocation;
-            $user->url             = $provider->userURL;
-
-            if ($provider->userAvatar) {
-                $image = $this->c->Files->uploadFromLink($provider->userAvatar);
-
-                if ($image instanceof Image) {
-                    $name   = $this->c->Secury->randomPass(8);
-                    $path   = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$name}.(webp|jpg|png|gif)";
-                    $result = $image
-                        ->rename(true)
-                        ->rewrite(false)
-                        ->resize($this->c->config->i_avatars_width, $this->c->config->i_avatars_height)
-                        ->toFile($path, $this->c->config->i_avatars_size);
-
-                    if (true === $result) {
-                        $user->avatar = $image->name() . '.' . $image->ext();
-                    } else {
-                        $this->c->Log->warning('OAuth Failed image processing', [
-                            'user'  => $user->fLog(),
-                            'error' => $image->error(),
-                        ]);
-                    }
-                } else {
-                    $this->c->Log->warning('OAuth Avatar not image', [
-                        'user'  => $user->fLog(),
-                        'error' => $this->c->Files->error(),
-                    ]);
-                }
-            }
-
-            $this->c->users->insert($user);
-
-            if (true !== $this->c->providerUser->registration($user, $provider)) {
-                throw new RuntimeException('Failed to insert data'); // ??????????????????????????????????????????
-            }
-
-            $this->c->Log->info('OAuth Reg: ok', [
-                'user'     => $user->fLog(),
-                'provider' => $provider->name,
-                'userInfo' => $provider->userInfo,
-                'headers'  => true,
-            ]);
-
-        } else {
-            $user = $this->c->users->load($uid);
-        }
-
         // вход
-        return $this->c->Auth->login([], 'POST', '', $user);
-    }
+        if ($uid > 0) {
+            $user = $this->c->users->load($uid);
 
-    /**
-     * Подбирает уникальное имя для регистрации пользователя
-     */
-    protected function nameGenerator(Driver $provider): string
-    {
-        $names = [];
-
-        if ('' != $provider->userName) {
-            $names[] = $provider->userName;
+            return $this->c->Auth->login([], 'POST', '', $user);
         }
 
-        if ('' != $provider->userLogin) {
-            $names[] = $provider->userLogin;
+        // на форуме есть пользователь с таким email
+        if (
+            $this->c->providerUser->findByEmail($provider->userEmail) > 0
+            || $this->c->users->loadByEmail($provider->userEmail) instanceof User
+        ) {
+            $auth         = $this->c->Auth;
+            $auth->fIswev = [FORK_MESS_INFO, ['Email message', __($provider->name)]];
+
+            return $auth->forget([], 'GET', $provider->userEmail);
         }
 
-        if ('' != ($tmp = (string) \strstr($provider->userEmail, '@', true))) {
-            $names[] = $tmp;
+        // регистрация закрыта
+        if (1 !== $this->c->config->b_regs_allow) {
+            return $this->c->Message->message('No new regs');
         }
 
-        $names[] = 'user' . \time();
-        $v       = $this->c->Validator->reset()->addRules(['name' => 'required|string:trim|username|noURL:1']);
-        $end     = '';
-        $i       = 0;
+        // продолжение регистрации начиная с согласия с правилами
+        if ('reg' !== $provider->stateType) {
+            $page = $this->c->Rules->confirmation();
+            $form = $page->form;
 
-        while ($i < 100) {
-            foreach ($names as $name) {
-                if ($v->validation(['name' => $name . $end])) {
-                    return $v->name;
-                }
-            }
+            $form['hidden']['oauth'] = $this->providerToString($provider);
 
-            $end = '_' . $this->c->Secury->randomHash(4);
-            ++$i;
+            $page->form   = $form;
+            $page->fIswev = [FORK_MESS_INFO, 'First time Register?'];
+
+            return $page;
         }
 
-        throw new RuntimeException('Failed to generate unique username');
+        return $this->c->Register->reg([], 'POST', $provider);
     }
 }

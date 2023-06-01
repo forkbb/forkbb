@@ -119,3 +119,6 @@ msgstr "Email verified"
 
 msgid "Account removed"
 msgstr "Account removed."
+
+msgid "First time Register?"
+msgstr "You are here for the first time. Register?"

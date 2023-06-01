@@ -10,10 +10,12 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Pages;
 
+use ForkBB\Core\Image;
 use ForkBB\Core\Validator;
 use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\RegLogTrait;
+use ForkBB\Models\Provider\Driver;
 use ForkBB\Models\User\User;
 use function \ForkBB\__;
 
@@ -22,24 +24,64 @@ class Register extends Page
     use RegLogTrait;
 
     /**
+     * Флаг входа с помощью OAuth
+     */
+    protected bool $useOAuth = false;
+
+    /**
      * Регистрация
      */
-    public function reg(): Page
+    public function reg(array $args, string $method, Driver $provider = null): Page
     {
         $this->c->Lang->load('validator');
         $this->c->Lang->load('register');
 
+        // регистрация через OAuth
+        if (null !== $provider) {
+            $this->provider = $provider;
+
+            $_POST = [
+                'token'    => $this->c->Csrf->create('RegisterForm'),
+                'agree'    => $this->c->Csrf->create('Register'),
+                'oauth'    => $this->providerToString($provider),
+                'register' => 'Register with OAuth',
+            ];
+        // переход от Rules/завершение регистрации через OAuth
+        } else {
+            $v = $this->c->Validator->reset()->addRules(['oauth' => 'string']);
+
+            if (
+                ! $v->validation($_POST)
+                || (
+                    null !== $v->oauth
+                    && ! ($this->provider = $this->stringToProvider($v->oauth)) instanceof Driver
+                )
+            ) {
+                return $this->c->Message->message('Bad request');
+            }
+        }
+
+        $this->useOAuth = $this->provider instanceof Driver;
+
+        $rules = [
+            'token'    => 'token:RegisterForm',
+            'agree'    => 'required|token:Register',
+            'on'       => 'integer',
+            'oauth'    => 'string',
+            'email'    => 'required_with:on|string:trim|email:noban',
+            'username' => 'required_with:on|string:trim|username|noURL:1',
+            'password' => 'required_with:on|string|min:16|max:100000|password',
+            'register' => 'required|string',
+        ];
+
+        if ($this->useOAuth) {
+            unset($rules['email'], $rules['password']);
+        }
+
         $v = $this->c->Validator->reset()
-            ->addValidators([
-            ])->addRules([
-                'token'    => 'token:RegisterForm',
-                'agree'    => 'required|token:Register',
-                'on'       => 'integer',
-                'email'    => 'required_with:on|string:trim|email:noban',
-                'username' => 'required_with:on|string:trim|username|noURL:1',
-                'password' => 'required_with:on|string|min:16|max:100000|password',
-                'register' => 'required|string',
-            ])->addAliases([
+            ->addValidators([])
+            ->addRules($rules)
+            ->addAliases([
                 'email'    => 'Email',
                 'username' => 'Username',
                 'password' => 'Passphrase',
@@ -55,23 +97,24 @@ class Register extends Page
         if ($v->validation($_POST, true)) {
             // завершение регистрации
             if (1 === $v->on) {
-                $userInDB = $this->c->users->loadByEmail($v->email);
+                $email    = $this->useOAuth ? $this->provider->userEmail : $v->email;
+                $userInDB = $this->c->users->loadByEmail($email);
 
                 if ($userInDB instanceof User) {
-                    return $this->regDupe($v, $userInDB);
+                    return $this->regDupe($v, $userInDB, $email);
                 }
 
-                $id = $this->c->providerUser->findByEmail($v->email);
+                $id = $this->c->providerUser->findByEmail($email);
 
                 if ($id > 0) {
                     $userInDB = $this->c->users->load($id);
 
                     if ($userInDB instanceof User) {
-                        return $this->regDupe($v, $userInDB);
+                        return $this->regDupe($v, $userInDB, $email);
                     }
                 }
 
-                return $this->regEnd($v);
+                return $this->regEnd($v, $email);
             }
         } else {
             $this->fIswev = $v->getErrors();
@@ -98,7 +141,7 @@ class Register extends Page
         $this->titles       = 'Register';
         $this->robots       = 'noindex';
         $this->form         = $this->formReg($v);
-        $this->formOAuth    = $this->reglogForm('reg');
+        $this->formOAuth    = $this->useOAuth ? null : $this->reglogForm('reg');
 
         return $this;
     }
@@ -108,49 +151,14 @@ class Register extends Page
      */
     protected function formReg(Validator $v): array
     {
-        return [
+        $form = [
             'action' => $this->c->Router->link('RegisterForm'),
             'hidden' => [
                 'token' => $this->c->Csrf->create('RegisterForm'),
                 'agree' => $v->agree,
                 'on'    => '1',
             ],
-            'sets'   => [
-                'reg' => [
-                    'fields' => [
-                        'email' => [
-                            'autofocus'      => true,
-                            'class'          => ['hint'],
-                            'type'           => 'text',
-                            'maxlength'      => (string) $this->c->MAX_EMAIL_LENGTH,
-                            'value'          => $v->email,
-                            'caption'        => 'Email',
-                            'help'           => 1 === $this->c->config->b_regs_verify ? 'Email help2' : 'Email help',
-                            'required'       => true,
-                            'pattern'        => '.+@.+',
-                            'autocapitalize' => 'off',
-                        ],
-                        'username' => [
-                            'class'     => ['hint'],
-                            'type'      => 'text',
-                            'maxlength' => '25',
-                            'value'     => $v->username,
-                            'caption'   => 'Username',
-                            'help'      => 'Login format',
-                            'required'  => true,
-                            'pattern'   => '^.{2,25}$',
-                        ],
-                        'password' => [
-                            'class'     => ['hint'],
-                            'type'      => 'password',
-                            'caption'   => 'Passphrase',
-                            'help'      => 'Passphrase help',
-                            'required'  => true,
-                            'pattern'   => '^.{16,}$',
-                        ],
-                    ],
-                ],
-            ],
+            'sets'   => [],
             'btns'   => [
                 'register' => [
                     'type'  => 'submit',
@@ -158,14 +166,64 @@ class Register extends Page
                 ],
             ],
         ];
+
+        $fields = [];
+
+        if (! $this->useOAuth) {
+            $fields['email'] = [
+                'autofocus'      => true,
+                'class'          => ['hint'],
+                'type'           => 'text',
+                'maxlength'      => (string) $this->c->MAX_EMAIL_LENGTH,
+                'value'          => $v->email,
+                'caption'        => 'Email',
+                'help'           => 1 === $this->c->config->b_regs_verify ? 'Email help2' : 'Email help',
+                'required'       => true,
+                'pattern'        => '.+@.+',
+                'autocapitalize' => 'off',
+            ];
+        }
+
+        $fields['username'] = [
+            'class'     => ['hint'],
+            'type'      => 'text',
+            'maxlength' => '25',
+            'value'     => $v->username ?? ($this->useOAuth ? $this->nameGenerator($this->provider) : ''),
+            'caption'   => 'Username',
+            'help'      => 'Login format',
+            'required'  => true,
+            'pattern'   => '^.{2,25}$',
+        ];
+
+        if (! $this->useOAuth) {
+            $fields['password'] = [
+                'class'     => ['hint'],
+                'type'      => 'password',
+                'caption'   => 'Passphrase',
+                'help'      => 'Passphrase help',
+                'required'  => true,
+                'pattern'   => '^.{16,}$',
+            ];
+        }
+
+        $form['sets']['reg']['fields'] = $fields;
+
+        if ($this->useOAuth) {
+            $form['hidden']['oauth'] = $v->oauth;
+        }
+
+        return $form;
     }
 
     /**
      * Завершение регистрации
      */
-    protected function regEnd(Validator $v): Page
+    protected function regEnd(Validator $v, string $email): Page
     {
-        if (1 === $this->c->config->b_regs_verify) {
+        if (
+            ! $this->useOAuth
+            && 1 === $this->c->config->b_regs_verify
+        ) {
             $groupId = FORK_GROUP_UNVERIFIED;
             $key     = $this->c->Secury->randomPass(31);
         } else {
@@ -176,10 +234,10 @@ class Register extends Page
         $user = $this->c->users->create();
 
         $user->username        = $v->username;
-        $user->password        = \password_hash($v->password, \PASSWORD_DEFAULT);
+        $user->password        = $this->useOAuth ? 'oauth_' . $this->c->Secury->randomPass(7) : \password_hash($v->password, \PASSWORD_DEFAULT);
         $user->group_id        = $groupId;
-        $user->email           = $v->email;
-        $user->email_confirmed = 0;
+        $user->email           = $email;
+        $user->email_confirmed = $this->useOAuth && $this->provider->userEmailVerifed ? 1 : 0;
         $user->activate_string = $key;
         $user->u_mark_all_read = \time();
         $user->email_setting   = $this->c->config->i_default_email_setting;
@@ -189,8 +247,49 @@ class Register extends Page
         $user->registered      = \time();
         $user->registration_ip = $this->user->ip;
         $user->signature       = '';
+        $user->ip_check_type   = 0;
+        $user->location        = $this->useOAuth ? $this->provider->userLocation : '';
+        $user->url             = $this->useOAuth ? $this->provider->userURL : '';
+
+        if (
+            $this->useOAuth
+            && $this->provider->userAvatar
+        ) {
+            $image = $this->c->Files->uploadFromLink($this->provider->userAvatar);
+
+            if ($image instanceof Image) {
+                $name   = $this->c->Secury->randomPass(8);
+                $path   = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$name}.(webp|jpg|png|gif)";
+                $result = $image
+                    ->rename(true)
+                    ->rewrite(false)
+                    ->resize($this->c->config->i_avatars_width, $this->c->config->i_avatars_height)
+                    ->toFile($path, $this->c->config->i_avatars_size);
+
+                if (true === $result) {
+                    $user->avatar = $image->name() . '.' . $image->ext();
+                } else {
+                    $this->c->Log->warning('OAuth Failed image processing', [
+                        'user'  => $user->fLog(),
+                        'error' => $image->error(),
+                    ]);
+                }
+            } else {
+                $this->c->Log->warning('OAuth Avatar not image', [
+                    'user'  => $user->fLog(),
+                    'error' => $this->c->Files->error(),
+                ]);
+            }
+        }
 
         $newUserId = $this->c->users->insert($user);
+
+        if (
+            $this->useOAuth
+            && true !== $this->c->providerUser->registration($user, $this->provider)
+        ) {
+            throw new RuntimeException('Failed to insert data'); // ??????????????????????????????????????????
+        }
 
         $this->c->Log->info('Registriaton: ok', [
             'user'    => $user->fLog(),
@@ -240,7 +339,10 @@ class Register extends Page
         $this->c->Lang->load('register');
 
         // отправка письма активации аккаунта
-        if (1 === $this->c->config->b_regs_verify) {
+        if (
+            ! $this->useOAuth
+            && 1 === $this->c->config->b_regs_verify
+        ) {
             $this->c->Csrf->setHashExpiration(259200); // ???? хэш действует 72 часа
 
             $link = $this->c->Router->link(
@@ -264,7 +366,7 @@ class Register extends Page
                     ->setMaxRecipients(1)
                     ->setFolder($this->c->DIR_LANG)
                     ->setLanguage($this->user->language)
-                    ->setTo($v->email)
+                    ->setTo($email)
                     ->setFrom($this->c->config->o_webmaster_email, $tplData['fMailer'])
                     ->setTpl('welcome.tpl', $tplData)
                     ->send();
@@ -286,21 +388,24 @@ class Register extends Page
                 $auth         = $this->c->Auth;
                 $auth->fIswev = [FORK_MESS_WARN, ['Error welcom mail', $this->c->config->o_admin_email]];
 
-                return $auth->forget([], 'GET', $v->email);
+                return $auth->forget([], 'GET', $email);
             }
         // форма логина
         } else {
+            return $this->c->Auth->login([], 'POST', '', $user);
+/*
             $auth         = $this->c->Auth;
             $auth->fIswev = [FORK_MESS_SUCC, 'Reg complete'];
 
             return $auth->login([], 'GET', $v->username);
+*/
         }
     }
 
     /**
      * Делает вид, что пользователь зарегистрирован (для предотвращения утечки email)
      */
-    protected function regDupe(Validator $v, User $userInDB): Page
+    protected function regDupe(Validator $v, User $userInDB, string $email): Page
     {
         $this->c->Log->warning('Registriaton: dupe', [
             'user'     => $this->user->fLog(), // ????
@@ -346,7 +451,10 @@ class Register extends Page
         $this->c->Lang->load('register');
 
         // фейк отправки письма активации аккаунта
-        if (1 === $this->c->config->b_regs_verify) {
+        if (
+            ! $this->useOAuth
+            && 1 === $this->c->config->b_regs_verify
+        ) {
             $isSent = true;
 
             // письмо активации аккаунта отправлено
@@ -357,7 +465,7 @@ class Register extends Page
                 $auth         = $this->c->Auth;
                 $auth->fIswev = [FORK_MESS_WARN, ['Error welcom mail', $this->c->config->o_admin_email]];
 
-                return $auth->forget([], 'GET', $v->email);
+                return $auth->forget([], 'GET', $email);
             }
         // форма логина
         } else {
