@@ -4,7 +4,8 @@ Thank you for registering in the forums at {!fRootLink!}.
 
 Your username: {!username!}
 
-Go link to activate your account: {!link!} This link is valid for 3 days.
+Go link to activate your account: {!link!}
+This link is valid for 3 days.
 
 --
 {!fMailer!} Mailer
