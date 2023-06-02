@@ -1,7 +1,7 @@
 {
     "name": "forkbb/forkbb",
     "description": "The ForkBB is an open source forum application.",
-    "homepage": "https://github.com/forkbb",
+    "homepage": "https://forkbb.ru",
     "type": "project",
     "license": "MIT",
     "minimum-stability": "dev",
