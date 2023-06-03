@@ -237,6 +237,12 @@ msgstr "Max size"
 msgid "Max size help"
 msgstr "The maximum allowed size of avatars in bytes (10240 is recommended)."
 
+msgid "Avatar quality label"
+msgstr "Quality"
+
+msgid "Avatar quality help"
+msgstr "Avatar image quality between 0 and 100."
+
 msgid "E-mail subhead"
 msgstr "Email"
 

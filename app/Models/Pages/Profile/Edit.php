@@ -134,6 +134,7 @@ class Edit extends Profile
                     $result = $v->upload_avatar
                         ->rename(true)
                         ->rewrite(false)
+                        ->setQuality($this->c->config->i_avatars_quality ?? 75)
                         ->resize($this->c->config->i_avatars_width, $this->c->config->i_avatars_height)
                         ->toFile($path, $this->c->config->i_avatars_size);
 

@@ -237,6 +237,12 @@ msgstr "Макс. размер"
 msgid "Max size help"
 msgstr "Макс. разрешённый размер аватары в байтах (рекомендуется 10240)."
 
+msgid "Avatar quality label"
+msgstr "Качество"
+
+msgid "Avatar quality help"
+msgstr "Качество изображения аватары от 0 до 100."
+
 msgid "E-mail subhead"
 msgstr "Почта"
 

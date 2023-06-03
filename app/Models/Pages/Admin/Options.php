@@ -81,6 +81,7 @@ class Options extends Admin
                     'i_avatars_width'         => 'required|integer|min:50|max:999',
                     'i_avatars_height'        => 'required|integer|min:50|max:999',
                     'i_avatars_size'          => 'required|integer|min:0|max:9999999',
+                    'i_avatars_quality'       => 'required|integer|min:0|max:100',
                     'o_admin_email'           => 'required|string:trim|email',
                     'o_webmaster_email'       => 'required|string:trim|email',
                     'b_forum_subscriptions'   => 'required|integer|in:0,1',
@@ -504,6 +505,14 @@ class Options extends Admin
                     'value'   => $config->i_avatars_size,
                     'caption' => 'Max size label',
                     'help'    => 'Max size help',
+                ],
+                'i_avatars_quality' => [
+                    'type'    => 'number',
+                    'min'     => '0',
+                    'max'     => '100',
+                    'value'   => $config->i_avatars_quality,
+                    'caption' => 'Avatar quality label',
+                    'help'    => 'Avatar quality help',
                 ],
             ],
         ];

@@ -570,4 +570,18 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.57 to rev.58
+     */
+    protected function stageNumber57(array $args): ?int
+    {
+        $config = $this->c->config;
+
+        $config->i_avatars_quality = 75;
+
+        $config->save();
+
+        return null;
+    }
 }

@@ -1468,6 +1468,7 @@ class Install extends Admin
             'i_avatars_width'         => 160,
             'i_avatars_height'        => 160,
             'i_avatars_size'          => 51200,
+            'i_avatars_quality'       => 75,
             'o_admin_email'           => $v->email,
             'o_webmaster_email'       => $v->email,
             'b_forum_subscriptions'   => 1,
