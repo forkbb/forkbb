@@ -62,6 +62,8 @@ class Files
 # non-standard mime types
         'image/x-ms-bmp' => 'bmp',
         'image/avif' => 'avif',
+        'image/heif' => 'heif',
+        'image/heic' => 'heic',
     ];
 
     /**
@@ -844,17 +846,19 @@ class Files
 # non-standard mime types
         'image/x-ms-bmp' => 'bmp',
         'image/avif' => 'avif',
+        'image/heif' => 'heif',
+        'image/heic' => 'heic',
     ];
 
     public function __construct(int|string $maxFileSize, int|string $maxImgSize, protected array $imageDrivers, protected Container $c)
     {
         $init = \min(
             \PHP_INT_MAX,
-            $this->size(\ini_get('upload_max_filesize')),
-            $this->size(\ini_get('post_max_size'))
+            $this->size(\ini_get('upload_max_filesize') ?: 0),
+            $this->size(\ini_get('post_max_size') ?: 0)
         );
 
-        $this->maxPixels   = (int) ($this->size(\ini_get('memory_limit')) / 10);
+        $this->maxPixels   = (int) ($this->size(\ini_get('memory_limit') ?: 0) / 10);
         $this->maxImgSize  = \min(
             $this->size($maxImgSize),
             $init,
