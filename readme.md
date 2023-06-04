@@ -19,6 +19,8 @@ ForkBB is a free and open source forum software. The project is based on [FluxBB
 
 ### For Apache:
 
+Apache must have **mod_rewrite** and **mod_headers** enabled. Also, the **AllowOverride** directive must be set to **All**.
+
 Two options
 1. Document Root != **public** folder:
     * Rename **.dist.htaccess** to **.htaccess**,
