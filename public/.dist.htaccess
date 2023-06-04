@@ -1,3 +1,7 @@
+#
+# This .htaccess for AllowOverride All
+# https://httpd.apache.org/docs/2.4/mod/core.html#allowoverride
+#
 AddDefaultCharset UTF-8
 
 <IfModule mod_autoindex.c>
