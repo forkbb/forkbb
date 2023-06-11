@@ -13,11 +13,13 @@ ForkBB.editor = (function (doc, win) {
     'use strict';
 
     var instance,
+        nameSelector = ".f-username",
         dataName = "data-SCEditorConfig",
         emotName = "data-smiliesEnabled",
         linkName = "data-linkEnabled",
         selector = "textarea[" + dataName + "]",
         textarea,
+        elForScroll,
         options = {
             format: 'bbcode',
             icons: 'monocons',
@@ -82,6 +84,19 @@ ForkBB.editor = (function (doc, win) {
             } else {
                 instance.emoticons(true);
             }
+        }
+
+        elForScroll = textarea.parentNode;
+        var users = doc.querySelectorAll(nameSelector);
+
+        for (var node of users) {
+            var a = doc.createElement("a");
+            a.textContent = "@";
+            a.addEventListener('click', function (e) {
+                instance.insert("[b]" + e.target.parentNode.textContent + "[/b], ");
+                elForScroll.scrollIntoView({behavior: "smooth", block: "end"});
+            });
+            node.insertBefore(a, node.firstChild);
         }
     }
 
