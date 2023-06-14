@@ -733,6 +733,8 @@
 
 #forka .f-field-handler .f-ytxtarea {
   height: 15rem;
+  overflow: auto;
+  white-space: pre;
 }
 
 #forka .f-bbcode-form .f-btns,
