@@ -437,10 +437,10 @@ abstract class Page extends Model
      */
     public function settitles(string|array $value): void
     {
-        $attr   = $this->getAttr('titles', []);
+        $attr   = $this->getModelAttr('titles', []);
         $attr[] = $value;
 
-        $this->setAttr('titles', $attr);
+        $this->setModelAttr('titles', $attr);
     }
 
     /**
@@ -449,7 +449,7 @@ abstract class Page extends Model
      */
     public function setfIswev(array $value): void
     {
-        $attr = $this->getAttr('fIswev', []);
+        $attr = $this->getModelAttr('fIswev', []);
 
         if (
             isset($value[0], $value[1])
@@ -461,7 +461,7 @@ abstract class Page extends Model
             $attr = \array_merge_recursive($attr, $value); // ???? добавить проверку?
         }
 
-        $this->setAttr('fIswev', $attr) ;
+        $this->setModelAttr('fIswev', $attr) ;
     }
 
     /**

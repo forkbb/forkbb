@@ -25,7 +25,7 @@ class Posts extends Manager
      */
     public function create(array $attrs = []): Post
     {
-        return $this->c->PostModel->setAttrs($attrs);
+        return $this->c->PostModel->setModelAttrs($attrs);
     }
 
     /**

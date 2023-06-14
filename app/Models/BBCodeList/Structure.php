@@ -61,14 +61,14 @@ class Structure extends Model
 
         foreach ($bbcode as $cur) {
             if ($this->tag === $cur['tag']) {
-                return $this->setAttrs($cur);
+                return $this->setModelAttrs($cur);
             }
         }
     }
 
     public function fromString(string $data): Structure
     {
-        return $this->setAttrs(\json_decode($data, true, 512, \JSON_THROW_ON_ERROR));
+        return $this->setModelAttrs(\json_decode($data, true, 512, \JSON_THROW_ON_ERROR));
     }
 
     public function toString(): string
@@ -142,14 +142,14 @@ class Structure extends Model
 
     protected function gettype(): string
     {
-        $type = $this->getAttr('type');
+        $type = $this->getModelAttr('type');
 
         return \is_string($type) ? $type : 'inline';
     }
 
     protected function getparents(): array
     {
-        $parents = $this->getAttr('parents');
+        $parents = $this->getModelAttr('parents');
 
         if (\is_array($parents)) {
             return $parents;
@@ -163,36 +163,36 @@ class Structure extends Model
     protected function setrecursive($value): void
     {
         $value = empty($value) ? null : true;
-        $this->setAttr('recursive', $value);
+        $this->setModelAttr('recursive', $value);
     }
 
     protected function settext_only($value): void
     {
         $value = empty($value) ? null : true;
-        $this->setAttr('text_only', $value);
+        $this->setModelAttr('text_only', $value);
     }
 
     protected function settags_only($value): void
     {
         $value = empty($value) ? null : true;
-        $this->setAttr('tags_only', $value);
+        $this->setModelAttr('tags_only', $value);
     }
 
     protected function setpre($value): void
     {
         $value = empty($value) ? null : true;
-        $this->setAttr('pre', $value);
+        $this->setModelAttr('pre', $value);
     }
 
     protected function setsingle($value): void
     {
         $value = empty($value) ? null : true;
-        $this->setAttr('single', $value);
+        $this->setModelAttr('single', $value);
     }
 
     protected function getauto(): bool
     {
-        $auto = $this->getAttr('auto');
+        $auto = $this->getModelAttr('auto');
 
         if (\is_bool($auto)) {
             return $auto;
@@ -206,13 +206,13 @@ class Structure extends Model
     protected function setauto($value): void
     {
         $value = ! empty($value);
-        $this->setAttr('auto', $value);
+        $this->setModelAttr('auto', $value);
     }
 
     protected function setself_nesting($value): void
     {
         $value = (int) $value < 1 ? false : (int) $value;
-        $this->setAttr('self_nesting', $value);
+        $this->setModelAttr('self_nesting', $value);
     }
 
     protected function getBBAttr(string $name, array $fields): mixed
@@ -255,7 +255,7 @@ class Structure extends Model
 
     protected function setBBAttr(string $name, mixed $data, array $fields): void
     {
-        $attrs = $this->getAttr('attrs');
+        $attrs = $this->getModelAttr('attrs');
 
         if (
             empty($data['allowed'])
@@ -289,7 +289,7 @@ class Structure extends Model
             $attrs[$name] = empty($result) ? true : $result;
         }
 
-        $this->setAttr('attrs', $attrs);
+        $this->setModelAttr('attrs', $attrs);
     }
 
     protected function getno_attr(): mixed
@@ -314,7 +314,7 @@ class Structure extends Model
 
     protected function getother_attrs(): array
     {
-        $attrs = $this->getAttr('attrs');
+        $attrs = $this->getModelAttr('attrs');
 
         if (! \is_array($attrs)) {
             return [];

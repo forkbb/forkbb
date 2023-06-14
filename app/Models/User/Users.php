@@ -28,7 +28,7 @@ class Users extends Manager
      */
     public function create(array $attrs = []): User
     {
-        return $this->c->UserModel->setAttrs($attrs);
+        return $this->c->UserModel->setModelAttrs($attrs);
     }
 
     /**
@@ -150,7 +150,7 @@ class Users extends Manager
         $cache = $this->c->Cache->get(self::CACHE_KEY);
 
         if (! \is_array($cache)) {
-            $cache = $this->c->groups->get(FORK_GROUP_GUEST)->getAttrs();
+            $cache = $this->c->groups->get(FORK_GROUP_GUEST)->getModelAttrs();
 
             if (true !== $this->c->Cache->set(self::CACHE_KEY, $cache)) {
                 throw new RuntimeException('Unable to write value to cache - ' . self::CACHE_KEY);

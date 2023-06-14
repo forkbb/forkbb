@@ -26,7 +26,7 @@ class Polls extends Manager
      */
     public function create(array $attrs = []): Poll
     {
-        return $this->c->PollModel->setAttrs($attrs);
+        return $this->c->PollModel->setModelAttrs($attrs);
     }
 
     /**
@@ -45,7 +45,7 @@ class Polls extends Manager
                 $poll = $this->create($data);
             } else {
                 $poll = $this->Load->load($id);
-                $data = $poll instanceof Poll ? $poll->getAttrs() : null; // ????
+                $data = $poll instanceof Poll ? $poll->getModelAttrs() : null; // ????
 
                 $this->c->Cache->set("poll{$id}", $data);
             }

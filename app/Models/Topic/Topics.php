@@ -25,7 +25,7 @@ class Topics extends Manager
      */
     public function create(array $attrs = []): Topic
     {
-        return $this->c->TopicModel->setAttrs($attrs);
+        return $this->c->TopicModel->setModelAttrs($attrs);
     }
 
     /**

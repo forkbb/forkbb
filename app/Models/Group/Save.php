@@ -31,7 +31,7 @@ class Save extends Action
             return $group;
         }
 
-        $values = $group->getAttrs();
+        $values = $group->getModelAttrs();
         $fields = $this->c->dbMap->groups;
 
         $set = $vars = [];
@@ -77,7 +77,7 @@ class Save extends Action
             throw new RuntimeException('The model has ID');
         }
 
-        $attrs  = $group->getAttrs();
+        $attrs  = $group->getModelAttrs();
         $fields = $this->c->dbMap->groups;
 
         $set = $set2 = $vars = [];

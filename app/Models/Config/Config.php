@@ -38,7 +38,7 @@ class Config extends DataModel
             }
         }
 
-        $this->setAttrs($config);
+        $this->setModelAttrs($config);
 
         return $this;
     }

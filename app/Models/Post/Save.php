@@ -31,7 +31,7 @@ class Save extends Action
             return $post;
         }
 
-        $values = $post->getAttrs();
+        $values = $post->getModelAttrs();
         $fields = $this->c->dbMap->posts;
         $set = $vars = [];
 
@@ -70,7 +70,7 @@ class Save extends Action
             throw new RuntimeException('The model has ID');
         }
 
-        $attrs  = $post->getAttrs();
+        $attrs  = $post->getModelAttrs();
         $fields = $this->c->dbMap->posts;
         $set = $set2 = $vars = [];
 

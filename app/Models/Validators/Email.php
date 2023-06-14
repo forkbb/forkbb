@@ -149,7 +149,7 @@ class Email extends RulesValidator
             && $user instanceof User
             && ! $user->isGuest
         ) {
-            $originalUser->setAttrs($user->getAttrs());
+            $originalUser->setModelAttrs($user->getModelAttrs());
         }
 
         return $email;

@@ -22,7 +22,7 @@ class Users extends Rules
      */
     public function init(): Users
     {
-        $this->setAttrs([]);
+        $this->setModelAttrs([]);
 
         $this->ready = true;
         $this->user  = $this->c->user;

@@ -42,7 +42,7 @@ class Cookie extends Model
             'time'     => 31536000,
         ];
 
-        $this->setAttrs($options);
+        $this->setModelAttrs($options);
         $this->init();
         $this->noSet = true;
     }

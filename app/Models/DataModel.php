@@ -29,12 +29,12 @@ class DataModel extends Model
      * Сбрасывает вычисленные свойства
      * Флаги модификации свойст сброшены
      */
-    public function setAttrs(array $attrs): Model
+    public function setModelAttrs(array $attrs): Model
     {
         $this->zModFlags   = [];
         $this->zTrackFlags = [];
 
-        return parent::setAttrs($attrs);
+        return parent::setModelAttrs($attrs);
     }
 
     /**
@@ -142,7 +142,7 @@ class DataModel extends Model
     {
         // без вычисления
         if (\str_starts_with($name, '__')) {
-            return $this->getAttr(\substr($name, 2));
+            return $this->getModelAttr(\substr($name, 2));
         // с вычислениями
         } else {
             return parent::__get($name);

@@ -40,7 +40,7 @@ class PBlock extends Model
 
     public function init(User $user): void
     {
-        $this->setAttrs([]);
+        $this->setModelAttrs([]);
 
         $this->repository = [];
         $this->user       = $user;

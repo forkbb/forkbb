@@ -41,7 +41,7 @@ class Save extends Method
             return $model;
         }
 
-        $values = $model->getAttrs();
+        $values = $model->getModelAttrs();
         $fields = $this->c->dbMap->{$table};
 
         $set = $vars = [];
@@ -83,7 +83,7 @@ class Save extends Method
             throw new InvalidArgumentException('Bad model');
         }
 
-        $attrs  = $model->getAttrs();
+        $attrs  = $model->getModelAttrs();
         $fields = $this->c->dbMap->{$table};
 
         $set = $set2 = $vars = [];

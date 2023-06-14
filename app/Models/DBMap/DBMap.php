@@ -37,7 +37,7 @@ class DBMap extends Model
             }
         }
 
-        $this->setAttrs($map);
+        $this->setModelAttrs($map);
 
         return $this;
     }

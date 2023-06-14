@@ -88,7 +88,7 @@ class Model
      * Устанавливает значение для свойства
      * Без вычислений, но со сбросом зависимых свойст и вычисленного значения
      */
-    public function setAttr(string $name, mixed $value): Model
+    public function setModelAttr(string $name, mixed $value): Model
     {
         $this->unsetCalc($name);
         $this->zAttrs[$name] = $value;
@@ -100,7 +100,7 @@ class Model
      * Устанавливает значения для свойств
      * Сбрасывает вычисленные свойства
      */
-    public function setAttrs(array $attrs): Model
+    public function setModelAttrs(array $attrs): Model
     {
         $this->zAttrs     = $attrs; //????
         $this->zAttrsCalc = [];
@@ -142,7 +142,7 @@ class Model
      * Возвращает значение свойства
      * Без вычислений
      */
-    public function getAttr(string $name, mixed $default = null): mixed
+    public function getModelAttr(string $name, mixed $default = null): mixed
     {
         return \array_key_exists($name, $this->zAttrs) ? $this->zAttrs[$name] : $default;
     }
@@ -151,7 +151,7 @@ class Model
      * Возвращает значения свойств в массиве
      * Без вычислений
      */
-    public function getAttrs(): array
+    public function getModelAttrs(): array
     {
         return $this->zAttrs;
     }

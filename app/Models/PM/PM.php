@@ -97,9 +97,9 @@ class PM extends Model
     {
         switch ($type) {
             case Cnst::PTOPIC:
-                return $this->c->PTopicModel->setAttrs($attrs);
+                return $this->c->PTopicModel->setModelAttrs($attrs);
             case Cnst::PPOST:
-                return $this->c->PPostModel->setAttrs($attrs);
+                return $this->c->PPostModel->setModelAttrs($attrs);
             default:
                 throw new InvalidArgumentException("Wrong type: {$type}");
         }
@@ -403,7 +403,7 @@ class PM extends Model
                 $area = Cnst::ACTION_CURRENT;
         }
 
-        $this->setAttr('area', $area);
+        $this->setModelAttr('area', $area);
 
         return $this;
     }

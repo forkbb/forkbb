@@ -29,7 +29,7 @@ class Reports extends Manager
      */
     public function create(array $attrs = []): Report
     {
-        return $this->c->ReportModel->setAttrs($attrs);
+        return $this->c->ReportModel->setModelAttrs($attrs);
     }
 
     /**

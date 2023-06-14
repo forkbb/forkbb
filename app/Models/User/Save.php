@@ -34,7 +34,7 @@ class Save extends Action
             return $user;
         }
 
-        $values = $user->getAttrs();
+        $values = $user->getModelAttrs();
 
         if ($user->isGuest) {
             $fields = $this->c->dbMap->online;
@@ -115,7 +115,7 @@ class Save extends Action
         // вычисление username_normal для нового пользователя
         $user->username_normal = $this->manager->normUsername($user->username);
 
-        $attrs  = $user->getAttrs();
+        $attrs  = $user->getModelAttrs();
         $fields = $this->c->dbMap->users;
         $set = $set2 = $vars = [];
 

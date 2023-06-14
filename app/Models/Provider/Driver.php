@@ -48,7 +48,7 @@ abstract class Driver extends Model
             throw new RuntimeException("Invalid name: {$name}");
         }
 
-        $this->setAttr('name', $name);
+        $this->setModelAttr('name', $name);
     }
 
     /**

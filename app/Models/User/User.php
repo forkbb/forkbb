@@ -118,7 +118,7 @@ class User extends DataModel
     protected function getlanguage(): string
     {
         $langs = $this->c->Func->getLangs();
-        $lang  = $this->getAttr('language');
+        $lang  = $this->getModelAttr('language');
 
         if (
             empty($lang)
@@ -140,7 +140,7 @@ class User extends DataModel
     protected function getstyle(): string
     {
         $styles = $this->c->Func->getStyles();
-        $style  = $this->getAttr('style');
+        $style  = $this->getModelAttr('style');
 
         if (
             $this->isGuest
@@ -180,7 +180,7 @@ class User extends DataModel
      */
     protected function getavatar(): ?string
     {
-        $file = $this->getAttr('avatar');
+        $file = $this->getModelAttr('avatar');
 
         if (! empty($file)) {
             $file = $this->c->config->o_avatars_dir . '/' . $file;
@@ -199,7 +199,7 @@ class User extends DataModel
      */
     public function deleteAvatar(): void
     {
-        $file = $this->getAttr('avatar');
+        $file = $this->getModelAttr('avatar');
 
         if (! empty($file)) {
             $path = $this->c->DIR_PUBLIC . "{$this->c->config->o_avatars_dir}/{$file}";
@@ -313,7 +313,7 @@ class User extends DataModel
      */
     protected function getdisp_topics(): int
     {
-        $attr = $this->getAttr('disp_topics');
+        $attr = $this->getModelAttr('disp_topics');
 
         if ($attr < 10) {
             $attr = $this->c->config->i_disp_topics_default;
@@ -327,7 +327,7 @@ class User extends DataModel
      */
     protected function getdisp_posts(): int
     {
-        $attr = $this->getAttr('disp_topics');
+        $attr = $this->getModelAttr('disp_topics');
 
         if ($attr < 10) {
             $attr = $this->c->config->i_disp_posts_default;
@@ -384,15 +384,15 @@ class User extends DataModel
     /**
      * Возвращает значения свойств в массиве
      */
-    public function getAttrs(): array
+    public function getModelAttrs(): array
     {
         foreach (['email_normal', 'username_normal'] as $key) {
             if (isset($this->zModFlags[$key])) {
-                $this->setAttr($key, $this->$key);
+                $this->setModelAttr($key, $this->$key);
             }
         }
 
-        return parent::getAttrs();
+        return parent::getModelAttrs();
     }
 
     /**

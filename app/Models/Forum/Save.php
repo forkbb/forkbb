@@ -31,7 +31,7 @@ class Save extends Action
             return $forum;
         }
 
-        $values = $forum->getAttrs();
+        $values = $forum->getModelAttrs();
         $fields = $this->c->dbMap->forums;
         $set = $vars = [];
 
@@ -88,7 +88,7 @@ class Save extends Action
             throw new RuntimeException('The model has ID');
         }
 
-        $attrs  = $forum->getAttrs();
+        $attrs  = $forum->getModelAttrs();
         $fields = $this->c->dbMap->forums;
         $set = $set2 = $vars = [];
 

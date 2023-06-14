@@ -24,7 +24,7 @@ class Profile extends Rules
      */
     public function setUser(User $curUser): Profile
     {
-        $this->setAttrs([]);
+        $this->setModelAttrs([]);
 
         $this->ready       = true;
         $this->user        = $this->c->user;

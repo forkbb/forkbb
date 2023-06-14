@@ -27,7 +27,7 @@ class Save extends Method
             return $this->model;
         }
 
-        $values = $this->model->getAttrs();
+        $values = $this->model->getModelAttrs();
 
         foreach ($modified as $name) {
             if (\array_key_exists($name, $values)) {

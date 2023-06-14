@@ -30,7 +30,7 @@ class Groups extends Manager
      */
     public function create(array $attrs = []): Group
     {
-        return $this->c->GroupModel->setAttrs($attrs);
+        return $this->c->GroupModel->setModelAttrs($attrs);
     }
 
     public function getList(): array

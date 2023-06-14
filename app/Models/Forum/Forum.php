@@ -89,7 +89,7 @@ class Forum extends DataModel
     protected function getsubforums(): array
     {
         $sub  = [];
-        $attr = $this->getAttr('subforums');
+        $attr = $this->getModelAttr('subforums');
 
         if (\is_array($attr)) {
             foreach ($attr as $id) {
@@ -106,7 +106,7 @@ class Forum extends DataModel
     protected function getdescendants(): array
     {
         $all  = [];
-        $attr = $this->getAttr('descendants');
+        $attr = $this->getModelAttr('descendants');
 
         if (\is_array($attr)) {
             foreach ($attr as $id) {
@@ -242,7 +242,7 @@ class Forum extends DataModel
      */
     protected function getmoderators(): array
     {
-        $attr = $this->getAttr('moderators');
+        $attr = $this->getModelAttr('moderators');
 
         if (
             empty($attr)
@@ -278,7 +278,7 @@ class Forum extends DataModel
      */
     public function modAdd(User ...$users): void
     {
-        $attr = $this->getAttr('moderators');
+        $attr = $this->getModelAttr('moderators');
 
         if (
             empty($attr)
@@ -303,7 +303,7 @@ class Forum extends DataModel
      */
     public function modDelete(User ...$users): void
     {
-        $attr = $this->getAttr('moderators');
+        $attr = $this->getModelAttr('moderators');
 
         if (
             empty($attr)
@@ -328,7 +328,7 @@ class Forum extends DataModel
      */
     protected function gettree(): Forum
     {
-        $attr = $this->getAttr('tree');
+        $attr = $this->getModelAttr('tree');
 
         if (empty($attr)) { //????
             $numT   = (int) $this->num_topics;
@@ -362,7 +362,7 @@ class Forum extends DataModel
                 'newMessages'  => $fnew,
             ]);
 
-            $this->setAttr('tree', $attr);
+            $this->setModelAttr('tree', $attr);
         }
 
         return $attr;
@@ -457,9 +457,9 @@ class Forum extends DataModel
     /**
      * Возвращает значения свойств в массиве
      */
-    public function getAttrs(): array
+    public function getModelAttrs(): array
     {
-        $data = parent::getAttrs();
+        $data = parent::getModelAttrs();
 
         $data['moderators'] = empty($data['moderators']) || ! \is_array($data['moderators'])
             ? ''

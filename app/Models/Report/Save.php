@@ -33,7 +33,7 @@ class Save extends Action
             return $report;
         }
 
-        $values = $report->getAttrs();
+        $values = $report->getModelAttrs();
         $fields = $this->c->dbMap->reports;
         $set = $vars = [];
 
@@ -74,7 +74,7 @@ class Save extends Action
 
         $report->created = \time();
 
-        $attrs  = $report->getAttrs();
+        $attrs  = $report->getModelAttrs();
         $fields = $this->c->dbMap->reports;
         $set = $set2 = $vars = [];
 
