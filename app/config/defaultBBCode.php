@@ -355,7 +355,7 @@ HANDLER,
             'No_attr' => true,
         ],
         'handler' => <<<'HANDLER'
-$header = isset($attrs['Def']) ? '<div class="f-bb-q-header">' . __(['%s wrote', $attrs['Def']]) . '</div>' : '';
+$header = isset($attrs['Def']) ? '<cite class="f-bb-q-header">' . __(['%s wrote', $attrs['Def']]) . '</cite>' : '';
 return "</p><blockquote class=\"f-bb-quote\">{$header}<div class=\"f-bb-q-body\"><p>{$body}</p></div></blockquote><p>";
 HANDLER,
     ],
