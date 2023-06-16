@@ -67,13 +67,9 @@ EOD;
      */
     public function rendering(Page $p): ?string
     {
-        foreach ($p->httpHeaders as $catHeader) {
-            foreach ($catHeader as $header) {
-                \header($header[0], $header[1]);
-            }
-        }
-
         if (null === $p->nameTpl) {
+            $this->sendHttpHeaders($p);
+
             return null;
         }
 
@@ -93,6 +89,20 @@ EOD;
             $this->endBlock(true);
         }
 
+        $this->sendHttpHeaders($p);
+
         return $this->block('content');
+    }
+
+    /**
+     * Отправляет HTTP заголовки
+     */
+    protected function sendHttpHeaders(Page $p): void
+    {
+        foreach ($p->httpHeaders as $catHeader) {
+            foreach ($catHeader as $header) {
+                \header($header[0], $header[1]);
+            }
+        }
     }
 }

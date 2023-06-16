@@ -401,12 +401,34 @@ abstract class Page extends Model
     protected function gethttpHeaders(): array
     {
         foreach ($this->c->HTTP_HEADERS[$this->hhsLevel] as $header => $value) {
+            if (
+                'Content-Security-Policy' === $header
+                && $this->c->isInit('Parser')
+                && $this->c->Parser->inlineStyle()
+            ) {
+                $value = $this->addUnsafeInline($value);
+            }
+
             $this->header($header, $value);
         }
 
         $this->httpStatus();
 
         return $this->httpHeaders;
+    }
+
+    /**
+     * Добавляет в заголовок (Content-Security-Policy) значение unsafe-inline для style-src
+     */
+    protected function addUnsafeInline(string $header): string
+    {
+        if (false === \strpos($header, 'style-src')) {
+            return $header . ';style-src \'self\' \'unsafe-inline\''; // ???? брать правила с default-src ?
+        } elseif (\preg_match('%style\-src[^;]+?unsafe\-inline%i', $header)) {
+            return $header;
+        } else {
+            return \str_replace('style-src', 'style-src \'unsafe-inline\'', $header);
+        }
     }
 
     /**

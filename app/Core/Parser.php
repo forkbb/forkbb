@@ -144,4 +144,24 @@ class Parser extends Parserus
 
         return $this->getHtml();
     }
+
+    /**
+     * Флаг использования встроенных стилей
+     */
+    protected bool $flagInlneStyle = false;
+
+    /**
+     * Устанавливает/возвращает флаг использования встроенных стилей в ббкодах
+     * (обработчик ббкода должен вызвать этот метод со значением true)
+     */
+    public function inlineStyle(bool $flag = null): bool
+    {
+        $prev = $this->flagInlneStyle;
+
+        if (true === $flag) {
+            $this->flagInlneStyle = $flag;
+        }
+
+        return $prev;
+    }
 }
