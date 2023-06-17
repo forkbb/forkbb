@@ -164,7 +164,8 @@ body,
 }
 
 #fork code,
-#fork pre {
+#fork pre,
+#fork .f-bb-mono {
   font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
 }
 
@@ -1758,141 +1759,33 @@ body,
   background-color: #D3B58D;
 }
 
-#fork .f-bb-size1 {
+#fork .f-bb-size[data-bb="1"] {
   font-size: xx-small;
 }
 
-#fork .f-bb-size2 {
+#fork .f-bb-size[data-bb="2"] {
   font-size: small;
 }
 
-#fork .f-bb-size3 {
+#fork .f-bb-size[data-bb="3"] {
   font-size: medium;
 }
 
-#fork .f-bb-size4 {
+#fork .f-bb-size[data-bb="4"] {
   font-size: large;
 }
 
-#fork .f-bb-size5 {
+#fork .f-bb-size[data-bb="5"] {
   font-size: x-large;
 }
 
-#fork .f-bb-size6 {
+#fork .f-bb-size[data-bb="6"] {
   font-size: xx-large;
 }
 
-#fork .f-bb-size7 {
+#fork .f-bb-size[data-bb="7"] {
   font-size: 3rem;
   font-size: xxx-large; /* https://caniuse.com/mdn-css_properties_font-size_xxx-large */
-}
-
-#fork .f-bb-font[data-bb="Arial"] {
-  font-family: Arial;
-}
-
-#fork .f-bb-font[data-bb="Arial Black"] {
-  font-family: "Arial Black";
-}
-
-#fork .f-bb-font[data-bb="Comic Sans MS"] {
-  font-family: "Comic Sans MS";
-}
-
-#fork .f-bb-font[data-bb="Courier New"] {
-  font-family: "Courier New";
-}
-
-#fork .f-bb-font[data-bb="Georgia"] {
-  font-family: Georgia;
-}
-
-#fork .f-bb-font[data-bb="Impact"] {
-  font-family: Impact;
-}
-
-#fork .f-bb-font[data-bb="Sans-serif"] {
-  font-family: Sans-serif;
-}
-
-#fork .f-bb-font[data-bb="Serif"] {
-  font-family: Serif;
-}
-
-#fork .f-bb-font[data-bb="Times New Roman"] {
-  font-family: "Times New Roman";
-}
-
-#fork .f-bb-font[data-bb="Trebuchet MS"] {
-  font-family: "Trebuchet MS";
-}
-
-#fork .f-bb-font[data-bb="Verdana"] {
-  font-family: Verdana;
-}
-
-#fork .f-bb-color[data-bb="#000000"] {
-  color: #000000;
-}
-
-#fork .f-bb-color[data-bb="#808080"] {
-  color: #808080;
-}
-
-#fork .f-bb-color[data-bb="#C0C0C0"] {
-  color: #C0C0C0;
-}
-
-#fork .f-bb-color[data-bb="#FFFFFF"] {
-  color: #FFFFFF;
-}
-
-#fork .f-bb-color[data-bb="#FF00FF"] {
-  color: #FF00FF;
-}
-
-#fork .f-bb-color[data-bb="#800080"] {
-  color: #800080;
-}
-
-#fork .f-bb-color[data-bb="#FF0000"] {
-  color: #FF0000;
-}
-
-#fork .f-bb-color[data-bb="#800000"] {
-  color: #800000;
-}
-
-#fork .f-bb-color[data-bb="#FFFF00"] {
-  color: #FFFF00;
-}
-
-#fork .f-bb-color[data-bb="#808000"] {
-  color: #808000;
-}
-
-#fork .f-bb-color[data-bb="#00FF00"] {
-  color: #00FF00;
-}
-
-#fork .f-bb-color[data-bb="#008000"] {
-  color: #008000;
-}
-
-#fork .f-bb-color[data-bb="#00FFFF"] {
-  color: #00FFFF;
-}
-
-#fork .f-bb-color[data-bb="#008080"] {
-  color: #008080;
-}
-
-#fork .f-bb-color[data-bb="#0000FF"] {
-  color: #0000FF;
-}
-
-#fork .f-bb-color[data-bb="#000080"] {
-  color: #000080;
 }
 
 /****************/

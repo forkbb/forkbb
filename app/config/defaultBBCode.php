@@ -112,6 +112,7 @@ HANDLER,
             ],
         ],
         'handler' => <<<'HANDLER'
+$parser->inlineStyle(true);
 $color = $attrs['Def'];
 
 if ('#' === $color[0]) {
@@ -141,7 +142,7 @@ if ('#' === $color[0]) {
     }
 }
 
-return "<span class=\"f-bb-color\" data-bb=\"{$color}\">{$body}</span>";
+return "<span class=\"f-bb-color\" style=\"color:{$color};\">{$body}</span>";
 HANDLER,
     ],
     [
@@ -153,6 +154,7 @@ HANDLER,
             ],
         ],
         'handler' => <<<'HANDLER'
+$parser->inlineStyle(true);
 $color = $attrs['Def'];
 
 if ('#' === $color[0]) {
@@ -182,7 +184,7 @@ if ('#' === $color[0]) {
     }
 }
 
-return "<span class=\"f-bb-color\" data-bb=\"{$color}\">{$body}</span>";
+return "<span class=\"f-bb-color\" style=\"color:{$color};\">{$body}</span>";
 HANDLER,
     ],
     [
@@ -194,7 +196,37 @@ HANDLER,
             ],
         ],
         'handler' => <<<'HANDLER'
-return "<span style=\"background-color:{$attrs['Def']};\">{$body}</span>";
+$parser->inlineStyle(true);
+$color = $attrs['Def'];
+
+if ('#' === $color[0]) {
+    $color = \strtoupper($color);
+} else {
+    $repl = [
+        'black'   => '#000000',
+        'gray'    => '#808080',
+        'silver'  => '#C0C0C0',
+        'white'   => '#FFFFFF',
+        'fuchsia' => '#FF00FF',
+        'purple'  => '#800080',
+        'red'     => '#FF0000',
+        'maroon'  => '#800000',
+        'yellow'  => '#FFFF00',
+        'olive'   => '#808000',
+        'lime'    => '#00FF00',
+        'green'   => '#008000',
+        'aqua'    => '#00FFFF',
+        'teal'    => '#008080',
+        'blue'    => '#0000FF',
+        'navy'    => '#000080',
+    ];
+
+    if (isset($repl[$color])) {
+        $color = $repl[$color];
+    }
+}
+
+return "<span class=\"f-bb-bgcolor\" style=\"background-color:{$color};\">{$body}</span>";
 HANDLER,
     ],
     [
@@ -206,7 +238,7 @@ HANDLER,
             ],
         ],
         'handler' => <<<'HANDLER'
-return "<span class=\"f-bb-size{$attrs['Def']}\">{$body}</span>";
+return "<span class=\"f-bb-size\" data-bb=\"{$attrs['Def']}\">{$body}</span>";
 HANDLER,
     ],
     [
@@ -240,7 +272,7 @@ HANDLER,
     [
         'tag' => 'mono',
         'handler' => <<<'HANDLER'
-return "<code class=\"f-bb-mono\">{$body}</code>";
+return "<span class=\"f-bb-mono\">{$body}</span>";
 HANDLER,
     ],
     [
@@ -252,7 +284,9 @@ HANDLER,
             ],
         ],
         'handler' => <<<'HANDLER'
-return "<span class=\"f-bb-font\" data-bb=\"{$attrs['Def']}\">{$body}</span>";
+$parser->inlineStyle(true);
+
+return "<span class=\"f-bb-font\" style=\"font-family:{$attrs['Def']};\">{$body}</span>";
 HANDLER,
     ],
     [

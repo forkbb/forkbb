@@ -89,6 +89,7 @@ video {
   box-sizing: border-box;
   overflow-wrap: break-word;
   word-break: break-word;
+  outline: none;
 }
 
 body {
@@ -213,4 +214,33 @@ u {
 img {
   max-width: 100%;
   height: auto;
+}
+
+span.f-bb-mono {
+  border: 0.0625rem solid #C0C0C0;
+  background-color: #FFFFFF;
+  padding: 0 0.25rem;
+  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+}
+
+summary {
+  cursor: pointer;
+  margin-bottom: 0.625rem;
+}
+
+summary::after {
+  display: inline-block;
+  content: "(click to open)";
+  font-size: 0.875rem;
+  margin: 0 0.3125rem;
+  opacity: 0.6;
+}
+
+details[open] > summary::after {
+  content: "(click to close)";
+}
+
+div.f-bb-s-body {
+  padding: 0.625rem;
+  border-inline-start: 0.1875rem solid #AA7939;
 }

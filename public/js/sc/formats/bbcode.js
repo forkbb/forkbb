@@ -347,6 +347,9 @@
 			tags: {
 				font: {
 					size: null
+				},
+				span: {
+					class: 'f-bb-size'
 				}
 			},
 			styles: {
@@ -355,6 +358,10 @@
 			format: function (element, content) {
 				var	fontSize = attr(element, 'size'),
 					size     = 2;
+
+				if (!fontSize) {
+					fontSize = attr(element, 'data-bb');
+				}
 
 				if (!fontSize) {
 					fontSize = css(element, 'fontSize');
@@ -694,18 +701,29 @@
 		// START_COMMAND: Code
 		code: {
 			tags: {
+				pre: null,
 				code: null
 			},
 			isInline: false,
 			allowedChildren: ['#', '#newline'],
-			format: '[code]{0}[/code]',
+			format: function (element, content) {
+				if (is(element, 'pre') && is(element.firstChild, 'code')) {
+					content	= this.elementToBbcode(element.firstChild);
+				}
+
+				return '[code]' + content + '[/code]';
+			},
 			html: '<code>{0}</code>'
 		},
 		// END_COMMAND
 
-
 		// START_COMMAND: Left
 		left: {
+			tags: {
+				p: {
+					class: 'f-bb-left'
+				}
+			},
 			styles: {
 				'text-align': [
 					'left',
@@ -723,6 +741,11 @@
 
 		// START_COMMAND: Centre
 		center: {
+			tags: {
+				p: {
+					class: 'f-bb-center'
+				}
+			},
 			styles: {
 				'text-align': [
 					'center',
@@ -740,6 +763,11 @@
 
 		// START_COMMAND: Right
 		right: {
+			tags: {
+				p: {
+					class: 'f-bb-right'
+				}
+			},
 			styles: {
 				'text-align': [
 					'right',
@@ -757,6 +785,11 @@
 
 		// START_COMMAND: Justify
 		justify: {
+			tags: {
+				p: {
+					class: 'f-bb-justify'
+				}
+			},
 			styles: {
 				'text-align': [
 					'justify',
@@ -811,6 +844,62 @@
 			isInline: false,
 			format: '[ltr]{0}[/ltr]',
 			html: '<div style="direction: ltr">{0}</div>'
+		},
+		// END_COMMAND
+
+		// START_COMMAND: Mono
+		mono: {
+			tags: {
+				span: {
+					class: 'f-bb-mono'
+				}
+			},
+			isInline: true,
+			format: '[mono]{0}[/mono]',
+			html: '<span class="f-bb-mono">{0}</span>'
+		},
+		// END_COMMAND
+
+		// START_COMMAND: Spoiler
+		spoiler: {
+			tags: {
+				details: null
+			},
+			isInline: false,
+//			quoteType: QuoteType.never,
+			format: function (element, content) {
+				var summary;
+				var children = element.children;
+
+				for (var i = 0; !summary && i < children.length; i++) {
+					if (is(children[i], 'summary')) {
+						summary = children[i];
+					}
+				}
+
+				if (summary) {
+					element.removeChild(summary);
+					content	= this.elementToBbcode(element);
+					summary = '=' + summary.textContent;
+
+					if (/^=['"]?Hidden text['"]?$/.test(summary)) {
+						summary = '';
+					}
+				} else {
+					summary = '';
+				}
+
+				return '[spoiler' + summary + ']' + content + '[/spoiler]';
+			},
+			html: function (token, attrs, content) {
+				if (attrs.defaultattr) {
+					var summary = escapeEntities(attrs.defaultattr);
+				} else {
+					var summary = 'Hidden text';
+				}
+
+				return '<details><summary>' + summary + '</summary><div class="f-bb-s-body">' + content + '</div></details>';
+			}
 		},
 		// END_COMMAND
 
