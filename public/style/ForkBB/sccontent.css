@@ -164,7 +164,7 @@ blockquote cite {
   display: block;
   padding: 0.625rem;
   background-color: #F8F4E3 /*#D3B58D*/;
-  margin: -0.625rem -0.625rem 0 -0.625rem;
+  margin: -0.625rem -0.625rem 0.625rem -0.625rem;
 }
 
 a {
