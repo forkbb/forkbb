@@ -36,54 +36,63 @@ return '</p><pre class="f-bb-code">' . \trim($body, "\n\r") . '</pre><p>';
 HANDLER,
     ],
     [   'tag' => 'b',
+        'parents' => ['inline', 'block', 'url'],
         'handler' => <<<'HANDLER'
 return "<b>{$body}</b>";
 HANDLER,
     ],
     [
         'tag' => 'i',
+        'parents' => ['inline', 'block', 'url'],
         'handler' => <<<'HANDLER'
 return "<i>{$body}</i>";
 HANDLER,
     ],
     [
         'tag' => 'em',
+        'parents' => ['inline', 'block', 'url'],
         'handler' => <<<'HANDLER'
 return "<em>{$body}</em>";
 HANDLER,
     ],
     [
         'tag' => 'u',
+        'parents' => ['inline', 'block', 'url'],
         'handler' => <<<'HANDLER'
 return "<u>{$body}</u>";
 HANDLER,
     ],
     [
         'tag' => 's',
+        'parents' => ['inline', 'block', 'url'],
         'handler' => <<<'HANDLER'
 return "<s>{$body}</s>";
 HANDLER,
     ],
     [
         'tag' => 'del',
+        'parents' => ['inline', 'block', 'url'],
         'handler' => <<<'HANDLER'
 return "<del>{$body}</del>";
 HANDLER,
     ],
     [
         'tag' => 'ins',
+        'parents' => ['inline', 'block', 'url'],
         'handler' => <<<'HANDLER'
 return "<ins>{$body}</ins>";
 HANDLER,
     ],
     [
         'tag' => 'sub',
+        'parents' => ['inline', 'block', 'url'],
         'handler' => <<<'HANDLER'
 return "<sub>{$body}</sub>";
 HANDLER,
     ],
     [
         'tag' => 'sup',
+        'parents' => ['inline', 'block', 'url'],
         'handler' => <<<'HANDLER'
 return "<sup>{$body}</sup>";
 HANDLER,
@@ -105,6 +114,7 @@ HANDLER,
     ],
     [
         'tag' => 'color',
+        'parents' => ['inline', 'block', 'url'],
         'self_nesting' => 5,
         'attrs' => [
             'Def' => [
@@ -147,6 +157,7 @@ HANDLER,
     ],
     [
         'tag' => 'colour',
+        'parents' => ['inline', 'block', 'url'],
         'self_nesting' => 5,
         'attrs' => [
             'Def' => [
@@ -189,6 +200,7 @@ HANDLER,
     ],
     [
         'tag' => 'background',
+        'parents' => ['inline', 'block', 'url'],
         'self_nesting' => 5,
         'attrs' => [
             'Def' => [
@@ -231,6 +243,7 @@ HANDLER,
     ],
     [
         'tag' => 'size',
+        'parents' => ['inline', 'block', 'url'],
         'self_nesting' => 5,
         'attrs' => [
             'Def' => [
@@ -271,12 +284,14 @@ HANDLER,
     ],
     [
         'tag' => 'mono',
+        'parents' => ['inline', 'block', 'url'],
         'handler' => <<<'HANDLER'
 return "<span class=\"f-bb-mono\">{$body}</span>";
 HANDLER,
     ],
     [
         'tag' => 'font',
+        'parents' => ['inline', 'block', 'url'],
         'self_nesting' => 5,
         'attrs' => [
             'Def' => [
@@ -390,6 +405,7 @@ HANDLER,
         ],
         'handler' => <<<'HANDLER'
 $header = isset($attrs['Def']) ? '<cite class="f-bb-q-header">' . __(['%s wrote', $attrs['Def']]) . '</cite>' : '';
+
 return "</p><blockquote class=\"f-bb-quote\">{$header}<div class=\"f-bb-q-body\"><p>{$body}</p></div></blockquote><p>";
 HANDLER,
     ],
