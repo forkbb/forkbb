@@ -625,7 +625,11 @@
 						content + '[/email]';
 				}
 
-				return '[url=' + url + ']' + content + '[/url]';
+				if (url === content) {
+					return '[url]' + content + '[/url]';
+				} else {
+					return '[url=' + url + ']' + content + '[/url]';
+				}
 			},
 			html: function (token, attrs, content) {
 				attrs.defaultattr =
