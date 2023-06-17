@@ -123,6 +123,7 @@ HANDLER,
         ],
         'handler' => <<<'HANDLER'
 $parser->inlineStyle(true);
+
 $color = $attrs['Def'];
 
 if ('#' === $color[0]) {
@@ -166,6 +167,7 @@ HANDLER,
         ],
         'handler' => <<<'HANDLER'
 $parser->inlineStyle(true);
+
 $color = $attrs['Def'];
 
 if ('#' === $color[0]) {
@@ -209,6 +211,7 @@ HANDLER,
         ],
         'handler' => <<<'HANDLER'
 $parser->inlineStyle(true);
+
 $color = $attrs['Def'];
 
 if ('#' === $color[0]) {
@@ -324,6 +327,7 @@ if ('' == $def) {
     return '<span class="f-bb-badlink">BAD EMAIL</span>';
 } else {
     $def = $parser->e($def);
+
     return "<a href=\"{$def}\">{$body}</a>";
 }
 HANDLER,
@@ -513,6 +517,7 @@ HANDLER,
         ],
         'handler' => <<<'HANDLER'
 $attr = '';
+
 foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
@@ -531,6 +536,7 @@ HANDLER,
         ],
         'handler' => <<<'HANDLER'
 $attr = '';
+
 foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
@@ -550,6 +556,7 @@ HANDLER,
         ],
         'handler' => <<<'HANDLER'
 $attr = '';
+
 foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
@@ -569,6 +576,7 @@ HANDLER,
         ],
         'handler' => <<<'HANDLER'
 $attr = '';
+
 foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
@@ -588,6 +596,7 @@ HANDLER,
         ],
         'handler' => <<<'HANDLER'
 $attr = '';
+
 foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
@@ -607,6 +616,7 @@ HANDLER,
         ],
         'handler' => <<<'HANDLER'
 $attr = '';
+
 foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
@@ -627,6 +637,7 @@ HANDLER,
         ],
         'handler' => <<<'HANDLER'
 $attr = '';
+
 foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
@@ -647,6 +658,7 @@ HANDLER,
         ],
         'handler' => <<<'HANDLER'
 $attr = '';
+
 foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
