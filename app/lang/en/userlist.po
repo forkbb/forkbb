@@ -19,7 +19,7 @@ msgid "User sort head"
 msgstr "Sort users"
 
 msgid "User search info"
-msgstr "Use the wildcard character * for partial matches."
+msgstr "Use the wildcard character (*) and the question mark (?) for partial matches."
 
 msgid "User group"
 msgstr "User group"
