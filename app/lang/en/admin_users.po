@@ -76,7 +76,7 @@ msgid "User search subhead"
 msgstr "Search criteria"
 
 msgid "User search info"
-msgstr "Search for users in the database. You can enter one or more terms to search for. Wildcards in the form of asterisks (*) are accepted."
+msgstr "Search for users in the database. You can enter one or more terms to search for. Wildcards in the form of asterisks (*) and the question mark (?) are accepted."
 
 msgid "Username label"
 msgstr "Username"
