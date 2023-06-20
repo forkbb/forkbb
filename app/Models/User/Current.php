@@ -122,7 +122,7 @@ class Current extends Action
         'spider'     => ['%spider(?![\w ]*build/)%'],
         'google'     => ['%google(?:\w| |;|\-(?!tr))%'],
         'wordpress'  => ['', '%(wordpress)%i'],
-        'compatible' => ['%compatible(?!;\ msie)%', '%compatible[;) ]+([\w ./!-]+)%i']
+        'compatible' => ['%compatible(?!;\ msie)%', '%compatible[;) (]+([\w ./!-]+)%i']
     ];
 
     /**
@@ -179,9 +179,11 @@ class Current extends Action
             '%[^\w/.-]+%',
             '%(?:_| |-|\b)bot(?:_| |-|\b)%i',
             '%(?<=^|\s)[^a-zA-Z\s]{1,2}(?:\s|$)%',
+            '%/\S*+\K.+%',
         ];
         $rep = [
             ' ',
+            '',
             '',
             '',
         ];
