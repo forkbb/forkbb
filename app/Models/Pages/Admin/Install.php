@@ -861,7 +861,7 @@ class Install extends Admin
             'FIELDS' => [
                 'id'           => ['SERIAL', false],
                 'poster'       => ['VARCHAR(190)', false, ''],
-                'poster_id'    => ['INT(10) UNSIGNED', false, 1],
+                'poster_id'    => ['INT(10) UNSIGNED', false, 0],
                 'poster_ip'    => ['VARCHAR(45)', false, ''],
                 'poster_email' => ['VARCHAR(190)', false, ''],
                 'message'      => ['MEDIUMTEXT', false],
