@@ -139,7 +139,7 @@ msgid "Go to forum"
 msgstr "Go to forum"
 
 msgid "Search btn"
-msgstr "Serach"
+msgstr "Search"
 
 msgid "<a href=\"%s\">Advanced search</a>"
 msgstr "<a href=\"%s\">Advanced search</a>"
