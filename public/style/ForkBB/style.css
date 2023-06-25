@@ -145,6 +145,12 @@ body,
   }
 }
 
+#fork :focus {
+  outline-style: none;
+  /*outline-width: 0px !important;
+  outline-color: none !important;*/
+}
+
 #fork b,
 #fork strong {
   font-weight: bold;
@@ -812,8 +818,10 @@ body,
   border: 0.0625rem solid #AA7939;
 }
 
-#fork .f-ctrl:focus {
-  box-shadow: inset 0 0 0.5rem 0 rgba(170,121,57,0.75), 0 0 0.5rem 0 rgba(170,121,57,0.75);
+#fork input:focus,
+#fork select:focus,
+#fork textarea:focus {
+  box-shadow: 0 0 0 0.125rem #AA7939;
 }
 
 #fork .f-field-hint .f-yhint {
