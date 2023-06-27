@@ -91,6 +91,7 @@ trait PostFormTrait
             'required'  => true,
             'value'     => $vars['message'] ?? null,
             'autofocus' => $autofocus,
+            'maxlength' => $this->c->MAX_POST_SIZE,
         ];
         $form['sets']['uesm'] = [
             'fields' => $fieldset,
