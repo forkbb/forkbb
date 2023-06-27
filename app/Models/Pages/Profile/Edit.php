@@ -463,10 +463,11 @@ class Edit extends Profile
         if ($this->rules->useSignature) {
             $fields = [];
             $fields['signature'] = [
-                'type'    => 'textarea',
-                'value'   => $this->curUser->signature,
-                'caption' => 'Signature',
-                'help'    => ['Sig max size', num($this->curUser->g_sig_length), num($this->curUser->g_sig_lines)],
+                'type'      => 'textarea',
+                'value'     => $this->curUser->signature,
+                'caption'   => 'Signature',
+                'help'      => ['Sig max size', num($this->curUser->g_sig_length), num($this->curUser->g_sig_lines)],
+                'maxlength' => $this->curUser->g_sig_length,
             ];
             $form['sets']['signature'] = [
                 'class'  => ['data-edit'],

@@ -564,6 +564,7 @@ class BBCode extends Parser
                     'value'     => $structure->handler,
                     'caption'   => 'Handler label',
                     'help'      => 'Handler info',
+                    'maxlength' => '65535',
                 ],
                 'text_handler' => [
                     'class'     => ['handler'],
@@ -571,6 +572,7 @@ class BBCode extends Parser
                     'value'     => $structure->text_handler,
                     'caption'   => 'Text handler label',
                     'help'      => 'Text handler info',
+                    'maxlength' => '65535',
                 ],
                 'recursive' => [
                     'type'    => 'radio',
