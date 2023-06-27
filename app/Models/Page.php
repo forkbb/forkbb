@@ -427,13 +427,23 @@ abstract class Page extends Model
      */
     protected function addUnsafeInline(string $header): string
     {
-        if (false === \strpos($header, 'style-src')) {
-            return $header . ';style-src \'self\' \'unsafe-inline\''; // ???? брать правила с default-src ?
-        } elseif (\preg_match('%style\-src[^;]+?unsafe\-inline%i', $header)) {
-            return $header;
-        } else {
-            return \str_replace('style-src', 'style-src \'unsafe-inline\'', $header);
+        if (\preg_match('%style\-src([^;]+)%', $header, $matches)) {
+            if (false === \strpos($matches[1], 'unsafe-inline')) {
+                return \str_replace($matches[0], "{$matches[0]} 'unsafe-inline'", $header);
+            } else {
+                return $header;
+            }
         }
+
+        if (\preg_match('%default\-src([^;]+)%', $header, $matches)) {
+            if (false === \strpos($matches[1], 'unsafe-inline')) {
+                return "{$header};style-src{$matches[1]} 'unsafe-inline'";
+            } else {
+                return "{$header};style-src{$matches[1]}";
+            }
+        }
+
+        return "{$header};style-src 'self' 'unsafe-inline'";
     }
 
     /**
