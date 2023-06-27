@@ -336,6 +336,8 @@ trait PostFormTrait
 
                     unset($cur);
 
+                    $this->needUnsafeInlineStyle = true;
+
                     break 2;
                 }
             }

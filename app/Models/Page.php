@@ -403,8 +403,13 @@ abstract class Page extends Model
         foreach ($this->c->HTTP_HEADERS[$this->hhsLevel] as $header => $value) {
             if (
                 'Content-Security-Policy' === $header
-                && $this->c->isInit('Parser')
-                && $this->c->Parser->inlineStyle()
+                && (
+                    $this->needUnsafeInlineStyle
+                    || (
+                        $this->c->isInit('Parser')
+                        && $this->c->Parser->inlineStyle()
+                    )
+                )
             ) {
                 $value = $this->addUnsafeInline($value);
             }
