@@ -27,7 +27,11 @@ class GDDriver extends DefaultDriver
 
     public function readFromStr(string $data): mixed
     {
-        return $this->tuning($this->ready ? \imagecreatefromstring($data) : false);
+        if ($this->isBadData(\substr($data, 0, 64))) {
+            return false;
+        } else {
+            return $this->tuning($this->ready ? \imagecreatefromstring($data) : false);
+        }
     }
 
     public function readFromPath(string $path): mixed
@@ -35,11 +39,27 @@ class GDDriver extends DefaultDriver
         if (
             ! $this->ready
             || $this->files->isBadPath($path)
+            || $this->isBadData(\file_get_contents($path, false, null, 0, 64))
         ) {
             return false;
         } else {
             return $this->tuning(\imagecreatefromstring(\file_get_contents($path)));
         }
+    }
+
+    protected function isBadData(string $data): bool
+    {
+        if (
+            8 === \strpos($data, 'WEBP')
+            && (
+                \strpos($data, 'ANIM')
+                || \strpos($data, 'ANMF')
+            )
+        ) {
+            return true;
+        }
+
+        return false;
     }
 
     protected function tuning(mixed $image): mixed
