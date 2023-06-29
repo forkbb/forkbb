@@ -58,7 +58,7 @@ msgid "Maintenance mode label"
 msgstr "Enable"
 
 msgid "Maintenance mode help"
-msgstr "When enabled, the board will only be available to administrators. This should be used if the board needs to be taken down temporarily for maintenance. <b>WARNING! Do not log out when the board is in maintenance mode.</b> You will not be able to login again."
+msgstr "When enabled, the board will only be available to Administrators who are logged in prior to enabling. This should be used if the board needs to be taken down temporarily for maintenance.<br><b>WARNING! Do not log out when the board is in maintenance mode. You will not be able to login again.</b>"
 
 msgid "Maintenance message label"
 msgstr "Maintenance message (HTML)"
