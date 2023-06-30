@@ -15,6 +15,7 @@ use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin;
 use ForkBB\Models\Config\Config;
 use function \ForkBB\__;
+use RuntimeException;
 
 class Maintenance extends Admin
 {
@@ -56,6 +57,7 @@ class Maintenance extends Admin
         $this->aIndex          = 'maintenance';
         $this->formMaintenance = $this->formMaintenance($config);
         $this->formRebuild     = $this->formRebuild();
+        $this->formClearCache  = $this->formClearCache();
 
         return $this;
     }
@@ -118,7 +120,7 @@ class Maintenance extends Admin
                     ],
                 ],
                 'indx' => [
-                    'legend' => 'Rebuild index head',
+                    'legend' => 'Rebuilding search index',
                     'fields' => [
                         'limit' => [
                             'type'    => 'number',
@@ -160,6 +162,39 @@ class Maintenance extends Admin
             ],
         ];
 
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     */
+    protected function formClearCache(): array
+    {
+        $form = [
+            'action' => $this->c->Router->link('AdminMaintenanceClear'),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('AdminMaintenanceClear'),
+            ],
+            'sets'   => [
+                'clear-cache' => [
+                    'legend' => 'Clearing the cache',
+                    'fields' => [
+                        'confirm' => [
+                            'type'    => 'checkbox',
+                            'label'   => 'Confirm action',
+                            'checked' => false,
+                        ],
+                    ],
+                ],
+            ],
+            'btns'   => [
+                'clear' => [
+                    'type'  => 'submit',
+                    'value' => __('Clear'),
+                ],
+            ],
+        ];
+
+        return $form;
     }
 
     /**
@@ -238,5 +273,39 @@ class Maintenance extends Admin
         } else {
             return $this->c->Redirect->page('AdminMaintenance')->message('Rebuilding index end', FORK_MESS_SUCC);
         }
+    }
+
+    /**
+     * Пересчитывает количество сообщений пользователей
+     */
+    public function clearCache(array $args, string $method): Page
+    {
+        $this->c->Lang->load('validator');
+        $this->c->Lang->load('admin_maintenance');
+
+        $v = $this->c->Validator->reset()
+            ->addValidators([
+            ])->addRules([
+                'confirm' => 'checkbox',
+                'token'   => 'token:AdminMaintenanceClear',
+            ])->addAliases([
+            ])->addArguments([
+            ])->addMessages([
+            ]);
+
+        if (
+            ! $v->validation($_POST)
+            || '1' !== $v->confirm
+        ) {
+            return $this->c->Message->message(
+                '1' !== $v->confirm ? 'No confirm redirect' : ($this->c->Csrf->getError() ?? 'Bad token')
+            );
+        }
+
+        if (true !== $this->c->Cache->clear()) {
+            throw new RuntimeException('Unable to clear cache');
+        }
+
+        return $this->c->Redirect->page('AdminMaintenance')->message('Clear cache redirect', FORK_MESS_SUCC);
     }
 }

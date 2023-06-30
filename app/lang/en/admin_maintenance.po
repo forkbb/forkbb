@@ -46,7 +46,7 @@ msgid "Rebuild index"
 msgstr "Rebuild index"
 
 msgid "Rebuilding search index"
-msgstr "Rebuilding search index"
+msgstr "Rebuild search index"
 
 msgid "Rebuilding index end"
 msgstr "Rebuilding index is over."
@@ -68,3 +68,15 @@ msgstr "The message that will be displayed to users when the board is in mainten
 
 msgid "Default maintenance message"
 msgstr "The forums are temporarily down for maintenance. <b>Please try again in a few minutes.</b>"
+
+msgid "Clear cache head"
+msgstr "Clear cache"
+
+msgid "Clearing the cache"
+msgstr "Clear cache"
+
+msgid "Clear"
+msgstr "Clear"
+
+msgid "Clear cache redirect"
+msgstr "Board cache cleared."

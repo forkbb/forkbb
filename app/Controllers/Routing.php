@@ -755,6 +755,12 @@ class Routing
                 'AdminRebuildIndex'
             );
             $r->add(
+                $r::PST,
+                '/admin/maintenance/clear',
+                'AdminMaintenance:clearCache',
+                'AdminMaintenanceClear'
+            );
+            $r->add(
                 $r::GET,
                 '/admin/logs',
                 'AdminLogs:info',

@@ -15,3 +15,11 @@
 @endif
         </div>
       </section>
+      <section id="fork-clcch" class="f-admin">
+        <h2>{!! __('Clear cache head') !!}</h2>
+        <div class="f-fdiv">
+@if ($form = $p->formClearCache)
+    @include ('layouts/form')
+@endif
+        </div>
+      </section>
