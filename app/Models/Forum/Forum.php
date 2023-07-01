@@ -417,6 +417,35 @@ class Forum extends DataModel
             return [];
         }
 
+        $this->createIdsList(
+            $this->c->user->disp_topics,
+            ($this->page - 1) * $this->c->user->disp_topics
+        );
+
+        return empty($this->idsList) ? [] : $this->c->topics->view($this);
+    }
+
+    /**
+     * Вычисляет страницу раздела на которой находится данная тема
+     */
+    public function calcPage(int $tid): void
+    {
+        $this->createIdsList();
+
+        $arr = \array_flip($this->idsList);
+
+        if (isset($arr[$tid])) {
+            $this->page = (int) \ceil(($arr[$tid] + 1) / $this->c->user->disp_topics);
+        } else {
+            $this->page = null;
+        }
+    }
+
+    /**
+     * Создает список id тем раздела
+     */
+    protected function createIdsList(int $rows = null, int $offset = null): void
+    {
         switch ($this->sort_by) {
             case 1:
                 $sortBy = 't.posted DESC';
@@ -440,18 +469,19 @@ class Forum extends DataModel
 
         $vars = [
             ':fid'    => $this->id,
-            ':offset' => ($this->page - 1) * $this->c->user->disp_topics,
-            ':rows'   => $this->c->user->disp_topics,
+            ':offset' => $offset,
+            ':rows'   => $rows,
         ];
         $query = "SELECT t.id
             FROM ::topics AS t
             WHERE t.forum_id=?i:fid
-            ORDER BY t.sticky DESC, {$sortBy}, t.id DESC
-            LIMIT ?i:rows OFFSET ?i:offset";
+            ORDER BY t.sticky DESC, {$sortBy}, t.id DESC";
+
+        if (isset($rows, $offset)) {
+            $query .= ' LIMIT ?i:rows OFFSET ?i:offset';
+        }
 
         $this->idsList = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
-
-        return empty($this->idsList) ? [] : $this->c->topics->view($this);
     }
 
     /**

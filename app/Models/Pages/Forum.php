@@ -12,6 +12,7 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
 use ForkBB\Models\Forum\Forum as ForumModel;
+use ForkBB\Models\Topic\Topic;
 use function \ForkBB\__;
 
 class Forum extends Page
@@ -19,7 +20,7 @@ class Forum extends Page
     /**
      * Подготовка данных для шаблона
      */
-    public function view(array $args): Page
+    public function view(array $args, string $method): Page
     {
         $this->c->Lang->load('forum');
         $this->c->Lang->load('subforums');
@@ -125,5 +126,35 @@ class Forum extends Page
         ];
 
         return $form;
+    }
+
+    /**
+     * Подготовка данных для шаблона
+     */
+    public function scrollToTopic(array $args, string $method): Page
+    {
+        $topic = $this->c->topics->load($args['tid']);
+
+        if (! $topic instanceof Topic) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $forum = $topic->parent;
+
+        $forum->calcPage($args['tid']);
+
+        if (null === $forum->page) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        return $this->c->Redirect->page(
+            'Forum',
+            [
+                'id'   => $forum->id,
+                'name' => $forum->forum_name,
+                'page' => $forum->page,
+                '#'    => "topic-{$topic->id}",
+            ]
+        );
     }
 }

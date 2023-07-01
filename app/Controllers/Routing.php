@@ -295,13 +295,21 @@ class Routing
                     'SetNewEmail'
                 );
             }
-            // пометка разделов прочитанными
+
             if (! $user->isGuest) {
+                // пометка разделов прочитанными
                 $r->add(
                     $r::GET,
                     '/forum/{id|i:\d+}/markread/{token}',
                     'Misc:markread',
                     'MarkRead'
+                );
+                // скролирование до топика
+                $r->add(
+                    $r::GET,
+                    '/forum/scroll/topic/{tid|i:[1-9]\d*}',
+                    'Forum:scrollToTopic',
+                    'ForumScrollToTopic'
                 );
             }
 

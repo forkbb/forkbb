@@ -194,6 +194,23 @@ class Topic extends DataModel
     }
 
     /**
+     * Дополнительная ссылка для хлебных крошек
+     */
+    protected function getlinkCrumbExt(): ?string
+    {
+        if ($this->c->user->isGuest) {
+            return null;
+        } else {
+            return $this->c->Router->link(
+                'ForumScrollToTopic',
+                [
+                    'tid'  => $this->id,
+                ]
+            );
+        }
+    }
+
+    /**
      * Статус наличия новых сообщений в теме
      */
     protected function gethasNew(): int|false

@@ -528,6 +528,10 @@ abstract class Page extends Model
                         $this->titles = ['Page %s', $crumb->page];
                     }
 
+                    if ($crumb->linkCrumbExt) {
+                        $result[] = [$crumb->linkCrumbExt, '#', null];
+                    }
+
                     $crumb = $crumb->parent;
                 } while (
                     $crumb instanceof Model
