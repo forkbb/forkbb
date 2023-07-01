@@ -509,6 +509,7 @@ abstract class Page extends Model
     {
         $result = [];
         $active = true;
+        $ext    = null;
 
         foreach ($crumbs as $crumb) {
             // модель
@@ -520,7 +521,7 @@ abstract class Page extends Model
                         $name = ['%s', $name];
                     }
 
-                    $result[]     = [$crumb, $name, $active];
+                    $result[]     = [$crumb, $name, $active, $ext];
                     $active       = null;
                     $this->titles = $name;
 
@@ -529,7 +530,9 @@ abstract class Page extends Model
                     }
 
                     if ($crumb->linkCrumbExt) {
-                        $result[] = [$crumb->linkCrumbExt, '#', null];
+                        $ext = [$crumb->linkCrumbExt, '#'];
+                    } else {
+                        $ext = null;
                     }
 
                     $crumb = $crumb->parent;
@@ -539,18 +542,19 @@ abstract class Page extends Model
                 );
             // ссылка (передана массивом)
             } elseif (\is_array($crumb)) {
-                $result[]     = [$crumb[0], $crumb[1], $active];
+                $result[]     = [$crumb[0], $crumb[1], $active, $ext];
                 $this->titles = $crumb[1];
             // строка
             } else {
-                $result[]     = [null, (string) $crumb, $active];
+                $result[]     = [null, (string) $crumb, $active, $ext];
                 $this->titles = (string) $crumb;
             }
 
             $active = null;
+            $ext    = null;
         }
         // главная страница
-        $result[] = [$this->c->Router->link('Index'), 'Index', $active];
+        $result[] = [$this->c->Router->link('Index'), 'Index', $active, $ext];
 
         return \array_reverse($result);
     }

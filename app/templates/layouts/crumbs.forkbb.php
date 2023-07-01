@@ -7,6 +7,9 @@
             <a class="f-crumb-a @if ($cur[2]) active" aria-current="page @endif" href="{{ $cur[0]->link }}" itemprop="item">
               <span itemprop="name">{!! __($cur[1]) !!}</span>
             </a>
+            @if ($cur[3])
+            &nbsp;[&nbsp;<a href="{{ $cur[3][0] }}">{{ $cur[3][1] }}</a>&nbsp;]
+            @endif
             <meta itemprop="position" content="{!! @iteration !!}">
           </li><!-- endinline -->
         @else
@@ -17,6 +20,9 @@
             </a>
             @else
             <span @if ($cur[2]) class="active" @endif itemprop="name">{!! __($cur[1]) !!}</span>
+            @endif
+            @if ($cur[3])
+            &nbsp;[&nbsp;<a href="{{ $cur[3][0] }}">{{ $cur[3][1] }}</a>&nbsp;]
             @endif
             <meta itemprop="position" content="{!! @iteration !!}">
           </li><!-- endinline -->
