@@ -5,7 +5,9 @@ if (typeof ForkBB === "undefined" || !ForkBB) {
 ForkBB.common = (function (doc, win) {
     'use strict';
 
-    var selectorBack = ".f-go-back";
+    var selectorBack = ".f-go-back",
+        hlClass = "f-highlighted";
+
 
     function initGoBack()
     {
@@ -20,9 +22,24 @@ ForkBB.common = (function (doc, win) {
         }
     }
 
+    function initAnchorHL()
+    {
+        var target,
+            hash = (win.location.hash || "").replace(/^#/, "");
+
+        if (hash && (target = doc.getElementById(hash))) {
+            target.classList.add(hlClass);
+
+            setTimeout(function() {
+                target.classList.remove(hlClass);
+            }, 1500);
+        }
+    }
+
     return {
         init : function () {
             initGoBack();
+            initAnchorHL();
         },
     };
 }(document, window));

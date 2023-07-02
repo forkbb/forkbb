@@ -2925,3 +2925,20 @@ body,
   color: #ffffff;
   background-color: #4285f4;
 }
+
+/************/
+/* Анимация */
+/************/
+#fork .f-highlighted,
+#fork .f-highlighted .f-post-body {
+  animation: highlightedAnim 0.5s linear 0s 2 normal none;
+}
+
+@keyframes highlightedAnim {
+  0%, 100% {
+    box-shadow: 0 0 0 0 transparent inset;
+  }
+  50% {
+    box-shadow: 0 0 0 0.25rem #AA7939 inset;
+  }
+}
