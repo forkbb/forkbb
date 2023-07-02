@@ -1590,6 +1590,35 @@ body,
     content: "\2022";
     padding-inline-end: 0.3125rem;
   }
+
+  .f-post-user .f-psfont::before {
+    display: inline-block;
+    font-family: "fa";
+    font-weight: 900;
+    padding-inline-end: 0.3125rem;
+  }
+
+  .f-post-user .f-psfont > span {
+    display: none;
+  }
+
+  .f-postcount > .f-psfont::before {
+    font-weight: 400;
+    content: "\f086";
+  }
+
+  .f-registered > .f-psfont::before {
+    content: "\f2f6";
+  }
+
+  .f-location > .f-psfont::before {
+    content: "\f041";
+  }
+
+  .f-promoteuser > a > .f-psfont::before {
+    padding-inline-end: 0;
+    content: "\f007\f30c"; /* \e539 */
+  }
 }
 
 @media screen and (min-width: 50rem) {

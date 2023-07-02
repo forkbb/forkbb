@@ -92,10 +92,10 @@
               <li class="f-userstatus">{!! __($post->user->online ? 'Online' : 'Offline') !!}</li>
         @endif
         @if ($p->user->showUserInfo && $p->user->showPostCount && $post->user->num_posts)
-              <li class="f-postcount">{!! __(['%s post', $post->user->num_posts, num($post->user->num_posts)]) !!}</li>
+              <li class="f-postcount"><span class="f-psfont">{!! __(['%s post', $post->user->num_posts, num($post->user->num_posts)]) !!}</span></li>
         @endif
         @if ($linkPromote = $p->user->linkPromote($post))
-              <li class="f-promoteuser"><a href="{{ $linkPromote }}">{!! __('Promote user') !!}</a></li>
+              <li class="f-promoteuser"><a href="{{ $linkPromote }}" title="{{ __('Promote user title') }}"><span class="f-psfont">{!! __('Promote user') !!}</span></a></li>
         @endif
             </ul>
         @if (! $post->user->isGuest && $p->user->showUserInfo)
@@ -103,9 +103,9 @@
             @if ($p->user->isAdmMod && '' != $post->user->admin_note)
               <li class="f-admin-note" title="{{ __('Admin note') }}">{{ $post->user->admin_note }}</li>
             @endif
-              <li>{!! __(['Registered: %s', dt($post->user->registered, true)]) !!}</li>
+              <li class="f-registered"><span class="f-psfont">{!! __(['Registered: %s', dt($post->user->registered, true)]) !!}</span></li>
             @if ($post->user->location)
-              <li>{!! __(['From %s', $post->user->censorLocation]) !!}</li>
+              <li class="f-location"><span class="f-psfont">{!! __(['From %s', $post->user->censorLocation]) !!}</span></li>
             @endif
             </ul>
         @endif

@@ -19,9 +19,12 @@ msgid "Topic closed"
 msgstr "Topic closed"
 
 msgid "From %s"
-msgstr "Location: %s"
+msgstr "<span>Location: </span>%s"
 
 msgid "Promote user"
+msgstr "<span>Promote user</span>"
+
+msgid "Promote user title"
 msgstr "Promote user"
 
 msgid "IP address logged"
@@ -32,11 +35,11 @@ msgstr "Note:"
 
 msgid "%s post"
 msgid_plural "%s posts"
-msgstr[0] "%s post"
-msgstr[1] "%s posts"
+msgstr[0] "%s<span> post</span>"
+msgstr[1] "%s<span> posts</span>"
 
 msgid "Registered: %s"
-msgstr "Registered: %s"
+msgstr "<span>Registered: </span>%s"
 
 msgid "Website"
 msgstr "Website"

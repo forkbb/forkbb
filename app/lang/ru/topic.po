@@ -19,9 +19,12 @@ msgid "Topic closed"
 msgstr "Тема закрыта"
 
 msgid "From %s"
-msgstr "Локация: %s"
+msgstr "<span>Локация: </span>%s"
 
 msgid "Promote user"
+msgstr "<span>Продвинуть пользователя</span>"
+
+msgid "Promote user title"
 msgstr "Продвинуть пользователя"
 
 msgid "IP address logged"
@@ -32,12 +35,12 @@ msgstr "Замечание"
 
 msgid "%s post"
 msgid_plural "%s posts"
-msgstr[0] "%s сообщение"
-msgstr[1] "%s сообщения"
-msgstr[2] "%s сообщений"
+msgstr[0] "%s<span> сообщение</span>"
+msgstr[1] "%s<span> сообщения</span>"
+msgstr[2] "%s<span> сообщений</span>"
 
 msgid "Registered: %s"
-msgstr "Здесь с %s"
+msgstr "<span>Здесь с </span>%s"
 
 msgid "Website"
 msgstr "Сайт"
