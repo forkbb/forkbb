@@ -334,6 +334,12 @@ trait PostFormTrait
                         'href' => $this->publicLink("/style/sc/themes/default.css"),
                     ]);
 
+                    if ($this->c->user->g_post_links) {
+                        $this->pageHeader('imgbb', 'script', 0, [
+                            'src' => $this->publicLink('/js/imgbb.js'),
+                        ]);
+                    }
+
                     unset($cur);
 
                     $this->needUnsafeInlineStyle = true;

@@ -103,6 +103,9 @@ ForkBB.editor = (function (doc, win) {
         init : function () {
             initEditor();
         },
+        getInstance : function () {
+            return instance;
+        }
     };
 }(document, window));
 
