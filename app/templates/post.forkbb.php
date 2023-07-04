@@ -45,6 +45,7 @@
             </ul>
             <ul class="f-user-info">
               <li class="f-username">{{ $post->user->username }}</li>
+              <li class="f-usertitle">{{ $post->user->title() }}</li>
             </ul>
           </div>
         </address>
