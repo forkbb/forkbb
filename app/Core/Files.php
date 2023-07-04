@@ -64,6 +64,7 @@ class Files
         'image/avif' => 'avif',
         'image/heif' => 'heif',
         'image/heic' => 'heic',
+        'image/jxl'  => 'jxl',
     ];
 
     /**
@@ -848,6 +849,7 @@ class Files
         'image/avif' => 'avif',
         'image/heif' => 'heif',
         'image/heic' => 'heic',
+        'image/jxl'  => 'jxl',
     ];
 
     public function __construct(int|string $maxFileSize, int|string $maxImgSize, protected array $imageDrivers, protected Container $c)
