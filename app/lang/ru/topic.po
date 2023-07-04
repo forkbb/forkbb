@@ -43,7 +43,16 @@ msgid "Registered: %s"
 msgstr "<span>Здесь с </span>%s"
 
 msgid "Website"
+msgstr "<span>Сайт</span>"
+
+msgid "Website title"
 msgstr "Сайт"
+
+msgid "Email "
+msgstr "<span>Почта</span>"
+
+msgid "Email title"
+msgstr "Почта"
 
 msgid "Online"
 msgstr "Online"

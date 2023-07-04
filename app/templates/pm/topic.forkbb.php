@@ -84,14 +84,22 @@
               <li class="f-postcount"><span class="f-psfont">{!! __(['%s post', $post->user->num_posts, num($post->user->num_posts)]) !!}</span></li>
         @endif
             </ul>
-        @if (! $post->user->isGuest && $p->user->showUserInfo)
+        @if ($p->user->showUserInfo)
             <ul class="f-user-info-add">
             @if ($p->user->isAdmMod && '' != $post->user->admin_note)
               <li class="f-admin-note" title="{{ __('Admin note') }}">{{ $post->user->admin_note }}</li>
             @endif
+            @if (! $post->user->isGuest )
               <li class="f-registered"><span class="f-psfont">{!! __(['Registered: %s', dt($post->user->registered, true)]) !!}</span></li>
+            @endif
             @if ($post->user->location)
               <li class="f-location"><span class="f-psfont">{!! __(['From %s', $post->user->censorLocation]) !!}</span></li>
+            @endif
+            @if ($post->user->url)
+              <li class="f-user-contacts f-website"><a href="{{ $post->user->censorUrl }}" title="{{ __('Website title') }}" rel="ugc"><span class="f-psfont">{!! __('Website') !!}</span></a></li>
+            @endif
+            @if (($post->user->isGuest && $post->user->email && $p->user->isAdmMod) || 0 === $post->user->email_setting)
+              <li class="f-user-contacts f-email"><a href="mailto:{{ $post->user->censorEmail }}" title="{{ __('Email title') }}" rel="ugc"><span class="f-psfont">{!! __('Email ') !!}</span></a></li>
             @endif
             </ul>
         @endif

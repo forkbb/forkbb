@@ -42,7 +42,16 @@ msgid "Registered: %s"
 msgstr "<span>Registered: </span>%s"
 
 msgid "Website"
+msgstr "<span>Website</span>"
+
+msgid "Website title"
 msgstr "Website"
+
+msgid "Email "
+msgstr "<span>Email</span>"
+
+msgid "Email title"
+msgstr "Email"
 
 msgid "Online"
 msgstr "Online"

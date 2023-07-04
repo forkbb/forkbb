@@ -1501,6 +1501,10 @@ body,
   order: 2;
 }
 
+#fork .f-user-contacts {
+  display: inline-block;
+}
+
 #fork .f-username {
   font-size: 1.25rem;
   word-break: break-all;
@@ -1578,6 +1582,12 @@ body,
   color: #D8000C;
 }
 
+.f-post-user .f-psfont::before {
+  display: inline-block;
+  font-family: "fa";
+  font-weight: 900;
+}
+
 @media screen and (max-width: 49.9999rem) {
   #fork .f-user-info > li:not(.f-username),
   #fork .f-user-info-add > li {
@@ -1591,37 +1601,45 @@ body,
     padding-inline-end: 0.3125rem;
   }
 
-  .f-post-user .f-psfont::before {
-    display: inline-block;
-    font-family: "fa";
-    font-weight: 900;
-    padding-inline-end: 0.3125rem;
-  }
-
   .f-post-user .f-psfont > span {
     display: none;
   }
 
   .f-postcount > .f-psfont::before {
     font-weight: 400;
-    content: "\f086";
+    content: "\f086\a0";
   }
 
   .f-registered > .f-psfont::before {
-    content: "\f2f6";
+    content: "\f2f6\a0";
   }
 
   .f-location > .f-psfont::before {
-    content: "\f041";
+    content: "\f041\a0";
   }
 
   .f-promoteuser > a > .f-psfont::before {
-    padding-inline-end: 0;
     content: "\f007\f30c"; /* \e539 */
+  }
+
+  .f-website > a > .f-psfont::before {
+    content: "\f0c1";
+  }
+
+  .f-email > a > .f-psfont::before {
+    content: "\40";
   }
 }
 
 @media screen and (min-width: 50rem) {
+  .f-website > a > .f-psfont::before {
+    content: "\f0c1\a0";
+  }
+
+  .f-email > a > .f-psfont::before {
+    content: "\40\a0";
+  }
+
   #fork .f-post {
     display: flex;
     flex-wrap: wrap;
