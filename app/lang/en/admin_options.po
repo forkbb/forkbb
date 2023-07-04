@@ -91,7 +91,7 @@ msgid "Info in posts label"
 msgstr "User info in posts"
 
 msgid "Info in posts help"
-msgstr "Show information about the poster under the username in topic view. The information affected is location, register date, post count and the contact links (email and URL)."
+msgstr "Show information about the poster under the username in topic view. The information affected is location, register date, post count and the contact links (email and URL). Does not affect administrators."
 
 msgid "Post count label"
 msgstr "User post count"

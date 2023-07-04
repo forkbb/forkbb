@@ -289,7 +289,7 @@ class User extends DataModel
      */
     protected function getshowUserInfo(): bool
     {
-        return 1 === $this->c->config->b_show_user_info;
+        return $this->isAdmin || 1 === $this->c->config->b_show_user_info;
     }
 
     /**
