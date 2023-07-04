@@ -217,6 +217,19 @@ class Post extends DataModel
     }
 
     /**
+     * Ссылка на страницу данных об ip
+     */
+    protected function getlinkGetHost(): string
+    {
+        return $this->c->Router->link(
+            'AdminHost',
+            [
+                'ip' => $this->poster_ip,
+            ]
+        );
+    }
+
+    /**
      * HTML код сообщения
      */
     public function html(): string

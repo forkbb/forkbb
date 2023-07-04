@@ -107,6 +107,9 @@
             @if ($post->user->location)
               <li class="f-location"><span class="f-psfont">{!! __(['From %s', $post->user->censorLocation]) !!}</span></li>
             @endif
+            @if ($p->showIpAddrs)
+              <li class="f-poster-ip"><a href="{{ $post->linkGetHost }}" title="{{ $post->poster_ip }}"><span class="f-psfont">{!! __('IP address logged') !!}</span></a></li>
+            @endif
             </ul>
         @endif
           </div>

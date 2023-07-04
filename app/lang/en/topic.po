@@ -28,7 +28,7 @@ msgid "Promote user title"
 msgstr "Promote user"
 
 msgid "IP address logged"
-msgstr "IP address logged"
+msgstr "IP<span> address</span>"
 
 msgid "Note"
 msgstr "Note:"
