@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.0.0';
     const REV_MIN_FOR_UPDATE         = 53;
-    const LATEST_REV_WITH_DB_CHANGES = 55;
+    const LATEST_REV_WITH_DB_CHANGES = 59;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const CONFIG_FILE                = 'main.php';
@@ -599,6 +599,35 @@ class Update extends Admin
 
             $this->c->DB->exec($query, $vars);
         }
+
+        return null;
+    }
+
+    /**
+     * rev.58 to rev.59
+     */
+    protected function stageNumber58(array $args): ?int
+    {
+        $config = $this->c->config;
+
+        $config->b_upload             = 1;
+        $config->i_upload_img_quality = 75;
+
+        $config->save();
+
+        $this->c->DB->addField('::groups', 'g_up_ext', 'VARCHAR(255)', false, 'webp,jpg,jpeg,png,gif,avif');
+        $this->c->DB->addField('::groups', 'g_up_size_kb', 'INT(10) UNSIGNED', false, 0);
+        $this->c->DB->addField('::groups', 'g_up_limit_mb', 'INT(10) UNSIGNED', false, 0);
+
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'multiple=>AdminUploads',
+            '\\ForkBB\\Models\\Pages\\Admin\\Uploads::class',
+            'AdminLogs'
+        );
+
+        $coreConfig->save();
 
         return null;
     }

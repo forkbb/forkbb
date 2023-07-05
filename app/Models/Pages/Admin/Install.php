@@ -116,6 +116,7 @@ class Install extends Admin
             $this->c->DIR_CONFIG . '/db',
             $this->c->DIR_CACHE,
             $this->c->DIR_PUBLIC . '/img/avatars',
+            $this->c->DIR_PUBLIC . '/upload',
         ];
 
         foreach ($folders as $folder) {
@@ -829,6 +830,9 @@ class Install extends Admin
                 'g_pm_limit'             => ['INT(10) UNSIGNED', false, 100],
                 'g_sig_length'           => ['SMALLINT UNSIGNED', false, 400],
                 'g_sig_lines'            => ['TINYINT UNSIGNED', false, 4],
+                'g_up_ext'               => ['VARCHAR(255)', false, 'webp,jpg,jpeg,png,gif,avif'],
+                'g_up_size_kb'           => ['INT(10) UNSIGNED', false, 0],
+                'g_up_limit_mb'          => ['INT(10) UNSIGNED', false, 0],
             ],
             'PRIMARY KEY' => ['g_id'],
             'ENGINE' => $this->DBEngine,
@@ -1517,6 +1521,8 @@ class Install extends Admin
                 ], FORK_JSON_ENCODE
             ),
             's_РЕГИСТР'               => 'Ok',
+            'b_upload'                => 1,
+            'i_upload_img_quality'    => 75,
         ];
 
         foreach ($forkConfig as $name => $value) {

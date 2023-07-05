@@ -390,6 +390,7 @@ return [
         'AdminParserSmilies' => \ForkBB\Models\Pages\Admin\Parser\Smilies::class,
         'AdminParserBBCode'  => \ForkBB\Models\Pages\Admin\Parser\BBCode::class,
         'AdminLogs'          => \ForkBB\Models\Pages\Admin\Logs::class,
+        'AdminUploads'       => \ForkBB\Models\Pages\Admin\Uploads::class,
 
         'AdminListModel'    => \ForkBB\Models\AdminList\AdminList::class,
         'BanListModel'      => \ForkBB\Models\BanList\BanList::class,

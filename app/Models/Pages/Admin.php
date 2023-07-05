@@ -81,6 +81,7 @@ abstract class Admin extends Page
                 'censoring'   => [$r->link('AdminCensoring'), 'Censoring'],
                 'logs'        => [$r->link('AdminLogs'), 'Logs'],
                 'maintenance' => [$r->link('AdminMaintenance'), 'Maintenance'],
+                'uploads'     => [$r->link('AdminUploads'), 'Uploads'],
             ];
         }
 

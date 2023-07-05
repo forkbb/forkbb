@@ -77,3 +77,6 @@ msgstr "Логи"
 
 msgid "Admin menu"
 msgstr "Меню админки"
+
+msgid "Uploads"
+msgstr "Загрузки"

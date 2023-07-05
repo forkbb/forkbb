@@ -77,3 +77,6 @@ msgstr "Logs"
 
 msgid "Admin menu"
 msgstr "Admin menu"
+
+msgid "Uploads"
+msgstr "Uploads"

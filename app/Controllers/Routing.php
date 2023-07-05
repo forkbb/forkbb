@@ -780,6 +780,12 @@ class Routing
                 'AdminLogs:action',
                 'AdminLogsAction'
             );
+            $r->add(
+                $r::DUO,
+                '/admin/uploads',
+                'AdminUploads:view',
+                'AdminUploads'
+            );
         }
 
         $uri = $_SERVER['REQUEST_URI'];
