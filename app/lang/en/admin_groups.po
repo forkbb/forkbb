@@ -310,7 +310,7 @@ msgid "Max file size label"
 msgstr "Max file size"
 
 msgid "Max file size help"
-msgstr "Maximum file upload size (<b>KiB</b>). PHP settings affect this setting. Set to 0 to disable file uploads for this group."
+msgstr "Maximum file upload size (<b>KiB</b>). PHP and engine settings affect this parameter. Set to 0 to disable file uploads for this group."
 
 msgid "Disk space limit label"
 msgstr "Disk space limit"

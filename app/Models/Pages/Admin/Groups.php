@@ -303,9 +303,10 @@ class Groups extends Admin
             if (! $group->groupGuest) {
                 $v->addValidators([
                     'ext_check' => [$this, 'vExtsCheck'],
+                    'size_check' => [$this, 'vSizeCheck'],
                 ])->addRules([
                     'g_up_ext'      => 'exist|string:trim|max:255|ext_check',
-                    'g_up_size_kb'  => 'required|integer|min:0|max:2147483647',
+                    'g_up_size_kb'  => 'required|integer|min:0|max:2147483647|size_check',
                     'g_up_limit_mb' => 'required|integer|min:0|max:2147483647',
                 ]);
             }
@@ -341,6 +342,14 @@ class Groups extends Admin
         }
 
         return \implode(',', $result);
+    }
+
+    /**
+     * Наводит порядок в расширениях
+     */
+    public function vSizeCheck(Validator $v, int $size): int
+    {
+        return \min($size, $this->c->Files->maxFileSize('K'));
     }
 
     /**
