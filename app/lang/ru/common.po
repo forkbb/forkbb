@@ -383,22 +383,22 @@ msgid "%s B"
 msgstr "%s байт"
 
 msgid "%s KiB"
-msgstr "%s Кбайт"
+msgstr "%s КиБ"
 
 msgid "%s MiB"
-msgstr "%s Мбайт"
+msgstr "%s МиБ"
 
 msgid "%s GiB"
-msgstr "%s Гбайт"
+msgstr "%s ГиБ"
 
 msgid "%s TiB"
-msgstr "%s Тбайт"
+msgstr "%s ТиБ"
 
 msgid "%s PiB"
-msgstr "%s Пбайт"
+msgstr "%s ПиБ"
 
 msgid "%s EiB"
-msgstr "%s Эбайт"
+msgstr "%s ЭиБ"
 
 msgid "Latest active topics"
 msgstr "Последние активные темы"
