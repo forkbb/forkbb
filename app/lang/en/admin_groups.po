@@ -296,3 +296,24 @@ msgstr "Limit"
 
 msgid "PM limit help"
 msgstr "The maximum number of dialogs for a user in this group. Set to 0 to disable."
+
+msgid "Upload subhead"
+msgstr "File uploads"
+
+msgid "Allowed file extensions label"
+msgstr "Allowed types"
+
+msgstr "Allowed file extensions help"
+msgstr "List of allowed file extensions for upload, separated by commas. An empty field disable file uploads for this group."
+
+msgid "Max file size label"
+msgstr "Max file size"
+
+msgid "Max file size help"
+msgstr "Maximum file upload size (<b>KiB</b>). PHP settings affect this setting. Set to 0 to disable file uploads for this group."
+
+msgid "Disk space limit label"
+msgstr "Disk space limit"
+
+msgid "Disk space limit help"
+msgstr "Disk space limit (<b>MiB</b>). Set to 0 to disable file uploads for this group."

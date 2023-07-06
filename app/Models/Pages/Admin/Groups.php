@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Pages\Admin;
 
 use ForkBB\Core\Container;
+use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Group\Group;
 use ForkBB\Models\Pages\Admin;
@@ -299,6 +300,16 @@ class Groups extends Admin
                 }
             }
 
+            if (! $group->groupGuest) {
+                $v->addValidators([
+                    'ext_check' => [$this, 'vExtsCheck'],
+                ])->addRules([
+                    'g_up_ext'      => 'exist|string:trim|max:255|ext_check',
+                    'g_up_size_kb'  => 'required|integer|min:0|max:2147483647',
+                    'g_up_limit_mb' => 'required|integer|min:0|max:2147483647',
+                ]);
+            }
+
             if ($v->validation($_POST)) {
                 return $this->save($group, $baseGroup, $v->getData());
             }
@@ -311,6 +322,25 @@ class Groups extends Admin
         $this->form    = $this->formEdit($vars, $group, $marker);
 
         return $this;
+    }
+
+    /**
+     * Наводит порядок в расширениях
+     */
+    public function vExtsCheck(Validator $v, string $exts): string
+    {
+        $exts   = \explode(',', $exts);
+        $result = [];
+
+        foreach ($exts as $ext) {
+            $ext = \trim($ext);
+
+            if (\preg_match('%^[a-z0-9]+(?:[_-]+[a-z0-9]+)*$%iD', $ext)) {
+                $result[] = $ext;
+            }
+        }
+
+        return \implode(',', $result);
     }
 
     /**
@@ -407,341 +437,371 @@ class Groups extends Admin
             'fields' => $fieldset,
         ];
 
-        if ($group->groupAdmin) {
-            return $form;
-        }
+        if (! $group->groupAdmin) {
+            if (! $group->groupGuest) {
+                $fieldset = [];
+                $options  = [0 => __('Disable promotion')];
 
-        if (! $group->groupGuest) {
-            $fieldset = [];
-            $options  = [0 => __('Disable promotion')];
-
-            foreach ($this->groupsNew as $key => $title) {
-                if (
-                    $key !== $group->g_id
-                    && $key !== FORK_GROUP_GUEST
-                ) {
-                    $options[$key] = $title;
+                foreach ($this->groupsNew as $key => $title) {
+                    if (
+                        $key !== $group->g_id
+                        && $key !== FORK_GROUP_GUEST
+                    ) {
+                        $options[$key] = $title;
+                    }
                 }
+
+                $fieldset['g_promote_next_group'] = [
+                    'type'    => 'select',
+                    'options' => $options,
+                    'value'   => $group->g_promote_next_group,
+                    'caption' => 'Promote users label',
+                    'help'    => ['Promote users help', __('Disable promotion')],
+                ];
+                $fieldset['g_promote_min_posts'] = [
+                    'type'    => 'number',
+                    'min'     => '0',
+                    'max'     => '9999999999',
+                    'value'   => $group->g_promote_min_posts,
+                    'caption' => 'Number for promotion label',
+                    'help'    => 'Number for promotion help',
+                ];
+                $form['sets']['group-promote'] = [
+                    'legend' => 'Promotion subhead',
+                    'fields' => $fieldset,
+                ];
             }
 
-            $fieldset['g_promote_next_group'] = [
-                'type'    => 'select',
-                'options' => $options,
-                'value'   => $group->g_promote_next_group,
-                'caption' => 'Promote users label',
-                'help'    => ['Promote users help', __('Disable promotion')],
-            ];
-            $fieldset['g_promote_min_posts'] = [
-                'type'    => 'number',
-                'min'     => '0',
-                'max'     => '9999999999',
-                'value'   => $group->g_promote_min_posts,
-                'caption' => 'Number for promotion label',
-                'help'    => 'Number for promotion help',
-            ];
-            $form['sets']['group-promote'] = [
-                'legend' => 'Promotion subhead',
-                'fields' => $fieldset,
-            ];
-        }
 
+            $yn = [1 => __('Yes'), 0 => __('No')];
 
-        $yn = [1 => __('Yes'), 0 => __('No')];
+            if (
+                ! $group->groupGuest
+                && ! $group->groupMember
+                && $group->g_id !== $this->c->config->i_default_user_group
+            ) {
+                $fieldset = [];
+                $fieldset['g_moderator'] = [
+                    'type'    => 'radio',
+                    'value'   => $group->g_moderator,
+                    'values'  => $yn,
+                    'caption' => 'Mod privileges label',
+                    'help'    => 'Mod privileges help',
+                ];
+                $fieldset['g_mod_edit_users'] = [
+                    'type'    => 'radio',
+                    'value'   => $group->g_mod_edit_users,
+                    'values'  => $yn,
+                    'caption' => 'Edit profile label',
+                    'help'    => 'Edit profile help',
+                ];
+                $fieldset['g_mod_rename_users'] = [
+                    'type'    => 'radio',
+                    'value'   => $group->g_mod_rename_users,
+                    'values'  => $yn,
+                    'caption' => 'Rename users label',
+                    'help'    => 'Rename users help',
+                ];
+                $fieldset['g_mod_change_passwords'] = [
+                    'type'    => 'radio',
+                    'value'   => $group->g_mod_change_passwords,
+                    'values'  => $yn,
+                    'caption' => 'Change passwords label',
+                    'help'    => 'Change passwords help',
+                ];
+                $fieldset['g_mod_promote_users'] = [
+                    'type'    => 'radio',
+                    'value'   => $group->g_mod_promote_users,
+                    'values'  => $yn,
+                    'caption' => 'Mod promote users label',
+                    'help'    => 'Mod promote users help',
+                ];
+                $fieldset['g_mod_ban_users'] = [
+                    'type'    => 'radio',
+                    'value'   => $group->g_mod_ban_users,
+                    'values'  => $yn,
+                    'caption' => 'Ban users label',
+                    'help'    => 'Ban users help',
+                ];
+                $form['sets']['group-mod'] = [
+                    'legend' => 'Moderation subhead',
+                    'fields' => $fieldset,
+                ];
+                $form['sets']['mod-info'] = [
+                    'inform' => [
+                        [
+                            'message' => 'Moderator info',
+                        ],
+                    ],
+                ];
+            }
 
-        if (
-            ! $group->groupGuest
-            && ! $group->groupMember
-            && $group->g_id !== $this->c->config->i_default_user_group
-        ) {
             $fieldset = [];
-            $fieldset['g_moderator'] = [
+            $fieldset['g_read_board'] = [
                 'type'    => 'radio',
-                'value'   => $group->g_moderator,
+                'value'   => $group->g_read_board,
                 'values'  => $yn,
-                'caption' => 'Mod privileges label',
-                'help'    => 'Mod privileges help',
+                'caption' => 'Read board label',
+                'help'    => 'Read board help',
             ];
-            $fieldset['g_mod_edit_users'] = [
+            $fieldset['g_view_users'] = [
                 'type'    => 'radio',
-                'value'   => $group->g_mod_edit_users,
+                'value'   => $group->g_view_users,
                 'values'  => $yn,
-                'caption' => 'Edit profile label',
-                'help'    => 'Edit profile help',
+                'caption' => 'View user info label',
+                'help'    => 'View user info help',
             ];
-            $fieldset['g_mod_rename_users'] = [
+            $fieldset['g_post_replies'] = [
                 'type'    => 'radio',
-                'value'   => $group->g_mod_rename_users,
+                'value'   => $group->g_post_replies,
                 'values'  => $yn,
-                'caption' => 'Rename users label',
-                'help'    => 'Rename users help',
+                'caption' => 'Post replies label',
+                'help'    => 'Post replies help',
             ];
-            $fieldset['g_mod_change_passwords'] = [
+            $fieldset['g_post_topics'] = [
                 'type'    => 'radio',
-                'value'   => $group->g_mod_change_passwords,
+                'value'   => $group->g_post_topics,
                 'values'  => $yn,
-                'caption' => 'Change passwords label',
-                'help'    => 'Change passwords help',
+                'caption' => 'Post topics label',
+                'help'    => 'Post topics help',
             ];
-            $fieldset['g_mod_promote_users'] = [
+
+            if (! $group->groupGuest) {
+                $fieldset['g_edit_posts'] = [
+                    'type'    => 'radio',
+                    'value'   => $group->g_edit_posts,
+                    'values'  => $yn,
+                    'caption' => 'Edit posts label',
+                    'help'    => 'Edit posts help',
+                ];
+                $fieldset['g_delete_posts'] = [
+                    'type'    => 'radio',
+                    'value'   => $group->g_delete_posts,
+                    'values'  => $yn,
+                    'caption' => 'Delete posts label',
+                    'help'    => 'Delete posts help',
+                ];
+                $fieldset['g_delete_topics'] = [
+                    'type'    => 'radio',
+                    'value'   => $group->g_delete_topics,
+                    'values'  => $yn,
+                    'caption' => 'Delete topics label',
+                    'help'    => 'Delete topics help',
+                ];
+                $fieldset['g_set_title'] = [
+                    'type'    => 'radio',
+                    'value'   => $group->g_set_title,
+                    'values'  => $yn,
+                    'caption' => 'Set own title label',
+                    'help'    => 'Set own title help',
+                ];
+            }
+
+            $fieldset['g_post_links'] = [
                 'type'    => 'radio',
-                'value'   => $group->g_mod_promote_users,
+                'value'   => $group->g_post_links,
                 'values'  => $yn,
-                'caption' => 'Mod promote users label',
-                'help'    => 'Mod promote users help',
+                'caption' => 'Post links label',
+                'help'    => 'Post links help',
             ];
-            $fieldset['g_mod_ban_users'] = [
+            $fieldset['g_search'] = [
                 'type'    => 'radio',
-                'value'   => $group->g_mod_ban_users,
+                'value'   => $group->g_search,
                 'values'  => $yn,
-                'caption' => 'Ban users label',
-                'help'    => 'Ban users help',
+                'caption' => 'User search label',
+                'help'    => 'User search help',
             ];
-            $form['sets']['group-mod'] = [
-                'legend' => 'Moderation subhead',
+            $fieldset['g_search_users'] = [
+                'type'    => 'radio',
+                'value'   => $group->g_search_users,
+                'values'  => $yn,
+                'caption' => 'User list search label',
+                'help'    => 'User list search help',
+            ];
+
+            if ($group->groupGuest) {
+                $fieldset['a_guest_set[show_smilies]'] = [
+                    'type'    => 'radio',
+                    'value'   => $this->c->config->a_guest_set['show_smilies'] ?? 0,
+                    'values'  => $yn,
+                    'caption' => 'Smilies label',
+                    'help'    => 'Smilies info',
+                ];
+                $fieldset['a_guest_set[show_sig]'] = [
+                    'type'    => 'radio',
+                    'value'   => $this->c->config->a_guest_set['show_sig'] ?? 0,
+                    'values'  => $yn,
+                    'caption' => 'Sigs label',
+                    'help'    => 'Sigs info',
+                ];
+                $fieldset['a_guest_set[show_avatars]'] = [
+                    'type'    => 'radio',
+                    'value'   => $this->c->config->a_guest_set['show_avatars'] ?? 0,
+                    'values'  => $yn,
+                    'caption' => 'Avatars label',
+                    'help'    => 'Avatars info',
+                ];
+                $fieldset['a_guest_set[show_img]'] = [
+                    'type'    => 'radio',
+                    'value'   => $this->c->config->a_guest_set['show_img'] ?? 0,
+                    'values'  => $yn,
+                    'caption' => 'Images label',
+                    'help'    => 'Images info',
+                ];
+                $fieldset['a_guest_set[show_img_sig]'] = [
+                    'type'    => 'radio',
+                    'value'   => $this->c->config->a_guest_set['show_img_sig'] ?? 0,
+                    'values'  => $yn,
+                    'caption' => 'Images sigs label',
+                    'help'    => 'Images sigs info',
+                ];
+            } else {
+                $fieldset['g_send_email'] = [
+                    'type'    => 'radio',
+                    'value'   => $group->g_send_email,
+                    'values'  => $yn,
+                    'caption' => 'Send e-mails label',
+                    'help'    => 'Send e-mails help',
+                ];
+            }
+
+            $form['sets']['group-permissions'] = [
+                'legend' => 'Permissions subhead',
                 'fields' => $fieldset,
             ];
-            $form['sets']['mod-info'] = [
+            $form['sets']['def-info'] = [
                 'inform' => [
                     [
-                        'message' => 'Moderator info',
+                        'message' => 'Group settings info',
                     ],
                 ],
             ];
-        }
 
-        $fieldset = [];
-        $fieldset['g_read_board'] = [
-            'type'    => 'radio',
-            'value'   => $group->g_read_board,
-            'values'  => $yn,
-            'caption' => 'Read board label',
-            'help'    => 'Read board help',
-        ];
-        $fieldset['g_view_users'] = [
-            'type'    => 'radio',
-            'value'   => $group->g_view_users,
-            'values'  => $yn,
-            'caption' => 'View user info label',
-            'help'    => 'View user info help',
-        ];
-        $fieldset['g_post_replies'] = [
-            'type'    => 'radio',
-            'value'   => $group->g_post_replies,
-            'values'  => $yn,
-            'caption' => 'Post replies label',
-            'help'    => 'Post replies help',
-        ];
-        $fieldset['g_post_topics'] = [
-            'type'    => 'radio',
-            'value'   => $group->g_post_topics,
-            'values'  => $yn,
-            'caption' => 'Post topics label',
-            'help'    => 'Post topics help',
-        ];
-
-        if (! $group->groupGuest) {
-            $fieldset['g_edit_posts'] = [
-                'type'    => 'radio',
-                'value'   => $group->g_edit_posts,
-                'values'  => $yn,
-                'caption' => 'Edit posts label',
-                'help'    => 'Edit posts help',
-            ];
-            $fieldset['g_delete_posts'] = [
-                'type'    => 'radio',
-                'value'   => $group->g_delete_posts,
-                'values'  => $yn,
-                'caption' => 'Delete posts label',
-                'help'    => 'Delete posts help',
-            ];
-            $fieldset['g_delete_topics'] = [
-                'type'    => 'radio',
-                'value'   => $group->g_delete_topics,
-                'values'  => $yn,
-                'caption' => 'Delete topics label',
-                'help'    => 'Delete topics help',
-            ];
-            $fieldset['g_set_title'] = [
-                'type'    => 'radio',
-                'value'   => $group->g_set_title,
-                'values'  => $yn,
-                'caption' => 'Set own title label',
-                'help'    => 'Set own title help',
-            ];
-        }
-
-        $fieldset['g_post_links'] = [
-            'type'    => 'radio',
-            'value'   => $group->g_post_links,
-            'values'  => $yn,
-            'caption' => 'Post links label',
-            'help'    => 'Post links help',
-        ];
-        $fieldset['g_search'] = [
-            'type'    => 'radio',
-            'value'   => $group->g_search,
-            'values'  => $yn,
-            'caption' => 'User search label',
-            'help'    => 'User search help',
-        ];
-        $fieldset['g_search_users'] = [
-            'type'    => 'radio',
-            'value'   => $group->g_search_users,
-            'values'  => $yn,
-            'caption' => 'User list search label',
-            'help'    => 'User list search help',
-        ];
-
-        if ($group->groupGuest) {
-            $fieldset['a_guest_set[show_smilies]'] = [
-                'type'    => 'radio',
-                'value'   => $this->c->config->a_guest_set['show_smilies'] ?? 0,
-                'values'  => $yn,
-                'caption' => 'Smilies label',
-                'help'    => 'Smilies info',
-            ];
-            $fieldset['a_guest_set[show_sig]'] = [
-                'type'    => 'radio',
-                'value'   => $this->c->config->a_guest_set['show_sig'] ?? 0,
-                'values'  => $yn,
-                'caption' => 'Sigs label',
-                'help'    => 'Sigs info',
-            ];
-            $fieldset['a_guest_set[show_avatars]'] = [
-                'type'    => 'radio',
-                'value'   => $this->c->config->a_guest_set['show_avatars'] ?? 0,
-                'values'  => $yn,
-                'caption' => 'Avatars label',
-                'help'    => 'Avatars info',
-            ];
-            $fieldset['a_guest_set[show_img]'] = [
-                'type'    => 'radio',
-                'value'   => $this->c->config->a_guest_set['show_img'] ?? 0,
-                'values'  => $yn,
-                'caption' => 'Images label',
-                'help'    => 'Images info',
-            ];
-            $fieldset['a_guest_set[show_img_sig]'] = [
-                'type'    => 'radio',
-                'value'   => $this->c->config->a_guest_set['show_img_sig'] ?? 0,
-                'values'  => $yn,
-                'caption' => 'Images sigs label',
-                'help'    => 'Images sigs info',
-            ];
-        } else {
-            $fieldset['g_send_email'] = [
-                'type'    => 'radio',
-                'value'   => $group->g_send_email,
-                'values'  => $yn,
-                'caption' => 'Send e-mails label',
-                'help'    => 'Send e-mails help',
-            ];
-        }
-
-        $form['sets']['group-permissions'] = [
-            'legend' => 'Permissions subhead',
-            'fields' => $fieldset,
-        ];
-        $form['sets']['def-info'] = [
-            'inform' => [
-                [
-                    'message' => 'Group settings info',
-                ],
-            ],
-        ];
-
-        $fieldset = [];
-        $fieldset['g_post_flood'] = [
-            'type'    => 'number',
-            'min'     => '0',
-            'max'     => '32767',
-            'value'   => $group->g_post_flood,
-            'caption' => 'Post flood label',
-            'help'    => 'Post flood help',
-        ];
-        $fieldset['g_search_flood'] = [
-            'type'    => 'number',
-            'min'     => '0',
-            'max'     => '32767',
-            'value'   => $group->g_search_flood,
-            'caption' => 'Search flood label',
-            'help'    => 'Search flood help',
-        ];
-
-        if (! $group->groupGuest) {
-            $fieldset['g_deledit_interval'] = [
-                'type'    => 'number',
-                'min'     => '0',
-                'max'     => '999999',
-                'value'   => $group->g_deledit_interval,
-                'caption' => 'Delete-edit interval label',
-                'help'    => 'Delete-edit interval help',
-            ];
-            $fieldset['g_email_flood'] = [
-                'type'    => 'number',
-                'min'     => '0',
-                'max'     => '32767',
-                'value'   => $group->g_email_flood,
-                'caption' => 'E-mail flood label',
-                'help'    => 'E-mail flood help',
-            ];
-            $fieldset['g_report_flood'] = [
-                'type'    => 'number',
-                'min'     => '0',
-                'max'     => '32767',
-                'value'   => $group->g_report_flood,
-                'caption' => 'Report flood label',
-                'help'    => 'Report flood help',
-            ];
-
-        }
-
-        $form['sets']['group-intervals'] = [
-            'legend' => 'Intervals subhead',
-            'fields' => $fieldset,
-        ];
-
-        if (! $group->groupGuest) {
             $fieldset = [];
-            $fieldset['g_sig_length'] = [
+            $fieldset['g_post_flood'] = [
                 'type'    => 'number',
                 'min'     => '0',
-                'max'     => '16000',
-                'value'   => $group->g_sig_length,
-                'caption' => 'Max sig length label',
-                'help'    => 'Max sig length help',
+                'max'     => '32767',
+                'value'   => $group->g_post_flood,
+                'caption' => 'Post flood label',
+                'help'    => 'Post flood help',
             ];
-            $fieldset['g_sig_lines'] = [
+            $fieldset['g_search_flood'] = [
                 'type'    => 'number',
                 'min'     => '0',
-                'max'     => '100',
-                'value'   => $group->g_sig_lines,
-                'caption' => 'Max sig lines label',
-                'help'    => 'Max sig lines help',
+                'max'     => '32767',
+                'value'   => $group->g_search_flood,
+                'caption' => 'Search flood label',
+                'help'    => 'Search flood help',
             ];
-            $form['sets']['group-signature'] = [
-                'legend' => 'Signature subhead',
+
+            if (! $group->groupGuest) {
+                $fieldset['g_deledit_interval'] = [
+                    'type'    => 'number',
+                    'min'     => '0',
+                    'max'     => '999999',
+                    'value'   => $group->g_deledit_interval,
+                    'caption' => 'Delete-edit interval label',
+                    'help'    => 'Delete-edit interval help',
+                ];
+                $fieldset['g_email_flood'] = [
+                    'type'    => 'number',
+                    'min'     => '0',
+                    'max'     => '32767',
+                    'value'   => $group->g_email_flood,
+                    'caption' => 'E-mail flood label',
+                    'help'    => 'E-mail flood help',
+                ];
+                $fieldset['g_report_flood'] = [
+                    'type'    => 'number',
+                    'min'     => '0',
+                    'max'     => '32767',
+                    'value'   => $group->g_report_flood,
+                    'caption' => 'Report flood label',
+                    'help'    => 'Report flood help',
+                ];
+
+            }
+
+            $form['sets']['group-intervals'] = [
+                'legend' => 'Intervals subhead',
                 'fields' => $fieldset,
             ];
 
+            if (! $group->groupGuest) {
+                $fieldset = [];
+                $fieldset['g_sig_length'] = [
+                    'type'    => 'number',
+                    'min'     => '0',
+                    'max'     => '16000',
+                    'value'   => $group->g_sig_length,
+                    'caption' => 'Max sig length label',
+                    'help'    => 'Max sig length help',
+                ];
+                $fieldset['g_sig_lines'] = [
+                    'type'    => 'number',
+                    'min'     => '0',
+                    'max'     => '100',
+                    'value'   => $group->g_sig_lines,
+                    'caption' => 'Max sig lines label',
+                    'help'    => 'Max sig lines help',
+                ];
+                $form['sets']['group-signature'] = [
+                    'legend' => 'Signature subhead',
+                    'fields' => $fieldset,
+                ];
 
+
+                $fieldset = [];
+                $fieldset['g_pm'] = [
+                    'type'    => 'radio',
+                    'value'   => $group->g_pm,
+                    'values'  => $yn,
+                    'caption' => 'Allow PM label',
+                ];
+                $fieldset['g_pm_limit'] = [
+                    'type'    => 'number',
+                    'min'     => '0',
+                    'max'     => '999999',
+                    'value'   => $group->g_pm_limit,
+                    'caption' => 'PM limit label',
+                    'help'    => 'PM limit help',
+                ];
+                $form['sets']['group-pm'] = [
+                    'legend' => 'PM subhead',
+                    'fields' => $fieldset,
+                ];
+            }
+        }
+
+        if (! $group->groupGuest) {
             $fieldset = [];
-            $fieldset['g_pm'] = [
-                'type'    => 'radio',
-                'value'   => $group->g_pm,
-                'values'  => $yn,
-                'caption' => 'Allow PM label',
+            $fieldset['g_up_ext'] = [
+                'type'      => 'text',
+                'maxlength' => '255',
+                'value'     => $group->g_up_ext,
+                'caption'   => 'Allowed file extensions label',
+                'help'      => 'Allowed file extensions help',
             ];
-            $fieldset['g_pm_limit'] = [
+            $fieldset['g_up_size_kb'] = [
                 'type'    => 'number',
                 'min'     => '0',
-                'max'     => '999999',
-                'value'   => $group->g_pm_limit,
-                'caption' => 'PM limit label',
-                'help'    => 'PM limit help',
+                'max'     => '2147483647',
+                'value'   => $group->g_up_size_kb,
+                'caption' => 'Max file size label',
+                'help'    => 'Max file size help',
             ];
-            $form['sets']['group-pm'] = [
-                'legend' => 'PM subhead',
+            $fieldset['g_up_limit_mb'] = [
+                'type'    => 'number',
+                'min'     => '0',
+                'max'     => '2147483647',
+                'value'   => $group->g_up_limit_mb,
+                'caption' => 'Disk space limit label',
+                'help'    => 'Disk space limit help',
+            ];
+
+            $form['sets']['group-upload'] = [
+                'legend' => 'Upload subhead',
                 'fields' => $fieldset,
             ];
         }
