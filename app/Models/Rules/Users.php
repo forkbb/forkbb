@@ -88,4 +88,60 @@ class Users extends Rules
 
         return $this->profileRules->setUser($user)->changeGroup;
     }
+
+    /**
+     * Статус возможности использования опросов
+     */
+    protected function getusePoll(): bool
+    {
+        return ! $this->user->isGuest && 1 === $this->c->config->b_poll_enabled;
+    }
+
+    /**
+     * Статус показа количества сообщений
+     */
+    protected function getshowPostCount(): bool
+    {
+        return 1 === $this->c->config->b_show_post_count || $this->user->isAdmMod;
+    }
+
+    /**
+     * Статус показа подписи
+     */
+    protected function getshowSignature(): bool
+    {
+        return 1 === $this->user->show_sig;
+    }
+
+    /**
+     * Статус показа информации пользователя
+     */
+    protected function getshowUserInfo(): bool
+    {
+        return $this->user->isAdmin || 1 === $this->c->config->b_show_user_info;
+    }
+
+    /**
+     * Статус показа аватаров
+     */
+    protected function getshowAvatar(): bool
+    {
+        return 1 === $this->c->config->b_avatars && 1 === $this->user->show_avatars;
+    }
+
+    /**
+     * Статус поиска пользователей
+     */
+    protected function getsearchUsers(): bool
+    {
+        return $this->user->isAdmin || 1 === $this->user->g_search_users;
+    }
+
+    /**
+     * Статус видимости профилей пользователей
+     */
+    protected function getviewUsers(): bool
+    {
+        return $this->user->isAdmin || 1 === $this->user->g_view_users;
+    }
 }

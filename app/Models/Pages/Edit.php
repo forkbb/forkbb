@@ -71,7 +71,7 @@ class Edit extends Page
 
                 if (
                     $firstPost
-                    && $this->user->usePoll
+                    && $this->userRules->usePoll
                     && $v->poll_enable
                 ) {
                     $this->poll = $this->c->polls->create($v->poll);
@@ -91,7 +91,7 @@ class Edit extends Page
 
         if (
             $firstPost
-            && $this->user->usePoll
+            && $this->userRules->usePoll
         ) {
             $poll = $topic->poll;
 
@@ -199,7 +199,7 @@ class Edit extends Page
                 $topic->stick_fp = $v->stick_fp ? 1 : 0;
             }
             // опрос
-            if ($this->user->usePoll) {
+            if ($this->userRules->usePoll) {
                 $this->changePoll($topic, $v);
             }
         }

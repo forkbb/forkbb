@@ -251,7 +251,7 @@ class Forum extends DataModel
             return [];
         }
 
-        $viewUsers = $this->c->user->viewUsers;
+        $viewUsers = $this->c->userRules->viewUsers;
 
         foreach ($attr as $id => &$cur) {
             $cur = [

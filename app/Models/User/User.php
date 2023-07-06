@@ -30,11 +30,9 @@ class User extends DataModel
         parent::__construct($container);
 
         $this->zDepend = [
-            'group_id'     => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'isBanByName', 'link', 'viewUsers', 'showPostCount', 'searchUsers', 'usePoll', 'usePM'],
+            'group_id'     => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'isBanByName', 'link', 'usePM'],
             'id'           => ['isGuest', 'link', 'online'],
             'last_visit'   => ['currentVisit'],
-            'show_sig'     => ['showSignature'],
-            'show_avatars' => ['showAvatar'],
             'signature'    => ['isSignature'],
             'email'        => ['email_normal'],
             'username'     => ['username_normal'],
@@ -261,54 +259,6 @@ class User extends DataModel
     }
 
     /**
-     * Статус видимости профилей пользователей
-     */
-    protected function getviewUsers(): bool
-    {
-        return $this->isAdmin || 1 === $this->g_view_users;
-    }
-
-    /**
-     * Статус поиска пользователей
-     */
-    protected function getsearchUsers(): bool
-    {
-        return $this->isAdmin || 1 === $this->g_search_users;
-    }
-
-    /**
-     * Статус показа аватаров
-     */
-    protected function getshowAvatar(): bool
-    {
-        return 1 === $this->c->config->b_avatars && 1 === $this->show_avatars;
-    }
-
-    /**
-     * Статус показа информации пользователя
-     */
-    protected function getshowUserInfo(): bool
-    {
-        return $this->isAdmin || 1 === $this->c->config->b_show_user_info;
-    }
-
-    /**
-     * Статус показа подписи
-     */
-    protected function getshowSignature(): bool
-    {
-        return 1 === $this->show_sig;
-    }
-
-    /**
-     * Статус показа количества сообщений
-     */
-    protected function getshowPostCount(): bool
-    {
-        return 1 === $this->c->config->b_show_post_count || $this->isAdmMod;
-    }
-
-    /**
      * Число тем на одну страницу
      */
     protected function getdisp_topics(): int
@@ -396,13 +346,8 @@ class User extends DataModel
     }
 
     /**
-     * Статус возможности использования опросов
+     * Информация для лога
      */
-    protected function getusePoll(): bool
-    {
-        return ! $this->isGuest && 1 === $this->c->config->b_poll_enabled;
-    }
-
     public function fLog(): string
     {
         return $this->isGuest

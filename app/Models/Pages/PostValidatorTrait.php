@@ -218,7 +218,7 @@ trait PostValidatorTrait
         if (
             $first
             && $notPM
-            && $this->user->usePoll
+            && $this->userRules->usePoll
         ) {
             $v->addValidators([
                 'check_poll'  => [$this, 'vCheckPoll'],

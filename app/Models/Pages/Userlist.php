@@ -47,10 +47,10 @@ class Userlist extends Page
         $prefix = 'POST' === $method ? 'required|' : '';
         $v = $this->c->Validator->reset()
             ->addRules([
-                'sort'  => $prefix . 'string|in:username,registered' . ($this->user->showPostCount ? ',num_posts' : ''),
+                'sort'  => $prefix . 'string|in:username,registered' . ($this->userRules->showPostCount ? ',num_posts' : ''),
                 'dir'   => $prefix . 'string|in:ASC,DESC',
                 'group' => $prefix . 'string|in:' . \implode(',', \array_keys($this->groupList)),
-                'name'  => $prefix . 'string|min:1|max:25' . ($this->user->searchUsers ? '' : '|in:*'),
+                'name'  => $prefix . 'string|min:1|max:25' . ($this->userRules->searchUsers ? '' : '|in:*'),
             ]);
 
         $error = true;
@@ -178,14 +178,14 @@ class Userlist extends Page
             'btns'   => [
                 'submit' => [
                     'type'  => 'submit',
-                    'value' => __($this->user->searchUsers ? 'Search btn' : 'Submit'),
+                    'value' => __($this->userRules->searchUsers ? 'Search btn' : 'Submit'),
                 ],
             ],
         ];
 
         $fields = [];
 
-        if ($this->user->searchUsers) {
+        if ($this->userRules->searchUsers) {
             $fields['name'] = [
                 'class'     => ['w0'],
                 'type'      => 'text',
@@ -212,7 +212,7 @@ class Userlist extends Page
             'type'    => 'select',
             'options' => [
                 ['username', __('Sort by name')],
-                ['num_posts', __('Sort by number'), $this->user->showPostCount ? null : true],
+                ['num_posts', __('Sort by number'), $this->userRules->showPostCount ? null : true],
                 ['registered', __('Sort by date')],
             ],
             'value'   => $v->sort,

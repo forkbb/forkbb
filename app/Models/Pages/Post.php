@@ -71,7 +71,7 @@ class Post extends Page
                 );
 
                 if (
-                    $this->user->usePoll
+                    $this->userRules->usePoll
                     && $v->poll_enable
                 ) {
                     $this->poll = $this->c->polls->create($v->poll);
@@ -264,7 +264,7 @@ class Post extends Page
             $topic->first_post_id = $post->id;
 
             if (
-                $this->user->usePoll
+                $this->userRules->usePoll
                 && $v->poll_enable
             ) {
                 $topic->poll_type  = $v->poll['duration'] > 0 ? 1000 + $v->poll['duration'] : 1; // ???? перенести в модель poll?

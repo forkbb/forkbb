@@ -578,7 +578,7 @@ class Bans extends Admin
                     return $this->c->Message->message(['User is ban', $user->username]);
                 }
 
-                if ($this->c->userRules->canBanUser($user)) {
+                if ($this->userRules->canBanUser($user)) {
                     continue;
                 }
 
@@ -748,7 +748,7 @@ class Bans extends Admin
                 $v->addError('No user message');
             } elseif ($this->c->bans->banFromName($user->username) > 0) {
                 $v->addError(['User is ban', $user->username]);
-            } elseif (! $this->c->userRules->canBanUser($user)) {
+            } elseif (! $this->userRules->canBanUser($user)) {
                 if ($user->isGuest) {
                     $v->addError('Cannot ban guest message');
                 } elseif ($user->isAdmin) {

@@ -107,7 +107,7 @@ abstract class Users extends Admin
                         return false;
                     }
 
-                    if (! $this->c->userRules->canBanUser($user)) {
+                    if (! $this->userRules->canBanUser($user)) {
                         $this->fIswev = [FORK_MESS_VLD, ['You are not allowed to ban the %s', $user->username]];
 
                         if ($user->isAdmMod) {
@@ -119,7 +119,7 @@ abstract class Users extends Admin
 
                     break;
                 case self::ACTION_DEL:
-                    if (! $this->c->userRules->canDeleteUser($user)) {
+                    if (! $this->userRules->canDeleteUser($user)) {
                         $this->fIswev = [FORK_MESS_VLD, ['You are not allowed to delete the %s', $user->username]];
 
                         if ($user->isAdmMod) {
@@ -131,7 +131,7 @@ abstract class Users extends Admin
 
                     break;
                 case self::ACTION_CHG:
-                    if (! $this->c->userRules->canChangeGroup($user, $profile)) {
+                    if (! $this->userRules->canChangeGroup($user, $profile)) {
                         $this->fIswev = [FORK_MESS_VLD, ['You are not allowed to change group for %s', $user->username]];
 
                         if ($user->isAdmin) {

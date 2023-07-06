@@ -26,7 +26,7 @@ class Index extends Page
         // крайний пользователь // ???? может в stats переместить?
         $this->c->stats->userLast = [
             'name' => $this->c->stats->userLast['username'],
-            'link' => $this->user->viewUsers
+            'link' => $this->userRules->viewUsers
                 ? $this->c->Router->link(
                     'User',
                     [

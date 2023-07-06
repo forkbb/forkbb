@@ -182,7 +182,7 @@ trait PostFormTrait
         if (
             $first
             && $notPM
-            && $this->user->usePoll
+            && $this->userRules->usePoll
         ) {
             $term = $edit && $model->parent->poll_term
                 ? $model->parent->poll_term

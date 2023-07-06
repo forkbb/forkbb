@@ -34,9 +34,9 @@
     </div>
 @if ($form = $p->form)
     <section id="fork-usrlstform"  class="f-main">
-      <h2>{!! __($p->user->searchUsers ? 'User search head' : 'User sort head') !!}</h2>
+      <h2>{!! __($p->userRules->searchUsers ? 'User search head' : 'User sort head') !!}</h2>
       <details>
-        <summary>{!! __($p->user->searchUsers ? 'User search head' : 'User sort head') !!}</summary>
+        <summary>{!! __($p->userRules->searchUsers ? 'User search head' : 'User sort head') !!}</summary>
         <div class="f-fdiv">
     @include ('layouts/form')
         </div>
@@ -61,7 +61,7 @@
               <span class="f-hc-tname">{!! __('Title') !!}</span>
               <small>),</small>
             </span>
-    @if ($p->user->showPostCount)
+    @if ($p->userRules->showPostCount)
             <span class="f-hcell f-cnumposts">
               <span class="f-hc-table">
                 <span class="f-hc-tasc"><a @if (2 === $p->activeLink) class="active" @endif href="{{ $p->links[2] }}">▲</a></span>
@@ -81,13 +81,13 @@
           </li>
     @foreach ($p->userList as $user)
           <li class="f-row" value="{{ ++$p->startNum }}">
-        @if ($p->user->viewUsers && $user->link)
+        @if ($p->userRules->viewUsers && $user->link)
             <span class="f-cell f-cusername"><a href="{{ $user->link }}">{{ $user->username }}</a></span>
         @else
             <span class="f-cell f-cusername">{{ $user->username }}</span>
         @endif
             <span class="f-cell f-ctitle"><small>(</small><i>{{ $user->title() }}</i><small>),</small></span>
-        @if ($p->user->showPostCount)
+        @if ($p->userRules->showPostCount)
             <span class="f-cell f-cnumposts">{!! __(['<b>%s</b><small> post,</small>', $user->num_posts, num($user->num_posts)]) !!}</span>
         @endif
             <span class="f-cell f-cdatereg">{!! __(['<small>registered: </small><b>%s</b>', dt($user->registered, true)]) !!}</span>

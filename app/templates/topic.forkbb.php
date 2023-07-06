@@ -70,19 +70,19 @@
         <address class="f-post-user">
           <div class="f-post-usticky">
             <ul hidden class="f-user-info-first">
-        @if ($p->user->viewUsers && $post->user->link)
+        @if ($p->userRules->viewUsers && $post->user->link)
               <li class="f-username"><a href="{{ $post->user->link }}" rel="author">{{ $post->user->username }}</a></li>
         @else
               <li class="f-username">{{ $post->user->username }}</li>
         @endif
             </ul>
-        @if ($p->user->showAvatar && $post->user->avatar)
+        @if ($p->userRules->showAvatar && $post->user->avatar)
             <p class="f-avatar">
               <img alt="{{ $post->user->username }}" src="{{ $post->user->avatar }}" loading="lazy">
             </p>
         @endif
             <ul class="f-user-info">
-        @if ($p->user->viewUsers && $post->user->link)
+        @if ($p->userRules->viewUsers && $post->user->link)
               <li class="f-username"><a href="{{ $post->user->link }}" rel="author">{{ $post->user->username }}</a></li>
         @else
               <li class="f-username">{{ $post->user->username }}</li>
@@ -91,14 +91,14 @@
         @if (! $post->user->isGuest)
               <li class="f-userstatus">{!! __($post->user->online ? 'Online' : 'Offline') !!}</li>
         @endif
-        @if ($p->user->showUserInfo && $p->user->showPostCount && $post->user->num_posts)
+        @if ($p->userRules->showUserInfo && $p->userRules->showPostCount && $post->user->num_posts)
               <li class="f-postcount"><span class="f-psfont">{!! __(['%s post', $post->user->num_posts, num($post->user->num_posts)]) !!}</span></li>
         @endif
         @if ($linkPromote = $p->user->linkPromote($post))
               <li class="f-promoteuser"><a href="{{ $linkPromote }}" title="{{ __('Promote user title') }}"><span class="f-psfont">{!! __('Promote user') !!}</span></a></li>
         @endif
             </ul>
-        @if ($p->user->showUserInfo)
+        @if ($p->userRules->showUserInfo)
             <ul class="f-user-info-add">
             @if ($p->user->isAdmMod && '' != $post->user->admin_note)
               <li class="f-admin-note" title="{{ __('Admin note') }}">{{ $post->user->admin_note }}</li>
@@ -109,7 +109,7 @@
             @if ($post->user->location)
               <li class="f-location"><span class="f-psfont">{!! __(['From %s', $post->user->censorLocation]) !!}</span></li>
             @endif
-            @if ($p->showIpAddrs)
+            @if ($p->userRules->viewIP)
               <li class="f-poster-ip"><a href="{{ $post->linkGetHost }}" title="{{ $post->poster_ip }}"><span class="f-psfont">{!! __('IP address logged') !!}</span></a></li>
             @endif
             @if ($post->user->url)
@@ -129,7 +129,7 @@
             @include ('layouts/poll')
         @endif
           </div>
-        @if ($p->user->showSignature && $post->user->isSignature)
+        @if ($p->userRules->showSignature && $post->user->isSignature)
           <aside class="f-post-sign">
             <div class="f-sign-brd">
               <small>- - -</small>

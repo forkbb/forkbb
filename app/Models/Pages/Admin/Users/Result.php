@@ -30,7 +30,7 @@ class Result extends Users
         }
 
         if (isset($data['ip'])) {
-            if (! $this->c->userRules->viewIP) {
+            if (! $this->userRules->viewIP) {
                 return $this->c->Message->message('Bad request');
             }
 
@@ -64,9 +64,9 @@ class Result extends Users
                 'token'          => 'token:AdminUsersResult',
                 'users'          => 'required|array',
                 'users.*'        => 'required|integer|min:1|max:9999999999',
-                'ban'            => $this->c->userRules->banUsers ? 'checkbox' : 'absent',
-                'delete'         => $this->c->userRules->deleteUsers ? 'checkbox' : 'absent',
-                'change_group'   => $this->c->userRules->changeGroup ? 'checkbox' : 'absent',
+                'ban'            => $this->userRules->banUsers ? 'checkbox' : 'absent',
+                'delete'         => $this->userRules->deleteUsers ? 'checkbox' : 'absent',
+                'change_group'   => $this->userRules->changeGroup ? 'checkbox' : 'absent',
             ])->addAliases([
                 'users'          => 'Select',
                 'users.*'        => 'Select',
@@ -82,17 +82,17 @@ class Result extends Users
             if ($v->validation($_POST)) {
                 if (
                     ! empty($v->ban)
-                    && $this->c->userRules->banUsers
+                    && $this->userRules->banUsers
                 ) {
                     $action = self::ACTION_BAN;
                 } elseif (
                     ! empty($v->delete)
-                    && $this->c->userRules->deleteUsers
+                    && $this->userRules->deleteUsers
                 ) {
                     $action = self::ACTION_DEL;
                 } elseif (
                     ! empty($v->change_group)
-                    && $this->c->userRules->changeGroup
+                    && $this->userRules->changeGroup
                 ) {
                     $action = self::ACTION_CHG;
                 } else {
@@ -251,19 +251,19 @@ class Result extends Users
             'btns'   => [],
         ];
 
-        if ($this->c->userRules->banUsers) {
+        if ($this->userRules->banUsers) {
             $form['btns']['ban'] = [
                 'type'  => 'submit',
                 'value' => __('Ban'),
             ];
         }
-        if ($this->c->userRules->deleteUsers) {
+        if ($this->userRules->deleteUsers) {
             $form['btns']['delete'] = [
                 'type'  => 'submit',
                 'value' => __('Delete'),
             ];
         }
-        if ($this->c->userRules->changeGroup) {
+        if ($this->userRules->changeGroup) {
             $form['btns']['change_group'] = [
                 'type'  => 'submit',
                 'value' => __('Change group'),

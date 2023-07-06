@@ -250,7 +250,7 @@ class View extends Profile
                     'class'   => ['pline'],
                     'type'    => 'link',
                     'caption' => 'Posts info',
-                    'value'   => $this->user->showPostCount ? num($this->curUser->num_posts) : __('Show posts'),
+                    'value'   => $this->userRules->showPostCount ? num($this->curUser->num_posts) : __('Show posts'),
                     'href'    => $this->c->Router->link(
                         'SearchAction',
                         [
@@ -264,7 +264,7 @@ class View extends Profile
                     'class'   => ['pline'],
                     'type'    => 'link',
                     'caption' => 'Topics info',
-                    'value'   => $this->user->showPostCount ? num($this->curUser->num_topics) : __('Show topics'),
+                    'value'   => $this->userRules->showPostCount ? num($this->curUser->num_topics) : __('Show topics'),
                     'href'    => $this->c->Router->link(
                         'SearchAction',
                         [
@@ -274,7 +274,7 @@ class View extends Profile
                     ),
                     'title'   => __('Show topics'),
                 ];
-            } elseif ($this->user->showPostCount) {
+            } elseif ($this->userRules->showPostCount) {
                 $fields['posts'] = [
                     'class'   => ['pline'],
                     'type'    => 'str',

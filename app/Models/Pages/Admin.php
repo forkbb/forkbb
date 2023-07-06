@@ -60,7 +60,7 @@ abstract class Admin extends Page
             'users' => [$r->link('AdminUsers'), 'Users'],
         ];
 
-        if ($this->c->userRules->banUsers) {
+        if ($this->userRules->banUsers) {
             $nav['bans'] = [$r->link('AdminBans'), 'Bans'];
         }
         if (

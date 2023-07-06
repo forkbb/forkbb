@@ -24,9 +24,10 @@ class Routing
      */
     public function routing(): Page
     {
-        $user   = $this->c->user;
-        $config = $this->c->config;
-        $r      = $this->c->Router;
+        $user      = $this->c->user;
+        $userRules = $this->c->userRules;
+        $config    = $this->c->config;
+        $r         = $this->c->Router;
 
         // регистрация/вход/выход
         if ($user->isGuest) {
@@ -182,7 +183,7 @@ class Routing
                 );
             }
             // юзеры
-            if ($user->viewUsers) {
+            if ($userRules->viewUsers) {
                 // список пользователей
                 $r->add(
                     $r::GET,
@@ -447,7 +448,7 @@ class Routing
             }
         }
         // опросы
-        if ($user->usePoll) {
+        if ($userRules->usePoll) {
             $r->add(
                 $r::PST,
                 '/poll/{tid|i:[1-9]\d*}',
@@ -470,7 +471,7 @@ class Routing
                 'AdminStatistics'
             );
 
-            if ($this->c->userRules->viewIP) {
+            if ($userRules->viewIP) {
                 $r->add(
                     $r::GET,
                     '/admin/get/host/{ip:[0-9a-fA-F:.]+}',
@@ -526,7 +527,7 @@ class Routing
                 );
             }
 
-            if ($this->c->userRules->banUsers) {
+            if ($userRules->banUsers) {
                 $r->add(
                     $r::DUO,
                     '/admin/bans',

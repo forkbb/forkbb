@@ -72,7 +72,10 @@ abstract class Page extends Model
         if (1 === $container->config->b_announcement) {
             $this->fAnnounce = $container->config->o_announcement_message;
         }
-        $this->user = $this->c->user; // передача текущего юзера в шаблон
+
+        // передача текущего юзера и его правил в шаблон
+        $this->user      = $this->c->user;
+        $this->userRules = $this->c->userRules;
 
         $this->pageHeader('mainStyle', 'link', 10000, [
             'rel'  => 'stylesheet',
@@ -121,7 +124,7 @@ abstract class Page extends Model
 
         if (
             1 === $this->user->g_read_board
-            && $this->user->viewUsers
+            && $this->userRules->viewUsers
         ) {
             $navGen[self::FI_USERS] = [
                 $r->link('Userlist'),

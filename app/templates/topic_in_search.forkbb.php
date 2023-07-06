@@ -52,14 +52,14 @@
         <address class="f-post-user">
           <div class="f-post-usticky">
             <ul hidden class="f-user-info-first">
-        @if ($p->user->viewUsers && $post->user->link)
+        @if ($p->userRules->viewUsers && $post->user->link)
               <li class="f-username"><a href="{{ $post->user->link }}">{{ $post->user->username }}</a></li>
         @else
               <li class="f-username">{{ $post->user->username }}</li>
         @endif
             </ul>
             <ul class="f-user-info">
-        @if ($p->user->viewUsers && $post->user->link)
+        @if ($p->userRules->viewUsers && $post->user->link)
               <li class="f-username"><a href="{{ $post->user->link }}">{{ $post->user->username }}</a></li>
         @else
               <li class="f-username">{{ $post->user->username }}</li>

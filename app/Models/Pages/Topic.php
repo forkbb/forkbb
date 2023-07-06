@@ -148,7 +148,6 @@ class Topic extends Page
         $this->crumbs       = $this->crumbs($topic);
         $this->online       = $this->c->Online->calc($this)->info();
         $this->stats        = null;
-        $this->showIpAddrs  = $this->c->userRules->viewIP;
 
         if (
             $topic->canReply

@@ -55,13 +55,13 @@ class Action extends Users
         switch ($args['action']) {
 /*
             case self::ACTION_BAN:
-                if (! $this->c->userRules->banUsers) {
+                if (! $this->userRules->banUsers) {
                     $error = true;
                 }
                 break;
 */
             case self::ACTION_DEL:
-                if (! $this->c->userRules->deleteUsers) {
+                if (! $this->userRules->deleteUsers) {
                     $error = true;
                 }
 
@@ -69,12 +69,12 @@ class Action extends Users
             case self::ACTION_CHG:
                 if (
                     $profile
-                    && ! $this->c->userRules->canChangeGroup($this->c->users->load((int) $args['ids']), true)
+                    && ! $this->userRules->canChangeGroup($this->c->users->load((int) $args['ids']), true)
                 ) {
                     $error = true;
                 } elseif (
                     ! $profile
-                    && ! $this->c->userRules->changeGroup
+                    && ! $this->userRules->changeGroup
                 ) {
                     $error = true;
                 }

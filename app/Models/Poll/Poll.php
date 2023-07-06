@@ -133,7 +133,7 @@ class Poll extends DataModel
     protected function getcanVote(): bool
     {
         return $this->tid > 0
-            && $this->c->user->usePoll
+            && $this->c->userRules->usePoll
             && $this->isOpen
             && ! $this->userVoted;
     }
@@ -144,7 +144,7 @@ class Poll extends DataModel
     protected function getcanSeeResult(): bool
     {
         return (
-                $this->c->user->usePoll
+                $this->c->userRules->usePoll
                 || 1 === $this->c->config->b_poll_guest
             )
             && (
@@ -159,7 +159,7 @@ class Poll extends DataModel
      */
     protected function getcanEdit(): bool
     {
-        return $this->c->user->usePoll
+        return $this->c->userRules->usePoll
             && (
                 0 === $this->c->config->i_poll_time
                 || $this->tid < 1

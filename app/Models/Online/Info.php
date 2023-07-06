@@ -24,7 +24,7 @@ class Info extends Method
             return null;
         }
 
-        $viewUsers            = $this->c->user->viewUsers;
+        $viewUsers            = $this->c->userRules->viewUsers;
         $this->model->maxNum  = $this->c->config->a_max_users['number'];
         $this->model->maxTime = $this->c->config->a_max_users['time'];
         $info                 = [];
