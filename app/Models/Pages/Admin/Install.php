@@ -684,6 +684,39 @@ class Install extends Admin
             $this->c->DB->exec($query);
         }
 
+        //attachments
+        $schema = [
+            'FIELDS' => [
+                'id'          => ['SERIAL', false],
+                'uid'         => ['INT(10) UNSIGNED', false, 0],
+                'created'     => ['INT(10) UNSIGNED', false, 0],
+                'size_kb'     => ['INT(10) UNSIGNED', false, 0],
+                'path'        => ['VARCHAR(255)', false, ''],
+            ],
+            'PRIMARY KEY' => ['id'],
+            'INDEXES' => [
+                'uid_idx' => ['uid'],
+            ],
+            'ENGINE' => $this->DBEngine,
+        ];
+        $this->c->DB->createTable('::attachments', $schema);
+
+        //attachments_pos
+        $schema = [
+            'FIELDS' => [
+                'id'          => ['SERIAL', false],
+                'pid'         => ['INT(10) UNSIGNED', false, 0],
+            ],
+            'UNIQUE KEYS' => [
+                'id_pid_idx' => ['id', 'pid'],
+            ],
+            'INDEXES' => [
+                'pid_idx' => ['pid'],
+            ],
+            'ENGINE' => $this->DBEngine,
+        ];
+        $this->c->DB->createTable('::attachments_pos', $schema);
+
         // bans
         $schema = [
             'FIELDS' => [

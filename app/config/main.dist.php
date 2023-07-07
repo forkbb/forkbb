@@ -172,6 +172,7 @@ return [
             ],
         ],
         'providerUser'  => \ForkBB\Models\ProviderUser\ProviderUser::class,
+        'attachments'   => \ForkBB\Models\Attachment\Attachments::class,
 
         'Csrf' => [
             'class'  => \ForkBB\Core\Csrf::class,

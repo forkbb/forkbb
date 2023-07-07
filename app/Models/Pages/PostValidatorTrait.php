@@ -103,6 +103,11 @@ trait PostValidatorTrait
     {
         $this->c->Lang->load('validator');
 
+        // обработка вложений + хак с добавление вложений в сообщение на лету
+        if (\is_string($attMessage = $this->attachmentsProc($marker, $args))) {
+            $_POST['message'] .= $attMessage;
+        }
+
         $notPM = $this->fIndex !== self::FI_PM;
 
         if ($this->user->isGuest) {
@@ -258,5 +263,62 @@ trait PostValidatorTrait
         }
 
         return $enable;
+    }
+
+    /**
+     * Проверка вложений
+     */
+    public function vCheckAttach(Validator $v, array $files): array
+    {
+        $exts   = \array_flip(\explode(',', $this->user->g_up_ext));
+        $result = [];
+
+        foreach ($files as $file) {
+            if (isset($exts[$file->ext()])) {
+                $result[] = $file;
+            } else {
+                $v->addError(['The %s extension is not allowed', $file->ext()]);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Обрабатывает загруженные файлы
+     */
+    protected function attachmentsProc(string $marker, array $args): ?string
+    {
+        if (! $this->userRules->useUpload) {
+            return null;
+        }
+
+        $v = $this->c->Validator->reset()
+            ->addValidators([
+                'check_attach'   => [$this, 'vCheckAttach'],
+            ])->addRules([
+                'token'        => 'token:' . $marker,
+                'attachments'  => "file:multiple|max:{$this->user->g_up_size_kb}|check_attach",
+            ])->addAliases([
+                'attachments'  => 'Attachments',
+            ])->addArguments([
+                'token'        => $args,
+            ])->addMessages([
+            ]);
+
+        if (! $v->validation($_FILES + $_POST)) {
+            $this->fIswev = $v->getErrors();
+
+            return null;
+        }
+
+        $attachments = $v->attachments;
+
+        $result = "\n";
+        foreach ($attachments as $a) {
+            $result .= ' ' . $a->name() . '.' . $a->ext();
+        }
+
+        return $result;
     }
 }

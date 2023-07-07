@@ -77,3 +77,9 @@ msgstr "Создать тему"
 
 msgid "Re"
 msgstr "Re: "
+
+msgid "%1$s (%2$s max size)"
+msgstr "%1$s (макс. %2$s)"
+
+msgid "Attachments"
+msgstr "Вложения"

@@ -121,3 +121,9 @@ msgstr "Unsubscribe from email notifications of new posts"
 
 msgid "Post list"
 msgstr "Posts"
+
+msgid "%1$s (%2$s max size)"
+msgstr "%1$s (%2$s max size)"
+
+msgid "Attachments"
+msgstr "Attachments"

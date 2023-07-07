@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Model;
-use function \ForkBB\__;
+use function \ForkBB\{__, size};
 
 trait PostFormTrait
 {
@@ -96,6 +96,26 @@ trait PostFormTrait
         $form['sets']['uesm'] = [
             'fields' => $fieldset,
         ];
+
+        if ($this->userRules->useUpload) {
+            $autofocus = null;
+            $limit     = $this->user->g_up_size_kb * 1024;
+
+            $form['enctype'] = 'multipart/form-data';
+            $form['hidden']['MAX_FILE_SIZE'] = $limit;
+
+            $form['sets']['uesm-attachments'] = [
+                'legend' => 'Attachments',
+                'fields' => [
+                    'attachments[]' => [
+                        'type'     => 'file',
+                        'help'     => ['%1$s (%2$s max size)', \strtr($this->user->g_up_ext, [',' => ', ']), size($limit)],
+                        'accept'   => '.' . \strtr($this->user->g_up_ext, [',' => ',.']),
+                        'multiple' => true,
+                    ]
+                ],
+            ];
+        }
 
         $autofocus = null;
         $fieldset  = [];

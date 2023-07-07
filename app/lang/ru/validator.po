@@ -203,3 +203,6 @@ msgstr "Поле :alias содержит ссылку."
 
 msgid "The :alias is not valid email"
 msgstr "Поле :alias содержит неверный электронный адрес."
+
+msgid "The %s extension is not allowed"
+msgstr "Расширение .%s запрещено."

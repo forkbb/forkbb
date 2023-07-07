@@ -203,3 +203,6 @@ msgstr "The :alias field contains a link."
 
 msgid "The :alias is not valid email"
 msgstr "The :alias field contains an invalid email address."
+
+msgid "The %s extension is not allowed"
+msgstr "The .%s extension is not allowed."

@@ -345,7 +345,7 @@ class Groups extends Admin
     }
 
     /**
-     * Наводит порядок в расширениях
+     * Ограничивает макс. размер файла на основе \Core\Files
      */
     public function vSizeCheck(Validator $v, int $size): int
     {

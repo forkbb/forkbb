@@ -619,12 +619,49 @@ class Update extends Admin
         $this->c->DB->addField('::groups', 'g_up_size_kb', 'INT(10) UNSIGNED', false, 0);
         $this->c->DB->addField('::groups', 'g_up_limit_mb', 'INT(10) UNSIGNED', false, 0);
 
+        //attachments
+        $schema = [
+            'FIELDS' => [
+                'id'          => ['SERIAL', false],
+                'uid'         => ['INT(10) UNSIGNED', false, 0],
+                'created'     => ['INT(10) UNSIGNED', false, 0],
+                'size_kb'     => ['INT(10) UNSIGNED', false, 0],
+                'path'        => ['VARCHAR(255)', false, ''],
+            ],
+            'PRIMARY KEY' => ['id'],
+            'INDEXES' => [
+                'uid_idx' => ['uid'],
+            ],
+        ];
+        $this->c->DB->createTable('::attachments', $schema);
+
+        //attachments_pos
+        $schema = [
+            'FIELDS' => [
+                'id'          => ['SERIAL', false],
+                'pid'         => ['INT(10) UNSIGNED', false, 0],
+            ],
+            'UNIQUE KEYS' => [
+                'id_pid_idx' => ['id', 'pid'],
+            ],
+            'INDEXES' => [
+                'pid_idx' => ['pid'],
+            ],
+        ];
+        $this->c->DB->createTable('::attachments_pos', $schema);
+
         $coreConfig = new CoreConfig($this->configFile);
 
         $coreConfig->add(
             'multiple=>AdminUploads',
             '\\ForkBB\\Models\\Pages\\Admin\\Uploads::class',
             'AdminLogs'
+        );
+
+        $coreConfig->add(
+            'shared=>attachments',
+            '\\ForkBB\\Models\\Attachment\\Attachments::class',
+            'providerUser'
         );
 
         $coreConfig->save();
