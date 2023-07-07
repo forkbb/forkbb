@@ -144,4 +144,16 @@ class Users extends Rules
     {
         return $this->user->isAdmin || 1 === $this->user->g_view_users;
     }
+
+    /**
+     * Статус возможности использования загрузки файлов
+     */
+    protected function getuseUpload(): bool
+    {
+        return 1 === $this->c->config->b_upload
+            && 1 === $this->user->g_post_links // ???? может быть локальные ссылки разрешить в постах?
+            && ! empty($this->user->g_up_ext)
+            && $this->user->g_up_size_kb > 0
+            && $this->user->g_up_limit_mb > 0;
+    }
 }
