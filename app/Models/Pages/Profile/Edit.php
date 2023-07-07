@@ -346,7 +346,7 @@ class Edit extends Profile
                     num($this->c->config->i_avatars_size),
                     size($this->c->config->i_avatars_size)
                 ],
-                'accept' => $this->accept,
+                'accept'  => $this->accept,
             ];
         }
         $form['sets']['header'] = [
