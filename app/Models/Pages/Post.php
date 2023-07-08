@@ -286,6 +286,11 @@ class Post extends Page
         $this->c->topics->update($topic->calcStat());
         $this->c->forums->update($forum->calcStat());
 
+        // синхронизация вложений
+        if ($this->userRules->useUpload) {
+            $this->c->attachments->syncWithPost($merge ? $lastPost : $post);
+        }
+
         // обновление данных текущего пользователя
         if (
             ! $merge

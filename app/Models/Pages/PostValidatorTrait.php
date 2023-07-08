@@ -310,6 +310,8 @@ trait PostValidatorTrait
             $this->fIswev = $v->getErrors();
 
             return null;
+        } elseif (! \is_array($v->attachments)) {
+            return null;
         }
 
         $result = "\n";
@@ -318,7 +320,13 @@ trait PostValidatorTrait
             $data = $this->c->attachments->addFile($file);
 
             if (\is_array($data)) {
-                $result .= ' ' . $data['path'];
+                $name = $file->name();
+
+                if ($data['image']) {
+                    $result .= "[img]{$data['url']}[/img]\n"; // ={$name}
+                } else {
+                    $result .= "[url={$data['url']}]{$name}[/url]\n";
+                }
             }
         }
 

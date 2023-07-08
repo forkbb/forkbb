@@ -650,6 +650,21 @@ class Update extends Admin
         ];
         $this->c->DB->createTable('::attachments_pos', $schema);
 
+        //attachments_pos_pm
+        $schema = [
+            'FIELDS' => [
+                'id'          => ['SERIAL', false],
+                'pid'         => ['INT(10) UNSIGNED', false, 0],
+            ],
+            'UNIQUE KEYS' => [
+                'id_pid_idx' => ['id', 'pid'],
+            ],
+            'INDEXES' => [
+                'pid_idx' => ['pid'],
+            ],
+        ];
+        $this->c->DB->createTable('::attachments_pos_pm', $schema);
+
         $coreConfig = new CoreConfig($this->configFile);
 
         $coreConfig->add(

@@ -221,6 +221,11 @@ class Edit extends Page
 
         $this->c->forums->update($topic->parent);
 
+        // синхронизация вложений
+        if ($this->userRules->useUpload) {
+            $this->c->attachments->syncWithPost($post, true);
+        }
+
         // антифлуд
         if (
             $calcPost
