@@ -75,25 +75,6 @@ class File
     }
 
     /**
-     * Фильрует и переводит в латиницу(?) имя файла
-     */
-    protected function filterName(string $name): string
-    {
-        $name = \transliterator_transliterate(
-            "Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; [:Punctuation:] Remove; Lower();",
-            $name
-        );
-
-        $name = \trim(\preg_replace('%[^\w.-]+%', '-', $name), '-');
-
-        if (! isset($name[0])) {
-            $name = (string) \time();
-        }
-
-        return $name;
-    }
-
-    /**
      * Возвращает информацию о пути к сохраняемому файлу с учетом подстановок
      */
     protected function pathinfo(string $path): ?array
@@ -105,7 +86,7 @@ class File
         }
 
         if ('*' === $matches[2]) {
-            $matches[2] = $this->filterName($this->name);
+            $matches[2] = $this->files->filterName($this->name);
         }
 
         if ('*' === $matches[3]) {
@@ -154,7 +135,7 @@ class File
     protected function dirProc(string $dirname): bool
     {
         if (! \is_dir($dirname)) {
-            if (! \mkdir($dirname, 0755)) {
+            if (! \mkdir($dirname, 0755, true)) {
                 $this->error = 'Can not create directory';
 
                 return false;

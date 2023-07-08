@@ -312,11 +312,14 @@ trait PostValidatorTrait
             return null;
         }
 
-        $attachments = $v->attachments;
-
         $result = "\n";
-        foreach ($attachments as $a) {
-            $result .= ' ' . $a->name() . '.' . $a->ext();
+
+        foreach ($v->attachments as $file) {
+            $data = $this->c->attachments->addFile($file);
+
+            if (\is_array($data)) {
+                $result .= ' ' . $data['path'];
+            }
         }
 
         return $result;

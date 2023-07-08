@@ -961,6 +961,25 @@ class Files
     }
 
     /**
+     * Фильрует и переводит в латиницу(?) имя файла
+     */
+    public function filterName(string $name): string
+    {
+        $name = \transliterator_transliterate(
+            "Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; Lower();",
+            $name
+        );
+
+        $name = \trim(\preg_replace(['%[^\w-]+%', '%_+%'], ['-', '_'], $name), '-_');
+
+        if (! isset($name[0])) {
+            $name = (string) \time();
+        }
+
+        return $name;
+    }
+
+    /**
      * Возвращает текст ошибки
      */
     public function error(): ?string

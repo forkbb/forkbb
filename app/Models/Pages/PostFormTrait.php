@@ -327,7 +327,7 @@ trait PostFormTrait
                     $cur['data'] = [
                         'SCEditorConfig' => $scConfig,
                         'smiliesEnabled' => $smiliesEnabled,
-                        'linkEnabled'    => $this->c->user->g_post_links,
+                        'linkEnabled'    => $this->user->g_post_links,
                     ];
 
                     $this->pageHeader('sceditor', 'script', 9600, [
@@ -354,7 +354,7 @@ trait PostFormTrait
                         'href' => $this->publicLink("/style/sc/themes/default.css"),
                     ]);
 
-                    if ($this->c->user->g_post_links) {
+                    if ($this->user->g_post_links) {
                         $this->pageHeader('imgbb', 'script', 0, [
                             'src' => $this->publicLink('/js/imgbb.js'),
                         ]);

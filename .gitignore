@@ -11,3 +11,5 @@
 /public/.htaccess
 /public/index.php
 !.gitkeep
+/public/upload/**/*
+!/public/upload/index.html
