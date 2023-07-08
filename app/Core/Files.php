@@ -36,6 +36,11 @@ class Files
     protected int $maxPixels;
 
     /**
+     * Максимальное число одновременно загружаемых файлов
+     */
+    protected int $maxMultiple = 10;
+
+    /**
      * Текст ошибки
      */
     protected ?string $error = null;
@@ -1037,6 +1042,12 @@ class Files
         }
 
         if (\is_array($file['tmp_name'])) {
+            if (\count($file['tmp_name']) > $this->maxMultiple) {
+                $this->error = 'Lots of files to upload';
+
+                return false;
+            }
+
             $result = [];
 
             foreach ($file['tmp_name'] as $key => $tmpName) {
