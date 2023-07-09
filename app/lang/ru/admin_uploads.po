@@ -26,3 +26,9 @@ msgstr "Качество"
 
 msgid "Upload quality help"
 msgstr "Качество изображений от 0 до 100."
+
+msgid "Upload axis limit label"
+msgstr "Ограничение по оси"
+
+msgid "Upload axis limit help"
+msgstr "К загруженному изображению будет применен ресайз, если его ширина/высота больше этого ограничения."

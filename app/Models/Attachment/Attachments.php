@@ -71,8 +71,8 @@ class Attachments extends Manager
         $file->rename(false)->rewrite(false);
 
         if ($file instanceof Image) {
-            $file->setQuality($this->c->config->i_upload_img_quality ?? 75);
-                //->resize($this->c->config->i_avatars_width, $this->c->config->i_avatars_height)
+            $file->setQuality($this->c->config->i_upload_img_quality ?? 75)
+                ->resize($this->c->config->i_upload_img_axis_limit, $this->c->config->i_upload_img_axis_limit);
         }
 
         $status = $file->toFile($location);
@@ -124,7 +124,7 @@ class Attachments extends Manager
             return;
         }
 
-        \preg_match_all('%' . self::FOLDER . '((\d{4})/(\d+)/[\w-]+?_(\d{3})\.[\w-]+)\b%', $post->message, $matches, \PREG_SET_ORDER);
+        \preg_match_all('%' . self::FOLDER . '((\d{4})/(\d+)/[\w-]+?_(\d{3})\.[\w-]+)\b%', $post->message, $matches, \PREG_SET_ORDER); // ???? проверять html?
 
         $attInPost = [];
 

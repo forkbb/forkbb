@@ -610,8 +610,9 @@ class Update extends Admin
     {
         $config = $this->c->config;
 
-        $config->b_upload             = 1;
-        $config->i_upload_img_quality = 75;
+        $config->b_upload                = 1;
+        $config->i_upload_img_quality    = 75;
+        $config->i_upload_img_axis_limit = 1920;
 
         $config->save();
 

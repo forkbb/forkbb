@@ -163,6 +163,11 @@ class PMEdit extends AbstractPM
 
         $this->pms->update(Cnst::PTOPIC, $topic);
 
+        // синхронизация вложений
+        if ($this->userRules->useUpload) {
+            $this->c->attachments->syncWithPost($post, true);
+        }
+
         // антифлуд
         if ($calcUser) {
             $this->user->u_pm_last_post = $now;

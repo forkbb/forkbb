@@ -227,6 +227,11 @@ class PMPost extends AbstractPM
 
         $this->pms->update(Cnst::PTOPIC, $topic->calcStat());
 
+        // синхронизация вложений
+        if ($this->userRules->useUpload) {
+            $this->c->attachments->syncWithPost($post);
+        }
+
         // новый диалог в архив
         if (
             $this->newTopic

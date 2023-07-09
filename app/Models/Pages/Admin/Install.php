@@ -1572,6 +1572,7 @@ class Install extends Admin
             's_РЕГИСТР'               => 'Ok',
             'b_upload'                => 1,
             'i_upload_img_quality'    => 75,
+            'i_upload_img_axis_limit' => 1920,
         ];
 
         foreach ($forkConfig as $name => $value) {

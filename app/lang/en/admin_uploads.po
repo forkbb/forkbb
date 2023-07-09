@@ -26,3 +26,9 @@ msgstr "Quality"
 
 msgid "Upload quality help"
 msgstr "Images quality between 0 and 100."
+
+msgid "Upload axis limit label"
+msgstr "Axis limit"
+
+msgid "Upload axis limit help"
+msgstr "The uploaded image will be resized if its width/height is greater than this limit."

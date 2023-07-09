@@ -33,17 +33,19 @@ class Uploads extends Admin
             $v = $this->c->Validator->reset()
                 ->addValidators([
                 ])->addRules([
-                    'token'                => 'token:AdminUploads',
-                    'b_upload'             => 'required|integer|in:0,1',
-                    'i_upload_img_quality' => 'required|integer|min:0|max:100',
+                    'token'                   => 'token:AdminUploads',
+                    'b_upload'                => 'required|integer|in:0,1',
+                    'i_upload_img_quality'    => 'required|integer|min:0|max:100',
+                    'i_upload_img_axis_limit' => 'required|integer|min:100|max:20000',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
                 ]);
 
             if ($v->validation($_POST)) {
-                $this->c->config->b_upload             = $v->b_upload;
-                $this->c->config->i_upload_img_quality = $v->i_upload_img_quality;
+                $this->c->config->b_upload                = $v->b_upload;
+                $this->c->config->i_upload_img_quality    = $v->i_upload_img_quality;
+                $this->c->config->i_upload_img_axis_limit = $v->i_upload_img_axis_limit;
                 $this->c->config->save();
 
                 return $this->c->Redirect->page('AdminUploads')->message('Data updated redirect', FORK_MESS_SUCC);
@@ -87,6 +89,14 @@ class Uploads extends Admin
                             'value'   => $config->i_upload_img_quality,
                             'caption' => 'Upload quality label',
                             'help'    => 'Upload quality help',
+                        ],
+                        'i_upload_img_axis_limit' => [
+                            'type'    => 'number',
+                            'min'     => '100',
+                            'max'     => '20000',
+                            'value'   => $config->i_upload_img_axis_limit,
+                            'caption' => 'Upload axis limit label',
+                            'help'    => 'Upload axis limit help',
                         ],
                     ],
                 ],
