@@ -21,7 +21,7 @@ use RuntimeException;
 class Attachments extends Manager
 {
     const HTML_CONT = '<!DOCTYPE html><html lang="en"><head><title>.</title></head><body>.</body></html>';
-    const BAD_EXTS  = '%^(?:php.*|phar|[ps]?html?|jsp?|htaccess|htpasswd|f?cgi|)$%i';
+    const BAD_EXTS  = '%^(?:php.*|phar|[ps]?html?|jsp?|htaccess|htpasswd|f?cgi|svg|)$%i';
     const FOLDER    = '/upload/';
 
     /**
