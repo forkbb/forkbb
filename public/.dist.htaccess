@@ -16,6 +16,7 @@ AddDefaultCharset UTF-8
   RewriteCond %{REQUEST_URI} !^/style/
   RewriteCond %{REQUEST_URI} !^/img/
   RewriteCond %{REQUEST_URI} !^/js/
+  RewriteCond %{REQUEST_URI} !^/upload/
   RewriteCond %{REQUEST_URI} !^/favicon\.ico$
   RewriteCond %{REQUEST_URI} !^/robots\.txt$
   RewriteRule . index.php [L]
@@ -36,7 +37,7 @@ AddDefaultCharset UTF-8
 
 # Set Cache-Control header for caching statics
 <ifModule mod_headers.c>
-  <FilesMatch "\.(css|js|gif|png|jpg|jpeg|webp|woff|woff2)$">
+  <FilesMatch "\.(css|js|gif|png|jpg|jpeg|webp|avif|woff|woff2)$">
     Header set Cache-Control "public,max-age=31536000,immutable"
     Header unset ETag
   </FilesMatch>
