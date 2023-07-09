@@ -136,7 +136,7 @@ class Attachments extends Manager
         $table = $post instanceof PPost ? '::attachments_pos_pm' : '::attachments_pos';
 
         if (empty($attInPost)) {
-            if (true === $ditPost) {
+            if (true === $editPost) {
                 $vars = [
                     ':pid' => $post->id
                 ];
