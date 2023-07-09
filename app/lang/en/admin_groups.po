@@ -303,7 +303,7 @@ msgstr "File uploads"
 msgid "Allowed file extensions label"
 msgstr "Allowed types"
 
-msgstr "Allowed file extensions help"
+msgid "Allowed file extensions help"
 msgstr "List of allowed file extensions for upload, separated by commas. An empty field disable file uploads for this group."
 
 msgid "Max file size label"
