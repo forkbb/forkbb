@@ -86,7 +86,7 @@ class GDDriver extends DefaultDriver
             case 'gif':
                 break;
             case 'png':
-                $args[] = (int) \floor((100 - $quality) / 11);
+                $args[] = 9; //(int) \floor((100 - $quality) / 11);
                 break;
             case 'jpg':
                 $type   = 'jpeg';
