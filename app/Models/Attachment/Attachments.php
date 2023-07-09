@@ -47,8 +47,9 @@ class Attachments extends Manager
         $vars = [
             'uid'     => $uid,
             'created' => $now,
+            'uip'     => $this->c->user->ip,
         ];
-        $query = 'INSERT INTO ::attachments (uid, created) VALUES (?i:uid, ?i:created)';
+        $query = 'INSERT INTO ::attachments (uid, created, uip) VALUES (?i:uid, ?i:created, ?s:uip)';
 
         $this->c->DB->exec($query, $vars);
 

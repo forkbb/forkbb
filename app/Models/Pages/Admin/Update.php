@@ -628,6 +628,7 @@ class Update extends Admin
                 'created'     => ['INT(10) UNSIGNED', false, 0],
                 'size_kb'     => ['INT(10) UNSIGNED', false, 0],
                 'path'        => ['VARCHAR(255)', false, ''],
+                'uip'         => ['VARCHAR(45)', false, ''],
             ],
             'PRIMARY KEY' => ['id'],
             'INDEXES' => [
