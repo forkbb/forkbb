@@ -72,6 +72,18 @@ class Search extends Model
      */
     public function cleanText(string $text, bool $indexing = false): string
     {
+        // хэштеги отдельно
+        $tags = [];
+        $text = \preg_replace_callback(
+            '%(?<=^|\s|\n|\r)#(?=[\p{L}\p{N}_]{3})[\p{L}\p{N}]+(?:_+[\p{L}\p{N}]+)*(?=$|\s|\n|\r|\.|,)%u',
+            function ($matches) use (&$tags)  {
+                $tags[] = $matches[0];
+
+                return ' ';
+            },
+            $text
+        );
+
         $text = \str_replace(['`', '’', 'ё'], ['\'', '\'', 'е'], $text);
         // четыре одинаковых буквы в одну
         $text = \preg_replace('%(\p{L})\1{3,}%u', '\1', $text);
@@ -90,7 +102,7 @@ class Search extends Model
         // сжатие пробелов
         $text = \preg_replace('% {2,}%', ' ', $text);
 
-        return \trim($text);
+        return \trim($text . ' '. \implode(' ', $tags));
     }
 
     /**

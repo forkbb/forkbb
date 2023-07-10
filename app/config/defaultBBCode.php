@@ -676,5 +676,26 @@ $body = __(['Post from topic %s', $parser->de($body)]);
 return "</p><p class=\"f-bb-from\">{$body}</p><p>";
 HANDLER,
     ],
+    [
+        'tag' => 'hashtag',
+        'auto' => false,
+        'text_only' => true,
+        'attrs' => [
+            'No_attr' => [
+                'body_format' => '%^#(?=.{3})[\p{L}\p{N}]+(?:_+[\p{L}\p{N}]+)*$%uD',
+                'text_only' => true,
+            ],
+        ],
+        'handler' => <<<'HANDLER'
+$link = $parser->attr('hashtagLink');
 
+if (\is_string($link)) {
+    $link = \str_replace('HASHTAG', \rawurlencode($body), $link);
+
+    return "<a class=\"f-bb-hashtag\" href=\"{$link}\" rel=\"ugc\">{$body}</a>";
+} else {
+    return "<span class=\"f-bb-hashtag\">{$body}</span>";
+}
+HANDLER,
+    ],
 ];

@@ -19,7 +19,18 @@ class Prepare extends Method
      */
     public function prepare(string $query): bool
     {
-        if (\substr_count($query, '"') % 2) {
+        // обработка хэштега (может быть только один!)
+        if (
+            \preg_match('%^#(?=.{3})[\p{L}\p{N}]+(?:_+[\p{L}\p{N}]+)*$%uD', $query)
+            && \is_string($tag = $this->model->word(\mb_strtolower($query, 'UTF-8')))
+        ) {
+            $this->model->queryError = null;
+            $this->model->queryWords = [$tag];
+            $this->model->queryText  = $tag;
+
+            return true;
+        // не парные кавычки
+        } elseif (\substr_count($query, '"') % 2) {
             $this->model->queryError = 'Odd number of quotes: \'%s\'';
             $this->model->queryWords = [];
             $this->model->queryText  = $query;

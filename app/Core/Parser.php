@@ -54,6 +54,10 @@ class Parser extends Parserus
         $this->setAttr('baseUrl', $this->c->BASE_URL);
         $this->setAttr('showImg', 1 === $this->c->user->show_img);
         $this->setAttr('showImgSign', 1 === $this->c->user->show_img_sig);
+        $this->setAttr(
+            'hashtagLink',
+            1 === $this->c->user->g_search ? $this->c->Router->link('Search', ['keywords' => 'HASHTAG']) : null
+        );
     }
 
     /**
@@ -92,6 +96,9 @@ class Parser extends Parserus
         if (1 === $this->c->config->b_make_links) {
             $this->detectUrls();
         }
+
+        // создание хэштегов
+        $this->detect('hashtag', '%(?<=^|\s|\n|\r)#(?=[\p{L}\p{N}_]{3})[\p{L}\p{N}]+(?:_+[\p{L}\p{N}]+)*(?=$|\s|\n|\r|\.|,)%u', true);
 
         return \preg_replace('%^(\x20*\n)+|(\n\x20*)+$%D', '', $this->getCode());
     }

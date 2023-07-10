@@ -1844,6 +1844,11 @@ body,
   font-size: xxx-large; /* https://caniuse.com/mdn-css_properties_font-size_xxx-large */
 }
 
+#fork .f-bb-hashtag {
+  border-bottom-style: dashed;
+  border-bottom-width: 0.0625rem;
+}
+
 /****************/
 /* Предпросмотр */
 /****************/
