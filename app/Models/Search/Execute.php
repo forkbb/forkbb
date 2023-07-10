@@ -20,6 +20,8 @@ use RuntimeException;
 
 class Execute extends Method
 {
+    const CACHE_TIMEOUT = 300;
+
     protected string $queryIdx;
     protected string $queryCJK;
     protected int $sortType;
@@ -41,6 +43,7 @@ class Execute extends Method
             throw new RuntimeException('No query data');
         }
 
+        $delimiter     = \time() - self::CACHE_TIMEOUT;
         $this->words   = [];
         $this->stmtIdx = null;
         $this->stmtCJK = null;
@@ -68,8 +71,8 @@ class Execute extends Method
 
         if (
             ! empty($row['search_time'])
-            && \time() - $row['search_time'] < 60 * 5
-        ) { //????
+            && $delimiter <= $row['search_time']
+        ) {
             $result                    = \explode("\n", $row['search_data']);
             $this->model->queryIds     = '' == $result[0] ? [] : \array_map('\\intval', \explode(',', $result[0]));
             $this->model->queryNoCache = false;
@@ -104,6 +107,13 @@ class Execute extends Method
 
         $this->model->queryIds     = $ids;
         $this->model->queryNoCache = true;
+
+        $vars = [
+            ':time' => $delimiter,
+        ];
+        $query = 'DELETE FROM ::search_cache WHERE search_time<?i:time';
+
+        $this->c->DB->exec($query, $vars);
 
         return true;
     }
