@@ -864,6 +864,21 @@
 		},
 		// END_COMMAND
 
+		// START_COMMAND: Hashtag
+		hashtag: {
+			tags: {
+				span: {
+					class: 'f-bb-hashtag'
+				}
+			},
+			isInline: true,
+			format: function (element, content) {
+				return '[hashtag]' + content.replace(/(^\s+|\s+$)/g, '') + '[/hashtag]';
+			},
+			html: '<span class="f-bb-hashtag">{0}</span>'
+		},
+		// END_COMMAND
+
 		// START_COMMAND: Spoiler
 		spoiler: {
 			tags: {

@@ -244,3 +244,9 @@ div.f-bb-s-body {
   padding: 0.625rem;
   border-inline-start: 0.1875rem solid #AA7939;
 }
+
+span.f-bb-hashtag {
+  color: #583200;
+  border-bottom-style: dashed;
+  border-bottom-width: 0.0625rem;
+}
