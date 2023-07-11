@@ -715,4 +715,14 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.60 to rev.61
+     */
+    protected function stageNumber60(array $args): ?int
+    {
+        $this->c->DB->addField('::users', 'u_up_size_mb', 'INT(10) UNSIGNED', false, 0);
+
+        return null;
+    }
 }

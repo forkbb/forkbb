@@ -315,12 +315,14 @@ trait PostValidatorTrait
         }
 
         $result = "\n";
+        $calc   = false;
 
         foreach ($v->attachments as $file) {
             $data = $this->c->attachments->addFile($file);
 
             if (\is_array($data)) {
                 $name = $file->name();
+                $calc = true;
 
                 if ($data['image']) {
                     $result .= "[img]{$data['url']}[/img]\n"; // ={$name}
@@ -328,6 +330,10 @@ trait PostValidatorTrait
                     $result .= "[url={$data['url']}]{$name}[/url]\n";
                 }
             }
+        }
+
+        if ($calc) {
+            $this->c->attachments->recalculate($this->user);
         }
 
         return $result;

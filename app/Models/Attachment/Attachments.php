@@ -15,6 +15,7 @@ use ForkBB\Core\Image;
 use ForkBB\Models\Manager;
 use ForkBB\Models\Post\Post;
 use ForkBB\Models\PM\PPost;
+use ForkBB\Models\User\User;
 use PDO;
 use RuntimeException;
 
@@ -221,5 +222,17 @@ class Attachments extends Manager
         }
 
         return;
+    }
+
+    public function recalculate(User $user)
+    {
+        $vars = [
+            ':uid' => $user->id,
+        ];
+        $query = 'SELECT SUM(size_kb) FROM ::attachments WHERE uid=?i:uid';
+
+        $user->u_up_size_mb = (int) round($this->c->DB->query($query, $vars)->fetchColumn() / 1024);
+
+        $this->c->users->update($user); //???? оптимизировать?
     }
 }

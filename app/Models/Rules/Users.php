@@ -154,6 +154,7 @@ class Users extends Rules
             && 1 === $this->user->g_post_links // ???? может быть локальные ссылки разрешить в постах?
             && ! empty($this->user->g_up_ext)
             && $this->user->g_up_size_kb > 0
-            && $this->user->g_up_limit_mb > 0;
+            && $this->user->g_up_limit_mb > 0
+            && $this->user->u_up_size_mb < $this->user->g_up_limit_mb;
     }
 }

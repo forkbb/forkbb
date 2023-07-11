@@ -1184,6 +1184,7 @@ class Install extends Admin
                 'last_report_id'   => ['INT(10) UNSIGNED', false, 0],
                 'ip_check_type'    => ['TINYINT UNSIGNED', false, 0],
                 'login_ip_cache'   => ['VARCHAR(255)', false, ''],
+                'u_up_size_mb'     => ['INT(10) UNSIGNED', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
             'UNIQUE KEYS' => [
