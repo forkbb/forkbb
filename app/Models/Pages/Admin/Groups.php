@@ -336,7 +336,10 @@ class Groups extends Admin
         foreach ($exts as $ext) {
             $ext = \trim($ext);
 
-            if (\preg_match('%^[a-z0-9]+(?:[_-]+[a-z0-9]+)*$%iD', $ext)) {
+            if (
+                \preg_match('%^[a-z0-9]+(?:[_-]+[a-z0-9]+)*$%iD', $ext)
+                && ! \preg_match($this->c->attachments::BAD_EXTS, $ext)
+            ) {
                 $result[] = $ext;
             }
         }
