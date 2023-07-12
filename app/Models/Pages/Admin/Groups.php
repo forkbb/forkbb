@@ -330,7 +330,7 @@ class Groups extends Admin
      */
     public function vExtsCheck(Validator $v, string $exts): string
     {
-        $exts   = \explode(',', $exts);
+        $exts   = \explode(',', \mb_strtolower($exts, 'UTF-8'));
         $result = [];
 
         foreach ($exts as $ext) {
@@ -340,7 +340,7 @@ class Groups extends Admin
                 \preg_match('%^[a-z0-9]+(?:[_-]+[a-z0-9]+)*$%iD', $ext)
                 && ! \preg_match($this->c->attachments::BAD_EXTS, $ext)
             ) {
-                $result[] = $ext;
+                $result[$ext] = $ext;
             }
         }
 

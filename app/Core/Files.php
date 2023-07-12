@@ -1144,7 +1144,7 @@ class Files
             $ext  = '';
         } else {
             $name = \substr($file['name'], 0, $pos);
-            $ext  = \substr($file['name'], $pos + 1);
+            $ext  = \mb_strtolower(\substr($file['name'], $pos + 1), 'UTF-8');
         }
 
         $imageExt = $this->imageExt($file['tmp_name']);
