@@ -1575,6 +1575,7 @@ class Install extends Admin
             'b_upload'                => 0,
             'i_upload_img_quality'    => 75,
             'i_upload_img_axis_limit' => 1920,
+            's_upload_img_outf'       => 'webp,jpg,png,gif',
         ];
 
         foreach ($forkConfig as $name => $value) {

@@ -32,9 +32,11 @@ class Uploads extends Admin
         if ('POST' === $method) {
             $v = $this->c->Validator->reset()
                 ->addValidators([
+                    'ext_check' => [$this, 'vExtsCheck'],
                 ])->addRules([
                     'token'                   => 'token:AdminUploads',
                     'b_upload'                => 'required|integer|in:0,1',
+                    's_upload_img_outf'       => 'required|string:trim|max:255|ext_check',
                     'i_upload_img_quality'    => 'required|integer|min:0|max:100',
                     'i_upload_img_axis_limit' => 'required|integer|min:100|max:20000',
                 ])->addAliases([
@@ -44,6 +46,7 @@ class Uploads extends Admin
 
             if ($v->validation($_POST)) {
                 $this->c->config->b_upload                = $v->b_upload;
+                $this->c->config->s_upload_img_outf       = $v->s_upload_img_outf;
                 $this->c->config->i_upload_img_quality    = $v->i_upload_img_quality;
                 $this->c->config->i_upload_img_axis_limit = $v->i_upload_img_axis_limit;
                 $this->c->config->save();
@@ -82,6 +85,14 @@ class Uploads extends Admin
                             'caption' => 'Uploads mode label',
                             'help'    => ['Uploads mode help', __('User groups'), $this->c->Router->link('AdminGroups')],
                         ],
+                        's_upload_img_outf' => [
+                            'required'  => true,
+                            'type'      => 'text',
+                            'maxlength' => '255',
+                            'value'     => $config->s_upload_img_outf,
+                            'caption'   => 'Output image types label',
+                            'help'      => 'Output image types help',
+                        ],
                         'i_upload_img_quality' => [
                             'type'    => 'number',
                             'min'     => '0',
@@ -108,5 +119,41 @@ class Uploads extends Admin
                 ],
             ],
         ];
+    }
+
+    /**
+     * Наводит порядок в расширениях
+     */
+    public function vExtsCheck(Validator $v, string $exts): string
+    {
+        $allowed = [
+            'webp' => true,
+            'jpg'  => true,
+            'jpeg' => 'jpg',
+            'png'  => true,
+            'gif'  => true,
+            'avif' => true,
+        ];
+
+        $exts   = \explode(',', \mb_strtolower($exts, 'UTF-8'));
+        $result = [];
+
+        foreach ($exts as $ext) {
+            $ext = \trim($ext);
+
+            if (isset($allowed[$ext])) {
+                if (\is_string($allowed[$ext])) {
+                    $ext = $allowed[$ext];
+                }
+
+                $result[$ext] = $ext;
+            }
+        }
+
+        if (empty($result)) {
+            return 'webp';
+        } else {
+            return \implode(',', $result);
+        }
     }
 }

@@ -60,11 +60,10 @@ class Attachments extends Manager
         $p2 = (int) ($id / 1000);
         $p3 = \substr($name, 0, 235 - \strlen($ext)) . '_' . \sprintf("%03d", $id - $p2);
 
-        $path     = "{$p1}/{$p2}/{$p3}.{$ext}";
-        $location = $this->c->DIR_PUBLIC . self::FOLDER . $path;
+        $dir = $this->c->DIR_PUBLIC . self::FOLDER . "{$p1}/{$p2}";
 
         if (
-            ! \is_dir($dir = \implode('/', \explode('/', $location, -1)))
+            ! \is_dir($dir)
             && \mkdir($dir, 0755, true)
         ) {
             \file_put_contents("{$dir}/index.html", self::HTML_CONT);
@@ -75,12 +74,16 @@ class Attachments extends Manager
         if ($file instanceof Image) {
             $file->setQuality($this->c->config->i_upload_img_quality ?? 75)
                 ->resize($this->c->config->i_upload_img_axis_limit, $this->c->config->i_upload_img_axis_limit);
+
+            if (! empty($this->c->config->s_upload_img_outf)) {
+                $ext = '(' . \strtr($this->c->config->s_upload_img_outf, [',' => '|']) . ')';
+            }
         }
 
-        $status = $file->toFile($location);
+        $status = $file->toFile("{$dir}/{$p3}.{$ext}");
 
         if (true !== $status) {
-            $this->c->Log->warning("Attachments Failed processing {$path}", [
+            $this->c->Log->warning("Attachments Failed processing {$p1}/{$p2}/{$p3}.{$ext}", [
                 'user'    => $this->user->fLog(),
                 'error'   => $file->error(),
             ]);
@@ -95,7 +98,10 @@ class Attachments extends Manager
             return null;
         }
 
-        $size = $this->c->Files->size(\filesize($location), 'K');
+        $location = $file->path();
+        $path     = "{$p1}/{$p2}/{$file->name()}.{$file->ext()}";
+        $size     = $this->c->Files->size(\filesize($location), 'K');
+
         $vars = [
             ':id'      => $id,
             ':path'    => $path,

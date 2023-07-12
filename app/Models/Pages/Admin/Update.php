@@ -721,6 +721,12 @@ class Update extends Admin
      */
     protected function stageNumber60(array $args): ?int
     {
+        $config = $this->c->config;
+
+        $config->s_upload_img_outf = 'webp,jpg,png,gif';
+
+        $config->save();
+
         $this->c->DB->addField('::users', 'u_up_size_mb', 'INT(10) UNSIGNED', false, 0);
 
         return null;

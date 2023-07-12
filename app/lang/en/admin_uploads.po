@@ -32,3 +32,9 @@ msgstr "Axis limit"
 
 msgid "Upload axis limit help"
 msgstr "The uploaded image will be resized if its width/height is greater than this limit."
+
+msgid "Output image types label"
+msgstr "Output image types"
+
+msgid "Output image types help"
+msgstr "Types of pictures to save to this site, separated by commas. If a picture of another type is loaded, it will be converted to the first type from this list."
