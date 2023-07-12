@@ -90,13 +90,16 @@ class GDDriver extends DefaultDriver
                 break;
             case 'jpg':
                 $type   = 'jpeg';
-//                $args[] = $quality;
-//                break;
+                $args[] = $quality;
+                break;
             case 'webp':
-//                if (defined('\\IMG_WEBP_LOSSLESS')) {
-//                    $quality = \IMG_WEBP_LOSSLESS; // кодирование без потери качества
-//                }
             case 'avif':
+                if (\imagecolorstotal($image) > 0) {
+                    \imagepalettetotruecolor($image);
+
+                    $args = [$this->tuning($image), $path];
+                }
+
                 $args[] = $quality;
                 break;
             default:
