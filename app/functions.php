@@ -151,7 +151,7 @@ function size(int $size): string
 {
     $units = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB'];
 
-    for ($i = 0; $size > 1024; ++$i) {
+    for ($i = 0; $size >= 1024; ++$i) {
         $size /= 1024;
     }
 
