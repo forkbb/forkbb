@@ -783,7 +783,7 @@ class Routing
             );
             $r->add(
                 $r::DUO,
-                '/admin/uploads',
+                '/admin/uploads[/{page|i:[1-9]\d*}]',
                 'AdminUploads:view',
                 'AdminUploads'
             );

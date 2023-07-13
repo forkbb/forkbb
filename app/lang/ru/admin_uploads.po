@@ -38,3 +38,21 @@ msgstr "Вых. типы картинок"
 
 msgid "Output image types help"
 msgstr "Типы картинок для сохранения на этот сайт, через запятую. Если загружена картинка другого типа, то она будет конвертирована в первый тип из этого списка."
+
+msgid "Page %s missing"
+msgstr "Страница %s отсутствует."
+
+msgid "File list head"
+msgstr "Список файлов"
+
+msgid "File head"
+msgstr "Файл"
+
+msgid "Size head"
+msgstr "Размер"
+
+msgid "Created head"
+msgstr "Создан"
+
+msgid "User head"
+msgstr "Автор"

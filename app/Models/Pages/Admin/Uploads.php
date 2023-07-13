@@ -12,9 +12,10 @@ namespace ForkBB\Models\Pages\Admin;
 
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
+use ForkBB\Models\Attachment\Attachments;
 use ForkBB\Models\Pages\Admin;
 use ForkBB\Models\Config\Config;
-use function \ForkBB\__;
+use function \ForkBB\{__, dt, size};
 use RuntimeException;
 
 class Uploads extends Admin
@@ -57,9 +58,19 @@ class Uploads extends Admin
             $this->fIswev = $v->getErrors();
         }
 
-        $this->nameTpl         = 'admin/uploads';
-        $this->aIndex          = 'uploads';
-        $this->formUploads     = $this->formUploads($config);
+        $this->nameTpl     = 'admin/uploads';
+        $this->aIndex      = 'uploads';
+        $this->formUploads = $this->formUploads($config);
+
+        $attachments       = $this->c->attachments;
+        $attachments->page = $args['page'] ?: 1;
+        $this->pagination  = $attachments->pagination;
+
+        if ($attachments->hasPage()) {
+            $this->formFileList = $this->formFileList($attachments, $args);
+        } else {
+            $this->badPage = $attachments->page;
+        }
 
         return $this;
     }
@@ -155,5 +166,107 @@ class Uploads extends Admin
         } else {
             return \implode(',', $result);
         }
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     */
+    protected function formFileList(Attachments $attachments, array $args): array
+    {
+        $data = $attachments->pageData();
+        $uIds = [];
+
+        foreach ($attachments->idsList as $id) {
+            if (isset($data[$id])) {
+                $uid        = $data[$id]['uid'];
+                $uIds[$uid] = $uid;
+            }
+        }
+
+        $users = $this->c->users->loadByIds($uIds);
+
+        $form = [/*
+            'action' => $this->c->Router->link('AdminUploads', $args),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('AdminUploads', $args),
+            ],*/
+            'sets'   => [],
+            /*'btns'   => [],*/
+        ];
+
+        $ids = $attachments->idsList;
+
+        \array_unshift($ids, 0);
+
+        foreach ($ids as $id) {
+            $att    = $data[$id] ?? null;
+            $user   = isset($att['uid'], $users[$att['uid']]) ? $users[$att['uid']] : null;
+            $fields = [];
+
+            $fields["f{$id}-wrap"] = [
+                'class' => ['main-wrap'],
+                'type'  => 'wrap',
+            ];
+            $y = isset($att['path']);
+            $fields["f{$id}-file"] = [
+                'class'   => ['filelist', 'file'],
+                'type'    => $y ? 'include' : 'str',
+                'caption' => 'File head',
+                'value'   => $y ? \basename($att['path']) : '',
+                'title'   => $y ? $att['path'] : '',
+                'href'    => $y ? $this->c->PUBLIC_URL . $attachments::FOLDER . $att['path'] : '',
+                'include' => 'admin/uploads_file',
+            ];
+            $fields["f{$id}-size"] = [
+                'class'   => ['filelist', 'size'],
+                'type'    => 'str',
+                'caption' => 'Size head',
+                'value'   => isset($att['size_kb']) ? size(1024 * ($att['size_kb'] ?: 1)) : '',
+            ];
+            $y = isset($att['created']);
+            $fields["f{$id}-created"] = [
+                'class'   => ['filelist', 'created'],
+                'type'    => $y ? 'link' : 'str',
+                'caption' => 'Created head',
+                'value'   => $y ? dt($att['created']) : '',
+                'title'   => $y ? $att['uip'] : '',
+                'href'    => $y ? $this->c->Router->link('AdminHost', ['ip' => $att['uip']]) : '',
+            ];
+
+            if ($user) {
+                $fields["f{$id}-user"] = [
+                    'class'   => ['filelist', 'user'],
+                    'type'    => 'link',
+                    'caption' => 'User head',
+                    'value'   => $user->username,
+                    'href'    => $this->c->Router->link('User', ['id' => $user->id, 'name' => $user->username]),
+                ];
+            } else {
+                $fields["f{$id}-user"] = [
+                    'class'   => ['filelist', 'user'],
+                    'type'    => 'str',
+                    'caption' => 'User head',
+                    'value'   => $id ? 'User #' . ($att['uid'] ?: '??') : '',
+                ];
+            }
+            $fields[] = [
+                'type' => 'endwrap',
+            ];
+            $fields["f{$id}-action"] = [
+                'class'   => ['action'],
+                'caption' => 'Action',
+                'type'    => 'str',
+                'value'   => $id ? 'X' : '',
+            ];
+
+
+            $form['sets']["f{$id}"] = [
+                'class'  => ['filelist'],
+                'legend' => (string) $id,
+                'fields' => $fields,
+            ];
+        }
+
+        return $form;
     }
 }

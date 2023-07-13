@@ -38,3 +38,21 @@ msgstr "Output image types"
 
 msgid "Output image types help"
 msgstr "Types of pictures to save to this site, separated by commas. If a picture of another type is loaded, it will be converted to the first type from this list."
+
+msgid "Page %s missing"
+msgstr "Page %s missing."
+
+msgid "File list head"
+msgstr "File list"
+
+msgid "File head"
+msgstr "File"
+
+msgid "Size head"
+msgstr "Size"
+
+msgid "Created head"
+msgstr "Created"
+
+msgid "User head"
+msgstr "Author"

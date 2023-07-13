@@ -12,18 +12,19 @@ namespace ForkBB\Models\Attachment;
 
 use ForkBB\Core\File;
 use ForkBB\Core\Image;
-use ForkBB\Models\Manager;
+use ForkBB\Models\Model;
 use ForkBB\Models\Post\Post;
 use ForkBB\Models\PM\PPost;
 use ForkBB\Models\User\User;
 use PDO;
 use RuntimeException;
 
-class Attachments extends Manager
+class Attachments extends Model
 {
     const HTML_CONT = '<!DOCTYPE html><html lang="en"><head><title>.</title></head><body>.</body></html>';
     const BAD_EXTS  = '%^(?:php.*|phar|[ps]?html?|jsp?|htaccess|htpasswd|f?cgi|svg|)$%i';
     const FOLDER    = '/upload/';
+    const PER_PAGE  = 20;
 
     /**
      * Ключ модели для контейнера
@@ -230,7 +231,10 @@ class Attachments extends Manager
         return;
     }
 
-    public function recalculate(User $user)
+    /**
+     * Пересчитывает объём файлов пользователя
+     */
+    public function recalculate(User $user): void
     {
         $vars = [
             ':uid' => $user->id,
@@ -240,5 +244,81 @@ class Attachments extends Manager
         $user->u_up_size_mb = (int) round($this->c->DB->query($query, $vars)->fetchColumn() / 1024);
 
         $this->c->users->update($user); //???? оптимизировать?
+    }
+
+    /**
+     * Количество страниц для просмотра файлов
+     */
+    protected function getnumPages(): int
+    {
+        $query = 'SELECT COUNT(id) FROM ::attachments';
+
+        $this->fileCount = (int) $this->c->DB->query($query)->fetchColumn();
+
+        return (int) \ceil(($this->fileCount ?: 1) / self::PER_PAGE);
+    }
+
+    /**
+     * Статус наличия установленной страницы
+     */
+    public function hasPage(): bool
+    {
+        return $this->page > 0 && $this->page <= $this->numPages;
+    }
+
+    /**
+     * Массив страниц
+     */
+    protected function getpagination(): array
+    {
+        return $this->c->Func->paginate(
+            $this->numPages,
+            $this->page,
+            'AdminUploads',
+            ['#' => 'filelist']
+        );
+    }
+
+    /**
+     * Возвращает массив данных с установленной страницы
+     */
+    public function pageData(): array
+    {
+        if (! $this->hasPage()) {
+            throw new InvalidArgumentException('Bad number of displayed page');
+        }
+
+        if (empty($this->fileCount)) {
+            return [];
+        }
+
+        $vars = [
+            ':offset' => ($this->page - 1) * self::PER_PAGE,
+            ':rows'   => self::PER_PAGE,
+        ];
+        $query = "SELECT id
+            FROM ::attachments
+            ORDER BY id DESC
+            LIMIT ?i:rows OFFSET ?i:offset";
+
+        $this->idsList = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
+
+        if (empty($this->idsList)) {
+            return [];
+        }
+
+        $vars = [
+            ':ids' => $this->idsList,
+        ];
+        $query = 'SELECT * FROM ::attachments WHERE id IN (?ai:ids)';
+
+        $stmt = $this->c->DB->query($query, $vars);
+        $data = [];
+
+        while ($row = $stmt->fetch()) {
+            $data[$row['id']] = $row;
+        }
+
+        return $data;
     }
 }

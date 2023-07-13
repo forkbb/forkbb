@@ -1068,3 +1068,156 @@
 #forka .f-field-provider.f-field-allow .f-flblch {
   height: 2rem;
 }
+
+/****************************************/
+/* Админка/Загрузки                     */
+/****************************************/
+#fork-uploads + #filelist {
+  margin-bottom: 1rem;
+}
+
+#fork-uploads-files .f-fleg {
+  display: none;
+}
+
+#fork-uploads-files .f-fs-filelist {
+  display: flex;
+}
+
+#fork-uploads-files .f-wrap-main-wrap {
+  width: calc(100% - 3rem);
+}
+
+#fork-uploads-files .f-field-action {
+  width: 3rem;
+}
+
+#fork-uploads-files .f-field-action > dd {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+#fork-uploads-files .f-filelist-image {
+  max-width: 10rem;
+  max-height: 10rem;
+  display: block;
+}
+
+#fork-uploads-files .f-field-action {
+  border-inline-start: 0.0625rem dotted #AA7939;
+}
+
+@media screen and (max-width: 85.9999rem) {
+  #fork-uploads-files .f-field-action > dt {
+    display: none;
+  }
+
+  #fork-uploads-files .f-field-file,
+  #fork-uploads-files .f-field-size,
+  #fork-uploads-files .f-field-created {
+    border-bottom: 0;
+  }
+
+  #fork-uploads-files .f-wrap-main-wrap .f-ycaption::after {
+    content: ": ";
+  }
+
+  #fork-uploads-files .f-fs-filelist:first-of-type {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 35.9999rem) {
+  #fork-uploads-files .f-field-filelist > dt,
+  #fork-uploads-files .f-field-filelist > dd,
+  #fork-uploads-files .f-wrap-main-wrap .f-ycaption,
+  #fork-uploads-files .f-wrap-main-wrap .f-str {
+    display: inline;
+  }
+}
+
+@media screen and (min-width: 36rem) and (max-width: 85.9999rem) {
+  #fork-uploads-files .f-field-filelist > dt {
+    width: 8rem;
+  }
+
+  #fork-uploads-files .f-field-filelist > dd {
+    width: calc(100% - 8rem);
+  }
+}
+
+@media screen and (min-width: 86rem)  {
+  #fork-uploads-files .f-wrap-main-wrap {
+    display: flex;
+  }
+
+  #fork-uploads-files .f-field-filelist {
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  #fork-uploads-files .f-field-filelist > dt{
+    width: 100%;
+    text-align: center;
+  }
+
+  #fork-uploads-files .f-field-filelist > dd {
+    display: flex;
+    gap: 0.3125rem;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  #fork-uploads-files .f-ycaption {
+    font-weight: bold;
+  }
+
+  #fork-uploads-files .f-field-file {
+    width: 45%;
+  }
+
+  #fork-uploads-files .f-field-file > dd {
+    justify-content: space-between;
+  }
+
+  #fork-uploads-files .f-field-size {
+    width: 10%;
+    border-inline-start: 0.0625rem dotted #AA7939;
+  }
+
+  #fork-uploads-files .f-field-size > dd {
+    justify-content: flex-end;
+  }
+
+  #fork-uploads-files .f-field-created {
+    width: 21%;
+    border-inline-start: 0.0625rem dotted #AA7939;
+  }
+
+  #fork-uploads-files .f-field-created > dd {
+    justify-content: center;
+  }
+
+  #fork-uploads-files .f-field-user {
+    width: 24%;
+    border-inline-start: 0.0625rem dotted #AA7939;
+  }
+
+  #fork-uploads-files .f-fs-filelist:not(:first-of-type) dt {
+    display: none;
+  }
+
+  #fork-uploads-files .f-fs-filelist:first-of-type {
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  #fork-uploads-files .f-fs-filelist:first-of-type dt {
+    display: block;
+    width: 100%;
+  }
+}
