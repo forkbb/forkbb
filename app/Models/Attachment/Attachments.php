@@ -289,6 +289,8 @@ class Attachments extends Model
         }
 
         if (empty($this->fileCount)) {
+            $this->idsList = [];
+
             return [];
         }
 
