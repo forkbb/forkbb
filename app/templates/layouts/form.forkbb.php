@@ -81,7 +81,10 @@
                 <p id="id-{{ $key }}" class="f-str"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
                             @break
                         @case ('yield')
-                {!! $this->block($cur['value']) !!}
+                @yield($cur['value'])
+                            @break
+                        @case ('include')
+                @include($cur['include'])
                             @break
                     @endswitch
                     @if ($cur['help'])
