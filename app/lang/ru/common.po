@@ -380,25 +380,25 @@ msgid "Maintenance mode enabled"
 msgstr "<a href=\"%s\">Включен режим обслуживания!</a>"
 
 msgid "%s B"
-msgstr "%s байт"
+msgstr "%sб"
 
 msgid "%s KiB"
-msgstr "%s КиБ"
+msgstr "%sК"
 
 msgid "%s MiB"
-msgstr "%s МиБ"
+msgstr "%sМ"
 
 msgid "%s GiB"
-msgstr "%s ГиБ"
+msgstr "%sГ"
 
 msgid "%s TiB"
-msgstr "%s ТиБ"
+msgstr "%sТ"
 
 msgid "%s PiB"
-msgstr "%s ПиБ"
+msgstr "%sП"
 
 msgid "%s EiB"
-msgstr "%s ЭиБ"
+msgstr "%sЭ"
 
 msgid "Latest active topics"
 msgstr "Последние активные темы"

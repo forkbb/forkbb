@@ -378,25 +378,25 @@ msgid "Maintenance mode enabled"
 msgstr "<a href=\"%s\">Maintenance mode is enabled!</a>"
 
 msgid "%s B"
-msgstr "%s B"
+msgstr "%sB"
 
 msgid "%s KiB"
-msgstr "%s KiB"
+msgstr "%sK"
 
 msgid "%s MiB"
-msgstr "%s MiB"
+msgstr "%sM"
 
 msgid "%s GiB"
-msgstr "%s GiB"
+msgstr "%sG"
 
 msgid "%s TiB"
-msgstr "%s TiB"
+msgstr "%sT"
 
 msgid "%s PiB"
-msgstr "%s PiB"
+msgstr "%sP"
 
 msgid "%s EiB"
-msgstr "%s EiB"
+msgstr "%sE"
 
 msgid "Latest active topics"
 msgstr "Latest active topics"
