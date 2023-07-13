@@ -59,7 +59,7 @@ class ActionP extends Method
             $list = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
         }
 
-        $this->model->numPages = (int) \ceil((\count($list) ?: 1) / $this->c->user->disp_posts);
+        $this->model->numPages = (int) \ceil(($this->model->count($list) ?: 1) / $this->c->user->disp_posts);
 
         // нет такой страницы в результате поиска
         if (! $this->model->hasPage()) {
@@ -69,7 +69,7 @@ class ActionP extends Method
             return [];
         }
 
-        $this->model->idsList = \array_slice(
+        $this->model->idsList = $this->model->slice(
             $list,
             ($this->model->page - 1) * $this->c->user->disp_posts,
             (int) $this->c->user->disp_posts

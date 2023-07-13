@@ -74,7 +74,7 @@ class Execute extends Method
             && $delimiter <= $row['search_time']
         ) {
             $result                    = \explode("\n", $row['search_data']);
-            $this->model->queryIds     = '' == $result[0] ? [] : \array_map('\\intval', \explode(',', $result[0]));
+            $this->model->queryIds     = $result[0];
             $this->model->queryNoCache = false;
 
             return true;

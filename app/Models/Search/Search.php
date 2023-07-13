@@ -141,4 +141,48 @@ class Search extends Model
     {
         return \preg_match('%' . self::CJK_REGEX . '%u', $word) ? true : false; //?????
     }
+
+    /**
+     * Выбирает срез из массива/строки номеров через запятую
+     */
+    public function slice(string|array $data, int $offset, int $length): array
+    {
+        if (\is_array($data)) {
+            return \array_slice($data, $offset, $length);
+        }
+
+        $p = 0;
+        $i = 0;
+
+        while ($i < $offset) {
+            if (false === ($p = \strpos($data, ',', $p))) {
+                return [];
+            }
+
+            ++$p;
+            ++$i;
+        }
+
+        $e       = $p;
+        $offset += $length;
+
+        while ($i < $offset) {
+            if (false === ($e = \strpos($data, ',', $e))) {
+                return \array_map('\\intval', \explode(',', \substr($data, $p)));
+            }
+
+            ++$e;
+            ++$i;
+        }
+
+        return \array_map('\\intval', \explode(',', \substr($data, $p, $e - $p - 1)));
+    }
+
+    /**
+     * Подсчитывает число элементов массива/строки номеров через запятую
+     */
+    public function count(string|array $data): int
+    {
+        return \is_array($data) ? \count($data) : \substr_count($data, ',') + 1;
+    }
 }
