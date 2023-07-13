@@ -14,8 +14,7 @@ use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin\Users;
 use ForkBB\Models\User\User;
-use function \ForkBB\__;
-use function \ForkBB\num;
+use function \ForkBB\{__, num};
 
 class Result extends Users
 {
