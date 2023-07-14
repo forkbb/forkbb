@@ -41,7 +41,7 @@ class Execute extends Method
             throw new RuntimeException('No query data');
         }
 
-        $delimiter     = \time() - $this->c->i_search_ttl;
+        $delimiter     = \time() - $this->c->config->i_search_ttl;
         $this->words   = [];
         $this->stmtIdx = null;
         $this->stmtCJK = null;
