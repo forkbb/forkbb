@@ -46,10 +46,12 @@ class Uploads extends Admin
                 ]);
 
             if ($v->validation($_POST)) {
-                $this->c->config->b_upload                = $v->b_upload;
-                $this->c->config->s_upload_img_outf       = $v->s_upload_img_outf;
-                $this->c->config->i_upload_img_quality    = $v->i_upload_img_quality;
-                $this->c->config->i_upload_img_axis_limit = $v->i_upload_img_axis_limit;
+                $data = $v->getData(false, ['token']);
+
+                foreach ($data as $attr => $value) {
+                    $this->c->config->$attr = $value;
+                }
+
                 $this->c->config->save();
 
                 return $this->c->Redirect->page('AdminUploads')->message('Data updated redirect', FORK_MESS_SUCC);
