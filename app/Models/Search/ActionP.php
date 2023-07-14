@@ -42,7 +42,7 @@ class ActionP extends Method
                 $query = 'SELECT p.id
                     FROM ::posts AS p
                     INNER JOIN ::topics AS t ON t.id=p.topic_id
-                    WHERE t.forum_id IN (?ai:forums) AND t.moved_to=0 AND p.poster_id=?i:uid
+                    WHERE p.poster_id=?i:uid AND t.forum_id IN (?ai:forums)
                     ORDER BY p.posted DESC';
 
                 break;
