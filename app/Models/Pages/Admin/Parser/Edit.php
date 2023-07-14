@@ -41,9 +41,7 @@ class Edit extends Parser
                 ]);
 
             $valid = $v->validation($_POST);
-            $data  = $v->getData();
-
-            unset($data['token']);
+            $data  = $v->getData(false, ['token']);
 
             foreach ($data as $attr => $value) {
                 $config->$attr = $value;
@@ -55,7 +53,7 @@ class Edit extends Parser
                 return $this->c->Redirect->page('AdminParser')->message('Parser settings updated redirect', FORK_MESS_SUCC);
             }
 
-            $this->fIswev  = $v->getErrors();
+            $this->fIswev = $v->getErrors();
         }
 
         $this->nameTpl   = 'admin/form';

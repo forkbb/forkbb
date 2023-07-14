@@ -93,7 +93,7 @@ class Container
             throw new InvalidArgumentException("Wrong property name: {$key}");
         }
 
-        $args  = [];
+        $args = [];
 
         if (\is_array($config)) {
             // N.B. "class" is just the first element, regardless of its key

@@ -104,8 +104,7 @@ class Config extends Profile
             }
 
             if ($v->validation($_POST)) {
-                $data  = $v->getData();
-                unset($data['token']);
+                $data = $v->getData(false, ['token']);
 
                 $this->curUser->replAttrs($data, true);
 

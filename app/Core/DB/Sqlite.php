@@ -406,7 +406,7 @@ class Sqlite
 
             return false;
         } else {
-            $vars  = [
+            $vars = [
                 ':tname'  => $table,
                 ':iname'  => $table . '_' . $index,
                 ':itype'  => 'index',

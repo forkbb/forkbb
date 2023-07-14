@@ -37,8 +37,8 @@ class Csrf
      */
     public function create(string $marker, array $args = [], int|string $time = null): string
     {
-        $marker      = $this->argsToStr($marker, $args);
-        $time        = $time ?: \time();
+        $marker = $this->argsToStr($marker, $args);
+        $time   = $time ?: \time();
 
         return $this->secury->hmac($marker, $time . $this->key) . 's' . $time;
     }
@@ -48,8 +48,8 @@ class Csrf
      */
     public function createHash(string $marker, array $args = [], int|string $time = null): string
     {
-        $marker      = $this->argsToStr($marker, $args, ['hash']);
-        $time        = $time ?: \time() + $this->hashExpiration;
+        $marker = $this->argsToStr($marker, $args, ['hash']);
+        $time   = $time ?: \time() + $this->hashExpiration;
 
         return $this->secury->hash($marker . $time) . 'e' . $time;
     }

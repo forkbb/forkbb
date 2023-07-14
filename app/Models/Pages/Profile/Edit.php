@@ -117,8 +117,7 @@ class Edit extends Profile
                 ]);
 
             $valid = $v->validation($_FILES + $_POST);
-            $data  = $v->getData();
-            unset($data['token'], $data['upload_avatar'], $data['delete_avatar']);
+            $data  = $v->getData(false, ['token', 'upload_avatar', 'delete_avatar']);
 
             if ($valid) {
                 if (

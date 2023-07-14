@@ -70,9 +70,9 @@ class Router
 
     public function __construct(protected string $baseUrl, protected Csrf $csrf)
     {
-        $this->host    = \parse_url($baseUrl, \PHP_URL_HOST);
-        $this->prefix  = \parse_url($baseUrl, \PHP_URL_PATH) ?? '';
-        $this->length  = \strlen($this->prefix);
+        $this->host   = \parse_url($baseUrl, \PHP_URL_HOST);
+        $this->prefix = \parse_url($baseUrl, \PHP_URL_PATH) ?? '';
+        $this->length = \strlen($this->prefix);
     }
 
     /**

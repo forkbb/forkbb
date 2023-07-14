@@ -58,8 +58,8 @@ class File
             throw new FileException('File can not be read');
         }
 
-        $this->data  = null;
-        $this->size  = \is_string($this->data) ? \strlen($this->data) : \filesize($path);
+        $this->data = null;
+        $this->size = \is_string($this->data) ? \strlen($this->data) : \filesize($path);
 
         if (! $this->size) {
             throw new FileException('File size is undefined');

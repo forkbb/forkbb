@@ -456,9 +456,7 @@ class BBCode extends Parser
             return $txt;
         }
 
-        $data = $v->getData();
-
-        unset($data['token'], $data['save']);
+        $data = $v->getData(false, ['token', 'save']);
 
         foreach ($data as $key => $value) {
             if ('type_new' === $key) {
