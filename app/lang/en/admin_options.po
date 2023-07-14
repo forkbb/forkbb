@@ -440,3 +440,9 @@ msgstr "Allow users to login/register on this bulletin board using accounts on t
 
 msgid "Configure providers"
 msgstr "Configure providers"
+
+msgid "Search cache lifetime label"
+msgstr "Search cache lifetime"
+
+msgid "Search cache lifetime help"
+msgstr "Search query caching time in seconds."

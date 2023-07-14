@@ -20,8 +20,6 @@ use RuntimeException;
 
 class Execute extends Method
 {
-    const CACHE_TIMEOUT = 300;
-
     protected string $queryIdx;
     protected string $queryCJK;
     protected int $sortType;
@@ -43,7 +41,7 @@ class Execute extends Method
             throw new RuntimeException('No query data');
         }
 
-        $delimiter     = \time() - self::CACHE_TIMEOUT;
+        $delimiter     = \time() - $this->c->i_search_ttl;
         $this->words   = [];
         $this->stmtIdx = null;
         $this->stmtCJK = null;

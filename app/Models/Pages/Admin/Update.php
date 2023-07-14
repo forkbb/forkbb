@@ -724,6 +724,7 @@ class Update extends Admin
         $config = $this->c->config;
 
         $config->s_upload_img_outf = 'webp,jpg,png,gif';
+        $config->i_search_ttl      = 900;
 
         $config->save();
 

@@ -61,6 +61,7 @@ class Options extends Admin
                     'i_timeout_visit'         => 'required|integer|min:0|max:99999',
                     'i_timeout_online'        => 'required|integer|min:0|max:99999|check_timeout',
                     'i_redirect_delay'        => 'required|integer|min:0|max:99999',
+                    'i_search_ttl'            => 'required|integer|min:300|max:99999',
                     'b_show_user_info'        => 'required|integer|in:0,1',
                     'b_show_post_count'       => 'required|integer|in:0,1',
                     'i_topic_review'          => 'required|integer|min:0|max:50',
@@ -285,6 +286,14 @@ class Options extends Admin
                     'value'   => $config->i_redirect_delay,
                     'caption' => 'Redirect time label',
                     'help'    => 'Redirect time help',
+                ],
+                'i_search_ttl' => [
+                    'type'    => 'number',
+                    'min'     => '300',
+                    'max'     => '99999',
+                    'value'   => $config->i_search_ttl,
+                    'caption' => 'Search cache lifetime label',
+                    'help'    => 'Search cache lifetime help',
                 ],
             ],
         ];
