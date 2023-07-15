@@ -931,7 +931,7 @@ class Install extends Admin
             'PRIMARY KEY' => ['id'],
             'INDEXES' => [
                 'topic_id_idx' => ['topic_id'],
-                'multi_idx'    => ['poster_id', 'topic_id'],
+                'multi_idx'    => ['poster_id', 'topic_id', 'posted'],
             ],
             'ENGINE' => $this->DBEngine,
         ];

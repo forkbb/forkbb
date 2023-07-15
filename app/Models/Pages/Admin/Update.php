@@ -732,4 +732,15 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.61 to rev.62
+     */
+    protected function stageNumber61(array $args): ?int
+    {
+        $this->c->DB->dropIndex('::posts', 'multi_idx');
+        $this->c->DB->addIndex('::posts', 'multi_idx', ['poster_id', 'topic_id', 'posted']);
+
+        return null;
+    }
 }
