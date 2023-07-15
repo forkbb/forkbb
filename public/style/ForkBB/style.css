@@ -1454,13 +1454,15 @@ body,
   display: none;
 }
 
-#fork-topic .f-post-posted {
-  margin-inline-end: 0.625rem;
+#fork .f-post-edited > span {
+  display: none;
 }
 
-#fork-topic .f-post-edited {
-  font-style: italic;
-  /*opacity: 0.5;*/
+#fork .f-post-edited::before {
+  padding: 0 0.625rem;
+  font-family: "fa";
+  font-weight: 400;
+  content: "\f044";
 }
 
 #fork .f-post-number {
