@@ -50,26 +50,46 @@ class View extends Action
             return $result;
         }
 
+        $uid = $this->c->user->id;
+
         if ('topics_with_your_posts' === $arg->currentAction) {
             $dots = $arg->idsList;
         } else {
-            $vars = [
-                ':uid' => $this->c->user->id,
-                ':ids' => $arg->idsList,
-            ];
-            $query = 'SELECT p.topic_id
-                FROM ::posts AS p
-                WHERE p.poster_id=?i:uid AND p.topic_id IN (?ai:ids)
-                GROUP BY p.topic_id';
+            $ids = [];
 
-            $dots = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
+            foreach ($arg->idsList as $id) {
+                if (! $result[$id] instanceof Topic) {
+                    continue;
+                }
+
+                if (
+                    $uid === $result[$id]->poster_id
+                    || $uid === $result[$id]->last_poster_id
+                ) {
+                    $result[$id]->__dot = true;
+                } else {
+                    $ids[] = $id;
+                }
+            }
+
+            if ($ids) {
+                $vars = [
+                    ':uid' => $uid,
+                    ':ids' => $ids,
+                ];
+                $query = 'SELECT p.topic_id
+                    FROM ::posts AS p
+                    WHERE p.poster_id=?i:uid AND p.topic_id IN (?ai:ids)
+                    GROUP BY p.topic_id';
+
+                $dots = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
+            } else {
+                $dots = [];
+            }
         }
 
         foreach ($dots as $id) {
-            if (
-                isset($result[$id])
-                && $result[$id] instanceof Topic
-            ) {
+            if ($result[$id] instanceof Topic) {
                 $result[$id]->__dot = true;
             }
         }
