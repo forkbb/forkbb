@@ -44,9 +44,15 @@ class View extends Action
         $result = $this->c->topics->loadByIds($arg->idsList, $full);
 
         if (
-            ! $this->c->user->isGuest
-            && 1 === $this->c->config->b_show_dot
+            $this->c->user->isGuest
+            || 1 !== $this->c->config->b_show_dot
         ) {
+            return $result;
+        }
+
+        if ('topics_with_your_posts' === $arg->currentAction) {
+            $dots = $arg->idsList;
+        } else {
             $vars = [
                 ':uid' => $this->c->user->id,
                 ':ids' => $arg->idsList,
@@ -57,14 +63,14 @@ class View extends Action
                 GROUP BY p.topic_id';
 
             $dots = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
+        }
 
-            foreach ($dots as $id) {
-                if (
-                    isset($result[$id])
-                    && $result[$id] instanceof Topic
-                ) {
-                    $result[$id]->__dot = true;
-                }
+        foreach ($dots as $id) {
+            if (
+                isset($result[$id])
+                && $result[$id] instanceof Topic
+            ) {
+                $result[$id]->__dot = true;
             }
         }
 

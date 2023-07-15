@@ -422,7 +422,7 @@ class Search extends Page
 
         $model        = $this->c->search;
         $model->page  = $args['page'] ?? 1;
-        $action       = $args['action'];
+        $action       = $model->currentAction = $args['action'];
         $asTopicsList = true;
         $list         = false;
         $uid          = $args['uid'] ?? null;
