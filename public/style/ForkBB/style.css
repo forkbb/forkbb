@@ -837,6 +837,30 @@ body,
   max-height: 10rem;
 }
 
+#fork .f-pass-prnt {
+  position: relative;
+}
+
+#fork .f-pass-prnt .f-ctrl {
+  padding-inline-end: 2rem;
+}
+
+#fork .f-pass-ctrl::before {
+  position: absolute;
+  display: block;
+  font-family: "fa";
+  font-weight: 900;
+  content: "\f06e";
+  padding: 0.5rem;
+  top: 0;
+  inset-inline-end: 0;
+  cursor: pointer;
+}
+
+#fork .f-pass-dspl::before {
+  content: "\f070";
+}
+
 /**************/
 /* Объявление */
 /**************/
@@ -1141,12 +1165,17 @@ body,
   position: relative;
 }
 
-#fork #id-dl-passinlogin .f-yhint {
+#id-dl-passinlogin .f-yhint {
   position: absolute;
   top: 0.5rem;
   inset-inline-end: 0.3125rem;
   width: auto;
   margin: 0;
+}
+
+#id-dl-passinlogin .f-pass-prnt .f-yhint { /* для просмотра пароля */
+  top: -1.3125rem;
+  inset-inline-end: 0;
 }
 
 /***************************************/

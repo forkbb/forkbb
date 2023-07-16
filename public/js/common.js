@@ -1,3 +1,10 @@
+/**
+ * This file is part of the ForkBB <https://github.com/forkbb>.
+ *
+ * @copyright (c) Visman <mio.visman@yandex.ru, https://github.com/MioVisman>
+ * @license   The MIT License (MIT)
+ */
+
 if (typeof ForkBB === "undefined" || !ForkBB) {
     var ForkBB = {};
 }
@@ -36,10 +43,39 @@ ForkBB.common = (function (doc, win) {
         }
     }
 
+    function initShowPAss()
+    {
+        var inps = doc.querySelectorAll("input[type='password']");
+
+        for (var i = 0; i < inps.length; i++) {
+            var span = doc.createElement("span");
+            span.classList.add('f-pass-ctrl');
+
+            span.addEventListener('click', (function(i, s){
+                return function () {
+                    if (i.getAttribute('type') == 'password') {
+                        i.setAttribute('type', 'text');
+                        s.classList.add('f-pass-dspl');
+                    } else {
+                        i.setAttribute('type', 'password');
+                        s.classList.remove('f-pass-dspl');
+                    }
+
+                    i.focus();
+                }
+            })(inps[i], span));
+
+            var parent = inps[i].parentNode;
+            parent.appendChild(span);
+            parent.classList.add('f-pass-prnt');
+        }
+    }
+
     return {
         init : function () {
             initGoBack();
             initAnchorHL();
+            initShowPAss();
         },
     };
 }(document, window));
