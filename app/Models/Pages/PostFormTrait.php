@@ -51,10 +51,10 @@ trait PostFormTrait
             $fieldset['username'] = [
                 'class'     => ['w1'],
                 'type'      => 'text',
-                'maxlength' => '25',
+                'maxlength' => $this->c->USERNAME['max'],
                 'caption'   => 'Username',
                 'required'  => true,
-                'pattern'   => '^.{2,25}$',
+                'pattern'   => $this->c->USERNAME['jsPattern'],
                 'value'     => $vars['username'] ?? null,
                 'autofocus' => $autofocus,
             ];

@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.0.0';
     const REV_MIN_FOR_UPDATE         = 53;
-    const LATEST_REV_WITH_DB_CHANGES = 59;
+    const LATEST_REV_WITH_DB_CHANGES = 62;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const CONFIG_FILE                = 'main.php';
@@ -743,6 +743,22 @@ class Update extends Admin
 
         $this->c->DB->dropIndex('::search_matches', 'word_id_idx');
         $this->c->DB->addIndex('::search_matches', 'multi_idx', ['word_id', 'post_id']);
+
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'USERNAME',
+            [
+                'phpPattern' => '\'%^\\p{L}[\\p{L}\\p{N}\\x20\\._-]+$%uD\'',
+                'jsPattern'  => '\'^.{2,}$\'',
+                'min'        => '2',
+                'max'        => '25',
+            ],
+            'FLOOD_INTERVAL'
+        );
+        $coreConfig->delete('USERNAME_PATTERN');
+
+        $coreConfig->save();
 
         return null;
     }

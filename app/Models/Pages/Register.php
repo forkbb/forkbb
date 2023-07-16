@@ -187,12 +187,12 @@ class Register extends Page
         $fields['username'] = [
             'class'     => ['hint'],
             'type'      => 'text',
-            'maxlength' => '25',
+            'maxlength' => $this->c->USERNAME['max'],
             'value'     => $v->username ?? ($this->useOAuth ? $this->nameGenerator($this->provider) : ''),
             'caption'   => 'Username',
             'help'      => 'Login format',
             'required'  => true,
-            'pattern'   => '^.{2,25}$',
+            'pattern'   => $this->c->USERNAME['jsPattern'],
         ];
 
         if (! $this->useOAuth) {

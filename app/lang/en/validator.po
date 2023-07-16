@@ -206,3 +206,9 @@ msgstr "The :alias field contains an invalid email address."
 
 msgid "The %s extension is not allowed"
 msgstr "The .%s extension is not allowed."
+
+msgid "Short username"
+msgstr "The username is too short."
+
+msgid "Long username"
+msgstr "The username is too long."

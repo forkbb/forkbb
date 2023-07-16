@@ -47,7 +47,12 @@ return [
     'MAX_FILE_SIZE'    => '2M',
     'MAX_EMAIL_LENGTH' => 80,
     'FLOOD_INTERVAL'   => 3600,
-    'USERNAME_PATTERN' => '%^(?=.{2,25}$)\p{L}[\p{L}\p{N}\x20\._-]+$%uD',
+    'USERNAME'         => [
+        'phpPattern' => '%^\p{L}[\p{L}\p{N}\x20\._-]+$%uD',
+        'jsPattern'  => '^.{2,}$',
+        'min'        => 2,
+        'max'        => 25,
+    ],
     'HTTP_HEADERS'     => [
         'common' => [
             'X-Content-Type-Options'  => 'nosniff',

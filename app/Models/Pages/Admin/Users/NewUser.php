@@ -96,12 +96,12 @@ class NewUser extends Users
                         'username' => [
                             'autofocus' => true,
                             'type'      => 'text',
-                            'maxlength' => '25',
+                            'maxlength' => $this->c->USERNAME['max'],
                             'value'     => $data['username'] ?? null,
                             'caption'   => 'Username',
                             'help'      => 'Login format',
                             'required'  => true,
-                            'pattern'   => '^.{2,25}$',
+                            'pattern'   => $this->c->USERNAME['jsPattern'],
                         ],
                         'email' => [
                             'type'           => 'text',

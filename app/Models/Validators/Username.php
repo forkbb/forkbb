@@ -32,8 +32,16 @@ class Username extends RulesValidator
         if ($old !== $username) {
 
             $user = $this->c->users->create(['id' => $id, 'username' => $username]);
+            $len  = \mb_strlen($username, 'UTF-8');
 
-            if (! \preg_match($this->c->USERNAME_PATTERN, $username)) {
+            // короткое
+            if ($len < $this->c->USERNAME['min']) {
+                $v->addError('Short username');
+            // длинное
+            } elseif ($len > $this->c->USERNAME['max']) {
+                $v->addError('Long username');
+            // паттерн не совпал
+            } elseif (! \preg_match($this->c->USERNAME['phpPattern'], $username)) {
                 $v->addError('Login format');
             // идущие подряд пробелы
             } elseif (\preg_match('%\s{2,}%u', $username)) {

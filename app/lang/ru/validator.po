@@ -206,3 +206,9 @@ msgstr "Поле :alias содержит неверный электронный
 
 msgid "The %s extension is not allowed"
 msgstr "Расширение .%s запрещено."
+
+msgid "Short username"
+msgstr "Слишком короткое имя пользователя."
+
+msgid "Long username"
+msgstr "Слишком длинное имя пользователя."
