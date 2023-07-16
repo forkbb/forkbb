@@ -96,7 +96,7 @@ class NewUser extends Users
                         'username' => [
                             'autofocus' => true,
                             'type'      => 'text',
-                            'maxlength' => $this->c->USERNAME['max'],
+                            'maxlength' => $this->user->isAdmin ? '190' : $this->c->USERNAME['max'],
                             'value'     => $data['username'] ?? null,
                             'caption'   => 'Username',
                             'help'      => 'Login format',
