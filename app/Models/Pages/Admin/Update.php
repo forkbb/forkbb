@@ -741,6 +741,9 @@ class Update extends Admin
         $this->c->DB->dropIndex('::posts', 'multi_idx');
         $this->c->DB->addIndex('::posts', 'multi_idx', ['poster_id', 'topic_id', 'posted']);
 
+        $this->c->DB->dropIndex('::search_matches', 'word_id_idx');
+        $this->c->DB->addIndex('::search_matches', 'multi_idx', ['word_id', 'post_id']);
+
         return null;
     }
 }

@@ -981,7 +981,7 @@ class Install extends Admin
                 'subject_match' => ['TINYINT(1)', false, 0],
             ],
             'INDEXES' => [
-                'word_id_idx' => ['word_id'],
+                'multi_idx' => ['word_id', 'post_id'],
                 'post_id_idx' => ['post_id'],
             ],
             'ENGINE' => $this->DBEngine,
