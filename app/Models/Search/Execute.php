@@ -281,8 +281,8 @@ class Execute extends Method
 
         if (1 === $this->model->showAs) {
             $usePIdx                 = true;
-            $selectFIdx              = 'p.topic_id';
-            $selectFCJK              = 't.id';
+            $selectFIdx              = 'DISTINCT p.topic_id';
+            $selectFCJK              = 'DISTINCT t.id';
             $useTCJK                 = true;
         } else {
             $selectFIdx              = 'sm.post_id';
