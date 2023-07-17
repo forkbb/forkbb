@@ -96,6 +96,7 @@ class NewUser extends Users
                         'username' => [
                             'autofocus' => true,
                             'type'      => 'text',
+                            'minlength' => $this->c->USERNAME['min'],
                             'maxlength' => $this->user->isAdmin ? '190' : $this->c->USERNAME['max'],
                             'value'     => $data['username'] ?? null,
                             'caption'   => 'Username',
@@ -110,7 +111,7 @@ class NewUser extends Users
                             'caption'        => 'Email',
                             'help'           => 'Email help',
                             'required'       => true,
-                            'pattern'        => '.+@.+',
+                            'pattern'        => '^.*[^@]@[^@].*$',
                             'autocapitalize' => 'off',
                         ],
                         'password' => [
@@ -118,7 +119,8 @@ class NewUser extends Users
                             'caption'   => 'Passphrase',
                             'help'      => 'Passphrase help',
                             'required'  => true,
-                            'pattern'   => '^.{16,}$',
+                            'minlength' => '16',
+                            'pattern'   => '^.*[^ ] [^ ].*$',
                         ],
                     ],
                 ],

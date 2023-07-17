@@ -242,6 +242,7 @@ class Edit extends Profile
         if ($this->rules->rename) {
             $fields['username'] = [
                 'type'      => 'text',
+                'minlength' => $this->c->USERNAME['min'],
                 'maxlength' => $this->user->isAdmin ? '190' : $this->c->USERNAME['max'],
                 'caption'   => 'Username',
                 'required'  => true,

@@ -179,7 +179,7 @@ class Register extends Page
                 'caption'        => 'Email',
                 'help'           => 1 === $this->c->config->b_regs_verify ? 'Email help2' : 'Email help',
                 'required'       => true,
-                'pattern'        => '.+@.+',
+                'pattern'        => '^.*[^@]@[^@].*$',
                 'autocapitalize' => 'off',
             ];
         }
@@ -187,6 +187,7 @@ class Register extends Page
         $fields['username'] = [
             'class'     => ['hint'],
             'type'      => 'text',
+            'minlength' => $this->c->USERNAME['min'],
             'maxlength' => $this->c->USERNAME['max'],
             'value'     => $v->username ?? ($this->useOAuth ? $this->nameGenerator($this->provider) : ''),
             'caption'   => 'Username',
@@ -202,7 +203,8 @@ class Register extends Page
                 'caption'   => 'Passphrase',
                 'help'      => 'Passphrase help',
                 'required'  => true,
-                'pattern'   => '^.{16,}$',
+                'minlength' => '16',
+                'pattern'   => '^.*[^ ] [^ ].*$',
             ];
         }
 

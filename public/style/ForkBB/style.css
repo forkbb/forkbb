@@ -819,6 +819,10 @@ body,
   border: 0.0625rem solid #AA7939;
 }
 
+#fork input.f-ctrl:user-invalid {
+  border: 0.125rem dotted red;
+}
+
 #fork input:focus,
 #fork select:focus,
 #fork textarea:focus {

@@ -171,6 +171,7 @@ class Search extends Page
                         'keywords' => [
                             'class'     => ['w0'],
                             'type'      => 'text',
+                            'minlength' => '3',
                             'maxlength' => '100',
                             'caption'   => 'Keyword search',
                             'value'     => $v->keywords ?? '',
@@ -209,6 +210,7 @@ class Search extends Page
                         'keywords' => [
                             'class'     => ['w2'],
                             'type'      => 'text',
+                            'minlength' => '3',
                             'maxlength' => '100',
                             'caption'   => 'Keyword search',
                             'value'     => $v->keywords ?? '',

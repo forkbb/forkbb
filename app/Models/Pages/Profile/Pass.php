@@ -108,7 +108,8 @@ class Pass extends Profile
                             'type'      => 'password',
                             'caption'   => 'New pass',
                             'required'  => true,
-                            'pattern'   => '^.{16,}$',
+                            'minlength' => '16',
+                            'pattern'   => '^.*[^ ] [^ ].*$',
                             'help'      => 'Passphrase help',
                         ],
                         'password' => [

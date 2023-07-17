@@ -231,7 +231,7 @@ class Email extends Profile
                             'maxlength'      => (string) $this->c->MAX_EMAIL_LENGTH,
                             'caption'        => $this->rules->confirmEmail ? 'New or old email' : 'New email',
                             'required'       => true,
-                            'pattern'        => '.+@.+',
+                            'pattern'        => '^.*[^@]@[^@].*$',
                             'value'          => $this->curUser->email,
                             'help'           => $this->rules->my ? 'Email instructions' : null,
                             'autocapitalize' => 'off',
