@@ -678,10 +678,28 @@
   margin: 0;
 }
 
-#forka .f-bbcode-form .f-field-tag,
+#forka .f-fs-bbcode,
+#fork-smls .f-fs-smile {
+  border-bottom: 0.0625rem dotted #AA7939;
+}
+
+#fork-smls .f-fs-smile {
+  margin-bottom: 0.3125rem;
+}
+
 #fork-smls .f-fs-smile .f-fleg,
 #fork-smls .f-fs-new-smile .f-fleg {
-  border-top: 0.0625rem dotted #AA7939;
+  border: 0.0625rem solid #AA7939;
+  background-color: #FFEBCD;
+}
+
+#forka .f-field-bbcode.f-field-tag .f-link,
+#forka #id-fs-structure #id-tag {
+  display: block;
+  line-height: 1.25rem;
+  padding: 0.5rem;
+  border: 0.0625rem solid #AA7939;
+  background-color: #FFEBCD;
 }
 
 #forka .f-fs-bbcode .f-fleg,
@@ -760,6 +778,20 @@
   opacity: 0.5;
 }
 
+@media screen and (max-width: 24.9999rem) {
+  #forka .f-field-bbcode {
+    border-bottom: 0;
+    margin-bottom: 0;
+  }
+}
+
+@media screen and (max-width: 34.9999rem) {
+  #forka .f-field-smile {
+    border-bottom: 0;
+    margin-bottom: 0;
+  }
+}
+
 @media screen and (min-width: 25rem) {
   #forka .f-bbcode-form .f-fs-bbcode {
     display: flex;
@@ -770,8 +802,8 @@
     flex-direction: column;
   }
 
-  #forka .f-bbcode-form .f-field-tag {
-    border-top: 0;
+  #forka .f-fs-bbcode {
+    border-bottom: 0;
   }
 
   #forka .f-bbcode-form .f-field-bbcode > dt {
@@ -808,6 +840,8 @@
 @media screen and (min-width: 35rem) {
   #fork-smls .f-fs-smile {
     display: flex;
+    margin-bottom: 0;
+    border-bottom: 0;
   }
 
   #fork-smls .f-field-smile {
@@ -859,7 +893,7 @@
   }
 
   #fork-smls .f-fs-new-smile .f-fleg {
-    border-top: 0;
+    /*border-top: 0;*/
   }
 }
 
