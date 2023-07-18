@@ -80,7 +80,7 @@ class Bans extends Admin
             ->addValidators([
             ])->addRules([
                 'token'      => 'token:AdminBans',
-                's_username' => 'string:trim,null|max:25',
+                's_username' => 'string:trim,null|max:190',
                 's_ip'       => 'string:trim,null|max:40',
                 's_email'    => 'string:trim,null|max:' . $this->c->MAX_EMAIL_LENGTH,
                 's_message'  => 'string:trim,null|max:255',
@@ -146,7 +146,7 @@ class Bans extends Admin
         $fields = [];
         $fields['s_username'] = [
             'type'      => 'text',
-            'maxlength' => '25',
+            'maxlength' => '190',
             'caption'   => 'Username label',
             'value'     => $data['s_username'] ?? null,
         ];
@@ -254,7 +254,7 @@ class Bans extends Admin
             $fields = [];
             $fields['username'] = [
                 'type'      => $this->banCount < 1 ? 'text' : 'str',
-                'maxlength' => '25',
+                'maxlength' => '190',
                 'caption'   => 'Username label',
                 'help'      => $this->banCount < 1 ? 'Username help' : null,
                 'value'     => $data['username'] ?? null,
@@ -643,7 +643,7 @@ class Bans extends Admin
                 'submit_ban'      => [$this, 'vSubmitBan'],
             ])->addRules([
                 'token'           => 'token:' . $this->formBanPage,
-                'username'        => $this->banCount < 1 ? 'string:trim|max:25|user_ban' : 'absent',
+                'username'        => $this->banCount < 1 ? 'string:trim|max:190|user_ban' : 'absent',
                 'ip'              => $this->banCount < 2 ? 'string:trim,spaces|max:255|ip_ban' : 'absent',
                 'email'           => $this->banCount < 2 ? 'string:trim|max:' . $this->c->MAX_EMAIL_LENGTH . '|email_ban' : 'absent',
                 'message'         => 'string:trim|max:255',

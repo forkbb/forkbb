@@ -62,7 +62,7 @@ class View extends Users
                     ->addValidators([
                     ])->addRules([
                         'token'           => 'token:AdminUsers',
-                        'username'        => 'string:null|max:25',
+                        'username'        => 'string:null|max:190',
                         'email'           => 'string:null|max:' . $this->c->MAX_EMAIL_LENGTH,
                         'title'           => 'string:null|max:50',
                         'realname'        => 'string:null|max:40',
@@ -185,7 +185,7 @@ class View extends Users
         $fields = [];
         $fields['username'] = [
             'type'      => 'text',
-            'maxlength' => '25',
+            'maxlength' => '190',
             'caption'   => 'Username label',
             'value'     => $data['username'] ?? null,
         ];
