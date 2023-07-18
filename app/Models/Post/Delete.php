@@ -78,10 +78,13 @@ class Delete extends Action
                     throw new RuntimeException('Parents unavailable');
                 }
 
-                $pids[$arg->id]              = $arg->id;
-                $parents[$arg->topic_id]     = $arg->parent;
-                $uidsUpdate[$arg->poster_id] = $arg->poster_id;
-                $isPost                      = 1;
+                $pids[$arg->id]          = $arg->id;
+                $parents[$arg->topic_id] = $arg->parent;
+                $isPost                  = 1;
+
+                if ($arg->poster_id > 0) {
+                    $uidsUpdate[$arg->poster_id] = $arg->poster_id;
+                }
             } else {
                 throw new InvalidArgumentException('Expected User(s), Forum(s), Topic(s) or Post(s)');
             }
