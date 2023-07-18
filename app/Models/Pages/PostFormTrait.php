@@ -51,6 +51,7 @@ trait PostFormTrait
             $fieldset['username'] = [
                 'class'     => ['w1'],
                 'type'      => 'text',
+                'minlength' => $this->c->USERNAME['min'],
                 'maxlength' => $this->c->USERNAME['max'],
                 'caption'   => 'Username',
                 'required'  => true,
@@ -64,7 +65,7 @@ trait PostFormTrait
                 'maxlength'      => (string) $this->c->MAX_EMAIL_LENGTH,
                 'caption'        => 'Email',
                 'required'       => 1 === $this->c->config->b_force_guest_email,
-                'pattern'        => '.+@.+',
+                'pattern'        => '^.*[^@]@[^@].*$',
                 'value'          => $vars['email'] ?? null,
                 'autocapitalize' => 'off',
             ];
