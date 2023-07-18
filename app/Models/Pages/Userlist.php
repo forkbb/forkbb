@@ -50,7 +50,7 @@ class Userlist extends Page
                 'sort'  => $prefix . 'string|in:username,registered' . ($this->userRules->showPostCount ? ',num_posts' : ''),
                 'dir'   => $prefix . 'string|in:ASC,DESC',
                 'group' => $prefix . 'string|in:' . \implode(',', \array_keys($this->groupList)),
-                'name'  => $prefix . 'string|min:1|max:25' . ($this->userRules->searchUsers ? '' : '|in:*'),
+                'name'  => $prefix . 'string|min:1|max:190' . ($this->userRules->searchUsers ? '' : '|in:*'),
             ]);
 
         $error = true;
@@ -189,7 +189,7 @@ class Userlist extends Page
             $fields['name'] = [
                 'class'     => ['w0'],
                 'type'      => 'text',
-                'maxlength' => '25',
+                'maxlength' => '190',
                 'value'     => $v->name ?: '*',
                 'caption'   => 'Username',
                 'help'      => 'User search info',

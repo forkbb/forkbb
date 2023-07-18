@@ -101,7 +101,7 @@ class Search extends Page
 
             if ($advanced) {
                 $v->addRules([
-                    'author'   => 'required|string:trim|max:25|check_author',
+                    'author'   => 'required|string:trim|max:190|check_author',
                     'forums'   => 'check_forums',
                     'serch_in' => 'required|integer|in:0,1,2',
                     'sort_by'  => 'required|integer|in:0,1,2,3',
@@ -220,7 +220,7 @@ class Search extends Page
                         'author' => [
                             'class'     => ['w1'],
                             'type'      => 'text',
-                            'maxlength' => '25',
+                            'maxlength' => '190',
                             'caption'   => 'Author search',
                             'value'     => $v->author ?? '*',
                             'required'  => true,
@@ -400,7 +400,7 @@ class Search extends Page
 
         if (
             '*' !== $name
-            && ! \preg_match('%[\p{L}\p{N}]%', $name)
+            && \preg_match('%[@\'"<>\\/\x00-\x1F]%', $name)
         ) {
             $v->addError('The :alias is not valid format');
         }

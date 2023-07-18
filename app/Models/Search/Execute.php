@@ -237,7 +237,7 @@ class Execute extends Method
         //???? нужен индекс по авторам сообщений/тем?
         if ('*' !== $v->author) {
             $usePIdx                 = true;
-            $vars[':author']         = \str_replace(['#', '_', '*', '?'], ['##', '#_', '%', '_'], $v->author);
+            $vars[':author']         = \str_replace(['#', '%', '_', '*', '?'], ['##', '#%', '#_', '%', '_'], $v->author);
             $whereIdx[]              = "p.poster {$like} ?s:author ESCAPE '#'";
         }
 
