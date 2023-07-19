@@ -212,3 +212,6 @@ msgstr "The username is too short."
 
 msgid "Long username"
 msgstr "The username is too long."
+
+msgid "Invalid passphrase"
+msgstr "Invalid passphrase."

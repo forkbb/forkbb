@@ -212,3 +212,6 @@ msgstr "Слишком короткое имя пользователя."
 
 msgid "Long username"
 msgstr "Слишком длинное имя пользователя."
+
+msgid "Invalid passphrase"
+msgstr "Неверная кодовая фраза."

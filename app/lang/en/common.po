@@ -437,9 +437,6 @@ msgstr "No"
 msgid "Your passphrase"
 msgstr "Your passphrase"
 
-msgid "Invalid passphrase"
-msgstr "Invalid passphrase"
-
 msgid "User %s"
 msgstr "%s"
 
