@@ -19,10 +19,10 @@ msgid "Long email"
 msgstr "The email address you entered is too long."
 
 msgid "Passphrase help"
-msgstr "Passphrase must contain a few words separated by spaces. Passphrase must be at least 16 characters long. Passphrase are case sensitive."
+msgstr "The passphrase should be at least 16 characters long, with multiple words separated by spaces, and it is case sensitive."
 
 msgid "Pass format"
-msgstr "Passphrase must contain a few words separated by spaces. Passphrase must be at least 16 characters long."
+msgstr "The passphrase should be at least 16 characters long, with multiple words separated by spaces."
 
 msgid "Login format"
 msgstr "The username must begin with a letter. May contain letters, numbers, spaces, dots, dashes and underscores."
