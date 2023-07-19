@@ -335,3 +335,21 @@ msgstr "Привязать новый аккаунт"
 
 msgid "Delete"
 msgstr "Удалить"
+
+msgid "Delete my profile"
+msgstr "Удалить профиль"
+
+msgid "Deleting profile"
+msgstr "Удаление профиля"
+
+msgid "You are trying to delete your profile"
+msgstr "Вы пытаетесь удалить свой профиль."
+
+msgid "Confirm delete label"
+msgstr "Удалить профиль?"
+
+msgid "Confirm delete info"
+msgstr "<b>Это необратимая операция!</b>"
+
+msgid "Your deleted redirect"
+msgstr "Ваш профиль удален."

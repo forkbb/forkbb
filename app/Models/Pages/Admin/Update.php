@@ -762,4 +762,22 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.62 to rev.63
+     */
+    protected function stageNumber62(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'multiple=>ProfileDelete',
+            '\\ForkBB\\Models\\Pages\\Profile\\Delete::class',
+            'ProfileOAuth'
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }

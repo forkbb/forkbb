@@ -269,6 +269,15 @@ class Routing
                     'EditUserPass'
                 );
             }
+            // удаление своего профиля
+            if (! $user->isGuest) {
+                $r->add(
+                    $r::DUO,
+                    '/user/{id|i:' . $user->id . '}/delete/profile',
+                    'ProfileDelete:delete',
+                    'DeleteUserProfile'
+                );
+            }
             // управление аккаунтами OAuth
             if (
                 ! $user->isGuest

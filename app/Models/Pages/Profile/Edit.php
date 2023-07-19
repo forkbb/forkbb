@@ -239,6 +239,7 @@ class Edit extends Profile
 
         // имя, титул и аватара
         $fields = [];
+
         if ($this->rules->rename) {
             $fields['username'] = [
                 'type'      => 'text',
@@ -257,6 +258,16 @@ class Edit extends Profile
                 'value'   => $this->curUser->username,
             ];
         }
+
+        if ($this->rules->deleteMyProfile) {
+            $fields['delete_profile'] = [
+                'type'    => 'link',
+                'value'   => __('Delete my profile'),
+                'title'   => __('Delete my profile'),
+                'href'    => $this->c->Router->link('DeleteUserProfile', $args),
+            ];
+        }
+
         if ($this->rules->changeGroup) {
             $fields['group'] = [
                 'type'    => 'link',
@@ -273,6 +284,7 @@ class Edit extends Profile
                 'value'   => $this->curUser->group_id ? $this->curUser->g_title : '-',
             ];
         }
+
         if ($this->rules->confModer) {
             $fields['configure-moderator'] = [
                 'type'    => 'link',
@@ -280,6 +292,7 @@ class Edit extends Profile
                 'href'    => $this->c->Router->link('EditUserModeration', $args),
             ];
         }
+
         if ($this->rules->setTitle) {
             $fields['title'] = [
                 'type'      => 'text',
@@ -296,6 +309,7 @@ class Edit extends Profile
                 'value'   => $this->curUser->title(),
             ];
         }
+
         if ($this->rules->editPass) {
             $fields['change_pass'] = [
                 'type'  => 'link',
@@ -303,6 +317,7 @@ class Edit extends Profile
                 'href'  => $this->c->Router->link('EditUserPass', $args),
             ];
         }
+
         if ($this->rules->configureOAuth) {
             $fields['configure_oauth'] = [
                 'type'  => 'link',
@@ -310,6 +325,7 @@ class Edit extends Profile
                 'href'  => $this->c->Router->link('EditUserOAuth', $args),
             ];
         }
+
         if ($this->rules->useAvatar) {
             if (! $this->curUser->avatar) {
                 $fields['avatar'] = [
@@ -405,6 +421,7 @@ class Edit extends Profile
 
         // контактная информация
         $fields = [];
+
         if ($this->rules->viewOEmail) {
             $fields['open-email'] = [
                 'class'   => ['pline'],
@@ -413,6 +430,7 @@ class Edit extends Profile
                 'value'   => $this->curUser->censorEmail,
             ];
         }
+
         if ($this->rules->editEmail) {
             $fields['change_email'] = [
                 'type'  => 'link',
@@ -420,6 +438,7 @@ class Edit extends Profile
                 'href'  => $this->c->Router->link('EditUserEmail', $args),
             ];
         }
+
         $fields['email_setting'] = [
             'class'   => ['block'],
             'type'    => 'radio',
@@ -453,6 +472,7 @@ class Edit extends Profile
                 'href'    => $this->curUser->censorUrl,
             ];
         }
+
         $form['sets']['contacts'] = [
             'class'  => ['data-edit'],
             'legend' => 'Contact details',

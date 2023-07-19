@@ -335,3 +335,21 @@ msgstr "Add new account"
 
 msgid "Delete"
 msgstr "Delete"
+
+msgid "Delete my profile"
+msgstr "Delete profile"
+
+msgid "Deleting profile"
+msgstr "Delete profile"
+
+msgid "You are trying to delete your profile"
+msgstr "You are trying to delete your profile."
+
+msgid "Confirm delete label"
+msgstr "Delete profile?"
+
+msgid "Confirm delete info"
+msgstr "<b>This is an irreversible operation!</b>"
+
+msgid "Your deleted redirect"
+msgstr "Your profile has been deleted."

@@ -374,6 +374,7 @@ return [
         'ProfileEmail'       => \ForkBB\Models\Pages\Profile\Email::class,
         'ProfileMod'         => \ForkBB\Models\Pages\Profile\Mod::class,
         'ProfileOAuth'       => \ForkBB\Models\Pages\Profile\OAuth::class,
+        'ProfileDelete'      => \ForkBB\Models\Pages\Profile\Delete::class,
         'AdminIndex'         => \ForkBB\Models\Pages\Admin\Index::class,
         'AdminStatistics'    => \ForkBB\Models\Pages\Admin\Statistics::class,
         'AdminOptions'       => \ForkBB\Models\Pages\Admin\Options::class,
