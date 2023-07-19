@@ -134,6 +134,11 @@ class Profile extends Rules
             && ! $this->curUser->isGuest;
     }
 
+    protected function getdeleteMyProfile(): bool
+    {
+        return $this->my && ! $this->user->isAdmin;
+    }
+
     protected function getviewIP(): bool
     {
         return $this->user->isAdmin;;
