@@ -10,12 +10,9 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Pages\Profile;
 
-use ForkBB\Core\Image;
 use ForkBB\Core\Validator;
-use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
-use ForkBB\Models\User\User;
 use function \ForkBB\__;
 
 class Pass extends Profile
@@ -52,17 +49,13 @@ class Pass extends Profile
                 ]);
 
             if ($v->validation($_POST)) {
-//                if (\password_verify($v->new_pass, $this->curUser->password)) {
-//                    return $this->c->Redirect->page('EditUserProfile', $args)->message('Email is old redirect');
-//                }
-
                 $this->curUser->password = \password_hash($v->new_pass, \PASSWORD_DEFAULT);
                 $this->c->users->update($this->curUser);
 
                 if ($this->rules->my) {
-#                    $auth = $this->c->Auth;
-#                    $auth->fIswev = [FORK_MESS_SUCC => [__('Pass updated')]];
-#                    return $auth->login([], 'GET', $this->curUser->username);
+//                    $auth = $this->c->Auth;
+//                    $auth->fIswev = [FORK_MESS_SUCC => [__('Pass updated')]];
+//                    return $auth->login([], 'GET', $this->curUser->username);
                     return $this->c->Redirect->page('Login')->message('Pass updated', FORK_MESS_SUCC); // ???? нужна передача данных между скриптами не привязанная к пользователю
                 } else {
                     return $this->c->Redirect->page('EditUserProfile', $args)->message('Pass updated redirect', FORK_MESS_SUCC);

@@ -87,7 +87,8 @@ class Routing
             $r->add(
                 $r::GET,
                 '/login[/{tail:.*}]',
-                'Redirect:toIndex'
+                'Redirect:toIndex',
+                'Login' // <-- для переадресации со страницы изменения пароля
             );
             $r->add(
                 $r::GET,
