@@ -136,7 +136,9 @@ class Profile extends Rules
 
     protected function getdeleteMyProfile(): bool
     {
-        return $this->my && ! $this->user->isAdmin;
+        return $this->my
+            && ! $this->user->isAdmin
+            && 1 === $this->curUser->g_delete_profile;
     }
 
     protected function getviewIP(): bool

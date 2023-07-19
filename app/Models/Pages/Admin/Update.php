@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.0.0';
     const REV_MIN_FOR_UPDATE         = 53;
-    const LATEST_REV_WITH_DB_CHANGES = 62;
+    const LATEST_REV_WITH_DB_CHANGES = 63;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const CONFIG_FILE                = 'main.php';
@@ -777,6 +777,8 @@ class Update extends Admin
         );
 
         $coreConfig->save();
+
+        $this->c->DB->addField('::groups', 'g_delete_profile', 'TINYINT(1)', false, 0);
 
         return null;
     }

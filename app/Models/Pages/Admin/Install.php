@@ -866,6 +866,7 @@ class Install extends Admin
                 'g_edit_posts'           => ['TINYINT(1)', false, 1],
                 'g_delete_posts'         => ['TINYINT(1)', false, 1],
                 'g_delete_topics'        => ['TINYINT(1)', false, 1],
+                'g_delete_profile'       => ['TINYINT(1)', false, 0],
                 'g_post_links'           => ['TINYINT(1)', false, 1],
                 'g_set_title'            => ['TINYINT(1)', false, 1],
                 'g_search'               => ['TINYINT(1)', false, 1],

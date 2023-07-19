@@ -317,3 +317,9 @@ msgstr "Disk space limit"
 
 msgid "Disk space limit help"
 msgstr "Disk space limit (<b>MiB</b>). Set to 0 to disable file uploads for this group."
+
+msgid "Delete profile label"
+msgstr "Delete profile"
+
+msgid "Delete profile help"
+msgstr "Allow users of this group to delete their profile (<b>user&apos;s messages will not be deleted</b>)."

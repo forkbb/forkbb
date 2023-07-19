@@ -287,6 +287,7 @@ class Groups extends Admin
                         'g_edit_posts'           => 'required|integer|in:0,1',
                         'g_delete_posts'         => 'required|integer|in:0,1',
                         'g_delete_topics'        => 'required|integer|in:0,1',
+                        'g_delete_profile'       => 'required|integer|in:0,1',
                         'g_deledit_interval'     => 'required|integer|min:0|max:999999',
                         'g_set_title'            => 'required|integer|in:0,1',
                         'g_send_email'           => 'required|integer|in:0,1',
@@ -599,6 +600,13 @@ class Groups extends Admin
                     'values'  => $yn,
                     'caption' => 'Delete topics label',
                     'help'    => 'Delete topics help',
+                ];
+                $fieldset['g_delete_profile'] = [
+                    'type'    => 'radio',
+                    'value'   => $group->g_delete_profile,
+                    'values'  => $yn,
+                    'caption' => 'Delete profile label',
+                    'help'    => 'Delete profile help',
                 ];
                 $fieldset['g_set_title'] = [
                     'type'    => 'radio',
