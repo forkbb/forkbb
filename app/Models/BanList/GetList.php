@@ -22,7 +22,7 @@ class GetList extends Method
         $vars = [
             ':ids' => $ids,
         ];
-        $query = 'SELECT b.id, b.username, b.ip, b.email, b.message, b.expire, u.id AS id_creator, u.username AS name_creator
+        $query = 'SELECT b.id, b.username, b.ip, b.email, b.message, b.expire, b.ban_creator AS id_creator, u.username AS name_creator
             FROM ::bans AS b
             LEFT JOIN ::users AS u ON u.id=b.ban_creator
             WHERE b.id IN (?ai:ids)';
@@ -33,7 +33,7 @@ class GetList extends Method
         while ($row = $stmt->fetch()) {
             if (null === $row['name_creator']) {
                 $row['name_creator'] = 'User #' . $row['id_creator'];
-                $row['id_creator']   = 1;
+                $row['id_creator']   = 0;
             }
 
             $list[$row['id']] = $row;
