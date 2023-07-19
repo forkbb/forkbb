@@ -68,6 +68,17 @@ class Delete extends Action
             $this->c->Online->delete($user);
 
             $user->deleteAvatar();
+
+            // имя и email удаляемого пользователя в бан
+            if (! $user->isBanByName) {
+                $this->c->bans->insert([
+                    'username' => $user->username,
+                    'ip'       => '',
+                    'email'    => $user->email,
+                    'message'  => 'remote user',
+                    'expire'   => 0,
+                ]);
+            }
         }
 
         $vars = [
