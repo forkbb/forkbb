@@ -30,6 +30,7 @@ class Delete extends Action
         $ids        = [];
         $moderators = [];
         $resetAdmin = false;
+        $resetBan   = false;
 
         foreach ($users as $user) {
             if ($user->isGuest) {
@@ -78,6 +79,8 @@ class Delete extends Action
                     'message'  => 'remote user',
                     'expire'   => 0,
                 ]);
+
+                $resetBan = true;
             }
         }
 
@@ -92,6 +95,10 @@ class Delete extends Action
 
         if ($resetAdmin) {
             $this->c->admins->reset();
+        }
+
+        if ($resetBan) {
+            $this->c->bans->reset();
         }
 
         $this->c->stats->reset();
