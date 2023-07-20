@@ -110,11 +110,11 @@ class Search extends Page
                 ]);
             }
 
-            if ('POST' === $method) {
-                $v->addRules([
-                    'token'    => 'token:' . $marker,
-                ]);
-            }
+//            if ('POST' === $method) {
+//                $v->addRules([
+//                    'token'    => 'token:' . $marker,
+//                ]);
+//            }
 
             $v->addRules([
                 'keywords'     => 'required|string:trim|max:100|check_query:' . $method,
@@ -158,9 +158,9 @@ class Search extends Page
     {
         return [
             'action' => $this->c->Router->link('Search'),
-            'hidden' => [
-                'token' => $this->c->Csrf->create('Search'),
-            ],
+//            'hidden' => [
+//                'token' => $this->c->Csrf->create('Search'),
+//            ],
             'sets'   => [
                 'what' => [
                     'fields' => [
@@ -197,9 +197,9 @@ class Search extends Page
     {
         return [
             'action' => $this->c->Router->link('SearchAdvanced'),
-            'hidden' => [
-                'token' => $this->c->Csrf->create('SearchAdvanced'),
-            ],
+//            'hidden' => [
+//                'token' => $this->c->Csrf->create('SearchAdvanced'),
+//            ],
             'sets'   => [
                 'what' => [
                     'fields' => [
