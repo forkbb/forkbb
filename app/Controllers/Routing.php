@@ -805,7 +805,7 @@ class Routing
             $uri = \substr($uri, 0, $pos);
         }
 
-        $uri    = \rawurldecode($uri);
+        $uri    = \rawurldecode(\strtr($uri, '+', ' '));
         $method = $_SERVER['REQUEST_METHOD'];
         $route  = $r->route($method, $uri);
         $page   = null;
