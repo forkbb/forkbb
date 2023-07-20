@@ -205,7 +205,7 @@ class Online extends Model
             $diff = \time() - $this->c->user->logged;
 
             if (
-                $diff < 5
+                $diff < 3
                 || (
                     $position === $this->c->user->o_position
                     && $diff < $this->c->config->i_timeout_online / 10
