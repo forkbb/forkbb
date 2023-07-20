@@ -426,7 +426,7 @@ class Register extends Page
                 'fRootLink' => $this->c->Router->link('Index'),
                 'fMailer'   => __(['Mailer', $this->c->config->o_board_title]),
                 'username'  => $v->username,
-                'email'     => $v->eamil,
+                'email'     => $v->email,
                 'ip'        => $this->user->ip,
                 'userInDB'  => $userInDB->username,
             ];
