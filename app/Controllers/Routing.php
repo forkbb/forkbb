@@ -182,6 +182,12 @@ class Routing
                     'Search:action',
                     'SearchAction'
                 );
+                $r->add(
+                    $r::GET,
+                    '/opensearch.xml',
+                    'Misc:opensearch',
+                    'OpenSearch'
+                );
             }
             // юзеры
             if ($userRules->viewUsers) {

@@ -342,10 +342,20 @@ abstract class Page extends Model
                 'href' => $this->canonical,
             ]);
         }
+
         if ($this->robots) {
             $this->pageHeader('robots', 'meta', 11000, [
                 'name'    => 'robots',
                 'content' => $this->robots,
+            ]);
+        }
+
+        if (1 === $this->user->g_search) {
+            $this->pageHeader('opensearch', 'link', 0, [
+                'rel'   => 'search',
+                'type'  => 'application/opensearchdescription+xml',
+                'href'  => $this->c->Router->link('OpenSearch'),
+                'title' => $this->fTitle,
             ]);
         }
 

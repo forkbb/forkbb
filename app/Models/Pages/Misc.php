@@ -17,6 +17,22 @@ use function \ForkBB\__;
 
 class Misc extends Page
 {
+    public function opensearch(): Page
+    {
+        $this->nameTpl      = "opensearch";
+        $this->onlinePos    = null;
+        $this->onlineDetail = null;
+        $this->imageLink    = \preg_replace('%^(.*://(?:[^/]++)).*$%', '$1', $this->c->BASE_URL) . '/favicon.ico'; // ???? костыль O_o
+        $this->searchLink   = \strtr(
+            $this->c->Router->link('Search', ['keywords' => 'SEARCHTERMS']),
+            ['SEARCHTERMS' => '{searchTerms}']
+        );
+
+        $this->header('Content-type', 'application/xml; charset=utf-8');
+
+        return $this;
+    }
+
     /**
      * Пометка раздела прочитанным
      */
