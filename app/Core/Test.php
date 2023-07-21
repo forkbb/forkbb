@@ -36,6 +36,8 @@ class Test
         if (null !== $value) {
             $v->addError('The :alias contains an invalid value');
 
+            $this->log('Invalid value for field');
+
             return $value;
         }
 
@@ -46,19 +48,25 @@ class Test
         } elseif (\preg_match('%\bmsie\b%i', $_SERVER['HTTP_USER_AGENT'])) {
             $v->addError('Old browser', FORK_MESS_WARN);
 
+            $this->log('Old browser');
+
             return $value;
         }
+
         if (empty($_SERVER['HTTP_ACCEPT'])) {
             $index += 5;
         } elseif (false === \strpos($_SERVER['HTTP_ACCEPT'], 'text/html')) {
             $index += 1;
         }
+
         if (empty($_SERVER['HTTP_ACCEPT_ENCODING'])) {
             $index += 1;
         }
+
         if (empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $index += 1;
         }
+
         if (
             ! empty($_SERVER['HTTP_PRAGMA'])
             && ! \preg_match('%^no-cache$%iD', $_SERVER['HTTP_PRAGMA'])
@@ -81,16 +89,29 @@ class Test
         } elseif (! \preg_match('%^(?:keep-alive|close)$%iD', $_SERVER['HTTP_CONNECTION'])) {
             $index += 3;
         }
+
         if (
             ! empty($_SERVER['HTTP_REFERER'])
             && $this->c->Router->validate($_SERVER['HTTP_REFERER'], 'Index') !== $_SERVER['HTTP_REFERER']
         ) {
             $index += 3;
         }
+
         if ($index > 3)  {
             $v->addError('Bad browser', FORK_MESS_ERR);
+
+            $this->log('Bad browser');
         }
 
         return $value;
+    }
+
+    protected function log(string $message): void
+    {
+        $this->c->Log->debug("TEST: {$message}", [
+//            'user'    => $this->user->fLog(),
+//            'message' => $message,
+            'headers' => true,
+        ]);
     }
 }
