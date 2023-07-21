@@ -94,6 +94,19 @@ trait PostFormTrait
             'autofocus' => $autofocus,
             'maxlength' => $this->c->MAX_POST_SIZE,
         ];
+
+        if (
+            $this->user->isGuest
+            || empty($this->user->last_post)
+        ) {
+            $fieldset['terms'] = [
+                'class'   => ['w0'],
+                'type'    => 'checkbox',
+                'label'   => 'I agree to the Terms of Use',
+                'checked' => false,
+            ];
+        }
+
         $form['sets']['uesm'] = [
             'fields' => $fieldset,
         ];

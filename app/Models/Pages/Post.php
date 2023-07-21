@@ -47,7 +47,10 @@ class Post extends Page
         if ('POST' === $method) {
             $v = $this->messageValidator($forum, 'NewTopic', $args, false, true);
 
-            if ($this->user->isGuest) {
+            if (
+                $this->user->isGuest
+                || empty($this->user->last_post)
+            ) {
                 $v = $this->c->Test->beforeValidation($v);
             }
 

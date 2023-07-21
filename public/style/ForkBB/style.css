@@ -1169,6 +1169,12 @@ body,
   position: relative;
 }
 
+#fork #id-dl-terms {
+  padding: 0;
+  margin: 0;
+  display: none;
+}
+
 #id-dl-passinlogin .f-yhint {
   position: absolute;
   top: 0.5rem;

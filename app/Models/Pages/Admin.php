@@ -79,9 +79,9 @@ abstract class Admin extends Page
                 'forums'      => [$r->link('AdminForums'), 'Forums'],
                 'groups'      => [$r->link('AdminGroups'), 'User groups'],
                 'censoring'   => [$r->link('AdminCensoring'), 'Censoring'],
+                'uploads'     => [$r->link('AdminUploads'), 'Uploads'],
                 'logs'        => [$r->link('AdminLogs'), 'Logs'],
                 'maintenance' => [$r->link('AdminMaintenance'), 'Maintenance'],
-                'uploads'     => [$r->link('AdminUploads'), 'Uploads'],
             ];
         }
 

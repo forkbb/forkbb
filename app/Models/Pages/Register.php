@@ -71,6 +71,7 @@ class Register extends Page
             'email'    => 'required_with:on|string:trim|email:noban',
             'username' => 'required_with:on|string:trim|username|noURL:1',
             'password' => 'required_with:on|string|min:16|max:100000|password',
+            'terms'    => 'absent',
             'register' => 'required|string',
         ];
 
@@ -207,6 +208,12 @@ class Register extends Page
                 'pattern'   => '^.*[^ ] [^ ].*$',
             ];
         }
+
+        $fields['terms'] = [
+            'type'    => 'checkbox',
+            'label'   => 'I agree to the Terms of Use',
+            'checked' => false,
+        ];
 
         $form['sets']['reg']['fields'] = $fields;
 

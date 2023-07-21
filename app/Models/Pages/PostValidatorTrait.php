@@ -203,6 +203,7 @@ trait PostValidatorTrait
                 'hide_smilies' => $ruleHideSmilies,
                 'edit_post'    => $ruleEditPost,
                 'subscribe'    => $ruleSubscribe,
+                'terms'        => 'absent',
                 'preview'      => 'string',
                 'submit'       => 'string|check_timeout',
                 'message'      => $ruleMessage,
