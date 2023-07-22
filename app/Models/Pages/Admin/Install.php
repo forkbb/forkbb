@@ -1578,6 +1578,8 @@ class Install extends Admin
             'i_upload_img_axis_limit' => 1920,
             's_upload_img_outf'       => 'webp,jpg,png,gif',
             'i_search_ttl'            => 900,
+            'b_ant_hidden_ch'         => 1,
+            'b_ant_use_js'            => 0,
         ];
 
         foreach ($forkConfig as $name => $value) {
