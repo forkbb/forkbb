@@ -122,3 +122,6 @@ msgstr "Аккаунт удален."
 
 msgid "First time Register?"
 msgstr "Вы здесь впервые. Зарегистрируетесь?"
+
+msgid "Email banned"
+msgstr "Адрес электронной почты полученный от %s забанен."

@@ -157,6 +157,13 @@ class RegLog extends Page
             return $redirect->message(['Email registered by another', __($provider->name)], FORK_MESS_WARN, self::TIMEOUT);
         }
 
+        $user = $this->c->users->create(['email' => $provider->userEmail]);
+
+        // этот email забанен
+        if (1 === $this->c->bans->isBanned($user)) {
+            return $redirect->message(['Email banned', __($provider->name)], FORK_MESS_WARN, self::TIMEOUT);
+        }
+
         if (true !== $this->c->providerUser->registration($this->user, $provider)) {
             throw new RuntimeException('Failed to insert data'); // ??????????????????????????????????????????
         }
@@ -190,6 +197,13 @@ class RegLog extends Page
         // регистрация закрыта
         if (1 !== $this->c->config->b_regs_allow) {
             return $this->c->Message->message('No new regs');
+        }
+
+        $user = $this->c->users->create(['email' => $provider->userEmail]);
+
+        // этот email забанен
+        if (1 === $this->c->bans->isBanned($user)) {
+            return $this->c->Message->message(['Email banned', __($provider->name)], false);
         }
 
         // продолжение регистрации начиная с согласия с правилами

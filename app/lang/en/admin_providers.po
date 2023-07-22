@@ -122,3 +122,6 @@ msgstr "Account removed."
 
 msgid "First time Register?"
 msgstr "You are here for the first time. Register?"
+
+msgid "Email banned"
+msgstr "The email address received from %s is banned."
