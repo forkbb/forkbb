@@ -71,11 +71,21 @@ ForkBB.common = (function (doc, win) {
         }
     }
 
+    function initForm()
+    {
+        var inps = doc.querySelectorAll("input[type='hidden'][name='nekot']");
+
+        for (var i = 0; i < inps.length; i++) {
+            inps[i].value += (inps[i].parentNode.querySelector("input[type='hidden'][name='token']").value.replace(/\D/g, '').replace(/(......).*/, '$1'));
+        }
+    }
+
     return {
         init : function () {
             initGoBack();
             initAnchorHL();
             initShowPAss();
+            initForm();
         },
     };
 }(document, window));
