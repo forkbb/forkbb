@@ -35,7 +35,7 @@ return [
         'algo' => 'sha1',
         'salt' => '_SALT_FOR_HMAC_',
     ],
-    'DEBUG'            => 0, // 1st&2nd: time/memory, 2nd: queries, 3rd: message 400+ to log
+    'DEBUG'            => 0, // 0&1st: time/memory, 1st: queries, 2nd: message 400+ to log
     'MAINTENANCE_OFF'  => false,
     'BBCODE_INFO'      => [
         'smTpl'    => '<img src="{url}" alt="{alt}">',
