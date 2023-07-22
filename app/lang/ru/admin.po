@@ -80,3 +80,6 @@ msgstr "Меню админки"
 
 msgid "Uploads"
 msgstr "Загрузки"
+
+msgid "Antispam"
+msgstr "Антиспам"

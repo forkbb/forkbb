@@ -215,3 +215,6 @@ msgstr "Слишком длинное имя пользователя."
 
 msgid "Invalid passphrase"
 msgstr "Неверная кодовая фраза."
+
+msgid "Javascript disabled or bot"
+msgstr "В вашем браузере, вероятнее всего, выключен javascript или вы робот :)"

@@ -80,3 +80,6 @@ msgstr "Admin menu"
 
 msgid "Uploads"
 msgstr "Uploads"
+
+msgid "Antispam"
+msgstr "Antispam"
