@@ -79,6 +79,10 @@ class Register extends Page
             unset($rules['email'], $rules['password']);
         }
 
+        if (1 === $this->c->config->b_ant_use_js) {
+            $rules['nekot'] = 'required_with:on|string|nekot';
+        }
+
         $v = $this->c->Validator->reset()
             ->addValidators([])
             ->addRules($rules)
@@ -91,6 +95,7 @@ class Register extends Page
                 'agree.token'       => [FORK_MESS_WARN, ['Bad agree', $this->c->Router->link('Register')]],
                 'password.password' => 'Pass format',
                 'username.login'    => 'Login format',
+                'nekot'             => [FORK_MESS_ERR, 'Javascript disabled or bot'],
             ]);
 
         $v = $this->c->Test->beforeValidation($v);
@@ -209,16 +214,22 @@ class Register extends Page
             ];
         }
 
-        $fields['terms'] = [
-            'type'    => 'checkbox',
-            'label'   => 'I agree to the Terms of Use',
-            'checked' => false,
-        ];
+        if (1 === $this->c->config->b_ant_hidden_ch) {
+            $fields['terms'] = [
+                'type'    => 'checkbox',
+                'label'   => 'I agree to the Terms of Use',
+                'checked' => false,
+            ];
+        }
 
         $form['sets']['reg']['fields'] = $fields;
 
         if ($this->useOAuth) {
             $form['hidden']['oauth'] = $v->oauth;
+        }
+
+        if (1 === $this->c->config->b_ant_use_js) {
+            $form['hidden']['nekot'] = '';
         }
 
         return $form;
