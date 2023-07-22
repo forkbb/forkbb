@@ -803,6 +803,12 @@ class Routing
                 'AdminUploads:view',
                 'AdminUploads'
             );
+            $r->add(
+                $r::DUO,
+                '/admin/antispam',
+                'AdminAntispam:view',
+                'AdminAntispam'
+            );
         }
 
         $uri = $_SERVER['REQUEST_URI'];
