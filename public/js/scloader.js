@@ -31,7 +31,7 @@ ForkBB.editor = (function (doc, win) {
             toolbar: 'bold,italic,underline,strike,subscript,superscript|' +
                 'left,center,right,justify|font,size,color,removeformat|' +
                 'bulletlist,orderedlist,indent,outdent|' +
-                'table|code,quote|horizontalrule,image,email,link,unlink|' +
+                'table|code,mono,quote|horizontalrule,image,email,link,unlink|' +
                 'emoticon,date,time|maximize,source'
         };
 

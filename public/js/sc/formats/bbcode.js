@@ -237,6 +237,9 @@
 		},
 		ltr: {
 			txtExec: ['[ltr]', '[/ltr]']
+		},
+		mono: {
+			txtExec: ['[mono]', '[/mono]']
 		}
 	};
 

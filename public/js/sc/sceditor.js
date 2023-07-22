@@ -1319,7 +1319,7 @@
 		toolbar: 'bold,italic,underline,strike,subscript,superscript|' +
 			'left,center,right,justify|font,size,color,removeformat|' +
 			'cut,copy,pastetext|bulletlist,orderedlist,indent,outdent|' +
-			'table|code,quote|horizontalrule,image,email,link,unlink|' +
+			'table|code,mono,quote|horizontalrule,image,email,link,unlink|' +
 			'emoticon,youtube,date,time|ltr,rtl|print,maximize,source',
 
 		/**
@@ -2863,6 +2863,35 @@
 			},
 			tooltip: 'View source',
 			shortcut: 'Ctrl+Shift+S'
+		},
+		// END_COMMAND
+
+		// START_COMMAND: Centre
+		mono: {
+			state: function (parents) {
+				return !!closest(parents, 'span.f-bb-mono');
+			},
+			exec: function () {
+				var	editor = this,
+					rangeHelper = editor.getRangeHelper(),
+					mono = closest(rangeHelper.parentNode(), 'span.f-bb-mono'),
+					range = rangeHelper.selectedRange();
+
+				editor.focus();
+
+				if (mono) {
+					if (mono.nextSibling) {
+						range.setStartBefore(mono.nextSibling);
+						range.setEndBefore(mono.nextSibling);
+					}
+				} else {
+					this.wysiwygEditorInsertHtml(
+						'<span class="f-bb-mono">',
+						'</span>'
+					);
+				}
+			},
+			tooltip: 'Mono'
 		},
 		// END_COMMAND
 
