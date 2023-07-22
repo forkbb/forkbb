@@ -80,6 +80,7 @@ abstract class Admin extends Page
                 'groups'      => [$r->link('AdminGroups'), 'User groups'],
                 'censoring'   => [$r->link('AdminCensoring'), 'Censoring'],
                 'uploads'     => [$r->link('AdminUploads'), 'Uploads'],
+                'antispam'    => [$r->link('AdminAntispam'), 'Antispam'],
                 'logs'        => [$r->link('AdminLogs'), 'Logs'],
                 'maintenance' => [$r->link('AdminMaintenance'), 'Maintenance'],
             ];
