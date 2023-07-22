@@ -141,6 +141,9 @@ return [
 
         'config'     => '@ConfigModel:install',
         'users'      => \ForkBB\Models\User\Users::class,
+        'userRules'  => '@UsersRules:init',
+
+        'UsersRules' => \ForkBB\Models\Rules\Users::class,
 
         'VLemail'    => \ForkBB\Models\Validators\Email::class,
         'VLhtml'     => \ForkBB\Models\Validators\Html::class,
