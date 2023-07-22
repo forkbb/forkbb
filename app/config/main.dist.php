@@ -215,6 +215,7 @@ return [
         'VLusername' => \ForkBB\Models\Validators\Username::class,
         'VLemail'    => \ForkBB\Models\Validators\Email::class,
         'VLhtml'     => \ForkBB\Models\Validators\Html::class,
+        'VLnekot'    => \ForkBB\Models\Validators\Nekot::class,
 
         'ProfileRules' => \ForkBB\Models\Rules\Profile::class,
         'UsersRules'   => \ForkBB\Models\Rules\Users::class,
@@ -398,6 +399,7 @@ return [
         'AdminParserBBCode'  => \ForkBB\Models\Pages\Admin\Parser\BBCode::class,
         'AdminLogs'          => \ForkBB\Models\Pages\Admin\Logs::class,
         'AdminUploads'       => \ForkBB\Models\Pages\Admin\Uploads::class,
+        'AdminAntispam'      => \ForkBB\Models\Pages\Admin\Antispam::class,
 
         'AdminListModel'    => \ForkBB\Models\AdminList\AdminList::class,
         'BanListModel'      => \ForkBB\Models\BanList\BanList::class,
