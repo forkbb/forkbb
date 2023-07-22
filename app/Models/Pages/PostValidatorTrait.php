@@ -238,6 +238,15 @@ trait PostValidatorTrait
             ]);
         }
 
+        if (
+            $this->user->isGuest
+            || empty($this->user->last_post)
+        ) {
+            if (1 === $this->c->config->b_ant_use_js) {
+                $v->addRules(['nekot' => 'exist|string|nekot']);
+            }
+        }
+
         return $v;
     }
 

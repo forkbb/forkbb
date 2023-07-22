@@ -99,12 +99,18 @@ trait PostFormTrait
             $this->user->isGuest
             || empty($this->user->last_post)
         ) {
-            $fieldset['terms'] = [
-                'class'   => ['w0'],
-                'type'    => 'checkbox',
-                'label'   => 'I agree to the Terms of Use',
-                'checked' => false,
-            ];
+            if (1 === $this->c->config->b_ant_hidden_ch) {
+                $fieldset['terms'] = [
+                    'class'   => ['w0'],
+                    'type'    => 'checkbox',
+                    'label'   => 'I agree to the Terms of Use',
+                    'checked' => false,
+                ];
+            }
+
+            if (1 === $this->c->config->b_ant_use_js) {
+                $form['hidden']['nekot'] = '';
+            }
         }
 
         $form['sets']['uesm'] = [
