@@ -109,7 +109,7 @@ class Test
     protected function log(string $message): void
     {
         $this->c->Log->debug("TEST: {$message}", [
-            'user'    => $this->user->fLog(),
+            'user'    => $this->c->user->fLog(),
             'headers' => true,
         ]);
     }
