@@ -782,4 +782,35 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.63 to rev.64
+     */
+    protected function stageNumber63(array $args): ?int
+    {
+        $config = $this->c->config;
+
+        $config->b_ant_hidden_ch = 1;
+        $config->b_ant_use_js    = 0;
+
+        $config->save();
+
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'multiple=>AdminAntispam',
+            '\\ForkBB\\Models\\Pages\\Admin\\Antispam::class',
+            'AdminUploads'
+        );
+
+        $coreConfig->add(
+            'shared=>VLnekot',
+            '\\ForkBB\\Models\\Validators\\Nekot::class',
+            'VLhtml'
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }
