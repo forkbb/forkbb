@@ -1,3 +1,7 @@
+#forka {
+  --c-log-in-c: #F8F4E3;
+}
+
 /******************/
 /* Админка - меню */
 /******************/
@@ -7,14 +11,14 @@
 }
 
 #fork-a-menu .f-menu-a.active {
-  background-color: #814A00;
-  color: #F8F4E3;
+  background-color: var(--bg-active);
+  color: var(--c-active);
 }
 
 #fork-a-menu .f-menu-a:hover,
 #fork-a-menu .f-menu-a:focus {
-  background-color: #583200;
-  color: #F8F4E3;
+  background-color: var(--c-a-and-btn);
+  color: var(--c-active);
 }
 
 #fork-a-menu #id-an-label {
@@ -75,8 +79,8 @@
 
 #forka .f-admin .f-adiv,
 #forka .f-admin .f-fdiv {
-  background-color: #F8F4E3;
-  border: 0.0625rem solid #AA7939;
+  background-color: var(--bg-like-nav);
+  border: 0.0625rem solid var(--br-fprimary);
 }
 
 #fork-welcome p,
@@ -96,7 +100,7 @@
 }
 
 #forka dl {
-  border-bottom: 0.0625rem dotted #AA7939;
+  border-bottom: 0.0625rem dotted var(--br-fprimary);
   margin-bottom: 0.3125rem;
 }
 
@@ -110,11 +114,11 @@
 
 #fork-grlist li {
   padding: 0.625rem 0;
-  border-bottom: 0.0625rem dotted #AA7939;
+  border-bottom: 0.0625rem dotted var(--br-fprimary);
 }
 
 #fork-grlist li:first-child {
-  border-top: 0.0625rem dotted #AA7939;
+  border-top: 0.0625rem dotted var(--br-fprimary);
 }
 
 #forka #fork-phpinfo {
@@ -414,7 +418,7 @@
 #forka .f-fs-result {
   display: flex;
   align-items: stretch;
-  border-bottom: 0.0625rem dotted #AA7939;
+  border-bottom: 0.0625rem dotted var(--br-fprimary);
   margin-bottom: 0.3125rem;
   padding-bottom: 0.3125rem;
 }
@@ -466,7 +470,7 @@
   width: 3rem;
   overflow: hidden;
   text-align: center;
-  border-inline-start: 0.0625rem dotted #AA7939;
+  border-inline-start: 0.0625rem dotted var(--br-fprimary);
   display: flex;
   flex-direction: column;
 }
@@ -483,7 +487,7 @@
 }
 
 #forka .f-fs-result .f-field-note > dd {
-  color: #D8000C;
+  color: var(--c-faggr);
 }
 
 #fork-recalc #id-dl-confirm > dt {
@@ -563,12 +567,12 @@
 
   #forka .f-fs-result .f-field-title {
     width: 16%;
-    border-inline-start: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted var(--br-fprimary);
   }
 
   #forka .f-fs-result .f-field-posts {
     width: 15%;
-    border-inline-start: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted var(--br-fprimary);
   }
 
   #forka .f-fs-result .f-field-posts > dd {
@@ -577,12 +581,12 @@
 
   #forka .f-fs-result .f-field-note {
     width: 20%;
-    border-inline-start: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted var(--br-fprimary);
   }
 
   #forka .f-fs-result .f-field-view-ip {
     width: 16%;
-    border-inline-start: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted var(--br-fprimary);
   }
 
   #forka .f-fs-result .f-field-ip {
@@ -591,19 +595,19 @@
 
   #forka .f-fs-result .f-field-last-used {
     width: 25%;
-    border-inline-start: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted var(--br-fprimary);
     text-align: center;
   }
 
   #forka .f-fs-result .f-field-used-times {
     width: 20%;
-    border-inline-start: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted var(--br-fprimary);
     text-align: center;
   }
 
   #forka .f-fs-result .f-field-action {
     width: 30%;
-    border-inline-start: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted var(--br-fprimary);
   }
 }
 
@@ -615,7 +619,7 @@
   flex-direction: column;
   justify-content: center;
   width: 3rem;
-  border-inline-start: 0.0625rem dotted #AA7939;
+  border-inline-start: 0.0625rem dotted var(--br-fprimary);
 }
 
 #forka .f-fs-result .f-wrap-btns-result dt {
@@ -629,22 +633,22 @@
 @media screen and (min-width: 50rem) {
   #forka .f-fs-result .f-field-ips {
     width: 19%;
-    border-inline-start: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted var(--br-fprimary);
   }
 
   #forka .f-fs-result .f-field-expire {
     width: 16%;
-    border-inline-start: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted var(--br-fprimary);
   }
 
   #forka .f-fs-result .f-field-message {
     width: 16%;
-    border-inline-start: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted var(--br-fprimary);
   }
 
   #forka .f-fs-result .f-field-creator {
     width: 16%;
-    border-inline-start: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted var(--br-fprimary);
   }
 
   #forka .f-wrap-btns-result .f-ybtn {
@@ -665,7 +669,7 @@
 #fork-imgsm .f-fs-image {
   display: flex;
   align-items: center;
-  border: 0.0625rem dotted #AA7939;
+  border: 0.0625rem dotted var(--br-fprimary);
   margin: 0.3125rem;
 }
 
@@ -680,7 +684,7 @@
 
 #forka .f-fs-bbcode,
 #fork-smls .f-fs-smile {
-  border-bottom: 0.0625rem dotted #AA7939;
+  border-bottom: 0.0625rem dotted var(--br-fprimary);
 }
 
 #fork-smls .f-fs-smile {
@@ -689,8 +693,8 @@
 
 #fork-smls .f-fs-smile .f-fleg,
 #fork-smls .f-fs-new-smile .f-fleg {
-  border: 0.0625rem solid #AA7939;
-  background-color: #FFEBCD;
+  border: 0.0625rem solid var(--br-fprimary);
+  background-color: var(--bg-submenu);
 }
 
 #forka .f-field-bbcode.f-field-tag .f-link,
@@ -698,8 +702,8 @@
   display: block;
   line-height: 1.25rem;
   padding: 0.5rem;
-  border: 0.0625rem solid #AA7939;
-  background-color: #FFEBCD;
+  border: 0.0625rem solid var(--br-fprimary);
+  background-color: var(--bg-submenu);
 }
 
 #forka .f-fs-bbcode .f-fleg,
@@ -891,25 +895,21 @@
   #forka .f-field-smile.f-field-delete {
     width: 3rem;
   }
-
-  #fork-smls .f-fs-new-smile .f-fleg {
-    /*border-top: 0;*/
-  }
 }
 
 /****************************************/
 /* Админка/Сигналы                      */
 /****************************************/
 #forka .f-reports .f-fleg {
-  border-top: 0.0625rem dashed #AA7939;
+  border-top: 0.0625rem dashed var(--br-fprimary);
 }
 
 #fork-rprt-new .f-field-reason {
-  background-color: #FFBABA;
+  background-color: var(--bg-faggr);
 }
 
 #fork-rprt-old .f-field-reason {
-  background-color: #FEEFB3; /*#FFCCBA;*/
+  background-color: #FEEFB3;
 }
 
 /****************************************/
@@ -917,13 +917,13 @@
 /****************************************/
 #forka .f-lgli {
   padding: 0.3125rem;
-  border-bottom: 0.0625rem dotted #AA7939;
+  border-bottom: 0.0625rem dotted var(--br-fprimary);
   display: flex;
 }
 
 #forka .f-lgp,
 #id-lgdtlt .f-lgli:first-child {
-  border-top: 0.0625rem dotted #AA7939;
+  border-top: 0.0625rem dotted var(--br-fprimary);
 }
 
 #forka .f-llv > span {
@@ -932,42 +932,42 @@
 }
 
 #forka .f-llvem > span {
-  color: #F8F4E3;
+  color: var(--c-log-in-c);
   background-color: #B71C1C;
 }
 
 #forka .f-llval > span {
-  color: #F8F4E3;
+  color: var(--c-log-in-c);
   background-color: #D32F2F;
 }
 
 #forka .f-llvcr > span {
-  color: #F8F4E3;
+  color: var(--c-log-in-c);
   background-color: #F44336;
 }
 
 #forka .f-llver > span {
-  color: #F8F4E3;
+  color: var(--c-log-in-c);
   background-color: #FF5722;
 }
 
 #forka .f-llvwa > span {
-  color: #F8F4E3;
+  color: var(--c-log-in-c);
   background-color: #FF9100;
 }
 
 #forka .f-llvno > span {
-  color: #F8F4E3;
+  color: var(--c-log-in-c);
   background-color: #4CAF50;
 }
 
 #forka .f-llvin > span {
-  color: #F8F4E3;
+  color: var(--c-log-in-c);
   background-color: #1976D2;
 }
 
 #forka .f-llvde > span {
-  color: #F8F4E3;
+  color: var(--c-log-in-c);
   background-color: #90CAF9;
 }
 
@@ -1023,8 +1023,8 @@
 }
 
 #fork-logview .f-lgdts {
-  color: #F8F4E3;
-  background-color: #AA7939;
+  color: var(--c-light);
+  background-color: var(--bg-like-br1);
   margin: 0.125rem 0.1875rem;
   display: block;
   text-align: center;
@@ -1140,7 +1140,7 @@
 }
 
 #fork-uploads-files .f-field-action {
-  border-inline-start: 0.0625rem dotted #AA7939;
+  border-inline-start: 0.0625rem dotted var(--br-fprimary);
 }
 
 @media screen and (max-width: 85.9999rem) {
@@ -1219,7 +1219,7 @@
 
   #fork-uploads-files .f-field-size {
     width: 10%;
-    border-inline-start: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted var(--br-fprimary);
   }
 
   #fork-uploads-files .f-field-size > dd {
@@ -1228,7 +1228,7 @@
 
   #fork-uploads-files .f-field-created {
     width: 21%;
-    border-inline-start: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted var(--br-fprimary);
   }
 
   #fork-uploads-files .f-field-created > dd {
@@ -1237,7 +1237,7 @@
 
   #fork-uploads-files .f-field-user {
     width: 24%;
-    border-inline-start: 0.0625rem dotted #AA7939;
+    border-inline-start: 0.0625rem dotted var(--br-fprimary);
   }
 
   #fork-uploads-files .f-fs-filelist:not(:first-of-type) dt {

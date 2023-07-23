@@ -1,10 +1,31 @@
-/* Palette URL: http://paletton.com/#uid=10I0u0kllll++b4w0gdaFqt00vB
-.color-primary-0 { color: #AA7939 }	Main Primary color
-.color-primary-1 { color: #583200 }
-.color-primary-2 { color: #814A00 }
-.color-primary-3 { color: #D3B58D }
-.color-primary-4 { color: #FCFCFC } #FEFCF2  #F8F4E3 #FFEBCD
-*/
+:root {
+  --c-fprimary: #333333;
+  --bg-fprimary: #FBFBFA;
+  --br-fprimary: #AA7939;
+  --bg-like-br1: #AA7939;
+  --c-a-and-btn: #583200;
+  --bg-fh1: #E0C8B3;
+  --br-fh1: #814A00;
+  --bg-active: #814A00;
+  --c-icon-sub: #814A00;
+  --bg-focus: #D3B58D;
+  --bg-post-h: #D3B58D;
+  --bg-post-b: #FEFAEF;
+  --bg-fann: #FEFAEF;
+  --bg-submenu: #FFEBCD;
+  --c-active: #F8F4E3;
+  --bg-btn: #F8F4E3;
+  --bg-like-nav: #F8F4E3;
+  --c-light: #F8F4E3;
+  --c-tsticky: #D8000C;
+  --c-faggr: #D8000C;
+  --bg-faggr: #FFBABA;
+  --c-tclosed: #C8CCD1;
+  --c-tpoll: #9F6000;
+  --c-req: red;
+  --bg-bbcode: #FFFFFF;
+  --br-bbcode: #C0C0C0;
+}
 
 /*******************/
 /* Общие настройки */
@@ -122,8 +143,8 @@ body,
 
 body,
 #fork {
-  color: #333333;
-  background-color: #FBFBFA;
+  color: var(--c-fprimary);
+  background-color: var(--bg-fprimary);
 }
 
 #fork {
@@ -147,8 +168,6 @@ body,
 
 #fork :focus {
   outline-style: none;
-  /*outline-width: 0px !important;
-  outline-color: none !important;*/
 }
 
 #fork b,
@@ -220,11 +239,11 @@ body,
 }
 
 #fork select {
-  background-color: #D3B58D;
+  background-color: var(--bg-focus);
 }
 
 #fork select:not([multiple]) option {
-  background-color: #FFEBCD;
+  background-color: var(--bg-submenu);
 }
 
 #fork #fork-h1,
@@ -247,8 +266,8 @@ body,
 
 #fork .f-mheader {
   padding: 0.625rem;
-  border: 0.0625rem solid #814A00;
-  background-color: #E0C8B3; /*#DABCA0; #D3B58D;*/
+  border: 0.0625rem solid var(--br-fh1);
+  background-color: var(--bg-fh1);
 }
 
 #fork section > h2,
@@ -286,7 +305,7 @@ body,
 
 #fork a,
 #fork .f-btn {
-  color: #583200;
+  color: var(--c-a-and-btn);
   cursor: pointer;
   text-decoration: none;
 }
@@ -298,7 +317,7 @@ body,
   border: 0.0625rem solid;
   border-radius: 0.1875rem;
   padding: 0.125rem 0.5rem;
-  background-color: #F8F4E3;
+  background-color: var(--bg-btn);
   touch-action: manipulation;
   user-select: none;
   white-space: nowrap;
@@ -314,12 +333,12 @@ body,
 #fork a:focus,
 #fork .f-btn:hover,
 #fork .f-btn:focus {
-  background-color: #D3B58D;
+  background-color: var(--bg-focus);
 }
 
 #fork a:active,
 #fork .f-btn:active {
-  background-color: #814A00;
+  background-color: var(--bg-active);
 }
 
 #fork .f-inline > dt,
@@ -337,7 +356,7 @@ body,
 
 #fork .f-req::after {
   content: " *";
-  color: red;
+  color: var(--c-req);
 }
 
 #fork .f-field-depth1 > dd {
@@ -374,7 +393,7 @@ body,
   cursor: pointer;
   font: 900 1.25rem "fa";
   content: "\f0c9";
-  color: #583200;
+  color: var(--c-a-and-btn);
 }
 
 #fork .f-menu-checkbox,
@@ -388,8 +407,8 @@ body,
 }
 
 #fork .f-menu-checkbox:focus + .f-menu-toggle::after {
-  color: #D3B58D;
-  background-color: #583200;
+  color: var(--bg-focus);
+  background-color: var(--c-a-and-btn);
 }
 
 #fork .f-menu-items {
@@ -436,30 +455,29 @@ body,
 /****************/
 #fork #fork-nav {
   order: 1;
-  border-bottom: 0.0625rem solid #AA7939;
+  border-bottom: 0.0625rem solid var(--br-fprimary);
 }
 
 #fork #fork-navdir {
   width: 100%;
-  background-color: #F8F4E3;
+  background-color: var(--bg-like-nav);
   display: flex;
   flex-direction: column;
 }
 
 #fork-nav #id-mn-label {
-  /* color: #F8F4E3; */
   position: absolute;
   top: 0.625rem;
   inset-inline-end: 0.9325rem;
 }
 
 #fork-nav .f-menu-items {
-  background-color: #F8F4E3;
-  border-bottom: 0.0625rem solid #AA7939;
+  background-color: var(--bg-btn);
+  border-bottom: 0.0625rem solid var(--br-fprimary);
 }
 
 #fork-nav .f-submenu-items {
-  background-color: #FFEBCD; /* #D3B58D; */
+  background-color: var(--bg-submenu);
 }
 
 #fork-nav .f-submenu-items .f-menu-a {
@@ -468,18 +486,18 @@ body,
 }
 
 #fork-nav .f-menu-a.active {
-  background-color: #814A00;
-  color: #F8F4E3;
+  background-color: var(--bg-active);
+  color: var(--c-active);
 }
 
 #fork-nav .f-menu-a:hover,
 #fork-nav .f-menu-a:focus {
-  background-color: #583200;
-  color: #F8F4E3;
+  background-color: var(--c-a-and-btn);
+  color: var(--c-active);
 }
 
 #fork-nav .f-menu-user-items {
-  background-color: #F8F4E3;
+  background-color: var(--bg-btn);
   display: flex;
   flex-grow: 1;
   justify-content: flex-end;
@@ -549,7 +567,7 @@ body,
   #fork #fork-navdir {
     flex-direction: row;
     flex-wrap: wrap;
-    border-bottom: 0.0625rem solid #AA7939;
+    border-bottom: 0.0625rem solid var(--br-fprimary);
   }
 
   #fork-nav #id-mn-label {
@@ -580,7 +598,7 @@ body,
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #FBFBFA;
+    background-color: var(--bg-fprimary);
     display: flex;
     font-size: 0.875rem;
   }
@@ -595,7 +613,7 @@ body,
 /*********/
 #fork #fork-header {
   order: 0;
-  border-bottom: 0.0625rem solid #AA7939;
+  border-bottom: 0.0625rem solid var(--br-fprimary);
 }
 
 #fork #id-fhth1 {
@@ -609,13 +627,12 @@ body,
 }
 
 #fork #id-fhtdesc {
-  border-top: 0.0625rem dotted #D3B58D;
+  border-top: 0.0625rem dotted var(--bg-post-h);
   padding: 0.625rem;
-  /* color: #F8F4E3; */
 }
 
 #fork #id-fhtha {
-  color: #583200;
+  color: var(--c-a-and-btn);
 }
 
 @media screen and (min-width: 50rem) {
@@ -681,7 +698,7 @@ body,
 /*********/
 #fork .f-fdiv {
   max-width: 100%;
-  border: 0.0625rem solid #AA7939;
+  border: 0.0625rem solid var(--br-fprimary);
   padding: 0.3125rem;
 }
 
@@ -707,7 +724,7 @@ body,
 #fork .f-fleg {
   width: 100%;
   padding: 0.3125rem;
-  border-bottom: 0.0625rem dotted #AA7939;
+  border-bottom: 0.0625rem dotted var(--br-fprimary);
   font-weight: bold;
 }
 
@@ -799,9 +816,9 @@ body,
 }
 
 #fork .f-finform {
-  background-color: #AA7939;
+  background-color: var(--bg-like-br1);
   padding: 0.625rem;
-  color: #F8F4E3;
+  color: var(--c-light);
   text-align: justify;
   margin: 0 -0.3125rem 0.3125rem;
   overflow: hidden;
@@ -816,7 +833,7 @@ body,
 }
 
 #fork .f-ctrl {
-  border: 0.0625rem solid #AA7939;
+  border: 0.0625rem solid var(--br-fprimary);
 }
 
 #fork input.f-ctrl:user-invalid {
@@ -826,7 +843,7 @@ body,
 #fork input:focus,
 #fork select:focus,
 #fork textarea:focus {
-  box-shadow: 0 0 0 0.125rem #AA7939;
+  box-shadow: 0 0 0 0.125rem var(--br-fprimary);
 }
 
 #fork .f-field-hint .f-yhint {
@@ -869,8 +886,8 @@ body,
 /* Объявление */
 /**************/
 #fork #fork-announce {
-  border-bottom: 0.0625rem solid #AA7939;
-  background-color: #FEFAEF;
+  border-bottom: 0.0625rem solid var(--br-fprimary);
+  background-color: var(--bg-fann);
   padding: 0.625rem;
   position: relative;
 }
@@ -883,9 +900,9 @@ body,
 }
 
 #fork #fork-footer-in {
-  border-bottom: 0.0625rem solid #AA7939;
-  border-top: 0.0625rem solid #AA7939;
-  background-color: #F8F4E3;
+  border-bottom: 0.0625rem solid var(--br-fprimary);
+  border-top: 0.0625rem solid var(--br-fprimary);
+  background-color: var(--bg-like-nav);
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -910,19 +927,19 @@ body,
 
 #fork-debug #fork-dgtable {
   width: 100%;
-  border: 0.0625rem solid #AA7939;
+  border: 0.0625rem solid var(--br-fprimary);
   border-collapse: collapse;
   table-layout: fixed;
 }
 
 #fork-dgtable #fork-dgthead {
-  background-color: #F8F4E3;
+  background-color: var(--bg-like-nav);
 }
 
 #fork-dgtable .f-tcl,
 #fork-dgtable .f-tcr {
   padding: 0.3125rem 0.625rem;
-  border-bottom: 0.0625rem solid #AA7939;
+  border-bottom: 0.0625rem solid var(--br-fprimary);
 }
 
 #fork-dgtable .f-tcl {
@@ -946,7 +963,7 @@ body,
 
 #fork .f-crumb:not(:last-child):after {
   display: inline;
-  color: #583200;
+  color: var(--c-a-and-btn);
   content: " /";
 }
 
@@ -974,7 +991,7 @@ body,
 
 #fork .f-nlinks-b {
   margin-top: 0.625rem;
-  border-top: 0.0625rem dotted #AA7939;
+  border-top: 0.0625rem dotted var(--br-fprimary);
 }
 
 #fork .f-nlinks-b .f-actions-links,
@@ -984,7 +1001,7 @@ body,
 
 #fork .f-nlinks-a {
   margin-bottom: 0.625rem;
-  border-bottom: 0.0625rem dotted #AA7939;
+  border-bottom: 0.0625rem dotted var(--br-fprimary);
   flex-wrap: wrap-reverse;
 }
 
@@ -1000,7 +1017,7 @@ body,
 }
 
 #fork .f-nav-links .f-page {
-  border: 0.0625rem solid #AA7939;
+  border: 0.0625rem solid var(--br-fprimary);
   padding: 0.125rem 0.375rem;
   font-size: 0.875rem;
   line-height: 1.125rem;
@@ -1012,9 +1029,9 @@ body,
 }
 
 #fork .f-nav-links .f-page.active {
-  border-color: #814A00;
-  background-color: #814A00;
-  color: #F8F4E3;
+  border-color: var(--bg-active);
+  background-color: var(--bg-active);
+  color: var(--c-active);
 }
 
 #fork .f-pinfo {
@@ -1077,8 +1094,8 @@ body,
 /***********/
 #fork-rules #id-rules {
   padding: 0.625rem;
-  border: 0.0625rem solid #AA7939;
-  background-color: #F8F4E3;
+  border: 0.0625rem solid var(--br-fprimary);
+  background-color: var(--bg-like-nav);
 }
 
 /************/
@@ -1094,7 +1111,7 @@ body,
 /* Статистика форума */
 /*********************/
 #fork #fork-stats {
-  border-top: 0.0625rem solid #AA7939;
+  border-top: 0.0625rem solid var(--br-fprimary);
   font-size: 0.875rem;
   padding: 0.3125rem 0;
 }
@@ -1116,7 +1133,7 @@ body,
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  border-bottom: 0.0625rem dotted #AA7939;
+  border-bottom: 0.0625rem dotted var(--br-fprimary);
 }
 
 #fork-stats .f-stats-dd {
@@ -1124,7 +1141,7 @@ body,
 }
 
 #fork-stats #fork-onlinelist {
-  border-top: 0.0625rem dotted #AA7939;
+  border-top: 0.0625rem dotted var(--br-fprimary);
   padding: 0.3125rem 0.625rem;
   width: 100%;
 }
@@ -1192,7 +1209,7 @@ body,
 /* Таблица разделов, подразделов и тем */
 /***************************************/
 .f-category > .f-table {
-  background-color: #F8F4E3;
+  background-color: var(--bg-like-nav);
 }
 
 #fork .f-category + .f-category {
@@ -1205,12 +1222,12 @@ body,
 
 #fork .f-ftlist .f-row {
   display: block;
-  border-bottom: 0.0625rem solid #AA7939;
+  border-bottom: 0.0625rem solid var(--br-fprimary);
   padding: 0.3125rem;
 }
 
 #fork .f-ftlist .f-thead {
-  border-bottom: 0.125rem solid #AA7939;
+  border-bottom: 0.125rem solid var(--br-fprimary);
   padding: 0;
 }
 
@@ -1292,7 +1309,7 @@ body,
 #fork .f-ficon::before {
   font: 400 1.5rem "fa";
   content: "\f15b"; /* "\f086"; */
-  color: #814A00;
+  color: var(--c-icon-sub);
 }
 
 #fork .f-fnew .f-ficon::before {
@@ -1311,7 +1328,7 @@ body,
 #fork .f-frdrsub::before {
   font: 400 0.875rem "fa";
   content: "\f1d8";
-  color: #814A00;
+  color: var(--c-icon-sub);
   margin-inline-end: 0.3125rem;
 }
 
@@ -1413,7 +1430,7 @@ body,
 }
 
 #fork .f-tpages .f-page {
-  border: 0.0625rem solid #AA7939;
+  border: 0.0625rem solid var(--br-fprimary);
   padding: 0.0625rem 0.3125rem;
   font-size: 0.875rem;
   line-height: 1.125rem;
@@ -1430,30 +1447,30 @@ body,
 }
 
 #fork .f-fsticky .f-ficon::before {
-  color: #D8000C;
+  color: var(--c-tsticky);
 }
 
 #fork .f-tsticky::before {
   font: 900 0.875rem "fa";
   content: "\f08d"; /* \f35b */
-  color: #D8000C;
+  color: var(--c-tsticky);
 }
 
 #fork .f-fclosed .f-ficon::before {
-  color: #C8CCD1;
+  color: var(--c-tclosed);
 }
 
 #fork .f-tclosed::before {
   font: 900 0.875rem "fa";
   content: "\f023";
-  color: #C8CCD1;
+  color: var(--c-tclosed);
 }
 
 
 #fork .f-tpoll::before {
   font: 900 0.875rem "fa";
   content: "\f681";
-  color: #9F6000;
+  color: var(--c-tpoll);
 }
 
 /*****************/
@@ -1462,16 +1479,16 @@ body,
 #fork .f-btn-topic-closed {
   pointer-events: none;
   cursor: default;
-  color: #D8000C;
-  background-color: #FFBABA;
+  color: var(--c-faggr);
+  background-color: var(--bg-faggr);
 }
 
 /********************/
 /* Сообщение в теме */
 /********************/
 #fork .f-post {
-  border-top: 0.0625rem solid #AA7939;
-  border-bottom: 0.0625rem solid #AA7939;
+  border-top: 0.0625rem solid var(--br-fprimary);
+  border-bottom: 0.0625rem solid var(--br-fprimary);
   position: relative;
 }
 
@@ -1483,8 +1500,8 @@ body,
   display: flex;
   flex-wrap: wrap;
   padding: 0.625rem;
-  border-bottom: 0.0625rem solid #AA7939;
-  background-color: #D3B58D;
+  border-bottom: 0.0625rem solid var(--br-fprimary);
+  background-color: var(--bg-post-h);
   font-size: 0.875rem;
 }
 
@@ -1512,8 +1529,8 @@ body,
 #fork .f-post-user {
   position: relative;
   padding: 0.625rem;
-  background-color: #F8F4E3;
-  border-bottom: 0.0625rem solid #AA7939;
+  background-color: var(--bg-like-nav);
+  border-bottom: 0.0625rem solid var(--br-fprimary);
   font-size: 0.875rem;
 }
 
@@ -1584,7 +1601,7 @@ body,
 
 #fork .f-post-body {
   padding: 0.3125rem;
-  background-color: #FEFAEF;
+  background-color: var(--bg-post-b);
 }
 
 #fork .f-post-body img {
@@ -1621,7 +1638,7 @@ body,
 }
 
 #fork .f-admin-note {
-  color: #D8000C;
+  color: var(--c-faggr);
 }
 
 .f-post-user .f-psfont::before {
@@ -1693,7 +1710,7 @@ body,
 
   #fork .f-post-user {
     width: 13rem;
-    border-inline-end: 0.0625rem solid #AA7939;
+    border-inline-end: 0.0625rem solid var(--br-fprimary);
     border-bottom: 0;
   }
 
@@ -1756,14 +1773,14 @@ body,
 }
 
 #fork .f-bb-quote {
-  border-inline-start: 0.1875rem solid #AA7939;
-  border-top: 0.0625rem solid #AA7939;
+  border-inline-start: 0.1875rem solid var(--br-fprimary);
+  border-top: 0.0625rem solid var(--br-fprimary);
 }
 
 #fork .f-bb-q-header {
   display: block;
   padding: 0.625rem;
-  background-color: #F8F4E3 /*#D3B58D*/;
+  background-color: var(--bg-like-nav);
 }
 
 #fork .f-bb-q-body {
@@ -1773,16 +1790,16 @@ body,
 #fork .f-bb-code {
   margin: 0 0.625rem;
   padding: 0.625rem;
-  background-color: #FFFFFF;
-  border: 0.0625rem solid #C0C0C0;
+  background-color: var(--bg-bbcode);
+  border: 0.0625rem solid var(--br-bbcode);
   overflow: auto;
   max-height: 45rem;
   min-height: 2rem;
 }
 
 #fork .f-bb-mono {
-  border: 0.0625rem solid #C0C0C0;
-  background-color: #FFFFFF;
+  border: 0.0625rem solid var(--br-bbcode);
+  background-color: var(--bg-bbcode);
   padding: 0 0.25rem;
 }
 
@@ -1806,7 +1823,7 @@ body,
 
 #fork .f-bb-s-body {
   padding: 0.625rem;
-  border-inline-start: 0.1875rem solid #AA7939;
+  border-inline-start: 0.1875rem solid var(--br-fprimary);
 }
 
 #fork .f-bb-from {
@@ -1815,8 +1832,8 @@ body,
 }
 
 #fork .f-bb-badlink {
-  color: #D8000C;
-  background-color: #FFBABA;
+  color: var(--c-faggr);
+  background-color: var(--bg-faggr);
 }
 
 #fork .f-bb-left {
@@ -1841,19 +1858,19 @@ body,
 
 #fork .f-bb-table {
   border-collapse: collapse;
-  border: 0.0625rem solid #333333;
+  border: 0.0625rem solid var(--c-fprimary);
 }
 
 #fork .f-bb-td,
 #fork .f-bb-th {
-  border: 0.0625rem solid #333333;
+  border: 0.0625rem solid var(--c-fprimary);
   empty-cells: show;
   padding: 0.3125rem;
   min-width: 1rem;
 }
 
 #fork .f-bb-th {
-  background-color: #D3B58D;
+  background-color: var(--bg-post-h);
 }
 
 #fork .f-bb-size[data-bb="1"] {
@@ -1894,7 +1911,7 @@ body,
 /* Предпросмотр */
 /****************/
 #fork .f-preview {
-  border-top: 0.0625rem solid #AA7939;
+  border-top: 0.0625rem solid var(--br-fprimary);
 }
 
 #fork .f-preview > h2 {
@@ -1905,14 +1922,14 @@ body,
 }
 
 #fork .f-preview .f-post-body {
-  border-top: 0.125rem solid #AA7939;
-  border-inline-start: 0.125rem solid #AA7939;
+  border-top: 0.125rem solid var(--br-fprimary);
+  border-inline-start: 0.125rem solid var(--br-fprimary);
   width: 100%;
 }
 
 /*****************************/
 #fork .f-post-form {
-  border-top: 0.0625rem solid #AA7939;
+  border-top: 0.0625rem solid var(--br-fprimary);
 }
 
 #fork #fork-view-posts {
@@ -1927,7 +1944,7 @@ body,
 }
 
 #fork .f-post-form > .f-fdiv {
-  background-color: #F8F4E3;
+  background-color: var(--bg-like-nav);
 }
 
 #fork .f-post-form .f-ycaption {
@@ -1972,8 +1989,8 @@ body,
 #fork .f-post-poll {
   margin-top: 0.625rem;
   padding: 0.625rem 0.625rem 0;
-  background-color: #F8F4E3;
-  border: 0.0625rem solid #AA7939;
+  background-color: var(--bg-like-nav);
+  border: 0.0625rem solid var(--br-fprimary);
 }
 
 #fork .f-poll-q {
@@ -1981,7 +1998,7 @@ body,
 }
 
 #fork .f-poll-q + .f-poll-q {
-  border-top: 0.0625rem solid #AA7939;
+  border-top: 0.0625rem solid var(--br-fprimary);
   padding-top: 0.625rem;
 }
 
@@ -2019,13 +2036,13 @@ body,
 }
 
 #fork .f-poll-ab {
-  border: 0.0625rem solid #AA7939;
+  border: 0.0625rem solid var(--br-fprimary);
   width: 60%;
   height: 0.5rem;
 }
 
 #fork .f-poll-ab-s1 {
-  background-color: #AA7939;
+  background-color: var(--bg-like-br1);
   height: 0.5rem;
   display: block;
   font-size: 0;
@@ -2035,7 +2052,7 @@ body,
 #fork .f-poll-btns,
 #fork .f-poll-status {
   text-align: center;
-  border-top: 0.0625rem solid #AA7939;
+  border-top: 0.0625rem solid var(--br-fprimary);
   padding: 0.625rem 0;
 }
 
@@ -2172,7 +2189,7 @@ body,
 /* Модерирование */
 /*****************/
 #fork #fork-mod {
-  border-top: 0.0625rem solid #AA7939;
+  border-top: 0.0625rem solid var(--br-fprimary);
   position: relative;
 }
 
@@ -2279,11 +2296,11 @@ body,
 /* Список пользователей */
 /************************/
 #fork-usrlst .f-thead {
-  background-color: #F8F4E3;
+  background-color: var(--bg-like-nav);
 }
 
 #fork-usrlst .f-row {
-  border-bottom: 0.0625rem solid #AA7939;
+  border-bottom: 0.0625rem solid var(--br-fprimary);
 }
 
 #fork-usrlst .f-row {
@@ -2296,7 +2313,7 @@ body,
 }
 
 #fork-usrlst .f-thead + .f-row {
-  border-top: 0.125rem solid #AA7939;
+  border-top: 0.125rem solid var(--br-fprimary);
 }
 
 @media screen and (max-width: 49.9999rem) {
@@ -2312,8 +2329,8 @@ body,
   }
 
   #fork-usrlst .f-thead {
-    border-top: 0.125rem solid #AA7939;
-    border-bottom: 0.125rem solid #AA7939;
+    border-top: 0.125rem solid var(--br-fprimary);
+    border-bottom: 0.125rem solid var(--br-fprimary);
     display: block;
     padding: 0 0.3125rem;
   }
@@ -2353,7 +2370,7 @@ body,
 
   #fork-usrlst .f-hc-tasc > a.active,
   #fork-usrlst .f-hc-tdesc > a.active {
-    border: 0.0625rem solid #814A00;
+    border: 0.0625rem solid var(--bg-active);
   }
 
   #fork-usrlst .f-cell > b,
@@ -2425,7 +2442,7 @@ body,
 }
 
 #fork .f-fs-header #id-dl-username {
-  border-bottom: 0.0625rem solid #AA7939;
+  border-bottom: 0.0625rem solid var(--br-fprimary);
 }
 
 #fork .f-fs-header #id-username {
@@ -2449,11 +2466,11 @@ body,
 
 #fork .f-fs-header,
 #fork .f-fs-data {
-  border-bottom: 0.0625rem dotted #AA7939;
+  border-bottom: 0.0625rem dotted var(--br-fprimary);
 }
 
 #fork #id-fs-note.f-fs-data {
-  background-color: #FFBABA;
+  background-color: var(--bg-faggr);
 }
 
 #fork .f-field-confirmed #id-open-email::after {
@@ -2535,7 +2552,7 @@ body,
 }
 
 #fork .f-fs-modforum > dl {
-  border-bottom: 0.0625rem dotted #AA7939;
+  border-bottom: 0.0625rem dotted var(--br-fprimary);
   margin-bottom: 0.3125rem;
 }
 
@@ -2568,7 +2585,7 @@ body,
 #fork .f-fs-header-edit > dl,
 #fork .f-fs-data-edit:not(#id-fs-activity) > dl,
 #fork #id-fs-activity.f-fs-data-edit {
-  border-bottom: 0.0625rem dotted #AA7939;
+  border-bottom: 0.0625rem dotted var(--br-fprimary);
 }
 
 #fork .f-fs-header-edit,
@@ -2592,7 +2609,7 @@ body,
 }
 
 #fork .f-fs-data-edit #id-admin_note {
-  background-color: #FFBABA;
+  background-color: var(--bg-faggr);
 }
 
 #fork #id-dl-delete_avatar .f-flblch {
@@ -2641,14 +2658,14 @@ body,
 }
 
 #fork-pm-menu a.f-menu-a.active {
-  background-color: #814A00;
-  color: #F8F4E3;
+  background-color: var(--bg-active);
+  color: var(--c-active);
 }
 
 #fork-pm-menu a.f-menu-a:hover,
 #fork-pm-menu a.f-menu-a:focus {
-  background-color: #583200;
-  color: #F8F4E3;
+  background-color: var(--c-a-and-btn);
+  color: var(--c-active);
 }
 
 #fork-pm-menu #id-pmn-label {
@@ -2674,7 +2691,7 @@ body,
   flex-wrap: wrap;
   gap: 0.3125rem;
   padding-top: 0.3125rem;
-  border-top: 0.0625rem solid #AA7939;
+  border-top: 0.0625rem solid var(--br-fprimary);
 }
 
 #forkpm .f-pm-bl-li {
@@ -2684,14 +2701,14 @@ body,
   justify-content: space-between;
   align-items: center;
   flex: 1 1 25rem;
-  border-bottom: 0.0625rem dotted #AA7939;
+  border-bottom: 0.0625rem dotted var(--br-fprimary);
 }
 
 @media screen and (min-width: 36rem) {
   #forkpm > .f-pmconfig-form dl {
     display: flex;
     justify-content: space-between;
-    border-bottom: 0.0625rem dotted #AA7939;
+    border-bottom: 0.0625rem dotted var(--br-fprimary);
     margin-bottom: 0.3125rem;
     padding: 0.3125rem;
   }
@@ -2783,9 +2800,9 @@ body,
     order: 2;
     width: 16rem;
     border-bottom: 0;
-    border-inline-start: 0.0625rem solid #AA7939;
+    border-inline-start: 0.0625rem solid var(--br-fprimary);
     padding: 0;
-    background-color: #F8F4E3;
+    background-color: var(--bg-like-nav);
   }
 
   #fork.f-with-nav #fork-footer {
@@ -2830,7 +2847,7 @@ body,
   #fork.f-with-nav #fork-nav .f-submenu-items {
     display: block;
     position: static;
-    background-color: #FFEBCD;
+    background-color: var(--bg-submenu);
   }
 }
 
@@ -3033,6 +3050,6 @@ body,
     box-shadow: 0 0 0 0 transparent inset;
   }
   50% {
-    box-shadow: 0 0 0 0.25rem #AA7939 inset;
+    box-shadow: 0 0 0 0.25rem var(--br-fprimary) inset;
   }
 }
