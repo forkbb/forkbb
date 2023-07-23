@@ -476,18 +476,10 @@ class Register extends Page
             && 1 === $this->c->config->b_regs_verify
         ) {
             $isSent = true;
-            $flood  = \time() - $userInDB->last_email_sent;
 
             // отправка письма на сброс кодовой фразы
-            // костыль
-            if ($flood >= $this->c->FLOOD_INTERVAL) {
-                $_POST = [
-                    'token'  => $this->c->Csrf->create('Forget'),
-                    'email'  => $email,
-                    'submit' => 'From dupe registration',
-                ];
-
-                $this->c->Auth->forget([], 'POST');
+            if (\time() - $userInDB->last_email_sent >= $this->c->FLOOD_INTERVAL) {
+                $this->c->Auth->forget([], 'POST', '', $userInDB);
             }
 
             // письмо активации аккаунта отправлено

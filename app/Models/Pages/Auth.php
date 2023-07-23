@@ -243,7 +243,7 @@ class Auth extends Page
     /**
      * Запрос на смену кодовой фразы
      */
-    public function forget(array $args, string $method, string $email = ''): Page
+    public function forget(array $args, string $method, string $email = '', User $user = null): Page
     {
         $this->c->Lang->load('validator');
         $this->c->Lang->load('auth');
@@ -251,6 +251,17 @@ class Auth extends Page
         $v = null;
 
         if ('POST' === $method) {
+            // форма заполнена с помощью модели User
+            if (null !== $user) {
+                $postData = [
+                    'token'  => $this->c->Csrf->create('Forget'),
+                    'email'  => $user->email,
+                    'submit' => 'From User model',
+                ];
+            } else {
+                $postData = null;
+            }
+
             $v = $this->c->Validator->reset()
                 ->addValidators([
                 ])->addRules([
@@ -264,7 +275,7 @@ class Auth extends Page
                 ]);
 
             $v       = $this->c->Test->beforeValidation($v);
-            $isValid = $v->validation($_POST, true);
+            $isValid = $v->validation($postData ?? $_POST, true);
             $context = [
                 'user'    => $this->user->fLog(), // ???? Guest only?
                 'errors'  => $v->getErrorsWithoutType(),
@@ -284,7 +295,7 @@ class Auth extends Page
                     ]);
 
                 if (
-                    $v->validation($_POST)
+                    $v->validation($postData ?? $_POST)
                     && 0 === $this->c->bans->banFromName($tmpUser->username)
                 ) {
                     $this->c->Csrf->setHashExpiration(259200); // ???? хэш действует 72 часа
