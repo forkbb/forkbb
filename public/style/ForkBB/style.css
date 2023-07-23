@@ -19,6 +19,7 @@
   --c-light: #F8F4E3;
   --c-tsticky: #D8000C;
   --c-faggr: #D8000C;
+  --c-faggr-pr: #333333;
   --bg-faggr: #FFBABA;
   --c-tclosed: #C8CCD1;
   --c-tpoll: #9F6000;
@@ -834,6 +835,7 @@ body,
 
 #fork .f-ctrl {
   border: 0.0625rem solid var(--br-fprimary);
+  background-color: var(--bg-fprimary);
 }
 
 #fork input.f-ctrl:user-invalid {
@@ -2470,6 +2472,7 @@ body,
 }
 
 #fork #id-fs-note.f-fs-data {
+  color: var(--c-faggr-pr);
   background-color: var(--bg-faggr);
 }
 
@@ -2609,6 +2612,7 @@ body,
 }
 
 #fork .f-fs-data-edit #id-admin_note {
+  color: var(--c-faggr-pr);
   background-color: var(--bg-faggr);
 }
 

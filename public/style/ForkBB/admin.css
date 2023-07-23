@@ -905,6 +905,7 @@
 }
 
 #fork-rprt-new .f-field-reason {
+  color: var(--c-faggr-pr);
   background-color: var(--bg-faggr);
 }
 
