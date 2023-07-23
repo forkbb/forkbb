@@ -73,28 +73,20 @@ class Test
         ) {
             $index += 1;
         }
-/*
-        if (empty($_SERVER['HTTP_CACHE_CONTROL'])) {
-            if (false !== \strpos($_SERVER['SERVER_PROTOCOL'], '1.1')) {
-                $index += 1;
-            }
-        } else {
-            if (false !== \strpos($_SERVER['SERVER_PROTOCOL'], '1.0')) {
-                $index += 3;
-            }
-        }
-*/
+
         if (empty($_SERVER['HTTP_CONNECTION'])) {
             $index += 1;
         } elseif (! \preg_match('%^(?:keep-alive|close)$%iD', $_SERVER['HTTP_CONNECTION'])) {
             $index += 3;
         }
 
-        if (
-            ! empty($_SERVER['HTTP_REFERER'])
-            && $this->c->Router->validate($_SERVER['HTTP_REFERER'], 'Index') !== $_SERVER['HTTP_REFERER']
-        ) {
-            $index += 3;
+        if (! empty($_SERVER['HTTP_REFERER'])) {
+            $ref = $this->c->Router->validate($_SERVER['HTTP_REFERER'], 'Index');
+            $ref = \strstr($ref, '#', true) ?: $ref;
+
+            if ($ref !== $_SERVER['HTTP_REFERER']) {
+                $index += 3;
+            }
         }
 
         if ($index > 3)  {
