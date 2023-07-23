@@ -18,8 +18,11 @@ class Nekot extends RulesValidator
     public function nekot(Validator $v, string $value): string
     {
         if (
-            '' == $value
-            || \substr(\preg_replace('%\D+%', '', $v->token), 0, 6) !== $value
+            $v->getStatus('token')
+            && (
+                '' == $value
+                || \substr(\preg_replace('%\D+%', '', $v->token), 0, 6) !== $value
+            )
         ) {
             $v->addError('Javascript disabled or bot', FORK_MESS_ERR);
         }
