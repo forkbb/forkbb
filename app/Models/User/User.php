@@ -215,14 +215,14 @@ class User extends DataModel
      */
     public function title(): string
     {
-        if ($this->isBanByName) {
+        if ($this->isGuest) {
+            return __('Guest');
+        } elseif ($this->isBanByName) {
             return __('Banned');
         } elseif ('' != $this->title) {
             return $this->censorTitle;
         } elseif ('' != $this->g_user_title) {
             return $this->censorG_user_title;
-        } elseif ($this->isGuest) {
-            return __('Guest');
         } elseif ($this->isUnverified) {
             return __('Unverified');
         } else {
