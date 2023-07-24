@@ -35,7 +35,7 @@
   font-family: "fa";
   font-style: normal;
   font-weight: 400;
-  src: url("../font/fa/fa-regular-400.v.60300.woff2") format("woff2");
+  src: url("../font/fa/fa-regular-400.v.60400.woff2") format("woff2");
   font-display: swap;
 }
 
@@ -43,7 +43,7 @@
   font-family: "fa";
   font-style: normal;
   font-weight: 900;
-  src: url("../font/fa/fa-solid-900.v.60300.woff2") format("woff2");
+  src: url("../font/fa/fa-solid-900.v.60400.woff2") format("woff2");
   font-display: swap;
 }
 
