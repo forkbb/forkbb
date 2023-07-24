@@ -244,6 +244,8 @@ class PMPost extends AbstractPM
 
             $this->user->u_pm_num_all += 1; // ???? может recalculate() ниже u_pm_last_post = $now?
 
+            $this->targetUser->u_pm_flash = 1;
+
             $this->pms->recalculate($this->targetUser);
         // сообщение в архивный диалог
         } elseif (Cnst::PT_ARCHIVE === $topic->poster_status) {
@@ -251,6 +253,8 @@ class PMPost extends AbstractPM
         // сообщение в активный диалог
         } else {
             $message = 'PM sent Redirect';
+
+            $this->targetUser->u_pm_flash = 1;
 
             $this->pms->recalculate($this->targetUser);
         }

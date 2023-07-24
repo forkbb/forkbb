@@ -98,6 +98,18 @@ abstract class Page extends Model
      */
     public function prepare(): void
     {
+        // вспышка нового личного сообщения
+        if (
+            null !== $this->onlinePos
+            && ! $this->user->isGuest
+            && 1 === $this->user->u_pm_flash
+        ) {
+            $this->fPMFlash         = true;
+            $this->user->u_pm_flash = 0;
+
+            $this->c->users->update($this->user);
+        }
+
         $this->pageHeader('commonJS', 'script', 10000, [
             'src' => $this->publicLink('/js/common.js'),
         ]);

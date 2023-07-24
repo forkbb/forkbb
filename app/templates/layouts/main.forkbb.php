@@ -13,7 +13,7 @@
 @endforeach
 </head>
 <body>
-  <div id="fork" @if ($p->fNavigation) class="f-with-nav" @endif>
+  <div id="fork" class="@if ($p->fNavigation)f-with-nav @endif @if($p->fPMFlash) f-pm-flash @endif">
     <header id="fork-header">
       <p id="id-fhth1"><a id="id-fhtha" rel="home" href="{{ $p->fRootLink }}">{{ $p->fTitle }}</a></p>
 @if ('' != $p->fDescription)

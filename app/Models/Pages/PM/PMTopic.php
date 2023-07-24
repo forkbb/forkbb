@@ -116,6 +116,8 @@ class PMTopic extends AbstractPM
             $this->model->poster_status = Cnst::PT_NORMAL; //????
             $this->model->target_status = Cnst::PT_NORMAL; //????
 
+            $this->targetUser->u_pm_flash = 1;
+
             $this->pms->update(Cnst::PTOPIC, $this->model);
             $this->pms->recalculate($this->targetUser);
             $this->pms->recalculate($this->user);

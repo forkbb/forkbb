@@ -132,10 +132,10 @@ body,
 #fork ul,
 #fork var,
 #fork video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font: inherit;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
   box-sizing: border-box;
   overflow-wrap: break-word;
   word-break: break-word;
@@ -3055,5 +3055,31 @@ body,
   }
   50% {
     box-shadow: 0 0 0 0.25rem var(--br-fprimary) inset;
+  }
+}
+
+#fork.f-pm-flash {
+  animation: pmFlashAnim 0.5s ease 0s 1 normal forwards;
+}
+
+@keyframes pmFlashAnim {
+  0%, 100% {
+    transform: translateX(0);
+  }
+
+  10%, 30%, 50%, 70% {
+    transform: translateX(-0.5rem);
+  }
+
+  20%, 40%, 60% {
+    transform: translateX(0.5rem);
+  }
+
+  80% {
+    transform: translateX(0.25rem);
+  }
+
+  90% {
+    transform: translateX(-0.25rem);
   }
 }
