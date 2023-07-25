@@ -1,31 +1,63 @@
 :root {
-  --c-fprimary: #333333;
-  --bg-fprimary: #FBFBFA;
-  --br-fprimary: #AA7939;
-  --bg-like-br1: #AA7939;
-  --c-a-and-btn: #583200;
-  --bg-fh1: #E0C8B3;
-  --br-fh1: #814A00;
-  --bg-active: #814A00;
-  --c-icon-sub: #814A00;
-  --bg-focus: #D3B58D;
-  --bg-post-h: #D3B58D;
-  --bg-post-b: #FEFAEF;
-  --bg-fann: #FEFAEF;
-  --bg-submenu: #FFEBCD;
-  --c-active: #F8F4E3;
-  --bg-btn: #F8F4E3;
-  --bg-like-nav: #F8F4E3;
-  --c-light: #F8F4E3;
-  --c-tsticky: #D8000C;
-  --c-faggr: #D8000C;
-  --c-faggr-pr: #333333;
-  --bg-faggr: #FFBABA;
-  --c-tclosed: #C8CCD1;
-  --c-tpoll: #9F6000;
-  --c-req: red;
-  --bg-bbcode: #FFFFFF;
-  --br-bbcode: #C0C0C0;
+  --c-fprimary: hsl(0, 0%, 20%);
+  --bg-fprimary: hsl(60, 9%, 98%);
+  --br-fprimary: hsl(34, 50%, 45%);
+  --bg-like-br1: hsl(34, 50%, 45%);
+  --c-a-and-btn: hsl(34, 100%, 17%);
+  --bg-fh1: hsl(28, 42%, 79%);
+  --br-fh1: hsl(34, 100%, 25%);
+  --bg-active: hsl(34, 100%, 25%);
+  --c-icon-sub: hsl(34, 100%, 25%);
+  --bg-focus: hsl(34, 44%, 69%);
+  --bg-post-h: hsl(34, 44%, 69%);
+  --bg-post-b: hsl(44, 88%, 97%);
+  --bg-fann: hsl(44, 88%, 97%);
+  --bg-submenu: hsl(36, 100%, 90%);
+  --c-active: hsl(49, 60%, 93%);
+  --bg-btn: hsl(49, 60%, 93%);
+  --bg-like-nav: hsl(49, 60%, 93%);
+  --c-light: hsl(49, 60%, 93%);
+  --c-tsticky: hsl(357, 100%, 42%);
+  --c-faggr: hsl(357, 100%, 42%);
+  --c-faggr-pr: hsl(0, 0%, 20%);
+  --bg-faggr: hsl(0, 100%, 86%);
+  --c-tclosed: hsl(213, 9%, 80%);
+  --c-tpoll: hsl(36, 100%, 31%);
+  --c-req: hsl(0, 100%, 50%);
+  --bg-bbcode: hsl(0, 0%, 100%);
+  --br-bbcode: hsl(0, 0%, 75%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-fprimary: hsl(0, 0%, 20%);
+    --bg-fprimary: hsl(34, 40%, 58%);
+    --br-fprimary: hsl(34, 50%, 25%);
+    --bg-like-br1: hsl(34, 50%, 45%);
+    --c-a-and-btn: hsl(34, 100%, 15%);
+    --bg-fh1: hsl(28, 42%, 79%);
+    --br-fh1: hsl(34, 100%, 25%);
+    --bg-active: hsl(34, 100%, 25%);
+    --c-icon-sub: hsl(34, 100%, 25%);
+    --bg-focus: hsl(34, 80%, 59%);
+    --bg-post-h: hsl(34, 44%, 69%);
+    --bg-post-b: hsl(36, 48%, 67%);
+    --bg-fann: hsl(36, 48%, 67%);
+    --bg-submenu: hsl(36, 50%, 60%);
+    --c-active: hsl(28, 50%, 73%);
+    --bg-btn: hsl(28, 50%, 73%);
+    --bg-like-nav: hsl(28, 50%, 73%);
+    --c-light: hsl(28, 50%, 73%);
+    --c-tsticky: hsl(357, 100%, 42%);
+    --c-faggr: hsl(357, 100%, 42%);
+    --c-faggr-pr: hsl(0, 0%, 20%);
+    --bg-faggr: hsl(0, 100%, 86%);
+    --c-tclosed: hsl(0, 0%, 32%);
+    --c-tpoll: hsl(136, 50%, 31%);
+    --c-req: hsl(0, 100%, 50%);
+    --bg-bbcode: hsl(0, 0%, 70%);
+    --br-bbcode: hsl(0, 0%, 15%);
+  }
 }
 
 /*******************/
@@ -380,6 +412,11 @@ body,
   padding-inline-start: 3.125rem;
 }
 
+#fork .f-table {
+  background-color: var(--bg-like-nav);
+}
+
+
 /********/
 /* Меню */
 /********/
@@ -699,6 +736,7 @@ body,
 /*********/
 #fork .f-fdiv {
   max-width: 100%;
+  background-color: var(--bg-like-nav);
   border: 0.0625rem solid var(--br-fprimary);
   padding: 0.3125rem;
 }
@@ -1210,9 +1248,9 @@ body,
 /***************************************/
 /* Таблица разделов, подразделов и тем */
 /***************************************/
-.f-category > .f-table {
+/*.f-category > .f-table {
   background-color: var(--bg-like-nav);
-}
+}*/
 
 #fork .f-category + .f-category {
   margin-top: 0.625rem;
@@ -1412,7 +1450,7 @@ body,
 
 #fork .f-cmposted {
   font-size: 0.875rem;
-  opacity: 0.4;
+  opacity: 0.6;
 }
 
 #fork .f-cmposter,
@@ -1445,7 +1483,7 @@ body,
 
 #fork .f-tpages:not(:hover) .f-page:not(:focus),
 #fork .f-cmforum > a:not(:focus):not(:hover) {
-  opacity: 0.4;
+  opacity: 0.6;
 }
 
 #fork .f-fsticky .f-ficon::before {
@@ -1624,7 +1662,7 @@ body,
 }
 
 #fork .f-post-btns:not(:hover) .f-btn:not(:focus) {
-  opacity: 0.4;
+  opacity: 0.6;
 }
 
 #fork .f-post-sign {
@@ -1945,9 +1983,9 @@ body,
   padding: 0.625rem 0.3125rem;
 }
 
-#fork .f-post-form > .f-fdiv {
+/*#fork .f-post-form > .f-fdiv {
   background-color: var(--bg-like-nav);
-}
+}*/
 
 #fork .f-post-form .f-ycaption {
   font-size: 0.875rem;
@@ -2204,7 +2242,7 @@ body,
 }
 
 #fork-mod .f-btns:not(:hover) .f-fbtn:not(:focus) {
-  opacity: 0.4;
+  opacity: 0.6;
 }
 
 #fork-modform .f-btns .f-fbtn {
@@ -2649,7 +2687,7 @@ body,
 }
 
 #fork .f-mi-pmoff {
-  opacity: 0.4;
+  opacity: 0.6;
 }
 
 #fork .f-nav-pm-links {

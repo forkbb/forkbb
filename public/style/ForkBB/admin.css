@@ -1,5 +1,11 @@
 #forka {
-  --c-log-in-c: #F8F4E3;
+  --c-log-in-c: hsl(49, 60%, 93%);
+}
+
+@media (prefers-color-scheme: dark) {
+  #forka {
+    --c-log-in-c: hsl(49, 60%, 10%);
+  }
 }
 
 /******************/
@@ -77,8 +83,8 @@
   gap: 1rem;
 }
 
-#forka .f-admin .f-adiv,
-#forka .f-admin .f-fdiv {
+/*#forka .f-admin .f-fdiv,*/
+#forka .f-admin .f-adiv {
   background-color: var(--bg-like-nav);
   border: 0.0625rem solid var(--br-fprimary);
 }
