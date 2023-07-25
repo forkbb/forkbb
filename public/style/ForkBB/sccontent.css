@@ -1,3 +1,65 @@
+:root {
+  --c-fprimary: hsl(0, 0%, 20%);
+  --bg-fprimary: hsl(60, 9%, 98%);
+  --br-fprimary: hsl(34, 50%, 45%);
+  --bg-like-br1: hsl(34, 50%, 45%);
+  --c-a-and-btn: hsl(34, 100%, 17%);
+  --bg-fh1: hsl(28, 42%, 79%);
+  --br-fh1: hsl(34, 100%, 25%);
+  --bg-active: hsl(34, 100%, 25%);
+  --c-icon-sub: hsl(34, 100%, 25%);
+  --bg-focus: hsl(34, 44%, 69%);
+  --bg-post-h: hsl(34, 44%, 69%);
+  --bg-post-b: hsl(44, 88%, 97%);
+  --bg-fann: hsl(44, 88%, 97%);
+  --bg-submenu: hsl(36, 100%, 90%);
+  --c-active: hsl(49, 60%, 93%);
+  --bg-btn: hsl(49, 60%, 93%);
+  --bg-like-nav: hsl(49, 60%, 93%);
+  --c-light: hsl(49, 60%, 93%);
+  --c-tsticky: hsl(357, 100%, 42%);
+  --c-faggr: hsl(357, 100%, 42%);
+  --c-faggr-pr: hsl(0, 0%, 20%);
+  --bg-faggr: hsl(0, 100%, 86%);
+  --c-tclosed: hsl(213, 9%, 80%);
+  --c-tpoll: hsl(36, 100%, 31%);
+  --c-req: hsl(0, 100%, 50%);
+  --bg-bbcode: hsl(0, 0%, 100%);
+  --br-bbcode: hsl(0, 0%, 75%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-fprimary: hsl(0, 0%, 20%);
+    --bg-fprimary: hsl(34, 40%, 58%);
+    --br-fprimary: hsl(34, 50%, 25%);
+    --bg-like-br1: hsl(34, 50%, 45%);
+    --c-a-and-btn: hsl(34, 100%, 15%);
+    --bg-fh1: hsl(28, 42%, 79%);
+    --br-fh1: hsl(34, 100%, 25%);
+    --bg-active: hsl(34, 100%, 25%);
+    --c-icon-sub: hsl(34, 100%, 25%);
+    --bg-focus: hsl(34, 80%, 59%);
+    --bg-post-h: hsl(34, 44%, 69%);
+    --bg-post-b: hsl(36, 48%, 67%);
+    --bg-fann: hsl(36, 48%, 67%);
+    --bg-submenu: hsl(36, 50%, 60%);
+    --c-active: hsl(28, 50%, 73%);
+    --bg-btn: hsl(28, 50%, 73%);
+    --bg-like-nav: hsl(28, 50%, 73%);
+    --c-light: hsl(28, 50%, 73%);
+    --c-tsticky: hsl(357, 100%, 42%);
+    --c-faggr: hsl(357, 100%, 42%);
+    --c-faggr-pr: hsl(0, 0%, 20%);
+    --bg-faggr: hsl(0, 100%, 86%);
+    --c-tclosed: hsl(0, 0%, 32%);
+    --c-tpoll: hsl(136, 50%, 31%);
+    --c-req: hsl(0, 100%, 50%);
+    --bg-bbcode: hsl(0, 0%, 70%);
+    --br-bbcode: hsl(0, 0%, 15%);
+  }
+}
+
 html,
 body,
 a,
@@ -93,8 +155,8 @@ video {
 }
 
 body {
-  color: #333333;
-  background-color: #FEFAEF;
+  color: var(--c-fprimary);
+  background-color: var(--bg-post-b); /*var(--bg-fprimary);*/
   font-family: -apple-system, system-ui, sans-serif;
   font-size: 1rem;
   line-height: 1.5;
@@ -146,8 +208,8 @@ code {
   white-space: pre;
   margin: 0 0.625rem;
   padding: 0.625rem;
-  background-color: #FFFFFF;
-  border: 0.0625rem solid #C0C0C0;
+  background-color: var(--bg-bbcode);
+  border: 0.0625rem solid var(--br-bbcode);
   overflow: auto;
   max-height: 45rem;
   min-height: 2rem;
@@ -155,42 +217,42 @@ code {
 }
 
 blockquote {
-  border-inline-start: 0.1875rem solid #AA7939;
-  border-top: 0.0625rem solid #AA7939;
+  border-inline-start: 0.1875rem solid var(--br-fprimary);
+  border-top: 0.0625rem solid var(--br-fprimary);
   padding: 0.625rem;
 }
 
 blockquote cite {
   display: block;
   padding: 0.625rem;
-  background-color: #F8F4E3 /*#D3B58D*/;
+  background-color: var(--bg-like-nav);
   margin: -0.625rem -0.625rem 0.625rem -0.625rem;
 }
 
 a {
-  color: #583200;
+  color: var(--c-a-and-btn);
   cursor: pointer;
   text-decoration: none;
 }
 
 a:hover, a:focus {
-  background-color: #D3B58D;
+  background-color: var(--bg-focus);
 }
 
 table {
   border-collapse: collapse;
-  border: 0.0625rem solid #333333;
+  border: 0.0625rem solid var(--c-fprimary);
 }
 
 td, th {
-  border: 0.0625rem solid #333333;
+  border: 0.0625rem solid var(--c-fprimary);
   empty-cells: show;
   padding: 0.3125rem;
   min-width: 1rem;
 }
 
 th {
-  background-color: #D3B58D;
+  background-color: var(--bg-post-h);
 }
 
 b,
@@ -217,8 +279,8 @@ img {
 }
 
 span.f-bb-mono {
-  border: 0.0625rem solid #C0C0C0;
-  background-color: #FFFFFF;
+  border: 0.0625rem solid var(--br-bbcode);
+  background-color: var(--bg-bbcode);
   padding: 0 0.25rem;
   font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
 }
@@ -242,11 +304,11 @@ details[open] > summary::after {
 
 div.f-bb-s-body {
   padding: 0.625rem;
-  border-inline-start: 0.1875rem solid #AA7939;
+  border-inline-start: 0.1875rem solid var(--br-fprimary);
 }
 
 span.f-bb-hashtag {
-  color: #583200;
+  color: var(--c-a-and-btn);
   border-bottom-style: dashed;
   border-bottom-width: 0.0625rem;
 }
