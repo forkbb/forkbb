@@ -165,7 +165,13 @@ class Current extends Action
 
         if (
             0 === $status
-            && ! \str_starts_with($agent, 'Mozilla/')
+            && (
+                ! \str_starts_with($agent, 'Mozilla/')
+                || (
+                    false === \strpos($agent, ' Gecko')
+                    && false === \strpos($agent, ' MSIE ')
+                )
+            )
             && ! \str_starts_with($agent, 'Opera/')
         ) {
             $status = 1;
@@ -176,12 +182,14 @@ class Current extends Action
         }
 
         $reg = [
+            '%Mozilla\S+%',
             '%[^\w/.-]+%',
             '%(?:_| |-|\b)bot(?:_| |-|\b)%i',
             '%(?<=^|\s)[^a-zA-Z\s]{1,2}(?:\s|$)%',
             '%/\S*+\K.+%',
         ];
         $rep = [
+            '',
             ' ',
             '',
             '',
