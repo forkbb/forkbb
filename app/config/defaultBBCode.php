@@ -455,7 +455,7 @@ if ($parser->attr('isSign')) {
 } else {
     // тег в теле сообщения
     if ($parser->attr('showImg')) {
-        return '<span class="postimg f-bbivert"><img src="' . $body . '" alt="' . $attrs['Def'] . '" loading="lazy"></span>';
+        return '<img src="' . $body . '" alt="' . $attrs['Def'] . '" loading="lazy" class="postimg f-bbivert">';
     }
 }
 
