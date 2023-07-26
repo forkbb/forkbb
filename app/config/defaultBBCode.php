@@ -32,7 +32,7 @@ HANDLER,
             'No_attr' => true,
         ],
         'handler' => <<<'HANDLER'
-return '</p><pre class="f-bb-code">' . \trim($body, "\n\r") . '</pre><p>';
+return '</p><pre class="f-bb-code f-bbivert">' . \trim($body, "\n\r") . '</pre><p>';
 HANDLER,
     ],
     [   'tag' => 'b',
@@ -358,11 +358,11 @@ if (! isset($attrs['Def'])) {
 
 switch ($attrs['Def'][0]) {
     case 'a':
-        return "</p><ol class=\"f-bb-l-lat\">{$body}</ol><p>";
+        return "</p><ol class=\"f-bb-l-lat f-bbivert\">{$body}</ol><p>";
     case '1':
-        return "</p><ol class=\"f-bb-l-dec\">{$body}</ol><p>";
+        return "</p><ol class=\"f-bb-l-dec f-bbivert\">{$body}</ol><p>";
     default:
-        return "</p><ul class=\"f-bb-l-disc\">{$body}</ul><p>";
+        return "</p><ul class=\"f-bb-l-disc f-bbivert\">{$body}</ul><p>";
 }
 HANDLER,
     ],
@@ -410,7 +410,7 @@ HANDLER,
         'handler' => <<<'HANDLER'
 $header = isset($attrs['Def']) ? '<cite class="f-bb-q-header">' . __(['%s wrote', $attrs['Def']]) . '</cite>' : '';
 
-return "</p><blockquote class=\"f-bb-quote\">{$header}<div class=\"f-bb-q-body\"><p>{$body}</p></div></blockquote><p>";
+return "</p><blockquote class=\"f-bb-quote f-bbivert\">{$header}<div class=\"f-bb-q-body\"><p>{$body}</p></div></blockquote><p>";
 HANDLER,
     ],
     [
@@ -426,7 +426,7 @@ if (! isset($attrs['Def'])) {
     $attrs['Def'] = __('Hidden text');
 }
 
-return "</p><details class=\"f-bb-spoiler\"><summary>{$attrs['Def']}</summary><div class=\"f-bb-s-body\"><p>{$body}</p></div></details><p>";
+return "</p><details class=\"f-bb-spoiler f-bbivert\"><summary>{$attrs['Def']}</summary><div class=\"f-bb-s-body\"><p>{$body}</p></div></details><p>";
 HANDLER,
     ],
     [
@@ -450,12 +450,12 @@ if (! isset($attrs['Def'])) {
 // тег в подписи
 if ($parser->attr('isSign')) {
     if ($parser->attr('showImgSign')) {
-        return '<img src="' . $body . '" alt="' . $attrs['Def'] . '" loading="lazy" class="sigimage">';
+        return '<img src="' . $body . '" alt="' . $attrs['Def'] . '" loading="lazy" class="sigimage f-bbivert">';
     }
 } else {
     // тег в теле сообщения
     if ($parser->attr('showImg')) {
-        return '<span class="postimg"><img src="' . $body . '" alt="' . $attrs['Def'] . '" loading="lazy"></span>';
+        return '<span class="postimg f-bbivert"><img src="' . $body . '" alt="' . $attrs['Def'] . '" loading="lazy"></span>';
     }
 }
 
@@ -522,7 +522,7 @@ foreach ($attrs as $key => $val) {
     $attr .= " {$key}=\"{$val}\"";
 }
 
-return "</p><table class=\"f-bb-table\"{$attr}>{$body}</table><p>";
+return "</p><table class=\"f-bb-table f-bbivert\"{$attr}>{$body}</table><p>";
 HANDLER,
     ],
     [
