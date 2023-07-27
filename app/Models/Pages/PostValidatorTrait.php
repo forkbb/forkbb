@@ -193,7 +193,7 @@ trait PostValidatorTrait
                 'check_message'  => [$this, 'vCheckMessage'],
                 'check_timeout'  => [$this, 'vCheckTimeout'],
             ])->addRules([
-                'token'        => 'token:' . $marker,
+                'token'        => 'token:3600:' . $marker,
                 'email'        => $ruleEmail,
                 'username'     => $ruleUsername,
                 'subject'      => $ruleSubject,
