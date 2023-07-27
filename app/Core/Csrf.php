@@ -77,7 +77,7 @@ class Csrf
     /**
      * Проверка токена/хэша
      */
-    public function verify($token, string $marker, array $args = []): bool
+    public function verify($token, string $marker, array $args = [], int $lifetime = null): bool
     {
         $this->error = 'Bad token';
         $now         = \time();
@@ -90,7 +90,7 @@ class Csrf
             switch ($matches[1]) {
                 // токен
                 case 's':
-                    if ($matches[2] + self::TOKEN_LIFETIME < $now) {
+                    if ($matches[2] + ($lifetime ?? self::TOKEN_LIFETIME) < $now) {
                         // просрочен
                         $this->error = 'Expired token';
                     } elseif (

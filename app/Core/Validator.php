@@ -772,9 +772,16 @@ class Validator
             $args = [];
         }
 
+        if (\preg_match('%^([1-9]\d+):(.+)$%', $attr, $matches)) {
+            $lifetime = (int) $matches[1];
+            $attr     = $matches[2];
+        } else {
+            $lifetime = null;
+        }
+
         if (
             ! \is_string($value)
-            || ! $this->c->Csrf->verify($value, $attr, $args)
+            || ! $this->c->Csrf->verify($value, $attr, $args, $lifetime)
         ) {
             $this->addError($this->c->Csrf->getError() ?? 'Bad token', FORK_MESS_ERR);
 
