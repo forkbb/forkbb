@@ -61,7 +61,7 @@ class Markread extends Action
 
             $this->c->DB->exec($query, $vars);
 
-            if ($user->mf_mark_all_read) {                                           // ????
+            if ($forum->mf_mark_all_read) {                                           // ????
                 $query = 'UPDATE ::mark_of_forum
                     SET mf_mark_all_read=?i:mark
                     WHERE uid=?i:uid AND fid=?i:fid';
