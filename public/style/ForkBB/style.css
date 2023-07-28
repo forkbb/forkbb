@@ -30,7 +30,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --c-fprimary: hsl(0, 0%, 20%);
+    --c-fprimary: hsl(0, 0%, 15%);
     --bg-fprimary: hsl(34, 40%, 58%);
     --br-fprimary: hsl(34, 50%, 25%);
     --bg-like-br1: hsl(34, 50%, 45%);
@@ -1644,12 +1644,6 @@ body,
   background-color: var(--bg-post-b);
 }
 
-#fork .f-post-body img {
-  max-width: 100%;
-  height: auto;
-  vertical-align: middle;
-}
-
 #fork .f-post-main {
   padding: 0.3125rem;
 }
@@ -1801,13 +1795,18 @@ body,
 /**********/
 /* bbcode */
 /**********/
+#fork .f-post-body img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
 #fork .f-bb-header {
   font-weight: bold;
   font-size: 1.25rem;
 }
 
 #fork .f-bb-after {
-  /*opacity: 0.5;*/
   font-style: italic;
   font-size: 0.875rem;
   padding-top: 0.625rem;
