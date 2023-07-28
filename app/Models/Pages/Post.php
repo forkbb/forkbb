@@ -72,6 +72,7 @@ class Post extends Page
                 $this->previewHtml = $this->c->censorship->censor(
                     $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies)
                 );
+                $this->useMediaJS  = true;
 
                 if (
                     $this->userRules->usePoll
@@ -139,6 +140,7 @@ class Post extends Page
                 && ! $v->getErrors()
             ) {
                 $this->previewHtml = $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies);
+                $this->useMediaJS  = true;
             }
         } elseif (isset($args['quote'])) {
             $post = $this->c->posts->load($args['quote'], $topic->id);

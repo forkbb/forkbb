@@ -68,6 +68,7 @@ class Edit extends Page
                 $this->previewHtml = $this->c->censorship->censor(
                     $this->c->Parser->parseMessage(null, (bool) $v->hide_smilies)
                 );
+                $this->useMediaJS  = true;
 
                 if (
                     $firstPost

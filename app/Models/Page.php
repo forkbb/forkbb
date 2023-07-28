@@ -114,6 +114,12 @@ abstract class Page extends Model
             'src' => $this->publicLink('/js/common.js'),
         ]);
 
+        if ($this->useMediaJS) {
+            $this->pageHeader('mediaJS', 'script', 10000, [
+                'src' => $this->publicLink('/js/media.js'),
+            ]);
+        }
+
         $this->boardNavigation();
         $this->iswevMessages();
     }

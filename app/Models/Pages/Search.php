@@ -542,8 +542,9 @@ class Search extends Page
         } else {
             $this->c->Lang->load('topic');
 
-            $this->nameTpl = 'topic_in_search';
-            $this->posts   = $list;
+            $this->nameTpl    = 'topic_in_search';
+            $this->posts      = $list;
+            $this->useMediaJS = true;
         }
 
         $this->fIndex        = self::FI_SRCH;

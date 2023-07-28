@@ -148,6 +148,7 @@ class Topic extends Page
         $this->crumbs       = $this->crumbs($topic);
         $this->online       = $this->c->Online->calc($this)->info();
         $this->stats        = null;
+        $this->useMediaJS   = true;
 
         if (
             $topic->canReply
