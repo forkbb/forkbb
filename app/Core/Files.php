@@ -855,6 +855,7 @@ class Files
         'image/heif' => 'heif',
         'image/heic' => 'heic',
         'image/jxl'  => 'jxl',
+        'audio/flac' => 'flac',
     ];
 
     public function __construct(int|string $maxFileSize, int|string $maxImgSize, protected array $imageDrivers, protected Container $c)
