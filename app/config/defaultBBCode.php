@@ -502,7 +502,7 @@ if ('' == $fUrl) {
 } else {
     $fUrl = $parser->e($fUrl);
 
-    return "<a href=\"{$fUrl}\" rel=\"ugc\">{$body}</a>";
+    return "<a href=\"{$fUrl}\" rel=\"ugc\" class=\"f-bb-url formedia\">{$body}</a>";
 }
 HANDLER,
     ],
