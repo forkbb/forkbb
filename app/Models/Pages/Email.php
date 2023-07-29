@@ -37,13 +37,8 @@ class Email extends Page
             return $this->c->Message->message('Bad request');
         }
 
-        $rules = $this->c->ProfileRules->setUser($this->curUser);
-
-        if (
-            ! $rules->viewEmail
-            || ! $rules->sendEmail
-        ) {
-            $message = null === $rules->sendEmail ? 'Form email disabled' : 'Bad request';
+        if (empty($this->curUser->linkEmail)) {
+            $message = null === $this->curUser->linkEmail ? 'Form email disabled' : 'Bad request';
 
             return $this->c->Message->message($message);
         }

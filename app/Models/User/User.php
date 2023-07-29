@@ -30,13 +30,14 @@ class User extends DataModel
         parent::__construct($container);
 
         $this->zDepend = [
-            'group_id'     => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'isBanByName', 'link', 'usePM'],
-            'id'           => ['isGuest', 'link', 'online'],
-            'last_visit'   => ['currentVisit'],
-            'signature'    => ['isSignature'],
-            'email'        => ['email_normal'],
-            'username'     => ['username_normal'],
-            'g_pm'         => ['usePM'],
+            'group_id'      => ['isUnverified', 'isGuest', 'isAdmin', 'isAdmMod', 'isBanByName', 'link', 'usePM', 'linkEmail'],
+            'id'            => ['isGuest', 'link', 'online', 'linkEmail'],
+            'last_visit'    => ['currentVisit'],
+            'signature'     => ['isSignature'],
+            'email'         => ['email_normal', 'linkEmail'],
+            'username'      => ['username_normal'],
+            'g_pm'          => ['usePM'],
+            'email_setting' => ['linkEmail'],
         ];
     }
 
@@ -365,5 +366,42 @@ class User extends DataModel
                 1 === $this->g_pm
                 || $this->isAdmin
             );
+    }
+
+    /**
+     * Формирует ссылку на отправку письма от $this->c->user к $this
+     * ???? Результат используется как условие для вариантов отображения
+     */
+    protected function getlinkEmail(): ?string
+    {
+        if (
+            $this->c->user->isGuest
+            || $this->id === $this->c->user->id
+            || empty($this->email)
+        ) {
+            return '';
+        } elseif (2 === $this->email_setting) {
+            return null;
+        } elseif (
+            0 === $this->email_setting
+            || (
+                $this->isGuest
+                && $this->c->user->isAdmMod
+            )
+        ) {
+            return 'mailto:' . $this->censorEmail;
+        } elseif (
+            1 === $this->email_setting
+            && (
+                1 === $this->c->user->g_send_email
+                || $this->c->user->isAdmin
+            )
+        ) {
+            $this->c->Csrf->setHashExpiration(3600);
+
+            return $this->c->Router->link('SendEmail', ['id' => $this->id]);
+        } else {
+            return '';
+        }
     }
 }

@@ -62,20 +62,6 @@ class Profile extends Rules
         return $this->my || $this->user->isAdmMod;
     }
 
-    protected function getviewEmail(): bool
-    {
-        return ! $this->my
-            && (
-                $this->user->isAdmMod // ???? модераторы у админов должны видеть email?
-                || (
-                    ! $this->user->isGuest
-                    && ! $this->user->isAdmMod
-                    && 1 === $this->user->g_send_email
-                    && $this->curUser->email_setting < 2
-                )
-            );
-    }
-
     protected function geteditEmail(): bool
     {
         return $this->my || $this->admin;
@@ -84,21 +70,6 @@ class Profile extends Rules
     protected function getconfirmEmail(): bool
     {
         return $this->my && ! $this->curUser->email_confirmed;
-    }
-
-    protected function getsendEmail(): ?bool // ???? проверка на подтвержденный email?
-    {
-        if ($this->viewEmail) {
-            if ($this->user->isAdmMod) {
-                return true;
-            } elseif (1 === $this->curUser->email_setting) {
-                return true;
-            }
-        } elseif (2 === $this->curUser->email_setting) {
-            return null;
-        }
-
-        return false;
     }
 
     protected function getsendPM(): bool

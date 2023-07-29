@@ -72,6 +72,7 @@ class View extends Profile
         $fields[] = [
             'type' => 'endwrap',
         ];
+
         if (
             $this->rules->useAvatar
             && $this->curUser->avatar
@@ -82,6 +83,7 @@ class View extends Profile
                 'value'   => 'avatar',
             ];
         }
+
         $form['sets']['header'] = [
             'class'  => ['header'],
             'legend' => 'Essentials',
@@ -98,10 +100,10 @@ class View extends Profile
                 'legend' => 'Admin note',
                 'fields' => [
                     'admin_note' => [
-                        'class'     => ['pline'],
-                        'type'      => 'str',
-                        'caption'   => 'Admin note',
-                        'value'     => $this->curUser->admin_note,
+                        'class'   => ['pline'],
+                        'type'    => 'str',
+                        'caption' => 'Admin note',
+                        'value'   => $this->curUser->admin_note,
                     ],
                 ],
             ];
@@ -109,6 +111,7 @@ class View extends Profile
 
         // личное
         $fields = [];
+
         if ('' != $this->curUser->realname) {
             $fields['realname'] = [
                 'class'   => ['pline'],
@@ -117,10 +120,12 @@ class View extends Profile
                 'value'   => $this->curUser->censorRealname,
             ];
         }
+
         $genders = [
             FORK_GEN_MAN => __('Male'),
             FORK_GEN_FEM => __('Female'),
         ];
+
         if (isset($genders[$this->curUser->gender])) {
             $fields['gender'] = [
                 'class'   => ['pline'],
@@ -129,6 +134,7 @@ class View extends Profile
                 'caption' => 'Gender',
             ];
         }
+
         if ('' != $this->curUser->location) {
             $fields['location'] = [
                 'class'   => ['pline'],
@@ -137,6 +143,7 @@ class View extends Profile
                 'value'   => $this->curUser->censorLocation,
             ];
         }
+
         if (! empty($fields)) {
             $form['sets']['personal'] = [
                 'class'  => ['data'],
@@ -147,6 +154,7 @@ class View extends Profile
 
         // контактная информация
         $fields = [];
+
         if ($this->rules->sendPM) {
             $this->c->Csrf->setHashExpiration(3600);
 
@@ -166,27 +174,27 @@ class View extends Profile
                 'href'    => $this->c->Router->link('PMAction', $pmArgs),
             ];
         }
-        if ($this->rules->viewEmail) {
-            if (0 === $this->curUser->email_setting) {
+
+        if (! empty($this->curUser->linkEmail)) {
+            if (\str_starts_with($this->curUser->linkEmail, 'mailto:')) {
                 $fields['email'] = [
                     'class'   => ['pline'],
                     'type'    => 'link',
                     'caption' => 'Email info',
-                    'value'   => $this->curUser->censorEmail,
-                    'href'    => 'mailto:' . $this->curUser->censorEmail,
+                    'value'   => \substr($this->curUser->linkEmail, 7),
+                    'href'    => $this->curUser->linkEmail,
                 ];
-            } elseif ($this->rules->sendEmail) {
-                $this->c->Csrf->setHashExpiration(3600);
-
+            } else {
                 $fields['email'] = [
                     'class'   => ['pline'],
                     'type'    => 'link',
                     'caption' => 'Email info',
                     'value'   => __('Send email'),
-                    'href'    => $this->c->Router->link('SendEmail', ['id' => $this->curUser->id]),
+                    'href'    => $this->curUser->linkEmail,
                 ];
             }
         }
+
         if (
             $this->rules->viewWebsite
             && $this->curUser->url
@@ -201,6 +209,7 @@ class View extends Profile
                 'rel'     => 'ugc',
             ];
         }
+
         if (! empty($fields)) {
             $form['sets']['contacts'] = [
                 'class'  => ['data'],
@@ -212,6 +221,7 @@ class View extends Profile
         // подпись
         if ($this->rules->useSignature) {
             $fields = [];
+
             if ($this->curUser->isSignature) {
                 $fields['signature'] = [
                     'type'    => 'yield',
@@ -221,6 +231,7 @@ class View extends Profile
 
                 $this->signatureSection = true;
             }
+
             if (! empty($fields)) {
                 $form['sets']['signature'] = [
                     'class'  => ['data'],
@@ -244,6 +255,7 @@ class View extends Profile
             'value'   => dt($this->curUser->last_post, true),
             'caption' => 'Last post info',
         ];
+
         if ($this->curUser->last_post > 0) {
             if (1 === $this->user->g_search) {
                 $fields['posts'] = [
@@ -289,10 +301,12 @@ class View extends Profile
                 ];
             }
         }
+
         if ($this->rules->viewSubscription) {
             $subscr     = $this->c->subscriptions;
             $subscrInfo = $subscr->info($this->curUser);
             $isLink     = 1 === $this->user->g_search;
+
             if (! empty($subscrInfo[$subscr::FORUMS_DATA])) {
                 $fields['forums_subscr'] = [
                     'class'   => ['pline'],
@@ -309,6 +323,7 @@ class View extends Profile
                     'title'   => __('Show forums subscriptions'),
                 ];
             }
+
             if (! empty($subscrInfo[$subscr::TOPICS_DATA])) {
                 $fields['topics_subscr'] = [
                     'class'   => ['pline'],
@@ -326,6 +341,7 @@ class View extends Profile
                 ];
             }
         }
+
         $form['sets']['activity'] = [
             'class'  => ['data'],
             'legend' => 'User activity',
@@ -334,6 +350,7 @@ class View extends Profile
 
         // приватная информация
         $fields = [];
+
         if ($this->rules->viewLastVisit) {
             $fields['lastvisit'] = [
                 'class'   => ['pline'],
@@ -344,6 +361,7 @@ class View extends Profile
                 'caption' => 'Last visit info',
             ];
         }
+
         if ($this->rules->viewOEmail) {
             $fields['open-email'] = [
                 'class'   => $this->curUser->email_confirmed ? ['pline', 'confirmed'] : ['pline', 'unconfirmed'],
@@ -353,6 +371,7 @@ class View extends Profile
                 'href'    => 'mailto:' . $this->curUser->censorEmail,
             ];
         }
+
         if (
             $this->rules->viewIP
             && false !== \filter_var($this->curUser->registration_ip, \FILTER_VALIDATE_IP)
@@ -371,12 +390,12 @@ class View extends Profile
                 'title'   => __('IP title'),
             ];
         }
+
         $form['sets']['private'] = [
             'class'  => ['data'],
             'legend' => 'Private information',
             'fields' => $fields,
         ];
-
 
         return $form;
     }
