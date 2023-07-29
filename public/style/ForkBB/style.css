@@ -1682,6 +1682,26 @@ body,
   font-weight: 900;
 }
 
+#fork .f-user-contacts > a {
+  border: 0.0625rem solid;
+  border-radius: .25rem;
+  display: inline-block;
+  margin-top: 0.3125rem;
+  padding: 0.0625rem 0.3125rem;
+}
+
+.f-website .f-psfont::before {
+  content: "\f015";
+}
+
+.f-email .f-psfont::before {
+  content: "\f0e0"; /*\40*/
+}
+
+.f-user-contacts .f-psfont > span {
+  display: none;
+}
+
 @media screen and (max-width: 49.9999rem) {
   #fork .f-user-info > li:not(.f-username),
   #fork .f-user-info-add > li {
@@ -1712,28 +1732,12 @@ body,
     content: "\f041\a0";
   }
 
-  .f-promoteuser > a > .f-psfont::before {
+  .f-promoteuser .f-psfont::before {
     content: "\f007\f30c"; /* \e539 */
-  }
-
-  .f-website > a > .f-psfont::before {
-    content: "\f0c1";
-  }
-
-  .f-email > a > .f-psfont::before {
-    content: "\40";
   }
 }
 
 @media screen and (min-width: 50rem) {
-  .f-website > a > .f-psfont::before {
-    content: "\f0c1\a0";
-  }
-
-  .f-email > a > .f-psfont::before {
-    content: "\40\a0";
-  }
-
   #fork .f-post {
     display: flex;
     flex-wrap: wrap;
