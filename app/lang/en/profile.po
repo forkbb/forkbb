@@ -133,7 +133,10 @@ msgid "Style"
 msgstr "Style"
 
 msgid "Admin note"
-msgstr "Admin note"
+msgstr "Administration note"
+
+msgid "Admin note help"
+msgstr "For administrators and moderators."
 
 msgid "Delete user"
 msgstr "Delete"

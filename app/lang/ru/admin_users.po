@@ -106,7 +106,7 @@ msgid "Signature label"
 msgstr "Подпись"
 
 msgid "Admin note label"
-msgstr "Примечание админа"
+msgstr "Примечание администрации"
 
 msgid "Posts label"
 msgstr "Сообщений"

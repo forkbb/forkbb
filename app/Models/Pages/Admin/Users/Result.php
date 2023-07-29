@@ -325,7 +325,7 @@ class Result extends Users
             $fields["l{$number}-note"] = [
                 'class'   => '' === \trim($user->admin_note ?? '') ? ['result', 'note', 'no-data'] : ['result', 'note'],
                 'type'    => 'str',
-                'caption' => 'Примечание админа',
+                'caption' => 'Results admin note head',
                 'value'   => $user->admin_note,
             ];
 

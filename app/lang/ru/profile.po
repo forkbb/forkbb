@@ -135,6 +135,9 @@ msgstr "Стиль"
 msgid "Admin note"
 msgstr "Примечание администрации"
 
+msgid "Admin note help"
+msgstr "Для администраторов и модераторов."
+
 msgid "Delete user"
 msgstr "Удалить"
 

@@ -382,6 +382,7 @@ class Edit extends Profile
                         'maxlength' => '30',
                         'caption'   => 'Admin note',
                         'value'     => $this->curUser->admin_note,
+                        'help'      => 'Admin note help',
                     ],
                 ],
             ];

@@ -106,7 +106,7 @@ msgid "Signature label"
 msgstr "Signature"
 
 msgid "Admin note label"
-msgstr "Admin note"
+msgstr "Administration note"
 
 msgid "Posts label"
 msgstr "Posts"
@@ -187,7 +187,7 @@ msgid "Results posts head"
 msgstr "Posts"
 
 msgid "Results admin note head"
-msgstr "Admin note"
+msgstr "Note"
 
 msgid "Results IP address head"
 msgstr "IP address"
