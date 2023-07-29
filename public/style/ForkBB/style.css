@@ -1687,7 +1687,7 @@ body,
   border-radius: .25rem;
   display: inline-block;
   margin-top: 0.3125rem;
-  padding: 0.0625rem 0.3125rem;
+  padding: 0 0.25rem;
 }
 
 .f-website .f-psfont::before {
