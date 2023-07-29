@@ -70,7 +70,7 @@ class Edit extends Profile
             }
 
             if ($this->rules->editWebsite) {
-                $ruleWebsite = 'exist|string:trim,empty|max:100|regex:%^(?:https?:)?//[^\x00-\x1F\s]+$%iu';
+                $ruleWebsite = 'exist|string:trim,empty|max:100|regex:%^https?://[^\x00-\x1F\s]+$%uD';
             } else {
                 $ruleWebsite = 'absent';
             }
