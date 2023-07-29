@@ -111,7 +111,7 @@ msgid "Message %s was not found in the database"
 msgstr "Message №%s was not found in the database"
 
 msgid "Admin note"
-msgstr "Admin note"
+msgstr "Administration note"
 
 msgid "Subscribe topic"
 msgstr "Receive email notification of new posts"
