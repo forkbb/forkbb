@@ -459,7 +459,9 @@ ForkBB.media = (function (doc, win, nav) {
 
     return {
         init : function () {
-            crawl();
+            if (!!Element.prototype.closest) {
+                crawl();
+            }
         },
     };
 }(document, window, navigator));

@@ -24,6 +24,7 @@ ForkBB.common = (function (doc, win) {
             backs[i].addEventListener("click", function (event) {
                 win.history.back();
                 event.preventDefault();
+
                 return false;
             });
         }
@@ -43,7 +44,7 @@ ForkBB.common = (function (doc, win) {
         }
     }
 
-    function initShowPAss()
+    function initShowPass()
     {
         var inps = doc.querySelectorAll("input[type='password']");
 
@@ -83,13 +84,14 @@ ForkBB.common = (function (doc, win) {
     return {
         init : function () {
             initGoBack();
-            initAnchorHL();
-            initShowPAss();
             initForm();
+
+            if (typeof DOMTokenList !== 'undefined') {
+                initAnchorHL();
+                initShowPass();
+            }
         },
     };
 }(document, window));
 
-if (document.addEventListener) {
-	document.addEventListener("DOMContentLoaded", ForkBB.common.init, false);
-}
+document.addEventListener("DOMContentLoaded", ForkBB.common.init, false);

@@ -40,7 +40,8 @@ ForkBB.editor = (function (doc, win) {
         var conf, smiliesEnabled, linkEnabled;
 
         if (
-            !sceditor
+            !Object.assign
+            || !sceditor
             || !(textarea = doc.querySelector(selector))
             || !(conf = JSON.parse(textarea.getAttribute(dataName)))
         ) {
@@ -109,6 +110,4 @@ ForkBB.editor = (function (doc, win) {
     };
 }(document, window));
 
-if (document.addEventListener && Object.assign) {
-    document.addEventListener("DOMContentLoaded", ForkBB.editor.init, false);
-}
+document.addEventListener("DOMContentLoaded", ForkBB.editor.init, false);

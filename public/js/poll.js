@@ -57,7 +57,10 @@ ForkBB.poll = (function (doc, win) {
 
     return {
         init : function () {
-            if (0 !== inputPE) {
+            if (
+                0 !== inputPE
+                || typeof DOMTokenList === 'undefined'
+            ) {
                 return;
             }
 
@@ -188,6 +191,4 @@ ForkBB.poll = (function (doc, win) {
     };
 }(document, window));
 
-if (document.addEventListener) {
-	document.addEventListener("DOMContentLoaded", ForkBB.poll.init, false);
-}
+document.addEventListener("DOMContentLoaded", ForkBB.poll.init, false);
