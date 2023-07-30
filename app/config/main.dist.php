@@ -43,6 +43,7 @@ return [
         'smTplBl'  => ['url'],
     ],
     'MAX_POST_SIZE'    => 65536,
+    'MAX_SUBJ_LENGTH'  => 70,     // max 255
     'MAX_IMG_SIZE'     => '2M',
     'MAX_FILE_SIZE'    => '2M',
     'MAX_EMAIL_LENGTH' => 80,

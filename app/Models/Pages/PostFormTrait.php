@@ -76,7 +76,7 @@ trait PostFormTrait
             $fieldset['subject'] = [
                 'class'     => ['w0'],
                 'type'      => 'text',
-                'maxlength' => '70',
+                'maxlength' => $this->c->MAX_SUBJ_LENGTH,
                 'caption'   => 'Subject',
                 'required'  => true,
                 'value'     => $vars['subject'] ?? null,

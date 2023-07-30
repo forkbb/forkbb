@@ -163,7 +163,7 @@ trait PostValidatorTrait
         }
 
         if ($first) {
-            $ruleSubject = 'required|string:trim,spaces|min:1|max:70|' . ($executive ? '' : 'noURL|') . 'check_subject';
+            $ruleSubject = 'required|string:trim,spaces|min:1|max:' . $this->c->MAX_SUBJ_LENGTH . '|' . ($executive ? '' : 'noURL|') . 'check_subject';
         } else {
             $ruleSubject = 'absent';
         }

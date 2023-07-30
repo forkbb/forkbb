@@ -813,4 +813,22 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.64 to rev.65
+     */
+    protected function stageNumber64(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'MAX_SUBJ_LENGTH',
+            '70',
+            'MAX_POST_SIZE'
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }
