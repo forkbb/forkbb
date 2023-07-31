@@ -126,17 +126,22 @@ class Current extends Action
     ];
 
     /**
-     * Пытается по юзерагентуопределить робота
-     * Если робот, то возвращает вычисленное имя
+     * Определяет бота
+     * Если бот, то возвращает вычисленное имя
      */
     protected function isBot(string $agent): string|false
     {
-        if ('' == $agent) {
-            return false;
+        $status = (int) (
+            empty($_SERVER['HTTP_ACCEPT'])
+            || empty($_SERVER['HTTP_ACCEPT_ENCODING'])
+            || empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])
+        );
+
+        if ('' === $agent) {
+            return $status ? 'Unknown' : false;
         }
 
         $agentL = \strtolower($agent);
-        $status = 0;
 
         if (
             false !== ($pos = \strpos($agentL, 'http:'))
