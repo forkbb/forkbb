@@ -20,8 +20,11 @@ class Csrf
     protected ?string $error = null;
     protected int $hashExpiration = 3600;
 
-    public function __construct(protected Secury $secury, #[SensitiveParameter] protected string $key)
-    {
+    public function __construct(
+        protected Secury $secury,
+        #[SensitiveParameter] protected string $key,
+        #[SensitiveParameter] protected mixed $externalSalt // сюда и Container может попасть O_o
+    ) {
     }
 
     /**
@@ -35,12 +38,24 @@ class Csrf
     /**
      * Возвращает csrf токен
      */
-    public function create(string $marker, array $args = [], int|string $time = null): string
+    public function create(string $marker, array $args = [], int|string $time = null, string $type = 's'): string
     {
         $marker = $this->argsToStr($marker, $args);
         $time   = $time ?: \time();
 
-        return $this->secury->hmac($marker, $time . $this->key) . 's' . $time;
+        switch ($type) {
+            case 's':
+                return $this->secury->hmac($marker, $time . $this->key) . 's' . $time;
+            case 'x':
+                if (
+                    \is_string($this->externalSalt)
+                    && isset($this->externalSalt[9])
+                ) {
+                    return \hash_hmac('sha1', $marker, $time . $this->externalSalt) . 'x' . $time;
+                }
+            default:
+                return 'n';
+        }
     }
 
     /**
@@ -85,17 +100,18 @@ class Csrf
 
         if (
             \is_string($token)
-            && \preg_match('%(e|s)(\d+)$%D', $token, $matches)
+            && \preg_match('%(e|s|x)(\d+)$%D', $token, $matches)
         ) {
             switch ($matches[1]) {
                 // токен
                 case 's':
+                case 'x':
                     if ($matches[2] + ($lifetime ?? self::TOKEN_LIFETIME) < $now) {
                         // просрочен
                         $this->error = 'Expired token';
                     } elseif (
                         $matches[2] + 0 <= $now
-                        && \hash_equals($this->create($marker, $args, $matches[2]), $token)
+                        && \hash_equals($this->create($marker, $args, $matches[2], $matches[1]), $token)
                     ) {
                         $this->error = null;
                         $result      = true;

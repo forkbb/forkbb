@@ -181,9 +181,10 @@ return [
         'attachments'   => \ForkBB\Models\Attachment\Attachments::class,
 
         'Csrf' => [
-            'class'  => \ForkBB\Core\Csrf::class,
-            'Secury' => '@Secury',
-            'key'    => '%user.password%%user.ip%%user.id%%BASE_URL%',
+            'class'   => \ForkBB\Core\Csrf::class,
+            'Secury'  => '@Secury',
+            'key'     => '%user.password%%user.ip%%user.id%%BASE_URL%',
+            'extSalt' => '',
         ],
         'Online' => \ForkBB\Models\Online\Online::class,
         'Cookie' => [
