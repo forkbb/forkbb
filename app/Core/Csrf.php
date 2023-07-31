@@ -51,7 +51,7 @@ class Csrf
                     \is_string($this->externalSalt)
                     && isset($this->externalSalt[9])
                 ) {
-                    return \hash_hmac('sha1', $marker, $time . $this->externalSalt) . 'x' . $time;
+                    return \hash_hmac('sha1', $marker, $time . $this->externalSalt . $_SERVER['REMOTE_ADDR']) . 'x' . $time;
                 }
             default:
                 return 'n';
