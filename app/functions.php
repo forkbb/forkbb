@@ -264,10 +264,11 @@ function url(string $url): string
 
                 $host = \filter_var($p['host'], \FILTER_VALIDATE_DOMAIN, \FILTER_FLAG_HOSTNAME);
 
-                if (false !== $host) {
+                if (\is_string($host)) {
                     $result .= $host;
                 } elseif (
-                    '[' === $p['host'][0]
+                    isset($p['host'][1])
+                    && '[' === $p['host'][0]
                     && ']' === $p['host'][-1]
                     && \filter_var(\substr($p['host'], 1, -1), \FILTER_VALIDATE_IP, \FILTER_FLAG_IPV6)
                 ) {
