@@ -514,7 +514,7 @@ class Register extends Page
             || ! \hash_equals($user->activate_string, $args['key'])
         ) {
             $this->c->Log->warning('Account activation: fail', [
-                'user' => $user instanceof User ? $user->fLog() : $this->user->fLog(),
+                'user' => isset($user) && $user instanceof User ? $user->fLog() : $this->user->fLog(),
                 'args' => $args,
             ]);
 

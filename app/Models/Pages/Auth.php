@@ -417,7 +417,7 @@ class Auth extends Page
             || ! \hash_equals($user->activate_string, $args['key'])
         ) {
             $this->c->Log->warning('Passphrase reset: confirmation, fail', [
-                'user' => $user instanceof User ? $user->fLog() : $this->user->fLog(),
+                'user' => isset($user) && $user instanceof User ? $user->fLog() : $this->user->fLog(),
                 'args' => $args,
             ]);
 
