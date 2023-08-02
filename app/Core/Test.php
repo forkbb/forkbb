@@ -74,9 +74,10 @@ class Test
             $index += 1;
         }
 
-        if (empty($_SERVER['HTTP_CONNECTION'])) {
-            $index += 1;
-        } elseif (! \preg_match('%^(?:keep-alive|close)$%iD', $_SERVER['HTTP_CONNECTION'])) {
+        if (
+            ! empty($_SERVER['HTTP_CONNECTION'])
+            && ! \preg_match('%^(?:keep-alive|close)$%iD', $_SERVER['HTTP_CONNECTION'])
+        ) {
             $index += 3;
         }
 
