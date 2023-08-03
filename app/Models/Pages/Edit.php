@@ -24,6 +24,8 @@ class Edit extends Page
     use PostFormTrait;
     use PostValidatorTrait;
 
+    const SILENT = 1200;
+
     /**
      * Редактирование сообщения
      */
@@ -148,19 +150,33 @@ class Edit extends Page
         $calcPost  = false;
         $calcTopic = false;
         $calcForum = false;
+        $calcAttch = false;
 
         // текст сообщения
         if ($post->message !== $v->message) {
             $post->message       = $v->message;
-            $post->edited        = $now;
-            $post->editor        = $this->user->username;
-            $post->editor_id     = $this->user->id;
-            $calcPost            = true;
-            if ($post->id === $topic->last_post_id) {
-                $calcTopic       = true;
-                $calcForum       = true;
+            $calcAttch           = true;
+
+            if (
+                $post->poster_id !== $this->user->id
+                || $now - $post->posted > self::SILENT
+                || (
+                    $post->editor_id > 0
+                    && $post->editor_id !== $this->user->id
+                )
+            ) {
+                $post->edited    = $now;
+                $post->editor    = $this->user->username;
+                $post->editor_id = $this->user->id;
+                $calcPost        = true;
+
+                if ($post->id === $topic->last_post_id) {
+                    $calcTopic   = true;
+                    $calcForum   = true;
+                }
             }
         }
+
         // показ смайлов
         if (
             1 === $this->c->config->b_smilies
@@ -168,6 +184,7 @@ class Edit extends Page
         ) {
             $post->hide_smilies  = $v->hide_smilies ? 1 : 0;
         }
+
         // редактирование без ограничений
         if (
             $executive
@@ -185,6 +202,7 @@ class Edit extends Page
                 $post->editor_id = $this->user->id;
                 $calcForum       = true;
             }
+
             // выделение темы
             if (
                 $executive
@@ -192,6 +210,7 @@ class Edit extends Page
             ) {
                 $topic->sticky   = $v->stick_topic ? 1 : 0;
             }
+
             // закрепление первого сообшения
             if (
                 $executive
@@ -199,6 +218,7 @@ class Edit extends Page
             ) {
                 $topic->stick_fp = $v->stick_fp ? 1 : 0;
             }
+
             // опрос
             if ($this->userRules->usePoll) {
                 $this->changePoll($topic, $v);
@@ -223,7 +243,10 @@ class Edit extends Page
         $this->c->forums->update($topic->parent);
 
         // синхронизация вложений
-        if ($this->userRules->useUpload) {
+        if (
+            $calcAttch
+            && $this->userRules->useUpload
+        ) {
             $this->c->attachments->syncWithPost($post, true);
         }
 
@@ -232,7 +255,8 @@ class Edit extends Page
             $calcPost
             || $calcForum
         ) {
-            $this->user->last_post = $now; //????
+            $this->user->last_post = $now;
+
             $this->c->users->update($this->user);
         }
 
@@ -255,9 +279,9 @@ class Edit extends Page
 
             // редактирование
             if ($v->poll_enable) {
-                $topic->poll_type  = $v->poll['duration'] > 0 ? 1000 + $v->poll['duration'] : 1; // ???? перенести в модель poll?
+                $topic->poll_type = $v->poll['duration'] > 0 ? 1000 + $v->poll['duration'] : 1; // ???? перенести в модель poll?
 #                $topic->poll_time  = 0;
-                $topic->poll_term  = $v->poll['hide_result']
+                $topic->poll_term = $v->poll['hide_result']
                     ? ($topic->poll_term ?: $this->c->config->i_poll_term)
                     : 0;
 
@@ -268,17 +292,17 @@ class Edit extends Page
                 $this->c->polls->update($poll);
             // удаление
             } else {
-                $topic->poll_type  = 0;
-                $topic->poll_time  = 0;
-                $topic->poll_term  = 0;
+                $topic->poll_type = 0;
+                $topic->poll_time = 0;
+                $topic->poll_term = 0;
 
                 $this->c->polls->delete($poll);
             }
         // добавление
         } elseif ($v->poll_enable) {
-            $topic->poll_type  = $v->poll['duration'] > 0 ? 1000 + $v->poll['duration'] : 1; // ???? перенести в модель poll?
-            $topic->poll_time  = \time();
-            $topic->poll_term  = $v->poll['hide_result'] ? $this->c->config->i_poll_term : 0;
+            $topic->poll_type = $v->poll['duration'] > 0 ? 1000 + $v->poll['duration'] : 1; // ???? перенести в модель poll?
+            $topic->poll_time = \time();
+            $topic->poll_term = $v->poll['hide_result'] ? $this->c->config->i_poll_term : 0;
 
             $poll = $this->c->polls->create([
                 'tid'      => $topic->id,
