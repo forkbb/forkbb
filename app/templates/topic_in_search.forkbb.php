@@ -48,7 +48,7 @@
             <span class="f-post-posted"><a href="{{ $post->link }}" title="{{ __('Go to post') }}" rel="bookmark"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></a></span>
           </h3>
         @if ($post->edited)
-          <span class="f-post-edited" title="{{ __(['Last edit', $post->editor, dt($post->edited)]) }}"><span>{!! __('Edited') !!}</span></span>
+          <span class="f-post-edited" title="{{! __(['Last edit', $post->editor, dt($post->edited)]) !}}"><span>{!! __('Edited') !!}</span></span>
         @endif
           <span class="f-post-number">#{{ $post->postNumber }}</span>
         </header>

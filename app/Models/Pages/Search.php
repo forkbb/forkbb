@@ -400,7 +400,7 @@ class Search extends Page
 
         if (
             '*' !== $name
-            && \preg_match('%[@\'"<>\\/\x00-\x1F]%', $name)
+            && \preg_match('%[@"<>\\/\x00-\x1F]%', $name)
         ) {
             $v->addError('The :alias is not valid format');
         }

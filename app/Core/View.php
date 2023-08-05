@@ -95,6 +95,29 @@ EOD;
     }
 
     /**
+     * Compile echos
+     */
+    protected function compileEchos(string $value): string
+    {
+        $value = \preg_replace_callback(
+            '%(@)?\{\{!\s*(.+?)\s*!\}\}(\r?\n)?%s',
+            function($matches) {
+                $whitespace = empty($matches[3]) ? '' : $matches[3] . $matches[3];
+
+                return $matches[1]
+                    ? \substr($matches[0], 1)
+                    : '<?= \\htmlspecialchars((string) '
+                        . $this->compileEchoDefaults($matches[2])
+                        . ', \\ENT_HTML5 | \\ENT_QUOTES | \\ENT_SUBSTITUTE, \'UTF-8\', false) ?>'
+                        . $whitespace;
+            },
+            $value
+        );
+
+        return parent::compileEchos($value);
+    }
+
+    /**
      * Отправляет HTTP заголовки
      */
     protected function sendHttpHeaders(Page $p): void

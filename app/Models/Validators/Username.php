@@ -36,7 +36,7 @@ class Username extends RulesValidator
 
             if ($this->c->user->isAdmin) {
                 $max     = 190;
-                $pattern = '%^[^@\'"<>\\/\x00-\x1F]+$%D';
+                $pattern = '%^[^@"<>\\/\x00-\x1F]+$%D';
             } else {
                 $max     = $this->c->USERNAME['max'];
                 $pattern = $this->c->USERNAME['phpPattern'];
@@ -51,7 +51,7 @@ class Username extends RulesValidator
             // паттерн не совпал
             } elseif (
                 ! \preg_match($pattern, $username)
-                || \preg_match('%[@\'"<>\\/\x00-\x1F]%', $username)
+                || \preg_match('%[@"<>\\/\x00-\x1F]%', $username)
             ) {
                 $v->addError('Login format');
             // идущие подряд пробелы
