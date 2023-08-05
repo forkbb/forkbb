@@ -123,7 +123,10 @@ return [
             'eol'   => '%EOL%',
         ],
         'Func'      => \ForkBB\Core\Func::class,
-        'Test'      => \ForkBB\Core\Test::class,
+        'Test'      => [
+            'class'  => \ForkBB\Core\Test::class,
+            'config' => '%DIR_CONFIG%/test.default.php',
+        ],
         'NormEmail' => \MioVisman\NormEmail\NormEmail::class,
         'Log'       => [
             'class'  => \ForkBB\Core\Log::class,

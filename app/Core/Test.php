@@ -15,8 +15,19 @@ use ForkBB\Core\Validator;
 
 class Test
 {
-    public function __construct(protected Container $c)
+    protected array $config = [];
+
+    public function __construct(string $path, protected Container $c)
     {
+        if (! \is_file($path)) {
+            throw new RuntimeException('File not found');
+        }
+
+        if (! \is_readable($path)) {
+            throw new RuntimeException('File can not be read');
+        }
+
+        $this->config = include $path;
     }
 
     public function beforeValidation(Validator $v): Validator
@@ -86,7 +97,33 @@ class Test
             $ref = \strstr($ref, '#', true) ?: $ref;
 
             if ($ref !== $_SERVER['HTTP_REFERER']) {
-                $index += 3;
+                $inc = 3;
+
+                if (
+                    ! empty($this->config['referers'])
+                    && \is_array($this->config['referers'])
+                ) {
+                    foreach ($this->config['referers'] as $ref) {
+                        if (false === \strpos($ref, '*')) {
+                            if ($ref === $_SERVER['HTTP_REFERER']) {
+                                $inc = 0;
+
+                                break;
+                            }
+                        } else {
+                            $ref = \preg_quote($ref, '%');
+                            $ref = \str_replace('\\*', '.*?', $ref);
+
+                            if (\preg_match("%^{$ref}$%D", $_SERVER['HTTP_REFERER'])) {
+                                $inc = 0;
+
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                $index += $inc;
             }
         }
 

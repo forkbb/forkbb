@@ -831,4 +831,24 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.65 to rev.66
+     */
+    protected function stageNumber65(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>Test',
+            [
+                'class'  => '\\ForkBB\\Core\\Test::class',
+                'config' => '\'%DIR_CONFIG%/test.default.php\'',
+            ]
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }
