@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.0.0';
     const REV_MIN_FOR_UPDATE         = 53;
-    const LATEST_REV_WITH_DB_CHANGES = 63;
+    const LATEST_REV_WITH_DB_CHANGES = 67;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const CONFIG_FILE                = 'main.php';
@@ -848,6 +848,26 @@ class Update extends Admin
         );
 
         $coreConfig->save();
+
+        return null;
+    }
+
+    /**
+     * rev.66 to rev.67
+     */
+    protected function stageNumber66(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'multiple=>ProfileSearch',
+            '\\ForkBB\\Models\\Pages\\Profile\\Search::class',
+            'ProfileDelete'
+        );
+
+        $coreConfig->save();
+
+        $this->c->DB->addField('::users', 'unfollowed_f', 'VARCHAR(255)', false, '');
 
         return null;
     }

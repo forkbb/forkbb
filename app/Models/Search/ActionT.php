@@ -18,6 +18,18 @@ use InvalidArgumentException;
 class ActionT extends Method
 {
     /**
+     * Удаляет из списка неотслеживаемые пользователем разделы
+     */
+    protected function unfollow(array $forums): array
+    {
+        if (empty($this->c->user->unfollowed_f)) {
+            return $forums;
+        } else {
+            return \array_diff($forums, \array_map('\\intval', \explode(',', $this->c->user->unfollowed_f)));
+        }
+    }
+
+    /**
      * Поисковые действия по темам
      */
     public function actionT(string $action, Forum $root, int $uid = null): array|false
@@ -44,6 +56,7 @@ class ActionT extends Method
                     WHERE t.forum_id IN (?ai:forums) AND t.moved_to=0
                     ORDER BY t.last_post DESC
                     LIMIT 1000';
+                $forums = $this->unfollow($forums);
 
                 break;
             case 'unanswered_topics':
@@ -51,6 +64,7 @@ class ActionT extends Method
                     FROM ::topics AS t
                     WHERE t.forum_id IN (?ai:forums) AND t.moved_to=0 AND t.num_replies=0
                     ORDER BY t.last_post DESC';
+                $forums = $this->unfollow($forums);
 
                 break;
             case 'topics_with_your_posts':

@@ -321,7 +321,22 @@ class Config extends Profile
                     ],
                 ],
             ];
-            }
+        }
+
+        if ($this->rules->configureSearch) {
+            $form['sets']['search'] = [
+                'legend' => 'Search options',
+                'class'  => ['data-edit'],
+                'fields' => [
+                    'search_config' => [
+                        'type'  => 'link',
+                        'value' => __('Set up search'),
+                        'title' => __('Set up search'),
+                        'href'  => $this->c->Router->link('EditUserSearch', $args),
+                    ],
+                ],
+            ];
+        }
 
         return $form;
     }

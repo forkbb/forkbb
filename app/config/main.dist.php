@@ -381,6 +381,7 @@ return [
         'ProfileMod'         => \ForkBB\Models\Pages\Profile\Mod::class,
         'ProfileOAuth'       => \ForkBB\Models\Pages\Profile\OAuth::class,
         'ProfileDelete'      => \ForkBB\Models\Pages\Profile\Delete::class,
+        'ProfileSearch'      => \ForkBB\Models\Pages\Profile\Search::class,
         'AdminIndex'         => \ForkBB\Models\Pages\Admin\Index::class,
         'AdminStatistics'    => \ForkBB\Models\Pages\Admin\Statistics::class,
         'AdminOptions'       => \ForkBB\Models\Pages\Admin\Options::class,

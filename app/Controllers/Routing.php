@@ -82,7 +82,6 @@ class Routing
                 'Auth:logout',
                 'Logout'
             );
-
             // обработка "кривых" перенаправлений с логина и регистрации
             $r->add(
                 $r::GET,
@@ -96,6 +95,7 @@ class Routing
                 'Redirect:toIndex'
             );
         }
+
         // OAuth
         if (
             $user->isAdmin
@@ -108,6 +108,7 @@ class Routing
                 'RegLogCallback'
             );
         }
+
         if (1 === $config->b_oauth_allow) {
             $r->add(
                 $r::PST,
@@ -116,6 +117,7 @@ class Routing
                 'RegLogRedirect'
             );
         }
+
         // просмотр разрешен
         if (1 === $user->g_read_board) {
             // главная
@@ -135,6 +137,7 @@ class Routing
                 '/index.html',
                 'Redirect:toIndex'
             );
+
             // правила
             if (
                 1 === $config->b_rules
@@ -150,6 +153,7 @@ class Routing
                     'Rules'
                 );
             }
+
             // поиск
             if (1 === $user->g_search) {
                 $r->add(
@@ -163,7 +167,6 @@ class Routing
                     '/search',
                     'Search:view'
                 );
-
                 $r->add(
                     $r::GET,
                     '/search/advanced[/{keywords}/{author}/{forums}/{serch_in:\d}/{sort_by:\d}/{sort_dir:\d}/{show_as:\d}[/{page|i:[1-9]\d*}]]',
@@ -175,7 +178,6 @@ class Routing
                     '/search/advanced',
                     'Search:viewAdvanced'
                 );
-
                 $r->add(
                     $r::GET,
                     '/search[/user/{uid|i:[1-9]\d*}]/{action:(?!search)[a-z_]+}[/in_forum/{forum|i:[1-9]\d*}][/{page|i:[1-9]\d*}]',
@@ -189,6 +191,7 @@ class Routing
                     'OpenSearch'
                 );
             }
+
             // юзеры
             if ($userRules->viewUsers) {
                 // список пользователей
@@ -276,8 +279,16 @@ class Routing
                     'EditUserPass'
                 );
             }
-            // удаление своего профиля
+
             if (! $user->isGuest) {
+                // настройка поиска
+                $r->add(
+                    $r::DUO,
+                    '/user/{id|i:' . $user->id . '}/edit/config/search',
+                    'ProfileSearch:config',
+                    'EditUserSearch'
+                );
+                // удаление своего профиля
                 $r->add(
                     $r::DUO,
                     '/user/{id|i:' . $user->id . '}/delete/profile',
@@ -285,6 +296,7 @@ class Routing
                     'DeleteUserProfile'
                 );
             }
+
             // управление аккаунтами OAuth
             if (
                 ! $user->isGuest
@@ -303,6 +315,7 @@ class Routing
                     'EditUserOAuthAction'
                 );
             }
+
             // смена своего email
             if (! $user->isGuest) {
                 $r->add(
@@ -398,6 +411,7 @@ class Routing
                 'Delete:delete',
                 'DeletePost'
             );
+
             // сигналы (репорты)
             if (
                 ! $user->isAdmin
@@ -410,6 +424,7 @@ class Routing
                     'ReportPost'
                 );
             }
+
             // отправка email
             if (
                 ! $user->isGuest
@@ -422,6 +437,7 @@ class Routing
                     'SendEmail'
                 );
             }
+
             // feed
             $r->add(
                 $r::GET,
@@ -429,6 +445,7 @@ class Routing
                 'Feed:view',
                 'Feed'
             );
+
             // подписки
             if (
                 ! $user->isGuest
@@ -447,6 +464,7 @@ class Routing
                     'TopicSubscription'
                 );
             }
+
             // личные сообщения
             if ($user->usePM) {
                 $r->add(
@@ -463,6 +481,7 @@ class Routing
                 );
             }
         }
+
         // опросы
         if ($userRules->usePoll) {
             $r->add(
@@ -472,6 +491,7 @@ class Routing
                 'Poll'
             );
         }
+
         // админ и модератор
         if ($user->isAdmMod) {
             $r->add(
@@ -520,7 +540,6 @@ class Routing
                 'AdminUsersAction:view',
                 'AdminUsersAction'
             );
-
             $r->add(
                 $r::GET,
                 '/admin/users/promote/{uid|i:[1-9]\d*}/{pid|i:[1-9]\d*}/{token}',
@@ -603,6 +622,7 @@ class Routing
             );
 
         }
+
         // только админ
         if ($user->isAdmin) {
             $r->add(

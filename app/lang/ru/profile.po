@@ -356,3 +356,21 @@ msgstr "<b>Это необратимая операция!</b>"
 
 msgid "Your deleted redirect"
 msgstr "Ваш профиль удален."
+
+msgid "Search config"
+msgstr "Конфигурация поиска"
+
+msgid "Search options"
+msgstr "Опции поиска"
+
+msgid "Set up search"
+msgstr "Настроить поиск"
+
+msgid "Follow label"
+msgstr "Отслеживать"
+
+msgid "Update search config redirect"
+msgstr "Настройки поиска сохранены."
+
+msgid "Select followed forums for %s and %s:"
+msgstr "Выберите отслеживаемые разделы для <b><i>%s</i></b> и <b><i>%s</i></b>:"

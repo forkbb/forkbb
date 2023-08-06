@@ -561,7 +561,7 @@ abstract class Page extends Model
                     }
 
                     if ($crumb->linkCrumbExt) {
-                        $ext = [$crumb->linkCrumbExt, '#'];
+                        $ext = [$crumb->linkCrumbExt, $crumb->textCrumbExt ?? '#'];
                     } else {
                         $ext = null;
                     }
@@ -573,17 +573,19 @@ abstract class Page extends Model
                 );
             // ссылка (передана массивом)
             } elseif (\is_array($crumb)) {
-                $result[]     = [$crumb[0], $crumb[1], $active, $ext];
+                $result[]     = [$crumb[0], $crumb[1], $active, $crumb[2] ?? $ext];
                 $this->titles = $crumb[1];
+                $ext          = null;
             // строка
             } else {
                 $result[]     = [null, (string) $crumb, $active, $ext];
                 $this->titles = (string) $crumb;
+                $ext          = null;
             }
 
             $active = null;
-            $ext    = null;
         }
+
         // главная страница
         $result[] = [$this->c->Router->link('Index'), 'Index', $active, $ext];
 

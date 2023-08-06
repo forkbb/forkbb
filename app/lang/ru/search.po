@@ -176,3 +176,6 @@ msgstr "Логический оператор в начале (под)запро
 
 msgid "Logical operators follow one after another: '%s'"
 msgstr "Логические операторы следуют друг за другом: '%s'"
+
+msgid "Set up"
+msgstr "Настр."

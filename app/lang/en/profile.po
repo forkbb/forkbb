@@ -356,3 +356,21 @@ msgstr "<b>This is an irreversible operation!</b>"
 
 msgid "Your deleted redirect"
 msgstr "Your profile has been deleted."
+
+msgid "Search config"
+msgstr "Search config"
+
+msgid "Search options"
+msgstr "Search options"
+
+msgid "Set up search"
+msgstr "Set up search"
+
+msgid "Follow label"
+msgstr "Follow"
+
+msgid "Update search config redirect"
+msgstr "Search settings updated."
+
+msgid "Select followed forums for %s and %s:"
+msgstr "Select followed forums for <b><i>%s</i></b> and <b><i>%s</i></b>:"

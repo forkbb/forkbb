@@ -2632,6 +2632,10 @@ body,
   width: calc(100% - 3rem);
 }
 
+#fork-profile-search .f-finform:first-child {
+  margin-bottom: 1rem;
+}
+
 /****************************/
 /* Профиль - редактирование */
 /****************************/
@@ -2641,11 +2645,11 @@ body,
   border-bottom: 0.0625rem dotted var(--br-fprimary);
 }
 
-#fork .f-fs-header-edit,
+/*#fork .f-fs-header-edit,
 #fork .f-fs-data-edit {
   padding: 0.3125rem 0;
   margin-bottom: 0.3125rem;
-}
+}*/
 
 #fork .f-fs-header-edit .f-avatar-img {
   max-width: 11.75rem;

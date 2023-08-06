@@ -168,4 +168,9 @@ class Profile extends Rules
     {
         return $this->my && 1 === $this->c->config->b_oauth_allow;
     }
+
+    protected function getconfigureSearch(): bool
+    {
+        return $this->my && 1 === $this->curUser->g_search;
+    }
 }

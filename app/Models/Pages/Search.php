@@ -428,12 +428,13 @@ class Search extends Page
         $asTopicsList = true;
         $list         = false;
         $uid          = $args['uid'] ?? null;
-        $subIndex = [
+        $subIndex     = [
             'topics_with_your_posts' => 'with-your-posts',
             'latest_active_topics'   => 'latest',
             'unanswered_topics'      => 'unanswered',
             'new'                    => 'new',
         ];
+        $extLink      = true;
 
         switch ($action) {
             case 'search':
@@ -459,6 +460,8 @@ class Search extends Page
                 if ($this->user->isGuest) {
                     break;
                 }
+
+                $extLink = false;
             case 'latest_active_topics':
             case 'unanswered_topics':
                 if (isset($uid)) {
@@ -469,6 +472,19 @@ class Search extends Page
                 $list              = $model->actionT($action, $forum, $uid);
                 $model->name       = __('Quick search ' . $action);
                 $model->linkMarker = 'SearchAction';
+
+                if (
+                    $extLink
+                    && ! $this->user->isGuest
+                ) {
+                    $model->linkCrumbExt = $this->c->Router->link('EditUserSearch', ['id' => $this->user->id]);
+
+                    if (empty($this->user->unfollowed_f)) {
+                        $model->textCrumbExt = __('Set up');
+                    } else {
+                        $model->textCrumbExt = '-' . (\substr_count($this->user->unfollowed_f, ',') + 1);
+                    }
+                }
 
                 if ($forum->id) {
                     $model->linkArgs = ['action' => $action, 'forum' => $forum->id];
@@ -523,6 +539,7 @@ class Search extends Page
             return $this->c->Message->message('Bad request');
         } elseif (empty($list)) {
             $this->fIswev = [FORK_MESS_INFO, 'No hits'];
+            $this->noHits = true;
 
             return $this->view([], 'GET', true);
         }
@@ -563,7 +580,14 @@ class Search extends Page
      */
     protected function crumbs(mixed ...$crumbs): array
     {
-        $crumbs[] = [$this->c->Router->link('Search'), 'Search'];
+        // перехват пустого результата для 'latest_active_topics' и 'unanswered_topics'
+        if (isset($this->noHits, $this->c->search->linkCrumbExt, $this->c->search->textCrumbExt)) {
+            $ext = [$this->c->search->linkCrumbExt, $this->c->search->textCrumbExt];
+        } else {
+            $ext = null;
+        }
+
+        $crumbs[] = [$this->c->Router->link('Search'), 'Search', $ext];
 
         return parent::crumbs(...$crumbs);
     }
