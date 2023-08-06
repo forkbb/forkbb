@@ -12,13 +12,9 @@ namespace ForkBB\Models\Pages\Profile;
 
 use ForkBB\Core\Image;
 use ForkBB\Core\Validator;
-use ForkBB\Core\Exceptions\MailException;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
-use ForkBB\Models\User\User;
-use function \ForkBB\__;
-use function \ForkBB\num;
-use function \ForkBB\size;
+use function \ForkBB\{__, num, size};
 
 class Edit extends Profile
 {

@@ -13,7 +13,6 @@ namespace ForkBB\Models\Pages\Profile;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
 use ForkBB\Models\Pages\RegLogTrait;
-use ForkBB\Models\User\User;
 use function \ForkBB\__;
 
 class OAuth extends Profile

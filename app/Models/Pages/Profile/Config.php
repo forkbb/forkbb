@@ -15,8 +15,7 @@ use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
 use ForkBB\Models\Pages\TimeZoneTrait;
 use DateTimeZone;
-use function \ForkBB\__;
-use function \ForkBB\dt;
+use function \ForkBB\{__, dt};
 
 class Config extends Profile
 {
