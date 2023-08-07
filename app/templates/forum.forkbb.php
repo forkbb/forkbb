@@ -91,10 +91,10 @@
               <div class="f-ficon"></div>
             @endif
               <div class="f-finfo">
-                <h3 class="f-finfo-h3">
+                <p class="f-finfo-h3">
                   <span class="f-tmoved" title="{{ __('Moved') }}"><small class="f-movedtxt">{!! __('Moved') !!}</small></span>
                   <a class="f-ftname" href="{{ $topic->link }}">{{ $topic->name }}</a>
-                </h3>
+                </p>
               </div>
             </div>
           </li>
@@ -108,7 +108,7 @@
               <div class="f-ficon"></div>
             @endif
               <div class="f-finfo">
-                <h3 class="f-finfo-h3">
+                <p class="f-finfo-h3">
             @if ($topic->dot)
                   <span class="f-tdot"><span class="f-dottxt">·</span></span>
             @endif
@@ -145,7 +145,7 @@
             @if (false !== $topic->hasUnread || false !== $topic->hasNew)
                   <small>)</small>
             @endif
-                </h3>
+                </p>
                 <p class="f-finfo-p">
                   <span class="f-cmposter">{!! __(['by %s', $topic->poster]) !!}</span>
                   <span class="f-cmposted">{{ dt($topic->posted) }}</span>

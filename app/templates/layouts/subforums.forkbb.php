@@ -4,12 +4,12 @@
               <div class="f-cell f-cmain">
                 <div class="f-ficon"></div>
                 <div class="f-finfo">
-                  <h3 class="f-finfo-h3">
+                  <p class="f-finfo-h3">
                     <span class="f-frsname">
                       <small class="f-fredirtext">{!! __('Link to') !!}</small>
                       <a class="f-ftname" href="{{ $cur->redirect_url }}">{{ $cur->forum_name }}</a>
                     </span>
-                  </h3>
+                  </p>
         @if ('' != $cur->forum_desc)
                   <p class="f-fdesc">{!! $cur->forum_desc !!}</p>
         @endif
@@ -21,7 +21,7 @@
               <div class="f-cell f-cmain">
                 <div class="f-ficon"></div>
                 <div class="f-finfo">
-                  <h3 class="f-finfo-h3">
+                  <p class="f-finfo-h3">
                     <span class="f-frsname">
                       <a class="f-ftname" href="{{ $cur->link }}">{{ $cur->forum_name }}</a>
                     </span>
@@ -30,7 +30,7 @@
                     <span class="f-fnew"><a href="{{ $cur->linkNew }}" title="{{ __('New posts') }}"><small class="f-newtxt">{!! __('New posts') !!}</small></a></span>
                     <small>)</small>
         @endif
-                  </h3>
+                  </p>
         @if ($cur->subforums)
                   <dl class="f-inline f-fsub"><!-- inline -->
                     <dt>{!! __(['Sub forum', \count($cur->subforums)]) !!}</dt>
