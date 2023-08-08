@@ -73,7 +73,7 @@ ForkBB.editor = (function (doc, win) {
         sceditor.create(textarea, options);
         instance = sceditor.instance(textarea);
 
-        instance.height(instance.height() - instance.getBody().offsetHeight + 300);
+        instance.height(instance.height() - instance.getContentAreaContainer().offsetHeight + 250);
 
         if (smiliesEnabled) {
             var checkbox = doc.querySelector('input[name="hide_smilies"]');
