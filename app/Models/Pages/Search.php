@@ -143,7 +143,7 @@ class Search extends Page
         $this->nameTpl      = 'search';
         $this->onlinePos    = 'search';
         $this->onlineDetail = null;
-        $this->canonical    = $this->c->Router->link('Search');
+        $this->canonical    = $this->c->Router->link($advanced ? 'SearchAdvanced' : 'Search');
         $this->robots       = 'noindex';
         $this->form         = $advanced ? $this->formSearchAdvanced($v) : $this->formSearch($v);
         $this->crumbs       = $this->crumbs();

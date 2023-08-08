@@ -47,6 +47,7 @@ class Rules extends Page
         $this->nameTpl      = 'rules';
         $this->onlinePos    = 'rules';
         $this->onlineDetail = null;
+        $this->canonical    = $this->c->Router->link('Register');
         $this->robots       = 'noindex';
         $this->crumbs       = $this->crumbs(
             'Forum rules',

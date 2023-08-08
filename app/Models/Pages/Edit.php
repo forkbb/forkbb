@@ -129,7 +129,7 @@ class Edit extends Page
 
         $this->nameTpl   = 'post';
         $this->onlinePos = 'topic-' . $topic->id;
-        $this->canonical = $post->linkEdit;
+//        $this->canonical = $post->linkEdit;
         $this->robots    = 'noindex';
         $this->formTitle = $firstPost ? 'Edit topic' : 'Edit post';
         $this->crumbs    = $this->crumbs($this->formTitle, $topic);
