@@ -871,4 +871,18 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.67 to rev.68
+     */
+    protected function stageNumber67(array $args): ?int
+    {
+        $config = $this->c->config;
+
+        $config->s_meta_desc ??= '';
+
+        $config->save();
+
+        return null;
+    }
 }

@@ -1581,6 +1581,7 @@ class Install extends Admin
             'i_search_ttl'            => 900,
             'b_ant_hidden_ch'         => 1,
             'b_ant_use_js'            => 0,
+            's_meta_desc'             => '',
         ];
 
         foreach ($forkConfig as $name => $value) {

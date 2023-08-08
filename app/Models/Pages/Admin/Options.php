@@ -43,6 +43,7 @@ class Options extends Admin
                     'token'                   => 'token:AdminOptions',
                     'o_board_title'           => 'required|string:trim|max:255',
                     'o_board_desc'            => 'exist|string:trim,empty|max:65000 bytes|html',
+                    's_meta_desc'             => 'exist|string:trim,empty|max:255',
                     'o_default_timezone'      => [
                         'required',
                         'string:trim',
@@ -235,6 +236,13 @@ class Options extends Admin
                     'value'   => $config->o_board_desc,
                     'caption' => 'Board desc label',
                     'help'    => 'Board desc help',
+                ],
+                's_meta_desc' => [
+                    'type'      => 'text',
+                    'maxlength' => '255',
+                    'value'     => $config->s_meta_desc,
+                    'caption'   => 'Meta desc label',
+                    'help'      => 'Meta desc help',
                 ],
                 'o_default_timezone' => [
                     'type'    => 'select',

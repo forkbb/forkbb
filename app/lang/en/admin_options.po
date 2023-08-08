@@ -446,3 +446,9 @@ msgstr "Search cache lifetime"
 
 msgid "Search cache lifetime help"
 msgstr "Search query caching time in seconds."
+
+msgid "Meta desc label"
+msgstr "Meta tag <i>description</i>"
+
+msgid "Meta desc help"
+msgstr "This meta tag can be used by search engines to form a snippet that is displayed in the search results."

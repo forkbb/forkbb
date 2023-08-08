@@ -69,6 +69,8 @@ abstract class Page extends Model
         $this->fDescription = $container->config->o_board_desc;
         $this->fRootLink    = $container->Router->link('Index');
 
+        $this->mDescription = $this->c->config->s_meta_desc;
+
         if (1 === $container->config->b_announcement) {
             $this->fAnnounce = $container->config->o_announcement_message;
         }
