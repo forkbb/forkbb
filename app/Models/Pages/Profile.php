@@ -45,6 +45,8 @@ abstract class Profile extends Page
         $this->nameTpl   = 'profile';
         $this->onlinePos = 'profile-' . $this->curUser->id; // ????
 
+        $this->mDescription = __(['mDescription for %s', $this->curUser->username]);
+
         return true;
     }
 

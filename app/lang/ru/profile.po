@@ -374,3 +374,6 @@ msgstr "Настройки поиска сохранены."
 
 msgid "Select followed forums for %s and %s:"
 msgstr "Выберите отслеживаемые разделы для <b><i>%s</i></b> и <b><i>%s</i></b>:"
+
+msgid "mDescription for %s"
+msgstr "%s - профиль пользователя. Активность, посты, топики и контакты."

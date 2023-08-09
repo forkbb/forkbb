@@ -374,3 +374,6 @@ msgstr "Search settings updated."
 
 msgid "Select followed forums for %s and %s:"
 msgstr "Select followed forums for <b><i>%s</i></b> and <b><i>%s</i></b>:"
+
+msgid "mDescription for %s"
+msgstr "%s's profile. Activity, posts, topics and contacts."

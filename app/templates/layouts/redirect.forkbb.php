@@ -6,7 +6,7 @@
   <meta http-equiv="refresh" content="{{ $p->timeout }}; URL={{ $p->link }}">
   <title>{{! $p->pageTitle !}}</title>
 @if ($p->mDescription)
-  <meta name="description" content="{{ $p->mDescription }}">
+  <meta name="description" content="{{! $p->mDescription !}}">
 @endif
 @foreach ($p->pageHeaders as $pageHeader)
     @if ('style' === $pageHeader['type'])

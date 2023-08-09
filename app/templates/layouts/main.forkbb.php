@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{! $p->pageTitle !}}</title>
 @if ($p->mDescription)
-  <meta name="description" content="{{ $p->mDescription }}">
+  <meta name="description" content="{{! $p->mDescription !}}">
 @endif
 @foreach ($p->pageHeaders as $pageHeader)
     @if ('style' === $pageHeader['type'])
