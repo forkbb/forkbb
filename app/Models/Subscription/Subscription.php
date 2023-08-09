@@ -89,14 +89,13 @@ class Subscription extends Model
 
         if (! empty($this->forums)) {
             $query = 'INSERT INTO ::forum_subscriptions (user_id, forum_id)
-                SELECT ?i:uid, ?i:id
-                FROM ::groups
+                SELECT tmp.*
+                FROM (SELECT ?i:uid AS f1, ?i:id AS f2) AS tmp
                 WHERE NOT EXISTS (
                     SELECT 1
                     FROM ::forum_subscriptions
                     WHERE user_id=?i:uid AND forum_id=?i:id
-                )
-                LIMIT 1';
+                )';
 
             foreach ($this->forums as $id) {
                 $vars[':id'] = $id;
@@ -107,14 +106,13 @@ class Subscription extends Model
 
         if (! empty($this->topics)) {
             $query = 'INSERT INTO ::topic_subscriptions (user_id, topic_id)
-                SELECT ?i:uid, ?i:id
-                FROM ::groups
+                SELECT tmp.*
+                FROM (SELECT ?i:uid AS f1, ?i:id AS f2) AS tmp
                 WHERE NOT EXISTS (
                     SELECT 1
                     FROM ::topic_subscriptions
                     WHERE user_id=?i:uid AND topic_id=?i:id
-                )
-                LIMIT 1';
+                )';
 
             foreach ($this->topics as $id) {
                 $vars[':id'] = $id;

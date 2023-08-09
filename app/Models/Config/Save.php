@@ -79,14 +79,13 @@ class Save extends Method
                         $this->c->DB->exec($query, $vars);
 
                         $query = 'INSERT INTO ::config (conf_name, conf_value)
-                            SELECT ?s:name, ?s:value
-                            FROM ::groups
+                            SELECT tmp.*
+                            FROM (SELECT ?s:name AS f1, ?s:value AS f2) AS tmp
                             WHERE NOT EXISTS (
                                 SELECT 1
                                 FROM ::config
                                 WHERE conf_name=?s:name
-                            )
-                            LIMIT 1';
+                            )';
 
                         break;
                 }
