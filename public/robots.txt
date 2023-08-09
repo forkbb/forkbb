@@ -4,6 +4,5 @@ Disallow: /log
 Disallow: /mod
 Disallow: /reg
 Disallow: /search
-Disallow: /userlist
 Disallow: /post
 Disallow: /forum/scroll
