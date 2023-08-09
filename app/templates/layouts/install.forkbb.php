@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{!! __('ForkBB Installation') !!}</title>
+  <meta name="robots" content="noindex">
 @foreach ($p->pageHeaders as $pageHeader)
     @if ('style' === $pageHeader['type'])
   <style>{!! $pageHeader['values'][0] !!}</style>

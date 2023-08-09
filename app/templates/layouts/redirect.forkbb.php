@@ -8,6 +8,7 @@
 @if ($p->mDescription)
   <meta name="description" content="{{! $p->mDescription !}}">
 @endif
+  <meta name="robots" content="noindex">
 @foreach ($p->pageHeaders as $pageHeader)
     @if ('style' === $pageHeader['type'])
   <style>{!! $pageHeader['values'][0] !!}</style>

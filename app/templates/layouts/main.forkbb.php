@@ -7,6 +7,12 @@
 @if ($p->mDescription)
   <meta name="description" content="{{! $p->mDescription !}}">
 @endif
+@if ($p->robots)
+  <meta name="robots" content="{{ $p->robots }}">
+@endif
+@if ($p->canonical)
+  <link rel="canonical" href="{{ $p->canonical }}">
+@endif
 @foreach ($p->pageHeaders as $pageHeader)
     @if ('style' === $pageHeader['type'])
   <style>{!! $pageHeader['values'][0] !!}</style>
