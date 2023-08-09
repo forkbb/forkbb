@@ -391,11 +391,13 @@ class View extends Profile
             ];
         }
 
-        $form['sets']['private'] = [
-            'class'  => ['data'],
-            'legend' => 'Private information',
-            'fields' => $fields,
-        ];
+        if (! empty($fields)) {
+            $form['sets']['private'] = [
+                'class'  => ['data'],
+                'legend' => 'Private information',
+                'fields' => $fields,
+            ];
+        }
 
         return $form;
     }
