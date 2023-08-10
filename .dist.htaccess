@@ -14,6 +14,7 @@ AddDefaultCharset UTF-8
 
   <IfModule !litespeed>
     RewriteRule ^favicon\.ico$ public/favicon.ico [L]
+    RewriteRule ^apple-touch-icon\.png$ public/apple-touch-icon.png [L]
     RewriteRule ^robots\.txt$ public/robots.txt [L]
 
     RewriteRule !^public/ index.php [L]
@@ -28,6 +29,7 @@ AddDefaultCharset UTF-8
   </IfModule>
   <IfModule litespeed>
     RewriteRule ^favicon\.ico$ public/favicon.ico
+    RewriteRule ^apple-touch-icon\.png$ public/apple-touch-icon.png
     RewriteRule ^robots\.txt$ public/robots.txt
 
     RewriteRule !^public/ index.php [L]
