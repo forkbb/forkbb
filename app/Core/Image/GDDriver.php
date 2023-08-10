@@ -162,4 +162,14 @@ class GDDriver extends DefaultDriver
 
         return $result;
     }
+
+    public function width(mixed $image): int
+    {
+        return \imagesx($image);
+    }
+
+    public function height(mixed $image): int
+    {
+        return \imagesy($image);
+    }
 }

@@ -8,8 +8,9 @@
 /app/cache/**/*.tmp
 /app/log/*
 /public/img/avatars/*
+/public/img/og/*
 /public/.htaccess
 /public/index.php
-!.gitkeep
 /public/upload/**/*
 !/public/upload/index.html
+!.gitkeep

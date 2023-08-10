@@ -49,6 +49,16 @@ class DefaultDriver
         return $image;
     }
 
+    public function width(mixed $image): int
+    {
+        return 0;
+    }
+
+    public function height(mixed $image): int
+    {
+        return 0;
+    }
+
     public function destroy(mixed $image): void
     {
     }

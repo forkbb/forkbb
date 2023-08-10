@@ -127,6 +127,16 @@ class Image extends File
         return $result;
     }
 
+    public function width(): int
+    {
+        return $this->imgDriver->width($this->image);
+    }
+
+    public function height(): int
+    {
+        return $this->imgDriver->height($this->image);
+    }
+
     public function __destruct()
     {
         $this->imgDriver->destroy($this->image);

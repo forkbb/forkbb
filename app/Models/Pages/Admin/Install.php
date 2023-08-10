@@ -1582,6 +1582,7 @@ class Install extends Admin
             'b_ant_hidden_ch'         => 1,
             'b_ant_use_js'            => 0,
             's_meta_desc'             => '',
+            'a_og_image'              => \json_encode([], FORK_JSON_ENCODE),
         ];
 
         foreach ($forkConfig as $name => $value) {

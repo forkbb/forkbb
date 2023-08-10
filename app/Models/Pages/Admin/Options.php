@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Pages\Admin;
 
+use ForkBB\Core\Image;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Admin;
@@ -114,6 +115,8 @@ class Options extends Admin
                     'b_poll_guest'            => 'required|integer|in:0,1',
                     'b_pm'                    => 'required|integer|in:0,1',
                     'b_oauth_allow'           => 'required|integer|in:0,1',
+                    'upload_og_image'         => 'image',
+                    'delete_og_image'         => 'checkbox',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -122,20 +125,56 @@ class Options extends Admin
                     'o_webmaster_email' => 'Invalid webmaster e-mail message',
                 ]);
 
-            $valid = $v->validation($_POST);
+            $valid = $v->validation($_FILES + $_POST);
             $data  = $v->getData();
 
             if (empty($data['changeSmtpPassword'])) {
                 unset($data['o_smtp_pass']);
             }
 
-            unset($data['changeSmtpPassword'], $data['token']);
+            unset($data['changeSmtpPassword'], $data['token'], $data['upload_og_image'], $data['delete_og_image']);
 
             foreach ($data as $attr => $value) {
                 $config->$attr = $value;
             }
 
             if ($valid) {
+                if (
+                    $v->delete_og_image
+                    || $v->upload_og_image instanceof Image
+                ) {
+                    $folder = $this->c->DIR_PUBLIC . '/img/og/';
+
+                    $this->deleteOgImage($folder);
+
+                    $config->a_og_image = [];
+                }
+
+                if ($v->upload_og_image instanceof Image) {
+                    $path = $folder . $this->c->Secury->randomPass(8) . '.webp';
+
+                    $result = $v->upload_og_image
+                        ->rename(true)
+                        ->rewrite(false)
+                        ->setQuality($this->c->config->i_avatars_quality ?? 75)
+                        ->toFile($path);
+
+                    if (true === $result) {
+                        $config->a_og_image = [
+                            'file'   => $v->upload_og_image->name() . '.' . $v->upload_og_image->ext(),
+                            'width'  => $v->upload_og_image->width(),
+                            'height' => $v->upload_og_image->height(),
+                        ];
+                    } else {
+                        $config->a_og_image = [];
+
+                        $this->c->Log->warning('og:image Failed image processing', [
+                            'user'  => $this->user->fLog(),
+                            'error' => $v->upload_og_image->error(),
+                        ]);
+                    }
+                }
+
                 $config->save();
 
                 return $this->c->Redirect->page('AdminOptions')->message('Options updated redirect', FORK_MESS_SUCC);
@@ -151,6 +190,20 @@ class Options extends Admin
         $this->classForm = ['editoptions'];
 
         return $this;
+    }
+
+    /**
+     * Удаляет текущую картинку Open Graph
+     */
+    protected function deleteOgImage(string $folder): void
+    {
+        if (! empty($this->c->config->a_og_image['file'])) {
+            $path = $folder . $this->c->config->a_og_image['file'];
+
+            if (\is_file($path)) {
+                \unlink($path);
+            }
+        }
     }
 
     /**
@@ -202,12 +255,13 @@ class Options extends Admin
     protected function formEdit(Config $config): array
     {
         $form = [
-            'action' => $this->c->Router->link('AdminOptions'),
-            'hidden' => [
+            'action'  => $this->c->Router->link('AdminOptions'),
+            'hidden'  => [
                 'token' => $this->c->Csrf->create('AdminOptions'),
             ],
-            'sets'   => [],
-            'btns'   => [
+            'enctype' => 'multipart/form-data',
+            'sets'    => [],
+            'btns'    => [
                 'save'  => [
                     'type'  => 'submit',
                     'value' => __('Save changes'),
@@ -218,6 +272,10 @@ class Options extends Admin
         $yn     = [1 => __('Yes'), 0 => __('No')];
         $langs  = $this->c->Func->getNameLangs();
         $styles = $this->c->Func->getStyles();
+
+        if (isset($config->a_og_image['file'])) {
+            $this->ogImageUrl = $this->c->PUBLIC_URL . '/img/og/' . $config->a_og_image['file'];
+        }
 
         $form['sets']['essentials'] = [
             'legend' => 'Essentials subhead',
@@ -264,6 +322,23 @@ class Options extends Admin
                     'value'   => $config->o_default_style,
                     'caption' => 'Default style label',
                     'help'    => 'Default style help',
+                ],
+                'a_og_image' => [
+                    'type'    => empty($this->ogImageUrl) ? 'str' : 'yield',
+                    'caption' => 'Og image label',
+                    'value'   => empty($this->ogImageUrl) ? __('Not uploaded') : 'og:image',
+                    'help'    => empty($this->ogImageUrl) ? null : ['Og image help', $config->a_og_image['width'], $config->a_og_image['height']],
+                ],
+                'delete_og_image' => [
+                    'type'    => 'checkbox',
+                    'label'   => 'Delete og image',
+                    'checked' => false,
+                ],
+                'upload_og_image' => [
+                    'type'    => 'file',
+                    'caption' => 'New og image label',
+                    'help'    => 'New og image help',
+                    'accept'  => 'image/*',
                 ],
             ],
         ];

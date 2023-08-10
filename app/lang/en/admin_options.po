@@ -452,3 +452,21 @@ msgstr "Meta tag <i>description</i>"
 
 msgid "Meta desc help"
 msgstr "This meta tag can be used by search engines to form a snippet that is displayed in the search results."
+
+msgid "New og image label"
+msgstr "New image"
+
+msgid "New og image help"
+msgstr "Image for Open Graph by default. The recommended size is <b>1200</b> x <b>630</b> pixels."
+
+msgid "Not uploaded"
+msgstr "Not uploaded"
+
+msgid "Og image label"
+msgstr "Image for Open Graph"
+
+msgid "Og image help"
+msgstr "Size is <b>%1$s</b> x <b>%2$s</b> pixels."
+
+msgid "Delete og image"
+msgstr "Delete image for Open Graph"

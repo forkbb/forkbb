@@ -880,6 +880,7 @@ class Update extends Admin
         $config = $this->c->config;
 
         $config->s_meta_desc ??= '';
+        $config->a_og_image  ??= [];
 
         $config->save();
 

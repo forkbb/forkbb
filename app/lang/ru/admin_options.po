@@ -452,3 +452,21 @@ msgstr "Мета-тег <i>description</i>"
 
 msgid "Meta desc help"
 msgstr "Данный мета-тег может быть использован поисковыми системами для формирования сниппета, который отображается в результатах поисковой выдачи."
+
+msgid "New og image label"
+msgstr "Новая картинка"
+
+msgid "New og image help"
+msgstr "Картинка для Open Graph по умолчанию. Рекомендуемый размер - <b>1200</b> x <b>630</b> точек."
+
+msgid "Not uploaded"
+msgstr "Не загружена"
+
+msgid "Og image label"
+msgstr "Картинка для Open Graph"
+
+msgid "Og image help"
+msgstr "Pазмер - <b>%1$s</b> x <b>%2$s</b> точек."
+
+msgid "Delete og image"
+msgstr "Удалить картинку для Open Graph"

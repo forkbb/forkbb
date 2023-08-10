@@ -123,4 +123,14 @@ class ImagickDriver extends DefaultDriver
             throw new FileException($e->getMessage());
         }
     }
+
+    public function width(mixed $imagick): int
+    {
+        return $imagick->getImageWidth();
+    }
+
+    public function height(mixed $imagick): int
+    {
+        return $imagick->getImageHeight();
+    }
 }
