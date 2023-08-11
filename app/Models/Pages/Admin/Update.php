@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.0.0';
     const REV_MIN_FOR_UPDATE         = 53;
-    const LATEST_REV_WITH_DB_CHANGES = 67;
+    const LATEST_REV_WITH_DB_CHANGES = 68;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const CONFIG_FILE                = 'main.php';
@@ -883,6 +883,8 @@ class Update extends Admin
         $config->a_og_image  ??= [];
 
         $config->save();
+
+        $this->c->DB->addIndex('::posts', 'editor_id_idx', ['editor_id']);
 
         return null;
     }
