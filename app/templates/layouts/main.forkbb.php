@@ -12,6 +12,22 @@
 @endif
 @if ($p->canonical)
   <link rel="canonical" href="{{ $p->canonical }}">
+    @if ($p->mOgImage)
+  <meta property="og:title" content="{{! $p->pageTitle !}}">
+  <meta property="og:type" content="{{ $p->mOgType or 'website' }}">
+  <meta property="og:url" content="{{ $p->canonical }}">
+  <meta property="og:image" content="{{ $p->mOgImage }}">
+        @if ($p->mOgImageX)
+  <meta property="og:image:width" content="{{ $p->mOgImageX }}">
+        @endif
+        @if ($p->mOgImageY)
+  <meta property="og:image:height" content="{{ $p->mOgImageY }}">
+        @endif
+        @if ($p->mDescription)
+  <meta property="og:description" content="{{! $p->mDescription !}}">
+        @endif
+  <meta property="og:site_name" content="{{ $p->fTitle }}">
+    @endif
 @endif
 @foreach ($p->pageHeaders as $pageHeader)
     @if ('style' === $pageHeader['type'])

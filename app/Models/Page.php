@@ -71,6 +71,12 @@ abstract class Page extends Model
 
         $this->mDescription = $this->c->config->s_meta_desc;
 
+        if (! empty($this->c->config->a_og_image['file'])) {
+            $this->mOgImage  = $this->c->PUBLIC_URL . '/img/og/' . $this->c->config->a_og_image['file'];
+            $this->mOgImageX = $this->c->config->a_og_image['width'] ?? null;
+            $this->mOgImageY = $this->c->config->a_og_image['height'] ?? null;
+        }
+
         if (1 === $container->config->b_announcement) {
             $this->fAnnounce = $container->config->o_announcement_message;
         }
