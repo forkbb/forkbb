@@ -87,40 +87,76 @@ class Delete extends Method
             $vars = [
                 ':users' => $uids,
             ];
-            $query = 'DELETE
-                FROM ::search_matches
-                WHERE post_id IN (
-                    SELECT p.id
-                    FROM ::posts AS p
-                    WHERE p.poster_id IN (?ai:users)
-                )';
+
+            switch ($this->c->DB->getType()) {
+                case 'mysql':
+                    $query = 'DELETE sm
+                        FROM ::search_matches AS sm, ::posts AS p
+                        WHERE p.poster_id IN (?ai:users) AND sm.post_id=p.id';
+
+                    break;
+                default:
+                    $query = 'DELETE
+                        FROM ::search_matches
+                        WHERE post_id IN (
+                            SELECT p.id
+                            FROM ::posts AS p
+                            WHERE p.poster_id IN (?ai:users)
+                        )';
+
+                    break;
+            }
         }
 
         if ($forums) {
             $vars = [
                 ':forums' => \array_keys($forums),
             ];
-            $query = 'DELETE
-                FROM ::search_matches
-                WHERE post_id IN (
-                    SELECT p.id
-                    FROM ::posts AS p
-                    INNER JOIN ::topics AS t ON t.id=p.topic_id
-                    WHERE t.forum_id IN (?ai:forums)
-                )';
+
+            switch ($this->c->DB->getType()) {
+                case 'mysql':
+                    $query = 'DELETE sm
+                        FROM ::search_matches AS sm, ::posts AS p, ::topics AS t
+                        WHERE t.forum_id IN (?ai:forums) AND p.topic_id=t.id AND sm.post_id=p.id';
+
+                    break;
+                default:
+                    $query = 'DELETE
+                        FROM ::search_matches
+                        WHERE post_id IN (
+                            SELECT p.id
+                            FROM ::posts AS p
+                            INNER JOIN ::topics AS t ON t.id=p.topic_id
+                            WHERE t.forum_id IN (?ai:forums)
+                        )';
+
+                    break;
+            }
         }
 
         if ($topics) {
             $vars = [
                 ':topics' => \array_keys($topics),
             ];
-            $query = 'DELETE
-                FROM ::search_matches
-                WHERE post_id IN (
-                    SELECT p.id
-                    FROM ::posts AS p
-                    WHERE p.topic_id IN (?ai:topics)
-                )';
+
+            switch ($this->c->DB->getType()) {
+                case 'mysql':
+                    $query = 'DELETE sm
+                        FROM ::search_matches AS sm, ::posts AS p
+                        WHERE p.topic_id IN (?ai:topics) AND sm.post_id=p.id';
+
+                    break;
+                default:
+                    $query = 'DELETE
+                        FROM ::search_matches
+                        WHERE post_id IN (
+                            SELECT p.id
+                            FROM ::posts AS p
+                            WHERE p.topic_id IN (?ai:topics)
+                        )';
+
+                    break;
+            }
         }
 
         if ($posts) {
