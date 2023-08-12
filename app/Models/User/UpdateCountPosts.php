@@ -56,7 +56,6 @@ class UpdateCountPosts extends Action
                 INNER JOIN ::topics AS t ON t.id=p.topic_id
                 INNER JOIN ::forums AS f ON f.id=t.forum_id
                 WHERE p.poster_id=::users.id AND f.no_sum_mess=0
-                GROUP BY p.poster_id
             ), 0)
             WHERE ' . $where;
 

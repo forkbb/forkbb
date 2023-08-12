@@ -55,7 +55,6 @@ class UpdateCountTopics extends Action
                 FROM ::topics AS t
                 INNER JOIN ::posts AS p ON t.first_post_id=p.id
                 WHERE p.poster_id=::users.id AND t.moved_to=0
-                GROUP BY p.poster_id
             ), 0)
             WHERE ' . $where;
 
