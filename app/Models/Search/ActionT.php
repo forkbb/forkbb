@@ -68,12 +68,19 @@ class ActionT extends Method
 
                 break;
             case 'topics_with_your_posts':
+/*
                 $query = 'SELECT t.id
                     FROM ::topics AS t
                     INNER JOIN ::posts AS p ON t.id=p.topic_id
                     WHERE t.forum_id IN (?ai:forums) AND t.moved_to=0 AND p.poster_id=?i:uid
                     GROUP BY t.id
                     ORDER BY t.last_post DESC';
+*/
+                // упрощенный запрос для больших форумов, дополнительная обработка ниже
+                $query = 'SELECT DISTINCT t.id, t.last_post
+                    FROM forum_topics AS t
+                    INNER JOIN forum_posts AS p ON t.id=p.topic_id
+                    WHERE t.forum_id IN (?ai:forums) AND t.moved_to=0 AND p.poster_id=?i:uid';
 
                 break;
             case 'topics':
@@ -125,7 +132,15 @@ class ActionT extends Method
                 ':max'    => \max((int) $this->c->user->last_visit, (int) $this->c->user->u_mark_all_read),
             ];
 
-            $list = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
+            if ('topics_with_your_posts' === $action) {
+                $list = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_KEY_PAIR);
+
+                \arsort($list, \SORT_NUMERIC);
+
+                $list = \array_keys($list);
+            } else {
+                $list = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
+            }
         }
 
         $this->model->numPages = (int) \ceil(($this->model->count($list) ?: 1) / $this->c->user->disp_topics);
