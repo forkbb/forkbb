@@ -887,7 +887,7 @@ class Update extends Admin
         $this->c->DB->addIndex('::posts', 'editor_id_idx', ['editor_id']);
 
         $this->c->DB->dropIndex('::topics', 'moved_to_idx');
-        $this->c->DB->addIndex('::topics', 'multi_1_idx', ['moved_to', 'forum_id', 'num_replies']);
+        $this->c->DB->addIndex('::topics', 'multi_1_idx', ['moved_to', 'forum_id', 'num_replies', 'last_post']);
 
         return null;
     }

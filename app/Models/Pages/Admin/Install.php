@@ -1055,7 +1055,7 @@ class Install extends Admin
                 'forum_id_idx'      => ['forum_id'],
                 'last_post_idx'     => ['last_post'],
                 'first_post_id_idx' => ['first_post_id'],
-                'multi_1_idx'       => ['moved_to', 'forum_id', 'num_replies'],
+                'multi_1_idx'       => ['moved_to', 'forum_id', 'num_replies', 'last_post'],
             ],
             'ENGINE' => $this->DBEngine,
         ];
