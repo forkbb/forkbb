@@ -1052,7 +1052,7 @@ class Install extends Admin
             ],
             'PRIMARY KEY' => ['id'],
             'INDEXES' => [
-                'forum_id_idx'      => ['forum_id'],
+                'multi_2_idx'       => ['forum_id', 'sticky', 'last_post'],
                 'last_post_idx'     => ['last_post'],
                 'first_post_id_idx' => ['first_post_id'],
                 'multi_1_idx'       => ['moved_to', 'forum_id', 'num_replies', 'last_post'],
