@@ -90,8 +90,8 @@ class ActionT extends Method
                     LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND mot.tid=t.id)
                     LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND mof.fid=t.forum_id)
                     WHERE t.forum_id IN (?ai:forums)
-                        AND t.last_post>?i:max
                         AND t.moved_to=0
+                        AND t.last_post>?i:max
                         AND (mot.mt_last_visit IS NULL OR t.last_post>mot.mt_last_visit)
                         AND (mof.mf_mark_all_read IS NULL OR t.last_post>mof.mf_mark_all_read)
                     ORDER BY t.last_post DESC';

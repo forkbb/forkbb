@@ -1053,9 +1053,9 @@ class Install extends Admin
             'PRIMARY KEY' => ['id'],
             'INDEXES' => [
                 'forum_id_idx'      => ['forum_id'],
-                'moved_to_idx'      => ['moved_to'],
                 'last_post_idx'     => ['last_post'],
                 'first_post_id_idx' => ['first_post_id'],
+                'multi_1_idx'       => ['moved_to', 'forum_id', 'num_replies'],
             ],
             'ENGINE' => $this->DBEngine,
         ];
