@@ -1,10 +1,10 @@
 #forka {
-  --c-log-in-c: hsl(49, 60%, 93%);
+  --c-log-in-c: hsl(0, 60%, 100%);
 }
 
 @media (prefers-color-scheme: dark) {
   #forka {
-    --c-log-in-c: hsl(49, 60%, 10%);
+    --c-log-in-c: hsl(0, 60%, 2%);
   }
 }
 
