@@ -53,8 +53,7 @@ class UpdateCountTopics extends Action
             SET num_topics = COALESCE((
                 SELECT COUNT(t.id)
                 FROM ::topics AS t
-                INNER JOIN ::posts AS p ON t.first_post_id=p.id
-                WHERE p.poster_id=::users.id AND t.moved_to=0
+                WHERE t.poster_id=::users.id AND t.moved_to=0
             ), 0)
             WHERE ' . $where;
 
