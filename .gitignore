@@ -12,5 +12,6 @@
 /public/.htaccess
 /public/index.php
 /public/upload/**/*
+/public/style/ForkBB_old/*
 !/public/upload/index.html
 !.gitkeep

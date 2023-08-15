@@ -1,11 +1,5 @@
 #forka {
-  --c-log-in-c: hsl(0, 60%, 100%);
-}
-
-@media (prefers-color-scheme: dark) {
-  #forka {
-    --c-log-in-c: hsl(0, 60%, 2%);
-  }
+  --c-log-in-c: hsl(220,5%,12%);
 }
 
 /******************/
@@ -24,7 +18,7 @@
 #fork-a-menu .f-menu-a:hover,
 #fork-a-menu .f-menu-a:focus {
   background-color: var(--c-a-and-btn);
-  color: var(--c-active);
+  color: var(--c-nav-focus);
 }
 
 #fork-a-menu #id-an-label {
@@ -266,6 +260,10 @@
 /*********************/
 /* Админка/Разделы   */
 /*********************/
+#forka .f-editforums-form dt {
+  display: none;
+}
+
 #forka .f-deleteforum-form .f-fbtn {
   width: auto;
   display: inline-block;
@@ -916,7 +914,8 @@
 }
 
 #fork-rprt-old .f-field-reason {
-  background-color: #FEEFB3;
+  color: var(--c-faggr-pr);
+  background-color: hsl(48, 40%, 85%);
 }
 
 /****************************************/

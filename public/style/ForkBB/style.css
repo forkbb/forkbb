@@ -1,63 +1,37 @@
 :root {
-  --c-fprimary: hsl(0, 0%, 20%);
-  --bg-fprimary: hsl(60, 9%, 98%);
-  --br-fprimary: hsl(34, 50%, 45%);
-  --bg-like-br1: hsl(34, 50%, 45%);
-  --c-a-and-btn: hsl(34, 100%, 17%);
-  --bg-fh1: hsl(28, 42%, 79%);
-  --br-fh1: hsl(34, 100%, 25%);
-  --bg-active: hsl(34, 100%, 25%);
-  --c-icon-sub: hsl(34, 100%, 25%);
-  --bg-focus: hsl(34, 44%, 69%);
-  --bg-post-h: hsl(34, 44%, 69%);
-  --bg-post-b: hsl(28, 88%, 97%);
-  --bg-fann: hsl(28, 88%, 97%);
-  --bg-submenu: hsl(36, 100%, 90%);
-  --c-active: hsl(28, 60%, 93%);
-  --bg-btn: hsl(28, 60%, 93%);
-  --bg-like-nav: hsl(28, 60%, 93%);
-  --c-light: hsl(28, 60%, 93%);
-  --c-tsticky: hsl(357, 100%, 42%);
-  --c-faggr: hsl(357, 100%, 42%);
+  --c-fprimary: hsl(40, 16%, 93%);
+  --bg-fprimary: hsl(0, 0%, 16%);
+  --br-fprimary: hsl(0, 0%, 34%);
+  --bg-like-br1: hsl(0, 18%, 30%);
+  --c-a-and-btn: hsl(50, 100%, 50%);
+  --c-fh1: hsl(0, 0%, 80%);
+  --bg-fh1: hsl(220, 5%, 12%);
+  --br-fh1: hsl(0, 0%, 80%);
+  --c-icon-sub: hsl(0, 0%, 70%);
+  --c-focus: hsl(220, 5%, 12%);
+  --bg-focus: hsl(50, 100%, 50%);
+  --bg-post-h: hsl(0, 20%, 26%);
+  --bg-post-b: hsl(0, 0%, 26%);
+  --bg-fann: hsl(0, 0%, 21%);
+  --bg-submenu: hsl(0, 0%, 20%);
+  --bg-stats: hsl(0, 0%, 21%);
+  --c-active: hsl(40, 16%, 93%);
+  --c-nav-focus: hsl(220, 5%, 12%);
+  --bg-active: hsl(220, 5%, 12%);
+  --bg-btn: hsl(0, 0%, 21%);
+  --bg-nav: hsl(0, 0%, 19%);
+  --bg-like-nav: hsl(0, 0%, 19%);
+  --c-light: hsl(40, 16%, 93%);
+  --c-tsticky: hsl(0, 100%, 50%);
+  --c-faggr: hsl(357, 75%, 50%);
   --c-faggr-pr: hsl(0, 0%, 20%);
   --bg-faggr: hsl(0, 100%, 86%);
-  --c-tclosed: hsl(213, 9%, 80%);
-  --c-tpoll: hsl(136, 50%, 31%);
+  --c-tclosed: hsl(0, 0%, 45%);
+  --c-tpoll: hsl(50, 100%, 50%);
   --c-req: hsl(0, 100%, 50%);
-  --bg-bbcode: hsl(0, 0%, 100%);
+  --bg-bbcode: hsl(220, 5%, 16%);
   --br-bbcode: hsl(0, 0%, 75%);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --c-fprimary: hsl(0, 0%, 15%);
-    --bg-fprimary: hsl(34, 40%, 58%);
-    --br-fprimary: hsl(34, 50%, 25%);
-    --bg-like-br1: hsl(34, 50%, 45%);
-    --c-a-and-btn: hsl(34, 100%, 15%);
-    --bg-fh1: hsl(28, 42%, 79%);
-    --br-fh1: hsl(34, 100%, 25%);
-    --bg-active: hsl(34, 100%, 25%);
-    --c-icon-sub: hsl(34, 100%, 25%);
-    --bg-focus: hsl(34, 80%, 59%);
-    --bg-post-h: hsl(34, 44%, 69%);
-    --bg-post-b: hsl(36, 48%, 67%);
-    --bg-fann: hsl(36, 48%, 67%);
-    --bg-submenu: hsl(36, 50%, 60%);
-    --c-active: hsl(28, 50%, 73%);
-    --bg-btn: hsl(28, 50%, 73%);
-    --bg-like-nav: hsl(28, 50%, 73%);
-    --c-light: hsl(28, 50%, 73%);
-    --c-tsticky: hsl(357, 100%, 42%);
-    --c-faggr: hsl(357, 100%, 42%);
-    --c-faggr-pr: hsl(0, 0%, 20%);
-    --bg-faggr: hsl(0, 100%, 86%);
-    --c-tclosed: hsl(0, 0%, 32%);
-    --c-tpoll: hsl(136, 50%, 31%);
-    --c-req: hsl(0, 100%, 50%);
-    --bg-bbcode: hsl(0, 0%, 70%);
-    --br-bbcode: hsl(0, 0%, 15%);
-  }
+  --bg-poll-res: hsl(50, 100%, 50%);
 }
 
 /*******************/
@@ -301,6 +275,7 @@ body,
   padding: 0.625rem;
   border: 0.0625rem solid var(--br-fh1);
   background-color: var(--bg-fh1);
+  color: var(--c-fh1);
 }
 
 #fork section > h2,
@@ -341,6 +316,7 @@ body,
   color: var(--c-a-and-btn);
   cursor: pointer;
   text-decoration: none;
+  transition-duration: 1s;
 }
 
 #fork .f-btn {
@@ -366,11 +342,13 @@ body,
 #fork a:focus,
 #fork .f-btn:hover,
 #fork .f-btn:focus {
+  color: var(--c-focus);
   background-color: var(--bg-focus);
 }
 
 #fork a:active,
 #fork .f-btn:active {
+  color: var(--c-active);
   background-color: var(--bg-active);
 }
 
@@ -445,7 +423,7 @@ body,
 }
 
 #fork .f-menu-checkbox:focus + .f-menu-toggle::after {
-  color: var(--bg-focus);
+  color: var(--c-nav-focus);
   background-color: var(--c-a-and-btn);
 }
 
@@ -510,7 +488,7 @@ body,
 }
 
 #fork-nav .f-menu-items {
-  background-color: var(--bg-btn);
+  background-color: var(--bg-nav);
   border-bottom: 0.0625rem solid var(--br-fprimary);
 }
 
@@ -531,11 +509,11 @@ body,
 #fork-nav .f-menu-a:hover,
 #fork-nav .f-menu-a:focus {
   background-color: var(--c-a-and-btn);
-  color: var(--c-active);
+  color: var(--c-nav-focus);
 }
 
 #fork-nav .f-menu-user-items {
-  background-color: var(--bg-btn);
+  background-color: var(--bg-nav);
   display: flex;
   flex-grow: 1;
   justify-content: flex-end;
@@ -669,9 +647,9 @@ body,
   padding: 0.625rem;
 }
 
-#fork #id-fhtha {
+/*#fork #id-fhtha {
   color: var(--c-a-and-btn);
-}
+}*/
 
 @media screen and (min-width: 50rem) {
   #fork #id-fhth1 {
@@ -874,6 +852,7 @@ body,
 #fork .f-ctrl {
   border: 0.0625rem solid var(--br-fprimary);
   background-color: var(--bg-fprimary);
+  color: var(--c-fprimary);
 }
 
 #fork input.f-ctrl:user-invalid {
@@ -883,7 +862,7 @@ body,
 #fork input:focus,
 #fork select:focus,
 #fork textarea:focus {
-  box-shadow: 0 0 0 0.125rem var(--br-fprimary);
+  box-shadow: 0 0 0 0.125rem var(--c-a-and-btn);
 }
 
 #fork .f-field-hint .f-yhint {
@@ -1069,7 +1048,7 @@ body,
 }
 
 #fork .f-nav-links .f-page.active {
-  border-color: var(--bg-active);
+  border-color: var(--c-active);
   background-color: var(--bg-active);
   color: var(--c-active);
 }
@@ -1152,6 +1131,7 @@ body,
 /*********************/
 #fork #fork-stats {
   border-top: 0.0625rem solid var(--br-fprimary);
+  background-color: var(--bg-stats);
   font-size: 0.875rem;
   padding: 0.3125rem 0;
 }
@@ -1486,13 +1466,13 @@ body,
   opacity: 0.6;
 }
 
-#fork .f-fsticky .f-ficon::before {
+/*#fork .f-fsticky .f-ficon::before {
   color: var(--c-tsticky);
-}
+}*/
 
 #fork .f-tsticky::before {
   font: 900 0.875rem "fa";
-  content: "\f08d"; /* \f35b */
+  content: "\f08d";
   color: var(--c-tsticky);
 }
 
@@ -1680,6 +1660,7 @@ body,
   display: inline-block;
   font-family: "fa";
   font-weight: 900;
+  font-size: 0.75rem;
 }
 
 #fork .f-user-contacts > a {
@@ -2090,11 +2071,11 @@ body,
 #fork .f-poll-ab {
   border: 0.0625rem solid var(--br-fprimary);
   width: 60%;
-  height: 0.5rem;
+  /*height: 0.5rem;*/
 }
 
 #fork .f-poll-ab-s1 {
-  background-color: var(--bg-like-br1);
+  background-color: var(--bg-poll-res);
   height: 0.5rem;
   display: block;
   font-size: 0;
@@ -2422,7 +2403,7 @@ body,
 
   #fork-usrlst .f-hc-tasc > a.active,
   #fork-usrlst .f-hc-tdesc > a.active {
-    border: 0.0625rem solid var(--bg-active);
+    border: 0.0625rem solid var(--c-a-and-btn);
   }
 
   #fork-usrlst .f-cell > b,
@@ -2723,7 +2704,7 @@ body,
 #fork-pm-menu a.f-menu-a:hover,
 #fork-pm-menu a.f-menu-a:focus {
   background-color: var(--c-a-and-btn);
-  color: var(--c-active);
+  color: var(--c-nav-focus);
 }
 
 #fork-pm-menu #id-pmn-label {
@@ -2860,7 +2841,7 @@ body,
     border-bottom: 0;
     border-inline-start: 0.0625rem solid var(--br-fprimary);
     padding: 0;
-    background-color: var(--bg-like-nav);
+    background-color: var(--bg-nav);
   }
 
   #fork.f-with-nav #fork-footer {
