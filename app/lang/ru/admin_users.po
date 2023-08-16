@@ -271,7 +271,7 @@ msgid "Recalculate"
 msgstr "Пересчитать"
 
 msgid "Recalculate head"
-msgstr "Пересчет количества сообщений пользователей"
+msgstr "Пересчет количества сообщений и тем пользователей"
 
 msgid "Number of users posts"
-msgstr "Количество сообщений пользователей"
+msgstr "Количество сообщений и тем пользователей"
