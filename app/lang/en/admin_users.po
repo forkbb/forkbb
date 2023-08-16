@@ -265,7 +265,7 @@ msgid "New user added redirect"
 msgstr "New user added."
 
 msgid "Updated the number of users posts redirect"
-msgstr "Updated the number of users posts."
+msgstr "Updated the number of users posts and topics."
 
 msgid "Recalculate"
 msgstr "Recalculate"
