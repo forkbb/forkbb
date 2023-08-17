@@ -1,4 +1,4 @@
-# ForkBB rev.67 Alpha Readme
+# ForkBB rev.68 Alpha Readme
 
 ## About
 
@@ -16,6 +16,8 @@ ForkBB is a free and open source forum software. The project is based on [FluxBB
 * A database such as MySQL 5.5.3+ (an extension using the mysqlnd driver must be enabled), SQLite 3.25+, PostgreSQL 10+
 
 ## Install
+
+Topic [Установка (Installation)](https://forkbb.ru/topic/28/%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%28Installation%29)
 
 ### For Apache:
 
