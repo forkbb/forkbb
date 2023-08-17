@@ -45,8 +45,10 @@ Disallow: /log
 Disallow: /mod
 Disallow: /reg
 Disallow: /search
-Disallow: /userlist
 Disallow: /post
+Disallow: /forum/scroll
+Disallow: /userlist/*/DESC/
+Disallow: /userlist/*/ASC/
 ```
 On which option you see the contents of the file, choose the option for changing the file names above.
 P.S. If you see the contents of the file in both cases, then something went wrong or you have already changed the names of the files **.dist.htaccess** and **index.dist.php**.
