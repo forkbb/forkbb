@@ -32,6 +32,8 @@
   --bg-bbcode: hsl(220, 5%, 16%);
   --br-bbcode: hsl(0, 0%, 75%);
   --bg-poll-res: hsl(50, 100%, 50%);
+  --c-sel: hsl(0, 0%, 0%);
+  --bg-sel: hsl(0, 0%, 60%);
 }
 
 html,
@@ -301,4 +303,10 @@ table:not(:last-child),
 img:not(:last-child),
 details:not(:last-child) {
   margin-bottom: 0.5rem;
+}
+
+::selection {
+  /*color: var(--c-sel);*/
+  background-color: var(--bg-sel);
+  text-shadow: -0.0625rem 0 0 var(--c-sel), 0.0625rem 0 0 var(--c-sel), 0 -0.0625rem 0 var(--c-sel), 0 0.0625rem 0 var(--c-sel);
 }

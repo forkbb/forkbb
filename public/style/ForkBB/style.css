@@ -32,6 +32,8 @@
   --bg-bbcode: hsl(220, 5%, 16%);
   --br-bbcode: hsl(0, 0%, 75%);
   --bg-poll-res: hsl(50, 100%, 50%);
+  --c-sel: hsl(0, 0%, 0%);
+  --bg-sel: hsl(0, 0%, 60%);
 }
 
 /*******************/
@@ -175,6 +177,12 @@ body,
 
 #fork :focus {
   outline-style: none;
+}
+
+#fork ::selection {
+  /*color: var(--c-sel);*/
+  background-color: var(--bg-sel);
+  text-shadow: -0.0625rem 0 0 var(--c-sel), 0.0625rem 0 0 var(--c-sel), 0 -0.0625rem 0 var(--c-sel), 0 0.0625rem 0 var(--c-sel);
 }
 
 #fork b,
