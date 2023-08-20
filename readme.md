@@ -4,10 +4,6 @@
 
 ForkBB is a free and open source forum software. The project is based on [FluxBB_by_Visman](https://github.com/MioVisman/FluxBB_by_Visman)
 
-## Note
-
-### Please DO NOT use this revision in production, it is for test only.
-
 ## Requirements
 
 * PHP 8.0+
@@ -66,7 +62,7 @@ P.S. If you see the contents of the file in both cases, then something went wron
 ## Links
 
 * Homepage: https://forkbb.ru/
-* Development: https://github.com/forkbb/forkbb
+* GitHub: https://github.com/forkbb/forkbb
 
 ## License
 
