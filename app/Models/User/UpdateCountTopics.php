@@ -40,10 +40,10 @@ class UpdateCountTopics extends Action
         }
 
         if (empty($ids)) {
-            $where = '::users.id > 0';
+            $where = '';
             $vars  = [];
         } else {
-            $where = '::users.id IN (?ai:ids)';
+            $where = ' WHERE ::users.id IN (?ai:ids)';
             $vars  = [
                 ':ids' => \array_keys($ids),
             ];
@@ -54,8 +54,7 @@ class UpdateCountTopics extends Action
                 SELECT COUNT(t.id)
                 FROM ::topics AS t
                 WHERE t.poster_id=::users.id AND t.moved_to=0
-            ), 0)
-            WHERE ' . $where;
+            ), 0)' . $where;
 
         $this->c->DB->exec($query, $vars);
     }

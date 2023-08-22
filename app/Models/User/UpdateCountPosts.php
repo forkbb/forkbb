@@ -16,6 +16,9 @@ use InvalidArgumentException;
 
 class UpdateCountPosts extends Action
 {
+    protected ?bool $count = null;
+    protected array $need  = [];
+
     /**
      * Обновляет число сообщений пользователя(ей)
      */
@@ -40,24 +43,62 @@ class UpdateCountPosts extends Action
         }
 
         if (empty($ids)) {
-            $where = '::users.id > 0';
+            $where = '';
             $vars  = [];
         } else {
-            $where = '::users.id IN (?ai:ids)';
+            $where = ' WHERE ::users.id IN (?ai:ids)';
             $vars  = [
                 ':ids' => \array_keys($ids),
             ];
         }
 
-        $query = 'UPDATE ::users
-            SET num_posts = COALESCE((
-                SELECT COUNT(p.id)
-                FROM ::posts AS p
-                INNER JOIN ::topics AS t ON t.id=p.topic_id
-                INNER JOIN ::forums AS f ON f.id=t.forum_id
-                WHERE p.poster_id=::users.id AND f.no_sum_mess=0
-            ), 0)
-            WHERE ' . $where;
+        if (null === $this->count) {
+            if ($this->c->user->isAdmin) {
+                $manager = $this->c->forums;
+            } else {
+                $manager = $this->c->ForumManager->init($this->c->groups->get(FORK_GROUP_ADMIN)); //???? закэшировать?
+            }
+
+            $forums = $manager->get(0)->descendants;
+            $yes    = [];
+            $not    = [];
+
+            foreach ($forums as $forum) {
+                if (0 === $forum->no_sum_mess) {
+                    $yes[] = $forum->id;
+                } else {
+                    $not[] = $forum->id;
+                }
+            }
+
+            $this->count = ! empty($yes);
+            $this->need  = empty($not) ? [] : $yes;
+        }
+
+        if (! $this->count) {
+            $query = 'UPDATE ::users
+                SET num_posts = 0' . $where;
+
+        } elseif (empty($this->need)) {
+            $query = 'UPDATE ::users
+                SET num_posts = COALESCE((
+                    SELECT COUNT(p.id)
+                    FROM ::posts AS p
+                    WHERE p.poster_id=::users.id
+                ), 0)' . $where;
+
+        } else {
+            $vars[':forums'] = $this->need;
+
+            $query = 'UPDATE ::users
+              SET num_posts = COALESCE((
+                    SELECT COUNT(p.id)
+                    FROM ::posts AS p
+                    INNER JOIN ::topics AS t ON t.id=p.topic_id
+                    WHERE p.poster_id=::users.id AND t.forum_id IN (?ai:forums)
+                ), 0)' . $where;
+
+        }
 
         $this->c->DB->exec($query, $vars);
     }
