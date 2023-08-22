@@ -13,7 +13,6 @@ namespace ForkBB;
 use ForkBB\Core\Container;
 use ForkBB\Core\ErrorHandler;
 use ForkBB\Models\Page;
-use Exception;
 use RuntimeException;
 
 \error_reporting(\E_ALL ^ \E_NOTICE);
