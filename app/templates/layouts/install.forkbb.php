@@ -42,7 +42,9 @@
     @endif
 @endif
     </main>
+    <footer id="fork-footer">
 <!-- debuginfo -->
+    </footer>
   </div>
 </body>
 </html>

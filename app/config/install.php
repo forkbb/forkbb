@@ -46,7 +46,7 @@ if (! empty($extNotFound)) {
 
 return [
     'BASE_URL'         => forkGetBaseURL(),
-    'DEBUG'            => 0,
+    'DEBUG'            => 2,
     'EOL'              => \PHP_EOL,
     'MAX_EMAIL_LENGTH' => 80,
     'FLOOD_INTERVAL'   => 3600,
