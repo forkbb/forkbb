@@ -189,12 +189,9 @@
 /*************/
 /* Установка */
 /*************/
-/*#fork .f-install {
-  margin: 1rem 0;
-}*/
-
 #fork .f-install > h2 {
-  padding: 0 0.625rem;
+  display: block;
+  padding: 0 0.625rem 0.625rem 0.625rem;
 }
 
 /****************************************/
