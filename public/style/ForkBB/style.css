@@ -8,6 +8,7 @@
   --bg-fh1: hsl(220, 5%, 12%);
   --br-fh1: hsl(0, 0%, 80%);
   --c-icon-sub: hsl(0, 0%, 70%);
+  --c-icon-new: hsl(50, 100%, 50%);
   --c-focus: hsl(220, 5%, 12%);
   --bg-focus: hsl(50, 100%, 50%);
   --bg-post-h: hsl(0, 20%, 26%);
@@ -1343,6 +1344,7 @@ body,
 #fork .f-fnew .f-ficon::before {
   font-weight: 900;
   content: "\f15b"; /* "\f086"; */
+  color: var(--c-icon-new);
 }
 
 #fork .f-fredir .f-ficon::before {
