@@ -397,7 +397,11 @@
 					size = fontSize;
 				}
 
-				return '[size=' + size + ']' + content + '[/size]';
+				if (/^[1-7]$/.test(size.toString())) {
+					return '[size=' + size + ']' + content + '[/size]';
+				} else {
+					return content;
+				}
 			},
 			html: '<font size="{defaultattr}">{!0}</font>'
 		},
@@ -421,8 +425,13 @@
 					color = elm.style.color || css(elm, 'color');
 				}
 
-				return '[color=' + _normaliseColour(color) + ']' +
-					content + '[/color]';
+				color = _normaliseColour(color);
+
+				if (/^(?:\#[0-9A-Fa-f]{6}|aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|orange|purple|red|silver|teal|yellow|white)$/.test(color)) {
+					return '[color=' + color + ']' + content + '[/color]';
+				} else {
+					return content;
+				}
 			},
 			html: function (token, attrs, content) {
 				return '<font color="' +
