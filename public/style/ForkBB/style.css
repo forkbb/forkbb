@@ -35,6 +35,7 @@
   --bg-poll-res: hsl(50, 100%, 50%);
   --c-sel: hsl(0, 0%, 0%);
   --bg-sel: hsl(0, 0%, 60%);
+  --c-highlighted: hsl(39, 100%, 50%);
 }
 
 /*******************/
@@ -3099,7 +3100,7 @@ body,
     box-shadow: 0 0 0 0 transparent inset;
   }
   50% {
-    box-shadow: 0 0 0 0.25rem var(--br-fprimary) inset;
+    box-shadow: 0 0 0 0.25rem var(--c-highlighted) inset;
   }
 }
 
