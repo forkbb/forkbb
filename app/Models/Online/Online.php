@@ -99,6 +99,7 @@ class Online extends Model
         $guests    = [];
         $bots      = [];
         $needClean = false;
+        $upUsers   = [];
 
         if ($detail) {
             $query = 'SELECT o.user_id, o.ident, o.logged, o.o_position, o.o_name
@@ -119,13 +120,7 @@ class Online extends Model
                     $needClean = true;
 
                     if ($cur['user_id'] > 0) {
-                        $this->c->users->updateLastVisit(
-                            $this->c->users->create([
-                                'id'       => $cur['user_id'],
-                                'group_id' => FORK_GROUP_MEMBER,
-                                'logged'   => $cur['logged'],
-                            ])
-                        );
+                        $upUsers[$cur['user_id']] = $cur['logged'];
                     }
                 }
 
@@ -162,6 +157,19 @@ class Online extends Model
 
         // удаление просроченных посетителей
         if ($needClean) {
+            // отсортировать обновляемых пользователей для предотвращения Deadlock
+            \ksort($upUsers, \SORT_NUMERIC);
+
+            foreach ($upUsers as $id => $logged) {
+                $this->c->users->updateLastVisit(
+                    $this->c->users->create([
+                        'id'       => $id,
+                        'group_id' => FORK_GROUP_MEMBER,
+                        'logged'   => $logged,
+                    ])
+                );
+            }
+
             $vars = [
                 ':visit' => $tVisit,
             ];
