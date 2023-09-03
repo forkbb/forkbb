@@ -193,8 +193,8 @@ code {
 }
 
 blockquote {
-  border-inline-start: 0.1875rem solid var(--br-fprimary);
-  border-top: 0.0625rem solid var(--br-fprimary);
+  border-inline-start: 0.1875rem solid var(--br-bbcode);
+  border-top: 0.0625rem solid var(--br-bbcode);
   padding: 0.625rem;
 }
 

@@ -1809,8 +1809,8 @@ body,
 }
 
 #fork .f-bb-quote {
-  border-inline-start: 0.1875rem solid var(--br-fprimary);
-  border-top: 0.0625rem solid var(--br-fprimary);
+  border-inline-start: 0.1875rem solid var(--br-bbcode);
+  border-top: 0.0625rem solid var(--br-bbcode);
 }
 
 #fork .f-bb-q-header {
