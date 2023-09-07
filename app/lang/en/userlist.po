@@ -42,7 +42,7 @@ msgid "No users found"
 msgstr "No users were found matching your criteria."
 
 msgid "Search btn"
-msgstr "Serach"
+msgstr "Search"
 
 msgid "Sort users by"
 msgstr "Sort user list by"
