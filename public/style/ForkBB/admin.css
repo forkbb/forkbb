@@ -77,6 +77,10 @@
   gap: 1rem;
 }
 
+#forka textarea {
+  min-height: 7rem;
+}
+
 /*#forka .f-admin .f-fdiv,*/
 #forka .f-admin .f-adiv {
   background-color: var(--bg-like-nav);
