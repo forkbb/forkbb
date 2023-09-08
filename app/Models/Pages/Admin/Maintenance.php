@@ -106,7 +106,7 @@ class Maintenance extends Admin
      */
     protected function formRebuild(): array
     {
-        return [
+        $form = [
             'action' => $this->c->Router->link('AdminMaintenanceRebuild'),
             'hidden' => [
                 'token' => $this->c->Csrf->create('AdminMaintenanceRebuild'),
@@ -162,6 +162,21 @@ class Maintenance extends Admin
             ],
         ];
 
+        if (1 !== $this->c->config->b_maintenance) {
+            $form['sets']['maintenance-only'] = [
+                'inform' => [
+                    [
+                        'html' => '- - -',
+                    ],
+                    [
+                        'message' => 'Maintenance only',
+                    ],
+                ],
+            ];
+            $form['btns']['rebuild']['disabled'] = true;
+        }
+
+        return $form;
     }
 
     /**
@@ -217,6 +232,10 @@ class Maintenance extends Admin
      */
     public function rebuild(array $args, string $method): Page
     {
+        if (1 !== $this->c->config->b_maintenance) {
+            return $this->c->Message->message('Maintenance only');
+        }
+
         $this->c->Lang->load('validator');
         $this->c->Lang->load('admin_maintenance');
 
