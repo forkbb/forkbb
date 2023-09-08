@@ -83,3 +83,6 @@ msgstr "Загрузки"
 
 msgid "Antispam"
 msgstr "Антиспам"
+
+msgid "Maintenance only"
+msgstr "Доступно только в режиме обслуживания."

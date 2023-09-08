@@ -83,3 +83,6 @@ msgstr "Uploads"
 
 msgid "Antispam"
 msgstr "Antispam"
+
+msgid "Maintenance only"
+msgstr "Available only in maintenance mode."

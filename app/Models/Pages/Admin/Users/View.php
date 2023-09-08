@@ -416,6 +416,10 @@ class View extends Users
      */
     public function recalculate(array $args, string $method): Page
     {
+        if (1 !== $this->c->config->b_maintenance) {
+            return $this->c->Message->message('Maintenance only');
+        }
+
         $v = $this->c->Validator->reset()
         ->addValidators([
         ])->addRules([
@@ -470,6 +474,17 @@ class View extends Users
                 ],
             ],
         ];
+
+        if (1 !== $this->c->config->b_maintenance) {
+            $form['sets']['maintenance-only'] = [
+                'inform' => [
+                    [
+                        'message' => 'Maintenance only',
+                    ],
+                ],
+            ];
+            $form['btns']['recalculate']['disabled'] = true;
+        }
 
         return $form;
     }
