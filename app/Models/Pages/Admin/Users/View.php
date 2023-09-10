@@ -439,6 +439,10 @@ class View extends Users
             );
         }
 
+        if (\function_exists('\\set_time_limit')) {
+            \set_time_limit(0);
+        }
+
         $this->c->users->updateCountPosts();
         $this->c->users->updateCountTopics();
 
