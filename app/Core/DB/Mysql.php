@@ -503,11 +503,19 @@ class Mysql
             $tmp[] = "{$key}({$val})";
         }
 
-        $other = [];
-        $stmt  = $this->db->query("SHOW VARIABLES LIKE 'character\\_set\\_%'");
+        $other   = [];
+        $queries = [
+            "SHOW VARIABLES LIKE 'character\\_set\\_%'",
+            "SHOW VARIABLES LIKE '%max\\_conn%'",
+            "SHOW STATUS LIKE '%\\_conn%'",
+        ];
 
-        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $other[$row[0]] = $row[1];
+        foreach ($queries as $query) {
+            $stmt  = $this->db->query($query);
+
+            while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+                $other[$row[0]] = $row[1];
+            }
         }
 
         return [
