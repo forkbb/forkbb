@@ -30,7 +30,7 @@ class ComposerStaticInit90ad93c7251d4f60daa9e545879c49e7
         ),
         'Psr\\Log\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+            0 => __DIR__ . '/..' . '/psr/log/src',
         ),
         'MioVisman\\NormEmail\\' => 
         array (
