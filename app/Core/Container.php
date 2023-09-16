@@ -1,10 +1,15 @@
 <?php
 /**
  * This file is part of the ForkBB <https://github.com/forkbb>.
+ *
+ * @copyright (c) Visman <mio.visman@yandex.ru, https://github.com/MioVisman>
+ * @license   The MIT License (MIT)
  */
 /**
- * based on Container https://github.com/artoodetoo/container
- * by artoodetoo
+ * based on Container <https://github.com/artoodetoo/container>
+ *
+ * @copyright (c) 2016 artoodetoo <https://github.com/artoodetoo>
+ * @license   The MIT License (MIT)
  */
 
 declare(strict_types=1);
