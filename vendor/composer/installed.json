@@ -1,63 +1,6 @@
 {
     "packages": [
         {
-            "name": "artoodetoo/dirk",
-            "version": "dev-visman",
-            "version_normalized": "dev-visman",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/MioVisman/dirk.git",
-                "reference": "32ce64305c87344bf6bfc48221643d374f6aa65b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/MioVisman/dirk/zipball/32ce64305c87344bf6bfc48221643d374f6aa65b",
-                "reference": "32ce64305c87344bf6bfc48221643d374f6aa65b",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.0.*"
-            },
-            "time": "2021-02-06T14:10:06+00:00",
-            "default-branch": true,
-            "type": "library",
-            "installation-source": "dist",
-            "autoload": {
-                "psr-4": {
-                    "R2\\Templating\\": "src"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "R2\\Templating\\Tests": "tests"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "artoodetoo",
-                    "email": "i.am@artoodetoo.org"
-                }
-            ],
-            "description": "PHP template system",
-            "keywords": [
-                "dirk",
-                "package",
-                "templates",
-                "templating",
-                "views"
-            ],
-            "support": {
-                "source": "https://github.com/MioVisman/dirk/tree/visman"
-            },
-            "install-path": "../artoodetoo/dirk"
-        },
-        {
             "name": "miovisman/jevix",
             "version": "2.2.1",
             "version_normalized": "2.2.1.0",
@@ -120,8 +63,8 @@
         },
         {
             "name": "miovisman/normemail",
-            "version": "dev-master",
-            "version_normalized": "dev-master",
+            "version": "1.0.0",
+            "version_normalized": "1.0.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MioVisman/NormEmail.git",
@@ -165,27 +108,31 @@
                 "email",
                 "normalization"
             ],
+            "support": {
+                "issues": "https://github.com/MioVisman/NormEmail/issues",
+                "source": "https://github.com/MioVisman/NormEmail/tree/1.0.0"
+            },
             "install-path": "../miovisman/normemail"
         },
         {
             "name": "miovisman/parserus",
-            "version": "1.2.0",
-            "version_normalized": "1.2.0.0",
+            "version": "1.2.1",
+            "version_normalized": "1.2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MioVisman/Parserus.git",
-                "reference": "ed0900c73aa1685f0907d9eb0f7dafa7f85f33cc"
+                "reference": "cfb7aaf20b5250e9bdfa808a5c68425dfea3c1c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MioVisman/Parserus/zipball/ed0900c73aa1685f0907d9eb0f7dafa7f85f33cc",
-                "reference": "ed0900c73aa1685f0907d9eb0f7dafa7f85f33cc",
+                "url": "https://api.github.com/repos/MioVisman/Parserus/zipball/cfb7aaf20b5250e9bdfa808a5c68425dfea3c1c9",
+                "reference": "cfb7aaf20b5250e9bdfa808a5c68425dfea3c1c9",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.3.0"
             },
-            "time": "2022-01-08T13:04:33+00:00",
+            "time": "2023-06-17T13:00:37+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -212,7 +159,7 @@
             ],
             "support": {
                 "issues": "https://github.com/MioVisman/Parserus/issues",
-                "source": "https://github.com/MioVisman/Parserus/tree/1.2.0"
+                "source": "https://github.com/MioVisman/Parserus/tree/1.2.1"
             },
             "install-path": "../miovisman/parserus"
         },

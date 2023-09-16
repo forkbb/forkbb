@@ -10,17 +10,6 @@
         'dev' => true,
     ),
     'versions' => array(
-        'artoodetoo/dirk' => array(
-            'pretty_version' => 'dev-visman',
-            'version' => 'dev-visman',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../artoodetoo/dirk',
-            'aliases' => array(
-                0 => '9999999-dev',
-            ),
-            'reference' => '32ce64305c87344bf6bfc48221643d374f6aa65b',
-            'dev_requirement' => false,
-        ),
         'forkbb/forkbb' => array(
             'pretty_version' => '1.0.0+no-version-set',
             'version' => '1.0.0.0',
@@ -40,23 +29,21 @@
             'dev_requirement' => false,
         ),
         'miovisman/normemail' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
+            'pretty_version' => '1.0.0',
+            'version' => '1.0.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../miovisman/normemail',
-            'aliases' => array(
-                0 => '9999999-dev',
-            ),
+            'aliases' => array(),
             'reference' => '2e657463266b1249e97d15c6795dd14248097cb3',
             'dev_requirement' => false,
         ),
         'miovisman/parserus' => array(
-            'pretty_version' => '1.2.0',
-            'version' => '1.2.0.0',
+            'pretty_version' => '1.2.1',
+            'version' => '1.2.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../miovisman/parserus',
             'aliases' => array(),
-            'reference' => 'ed0900c73aa1685f0907d9eb0f7dafa7f85f33cc',
+            'reference' => 'cfb7aaf20b5250e9bdfa808a5c68425dfea3c1c9',
             'dev_requirement' => false,
         ),
         'psr/log' => array(
