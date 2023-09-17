@@ -98,8 +98,8 @@ class Online extends Model
         $users     = [];
         $guests    = [];
         $bots      = [];
-        $needClean = false;
         $upUsers   = [];
+        $delGuests = [];
 
         if ($detail) {
             $query = 'SELECT o.user_id, o.ident, o.logged, o.o_position, o.o_name
@@ -117,10 +117,10 @@ class Online extends Model
             // посетитель уже не онлайн (или почти не онлайн)
             if ($cur['logged'] < $tOnline) {
                 if ($cur['logged'] < $tVisit) {
-                    $needClean = true;
-
                     if ($cur['user_id'] > 0) {
                         $upUsers[$cur['user_id']] = $cur['logged'];
+                    } else {
+                        $delGuests[] = $cur['ident'];
                     }
                 }
 
@@ -156,8 +156,7 @@ class Online extends Model
         }
 
         // удаление просроченных посетителей
-        if ($needClean) {
-            // отсортировать обновляемых пользователей для предотвращения Deadlock
+        if ($upUsers) {
             \ksort($upUsers, \SORT_NUMERIC);
 
             foreach ($upUsers as $id => $logged) {
@@ -171,10 +170,23 @@ class Online extends Model
             }
 
             $vars = [
-                ':visit' => $tVisit,
+                ':ids' => \array_keys($upUsers),
             ];
             $query = 'DELETE FROM ::online
-                    WHERE logged<?i:visit';
+                WHERE user_id IN (?ai:ids)';
+
+            $this->c->DB->exec($query, $vars);
+        }
+
+        // удаление просроченных гостей
+        if ($delGuests) {
+            \sort($delGuests, \SORT_STRING);
+
+            $vars = [
+                ':idents' => $delGuests,
+            ];
+            $query = 'DELETE FROM ::online
+                WHERE user_id=0 AND ident IN (?as:idents)';
 
             $this->c->DB->exec($query, $vars);
         }
