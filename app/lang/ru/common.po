@@ -377,7 +377,10 @@ msgid "New reports"
 msgstr "<a href=\"%s\">Есть новые сигналы</a>"
 
 msgid "Maintenance mode enabled"
-msgstr "<a href=\"%s\">Включен режим обслуживания!</a>"
+msgstr "<a href=\"%s\">Включен режим обслуживания</a>"
+
+msgid "Maintenance mode enabled off"
+msgstr "<a href=\"%s\">Режим обслуживания заблокирован параметром MAINTENANCE_OFF</a>"
 
 msgid "%s B"
 msgstr "%sб"

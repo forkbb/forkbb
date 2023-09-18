@@ -312,7 +312,11 @@ abstract class Page extends Model
             1 === $this->c->config->b_maintenance
             && $this->user->isAdmin
         ) {
-            $this->fIswev = [FORK_MESS_WARN, ['Maintenance mode enabled', $this->c->Router->link('AdminMaintenance')]];
+            if ($this->c->MAINTENANCE_OFF) {
+                $this->fIswev = [FORK_MESS_ERR, ['Maintenance mode enabled off', $this->c->Router->link('AdminMaintenance')]];
+            } else {
+                $this->fIswev = [FORK_MESS_WARN, ['Maintenance mode enabled', $this->c->Router->link('AdminMaintenance')]];
+            }
         }
 
         if (
