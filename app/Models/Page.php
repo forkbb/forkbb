@@ -376,11 +376,7 @@ abstract class Page extends Model
         }
 
         \uasort($this->pageHeaders, function (array $a, array $b) {
-            if ($a['weight'] === $b['weight']) {
-                return 0;
-            } else {
-                return $a['weight'] > $b['weight'] ? -1 : 1;
-            }
+            return $b['weight'] <=> $a['weight'];
         });
 
         return $this->pageHeaders;
