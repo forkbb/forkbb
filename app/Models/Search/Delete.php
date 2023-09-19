@@ -31,9 +31,9 @@ class Delete extends Method
         }
 
         $uids    = [];
-        $forums  = [];
-        $topics  = [];
-        $posts   = [];
+        $fids    = [];
+        $tids    = [];
+        $pids    = [];
         $isUser  = 0;
         $isForum = 0;
         $isTopic = 0;
@@ -55,15 +55,15 @@ class Delete extends Method
                     throw new RuntimeException('Forum unavailable');
                 }
 
-                $forums[$arg->id] = $arg;
-                $isForum          = 1;
+                $fids[$arg->id] = $arg->id;
+                $isForum        = 1;
             } elseif ($arg instanceof Topic) {
                 if (! $arg->parent instanceof Forum) {
                     throw new RuntimeException('Parent unavailable');
                 }
 
-                $topics[$arg->id] = $arg;
-                $isTopic          = 1;
+                $tids[$arg->id] = $arg->id;
+                $isTopic        = 1;
             } elseif ($arg instanceof Post) {
                 if (
                     ! $arg->parent instanceof Topic
@@ -72,8 +72,8 @@ class Delete extends Method
                     throw new RuntimeException('Parents unavailable');
                 }
 
-                $posts[$arg->id] = $arg;
-                $isPost          = 1;
+                $pids[$arg->id] = $arg->id;
+                $isPost         = 1;
             } else {
                 throw new InvalidArgumentException('Expected User(s), Forum(s), Topic(s) or Post(s)');
             }
@@ -108,9 +108,9 @@ class Delete extends Method
             }
         }
 
-        if ($forums) {
+        if ($fids) {
             $vars = [
-                ':forums' => \array_keys($forums),
+                ':forums' => $fids,
             ];
 
             switch ($this->c->DB->getType()) {
@@ -134,9 +134,9 @@ class Delete extends Method
             }
         }
 
-        if ($topics) {
+        if ($tids) {
             $vars = [
-                ':topics' => \array_keys($topics),
+                ':topics' => $tids,
             ];
 
             switch ($this->c->DB->getType()) {
@@ -159,9 +159,13 @@ class Delete extends Method
             }
         }
 
-        if ($posts) {
+        if ($pids) {
+            if (\count($pids) > 1) {
+                \sort($pids, \SORT_NUMERIC);
+            }
+
             $vars = [
-                ':posts' => \array_keys($posts),
+                ':posts' => $pids,
             ];
             $query = 'DELETE
                 FROM ::search_matches
