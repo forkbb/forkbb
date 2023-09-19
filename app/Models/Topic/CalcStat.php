@@ -53,7 +53,7 @@ class CalcStat extends Method
             ];
             $query = 'SELECT p.id, p.poster, p.poster_id, p.posted, p.edited
                 FROM ::posts AS p
-                WHERE p.id IN(?ai:ids)';
+                WHERE p.id IN (?ai:ids)';
 
             $result = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_UNIQUE);
 

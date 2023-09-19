@@ -125,7 +125,7 @@ class LoadTree extends Action
         $query = 'SELECT t.forum_id, t.last_post
             FROM ::topics AS t
             LEFT JOIN ::mark_of_topic AS mot ON (mot.uid=?i:uid AND mot.tid=t.id)
-            WHERE t.forum_id IN(?ai:forums)
+            WHERE t.forum_id IN (?ai:forums)
                 AND t.moved_to=0
                 AND t.last_post>?i:max
                 AND (mot.mt_last_visit IS NULL OR t.last_post>mot.mt_last_visit)';

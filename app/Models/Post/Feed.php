@@ -58,7 +58,7 @@ class Feed extends Action
                 p.hide_smilies, p.posted, p.edited, t.id as tid, t.subject as topic_name, t.forum_id as fid
                 FROM ::posts AS p
                 INNER JOIN ::topics AS t ON t.id=p.topic_id
-                WHERE t.forum_id IN(?ai:forums)
+                WHERE t.forum_id IN (?ai:forums)
                 ORDER BY p.id DESC
                 LIMIT 50';
 

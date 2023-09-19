@@ -80,7 +80,7 @@ class Index extends Method
             ];
             $query = 'SELECT sw.word
                 FROM ::search_words AS sw
-                WHERE sw.word IN(?as:words)';
+                WHERE sw.word IN (?as:words)';
 
             $oldWords = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
             $newWords = \array_diff($allWords, $oldWords);

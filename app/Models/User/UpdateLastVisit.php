@@ -24,6 +24,7 @@ class UpdateLastVisit extends Action
         if ($user->isGuest) {
             throw new RuntimeException('Expected user');
         }
+
         if ($user->logged > 0) {
             $vars = [
                 ':logged' => $user->logged,
@@ -34,6 +35,7 @@ class UpdateLastVisit extends Action
                 WHERE id=?i:id AND last_visit<?i:logged';
 
             $this->c->DB->exec($query, $vars);
+
             $user->__last_visit = $user->logged;
         }
     }
