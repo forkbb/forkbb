@@ -48,14 +48,16 @@ class ChangeGroup extends Action
             ) {
                 $moderators[$user->id] = $user;
             }
+
             if ($user->isAdmin) {
                 $adminPresent = true;
             }
+
             if ($user->isUnverified) {
                 $unverPresent = true;
             }
 
-            $ids[] = $user->id;
+            $ids[]            = $user->id;
             $user->__group_id = $newGroupId;
         }
 
@@ -68,6 +70,10 @@ class ChangeGroup extends Action
                     $this->c->forums->update($forum);
                 }
             }
+        }
+
+        if (\count($ids) > 1) {
+            \sort($ids, \SORT_NUMERIC);
         }
 
         $vars = [

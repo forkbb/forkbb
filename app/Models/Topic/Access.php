@@ -28,6 +28,10 @@ class Access extends Action
         }
 
         if (! empty($ids)) {
+            if (\count($ids) > 1) {
+                \sort($ids, \SORT_NUMERIC);
+            }
+
             $vars = [
                 ':ids'    => $ids,
                 ':closed' => $open ? 0 : 1,
