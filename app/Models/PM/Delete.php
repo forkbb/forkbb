@@ -62,7 +62,7 @@ class Delete extends Method
                 }
 
                 $users[$arg->id] = $arg;
-                $isUser         = 1;
+                $isUser          = 1;
             } elseif ($arg instanceof PPost) {
                 if (! $arg->parent instanceof PTopic) {
                     throw new RuntimeException('Bad ppost');
@@ -87,6 +87,10 @@ class Delete extends Method
         }
 
         if ($topics) {
+            if (\count($topics) > 1) {
+                \ksort($topics, \SORT_NUMERIC);
+            }
+
             $ids = [];
 
             foreach ($topics as $topic) {
@@ -103,6 +107,10 @@ class Delete extends Method
         }
 
         if ($posts) {
+            if (\count($posts) > 1) {
+                \ksort($posts, \SORT_NUMERIC);
+            }
+
             $calcTopics = [];
 
             foreach ($posts as $post) {
@@ -122,6 +130,10 @@ class Delete extends Method
                 WHERE id IN (?ai:ids)';
 
             $this->c->DB->exec($query, $vars);
+
+            if (\count($calcTopics) > 1) {
+                \ksort($calcTopics, \SORT_NUMERIC);
+            }
 
             foreach ($calcTopics as $topic) {
                 $this->model->update(Cnst::PTOPIC, $topic->calcStat());
@@ -184,6 +196,10 @@ class Delete extends Method
                 $uids[$row['target_id']] = $row['target_id'];
             }
 
+            if (\count($ids) > 1) {
+                \sort($ids, \SORT_NUMERIC);
+            }
+
             $this->deletePTopics($ids);
 
             foreach ($this->c->users->loadByIds($uids) as $user) {
@@ -191,6 +207,10 @@ class Delete extends Method
                     $calcUsers[$user->id] = $user;
                 }
             }
+        }
+
+        if (\count($calcUsers) > 1) {
+            \ksort($calcUsers, \SORT_NUMERIC);
         }
 
         foreach ($calcUsers as $user) {

@@ -202,6 +202,10 @@ class Delete extends Action
         }
 
         if ($pids) {
+            if (\count($pids) > 1) {
+                \sort($pids, \SORT_NUMERIC);
+            }
+
             $vars = [
                 ':posts' => $pids,
             ];
@@ -213,15 +217,24 @@ class Delete extends Action
         }
 
         if ($parents) {
+            if (\count($parents) > 1) {
+                \ksort($parents, \SORT_NUMERIC);
+            }
+
             $topics  = $parents;
             $parents = [];
 
             foreach ($topics as $topic) {
                 $parents[$topic->parent->id] = $topic->parent;
+
                 $this->c->topics->update($topic->calcStat());
             }
 
             if (! $forums) {
+                if (\count($parents) > 1) {
+                    \ksort($parents, \SORT_NUMERIC);
+                }
+
                 foreach ($parents as $forum) {
                     $this->c->forums->update($forum->calcStat());
                 }

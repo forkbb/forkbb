@@ -29,6 +29,7 @@ class Save extends Method
             if (! isset($list[$id]['search_for'], $list[$id]['replace_with'])) {
                 continue;
             }
+
             if ('' === \trim($list[$id]['search_for'])) {
                 if ($id > 0) {
                     $forDel[] = $id;
@@ -60,9 +61,14 @@ class Save extends Method
                 $this->c->DB->exec($query, $vars);
             }
         }
+
         if ($forDel) {
+            if (\count($forDel) > 1) {
+                \sort($forDel, \SORT_NUMERIC);
+            }
+
             $vars = [
-                ':del' => $forDel
+                ':del' => $forDel,
             ];
             $query = 'DELETE
                 FROM ::censoring

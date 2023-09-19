@@ -43,6 +43,10 @@ class UpdateCountTopics extends Action
             $where = '';
             $vars  = [];
         } else {
+            if (\count($ids) > 1) {
+                \ksort($ids, \SORT_NUMERIC);
+            }
+
             $where = ' WHERE ::users.id IN (?ai:ids)';
             $vars  = [
                 ':ids' => \array_keys($ids),

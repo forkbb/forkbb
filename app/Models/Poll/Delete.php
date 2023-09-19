@@ -55,6 +55,10 @@ class Delete extends Action
             throw new InvalidArgumentException('Expected only Poll(s) or Topic(s)');
         }
 
+        if (\count($tids) > 1) {
+            \sort($tids, \SORT_NUMERIC);
+        }
+
         $vars = [
             ':tids' => $tids,
         ];

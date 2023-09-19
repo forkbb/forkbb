@@ -89,6 +89,7 @@ class Refresh extends Action
             $sub[] = $id;
             $all   = \array_merge($this->createList($list, $id), $all);
         }
+
         if (0 === $parent) {
             if (empty($sub)) {
                 return [];
@@ -99,6 +100,11 @@ class Refresh extends Action
         }
 
         $all = \array_merge($sub, $all);
+
+        if (\count($all) > 1) {
+            \sort($all, \SORT_NUMERIC);
+        }
+
         $list[$parent]['subforums']   = $sub ?: null;
         $list[$parent]['descendants'] = $all ?: null;
 

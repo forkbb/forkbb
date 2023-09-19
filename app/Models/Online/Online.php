@@ -157,7 +157,9 @@ class Online extends Model
 
         // удаление просроченных посетителей
         if ($upUsers) {
-            \ksort($upUsers, \SORT_NUMERIC);
+            if (\count($upUsers) > 1) {
+                \ksort($upUsers, \SORT_NUMERIC);
+            }
 
             foreach ($upUsers as $id => $logged) {
                 $this->c->users->updateLastVisit(
@@ -180,7 +182,9 @@ class Online extends Model
 
         // удаление просроченных гостей
         if ($delGuests) {
-            \sort($delGuests, \SORT_STRING);
+            if (\count($delGuests) > 1) {
+                \sort($delGuests, \SORT_STRING);
+            }
 
             $vars = [
                 ':idents' => $delGuests,

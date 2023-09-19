@@ -149,6 +149,10 @@ class Delete extends Action
                 throw new RuntimeException('Bad topic');
             }
 
+            if (\count($topics) > 1) {
+                \ksort($topics, \SORT_NUMERIC);
+            }
+
             $this->c->subscriptions->unsubscribe(...$topics);
             $this->c->polls->delete(...$topics);
 
@@ -175,6 +179,10 @@ class Delete extends Action
         }
 
         if ($parents) {
+            if (\count($parents) > 1) {
+                \ksort($parents, \SORT_NUMERIC);
+            }
+
             foreach ($parents as $forum) {
                 $this->c->forums->update($forum->calcStat());
             }

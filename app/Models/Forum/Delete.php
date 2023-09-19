@@ -87,6 +87,10 @@ class Delete extends Action
         }
 
         if ($forums) {
+            if (\count($forums) > 1) {
+                \ksort($forums, \SORT_NUMERIC);
+            }
+
             $this->c->subscriptions->unsubscribe(...$forums);
 
             foreach ($forums as $forum) {

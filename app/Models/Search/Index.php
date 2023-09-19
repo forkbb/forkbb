@@ -113,7 +113,7 @@ class Index extends Method
             ];
             $query = 'DELETE
                 FROM ::search_matches
-                WHERE word_id IN(?ai:ids) AND post_id=?i:pid AND subject_match=?i:subj';
+                WHERE word_id IN (?ai:ids) AND post_id=?i:pid AND subject_match=?i:subj';
 
             $this->c->DB->exec($query, $vars);
         }
@@ -132,7 +132,7 @@ class Index extends Method
             $query = 'INSERT INTO ::search_matches (post_id, word_id, subject_match)
                 SELECT ?i:pid, id, ?i:subj
                 FROM ::search_words
-                WHERE word IN(?as:words)';
+                WHERE word IN (?as:words)';
 
             $this->c->DB->exec($query, $vars);
         }

@@ -141,20 +141,23 @@ class Subscription extends Model
                 $where[':uid'] = 'user_id=?i:uid';
                 $vars[':uid']  = \reset($this->users);
             } else {
-                $where[':uid'] = 'user_id IN(?ai:uid)';
+                $where[':uid'] = 'user_id IN (?ai:uid)';
                 $vars[':uid']  = $this->users;
             }
         }
 
         $all = empty($this->forums) && empty($this->topics);
 
-        if ($all || ! empty($this->forums)) {
+        if (
+            $all
+            || ! empty($this->forums)
+        ) {
             if (! empty($this->forums)) {
                 if (1 === \count($this->forums)) {
                     $where[':id'] = 'forum_id=?i:id';
                     $vars[':id']  = \reset($this->forums);
                 } else {
-                    $where[':id'] = 'forum_id IN(?ai:id)';
+                    $where[':id'] = 'forum_id IN (?ai:id)';
                     $vars[':id']  = $this->forums;
                 }
             }
@@ -168,13 +171,16 @@ class Subscription extends Model
 
         unset($where[':id'], $vars[':id']);
 
-        if ($all || ! empty($this->topics)) {
+        if (
+            $all
+            || ! empty($this->topics)
+        ) {
             if (! empty($this->topics)) {
                 if (1 === \count($this->topics)) {
                     $where[':id'] = 'topic_id=?i:id';
                     $vars[':id']  = \reset($this->topics);
                 } else {
-                    $where[':id'] = 'topic_id IN(?ai:id)';
+                    $where[':id'] = 'topic_id IN (?ai:id)';
                     $vars[':id']  = $this->topics;
                 }
             }

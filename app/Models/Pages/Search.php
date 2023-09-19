@@ -334,7 +334,6 @@ class Search extends Page
                 if (! $search->prepare($query)) {
                     $v->addError([$search->queryError, $search->queryText]);
                 } else {
-
                     if ($this->c->search->execute($v, $this->listOfIndexes, $flood)) {
                         $flood = false;
 
@@ -384,7 +383,9 @@ class Search extends Page
             if (! empty(\array_diff($forums, $this->listOfIndexes))) {
                 $v->addError('The :alias contains an invalid value');
             }
+
             \sort($forums, SORT_NUMERIC);
+
             $forums = \implode('.', $forums);
         }
 

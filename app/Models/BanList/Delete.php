@@ -22,6 +22,10 @@ class Delete extends Method
     public function delete(int ...$ids): BanList
     {
         if (! empty($ids)) {
+            if (\count($ids) > 1) {
+                \sort($ids, \SORT_NUMERIC);
+            }
+
             $vars = [
                 ':ids' => $ids,
             ];

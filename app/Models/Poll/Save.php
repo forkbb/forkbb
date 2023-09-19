@@ -43,9 +43,9 @@ class Save extends Action
             SET qna_text=?s:qna
             WHERE tid=?i:tid AND question_id=?i:qid AND field_id=?i:fid';
         $queryD1 = 'DELETE FROM ::poll
-            WHERE tid=?i:tid AND question_id IN(?ai:qids)';
+            WHERE tid=?i:tid AND question_id IN (?ai:qids)';
         $queryD2 = 'DELETE FROM ::poll
-            WHERE tid=?i:tid AND question_id=?i:qid AND field_id IN(?ai:fid)';
+            WHERE tid=?i:tid AND question_id=?i:qid AND field_id IN (?ai:fid)';
 
         $modified    = false;
         $oldQuestion = $old->question;

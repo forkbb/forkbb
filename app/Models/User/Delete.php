@@ -21,29 +21,35 @@ class Delete extends Action
     /**
      * Удаляет пользователя(ей)
      */
-    public function delete(User ...$users): void
+    public function delete(User ...$args): void
     {
-        if (empty($users)) {
+        if (empty($args)) {
             throw new InvalidArgumentException('No arguments, expected User(s)');
         }
 
-        $ids        = [];
+        $users      = [];
         $moderators = [];
         $resetAdmin = false;
         $resetBan   = false;
 
-        foreach ($users as $user) {
+        foreach ($args as $user) {
             if ($user->isGuest) {
                 throw new RuntimeException('Guest can not be deleted');
             }
+
             if ($user->isAdmMod) {
                 $moderators[$user->id] = $user;
             }
+
             if ($user->isAdmin) {
                 $resetAdmin = true;
             }
 
-            $ids[] = $user->id;
+            $users[$user->id] = $user;
+        }
+
+        if (\count($users) > 1) {
+            \ksort($users, \SORT_NUMERIC);
         }
 
         if ($moderators) {
@@ -85,7 +91,7 @@ class Delete extends Action
         }
 
         $vars = [
-            ':users' => $ids,
+            ':users' => \array_keys($users),
         ];
         $query = 'DELETE
             FROM ::users
