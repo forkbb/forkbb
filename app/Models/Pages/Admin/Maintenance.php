@@ -162,7 +162,10 @@ class Maintenance extends Admin
             ],
         ];
 
-        if (1 !== $this->c->config->b_maintenance) {
+        if (
+            1 !== $this->c->config->b_maintenance
+            || $this->c->MAINTENANCE_OFF
+        ) {
             $form['sets']['maintenance-only'] = [
                 'inform' => [
                     [
@@ -232,7 +235,10 @@ class Maintenance extends Admin
      */
     public function rebuild(array $args, string $method): Page
     {
-        if (1 !== $this->c->config->b_maintenance) {
+        if (
+            1 !== $this->c->config->b_maintenance
+            || $this->c->MAINTENANCE_OFF
+        ) {
             return $this->c->Message->message('Maintenance only');
         }
 

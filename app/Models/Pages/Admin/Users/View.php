@@ -416,7 +416,10 @@ class View extends Users
      */
     public function recalculate(array $args, string $method): Page
     {
-        if (1 !== $this->c->config->b_maintenance) {
+        if (
+            1 !== $this->c->config->b_maintenance
+            || $this->c->MAINTENANCE_OFF
+        ) {
             return $this->c->Message->message('Maintenance only');
         }
 
@@ -479,7 +482,10 @@ class View extends Users
             ],
         ];
 
-        if (1 !== $this->c->config->b_maintenance) {
+        if (
+            1 !== $this->c->config->b_maintenance
+            || $this->c->MAINTENANCE_OFF
+        ) {
             $form['sets']['maintenance-only'] = [
                 'inform' => [
                     [
