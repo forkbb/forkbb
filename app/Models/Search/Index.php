@@ -106,6 +106,10 @@ class Index extends Method
                 continue;
             }
 
+            if (\count($list) > 1) {
+                \sort($list, \SORT_NUMERIC);
+            }
+
             $vars = [
                 ':pid'  => $post->id,
                 ':subj' => 's' === $key ? 1 : 0,
