@@ -43,7 +43,9 @@ class View
             $this->cache      = $config['cache'];
             $this->defaultDir = $config['defaultDir'];
 
-            $this->other[\hash('md5', $config['userDir'])] = [$config['userDir'], 10];
+            if (! empty($config['userDir'])) {
+                $this->other[\hash('md5', $config['userDir'])] = [$config['userDir'], 10];
+            }
 
             if (! empty($config['composers'])) {
                 foreach ($config['composers'] as $name => $composer) {
