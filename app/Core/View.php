@@ -168,7 +168,7 @@ class View
         $st = \preg_replace('%\W%', '-', $name);
 
         foreach ($this->other as $hash => $cur) {
-            if (\file_exist($tpl = "{$cur[0]}/{$name}{$this->ext}")) {
+            if (\file_exists($tpl = "{$cur[0]}/{$name}{$this->ext}")) {
                 $php = "{$this->cache}/_{$st}-{$hash}.php";
 
                 if (
