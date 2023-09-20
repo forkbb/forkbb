@@ -106,12 +106,15 @@ class Delete extends Action
                 FROM ::topics AS t
                 WHERE t.poster_id IN (?ai:users)';
 
-            $tids   = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
-            $topics = $this->manager->loadByIds($tids, false);
+            $tids = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
-            foreach ($topics as $topic) {
-                $parents[$topic->parent->id] = $topic->parent;
-            }
+#            $topics = $this->manager->loadByIds($tids, false);
+#
+#            foreach ($topics as $topic) {
+#                $parents[$topic->parent->id] = $topic->parent;
+#            }
+
+            $this->delete(...($this->manager->loadByIds($tids, false)));
         }
 
         $this->c->posts->delete(...$args);

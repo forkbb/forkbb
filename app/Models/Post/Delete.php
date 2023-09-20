@@ -136,15 +136,15 @@ class Delete extends Action
 
             $parents = $this->c->topics->loadByIds($tids, false);
 
-            $query = 'UPDATE ::posts
-                SET editor_id=0
-                WHERE editor_id IN (?ai:users)';
-
-            $this->c->DB->exec($query, $vars);
-
             $query = 'DELETE
                 FROM ::posts
                 WHERE poster_id IN (?ai:users)';
+
+            $this->c->DB->exec($query, $vars);
+
+            $query = 'UPDATE ::posts
+                SET editor_id=0
+                WHERE editor_id IN (?ai:users)';
 
             $this->c->DB->exec($query, $vars);
         }
