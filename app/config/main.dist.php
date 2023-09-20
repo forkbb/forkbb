@@ -104,9 +104,12 @@ return [
         ],
         'Validator' => \ForkBB\Core\Validator::class,
         'View' => [
-            'class'     => \ForkBB\Core\View::class,
-            'cache_dir' => '%DIR_CACHE%',
-            'views_dir' => '%DIR_VIEWS%',
+            'class'  => \ForkBB\Core\View::class,
+            'config' => [
+                'cache'      => '%DIR_CACHE%',
+                'defaultDir' => '%DIR_VIEWS%/_default',
+                'userDir'    => '%DIR_VIEWS%/_user',
+            ],
         ],
         'Router' => [
             'class'    => \ForkBB\Core\Router::class,

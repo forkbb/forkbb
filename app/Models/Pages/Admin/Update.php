@@ -893,4 +893,28 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.68 to rev.69
+     */
+    protected function stageNumber68(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>View',
+            [
+                'class'  => '\\ForkBB\\Core\\View::class',
+                'config' => [
+                    'cache'      => '\'%DIR_CACHE%\'',
+                    'defaultDir' => '\'%DIR_VIEWS%/_default\'',
+                    'userDir'    => '\'%DIR_VIEWS%/_user\'',
+                ],
+            ]
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }
