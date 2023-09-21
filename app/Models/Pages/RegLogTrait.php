@@ -30,20 +30,11 @@ trait RegLogTrait
 
         $this->c->Lang->load('admin_providers');
 
-        switch ($type) {
-            case 'reg':
-                $message = 'Sign up with %s';
-
-                break;
-            case 'add':
-                $message = 'From %s';
-
-                break;
-            default:
-                $message = 'Sign in with %s';
-
-                break;
-        }
+        $message = match ($type) {
+            'reg'   => 'Sign up with %s',
+            'add'   => 'From %s',
+            default => 'Sign in with %s',
+        };
 
         $btns = [];
 

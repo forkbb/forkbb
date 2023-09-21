@@ -87,76 +87,58 @@ class Delete extends Method
             $vars = [
                 ':users' => $uids,
             ];
+            $query = match ($this->c->DB->getType()) {
+                'mysql' => 'DELETE sm
+                    FROM ::search_matches AS sm, ::posts AS p
+                    WHERE p.poster_id IN (?ai:users) AND sm.post_id=p.id',
 
-            switch ($this->c->DB->getType()) {
-                case 'mysql':
-                    $query = 'DELETE sm
-                        FROM ::search_matches AS sm, ::posts AS p
-                        WHERE p.poster_id IN (?ai:users) AND sm.post_id=p.id';
-
-                    break;
-                default:
-                    $query = 'DELETE
-                        FROM ::search_matches
-                        WHERE post_id IN (
-                            SELECT p.id
-                            FROM ::posts AS p
-                            WHERE p.poster_id IN (?ai:users)
-                        )';
-
-                    break;
-            }
+                default => 'DELETE
+                    FROM ::search_matches
+                    WHERE post_id IN (
+                        SELECT p.id
+                        FROM ::posts AS p
+                        WHERE p.poster_id IN (?ai:users)
+                    )',
+            };
         }
 
         if ($fids) {
             $vars = [
                 ':forums' => $fids,
             ];
+            $query = match ($this->c->DB->getType()) {
+                'mysql' => 'DELETE sm
+                    FROM ::search_matches AS sm, ::posts AS p, ::topics AS t
+                    WHERE t.forum_id IN (?ai:forums) AND p.topic_id=t.id AND sm.post_id=p.id',
 
-            switch ($this->c->DB->getType()) {
-                case 'mysql':
-                    $query = 'DELETE sm
-                        FROM ::search_matches AS sm, ::posts AS p, ::topics AS t
-                        WHERE t.forum_id IN (?ai:forums) AND p.topic_id=t.id AND sm.post_id=p.id';
-
-                    break;
-                default:
-                    $query = 'DELETE
-                        FROM ::search_matches
-                        WHERE post_id IN (
-                            SELECT p.id
-                            FROM ::posts AS p
-                            INNER JOIN ::topics AS t ON t.id=p.topic_id
-                            WHERE t.forum_id IN (?ai:forums)
-                        )';
-
-                    break;
-            }
+                default => 'DELETE
+                    FROM ::search_matches
+                    WHERE post_id IN (
+                        SELECT p.id
+                        FROM ::posts AS p
+                        INNER JOIN ::topics AS t ON t.id=p.topic_id
+                        WHERE t.forum_id IN (?ai:forums)
+                    )',
+            };
         }
 
         if ($tids) {
             $vars = [
                 ':topics' => $tids,
             ];
+            $query = match ($this->c->DB->getType()) {
+                'mysql' => 'DELETE sm
+                    FROM ::search_matches AS sm, ::posts AS p
+                    WHERE p.topic_id IN (?ai:topics) AND sm.post_id=p.id',
 
-            switch ($this->c->DB->getType()) {
-                case 'mysql':
-                    $query = 'DELETE sm
-                        FROM ::search_matches AS sm, ::posts AS p
-                        WHERE p.topic_id IN (?ai:topics) AND sm.post_id=p.id';
-
-                    break;
-                default:
-                    $query = 'DELETE
-                        FROM ::search_matches
-                        WHERE post_id IN (
-                            SELECT p.id
-                            FROM ::posts AS p
-                            WHERE p.topic_id IN (?ai:topics)
-                        )';
-
-                    break;
-            }
+                default => 'DELETE
+                    FROM ::search_matches
+                    WHERE post_id IN (
+                        SELECT p.id
+                        FROM ::posts AS p
+                        WHERE p.topic_id IN (?ai:topics)
+                    )',
+            };
         }
 
         if ($pids) {

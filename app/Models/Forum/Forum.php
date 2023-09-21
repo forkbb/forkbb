@@ -446,26 +446,14 @@ class Forum extends DataModel
      */
     protected function createIdsList(int $rows = null, int $offset = null): void
     {
-        switch ($this->sort_by) {
-            case 1:
-                $sortBy = 't.posted DESC';
-                break;
-            case 2:
-                $sortBy = 't.subject ASC';
-                break;
-            case 4:
-                $sortBy = 't.last_post ASC';
-                break;
-            case 5:
-                $sortBy = 't.posted ASC';
-                break;
-            case 6:
-                $sortBy = 't.subject DESC';
-                break;
-            default:
-                $sortBy = 't.last_post DESC';
-                break;
-        }
+        $sortBy = match ($this->sort_by) {
+            1       => 't.posted DESC',
+            2       => 't.subject',
+            4       => 't.last_post',
+            5       => 't.posted',
+            6       => 't.subject DESC',
+            default => 't.last_post DESC',
+        };
 
         $vars = [
             ':fid'    => $this->id,

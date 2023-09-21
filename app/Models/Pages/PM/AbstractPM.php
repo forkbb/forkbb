@@ -156,11 +156,11 @@ abstract class AbstractPM extends Page
                     $name = \substr($pms->second, 1, -1);
                 }
 
-                switch ($pms->area) {
-                    case Cnst::ACTION_NEW:     $m = ['New messages with %s', $name]; break;
-                    case Cnst::ACTION_CURRENT: $m = ['My talks with %s', $name]; break;
-                    case Cnst::ACTION_ARCHIVE: $m = ['Archive messages with %s', $name]; break;
-                }
+                $m = match ($pms->area) {
+                    Cnst::ACTION_NEW     => ['New messages with %s', $name],
+                    Cnst::ACTION_CURRENT => ['My talks with %s', $name],
+                    Cnst::ACTION_ARCHIVE => ['Archive messages with %s', $name],
+                };
             } else {
                 if ($this->targetUser instanceof User) {
                     $crumbs[] = [
@@ -177,11 +177,11 @@ abstract class AbstractPM extends Page
                     ];
                 }
 
-                switch ($pms->area) {
-                    case Cnst::ACTION_NEW:     $m = 'New messages'; break;
-                    case Cnst::ACTION_CURRENT: $m = 'My talks'; break;
-                    case Cnst::ACTION_ARCHIVE: $m = 'Archive messages'; break;
-                }
+                $m = match ($pms->area) {
+                    Cnst::ACTION_NEW     => 'New messages',
+                    Cnst::ACTION_CURRENT => 'My talks',
+                    Cnst::ACTION_ARCHIVE => 'Archive messages',
+                };
             }
 
             $crumbs[] = [

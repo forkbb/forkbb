@@ -259,31 +259,23 @@ class Online extends Model
                     WHERE user_id=?i:id';
             }
         } else {
-            switch ($this->c->DB->getType()) {
-                case 'mysql':
-                    $query = 'INSERT IGNORE INTO ::online (user_id, ident, logged, o_position, o_name)
-                        VALUES (?i:id, ?s:ident, ?i:logged, ?s:pos, ?s:name)';
+            $query = match ($this->c->DB->getType()) {
+                'mysql' => 'INSERT IGNORE INTO ::online (user_id, ident, logged, o_position, o_name)
+                    VALUES (?i:id, ?s:ident, ?i:logged, ?s:pos, ?s:name)',
 
-                    break;
-                case 'sqlite':
-                case 'pgsql':
-                    $query = 'INSERT INTO ::online (user_id, ident, logged, o_position, o_name)
-                        VALUES (?i:id, ?s:ident, ?i:logged, ?s:pos, ?s:name)
-                        ON CONFLICT(user_id, ident) DO NOTHING';
+                'sqlite', 'pgsql' => 'INSERT INTO ::online (user_id, ident, logged, o_position, o_name)
+                    VALUES (?i:id, ?s:ident, ?i:logged, ?s:pos, ?s:name)
+                    ON CONFLICT(user_id, ident) DO NOTHING',
 
-                    break;
-                default:
-                    $query = 'INSERT INTO ::online (user_id, ident, logged, o_position, o_name)
-                        SELECT tmp.*
-                        FROM (SELECT ?i:id AS f1, ?s:ident AS f2, ?i:logged AS f3, ?s:pos AS f4, ?s:name AS f5) AS tmp
-                        WHERE NOT EXISTS (
-                            SELECT 1
-                            FROM ::online
-                            WHERE user_id=?i:id AND ident=?s:ident
-                        )';
-
-                    break;
-            }
+                default => 'INSERT INTO ::online (user_id, ident, logged, o_position, o_name)
+                    SELECT tmp.*
+                    FROM (SELECT ?i:id AS f1, ?s:ident AS f2, ?i:logged AS f3, ?s:pos AS f4, ?s:name AS f5) AS tmp
+                    WHERE NOT EXISTS (
+                        SELECT 1
+                        FROM ::online
+                        WHERE user_id=?i:id AND ident=?s:ident
+                    )',
+            };
         }
 
         $this->c->DB->exec($query, $vars);

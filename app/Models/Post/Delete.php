@@ -161,24 +161,19 @@ class Delete extends Action
 
             $uidsUpdate = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
-            switch ($this->c->DB->getType()) {
-                case 'mysql':
-                    $query = 'DELETE p
-                        FROM ::posts AS p, ::topics AS t
-                        WHERE t.forum_id IN (?ai:forums) AND p.topic_id=t.id';
+            $query = match ($this->c->DB->getType()) {
+                'mysql' => 'DELETE p
+                    FROM ::posts AS p, ::topics AS t
+                    WHERE t.forum_id IN (?ai:forums) AND p.topic_id=t.id',
 
-                    break;
-                default:
-                    $query = 'DELETE
-                        FROM ::posts
-                        WHERE topic_id IN (
-                            SELECT id
-                            FROM ::topics
-                            WHERE forum_id IN (?ai:forums)
-                        )';
-
-                break;
-            }
+                default => 'DELETE
+                    FROM ::posts
+                    WHERE topic_id IN (
+                        SELECT id
+                        FROM ::topics
+                        WHERE forum_id IN (?ai:forums)
+                    )',
+            };
 
             $this->c->DB->exec($query, $vars);
         }

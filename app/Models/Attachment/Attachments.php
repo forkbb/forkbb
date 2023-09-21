@@ -182,31 +182,23 @@ class Attachments extends Model
                 ]);
             }
 
-            switch ($this->c->DB->getType()) {
-                case 'mysql':
-                    $query = "INSERT IGNORE INTO {$table} (id, pid)
-                        VALUES (?i:id, ?i:pid)";
+            $query = match ($this->c->DB->getType()) {
+                'mysql' => "INSERT IGNORE INTO {$table} (id, pid)
+                    VALUES (?i:id, ?i:pid)",
 
-                    break;
-                case 'sqlite':
-                case 'pgsql':
-                    $query = "INSERT INTO {$table} (id, pid)
-                        VALUES (?i:id, ?i:pid)
-                        ON CONFLICT(id, pid) DO NOTHING";
+                'sqlite', 'pgsql' => "INSERT INTO {$table} (id, pid)
+                    VALUES (?i:id, ?i:pid)
+                    ON CONFLICT(id, pid) DO NOTHING",
 
-                    break;
-                default:
-                    $query = "INSERT INTO {$table} (id, pid)
-                        SELECT tmp.*
-                        FROM (SELECT ?i:id AS f1, ?i:pid AS f2) AS tmp
-                        WHERE NOT EXISTS (
-                            SELECT 1
-                            FROM {$table}
-                            WHERE id=?i:id AND pid=?i:pid
-                        )";
-
-                    break;
-            }
+                default => "INSERT INTO {$table} (id, pid)
+                    SELECT tmp.*
+                    FROM (SELECT ?i:id AS f1, ?i:pid AS f2) AS tmp
+                    WHERE NOT EXISTS (
+                        SELECT 1
+                        FROM {$table}
+                        WHERE id=?i:id AND pid=?i:pid
+                    )",
+            };
 
             foreach ($ids as $id) {
                 $vars = [
