@@ -11,12 +11,10 @@ declare(strict_types=1);
 namespace ForkBB\Models\Topic;
 
 use ForkBB\Models\Action;
-use ForkBB\Models\Model;
 use ForkBB\Models\Forum\Forum;
 use ForkBB\Models\Search\Search;
 use ForkBB\Models\Topic\Topic;
 use PDO;
-use InvalidArgumentException;
 use RuntimeException;
 
 class View extends Action
@@ -24,14 +22,12 @@ class View extends Action
     /**
      * Возвращает список тем
      */
-    public function view(Model $arg): array
+    public function view(Forum|Search $arg): array
     {
         if ($arg instanceof Forum) {
             $full = false;
         } elseif ($arg instanceof Search) {
             $full = true;
-        } else {
-            throw new InvalidArgumentException('Expected Forum or Search');
         }
 
         if (

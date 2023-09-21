@@ -11,12 +11,10 @@ declare(strict_types=1);
 namespace ForkBB\Models\Post;
 
 use ForkBB\Models\Action;
-use ForkBB\Models\Model;
 use ForkBB\Models\Post\Post;
 use ForkBB\Models\Search\Search;
 use ForkBB\Models\Topic\Topic;
 use PDO;
-use InvalidArgumentException;
 use RuntimeException;
 
 class View extends Action
@@ -24,15 +22,8 @@ class View extends Action
     /**
      * Возвращает список сообщений
      */
-    public function view(Model $arg, bool $review = false): array
+    public function view(Search|Topic $arg, bool $review = false): array
     {
-        if (
-            ! $arg instanceof Topic
-            && ! $arg instanceof Search
-        ) {
-            throw new InvalidArgumentException('Expected Topic or Search');
-        }
-
         if (
             empty($arg->idsList)
             || ! \is_array($arg->idsList)

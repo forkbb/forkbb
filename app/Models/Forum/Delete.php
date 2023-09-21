@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace ForkBB\Models\Forum;
 
 use ForkBB\Models\Action;
-use ForkBB\Models\DataModel;
 use ForkBB\Models\Forum\Forum;
 use ForkBB\Models\User\User;
 use InvalidArgumentException;
@@ -22,7 +21,7 @@ class Delete extends Action
     /**
      * Удаляет раздел(ы)
      */
-    public function delete(DataModel ...$args): void
+    public function delete(Forum|User ...$args): void
     {
         if (empty($args)) {
             throw new InvalidArgumentException('No arguments, expected User(s) or Forum(s)');
@@ -54,8 +53,6 @@ class Delete extends Action
                 foreach (\array_keys($arg->descendants) as $id) { //???? а если не админ?
                     $all[$id] = true;
                 }
-            } else {
-                throw new InvalidArgumentException('Expected User(s) or Forum(s)');
             }
         }
 

@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace ForkBB\Models\PM;
 
 use ForkBB\Models\Method;
-use ForkBB\Models\DataModel;
 use ForkBB\Models\PM\Cnst;
 use ForkBB\Models\PM\PPost;
 use ForkBB\Models\PM\PTopic;
@@ -41,7 +40,7 @@ class Delete extends Method
         }
     }
 
-    public function delete(DataModel ...$args): void
+    public function delete(PPost|PTopic|User ...$args): void
     {
         if (empty($args)) {
             throw new InvalidArgumentException('No arguments, expected User(s), PPost(s) or PTopic(s)');
@@ -77,8 +76,6 @@ class Delete extends Method
 
                 $topics[$arg->id] = $arg;
                 $isTopic          = 1;
-            } else {
-                throw new InvalidArgumentException('Expected User(s), PPost(s) or PTopic(s)');
             }
         }
 

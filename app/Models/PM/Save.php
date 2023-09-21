@@ -11,17 +11,15 @@ declare(strict_types=1);
 namespace ForkBB\Models\PM;
 
 use ForkBB\Models\Method;
-use ForkBB\Models\DataModel;
 use ForkBB\Models\PM\Cnst;
 use ForkBB\Models\PM\PPost;
 use ForkBB\Models\PM\PTopic;
 use ForkBB\Models\PM\PRnd;
-use InvalidArgumentException;
 use RuntimeException;
 
 class Save extends Method
 {
-    public function update(DataModel $model): DataModel
+    public function update(PPost|PTopic $model): PPost|PTopic
     {
         if ($model->id < 1) {
             throw new RuntimeException('The model does not have ID');
@@ -31,8 +29,6 @@ class Save extends Method
             $table  = 'pm_posts';
         } elseif ($model instanceof PTopic) {
             $table  = 'pm_topics';
-        } else {
-            throw new InvalidArgumentException('Bad model');
         }
 
         $modified = $model->getModified();
@@ -69,7 +65,7 @@ class Save extends Method
         return $model;
     }
 
-    public function insert(DataModel $model): int
+    public function insert(PPost|PTopic $model): int
     {
         if (null !== $model->id) {
             throw new RuntimeException('The model has ID');
@@ -79,8 +75,6 @@ class Save extends Method
             $table  = 'pm_posts';
         } elseif ($model instanceof PTopic) {
             $table  = 'pm_topics';
-        } else {
-            throw new InvalidArgumentException('Bad model');
         }
 
         $attrs  = $model->getModelAttrs();

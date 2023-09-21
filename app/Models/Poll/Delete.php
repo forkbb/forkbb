@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace ForkBB\Models\Poll;
 
 use ForkBB\Models\Action;
-use ForkBB\Models\DataModel;
 use ForkBB\Models\Forum\Forum;
 use ForkBB\Models\Poll\Poll;
 use ForkBB\Models\Topic\Topic;
@@ -23,7 +22,7 @@ class Delete extends Action
     /**
      * Удаление индекса
      */
-    public function delete(DataModel ...$args): void
+    public function delete(Poll|Topic ...$args): void
     {
         if (empty($args)) {
             throw new InvalidArgumentException('No arguments, expected Poll(s) or Topic(s)');
@@ -46,8 +45,6 @@ class Delete extends Action
 
                 $tids[$arg->id] = $arg->id;
                 $isTopic        = 1;
-            } else {
-                throw new InvalidArgumentException('Expected Poll(s) or Topic(s)');
             }
         }
 

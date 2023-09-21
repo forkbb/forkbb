@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace ForkBB\Models\Search;
 
 use ForkBB\Models\Method;
-use ForkBB\Models\DataModel;
 use ForkBB\Models\Forum\Forum;
 use ForkBB\Models\Post\Post;
 use ForkBB\Models\Topic\Topic;
@@ -24,7 +23,7 @@ class Delete extends Method
     /**
      * Удаление индекса
      */
-    public function delete(DataModel ...$args): void
+    public function delete(Forum|Post|Topic|User ...$args): void
     {
         if (empty($args)) {
             throw new InvalidArgumentException('No arguments, expected User(s), Forum(s), Topic(s) or Post(s)');
@@ -74,8 +73,6 @@ class Delete extends Method
 
                 $pids[$arg->id] = $arg->id;
                 $isPost         = 1;
-            } else {
-                throw new InvalidArgumentException('Expected User(s), Forum(s), Topic(s) or Post(s)');
             }
         }
 

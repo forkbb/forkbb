@@ -11,19 +11,15 @@ declare(strict_types=1);
 namespace ForkBB\Models\Post;
 
 use ForkBB\Models\Action;
-use ForkBB\Models\DataModel;
 use ForkBB\Models\Topic\Topic;
 use ForkBB\Models\Forum\Forum;
-
-use InvalidArgumentException;
-use RuntimeException;
 
 class Feed extends Action
 {
     /**
      * Загружает данные для feed
      */
-    public function Feed(DataModel $model): array
+    public function Feed(Forum|Topic $model): array
     {
         if ($model instanceof Topic) {
             if (0 !== $model->moved_to) {
@@ -61,9 +57,6 @@ class Feed extends Action
                 WHERE t.forum_id IN (?ai:forums)
                 ORDER BY p.id DESC
                 LIMIT 50';
-
-        } else {
-            throw new InvalidArgumentException('Expected Topic or Forum');
         }
 
         return $this->c->DB->query($query, $vars)->fetchAll();
