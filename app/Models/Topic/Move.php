@@ -29,6 +29,7 @@ class Move extends Action
             if ($topic->parent === $toForum) {
                 continue;
             }
+
             if ($redirect) {
                 $rTopic                 = $this->c->topics->create();
                 $rTopic->poster         = $topic->poster;
@@ -40,7 +41,7 @@ class Move extends Action
 //                $rTopic->last_post_id   = $topic->last_post_id;
 //                $rTopic->last_poster    = $topic->last_poster;
 //                $rTopic->last_poster_id = $topic->last_poster_id;
-                $rTopic->moved_to       = $topic->id;
+                $rTopic->moved_to       = $topic->moved_to ?: $topic->id;
                 $rTopic->forum_id       = $topic->forum_id;
 
                 $this->c->topics->insert($rTopic);
