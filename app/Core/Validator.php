@@ -956,16 +956,21 @@ class Validator
     protected function vDate(Validator $v, mixed $value): ?string
     {
         if ($this->noValue($value)) {
-            $value = null;
-        } elseif (
-            ! \is_string($value)
-            || false === \strtotime("{$value} UTC")
-        ) {
-            $v->addError('The :alias does not contain a date');
-
-            $value = \is_scalar($value) ? (string) $value : null;
+            return null;
         }
 
-        return $value;
+        if (\is_string($value)) {
+            $timestamp = \strtotime("{$value} UTC");
+        } else {
+            $timestamp = false;
+        }
+
+        if (false === $timestamp) {
+            $v->addError('The :alias does not contain a date');
+        } elseif ($timestamp < 0) {
+            $v->addError('The :alias contains time before start of Unix');
+        }
+
+        return \is_scalar($value) ? (string) $value : null;
     }
 }

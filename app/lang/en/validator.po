@@ -218,3 +218,6 @@ msgstr "Invalid passphrase."
 
 msgid "Javascript disabled or bot"
 msgstr "Your browser most likely has javascript disabled or you are a robot :)"
+
+msgid "The :alias contains time before start of Unix"
+msgstr "The :alias field contains the time before the start of the Unix epoch."

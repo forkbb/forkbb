@@ -218,3 +218,6 @@ msgstr "Неверная кодовая фраза."
 
 msgid "Javascript disabled or bot"
 msgstr "В вашем браузере, вероятнее всего, выключен javascript или вы робот :)"
+
+msgid "The :alias contains time before start of Unix"
+msgstr "Поле :alias содержит время предшествующее началу эпохи Unix."
