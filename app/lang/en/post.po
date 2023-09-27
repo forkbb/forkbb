@@ -83,3 +83,24 @@ msgstr "%1$s (%2$s max size)"
 
 msgid "Attachments"
 msgstr "Attachments"
+
+msgid "Change author and date"
+msgstr "Change author and date"
+
+msgid "Change"
+msgstr "Change"
+
+msgid "Posted"
+msgstr "Posted"
+
+msgid "Change AnD topic"
+msgstr "Change author of topic and its date"
+
+msgid "Change AnD post"
+msgstr "Change author of post and its date"
+
+msgid "User %s does not exist"
+msgstr "User '%s' does not exist."
+
+msgid "Change redirect"
+msgstr "Changes done."

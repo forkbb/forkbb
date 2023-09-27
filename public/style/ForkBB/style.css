@@ -1534,6 +1534,7 @@ body,
   border-bottom: 0.0625rem solid var(--br-fprimary);
   background-color: var(--bg-post-h);
   font-size: 0.875rem;
+  gap: 0.625rem;
 }
 
 #fork-topic .f-phead-h3,
@@ -1541,15 +1542,21 @@ body,
   display: none;
 }
 
-#fork .f-post-edited > span {
+#fork .f-post-edited > span,
+#fork .f-post-change-a > span {
   display: none;
 }
 
 #fork .f-post-edited::before {
-  padding: 0 0.625rem;
   font-family: "fa";
   font-weight: 400;
   content: "\f044";
+}
+
+#fork .f-post-change-a::before {
+  font-family: "fa";
+  font-weight: 900;
+  content: "\f013";
 }
 
 #fork .f-post-number {

@@ -128,3 +128,6 @@ msgstr "%1$s (макс. %2$s)"
 
 msgid "Attachments"
 msgstr "Вложения"
+
+msgid "Change author and date"
+msgstr "Изменить автора и дату"

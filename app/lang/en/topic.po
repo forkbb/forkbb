@@ -127,3 +127,6 @@ msgstr "%1$s (%2$s max size)"
 
 msgid "Attachments"
 msgstr "Attachments"
+
+msgid "Change author and date"
+msgstr "Change author and date"

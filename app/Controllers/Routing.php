@@ -412,6 +412,15 @@ class Routing
                 'DeletePost'
             );
 
+            if ($user->isAdmin) {
+                $r->add(
+                    $r::DUO,
+                    '/post/{id|i:[1-9]\d*}/change',
+                    'Edit:change',
+                    'ChangeAnD'
+                );
+            }
+
             // сигналы (репорты)
             if (
                 ! $user->isAdmin

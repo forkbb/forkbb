@@ -62,6 +62,9 @@
         @else
           <span class="f-post-posted"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></span>
         @endif
+        @if ($post->canEdit && $p->user->isAdmin)
+          <span class="f-post-change" title="{{ __('Change author and date') }}"><a class="f-post-change-a" href="{{ $post->linkAnD }}"><span>&#9881;</span></a></span>
+        @endif
         @if ($post->edited)
           <span class="f-post-edited" title="{{! __(['Last edit', $post->editor, dt($post->edited)]) !}}"><span>{!! __('Edited') !!}</span></span>
         @endif

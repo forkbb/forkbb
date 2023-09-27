@@ -83,3 +83,24 @@ msgstr "%1$s (макс. %2$s)"
 
 msgid "Attachments"
 msgstr "Вложения"
+
+msgid "Change author and date"
+msgstr "Изменить автора и дату"
+
+msgid "Change"
+msgstr "Изменить"
+
+msgid "Posted"
+msgstr "Опубликовано"
+
+msgid "Change AnD topic"
+msgstr "Изменение автора темы и её даты"
+
+msgid "Change AnD post"
+msgstr "Изменение автора сообщения и его даты"
+
+msgid "User %s does not exist"
+msgstr "Нет пользователя с именем '%s'."
+
+msgid "Change redirect"
+msgstr "Изменения выполнены."

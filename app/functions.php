@@ -11,8 +11,6 @@ declare(strict_types=1);
 namespace ForkBB;
 
 use ForkBB\Core\Container;
-use DateTime;
-use DateTimeZone;
 use InvalidArgumentException;
 
 /**
@@ -105,13 +103,7 @@ function dt(int $arg, bool $dateOnly = false, string $dateFormat = null, string 
     }
 
     if (null === $offset) {
-        if (\in_array($c->user->timezone, DateTimeZone::listIdentifiers(), true)) {
-            $dateTimeZone = new DateTimeZone($c->user->timezone);
-            $dateTime     = new DateTime('now', $dateTimeZone);
-            $offset       = $dateTime->getOffset();
-        } else {
-            $offset      = 0;
-        }
+        $offset = $c->Func->offset();
     }
 
     $arg += $offset;

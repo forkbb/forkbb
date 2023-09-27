@@ -17,6 +17,7 @@ use ForkBB\Models\Pages\PostValidatorTrait;
 use ForkBB\Models\Poll\Poll;
 use ForkBB\Models\Post\Post;
 use ForkBB\Models\Topic\Topic;
+use ForkBB\Models\User\User;
 use function \ForkBB\__;
 
 class Edit extends Page
@@ -313,5 +314,202 @@ class Edit extends Page
 
             $this->c->polls->insert($poll);
         }
+    }
+
+    /**
+     * Переводит метку времени в дату/время с учетом часового пояса пользователя
+     */
+    protected function timeToDate(int $timestamp): string
+    {
+        return \gmdate('Y-m-d\TH:i:s', $timestamp + $this->c->Func->offset());
+    }
+
+    /**
+     * Переводит дату/время в метку времени с учетом часового пояса пользователя
+     */
+    protected function dateToTime(string $date): int
+    {
+        return \strtotime("{$date} UTC") - $this->c->Func->offset();
+    }
+
+    /**
+     * Изменение автора и даты
+     */
+    public function change(array $args, string $method): Page
+    {
+        $post = $this->c->posts->load($args['id']);
+
+        if (
+            ! $post instanceof Post
+            || ! $post->canEdit
+        ) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $topic     = $post->parent;
+        $firstPost = $post->id === $topic->first_post_id;
+        $lastPost  = $post->id === $topic->last_post_id;
+
+        $this->c->Lang->load('post');
+        $this->c->Lang->load('validator');
+
+        if ('POST' === $method) {
+            $v = $this->c->Validator->reset()
+            ->addValidators([
+                'username_check' => [$this, 'vUsernameCheck'],
+            ])->addRules([
+                'token'      => 'token:ChangeAnD',
+                'username'   => 'required|string|username_check',
+                'posted'     => 'required|date',
+                'change_and' => 'required|string',
+            ])->addAliases([
+                'username' => 'Username',
+                'posted'   => 'Posted',
+            ])->addArguments([
+                'token'                   => $args,
+                'username.username_check' => $post->user,
+            ]);
+
+            if ($v->validation($_POST)) {
+                $ids     = [];
+                $upPost  = false;
+
+                // изменить имя автора
+                if (
+                    $this->newUser instanceof User
+                    && $this->newUser->id !== $post->user->id
+                ) {
+                    if (! $post->user->isGuest) {
+                        $ids[] = $post->user->id;
+                    }
+
+                    if (! $this->newUser->isGuest) {
+                        $ids[] = $this->newUser->id;
+                    }
+
+                    $post->poster    = $this->newUser->username;
+                    $post->poster_id = $this->newUser->id;
+                    $upPost          = true;
+                }
+                // изменит время создания
+                if (\abs($post->posted - $this->dateToTime($v->posted)) >= 60) {
+                    $post->posted    = $this->dateToTime($v->posted);
+                    $upPost          = true;
+                }
+
+                if ($upPost) {
+                    $post->edited    = \time();
+                    $post->editor    = $this->user->username;
+                    $post->editor_id = $this->user->id;
+
+                    $this->c->posts->update($post);
+
+                    if (
+                        $firstPost
+                        || $lastPost
+                    ) {
+                        $topic->calcStat();
+                        $this->c->topics->update($topic);
+
+                        if ($lastPost) {
+                            $topic->parent->calcStat();
+                            $this->c->forums->update($topic->parent);
+                        }
+                    }
+                }
+
+                if ($ids) {
+                    $this->c->users->updateCountPosts(...$ids);
+
+                    if ($firstPost) {
+                        $this->c->users->updateCountTopics(...$ids);
+                    }
+                }
+
+                return $this->c->Redirect->url($post->link)->message('Change redirect', FORK_MESS_SUCC);
+            }
+
+            $this->fIswev = $v->getErrors();
+
+            $data = [
+                'username' => $v->username ?: $post->poster,
+                'posted'   => $v->posted ?: $this->timeToDate($post->posted),
+            ];
+        } else {
+            $data = [
+                'username' => $post->poster,
+                'posted'   => $this->timeToDate($post->posted),
+            ];
+        }
+
+        $this->nameTpl   = 'post';
+        $this->onlinePos = 'topic-' . $topic->id;
+        $this->robots    = 'noindex';
+        $this->formTitle = $firstPost ? 'Change AnD topic' : 'Change AnD post';
+        $this->crumbs    = $this->crumbs($this->formTitle, $topic);
+        $this->form      = $this->formAuthorAndDate($data, $args);
+
+        return $this;
+    }
+
+    public function vUsernameCheck(Validator $v, string $username, $attr, User $user): string
+    {
+        if ($username !== $user->username) {
+            $newUser = $this->c->users->loadByName($username, true);
+
+            if ($newUser instanceof User) {
+                $username      = $newUser->username;
+                $this->newUser = $newUser;
+            } else {
+                $v->addError(['User %s does not exist', $username]);
+            }
+        }
+
+        return $username;
+    }
+
+    /**
+     * Возвращает данные для построения формы изменения автора поста и времени создания
+     */
+    protected function formAuthorAndDate(array $data, array $args): ?array
+    {
+        if (! $this->user->isAdmin) {
+            return null;
+        }
+
+        return [
+            'action' => $this->c->Router->link('ChangeAnD', $args),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('ChangeAnD', $args),
+            ],
+            'sets' => [
+                'author-and-date' => [
+                    'fields' => [
+                        'username'=> [
+                            'type'      => 'text',
+                            'minlength' => $this->c->USERNAME['min'],
+                            'maxlength' => $this->c->USERNAME['max'],
+                            'caption'   => 'Username',
+                            'required'  => true,
+                            'pattern'   => $this->c->USERNAME['jsPattern'],
+                            'value'     => $data['username'] ?? null,
+                            'autofocus' => true,
+                        ],
+                        'posted'=> [
+                            'type'      => 'datetime-local',
+                            'caption'   => 'Posted',
+                            'required'  => true,
+                            'value'     => $data['posted'] ?? null,
+                        ],
+                    ],
+                ],
+            ],
+            'btns' => [
+                'change_and' => [
+                    'type'  => 'submit',
+                    'value' => __('Change'),
+                ],
+            ],
+        ];
     }
 }

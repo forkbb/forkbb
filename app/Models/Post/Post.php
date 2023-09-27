@@ -195,6 +195,19 @@ class Post extends DataModel
     }
 
     /**
+     * Ссылка на страницу редактирования автора и даты
+     */
+    protected function getlinkAnD(): string
+    {
+        return $this->c->Router->link(
+            'ChangeAnD',
+            [
+                'id' => $this->id,
+            ]
+        );
+    }
+
+    /**
      * Статус возможности ответа с цитированием
      */
     protected function getcanQuote(): bool

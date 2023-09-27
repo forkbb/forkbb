@@ -36,6 +36,7 @@
                         @case ('number')
                         @case ('password')
                         @case ('file')
+                        @case ('datetime-local')
                 <input id="id-{{ $key }}" name="{{ $key }}" class="f-ctrl" type="{{ $cur['type'] }}" @foreach ($cur as $k => $v) @if (\in_array($k, ['autofocus', 'disabled', 'multiple', 'readonly', 'required'], true) && ! empty($v)) {!! $k !!} @elseif (\in_array($k, ['accept', 'autocapitalize', 'autocomplete', 'max', 'maxlength', 'min', 'minlength', 'pattern', 'placeholder', 'step', 'title', 'value'], true)) {!! $k !!}="{{ $v }}" @endif @endforeach>
                             @break
                         @case ('textarea')

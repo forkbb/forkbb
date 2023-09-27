@@ -11,6 +11,8 @@ declare(strict_types=1);
 namespace ForkBB\Core;
 
 use ForkBB\Core\Container;
+use DateTime;
+use DateTimeZone;
 use function \ForkBB\__;
 
 class Func
@@ -253,5 +255,20 @@ class Func
         \arsort($result, \SORT_NUMERIC);
 
         return \array_keys($result);
+    }
+
+    /**
+     * Возвращает смещение в секундах для часовой зоны текущего пользователя или 0
+     */
+    public function offset(): int
+    {
+        if (\in_array($this->c->user->timezone, DateTimeZone::listIdentifiers(), true)) {
+            $dateTimeZone = new DateTimeZone($this->c->user->timezone);
+            $dateTime     = new DateTime('now', $dateTimeZone);
+
+            return $dateTime->getOffset();
+        } else {
+            return 0;
+        }
     }
 }
