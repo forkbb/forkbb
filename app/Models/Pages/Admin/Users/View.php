@@ -272,16 +272,16 @@ class View extends Users
         ];
         $fields['last_post_1'] = [
             'class'     => ['bstart'],
-            'type'      => 'text',
-            'maxlength' => '100',
+            'type'      => 'datetime-local',
             'value'     => $data['last_post_1'] ?? null,
             'caption'   => 'Last post label',
+            'step'      => '1',
         ];
         $fields['last_post_2'] = [
             'class'     => ['bend'],
-            'type'      => 'text',
-            'maxlength' => '100',
+            'type'      => 'datetime-local',
             'value'     => $data['last_post_2'] ?? null,
+            'step'      => '1',
         ];
         $fields[] = [
             'type' => 'endwrap',
@@ -292,16 +292,16 @@ class View extends Users
         ];
         $fields['last_visit_1'] = [
             'class'     => ['bstart'],
-            'type'      => 'text',
-            'maxlength' => '100',
+            'type'      => 'datetime-local',
             'value'     => $data['last_visit_1'] ?? null,
             'caption'   => 'Last visit label',
+            'step'      => '1',
         ];
         $fields['last_visit_2'] = [
             'class'     => ['bend'],
-            'type'      => 'text',
-            'maxlength' => '100',
+            'type'      => 'datetime-local',
             'value'     => $data['last_visit_2'] ?? null,
+            'step'      => '1',
         ];
         $fields[] = [
             'type' => 'endwrap',
@@ -312,16 +312,16 @@ class View extends Users
         ];
         $fields['registered_1'] = [
             'class'     => ['bstart'],
-            'type'      => 'text',
-            'maxlength' => '100',
+            'type'      => 'datetime-local',
             'value'     => $data['registered_1'] ?? null,
             'caption'   => 'Registered label',
+            'step'      => '1',
         ];
         $fields['registered_2'] = [
             'class'     => ['bend'],
-            'type'      => 'text',
-            'maxlength' => '100',
+            'type'      => 'datetime-local',
             'value'     => $data['registered_2'] ?? null,
+            'step'      => '1',
         ];
         $fields[] = [
             'type' => 'endwrap',

@@ -215,7 +215,7 @@ class Result extends Users
                 $key   = $matches[2];
 
                 if (\is_string($value)) {
-                    $value = \strtotime($value . ' UTC');
+                    $value = $this->c->Func->dateToTime($value);
                 }
             } elseif (\is_string($value)) {
                 $type     = 'LIKE';
