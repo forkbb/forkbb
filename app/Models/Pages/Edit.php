@@ -361,6 +361,7 @@ class Edit extends Page
                 'token'      => 'token:ChangeAnD',
                 'username'   => 'required|string|username_check',
                 'posted'     => 'required|date',
+                'confirm'    => 'checkbox',
                 'change_and' => 'required|string',
             ])->addAliases([
                 'username' => 'Username',
@@ -371,6 +372,10 @@ class Edit extends Page
             ]);
 
             if ($v->validation($_POST)) {
+                if ('1' !== $v->confirm) {
+                    return $this->c->Redirect->url($post->link)->message('No confirm redirect', FORK_MESS_WARN);
+                }
+
                 $ids     = [];
                 $upPost  = false;
 
@@ -500,6 +505,11 @@ class Edit extends Page
                             'caption'   => 'Posted',
                             'required'  => true,
                             'value'     => $data['posted'] ?? null,
+                        ],
+                        'confirm' => [
+                            'type'      => 'checkbox',
+                            'label'     => 'Confirm action',
+                            'checked'   => false,
                         ],
                     ],
                 ],
