@@ -960,7 +960,7 @@ class Validator
         }
 
         if (\is_string($value)) {
-            $timestamp = \strtotime("{$value} UTC");
+            $timestamp = $this->c->Func->dateToTime($value);
         } else {
             $timestamp = false;
         }
