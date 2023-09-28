@@ -317,22 +317,6 @@ class Edit extends Page
     }
 
     /**
-     * Переводит метку времени в дату/время с учетом часового пояса пользователя
-     */
-    protected function timeToDate(int $timestamp): string
-    {
-        return \gmdate('Y-m-d\TH:i:s', $timestamp + $this->c->Func->offset());
-    }
-
-    /**
-     * Переводит дату/время в метку времени с учетом часового пояса пользователя
-     */
-    protected function dateToTime(string $date): int
-    {
-        return \strtotime("{$date} UTC") - $this->c->Func->offset();
-    }
-
-    /**
      * Изменение автора и даты
      */
     public function change(array $args, string $method): Page
@@ -396,9 +380,12 @@ class Edit extends Page
                     $post->poster_id = $this->newUser->id;
                     $upPost          = true;
                 }
+
+                $posted = $this->c->Func->dateToTime($v->posted);
+
                 // изменит время создания
-                if (\abs($post->posted - $this->dateToTime($v->posted)) >= 60) {
-                    $post->posted    = $this->dateToTime($v->posted);
+                if (\abs($post->posted - $posted) >= 60) {
+                    $post->posted    = $posted;
                     $upPost          = true;
                 }
 
@@ -438,12 +425,12 @@ class Edit extends Page
 
             $data = [
                 'username' => $v->username ?: $post->poster,
-                'posted'   => $v->posted ?: $this->timeToDate($post->posted),
+                'posted'   => $v->posted ?: $this->c->Func->timeToDate($post->posted),
             ];
         } else {
             $data = [
                 'username' => $post->poster,
-                'posted'   => $this->timeToDate($post->posted),
+                'posted'   => $this->c->Func->timeToDate($post->posted),
             ];
         }
 

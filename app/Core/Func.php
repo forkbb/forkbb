@@ -32,6 +32,11 @@ class Func
      */
     protected ?array $nameLangs = null;
 
+    /**
+     * Смещение времени для текущего пользователя
+     */
+    protected ?int $offset = null;
+
     public function __construct(protected Container $c)
     {
     }
@@ -262,13 +267,39 @@ class Func
      */
     public function offset(): int
     {
-        if (\in_array($this->c->user->timezone, DateTimeZone::listIdentifiers(), true)) {
+        if (null !== $this->offset) {
+            return $this->offset;
+        } elseif (\in_array($this->c->user->timezone, DateTimeZone::listIdentifiers(), true)) {
             $dateTimeZone = new DateTimeZone($this->c->user->timezone);
             $dateTime     = new DateTime('now', $dateTimeZone);
 
-            return $dateTime->getOffset();
+            return $this->offset = $dateTime->getOffset();
         } else {
-            return 0;
+            return $this->offset = 0;
+        }
+    }
+
+    /**
+     * Переводит метку времени в дату-время с учетом/без учета часового пояса пользователя
+     */
+    public function timeToDate(int $timestamp, bool $useOffset = true): string
+    {
+        return \gmdate('Y-m-d\TH:i:s', $timestamp + ($useOffset ? $this->offset() : 0));
+    }
+
+    /**
+     * Переводит дату-время в метку времени с учетом/без учета часового пояса пользователя
+     */
+    public function dateToTime(string $date, bool $useOffset = true): int|false
+    {
+        $timestamp = \strtotime("{$date} UTC");
+
+        if (! \is_int($timestamp)) {
+            return false;
+        } elseif ($useOffset) {
+            return $timestamp - $this->offset();
+        } else {
+            return $timestamp;
         }
     }
 }
