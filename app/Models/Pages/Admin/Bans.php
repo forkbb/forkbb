@@ -174,16 +174,16 @@ class Bans extends Admin
         ];
         $fields['s_expire_1'] = [
             'class'     => ['bstart'],
-            'type'      => 'text',
-            'maxlength' => '100',
+            'type'      => 'datetime-local',
             'value'     => $data['s_expire_1'] ?? null,
             'caption'   => 'Expire date label',
+            'step'      => '1',
         ];
         $fields['s_expire_2'] = [
             'class'     => ['bend'],
-            'type'      => 'text',
-            'maxlength' => '100',
+            'type'      => 'datetime-local',
             'value'     => $data['s_expire_2'] ?? null,
+            'step'      => '1',
         ];
         $fields[] = [
             'type' => 'endwrap',
@@ -288,11 +288,11 @@ class Bans extends Admin
             'value'     => $data['message'] ?? null,
         ];
         $fields['expire'] = [
-            'type'      => 'text',
-            'maxlength' => '100',
+            'type'      => 'datetime-local',
             'caption'   => 'Expire date label',
             'help'      => 'Expire date help',
             'value'     => $data['expire'] ?? null,
+            'step'      => '1',
         ];
         $form['sets']['ban-exp'] = [
             'legend' => 'Message expiry subhead',
@@ -333,7 +333,7 @@ class Bans extends Admin
                 $key   = $matches[2];
 
                 if (\is_string($value)) {
-                    $value = \strtotime($value . ' UTC');
+                    $value = $this->c->Func->dateToTime($value);
                 }
             } elseif (\is_string($value)) {
                 $type     = 'LIKE';
@@ -468,7 +468,7 @@ class Bans extends Admin
                 'class'   => empty($ban['expire']) ? ['result', 'expire', 'no-data'] : ['result', 'expire'],
                 'type'    => 'str',
                 'caption' => 'Results expire head',
-                'value'   => empty($ban['expire']) ? '' : dt($ban['expire'], true),
+                'value'   => empty($ban['expire']) ? '' : $this->c->Func->timeToDate($ban['expire']),
             ];
             $fields["l{$number}-message"] = [
                 'class'   => '' == $ban['message'] ? ['result', 'message', 'no-data'] : ['result', 'message'],
@@ -615,7 +615,7 @@ class Bans extends Admin
         }
 
         $ban           = $data[$id];
-        $ban['expire'] = empty($ban['expire']) ? '' : \date('Y-m-d', $ban['expire']);
+        $ban['expire'] = empty($ban['expire']) ? '' : $this->c->Func->timeToDate($ban['expire']);
         $userList      = [
             $this->c->users->create(['username' => $ban['username']]),
         ];
@@ -664,7 +664,7 @@ class Bans extends Admin
                 $action  = $isNew ? 'insert' : 'update';
                 $id      = $isNew ? null : $args['id'];
                 $message = (string) $v->message;
-                $expire  = empty($v->expire) ? 0 : \strtotime($v->expire . ' UTC');
+                $expire  = empty($v->expire) ? 0 : $this->c->Func->dateToTime($v->expire);
 
                 if ($this->banCount < 1) {
                     $userList = [false];
@@ -834,7 +834,7 @@ class Bans extends Admin
             null !== $expire
             && '' !== \trim($expire)
         ) {
-            if (\strtotime($expire . ' UTC') - \time() < 86400) {
+            if ($this->c->Func->dateToTime($expire) - \time() < 86400) {
                 $v->addError('Invalid date message');
             }
         }
