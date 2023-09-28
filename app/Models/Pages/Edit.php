@@ -492,6 +492,7 @@ class Edit extends Page
                             'caption'   => 'Posted',
                             'required'  => true,
                             'value'     => $data['posted'] ?? null,
+                            'step'      => '1',
                         ],
                         'confirm' => [
                             'type'      => 'checkbox',
