@@ -468,7 +468,7 @@ class Bans extends Admin
                 'class'   => empty($ban['expire']) ? ['result', 'expire', 'no-data'] : ['result', 'expire'],
                 'type'    => 'str',
                 'caption' => 'Results expire head',
-                'value'   => empty($ban['expire']) ? '' : $this->c->Func->timeToDate($ban['expire']),
+                'value'   => empty($ban['expire']) ? '' : dt($ban['expire']),
             ];
             $fields["l{$number}-message"] = [
                 'class'   => '' == $ban['message'] ? ['result', 'message', 'no-data'] : ['result', 'message'],
