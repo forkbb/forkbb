@@ -176,9 +176,10 @@ class Search extends Profile
                 $fields = [];
                 $fields["name{$forum->id}"] = [
                     'class'   => ['modforum', 'name', 'depth' . $forum->depth],
-                    'type'    => 'str',
+                    'type'    => 'label',
                     'value'   => $forum->forum_name,
                     'caption' => 'Forum label',
+                    'for'     => "follow[{$forum->id}]",
                 ];
                 $fields["follow[{$forum->id}]"] = [
                     'class'    => ['modforum', 'moderator'],

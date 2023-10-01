@@ -796,7 +796,8 @@ body,
   margin: 0.3125rem 0 0;
 }
 
-#fork .f-flblch {
+#fork .f-flblch,
+#fork .f-label {
   cursor: pointer;
 }
 

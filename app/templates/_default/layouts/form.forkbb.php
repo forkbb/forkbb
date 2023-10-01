@@ -26,7 +26,7 @@
             <dl id="id-dl-{{ $cur['id'] or $key }}" @if ($cur['class']) class="f-field-{{ \implode(' f-field-', $cur['class']) }}" @endif>
               <dt>
                     @if ($cur['caption'])
-                <label class="f-ycaption @if ($cur['required']) f-req @endif" @if (false === \strpos('.radio.yield.str.btn.link.', ".{$cur['type']}.")) for="id-{{ $key }}" @endif>{!! __($cur['caption']) !!}</label>
+                <label class="f-ycaption @if ($cur['required']) f-req @endif" @if (false === \strpos('.radio.yield.str.btn.link.label.', ".{$cur['type']}.")) for="id-{{ $key }}" @endif>{!! __($cur['caption']) !!}</label>
                     @endif
               </dt>
               <dd>
@@ -80,6 +80,9 @@
                             @break
                         @case ('str')
                 <p id="id-{{ $key }}" class="f-str"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</p>
+                            @break
+                        @case ('label')
+                <label id="id-{{ $key }}" class="f-label" for="id-{{ $cur['for'] }}"> @if ($cur['html']){!! $cur['value'] !!} @else{{ $cur['value'] }} @endif</label>
                             @break
                         @case ('yield')
                 @yield($cur['value'])
