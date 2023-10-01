@@ -132,9 +132,10 @@ class Mod extends Profile
                 $fields = [];
                 $fields["name{$forum->id}"] = [
                     'class'   => ['modforum', 'name', 'depth' . $forum->depth],
-                    'type'    => 'str',
+                    'type'    => 'label',
                     'value'   => $forum->forum_name,
                     'caption' => 'Forum label',
+                    'for'     => "moderator[{$forum->id}]",
                 ];
                 $fields["moderator[{$forum->id}]"] = [
                     'class'    => ['modforum', 'moderator'],
