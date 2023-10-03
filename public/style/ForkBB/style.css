@@ -2285,6 +2285,15 @@ body,
   inset-inline-start: 0;
 }
 
+#fork-modform .f-fs-modforum.f-fs-current {
+  font-weight: bolder;
+  font-style: italic;
+}
+
+#fork-modform .f-finform + .f-finform {
+  margin-top: 0.3125rem;
+}
+
 /*********/
 /* Поиск */
 /*********/
@@ -2980,7 +2989,8 @@ body,
   #fork-mod .f-btn[name="merge"] > span,
   #fork-mod .f-btn[name="split"] > span,
   #fork-mod .f-btn[name="stick"] > span,
-  #fork-mod .f-btn[name="unstick"] > span {
+  #fork-mod .f-btn[name="unstick"] > span,
+  #fork-mod .f-btn[name="link"] > span {
     display: none;
   }
 
@@ -3014,6 +3024,10 @@ body,
 
   #fork-mod .f-btn[name="unstick"]::before {
     content: "\f358";
+  }
+
+  #fork-mod .f-btn[name="link"]::before {
+    content: "\f0c1";
   }
 }
 

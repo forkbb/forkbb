@@ -290,3 +290,27 @@ msgstr "Вначале, пожалуйста, <a href=\"%s\">подтверди�
 
 msgid "Poll cannot be attached"
 msgstr "Тему с опросом нельзя прикрепить к другой теме."
+
+msgid "Link btn"
+msgstr "Перенапр."
+
+msgid "Only one topic is permissible"
+msgstr "Только одна тема должна быть выбрана для управления ссылками на неё."
+
+msgid "Control of redirects title"
+msgstr "Управление темами-ссылками"
+
+msgid "Need full topic for this operation"
+msgstr "Нужно выбрать полноценную тему для этой операции."
+
+msgid "Forum label"
+msgstr "Раздел"
+
+msgid "Redir label"
+msgstr "Установить тему для переадресации"
+
+msgid "Change btn"
+msgstr "Изменить"
+
+msgid "Redirects changed redirect"
+msgstr "Ссылающиеся темы изменены."

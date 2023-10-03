@@ -270,3 +270,27 @@ msgstr "First, please <a href=\"%s\">confirm</a> your email address."
 
 msgid "Poll cannot be attached"
 msgstr "Topic with a poll cannot be attached to another topic."
+
+msgid "Link btn"
+msgstr "Redirect"
+
+msgid "Only one topic is permissible"
+msgstr "Only one topic should be selected to manage links to it."
+
+msgid "Control of redirects title"
+msgstr "Control of redirects topics"
+
+msgid "Need full topic for this operation"
+msgstr "You need to choose a full-fledged topic for this operation."
+
+msgid "Forum label"
+msgstr "Forum"
+
+msgid "Redir label"
+msgstr "Set redirect topic"
+
+msgid "Change btn"
+msgstr "Change"
+
+msgid "Redirects changed redirect"
+msgstr "Redirects topics changed."

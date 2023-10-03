@@ -58,14 +58,14 @@ class Load extends Action
         ];
         $query = $this->getSql('t.id=?i:tid', true);
 
-        $data = $this->c->DB->query($query, $vars)->fetch();
+        $row = $this->c->DB->query($query, $vars)->fetch();
 
         // тема отсутствует или недоступна
-        if (empty($data)) {
+        if (empty($row)) {
             return null;
         }
 
-        $topic = $this->manager->create($data);
+        $topic = $this->manager->create($row);
         $forum = $topic->parent;
 
         if ($forum instanceof Forum) {
@@ -75,8 +75,6 @@ class Load extends Action
         } else {
             return null;
         }
-
-
     }
 
     /**
@@ -112,6 +110,38 @@ class Load extends Action
                 if (! empty($row['mf_mark_all_read'])) {
                     $topic->parent->__mf_mark_all_read = $row['mf_mark_all_read'];
                 }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Загружает список тем при открытие которых идет переадресация на тему c указанным id
+     */
+    public function loadLinks(int $id): array
+    {
+        if ($id < 1) {
+            throw new InvalidArgumentException('Expected a positive topic id');
+        }
+
+        $vars = [
+            ':id' => $id,
+        ];
+        $query = 'SELECT *
+            FROM ::topics
+            WHERE moved_to=?i:id
+            ORDER BY id';
+
+        $stmt = $this->c->DB->query($query, $vars);
+
+        $result = [];
+
+        while ($row = $stmt->fetch()) {
+            $topic = $this->manager->create($row);
+
+            if ($topic->parent instanceof Forum) {
+                $result[] = $topic;
             }
         }
 

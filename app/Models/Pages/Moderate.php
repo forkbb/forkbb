@@ -39,6 +39,7 @@ class Moderate extends Page
         'unstick' => self::INTOPIC + self::TOTOPIC,
         'stick'   => self::INTOPIC + self::TOTOPIC,
         'split'   => self::INTOPIC,
+        'link'    => self::INFORUM,
     ];
 
     public function __construct(Container $container)
@@ -128,6 +129,12 @@ class Moderate extends Page
                 && \count($v->ids) < 2
             ) {
                 $v->addError('Not enough topics selected');
+            // управление перенаправлениями
+            } elseif (
+                'link' === $action
+                && \count($v->ids) > 1
+            ) {
+                $v->addError('Only one topic is permissible');
             // перенос тем или разделение постов
             } elseif (
                 'move' === $action
@@ -171,6 +178,8 @@ class Moderate extends Page
                 'page'        => 'integer|min:1',
                 'ids'         => 'required|array',
                 'ids.*'       => 'required|integer|min:1|max:9999999999',
+                'forums'      => 'array',
+                'forums.*'    => 'integer|min:1|max:9999999999', // ????
                 'confirm'     => 'integer',
                 'redirect'    => 'integer',
                 'subject'     => 'string:trim,spaces|min:1|max:70',
@@ -184,6 +193,7 @@ class Moderate extends Page
                 'unstick'     => 'string',
                 'stick'       => 'string',
                 'split'       => 'string',
+                'link'        => 'string',
                 'action'      => 'action_process',
             ])->addAliases([
             ])->addArguments([
@@ -568,6 +578,157 @@ class Moderate extends Page
             default:
                 return $this->c->Message->message('Bad request');
         }
+    }
+
+    protected function actionLink(array $topics, Validator $v): Page
+    {
+        $topic = \array_pop($topics);
+
+        if ($topic->moved_to) {
+            return $this->c->Message->message('Need full topic for this operation');
+        }
+
+        $links = $this->c->topics->loadLinks($topic);
+        $ft    = [];
+
+        foreach ($links as $link) {
+            $ft[$link->parent->id][] = $link;
+        }
+
+        switch ($v->step) {
+            case 1:
+                $this->formTitle   = 'Control of redirects title';
+                $this->crumbs      = $this->crumbs($this->formTitle, 'Moderate', $this->curForum);
+                $this->form        = $this->formLinks($topic, $ft, $v);
+
+                return $this;
+            case 2:
+                $root = $this->c->forums->get(0);
+
+                if ($root instanceof Forum) {
+                    $selected = $v->forums ?: [];
+                    $delLinks = [];
+
+                    foreach ($this->c->forums->depthList($root, 0) as $forum) {
+                        if ('' != $forum->redirect_url) {
+                            continue;
+                        }
+
+                        // создать тему-перенаправление
+                        if (
+                            empty($ft[$forum->id])
+                            && \in_array($forum->id, $selected, true)
+                        ) {
+                            $rTopic            = $this->c->topics->create();
+                            $rTopic->poster    = $topic->poster;
+                            $rTopic->poster_id = $topic->poster_id;
+                            $rTopic->subject   = $topic->subject;
+                            $rTopic->posted    = $topic->posted;
+                            $rTopic->last_post = $topic->last_post;
+                            $rTopic->moved_to  = $topic->moved_to ?: $topic->id;
+                            $rTopic->forum_id  = $forum->id;
+
+                            $this->c->topics->insert($rTopic);
+                            $this->c->forums->update($forum->calcStat());
+                        // удалить тему(ы)-перенаправление
+                        } elseif (
+                            ! empty($ft[$forum->id])
+                            && ! \in_array($forum->id, $selected, true)
+                        ) {
+                            foreach ($ft[$forum->id] as $link) {
+                                $delLinks[] = $link;
+                            }
+                        }
+                    }
+
+                    if ($delLinks) {
+                        $this->c->topics->delete(...$delLinks);
+                    }
+                }
+
+                return $this->c->Redirect->url($topic->linkCrumbExt)->message('Redirects changed redirect', FORK_MESS_SUCC);
+            default:
+                return $this->c->Message->message('Bad request');
+        }
+    }
+
+    /**
+     * Подготавливает массив данных для формы управления переадресацией
+     */
+    protected function formLinks(Topic $topic, array $ft, Validator $v): array
+    {
+        $form = [
+            'action' => $this->c->Router->link('Moderate'),
+            'hidden' => [
+                'token'  => $this->c->Csrf->create('Moderate'),
+                'step'   => $v->step + 1,
+                'forum'  => $v->forum,
+                'ids'    => $v->ids,
+            ],
+            'sets' => [
+                'info' => [
+                    'inform' => [
+                        [
+                            'html' => __(['Topic «%s»', $topic->name]),
+                        ],
+                    ],
+                ],
+            ],
+            'btns' => [
+                'link' => [
+                    'type'  => 'submit',
+                    'value' => __('Change btn'),
+                ],
+                'cancel' => [
+                    'type'  => 'submit',
+                    'value' => __('Cancel'),
+                ],
+            ],
+        ];
+
+        $root = $this->c->forums->get(0);
+
+        if ($root instanceof Forum) {
+            $list = $this->c->forums->depthList($root, 0);
+            $cid  = null;
+
+            foreach ($list as $forum) {
+                if ($cid !== $forum->cat_id) {
+                    $form['sets']["category{$forum->cat_id}-info"] = [
+                        'inform' => [
+                            [
+                                'message' => $forum->cat_name,
+                            ],
+                        ],
+                    ];
+                    $cid = $forum->cat_id;
+                }
+
+                $fields = [];
+                $fields["name{$forum->id}"] = [
+                    'class'   => ['modforum', 'name', 'depth' . $forum->depth],
+                    'type'    => 'label',
+                    'value'   => $forum->forum_name,
+                    'caption' => 'Forum label',
+                    'for'     => "forums[{$forum->id}]",
+                ];
+                $fields["forums[{$forum->id}]"] = [
+                    'class'    => ['modforum', 'moderator'],
+                    'type'     => 'checkbox',
+                    'value'    => $forum->id,
+                    'checked'  => ! empty($ft[$forum->id]),
+                    'disabled' => '' != $forum->redirect_url,
+                    'caption'  => 'Redir label',
+                ];
+                $form['sets']["forum{$forum->id}"] = [
+                    'class'  => $topic->parent->id === $forum->id ? ['modforum', 'current'] : ['modforum'],
+                    'legend' => $forum->cat_name . ' / ' . $forum->forum_name,
+                    'fields' => $fields,
+                ];
+            }
+        }
+
+        return $form;
     }
 
     /**

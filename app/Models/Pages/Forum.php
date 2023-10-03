@@ -122,6 +122,11 @@ class Forum extends Page
                     'type'      => 'submit',
                     'value'     => __('Merge'),
                 ],
+                'link' => [
+                    'class'     => ['origin'],
+                    'type'      => 'submit',
+                    'value'     => __('Link btn'),
+                ],
             ],
         ];
 

@@ -37,6 +37,7 @@ class Topics extends Manager
             return $this->get($id);
         } else {
             $topic = $this->Load->load($id);
+
             $this->set($id, $topic);
 
             return $topic;
@@ -57,6 +58,7 @@ class Topics extends Manager
             } else {
                 $result[$id] = null;
                 $data[]      = $id;
+
                 $this->set($id, null);
             }
         }
@@ -68,6 +70,28 @@ class Topics extends Manager
         foreach ($this->Load->loadByIds($data, $full) as $topic) {
             if ($topic instanceof Topic) {
                 $result[$topic->id] = $topic;
+
+                $this->set($topic->id, $topic);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Получает список тем при открытие которых идет переадресация на текущую тему
+     */
+    public function loadLinks(int|Topic $arg): array
+    {
+        $id     = \is_int($arg) ? $arg : (int) $arg->id;
+        $result = [];
+
+        foreach ($this->Load->loadLinks($id) as $topic) {
+            if ($this->isset($topic->id)) {
+                $result[$topic->id] = $this->get($topic->id);
+            } else {
+                $result[$topic->id] = $topic;
+
                 $this->set($topic->id, $topic);
             }
         }
@@ -89,6 +113,7 @@ class Topics extends Manager
     public function insert(Topic $topic): int
     {
         $id = $this->Save->insert($topic);
+
         $this->set($id, $topic);
 
         return $id;
