@@ -175,7 +175,7 @@ class Moderate extends Page
                 'step'        => 'required|integer|min:1',
                 'forum'       => 'required|integer|min:1|max:9999999999',
                 'topic'       => 'integer|min:1|max:9999999999',
-                'page'        => 'integer|min:1',
+                'page'        => 'integer|min:1|max:9999999999',
                 'ids'         => 'required|array',
                 'ids.*'       => 'required|integer|min:1|max:9999999999',
                 'forums'      => 'array',
@@ -218,8 +218,6 @@ class Moderate extends Page
         ) {
             return $this->c->Message->message('No permission', true, 403);
         }
-
-        $page = $v->page ?? 1;
 
         if ($v->topic) {
             $this->curTopic = $this->c->topics->load($v->topic);
@@ -267,7 +265,7 @@ class Moderate extends Page
                 [
                     'id'   => $this->curTopic->id,
                     'name' => $this->curTopic->name,
-                    'page' => $page,
+                    'page' => $v->page,
                 ]
             );
         } else {
@@ -287,7 +285,7 @@ class Moderate extends Page
                 [
                     'id'   => $this->curForum->id,
                     'name' => $this->curForum->forum_name,
-                    'page' => $page,
+                    'page' => $v->page,
                 ]
             );
         }
@@ -401,9 +399,11 @@ class Moderate extends Page
                 if (1 === $v->confirm) {
                     if (true === $this->processAsPosts) {
                         $this->c->posts->delete(...$objects);
+
                         $message = 'Delete post redirect';
                     } else {
                         $this->c->topics->delete(...$objects);
+
                         $message = 'Delete topic redirect';
                     }
 
@@ -434,6 +434,7 @@ class Moderate extends Page
             case 2:
                 if (1 === $v->confirm) {
                     $forum = $this->c->forums->get($v->destination);
+
                     $this->c->topics->move(1 === $v->redirect, $forum, ...$topics);
 
                     return $this->c->Redirect->url($this->curForum->link)->message(['Move topic redirect', $this->numObj], FORK_MESS_SUCC);
@@ -509,6 +510,7 @@ class Moderate extends Page
                 if (1 === $v->confirm) {
                     foreach ($topics as $topic) {
                         $topic->sticky = 0;
+
                         $this->c->topics->update($topic);
                     }
 
@@ -539,6 +541,7 @@ class Moderate extends Page
                 if (1 === $v->confirm) {
                     foreach ($topics as $topic) {
                         $topic->sticky = 1;
+
                         $this->c->topics->update($topic);
                     }
 
@@ -567,8 +570,8 @@ class Moderate extends Page
                     $newTopic           = $this->c->topics->create();
                     $newTopic->subject  = $v->subject;
                     $newTopic->forum_id = $v->forum;
-                    $this->c->topics->insert($newTopic);
 
+                    $this->c->topics->insert($newTopic);
                     $this->c->posts->move(false, $newTopic, ...$posts);
 
                     return $this->c->Redirect->url($this->curForum->link)->message('Split posts redirect', FORK_MESS_SUCC);
@@ -743,6 +746,7 @@ class Moderate extends Page
                 'step'   => $v->step + 1,
                 'forum'  => $v->forum,
                 'ids'    => $v->ids,
+                'page'   => $v->page ?? 1,
             ],
             'sets' => [],
             'btns' => [],
