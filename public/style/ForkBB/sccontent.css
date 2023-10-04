@@ -212,6 +212,7 @@ a {
 }
 
 a:hover, a:focus {
+  color: var(--c-focus);
   background-color: var(--bg-focus);
 }
 
