@@ -399,18 +399,21 @@ class Routing
                 'Topic:viewPost',
                 'ViewPost'
             );
-            $r->add(
-                $r::DUO,
-                '/post/{id|i:[1-9]\d*}/edit',
-                'Edit:edit',
-                'EditPost'
-            );
-            $r->add(
-                $r::DUO,
-                '/post/{id|i:[1-9]\d*}/delete',
-                'Delete:delete',
-                'DeletePost'
-            );
+
+            if (! $user->isGuest) {
+                $r->add(
+                    $r::DUO,
+                    '/post/{id|i:[1-9]\d*}/edit',
+                    'Edit:edit',
+                    'EditPost'
+                );
+                $r->add(
+                    $r::DUO,
+                    '/post/{id|i:[1-9]\d*}/delete',
+                    'Delete:delete',
+                    'DeletePost'
+                );
+            }
 
             if ($user->isAdmin) {
                 $r->add(
