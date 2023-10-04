@@ -27,7 +27,7 @@ class View
     protected ?Compiler $compilerObj;
     protected string    $compilerClass = Compiler::class;
 
-    protected string $cache;
+    protected string $cacheDir;
     protected string $defaultDir;
     protected string $defaultHash;
 
@@ -40,11 +40,11 @@ class View
     public function __construct(string|array $config, mixed $views)
     {
         if (\is_array($config)) {
-            $this->cache      = $config['cache'];
+            $this->cacheDir   = $config['cache'];
             $this->defaultDir = $config['defaultDir'];
 
             if (! empty($config['userDir'])) {
-                $this->other[\hash('md5', $config['userDir'])] = [$config['userDir'], 10];
+                $this->addTplDir($config['userDir'], 10);
             }
 
             if (! empty($config['composers'])) {
@@ -58,11 +58,28 @@ class View
             }
         } else {
             // для rev. 68 и ниже
-            $this->cache       = $config;
-            $this->defaultDir  = $views;
+            $this->cacheDir   = $config;
+            $this->defaultDir = $views;
         }
 
         $this->defaultHash = \hash('md5', $this->defaultDir);
+    }
+
+    /**
+     * Добавляет новый каталог шаблонов $pathToDir.
+     * Сортирует список каталогов в соответствии с приоритетом $priority. По убыванию.
+     */
+    public function addTplDir(string $pathToDir, int $priority): View
+    {
+        $this->other[\hash('md5', $pathToDir)] = [$pathToDir, $priority];
+
+        if (\count($this->other) > 1) {
+            \uasort($this->other, function (array $a, array $b) {
+                return $b[1] <=> $a[1];
+            });
+        }
+
+        return $this;
     }
 
     /**
@@ -171,7 +188,7 @@ class View
 
         foreach ($this->other as $hash => $cur) {
             if (\file_exists($tpl = "{$cur[0]}/{$name}{$this->ext}")) {
-                $php = "{$this->cache}/_{$st}-{$hash}.php";
+                $php = "{$this->cacheDir}/_{$st}-{$hash}.php";
 
                 if (
                     ! \file_exists($php)
@@ -186,7 +203,7 @@ class View
 
         $hash = $this->defaultHash;
         $tpl  = "{$this->defaultDir}/{$name}{$this->ext}";
-        $php  = "{$this->cache}/_{$st}-{$hash}.php";
+        $php  = "{$this->cacheDir}/_{$st}-{$hash}.php";
 
         if (
             ! \file_exists($php)
