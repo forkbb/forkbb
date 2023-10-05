@@ -360,6 +360,10 @@ class Update extends Admin
 
             do {
                 if (\method_exists($this, 'stageNumber' . $stage)) {
+                    if (\function_exists('\\set_time_limit')) {
+                        \set_time_limit(0);
+                    }
+
                     $start = $this->{'stageNumber' . $stage}($args);
 
                     if (null === $start) {
