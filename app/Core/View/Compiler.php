@@ -65,7 +65,7 @@ class Compiler
         $pre = $this->preArray[$this->tplName] ?? null;
 
         return \preg_replace_callback(
-            '%[ \t]*+<!-- PRE (\w+) -->[ \t]*\r?\n?%',
+            '%^[ \t]*+<!-- PRE (\w+) -->[ \t]*(?:\r?\n)?%m',
             function($match) use ($pre) {
                 if (isset($pre[$match[1]])) {
                     return \rtrim($pre[$match[1]]) . "\n";
@@ -110,7 +110,7 @@ class Compiler
     {
         // {{! !}}
         $value = \preg_replace_callback(
-            '%(@)?\{\{!\s*(.+?)\s*!\}\}(\r?\n)?%s',
+            '%(@)?\{\{![ \t]*+(.+?)[ \t]*!\}\}(\r?\n)?%',
             function($matches) {
                 $whitespace = empty($matches[3]) ? '' : $matches[3] . $matches[3];
 
@@ -126,7 +126,7 @@ class Compiler
 
         // {!! !!}
         $value = \preg_replace_callback(
-            '%\{\!!\s*(.+?)\s*!!\}(\r?\n)?%s',
+            '%\{\!![ \t]*+(.+?)[ \t]*!!\}(\r?\n)?%',
             function($matches) {
                 $whitespace = empty($matches[2]) ? '' : $matches[2] . $matches[2];
 
@@ -140,7 +140,7 @@ class Compiler
 
         // {{ }}
         $value = \preg_replace_callback(
-            '%(@)?\{\{\s*(.+?)\s*\}\}(\r?\n)?%s',
+            '%(@)?\{\{(?!!)[ \t]*+(.+?)[ \t]*\}\}(\r?\n)?%',
             function($matches) {
                 $whitespace = empty($matches[3]) ? '' : $matches[3] . $matches[3];
 
