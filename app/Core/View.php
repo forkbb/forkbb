@@ -23,6 +23,7 @@ use RuntimeException;
 class View
 {
     protected string $ext = '.forkbb.php';
+    protected string $preFile = '';
 
     protected ?Compiler $compilerObj;
     protected string    $compilerClass = Compiler::class;
@@ -55,6 +56,10 @@ class View
 
             if (! empty($config['compiler'])) {
                 $this->compilerClass = $config['compiler'];
+            }
+
+            if (! empty($config['preFile'])) {
+                $this->preFile = $config['preFile'];
             }
         } else {
             // для rev. 68 и ниже
@@ -194,7 +199,7 @@ class View
                     ! \file_exists($php)
                     || \filemtime($tpl) > \filemtime($php)
                 ) {
-                    $this->create($php, $tpl);
+                    $this->create($php, $tpl, $name);
                 }
 
                 return $php;
@@ -209,7 +214,7 @@ class View
             ! \file_exists($php)
             || \filemtime($tpl) > \filemtime($php)
         ) {
-            $this->create($php, $tpl);
+            $this->create($php, $tpl, $name);
         }
 
         return $php;
@@ -228,13 +233,13 @@ class View
     /**
      * Генерирует $php файл на основе шаблона $tpl
      */
-    protected function create(string $php, string $tpl): void
+    protected function create(string $php, string $tpl, string $name): void
     {
         if (empty($this->compilerObj)) {
-            $this->compilerObj = new $this->compilerClass();
+            $this->compilerObj = new $this->compilerClass($this->preFile);
         }
 
-        $text = $this->compilerObj->create(\file_get_contents($tpl), \hash('fnv1a32', $tpl));
+        $text = $this->compilerObj->create($name, \file_get_contents($tpl), \hash('fnv1a32', $tpl));
 
         if (false === \file_put_contents($php, $text, \LOCK_EX)) {
             throw new RuntimeException("Failed to write {$php} file");

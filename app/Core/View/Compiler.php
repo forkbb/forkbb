@@ -22,29 +22,59 @@ class Compiler
 {
     protected string $shortID;
     protected int    $loopsCounter = 0;
-    protected array  $compilers    = [
+    protected array  $compilers = [
+        'PrePaste',
         'Statements',
         'Comments',
         'Echos',
         'Transformations',
     ];
+    protected array  $preArray = [];
+    protected string $tplName;
 
-    public function __construct()
+    public function __construct(string $preFile)
     {
+        if (
+            ! empty($preFile)
+            && \is_file($preFile)
+        ) {
+            $this->preArray = include $preFile;
+        }
     }
 
     /**
      * Генерирует php код на основе шаблона из $text
      */
-    public function create(string $text, string $hash): string
+    public function create(string $name, string $text, string $hash): string
     {
         $this->shortID = $hash;
+        $this->tplName = $name;
 
         foreach ($this->compilers as $type) {
             $text = $this->{'compile' . $type}($text);
         }
 
         return $text;
+    }
+
+    /**
+     * Обрабатывает предварительную подстановку кода в шаблон
+     */
+    protected function compilePrePaste(string $value): string
+    {
+        $pre = $this->preArray[$this->tplName] ?? null;
+
+        return \preg_replace_callback(
+            '%[ \t]*+<!-- PRE (\w+) -->[ \t]*\r?\n?%',
+            function($match) use ($pre) {
+                if (isset($pre[$match[1]])) {
+                    return \rtrim($pre[$match[1]]) . "\n";
+                } else {
+                    return '';
+                }
+            },
+            $value
+        );
     }
 
     /**
