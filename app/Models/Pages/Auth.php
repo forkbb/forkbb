@@ -206,7 +206,7 @@ class Auth extends Page
     /**
      * Проверка пользователя по базе
      */
-    public function vLoginCheck(Validator $v, #[SensitiveParameter] string $password ): string
+    public function vLoginCheck(Validator $v, #[SensitiveParameter] string $password): string
     {
         if (empty($v->getErrors())) {
             if ($this->loginWithForm) {

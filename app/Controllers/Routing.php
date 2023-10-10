@@ -97,18 +97,6 @@ class Routing
         }
 
         // OAuth
-        if (
-            $user->isAdmin
-            || 1 === $config->b_oauth_allow
-        ) {
-            $r->add(
-                $r::GET,
-                '/reglog/callback/{name}',
-                'RegLog:callback',
-                'RegLogCallback'
-            );
-        }
-
         if (1 === $config->b_oauth_allow) {
             $r->add(
                 $r::PST,
@@ -116,6 +104,15 @@ class Routing
                 'RegLog:redirect',
                 'RegLogRedirect'
             );
+
+            if ($user->isAdmin) {
+                $r->add(
+                    $r::GET,
+                    '/reglog/callback/{name}',
+                    'RegLog:callback',
+                    'RegLogCallback'
+                );
+            }
         }
 
         // просмотр разрешен
