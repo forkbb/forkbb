@@ -216,6 +216,16 @@ class View
     }
 
     /**
+     * Удаляет файлы кэша для шаблона $name
+     */
+    public function delete(string $name): void
+    {
+        $st = \preg_replace('%\W%', '-', $name);
+
+        \array_map('\\unlink', \glob("{$this->cacheDir}/_{$st}-*.php"));
+    }
+
+    /**
      * Генерирует $php файл на основе шаблона $tpl
      */
     protected function create(string $php, string $tpl): void
