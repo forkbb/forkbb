@@ -921,4 +921,22 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.69 to rev.70
+     */
+    protected function stageNumber69(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>%DIR_EXT%',
+            '\'%DIR_ROOT%/ext\'',
+            '%DIR_VIEWS%'
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }

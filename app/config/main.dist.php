@@ -84,6 +84,7 @@ return [
         '%DIR_LANG%'   => '%DIR_APP%/lang',
         '%DIR_LOG%'    => '%DIR_APP%/log',
         '%DIR_VIEWS%'  => '%DIR_APP%/templates',
+        '%DIR_EXT%'    => '%DIR_ROOT%/ext',
 
         'DB' => [
             'class' => \ForkBB\Core\DB::class,
