@@ -42,8 +42,7 @@ define('FORK_GEN_FEM', 2);
 
 define('FORK_JSON_ENCODE', \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR);
 
-require __DIR__ . '/../vendor/autoload.php';
-
+$loader       = require __DIR__ . '/../vendor/autoload.php';
 $errorHandler = new ErrorHandler();
 
 if (\is_file(__DIR__ . '/config/main.php')) {
@@ -53,6 +52,8 @@ if (\is_file(__DIR__ . '/config/main.php')) {
 } else {
     throw new RuntimeException('Application is not configured');
 }
+
+$c->autoloader = $loader;
 
 $errorHandler->setContainer($c);
 
