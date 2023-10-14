@@ -16,6 +16,7 @@ use Psr\SimpleCache\InvalidArgumentException;
 use DateInterval;
 use DateTime;
 use DateTimeZone;
+use FilesystemIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RegexIterator;
@@ -117,8 +118,9 @@ class FileCache implements CacheInterface
      */
     public function clear(): bool
     {
-        $dir      = new RecursiveDirectoryIterator($this->cacheDir, RecursiveDirectoryIterator::SKIP_DOTS);
-        $iterator = new RecursiveIteratorIterator($dir);
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($this->cacheDir, FilesystemIterator::SKIP_DOTS)
+        );
         $files    = new RegexIterator($iterator, '%\.(?:php|tmp)$%i', RegexIterator::MATCH);
         $result   = true;
 

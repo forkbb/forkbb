@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Core;
 
 use Psr\SimpleCache\CacheInterface;
+use FilesystemIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RegexIterator;
@@ -76,8 +77,9 @@ class LogViewer
 
     protected function getFileList(): array
     {
-        $dir      = new RecursiveDirectoryIterator($this->dir, RecursiveDirectoryIterator::SKIP_DOTS);
-        $iterator = new RecursiveIteratorIterator($dir);
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($this->dir, FilesystemIterator::SKIP_DOTS)
+        );
         $files    = new RegexIterator($iterator, $this->namePattern, RegexIterator::MATCH);
         $result   = [];
 
