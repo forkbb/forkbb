@@ -172,17 +172,17 @@ class Validator
                     }
                 }
 
+                if (
+                    'array' === $name
+                    && ! \is_array($rule)
+                ) {
+                    $rule = [];
+                }
+
                 $rules[$name] = $rule ?? '';
             }
 
             if (isset($suffix)) {
-                if (
-                    isset($this->rules[$field]['array'])
-                    && ! \is_array($this->rules[$field]['array'])
-                ) {
-                    $this->rules[$field]['array'] = [];
-                }
-
                 $this->rules[$field]['array'][$suffix] = $rules;
             } else {
                 $this->rules[$field] = $rules;
