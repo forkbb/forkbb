@@ -805,6 +805,18 @@ class Install extends Admin
         ];
         $this->c->DB->createTable('::config', $schema);
 
+        // extensions
+        $schema = [
+            'FIELDS' => [
+                'ext_name'   => ['VARCHAR(190)', false, ''],
+                'ext_status' => ['TINYINT', false, 0],
+                'ext_data'   => ['TEXT', false],
+            ],
+            'PRIMARY KEY' => ['ext_name'],
+            'ENGINE' => $this->DBEngine,
+        ];
+        $this->c->DB->createTable('::extensions', $schema);
+
         // forum_perms
         $schema = [
             'FIELDS' => [

@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.0.0';
     const REV_MIN_FOR_UPDATE         = 53;
-    const LATEST_REV_WITH_DB_CHANGES = 68;
+    const LATEST_REV_WITH_DB_CHANGES = 70;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const CONFIG_FILE                = 'main.php';
@@ -936,6 +936,18 @@ class Update extends Admin
         );
 
         $coreConfig->save();
+
+        // extensions
+        $schema = [
+            'FIELDS' => [
+                'ext_name'   => ['VARCHAR(190)', false, ''],
+                'ext_status' => ['TINYINT', false, 0],
+                'ext_data'   => ['TEXT', false],
+            ],
+            'PRIMARY KEY' => ['ext_name'],
+            'ENGINE' => $this->DBEngine,
+        ];
+        $this->c->DB->createTable('::extensions', $schema);
 
         return null;
     }
