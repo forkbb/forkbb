@@ -935,6 +935,24 @@ class Update extends Admin
             '%DIR_VIEWS%'
         );
 
+        $coreConfig->add(
+            'multiple=>ExtensionModel',
+            '\\ForkBB\\Models\\Extension\\Extension::class',
+            'DBMapModel'
+        );
+
+        $coreConfig->add(
+            'multiple=>ExtensionManager',
+            '\\ForkBB\\Models\\Extension\\Extensions::class',
+            'ExtensionModel'
+        );
+
+        $coreConfig->add(
+            'shared=>extensions',
+            '\'@ExtensionManager:init\'',
+            'attachments'
+        );
+
         $coreConfig->save();
 
         // extensions
@@ -945,7 +963,6 @@ class Update extends Admin
                 'ext_data'   => ['TEXT', false],
             ],
             'PRIMARY KEY' => ['ext_name'],
-            'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('::extensions', $schema);
 

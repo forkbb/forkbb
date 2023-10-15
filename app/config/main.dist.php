@@ -186,6 +186,7 @@ return [
         ],
         'providerUser'  => \ForkBB\Models\ProviderUser\ProviderUser::class,
         'attachments'   => \ForkBB\Models\Attachment\Attachments::class,
+        'extensions'    => '@ExtensionManager:init',
 
         'Csrf' => [
             'class'   => \ForkBB\Core\Csrf::class,
@@ -418,6 +419,8 @@ return [
         'CensorshipModel'   => \ForkBB\Models\Censorship\Censorship::class,
         'ConfigModel'       => \ForkBB\Models\Config\Config::class,
         'DBMapModel'        => \ForkBB\Models\DBMap\DBMap::class,
+        'ExtensionModel'    => \ForkBB\Models\Extension\Extension::class,
+        'ExtensionManager'  => \ForkBB\Models\Extension\Extensions::class,
         'ForumModel'        => \ForkBB\Models\Forum\Forum::class,
         'ForumManager'      => \ForkBB\Models\Forum\Forums::class,
         'GroupModel'        => \ForkBB\Models\Group\Group::class,
