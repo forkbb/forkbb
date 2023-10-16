@@ -33,7 +33,7 @@ class Groups extends Admin
         $notForNew     = [FORK_GROUP_ADMIN];
         $notForDefault = [FORK_GROUP_ADMIN, FORK_GROUP_MOD, FORK_GROUP_GUEST];
 
-        foreach ($this->c->groups->getList() as $key => $group) {
+        foreach ($this->c->groups->repository as $key => $group) {
             $groupsList[$key] = [$group->g_title, $group->linkEdit, $group->linkDelete];
 
             if (! \in_array($group->g_id, $notForNew, true)) {

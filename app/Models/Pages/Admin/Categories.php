@@ -85,7 +85,7 @@ class Categories extends Admin
             ],
         ];
 
-        foreach ($this->c->categories->getList() as $key => $row) {
+        foreach ($this->c->categories->repository as $key => $row) {
             $fields = [];
             $fields["form[{$key}][cat_name]"] = [
                 'class'     => ['name', 'category'],

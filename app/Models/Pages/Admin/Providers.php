@@ -92,7 +92,7 @@ class Providers extends Admin
             ],
         ];
 
-        foreach ($this->c->providers->init()->list() as $provider) {
+        foreach ($this->c->providers->init()->repository as $provider) {
             $fields = [];
             $fields["name-{$provider->name}"] = [
                 'class'   => ['name', 'provider'],

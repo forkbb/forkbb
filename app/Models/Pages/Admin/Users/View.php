@@ -27,7 +27,7 @@ class View extends Users
             0  => __('Unverified users'),
         ];
 
-        foreach ($this->c->groups->getList() as $group) {
+        foreach ($this->c->groups->repository as $group) {
             if (! $group->groupGuest) {
                 $groups[$group->g_id] = $group->g_title;
             }

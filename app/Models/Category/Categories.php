@@ -41,11 +41,6 @@ class Categories extends Manager
         return $this;
     }
 
-    public function getList(): array
-    {
-        return $this->repository;
-    }
-
     public function set($key, $value): Manager
     {
         if (! isset($value['cat_name'], $value['disp_position'])) {

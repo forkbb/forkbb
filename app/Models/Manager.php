@@ -50,7 +50,7 @@ class Manager
         $x = \ord($name);
 
         if ($x > 90 || $x < 65) {
-            return null;
+            return 'repository' === $name ? $this->repository : null;
         } else {
             $key = $this->cKey . '/' . \lcfirst($name);
 

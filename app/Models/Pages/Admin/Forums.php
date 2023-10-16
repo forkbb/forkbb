@@ -24,7 +24,7 @@ class Forums extends Admin
     protected function calcList(Forum $forum): void
     {
         $cid        = null;
-        $categories = $this->c->categories->getList();
+        $categories = $this->c->categories->repository;
         $options    = [
             ['', __('Not selected')],
         ];
