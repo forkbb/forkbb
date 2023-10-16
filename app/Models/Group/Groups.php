@@ -33,11 +33,6 @@ class Groups extends Manager
         return $this->c->GroupModel->setModelAttrs($attrs);
     }
 
-    public function getList(): array
-    {
-        return $this->repository;
-    }
-
     /**
      * Загрузка списка групп
      */

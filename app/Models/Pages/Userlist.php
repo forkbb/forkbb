@@ -27,7 +27,7 @@ class Userlist extends Page
             'all' => __('All users'),
         ];
 
-        foreach ($this->c->groups->getList() as $group) {
+        foreach ($this->c->groups->repository as $group) {
             if (! $group->groupGuest) {
                 $list[$group->g_id] = $group->g_title;
             }

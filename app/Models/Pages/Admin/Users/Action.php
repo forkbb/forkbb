@@ -220,7 +220,7 @@ class Action extends Users
     {
         $list = [];
 
-        foreach ($this->c->groups->getList() as $id => $group) {
+        foreach ($this->c->groups->repository as $id => $group) {
                 $list[$id] = $group->g_title;
         }
 

@@ -84,14 +84,6 @@ class Providers extends Manager
     }
 
     /**
-     * Возращает список созданных провайдеров
-     */
-    public function list(): array
-    {
-        return $this->repository;
-    }
-
-    /**
      * Возращает список имён активных провайдеров
      */
     public function active(): array
