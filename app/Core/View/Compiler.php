@@ -171,7 +171,7 @@ class Compiler
 
 declare(strict_types=1);
 
-use function \ForkBB\{__, num, dt, size};
+use function \ForkBB\{__, num, dt, size, url};
 
 ?>
 EOD;
