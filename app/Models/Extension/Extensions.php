@@ -38,6 +38,10 @@ class Extensions extends Manager
 
         $this->fromList($this->prepare($list));
 
+        \uasort($this->repository, function (Extension $a, Extension $b) {
+            return $a->dispalyName <=> $b->dispalyName;
+        });
+
         return $this;
     }
 
@@ -122,7 +126,7 @@ class Extensions extends Manager
                 'require'            => 'required|array',
                 'extra'              => 'required|array',
                 'extra.display-name' => 'required|string',
-                'extra.require'      => 'array',
+                'extra.requirements' => 'array',
             ])->addAliases([
             ])->addArguments([
             ])->addMessages([
