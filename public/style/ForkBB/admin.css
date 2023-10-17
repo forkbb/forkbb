@@ -1,5 +1,5 @@
 #forka {
-  --c-log-in-c: hsl(220,5%,12%);
+  --c-log-in-c: hsl(0,0%,0%);
 }
 
 /******************/
@@ -1056,9 +1056,9 @@
   text-align: center;
 }
 
-#fork #fork-logview summary.f-lgsu {
+/*#fork #fork-logview summary.f-lgsu {
   margin: 0;
-}
+}*/
 
 #fork #fork-logview summary.f-lgsu::after {
   content: none;
@@ -1268,4 +1268,62 @@
     display: block;
     width: 100%;
   }
+}
+
+/****************************************/
+/* Админка/РАсширения                   */
+/****************************************/
+#fork #fork-extsinfo summary.f-extsu::after {
+  content: none;
+}
+
+#fork-extsinfo .f-extli:first-child {
+  border-top: 0.0625rem dotted var(--br-fprimary);
+}
+
+#fork-extsinfo .f-extli {
+  border-bottom: 0.0625rem dotted var(--br-fprimary);
+  padding: 0.625rem;
+}
+
+#fork-extsinfo .f-extsu {
+  display: block;
+}
+
+#fork-extsinfo .f-extdata {
+  color: var(--c-fprimary);
+  border: 0.0625rem solid var(--br-fprimary);
+  padding: 0.3125rem;
+}
+
+#fork-extsinfo .f-extdd-author {
+  width: 100%;
+}
+
+#fork-extsinfo .f-ext-status0 {
+  color: var(--c-log-in-c);
+  background-color: #90CAF9;
+}
+
+#fork-extsinfo .f-ext-status4,
+#fork-extsinfo .f-ext-status5,
+#fork-extsinfo .f-ext-status6 {
+  color: var(--c-log-in-c);
+  background-color: #1976D2;
+}
+
+#fork-extsinfo .f-ext-status8 {
+  color: var(--c-log-in-c);
+  background-color: #4CAF50;
+}
+
+#fork-extsinfo .f-ext-status9,
+#fork-extsinfo .f-ext-status10 {
+  color: var(--c-log-in-c);
+  background-color: #FF5722;
+}
+
+#fork-extsinfo .f-ext-status12 {
+  color: var(--c-log-in-c);
+  background-color: #B71C1C;
 }

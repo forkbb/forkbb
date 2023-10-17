@@ -411,6 +411,7 @@ return [
         'AdminLogs'          => \ForkBB\Models\Pages\Admin\Logs::class,
         'AdminUploads'       => \ForkBB\Models\Pages\Admin\Uploads::class,
         'AdminAntispam'      => \ForkBB\Models\Pages\Admin\Antispam::class,
+        'AdminExtensions'    => \ForkBB\Models\Pages\Admin\Extensions::class,
 
         'AdminListModel'    => \ForkBB\Models\AdminList\AdminList::class,
         'BanListModel'      => \ForkBB\Models\BanList\BanList::class,

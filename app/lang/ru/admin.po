@@ -86,3 +86,6 @@ msgstr "Антиспам"
 
 msgid "Maintenance only"
 msgstr "Доступно только в режиме обслуживания."
+
+msgid "Extensions"
+msgstr "Расширения"

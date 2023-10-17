@@ -953,6 +953,12 @@ class Update extends Admin
             'attachments'
         );
 
+        $coreConfig->add(
+            'multiple=>AdminExtensions',
+            '\\ForkBB\\Models\\Pages\\Admin\\Extensions::class',
+            'AdminAntispam'
+        );
+
         $coreConfig->save();
 
         // extensions
