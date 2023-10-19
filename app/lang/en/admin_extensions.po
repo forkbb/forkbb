@@ -13,7 +13,7 @@ msgstr ""
 "Language: en\n"
 
 msgid "Details"
-msgstr "Details"
+msgstr "Details:"
 
 msgid "Name"
 msgstr "Name of package"
@@ -31,10 +31,10 @@ msgid "Licence"
 msgstr "Licence"
 
 msgid "Requirements"
-msgstr "Requirements"
+msgstr "Requirements:"
 
 msgid "Authors"
-msgstr "Author(s)"
+msgstr "Author(s):"
 
 msgid "php"
 msgstr "PHP version"
@@ -59,3 +59,30 @@ msgstr "Enabled, but package changed!"
 
 msgid "Crash"
 msgstr "Crash, package not found!"
+
+msgid "Install_"
+msgstr "Install"
+
+msgid "Uninstall_"
+msgstr "Uninstall"
+
+msgid "Enable_"
+msgstr "Enable"
+
+msgid "Disable_"
+msgstr "Disable"
+
+msgid "Update_"
+msgstr "Update"
+
+msgid "Downdate_"
+msgstr "Downdate"
+
+msgid "Package version"
+msgstr "Package version"
+
+msgid "Extension not found"
+msgstr "Extension not found."
+
+msgid "Invalid action"
+msgstr "Invalid action."

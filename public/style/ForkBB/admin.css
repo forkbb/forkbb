@@ -410,7 +410,7 @@
 /* Админка/Пользователи */
 /************************/
 #fork-ausersrch-rs .f-btns {
-  text-align: end;
+  justify-content: flex-end;
 }
 
 #fork-ausersrch-rs .f-btns .f-fbtn,
@@ -1273,7 +1273,7 @@
 /****************************************/
 /* Админка/РАсширения                   */
 /****************************************/
-#fork #fork-extsinfo summary.f-extsu::after {
+#forka #fork-extsinfo summary.f-extsu::after {
   content: none;
 }
 
@@ -1325,5 +1325,13 @@
 
 #fork-extsinfo .f-ext-status12 {
   color: var(--c-log-in-c);
-  background-color: #B71C1C;
+  background-color: #D32F2F;
+}
+
+#forka #fork-extsinfo .f-fbtn {
+  width: auto;
+}
+
+#forka .f-fbtn[data-name="uninstall"]:not(.origin) {
+  color: red;
 }

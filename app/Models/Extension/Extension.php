@@ -39,6 +39,11 @@ class Extension extends Model
         return $this->dbData['version'] ?? $this->fileData['version'];
     }
 
+    protected function getfileVersion(): string
+    {
+        return $this->fileData['version'] ?? '-';
+    }
+
     protected function getname(): string
     {
         return $this->dbData['name'] ?? $this->fileData['name'];
@@ -101,5 +106,35 @@ class Extension extends Model
             default:
                 throw new RuntimeException("Error in {$this->name} extension status");
         }
+    }
+
+    protected function getcanInstall(): bool
+    {
+        return self::NOT_INSTALLED === $this->status;
+    }
+
+    protected function getcanUninstall(): bool
+    {
+        return \in_array($this->status, [self::DISABLED, self::DISABLED_DOWN, self::DISABLED_UP], true);
+    }
+
+    protected function getcanUpdate(): bool
+    {
+        return \in_array($this->status, [self::DISABLED_UP, self::ENABLED_UP], true);
+    }
+
+    protected function getcanDowndate(): bool
+    {
+        return \in_array($this->status, [self::DISABLED_DOWN, self::ENABLED_DOWN], true);
+    }
+
+    protected function getcanEnable(): bool
+    {
+        return self::DISABLED === $this->status;
+    }
+
+    protected function getcanDisable(): bool
+    {
+        return \in_array($this->status, [self::ENABLED, self::ENABLED_DOWN, self::ENABLED_UP, self::CRASH], true);
     }
 }

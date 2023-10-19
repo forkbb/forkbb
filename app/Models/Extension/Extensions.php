@@ -106,7 +106,8 @@ class Extensions extends Manager
      */
     protected function prepare(array $files): array
     {
-        $v = $this->c->Validator->reset()
+        $v = clone $this->c->Validator;
+        $v = $v->reset()
             ->addValidators([
             ])->addRules([
                 'name'               => 'required|string',

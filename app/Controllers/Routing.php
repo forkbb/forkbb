@@ -839,7 +839,7 @@ class Routing
                 'AdminAntispam'
             );
             $r->add(
-                $r::GET,
+                $r::DUO,
                 '/admin/extensions',
                 'AdminExtensions:info',
                 'AdminExtensions'

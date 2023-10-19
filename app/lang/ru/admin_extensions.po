@@ -13,7 +13,7 @@ msgstr ""
 "Language: ru\n"
 
 msgid "Details"
-msgstr "Подробности"
+msgstr "Подробности:"
 
 msgid "Name"
 msgstr "Имя пакета"
@@ -31,10 +31,10 @@ msgid "Licence"
 msgstr "Лицензия"
 
 msgid "Requirements"
-msgstr "Требования"
+msgstr "Требования:"
 
 msgid "Authors"
-msgstr "Автор(ы)"
+msgstr "Автор(ы):"
 
 msgid "php"
 msgstr "Версия PHP"
@@ -59,3 +59,30 @@ msgstr "Включено, но пакет изменен!"
 
 msgid "Crash"
 msgstr "Сломано, пакет не найден!"
+
+msgid "Install_"
+msgstr "Установить"
+
+msgid "Uninstall_"
+msgstr "Удалить"
+
+msgid "Enable_"
+msgstr "Включить"
+
+msgid "Disable_"
+msgstr "Выключить"
+
+msgid "Update_"
+msgstr "Обновить"
+
+msgid "Downdate_"
+msgstr "Откатить"
+
+msgid "Package version"
+msgstr "Версия пакета"
+
+msgid "Extension not found"
+msgstr "Расширение не найдено."
+
+msgid "Invalid action"
+msgstr "Недопустимое действие."
