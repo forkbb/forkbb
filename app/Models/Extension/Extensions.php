@@ -35,10 +35,8 @@ class Extensions extends Manager
      */
     protected string|array $error = '';
 
-    /**
-     * Путь до файла, который содержит данные из всех установленных расширений
-     */
     protected string $commonFile;
+    protected string $preFile;
 
     /**
      * Возвращает action (или свойство) по его имени
@@ -54,6 +52,7 @@ class Extensions extends Manager
     public function init(): Extensions
     {
         $this->commonFile = $this->c->DIR_CONFIG . '/ext/common.php';
+        $this->preFile    = $this->c->DIR_CONFIG . '/ext/pre.php';
 
         $this->fromDB();
 
@@ -237,6 +236,8 @@ class Extensions extends Manager
 
         $this->updateCommon($ext);
 
+        $this->updateIndividual();
+
         return true;
     }
 
@@ -250,6 +251,8 @@ class Extensions extends Manager
 
             return false;
         }
+
+        $oldStatus = $ext->dbStatus;
 
         $vars = [
             ':name' => $ext->name,
@@ -269,6 +272,10 @@ class Extensions extends Manager
 
         $this->updateCommon($ext);
 
+        if ($oldStatus) {
+            $this->updateIndividual();
+        }
+
         return true;
     }
 
@@ -283,7 +290,8 @@ class Extensions extends Manager
             return false;
         }
 
-        $result = $ext->prepare();
+        $oldStatus = $ext->dbStatus;
+        $result    = $ext->prepare();
 
         if (true !== $result) {
             $this->error = $result;
@@ -308,6 +316,10 @@ class Extensions extends Manager
         ]);
 
         $this->updateCommon($ext);
+
+        if ($oldStatus) {
+            $this->updateIndividual();
+        }
 
         return true;
     }
@@ -323,7 +335,8 @@ class Extensions extends Manager
             return false;
         }
 
-        $result = $ext->prepare();
+        $oldStatus = $ext->dbStatus;
+        $result    = $ext->prepare();
 
         if (true !== $result) {
             $this->error = $result;
@@ -348,6 +361,10 @@ class Extensions extends Manager
         ]);
 
         $this->updateCommon($ext);
+
+        if ($oldStatus) {
+            $this->updateIndividual();
+        }
 
         return true;
     }
@@ -378,6 +395,8 @@ class Extensions extends Manager
             'fileData' => $ext->fileData,
         ]);
 
+        $this->updateIndividual();
+
         return true;
     }
 
@@ -407,7 +426,21 @@ class Extensions extends Manager
             'fileData' => $ext->fileData,
         ]);
 
+        $this->updateIndividual();
+
         return true;
+    }
+
+    /**
+     * Возвращает данные из файла с общими данными по расширениям
+     */
+    protected function loadDataFromFile(string $file): array
+    {
+        if (\is_file($file)) {
+            return include $file;
+        } else {
+            return [];
+        }
     }
 
     /**
@@ -415,11 +448,7 @@ class Extensions extends Manager
      */
     protected function updateCommon(Extension $ext): bool
     {
-        if (\is_file($this->commonFile)) {
-            $data = include $this->commonFile;
-        } else {
-            $data = [];
-        }
+        $data = $this->loadDataFromFile($this->commonFile);
 
         if ($ext::NOT_INSTALLED === $ext->status) {
             unset($data[$ext->name]);
@@ -448,5 +477,82 @@ class Extensions extends Manager
 
             return true;
         }
+    }
+
+    /**
+     * Обновляет индивидуальные файлы с данными по расширениям
+     */
+    protected function updateIndividual(): bool
+    {
+        $oldPre     = $this->loadDataFromFile($this->preFile);
+        $templates  = [];
+        $commonData = $this->loadDataFromFile($this->commonFile);
+        $pre        = [];
+        $newPre     = [];
+
+        // выделение данных
+        foreach ($this->repository as $ext) {
+            if (1 !== $ext->dbStatus) {
+                continue;
+            }
+
+            if (isset($commonData[$ext->name]['templates']['pre'])) {
+                $pre = \array_merge_recursive($pre, $commonData[$ext->name]['templates']['pre']);
+            }
+        }
+
+        // PRE-данные шаблонов
+        foreach ($pre as $template => $names) {
+            $templates[$template] = $template;
+
+            foreach ($names as $name => $list) {
+                \uasort($list, function (array $a, array $b) {
+                    return $b['priority'] <=> $a['priority'];
+                });
+
+                $result = '';
+
+                foreach ($list as $value) {
+                    $result .= $value['data'];
+                }
+
+                $newPre[$template][$name] = $result;
+            }
+        }
+
+        $this->putData($this->preFile, $newPre);
+
+        // удаление скомпилированных шаблонов
+        foreach (\array_merge($this->diffPre($oldPre, $newPre), $this->diffPre($newPre, $oldPre)) as $template) {
+            $this->c->View->delete($template);
+        }
+
+        return true;
+    }
+
+    protected function diffPre(array $a, array $b): array
+    {
+        $result = [];
+
+        foreach ($a as $template => $names) {
+            if (! isset($b[$template])) {
+                $result[$template] = $template;
+
+                continue;
+            }
+
+            foreach ($names as $name => $value) {
+                if (
+                    ! isset($b[$template][$name])
+                    || $value !== $b[$template][$name]
+                ) {
+                    $result[$template] = $template;
+
+                    continue 2;
+                }
+            }
+        }
+
+        return $result;
     }
 }
