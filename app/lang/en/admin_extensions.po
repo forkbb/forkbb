@@ -86,3 +86,30 @@ msgstr "Extension not found."
 
 msgid "Invalid action"
 msgstr "Invalid action."
+
+msgid "Redirect install"
+msgstr "The extension is installed."
+
+msgid "Redirect uninstall"
+msgstr "The extension has been uninstalled."
+
+msgid "Redirect update"
+msgstr "The extension has been updated."
+
+msgid "Redirect downdate"
+msgstr "The extension version has been downgraded."
+
+msgid "Redirect enable"
+msgstr "The extension is enabled."
+
+msgid "Redirect disable"
+msgstr "The extension is disabled."
+
+msgid "Invalid template type"
+msgstr "Invalid template type."
+
+msgid "PRE name not found"
+msgstr "PRE name not found."
+
+msgid "Template file '%s' not found"
+msgstr "Template file '%s' not found."

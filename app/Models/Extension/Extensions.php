@@ -25,13 +25,36 @@ class Extensions extends Manager
      */
     protected string $cKey = 'Extensions';
 
+    /**
+     * Список отсканированных папок
+     */
     protected array $folders = [];
+
+    /**
+     * Текст ошибки
+     */
+    protected string|array $error = '';
+
+    /**
+     * Путь до файла, который содержит данные из всех установленных расширений
+     */
+    protected string $commonFile;
+
+    /**
+     * Возвращает action (или свойство) по его имени
+     */
+    public function __get(string $name): mixed
+    {
+        return 'error' === $name ? $this->error : parent::__get($name);
+    }
 
     /**
      * Инициализирует менеджер
      */
     public function init(): Extensions
     {
+        $this->commonFile = $this->c->DIR_CONFIG . '/ext/common.php';
+
         $this->fromDB();
 
         $list = $this->scan($this->c->DIR_EXT);
@@ -110,24 +133,30 @@ class Extensions extends Manager
         $v = $v->reset()
             ->addValidators([
             ])->addRules([
-                'name'               => 'required|string',
-                'type'               => 'required|string|in:forkbb-extension',
-                'description'        => 'required|string',
-                'homepage'           => 'string',
-                'version'            => 'required|string',
-                'time'               => 'string',
-                'license'            => 'string',
-                'authors'            => 'required|array',
-                'authors.*.name'     => 'required|string',
-                'authors.*.email'    => 'string',
-                'authors.*.homepage' => 'string',
-                'authors.*.role'     => 'string',
-                'autoload.psr-4'     => 'required|array',
-                'autoload.psr-4.*'   => 'required|string',
-                'require'            => 'required|array',
-                'extra'              => 'required|array',
-                'extra.display-name' => 'required|string',
-                'extra.requirements' => 'array',
+                'name'                       => 'required|string',
+                'type'                       => 'required|string|in:forkbb-extension',
+                'description'                => 'required|string',
+                'homepage'                   => 'string',
+                'version'                    => 'required|string',
+                'time'                       => 'string',
+                'license'                    => 'string',
+                'authors'                    => 'required|array',
+                'authors.*.name'             => 'required|string',
+                'authors.*.email'            => 'string',
+                'authors.*.homepage'         => 'string',
+                'authors.*.role'             => 'string',
+                'autoload.psr-4'             => 'required|array',
+                'autoload.psr-4.*'           => 'required|string',
+                'require'                    => 'required|array',
+                'extra'                      => 'required|array',
+                'extra.display-name'         => 'required|string',
+                'extra.requirements'         => 'array',
+                'extra.templates'            => 'array',
+                'extra.templates.*.type'     => 'required|string|in:pre',
+                'extra.templates.*.template' => 'required|string',
+                'extra.templates.*.name'     => 'string',
+                'extra.templates.*.priority' => 'integer',
+                'extra.templates.*.file'     => 'string',
             ])->addAliases([
             ])->addArguments([
             ])->addMessages([
@@ -168,6 +197,256 @@ class Extensions extends Manager
             } else {
                 $model->setModelAttr('fileData', $data);
             }
+        }
+    }
+
+    /**
+     * Устанавливает расширение
+     */
+    public function install(Extension $ext): bool
+    {
+        if (true !== $ext->canInstall) {
+            $this->error = 'Invalid action';
+
+            return false;
+        }
+
+        $result = $ext->prepare();
+
+        if (true !== $result) {
+            $this->error = $result;
+
+            return false;
+        }
+
+        $vars = [
+            ':name' => $ext->name,
+            ':data' => \json_encode($ext->fileData, FORK_JSON_ENCODE),
+        ];
+        $query = 'INSERT INTO ::extensions (ext_name, ext_status, ext_data)
+            VALUES(?s:name, 1, ?s:data)';
+
+        $this->c->DB->exec($query, $vars);
+
+        $ext->setModelAttrs([
+            'name'     => $ext->name,
+            'dbStatus' => 1,
+            'dbData'   => $ext->fileData,
+            'fileData' => $ext->fileData,
+        ]);
+
+        $this->updateCommon($ext);
+
+        return true;
+    }
+
+    /**
+     * Удаляет расширение
+     */
+    public function uninstall(Extension $ext): bool
+    {
+        if (true !== $ext->canUninstall) {
+            $this->error = 'Invalid action';
+
+            return false;
+        }
+
+        $vars = [
+            ':name' => $ext->name,
+        ];
+        $query = 'DELETE
+            FROM ::extensions
+            WHERE ext_name=?s:name';
+
+        $this->c->DB->exec($query, $vars);
+
+        $ext->setModelAttrs([
+            'name'     => $ext->name,
+            'dbStatus' => null,
+            'dbData'   => null,
+            'fileData' => $ext->fileData,
+        ]);
+
+        $this->updateCommon($ext);
+
+        return true;
+    }
+
+    /**
+     * Обновляет расширение
+     */
+    public function update(Extension $ext): bool
+    {
+        if (true !== $ext->canUpdate) {
+            $this->error = 'Invalid action';
+
+            return false;
+        }
+
+        $result = $ext->prepare();
+
+        if (true !== $result) {
+            $this->error = $result;
+
+            return false;
+        }
+
+        $vars = [
+            ':name' => $ext->name,
+            ':data' => \json_encode($ext->fileData, FORK_JSON_ENCODE),
+        ];
+        $query = 'UPDATE ::extensions SET ext_data=?s:data
+            WHERE ext_name=?s:name';
+
+        $this->c->DB->exec($query, $vars);
+
+        $ext->setModelAttrs([
+            'name'     => $ext->name,
+            'dbStatus' => $ext->dbStatus,
+            'dbData'   => $ext->fileData,
+            'fileData' => $ext->fileData,
+        ]);
+
+        $this->updateCommon($ext);
+
+        return true;
+    }
+
+    /**
+     * Обновляет расширение
+     */
+    public function downdate(Extension $ext): bool
+    {
+        if (true !== $ext->canDowndate) {
+            $this->error = 'Invalid action';
+
+            return false;
+        }
+
+        $result = $ext->prepare();
+
+        if (true !== $result) {
+            $this->error = $result;
+
+            return false;
+        }
+
+        $vars = [
+            ':name' => $ext->name,
+            ':data' => \json_encode($ext->fileData, FORK_JSON_ENCODE),
+        ];
+        $query = 'UPDATE ::extensions SET ext_data=?s:data
+            WHERE ext_name=?s:name';
+
+        $this->c->DB->exec($query, $vars);
+
+        $ext->setModelAttrs([
+            'name'     => $ext->name,
+            'dbStatus' => $ext->dbStatus,
+            'dbData'   => $ext->fileData,
+            'fileData' => $ext->fileData,
+        ]);
+
+        $this->updateCommon($ext);
+
+        return true;
+    }
+
+    /**
+     * Включает расширение
+     */
+    public function enable(Extension $ext): bool
+    {
+        if (true !== $ext->canEnable) {
+            $this->error = 'Invalid action';
+
+            return false;
+        }
+
+        $vars = [
+            ':name' => $ext->name,
+        ];
+        $query = 'UPDATE ::extensions SET ext_status=1
+            WHERE ext_name=?s:name';
+
+        $this->c->DB->exec($query, $vars);
+
+        $ext->setModelAttrs([
+            'name'     => $ext->name,
+            'dbStatus' => 1,
+            'dbData'   => $ext->dbData,
+            'fileData' => $ext->fileData,
+        ]);
+
+        return true;
+    }
+
+    /**
+     * Выключает расширение
+     */
+    public function disable(Extension $ext): bool
+    {
+        if (true !== $ext->canDisable) {
+            $this->error = 'Invalid action';
+
+            return false;
+        }
+
+        $vars = [
+            ':name' => $ext->name,
+        ];
+        $query = 'UPDATE ::extensions SET ext_status=0
+            WHERE ext_name=?s:name';
+
+        $this->c->DB->exec($query, $vars);
+
+        $ext->setModelAttrs([
+            'name'     => $ext->name,
+            'dbStatus' => 0,
+            'dbData'   => $ext->dbData,
+            'fileData' => $ext->fileData,
+        ]);
+
+        return true;
+    }
+
+    /**
+     * Обновляет файл с общими данными по расширениям
+     */
+    protected function updateCommon(Extension $ext): bool
+    {
+        if (\is_file($this->commonFile)) {
+            $data = include $this->commonFile;
+        } else {
+            $data = [];
+        }
+
+        if ($ext::NOT_INSTALLED === $ext->status) {
+            unset($data[$ext->name]);
+        } else {
+            $data[$ext->name] = $ext->prepareData();
+        }
+
+        return $this->putData($this->commonFile, $data);
+    }
+
+    /**
+     * Записывает данные в указанный файл
+     */
+    protected function putData(string $file, mixed $data): bool
+    {
+        $content = "<?php\n\nreturn " . \var_export($data, true) . ";\n";
+
+        if (false === \file_put_contents($file, $content, \LOCK_EX)) {
+            return false;
+        } else {
+            if (\function_exists('\\opcache_invalidate')) {
+                \opcache_invalidate($file, true);
+            } elseif (\function_exists('\\apc_delete_file')) {
+                \apc_delete_file($file);
+            }
+
+            return true;
         }
     }
 }

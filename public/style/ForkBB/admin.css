@@ -110,6 +110,7 @@
 
 #forka .f-fleg {
   margin-bottom: 0.3125rem;
+  background: linear-gradient(var(--bg-like-nav), var(--bg-fprimary), var(--bg-like-nav));
 }
 
 #forka .f-flblch {

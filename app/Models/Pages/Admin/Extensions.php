@@ -77,13 +77,10 @@ class Extensions extends Admin
             return $this->c->Message->message('Invalid action');
         }
 
-        $property = 'can' . \ucfirst($action);
-
-        if (true !== $ext->{$property}) {
-            return $this->c->Message->message('Invalid action');
+        if (true !== $this->c->extensions->{$action}($ext)) {
+            return $this->c->Message->message($this->c->extensions->error);
         }
 
-        exit(var_dump('<pre>', $_POST, '</pre>'));
-
+        return $this->c->Redirect->page('AdminExtensions')->message("Redirect {$action}", FORK_MESS_SUCC);
     }
 }

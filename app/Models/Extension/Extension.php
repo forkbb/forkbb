@@ -29,6 +29,8 @@ class Extension extends Model
      */
     protected string $cKey = 'Extension';
 
+    protected array $prepareData;
+
     protected function getdispalyName(): string
     {
         return $this->dbData['extra']['display-name'] ?? $this->fileData['extra']['display-name'];
@@ -136,5 +138,47 @@ class Extension extends Model
     protected function getcanDisable(): bool
     {
         return \in_array($this->status, [self::ENABLED, self::ENABLED_DOWN, self::ENABLED_UP, self::CRASH], true);
+    }
+
+    public function prepare(): bool|string|array
+    {
+        $this->prepareData = [];
+
+        if ($this->fileData['extra']['templates']) {
+            foreach ($this->fileData['extra']['templates'] as $cur) {
+                switch($cur['type']) {
+                    case 'pre':
+                        if (empty($cur['name'])) {
+                            return 'PRE name not found';
+                        } elseif (empty($cur['file'])) {
+                            return ['Template file \'%s\' not found', $cur['file']];
+                        }
+
+                        $path = $this->fileData['path'] . '/' . \ltrim($cur['file'], '\\/');
+
+                        if (! \is_file($path)) {
+                            return ['Template file \'%s\' not found', $cur['file']];
+                        }
+
+                        $data = \file_get_contents($path);
+
+                        $this->prepareData['templates']['pre'][$cur['template']][$cur['name']][] = [
+                            'priority' => $cur['priority'] ?: 0,
+                            'data'     => $data,
+                        ];
+
+                        break;
+                    default:
+                        return 'Invalid template type';
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public function prepareData(): array
+    {
+        return $this->prepareData;
     }
 }

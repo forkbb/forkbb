@@ -118,8 +118,15 @@
     <footer id="fork-footer">
       <p class="f-sim-header">{!! __('Board footer') !!}</p>
       <div id="fork-footer-in">
-        <div></div>
-        <div><p id="id-fpoweredby">{!! __('Powered by') !!}</p></div>
+        <div>
+          <!-- PRE footerFirstStart -->
+          <!-- PRE footerFirstEnd -->
+        </div>
+        <div>
+          <!-- PRE footerSecondStart -->
+          <p id="id-fpoweredby">{!! __('Powered by') !!}</p>
+          <!-- PRE footerSecondEnd -->
+        </div>
       </div>
 <!-- debuginfo -->
     </footer>

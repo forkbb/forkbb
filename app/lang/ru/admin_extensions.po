@@ -86,3 +86,30 @@ msgstr "Расширение не найдено."
 
 msgid "Invalid action"
 msgstr "Недопустимое действие."
+
+msgid "Redirect install"
+msgstr "Расширение установлено."
+
+msgid "Redirect uninstall"
+msgstr "Расширение деинсталлировано."
+
+msgid "Redirect update"
+msgstr "Расширение обновлено."
+
+msgid "Redirect downdate"
+msgstr "Версия расширения понижена."
+
+msgid "Redirect enable"
+msgstr "Расширение включено."
+
+msgid "Redirect disable"
+msgstr "Расширение выключено."
+
+msgid "Invalid template type"
+msgstr "Неверный тип шаблона."
+
+msgid "PRE name not found"
+msgstr "PRE-имя не найдено."
+
+msgid "Template file '%s' not found"
+msgstr "Файл шаблона '%s' не найден."
