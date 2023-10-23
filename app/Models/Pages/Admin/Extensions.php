@@ -25,24 +25,22 @@ class Extensions extends Admin
     {
         $this->c->Lang->load('admin_extensions');
 
-        if ('POST' === $method) {
-            return $this->action($args, $method);
-        }
-
         $this->nameTpl    = 'admin/extensions';
         $this->aIndex     = 'extensions';
         $this->extensions = $this->c->extensions->repository;
-        $this->actionLink = $this->c->Router->link('AdminExtensions');
-        $this->formsToken = $this->c->Csrf->create('AdminExtensions');
+        $this->actionLink = $this->c->Router->link('AdminExtensionsAction');
+        $this->formsToken = $this->c->Csrf->create('AdminExtensionsAction');
 
         return $this;
     }
 
-    protected function action(array $args, string $method): Page
+    public function action(array $args, string $method): Page
     {
+        $this->c->Lang->load('admin_extensions');
+
         $v = $this->c->Validator->reset()
             ->addRules([
-                'token'     => 'token:AdminExtensions',
+                'token'     => 'token:AdminExtensionsAction',
                 'name'      => 'required|string',
                 'confirm'   => 'required|string|in:1',
                 'install'   => 'string',
@@ -81,6 +79,6 @@ class Extensions extends Admin
             return $this->c->Message->message($this->c->extensions->error);
         }
 
-        return $this->c->Redirect->page('AdminExtensions')->message("Redirect {$action}", FORK_MESS_SUCC);
+        return $this->c->Redirect->page('AdminExtensions', ['#' => $ext->id])->message("Redirect {$action}", FORK_MESS_SUCC);
     }
 }

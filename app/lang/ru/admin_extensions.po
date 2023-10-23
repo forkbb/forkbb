@@ -113,3 +113,6 @@ msgstr "PRE-имя не найдено."
 
 msgid "Template file '%s' not found"
 msgstr "Файл шаблона '%s' не найден."
+
+msgid "An error occurred in updateCommon"
+msgstr "Возникла ошибка в updateCommon."

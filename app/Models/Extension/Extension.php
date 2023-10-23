@@ -51,6 +51,11 @@ class Extension extends Model
         return $this->dbData['name'] ?? $this->fileData['name'];
     }
 
+    protected function getid(): string
+    {
+        return 'ext-' . \trim(\preg_replace('%\W+%', '-', $this->name), '-');
+    }
+
     protected function getdescription(): string
     {
         return $this->dbData['description'] ?? $this->fileData['description'];

@@ -6,7 +6,7 @@
           <fieldset>
             <ol>
     @foreach ($p->extensions as $ext)
-              <li class="f-extli f-ext-status{{ $ext->status }}">
+              <li id="{{ $ext->id }}" class="f-extli f-ext-status{{ $ext->status }}">
                 <details class="f-extdtl">
                   <summary class="f-extsu">
                     <span>{{ $ext->dispalyName }}</span>

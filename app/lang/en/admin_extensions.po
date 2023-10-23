@@ -113,3 +113,6 @@ msgstr "PRE name not found."
 
 msgid "Template file '%s' not found"
 msgstr "Template file '%s' not found."
+
+msgid "An error occurred in updateCommon"
+msgstr "An error occurred in updateCommon."

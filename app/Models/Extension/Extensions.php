@@ -132,7 +132,7 @@ class Extensions extends Manager
         $v = $v->reset()
             ->addValidators([
             ])->addRules([
-                'name'                       => 'required|string',
+                'name'                       => 'required|string|regex:%^[a-z0-9](?:[_.-]?[a-z0-9]+)*/[a-z0-9](?:[_.-]?[a-z0-9]+)*$%',
                 'type'                       => 'required|string|in:forkbb-extension',
                 'description'                => 'required|string',
                 'homepage'                   => 'string',
@@ -225,8 +225,6 @@ class Extensions extends Manager
         $query = 'INSERT INTO ::extensions (ext_name, ext_status, ext_data)
             VALUES(?s:name, 1, ?s:data)';
 
-        $this->c->DB->exec($query, $vars);
-
         $ext->setModelAttrs([
             'name'     => $ext->name,
             'dbStatus' => 1,
@@ -234,9 +232,15 @@ class Extensions extends Manager
             'fileData' => $ext->fileData,
         ]);
 
-        $this->updateCommon($ext);
+        if (true !== $this->updateCommon($ext)) {
+            $this->error = 'An error occurred in updateCommon';
+
+            return false;
+        }
 
         $this->updateIndividual();
+
+        $this->c->DB->exec($query, $vars);
 
         return true;
     }
@@ -261,8 +265,6 @@ class Extensions extends Manager
             FROM ::extensions
             WHERE ext_name=?s:name';
 
-        $this->c->DB->exec($query, $vars);
-
         $ext->setModelAttrs([
             'name'     => $ext->name,
             'dbStatus' => null,
@@ -270,11 +272,17 @@ class Extensions extends Manager
             'fileData' => $ext->fileData,
         ]);
 
-        $this->updateCommon($ext);
+        if (true !== $this->updateCommon($ext)) {
+            $this->error = 'An error occurred in updateCommon';
+
+            return false;
+        }
 
         if ($oldStatus) {
             $this->updateIndividual();
         }
+
+        $this->c->DB->exec($query, $vars);
 
         return true;
     }
@@ -284,44 +292,13 @@ class Extensions extends Manager
      */
     public function update(Extension $ext): bool
     {
-        if (true !== $ext->canUpdate) {
+        if (true === $ext->canUpdate) {
+            return $this->updown($ext);
+        } else {
             $this->error = 'Invalid action';
 
             return false;
         }
-
-        $oldStatus = $ext->dbStatus;
-        $result    = $ext->prepare();
-
-        if (true !== $result) {
-            $this->error = $result;
-
-            return false;
-        }
-
-        $vars = [
-            ':name' => $ext->name,
-            ':data' => \json_encode($ext->fileData, FORK_JSON_ENCODE),
-        ];
-        $query = 'UPDATE ::extensions SET ext_data=?s:data
-            WHERE ext_name=?s:name';
-
-        $this->c->DB->exec($query, $vars);
-
-        $ext->setModelAttrs([
-            'name'     => $ext->name,
-            'dbStatus' => $ext->dbStatus,
-            'dbData'   => $ext->fileData,
-            'fileData' => $ext->fileData,
-        ]);
-
-        $this->updateCommon($ext);
-
-        if ($oldStatus) {
-            $this->updateIndividual();
-        }
-
-        return true;
     }
 
     /**
@@ -329,12 +306,17 @@ class Extensions extends Manager
      */
     public function downdate(Extension $ext): bool
     {
-        if (true !== $ext->canDowndate) {
+        if (true === $ext->canDowndate) {
+            return $this->updown($ext);
+        } else {
             $this->error = 'Invalid action';
 
             return false;
         }
+    }
 
+    protected function updown(Extension $ext): bool
+    {
         $oldStatus = $ext->dbStatus;
         $result    = $ext->prepare();
 
@@ -351,8 +333,6 @@ class Extensions extends Manager
         $query = 'UPDATE ::extensions SET ext_data=?s:data
             WHERE ext_name=?s:name';
 
-        $this->c->DB->exec($query, $vars);
-
         $ext->setModelAttrs([
             'name'     => $ext->name,
             'dbStatus' => $ext->dbStatus,
@@ -360,11 +340,17 @@ class Extensions extends Manager
             'fileData' => $ext->fileData,
         ]);
 
-        $this->updateCommon($ext);
+        if (true !== $this->updateCommon($ext)) {
+            $this->error = 'An error occurred in updateCommon';
+
+            return false;
+        }
 
         if ($oldStatus) {
             $this->updateIndividual();
         }
+
+        $this->c->DB->exec($query, $vars);
 
         return true;
     }
@@ -386,8 +372,6 @@ class Extensions extends Manager
         $query = 'UPDATE ::extensions SET ext_status=1
             WHERE ext_name=?s:name';
 
-        $this->c->DB->exec($query, $vars);
-
         $ext->setModelAttrs([
             'name'     => $ext->name,
             'dbStatus' => 1,
@@ -396,6 +380,8 @@ class Extensions extends Manager
         ]);
 
         $this->updateIndividual();
+
+        $this->c->DB->exec($query, $vars);
 
         return true;
     }
@@ -417,8 +403,6 @@ class Extensions extends Manager
         $query = 'UPDATE ::extensions SET ext_status=0
             WHERE ext_name=?s:name';
 
-        $this->c->DB->exec($query, $vars);
-
         $ext->setModelAttrs([
             'name'     => $ext->name,
             'dbStatus' => 0,
@@ -427,6 +411,8 @@ class Extensions extends Manager
         ]);
 
         $this->updateIndividual();
+
+        $this->c->DB->exec($query, $vars);
 
         return true;
     }
@@ -530,6 +516,9 @@ class Extensions extends Manager
         return true;
     }
 
+    /**
+     * Вычисляет расхождение для PRE-данных
+     */
     protected function diffPre(array $a, array $b): array
     {
         $result = [];
