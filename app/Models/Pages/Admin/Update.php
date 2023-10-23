@@ -959,6 +959,11 @@ class Update extends Admin
             'AdminAntispam'
         );
 
+        $coreConfig->add(
+            'shared=>View=>config=>preFile',
+            '\'%DIR_CONFIG%/ext/pre.php\''
+        );
+
         $coreConfig->save();
 
         // extensions
