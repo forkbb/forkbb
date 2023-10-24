@@ -21,6 +21,8 @@
     @endif
 @endsection
 @extends ('layouts/main')
+    <!-- PRE start -->
+    <!-- PRE h1Before -->
     <div class="f-mheader">
     @if (\is_array($p->model->name))
       <h1 id="fork-h1">{!! __($p->model->name) !!}</h1>
@@ -31,10 +33,14 @@
       <p class="f-fdesc">{!! $p->model->forum_desc !!}</p>
     @endif
     </div>
+    <!-- PRE h1After -->
 @if ($forums = $p->model->subforums)
+    <!-- PRE crumbsBefore -->
     <div class="f-nav-links">
     @yield ('crumbs')
     </div>
+    <!-- PRE crumbsAfter -->
+    <!-- PRE subforumsBefore -->
     <section id="fork-subforums">
       <ol class="f-ftlist">
         <li id="id-subforums{{ $p->model->id }}" class="f-category">
@@ -50,7 +56,9 @@
         </li>
       </ol>
     </section>
+    <!-- PRE subforumsAfter -->
 @endif
+    <!-- PRE linksBefore -->
     <div class="f-nav-links">
 @yield ('crumbs')
 @if ($p->model->canCreateTopic || $p->model->pagination)
@@ -66,7 +74,9 @@
       </div>
 @endif
     </div>
+    <!-- PRE linksAfter -->
 @if ($p->topics)
+    <!-- PRE mainBefore -->
     <section id="fork-forum" class="f-main">
       <h2>{!! __('Topic list') !!}</h2>
       <div class="f-ftlist">
@@ -172,6 +182,8 @@
         </ol>
       </div>
     </section>
+    <!-- PRE mainAfter -->
+    <!-- PRE linksBefore -->
     <div class="f-nav-links">
     @if ($p->model->canCreateTopic || $p->model->pagination || $p->model->canMarkRead || $p->model->canSubscription)
       <div class="f-nlinks-a">
@@ -201,12 +213,16 @@
     @endif
     @yield ('crumbs')
     </div>
+    <!-- PRE linksAfter -->
 @endif
 @if ($p->enableMod && $form = $p->formMod)
+    <!-- PRE modBefore -->
     <aside id="fork-mod" class="f-moderate">
       <h2>{!! __('Moderate') !!}</h2>
       <div class="f-fdivm">
     @include ('layouts/form')
       </div>
     </aside>
+    <!-- PRE modAfter -->
 @endif
+    <!-- PRE end -->

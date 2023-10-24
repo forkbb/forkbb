@@ -1,12 +1,18 @@
 @include ('layouts/crumbs')
 @extends ('layouts/main')
+    <!-- PRE start -->
+    <!-- PRE h1Before -->
     <div class="f-mheader">
       <h1 id="fork-h1">{!! __($p->formTitle) !!}</h1>
     </div>
+    <!-- PRE h1After -->
+    <!-- PRE crumbsBefore -->
     <div class="f-nav-links">
 @yield ('crumbs')
     </div>
+    <!-- PRE crumbsAfter -->
 @if ($p->previewHtml)
+    <!-- PRE previewBefore -->
     <section class="f-preview">
       <h2>{!! __('Post preview') !!}</h2>
       <div class="f-post-body">
@@ -18,16 +24,22 @@
         </div>
       </div>
     </section>
+    <!-- PRE previewAfter -->
 @endif
 @if ($form = $p->form)
+    <!-- PRE mainBefore -->
     <section class="f-post-form">
+      <!-- PRE mainStart -->
       <h2>{!! __($p->formTitle) !!}</h2>
       <div class="f-fdiv">
     @include ('layouts/form')
       </div>
+      <!-- PRE mainEnd -->
     </section>
+    <!-- PRE mainAfter -->
 @endif
 @if ($p->posts)
+    <!-- PRE postsBefore -->
     <section id="fork-view-posts">
       <h2>{!! __($p->postsTitle) !!}</h2>
     @foreach ($p->posts as $post)
@@ -58,4 +70,6 @@
         @endif
     @endforeach
     </section>
+    <!-- PRE postsAfter -->
 @endif
+    <!-- PRE end -->

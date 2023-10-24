@@ -21,9 +21,13 @@
     @endif
 @endsection
 @extends ('layouts/main')
+    <!-- PRE start -->
+    <!-- PRE h1Before -->
     <div class="f-mheader">
       <h1 id="fork-h1">{!! __('User list') !!}</h1>
     </div>
+    <!-- PRE h1After -->
+    <!-- PRE linksBefore -->
     <div class="f-nav-links">
 @yield ('crumbs')
 @if ($p->pagination)
@@ -32,8 +36,10 @@
       </div>
 @endif
     </div>
+    <!-- PRE linksAfter -->
 @if ($form = $p->form)
-    <section id="fork-usrlstform"  class="f-main">
+    <!-- PRE searchBefore -->
+    <section id="fork-usrlstform" class="f-main">
       <h2>{!! __($p->userRules->searchUsers ? 'User search head' : 'User sort head') !!}</h2>
       <details>
         <summary>{!! __($p->userRules->searchUsers ? 'User search head' : 'User sort head') !!}</summary>
@@ -42,8 +48,10 @@
         </div>
       </details>
     </section>
+    <!-- PRE searchAfter -->
 @endif
 @if ($p->userList)
+    <!-- PRE mainBefore -->
     <section id="fork-usrlst" class="f-main">
       <h2>{!! __('User_list') !!}</h2>
       <div class="f-ulist">
@@ -96,11 +104,15 @@
         </ol>
       </div>
     </section>
+    <!-- PRE mainAfter -->
     @if ($p->pagination)
+    <!-- PRE linksBefore -->
     <div class="f-nav-links">
       <div class="f-nlinks">
         @yield ('pagination')
       </div>
     </div>
+    <!-- PRE linksAfter -->
     @endif
 @endif
+    <!-- PRE end -->

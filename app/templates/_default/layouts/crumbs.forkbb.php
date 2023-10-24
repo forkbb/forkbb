@@ -1,7 +1,9 @@
 @section ('crumbs')
+      <!-- PRE start -->
       <nav class="f-nav-crumbs">
         <ol class="f-crumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
     @foreach ($p->crumbs as $cur)
+          <!-- PRE foreachStart -->
         @if (\is_object($cur[0]))
           <li class="f-crumb @if ($cur[0]->is_subscribed) f-subscribed @endif" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><!-- inline -->
             <a class="f-crumb-a @if ($cur[2]) active" aria-current="page @endif" href="{{ $cur[0]->link }}" itemprop="item">
@@ -27,7 +29,9 @@
             <meta itemprop="position" content="{!! @iteration !!}">
           </li><!-- endinline -->
         @endif
+          <!-- PRE foreachEnd -->
     @endforeach
         </ol>
       </nav>
+      <!-- PRE end -->
 @endsection

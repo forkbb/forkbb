@@ -1,6 +1,9 @@
+            <!-- PRE start -->
             <div class="f-post-poll">
+              <!-- PRE inStart -->
 @if ($poll->canVote)
               <form class="f-form" method="post" action="{{ $poll->link }}">
+                <!-- PRE formStart -->
                 <input type="hidden" name="token" value="{{ $poll->token }}">
 @endif
 @foreach ($poll->question as $q => $question)
@@ -41,8 +44,11 @@
                 <p class="f-poll-btns">
                   <button class="f-btn" name="vote" value="{{ __('Vote') }}" title="{{ __('Vote') }}"><span>{!! __('Vote') !!}</span></button>
                 </p>
+                <!-- PRE formEnd -->
               </form>
 @elseif (null !== $poll->status)
               <p class="f-poll-status"><span>{!! __($poll->status) !!}</span></p>
 @endif
+              <!-- PRE inEnd -->
             </div>
+            <!-- PRE end -->

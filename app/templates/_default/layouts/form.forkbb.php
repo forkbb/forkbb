@@ -1,5 +1,7 @@
+        <!-- PRE start -->
 @if ($form['action'])
         <form @if ($form['id']) id="{{ $form['id'] }}" @endif class="f-form" method="post" action="{{ $form['action'] }}" @if ($form['enctype']) enctype="{{ $form['enctype'] }}" @endif>
+          <!-- PRE formStart -->
 @endif
 @foreach ($form['sets'] as $setKey => $setVal)
     @if ($setVal['inform'])
@@ -31,6 +33,7 @@
               </dt>
               <dd>
                     @switch ($cur['type'])
+                <!-- PRE switchStart -->
                         @case ('text')
                         @case ('email')
                         @case ('number')
@@ -97,6 +100,7 @@
               </dd>
             </dl>
                     @break
+                <!-- PRE switchEnd -->
             @endswitch
         @endforeach
           </fieldset>
@@ -116,12 +120,16 @@
     @endif
           <p class="f-btns">
     @foreach ($form['btns'] as $key => $cur)
+            <!-- PRE btnsForeachStart -->
         @if ('submit' === $cur['type'])
             <button class="f-btn f-fbtn @if($cur['class']) {{ \implode(' ', $cur['class']) }} @endif" name="{{ $key }}" value="{{ $cur['value'] }}" @isset ($cur['accesskey']) accesskey="{{ $cur['accesskey'] }}" @endisset title="{{ $cur['value'] }}" @if ($cur['disabled']) disabled @endif><span>{{ $cur['value'] }}</span></button>
         @elseif ('btn'=== $cur['type'])
             <a class="f-btn f-fbtn @if($cur['class']) {{ \implode(' ', $cur['class']) }} @endif" data-name="{{ $key }}" href="{{ $cur['href'] }}" @isset ($cur['accesskey']) accesskey="{{ $cur['accesskey'] }}" @endisset title="{{ $cur['value'] }}"><span>{{ $cur['value'] }}</span></a>
         @endif
+            <!-- PRE btnsForeachEnd -->
     @endforeach
           </p>
+          <!-- PRE formEnd -->
         </form>
 @endif
+        <!-- PRE end -->

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ __('lang_identifier') }}" dir="{{ __('lang_direction') }}">
 <head>
+  <!-- PRE headStart -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{! $p->pageTitle !}}</title>
@@ -36,28 +37,39 @@
   <{{ $pageHeader['type'] }} @foreach ($pageHeader['values'] as $key => $val) {{ $key }}="{{ $val }}" @endforeach>
     @endif
 @endforeach
+  <!-- PRE headEnd -->
 </head>
 <body>
+  <!-- PRE bodyStart -->
   <div id="fork" class="@if ($p->fNavigation)f-with-nav @endif @if($p->fPMFlash) f-pm-flash @endif">
+    <!-- PRE headerBefore -->
     <header id="fork-header">
       <p id="id-fhth1"><a id="id-fhtha" rel="home" href="{{ $p->fRootLink }}">{{ $p->fTitle }}</a></p>
 @if ('' != $p->fDescription)
       <p id="id-fhtdesc">{!! $p->fDescription !!}</p>
 @endif
     </header>
+    <!-- PRE headerAfter -->
+    <!-- PRE mainBefore -->
     <main id="fork-main">
 @if ($p->fAnnounce)
     <aside id="fork-announce">
+      <!-- PRE announceStart -->
       <p class="f-sim-header">{!! __('Announcement') !!}</p>
       <p id="id-facontent">{!! $p->fAnnounce !!}</p>
+      <!-- PRE announceEnd -->
     </aside>
 @endif
 @if ($iswev = $p->fIswev)
     @include ('layouts/iswev')
 @endif
+      <!-- PRE contentBefore -->
 @yield ('content')
+      <!-- PRE contentAfter -->
     </main>
+    <!-- PRE mainAfter -->
 @if ($p->fNavigation)
+    <!-- PRE navBefore -->
     <nav id="fork-nav" class="f-menu @if ($p->fNavigation['search']) f-main-nav-search @endif">
       <div id="fork-navdir">
         <input id="id-mn-checkbox" class="f-menu-checkbox" type="checkbox">
@@ -114,7 +126,9 @@
     @endif
       </div>
     </nav>
+    <!-- PRE navAfter -->
 @endif
+    <!-- PRE footerBefore -->
     <footer id="fork-footer">
       <p class="f-sim-header">{!! __('Board footer') !!}</p>
       <div id="fork-footer-in">
@@ -130,7 +144,9 @@
       </div>
 <!-- debuginfo -->
     </footer>
+    <!-- PRE footerAfter -->
   </div>
+  <!-- PRE scriptsBefore -->
 @foreach ($p->pageHeaders as $pageHeader)
     @if ('script' === $pageHeader['type'])
         @empty ($pageHeader['values']['inline'])
@@ -140,5 +156,7 @@
         @endempty
     @endif
 @endforeach
+  <!-- PRE scriptsAfter -->
+  <!-- PRE bodyEnd -->
 </body>
 </html>
