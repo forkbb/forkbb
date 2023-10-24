@@ -167,10 +167,12 @@ class Extension extends Model
 
                         $data = \file_get_contents($path);
 
-                        $this->prepareData['templates']['pre'][$cur['template']][$cur['name']][] = [
-                            'priority' => $cur['priority'] ?: 0,
-                            'data'     => $data,
-                        ];
+                        foreach (\explode(',', $cur['template']) as $template) {
+                            $this->prepareData['templates']['pre'][$template][$cur['name']][] = [
+                                'priority' => $cur['priority'] ?: 0,
+                                'data'     => $data,
+                            ];
+                        }
 
                         break;
                     default:
