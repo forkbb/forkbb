@@ -82,6 +82,7 @@ abstract class Admin extends Page
                 'uploads'     => [$r->link('AdminUploads'), 'Uploads'],
                 'antispam'    => [$r->link('AdminAntispam'), 'Antispam'],
                 'logs'        => [$r->link('AdminLogs'), 'Logs'],
+                'extensions'  => [$r->link('AdminExtensions'), 'Extensions'],
                 'maintenance' => [$r->link('AdminMaintenance'), 'Maintenance'],
             ];
         }

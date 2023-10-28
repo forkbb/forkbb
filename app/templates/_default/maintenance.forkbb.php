@@ -1,4 +1,5 @@
 @extends ('layouts/main')
+      <!-- PRE start -->
       <div class="f-iswev-wrap">
         <section class="f-iswev f-info">
           <h2>Info message</h2>
@@ -7,3 +8,4 @@
           </ul>
         </section>
       </div>
+      <!-- PRE end -->

@@ -21,9 +21,13 @@
     @endif
 @endsection
 @extends ('layouts/main')
+    <!-- PRE start -->
+    <!-- PRE h1Before -->
     <div class="f-mheader">
       <h1 id="fork-h1">{{ $p->model->name }}</h1>
     </div>
+    <!-- PRE h1After -->
+    <!-- PRE linksBBefore -->
     <div class="f-nav-links">
 @yield ('crumbs')
 @if ($p->model->canReply || $p->model->closed || $p->model->pagination)
@@ -45,6 +49,8 @@
       </div>
 @endif
     </div>
+    <!-- PRE linksBAfter -->
+    <!-- PRE mainBefore -->
     <section id="fork-topic" class="f-main">
       <h2>{!! __('Post list') !!}</h2>
 @foreach ($p->posts as $id => $post)
@@ -166,6 +172,8 @@
     @endif
 @endforeach
     </section>
+    <!-- PRE mainAfter -->
+    <!-- PRE linksABefore -->
     <div class="f-nav-links">
 @if ($p->model->canReply || $p->model->pagination || $p->model->canSubscription)
       <div class="f-nlinks-a">
@@ -191,22 +199,30 @@
 @endif
 @yield ('crumbs')
     </div>
+    <!-- PRE linksAAfter -->
 @if ($p->enableMod && $form = $p->formMod)
+    <!-- PRE modBefore -->
     <aside id="fork-mod" class="f-moderate">
       <h2>{!! __('Moderate') !!}</h2>
       <div class="f-fdivm">
     @include ('layouts/form')
       </div>
     </aside>
+    <!-- PRE modAfter -->
 @endif
 @if ($p->online)
+    <!-- PRE statsBefore -->
     @include ('layouts/stats')
+    <!-- PRE statsAfter -->
 @endif
 @if ($form = $p->form)
+    <!-- PRE quickBefore -->
     <section class="f-post-form">
       <h2>{!! __('Quick post') !!}</h2>
       <div class="f-fdiv">
     @include ('layouts/form')
       </div>
     </section>
+    <!-- PRE quickAfter -->
 @endif
+    <!-- PRE end -->

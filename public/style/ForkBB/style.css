@@ -232,6 +232,9 @@ body,
 
 #fork summary {
   cursor: pointer;
+}
+
+#fork details[open] > summary {
   margin-bottom: 0.625rem;
 }
 

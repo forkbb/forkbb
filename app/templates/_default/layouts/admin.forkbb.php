@@ -1,12 +1,19 @@
 @include ('layouts/crumbs')
 @extends ('layouts/main')
+    <!-- PRE start -->
+    <!-- PRE h1Before -->
     <div class="f-mheader">
       <h1 id="fork-h1">{!! __($p->adminHeader) !!}</h1>
     </div>
+    <!-- PRE h1After -->
+    <!-- PRE linksBefore -->
     <div class="f-nav-links f-nav-admin{{ $p->mainSuffix or '' }}-links">
 @yield ('crumbs')
     </div>
+    <!-- PRE linksAfter -->
+    <!-- PRE mainBefore -->
     <div class="f-main f-main-admin{{ $p->mainSuffix or '' }}">
+      <!-- PRE menuBefore -->
       <div id="fork-a-menu">
 @if ($p->aNavigation)
         <nav id="fork-a-nav" class="f-menu">
@@ -20,7 +27,12 @@
         </nav>
 @endif
       </div>
+      <!-- PRE menuAfter -->
+      <!-- PRE contentBefore -->
       <div id="forka">
 @yield ('content')
       </div>
+      <!-- PRE contentAfter -->
     </div>
+    <!-- PRE mainAfter -->
+    <!-- PRE end -->

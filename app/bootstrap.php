@@ -42,8 +42,7 @@ define('FORK_GEN_FEM', 2);
 
 define('FORK_JSON_ENCODE', \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR);
 
-require __DIR__ . '/../vendor/autoload.php';
-
+$loader       = require __DIR__ . '/../vendor/autoload.php';
 $errorHandler = new ErrorHandler();
 
 if (\is_file(__DIR__ . '/config/main.php')) {
@@ -53,6 +52,8 @@ if (\is_file(__DIR__ . '/config/main.php')) {
 } else {
     throw new RuntimeException('Application is not configured');
 }
+
+$c->autoloader = $loader;
 
 $errorHandler->setContainer($c);
 
@@ -69,7 +70,7 @@ if (
     $c->BASE_URL = \str_replace('https://', 'http://', $c->BASE_URL);
 }
 
-$c->FORK_REVISION = 69;
+$c->FORK_REVISION = 70;
 $c->START         = $forkStart;
 $c->PUBLIC_URL    = $c->BASE_URL . $forkPublicPrefix;
 

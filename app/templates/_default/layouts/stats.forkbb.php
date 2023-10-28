@@ -1,4 +1,6 @@
+    <!-- PRE start -->
     <aside id="fork-stats">
+      <!-- PRE inStart -->
       <p class="f-sim-header">{!! __('Stats info') !!}</p>
 @if ($p->stats)
       <dl id="fork-stboard">
@@ -36,4 +38,6 @@
     @endforeach
       </dl><!-- endinline -->
 @endif
+      <!-- PRE inEnd -->
     </aside>
+    <!-- PRE end -->

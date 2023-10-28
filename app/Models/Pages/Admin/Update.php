@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.0.0';
     const REV_MIN_FOR_UPDATE         = 53;
-    const LATEST_REV_WITH_DB_CHANGES = 68;
+    const LATEST_REV_WITH_DB_CHANGES = 70;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const CONFIG_FILE                = 'main.php';
@@ -918,6 +918,64 @@ class Update extends Admin
         );
 
         $coreConfig->save();
+
+        return null;
+    }
+
+    /**
+     * rev.69 to rev.70
+     */
+    protected function stageNumber69(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>%DIR_EXT%',
+            '\'%DIR_ROOT%/ext\'',
+            '%DIR_VIEWS%'
+        );
+
+        $coreConfig->add(
+            'multiple=>ExtensionModel',
+            '\\ForkBB\\Models\\Extension\\Extension::class',
+            'DBMapModel'
+        );
+
+        $coreConfig->add(
+            'multiple=>ExtensionManager',
+            '\\ForkBB\\Models\\Extension\\Extensions::class',
+            'ExtensionModel'
+        );
+
+        $coreConfig->add(
+            'shared=>extensions',
+            '\'@ExtensionManager:init\'',
+            'attachments'
+        );
+
+        $coreConfig->add(
+            'multiple=>AdminExtensions',
+            '\\ForkBB\\Models\\Pages\\Admin\\Extensions::class',
+            'AdminAntispam'
+        );
+
+        $coreConfig->add(
+            'shared=>View=>config=>preFile',
+            '\'%DIR_CONFIG%/ext/pre.php\''
+        );
+
+        $coreConfig->save();
+
+        // extensions
+        $schema = [
+            'FIELDS' => [
+                'ext_name'   => ['VARCHAR(190)', false, ''],
+                'ext_status' => ['TINYINT', false, 0],
+                'ext_data'   => ['TEXT', false],
+            ],
+            'PRIMARY KEY' => ['ext_name'],
+        ];
+        $this->c->DB->createTable('::extensions', $schema);
 
         return null;
     }

@@ -1,8 +1,12 @@
 @extends ('layouts/main')
+    <!-- PRE start -->
 @if ($p->categoryes)
+    <!-- PRE h1Before -->
     <div class="f-mheader">
       <h1 id="fork-h1">{!! __('Forum list') !!}</h1>
     </div>
+    <!-- PRE h1After -->
+    <!-- PRE mainBefore -->
     <div class="f-main">
       <ol class="f-ftlist">
     @foreach ($p->categoryes as $id => $forums)
@@ -20,7 +24,9 @@
     @endforeach
       </ol>
     </div>
+    <!-- PRE mainAfter -->
     @if ($p->linkMarkRead)
+    <!-- PRE linksBefore -->
     <div class="f-nav-links">
       <div class="f-nlinks">
         <div class="f-actions-links">
@@ -30,6 +36,10 @@
         </div>
       </div>
     </div>
+    <!-- PRE linksAfter -->
     @endif
 @endif
+    <!-- PRE statsBefore -->
 @include ('layouts/stats')
+    <!-- PRE statsafter -->
+    <!-- PRE end -->

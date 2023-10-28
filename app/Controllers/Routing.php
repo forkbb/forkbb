@@ -838,6 +838,18 @@ class Routing
                 'AdminAntispam:view',
                 'AdminAntispam'
             );
+            $r->add(
+                $r::GET,
+                '/admin/extensions',
+                'AdminExtensions:info',
+                'AdminExtensions'
+            );
+            $r->add(
+                $r::PST,
+                '/admin/extensions/action',
+                'AdminExtensions:action',
+                'AdminExtensionsAction'
+            );
         }
 
         $uri = $_SERVER['REQUEST_URI'];

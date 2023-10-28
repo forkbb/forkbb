@@ -84,6 +84,7 @@ return [
         '%DIR_LANG%'   => '%DIR_APP%/lang',
         '%DIR_LOG%'    => '%DIR_APP%/log',
         '%DIR_VIEWS%'  => '%DIR_APP%/templates',
+        '%DIR_EXT%'    => '%DIR_ROOT%/ext',
 
         'DB' => [
             'class' => \ForkBB\Core\DB::class,
@@ -109,6 +110,7 @@ return [
                 'cache'      => '%DIR_CACHE%',
                 'defaultDir' => '%DIR_VIEWS%/_default',
                 'userDir'    => '%DIR_VIEWS%/_user',
+                'preFile'    => '%DIR_CONFIG%/ext/pre.php',
             ],
         ],
         'Router' => [
@@ -185,6 +187,7 @@ return [
         ],
         'providerUser'  => \ForkBB\Models\ProviderUser\ProviderUser::class,
         'attachments'   => \ForkBB\Models\Attachment\Attachments::class,
+        'extensions'    => '@ExtensionManager:init',
 
         'Csrf' => [
             'class'   => \ForkBB\Core\Csrf::class,
@@ -409,6 +412,7 @@ return [
         'AdminLogs'          => \ForkBB\Models\Pages\Admin\Logs::class,
         'AdminUploads'       => \ForkBB\Models\Pages\Admin\Uploads::class,
         'AdminAntispam'      => \ForkBB\Models\Pages\Admin\Antispam::class,
+        'AdminExtensions'    => \ForkBB\Models\Pages\Admin\Extensions::class,
 
         'AdminListModel'    => \ForkBB\Models\AdminList\AdminList::class,
         'BanListModel'      => \ForkBB\Models\BanList\BanList::class,
@@ -417,6 +421,8 @@ return [
         'CensorshipModel'   => \ForkBB\Models\Censorship\Censorship::class,
         'ConfigModel'       => \ForkBB\Models\Config\Config::class,
         'DBMapModel'        => \ForkBB\Models\DBMap\DBMap::class,
+        'ExtensionModel'    => \ForkBB\Models\Extension\Extension::class,
+        'ExtensionManager'  => \ForkBB\Models\Extension\Extensions::class,
         'ForumModel'        => \ForkBB\Models\Forum\Forum::class,
         'ForumManager'      => \ForkBB\Models\Forum\Forums::class,
         'GroupModel'        => \ForkBB\Models\Group\Group::class,

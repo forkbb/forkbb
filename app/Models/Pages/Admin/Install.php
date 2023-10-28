@@ -114,9 +114,12 @@ class Install extends Admin
         $folders = [
             $this->c->DIR_CONFIG,
             $this->c->DIR_CONFIG . '/db',
+            $this->c->DIR_CONFIG . '/ext',
             $this->c->DIR_CACHE,
+            $this->c->DIR_CACHE . '/polls',
             $this->c->DIR_PUBLIC . '/img/avatars',
             $this->c->DIR_PUBLIC . '/upload',
+            $this->c->DIR_LOG,
         ];
 
         foreach ($folders as $folder) {
@@ -804,6 +807,18 @@ class Install extends Admin
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('::config', $schema);
+
+        // extensions
+        $schema = [
+            'FIELDS' => [
+                'ext_name'   => ['VARCHAR(190)', false, ''],
+                'ext_status' => ['TINYINT', false, 0],
+                'ext_data'   => ['TEXT', false],
+            ],
+            'PRIMARY KEY' => ['ext_name'],
+            'ENGINE' => $this->DBEngine,
+        ];
+        $this->c->DB->createTable('::extensions', $schema);
 
         // forum_perms
         $schema = [
