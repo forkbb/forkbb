@@ -6,11 +6,11 @@
       <h1 id="fork-h1">{!! __($p->pmHeader) !!}</h1>
     </div>
     <!-- PRE h1After -->
-    <!-- PRE crumbsBefore -->
+    <!-- PRE linksBefore -->
     <div class="f-nav-links f-nav-pm-links">
 @yield ('crumbs')
     </div>
-    <!-- PRE crumbsAfter -->
+    <!-- PRE linksAfter -->
     <!-- PRE mainBefore -->
     <div class="f-main f-main-pm">
       <!-- PRE menuBefore -->

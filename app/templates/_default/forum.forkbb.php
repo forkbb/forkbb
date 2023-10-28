@@ -35,11 +35,11 @@
     </div>
     <!-- PRE h1After -->
 @if ($forums = $p->model->subforums)
-    <!-- PRE crumbsBefore -->
+    <!-- PRE linksBefore -->
     <div class="f-nav-links">
     @yield ('crumbs')
     </div>
-    <!-- PRE crumbsAfter -->
+    <!-- PRE linksAfter -->
     <!-- PRE subforumsBefore -->
     <section id="fork-subforums">
       <ol class="f-ftlist">
@@ -58,7 +58,7 @@
     </section>
     <!-- PRE subforumsAfter -->
 @endif
-    <!-- PRE linksBefore -->
+    <!-- PRE linksBBefore -->
     <div class="f-nav-links">
 @yield ('crumbs')
 @if ($p->model->canCreateTopic || $p->model->pagination)
@@ -74,7 +74,7 @@
       </div>
 @endif
     </div>
-    <!-- PRE linksAfter -->
+    <!-- PRE linksBAfter -->
 @if ($p->topics)
     <!-- PRE mainBefore -->
     <section id="fork-forum" class="f-main">
@@ -183,7 +183,7 @@
       </div>
     </section>
     <!-- PRE mainAfter -->
-    <!-- PRE linksBefore -->
+    <!-- PRE linksABefore -->
     <div class="f-nav-links">
     @if ($p->model->canCreateTopic || $p->model->pagination || $p->model->canMarkRead || $p->model->canSubscription)
       <div class="f-nlinks-a">
@@ -213,7 +213,7 @@
     @endif
     @yield ('crumbs')
     </div>
-    <!-- PRE linksAfter -->
+    <!-- PRE linksAAfter -->
 @endif
 @if ($p->enableMod && $form = $p->formMod)
     <!-- PRE modBefore -->

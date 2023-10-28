@@ -6,11 +6,11 @@
       <h1 id="fork-h1">{!! __($p->adminHeader) !!}</h1>
     </div>
     <!-- PRE h1After -->
-    <!-- PRE crumbsBefore -->
+    <!-- PRE linksBefore -->
     <div class="f-nav-links f-nav-admin{{ $p->mainSuffix or '' }}-links">
 @yield ('crumbs')
     </div>
-    <!-- PRE crumbsAfter -->
+    <!-- PRE linksAfter -->
     <!-- PRE mainBefore -->
     <div class="f-main f-main-admin{{ $p->mainSuffix or '' }}">
       <!-- PRE menuBefore -->

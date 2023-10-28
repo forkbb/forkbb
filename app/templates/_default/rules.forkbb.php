@@ -6,11 +6,11 @@
       <h1 id="fork-h1">{!! __('Forum rules') !!}</h1>
     </div>
     <!-- PRE h1After -->
-    <!-- PRE crumbsBefore -->
+    <!-- PRE linksBefore -->
     <div class="f-nav-links">
 @yield ('crumbs')
     </div>
-    <!-- PRE crumbsAfter -->
+    <!-- PRE linksAfter -->
     <!-- PRE mainBefore -->
     <div id="fork-rules" class="f-main">
       <div id="id-rules">{!! $p->rules !!}</div>

@@ -27,7 +27,7 @@
       <h1 id="fork-h1">{{ $p->model->name }}</h1>
     </div>
     <!-- PRE h1After -->
-    <!-- PRE linksBefore -->
+    <!-- PRE linksBBefore -->
     <div class="f-nav-links">
 @yield ('crumbs')
 @if ($p->model->canReply || $p->model->closed || $p->model->pagination)
@@ -49,7 +49,7 @@
       </div>
 @endif
     </div>
-    <!-- PRE linksAfter -->
+    <!-- PRE linksBAfter -->
     <!-- PRE mainBefore -->
     <section id="fork-topic" class="f-main">
       <h2>{!! __('Post list') !!}</h2>
@@ -173,7 +173,7 @@
 @endforeach
     </section>
     <!-- PRE mainAfter -->
-    <!-- PRE linksBefore -->
+    <!-- PRE linksABefore -->
     <div class="f-nav-links">
 @if ($p->model->canReply || $p->model->pagination || $p->model->canSubscription)
       <div class="f-nlinks-a">
@@ -199,7 +199,7 @@
 @endif
 @yield ('crumbs')
     </div>
-    <!-- PRE linksAfter -->
+    <!-- PRE linksAAfter -->
 @if ($p->enableMod && $form = $p->formMod)
     <!-- PRE modBefore -->
     <aside id="fork-mod" class="f-moderate">

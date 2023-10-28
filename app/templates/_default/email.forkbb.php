@@ -6,11 +6,11 @@
       <h1 id="fork-h1">{!! __($p->legend) !!}</h1>
     </div>
     <!-- PRE h1After -->
-    <!-- PRE crumbsBefore -->
+    <!-- PRE linksBefore -->
     <div class="f-nav-links">
 @yield ('crumbs')
     </div>
-    <!-- PRE crumbsAfter -->
+    <!-- PRE linksAfter -->
 @if ($form = $p->form)
     <!-- PRE mainBefore -->
     <section id="fork-sendemail" class="f-post-form">

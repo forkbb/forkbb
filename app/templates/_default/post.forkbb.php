@@ -6,11 +6,11 @@
       <h1 id="fork-h1">{!! __($p->formTitle) !!}</h1>
     </div>
     <!-- PRE h1After -->
-    <!-- PRE crumbsBefore -->
+    <!-- PRE linksBefore -->
     <div class="f-nav-links">
 @yield ('crumbs')
     </div>
-    <!-- PRE crumbsAfter -->
+    <!-- PRE linksAfter -->
 @if ($p->previewHtml)
     <!-- PRE previewBefore -->
     <section class="f-preview">

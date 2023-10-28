@@ -27,7 +27,7 @@
       <h1 id="fork-h1">{!! __('User list') !!}</h1>
     </div>
     <!-- PRE h1After -->
-    <!-- PRE linksBefore -->
+    <!-- PRE linksBBefore -->
     <div class="f-nav-links">
 @yield ('crumbs')
 @if ($p->pagination)
@@ -36,7 +36,7 @@
       </div>
 @endif
     </div>
-    <!-- PRE linksAfter -->
+    <!-- PRE linksBAfter -->
 @if ($form = $p->form)
     <!-- PRE searchBefore -->
     <section id="fork-usrlstform" class="f-main">
@@ -106,13 +106,13 @@
     </section>
     <!-- PRE mainAfter -->
     @if ($p->pagination)
-    <!-- PRE linksBefore -->
+    <!-- PRE linksABefore -->
     <div class="f-nav-links">
       <div class="f-nlinks">
         @yield ('pagination')
       </div>
     </div>
-    <!-- PRE linksAfter -->
+    <!-- PRE linksAAfter -->
     @endif
 @endif
     <!-- PRE end -->

@@ -27,7 +27,7 @@
       <h1 id="fork-h1">{!! __($p->model->name) !!}</h1>
     </div>
     <!-- PRE h1After -->
-    <!-- PRE linksBefore -->
+    <!-- PRE linksBBefore -->
     <div class="f-nav-links">
 @yield ('crumbs')
 @if ($p->model->pagination)
@@ -36,7 +36,7 @@
       </div>
 @endif
     </div>
-    <!-- PRE linksAfter -->
+    <!-- PRE linksBAfter -->
     <!-- PRE mainBefore -->
     <section id="fork-topic-ins" class="f-main">
       <h2>{!! __('Post list') !!}</h2>
@@ -102,7 +102,7 @@
 @endforeach
     </section>
     <!-- PRE mainAfter -->
-    <!-- PRE linksBefore -->
+    <!-- PRE linksABefore -->
     <div class="f-nav-links">
 @if ($p->model->pagination)
       <div class="f-nlinks-a">
@@ -111,5 +111,5 @@
 @endif
 @yield ('crumbs')
     </div>
-    <!-- PRE linksAfter -->
+    <!-- PRE linksAAfter -->
     <!-- PRE end -->
