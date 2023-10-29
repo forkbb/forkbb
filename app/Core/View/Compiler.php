@@ -505,4 +505,20 @@ EOD;
     {
         return "<?php break; ?>";
     }
+
+    /**
+     * @php
+     */
+    protected function compilePhp(): string
+    {
+        return "<?php";
+    }
+
+    /**
+     * @endphp
+     */
+    protected function compileEndphp(): string
+    {
+        return " ?>";
+    }
 }
