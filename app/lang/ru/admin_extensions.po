@@ -116,3 +116,6 @@ msgstr "Файл шаблона '%s' не найден."
 
 msgid "An error occurred in updateCommon"
 msgstr "Возникла ошибка в updateCommon."
+
+msgid "Empty"
+msgstr "Пусто"

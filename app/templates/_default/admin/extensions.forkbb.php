@@ -5,7 +5,7 @@
         <div>
           <fieldset>
             <ol>
-    @foreach ($p->extensions as $ext)
+    @forelse ($p->extensions as $ext)
               <li id="{{ $ext->id }}" class="f-extli f-ext-status{{ $ext->status }}">
                 <details class="f-extdtl">
                   <summary class="f-extsu">
@@ -35,7 +35,7 @@
                     {!! __('Crash') !!}
                 @break
         @endswitch
-                    /<span>
+                    /</span>
                   </summary>
                   <div class="f-extdata f-fdiv">
                     <form class="f-form" method="post" action="{{ $p->actionLink }}">
@@ -85,6 +85,7 @@
                         <legend class="f-fleg">{!! __('Authors') !!}</legend>
         @foreach ($ext->authors as $author)
                         <dl>
+                          <dt class="f-extdt-empty"></dt>
                           <dd class="f-extdd-author">
                             <span>{{ $author['name'] }}</span>
             @if (! empty($author['email']) || ! empty($author['homepage']))
@@ -107,9 +108,10 @@
                         </dl>
         @endforeach
                       </fieldset>
-                      <fieldset calss="f-extfs-confirm">
+                      <fieldset class="f-extfs-confirm">
                         <dl>
-                          <dd>
+                          <dt class="f-extdt-empty"></dt>
+                          <dd class="f-extdd-confirm">
                             <label class="f-flblch"><input name="confirm" class="f-ychk" type="checkbox" value="1">{!! __('Confirm action') !!}</label>
                           </dd>
                         </dl>
@@ -140,7 +142,12 @@
                   </div>
                 </details>
               </li>
-    @endforeach
+    @empty
+              <li>
+        @php $iswev = [FORK_MESS_INFO => ['Empty']]; @endphp
+        @include ('layouts/iswev')
+              </li>
+    @endforelse
             </ol>
           </fieldset>
         </div>

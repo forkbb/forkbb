@@ -116,3 +116,6 @@ msgstr "Template file '%s' not found."
 
 msgid "An error occurred in updateCommon"
 msgstr "An error occurred in updateCommon."
+
+msgid "Empty"
+msgstr "Empty"

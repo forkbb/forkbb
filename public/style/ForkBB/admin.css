@@ -1297,7 +1297,12 @@
   padding: 0.3125rem;
 }
 
-#fork-extsinfo .f-extdd-author {
+#fork-extsinfo .f-extdt-empty {
+  display: none;
+}
+
+#fork-extsinfo .f-extdd-author,
+#fork-extsinfo .f-extdd-confirm {
   width: 100%;
 }
 
