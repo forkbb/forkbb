@@ -1,4 +1,4 @@
-# ForkBB rev.69 Alpha Readme
+# ForkBB rev.70 Alpha Readme
 
 ## About
 
@@ -20,10 +20,10 @@ Topic [Установка (Installation)](https://forkbb.ru/topic/28/%D0%A3%D1%8
 Apache must have **mod_rewrite** and **mod_headers** enabled. Also, the **AllowOverride** directive must be set to **All**.
 
 Two options
-1. Document Root != **public** folder:
+1. Document Root != **public** folder (shared hosting):
     * Rename **.dist.htaccess** to **.htaccess**,
     * Rename **index.dist.php** to **index.php**.
-2. Document Root == **public** folder (recommended):
+2. Document Root == **public** folder (recommended if you have access to Apache configuration):
     * Rename public/**.dist.htaccess** to public/**.htaccess**,
     * Rename public/**index.dist.php** to public/**index.php**;
 
