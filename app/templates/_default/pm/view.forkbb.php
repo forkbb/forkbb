@@ -29,8 +29,9 @@
 @endif
       <section id="fork-forum" class="f-pm f-pmview @empty ($p->pmList) f-pm-empty @endempty">
         <h2>{!! __($p->title) !!}</h2>
-@if (empty($p->pmList) && $iswev = [FORK_MESS_INFO => ['Info zero']])
-        @include ('layouts/iswev')
+@empty ($p->pmList)
+    @php $iswev = [FORK_MESS_INFO => ['Info zero']]; @endphp
+    @include ('layouts/iswev')
 @else
         <div class="f-ftlist">
           <ol class="f-table">
@@ -40,9 +41,10 @@
               <div class="f-hcell f-clast">{!! __('Last post') !!}</div>
             </li>
     @foreach ($p->pmList as $id => $topic)
-        @if (empty($topic->id) && $iswev = [FORK_MESS_ERR => [['Dialogue %s was not found in the database', $id]]])
+        @empty ($topic->id)
+            @php $iswev = [FORK_MESS_ERR => [['Dialogue %s was not found in the database', $id]]]; @endphp
             <li id="ptopic-{{ $id }}" class="f-row">
-              @include ('layouts/iswev')
+            @include ('layouts/iswev')
             </li>
         @else
             <li id="ptopic-{{ $topic->id }}" class="f-row @if ($topic->hasNew) f-fnew @endif @if ($topic->closed) f-fclosed @endif">
@@ -85,11 +87,11 @@
                 <span class="f-clposter">{!! __(['by %s', $topic->last_poster]) !!}</span>
               </div>
             </li>
-        @endif
+        @endempty
     @endforeach
           </ol>
         </div>
-@endif
+@endempty
       </section>
 @if ($p->pagination || $p->form)
       <div class="f-pm f-nav-links">

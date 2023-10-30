@@ -38,7 +38,8 @@
       <section id="fork-uploads-files" class="f-admin">
         <h2>{!! __('File list head') !!}</h2>
         <div class="f-fdiv">
-@if (null !== $p->badPage && $iswev = [FORK_MESS_ERR => [['Page %s missing', $p->badPage]]])
+@if (null !== $p->badPage)
+    @php $iswev = [FORK_MESS_ERR => [['Page %s missing', $p->badPage]]]; @endphp
     @include ('layouts/iswev')
 @elseif ($form = $p->formFileList)
     @include ('layouts/form')
