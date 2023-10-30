@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace ForkBB\Models\Pages;
 
+use ForkBB\Core\Image;
 use ForkBB\Core\Validator;
 use ForkBB\Models\Model;
 use function \ForkBB\__;
@@ -103,10 +104,7 @@ trait PostValidatorTrait
     {
         $this->c->Lang->load('validator');
 
-        // обработка вложений + хак с добавление вложений в сообщение на лету
-        if (\is_string($attMessage = $this->attachmentsProc($marker, $args))) {
-            $_POST['message'] .= $attMessage;
-        }
+        $this->attachmentsProc($marker, $args);
 
         $notPM = $this->fIndex !== self::FI_PM;
 
@@ -297,55 +295,83 @@ trait PostValidatorTrait
     /**
      * Обрабатывает загруженные файлы
      */
-    protected function attachmentsProc(string $marker, array $args): ?string
+    protected function attachmentsProc(string $marker, array $args): void
     {
         if (! $this->userRules->useUpload) {
-            return null;
+            return;
         }
 
         $v = $this->c->Validator->reset()
             ->addValidators([
-                'check_attach'   => [$this, 'vCheckAttach'],
+                'check_attach' => [$this, 'vCheckAttach'],
             ])->addRules([
-                'token'        => 'token:' . $marker,
-                'attachments'  => "file:multiple|max:{$this->user->g_up_size_kb}|check_attach",
+                'token'       => 'token:' . $marker,
+                'message'     => 'string:trim',
+                'attachments' => "file:multiple|max:{$this->user->g_up_size_kb}|check_attach",
             ])->addAliases([
-                'attachments'  => 'Attachments',
+                'attachments' => 'Attachments',
             ])->addArguments([
-                'token'        => $args,
+                'token' => $args,
             ])->addMessages([
             ]);
 
         if (! $v->validation($_FILES + $_POST)) {
             $this->fIswev = $v->getErrors();
 
-            return null;
-        } elseif (! \is_array($v->attachments)) {
-            return null;
+            return;
         }
 
-        $result = "\n";
-        $calc   = false;
+        $calc = false;
 
-        foreach ($v->attachments as $file) {
-            $data = $this->c->attachments->addFile($file);
+        // костыль с конвертацией картинок из base64 в файлы
+        $_POST['message'] = \preg_replace_callback(
+            '%\[img\](data:[\w/.+-]*+;base64,[a-zA-Z0-9/+=]++)\[/img\]%',
+            function ($matches) use ($calc) {
+                $file = $this->c->Files->uploadFromLink($matches[1]);
 
-            if (\is_array($data)) {
-                $name = $file->name();
-                $calc = true;
-
-                if ($data['image']) {
-                    $result .= "[img]{$data['url']}[/img]\n"; // ={$name}
-                } else {
-                    $result .= "[url={$data['url']}]{$name}[/url]\n";
+                if (! $file instanceof Image) {
+                    return $this->c->Files->error() ?? 'Bad image';
                 }
+
+                $data = $this->c->attachments->addFile($file);
+
+                if (\is_array($data)) {
+                    $calc = true;
+
+                    return "[img]{$data['url']}[/img]";
+                } else {
+                    return 'Bad file';
+                }
+            },
+            (string) $v->message
+        );
+
+        if (\is_array($v->attachments)) {
+            $result = '';
+
+            foreach ($v->attachments as $file) {
+                $data = $this->c->attachments->addFile($file);
+
+                if (\is_array($data)) {
+                    $name = $file->name();
+                    $calc = true;
+
+                    if ($data['image']) {
+                        $result .= "\n[img]{$data['url']}[/img]"; // ={$name}
+                    } else {
+                        $result .= "\n[url={$data['url']}]{$name}[/url]";
+                    }
+                }
+            }
+
+            // костыль с добавление вложений в сообщение на лету
+            if ('' !== $result) {
+                $_POST['message'] .= $result;
             }
         }
 
         if ($calc) {
             $this->c->attachments->recalculate($this->user);
         }
-
-        return $result;
     }
 }
