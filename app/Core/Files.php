@@ -978,11 +978,7 @@ class Files
 
         $name = \trim(\preg_replace(['%[^\w-]+%', '%_+%'], ['-', '_'], $name), '-_');
 
-        if (! isset($name[0])) {
-            $name = (string) \time();
-        }
-
-        return $name;
+        return isset($name[0]) ? $name : (string) \time();
     }
 
     /**
@@ -1095,32 +1091,16 @@ class Files
     protected function uploadFile(array $file, bool $isUploaded = true): ?File
     {
         if (\UPLOAD_ERR_OK !== $file['error']) {
-            switch ($file['error']) {
-                case \UPLOAD_ERR_INI_SIZE:
-                    $this->error = 'The uploaded file exceeds the upload_max_filesize';
-                    break;
-                case \UPLOAD_ERR_FORM_SIZE:
-                    $this->error = 'The uploaded file exceeds the MAX_FILE_SIZE';
-                    break;
-                case \UPLOAD_ERR_PARTIAL:
-                    $this->error = 'The uploaded file was only partially uploaded';
-                    break;
-                case \UPLOAD_ERR_NO_FILE:
-                    $this->error = 'No file was uploaded';
-                    break;
-                case \UPLOAD_ERR_NO_TMP_DIR:
-                    $this->error = 'Missing a temporary folder';
-                    break;
-                case \UPLOAD_ERR_CANT_WRITE:
-                    $this->error = 'Failed to write file to disk';
-                    break;
-                case \UPLOAD_ERR_EXTENSION:
-                    $this->error = 'A PHP extension stopped the file upload';
-                    break;
-                default:
-                    $this->error = 'Unknown upload error';
-                    break;
-            }
+            $this->error = match ($file['error']) {
+                \UPLOAD_ERR_INI_SIZE   => 'The uploaded file exceeds the upload_max_filesize',
+                \UPLOAD_ERR_FORM_SIZE  => 'The uploaded file exceeds the MAX_FILE_SIZE',
+                \UPLOAD_ERR_PARTIAL    => 'The uploaded file was only partially uploaded',
+                \UPLOAD_ERR_NO_FILE    => 'No file was uploaded',
+                \UPLOAD_ERR_NO_TMP_DIR => 'Missing a temporary folder',
+                \UPLOAD_ERR_CANT_WRITE => 'Failed to write file to disk',
+                \UPLOAD_ERR_EXTENSION  => 'A PHP extension stopped the file upload',
+                default                => 'Unknown upload error',
+            };
 
             return null;
         }
@@ -1148,16 +1128,22 @@ class Files
             $ext  = \mb_strtolower(\substr($file['name'], $pos + 1), 'UTF-8');
         }
 
-        $imageExt = $this->imageExt($file['tmp_name']);
+        $mimeType = $this->mimeType($file['tmp_name']);
 
-        if (\is_string($imageExt)) {
+        if (! isset($this->mimeToExt[$mimeType])) {
+            $this->error = "Unknown mime type of the file: {$mimeType}";
+
+            return null;
+        }
+
+        if (isset($this->imageType[$mimeType])) {
             if ($file['size'] > $this->maxImgSize) {
                 $this->error = 'The image too large';
 
                 return null;
             }
 
-            $ext       = $imageExt;
+            $ext       = $this->imageType[$mimeType];
             $className = Image::class;
         } else {
             if ($file['size'] > $this->maxFileSize) {
@@ -1167,14 +1153,6 @@ class Files
             }
 
             $className = File::class;
-        }
-
-        $mimeType = $this->mimeType($file['tmp_name']);
-
-        if (! isset($this->mimeToExt[$mimeType])) {
-            $this->error = "Unknown mime type of the file: {$mimeType}";
-
-            return null;
         }
 
         $realExt = $this->mimeToExt[$mimeType];
@@ -1201,20 +1179,31 @@ class Files
     }
 
     /**
-     * Получает файл по внешней ссылке
+     * Получает файл по внешней ссылке или из строки data:...;base64,...
      */
     public function uploadFromLink(string $url): ?File
     {
-        $cmpn = \parse_url($url);
+        if (\preg_match('%^data:(.*?);base64,%', $url, $matches)) {
+            $name   = '';
+            $type   = $matches[1];
+            $offset = \strlen($matches[0]);
+        } else {
+            $cmpn = \parse_url($url);
 
-        if (
-            ! isset($cmpn['scheme'], $cmpn['host'], $cmpn['path'])
-            || ! \in_array($cmpn['scheme'], ['https', 'http'], true)
-        ) {
-            $this->error = 'Bad url';
+            if (
+                ! isset($cmpn['scheme'], $cmpn['host'], $cmpn['path'])
+                || ! \in_array($cmpn['scheme'], ['https', 'http'], true)
+            ) {
+                $this->error = 'Bad url';
 
-            return null;
+                return null;
+            }
+
+            $name   = \basename($cmpn['path']) ?: '';
+            $type   = '';
+            $offset = 0;
         }
+
 
         $tmpName = $this->c->DIR_CACHE . '/' .  $this->c->Secury->randomPass(32) . '.tmp';
 
@@ -1230,7 +1219,21 @@ class Files
 
         $result = null;
 
-        if (\extension_loaded('curl')) {
+        if ($offset > 0) {
+            $content = \base64_decode(\substr($url, $offset), true);
+
+            if (false === $content) {
+                $this->error = 'Bad base64';
+
+                return null;
+            }
+
+            $result = (bool) @\fwrite($tmpFile, $content);
+
+            if (false === $result) {
+                $this->error = "Failed fwrite() to temp file";
+            }
+        } elseif (\extension_loaded('curl')) {
             $result = $this->curlAction($url, $tmpFile);
         } elseif (\filter_var(\ini_get('allow_url_fopen'), \FILTER_VALIDATE_BOOL)) {
             $result = $this->streamAction($url, $tmpFile);
@@ -1242,8 +1245,8 @@ class Files
             return $this->uploadFile(
                 [
                     'tmp_name' => $tmpName,
-                    'name'     => \basename($cmpn['path']) ?: '',
-                    'type'     => '',
+                    'name'     => $name,
+                    'type'     => $type,
                     'error'    => \UPLOAD_ERR_OK,
                     'size'     => \filesize($tmpName),
                 ],
