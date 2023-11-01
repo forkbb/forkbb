@@ -175,7 +175,7 @@ class Logs extends Admin
         $data = $this->c->LogViewer->parse($path);
 
         foreach ($data as &$cur) {
-            $cur['context'] = \print_r($cur['context'], true);
+            $cur['context'] = \preg_replace('%^\s*Array\s*\(\n(.+)\n\)\s*$%s', '$1', \print_r($cur['context'], true));
         }
 
         unset($cur);
