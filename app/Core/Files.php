@@ -972,7 +972,7 @@ class Files
     public function filterName(string $name): string
     {
         $name = \transliterator_transliterate(
-            "Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; Lower();",
+            'Any-Latin; Latin-ASCII; Lower()', // "Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; Lower();",
             $name
         );
 
