@@ -320,7 +320,7 @@ class Func
         }
 
         if (true === $conf['WtoHyphen']) {
-            $str = \trim(\preg_replace(['%[^\w-]+%u', '%_+%'], ['-', '_'], $str), '-_');
+            $str = \trim(\preg_replace(['%[^\w]+%u', '%_+%'], ['-', '_'], $str), '-_');
         }
 
         return isset($str[0]) ? $str : '-';

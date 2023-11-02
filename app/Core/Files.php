@@ -976,7 +976,7 @@ class Files
             $name
         );
 
-        $name = \trim(\preg_replace(['%[^\w-]+%', '%_+%'], ['-', '_'], $name), '-_');
+        $name = \trim(\preg_replace(['%[^\w]+%', '%_+%'], ['-', '_'], $name), '-_');
 
         return isset($name[0]) ? $name : (string) \time();
     }
