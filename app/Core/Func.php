@@ -302,4 +302,27 @@ class Func
             return $timestamp;
         }
     }
+
+    /**
+     * Преобразует строку в соотвествии с правилами FRIENDLY_URL
+     */
+    public function friendly(string $str): string
+    {
+        $conf = $this->c->FRIENDLY_URL;
+        $rule = $conf['translit'];
+
+        if (true === $conf['lowercase']) {
+            $rule .= 'Lower();';
+        }
+
+        if ('' !== $rule) {
+            $str = \transliterator_transliterate($rule, $str);
+        }
+
+        if (true === $conf['WtoHyphen']) {
+            $str = \trim(\preg_replace(['%[^\w-]+%u', '%_+%'], ['-', '_'], $str), '-_');
+        }
+
+        return isset($str[0]) ? $str : '-';
+    }
 }

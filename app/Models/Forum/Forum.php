@@ -129,7 +129,7 @@ class Forum extends DataModel
                 'Forum',
                 [
                     'id'   => $this->id,
-                    'name' => $this->forum_name,
+                    'name' => $this->c->Func->friendly($this->forum_name),
                 ]
             );
         }
@@ -261,7 +261,7 @@ class Forum extends DataModel
                         'User',
                         [
                             'id'   => $id,
-                            'name' => $cur,
+                            'name' => $this->c->Func->friendly($cur),
                         ]
                     )
                     : null,
@@ -391,7 +391,7 @@ class Forum extends DataModel
             'Forum',
             [
                 'id'   => $this->id,
-                'name' => $this->forum_name,
+                'name' => $this->c->Func->friendly($this->forum_name),
             ]
         );
     }

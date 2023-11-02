@@ -74,6 +74,11 @@ return [
     ],
     'DATE_FORMATS' => ['Y-m-d', 'd M Y', 'Y-m-d', 'Y-d-m', 'd-m-Y', 'm-d-Y', 'M j Y', 'jS M Y'],
     'TIME_FORMATS' => ['H:i:s', 'H:i', 'H:i:s', 'H:i', 'g:i:s a', 'g:i a'],
+    'FRIENDLY_URL' => [
+        'lowercase' => true,
+        'translit'  => 'Russian-Latin/BGN;Any-Latin;Latin-ASCII;',
+        'WtoHyphen' => true,
+    ],
 
     'shared' => [
         '%DIR_ROOT%'   => \realpath(__DIR__ . '/../..'),

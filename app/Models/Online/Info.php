@@ -37,7 +37,7 @@ class Info extends Method
                         'User',
                         [
                             'id'   => $id,
-                            'name' => $name,
+                            'name' => $this->c->Func->friendly($name),
                         ]
                     )
                     : null,

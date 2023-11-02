@@ -101,7 +101,7 @@ class Topic extends DataModel
             'Topic',
             [
                 'id'   => $this->moved_to ?: $this->id,
-                'name' => $this->name,
+                'name' => $this->c->Func->friendly($this->name),
             ]
         );
     }
@@ -329,7 +329,7 @@ class Topic extends DataModel
                 'Topic',
                 [
                     'id'   => $this->id,
-                    'name' => $this->name,
+                    'name' => $this->c->Func->friendly($this->name),
                 ]
             );
         }

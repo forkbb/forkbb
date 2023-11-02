@@ -168,7 +168,7 @@ class User extends DataModel
                 'User',
                 [
                     'id'   => $this->id,
-                    'name' => $this->username,
+                    'name' => $this->c->Func->friendly($this->username),
                 ]
             );
         }

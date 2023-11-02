@@ -979,4 +979,26 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.70 to rev.71
+     */
+    protected function stageNumber70(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'FRIENDLY_URL',
+            [
+                'lowercase' => 'false',
+                'translit'  => '\'\'',
+                'WtoHyphen' => 'false',
+            ],
+            'TIME_FORMATS'
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }

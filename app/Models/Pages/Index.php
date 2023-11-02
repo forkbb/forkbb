@@ -31,7 +31,7 @@ class Index extends Page
                     'User',
                     [
                         'id'   => $this->c->stats->userLast['id'],
-                        'name' => $this->c->stats->userLast['username'],
+                        'name' => $this->c->Func->friendly($this->c->stats->userLast['username']),
                     ]
                 )
                 : null,

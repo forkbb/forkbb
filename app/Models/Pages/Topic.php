@@ -136,14 +136,7 @@ class Topic extends Page
         $this->nameTpl      = 'topic';
         $this->onlinePos    = 'topic-' . $topic->id;
         $this->onlineDetail = true;
-        $this->canonical    = $this->c->Router->link(
-            'Topic',
-            [
-                'id'   => $topic->id,
-                'name' => $topic->name,
-                'page' => $topic->page
-            ]
-        );
+        $this->canonical    = $topic->link;
         $this->model        = $topic;
         $this->crumbs       = $this->crumbs($topic);
         $this->online       = $this->c->Online->calc($this)->info();
