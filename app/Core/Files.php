@@ -15,6 +15,7 @@ use ForkBB\Core\File;
 use ForkBB\Core\Image;
 use ForkBB\Core\Image\DefaultDriver;
 use ForkBB\Core\Exceptions\FileException;
+use Transliterator;
 use InvalidArgumentException;
 use RuntimeException;
 
@@ -54,6 +55,11 @@ class Files
      * Временные файлы
      */
     protected array $tmpFiles = [];
+
+    /**
+     * Для кэширования транслитератора
+     */
+    protected Transliterator|false|null $transl = null;
 
     /**
      * Список mime типов считающихся картинками
@@ -971,10 +977,13 @@ class Files
      */
     public function filterName(string $name): string
     {
-        $name = \transliterator_transliterate(
-            'Any-Latin; Latin-ASCII; Lower()', // "Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; Lower();",
-            $name
-        );
+        if (null === $this->transl) {
+            $this->transl = Transliterator::create('Any-Latin;Latin-ASCII;Lower();') ?? false;
+        }
+
+        if ($this->transl instanceof Transliterator) {
+            $name = $this->transl->transliterate($name);
+        }
 
         $name = \trim(\preg_replace(['%[^\w]+%', '%_+%'], ['-', '_'], $name), '-_');
 
