@@ -13,6 +13,7 @@ namespace ForkBB\Core;
 use ForkBB\Core\Container;
 use DateTime;
 use DateTimeZone;
+use Transliterator;
 use function \ForkBB\__;
 
 class Func
@@ -37,8 +38,14 @@ class Func
      */
     protected ?int $offset = null;
 
+    /**
+     * Копия $this->c->FRIENDLY_URL
+     */
+    protected array $fUrl;
+
     public function __construct(protected Container $c)
     {
+        $this->fUrl = $this->c->FRIENDLY_URL;
     }
 
     /**
@@ -304,22 +311,32 @@ class Func
     }
 
     /**
+     * Для кэширования транслитератора
+     */
+    protected Transliterator|false|null $transl = null;
+
+    /**
      * Преобразует строку в соотвествии с правилами FRIENDLY_URL
      */
     public function friendly(string $str): string
     {
-        $conf = $this->c->FRIENDLY_URL;
-        $rule = $conf['translit'];
-
-        if (true === $conf['lowercase']) {
-            $rule .= 'Lower();';
+        if (null === $this->transl) {
+            if (empty($this->fUrl['translit'])) {
+                $this->transl = false;
+            } else {
+                $this->transl = Transliterator::create($this->fUrl['translit']) ?? false;
+            }
         }
 
-        if ('' !== $rule) {
-            $str = \transliterator_transliterate($rule, $str);
+        if ($this->transl instanceof Transliterator) {
+            $str = $this->transl->transliterate($str);
         }
 
-        if (true === $conf['WtoHyphen']) {
+        if (true === $this->fUrl['lowercase']) {
+            $str = \mb_strtolower($str, 'UTF-8');
+        }
+
+        if (true === $this->fUrl['WtoHyphen']) {
             $str = \trim(\preg_replace(['%[^\w]+%u', '%_+%'], ['-', '_'], $str), '-_');
         }
 
