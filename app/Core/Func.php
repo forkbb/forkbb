@@ -43,6 +43,11 @@ class Func
      */
     protected array $fUrl;
 
+    /**
+     * Для кэширования транслитератора
+     */
+    protected Transliterator|false|null $transl = null;
+
     public function __construct(protected Container $c)
     {
         $this->fUrl = $this->c->FRIENDLY_URL;
@@ -309,11 +314,6 @@ class Func
             return $timestamp;
         }
     }
-
-    /**
-     * Для кэширования транслитератора
-     */
-    protected Transliterator|false|null $transl = null;
 
     /**
      * Преобразует строку в соотвествии с правилами FRIENDLY_URL
