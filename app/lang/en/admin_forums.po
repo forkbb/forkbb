@@ -134,3 +134,9 @@ msgstr "If YES, then new messages from users in this forum will increase their c
 
 msgid "<span></span>"
 msgstr "<span></span>"
+
+msgid "Friendly name label"
+msgstr "Name for URL"
+
+msgid "Friendly name help"
+msgstr "A string identifier on the basis of which the url to this forum will be generated. May consist of Latin letters, numbers, underscores and hyphens."

@@ -362,6 +362,7 @@ class Forums extends Admin
                 ->addRules([
                     'token'                => 'token:' . $marker,
                     'forum_name'           => 'required|string:trim|max:80',
+                    'friendly_name'        => 'string:trim|max:80|regex:%^[\w-]*$%',
                     'forum_desc'           => 'exist|string:trim|max:65000 bytes|html',
                     'parent'               => 'required|integer|in:' . \implode(',', $this->listOfIndexes),
                     'sort_by'              => 'required|integer|in:0,1,2,4,5,6',
@@ -379,11 +380,12 @@ class Forums extends Admin
 
             $valid = $v->validation($_POST);
 
-            $forum->forum_name   = $v->forum_name;
-            $forum->forum_desc   = $v->forum_desc;
-            $forum->sort_by      = $v->sort_by;
-            $forum->redirect_url = $v->redirect_url ?? '';
-            $forum->no_sum_mess  = $v->no_sum_mess;
+            $forum->forum_name    = $v->forum_name;
+            $forum->friendly_name = \trim($v->friendly_name, '_-');
+            $forum->forum_desc    = $v->forum_desc;
+            $forum->sort_by       = $v->sort_by;
+            $forum->redirect_url  = $v->redirect_url ?? '';
+            $forum->no_sum_mess   = $v->no_sum_mess;
 
             if ($v->parent > 0) {
                 $forum->parent_forum_id = $v->parent;
@@ -461,6 +463,13 @@ class Forums extends Admin
                     'value'     => $forum->forum_name,
                     'caption'   => 'Forum name label',
                     'required'  => true,
+                ],
+                'friendly_name' => [
+                    'type'      => 'text',
+                    'maxlength' => '80',
+                    'value'     => $forum->friendly_name,
+                    'caption'   => 'Friendly name label',
+                    'help'      => 'Friendly name help',
                 ],
                 'forum_desc' => [
                     'type'    => 'textarea',

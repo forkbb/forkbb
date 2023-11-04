@@ -37,7 +37,7 @@ class Refresh extends Action
             $vars = [
                 ':gid' => $gid,
             ];
-            $query = 'SELECT f.cat_id, c.cat_name, f.id, f.forum_name, f.redirect_url, f.parent_forum_id,
+            $query = 'SELECT f.cat_id, c.cat_name, f.id, f.forum_name, f.friendly_name, f.redirect_url, f.parent_forum_id,
                     f.moderators, f.no_sum_mess, f.disp_position, f.sort_by, fp.post_topics, fp.post_replies
                 FROM ::categories AS c
                 INNER JOIN ::forums AS f ON c.id=f.cat_id

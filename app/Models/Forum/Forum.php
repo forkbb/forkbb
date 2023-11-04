@@ -48,6 +48,14 @@ class Forum extends DataModel
     }
 
     /**
+     * Возвращает название для формирования URL
+     */
+    protected function getfriendly(): ?string
+    {
+        return isset($this->friendly_name[0]) ? $this->friendly_name : $this->forum_name;
+    }
+
+    /**
      * Статус возможности создания новой темы
      */
     protected function getcanCreateTopic(): bool
@@ -129,7 +137,7 @@ class Forum extends DataModel
                 'Forum',
                 [
                     'id'   => $this->id,
-                    'name' => $this->c->Func->friendly($this->forum_name),
+                    'name' => $this->friendly,
                 ]
             );
         }
@@ -391,7 +399,7 @@ class Forum extends DataModel
             'Forum',
             [
                 'id'   => $this->id,
-                'name' => $this->c->Func->friendly($this->forum_name),
+                'name' => $this->friendly,
             ]
         );
     }

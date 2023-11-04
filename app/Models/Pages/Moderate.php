@@ -284,7 +284,7 @@ class Moderate extends Page
                 'Forum',
                 [
                     'id'   => $this->curForum->id,
-                    'name' => $this->curForum->forum_name,
+                    'name' => $this->curForum->friendly,
                     'page' => $v->page,
                 ]
             );

@@ -48,7 +48,7 @@ class Forum extends Page
             'Forum',
             [
                 'id'   => $args['id'],
-                'name' => $this->c->Func->friendly($forum->forum_name),
+                'name' => $forum->friendly,
                 'page' => $forum->page,
             ]
         );
@@ -156,7 +156,7 @@ class Forum extends Page
             'Forum',
             [
                 'id'   => $forum->id,
-                'name' => $forum->forum_name,
+                'name' => $forum->friendly,
                 'page' => $forum->page,
                 '#'    => "topic-{$topic->id}",
             ]
