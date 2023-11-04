@@ -1001,4 +1001,27 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.71 to rev.72
+     */
+    protected function stageNumber71(array $args): ?int
+    {
+        switch ($args['start'] ?? 1) {
+            case 2:
+                return null;
+            default:
+                $coreConfig = new CoreConfig($this->configFile);
+
+                $coreConfig->add(
+                    'FRIENDLY_URL=>file',
+                    '\'translit.default.php\'',
+                    'WtoHyphen'
+                );
+
+                $coreConfig->save();
+
+                return 2;
+        }
+    }
 }

@@ -64,6 +64,7 @@ return [
         'lowercase' => true,
         'translit'  => 'Russian-Latin/BGN;Any-Latin;Latin-ASCII;',
         'WtoHyphen' => true,
+        'file'      => 'translit.default.php',
     ],
 
     'forConfig' => [

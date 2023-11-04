@@ -48,6 +48,11 @@ class Func
      */
     protected Transliterator|false|null $transl = null;
 
+    /**
+     * Массив подмены символов перед/вместо траслитератор(ом/а)
+     */
+    protected ?array $translArray;
+
     public function __construct(protected Container $c)
     {
         $this->fUrl = $this->c->FRIENDLY_URL;
@@ -321,11 +326,31 @@ class Func
     public function friendly(string $str): string
     {
         if (null === $this->transl) {
+            $useFile = false;
+
             if (empty($this->fUrl['translit'])) {
                 $this->transl = false;
+            } elseif (true === $this->fUrl['translit']) {
+                $this->transl = false;
+                $useFile      = true;
             } else {
                 $this->transl = Transliterator::create($this->fUrl['translit']) ?? false;
+
+                if ($this->transl instanceof Transliterator) {
+                    $useFile = true;
+                }
             }
+
+            if (
+                true === $useFile
+                && ! empty($this->fUrl['file'])
+            ) {
+                $this->translArray = include "{$this->c->DIR_CONFIG}/{$this->fUrl['file']}";
+            }
+        }
+
+        if (! empty($this->translArray)) {
+            $str = \strtr($str, $this->translArray);
         }
 
         if ($this->transl instanceof Transliterator) {
