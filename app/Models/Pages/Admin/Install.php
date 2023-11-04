@@ -839,6 +839,7 @@ class Install extends Admin
             'FIELDS' => [
                 'id'              => ['SERIAL', false],
                 'forum_name'      => ['VARCHAR(80)', false, 'New forum'],
+                'friendly_name'   => ['VARCHAR(80)', false, ''],
                 'forum_desc'      => ['TEXT', false],
                 'redirect_url'    => ['VARCHAR(255)', false, ''],
                 'moderators'      => ['TEXT', false],

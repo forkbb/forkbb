@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.0.0';
     const REV_MIN_FOR_UPDATE         = 53;
-    const LATEST_REV_WITH_DB_CHANGES = 70;
+    const LATEST_REV_WITH_DB_CHANGES = 72;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const CONFIG_FILE                = 'main.php';
@@ -1008,8 +1008,32 @@ class Update extends Admin
     protected function stageNumber71(array $args): ?int
     {
         switch ($args['start'] ?? 1) {
-            case 2:
+            case 3:
+                $f = $this->c->FRIENDLY_URL;
+
+                if (
+                    ! empty($f['lowercase'])
+                    || ! empty($f['translit'])
+                    || ! empty($f['WtoHyphen'])
+                ) {
+
+                    $names = $this->c->DB->query('SELECT id, forum_name FROM ::forums WHERE redirect_url=\'\' ORDER BY id')->fetchAll(PDO::FETCH_KEY_PAIR);
+                    $query = 'UPDATE ::forums SET friendly_name=?s:name WHERE id=?i:id';
+
+                    foreach ($names as $id => $name) {
+                        $vars = [
+                            ':id'   => $id,
+                            ':name' => \mb_substr($this->c->Func->friendly($name), 0, 80, 'UTF-8'),
+                        ];
+                        $this->c->DB->exec($query, $vars);
+                    }
+                }
+
                 return null;
+            case 2:
+                $this->c->DB->addField('::forums', 'friendly_name', 'VARCHAR(80)', false, '', null, 'forum_name');
+
+                return 3;
             default:
                 $coreConfig = new CoreConfig($this->configFile);
 
