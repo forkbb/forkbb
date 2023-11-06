@@ -76,7 +76,7 @@ return [
     'TIME_FORMATS' => ['H:i:s', 'H:i', 'H:i:s', 'H:i', 'g:i:s a', 'g:i a'],
     'FRIENDLY_URL' => [
         'lowercase' => true,
-        'translit'  => 'Russian-Latin/BGN;Any-Latin;Latin-ASCII;',
+        'translit'  => true, // 'Any-Latin;Latin-ASCII;',
         'WtoHyphen' => true,
         'file'      => 'translit.default.php',
     ],
