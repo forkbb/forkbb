@@ -331,6 +331,10 @@ class Maintenance extends Admin
             throw new RuntimeException('Unable to clear cache');
         }
 
+        if (\function_exists('\\opcache_reset')) {
+            \opcache_reset();
+        }
+
         return $this->c->Redirect->page('AdminMaintenance')->message('Clear cache redirect', FORK_MESS_SUCC);
     }
 }
