@@ -51,7 +51,7 @@ class Func
     /**
      * Массив подмены символов перед/вместо траслитератор(ом/а)
      */
-    protected ?array $translArray;
+    protected ?array $translArray = null;
 
     public function __construct(protected Container $c)
     {
@@ -325,36 +325,23 @@ class Func
      */
     public function friendly(string $str): string
     {
-        if (null === $this->transl) {
-            $useFile = false;
+        if (! empty($this->fUrl['translit'])) {
+            if (! empty($this->fUrl['file'])) {
+                $this->translArray ??= include "{$this->c->DIR_CONFIG}/{$this->fUrl['file']}";
 
-            if (empty($this->fUrl['translit'])) {
-                $this->transl = false;
-            } elseif (true === $this->fUrl['translit']) {
-                $this->transl = false;
-                $useFile      = true;
-            } else {
-                $this->transl = Transliterator::create($this->fUrl['translit']) ?? false;
-
-                if ($this->transl instanceof Transliterator) {
-                    $useFile = true;
-                }
+                $str = \strtr($str, $this->translArray);
             }
 
             if (
-                true === $useFile
-                && ! empty($this->fUrl['file'])
+                \is_string($this->fUrl['translit'])
+                && \preg_match('%[\x80-\xFF]%', $str)
             ) {
-                $this->translArray = include "{$this->c->DIR_CONFIG}/{$this->fUrl['file']}";
+                $this->transl ??= Transliterator::create($this->fUrl['translit']) ?? false;
+
+                if ($this->transl instanceof Transliterator) {
+                    $str = $this->transl->transliterate($str);
+                }
             }
-        }
-
-        if (! empty($this->translArray)) {
-            $str = \strtr($str, $this->translArray);
-        }
-
-        if ($this->transl instanceof Transliterator) {
-            $str = $this->transl->transliterate($str);
         }
 
         if (true === $this->fUrl['lowercase']) {
