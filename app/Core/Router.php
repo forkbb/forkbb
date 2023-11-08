@@ -234,7 +234,12 @@ class Router
         }
 
         $pos  = \strpos($uri, '/', 1);
-        $base = false === $pos ? $uri : \substr($uri, 0, $pos);
+
+        if (false === $pos) {
+            $base = isset($this->dynamic[$uri]) ? $uri : '/';
+        } else {
+            $base = \substr($uri, 0, $pos);
+        }
 
         if (isset($this->dynamic[$base])) {
             foreach ($this->dynamic[$base] as $pattern => $data) {
