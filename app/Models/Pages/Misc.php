@@ -238,7 +238,7 @@ class Misc extends Page
             $this->sitemap[$this->c->Router->link('Index')] = null;
         }
 
-        $this->onlinePos    = null;
+        $this->onlinePos    = 'sitemap';
         $this->onlineDetail = null;
 
         $this->header('Content-type', 'application/xml; charset=utf-8');
