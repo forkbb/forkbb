@@ -29,6 +29,13 @@ class Routing
         $config    = $this->c->config;
         $r         = $this->c->Router;
 
+        $r->add(
+            $r::GET,
+            '/sitemap{id:\d*}.xml',
+            'Misc:sitemap',
+            'Sitemap'
+        );
+
         // регистрация/вход/выход
         if ($user->isGuest) {
             // вход

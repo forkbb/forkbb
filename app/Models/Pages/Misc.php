@@ -13,7 +13,7 @@ namespace ForkBB\Models\Pages;
 use ForkBB\Models\Page;
 use ForkBB\Models\Forum\Forum;
 use ForkBB\Models\Topic\Topic;
-use function \ForkBB\__;
+use function \ForkBB\{__, num};
 
 class Misc extends Page
 {
@@ -135,5 +135,121 @@ class Misc extends Page
         );
 
         return $this->c->Message->message(['Confirm your email address', $link], true, 100);
+    }
+
+    public array $sitemap = [];
+
+    /**
+     * Вывод sitemap
+     */
+    public function sitemap(array $args): Page
+    {
+        $gGroup = $this->c->groups->get(FORK_GROUP_GUEST);
+        $forums = $this->c->ForumManager->init($gGroup);
+        $id     = null === $args['id'] ? null : (int) $args['id'];
+        $max    = 50000;
+
+        $this->nameTpl = 'sitemap';
+
+        // sitemap.xml
+        if (null === $id) {
+            foreach ($forums->loadTree(0)->descendants as $forum) {
+                if ($forum->last_post > 0) {
+                    $this->sitemap[$this->c->Router->link('Sitemap', ['id' => $forum->id])] = $forum->last_post;
+                }
+            }
+
+            if (1 === $gGroup->g_view_users) {
+                $this->sitemap[$this->c->Router->link('Sitemap', ['id' => 0])] = null;
+            }
+
+            $this->nameTpl = 'sitemap_index';
+
+        // sitemap0.xml
+        } elseif (0 === $id) {
+            if (1 !== $gGroup->g_view_users) {
+                return $this->c->Message->message('Bad request');
+            }
+
+            $vars = [
+                ':max' => $max,
+            ];
+            $query = 'SELECT u.id, u.username
+                FROM ::users AS u
+                WHERE u.last_post!=0
+                ORDER BY u.id DESC
+                LIMIT ?i:max';
+
+            $stmt = $this->c->DB->query($query, $vars);
+
+            while ($cur = $stmt->fetch()) {
+                $name = $this->c->Func->friendly($cur['username']);
+
+                $this->sitemap[$this->c->Router->link(
+                    'User',
+                    [
+                        'id'   => $cur['id'],
+                        'name' => $name,
+                    ]
+                )] = null;
+            }
+
+        // sitemapN.xml
+        } else {
+            $forum = $forums->get($id);
+
+            if (! $forum instanceof Forum) {
+                return $this->c->Message->message('Bad request');
+            }
+
+            $dpd = $this->c->config->i_disp_posts_default;
+
+            $vars = [
+                ':fid' => $forum->id,
+            ];
+            $query = 'SELECT t.id, t.subject, t.last_post, t.num_replies
+                FROM ::topics AS t
+                WHERE t.moved_to=0 AND t.forum_id=?i:fid
+                ORDER BY t.last_post DESC';
+
+            $stmt = $this->c->DB->query($query, $vars);
+
+            while ($cur = $stmt->fetch()) {
+                $name = $this->c->Func->friendly($cur['subject']);
+                $page = (int) \ceil(($cur['num_replies'] + 1) / $dpd);
+                $last = $cur['last_post'];
+
+                for (; $max > 0 && $page > 0; --$max, --$page) {
+                    $this->sitemap[$this->c->Router->link(
+                        'Topic',
+                        [
+                            'id'   => $cur['id'],
+                            'name' => $name,
+                            'page' => $page,
+                        ]
+                    )] = $last;
+
+                    $last = null;
+                }
+            }
+        }
+
+        if (empty($this->sitemap)) {
+            $this->sitemap[$this->c->Router->link('Index')] = null;
+        }
+
+        $this->onlinePos    = null;
+        $this->onlineDetail = null;
+
+        $this->header('Content-type', 'application/xml; charset=utf-8');
+
+        $d = num(\microtime(true) - $this->c->START, 3);
+
+        $this->c->Log->debug("{$this->nameTpl} : {$id} : time = {$d}", [
+            'user'    => $this->user->fLog(),
+            'headers' => true,
+        ]);
+
+        return $this;
     }
 }
