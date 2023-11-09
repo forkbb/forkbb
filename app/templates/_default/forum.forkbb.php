@@ -68,7 +68,7 @@
         <div class="f-actions-links">
           <small>{!! __('ACTIONS') !!}</small>
           <small>|</small>
-          <span class="f-act-span"><a class="f-btn f-btn-create-topic" title="{{ __('Post topic') }}" href="{{ $p->model->linkCreateTopic }}"><span>{!! __('Post topic') !!}</span></a></span>
+          <span class="f-act-span"><a class="f-btn f-btn-create-topic" title="{{ __('Post topic') }}" href="{{ $p->model->linkCreateTopic }}" rel="nofollow"><span>{!! __('Post topic') !!}</span></a></span>
         </div>
     @endif
       </div>
@@ -205,7 +205,7 @@
             @endif
             @if ($p->model->canCreateTopic)
           <small>|</small>
-          <span class="f-act-span"><a class="f-btn f-btn-create-topic" title="{{ __('Post topic') }}" href="{{ $p->model->linkCreateTopic }}"><span>{!! __('Post topic') !!}</span></a></span>
+          <span class="f-act-span"><a class="f-btn f-btn-create-topic" title="{{ __('Post topic') }}" href="{{ $p->model->linkCreateTopic }}" rel="nofollow"><span>{!! __('Post topic') !!}</span></a></span>
             @endif
         </div>
         @endif

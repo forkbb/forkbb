@@ -42,7 +42,7 @@
         @endif
         @if ($p->model->canReply)
           <small>|</small>
-          <span class="f-act-span"><a class="f-btn f-btn-post-reply" title="{{ __('Post reply') }}" href="{{ $p->model->linkReply }}"><span>{!! __('Post reply') !!}</span></a></span>
+          <span class="f-act-span"><a class="f-btn f-btn-post-reply" title="{{ __('Post reply') }}" href="{{ $p->model->linkReply }}" rel="nofollow"><span>{!! __('Post reply') !!}</span></a></span>
         @endif
         </div>
     @endif
@@ -164,7 +164,7 @@
             @endif
             @if ($post->canQuote)
             <small>-</small>
-            <a class="f-btn f-postquote" title="{{ __('Quote') }}" href="{{ $post->linkQuote }}"><span>{!! __('Quote') !!}</span></a>
+            <a class="f-btn f-postquote" title="{{ __('Quote') }}" href="{{ $post->linkQuote }}" rel="nofollow"><span>{!! __('Quote') !!}</span></a>
             @endif
           </aside>
         @endif
@@ -191,7 +191,7 @@
         @endif
         @if ($p->model->canReply)
           <small>|</small>
-          <span class="f-act-span"><a class="f-btn f-btn-post-reply" title="{{ __('Post reply') }}" href="{{ $p->model->linkReply }}"><span>{!! __('Post reply') !!}</span></a></span>
+          <span class="f-act-span"><a class="f-btn f-btn-post-reply" title="{{ __('Post reply') }}" href="{{ $p->model->linkReply }}" rel="nofollow"><span>{!! __('Post reply') !!}</span></a></span>
         @endif
         </div>
     @endif
