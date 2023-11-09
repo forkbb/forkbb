@@ -13,7 +13,7 @@ namespace ForkBB\Models\Pages;
 use ForkBB\Models\Page;
 use ForkBB\Models\Forum\Forum;
 use ForkBB\Models\Topic\Topic;
-use function \ForkBB\{__, num};
+use function \ForkBB\__;
 
 class Misc extends Page
 {
@@ -151,8 +151,10 @@ class Misc extends Page
 
         $this->nameTpl = 'sitemap';
 
-        // sitemap.xml
-        if (null === $id) {
+        if (1 !== $gGroup->g_read_board) {
+
+        } elseif (null === $id) {
+            // sitemap.xml
             foreach ($forums->loadTree(0)->descendants as $forum) {
                 if ($forum->last_post > 0) {
                     $this->sitemap[$this->c->Router->link('Sitemap', ['id' => $forum->id])] = $forum->last_post;
@@ -165,8 +167,8 @@ class Misc extends Page
 
             $this->nameTpl = 'sitemap_index';
 
-        // sitemap0.xml
         } elseif (0 === $id) {
+            // sitemap0.xml
             if (1 !== $gGroup->g_view_users) {
                 return $this->c->Message->message('Bad request');
             }
@@ -194,8 +196,8 @@ class Misc extends Page
                 )] = null;
             }
 
-        // sitemapN.xml
         } else {
+            // sitemapN.xml
             $forum = $forums->get($id);
 
             if (! $forum instanceof Forum) {
@@ -234,22 +236,22 @@ class Misc extends Page
             }
         }
 
-        if (empty($this->sitemap)) {
-            $this->sitemap[$this->c->Router->link('Index')] = null;
-        }
-
         $this->onlinePos    = 'sitemap';
         $this->onlineDetail = null;
 
         $this->header('Content-type', 'application/xml; charset=utf-8');
 
-        $d = num(\microtime(true) - $this->c->START, 3);
+        $d = \number_format(\microtime(true) - $this->c->START, 3);
 
         $this->c->Log->debug("{$this->nameTpl} : {$id} : time = {$d}", [
             'user'    => $this->user->fLog(),
             'headers' => true,
         ]);
 
-        return $this;
+        if (empty($this->sitemap)) {
+            return $this->c->Message->message('Bad request');
+        } else {
+            return $this;
+        }
     }
 }
