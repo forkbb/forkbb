@@ -155,9 +155,13 @@ class Misc extends Page
 
         } elseif (null === $id) {
             // sitemap.xml
+            $available = false;
+
             foreach ($forums->loadTree(0)->descendants as $forum) {
                 if ($forum->last_post > 0) {
                     $this->sitemap[$this->c->Router->link('Sitemap', ['id' => $forum->id])] = $forum->last_post;
+
+                    $available = true;
                 }
             }
 
@@ -165,7 +169,46 @@ class Misc extends Page
                 $this->sitemap[$this->c->Router->link('Sitemap', ['id' => 0])] = null;
             }
 
+            if (true === $available) {
+                $this->sitemap[$this->c->Router->link('Sitemap', ['id' => 2147483647])] = null;
+            }
+
             $this->nameTpl = 'sitemap_index';
+
+        } elseif (2147483647 === $id) {
+            // sitemap2147483647.xml
+            $this->sitemap[$this->c->Router->link('Index')] = null;
+
+            --$max;
+
+            if (
+                1 === $this->c->config->b_rules
+                && 1 === $this->c->config->b_regs_allow
+            ) {
+                $this->sitemap[$this->c->Router->link('Rules')] = null;
+
+                --$max;
+            }
+
+            $dtd = $this->c->config->i_disp_topics_default;
+
+            foreach ($forums->loadTree(0)->descendants as $forum) {
+                if ($forum->last_post > 0) {
+                    $pages = (int) \ceil(($forum->num_topics ?: 1) / $dtd);
+                    $page  = 1;
+
+                    for (; $max > 0 && $page <= $pages; --$max, ++$page) {
+                        $this->sitemap[$this->c->Router->link(
+                            'Forum',
+                            [
+                                'id'   => $forum->id,
+                                'name' => $forum->friendly,
+                                'page' => $page,
+                            ]
+                        )] = null;
+                    }
+                }
+            }
 
         } elseif (0 === $id) {
             // sitemap0.xml
