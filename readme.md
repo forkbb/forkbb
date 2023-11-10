@@ -13,7 +13,7 @@ ForkBB is a free and open source forum software. The project is based on [FluxBB
 
 ## Install
 
-Topic [Установка (Installation)](https://forkbb.ru/topic/28/%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%28Installation%29)
+Topic [Установка (Installation)](https://forkbb.ru/topic/28/ustanovka-installation)
 
 ### For Apache:
 
