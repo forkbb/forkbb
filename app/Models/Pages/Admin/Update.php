@@ -1048,4 +1048,22 @@ class Update extends Admin
                 return 2;
         }
     }
+
+    /**
+     * rev.72 to rev.73
+     */
+    protected function stageNumber72(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'multiple=>Sitemap',
+            '\\ForkBB\\Models\\Pages\\Sitemap::class',
+            'Misc'
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }

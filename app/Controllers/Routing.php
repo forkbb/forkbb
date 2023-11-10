@@ -32,7 +32,7 @@ class Routing
         $r->add(
             $r::GET,
             '/sitemap{id:\d*}.xml',
-            'Misc:sitemap',
+            'Sitemap:view',
             'Sitemap'
         );
 

@@ -372,6 +372,7 @@ return [
         'Ban'                => \ForkBB\Models\Pages\Ban::class,
         'Debug'              => \ForkBB\Models\Pages\Debug::class,
         'Misc'               => \ForkBB\Models\Pages\Misc::class,
+        'Sitemap'            => \ForkBB\Models\Pages\Sitemap::class,
         'Moderate'           => \ForkBB\Models\Pages\Moderate::class,
         'Report'             => \ForkBB\Models\Pages\Report::class,
         'Email'              => \ForkBB\Models\Pages\Email::class,
