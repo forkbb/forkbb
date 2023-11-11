@@ -65,31 +65,9 @@ abstract class Page extends Model
 #       $this->canonical    = '';             # string      Переменная для link rel="canonical"
         $this->hhsLevel     = 'common';       # string      Ключ для $c->HTTP_HEADERS (для вывода заголовков HTTP из конфига)
 
-        $this->fTitle       = $container->config->o_board_title;
-        $this->fDescription = $container->config->o_board_desc;
-        $this->fRootLink    = $container->Router->link('Index');
-
-        $this->mDescription = $this->c->config->s_meta_desc;
-
-        if (! empty($this->c->config->a_og_image['file'])) {
-            $this->mOgImage  = $this->c->PUBLIC_URL . '/img/og/' . $this->c->config->a_og_image['file'];
-            $this->mOgImageX = $this->c->config->a_og_image['width'] ?? null;
-            $this->mOgImageY = $this->c->config->a_og_image['height'] ?? null;
-        }
-
-        if (1 === $container->config->b_announcement) {
-            $this->fAnnounce = $container->config->o_announcement_message;
-        }
-
         // передача текущего юзера и его правил в шаблон
         $this->user      = $this->c->user;
         $this->userRules = $this->c->userRules;
-
-        $this->pageHeader('mainStyle', 'link', 10000, [
-            'rel'  => 'stylesheet',
-            'type' => 'text/css',
-            'href' => $this->publicLink("/style/{$this->user->style}/style.css"),
-        ]);
 
         $now = \gmdate('D, d M Y H:i:s') . ' GMT';
 
@@ -106,6 +84,22 @@ abstract class Page extends Model
      */
     public function prepare(): void
     {
+        $this->fTitle       = $this->c->config->o_board_title;
+        $this->fDescription = $this->c->config->o_board_desc;
+        $this->fRootLink    = $this->c->Router->link('Index');
+
+        $this->mDescription = $this->c->config->s_meta_desc;
+
+        if (! empty($this->c->config->a_og_image['file'])) {
+            $this->mOgImage  = $this->c->PUBLIC_URL . '/img/og/' . $this->c->config->a_og_image['file'];
+            $this->mOgImageX = $this->c->config->a_og_image['width'] ?? null;
+            $this->mOgImageY = $this->c->config->a_og_image['height'] ?? null;
+        }
+
+        if (1 === $this->c->config->b_announcement) {
+            $this->fAnnounce = $this->c->config->o_announcement_message;
+        }
+
         // вспышка нового личного сообщения
         if (
             null !== $this->onlinePos
@@ -117,6 +111,12 @@ abstract class Page extends Model
 
             $this->c->users->update($this->user);
         }
+
+        $this->pageHeader('mainStyle', 'link', 10000, [
+            'rel'  => 'stylesheet',
+            'type' => 'text/css',
+            'href' => $this->publicLink("/style/{$this->user->style}/style.css"),
+        ]);
 
         $this->pageHeader('commonJS', 'script', 10000, [
             'src' => $this->publicLink('/js/common.js'),
