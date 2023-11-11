@@ -271,6 +271,7 @@ class View extends Profile
                         ]
                     ),
                     'title'   => __('Show posts'),
+                    'rel'     => 'nofollow',
                 ];
                 $fields['topics'] = [
                     'class'   => ['pline'],
@@ -285,6 +286,7 @@ class View extends Profile
                         ]
                     ),
                     'title'   => __('Show topics'),
+                    'rel'     => 'nofollow',
                 ];
             } elseif ($this->userRules->showPostCount) {
                 $fields['posts'] = [
