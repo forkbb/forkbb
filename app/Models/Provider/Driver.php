@@ -267,7 +267,9 @@ abstract class Driver extends Model
                 break;
         }
 
-        \curl_setopt($ch, \CURLOPT_MAXREDIRS, 10);
+        \curl_setopt($ch, \CURLOPT_PROTOCOLS, \CURLPROTO_HTTPS | \CURLPROTO_HTTP);
+        \curl_setopt($ch, \CURLOPT_REDIR_PROTOCOLS, \CURLPROTO_HTTPS);
+        \curl_setopt($ch, \CURLOPT_MAXREDIRS, 5);
         \curl_setopt($ch, \CURLOPT_TIMEOUT, 10);
         \curl_setopt($ch, \CURLOPT_RETURNTRANSFER, true);
         \curl_setopt($ch, \CURLOPT_HEADER, false);

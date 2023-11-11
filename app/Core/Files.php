@@ -1271,7 +1271,7 @@ class Files
     /**
      * Переменные конфига подключения
      */
-    protected int    $actMaxRedir = 10;
+    protected int    $actMaxRedir = 5;
     protected float  $actTimeout  = 15.0;
     protected string $actUAgent   = 'ForkBB downloader (%s)';
     protected array  $actHeader   = [
@@ -1291,6 +1291,8 @@ class Files
             return false;
         }
 
+        \curl_setopt($ch, \CURLOPT_PROTOCOLS, \CURLPROTO_HTTPS | \CURLPROTO_HTTP);
+        \curl_setopt($ch, \CURLOPT_REDIR_PROTOCOLS, \CURLPROTO_HTTPS);
         \curl_setopt($ch, \CURLOPT_HTTPGET, true);
         \curl_setopt($ch, \CURLOPT_HEADER, false);
         \curl_setopt($ch, \CURLOPT_HTTPHEADER, $this->actHeader);
