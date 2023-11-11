@@ -13,6 +13,7 @@ namespace ForkBB\Models\Post;
 use ForkBB\Models\Action;
 use ForkBB\Models\Topic\Topic;
 use ForkBB\Models\Forum\Forum;
+use PDO;
 
 class Feed extends Action
 {
@@ -50,13 +51,22 @@ class Feed extends Action
             $vars = [
                 ':forums' => $ids,
             ];
-            $query = 'SELECT p.id as pid, p.poster as username, p.poster_id as uid, p.message as content,
-                p.hide_smilies, p.posted, p.edited, t.id as tid, t.subject as topic_name, t.forum_id as fid
+            $query = 'SELECT p.id
                 FROM ::posts AS p
                 INNER JOIN ::topics AS t ON t.id=p.topic_id
                 WHERE t.forum_id IN (?ai:forums)
                 ORDER BY p.id DESC
                 LIMIT 50';
+
+            $vars = [
+                ':ids' => $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN),
+            ];
+            $query = 'SELECT p.id as pid, p.poster as username, p.poster_id as uid, p.message as content,
+                p.hide_smilies, p.posted, p.edited, t.id as tid, t.subject as topic_name, t.forum_id as fid
+                FROM ::posts AS p
+                INNER JOIN ::topics AS t ON t.id=p.topic_id
+                WHERE p.id IN (?ai:ids)
+                ORDER BY p.id DESC';
         }
 
         return $this->c->DB->query($query, $vars)->fetchAll();
