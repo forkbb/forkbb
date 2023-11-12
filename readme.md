@@ -43,6 +43,8 @@ Disallow: /reg
 Disallow: /search
 Disallow: /post
 Disallow: /forum/scroll
+Disallow: /forum/*/new/topic
+Disallow: /topic/*/new/reply
 Disallow: /userlist/*/DESC/
 Disallow: /userlist/*/ASC/
 ```
