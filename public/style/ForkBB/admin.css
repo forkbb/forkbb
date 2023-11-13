@@ -1338,6 +1338,6 @@
   width: auto;
 }
 
-#forka .f-fbtn[data-name="uninstall"]:not(.origin) {
+#forka .f-fbtn[name="uninstall"]:not(.origin) {
   color: red;
 }
