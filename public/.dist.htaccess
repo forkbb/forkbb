@@ -4,6 +4,9 @@
 #
 AddDefaultCharset UTF-8
 
+#Options +FollowSymLinks                           # For extensions with symlinks
+##Options -FollowSymLinks +SymLinksIfOwnerMatch    # or this (more security(?), more checks(!!!))
+
 <IfModule mod_autoindex.c>
     Options -Indexes
 </IfModule>
