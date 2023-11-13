@@ -119,3 +119,15 @@ msgstr "An error occurred in updateCommon."
 
 msgid "Empty"
 msgstr "Empty"
+
+msgid "Invalid symlink type"
+msgstr "Invalid symlink type."
+
+msgid "Bad symlink"
+msgstr "Bad symlink."
+
+msgid "Target '%s' not found"
+msgstr "Target '%s' not found."
+
+msgid "Link '%s' already exists"
+msgstr "Link '%s' already exists."

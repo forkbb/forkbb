@@ -119,3 +119,15 @@ msgstr "Возникла ошибка в updateCommon."
 
 msgid "Empty"
 msgstr "Пусто"
+
+msgid "Invalid symlink type"
+msgstr "Неверный тип символической ссылки."
+
+msgid "Bad symlink"
+msgstr "Плохая символическая ссылка."
+
+msgid "Target '%s' not found"
+msgstr "Target '%s' отсутствует."
+
+msgid "Link '%s' already exists"
+msgstr "Link '%s' уже существует."

@@ -150,6 +150,10 @@ class Extensions extends Manager
                 'extra'                      => 'required|array',
                 'extra.display-name'         => 'required|string',
                 'extra.requirements'         => 'array',
+                'extra.symlinks'             => 'array',
+                'extra.symlinks.*.type'      => 'required|string|in:public',
+                'extra.symlinks.*.target'    => 'required|string',
+                'extra.symlinks.*.link'      => 'required|string',
                 'extra.templates'            => 'array',
                 'extra.templates.*.type'     => 'required|string|in:pre',
                 'extra.templates.*.template' => 'required|string',
@@ -238,6 +242,7 @@ class Extensions extends Manager
             return false;
         }
 
+        $this->setSymlinks($ext);
         $this->updateIndividual();
 
         $this->c->DB->exec($query, $vars);
@@ -271,6 +276,8 @@ class Extensions extends Manager
             'dbData'   => null,
             'fileData' => $ext->fileData,
         ]);
+
+        $this->removeSymlinks($ext);
 
         if (true !== $this->updateCommon($ext)) {
             $this->error = 'An error occurred in updateCommon';
@@ -340,11 +347,15 @@ class Extensions extends Manager
             'fileData' => $ext->fileData,
         ]);
 
+        $this->removeSymlinks($ext);
+
         if (true !== $this->updateCommon($ext)) {
             $this->error = 'An error occurred in updateCommon';
 
             return false;
         }
+
+        $this->setSymlinks($ext);
 
         if ($oldStatus) {
             $this->updateIndividual();
@@ -379,6 +390,7 @@ class Extensions extends Manager
             'fileData' => $ext->fileData,
         ]);
 
+        $this->setSymlinks($ext);
         $this->updateIndividual();
 
         $this->c->DB->exec($query, $vars);
@@ -410,6 +422,7 @@ class Extensions extends Manager
             'fileData' => $ext->fileData,
         ]);
 
+        $this->removeSymlinks($ext);
         $this->updateIndividual();
 
         $this->c->DB->exec($query, $vars);
@@ -543,5 +556,32 @@ class Extensions extends Manager
         }
 
         return $result;
+    }
+
+    protected function setSymlinks(Extension $ext): bool
+    {
+        $data = $this->loadDataFromFile($this->commonFile);
+        $symlinks = $data[$ext->name]['symlinks'] ?? [];
+
+        foreach ($symlinks as $target => $link) {
+            \symlink($target, $link);
+        }
+
+        return true;
+    }
+
+    protected function removeSymlinks(Extension $ext): bool
+    {
+        $data = $this->loadDataFromFile($this->commonFile);
+        $symlinks = $data[$ext->name]['symlinks'] ?? [];
+
+        foreach ($symlinks as $target => $link) {
+            if (\is_link($link)) {
+                \is_file($link) ? \unlink($link) : \rmdir($link);
+            }
+        }
+
+        return true;
+
     }
 }

@@ -161,7 +161,10 @@ class Extension extends Model
 
                         $path = $this->fileData['path'] . '/' . \ltrim($cur['file'], '\\/');
 
-                        if (! \is_file($path)) {
+                        if (
+                            $this->c->Files->isBadPath($path)
+                            || ! \is_file($path)
+                        ) {
                             return ['Template file \'%s\' not found', $cur['file']];
                         }
 
@@ -177,6 +180,46 @@ class Extension extends Model
                         break;
                     default:
                         return 'Invalid template type';
+                }
+            }
+        }
+
+        if ($this->fileData['extra']['symlinks']) {
+            foreach ($this->fileData['extra']['symlinks'] as $cur) {
+                switch($cur['type']) {
+                    case 'public':
+                        if (
+                            empty($cur['target'])
+                            || empty($cur['link'])
+                            || $this->c->Files->isBadPath($cur['target'])
+                            || $this->c->Files->isBadPath($cur['link'])
+                        ) {
+                            return 'Bad symlink';
+                        }
+
+                        $target = $this->fileData['path'] . '/' . \trim($cur['target'], '\\/');
+
+                        if (
+                            ! \is_file($target)
+                            && ! \is_dir($target)
+                        ) {
+                            return ['Target \'%s\' not found', $cur['target']];
+                        }
+
+                        $link = $this->c->DIR_PUBLIC . '/' . \trim($cur['link'], '\\/');
+
+                        if (
+                            \is_file($link)
+                            || \is_dir($link)
+                        ) {
+                            return ['Link \'%s\' already exists', $cur['link']];
+                        }
+
+                        $this->prepareData['symlinks'][$target] = $link;
+
+                        break;
+                    default:
+                        return 'Invalid symlink type';
                 }
             }
         }
