@@ -209,8 +209,11 @@ class Extension extends Model
                         $link = $this->c->DIR_PUBLIC . '/' . \trim($cur['link'], '\\/');
 
                         if (
-                            \is_file($link)
-                            || \is_dir($link)
+                            ! \is_link($link)
+                            && (
+                                \is_file($link)
+                                || \is_dir($link)
+                            )
                         ) {
                             return ['Link \'%s\' already exists', $cur['link']];
                         }

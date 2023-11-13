@@ -347,7 +347,9 @@ class Extensions extends Manager
             'fileData' => $ext->fileData,
         ]);
 
-        $this->removeSymlinks($ext);
+        if ($oldStatus) {
+            $this->removeSymlinks($ext);
+        }
 
         if (true !== $this->updateCommon($ext)) {
             $this->error = 'An error occurred in updateCommon';
@@ -355,9 +357,8 @@ class Extensions extends Manager
             return false;
         }
 
-        $this->setSymlinks($ext);
-
         if ($oldStatus) {
+            $this->setSymlinks($ext);
             $this->updateIndividual();
         }
 
@@ -558,6 +559,9 @@ class Extensions extends Manager
         return $result;
     }
 
+    /**
+     * Создает симлинки для расширения
+     */
     protected function setSymlinks(Extension $ext): bool
     {
         $data = $this->loadDataFromFile($this->commonFile);
@@ -570,6 +574,9 @@ class Extensions extends Manager
         return true;
     }
 
+    /**
+     * Удаляет симлинки расширения
+     */
     protected function removeSymlinks(Extension $ext): bool
     {
         $data = $this->loadDataFromFile($this->commonFile);
