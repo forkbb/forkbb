@@ -140,13 +140,7 @@ class Validator
     public function addRules(array $list): Validator
     {
         foreach ($list as $field => $raw) {
-            $rules  = [];
-            $suffix = null;
-
-            // правило для элементов массива
-            if (\strpos($field, '.') > 0) {
-                list($field, $suffix) = \explode('.', $field, 2);
-            }
+            $rules = [];
 
             if (! \is_array($raw)) {
                 $raw = \explode('|', $raw);
@@ -182,13 +176,34 @@ class Validator
                 $rules[$name] = $rule ?? '';
             }
 
-            if (isset($suffix)) {
-                $this->rules[$field]['array'][$suffix] = $rules;
-            } else {
-                $this->rules[$field] = $rules;
-            }
+            if (\strpos($field, '.') > 0) {
+                $fields = \explode('.', $field);
+                $n      = \count($fields);
+                $start  = true;
+                $r      = &$this->rules;
 
-            $this->fields[$field] = $field;
+                foreach ($fields as $field) {
+                    if (true === $start) {
+                        $this->fields[$field] = $field;
+                        $start                = false;
+                    }
+
+                    if (--$n) {
+                        if (! isset($r[$field]['array'])) {
+                            $r[$field]['array'] = [];
+                        }
+
+                        $r = &$r[$field]['array'];
+                    } else {
+                        $r[$field] = $rules;
+                    }
+                }
+
+                unset ($r);
+            } else {
+                $this->rules[$field]  = $rules;
+                $this->fields[$field] = $field;
+            }
         }
 
         return $this;
@@ -639,35 +654,32 @@ class Validator
         if ('' === $name) {
             $result = $this->checkValue($value, $rules, $field);
         } else {
-            if (! \preg_match('%^([^.]+)(?:\.(.+))?$%', $name, $matches)) {
+            if (false !== \strpos($name, '.')) {
                 throw new RuntimeException("Bad path '{$name}'");
             }
 
-            $key  = $matches[1];
-            $name = $matches[2] ?? '';
-
             if (
-                '*' === $key
+                '*' === $name
                 && \is_array($value)
             ) {
                 foreach ($value as $i => $cur) {
-                    $this->recArray($value[$i], $result[$i], $name, $rules, $field);
+                    $this->recArray($value[$i], $result[$i], '', $rules, $field);
                 }
             } elseif (
-                '*' !== $key
+                '*' !== $name
                 && \is_array($value)
-                && \array_key_exists($key, $value)
+                && \array_key_exists($name, $value)
             ) {
-                $this->recArray($value[$key], $result[$key], $name, $rules, $field);
+                $this->recArray($value[$name], $result[$name], '', $rules, $field);
             } elseif (isset($rules['required'])) {
                 $tmp1 = null;
                 $tmp2 = null;
-                $this->recArray($tmp1, $tmp2, $name, $rules, $field);
-            } elseif ('*' === $key) {
+                $this->recArray($tmp1, $tmp2, '', $rules, $field);
+            } elseif ('*' === $name) {
                 $result = []; // ???? а может там не отсутствие элемента, а не array?
             } else {
-                $value[$key] = null;
-                $this->recArray($value[$key], $result[$key], $name, $rules, $field);
+                $value[$name] = null;
+                $this->recArray($value[$name], $result[$name], '', $rules, $field);
             }
         }
     }
