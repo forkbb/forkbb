@@ -30,6 +30,7 @@ class Categories extends Admin
             $v = $this->c->Validator->reset()
                 ->addRules([
                     'token'                => 'token:AdminCategories',
+                    'form'                 => 'required|array',
                     'form.*.cat_name'      => 'required|string:trim|max:80',
                     'form.*.disp_position' => 'required|integer|min:0|max:9999999999',
                     'new'                  => 'exist|string:trim|max:80'

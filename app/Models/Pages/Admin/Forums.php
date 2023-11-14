@@ -102,6 +102,7 @@ class Forums extends Admin
             $v = $this->c->Validator->reset()
                 ->addRules([
                     'token'                => 'token:AdminForums',
+                    'form'                 => 'required|array',
                     'form.*.disp_position' => 'required|integer|min:0|max:9999999999',
                 ])->addAliases([
                 ])->addArguments([

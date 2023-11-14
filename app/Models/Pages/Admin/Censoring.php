@@ -29,8 +29,9 @@ class Censoring extends Admin
                 ->addRules([
                     'token'               => 'token:AdminCensoring',
                     'b_censoring'         => 'required|integer|in:0,1',
-                    'form.*.search_for'   => 'string:trim|max:60',
-                    'form.*.replace_with' => 'string:trim|max:60',
+                    'form'                => 'required|array',
+                    'form.*.search_for'   => 'exist|string:trim|max:60',
+                    'form.*.replace_with' => 'exist|string:trim|max:60',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
