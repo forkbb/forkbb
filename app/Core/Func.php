@@ -55,7 +55,7 @@ class Func
 
     public function __construct(protected Container $c)
     {
-        $this->fUrl = $this->c->FRIENDLY_URL;
+        $this->fUrl = $c->isInit('FRIENDLY_URL') ? $c->FRIENDLY_URL : [];
     }
 
     /**
