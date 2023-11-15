@@ -66,8 +66,6 @@ class BBCodeList extends Model
     {
         if (\function_exists('\\opcache_invalidate')) {
             \opcache_invalidate($this->fileCache, true);
-        } elseif (\function_exists('\\apc_delete_file')) {
-            \apc_delete_file($this->fileCache);
         }
 
         return $this;

@@ -168,24 +168,28 @@ class Extensions extends Manager
         $result = [];
 
         foreach ($files as $path => $file) {
-            if (! \is_array($file)) {
-                continue;
-            } elseif (! $v->validation($file)) {
-                $this->c->Log->debug(
-                    'Extension: Bad structure for '
-                    . \preg_replace('%^.+((?:[\\\\/]+[^\\\\/]+){3})$%', '$1', $path),
-                    [
-                        'errors'  => \array_map('\\ForkBB\__', $v->getErrorsWithoutType()),
-                        'headers' => false,
-                    ]
-                );
+            $context = null;
 
-                continue;
+            if (! \is_array($file)) {
+                $context = [
+                    'errors' => ['Bad json'],
+                ];
+            } elseif (! $v->validation($file)) {
+                $context = [
+                    'errors' => \array_map('\\ForkBB\__', $v->getErrorsWithoutType()),
+                ];
             }
 
-            $data             = $v->getData(true);
-            $data['path']     = $path;
-            $result[$v->name] = $data;
+            if (null === $context) {
+                $data             = $v->getData(true);
+                $data['path']     = $path;
+                $result[$v->name] = $data;
+            } else {
+                $context['headers'] = false;
+                $path               = \preg_replace('%^.+((?:[\\\\/]+[^\\\\/]+){3})$%', '$1', $path);
+
+                $this->c->Log->debug("Extension: Bad structure for {$path}", $context);
+            }
         }
 
         return $result;
@@ -480,8 +484,6 @@ class Extensions extends Manager
         } else {
             if (\function_exists('\\opcache_invalidate')) {
                 \opcache_invalidate($file, true);
-            } elseif (\function_exists('\\apc_delete_file')) {
-                \apc_delete_file($file);
             }
 
             return true;
