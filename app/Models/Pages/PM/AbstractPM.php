@@ -31,7 +31,7 @@ abstract class AbstractPM extends Page
         $this->fIndex    = self::FI_PM;
         $this->onlinePos = 'pm';
         $this->robots    = 'noindex, nofollow';
-        $this->hhsLevel  = 'secure';
+//        $this->hhsLevel  = 'secure';
     }
 
     /**
