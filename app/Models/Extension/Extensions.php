@@ -171,6 +171,15 @@ class Extensions extends Manager
             if (! \is_array($file)) {
                 continue;
             } elseif (! $v->validation($file)) {
+                $this->c->Log->debug(
+                    'Extension: Bad structure for '
+                    . \preg_replace('%^.+((?:[\\\\/]+[^\\\\/]+){3})$%', '$1', $path),
+                    [
+                        'errors'  => \array_map('\\ForkBB\__', $v->getErrorsWithoutType()),
+                        'headers' => false,
+                    ]
+                );
+
                 continue;
             }
 
