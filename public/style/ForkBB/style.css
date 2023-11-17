@@ -1283,9 +1283,9 @@ body,
   width: calc(100% - 2rem);
 }
 
-#fork .f-ftlist .f-ftname {
+/*#fork .f-ftlist .f-ftname {
   max-width: 100%;
-}
+}*/
 
 #fork .f-ftlist .f-cstats {
   display: flex;
