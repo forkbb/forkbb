@@ -52,7 +52,15 @@ class Search extends Profile
 
             if ($v->validation($_POST)) {
                 if (! empty($v->follow)) {
-                    $unfollow = \array_diff(\array_keys($this->curForums), $v->follow);
+                    $unfollow = [];
+
+                    foreach ($this->curForums as $id => $forum) {
+                        if ('' == $forum->redirect_url) {
+                            $unfollow[$id] = $id;
+                        }
+                    }
+
+                    $unfollow = \array_diff($unfollow, $v->follow);
 
                     \sort($unfollow, \SORT_NUMERIC);
 
