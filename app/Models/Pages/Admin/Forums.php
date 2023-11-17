@@ -367,7 +367,7 @@ class Forums extends Admin
                     'forum_desc'           => 'exist|string:trim|max:65000 bytes|html',
                     'parent'               => 'required|integer|in:' . \implode(',', $this->listOfIndexes),
                     'sort_by'              => 'required|integer|in:0,1,2,4,5,6',
-                    'redirect_url'         => 'string:trim|max:255', //???? это поле может быть отключено в форме
+                    'redirect_url'         => 'string:trim|max:255|regex:%^(?:https?://.+)?$%', //???? это поле может быть отключено в форме
                     'no_sum_mess'          => 'required|integer|in:0,1',
                     'perms.*.read_forum'   => 'checkbox',
                     'perms.*.post_replies' => 'checkbox',
