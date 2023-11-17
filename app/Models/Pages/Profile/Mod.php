@@ -142,7 +142,7 @@ class Mod extends Profile
                     'type'     => 'checkbox',
                     'value'    => $forum->id,
                     'checked'  => isset($this->curForums[$forum->id]) && $this->curUser->isModerator($forum),
-                    'disabled' => ! isset($this->curForums[$forum->id]) || '' != $this->curForums[$forum->id]->redirect_url,
+                    'disabled' => ! isset($this->curForums[$forum->id]) || ! empty($this->curForums[$forum->id]->redirect_url),
                     'caption'  => 'Moderator label',
                 ];
                 $form['sets']["forum{$forum->id}"] = [

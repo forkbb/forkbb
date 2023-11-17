@@ -613,7 +613,7 @@ class Moderate extends Page
                     $delLinks = [];
 
                     foreach ($this->c->forums->depthList($root, 0) as $forum) {
-                        if ('' != $forum->redirect_url) {
+                        if ($forum->redirect_url) {
                             continue;
                         }
 
@@ -720,7 +720,7 @@ class Moderate extends Page
                     'type'     => 'checkbox',
                     'value'    => $forum->id,
                     'checked'  => ! empty($ft[$forum->id]),
-                    'disabled' => '' != $forum->redirect_url,
+                    'disabled' => ! empty($forum->redirect_url),
                     'caption'  => 'Redir label',
                 ];
                 $form['sets']["forum{$forum->id}"] = [

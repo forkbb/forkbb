@@ -55,7 +55,7 @@ class Search extends Profile
                     $unfollow = [];
 
                     foreach ($this->curForums as $id => $forum) {
-                        if ('' == $forum->redirect_url) {
+                        if (empty($forum->redirect_url)) {
                             $unfollow[$id] = $id;
                         }
                     }
@@ -194,7 +194,7 @@ class Search extends Profile
                     'type'     => 'checkbox',
                     'value'    => $forum->id,
                     'checked'  => ! isset($this->curUnfollowed[$forum->id]),
-                    'disabled' => '' != $this->curForums[$forum->id]->redirect_url,
+                    'disabled' => ! empty($this->curForums[$forum->id]->redirect_url),
                     'caption'  => 'Follow label',
                 ];
                 $form['sets']["forum{$forum->id}"] = [
