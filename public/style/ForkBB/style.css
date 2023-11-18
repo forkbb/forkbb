@@ -9,6 +9,7 @@
   --br-fh1: hsl(0, 0%, 80%);
   --c-icon-sub: hsl(0, 0%, 70%);
   --c-icon-new: hsl(50, 100%, 50%);
+  --c-focus-v: hsl(30, 100%, 50%);
   --c-a-focus: hsl(175, 100%, 50%);
   --c-focus: hsl(220, 5%, 12%);
   --bg-focus: hsl(50, 100%, 50%);
@@ -355,6 +356,10 @@ body,
 #fork a:hover,
 #fork a:focus {
   color: var(--c-a-focus);
+}
+
+#fork :focus-visible {
+  outline: 0.25rem double var(--c-focus-v);
 }
 
 #fork .f-btn:hover,
