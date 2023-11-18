@@ -10,17 +10,6 @@
   top: 1rem;
 }
 
-#fork-a-menu .f-menu-a.active {
-  background-color: var(--bg-active);
-  color: var(--c-active);
-}
-
-#fork-a-menu .f-menu-a:hover,
-#fork-a-menu .f-menu-a:focus {
-  background-color: var(--c-a-and-btn);
-  color: var(--c-nav-focus);
-}
-
 #fork-a-menu #id-an-label {
   position: absolute;
   top: -2.875rem;

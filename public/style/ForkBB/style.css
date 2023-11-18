@@ -9,6 +9,7 @@
   --br-fh1: hsl(0, 0%, 80%);
   --c-icon-sub: hsl(0, 0%, 70%);
   --c-icon-new: hsl(50, 100%, 50%);
+  --c-a-focus: hsl(175, 100%, 50%);
   --c-focus: hsl(220, 5%, 12%);
   --bg-focus: hsl(50, 100%, 50%);
   --bg-post-h: hsl(0, 20%, 26%);
@@ -329,7 +330,7 @@ body,
   color: var(--c-a-and-btn);
   cursor: pointer;
   text-decoration: none;
-  transition-duration: 1s;
+  transition-duration: 0.5s;
 }
 
 #fork .f-btn {
@@ -352,18 +353,23 @@ body,
 }
 
 #fork a:hover,
-#fork a:focus,
+#fork a:focus {
+  color: var(--c-a-focus);
+}
+
 #fork .f-btn:hover,
-#fork .f-btn:focus {
+#fork .f-btn:focus,
+#fork .f-page:hover,
+#fork .f-page:focus {
   color: var(--c-focus);
   background-color: var(--bg-focus);
 }
 
-#fork a:active,
+/*#fork a:active,
 #fork .f-btn:active {
   color: var(--c-active);
   background-color: var(--bg-active);
-}
+}*/
 
 #fork .f-inline > dt,
 #fork .f-inline > dd {
@@ -406,7 +412,6 @@ body,
 #fork .f-table {
   background-color: var(--bg-like-nav);
 }
-
 
 /********/
 /* Меню */
@@ -473,6 +478,17 @@ body,
   text-overflow: ellipsis;
 }
 
+#fork .f-menu-a.active {
+  background-color: var(--bg-active);
+  color: var(--c-active);
+}
+
+#fork .f-menu-a:hover,
+#fork .f-menu-a:focus {
+  background-color: var(--c-a-and-btn);
+  color: var(--c-nav-focus);
+}
+
 @media screen and (min-width: 50rem) {
   #fork .f-menu-checkbox {
     display: none;
@@ -512,17 +528,6 @@ body,
 #fork-nav .f-submenu-items .f-menu-a {
   text-transform: none;
   padding: 0.3125rem 0.625rem;
-}
-
-#fork-nav .f-menu-a.active {
-  background-color: var(--bg-active);
-  color: var(--c-active);
-}
-
-#fork-nav .f-menu-a:hover,
-#fork-nav .f-menu-a:focus {
-  background-color: var(--c-a-and-btn);
-  color: var(--c-nav-focus);
 }
 
 #fork-nav .f-menu-user-items {
@@ -2725,17 +2730,6 @@ body,
 #fork #fork-pm-nav {
   position: sticky;
   top: 1rem;
-}
-
-#fork-pm-menu a.f-menu-a.active {
-  background-color: var(--bg-active);
-  color: var(--c-active);
-}
-
-#fork-pm-menu a.f-menu-a:hover,
-#fork-pm-menu a.f-menu-a:focus {
-  background-color: var(--c-a-and-btn);
-  color: var(--c-nav-focus);
 }
 
 #fork-pm-menu #id-pmn-label {
