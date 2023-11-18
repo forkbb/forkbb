@@ -68,7 +68,10 @@ class Forum extends Page
             $this->formMod   = $this->formMod($forum);
         }
 
-        if ($this->c->config->i_feed_type > 0) {
+        if (
+            $this->c->config->i_feed_type > 0
+            && $forum->num_posts > 0
+        ) {
             $feedType = 2 === $this->c->config->i_feed_type ? 'atom' : 'rss';
 
             $this->pageHeader('feed', 'link', 0, [
