@@ -501,7 +501,10 @@ class Search extends Page
             case 'topics':
             case 'topics_subscriptions':
             case 'forums_subscriptions':
-                if (! isset($uid)) {
+                if (
+                    ! isset($uid)
+                    || $this->user->isBot
+                ) {
                     break;
                 }
 

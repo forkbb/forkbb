@@ -257,7 +257,10 @@ class View extends Profile
         ];
 
         if ($this->curUser->last_post > 0) {
-            if (1 === $this->user->g_search) {
+            if (
+                1 === $this->user->g_search
+                && ! $this->user->isBot
+            ) {
                 $fields['posts'] = [
                     'class'   => ['pline'],
                     'type'    => 'link',
