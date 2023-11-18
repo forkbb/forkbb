@@ -358,7 +358,8 @@ body,
   color: var(--c-a-focus);
 }
 
-#fork :focus-visible {
+#fork a:focus-visible,
+#fork .f-btn:focus-visible {
   outline: 0.25rem double var(--c-focus-v);
 }
 
