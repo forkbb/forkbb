@@ -58,8 +58,14 @@ class Feed extends Action
                 ORDER BY p.id DESC
                 LIMIT 50';
 
+            $ids = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
+
+            if (empty($ids)) {
+                return [];
+            }
+
             $vars = [
-                ':ids' => $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN),
+                ':ids' => $ids,
             ];
             $query = 'SELECT p.id as pid, p.poster as username, p.poster_id as uid, p.message as content,
                 p.hide_smilies, p.posted, p.edited, t.id as tid, t.subject as topic_name, t.forum_id as fid
