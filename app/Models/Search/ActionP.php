@@ -31,49 +31,66 @@ class ActionP extends Method
             return [];
         }
 
-        $query = null;
-
         switch ($action) {
             case 'search':
                 $list = $this->model->queryIds;
 
+                $this->model->numPages = (int) \ceil(($this->model->count($list) ?: 1) / $this->c->user->disp_posts);
+
                 break;
             case 'posts':
-                $query = 'SELECT p.id
+                $vars = [
+                    ':forums' => $forums,
+                    ':uid'    => $uid,
+                ];
+                $query = 'SELECT COUNT(p.id)
                     FROM ::posts AS p
                     INNER JOIN ::topics AS t ON t.id=p.topic_id
-                    WHERE p.poster_id=?i:uid AND t.forum_id IN (?ai:forums)
-                    ORDER BY p.posted DESC';
+                    WHERE p.poster_id=?i:uid AND t.forum_id IN (?ai:forums)';
+
+                $count = (int) $this->c->DB->query($query, $vars)->fetchColumn();
+
+                $this->model->numPages = (int) \ceil(($count ?: 1) / $this->c->user->disp_posts);
 
                 break;
             default:
                 throw new InvalidArgumentException('Unknown action: ' . $action);
         }
 
-        if (null !== $query) {
-            $vars = [
-                ':forums' => $forums,
-                ':uid'    => $uid,
-            ];
-
-            $list = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
-        }
-
-        $this->model->numPages = (int) \ceil(($this->model->count($list) ?: 1) / $this->c->user->disp_posts);
-
         // нет такой страницы в результате поиска
         if (! $this->model->hasPage()) {
             return false;
-        // результат пуст
-        } elseif (empty($list)) {
-            return [];
         }
 
-        $this->model->idsList = $this->model->slice(
-            $list,
-            ($this->model->page - 1) * $this->c->user->disp_posts,
-            (int) $this->c->user->disp_posts
-        );
+        switch ($action) {
+            case 'search':
+                // результат пуст
+                if (empty($list)) {
+                    return [];
+                }
+
+                $this->model->idsList = $this->model->slice(
+                    $list,
+                    ($this->model->page - 1) * $this->c->user->disp_posts,
+                    (int) $this->c->user->disp_posts
+                );
+
+                break;
+            case 'posts':
+                $vars[':offset'] = ($this->model->page - 1) * $this->c->user->disp_posts;
+                $vars[':rows']   = (int) $this->c->user->disp_posts;
+
+                $query = 'SELECT p.id
+                    FROM ::posts AS p
+                    INNER JOIN ::topics AS t ON t.id=p.topic_id
+                    WHERE p.poster_id=?i:uid AND t.forum_id IN (?ai:forums)
+                    ORDER BY p.posted DESC
+                    LIMIT ?i:rows OFFSET ?i:offset';
+
+                $this->model->idsList = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
+
+                break;
+        }
 
         return $this->c->posts->view($this->model);
     }
