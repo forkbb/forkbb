@@ -10,7 +10,7 @@
   --c-icon-sub: hsl(0, 0%, 70%);
   --c-icon-new: hsl(50, 100%, 50%);
   --c-focus-v: hsl(30, 100%, 50%);
-  --c-a-focus: hsl(175, 100%, 50%);
+  --c-a-focus: hsl(50, 100%, 40%);
   --c-focus: hsl(220, 5%, 12%);
   --bg-focus: hsl(50, 100%, 50%);
   --bg-post-h: hsl(0, 20%, 26%);
@@ -261,7 +261,7 @@ body,
 }
 
 #fork select {
-  background-color: var(--bg-focus);
+  background-color: var(--bg-fprimary);
 }
 
 #fork select:not([multiple]) option {
@@ -331,7 +331,7 @@ body,
   color: var(--c-a-and-btn);
   cursor: pointer;
   text-decoration: none;
-  transition-duration: 0.5s;
+  transition: color 0.5s, background-color 0.5s;
 }
 
 #fork .f-btn {
@@ -356,19 +356,22 @@ body,
 #fork a:hover,
 #fork a:focus {
   color: var(--c-a-focus);
+  text-decoration: underline;
 }
 
 #fork a:focus-visible,
 #fork .f-btn:focus-visible {
   outline: 0.25rem double var(--c-focus-v);
+  text-decoration: none;
 }
 
 #fork .f-btn:hover,
 #fork .f-btn:focus,
-#fork .f-page:hover,
-#fork .f-page:focus {
+#fork a.f-page:hover,
+#fork a.f-page:focus {
   color: var(--c-focus);
   background-color: var(--bg-focus);
+  text-decoration: none;
 }
 
 /*#fork a:active,
@@ -493,6 +496,7 @@ body,
 #fork .f-menu-a:focus {
   background-color: var(--c-a-and-btn);
   color: var(--c-nav-focus);
+  text-decoration: none;
 }
 
 @media screen and (min-width: 50rem) {
