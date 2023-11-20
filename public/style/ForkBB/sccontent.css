@@ -8,6 +8,9 @@
   --bg-fh1: hsl(220, 5%, 12%);
   --br-fh1: hsl(0, 0%, 80%);
   --c-icon-sub: hsl(0, 0%, 70%);
+  --c-icon-new: hsl(50, 100%, 50%);
+  --c-focus-v: hsl(30, 100%, 50%);
+  --c-a-focus: hsl(50, 100%, 40%);
   --c-focus: hsl(220, 5%, 12%);
   --bg-focus: hsl(50, 100%, 50%);
   --bg-post-h: hsl(0, 20%, 26%);
@@ -34,6 +37,7 @@
   --bg-poll-res: hsl(50, 100%, 50%);
   --c-sel: hsl(0, 0%, 0%);
   --bg-sel: hsl(0, 0%, 60%);
+  --c-highlighted: hsl(39, 100%, 50%);
 }
 
 html,
@@ -205,15 +209,16 @@ blockquote cite {
   margin: -0.625rem -0.625rem 0.625rem -0.625rem;
 }
 
-a {
+a, span.f-bb-hashtag {
   color: var(--c-a-and-btn);
   cursor: pointer;
   text-decoration: none;
+  transition: color 0.5s, background-color 0.5s;
 }
 
-a:hover, a:focus {
-  color: var(--c-focus);
-  background-color: var(--bg-focus);
+a:hover, a:focus, span.f-bb-hashtag:hover, span.f-bb-hashtag:focus {
+  color: var(--c-a-focus);
+  text-decoration: underline;
 }
 
 table {
@@ -285,7 +290,6 @@ div.f-bb-s-body {
 }
 
 span.f-bb-hashtag {
-  color: var(--c-a-and-btn);
   border-bottom-style: dashed;
   border-bottom-width: 0.0625rem;
 }
