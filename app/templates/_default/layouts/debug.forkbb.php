@@ -2,7 +2,7 @@
       <aside id="fork-debug">
         <!-- PRE inStart -->
         <p class="f-sim-header">{!! __('Debug table') !!}</p>
-        <p id="id-fdebugtime">[ {!! __(['Generated in %1$s, %2$s queries', num(\microtime(true) - $p->start, 3), $p->numQueries]) !!} - {!! __(['Memory %1$s, Peak %2$s', size(\memory_get_usage()), size(\memory_get_peak_usage())]) !!} ]</p>
+        <p id="id-fdebugtime">t = {{ num(\microtime(true) - $p->start, 3) }} : q = {{ $p->numQueries}} : m = {{ size(\memory_get_usage()) }} / {{ size(\memory_get_peak_usage()) }}</p>
 @if ($p->queries)
         <table id="fork-dgtable">
           <thead id="fork-dgthead">
