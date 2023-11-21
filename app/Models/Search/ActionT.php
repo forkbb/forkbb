@@ -78,7 +78,7 @@ class ActionT extends Method
 */
                 // упрощенный запрос для больших форумов, дополнительная обработка ниже
                 $query = 'SELECT DISTINCT t.id, t.last_post
-                    FROM forum_topics AS t
+                    FROM ::topics AS t
                     INNER JOIN forum_posts AS p ON t.id=p.topic_id
                     WHERE t.forum_id IN (?ai:forums) AND t.moved_to=0 AND p.poster_id=?i:uid';
 
