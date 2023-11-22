@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace ForkBB\Models;
 
 use ForkBB\Core\Container;
+use ForkBB\Models\Manager;
 
 class Model
 {
@@ -33,6 +34,11 @@ class Model
      * Зависимости свойств
      */
     protected array $zDepend = [];
+
+    /**
+     * Текущий Manager для модели
+     */
+    protected Manager $manager;
 
     public function __construct(protected Container $c)
     {
@@ -164,5 +170,15 @@ class Model
         $key = $this->cKey . '/' . $name;
 
         return $this->c->$key->setModel($this)->$name(...$args);
+    }
+
+    /**
+     * Объявление менеджера
+     */
+    public function setManager(Manager $manager): Model
+    {
+        $this->manager = $manager;
+
+        return $this;
     }
 }
