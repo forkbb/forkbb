@@ -44,7 +44,7 @@ class UpdateUsername extends Action
                 $isMod = true;
                 $forum->modAdd($user); // переименование модератора
 
-                $this->c->forums->update($forum);
+                $this->manager->update($forum);
             }
         }
 

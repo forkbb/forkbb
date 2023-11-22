@@ -42,7 +42,7 @@ class Delete extends Action
                 $uids[$arg->id] = $arg->id;
                 $isUser         = 1;
             } elseif ($arg instanceof Forum) {
-                if (! $this->c->forums->get($arg->id) instanceof Forum) {
+                if (! $this->manager->get($arg->id) instanceof Forum) {
                     throw new RuntimeException('Forum unavailable');
                 }
 
