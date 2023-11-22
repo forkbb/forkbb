@@ -226,10 +226,12 @@ class DB
                     case 's':
                     case 'f':
                         $value = [1];
+
                         break;
                     default:
                         $value = [1];
                         $type  = 's';
+
                         break;
                 }
 

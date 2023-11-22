@@ -37,7 +37,7 @@ class Mail
 
     public function __construct(string $host, string $user, #[SensitiveParameter] string $pass, int $ssl, string $eol, protected Container $c)
     {
-        if ('' != $host) {
+        if ('' !== $host) {
             $hp = \explode(':', $host, 2);
 
             if (
@@ -103,11 +103,10 @@ class Mail
             return false;
         }
 
-
-        if ($strict) {
+        if (true === $strict) {
             $level = $this->c->ErrorHandler->logOnly(\E_WARNING);
 
-            if ($ip) {
+            if (\is_string($ip)) {
                 $mx = \checkdnsrr($ip, 'MX'); // ipv6 в пролёте :(
             } else {
                 $mx = \dns_get_record($domainASCII, \DNS_MX);

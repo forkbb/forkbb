@@ -46,7 +46,6 @@ class Primary
             $confChange = [
                 'multiple' => [
                     'CtrlRouting' => \ForkBB\Controllers\Update::class,
-
                     'AdminUpdate' => \ForkBB\Models\Pages\Admin\Update::class,
                 ],
             ];

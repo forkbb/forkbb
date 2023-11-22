@@ -172,6 +172,7 @@ class Config
                 switch ($type) {
                     case 'ZERO':
                         $type = 'NEW';
+
                         break;
                     case 'NEW':
                     case '=>':
@@ -180,6 +181,7 @@ class Config
                         $value_before    = $other;
                         $other           = '';
                         $type            = 'VALUE';
+
                         break;
                     default:
                         throw new ForkException('Config array cannot be parsed (3)');
@@ -219,6 +221,7 @@ class Config
                     case 'VALUE':
                     case 'VALUE_OR_KEY':
                         $type = 'NEW';
+
                         break;
                     default:
                         throw new ForkException('Config array cannot be parsed (6)');
@@ -234,6 +237,7 @@ class Config
                         $value        = null;
                         $value_before = '';
                         $type         = '=>';
+
                         break;
                     default:
                         throw new ForkException('Config array cannot be parsed (7)');
@@ -251,7 +255,8 @@ class Config
                     case 'VALUE_OR_KEY':
                     case 'VALUE':
                     case '=>':
-                            $other .= $token;
+                        $other .= $token;
+
                         break;
                     default:
                         throw new ForkException('Config array cannot be parsed (8)');
@@ -291,9 +296,11 @@ class Config
                         }
 
                         $type = 'VALUE_OR_KEY';
+
                         break;
                     case '=>':
                         $type = 'VALUE';
+
                         break;
                     default:
                         throw new ForkException('Config array cannot be parsed (10)');
@@ -311,11 +318,11 @@ class Config
     protected function isFormat(mixed $data): bool
     {
         return \is_array($data)
-        && \array_key_exists('value', $data)
-        && \array_key_exists('value_before', $data)
-        && \array_key_exists('value_after', $data)
-        && \array_key_exists('key_before', $data)
-        && \array_key_exists('key_after', $data);
+            && \array_key_exists('value', $data)
+            && \array_key_exists('value_before', $data)
+            && \array_key_exists('value_after', $data)
+            && \array_key_exists('key_before', $data)
+            && \array_key_exists('key_after', $data);
     }
 
     /**
@@ -429,6 +436,7 @@ class Config
             return false;
         } else {
             $result = $config[$key];
+
             unset($config[$key]);
 
             return $result;

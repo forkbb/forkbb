@@ -67,8 +67,8 @@ class ErrorHandler
         \set_error_handler([$this, 'errorHandler'], \E_ALL);
         \set_exception_handler([$this, 'exceptionHandler']);
         \register_shutdown_function([$this, 'shutdownHandler']);
-
         \ob_start();
+
         $this->obLevel = \ob_get_level();
     }
 
@@ -198,6 +198,7 @@ class ErrorHandler
                 if (isset($error['exception'])) {
                     $context['exception'] = $error['exception'];
                 }
+
                 $context['headers'] = false;
 
                 $this->c->Log->{$method}($this->message($error), $context);
@@ -279,15 +280,19 @@ EOT;
                             switch ($type) {
                                 case 'boolean':
                                     $type = $arg ? 'true' : 'false';
+
                                     break;
                                 case 'array':
                                     $type .= '(' . \count($arg) . ')';
+
                                     break;
                                 case 'resource':
                                     $type = \get_resource_type($arg);
+
                                     break;
                                 case 'object':
                                     $type .= '{' . \get_class($arg) . '}';
+
                                     break;
                             }
 
@@ -296,8 +301,8 @@ EOT;
                         }
                     }
                     $line .= ')';
+                    $line  = $this->e(\str_replace($this->hidePath, '...', $line));
 
-                    $line = $this->e(\str_replace($this->hidePath, '...', $line));
                     echo "<li>{$line}</li>";
                 }
 

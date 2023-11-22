@@ -639,7 +639,6 @@ class Routing
                 'Moderate:action',
                 'Moderate'
             );
-
         }
 
         // только админ
