@@ -34,7 +34,7 @@ class Forums extends Manager
      */
     public function create(array $attrs = []): Forum
     {
-        return $this->c->ForumModel->setModelAttrs($attrs);
+        return $this->c->ForumModel->setManager($this)->setModelAttrs($attrs);
     }
 
     /**

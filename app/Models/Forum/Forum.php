@@ -35,7 +35,7 @@ class Forum extends DataModel
 
             return null;
         } else {
-            return $this->c->forums->get($this->parent_forum_id);
+            return $this->manager->get($this->parent_forum_id);
         }
     }
 
@@ -101,7 +101,7 @@ class Forum extends DataModel
 
         if (\is_array($attr)) {
             foreach ($attr as $id) {
-                $sub[$id] = $this->c->forums->get($id);
+                $sub[$id] = $this->manager->get($id);
             }
         }
 
@@ -118,7 +118,7 @@ class Forum extends DataModel
 
         if (\is_array($attr)) {
             foreach ($attr as $id) {
-                $all[$id] = $this->c->forums->get($id);
+                $all[$id] = $this->manager->get($id);
             }
         }
 
@@ -360,7 +360,7 @@ class Forum extends DataModel
                 }
             }
 
-            $attr = $this->c->forums->create([
+            $attr = $this->manager->create([
                 'num_topics'   => $numT,
                 'num_posts'    => $numP,
                 'last_post'    => $time,
