@@ -132,6 +132,7 @@ return [
             'pass'  => '%config.o_smtp_pass%',
             'ssl'   => '%config.b_smtp_ssl%',
             'eol'   => '%EOL%',
+            'file'  => '%DIR_CONFIG%/domains.default.php',
         ],
         'Func'      => \ForkBB\Core\Func::class,
         'Test'      => [

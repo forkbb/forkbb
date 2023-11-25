@@ -34,9 +34,17 @@ class Mail
         'Content-Type' => true,
     ];
     protected string $response;
+    protected ?array $domains = null;
 
-    public function __construct(string $host, string $user, #[SensitiveParameter] string $pass, int $ssl, string $eol, protected Container $c)
-    {
+    public function __construct(
+        string $host,
+        string $user,
+        #[SensitiveParameter] string $pass,
+        int $ssl,
+        string $eol,
+        protected string $pathToFile,
+        protected Container $c
+    ) {
         if ('' !== $host) {
             $hp = \explode(':', $host, 2);
 
@@ -104,12 +112,14 @@ class Mail
         }
 
         if (true === $strict) {
+            $this->domains ??= include $this->pathToFile;
+
             $level = $this->c->ErrorHandler->logOnly(\E_WARNING);
 
             if (\is_string($ip)) {
-                $mx = \checkdnsrr($ip, 'MX'); // ipv6 в пролёте :(
+                $mx = $this->domains[$ip] ?? \checkdnsrr($ip, 'MX'); // ipv6 в пролёте :(
             } else {
-                $mx = \dns_get_record($domainASCII, \DNS_MX);
+                $mx = $this->domains[$domainASCII] ?? \dns_get_record($domainASCII, \DNS_MX);
             }
 
             $this->c->ErrorHandler->logOnly($level);

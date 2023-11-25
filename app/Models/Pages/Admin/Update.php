@@ -1066,4 +1066,22 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.73 to rev.74
+     */
+    protected function stageNumber73(array $args): ?int
+    {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'shared=>Mail=>file',
+            '\'%DIR_CONFIG%/domains.default.php\'',
+            'eol'
+        );
+
+        $coreConfig->save();
+
+        return null;
+    }
 }
