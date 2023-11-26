@@ -441,6 +441,35 @@
 		},
 		// END_COMMAND
 
+		// START_COMMAND: Background-color
+		background: {
+			tags: {
+				span: {
+					class: 'f-bb-bgcolor'
+				}
+			},
+			styles: {
+				'background-color': null
+			},
+			quoteType: QuoteType.never,
+			format: function (elm, content) {
+				var	color = elm.style.backgroundColor || css(elm, 'background-color');
+				color = _normaliseColour(color);
+
+				if (/^(?:\#[0-9A-Fa-f]{6}|aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|orange|purple|red|silver|teal|yellow|white)$/.test(color)) {
+					return '[background=' + color + ']' + content + '[/background]';
+				} else {
+					return content;
+				}
+			},
+			html: function (token, attrs, content) {
+				return '<span style="background-color:' +
+					escapeEntities(_normaliseColour(attrs.defaultattr), true) +
+					';">' + content + '</span>';
+			}
+		},
+		// END_COMMAND
+
 		// START_COMMAND: Lists
 		ul: {
 			tags: {
