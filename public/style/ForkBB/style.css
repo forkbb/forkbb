@@ -767,10 +767,12 @@ body,
 }
 
 #fork .f-fleg {
+  background: linear-gradient(var(--bg-like-nav), var(--bg-fprimary), var(--bg-like-nav));
+  border-bottom: 0.0625rem dotted var(--br-fprimary);
   width: 100%;
   padding: 0.3125rem;
-  border-bottom: 0.0625rem dotted var(--br-fprimary);
-  font-weight: bold;
+  text-indent: 0.625rem;
+  text-transform: uppercase;
 }
 
 #fork .f-ctrl,
@@ -2680,11 +2682,6 @@ body,
 #fork .f-fs-header-edit .f-avatar-img {
   max-width: 11.75rem;
   height: auto;
-}
-
-#fork .f-fs-header-edit .f-fleg,
-#fork .f-fs-data-edit .f-fleg {
-  display: none;
 }
 
 #fork .f-fs-data-edit #id-signature {
