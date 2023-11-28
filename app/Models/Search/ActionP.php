@@ -64,11 +64,6 @@ class ActionP extends Method
 
         switch ($action) {
             case 'search':
-                // результат пуст
-                if (empty($list)) {
-                    return [];
-                }
-
                 $this->model->idsList = $this->model->slice(
                     $list,
                     ($this->model->page - 1) * $this->c->user->disp_posts,
@@ -90,6 +85,10 @@ class ActionP extends Method
                 $this->model->idsList = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
                 break;
+        }
+
+        if (empty($this->model->idsList)) {
+            return [];
         }
 
         return $this->c->posts->view($this->model);
