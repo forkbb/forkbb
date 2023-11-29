@@ -156,6 +156,7 @@ class Execute extends Method
                 $ids = $this->exec($word, $vars);
             } else {
                 $CJK = false;
+
                 if (
                     isset($word['type'])
                     && 'CJK' === $word['type']
@@ -268,9 +269,9 @@ class Execute extends Method
                 break;
             default:
                 if (isset($vars[':author'])) {
-                    $whereCJK[]      = "((p.message {$like} ?s:word AND p.poster {$like} ?s:author ESCAPE '#') OR (t.subject {$like} ?s:word AND t.poster {$like} ?s:author ESCAPE '#'))";
+                    $whereCJK[]      = "((p.message {$like} ?s:word AND p.poster {$like} ?s:author ESCAPE '#') OR (t.subject {$like} ?s:word AND t.first_post_id=p.id AND t.poster {$like} ?s:author ESCAPE '#'))";
                 } else {
-                    $whereCJK[]      = "(p.message {$like} ?s:word OR t.subject {$like} ?s:word)";
+                    $whereCJK[]      = "(p.message {$like} ?s:word OR (t.subject {$like} ?s:word AND t.first_post_id=p.id))";
                 }
 
                 $usePCJK             = true;
