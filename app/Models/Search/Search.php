@@ -93,6 +93,8 @@ class Search extends Model
 
         $text = \str_replace(['ʹ', 'ʻ', 'ʼ', 'ʽ', 'ʾ', 'ʿ', '΄', '᾿', 'Ꞌ', 'ꞌ', '‘', '’', '‛', '′', '´', '`', '｀', '＇', '`', '’'], '\'', $text);
         $text = \str_replace('ё', 'е', $text);
+        // разделить CJK знаки
+        $text = \preg_replace('%' . self::CJK_REGEX . '%u', ' \0 ', $text);
         // четыре одинаковых буквы в одну
         $text = \preg_replace('%(\p{L})\1{3,}%u', '\1', $text);
         // удаление ' и - вне слов
@@ -126,7 +128,7 @@ class Search extends Model
         }
 
         if ($this->isCJKWord($word)) {
-            return $indexing ? null : $word;
+            return $word;
         }
 
         $len = \mb_strlen(\trim($word, '?*'), 'UTF-8');
@@ -143,11 +145,30 @@ class Search extends Model
     }
 
     /**
+     * Получение слов из текста
+     */
+    public function words(string $text, bool $indexing): array
+    {
+        $text  = $this->cleanText($text, $indexing);
+        $words = [];
+
+        foreach (\explode(' ', $text) as $word) {
+            $word = $this->word($word, $indexing);
+
+            if (null !== $word) {
+                $words[$word] = $word;
+            }
+        }
+
+        return \array_values($words);
+    }
+
+    /**
      * Проверка слова на язык CJK
      */
     public function isCJKWord(string $word): bool
     {
-        return \preg_match('%' . self::CJK_REGEX . '%u', $word) ? true : false; //?????
+        return \preg_match('%^' . self::CJK_REGEX . '+$%u', $word) ? true : false; //?????
     }
 
     /**

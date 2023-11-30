@@ -22,9 +22,9 @@ class Index extends Method
     public function index(Post $post, string $mode = 'add'): void
     {
         //???? пост после валидации должен иметь дерево тегов
-        $mesWords = $this->words(\mb_strtolower($this->c->Parser->getText(), 'UTF-8'));
+        $mesWords = $this->model->words(\mb_strtolower($this->c->Parser->getText(), 'UTF-8'), true);
         $subWords = $post->id === $post->parent->first_post_id
-            ? $this->words(\mb_strtolower($post->parent->subject, 'UTF-8'))
+            ? $this->model->words(\mb_strtolower($post->parent->subject, 'UTF-8'), true)
             : [];
 
         if ('add' !== $mode) {
@@ -140,24 +140,5 @@ class Index extends Method
 
             $this->c->DB->exec($query, $vars);
         }
-    }
-
-    /**
-     * Получение слов из текста для построения поискового индекса
-     */
-    protected function words(string $text): array
-    {
-        $text  = $this->model->cleanText($text, true);
-        $words = [];
-
-        foreach (\explode(' ', $text) as $word) {
-            $word = $this->model->word($word, true);
-
-            if (null !== $word) {
-                $words[$word] = $word;
-            }
-        }
-
-        return \array_values($words);
     }
 }

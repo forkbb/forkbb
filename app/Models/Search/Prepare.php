@@ -57,7 +57,7 @@ class Prepare extends Method
                     // подстрока является словом и нет символов CJK языков
                     if (
                         false === \strpos($subQuery, ' ')
-                        && ! $this->model->isCJKWord($subQuery)
+                        //&& ! $this->model->isCJKWord($subQuery)
                         && $this->model->cleanText($subQuery) === $subQuery
                     ) {
                         $words[] = $subQuery;
@@ -154,7 +154,7 @@ class Prepare extends Method
                                 $temp[] = 'AND';
                             }
                             if ($this->model->isCJKWord($word)) {
-                                $temp[] = ['type' => 'CJK', 'word' => $word];
+                                $temp[] = $word; // ['type' => 'CJK', 'word' => $word];
                             } elseif (\rtrim($word, '?*') === $word) {
                                 $temp[] = $word . '*'; //????
                             } else {
@@ -185,6 +185,7 @@ class Prepare extends Method
                         break;
                 }
             }
+
             $quotes  = true;
         }
 

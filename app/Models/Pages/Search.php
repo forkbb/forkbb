@@ -171,7 +171,7 @@ class Search extends Page
                         'keywords' => [
                             'class'     => ['w0'],
                             'type'      => 'text',
-                            'minlength' => '3',
+                            'minlength' => '1',
                             'maxlength' => '100',
                             'caption'   => 'Keyword search',
                             'value'     => $v->keywords ?? '',
@@ -210,7 +210,7 @@ class Search extends Page
                         'keywords' => [
                             'class'     => ['w2'],
                             'type'      => 'text',
-                            'minlength' => '3',
+                            'minlength' => '1',
                             'maxlength' => '100',
                             'caption'   => 'Keyword search',
                             'value'     => $v->keywords ?? '',
@@ -334,7 +334,7 @@ class Search extends Page
                 if (! $search->prepare($query)) {
                     $v->addError([$search->queryError, $search->queryText]);
                 } else {
-                    if ($this->c->search->execute($v, $this->listOfIndexes, $flood)) {
+                    if ($search->execute($v, $this->listOfIndexes, $flood)) {
                         $flood = false;
 
                         if (empty($search->queryIds)) {

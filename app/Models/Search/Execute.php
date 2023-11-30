@@ -162,6 +162,32 @@ class Execute extends Method
                     && 'CJK' === $word['type']
                 ) {
                     $CJK  = true;
+
+                    // создание подзапросов для ускорения!?
+                    $subWords = $this->model->words($word['word'], false);
+                    $subCount = \count($subWords);
+                    $list     = [];
+                    $i        = 0;
+
+                    foreach ($subWords as $cur) {
+                        ++$i;
+
+                        if ($this->model->isCJKWord($cur)) {
+                            $list[] = $cur;
+                        } elseif (1 === $i) {
+                            if ($subCount < 3) {
+                                $list[] = '*' . $cur;
+                            }
+                        } elseif ($subCount === $i) {
+                            if ($subCount < 3) {
+                                $list[] = $cur . '*';
+                            }
+                        } else {
+                            $list[] = $cur;
+                        }
+                    }
+
+                    $list = \array_keys($this->exec($list, $vars));
                     $word = '*' . \trim($word['word'], '*') . '*';
                 }
 
@@ -173,6 +199,8 @@ class Execute extends Method
                     $vars[':word'] = $word;
 
                     if ($CJK) {
+                        $vars[':list'] = $list;
+
                         if (null === $this->stmtCJK) {
                             $this->stmtCJK = $this->c->DB->prepare($this->queryCJK, $vars);
                             $this->stmtCJK->execute();
@@ -285,10 +313,12 @@ class Execute extends Method
             $selectFIdx              = 'DISTINCT p.topic_id';
             $selectFCJK              = 'DISTINCT t.id';
             $useTCJK                 = true;
+            $whereCJK[]              = 't.id IN (?ai:list)';
         } else {
             $selectFIdx              = 'sm.post_id';
             $selectFCJK              = 'p.id';
             $usePCJK                 = true;
+            $whereCJK[]              = 'p.id IN (?ai:list)';
         }
 
         switch ($v->sort_by) {
