@@ -15,12 +15,12 @@ use ForkBB\Models\Model;
 class Search extends Model
 {
     const CJK_REGEX = '['.
-        '\x{1100}-\x{11FF}'.  // Hangul Jamo
-        '\x{3130}-\x{318F}'.  // Hangul Compatibility Jamo
-        '\x{AC00}-\x{D7AF}'.  // Hangul Syllables
+        '\x{1100}-\x{11FF}'.   // Hangul Jamo
+        '\x{3130}-\x{318F}'.   // Hangul Compatibility Jamo
+        '\x{AC00}-\x{D7AF}'.   // Hangul Syllables
 
         // Hiragana
-        '\x{3040}-\x{309F}'.  // Hiragana
+        '\x{3040}-\x{309F}'.   // Hiragana
 
         // Katakana
         '\x{30A0}-\x{30FF}'.   // Katakana
@@ -36,6 +36,13 @@ class Search extends Model
         '\x{3400}-\x{4DBF}'.   // CJK Unified Ideographs Extension A
         '\x{4E00}-\x{9FFF}'.   // CJK Unified Ideographs
         '\x{20000}-\x{2A6DF}'. // CJK Unified Ideographs Extension B
+        '\x{2A700}-\x{2B73F}'. // CJK Unified Ideographs Extension C
+        '\x{2B740}-\x{2B81F}'. // CJK Unified Ideographs Extension D
+        '\x{2B820}-\x{2CEAF}'. // CJK Unified Ideographs Extension E
+        '\x{2CEB0}-\x{2EBEF}'. // CJK Unified Ideographs Extension F
+        '\x{2F800}-\x{2FA1F}'. // CJK Compatibility Ideographs Supplement
+        '\x{30000}-\x{3134F}'. // CJK Unified Ideographs Extension G
+        '\x{31350}-\x{323AF}'. // CJK Unified Ideographs Extension H
         ']';
 
     /**
