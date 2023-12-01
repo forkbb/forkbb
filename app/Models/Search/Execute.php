@@ -20,12 +20,12 @@ use RuntimeException;
 
 class Execute extends Method
 {
-    protected string $queryIdx;
-    protected string $queryCJK;
+    protected string $queryIndx;
+    protected string $queryLike;
     protected int $sortType;
     protected array $words;
-    protected ?DBStatement $stmtIdx;
-    protected ?DBStatement $stmtCJK;
+    protected ?DBStatement $stmtIndx;
+    protected ?DBStatement $stmtLike;
 
     /**
      * Поиск тем/сообщений в соответствии с поисковым запросом
@@ -41,11 +41,11 @@ class Execute extends Method
             throw new RuntimeException('No query data');
         }
 
-        $delimiter     = \time() - $this->c->config->i_search_ttl;
-        $this->words   = [];
-        $this->stmtIdx = null;
-        $this->stmtCJK = null;
-        $queryVars     = $this->buildSelect($v, $forumIdxs);
+        $delimiter      = \time() - $this->c->config->i_search_ttl;
+        $this->words    = [];
+        $this->stmtIndx = null;
+        $this->stmtLike = null;
+        $queryVars      = $this->buildSelect($v, $forumIdxs);
 
         $key = $this->c->user->group_id . '-' .
                $v->serch_in .
@@ -191,24 +191,24 @@ class Execute extends Method
                         } else {
                             $vars[':list'] = $list;
 
-                            if (null === $this->stmtCJK) {
-                                $this->stmtCJK = $this->c->DB->prepare($this->queryCJK, $vars);
-                                $this->stmtCJK->execute();
+                            if (null === $this->stmtLike) {
+                                $this->stmtLike = $this->c->DB->prepare($this->queryLike, $vars);
+                                $this->stmtLike->execute();
                             } else {
-                                $this->stmtCJK->execute($vars);
+                                $this->stmtLike->execute($vars);
                             }
 
-                            $this->words[$word] = $list = $this->stmtCJK->fetchAll(PDO::FETCH_KEY_PAIR);
+                            $this->words[$word] = $list = $this->stmtLike->fetchAll(PDO::FETCH_KEY_PAIR);
                         }
                     } else {
-                        if (null === $this->stmtIdx) {
-                            $this->stmtIdx = $this->c->DB->prepare($this->queryIdx, $vars);
-                            $this->stmtIdx->execute();
+                        if (null === $this->stmtIndx) {
+                            $this->stmtIndx = $this->c->DB->prepare($this->queryIndx, $vars);
+                            $this->stmtIndx->execute();
                         } else {
-                            $this->stmtIdx->execute($vars);
+                            $this->stmtIndx->execute($vars);
                         }
 
-                        $this->words[$word] = $list = $this->stmtIdx->fetchAll(PDO::FETCH_KEY_PAIR);
+                        $this->words[$word] = $list = $this->stmtIndx->fetchAll(PDO::FETCH_KEY_PAIR);
                     }
                 }
             }
@@ -234,53 +234,53 @@ class Execute extends Method
      */
     protected function buildSelect(Validator $v, array $forumIdxs): array
     {
-        $vars     = [];
-        $whereIdx = [];
-        $whereCJK = [];
-        $useTIdx  = false;
-        $usePIdx  = false;
-        $useTCJK  = false;
-        $usePCJK  = false;
-        $like     = 'pgsql' === $this->c->DB->getType() ? 'ILIKE' : 'LIKE';
+        $vars      = [];
+        $whereIndx = [];
+        $whereLike = [];
+        $useTIndx  = false;
+        $usePIndx  = false;
+        $useTLike  = false;
+        $usePLike  = false;
+        $like      = 'pgsql' === $this->c->DB->getType() ? 'ILIKE' : 'LIKE';
 
         if (
             '*' !== $v->forums
             || ! $this->c->user->isAdmin
         ) {
-            $useTIdx                 = true;
-            $whereIdx[]              = 't.forum_id IN (?ai:forums)';
-            $whereCJK[]              = 't.forum_id IN (?ai:forums)';
-            $useTCJK                 = true;
+            $useTIndx                = true;
+            $whereIndx[]             = 't.forum_id IN (?ai:forums)';
+            $whereLike[]             = 't.forum_id IN (?ai:forums)';
+            $useTLike                = true;
             $vars[':forums']         = '*' === $v->forums ? $forumIdxs : \explode('.', $v->forums);
         }
 
         //???? нужен индекс по авторам сообщений/тем?
         if ('*' !== $v->author) {
-            $usePIdx                 = true;
+            $usePIndx                = true;
             $vars[':author']         = \str_replace(['#', '%', '_', '*', '?'], ['##', '#%', '#_', '%', '_'], $v->author);
-            $whereIdx[]              = "p.poster {$like} ?s:author ESCAPE '#'";
+            $whereIndx[]             = "p.poster {$like} ?s:author ESCAPE '#'";
         }
 
         $this->model->showAs         = $v->show_as;
 
         switch ($v->serch_in) {
             case 1:
-                $whereIdx[]          = 'sm.subject_match=0';
-                $whereCJK[]          = "p.message {$like} ?s:word";
-                $usePCJK             = true;
+                $whereIndx[]         = 'sm.subject_match=0';
+                $whereLike[]         = "p.message {$like} ?s:word";
+                $usePLike            = true;
 
                 if (isset($vars[':author'])) {
-                    $whereCJK[]      = "p.poster {$like} ?s:author ESCAPE '#'";
+                    $whereLike[]     = "p.poster {$like} ?s:author ESCAPE '#'";
                 }
 
                 break;
             case 2:
-                $whereIdx[]          = 'sm.subject_match=1';
-                $whereCJK[]          = "t.subject {$like} ?s:word";
-                $useTCJK             = true;
+                $whereIndx[]         = 'sm.subject_match=1';
+                $whereLike[]         = "t.subject {$like} ?s:word";
+                $useTLike            = true;
 
                 if (isset($vars[':author'])) {
-                    $whereCJK[]      = "t.poster {$like} ?s:author ESCAPE '#'";
+                    $whereLike[]     = "t.poster {$like} ?s:author ESCAPE '#'";
                 }
                 // при поиске в заголовках результат только в виде списка тем
                 $this->model->showAs = 1;
@@ -288,73 +288,73 @@ class Execute extends Method
                 break;
             default:
                 if (isset($vars[':author'])) {
-                    $whereCJK[]      = "((p.message {$like} ?s:word AND p.poster {$like} ?s:author ESCAPE '#') OR (t.subject {$like} ?s:word AND t.first_post_id=p.id AND t.poster {$like} ?s:author ESCAPE '#'))";
+                    $whereLike[]     = "((p.message {$like} ?s:word AND p.poster {$like} ?s:author ESCAPE '#') OR (t.subject {$like} ?s:word AND t.first_post_id=p.id AND t.poster {$like} ?s:author ESCAPE '#'))";
                 } else {
-                    $whereCJK[]      = "(p.message {$like} ?s:word OR (t.subject {$like} ?s:word AND t.first_post_id=p.id))";
+                    $whereLike[]     = "(p.message {$like} ?s:word OR (t.subject {$like} ?s:word AND t.first_post_id=p.id))";
                 }
 
-                $usePCJK             = true;
-                $useTCJK             = true;
+                $usePLike            = true;
+                $useTLike            = true;
 
                 break;
         }
 
         if (1 === $this->model->showAs) {
-            $usePIdx                 = true;
-            $selectFIdx              = 'DISTINCT p.topic_id';
-            $selectFCJK              = 'DISTINCT t.id';
-            $useTCJK                 = true;
-            $whereCJK[]              = 't.id IN (?ai:list)';
+            $usePIndx                = true;
+            $selectFIndx             = 'DISTINCT p.topic_id';
+            $selectFLike             = 'DISTINCT t.id';
+            $useTLike                = true;
+            $whereLike[]             = 't.id IN (?ai:list)';
         } else {
-            $selectFIdx              = 'sm.post_id';
-            $selectFCJK              = 'p.id';
-            $usePCJK                 = true;
-            $whereCJK[]              = 'p.id IN (?ai:list)';
+            $selectFIndx             = 'sm.post_id';
+            $selectFLike             = 'p.id';
+            $usePLike                = true;
+            $whereLike[]             = 'p.id IN (?ai:list)';
         }
 
         switch ($v->sort_by) {
             case 1:
                 if (1 === $this->model->showAs) {
-                    $sortIdx         = 't.poster';
-                    $sortCJK         = 't.poster';
-                    $useTIdx         = true;
-                    $useTCJK         = true;
+                    $sortIndx        = 't.poster';
+                    $sortLike        = 't.poster';
+                    $useTIndx        = true;
+                    $useTLike        = true;
                 } else {
-                    $sortIdx         = 'p.poster';
-                    $sortCJK         = 'p.poster';
-                    $usePIdx         = true;
-                    $usePCJK         = true;
+                    $sortIndx        = 'p.poster';
+                    $sortLike        = 'p.poster';
+                    $usePIndx        = true;
+                    $usePLike        = true;
                 }
 
                 $this->sortType      = \SORT_STRING;
 
                 break;
             case 2:
-                $sortIdx             = 't.subject';
-                $sortCJK             = 't.subject';
-                $useTIdx             = true;
-                $useTCJK             = true;
+                $sortIndx            = 't.subject';
+                $sortLike            = 't.subject';
+                $useTIndx            = true;
+                $useTLike            = true;
                 $this->sortType      = \SORT_STRING;
 
                 break;
             case 3:
-                $sortIdx             = 't.forum_id';
-                $sortCJK             = 't.forum_id';
-                $useTIdx             = true;
-                $useTCJK             = true;
+                $sortIndx            = 't.forum_id';
+                $sortLike            = 't.forum_id';
+                $useTIndx            = true;
+                $useTLike            = true;
                 $this->sortType      = \SORT_NUMERIC;
 
                 break;
             default:
                 if (1 === $this->model->showAs) {
-                    $sortIdx         = 't.last_post';
-                    $sortCJK         = 't.last_post';
-                    $useTIdx         = true;
-                    $useTCJK         = true;
+                    $sortIndx        = 't.last_post';
+                    $sortLike        = 't.last_post';
+                    $useTIndx        = true;
+                    $useTLike        = true;
                 } else {
-                    $sortIdx         = 'sm.post_id';
-                    $sortCJK         = 'p.id';
-                    $usePCJK         = true;
+                    $sortIndx        = 'sm.post_id';
+                    $sortLike        = 'p.id';
+                    $usePLike        = true;
                 }
 
                 $this->sortType      = \SORT_NUMERIC;
@@ -362,23 +362,23 @@ class Execute extends Method
                 break;
         }
 
-        $usePIdx  = $usePIdx || $useTIdx ? 'INNER JOIN ::posts AS p ON p.id=sm.post_id '   : '';
-        $useTIdx  = $useTIdx             ? 'INNER JOIN ::topics AS t ON t.id=p.topic_id ' : '';
-        $whereIdx = empty($whereIdx)     ? '' : ' AND ' . \implode(' AND ', $whereIdx);
+        $usePIndx  = $usePIndx || $useTIndx ? 'INNER JOIN ::posts AS p ON p.id=sm.post_id '   : '';
+        $useTIndx  = $useTIndx              ? 'INNER JOIN ::topics AS t ON t.id=p.topic_id ' : '';
+        $whereIndx = empty($whereIndx)      ? '' : ' AND ' . \implode(' AND ', $whereIndx);
 
-        $this->queryIdx = "SELECT {$selectFIdx}, {$sortIdx} FROM ::search_words AS sw " .
-                          'INNER JOIN ::search_matches AS sm ON sm.word_id=sw.id ' .
-                          $usePIdx .
-                          $useTIdx .
-                          'WHERE sw.word LIKE ?s:word' . $whereIdx; // ILIKE не нужен, слово в ниж.регистре
+        $this->queryIndx = "SELECT {$selectFIndx}, {$sortIndx} FROM ::search_words AS sw " .
+                           'INNER JOIN ::search_matches AS sm ON sm.word_id=sw.id ' .
+                           $usePIndx .
+                           $useTIndx .
+                           'WHERE sw.word LIKE ?s:word' . $whereIndx; // ILIKE не нужен, слово в ниж.регистре
 
-        if ($usePCJK) {
-            $this->queryCJK = "SELECT {$selectFCJK}, {$sortCJK} FROM ::posts AS p " .
-                              ($useTCJK ? 'INNER JOIN ::topics AS t ON t.id=p.topic_id ' : '') .
-                              'WHERE ' . \implode(' AND ', $whereCJK);
+        if ($usePLike) {
+            $this->queryLike = "SELECT {$selectFLike}, {$sortLike} FROM ::posts AS p " .
+                               ($useTLike ? 'INNER JOIN ::topics AS t ON t.id=p.topic_id ' : '') .
+                               'WHERE ' . \implode(' AND ', $whereLike);
         } else {
-            $this->queryCJK = "SELECT {$selectFCJK}, {$sortCJK} FROM ::topics AS t " .
-                              'WHERE ' . \implode(' AND ', $whereCJK);
+            $this->queryLike = "SELECT {$selectFLike}, {$sortLike} FROM ::topics AS t " .
+                               'WHERE ' . \implode(' AND ', $whereLike);
         }
 
         return $vars;
