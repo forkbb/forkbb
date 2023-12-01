@@ -129,6 +129,9 @@ msgstr "Search query: «%1$s» - Author: «%2$s»"
 msgid "No hits"
 msgstr "Your search returned no hits."
 
+msgid "Too many coincidences"
+msgstr "Too many coincidences."
+
 msgid "Go to post"
 msgstr "Go to post"
 

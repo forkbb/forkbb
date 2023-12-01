@@ -338,7 +338,7 @@ class Search extends Page
                         $flood = false;
 
                         if (empty($search->queryIds)) {
-                            $v->addError('No hits', FORK_MESS_INFO);
+                            $v->addError($search->queryError ?? 'No hits', FORK_MESS_INFO);
                         }
 
                         if (

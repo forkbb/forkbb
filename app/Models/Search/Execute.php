@@ -188,6 +188,10 @@ class Execute extends Method
 
                         if (empty($list)) {
                             $this->words[$word] = [];
+                        } elseif (\count($list) > 60000) {
+                            $this->model->queryError = 'Too many coincidences';
+
+                            return [];
                         } else {
                             $vars[':list'] = $list;
 

@@ -129,6 +129,9 @@ msgstr "Запрос: «%1$s» - Автор: «%2$s»"
 msgid "No hits"
 msgstr "Ничего не найдено."
 
+msgid "Too many coincidences"
+msgstr "Слишком много совпадений."
+
 msgid "Go to post"
 msgstr "Перейти к сообщению"
 
