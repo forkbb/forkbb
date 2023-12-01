@@ -183,6 +183,10 @@ class Execute extends Method
                         }
 
                         if (! empty($list)) {
+                            \usort($list, function ($a, $b) {
+                                return \mb_strlen($b, 'UTF-8') <=> \mb_strlen($a, 'UTF-8');
+                            });
+
                             $list = \array_keys($this->exec($list, $vars));
                         }
 
