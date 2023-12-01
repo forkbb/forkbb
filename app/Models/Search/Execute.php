@@ -209,14 +209,26 @@ class Execute extends Method
                             $this->words[$word] = $list = $this->stmtLike->fetchAll(PDO::FETCH_KEY_PAIR);
                         }
                     } else {
-                        if (null === $this->stmtIndx) {
-                            $this->stmtIndx = $this->c->DB->prepare($this->queryIndx, $vars);
-                            $this->stmtIndx->execute();
-                        } else {
-                            $this->stmtIndx->execute($vars);
-                        }
+                        $list = $this->c->DB->query('SELECT id FROM ::search_words WHERE word LIKE ?s', [$word])->fetchAll(PDO::FETCH_COLUMN);
 
-                        $this->words[$word] = $list = $this->stmtIndx->fetchAll(PDO::FETCH_KEY_PAIR);
+                        if (empty($list)) {
+                            $this->words[$word] = [];
+                        } elseif (\count($list) > 60000) {
+                            $this->model->queryError = 'Too many coincidences';
+
+                            return [];
+                        } else {
+                            $vars[':list'] = $list;
+
+                            if (null === $this->stmtIndx) {
+                                $this->stmtIndx = $this->c->DB->prepare($this->queryIndx, $vars);
+                                $this->stmtIndx->execute();
+                            } else {
+                                $this->stmtIndx->execute($vars);
+                            }
+
+                            $this->words[$word] = $list = $this->stmtIndx->fetchAll(PDO::FETCH_KEY_PAIR);
+                        }
                     }
                 }
             }
@@ -374,11 +386,10 @@ class Execute extends Method
         $useTIndx  = $useTIndx              ? 'INNER JOIN ::topics AS t ON t.id=p.topic_id ' : '';
         $whereIndx = empty($whereIndx)      ? '' : ' AND ' . \implode(' AND ', $whereIndx);
 
-        $this->queryIndx = "SELECT {$selectFIndx}, {$sortIndx} FROM ::search_words AS sw " .
-                           'INNER JOIN ::search_matches AS sm ON sm.word_id=sw.id ' .
+        $this->queryIndx = "SELECT {$selectFIndx}, {$sortIndx} FROM ::search_matches AS sm " .
                            $usePIndx .
                            $useTIndx .
-                           'WHERE sw.word LIKE ?s:word' . $whereIndx; // ILIKE не нужен, слово в ниж.регистре
+                           'WHERE sm.word_id IN (?ai:list)' . $whereIndx; // ILIKE не нужен, слово в ниж.регистре
 
         if ($usePLike) {
             $this->queryLike = "SELECT {$selectFLike}, {$sortLike} FROM ::posts AS p " .
