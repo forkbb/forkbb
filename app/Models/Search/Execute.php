@@ -257,8 +257,8 @@ class Execute extends Method
         ) {
             $useTIndx                = true;
             $whereIndx[]             = 't.forum_id IN (?ai:forums)';
-            $whereLike[]             = 't.forum_id IN (?ai:forums)';
-            $useTLike                = true;
+//            $whereLike[]             = 't.forum_id IN (?ai:forums)';
+//            $useTLike                = true;
             $vars[':forums']         = '*' === $v->forums ? $forumIdxs : \explode('.', $v->forums);
         }
 
