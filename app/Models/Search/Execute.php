@@ -151,7 +151,7 @@ class Execute extends Method
                 && ! isset($word['type'])
                 && ! isset($word['word'])
             ) {
-                $ids = $this->exec($word, $vars);
+                $list = $this->exec($word, $vars);
             } else {
                 $reqLike = false;
 
@@ -211,16 +211,16 @@ class Execute extends Method
                         $this->words[$word] = $list = $this->stmtIdx->fetchAll(PDO::FETCH_KEY_PAIR);
                     }
                 }
+            }
 
-                if (! $count) {
-                    $ids = $list;
-                } elseif ('AND' === $type) {
-                    $ids = \array_intersect_key($ids, $list);
-                } elseif ('OR' === $type) {
-                    $ids += $list;
-                } elseif ('NOT' === $type) {
-                    $ids = \array_diff_key($ids, $list);
-                }
+            if (! $count) {
+                $ids = $list;
+            } elseif ('AND' === $type) {
+                $ids = \array_intersect_key($ids, $list);
+            } elseif ('OR' === $type) {
+                $ids += $list;
+            } elseif ('NOT' === $type) {
+                $ids = \array_diff_key($ids, $list);
             }
 
             ++$count;
