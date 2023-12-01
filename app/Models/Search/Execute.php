@@ -139,7 +139,7 @@ class Execute extends Method
 
             // если до сих пор ни чего не найдено и тип операции не ИЛИ, то выполнять не надо
             if (
-                $count
+                0 !== $count
                 && empty($ids)
                 && 'OR' !== $type
             ) {
@@ -148,47 +148,20 @@ class Execute extends Method
 
             if (
                 \is_array($word)
-                && (
-                    ! isset($word['type'])
-                    || 'CJK' !== $word['type']
-                )
+                && ! isset($word['type'])
+                && ! isset($word['word'])
             ) {
                 $ids = $this->exec($word, $vars);
             } else {
-                $CJK = false;
+                $reqLike = false;
 
                 if (
                     isset($word['type'])
-                    && 'CJK' === $word['type']
+                    && 'LIKE' === $word['type']
                 ) {
-                    $CJK  = true;
-
-                    // создание подзапросов для ускорения!?
-                    $subWords = $this->model->words($word['word'], false);
-                    $subCount = \count($subWords);
-                    $list     = [];
-                    $i        = 0;
-
-                    foreach ($subWords as $cur) {
-                        ++$i;
-
-                        if ($this->model->isCJKWord($cur)) {
-                            $list[] = $cur;
-                        } elseif (1 === $i) {
-                            if ($subCount < 3) {
-                                $list[] = '*' . $cur;
-                            }
-                        } elseif ($subCount === $i) {
-                            if ($subCount < 3) {
-                                $list[] = $cur . '*';
-                            }
-                        } else {
-                            $list[] = $cur;
-                        }
-                    }
-
-                    $list = \array_keys($this->exec($list, $vars));
-                    $word = '*' . \trim($word['word'], '*') . '*';
+                    $reqLike  = true;
+                    $subWords = $this->model->words($word['word'], true);
+                    $word     = '*' . \trim($word['word'], '*') . '*';
                 }
 
                 $word = \str_replace(['*', '?'], ['%', '_'], $word);
@@ -198,17 +171,35 @@ class Execute extends Method
                 } else {
                     $vars[':word'] = $word;
 
-                    if ($CJK) {
-                        $vars[':list'] = $list;
+                    if ($reqLike) {
+                        $list = [];
 
-                        if (null === $this->stmtCJK) {
-                            $this->stmtCJK = $this->c->DB->prepare($this->queryCJK, $vars);
-                            $this->stmtCJK->execute();
-                        } else {
-                            $this->stmtCJK->execute($vars);
+                        foreach ($subWords as $cur) {
+                            if ($this->model->isCJKWord($cur)) {
+                                $list[] = $cur;
+                            } else {
+                                $list[] = "{$cur}*";
+                            }
                         }
 
-                        $this->words[$word] = $list = $this->stmtCJK->fetchAll(PDO::FETCH_KEY_PAIR);
+                        if (! empty($list)) {
+                            $list = \array_keys($this->exec($list, $vars));
+                        }
+
+                        if (empty($list)) {
+                            $this->words[$word] = [];
+                        } else {
+                            $vars[':list'] = $list;
+
+                            if (null === $this->stmtCJK) {
+                                $this->stmtCJK = $this->c->DB->prepare($this->queryCJK, $vars);
+                                $this->stmtCJK->execute();
+                            } else {
+                                $this->stmtCJK->execute($vars);
+                            }
+
+                            $this->words[$word] = $list = $this->stmtCJK->fetchAll(PDO::FETCH_KEY_PAIR);
+                        }
                     } else {
                         if (null === $this->stmtIdx) {
                             $this->stmtIdx = $this->c->DB->prepare($this->queryIdx, $vars);

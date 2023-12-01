@@ -14,6 +14,7 @@ use ForkBB\Models\Model;
 
 class Search extends Model
 {
+    const QUOTES = ['ʹ', 'ʻ', 'ʼ', 'ʽ', 'ʾ', 'ʿ', '΄', '᾿', 'Ꞌ', 'ꞌ', '‘', '’', '‛', '′', '´', '`', '｀', '＇', '`', '’'];
     const CJK_REGEX = '['.
         '\x{1100}-\x{11FF}'.   // Hangul Jamo
         '\x{3130}-\x{318F}'.   // Hangul Compatibility Jamo
@@ -91,7 +92,7 @@ class Search extends Model
             $text
         );
 
-        $text = \str_replace(['ʹ', 'ʻ', 'ʼ', 'ʽ', 'ʾ', 'ʿ', '΄', '᾿', 'Ꞌ', 'ꞌ', '‘', '’', '‛', '′', '´', '`', '｀', '＇', '`', '’'], '\'', $text);
+        $text = \str_replace(self::QUOTES, '\'', $text);
         $text = \str_replace('ё', 'е', $text);
         // разделить CJK знаки
         $text = \preg_replace('%' . self::CJK_REGEX . '%u', ' \0 ', $text);

@@ -52,19 +52,18 @@ class Prepare extends Method
             // подстрока внутри кавычек
             if ($quotes) {
                 $subQuery = \mb_strtolower(\trim($subQuery), 'UTF-8');
-                // не стоп-слово и минимальная длина удовлетворяет условию
+
                 if (null !== $this->model->word($subQuery)) {
-                    // подстрока является словом и нет символов CJK языков
                     if (
                         false === \strpos($subQuery, ' ')
-                        //&& ! $this->model->isCJKWord($subQuery)
                         && $this->model->cleanText($subQuery) === $subQuery
                     ) {
                         $words[] = $subQuery;
-                    // это не слово или есть символы CJK языков
-                    // искать придется через LIKE по тексту сообщений
                     } else {
-                        $words[] = ['type' => 'CJK', 'word' => $subQuery];
+                        $words[] = [
+                            'type' => 'LIKE',
+                            'word' => $subQuery
+                        ];
                     }
 
                     $keyword = false;
@@ -86,17 +85,18 @@ class Prepare extends Method
                 ) as $cur
             ) {
                 $key = null;
+
                 switch ($cur) {
                     case 'AND':
                     case '+':
                         $key = 'AND';
                     case 'OR':
                     case '|':
-                        $key = $key ?: 'OR';
+                        $key ??= 'OR';
                     case 'NOT':
                     case '-':
                     case '!':
-                        $key = $key ?: 'NOT';
+                        $key ??= 'NOT';
 
                         if (! $keyword) {
                             $keyword = true;
@@ -122,10 +122,12 @@ class Prepare extends Method
                         } elseif ($keyword) {
                             $error = 'Logical operator at the end of the search subquery: \'%s\'';
                         }
+
                         if (empty($stack)) {
                             $error = 'The order of brackets is broken: \'%s\'';
                         } else {
                             $temp = $words;
+
                             list($words, $keyword, $count) = \array_pop($stack);
 
                             if (! $keyword) {
@@ -149,12 +151,12 @@ class Prepare extends Method
 
                             if (null === $word) {
                                 continue;
-                            }
-                            if (! empty($temp)) {
+                            } elseif (! empty($temp)) {
                                 $temp[] = 'AND';
                             }
+
                             if ($this->model->isCJKWord($word)) {
-                                $temp[] = $word; // ['type' => 'CJK', 'word' => $word];
+                                $temp[] = $word;
                             } elseif (\rtrim($word, '?*') === $word) {
                                 $temp[] = $word . '*'; //????
                             } else {
@@ -168,6 +170,7 @@ class Prepare extends Method
                             if (! $keyword) {
                                 $words[] = 'AND';
                             }
+
                             if (
                                 1 === $countT
                                 || 'AND' === \end($words)
@@ -215,7 +218,7 @@ class Prepare extends Method
         foreach ($words as $word) {
             if (
                 isset($word['type'])
-                && 'CJK' === $word['type']
+                && 'LIKE' === $word['type']
             ) {
                 $word = '"' . $word['word'] . '"';
             } elseif (\is_array($word)) {

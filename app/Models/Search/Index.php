@@ -74,6 +74,7 @@ class Index extends Method
         } else {
             $allWords = \array_unique(\array_merge($words['add']['p'], $words['add']['s']));
         }
+
         if (! empty($allWords)) {
             $vars = [
                 ':words' => $allWords,
@@ -93,6 +94,7 @@ class Index extends Method
                 foreach ($newWords as $word) {
                     if (null === $stmt) {
                         $stmt = $this->c->DB->prepare($query, [':word' => $word]);
+
                         $stmt->execute();
                     } else {
                         $stmt->execute([':word' => $word]);
