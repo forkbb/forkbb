@@ -11,17 +11,12 @@ declare(strict_types=1);
 namespace ForkBB\Models\Search;
 
 use ForkBB\Core\Validator;
-use ForkBB\Core\DB\DBStatement;
 use ForkBB\Models\Method;
-use ForkBB\Models\Forum\Forum;
-use ForkBB\Models\Post\Post;
 use PDO;
 use RuntimeException;
 
 class Execute extends Method
 {
-    const MAX_PLACE = 60000;
-
     protected int $sortType;
     protected array $wordsCache = [];
 
@@ -124,7 +119,7 @@ class Execute extends Method
         ) {
             $vars = [
                 ':forums' => $structure[':forums'],
-                ':ids'    => $ids,
+                ':ids'    => \implode(',', \array_map('\\intval', $ids)),
             ];
 
             $ids = $this->c->DB->query($structure['queryForums'], $vars)->fetchAll(PDO::FETCH_COLUMN);
@@ -136,7 +131,7 @@ class Execute extends Method
         ) {
             $vars = [
                 ':author' => $structure[':author'],
-                ':ids'    => $ids,
+                ':ids'    => \implode(',', \array_map('\\intval', $ids)),
             ];
 
             $ids = $this->c->DB->query($structure['queryAuthor'], $vars)->fetchAll(PDO::FETCH_COLUMN);
@@ -147,7 +142,7 @@ class Execute extends Method
                 return \array_combine($ids, $ids);
             } else {
                 $vars = [
-                    ':ids' => $ids,
+                    ':ids' => \implode(',', \array_map('\\intval', $ids)),
                 ];
 
                 $ids = $this->c->DB->query($structure['queryResult'], $vars)->fetchAll(PDO::FETCH_KEY_PAIR);
@@ -231,13 +226,9 @@ class Execute extends Method
 
                         if (empty($list)) {
                             $this->wordsCache[$word] = [];
-                        } elseif (\count($list) > self::MAX_PLACE) {
-                            $this->model->queryError = 'Too many coincidences';
-
-                            return [];
                         } else {
                             $vars = [
-                                ':list' => $list,
+                                ':list' => \implode(',', \array_map('\\intval', $list)),
                                 ':word' => $word,
                             ];
 
@@ -253,13 +244,9 @@ class Execute extends Method
 
                         if (empty($list)) {
                             $this->wordsCache[$word] = [];
-                        } elseif (\count($list) > self::MAX_PLACE) {
-                            $this->model->queryError = 'Too many coincidences';
-
-                            return [];
                         } else {
                             $vars = [
-                                ':list' => $list,
+                                ':list' => \implode(',', \array_map('\\intval', $list)),
                             ];
 
                             $this->wordsCache[$word] = $list = $this->c->DB->query($structure['queryIndxRaw'], $vars)->fetchAll(PDO::FETCH_COLUMN);
@@ -300,36 +287,36 @@ class Execute extends Method
             $out[':forums']     = '*' === $v->forums ? $forumIdxs : \explode('.', $v->forums);
             $out['queryForums'] = 'SELECT p.id FROM ::posts AS p ' .
                                   'INNER JOIN ::topics AS t ON t.id=p.topic_id ' .
-                                  'WHERE p.id IN (?ai:ids) AND t.forum_id IN (?ai:forums)';
+                                  'WHERE p.id IN (?p:ids) AND t.forum_id IN (?ai:forums)';
         }
 
         //???? нужен индекс по авторам сообщений/тем?
         if ('*' !== $v->author) {
             $out[':author']     = \str_replace(['#', '%', '_', '*', '?'], ['##', '#%', '#_', '%', '_'], $v->author);
-            $out['queryAuthor'] = "SELECT id FROM ::post WHERE id IN (?ai:ids) AND poster {$like} ?s:author ESCAPE '#'";
+            $out['queryAuthor'] = "SELECT id FROM ::post WHERE id IN (?p:ids) AND poster {$like} ?s:author ESCAPE '#'";
         }
 
         $this->model->showAs = $v->show_as;
 
         switch ($v->serch_in) {
             case 1:
-                $out['queryIndxRaw']  = 'SELECT post_id FROM ::search_matches WHERE word_id IN (?ai:list) AND subject_match=0';
-                $out['queryLikeRaw']  = "SELECT id FROM ::posts WHERE id IN (?ai:list) AND message {$like} ?s:word";
+                $out['queryIndxRaw']  = 'SELECT post_id FROM ::search_matches WHERE word_id IN (?p:list) AND subject_match=0';
+                $out['queryLikeRaw']  = "SELECT id FROM ::posts WHERE id IN (?p:list) AND message {$like} ?s:word";
 
                 break;
             case 2:
-                $out['queryIndxRaw']  = 'SELECT post_id FROM ::search_matches WHERE word_id IN (?ai:list) AND subject_match=1';
-                $out['queryLikeRaw']  = "SELECT first_post_id FROM ::topics WHERE first_post_id IN (?ai:list) AND subject {$like} ?s:word";
+                $out['queryIndxRaw']  = 'SELECT post_id FROM ::search_matches WHERE word_id IN (?p:list) AND subject_match=1';
+                $out['queryLikeRaw']  = "SELECT first_post_id FROM ::topics WHERE first_post_id IN (?p:list) AND subject {$like} ?s:word";
 
                 // при поиске в заголовках результат только в виде списка тем
                 $this->model->showAs = 1;
 
                 break;
             default:
-                $out['queryIndxRaw']  = 'SELECT post_id FROM ::search_matches WHERE word_id IN (?ai:list)';
-                $out['queryLikeRaw']  = "SELECT id FROM ::posts WHERE id IN (?ai:list) AND message {$like} ?s:word" .
+                $out['queryIndxRaw']  = 'SELECT post_id FROM ::search_matches WHERE word_id IN (?p:list)';
+                $out['queryLikeRaw']  = "SELECT id FROM ::posts WHERE id IN (?p:list) AND message {$like} ?s:word" .
                                         ' UNION ' .
-                                        "SELECT first_post_id FROM ::topics WHERE first_post_id IN (?ai:list) AND subject {$like} ?s:word";
+                                        "SELECT first_post_id FROM ::topics WHERE first_post_id IN (?p:list) AND subject {$like} ?s:word";
 
                 break;
         }
@@ -377,7 +364,7 @@ class Execute extends Method
             $useT               = $useT ? 'INNER JOIN ::topics AS t ON t.id=p.topic_id ' : '';
             $out['queryResult'] = "SELECT {$key}, {$value} FROM ::posts AS p " .
                                   $useT .
-                                  'WHERE p.id IN (?ai:ids)';
+                                  'WHERE p.id IN (?p:ids)';
         }
 
         return $out;
