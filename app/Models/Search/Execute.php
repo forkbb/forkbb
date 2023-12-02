@@ -20,12 +20,10 @@ use RuntimeException;
 
 class Execute extends Method
 {
-    protected string $queryIndx;
-    protected string $queryLike;
+    const MAX_PLACE = 60000;
+
     protected int $sortType;
-    protected array $words;
-    protected ?DBStatement $stmtIndx;
-    protected ?DBStatement $stmtLike;
+    protected array $wordsCache = [];
 
     /**
      * Поиск тем/сообщений в соответствии с поисковым запросом
@@ -41,11 +39,8 @@ class Execute extends Method
             throw new RuntimeException('No query data');
         }
 
-        $delimiter      = \time() - $this->c->config->i_search_ttl;
-        $this->words    = [];
-        $this->stmtIndx = null;
-        $this->stmtLike = null;
-        $queryVars      = $this->buildSelect($v, $forumIdxs);
+        $delimiter = \time() - $this->c->config->i_search_ttl;
+        $structure = $this->buildSelect($v, $forumIdxs);
 
         $key = $this->c->user->group_id . '-' .
                $v->serch_in .
@@ -80,12 +75,12 @@ class Execute extends Method
             return false;
         }
 
-        $ids = $this->exec($this->model->queryWords, $queryVars);
+        $ids = $this->exec($this->model->queryWords, $structure);
 
         if (1 === $v->sort_dir) {
-            \asort($ids, $this->sortType);
+            \asort($ids, $structure['sortType']);
         } else {
-            \arsort($ids, $this->sortType);
+            \arsort($ids, $structure['sortType']);
         }
 
         $ids = \array_keys($ids);
@@ -119,7 +114,53 @@ class Execute extends Method
     /**
      * Поиск по словам рекурсивного списка
      */
-    protected function exec(array $words, array $vars): array
+    protected function exec(array $words, array $structure): array
+    {
+        $ids = $this->execRaw($words, $structure);
+
+        if (
+            ! empty($ids)
+            && ! empty($structure[':forums'])
+        ) {
+            $vars = [
+                ':forums' => $structure[':forums'],
+                ':ids'    => $ids,
+            ];
+
+            $ids = $this->c->DB->query($structure['queryForums'], $vars)->fetchAll(PDO::FETCH_COLUMN);
+        }
+
+        if (
+            ! empty($ids)
+            && ! empty($structure[':author'])
+        ) {
+            $vars = [
+                ':author' => $structure[':author'],
+                ':ids'    => $ids,
+            ];
+
+            $ids = $this->c->DB->query($structure['queryAuthor'], $vars)->fetchAll(PDO::FETCH_COLUMN);
+        }
+
+        if (! empty($ids)) {
+            if (null === $structure['queryResult']) {
+                return \array_combine($ids, $ids);
+            } else {
+                $vars = [
+                    ':ids' => $ids,
+                ];
+
+                $ids = $this->c->DB->query($structure['queryResult'], $vars)->fetchAll(PDO::FETCH_KEY_PAIR);
+            }
+        }
+
+        return $ids;
+    }
+
+    /**
+     * Поиск по словам рекурсивного списка без ограничителей
+     */
+    protected function execRaw(array $words, array $structure): array
     {
         $type  = 'AND';
         $count = 0;
@@ -137,7 +178,7 @@ class Execute extends Method
                 continue;
             }
 
-            // если до сих пор ни чего не найдено и тип операции не ИЛИ, то выполнять не надо
+            // если до сих пор ни чего не найдено и тип операции не ИЛИ, то выполнять не надо(?)
             if (
                 0 !== $count
                 && empty($ids)
@@ -151,7 +192,7 @@ class Execute extends Method
                 && ! isset($word['type'])
                 && ! isset($word['word'])
             ) {
-                $list = $this->exec($word, $vars);
+                $list = $this->execRaw($word, $structure);
             } else {
                 $reqLike = false;
 
@@ -161,17 +202,15 @@ class Execute extends Method
                 ) {
                     $reqLike  = true;
                     $subWords = $this->model->words($word['word'], true);
-                    $word     = '*' . \trim($word['word'], '*') . '*';
+                    $word     = '%' . $word['word'] . '%';
+                } else {
+                    $word     = \str_replace(['*', '?'], ['%', '_'], $word);
                 }
 
-                $word = \str_replace(['*', '?'], ['%', '_'], $word);
-
-                if (isset($this->words[$word])) {
-                    $list = $this->words[$word];
+                if (isset($this->wordsCache[$word])) {
+                    $list = $this->wordsCache[$word];
                 } else {
-                    $vars[':word'] = $word;
-
-                    if ($reqLike) {
+                    if (true === $reqLike) {
                         $list = [];
 
                         foreach ($subWords as $cur) {
@@ -187,66 +226,62 @@ class Execute extends Method
                                 return \mb_strlen($b, 'UTF-8') <=> \mb_strlen($a, 'UTF-8');
                             });
 
-                            $list = \array_keys($this->exec($list, $vars));
+                            $list = $this->execRaw($list, $structure);
                         }
 
                         if (empty($list)) {
-                            $this->words[$word] = [];
-                        } elseif (\count($list) > 60000) {
+                            $this->wordsCache[$word] = [];
+                        } elseif (\count($list) > self::MAX_PLACE) {
                             $this->model->queryError = 'Too many coincidences';
 
                             return [];
                         } else {
-                            $vars[':list'] = $list;
+                            $vars = [
+                                ':list' => $list,
+                                ':word' => $word,
+                            ];
 
-                            if (null === $this->stmtLike) {
-                                $this->stmtLike = $this->c->DB->prepare($this->queryLike, $vars);
-                                $this->stmtLike->execute();
-                            } else {
-                                $this->stmtLike->execute($vars);
-                            }
-
-                            $this->words[$word] = $list = $this->stmtLike->fetchAll(PDO::FETCH_KEY_PAIR);
+                            $this->wordsCache[$word] = $list = $this->c->DB->query($structure['queryLikeRaw'], $vars)->fetchAll(PDO::FETCH_COLUMN);
                         }
                     } else {
-                        $list = $this->c->DB->query('SELECT id FROM ::search_words WHERE word LIKE ?s', [$word])->fetchAll(PDO::FETCH_COLUMN);
+                        $vars = [
+                            ':word' => $word,
+                        ];
+                        $query = 'SELECT id FROM ::search_words WHERE word LIKE ?s:word';
+
+                        $list = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
 
                         if (empty($list)) {
-                            $this->words[$word] = [];
-                        } elseif (\count($list) > 60000) {
+                            $this->wordsCache[$word] = [];
+                        } elseif (\count($list) > self::MAX_PLACE) {
                             $this->model->queryError = 'Too many coincidences';
 
                             return [];
                         } else {
-                            $vars[':list'] = $list;
+                            $vars = [
+                                ':list' => $list,
+                            ];
 
-                            if (null === $this->stmtIndx) {
-                                $this->stmtIndx = $this->c->DB->prepare($this->queryIndx, $vars);
-                                $this->stmtIndx->execute();
-                            } else {
-                                $this->stmtIndx->execute($vars);
-                            }
-
-                            $this->words[$word] = $list = $this->stmtIndx->fetchAll(PDO::FETCH_KEY_PAIR);
+                            $this->wordsCache[$word] = $list = $this->c->DB->query($structure['queryIndxRaw'], $vars)->fetchAll(PDO::FETCH_COLUMN);
                         }
                     }
                 }
             }
 
             if (! $count) {
-                $ids = $list;
+                $ids = \array_flip($list);
             } elseif ('AND' === $type) {
-                $ids = \array_intersect_key($ids, $list);
+                $ids = \array_intersect_key($ids, \array_flip($list));
             } elseif ('OR' === $type) {
-                $ids += $list;
+                $ids += \array_flip($list);
             } elseif ('NOT' === $type) {
-                $ids = \array_diff_key($ids, $list);
+                $ids = \array_diff_key($ids, \array_flip($list));
             }
 
             ++$count;
         }
 
-        return $ids;
+        return \array_keys($ids);
     }
 
     /**
@@ -254,152 +289,97 @@ class Execute extends Method
      */
     protected function buildSelect(Validator $v, array $forumIdxs): array
     {
-        $vars      = [];
-        $whereIndx = [];
-        $whereLike = [];
-        $useTIndx  = false;
-        $usePIndx  = false;
-        $useTLike  = false;
-        $usePLike  = false;
-        $like      = 'pgsql' === $this->c->DB->getType() ? 'ILIKE' : 'LIKE';
+        $out  = [];
+        $like = 'pgsql' === $this->c->DB->getType() ? 'ILIKE' : 'LIKE';
+        $useT = false;
 
         if (
             '*' !== $v->forums
             || ! $this->c->user->isAdmin
         ) {
-            $useTIndx                = true;
-            $whereIndx[]             = 't.forum_id IN (?ai:forums)';
-//            $whereLike[]             = 't.forum_id IN (?ai:forums)';
-//            $useTLike                = true;
-            $vars[':forums']         = '*' === $v->forums ? $forumIdxs : \explode('.', $v->forums);
+            $out[':forums']     = '*' === $v->forums ? $forumIdxs : \explode('.', $v->forums);
+            $out['queryForums'] = 'SELECT p.id FROM ::posts AS p ' .
+                                  'INNER JOIN ::topics AS t ON t.id=p.topic_id ' .
+                                  'WHERE p.id IN (?ai:ids) AND t.forum_id IN (?ai:forums)';
         }
 
         //???? нужен индекс по авторам сообщений/тем?
         if ('*' !== $v->author) {
-            $usePIndx                = true;
-            $vars[':author']         = \str_replace(['#', '%', '_', '*', '?'], ['##', '#%', '#_', '%', '_'], $v->author);
-            $whereIndx[]             = "p.poster {$like} ?s:author ESCAPE '#'";
+            $out[':author']     = \str_replace(['#', '%', '_', '*', '?'], ['##', '#%', '#_', '%', '_'], $v->author);
+            $out['queryAuthor'] = "SELECT id FROM ::post WHERE id IN (?ai:ids) AND poster {$like} ?s:author ESCAPE '#'";
         }
 
-        $this->model->showAs         = $v->show_as;
+        $this->model->showAs = $v->show_as;
 
         switch ($v->serch_in) {
             case 1:
-                $whereIndx[]         = 'sm.subject_match=0';
-                $whereLike[]         = "p.message {$like} ?s:word";
-                $usePLike            = true;
-
-                if (isset($vars[':author'])) {
-                    $whereLike[]     = "p.poster {$like} ?s:author ESCAPE '#'";
-                }
+                $out['queryIndxRaw']  = 'SELECT post_id FROM ::search_matches WHERE word_id IN (?ai:list) AND subject_match=0';
+                $out['queryLikeRaw']  = "SELECT id FROM ::posts WHERE id IN (?ai:list) AND message {$like} ?s:word";
 
                 break;
             case 2:
-                $whereIndx[]         = 'sm.subject_match=1';
-                $whereLike[]         = "t.subject {$like} ?s:word";
-                $useTLike            = true;
+                $out['queryIndxRaw']  = 'SELECT post_id FROM ::search_matches WHERE word_id IN (?ai:list) AND subject_match=1';
+                $out['queryLikeRaw']  = "SELECT first_post_id FROM ::topics WHERE first_post_id IN (?ai:list) AND subject {$like} ?s:word";
 
-                if (isset($vars[':author'])) {
-                    $whereLike[]     = "t.poster {$like} ?s:author ESCAPE '#'";
-                }
                 // при поиске в заголовках результат только в виде списка тем
                 $this->model->showAs = 1;
 
                 break;
             default:
-                if (isset($vars[':author'])) {
-                    $whereLike[]     = "((p.message {$like} ?s:word AND p.poster {$like} ?s:author ESCAPE '#') OR (t.subject {$like} ?s:word AND t.first_post_id=p.id AND t.poster {$like} ?s:author ESCAPE '#'))";
-                } else {
-                    $whereLike[]     = "(p.message {$like} ?s:word OR (t.subject {$like} ?s:word AND t.first_post_id=p.id))";
-                }
-
-                $usePLike            = true;
-                $useTLike            = true;
+                $out['queryIndxRaw']  = 'SELECT post_id FROM ::search_matches WHERE word_id IN (?ai:list)';
+                $out['queryLikeRaw']  = "SELECT id FROM ::posts WHERE id IN (?ai:list) AND message {$like} ?s:word" .
+                                        ' UNION ' .
+                                        "SELECT first_post_id FROM ::topics WHERE first_post_id IN (?ai:list) AND subject {$like} ?s:word";
 
                 break;
         }
 
         if (1 === $this->model->showAs) {
-            $usePIndx                = true;
-            $selectFIndx             = 'DISTINCT p.topic_id';
-            $selectFLike             = 'DISTINCT t.id';
-            $useTLike                = true;
-            $whereLike[]             = 't.id IN (?ai:list)';
+            $key = 'DISTINCT p.topic_id';
         } else {
-            $selectFIndx             = 'sm.post_id';
-            $selectFLike             = 'p.id';
-            $usePLike                = true;
-            $whereLike[]             = 'p.id IN (?ai:list)';
+            $key = 'p.id';
         }
 
         switch ($v->sort_by) {
             case 1:
-                if (1 === $this->model->showAs) {
-                    $sortIndx        = 't.poster';
-                    $sortLike        = 't.poster';
-                    $useTIndx        = true;
-                    $useTLike        = true;
-                } else {
-                    $sortIndx        = 'p.poster';
-                    $sortLike        = 'p.poster';
-                    $usePIndx        = true;
-                    $usePLike        = true;
-                }
-
-                $this->sortType      = \SORT_STRING;
+                $value           = 'p.poster';
+                $out['sortType'] = \SORT_STRING;
 
                 break;
             case 2:
-                $sortIndx            = 't.subject';
-                $sortLike            = 't.subject';
-                $useTIndx            = true;
-                $useTLike            = true;
-                $this->sortType      = \SORT_STRING;
+                $value           = 't.subject';
+                $useT            = true;
+                $out['sortType'] = \SORT_STRING;
 
                 break;
             case 3:
-                $sortIndx            = 't.forum_id';
-                $sortLike            = 't.forum_id';
-                $useTIndx            = true;
-                $useTLike            = true;
-                $this->sortType      = \SORT_NUMERIC;
+                $value           = 't.forum_id';
+                $useT            = true;
+                $out['sortType'] = \SORT_NUMERIC;
 
                 break;
             default:
                 if (1 === $this->model->showAs) {
-                    $sortIndx        = 't.last_post';
-                    $sortLike        = 't.last_post';
-                    $useTIndx        = true;
-                    $useTLike        = true;
+                    $value       = 't.last_post';
+                    $useT        = true;
                 } else {
-                    $sortIndx        = 'sm.post_id';
-                    $sortLike        = 'p.id';
-                    $usePLike        = true;
+                    $value       = 'p.id';
                 }
 
-                $this->sortType      = \SORT_NUMERIC;
+                $out['sortType'] = \SORT_NUMERIC;
 
                 break;
         }
 
-        $usePIndx  = $usePIndx || $useTIndx ? 'INNER JOIN ::posts AS p ON p.id=sm.post_id '   : '';
-        $useTIndx  = $useTIndx              ? 'INNER JOIN ::topics AS t ON t.id=p.topic_id ' : '';
-        $whereIndx = empty($whereIndx)      ? '' : ' AND ' . \implode(' AND ', $whereIndx);
-
-        $this->queryIndx = "SELECT {$selectFIndx}, {$sortIndx} FROM ::search_matches AS sm " .
-                           $usePIndx .
-                           $useTIndx .
-                           'WHERE sm.word_id IN (?ai:list)' . $whereIndx; // ILIKE не нужен, слово в ниж.регистре
-
-        if ($usePLike) {
-            $this->queryLike = "SELECT {$selectFLike}, {$sortLike} FROM ::posts AS p " .
-                               ($useTLike ? 'INNER JOIN ::topics AS t ON t.id=p.topic_id ' : '') .
-                               'WHERE ' . \implode(' AND ', $whereLike);
+        if ($key === $value) {
+            $out['queryResult'] = null;
         } else {
-            $this->queryLike = "SELECT {$selectFLike}, {$sortLike} FROM ::topics AS t " .
-                               'WHERE ' . \implode(' AND ', $whereLike);
+            $useT               = $useT ? 'INNER JOIN ::topics AS t ON t.id=p.topic_id ' : '';
+            $out['queryResult'] = "SELECT {$key}, {$value} FROM ::posts AS p " .
+                                  $useT .
+                                  'WHERE p.id IN (?ai:ids)';
         }
 
-        return $vars;
+        return $out;
     }
 }
