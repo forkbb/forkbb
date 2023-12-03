@@ -197,7 +197,8 @@ class Execute extends Method
                 ) {
                     $reqLike  = true;
                     $subWords = $this->model->words($word['word'], true);
-                    $word     = '%' . $word['word'] . '%';
+                    $word     = \str_replace(['#', '%', '_'], ['##', '#%', '#_'], $word['word']);
+                    $word     = "%{$word}%";
                 } else {
                     $word     = \str_replace(['*', '?'], ['%', '_'], $word);
                 }
@@ -301,12 +302,12 @@ class Execute extends Method
         switch ($v->serch_in) {
             case 1:
                 $out['queryIndxRaw']  = 'SELECT post_id FROM ::search_matches WHERE word_id IN (?p:list) AND subject_match=0';
-                $out['queryLikeRaw']  = "SELECT id FROM ::posts WHERE id IN (?p:list) AND message {$like} ?s:word";
+                $out['queryLikeRaw']  = "SELECT id FROM ::posts WHERE id IN (?p:list) AND message {$like} ?s:word ESCAPE '#'";
 
                 break;
             case 2:
                 $out['queryIndxRaw']  = 'SELECT post_id FROM ::search_matches WHERE word_id IN (?p:list) AND subject_match=1';
-                $out['queryLikeRaw']  = "SELECT first_post_id FROM ::topics WHERE first_post_id IN (?p:list) AND subject {$like} ?s:word";
+                $out['queryLikeRaw']  = "SELECT first_post_id FROM ::topics WHERE first_post_id IN (?p:list) AND subject {$like} ?s:word ESCAPE '#'";
 
                 // при поиске в заголовках результат только в виде списка тем
                 $this->model->showAs = 1;
@@ -314,9 +315,9 @@ class Execute extends Method
                 break;
             default:
                 $out['queryIndxRaw']  = 'SELECT post_id FROM ::search_matches WHERE word_id IN (?p:list)';
-                $out['queryLikeRaw']  = "SELECT id FROM ::posts WHERE id IN (?p:list) AND message {$like} ?s:word" .
+                $out['queryLikeRaw']  = "SELECT id FROM ::posts WHERE id IN (?p:list) AND message {$like} ?s:word ESCAPE '#'" .
                                         ' UNION ' .
-                                        "SELECT first_post_id FROM ::topics WHERE first_post_id IN (?p:list) AND subject {$like} ?s:word";
+                                        "SELECT first_post_id FROM ::topics WHERE first_post_id IN (?p:list) AND subject {$like} ?s:word ESCAPE '#'";
 
                 break;
         }
