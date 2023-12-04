@@ -170,6 +170,7 @@ class Topic extends Page
         if ($topic->showViews) {
             $topic->incViews();
         }
+
         $topic->updateVisits();
 
         if ($this->c->config->i_feed_type > 0) {
@@ -189,6 +190,8 @@ class Topic extends Page
 
             $this->poll = $topic->poll;
         }
+
+        $this->descriptionGenerator($this->posts);
 
         return $this;
     }
@@ -260,5 +263,48 @@ class Topic extends Page
         ];
 
         return $form;
+    }
+
+    /**
+     * Генерирует (пытается?) мета-тег description на основе сообщений страницы
+     */
+    protected function descriptionGenerator(array $posts): void
+    {
+        foreach ($posts as $post) {
+            if (
+                empty($post->message)
+                || ! \is_string($post->message)
+            ) {
+                continue;
+            }
+
+            $cur = $this->c->censorship->censor($post->message);
+            $cur = \preg_replace('%\[/?[a-z\*][a-z\d-]{0,10}.*?\]%i', '', $cur);
+            $cur = \preg_replace('%https?://\S+%u', ' ', $cur);
+            $cur = \preg_replace('%\b[ \f\r\t\v]*\n%u', '. ', $cur);
+            $cur = \preg_replace('%\s+%u', ' ', $cur);
+            $cur = \trim($cur);
+            $len = \mb_strlen($cur, 'UTF-8');
+
+            if ($len > 180) {
+                $cur = \mb_substr($cur, 0, 180, 'UTF-8');
+                $pos = \strrpos($cur, ' ');
+
+                if (empty($pos)) {
+                    continue;
+                }
+
+                $cur = \rtrim(\substr($cur, 0, $pos)) . '...';
+                $len = \mb_strlen($cur, 'UTF-8');
+            }
+
+            if (empty(\strpos($cur, ' '))) {
+                continue;
+            }
+
+            $this->mDescription = $cur;
+
+            return;
+        }
     }
 }
