@@ -294,7 +294,7 @@ class Execute extends Method
         //???? нужен индекс по авторам сообщений/тем?
         if ('*' !== $v->author) {
             $out[':author']     = \str_replace(['#', '%', '_', '*', '?'], ['##', '#%', '#_', '%', '_'], $v->author);
-            $out['queryAuthor'] = "SELECT id FROM ::post WHERE id IN (?p:ids) AND poster {$like} ?s:author ESCAPE '#'";
+            $out['queryAuthor'] = "SELECT id FROM ::posts WHERE id IN (?p:ids) AND poster {$like} ?s:author ESCAPE '#'";
         }
 
         $this->model->showAs = $v->show_as;
