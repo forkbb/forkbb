@@ -323,3 +323,9 @@ msgstr "Delete profile"
 
 msgid "Delete profile help"
 msgstr "Allow users of this group to delete their profile (<b>user&apos;s messages will not be deleted</b>)."
+
+msgid "Use reaction label"
+msgstr "Use reactions"
+
+msgid "Use reaction help"
+msgstr "Allow users of this group to use reactions to rate posts."

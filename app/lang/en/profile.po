@@ -117,6 +117,12 @@ msgstr "Images in signatures"
 msgid "Images sigs info"
 msgstr "Show images in user signatures."
 
+msgid "Reaction label"
+msgstr "Reactions"
+
+msgid "Reaction info"
+msgstr "Show reactions to posts."
+
 msgid "Avatars label"
 msgstr "Avatars"
 

@@ -297,6 +297,7 @@ class Groups extends Admin
                         'g_sig_lines'            => 'required|integer|min:0|max:255',
                         'g_pm'                   => 'required|integer|in:0,1',
                         'g_pm_limit'             => 'required|integer|min:0|max:999999',
+                        'g_use_reaction'         => 'required|integer|in:0,1',
                     ]);
                 }
             }
@@ -614,6 +615,13 @@ class Groups extends Admin
                     'values'  => $yn,
                     'caption' => 'Set own title label',
                     'help'    => 'Set own title help',
+                ];
+                $fieldset['g_use_reaction'] = [
+                    'type'    => 'radio',
+                    'value'   => $group->g_use_reaction,
+                    'values'  => $yn,
+                    'caption' => 'Use reaction label',
+                    'help'    => 'Use reaction help',
                 ];
             }
 

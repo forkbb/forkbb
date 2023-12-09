@@ -12,6 +12,7 @@ namespace ForkBB\Models\Rules;
 
 use ForkBB\Models\Model;
 use ForkBB\Models\Rules;
+use ForkBB\Models\Post\Post;
 use ForkBB\Models\User\User;
 use ForkBB\Models\Rules\Profile as ProfileRules;
 
@@ -156,5 +157,28 @@ class Users extends Rules
             && $this->user->g_up_size_kb > 0
             && $this->user->g_up_limit_mb > 0
             && $this->user->u_up_size_mb < $this->user->g_up_limit_mb;
+    }
+
+    /**
+     * Статус видимости реакций
+     */
+    protected function getshowReaction(): bool
+    {
+        return 1 === $this->c->config->b_reaction
+            && (
+                1 === $this->user->show_reaction
+                || $this->user->isGuset
+            );
+    }
+
+    /**
+     * Статус возможности реагировать на пост
+     */
+    public function canUseReaction(Post $post): bool
+    {
+        return $this->showReaction
+            && ! $this->user->isGuset
+            && 1 === $this->user->g_use_reaction
+            && $this->user->id !== $post->poster_id;
     }
 }

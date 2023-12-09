@@ -64,6 +64,7 @@ class Config extends Profile
                     'show_avatars'  => 'required|integer|in:0,1',
                     'show_img'      => 'required|integer|in:0,1',
                     'show_img_sig'  => 'required|integer|in:0,1',
+                    'show_reaction' => 'required|integer|in:0,1',
                     'disp_topics'   => 'integer|min:0|max:50|to_zero',
                     'disp_posts'    => 'integer|min:0|max:50|to_zero',
                     'ip_check_type' => 'required|integer|in:' . (
@@ -83,6 +84,7 @@ class Config extends Profile
                     'show_avatars'  => 'Avatars label',
                     'show_img'      => 'Images label',
                     'show_img_sig'  => 'Images sigs label',
+                    'show_reaction' => 'Reaction label',
                     'disp_topics'   => 'Topics per page label',
                     'disp_posts'    => 'Posts per page label',
                     'ip_check_type' => 'IP check',
@@ -256,6 +258,13 @@ class Config extends Profile
                     'values'  => $yn,
                     'caption' => 'Images sigs label',
                     'help'    => 'Images sigs info',
+                ],
+                'show_reaction' => [
+                    'type'    => 'radio',
+                    'value'   => $this->curUser->show_reaction,
+                    'values'  => $yn,
+                    'caption' => 'Reaction label',
+                    'help'    => 'Reaction info',
                 ],
             ],
         ];

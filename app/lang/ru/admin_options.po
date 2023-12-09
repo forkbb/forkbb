@@ -470,3 +470,45 @@ msgstr "Pазмер - <b>%1$s</b> x <b>%2$s</b> точек."
 
 msgid "Delete og image"
 msgstr "Удалить картинку для Open Graph"
+
+msgid "Reaction subhead"
+msgstr "Реакции на сообщения"
+
+msgid "Allow reaction label"
+msgstr "Включить систему реакций"
+
+msgid "Reaction type label"
+msgstr "Типы реакций"
+
+msgid "Reaction type help"
+msgstr "Типы реакций, которые будут доступны пользователям."
+
+msgid "Type: like"
+msgstr "Нравится"
+
+msgid "Type: fire"
+msgstr "Огонь"
+
+msgid "Type: lol"
+msgstr "Очень смешно"
+
+msgid "Type: smile"
+msgstr "Улыбка"
+
+msgid "Type: frown"
+msgstr "Хмурый"
+
+msgid "Type: sad"
+msgstr "Печаль"
+
+msgid "Type: cry"
+msgstr "Слёзы"
+
+msgid "Type: angry"
+msgstr "Злой"
+
+msgid "Type: dislike"
+msgstr "Не нравится"
+
+msgid "Type: meh"
+msgstr "Безразличный"

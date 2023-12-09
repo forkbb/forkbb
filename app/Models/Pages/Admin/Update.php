@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.0.0';
     const REV_MIN_FOR_UPDATE         = 53;
-    const LATEST_REV_WITH_DB_CHANGES = 72;
+    const LATEST_REV_WITH_DB_CHANGES = 76;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const CONFIG_FILE                = 'main.php';
@@ -1081,6 +1081,54 @@ class Update extends Admin
         );
 
         $coreConfig->save();
+
+        return null;
+    }
+
+    /**
+     * rev.75 to rev.76
+     */
+    protected function stageNumber75(array $args): ?int
+    {
+        $this->c->DB->addField('::groups', 'g_use_reaction', 'TINYINT(1)', false, 1);
+        $this->c->DB->addField('::posts', 'reactions', 'VARCHAR(255)', false, '');
+        $this->c->DB->addField('::users', 'show_reaction', 'TINYINT(1)', false, 1);
+
+        $this->c->DB->query('UPDATE ::groups SET g_use_reaction=0 WHERE g_id=?i', [FORK_GROUP_GUEST]);
+
+        // reactions
+        $schema = [
+            'FIELDS' => [
+                'pid'      => ['INT(10) UNSIGNED', false, 0],
+                'uid'      => ['INT(10) UNSIGNED', false, 0],
+                'reaction' => ['TINYINT UNSIGNED', false, 0],
+            ],
+            'UNIQUE KEYS' => [
+                'pid_uid_idx' => ['pid', 'uid'],
+            ],
+            'INDEXES' => [
+                'uid_idx' => ['uid'],
+            ],
+        ];
+        $this->c->DB->createTable('::reactions', $schema);
+
+        $config = $this->c->config;
+
+        $config->b_reaction       = 0;
+        $config->a_reaction_types = [
+            1  => ['like', true],
+            2  => ['fire', true],
+            3  => ['lol', true],
+            4  => ['smile', true],
+            5  => ['frown', true],
+            6  => ['sad', true],
+            7  => ['cry', true],
+            8  => ['angry', true],
+            9  => ['dislike', true],
+            10 => ['meh', true],
+        ];
+
+        $config->save();
 
         return null;
     }

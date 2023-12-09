@@ -1259,7 +1259,7 @@
 }
 
 /****************************************/
-/* Админка/РАсширения                   */
+/* Админка/Расширения                   */
 /****************************************/
 #forka #fork-extsinfo summary.f-extsu::after {
   content: none;
@@ -1327,4 +1327,56 @@
 
 #forka .f-fbtn[name="uninstall"]:not(.origin) {
   color: red;
+}
+
+/***********/
+/* Реакции */
+/***********/
+.f-field-retype option::before{
+  display: inline-block;
+  font-family: "fa";
+  font-weight: 400;
+  padding-inline-end: 0.3125rem;
+  font-size: 1.5rem;
+}
+
+.f-field-retype option[value="like"]::before {
+  content: "\f164";
+}
+
+.f-field-retype option[value="fire"]::before {
+  font-weight: 900;
+  content: "\f06d";
+}
+
+.f-field-retype option[value="lol"]::before {
+  content: "\f599";
+}
+
+.f-field-retype option[value="smile"]::before {
+  content: "\f118";
+}
+
+.f-field-retype option[value="frown"]::before {
+  content: "\f57a";
+}
+
+.f-field-retype option[value="sad"]::before {
+  content: "\f5b4";
+}
+
+.f-field-retype option[value="cry"]::before {
+  content: "\f5b3";
+}
+
+.f-field-retype option[value="angry"]::before {
+  content: "\f556";
+}
+
+.f-field-retype option[value="dislike"]::before {
+  content: "\f165";
+}
+
+.f-field-retype option[value="meh"]::before {
+  content: "\f11a";
 }

@@ -900,6 +900,7 @@ class Install extends Admin
                 'g_up_ext'               => ['VARCHAR(255)', false, 'webp,jpg,jpeg,png,gif,avif'],
                 'g_up_size_kb'           => ['INT(10) UNSIGNED', false, 0],
                 'g_up_limit_mb'          => ['INT(10) UNSIGNED', false, 0],
+                'g_use_reaction'         => ['TINYINT(1)', false, 1],
             ],
             'PRIMARY KEY' => ['g_id'],
             'ENGINE' => $this->DBEngine,
@@ -944,6 +945,7 @@ class Install extends Admin
                 'editor_id'    => ['INT(10) UNSIGNED', false, 0],
                 'user_agent'   => ['VARCHAR(255)', false, ''],
                 'topic_id'     => ['INT(10) UNSIGNED', false, 0],
+                'reactions'    => ['VARCHAR(255)', false, ''],
             ],
             'PRIMARY KEY' => ['id'],
             'INDEXES' => [
@@ -954,6 +956,23 @@ class Install extends Admin
             'ENGINE' => $this->DBEngine,
         ];
         $this->c->DB->createTable('::posts', $schema);
+
+        // reactions
+        $schema = [
+            'FIELDS' => [
+                'pid'      => ['INT(10) UNSIGNED', false, 0],
+                'uid'      => ['INT(10) UNSIGNED', false, 0],
+                'reaction' => ['TINYINT UNSIGNED', false, 0],
+            ],
+            'UNIQUE KEYS' => [
+                'pid_uid_idx' => ['pid', 'uid'],
+            ],
+            'INDEXES' => [
+                'uid_idx' => ['uid'],
+            ],
+            'ENGINE' => $this->DBEngine,
+        ];
+        $this->c->DB->createTable('::reactions', $schema);
 
         // reports
         $schema = [
@@ -1204,6 +1223,7 @@ class Install extends Admin
                 'login_ip_cache'   => ['VARCHAR(255)', false, ''],
                 'u_up_size_mb'     => ['INT(10) UNSIGNED', false, 0],
                 'unfollowed_f'     => ['VARCHAR(255)', false, ''],
+                'show_reaction'    => ['TINYINT(1)', false, 1],
             ],
             'PRIMARY KEY' => ['id'],
             'UNIQUE KEYS' => [
@@ -1436,6 +1456,7 @@ class Install extends Admin
                 'g_pm'                   => 0,
                 'g_sig_length'           => 0,
                 'g_sig_lines'            => 0,
+                'g_use_reaction'         => 0,
             ],
             [
                 'g_id'                   => FORK_GROUP_MEMBER,
@@ -1482,6 +1503,7 @@ class Install extends Admin
                 'g_pm'                   => 0,
                 'g_promote_min_posts'    => 5,
                 'g_promote_next_group'   => FORK_GROUP_MEMBER,
+                'g_use_reaction'         => 0,
             ],
         ];
 
@@ -1600,6 +1622,21 @@ class Install extends Admin
             'b_ant_use_js'            => 0,
             's_meta_desc'             => '',
             'a_og_image'              => \json_encode([], FORK_JSON_ENCODE),
+            'b_reaction'              => 0,
+            'a_reaction_types'        => \json_encode(
+                [
+                    1  => ['like', true],
+                    2  => ['fire', true],
+                    3  => ['lol', true],
+                    4  => ['smile', true],
+                    5  => ['frown', true],
+                    6  => ['sad', true],
+                    7  => ['cry', true],
+                    8  => ['angry', true],
+                    9  => ['dislike', true],
+                    10 => ['meh', true],
+                ], FORK_JSON_ENCODE
+            ),
         ];
 
         foreach ($forkConfig as $name => $value) {

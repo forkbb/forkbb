@@ -40,6 +40,7 @@ class Options extends Admin
                     'check_timeout' => [$this, 'vCheckTimeout'],
                     'check_dir'     => [$this, 'vCheckDir'],
                     'check_empty'   => [$this, 'vCheckEmpty'],
+                    'check_type'    => [$this, 'vCheckType'],
                 ])->addRules([
                     'token'                   => 'token:AdminOptions',
                     'o_board_title'           => 'required|string:trim|max:255',
@@ -117,6 +118,8 @@ class Options extends Admin
                     'b_oauth_allow'           => 'required|integer|in:0,1',
                     'upload_og_image'         => 'image',
                     'delete_og_image'         => 'checkbox',
+                    'b_reaction'              => 'required|integer|in:0,1',
+                    'a_reaction_types'        => 'required|array|check_type',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -247,6 +250,23 @@ class Options extends Admin
         }
 
         return $value;
+    }
+
+    /**
+     * Проверка и преобразование для типов реакций
+     */
+    public function vCheckType(Validator $v, array $types): array
+    {
+        $types  = \array_flip($types);
+        $result = $this->c->config->a_reaction_types;
+
+        foreach ($result as &$cur) {
+            $cur[1] = isset($types[$cur[0]]);
+        }
+
+        unset($cur);
+
+        return $result;
     }
 
     /**
@@ -834,6 +854,39 @@ class Options extends Admin
                     'values'  => $yn,
                     'caption' => 'Allow PM label',
                     'help'    => ['Allow PM help', __('User groups'), $this->c->Router->link('AdminGroups')],
+                ],
+            ],
+        ];
+
+        $options = [];
+        $values  = [];
+
+        foreach ($config->a_reaction_types as $key => $cur) {
+            $options[$cur[0]] = __("Type: {$cur[0]}");
+
+            if ($cur[1]) {
+                $values[] = $cur[0];
+            }
+        }
+
+        $form['sets']['reaction'] = [
+            'legend' => 'Reaction subhead',
+            'fields' => [
+                'b_reaction' => [
+                    'type'    => 'radio',
+                    'value'   => $config->b_reaction,
+                    'values'  => $yn,
+                    'caption' => 'Allow reaction label',
+                ],
+                'a_reaction_types' => [
+                    'class'    => ['retype'],
+                    'type'     => 'select',
+                    'options'  => $options,
+                    'value'    => $values,
+                    'size'     => 10,
+                    'multiple' => true,
+                    'caption'  => 'Reaction type label',
+                    'help'     => 'Reaction type help',
                 ],
             ],
         ];

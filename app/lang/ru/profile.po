@@ -117,6 +117,12 @@ msgstr "Изображения в подписях"
 msgid "Images sigs info"
 msgstr "Показывать изображения в подписях."
 
+msgid "Reaction label"
+msgstr "Реакции"
+
+msgid "Reaction info"
+msgstr "Показывать реакции на сообщения."
+
 msgid "Avatars label"
 msgstr "Аватары"
 
