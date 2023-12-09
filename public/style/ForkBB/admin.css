@@ -1332,7 +1332,7 @@
 /***********/
 /* Реакции */
 /***********/
-.f-field-retype option::before{
+.f-retype::before{
   display: inline-block;
   font-family: "fa";
   font-weight: 400;
@@ -1340,43 +1340,43 @@
   font-size: 1.5rem;
 }
 
-.f-field-retype option[value="like"]::before {
+.f-retype-like::before {
   content: "\f164";
 }
 
-.f-field-retype option[value="fire"]::before {
+.f-retype-fire::before {
   font-weight: 900;
   content: "\f06d";
 }
 
-.f-field-retype option[value="lol"]::before {
+.f-retype-lol::before {
   content: "\f599";
 }
 
-.f-field-retype option[value="smile"]::before {
+.f-retype-smile::before {
   content: "\f118";
 }
 
-.f-field-retype option[value="frown"]::before {
+.f-retype-frown::before {
   content: "\f57a";
 }
 
-.f-field-retype option[value="sad"]::before {
+.f-retype-sad::before {
   content: "\f5b4";
 }
 
-.f-field-retype option[value="cry"]::before {
+.f-retype-cry::before {
   content: "\f5b3";
 }
 
-.f-field-retype option[value="angry"]::before {
+.f-retype-angry::before {
   content: "\f556";
 }
 
-.f-field-retype option[value="dislike"]::before {
+.f-retype-dislike::before {
   content: "\f165";
 }
 
-.f-field-retype option[value="meh"]::before {
+.f-retype-meh::before {
   content: "\f11a";
 }

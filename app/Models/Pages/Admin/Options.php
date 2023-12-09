@@ -879,7 +879,7 @@ class Options extends Admin
                     'caption' => 'Allow reaction label',
                 ],
                 'a_reaction_types' => [
-                    'class'    => ['retype'],
+                    'cprefix'  => 'f-retype f-retype-',
                     'type'     => 'select',
                     'options'  => $options,
                     'value'    => $values,
