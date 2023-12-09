@@ -56,10 +56,10 @@
                                         @endif
                 <optgroup label="{{ $option[0] }}">
                                     @else
-                  <option value="{{ $option[0] }}" @if ((\is_array($cur['value']) && \in_array($option[0], $cur['value'])) || $option[0] == $cur['value']) selected @endif @if ($option[2]) disabled @endif>{{ $option[1] }}</option>
+                  <option value="{{ $option[0] }}" @if ($cur['cprefix']) class="{{ $cur['cprefix'] . $option[0] }}" @endif @if ((\is_array($cur['value']) && \in_array($option[0], $cur['value'])) || $option[0] == $cur['value']) selected @endif @if ($option[2]) disabled @endif>{{ $option[1] }}</option>
                                     @endif
                                 @else
-                  <option value="{{ $v }}" @if ((\is_array($cur['value']) && \in_array($v, $cur['value'])) || $v == $cur['value']) selected @endif>{{ $option }}</option>
+                  <option value="{{ $v }}" @if ($cur['cprefix']) class="{{ $cur['cprefix'] . $v }}" @endif @if ((\is_array($cur['value']) && \in_array($v, $cur['value'])) || $v == $cur['value']) selected @endif>{{ $option }}</option>
                                 @endif
                             @endforeach
                             @if (null !== $count)
