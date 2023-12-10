@@ -147,24 +147,35 @@
             {!! $post->user->htmlSign !!}
           </aside>
         @endif
-        @if ($post->canReport || $post->canDelete || $post->canEdit || $post->canQuote)
-          <aside class="f-post-btns">
-            <small>{!! __('ACTIONS') !!}</small>
-            @if ($post->canReport)
-            <small>-</small>
-            <a class="f-btn f-minor f-postreport" title="{{ __('Report') }}" href="{{ $post->linkReport }}"><span>{!! __('Report') !!}</span></a>
+        @php $showPostReaction = $p->userRules->showReaction && (! empty($post->reactions) || $post->useReaction) && ! empty($reactions = $post->reactionData()) @endphp
+        @php $showPostBtns = $post->canReport || $post->canDelete || $post->canEdit || $post->canQuote @endphp
+        @if ($showPostReaction || $showPostBtns)
+          <aside class="f-post-bfooter">
+            @if ($showPostReaction)
+            <div class="f-post-reaction">
+                @include ('layouts/reaction')
+            </div>
             @endif
-            @if ($post->canDelete)
-            <small>-</small>
-            <a class="f-btn f-postdelete" title="{{ __('Delete') }}" href="{{ $post->linkDelete }}"><span>{!! __('Delete') !!}</span></a>
-            @endif
-            @if ($post->canEdit)
-            <small>-</small>
-            <a class="f-btn f-postedit" title="{{ __('Edit') }}" href="{{ $post->linkEdit }}"><span>{!! __('Edit') !!}</span></a>
-            @endif
-            @if ($post->canQuote)
-            <small>-</small>
-            <a class="f-btn f-postquote" title="{{ __('Quote') }}" href="{{ $post->linkQuote }}" rel="nofollow"><span>{!! __('Quote') !!}</span></a>
+            @if ($showPostBtns)
+            <div class="f-post-btns">
+              <small>{!! __('ACTIONS') !!}</small>
+                @if ($post->canReport)
+              <small>-</small>
+              <a class="f-btn f-minor f-postreport" title="{{ __('Report') }}" href="{{ $post->linkReport }}"><span>{!! __('Report') !!}</span></a>
+                @endif
+                @if ($post->canDelete)
+              <small>-</small>
+              <a class="f-btn f-postdelete" title="{{ __('Delete') }}" href="{{ $post->linkDelete }}"><span>{!! __('Delete') !!}</span></a>
+                @endif
+                @if ($post->canEdit)
+              <small>-</small>
+              <a class="f-btn f-postedit" title="{{ __('Edit') }}" href="{{ $post->linkEdit }}"><span>{!! __('Edit') !!}</span></a>
+                @endif
+                @if ($post->canQuote)
+              <small>-</small>
+              <a class="f-btn f-postquote" title="{{ __('Quote') }}" href="{{ $post->linkQuote }}" rel="nofollow"><span>{!! __('Quote') !!}</span></a>
+                @endif
+            </div>
             @endif
           </aside>
         @endif

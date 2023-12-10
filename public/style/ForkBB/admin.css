@@ -1333,50 +1333,5 @@
 /* Реакции */
 /***********/
 .f-retype::before{
-  display: inline-block;
-  font-family: "fa";
-  font-weight: 400;
   padding-inline-end: 0.3125rem;
-  font-size: 1.5rem;
-}
-
-.f-retype-like::before {
-  content: "\f164";
-}
-
-.f-retype-fire::before {
-  font-weight: 900;
-  content: "\f06d";
-}
-
-.f-retype-lol::before {
-  content: "\f599";
-}
-
-.f-retype-smile::before {
-  content: "\f118";
-}
-
-.f-retype-frown::before {
-  content: "\f57a";
-}
-
-.f-retype-sad::before {
-  content: "\f5b4";
-}
-
-.f-retype-cry::before {
-  content: "\f5b3";
-}
-
-.f-retype-angry::before {
-  content: "\f556";
-}
-
-.f-retype-dislike::before {
-  content: "\f165";
-}
-
-.f-retype-meh::before {
-  content: "\f11a";
 }

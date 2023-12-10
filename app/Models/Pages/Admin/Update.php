@@ -1130,6 +1130,22 @@ class Update extends Admin
 
         $config->save();
 
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'multiple=>Reaction',
+            '\\ForkBB\\Models\\Pages\\Reaction::class',
+            'ProfileSearch'
+        );
+
+        $coreConfig->add(
+            'shared=>reactions',
+            '\\ForkBB\\Models\\Reaction\\Reactions::class',
+            'extensions'
+        );
+
+        $coreConfig->save();
+
         return null;
     }
 }

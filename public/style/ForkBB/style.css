@@ -38,6 +38,9 @@
   --c-sel: hsl(0, 0%, 0%);
   --bg-sel: hsl(0, 0%, 60%);
   --c-highlighted: hsl(39, 100%, 50%);
+  --c-reaction: hsl(40, 16%, 93%);
+  --bg-reaction: hsl(0, 0%, 16%);
+  --br-reaction: hsl(0, 0%, 34%);
 }
 
 /*******************/
@@ -1672,6 +1675,7 @@ body,
   justify-content: flex-end;
   gap: 0.3125rem;
   padding: 0.3125rem;
+  margin-inline-start: auto;
 }
 
 #fork .f-post-btns:not(:hover) .f-btn:not(:focus) {
@@ -3153,4 +3157,121 @@ body,
   90% {
     transform: translateX(-0.25rem);
   }
+}
+
+/***********/
+/* Реакции */
+/***********/
+#fork .f-post-bfooter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+#fork .f-reaction-div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3125rem;
+  padding: 0.3125rem;
+}
+
+#fork .f-reaction-block,
+#fork .f-retype-count {
+  display: flex;
+}
+
+#fork .f-retype-btn {
+  display: inline-block;
+  cursor: pointer;
+  border: 0.0625rem solid var(--br-reaction);
+  padding: 0.0625rem 0.125rem;
+  color: var(--c-reaction);
+  background-color: var(--bg-reaction);
+  line-height: 1.125;
+}
+
+#fork .f-retype-count {
+  border: 0.0625rem solid var(--br-reaction);
+  padding: 0.0625rem 0.125rem;
+  color: var(--c-reaction);
+  background-color: var(--bg-reaction);
+  border-inline-start-width: 0;
+}
+
+#fork .f-retype::before {
+  display: inline-block;
+  font-family: "fa";
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+
+#fork .f-reaction-checkbox,
+#fork .f-retype-tspan {
+  position: fixed;
+  transform: scale(0);
+}
+
+#fork .f-reaction-checkbox:focus + .f-reaction-toggle,
+#fork .f-retype-btn:focus-visible {
+  outline: 0.25rem double var(--c-focus-v);
+  z-index: 10;
+}
+
+#fork .f-reaction-hblock {
+  display: none;
+}
+
+#fork .f-reaction-checkbox:checked ~ .f-reaction-hblock {
+  display: flex;
+}
+
+#fork .f-reaction-checkbox:checked,
+#fork .f-reaction-checkbox:checked ~ .f-reaction-toggle {
+  display: none;
+}
+
+#fork .f-retype-toggle::before {
+  content: "\2b";
+}
+
+#fork .f-retype-like::before {
+  content: "\f164";
+}
+
+#fork .f-retype-fire::before {
+  font-weight: 900;
+  content: "\f06d";
+}
+
+#fork .f-retype-lol::before {
+  content: "\f599";
+}
+
+#fork .f-retype-smile::before {
+  content: "\f118";
+}
+
+#fork .f-retype-frown::before {
+  content: "\f57a";
+}
+
+#fork .f-retype-sad::before {
+  content: "\f5b4";
+}
+
+#fork .f-retype-cry::before {
+  content: "\f5b3";
+}
+
+#fork .f-retype-angry::before {
+  content: "\f556";
+}
+
+#fork .f-retype-dislike::before {
+  content: "\f165";
+}
+
+#fork .f-retype-meh::before {
+  content: "\f11a";
 }

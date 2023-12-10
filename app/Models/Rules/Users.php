@@ -167,7 +167,7 @@ class Users extends Rules
         return 1 === $this->c->config->b_reaction
             && (
                 1 === $this->user->show_reaction
-                || $this->user->isGuset
+                || $this->user->isGuest
             );
     }
 
@@ -177,7 +177,7 @@ class Users extends Rules
     public function canUseReaction(Post $post): bool
     {
         return $this->showReaction
-            && ! $this->user->isGuset
+            && ! $this->user->isGuest
             && 1 === $this->user->g_use_reaction
             && $this->user->id !== $post->poster_id;
     }

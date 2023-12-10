@@ -499,6 +499,19 @@ class Routing
                     'PMAction'
                 );
             }
+
+            // реакции
+            if (
+                ! $user->isGuest
+                && $userRules->showReaction
+            ) {
+                $r->add(
+                    $r::PST,
+                    '/post/{id|i:[1-9]\d*}/reaction/{token}',
+                    'Reaction:reaction',
+                    'Reaction'
+                );
+            }
         }
 
         // опросы

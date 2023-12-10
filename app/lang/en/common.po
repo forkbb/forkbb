@@ -463,3 +463,33 @@ msgstr "ACTIONS"
 
 msgid "Main menu"
 msgstr "Main menu"
+
+msgid ":like:"
+msgstr "Like"
+
+msgid ":fire:"
+msgstr "Fire"
+
+msgid ":lol:"
+msgstr "LOL"
+
+msgid ":smile:"
+msgstr "Smile"
+
+msgid ":frown:"
+msgstr "Frown"
+
+msgid ":sad:"
+msgstr "Sad"
+
+msgid ":cry:"
+msgstr "Cry"
+
+msgid ":angry:"
+msgstr "Angry"
+
+msgid ":dislike:"
+msgstr "Dislike"
+
+msgid ":meh:"
+msgstr "Meh"

@@ -249,4 +249,17 @@ class Post extends DataModel
     {
         return $this->c->censorship->censor($this->c->Parser->parseMessage($this->message, (bool) $this->hide_smilies));
     }
+
+    /**
+     * Проверяет возможность реагировать на этот пост
+     */
+    protected function getuseReaction(): bool
+    {
+        return $this->c->userRules->canUseReaction($this);
+    }
+
+    public function reactionData(): array
+    {
+        return $this->c->reactions->generateForm($this);
+    }
 }

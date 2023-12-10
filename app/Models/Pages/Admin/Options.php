@@ -862,7 +862,7 @@ class Options extends Admin
         $values  = [];
 
         foreach ($config->a_reaction_types as $key => $cur) {
-            $options[$cur[0]] = __("Type: {$cur[0]}");
+            $options[$cur[0]] = __(":{$cur[0]}:");
 
             if ($cur[1]) {
                 $values[] = $cur[0];

@@ -482,33 +482,3 @@ msgstr "Reaction types"
 
 msgid "Reaction type help"
 msgstr "Types of reactions that will be available to users."
-
-msgid "Type: like"
-msgstr "Like"
-
-msgid "Type: fire"
-msgstr "Fire"
-
-msgid "Type: lol"
-msgstr "LOL"
-
-msgid "Type: smile"
-msgstr "Smile"
-
-msgid "Type: frown"
-msgstr "Frown"
-
-msgid "Type: sad"
-msgstr "Sad"
-
-msgid "Type: cry"
-msgstr "Cry"
-
-msgid "Type: angry"
-msgstr "Angry"
-
-msgid "Type: dislike"
-msgstr "Dislike"
-
-msgid "Type: meh"
-msgstr "Meh"

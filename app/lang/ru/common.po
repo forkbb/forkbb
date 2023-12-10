@@ -465,3 +465,33 @@ msgstr "ДЕЙСТВИЯ"
 
 msgid "Main menu"
 msgstr "Главное меню"
+
+msgid ":like:"
+msgstr "Нравится"
+
+msgid ":fire:"
+msgstr "Огонь"
+
+msgid ":lol:"
+msgstr "Ухахатываюсь"
+
+msgid ":smile:"
+msgstr "Улыбаюсь"
+
+msgid ":frown:"
+msgstr "Хмурюсь"
+
+msgid ":sad:"
+msgstr "Печалюсь"
+
+msgid ":cry:"
+msgstr "Я плачу"
+
+msgid ":angry:"
+msgstr "Злюсь"
+
+msgid ":dislike:"
+msgstr "Не нравится"
+
+msgid ":meh:"
+msgstr "Мне безразлично"
