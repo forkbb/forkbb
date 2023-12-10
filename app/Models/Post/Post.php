@@ -258,8 +258,11 @@ class Post extends DataModel
         return $this->c->userRules->canUseReaction($this);
     }
 
-    public function reactionData(): array
+    /**
+     * Возвращает данные по реакции на сообщение
+     */
+    public function reactionData(bool $allow = true): ?array
     {
-        return $this->c->reactions->generateForm($this);
+        return $this->c->reactions->generateForm($this, $allow);
     }
 }

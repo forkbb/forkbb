@@ -90,12 +90,20 @@
           <div class="f-post-main">
             {!! $post->html() !!}
           </div>
-          <aside class="f-post-btns">
-            <small>{!! __('ACTIONS') !!}</small>
-            <small>-</small>
-            <a class="f-btn f-posttotopic" href="{{ $post->parent->link }}">{!! __('Go to topic') !!}</a>
-            <small>-</small>
-            <a class="f-btn f-posttopost" href="{{ $post->link }}">{!! __('Go to post') !!}</a>
+          <aside class="f-post-bfooter">
+        @php $showPostReaction = $p->userRules->showReaction && (! empty($post->reactions) || $post->useReaction) && ! empty($reactions = $post->reactionData(false)) @endphp
+        @if ($showPostReaction)
+            <div class="f-post-reaction">
+            @include ('layouts/reaction')
+            </div>
+        @endif
+            <div class="f-post-btns">
+              <small>{!! __('ACTIONS') !!}</small>
+              <small>-</small>
+              <a class="f-btn f-posttotopic" href="{{ $post->parent->link }}">{!! __('Go to topic') !!}</a>
+              <small>-</small>
+              <a class="f-btn f-posttopost" href="{{ $post->link }}">{!! __('Go to post') !!}</a>
+            </div>
           </aside>
         </div>
       </article>

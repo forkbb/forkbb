@@ -22,7 +22,10 @@ class Reactions extends Manager
      */
     protected string $cKey = 'Reactions';
 
-    public function generateForm(Post $post): array
+    /**
+     * Генериует массив данных для отображения реакции (и формы для неё) на сообщение
+     */
+    public function generateForm(Post $post, bool $allow = true): ?array
     {
         $types  = $this->c->config->a_reaction_types;
         $result = [
@@ -35,11 +38,14 @@ class Reactions extends Manager
             foreach (\explode('|', $post->reactions) as $keyval) {
                 list($key, $val) = \explode(':', $keyval);
 
-                $result['visible'][$types[$key][0]] = [$val, $post->useReaction && $types[$key][1]];
+                $result['visible'][$types[$key][0]] = [$val, $allow && $post->useReaction && $types[$key][1]];
             }
         }
 
-        if ($post->useReaction) {
+        if (
+            true === $allow
+            && $post->useReaction
+        ) {
             $result['action'] = $this->c->Router->link('Reaction', ['id' => $post->id]);
 
             foreach ($types as $type) {
@@ -52,9 +58,12 @@ class Reactions extends Manager
             }
         }
 
-        return $result;
+        return empty($result['visible']) && empty($result['hidden']) ? null : $result;
     }
 
+    /**
+     * Вносит изменения в реакцию на сообщение
+     */
     public function reaction(Post $post, int $type): ?bool
     {
         $vars = [
@@ -100,6 +109,9 @@ class Reactions extends Manager
         return $result;
     }
 
+    /**
+     * Генерирует данные в поле reactions сообщения на основе БД
+     */
     public function recalcReactions(Post $post): bool
     {
         $vars = [
