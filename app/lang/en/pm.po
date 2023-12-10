@@ -106,7 +106,7 @@ msgid "Dialogue %s was not found in the database"
 msgstr "Dialogue %s was not found in the database."
 
 msgid "Select"
-msgstr "Выбрать"
+msgstr "Select"
 
 msgid "Closed"
 msgstr "Closed"

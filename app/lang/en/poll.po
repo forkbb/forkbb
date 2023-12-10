@@ -22,7 +22,7 @@ msgid "Hide poll results up to %s voters"
 msgstr "Hide poll results up to %s voters"
 
 msgid "Question text label"
-msgstr "Текст вопроса"
+msgstr "Question"
 
 msgid "Answer type label"
 msgstr "Number of answer"
