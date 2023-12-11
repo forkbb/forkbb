@@ -495,3 +495,6 @@ msgstr "Не нравится"
 
 msgid ":meh:"
 msgstr "Мне безразлично"
+
+msgid ":shock:"
+msgstr "Я в шоке"

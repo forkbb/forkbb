@@ -1635,6 +1635,7 @@ class Install extends Admin
                     8  => ['angry', true],
                     9  => ['dislike', true],
                     10 => ['meh', true],
+                    11 => ['shock', true],
                 ], FORK_JSON_ENCODE
             ),
         ];

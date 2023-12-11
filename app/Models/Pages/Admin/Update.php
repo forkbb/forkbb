@@ -1126,6 +1126,7 @@ class Update extends Admin
             8  => ['angry', true],
             9  => ['dislike', true],
             10 => ['meh', true],
+            11 => ['shock', true],
         ];
 
         $config->save();
@@ -1142,6 +1143,11 @@ class Update extends Admin
             'shared=>reactions',
             '\\ForkBB\\Models\\Reaction\\Reactions::class',
             'extensions'
+        );
+
+        $coreConfig->add(
+            'shared=>Reactions/delete',
+            '\\ForkBB\\Models\\Reaction\\Delete::class'
         );
 
         $coreConfig->save();

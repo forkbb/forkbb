@@ -92,6 +92,7 @@ class Delete extends Action
         }
 
         $this->c->search->delete(...$args);
+        $this->c->reactions->delete(...$args);
 
         //???? предупреждения
 

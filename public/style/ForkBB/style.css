@@ -3275,3 +3275,7 @@ body,
 #fork .f-retype-meh::before {
   content: "\f11a";
 }
+
+#fork .f-retype-shock::before {
+  content: "\f5c2";
+}

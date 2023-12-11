@@ -348,6 +348,8 @@ return [
         'Users/updateLastVisit'    => \ForkBB\Models\User\UpdateLastVisit::class,
         'Users/updateLoginIpCache' => \ForkBB\Models\User\UpdateLoginIpCache::class,
         'Users/usersNumber'        => \ForkBB\Models\User\UsersNumber::class,
+
+        'Reactions/delete' => \ForkBB\Models\Reaction\Delete::class,
     ],
     'multiple'  => [
         'CtrlPrimary' => \ForkBB\Controllers\Primary::class,
