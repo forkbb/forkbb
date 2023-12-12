@@ -7,7 +7,9 @@
                     <button class="f-retype f-retype-btn f-retype-{{ $key }}" name="{{ $key }}" value="{{ $key }}" title="{!! $title = __(":{$key}:") !!}" @empty ($cur[1]) disabled @endempty>
                       <small>{!! $title !!}</small>
                     </button>
+    @if ($cur[0] > 0)
                     <span class="f-retype-count">{{ $cur[0] }}</span>
+    @endif
                   </span><!-- endinline -->
 @endforeach
 @if ($reactions['hidden'])

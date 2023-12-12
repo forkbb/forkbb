@@ -1669,6 +1669,13 @@ body,
   padding: 0.3125rem;
 }
 
+#fork .f-post-bfooter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
 #fork .f-post-btns {
   display: flex;
   flex-wrap: wrap;
@@ -3162,13 +3169,6 @@ body,
 /***********/
 /* Реакции */
 /***********/
-#fork .f-post-bfooter {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
 #fork .f-reaction-div {
   display: flex;
   flex-wrap: wrap;
@@ -3176,34 +3176,40 @@ body,
   padding: 0.3125rem;
 }
 
-#fork .f-reaction-block,
-#fork .f-retype-count {
+#fork .f-reaction-block {
   display: flex;
 }
 
 #fork .f-retype-btn {
-  display: inline-block;
+  display: flex;
   cursor: pointer;
   border: 0.0625rem solid var(--br-reaction);
   padding: 0.0625rem 0.125rem;
   color: var(--c-reaction);
   background-color: var(--bg-reaction);
   line-height: 1.125;
+  align-items: center;
 }
 
 #fork .f-retype-count {
+  display: flex;
   border: 0.0625rem solid var(--br-reaction);
   padding: 0.0625rem 0.125rem;
   color: var(--c-reaction);
   background-color: var(--bg-reaction);
   border-inline-start-width: 0;
+  align-items: center;
+  font-size: 0.875rem;
 }
 
 #fork .f-retype::before {
-  display: inline-block;
-  font-family: "fa";
-  font-weight: 400;
+  display: flex;
   font-size: 1.5rem;
+  content: " ";
+  width: 1.5rem;
+  height: 1.5rem;
+  background: center no-repeat;
+  background-size: contain;
 }
 
 #fork .f-reaction-checkbox,
@@ -3232,50 +3238,51 @@ body,
 }
 
 #fork .f-retype-toggle::before {
-  content: "\2b";
+  content: "...";
+  justify-content: center;
+  align-items: center;
 }
 
 #fork .f-retype-like::before {
-  content: "\f164";
+  background-image: url("reactions/like.svg");
 }
 
 #fork .f-retype-fire::before {
-  font-weight: 900;
-  content: "\f06d";
+  background-image: url("reactions/fire.svg");
 }
 
 #fork .f-retype-lol::before {
-  content: "\f599";
+  background-image: url("reactions/lol.svg");
 }
 
 #fork .f-retype-smile::before {
-  content: "\f118";
+  background-image: url("reactions/smile.svg");
 }
 
 #fork .f-retype-frown::before {
-  content: "\f57a";
+  background-image: url("reactions/frown.svg");
 }
 
 #fork .f-retype-sad::before {
-  content: "\f5b4";
+  background-image: url("reactions/sad.svg");
 }
 
 #fork .f-retype-cry::before {
-  content: "\f5b3";
+  background-image: url("reactions/cry.svg");
 }
 
 #fork .f-retype-angry::before {
-  content: "\f556";
+  background-image: url("reactions/angry.svg");
 }
 
 #fork .f-retype-dislike::before {
-  content: "\f165";
+  background-image: url("reactions/dislike.svg");
 }
 
 #fork .f-retype-meh::before {
-  content: "\f11a";
+  background-image: url("reactions/meh.svg");
 }
 
 #fork .f-retype-shock::before {
-  content: "\f5c2";
+  background-image: url("reactions/shock.svg");
 }

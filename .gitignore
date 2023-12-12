@@ -11,7 +11,7 @@
 /public/.htaccess
 /public/index.php
 /public/img/*
-/public/style/*
+/public/style/ForkBB_old
 /public/upload/**/*
 !/public/img/sm/big_smile.png
 !/public/img/sm/cool.png
@@ -25,8 +25,5 @@
 !/public/img/sm/tongue.png
 !/public/img/sm/wink.png
 !/public/img/sm/yikes.png
-!/public/style/font/*
-!/public/style/ForkBB/*
-!/public/style/sc/*
 !/public/upload/index.html
 !.gitkeep

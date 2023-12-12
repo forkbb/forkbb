@@ -1329,9 +1329,10 @@
   color: red;
 }
 
-/***********/
-/* Реакции */
-/***********/
-.f-retype::before{
+/*********************/
+/* Админка - Реакции */
+/*********************/
+#forka .f-retype::before{
+  display: inline-block;
   padding-inline-end: 0.3125rem;
 }
