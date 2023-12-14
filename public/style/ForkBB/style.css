@@ -39,6 +39,7 @@
   --bg-sel: hsl(0, 0%, 60%);
   --c-highlighted: hsl(39, 100%, 50%);
   --c-reaction: hsl(40, 16%, 93%);
+  --c-reaction-sel: hsl(130, 47%, 42%);
   --bg-reaction: hsl(0, 0%, 16%);
   --br-reaction: hsl(0, 0%, 34%);
 }
@@ -3200,6 +3201,10 @@ body,
   border-inline-start-width: 0;
   align-items: center;
   font-size: 0.875rem;
+}
+
+#fork .f-reaction-selected {
+  outline: 0.0625rem solid var(--c-reaction-sel);
 }
 
 #fork .f-retype::before {

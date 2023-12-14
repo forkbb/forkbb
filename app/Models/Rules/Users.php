@@ -172,6 +172,16 @@ class Users extends Rules
     }
 
     /**
+     * Статус показа выбранных реакций
+     */
+    protected function getselectedReaction(): bool
+    {
+        return ! $this->user->isGuest
+            && $this->showReaction
+            && 1 === $this->c->config->b_show_user_reaction;
+    }
+
+    /**
      * Статус возможности реагировать на пост
      */
     public function canUseReaction(Post $post): bool

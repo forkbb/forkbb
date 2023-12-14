@@ -137,4 +137,41 @@ class Reactions extends Manager
 
         return true;
     }
+
+    /**
+     * Вычисляет выбранные реакции для текущего пользователя для списка сообщений
+     */
+    public function calcSelectedReactions(array $posts): void
+    {
+        $ids = [];
+
+        foreach ($posts as $post) {
+            if ($post instanceof Post) {
+                $ids[] = $post->id;
+            }
+        }
+
+        if (empty($ids)) {
+            return;
+        }
+
+        $vars = [
+            ':ids' => $ids,
+            ':uid' => $this->c->user->id,
+        ];
+        $query = 'SELECT pid, reaction FROM ::reactions WHERE pid IN (?ai:ids) AND uid=?i:uid';
+
+        $reactions = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_KEY_PAIR);
+
+        $types = $this->c->config->a_reaction_types;
+
+        foreach ($posts as $post) {
+            if (
+                $post instanceof Post
+                && isset($reactions[$post->id], $types[$reactions[$post->id]])
+            ) {
+                $post->__selectedReaction = $types[$reactions[$post->id]][0];
+            }
+        }
+    }
 }

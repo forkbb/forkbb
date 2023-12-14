@@ -482,3 +482,9 @@ msgstr "Типы реакций"
 
 msgid "Reaction type help"
 msgstr "Типы реакций, которые будут доступны пользователям."
+
+msgid "User has reactioned label"
+msgstr "Метка реакции"
+
+msgid "User has reactioned help"
+msgstr "Выделить реакции, которые выбрал пользователь для отображаемых сообщений. Выключите, если хотите снизить загрузку сервера."

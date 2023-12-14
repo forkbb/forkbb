@@ -1638,6 +1638,7 @@ class Install extends Admin
                     11 => ['shock', true],
                 ], FORK_JSON_ENCODE
             ),
+            'b_show_user_reaction'    => 0,
         ];
 
         foreach ($forkConfig as $name => $value) {

@@ -482,3 +482,9 @@ msgstr "Reaction types"
 
 msgid "Reaction type help"
 msgstr "Types of reactions that will be available to users."
+
+msgid "User has reactioned label"
+msgstr "User has reactioned"
+
+msgid "User has reactioned help"
+msgstr "Highlight the reactions that the user has selected for the posts displayed. Disable if you are experiencing high server load."

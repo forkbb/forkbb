@@ -3,7 +3,7 @@
 @endisset
                 <div class="f-reaction-div">
 @foreach ($reactions['visible'] as $key => $cur)
-                  <span class="f-reaction-block"><!-- inline -->
+                  <span class="f-reaction-block @if ($key === $post->selectedReaction) f-reaction-selected @endif"><!-- inline -->
                     <button class="f-retype f-retype-btn f-retype-{{ $key }}" name="{{ $key }}" value="{{ $key }}" title="{!! $title = __(":{$key}:") !!}" @empty ($cur[1]) disabled @endempty>
                       <small>{!! $title !!}</small>
                     </button>

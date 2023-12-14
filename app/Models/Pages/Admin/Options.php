@@ -120,6 +120,7 @@ class Options extends Admin
                     'delete_og_image'         => 'checkbox',
                     'b_reaction'              => 'required|integer|in:0,1',
                     'a_reaction_types'        => 'required|array|check_type',
+                    'b_show_user_reaction'    => 'required|integer|in:0,1',
                 ])->addAliases([
                 ])->addArguments([
                 ])->addMessages([
@@ -877,6 +878,13 @@ class Options extends Admin
                     'value'   => $config->b_reaction,
                     'values'  => $yn,
                     'caption' => 'Allow reaction label',
+                ],
+                'b_show_user_reaction' => [
+                    'type'    => 'radio',
+                    'value'   => $config->b_show_user_reaction,
+                    'values'  => $yn,
+                    'caption' => 'User has reactioned label',
+                    'help'    => 'User has reactioned help',
                 ],
                 'a_reaction_types' => [
                     'cprefix'  => 'f-retype f-retype-',

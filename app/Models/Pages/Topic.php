@@ -193,6 +193,10 @@ class Topic extends Page
 
         $this->descriptionGenerator($this->posts);
 
+        if (true === $this->userRules->selectedReaction) {
+            $this->c->reactions->calcSelectedReactions($this->posts);
+        }
+
         return $this;
     }
 
