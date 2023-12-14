@@ -57,8 +57,8 @@ class View extends Action
 
         $this->c->users->loadByIds($userIds);
 
-        $offset    = ($arg->page - 1) * $this->c->user->disp_posts;
-        $timeMax   = 0;
+        $offset  = ($arg->page - 1) * $this->c->user->disp_posts;
+        $timeMax = 0;
 
         if ($review) {
             $postCount = $arg->num_replies + 2;
@@ -75,6 +75,7 @@ class View extends Action
                 } elseif ($post->posted > $timeMax) {
                     $timeMax = $post->posted;
                 }
+
                 if (
                     $post->id === $arg->first_post_id
                     && $offset > 0
@@ -106,6 +107,10 @@ class View extends Action
 
                 $post->__postNumber = $offset + $postCount; //????
             }
+        }
+
+        if (true === $this->c->userRules->selectedReaction) {
+            $this->c->reactions->calcSelectedReactions($result);
         }
 
         return $result;
