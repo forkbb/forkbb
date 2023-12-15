@@ -81,6 +81,56 @@ ForkBB.common = (function (doc, win) {
         }
     }
 
+    function initSubmitReactions()
+    {
+        var forms = doc.querySelectorAll("form.f-reaction-form");
+
+        for (var i = 0; i < forms.length; i++) {
+            forms[i].addEventListener('click', function (event) {
+                var form,
+                    b = event.target;
+
+                if (b.tagName !== "BUTTON") {
+                    return;
+                }
+
+                event.preventDefault();
+
+                if (!b.name || !b.value || b.name !== b.value || !(form = b.closest("form"))) {
+                    return;
+                }
+
+                var data = new FormData();
+
+                data.append(b.name, b.value);
+
+                fetch(form.action, {
+                    method: "POST",
+                    body: data,
+                    headers: {
+                        Accept: "application/json",
+                        "X-Requested-With": "XMLHttpRequest"
+                    }
+                }).then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('HTTP Error: ' + response.status);
+                    }
+
+                    return response.json();
+                }).then(function (data) {
+                    if (data.error) {
+                        throw new Error(data.error);
+                    }
+
+                    form.innerHTML = data.reactions;
+                }).catch(function (e) {
+                    alert(e);
+                });
+            });
+        }
+
+    }
+
     return {
         init : function () {
             initGoBack();
@@ -89,6 +139,10 @@ ForkBB.common = (function (doc, win) {
             if (typeof DOMTokenList !== 'undefined') {
                 initAnchorHL();
                 initShowPass();
+            }
+
+            if (typeof fetch !== "undefined") {
+                initSubmitReactions();
             }
         },
     };

@@ -15,13 +15,33 @@ use function \ForkBB\__;
 
 class Reaction extends Page
 {
+    protected function responseAsJSON(array $response, string $position = 'info-400'): Page
+    {
+        $this->nameTpl      = 'layouts/plain_raw';
+        $this->onlinePos    = $position;
+        $this->onlineDetail = null;
+        $this->httpStatus   = 200;
+        $this->plainRaw     = \json_encode($response, FORK_JSON_ENCODE);
+
+        $this->header('Content-type', 'application/json', true);
+
+        return $this;
+
+    }
+
     /**
      * Обрабатывает реакцию на сообщение
      */
     public function reaction(array $args, string $method): Page
     {
+        $responseAsJSON = ($_SERVER['HTTP_ACCEPT'] ?? '') === 'application/json';
+
         if (! $this->c->Csrf->verify($args['token'], 'Reaction', $args)) {
-            return $this->c->Message->message($this->c->Csrf->getError());
+            if (true === $responseAsJSON) {
+                return $this->responseAsJSON(['error' => __($this->c->Csrf->getError())]);
+            } else {
+                return $this->c->Message->message($this->c->Csrf->getError());
+            }
         }
 
         $nameKey = [];
@@ -42,7 +62,11 @@ class Reaction extends Page
             ! $v->validation($_POST)
             || 1 !== \count($result = $v->getData())
         ) {
-            return $this->c->Message->message('Bad request');
+            if (true === $responseAsJSON) {
+                return $this->responseAsJSON(['error' => __('Bad request')]);
+            } else {
+                return $this->c->Message->message('Bad request');
+            }
         }
 
         $post = $this->c->posts->load($args['id']);
@@ -55,6 +79,21 @@ class Reaction extends Page
             default => FORK_MESS_WARN,
         };
 
-        return $this->c->Redirect->url($post->link)->message(":{$name}:", $status);
+        if (true === $responseAsJSON) {
+            $post->__selectedReaction = $name;
+
+            $this->nameTpl      = 'reaction_for_json';
+            $this->onlinePos    = null;
+            $this->onlineDetail = null;
+            $this->post         = $post;
+
+            $tpl = $this->c->View->rendering($this, false);
+
+            \preg_match('%<form[^>]*+>(.+)</form>%is', $tpl, $matches);
+
+            return $this->responseAsJSON(['status' => $status, 'reactions' => $matches[1] ?? ''], 'topic-' . $post->parent->id);
+        } else {
+            return $this->c->Redirect->url($post->link)->message(":{$name}:", $status);
+        }
     }
 }

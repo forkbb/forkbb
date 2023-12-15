@@ -90,7 +90,7 @@ class View
     /**
      * Возвращает отображение страницы $p или null
      */
-    public function rendering(Page $p): ?string
+    public function rendering(Page $p, bool $sendHeaders = true): ?string
     {
         if (null === $p->nameTpl) {
             $this->sendHttpHeaders($p);
@@ -118,7 +118,9 @@ class View
             $this->endBlock(true);
         }
 
-        $this->sendHttpHeaders($p);
+        if (true === $sendHeaders) {
+            $this->sendHttpHeaders($p);
+        }
 
         return $this->block('content');
     }
