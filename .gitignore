@@ -11,7 +11,7 @@
 /public/.htaccess
 /public/index.php
 /public/img/*
-/public/style/ForkBB_old
+/public/style/GreenFork
 /public/upload/**/*
 !/public/img/sm/big_smile.png
 !/public/img/sm/cool.png

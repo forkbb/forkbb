@@ -1714,7 +1714,7 @@ body,
 }
 
 #fork .f-user-contacts > a {
-  border: 0.0625rem solid;
+  border: 0.0625rem solid var(--br-fprimary);
   border-radius: .25rem;
   display: inline-block;
   margin-top: 0.3125rem;
