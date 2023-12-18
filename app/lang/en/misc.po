@@ -81,6 +81,12 @@ msgstr "Open"
 msgid "Close"
 msgstr "Close"
 
+msgid "Stick"
+msgstr "Stick"
+
+msgid "Unstick"
+msgstr "Unstick"
+
 msgid "Move topic title"
 msgid_plural "Move topics title"
 msgstr[0] "Move topic"

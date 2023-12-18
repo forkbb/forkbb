@@ -110,6 +110,16 @@ class Forum extends Page
                     'type'      => 'submit',
                     'value'     => __('Close'),
                 ],
+                'stick' => [
+                    'class'     => ['origin'],
+                    'type'      => 'submit',
+                    'value'     => __('Stick'),
+                ],
+                'unstick' => [
+                    'class'     => ['origin'],
+                    'type'      => 'submit',
+                    'value'     => __('Unstick'),
+                ],
                 'delete' => [
                     'class'     => ['origin'],
                     'type'      => 'submit',

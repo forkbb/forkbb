@@ -81,6 +81,12 @@ msgstr "Открыть"
 msgid "Close"
 msgstr "Закрыть"
 
+msgid "Stick"
+msgstr "Прикрепить"
+
+msgid "Unstick"
+msgstr "Открепить"
+
 msgid "Move topic title"
 msgid_plural "Move topics title"
 msgstr[0] "Перенос темы"

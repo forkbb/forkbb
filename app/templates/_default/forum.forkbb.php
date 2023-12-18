@@ -103,6 +103,9 @@
             @endif
               <div class="f-finfo">
                 <p class="f-finfo-h3">
+            @if ($topic->sticky)
+                  <span class="f-tsticky" title="{{ __('Sticky') }}"><small class="f-stickytxt">{!! __('Sticky') !!}</small></span>
+            @endif
                   <span class="f-tmoved" title="{{ __('Moved') }}"><small class="f-movedtxt">{!! __('Moved') !!}</small></span>
                   <a class="f-ftname" href="{{ $topic->link }}">{{ $topic->name }}</a>
                 </p>
