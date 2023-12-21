@@ -327,14 +327,8 @@ class Register extends Page
             $tplData = [
                 'fRootLink' => $this->c->Router->link('Index'),
                 'fMailer'   => __(['Mailer', $this->c->config->o_board_title]),
-                'username'  => $v->username,
-                'userLink'  => $this->c->Router->link(
-                    'User',
-                    [
-                        'id'   => $newUserId,
-                        'name' => $v->username,
-                    ]
-                ),
+                'username'  => $user->username,
+                'userLink'  => $user->link,
             ];
 
             try {
@@ -376,7 +370,7 @@ class Register extends Page
                 'fTitle'    => $this->c->config->o_board_title,
                 'fRootLink' => $this->c->Router->link('Index'),
                 'fMailer'   => __(['Mailer', $this->c->config->o_board_title]),
-                'username'  => $v->username,
+                'username'  => $user->username,
                 'link'      => $link,
             ];
 
