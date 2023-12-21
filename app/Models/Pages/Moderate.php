@@ -264,7 +264,7 @@ class Moderate extends Page
                 'Topic',
                 [
                     'id'   => $this->curTopic->id,
-                    'name' => $this->curTopic->name,
+                    'name' => $this->c->Func->friendly($this->curTopic->name),
                     'page' => $v->page,
                 ]
             );
