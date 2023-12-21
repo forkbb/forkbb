@@ -241,7 +241,7 @@ class Uploads extends Admin
                     'type'    => 'link',
                     'caption' => 'User head',
                     'value'   => $user->username,
-                    'href'    => $this->c->Router->link('User', ['id' => $user->id, 'name' => $user->username]),
+                    'href'    => $user->link,
                 ];
             } else {
                 $fields["f{$id}-user"] = [

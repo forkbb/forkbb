@@ -291,7 +291,7 @@ class Action extends Users
                     if ($this->c->ProfileRules->setUser($user)->editProfile) {
                         $redirect->url($link);
                     } else {
-                        $redirect->page('User', ['id' => $user->id, 'name' => $user->username]);
+                        $redirect->url($user->link);
                     }
                 } else {
                     $redirect->page('AdminUsers');

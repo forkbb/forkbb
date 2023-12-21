@@ -485,7 +485,7 @@ class Bans extends Admin
                     'User',
                     [
                         'id'   => $ban['id_creator'],
-                        'name' => $ban['name_creator'],
+                        'name' => $this->c->Func->friendly($ban['name_creator']),
                     ]
                 ),
             ];
