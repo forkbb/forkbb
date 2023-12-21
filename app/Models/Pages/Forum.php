@@ -47,7 +47,7 @@ class Forum extends Page
         $this->canonical  = $this->c->Router->link(
             'Forum',
             [
-                'id'   => $args['id'],
+                'id'   => $forum->id,
                 'name' => $forum->friendly,
                 'page' => $forum->page,
             ]
