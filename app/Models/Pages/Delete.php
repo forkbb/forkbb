@@ -57,7 +57,7 @@ class Delete extends Page
 
             if ($deleteTopic) {
                 $redirect = $this->c->Redirect
-                    ->page('Forum', ['id' => $topic->forum_id, 'name' => $topic->parent->forum_name])
+                    ->url($topic->parent->link)
                     ->message('Topic del redirect', FORK_MESS_SUCC);
                 $this->c->topics->delete($topic);
             } else {
