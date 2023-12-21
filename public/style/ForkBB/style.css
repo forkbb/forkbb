@@ -2953,8 +2953,13 @@ body,
   #fork .f-postedit > span,
   #fork .f-postquote > span,
   #fork .f-postblock > span,
-  #fork .f-postunblock > span {
+  #fork .f-postunblock > span,
+  #fork .f-btn-change-user-group > span {
     display: none;
+  }
+
+  #fork .f-btn-change-user-group::before {
+    content: "\f500";
   }
 
   #fork .f-btn-ban-user::before {
