@@ -132,15 +132,15 @@ class Parserus
      * @var array
      */
     protected $defLang = [
-        1 => '[%1$s] tag in blacklist',
-        2 => '[%1$s] tag not in whitelist',
-        3 => '[%1$s] tag can\'t be opened in [%2$s] tag',
-        4 => 'No start tag found for [/%1$s] tag',
-        5 => 'Found [/%1$s] tag for single [%1$s] tag',
-        6 => 'No attributes in [%1$s] tag',
-        7 => 'Primary attribute is forbidden in [%1$s] tag',
-        8 => 'Secondary attribute is forbidden in [%1$s] tag',
-        9 => 'Attribute \'%2$s\' does not match pattern in [%1$s] tag',
+        1  => '[%1$s] tag in blacklist',
+        2  => '[%1$s] tag not in whitelist',
+        3  => '[%1$s] tag can\'t be opened in [%2$s] tag',
+        4  => 'No start tag found for [/%1$s] tag',
+        5  => 'Found [/%1$s] tag for single [%1$s] tag',
+        6  => 'No attributes in [%1$s] tag',
+        7  => 'Primary attribute is forbidden in [%1$s] tag',
+        8  => 'Secondary attribute is forbidden in [%1$s] tag',
+        9  => 'Attribute \'%2$s\' does not match pattern in [%1$s] tag',
         10 => '[%1$s] tag contains unknown secondary attribute \'%2$s\'',
         11 => 'Body of [%1$s] tag does not match pattern',
         12 => '[%1$s] tag was opened within itself, this is not allowed',
@@ -160,6 +160,7 @@ class Parserus
         if (! in_array($flag, [ENT_HTML401, ENT_XML1, ENT_XHTML, ENT_HTML5])) {
             $flag = ENT_HTML5;
         }
+
         $this->eFlags = $flag | ENT_QUOTES | ENT_SUBSTITUTE;
         $this->tRepl  = in_array($flag, [ENT_HTML5, ENT_HTML401])
             ? ['<br>',   '&nbsp; &nbsp; ', '&nbsp; ', ' &nbsp;']
@@ -242,6 +243,7 @@ class Parserus
             if (isset($bb['body_format'])) {
                 $cur['body_format'] = $bb['body_format'];
             }
+
             if (isset($bb['text_only'])) {
                 $cur['text_only'] = true;
             }
@@ -321,6 +323,7 @@ class Parserus
     public function setSmilies(array $smilies): self
     {
         $this->smilies = $smilies;
+
         $this->createSmPattern();
 
         return $this;
@@ -338,7 +341,9 @@ class Parserus
         }
 
         $arr = array_keys($this->smilies);
+
         sort($arr);
+
         $arr[] = '  ';
 
         $symbol  = '';
@@ -358,6 +363,7 @@ class Parserus
                         $pattern .= $quote . preg_quote($symbol, '%') . $sub[0];
                         $quote    = '|';
                     }
+
                     $symbol = $match[1];
                     $sub    = [preg_quote($match[2], '%')];
                 }
@@ -561,6 +567,7 @@ class Parserus
             $text     = $match[3];
 
             $tmp = $this->getNormAttr($match[1]);
+
             if (isset($tmp[0])) {
                 $attrs['Def'] = $tmp;
 
@@ -596,6 +603,7 @@ class Parserus
                 $text     = $match[4];
 
                 $tmp = $this->getNormAttr($match[2]);
+
                 if (isset($tmp[0])) {
                     $attrs[$match[1]] = $tmp;
 
@@ -665,6 +673,7 @@ class Parserus
 
                     return false;
                 }
+
                 $curId = $this->data[$curId]['parent'];
             }
         }
@@ -685,7 +694,7 @@ class Parserus
                 return false;
             }
 
-            $curId = $this->data[$curId]['parent'];
+            $curId  = $this->data[$curId]['parent'];
             $curTag = $this->data[$curId]['tag'];
         }
 
@@ -856,6 +865,7 @@ class Parserus
     public function parse(string $text, array $opts = []): self
     {
         $this->reset($opts);
+
         $curText  = '';
         $recCount = 0;
 
@@ -880,6 +890,7 @@ class Parserus
 
             if (! isset($this->bbcodes[$tag])) {
                 $curText .= $tagText;
+
                 continue;
             }
 
@@ -892,6 +903,7 @@ class Parserus
                 } else {
                     $curText = $this->closeTag($tag, $curText, $tagText);
                 }
+
                 continue;
             }
 
@@ -899,6 +911,7 @@ class Parserus
 
             if (null === $attrs) {
                 $curText .= $tagText;
+
                 continue;
             }
 
@@ -909,7 +922,9 @@ class Parserus
 
             if ($recCount) {
                 ++$recCount;
+
                 $curText .= $tagText;
+
                 continue;
             }
 
@@ -919,6 +934,7 @@ class Parserus
             ) {
                 $curText .= $tagText;
                 $this->errors[] = [1, $tag];
+
                 continue;
             }
 
@@ -928,16 +944,19 @@ class Parserus
             ) {
                 $curText .= $tagText;
                 $this->errors[] = [2, $tag];
+
                 continue;
             }
 
             if (($parentId = $this->findParent($tag)) === false) {
                 $curText .= $tagText;
+
                 continue;
             }
 
             if (($attrs = $this->validationTag($tag, $attrs['attrs'], $text)) === false) {
                 $curText .= $tagText;
+
                 continue;
             }
 
@@ -1003,12 +1022,14 @@ class Parserus
         }
 
         $tag = $this->data[$id]['tag'];
+
         if (false !== $this->bbcodes[$tag]['self_nesting']) {
             if (isset($tags[$tag])) {
                 ++$tags[$tag];
             } else {
                 $tags[$tag] = 0;
             }
+
             if ($tags[$tag] > $this->bbcodes[$tag]['self_nesting']) {
                 $this->errors[] = [16, $tag, $this->bbcodes[$tag]['self_nesting']];
 
@@ -1036,6 +1057,7 @@ class Parserus
         if (isset($this->data[$id]['tag'])) {
 
             $body = '';
+
             foreach ($this->data[$id]['children'] as $cid) {
                 $body .= $this->getHtml($cid);
             }
@@ -1047,6 +1069,7 @@ class Parserus
             }
 
             $attrs = [];
+
             foreach ($this->data[$id]['attrs'] as $key => $val) {
                 if (isset($bb['attrs'][$key])) {
                     $attrs[$key] = $this->e($val);
@@ -1069,15 +1092,19 @@ class Parserus
         ) {
             case 1:
                 $text = $this->e(preg_replace('%^\x20*\n%', '', $this->data[$id]['text']));
+
                 break;
             case 2:
                 $text = $this->e(preg_replace('%\n\x20*$%D', '', $this->data[$id]['text']));
+
                 break;
             case 3:
                 $text = $this->e(preg_replace('%^\x20*\n|\n\x20*$%D', '', $this->data[$id]['text']));
+
                 break;
             default:
                 $text = $this->e($this->data[$id]['text']);
+
                 break;
         }
 
@@ -1117,6 +1144,7 @@ class Parserus
         }
 
         $body = '';
+
         foreach ($this->data[$id]['children'] as $cid) {
             $body .= $this->getCode($cid);
         }
@@ -1131,13 +1159,16 @@ class Parserus
         $def   = '';
         $other = '';
         $count = count($attrs);
+
         foreach ($attrs as $attr => $val) {
             $quote = '';
+
             if (
                 $count > 1
                 || strpbrk($val, ' \'"]')
             ) {
                 $quote = '"';
+
                 if (
                     false !== strpos($val, '"')
                     && false === strpos($val, '\'')
@@ -1145,6 +1176,7 @@ class Parserus
                     $quote = '\'';
                 }
             }
+
             if ('Def' === $attr) {
                 $def = '=' . $quote . $val . $quote;
             } else {
@@ -1165,15 +1197,10 @@ class Parserus
     public function getText(int $id = 0): string
     {
         if (isset($this->data[$id]['tag'])) {
-
             $body = '';
+
             foreach ($this->data[$id]['children'] as $cid) {
-                $child = $this->getText($cid);
-                if (isset($body[0], $child[0])) {
-                    $body .= ' ' . $child;
-                } else {
-                    $body .= $child;
-                }
+                $body .= $this->getText($cid);
             }
 
             $bb = $this->bbcodes[$this->data[$id]['tag']];
@@ -1183,6 +1210,7 @@ class Parserus
             }
 
             $attrs = [];
+
             foreach ($this->data[$id]['attrs'] as $key => $val) {
                 if (isset($bb['attrs'][$key])) {
                     $attrs[$key] = $val;
@@ -1232,6 +1260,7 @@ class Parserus
         }
 
         $error = null;
+
         if (
             null !== $this->blackList
             && in_array($tag, $this->blackList)

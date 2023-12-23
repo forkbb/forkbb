@@ -23,7 +23,7 @@
         "ext-intl" : "*",
         "ext-json": "*",
         "ext-pdo": "*",
-        "miovisman/parserus": "^1.2.1",
+        "miovisman/parserus": "^1.3.0",
         "miovisman/normemail": "^1.0.0",
         "psr/simple-cache": "^3",
         "psr/log": "^3",
