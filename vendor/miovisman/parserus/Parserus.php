@@ -1206,7 +1206,17 @@ class Parserus
             $bb = $this->bbcodes[$this->data[$id]['tag']];
 
             if (null === $bb['text_handler']) {
-                return $body;
+                if (
+                    isset($body[0])
+                    && 'inline' !== $bb['type']
+                ) {
+                    $before = preg_match('%^\s%su', $body)  ? '' : ' ';
+                    $after  = preg_match('%\s$%sDu', $body) ? '' : ' ';
+
+                    return $before . $body . $after;
+                } else {
+                    return $body;
+                }
             }
 
             $attrs = [];
