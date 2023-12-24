@@ -129,6 +129,8 @@ class Search extends Page
                 'GET' === $method
                 && $v->validation($args)
             ) {
+                $this->searchInValue = $v->serch_in;
+
                 return $this->action(\array_merge($args, $v->getData(), ['action' => 'search']), $method, $advanced);
             }
 

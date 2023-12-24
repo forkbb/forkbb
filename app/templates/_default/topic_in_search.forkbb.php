@@ -50,7 +50,7 @@
           <h3 class="f-phead-h3">
             <span class="f-psh-forum"><a href="{{ $post->parent->parent->link }}" title="{{ __('Go to forum') }}">{{ $post->parent->parent->forum_name }}</a></span>
             <span class="f-sep"><small>»</small></span>
-            <span class="f-psh-topic"><a href="{{ $post->parent->link }}" title="{{ __('Go to topic') }}">@if ($post->id !== $post->parent->first_post_id){!! __('Re') !!} @endif{{ $post->parent->name }}</a></span>
+            <span class="f-psh-topic" @if (! empty($p->model->queryRegexp) && 1 !== $p->searchInValue) data-search-regexp="{{ $p->model->queryRegexp }}" @endif><a href="{{ $post->parent->link }}" title="{{ __('Go to topic') }}">@if ($post->id !== $post->parent->first_post_id){!! __('Re') !!} @endif{{ $post->parent->name }}</a></span>
             <span class="f-sep"><small>»</small></span>
             <span class="f-post-posted"><a href="{{ $post->link }}" title="{{ __('Go to post') }}" rel="bookmark"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></a></span>
           </h3>
@@ -87,7 +87,7 @@
           </div>
         </address>
         <div class="f-post-body">
-          <div class="f-post-main">
+          <div class="f-post-main" @if (! empty($p->model->queryRegexp) && 2 !== $p->searchInValue) data-search-regexp="{{ $p->model->queryRegexp }}" @endif>
             {!! $post->html() !!}
           </div>
           <aside class="f-post-bfooter">

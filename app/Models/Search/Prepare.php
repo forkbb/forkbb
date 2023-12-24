@@ -19,6 +19,8 @@ class Prepare extends Method
      */
     public function prepare(string $query): bool
     {
+        $this->model->queryRegexp = null;
+
         // обработка хэштега (может быть только один!)
         if (
             \preg_match('%^#(?=.{3})[\p{L}\p{N}]+(?:_+[\p{L}\p{N}]+)*$%uD', $query)
@@ -56,7 +58,7 @@ class Prepare extends Method
                 if (null !== $this->model->word($subQuery)) {
                     if (
                         false === \strpos($subQuery, ' ')
-                        && $this->model->cleanText($subQuery) === $subQuery
+                        && $this->model->cleanText($subQuery, true) === $subQuery
                     ) {
                         $words[] = $subQuery;
                     } else {
@@ -200,9 +202,10 @@ class Prepare extends Method
             $error = 'The order of brackets is broken: \'%s\'';
         }
 
-        $this->model->queryError = $error;
-        $this->model->queryWords = $words;
-        $this->model->queryText  = $this->queryText($words);
+        $this->model->queryError  = $error;
+        $this->model->queryWords  = $words;
+        $this->model->queryText   = $this->queryText($words);
+        $this->model->queryRegexp = $this->queryRegexp($words);
 
         return null === $error;
     }
@@ -227,6 +230,46 @@ class Prepare extends Method
 
             $result .= $space . $word;
             $space   = ' ';
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * Создает регулярное выражение для подстветки
+     */
+    protected function queryRegexp(array $words): string
+    {
+        $space  = '';
+        $result = '';
+        $skip   = false;
+
+        foreach ($words as $word) {
+            if (
+                true === $skip
+                || 'AND' === $word
+                || 'OR' === $word
+            ) {
+                $skip = false;
+
+                continue;
+            } elseif ('NOT' === $word) {
+                $skip = true;
+
+                continue;
+            } elseif (
+                isset($word['type'])
+                && 'LIKE' === $word['type']
+            ) {
+                $result .= $space . \preg_replace('%[\\\\+*?\[\]^$(){}|.]%', '\\\\$0', $word['word']);
+            } elseif (\is_array($word)) {
+                $result .= $space . $this->queryRegexp($word);
+            } else {
+                $result .= $space . '(?<![\\p{L}\\p{N}_])' . \str_replace(['?', '*'], ['.', '[\\p{L}\\p{N}_]*'], $word);
+            }
+
+            $space   = '|';
         }
 
         return $result;

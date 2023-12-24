@@ -2328,6 +2328,11 @@ body,
 /*********/
 /* Поиск */
 /*********/
+#fork span.f-search-highlight {
+  background-color: #F3BFCC;
+  color: #BC2A4D;
+}
+
 #fork-search .f-yinfo:first-child {
   text-align: end;
   padding: 0 0.3125rem;

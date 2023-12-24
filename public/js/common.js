@@ -13,8 +13,8 @@ ForkBB.common = (function (doc, win) {
     'use strict';
 
     var selectorBack = ".f-go-back",
-        hlClass = "f-highlighted";
-
+        hlClass = "f-highlighted",
+        shlClass = "f-search-highlight";
 
     function initGoBack()
     {
@@ -128,7 +128,49 @@ ForkBB.common = (function (doc, win) {
                 });
             });
         }
+    }
 
+    function highlightText(element, regexp)
+    {
+        if (element.nodeType === 3) {
+            var text = element.textContent;
+            var parts = text.split(regexp);
+
+            if (parts.length > 1) {
+                var parent = element.parentNode;
+
+                for (var i = 0; i < parts.length; i++) {
+                    if (regexp.test(parts[i])) {
+                        var newPart = doc.createElement('span');
+                        newPart.classList.add(shlClass);
+                        newPart.textContent = parts[i];
+                    } else {
+                        var newPart = doc.createTextNode(parts[i]);
+                    }
+
+                    parent.insertBefore(newPart, element);
+                }
+
+                parent.removeChild(element);
+            }
+        } else if (element.nodeType === 1 && !element.classList.contains(shlClass) && element.childNodes.length && !/(script|style|iframe)/i.test(element.tagName)) {
+            for (var i = 0; i < element.childNodes.length; i++) {
+                highlightText(element.childNodes[i], regexp);
+            }
+        }
+    }
+
+    function initHighlight()
+    {
+        var nodes = doc.querySelectorAll("[data-search-regexp]");
+
+        for (var i = 0; i < nodes.length; i++) {
+            try {
+                if (nodes[i].dataset.searchRegexp) {
+                    highlightText(nodes[i], new RegExp('(' + nodes[i].dataset.searchRegexp + ')', 'giu'));
+                }
+            } catch (error) {console.log(error);}
+        }
     }
 
     return {
@@ -139,6 +181,7 @@ ForkBB.common = (function (doc, win) {
             if (typeof DOMTokenList !== 'undefined') {
                 initAnchorHL();
                 initShowPass();
+                initHighlight();
             }
 
             if (typeof fetch !== "undefined") {
