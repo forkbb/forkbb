@@ -21,7 +21,7 @@
 </head>
 <body>
   <!-- PRE bodyStart -->
-  <div id="fork">
+  <div id="fork" class="pg-redirect">
     <!-- PRE mainBefore -->
     <main id="fork-main">
       <aside id="fork-rdrct" class="f-main">

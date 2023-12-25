@@ -9,7 +9,7 @@
           <p class="f-finform">{!! $cur['html'] or __($cur['message']) !!}</p>
         @endforeach
     @elseif (isset($setVal['fields']))
-          <fieldset id="id-fs-{{ $setKey }}" @if ($setVal['class']) class="f-fs-{{ \implode(' f-fs-', $setVal['class']) }}" @endif>
+          <fieldset id="id-fs-{{ $setKey }}" @if ($setVal['class']) class="@expclass($setVal['class'], 'f-fs-')" @endif>
         @if ($setVal['legend'])
             <legend class="f-fleg">{!! __($setVal['legend']) !!}</legend>
         @endif
@@ -19,13 +19,13 @@
             <p id="id-{{ $cur['id'] or $setKey.$key }}" class="f-yinfo">{!! __($cur['value']) !!}</p>
                     @break
                 @case ('wrap')
-            <div id="id-{{ $cur['id'] or $setKey.$key }}" @if ($cur['class']) class="f-wrap-{{ \implode(' f-wrap-', $cur['class']) }}" @endif>
+            <div id="id-{{ $cur['id'] or $setKey.$key }}" @if ($cur['class']) class="@expclass($cur['class'], 'f-wrap-')" @endif>
                     @break
                 @case('endwrap')
             </div>
                     @break
                 @default
-            <dl id="id-dl-{{ $cur['id'] or $key }}" @if ($cur['class']) class="f-field-{{ \implode(' f-field-', $cur['class']) }}" @endif>
+            <dl id="id-dl-{{ $cur['id'] or $key }}" @if ($cur['class']) class="@expclass($cur['class'], 'f-field-')" @endif>
               <dt>
                     @if ($cur['caption'])
                 <label class="f-ycaption @if ($cur['required']) f-req @endif" @if (false === \strpos('.radio.yield.str.btn.link.label.include.', ".{$cur['type']}.")) for="id-{{ $key }}" @endif>{!! __($cur['caption']) !!}</label>
@@ -122,9 +122,9 @@
     @foreach ($form['btns'] as $key => $cur)
             <!-- PRE btnsForeachStart -->
         @if ('submit' === $cur['type'])
-            <button class="f-btn f-fbtn @if($cur['class']) {{ \implode(' ', $cur['class']) }} @endif" name="{{ $key }}" value="{{ $cur['value'] }}" @isset ($cur['accesskey']) accesskey="{{ $cur['accesskey'] }}" @endisset title="{{ $cur['title'] or $cur['value'] }}" @if ($cur['disabled']) disabled @endif><span>{{ $cur['value'] }}</span></button>
+            <button class="f-btn f-fbtn @if($cur['class']) @expclass($cur['class']) @endif" name="{{ $key }}" value="{{ $cur['value'] }}" @isset ($cur['accesskey']) accesskey="{{ $cur['accesskey'] }}" @endisset title="{{ $cur['title'] or $cur['value'] }}" @if ($cur['disabled']) disabled @endif><span>{{ $cur['value'] }}</span></button>
         @elseif ('btn'=== $cur['type'])
-            <a class="f-btn f-fbtn @if($cur['class']) {{ \implode(' ', $cur['class']) }} @endif" data-name="{{ $key }}" href="{{ $cur['href'] }}" @isset ($cur['accesskey']) accesskey="{{ $cur['accesskey'] }}" @endisset title="{{ $cur['title'] or $cur['value'] }}"><span>{{ $cur['value'] }}</span></a>
+            <a class="f-btn f-fbtn @if($cur['class']) @expclass($cur['class']) @endif" data-name="{{ $key }}" href="{{ $cur['href'] }}" @isset ($cur['accesskey']) accesskey="{{ $cur['accesskey'] }}" @endisset title="{{ $cur['title'] or $cur['value'] }}"><span>{{ $cur['value'] }}</span></a>
         @endif
             <!-- PRE btnsForeachEnd -->
     @endforeach

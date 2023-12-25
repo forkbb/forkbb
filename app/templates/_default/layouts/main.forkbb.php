@@ -41,7 +41,7 @@
 </head>
 <body>
   <!-- PRE bodyStart -->
-  <div id="fork" class="@if ($p->fNavigation)f-with-nav @endif @if($p->fPMFlash) f-pm-flash @endif">
+  <div id="fork" class="@if ($p->fNavigation)f-with-nav @endif @if($p->fPMFlash) f-pm-flash @endif @expclass($p->identifier, 'pg-')">
     <!-- PRE headerBefore -->
     <header id="fork-header">
 @isset ($h1InHeader)
@@ -105,7 +105,7 @@
     @if ($p->fNavigationUser)
         <ul class="f-menu-user-items" itemscope itemtype="https://schema.org/SiteNavigationElement" role="menu">
         @foreach ($p->fNavigationUser as $key => $val)
-          <li id="fork-nav-{{ $key }}" class="f-menu-item @if ($val[4]) f-mi-{{ \implode(' f-mi-', $val[4]) }} @endif" itemprop="about" itemscope itemtype="https://schema.org/ItemList" role="menuitem"><!-- inline -->
+          <li id="fork-nav-{{ $key }}" class="f-menu-item @if ($val[4]) @expclass($val[4], 'f-mi-') @endif" itemprop="about" itemscope itemtype="https://schema.org/ItemList" role="menuitem"><!-- inline -->
             <a class="f-menu-a @if ($key == $p->fIndex) active @endif" href="{{ $val[0] }}" @if ($val[2]) title="{{ __($val[2]) }}" @endif itemprop="url">
               <span class="f-menu-span" itemprop="name">{!! __($val[1]) !!}</span>
             </a>
