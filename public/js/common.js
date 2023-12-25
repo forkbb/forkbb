@@ -41,6 +41,8 @@ ForkBB.common = (function (doc, win) {
             setTimeout(function() {
                 target.classList.remove(hlClass);
             }, 1500);
+        } else if (target = doc.getElementById('fork-main')) {
+            target.scrollIntoView({behavior: "smooth"});
         }
     }
 
