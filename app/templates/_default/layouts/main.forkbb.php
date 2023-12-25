@@ -44,7 +44,11 @@
   <div id="fork" class="@if ($p->fNavigation)f-with-nav @endif @if($p->fPMFlash) f-pm-flash @endif">
     <!-- PRE headerBefore -->
     <header id="fork-header">
+@isset ($h1InHeader)
+      <h1 id="id-fhth1">{{ $p->fTitle }}</h1>
+@else
       <p id="id-fhth1"><a id="id-fhtha" rel="home" href="{{ $p->fRootLink }}">{{ $p->fTitle }}</a></p>
+@endisset
 @if ('' != $p->fDescription)
       <p id="id-fhtdesc">{!! $p->fDescription !!}</p>
 @endif

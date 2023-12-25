@@ -672,16 +672,13 @@ body,
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  color: var(--c-a-and-btn);
 }
 
 #fork #id-fhtdesc {
   border-top: 0.0625rem dotted var(--bg-post-h);
   padding: 0.625rem;
 }
-
-/*#fork #id-fhtha {
-  color: var(--c-a-and-btn);
-}*/
 
 @media screen and (min-width: 50rem) {
   #fork #id-fhth1 {

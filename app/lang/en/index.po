@@ -47,6 +47,3 @@ msgstr "User information"
 
 msgid "Visitors online"
 msgstr "Registered users online: <b>%1$s</b>, guests: <b>%2$s</b>."
-
-msgid "Forum list"
-msgstr "Forum list"

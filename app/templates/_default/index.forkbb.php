@@ -1,11 +1,7 @@
 @extends ('layouts/main')
+@php $h1InHeader = true; @endphp
     <!-- PRE start -->
 @if ($p->categoryes)
-    <!-- PRE h1Before -->
-    <div class="f-mheader">
-      <h1 id="fork-h1">{!! __('Forum list') !!}</h1>
-    </div>
-    <!-- PRE h1After -->
     <!-- PRE mainBefore -->
     <div class="f-main">
       <ol class="f-ftlist">
