@@ -30,6 +30,7 @@ class PMBlock extends AbstractPM
      */
     protected function view(array $args, string $method): Page
     {
+        $this->identifier = ['pm', 'pm-block-list'];
         $this->nameTpl    = 'pm/block';
         $this->blockList  = $this->c->pms->block->list;
         $this->pmCrumbs[] = [$this->c->Router->link('PMAction', $args), 'Blocked users'];
@@ -135,6 +136,7 @@ class PMBlock extends AbstractPM
             return $this->c->Redirect->url($this->linkBack)->message($message, FORK_MESS_SUCC);
         }
 
+        $this->identifier = ['pm', 'pm-block'];
         $this->nameTpl    = 'pm/form';
         $this->formTitle  = $blockStatus ? 'Unblock user title' : 'Block user title';
         $this->formClass  = 'block';

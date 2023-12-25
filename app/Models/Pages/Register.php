@@ -139,6 +139,7 @@ class Register extends Page
             $this->httpStatus = 400;
         }
 
+        $this->identifier   = 'register';
         $this->hhsLevel     = 'secure';
         $this->fIndex       = self::FI_REG;
         $this->nameTpl      = 'register';

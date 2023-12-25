@@ -115,11 +115,12 @@ class Email extends Page
             ]);
         }
 
-        $this->nameTpl   = 'email';
-        $this->robots    = 'noindex';
-        $this->legend    = ['Send email to %s', $this->curUser->username];
-        $this->crumbs    = $this->crumbs([null, $this->legend]);
-        $this->form      = $this->formEmail($args, $data);
+        $this->identifier = 'email';
+        $this->nameTpl    = 'email';
+        $this->robots     = 'noindex';
+        $this->legend     = ['Send email to %s', $this->curUser->username];
+        $this->crumbs     = $this->crumbs([null, $this->legend]);
+        $this->form       = $this->formEmail($args, $data);
 
         return $this;
     }

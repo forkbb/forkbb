@@ -50,6 +50,7 @@ class Index extends Page
             }
         }
 
+        $this->identifier   = 'index';
         $this->nameTpl      = 'index';
         $this->onlinePos    = 'index';
         $this->onlineDetail = true;

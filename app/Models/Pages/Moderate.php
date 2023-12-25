@@ -46,10 +46,11 @@ class Moderate extends Page
     {
         parent::__construct($container);
 
-        $this->nameTpl   = 'moderate';
-        $this->onlinePos = 'moderate';
-        $this->robots    = 'noindex, nofollow';
-        $this->hhsLevel  = 'secure';
+        $this->identifier = 'moderate';
+        $this->nameTpl    = 'moderate';
+        $this->onlinePos  = 'moderate';
+        $this->robots     = 'noindex, nofollow';
+        $this->hhsLevel   = 'secure';
 
         $container->Lang->load('validator');
         $container->Lang->load('misc');

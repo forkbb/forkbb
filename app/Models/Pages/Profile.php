@@ -38,12 +38,13 @@ abstract class Profile extends Page
 
         $this->c->Lang->load('profile');
 
-        $this->hhsLevel  = 'secure';
-        $this->rules     = $this->c->ProfileRules->setUser($this->curUser);
-        $this->robots    = 'noindex';
-        $this->fIndex    = $this->rules->my ? self::FI_PROFL : self::FI_USERS;
-        $this->nameTpl   = 'profile';
-        $this->onlinePos = 'profile-' . $this->curUser->id; // ????
+        $this->identifier = 'profile';
+        $this->hhsLevel   = 'secure';
+        $this->rules      = $this->c->ProfileRules->setUser($this->curUser);
+        $this->robots     = 'noindex';
+        $this->fIndex     = $this->rules->my ? self::FI_PROFL : self::FI_USERS;
+        $this->nameTpl    = 'profile';
+        $this->onlinePos  = 'profile-' . $this->curUser->id; // ????
 
         $this->mDescription = __(['mDescription for %s', $this->curUser->username]);
 

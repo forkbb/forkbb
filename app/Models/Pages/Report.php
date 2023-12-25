@@ -107,12 +107,13 @@ class Report extends Page
             $data         = $v->getData();
         }
 
-        $this->nameTpl   = 'report';
+        $this->identifier = 'report';
+        $this->nameTpl    = 'report';
 //        $this->onlinePos = 'forum-' . $forum->id;
 //        $this->canonical = $this->c->Router->link('NewTopic', ['id' => $forum->id]);
-        $this->robots    = 'noindex';
-        $this->crumbs    = $this->crumbs('Report post', $topic);
-        $this->form      = $this->formReport($args, $data);
+        $this->robots     = 'noindex';
+        $this->crumbs     = $this->crumbs('Report post', $topic);
+        $this->form       = $this->formReport($args, $data);
 
         return $this;
     }

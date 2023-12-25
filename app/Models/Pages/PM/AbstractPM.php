@@ -26,11 +26,12 @@ abstract class AbstractPM extends Page
     {
         parent::__construct($container);
 
-        $this->pms       = $container->pms;
-        $this->pmIndex   = Cnst::ACTION_CURRENT; # string Указатель на активный пункт навигации в меню ЛС
-        $this->fIndex    = self::FI_PM;
-        $this->onlinePos = 'pm';
-        $this->robots    = 'noindex, nofollow';
+        $this->identifier = 'pm';
+        $this->pms        = $container->pms;
+        $this->pmIndex    = Cnst::ACTION_CURRENT; # string Указатель на активный пункт навигации в меню ЛС
+        $this->fIndex     = self::FI_PM;
+        $this->onlinePos  = 'pm';
+        $this->robots     = 'noindex, nofollow';
 //        $this->hhsLevel  = 'secure';
     }
 

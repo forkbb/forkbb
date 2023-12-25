@@ -149,6 +149,7 @@ class Userlist extends Page
             $this->fIswev   = [FORK_MESS_INFO, 'No users found'];
         }
 
+        $this->identifier   = 'userlist';
         $this->fIndex       = self::FI_USERS;
         $this->nameTpl      = 'userlist';
         $this->onlinePos    = 'userlist';

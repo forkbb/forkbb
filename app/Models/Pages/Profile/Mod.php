@@ -65,6 +65,7 @@ class Mod extends Profile
             $this->fIswev = $v->getErrors();
         }
 
+        $this->identifier      = ['profile', 'profile-mod'];
         $this->crumbs          = $this->crumbs(
             [
                 $this->c->Router->link('EditUserModeration', $args),

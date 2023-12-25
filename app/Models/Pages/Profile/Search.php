@@ -84,6 +84,7 @@ class Search extends Profile
             $this->fIswev = $v->getErrors();
         }
 
+        $this->identifier      = ['profile', 'profile-search'];
         $this->crumbs          = $this->crumbs(
             [
                 $this->c->Router->link('EditUserSearch', $args),

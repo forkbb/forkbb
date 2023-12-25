@@ -159,6 +159,7 @@ class PMPost extends AbstractPM
             unset($args['more2']);
         }
 
+        $this->identifier = ['pm', 'pm-post'];
         $this->pmIndex    = $this->pms->area;
         $this->nameTpl    = 'pm/post';
         $this->form       = $this->messageFormPM(null, 'PMAction', $args, false, $this->newTopic, false);

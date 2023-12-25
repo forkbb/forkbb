@@ -22,6 +22,7 @@ class Maintenance extends Page
 
         parent::__construct($container);
 
+        $this->identifier         = 'maintenance';
         $this->httpStatus         = 503;
         $this->nameTpl            = 'maintenance';
 #       $this->onlinePos          = null; //????

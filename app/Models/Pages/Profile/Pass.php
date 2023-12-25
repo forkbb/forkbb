@@ -64,6 +64,7 @@ class Pass extends Profile
             $this->fIswev = $v->getErrors();
         }
 
+        $this->identifier      = ['profile', 'profile-pass'];
         $this->crumbs          = $this->crumbs(
             [
                 $this->c->Router->link('EditUserPass', $args),

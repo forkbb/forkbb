@@ -79,6 +79,7 @@ class PMEdit extends AbstractPM
             ];
         }
 
+        $this->identifier = ['pm', 'pm-edit'];
         $this->targetUser = $topic->ztUser;
         $this->pms->area  = $this->pms->inArea($topic);
         $this->pmIndex    = $this->pms->area;

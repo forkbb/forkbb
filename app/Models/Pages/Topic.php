@@ -133,6 +133,7 @@ class Topic extends Page
 
         $this->c->Lang->load('topic');
 
+        $this->identifier   = 'topic';
         $this->nameTpl      = 'topic';
         $this->onlinePos    = 'topic-' . $topic->id;
         $this->onlineDetail = true;

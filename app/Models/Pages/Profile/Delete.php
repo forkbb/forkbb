@@ -61,6 +61,7 @@ class Delete extends Profile
         }
 
         $this->fIswev          = [FORK_MESS_ERR, 'You are trying to delete your profile'];
+        $this->identifier      = ['profile', 'profile-delete'];
         $this->crumbs          = $this->crumbs(
             [
                 $this->c->Router->link('DeleteUserProfile', $args),

@@ -20,6 +20,7 @@ class Message extends Page
      */
     public function message(string|array $message, bool $back = true, int $status = 400, array $headers = []): Page
     {
+        $this->identifier   = 'message';
         $this->nameTpl      = 'message';
         $this->onlinePos    = 'info-' . $status;
         $this->onlineDetail = null;

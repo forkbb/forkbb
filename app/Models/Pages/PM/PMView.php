@@ -101,6 +101,7 @@ class PMView extends AbstractPM
             $this->fIswev = $v->getErrors();
         }
 
+        $this->identifier = ['pm', 'pm-view'];
         $this->nameTpl    = 'pm/view';
         $this->pmList     = $this->pms->pmListCurPage();
         $this->pagination = $this->pms->pagination;

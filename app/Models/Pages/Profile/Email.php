@@ -192,6 +192,7 @@ class Email extends Profile
             $this->fIswev           = $v->getErrors();
         }
 
+        $this->identifier      = ['profile', 'profile-email'];
         $this->crumbs          = $this->crumbs(
             [
                 $this->c->Router->link('EditUserEmail', $args),

@@ -141,6 +141,7 @@ class Search extends Page
             $this->fIswev = [FORK_MESS_INFO, 'The search may be case sensitive'];
         }
 
+        $this->identifier   = 'search';
         $this->fIndex       = 'search';
         $this->nameTpl      = 'search';
         $this->onlinePos    = 'search';
@@ -570,6 +571,7 @@ class Search extends Page
             $this->useMediaJS = true;
         }
 
+        $this->identifier    = 'search-result';
         $this->fIndex        = self::FI_SRCH;
         $this->onlinePos     = 'search';
         $this->robots        = 'noindex';

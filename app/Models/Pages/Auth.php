@@ -115,6 +115,7 @@ class Auth extends Page
 
         $ref = $this->c->Secury->replInvalidChars($_SERVER['HTTP_REFERER'] ?? '');
 
+        $this->identifier   = 'login';
         $this->hhsLevel     = 'secure';
         $this->fIndex       = self::FI_LOGIN;
         $this->nameTpl      = 'login';
@@ -359,6 +360,7 @@ class Auth extends Page
             $this->httpStatus = 400;
         }
 
+        $this->identifier   = 'reset';
         $this->hhsLevel     = 'secure';
         $this->fIndex       = self::FI_LOGIN;
         $this->nameTpl      = 'passphrase_reset';
@@ -489,6 +491,7 @@ class Auth extends Page
             ]);
         }
 
+        $this->identifier   = 'change';
         $this->hhsLevel     = 'secure';
         $this->fIndex       = self::FI_LOGIN;
         $this->nameTpl      = 'change_passphrase';

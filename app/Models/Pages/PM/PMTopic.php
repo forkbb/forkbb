@@ -125,6 +125,7 @@ class PMTopic extends AbstractPM
             return $this->c->Redirect->url($this->model->link)->message('Send dialogue redirect', FORK_MESS_SUCC);
         }
 
+        $this->identifier = ['pm', 'pm-send'];
         $this->pms->area  = $this->pms->inArea($this->model);
         $this->pmIndex    = $this->pms->area;
         $this->nameTpl    = 'pm/post';
@@ -203,6 +204,7 @@ class PMTopic extends AbstractPM
 
         $this->c->Lang->load('topic');
 
+        $this->identifier = ['pm', 'pm-topic'];
         $this->args       = $args;
         $this->targetUser = $this->model->ztUser;
         $this->pms->area  = $this->pms->inArea($this->model);

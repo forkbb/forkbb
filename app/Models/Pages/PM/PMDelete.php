@@ -106,6 +106,7 @@ class PMDelete extends AbstractPM
             return $redirect;
         }
 
+        $this->identifier = ['pm', 'pm-delete'];
         $this->targetUser = $topic->ztUser;
         $this->pmIndex    = $this->pms->area;
         $this->nameTpl    = 'pm/post';

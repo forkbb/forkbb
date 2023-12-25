@@ -128,13 +128,14 @@ class Edit extends Page
             }
         }
 
-        $this->nameTpl   = 'post';
-        $this->onlinePos = 'topic-' . $topic->id;
+        $this->identifier = 'edit';
+        $this->nameTpl    = 'post';
+        $this->onlinePos  = 'topic-' . $topic->id;
 //        $this->canonical = $post->linkEdit;
-        $this->robots    = 'noindex';
-        $this->formTitle = $firstPost ? 'Edit topic' : 'Edit post';
-        $this->crumbs    = $this->crumbs($this->formTitle, $topic);
-        $this->form      = $this->messageForm($post, 'EditPost', $args, true, $firstPost, false);
+        $this->robots     = 'noindex';
+        $this->formTitle  = $firstPost ? 'Edit topic' : 'Edit post';
+        $this->crumbs     = $this->crumbs($this->formTitle, $topic);
+        $this->form       = $this->messageForm($post, 'EditPost', $args, true, $firstPost, false);
 
         return $this;
     }
@@ -434,12 +435,13 @@ class Edit extends Page
             ];
         }
 
-        $this->nameTpl   = 'post';
-        $this->onlinePos = 'topic-' . $topic->id;
-        $this->robots    = 'noindex';
-        $this->formTitle = $firstPost ? 'Change AnD topic' : 'Change AnD post';
-        $this->crumbs    = $this->crumbs($this->formTitle, $topic);
-        $this->form      = $this->formAuthorAndDate($data, $args);
+        $this->identifier = 'change-and';
+        $this->nameTpl    = 'post';
+        $this->onlinePos  = 'topic-' . $topic->id;
+        $this->robots     = 'noindex';
+        $this->formTitle  = $firstPost ? 'Change AnD topic' : 'Change AnD post';
+        $this->crumbs     = $this->crumbs($this->formTitle, $topic);
+        $this->form       = $this->formAuthorAndDate($data, $args);
 
         return $this;
     }

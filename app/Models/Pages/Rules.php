@@ -20,6 +20,7 @@ class Rules extends Page
      */
     public function view(): Page
     {
+        $this->identifier   = 'rules';
         $this->fIndex       = self::FI_RULES;
         $this->nameTpl      = 'rules';
         $this->onlinePos    = 'rules';
@@ -43,6 +44,7 @@ class Rules extends Page
     {
         $this->c->Lang->load('register');
 
+        $this->identifier   = 'rules-reg';
         $this->fIndex       = self::FI_REG;
         $this->nameTpl      = 'rules';
         $this->onlinePos    = 'rules';

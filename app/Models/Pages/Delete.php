@@ -70,6 +70,7 @@ class Delete extends Page
             return $redirect;
         }
 
+        $this->identifier = 'delete';
         $this->nameTpl    = 'post';
         $this->onlinePos  = 'topic-' . $topic->id;
 //        $this->canonical  = $post->linkDelete;

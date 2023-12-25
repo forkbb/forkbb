@@ -84,12 +84,13 @@ class Post extends Page
             }
         }
 
-        $this->nameTpl   = 'post';
-        $this->canonical = $forum->linkCreateTopic;
-        $this->robots    = 'noindex';
-        $this->formTitle = 'Post new topic';
-        $this->crumbs    = $this->crumbs($this->formTitle, $forum);
-        $this->form      = $this->messageForm($forum, 'NewTopic', $args, false, true, false);
+        $this->identifier = 'post';
+        $this->nameTpl    = 'post';
+        $this->canonical  = $forum->linkCreateTopic;
+        $this->robots     = 'noindex';
+        $this->formTitle  = 'Post new topic';
+        $this->crumbs     = $this->crumbs($this->formTitle, $forum);
+        $this->form       = $this->messageForm($forum, 'NewTopic', $args, false, true, false);
 
         return $this;
     }
@@ -151,6 +152,7 @@ class Post extends Page
             unset($args['quote']);
         }
 
+        $this->identifier = 'post';
         $this->nameTpl    = 'post';
         $this->canonical  = $topic->linkReply;
         $this->robots     = 'noindex';

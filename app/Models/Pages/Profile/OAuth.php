@@ -33,6 +33,7 @@ class OAuth extends Profile
 
         $this->c->Lang->load('admin_providers');
 
+        $this->identifier      = ['profile', 'profile-oauth'];
         $this->crumbs          = $this->crumbs(
             [
                 $this->c->Router->link('EditUserOAuth', $args),
@@ -155,6 +156,7 @@ class OAuth extends Profile
             return $this->c->Redirect->page('EditUserOAuthAction', $args)->message('No confirm redirect', FORK_MESS_WARN);
         }
 
+        $this->identifier      = ['profile', 'profile-oauth-a'];
         $this->crumbs          = $this->crumbs(
             [
                 $this->c->Router->link('EditUserOAuthAction', $args),

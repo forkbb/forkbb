@@ -58,6 +58,7 @@ class PMConfig extends AbstractPM
             $this->fIswev = $v->getErrors();
         }
 
+        $this->identifier   = ['pm', 'pm-config'];
         $this->nameTpl      = 'pm/form';
         $this->onlineDetail = null;
         $this->pmIndex      = Cnst::ACTION_CONFIG;

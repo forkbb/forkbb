@@ -22,6 +22,7 @@ abstract class Admin extends Page
     {
         parent::__construct($container);
 
+        $this->identifier   = 'admin';
         $this->aIndex       = 'index'; # string Указатель на активный пункт навигации в меню админки
         $this->fIndex       = self::FI_ADMIN;
         $this->onlinePos    = 'admin';

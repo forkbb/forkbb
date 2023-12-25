@@ -53,17 +53,18 @@ abstract class Page extends Model
         $formats[1]              = __($formats[1]);
         $container->TIME_FORMATS = $formats;
 
-        $this->fIndex       = self::FI_INDEX; # string      Указатель на активный пункт навигации
-        $this->httpStatus   = 200;            # int         HTTP статус ответа для данной страницы
-#       $this->nameTpl      = null;           # null|string Имя шаблона
-#       $this->titles       = [];             # array       Массив титула страницы | setTitles()
-#       $this->fIswev       = [];             # array       Массив info, success, warning, error, validation информации
-#       $this->onlinePos    = '';             # null|string Позиция для таблицы онлайн текущего пользователя
-        $this->onlineDetail = false;          # null|bool   Формировать данные по посетителям online или нет
-        $this->onlineFilter = true;           # bool        Посетители только по текущей странице или по всем
-#       $this->robots       = '';             # string      Переменная для meta name="robots"
-#       $this->canonical    = '';             # string      Переменная для link rel="canonical"
-        $this->hhsLevel     = 'common';       # string      Ключ для $c->HTTP_HEADERS (для вывода заголовков HTTP из конфига)
+        $this->identifier   = 'unknown';      # string|array Идентификатор(ы) для установки классов элемента #fork
+        $this->fIndex       = self::FI_INDEX; # string       Указатель на активный пункт навигации
+        $this->httpStatus   = 200;            # int          HTTP статус ответа для данной страницы
+#       $this->nameTpl      = null;           # null|string  Имя шаблона
+#       $this->titles       = [];             # array        Массив титула страницы | setTitles()
+#       $this->fIswev       = [];             # array        Массив info, success, warning, error, validation информации
+#       $this->onlinePos    = '';             # null|string  Позиция для таблицы онлайн текущего пользователя
+        $this->onlineDetail = false;          # null|bool    Формировать данные по посетителям online или нет
+        $this->onlineFilter = true;           # bool         Посетители только по текущей странице или по всем
+#       $this->robots       = '';             # string       Переменная для meta name="robots"
+#       $this->canonical    = '';             # string       Переменная для link rel="canonical"
+        $this->hhsLevel     = 'common';       # string       Ключ для $c->HTTP_HEADERS (для вывода заголовков HTTP из конфига)
 
         $this->fTitle       = $container->config->o_board_title;
         $this->fDescription = $container->config->o_board_desc;
