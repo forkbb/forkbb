@@ -13,11 +13,10 @@ namespace ForkBB\Models\Poll;
 use ForkBB\Models\Action;
 use ForkBB\Models\Poll\Poll;
 use InvalidArgumentException;
-use function \ForkBB\__;
 
 class Revision extends Action
 {
-    protected ?string $error;
+    protected string|array|null $error;
     protected array $question;
     protected array $answer;
     protected array $type;
@@ -25,7 +24,7 @@ class Revision extends Action
     /**
      * Проверяет/нормализует опрос
      */
-    public function revision(Poll $poll, bool $normalize = false): string|bool
+    public function revision(Poll $poll, bool $normalize = false): string|array|bool
     {
         $this->error    = null;
         $this->question = [];
@@ -37,7 +36,7 @@ class Revision extends Action
             empty($poll->question)
             || ! \is_array($poll->question)
         ) {
-            $this->error = __('The poll structure is broken');
+            $this->error = 'The poll structure is broken';
         } else {
             $this->test($poll);
         }
@@ -74,7 +73,7 @@ class Revision extends Action
 
                 continue;
             } elseif ($emptyQ) {
-                $this->error = __(['Question number %s is preceded by an empty question', $qid]);
+                $this->error = ['Question number %s is preceded by an empty question', $qid];
 
                 return;
             }
@@ -83,7 +82,7 @@ class Revision extends Action
                 empty($answers[$qid])
                 || ! \is_array($answers[$qid])
             ) {
-                $this->error = __(['For question number %s, the structure of answers is broken', $qid]);
+                $this->error = ['For question number %s, the structure of answers is broken', $qid];
 
                 return;
             }
@@ -102,7 +101,7 @@ class Revision extends Action
 
                     continue;
                 } elseif ($emptyA) {
-                    $this->error = __(['Answer number %1$s is preceded by an empty answer (question number %2$s)', $fid, $qid]);
+                    $this->error = ['Answer number %1$s is preceded by an empty answer (question number %2$s)', $fid, $qid];
 
                     return;
                 }
@@ -114,19 +113,19 @@ class Revision extends Action
             }
 
             if (! empty($answers[$qid])) {
-                $this->error = __(['For question number %s, the structure of answers is broken', $qid]);
+                $this->error = ['For question number %s, the structure of answers is broken', $qid];
 
                 return;
             } elseif ($countA < 2) {
-                $this->error = __('Requires at least two answers per question (%s)', $qid);
+                $this->error = ['Requires at least two answers per question (%s)', $qid];
 
                 return;
             } elseif (! isset($types[$qid])) {
-                $this->error = __(['For question number %s, there is no value for the maximum number of answers for voting', $qid]);
+                $this->error = ['For question number %s, there is no value for the maximum number of answers for voting', $qid];
 
                 return;
             } elseif ($types[$qid] > $countA) {
-                $this->error = __(['For question number %s, the maximum number of answers for voting more answers', $qid]);
+                $this->error = ['For question number %s, the maximum number of answers for voting more answers', $qid];
 
                 return;
             }
@@ -142,7 +141,7 @@ class Revision extends Action
             0 === $countQ
             || ! empty($questions)
         ) {
-            $this->error = __('The poll structure is broken');
+            $this->error = 'The poll structure is broken';
         }
     }
 }
