@@ -1166,6 +1166,8 @@ class Update extends Admin
 
         $config->save();
 
+        $this->c->DB->addField('::users', 'page_scroll', 'TINYINT', false, 0);
+
         return null;
     }
 }

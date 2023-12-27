@@ -59,6 +59,7 @@ class Config extends Profile
                     ],
                     'time_format'   => 'required|integer|in:' . \implode(',', \array_keys($this->c->TIME_FORMATS)),
                     'date_format'   => 'required|integer|in:' . \implode(',', \array_keys($this->c->DATE_FORMATS)),
+                    'page_scroll'   => 'required|integer|in:-2,-1,0,1,2',
                     'show_smilies'  => 'required|integer|in:0,1',
                     'show_sig'      => 'required|integer|in:0,1',
                     'show_avatars'  => 'required|integer|in:0,1',
@@ -79,6 +80,7 @@ class Config extends Profile
                     'timezone'      => 'Time zone',
                     'time_format'   => 'Time format',
                     'date_format'   => 'Date format',
+                    'page_scroll'   => 'Page scroll label',
                     'show_smilies'  => 'Smilies label',
                     'show_sig'      => 'Sigs label',
                     'show_avatars'  => 'Avatars label',
@@ -218,7 +220,19 @@ class Config extends Profile
                     'value'   => $this->curUser->date_format,
                     'caption' => 'Date format',
                 ],
-
+                'page_scroll' => [
+                    'type'    => 'select',
+                    'options' => [
+                        -2 => __('Past the header and announce (no animation)'),
+                        -1 => __('Past the header (no animation)'),
+                        0  => __('Not active'),
+                        1  => __('Past the header (smooth)'),
+                        2  => __('Past the header and announce (smooth)'),
+                    ],
+                    'value'   => $this->curUser->page_scroll,
+                    'caption' => 'Page scroll label',
+                    'help'    => 'Page scroll info',
+                ],
             ],
         ];
         $form['sets']['viewing-posts'] = [

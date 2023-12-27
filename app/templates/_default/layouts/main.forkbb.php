@@ -41,7 +41,7 @@
 </head>
 <body>
   <!-- PRE bodyStart -->
-  <div id="fork" class="@if ($p->fNavigation)f-with-nav @endif @if($p->fPMFlash) f-pm-flash @endif @expclass($p->identifier, 'pg-')">
+  <div id="fork" class="@if ($p->fNavigation)f-with-nav @endif @if($p->fPMFlash) f-pm-flash @endif @expclass($p->identifier, 'pg-')" data-page-scroll="{!! (int) $p->user->page_scroll !!}">
     <!-- PRE headerBefore -->
     <header id="fork-header">
 @isset ($h1InHeader)

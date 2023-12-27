@@ -1224,6 +1224,7 @@ class Install extends Admin
                 'u_up_size_mb'     => ['INT(10) UNSIGNED', false, 0],
                 'unfollowed_f'     => ['VARCHAR(255)', false, ''],
                 'show_reaction'    => ['TINYINT(1)', false, 1],
+                'page_scroll'      => ['TINYINT', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
             'UNIQUE KEYS' => [

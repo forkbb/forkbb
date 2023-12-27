@@ -383,3 +383,24 @@ msgstr "Выберите отслеживаемые разделы для <b><i>
 
 msgid "mDescription for %s"
 msgstr "%s - профиль пользователя. Активность, посты, топики и контакты."
+
+msgid "Page scroll label"
+msgstr "Прокрутка страницы"
+
+msgid "Page scroll info"
+msgstr "Если активна, то javascript скрипт прокрутит открытую в активном окне страницу мимо указанных блоков. Работа зависит от вашего браузера и его настроек."
+
+msgid "Not active"
+msgstr "Не активна"
+
+msgid "Past the header (smooth)"
+msgstr "Мимо шапки (плавно)"
+
+msgid "Past the header and announce (smooth)"
+msgstr "Мимо шапки и объвления (плавно)"
+
+msgid "Past the header (no animation)"
+msgstr "Мимо шапки (без анимации)"
+
+msgid "Past the header and announce (no animation)"
+msgstr "Мимо шапки и объвления (без анимации)"

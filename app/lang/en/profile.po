@@ -383,3 +383,24 @@ msgstr "Select followed forums for <b><i>%s</i></b> and <b><i>%s</i></b>:"
 
 msgid "mDescription for %s"
 msgstr "%s's profile. Activity, posts, topics and contacts."
+
+msgid "Page scroll label"
+msgstr "Page scroll"
+
+msgid "Page scroll info"
+msgstr "If active, the javascript script will scroll the page opened in the active window past the specified blocks. Operation depends on your browser and its settings."
+
+msgid "Not active"
+msgstr "Not active"
+
+msgid "Past the header (smooth)"
+msgstr "Past the header (smooth)"
+
+msgid "Past the header and announce (smooth)"
+msgstr "Past the header and announce (smooth)"
+
+msgid "Past the header (no animation)"
+msgstr "Past the header (no animation)"
+
+msgid "Past the header and announce (no animation)"
+msgstr "Past the header and announce (no animation)"

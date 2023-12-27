@@ -33,6 +33,7 @@ ForkBB.common = (function (doc, win) {
     function initAnchorHL()
     {
         var target,
+            scroll,
             hash = (win.location.hash || "").replace(/^#/, "");
 
         if (hash && (target = doc.getElementById(hash))) {
@@ -41,8 +42,27 @@ ForkBB.common = (function (doc, win) {
             setTimeout(function() {
                 target.classList.remove(hlClass);
             }, 1500);
-        } else if (target = doc.getElementById('fork-main')) {
-            target.scrollIntoView({behavior: "smooth"});
+        } else if (
+            (target = doc.getElementById('fork'))
+            && (scroll = target.dataset.pageScroll)
+            && (scroll = scroll.match(/^(-)?(\d+)$/))
+            && "0" !== scroll[2]
+        ) {
+            target = null;
+
+            if ("2" === scroll[2] && (target = doc.getElementById('fork-announce'))) {
+                do {
+                    target = target.nextElementSibling;
+                } while (target && "none" === win.getComputedStyle(target).display)
+            }
+
+            if (!target) {
+                target = doc.getElementById('fork-main');
+            }
+
+            if (target) {
+                target.scrollIntoView("-" === scroll[1] ? {} : {behavior: "smooth"});
+            }
         }
     }
 
