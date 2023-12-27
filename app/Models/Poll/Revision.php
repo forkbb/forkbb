@@ -102,7 +102,7 @@ class Revision extends Action
 
                     continue;
                 } elseif ($emptyA) {
-                    $this->error = __('Answer number %1$s is preceded by an empty answer (question number %2$s)', $fid, $qid);
+                    $this->error = __(['Answer number %1$s is preceded by an empty answer (question number %2$s)', $fid, $qid]);
 
                     return;
                 }
