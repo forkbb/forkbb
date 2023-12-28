@@ -523,21 +523,6 @@ EOD;
     }
 
     /**
-     * @expclass
-     */
-    protected function compileExpclass(string $expression): string
-    {
-        if (\preg_match('%^\(\s*([^,]+)\s*(?:,\s*[\'"]([\w-]*)[\'"]\s*(?:,\s*[\'"]([\w-]*)[\'"]\s*)?)?\)$%', $expression, $matches)) {
-            $matches[2] ??= '';
-            $matches[3] ??= '';
-
-            return " {$matches[2]}{{ (\is_array({$matches[1]}) ? \implode('{$matches[3]} {$matches[2]}', {$matches[1]}) : {$matches[1]}) }}{$matches[3]}";
-        } else {
-            return $expression;
-        }
-    }
-
-    /**
      * @class()
      */
     protected function compileClass(string $expression): string

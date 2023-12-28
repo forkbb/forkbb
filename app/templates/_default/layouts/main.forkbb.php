@@ -41,7 +41,7 @@
 </head>
 <body>
   <!-- PRE bodyStart -->
-  <div id="fork" class="@if ($p->fNavigation)f-with-nav @endif @if($p->fPMFlash) f-pm-flash @endif @expclass($p->identifier, 'pg-')" data-page-scroll="{!! (int) $p->user->page_scroll !!}">
+  <div id="fork" @class(['f-with-nav' => $p->fNavigation, 'f-pm-flash' => $p->fPMFlash, [$p->identifier, 'pg-']]) data-page-scroll="{!! (int) $p->user->page_scroll !!}">
     <!-- PRE headerBefore -->
     <header id="fork-header">
 @isset ($h1InHeader)
@@ -105,7 +105,7 @@
     @if ($p->fNavigationUser)
         <ul class="f-menu-user-items" itemscope itemtype="https://schema.org/SiteNavigationElement" role="menu">
         @foreach ($p->fNavigationUser as $key => $val)
-          <li id="fork-nav-{{ $key }}" class="f-menu-item @if ($val[4]) @expclass($val[4], 'f-mi-') @endif" itemprop="about" itemscope itemtype="https://schema.org/ItemList" role="menuitem"><!-- inline -->
+          <li id="fork-nav-{{ $key }}" @class(['f-menu-item', [$val[4] ?? null, 'f-mi-']]) itemprop="about" itemscope itemtype="https://schema.org/ItemList" role="menuitem"><!-- inline -->
             <a class="f-menu-a @if ($key == $p->fIndex) active @endif" href="{{ $val[0] }}" @if ($val[2]) title="{{ __($val[2]) }}" @endif itemprop="url">
               <span class="f-menu-span" itemprop="name">{!! __($val[1]) !!}</span>
             </a>
