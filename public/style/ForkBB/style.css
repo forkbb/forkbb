@@ -1897,6 +1897,7 @@ body,
   border: 0.0625rem solid var(--br-bbcode);
   background-color: var(--bg-bbcode);
   padding: 0 0.25rem;
+  box-decoration-break: clone;
 }
 
 #fork .f-bb-l-disc {
