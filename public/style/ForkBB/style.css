@@ -1030,13 +1030,20 @@ body,
   content: " \f0f3"; /* f06e */
 }
 
-#fork .f-crumb:first-child .f-crumb-a::before {
+#fork .f-cr-index-a::before {
   display: inline-block;
   font: 900 0.875rem "fa";
-  content: " \f015";
+  content: "\f015\a0";
 }
 
-#fork .f-crumb:first-child .f-crumb-a > span {
+#fork .f-cr-users-a::before {
+  display: inline-block;
+  font: 900 0.875rem "fa";
+  content: "\a0\f0c0\a0";
+}
+
+#fork .f-cr-index-a > span,
+#fork .f-cr-users-a > span {
   display: none;
 }
 
