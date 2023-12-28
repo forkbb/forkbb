@@ -105,7 +105,7 @@ abstract class Admin extends Page
             }
         }
 
-        $crumbs[] = [$this->c->Router->link('Admin'), 'Admin title'];
+        $crumbs[] = [$this->c->Router->link('Admin'), 'Admin title', null, 'admin'];
         $result   = parent::crumbs(...$crumbs);
 
         $this->adminHeader = \end($result)[1];

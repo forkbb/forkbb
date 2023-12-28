@@ -595,7 +595,7 @@ class Search extends Page
             $ext = null;
         }
 
-        $crumbs[] = [$this->c->Router->link('Search'), 'Search', $ext];
+        $crumbs[] = [$this->c->Router->link('Search'), 'Search', null, 'search', $ext];
 
         return parent::crumbs(...$crumbs);
     }

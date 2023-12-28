@@ -547,7 +547,7 @@ abstract class Page extends Model
                         $name = ['%s', $name];
                     }
 
-                    $result[]     = [$crumb, $name, $active, $ext];
+                    $result[]     = [$crumb, $name, null, null, $active, $ext];
                     $active       = null;
                     $this->titles = $name;
 
@@ -568,12 +568,12 @@ abstract class Page extends Model
                 );
             // ссылка (передана массивом)
             } elseif (\is_array($crumb)) {
-                $result[]     = [$crumb[0], $crumb[1], $active, $crumb[2] ?? $ext];
+                $result[]     = [$crumb[0], $crumb[1], $crumb[2] ?? null, $crumb[3] ?? null, $active, $crumb[4] ?? $ext];
                 $this->titles = $crumb[1];
                 $ext          = null;
             // строка
             } else {
-                $result[]     = [null, (string) $crumb, $active, $ext];
+                $result[]     = [null, (string) $crumb, null, null, $active, $ext];
                 $this->titles = (string) $crumb;
                 $ext          = null;
             }
@@ -582,7 +582,7 @@ abstract class Page extends Model
         }
 
         // главная страница
-        $result[] = [$this->c->Router->link('Index'), 'Index', $active, $ext];
+        $result[] = [$this->c->Router->link('Index'), 'Index', null, 'index', $active, $ext];
 
         return \array_reverse($result);
     }

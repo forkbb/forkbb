@@ -5,26 +5,26 @@
     @foreach ($p->crumbs as $cur)
           <!-- PRE foreachStart -->
         @if (\is_object($cur[0]))
-          <li class="f-crumb @if ($cur[0]->is_subscribed) f-subscribed @endif" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><!-- inline -->
-            <a class="f-crumb-a @if ($cur[2]) active" aria-current="page @endif" href="{{ $cur[0]->link }}" itemprop="item">
+          <li @class(['f-crumb', 'f-subscribed' => $cur[0]->is_subscribed, [$cur[3], 'f-cr-']]) itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><!-- inline -->
+            <a @class(['f-crumb-a', 'active' => $cur[4], [$cur[3], 'f-cr-', '-a']]) @if ($cur[4]) aria-current="page" @endif href="{{ $cur[0]->link }}" title="{!! __($cur[2] ?? $cur[1]) !!}" itemprop="item">
               <span itemprop="name">{!! __($cur[1]) !!}</span>
             </a>
-            @if ($cur[3])
-            &nbsp;[&nbsp;<a href="{{ $cur[3][0] }}">{{ $cur[3][1] }}</a>&nbsp;]
+            @if ($cur[5])
+            &nbsp;[&nbsp;<a href="{{ $cur[5][0] }}">{{ $cur[5][1] }}</a>&nbsp;]
             @endif
             <meta itemprop="position" content="{!! @iteration !!}">
           </li><!-- endinline -->
         @else
-          <li class="f-crumb" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><!-- inline -->
+          <li @class(['f-crumb', [$cur[3], 'f-cr-']]) itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><!-- inline -->
             @if ($cur[0])
-            <a class="f-crumb-a @if ($cur[2]) active" aria-current="page @endif" href="{{ $cur[0] }}" itemprop="item">
+            <a @class(['f-crumb-a', 'active' => $cur[4], [$cur[3], 'f-cr-', '-a']]) @if ($cur[4]) aria-current="page" @endif href="{{ $cur[0] }}" title="{!! __($cur[2] ?? $cur[1]) !!}" itemprop="item">
               <span itemprop="name">{!! __($cur[1]) !!}</span>
             </a>
             @else
-            <span @if ($cur[2]) class="active" @endif itemprop="name">{!! __($cur[1]) !!}</span>
+            <span @if ($cur[4]) class="active" @endif itemprop="name">{!! __($cur[1]) !!}</span>
             @endif
-            @if ($cur[3])
-            &nbsp;[&nbsp;<a href="{{ $cur[3][0] }}">{{ $cur[3][1] }}</a>&nbsp;]
+            @if ($cur[5])
+            &nbsp;[&nbsp;<a href="{{ $cur[5][0] }}">{{ $cur[5][1] }}</a>&nbsp;]
             @endif
             <meta itemprop="position" content="{!! @iteration !!}">
           </li><!-- endinline -->
