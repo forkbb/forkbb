@@ -536,4 +536,12 @@ EOD;
             return $expression;
         }
     }
+
+    /**
+     * @class()
+     */
+    protected function compileClass(string $expression): string
+    {
+        return "<?= \$this->createClass{$expression}; ?>";
+    }
 }

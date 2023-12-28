@@ -19,6 +19,7 @@ namespace ForkBB\Core;
 use ForkBB\Core\View\Compiler;
 use ForkBB\Models\Page;
 use RuntimeException;
+use function \ForkBB\e;
 
 class View
 {
@@ -297,5 +298,36 @@ class View
         }
 
         return $name;
+    }
+
+    /**
+     * Формирует строку class="..."
+     */
+    protected function createClass(mixed $data): string
+    {
+        if (! \is_array($data)) {
+            return '';
+        }
+
+        $out = [];
+
+        foreach ($data as $key => $value) {
+            if (\is_string($key)) {
+                if (! empty($value)) {
+                    $out[] = $key;
+                }
+            } elseif (\is_string($value)) {
+                $out[] = $value;
+            } elseif (
+                \is_array($value)
+                && ! empty($value[0])
+            ) {
+                $value[1] ??= '';
+                $value[2] ??= '';
+                $out[]      = $value[1] . (\is_array($value[0]) ? \implode("{$value[2]} {$value[1]}", $value[0]) : $value[0]) . $value[2];
+            }
+        }
+
+        return empty($out) ? '' : ' class="' . e(\implode(' ', $out)) . '"';
     }
 }
