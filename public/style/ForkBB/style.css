@@ -1620,17 +1620,18 @@ body,
 #fork .f-post-usticky {
   display: flex;
   flex-wrap: wrap;
+  gap: 0.3125rem;
 }
 
 #fork .f-avatar {
   order: 1;
   flex-grow: 0.5;
   text-align: end;
-  margin-bottom: 0.3125rem;
+  /*margin-bottom: 0.3125rem;*/
 }
 
 #fork .f-avatar > img {
-  max-width: 4.6875rem;
+  max-width: 3.25rem;
   height: auto;
 }
 
@@ -1685,6 +1686,7 @@ body,
 #fork .f-post-body {
   padding: 0.3125rem;
   background-color: var(--bg-post-b);
+  position: relative;
 }
 
 #fork .f-post-main {
@@ -1787,6 +1789,25 @@ body,
   .f-promoteuser .f-psfont::before {
     content: "\f007\f30c"; /* \e539 */
   }
+
+  #fork .f-post-user {
+    padding-bottom: 1rem;
+  }
+
+  #fork .f-post-body::before,
+  #fork .f-post-body::after {
+    content: '';
+    position: absolute;
+    left: calc(50% - 0.625rem);
+    top: -1.25rem;
+    border: 0.625rem solid transparent;
+    border-bottom: 0.625rem solid var(--br-fprimary);
+  }
+
+  #fork .f-post-body::after {
+    border-bottom: 0.625rem solid var(--bg-post-b);
+    top: -1.14rem;
+  }
 }
 
 @media screen and (min-width: 50rem) {
@@ -1813,7 +1834,7 @@ body,
 
   #fork .f-user-info-first {
     display: block;
-    margin-bottom: 0.625rem;
+    margin-bottom: 0.3125rem;
     width: 100%;
   }
 
@@ -1834,7 +1855,6 @@ body,
 
   #fork .f-post-body {
     width: calc(100% - 13rem);
-    position: relative;
     display: flex;
     flex-direction: column;
   }
