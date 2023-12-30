@@ -1027,7 +1027,7 @@ body,
 #fork .f-subscribed > .f-crumb-a::after {
   display: inline;
   font: 400 0.875rem "fa";
-  content: " \f0f3"; /* f06e */
+  content: "\a0\f0f3";
 }
 
 #fork .f-cr-index-a::before {
@@ -1042,8 +1042,15 @@ body,
   content: "\a0\f0c0\a0";
 }
 
+#fork .f-cr-search-a:not(.active)::before {
+  display: inline-block;
+  font: 900 0.875rem "fa";
+  content: "\a0\f002\a0";
+}
+
 #fork .f-cr-index-a > span,
-#fork .f-cr-users-a > span {
+#fork .f-cr-users-a > span,
+#fork .f-cr-search-a:not(.active) > span {
   display: none;
 }
 

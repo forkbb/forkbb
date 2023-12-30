@@ -182,13 +182,13 @@
 /******************/
 /* Хлебные крошки */
 /******************/
-#fork .f-cr-admin:not(:last-child) .f-cr-admin-a::before {
+#fork .f-cr-admin-a:not(.active)::before {
   display: inline-block;
   font: 900 0.875rem "fa";
   content: "\a0\f7d9\a0";
 }
 
-#fork .f-cr-admin:not(:last-child) .f-cr-admin-a > span {
+#fork .f-cr-admin-a:not(.active) > span {
   display: none;
 }
 
