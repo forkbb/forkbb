@@ -570,7 +570,7 @@ class Moderate extends Page
                 if (1 === $v->confirm) {
                     $newTopic           = $this->c->topics->create();
                     $newTopic->subject  = $v->subject;
-                    $newTopic->forum_id = $v->forum;
+                    $newTopic->forum_id = $v->destination;
 
                     $this->c->topics->insert($newTopic);
                     $this->c->posts->move(false, $newTopic, ...$posts);
