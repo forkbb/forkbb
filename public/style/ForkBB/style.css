@@ -1815,6 +1815,31 @@ body,
     border-bottom: 0.625rem solid var(--bg-post-b);
     top: -1.14rem;
   }
+
+  #fork .f-user-info-toggle {
+    display: flex;
+    position: absolute;
+    top: 0.1875rem;
+    inset-inline-end: 0.1875rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 0.0625rem solid var(--c-fprimary);
+    border-radius: 1.25rem;
+    background-color: var(--bg-fprimary);
+    justify-content: center;
+    align-items: center;
+    opacity: 0.6;
+    cursor: pointer;
+  }
+
+  #fork .f-user-info-toggle::before {
+    font: 900 0.875rem "fa";
+    content: "\f129";
+  }
+
+  #fork .f-user-info-checkbox:not(:checked) ~ .f-user-info-add {
+    display: none;
+  }
 }
 
 @media screen and (min-width: 50rem) {

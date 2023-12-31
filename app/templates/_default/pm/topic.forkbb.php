@@ -86,6 +86,8 @@
         @endif
             </ul>
         @if ($p->userRules->showUserInfo)
+            <input id="id-uibx-{!! (int) $post->id !!}" class="f-user-info-checkbox" type="checkbox" hidden>
+            <label class="f-user-info-toggle" for="id-uibx-{!! (int) $post->id !!}" title="{!! __('Info') !!}" hidden><span class="f-user-info-tsp" hidden>{!! __('Info') !!}</span></label>
             <ul class="f-user-info-add">
             @if ($p->user->isAdmMod && '' != $post->user->admin_note)
               <li class="f-admin-note" title="{{ __('Admin note') }}">{{ $post->user->admin_note }}</li>
