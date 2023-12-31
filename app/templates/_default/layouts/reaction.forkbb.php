@@ -13,9 +13,9 @@
                   </span><!-- endinline -->
 @endforeach
 @if ($reactions['hidden'])
-                  <input id="id-reaction-{{ $post->id }}" class="f-reaction-checkbox" type="checkbox">
+                  <input id="id-reaction-{!! (int) $post->id !!}" class="f-reaction-checkbox" type="checkbox">
                   <span class="f-reaction-block f-reaction-toggle"><!-- inline -->
-                    <label class="f-retype f-retype-btn f-retype-toggle" for="id-reaction-{{ $post->id }}"><span class="f-retype-tspan">...</span></label>
+                    <label class="f-retype f-retype-btn f-retype-toggle" for="id-reaction-{!! (int) $post->id !!}"><span class="f-retype-tspan">...</span></label>
                   </span><!-- endinline -->
     @foreach ($reactions['hidden'] as $key => $cur)
                   <span class="f-reaction-block f-reaction-hblock"><!-- inline -->

@@ -22,7 +22,7 @@
       <h2>{!! __($p->postsTitle) !!}</h2>
     @foreach ($p->posts as $post)
         @if ($post->id)
-      <article id="p{{ $post->id }}" class="f-post @if (FORK_GEN_MAN == $post->user->gender) f-user-male @elseif (FORK_GEN_FEM == $post->user->gender) f-user-female @endif">
+      <article id="p{!! (int) $post->id !!}" class="f-post @if (FORK_GEN_MAN == $post->user->gender) f-user-male @elseif (FORK_GEN_FEM == $post->user->gender) f-user-female @endif">
         <header class="f-post-header">
           <h3 class="f-phead-h3">@if ($post->postNumber > 1){!! __('Re') !!} @endif{{ $post->parent->name }}</h3>
           <span class="f-post-posted"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></span>

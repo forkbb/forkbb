@@ -58,14 +58,14 @@
         @php $iswev = [FORK_MESS_ERR => [['Message %s was not found in the database', $id]]]; @endphp
         @include ('layouts/iswev')
     @else
-      <article id="p{{ $post->id }}" class="f-post @if (FORK_GEN_MAN == $post->user->gender) f-user-male @elseif (FORK_GEN_FEM == $post->user->gender) f-user-female @endif @if ($post->user->online) f-user-online @endif @if (1 === $post->postNumber) f-post-first @endif">
+      <article id="p{!! (int) $post->id !!}" class="f-post @if (FORK_GEN_MAN == $post->user->gender) f-user-male @elseif (FORK_GEN_FEM == $post->user->gender) f-user-female @endif @if ($post->user->online) f-user-online @endif @if (1 === $post->postNumber) f-post-first @endif">
         @if ($p->enableMod && $post->postNumber > 1)
-        <input hidden id="checkbox-{{ $post->id }}" class="f-post-checkbox" type="checkbox" name="ids[{{ $post->id }}]" value="{{ $post->id }}" form="id-form-mod">
+        <input hidden id="checkbox-{!! (int) $post->id !!}" class="f-post-checkbox" type="checkbox" name="ids[{!! (int) $post->id !!}]" value="{!! (int) $post->id !!}" form="id-form-mod">
         @endif
         <header class="f-post-header">
           <h3 class="f-phead-h3">@if ($post->postNumber > 1){!! __('Re') !!} @endif{{ $p->model->name }}</h3>
         @if ($p->enableMod && $post->postNumber > 1)
-          <label class="f-post-posted" for="checkbox-{{ $post->id }}" title="{{ __('Select for moderation') }}"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></label>
+          <label class="f-post-posted" for="checkbox-{!! (int) $post->id !!}" title="{{ __('Select for moderation') }}"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></label>
         @else
           <span class="f-post-posted"><time datetime="{{ \gmdate('c', $post->posted) }}">{{ dt($post->posted) }}</time></span>
         @endif
