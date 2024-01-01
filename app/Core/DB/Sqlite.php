@@ -709,8 +709,8 @@ class Sqlite
     public function statistics(): array
     {
         $vars = [
-            ':tname'  => \str_replace('_', '#_', $this->dbPrefix) . '%',
-            ':ttype'  => 'table',
+            ':tname' => \str_replace('_', '#_', $this->dbPrefix) . '%',
+            ':ttype' => 'table',
         ];
         $query = 'SELECT tbl_name FROM sqlite_master WHERE tbl_name LIKE ?s:tname ESCAPE \'#\' AND type=?s:ttype';
 

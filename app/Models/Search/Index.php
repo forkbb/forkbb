@@ -100,6 +100,8 @@ class Index extends Method
                         $stmt->execute([':word' => $word]);
                     }
                 }
+
+                $stmt  = null;
             }
         }
 

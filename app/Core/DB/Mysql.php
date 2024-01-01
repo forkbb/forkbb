@@ -487,7 +487,8 @@ class Mysql
 
         while ($row = $stmt->fetch()) {
             $records += $row['Rows'];
-            $size += $row['Data_length'] + $row['Index_length'];
+            $size    += $row['Data_length'] + $row['Index_length'];
+
             if (isset($engine[$row['Engine']])) {
                 ++$engine[$row['Engine']];
             } else {

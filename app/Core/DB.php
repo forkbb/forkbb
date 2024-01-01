@@ -21,7 +21,7 @@ class DB
     /**
      * Экземпляр PDO через который идет работа с бд
      */
-    protected PDO $pdo;
+    protected ?PDO $pdo;
 
     /**
      * Префикс для таблиц базы
@@ -472,5 +472,13 @@ class DB
         }
 
         return $this->dbDrv->$name(...$args);
+    }
+
+    /**
+     * Уничтожает (или пытается?) объект PDO
+     */
+    public function disconnect(): void
+    {
+        $this->pdo = null;
     }
 }

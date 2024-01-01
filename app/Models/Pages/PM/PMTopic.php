@@ -204,6 +204,8 @@ class PMTopic extends AbstractPM
 
         $this->c->Lang->load('topic');
 
+        $this->pms->block; // загрузить PBlock
+
         $this->identifier = ['pm', 'pm-topic'];
         $this->args       = $args;
         $this->targetUser = $this->model->ztUser;

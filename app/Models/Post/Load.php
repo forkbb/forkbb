@@ -99,10 +99,11 @@ class Load extends Action
 
         $result   = [];
         $topicIds = [];
+
         while ($row = $stmt->fetch()) {
-            $post = $this->manager->create($row);
+            $post                      = $this->manager->create($row);
             $topicIds[$post->topic_id] = $post->topic_id;
-            $result[] = $post;
+            $result[]                  = $post;
         }
 
         if ($withTopics) {
