@@ -305,7 +305,7 @@ trait PostValidatorTrait
             ->addValidators([
                 'check_attach' => [$this, 'vCheckAttach'],
             ])->addRules([
-                'token'       => 'token:' . $marker,
+                'token'       => 'token:3600:' . $marker,
                 'message'     => 'string:trim',
                 'attachments' => "file:multiple|max:{$this->user->g_up_size_kb}|check_attach",
             ])->addAliases([
