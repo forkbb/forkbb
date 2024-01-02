@@ -71,10 +71,10 @@ msgid "No permission"
 msgstr "У вас нет прав на просмотр этой страницы."
 
 msgid "Bad token"
-msgstr "Неверный токен."
+msgstr "Неверный токен. Пожалуйста, попробуйте повторить действие."
 
 msgid "Expired token"
-msgstr "Токен просрочен."
+msgstr "Токен просрочен. Пожалуйста, попробуйте повторить действие."
 
 msgid "Hidden text"
 msgstr "Скрытый текст"
