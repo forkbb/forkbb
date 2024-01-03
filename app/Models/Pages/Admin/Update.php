@@ -1170,4 +1170,17 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.77 to rev.78
+     */
+    protected function stageNumber77(array $args): ?int
+    {
+        $this->c->DB->alterField('::forums', 'num_topics', 'INT(10) UNSIGNED', false, 0);
+        $this->c->DB->alterField('::forums', 'num_posts', 'INT(10) UNSIGNED', false, 0);
+        $this->c->DB->alterField('::topics', 'num_views', 'INT(10) UNSIGNED', false, 0);
+        $this->c->DB->alterField('::topics', 'num_replies', 'INT(10) UNSIGNED', false, 0);
+
+        return null;
+    }
 }
