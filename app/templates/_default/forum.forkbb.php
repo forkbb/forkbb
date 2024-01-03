@@ -93,7 +93,7 @@
             @include ('layouts/iswev')
           </li>
         @elseif ($topic->moved_to)
-          <li id="topic-{!! (int) $topic->id !!}" class="f-row f-fredir">
+          <li id="topic-{!! (int) $topic->id !!}" class="f-row f-fredir @if ($topic->sticky) f-fsticky @endif">
             <div class="f-cell f-cmain">
             @if ($p->enableMod)
               <input hidden id="checkbox-{!! (int) $topic->id !!}" class="f-fch" type="checkbox" name="ids[{!! (int) $topic->id !!}]" value="{!! (int) $topic->id !!}" form="id-form-mod">

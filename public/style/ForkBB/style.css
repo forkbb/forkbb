@@ -26,10 +26,12 @@
   --bg-like-nav: hsl(0, 0%, 19%);
   --c-light: hsl(40, 16%, 93%);
   --c-tsticky: hsl(0, 100%, 50%);
+  --bg-tsticky: hsl(0, 15%, 22%);
   --c-faggr: hsl(357, 75%, 50%);
   --c-faggr-pr: hsl(0, 0%, 20%);
   --bg-faggr: hsl(0, 100%, 86%);
   --c-tclosed: hsl(0, 0%, 45%);
+  --bg-tclosed: hsl(0, 0%, 22%);
   --c-tpoll: hsl(50, 100%, 50%);
   --c-req: hsl(0, 100%, 50%);
   --bg-bbcode: hsl(220, 5%, 16%);
@@ -1529,9 +1531,13 @@ body,
   opacity: 0.6;
 }
 
-/*#fork .f-fsticky .f-ficon::before {
-  color: var(--c-tsticky);
-}*/
+#fork .f-fsticky {
+  background-color: var(--bg-tsticky);
+}
+
+#fork .f-fclosed {
+  background-color: var(--bg-tclosed);
+}
 
 #fork .f-tsticky::before {
   font: 900 0.875rem "fa";
