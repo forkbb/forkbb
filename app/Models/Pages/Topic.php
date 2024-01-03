@@ -190,6 +190,8 @@ class Topic extends Page
             $this->c->Lang->load('poll');
 
             $this->poll = $topic->poll;
+
+            $this->poll->canVote; // предзагрузка
         }
 
         $this->descriptionGenerator($this->posts);
