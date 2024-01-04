@@ -99,7 +99,7 @@ class View
             return null;
         }
 
-        $p->prepare();
+//        $p->prepare();
 
         $this->templates[] = $p->nameTpl;
 

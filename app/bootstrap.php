@@ -88,19 +88,11 @@ if (null !== $page->onlinePos) {
     $c->Online->calc($page);
 }
 
+if (null !== $page->nameTpl) {
+    $page->prepare();
+}
+
 if ($c->isInit('DB')) {
-    // вспышка нового личного сообщения
-    if (
-        1 === $c->user->u_pm_flash
-        && null !== $page->onlinePos
-        && 200 === $page->httpStatus
-    ) {
-        $page->fPMFlash      = true;
-        $c->user->u_pm_flash = 0;
-
-        $c->users->update($c->user);
-    }
-
     if ($c->DB->inTransaction()) {
         $c->DB->commit();
     }
