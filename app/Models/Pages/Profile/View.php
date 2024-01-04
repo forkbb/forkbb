@@ -230,6 +230,8 @@ class View extends Profile
                     'value'   => 'signature',
                 ];
 
+                $this->c->Parser; // предзагрузка
+
                 $this->signatureSection = true;
             }
 

@@ -166,6 +166,10 @@ class PMPost extends AbstractPM
         $this->posts      = $this->newTopic ? null : $topic->review();
         $this->postsTitle = 'Topic review';
 
+        if (! empty($this->posts)) {
+            $this->c->Parser; // предзагрузка
+        }
+
         return $this;
     }
 

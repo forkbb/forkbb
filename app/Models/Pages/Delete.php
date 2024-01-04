@@ -70,6 +70,8 @@ class Delete extends Page
             return $redirect;
         }
 
+        $this->c->Parser; // предзагрузка
+
         $this->identifier = 'delete';
         $this->nameTpl    = 'post';
         $this->onlinePos  = 'topic-' . $topic->id;

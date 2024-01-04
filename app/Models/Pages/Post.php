@@ -152,6 +152,8 @@ class Post extends Page
             unset($args['quote']);
         }
 
+        $this->c->Parser; // предзагрузка
+
         $this->identifier = 'post';
         $this->nameTpl    = 'post';
         $this->canonical  = $topic->linkReply;

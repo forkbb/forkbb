@@ -566,6 +566,8 @@ class Search extends Page
         } else {
             $this->c->Lang->load('topic');
 
+            $this->c->Parser; // предзагрузка
+
             $this->nameTpl    = 'topic_in_search';
             $this->posts      = $list;
             $this->useMediaJS = true;
