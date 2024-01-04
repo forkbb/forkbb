@@ -369,6 +369,7 @@ class Forums extends Admin
                     'sort_by'              => 'required|integer|in:0,1,2,4,5,6',
                     'redirect_url'         => 'string:trim|max:255|regex:%^(?:https?://.+)?$%', //???? это поле может быть отключено в форме
                     'no_sum_mess'          => 'required|integer|in:0,1',
+                    'use_solution'         => 'required|integer|in:0,1',
                     'perms.*.read_forum'   => 'checkbox',
                     'perms.*.post_replies' => 'checkbox',
                     'perms.*.post_topics'  => 'checkbox',
@@ -387,6 +388,7 @@ class Forums extends Admin
             $forum->sort_by       = $v->sort_by;
             $forum->redirect_url  = $v->redirect_url ?? '';
             $forum->no_sum_mess   = $v->no_sum_mess;
+            $forum->use_solution  = $v->use_solution;
 
             if ($v->parent > 0) {
                 $forum->parent_forum_id = $v->parent;
@@ -511,7 +513,14 @@ class Forums extends Admin
                     'value'   => $forum->no_sum_mess,
                     'values'  => [0 => __('Yes'), 1 => __('No')],
                     'caption' => 'Count messages label',
-                    'help'    => ['Count messages help', $this->c->Router->link('AdminUsers'), __('Users')],
+                    'help'    => ['Count messages help', $this->c->Router->link('AdminUsers', ['#' => 'fork-recalc']), __('Users')],
+                ],
+                'use_solution' => [
+                    'type'    => 'radio',
+                    'value'   => $forum->use_solution,
+                    'values'  => [1 => __('Yes'), 0 => __('No')],
+                    'caption' => 'Use solution label',
+                    'help'    => 'Use solution help',
                 ],
             ],
         ];

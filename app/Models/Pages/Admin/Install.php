@@ -855,6 +855,7 @@ class Install extends Admin
                 'cat_id'          => ['INT(10) UNSIGNED', false, 0],
                 'no_sum_mess'     => ['TINYINT(1)', false, 0],
                 'parent_forum_id' => ['INT(10) UNSIGNED', false, 0],
+                'use_solution'    => ['TINYINT(1)', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
             'ENGINE' => $this->DBEngine,
@@ -1084,6 +1085,10 @@ class Install extends Admin
                 'poll_type'      => ['SMALLINT UNSIGNED', false, 0],
                 'poll_time'      => ['INT(10) UNSIGNED', false, 0],
                 'poll_term'      => ['TINYINT', false, 0],
+                'solution'       => ['INT(10) UNSIGNED', false, 0],
+                'solution_wa'    => ['VARCHAR(190)', false, ''],
+                'solution_wa_id' => ['INT(10) UNSIGNED', false, 0],
+                'solution_time'  => ['INT(10) UNSIGNED', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
             'INDEXES' => [

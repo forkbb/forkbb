@@ -243,6 +243,19 @@ class Post extends DataModel
     }
 
     /**
+     * Ссылка на установку/сброс статуса 'Решение'
+     */
+    protected function getlinkSolution(): string
+    {
+        return $this->c->Router->link(
+            'ChSolution',
+            [
+                'id' => $this->id,
+            ]
+        );
+    }
+
+    /**
      * HTML код сообщения
      */
     public function html(): string

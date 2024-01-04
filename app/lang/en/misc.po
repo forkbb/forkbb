@@ -300,3 +300,12 @@ msgstr "Change"
 
 msgid "Redirects changed redirect"
 msgstr "Redirects topics changed."
+
+msgid "Solution chosen"
+msgstr "The solution has been chosen."
+
+msgid "Solution changed"
+msgstr "The solution has been changed."
+
+msgid "Solution removed"
+msgstr "The solution has been removed."

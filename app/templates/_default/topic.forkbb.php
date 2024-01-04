@@ -58,7 +58,7 @@
         @php $iswev = [FORK_MESS_ERR => [['Message %s was not found in the database', $id]]]; @endphp
         @include ('layouts/iswev')
     @else
-      <article id="p{!! (int) $post->id !!}" class="f-post @if (FORK_GEN_MAN == $post->user->gender) f-user-male @elseif (FORK_GEN_FEM == $post->user->gender) f-user-female @endif @if ($post->user->online) f-user-online @endif @if (1 === $post->postNumber) f-post-first @endif">
+      <article id="p{!! (int) $post->id !!}" class="f-post @if (FORK_GEN_MAN == $post->user->gender) f-user-male @elseif (FORK_GEN_FEM == $post->user->gender) f-user-female @endif @if ($post->user->online) f-user-online @endif @if (1 === $post->postNumber) f-post-first @endif @if ($post->id === $p->model->solution) f-post-solution @endif">
         @if ($p->enableMod && $post->postNumber > 1)
         <input hidden id="checkbox-{!! (int) $post->id !!}" class="f-post-checkbox" type="checkbox" name="ids[{!! (int) $post->id !!}]" value="{!! (int) $post->id !!}" form="id-form-mod">
         @endif
@@ -74,6 +74,9 @@
         @endif
         @if ($post->edited)
           <span class="f-post-edited" title="{{! __(['Last edit', $post->editor, dt($post->edited)]) !}}"><span>{!! __('Edited') !!}</span></span>
+        @endif
+        @if ($post->id === $p->model->solution)
+          <span class="f-post-solution-info" title="{{! __(['This is solution. %1$s (%2$s)', $p->model->solution_wa, dt($p->model->solution_time)]) !}}"><span>{!! __('Solution') !!}</span></span>
         @endif
           <span class="f-post-number"><a href="{{ $post->link }}" rel="bookmark">#{{ $post->postNumber }}</a></span>
         </header>
@@ -149,8 +152,8 @@
             {!! $post->user->htmlSign !!}
           </aside>
         @endif
-        @php $showPostReaction = $p->userRules->showReaction && (! empty($post->reactions) || $post->useReaction) && ! empty($reactions = $post->reactionData()) @endphp
-        @php $showPostBtns = $post->canReport || $post->canDelete || $post->canEdit || $post->canQuote @endphp
+        @php $showPostReaction = $p->userRules->showReaction && (! empty($post->reactions) || $post->useReaction) && ! empty($reactions = $post->reactionData()); @endphp
+        @php $showPostBtns = $post->canReport || $post->canDelete || $post->canEdit || $post->canQuote || $p->model->canChSolution; @endphp
         @if ($showPostReaction || $showPostBtns)
           <aside class="f-post-bfooter">
             @if ($showPostReaction)
@@ -161,17 +164,21 @@
             @if ($showPostBtns)
             <div class="f-post-btns">
               <small>{!! __('ACTIONS') !!}</small>
+                @if ($p->model->canChSolution)
+              <small>-</small>
+              <a class="f-btn f-postsolution" title="{{ __('Solution') }}" href="{{ $post->linkSolution }}" rel="nofollow"><span>{!! __('Solution') !!}</span></a>
+                @endif
                 @if ($post->canReport)
               <small>-</small>
-              <a class="f-btn f-minor f-postreport" title="{{ __('Report') }}" href="{{ $post->linkReport }}"><span>{!! __('Report') !!}</span></a>
+              <a class="f-btn f-minor f-postreport" title="{{ __('Report') }}" href="{{ $post->linkReport }}" rel="nofollow"><span>{!! __('Report') !!}</span></a>
                 @endif
                 @if ($post->canDelete)
               <small>-</small>
-              <a class="f-btn f-postdelete" title="{{ __('Delete') }}" href="{{ $post->linkDelete }}"><span>{!! __('Delete') !!}</span></a>
+              <a class="f-btn f-postdelete" title="{{ __('Delete') }}" href="{{ $post->linkDelete }}" rel="nofollow"><span>{!! __('Delete') !!}</span></a>
                 @endif
                 @if ($post->canEdit)
               <small>-</small>
-              <a class="f-btn f-postedit" title="{{ __('Edit') }}" href="{{ $post->linkEdit }}"><span>{!! __('Edit') !!}</span></a>
+              <a class="f-btn f-postedit" title="{{ __('Edit') }}" href="{{ $post->linkEdit }}" rel="nofollow"><span>{!! __('Edit') !!}</span></a>
                 @endif
                 @if ($post->canQuote)
               <small>-</small>

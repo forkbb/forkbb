@@ -140,3 +140,9 @@ msgstr "Name for URL"
 
 msgid "Friendly name help"
 msgstr "A string identifier on the basis of which the url to this forum will be generated. May consist of Latin letters, numbers, underscores and hyphens."
+
+msgid "Use solution label"
+msgstr "Allow 'Solution'"
+
+msgid "Use solution help"
+msgstr "Allow this forum to mark a post as a solution to a question/problem from the first post in the topic."

@@ -12,6 +12,7 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
 use ForkBB\Models\Forum\Forum;
+use ForkBB\Models\Post\Post;
 use ForkBB\Models\Topic\Topic;
 use function \ForkBB\__;
 
@@ -135,5 +136,54 @@ class Misc extends Page
         );
 
         return $this->c->Message->message(['Confirm your email address', $link], true, 100);
+    }
+
+    /**
+     * Устанавливает или сбрасывает статус 'Решение' у сообщения/темы
+     */
+    public function solution(array $args): Page
+    {
+        if (! $this->c->Csrf->verify($args['token'], 'ChSolution', $args)) {
+            return $this->c->Message->message($this->c->Csrf->getError());
+        }
+
+        $post = $this->c->posts->load($args['id']);
+
+        if (
+            ! $post instanceof Post
+            || ! ($topic = $post->parent) instanceof Topic
+            || true !== $topic->canChSolution
+        ) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        if ($args['id'] === $topic->solution) {
+            $message = 'Solution removed';
+            $status  = FORK_MESS_ERR;
+
+            $topic->solution      = 0;
+            $topic->solution_wa   = '';
+            $topic->solutionwa_id = 0;
+            $topic->solution_time = 0;
+        } else {
+            if (0 === $topic->solution) {
+                $message = 'Solution chosen';
+                $status  = FORK_MESS_SUCC;
+            } else {
+                $message = 'Solution changed';
+                $status  = FORK_MESS_WARN;
+            }
+
+            $topic->solution      = $args['id'];
+            $topic->solution_wa   = $this->c->user->username;
+            $topic->solutionwa_id = $this->c->user->id;
+            $topic->solution_time = \time();
+        }
+
+        $this->c->topics->update($topic);
+
+        $this->c->Lang->load('misc');
+
+        return $this->c->Redirect->url($post->link)->message($message, $status);
     }
 }

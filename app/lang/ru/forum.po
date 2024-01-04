@@ -27,6 +27,9 @@ msgstr "Закрытая тема"
 msgid "Poll"
 msgstr "Опрос"
 
+msgid "Solved"
+msgstr "Есть решение"
+
 msgid "Empty forum"
 msgstr "Раздел пуст."
 

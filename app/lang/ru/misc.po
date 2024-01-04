@@ -320,3 +320,12 @@ msgstr "Изменить"
 
 msgid "Redirects changed redirect"
 msgstr "Ссылающиеся темы изменены."
+
+msgid "Solution chosen"
+msgstr "Решение выбрано."
+
+msgid "Solution changed"
+msgstr "Решение изменено."
+
+msgid "Solution removed"
+msgstr "Решение удалено."

@@ -113,7 +113,7 @@
             </div>
           </li>
         @else
-          <li id="topic-{!! (int) $topic->id !!}" class="f-row @if (false !== $topic->hasNew) f-fnew @endif @if (false !== $topic->hasUnread) f-funread @endif @if ($topic->sticky) f-fsticky @endif @if ($topic->closed) f-fclosed @endif @if ($topic->poll_type) f-fpoll @endif @if ($topic->dot) f-fposted @endif">
+          <li id="topic-{!! (int) $topic->id !!}" class="f-row @if (false !== $topic->hasNew) f-fnew @endif @if (false !== $topic->hasUnread) f-funread @endif @if ($topic->sticky) f-fsticky @endif @if ($topic->closed) f-fclosed @endif @if ($topic->poll_type > 0) f-fpoll @endif @if ($topic->solution > 0) f-fsolved @endif @if ($topic->dot) f-fposted @endif">
             <div class="f-cell f-cmain">
             @if ($p->enableMod)
               <input hidden id="checkbox-{!! (int) $topic->id !!}" class="f-fch" type="checkbox" name="ids[{!! (int) $topic->id !!}]" value="{!! (int) $topic->id !!}" form="id-form-mod">
@@ -134,6 +134,9 @@
             @endif
             @if ($topic->poll_type > 0)
                   <span class="f-tpoll" title="{{ __('Poll') }}"><small class="f-polltxt">{!! __('Poll') !!}</small></span>
+            @endif
+            @if ($topic->solution > 0)
+                  <span class="f-tsolved" title="{{ __('Solved') }}"><small class="f-solvedtxt">{!! __('Solved') !!}</small></span>
             @endif
                   <a class="f-ftname" href="{{ $topic->link }}">{{ $topic->name }}</a>
             @if ($topic->pagination)

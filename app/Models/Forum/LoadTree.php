@@ -31,6 +31,7 @@ class LoadTree extends Action
         if (! $root->ready) {
             $list[$rootId] = $root;
         }
+
         foreach ($root->descendants as $id => $descendant) {
             if (! $descendant->ready) {
                 $list[$id] = $descendant;
@@ -61,12 +62,12 @@ class LoadTree extends Action
         ];
 
         if ($this->c->user->isGuest) {
-            $query = 'SELECT f.id, f.forum_desc, f.num_topics, f.sort_by, f.num_posts,
+            $query = 'SELECT f.id, f.forum_desc, f.num_topics, f.num_posts,
                     f.last_post, f.last_post_id, f.last_poster, f.last_topic
                 FROM ::forums AS f
                 WHERE id IN (?ai:forums)';
         } elseif (1 === $this->c->config->b_forum_subscriptions) {
-            $query = 'SELECT f.id, f.forum_desc, f.num_topics, f.sort_by, f.num_posts,
+            $query = 'SELECT f.id, f.forum_desc, f.num_topics, f.num_posts,
                     f.last_post, f.last_post_id, f.last_poster, f.last_topic,
                     mof.mf_mark_all_read, s.user_id AS is_subscribed
                 FROM ::forums AS f
@@ -74,7 +75,7 @@ class LoadTree extends Action
                 LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND mof.fid=f.id)
                 WHERE f.id IN (?ai:forums)';
         } else {
-            $query = 'SELECT f.id, f.forum_desc, f.num_topics, f.sort_by, f.num_posts,
+            $query = 'SELECT f.id, f.forum_desc, f.num_topics, f.num_posts,
                     f.last_post, f.last_post_id, f.last_poster, f.last_topic,
                     mof.mf_mark_all_read
                 FROM ::forums AS f
@@ -107,6 +108,7 @@ class LoadTree extends Action
 
         foreach ($list as $forum) {
             $t = \max($max, (int) $forum->mf_mark_all_read);
+
             if ($forum->last_post > $t) {
                 $time[$forum->id] = $t;
             }

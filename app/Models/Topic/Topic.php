@@ -518,4 +518,19 @@ class Topic extends DataModel
     {
         return $this->poll_type > 0 ? $this->c->polls->load($this->id) : null;
     }
+
+    /**
+     * Возвращает статус возможности выбрать решение
+     */
+    protected function getcanChSolution(): bool
+    {
+        return 1 === $this->parent->use_solution
+            && (
+                $this->c->user->isAdmin
+                || (
+                    $this->c->user->id === $this->poster_id
+                    && ! $this->c->user->isGuest
+                )
+            );
+    }
 }

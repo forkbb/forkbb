@@ -420,6 +420,12 @@ class Routing
                     'Delete:delete',
                     'DeletePost'
                 );
+                $r->add(
+                    $r::GET,
+                    '/post/{id|i:[1-9]\d*}/solution/{token}',
+                    'Misc:solution',
+                    'ChSolution'
+                );
             }
 
             if ($user->isAdmin) {

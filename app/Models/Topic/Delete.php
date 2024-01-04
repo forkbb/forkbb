@@ -142,6 +142,12 @@ class Delete extends Action
                 WHERE last_poster_id IN (?ai:users)';
 
             $this->c->DB->exec($query, $vars);
+
+            $query = 'UPDATE ::topics
+                SET solution_wa_id=0
+                WHERE solution_wa_id IN (?ai:users)';
+
+            $this->c->DB->exec($query, $vars);
         }
 
         if ($topics) {

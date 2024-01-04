@@ -27,6 +27,9 @@ msgstr "Closed"
 msgid "Poll"
 msgstr "Poll"
 
+msgid "Solved"
+msgstr "Solved"
+
 msgid "Empty forum"
 msgstr "Forum is empty."
 

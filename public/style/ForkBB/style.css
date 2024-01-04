@@ -14,6 +14,7 @@
   --c-focus: hsl(220, 5%, 12%);
   --bg-focus: hsl(50, 100%, 50%);
   --bg-post-h: hsl(0, 20%, 26%);
+  --bg-post-s-h: hsl(83, 72%, 22%);
   --bg-post-b: hsl(0, 0%, 26%);
   --bg-fann: hsl(0, 0%, 21%);
   --bg-submenu: hsl(0, 0%, 20%);
@@ -33,6 +34,7 @@
   --c-tclosed: hsl(0, 0%, 45%);
   --bg-tclosed: hsl(0, 0%, 22%);
   --c-tpoll: hsl(50, 100%, 50%);
+  --c-tsolved: hsl(120, 100%, 50%);
   --c-req: hsl(0, 100%, 50%);
   --bg-bbcode: hsl(220, 5%, 16%);
   --br-bbcode: hsl(0, 0%, 75%);
@@ -1555,11 +1557,16 @@ body,
   color: var(--c-tclosed);
 }
 
-
 #fork .f-tpoll::before {
   font: 900 0.875rem "fa";
   content: "\f681";
   color: var(--c-tpoll);
+}
+
+#fork .f-tsolved::before {
+  font: 900 0.875rem "fa";
+  content: "\f00c";
+  color: var(--c-tsolved);
 }
 
 /*****************/
@@ -1595,14 +1602,25 @@ body,
   gap: 0.625rem;
 }
 
+#fork .f-post-solution .f-post-header {
+  background-color: var(--bg-post-s-h);
+}
+
 #fork-topic .f-phead-h3,
 #fork-view-posts .f-phead-h3 {
   display: none;
 }
 
 #fork .f-post-edited > span,
-#fork .f-post-change-a > span {
+#fork .f-post-change-a > span,
+#fork .f-post-solution-info > span {
   display: none;
+}
+
+#fork .f-post-solution-info::before {
+  font-family: "fa";
+  font-weight: 900;
+  content: "\f00c";
 }
 
 #fork .f-post-edited::before {
@@ -1700,6 +1718,10 @@ body,
   padding: 0.3125rem;
   background-color: var(--bg-post-b);
   position: relative;
+}
+
+#fork .f-post-body > .f-iswev-wrap {
+  margin: 0.3125rem;
 }
 
 #fork .f-post-main {
@@ -3034,6 +3056,7 @@ body,
   #fork .f-btn-edit-settings > span,
   #fork .f-btn-view-profile > span,
   #fork .f-postreport > span,
+  #fork .f-postsolution > span,
   #fork .f-postdelete > span,
   #fork .f-postedit > span,
   #fork .f-postquote > span,
@@ -3049,6 +3072,10 @@ body,
 
   #fork .f-btn-ban-user::before {
     content: "\f05e";
+  }
+
+  #fork .f-postsolution::before {
+    content: "\f00c";
   }
 
   #fork .f-btn-delete-user::before,

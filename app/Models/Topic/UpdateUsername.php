@@ -40,5 +40,11 @@ class UpdateUsername extends Action
             WHERE last_poster_id=?i:id';
 
         $this->c->DB->exec($query, $vars);
+
+        $query = 'UPDATE ::topics
+            SET solution_wa=?s:name
+            WHERE solution_wa_id=?i:id';
+
+        $this->c->DB->exec($query, $vars);
     }
 }

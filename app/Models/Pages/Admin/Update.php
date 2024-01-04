@@ -1181,6 +1181,13 @@ class Update extends Admin
         $this->c->DB->alterField('::topics', 'num_views', 'INT(10) UNSIGNED', false, 0);
         $this->c->DB->alterField('::topics', 'num_replies', 'INT(10) UNSIGNED', false, 0);
 
+        $this->c->DB->addField('::topics', 'solution', 'INT(10) UNSIGNED', false, 0);
+        $this->c->DB->addField('::topics', 'solution_wa', 'VARCHAR(190)', false, '');
+        $this->c->DB->addField('::topics', 'solution_wa_id', 'INT(10) UNSIGNED', false, 0);
+        $this->c->DB->addField('::topics', 'solution_time', 'INT(10) UNSIGNED', false, 0);
+
+        $this->c->DB->addField('::forums', 'use_solution', 'TINYINT(1)', false, 0);
+
         return null;
     }
 }

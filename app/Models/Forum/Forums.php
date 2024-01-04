@@ -95,6 +95,7 @@ class Forums extends Manager
             }
 
             $forum = $this->create($this->forumList[$id]);
+
             $this->set($id, $forum);
         }
 
@@ -115,6 +116,7 @@ class Forums extends Manager
     public function insert(Forum $forum): int
     {
         $id = $this->Save->insert($forum);
+
         $this->set($id, $forum);
 
         return $id;
