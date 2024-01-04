@@ -133,6 +133,7 @@ class Topic extends Page
 
         $this->c->Lang->load('topic');
 
+        (\current($this->posts))->canEdit; // предзагрузка списка админов если необходимо O_o ????
         $this->c->Parser; // предзагрузка
 
         $this->identifier   = 'topic';
