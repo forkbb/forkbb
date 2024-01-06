@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace ForkBB\Core\Cache;
 
+use ForkBB\Core\Container;
 use Psr\SimpleCache\CacheInterface;
 use Psr\SimpleCache\CacheException;
 use Psr\SimpleCache\InvalidArgumentException;
@@ -28,7 +29,7 @@ class FileCache implements CacheInterface
      */
     protected string $cacheDir;
 
-    public function __construct(string $dir, string $resetMark)
+    public function __construct(string $dir, string $resetMark, protected Container $c)
     {
         $dir = \rtrim($dir, '\\/');
 
@@ -53,7 +54,11 @@ class FileCache implements CacheInterface
         $file = $this->path($key);
 
         if (\is_file($file)) {
+            $oldFile = $this->c->ErrorHandler->addBadFile($file);
+
             require $file;
+
+            $this->c->ErrorHandler->addBadFile($oldFile);
 
             if (
                 isset($expire, $data)
