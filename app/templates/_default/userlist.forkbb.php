@@ -59,9 +59,9 @@
           <li hidden class="f-row f-thead">
             <span class="f-hcell f-cusername">
               <span class="f-hc-table">
-                <span class="f-hc-tasc"><a @if (0 === $p->activeLink) class="active" @endif href="{{ $p->links[0] }}">▲</a></span>
+                <span class="f-hc-tasc"><a @if (0 === $p->activeLink) class="active" @endif href="{{ $p->links[0] }}" rel="nofollow">▲</a></span>
                 <span class="f-hc-tname">{!! __('Username') !!}</span>
-                <span class="f-hc-tdesc"><a @if (1 === $p->activeLink) class="active" @endif href="{{ $p->links[1] }}">▼</a></span>
+                <span class="f-hc-tdesc"><a @if (1 === $p->activeLink) class="active" @endif href="{{ $p->links[1] }}" rel="nofollow">▼</a></span>
               </span>
             </span>
             <span class="f-hcell f-ctitle">
@@ -72,18 +72,18 @@
     @if ($p->userRules->showPostCount)
             <span class="f-hcell f-cnumposts">
               <span class="f-hc-table">
-                <span class="f-hc-tasc"><a @if (2 === $p->activeLink) class="active" @endif href="{{ $p->links[2] }}">▲</a></span>
+                <span class="f-hc-tasc"><a @if (2 === $p->activeLink) class="active" @endif href="{{ $p->links[2] }}" rel="nofollow">▲</a></span>
                 <span class="f-hc-tname">{!! __('Posts') !!}</span>
-                <span class="f-hc-tdesc"><a @if (3 === $p->activeLink) class="active" @endif href="{{ $p->links[3] }}">▼</a></span>
+                <span class="f-hc-tdesc"><a @if (3 === $p->activeLink) class="active" @endif href="{{ $p->links[3] }}" rel="nofollow">▼</a></span>
               </span>
               <small>,</small>
             </span>
     @endif
             <span class="f-hcell f-cdatereg">
               <span class="f-hc-table">
-                <span class="f-hc-tasc"><a @if (4 === $p->activeLink) class="active" @endif href="{{ $p->links[4] }}">▲</a></span>
+                <span class="f-hc-tasc"><a @if (4 === $p->activeLink) class="active" @endif href="{{ $p->links[4] }}" rel="nofollow">▲</a></span>
                 <span class="f-hc-tname">{!! __('Registered') !!}</span>
-                <span class="f-hc-tdesc"><a @if (5 === $p->activeLink) class="active" @endif href="{{ $p->links[5] }}">▼</a></span>
+                <span class="f-hc-tdesc"><a @if (5 === $p->activeLink) class="active" @endif href="{{ $p->links[5] }}" rel="nofollow">▼</a></span>
               </span>
             </span>
           </li>

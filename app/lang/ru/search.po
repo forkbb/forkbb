@@ -145,10 +145,10 @@ msgid "Search btn"
 msgstr "Найти"
 
 msgid "<a href=\"%s\">Advanced search</a>"
-msgstr "<a href=\"%s\">Расширенный поиск</a>"
+msgstr "<a href=\"%s\" rel=\"nofollow\">Расширенный поиск</a>"
 
 msgid "<a href=\"%s\">Simple search</a>"
-msgstr "<a href=\"%s\">Простой поиск</a>"
+msgstr "<a href=\"%s\" rel=\"nofollow\">Простой поиск</a>"
 
 msgid "Category prefix"
 msgstr ""
