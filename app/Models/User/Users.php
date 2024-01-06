@@ -51,11 +51,14 @@ class Users extends Manager
      */
     public function loadByIds(array $ids): array
     {
-        $result = [];
-        $data   = [];
+        $result   = [];
+        $data     = [];
+        $preGuest = false;
 
         foreach ($ids as $id) {
             if (0 === $id) { // это гость, его грузим через guest()
+                $preGuest = true;
+
                 continue;
             } elseif ($this->isset($id)) {
                 $result[$id] = $this->get($id);
@@ -64,6 +67,10 @@ class Users extends Manager
                 $data[]      = $id;
                 $this->set($id, null);
             }
+        }
+
+        if (true === $preGuest) {
+            $this->guest();
         }
 
         if (empty($data)) {
