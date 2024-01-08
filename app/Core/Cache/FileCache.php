@@ -54,11 +54,11 @@ class FileCache implements CacheInterface
         $file = $this->path($key);
 
         if (\is_file($file)) {
-            $oldFile = $this->c->ErrorHandler->addBadFile($file);
+            $oldBadFile = $this->c->ErrorHandler->addBadFile($file);
 
             require $file;
 
-            $this->c->ErrorHandler->addBadFile($oldFile);
+            $this->c->ErrorHandler->addBadFile($oldBadFile);
 
             if (
                 isset($expire, $data)
