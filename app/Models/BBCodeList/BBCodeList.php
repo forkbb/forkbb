@@ -38,7 +38,11 @@ class BBCodeList extends Model
             $this->generate();
         }
 
+        $oldBadFile = $this->c->ErrorHandler->addBadFile($this->fileCache);
+
         $this->list = include $this->fileCache;
+
+        $this->c->ErrorHandler->addBadFile($oldBadFile);
 
         return $this;
     }
