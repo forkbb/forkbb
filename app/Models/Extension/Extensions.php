@@ -20,7 +20,9 @@ use RuntimeException;
 
 class Extensions extends Manager
 {
-     /**
+    const FOLDER_NAMES = ['DIR_EXT', 'DIR_PUBLIC', 'DIR_VIEWS', 'DIR_LOG', 'DIR_LANG', 'DIR_CONFIG', 'DIR_CACHE', 'DIR_APP', 'DIR_ROOT'];
+
+    /**
      * Ключ модели для контейнера
      */
     protected string $cKey = 'Extensions';
@@ -478,6 +480,11 @@ class Extensions extends Manager
     protected function putData(string $file, mixed $data): bool
     {
         $content = "<?php\n\nreturn " . \var_export($data, true) . ";\n";
+
+        foreach (self::FOLDER_NAMES as $dir) {
+            $search  = \str_replace('\\', '\\\\', $this->c->{$dir});
+            $content = \str_replace("'{$search}" , "\$this->c->{$dir} . '", $content);
+        }
 
         if (false === \file_put_contents($file, $content, \LOCK_EX)) {
             return false;
