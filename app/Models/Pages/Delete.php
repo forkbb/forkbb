@@ -71,6 +71,7 @@ class Delete extends Page
         }
 
         $this->c->Parser; // предзагрузка
+        $post->user; // предзагрузка
 
         $this->identifier = 'delete';
         $this->nameTpl    = 'post';
