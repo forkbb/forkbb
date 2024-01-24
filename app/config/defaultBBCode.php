@@ -36,63 +36,63 @@ return '</p><pre class="f-bb-code f-bbivert">' . \trim($body, "\n\r") . '</pre><
 HANDLER,
     ],
     [   'tag' => 'b',
-        'parents' => ['inline', 'block', 'url'],
+        'parents' => ['inline', 'block', 'url', 'h'],
         'handler' => <<<'HANDLER'
 return "<b>{$body}</b>";
 HANDLER,
     ],
     [
         'tag' => 'i',
-        'parents' => ['inline', 'block', 'url'],
+        'parents' => ['inline', 'block', 'url', 'h'],
         'handler' => <<<'HANDLER'
 return "<i>{$body}</i>";
 HANDLER,
     ],
     [
         'tag' => 'em',
-        'parents' => ['inline', 'block', 'url'],
+        'parents' => ['inline', 'block', 'url', 'h'],
         'handler' => <<<'HANDLER'
 return "<em>{$body}</em>";
 HANDLER,
     ],
     [
         'tag' => 'u',
-        'parents' => ['inline', 'block', 'url'],
+        'parents' => ['inline', 'block', 'url', 'h'],
         'handler' => <<<'HANDLER'
 return "<u>{$body}</u>";
 HANDLER,
     ],
     [
         'tag' => 's',
-        'parents' => ['inline', 'block', 'url'],
+        'parents' => ['inline', 'block', 'url', 'h'],
         'handler' => <<<'HANDLER'
 return "<s>{$body}</s>";
 HANDLER,
     ],
     [
         'tag' => 'del',
-        'parents' => ['inline', 'block', 'url'],
+        'parents' => ['inline', 'block', 'url', 'h'],
         'handler' => <<<'HANDLER'
 return "<del>{$body}</del>";
 HANDLER,
     ],
     [
         'tag' => 'ins',
-        'parents' => ['inline', 'block', 'url'],
+        'parents' => ['inline', 'block', 'url', 'h'],
         'handler' => <<<'HANDLER'
 return "<ins>{$body}</ins>";
 HANDLER,
     ],
     [
         'tag' => 'sub',
-        'parents' => ['inline', 'block', 'url'],
+        'parents' => ['inline', 'block', 'url', 'h'],
         'handler' => <<<'HANDLER'
 return "<sub>{$body}</sub>";
 HANDLER,
     ],
     [
         'tag' => 'sup',
-        'parents' => ['inline', 'block', 'url'],
+        'parents' => ['inline', 'block', 'url', 'h'],
         'handler' => <<<'HANDLER'
 return "<sup>{$body}</sup>";
 HANDLER,
@@ -101,7 +101,77 @@ HANDLER,
         'tag' => 'h',
         'type' => 'h',
         'handler' => <<<'HANDLER'
-return "</p><p class=\"f-bb-header\">{$body}</p><p>";
+$text  = $parser->getText($id);
+$ident = $parser->createIdentifier($text);
+$ident = $parser->e($ident);
+
+return "</p><p id=\"{$ident}\" class=\"f-bb-h3\">{$body}</p><p>";
+HANDLER,
+    ],
+    [
+        'tag' => 'h1',
+        'type' => 'h',
+        'handler' => <<<'HANDLER'
+$text  = $parser->getText($id);
+$ident = $parser->createIdentifier($text);
+$ident = $parser->e($ident);
+
+return "</p><p id=\"{$ident}\" class=\"f-bb-h1\">{$body}</p><p>";
+HANDLER,
+    ],
+    [
+        'tag' => 'h2',
+        'type' => 'h',
+        'handler' => <<<'HANDLER'
+$text  = $parser->getText($id);
+$ident = $parser->createIdentifier($text);
+$ident = $parser->e($ident);
+
+return "</p><p id=\"{$ident}\" class=\"f-bb-h2\">{$body}</p><p>";
+HANDLER,
+    ],
+    [
+        'tag' => 'h3',
+        'type' => 'h',
+        'handler' => <<<'HANDLER'
+$text  = $parser->getText($id);
+$ident = $parser->createIdentifier($text);
+$ident = $parser->e($ident);
+
+return "</p><p id=\"{$ident}\" class=\"f-bb-h3\">{$body}</p><p>";
+HANDLER,
+    ],
+    [
+        'tag' => 'h4',
+        'type' => 'h',
+        'handler' => <<<'HANDLER'
+$text  = $parser->getText($id);
+$ident = $parser->createIdentifier($text);
+$ident = $parser->e($ident);
+
+return "</p><p id=\"{$ident}\" class=\"f-bb-h4\">{$body}</p><p>";
+HANDLER,
+    ],
+    [
+        'tag' => 'h5',
+        'type' => 'h',
+        'handler' => <<<'HANDLER'
+$text  = $parser->getText($id);
+$ident = $parser->createIdentifier($text);
+$ident = $parser->e($ident);
+
+return "</p><p id=\"{$ident}\" class=\"f-bb-h5\">{$body}</p><p>";
+HANDLER,
+    ],
+    [
+        'tag' => 'h6',
+        'type' => 'h',
+        'handler' => <<<'HANDLER'
+$text  = $parser->getText($id);
+$ident = $parser->createIdentifier($text);
+$ident = $parser->e($ident);
+
+return "</p><p id=\"{$ident}\" class=\"f-bb-h6\">{$body}</p><p>";
 HANDLER,
     ],
     [
@@ -114,7 +184,7 @@ HANDLER,
     ],
     [
         'tag' => 'color',
-        'parents' => ['inline', 'block', 'url'],
+        'parents' => ['inline', 'block', 'url', 'h'],
         'self_nesting' => 5,
         'attrs' => [
             'Def' => [
@@ -158,7 +228,7 @@ HANDLER,
     ],
     [
         'tag' => 'colour',
-        'parents' => ['inline', 'block', 'url'],
+        'parents' => ['inline', 'block', 'url', 'h'],
         'self_nesting' => 5,
         'attrs' => [
             'Def' => [
@@ -202,7 +272,7 @@ HANDLER,
     ],
     [
         'tag' => 'background',
-        'parents' => ['inline', 'block', 'url'],
+        'parents' => ['inline', 'block', 'url', 'h'],
         'self_nesting' => 5,
         'attrs' => [
             'Def' => [
@@ -294,7 +364,7 @@ HANDLER,
     ],
     [
         'tag' => 'font',
-        'parents' => ['inline', 'block', 'url'],
+        'parents' => ['inline', 'block', 'url', 'h'],
         'self_nesting' => 5,
         'attrs' => [
             'Def' => [
