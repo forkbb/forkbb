@@ -316,3 +316,38 @@ details:not(:last-child) {
   background-color: var(--bg-sel);
   text-shadow: -0.0625rem 0 0 var(--c-sel), 0.0625rem 0 0 var(--c-sel), 0 -0.0625rem 0 var(--c-sel), 0 0.0625rem 0 var(--c-sel);
 }
+
+h1, h2, h3, h4 , h5, h6 {
+  display: block;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 2rem;
+  margin: 0.67rem 0;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin: 0.83rem 0;
+}
+
+h3 {
+  font-size: 1.17rem;
+  margin: 1rem 0;
+}
+
+h4 {
+  font-size: 1rem;
+  margin: 1.33rem 0;
+}
+
+h5 {
+  font-size: .83rem;
+  margin: 1.67rem 0;
+}
+
+h6 {
+  font-size: .67rem;
+  margin: 2.33rem 0;
+}
