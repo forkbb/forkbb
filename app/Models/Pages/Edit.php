@@ -230,6 +230,9 @@ class Edit extends Page
         // обновление сообщения
         $this->c->posts->update($post);
 
+        // изменить (возможно!?) оглавление темы
+        $topic->addPostToToc($post);
+
         // обновление темы
         if ($calcTopic) {
             $topic->calcStat();

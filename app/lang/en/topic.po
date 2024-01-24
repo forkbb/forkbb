@@ -136,3 +136,6 @@ msgstr "Solution"
 
 msgid "This is solution. %1$s (%2$s)"
 msgstr "This is the solution. %1$s (%2$s)"
+
+msgid "Table of content"
+msgstr "Table of content"

@@ -207,6 +207,10 @@ class Delete extends Action
                 WHERE id IN (?ai:posts)';
 
             $this->c->DB->exec($query, $vars);
+
+            foreach ($parents as $topic) {
+                $topic->deleteFromToc(...$pids);
+            }
         }
 
         if ($parents) {

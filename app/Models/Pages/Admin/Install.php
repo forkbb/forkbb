@@ -1089,6 +1089,7 @@ class Install extends Admin
                 'solution_wa'    => ['VARCHAR(190)', false, ''],
                 'solution_wa_id' => ['INT(10) UNSIGNED', false, 0],
                 'solution_time'  => ['INT(10) UNSIGNED', false, 0],
+                'toc'            => ['TEXT', true],
             ],
             'PRIMARY KEY' => ['id'],
             'INDEXES' => [

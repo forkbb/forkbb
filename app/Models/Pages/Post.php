@@ -281,6 +281,9 @@ class Post extends Page
             }
         }
 
+        // изменить (возможно!?) оглавление темы
+        $topic->addPostToToc($merge ? $lastPost : $post, $merge);
+
         // обновление данных в теме и разделе
         $this->c->topics->update($topic->calcStat());
         $this->c->forums->update($forum->calcStat());
@@ -310,7 +313,9 @@ class Post extends Page
                 $this->user->num_topics = $this->user->num_topics + 1;
             }
         }
+
         $this->user->last_post = $now;
+
         $this->c->users->update($this->user);
 
         if (1 === $this->c->config->b_topic_subscriptions) { // ????

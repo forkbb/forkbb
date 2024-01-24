@@ -137,3 +137,6 @@ msgstr "Решение"
 
 msgid "This is solution. %1$s (%2$s)"
 msgstr "Это решение. %1$s (%2$s)"
+
+msgid "Table of content"
+msgstr "Содержание темы"

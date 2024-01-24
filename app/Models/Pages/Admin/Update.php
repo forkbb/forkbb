@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.0.0';
     const REV_MIN_FOR_UPDATE         = 53;
-    const LATEST_REV_WITH_DB_CHANGES = 76;
+    const LATEST_REV_WITH_DB_CHANGES = 78;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const CONFIG_FILE                = 'main.php';
@@ -1187,6 +1187,41 @@ class Update extends Admin
         $this->c->DB->addField('::topics', 'solution_time', 'INT(10) UNSIGNED', false, 0);
 
         $this->c->DB->addField('::forums', 'use_solution', 'TINYINT(1)', false, 0);
+
+        return null;
+    }
+
+    /**
+     * rev.78 to rev.79
+     */
+    protected function stageNumber78(array $args): ?int
+    {
+        $queryI  = 'INSERT INTO ::bbcode (bb_tag, bb_edit, bb_delete, bb_structure)
+            VALUES(?s:tag, 1, 0, ?s:structure)';
+        $queryU  = 'UPDATE ::bbcode
+            SET bb_edit=1, bb_delete=0, bb_structure=?s:structure
+            WHERE bb_tag=?s:tag';
+        $bbcodes = include $this->c->DIR_CONFIG . '/defaultBBCode.php';
+
+        $tagsUpd = ['b', 'i', 'em', 'u', 's', 'del', 'ins', 'sub', 'sup', 'h', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'color', 'colour', 'background', 'font'];
+        $tagsUpd = \array_flip($tagsUpd);
+
+        foreach ($bbcodes as $bbcode) {
+            if (! isset($tagsUpd[$bbcode['tag']])) {
+                continue;
+            }
+
+            $vars = [
+                ':tag'       => $bbcode['tag'],
+                ':structure' => \json_encode($bbcode, FORK_JSON_ENCODE),
+            ];
+            $exist = $this->c->DB->query('SELECT 1 FROM ::bbcode WHERE bb_tag=?s:tag', $vars)->fetchColumn();
+            $query = empty($exist) ? $queryI : $queryU;
+
+            $this->c->DB->exec($query, $vars);
+        }
+
+        $this->c->DB->addField('::topics', 'toc', 'TEXT', true);
 
         return null;
     }

@@ -171,4 +171,18 @@ class Parser extends Parserus
 
         return $prev;
     }
+
+    /**
+     * Создает строку идентификатора на основе текста
+     */
+    public function createIdentifier(string $text): string
+    {
+        $text = \preg_replace('%[^\p{L}\p{N}-]+%u', '_', $text);
+
+        if (\mb_strlen($text, 'UTF-8') > 80) {
+            $text = \mb_substr($text, 0, 80, 'UTF-8');
+        }
+
+        return \trim($text, '-_');
+    }
 }

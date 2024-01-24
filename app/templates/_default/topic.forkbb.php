@@ -50,6 +50,38 @@
 @endif
     </div>
     <!-- PRE linksBAfter -->
+@if ($p->model->toc)
+    <section id="fork-toc" class="f-main">
+      <h2>{!! __('Table of content') !!}</h2>
+      <details class="f-toc-det">
+        <summary class="f-toc-sum">{!! __('Table of content') !!}</summary>
+        <div class="f-toc-div">
+    @php $level = 0; @endphp
+    @foreach ($p->model->tableOfContent as $cur)
+        @if ($cur['level'] > $level)
+            @while ($cur['level'] > $level)
+          <ul class="f-toc-ul"><li class="f-toc-li">
+              @php ++$level; @endphp
+            @endwhile
+        @elseif ($cur['level'] < $level)
+            @while ($cur['level'] < $level)
+          </li></ul>
+              @php --$level; @endphp
+            @endwhile
+          </li><li class="f-toc-li">
+        @else
+          </li><li class="f-toc-li">
+        @endif
+          <a  class="f-toc-a" href="{{ $cur['url'] }}">{{ $cur['value'] }}</a>
+    @endforeach
+    @while ($level > 0)
+          </li></ul>
+        @php --$level; @endphp
+    @endwhile
+        </div>
+      </details>
+    </section>
+@endif
     <!-- PRE mainBefore -->
     <section id="fork-topic" class="f-main">
       <h2>{!! __('Post list') !!}</h2>

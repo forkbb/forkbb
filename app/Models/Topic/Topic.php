@@ -14,6 +14,7 @@ use ForkBB\Core\Container;
 use ForkBB\Models\DataModel;
 use ForkBB\Models\Forum\Forum;
 use ForkBB\Models\Poll\Poll;
+use ForkBB\Models\Post\Post;
 use PDO;
 use RuntimeException;
 
@@ -532,5 +533,114 @@ class Topic extends DataModel
                     && ! $this->c->user->isGuest
                 )
             );
+    }
+
+    /**
+     * Спислк bbcode для оглавления и их уровень //???? перенести в настройки?
+     */
+    protected array $idsLevel = [
+        'h1' => 1,
+        'h2' => 2,
+        'h'  => 3,
+        'h3' => 3,
+        'h4' => 4,
+        'h5' => 5,
+        'h6' => 6,
+    ];
+
+    /**
+     * Вносит изменение (возможно!?) в оглавление темы на основе переданного сообщения
+     * Сообщение $post должно быть обработано парсером перед вызовом метода, чтобы парсер содержал дерево тегов этого сообщения
+     */
+    public function addPostToToc(Post $post, bool $merge = false): Topic
+    {
+        if (
+            $post->poster_id < 1
+            || $this->poster_id !== $post->poster_id
+            || (
+                empty($this->toc)
+                && $this->first_post_id !== $post->id
+            )
+        ) {
+            return $this;
+        }
+
+        $ids = $this->c->Parser->getIds(...(\array_keys($this->idsLevel)));
+
+        if (empty($ids)) {
+            if ($merge) {
+                return $this;
+            } elseif ($this->first_post_id === $post->id) {
+                $this->toc = null;
+
+                return $this;
+            }
+        }
+
+        $r = [];
+
+        foreach ($ids as $id => $tag) {
+            $text  = \preg_replace('%^\s+|\s+$%uD', '', $this->c->Parser->getText($id));
+            $ident = $this->c->Parser->createIdentifier($text);
+            $r[]   = [$this->idsLevel[$tag], $ident, $text];
+        }
+
+        $toc = $this->toc ? \json_decode($this->toc, true, 512, \JSON_THROW_ON_ERROR) : [];
+
+        if (
+            $merge
+            && ! empty($toc[$post->id])
+        ) {
+            $toc[$post->id] = \array_merge($toc[$post->id], $r);
+        } else {
+            $toc[$post->id] = $r;
+        }
+
+        \ksort($toc, \SORT_NUMERIC);
+
+        $this->toc = \json_encode($toc, FORK_JSON_ENCODE);
+
+        return $this;
+    }
+
+    /**
+     * Удаляет из содержимого сообщения по их id
+     */
+    public function deleteFromToc(int ...$ids): Topic
+    {
+        if (empty($this->toc)) {
+            return $this;
+        }
+
+        $toc = \json_decode($this->toc, true, 512, \JSON_THROW_ON_ERROR);
+
+        foreach ($ids as $id) {
+            unset($toc[$id]);
+        }
+
+        $this->toc = \json_encode($toc, FORK_JSON_ENCODE);
+
+        return $this;
+    }
+
+    protected function gettableOfContent(): array
+    {
+        $toc = $this->toc ? \json_decode($this->toc, true, 512, \JSON_THROW_ON_ERROR) : [];
+        $out = [];
+
+        foreach ($toc as $pid => $list) {
+            $link = $this->c->Router->link('ViewPost', ['id' => $pid]);
+            $link = \strstr($link, '#', true) ?: $link;
+
+            foreach ($list as $cur) {
+                $out[] = [
+                    'level' => $cur[0],
+                    'url'   => "{$link}#{$cur[1]}",
+                    'value' => $cur[2],
+                ];
+            }
+        }
+
+        return $out;
     }
 }
