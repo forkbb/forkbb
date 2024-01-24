@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @copyright  Copyright (c) 2016-2023 Visman. All rights reserved.
+ * @copyright  Copyright (c) 2016-2024 Visman. All rights reserved.
  * @author     Visman <mio.visman@yandex.ru>
  * @link       https://github.com/MioVisman/Parserus
  * @license    https://opensource.org/licenses/MIT The MIT License (MIT)
@@ -344,8 +344,7 @@ class Parserus
 
         sort($arr);
 
-        $arr[] = '  ';
-
+        $arr[]   = '  ';
         $symbol  = '';
         $pattern = '';
         $quote   = '';
@@ -537,15 +536,15 @@ class Parserus
     /**
      * Метод выделяет все атрибуты с их содержимым для обрабатываемого тега
      *
-     * @param  string           $tag  Имя обрабатываемого тега
-     * @param  string           $type "Тип атрибутов" = ' ', '=' или ']'
-     * @param  string           $text Текст из которого выделяются атрибуты
+     * @param  string     $tag  Имя обрабатываемого тега
+     * @param  string     $type "Тип атрибутов" = ' ', '=' или ']'
+     * @param  string     $text Текст из которого выделяются атрибуты
      *
      * @return null|array
      */
     protected function parseAttrs(string $tag, string $type, string $text): ?array
     {
-        $attrs = [];
+        $attrs   = [];
         $tagText = '';
 
         if ('=' === $type) {
@@ -565,8 +564,7 @@ class Parserus
             $type     = $match[2];
             $tagText .= $match[1] . $match[2];
             $text     = $match[3];
-
-            $tmp = $this->getNormAttr($match[1]);
+            $tmp      = $this->getNormAttr($match[1]);
 
             if (isset($tmp[0])) {
                 $attrs['Def'] = $tmp;
@@ -601,8 +599,7 @@ class Parserus
 
                 $tagText .= $match[1] . '=' . $match[2] . $match[3];
                 $text     = $match[4];
-
-                $tmp = $this->getNormAttr($match[2]);
+                $tmp      = $this->getNormAttr($match[2]);
 
                 if (isset($tmp[0])) {
                     $attrs[$match[1]] = $tmp;
@@ -750,9 +747,8 @@ class Parserus
             ) {
                 $ptag  = preg_quote($tag, '%');
                 $match = preg_split('%^([^\[]*(?:\[(?!/' . $ptag . '\])[^\[]*)*)(?:\[/' . $ptag . '\])?%i', $text, 2, PREG_SPLIT_DELIM_CAPTURE);
-
-                $body = $match[1];
-                $end  = $match[2];
+                $body  = $match[1];
+                $end   = $match[2];
             }
 
             // для тега с 'text_only' устанавливается флаг для возврата тела
@@ -841,6 +837,7 @@ class Parserus
     protected function reset(array $opts): void
     {
         $this->defaultROOT();
+
         $this->data     = [];
         $this->dataId   = -1;
         $this->curId    = $this->addTagNode(
@@ -868,9 +865,8 @@ class Parserus
 
         $curText  = '';
         $recCount = 0;
-
-        $text = str_replace("\r\n", "\n", $text);
-        $text = str_replace("\r", "\n", $text);
+        $text     = str_replace("\r\n", "\n", $text);
+        $text     = str_replace("\r", "\n", $text);
 
         while (
             ($match = preg_split('%(\[(/)?(' . ($recCount ? $recTag : '[a-z\*][a-z\d-]{0,10}') . ')((?(1)\]|[=\]\x20])))%i', $text, 2, PREG_SPLIT_DELIM_CAPTURE))
@@ -932,7 +928,7 @@ class Parserus
                 null !== $this->blackList
                 && in_array($tag, $this->blackList)
             ) {
-                $curText .= $tagText;
+                $curText       .= $tagText;
                 $this->errors[] = [1, $tag];
 
                 continue;
@@ -942,7 +938,7 @@ class Parserus
                 null !== $this->whiteList
                 && ! in_array($tag, $this->whiteList)
             ) {
-                $curText .= $tagText;
+                $curText       .= $tagText;
                 $this->errors[] = [2, $tag];
 
                 continue;
@@ -961,8 +957,7 @@ class Parserus
             }
 
             $curText = $this->addTextNode($curText, $this->curId);
-
-            $id = $this->addTagNode(
+            $id      = $this->addTagNode(
                 $tag,
                 $parentId,
                 $attrs['attrs'],
@@ -972,7 +967,7 @@ class Parserus
             if (isset($attrs['body'])) {
                 $this->addTextNode($attrs['body'], $id);
 
-                $text = $attrs['end'];
+                $text        = $attrs['end'];
                 $this->curId = $parentId;
 
             } elseif (isset($this->bbcodes[$tag]['single'])) {
@@ -1036,6 +1031,7 @@ class Parserus
                 return true;
             }
         }
+
         foreach ($this->data[$id]['children'] as $child) {
             if ($this->searchError($child, $depth, $tags)) {
                 return true;
@@ -1055,7 +1051,6 @@ class Parserus
     public function getHtml(int $id = 0): string
     {
         if (isset($this->data[$id]['tag'])) {
-
             $body = '';
 
             foreach ($this->data[$id]['children'] as $cid) {
@@ -1076,7 +1071,7 @@ class Parserus
                 }
             }
 
-            return $bb['handler']($body, $attrs, $this);
+            return $bb['handler']($body, $attrs, $this, $id);
         }
 
         $pid = $this->data[$id]['parent'];
@@ -1155,7 +1150,6 @@ class Parserus
 
         $tag   = $this->data[$id]['tag'];
         $attrs = $this->data[$id]['attrs'];
-
         $def   = '';
         $other = '';
         $count = count($attrs);
@@ -1178,7 +1172,7 @@ class Parserus
             }
 
             if ('Def' === $attr) {
-                $def = '=' . $quote . $val . $quote;
+                $def    = '=' . $quote . $val . $quote;
             } else {
                 $other .= ' ' . $attr . '=' . $quote . $val . $quote;
             }
@@ -1227,7 +1221,7 @@ class Parserus
                 }
             }
 
-            return $bb['text_handler']($body, $attrs, $this);
+            return $bb['text_handler']($body, $attrs, $this, $id);
         }
 
         $pid = $this->data[$id]['parent'];
@@ -1307,9 +1301,9 @@ class Parserus
                 return $this;
             }
 
-            $key = array_search($id, $this->data[$pid]['children']);
-            $idx = array_search($key, array_keys($this->data[$pid]['children']));
-            $arrEnd = array_slice($this->data[$pid]['children'], $idx + 1);
+            $key                          = array_search($id, $this->data[$pid]['children']);
+            $idx                          = array_search($key, array_keys($this->data[$pid]['children']));
+            $arrEnd                       = array_slice($this->data[$pid]['children'], $idx + 1);
             $this->data[$pid]['children'] = array_slice($this->data[$pid]['children'], 0, $idx);
 
             $pos = 0;
@@ -1318,6 +1312,7 @@ class Parserus
                 $this->addTextNode(substr($this->data[$id]['text'], $pos, $match[1] - $pos), $pid);
 
                 $new = $this->addTagNode($tag, $pid, [], $textOnly);
+
                 $this->addTextNode($match[0], $new);
 
                 $pos = $match[1] + strlen($match[0]);
@@ -1400,6 +1395,7 @@ class Parserus
             foreach ($this->data[$id]['children'] as $cid) {
                 unset($this->data[$cid]);
             }
+
             $this->data[$id]['children'] = [];
         }
 
@@ -1461,5 +1457,35 @@ class Parserus
     public function de(string $text): string
     {
         return htmlspecialchars_decode($text, $this->eFlags);
+    }
+
+    /**
+     * Метод возвращает массив вида "id => имя тега" построенный на основе дерева тегов
+     * Если указаны $tags, то возвращаются только они
+     *
+     * @param  string ...$tags Имена тегов
+     *
+     * @return array
+     */
+    public function getIds(string ...$tags): array
+    {
+        if (empty($tags)) {
+            return array_map(function ($a) {
+                return $a['tag'] ?? 'TEXT';
+            } , $this->data);
+        } else {
+            $result = [];
+            $tags   = array_flip($tags);
+
+            foreach ($this->data as $key => $a) {
+                $tag = $a['tag'] ?? 'TEXT';
+
+                if (isset($tags[$tag])) {
+                    $result[$key] = $tag;
+                }
+            }
+
+            return $result;
+        }
     }
 }
