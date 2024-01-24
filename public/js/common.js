@@ -36,12 +36,16 @@ ForkBB.common = (function (doc, win) {
             scroll,
             hash = (win.location.hash || "").replace(/^#/, "");
 
-        if (hash && (target = doc.getElementById(hash))) {
-            target.classList.add(hlClass);
+        if (hash) {
+            target = doc.getElementById(hash);
 
-            setTimeout(function() {
-                target.classList.remove(hlClass);
-            }, 1500);
+            if (target) {
+                target.classList.add(hlClass);
+
+                setTimeout(function() {
+                    target.classList.remove(hlClass);
+                }, 1500);
+            }
         } else if (
             (target = doc.getElementById('fork'))
             && (scroll = target.dataset.pageScroll)
