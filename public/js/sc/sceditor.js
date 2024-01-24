@@ -2158,7 +2158,10 @@
 		// END_COMMAND
 		// START_COMMAND: Remove Format
 		removeformat: {
-			exec: 'removeformat',
+			exec: function () {
+				this.execCommand('formatblock', '<p>');
+				this.execCommand('removeformat');
+			}, //'removeformat',
 			tooltip: 'Remove Formatting'
 		},
 		// END_COMMAND
@@ -2866,32 +2869,51 @@
 		},
 		// END_COMMAND
 
-		// START_COMMAND: Centre
+		// START_COMMAND: Mono
 		mono: {
-			state: function (parents) {
-				return !!closest(parents, 'span.f-bb-mono');
+			state: function (parent) {
+				return closest(parent, 'span.f-bb-mono') ? 1 : 0;
 			},
 			exec: function () {
-				var	editor = this,
-					rangeHelper = editor.getRangeHelper(),
-					mono = closest(rangeHelper.parentNode(), 'span.f-bb-mono'),
-					range = rangeHelper.selectedRange();
-
-				editor.focus();
-
-				if (mono) {
-					if (mono.nextSibling) {
-						range.setStartBefore(mono.nextSibling);
-						range.setEndBefore(mono.nextSibling);
-					}
-				} else {
-					this.wysiwygEditorInsertHtml(
-						'<span class="f-bb-mono">',
-						'</span>'
-					);
-				}
+				execSub(this, 'span.f-bb-mono', '<span class="f-bb-mono">', '</span>');
 			},
 			tooltip: 'Mono'
+		},
+		// END_COMMAND
+
+		// START_COMMAND: H1
+		h1: {
+			state: function (parent) {
+				return closest(parent, 'h1') ? 1 : 0;
+			},
+			exec: function () {
+				execSub(this, 'h1');
+			},
+			tooltip: 'Heading 1'
+		},
+		// END_COMMAND
+
+		// START_COMMAND: H2
+		h2: {
+			state: function (parent) {
+				return closest(parent, 'h2') ? 1 : 0;
+			},
+			exec: function () {
+				execSub(this, 'h2');
+			},
+			tooltip: 'Heading 2'
+		},
+		// END_COMMAND
+
+		// START_COMMAND: H3
+		h3: {
+			state: function (parent) {
+				return closest(parent, 'h3') ? 1 : 0;
+			},
+			exec: function () {
+				execSub(this, 'h3');
+			},
+			tooltip: 'Heading 3'
 		},
 		// END_COMMAND
 
@@ -2899,6 +2921,25 @@
 		// without having to remove the , after the last one.
 		// Needed for IE.
 		ignore: {}
+	};
+
+	var execSub = function (editor, selector, start, end) {
+		var	rangeHelper = editor.getRangeHelper(),
+			element = closest(rangeHelper.parentNode(), selector),
+			range = rangeHelper.selectedRange();
+
+		editor.focus();
+
+		if (element) {
+			if (element.nextSibling) {
+				range.setStartBefore(element.nextSibling);
+				range.setEndBefore(element.nextSibling);
+			}
+		} else if (start && end) {
+			editor.wysiwygEditorInsertHtml(start, end);
+		} else {
+			editor.execCommand('formatblock', '<' + selector + '>');
+		}
 	};
 
 	var plugins = {};

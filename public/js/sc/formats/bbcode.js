@@ -240,6 +240,24 @@
 		},
 		mono: {
 			txtExec: ['[mono]', '[/mono]']
+		},
+		h1: {
+			txtExec: ['[h1]', '[/h1]']
+		},
+		h2: {
+			txtExec: ['[h2]', '[/h2]']
+		},
+		h3: {
+			txtExec: ['[h3]', '[/h3]']
+		},
+		h4: {
+			txtExec: ['[h4]', '[/h4]']
+		},
+		h5: {
+			txtExec: ['[h5]', '[/h5]']
+		},
+		h6: {
+			txtExec: ['[h6]', '[/h6]']
 		}
 	};
 
@@ -968,6 +986,26 @@
 		// Needed for IE.
 		ignore: {}
 	};
+
+	// START_COMMAND: H1-H6
+	each([1,2,3,4,5,6], function (i, n) {
+		var handler = {
+			tags: {
+				p: {
+					class: 'f-bb-h' + n
+				}
+			},
+			isInline: false,
+			/*allowedChildren: ['#'],*/
+			format: '[h' + n + ']{0}[/h' + n + ']',
+			html: '<h' + n + '>{0}</h' + n + '>'
+		};
+
+		handler.tags['h' + n] = null;
+
+		bbcodeHandlers['h' + n] = handler;
+	});
+	// END_COMMAND
 
 	/**
 	 * Formats a string replacing {name} with the values of

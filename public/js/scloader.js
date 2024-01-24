@@ -29,7 +29,7 @@ ForkBB.editor = (function (doc, win) {
             resizeWidth: false,
             width: '100%',
             toolbar: 'bold,italic,underline,strike,subscript,superscript|' +
-                'left,center,right,justify|font,size,color,removeformat|' +
+                'left,center,right,justify|h1,h2,h3|font,size,color,removeformat|' +
                 'bulletlist,orderedlist,indent,outdent|' +
                 'table|code,mono,quote|horizontalrule,image,email,link,unlink|' +
                 'emoticon,date,time|maximize,source'
