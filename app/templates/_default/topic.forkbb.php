@@ -51,11 +51,12 @@
     </div>
     <!-- PRE linksBAfter -->
 @if ($p->model->toc)
+    <!-- PRE tocBefore -->
     <section id="fork-toc" class="f-main">
       <h2>{!! __('Table of content') !!}</h2>
       <details class="f-toc-det">
         <summary class="f-toc-sum">{!! __('Table of content') !!}</summary>
-        <div class="f-toc-div">
+        <div class="f-toc-div"><!-- inline -->
     @php $level = 0; @endphp
     @foreach ($p->model->tableOfContent as $cur)
         @if ($cur['level'] > $level)
@@ -78,9 +79,10 @@
           </li></ul>
         @php --$level; @endphp
     @endwhile
-        </div>
+        </div><!-- endinline -->
       </details>
     </section>
+    <!-- PRE tocAfter -->
 @endif
     <!-- PRE mainBefore -->
     <section id="fork-topic" class="f-main">
