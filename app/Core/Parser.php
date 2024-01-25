@@ -183,6 +183,10 @@ class Parser extends Parserus
             $text = \mb_substr($text, 0, 80, 'UTF-8');
         }
 
-        return \trim($text, '-_');
+        $text  = \trim($text, '-_');
+        $first = \mb_substr($text, 0, 1, 'UTF-8');
+        $other = \mb_substr($text, 1, null, 'UTF-8');
+
+        return \mb_strtoupper($first, 'UTF-8') . $other;
     }
 }
