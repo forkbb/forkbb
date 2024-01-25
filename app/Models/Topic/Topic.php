@@ -604,7 +604,7 @@ class Topic extends DataModel
     }
 
     /**
-     * Удаляет из содержимого сообщения по их id
+     * Удаляет из оглавления темы сообщения по их номеру
      */
     public function deleteFromToc(int ...$ids): Topic
     {
@@ -613,24 +613,31 @@ class Topic extends DataModel
         }
 
         $toc = \json_decode($this->toc, true, 512, \JSON_THROW_ON_ERROR);
+        $new = \array_diff_key($toc, \array_flip($ids));
 
-        foreach ($ids as $id) {
-            unset($toc[$id]);
+        if ($toc !== $new) {
+            $this->toc = \json_encode($new, FORK_JSON_ENCODE);
         }
-
-        $this->toc = \json_encode($toc, FORK_JSON_ENCODE);
 
         return $this;
     }
 
+    /**
+     * Возвращает список для построения оглавления темы
+     */
     protected function gettableOfContent(): array
     {
-        $toc = $this->toc ? \json_decode($this->toc, true, 512, \JSON_THROW_ON_ERROR) : [];
-        $out = [];
+        $toc     = $this->toc ? \json_decode($this->toc, true, 512, \JSON_THROW_ON_ERROR) : [];
+        $out     = [];
+        $visible = \is_array($this->idsList) ? \array_flip($this->idsList) : [];
 
         foreach ($toc as $pid => $list) {
-            $link = $this->c->Router->link('ViewPost', ['id' => $pid]);
-            $link = \strstr($link, '#', true) ?: $link;
+            if (isset($visible[$pid])) {
+                $link = '';
+            } else {
+                $link = $this->c->Router->link('ViewPost', ['id' => $pid]);
+                $link = \strstr($link, '#', true) ?: $link;
+            }
 
             foreach ($list as $cur) {
                 $out[] = [
