@@ -344,7 +344,7 @@ ForkBB.media = (function (doc, win, nav) {
         } else if (arr = url.match(/^dai(?:lymotion\.com\/video|\.ly)\/([a-zA-Z\d]+)/)) {
             createMedia(node, {src: "https://www.dailymotion.com/embed/video/" + arr[1] + "?theme=none"}, size);
 
-        } else if (arr = url.match(/^(?:video\.rutube\.ru|rutube\.ru\/(?:video(?:\/embed)?|play\/embed))\/([a-f\d]+)(?=\/|\?|#|$)\/?(?:\?t=(\d+))?/)) {
+        } else if (arr = url.match(/^(?:video\.rutube\.ru|rutube\.ru\/(?:(?:live\/)?video(?:\/embed)?|play\/embed))\/([a-f\d]+)(?=\/|\?|#|$)\/?(?:\?t=(\d+))?/)) {
             createMedia(node, {src: "https://rutube.ru/play/embed/" + arr[1] + (arr[2] ? "?t=" + arr[2] : "")}, size);
 
         } else if (arr = url.match(/^api\.soundcloud\.com\/(?:tracks|playlists)\/\d+/)) {
