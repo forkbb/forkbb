@@ -13,6 +13,7 @@ namespace ForkBB\Models\Pages;
 use DateTime;
 use DateTimeZone;
 use IntlDateFormatter;
+use IntlException;
 use function \ForkBB\__;
 
 trait TimeZoneTrait
@@ -40,17 +41,16 @@ trait TimeZoneTrait
             \asort($group, \SORT_STRING);
 
             foreach ($group as $zone => $value) {
-                if ('America/Nuuk' === $zone) {
-                    continue;
-                }
+                try {
+                    if ($first) {
+                        $format    = new IntlDateFormatter(__('lang_identifier'), IntlDateFormatter::SHORT, IntlDateFormatter::SHORT, $zone);
+                        $options[] = ['(UTC' . $hm . ') ' . $format->format($now)];
+                        $first     = false;
+                    }
 
-                if ($first) {
-                    $first     = false;
-                    $format    = new IntlDateFormatter(__('lang_identifier'), IntlDateFormatter::SHORT, IntlDateFormatter::SHORT, $zone);
-                    $options[] = ['(UTC' . $hm . ') ' . $format->format($now)];
+                    $options[] = [$zone, \trim($value)];
+                } catch (IntlException $e) {
                 }
-
-                $options[] = [$zone, \trim($value)];
             }
         }
 
