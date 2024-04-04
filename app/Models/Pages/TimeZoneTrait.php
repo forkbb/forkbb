@@ -40,6 +40,10 @@ trait TimeZoneTrait
             \asort($group, \SORT_STRING);
 
             foreach ($group as $zone => $value) {
+                if ('America/Nuuk' === $zone) {
+                    continue;
+                }
+
                 if ($first) {
                     $first     = false;
                     $format    = new IntlDateFormatter(__('lang_identifier'), IntlDateFormatter::SHORT, IntlDateFormatter::SHORT, $zone);
