@@ -688,7 +688,7 @@ body,
 
 #fork #id-fhtdesc {
   border-top: 0.0625rem dotted var(--bg-post-h);
-  padding: 0.625rem;
+  padding: 0 0.625rem 0.625rem;
 }
 
 @media screen and (min-width: 50rem) {
