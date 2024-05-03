@@ -259,55 +259,53 @@ class View extends Profile
             'caption' => 'Last post info',
         ];
 
-        if ($this->curUser->last_post > 0) {
-            if (
-                1 === $this->user->g_search
-                && ! $this->user->isBot
-            ) {
-                $fields['posts'] = [
-                    'class'   => ['pline'],
-                    'type'    => 'link',
-                    'caption' => 'Posts info',
-                    'value'   => $this->userRules->showPostCount ? num($this->curUser->num_posts) : __('Show posts'),
-                    'href'    => $this->c->Router->link(
-                        'SearchAction',
-                        [
-                            'action' => 'posts',
-                            'uid'    => $this->curUser->id,
-                        ]
-                    ),
-                    'title'   => __('Show posts'),
-                    'rel'     => 'nofollow',
-                ];
-                $fields['topics'] = [
-                    'class'   => ['pline'],
-                    'type'    => 'link',
-                    'caption' => 'Topics info',
-                    'value'   => $this->userRules->showPostCount ? num($this->curUser->num_topics) : __('Show topics'),
-                    'href'    => $this->c->Router->link(
-                        'SearchAction',
-                        [
-                            'action' => 'topics',
-                            'uid'    => $this->curUser->id,
-                        ]
-                    ),
-                    'title'   => __('Show topics'),
-                    'rel'     => 'nofollow',
-                ];
-            } elseif ($this->userRules->showPostCount) {
-                $fields['posts'] = [
-                    'class'   => ['pline'],
-                    'type'    => 'str',
-                    'caption' => 'Posts info',
-                    'value'   => num($this->curUser->num_posts),
-                ];
-                $fields['topics'] = [
-                    'class'   => ['pline'],
-                    'type'    => 'str',
-                    'caption' => 'Topics info',
-                    'value'   => num($this->curUser->num_topics),
-                ];
-            }
+        if (
+            1 === $this->user->g_search
+            && ! $this->user->isBot
+        ) {
+            $fields['posts'] = [
+                'class'   => ['pline'],
+                'type'    => 'link',
+                'caption' => 'Posts info',
+                'value'   => $this->userRules->showPostCount ? num($this->curUser->num_posts) : __('Show posts'),
+                'href'    => $this->c->Router->link(
+                    'SearchAction',
+                    [
+                        'action' => 'posts',
+                        'uid'    => $this->curUser->id,
+                    ]
+                ),
+                'title'   => __('Show posts'),
+                'rel'     => 'nofollow',
+            ];
+            $fields['topics'] = [
+                'class'   => ['pline'],
+                'type'    => 'link',
+                'caption' => 'Topics info',
+                'value'   => $this->userRules->showPostCount ? num($this->curUser->num_topics) : __('Show topics'),
+                'href'    => $this->c->Router->link(
+                    'SearchAction',
+                    [
+                        'action' => 'topics',
+                        'uid'    => $this->curUser->id,
+                    ]
+                ),
+                'title'   => __('Show topics'),
+                'rel'     => 'nofollow',
+            ];
+        } elseif ($this->userRules->showPostCount) {
+            $fields['posts'] = [
+                'class'   => ['pline'],
+                'type'    => 'str',
+                'caption' => 'Posts info',
+                'value'   => num($this->curUser->num_posts),
+            ];
+            $fields['topics'] = [
+                'class'   => ['pline'],
+                'type'    => 'str',
+                'caption' => 'Topics info',
+                'value'   => num($this->curUser->num_topics),
+            ];
         }
 
         if ($this->rules->viewSubscription) {
