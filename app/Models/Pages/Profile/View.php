@@ -308,6 +308,16 @@ class View extends Profile
             ];
         }
 
+        if ($this->user->isAdmin) {
+            $fields['recalculate'] = [
+                'class'   => ['pline'],
+                'type'    => 'link',
+                'value'   => __('Recalculate posts and topics'),
+                'href'    => $this->c->Router->link('EditUserRecalc', ['id' => $this->curUser->id]),
+                'rel'     => 'nofollow',
+            ];
+        }
+
         if ($this->rules->viewSubscription) {
             $subscr     = $this->c->subscriptions;
             $subscrInfo = $subscr->info($this->curUser);

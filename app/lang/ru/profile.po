@@ -404,3 +404,9 @@ msgstr "Мимо шапки (без анимации)"
 
 msgid "Past the header and announce (no animation)"
 msgstr "Мимо шапки и объвления (без анимации)"
+
+msgid "Recalculate posts and topics"
+msgstr "Пересчитать сообщения и темы"
+
+msgid "Recalculate %s redirect"
+msgstr "Количество сообщений и тем для <b>%s</b> перерасчитано."

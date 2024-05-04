@@ -287,6 +287,15 @@ class Routing
                 );
             }
 
+            if ($user->isAdmin) {
+                $r->add(
+                    $r::GET,
+                    '/user/{id|i:[1-9]\d*}/recalculate/{token}',
+                    'ProfileEdit:recalc',
+                    'EditUserRecalc'
+                );
+            }
+
             if (! $user->isGuest) {
                 // настройка поиска
                 $r->add(

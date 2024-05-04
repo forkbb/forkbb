@@ -496,4 +496,24 @@ class Edit extends Profile
 
         return $form;
     }
+
+    /**
+     * Пересчитывает количество сообщений и тем
+     */
+    public function recalc(array $args, string $method): Page
+    {
+        if (
+            ! $this->c->Csrf->verify($args['token'], 'EditUserRecalc', $args)
+            || false === $this->initProfile($args['id'])
+        ) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $this->c->users->updateCountPosts($this->curUser);
+        $this->c->users->updateCountTopics($this->curUser);
+
+        return $this->c->Redirect
+            ->url($this->curUser->link)
+            ->message(['Recalculate %s redirect', $this->curUser->username], FORK_MESS_SUCC);
+    }
 }

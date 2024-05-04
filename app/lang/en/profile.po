@@ -404,3 +404,9 @@ msgstr "Past the header (no animation)"
 
 msgid "Past the header and announce (no animation)"
 msgstr "Past the header and announce (no animation)"
+
+msgid "Recalculate posts and topics"
+msgstr "Recalculate posts and topics"
+
+msgid "Recalculate %s redirect"
+msgstr "The number of posts and topics for <b>%s</b> has been recalculated."
