@@ -378,6 +378,9 @@ trait PostFormTrait
                         $this->pageHeader('imgbb', 'script', 0, [
                             'src' => $this->publicLink('/js/imgbb.js'),
                         ]);
+                        $this->pageHeader('postimages', 'script', 0, [
+                            'src' => $this->publicLink('/js/postimages.js'),
+                        ]);
                     }
 
                     unset($cur);
