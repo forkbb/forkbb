@@ -109,7 +109,7 @@
                 0 < n.length && (t = document.querySelectorAll(n.join(",")))
             }
             if (t) {
-                !document.getElementById(this.ns.pluginStyle) && this.settings.css && (o = document.createElement("style"), a = this.settings.css, a = this.appyTemplate(a), o.type = "text/css", o.innerHTML = a.replace(/%p/g, "." + this.ns.plugin), o.setAttribute("id", this.ns.pluginStyle), document.body.appendChild(o)), t instanceof NodeList || (t = [t]);
+                !document.getElementById(this.ns.pluginStyle) && this.settings.css && (o = document.createElement("style"), a = this.settings.css, a = this.appyTemplate(a), o.innerHTML = a.replace(/%p/g, "." + this.ns.plugin), o.setAttribute("id", this.ns.pluginStyle), document.body.appendChild(o)), t instanceof NodeList || (t = [t]);
                 for (var o, a, l, u = 0, r = 0; r < t.length; r++) t[r].getAttribute(this.ns.dataPluginTarget) || ((l = i || t[r]).setAttribute(this.ns.dataPlugin, "sibling"), l.insertAdjacentHTML({
                     before: "beforebegin",
                     after: "afterend"
