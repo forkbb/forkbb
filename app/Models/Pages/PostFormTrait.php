@@ -45,6 +45,15 @@ trait PostFormTrait
             ],
         ];
 
+        if (! $quick) {
+            $form['btns']['cancel'] = [
+                'type'  => 'btn',
+                'value' => __('Go back'), // 'Cancel'
+                'class' => ['f-opacity', 'f-go-back'],
+                'href'  => $model->link,
+            ];
+        }
+
         $fieldset = [];
 
         if ($this->user->isGuest) {

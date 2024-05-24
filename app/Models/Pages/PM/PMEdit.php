@@ -12,6 +12,7 @@ namespace ForkBB\Models\Pages\PM;
 
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
+use ForkBB\Models\Model;
 use ForkBB\Models\Pages\PM\AbstractPM;
 use ForkBB\Models\Pages\PostFormTrait;
 use ForkBB\Models\Pages\PostValidatorTrait;
@@ -85,7 +86,7 @@ class PMEdit extends AbstractPM
         $this->pmIndex    = $this->pms->area;
         $this->nameTpl    = 'pm/post';
         $this->formTitle  = $firstPost ? 'Edit PT title' : 'Edit PM title';
-        $this->form       = $this->messageFormPM(null, 'PMAction', $args, true, $firstPost, false);
+        $this->form       = $this->messageFormPM($post, 'PMAction', $args, true, $firstPost, false);
         $this->pmCrumbs[] = [
             $this->c->Router->link('PMAction', $args),
             $firstPost ? 'Edit dialogue' : 'Edit message',

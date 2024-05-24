@@ -12,6 +12,7 @@ namespace ForkBB\Models\Pages\PM;
 
 use ForkBB\Core\Validator;
 use ForkBB\Models\Page;
+use ForkBB\Models\Model;
 use ForkBB\Models\Pages\PM\AbstractPM;
 use ForkBB\Models\Pages\PostFormTrait;
 use ForkBB\Models\Pages\PostValidatorTrait;
@@ -162,7 +163,7 @@ class PMPost extends AbstractPM
         $this->identifier = ['pm', 'pm-post'];
         $this->pmIndex    = $this->pms->area;
         $this->nameTpl    = 'pm/post';
-        $this->form       = $this->messageFormPM(null, 'PMAction', $args, false, $this->newTopic, false);
+        $this->form       = $this->messageFormPM($this->newTopic ? $this->targetUser : $topic, 'PMAction', $args, false, $this->newTopic, false);
         $this->posts      = $this->newTopic ? null : $topic->review();
         $this->postsTitle = 'Topic review';
 
