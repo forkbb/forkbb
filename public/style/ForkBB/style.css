@@ -798,7 +798,7 @@ body,
 }
 
 #fork .f-fbtn:not(.origin) {
-  min-width: 7rem;
+  min-width: 5rem;
 }
 
 #fork .f-fbtn[name="delete"]:not(.origin),
