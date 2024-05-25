@@ -1550,6 +1550,7 @@ class Install extends Admin
             'b_smilies_sig'           => 1,
             'b_make_links'            => 1,
             'o_default_lang'          => $v->defaultlang,
+            'b_default_lang_auto'     => 1,
             'o_default_style'         => $v->defaultstyle,
             'i_default_user_group'    => FORK_GROUP_NEW_MEMBER,
             'i_topic_review'          => 15,

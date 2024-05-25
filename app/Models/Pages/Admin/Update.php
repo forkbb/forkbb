@@ -1225,4 +1225,18 @@ class Update extends Admin
 
         return null;
     }
+
+    /**
+     * rev.79 to rev.80
+     */
+    protected function stageNumber79(array $args): ?int
+    {
+        $config = $this->c->config;
+
+        $config->b_default_lang_auto ??= 1;
+
+        $config->save();
+
+        return null;
+    }
 }

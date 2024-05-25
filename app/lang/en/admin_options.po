@@ -488,3 +488,9 @@ msgstr "User has reactioned"
 
 msgid "User has reactioned help"
 msgstr "Highlight the reactions that the user has selected for the posts displayed. Disable if you are experiencing high server load."
+
+msgid "Auto language detection label"
+msgstr "Auto language detection"
+
+msgid "Auto language detection help"
+msgstr "Automatically detect the guest's language based on data from his request to the server, or return the default language specified above if this fails."

@@ -56,6 +56,7 @@ class Options extends Admin
                         'string:trim',
                         'in' => $this->c->Func->getLangs(),
                     ],
+                    'b_default_lang_auto'     => 'required|integer|in:0,1',
                     'o_default_style'         => [
                         'required',
                         'string:trim',
@@ -336,6 +337,13 @@ class Options extends Admin
                     'value'   => $config->o_default_lang,
                     'caption' => 'Language label',
                     'help'    => 'Language help',
+                ],
+                'b_default_lang_auto' => [
+                    'type'    => 'radio',
+                    'value'   => $config->b_default_lang_auto,
+                    'values'  => $yn,
+                    'caption' => 'Auto language detection label',
+                    'help'    => 'Auto language detection help',
                 ],
                 'o_default_style' => [
                     'type'    => 'select',
