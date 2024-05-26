@@ -18,7 +18,7 @@ trait PostFormTrait
     /**
      * Возвращает данные для построения формы создания темы/сообщения
      */
-    protected function messageForm(?Model $model, string $marker, array $args, bool $edit, bool $first, bool $quick): array
+    protected function messageForm(Model $model, string $marker, array $args, bool $edit, bool $first, bool $quick): array
     {
         $vars = $args['_vars'] ?? null;
 

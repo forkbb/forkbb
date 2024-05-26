@@ -96,7 +96,7 @@ class PMEdit extends AbstractPM
         return $this;
     }
 
-    protected function messageFormPM(?Model $model, string $marker, array $args, bool $edit, bool $first, bool $quick): array
+    protected function messageFormPM(Model $model, string $marker, array $args, bool $edit, bool $first, bool $quick): array
     {
         $form = $this->messageForm($model, $marker, $args, $edit, $first, $quick);
 
