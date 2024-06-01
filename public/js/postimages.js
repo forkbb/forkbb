@@ -223,9 +223,9 @@ postimage.render = function(i) {
             postimage.upload(i);
         };
     }(i));
-    var icon = document.createElement('img');
-    icon.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAMAAAAOusbgAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADBQTFRFjLXzydz5d6fx1uX7SYns4Ov8+vz/pcX1VpLt6vL9uNL4ZZvvPoLq8vf+////OoDqiMZ5LgAAAmRJREFUeNrs2dlu3DAMBVCK2lf//982kxRFRpIX2vQYBXifkxxEpiiZhuWhgMACCyywwAILLLDAAvcxIWcEwJyD+Rhs0CcdXfuOizp5NPfDBlVtQ2LCciscfGwrsT7cBofk2kYqhSbAxte2kwqGH0bbDkQjM2xUO5hkOOFs2+HowAfn2AixgQsOtpGiDQ9sdCNGFRY4NXI8Bwzzv/3VpJX617L74HU41Gl/xFBeMQHTrPKiuQxPFlq/NygDlr7YuzAe6YvGDyvu8jV4rOh5fxgb6k5lA7Wy1vrSuNfxClz6Fh1Xu1LuizBdgbM7/uT6aqjhAuwptdrXP5yH+5Xe3p39jk/lNBwiaXMmwim1DefuCQdSRTg8DQPt0Cn2+EMGSm3tnjmEnwfKQ0Nif02n4fd+6XYvFt1DPg9b2lHXbyjFBNvdC023/bjg+BRcn1pqt3tfzu2W4vrgdiJ0It4G0sFqD9ZcLdNSjnbOQ8K2h45FS7rN9PckX9jgzTodLoa48MFb9QKktxgqXFevmehIBUGFW1yRsdLeYcjwigzDO6VamOEWx98pwPzStjL7UO/1WnAyq0jLDfDrDTn/1Gwx2c9GJHtN7iz8WnGt1GsWMZ9TXBxFEMdMhHPsJjgtz8AHxly3wOrIGJV05+Ic31Jg5XmGenR4gd1/2vIMynt4we35sfNMnwbsUKxhY1LvUub6GGInuwTntFPA+PnHTrfn2J2rpqkn4a+jIUPSMdYao9UJkKqehv8eTCEEU5ZzuQBfi8ACCyywwAL/d7D7nQ/CCL+Dy8fgGyOwwAILLLDAAgv8+fwRYADFLTINcMpJIgAAAABJRU5ErkJggg==";
+    var icon = document.createElement('span');
     icon.className = "postimages-button--forkbb-icon";
+    icon.innerHTML = '<svg class="postimages-button--forkbb-icon" xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 180 180" style="fill: currentcolor;"><path d="M0 90v90h180V0H0v90zm108.3-63.3c9.2 2.7 20.6 9.4 25.8 15.2 10.1 11.4 13.3 21.2 12.8 39.1-.4 10.7-.7 12-4 19-4 8.5-11.6 17.3-18.7 21.9-2.6 1.7-8.4 4.3-12.8 5.7-6.5 2.2-9.7 2.7-18.4 2.7-12 .1-18.8-1.9-26.5-7.9L62 119v42H35.9l.3-48.3c.3-54.4 0-52.2 8.5-64.9C50.1 39.6 54 36.3 64.4 31c13.4-6.8 29.9-8.4 43.9-4.3z"/><path d="M81.9 49.5c-6.4 2-14.1 9.2-17 15.7-3.2 7.4-3.2 18.4.1 24.8 6.1 12.1 14.2 17.3 26.4 17.3 5.2 0 8.5-.6 12.3-2.3 17.2-7.4 22.6-30.8 10.8-46.2-6.7-8.8-21.2-13-32.6-9.3z"/></svg>';
     var text = document.createElement('span');
     text.className = "postimages-button--forkbb-text";
     text.innerText = "Postimage";
