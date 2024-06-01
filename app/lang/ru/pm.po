@@ -78,9 +78,6 @@ msgstr "Редактирование сообщения"
 msgid "Edit message"
 msgstr "Редактирование сообщения"
 
-msgid "\"%s\""
-msgstr "\"%s\""
-
 msgid "Topic review"
 msgstr "Обзор диалога (новое вверху)"
 

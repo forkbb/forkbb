@@ -69,9 +69,6 @@ msgstr "Действие"
 msgid "Data updated redirect"
 msgstr "Данные изменены."
 
-msgid "\"%s\""
-msgstr "\"%s\""
-
 msgid "Logs"
 msgstr "Логи"
 

@@ -69,9 +69,6 @@ msgstr "Action"
 msgid "Data updated redirect"
 msgstr "Data updated."
 
-msgid "\"%s\""
-msgstr "\"%s\""
-
 msgid "Logs"
 msgstr "Logs"
 
