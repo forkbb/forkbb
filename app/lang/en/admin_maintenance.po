@@ -40,7 +40,7 @@ msgid "Empty index help"
 msgstr "Select this if you want the search index to be emptied before rebuilding (see below)."
 
 msgid "Rebuild completed info"
-msgstr "Once the process has completed, you will be redirected back to this page. If you are forced to abort the rebuild process, make a note of the last processed post ID and enter that ID+1 in "Starting post ID" when/if you want to continue ("Empty index" must not be selected)."
+msgstr "Once the process has completed, you will be redirected back to this page. If you are forced to abort the rebuild process, make a note of the last processed post ID and enter that ID+1 in &quot;Starting post ID&quot; when/if you want to continue (&quot;Empty index&quot; must not be selected)."
 
 msgid "Rebuild index"
 msgstr "Rebuild index"
