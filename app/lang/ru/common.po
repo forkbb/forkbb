@@ -460,6 +460,9 @@ msgstr "Поиск может быть чувствителен к регист�
 msgid "%s"
 msgstr "%s"
 
+msgid "\"%s\""
+msgstr "&quot;%s&quot;"
+
 msgid "ACTIONS"
 msgstr "ДЕЙСТВИЯ"
 
