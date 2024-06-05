@@ -1739,6 +1739,17 @@ body,
   padding: 0.3125rem;
 }
 
+#fork .f-post-customfields {
+  border-top: 0.125rem dotted;
+  border-bottom: 0.125rem dotted;
+  padding: 0.3125rem 0;
+  margin-bottom: 0.3125rem;
+}
+
+#fork .f-post-customfield {
+  text-indent: 1rem;
+}
+
 #fork .f-post-bfooter {
   display: flex;
   flex-wrap: wrap;
