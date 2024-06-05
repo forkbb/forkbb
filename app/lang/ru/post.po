@@ -104,3 +104,15 @@ msgstr "Нет пользователя с именем '%s'."
 
 msgid "Change redirect"
 msgstr "Изменения выполнены."
+
+msgid "All"
+msgstr "Данные из этого поля видны всем."
+
+msgid "Not guests"
+msgstr "Данные из этого поля видны всем, кроме гостей."
+
+msgid "Admins and mods"
+msgstr "Данные из этого поля видны только админам и модераторам раздела."
+
+msgid "Admins only"
+msgstr "Данные из этого поля видны только админам."

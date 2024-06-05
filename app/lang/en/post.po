@@ -104,3 +104,15 @@ msgstr "User '%s' does not exist."
 
 msgid "Change redirect"
 msgstr "Changes done."
+
+msgid "All"
+msgstr "Data from this field is visible to everyone."
+
+msgid "Not guests"
+msgstr "Data from this field is visible to everyone except guests."
+
+msgid "Admins and mods"
+msgstr "Data from this field is visible only to administrators and forum moderators."
+
+msgid "Admins only"
+msgstr "Data from this field is visible only to administrators."

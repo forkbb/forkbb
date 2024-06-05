@@ -24,6 +24,7 @@ class Edit extends Page
 {
     use PostFormTrait;
     use PostValidatorTrait;
+    use PostCFTrait;
 
     const SILENT = 1200;
 
@@ -41,8 +42,9 @@ class Edit extends Page
             return $this->c->Message->message('Bad request');
         }
 
-        $topic     = $post->parent;
-        $firstPost = $post->id === $topic->first_post_id;
+        $topic                   = $post->parent;
+        $firstPost               = $post->id === $topic->first_post_id;
+        $this->customFieldsLevel = $firstPost ? $topic->customFieldsCurLevel : 0;
 
         $this->c->Lang->load('post');
 
@@ -52,6 +54,10 @@ class Edit extends Page
 
         if ('POST' === $method) {
             $v = $this->messageValidator($post, 'EditPost', $args, true, $firstPost);
+
+            if ($this->customFieldsLevel > 0) {
+                $this->addCFtoMessageValidator($topic->cf_data, $this->customFieldsLevel, $v);
+            }
 
             if (
                 $v->validation($_POST)
@@ -136,6 +142,10 @@ class Edit extends Page
         $this->formTitle  = $firstPost ? 'Edit topic' : 'Edit post';
         $this->crumbs     = $this->crumbs($this->formTitle, $topic);
         $this->form       = $this->messageForm($post, 'EditPost', $args, true, $firstPost, false);
+
+        if ($this->customFieldsLevel > 0) {
+            $this->form = $this->addCFtoMessageForm($topic->cf_data, $this->customFieldsLevel, $this->form, $args);
+        }
 
         return $this;
     }
@@ -224,6 +234,11 @@ class Edit extends Page
             // опрос
             if ($this->userRules->usePoll) {
                 $this->changePoll($topic, $v);
+            }
+
+            if ($this->customFieldsLevel > 0) {
+                $topic->cf_data  = $this->setCFData($topic->cf_data, $this->customFieldsLevel, $v->cf_data);
+                $topic->cf_level = $this->setCFLevel($topic->cf_data);
             }
         }
 

@@ -20,6 +20,7 @@ class Post extends Page
 {
     use PostFormTrait;
     use PostValidatorTrait;
+    use PostCFTrait;
 
     /**
      * Создание новой темы
@@ -42,10 +43,23 @@ class Post extends Page
             $this->c->Lang->load('poll');
         }
 
-        $this->onlinePos = 'forum-' . $forum->id;
+        $this->onlinePos         = 'forum-' . $forum->id;
+        $this->customFieldsLevel = 0;
+
+        if (1 === $forum->use_custom_fields) {
+            $forum = $this->c->forums->loadTree($args['id']);
+
+            if (! empty($forum->custom_fields)) {
+                $this->customFieldsLevel = 4;
+            }
+        }
 
         if ('POST' === $method) {
             $v = $this->messageValidator($forum, 'NewTopic', $args, false, true);
+
+            if ($this->customFieldsLevel > 0) {
+                $this->addCFtoMessageValidator($forum->custom_fields, $this->customFieldsLevel, $v);
+            }
 
             if (
                 $this->user->isGuest
@@ -91,6 +105,10 @@ class Post extends Page
         $this->formTitle  = 'Post new topic';
         $this->crumbs     = $this->crumbs($this->formTitle, $forum);
         $this->form       = $this->messageForm($forum, 'NewTopic', $args, false, true, false);
+
+        if ($this->customFieldsLevel > 0) {
+            $this->form = $this->addCFtoMessageForm($forum->custom_fields, $this->customFieldsLevel, $this->form, $args);
+        }
 
         return $this;
     }
@@ -216,6 +234,11 @@ class Post extends Page
             $topic->last_post      = $now;
             $topic->sticky         = $v->stick_topic ? 1 : 0;
             $topic->stick_fp       = $v->stick_fp ? 1 : 0;
+
+            if ($this->customFieldsLevel > 0) {
+                $topic->cf_data  = $this->setCFData($forum->custom_fields, $this->customFieldsLevel, $v->cf_data);
+                $topic->cf_level = $this->setCFLevel($topic->cf_data);
+            }
 
             $this->c->topics->insert($topic);
         }
