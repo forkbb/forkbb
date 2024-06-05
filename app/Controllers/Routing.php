@@ -763,7 +763,7 @@ class Routing
             );
             $r->add(
                 $r::DUO,
-                '/admin/categories/{id|i:[1-9]\d*}/delete',
+                '/admin/categories/delete/{id|i:[1-9]\d*}',
                 'AdminCategories:delete',
                 'AdminCategoriesDelete'
             );
@@ -781,15 +781,21 @@ class Routing
             );
             $r->add(
                 $r::DUO,
-                '/admin/forums/{id|i:[1-9]\d*}/edit',
+                '/admin/forums/edit/{id|i:[1-9]\d*}',
                 'AdminForums:edit',
                 'AdminForumsEdit'
             );
             $r->add(
                 $r::DUO,
-                '/admin/forums/{id|i:[1-9]\d*}/delete',
+                '/admin/forums/delete/{id|i:[1-9]\d*}',
                 'AdminForums:delete',
                 'AdminForumsDelete'
+            );
+            $r->add(
+                $r::DUO,
+                '/admin/forums/fields/{id|i:[1-9]\d*}[/{action:\w+}[/{field|i:[1-9]\d*}]]',
+                'AdminForums:customFields',
+                'AdminForumsFields'
             );
             $r->add(
                 $r::GET,
@@ -811,13 +817,13 @@ class Routing
             );
             $r->add(
                 $r::DUO,
-                '/admin/groups/{id|i:[1-9]\d*}/edit',
+                '/admin/groups/edit/{id|i:[1-9]\d*}',
                 'AdminGroups:edit',
                 'AdminGroupsEdit'
             );
             $r->add(
                 $r::DUO,
-                '/admin/groups/{id|i:[1-9]\d*}/delete',
+                '/admin/groups/delete/{id|i:[1-9]\d*}',
                 'AdminGroups:delete',
                 'AdminGroupsDelete'
             );
