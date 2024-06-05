@@ -654,7 +654,7 @@ class Validator
         if ('' === $name) {
             $result = $this->checkValue($value, $rules, $field);
         } else {
-            if (false !== \strpos($name, '.')) {
+            if (false !== \strpos((string) $name, '.')) {
                 throw new RuntimeException("Bad path '{$name}'");
             }
 
