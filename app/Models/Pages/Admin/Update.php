@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.0.0';
     const REV_MIN_FOR_UPDATE         = 53;
-    const LATEST_REV_WITH_DB_CHANGES = 78;
+    const LATEST_REV_WITH_DB_CHANGES = 81;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const CONFIG_FILE                = 'main.php';
@@ -1236,6 +1236,19 @@ class Update extends Admin
         $config->b_default_lang_auto ??= 1;
 
         $config->save();
+
+        return null;
+    }
+
+    /**
+     * rev.80 to rev.81
+     */
+    protected function stageNumber80(array $args): ?int
+    {
+        $this->c->DB->addField('::forums', 'use_custom_fields', 'TINYINT(1)', false, 0);
+        $this->c->DB->addField('::forums', 'custom_fields', 'TEXT', true);
+        $this->c->DB->addField('::topics', 'cf_level', 'TINYINT UNSIGNED', false, 0);
+        $this->c->DB->addField('::topics', 'cf_data', 'TEXT', true);
 
         return null;
     }
