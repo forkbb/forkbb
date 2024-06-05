@@ -173,6 +173,15 @@
         </address>
         <div class="f-post-body">
           <div class="f-post-main">
+        @if (1 === $post->postNumber && $p->model->customFieldsCurLevel > 0)
+            <div class="f-post-customfields">
+            @foreach ($p->model->cf_data as $field)
+                @if ($p->model->customFieldsCurLevel >= $p->model->cf_level)
+            <p class="f-post-customfield">[ <span class="f-post-cf-name">{!! __($field['name']) !!}</span> ] : <span class="f-post-cf-value">{{ $field['value']}}</span></p>
+                @endif
+            @endforeach
+            </div>
+        @endif
             {!! $post->html() !!}
         @if (1 === $post->postNumber && ($poll = $p->poll))
             @include ('layouts/poll')
