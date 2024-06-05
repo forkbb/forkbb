@@ -63,12 +63,12 @@ class LoadTree extends Action
 
         if ($this->c->user->isGuest) {
             $query = 'SELECT f.id, f.forum_desc, f.num_topics, f.num_posts,
-                    f.last_post, f.last_post_id, f.last_poster, f.last_topic
+                    f.last_post, f.last_post_id, f.last_poster, f.last_topic, f.custom_fields
                 FROM ::forums AS f
                 WHERE id IN (?ai:forums)';
         } elseif (1 === $this->c->config->b_forum_subscriptions) {
             $query = 'SELECT f.id, f.forum_desc, f.num_topics, f.num_posts,
-                    f.last_post, f.last_post_id, f.last_poster, f.last_topic,
+                    f.last_post, f.last_post_id, f.last_poster, f.last_topic, f.custom_fields,
                     mof.mf_mark_all_read, s.user_id AS is_subscribed
                 FROM ::forums AS f
                 LEFT JOIN ::forum_subscriptions AS s ON (s.user_id=?i:uid AND s.forum_id=f.id)
@@ -76,7 +76,7 @@ class LoadTree extends Action
                 WHERE f.id IN (?ai:forums)';
         } else {
             $query = 'SELECT f.id, f.forum_desc, f.num_topics, f.num_posts,
-                    f.last_post, f.last_post_id, f.last_poster, f.last_topic,
+                    f.last_post, f.last_post_id, f.last_poster, f.last_topic, f.custom_fields,
                     mof.mf_mark_all_read
                 FROM ::forums AS f
                 LEFT JOIN ::mark_of_forum AS mof ON (mof.uid=?i:uid AND mof.fid=f.id)

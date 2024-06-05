@@ -650,4 +650,52 @@ class Topic extends DataModel
 
         return $out;
     }
+
+    protected function getcf_data(): array
+    {
+        $attr = $this->getModelAttr('cf_data');
+
+        if (
+            empty($attr)
+            || ! \is_array($attr = \json_decode($attr, true, 512, \JSON_THROW_ON_ERROR))
+        ) {
+            return [];
+        } else {
+            return $attr;
+        }
+    }
+
+    protected function setcf_data(string|array|null $value): void
+    {
+        if (empty($value)) {
+            $value = null;
+        } elseif (\is_array($value)) {
+            $value = \json_encode($value, FORK_JSON_ENCODE);
+        }
+
+        $this->setModelAttr('cf_data', $value);
+    }
+
+    protected function getcustomFieldsCurLevel(): int
+    {
+        if ($this->cf_level < 1) {
+            return 0;
+        } elseif (
+            $this->c->user->isAdmin
+            || (
+                $this->c->user->id === $this->poster_id
+                && ! $this->c->user->isGuest
+            )
+        ) {
+            $level = 4;
+        } elseif ($this->c->user->isModerator($this)) {
+            $level = 3;
+        } elseif (! $this->c->user->isGuest) {
+            $level = 2;
+        } else {
+            $level = 1;
+        }
+
+        return $this->cf_level > $level ? 0 : $level;
+    }
 }

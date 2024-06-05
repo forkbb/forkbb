@@ -493,4 +493,29 @@ class Forum extends DataModel
 
         return $data;
     }
+
+    protected function getcustom_fields(): array
+    {
+        $attr = $this->getModelAttr('custom_fields');
+
+        if (
+            empty($attr)
+            || ! \is_array($attr = \json_decode($attr, true, 512, \JSON_THROW_ON_ERROR))
+        ) {
+            return [];
+        } else {
+            return $attr;
+        }
+    }
+
+    protected function setcustom_fields(string|array|null $value): void
+    {
+        if (empty($value)) {
+            $value = null;
+        } elseif (\is_array($value)) {
+            $value = \json_encode($value, FORK_JSON_ENCODE);
+        }
+
+        $this->setModelAttr('custom_fields', $value);
+    }
 }
