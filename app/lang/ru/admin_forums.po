@@ -58,7 +58,7 @@ msgid "Delete forum warn"
 msgstr "<b>ВНИМАНИЕ!</b> При удалении раздела будут удалены все темы и сообщения находящиеся в нем!"
 
 msgid "Edit forum head"
-msgstr "Правка раздела"
+msgstr "Редактирование раздела"
 
 msgid "Forum name label"
 msgstr "Название раздела"
@@ -146,3 +146,60 @@ msgstr "Разрешить 'Решение'"
 
 msgid "Use solution help"
 msgstr "Разрешить в этом разделе помечать сообщение как решение вопроса/проблемы из первого сообщения темы."
+
+msgid "Use custom fields label"
+msgstr "Вкл. настраиваемые поля"
+
+msgid "Use custom fields help"
+msgstr "Разрешить в этом разделе при создании темы использовать настраиваемые поля. Не влияет на уже созданные темы."
+
+msgid "Customize fields"
+msgstr "Настроить поля"
+
+msgid "Custom fields head"
+msgstr "Настраиваемые поля"
+
+msgid "Add field"
+msgstr "Добавить поле"
+
+msgid "Field name label"
+msgstr "Имя поля"
+
+msgid "Add field head"
+msgstr "Добавление поля"
+
+msgid "Edit field head"
+msgstr "Редактирование поля"
+
+msgid "Field required label"
+msgstr "Обязательно для заполнения"
+
+msgid "Visibility label"
+msgstr "Кто видит данные?"
+
+msgid "All"
+msgstr "Все"
+
+msgid "Not guests"
+msgstr "Все, кроме гостей"
+
+msgid "Admins and mods"
+msgstr "Админы, модераторы раздела и автор темы"
+
+msgid "Admins only"
+msgstr "Только админы и автор темы"
+
+msgid "Maximum length label"
+msgstr "Максимальная длина"
+
+msgid "Fields updated redirect"
+msgstr "Поля изменены."
+
+msgid "Field deleted redirect"
+msgstr "Поле удалено."
+
+msgid "I want to delete field %s"
+msgstr "Да, я хочу удалить поле <b>%s</b>"
+
+msgid "Delete field"
+msgstr "Удалить поле"

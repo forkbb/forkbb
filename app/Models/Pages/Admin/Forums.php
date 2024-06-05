@@ -334,26 +334,26 @@ class Forums extends Admin
      */
     public function edit(array $args, string $method): Page
     {
+        $forum = empty($args['id']) ? $this->c->forums->create() : $this->c->forums->loadTree($args['id']);
+
+        if (! $forum instanceof Forum) {
+            return $this->c->Message->message('Bad request');
+        }
+
         $this->c->Lang->load('validator');
         $this->c->Lang->load('admin_forums');
 
         if (empty($args['id'])) {
-            $forum           = $this->c->forums->create();
             $marker          = 'AdminForumsNew';
             $this->aCrumbs[] = [$this->c->Router->link($marker), 'Add forum head'];
             $this->titleForm = 'Add forum head';
             $this->classForm = ['createforum'];
         } else {
-            $forum           = $this->c->forums->loadTree($args['id']); //?????
             $marker          = 'AdminForumsEdit';
             $this->aCrumbs[] = [$this->c->Router->link($marker, $args), 'Edit forum head'];
             $this->aCrumbs[] = [null, ['"%s"', $forum->forum_name]];
             $this->titleForm = 'Edit forum head';
             $this->classForm = ['editforum'];
-        }
-
-        if (! $forum instanceof Forum) {
-            return $this->c->Message->message('Bad request');
         }
 
         $this->calcList($forum);
@@ -374,7 +374,8 @@ class Forums extends Admin
                     'perms.*.post_replies' => 'checkbox',
                     'perms.*.post_topics'  => 'checkbox',
                     'submit'               => 'string',
-                    'reset'                => empty($forum->id) ? 'absent' : 'string',
+                    'reset'                => $forum->id > 0 ? 'string' : 'absent',
+                    'use_custom_fields'    => $forum->id > 0 && ! $forum->redirect_url ? 'required|integer|in:0,1' : 'absent',
                 ])->addAliases([
                 ])->addArguments([
                     'token' => $args,
@@ -389,6 +390,10 @@ class Forums extends Admin
             $forum->redirect_url  = $v->redirect_url ?? '';
             $forum->no_sum_mess   = $v->no_sum_mess;
             $forum->use_solution  = $v->use_solution;
+
+            if ($forum->id > 0) {
+                $forum->use_custom_fields = $forum->redirect_url || empty($forum->custom_fields) ? 0 : $v->use_custom_fields;
+            }
 
             if ($v->parent > 0) {
                 $forum->parent_forum_id = $v->parent;
@@ -455,7 +460,7 @@ class Forums extends Admin
 
         $form['btns']['submit'] = [
             'type'  => 'submit',
-            'value' => empty($forum->id) ? __('Add') : __('Update'),
+            'value' =>  __($forum->id > 0 ? 'Update' : 'Add'),
         ];
 
         $form['sets']['forum'] = [
@@ -525,6 +530,27 @@ class Forums extends Admin
             ],
         ];
 
+        if (
+            $forum->id > 0
+            && ! $forum->redirect_url
+        ) {
+            $form['sets']['forum']['fields'] += [
+                'use_custom_fields' => [
+                    'type'    => 'radio',
+                    'value'   => $forum->use_custom_fields,
+                    'values'  => [1 => __('Yes'), 0 => __('No')],
+                    'caption' => 'Use custom fields label',
+                    'help'    => 'Use custom fields help',
+                ],
+                'custom_fields' => [
+                    'type'    => 'link',
+                    'value'   => __('Customize fields'),
+                    'title'   => __('Customize fields'),
+                    'href'    => $this->c->Router->link('AdminForumsFields', ['id' => $forum->id]),
+                ],
+            ];
+        }
+
         $form['sets']['forum-info'] = [
             'inform' => [
                 [
@@ -571,5 +597,389 @@ class Forums extends Admin
         }
 
         return $form;
+    }
+
+    /**
+     * Точка входа для настраиваемых полей
+     */
+    public function customFields(array $args, string $method): Page
+    {
+        $forum = $this->c->forums->loadTree($args['id']);
+
+        if (
+            ! $forum instanceof Forum
+            || $forum->redirect_url
+        ) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $this->c->Lang->load('validator');
+        $this->c->Lang->load('admin_forums');
+
+        if (empty($args['action'])) {
+            $m = 'customFieldsView';
+        } else {
+            switch ($args['action']) {
+                case 'new':
+                case 'edit':
+                    $m = 'customFieldsEdit';
+                    break;
+                case 'delete':
+                    $m = 'customFieldsDelete';
+                    break;
+                default:
+                    return $this->c->Message->message('Bad request');
+            }
+        }
+
+        $this->nameTpl   = 'admin/form';
+        $this->aIndex    = 'forums';
+        $page            = $this->{$m}($args, $method, $forum);
+        $this->aCrumbs[] = [$this->c->Router->link('AdminForumsFields', ['id' => $forum->id]), 'Custom fields head'];
+        $this->aCrumbs[] = [$this->c->Router->link('AdminForumsEdit', $args), 'Edit forum head'];
+        $this->aCrumbs[] = [null, ['"%s"', $forum->forum_name]];
+
+        return $page;
+    }
+
+    /**
+     * Список настраиваемых полей
+     */
+    protected function customFieldsView(array $args, string $method, Forum $forum): Page
+    {
+        if ('POST' === $method) {
+            $v = $this->c->Validator->reset()
+                ->addRules([
+                    'token' => 'token:AdminForumsFields',
+                    'pos'   => 'required|array',
+                    'pos.*' => 'required|integer|min:0|max:9999',
+                ])->addAliases([
+                ])->addArguments([
+                    'token' => ['id' => $forum->id],
+                ])->addMessages([
+                ]);
+
+            if ($v->validation($_POST)) {
+                $positions = $v->pos;
+
+                \asort($positions, \SORT_NUMERIC);
+
+                $positions = \array_keys($positions);
+                $i         = 1;
+                $fields    = $forum->custom_fields;
+                $new       = [];
+
+                foreach ($positions as $pos) {
+                    if (empty($fields[$pos])) {
+                        continue;
+                    }
+
+                    $new[$i]      = $fields[$pos];
+                    $fields[$pos] = null;
+                    ++$i;
+                }
+
+                foreach ($fields as $field) {
+                    if (empty($field)) {
+                        continue;
+                    }
+
+                    $new[$i] = $field;
+                    ++$i;
+                }
+
+                $forum->custom_fields = $new;
+
+                $this->c->forums->update($forum);
+
+                return $this->c->Redirect->page('AdminForumsFields', $args)->message('Fields updated redirect', FORK_MESS_SUCC);
+            }
+
+            $this->fIswev  = $v->getErrors();
+        }
+
+        $this->titleForm = 'Custom fields head';
+        $this->classForm = ['editforums', 'customfields', 'inline'];
+        $this->form      = $this->formCFView($forum, $args);
+
+        return $this;
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     */
+    protected function formCFView(Forum $forum, array $args): array
+    {
+        $form = [
+            'action' => $this->c->Router->link('AdminForumsFields', ['id' => $forum->id]),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('AdminForumsFields', ['id' => $forum->id]),
+            ],
+            'sets'   => [],
+            'btns'   => [
+                'new' => [
+                    'type'  => 'btn',
+                    'value' => __('Add field'),
+                    'href'  => $this->c->Router->link(
+                        'AdminForumsFields',
+                        [
+                            'id'     => $forum->id,
+                            'action' => 'new',
+                        ]
+                    ),
+                ],
+                'update' => [
+                    'type'  => 'submit',
+                    'value' => __('Update positions'),
+                ],
+            ],
+        ];
+
+        $list = $forum->custom_fields;
+
+        foreach ($list as $id => $cur) {
+            $fields = [];
+            $fields["name-btn{$id}"] = [
+                'class'   => ['name', 'forum'],
+                'type'    => 'btn',
+                'value'   => $cur['name'],
+                'caption' => 'Field name label',
+                'href'    => $this->c->Router->link(
+                    'AdminForumsFields',
+                    [
+                        'id'     => $forum->id,
+                        'action' => 'edit',
+                        'field'  => $id,
+                    ]
+                ),
+            ];
+            $fields["pos[{$id}]"] = [
+                'class'   => ['position', 'forum'],
+                'type'    => 'number',
+                'min'     => '1',
+                'max'     => '9999',
+                'value'   => $id,
+                'caption' => 'Position label',
+            ];
+            $fields["delete-btn{$id}"] = [
+                'class'    => ['delete', 'forum'],
+                'type'     => 'btn',
+                'value'    => '❌',
+                'caption'  => 'Delete',
+                'title'    => __('Delete'),
+                'href'     => $this->c->Router->link(
+                    'AdminForumsFields',
+                    [
+                        'id'     => $forum->id,
+                        'action' => 'delete',
+                        'field'  => $id,
+                    ]
+                ),
+            ];
+            $form['sets']["field{$id}"] = [
+                'class'  => ['forum', 'inline'],
+                'legend' => $cur['name'],
+                'fields' => $fields,
+            ];
+        }
+
+        return $form;
+    }
+
+    /**
+     * Создание/редактирование поля
+     */
+    protected function customFieldsEdit(array $args, string $method, Forum $forum): Page
+    {
+        if (empty($args['field'])) {
+            $this->titleForm = 'Add field head';
+            $this->classForm = ['createfield'];
+            $data            = [];
+        } else {
+            if (empty($forum->custom_fields[$args['field']])) {
+                return $this->c->Message->message('Bad request');
+            }
+
+            $this->titleForm = 'Edit field head';
+            $this->classForm = ['editfield'];
+            $data            = $forum->custom_fields[$args['field']];
+        }
+
+        $this->aCrumbs[] = [$this->c->Router->link('AdminForumsFields', $args), $this->titleForm];
+
+        if ('POST' === $method) {
+            $v = $this->c->Validator->reset()
+                ->addRules([
+                    'token'      => 'token:AdminForumsFields',
+                    'name'       => 'required|string|max:256',
+                    'required'   => 'required|integer|in:0,1',
+                    'visibility' => 'required|integer|in:1,2,3,4',
+                    'maxlength'  => 'required|integer|min:1|max:10000',
+                ])->addAliases([
+                ])->addArguments([
+                    'token' => $args,
+                ])->addMessages([
+                ]);
+
+            $valid = $v->validation($_POST);
+            $data  = $v->getData(true, ['token']);
+
+            if ($valid) {
+                $fields               = $forum->custom_fields;
+                $id                   = empty($args['field']) ? \max(1, \max(\array_keys($fields) + [0]) + 1) : $args['field'];
+                $fields[$id]          = $data;
+                $forum->custom_fields = $fields;
+
+                $this->c->forums->update($forum);
+
+                return $this->c->Redirect->page('AdminForumsFields', ['id' => $forum->id])->message('Fields updated redirect', FORK_MESS_SUCC);
+            }
+
+            $this->fIswev = $v->getErrors();
+        }
+
+        $this->form = $this->formCFEdit($forum, $args, $data);
+
+        return $this;
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     */
+    protected function formCFEdit(Forum $forum, array $args, array $data): array
+    {
+        return [
+            'action' => $this->c->Router->link('AdminForumsFields', $args),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('AdminForumsFields', $args),
+            ],
+            'sets'   => [
+                'field' => [
+                    'fields' => [
+                        'name' => [
+                            'type'      => 'text',
+                            'maxlength' => '255',
+                            'value'     => $data['name'] ?? '',
+                            'caption'   => 'Field name label',
+                            'required'  => true,
+                        ],
+                        'required' => [
+                            'type'    => 'radio',
+                            'value'   => ($data['required'] ?? 1) ? 1 : 0,
+                            'values'  => [1 => __('Yes'), 0 => __('No')],
+                            'caption' => 'Field required label',
+                        ],
+                        'visibility' => [
+                            'type'    => 'select',
+                            'options' => [
+                                1 => __('All'),
+                                2 => __('Not guests'),
+                                3 => __('Admins and mods'),
+                                4 => __('Admins only'),
+                            ],
+                            'value'   => $data['visibility'] ?? 4,
+                            'caption' => 'Visibility label',
+                        ],
+                        'maxlength' => [
+                            'type'    => 'number',
+                            'min'     => '1',
+                            'max'     => '10000',
+                            'value'   => $data['maxlength'] ?? 256,
+                            'caption' => 'Maximum length label',
+                        ],
+                    ],
+                ],
+            ],
+            'btns'   => [
+                'submit' => [
+                    'type'  => 'submit',
+                    'value' =>  __(empty($args['field']) ? 'Add' : 'Update'),
+                ]
+            ],
+        ];
+    }
+
+    /**
+     * Удаление поля
+     */
+    protected function customFieldsDelete(array $args, string $method, Forum $forum): Page
+    {
+        if (empty($forum->custom_fields[$args['field']])) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        if ('POST' === $method) {
+            $v = $this->c->Validator->reset()
+                ->addRules([
+                    'token'     => 'token:AdminForumsFields',
+                    'confirm'   => 'checkbox',
+                    'delete'    => 'required|string',
+                ])->addAliases([
+                ])->addArguments([
+                    'token' => $args,
+                ]);
+
+            $page = $this->c->Redirect->page('AdminForumsFields', ['id' => $forum->id]);
+
+            if (
+                ! $v->validation($_POST)
+                || '1' !== $v->confirm
+            ) {
+                return $page->message('No confirm redirect', FORK_MESS_WARN);
+            }
+
+            $fields = $forum->custom_fields;
+
+            unset($fields[$args['field']]);
+
+            $forum->custom_fields = $fields;
+
+            $this->c->forums->update($forum);
+
+            return $page->message('Field deleted redirect', FORK_MESS_SUCC);
+        }
+
+        $this->titleForm = 'Delete field head';
+        $this->classForm = ['deletefield', 'deleteforum'];
+        $this->aCrumbs[] = [$this->c->Router->link('AdminForumsFields', $args), $this->titleForm];
+        $this->form      = $this->formCFDelete($forum, $args);
+
+        return $this;
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     */
+    protected function formCFDelete(Forum $forum, array $args): array
+    {
+        return [
+            'action' => $this->c->Router->link('AdminForumsFields', $args),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('AdminForumsFields', $args),
+            ],
+            'sets'   => [
+                'confirm' => [
+                    'fields' => [
+                        'confirm' => [
+                            'caption' => 'Confirm delete',
+                            'type'    => 'checkbox',
+                            'label'   => ['I want to delete field %s', $forum->custom_fields[$args['field']]['name']],
+                            'checked' => false,
+                        ],
+                    ],
+                ],
+            ],
+            'btns'   => [
+                'delete' => [
+                    'type'  => 'submit',
+                    'value' => __('Delete field'),
+                ],
+                'cancel' => [
+                    'type'  => 'btn',
+                    'value' => __('Cancel'),
+                    'href'  => $this->c->Router->link('AdminForumsFields', ['id' => $forum->id]),
+                ],
+            ],
+        ];
     }
 }

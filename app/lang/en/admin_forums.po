@@ -146,3 +146,60 @@ msgstr "Allow 'Solution'"
 
 msgid "Use solution help"
 msgstr "Allow this forum to mark a post as a solution to a question/problem from the first post in the topic."
+
+msgid "Use custom fields label"
+msgstr "Use custom fields"
+
+msgid "Use custom fields help"
+msgstr "Allow custom fields to be used when creating topic in this forum. Does not affect existing topics."
+
+msgid "Customize fields"
+msgstr "Customize fields"
+
+msgid "Custom fields head"
+msgstr "Custom fields"
+
+msgid "Add field"
+msgstr "Add field"
+
+msgid "Field name label"
+msgstr "Field name"
+
+msgid "Add field head"
+msgstr "Add field"
+
+msgid "Edit field head"
+msgstr "Edit field"
+
+msgid "Field required label"
+msgstr "Required"
+
+msgid "Visibility label"
+msgstr "Who sees data?"
+
+msgid "All"
+msgstr "All"
+
+msgid "Not guests"
+msgstr "Everything except guests"
+
+msgid "Admins and mods"
+msgstr "Admins, forum moderators and topic author"
+
+msgid "Admins only"
+msgstr "Only admins and topic author"
+
+msgid "Maximum length label"
+msgstr "Maximum length"
+
+msgid "Fields updated redirect"
+msgstr "Fields updated."
+
+msgid "Field deleted redirect"
+msgstr "Field deleted."
+
+msgid "I want to delete field %s"
+msgstr "Yes, I want to delete the field <b>%s</b>"
+
+msgid "Delete field"
+msgstr "Delete field"
