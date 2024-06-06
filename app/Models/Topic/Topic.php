@@ -656,7 +656,7 @@ class Topic extends DataModel
         $attr = $this->getModelAttr('cf_data');
 
         if (
-            empty($attr)
+            ! \is_string($attr)
             || ! \is_array($attr = \json_decode($attr, true, 512, \JSON_THROW_ON_ERROR))
         ) {
             return [];
@@ -667,10 +667,13 @@ class Topic extends DataModel
 
     protected function setcf_data(string|array|null $value): void
     {
-        if (empty($value)) {
-            $value = null;
-        } elseif (\is_array($value)) {
+        if (\is_array($value)) {
             $value = \json_encode($value, FORK_JSON_ENCODE);
+        } elseif (
+            ! \is_string($value)
+            || ! \is_array(\json_decode($value, true))
+        ) {
+            $value = null;
         }
 
         $this->setModelAttr('cf_data', $value);

@@ -499,7 +499,7 @@ class Forum extends DataModel
         $attr = $this->getModelAttr('custom_fields');
 
         if (
-            empty($attr)
+            ! \is_string($attr)
             || ! \is_array($attr = \json_decode($attr, true, 512, \JSON_THROW_ON_ERROR))
         ) {
             return [];
@@ -510,10 +510,13 @@ class Forum extends DataModel
 
     protected function setcustom_fields(string|array|null $value): void
     {
-        if (empty($value)) {
-            $value = null;
-        } elseif (\is_array($value)) {
+        if (\is_array($value)) {
             $value = \json_encode($value, FORK_JSON_ENCODE);
+        } elseif (
+            ! \is_string($value)
+            || ! \is_array(\json_decode($value, true))
+        ) {
+            $value = null;
         }
 
         $this->setModelAttr('custom_fields', $value);
