@@ -26,7 +26,7 @@ trait PostCFTrait
         foreach ($form['sets']['uesm']['fields'] as $key => $cur) {
             if ('message' === $key) {
                 foreach ($data as $id => $field) {
-                    if ($field['visibility'] < $level) {
+                    if ($field['visibility'] > $level) {
                         continue;
                     }
 
@@ -61,7 +61,7 @@ trait PostCFTrait
     protected function addCFtoMessageValidator(array $data, int $level, Validator $v): void
     {
         foreach ($data as $id => $field) {
-            if ($field['visibility'] < $level) {
+            if ($field['visibility'] > $level) {
                 continue;
             }
 
@@ -83,7 +83,7 @@ trait PostCFTrait
     protected function setCFData(array $data, int $level, array $from): array
     {
         foreach ($data as $id => &$field) {
-            if ($field['visibility'] < $level) {
+            if ($field['visibility'] > $level) {
                 continue;
             }
 
