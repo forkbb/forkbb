@@ -681,7 +681,10 @@ class Topic extends DataModel
 
     protected function getcustomFieldsCurLevel(): int
     {
-        if ($this->cf_level < 1) {
+        if (
+            $this->cf_level < 1
+            || empty($this->cf_data)
+        ) {
             return 0;
         } elseif (
             $this->c->user->isAdmin
