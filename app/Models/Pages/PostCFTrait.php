@@ -42,7 +42,7 @@ trait PostCFTrait
                             2 => 'Not guests',
                             3 => 'Admins and mods',
                             4 => 'Admins only',
-                        }
+                        },
                     ];
                 }
             }

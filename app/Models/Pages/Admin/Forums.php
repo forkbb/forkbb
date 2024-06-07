@@ -893,7 +893,7 @@ class Forums extends Admin
             'btns'   => [
                 'submit' => [
                     'type'  => 'submit',
-                    'value' =>  __(empty($args['field']) ? 'Add' : 'Update'),
+                    'value' => __(empty($args['field']) ? 'Add' : 'Update'),
                 ]
             ],
         ];
