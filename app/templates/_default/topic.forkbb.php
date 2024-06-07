@@ -177,7 +177,7 @@
             <div class="f-post-customfields">
             @foreach ($p->model->cf_data as $field)
                 @if ($p->model->customFieldsCurLevel >= $field['visibility'])
-            <p class="f-post-customfield"><span class="f-post-cf-name">{!! __($field['name']) !!}</span> : <span class="f-post-cf-value">{{ $field['value'] }}</span></p>
+              <p class="f-post-customfield"><span class="f-post-cf-name">{!! __($field['name']) !!}</span> : <span class="f-post-cf-value">{{ $field['value'] }}</span></p>
                 @endif
             @endforeach
             </div>

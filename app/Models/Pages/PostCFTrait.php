@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Core\Validator;
-use function \ForkBB\{__, size};
 
 trait PostCFTrait
 {
