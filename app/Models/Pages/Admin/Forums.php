@@ -312,7 +312,6 @@ class Forums extends Admin
                         ],
                     ],
                 ],
-
             ],
             'btns'   => [
                 'delete' => [
