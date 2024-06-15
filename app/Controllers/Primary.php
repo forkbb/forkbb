@@ -20,12 +20,25 @@ class Primary
     }
 
     /**
+     * Проверка на запрос изображения
      * Проверка на обслуживание
      * Проверка на обновление
      * Проверка на бан
      */
     public function check(): ?Page
     {
+        if (
+            isset($_SERVER['HTTP_ACCEPT'][5])
+            && false === \strpos($_SERVER['HTTP_ACCEPT'], 'text/')
+            && false !== \strpos($_SERVER['HTTP_ACCEPT'], 'image/')
+        ) {
+            if (! $this->c->isInit('user')) {
+                $this->c->user = $this->c->users->create(['id' => 0, 'group_id' => FORK_GROUP_GUEST]);
+            }
+
+            return $this->c->Message->message('Not Found', true, 404);
+        }
+
         if (
             1 === $this->c->config->b_maintenance
             && ! $this->c->MAINTENANCE_OFF
