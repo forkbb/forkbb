@@ -37,7 +37,10 @@ class Router
     /**
      * Список методов доступа
      */
-    protected array $methods = [];
+    protected array $methods = [
+        'GET'  => 1,
+        'HEAD' => 1,
+    ];
 
     /**
      * Массив для построения ссылок
@@ -180,15 +183,7 @@ class Router
      */
     public function route(string $method, string $uri): array
     {
-        $head = 'HEAD' == $method;
-
-        if (
-            empty($this->methods[$method])
-            && (
-                ! $head
-                || empty($this->methods['GET'])
-            )
-        ) {
+        if (empty($this->methods[$method])) {
             return [
                 self::NOT_IMPLEMENTED,
             ];
@@ -204,6 +199,7 @@ class Router
             }
         }
 
+        $head    = 'HEAD' == $method;
         $allowed = [];
 
         if (isset($this->statical[$uri])) {
@@ -283,6 +279,7 @@ class Router
                 ];
             }
         }
+
         if (empty($allowed)) {
             return [
                 self::NOT_FOUND,
