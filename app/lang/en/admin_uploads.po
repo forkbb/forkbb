@@ -56,3 +56,21 @@ msgstr "Created"
 
 msgid "User head"
 msgstr "Author"
+
+msgid "Delete file head"
+msgstr "Delete file"
+
+msgid "Confirm delete"
+msgstr "Delete file?"
+
+msgid "I want to delete file %s"
+msgstr "Yes, I want to delete the file <b>%s</b>"
+
+msgid "Delete file warn"
+msgstr "This file is used (approximately) in <b>%1$s</b> messages and in <b>%2$s</b> private messages."
+
+msgid "File deleted redirect"
+msgstr "File deleted."
+
+msgid "File not deleted redirect"
+msgstr "File not deleted."

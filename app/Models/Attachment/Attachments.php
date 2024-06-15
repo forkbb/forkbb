@@ -315,4 +315,91 @@ class Attachments extends Model
 
         return $data;
     }
+
+    /**
+     * Возвращает массив данных о файле по его номеру или null
+     */
+    public function fileInfo(int $id): ?array
+    {
+        if ($id < 1) {
+            return null;
+        }
+
+        $vars  = [
+            'id' => $id,
+        ];
+        $query = 'SELECT * FROM ::attachments WHERE id=?i:id';
+        $info  = $this->c->DB->query($query, $vars)->fetch();
+
+        if (empty($info)) {
+            return null;
+        }
+
+        $query = 'SELECT pid FROM ::attachments_pos WHERE id=?i:id';
+        $pids  = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
+        $query = 'SELECT pid FROM ::attachments_pos_pm WHERE id=?i:id';
+        $pmids = $this->c->DB->query($query, $vars)->fetchAll(PDO::FETCH_COLUMN);
+
+        return [
+            'id'       => $id,
+            'uid'      => $info['uid'],
+            'created'  => $info['created'],
+            'size_kb'  => $info['size_kb'],
+            'path'     => $info['path'],
+            'url'      => $this->c->PUBLIC_URL . self::FOLDER . $info['path'],
+            'location' => $this->c->DIR_PUBLIC . self::FOLDER . $info['path'],
+            'pids'     => $pids,
+            'pmids'    => $pmids,
+        ];
+    }
+
+    /**
+     * Удаляет файл
+     */
+    public function deleteFile(int $id): bool
+    {
+        $info = $this->fileInfo($id);
+
+        if (empty($info)) {
+            return false;
+        }
+
+        if (
+            ! \is_file($info['location'])
+            || \unlink($info['location'])
+        ) {
+            $vars  = [
+                'id' => $id,
+            ];
+
+            if (! empty($info['pids'])) {
+                $query = 'DELETE FROM ::attachments_pos WHERE id=?i:id';
+
+                $this->c->DB->exec($query, $vars);
+            }
+
+            if (! empty($info['pmids'])) {
+                $query = 'DELETE FROM ::attachments_pos_pm WHERE id=?i:id';
+
+                $this->c->DB->exec($query, $vars);
+            }
+
+            $query = 'DELETE FROM ::attachments WHERE id=?i:id';
+
+            $this->c->DB->exec($query, $vars);
+
+            $user = $this->c->users->load($info['uid']);
+
+            if (
+                $user instanceof User
+                && ! $user->isGuest
+            ) {
+                $this->recalculate($user);
+            }
+
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

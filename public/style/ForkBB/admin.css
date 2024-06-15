@@ -1159,6 +1159,11 @@
   border-inline-start: 0.0625rem dotted var(--br-fprimary);
 }
 
+#forka .f-deletefile-form .f-fbtn {
+  width: auto;
+  display: inline-block;
+}
+
 @media screen and (max-width: 85.9999rem) {
   #fork-uploads-files .f-field-action > dt {
     display: none;

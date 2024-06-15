@@ -256,11 +256,12 @@ class Uploads extends Admin
             ];
             $fields["f{$id}-action"] = [
                 'class'   => ['action'],
-                'caption' => 'Action',
-                'type'    => 'str',
-                'value'   => $id ? 'X' : '',
+                'caption' => $id ? 'Delete' : 'Action',
+                'type'    => $id ? 'btn' : 'str',
+                'value'   => $id ? '❌' : '',
+                'title'   => $id ? __('Delete') : null,
+                'href'    => $id ? $this->c->Router->link('AdminUploadsDelete', ['id' => $id]) : null,
             ];
-
 
             $form['sets']["f{$id}"] = [
                 'class'  => ['filelist'],
@@ -270,5 +271,100 @@ class Uploads extends Admin
         }
 
         return $form;
+    }
+
+    /**
+     * Удаление файла
+     */
+    public function delete(array $args, string $method): Page
+    {
+        $info = $this->c->attachments->fileInfo($args['id']);
+
+        if (empty($info)) {
+            return $this->c->Message->message('Bad request');
+        }
+
+        $this->c->Lang->load('validator');
+        $this->c->Lang->load('admin_uploads');
+
+        if ('POST' === $method) {
+            $v = $this->c->Validator->reset()
+                ->addRules([
+                    'token'     => 'token:AdminUploadsDelete',
+                    'confirm'   => 'checkbox',
+                    'delete'    => 'required|string',
+                ])->addAliases([
+                ])->addArguments([
+                    'token' => $args,
+                ]);
+
+            if (
+                ! $v->validation($_POST)
+                || '1' !== $v->confirm
+            ) {
+                return $this->c->Redirect->page('AdminUploads')->message('No confirm redirect', FORK_MESS_WARN);
+            }
+
+            $page = $this->c->Redirect->page('AdminUploads');
+
+            return $this->c->attachments->deleteFile($args['id'])
+                ? $page->message('File deleted redirect', FORK_MESS_SUCC)
+                : $page->message('File not deleted redirect', FORK_MESS_ERR);
+        }
+
+        $this->nameTpl   = 'admin/form';
+        $this->aIndex    = 'uploads';
+        $this->aCrumbs[] = [
+            $this->c->Router->link('AdminUploadsDelete', ['id' => $args['id']]),
+            'Delete file head',
+        ];
+        $this->form      = $this->formDelete($args, $info);
+        $this->classForm = ['deletefile'];
+        $this->titleForm = 'Delete file head';
+
+        return $this;
+    }
+
+    /**
+     * Подготавливает массив данных для формы
+     */
+    protected function formDelete(array $args, array $info): array
+    {
+        return [
+            'action' => $this->c->Router->link('AdminUploadsDelete', $args),
+            'hidden' => [
+                'token' => $this->c->Csrf->create('AdminUploadsDelete', $args),
+            ],
+            'sets'   => [
+                'confirm' => [
+                    'fields' => [
+                        'confirm' => [
+                            'caption' => 'Confirm delete',
+                            'type'    => 'checkbox',
+                            'label'   => ['I want to delete file %s', $info['path']],
+                            'checked' => false,
+                        ],
+                    ],
+                ],
+                [
+                    'inform' => [
+                        [
+                            'message' => ['Delete file warn', \count($info['pids']), \count($info['pmids'])],
+                        ],
+                    ],
+                ],
+            ],
+            'btns'   => [
+                'delete' => [
+                    'type'  => 'submit',
+                    'value' => __('Delete'),
+                ],
+                'cancel' => [
+                    'type'  => 'btn',
+                    'value' => __('Cancel'),
+                    'href'  => $this->c->Router->link('AdminUploads'),
+                ],
+            ],
+        ];
     }
 }

@@ -56,3 +56,21 @@ msgstr "Создан"
 
 msgid "User head"
 msgstr "Автор"
+
+msgid "Delete file head"
+msgstr "Удаление файла"
+
+msgid "Confirm delete"
+msgstr "Удалить файл?"
+
+msgid "I want to delete file %s"
+msgstr "Да, я хочу удалить файл <b>%s</b>"
+
+msgid "Delete file warn"
+msgstr "Файл встречается (приблизительно) в <b>%1$s</b> сообщениях и в <b>%2$s</b> личных сообщениях."
+
+msgid "File deleted redirect"
+msgstr "Файл удален."
+
+msgid "File not deleted redirect"
+msgstr "Не получилось удалить файл."

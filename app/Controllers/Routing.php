@@ -877,6 +877,12 @@ class Routing
             );
             $r->add(
                 $r::DUO,
+                '/admin/uploads/delete/{id|i:[1-9]\d*}',
+                'AdminUploads:delete',
+                'AdminUploadsDelete'
+            );
+            $r->add(
+                $r::DUO,
                 '/admin/antispam',
                 'AdminAntispam:view',
                 'AdminAntispam'
