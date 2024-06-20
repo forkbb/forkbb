@@ -12,7 +12,6 @@ namespace ForkBB\Models\Pages;
 
 use ForkBB\Core\Container;
 use ForkBB\Models\Page;
-use function \ForkBB\__;
 
 class Maintenance extends Page
 {
