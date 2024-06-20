@@ -11,18 +11,24 @@ declare(strict_types=1);
 namespace ForkBB\Models\Pages;
 
 use ForkBB\Models\Page;
-use function \ForkBB\__;
 
 class Message extends Page
 {
     /**
+     * Флаг для отключения записи данных в таблицу ::online
+     * и невыполнения метода prepare() страницы
+     */
+    protected bool $noOnlinePos = false;
+
+    /**
      * Подготавливает данные для шаблона
      */
-    public function message(string|array $message, bool $back = true, int $status = 400, array $headers = []): Page
+    public function message(string|array $message, bool $back = true, int $status = 400, array $headers = [], bool $noOnlinePos = false): Page
     {
         $this->identifier   = 'message';
         $this->nameTpl      = 'message';
-        $this->onlinePos    = 'info-' . $status;
+        $this->noOnlinePos  = $noOnlinePos;
+        $this->onlinePos    = $noOnlinePos ? null : 'info-' . $status;
         $this->onlineDetail = null;
         $this->httpStatus   = \max(200, $status);
         $this->titles       = 'Info';
@@ -70,14 +76,22 @@ class Message extends Page
     }
 
     /**
+     * Подготовка страницы к отображению
+     */
+    public function prepare(): void
+    {
+        if (false === $this->noOnlinePos) {
+            parent::prepare();
+        }
+    }
+
+    /**
      * Задает массивы главной навигации форума
      */
     protected function boardNavigation(): void
     {
-        if ($this->c->config->i_fork_revision < $this->c->FORK_REVISION) {
-            return;
+        if ($this->c->config->i_fork_revision >= $this->c->FORK_REVISION) {
+            parent::boardNavigation();
         }
-
-        parent::boardNavigation();
     }
 }

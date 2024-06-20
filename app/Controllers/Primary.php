@@ -36,7 +36,7 @@ class Primary
                 $this->c->user = $this->c->users->create(['id' => 0, 'group_id' => FORK_GROUP_GUEST]);
             }
 
-            return $this->c->Message->message('Not Found', true, 404);
+            return $this->c->Message->message('Not Found', false, 404, [], true);
         }
 
         if (
