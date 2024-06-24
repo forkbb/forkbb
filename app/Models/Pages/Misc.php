@@ -161,10 +161,10 @@ class Misc extends Page
             $message = 'Solution removed';
             $status  = FORK_MESS_ERR;
 
-            $topic->solution      = 0;
-            $topic->solution_wa   = '';
-            $topic->solutionwa_id = 0;
-            $topic->solution_time = 0;
+            $topic->solution       = 0;
+            $topic->solution_wa    = '';
+            $topic->solution_wa_id = 0;
+            $topic->solution_time  = 0;
         } else {
             if (0 === $topic->solution) {
                 $message = 'Solution chosen';
@@ -174,10 +174,10 @@ class Misc extends Page
                 $status  = FORK_MESS_WARN;
             }
 
-            $topic->solution      = $args['id'];
-            $topic->solution_wa   = $this->c->user->username;
-            $topic->solutionwa_id = $this->c->user->id;
-            $topic->solution_time = \time();
+            $topic->solution       = $args['id'];
+            $topic->solution_wa    = $this->c->user->username;
+            $topic->solution_wa_id = $this->c->user->id;
+            $topic->solution_time  = \time();
         }
 
         $this->c->topics->update($topic);
