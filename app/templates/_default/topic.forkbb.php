@@ -196,7 +196,7 @@
           </aside>
         @endif
         @php $showPostReaction = $p->userRules->showReaction && (! empty($post->reactions) || $post->useReaction) && ! empty($reactions = $post->reactionData()); @endphp
-        @php $showPostBtns = $post->canReport || $post->canDelete || $post->canEdit || $post->canQuote || $p->model->canChSolution; @endphp
+        @php $showPostBtns = $post->canReport || $post->canDelete || $post->canEdit || $post->canQuote || $p->model->canChSolution || (1 === $post->postNumber && $p->model->solution > 0); @endphp
         @if ($showPostReaction || $showPostBtns)
           <aside class="f-post-bfooter">
             @if ($showPostReaction)
@@ -207,6 +207,10 @@
             @if ($showPostBtns)
             <div class="f-post-btns">
               <small>{!! __('ACTIONS') !!}</small>
+                @if (1 === $post->postNumber && $p->model->solution > 0)
+              <small>-</small>
+              <a class="f-btn f-gotosolution" title="{{ __('Go to solution') }}" href="{{ $p->model->linkGoToSolution }}" rel="nofollow"><span>{!! __('Go to solution') !!}</span></a>
+                @endif
                 @if ($p->model->canChSolution)
               <small>-</small>
               <a class="f-btn f-postsolution" title="{{ __('Solution') }}" href="{{ $post->linkSolution }}" rel="nofollow"><span>{!! __('Solution') !!}</span></a>

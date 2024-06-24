@@ -139,3 +139,6 @@ msgstr "This is the solution. %1$s (%2$s)"
 
 msgid "Table of content"
 msgstr "Table of content"
+
+msgid "Go to solution"
+msgstr "Go to solution"

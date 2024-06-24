@@ -651,6 +651,18 @@ class Topic extends DataModel
         return $out;
     }
 
+    /**
+     * Возвращает ссылку на пост с решение
+     */
+    protected function getlinkGoToSolution(): string
+    {
+        if ($this->solution > 0) {
+            return $this->c->Router->link('ViewPost', ['id' => $this->solution]);
+        } else {
+            return '';
+        }
+    }
+
     protected function getcf_data(): array
     {
         $attr = $this->getModelAttr('cf_data');

@@ -140,3 +140,6 @@ msgstr "Это решение. %1$s (%2$s)"
 
 msgid "Table of content"
 msgstr "Содержание темы"
+
+msgid "Go to solution"
+msgstr "Перейти к решению"
