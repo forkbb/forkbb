@@ -1,0 +1,43 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ZombiDev <hello@zombidev.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+msgid "Sign up"
+msgstr "Regístrate"
+
+msgid "If no rules"
+msgstr "Sigue la regla de oro."
+
+msgid "Bad agree"
+msgstr "ID del formulario obsoleto. Por favor inicia el <a href=\"%s\">registro</a> de cero."
+
+msgid "Reg cancel"
+msgstr "No estuviste de acuerdo con las reglas de este foro.."
+
+msgid "Agree"
+msgstr "Estoy de acuerdo"
+
+msgid "Reg email"
+msgstr "Gracias por registrarte. Se ha enviado un correo con un enlace para activar su cuenta a la dirección especificada. Si no llega puedes contactar con el administrador del foro en <a href=\"mailto:%1$s\">%1$s</a>."
+
+msgid "Reg complete"
+msgstr "Registro completo. Puedes iniciar sesión en los foros."
+
+msgid "Email help"
+msgstr "Por favor, introduce una dirección de correo electrónico válida."
+
+msgid "Email help2"
+msgstr "Por favor, introduce una dirección de correo electrónico válida. Se utilizará para activar su cuenta."
+
+msgid "Error welcom mail"
+msgstr "Al enviar el correo electrónico hubo un error. Utilice el formulario de restablecimiento de contraseña para activar su cuenta o comuníquese con el administrador del foro en <a href=\"mailto:%1$s\">%1$s</a>."

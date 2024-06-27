@@ -1,0 +1,501 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ZombiDev <hello@zombidev.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+msgid "lang_direction"
+msgstr "ltr"
+
+msgid "lang_identifier"
+msgstr "es"
+
+msgid "lang_decimal_point"
+msgstr "."
+
+msgid "lang_thousands_sep"
+msgstr ","
+
+# date format short ([0])
+msgid "Y-m-d"
+msgstr "Y-m-d"
+
+# date format long ([1])
+msgid "d M Y"
+msgstr "d M Y"
+
+# time format short ([1])
+msgid "H:i"
+msgstr "H:i"
+
+# time format long ([0])
+msgid "H:i:s"
+msgstr "H:i:s"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Cancel redirect"
+msgstr "Operación cancelada."
+
+msgid "No confirm redirect"
+msgstr "No se proporcionó confirmación. Operación cancelada."
+
+msgid "Confirm action"
+msgstr "Confirmar acción"
+
+msgid "Forum rules"
+msgstr "Reglas del Foro"
+
+msgid "Redirecting to index"
+msgstr "Redirigiendo a la página de principal."
+
+msgid "Error mail"
+msgstr "Al enviar el correo electrónico hubo un error. Inténtelo de nuevo más tarde o comuníquese con el administrador del foro en <a href=\"mailto:%1$s\">%1$s</a>."
+
+msgid "Bad request"
+msgstr "Solicitud incorrecta. La solicitud actualmente contiene datos incorrectos."
+
+msgid "Not Found"
+msgstr "No encontrado. El enlace es incorrecto o está desactualizado."
+
+msgid "No permission"
+msgstr "No tienes permiso para acceder a esta página."
+
+msgid "Bad token"
+msgstr "Token inválido. Por favor intenta repetir la acción."
+
+msgid "Expired token"
+msgstr "Token expirado. Por favor intenta repetir la acción."
+
+msgid "Hidden text"
+msgstr "Texto oculto"
+
+msgid "Announcement"
+msgstr "Anuncio:"
+
+msgid "Options"
+msgstr "Opciones"
+
+msgid "Submit"
+msgstr "Enviar"
+
+msgid "You are banned"
+msgstr "Estás baneado de este foro.."
+
+msgid "Your IP is blocked"
+msgstr "Tu IP está bloqueada en este foro."
+
+msgid "The ban expires %s"
+msgstr "La prohibición expira al final de %s"
+
+msgid "Ban message for you"
+msgstr "El administrador o moderador que te baneó dejó el siguiente mensaje:"
+
+msgid "Ban message contact %s"
+msgstr "Dirije cualquier consulta al administrador del foro en <a href=\"mailto:%1$s\">%1$s</a>."
+
+msgid "Never"
+msgstr "Nunca"
+
+msgid "Today"
+msgstr "Hoy"
+
+msgid "Yesterday"
+msgstr "Ayer"
+
+msgid "Info"
+msgstr "Información"
+
+msgid "Go back"
+msgstr "Regresar"
+
+msgid "Maintenance"
+msgstr "Mantenimiento"
+
+msgid "Redirecting"
+msgstr "Redireccionando"
+
+msgid "Redireccionando..."
+msgstr "<br><a href=\"%s\">Redireccionando …</a>"
+
+msgid "on"
+msgstr "on"
+
+msgid "off"
+msgstr "off"
+
+msgid "Last post"
+msgstr "Último mensaje"
+
+msgid "by %s"
+msgstr "por %s"
+
+msgid "New posts"
+msgstr "Nuevos mensajes"
+
+msgid "New posts info"
+msgstr "Ir al primer mensaje nuevo en este tema."
+
+msgid "Unread posts"
+msgstr "Mensajes sin leer"
+
+msgid "Unread posts info"
+msgstr "Ir al primer mensaje no leído en este tema"
+
+msgid "Username"
+msgstr "Usuario"
+
+msgid "Passphrase"
+msgstr "Frase de contraseña"
+
+msgid "Email"
+msgstr "Correo electrónico"
+
+msgid "Send email"
+msgstr "Enviar correo electrónico"
+
+msgid "Registered"
+msgstr "Registrado"
+
+msgid "Subject"
+msgstr "Asunto"
+
+msgid "Message"
+msgstr "Mensaje"
+
+msgid "Topic"
+msgstr "Tema"
+
+msgid "Forum"
+msgstr "Foro"
+
+msgid "Stats"
+msgstr "Estadísticas"
+
+msgid "Posts"
+msgstr "Mensajes"
+
+msgid "Replies"
+msgstr "Respuestas"
+
+msgid "%s Reply"
+msgid_plural "%s Replys"
+msgstr[0] "<b>%s</b> Respuesta"
+msgstr[1] "<b>%s</b> Respuestas"
+
+msgid "%s View"
+msgid_plural "%s Views"
+msgstr[0] "<b>%s</b> vista"
+msgstr[1] "<b>%s</b> vistas"
+
+msgid "Pages"
+msgstr "Páginas:"
+
+msgid "Page %s"
+msgstr "Página %s"
+
+msgid "Page %1$s of %2$s"
+msgstr "Página %1$s de %2$s ·"
+
+msgid "Image link"
+msgstr "imagen"
+
+msgid "%s wrote"
+msgstr "%s escribió:"
+
+msgid "Mailer"
+msgstr "%s"
+
+msgid "Previous"
+msgstr "Anterior"
+
+msgid "Next"
+msgstr "Siguiente"
+
+msgid "Spacer"
+msgstr "&hellip;"
+
+msgid "Title"
+msgstr "Título"
+
+msgid "Member"
+msgstr "Usuario"
+
+msgid "Moderator"
+msgstr "Moderador"
+
+msgid "Administrator"
+msgstr "Administrador"
+
+msgid "Banned"
+msgstr "Baneado"
+
+msgid "Guest"
+msgstr "Visitante"
+
+msgid "Unverified"
+msgstr "Sin verificar"
+
+msgid "Index"
+msgstr "Inicio"
+
+msgid "Home page"
+msgstr "Página de inicio"
+
+msgid "User list"
+msgstr "Lista de usuarios"
+
+msgid "List of users"
+msgstr "Lista de usuarios"
+
+msgid "Rules"
+msgstr "Normas"
+
+msgid "Board rules"
+msgstr "Normas del foro"
+
+msgid "Search"
+msgstr "Buscar"
+
+msgid "Search topics and posts"
+msgstr "Buscar temas y mensajes"
+
+msgid "Register"
+msgstr "Registro"
+
+msgid "Login"
+msgstr "Login"
+
+msgid "Profile"
+msgstr "Profile"
+
+msgid "Your profile"
+msgstr "Tu perfil"
+
+msgid "Logout"
+msgstr "Cerrar sessión"
+
+msgid "Admin"
+msgstr "Panel Admin"
+
+msgid "Administration functions"
+msgstr "Funciones de administración"
+
+msgid "Title separator"
+msgstr " - "
+
+msgid "PM"
+msgstr "PM"
+
+msgid "PM %s"
+msgstr "<span class="f-spantxtpm">PM </span><b>(%s)</b>"
+
+msgid "Private messages"
+msgstr "Mensajes privados"
+
+msgid "Send PM"
+msgstr "Enviar mensaje privado"
+
+msgid "Board footer"
+msgstr "Board footer:"
+
+msgid "Powered by"
+msgstr "Desarrollado por <a href=\"https://forkbb.ru\">ForkBB</a>"
+
+msgid "Debug table"
+msgstr "Información de depuración:"
+
+msgid "Generated in %1$s, %2$s queries"
+msgstr "Generado en %1$s segundos, %2$s consultas ejecutadas"
+
+msgid "Memory %1$s, Peak %2$s"
+msgstr "Memoria usada: %1$s (Peak: %2$s)"
+
+msgid "Query times"
+msgstr "Tiempo (s)"
+
+msgid "Query"
+msgstr "Consulta"
+
+msgid "The most recent posts at %s board"
+msgstr "Los mensajes más recientes en el foro \"%s\"."
+
+msgid "The most recent posts in %s forum"
+msgstr "Los mensajes más recientes en el foro \"%s\"."
+
+msgid "The most recent posts in %s topic"
+msgstr "Los mensajes más recientes en el tema \"%s\"."
+
+msgid "RSS reply"
+msgstr "Re: "
+
+msgid "RSS active topics feed"
+msgstr "Feed RSS de temas activos"
+
+msgid "Atom active topics feed"
+msgstr "Feed Atom de temas activos"
+
+msgid "RSS forum feed"
+msgstr "RSS feed foro"
+
+msgid "Atom forum feed"
+msgstr "Atom feed foro"
+
+msgid "RSS topic feed"
+msgstr "RSS feed temas"
+
+msgid "Atom topic feed"
+msgstr "Atom feed temas"
+
+msgid "After time"
+msgstr "Añadido después"
+
+msgid "After time s"
+msgstr " s"
+
+msgid "After time i"
+msgstr " min"
+
+msgid "After time H"
+msgstr " h"
+
+msgid "After time d"
+msgstr " d"
+
+msgid "New reports"
+msgstr "<a href=\"%s\">Hay nuevos reportes</a>"
+
+msgid "Maintenance mode enabled"
+msgstr "<a href=\"%s\">El modo de mantenimiento está habilitado</a>"
+
+msgid "Maintenance mode enabled off"
+msgstr "<a href=\"%s\">El modo de mantenimiento está bloqueado por el parámetro MAINTENANCE_OFF</a>"
+
+msgid "%s B"
+msgstr "%sB"
+
+msgid "%s KiB"
+msgstr "%sK"
+
+msgid "%s MiB"
+msgstr "%sM"
+
+msgid "%s GiB"
+msgstr "%sG"
+
+msgid "%s TiB"
+msgstr "%sT"
+
+msgid "%s PiB"
+msgstr "%sP"
+
+msgid "%s EiB"
+msgstr "%sE"
+
+msgid "Latest active topics"
+msgstr "Últimos temas activos"
+
+msgid "Find latest active topics"
+msgstr "Buscar los últimos temas activos"
+
+msgid "Unanswered topics"
+msgstr "Temas sin respuesta"
+
+msgid "Find unanswered topics"
+msgstr "Buscar temas sin respuesta"
+
+msgid "Topics with your posts"
+msgstr "Temas con tus mensajes"
+
+msgid "Find topics with your posts"
+msgstr "Buscar temas con tus mensajes"
+
+msgid "Male"
+msgstr "Masculino"
+
+msgid "Female"
+msgstr "Femenino"
+
+msgid "Save changes"
+msgstr "Guardar cambios"
+
+msgid "Save"
+msgstr "Guardar"
+
+msgid "Yes"
+msgstr "Si"
+
+msgid "No"
+msgstr "No"
+
+msgid "Your passphrase"
+msgstr "Tu frase de contraseña"
+
+msgid "User %s"
+msgstr "%s"
+
+msgid "Unsubscribe"
+msgstr "Desuscribirse"
+
+msgid "Subscribe"
+msgstr "Suscribirse"
+
+msgid "Post from topic %s"
+msgstr "Este mensaje está movido del tema &quot;%s&quot;"
+
+msgid "The search may be case sensitive"
+msgstr "La búsqueda puede distinguir entre mayúsculas y minúsculas para caracteres latinos no básicos."
+
+msgid "%s"
+msgstr "%s"
+
+msgid "\"%s\""
+msgstr "&quot;%s&quot;"
+
+msgid "ACTIONS"
+msgstr "ACCIONES"
+
+msgid "Main menu"
+msgstr "Menú principal"
+
+msgid ":like:"
+msgstr "Like"
+
+msgid ":fire:"
+msgstr "Fire"
+
+msgid ":lol:"
+msgstr "LOL"
+
+msgid ":smile:"
+msgstr "Smile"
+
+msgid ":frown:"
+msgstr "Frown"
+
+msgid ":sad:"
+msgstr "Sad"
+
+msgid ":cry:"
+msgstr "Cry"
+
+msgid ":angry:"
+msgstr "Angry"
+
+msgid ":dislike:"
+msgstr "Dislike"
+
+msgid ":meh:"
+msgstr "Meh"
+
+msgid ":shock:"
+msgstr "Shock"

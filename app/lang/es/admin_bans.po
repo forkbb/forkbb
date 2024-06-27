@@ -1,0 +1,166 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ZombiDev <hello@zombidev.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+msgid "No user message"
+msgstr "No se ha registrado ningún usuario con ese nombre de usuario. Si quieres añadir un ban no ligado a un nombre de usuario específico simplemente deja el nombre de usuario en blanco."
+
+msgid "No user ID message"
+msgstr "No se ha registrado ningún usuario con ese ID."
+
+msgid "User is admin message"
+msgstr "El usuario %s es un administrador y no puede ser baneado. Si quieres banear a un administrador, primero debes degradarlo."
+
+msgid "User is mod message"
+msgstr "El usuario %s es un moderador y no puede ser baneado. Si quieres banear a un moderador, primero debes degradarlo."
+
+msgid "User is ban"
+msgstr "El usuario %s está baneado."
+
+msgid "Must enter message"
+msgstr "Debes introducir un nombre de usuario, una dirección IP o una dirección de correo electrónico (como mínimo)."
+
+msgid "Cannot ban guest message"
+msgstr "El usuario invitado no puede ser baneado."
+
+msgid "Invalid IP message (%s)"
+msgstr "Has introducido un rango IP/IP inválido (%s)."
+
+msgid "Invalid e-mail message"
+msgstr "La dirección de correo electrónico (por ejemplo, user@domain.com) o el dominio parcial de la dirección de correo electrónico (por ejemplo, dominio.com o .com) que has introducido no son válidos."
+
+msgid "Invalid date message"
+msgstr "Has introducido una fecha de expiración no válida. La prohibición debe durar al menos un día."
+
+msgid "Ban added redirect"
+msgstr "Ban añadido."
+
+msgid "Ban edited redirect"
+msgstr "Ban editado."
+
+msgid "Ban removed redirect"
+msgstr "Ban eliminado."
+
+msgid "New ban head"
+msgstr "Nuevo ban"
+
+msgid "Add ban subhead"
+msgstr "Añadir ban"
+
+msgid "Edit ban head"
+msgstr "Ban editable"
+
+msgid "Edit ban subhead"
+msgstr "Editar ban"
+
+msgid "Username label"
+msgstr "Usuario"
+
+msgid "Username help"
+msgstr "Case-insensitive."
+
+msgid "Ban search head"
+msgstr "Buscar ban"
+
+msgid "Ban search subhead"
+msgstr "Criterio de búsqueda"
+
+msgid "Ban search info"
+msgstr "Buscar prohibiciones en la base de datos. Puedes introducir uno o varios términos de búsqueda. Se aceptan comodines en forma de asteriscos (*). Para mostrar todas las prohibiciones, deje todos los campos vacíos."
+
+msgid "Message label"
+msgstr "Mensaje"
+
+msgid "Order by label"
+msgstr "Ordenar por"
+
+msgid "Ordenar por id"
+msgstr "Record number"
+
+msgid "Ordenar por usuario"
+msgstr "Username"
+
+msgid "Order by ip"
+msgstr "IP"
+
+msgid "Order by e-mail"
+msgstr "Email"
+
+msgid "Order by expire"
+msgstr "Fecha de expiración"
+
+msgid "Ascending"
+msgstr "Ascendente"
+
+msgid "Descending"
+msgstr "Descendente"
+
+msgid "Submit search"
+msgstr "Enviar búsqueda"
+
+msgid "E-mail label"
+msgstr "Email"
+
+msgid "E-mail help"
+msgstr "El correo electrónico o dominio de correo electrónico que deseas prohibir (por ejemplo, someone@somewhere.com, somewhere.com o .com)."
+
+msgid "IP label"
+msgstr "IP address/IP-ranges"
+
+msgid "IP help"
+msgstr "La dirección IP o los rangos de IP que deseas prohibir (por ejemplo, 150.11.110.1 o 150.11.110). Separa las direcciones con espacios. Si ya se ha introducido una IP, será la última IP conocida de este usuario en la base de datos."
+
+msgid "Ban message label"
+msgstr "Mensaje ban"
+
+msgid "Ban message help"
+msgstr "Mensaje que se mostrará al usuario baneado cuando visite el foro."
+
+msgid "Message expiry subhead"
+msgstr "Mensaje de ban y expiración"
+
+msgid "Expire date label"
+msgstr "Fecha de expiración"
+
+msgid "Expire date help"
+msgstr "Fecha en la que este ban debe eliminarse automáticamente (formato: aaaa-mm-dd). Deja en blanco para eliminar manualmente."
+
+msgid "Results head"
+msgstr "Resultados de la búsqueda"
+
+msgid "Results username head"
+msgstr "Usuario"
+
+msgid "Results e-mail head"
+msgstr "Email"
+
+msgid "Results IP address head"
+msgstr "IP/IP-ranges"
+
+msgid "Results expire head"
+msgstr "Expira"
+
+msgid "Results message head"
+msgstr "Mensaje"
+
+msgid "Results banned by head"
+msgstr "Baneado por"
+
+msgid "Results actions head"
+msgstr "Acciones"
+
+msgid "Search results legend"
+msgstr "Selecciona cómo ver los resultados de la búsqueda"
+
+msgid "No bans found"
+msgstr "No se han encontrado bans que coincidan con sus criterios."

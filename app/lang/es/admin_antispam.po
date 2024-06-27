@@ -1,0 +1,34 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ZombiDev <hello@zombidev.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+msgid "Antispam head"
+msgstr "Antispam"
+
+msgid "General subhead"
+msgstr "Configuración general"
+
+msgid "Settings updated redirect"
+msgstr "Ajustes actualizados."
+
+msgid "Hidden checkboxes label"
+msgstr "Campos ocultos"
+
+msgid "Hidden checkboxes help"
+msgstr "Añadir campos ocultos de verificación a los formularios que los bots pueden atacar. Formularios como: registro, mensaje de invitado, primer mensaje de usuario."
+
+msgid "Use javascript label"
+msgstr "Usar javascript"
+
+msgid "Use javascript help"
+msgstr "Añadir un campo calculado por javascript a los formularios. Formularios: registro, mensaje de invitado, primer mensaje del usuario."

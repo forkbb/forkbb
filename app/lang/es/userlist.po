@@ -1,0 +1,66 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ZombiDev <hello@zombidev.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+msgid "User search head"
+msgstr "Buscar usuarios"
+
+msgid "User sort head"
+msgstr "Ordenar usuarios"
+
+msgid "User search info"
+msgstr "Utiliza el carácter comodín (*) y el signo de interrogación (?) para las coincidencias parciales."
+
+msgid "User group"
+msgstr "Grupo de usuario"
+
+msgid "All users"
+msgstr "< Todo >"
+
+msgid "User_list"
+msgstr "Usuarios ordenados/encontrados"
+
+msgid "<b>%s</b><small> post,</small>"
+msgid_plural "<b>%s</b><small> posts,</small>"
+msgstr[0] "<b>%s</b><small> mensaje,</small>"
+msgstr[1] "<b>%s</b><small> mensajes,</small>"
+
+msgid "<small>registered: </small><b>%s</b>"
+msgstr "<small>registrado: </small><b>%s</b>"
+
+msgid "No users found"
+msgstr "No se encontraron usuarios que coincidan con tus criterios."
+
+msgid "Search btn"
+msgstr "Buscar"
+
+msgid "Sort users by"
+msgstr "Ordenar lista de usuarios por"
+
+msgid "Sort by name"
+msgstr "Nombre"
+
+msgid "Sort by number"
+msgstr "Número de mensajes"
+
+msgid "Sort by date"
+msgstr "Fecha de registro"
+
+msgid "User sort order"
+msgstr "Orden de la lista de usuarios"
+
+msgid "Ascending"
+msgstr "Ascendente"
+
+msgid "Descending"
+msgstr "Descendente"

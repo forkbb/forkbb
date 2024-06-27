@@ -1,0 +1,133 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ZombiDev <hello@zombidev.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+msgid "Details"
+msgstr "Detalles:"
+
+msgid "Name"
+msgstr "Nombre del package"
+
+msgid "Description"
+msgstr "Descripción"
+
+msgid "Release date"
+msgstr "Fecha de publicación"
+
+msgid "Homepage"
+msgstr "Página de inicio"
+
+msgid "Licence"
+msgstr "Licencia"
+
+msgid "Requirements"
+msgstr "Requisitos:"
+
+msgid "Authors"
+msgstr "Autor(es):"
+
+msgid "php"
+msgstr "Versión PHP"
+
+msgid "forkbb"
+msgstr "Revisión ForkBB"
+
+msgid "Not installed"
+msgstr "No instalada"
+
+msgid "Disabled"
+msgstr "Desactivada"
+
+msgid "Disabled, package changed"
+msgstr "Desactivada, package cambiado"
+
+msgid "Enabled"
+msgstr "Activada"
+
+msgid "Enabled, package changed"
+msgstr "Activada, ¡pero package cambiado!"
+
+msgid "Crash"
+msgstr "Fallo, ¡package no encontrado!"
+
+msgid "Install_"
+msgstr "Instalar"
+
+msgid "Uninstall_"
+msgstr "Desinstalar"
+
+msgid "Enable_"
+msgstr "Activar"
+
+msgid "Disable_"
+msgstr "Desactivar"
+
+msgid "Update_"
+msgstr "Actualizar"
+
+msgid "Downdate_"
+msgstr "Downdate"
+
+msgid "Package version"
+msgstr "Versión de Package"
+
+msgid "Extension not found"
+msgstr "Extensión no encontrada."
+
+msgid "Invalid action"
+msgstr "Acción inválida."
+
+msgid "Redirect install"
+msgstr "La extensión está instalada."
+
+msgid "Redirect uninstall"
+msgstr "La extensión ha sido desinstalada."
+
+msgid "Redirect update"
+msgstr "La extensión ha sido actualizada."
+
+msgid "Redirect downdate"
+msgstr "La versión de la extensión ha sido degradada."
+
+msgid "Redirect enable"
+msgstr "La extensión está activada."
+
+msgid "Redirect disable"
+msgstr "La extensión está desactivada."
+
+msgid "Invalid template type"
+msgstr "Tipo de plantilla no válido."
+
+msgid "PRE name not found"
+msgstr "Nombre PRE no encontrado."
+
+msgid "Template file '%s' not found"
+msgstr "Archivo de plantilla '%s' no encontrado."
+
+msgid "An error occurred in updateCommon"
+msgstr "Se ha producido un error en updateCommon."
+
+msgid "Empty"
+msgstr "Vacío"
+
+msgid "Invalid symlink type"
+msgstr "Tipo de enlace &quot;symlink&quot; no válido."
+
+msgid "Bad symlink"
+msgstr "Mal symlink."
+
+msgid "Target '%s' not found"
+msgstr "Objetivo '%s' no encontrado."
+
+msgid "Link '%s' already exists"
+msgstr "El enlace '%s' ya existe."

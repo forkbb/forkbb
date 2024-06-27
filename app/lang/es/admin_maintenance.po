@@ -1,0 +1,82 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ZombiDev <hello@zombidev.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+msgid "Maintenance head"
+msgstr "Mantenimiento del foro"
+
+msgid "Rebuild index head"
+msgstr "Reconstruir el índice de búsqueda"
+
+msgid "Rebuild index info"
+msgstr "Si añadistes, editaste o eliminaste publicaciones manualmente en la base de datos o si tienes problemas para realizar la búsqueda, debes reconstruir el índice de búsqueda. Para obtener el mejor rendimiento, debes poner el foro en modo de mantenimiento (ver arriba) durante la reconstrucción. <b>¡La reconstrucción del índice de búsqueda puede llevar mucho tiempo y aumentará la carga del servidor durante el proceso de reconstrucción!</b>"
+
+msgid "Posts per cycle label"
+msgstr "Mensajes por ciclo"
+
+msgid "Posts per cycle help"
+msgstr "El número de mensajes a procesar por página vista. P.ej. si ingresara 300, se procesarían trescientas publicaciones y luego la página se actualizaría. Esto es para evitar que el script expire durante el proceso de reconstrucción."
+
+msgid "Starting post label"
+msgstr "ID del mensaje inicial"
+
+msgid "Starting post help"
+msgstr "El ID del mensaje para comenzar a reconstruir. El valor predeterminado es el primer ID disponible en la base de datos. Normalmente no querrás cambiar esto."
+
+msgid "Empty index label"
+msgstr "Índice vacío"
+
+msgid "Empty index help"
+msgstr "Selecciona esta opción si quieres que el índice de búsqueda se vacíe antes de reconstruirlo (ver más abajo)."
+
+msgid "Rebuild completed info"
+msgstr "Una vez finalizado el proceso, serás redirigido de nuevo a esta página. Si te ves obligado a cancelar el proceso de reconstrucción, anota el último ID de mensaje procesado e introduce ese ID+1 en &quot;Starting post ID&quot; cuando/si quieres continuar (&quot;Empty index&quot; no debe estar seleccionado)."
+
+msgid "Rebuild index"
+msgstr "Reconstruir índice"
+
+msgid "Rebuilding search index"
+msgstr "Reconstruir índice de búsqueda"
+
+msgid "Rebuilding index end"
+msgstr "El índice de reconstrucción ha terminado."
+
+msgid "Processed posts"
+msgstr "Mensajes procesados de <b>%1$s</b> a <b>%2$s</b> …"
+
+msgid "Maintenance mode label"
+msgstr "Activar"
+
+msgid "Maintenance mode help"
+msgstr "Cuando esté habilitado, el foro sólo estará disponible para los Administradores que hayan iniciado sesión antes de habilitarlo. Esta opción debe utilizarse si el foro necesita ser desactivado temporalmente por mantenimiento.<br><b>¡ATENCIÓN! No cierre la sesión cuando el foro esté en modo de mantenimiento. No podrá volver a conectarse.</b>"
+
+msgid "Maintenance message label"
+msgstr "Mensaje de mantenimiento (HTML)"
+
+msgid "Maintenance message help"
+msgstr "El mensaje que se mostrará a los usuarios cuando el foro esté en modo de mantenimiento."
+
+msgid "Default maintenance message"
+msgstr "Los foros están temporalmente inactivos por mantenimiento. <b>Inténtalo de nuevo en unos minutos.</b>"
+
+msgid "Clear cache head"
+msgstr "Limpiar cache"
+
+msgid "Clearing the cache"
+msgstr "Limpiar cache"
+
+msgid "Clear"
+msgstr "Limpiar"
+
+msgid "Clear cache redirect"
+msgstr "Caché del foro borrado."

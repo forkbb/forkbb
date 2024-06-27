@@ -1,0 +1,106 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ZombiDev <hello@zombidev.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+msgid "Poll legend"
+msgstr "Encuesta"
+
+msgid "Include poll"
+msgstr "Incluir encuesta"
+
+msgid "Hide poll results up to %s voters"
+msgstr "Ocultar resultados de encuesta hasta %s votantes"
+
+msgid "Question text label"
+msgstr "Pregunta"
+
+msgid "Answer type label"
+msgstr "Número de respuestas"
+
+msgid "Answer type help"
+msgstr "El número máximo de respuestas para votar."
+
+msgid "Answer %s label"
+msgstr "Respuesta %s"
+
+msgid "Question number %s is preceded by an empty question"
+msgstr "La pregunta número %s está precedida por una pregunta vacía."
+
+msgid "For question number %s, the structure of answers is broken"
+msgstr "Para la pregunta número %s, la estructura de respuestas está rota."
+
+msgid "Answer number %1$s is preceded by an empty answer (question number %2$s)"
+msgstr "La respuesta número %1$s está precedida por una respuesta vacía (pregunta número %2$s)."
+
+msgid "For question number %s, there is no value for the maximum number of answers for voting"
+msgstr "Para la pregunta número %s, no hay ningún valor para el número máximo de respuestas para votar."
+
+msgid "For question number %s, the maximum number of answers for voting more answers"
+msgstr "Para la pregunta número %s, el número máximo de respuestas para votar más respuestas."
+
+msgid "Requires at least two answers per question (%s)"
+msgstr "Requiere al menos dos respuestas por pregunta (%s)."
+
+msgid "The poll structure is broken"
+msgstr "La estructura de la encuesta está rota."
+
+msgid "Question %s legend"
+msgstr "Pregunta %s"
+
+msgid "You can choose up to %s answers"
+msgstr "Puedes elegir hasta %s respuestas."
+
+msgid "In total voted: %s"
+msgstr "En total votado: %s"
+
+msgid "Poll duration label"
+msgstr "Duración"
+
+msgid "Poll duration help"
+msgstr "Duración de la encuesta (en días). Estable a 0 para desactivar."
+
+msgid "(%1$s [%2$s%%])"
+msgstr "(%1$s [%2$s%%])"
+
+msgid "Poll results are hidden from the guests"
+msgstr "Los resultados de la encuesta están ocultos a los visitantes."
+
+msgid "This poll is closed"
+msgstr "Esta encuesta está cerrada."
+
+msgid "Poll results are hidden up to %s voters"
+msgstr "Los resultados de la encuesta están ocultos hasta %s votantes."
+
+msgid "You voted"
+msgstr "Tú votaste."
+
+msgid "Guest cannot vote"
+msgstr "El visitante no puede votar."
+
+msgid "Poll status is undefined"
+msgstr "El estado de la encuesta no está definido."
+
+msgid "Vote"
+msgstr "Votar"
+
+msgid "You cannot vote on this poll"
+msgstr "No puedes votar en esta encuesta."
+
+msgid "No vote on question %s"
+msgstr "No se votó la pregunta número %s."
+
+msgid "The selected answer is not present in question %s"
+msgstr "La respuesta seleccionada no está presente en la pregunta número %s."
+
+msgid "Too many answers selected in question %s"
+msgstr "Demasiadas respuestas seleccionadas en la pregunta número %s."

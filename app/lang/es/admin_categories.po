@@ -1,0 +1,46 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ZombiDev <hello@zombidev.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+msgid "Category deleted redirect"
+msgstr "Categoría eliminada"
+
+msgid "Confirm delete"
+msgstr "¿Borrar categoría?"
+
+msgid "I want to delete the category %s"
+msgstr "Sí, quiero eliminar la categoría <b>%s</b>."
+
+msgid "Delete category warn"
+msgstr "<b>¡AVISO!</b> Al borrar una categoría se borrarán todos los foros, temas y mensajes (si los hay) de esta categoría!"
+
+msgid "Categories updated redirect"
+msgstr "Categorías actualizadas."
+
+msgid "Add category label"
+msgstr "Nombre de la nueva categoría"
+
+msgid "Add category help"
+msgstr "El nombre de la nueva categoría que quieres añadir. Puedes editar el nombre de la categoría más tarde. Vete a <a href="%1$s">%2$s</a> para agregar foros a la nueva categoría."
+
+msgid "Delete category head"
+msgstr "Eliminar categoría"
+
+msgid "Delete category"
+msgstr "Eliminar categoría"
+
+msgid "Category position label"
+msgstr "Posición"
+
+msgid "Category name label"
+msgstr "Nombre"

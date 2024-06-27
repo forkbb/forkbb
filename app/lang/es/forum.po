@@ -1,0 +1,49 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ZombiDev <hello@zombidev.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+msgid "Post topic"
+msgstr "Nuevo tema"
+
+msgid "Moved"
+msgstr "Movido"
+
+msgid "Sticky"
+msgstr "Chincheta"
+
+msgid "Closed"
+msgstr "Cerrado"
+
+msgid "Poll"
+msgstr "Encuesta"
+
+msgid "Solved"
+msgstr "Solucionado"
+
+msgid "Empty forum"
+msgstr "El foro está vacío."
+
+msgid "Topic %s was not found in the database"
+msgstr "El tema №%s no se encontró en la base de datos"
+
+msgid "Last post <a href=\"%1$s\">%2$s</a>"
+msgstr "<small>Último mensaje </small><a href=\"%1$s\">%2$s</a>"
+
+msgid "Subscribe forum"
+msgstr "Recibir notificación por correo electrónico de nuevos temas."
+
+msgid "Unsubscribe forum"
+msgstr "Desinscribirse de las notificaciones por correo electrónico de nuevos temas"
+
+msgid "Topic list"
+msgstr "Lista de temas"

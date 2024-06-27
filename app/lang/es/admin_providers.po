@@ -1,0 +1,127 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ZombiDev <hello@zombidev.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+msgid "OAuth authorization disabled"
+msgstr "Autorización OAuth está <a href=\"%s\">desactivado</a>."
+
+msgid "Providers"
+msgstr "Proveedores"
+
+msgid "Provider label"
+msgstr "Proveedor"
+
+msgid "Position label"
+msgstr "Posición"
+
+msgid "Allow label"
+msgstr "Permitir"
+
+msgid "Providers updated redirect"
+msgstr "Tabla de proveedores actualizada."
+
+msgid "Provider updated redirect"
+msgstr "Datos del proveedor actualizados."
+
+msgid "github"
+msgstr "GitHub"
+
+msgid "yandex"
+msgstr "Yandex"
+
+msgid "google"
+msgstr "Google"
+
+msgid "Callback label"
+msgstr "Callback URI"
+
+msgid "Callback help"
+msgstr "El URI al que se devuelve al usuario después de haber concedido o denegado el acceso a la aplicación (corresponde al redireccionamiento_uri del protocolo OAuth). Debe especificarse al registrar su aplicación en el servidor del proveedor."
+
+msgid "ID label"
+msgstr "Client ID"
+
+msgid "ID help"
+msgstr "Identificador que podrás obtener al registrar tu aplicación en el servidor del proveedor."
+
+msgid "Secret label"
+msgstr "Client secret"
+
+msgid "Secret help"
+msgstr "El contraseña (secreta) que puede obtener al registrar su aplicación en el servidor del proveedor."
+
+msgid "Change data help"
+msgstr "Habilite esta casilla de verificación si desea cambiar los datos"
+
+msgid "Sign in with %s"
+msgstr "Inicia sesión con %s"
+
+msgid "Sign up with %s"
+msgstr "Registrarte con %s"
+
+msgid "From %s"
+msgstr "%s"
+
+msgid "Provider response error: %s"
+msgstr "Error.<br>Respuesta del proveedor: %s."
+
+msgid "State error"
+msgstr "Error en el parámetro de estado."
+
+msgid "Token error: %s"
+msgstr "Error en la solicitud del token de acceso: %s."
+
+msgid "cURL disabled"
+msgstr "La extensión cURL está deshabilitada en PHP y enable_url_fopen = OFF."
+
+msgid "cURL error"
+msgstr "cURL error."
+
+msgid "User error"
+msgstr "La solicitud de datos del usuario falló."
+
+msgid "No new regs"
+msgstr "Este foro no acepta nuevas inscripciones."
+
+msgid "Email message"
+msgstr "Este correo electrónico recibido de %s pertenece a un usuario registrado.<br>¿Quizás utilizó otro proveedor para iniciar sesión o nombre de usuario + frase de contraseña?"
+
+msgid "Already linked to you"
+msgstr "Esta cuenta ya está vinculada a usted."
+
+msgid "Already linked to another"
+msgstr "Esta cuenta ya está vinculada a otro usuario."
+
+msgid "Email registered by another"
+msgstr "La dirección de correo electrónico recibida de %s está registrada por otro usuario."
+
+msgid "Account linked"
+msgstr "Cuenta vinculada."
+
+msgid "Identifier label"
+msgstr "Identificador"
+
+msgid "Email label"
+msgstr "Correo electrónico"
+
+msgid "Verified label"
+msgstr "Correo electrónico verificado"
+
+msgid "Account removed"
+msgstr "Cuenta eliminada."
+
+msgid "First time Register?"
+msgstr "Estás aquí por primera vez. ¿Registro?"
+
+msgid "Email banned"
+msgstr "La dirección de correo electrónico recibida de %s está prohibida."

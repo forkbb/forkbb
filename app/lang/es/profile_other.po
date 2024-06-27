@@ -1,0 +1,28 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ZombiDev <hello@zombidev.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+msgid "Display e-mail label"
+msgstr "Mostrar la dirección de correo electrónico a otros usuarios"
+
+msgid "Hide allow form label"
+msgstr "Ocultar la dirección de correo electrónico pero permitir el correo electrónico del formulario"
+
+msgid "Hide both label"
+msgstr "Ocultar dirección de correo electrónico y no permitir el correo electrónico del formulario"
+
+msgid "Topics per page label"
+msgstr "Temas por página"
+
+msgid "Posts per page label"
+msgstr "Mensajes por página"

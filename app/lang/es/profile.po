@@ -1,0 +1,412 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ZombiDev <hello@zombidev.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+msgid "User activity"
+msgstr "Actividad del usuario"
+
+msgid "Activate email sent"
+msgstr "Se ha enviado un correo electrónico a la dirección especificada con instrucciones sobre cómo activar la dirección de correo electrónico. Si no llega puedes contactar con el administrador del foro en <a href=\"mailto:%1$s\">%1$s</a>."
+
+msgid "Email instructions"
+msgstr "Se enviará un correo electrónico con un enlace de activación a esta dirección de correo electrónico. Debe hacer clic en el enlace del correo electrónico que recibe para activar esta dirección."
+
+msgid "Change email"
+msgstr "Cambiar dirección de correo electrónico"
+
+msgid "New email"
+msgstr "Nueva dirección de correo electrónico"
+
+msgid "New or old email"
+msgstr "Dirección de correo electrónico nueva o antigua (para confirmación)"
+
+msgid "Delete avatar"
+msgstr "Eliminar avatar"
+
+msgid "Profile redirect"
+msgstr "Perfil actualizado."
+
+msgid "%s's profile"
+msgstr "Perfil de %s"
+
+msgid "Email info"
+msgstr "Correo electrónico"
+
+msgid "Registered info"
+msgstr "Registrado"
+
+msgid "Last post info"
+msgstr "Último mensaje"
+
+msgid "Last visit info"
+msgstr "Última visita"
+
+msgid "Posts info"
+msgstr "Mensajes totales"
+
+msgid "Show posts"
+msgstr "Ver mensajes del usuario"
+
+msgid "Topics info"
+msgstr "Temas totales"
+
+msgid "Show topics"
+msgstr "Ver temas del usuario"
+
+msgid "Realname"
+msgstr "Nombre real"
+
+msgid "Location"
+msgstr "Ubicación"
+
+msgid "Website"
+msgstr "Página web"
+
+msgid "Avatar"
+msgstr "Avatar"
+
+msgid "Signature"
+msgstr "Firma"
+
+msgid "Sig max size"
+msgstr "Longitud máxima: <b>%1$s</b> carácteres / Líneas máximas: <b>%2$s</b>"
+
+msgid "Leave blank"
+msgstr "Déjelo en blanco para usar el foro predeterminado."
+
+msgid "Subscription options"
+msgstr "Opciones de suscripción"
+
+msgid "Notify label"
+msgstr "Notificación con texto de mensaje."
+
+msgid "Notify info"
+msgstr "Incluir un texto de nuevos mensajes en los correos electrónicos de notificación de suscripción."
+
+msgid "Auto notify label"
+msgstr "Suscríbirse automáticamente a temas"
+
+msgid "Auto notify info"
+msgstr "Suscríbirse automáticamente a todos los temas en los que envías mensajes."
+
+msgid "Smilies label"
+msgstr "Smilies"
+
+msgid "Smilies info"
+msgstr "Ver smilies as iconos gráficos."
+
+msgid "Images label"
+msgstr "Imágenes en mensajes"
+
+msgid "Images info"
+msgstr "Mostrar imágenes en mensajes."
+
+msgid "Images sigs label"
+msgstr "Imágenes en firmas"
+
+msgid "Images sigs info"
+msgstr "Mostrar imágenes en firmas de usuarios."
+
+msgid "Reaction label"
+msgstr "Reacciones"
+
+msgid "Reaction info"
+msgstr "Mostrar reacciones en los mensajes."
+
+msgid "Avatars label"
+msgstr "Avatars"
+
+msgid "Avatars info"
+msgstr "Mostrar avatars en mensajes."
+
+msgid "Sigs label"
+msgstr "Firmas"
+
+msgid "Sigs info"
+msgstr "Mostrar firmas de usuarios."
+
+msgid "Style"
+msgstr "Estilo"
+
+msgid "Admin note"
+msgstr "Nota de administración"
+
+msgid "Admin note help"
+msgstr "Para administradores y moderadores."
+
+msgid "Delete user"
+msgstr "Eliminar"
+
+msgid "Ban user"
+msgstr "Ban"
+
+msgid "Unban user"
+msgstr "Desbanear"
+
+msgid "Update rights redirect"
+msgstr "Derechos de moderador del foro actualizados."
+
+msgid "Gender"
+msgstr "Género"
+
+msgid "Do not display"
+msgstr "No mostrar"
+
+msgid "Contact details"
+msgstr "Detalles de contacto"
+
+msgid "Personal information"
+msgstr "Información personal"
+
+msgid "Email settings label"
+msgstr "Ajustes del correo electrónico"
+
+msgid "View "
+msgstr "Ver"
+
+msgid "Edit "
+msgstr "Editar"
+
+msgid "Editing profile"
+msgstr "Editar perfil"
+
+msgid "Configure "
+msgstr "Configurar"
+
+msgid "Board configuration"
+msgstr "Configuración del foro"
+
+msgid "Not uploaded"
+msgstr "No subido"
+
+msgid "New avatar"
+msgstr "Nuevo avatar"
+
+msgid "New avatar info"
+msgstr "El tamaño del avatar cambiará automáticamente a <b>%1$s</b>x<b>%2$s</b> píxel. El avatar se eliminará si su tamaño excede los <b>%3$s</b> bytes (<i>%4$s</i>) después de la compresión."
+
+msgid "IP"
+msgstr "IP"
+
+msgid "IP title"
+msgstr "Mostrar información de la IP"
+
+msgid "No signature after censoring"
+msgstr "El texto de la firma fue eliminado tras la censura."
+
+msgid "Signature has too many lines"
+msgstr "La firma tiene demasiadas líneas."
+
+msgid "All caps signature"
+msgstr "La firma solo tiene letras mayúsculas."
+
+msgid "To change email"
+msgstr "Cambiar dirección de correo electrónico"
+
+msgid "To confirm/change email"
+msgstr "Confirmar/cambiar dirección de correo electrónico"
+
+msgid "Email is old redirect"
+msgstr "La dirección de correo electrónico no se ha cambiado."
+
+msgid "Email changed redirect"
+msgstr "Dirección de correo electrónico cambiada."
+
+msgid "Email confirmed redirect"
+msgstr "Dirección de correo electrónico confirmada."
+
+msgid "Pass not match"
+msgstr "Las frases de contraseña no coinciden."
+
+msgid "Change pass"
+msgstr "Cambiar frase de contraseña"
+
+msgid "Change passphrase"
+msgstr "Cambiar frase de contraseña"
+
+msgid "New pass"
+msgstr "Nueva frase de contraseña"
+
+msgid "Confirm new pass"
+msgstr "Confirmar nueva frase de contraseña"
+
+msgid "Pass updated"
+msgstr "Su frase de contraseña ha sido actualizada. Ahora puede iniciar sesión con su nueva contraseña."
+
+msgid "Pass updated redirect"
+msgstr "Frase de contraseña actualizada."
+
+msgid "Language"
+msgstr "Lenguaje"
+
+msgid "Essentials"
+msgstr "Esenciales"
+
+msgid "Time zone"
+msgstr "Zona horaria"
+
+msgid "Default for language"
+msgstr "Idioma predeterminado"
+
+msgid "For default"
+msgstr "Zero this field for the default settings."
+
+msgid "Time format"
+msgstr "Formato de hora"
+
+msgid "Date format"
+msgstr "Formato de fecha"
+
+msgid "Viewing posts"
+msgstr "Viendo mensajes"
+
+msgid "Pagination"
+msgstr "Paginación"
+
+msgid "Board configuration redirect"
+msgstr "Configuración del foro actualizada."
+
+msgid "Group"
+msgstr "Grupo"
+
+msgid "Change user group"
+msgstr "Cambiar grupo de usuarios"
+
+msgid "Configure moderator rights"
+msgstr "Configurar permisos de moderador"
+
+msgid "Moderator rights"
+msgstr "Permisos de moderador"
+
+msgid "Forum label"
+msgstr "Foro"
+
+msgid "Moderator label"
+msgstr "Moderador"
+
+msgid "Private information"
+msgstr "Información privada"
+
+msgid "Security"
+msgstr "Seguridad"
+
+msgid "IP check"
+msgstr "Comprobar IP"
+
+msgid "Disable check"
+msgstr "Desactivado"
+
+msgid "Not strict check"
+msgstr "No estricto"
+
+msgid "Strict check"
+msgstr "Estricto"
+
+msgid "IP check info"
+msgstr "<b>Estricto</b> - si tu dirección IP ha cambiado, cerrará sesión;<br><b>No estricto</b>: este foro recuerda entre 10 y 20 de sus últimas direcciones IP y si su dirección IP actual no está en esta lista, cerrará sesión;<br><b>Desactivado</b>: si cambia tu dirección IP, no afecta nada."
+
+msgid "Total topics subscriptions"
+msgstr "Subscripciones totales a temas"
+
+msgid "Total forums subscriptions"
+msgstr "Suscripciones totales a foros"
+
+msgid "Show topics subscriptions"
+msgstr "Show user subscriptions to topics"
+
+msgid "Show forums subscriptions"
+msgstr "Mostrar suscripciones de usuarios a foros"
+
+msgid "Configure OAuth"
+msgstr "Configurar cuentas OAuth"
+
+msgid "OAuth accounts"
+msgstr "Cuentas OAuth"
+
+msgid "No linked accounts"
+msgstr "Sin cuentas vinculadas."
+
+msgid "Linked accounts"
+msgstr "Cuentas vinculadas"
+
+msgid "Add account"
+msgstr "Añadir nueva cuenta"
+
+msgid "Delete"
+msgstr "Eliminar"
+
+msgid "Delete my profile"
+msgstr "Elminar perfil"
+
+msgid "Deleting profile"
+msgstr "Eliminar perfil"
+
+msgid "You are trying to delete your profile"
+msgstr "Estás intentando eliminar tu perfil."
+
+msgid "Confirm delete label"
+msgstr "¿Eliminar perfil?"
+
+msgid "Confirm delete info"
+msgstr "<b>¡Esta es una operación irreversible!</b>"
+
+msgid "Your deleted redirect"
+msgstr "Tu perfil ha sido eliminado."
+
+msgid "Search config"
+msgstr "Configurar búsqueda"
+
+msgid "Search options"
+msgstr "Opciones de búsqueda"
+
+msgid "Set up search"
+msgstr "Configurar la búsqueda"
+
+msgid "Follow label"
+msgstr "Seguir"
+
+msgid "Update search config redirect"
+msgstr "Configuración de búsqueda actualizada."
+
+msgid "Select followed forums for %s and %s:"
+msgstr "Seleccione los foros seguidos por <b><i>%s</i></b> y <b><i>%s</i></b>:"
+
+msgid "mDescription for %s"
+msgstr "Perfil de %s. Actividad, publicaciones, temas y contactos."
+
+msgid "Page scroll label"
+msgstr "Desplazamiento de página"
+
+msgid "Page scroll info"
+msgstr "Si está activo, el script javascript desplazará la página abierta en la ventana activa más allá de los bloques especificados. El funcionamiento depende de su navegador y su configuración."
+
+msgid "Not active"
+msgstr "Sin activar"
+
+msgid "Past the header (smooth)"
+msgstr "Más allá del encabezado (suave)"
+
+msgid "Past the header and announce (smooth)"
+msgstr "Más allá del encabezado y anuncio (suave)"
+
+msgid "Past the header (no animation)"
+msgstr "Más allá del encabezado (sin animación)"
+
+msgid "Past the header and announce (no animation)"
+msgstr "Más allá del encabezado y anuncio (sin animación)"
+
+msgid "Recalculate posts and topics"
+msgstr "Recalcular mensajes y temas."
+
+msgid "Recalculate %s redirect"
+msgstr "Se ha recalculado el número de mensajes y temas para <b>%s</b>."

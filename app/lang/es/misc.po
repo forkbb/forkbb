@@ -1,0 +1,311 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ZombiDev <hello@zombidev.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+msgid "Mark read redirect"
+msgstr "Todos los temas y foros se han marcado como leídos."
+
+msgid "Mark forum read redirect"
+msgstr "Todos los temas del foro especificado se han marcado como leídos."
+
+msgid "Form email disabled"
+msgstr "El usuario al que intentas enviar un correo electrónico ha desactivado el formulario de correo electrónico."
+
+msgid "Email sent redirect"
+msgstr "Correo electrónico enviado."
+
+msgid "Send email to %s"
+msgstr "Enviar correo electrónico a %s"
+
+msgid "Send email title"
+msgstr "Enviar correo electrónico"
+
+msgid "Email subject"
+msgstr "Asunto"
+
+msgid "Email message"
+msgstr "Mensaje"
+
+msgid "Email disclosure note"
+msgstr "Ten en cuenta que al utilizar este formulario, tu dirección de correo electrónico será revelada al destinatario."
+
+msgid "Report redirect"
+msgstr "Mensaje reportado."
+
+msgid "Report post"
+msgstr "Reportar mensaje"
+
+msgid "Reason"
+msgstr "Razón"
+
+msgid "Reason desc"
+msgstr "Por favor, introduce un breve motivo por el que estás denunciando esta publicación."
+
+msgid "Subscribe redirect"
+msgstr "Tu suscripción ha sido añadida."
+
+msgid "Unsubscribe redirect"
+msgstr "Tu suscripción ha sido eliminada."
+
+msgid "Moderate"
+msgstr "Moderado"
+
+msgid "Select for moderation"
+msgstr "Selecciona para moderar"
+
+msgid "Move"
+msgstr "Mover"
+
+msgid "Split"
+msgstr "Dividir"
+
+msgid "Delete"
+msgstr "Eliminar"
+
+msgid "Merge"
+msgstr "Unir"
+
+msgid "Open"
+msgstr "Abrir"
+
+msgid "Close"
+msgstr "Cerrar"
+
+msgid "Stick"
+msgstr "Poner chincheta"
+
+msgid "Unstick"
+msgstr "Quitar chincheta"
+
+msgid "Move topic title"
+msgid_plural "Move topics title"
+msgstr[0] "Mover tema"
+msgstr[1] "Mover temas"
+
+msgid "Invalid destination"
+msgstr "Destino no válido."
+
+msgid "Move to"
+msgstr "Mover a"
+
+msgid "Nowhere to move"
+msgstr "No hay foros a los que puedas mover temas."
+
+msgid "Leave redirect"
+msgstr "Dejar tema(s) de redirección"
+
+msgid "Move topic redirect"
+msgid_plural "Move topic redirect"
+msgstr[0] "Tema movido."
+msgstr[1] "Temas movidos."
+
+msgid "Delete topic title"
+msgid_plural "Delete topics title"
+msgstr[0] "Delete topic"
+msgstr[1] "Delete topics"
+
+msgid "Delete topics redirect"
+msgid_plural "Delete topics redirect"
+msgstr[0] "Topic deleted."
+msgstr[1] "Topics deleted."
+
+msgid "Open topic redirect"
+msgid_plural "Open topics redirect"
+msgstr[0] "Tema abierto."
+msgstr[1] "Temas abiertos."
+
+msgid "Close topic redirect"
+msgid_plural "Close topics redirect"
+msgstr[0] "Tema cerrado."
+msgstr[1] "Temas cerrados."
+
+msgid "Not enough topics selected"
+msgstr "Debes seleccionar al menos dos temas para unirlos."
+
+msgid "Stick topic title"
+msgid_plural "Stick topics title"
+msgstr[0] "Tema chincheta"
+msgstr[1] "Temas chinchetas"
+
+msgid "Stick topic redirect"
+msgid_plural "Stick topics redirect"
+msgstr[0] "Tema chincheta."
+msgstr[1] "Temas chinchetas."
+
+msgid "Unstick topic title"
+msgid_plural "Unstick topics title"
+msgstr[0] "Quitar chincheta en tema"
+msgstr[1] "Quitar chinchetas en temas"
+
+msgid "Unstick topic redirect"
+msgid_plural "Unstick topics redirect"
+msgstr[0] "Quitar chincheta en tema"
+msgstr[1] "Quitar chinchetas en temas"
+
+msgid "Merge topics title"
+msgstr "Unir temas"
+
+msgid "Merge topics redirect"
+msgstr "Temas unidos."
+
+msgid "New subject"
+msgstr "Nuevo asunto"
+
+msgid "No subject"
+msgstr "No hay asunto para el tema nuevo."
+
+msgid "Split posts title"
+msgstr "Tema dividido"
+
+msgid "Split posts redirect"
+msgstr "El tema está dividido."
+
+msgid "Delete post title"
+msgid_plural "Delete posts title"
+msgstr[0] "Eliminar mensaje"
+msgstr[1] "Eliminar mensajes"
+
+msgid "Delete post redirect"
+msgid_plural "Delete posts redirect"
+msgstr[0] "Mensaje eliminado."
+msgstr[1] "Mensajes eliminados."
+
+msgid "Topic «%s»"
+msgstr "Tema «%s»"
+
+msgid "Post «%1$s by %2$s»"
+msgstr "Mensaje «%1$s por %2$s»"
+
+msgid "All posts will be posted in the «%s» topic"
+msgstr "Todos los mensajes se publicarán en el tema «%s»."
+
+msgid "Action not available"
+msgstr "Acción no disponible."
+
+msgid "No object selected"
+msgstr "Debes seleccionar al menos un elemento para la acción."
+
+msgid "Open topic title"
+msgid_plural "Open topics title"
+msgstr[0] "Tema abierto"
+msgstr[1] "Temas abiertos"
+
+msgid "Close topic title"
+msgid_plural "Close topics title"
+msgstr[0] "Tema cerrado"
+msgstr[1] "Temas cerrados"
+
+msgid "Topic links cannot be merged"
+msgstr "Los enlaces de temas no se pueden fusionar."
+
+msgid "Category prefix"
+msgstr ""
+
+msgid "Forum prefix"
+msgstr ""
+
+msgid "Forum indent"
+msgstr "◦ ◦ "
+
+msgid "Moderate topic"
+msgstr "Tema moderado"
+
+msgid "All"
+msgstr "All"
+
+msgid "Delete topic btn"
+msgid_plural "Delete topics btn"
+msgstr[0] "Elminar tema"
+msgstr[1] "Eliminar temas"
+
+msgid "Delete post btn"
+msgid_plural "Delete posts btn"
+msgstr[0] "Eliminar mensaje"
+msgstr[1] "Eliminar mensajes"
+
+msgid "Move topic btn"
+msgid_plural "Move topics btn"
+msgstr[0] "Mover tema"
+msgstr[1] "Mover temas"
+msgstr[2] "Mover temas"
+
+msgid "Open topic btn"
+msgid_plural "Open topics btn"
+msgstr[0] "Abrir tema"
+msgstr[1] "Abrir temas"
+
+msgid "Close topic btn"
+msgid_plural "Close topics btn"
+msgstr[0] "Cerrar tema"
+msgstr[1] "Cerrar temas"
+
+msgid "Merge btn"
+msgstr "Unir temas"
+
+msgid "Unstick btn"
+msgid_plural "Unstick btn"
+msgstr[0] "Quitar chincheta de tema"
+msgstr[1] "Quitar chincheta de temas"
+
+msgid "Stick btn"
+msgid_plural "Stick btn"
+msgstr[0] "Poner chincheta en tema"
+msgstr[1] "Poner chincheta en temas"
+
+msgid "Split btn"
+msgstr "Tema dividido"
+
+msgid "Moderate forum"
+msgstr "Foro moderado"
+
+msgid "When sending email there was an error"
+msgstr "Al enviar el correo electrónico hubo un error. Por favor, inténtalo de nuevo más tarde."
+
+msgid "Confirm your email address"
+msgstr "Primero, <a href=\"%s\">confirma</a> tu dirección de correo electrónico."
+
+msgid "Poll cannot be attached"
+msgstr "Un tema con una encuesta no puede adjuntarse a otro tema."
+
+msgid "Link btn"
+msgstr "Redirigir"
+
+msgid "Only one topic is permissible"
+msgstr "Solo se debe seleccionar un tema para administrar los enlaces al mismo.."
+
+msgid "Control of redirects title"
+msgstr "Control de temas de redirecciones"
+
+msgid "Need full topic for this operation"
+msgstr "Debe elegir un tema completo para esta operación."
+
+msgid "Forum label"
+msgstr "Foro"
+
+msgid "Redir label"
+msgstr "Establecer tema de redirección"
+
+msgid "Change btn"
+msgstr "Cambiar"
+
+msgid "Redirects changed redirect"
+msgstr "Los temas de redireccionamiento cambiaron."
+
+msgid "Solution chosen"
+msgstr "La solución ha sido elegida.."
+
+msgid "Solution changed"
+msgstr "La solución ha sido cambiada."
+
+msgid "Solution removed"
+msgstr "La solución ha sido eliminada."

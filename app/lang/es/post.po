@@ -1,0 +1,118 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ZombiDev <hello@zombidev.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+msgid "No subject after censoring"
+msgstr "Los temas deben contener un asunto. Después de aplicar filtros de censura, tu tema estaba vacío."
+
+msgid "No message after censoring"
+msgstr "Debes ingresar un mensaje. Después de aplicar filtros de censura, tu mensaje estaba vacío."
+
+msgid "All caps subject"
+msgstr "Los asuntos no pueden contener solo letras mayúsculas."
+
+msgid "All caps message"
+msgstr "Los mensajes no pueden contener solo letras mayúsculas."
+
+msgid "Post preview"
+msgstr "Vista previa"
+
+msgid "Post redirect"
+msgstr "Mensaje ingresado."
+
+msgid "Post a reply"
+msgstr "Responder"
+
+msgid "Post new topic"
+msgstr "Nuevo tema"
+
+msgid "Hide smilies"
+msgstr "No mostrar nunca emoticones como íconos para este mensaje"
+
+msgid "New subscribe"
+msgstr "Suscríbete a este tema"
+
+msgid "Stay subscribed"
+msgstr "Manténte suscrito a este tema."
+
+msgid "Topic review"
+msgstr "Revisión del tema (el más nuevo primero)"
+
+msgid "Preview"
+msgstr "Previsualizar"
+
+msgid "EditPost edit"
+msgstr "Permitir editar el mensaje dado sin restricciones."
+
+msgid "Stick first post"
+msgstr "Para pegar la primera publicación en todas las páginas del tema"
+
+msgid "Edit post"
+msgstr "Editar mensaje"
+
+msgid "Edit topic"
+msgstr "Editar tema"
+
+msgid "Merge posts"
+msgstr "Unir con el anterior si es tuyo."
+
+msgid "Edit redirect"
+msgstr "Mensaje actualizado."
+
+msgid "Stick topic"
+msgstr "Tema chincheta"
+
+msgid "Create topic"
+msgstr "Crear tema"
+
+msgid "Re"
+msgstr "Re: "
+
+msgid "%1$s (%2$s max size)"
+msgstr "%1$s (%2$s de tamaño máximo)"
+
+msgid "Attachments"
+msgstr "Archivos adjuntos"
+
+msgid "Change author and date"
+msgstr "Cambiar autor y fecha"
+
+msgid "Change"
+msgstr "Cambiar"
+
+msgid "Posted"
+msgstr "Publicado"
+
+msgid "Change AnD topic"
+msgstr "Cambiar autor del tema y su fecha"
+
+msgid "Change AnD post"
+msgstr "Cambiar autor del mensaje y su fecha"
+
+msgid "User %s does not exist"
+msgstr "Usuario '%s' no existe."
+
+msgid "Change redirect"
+msgstr "Cambios realizados."
+
+msgid "All"
+msgstr "Los datos de este campo son visibles para todos."
+
+msgid "Not guests"
+msgstr "Los datos de este campo son visibles para todos excepto para los invitados."
+
+msgid "Admins and mods"
+msgstr "Los datos de este campo solo son visibles para los administradores y moderadores del foro."
+
+msgid "Admins only"
+msgstr "Los datos de este campo solo son visibles para los administradores."

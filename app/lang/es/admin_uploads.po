@@ -1,0 +1,76 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ZombiDev <hello@zombidev.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+msgid "Uploads head"
+msgstr "Upload de archivos"
+
+msgid "Uploads mode label"
+msgstr "Permitir"
+
+msgid "Uploads mode help"
+msgstr "Las configuraciones para grupos individuales están disponibles en <a href="%2$s">%1$s</a>."
+
+msgid "Upload quality label"
+msgstr "Calidad"
+
+msgid "Upload quality help"
+msgstr "Calidad de imágenes entre 0 y 100."
+
+msgid "Upload axis limit label"
+msgstr "Límite del eje"
+
+msgid "Upload axis limit help"
+msgstr "La imagen subida cambiará de tamaño si su ancho/alto es mayor que este límite."
+
+msgid "Output image types label"
+msgstr "Tipos de imágenes de salida"
+
+msgid "Output image types help"
+msgstr "Tipos de imágenes para guardar en este sitio, separadas por comas. Si se sube una imagen de otro tipo, se convertirá al primer tipo de esta lista."
+
+msgid "Page %s missing"
+msgstr "Falta la página %s."
+
+msgid "File list head"
+msgstr "Lista de archivos"
+
+msgid "File head"
+msgstr "Archivo"
+
+msgid "Size head"
+msgstr "Tamaño"
+
+msgid "Created head"
+msgstr "Creado"
+
+msgid "User head"
+msgstr "Autor"
+
+msgid "Delete file head"
+msgstr "Borrar archivo"
+
+msgid "Confirm delete"
+msgstr "¿Borrar archivo?"
+
+msgid "I want to delete file %s"
+msgstr "Sí, quiero eliminar el archivo <b>%s</b>"
+
+msgid "Delete file warn"
+msgstr "Este archivo se utiliza en (aproximadamente) <b>%1$s</b> mensajes y en <b>%2$s</b> mensajes privados."
+
+msgid "File deleted redirect"
+msgstr "Archivo eliminado"
+
+msgid "File not deleted redirect"
+msgstr "Archivo no eliminado"

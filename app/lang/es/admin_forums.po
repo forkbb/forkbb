@@ -1,0 +1,205 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ZombiDev <hello@zombidev.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+msgid "Forum added redirect"
+msgstr "Foro añadido."
+
+msgid "Forum deleted redirect"
+msgstr "Foro borrado."
+
+msgid "Forums updated redirect"
+msgstr "Foros actualizados."
+
+msgid "Forum updated redirect"
+msgstr "Foro actualizado."
+
+msgid "Perms reverted redirect"
+msgstr "Los permisos volvieron a los valores predeterminados."
+
+msgid "New forum"
+msgstr "Nuevo foro"
+
+msgid "Add forum head"
+msgstr "Añadir foro"
+
+msgid "Forum label"
+msgstr "Foro"
+
+msgid "Delete forum"
+msgstr "Borrar foro"
+
+msgid "Position label"
+msgstr "Posición"
+
+msgid "Update positions"
+msgstr "Actualizar posiciones"
+
+msgid "Delete forum head"
+msgstr "Borrar foro"
+
+msgid "Confirm delete"
+msgstr "¿Borrar foro?"
+
+msgid "I want to delete forum %s"
+msgstr "Sí, quiero borrar el foro <b>%s</b>."
+
+msgid "Delete forum warn"
+msgstr "<b>¡ATENCIÓN!</b> Al borrar un foro se borrarán todos los temas y mensajes (si los hubiera) de ese foro."
+
+msgid "Edit forum head"
+msgstr "Editar foro"
+
+msgid "Forum name label"
+msgstr "Nombre del foro"
+
+msgid "Forum description label"
+msgstr "Descripción (HTML)"
+
+msgid "Sort by label"
+msgstr "Ordenar temas por"
+
+msgid "Last post option DESC"
+msgstr "Último mensaje (el más reciente primero)"
+
+msgid "Last post option ASC"
+msgstr "Último mensaje (último más reciente)"
+
+msgid "Topic start option DESC"
+msgstr "Inicio del tema (primero el más reciente)"
+
+msgid "Topic start option ASC"
+msgstr "Inicio del tema (último más reciente)"
+
+msgid "Subject option ASC"
+msgstr "Asunto (A...Z)"
+
+msgid "Subject option DESC"
+msgstr "Asunto (Z...A)"
+
+msgid "Redirect label"
+msgstr "Redireccionar URL"
+
+msgid "Redirect help"
+msgstr "Sólo disponible en foros vacíos."
+
+msgid "Group permissions info"
+msgstr "En este formulario, puedes establecer los permisos específicos del foro para los diferentes grupos de usuarios. Si no has hecho ningún cambio en los permisos de grupo de este foro, lo que ves a continuación es el valor predeterminado basado en la configuración en <a href=\"%1$s\">%2$s</a>. Los administradores siempre tienen permisos completos y por lo tanto están excluidos. Los ajustes de permisos que difieren de los permisos predeterminados para el grupo de usuarios están marcados en rojo. La casilla de verificación del permiso &quot;Leer foro&quot; estará desactivada si el grupo en cuestión carece del permiso &quot;Leer foro&quot;. Para redirigir foros, sólo se puede editar el permiso &quot;Leer foro&quot;."
+
+msgid "Read forum label"
+msgstr "Leer foro"
+
+msgid "Post replies label"
+msgstr "Publicar respuestas"
+
+msgid "Post topics label"
+msgstr "Publicar temas"
+
+msgid "Revert to default"
+msgstr "Volver a la configuración por defecto"
+
+msgid "Parent label"
+msgstr "Padre"
+
+msgid "Parent help"
+msgstr "Categoría o foro para la ubicación de este foro."
+
+msgid "Not selected"
+msgstr "No seleccionado"
+
+msgid "Category prefix"
+msgstr "▶ "
+
+msgid "Forum prefix"
+msgstr ""
+
+msgid "Forum indent"
+msgstr "◦ ◦ "
+
+msgid "Count messages label"
+msgstr "Contar mensajes para los usuarios"
+
+msgid "Count messages help"
+msgstr "En caso afirmativo, los nuevos mensajes de los usuarios en este foro aumentarán su contador de mensajes en el perfil. Puedes volver a calcular los mensajes de todos los usuarios en <a href=\"%1$s\">%2$s</a>."
+
+msgid "<span></span>"
+msgstr "<span></span>"
+
+msgid "Friendly name label"
+msgstr "Nombre para la URL"
+
+msgid "Friendly name help"
+msgstr "Identificador de cadena a partir del cual se generará la url a este foro. Puede constar de letras latinas, números, guiones bajos y guiones."
+
+msgid "Use solution label"
+msgstr "Permitir 'Solucionado'"
+
+msgid "Use solution help"
+msgstr "Permitir que este foro marque un mensaje como solución a una pregunta/problema desde el primer mensaje del tema."
+
+msgid "Use custom fields label"
+msgstr "Utilizar campos personalizados"
+
+msgid "Use custom fields help"
+msgstr "Permitir el uso de campos personalizados al crear un tema en este foro. No afecta a los temas existentes."
+
+msgid "Customize fields"
+msgstr "Personalización de campos"
+
+msgid "Custom fields head"
+msgstr "Campos personalizados"
+
+msgid "Add field"
+msgstr "Añadir campo"
+
+msgid "Field name label"
+msgstr "Nombre del campo"
+
+msgid "Add field head"
+msgstr "Añadir campo"
+
+msgid "Edit field head"
+msgstr "Editar campo"
+
+msgid "Field required label"
+msgstr "Requerido"
+
+msgid "Visibility label"
+msgstr "¿Quién ve los datos?"
+
+msgid "All"
+msgstr "Todos"
+
+msgid "Not guests"
+msgstr "Todos excepto invitados"
+
+msgid "Admins and mods"
+msgstr "Administradores, moderadores de foros y autores de temas"
+
+msgid "Admins only"
+msgstr "Sólo administradores y autores de temas"
+
+msgid "Maximum length label"
+msgstr "Longitud máxima"
+
+msgid "Fields updated redirect"
+msgstr "Campos actualizados."
+
+msgid "Field deleted redirect"
+msgstr "Campo eliminado."
+
+msgid "I want to delete field %s"
+msgstr "Sí, quiero borrar el campo <b>%s</b>."
+
+msgid "Delete field"
+msgstr "Eliminar campo"

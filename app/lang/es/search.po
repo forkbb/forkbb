@@ -1,0 +1,187 @@
+#
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ForkBB\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: ZombiDev <hello@zombidev.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+msgid "User search"
+msgstr "Búsqueda de usuarios"
+
+msgid "Search info"
+msgstr "Para buscar por palabra clave, ingresa uno o más términos para buscar. Separa los términos con espacios. Utilice Y, O y NO para refinar la búsqueda. Para buscar por autor ingresa el nombre de usuario del autor cuyas publicaciones deseas buscar. Utiliza el carácter comodín * para coincidencias parciales."
+
+msgid "Keyword search"
+msgstr "Búsqueda por palabra clave"
+
+msgid "Author search"
+msgstr "Búsqueda de autor"
+
+msgid "Search in legend"
+msgstr "Selecciona dónde buscar"
+
+msgid "Search in info"
+msgstr "Elije en qué foro te gustaría buscar y si deseas buscar por temas, texto de mensajes o ambos."
+
+msgid "Search multiple forums info"
+msgstr "Si no se selecciona un foro, se buscarán en todos los foros."
+
+msgid "Forum search"
+msgstr "Foro"
+
+msgid "Search in"
+msgstr "Busca en"
+
+msgid "Message and subject"
+msgstr "Texto del mensaje y asunto del tema"
+
+msgid "Message only"
+msgstr "Sólo texto del mensaje"
+
+msgid "Topic only"
+msgstr "Asunto del tema únicamente"
+
+msgid "Sort by"
+msgstr "Ordenar por"
+
+msgid "Sort order"
+msgstr "Orden de los resultados"
+
+msgid "Search results legend"
+msgstr "Selecciona cómo ver los resultados de la búsqueda"
+
+msgid "Search results info"
+msgstr "Puedes elegir cómo deseas ordenar y mostrar ús resultados."
+
+msgid "Sort by post time"
+msgstr "Hora de publicación"
+
+msgid "Sort by author"
+msgstr "Autor"
+
+msgid "Sort by subject"
+msgstr "Asunto"
+
+msgid "Sort by forum"
+msgstr "Foro"
+
+msgid "Ascending"
+msgstr "Ascendente"
+
+msgid "Descending"
+msgstr "Descendente"
+
+msgid "Show as"
+msgstr "Mostrar resultados como"
+
+msgid "Show as topics"
+msgstr "Temas"
+
+msgid "Show as posts"
+msgstr "Mensajes"
+
+msgid "Search results"
+msgstr "Resultados de la búsqueda"
+
+msgid "Quick search new"
+msgstr "Nuevo"
+
+msgid "Quick search latest_active_topics"
+msgstr "Último activo"
+
+msgid "Quick search unanswered_topics"
+msgstr "Sin respuesta"
+
+msgid "Quick search topics_with_your_posts"
+msgstr "Publicado"
+
+msgid "Quick search user topics"
+msgstr "Temas por %s"
+
+msgid "Quick search user posts"
+msgstr "Mensajes por %s"
+
+msgid "Quick search user topics_subscriptions"
+msgstr "Temas suscritos por %s"
+
+msgid "Quick search user forums_subscriptions"
+msgstr "Foros suscritos por %s"
+
+msgid "Quick search show_user_warn"
+msgstr "Advertencias para %s"
+
+msgid "Quick search show_last"
+msgstr "Últimos mensajes"
+
+msgid "Search query: %s"
+msgstr "Consulta de busqueda: «%s»"
+
+msgid "Search query: %1$s and Author: %2$s"
+msgstr "Consulta de busqueda: «%1$s» - Autor: «%2$s»"
+
+msgid "No hits"
+msgstr "Tú búsqueda no arrojó resultados."
+
+msgid "Too many coincidences"
+msgstr "Demasiadas coincidencias."
+
+msgid "Go to post"
+msgstr "Ir al mensaje"
+
+msgid "Go to topic"
+msgstr "Ir al tema"
+
+msgid "Go to forum"
+msgstr "Ir al foro"
+
+msgid "Search btn"
+msgstr "Buscar"
+
+msgid "<a href=\"%s\">Advanced search</a>"
+msgstr "<a href=\"%s\" rel=\"nofollow\">Búsqueda avanzada</a>"
+
+msgid "<a href=\"%s\">Simple search</a>"
+msgstr "<a href=\"%s\" rel=\"nofollow\">Búsqueda simple</a>"
+
+msgid "Category prefix"
+msgstr ""
+
+msgid "Forum prefix"
+msgstr ""
+
+msgid "Forum indent"
+msgstr "◦ ◦ "
+
+msgid "There is no word for search: '%s'"
+msgstr "No hay palabra para buscar: '%s'"
+
+msgid "Logical operator at the end of the search query: '%s'"
+msgstr "Operador lógico al final de la consulta de búsqueda: '%s'"
+
+msgid "The order of brackets is broken: '%s'"
+msgstr "El orden de los paréntesis está roto: '%s'"
+
+msgid "Empty subquery: '%s'"
+msgstr "Subconsulta vacía: '%s'"
+
+msgid "Logical operator at the end of the search subquery: '%s'"
+msgstr "Operador lógico al final de la subconsulta de búsqueda: '%s'"
+
+msgid "Logical operator at the beginning of the search (sub)query: '%s'"
+msgstr "Operador lógico al principio de la (sub)consulta de búsqueda: '%s'"
+
+msgid "Logical operators follow one after another: '%s'"
+msgstr "Los operadores lógicos se suceden: '%s'"
+
+msgid "Set up"
+msgstr "Configurar"
+
+msgid "Odd number of quotes: '%s'"
+msgstr "Número impar de comillas dobles: '%s'"
