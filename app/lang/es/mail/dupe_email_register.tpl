@@ -1,6 +1,6 @@
 Asunto: Alerta - Correo electrónico duplicado detectado
 
-El usuario '{!nombredeusuario!}' [{!ip!}] intenta registrarse con una dirección de correo electrónico '{!email!}' que pertenece al usuario '{!userInDB!}'.
+El usuario '{!username!}' [{!ip!}] intenta registrarse con una dirección de correo electrónico '{!email!}' que pertenece al usuario '{!userInDB!}'.
 
 Foros en {!fRootLink!}
 
