@@ -124,7 +124,7 @@ msgstr "Mantenimiento"
 msgid "Redirecting"
 msgstr "Redireccionando"
 
-msgid "Redireccionando..."
+msgid "Redirecting..."
 msgstr "<br><a href=\"%s\">Redireccionando …</a>"
 
 msgid "on"
