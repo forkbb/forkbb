@@ -40,7 +40,7 @@ msgid "Board stats"
 msgstr "Board statistics"
 
 msgid "Most online"
-msgstr "Maximum online users (%1$s) was be there %2$s"
+msgstr "Maximum online users (%1$s) was on %2$s"
 
 msgid "User info"
 msgstr "User information"
