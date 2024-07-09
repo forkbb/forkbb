@@ -111,7 +111,7 @@ class Router
     /**
      * Возвращает ссылку на основании маркера
      */
-    public function link(string $marker = null, array $args = []): string
+    public function link(?string $marker = null, array $args = []): string
     {
         $result = $this->baseUrl;
         $anchor = isset($args['#']) ? '#' . \rawurlencode($args['#']) : '';
@@ -173,6 +173,7 @@ class Router
                 );
             }
         }
+
         $link = \str_replace(['[', ']'], '', $link);
 
         return $result . \strtr($link, $data) . $anchor;
@@ -257,6 +258,7 @@ class Router
                 }
 
                 $args = [];
+
                 foreach ($keys as $key => $type) {
                     if (isset($matches[$key][0])) {
                         $args[$key] = \str_replace($this->subRepl, $this->subSearch, $matches[$key]);
@@ -295,7 +297,7 @@ class Router
     /**
      * Метод добавляет маршрут
      */
-    public function add(array|string $method, string $route, string $handler, string $marker = null): void
+    public function add(array|string $method, string $route, string $handler, ?string $marker = null): void
     {
         if (\is_array($method)) {
             foreach ($method as $m) {
@@ -320,6 +322,7 @@ class Router
 
         if (false === \strpbrk($route, '{}[]')) {
             $data = null;
+
             if (\is_array($method)) {
                 foreach ($method as $m) {
                     $this->statical[$route][$m] = [$handler, $marker];
@@ -329,6 +332,7 @@ class Router
             }
         } else {
             $data = $this->parse($route);
+
             if (null === $data) {
                 throw new InvalidArgumentException("Wrong route: {$route}");
             }

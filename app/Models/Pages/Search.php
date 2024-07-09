@@ -157,7 +157,7 @@ class Search extends Page
     /**
      * Подготавливает массив данных для формы
      */
-    protected function formSearch(Validator $v = null): array
+    protected function formSearch(?Validator $v = null): array
     {
         return [
             'action' => $this->c->Router->link('Search'),
@@ -196,7 +196,7 @@ class Search extends Page
     /**
      * Подготавливает массив данных для формы
      */
-    protected function formSearchAdvanced(Validator $v = null): array
+    protected function formSearchAdvanced(?Validator $v = null): array
     {
         return [
             'action' => $this->c->Router->link('SearchAdvanced'),

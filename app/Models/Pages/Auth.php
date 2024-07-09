@@ -56,7 +56,7 @@ class Auth extends Page
     /**
      * Вход на форум
      */
-    public function login(array $args, string $method, string $username = '', User $user = null): Page
+    public function login(array $args, string $method, string $username = '', ?User $user = null): Page
     {
         $this->c->Lang->load('validator');
         $this->c->Lang->load('auth');
@@ -245,7 +245,7 @@ class Auth extends Page
     /**
      * Запрос на смену кодовой фразы
      */
-    public function forget(array $args, string $method, string $email = '', User $user = null): Page
+    public function forget(array $args, string $method, string $email = '', ?User $user = null): Page
     {
         $this->c->Lang->load('validator');
         $this->c->Lang->load('auth');

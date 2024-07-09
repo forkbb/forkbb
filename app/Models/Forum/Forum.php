@@ -452,7 +452,7 @@ class Forum extends DataModel
     /**
      * Создает список id тем раздела
      */
-    protected function createIdsList(int $rows = null, int $offset = null): void
+    protected function createIdsList(?int $rows = null, ?int $offset = null): void
     {
         $sortBy = match ($this->sort_by) {
             1       => 't.posted DESC',

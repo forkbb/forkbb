@@ -461,13 +461,13 @@ class Parserus
      * Метод добавляет новый тег в дерево тегов
      *
      * @param  string $tag      Имя тега
-     * @param  int    $parentId Указатель на родителя
+     * @param  ?int   $parentId Указатель на родителя
      * @param  array  $attrs    Массив атрибутов тега
      * @param  bool   $textOnly Флаг. Если true, то в теле только текст
      *
      * @return int              Указатель на данный тег
      */
-    protected function addTagNode(string $tag, int $parentId = null, array $attrs = [], bool $textOnly = false): int
+    protected function addTagNode(string $tag, ?int $parentId = null, array $attrs = [], bool $textOnly = false): int
     {
         $this->data[++$this->dataId] = [
             'tag'      => $tag,

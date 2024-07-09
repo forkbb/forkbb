@@ -106,7 +106,7 @@ class Parser extends Parserus
     /**
      * Преобразует бб-коды в html в сообщениях
      */
-    public function parseMessage(string $text = null, bool $hideSmilies = false): string
+    public function parseMessage(?string $text = null, bool $hideSmilies = false): string
     {
         // при null предполагается брать данные после prepare()
         if (null !== $text) {
@@ -132,7 +132,7 @@ class Parser extends Parserus
     /**
      * Преобразует бб-коды в html в подписях пользователей
      */
-    public function parseSignature(string $text = null): string
+    public function parseSignature(?string $text = null): string
     {
         // при null предполагается брать данные после prepare()
         if (null !== $text) {
@@ -161,7 +161,7 @@ class Parser extends Parserus
      * Устанавливает/возвращает флаг использования встроенных стилей в ббкодах
      * (обработчик ббкода должен вызвать этот метод со значением true)
      */
-    public function inlineStyle(bool $flag = null): bool
+    public function inlineStyle(?bool $flag = null): bool
     {
         $prev = $this->flagInlneStyle;
 

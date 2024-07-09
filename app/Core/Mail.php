@@ -172,7 +172,7 @@ class Mail
     /**
      * Добавляет заголовок To
      */
-    public function addTo(string|array $email, string $name = null): Mail
+    public function addTo(string|array $email, string $name = ''): Mail
     {
         if (! \is_array($email)) {
             $email = \preg_split('%[,\n\r]%', $email, -1, \PREG_SPLIT_NO_EMPTY);
@@ -182,7 +182,7 @@ class Mail
             $cur = $this->valid(\trim((string) $cur), false, true);
 
             if (false !== $cur) {
-                $this->to[$cur] = $name ?? '';
+                $this->to[$cur] = $name;
             }
         }
 
@@ -192,17 +192,17 @@ class Mail
     /**
      * Задает заголовок To
      */
-    public function setTo(array|string $email, string $name = null): Mail
+    public function setTo(array|string $email, string $name = ''): Mail
     {
         $this->to = [];
 
-        return $this->addTo($email, $name ?? '');
+        return $this->addTo($email, $name);
     }
 
     /**
      * Задает заголовок From
      */
-    public function setFrom(string $email, string $name = null): Mail
+    public function setFrom(string $email, string $name = ''): Mail
     {
         $email = $this->valid($email, false, true);
 
@@ -217,7 +217,7 @@ class Mail
     /**
      * Задает заголовок Reply-To
      */
-    public function setReplyTo(string $email, string $name = null): Mail
+    public function setReplyTo(string $email, string $name = ''): Mail
     {
         $email = $this->valid($email, false, true);
 

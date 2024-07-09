@@ -44,7 +44,7 @@ class PM extends Model
         ];
     }
 
-    protected function checkType(int $type, DataModel $model = null): void
+    protected function checkType(int $type, ?DataModel $model = null): void
     {
         switch ($type) {
             case Cnst::PTOPIC:

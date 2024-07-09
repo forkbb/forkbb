@@ -95,7 +95,7 @@ class Update extends Admin
     /**
      * Проверяет наличие блокировки скрипта обновления
      */
-    protected function hasLock(string $uid = null): bool
+    protected function hasLock(?string $uid = null): bool
     {
         $lock = $this->c->Cache->get(self::LOCK_NAME);
 
@@ -106,7 +106,7 @@ class Update extends Admin
         }
     }
 
-    protected function setLock(string $uid = null): ?string
+    protected function setLock(?string $uid = null): ?string
     {
         if (true === $this->hasLock($uid)) {
             return null;

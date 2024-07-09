@@ -346,7 +346,7 @@ abstract class Page extends Model
     /**
      * Задает/получает заголовок страницы
      */
-    public function pageHeader(string $name, string $type, int $weight = 0, array $values = null): mixed
+    public function pageHeader(string $name, string $type, int $weight = 0, ?array $values = null): mixed
     {
         if (null === $values) {
             return $this->pageHeaders["{$name}_{$type}"] ?? null;

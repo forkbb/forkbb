@@ -912,10 +912,10 @@ class Jevix
 
     /**
      * Восстановить
-     * @param int $index
+     * @param ?int $index
      * @throws RuntimeException
      */
-    protected function restoreState(int $index = null): void
+    protected function restoreState(?int $index = null): void
     {
         if (empty($this->states)) {
             throw new RuntimeException('End of stack');

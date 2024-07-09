@@ -27,7 +27,7 @@ class Container
     protected array $shared    = [];
     protected array $multiple  = [];
 
-    public function __construct(array $config = null)
+    public function __construct(array $config = [])
     {
         if (empty($config)) {
             return;

@@ -20,7 +20,7 @@ class ActionP extends Method
     /**
      * Поисковые действия по сообщениям
      */
-    public function actionP(string $action, Forum $root, int $uid = null): array|false
+    public function actionP(string $action, Forum $root, ?int $uid = null): array|false
     {
         $forums = \array_keys($root->descendants);
 

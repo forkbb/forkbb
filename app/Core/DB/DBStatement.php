@@ -81,12 +81,9 @@ class DBStatement
     /**
      * Метод расширяет PDOStatement::execute()
      */
-    public function execute(array $params = null): bool
+    public function execute(?array $params = null): bool
     {
-        if (
-            \is_array($params)
-            && ! empty($params)
-        ) {
+        if (! empty($params)) {
             $this->bindValueList($params);
         }
 

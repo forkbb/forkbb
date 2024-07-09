@@ -177,7 +177,7 @@ class File
     /**
      * Сохраняет файл по указанному шаблону пути
      */
-    public function toFile(string $path, int $maxSize = null): bool
+    public function toFile(string $path, ?int $maxSize = null): bool
     {
         $info = $this->pathinfo($path);
 

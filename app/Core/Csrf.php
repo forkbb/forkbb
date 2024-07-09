@@ -38,7 +38,7 @@ class Csrf
     /**
      * Возвращает csrf токен
      */
-    public function create(string $marker, array $args = [], int|string $time = null, string $type = 's'): string
+    public function create(string $marker, array $args = [], int|string $time = 0, string $type = 's'): string
     {
         $marker = $this->argsToStr($marker, $args);
         $time   = $time ?: \time();
@@ -61,7 +61,7 @@ class Csrf
     /**
      * Возвращает хэш
      */
-    public function createHash(string $marker, array $args = [], int|string $time = null): string
+    public function createHash(string $marker, array $args = [], int|string $time = 0): string
     {
         $marker = $this->argsToStr($marker, $args, ['hash']);
         $time   = $time ?: \time() + $this->hashExpiration;
@@ -92,7 +92,7 @@ class Csrf
     /**
      * Проверка токена/хэша
      */
-    public function verify($token, string $marker, array $args = [], int $lifetime = null): bool
+    public function verify($token, string $marker, array $args = [], ?int $lifetime = null): bool
     {
         $this->error = 'Bad token';
         $now         = \time();

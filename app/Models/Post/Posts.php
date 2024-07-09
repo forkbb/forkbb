@@ -32,7 +32,7 @@ class Posts extends Manager
      * Получает сообщение по id
      * Получает сообщение по id и tid темы (с проверкой вхождения)
      */
-    public function load(int $id, int $tid = null): ?Post
+    public function load(int $id, ?int $tid = null): ?Post
     {
         if ($this->isset($id)) {
             $post = $this->get($id);

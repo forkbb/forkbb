@@ -328,7 +328,7 @@ class Config
     /**
      * Добавляет/заменяет элемент в конфиг(е)
      */
-    public function add(string $path, mixed $value, string $after = null): bool
+    public function add(string $path, mixed $value, ?string $after = null): bool
     {
         if (empty($this->configArray)) {
             $this->configArray = $this->getArray();

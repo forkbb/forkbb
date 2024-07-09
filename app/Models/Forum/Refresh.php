@@ -20,7 +20,7 @@ class Refresh extends Action
     /**
      * Возвращает список доступных разделов для группы
      */
-    public function refresh(Group $group = null): array
+    public function refresh(?Group $group = null): array
     {
         if (null === $group) {
             $gid  = $this->c->user->group_id;

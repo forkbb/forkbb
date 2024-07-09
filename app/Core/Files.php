@@ -907,7 +907,7 @@ class Files
     /**
      * Возвращает максимальный размер картинки для загрузки
      */
-    public function maxImgSize(string $unit = null): int
+    public function maxImgSize(?string $unit = null): int
     {
         return $this->size($this->maxImgSize, $unit);
     }
@@ -915,7 +915,7 @@ class Files
     /**
      * Возвращает максимальный размер файла для загрузки
      */
-    public function maxFileSize(string $unit = null): int
+    public function maxFileSize(?string $unit = null): int
     {
         return $this->size($this->maxFileSize, $unit);
     }
@@ -932,7 +932,7 @@ class Files
      * Переводит объем информации из одних единиц в другие
      * кило = 1024, а не 1000
      */
-    public function size(int|float|string $value, string $to = null): int
+    public function size(int|float|string $value, ?string $to = null): int
     {
         if (\is_string($value)) {
             if (! \preg_match('%^([^a-z]+)([a-z]+)?$%i', \trim($value), $matches)) {

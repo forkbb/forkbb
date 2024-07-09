@@ -51,14 +51,14 @@ class Cookie extends Model
      * Устанавливает куку
      */
     public function set(
-        string $name,
-        string $value,
-        int    $expire   = 0,
-        string $path     = null,
-        string $domain   = null,
-        bool   $secure   = false,
-        bool   $httponly = true,
-        string $samesite = null
+        string  $name,
+        string  $value,
+        int     $expire   = 0,
+        ?string $path     = null,
+        ?string $domain   = null,
+        bool    $secure   = false,
+        bool    $httponly = true,
+        ?string $samesite = null
     ): bool {
         $name   = $this->prefix . $name;
         $result = \setcookie(
@@ -96,7 +96,7 @@ class Cookie extends Model
     /**
      * Удаляет куку
      */
-    public function delete(string $name, string $path = null, string $domain = null): bool
+    public function delete(string $name, ?string $path = null, ?string $domain = null): bool
     {
         $result = $this->set($name, '', 1, $path, $domain);
 
@@ -152,7 +152,7 @@ class Cookie extends Model
     /**
      * Устанавливает куку аутентификации пользователя
      */
-    public function setUser(User $user, bool $remember = null): bool
+    public function setUser(User $user, ?bool $remember = null): bool
     {
         if ($user->isGuest) {
             return $this->deleteUser();

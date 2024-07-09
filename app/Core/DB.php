@@ -97,8 +97,8 @@ class DB
 
     public function __construct(
         string $dsn,
-        string $username = null,
-        #[SensitiveParameter] string $password = null,
+        ?string $username = null,
+        #[SensitiveParameter] ?string $password = null,
         array $options = [],
         string $prefix = ''
     ) {

@@ -88,10 +88,10 @@ class Lang
     /**
      * Ищет сообщение в загруженных переводах
      */
-    public function get(string $message, string $lang = null): null|string|array
+    public function get(string $message, string $lang = ''): null|string|array
     {
         if (
-            null !== $lang
+            '' !== $lang
             && isset($this->tr[$lang][$message])
         ) {
             return $this->tr[$lang][$message];
@@ -109,9 +109,9 @@ class Lang
     /**
      * Загружает языковой файл
      */
-    public function load(string $name, string $lang = null, string $path = null): void
+    public function load(string $name, string $lang = '', string $path = ''): void
     {
-        if (null !== $lang) {
+        if ('' !== $lang) {
             // смена порядка перебора языка
             $this->langOrder = [$lang => $lang] + $this->langOrder;
 

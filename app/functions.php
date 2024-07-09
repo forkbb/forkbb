@@ -89,12 +89,13 @@ function num(mixed $number, int $decimals = 0): string
 /**
  * Возвращает дату/время в формате текущего пользователя
  */
-function dt(int $arg, bool $dateOnly = false, string $dateFormat = null, string $timeFormat = null, bool $timeOnly = false, bool $noText = false, Container $container = null): string
+function dt(int $arg, bool $dateOnly = false, ?string $dateFormat = null, ?string $timeFormat = null, bool $timeOnly = false, bool $noText = false, ?Container $container = null): string
 {
     static $c, $offset;
 
     if (null !== $container) {
         $c = $container;
+
         return '';
     }
 

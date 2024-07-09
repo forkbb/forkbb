@@ -22,7 +22,7 @@ class Send extends Method
     /**
      * Рассылает письма по подпискам для новых тем/ответов
      */
-    public function send(Post $post, Topic $topic = null)
+    public function send(Post $post, ?Topic $topic = null)
     {
         try {
             if (null === $topic) {

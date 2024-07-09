@@ -31,7 +31,7 @@ class Register extends Page
     /**
      * Регистрация
      */
-    public function reg(array $args, string $method, Driver $provider = null): Page
+    public function reg(array $args, string $method, ?Driver $provider = null): Page
     {
         $this->c->Lang->load('validator');
         $this->c->Lang->load('register');

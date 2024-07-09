@@ -41,7 +41,7 @@ class Forums extends Manager
      * Инициализация списка разделов
      * Обновляет кеш разделов
      */
-    public function init(Group $group = null): Forums
+    public function init(?Group $group = null): Forums
     {
         if (null === $group) {
             $gid = $this->c->user->group_id;

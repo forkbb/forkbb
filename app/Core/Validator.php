@@ -403,13 +403,13 @@ class Validator
      * Возвращает проверенные данные
      * Поля с ошибками содержат значения по умолчанию или значения с ошибками
      */
-    public function getData(bool $all = false, array $doNotUse = null): array
+    public function getData(bool $all = false, array $doNotUse = []): array
     {
         if (empty($this->status)) {
             throw new RuntimeException('Data not found');
         }
 
-        if (null === $doNotUse) {
+        if (empty($doNotUse)) {
             $result = $this->result;
         } else {
             $result = \array_diff_key($this->result, \array_flip($doNotUse));

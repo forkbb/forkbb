@@ -18,7 +18,7 @@ class Delete extends Action
     /**
      * Удаляет группу
      */
-    public function delete(Group $group, Group $new = null): void
+    public function delete(Group $group, ?Group $new = null): void
     {
         if (null !== $new) {
             $this->c->users->promote($group, $new);
