@@ -419,6 +419,7 @@ body.sceditor-maximize {
   border-bottom: 1px solid var(--br-fprimary);
   line-height: 0;
   text-align: left;
+  -webkit-user-select: none;
   user-select: none;
   border-radius: 3px 3px 0 0;
   background-clip: padding-box;

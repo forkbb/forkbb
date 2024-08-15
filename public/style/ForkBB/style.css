@@ -359,6 +359,7 @@ body,
   padding: 0.125rem 0.5rem;
   background-color: var(--bg-btn);
   touch-action: manipulation;
+  -webkit-user-select: none;
   user-select: none;
   white-space: nowrap;
   text-align: center;
@@ -2051,6 +2052,7 @@ body,
   border: 0.0625rem solid var(--br-bbcode);
   background-color: var(--bg-bbcode);
   padding: 0 0.25rem;
+  -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
 
