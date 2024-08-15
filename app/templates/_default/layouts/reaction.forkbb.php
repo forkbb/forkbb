@@ -4,7 +4,7 @@
                 <div class="f-reaction-div">
 @foreach ($reactions['visible'] as $key => $cur)
                   <span class="f-reaction-block @if ($key === $post->selectedReaction) f-reaction-selected @endif"><!-- inline -->
-                    <button class="f-retype f-retype-btn f-retype-{{ $key }}" name="{{ $key }}" value="{{ $key }}" title="{!! $title = __(":{$key}:") !!}" @empty ($cur[1]) disabled @endempty>
+                    <button class="f-retype f-retype-btn f-retype-{{ $key }}" type="submit" name="{{ $key }}" value="{{ $key }}" title="{!! $title = __(":{$key}:") !!}" @empty ($cur[1]) disabled @endempty>
                       <small>{!! $title !!}</small>
                     </button>
     @if ($cur[0] > 0)
@@ -19,7 +19,7 @@
                   </span><!-- endinline -->
     @foreach ($reactions['hidden'] as $key => $cur)
                   <span class="f-reaction-block f-reaction-hblock"><!-- inline -->
-                    <button class="f-retype f-retype-btn f-retype-{{ $key }}" name="{{ $key }}" value="{{ $key }}" title="{!! $title = __(":{$key}:") !!}" @empty ($cur[1]) disabled @endempty>
+                    <button class="f-retype f-retype-btn f-retype-{{ $key }}" type="submit" name="{{ $key }}" value="{{ $key }}" title="{!! $title = __(":{$key}:") !!}" @empty ($cur[1]) disabled @endempty>
                       <small>{!! $title !!}</small>
                     </button>
                   </span><!-- endinline -->

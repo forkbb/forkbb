@@ -120,22 +120,22 @@
                       <input type="hidden" name="token" value="{{ $p->formsToken }}">
                       <p class="f-btns">
         @if ($ext->canInstall)
-                        <button class="f-btn f-fbtn" name="install" value="install" title="{{ __('Install_') }}"><span>{!! __('Install_') !!}</span></button>
+                        <button class="f-btn f-fbtn" type="submit" name="install" value="install" title="{{ __('Install_') }}"><span>{!! __('Install_') !!}</span></button>
         @endif
         @if ($ext->canUninstall)
-                        <button class="f-btn f-fbtn" name="uninstall" value="uninstall" title="{{ __('Uninstall_') }}"><span>{!! __('Uninstall_') !!}</span></button>
+                        <button class="f-btn f-fbtn" type="submit" name="uninstall" value="uninstall" title="{{ __('Uninstall_') }}"><span>{!! __('Uninstall_') !!}</span></button>
         @endif
         @if ($ext->canUpdate)
-                        <button class="f-btn f-fbtn" name="update" value="update" title="{{ __('Update_') }}"><span>{!! __('Update_') !!}</span></button>
+                        <button class="f-btn f-fbtn" type="submit" name="update" value="update" title="{{ __('Update_') }}"><span>{!! __('Update_') !!}</span></button>
         @endif
         @if ($ext->canDowndate)
-                        <button class="f-btn f-fbtn" name="downdate" value="downdate" title="{{ __('Downdate_') }}"><span>{!! __('Downdate_') !!}</span></button>
+                        <button class="f-btn f-fbtn" type="submit" name="downdate" value="downdate" title="{{ __('Downdate_') }}"><span>{!! __('Downdate_') !!}</span></button>
         @endif
         @if ($ext->canEnable)
-                        <button class="f-btn f-fbtn" name="enable" value="enable" title="{{ __('Enable_') }}"><span>{!! __('Enable_') !!}</span></button>
+                        <button class="f-btn f-fbtn" type="submit" name="enable" value="enable" title="{{ __('Enable_') }}"><span>{!! __('Enable_') !!}</span></button>
         @endif
         @if ($ext->canDisable)
-                        <button class="f-btn f-fbtn" name="disable" value="disable" title="{{ __('Disable_') }}"><span>{!! __('Disable_') !!}</span></button>
+                        <button class="f-btn f-fbtn" type="submit" name="disable" value="disable" title="{{ __('Disable_') }}"><span>{!! __('Disable_') !!}</span></button>
         @endif
                       </p>
                     </form>

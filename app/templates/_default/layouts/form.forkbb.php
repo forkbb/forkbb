@@ -122,7 +122,7 @@
     @foreach ($form['btns'] as $key => $cur)
             <!-- PRE btnsForeachStart -->
         @if ('submit' === $cur['type'])
-            <button @class(['f-btn', 'f-fbtn', [$cur['class'] ?? null]]) name="{{ $key }}" value="{{ $cur['value'] }}" @isset ($cur['accesskey']) accesskey="{{ $cur['accesskey'] }}" @endisset title="{{ $cur['title'] or $cur['value'] }}" @if ($cur['disabled']) disabled @endif><span>{{ $cur['value'] }}</span></button>
+            <button @class(['f-btn', 'f-fbtn', [$cur['class'] ?? null]]) type="submit" name="{{ $key }}" value="{{ $cur['value'] }}" @isset ($cur['accesskey']) accesskey="{{ $cur['accesskey'] }}" @endisset title="{{ $cur['title'] or $cur['value'] }}" @if ($cur['disabled']) disabled @endif><span>{{ $cur['value'] }}</span></button>
         @elseif ('btn'=== $cur['type'])
             <a @class(['f-btn', 'f-fbtn', [$cur['class'] ?? null]]) data-name="{{ $key }}" href="{{ $cur['href'] }}" @isset ($cur['accesskey']) accesskey="{{ $cur['accesskey'] }}" @endisset title="{{ $cur['title'] or $cur['value'] }}"><span>{{ $cur['value'] }}</span></a>
         @endif
