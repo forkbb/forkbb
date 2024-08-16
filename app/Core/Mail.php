@@ -485,7 +485,7 @@ class Mail
                     . $message,
                     ['250']
                 );
-                $this->smtpData('NOOP', ['250']);
+//                $this->smtpData('NOOP', ['250']);
             }
         } else {
             $arrRecipients = \array_chunk($this->to, $this->maxRecipients, true);
@@ -505,7 +505,7 @@ class Mail
                     . $message,
                     ['250']
                 );
-                $this->smtpData('NOOP', ['250']);
+//                $this->smtpData('NOOP', ['250']);
             }
         }
 
