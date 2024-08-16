@@ -135,6 +135,11 @@ class Current extends Action
             empty($_SERVER['HTTP_ACCEPT'])
             || empty($_SERVER['HTTP_ACCEPT_ENCODING'])
             || empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])
+            || (
+                isset($_SERVER['HTTP_REFERER'][0])
+                && ! \str_starts_with($_SERVER['HTTP_REFERER'], 'https://')
+                && ! \str_starts_with($_SERVER['HTTP_REFERER'], 'http://')
+            )
         );
 
         if ('' === $agent) {
