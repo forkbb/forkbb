@@ -98,8 +98,8 @@ abstract class Page extends Model
             ->header('Cache-Control', 'private, no-cache')
             ->header('Content-Type', 'text/html; charset=utf-8')
             ->header('Date', $now)
-            ->header('Last-Modified', $now)
-            ->header('Expires', $now);
+            ->header('Last-Modified', $now);
+            //->header('Expires', $now);
     }
 
     /**
