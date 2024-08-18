@@ -416,3 +416,6 @@ msgstr "Обо мне"
 
 msgid "To change about me"
 msgstr "Изменить"
+
+msgid "Change about me"
+msgstr "Изменение поля &apos;Обо мне&apos;"

@@ -176,13 +176,18 @@ class Profile extends Rules
 
     protected function geteditAboutMe(): bool
     {
-        return $this->admin 
-            || (
-                $this->moderator 
-                && $this->editProfile
-            ) || (
+        return (
                 $this->my 
                 && 1 === $this->user->g_use_about_me
+            ) || (
+                $this->curUser->about_me_id > 0
+                && (
+                    $this->admin 
+                    || (
+                        $this->moderator 
+                        && $this->editProfile
+                    )
+                )
             );
     }
 }
