@@ -70,7 +70,7 @@ if (
     $c->BASE_URL = \str_replace('https://', 'http://', $c->BASE_URL);
 }
 
-$c->FORK_REVISION = 81;
+$c->FORK_REVISION = 82;
 $c->START         = $forkStart;
 $c->PUBLIC_URL    = $c->BASE_URL . $forkPublicPrefix;
 
