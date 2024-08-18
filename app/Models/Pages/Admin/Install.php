@@ -904,6 +904,7 @@ class Install extends Admin
                 'g_up_size_kb'           => ['INT(10) UNSIGNED', false, 0],
                 'g_up_limit_mb'          => ['INT(10) UNSIGNED', false, 0],
                 'g_use_reaction'         => ['TINYINT(1)', false, 1],
+                'g_use_about_me'         => ['TINYINT(1)', false, 1],
             ],
             'PRIMARY KEY' => ['g_id'],
             'ENGINE' => $this->DBEngine,
@@ -1235,6 +1236,7 @@ class Install extends Admin
                 'unfollowed_f'     => ['VARCHAR(255)', false, ''],
                 'show_reaction'    => ['TINYINT(1)', false, 1],
                 'page_scroll'      => ['TINYINT', false, 0],
+                'about_me_id'      => ['INT(10) UNSIGNED', false, 0],
             ],
             'PRIMARY KEY' => ['id'],
             'UNIQUE KEYS' => [
@@ -1651,6 +1653,7 @@ class Install extends Admin
                 ], FORK_JSON_ENCODE
             ),
             'b_show_user_reaction'    => 0,
+            'i_about_me_topic_id'     => 0,
         ];
 
         foreach ($forkConfig as $name => $value) {
@@ -1658,7 +1661,7 @@ class Install extends Admin
         }
 
         // заполнение users, categories, forums, topics, posts
-        $ip = \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: '0.0.0.0';
+        $ip      = \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: '0.0.0.0';
         $topicId = 1;
 
         $this->c->DB->exec('INSERT INTO ::users (group_id, username, username_normal, password, email, email_normal, language, style, num_posts, last_post, registered, registration_ip, last_visit, signature, num_topics) VALUES (?i, ?s, ?s, ?s, ?s, ?s, ?s, ?s, 1, ?i, ?i, ?s, ?i, \'\', 1)', [FORK_GROUP_ADMIN, $v->username, $this->c->users->normUsername($v->username), \password_hash($v->password, \PASSWORD_DEFAULT), $v->email, $this->c->NormEmail->normalize($v->email), $v->defaultlang, $v->defaultstyle, $now, $now, $ip, $now]);
@@ -1682,6 +1685,21 @@ class Install extends Admin
         $topicId = (int) $this->c->DB->lastInsertId();
 
         $this->c->DB->exec('UPDATE ::posts SET topic_id=?i WHERE id=?i', [$topicId, $postId]);
+
+        // заполнение для "Обо мне"
+        $topicId = 1;
+
+        $this->c->DB->exec('INSERT INTO ::posts (poster, poster_id, poster_ip, message, posted, topic_id) VALUES(?s, ?i, ?s, ?s, ?i, ?i)', ['ForkBB', 0, $ip, 'Start', $now, $topicId]);
+
+        $postId = (int) $this->c->DB->lastInsertId();
+
+        $this->c->DB->exec('INSERT INTO ::topics (poster, poster_id, subject, posted, first_post_id, last_post, last_post_id, last_poster, last_poster_id, forum_id) VALUES(?s, ?i, ?s, ?i, ?i, ?i, ?i, ?s, ?i, ?i)', ['ForkBB', 0, '[system] About me', $now, $postId, $now, $postId, 'ForkBB', 0, 2147483647]);
+
+        $topicId = (int) $this->c->DB->lastInsertId();
+
+        $this->c->DB->exec('UPDATE ::posts SET topic_id=?i WHERE id=?i', [$topicId, $postId]);
+
+        $this->c->DB->exec('UPDATE ::config SET conf_value=?s WHERE conf_name=?s', [$topicId, 'i_about_me_topic_id']);
 
         // заполнение smilies
         $smilies = [

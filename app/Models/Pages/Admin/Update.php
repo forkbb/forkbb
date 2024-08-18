@@ -25,7 +25,7 @@ class Update extends Admin
 {
     const PHP_MIN                    = '8.0.0';
     const REV_MIN_FOR_UPDATE         = 53;
-    const LATEST_REV_WITH_DB_CHANGES = 81;
+    const LATEST_REV_WITH_DB_CHANGES = 82;
     const LOCK_NAME                  = 'lock_update';
     const LOCK_TTL                   = 1800;
     const CONFIG_FILE                = 'main.php';
@@ -1249,6 +1249,37 @@ class Update extends Admin
         $this->c->DB->addField('::forums', 'custom_fields', 'TEXT', true);
         $this->c->DB->addField('::topics', 'cf_level', 'TINYINT UNSIGNED', false, 0);
         $this->c->DB->addField('::topics', 'cf_data', 'TEXT', true);
+
+        return null;
+    }
+
+    /**
+     * rev.81 to rev.82
+     */
+    protected function stageNumber81(array $args): ?int
+    {
+        $this->c->DB->addField('::users', 'about_me_id', 'INT(10) UNSIGNED', false, 0);
+        $this->c->DB->addField('::groups', 'g_use_about_me', 'TINYINT(1)', false, 1);
+        
+        $now     = \time();
+        $ip      = \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: '0.0.0.0';
+        $topicId = 1;
+
+        $this->c->DB->exec('INSERT INTO ::posts (poster, poster_id, poster_ip, message, posted, topic_id) VALUES(?s, ?i, ?s, ?s, ?i, ?i)', ['ForkBB', 0, $ip, 'Start', $now, $topicId]);
+
+        $postId = (int) $this->c->DB->lastInsertId();
+
+        $this->c->DB->exec('INSERT INTO ::topics (poster, poster_id, subject, posted, first_post_id, last_post, last_post_id, last_poster, last_poster_id, forum_id) VALUES(?s, ?i, ?s, ?i, ?i, ?i, ?i, ?s, ?i, ?i)', ['ForkBB', 0, '[system] About me', $now, $postId, $now, $postId, 'ForkBB', 0, 2147483647]);
+
+        $topicId = (int) $this->c->DB->lastInsertId();
+
+        $this->c->DB->exec('UPDATE ::posts SET topic_id=?i WHERE id=?i', [$topicId, $postId]);
+
+        $config = $this->c->config;
+
+        $config->i_about_me_topic_id = $topicId;
+
+        $config->save();
 
         return null;
     }
