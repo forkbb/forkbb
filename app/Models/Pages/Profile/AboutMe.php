@@ -41,8 +41,8 @@ class AboutMe extends Profile
         $this->c->Lang->load('validator');
 
         $forum = $this->c->forums->create([
-            'id'               => self::FORUM_ID,
-            'parent_forum_id)' => 0,
+            'id'              => self::FORUM_ID,
+            'parent_forum_id' => 0,
         ]);
         $this->c->forums->set(self::FORUM_ID, $forum);
 
