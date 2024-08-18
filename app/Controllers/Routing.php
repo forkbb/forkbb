@@ -221,38 +221,7 @@ class Routing
                     'User'
                 );
 
-                if (! $user->isGuest) {
-                    $r->add(
-                        $r::DUO,
-                        '/user/{id|i:[1-9]\d*}/edit/profile',
-                        'ProfileEdit:edit',
-                        'EditUserProfile'
-                    );
-                    $r->add(
-                        $r::DUO,
-                        '/user/{id|i:[1-9]\d*}/edit/config',
-                        'ProfileConfig:config',
-                        'EditUserBoardConfig'
-                    );
-                    $r->add(
-                        $r::DUO,
-                        '/user/{id|i:[1-9]\d*}/edit/profile/email',
-                        'ProfileEmail:email',
-                        'EditUserEmail'
-                    );
-                    $r->add(
-                        $r::DUO,
-                        '/user/{id|i:[1-9]\d*}/edit/profile/passphrase',
-                        'ProfilePass:pass',
-                        'EditUserPass'
-                    );
-                    $r->add(
-                        $r::DUO,
-                        '/user/{id|i:[1-9]\d*}/edit/profile/moderation',
-                        'ProfileMod:moderation',
-                        'EditUserModeration'
-                    );
-                }
+                $idPattern = '[1-9]\d*';
             } elseif (! $user->isGuest) {
                 // только свой профиль
                 $r->add(
@@ -261,29 +230,47 @@ class Routing
                     'ProfileView:view',
                     'User'
                 );
+
+                $idPattern = (string) $user->id;
+            }
+
+            // юзеры - редактирование
+            if (! $user->isGuest) {
                 $r->add(
                     $r::DUO,
-                    '/user/{id|i:' . $user->id . '}/edit/profile',
+                    '/user/{id|i:' . $idPattern . '}/edit/profile',
                     'ProfileEdit:edit',
                     'EditUserProfile'
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id|i:' . $user->id . '}/edit/config',
+                    '/user/{id|i:' . $idPattern . '}/edit/config',
                     'ProfileConfig:config',
                     'EditUserBoardConfig'
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id|i:' . $user->id . '}/edit/profile/email',
+                    '/user/{id|i:' . $idPattern . '}/edit/profile/email',
                     'ProfileEmail:email',
                     'EditUserEmail'
                 );
                 $r->add(
                     $r::DUO,
-                    '/user/{id|i:' . $user->id . '}/edit/profile/passphrase',
+                    '/user/{id|i:' . $idPattern . '}/edit/profile/passphrase',
                     'ProfilePass:pass',
                     'EditUserPass'
+                );
+                $r->add(
+                    $r::DUO,
+                    '/user/{id|i:' . $idPattern . '}/edit/profile/moderation',
+                    'ProfileMod:moderation',
+                    'EditUserModeration'
+                );
+                $r->add(
+                    $r::DUO,
+                    '/user/{id|i:' . $idPattern . '}/edit/profile/about_me',
+                    'ProfileAboutMe:about',
+                    'EditUserAboutMe'
                 );
             }
 
