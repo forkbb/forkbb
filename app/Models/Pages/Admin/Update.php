@@ -1258,6 +1258,16 @@ class Update extends Admin
      */
     protected function stageNumber81(array $args): ?int
     {
+        $coreConfig = new CoreConfig($this->configFile);
+
+        $coreConfig->add(
+            'multiple=>ProfileAboutMe',
+            '\\ForkBB\\Models\\Pages\\Profile\\AboutMe::class',
+            'ProfileSearch'
+        );
+
+        $coreConfig->save();
+
         $this->c->DB->addField('::users', 'about_me_id', 'INT(10) UNSIGNED', false, 0);
         $this->c->DB->addField('::groups', 'g_use_about_me', 'TINYINT(1)', false, 1);
         

@@ -410,3 +410,9 @@ msgstr "Recalculate posts and topics"
 
 msgid "Recalculate %s redirect"
 msgstr "The number of posts and topics for <b>%s</b> has been recalculated."
+
+msgid "About me"
+msgstr "About me"
+
+msgid "To change about me"
+msgstr "Change"

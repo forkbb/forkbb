@@ -411,6 +411,16 @@ class Edit extends Profile
             'caption'   => 'Location',
             'value'     => $this->curUser->location,
         ];
+
+        if ($this->rules->editAboutMe) {
+            $fields['change_about'] = [
+                'type'    => 'link',
+                'caption' => 'About me',
+                'value'   => __('To change about me'),
+                'href'    => $this->c->Router->link('EditUserAboutMe', $args),
+            ];
+        }
+
         $form['sets']['personal'] = [
             'class'  => ['data-edit'],
             'legend' => 'Personal information',

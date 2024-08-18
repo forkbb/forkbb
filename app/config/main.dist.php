@@ -399,6 +399,7 @@ return [
         'ProfileOAuth'       => \ForkBB\Models\Pages\Profile\OAuth::class,
         'ProfileDelete'      => \ForkBB\Models\Pages\Profile\Delete::class,
         'ProfileSearch'      => \ForkBB\Models\Pages\Profile\Search::class,
+        'ProfileAboutMe'     => \ForkBB\Models\Pages\Profile\AboutMe::class,
         'Reaction'           => \ForkBB\Models\Pages\Reaction::class,
         'AdminIndex'         => \ForkBB\Models\Pages\Admin\Index::class,
         'AdminStatistics'    => \ForkBB\Models\Pages\Admin\Statistics::class,

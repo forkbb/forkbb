@@ -173,4 +173,16 @@ class Profile extends Rules
     {
         return $this->my && 1 === $this->curUser->g_search;
     }
+
+    protected function geteditAboutMe(): bool
+    {
+        return $this->admin 
+            || (
+                $this->moderator 
+                && $this->editProfile
+            ) || (
+                $this->my 
+                && 1 === $this->user->g_use_about_me
+            );
+    }
 }
