@@ -18,6 +18,8 @@ use RuntimeException;
 
 class Delete extends Action
 {
+    const FORUM_ID = 2147483647;
+
     /**
      * Удаляет пользователя(ей)
      */
@@ -27,6 +29,7 @@ class Delete extends Action
             throw new InvalidArgumentException('No arguments, expected User(s)');
         }
 
+        $pids       = [];
         $users      = [];
         $moderators = [];
         $resetAdmin = false;
@@ -46,6 +49,10 @@ class Delete extends Action
             }
 
             $users[$user->id] = $user;
+
+            if ($user->about_me_id > 0) {
+                $pids[$user->about_me_id] = $user->about_me_id;
+            }
         }
 
         if (\count($users) > 1) {
@@ -70,6 +77,19 @@ class Delete extends Action
         $this->c->providerUser->delete(...$users);
 
         //???? предупреждения
+
+        // обо мне
+        if (! empty($pids)) {
+            $forum = $this->c->forums->create([
+                'id'              => self::FORUM_ID,
+                'parent_forum_id' => 0,
+            ]);
+            $this->c->forums->set(self::FORUM_ID, $forum);
+
+            $posts = $this->c->posts->loadByIds($pids);
+
+            $this->c->posts->delete(...$posts);
+        }
 
         foreach ($users as $user) {
             $this->c->Online->delete($user);
