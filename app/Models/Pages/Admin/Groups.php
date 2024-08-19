@@ -298,6 +298,7 @@ class Groups extends Admin
                         'g_pm'                   => 'required|integer|in:0,1',
                         'g_pm_limit'             => 'required|integer|min:0|max:999999',
                         'g_use_reaction'         => 'required|integer|in:0,1',
+                        'g_use_about_me'         => 'required|integer|in:0,1',
                     ]);
                 }
             }
@@ -622,6 +623,13 @@ class Groups extends Admin
                     'values'  => $yn,
                     'caption' => 'Use reaction label',
                     'help'    => 'Use reaction help',
+                ];
+                $fieldset['g_use_about_me'] = [
+                    'type'    => 'radio',
+                    'value'   => $group->g_use_about_me,
+                    'values'  => $yn,
+                    'caption' => 'Use about me label',
+                    'help'    => 'Use about me help',
                 ];
             }
 

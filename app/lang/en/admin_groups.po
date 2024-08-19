@@ -329,3 +329,9 @@ msgstr "Use reactions"
 
 msgid "Use reaction help"
 msgstr "Allow users of this group to use reactions to rate posts."
+
+msgid "Use about me label"
+msgstr "Use &apos;About me&apos;"
+
+msgid "Use about me help"
+msgstr "Allow users of this group to use the &apos;About Me&apos; field in profile."

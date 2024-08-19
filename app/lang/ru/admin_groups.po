@@ -329,3 +329,9 @@ msgstr "Использовать реакции"
 
 msgid "Use reaction help"
 msgstr "Разрешить пользователям этой группы использовать реакции для оценки сообщений."
+
+msgid "Use about me label"
+msgstr "Использовать &apos;Обо мне&apos;"
+
+msgid "Use about me help"
+msgstr "Разрешить пользователям этой группы использовать поле &apos;Обо мне&apos; в своем профиле."

@@ -50,6 +50,7 @@ class Delete extends Action
 
             $users[$user->id] = $user;
 
+            // обо мне
             if ($user->about_me_id > 0) {
                 $pids[$user->about_me_id] = $user->about_me_id;
             }
