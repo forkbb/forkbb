@@ -100,7 +100,7 @@ trait PostValidatorTrait
     /**
      * Подготовка валидатора к проверке данных из формы создания темы/сообщения
      */
-    protected function messageValidator(?Model $model, string $marker, array $args, bool $edit, bool $first): Validator
+    protected function messageValidator(?Model $model, string $marker, array $args, bool $edit, bool $first, bool $about = false): Validator
     {
         $this->c->Lang->load('validator');
 
@@ -143,6 +143,7 @@ trait PostValidatorTrait
 
             if (
                 $edit
+                && ! $about
                 && ! $model->user->isGuest
                 && ! $model->user->isAdmin
             ) {

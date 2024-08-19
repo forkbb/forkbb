@@ -61,10 +61,8 @@ class AboutMe extends Profile
             ]);
         }
 
-        $post->link = $this->c->Router->link('EditUserAboutMe', $args);
-
         if ('POST' === $method) {
-            $v = $this->messageValidator($post, 'EditUserAboutMe', $args, true, false, false);
+            $v = $this->messageValidator($post, 'EditUserAboutMe', $args, true, false, true);
 
             if (
                 $v->validation($_POST)
@@ -96,7 +94,7 @@ class AboutMe extends Profile
 
         $this->nameTpl     = 'post';
         $this->formTitle   = 'About me';
-        $this->form        = $this->messageForm($post, 'EditUserAboutMe', $args, true, false, false);
+        $this->form        = $this->messageForm($post, 'EditUserAboutMe', $args, true, false, false, true);
         $this->identifier  = ['profile', 'profile-search'];
         $this->crumbs      = $this->crumbs(
             [
@@ -149,7 +147,7 @@ class AboutMe extends Profile
         } else {
             $calcPost  = false;
             $calcTopic = false;
-    
+
             // текст сообщения
             if ($post->message !== $v->message) {
                 $calcPost        = true;
@@ -163,29 +161,29 @@ class AboutMe extends Profile
                     $calcTopic = true;
                 }
             }
-    
+
             if (
                 1 === $this->c->config->b_smilies
                 && (bool) $post->hide_smilies !== (bool) $v->hide_smilies
             ) {
                 $post->hide_smilies = $v->hide_smilies ? 1 : 0;
             }
-    
+
             $this->c->posts->update($post);
-    
+
             if ($calcTopic) {
                 $topic->calcStat();
             }
-    
+
             $this->c->topics->update($topic);
-    
+
             if ($calcPost) {
                 if ($this->c->userRules->useUpload) {
                     $this->c->attachments->syncWithPost($post, true);
                 }
-    
+
                 $this->user->last_post = $now;
-    
+
                 $this->c->users->update($this->user);
             }
         }

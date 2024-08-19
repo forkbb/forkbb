@@ -18,7 +18,7 @@ trait PostFormTrait
     /**
      * Возвращает данные для построения формы создания темы/сообщения
      */
-    protected function messageForm(Model $model, string $marker, array $args, bool $edit, bool $first, bool $quick): array
+    protected function messageForm(Model $model, string $marker, array $args, bool $edit, bool $first, bool $quick, bool $about = false): array
     {
         $vars = $args['_vars'] ?? null;
 
@@ -45,7 +45,10 @@ trait PostFormTrait
             ],
         ];
 
-        if (! $quick) {
+        if (
+            ! $quick
+            && ! $about
+        ) {
             $form['btns']['cancel'] = [
                 'type'  => 'btn',
                 'value' => __('Go back'), // 'Cancel'
@@ -175,6 +178,7 @@ trait PostFormTrait
 
                 if (
                     $edit
+                    && ! $about
                     && ! $model->user->isGuest
                     && ! $model->user->isAdmin
                 ) {
