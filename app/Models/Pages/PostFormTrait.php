@@ -101,7 +101,7 @@ trait PostFormTrait
             'class'     => ['w0'],
             'type'      => 'textarea',
             'caption'   => 'Message',
-            'required'  => true,
+            'required'  => ! $about,
             'value'     => $vars['message'] ?? null,
             'autofocus' => $autofocus,
             'maxlength' => $this->c->MAX_POST_SIZE,

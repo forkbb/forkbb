@@ -43,6 +43,10 @@ trait PostValidatorTrait
      */
     public function vCheckMessage(Validator $v, string $message, $attr, bool $executive): string
     {
+        if ('' === $message) {
+            return '';
+        }
+
         $prepare = null;
 
         // после цензуры текст сообщения пустой
@@ -184,7 +188,7 @@ trait PostValidatorTrait
             $ruleHideSmilies = 'absent';
         }
 
-        $ruleMessage = 'required|string:trim|max:' . $this->c->MAX_POST_SIZE . ($executive ? '' : '|noURL') . '|check_message';
+        $ruleMessage = ($about ? '' : 'required|') . 'string:trim|max:' . $this->c->MAX_POST_SIZE . ($executive ? '' : '|noURL') . '|check_message';
 
         $v = $this->c->Validator->reset()
             ->addValidators([

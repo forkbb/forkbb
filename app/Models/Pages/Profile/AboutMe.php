@@ -118,7 +118,14 @@ class AboutMe extends Profile
         $now   = \time();
         $topic = $post->parent;
 
-        if (empty($post->id)) {
+        if ('' === $v->message) {
+            if ($post->id > 0) {
+                $this->c->posts->delete($post);
+            }
+
+            $this->curUser->about_me_id = 0;
+            $this->c->users->update($this->curUser);
+        } elseif (empty($post->id)) {
             $post->poster_ip    = $this->user->ip;
             $post->message      = $v->message;
             $post->hide_smilies = $v->hide_smilies ? 1 : 0;
