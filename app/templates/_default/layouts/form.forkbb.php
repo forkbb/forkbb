@@ -8,6 +8,11 @@
         @foreach ($setVal['inform'] as $key => $cur)
           <p class="f-finform">{!! $cur['html'] or __($cur['message']) !!}</p>
         @endforeach
+    @elseif (isset($setVal['tabs']))
+        @foreach ($setVal['tabs'] as $key => $cur)
+            <input class="f-tab-input" id="id-{{ $setKey }}-{{ $key }}" type="radio" name="tn-{{ $setKey }}" @if ($cur[1]) checked @endif hidden>
+            <label class="f-tab-label" id="id-{{ $setKey }}-{{ $key }}-label" for="id-{{ $setKey }}-{{ $key }}">{!! __($cur[0]) !!}</label>
+        @endforeach
     @elseif (isset($setVal['fields']))
           <fieldset id="id-fs-{{ $setKey }}" @if ($setVal['class']) @class([[$setVal['class'], 'f-fs-']]) @endif>
         @if ($setVal['legend'])

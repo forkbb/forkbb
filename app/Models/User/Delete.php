@@ -18,8 +18,6 @@ use RuntimeException;
 
 class Delete extends Action
 {
-    const FORUM_ID = 2147483647;
-
     /**
      * Удаляет пользователя(ей)
      */
@@ -82,10 +80,10 @@ class Delete extends Action
         // обо мне
         if (! empty($pids)) {
             $forum = $this->c->forums->create([
-                'id'              => self::FORUM_ID,
+                'id'              => FORK_SFID,
                 'parent_forum_id' => 0,
             ]);
-            $this->c->forums->set(self::FORUM_ID, $forum);
+            $this->c->forums->set(FORK_SFID, $forum);
 
             $posts = $this->c->posts->loadByIds($pids);
 

@@ -439,6 +439,22 @@ body,
   background-color: var(--bg-like-nav);
 }
 
+#fork .f-tab-label {
+  display: inline-block;
+  padding: 0.625rem 0.625rem 0.3125rem;
+  margin-bottom: 0.3125rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  color: var(--c-a-and-btn);
+  min-width: 4rem;
+}
+
+#fork .f-tab-input:checked + .f-tab-label {
+  color: var(--c-active);
+  border-bottom: 0.0625rem solid;
+}
+
 /********/
 /* Меню */
 /********/
@@ -2774,6 +2790,14 @@ body,
   flex: 1 0 7rem;
 }
 
+#fork #id-ptabs-about_me:checked ~ fieldset:not(#id-fs-about_me) {
+  display: none;
+}
+
+#fork #id-ptabs-other:checked ~ #id-fs-about_me {
+  display: none;
+}
+
 @media screen and (min-width: 40rem) {
   #fork .f-fs-header .f-wrap-usertitle {
     order: 1;
@@ -2816,6 +2840,14 @@ body,
 
   #fork .f-fs-data dd {
     width: 67%
+  }
+
+  #fork #id-dl-about_me > dt {
+    display: none;
+  }
+
+  #fork #id-dl-about_me > dd {
+    width: 100%;
   }
 
   #fork .f-field-pline .f-ycaption::after {

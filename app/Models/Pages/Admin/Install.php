@@ -1693,7 +1693,7 @@ class Install extends Admin
 
         $postId = (int) $this->c->DB->lastInsertId();
 
-        $this->c->DB->exec('INSERT INTO ::topics (poster, poster_id, subject, posted, first_post_id, last_post, last_post_id, last_poster, last_poster_id, forum_id) VALUES(?s, ?i, ?s, ?i, ?i, ?i, ?i, ?s, ?i, ?i)', ['ForkBB', 0, '[system] About me', $now, $postId, $now, $postId, 'ForkBB', 0, 2147483647]);
+        $this->c->DB->exec('INSERT INTO ::topics (poster, poster_id, subject, posted, first_post_id, last_post, last_post_id, last_poster, last_poster_id, forum_id) VALUES(?s, ?i, ?s, ?i, ?i, ?i, ?i, ?s, ?i, ?i)', ['ForkBB', 0, '[system] About me', $now, $postId, $now, $postId, 'ForkBB', 0, FORK_SFID]);
 
         $topicId = (int) $this->c->DB->lastInsertId();
 

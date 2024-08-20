@@ -1270,7 +1270,7 @@ class Update extends Admin
 
         $this->c->DB->addField('::users', 'about_me_id', 'INT(10) UNSIGNED', false, 0);
         $this->c->DB->addField('::groups', 'g_use_about_me', 'TINYINT(1)', false, 1);
-        
+
         $now     = \time();
         $ip      = \filter_var($_SERVER['REMOTE_ADDR'], \FILTER_VALIDATE_IP) ?: '0.0.0.0';
         $topicId = 1;
@@ -1279,7 +1279,7 @@ class Update extends Admin
 
         $postId = (int) $this->c->DB->lastInsertId();
 
-        $this->c->DB->exec('INSERT INTO ::topics (poster, poster_id, subject, posted, first_post_id, last_post, last_post_id, last_poster, last_poster_id, forum_id) VALUES(?s, ?i, ?s, ?i, ?i, ?i, ?i, ?s, ?i, ?i)', ['ForkBB', 0, '[system] About me', $now, $postId, $now, $postId, 'ForkBB', 0, 2147483647]);
+        $this->c->DB->exec('INSERT INTO ::topics (poster, poster_id, subject, posted, first_post_id, last_post, last_post_id, last_poster, last_poster_id, forum_id) VALUES(?s, ?i, ?s, ?i, ?i, ?i, ?i, ?s, ?i, ?i)', ['ForkBB', 0, '[system] About me', $now, $postId, $now, $postId, 'ForkBB', 0, FORK_SFID]);
 
         $topicId = (int) $this->c->DB->lastInsertId();
 

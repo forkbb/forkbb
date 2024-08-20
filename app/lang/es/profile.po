@@ -419,3 +419,6 @@ msgstr "Change"
 
 msgid "Change about me"
 msgstr "Change &apos;About me&apos;"
+
+msgid "Other"
+msgstr "Other"

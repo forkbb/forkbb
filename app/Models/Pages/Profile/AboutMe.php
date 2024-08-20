@@ -23,8 +23,6 @@ class AboutMe extends Profile
     use PostFormTrait;
     use PostValidatorTrait;
 
-    const FORUM_ID = 2147483647;
-
     /**
      * Подготавливает данные для шаблона Обо мне
      */
@@ -41,10 +39,10 @@ class AboutMe extends Profile
         $this->c->Lang->load('validator');
 
         $forum = $this->c->forums->create([
-            'id'              => self::FORUM_ID,
+            'id'              => FORK_SFID,
             'parent_forum_id' => 0,
         ]);
-        $this->c->forums->set(self::FORUM_ID, $forum);
+        $this->c->forums->set(FORK_SFID, $forum);
 
         if ($this->curUser->about_me_id > 0) {
             $post = $this->c->posts->load($this->curUser->about_me_id);
@@ -92,6 +90,7 @@ class AboutMe extends Profile
             ];
         }
 
+        $this->hhsLevel    = 'common'; // для остальных страниц профиля уровень задан в initProfile()
         $this->nameTpl     = 'post';
         $this->formTitle   = 'About me';
         $this->form        = $this->messageForm($post, 'EditUserAboutMe', $args, true, false, false, true);
@@ -124,6 +123,7 @@ class AboutMe extends Profile
             }
 
             $this->curUser->about_me_id = 0;
+
             $this->c->users->update($this->curUser);
         } elseif (empty($post->id)) {
             $post->poster_ip    = $this->user->ip;

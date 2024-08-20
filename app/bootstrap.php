@@ -42,6 +42,8 @@ define('FORK_GEN_FEM', 2);
 
 define('FORK_JSON_ENCODE', \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR);
 
+define('FORK_SFID', 2147483647);
+
 $loader       = require __DIR__ . '/../vendor/autoload.php';
 $errorHandler = new ErrorHandler();
 

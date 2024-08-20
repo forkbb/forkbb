@@ -13,6 +13,7 @@ namespace ForkBB\Models\Pages\Profile;
 use ForkBB\Models\Page;
 use ForkBB\Models\Pages\Profile;
 use ForkBB\Models\PM\Cnst;
+use ForkBB\Models\Post\Post;
 use function \ForkBB\__;
 use function \ForkBB\dt;
 use function \ForkBB\num;
@@ -108,6 +109,44 @@ class View extends Profile
                     ],
                 ],
             ];
+        }
+
+        // обо мне
+        if ($this->curUser->about_me_id > 0) {
+            $forum = $this->c->forums->create([
+                'id'              => FORK_SFID,
+                'parent_forum_id' => 0,
+            ]);
+            $this->c->forums->set(FORK_SFID, $forum);
+
+            $post = $this->c->posts->load($this->curUser->about_me_id);
+
+            if (
+                $post instanceof Post
+                && '' !== $post->message
+            ) {
+                $form['sets']['ptabs'] = [
+                    'tabs' => [
+                        'about_me' => ['About me', true],
+                        'other'    => ['Other', false],
+                    ],
+                ];
+
+                $form['sets']['about_me'] = [
+                    'class'  => ['data'],
+                    'legend' => 'About me',
+                    'fields' => [
+                        'about_me' => [
+                            'type'    => 'yield',
+                            'value'   => 'about_me',
+                        ],
+                    ],
+                ];
+
+                $this->c->Parser; // предзагрузка
+
+                $this->aboutMePost = $post;
+            }
         }
 
         // личное

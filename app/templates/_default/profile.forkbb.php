@@ -1,6 +1,7 @@
 @include ('layouts/crumbs')
 @section ('avatar')<img class="f-avatar-img" src="{{ $p->curUser->avatar }}" alt="{{ $p->curUser->username }}"> @endsection
 @section ('signature') @if ($p->signatureSection){!! $p->curUser->htmlSign !!} @endif @endsection
+@section ('about_me') @if ($p->aboutMePost){!! $p->aboutMePost->html() !!} @endif @endsection
 @extends ('layouts/main')
     <!-- PRE start -->
     <!-- PRE h1Before -->
