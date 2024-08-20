@@ -2798,6 +2798,10 @@ body,
   display: none;
 }
 
+#fork-profile .f-post-body {
+  width: 100%;
+}
+
 @media screen and (min-width: 40rem) {
   #fork .f-fs-header .f-wrap-usertitle {
     order: 1;
