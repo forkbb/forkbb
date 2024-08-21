@@ -28,13 +28,13 @@ msgstr "No parent forum"
 
 msgid "%s Topic"
 msgid_plural "%s Topics"
-msgstr[0] "<b>%s</b> Topic"
-msgstr[1] "<b>%s</b> Topics"
+msgstr[0] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Topic</span>"
+msgstr[1] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Topics</span>"
 
 msgid "%s Post"
 msgid_plural "%s Posts"
-msgstr[0] "<b>%s</b> Post"
-msgstr[1] "<b>%s</b> Posts"
+msgstr[0] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Post</span>"
+msgstr[1] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Posts</span>"
 
 msgid "Moderated by"
 msgstr "Moderated by"
@@ -49,4 +49,4 @@ msgid "All is read"
 msgstr "All is read"
 
 msgid "Last post in the topic \"<a href=\"%1$s\">%2$s</a>\""
-msgstr "<small>Last post in the topic &quot;</small><a href=\"%1$s\">%2$s</a><small>&quot;</small>"
+msgstr "<small>Last post in the topic &quot;</small><a href=\"%1$s\"><span class=\"f-cltname\">%2$s</span><span class=\"f-clttime\" hidden> %3$s</span></a><small>&quot;</small>"

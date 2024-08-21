@@ -80,7 +80,7 @@
                 </div>
               </div>
               <div class="f-cell f-cstats">
-                <span>{!! __(['%s Reply', $topic->num_replies, num($topic->num_replies)]) !!}</span>
+                <span class="f-csreply">{!! __(['%s Reply', $topic->num_replies, num($topic->num_replies)]) !!}</span>
               </div>
               <div class="f-cell f-clast">
                 <span class="f-cltopic">{!! __(['Last post <a href="%1$s">%2$s</a>', $topic->linkLast, dt($topic->last_post)]) !!}</span>

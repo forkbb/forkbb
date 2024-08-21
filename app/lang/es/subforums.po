@@ -28,13 +28,13 @@ msgstr "No hay foro padre"
 
 msgid "%s Topic"
 msgid_plural "%s Topics"
-msgstr[0] "<b>%s</b> Tema"
-msgstr[1] "<b>%s</b> Temas"
+msgstr[0] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Tema</span>"
+msgstr[1] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Temas</span>"
 
 msgid "%s Post"
 msgid_plural "%s Posts"
-msgstr[0] "<b>%s</b> Mensaje"
-msgstr[1] "<b>%s</b> Mensajes"
+msgstr[0] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Mensaje</span>"
+msgstr[1] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Mensajes</span>"
 
 msgid "Moderated by"
 msgstr "Morderado por"
@@ -49,4 +49,4 @@ msgid "All is read"
 msgstr "Marcar todo como leído"
 
 msgid "Last post in the topic \"<a href=\"%1$s\">%2$s</a>\""
-msgstr "<small>Último mensaje en el tema &quot;</small><a href=\"%1$s\">%2$s</a><small>&quot;</small>"
+msgstr "<small>Último mensaje en el tema &quot;</small><a href=\"%1$s\"><span class=\"f-cltname\">%2$s</span><span class=\"f-clttime\" hidden> %3$s</span></a><small>&quot;</small>"

@@ -189,13 +189,13 @@ msgstr "Respuestas"
 
 msgid "%s Reply"
 msgid_plural "%s Replys"
-msgstr[0] "<b>%s</b> Respuesta"
-msgstr[1] "<b>%s</b> Respuestas"
+msgstr[0] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Respuesta</span>"
+msgstr[1] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> Respuestas</span>"
 
 msgid "%s View"
 msgid_plural "%s Views"
-msgstr[0] "<b>%s</b> vista"
-msgstr[1] "<b>%s</b> vistas"
+msgstr[0] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> vista</span>"
+msgstr[1] "<b class=\"f-num\">%s</b><span class=\"f-txt\"> vistas</span>"
 
 msgid "Pages"
 msgstr "Páginas:"

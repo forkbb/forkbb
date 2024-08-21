@@ -173,10 +173,10 @@
               </div>
             </div>
             <div class="f-cell f-cstats">
-              <span>{!! __(['%s Reply', $topic->num_replies, num($topic->num_replies)]) !!}</span>
+              <span class="f-csreply">{!! __(['%s Reply', $topic->num_replies, num($topic->num_replies)]) !!}</span>
             @if ($topic->showViews)
               <small>·</small>
-              <span>{!! __(['%s View', $topic->num_views, num($topic->num_views)]) !!}</span>
+              <span class="f-csview">{!! __(['%s View', $topic->num_views, num($topic->num_views)]) !!}</span>
             @endif
             </div>
             <div class="f-cell f-clast">

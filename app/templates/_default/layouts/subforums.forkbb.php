@@ -65,13 +65,13 @@
                 </div>
               </div>
               <div class="f-cell f-cstats">
-                <span>{!! __(['%s Topic', $cur->tree->num_topics, num($cur->tree->num_topics)]) !!}</span>
+                <span class="f-cstopic">{!! __(['%s Topic', $cur->tree->num_topics, num($cur->tree->num_topics)]) !!}</span>
                 <small>·</small>
-                <span>{!! __(['%s Post', $cur->tree->num_posts, num($cur->tree->num_posts)]) !!}</span>
+                <span class="f-cspost">{!! __(['%s Post', $cur->tree->num_posts, num($cur->tree->num_posts)]) !!}</span>
               </div>
               <div class="f-cell f-clast">
         @if ($cur->tree->last_post_id)
-                <span class="f-cltopic">{!! __(['Last post in the topic "<a href="%1$s">%2$s</a>"', $cur->tree->linkLast, $cur->tree->censorLast_topic]) !!}</span>
+                <span class="f-cltopic">{!! __(['Last post in the topic "<a href="%1$s">%2$s</a>"', $cur->tree->linkLast, $cur->tree->censorLast_topic, dt($cur->tree->last_post)]) !!}</span>
                 <span class="f-clposter">{!! __(['by %s', $cur->tree->last_poster]) !!}</span>
                 <span class="f-cltime">{{ dt($cur->tree->last_post) }}</span>
         @else
