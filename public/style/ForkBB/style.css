@@ -1457,7 +1457,8 @@ body,
 
 #fork .f-ftlist .f-clposter,
 #fork .f-ftlist .f-cltime,
-#fork .f-ftlist .f-cltname {
+#fork .f-ftlist .f-cltname,
+#fork .f-ftlist .f-csview {
   display: none;
 }
 
@@ -1500,6 +1501,10 @@ body,
     white-space: nowrap;
     text-overflow: ellipsis;
     max-width: 100%;
+  }
+
+  #fork .f-ftlist .f-csview {
+    display: block;
   }
 
   #fork .f-ftlist .f-cltime {
